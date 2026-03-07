@@ -1,0 +1,99 @@
+{
+  "timestamp": "2026-03-07T07:59:31.513020+00:00",
+  "SPY": {
+    "signal": "WARNING",
+    "color": "orange",
+    "close": 672.3800048828125,
+    "ema8": 681.9233572186118,
+    "ema21": 684.9933999525238,
+    "sma50": 688.0499963378907,
+    "sma200": 654.1278060913086,
+    "sma20": 685.921499633789,
+    "power_trend": {
+      "3d_gt_20sma": false,
+      "3d_gt_50sma": false,
+      "3d_gt_200sma": true,
+      "20sma_gt_50sma": false,
+      "50sma_gt_200sma": true
+    },
+    "trend_status": {
+      "9ema_dist": -1.48,
+      "21ema_dist": -1.88,
+      "50sma_dist": -2.33,
+      "200sma_dist": 2.71,
+      "52w_high_dist": -3.32
+    }
+  },
+  "QQQ": {
+    "signal": "WARNING",
+    "color": "orange",
+    "close": 599.75,
+    "ema8": 606.1066482604531,
+    "ema21": 608.4969401243861,
+    "sma50": 615.25259765625,
+    "sma200": 587.9268141174316,
+    "sma20": 607.1024932861328,
+    "power_trend": {
+      "3d_gt_20sma": false,
+      "3d_gt_50sma": false,
+      "3d_gt_200sma": true,
+      "20sma_gt_50sma": false,
+      "50sma_gt_200sma": true
+    },
+    "trend_status": {
+      "9ema_dist": -1.09,
+      "21ema_dist": -1.46,
+      "50sma_dist": -2.58,
+      "200sma_dist": 1.97,
+      "52w_high_dist": -5.54
+    }
+  },
+  "IWM": {
+    "signal": "WARNING",
+    "color": "orange",
+    "close": 250.88999938964844,
+    "ema8": 258.8565205820788,
+    "ema21": 261.02617609188235,
+    "sma50": 260.4095993041992,
+    "sma200": 238.19569137573242,
+    "sma20": 262.50049819946287,
+    "power_trend": {
+      "3d_gt_20sma": false,
+      "3d_gt_50sma": false,
+      "3d_gt_200sma": true,
+      "20sma_gt_50sma": true,
+      "50sma_gt_200sma": true
+    },
+    "trend_status": {
+      "9ema_dist": -3.33,
+      "21ema_dist": -4.04,
+      "50sma_dist": -3.79,
+      "200sma_dist": 5.06,
+      "52w_high_dist": -7.01
+    }
+  },
+  "RSP": {
+    "signal": "WARNING",
+    "color": "orange",
+    "close": 198.14999389648438,
+    "ema8": 201.7180771877471,
+    "ema21": 201.80425800997696,
+    "sma50": 199.27420013427735,
+    "sma200": 188.35885025024413,
+    "sma20": 202.75100021362306,
+    "power_trend": {
+      "3d_gt_20sma": false,
+      "3d_gt_50sma": false,
+      "3d_gt_200sma": true,
+      "20sma_gt_50sma": true,
+      "50sma_gt_200sma": true
+    },
+    "trend_status": {
+      "9ema_dist": -1.87,
+      "21ema_dist": -1.84,
+      "50sma_dist": -0.57,
+      "200sma_dist": 4.94,
+      "52w_high_dist": -3.33
+    }
+  }
+}
