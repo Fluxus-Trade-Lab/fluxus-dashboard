@@ -43,6 +43,8 @@ FINVIZ_COL_MAP = {
     '52W High': 'high_52w',
     '52W Low': 'low_52w',
     'EPS next Y': 'eps_growth_next_y',
+    'EPS this Y': 'eps_growth_this_y',
+    'Sales past 5Y': 'revenue_growth',
     # HTML scraper may use slightly different names
     'Rel Volume': 'rel_volume',
     'Avg Volume': 'avg_volume',
@@ -53,7 +55,7 @@ PCT_COLUMNS = [
     'change_pct', 'perf_1w', 'perf_1m', 'perf_3m',
     'perf_6m', 'perf_1y', 'perf_ytd', 'sma20_dist',
     'sma50_dist', 'sma200_dist', 'high_52w', 'low_52w',
-    'eps_growth_next_y',
+    'eps_growth_next_y', 'eps_growth_this_y', 'revenue_growth',
 ]
 
 

@@ -16,6 +16,7 @@ STANDARD_COLUMNS = [
     'market_cap', 'sector', 'industry',         # Classification
     'high_52w', 'low_52w',                      # Range
     'eps_growth_next_y',                         # Fundamentals (optional)
+    'eps_growth_this_y', 'revenue_growth',
 ]
 
 

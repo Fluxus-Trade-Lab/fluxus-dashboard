@@ -162,7 +162,7 @@ class TestCalculations:
 
 class TestSchema:
     def test_standard_columns_count(self):
-        assert len(STANDARD_COLUMNS) == 22
+        assert len(STANDARD_COLUMNS) == 24
 
     def test_standard_columns_required_fields(self):
         assert 'ticker' in STANDARD_COLUMNS
