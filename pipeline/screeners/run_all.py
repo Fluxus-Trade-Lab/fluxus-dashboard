@@ -145,7 +145,76 @@ def _json_serializer(obj):
         return obj.tolist()
     if isinstance(obj, (pd.Timestamp,)):
         return obj.isoformat()
+    if pd.isna(obj):
+        return None
     return str(obj)
+
+
+def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
+    """Compute RS scores, composite metrics, and derived columns for the screener."""
+    df = universe.copy()
+
+    # Coerce performance columns to numeric
+    perf_cols = ['perf_1w', 'perf_1m', 'perf_3m', 'perf_6m', 'perf_1y']
+    for col in perf_cols:
+        df[col] = pd.to_numeric(df[col], errors='coerce')
+
+    # --- Price RS percentile ranks (0-99 scale) ---
+    df['rs_21d'] = df['perf_1m'].rank(pct=True, na_option='bottom') * 99
+    df['rs_63d'] = df['perf_3m'].rank(pct=True, na_option='bottom') * 99
+    df['rs_126d'] = df['perf_6m'].rank(pct=True, na_option='bottom') * 99
+
+    # --- IBD-style RS (40% 3mo + 40% 6mo + 20% 1yr) ---
+    r3 = df['perf_3m'].rank(pct=True, na_option='bottom') * 99
+    r6 = df['perf_6m'].rank(pct=True, na_option='bottom') * 99
+    r1y = df['perf_1y'].rank(pct=True, na_option='bottom') * 99
+    df['rs_ibd'] = (0.4 * r3 + 0.4 * r6 + 0.2 * r1y)
+
+    # --- F score (fundamental) ---
+    eps = pd.to_numeric(df.get('eps_growth_next_y', pd.Series(dtype=float)), errors='coerce')
+    rev = pd.to_numeric(df.get('revenue_growth', pd.Series(dtype=float)), errors='coerce')
+    fundamental = eps.copy()
+    both_available = eps.notna() & rev.notna()
+    fundamental.loc[both_available] = (eps[both_available] + rev[both_available]) / 2
+    df['f_score'] = fundamental.rank(pct=True, na_option='bottom') * 99
+    df['f_score'] = df['f_score'].fillna(50)
+
+    # --- I score (industry RS) ---
+    industry_rs = df.groupby('industry')['rs_63d'].transform('mean')
+    df['i_score'] = industry_rs.rank(pct=True, na_option='bottom') * 99
+
+    # --- H score (hybrid composite) ---
+    # Weights: F:2, I:3, 21d:1, 63d:2, 126d:2 -> total 10
+    df['h_score'] = (
+        df['f_score'] * 2 +
+        df['i_score'] * 3 +
+        df['rs_21d'] * 1 +
+        df['rs_63d'] * 2 +
+        df['rs_126d'] * 2
+    ) / 10
+
+    # --- Derived technical columns ---
+    df['adr_pct'] = pd.to_numeric(df['atr'], errors='coerce') / pd.to_numeric(df['close'], errors='coerce') * 100
+    df['ema21_r'] = 1 + pd.to_numeric(df['sma20_dist'], errors='coerce')
+    df['sma50_r'] = 1 + pd.to_numeric(df['sma50_dist'], errors='coerce')
+
+    # 52W high distance
+    h = pd.to_numeric(df['high_52w'], errors='coerce')
+    c = pd.to_numeric(df['close'], errors='coerce')
+    if h.mean() > 1:  # absolute prices, not fractions
+        df['high_52w_dist'] = (c - h) / h
+    else:
+        df['high_52w_dist'] = h
+
+    # Round score columns to integers
+    for col in ['rs_21d', 'rs_63d', 'rs_126d', 'rs_ibd', 'f_score', 'i_score', 'h_score']:
+        df[col] = df[col].round(0).astype('Int64')
+
+    # Round derived columns to 4 decimals
+    for col in ['adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist']:
+        df[col] = df[col].round(4)
+
+    return df
 
 
 def main():
@@ -174,6 +243,9 @@ def main():
         logger.info("Using yfinance fallback universe...")
         universe = build_fallback_universe(yf_adapter)
         logger.info(f"Fallback universe: {len(universe)} stocks")
+
+    # Compute universe scores for screener page
+    scored_universe = compute_universe_scores(universe)
 
     # 2. Fetch ETF data
     logger.info("Fetching ETF data...")
@@ -239,6 +311,29 @@ def main():
         etf_data.to_json(orient='records', indent=2)
     )
     logger.info("Saved etf_data.json")
+
+    # Save full universe for screener page
+    universe_cols = [
+        'ticker', 'close', 'change_pct', 'perf_1w', 'perf_1m', 'perf_3m',
+        'perf_6m', 'perf_1y', 'perf_ytd',
+        'sma20_dist', 'sma50_dist', 'sma200_dist',
+        'atr', 'rel_volume', 'avg_volume', 'volume',
+        'market_cap', 'sector', 'industry',
+        'high_52w', 'low_52w', 'eps_growth_next_y',
+        'rs_21d', 'rs_63d', 'rs_126d', 'rs_ibd',
+        'f_score', 'i_score', 'h_score',
+        'adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist',
+    ]
+    export_cols = [c for c in universe_cols if c in scored_universe.columns]
+    universe_export = {
+        'timestamp': timestamp,
+        'count': len(scored_universe),
+        'rows': scored_universe[export_cols].to_dict('records'),
+    }
+    (OUTPUT_DIR / 'universe.json').write_text(
+        json.dumps(universe_export, indent=None, default=_json_serializer)
+    )
+    logger.info("Saved universe.json")
 
     # Summary
     total_tickers = sum(
