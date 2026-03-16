@@ -1,4 +1,5 @@
 import { formatTimestamp } from '../lib/format'
+import { useTheme } from '../hooks/useTheme'
 
 const NAV_ITEMS = [
   { key: 'dashboard', label: 'Dashboard', hash: '#/dashboard' },
@@ -11,10 +12,12 @@ const NAV_ITEMS = [
 ]
 
 export default function Header({ lastUpdated, isOffline, currentPage, onNavigate }) {
+  const { theme, toggle } = useTheme()
+
   return (
-    <header className="flex items-center justify-between px-4 py-3 bg-white border-b border-stone-200">
+    <header className="flex items-center justify-between px-4 py-3 bg-[var(--color-surface)] border-b border-[var(--color-border)]">
       <div className="flex items-center gap-3">
-        <h1 className="text-sm font-semibold tracking-tight text-stone-900">
+        <h1 className="text-sm font-semibold tracking-tight text-[var(--color-text)]">
           Fluxus Capital
         </h1>
         <div className="flex gap-1 ml-3">
@@ -24,8 +27,8 @@ export default function Header({ lastUpdated, isOffline, currentPage, onNavigate
               onClick={() => onNavigate(hash)}
               className={`px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide rounded ${
                 currentPage === key
-                  ? 'bg-stone-800 text-stone-100'
-                  : 'text-stone-500 hover:text-stone-800'
+                  ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
               }`}
             >
               {label}
@@ -33,14 +36,23 @@ export default function Header({ lastUpdated, isOffline, currentPage, onNavigate
           ))}
         </div>
         {isOffline && (
-          <span className="px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider bg-stone-200 text-stone-600 rounded">
+          <span className="px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] rounded">
             Offline
           </span>
         )}
       </div>
 
-      <div className="text-[10px] text-stone-400 font-mono">
-        {formatTimestamp(lastUpdated)}
+      <div className="flex items-center gap-3">
+        <div className="text-[10px] text-[var(--color-text-muted)] font-mono">
+          {formatTimestamp(lastUpdated)}
+        </div>
+        <button
+          onClick={toggle}
+          className="w-7 h-7 flex items-center justify-center rounded-full bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors cursor-pointer border-none text-sm"
+          title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          {theme === 'dark' ? '\u2600' : '\u263E'}
+        </button>
       </div>
     </header>
   )

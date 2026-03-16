@@ -24,7 +24,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
   const current = pageKey(page)
 
   return (
-    <div className="min-h-screen bg-[#fafaf9]">
+    <div className="min-h-screen bg-[var(--color-bg)]">
       <Header
         lastUpdated={lastUpdated}
         isOffline={isOffline}

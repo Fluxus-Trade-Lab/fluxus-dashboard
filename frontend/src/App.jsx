@@ -6,8 +6,8 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#fafaf9]">
-        <div className="text-stone-400 text-sm font-medium uppercase tracking-wide">
+      <div className="min-h-screen flex items-center justify-center bg-[var(--color-bg)]">
+        <div className="text-[var(--color-text-muted)] text-sm font-medium uppercase tracking-wide">
           Loading market data...
         </div>
       </div>
