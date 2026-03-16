@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react'
-import { createChart, ColorType } from 'lightweight-charts'
+import { createChart, ColorType, LineSeries, HistogramSeries } from 'lightweight-charts'
 
 export default function BreadthCharts({ data }) {
   if (!data?.history) return null
@@ -51,7 +51,7 @@ function MaChart({ history }) {
     const dates = history.dates
 
     // % above 200 SMA (blue)
-    const sma200Series = chart.addLineSeries({
+    const sma200Series = chart.addSeries(LineSeries, {
       color: '#3b82f6',
       lineWidth: 1.5,
       title: '200 SMA',
@@ -61,7 +61,7 @@ function MaChart({ history }) {
     )
 
     // % above 50 SMA (amber)
-    const sma50Series = chart.addLineSeries({
+    const sma50Series = chart.addSeries(LineSeries, {
       color: '#f59e0b',
       lineWidth: 1.5,
       title: '50 SMA',
@@ -71,7 +71,7 @@ function MaChart({ history }) {
     )
 
     // % above 20 SMA (stone)
-    const sma20Series = chart.addLineSeries({
+    const sma20Series = chart.addSeries(LineSeries, {
       color: '#a8a29e',
       lineWidth: 1,
       title: '20 SMA',
@@ -155,7 +155,7 @@ function McClellanChart({ history }) {
       }
     })
 
-    const mcSeries = chart.addHistogramSeries({
+    const mcSeries = chart.addSeries(HistogramSeries, {
       title: 'McClellan',
     })
     mcSeries.setData(mcData)
