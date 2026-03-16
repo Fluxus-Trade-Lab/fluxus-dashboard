@@ -16,7 +16,7 @@ export default function EpisodicPivot({ data }) {
       </thead>
       <tbody>
         {data.results.map((r, i) => (
-          <tr key={`${r.ticker}-${i}`} className="border-b border-stone-100">
+          <tr key={`${r.ticker}-${i}`} className={`border-b border-stone-100 ${i % 2 === 1 ? 'bg-stone-50/50' : ''}`}>
             <td className="font-mono text-xs font-medium text-stone-800 py-1 pr-2">
               {r.ticker}
             </td>

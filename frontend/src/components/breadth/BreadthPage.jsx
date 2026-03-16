@@ -1,6 +1,7 @@
 import MarketMonitor from './MarketMonitor'
 import ClassicBreadth from './ClassicBreadth'
 import BreadthCharts from './BreadthCharts'
+import BreadthTable from './BreadthTable'
 
 export default function BreadthPage({ data }) {
   const breadth = data?.breadth
@@ -18,6 +19,7 @@ export default function BreadthPage({ data }) {
       <MarketMonitor data={breadth} />
       <ClassicBreadth data={breadth} />
       <BreadthCharts data={breadth} />
+      <BreadthTable data={breadth} />
     </div>
   )
 }

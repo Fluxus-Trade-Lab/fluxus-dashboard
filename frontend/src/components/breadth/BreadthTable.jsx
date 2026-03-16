@@ -44,7 +44,7 @@ export default function BreadthTable({ data }) {
               <tr
                 key={row.date}
                 className={`border-b border-stone-100 hover:bg-stone-50 ${
-                  i === 0 ? 'bg-stone-50/50 font-medium' : ''
+                  i === 0 ? 'bg-stone-50/50 font-medium' : i % 2 === 1 ? 'bg-stone-50/50' : ''
                 }`}
               >
                 <Td className="text-stone-600 whitespace-nowrap">{fmtDate(row.date)}</Td>
@@ -98,7 +98,7 @@ function ThSep() {
 
 function Td({ children, className = '' }) {
   return (
-    <td className={`px-2 py-1 text-right font-mono text-[11px] ${className}`}>
+    <td className={`px-2 py-1 text-right font-mono tabular-nums text-[11px] ${className}`}>
       {children ?? '\u2014'}
     </td>
   )

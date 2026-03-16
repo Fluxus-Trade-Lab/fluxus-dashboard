@@ -26,7 +26,7 @@ export function abcColor(abc) {
 export function signalColor(color) {
   const map = {
     green: 'bg-green-500',
-    yellow: 'bg-yellow-400',
+    yellow: 'bg-amber-600',
     orange: 'bg-orange-500',
     red: 'bg-red-500',
   }

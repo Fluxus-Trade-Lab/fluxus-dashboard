@@ -5,7 +5,7 @@ const TICKERS = ['SPY', 'QQQ', 'IWM', 'RSP']
 function signalTextColor(color) {
   const map = {
     green: 'text-green-600',
-    yellow: 'text-yellow-600',
+    yellow: 'text-amber-600',
     orange: 'text-orange-500',
     red: 'text-red-500',
   }
