@@ -1,5 +1,5 @@
 import { useRef, useEffect, useCallback } from 'react'
-import { createChart, ColorType, LineSeries, HistogramSeries } from 'lightweight-charts'
+import { createChart, ColorType, LineSeries } from 'lightweight-charts'
 
 export default function BreadthCharts({ data }) {
   if (!data?.history) return null
@@ -99,13 +99,26 @@ function McClellanChart({ history }) {
 
   useChart(containerRef, chartRef, history, (chart, hist) => {
     const dates = hist.dates
-    const mcData = dates.map((d, i) => {
-      const val = hist.mcclellan_osc[i] ?? 0
-      return { time: d, value: val, color: val >= 0 ? '#22c55e' : '#ef4444' }
-    })
+    const mcData = dates.map((d, i) => ({
+      time: d,
+      value: hist.mcclellan_osc[i] ?? 0,
+    }))
 
-    const mcSeries = chart.addSeries(HistogramSeries, { title: 'McClellan' })
+    const mcSeries = chart.addSeries(LineSeries, {
+      color: '#78716c',
+      lineWidth: 1.5,
+      title: 'McClellan',
+      crosshairMarkerRadius: 3,
+    })
     mcSeries.setData(mcData)
+
+    // Zero line baseline
+    mcSeries.createPriceLine({
+      price: 0,
+      color: '#d6d3d1',
+      lineWidth: 1,
+      lineStyle: 2, // dashed
+    })
   })
 
   return (
