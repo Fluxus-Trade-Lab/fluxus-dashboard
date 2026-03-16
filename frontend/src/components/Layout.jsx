@@ -6,24 +6,33 @@ import MacroSection from './macro/MacroSection'
 import EquitiesSection from './equities/EquitiesSection'
 import ScreenersSection from './screeners/ScreenersSection'
 import ScreenerPage from './screener/ScreenerPage'
+import PortfolioPage from './portfolio/PortfolioPage'
+import JournalPage from './journal/JournalPage'
+import BriefingPage from './briefing/BriefingPage'
+import BreadthPage from './breadth/BreadthPage'
+import ModelBooksPage from './modelbooks/ModelBooksPage'
 import Footer from './Footer'
+
+function pageKey(hash) {
+  const key = hash.replace('#/', '') || 'dashboard'
+  return key
+}
 
 export default function Layout({ data, lastUpdated, isOffline }) {
   const [activeTab, setActiveTab] = useState('macro')
   const [page, navigate] = useHash()
-  const isDashboard = page !== '#/screener'
+  const current = pageKey(page)
 
   return (
     <div className="min-h-screen bg-[#fafaf9]">
       <Header
-        signals={data.signals}
         lastUpdated={lastUpdated}
         isOffline={isOffline}
-        currentPage={isDashboard ? 'dashboard' : 'screener'}
+        currentPage={current}
         onNavigate={navigate}
       />
 
-      {isDashboard ? (
+      {current === 'dashboard' ? (
         <>
           <TabNav activeTab={activeTab} onTabChange={setActiveTab} />
 
@@ -45,7 +54,12 @@ export default function Layout({ data, lastUpdated, isOffline }) {
         </>
       ) : (
         <main className="max-w-[1800px] mx-auto px-2 py-3">
-          <ScreenerPage />
+          {current === 'screener' && <ScreenerPage />}
+          {current === 'portfolio' && <PortfolioPage />}
+          {current === 'journal' && <JournalPage />}
+          {current === 'briefing' && <BriefingPage />}
+          {current === 'breadth' && <BreadthPage data={data} />}
+          {current === 'modelbooks' && <ModelBooksPage />}
         </main>
       )}
 

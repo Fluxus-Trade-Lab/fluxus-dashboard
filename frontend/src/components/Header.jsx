@@ -1,8 +1,16 @@
-import { signalColor, signalLabel, formatTimestamp } from '../lib/format'
+import { formatTimestamp } from '../lib/format'
 
-export default function Header({ signals, lastUpdated, isOffline, currentPage, onNavigate }) {
-  const tickers = ['SPY', 'QQQ', 'IWM', 'RSP']
+const NAV_ITEMS = [
+  { key: 'dashboard', label: 'Dashboard', hash: '#/dashboard' },
+  { key: 'screener', label: 'Screener', hash: '#/screener' },
+  { key: 'portfolio', label: 'Portfolio', hash: '#/portfolio' },
+  { key: 'journal', label: 'AI Coach', hash: '#/journal' },
+  { key: 'briefing', label: 'Briefing', hash: '#/briefing' },
+  { key: 'breadth', label: 'Breadth', hash: '#/breadth' },
+  { key: 'modelbooks', label: 'Model Books', hash: '#/modelbooks' },
+]
 
+export default function Header({ lastUpdated, isOffline, currentPage, onNavigate }) {
   return (
     <header className="flex items-center justify-between px-4 py-3 bg-white border-b border-stone-200">
       <div className="flex items-center gap-3">
@@ -10,50 +18,25 @@ export default function Header({ signals, lastUpdated, isOffline, currentPage, o
           Fluxus Capital
         </h1>
         <div className="flex gap-1 ml-3">
-          <button
-            onClick={() => onNavigate('#/dashboard')}
-            className={`px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide rounded ${
-              currentPage === 'dashboard'
-                ? 'bg-stone-800 text-stone-100'
-                : 'text-stone-500 hover:text-stone-800'
-            }`}
-          >
-            Dashboard
-          </button>
-          <button
-            onClick={() => onNavigate('#/screener')}
-            className={`px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide rounded ${
-              currentPage === 'screener'
-                ? 'bg-stone-800 text-stone-100'
-                : 'text-stone-500 hover:text-stone-800'
-            }`}
-          >
-            Screener
-          </button>
+          {NAV_ITEMS.map(({ key, label, hash }) => (
+            <button
+              key={key}
+              onClick={() => onNavigate(hash)}
+              className={`px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide rounded ${
+                currentPage === key
+                  ? 'bg-stone-800 text-stone-100'
+                  : 'text-stone-500 hover:text-stone-800'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
         {isOffline && (
           <span className="px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider bg-stone-200 text-stone-600 rounded">
             Offline
           </span>
         )}
-      </div>
-
-      <div className="hidden sm:flex items-center gap-3">
-        {tickers.map((ticker) => {
-          const s = signals?.[ticker]
-          if (!s) return null
-          return (
-            <div key={ticker} className="flex items-center gap-1.5">
-              <span className={`w-2 h-2 rounded-full ${signalColor(s.color)}`} />
-              <span className="font-mono text-xs font-medium text-stone-800">
-                {ticker}
-              </span>
-              <span className="text-[10px] text-stone-400 uppercase tracking-wide">
-                {signalLabel(s.signal)}
-              </span>
-            </div>
-          )
-        })}
       </div>
 
       <div className="text-[10px] text-stone-400 font-mono">
