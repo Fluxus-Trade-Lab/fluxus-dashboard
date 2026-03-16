@@ -316,14 +316,17 @@ def run(
     csv_row = {**today_entry, 'spx_close': spx_close}
     _append_csv(csv_path, csv_row)
 
-    # 8. Build history arrays for charting
+    # 8. Build history for frontend (chart arrays + full rows for table)
     all_entries = history + [today_entry]
-    history_arrays = {
+    history_output = {
+        # Chart arrays (used by BreadthCharts.jsx)
         'dates': [e['date'] for e in all_entries],
         'pct_above_200sma': [e.get('pct_above_200sma', 0) for e in all_entries],
         'pct_above_50sma': [e.get('pct_above_50sma', 0) for e in all_entries],
         'pct_above_20sma': [e.get('pct_above_20sma', 0) for e in all_entries],
         'mcclellan_osc': [e.get('mcclellan_osc', 0) for e in all_entries],
+        # Full rows (used by BreadthTable.jsx)
+        'rows': all_entries,
     }
 
     # 9. Assemble output
@@ -354,5 +357,5 @@ def run(
             'ad_line': ad_line,
             'mcclellan_osc': mcclellan['mcclellan_osc'],
         },
-        'history': history_arrays,
+        'history': history_output,
     }
