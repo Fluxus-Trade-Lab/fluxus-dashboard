@@ -32,6 +32,7 @@ from pipeline.screeners.ema21_watch import run as run_ema21_watch
 from pipeline.screeners.healthy_charts import run as run_healthy_charts
 from pipeline.screeners.episodic_pivot import run as run_episodic_pivot
 from pipeline.screeners.stockbee_ratio import run as run_stockbee_ratio
+from pipeline.screeners.breadth_metrics import run as run_breadth_metrics
 from pipeline.screeners.vcp_detector import run_vcp_pipeline
 from pipeline.screeners.atr_enrichment import enrich_with_atr
 
@@ -274,6 +275,16 @@ def main():
         universe, str(HISTORY_DIR / 'breadth_history.json')
     )
 
+    # 5b. Breadth metrics (Stockbee MM + classic breadth)
+    logger.info("Running breadth metrics...")
+    spx_close = signals.get('^GSPC', {}).get('close')
+    breadth_result = run_breadth_metrics(
+        universe,
+        str(HISTORY_DIR / 'breadth_metrics_history.json'),
+        str(HISTORY_DIR / 'breadth_archive.csv'),
+        spx_close=spx_close,
+    )
+
     # 6. VCP (two-layer — skip if universe too small)
     if len(universe) >= 50:
         logger.info("Running VCP detection...")
@@ -307,6 +318,12 @@ def main():
         {'timestamp': timestamp, **signals}, indent=2, default=_json_serializer
     ))
     logger.info("Saved signals.json")
+
+    # Save breadth metrics
+    (OUTPUT_DIR / 'breadth.json').write_text(json.dumps(
+        {'timestamp': timestamp, **breadth_result}, indent=2, default=_json_serializer
+    ))
+    logger.info("Saved breadth.json")
 
     # Save ETF data
     (OUTPUT_DIR / 'etf_data.json').write_text(
