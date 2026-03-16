@@ -12,13 +12,13 @@ export default function DateNav({ date, onChange }) {
 
   return (
     <div className="flex items-center gap-2">
-      <button onClick={() => shift(-1)} className="px-2 py-0.5 text-xs text-stone-500 hover:text-stone-800 bg-transparent border border-stone-200 rounded cursor-pointer">
+      <button onClick={() => shift(-1)} className="px-2 py-0.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-transparent border border-[var(--color-border)] rounded cursor-pointer">
         &#9664;
       </button>
-      <span className="text-xs font-mono text-stone-700 min-w-[120px] text-center">
+      <span className="text-xs font-mono text-[var(--color-text)] min-w-[120px] text-center">
         {fmtDate(date)}
       </span>
-      <button onClick={() => shift(1)} className="px-2 py-0.5 text-xs text-stone-500 hover:text-stone-800 bg-transparent border border-stone-200 rounded cursor-pointer">
+      <button onClick={() => shift(1)} className="px-2 py-0.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-transparent border border-[var(--color-border)] rounded cursor-pointer">
         &#9654;
       </button>
     </div>

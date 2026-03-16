@@ -13,7 +13,7 @@ export default function HealthyCharts({ data }) {
         if (!tickers || tickers.length === 0) return null
         return (
           <div key={key}>
-            <h4 className="text-[10px] font-medium uppercase tracking-wide text-stone-500 mb-1.5">
+            <h4 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-1.5">
               RS {key}
             </h4>
             <TickerGrid tickers={tickers} />

@@ -9,7 +9,7 @@ function signalTextColor(color) {
     orange: 'text-orange-500',
     red: 'text-red-500',
   }
-  return map[color] || 'text-stone-400'
+  return map[color] || 'text-[var(--color-text-muted)]'
 }
 
 export default function MarketConditions({ signals }) {
@@ -17,7 +17,7 @@ export default function MarketConditions({ signals }) {
 
   return (
     <div>
-      <h3 className="text-[10px] font-medium uppercase tracking-wide text-stone-500 mb-2">
+      <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
         Market Conditions
       </h3>
       <div className="flex flex-col gap-1.5">
@@ -29,10 +29,10 @@ export default function MarketConditions({ signals }) {
               key={ticker}
               className="grid grid-cols-[48px_1fr_auto] items-center gap-2"
             >
-              <span className="font-mono text-sm text-stone-800">
+              <span className="font-mono text-sm text-[var(--color-text-bold)]">
                 {ticker}
               </span>
-              <span className="font-mono text-xs text-stone-700">
+              <span className="font-mono text-xs text-[var(--color-text)]">
                 {s.close != null ? s.close.toFixed(2) : '--'}
               </span>
               <span

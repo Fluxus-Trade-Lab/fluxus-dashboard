@@ -3,14 +3,14 @@ export default function MarketMonitor({ data }) {
   if (!mm) return null
 
   return (
-    <div className="bg-white border border-stone-200 rounded-lg p-5">
-      <h3 className="text-[10px] font-medium uppercase tracking-wide text-stone-500 mb-3">
+    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+      <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
         Stockbee Market Monitor
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Primary */}
         <div>
-          <div className="text-[9px] font-medium uppercase tracking-wider text-stone-400 mb-2">
+          <div className="text-[9px] font-medium uppercase tracking-wider text-[var(--color-text-muted)] mb-2">
             Primary
           </div>
           <div className="flex flex-col gap-1">
@@ -25,7 +25,7 @@ export default function MarketMonitor({ data }) {
 
         {/* Secondary */}
         <div>
-          <div className="text-[9px] font-medium uppercase tracking-wider text-stone-400 mb-2">
+          <div className="text-[9px] font-medium uppercase tracking-wider text-[var(--color-text-muted)] mb-2">
             Secondary
           </div>
           <div className="flex flex-col gap-1">
@@ -38,7 +38,7 @@ export default function MarketMonitor({ data }) {
 
         {/* Reference */}
         <div>
-          <div className="text-[9px] font-medium uppercase tracking-wider text-stone-400 mb-2">
+          <div className="text-[9px] font-medium uppercase tracking-wider text-[var(--color-text-muted)] mb-2">
             Reference
           </div>
           <div className="flex flex-col gap-1">
@@ -62,8 +62,8 @@ export default function MarketMonitor({ data }) {
 function Row({ label, value, color = '' }) {
   return (
     <div className="flex items-center justify-between">
-      <span className="text-[11px] text-stone-500">{label}</span>
-      <span className={`font-mono tabular-nums text-[12px] text-stone-900 ${color}`}>
+      <span className="text-[11px] text-[var(--color-text-secondary)]">{label}</span>
+      <span className={`font-mono tabular-nums text-[12px] text-[var(--color-text)] ${color}`}>
         {value ?? '—'}
       </span>
     </div>

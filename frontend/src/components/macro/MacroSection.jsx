@@ -10,16 +10,16 @@ export default function MacroSection({ data }) {
 
   return (
     <div>
-      <div className="bg-white border-b border-stone-200 px-3 py-3">
+      <div className="bg-[var(--color-surface)] border-b border-[var(--color-border)] px-3 py-3">
         <SignalLights signals={signals} />
       </div>
-      <div className="bg-white border-b border-stone-200 px-3 py-3">
+      <div className="bg-[var(--color-surface)] border-b border-[var(--color-border)] px-3 py-3">
         <MarketConditions signals={signals} />
       </div>
-      <div className="bg-white border-b border-stone-200 px-3 py-3">
+      <div className="bg-[var(--color-surface)] border-b border-[var(--color-border)] px-3 py-3">
         <TrendStatus signals={signals} />
       </div>
-      <div className="bg-white border-b border-stone-200 px-3 py-3">
+      <div className="bg-[var(--color-surface)] border-b border-[var(--color-border)] px-3 py-3">
         <PowerTrend signals={signals} />
       </div>
     </div>

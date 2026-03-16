@@ -17,7 +17,7 @@ export default function ModelBooksPage() {
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto py-6 px-4">
-        <div className="text-xs text-stone-400 animate-pulse">Loading model books...</div>
+        <div className="text-xs text-[var(--color-text-muted)] animate-pulse">Loading model books...</div>
       </div>
     )
   }
@@ -25,7 +25,7 @@ export default function ModelBooksPage() {
   return (
     <div className="max-w-6xl mx-auto py-6 px-4">
       <div className="flex items-center justify-between mb-5">
-        <h2 className="text-[10px] font-medium uppercase tracking-wide text-stone-500">
+        <h2 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Model Books
         </h2>
         <div className="flex gap-1">
@@ -35,8 +35,8 @@ export default function ModelBooksPage() {
               onClick={() => setMode(m)}
               className={`px-3 py-1.5 text-[11px] font-medium rounded cursor-pointer transition-colors ${
                 mode === m
-                  ? 'bg-stone-800 text-stone-100'
-                  : 'text-stone-500 hover:text-stone-800 bg-stone-100'
+                  ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-[var(--color-surface-raised)]'
               }`}
             >
               {m === 'browse' ? 'Browse' : 'Study Mode'}

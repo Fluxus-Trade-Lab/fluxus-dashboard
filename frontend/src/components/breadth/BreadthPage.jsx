@@ -8,7 +8,7 @@ export default function BreadthPage({ data }) {
 
   if (!breadth) {
     return (
-      <div className="text-stone-400 text-sm font-medium uppercase tracking-wide py-8 text-center">
+      <div className="text-[var(--color-text-muted)] text-sm font-medium uppercase tracking-wide py-8 text-center">
         No breadth data available
       </div>
     )

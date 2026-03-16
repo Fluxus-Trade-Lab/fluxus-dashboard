@@ -6,12 +6,12 @@ export function fmtPct(val) {
 }
 
 export function pctColor(val) {
-  if (val == null || isNaN(val)) return 'text-stone-400'
-  return val > 0 ? 'text-green-600' : val < 0 ? 'text-red-500' : 'text-stone-500'
+  if (val == null || isNaN(val)) return 'text-[var(--color-text-muted)]'
+  return val > 0 ? 'text-green-600' : val < 0 ? 'text-red-500' : 'text-[var(--color-text-secondary)]'
 }
 
 export function atrBadgeColor(atrExt) {
-  if (atrExt == null) return 'bg-stone-100 text-stone-500'
+  if (atrExt == null) return 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]'
   if (atrExt <= 4) return 'bg-green-50 text-green-700'
   if (atrExt <= 6) return 'bg-amber-50 text-amber-700'
   return 'bg-red-50 text-red-700'
@@ -30,7 +30,7 @@ export function signalColor(color) {
     orange: 'bg-orange-500',
     red: 'bg-red-500',
   }
-  return map[color] || 'bg-stone-400'
+  return map[color] || 'bg-[var(--color-text-muted)]'
 }
 
 export function signalLabel(signal) {

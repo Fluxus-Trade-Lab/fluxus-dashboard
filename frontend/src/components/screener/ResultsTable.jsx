@@ -22,18 +22,18 @@ const COLUMNS = [
 ]
 
 function rsColor(val) {
-  if (val == null) return 'text-stone-300'
+  if (val == null) return 'text-[var(--color-text-muted)]'
   if (val >= 90) return 'bg-green-100 text-green-800 font-semibold'
   if (val >= 80) return 'bg-green-50 text-green-700'
-  if (val >= 50) return 'text-stone-600'
-  return 'text-stone-300'
+  if (val >= 50) return 'text-[var(--color-text-secondary)]'
+  return 'text-[var(--color-text-muted)]'
 }
 
 function pctColor(val) {
-  if (val == null) return 'text-stone-300'
+  if (val == null) return 'text-[var(--color-text-muted)]'
   if (val > 0) return 'text-green-700'
   if (val < 0) return 'text-red-600'
-  return 'text-stone-500'
+  return 'text-[var(--color-text-secondary)]'
 }
 
 function formatCell(val, type) {
@@ -54,7 +54,7 @@ function cellClass(val, type) {
   if (type === 'rs') return rsColor(val)
   if (type === 'pct') return pctColor(val)
   if (type === 'ticker') return 'text-blue-700 font-semibold'
-  return 'text-stone-700'
+  return 'text-[var(--color-text)]'
 }
 
 export default function ResultsTable({ rows }) {
@@ -79,15 +79,15 @@ export default function ResultsTable({ rows }) {
   }
 
   return (
-    <div className="overflow-x-auto border border-stone-200 rounded-lg bg-white">
+    <div className="overflow-x-auto border border-[var(--color-border)] rounded-lg bg-[var(--color-surface)]">
       <table className="w-full text-xs">
         <thead>
-          <tr className="border-b border-stone-200 bg-stone-50">
+          <tr className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
             {COLUMNS.map(col => (
               <th
                 key={col.key}
                 onClick={() => toggleSort(col.key)}
-                className={`px-2 py-1.5 text-left cursor-pointer hover:bg-stone-100 font-medium text-stone-500 uppercase tracking-wide ${col.width}`}
+                className={`px-2 py-1.5 text-left cursor-pointer hover:bg-[var(--color-hover-bg)] font-medium text-[var(--color-text-secondary)] uppercase tracking-wide ${col.width}`}
               >
                 {col.label}
                 {sortKey === col.key && (sortDir === 'asc' ? ' \u2191' : ' \u2193')}
@@ -97,7 +97,7 @@ export default function ResultsTable({ rows }) {
         </thead>
         <tbody>
           {sorted.map((row, i) => (
-            <tr key={row.ticker || i} className="border-b border-stone-100 hover:bg-stone-50">
+            <tr key={row.ticker || i} className="border-b border-[var(--color-border-light)] hover:bg-[var(--color-hover-bg)]">
               {COLUMNS.map(col => (
                 <td key={col.key} className={`px-2 py-1 font-mono text-[11px] ${cellClass(row[col.key], col.type)}`}>
                   {formatCell(row[col.key], col.type)}

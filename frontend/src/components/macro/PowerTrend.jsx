@@ -13,20 +13,20 @@ export default function PowerTrend({ signals }) {
 
   return (
     <div>
-      <h3 className="text-[10px] font-medium uppercase tracking-wide text-stone-500 mb-2">
+      <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
         Power Trend
       </h3>
       <div className="overflow-x-auto">
         <table className="w-full text-left">
           <thead>
             <tr>
-              <th className="text-[10px] font-medium uppercase tracking-wide text-stone-400 pb-1.5 pr-2">
+              <th className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] pb-1.5 pr-2">
                 Check
               </th>
               {TICKERS.map((t) => (
                 <th
                   key={t}
-                  className="text-[10px] font-medium uppercase tracking-wide text-stone-400 pb-1.5 text-center"
+                  className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] pb-1.5 text-center"
                 >
                   {t}
                 </th>
@@ -36,7 +36,7 @@ export default function PowerTrend({ signals }) {
           <tbody>
             {CHECKS.map((check) => (
               <tr key={check.key}>
-                <td className="text-xs text-stone-600 py-0.5 pr-2">
+                <td className="text-xs text-[var(--color-text-secondary)] py-0.5 pr-2">
                   {check.label}
                 </td>
                 {TICKERS.map((ticker) => {

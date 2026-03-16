@@ -20,7 +20,7 @@ function formatPattern(key) {
 }
 
 function PatternBadge({ pattern }) {
-  const colors = PATTERN_COLORS[pattern] || 'bg-stone-100 text-stone-600'
+  const colors = PATTERN_COLORS[pattern] || 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]'
   return (
     <span className={`inline-block px-2 py-0.5 text-[10px] font-medium rounded-full ${colors}`}>
       {formatPattern(pattern)}
@@ -80,7 +80,7 @@ export default function StudyMode({ cards }) {
   if (!card) {
     return (
       <div className="flex items-center justify-center h-64">
-        <span className="text-xs text-stone-400">No cards available</span>
+        <span className="text-xs text-[var(--color-text-muted)]">No cards available</span>
       </div>
     )
   }
@@ -89,27 +89,27 @@ export default function StudyMode({ cards }) {
     <div className="flex flex-col items-center">
       {/* Progress bar */}
       <div className="w-full max-w-xl flex items-center justify-between mb-4">
-        <span className="text-[10px] font-medium uppercase tracking-wide text-stone-400">
+        <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
           Card {currentIndex + 1} of {deck.length}
         </span>
         {reviewCount > 0 && (
-          <span className="text-[10px] text-stone-400">
+          <span className="text-[10px] text-[var(--color-text-muted)]">
             {reviewCount} marked for review
           </span>
         )}
       </div>
 
       {/* Flashcard */}
-      <div className="w-full max-w-xl bg-white border border-stone-200 rounded-lg overflow-hidden shadow-sm">
+      <div className="w-full max-w-xl bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden shadow-sm">
         {/* Chart placeholder */}
-        <div className="bg-stone-100 h-56 flex items-center justify-center relative">
+        <div className="bg-[var(--color-surface-raised)] h-56 flex items-center justify-center relative">
           {!revealed ? (
             <div className="text-center">
-              <div className="text-4xl font-bold text-stone-200 tracking-wide mb-2">?</div>
-              <div className="text-xs text-stone-400">Can you identify the pattern?</div>
+              <div className="text-4xl font-bold text-[var(--color-border)] tracking-wide mb-2">?</div>
+              <div className="text-xs text-[var(--color-text-muted)]">Can you identify the pattern?</div>
             </div>
           ) : (
-            <span className="text-3xl font-bold text-stone-300 tracking-wide">
+            <span className="text-3xl font-bold text-[var(--color-text-muted)] tracking-wide">
               {card.ticker}
             </span>
           )}
@@ -126,7 +126,7 @@ export default function StudyMode({ cards }) {
             <div className="flex justify-center">
               <button
                 onClick={handleReveal}
-                className="px-5 py-2 text-[11px] font-medium rounded bg-stone-800 text-stone-100 hover:bg-stone-700 transition-colors cursor-pointer"
+                className="px-5 py-2 text-[11px] font-medium rounded bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)] hover:bg-[var(--color-hover-bg)] transition-colors cursor-pointer"
               >
                 Reveal
               </button>
@@ -136,34 +136,34 @@ export default function StudyMode({ cards }) {
               {/* Metadata row */}
               <div className="flex items-center gap-4">
                 <div>
-                  <span className="text-[10px] font-medium uppercase tracking-wide text-stone-400 block">
+                  <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
                     Ticker
                   </span>
-                  <span className="text-sm font-semibold text-stone-800">{card.ticker}</span>
+                  <span className="text-sm font-semibold text-[var(--color-text-bold)]">{card.ticker}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] font-medium uppercase tracking-wide text-stone-400 block">
+                  <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
                     Year
                   </span>
-                  <span className="text-sm text-stone-700">{card.year}</span>
+                  <span className="text-sm text-[var(--color-text)]">{card.year}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] font-medium uppercase tracking-wide text-stone-400 block">
+                  <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
                     Source
                   </span>
-                  <span className="text-sm text-stone-700">{card.source}</span>
+                  <span className="text-sm text-[var(--color-text)]">{card.source}</span>
                 </div>
                 <div className="ml-auto">
-                  <span className="text-[10px] font-medium uppercase tracking-wide text-stone-400 block">
+                  <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
                     Outcome
                   </span>
-                  <span className="text-xs font-medium text-stone-700">{card.outcome}</span>
+                  <span className="text-xs font-medium text-[var(--color-text)]">{card.outcome}</span>
                 </div>
               </div>
 
               {/* Patterns */}
               <div>
-                <span className="text-[10px] font-medium uppercase tracking-wide text-stone-400 block mb-1.5">
+                <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1.5">
                   Patterns
                 </span>
                 <div className="flex flex-wrap gap-1.5">
@@ -175,13 +175,13 @@ export default function StudyMode({ cards }) {
 
               {/* Key Lessons */}
               <div>
-                <span className="text-[10px] font-medium uppercase tracking-wide text-stone-400 block mb-1.5">
+                <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1.5">
                   Key Lessons
                 </span>
                 <ul className="space-y-1">
                   {card.key_lessons.map((lesson, i) => (
-                    <li key={i} className="text-xs text-stone-600 flex gap-2">
-                      <span className="text-stone-300 select-none shrink-0">&bull;</span>
+                    <li key={i} className="text-xs text-[var(--color-text-secondary)] flex gap-2">
+                      <span className="text-[var(--color-text-muted)] select-none shrink-0">&bull;</span>
                       {lesson}
                     </li>
                   ))}
@@ -192,7 +192,7 @@ export default function StudyMode({ cards }) {
               <div className="flex items-center gap-2 pt-2">
                 <button
                   onClick={handleNext}
-                  className="px-4 py-2 text-[11px] font-medium rounded bg-stone-800 text-stone-100 hover:bg-stone-700 transition-colors cursor-pointer"
+                  className="px-4 py-2 text-[11px] font-medium rounded bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)] hover:bg-[var(--color-hover-bg)] transition-colors cursor-pointer"
                 >
                   Next
                 </button>
@@ -201,7 +201,7 @@ export default function StudyMode({ cards }) {
                   className={`px-4 py-2 text-[11px] font-medium rounded transition-colors cursor-pointer ${
                     isMarked
                       ? 'bg-amber-50 text-amber-700 hover:bg-amber-100'
-                      : 'bg-stone-100 text-stone-500 hover:text-stone-700 hover:bg-stone-200'
+                      : 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-hover-bg)]'
                   }`}
                 >
                   {isMarked ? 'Unmark' : 'Mark for Review'}

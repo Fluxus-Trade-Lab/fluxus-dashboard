@@ -7,7 +7,7 @@ export default function SignalLights({ signals }) {
 
   return (
     <div>
-      <h3 className="text-[10px] font-medium uppercase tracking-wide text-stone-500 mb-2">
+      <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
         Signal
       </h3>
       <div className="flex flex-col gap-1.5">
@@ -19,10 +19,10 @@ export default function SignalLights({ signals }) {
               <span
                 className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${signalColor(s.color)}`}
               />
-              <span className="font-mono text-sm text-stone-800">
+              <span className="font-mono text-sm text-[var(--color-text-bold)]">
                 {ticker}
               </span>
-              <span className="text-xs text-stone-500">
+              <span className="text-xs text-[var(--color-text-secondary)]">
                 {signalLabel(s.signal)}
               </span>
             </div>

@@ -21,20 +21,20 @@ export default function TrendStatus({ signals }) {
 
   return (
     <div>
-      <h3 className="text-[10px] font-medium uppercase tracking-wide text-stone-500 mb-2">
+      <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
         Trend Status
       </h3>
       <div className="overflow-x-auto">
         <table className="w-full text-left">
           <thead>
             <tr>
-              <th className="text-[10px] font-medium uppercase tracking-wide text-stone-400 pb-1.5 pr-2">
+              <th className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] pb-1.5 pr-2">
                 Ticker
               </th>
               {COLUMNS.map((col) => (
                 <th
                   key={col.key}
-                  className="text-[10px] font-medium uppercase tracking-wide text-stone-400 pb-1.5 pr-2 text-right"
+                  className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] pb-1.5 pr-2 text-right"
                 >
                   {col.label}
                 </th>
@@ -48,7 +48,7 @@ export default function TrendStatus({ signals }) {
               const ts = s.trend_status || {}
               return (
                 <tr key={ticker}>
-                  <td className="font-mono text-sm text-stone-800 py-0.5 pr-2">
+                  <td className="font-mono text-sm text-[var(--color-text-bold)] py-0.5 pr-2">
                     {ticker}
                   </td>
                   {COLUMNS.map((col) => {

@@ -18,7 +18,7 @@ export default function EtfRow({ etf }) {
   } = etf
 
   return (
-    <div className="grid grid-cols-[1.5rem_3.5rem_3.5rem_3.5rem_3.5rem_3rem_3rem_4rem] items-center px-2 py-1 border-b border-stone-100 hover:bg-stone-50">
+    <div className="grid grid-cols-[1.5rem_3.5rem_3.5rem_3.5rem_3.5rem_3rem_3rem_4rem] items-center px-2 py-1 border-b border-[var(--color-border-light)] hover:bg-[var(--color-hover-bg)]">
       {/* ABC dot */}
       <span
         className={`w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white ${abcColor(abc)}`}
@@ -28,7 +28,7 @@ export default function EtfRow({ etf }) {
 
       {/* Ticker + leveraged info */}
       <span className="flex flex-col leading-tight">
-        <span className="font-mono text-xs font-medium text-stone-800">
+        <span className="font-mono text-xs font-medium text-[var(--color-text-bold)]">
           {ticker}
         </span>
         <LeveragedInfo longEtfs={long_etfs} shortEtfs={short_etfs} />
@@ -50,12 +50,12 @@ export default function EtfRow({ etf }) {
       </span>
 
       {/* ATR dist */}
-      <span className="font-mono text-xs text-stone-600">
+      <span className="font-mono text-xs text-[var(--color-text-secondary)]">
         {dist_sma50_atr != null ? dist_sma50_atr.toFixed(1) : '—'}
       </span>
 
       {/* RRS */}
-      <span className="font-mono text-xs text-stone-600">
+      <span className="font-mono text-xs text-[var(--color-text-secondary)]">
         {rs != null ? `${Math.round(rs)}%` : '—'}
       </span>
 

@@ -145,7 +145,7 @@ function reducer(state, action) {
       return {
         ...state,
         optionsTrades: state.optionsTrades.map(t =>
-          t.id === action.id ? { ...t, closeDate: action.closeDate, closePremium: action.closePremium } : t
+          t.id === action.id ? { ...t, exitDate: action.exitDate, exitPrice: action.exitPrice } : t
         ),
       }
 

@@ -84,8 +84,8 @@ function MaChart({ history }) {
   })
 
   return (
-    <div className="bg-white border border-stone-200 rounded px-3 py-3">
-      <h3 className="text-[10px] font-medium uppercase tracking-wide text-stone-500 mb-2">
+    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-3 py-3">
+      <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
         % Above Moving Averages
       </h3>
       <div ref={containerRef} />
@@ -122,8 +122,8 @@ function McClellanChart({ history }) {
   })
 
   return (
-    <div className="bg-white border border-stone-200 rounded px-3 py-3">
-      <h3 className="text-[10px] font-medium uppercase tracking-wide text-stone-500 mb-2">
+    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-3 py-3">
+      <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
         McClellan Oscillator
       </h3>
       <div ref={containerRef} />

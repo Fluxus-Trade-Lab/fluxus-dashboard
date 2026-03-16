@@ -62,17 +62,17 @@ export default function CoachTab({ strategy }) {
   return (
     <div className="space-y-4">
       {/* Strategy header */}
-      <div className="bg-white border border-stone-200 rounded-lg p-5">
-        <h3 className="text-sm font-semibold text-stone-800 mb-1">{config.name}</h3>
-        <p className="text-xs text-stone-500">{config.description}</p>
+      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+        <h3 className="text-sm font-semibold text-[var(--color-text-bold)] mb-1">{config.name}</h3>
+        <p className="text-xs text-[var(--color-text-secondary)]">{config.description}</p>
       </div>
 
       {/* Chat area */}
-      <div className="bg-white border border-stone-200 rounded-lg overflow-hidden">
+      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden">
         <div className="min-h-[300px] max-h-[500px] overflow-y-auto p-4 space-y-3">
           {messages.length === 0 && (
             <div className="text-center py-12">
-              <div className="text-xs text-stone-400 uppercase tracking-wide mb-4">
+              <div className="text-xs text-[var(--color-text-muted)] uppercase tracking-wide mb-4">
                 Ask the {config.name} coach anything
               </div>
               <div className="flex flex-wrap gap-2 justify-center">
@@ -80,7 +80,7 @@ export default function CoachTab({ strategy }) {
                   <button
                     key={i}
                     onClick={() => setInput(prompt)}
-                    className="px-3 py-1.5 text-[11px] text-stone-500 bg-stone-50 border border-stone-200 rounded-full hover:bg-stone-100 cursor-pointer transition-colors"
+                    className="px-3 py-1.5 text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-full hover:bg-[var(--color-hover-bg)] cursor-pointer transition-colors"
                   >
                     {prompt}
                   </button>
@@ -93,8 +93,8 @@ export default function CoachTab({ strategy }) {
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-[80%] px-3 py-2 rounded-lg text-sm ${
                 msg.role === 'user'
-                  ? 'bg-stone-800 text-stone-100'
-                  : 'bg-stone-50 text-stone-700 border border-stone-200'
+                  ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
+                  : 'bg-[var(--color-bg)] text-[var(--color-text)] border border-[var(--color-border)]'
               }`}>
                 <div className="whitespace-pre-wrap">{msg.content}</div>
               </div>
@@ -104,19 +104,19 @@ export default function CoachTab({ strategy }) {
         </div>
 
         {/* Input */}
-        <div className="border-t border-stone-200 p-3 flex gap-2">
+        <div className="border-t border-[var(--color-border)] p-3 flex gap-2">
           <input
             type="text"
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleSend()}
             placeholder={`Ask about ${config.name?.toLowerCase() || 'trading'}...`}
-            className="flex-1 px-3 py-2 border border-stone-200 rounded text-sm bg-white outline-none focus:border-stone-400 font-sans"
+            className="flex-1 px-3 py-2 border border-[var(--color-border)] rounded text-sm bg-[var(--color-surface)] outline-none focus:border-[var(--color-text-muted)] font-sans"
           />
           <button
             onClick={handleSend}
             disabled={!input.trim()}
-            className="px-4 py-2 bg-stone-800 text-stone-100 rounded text-xs font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:bg-stone-700 transition-colors"
+            className="px-4 py-2 bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)] rounded text-xs font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[var(--color-hover-bg)] transition-colors"
           >
             Send
           </button>

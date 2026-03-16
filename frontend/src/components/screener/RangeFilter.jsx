@@ -14,37 +14,37 @@ export default function RangeFilter({ label, filterKey, value, onChange }) {
           type="checkbox"
           checked={enabled}
           onChange={(e) => onChange(filterKey, { ...value, enabled: e.target.checked })}
-          className="rounded border-stone-300"
+          className="rounded border-[var(--color-input-border)]"
         />
-        <span className="text-xs text-stone-600">{label}</span>
+        <span className="text-xs text-[var(--color-text-secondary)]">{label}</span>
       </label>
       <div className="flex items-center gap-1">
-        <span className="text-[10px] text-stone-400">Min</span>
+        <span className="text-[10px] text-[var(--color-text-muted)]">Min</span>
         <input
           type="number"
           value={min}
           onChange={(e) => update('min', e.target.value)}
-          className="border border-stone-300 rounded px-1.5 py-0.5 text-xs w-16 text-center"
+          className="border border-[var(--color-input-border)] rounded px-1.5 py-0.5 text-xs w-16 text-center"
           disabled={!enabled}
         />
         <button onClick={() => update('min', (Number(min) || 0) - 1)} disabled={!enabled}
-          className="text-stone-400 hover:text-stone-600 text-xs disabled:opacity-30">-</button>
+          className="text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] text-xs disabled:opacity-30">-</button>
         <button onClick={() => update('min', (Number(min) || 0) + 1)} disabled={!enabled}
-          className="text-stone-400 hover:text-stone-600 text-xs disabled:opacity-30">+</button>
+          className="text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] text-xs disabled:opacity-30">+</button>
       </div>
       <div className="flex items-center gap-1">
-        <span className="text-[10px] text-stone-400">Max</span>
+        <span className="text-[10px] text-[var(--color-text-muted)]">Max</span>
         <input
           type="number"
           value={max}
           onChange={(e) => update('max', e.target.value)}
-          className="border border-stone-300 rounded px-1.5 py-0.5 text-xs w-16 text-center"
+          className="border border-[var(--color-input-border)] rounded px-1.5 py-0.5 text-xs w-16 text-center"
           disabled={!enabled}
         />
         <button onClick={() => update('max', (Number(max) || 0) - 1)} disabled={!enabled}
-          className="text-stone-400 hover:text-stone-600 text-xs disabled:opacity-30">-</button>
+          className="text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] text-xs disabled:opacity-30">-</button>
         <button onClick={() => update('max', (Number(max) || 0) + 1)} disabled={!enabled}
-          className="text-stone-400 hover:text-stone-600 text-xs disabled:opacity-30">+</button>
+          className="text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] text-xs disabled:opacity-30">+</button>
       </div>
     </div>
   )

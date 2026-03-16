@@ -156,7 +156,7 @@ export default function Layout() {
         {fileInput}
         <div className="text-center max-w-md">
           <div className="text-3xl font-bold mb-2">Portfolio Tracker</div>
-          <div className="text-stone-400 mb-6 text-sm">Enter starting capital, or upload an existing trade log</div>
+          <div className="text-[var(--color-text-muted)] mb-6 text-sm">Enter starting capital, or upload an existing trade log</div>
           <InputField
             label="Starting Capital ($)"
             type="number"
@@ -226,9 +226,9 @@ export default function Layout() {
         {/* Reset confirm modal */}
         {showResetConfirm && (
           <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-80 shadow-xl">
+            <div className="bg-[var(--color-surface)] rounded-lg p-6 w-80 shadow-xl">
               <div className="font-bold mb-2">Reset All Data?</div>
-              <div className="text-sm text-stone-500 mb-4">This deletes everything. Export first if needed.</div>
+              <div className="text-sm text-[var(--color-text-secondary)] mb-4">This deletes everything. Export first if needed.</div>
               <div className="flex gap-2">
                 <Button variant="danger" onClick={() => { dispatch({ type: 'RESET_ALL' }); setShowResetConfirm(false) }}>Yes, Reset</Button>
                 <Button variant="ghost" onClick={() => setShowResetConfirm(false)}>Cancel</Button>
@@ -240,12 +240,12 @@ export default function Layout() {
         {/* Export modal */}
         {exportData && (
           <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-[600px] max-h-[80vh] shadow-xl flex flex-col">
+            <div className="bg-[var(--color-surface)] rounded-lg p-6 w-[600px] max-h-[80vh] shadow-xl flex flex-col">
               <div className="font-bold mb-2 flex justify-between">
                 <span>Export Data</span>
-                <button onClick={() => setExportData(null)} className="text-stone-400 hover:text-stone-600 cursor-pointer text-lg">&times;</button>
+                <button onClick={() => setExportData(null)} className="text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] cursor-pointer text-lg">&times;</button>
               </div>
-              <div className="text-xs text-stone-500 mb-2">Copy the CSV below, or save as .csv to open in Excel.</div>
+              <div className="text-xs text-[var(--color-text-secondary)] mb-2">Copy the CSV below, or save as .csv to open in Excel.</div>
               <div className="flex gap-2 mb-2">
                 <Button onClick={() => {
                   navigator.clipboard.writeText(exportData)
@@ -253,7 +253,7 @@ export default function Layout() {
                 }}>Copy</Button>
                 <Button variant="ghost" onClick={() => downloadFile(exportData, `portfolio_${new Date().toISOString().split('T')[0]}.csv`, 'text/csv')}>Download Again</Button>
               </div>
-              <textarea readOnly value={exportData} className="flex-1 min-h-[300px] p-2.5 border border-stone-200 rounded text-[11px] font-mono resize-y whitespace-pre overflow-auto" />
+              <textarea readOnly value={exportData} className="flex-1 min-h-[300px] p-2.5 border border-[var(--color-border)] rounded text-[11px] font-mono resize-y whitespace-pre overflow-auto" />
             </div>
           </div>
         )}
@@ -262,7 +262,7 @@ export default function Layout() {
         {trimModal && <TrimModal trade={trimModal} onClose={() => setTrimModal(null)} />}
 
         {/* Tabs */}
-        <div className="flex gap-0 border-b border-stone-200 mt-4 mb-5">
+        <div className="flex gap-0 border-b border-[var(--color-border)] mt-4 mb-5">
           {TABS.map((tab, i) => (
             <button
               key={tab}
@@ -270,7 +270,7 @@ export default function Layout() {
               className={`px-5 py-2.5 font-semibold text-sm cursor-pointer bg-transparent border-none border-b-2 transition-colors ${
                 state.activeTab === i
                   ? 'border-[var(--color-accent)] text-[var(--color-accent)]'
-                  : 'border-transparent text-stone-400 hover:text-stone-600'
+                  : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'
               }`}
             >
               {tab}

@@ -3,8 +3,8 @@ export default function ClassicBreadth({ data }) {
   if (!b) return null
 
   return (
-    <div className="bg-white border border-stone-200 rounded-lg p-5">
-      <h3 className="text-[10px] font-medium uppercase tracking-wide text-stone-500 mb-3">
+    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+      <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
         Classic Breadth
       </h3>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -28,11 +28,11 @@ export default function ClassicBreadth({ data }) {
 
 function Stat({ label, value, color = '' }) {
   return (
-    <div className="bg-stone-50 rounded p-3">
-      <div className="text-[10px] text-stone-500 font-medium uppercase tracking-wide mb-1">
+    <div className="bg-[var(--color-bg)] rounded p-3">
+      <div className="text-[10px] text-[var(--color-text-secondary)] font-medium uppercase tracking-wide mb-1">
         {label}
       </div>
-      <div className={`text-lg font-mono tabular-nums text-stone-900 ${color}`}>
+      <div className={`text-lg font-mono tabular-nums text-[var(--color-text)] ${color}`}>
         {value ?? '—'}
       </div>
     </div>

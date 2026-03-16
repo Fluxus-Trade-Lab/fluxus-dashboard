@@ -41,7 +41,7 @@ export default function ScreenerPage() {
 
   if (loading) {
     return (
-      <div className="text-stone-400 text-sm font-medium uppercase tracking-wide text-center py-20">
+      <div className="text-[var(--color-text-muted)] text-sm font-medium uppercase tracking-wide text-center py-20">
         Loading universe...
       </div>
     )
@@ -78,7 +78,7 @@ export default function ScreenerPage() {
       </div>
 
       {tickerList && (
-        <div className="mb-4 p-2 bg-stone-50 border border-stone-200 rounded text-xs font-mono text-stone-600 break-all select-all">
+        <div className="mb-4 p-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded text-xs font-mono text-[var(--color-text-secondary)] break-all select-all">
           {tickerList}
         </div>
       )}

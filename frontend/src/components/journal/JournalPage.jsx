@@ -14,7 +14,7 @@ export default function JournalPage() {
 
   return (
     <div className="max-w-5xl mx-auto py-6 px-4">
-      <h2 className="text-[10px] font-medium uppercase tracking-wide text-stone-500 mb-4">
+      <h2 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-4">
         AI Coach
       </h2>
 
@@ -26,8 +26,8 @@ export default function JournalPage() {
             onClick={() => setActiveStrategy(key)}
             className={`px-3 py-1.5 text-[11px] font-medium rounded cursor-pointer transition-colors ${
               activeStrategy === key
-                ? 'bg-stone-800 text-stone-100'
-                : 'text-stone-500 hover:text-stone-800 bg-stone-100'
+                ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
+                : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-[var(--color-surface-raised)]'
             }`}
           >
             {label}

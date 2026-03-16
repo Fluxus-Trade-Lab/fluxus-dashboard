@@ -6,11 +6,11 @@ export default function BreadthTable({ data }) {
   const sorted = [...rows].reverse()
 
   return (
-    <div className="bg-white border border-stone-200 rounded overflow-hidden">
+    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
           <thead>
-            <tr className="border-b border-stone-200 bg-stone-50">
+            <tr className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
               <Th>Date</Th>
               <Th>Up 4%</Th>
               <Th>Dn 4%</Th>
@@ -43,11 +43,11 @@ export default function BreadthTable({ data }) {
             {sorted.map((row, i) => (
               <tr
                 key={row.date}
-                className={`border-b border-stone-100 hover:bg-stone-50 ${
-                  i === 0 ? 'bg-stone-50/50 font-medium' : i % 2 === 1 ? 'bg-stone-50/50' : ''
+                className={`border-b border-[var(--color-border-light)] hover:bg-[var(--color-hover-bg)] ${
+                  i === 0 ? 'bg-[var(--color-surface-alt)]/50 font-medium' : i % 2 === 1 ? 'bg-[var(--color-surface-alt)]/50' : ''
                 }`}
               >
-                <Td className="text-stone-600 whitespace-nowrap">{fmtDate(row.date)}</Td>
+                <Td className="text-[var(--color-text-secondary)] whitespace-nowrap">{fmtDate(row.date)}</Td>
                 <Td>{row.up_4pct}</Td>
                 <Td>{row.down_4pct}</Td>
                 <Td className={ratioColor(row.ratio_5d)}>{row.ratio_5d?.toFixed(2)}</Td>
@@ -86,14 +86,14 @@ export default function BreadthTable({ data }) {
 
 function Th({ children }) {
   return (
-    <th className="px-2 py-1.5 text-right text-[10px] font-medium uppercase tracking-wide text-stone-500 whitespace-nowrap">
+    <th className="px-2 py-1.5 text-right text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] whitespace-nowrap">
       {children}
     </th>
   )
 }
 
 function ThSep() {
-  return <th className="w-px px-0 bg-stone-200" />
+  return <th className="w-px px-0 bg-[var(--color-border)]" />
 }
 
 function Td({ children, className = '' }) {
@@ -105,7 +105,7 @@ function Td({ children, className = '' }) {
 }
 
 function TdSep() {
-  return <td className="w-px px-0 bg-stone-100" />
+  return <td className="w-px px-0 bg-[var(--color-border-light)]" />
 }
 
 function fmtDate(iso) {

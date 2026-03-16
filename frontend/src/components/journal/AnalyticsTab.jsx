@@ -29,28 +29,28 @@ export default function AnalyticsTab() {
       </div>
 
       {/* By Strategy table */}
-      <div className="bg-white border border-stone-200 rounded-lg p-5">
-        <h3 className="text-[10px] font-medium uppercase tracking-wide text-stone-500 mb-3">
+      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+        <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
           Performance by Strategy
         </h3>
         <table className="w-full text-xs">
           <thead>
-            <tr className="border-b border-stone-200">
-              <th className="text-left py-2 text-[10px] font-medium uppercase tracking-wide text-stone-500">Strategy</th>
-              <th className="text-right py-2 text-[10px] font-medium uppercase tracking-wide text-stone-500">Trades</th>
-              <th className="text-right py-2 text-[10px] font-medium uppercase tracking-wide text-stone-500">Win Rate</th>
-              <th className="text-right py-2 text-[10px] font-medium uppercase tracking-wide text-stone-500">Avg R</th>
-              <th className="text-right py-2 text-[10px] font-medium uppercase tracking-wide text-stone-500">Avg Hold</th>
+            <tr className="border-b border-[var(--color-border)]">
+              <th className="text-left py-2 text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">Strategy</th>
+              <th className="text-right py-2 text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">Trades</th>
+              <th className="text-right py-2 text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">Win Rate</th>
+              <th className="text-right py-2 text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">Avg R</th>
+              <th className="text-right py-2 text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">Avg Hold</th>
             </tr>
           </thead>
           <tbody>
             {mockStats.byStrategy.map((s, i) => (
-              <tr key={s.name} className={`border-b border-stone-100 ${i % 2 === 1 ? 'bg-stone-50/50' : ''}`}>
-                <td className="py-2 font-medium text-stone-800">{s.name}</td>
-                <td className="py-2 text-right font-mono tabular-nums text-stone-600">{s.trades}</td>
+              <tr key={s.name} className={`border-b border-[var(--color-border-light)] ${i % 2 === 1 ? 'bg-[var(--color-surface-alt)]/50' : ''}`}>
+                <td className="py-2 font-medium text-[var(--color-text-bold)]">{s.name}</td>
+                <td className="py-2 text-right font-mono tabular-nums text-[var(--color-text-secondary)]">{s.trades}</td>
                 <td className={`py-2 text-right font-mono tabular-nums ${s.winRate >= 60 ? 'text-green-600' : s.winRate >= 50 ? 'text-amber-600' : 'text-red-500'}`}>{s.winRate}%</td>
-                <td className={`py-2 text-right font-mono tabular-nums ${s.avgR >= 1.5 ? 'text-green-600' : 'text-stone-600'}`}>{s.avgR}R</td>
-                <td className="py-2 text-right font-mono tabular-nums text-stone-600">{s.avgHold}d</td>
+                <td className={`py-2 text-right font-mono tabular-nums ${s.avgR >= 1.5 ? 'text-green-600' : 'text-[var(--color-text-secondary)]'}`}>{s.avgR}R</td>
+                <td className="py-2 text-right font-mono tabular-nums text-[var(--color-text-secondary)]">{s.avgHold}d</td>
               </tr>
             ))}
           </tbody>
@@ -58,14 +58,14 @@ export default function AnalyticsTab() {
       </div>
 
       {/* AI Insights */}
-      <div className="bg-white border border-stone-200 rounded-lg p-5">
-        <h3 className="text-[10px] font-medium uppercase tracking-wide text-stone-500 mb-3">
+      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+        <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
           Insights
         </h3>
         <div className="space-y-2">
           {mockStats.insights.map((insight, i) => (
-            <div key={i} className="flex gap-2 text-sm text-stone-600">
-              <span className="text-stone-400 flex-shrink-0">&rarr;</span>
+            <div key={i} className="flex gap-2 text-sm text-[var(--color-text-secondary)]">
+              <span className="text-[var(--color-text-muted)] flex-shrink-0">&rarr;</span>
               <span>{insight}</span>
             </div>
           ))}
@@ -73,17 +73,17 @@ export default function AnalyticsTab() {
       </div>
 
       {/* Phase notice */}
-      <div className="text-center py-4 text-[10px] text-stone-400 uppercase tracking-wide">
+      <div className="text-center py-4 text-[10px] text-[var(--color-text-muted)] uppercase tracking-wide">
         Showing sample data — connect your portfolio in Phase 2
       </div>
     </div>
   )
 }
 
-function StatCard({ label, value, color = 'text-stone-900' }) {
+function StatCard({ label, value, color = 'text-[var(--color-text)]' }) {
   return (
-    <div className="bg-stone-50 rounded-lg border border-stone-200 p-4">
-      <div className="text-[10px] text-stone-500 font-medium uppercase tracking-wide mb-1">{label}</div>
+    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-4">
+      <div className="text-[10px] text-[var(--color-text-secondary)] font-medium uppercase tracking-wide mb-1">{label}</div>
       <div className={`text-xl font-bold font-mono tabular-nums ${color}`}>{value}</div>
     </div>
   )

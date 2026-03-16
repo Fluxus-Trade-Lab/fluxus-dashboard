@@ -24,7 +24,7 @@ function getDecade(year) {
 }
 
 function PatternBadge({ pattern }) {
-  const colors = PATTERN_COLORS[pattern] || 'bg-stone-100 text-stone-600'
+  const colors = PATTERN_COLORS[pattern] || 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]'
   return (
     <span className={`inline-block px-2 py-0.5 text-[10px] font-medium rounded-full ${colors}`}>
       {formatPattern(pattern)}
@@ -43,20 +43,20 @@ function CardDetail({ card, onClose }) {
 
       {/* Modal */}
       <div
-        className="relative bg-white rounded-lg border border-stone-200 shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto"
+        className="relative bg-[var(--color-surface)] rounded-lg border border-[var(--color-border)] shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto"
         onClick={e => e.stopPropagation()}
       >
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full bg-stone-100 text-stone-500 hover:text-stone-800 hover:bg-stone-200 transition-colors cursor-pointer text-sm"
+          className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-hover-bg)] transition-colors cursor-pointer text-sm"
         >
           x
         </button>
 
         {/* Chart placeholder */}
-        <div className="bg-stone-100 rounded-t-lg h-52 flex items-center justify-center">
-          <span className="text-3xl font-bold text-stone-300 tracking-wide">
+        <div className="bg-[var(--color-surface-raised)] rounded-t-lg h-52 flex items-center justify-center">
+          <span className="text-3xl font-bold text-[var(--color-text-muted)] tracking-wide">
             {card.ticker}
           </span>
         </div>
@@ -64,21 +64,21 @@ function CardDetail({ card, onClose }) {
         {/* Content */}
         <div className="p-5 space-y-4">
           <div className="flex items-baseline justify-between">
-            <h3 className="text-sm font-semibold text-stone-800">
+            <h3 className="text-sm font-semibold text-[var(--color-text-bold)]">
               {card.ticker}
             </h3>
-            <span className="text-xs text-stone-400">{card.year}</span>
+            <span className="text-xs text-[var(--color-text-muted)]">{card.year}</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-medium uppercase tracking-wide text-stone-400">
+            <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
               Source
             </span>
-            <span className="text-xs text-stone-600">{card.source}</span>
+            <span className="text-xs text-[var(--color-text-secondary)]">{card.source}</span>
           </div>
 
           <div>
-            <span className="text-[10px] font-medium uppercase tracking-wide text-stone-400 block mb-1.5">
+            <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1.5">
               Patterns
             </span>
             <div className="flex flex-wrap gap-1.5">
@@ -89,13 +89,13 @@ function CardDetail({ card, onClose }) {
           </div>
 
           <div>
-            <span className="text-[10px] font-medium uppercase tracking-wide text-stone-400 block mb-1.5">
+            <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1.5">
               Key Lessons
             </span>
             <ul className="space-y-1">
               {card.key_lessons.map((lesson, i) => (
-                <li key={i} className="text-xs text-stone-600 flex gap-2">
-                  <span className="text-stone-300 select-none shrink-0">&bull;</span>
+                <li key={i} className="text-xs text-[var(--color-text-secondary)] flex gap-2">
+                  <span className="text-[var(--color-text-muted)] select-none shrink-0">&bull;</span>
                   {lesson}
                 </li>
               ))}
@@ -103,10 +103,10 @@ function CardDetail({ card, onClose }) {
           </div>
 
           <div className="flex items-center gap-2 pt-1">
-            <span className="text-[10px] font-medium uppercase tracking-wide text-stone-400">
+            <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
               Outcome
             </span>
-            <span className="text-xs font-medium text-stone-700">{card.outcome}</span>
+            <span className="text-xs font-medium text-[var(--color-text)]">{card.outcome}</span>
           </div>
         </div>
       </div>
@@ -156,7 +156,7 @@ export default function BrowseView({ cards }) {
         <select
           value={patternFilter}
           onChange={e => setPatternFilter(e.target.value)}
-          className="text-[11px] text-stone-600 bg-white border border-stone-200 rounded px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-stone-300"
+          className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
         >
           <option value="all">All Patterns</option>
           {allPatterns.map(p => (
@@ -167,7 +167,7 @@ export default function BrowseView({ cards }) {
         <select
           value={eraFilter}
           onChange={e => setEraFilter(e.target.value)}
-          className="text-[11px] text-stone-600 bg-white border border-stone-200 rounded px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-stone-300"
+          className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
         >
           <option value="all">All Eras</option>
           {allEras.map(e => (
@@ -178,7 +178,7 @@ export default function BrowseView({ cards }) {
         <select
           value={sourceFilter}
           onChange={e => setSourceFilter(e.target.value)}
-          className="text-[11px] text-stone-600 bg-white border border-stone-200 rounded px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-stone-300"
+          className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
         >
           <option value="all">All Sources</option>
           {allSources.map(s => (
@@ -186,15 +186,15 @@ export default function BrowseView({ cards }) {
           ))}
         </select>
 
-        <span className="text-[10px] text-stone-400 ml-1">
+        <span className="text-[10px] text-[var(--color-text-muted)] ml-1">
           {filtered.length} result{filtered.length !== 1 ? 's' : ''}
         </span>
       </div>
 
       {/* Card grid */}
       {filtered.length === 0 ? (
-        <div className="flex items-center justify-center h-48 rounded-lg border border-dashed border-stone-200 bg-stone-50">
-          <span className="text-xs text-stone-400">No cards match the current filters</span>
+        <div className="flex items-center justify-center h-48 rounded-lg border border-dashed border-[var(--color-border)] bg-[var(--color-surface-alt)]">
+          <span className="text-xs text-[var(--color-text-muted)]">No cards match the current filters</span>
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -202,11 +202,11 @@ export default function BrowseView({ cards }) {
             <button
               key={card.id}
               onClick={() => setSelectedCard(card)}
-              className="bg-white border border-stone-200 rounded-lg overflow-hidden text-left hover:border-stone-300 hover:shadow-sm transition-all cursor-pointer group"
+              className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden text-left hover:border-[var(--color-input-border)] hover:shadow-sm transition-all cursor-pointer group"
             >
               {/* Chart placeholder */}
-              <div className="bg-stone-100 h-40 flex items-center justify-center group-hover:bg-stone-50 transition-colors">
-                <span className="text-xl font-bold text-stone-300 tracking-wide group-hover:text-stone-400 transition-colors">
+              <div className="bg-[var(--color-surface-raised)] h-40 flex items-center justify-center group-hover:bg-[var(--color-hover-bg)] transition-colors">
+                <span className="text-xl font-bold text-[var(--color-text-muted)] tracking-wide group-hover:text-[var(--color-text-muted)] transition-colors">
                   {card.ticker}
                 </span>
               </div>
@@ -214,8 +214,8 @@ export default function BrowseView({ cards }) {
               {/* Info */}
               <div className="p-3 space-y-2">
                 <div className="flex items-baseline justify-between">
-                  <span className="text-xs font-semibold text-stone-700">{card.ticker}</span>
-                  <span className="text-[10px] text-stone-400">{card.year}</span>
+                  <span className="text-xs font-semibold text-[var(--color-text)]">{card.ticker}</span>
+                  <span className="text-[10px] text-[var(--color-text-muted)]">{card.year}</span>
                 </div>
                 <div className="flex flex-wrap gap-1">
                   {card.patterns.map(p => (
