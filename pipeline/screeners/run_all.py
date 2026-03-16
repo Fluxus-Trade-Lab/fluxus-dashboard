@@ -94,6 +94,7 @@ def build_fallback_universe(yf_adapter: YfinanceAdapter) -> pd.DataFrame:
 
             sma20 = float(hist['Close'].rolling(20).mean().iloc[-1])
             sma50 = float(hist['Close'].rolling(50).mean().iloc[-1])
+            sma40 = float(hist['Close'].rolling(40).mean().iloc[-1]) if len(hist) >= 40 else None
             sma200 = float(hist['Close'].rolling(200).mean().iloc[-1]) if len(hist) >= 200 else None
 
             # ATR calculation
@@ -115,6 +116,7 @@ def build_fallback_universe(yf_adapter: YfinanceAdapter) -> pd.DataFrame:
                 'perf_ytd': None,
                 'sma20_dist': (close - sma20) / sma20 if sma20 else None,
                 'sma50_dist': (close - sma50) / sma50 if sma50 else None,
+                'sma40_dist': (close - sma40) / sma40 if sma40 else None,
                 'sma200_dist': (close - sma200) / sma200 if sma200 else None,
                 'atr': atr,
                 'rel_volume': vol / avg_vol if avg_vol > 0 else None,
@@ -316,7 +318,7 @@ def main():
     universe_cols = [
         'ticker', 'close', 'change_pct', 'perf_1w', 'perf_1m', 'perf_3m',
         'perf_6m', 'perf_1y', 'perf_ytd',
-        'sma20_dist', 'sma50_dist', 'sma200_dist',
+        'sma20_dist', 'sma50_dist', 'sma40_dist', 'sma200_dist',
         'atr', 'rel_volume', 'avg_volume', 'volume',
         'market_cap', 'sector', 'industry',
         'high_52w', 'low_52w', 'eps_growth_next_y',
@@ -325,10 +327,14 @@ def main():
         'adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist',
     ]
     export_cols = [c for c in universe_cols if c in scored_universe.columns]
+    # Convert to object dtype so NaN becomes None (valid JSON null, not NaN)
+    export_df = scored_universe[export_cols].astype(object).where(
+        scored_universe[export_cols].notna(), None
+    )
     universe_export = {
         'timestamp': timestamp,
         'count': len(scored_universe),
-        'rows': scored_universe[export_cols].to_dict('records'),
+        'rows': export_df.to_dict('records'),
     }
     (OUTPUT_DIR / 'universe.json').write_text(
         json.dumps(universe_export, indent=None, default=_json_serializer)

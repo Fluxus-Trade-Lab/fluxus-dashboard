@@ -267,6 +267,7 @@ class YfinanceAdapter(BaseAdapter):
 
                 sma20 = float(hist['Close'].rolling(20).mean().iloc[-1])
                 sma50 = float(hist['Close'].rolling(50).mean().iloc[-1]) if n >= 50 else None
+                sma40 = float(hist['Close'].rolling(40).mean().iloc[-1]) if n >= 40 else None
                 sma200 = float(hist['Close'].rolling(200).mean().iloc[-1]) if n >= 200 else None
 
                 atr = calculate_atr(hist)
@@ -282,6 +283,7 @@ class YfinanceAdapter(BaseAdapter):
                     'perf_ytd': None,  # Would need calendar-year start
                     'sma20_dist': (close - sma20) / sma20 if sma20 else None,
                     'sma50_dist': (close - sma50) / sma50 if sma50 else None,
+                    'sma40_dist': (close - sma40) / sma40 if sma40 else None,
                     'sma200_dist': (close - sma200) / sma200 if sma200 else None,
                     'atr': atr,
                     'rel_volume': vol / avg_vol if avg_vol > 0 else None,

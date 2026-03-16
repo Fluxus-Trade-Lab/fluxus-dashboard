@@ -160,6 +160,22 @@ class TestCalculations:
 
 # ── Schema tests ─────────────────────────────────────────────────────────────
 
+class TestSma40:
+    def test_calculate_sma_40(self):
+        hist = _make_ohlc(60)
+        sma40 = calculate_sma(hist, 40)
+        assert sma40 is not None
+        assert isinstance(sma40, float)
+        # SMA40 should be between SMA20 and SMA50
+        sma20 = calculate_sma(hist, 20)
+        sma50 = calculate_sma(hist, 50)
+        # Just verify it returns a reasonable value (not testing ordering since synthetic data)
+        assert sma40 != sma20
+        assert sma40 != sma50
+
+
+# ── Schema tests ─────────────────────────────────────────────────────────────
+
 class TestSchema:
     def test_standard_columns_count(self):
         assert len(STANDARD_COLUMNS) == 24
