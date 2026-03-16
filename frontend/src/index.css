@@ -4,42 +4,69 @@
   --font-sans: 'Inter', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  --color-surface: #ffffff;
   --color-bg: #fafaf9;
+  --color-surface: #ffffff;
+  --color-surface-alt: #fafaf9;
+  --color-surface-raised: #f5f5f4;
   --color-border: #e7e5e4;
-  --color-text-primary: #1c1917;
+  --color-border-light: #f5f5f4;
+  --color-text: #1c1917;
   --color-text-secondary: #78716c;
   --color-text-muted: #a8a29e;
+  --color-text-bold: #292524;
 
   --color-signal-power3: #22c55e;
   --color-signal-caution: #eab308;
   --color-signal-warning: #f97316;
   --color-signal-riskoff: #ef4444;
+
+  --color-profit: #16a34a;
+  --color-loss: #dc2626;
+  --color-neutral: #78716c;
+  --color-accent: #2d5f8a;
+  --color-accent-light: #dbeafe;
+
+  --color-active-tab-bg: #292524;
+  --color-active-tab-text: #f5f5f4;
+  --color-hover-bg: #f5f5f4;
+  --color-input-bg: #ffffff;
+  --color-input-border: #d6d3d1;
+  --color-closed-row: #f5f5f4;
+}
+
+html.dark {
+  --color-bg: #1c1917;
+  --color-surface: #292524;
+  --color-surface-alt: #1c1917;
+  --color-surface-raised: #44403c;
+  --color-border: #44403c;
+  --color-border-light: #3a3733;
+  --color-text: #e7e5e4;
+  --color-text-secondary: #a8a29e;
+  --color-text-muted: #78716c;
+  --color-text-bold: #fafaf9;
+
+  --color-active-tab-bg: #fafaf9;
+  --color-active-tab-text: #1c1917;
+  --color-hover-bg: #44403c;
+  --color-input-bg: #1c1917;
+  --color-input-border: #57534e;
+  --color-closed-row: #44403c;
+
+  --color-accent-light: #1e3a5f;
 }
 
 html {
   color-scheme: light;
 }
+html.dark {
+  color-scheme: dark;
+}
 
 body {
   margin: 0;
   font-family: var(--font-sans);
-  background-color: #fafaf9;
-  color: #1c1917;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   min-height: 100vh;
 }
-
-/* Force light backgrounds on all surfaces */
-.bg-white { background-color: #ffffff !important; }
-.bg-stone-50 { background-color: #fafaf9 !important; }
-.text-stone-900 { color: #1c1917 !important; }
-
-/* ATR badge colors — explicit definitions for dynamic class usage */
-.bg-green-50 { background-color: #f0fdf4 !important; }
-.text-green-700 { color: #15803d !important; }
-.bg-amber-50 { background-color: #fffbeb !important; }
-.text-amber-700 { color: #b45309 !important; }
-.bg-red-50 { background-color: #fef2f2 !important; }
-.text-red-700 { color: #b91c1c !important; }
-.bg-stone-100 { background-color: #f5f5f4 !important; }
-.text-stone-500 { color: #78716c !important; }
