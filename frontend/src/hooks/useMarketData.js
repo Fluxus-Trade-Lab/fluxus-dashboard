@@ -13,6 +13,7 @@ const FILES = [
   'episodic_pivot',
   'vcp',
   'stockbee_ratio',
+  'breadth',
 ]
 
 export function useMarketData() {
