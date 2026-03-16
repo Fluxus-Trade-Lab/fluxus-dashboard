@@ -256,7 +256,7 @@ def main():
 
     # 3. Fetch MA signals
     logger.info("Fetching MA signals...")
-    signals = yf_adapter.fetch_ma_data(['SPY', 'QQQ', 'IWM', 'RSP'])
+    signals = yf_adapter.fetch_ma_data(['SPY', 'QQQ', 'IWM', 'RSP', '^GSPC'])
 
     # 4. Run screeners
     logger.info("Running screeners...")

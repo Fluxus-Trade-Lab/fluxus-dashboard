@@ -322,7 +322,7 @@ class YfinanceAdapter(BaseAdapter):
         Per plan.md §2.4 fetch_ma_data.
         """
         if tickers is None:
-            tickers = ['SPY', 'QQQ', 'IWM', 'RSP']
+            tickers = ['SPY', 'QQQ', 'IWM', 'RSP', '^GSPC']
 
         signals = {}
         for ticker in tickers:
