@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-03-16T22:03:49.166486+00:00",
+  "timestamp": "2026-03-17T22:03:58.241930+00:00",
   "SPY": {
     "signal": "WARNING",
     "color": "orange",
-    "close": 669.030029296875,
-    "ema8": 672.3305852017802,
-    "ema21": 678.7869849121288,
-    "sma50": 686.1245971679688,
-    "sma200": 656.8414669799805,
-    "sma20": 680.7959991455078,
+    "close": 670.7899780273438,
+    "ema8": 671.9882280519055,
+    "ema21": 678.0599842866477,
+    "sma50": 685.8769970703125,
+    "sma200": 657.2706381225586,
+    "sma20": 680.1929992675781,
     "power_trend": {
       "3d_gt_20sma": false,
       "3d_gt_50sma": false,
@@ -17,22 +17,94 @@
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": -0.61,
-      "21ema_dist": -1.46,
-      "50sma_dist": -2.56,
-      "200sma_dist": 1.82,
-      "52w_high_dist": -3.8
+      "9ema_dist": -0.27,
+      "21ema_dist": -1.08,
+      "50sma_dist": -2.25,
+      "200sma_dist": 2.02,
+      "52w_high_dist": -3.55
     }
   },
   "QQQ": {
     "signal": "WARNING",
     "color": "orange",
-    "close": 600.3800048828125,
-    "ema8": 601.9092900858376,
-    "ema21": 605.5517037943642,
-    "sma50": 613.0533984375,
-    "sma200": 590.5714709472657,
-    "sma20": 605.2759948730469,
+    "close": 603.3099975585938,
+    "ema8": 602.2205584131168,
+    "ema21": 605.3479123187416,
+    "sma50": 612.8571984863281,
+    "sma200": 590.9976287841797,
+    "sma20": 605.3764953613281,
+    "power_trend": {
+      "3d_gt_20sma": false,
+      "3d_gt_50sma": false,
+      "3d_gt_200sma": true,
+      "20sma_gt_50sma": false,
+      "50sma_gt_200sma": true
+    },
+    "trend_status": {
+      "9ema_dist": 0.13,
+      "21ema_dist": -0.34,
+      "50sma_dist": -1.58,
+      "200sma_dist": 2.04,
+      "52w_high_dist": -4.98
+    }
+  },
+  "IWM": {
+    "signal": "WARNING",
+    "color": "orange",
+    "close": 250.0500030517578,
+    "ema8": 251.24254636527823,
+    "ema21": 255.69275152006747,
+    "sma50": 260.4843991088867,
+    "sma200": 239.83676696777343,
+    "sma20": 257.71299743652344,
+    "power_trend": {
+      "3d_gt_20sma": false,
+      "3d_gt_50sma": false,
+      "3d_gt_200sma": true,
+      "20sma_gt_50sma": false,
+      "50sma_gt_200sma": true
+    },
+    "trend_status": {
+      "9ema_dist": -0.67,
+      "21ema_dist": -2.26,
+      "50sma_dist": -4.17,
+      "200sma_dist": 4.08,
+      "52w_high_dist": -7.32
+    }
+  },
+  "RSP": {
+    "signal": "WARNING",
+    "color": "orange",
+    "close": 196.0500030517578,
+    "ema8": 196.48110678741102,
+    "ema21": 198.78539288891858,
+    "sma50": 199.64800079345704,
+    "sma200": 189.11462913513185,
+    "sma20": 200.410001373291,
+    "power_trend": {
+      "3d_gt_20sma": false,
+      "3d_gt_50sma": false,
+      "3d_gt_200sma": true,
+      "20sma_gt_50sma": true,
+      "50sma_gt_200sma": true
+    },
+    "trend_status": {
+      "9ema_dist": -0.37,
+      "21ema_dist": -1.4,
+      "50sma_dist": -1.84,
+      "200sma_dist": 3.54,
+      "52w_high_dist": -4.35
+    }
+  },
+  "^GSPC": {
+    "signal": "WARNING",
+    "color": "orange",
+    "close": 6716.08984375,
+    "ema8": 6730.946391285024,
+    "ema21": 6794.926223192221,
+    "sma50": 6878.3663671875,
+    "sma200": 6612.135434570312,
+    "sma20": 6816.321459960937,
     "power_trend": {
       "3d_gt_20sma": false,
       "3d_gt_50sma": false,
@@ -42,82 +114,10 @@
     },
     "trend_status": {
       "9ema_dist": -0.32,
-      "21ema_dist": -0.86,
-      "50sma_dist": -2.11,
-      "200sma_dist": 1.63,
-      "52w_high_dist": -5.44
-    }
-  },
-  "IWM": {
-    "signal": "WARNING",
-    "color": "orange",
-    "close": 248.9199981689453,
-    "ema8": 251.58327302628408,
-    "ema21": 256.2570263667214,
-    "sma50": 260.4589990234375,
-    "sma200": 239.6079429626465,
-    "sma20": 258.3624977111816,
-    "power_trend": {
-      "3d_gt_20sma": false,
-      "3d_gt_50sma": false,
-      "3d_gt_200sma": true,
-      "20sma_gt_50sma": false,
-      "50sma_gt_200sma": true
-    },
-    "trend_status": {
-      "9ema_dist": -1.29,
-      "21ema_dist": -2.95,
-      "50sma_dist": -4.64,
-      "200sma_dist": 3.74,
-      "52w_high_dist": -7.74
-    }
-  },
-  "RSP": {
-    "signal": "WARNING",
-    "color": "orange",
-    "close": 194.9600067138672,
-    "ema8": 196.6042792833119,
-    "ema21": 199.05893187252448,
-    "sma50": 199.5842007446289,
-    "sma200": 189.00601661682128,
-    "sma20": 200.73350143432617,
-    "power_trend": {
-      "3d_gt_20sma": false,
-      "3d_gt_50sma": false,
-      "3d_gt_200sma": true,
-      "20sma_gt_50sma": true,
-      "50sma_gt_200sma": true
-    },
-    "trend_status": {
-      "9ema_dist": -1.02,
-      "21ema_dist": -2.1,
-      "50sma_dist": -2.37,
-      "200sma_dist": 3.05,
-      "52w_high_dist": -4.88
-    }
-  },
-  "^GSPC": {
-    "signal": "WARNING",
-    "color": "orange",
-    "close": 6699.3798828125,
-    "ema8": 6735.191119152172,
-    "ema21": 6802.809861132199,
-    "sma50": 6881.213974609375,
-    "sma200": 6608.115834960938,
-    "sma20": 6822.677978515625,
-    "power_trend": {
-      "3d_gt_20sma": false,
-      "3d_gt_50sma": false,
-      "3d_gt_200sma": true,
-      "20sma_gt_50sma": false,
-      "50sma_gt_200sma": true
-    },
-    "trend_status": {
-      "9ema_dist": -0.65,
-      "21ema_dist": -1.54,
-      "50sma_dist": -2.71,
-      "200sma_dist": 1.36,
-      "52w_high_dist": -4.0
+      "21ema_dist": -1.17,
+      "50sma_dist": -2.42,
+      "200sma_dist": 1.55,
+      "52w_high_dist": -3.76
     }
   }
 }
