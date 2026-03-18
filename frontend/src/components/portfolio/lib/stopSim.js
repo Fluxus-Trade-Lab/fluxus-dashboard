@@ -1,5 +1,3 @@
-import { lookupPrice } from './calculations'
-
 /**
  * Walk daily close prices to determine which stop levels were triggered.
  * Checks sequentially: stop k must trigger before stop k+1.

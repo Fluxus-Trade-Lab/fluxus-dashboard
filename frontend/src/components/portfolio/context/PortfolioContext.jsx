@@ -38,7 +38,11 @@ function loadFromStorage() {
       loading: false,
       fetchStatus: '',
       optionsCapital: parsed.optionsCapital ?? 25000,
-      optionsTrades: parsed.optionsTrades ?? [],
+      optionsTrades: (parsed.optionsTrades ?? []).map(t =>
+        t.id?.startsWith('s') && t.entryDate?.startsWith('2025-')
+          ? { ...t, entryDate: t.entryDate.replace('2025-', '2026-'), exitDate: t.exitDate?.replace('2025-', '2026-') }
+          : t
+      ),
       optionsCapitalSet: parsed.optionsCapitalSet ?? false,
     }
   } catch {

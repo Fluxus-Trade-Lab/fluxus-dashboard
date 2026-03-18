@@ -4,7 +4,7 @@ import { computeCashUsed, enrichTrades, computeMonthlyStats, computeYtdStats, co
 import { buildEquityCurve } from './lib/equityCurve'
 import { parseCSV, generateCSV, downloadFile } from './lib/csv'
 import { fmtCur, TABS } from './lib/portfolioFormat'
-import { computeThreeStopSim } from './lib/threeStopSim'
+import { computeStopSim } from './lib/stopSim'
 import PortfolioHeader from './PortfolioHeader'
 import TradeForm from './TradeForm'
 import TrimModal from './TrimModal'
@@ -14,7 +14,7 @@ import ExposureTab from './tabs/ExposureTab'
 import PerformanceTab from './tabs/PerformanceTab'
 import MonthlyTab from './tabs/MonthlyTab'
 import RiskTab from './tabs/RiskTab'
-import ThreeStopTab from './tabs/ThreeStopTab'
+import StopSimTab from './tabs/StopSimTab'
 import OptionsTab from './tabs/OptionsTab'
 import InputField from './ui/InputField'
 import Button from './ui/Button'
@@ -88,8 +88,12 @@ export default function Layout() {
   const holdingsData = useMemo(() => computeHoldingsData(openTrades), [openTrades])
   const mergedHoldingsData = useMemo(() => computeMergedHoldingsData(openTrades), [openTrades])
 
+  const twoStopSimData = useMemo(
+    () => computeStopSim(state.trades, state.dailyPrices, 2),
+    [state.trades, state.dailyPrices]
+  )
   const threeStopSimData = useMemo(
-    () => computeThreeStopSim(state.trades, state.dailyPrices),
+    () => computeStopSim(state.trades, state.dailyPrices, 3),
     [state.trades, state.dailyPrices]
   )
 
@@ -284,7 +288,7 @@ export default function Layout() {
         {state.activeTab === 2 && <PerformanceTab performanceData={performanceData} totalReturnPct={totalReturnPct} riskMetrics={riskMetrics} />}
         {state.activeTab === 3 && <MonthlyTab monthlyStats={monthlyStats} ytdStats={ytdStats} totalReturnPct={totalReturnPct} />}
         {state.activeTab === 4 && <RiskTab riskMetrics={riskMetrics} benchmarkTicker={state.benchmarkTicker} />}
-        {state.activeTab === 5 && <ThreeStopTab simData={threeStopSimData} />}
+        {state.activeTab === 5 && <StopSimTab simData2={twoStopSimData} simData3={threeStopSimData} />}
         {state.activeTab === 6 && <OptionsTab />}
       </div>
     </div>

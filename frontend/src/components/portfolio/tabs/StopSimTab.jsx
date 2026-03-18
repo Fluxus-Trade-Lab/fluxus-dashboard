@@ -1,7 +1,11 @@
+import { useState } from 'react'
 import StatCard from '../ui/StatCard'
 import { fmtCur, fmtPct, fmt, clr } from '../lib/portfolioFormat'
 
-export default function ThreeStopTab({ simData }) {
+export default function StopSimTab({ simData2, simData3 }) {
+  const [mode, setMode] = useState(3)
+  const simData = mode === 2 ? simData2 : simData3
+
   if (!simData || simData.rows.length === 0) {
     return (
       <div className="text-center py-16 text-[var(--color-text-muted)]">
@@ -15,15 +19,42 @@ export default function ThreeStopTab({ simData }) {
 
   const cards = [
     { label: 'Actual Total P&L', value: fmtCur(summary.totalActualPL), color: clr(summary.totalActualPL) },
-    { label: '3-Stop Total P&L', value: fmtCur(summary.totalSimPL), color: clr(summary.totalSimPL) },
-    { label: 'P&L Difference', value: fmtCur(summary.totalDiff), color: clr(summary.totalDiff), sub: summary.totalDiff > 0 ? '3-stop would save' : summary.totalDiff < 0 ? '3-stop would cost' : 'No change' },
+    { label: `${mode}-Stop Total P&L`, value: fmtCur(summary.totalSimPL), color: clr(summary.totalSimPL) },
+    { label: 'P&L Difference', value: fmtCur(summary.totalDiff), color: clr(summary.totalDiff), sub: summary.totalDiff > 0 ? `${mode}-stop would save` : summary.totalDiff < 0 ? `${mode}-stop would cost` : 'No change' },
     { label: 'Actual Avg Loss', value: fmtPct(summary.avgActualLoss), color: 'text-red-500' },
-    { label: '3-Stop Avg Loss', value: fmtPct(summary.avgSimLoss), color: 'text-red-500' },
+    { label: `${mode}-Stop Avg Loss`, value: fmtPct(summary.avgSimLoss), color: 'text-red-500' },
     { label: 'Trades Affected', value: `${summary.tradesAffected} / ${summary.totalTrades}`, color: '', sub: 'Had stops triggered' },
   ]
 
+  // Determine number of stop columns from first row's stops array
+  const numStops = rows[0]?.stops?.length || mode
+
   return (
     <div>
+      {/* Segmented toggle */}
+      <div className="flex mb-4">
+        <button
+          onClick={() => setMode(2)}
+          className={`px-4 py-1.5 text-xs font-semibold rounded-l-md border cursor-pointer ${
+            mode === 2
+              ? 'bg-[var(--color-accent)] text-white border-[var(--color-accent)]'
+              : 'bg-transparent text-[var(--color-text-muted)] border-[var(--color-border)]'
+          }`}
+        >
+          2-Stop
+        </button>
+        <button
+          onClick={() => setMode(3)}
+          className={`px-4 py-1.5 text-xs font-semibold rounded-r-md border border-l-0 cursor-pointer ${
+            mode === 3
+              ? 'bg-[var(--color-accent)] text-white border-[var(--color-accent)]'
+              : 'bg-transparent text-[var(--color-text-muted)] border-[var(--color-border)]'
+          }`}
+        >
+          3-Stop
+        </button>
+      </div>
+
       {hasHistoryGap && (
         <div className="p-3 bg-amber-50 border border-amber-200 rounded-md mb-4 text-xs text-amber-700">
           Some trades lack daily price history — using worst-case (all stops triggered) for those.
@@ -47,12 +78,12 @@ export default function ThreeStopTab({ simData }) {
               <th className="text-right py-2 px-2">Entry</th>
               <th className="text-right py-2 px-2">Stop</th>
               <th className="text-right py-2 px-2">R</th>
-              <th className="text-right py-2 px-2">Stop1</th>
-              <th className="text-right py-2 px-2">Stop2</th>
-              <th className="text-right py-2 px-2">Stop3</th>
+              {Array.from({ length: numStops }, (_, i) => (
+                <th key={i} className="text-right py-2 px-2">Stop{i + 1}</th>
+              ))}
               <th className="text-right py-2 px-2">Avg Exit</th>
               <th className="text-right py-2 px-2">Actual P&L</th>
-              <th className="text-right py-2 px-2">3-Stop P&L</th>
+              <th className="text-right py-2 px-2">{mode}-Stop P&L</th>
               <th className="text-right py-2 px-2">Diff</th>
             </tr>
           </thead>
@@ -67,15 +98,11 @@ export default function ThreeStopTab({ simData }) {
                 <td className="text-right py-2 px-2">{fmtCur(r.entryPrice)}</td>
                 <td className="text-right py-2 px-2">{fmtCur(r.stopPrice)}</td>
                 <td className="text-right py-2 px-2">{fmt(r.R, 2)}</td>
-                <td className={`text-right py-2 px-2 ${r.triggered[0] ? 'text-red-500 font-semibold' : 'text-[var(--color-text-muted)]'}`}>
-                  {fmtCur(r.stop1)}
-                </td>
-                <td className={`text-right py-2 px-2 ${r.triggered[1] ? 'text-red-500 font-semibold' : 'text-[var(--color-text-muted)]'}`}>
-                  {fmtCur(r.stop2)}
-                </td>
-                <td className={`text-right py-2 px-2 ${r.triggered[2] ? 'text-red-500 font-semibold' : 'text-[var(--color-text-muted)]'}`}>
-                  {fmtCur(r.stop3)}
-                </td>
+                {r.stops.map((stop, i) => (
+                  <td key={i} className={`text-right py-2 px-2 ${stop.triggered ? 'text-red-500 font-semibold' : 'text-[var(--color-text-muted)]'}`}>
+                    {fmtCur(stop.level)}
+                  </td>
+                ))}
                 <td className="text-right py-2 px-2">{fmtCur(r.actualAvgExit)}</td>
                 <td className={`text-right py-2 px-2 ${clr(r.actualPL)}`}>{fmtCur(r.actualPL)}</td>
                 <td className={`text-right py-2 px-2 ${clr(r.simPL)}`}>{fmtCur(r.simPL)}</td>

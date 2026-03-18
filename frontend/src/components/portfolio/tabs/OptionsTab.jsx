@@ -34,29 +34,29 @@ function weightedPL(t) {
 
 /* ── Sample data matching user's Q1 2026 log ── */
 const SAMPLE_OPTIONS = [
-  { id: 's1', ticker: 'VNET', strike: '11C', expiry: '2026-03-20', entryDate: '2025-01-05', weight: 1, costAvg: 0.6, exitPrice: 1.2, exitDate: '2025-01-14', notes: 'sold half 2x on 1/9, out 1/3 for 2x on 1/13, out rest at 1.4 on 1/14' },
-  { id: 's2', ticker: 'KWEB', strike: '40C', expiry: '2026-08-21', entryDate: '2025-01-05', weight: 2, costAvg: 2.62, exitPrice: null, exitDate: null, notes: '' },
-  { id: 's3', ticker: 'MSTR', strike: '170C', expiry: '2026-01-23', entryDate: '2025-01-07', weight: 0.25, costAvg: 6.7, exitPrice: 21, exitDate: '2025-01-13', notes: '' },
-  { id: 's4', ticker: 'LEN', strike: '125C', expiry: '2026-02-20', entryDate: '2025-01-09', weight: 1, costAvg: 2.2, exitPrice: null, exitDate: null, notes: 'sold half on 1/12' },
-  { id: 's5', ticker: 'IWM', strike: '265C', expiry: '2026-01-30', entryDate: '2025-01-12', weight: 1, costAvg: 2.43, exitPrice: 2.62, exitDate: '2025-01-13', notes: '' },
-  { id: 's6', ticker: 'LITE', strike: '410C', expiry: '2026-01-23', entryDate: '2025-01-12', weight: 0.25, costAvg: 2.9, exitPrice: 0, exitDate: '2025-01-23', notes: '' },
-  { id: 's7', ticker: 'SPX', strike: '6900/6800P', expiry: '2026-03-31', entryDate: '2025-01-13', weight: 1, costAvg: 24.8, exitPrice: null, exitDate: null, notes: 'to sell half when 2x' },
-  { id: 's8', ticker: 'GFS', strike: '40C', expiry: '2026-01-16', entryDate: '2025-01-13', weight: 0.25, costAvg: 1.09, exitPrice: 1.95, exitDate: '2025-01-13', notes: 'roll up 45c april' },
-  { id: 's9', ticker: 'GFS', strike: '45C', expiry: '2026-04-17', entryDate: '2025-01-13', weight: 1, costAvg: 2.6, exitPrice: null, exitDate: null, notes: 'sold 1/3 for 5 on 1/21' },
-  { id: 's10', ticker: 'IBIT', strike: '57C', expiry: '2026-02-20', entryDate: '2025-01-13', weight: 1, costAvg: 1.4, exitPrice: null, exitDate: null, notes: '' },
-  { id: 's11', ticker: 'DAL', strike: '65P', expiry: '2026-02-06', entryDate: '2025-01-13', weight: 0.25, costAvg: 1.2, exitPrice: null, exitDate: null, notes: '' },
-  { id: 's12', ticker: 'EOSE', strike: '20C', expiry: '2026-02-20', entryDate: '2025-01-14', weight: 1, costAvg: 1.15, exitPrice: null, exitDate: null, notes: '' },
-  { id: 's13', ticker: 'VKTX', strike: '35C', expiry: '2026-01-16', entryDate: '2025-01-14', weight: 0.25, costAvg: 1, exitPrice: 0, exitDate: '2025-01-16', notes: '' },
-  { id: 's14', ticker: 'AAPL', strike: '275C', expiry: '2026-02-20', entryDate: '2025-01-15', weight: 1, costAvg: 2.95, exitPrice: 1.4, exitDate: '2025-01-20', notes: '' },
-  { id: 's15', ticker: 'LAES', strike: '5C', expiry: '2026-03-20', entryDate: '2025-01-15', weight: 1, costAvg: 0.58, exitPrice: null, exitDate: null, notes: '' },
-  { id: 's16', ticker: 'TSM', strike: '380/400/420C', expiry: '2026-03-20', entryDate: '2025-01-15', weight: 1, costAvg: 1.2, exitPrice: null, exitDate: null, notes: 'call butterfly, bidding to sell half for 2x' },
-  { id: 's17', ticker: 'SNDK', strike: '400P', expiry: '2026-01-16', entryDate: '2025-01-16', weight: 0.25, costAvg: 2.16, exitPrice: 3.2, exitDate: '2025-01-16', notes: '' },
-  { id: 's18', ticker: 'CRML', strike: '23C', expiry: '2026-02-20', entryDate: '2025-01-26', weight: 0.25, costAvg: 1.63, exitPrice: 0.84, exitDate: '2025-01-27', notes: '' },
-  { id: 's19', ticker: 'SNOW', strike: '220C', expiry: '2026-02-06', entryDate: '2025-01-26', weight: 1, costAvg: 3.9, exitPrice: 6.4, exitDate: '2025-01-28', notes: '' },
-  { id: 's20', ticker: 'ORCL', strike: '190C', expiry: '2026-01-30', entryDate: '2025-01-26', weight: 0.25, costAvg: 2.76, exitPrice: 0.6, exitDate: '2025-01-27', notes: '' },
-  { id: 's21', ticker: 'EWY', strike: '135C', expiry: '2026-04-17', entryDate: '2025-01-27', weight: 1, costAvg: 4.1, exitPrice: null, exitDate: null, notes: '' },
-  { id: 's22', ticker: 'CORZ', strike: '22C', expiry: '2026-03-20', entryDate: '2025-01-28', weight: 1, costAvg: 2.05, exitPrice: null, exitDate: null, notes: '' },
-  { id: 's23', ticker: 'LEU', strike: '440/500/560', expiry: '2026-06-16', entryDate: '2025-01-28', weight: 0.25, costAvg: 3, exitPrice: null, exitDate: null, notes: '' },
+  { id: 's1', ticker: 'VNET', strike: '11C', expiry: '2026-03-20', entryDate: '2026-01-05', weight: 1, costAvg: 0.6, exitPrice: 1.2, exitDate: '2026-01-14', notes: 'sold half 2x on 1/9, out 1/3 for 2x on 1/13, out rest at 1.4 on 1/14' },
+  { id: 's2', ticker: 'KWEB', strike: '40C', expiry: '2026-08-21', entryDate: '2026-01-05', weight: 2, costAvg: 2.62, exitPrice: null, exitDate: null, notes: '' },
+  { id: 's3', ticker: 'MSTR', strike: '170C', expiry: '2026-01-23', entryDate: '2026-01-07', weight: 0.25, costAvg: 6.7, exitPrice: 21, exitDate: '2026-01-13', notes: '' },
+  { id: 's4', ticker: 'LEN', strike: '125C', expiry: '2026-02-20', entryDate: '2026-01-09', weight: 1, costAvg: 2.2, exitPrice: null, exitDate: null, notes: 'sold half on 1/12' },
+  { id: 's5', ticker: 'IWM', strike: '265C', expiry: '2026-01-30', entryDate: '2026-01-12', weight: 1, costAvg: 2.43, exitPrice: 2.62, exitDate: '2026-01-13', notes: '' },
+  { id: 's6', ticker: 'LITE', strike: '410C', expiry: '2026-01-23', entryDate: '2026-01-12', weight: 0.25, costAvg: 2.9, exitPrice: 0, exitDate: '2026-01-23', notes: '' },
+  { id: 's7', ticker: 'SPX', strike: '6900/6800P', expiry: '2026-03-31', entryDate: '2026-01-13', weight: 1, costAvg: 24.8, exitPrice: null, exitDate: null, notes: 'to sell half when 2x' },
+  { id: 's8', ticker: 'GFS', strike: '40C', expiry: '2026-01-16', entryDate: '2026-01-13', weight: 0.25, costAvg: 1.09, exitPrice: 1.95, exitDate: '2026-01-13', notes: 'roll up 45c april' },
+  { id: 's9', ticker: 'GFS', strike: '45C', expiry: '2026-04-17', entryDate: '2026-01-13', weight: 1, costAvg: 2.6, exitPrice: null, exitDate: null, notes: 'sold 1/3 for 5 on 1/21' },
+  { id: 's10', ticker: 'IBIT', strike: '57C', expiry: '2026-02-20', entryDate: '2026-01-13', weight: 1, costAvg: 1.4, exitPrice: null, exitDate: null, notes: '' },
+  { id: 's11', ticker: 'DAL', strike: '65P', expiry: '2026-02-06', entryDate: '2026-01-13', weight: 0.25, costAvg: 1.2, exitPrice: null, exitDate: null, notes: '' },
+  { id: 's12', ticker: 'EOSE', strike: '20C', expiry: '2026-02-20', entryDate: '2026-01-14', weight: 1, costAvg: 1.15, exitPrice: null, exitDate: null, notes: '' },
+  { id: 's13', ticker: 'VKTX', strike: '35C', expiry: '2026-01-16', entryDate: '2026-01-14', weight: 0.25, costAvg: 1, exitPrice: 0, exitDate: '2026-01-16', notes: '' },
+  { id: 's14', ticker: 'AAPL', strike: '275C', expiry: '2026-02-20', entryDate: '2026-01-15', weight: 1, costAvg: 2.95, exitPrice: 1.4, exitDate: '2026-01-20', notes: '' },
+  { id: 's15', ticker: 'LAES', strike: '5C', expiry: '2026-03-20', entryDate: '2026-01-15', weight: 1, costAvg: 0.58, exitPrice: null, exitDate: null, notes: '' },
+  { id: 's16', ticker: 'TSM', strike: '380/400/420C', expiry: '2026-03-20', entryDate: '2026-01-15', weight: 1, costAvg: 1.2, exitPrice: null, exitDate: null, notes: 'call butterfly, bidding to sell half for 2x' },
+  { id: 's17', ticker: 'SNDK', strike: '400P', expiry: '2026-01-16', entryDate: '2026-01-16', weight: 0.25, costAvg: 2.16, exitPrice: 3.2, exitDate: '2026-01-16', notes: '' },
+  { id: 's18', ticker: 'CRML', strike: '23C', expiry: '2026-02-20', entryDate: '2026-01-26', weight: 0.25, costAvg: 1.63, exitPrice: 0.84, exitDate: '2026-01-27', notes: '' },
+  { id: 's19', ticker: 'SNOW', strike: '220C', expiry: '2026-02-06', entryDate: '2026-01-26', weight: 1, costAvg: 3.9, exitPrice: 6.4, exitDate: '2026-01-28', notes: '' },
+  { id: 's20', ticker: 'ORCL', strike: '190C', expiry: '2026-01-30', entryDate: '2026-01-26', weight: 0.25, costAvg: 2.76, exitPrice: 0.6, exitDate: '2026-01-27', notes: '' },
+  { id: 's21', ticker: 'EWY', strike: '135C', expiry: '2026-04-17', entryDate: '2026-01-27', weight: 1, costAvg: 4.1, exitPrice: null, exitDate: null, notes: '' },
+  { id: 's22', ticker: 'CORZ', strike: '22C', expiry: '2026-03-20', entryDate: '2026-01-28', weight: 1, costAvg: 2.05, exitPrice: null, exitDate: null, notes: '' },
+  { id: 's23', ticker: 'LEU', strike: '440/500/560', expiry: '2026-06-16', entryDate: '2026-01-28', weight: 0.25, costAvg: 3, exitPrice: null, exitDate: null, notes: '' },
 ]
 
 /* ── Format short date ── */
@@ -74,6 +74,7 @@ export default function OptionsTab() {
   const [editingCapital, setEditingCapital] = useState(false)
   const [capitalInput, setCapitalInput] = useState('')
   const [showOpenOnly, setShowOpenOnly] = useState(false)
+  const [expandedNotes, setExpandedNotes] = useState({})
 
   const pm = state.privacyMode
   const allTrades = state.optionsTrades
@@ -260,7 +261,13 @@ export default function OptionsTab() {
                         {wtd != null ? (pm ? MASK : fmtPctSigned(wtd)) : '—'}
                       </td>
                       <td className={`${tdStyle} text-[var(--color-text-secondary)]`}>{days}</td>
-                      <td className={`${tdStyle} text-[11px] text-[var(--color-text-muted)] max-w-[220px] truncate`} title={t.notes}>{t.notes || '—'}</td>
+                      <td
+                        className={`${tdStyle} text-[11px] text-[var(--color-text-muted)] ${expandedNotes[t.id] ? 'whitespace-normal max-w-[320px]' : 'max-w-[180px] truncate'} ${t.notes ? 'cursor-pointer hover:text-[var(--color-text-secondary)]' : ''}`}
+                        onClick={() => t.notes && setExpandedNotes(prev => ({ ...prev, [t.id]: !prev[t.id] }))}
+                        title={expandedNotes[t.id] ? 'Click to collapse' : t.notes}
+                      >
+                        {t.notes || '—'}
+                      </td>
                       <td className={tdStyle}>
                         {isOpen ? (
                           closingId === t.id ? (
