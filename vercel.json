@@ -1,6 +1,6 @@
 {
   "installCommand": "cd frontend && npm install",
-  "buildCommand": "cd frontend && npm run build",
+  "buildCommand": "cp -r data/output frontend/public/data/output_real && rm -f frontend/public/data/output && mv frontend/public/data/output_real frontend/public/data/output && cd frontend && npm run build",
   "outputDirectory": "frontend/dist",
   "framework": "vite",
   "rewrites": [
