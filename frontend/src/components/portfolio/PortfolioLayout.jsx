@@ -4,17 +4,13 @@ import { computeCashUsed, enrichTrades, computeMonthlyStats, computeYtdStats, co
 import { buildEquityCurve } from './lib/equityCurve'
 import { parseCSV, generateCSV, downloadFile } from './lib/csv'
 import { fmtCur, TABS } from './lib/portfolioFormat'
-import { computeStopSim } from './lib/stopSim'
 import PortfolioHeader from './PortfolioHeader'
 import TradeForm from './TradeForm'
 import TrimModal from './TrimModal'
 import SettingsPanel from './SettingsPanel'
-import PLTab from './tabs/PLTab'
+import OverviewTab from './tabs/OverviewTab'
 import ExposureTab from './tabs/ExposureTab'
-import PerformanceTab from './tabs/PerformanceTab'
-import MonthlyTab from './tabs/MonthlyTab'
 import RiskTab from './tabs/RiskTab'
-import StopSimTab from './tabs/StopSimTab'
 import OptionsTab from './tabs/OptionsTab'
 import InputField from './ui/InputField'
 import Button from './ui/Button'
@@ -87,15 +83,6 @@ export default function Layout() {
   const sectorData = useMemo(() => computeSectorData(openTrades), [openTrades])
   const holdingsData = useMemo(() => computeHoldingsData(openTrades), [openTrades])
   const mergedHoldingsData = useMemo(() => computeMergedHoldingsData(openTrades), [openTrades])
-
-  const twoStopSimData = useMemo(
-    () => computeStopSim(state.trades, state.dailyPrices, 2),
-    [state.trades, state.dailyPrices]
-  )
-  const threeStopSimData = useMemo(
-    () => computeStopSim(state.trades, state.dailyPrices, 3),
-    [state.trades, state.dailyPrices]
-  )
 
   const cashPct = totalPortfolioValue > 0 ? (cashAvailable / totalPortfolioValue) * 100 : 0
 
@@ -207,7 +194,7 @@ export default function Layout() {
         totalReturnPct={totalReturnPct}
         cashAvailable={cashAvailable}
         cashPct={cashPct}
-        openCount={openTrades.length}
+        openCount={new Set(openTrades.map(t => t.ticker)).size}
         onShowForm={() => setShowForm(!showForm)}
         showForm={showForm}
         onExport={handleExport}
@@ -283,13 +270,10 @@ export default function Layout() {
         </div>
 
         {/* Tab content */}
-        {state.activeTab === 0 && <PLTab enrichedTrades={enrichedTrades} onTrim={setTrimModal} />}
+        {state.activeTab === 0 && <OverviewTab performanceData={performanceData} totalReturnPct={totalReturnPct} monthlyStats={monthlyStats} ytdStats={ytdStats} enrichedTrades={enrichedTrades} onTrim={setTrimModal} />}
         {state.activeTab === 1 && <ExposureTab openTrades={openTrades} sectorData={sectorData} holdingsData={holdingsData} mergedHoldingsData={mergedHoldingsData} />}
-        {state.activeTab === 2 && <PerformanceTab performanceData={performanceData} totalReturnPct={totalReturnPct} riskMetrics={riskMetrics} />}
-        {state.activeTab === 3 && <MonthlyTab monthlyStats={monthlyStats} ytdStats={ytdStats} totalReturnPct={totalReturnPct} />}
-        {state.activeTab === 4 && <RiskTab riskMetrics={riskMetrics} benchmarkTicker={state.benchmarkTicker} />}
-        {state.activeTab === 5 && <StopSimTab simData2={twoStopSimData} simData3={threeStopSimData} />}
-        {state.activeTab === 6 && <OptionsTab />}
+        {state.activeTab === 2 && <RiskTab riskMetrics={riskMetrics} benchmarkTicker={state.benchmarkTicker} />}
+        {state.activeTab === 3 && <OptionsTab />}
       </div>
     </div>
   )

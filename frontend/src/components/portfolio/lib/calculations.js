@@ -94,16 +94,17 @@ export function enrichTrades(trades, totalPortfolioValue, dailyPrices) {
 
 export function computeMonthlyStats(enrichedTrades, performanceData) {
   const byMonth = {}
-  enrichedTrades.forEach(t => (t.trims || []).forEach(tr => {
-    const m = tr.date?.slice(0, 7) || 'Unknown'
+  enrichedTrades.filter(t => t.isClosed).forEach(t => {
+    const trims = t.trims || []
+    const lastTrim = trims[trims.length - 1]
+    const m = lastTrim?.date?.slice(0, 7) || 'Unknown'
     if (!byMonth[m]) byMonth[m] = []
-    const dir = t.direction === 'long' ? 1 : -1
     byMonth[m].push({
-      retPct: t.entryPrice > 0 ? ((tr.price - t.entryPrice) / t.entryPrice) * 100 * dir : 0,
-      holdingDays: daysBetween(t.entryDate, tr.date),
-      pl: tr.qty * (tr.price - t.entryPrice) * dir,
+      retPct: t.totalReturnPct || 0,
+      holdingDays: t.holdingDays || 0,
+      pl: t.totalPL || 0,
     })
-  }))
+  })
 
   // Monthly portfolio return from equity curve
   const monthlyPortRet = {}
@@ -143,13 +144,9 @@ export function computeMonthlyStats(enrichedTrades, performanceData) {
 }
 
 export function computeYtdStats(enrichedTrades, totalReturnPct) {
-  const allExits = []
-  enrichedTrades.forEach(t => (t.trims || []).forEach(tr => {
-    const dir = t.direction === 'long' ? 1 : -1
-    allExits.push({
-      retPct: t.entryPrice > 0 ? ((tr.price - t.entryPrice) / t.entryPrice) * 100 * dir : 0,
-      holdingDays: daysBetween(t.entryDate, tr.date),
-    })
+  const allExits = enrichedTrades.filter(t => t.isClosed).map(t => ({
+    retPct: t.totalReturnPct || 0,
+    holdingDays: t.holdingDays || 0,
   }))
   if (!allExits.length) return null
   const wins = allExits.filter(x => x.retPct > 0)

@@ -6,9 +6,7 @@ const GROUP_ORDER = [
   'Indices',
   'S&P Style',
   'Sel Sectors',
-  'EW Sectors',
   'Industries',
-  'Countries',
 ]
 
 export default function EquitiesSection({ data }) {

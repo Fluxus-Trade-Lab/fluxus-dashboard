@@ -218,10 +218,16 @@ def _save_history(
     history: List[Dict[str, Any]],
     today_entry: Dict[str, Any],
 ) -> None:
-    """Append today's entry and save rolling history."""
+    """Append today's entry and save rolling history.
+
+    If today's date already exists in history, replace it (idempotent).
+    """
     path = Path(history_path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    combined = history + [today_entry]
+    today_date = today_entry.get('date')
+    # Remove any existing entry for today (idempotent re-runs)
+    deduped = [e for e in history if e.get('date') != today_date]
+    combined = deduped + [today_entry]
     combined = combined[-_HISTORY_DAYS:]
     try:
         path.write_text(json.dumps(combined, indent=2), encoding='utf-8')
@@ -317,7 +323,14 @@ def run(
     _append_csv(csv_path, csv_row)
 
     # 8. Build history for frontend (chart arrays + full rows for table)
-    all_entries = history + [today_entry]
+    # Deduplicate by date (today_entry replaces any existing same-date entry)
+    seen_dates = set()
+    all_entries = []
+    for e in history + [today_entry]:
+        d = e.get('date')
+        if d not in seen_dates:
+            seen_dates.add(d)
+            all_entries.append(e)
     history_output = {
         # Chart arrays (used by BreadthCharts.jsx)
         'dates': [e['date'] for e in all_entries],

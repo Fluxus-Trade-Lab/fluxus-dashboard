@@ -36,4 +36,4 @@ export const SECTOR_COLORS = [
   '#6db6b0', '#b8a960', '#a87fb8', '#7da6c4', '#c4917d', '#82b882',
 ]
 
-export const TABS = ['P/L', 'Exposure', 'Performance', 'Monthly', 'Risk', 'Stop Sim', 'Options']
+export const TABS = ['Overview', 'Exposure', 'Risk', 'Options Port']

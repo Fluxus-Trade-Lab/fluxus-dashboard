@@ -32,6 +32,9 @@ _MIN_REL_VOLUME = 0.5
 # RS bracket edges (descending).
 _RS_BRACKETS: list[int] = list(range(100, -1, -5))
 
+# Minimum RS bracket to include in output.
+_MIN_RS_BRACKET = 80
+
 
 def _perf_3m_rs(series: pd.Series) -> pd.Series:
     """Return 0-100 percentile rank of *series* across the universe."""
@@ -120,6 +123,9 @@ def run(universe: pd.DataFrame) -> Dict[str, Any]:
 
     # Assign bracket labels.
     hits["bracket"] = hits["rs"].apply(_bracket_label)
+
+    # Filter to RS >= _MIN_RS_BRACKET only.
+    hits = hits.loc[hits["bracket"] >= _MIN_RS_BRACKET]
 
     # Build output grouped by RS bracket.
     rs_groups: Dict[str, List[Dict[str, Any]]] = {}

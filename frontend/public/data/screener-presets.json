@@ -1,54 +1,107 @@
 [
   {
+    "name": "21EMA Watch",
+    "readonly": true,
+    "filters": {
+      "marketCapMin": 1.0,
+      "excludeHealthcare": true,
+      "trendBaseOnly": true,
+      "weeklyPct": { "enabled": true, "min": 0, "max": 15 },
+      "dcrPct": { "enabled": true, "min": 20, "max": 100 },
+      "ema21Atr": { "enabled": true, "min": -0.5, "max": 1 },
+      "sma50Atr": { "enabled": true, "min": 0, "max": 3 },
+      "ppCount": { "enabled": true, "min": 1, "max": 999 },
+      "adrPct": { "enabled": true, "min": 3.5, "max": 10 }
+    }
+  },
+  {
+    "name": "4% Bullish",
+    "readonly": true,
+    "filters": {
+      "marketCapMin": 1.0,
+      "excludeHealthcare": true,
+      "dailyPct": { "enabled": true, "min": 4, "max": 999 },
+      "relVolume": { "enabled": true, "min": 1, "max": 999 },
+      "fromOpenPct": { "enabled": true, "min": 0, "max": 999 },
+      "rs21d": { "enabled": true, "min": 60, "max": 99 },
+      "adrPct": { "enabled": true, "min": 3.5, "max": 10 }
+    }
+  },
+  {
+    "name": "Vol Up Gainers",
+    "readonly": true,
+    "filters": {
+      "marketCapMin": 1.0,
+      "excludeHealthcare": true,
+      "dailyPct": { "enabled": true, "min": 0, "max": 999 },
+      "relVolume": { "enabled": true, "min": 1.5, "max": 999 },
+      "adrPct": { "enabled": true, "min": 3.5, "max": 10 }
+    }
+  },
+  {
+    "name": "Momentum 97",
+    "readonly": true,
+    "filters": {
+      "excludeHealthcare": true,
+      "trendBaseOnly": true,
+      "perf1wPctile": { "enabled": true, "min": 0.97, "max": 1 },
+      "perf3mPctile": { "enabled": true, "min": 0.85, "max": 1 },
+      "adrPct": { "enabled": true, "min": 3.5, "max": 10 }
+    }
+  },
+  {
+    "name": "97 Club",
+    "readonly": true,
+    "filters": {
+      "marketCapMin": 1.0,
+      "excludeHealthcare": true,
+      "trendBaseOnly": true,
+      "hScore": { "enabled": true, "min": 80, "max": 99 },
+      "rs21d": { "enabled": true, "min": 97, "max": 99 },
+      "adrPct": { "enabled": true, "min": 3.5, "max": 10 }
+    }
+  },
+  {
+    "name": "VCS Setup",
+    "readonly": true,
+    "filters": {
+      "marketCapMin": 1.0,
+      "excludeHealthcare": true,
+      "vcs": { "enabled": true, "min": 60, "max": 100 },
+      "rs21d": { "enabled": true, "min": 60, "max": 99 },
+      "adrPct": { "enabled": true, "min": 3.5, "max": 10 }
+    }
+  },
+  {
+    "name": "Pocket Pivot",
+    "readonly": true,
+    "filters": {
+      "marketCapMin": 1.0,
+      "excludeHealthcare": true,
+      "pocketPivotOnly": true,
+      "trendBaseOnly": true,
+      "adrPct": { "enabled": true, "min": 3.5, "max": 10 }
+    }
+  },
+  {
+    "name": "PP Count",
+    "readonly": true,
+    "filters": {
+      "marketCapMin": 1.0,
+      "excludeHealthcare": true,
+      "trendBaseOnly": true,
+      "ppCount": { "enabled": true, "min": 3, "max": 999 },
+      "adrPct": { "enabled": true, "min": 3.5, "max": 10 }
+    }
+  },
+  {
     "name": "Weekly 20%+ Gainers",
     "readonly": true,
     "filters": {
       "marketCapMin": 1.0,
-      "vol50dMin": 1.0,
       "excludeHealthcare": true,
       "weeklyPct": { "enabled": true, "min": 20, "max": 500 },
-      "adrPct": { "enabled": true, "min": 3.5, "max": 20 }
-    }
-  },
-  {
-    "name": "EMA 21 Pullback (RS 80+)",
-    "readonly": true,
-    "filters": {
-      "marketCapMin": 1.0,
-      "sma20Dist": { "enabled": true, "min": -2, "max": 3 },
-      "sma50Dist": { "enabled": true, "min": 0, "max": 999 },
-      "sma200Dist": { "enabled": true, "min": 0, "max": 999 },
-      "rs63d": { "enabled": true, "min": 80, "max": 99 }
-    }
-  },
-  {
-    "name": "Momentum Leaders (IBD 90+)",
-    "readonly": true,
-    "filters": {
-      "marketCapMin": 1.0,
-      "rsIbd": { "enabled": true, "min": 90, "max": 99 },
-      "sma50Dist": { "enabled": true, "min": 0, "max": 999 },
-      "monthlyPct": { "enabled": true, "min": 0, "max": 999 }
-    }
-  },
-  {
-    "name": "Healthy Consolidation",
-    "readonly": true,
-    "filters": {
-      "marketCapMin": 1.0,
-      "high52wDist": { "enabled": true, "min": -25, "max": -5 },
-      "monthlyPct": { "enabled": true, "min": 0, "max": 999 },
-      "sma50Dist": { "enabled": true, "min": 0, "max": 999 },
-      "sma200Dist": { "enabled": true, "min": 0, "max": 999 }
-    }
-  },
-  {
-    "name": "Episodic Gaps",
-    "readonly": true,
-    "filters": {
-      "marketCapMin": 0.5,
-      "dailyPct": { "enabled": true, "min": 10, "max": 999 },
-      "relVolume": { "enabled": true, "min": 3, "max": 999 }
+      "adrPct": { "enabled": true, "min": 3.5, "max": 10 }
     }
   }
 ]

@@ -1,13 +1,38 @@
 import { useRef, useEffect, useCallback } from 'react'
 import { createChart, ColorType, LineSeries } from 'lightweight-charts'
 
+// Deduplicate history by date (keep last occurrence) to prevent
+// lightweight-charts from crashing on duplicate timestamps.
+function dedupeHistory(history) {
+  if (!history?.dates?.length) return history
+  const seen = new Set()
+  const indices = []
+  for (let i = history.dates.length - 1; i >= 0; i--) {
+    if (!seen.has(history.dates[i])) {
+      seen.add(history.dates[i])
+      indices.unshift(i)
+    }
+  }
+  const pick = (arr) => indices.map((i) => arr[i])
+  return {
+    ...history,
+    dates: pick(history.dates),
+    pct_above_200sma: pick(history.pct_above_200sma),
+    pct_above_50sma: pick(history.pct_above_50sma),
+    pct_above_20sma: pick(history.pct_above_20sma),
+    mcclellan_osc: pick(history.mcclellan_osc),
+  }
+}
+
 export default function BreadthCharts({ data }) {
   if (!data?.history) return null
 
+  const history = dedupeHistory(data.history)
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-      <MaChart history={data.history} />
-      <McClellanChart history={data.history} />
+      <MaChart history={history} />
+      <McClellanChart history={history} />
     </div>
   )
 }

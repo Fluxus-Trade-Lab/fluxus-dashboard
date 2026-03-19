@@ -32,11 +32,23 @@ export function applyFilters(rows, filters, tickerSearch) {
     result = result.filter(r => r.sector !== 'Healthcare')
   }
 
+  // Boolean flag filters
+  if (filters.trendBaseOnly) {
+    result = result.filter(r => r.trend_base === true)
+  }
+  if (filters.pocketPivotOnly) {
+    result = result.filter(r => r.pocket_pivot === true)
+  }
+  if (filters.momentum97Only) {
+    result = result.filter(r => r.momentum_97 === true)
+  }
+
   // Range filters — pct values (stored as decimals in data, user enters whole %)
   const pctRanges = [
     ['dailyPct', 'change_pct'],
     ['weeklyPct', 'perf_1w'],
     ['monthlyPct', 'perf_1m'],
+    ['fromOpenPct', 'from_open_pct'],
   ]
   for (const [filterKey, dataKey] of pctRanges) {
     const f = filters[filterKey]
@@ -70,6 +82,35 @@ export function applyFilters(rows, filters, tickerSearch) {
     }
   }
 
+  // ATR-distance ranges (data is R-multiple, user enters R value directly)
+  const atrRanges = [
+    ['ema21Atr', 'ema21_r'],
+    ['sma50Atr', 'sma50_r'],
+  ]
+  for (const [filterKey, dataKey] of atrRanges) {
+    const f = filters[filterKey]
+    if (f?.enabled) {
+      result = result.filter(r => {
+        if (r[dataKey] == null) return false
+        if (f.min !== '' && f.min != null && r[dataKey] < f.min) return false
+        if (f.max !== '' && f.max != null && r[dataKey] > f.max) return false
+        return true
+      })
+    }
+  }
+
+  // 21EMA Low Dist% (data is decimal, user enters %)
+  if (filters.ema21LowDist?.enabled) {
+    const f = filters.ema21LowDist
+    result = result.filter(r => {
+      const val = r.ema21_low_dist != null ? r.ema21_low_dist * 100 : null
+      if (val == null) return false
+      if (f.min !== '' && f.min != null && val < f.min) return false
+      if (f.max !== '' && f.max != null && val > f.max) return false
+      return true
+    })
+  }
+
   // ADR% (data already in %, no conversion needed)
   if (filters.adrPct?.enabled) {
     const f = filters.adrPct
@@ -81,12 +122,69 @@ export function applyFilters(rows, filters, tickerSearch) {
     })
   }
 
+  // VCS (data is 0-100, no conversion)
+  if (filters.vcs?.enabled) {
+    const f = filters.vcs
+    result = result.filter(r => {
+      if (r.vcs == null) return false
+      if (f.min !== '' && f.min != null && r.vcs < f.min) return false
+      if (f.max !== '' && f.max != null && r.vcs > f.max) return false
+      return true
+    })
+  }
+
+  // DCR% (data is decimal 0-1, user enters 0-100)
+  if (filters.dcrPct?.enabled) {
+    const f = filters.dcrPct
+    result = result.filter(r => {
+      const val = r.dcr_pct != null ? r.dcr_pct * 100 : null
+      if (val == null) return false
+      if (f.min !== '' && f.min != null && val < f.min) return false
+      if (f.max !== '' && f.max != null && val > f.max) return false
+      return true
+    })
+  }
+
+  // PP Count (raw integer, no conversion)
+  if (filters.ppCount?.enabled) {
+    const f = filters.ppCount
+    result = result.filter(r => {
+      const val = r.pp_count_30d
+      if (val == null) return false
+      if (f.min !== '' && f.min != null && val < f.min) return false
+      if (f.max !== '' && f.max != null && val > f.max) return false
+      return true
+    })
+  }
+
   // RS score ranges (data is 0-99 integer)
   const rsRanges = [
-    ['rsIbd', 'rs_ibd'],
+    ['hScore', 'h_score'],
+    ['fScore', 'f_score'],
+    ['iScore', 'i_score'],
+    ['rs21d', 'rs_21d'],
     ['rs63d', 'rs_63d'],
+    ['rs126d', 'rs_126d'],
+    ['rsIbd', 'rs_ibd'],
   ]
   for (const [filterKey, dataKey] of rsRanges) {
+    const f = filters[filterKey]
+    if (f?.enabled) {
+      result = result.filter(r => {
+        if (r[dataKey] == null) return false
+        if (f.min !== '' && f.min != null && r[dataKey] < f.min) return false
+        if (f.max !== '' && f.max != null && r[dataKey] > f.max) return false
+        return true
+      })
+    }
+  }
+
+  // Percentile ranges (data is 0-1, user enters 0-1 directly)
+  const pctileRanges = [
+    ['perf1wPctile', 'perf_1w_pctile'],
+    ['perf3mPctile', 'perf_3m_pctile'],
+  ]
+  for (const [filterKey, dataKey] of pctileRanges) {
     const f = filters[filterKey]
     if (f?.enabled) {
       result = result.filter(r => {

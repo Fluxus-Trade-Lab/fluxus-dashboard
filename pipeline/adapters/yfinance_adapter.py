@@ -100,6 +100,102 @@ def calculate_rrs(stock_data: pd.DataFrame, spy_data: pd.DataFrame,
         return None
 
 
+def calculate_vcs(hist: pd.DataFrame, len_short: int = 13, len_long: int = 63,
+                   len_vol: int = 50, sensitivity: float = 2.0,
+                   trend_penalty_weight: float = 1.0, hl_lookback: int = 63,
+                   penalty_factor: float = 0.75, bonus_max: int = 15) -> float | None:
+    """Volatility Contraction Score (0-100).
+    Ported from Pine Script by @oratnek_ill, with two enhancements:
+
+    B (Adaptive Volatility): Uses min(13-day, 3-day) stdev so the score
+       enters tight regime fast after a pole (3-day drops first) and exits
+       slowly during breakout (13-day holds longer).
+
+    D (Trend Quality): Replaces the original efficiency penalty with a
+       dual-timeframe Kaufman ER differential. Rewards "coiled springs"
+       (strong long-term trend + tight short-term) instead of penalizing
+       momentum poles.
+    """
+    try:
+        n = len(hist)
+        if n < len_long + len_short:
+            return None
+
+        close = hist['Close']
+        high = hist['High']
+        low = hist['Low']
+        vol = hist['Volume']
+
+        # True Range
+        tr = pd.concat([
+            high - low,
+            (high - close.shift()).abs(),
+            (low - close.shift()).abs(),
+        ], axis=1).max(axis=1)
+
+        # A. Price Compression: short ATR / long ATR
+        tr_short = tr.rolling(len_short).mean()
+        tr_long = tr.rolling(len_long).mean()
+        ratio_atr = tr_short / tr_long.clip(lower=1e-6)
+
+        # B. Adaptive Price Stability: min(slow, fast) stdev / long stdev
+        #    Fast to enter tight regime, slow to leave during breakout
+        std_short_slow = close.rolling(len_short).std()
+        std_short_fast = close.rolling(3).std()
+        std_short = pd.concat([std_short_slow, std_short_fast], axis=1).min(axis=1)
+        std_long = close.rolling(len_long).std()
+        ratio_std = std_short / std_long.clip(lower=1e-6)
+
+        # C. Volume Contraction: 5-day vol / 50-day vol
+        vol_avg = vol.rolling(len_vol).mean()
+        vol_short_avg = vol.rolling(5).mean()
+        vol_ratio = vol_short_avg / vol_avg.clip(lower=1.0)
+
+        # D. Trend Quality: dual-timeframe Kaufman ER differential
+        #    High long-term ER (strong trend) + low short-term ER (tight) = high score
+        def _kaufman_er(series, length):
+            net = (series - series.shift(length)).abs()
+            gross = series.diff().abs().rolling(length).sum()
+            return net / gross.clip(lower=1e-6)
+
+        er_long = _kaufman_er(close, len_long)
+        er_short = _kaufman_er(close, len_short)
+        gap = er_long - er_short
+        quality_score = (0.4 + gap * trend_penalty_weight).clip(0.0, 1.0)
+
+        # Score components: ATR 30%, StdDev 30%, Volume 20%, Trend Quality 20%
+        s_atr = (1.0 - ratio_atr.fillna(1.0)).clip(lower=0.0) * sensitivity
+        s_std = (1.0 - ratio_std.fillna(1.0)).clip(lower=0.0) * sensitivity
+        s_vol = (1.0 - vol_ratio.fillna(1.0)).clip(lower=0.0)
+
+        raw_score = s_atr * 0.3 + s_std * 0.3 + s_vol * 0.2 + quality_score * 0.2
+        physics_score = (raw_score * 100).clip(upper=100)
+        smooth_physics = physics_score.ewm(span=3, adjust=False).mean()
+
+        # Consistency bonus: consecutive days >= 70
+        is_tight = smooth_physics >= 70
+        groups = (~is_tight).cumsum()
+        days_tight = is_tight.groupby(groups).cumsum()
+
+        weight_physics = (100.0 - bonus_max) / 100.0
+        weighted_physics = smooth_physics * weight_physics
+        consistency = days_tight.clip(upper=bonus_max)
+        total_score = weighted_physics + consistency
+
+        # E. Structure check: higher low
+        low_recent = low.rolling(len_short).min()
+        low_base = low.rolling(hl_lookback).min().shift(len_short)
+        is_higher_low = low_recent >= low_base
+
+        final_score = total_score.copy()
+        final_score[~is_higher_low] *= penalty_factor
+        final_score = final_score.fillna(0.0)
+
+        return round(float(final_score.iloc[-1]), 1)
+    except Exception:
+        return None
+
+
 def calculate_abc_rating(hist_data: pd.DataFrame) -> str | None:
     """ABC trend rating. Cherry-picked from existing codebase.
     A = EMA10 > EMA20 > SMA50 (strong uptrend)
@@ -274,6 +370,52 @@ class YfinanceAdapter(BaseAdapter):
                 avg_vol = float(hist['Volume'].rolling(20).mean().iloc[-1])
                 vol = float(hist['Volume'].iloc[-1])
 
+                # --- New fields ---
+                last_open = float(hist['Open'].iloc[-1])
+                last_high = float(hist['High'].iloc[-1])
+                last_low = float(hist['Low'].iloc[-1])
+                ema21 = float(hist['Close'].ewm(span=21, adjust=False).mean().iloc[-1])
+
+                # From Open %: intraday move from open
+                from_open_pct = (close - last_open) / last_open if last_open > 0 else None
+
+                # DCR%: Daily Closing Range (close - low) / (high - low)
+                hl_range = last_high - last_low
+                dcr_pct = (close - last_low) / hl_range if hl_range > 0 else None
+
+                # Pocket Pivot: green candle + vol > max(prior 10 bars vol)
+                pp = False
+                pp_count = 0
+                if n >= 11:
+                    closes = hist['Close'].values
+                    opens = hist['Open'].values
+                    vols = hist['Volume'].values
+                    # Last bar pocket pivot
+                    if closes[-1] > opens[-1]:
+                        max_prior_vol = max(vols[-11:-1])
+                        pp = bool(vols[-1] > max_prior_vol)
+                    # Count pocket pivots in last 30 bars
+                    lookback = min(n, 30)
+                    for j in range(max(11, n - lookback), n):
+                        if closes[j] > opens[j] and vols[j] > max(vols[max(0, j-10):j]):
+                            pp_count += 1
+
+                # Trend Base: price > 50SMA AND 10WMA > 30WMA
+                trend_base = False
+                if sma50 is not None and close > sma50:
+                    # Resample to weekly for WMA
+                    weekly = hist['Close'].resample('W').last().dropna()
+                    if len(weekly) >= 30:
+                        wma10 = float(weekly.rolling(10).mean().iloc[-1])
+                        wma30 = float(weekly.rolling(30).mean().iloc[-1])
+                        trend_base = bool(wma10 > wma30)
+
+                # VCS
+                vcs = calculate_vcs(hist)
+
+                # 21EMA Low Dist%: how far today's low is from 21EMA
+                ema21_low_dist = (last_low - ema21) / ema21 if ema21 > 0 else None
+
                 enriched[ticker] = {
                     'perf_1w': (close / float(hist['Close'].iloc[-5]) - 1) if n >= 5 else None,
                     'perf_1m': (close / float(hist['Close'].iloc[-21]) - 1) if n >= 21 else None,
@@ -290,6 +432,13 @@ class YfinanceAdapter(BaseAdapter):
                     'avg_volume': avg_vol,
                     'high_52w': (close / float(hist['High'].max()) - 1),
                     'low_52w': (close / float(hist['Low'].min()) - 1),
+                    'from_open_pct': from_open_pct,
+                    'dcr_pct': dcr_pct,
+                    'pocket_pivot': pp,
+                    'pp_count_30d': pp_count,
+                    'trend_base': trend_base,
+                    'vcs': vcs,
+                    'ema21_low_dist': ema21_low_dist,
                 }
             except Exception as e:
                 logger.debug(f"  Enrich failed for {ticker}: {e}")

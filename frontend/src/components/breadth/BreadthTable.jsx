@@ -2,8 +2,16 @@ export default function BreadthTable({ data }) {
   const rows = data?.history?.rows
   if (!rows?.length) return null
 
-  // Reverse so newest date is first
-  const sorted = [...rows].reverse()
+  // Deduplicate by date (keep last), reverse so newest is first
+  const seen = new Set()
+  const deduped = []
+  for (let i = rows.length - 1; i >= 0; i--) {
+    if (!seen.has(rows[i].date)) {
+      seen.add(rows[i].date)
+      deduped.unshift(rows[i])
+    }
+  }
+  const sorted = [...deduped].reverse()
 
   return (
     <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded overflow-hidden">

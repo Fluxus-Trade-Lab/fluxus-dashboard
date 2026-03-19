@@ -1,6 +1,7 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef } from 'react'
 import { usePortfolio } from '../context/PortfolioContext'
 import { fmtCur, fmtPct, fmtPctSigned, clr, clrHex, todayStr, daysBetween, MASK, priv } from '../lib/portfolioFormat'
+import { downloadFile } from '../lib/csv'
 import StatCard from '../ui/StatCard'
 import Button from '../ui/Button'
 import InputField from '../ui/InputField'
@@ -66,6 +67,69 @@ function shortDate(d) {
   return `${parseInt(m)}/${parseInt(day)}`
 }
 
+/* ── CSV helpers ── */
+const OPT_HEADERS = ['Ticker', 'Strike', 'Expiry', 'Entry Date', 'Weight', 'Cost Avg', 'Exit Price', 'Exit Date', 'Notes']
+
+const escCsv = (v) => {
+  const s = String(v ?? '')
+  return s.includes(',') || s.includes('"') || s.includes('\n') ? '"' + s.replace(/"/g, '""') + '"' : s
+}
+
+function generateOptionsCSV(trades, capital) {
+  const rows = trades.map(t => [
+    t.ticker, t.strike, t.expiry, t.entryDate, t.weight,
+    t.costAvg, t.exitPrice ?? '', t.exitDate ?? '', t.notes ?? '',
+  ])
+  return [
+    '_meta,optionsCapital,' + capital,
+    '_meta,exportDate,' + todayStr(),
+    OPT_HEADERS.map(escCsv).join(','),
+    ...rows.map(r => r.map(escCsv).join(',')),
+  ].join('\n')
+}
+
+function parseOptionsCSV(text) {
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean)
+  let capital = null
+  const metaRows = lines.filter(l => l.startsWith('_meta,'))
+  metaRows.forEach(l => {
+    const parts = l.split(',')
+    if (parts[1] === 'optionsCapital') capital = parseFloat(parts[2])
+  })
+  const headerIdx = lines.findIndex(l => l.startsWith('Ticker'))
+  if (headerIdx === -1) return { trades: [], capital }
+  const headers = lines[headerIdx].split(',').map(h => h.trim().replace(/^"|"$/g, ''))
+  const dataRows = lines.slice(headerIdx + 1)
+    .filter(l => l && !l.startsWith('_meta'))
+    .map(l => {
+      // Handle quoted fields with commas
+      const vals = []
+      let cur = '', inQ = false
+      for (const ch of l) {
+        if (ch === '"') { inQ = !inQ }
+        else if (ch === ',' && !inQ) { vals.push(cur.trim()); cur = '' }
+        else { cur += ch }
+      }
+      vals.push(cur.trim())
+      const obj = {}
+      headers.forEach((h, i) => { obj[h] = (vals[i] || '').replace(/^"|"$/g, '') })
+      return obj
+    })
+  const trades = dataRows.filter(r => r.Ticker).map((r, i) => ({
+    id: Date.now().toString() + '_' + i,
+    ticker: (r.Ticker || '').toUpperCase(),
+    strike: r.Strike || '',
+    expiry: r.Expiry || '',
+    entryDate: r['Entry Date'] || todayStr(),
+    weight: parseFloat(r.Weight) || 1,
+    costAvg: parseFloat(r['Cost Avg']) || 0,
+    exitPrice: r['Exit Price'] ? parseFloat(r['Exit Price']) : null,
+    exitDate: r['Exit Date'] || null,
+    notes: r.Notes || '',
+  }))
+  return { trades, capital }
+}
+
 export default function OptionsTab() {
   const { state, dispatch } = usePortfolio()
   const [showForm, setShowForm] = useState(false)
@@ -75,6 +139,9 @@ export default function OptionsTab() {
   const [capitalInput, setCapitalInput] = useState('')
   const [showOpenOnly, setShowOpenOnly] = useState(false)
   const [expandedNotes, setExpandedNotes] = useState({})
+  const [editingNotes, setEditingNotes] = useState(null)
+  const [editingNotesValue, setEditingNotesValue] = useState('')
+  const fileInputRef = useRef(null)
 
   const pm = state.privacyMode
   const allTrades = state.optionsTrades
@@ -141,11 +208,33 @@ export default function OptionsTab() {
     })
   }
 
+  const handleExport = () => {
+    const csv = generateOptionsCSV(allTrades, state.optionsCapital)
+    downloadFile(csv, `options_${todayStr()}.csv`, 'text/csv')
+  }
+
+  const handleImport = (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      try {
+        const result = parseOptionsCSV(ev.target.result)
+        dispatch({ type: 'IMPORT_OPTIONS_DATA', trades: result.trades, capital: result.capital })
+      } catch (err) {
+        alert('Import failed: ' + err.message)
+      }
+    }
+    reader.readAsText(file)
+    e.target.value = ''
+  }
+
   const thStyle = 'text-left px-2.5 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[10px] uppercase tracking-wide whitespace-nowrap'
   const tdStyle = 'px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-xs'
 
   return (
     <div>
+      <input ref={fileInputRef} type="file" accept=".csv" className="hidden" onChange={handleImport} />
       {/* Stats row */}
       <div className="flex gap-3 flex-wrap mb-5">
         <div
@@ -208,6 +297,10 @@ export default function OptionsTab() {
             Open Only
           </button>
         )}
+        {allTrades.length > 0 && (
+          <Button variant="ghost" onClick={handleExport}>Export CSV</Button>
+        )}
+        <Button variant="ghost" onClick={() => fileInputRef.current?.click()}>Import CSV</Button>
         {allTrades.length === 0 && (
           <Button variant="ghost" onClick={handleLoadSample}>Try Sample</Button>
         )}
@@ -261,12 +354,33 @@ export default function OptionsTab() {
                         {wtd != null ? (pm ? MASK : fmtPctSigned(wtd)) : '—'}
                       </td>
                       <td className={`${tdStyle} text-[var(--color-text-secondary)]`}>{days}</td>
-                      <td
-                        className={`${tdStyle} text-[11px] text-[var(--color-text-muted)] ${expandedNotes[t.id] ? 'whitespace-normal max-w-[320px]' : 'max-w-[180px] truncate'} ${t.notes ? 'cursor-pointer hover:text-[var(--color-text-secondary)]' : ''}`}
-                        onClick={() => t.notes && setExpandedNotes(prev => ({ ...prev, [t.id]: !prev[t.id] }))}
-                        title={expandedNotes[t.id] ? 'Click to collapse' : t.notes}
-                      >
-                        {t.notes || '—'}
+                      <td className={`${tdStyle} text-[11px] text-[var(--color-text-muted)] max-w-[220px]`}>
+                        {editingNotes === t.id ? (
+                          <input
+                            type="text"
+                            value={editingNotesValue}
+                            onChange={e => setEditingNotesValue(e.target.value)}
+                            onBlur={() => {
+                              dispatch({ type: 'UPDATE_OPTIONS_TRADE', id: t.id, updates: { notes: editingNotesValue } })
+                              setEditingNotes(null)
+                            }}
+                            onKeyDown={e => {
+                              if (e.key === 'Enter') e.target.blur()
+                              if (e.key === 'Escape') setEditingNotes(null)
+                            }}
+                            autoFocus
+                            className="w-full bg-transparent border border-[var(--color-input-border)] rounded px-1 py-0.5 text-[11px] text-[var(--color-text-secondary)] outline-none"
+                          />
+                        ) : (
+                          <span
+                            className={`${expandedNotes[t.id] ? 'whitespace-normal' : 'truncate block'} cursor-pointer hover:text-[var(--color-text-secondary)]`}
+                            onClick={() => setExpandedNotes(prev => ({ ...prev, [t.id]: !prev[t.id] }))}
+                            onDoubleClick={() => { setEditingNotes(t.id); setEditingNotesValue(t.notes || '') }}
+                            title="Click to expand, double-click to edit"
+                          >
+                            {t.notes || '—'}
+                          </span>
+                        )}
                       </td>
                       <td className={tdStyle}>
                         {isOpen ? (

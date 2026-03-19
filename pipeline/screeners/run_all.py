@@ -213,9 +213,28 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     for col in ['rs_21d', 'rs_63d', 'rs_126d', 'rs_ibd', 'f_score', 'i_score', 'h_score']:
         df[col] = df[col].round(0).astype('Int64')
 
+    # --- Performance percentile ranks (0-1 scale, relative to full universe) ---
+    if 'perf_1w' in df.columns:
+        df['perf_1w_pctile'] = df['perf_1w'].rank(pct=True, na_option='bottom').round(4)
+    if 'perf_3m' in df.columns:
+        df['perf_3m_pctile'] = df['perf_3m'].rank(pct=True, na_option='bottom').round(4)
+
+    # --- Momentum 97 flag: 1W pctile >= 0.97 AND 3M pctile >= 0.85 ---
+    _w = df.get('perf_1w_pctile', pd.Series(0, index=df.index))
+    _m = df.get('perf_3m_pctile', pd.Series(0, index=df.index))
+    df['momentum_97'] = (_w >= 0.97) & (_m >= 0.85)
+
     # Round derived columns to 4 decimals
     for col in ['adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist']:
         df[col] = df[col].round(4)
+
+    # Round new enrichment columns
+    for col in ['from_open_pct', 'dcr_pct', 'ema21_low_dist']:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors='coerce').round(4)
+
+    if 'vcs' in df.columns:
+        df['vcs'] = pd.to_numeric(df['vcs'], errors='coerce').round(1)
 
     return df
 
@@ -342,6 +361,9 @@ def main():
         'rs_21d', 'rs_63d', 'rs_126d', 'rs_ibd',
         'f_score', 'i_score', 'h_score',
         'adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist',
+        'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d',
+        'trend_base', 'vcs', 'ema21_low_dist',
+        'perf_1w_pctile', 'perf_3m_pctile', 'momentum_97',
     ]
     export_cols = [c for c in universe_cols if c in scored_universe.columns]
     # Convert to object dtype so NaN becomes None (valid JSON null, not NaN)

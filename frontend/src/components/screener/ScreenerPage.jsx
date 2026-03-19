@@ -5,6 +5,7 @@ import { applyFilters } from '../../lib/screenerFilter'
 import PresetBar from './PresetBar'
 import FilterPanel from './FilterPanel'
 import ResultsTable from './ResultsTable'
+import WatchlistTab from './WatchlistTab'
 
 const DEFAULT_FILTERS = {
   marketCapEnabled: true,
@@ -14,12 +15,16 @@ const DEFAULT_FILTERS = {
   excludeHealthcare: false,
 }
 
+const TABS = ['Screener', 'Watchlist']
+
 export default function ScreenerPage() {
   const { universe, loading } = useUniverse()
   const { allPresets, activePreset, setActivePreset, savePreset, deletePreset } = usePresets()
   const [filters, setFilters] = useState(DEFAULT_FILTERS)
   const [tickerSearch, setTickerSearch] = useState('')
   const [results, setResults] = useState(null)
+  const [activeTab, setActiveTab] = useState(0)
+  const [copied, setCopied] = useState(false)
 
   const handleSelectPreset = (preset) => {
     setActivePreset(preset)
@@ -30,6 +35,13 @@ export default function ScreenerPage() {
 
   const handleSave = (name) => {
     savePreset(name, filters)
+  }
+
+  const handleReset = () => {
+    setFilters(DEFAULT_FILTERS)
+    setTickerSearch('')
+    setResults(null)
+    setActivePreset(null)
   }
 
   const handleRun = () => {
@@ -49,41 +61,73 @@ export default function ScreenerPage() {
 
   return (
     <div>
-      <PresetBar
-        presets={allPresets}
-        activePreset={activePreset}
-        onSelect={handleSelectPreset}
-        onSave={handleSave}
-        onDelete={(name) => { deletePreset(name); setActivePreset(null) }}
-      />
-
-      <FilterPanel
-        filters={filters}
-        onChange={setFilters}
-        onSearch={setTickerSearch}
-      />
-
-      <div className="flex items-center gap-4 mb-4">
-        <button
-          onClick={handleRun}
-          className="px-4 py-1.5 bg-green-600 text-white text-xs font-semibold uppercase tracking-wide rounded hover:bg-green-700"
-        >
-          Run Screener
-        </button>
-        {results && (
-          <span className="text-green-600 text-sm font-semibold">
-            {results.length} stocks matched
-          </span>
-        )}
+      {/* Tab bar */}
+      <div className="flex gap-0 border-b border-[var(--color-border)] mb-5">
+        {TABS.map((tab, i) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(i)}
+            className={`px-5 py-2.5 font-semibold text-sm cursor-pointer bg-transparent border-none border-b-2 transition-colors ${
+              activeTab === i
+                ? 'border-green-600 text-green-600'
+                : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
       </div>
 
-      {tickerList && (
-        <div className="mb-4 p-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded text-xs font-mono text-[var(--color-text-secondary)] break-all select-all">
-          {tickerList}
-        </div>
+      {activeTab === 0 && (
+        <>
+          <PresetBar
+            presets={allPresets}
+            activePreset={activePreset}
+            onSelect={handleSelectPreset}
+            onSave={handleSave}
+            onDelete={(name) => { deletePreset(name); setActivePreset(null) }}
+            onReset={handleReset}
+          />
+
+          <FilterPanel
+            filters={filters}
+            onChange={setFilters}
+            onSearch={setTickerSearch}
+          />
+
+          <div className="flex items-center gap-4 mb-4">
+            <button
+              onClick={handleRun}
+              className="px-4 py-1.5 bg-green-600 text-white text-xs font-semibold uppercase tracking-wide rounded hover:bg-green-700"
+            >
+              Run Screener
+            </button>
+            {results && (
+              <span className="text-green-600 text-sm font-semibold">
+                {results.length} stocks matched
+              </span>
+            )}
+          </div>
+
+          {tickerList && (
+            <div className="mb-4 p-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded text-xs font-mono text-[var(--color-text-secondary)] break-all select-all flex items-start gap-2">
+              <span className="flex-1">{tickerList}</span>
+              <button
+                onClick={() => { navigator.clipboard.writeText(tickerList); setCopied(true); setTimeout(() => setCopied(false), 1500) }}
+                className="shrink-0 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide border border-[var(--color-border)] rounded bg-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-text-secondary)] cursor-pointer transition-colors"
+              >
+                {copied ? 'Copied' : 'Copy'}
+              </button>
+            </div>
+          )}
+
+          {results && <ResultsTable rows={results} />}
+        </>
       )}
 
-      {results && <ResultsTable rows={results} />}
+      {activeTab === 1 && (
+        <WatchlistTab universe={universe} presets={allPresets} />
+      )}
     </div>
   )
 }

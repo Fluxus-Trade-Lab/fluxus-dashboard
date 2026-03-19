@@ -11,13 +11,19 @@ const COLUMNS = [
   { key: 'ticker', label: 'Ticker', type: 'ticker', width: 'w-16' },
   { key: 'close', label: 'Price', type: 'price', width: 'w-16' },
   { key: 'change_pct', label: 'Chg%', type: 'pct', width: 'w-14' },
+  { key: 'from_open_pct', label: 'Open%', type: 'pct', width: 'w-14' },
   { key: 'perf_1w', label: '1W%', type: 'pct', width: 'w-14' },
   { key: 'perf_1m', label: '1M%', type: 'pct', width: 'w-14' },
   { key: 'adr_pct', label: 'ADR%', type: 'num2', width: 'w-14' },
+  { key: 'dcr_pct', label: 'DCR%', type: 'pct100', width: 'w-14' },
+  { key: 'rel_volume', label: 'RVol', type: 'num2', width: 'w-14' },
   { key: 'avg_volume', label: 'Vol 50d', type: 'vol', width: 'w-16' },
-  { key: 'ema21_r', label: '21EMA R', type: 'ratio', width: 'w-16' },
-  { key: 'sma50_r', label: '50SMA R', type: 'ratio', width: 'w-16' },
-  { key: 'high_52w_dist', label: '52W High', type: 'pct', width: 'w-16' },
+  { key: 'ema21_r', label: '21R', type: 'ratio', width: 'w-12' },
+  { key: 'sma50_r', label: '50R', type: 'ratio', width: 'w-12' },
+  { key: 'ema21_low_dist', label: '21Low%', type: 'pct', width: 'w-14' },
+  { key: 'vcs', label: 'VCS', type: 'vcs', width: 'w-12' },
+  { key: 'pp_count_30d', label: 'PP', type: 'int', width: 'w-10' },
+  { key: 'high_52w_dist', label: '52W', type: 'pct', width: 'w-14' },
   { key: 'sector', label: 'Sector', type: 'text', width: 'w-24' },
 ]
 
@@ -36,15 +42,25 @@ function pctColor(val) {
   return 'text-[var(--color-text-secondary)]'
 }
 
+function vcsColor(val) {
+  if (val == null) return 'text-[var(--color-text-muted)]'
+  if (val >= 80) return 'bg-green-100 text-green-800 font-semibold'
+  if (val >= 60) return 'text-blue-700'
+  return 'text-[var(--color-text-muted)]'
+}
+
 function formatCell(val, type) {
   if (val == null || val === '') return '\u2014'
   switch (type) {
     case 'rs': return Math.round(val)
     case 'pct': return `${(val * 100).toFixed(2)}%`
+    case 'pct100': return `${(val * 100).toFixed(0)}%`
     case 'price': return `$${Number(val).toFixed(2)}`
-    case 'num2': return Number(val).toFixed(2) + '%'
+    case 'num2': return Number(val).toFixed(2)
     case 'ratio': return Number(val).toFixed(2) + 'R'
     case 'vol': return val >= 1e6 ? (val / 1e6).toFixed(1) + 'M' : (val / 1e3).toFixed(0) + 'K'
+    case 'vcs': return Number(val).toFixed(0)
+    case 'int': return Math.round(val)
     case 'ticker': return String(val)
     default: return String(val)
   }
@@ -52,7 +68,8 @@ function formatCell(val, type) {
 
 function cellClass(val, type) {
   if (type === 'rs') return rsColor(val)
-  if (type === 'pct') return pctColor(val)
+  if (type === 'pct' || type === 'pct100') return pctColor(val)
+  if (type === 'vcs') return vcsColor(val)
   if (type === 'ticker') return 'text-blue-700 font-semibold'
   return 'text-[var(--color-text)]'
 }

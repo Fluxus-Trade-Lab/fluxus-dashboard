@@ -153,8 +153,19 @@ function reducer(state, action) {
         ),
       }
 
+    case 'UPDATE_OPTIONS_TRADE':
+      return {
+        ...state,
+        optionsTrades: state.optionsTrades.map(t =>
+          t.id === action.id ? { ...t, ...action.updates } : t
+        ),
+      }
+
     case 'DELETE_OPTIONS_TRADE':
       return { ...state, optionsTrades: state.optionsTrades.filter(t => t.id !== action.id) }
+
+    case 'IMPORT_OPTIONS_DATA':
+      return { ...state, optionsTrades: action.trades, optionsCapital: action.capital ?? state.optionsCapital, optionsCapitalSet: true }
 
     case 'RESET_ALL':
       localStorage.removeItem(STORAGE_KEY)
