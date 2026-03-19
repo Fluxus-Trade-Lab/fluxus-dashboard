@@ -1,4 +1,5 @@
 import { createContext, useContext, useReducer, useEffect } from 'react'
+import { pullFromSheets, pushToSheets } from '../services/sheetsSync'
 
 const STORAGE_KEY = 'portfolio-v4'
 
@@ -18,6 +19,9 @@ const initialState = {
   optionsCapital: 25000,
   optionsTrades: [],
   optionsCapitalSet: false,
+  syncToken: '',
+  syncStatus: 'idle',
+  lastSyncTime: null,
 }
 
 function loadFromStorage() {
@@ -44,6 +48,7 @@ function loadFromStorage() {
           : t
       ),
       optionsCapitalSet: parsed.optionsCapitalSet ?? false,
+      syncToken: parsed.syncToken ?? '',
     }
   } catch {
     return initialState
@@ -120,6 +125,30 @@ function reducer(state, action) {
     case 'SET_GAS_URL':
       return { ...state, gasUrl: action.url }
 
+    case 'SET_SYNC_TOKEN':
+      return { ...state, syncToken: action.token }
+
+    case 'SET_SYNC_STATUS':
+      return {
+        ...state,
+        syncStatus: action.status,
+        lastSyncTime: action.status === 'success' ? new Date().toISOString() : state.lastSyncTime,
+      }
+
+    case 'HYDRATE_FROM_SHEETS':
+      return {
+        ...state,
+        trades: action.stockTrades ?? state.trades,
+        optionsTrades: action.optionsTrades ?? state.optionsTrades,
+        startingCapital: action.meta?.startingCapital ?? state.startingCapital,
+        optionsCapital: action.meta?.optionsCapital ?? state.optionsCapital,
+        benchmarkTicker: action.meta?.benchmarkTicker ?? state.benchmarkTicker,
+        capitalSet: true,
+        optionsCapitalSet: !!(action.meta?.optionsCapital),
+        syncStatus: 'success',
+        lastSyncTime: new Date().toISOString(),
+      }
+
     case 'SET_ACTIVE_TAB':
       return { ...state, activeTab: action.tab }
 
@@ -187,6 +216,24 @@ export function usePortfolio() {
 export function PortfolioProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, null, loadFromStorage)
 
+  // Pull from Sheets on init
+  useEffect(() => {
+    if (!state.gasUrl || !state.syncToken) return
+    let cancelled = false
+    dispatch({ type: 'SET_SYNC_STATUS', status: 'syncing' })
+    pullFromSheets(state.gasUrl, state.syncToken).then(result => {
+      if (cancelled) return
+      if (result.ok) {
+        dispatch({ type: 'HYDRATE_FROM_SHEETS', ...result })
+      } else {
+        console.warn('Sheets pull failed, using localStorage:', result.error)
+        dispatch({ type: 'SET_SYNC_STATUS', status: 'error' })
+      }
+    })
+    return () => { cancelled = true }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   // Persist to localStorage (debounced)
   useEffect(() => {
     if (!state.capitalSet && state.trades.length === 0 && state.optionsTrades.length === 0) return
@@ -204,11 +251,33 @@ export function PortfolioProvider({ children }) {
           optionsCapital: state.optionsCapital,
           optionsTrades: state.optionsTrades,
           optionsCapitalSet: state.optionsCapitalSet,
+          syncToken: state.syncToken,
         })
       )
     }, 500)
     return () => clearTimeout(t)
   }, [state.startingCapital, state.trades, state.dailyPrices, state.benchmarkHistories, state.gasUrl, state.benchmarkTicker, state.capitalSet, state.optionsCapital, state.optionsTrades, state.optionsCapitalSet])
+
+  // Auto-push to Sheets (debounced 2s)
+  useEffect(() => {
+    if (!state.gasUrl || !state.syncToken) return
+    if (!state.capitalSet && state.trades.length === 0) return
+    const t = setTimeout(() => {
+      dispatch({ type: 'SET_SYNC_STATUS', status: 'syncing' })
+      pushToSheets(state.gasUrl, state.syncToken, {
+        stockTrades: state.trades,
+        optionsTrades: state.optionsTrades,
+        meta: {
+          startingCapital: state.startingCapital,
+          optionsCapital: state.optionsCapital,
+          benchmarkTicker: state.benchmarkTicker,
+        },
+      }).then(result => {
+        dispatch({ type: 'SET_SYNC_STATUS', status: result.ok ? 'success' : 'error' })
+      })
+    }, 2000)
+    return () => clearTimeout(t)
+  }, [state.trades, state.optionsTrades, state.startingCapital, state.optionsCapital, state.benchmarkTicker, state.gasUrl, state.syncToken, state.capitalSet, dispatch])
 
   return (
     <PortfolioContext.Provider value={{ state, dispatch }}>
