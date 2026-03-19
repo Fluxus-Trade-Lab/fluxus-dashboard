@@ -38,9 +38,10 @@ export async function pushToSheets(gasUrl, token, { stockTrades, optionsTrades, 
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS)
 
   try {
+    // Use text/plain to avoid CORS preflight (GAS doesn't support OPTIONS)
     const res = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({ action: 'sync_all', token, stockTrades, optionsTrades, meta }),
       signal: controller.signal,
     })
