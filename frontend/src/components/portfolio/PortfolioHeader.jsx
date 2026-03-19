@@ -12,7 +12,21 @@ export default function Header({ portfolioValue, totalPL, totalReturnPct, cashAv
   return (
     <div className="px-6 py-4 border-b border-[var(--color-border)] flex items-center justify-between flex-wrap gap-3">
       <div>
-        <div className="text-lg font-bold">Portfolio Tracker</div>
+        <div className="text-lg font-bold flex items-center gap-1.5">
+          Portfolio Tracker
+          {state.gasUrl && state.syncToken && (
+            <span className="text-xs" title={
+              state.syncStatus === 'success' ? `Synced ${state.lastSyncTime ? new Date(state.lastSyncTime).toLocaleTimeString() : ''}` :
+              state.syncStatus === 'syncing' ? 'Syncing...' :
+              state.syncStatus === 'error' ? 'Sync failed' : 'Not synced'
+            }>
+              {state.syncStatus === 'success' && <span className="text-green-500">●</span>}
+              {state.syncStatus === 'syncing' && <span className="text-amber-500 animate-pulse">●</span>}
+              {state.syncStatus === 'error' && <span className="text-red-500">●</span>}
+              {state.syncStatus === 'idle' && <span className="text-[var(--color-text-muted)]">○</span>}
+            </span>
+          )}
+        </div>
         <div className="text-xs text-[var(--color-text-muted)]">Starting: {pm ? MASK : fmtCur(state.startingCapital)}</div>
       </div>
 
