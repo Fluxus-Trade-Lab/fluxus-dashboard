@@ -1,61 +1,66 @@
 {
-  "timestamp": "2026-03-19T21:57:25.086580+00:00",
-  "universe_size": 2478,
-  "spx_close": 6606.490234375,
+  "timestamp": "2026-03-20T21:55:04.124106+00:00",
+  "universe_size": 2461,
+  "spx_close": 6506.47998046875,
   "mm": {
-    "up_4pct": 100,
-    "down_4pct": 108,
-    "ratio_5d": 1.0816,
-    "ratio_10d": 1.0816,
-    "up_25pct_qtr": 359,
-    "down_25pct_qtr": 238,
-    "up_25pct_month": 68,
-    "down_25pct_month": 71,
-    "up_50pct_month": 15,
-    "down_50pct_month": 2
+    "up_4pct": 15,
+    "down_4pct": 366,
+    "ratio_5d": 0.6025,
+    "ratio_10d": 0.6025,
+    "up_25pct_qtr": 307,
+    "down_25pct_qtr": 281,
+    "up_25pct_month": 59,
+    "down_25pct_month": 127,
+    "up_50pct_month": 14,
+    "down_50pct_month": 1
   },
   "breadth": {
-    "t2108": 27.24,
-    "pct_above_200sma": 50.69,
-    "pct_above_50sma": 28.69,
-    "pct_above_20sma": 24.82,
-    "advances": 1261,
-    "declines": 1184,
-    "new_highs": 104,
-    "new_lows": 84,
-    "ad_line": 287,
-    "mcclellan_osc": -168.65
+    "t2108": 19.42,
+    "pct_above_200sma": 47.87,
+    "pct_above_50sma": 22.06,
+    "pct_above_20sma": 16.09,
+    "advances": 406,
+    "declines": 2038,
+    "new_highs": 54,
+    "new_lows": 138,
+    "ad_line": -1345,
+    "mcclellan_osc": -275.77
   },
   "history": {
     "dates": [
       "2026-03-16",
       "2026-03-17",
       "2026-03-18",
-      "2026-03-19"
+      "2026-03-19",
+      "2026-03-20"
     ],
     "pct_above_200sma": [
       53.2,
       53.73,
       50.87,
-      50.69
+      50.69,
+      47.87
     ],
     "pct_above_50sma": [
       32.18,
       33.9,
       28.22,
-      28.69
+      28.69,
+      22.06
     ],
     "pct_above_20sma": [
       24.77,
       29.08,
       22.4,
-      24.82
+      24.82,
+      16.09
     ],
     "mcclellan_osc": [
       0.0,
       -13.25,
       -142.31,
-      -168.65
+      -168.65,
+      -275.77
     ],
     "rows": [
       {
@@ -157,6 +162,31 @@
         "ratio_10d": 1.0816,
         "ad_line": 287,
         "mcclellan_osc": -168.65
+      },
+      {
+        "date": "2026-03-20",
+        "universe_size": 2461,
+        "up_4pct": 15,
+        "down_4pct": 366,
+        "up_25pct_qtr": 307,
+        "down_25pct_qtr": 281,
+        "up_25pct_month": 59,
+        "down_25pct_month": 127,
+        "up_50pct_month": 14,
+        "down_50pct_month": 1,
+        "t2108": 19.42,
+        "pct_above_200sma": 47.87,
+        "pct_above_50sma": 22.06,
+        "pct_above_20sma": 16.09,
+        "advances": 406,
+        "declines": 2038,
+        "new_highs": 54,
+        "new_lows": 138,
+        "net_advances": -1632,
+        "ratio_5d": 0.6025,
+        "ratio_10d": 0.6025,
+        "ad_line": -1345,
+        "mcclellan_osc": -275.77
       }
     ]
   }
