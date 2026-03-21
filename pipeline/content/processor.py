@@ -1,12 +1,14 @@
-"""Claude API content processor.
+"""Content processor using Claude Code CLI.
 
 Takes raw text (Discord messages or audio transcripts) and produces
 formatted output (Twitter threads or daily briefs) using the Fluxus voice.
+
+Uses `claude -p` (Claude Code CLI) instead of the Anthropic API,
+so it runs on your Max subscription — no separate API credits needed.
 """
 import json
 import re
-
-import anthropic
+import subprocess
 
 from pipeline.content.prompts.fluxus_voice import (
     SYSTEM_PROMPT,
@@ -14,32 +16,33 @@ from pipeline.content.prompts.fluxus_voice import (
     daily_brief_prompt,
 )
 
-MODEL = "claude-sonnet-4-20250514"
 
-
-def process_to_thread(messages: list[str], api_key: str | None = None) -> list[str]:
-    client = anthropic.Anthropic(api_key=api_key)
-    user_prompt = twitter_thread_prompt(messages)
-    response = client.messages.create(
-        model=MODEL,
-        max_tokens=2000,
-        system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": user_prompt}],
+def _claude(prompt: str, system: str) -> str:
+    """Call Claude Code CLI with a prompt and system instruction."""
+    full_prompt = f"<system>\n{system}\n</system>\n\n{prompt}"
+    result = subprocess.run(
+        ["claude", "-p", full_prompt],
+        capture_output=True,
+        text=True,
+        timeout=120,
     )
-    raw_output = response.content[0].text
+    if result.returncode != 0:
+        raise RuntimeError(f"Claude CLI error: {result.stderr.strip()}")
+    return result.stdout.strip()
+
+
+def process_to_thread(messages: list[str], style_examples: str = "") -> list[str]:
+    user_prompt = twitter_thread_prompt(messages)
+    system = SYSTEM_PROMPT
+    if style_examples:
+        system = system + "\n\n" + style_examples
+    raw_output = _claude(user_prompt, system)
     return split_thread(raw_output)
 
 
-def process_to_brief(transcript: str, api_key: str | None = None) -> dict:
-    client = anthropic.Anthropic(api_key=api_key)
+def process_to_brief(transcript: str) -> dict:
     user_prompt = daily_brief_prompt(transcript)
-    response = client.messages.create(
-        model=MODEL,
-        max_tokens=1000,
-        system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": user_prompt}],
-    )
-    raw_output = response.content[0].text
+    raw_output = _claude(user_prompt, SYSTEM_PROMPT)
     return _parse_brief_json(raw_output)
 
 
