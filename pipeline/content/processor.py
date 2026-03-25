@@ -1,12 +1,12 @@
-"""Content processor using Claude Code CLI.
+"""Content processor — dual mode: Claude Code CLI (local) or Anthropic API (CI).
 
-Takes raw text (Discord messages or audio transcripts) and produces
-formatted output (Twitter threads or daily briefs) using the Fluxus voice.
+Locally: uses `claude -p` so it runs on your Max subscription, no API credits.
+In CI (GitHub Actions): uses ANTHROPIC_API_KEY with the anthropic SDK.
 
-Uses `claude -p` (Claude Code CLI) instead of the Anthropic API,
-so it runs on your Max subscription — no separate API credits needed.
+Set ANTHROPIC_API_KEY to use API mode. Otherwise falls back to Claude Code CLI.
 """
 import json
+import os
 import re
 import subprocess
 
@@ -16,8 +16,32 @@ from pipeline.content.prompts.fluxus_voice import (
     daily_brief_prompt,
 )
 
+MODEL = "claude-sonnet-4-20250514"
+
 
 def _claude(prompt: str, system: str) -> str:
+    """Call Claude — CLI first (uses Max plan, free), API as fallback for CI."""
+    if os.environ.get("CI"):
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if api_key:
+            return _claude_api(prompt, system, api_key)
+    return _claude_cli(prompt, system)
+
+
+def _claude_api(prompt: str, system: str, api_key: str) -> str:
+    """Call Anthropic API directly."""
+    import anthropic
+    client = anthropic.Anthropic(api_key=api_key)
+    response = client.messages.create(
+        model=MODEL,
+        max_tokens=4096,
+        system=system,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return response.content[0].text.strip()
+
+
+def _claude_cli(prompt: str, system: str) -> str:
     """Call Claude Code CLI with a prompt and system instruction."""
     full_prompt = f"<system>\n{system}\n</system>\n\n{prompt}"
     result = subprocess.run(
