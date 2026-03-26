@@ -1,41 +1,17 @@
 {
-  "timestamp": "2026-03-25T22:04:19.341828+00:00",
-  "count": 14,
+  "timestamp": "2026-03-26T21:54:55.560558+00:00",
+  "count": 10,
   "results": [
-    {
-      "ticker": "PWR",
-      "num_contractions": 3,
-      "max_depth": 13.0,
-      "last_depth": 7.4,
-      "pivot": 573.97,
-      "pct_to_pivot": 0.1,
-      "volume_declining": false,
-      "ratios_healthy": false,
-      "atr_ext": 2.61,
-      "atr_color": "green"
-    },
     {
       "ticker": "SEE",
       "num_contractions": 2,
       "max_depth": 5.6,
       "last_depth": 2.3,
       "pivot": 42.01,
-      "pct_to_pivot": -0.1,
+      "pct_to_pivot": 0.0,
       "volume_declining": false,
       "ratios_healthy": true,
-      "atr_ext": 2.88,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "NOG",
-      "num_contractions": 4,
-      "max_depth": 16.6,
-      "last_depth": 9.0,
-      "pivot": 29.51,
-      "pct_to_pivot": -0.3,
-      "volume_declining": false,
-      "ratios_healthy": false,
-      "atr_ext": 3.44,
+      "atr_ext": 2.53,
       "atr_color": "green"
     },
     {
@@ -44,10 +20,34 @@
       "max_depth": 20.7,
       "last_depth": 3.3,
       "pivot": 23.72,
-      "pct_to_pivot": -0.3,
+      "pct_to_pivot": -0.5,
       "volume_declining": false,
       "ratios_healthy": true,
-      "atr_ext": 1.46,
+      "atr_ext": 1.74,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KRP",
+      "num_contractions": 3,
+      "max_depth": 13.3,
+      "last_depth": 5.1,
+      "pivot": 14.5,
+      "pct_to_pivot": -0.9,
+      "volume_declining": false,
+      "ratios_healthy": false,
+      "atr_ext": 3.41,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FIVE",
+      "num_contractions": 2,
+      "max_depth": 10.5,
+      "last_depth": 9.8,
+      "pivot": 229.33,
+      "pct_to_pivot": 1.1,
+      "volume_declining": true,
+      "ratios_healthy": false,
+      "atr_ext": 1.98,
       "atr_color": "green"
     },
     {
@@ -56,22 +56,46 @@
       "max_depth": 8.8,
       "last_depth": 5.1,
       "pivot": 27.5,
-      "pct_to_pivot": -0.4,
+      "pct_to_pivot": -1.6,
       "volume_declining": true,
       "ratios_healthy": false,
-      "atr_ext": 3.63,
+      "atr_ext": 3.97,
       "atr_color": "green"
     },
     {
-      "ticker": "TR",
+      "ticker": "SDRL",
       "num_contractions": 2,
-      "max_depth": 9.1,
-      "last_depth": 3.0,
-      "pivot": 41.45,
-      "pct_to_pivot": -0.7,
+      "max_depth": 13.6,
+      "last_depth": 7.3,
+      "pivot": 44.73,
+      "pct_to_pivot": -1.6,
       "volume_declining": false,
       "ratios_healthy": true,
-      "atr_ext": 1.86,
+      "atr_ext": 2.35,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LUNR",
+      "num_contractions": 3,
+      "max_depth": 37.6,
+      "last_depth": 16.4,
+      "pivot": 19.55,
+      "pct_to_pivot": 1.7,
+      "volume_declining": false,
+      "ratios_healthy": false,
+      "atr_ext": 0.37,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "TIGO",
+      "num_contractions": 2,
+      "max_depth": 13.0,
+      "last_depth": 10.0,
+      "pivot": 75.25,
+      "pct_to_pivot": 2.6,
+      "volume_declining": true,
+      "ratios_healthy": false,
+      "atr_ext": 2.76,
       "atr_color": "green"
     },
     {
@@ -80,82 +104,10 @@
       "max_depth": 8.1,
       "last_depth": 7.5,
       "pivot": 37.26,
-      "pct_to_pivot": 1.1,
+      "pct_to_pivot": 4.4,
       "volume_declining": false,
       "ratios_healthy": false,
-      "atr_ext": 4.39,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "FIVE",
-      "num_contractions": 2,
-      "max_depth": 10.5,
-      "last_depth": 9.8,
-      "pivot": 229.33,
-      "pct_to_pivot": -1.8,
-      "volume_declining": true,
-      "ratios_healthy": false,
-      "atr_ext": 2.91,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "IMAX",
-      "num_contractions": 3,
-      "max_depth": 16.7,
-      "last_depth": 5.9,
-      "pivot": 37.5,
-      "pct_to_pivot": -1.8,
-      "volume_declining": true,
-      "ratios_healthy": true,
-      "atr_ext": 0.56,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "VAL",
-      "num_contractions": 2,
-      "max_depth": 22.1,
-      "last_depth": 15.7,
-      "pivot": 102.19,
-      "pct_to_pivot": 1.9,
-      "volume_declining": true,
-      "ratios_healthy": true,
-      "atr_ext": 5.25,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "MCRI",
-      "num_contractions": 3,
-      "max_depth": 12.6,
-      "last_depth": 8.0,
-      "pivot": 102.84,
-      "pct_to_pivot": 3.4,
-      "volume_declining": false,
-      "ratios_healthy": false,
-      "atr_ext": 1.65,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "WMB",
-      "num_contractions": 2,
-      "max_depth": 8.3,
-      "last_depth": 5.7,
-      "pivot": 76.32,
-      "pct_to_pivot": 3.4,
-      "volume_declining": false,
-      "ratios_healthy": true,
-      "atr_ext": 2.64,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "LB",
-      "num_contractions": 3,
-      "max_depth": 28.8,
-      "last_depth": 8.5,
-      "pivot": 75.96,
-      "pct_to_pivot": 5.5,
-      "volume_declining": false,
-      "ratios_healthy": true,
-      "atr_ext": 1.88,
+      "atr_ext": 2.93,
       "atr_color": "green"
     },
     {
@@ -164,11 +116,11 @@
       "max_depth": 28.2,
       "last_depth": 12.5,
       "pivot": 25.75,
-      "pct_to_pivot": 5.9,
+      "pct_to_pivot": 8.0,
       "volume_declining": false,
       "ratios_healthy": false,
-      "atr_ext": 6.2,
-      "atr_color": "red"
+      "atr_ext": 5.34,
+      "atr_color": "amber"
     }
   ]
 }
