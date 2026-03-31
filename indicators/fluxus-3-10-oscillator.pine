@@ -1,0 +1,43 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © Fluxusz — See fluxus-3-10-oscillator.txt for full description and usage guide.
+// Linda Raschke's 3/10 Momentum Oscillator.
+
+//@version=6
+indicator('Fluxus 3/10 Oscillator', shorttitle = '3/10 Osc')
+
+// ──────────────────────────────────────────────────────────────
+// Inputs
+// ──────────────────────────────────────────────────────────────
+
+var GRP_OSC = 'Oscillator Settings'
+
+fastLen   = input.int(3, 'Fast MA Length', minval = 1, group = GRP_OSC)
+slowLen   = input.int(10, 'Slow MA Length', minval = 1, group = GRP_OSC)
+signalLen = input.int(16, 'Signal Length', minval = 1, group = GRP_OSC)
+src       = input.source(close, 'Source', group = GRP_OSC)
+
+var GRP_STYLE = 'Colors'
+
+colHistUp   = input.color(#26a69a, 'Histogram Rising', inline = 'hist', group = GRP_STYLE)
+colHistDown = input.color(#ef5350, 'Falling', inline = 'hist', group = GRP_STYLE)
+colSignal   = input.color(#ff9800, 'Signal Line', group = GRP_STYLE)
+colZero     = input.color(#787b86, 'Zero Line', group = GRP_STYLE)
+
+// ──────────────────────────────────────────────────────────────
+// Calculation
+// ──────────────────────────────────────────────────────────────
+
+fastMA   = ta.sma(src, fastLen)
+slowMA   = ta.sma(src, slowLen)
+hist     = fastMA - slowMA
+signal   = ta.sma(hist, signalLen)
+
+histRising = hist >= hist[1]
+
+// ──────────────────────────────────────────────────────────────
+// Plot
+// ──────────────────────────────────────────────────────────────
+
+plot(hist, 'Histogram', style = plot.style_columns, color = histRising ? colHistUp : colHistDown)
+plot(signal, 'Signal', color = colSignal, linewidth = 2)
+hline(0, 'Zero', color = colZero, linestyle = hline.style_dotted)

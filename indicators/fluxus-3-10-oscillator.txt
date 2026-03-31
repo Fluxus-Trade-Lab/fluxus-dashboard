@@ -1,0 +1,35 @@
+Fluxus 3/10 Oscillator
+======================
+
+Linda Raschke's 3/10 Momentum Oscillator — a short-term momentum gauge
+built from the spread between a fast and slow simple moving average.
+
+Formula
+-------
+  Histogram  = SMA(close, 3) − SMA(close, 10)
+  Signal     = SMA(histogram, 16)
+
+How to Read
+-----------
+  • Histogram above zero → short-term trend is up
+  • Histogram below zero → short-term trend is down
+  • Histogram crosses above signal → momentum turning bullish
+  • Histogram crosses below signal → momentum turning bearish
+  • Divergence: price makes new low but oscillator makes higher low → bullish
+  • "Slingshot": histogram pulls back to signal during a trend, then resumes
+    → continuation entry
+
+Settings
+--------
+  Fast MA Length    Default 3    (short-term average)
+  Slow MA Length    Default 10   (medium-term average)
+  Signal Length     Default 16   (signal smoothing)
+  Source            Default close
+
+  All colors are fully configurable:
+  Histogram Rising, Histogram Falling, Signal Line, Zero Line.
+
+Reference
+---------
+  Linda Raschke & Larry Connors, "Street Smarts" — 3/10 oscillator chapter.
+  lindaraschke.net/articles/
