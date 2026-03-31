@@ -56,10 +56,15 @@ export default function TagStats({ cards }) {
     )
   }
 
+  const maxCount = Math.max(...stats.map(s => s.count))
+  const maxGain = Math.max(...stats.filter(s => s.avgGain != null).map(s => s.avgGain), 1)
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
       {stats.map(({ pattern, count, avgGain, avgDuration }) => {
         const badgeColors = PATTERN_COLORS[pattern] || 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]'
+        const countPct = (count / maxCount) * 100
+        const gainPct = avgGain != null ? (avgGain / maxGain) * 100 : 0
         return (
           <div
             key={pattern}
@@ -70,17 +75,27 @@ export default function TagStats({ cards }) {
               {formatPattern(pattern)}
             </span>
 
-            {/* Stats */}
-            <div className="space-y-1.5">
-              <div className="flex items-baseline justify-between">
-                <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Count</span>
-                <span className="text-[11px] font-semibold text-[var(--color-text)]">{count}</span>
+            {/* Stats with inline bars */}
+            <div className="space-y-2">
+              <div>
+                <div className="flex items-baseline justify-between mb-0.5">
+                  <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Count</span>
+                  <span className="text-[11px] font-semibold text-[var(--color-text)]">{count}</span>
+                </div>
+                <div className="w-full h-1 bg-[var(--color-border)] rounded-full overflow-hidden">
+                  <div className="h-full bg-[var(--color-text-muted)] rounded-full" style={{ width: `${countPct}%` }} />
+                </div>
               </div>
-              <div className="flex items-baseline justify-between">
-                <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Avg Gain</span>
-                <span className="text-[11px] font-medium text-[var(--color-text-secondary)]">
-                  {avgGain != null ? `${avgGain.toFixed(1)}%` : '—'}
-                </span>
+              <div>
+                <div className="flex items-baseline justify-between mb-0.5">
+                  <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Avg Gain</span>
+                  <span className="text-[11px] font-medium text-green-700 dark:text-green-400">
+                    {avgGain != null ? `${avgGain.toFixed(0)}%` : '—'}
+                  </span>
+                </div>
+                <div className="w-full h-1 bg-[var(--color-border)] rounded-full overflow-hidden">
+                  <div className="h-full bg-green-500 dark:bg-green-600 rounded-full" style={{ width: `${gainPct}%` }} />
+                </div>
               </div>
               <div className="flex items-baseline justify-between">
                 <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Avg Duration</span>

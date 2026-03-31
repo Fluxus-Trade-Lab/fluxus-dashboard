@@ -72,6 +72,7 @@ function compareEntries(a, b, sortKey, sortDir) {
 
 export default function BrowseView({ cards }) {
   const [patternFilter, setPatternFilter] = useState('all')
+  const [sourceFilter, setSourceFilter] = useState('all')
   const [search, setSearch] = useState('')
   const [sortKey, setSortKey] = useState('gain_pct')
   const [sortDir, setSortDir] = useState('desc')
@@ -92,10 +93,16 @@ export default function BrowseView({ cards }) {
 
   const chartHeight = isLg ? 350 : 280
 
-  // Derive unique patterns
+  // Derive unique filter options
   const allPatterns = useMemo(() => {
     const set = new Set()
     cards.forEach(c => c.patterns.forEach(p => set.add(p)))
+    return [...set].sort()
+  }, [cards])
+
+  const allSources = useMemo(() => {
+    const set = new Set()
+    cards.forEach(c => set.add(c.source))
     return [...set].sort()
   }, [cards])
 
@@ -103,11 +110,12 @@ export default function BrowseView({ cards }) {
   const filtered = useMemo(() => {
     let result = cards.filter(card => {
       if (patternFilter !== 'all' && !card.patterns.includes(patternFilter)) return false
+      if (sourceFilter !== 'all' && card.source !== sourceFilter) return false
       if (search && !matchesSearch(card, search)) return false
       return true
     })
     return result.sort((a, b) => compareEntries(a, b, sortKey, sortDir))
-  }, [cards, patternFilter, search, sortKey, sortDir])
+  }, [cards, patternFilter, sourceFilter, search, sortKey, sortDir])
 
   // Selected entry
   const selectedEntry = useMemo(() => {
@@ -240,6 +248,16 @@ export default function BrowseView({ cards }) {
             <option value="all">All Patterns</option>
             {allPatterns.map(p => (
               <option key={p} value={p}>{formatPattern(p)}</option>
+            ))}
+          </select>
+          <select
+            value={sourceFilter}
+            onChange={e => setSourceFilter(e.target.value)}
+            className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
+          >
+            <option value="all">All Sources</option>
+            {allSources.map(s => (
+              <option key={s} value={s}>{s}</option>
             ))}
           </select>
           <span className="text-[10px] text-[var(--color-text-muted)] ml-auto">
