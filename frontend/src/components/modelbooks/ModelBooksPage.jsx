@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import BrowseView from './BrowseView'
 import StudyMode from './StudyMode'
 import TagStats from './TagStats'
+import TradingGym from './TradingGym'
 
 export default function ModelBooksPage() {
-  const [mode, setMode] = useState('browse') // 'browse' | 'study' | 'stats'
+  const [mode, setMode] = useState('browse') // 'browse' | 'study' | 'stats' | 'gym'
   const [cards, setCards] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -30,7 +31,7 @@ export default function ModelBooksPage() {
           Model Books
         </h2>
         <div className="flex gap-1">
-          {['browse', 'study', 'stats'].map(m => (
+          {['browse', 'study', 'stats', 'gym'].map(m => (
             <button
               key={m}
               onClick={() => setMode(m)}
@@ -40,7 +41,7 @@ export default function ModelBooksPage() {
                   : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-[var(--color-surface-raised)]'
               }`}
             >
-              {m === 'browse' ? 'Browse' : m === 'study' ? 'Study Mode' : 'Stats'}
+              {m === 'browse' ? 'Browse' : m === 'study' ? 'Study Mode' : m === 'stats' ? 'Stats' : 'Gym'}
             </button>
           ))}
         </div>
@@ -50,8 +51,10 @@ export default function ModelBooksPage() {
         <BrowseView cards={cards} />
       ) : mode === 'study' ? (
         <StudyMode cards={cards} />
-      ) : (
+      ) : mode === 'stats' ? (
         <TagStats cards={cards} />
+      ) : (
+        <TradingGym cards={cards} />
       )}
     </div>
   )
