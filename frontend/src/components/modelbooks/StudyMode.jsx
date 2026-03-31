@@ -1,4 +1,5 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
+import OhlcvChart from './OhlcvChart'
 
 const PATTERN_COLORS = {
   cup_with_handle: 'bg-blue-50 text-blue-700',
@@ -42,8 +43,34 @@ export default function StudyMode({ cards }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [revealed, setRevealed] = useState(false)
   const [markedForReview, setMarkedForReview] = useState(new Set())
+  const [ohlcv, setOhlcv] = useState(null)
 
   const card = deck[currentIndex]
+
+  // Fetch OHLCV data when card changes
+  useEffect(() => {
+    if (!card?.ohlcv_file) {
+      setOhlcv(null)
+      return
+    }
+
+    let cancelled = false
+    setOhlcv(null)
+
+    fetch(`/data/modelbooks/${card.ohlcv_file}`)
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        return r.json()
+      })
+      .then(data => {
+        if (!cancelled) setOhlcv(data)
+      })
+      .catch(() => {
+        if (!cancelled) setOhlcv(null)
+      })
+
+    return () => { cancelled = true }
+  }, [card?.id, card?.ohlcv_file])
 
   const reviewCount = markedForReview.size
 
@@ -101,17 +128,23 @@ export default function StudyMode({ cards }) {
 
       {/* Flashcard */}
       <div className="w-full max-w-xl bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden shadow-sm">
-        {/* Chart placeholder */}
-        <div className="bg-[var(--color-surface-raised)] h-56 flex items-center justify-center relative">
-          {!revealed ? (
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[var(--color-border)] tracking-wide mb-2">?</div>
-              <div className="text-xs text-[var(--color-text-muted)]">Can you identify the pattern?</div>
-            </div>
+        {/* Chart area */}
+        <div className="relative">
+          {card.ohlcv_file && ohlcv ? (
+            <OhlcvChart data={ohlcv} height={220} showMAs={revealed} />
           ) : (
-            <span className="text-3xl font-bold text-[var(--color-text-muted)] tracking-wide">
-              {card.ticker}
-            </span>
+            <div className="bg-[var(--color-surface-raised)] h-[220px] flex items-center justify-center">
+              {!revealed ? (
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-[var(--color-border)] tracking-wide mb-2">?</div>
+                  <div className="text-xs text-[var(--color-text-muted)]">Can you identify the pattern?</div>
+                </div>
+              ) : (
+                <span className="text-3xl font-bold text-[var(--color-text-muted)] tracking-wide">
+                  {card.ticker}
+                </span>
+              )}
+            </div>
           )}
           {isMarked && (
             <span className="absolute top-3 right-3 text-[10px] font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">

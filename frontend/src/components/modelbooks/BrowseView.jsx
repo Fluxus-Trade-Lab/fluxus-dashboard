@@ -80,6 +80,17 @@ export default function BrowseView({ cards }) {
   const [ohlcvLoading, setOhlcvLoading] = useState(false)
   const [showSpy, setShowSpy] = useState(false)
   const [spyData, setSpyData] = useState(null)
+  const [isLg, setIsLg] = useState(() => window.matchMedia('(min-width: 1024px)').matches)
+
+  // Responsive chart height: 280px mobile, 350px desktop
+  useEffect(() => {
+    const mql = window.matchMedia('(min-width: 1024px)')
+    const handler = (e) => setIsLg(e.matches)
+    mql.addEventListener('change', handler)
+    return () => mql.removeEventListener('change', handler)
+  }, [])
+
+  const chartHeight = isLg ? 350 : 280
 
   // Derive unique patterns
   const allPatterns = useMemo(() => {
@@ -216,7 +227,7 @@ export default function BrowseView({ cards }) {
         </div>
 
         {/* Table */}
-        <div className="overflow-y-auto border border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] flex-1 max-h-[70vh] lg:max-h-none">
+        <div className="overflow-y-auto border border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] flex-1 max-h-[40vh] lg:max-h-none">
           <table className="w-full text-xs">
             <thead className="sticky top-0 z-10">
               <tr className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
@@ -312,15 +323,15 @@ export default function BrowseView({ cards }) {
             {/* Chart */}
             <div className="border border-[var(--color-border)] rounded-lg overflow-hidden bg-[var(--color-surface)]">
               {ohlcvLoading ? (
-                <div className="flex items-center justify-center h-[350px] text-xs text-[var(--color-text-muted)]">
+                <div className="flex items-center justify-center text-xs text-[var(--color-text-muted)]" style={{ height: chartHeight }}>
                   Loading chart data...
                 </div>
               ) : !selectedEntry.ohlcv_file ? (
-                <div className="flex items-center justify-center h-[350px] text-xs text-[var(--color-text-muted)]">
+                <div className="flex items-center justify-center text-xs text-[var(--color-text-muted)]" style={{ height: chartHeight }}>
                   No chart data available for this entry
                 </div>
               ) : (
-                <OhlcvChart data={ohlcvData} height={350} spyData={showSpy ? spyData : null} />
+                <OhlcvChart data={ohlcvData} height={chartHeight} spyData={showSpy ? spyData : null} />
               )}
             </div>
 
