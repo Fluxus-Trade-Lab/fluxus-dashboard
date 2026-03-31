@@ -2,18 +2,18 @@ import { useState, useCallback, useMemo, useEffect } from 'react'
 import OhlcvChart from './OhlcvChart'
 
 const PATTERN_COLORS = {
-  cup_with_handle: 'bg-blue-50 text-blue-700',
-  flat_base: 'bg-green-50 text-green-700',
-  vcp: 'bg-purple-50 text-purple-700',
-  high_tight_flag: 'bg-amber-50 text-amber-700',
-  pocket_pivot: 'bg-cyan-50 text-cyan-700',
-  episodic_pivot: 'bg-rose-50 text-rose-700',
-  range_breakout: 'bg-orange-50 text-orange-700',
-  base_on_base: 'bg-teal-50 text-teal-700',
-  double_bottom: 'bg-indigo-50 text-indigo-700',
-  ipo_base: 'bg-lime-50 text-lime-700',
-  faulty_base: 'bg-red-50 text-red-600',
-  cup_without_handle: 'bg-sky-50 text-sky-700',
+  cup_with_handle: 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300',
+  flat_base: 'bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300',
+  vcp: 'bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300',
+  high_tight_flag: 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
+  pocket_pivot: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300',
+  episodic_pivot: 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300',
+  range_breakout: 'bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300',
+  base_on_base: 'bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-300',
+  double_bottom: 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300',
+  ipo_base: 'bg-lime-50 text-lime-700 dark:bg-lime-950 dark:text-lime-300',
+  faulty_base: 'bg-red-50 text-red-600 dark:bg-red-950 dark:text-red-400',
+  cup_without_handle: 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300',
 }
 
 function formatPattern(key) {
@@ -104,6 +104,18 @@ export default function StudyMode({ cards }) {
 
   const isMarked = card ? markedForReview.has(card.id) : false
 
+  // Keyboard shortcuts: Space=reveal, N=next, M=mark
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.target.tagName === 'INPUT') return
+      if (e.key === ' ' && !revealed) { e.preventDefault(); handleReveal() }
+      else if ((e.key === 'n' || e.key === 'ArrowRight') && revealed) { e.preventDefault(); handleNext() }
+      else if (e.key === 'm' && revealed) { e.preventDefault(); handleMarkForReview() }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [revealed, handleReveal, handleNext, handleMarkForReview])
+
   if (!card) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -131,7 +143,7 @@ export default function StudyMode({ cards }) {
         {/* Chart area */}
         <div className="relative">
           {card.ohlcv_file && ohlcv ? (
-            <OhlcvChart data={ohlcv} height={220} showMAs={revealed} />
+            <OhlcvChart data={ohlcv} height={260} showMAs={revealed} showVolume={revealed} />
           ) : (
             <div className="bg-[var(--color-surface-raised)] h-[220px] flex items-center justify-center">
               {!revealed ? (

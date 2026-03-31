@@ -4,18 +4,18 @@ import OhlcvChart from './OhlcvChart'
 /* ── Constants ──────────────────────────────────────────── */
 
 const PATTERN_COLORS = {
-  cup_with_handle: 'bg-blue-50 text-blue-700',
-  flat_base: 'bg-green-50 text-green-700',
-  vcp: 'bg-purple-50 text-purple-700',
-  high_tight_flag: 'bg-amber-50 text-amber-700',
-  pocket_pivot: 'bg-cyan-50 text-cyan-700',
-  episodic_pivot: 'bg-rose-50 text-rose-700',
-  range_breakout: 'bg-orange-50 text-orange-700',
-  base_on_base: 'bg-teal-50 text-teal-700',
-  double_bottom: 'bg-indigo-50 text-indigo-700',
-  ipo_base: 'bg-lime-50 text-lime-700',
-  faulty_base: 'bg-red-50 text-red-600',
-  cup_without_handle: 'bg-sky-50 text-sky-700',
+  cup_with_handle: 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300',
+  flat_base: 'bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300',
+  vcp: 'bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300',
+  high_tight_flag: 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
+  pocket_pivot: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300',
+  episodic_pivot: 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300',
+  range_breakout: 'bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300',
+  base_on_base: 'bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-300',
+  double_bottom: 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300',
+  ipo_base: 'bg-lime-50 text-lime-700 dark:bg-lime-950 dark:text-lime-300',
+  faulty_base: 'bg-red-50 text-red-600 dark:bg-red-950 dark:text-red-400',
+  cup_without_handle: 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300',
 }
 
 const COLUMNS = [
@@ -198,6 +198,27 @@ export default function BrowseView({ cards }) {
     else { setSortKey(key); setSortDir('desc') }
   }, [sortKey])
 
+  // Keyboard navigation: arrow keys to browse entries
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return
+      if (!filtered.length) return
+
+      const currentIdx = filtered.findIndex(c => c.id === selectedEntry?.id)
+      if (e.key === 'ArrowDown' || e.key === 'j') {
+        e.preventDefault()
+        const next = Math.min(currentIdx + 1, filtered.length - 1)
+        setSelectedId(filtered[next].id)
+      } else if (e.key === 'ArrowUp' || e.key === 'k') {
+        e.preventDefault()
+        const prev = Math.max(currentIdx - 1, 0)
+        setSelectedId(filtered[prev].id)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [filtered, selectedEntry?.id])
+
   return (
     <div className="flex flex-col lg:flex-row gap-4">
       {/* ── Left Panel: Table ──────────────────────────────── */}
@@ -263,7 +284,7 @@ export default function BrowseView({ cards }) {
                           : 'hover:bg-[var(--color-hover-bg)]'
                       }`}
                     >
-                      <td className="px-2 py-1.5 text-[11px] font-semibold text-blue-700">{card.ticker}</td>
+                      <td className="px-2 py-1.5 text-[11px] font-semibold text-blue-700 dark:text-blue-400">{card.ticker}</td>
                       <td className="px-2 py-1.5 text-[11px] text-[var(--color-text-secondary)] font-mono">{card.year}</td>
                       <td className="px-2 py-1.5">
                         <div className="flex flex-wrap gap-0.5">
@@ -276,7 +297,7 @@ export default function BrowseView({ cards }) {
                         </div>
                       </td>
                       <td className={`px-2 py-1.5 text-[11px] font-mono ${
-                        card.gain_pct != null && card.gain_pct > 0 ? 'text-green-700' : 'text-[var(--color-text-secondary)]'
+                        card.gain_pct != null && card.gain_pct > 0 ? 'text-green-700 dark:text-green-400' : 'text-[var(--color-text-secondary)]'
                       }`}>
                         {card.gain_pct != null ? `${card.gain_pct.toFixed(0)}%` : '\u2014'}
                       </td>
@@ -294,7 +315,7 @@ export default function BrowseView({ cards }) {
       </div>
 
       {/* ── Right Panel: Chart + Details ───────────────────── */}
-      <div className="lg:w-[60%] flex flex-col min-h-0">
+      <div className="lg:w-[60%] flex flex-col min-h-0 lg:sticky lg:top-4 lg:self-start">
         {selectedEntry ? (
           <>
             {/* Chart header */}
@@ -312,7 +333,7 @@ export default function BrowseView({ cards }) {
                 onClick={() => setShowSpy(s => !s)}
                 className={`ml-auto text-[10px] font-medium px-2 py-1 rounded border transition-colors ${
                   showSpy
-                    ? 'bg-indigo-50 text-indigo-700 border-indigo-200'
+                    ? 'bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950 dark:text-indigo-300 dark:border-indigo-800'
                     : 'bg-[var(--color-surface)] text-[var(--color-text-muted)] border-[var(--color-border)] hover:text-[var(--color-text-secondary)]'
                 }`}
               >
@@ -342,7 +363,7 @@ export default function BrowseView({ cards }) {
                 {selectedEntry.gain_pct != null && (
                   <div>
                     <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Gain</span>
-                    <span className="text-sm font-semibold text-green-700">{selectedEntry.gain_pct.toFixed(1)}%</span>
+                    <span className="text-sm font-semibold text-green-700 dark:text-green-400">{selectedEntry.gain_pct.toFixed(1)}%</span>
                   </div>
                 )}
                 {selectedEntry.duration_days != null && (
