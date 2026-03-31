@@ -281,7 +281,7 @@ export default function BrowseView({ cards }) {
                       className={`border-b border-[var(--color-border-light)] cursor-pointer transition-colors ${
                         isSelected
                           ? 'bg-[var(--color-hover-bg)] ring-1 ring-inset ring-[var(--color-input-border)]'
-                          : 'hover:bg-[var(--color-hover-bg)]'
+                          : 'even:bg-[var(--color-surface-alt)] hover:bg-[var(--color-hover-bg)]'
                       }`}
                     >
                       <td className="px-2 py-1.5 text-[11px] font-semibold text-blue-700 dark:text-blue-400">{card.ticker}</td>
@@ -352,7 +352,7 @@ export default function BrowseView({ cards }) {
                   No chart data available for this entry
                 </div>
               ) : (
-                <OhlcvChart data={ohlcvData} height={chartHeight} spyData={showSpy ? spyData : null} />
+                <OhlcvChart data={ohlcvData} height={chartHeight} spyData={showSpy ? spyData : null} showControls />
               )}
             </div>
 

@@ -38,6 +38,15 @@ function computeEMA(closes, period) {
   return result
 }
 
+/* ── MA config ──────────────────────────────────────────── */
+
+const MA_CONFIGS = [
+  { period: 10, type: 'ema', color: '#22d3ee', width: 1,   label: '10E' },
+  { period: 21, type: 'ema', color: '#3b82f6', width: 1.5, label: '21E' },
+  { period: 50, type: 'sma', color: '#f59e0b', width: 1.5, label: '50' },
+  { period: 200, type: 'sma', color: '#a8a29e', width: 1,  label: '200' },
+]
+
 /* ── Theme helpers ───────────────────────────────────────── */
 
 function isDarkMode() {
@@ -54,9 +63,31 @@ function getThemeColors() {
     candleDown: '#dc2626',
     wickUp: '#16a34a',
     wickDown: '#dc2626',
-    volUp: dark ? 'rgba(22, 163, 74, 0.25)' : 'rgba(22, 163, 74, 0.15)',
-    volDown: dark ? 'rgba(220, 38, 38, 0.25)' : 'rgba(220, 38, 38, 0.15)',
+    volUp: dark ? 'rgba(22, 163, 74, 0.3)' : 'rgba(22, 163, 74, 0.18)',
+    volDown: dark ? 'rgba(220, 38, 38, 0.3)' : 'rgba(220, 38, 38, 0.18)',
   }
+}
+
+/* ── MA Legend ───────────────────────────────────────────── */
+
+function MaLegend({ showMAs, spyData }) {
+  if (!showMAs) return null
+  return (
+    <div className="flex items-center gap-2.5 px-2 py-1">
+      {MA_CONFIGS.map(ma => (
+        <span key={ma.label} className="flex items-center gap-1">
+          <span className="inline-block w-3 h-0.5 rounded-full" style={{ backgroundColor: ma.color }} />
+          <span className="text-[9px] text-[var(--color-text-muted)] font-mono">{ma.label}</span>
+        </span>
+      ))}
+      {spyData?.length > 0 && (
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-0.5 rounded-full border-b border-dashed" style={{ borderColor: '#6366f1' }} />
+          <span className="text-[9px] text-indigo-500 font-mono">SPY</span>
+        </span>
+      )}
+    </div>
+  )
 }
 
 /* ── Component ───────────────────────────────────────────── */
@@ -67,9 +98,11 @@ export default function OhlcvChart({
   showVolume = true,
   height = 350,
   spyData,
+  showControls = false,
 }) {
   const containerRef = useRef(null)
   const chartRef = useRef(null)
+  const [logScale, setLogScale] = useState(false)
 
   // Watch for dark mode changes via MutationObserver
   const [darkMode, setDarkMode] = useState(isDarkMode)
@@ -106,6 +139,7 @@ export default function OhlcvChart({
       rightPriceScale: {
         borderVisible: false,
         scaleMargins: { top: 0.02, bottom: showVolume ? 0.18 : 0.02 },
+        mode: logScale ? 1 : 0, // 1 = logarithmic
       },
       timeScale: { borderVisible: false },
       crosshair: { horzLine: { visible: false, labelVisible: false } },
@@ -144,18 +178,14 @@ export default function OhlcvChart({
       const closes = data.map((d) => d.close)
       const times = data.map((d) => d.time)
 
-      const maConfigs = [
-        { values: computeEMA(closes, 10), color: '#22d3ee', width: 1 },    // cyan - 10 EMA
-        { values: computeEMA(closes, 21), color: '#3b82f6', width: 1.5 },  // blue - 21 EMA
-        { values: computeSMA(closes, 50), color: '#f59e0b', width: 1.5 },  // amber - 50 SMA
-        { values: computeSMA(closes, 200), color: '#a8a29e', width: 1 },   // gray - 200 SMA
-      ]
-
-      for (const ma of maConfigs) {
+      for (const ma of MA_CONFIGS) {
+        const values = ma.type === 'ema'
+          ? computeEMA(closes, ma.period)
+          : computeSMA(closes, ma.period)
         const lineData = []
         for (let i = 0; i < times.length; i++) {
-          if (ma.values[i] !== null) {
-            lineData.push({ time: times[i], value: ma.values[i] })
+          if (values[i] !== null) {
+            lineData.push({ time: times[i], value: values[i] })
           }
         }
         if (lineData.length > 0) {
@@ -217,7 +247,7 @@ export default function OhlcvChart({
         chartRef.current = null
       }
     }
-  }, [data, showMAs, showVolume, height, spyData, darkMode])
+  }, [data, showMAs, showVolume, height, spyData, darkMode, logScale])
 
   // Fallback
   if (!data?.length) {
@@ -231,5 +261,27 @@ export default function OhlcvChart({
     )
   }
 
-  return <div ref={containerRef} />
+  return (
+    <div>
+      {/* Toolbar: legend + controls */}
+      <div className="flex items-center justify-between">
+        <MaLegend showMAs={showMAs} spyData={spyData} />
+        {showControls && (
+          <div className="flex items-center gap-1 px-2 py-1">
+            <button
+              onClick={() => setLogScale(s => !s)}
+              className={`text-[9px] font-mono px-1.5 py-0.5 rounded transition-colors ${
+                logScale
+                  ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
+                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'
+              }`}
+            >
+              {logScale ? 'LOG' : 'LIN'}
+            </button>
+          </div>
+        )}
+      </div>
+      <div ref={containerRef} />
+    </div>
+  )
 }
