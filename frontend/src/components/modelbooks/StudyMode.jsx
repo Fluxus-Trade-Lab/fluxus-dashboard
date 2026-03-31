@@ -126,16 +126,30 @@ export default function StudyMode({ cards }) {
 
   return (
     <div className="flex flex-col items-center">
-      {/* Progress bar */}
-      <div className="w-full max-w-xl flex items-center justify-between mb-4">
-        <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
-          Card {currentIndex + 1} of {deck.length}
-        </span>
-        {reviewCount > 0 && (
-          <span className="text-[10px] text-[var(--color-text-muted)]">
-            {reviewCount} marked for review
+      {/* Progress */}
+      <div className="w-full max-w-xl mb-4 space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
+            Card {currentIndex + 1} of {deck.length}
           </span>
-        )}
+          <div className="flex items-center gap-3">
+            {reviewCount > 0 && (
+              <span className="text-[10px] text-amber-600 dark:text-amber-400">
+                {reviewCount} flagged
+              </span>
+            )}
+            <span className="text-[9px] text-[var(--color-text-muted)] font-mono">
+              Space=reveal  N=next  M=flag
+            </span>
+          </div>
+        </div>
+        {/* Visual progress bar */}
+        <div className="w-full h-1 bg-[var(--color-border)] rounded-full overflow-hidden">
+          <div
+            className="h-full bg-[var(--color-text-muted)] rounded-full transition-all duration-300"
+            style={{ width: `${((currentIndex + 1) / deck.length) * 100}%` }}
+          />
+        </div>
       </div>
 
       {/* Flashcard */}

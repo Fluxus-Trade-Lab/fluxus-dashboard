@@ -38,6 +38,46 @@ function computeEMA(closes, period) {
   return result
 }
 
+/* ── Weekly aggregation ─────────────────────────────────── */
+
+function toWeekly(daily) {
+  if (!daily?.length) return []
+  const weeks = []
+  let current = null
+
+  for (const bar of daily) {
+    // Parse ISO date to get week start (Monday)
+    const d = new Date(bar.time + 'T00:00:00')
+    const day = d.getDay()
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1) // Monday
+    const weekStart = new Date(d)
+    weekStart.setDate(diff)
+    const weekKey = weekStart.toISOString().slice(0, 10)
+
+    if (!current || current._week !== weekKey) {
+      if (current) weeks.push(current)
+      current = {
+        _week: weekKey,
+        time: bar.time, // Use first bar's date as the week time
+        open: bar.open,
+        high: bar.high,
+        low: bar.low,
+        close: bar.close,
+        volume: bar.volume,
+      }
+    } else {
+      current.high = Math.max(current.high, bar.high)
+      current.low = Math.min(current.low, bar.low)
+      current.close = bar.close
+      current.volume += bar.volume
+    }
+  }
+  if (current) weeks.push(current)
+
+  // Strip internal _week key
+  return weeks.map(({ _week, ...rest }) => rest)
+}
+
 /* ── MA config ──────────────────────────────────────────── */
 
 const MA_CONFIGS = [
@@ -103,6 +143,7 @@ export default function OhlcvChart({
   const containerRef = useRef(null)
   const chartRef = useRef(null)
   const [logScale, setLogScale] = useState(false)
+  const [timeframe, setTimeframe] = useState('D') // 'D' or 'W'
 
   // Watch for dark mode changes via MutationObserver
   const [darkMode, setDarkMode] = useState(isDarkMode)
@@ -123,6 +164,7 @@ export default function OhlcvChart({
 
     const theme = getThemeColors()
     const w = containerRef.current.clientWidth
+    const chartData = timeframe === 'W' ? toWeekly(data) : data
 
     const chart = createChart(containerRef.current, {
       layout: {
@@ -154,7 +196,7 @@ export default function OhlcvChart({
       wickUpColor: theme.wickUp,
       wickDownColor: theme.wickDown,
     })
-    candleSeries.setData(data)
+    candleSeries.setData(chartData)
 
     // Volume histogram (occupies bottom 15% of chart)
     if (showVolume) {
@@ -165,7 +207,7 @@ export default function OhlcvChart({
       volSeries.priceScale().applyOptions({
         scaleMargins: { top: 0.85, bottom: 0 },
       })
-      const volData = data.map(d => ({
+      const volData = chartData.map(d => ({
         time: d.time,
         value: d.volume,
         color: d.close >= d.open ? theme.volUp : theme.volDown,
@@ -175,8 +217,8 @@ export default function OhlcvChart({
 
     // MA overlays
     if (showMAs) {
-      const closes = data.map((d) => d.close)
-      const times = data.map((d) => d.time)
+      const closes = chartData.map((d) => d.close)
+      const times = chartData.map((d) => d.time)
 
       for (const ma of MA_CONFIGS) {
         const values = ma.type === 'ema'
@@ -247,7 +289,7 @@ export default function OhlcvChart({
         chartRef.current = null
       }
     }
-  }, [data, showMAs, showVolume, height, spyData, darkMode, logScale])
+  }, [data, showMAs, showVolume, height, spyData, darkMode, logScale, timeframe])
 
   // Fallback
   if (!data?.length) {
@@ -268,9 +310,23 @@ export default function OhlcvChart({
         <MaLegend showMAs={showMAs} spyData={spyData} />
         {showControls && (
           <div className="flex items-center gap-1 px-2 py-1">
+            {['D', 'W'].map(tf => (
+              <button
+                key={tf}
+                onClick={() => setTimeframe(tf)}
+                className={`text-[9px] font-mono px-1.5 py-0.5 rounded transition-colors cursor-pointer ${
+                  timeframe === tf
+                    ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
+                    : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'
+                }`}
+              >
+                {tf}
+              </button>
+            ))}
+            <span className="w-px h-3 bg-[var(--color-border)] mx-0.5" />
             <button
               onClick={() => setLogScale(s => !s)}
-              className={`text-[9px] font-mono px-1.5 py-0.5 rounded transition-colors ${
+              className={`text-[9px] font-mono px-1.5 py-0.5 rounded transition-colors cursor-pointer ${
                 logScale
                   ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                   : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'
