@@ -1,0 +1,476 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © Fluxusz — See fluxus-trading-risk-manager.txt for full description and usage guide.
+
+//@version=6
+indicator('Fluxus Trading Risk Manager', overlay = true, max_lines_count = 20, max_labels_count = 20)
+
+// ──────────────────────────────────────────────────────────────
+// Types
+// ──────────────────────────────────────────────────────────────
+
+type PivotPoint
+	float price
+	int barIdx
+
+// ──────────────────────────────────────────────────────────────
+// Inputs — Account & Risk
+// ──────────────────────────────────────────────────────────────
+
+var GRP_ACCOUNT = 'Account & Risk Settings'
+
+accountSize = input.int(100000, 'Account Size', group = GRP_ACCOUNT, inline = '1')
+equityRiskStr = input.string('0.25%', 'Equity Risk', ['0.25%', '0.50%', '0.75%', '1.00%'], group = GRP_ACCOUNT, inline = '1')
+useCustomRisk = input.bool(false, 'Custom Equity Risk', group = GRP_ACCOUNT, inline = '2')
+customRiskPct = input.float(0.75, ' ', group = GRP_ACCOUNT, inline = '2', tooltip = 'Custom portfolio risk %. Enable the toggle to use this instead of the preset.')
+useMaxPosition = input.bool(false, 'Max Position Size', group = GRP_ACCOUNT, inline = '3')
+maxPositionPct = input.float(10, ' ', group = GRP_ACCOUNT, inline = '3', tooltip = 'Cap position size at this % of total portfolio.')
+calcMode = input.string('Shares to Buy', 'Calculate', ['Shares to Buy', 'Stop Loss'], group = GRP_ACCOUNT)
+tradeDirection = input.string('Long', 'Direction', ['Long', 'Short'], group = GRP_ACCOUNT)
+useFractional = input.bool(false, 'Use Fractional Shares', group = GRP_ACCOUNT)
+
+// ──────────────────────────────────────────────────────────────
+// Inputs — Price Levels
+// ──────────────────────────────────────────────────────────────
+
+var GRP_PRICE = 'Price Levels'
+
+entryPriceInput = input.float(0.0, 'Entry Price', group = GRP_PRICE, inline = '1')
+useCandleEntry = input.bool(true, 'or Use Candle Levels', group = GRP_PRICE, inline = '1')
+candleEntryMode = input.string('Current Price', 'Candle Levels', ['Current Price', 'High', 'Low', 'Previous High', 'Previous Low'], group = GRP_PRICE, inline = '01')
+stopPriceInput = input.float(0.0, 'Stop Price', group = GRP_PRICE, inline = '2')
+useMajorLevel = input.bool(true, 'or Use Major Level', group = GRP_PRICE, inline = '2')
+majorStopMode = input.string('Low of Day', 'Major Levels', ['Low of Day', 'Current Bar Low', 'Previous Bar Low', 'Previous Day Low', 'Swing Low', '% ATR from LOD', '% ATR from Entry', '% ATR from Previous Bar Low', 'MA', 'MA Structure Low', 'High of Day', 'Previous High', 'Swing High', '% ATR from HOD', 'MA Structure High'], group = GRP_PRICE, inline = '3')
+bufferType = input.string('%', 'Buffer Type', ['%', '$'], group = GRP_PRICE, inline = '4')
+stopBuffer = input.float(0.25, 'Stop Buffer', group = GRP_PRICE, inline = '4')
+sharesOwned = input.int(0, 'Shares Owned', group = GRP_PRICE)
+
+// ──────────────────────────────────────────────────────────────
+// Inputs — Major Level Parameters
+// ──────────────────────────────────────────────────────────────
+
+var GRP_LEVELS = 'Major Level Settings'
+
+pivotLength = input.int(2, 'Pivot Length', group = GRP_LEVELS)
+atrLength = input.int(14, 'ATR Length', group = GRP_LEVELS, inline = '1')
+atrMult = input.float(1, 'Multiplier', group = GRP_LEVELS, inline = '1')
+maLength = input.int(21, 'Moving Average', group = GRP_LEVELS, inline = '2')
+maTypeStr = input.string('EMA', '', ['EMA', 'SMA'], group = GRP_LEVELS, inline = '2')
+
+// ──────────────────────────────────────────────────────────────
+// Inputs — N-Stop Risk Management
+// ──────────────────────────────────────────────────────────────
+
+var GRP_NSTOP = 'N-Stop Risk Management'
+
+enableNStop = input.bool(true, 'Enable N-Stop Levels', group = GRP_NSTOP)
+numStops = input.int(3, 'Number of Stops', minval = 2, maxval = 3, group = GRP_NSTOP, tooltip = '2-Stop: halves position at each level. 3-Stop: thirds position at each level.')
+showNStopTable = input.bool(false, 'Show N-Stop Table Rows', group = GRP_NSTOP, tooltip = 'Add stop-level details to the info table')
+showRTargets = input.bool(true, 'Show R-Multiple Targets', group = GRP_NSTOP, tooltip = 'Draw 1R, 2R, 3R profit target lines on chart')
+stopLineColor = input.color(color.new(color.red, 30), 'Stop Line Color', group = GRP_NSTOP, inline = '1')
+targetColor = input.color(color.new(color.green, 30), 'Target Line Color', group = GRP_NSTOP, inline = '1')
+
+// ──────────────────────────────────────────────────────────────
+// Inputs — Display
+// ──────────────────────────────────────────────────────────────
+
+var GRP_DISPLAY = 'Display Settings'
+
+showStopLine = input.bool(false, 'Show Stop Loss on Chart', group = GRP_DISPLAY)
+showShortInfo = input.bool(false, 'Include Short Info on Table', group = GRP_DISPLAY, tooltip = 'Add short position calculations to the table')
+tableYPos = input.string('Top', 'Table Position', options = ['Top', 'Middle', 'Bottom'], group = GRP_DISPLAY, inline = '1')
+tableXPos = input.string('Right', ' ', options = ['Right', 'Center', 'Left'], group = GRP_DISPLAY, inline = '1')
+textSizeStr = input.string('Normal', 'Text Size', options = ['Small', 'Normal', 'Large', 'Huge'], group = GRP_DISPLAY, inline = '2')
+textColor = input.color(color.black, 'Text Color', group = GRP_DISPLAY, inline = '2')
+tableBgColor = input.color(color.white, 'Table Background Color', group = GRP_DISPLAY)
+
+// ──────────────────────────────────────────────────────────────
+// Inputs — Multipliers
+// ──────────────────────────────────────────────────────────────
+
+var GRP_MULT = 'Multiplier Display'
+
+showMultipliers = input.bool(true, 'Show Multipliers', group = GRP_MULT)
+multFull = input.float(2.1, 'Full Multiplier', group = GRP_MULT, tooltip = 'Multiplier applied to share count for the full-size column')
+multHalf = input.float(0.56, 'Half Multiplier', group = GRP_MULT, tooltip = 'Multiplier applied to share count for the half-size column')
+
+// ──────────────────────────────────────────────────────────────
+// Derived constants
+// ──────────────────────────────────────────────────────────────
+
+riskMultiplier = switch equityRiskStr
+    '0.25%' => 0.0025
+    '0.50%' => 0.0050
+    '0.75%' => 0.0075
+    '1.00%' => 0.0100
+
+textSize = switch textSizeStr
+    'Small' => size.small
+    'Normal' => size.normal
+    'Large' => size.large
+    'Huge' => size.huge
+
+// ──────────────────────────────────────────────────────────────
+// State variables
+// ──────────────────────────────────────────────────────────────
+
+var swingLow = PivotPoint.new(na, na)
+var swingHigh = PivotPoint.new(na, na)
+
+// ──────────────────────────────────────────────────────────────
+// Core calculations
+// ──────────────────────────────────────────────────────────────
+
+pivotLow = ta.pivotlow(pivotLength, pivotLength)
+pivotHigh = ta.pivothigh(pivotLength, pivotLength)
+atr = ta.atr(atrLength)
+
+maHigh = maTypeStr == 'EMA' ? ta.ema(high, maLength) : ta.sma(high, maLength)
+maClose = maTypeStr == 'EMA' ? ta.ema(close, maLength) : ta.sma(close, maLength)
+maLow = maTypeStr == 'EMA' ? ta.ema(low, maLength) : ta.sma(low, maLength)
+
+if not na(pivotLow)
+    swingLow.price := low[pivotLength]
+    swingLow.barIdx := bar_index[pivotLength]
+    swingLow.barIdx
+
+if not na(pivotHigh)
+    swingHigh.price := high[pivotLength]
+    swingHigh.barIdx := bar_index[pivotLength]
+    swingHigh.barIdx
+
+// Single request.security() call — avoids creating a second security context
+[lowOfDay, prevDayLow, highOfDay, prevDayHigh] = request.security(syminfo.tickerid, 'D', [low, low[1], high, high[1]], lookahead = barmerge.lookahead_on)
+
+// ──────────────────────────────────────────────────────────────
+// Helper: resolve entry price
+// ──────────────────────────────────────────────────────────────
+
+getEntryPrice() =>
+    if useCandleEntry
+        switch candleEntryMode
+            'Current Price' => close
+            'High' => high
+            'Low' => low
+            'Previous High' => high[1]
+            'Previous Low' => low[1]
+    else
+        entryPriceInput
+
+// ──────────────────────────────────────────────────────────────
+// Helper: resolve major stop — auto-mirrors for long/short
+//   direction: +1 = long, -1 = short
+// ──────────────────────────────────────────────────────────────
+
+getMajorStop(int direction, float entry) =>
+    float result = na
+    if direction == 1
+        result := switch majorStopMode
+            'Low of Day' => lowOfDay
+            'Current Bar Low' => low
+            'Previous Bar Low' => low[1]
+            'Previous Day Low' => prevDayLow
+            'Swing Low' => swingLow.price
+            '% ATR from LOD' => lowOfDay - atr * atrMult
+            '% ATR from Entry' => entry - atr * atrMult
+            '% ATR from Previous Bar Low' => low[1] - atr * atrMult
+            'MA' => maClose
+            'MA Structure Low' => maLow
+            'High of Day' => highOfDay
+            'Previous High' => prevDayHigh
+            'Swing High' => swingHigh.price
+            '% ATR from HOD' => highOfDay + atr * atrMult
+            'MA Structure High' => maHigh
+        result
+    else
+        result := switch majorStopMode
+            'Low of Day' => highOfDay
+            'Current Bar Low' => high
+            'Previous Bar Low' => high[1]
+            'Previous Day Low' => prevDayHigh
+            'Swing Low' => swingHigh.price
+            '% ATR from LOD' => highOfDay + atr * atrMult
+            '% ATR from Entry' => entry + atr * atrMult
+            '% ATR from Previous Bar Low' => high[1] + atr * atrMult
+            'MA' => maClose
+            'MA Structure Low' => maHigh
+            'High of Day' => lowOfDay
+            'Previous High' => prevDayLow
+            'Swing High' => swingLow.price
+            '% ATR from HOD' => lowOfDay - atr * atrMult
+            'MA Structure High' => maLow
+        result
+    result
+
+// ──────────────────────────────────────────────────────────────
+// Helper: apply buffer to stop price
+// ──────────────────────────────────────────────────────────────
+
+applyBuffer(float rawStop, float entry) =>
+    bool isStopAboveEntry = rawStop > entry
+    if isStopAboveEntry
+        bufferType == '$' ? rawStop + stopBuffer : rawStop * (1 + stopBuffer / 100)
+    else
+        bufferType == '$' ? rawStop - stopBuffer : rawStop * (1 - stopBuffer / 100)
+
+// ──────────────────────────────────────────────────────────────
+// Helper: calculate position sizing
+// ──────────────────────────────────────────────────────────────
+
+calcShares(float riskAmount, float entry, float stop) =>
+    float raw = riskAmount / math.abs(entry - stop)
+    useFractional ? math.round(raw, 2) : math.floor(raw)
+
+// ──────────────────────────────────────────────────────────────
+// Main calculations
+// ──────────────────────────────────────────────────────────────
+
+totalRisk = useCustomRisk ? accountSize * (customRiskPct / 100) : accountSize * riskMultiplier
+entryPrice = getEntryPrice()
+
+// ── Long ──
+longRawStop = useMajorLevel ? getMajorStop(1, entryPrice) : stopPriceInput
+longFinalStop = applyBuffer(longRawStop, entryPrice)
+longShares = calcShares(totalRisk, entryPrice, longFinalStop)
+longPosSize = calcMode == 'Shares to Buy' ? longShares * entryPrice : sharesOwned * entryPrice
+longStopLoss = entryPrice - totalRisk / sharesOwned
+longDistPct = math.abs((longFinalStop / entryPrice - 1) * 100)
+longRisk = totalRisk
+
+// ── Cap long position size ──
+if longPosSize > accountSize * maxPositionPct / 100 and useMaxPosition and calcMode == 'Shares to Buy'
+    longShares := useFractional ? math.round(accountSize * maxPositionPct / 100 / entryPrice, 2) : math.floor(accountSize * maxPositionPct / 100 / entryPrice)
+    longPosSize := longShares * entryPrice
+    longRisk := math.abs(entryPrice - longFinalStop) * longShares
+    longRisk
+else if longPosSize < 0 and math.abs(longPosSize) > accountSize * maxPositionPct / 100 and useMaxPosition and calcMode == 'Shares to Buy'
+    longShares := useFractional ? math.round(accountSize * maxPositionPct / 100 / entryPrice * -1, 2) : math.floor(accountSize * maxPositionPct / 100 / entryPrice * -1)
+    longPosSize := longShares * entryPrice
+    longRisk := math.abs(entryPrice - longFinalStop) * longShares
+    longRisk
+
+// ── Short (auto-mirrored) — only computed when needed ──
+float shortFinalStop = na
+float shortShares = na
+float shortPosSize = na
+float shortDistPct = na
+float shortRisk = na
+
+if showShortInfo
+    shortRawStop = useMajorLevel ? getMajorStop(-1, entryPrice) : stopPriceInput > entryPrice ? entryPrice - (stopPriceInput - entryPrice) : entryPrice + entryPrice - stopPriceInput
+    shortFinalStop := applyBuffer(shortRawStop, entryPrice)
+    shortShares := calcShares(totalRisk, entryPrice, shortFinalStop)
+    shortPosSize := shortShares * entryPrice
+    shortDistPct := math.abs((shortFinalStop / entryPrice - 1) * 100)
+    shortRisk := totalRisk
+
+    // Cap short position size
+    if shortPosSize > accountSize * maxPositionPct / 100 and useMaxPosition
+        shortShares := useFractional ? math.round(accountSize * maxPositionPct / 100 / entryPrice, 2) : math.floor(accountSize * maxPositionPct / 100 / entryPrice)
+        shortPosSize := shortShares * entryPrice
+        shortRisk := math.abs(entryPrice - shortFinalStop) * shortShares
+        shortRisk
+
+// ──────────────────────────────────────────────────────────────
+// N-Stop calculations — only computed when enabled
+//   Stop k = entry - (k/N * R) * direction
+//   R = |entry - fullStop|
+//   qty_k = floor(totalShares / N), last tranche gets remainder
+// ──────────────────────────────────────────────────────────────
+
+float fullR = na
+int nDirection = na
+float nStop1 = na
+float nStop2 = na
+float nStop3 = na
+int nQty1 = na
+int nQty2 = na
+int nQty3 = na
+float nStopTotalLoss = na
+float fullStopLoss = na
+float target1R = na
+float target2R = na
+float target3R = na
+
+if enableNStop
+    fullR := math.abs(entryPrice - longFinalStop)
+    nDirection := longFinalStop < entryPrice ? 1 : -1
+
+    // N-stop levels
+    nStop1 := entryPrice - 1.0 / numStops * fullR * nDirection
+    nStop2 := entryPrice - 2.0 / numStops * fullR * nDirection
+    nStop3 := numStops == 3 ? entryPrice - fullR * nDirection : na
+
+    // N-stop quantities
+    nQtyBase = math.floor(longShares / numStops)
+    nQtyRemainder = math.round(longShares - nQtyBase * numStops)
+    nQty1 := nQtyBase
+    nQty2 := numStops == 2 ? nQtyBase + nQtyRemainder : nQtyBase
+    nQty3 := numStops == 3 ? nQtyBase + nQtyRemainder : 0
+
+    // N-stop simulated loss
+    nStopTotalLoss := math.abs(entryPrice - nStop1) * nQty1 + math.abs(entryPrice - nStop2) * nQty2 + (numStops == 3 ? math.abs(entryPrice - nStop3) * nQty3 : 0)
+    fullStopLoss := math.abs(entryPrice - longFinalStop) * longShares
+
+    // R-multiple targets (profit side — mirror of risk)
+    target1R := entryPrice + fullR * nDirection
+    target2R := entryPrice + 2 * fullR * nDirection
+    target3R := entryPrice + 3 * fullR * nDirection
+    target3R
+
+// ──────────────────────────────────────────────────────────────
+// Validation: warn if stop is on wrong side
+// ──────────────────────────────────────────────────────────────
+
+var label warnLabel = na
+
+if barstate.islast
+    label.delete(warnLabel)
+    bool stopWrongSide = tradeDirection == 'Long' ? longFinalStop > entryPrice : longFinalStop < entryPrice
+    string warnText = tradeDirection == 'Long' ? '⚠ Stop is ABOVE entry' : '⚠ Stop is BELOW entry'
+    if stopWrongSide and calcMode == 'Shares to Buy'
+        warnLabel := label.new(bar_index, high * 1.005, warnText, style = label.style_label_down, color = color.orange, textcolor = color.white, size = size.normal)
+        warnLabel
+
+// ──────────────────────────────────────────────────────────────
+// Table rendering
+// ──────────────────────────────────────────────────────────────
+
+// Dynamic row count
+tableRows = 5 // base: header + dollar risk + pos size + shares/stop + distance
+tableRows := tableRows + (showMultipliers ? 1 : 0)
+tableRows := tableRows + (showShortInfo ? 4 : 0)
+tableRows := tableRows + (enableNStop and showNStopTable ? numStops + 2 : 0) // header + N stop rows + savings row
+
+var table infoTable = table.new(str.lower(tableYPos) + '_' + str.lower(tableXPos), 1, tableRows, bgcolor = color.new(color.white, 100))
+
+// ── Persistent line/label arrays for N-stop visuals ──
+var array<line> nStopLines = array.new_line()
+var array<label> nStopLabels = array.new_label()
+var array<line> rTargetLines = array.new_line()
+var array<label> rTargetLabels = array.new_label()
+line stopLine = na
+label stopLabel = na
+
+if barstate.islast
+    // ── Clean up previous N-stop drawings ──
+    for ln in nStopLines
+        line.delete(ln)
+    array.clear(nStopLines)
+    for lb in nStopLabels
+        label.delete(lb)
+    array.clear(nStopLabels)
+    for ln in rTargetLines
+        line.delete(ln)
+    array.clear(rTargetLines)
+    for lb in rTargetLabels
+        label.delete(lb)
+    array.clear(rTargetLabels)
+
+    int row = 0
+    longPrefix = showShortInfo ? 'Long ' : ''
+
+    // ── Header spacer ──
+    infoTable.cell(0, row, ' ')
+    row := row + 1
+
+    // ── Long: Dollar Risk ──
+    infoTable.cell(0, row, longPrefix + 'Dollar Risk: ' + str.tostring(longRisk, '$#,###.##'), text_halign = text.align_left, bgcolor = tableBgColor, text_color = textColor, text_size = textSize)
+    row := row + 1
+
+    // ── Long: Position Size ──
+    infoTable.cell(0, row, longPrefix + 'Position Size: ' + str.tostring(longPosSize, '$#,###.##') + ' (' + str.tostring(longPosSize / accountSize * 100, '#.##') + '%)', text_halign = text.align_left, bgcolor = tableBgColor, text_color = textColor, text_size = textSize)
+    row := row + 1
+
+    // ── Long: Shares or Stop ──
+    if calcMode == 'Shares to Buy'
+        infoTable.cell(0, row, longPrefix + 'Shares to buy: ' + str.tostring(longShares), text_halign = text.align_left, bgcolor = tableBgColor, text_color = textColor, text_size = textSize)
+    else
+        infoTable.cell(0, row, longPrefix + 'Stop Loss: $' + str.tostring(longStopLoss, format.mintick), text_halign = text.align_left, bgcolor = tableBgColor, text_color = textColor, text_size = textSize)
+    row := row + 1
+
+    // ── Long: Distance to Stop ──
+    infoTable.cell(0, row, longPrefix + 'Distance to Stop: ' + str.tostring(longDistPct, '#.##') + '%', text_halign = text.align_left, bgcolor = tableBgColor, text_color = textColor, text_size = textSize)
+    row := row + 1
+
+    // ── Multipliers ──
+    if showMultipliers
+        infoTable.cell(0, row, str.tostring(math.floor(longShares * multFull), '#') + ' / ' + str.tostring(math.floor(longShares * multHalf), '#'), text_halign = text.align_left, bgcolor = tableBgColor, text_color = textColor, text_size = textSize)
+        row := row + 1
+        row
+
+    // ── N-Stop table rows (optional) ──
+    if enableNStop and showNStopTable
+        string nLabel = str.tostring(numStops) + '-Stop'
+        infoTable.cell(0, row, '── ' + nLabel + ' Levels ──', text_halign = text.align_left, bgcolor = color.new(tableBgColor, 50), text_color = textColor, text_size = textSize)
+        row := row + 1
+
+        infoTable.cell(0, row, 'SL1: $' + str.tostring(nStop1, format.mintick) + ' × ' + str.tostring(nQty1) + ' shs', text_halign = text.align_left, bgcolor = tableBgColor, text_color = textColor, text_size = textSize)
+        row := row + 1
+
+        infoTable.cell(0, row, 'SL2: $' + str.tostring(nStop2, format.mintick) + ' × ' + str.tostring(nQty2) + ' shs', text_halign = text.align_left, bgcolor = tableBgColor, text_color = textColor, text_size = textSize)
+        row := row + 1
+
+        if numStops == 3
+            infoTable.cell(0, row, 'SL3: $' + str.tostring(nStop3, format.mintick) + ' × ' + str.tostring(nQty3) + ' shs', text_halign = text.align_left, bgcolor = tableBgColor, text_color = textColor, text_size = textSize)
+            row := row + 1
+            row
+
+        string savings = str.tostring(nStopTotalLoss, '$#,###.##') + ' vs ' + str.tostring(fullStopLoss, '$#,###.##') + ' full'
+        infoTable.cell(0, row, nLabel + ' loss: ' + savings, text_halign = text.align_left, bgcolor = tableBgColor, text_color = textColor, text_size = textSize)
+        row := row + 1
+        row
+
+    // ── Short info ──
+    if showShortInfo
+        infoTable.cell(0, row, 'Short Dollar Risk: ' + str.tostring(shortRisk, '$#,###.##'), text_halign = text.align_left, bgcolor = tableBgColor, text_color = textColor, text_size = textSize)
+        row := row + 1
+
+        infoTable.cell(0, row, 'Short Position Size: ' + str.tostring(shortPosSize, '$#,###.##') + ' (' + str.tostring(shortPosSize / accountSize * 100, '#.##') + '%)', text_halign = text.align_left, bgcolor = tableBgColor, text_color = textColor, text_size = textSize)
+        row := row + 1
+
+        infoTable.cell(0, row, 'Short Shares: ' + str.tostring(shortShares), text_halign = text.align_left, bgcolor = tableBgColor, text_color = textColor, text_size = textSize)
+        row := row + 1
+
+        infoTable.cell(0, row, 'Short Distance to Stop: ' + str.tostring(shortDistPct, '#.##') + '%', text_halign = text.align_left, bgcolor = tableBgColor, text_color = textColor, text_size = textSize)
+        row := row + 1
+        row
+
+    // ── Main stop line on chart ──
+    if showStopLine
+        line.delete(stopLine[1])
+        label.delete(stopLabel[1])
+        float displayStop = calcMode == 'Stop Loss' ? longStopLoss : longFinalStop
+        int lineStart = calcMode == 'Shares to Buy' and majorStopMode == 'Swing Low' ? swingLow.barIdx : calcMode == 'Shares to Buy' and majorStopMode == 'Swing High' ? swingHigh.barIdx : bar_index
+
+        stopLabel := label.new(bar_index - 2, displayStop, 'Stop: $' + str.tostring(displayStop, format.mintick), color = color.new(color.white, 100), style = label.style_none, textcolor = textColor, size = size.small)
+        stopLine := line.new(lineStart, displayStop, bar_index + 1, displayStop, extend = extend.right, color = color.red)
+        stopLine
+
+    // ── N-Stop lines on chart ──
+    if enableNStop and calcMode == 'Shares to Buy'
+        // Stop 1
+        array.push(nStopLines, line.new(bar_index, nStop1, bar_index + 1, nStop1, extend = extend.right, color = stopLineColor, style = line.style_dashed, width = 1))
+        array.push(nStopLabels, label.new(bar_index + 8, nStop1, 'SL1: $' + str.tostring(nStop1, format.mintick) + ' (' + str.tostring(nQty1) + ')', color = color.new(color.white, 100), style = label.style_none, textcolor = stopLineColor, size = size.small))
+
+        // Stop 2
+        array.push(nStopLines, line.new(bar_index, nStop2, bar_index + 1, nStop2, extend = extend.right, color = stopLineColor, style = line.style_dashed, width = 1))
+        array.push(nStopLabels, label.new(bar_index + 8, nStop2, 'SL2: $' + str.tostring(nStop2, format.mintick) + ' (' + str.tostring(nQty2) + ')', color = color.new(color.white, 100), style = label.style_none, textcolor = stopLineColor, size = size.small))
+
+        // Stop 3 (only for 3-stop mode)
+        if numStops == 3
+            array.push(nStopLines, line.new(bar_index, nStop3, bar_index + 1, nStop3, extend = extend.right, color = stopLineColor, style = line.style_dashed, width = 1))
+            array.push(nStopLabels, label.new(bar_index + 8, nStop3, 'SL3: $' + str.tostring(nStop3, format.mintick) + ' (' + str.tostring(nQty3) + ')', color = color.new(color.white, 100), style = label.style_none, textcolor = stopLineColor, size = size.small))
+
+    // ── R-multiple target lines ──
+    if enableNStop and showRTargets and calcMode == 'Shares to Buy'
+        // 1R
+        array.push(rTargetLines, line.new(bar_index, target1R, bar_index + 1, target1R, extend = extend.right, color = targetColor, style = line.style_dashed, width = 1))
+        array.push(rTargetLabels, label.new(bar_index + 8, target1R, '1R: $' + str.tostring(target1R, format.mintick), color = color.new(color.white, 100), style = label.style_none, textcolor = targetColor, size = size.small))
+
+        // 2R
+        array.push(rTargetLines, line.new(bar_index, target2R, bar_index + 1, target2R, extend = extend.right, color = targetColor, style = line.style_dashed, width = 1))
+        array.push(rTargetLabels, label.new(bar_index + 8, target2R, '2R: $' + str.tostring(target2R, format.mintick), color = color.new(color.white, 100), style = label.style_none, textcolor = targetColor, size = size.small))
+
+        // 3R
+        array.push(rTargetLines, line.new(bar_index, target3R, bar_index + 1, target3R, extend = extend.right, color = targetColor, style = line.style_dashed, width = 1))
+        array.push(rTargetLabels, label.new(bar_index + 8, target3R, '3R: $' + str.tostring(target3R, format.mintick), color = color.new(color.white, 100), style = label.style_none, textcolor = targetColor, size = size.small))
