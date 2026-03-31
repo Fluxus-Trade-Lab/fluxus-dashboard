@@ -78,6 +78,8 @@ export default function BrowseView({ cards }) {
   const [selectedId, setSelectedId] = useState(null)
   const [ohlcvData, setOhlcvData] = useState(null)
   const [ohlcvLoading, setOhlcvLoading] = useState(false)
+  const [showSpy, setShowSpy] = useState(false)
+  const [spyData, setSpyData] = useState(null)
 
   // Derive unique patterns
   const allPatterns = useMemo(() => {
@@ -149,6 +151,36 @@ export default function BrowseView({ cards }) {
 
     return () => { cancelled = true }
   }, [selectedEntry?.id, selectedEntry?.ohlcv_file])
+
+  // Fetch SPY OHLCV when overlay is enabled
+  useEffect(() => {
+    if (!showSpy || !selectedEntry || !ohlcvData?.length) {
+      setSpyData(null)
+      return
+    }
+
+    let cancelled = false
+    const year = selectedEntry.year
+
+    fetch(`/data/modelbooks/ohlcv/spy-${year}.json`)
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        return r.json()
+      })
+      .then(data => {
+        if (cancelled) return
+        // Filter SPY data to match the entry's date range
+        const firstTime = ohlcvData[0].time
+        const lastTime = ohlcvData[ohlcvData.length - 1].time
+        const filtered = data.filter(d => d.time >= firstTime && d.time <= lastTime)
+        setSpyData(filtered.length > 0 ? filtered : null)
+      })
+      .catch(() => {
+        if (!cancelled) setSpyData(null)
+      })
+
+    return () => { cancelled = true }
+  }, [showSpy, selectedEntry?.id, selectedEntry?.year, ohlcvData])
 
   const toggleSort = useCallback((key) => {
     if (sortKey === key) setSortDir(d => d === 'asc' ? 'desc' : 'asc')
@@ -265,6 +297,16 @@ export default function BrowseView({ cards }) {
                   <PatternBadge key={p} pattern={p} />
                 ))}
               </div>
+              <button
+                onClick={() => setShowSpy(s => !s)}
+                className={`ml-auto text-[10px] font-medium px-2 py-1 rounded border transition-colors ${
+                  showSpy
+                    ? 'bg-indigo-50 text-indigo-700 border-indigo-200'
+                    : 'bg-[var(--color-surface)] text-[var(--color-text-muted)] border-[var(--color-border)] hover:text-[var(--color-text-secondary)]'
+                }`}
+              >
+                SPY Overlay
+              </button>
             </div>
 
             {/* Chart */}
@@ -278,7 +320,7 @@ export default function BrowseView({ cards }) {
                   No chart data available for this entry
                 </div>
               ) : (
-                <OhlcvChart data={ohlcvData} height={350} />
+                <OhlcvChart data={ohlcvData} height={350} spyData={showSpy ? spyData : null} />
               )}
             </div>
 

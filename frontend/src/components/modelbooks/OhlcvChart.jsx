@@ -64,7 +64,7 @@ export default function OhlcvChart({
   data,
   showMAs = true,
   height = 350,
-  spyData: _spyData,
+  spyData,
 }) {
   const containerRef = useRef(null)
   const chartRef = useRef(null)
@@ -140,6 +140,32 @@ export default function OhlcvChart({
       }
     }
 
+    // SPY overlay (normalized to % change from first bar)
+    if (spyData?.length > 0) {
+      const base = spyData[0].close
+      const spyLine = spyData.map(d => ({
+        time: d.time,
+        value: ((d.close - base) / base) * 100,
+      }))
+
+      const spySeries = chart.addSeries(LineSeries, {
+        color: '#6366f1',
+        lineWidth: 1.5,
+        lineStyle: 2, // dashed
+        crosshairMarkerVisible: false,
+        priceLineVisible: false,
+        lastValueVisible: true,
+        title: 'SPY %',
+        priceScaleId: 'spy',
+      })
+      spySeries.setData(spyLine)
+
+      chart.priceScale('spy').applyOptions({
+        scaleMargins: { top: 0.7, bottom: 0 },
+        borderVisible: false,
+      })
+    }
+
     chart.timeScale().fitContent()
     chartRef.current = chart
 
@@ -160,7 +186,7 @@ export default function OhlcvChart({
         chartRef.current = null
       }
     }
-  }, [data, showMAs, height])
+  }, [data, showMAs, height, spyData])
 
   // Fallback
   if (!data?.length) {
