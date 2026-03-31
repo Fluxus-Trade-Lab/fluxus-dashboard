@@ -1,4 +1,7 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
+import OhlcvChart from './OhlcvChart'
+
+/* ── Constants ──────────────────────────────────────────── */
 
 const PATTERN_COLORS = {
   cup_with_handle: 'bg-blue-50 text-blue-700',
@@ -15,223 +18,322 @@ const PATTERN_COLORS = {
   cup_without_handle: 'bg-sky-50 text-sky-700',
 }
 
+const COLUMNS = [
+  { key: 'ticker', label: 'Ticker', width: 'w-16' },
+  { key: 'year', label: 'Year', width: 'w-14' },
+  { key: 'patterns', label: 'Pattern(s)', width: 'w-28' },
+  { key: 'gain_pct', label: 'Gain%', width: 'w-16' },
+  { key: 'duration_days', label: 'Duration', width: 'w-16' },
+  { key: 'source', label: 'Source', width: 'w-20' },
+]
+
+/* ── Helpers ─────────────────────────────────────────────── */
+
 function formatPattern(key) {
   return key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-}
-
-function getDecade(year) {
-  return `${Math.floor(year / 10) * 10}s`
 }
 
 function PatternBadge({ pattern }) {
   const colors = PATTERN_COLORS[pattern] || 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]'
   return (
-    <span className={`inline-block px-2 py-0.5 text-[10px] font-medium rounded-full ${colors}`}>
+    <span className={`inline-block px-1.5 py-0.5 text-[9px] font-medium rounded-full ${colors} leading-tight`}>
       {formatPattern(pattern)}
     </span>
   )
 }
 
-function CardDetail({ card, onClose }) {
-  return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      onClick={onClose}
-    >
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/30" />
-
-      {/* Modal */}
-      <div
-        className="relative bg-[var(--color-surface)] rounded-lg border border-[var(--color-border)] shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto"
-        onClick={e => e.stopPropagation()}
-      >
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-hover-bg)] transition-colors cursor-pointer text-sm"
-        >
-          x
-        </button>
-
-        {/* Chart placeholder */}
-        <div className="bg-[var(--color-surface-raised)] rounded-t-lg h-52 flex items-center justify-center">
-          <span className="text-3xl font-bold text-[var(--color-text-muted)] tracking-wide">
-            {card.ticker}
-          </span>
-        </div>
-
-        {/* Content */}
-        <div className="p-5 space-y-4">
-          <div className="flex items-baseline justify-between">
-            <h3 className="text-sm font-semibold text-[var(--color-text-bold)]">
-              {card.ticker}
-            </h3>
-            <span className="text-xs text-[var(--color-text-muted)]">{card.year}</span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
-              Source
-            </span>
-            <span className="text-xs text-[var(--color-text-secondary)]">{card.source}</span>
-          </div>
-
-          <div>
-            <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1.5">
-              Patterns
-            </span>
-            <div className="flex flex-wrap gap-1.5">
-              {card.patterns.map(p => (
-                <PatternBadge key={p} pattern={p} />
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1.5">
-              Key Lessons
-            </span>
-            <ul className="space-y-1">
-              {card.key_lessons.map((lesson, i) => (
-                <li key={i} className="text-xs text-[var(--color-text-secondary)] flex gap-2">
-                  <span className="text-[var(--color-text-muted)] select-none shrink-0">&bull;</span>
-                  {lesson}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="flex items-center gap-2 pt-1">
-            <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
-              Outcome
-            </span>
-            <span className="text-xs font-medium text-[var(--color-text)]">{card.outcome}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+function matchesSearch(card, query) {
+  const q = query.toLowerCase()
+  if (card.ticker.toLowerCase().includes(q)) return true
+  if (card.outcome?.toLowerCase().includes(q)) return true
+  if (card.key_lessons?.some(l => l.toLowerCase().includes(q))) return true
+  return false
 }
+
+/* ── Sort comparator ─────────────────────────────────────── */
+
+function compareEntries(a, b, sortKey, sortDir) {
+  let av, bv
+  if (sortKey === 'patterns') {
+    av = a.patterns?.[0] || ''
+    bv = b.patterns?.[0] || ''
+  } else {
+    av = a[sortKey]
+    bv = b[sortKey]
+  }
+  if (av == null && bv == null) return 0
+  if (av == null) return 1
+  if (bv == null) return -1
+  if (typeof av === 'string') return sortDir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av)
+  return sortDir === 'asc' ? av - bv : bv - av
+}
+
+/* ── Main Component ──────────────────────────────────────── */
 
 export default function BrowseView({ cards }) {
   const [patternFilter, setPatternFilter] = useState('all')
-  const [eraFilter, setEraFilter] = useState('all')
-  const [sourceFilter, setSourceFilter] = useState('all')
-  const [selectedCard, setSelectedCard] = useState(null)
+  const [search, setSearch] = useState('')
+  const [sortKey, setSortKey] = useState('gain_pct')
+  const [sortDir, setSortDir] = useState('desc')
+  const [selectedId, setSelectedId] = useState(null)
+  const [ohlcvData, setOhlcvData] = useState(null)
+  const [ohlcvLoading, setOhlcvLoading] = useState(false)
 
-  // Derive unique filter options
+  // Derive unique patterns
   const allPatterns = useMemo(() => {
     const set = new Set()
     cards.forEach(c => c.patterns.forEach(p => set.add(p)))
     return [...set].sort()
   }, [cards])
 
-  const allEras = useMemo(() => {
-    const set = new Set()
-    cards.forEach(c => set.add(getDecade(c.year)))
-    return [...set].sort()
-  }, [cards])
-
-  const allSources = useMemo(() => {
-    const set = new Set()
-    cards.forEach(c => set.add(c.source))
-    return [...set].sort()
-  }, [cards])
-
-  // Filter cards
+  // Filter + sort
   const filtered = useMemo(() => {
-    return cards.filter(card => {
+    let result = cards.filter(card => {
       if (patternFilter !== 'all' && !card.patterns.includes(patternFilter)) return false
-      if (eraFilter !== 'all' && getDecade(card.year) !== eraFilter) return false
-      if (sourceFilter !== 'all' && card.source !== sourceFilter) return false
+      if (search && !matchesSearch(card, search)) return false
       return true
     })
-  }, [cards, patternFilter, eraFilter, sourceFilter])
+    return result.sort((a, b) => compareEntries(a, b, sortKey, sortDir))
+  }, [cards, patternFilter, search, sortKey, sortDir])
+
+  // Selected entry
+  const selectedEntry = useMemo(() => {
+    if (!selectedId) return filtered[0] || null
+    return filtered.find(c => c.id === selectedId) || filtered[0] || null
+  }, [filtered, selectedId])
+
+  // Auto-select first entry on load or when filters change
+  useEffect(() => {
+    if (filtered.length > 0 && !filtered.find(c => c.id === selectedId)) {
+      setSelectedId(filtered[0].id)
+    }
+  }, [filtered]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Auto-select first on mount
+  useEffect(() => {
+    if (cards.length > 0 && !selectedId) {
+      // Sort by gain_pct desc to pick the best one initially
+      const sorted = [...cards].sort((a, b) => (b.gain_pct || 0) - (a.gain_pct || 0))
+      setSelectedId(sorted[0].id)
+    }
+  }, [cards]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Fetch OHLCV on selection change
+  useEffect(() => {
+    if (!selectedEntry?.ohlcv_file) {
+      setOhlcvData(null)
+      return
+    }
+
+    let cancelled = false
+    setOhlcvLoading(true)
+    setOhlcvData(null)
+
+    fetch(`/data/modelbooks/${selectedEntry.ohlcv_file}`)
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        return r.json()
+      })
+      .then(data => {
+        if (!cancelled) {
+          setOhlcvData(data)
+          setOhlcvLoading(false)
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setOhlcvData(null)
+          setOhlcvLoading(false)
+        }
+      })
+
+    return () => { cancelled = true }
+  }, [selectedEntry?.id, selectedEntry?.ohlcv_file])
+
+  const toggleSort = useCallback((key) => {
+    if (sortKey === key) setSortDir(d => d === 'asc' ? 'desc' : 'asc')
+    else { setSortKey(key); setSortDir('desc') }
+  }, [sortKey])
 
   return (
-    <div>
-      {/* Filters */}
-      <div className="flex flex-wrap items-center gap-2 mb-4">
-        <select
-          value={patternFilter}
-          onChange={e => setPatternFilter(e.target.value)}
-          className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
-        >
-          <option value="all">All Patterns</option>
-          {allPatterns.map(p => (
-            <option key={p} value={p}>{formatPattern(p)}</option>
-          ))}
-        </select>
+    <div className="flex flex-col lg:flex-row gap-4">
+      {/* ── Left Panel: Table ──────────────────────────────── */}
+      <div className="lg:w-[40%] flex flex-col min-h-0">
+        {/* Toolbar */}
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          <input
+            type="text"
+            placeholder="Search ticker, lessons, outcome..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-2 py-1.5 w-48 focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
+          />
+          <select
+            value={patternFilter}
+            onChange={e => setPatternFilter(e.target.value)}
+            className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
+          >
+            <option value="all">All Patterns</option>
+            {allPatterns.map(p => (
+              <option key={p} value={p}>{formatPattern(p)}</option>
+            ))}
+          </select>
+          <span className="text-[10px] text-[var(--color-text-muted)] ml-auto">
+            {filtered.length} result{filtered.length !== 1 ? 's' : ''}
+          </span>
+        </div>
 
-        <select
-          value={eraFilter}
-          onChange={e => setEraFilter(e.target.value)}
-          className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
-        >
-          <option value="all">All Eras</option>
-          {allEras.map(e => (
-            <option key={e} value={e}>{e}</option>
-          ))}
-        </select>
-
-        <select
-          value={sourceFilter}
-          onChange={e => setSourceFilter(e.target.value)}
-          className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
-        >
-          <option value="all">All Sources</option>
-          {allSources.map(s => (
-            <option key={s} value={s}>{s}</option>
-          ))}
-        </select>
-
-        <span className="text-[10px] text-[var(--color-text-muted)] ml-1">
-          {filtered.length} result{filtered.length !== 1 ? 's' : ''}
-        </span>
+        {/* Table */}
+        <div className="overflow-y-auto border border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] flex-1 max-h-[70vh] lg:max-h-none">
+          <table className="w-full text-xs">
+            <thead className="sticky top-0 z-10">
+              <tr className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
+                {COLUMNS.map(col => (
+                  <th
+                    key={col.key}
+                    onClick={() => toggleSort(col.key)}
+                    className={`px-2 py-1.5 text-left cursor-pointer hover:bg-[var(--color-hover-bg)] font-medium text-[10px] text-[var(--color-text-secondary)] uppercase tracking-wide ${col.width}`}
+                  >
+                    {col.label}
+                    {sortKey === col.key && (sortDir === 'asc' ? ' \u2191' : ' \u2193')}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={COLUMNS.length} className="px-4 py-8 text-center text-xs text-[var(--color-text-muted)]">
+                    No entries match the current filters
+                  </td>
+                </tr>
+              ) : (
+                filtered.map(card => {
+                  const isSelected = selectedEntry?.id === card.id
+                  return (
+                    <tr
+                      key={card.id}
+                      onClick={() => setSelectedId(card.id)}
+                      className={`border-b border-[var(--color-border-light)] cursor-pointer transition-colors ${
+                        isSelected
+                          ? 'bg-[var(--color-hover-bg)] ring-1 ring-inset ring-[var(--color-input-border)]'
+                          : 'hover:bg-[var(--color-hover-bg)]'
+                      }`}
+                    >
+                      <td className="px-2 py-1.5 text-[11px] font-semibold text-blue-700">{card.ticker}</td>
+                      <td className="px-2 py-1.5 text-[11px] text-[var(--color-text-secondary)] font-mono">{card.year}</td>
+                      <td className="px-2 py-1.5">
+                        <div className="flex flex-wrap gap-0.5">
+                          {card.patterns.slice(0, 2).map(p => (
+                            <PatternBadge key={p} pattern={p} />
+                          ))}
+                          {card.patterns.length > 2 && (
+                            <span className="text-[9px] text-[var(--color-text-muted)]">+{card.patterns.length - 2}</span>
+                          )}
+                        </div>
+                      </td>
+                      <td className={`px-2 py-1.5 text-[11px] font-mono ${
+                        card.gain_pct != null && card.gain_pct > 0 ? 'text-green-700' : 'text-[var(--color-text-secondary)]'
+                      }`}>
+                        {card.gain_pct != null ? `${card.gain_pct.toFixed(0)}%` : '\u2014'}
+                      </td>
+                      <td className="px-2 py-1.5 text-[11px] text-[var(--color-text-secondary)] font-mono">
+                        {card.duration_days != null ? `${card.duration_days}d` : '\u2014'}
+                      </td>
+                      <td className="px-2 py-1.5 text-[11px] text-[var(--color-text-muted)] truncate max-w-[80px]">{card.source}</td>
+                    </tr>
+                  )
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      {/* Card grid */}
-      {filtered.length === 0 ? (
-        <div className="flex items-center justify-center h-48 rounded-lg border border-dashed border-[var(--color-border)] bg-[var(--color-surface-alt)]">
-          <span className="text-xs text-[var(--color-text-muted)]">No cards match the current filters</span>
-        </div>
-      ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {filtered.map(card => (
-            <button
-              key={card.id}
-              onClick={() => setSelectedCard(card)}
-              className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden text-left hover:border-[var(--color-input-border)] hover:shadow-sm transition-all cursor-pointer group"
-            >
-              {/* Chart placeholder */}
-              <div className="bg-[var(--color-surface-raised)] h-40 flex items-center justify-center group-hover:bg-[var(--color-hover-bg)] transition-colors">
-                <span className="text-xl font-bold text-[var(--color-text-muted)] tracking-wide group-hover:text-[var(--color-text-muted)] transition-colors">
-                  {card.ticker}
-                </span>
+      {/* ── Right Panel: Chart + Details ───────────────────── */}
+      <div className="lg:w-[60%] flex flex-col min-h-0">
+        {selectedEntry ? (
+          <>
+            {/* Chart header */}
+            <div className="flex items-center gap-3 mb-3">
+              <h3 className="text-sm font-semibold text-[var(--color-text-bold)]">
+                {selectedEntry.ticker}
+              </h3>
+              <span className="text-xs text-[var(--color-text-muted)]">{selectedEntry.year}</span>
+              <div className="flex gap-1.5 ml-1">
+                {selectedEntry.patterns.map(p => (
+                  <PatternBadge key={p} pattern={p} />
+                ))}
+              </div>
+            </div>
+
+            {/* Chart */}
+            <div className="border border-[var(--color-border)] rounded-lg overflow-hidden bg-[var(--color-surface)]">
+              {ohlcvLoading ? (
+                <div className="flex items-center justify-center h-[350px] text-xs text-[var(--color-text-muted)]">
+                  Loading chart data...
+                </div>
+              ) : !selectedEntry.ohlcv_file ? (
+                <div className="flex items-center justify-center h-[350px] text-xs text-[var(--color-text-muted)]">
+                  No chart data available for this entry
+                </div>
+              ) : (
+                <OhlcvChart data={ohlcvData} height={350} />
+              )}
+            </div>
+
+            {/* Details section */}
+            <div className="mt-3 p-4 border border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] space-y-3">
+              {/* Stats row */}
+              <div className="flex flex-wrap gap-x-6 gap-y-2">
+                {selectedEntry.gain_pct != null && (
+                  <div>
+                    <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Gain</span>
+                    <span className="text-sm font-semibold text-green-700">{selectedEntry.gain_pct.toFixed(1)}%</span>
+                  </div>
+                )}
+                {selectedEntry.duration_days != null && (
+                  <div>
+                    <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Duration</span>
+                    <span className="text-sm font-medium text-[var(--color-text)]">{selectedEntry.duration_days} days</span>
+                  </div>
+                )}
+                <div>
+                  <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Source</span>
+                  <span className="text-sm text-[var(--color-text-secondary)]">{selectedEntry.source}</span>
+                </div>
+                {selectedEntry.outcome && (
+                  <div>
+                    <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Outcome</span>
+                    <span className="text-sm font-medium text-[var(--color-text)]">{selectedEntry.outcome}</span>
+                  </div>
+                )}
               </div>
 
-              {/* Info */}
-              <div className="p-3 space-y-2">
-                <div className="flex items-baseline justify-between">
-                  <span className="text-xs font-semibold text-[var(--color-text)]">{card.ticker}</span>
-                  <span className="text-[10px] text-[var(--color-text-muted)]">{card.year}</span>
+              {/* Key lessons */}
+              {selectedEntry.key_lessons?.length > 0 && (
+                <div>
+                  <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1.5">
+                    Key Lessons
+                  </span>
+                  <ul className="space-y-1">
+                    {selectedEntry.key_lessons.map((lesson, i) => (
+                      <li key={i} className="text-xs text-[var(--color-text-secondary)] flex gap-2">
+                        <span className="text-[var(--color-text-muted)] select-none shrink-0">&bull;</span>
+                        {lesson}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="flex flex-wrap gap-1">
-                  {card.patterns.map(p => (
-                    <PatternBadge key={p} pattern={p} />
-                  ))}
-                </div>
-              </div>
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* Detail modal */}
-      {selectedCard && (
-        <CardDetail card={selectedCard} onClose={() => setSelectedCard(null)} />
-      )}
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="flex items-center justify-center h-64 rounded-lg border border-dashed border-[var(--color-border)] bg-[var(--color-surface-alt)]">
+            <span className="text-xs text-[var(--color-text-muted)]">Select an entry to view its chart</span>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
