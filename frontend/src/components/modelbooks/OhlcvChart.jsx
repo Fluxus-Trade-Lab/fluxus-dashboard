@@ -184,7 +184,11 @@ export default function OhlcvChart({
         mode: logScale ? 1 : 0, // 1 = logarithmic
       },
       timeScale: { borderVisible: false },
-      crosshair: { horzLine: { visible: false, labelVisible: false } },
+      crosshair: {
+        mode: 0, // Normal crosshair
+        horzLine: { visible: true, labelVisible: true, style: 3, color: isDarkMode() ? '#44403c' : '#d6d3d1' },
+        vertLine: { style: 3, color: isDarkMode() ? '#44403c' : '#d6d3d1' },
+      },
     })
 
     // Candlestick series

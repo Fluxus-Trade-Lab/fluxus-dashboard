@@ -217,10 +217,13 @@ export default function BrowseView({ cards }) {
         e.preventDefault()
         const next = Math.min(currentIdx + 1, filtered.length - 1)
         setSelectedId(filtered[next].id)
+        // Scroll row into view
+        document.querySelector(`[data-entry-id="${filtered[next].id}"]`)?.scrollIntoView({ block: 'nearest' })
       } else if (e.key === 'ArrowUp' || e.key === 'k') {
         e.preventDefault()
         const prev = Math.max(currentIdx - 1, 0)
         setSelectedId(filtered[prev].id)
+        document.querySelector(`[data-entry-id="${filtered[prev].id}"]`)?.scrollIntoView({ block: 'nearest' })
       }
     }
     window.addEventListener('keydown', handleKeyDown)
@@ -295,6 +298,7 @@ export default function BrowseView({ cards }) {
                   return (
                     <tr
                       key={card.id}
+                      data-entry-id={card.id}
                       onClick={() => setSelectedId(card.id)}
                       className={`border-b border-[var(--color-border-light)] cursor-pointer transition-colors ${
                         isSelected
