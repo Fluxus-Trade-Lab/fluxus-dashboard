@@ -422,7 +422,7 @@ export default function BrowseView({ cards }) {
       </div>
 
       {/* Table */}
-      <div className="overflow-y-auto border border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] flex-1 max-h-[40vh] lg:max-h-none">
+      <div className="overflow-y-auto border border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] flex-1 max-h-[40vh] lg:max-h-[calc(100vh-180px)]">
         <table className="w-full text-xs">
           <thead className="sticky top-0 z-10">
             <tr className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
@@ -494,14 +494,14 @@ export default function BrowseView({ cards }) {
   // Desktop (lg+): 22% | 48% | 30%
   if (isLg) {
     return (
-      <div className="flex gap-4" style={{ minHeight: 0 }}>
-        <div className="flex flex-col min-h-0" style={{ width: '22%', flexShrink: 0 }}>
+      <div className="flex gap-4">
+        <div className="flex flex-col" style={{ width: '22%', flexShrink: 0, maxHeight: 'calc(100vh - 140px)' }}>
           {tableBlock}
         </div>
-        <div className="flex flex-col min-h-0 sticky top-4 self-start" style={{ width: '48%', flexShrink: 0 }}>
+        <div className="flex flex-col sticky top-4 self-start" style={{ width: '48%', flexShrink: 0 }}>
           {chartBlock}
         </div>
-        <div className="flex flex-col min-h-0 sticky top-4 self-start" style={{ width: '30%', flexShrink: 0 }}>
+        <div className="flex flex-col sticky top-4 self-start overflow-y-auto" style={{ width: '30%', flexShrink: 0, maxHeight: 'calc(100vh - 140px)' }}>
           {notesBlock}
         </div>
       </div>
