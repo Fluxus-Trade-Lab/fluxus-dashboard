@@ -24,6 +24,9 @@ data/raw/*.tmp
 *.swo
 *~
 
+# Worktrees
+.worktrees/
+
 # OS
 .DS_Store
 Thumbs.db
@@ -32,3 +35,5 @@ Thumbs.db
 *.pem
 *.key
 credentials.json
+.vercel
+.gstack/

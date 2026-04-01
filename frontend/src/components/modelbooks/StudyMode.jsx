@@ -1,18 +1,19 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
+import OhlcvChart from './OhlcvChart'
 
 const PATTERN_COLORS = {
-  cup_with_handle: 'bg-blue-50 text-blue-700',
-  flat_base: 'bg-green-50 text-green-700',
-  vcp: 'bg-purple-50 text-purple-700',
-  high_tight_flag: 'bg-amber-50 text-amber-700',
-  pocket_pivot: 'bg-cyan-50 text-cyan-700',
-  episodic_pivot: 'bg-rose-50 text-rose-700',
-  range_breakout: 'bg-orange-50 text-orange-700',
-  base_on_base: 'bg-teal-50 text-teal-700',
-  double_bottom: 'bg-indigo-50 text-indigo-700',
-  ipo_base: 'bg-lime-50 text-lime-700',
-  faulty_base: 'bg-red-50 text-red-600',
-  cup_without_handle: 'bg-sky-50 text-sky-700',
+  cup_with_handle: 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300',
+  flat_base: 'bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300',
+  vcp: 'bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300',
+  high_tight_flag: 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
+  pocket_pivot: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300',
+  episodic_pivot: 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300',
+  range_breakout: 'bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300',
+  base_on_base: 'bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-300',
+  double_bottom: 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300',
+  ipo_base: 'bg-lime-50 text-lime-700 dark:bg-lime-950 dark:text-lime-300',
+  faulty_base: 'bg-red-50 text-red-600 dark:bg-red-950 dark:text-red-400',
+  cup_without_handle: 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300',
 }
 
 function formatPattern(key) {
@@ -42,8 +43,34 @@ export default function StudyMode({ cards }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [revealed, setRevealed] = useState(false)
   const [markedForReview, setMarkedForReview] = useState(new Set())
+  const [ohlcv, setOhlcv] = useState(null)
 
   const card = deck[currentIndex]
+
+  // Fetch OHLCV data when card changes
+  useEffect(() => {
+    if (!card?.ohlcv_file) {
+      setOhlcv(null)
+      return
+    }
+
+    let cancelled = false
+    setOhlcv(null)
+
+    fetch(`/data/modelbooks/${card.ohlcv_file}`)
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        return r.json()
+      })
+      .then(data => {
+        if (!cancelled) setOhlcv(data)
+      })
+      .catch(() => {
+        if (!cancelled) setOhlcv(null)
+      })
+
+    return () => { cancelled = true }
+  }, [card?.id, card?.ohlcv_file])
 
   const reviewCount = markedForReview.size
 
@@ -77,6 +104,18 @@ export default function StudyMode({ cards }) {
 
   const isMarked = card ? markedForReview.has(card.id) : false
 
+  // Keyboard shortcuts: Space=reveal, N=next, M=mark
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.target.tagName === 'INPUT') return
+      if (e.key === ' ' && !revealed) { e.preventDefault(); handleReveal() }
+      else if ((e.key === 'n' || e.key === 'ArrowRight') && revealed) { e.preventDefault(); handleNext() }
+      else if (e.key === 'm' && revealed) { e.preventDefault(); handleMarkForReview() }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [revealed, handleReveal, handleNext, handleMarkForReview])
+
   if (!card) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -87,31 +126,51 @@ export default function StudyMode({ cards }) {
 
   return (
     <div className="flex flex-col items-center">
-      {/* Progress bar */}
-      <div className="w-full max-w-xl flex items-center justify-between mb-4">
-        <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
-          Card {currentIndex + 1} of {deck.length}
-        </span>
-        {reviewCount > 0 && (
-          <span className="text-[10px] text-[var(--color-text-muted)]">
-            {reviewCount} marked for review
+      {/* Progress */}
+      <div className="w-full max-w-xl mb-4 space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
+            Card {currentIndex + 1} of {deck.length}
           </span>
-        )}
+          <div className="flex items-center gap-3">
+            {reviewCount > 0 && (
+              <span className="text-[10px] text-amber-600 dark:text-amber-400">
+                {reviewCount} flagged
+              </span>
+            )}
+            <span className="text-[9px] text-[var(--color-text-muted)] font-mono">
+              Space=reveal  N=next  M=flag
+            </span>
+          </div>
+        </div>
+        {/* Visual progress bar */}
+        <div className="w-full h-1 bg-[var(--color-border)] rounded-full overflow-hidden">
+          <div
+            className="h-full bg-[var(--color-text-muted)] rounded-full transition-all duration-300"
+            style={{ width: `${((currentIndex + 1) / deck.length) * 100}%` }}
+          />
+        </div>
       </div>
 
       {/* Flashcard */}
       <div className="w-full max-w-xl bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden shadow-sm">
-        {/* Chart placeholder */}
-        <div className="bg-[var(--color-surface-raised)] h-56 flex items-center justify-center relative">
-          {!revealed ? (
-            <div className="text-center">
-              <div className="text-4xl font-bold text-[var(--color-border)] tracking-wide mb-2">?</div>
-              <div className="text-xs text-[var(--color-text-muted)]">Can you identify the pattern?</div>
-            </div>
+        {/* Chart area */}
+        <div className="relative">
+          {card.ohlcv_file && ohlcv ? (
+            <OhlcvChart data={ohlcv} height={260} showMAs={revealed} showVolume={revealed} />
           ) : (
-            <span className="text-3xl font-bold text-[var(--color-text-muted)] tracking-wide">
-              {card.ticker}
-            </span>
+            <div className="bg-[var(--color-surface-raised)] h-[220px] flex items-center justify-center">
+              {!revealed ? (
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-[var(--color-border)] tracking-wide mb-2">?</div>
+                  <div className="text-xs text-[var(--color-text-muted)]">Can you identify the pattern?</div>
+                </div>
+              ) : (
+                <span className="text-3xl font-bold text-[var(--color-text-muted)] tracking-wide">
+                  {card.ticker}
+                </span>
+              )}
+            </div>
           )}
           {isMarked && (
             <span className="absolute top-3 right-3 text-[10px] font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
