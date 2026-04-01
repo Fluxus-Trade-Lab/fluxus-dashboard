@@ -19,11 +19,11 @@ const PATTERN_COLORS = {
 }
 
 const TABLE_COLUMNS = [
-  { key: 'ticker', label: 'Ticker', width: 'w-14' },
-  { key: 'year', label: 'Year', width: 'w-12' },
-  { key: 'patterns', label: 'Pattern(s)', width: 'w-24' },
-  { key: 'gain_pct', label: 'Gain%', width: 'w-14' },
-  { key: 'source', label: 'Src', width: 'w-16' },
+  { key: 'ticker', label: 'Ticker', width: '' },
+  { key: 'year', label: 'Year', width: '' },
+  { key: 'patterns', label: 'Pattern', width: '' },
+  { key: 'gain_pct', label: 'Gain', width: '' },
+  { key: 'source', label: 'Src', width: '' },
 ]
 
 /* Source abbreviation map */
@@ -494,14 +494,14 @@ export default function BrowseView({ cards }) {
   // Desktop (lg+): 22% | 48% | 30%
   if (isLg) {
     return (
-      <div className="flex gap-4">
-        <div className="flex flex-col" style={{ width: '22%', flexShrink: 0, maxHeight: 'calc(100vh - 140px)' }}>
+      <div className="flex gap-3">
+        <div className="flex flex-col" style={{ flex: '0 0 28%', maxHeight: 'calc(100vh - 140px)' }}>
           {tableBlock}
         </div>
-        <div className="flex flex-col sticky top-4 self-start" style={{ width: '48%', flexShrink: 0 }}>
+        <div className="flex flex-col sticky top-4 self-start" style={{ flex: '1 1 auto' }}>
           {chartBlock}
         </div>
-        <div className="flex flex-col sticky top-4 self-start overflow-y-auto" style={{ width: '30%', flexShrink: 0, maxHeight: 'calc(100vh - 140px)' }}>
+        <div className="flex flex-col sticky top-4 self-start overflow-y-auto" style={{ flex: '0 0 24%', maxHeight: 'calc(100vh - 140px)' }}>
           {notesBlock}
         </div>
       </div>
