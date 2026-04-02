@@ -1,41 +1,17 @@
 {
-  "timestamp": "2026-04-01T22:06:36.947218+00:00",
-  "count": 7,
+  "timestamp": "2026-04-02T22:03:38.867421+00:00",
+  "count": 15,
   "results": [
     {
-      "ticker": "DMLP",
+      "ticker": "ANAB",
       "num_contractions": 3,
-      "max_depth": 8.8,
-      "last_depth": 5.1,
-      "pivot": 27.5,
-      "pct_to_pivot": 0.3,
+      "max_depth": 20.0,
+      "last_depth": 8.8,
+      "pivot": 57.74,
+      "pct_to_pivot": 0.1,
       "volume_declining": true,
-      "ratios_healthy": false,
-      "atr_ext": 2.19,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "SDRL",
-      "num_contractions": 2,
-      "max_depth": 13.6,
-      "last_depth": 7.3,
-      "pivot": 44.73,
-      "pct_to_pivot": 0.4,
-      "volume_declining": false,
       "ratios_healthy": true,
-      "atr_ext": 1.33,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CMPR",
-      "num_contractions": 4,
-      "max_depth": 16.2,
-      "last_depth": 9.6,
-      "pivot": 74.59,
-      "pct_to_pivot": 0.7,
-      "volume_declining": true,
-      "ratios_healthy": false,
-      "atr_ext": 0.07,
+      "atr_ext": 0.42,
       "atr_color": "green"
     },
     {
@@ -47,7 +23,7 @@
       "pct_to_pivot": -0.8,
       "volume_declining": true,
       "ratios_healthy": true,
-      "atr_ext": 2.0,
+      "atr_ext": 2.09,
       "atr_color": "green"
     },
     {
@@ -59,7 +35,19 @@
       "pct_to_pivot": -1.2,
       "volume_declining": false,
       "ratios_healthy": true,
-      "atr_ext": 3.1,
+      "atr_ext": 3.27,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "NEE",
+      "num_contractions": 2,
+      "max_depth": 5.9,
+      "last_depth": 5.6,
+      "pivot": 94.44,
+      "pct_to_pivot": 1.4,
+      "volume_declining": true,
+      "ratios_healthy": false,
+      "atr_ext": 1.29,
       "atr_color": "green"
     },
     {
@@ -68,10 +56,70 @@
       "max_depth": 28.4,
       "last_depth": 19.1,
       "pivot": 56.69,
-      "pct_to_pivot": 2.2,
+      "pct_to_pivot": 1.6,
       "volume_declining": false,
       "ratios_healthy": false,
-      "atr_ext": 0.23,
+      "atr_ext": 0.31,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DMLP",
+      "num_contractions": 3,
+      "max_depth": 8.8,
+      "last_depth": 5.1,
+      "pivot": 27.5,
+      "pct_to_pivot": -1.7,
+      "volume_declining": true,
+      "ratios_healthy": false,
+      "atr_ext": 2.82,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KRP",
+      "num_contractions": 3,
+      "max_depth": 13.3,
+      "last_depth": 5.1,
+      "pivot": 14.5,
+      "pct_to_pivot": -1.7,
+      "volume_declining": false,
+      "ratios_healthy": false,
+      "atr_ext": 2.62,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "PFE",
+      "num_contractions": 6,
+      "max_depth": 6.8,
+      "last_depth": 4.8,
+      "pivot": 27.76,
+      "pct_to_pivot": -2.0,
+      "volume_declining": false,
+      "ratios_healthy": false,
+      "atr_ext": 2.22,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "SDRL",
+      "num_contractions": 2,
+      "max_depth": 13.6,
+      "last_depth": 7.3,
+      "pivot": 44.73,
+      "pct_to_pivot": -2.0,
+      "volume_declining": false,
+      "ratios_healthy": true,
+      "atr_ext": 1.79,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "PWR",
+      "num_contractions": 3,
+      "max_depth": 13.0,
+      "last_depth": 7.4,
+      "pivot": 573.97,
+      "pct_to_pivot": 2.4,
+      "volume_declining": false,
+      "ratios_healthy": false,
+      "atr_ext": 1.15,
       "atr_color": "green"
     },
     {
@@ -80,10 +128,58 @@
       "max_depth": 19.6,
       "last_depth": 9.4,
       "pivot": 69.35,
-      "pct_to_pivot": 3.8,
+      "pct_to_pivot": 2.8,
       "volume_declining": false,
       "ratios_healthy": false,
-      "atr_ext": 2.81,
+      "atr_ext": 3.05,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "SBR",
+      "num_contractions": 4,
+      "max_depth": 16.1,
+      "last_depth": 5.8,
+      "pivot": 77.0,
+      "pct_to_pivot": 3.2,
+      "volume_declining": false,
+      "ratios_healthy": false,
+      "atr_ext": 1.41,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "OII",
+      "num_contractions": 2,
+      "max_depth": 16.3,
+      "last_depth": 10.8,
+      "pivot": 36.72,
+      "pct_to_pivot": 3.3,
+      "volume_declining": false,
+      "ratios_healthy": true,
+      "atr_ext": 1.02,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KLAC",
+      "num_contractions": 2,
+      "max_depth": 24.1,
+      "last_depth": 16.3,
+      "pivot": 1577.35,
+      "pct_to_pivot": 4.0,
+      "volume_declining": true,
+      "ratios_healthy": true,
+      "atr_ext": 0.6,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "VAL",
+      "num_contractions": 2,
+      "max_depth": 22.1,
+      "last_depth": 15.7,
+      "pivot": 102.19,
+      "pct_to_pivot": 4.2,
+      "volume_declining": true,
+      "ratios_healthy": true,
+      "atr_ext": 2.96,
       "atr_color": "green"
     }
   ]
