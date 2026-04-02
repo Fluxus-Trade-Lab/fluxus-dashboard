@@ -227,8 +227,9 @@ calcShares(float riskAmount, float entry, float stop) =>
 totalRisk = useCustomRisk ? accountSize * (customRiskPct / 100) : accountSize * riskMultiplier
 entryPrice = getEntryPrice()
 
-// ── Long ──
-longRawStop = useMajorLevel ? getMajorStop(1, entryPrice) : stopPriceInput
+// ── Primary position (direction-aware) ──
+directionInt = tradeDirection == 'Long' ? 1 : -1
+longRawStop = useMajorLevel ? getMajorStop(directionInt, entryPrice) : stopPriceInput
 longFinalStop = applyBuffer(longRawStop, entryPrice)
 longShares = calcShares(totalRisk, entryPrice, longFinalStop)
 longPosSize = calcMode == 'Shares to Buy' ? longShares * entryPrice : sharesOwned * entryPrice
