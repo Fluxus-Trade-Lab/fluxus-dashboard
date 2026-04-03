@@ -1,12 +1,19 @@
 {
-  "timestamp": "2026-04-02T22:03:38.867421+00:00",
-  "count": 76,
+  "timestamp": "2026-04-03T21:59:36.183427+00:00",
+  "count": 77,
   "buckets": {
     "100": [
       {
         "ticker": "APTV-WI",
         "composite_rs": 99.69,
         "sector": "Consumer Cyclical",
+        "atr_ext": null,
+        "atr_color": "amber"
+      },
+      {
+        "ticker": "MDA",
+        "composite_rs": 99.69,
+        "sector": "Industrials",
         "atr_ext": null,
         "atr_color": "amber"
       },
@@ -28,13 +35,6 @@
         "ticker": "HSLV",
         "composite_rs": 99.69,
         "sector": "Basic Materials",
-        "atr_ext": null,
-        "atr_color": "amber"
-      },
-      {
-        "ticker": "MDA",
-        "composite_rs": 99.69,
-        "sector": "Industrials",
         "atr_ext": null,
         "atr_color": "amber"
       }
@@ -79,7 +79,7 @@
         "ticker": "PL",
         "composite_rs": 97.75,
         "sector": "Industrials",
-        "atr_ext": 3.88,
+        "atr_ext": 3.87,
         "atr_color": "green"
       },
       {
@@ -121,7 +121,7 @@
         "ticker": "TNGX",
         "composite_rs": 97.27,
         "sector": "Healthcare",
-        "atr_ext": 8.04,
+        "atr_ext": 7.98,
         "atr_color": "red"
       },
       {
@@ -139,18 +139,18 @@
         "atr_color": "red"
       },
       {
-        "ticker": "IRDM",
-        "composite_rs": 97.11,
-        "sector": "Communication Services",
-        "atr_ext": 7.84,
-        "atr_color": "red"
-      },
-      {
         "ticker": "CIEN",
         "composite_rs": 97.11,
         "sector": "Technology",
         "atr_ext": 5.11,
         "atr_color": "amber"
+      },
+      {
+        "ticker": "IRDM",
+        "composite_rs": 97.11,
+        "sector": "Communication Services",
+        "atr_ext": 7.84,
+        "atr_color": "red"
       },
       {
         "ticker": "GENB",
@@ -161,7 +161,7 @@
       },
       {
         "ticker": "DOCN",
-        "composite_rs": 96.78,
+        "composite_rs": 96.77,
         "sector": "Technology",
         "atr_ext": 5.19,
         "atr_color": "amber"
@@ -182,7 +182,7 @@
       },
       {
         "ticker": "CENX",
-        "composite_rs": 96.25,
+        "composite_rs": 96.24,
         "sector": "Basic Materials",
         "atr_ext": 2.98,
         "atr_color": "green"
@@ -214,14 +214,14 @@
         "ticker": "AGRO",
         "composite_rs": 95.29,
         "sector": "Consumer Defensive",
-        "atr_ext": 7.78,
+        "atr_ext": 7.77,
         "atr_color": "red"
       },
       {
         "ticker": "KODK",
         "composite_rs": 94.91,
         "sector": "Industrials",
-        "atr_ext": 7.73,
+        "atr_ext": 7.72,
         "atr_color": "red"
       },
       {
@@ -233,14 +233,14 @@
       },
       {
         "ticker": "DFTX",
-        "composite_rs": 94.74,
+        "composite_rs": 94.73,
         "sector": "Healthcare",
         "atr_ext": 3.06,
         "atr_color": "green"
       },
       {
         "ticker": "VSAT",
-        "composite_rs": 94.31,
+        "composite_rs": 94.3,
         "sector": "Technology",
         "atr_ext": 2.24,
         "atr_color": "green"
@@ -254,14 +254,14 @@
       },
       {
         "ticker": "AA",
-        "composite_rs": 94.13,
+        "composite_rs": 94.12,
         "sector": "Basic Materials",
         "atr_ext": 3.04,
         "atr_color": "green"
       },
       {
         "ticker": "STX",
-        "composite_rs": 94.13,
+        "composite_rs": 94.12,
         "sector": "Technology",
         "atr_ext": 1.06,
         "atr_color": "green"
@@ -270,7 +270,7 @@
         "ticker": "ANDG",
         "composite_rs": 93.89,
         "sector": "Consumer Cyclical",
-        "atr_ext": 3.98,
+        "atr_ext": 3.96,
         "atr_color": "green"
       },
       {
@@ -284,7 +284,7 @@
         "ticker": "TYRA",
         "composite_rs": 93.76,
         "sector": "Healthcare",
-        "atr_ext": 2.86,
+        "atr_ext": 2.85,
         "atr_color": "green"
       },
       {
@@ -303,28 +303,28 @@
       },
       {
         "ticker": "VFS",
-        "composite_rs": 93.29,
+        "composite_rs": 93.28,
         "sector": "Consumer Cyclical",
         "atr_ext": 8.82,
         "atr_color": "red"
       },
       {
         "ticker": "BRAI",
-        "composite_rs": 93.21,
+        "composite_rs": 93.2,
         "sector": "Technology",
         "atr_ext": null,
         "atr_color": "amber"
       },
       {
         "ticker": "DNTH",
-        "composite_rs": 93.0,
+        "composite_rs": 92.98,
         "sector": "Healthcare",
         "atr_ext": 6.17,
         "atr_color": "red"
       },
       {
         "ticker": "VIAV",
-        "composite_rs": 92.98,
+        "composite_rs": 92.96,
         "sector": "Technology",
         "atr_ext": 3.8,
         "atr_color": "green"
@@ -338,7 +338,7 @@
       },
       {
         "ticker": "EWTX",
-        "composite_rs": 92.7,
+        "composite_rs": 92.69,
         "sector": "Healthcare",
         "atr_ext": 2.42,
         "atr_color": "green"
@@ -368,21 +368,21 @@
     "97": [
       {
         "ticker": "WDC",
-        "composite_rs": 92.18,
+        "composite_rs": 92.17,
         "sector": "Technology",
         "atr_ext": 0.91,
         "atr_color": "green"
       },
       {
         "ticker": "NOK",
-        "composite_rs": 92.12,
+        "composite_rs": 92.11,
         "sector": "Technology",
         "atr_ext": 3.79,
         "atr_color": "green"
       },
       {
         "ticker": "BW",
-        "composite_rs": 92.02,
+        "composite_rs": 91.98,
         "sector": "Industrials",
         "atr_ext": 3.67,
         "atr_color": "green"
@@ -396,7 +396,7 @@
       },
       {
         "ticker": "LWLG",
-        "composite_rs": 91.88,
+        "composite_rs": 91.86,
         "sector": "Basic Materials",
         "atr_ext": 5.1,
         "atr_color": "amber"
@@ -424,31 +424,24 @@
       },
       {
         "ticker": "FLY",
-        "composite_rs": 91.03,
+        "composite_rs": 91.02,
         "sector": "Industrials",
         "atr_ext": 4.48,
         "atr_color": "amber"
       },
       {
         "ticker": "ICHR",
-        "composite_rs": 90.81,
+        "composite_rs": 90.8,
         "sector": "Technology",
         "atr_ext": 1.49,
         "atr_color": "green"
       },
       {
         "ticker": "CAR",
-        "composite_rs": 90.73,
+        "composite_rs": 90.71,
         "sector": "Industrials",
-        "atr_ext": 11.17,
+        "atr_ext": 11.16,
         "atr_color": "red"
-      },
-      {
-        "ticker": "FORM",
-        "composite_rs": 90.65,
-        "sector": "Technology",
-        "atr_ext": 2.11,
-        "atr_color": "green"
       },
       {
         "ticker": "YOU",
@@ -458,8 +451,15 @@
         "atr_color": "amber"
       },
       {
+        "ticker": "FORM",
+        "composite_rs": 90.62,
+        "sector": "Technology",
+        "atr_ext": 2.11,
+        "atr_color": "green"
+      },
+      {
         "ticker": "CAPR",
-        "composite_rs": 90.39,
+        "composite_rs": 90.38,
         "sector": "Healthcare",
         "atr_ext": 2.65,
         "atr_color": "green"
@@ -473,7 +473,7 @@
       },
       {
         "ticker": "PLSE",
-        "composite_rs": 90.07,
+        "composite_rs": 90.05,
         "sector": "Healthcare",
         "atr_ext": 2.55,
         "atr_color": "green"
@@ -494,21 +494,21 @@
       },
       {
         "ticker": "TEN",
-        "composite_rs": 89.46,
+        "composite_rs": 89.44,
         "sector": "Energy",
         "atr_ext": 6.17,
         "atr_color": "red"
       },
       {
         "ticker": "BCAX",
-        "composite_rs": 89.44,
+        "composite_rs": 89.43,
         "sector": "Healthcare",
         "atr_ext": 4.24,
         "atr_color": "amber"
       },
       {
         "ticker": "AEIS",
-        "composite_rs": 89.25,
+        "composite_rs": 89.24,
         "sector": "Industrials",
         "atr_ext": 1.42,
         "atr_color": "green"
@@ -517,28 +517,35 @@
         "ticker": "VIRT",
         "composite_rs": 89.06,
         "sector": "Financial",
-        "atr_ext": 5.23,
+        "atr_ext": 5.22,
         "atr_color": "amber"
       },
       {
         "ticker": "MTZ",
-        "composite_rs": 88.9,
+        "composite_rs": 88.89,
         "sector": "Industrials",
-        "atr_ext": 3.95,
+        "atr_ext": 3.94,
         "atr_color": "green"
       },
       {
         "ticker": "SEB",
-        "composite_rs": 88.81,
+        "composite_rs": 88.79,
         "sector": "Industrials",
-        "atr_ext": 4.51,
+        "atr_ext": 4.46,
         "atr_color": "amber"
       },
       {
         "ticker": "LGN",
-        "composite_rs": 88.78,
+        "composite_rs": 88.77,
         "sector": "Industrials",
         "atr_ext": 2.02,
+        "atr_color": "green"
+      },
+      {
+        "ticker": "INTC",
+        "composite_rs": 88.77,
+        "sector": "Technology",
+        "atr_ext": 1.6,
         "atr_color": "green"
       }
     ]
