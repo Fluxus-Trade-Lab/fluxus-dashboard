@@ -1,0 +1,37 @@
+/* Wiki-style callouts */
+.callout[data-callout="summary"] {
+  --callout-color: 59, 130, 246;
+  --callout-icon: lucide-book-open;
+  background-color: rgba(59, 130, 246, 0.05);
+  border-left: 4px solid rgb(59, 130, 246);
+}
+
+/* Muted source references */
+.callout[data-callout="source"] {
+  --callout-color: 156, 163, 175;
+  --callout-icon: lucide-link;
+  font-size: 0.9em;
+  opacity: 0.85;
+}
+
+/* Tag pills in properties view */
+.metadata-property[data-property-key="tags"] .multi-select-pill {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: rgb(59, 130, 246);
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 0.85em;
+}
+
+/* Category badge */
+.metadata-property[data-property-key="category"] .metadata-property-value {
+  font-weight: 600;
+  color: rgb(234, 179, 8);
+}
+
+/* Clean heading spacing for wiki feel */
+.markdown-preview-view h2 {
+  margin-top: 2em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
