@@ -139,7 +139,7 @@ export default function OverviewTab({
                       {t.trimStatus}
                     </span>
                   </td>
-                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] text-[11px] text-[var(--color-text-secondary)]">{t.entryDate}</td>
+                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] text-[11px] text-[var(--color-text-secondary)]">{t.entryDate?.slice(0, 10).replace(/-/g, '/')}</td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">
                     {pm ? MASK : (
                       <>

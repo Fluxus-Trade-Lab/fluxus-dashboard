@@ -32,7 +32,7 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
     let marketValue = 0
 
     trades.forEach(t => {
-      if (t.entryDate > date) return // Trade not yet open
+      if (t.entryDate.slice(0, 10) > date) return // Trade not yet open
 
       const dir = t.direction === 'long' ? 1 : -1
 
@@ -93,7 +93,7 @@ export function getPortfolioValueAtDate(trades, startingCapital, asOfDate, daily
   let mktVal = 0
 
   trades.forEach(t => {
-    if (new Date(t.entryDate) > new Date(asOfDate)) return
+    if (t.entryDate.slice(0, 10) > asOfDate) return
 
     const dir = t.direction === 'long' ? 1 : -1
     const trimsBeforeDate = (t.trims || []).filter(tr => new Date(tr.date) <= new Date(asOfDate))

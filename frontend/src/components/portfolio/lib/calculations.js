@@ -6,7 +6,7 @@ import { daysBetween, todayStr, RISK_FREE_RATE } from './portfolioFormat'
  * Returns entryPrice as last resort.
  */
 export function lookupPrice(ticker, date, dailyPrices, fallback) {
-  for (let d = 0; d < 5; d++) {
+  for (let d = 0; d < 10; d++) {
     const checkDate = new Date(date)
     checkDate.setDate(checkDate.getDate() - d)
     const key = `${ticker}:${checkDate.toISOString().split('T')[0]}`
