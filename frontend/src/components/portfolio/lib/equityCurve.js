@@ -27,6 +27,9 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
   }
 
   // 3. For each date, compute total portfolio value
+  // Forward-fill: track last known price per ticker to avoid jumping back to entryPrice
+  const lastKnownPrice = {}
+
   const curve = datePoints.map(date => {
     let cash = startingCapital
     let marketValue = 0
@@ -48,8 +51,10 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
       const qtyAtDate = t.originalQty - soldQty
       if (qtyAtDate <= 0) return
 
-      // Look up real daily close from dailyPrices
-      const price = lookupPrice(t.ticker, date, dailyPrices, t.entryPrice)
+      // Look up real daily close, forward-fill from last known price if missing
+      const fallback = lastKnownPrice[t.ticker] ?? t.entryPrice
+      const price = lookupPrice(t.ticker, date, dailyPrices, fallback)
+      lastKnownPrice[t.ticker] = price
       marketValue += qtyAtDate * price * dir
     })
 
