@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-04-14T22:24:13.798713+00:00",
+  "timestamp": "2026-04-15T22:11:32.501547+00:00",
   "SPY": {
     "signal": "CAUTION",
     "color": "yellow",
-    "close": 694.4600219726562,
-    "ema8": 676.4495685677385,
-    "ema21": 668.0334303662205,
-    "sma50": 672.9542272949219,
-    "sma200": 661.8277795410156,
-    "sma20": 660.3597290039063,
+    "close": 699.9400024414062,
+    "ema8": 681.6696649841092,
+    "ema21": 670.9340278283001,
+    "sma50": 673.0827075195313,
+    "sma200": 662.2787899780274,
+    "sma20": 661.908578491211,
     "power_trend": {
       "3d_gt_20sma": true,
       "3d_gt_50sma": true,
@@ -17,22 +17,22 @@
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": 2.82,
-      "21ema_dist": 3.81,
-      "50sma_dist": 3.1,
-      "200sma_dist": 4.7,
+      "9ema_dist": 2.86,
+      "21ema_dist": 4.14,
+      "50sma_dist": 3.84,
+      "200sma_dist": 5.38,
       "52w_high_dist": 0.0
     }
   },
   "QQQ": {
-    "signal": "CAUTION",
-    "color": "yellow",
-    "close": 628.5999755859375,
-    "ema8": 607.6219694008973,
-    "ema21": 598.2294659343885,
-    "sma50": 600.0159790039063,
-    "sma200": 596.1346115112304,
-    "sma20": 591.0825653076172,
+    "signal": "POWER_3",
+    "color": "green",
+    "close": 637.4000244140625,
+    "ema8": 614.2393149593787,
+    "ema21": 601.7904258049166,
+    "sma50": 600.2569494628906,
+    "sma200": 596.5913018798828,
+    "sma20": 592.8250549316406,
     "power_trend": {
       "3d_gt_20sma": true,
       "3d_gt_50sma": true,
@@ -41,22 +41,22 @@
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": 3.6,
-      "21ema_dist": 4.83,
-      "50sma_dist": 4.55,
-      "200sma_dist": 5.16,
-      "52w_high_dist": -0.88
+      "9ema_dist": 3.95,
+      "21ema_dist": 5.59,
+      "50sma_dist": 5.83,
+      "200sma_dist": 6.4,
+      "52w_high_dist": 0.0
     }
   },
   "IWM": {
-    "signal": "CAUTION",
-    "color": "yellow",
-    "close": 268.7200012207031,
-    "ema8": 260.3182081684566,
-    "ema21": 255.41962426378848,
-    "sma50": 256.3198043823242,
-    "sma200": 243.51369888305663,
-    "sma20": 251.78800048828126,
+    "signal": "POWER_3",
+    "color": "green",
+    "close": 269.3900146484375,
+    "ema8": 262.3341651640079,
+    "ema21": 256.68965975364796,
+    "sma50": 256.47331573486326,
+    "sma200": 243.79178840637206,
+    "sma20": 252.75500106811523,
     "power_trend": {
       "3d_gt_20sma": true,
       "3d_gt_50sma": true,
@@ -65,46 +65,22 @@
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": 3.41,
-      "21ema_dist": 4.95,
-      "50sma_dist": 4.61,
-      "200sma_dist": 9.38,
-      "52w_high_dist": -0.22
+      "9ema_dist": 2.92,
+      "21ema_dist": 4.71,
+      "50sma_dist": 4.79,
+      "200sma_dist": 9.5,
+      "52w_high_dist": 0.0
     }
   },
   "RSP": {
     "signal": "CAUTION",
     "color": "yellow",
-    "close": 199.66000366210938,
-    "ema8": 196.77212131100438,
-    "ema21": 195.32960260304108,
-    "sma50": 197.41209686279296,
-    "sma200": 190.0088671875,
-    "sma20": 193.5116714477539,
-    "power_trend": {
-      "3d_gt_20sma": true,
-      "3d_gt_50sma": false,
-      "3d_gt_200sma": true,
-      "20sma_gt_50sma": false,
-      "50sma_gt_200sma": true
-    },
-    "trend_status": {
-      "9ema_dist": 1.59,
-      "21ema_dist": 2.17,
-      "50sma_dist": 1.13,
-      "200sma_dist": 4.83,
-      "52w_high_dist": -2.17
-    }
-  },
-  "^GSPC": {
-    "signal": "CAUTION",
-    "color": "yellow",
-    "close": 6967.3798828125,
-    "ema8": 6788.3933950170185,
-    "ema21": 6705.958727159194,
-    "sma50": 6760.884208984375,
-    "sma200": 6670.721240234375,
-    "sma20": 6628.29755859375,
+    "close": 199.72999572753906,
+    "ema8": 197.42942673690098,
+    "ema21": 195.72963834024475,
+    "sma50": 197.4416717529297,
+    "sma200": 190.11437713623047,
+    "sma20": 193.7374580383301,
     "power_trend": {
       "3d_gt_20sma": true,
       "3d_gt_50sma": true,
@@ -113,11 +89,35 @@
       "50sma_gt_200sma": true
     },
     "trend_status": {
-      "9ema_dist": 2.79,
-      "21ema_dist": 3.75,
-      "50sma_dist": 2.96,
-      "200sma_dist": 4.26,
-      "52w_high_dist": -0.16
+      "9ema_dist": 1.3,
+      "21ema_dist": 2.0,
+      "50sma_dist": 1.15,
+      "200sma_dist": 4.81,
+      "52w_high_dist": -2.14
+    }
+  },
+  "^GSPC": {
+    "signal": "CAUTION",
+    "color": "yellow",
+    "close": 7022.9501953125,
+    "ema8": 6840.517128416015,
+    "ema21": 6734.77613336158,
+    "sma50": 6761.8144140625,
+    "sma200": 6674.970642089844,
+    "sma20": 6643.640576171875,
+    "power_trend": {
+      "3d_gt_20sma": true,
+      "3d_gt_50sma": true,
+      "3d_gt_200sma": true,
+      "20sma_gt_50sma": false,
+      "50sma_gt_200sma": true
+    },
+    "trend_status": {
+      "9ema_dist": 2.85,
+      "21ema_dist": 4.1,
+      "50sma_dist": 3.72,
+      "200sma_dist": 4.95,
+      "52w_high_dist": 0.0
     }
   }
 }
