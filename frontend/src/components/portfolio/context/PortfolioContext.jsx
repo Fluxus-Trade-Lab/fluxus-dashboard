@@ -22,6 +22,7 @@ const initialState = {
   syncToken: '',
   syncStatus: 'idle',
   lastSyncTime: null,
+  monthlyReviews: {},
 }
 
 function loadFromStorage() {
@@ -49,6 +50,7 @@ function loadFromStorage() {
       ),
       optionsCapitalSet: parsed.optionsCapitalSet ?? false,
       syncToken: parsed.syncToken ?? '',
+      monthlyReviews: parsed.monthlyReviews ?? {},
     }
   } catch {
     return initialState
@@ -135,7 +137,11 @@ function reducer(state, action) {
         lastSyncTime: action.status === 'success' ? new Date().toISOString() : state.lastSyncTime,
       }
 
-    case 'HYDRATE_FROM_SHEETS':
+    case 'HYDRATE_FROM_SHEETS': {
+      let reviews = state.monthlyReviews
+      if (action.meta?.monthlyReviews) {
+        try { reviews = JSON.parse(action.meta.monthlyReviews) } catch {}
+      }
       return {
         ...state,
         trades: action.stockTrades ?? state.trades,
@@ -143,11 +149,13 @@ function reducer(state, action) {
         startingCapital: action.meta?.startingCapital ?? state.startingCapital,
         optionsCapital: action.meta?.optionsCapital ?? state.optionsCapital,
         benchmarkTicker: action.meta?.benchmarkTicker ?? state.benchmarkTicker,
+        monthlyReviews: reviews,
         capitalSet: true,
         optionsCapitalSet: !!(action.meta?.optionsCapital),
         syncStatus: 'success',
         lastSyncTime: new Date().toISOString(),
       }
+    }
 
     case 'SET_ACTIVE_TAB':
       return { ...state, activeTab: action.tab }
@@ -195,6 +203,9 @@ function reducer(state, action) {
 
     case 'IMPORT_OPTIONS_DATA':
       return { ...state, optionsTrades: action.trades, optionsCapital: action.capital ?? state.optionsCapital, optionsCapitalSet: true }
+
+    case 'SET_MONTHLY_REVIEWS':
+      return { ...state, monthlyReviews: action.reviews }
 
     case 'RESET_ALL':
       localStorage.removeItem(STORAGE_KEY)
@@ -252,11 +263,12 @@ export function PortfolioProvider({ children }) {
           optionsTrades: state.optionsTrades,
           optionsCapitalSet: state.optionsCapitalSet,
           syncToken: state.syncToken,
+          monthlyReviews: state.monthlyReviews,
         })
       )
     }, 500)
     return () => clearTimeout(t)
-  }, [state.startingCapital, state.trades, state.dailyPrices, state.benchmarkHistories, state.gasUrl, state.benchmarkTicker, state.capitalSet, state.optionsCapital, state.optionsTrades, state.optionsCapitalSet])
+  }, [state.startingCapital, state.trades, state.dailyPrices, state.benchmarkHistories, state.gasUrl, state.benchmarkTicker, state.capitalSet, state.optionsCapital, state.optionsTrades, state.optionsCapitalSet, state.monthlyReviews])
 
   // Auto-push to Sheets (debounced 2s)
   useEffect(() => {
@@ -271,6 +283,7 @@ export function PortfolioProvider({ children }) {
           startingCapital: state.startingCapital,
           optionsCapital: state.optionsCapital,
           benchmarkTicker: state.benchmarkTicker,
+          monthlyReviews: JSON.stringify(state.monthlyReviews),
         },
       }).then(result => {
         dispatch({ type: 'SET_SYNC_STATUS', status: result.ok ? 'success' : 'error' })

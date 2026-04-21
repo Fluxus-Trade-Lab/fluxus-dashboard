@@ -27,12 +27,17 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
   }
 
   // 3. For each date, compute total portfolio value
+  // Cache the entry-day close price per trade for ratio-based normalization.
+  // This makes the curve immune to split adjustments, dividend adjustments,
+  // and price-scale mismatches between trade log and Yahoo Finance data.
+  const entryDayClose = {}
+
   const curve = datePoints.map(date => {
     let cash = startingCapital
     let marketValue = 0
 
     trades.forEach(t => {
-      if (t.entryDate > date) return // Trade not yet open
+      if (t.entryDate.slice(0, 10) > date) return // Trade not yet open
 
       const dir = t.direction === 'long' ? 1 : -1
 
@@ -48,8 +53,15 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
       const qtyAtDate = t.originalQty - soldQty
       if (qtyAtDate <= 0) return
 
-      // Look up real daily close from dailyPrices
-      const price = lookupPrice(t.ticker, date, dailyPrices, t.entryPrice)
+      // Ratio-based price: use daily return relative to entry-day close,
+      // applied to the actual entry price. This avoids split/adjustment errors.
+      const tradeId = t.id || t.ticker + t.entryDate
+      if (entryDayClose[tradeId] == null) {
+        entryDayClose[tradeId] = lookupPrice(t.ticker, t.entryDate.slice(0, 10), dailyPrices, t.entryPrice)
+      }
+      const baseClose = entryDayClose[tradeId]
+      const rawPrice = lookupPrice(t.ticker, date, dailyPrices, baseClose)
+      const price = baseClose !== 0 ? t.entryPrice * (rawPrice / baseClose) : t.entryPrice
       marketValue += qtyAtDate * price * dir
     })
 
@@ -93,7 +105,7 @@ export function getPortfolioValueAtDate(trades, startingCapital, asOfDate, daily
   let mktVal = 0
 
   trades.forEach(t => {
-    if (new Date(t.entryDate) > new Date(asOfDate)) return
+    if (t.entryDate.slice(0, 10) > asOfDate) return
 
     const dir = t.direction === 'long' ? 1 : -1
     const trimsBeforeDate = (t.trims || []).filter(tr => new Date(tr.date) <= new Date(asOfDate))

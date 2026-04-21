@@ -1,90 +1,169 @@
+import { useState, useMemo } from 'react'
+import { usePortfolio, PortfolioProvider } from '../portfolio/context/PortfolioContext'
+import { enrichTrades, computeMonthlyStats, computeSectorData } from '../portfolio/lib/calculations'
+import { buildEquityCurve } from '../portfolio/lib/equityCurve'
+import { computeTrimAnalysis, computeStopAnalysis, computePortfolioHeat, computeVolContribution, computePortfolioVol, computeSpyVol, computeInsights } from '../portfolio/lib/diagnostics'
+import SummarySection from './analytics/SummarySection'
+import RiskSection from './analytics/RiskSection'
+import VolatilitySection from './analytics/VolatilitySection'
+import TrimStopsSection from './analytics/TrimStopsSection'
+import MonthlyReviewSection from './analytics/MonthlyReviewSection'
+
+const SUB_TABS = [
+  { key: 'summary', label: 'Summary' },
+  { key: 'risk', label: 'Risk' },
+  { key: 'volatility', label: 'Volatility' },
+  { key: 'trim-stops', label: 'Trim & Stops' },
+  { key: 'monthly-review', label: 'Monthly Review' },
+]
+
 export default function AnalyticsTab() {
-  // Phase 1: Mock data. Phase 2: Pull from PortfolioContext via shared store
-  const mockStats = {
-    totalTrades: 47,
-    winRate: 61.7,
-    avgR: 1.8,
-    avgHoldDays: 12,
-    byStrategy: [
-      { name: 'Episodic Pivot', trades: 18, winRate: 72.2, avgR: 2.3, avgHold: 8 },
-      { name: 'VCP', trades: 15, winRate: 60.0, avgR: 1.5, avgHold: 16 },
-      { name: 'Breakout', trades: 14, winRate: 50.0, avgR: 1.1, avgHold: 11 },
-    ],
-    insights: [
-      'Your Episodic Pivot trades are your strongest setup (72% win rate, 2.3R avg)',
-      'VCP entries have decent win rate but lower R — consider tighter stops',
-      'Breakout trades underperform — review your entry timing',
-      'Average hold time is shorter on winners (8 days) vs losers (18 days)',
-    ]
-  }
-
   return (
-    <div className="space-y-5">
-      {/* Summary stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <StatCard label="Total Trades" value={mockStats.totalTrades} />
-        <StatCard label="Win Rate" value={`${mockStats.winRate}%`} color={mockStats.winRate >= 50 ? 'text-green-600' : 'text-red-500'} />
-        <StatCard label="Avg R-Multiple" value={`${mockStats.avgR}R`} color="text-green-600" />
-        <StatCard label="Avg Hold" value={`${mockStats.avgHoldDays}d`} />
-      </div>
-
-      {/* By Strategy table */}
-      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
-        <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
-          Performance by Strategy
-        </h3>
-        <table className="w-full text-xs">
-          <thead>
-            <tr className="border-b border-[var(--color-border)]">
-              <th className="text-left py-2 text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">Strategy</th>
-              <th className="text-right py-2 text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">Trades</th>
-              <th className="text-right py-2 text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">Win Rate</th>
-              <th className="text-right py-2 text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">Avg R</th>
-              <th className="text-right py-2 text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">Avg Hold</th>
-            </tr>
-          </thead>
-          <tbody>
-            {mockStats.byStrategy.map((s, i) => (
-              <tr key={s.name} className={`border-b border-[var(--color-border-light)] ${i % 2 === 1 ? 'bg-[var(--color-surface-alt)]/50' : ''}`}>
-                <td className="py-2 font-medium text-[var(--color-text-bold)]">{s.name}</td>
-                <td className="py-2 text-right font-mono tabular-nums text-[var(--color-text-secondary)]">{s.trades}</td>
-                <td className={`py-2 text-right font-mono tabular-nums ${s.winRate >= 60 ? 'text-green-600' : s.winRate >= 50 ? 'text-amber-600' : 'text-red-500'}`}>{s.winRate}%</td>
-                <td className={`py-2 text-right font-mono tabular-nums ${s.avgR >= 1.5 ? 'text-green-600' : 'text-[var(--color-text-secondary)]'}`}>{s.avgR}R</td>
-                <td className="py-2 text-right font-mono tabular-nums text-[var(--color-text-secondary)]">{s.avgHold}d</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {/* AI Insights */}
-      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
-        <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
-          Insights
-        </h3>
-        <div className="space-y-2">
-          {mockStats.insights.map((insight, i) => (
-            <div key={i} className="flex gap-2 text-sm text-[var(--color-text-secondary)]">
-              <span className="text-[var(--color-text-muted)] flex-shrink-0">&rarr;</span>
-              <span>{insight}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Phase notice */}
-      <div className="text-center py-4 text-[10px] text-[var(--color-text-muted)] uppercase tracking-wide">
-        Showing sample data — connect your portfolio in Phase 2
-      </div>
-    </div>
+    <PortfolioProvider>
+      <AnalyticsTabInner />
+    </PortfolioProvider>
   )
 }
 
-function StatCard({ label, value, color = 'text-[var(--color-text)]' }) {
+function AnalyticsTabInner() {
+  const { state } = usePortfolio()
+  const [activeTab, setActiveTab] = useState('summary')
+
+  const { trades, dailyPrices, benchmarkHistories, startingCapital } = state
+  const spyHistory = benchmarkHistories?.SPY || []
+
+  // Core enriched data
+  const performanceData = useMemo(
+    () => buildEquityCurve(trades, startingCapital, dailyPrices, benchmarkHistories),
+    [trades, startingCapital, dailyPrices, benchmarkHistories]
+  )
+
+  const portfolioValue = useMemo(() => {
+    if (performanceData.length === 0) return startingCapital
+    return performanceData[performanceData.length - 1].value
+  }, [performanceData, startingCapital])
+
+  const enriched = useMemo(
+    () => enrichTrades(trades, portfolioValue, dailyPrices),
+    [trades, portfolioValue, dailyPrices]
+  )
+
+  const openTrades = useMemo(() => enriched.filter(t => !t.isClosed), [enriched])
+  const closedTrades = useMemo(() => enriched.filter(t => t.isClosed), [enriched])
+
+  const monthlyStats = useMemo(
+    () => computeMonthlyStats(enriched, performanceData),
+    [enriched, performanceData]
+  )
+
+  // Diagnostics computations
+  const trimAnalysis = useMemo(
+    () => computeTrimAnalysis(closedTrades, dailyPrices),
+    [closedTrades, dailyPrices]
+  )
+
+  const stopAnalysis = useMemo(
+    () => computeStopAnalysis(closedTrades, dailyPrices),
+    [closedTrades, dailyPrices]
+  )
+
+  const heatData = useMemo(
+    () => computePortfolioHeat(openTrades, dailyPrices, portfolioValue),
+    [openTrades, dailyPrices, portfolioValue]
+  )
+
+  const volContrib = useMemo(
+    () => computeVolContribution(openTrades, dailyPrices, spyHistory, portfolioValue),
+    [openTrades, dailyPrices, spyHistory, portfolioValue]
+  )
+
+  const portfolioVol = useMemo(
+    () => computePortfolioVol(performanceData),
+    [performanceData]
+  )
+
+  const spyVol = useMemo(
+    () => computeSpyVol(spyHistory),
+    [spyHistory]
+  )
+
+  const sectorData = useMemo(() => computeSectorData(openTrades), [openTrades])
+
+  const insights = useMemo(
+    () => computeInsights(enriched, monthlyStats, trimAnalysis, stopAnalysis),
+    [enriched, monthlyStats, trimAnalysis, stopAnalysis]
+  )
+
+  if (!trades.length) {
+    return (
+      <div className="text-center py-16 text-[var(--color-text-muted)]">
+        No portfolio data. Import trades in the Portfolio tab first.
+      </div>
+    )
+  }
+
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-4">
-      <div className="text-[10px] text-[var(--color-text-secondary)] font-medium uppercase tracking-wide mb-1">{label}</div>
-      <div className={`text-xl font-bold font-mono tabular-nums ${color}`}>{value}</div>
+    <div>
+      {/* Sub-tab switcher */}
+      <div className="flex gap-1 mb-5 border-b border-[var(--color-border)] pb-2">
+        {SUB_TABS.map(({ key, label }) => (
+          <button
+            key={key}
+            onClick={() => setActiveTab(key)}
+            className={`px-3 py-1.5 text-[11px] font-medium rounded-t cursor-pointer transition-colors ${
+              activeTab === key
+                ? 'text-[var(--color-text)] border-b-2 border-[var(--color-accent)]'
+                : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {activeTab === 'summary' && (
+        <SummarySection
+          enriched={enriched}
+          closedTrades={closedTrades}
+          monthlyStats={monthlyStats}
+          performanceData={performanceData}
+          insights={insights}
+          startingCapital={startingCapital}
+        />
+      )}
+      {activeTab === 'risk' && (
+        <RiskSection
+          openTrades={openTrades}
+          enriched={enriched}
+          heatData={heatData}
+          sectorData={sectorData}
+          dailyPrices={dailyPrices}
+          spyHistory={spyHistory}
+          portfolioValue={portfolioValue}
+        />
+      )}
+      {activeTab === 'volatility' && (
+        <VolatilitySection
+          volContrib={volContrib}
+          portfolioVol={portfolioVol}
+          spyVol={spyVol}
+          dailyPrices={dailyPrices}
+          spyHistory={spyHistory}
+        />
+      )}
+      {activeTab === 'trim-stops' && (
+        <TrimStopsSection
+          trimAnalysis={trimAnalysis}
+          stopAnalysis={stopAnalysis}
+        />
+      )}
+      {activeTab === 'monthly-review' && (
+        <MonthlyReviewSection
+          enriched={enriched}
+          monthlyStats={monthlyStats}
+          performanceData={performanceData}
+        />
+      )}
     </div>
   )
 }
