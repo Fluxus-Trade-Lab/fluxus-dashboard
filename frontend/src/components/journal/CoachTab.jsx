@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 
 const STRATEGY_DESCRIPTIONS = {
   'episodic-pivot': {
@@ -30,47 +30,143 @@ const STRATEGY_DESCRIPTIONS = {
   },
 }
 
+function buildCopyPrompt(strategy, config, messages, newMessage) {
+  const historyBlock = messages.length > 0
+    ? '\n## Conversation so far\n' + messages.map(m =>
+        `${m.role === 'user' ? 'Me' : 'Coach'}: ${m.content}`
+      ).join('\n\n') + '\n'
+    : ''
+
+  return `You are an expert trading coach specializing in ${config.name}. ${config.description}
+
+Be direct, specific, and actionable. Reference concrete examples when possible. Keep responses under 300 words.
+${historyBlock}
+## My question
+${newMessage}`
+}
+
 export default function CoachTab({ strategy }) {
   const config = STRATEGY_DESCRIPTIONS[strategy] || {}
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [apiDisabled, setApiDisabled] = useState(false)
+  const [copied, setCopied] = useState(false)
+  const [pendingMessage, setPendingMessage] = useState(null)
   const bottomRef = useRef(null)
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  // Reset messages when strategy changes
+  // Reset when strategy changes
   useEffect(() => {
     setMessages([])
     setInput('')
+    setPendingMessage(null)
+    setCopied(false)
   }, [strategy])
 
-  const handleSend = () => {
-    if (!input.trim()) return
+  const callApi = useCallback(async (userMessage, history) => {
+    try {
+      const res = await fetch('/api/coach', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          strategy,
+          message: userMessage,
+          history: history.map(m => ({ role: m.role, content: m.content })),
+        }),
+      })
 
-    const userMsg = { role: 'user', content: input.trim() }
-    const stubReply = {
-      role: 'assistant',
-      content: `[Phase 2] This is where the ${config.name} coach will respond. The coach will be loaded with strategy-specific knowledge from \`data/coach/${strategy}.md\` and will use Claude API via a Vercel serverless function to provide personalized feedback on your setups and trades.\n\nFor now, try logging your trade observations here — they'll be available when coaching goes live.`
+      if (res.status === 503) {
+        // API disabled — switch to copy-paste mode
+        setApiDisabled(true)
+        return null
+      }
+
+      if (!res.ok) return null
+
+      const data = await res.json()
+      return data.reply || null
+    } catch {
+      // Network error or no API route — fall back to copy-paste
+      setApiDisabled(true)
+      return null
+    }
+  }, [strategy])
+
+  const handleSend = useCallback(async () => {
+    if (!input.trim()) return
+    const userMessage = input.trim()
+    const userMsg = { role: 'user', content: userMessage }
+
+    setMessages(prev => [...prev, userMsg])
+    setInput('')
+
+    if (apiDisabled) {
+      // Copy-paste mode: show pending state
+      setPendingMessage(userMessage)
+      return
     }
 
-    setMessages(prev => [...prev, userMsg, stubReply])
-    setInput('')
-  }
+    // Try API
+    setLoading(true)
+    const reply = await callApi(userMessage, [...messages, userMsg])
+    setLoading(false)
+
+    if (reply) {
+      setMessages(prev => [...prev, { role: 'assistant', content: reply }])
+    } else if (apiDisabled) {
+      // API just became disabled — show copy prompt
+      setPendingMessage(userMessage)
+    }
+  }, [input, messages, apiDisabled, callApi])
+
+  const handleCopyPrompt = useCallback(() => {
+    const prompt = buildCopyPrompt(strategy, config, messages.slice(0, -1), pendingMessage)
+    navigator.clipboard.writeText(prompt)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }, [strategy, config, messages, pendingMessage])
+
+  const handlePasteResponse = useCallback(() => {
+    navigator.clipboard.readText().then(text => {
+      if (text.trim()) {
+        setMessages(prev => [...prev, { role: 'assistant', content: text.trim() }])
+        setPendingMessage(null)
+      }
+    }).catch(() => {
+      // Clipboard read denied — show textarea fallback
+      const text = window.prompt('Paste Claude\'s response:')
+      if (text?.trim()) {
+        setMessages(prev => [...prev, { role: 'assistant', content: text.trim() }])
+        setPendingMessage(null)
+      }
+    })
+  }, [])
 
   return (
     <div className="space-y-4">
       {/* Strategy header */}
       <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
-        <h3 className="text-sm font-semibold text-[var(--color-text-bold)] mb-1">{config.name}</h3>
-        <p className="text-xs text-[var(--color-text-secondary)]">{config.description}</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-sm font-semibold text-[var(--color-text-bold)] mb-1">{config.name}</h3>
+            <p className="text-xs text-[var(--color-text-secondary)]">{config.description}</p>
+          </div>
+          {apiDisabled && (
+            <span className="text-[9px] font-medium uppercase tracking-wider px-2 py-0.5 rounded bg-[var(--color-surface-raised)] text-[var(--color-text-muted)]">
+              Copy-paste mode
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Chat area */}
       <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden">
         <div className="min-h-[300px] max-h-[500px] overflow-y-auto p-4 space-y-3">
-          {messages.length === 0 && (
+          {messages.length === 0 && !loading && (
             <div className="text-center py-12">
               <div className="text-xs text-[var(--color-text-muted)] uppercase tracking-wide mb-4">
                 Ask the {config.name} coach anything
@@ -100,6 +196,41 @@ export default function CoachTab({ strategy }) {
               </div>
             </div>
           ))}
+
+          {/* Loading indicator */}
+          {loading && (
+            <div className="flex justify-start">
+              <div className="px-3 py-2 rounded-lg text-sm bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text-muted)]">
+                Thinking...
+              </div>
+            </div>
+          )}
+
+          {/* Copy-paste fallback prompt */}
+          {pendingMessage && !loading && (
+            <div className="flex justify-start">
+              <div className="max-w-[80%] px-4 py-3 rounded-lg bg-[var(--color-bg)] border border-dashed border-[var(--color-border)] space-y-2">
+                <p className="text-xs text-[var(--color-text-secondary)]">
+                  Copy the prompt to claude.ai, then paste the response back.
+                </p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleCopyPrompt}
+                    className="px-3 py-1 text-[11px] font-medium rounded cursor-pointer bg-[var(--color-accent)] text-white hover:opacity-90 transition-opacity"
+                  >
+                    {copied ? 'Copied!' : 'Copy Prompt'}
+                  </button>
+                  <button
+                    onClick={handlePasteResponse}
+                    className="px-3 py-1 text-[11px] font-medium rounded cursor-pointer bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)] hover:opacity-90 transition-opacity"
+                  >
+                    Paste Response
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div ref={bottomRef} />
         </div>
 
@@ -109,13 +240,14 @@ export default function CoachTab({ strategy }) {
             type="text"
             value={input}
             onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && handleSend()}
+            onKeyDown={e => e.key === 'Enter' && !loading && handleSend()}
             placeholder={`Ask about ${config.name?.toLowerCase() || 'trading'}...`}
-            className="flex-1 px-3 py-2 border border-[var(--color-border)] rounded text-sm bg-[var(--color-surface)] outline-none focus:border-[var(--color-text-muted)] font-sans"
+            disabled={loading}
+            className="flex-1 px-3 py-2 border border-[var(--color-border)] rounded text-sm bg-[var(--color-surface)] outline-none focus:border-[var(--color-text-muted)] font-sans disabled:opacity-50"
           />
           <button
             onClick={handleSend}
-            disabled={!input.trim()}
+            disabled={!input.trim() || loading}
             className="px-4 py-2 bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)] rounded text-xs font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[var(--color-hover-bg)] transition-colors"
           >
             Send
