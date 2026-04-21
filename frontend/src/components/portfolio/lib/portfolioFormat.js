@@ -20,7 +20,7 @@ export const priv = (val, formatter, hidden) => hidden ? MASK : formatter(val)
 
 /** Returns a Tailwind text-color class */
 export const clr = (v) =>
-  v > 0 ? 'text-green-600' : v < 0 ? 'text-red-500' : 'text-[var(--color-text-secondary)]'
+  v > 0 ? 'text-[var(--color-profit)]' : v < 0 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text-secondary)]'
 
 /** Returns hex for Recharts / inline use */
 export const clrHex = (v) =>

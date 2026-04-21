@@ -29,23 +29,23 @@ const COLUMNS = [
 
 function rsColor(val) {
   if (val == null) return 'text-[var(--color-text-muted)]'
-  if (val >= 90) return 'bg-green-100 text-green-800 font-semibold'
-  if (val >= 80) return 'bg-green-50 text-green-700'
+  if (val >= 90) return 'bg-green-500/10 text-[var(--color-profit)] font-semibold'
+  if (val >= 80) return 'bg-green-500/10 text-[var(--color-profit)]'
   if (val >= 50) return 'text-[var(--color-text-secondary)]'
   return 'text-[var(--color-text-muted)]'
 }
 
 function pctColor(val) {
   if (val == null) return 'text-[var(--color-text-muted)]'
-  if (val > 0) return 'text-green-700'
-  if (val < 0) return 'text-red-600'
+  if (val > 0) return 'text-[var(--color-profit)]'
+  if (val < 0) return 'text-[var(--color-loss)]'
   return 'text-[var(--color-text-secondary)]'
 }
 
 function vcsColor(val) {
   if (val == null) return 'text-[var(--color-text-muted)]'
-  if (val >= 80) return 'bg-green-100 text-green-800 font-semibold'
-  if (val >= 60) return 'text-blue-700'
+  if (val >= 80) return 'bg-green-500/10 text-[var(--color-profit)] font-semibold'
+  if (val >= 60) return 'text-[var(--color-accent)]'
   return 'text-[var(--color-text-muted)]'
 }
 
@@ -70,7 +70,7 @@ function cellClass(val, type) {
   if (type === 'rs') return rsColor(val)
   if (type === 'pct' || type === 'pct100') return pctColor(val)
   if (type === 'vcs') return vcsColor(val)
-  if (type === 'ticker') return 'text-blue-700 font-semibold'
+  if (type === 'ticker') return 'text-[var(--color-accent)] font-semibold'
   return 'text-[var(--color-text)]'
 }
 

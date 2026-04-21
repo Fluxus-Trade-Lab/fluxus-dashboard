@@ -63,11 +63,11 @@ function MonthStats({ stats }) {
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
       <StatCard label="Return" value={fmtPct(stats.monthlyRetPct)} colorClass={clr(stats.monthlyRetPct)} />
       <StatCard label="Trades" value={stats.totalTrades} />
-      <StatCard label="Win Rate" value={fmtPct(stats.winPct)} colorClass={stats.winPct >= 50 ? 'text-green-600' : 'text-red-500'} />
-      <StatCard label="Avg Gain" value={fmtPct(stats.avgGain)} colorClass="text-green-600" />
-      <StatCard label="Avg Loss" value={fmtPct(stats.avgLoss)} colorClass="text-red-500" />
-      <StatCard label="Best Trade" value={fmtPct(stats.largestGain)} colorClass="text-green-600" />
-      <StatCard label="Worst Trade" value={fmtPct(stats.largestLoss)} colorClass="text-red-500" />
+      <StatCard label="Win Rate" value={fmtPct(stats.winPct)} colorClass={stats.winPct >= 50 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'} />
+      <StatCard label="Avg Gain" value={fmtPct(stats.avgGain)} colorClass="text-[var(--color-profit)]" />
+      <StatCard label="Avg Loss" value={fmtPct(stats.avgLoss)} colorClass="text-[var(--color-loss)]" />
+      <StatCard label="Best Trade" value={fmtPct(stats.largestGain)} colorClass="text-[var(--color-profit)]" />
+      <StatCard label="Worst Trade" value={fmtPct(stats.largestLoss)} colorClass="text-[var(--color-loss)]" />
       <StatCard label="Avg Hold" value={`${fmt(stats.avgHoldWin, 0)}d W / ${fmt(stats.avgHoldLoss, 0)}d L`} />
     </div>
   )
@@ -87,7 +87,7 @@ function MiniEquityCurve({ data }) {
           <XAxis dataKey="date" tick={{ fontSize: 9 }} tickFormatter={d => d.slice(8)} interval="preserveStartEnd" />
           <YAxis tick={{ fontSize: 9 }} tickFormatter={v => `${v.toFixed(1)}%`} domain={['auto', 'auto']} />
           <Tooltip
-            contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
+            contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text)' }}
             formatter={v => [`${v.toFixed(2)}%`, 'Return']}
             labelFormatter={l => l}
           />

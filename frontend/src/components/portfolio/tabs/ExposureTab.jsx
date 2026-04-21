@@ -75,7 +75,7 @@ export default function ExposureTab({ openTrades, sectorData, holdingsData, merg
                 outerRadius={90}
                 label={({ name, weight }) => `${name} ${weight}%`}
                 labelLine={{ strokeWidth: 1 }}
-                stroke="#fff"
+                stroke="var(--color-surface)"
                 strokeWidth={2}
               >
                 {mergedHoldingsData.map((_, i) => (
@@ -91,7 +91,7 @@ export default function ExposureTab({ openTrades, sectorData, holdingsData, merg
           <div className="font-semibold mb-3 text-sm">Sectors</div>
           <ResponsiveContainer width="100%" height={260}>
             <BarChart data={sectorData} layout="vertical">
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
               <XAxis
                 type="number"
                 tick={{ fontSize: 11 }}

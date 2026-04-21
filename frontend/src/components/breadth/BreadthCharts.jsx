@@ -51,15 +51,20 @@ function useChart(containerRef, chartRef, history, setupFn, height) {
     const w = containerRef.current.clientWidth
     const h = height ?? Math.max(160, Math.round(w * 0.35))
 
+    const root = getComputedStyle(document.documentElement)
+    const bgColor = root.getPropertyValue('--color-surface').trim() || '#ffffff'
+    const txtColor = root.getPropertyValue('--color-text-secondary').trim() || '#78716c'
+    const gridColor = root.getPropertyValue('--color-border-light').trim() || '#f5f5f4'
+
     const chart = createChart(containerRef.current, {
       layout: {
-        background: { type: ColorType.Solid, color: '#ffffff' },
-        textColor: '#78716c',
+        background: { type: ColorType.Solid, color: bgColor },
+        textColor: txtColor,
         fontSize: 10,
       },
       grid: {
-        vertLines: { color: '#f5f5f4' },
-        horzLines: { color: '#f5f5f4' },
+        vertLines: { color: gridColor },
+        horzLines: { color: gridColor },
       },
       width: w,
       height: h,

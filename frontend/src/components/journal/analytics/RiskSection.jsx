@@ -118,7 +118,7 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
               <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
               <XAxis type="number" tick={{ fontSize: 10 }} tickFormatter={v => `${v}%`} />
               <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} width={60} />
-              <Tooltip formatter={v => `${v}%`} contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)' }} />
+              <Tooltip formatter={v => `${v}%`} contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text)' }} />
               <Bar dataKey="heat" radius={[0, 4, 4, 0]}>
                 {heatChartData.map((d, i) => <Cell key={i} fill={heatColor(d.heat)} />)}
               </Bar>

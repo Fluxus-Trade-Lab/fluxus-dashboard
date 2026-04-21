@@ -52,7 +52,7 @@ export default function RecapViewer({ date }) {
           prose-li:text-[var(--color-text-secondary)] prose-li:text-sm
           prose-strong:text-[var(--color-text-bold)]
           prose-code:text-[var(--color-text)] prose-code:bg-[var(--color-surface-raised)] prose-code:px-1 prose-code:rounded
-          prose-a:text-blue-600"
+          prose-a:text-[var(--color-accent)]"
         dangerouslySetInnerHTML={{ __html: simpleMarkdown(content) }}
       />
     </div>

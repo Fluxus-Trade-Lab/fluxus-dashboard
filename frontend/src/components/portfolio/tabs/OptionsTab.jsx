@@ -13,8 +13,8 @@ const WEIGHT_LABELS = { 0.25: 'Bird', 1: 'Cat', 2: 'Goat', 4: 'Elephant' }
 function weightBadge(w) {
   const label = WEIGHT_LABELS[w] || w
   const col =
-    w >= 4 ? 'bg-green-100 text-green-700' :
-    w >= 2 ? 'bg-amber-100 text-amber-700' :
+    w >= 4 ? 'bg-green-500/10 text-[var(--color-profit)]' :
+    w >= 2 ? 'bg-amber-500/10 text-[var(--color-signal-caution)]' :
     w >= 1 ? 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]' :
     'bg-[var(--color-bg)] text-[var(--color-text-muted)]'
   return <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold ${col}`}>{w} — {label}</span>
@@ -334,7 +334,7 @@ export default function OptionsTab() {
                       <td className={`${tdStyle} font-mono text-[11px]`}>{t.strike}</td>
                       <td className={`${tdStyle} text-[11px] text-[var(--color-text-secondary)]`}>{shortDate(t.expiry)}</td>
                       <td className={tdStyle}>
-                        <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold ${isOpen ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
+                        <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold ${isOpen ? 'bg-green-500/10 text-[var(--color-profit)]' : 'bg-red-500/10 text-[var(--color-loss)]'}`}>
                           {isOpen ? 'OPEN' : 'CLOSED'}
                         </span>
                       </td>
@@ -345,7 +345,7 @@ export default function OptionsTab() {
                       <td className={`${tdStyle} text-[11px] text-[var(--color-text-secondary)]`}>{t.exitDate ? shortDate(t.exitDate) : '—'}</td>
                       <td className={`${tdStyle} font-semibold ${pct != null ? clr(pct) : ''}`}>
                         {pct != null ? (
-                          <span className={`px-1.5 py-0.5 rounded text-[11px] ${pct > 0 ? 'bg-green-50' : pct < 0 ? 'bg-red-50' : ''}`}>
+                          <span className={`px-1.5 py-0.5 rounded text-[11px] ${pct > 0 ? 'bg-green-500/5' : pct < 0 ? 'bg-red-500/5' : ''}`}>
                             {pm ? MASK : fmtPctSigned(pct)}
                           </span>
                         ) : '—'}
@@ -451,20 +451,20 @@ export default function OptionsTab() {
               <LineChart data={equityCurve}>
                 <XAxis
                   dataKey="date"
-                  tick={{ fontSize: 10, fill: '#78716c' }}
+                  tick={{ fontSize: 10, fill: 'var(--color-text-secondary)' }}
                   tickLine={false}
-                  axisLine={{ stroke: '#d6d3d1' }}
+                  axisLine={{ stroke: 'var(--color-border)' }}
                 />
                 <YAxis
-                  tick={{ fontSize: 10, fill: '#78716c' }}
+                  tick={{ fontSize: 10, fill: 'var(--color-text-secondary)' }}
                   tickLine={false}
-                  axisLine={{ stroke: '#d6d3d1' }}
+                  axisLine={{ stroke: 'var(--color-border)' }}
                   tickFormatter={v => `${v}%`}
                 />
                 <Tooltip
                   formatter={(v) => [pm ? MASK : `${v}%`, 'Cumulative P&L']}
-                  labelStyle={{ fontSize: 11, color: '#78716c' }}
-                  contentStyle={{ fontSize: 11, border: '1px solid #d6d3d1', borderRadius: 4 }}
+                  labelStyle={{ fontSize: 11, color: 'var(--color-text-secondary)' }}
+                  contentStyle={{ fontSize: 11, color: 'var(--color-text)', background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 4 }}
                 />
                 <Line
                   type="monotone"

@@ -66,7 +66,7 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
               <XAxis dataKey="date" tick={{ fontSize: 10 }} tickFormatter={d => d.slice(5)} interval="preserveStartEnd" />
               <YAxis tick={{ fontSize: 10 }} tickFormatter={v => `${v}%`} />
               <Tooltip
-                contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
+                contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text)' }}
                 formatter={(v, name) => [`${v}%`, name]}
                 labelFormatter={l => l}
               />

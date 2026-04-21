@@ -47,7 +47,7 @@ export default function EtfSection({ title, etfs, defaultSort = 'perf_1w' }) {
   if (!etfs || etfs.length === 0) return null
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded overflow-hidden">
+    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded overflow-x-auto">
       {/* Section title */}
       <div className="px-3 py-1.5 border-b border-[var(--color-border)]">
         <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">

@@ -124,19 +124,19 @@ function fmtDate(iso) {
 
 function ratioColor(val) {
   if (val == null) return ''
-  if (val >= 1.0) return 'bg-green-50 text-green-700'
-  if (val >= 0.5) return 'bg-amber-50 text-amber-700'
-  return 'bg-red-50 text-red-600'
+  if (val >= 1.0) return 'bg-green-500/10 text-[var(--color-profit)]'
+  if (val >= 0.5) return 'bg-amber-500/10 text-[var(--color-signal-caution)]'
+  return 'bg-red-500/10 text-[var(--color-loss)]'
 }
 
 function pctAboveColor(val) {
   if (val == null) return ''
-  if (val >= 60) return 'bg-green-50 text-green-700'
-  if (val >= 40) return 'bg-amber-50 text-amber-700'
-  return 'bg-red-50 text-red-600'
+  if (val >= 60) return 'bg-green-500/10 text-[var(--color-profit)]'
+  if (val >= 40) return 'bg-amber-500/10 text-[var(--color-signal-caution)]'
+  return 'bg-red-500/10 text-[var(--color-loss)]'
 }
 
 function mcColor(val) {
   if (val == null) return ''
-  return val >= 0 ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'
+  return val >= 0 ? 'bg-green-500/10 text-[var(--color-profit)]' : 'bg-red-500/10 text-[var(--color-loss)]'
 }

@@ -134,7 +134,7 @@ export default function OverviewTab({
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)]">
                     <span className={`px-2 py-0.5 rounded-full text-[11px] ${
                       t.isClosed ? 'bg-[var(--color-surface-raised)] text-[var(--color-text-muted)]' :
-                      t.trims?.length > 0 ? 'bg-amber-50 text-amber-700' : 'bg-green-50 text-green-700'
+                      t.trims?.length > 0 ? 'bg-amber-500/10 text-[var(--color-signal-caution)]' : 'bg-green-500/10 text-[var(--color-profit)]'
                     }`}>
                       {t.trimStatus}
                     </span>
@@ -191,7 +191,7 @@ export default function OverviewTab({
         {/* Left: Equity Curve */}
         <div className="min-w-0">
           {!hasSPY && (
-            <div className="p-3 bg-blue-50 border border-blue-200 rounded-md mb-4 text-xs text-[var(--color-accent)] flex items-center justify-between">
+            <div className="p-3 bg-[var(--color-accent-light)] border border-[var(--color-border)] rounded-md mb-4 text-xs text-[var(--color-accent)] flex items-center justify-between">
               <span>Load historical prices for the equity curve and SPY comparison.</span>
               <Button onClick={fetchFullHistory} disabled={state.loading}>
                 {state.loading ? 'Loading...' : 'Load History'}
@@ -215,7 +215,7 @@ export default function OverviewTab({
               </div>
               <ResponsiveContainer width="100%" height={280}>
                 <LineChart data={performanceData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f5f5f5" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
                   <XAxis
                     dataKey="date"
                     tick={{ fontSize: 10 }}
