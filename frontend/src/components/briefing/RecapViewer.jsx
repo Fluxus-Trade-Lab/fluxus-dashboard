@@ -59,10 +59,21 @@ export default function RecapViewer({ date }) {
   )
 }
 
-// Simple markdown parser - handles common cases
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
+
+function sanitizeHref(url) {
+  if (/^https?:\/\//i.test(url)) return url
+  if (url.startsWith('/') || url.startsWith('#')) return url
+  return '#'
+}
+
+// Simple markdown parser with XSS protection
 function simpleMarkdown(md) {
-  let html = md
-    // Code blocks
+  // Escape HTML first to prevent injection, then apply markdown transforms
+  let html = escapeHtml(md)
+    // Code blocks (escaped content is fine inside <code>)
     .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre class="bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-3 overflow-x-auto text-xs font-mono"><code>$2</code></pre>')
     // Headings
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
@@ -75,17 +86,17 @@ function simpleMarkdown(md) {
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     // Inline code
     .replace(/`([^`]+)`/g, '<code>$1</code>')
-    // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+    // Links — sanitize href to prevent javascript: URIs
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, text, url) =>
+      `<a href="${sanitizeHref(url)}" target="_blank" rel="noopener noreferrer">${text}</a>`)
     // Unordered lists
     .replace(/^- (.+)$/gm, '<li>$1</li>')
-    // Paragraphs (lines not already wrapped)
+    // Paragraphs
     .split('\n\n')
     .map(block => {
       block = block.trim()
       if (!block) return ''
       if (block.startsWith('<')) return block
-      // Wrap consecutive <li> in <ul>
       if (block.includes('<li>')) return `<ul class="list-disc pl-5 space-y-1">${block}</ul>`
       return `<p>${block.replace(/\n/g, '<br/>')}</p>`
     })

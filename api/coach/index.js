@@ -40,38 +40,48 @@ export default async function handler(req) {
   }
 
   if (req.method !== 'POST') {
-    return Response.json({ error: 'Method not allowed' }, { status: 405 })
+    return Response.json({ error: 'Method not allowed' }, { status: 405, headers: corsHeaders })
   }
 
   if (process.env.COACH_ENABLED !== 'true') {
     return Response.json({
       error: 'Coach API is disabled. Use the "Review with Claude" copy-paste flow, or set COACH_ENABLED=true and ANTHROPIC_API_KEY to enable.',
-    }, { status: 503 })
+    }, { status: 503, headers: corsHeaders })
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY
   if (!apiKey) {
-    return Response.json({ error: 'ANTHROPIC_API_KEY not configured' }, { status: 500 })
+    return Response.json({ error: 'ANTHROPIC_API_KEY not configured' }, { status: 500, headers: corsHeaders })
   }
 
   try {
     const { strategy, message, history = [], tradeContext } = await req.json()
 
     if (!strategy || !message) {
-      return Response.json({ error: 'Missing strategy or message' }, { status: 400 })
+      return Response.json({ error: 'Missing strategy or message' }, { status: 400, headers: corsHeaders })
     }
     if (message.length > MAX_MESSAGE_LEN) {
-      return Response.json({ error: 'Message too long' }, { status: 400 })
+      return Response.json({ error: 'Message too long' }, { status: 400, headers: corsHeaders })
     }
     if (tradeContext && tradeContext.length > MAX_CONTEXT_LEN) {
-      return Response.json({ error: 'Trade context too long' }, { status: 400 })
+      return Response.json({ error: 'Trade context too long' }, { status: 400, headers: corsHeaders })
     }
+
+    // Validate and sanitize history array
+    const validHistory = (Array.isArray(history) ? history : [])
+      .slice(-10)
+      .filter(m =>
+        m && typeof m.content === 'string' &&
+        ['user', 'assistant'].includes(m.role) &&
+        m.content.length <= MAX_MESSAGE_LEN
+      )
+      .map(m => ({ role: m.role, content: m.content }))
 
     const systemPrompt = STRATEGY_PROMPTS[strategy] || STRATEGY_PROMPTS['breakout']
     const contextBlock = tradeContext ? `\n\nTrade context:\n${tradeContext}` : ''
 
     const messages = [
-      ...history.slice(-10),
+      ...validHistory,
       { role: 'user', content: message + contextBlock },
     ]
 
@@ -92,7 +102,7 @@ export default async function handler(req) {
 
     if (!response.ok) {
       console.error('Claude API error:', response.status, await response.text())
-      return Response.json({ error: `Claude API error: ${response.status}` }, { status: 502 })
+      return Response.json({ error: `Claude API error: ${response.status}` }, { status: 502, headers: corsHeaders })
     }
 
     const data = await response.json()
@@ -101,6 +111,6 @@ export default async function handler(req) {
     return Response.json({ reply }, { headers: corsHeaders })
   } catch (err) {
     console.error('Coach API error:', err)
-    return Response.json({ error: 'Internal server error' }, { status: 500 })
+    return Response.json({ error: 'Internal server error' }, { status: 500, headers: corsHeaders })
   }
 }

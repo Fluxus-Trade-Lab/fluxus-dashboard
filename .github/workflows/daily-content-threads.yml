@@ -1,0 +1,80 @@
+# Daily Content Thread Generation — Fluxus Trading Community
+# Fetches Discord messages from today, generates Twitter thread drafts
+# via Claude API, commits drafts to data/output/threads/{date}/draft.txt
+name: Daily Content Threads
+
+on:
+  schedule:
+    # 22:00 UTC = 17:00 EST Mon-Fri (30 min after data pipeline)
+    - cron: '0 22 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Date to generate threads for (YYYY-MM-DD). Default: today.'
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  generate-threads:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: pipeline/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r pipeline/requirements.txt
+
+      - name: Generate thread drafts
+        run: |
+          if [ -n "$INPUT_DATE" ]; then
+            python -m pipeline.content.discord_to_thread --date "$INPUT_DATE"
+          else
+            python -m pipeline.content.discord_to_thread
+          fi
+        env:
+          INPUT_DATE: ${{ github.event.inputs.date }}
+          PYTHONPATH: ${{ github.workspace }}
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+          DISCORD_USER_ID: ${{ secrets.DISCORD_USER_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/output/threads/
+          git diff --staged --quiet || (git commit -m "content: thread drafts $(date +%Y-%m-%d)" && git push)
+
+      - name: Discord notification (success)
+        if: success() && env.DISCORD_WEBHOOK_URL != ''
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          curl -s -H "Content-Type: application/json" \
+            -d "{\"content\":\"Thread drafts ready for review\"}" \
+            "$DISCORD_WEBHOOK_URL"
+
+      - name: Discord notification (failure)
+        if: failure() && env.DISCORD_WEBHOOK_URL != ''
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          curl -s -H "Content-Type: application/json" \
+            -d "{\"content\":\"Content pipeline FAILED — check Actions logs\"}" \
+            "$DISCORD_WEBHOOK_URL"
