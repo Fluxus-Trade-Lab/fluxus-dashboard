@@ -22,7 +22,7 @@ export default function Sparkline({ data }) {
       <polyline
         points={points}
         fill="none"
-        stroke="#a8a29e"
+        stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"

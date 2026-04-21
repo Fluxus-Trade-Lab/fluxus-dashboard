@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useEffect } from 'react'
+import { createContext, useContext, useReducer, useEffect, useRef } from 'react'
 import { pullFromSheets, pushToSheets } from '../services/sheetsSync'
 
 const STORAGE_KEY = 'portfolio-v4'
@@ -226,11 +226,13 @@ export function usePortfolio() {
 
 export function PortfolioProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, null, loadFromStorage)
+  const isHydrating = useRef(true)
 
   // Pull from Sheets on init
   useEffect(() => {
     if (!state.gasUrl || !state.syncToken) return
     let cancelled = false
+    isHydrating.current = true
     dispatch({ type: 'SET_SYNC_STATUS', status: 'syncing' })
     pullFromSheets(state.gasUrl, state.syncToken).then(result => {
       if (cancelled) return
@@ -240,6 +242,8 @@ export function PortfolioProvider({ children }) {
         console.warn('Sheets pull failed, using localStorage:', result.error)
         dispatch({ type: 'SET_SYNC_STATUS', status: 'error' })
       }
+      // Allow push effects to fire after hydration settles
+      setTimeout(() => { isHydrating.current = false }, 3000)
     })
     return () => { cancelled = true }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -268,12 +272,13 @@ export function PortfolioProvider({ children }) {
       )
     }, 500)
     return () => clearTimeout(t)
-  }, [state.startingCapital, state.trades, state.dailyPrices, state.benchmarkHistories, state.gasUrl, state.benchmarkTicker, state.capitalSet, state.optionsCapital, state.optionsTrades, state.optionsCapitalSet, state.monthlyReviews])
+  }, [state.startingCapital, state.trades, state.dailyPrices, state.benchmarkHistories, state.gasUrl, state.benchmarkTicker, state.capitalSet, state.optionsCapital, state.optionsTrades, state.optionsCapitalSet, state.monthlyReviews, state.privacyMode])
 
-  // Auto-push to Sheets (debounced 2s)
+  // Auto-push to Sheets (debounced 2s, skip during hydration)
   useEffect(() => {
     if (!state.gasUrl || !state.syncToken) return
     if (!state.capitalSet && state.trades.length === 0) return
+    if (isHydrating.current) return
     const t = setTimeout(() => {
       dispatch({ type: 'SET_SYNC_STATUS', status: 'syncing' })
       pushToSheets(state.gasUrl, state.syncToken, {

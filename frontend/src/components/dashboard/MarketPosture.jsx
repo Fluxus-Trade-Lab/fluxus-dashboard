@@ -1,4 +1,4 @@
-import { signalLabel } from '../../lib/format'
+import { signalLabel, signalTextColor } from '../../lib/format'
 
 const SIGNAL_SCORE = { POWER_3: 3, CAUTION: 2, WARNING: 1, RISK_OFF: 0 }
 const TICKERS = ['SPY', 'QQQ', 'IWM', 'RSP']
@@ -79,11 +79,10 @@ export default function MarketPosture({ signals }) {
         {TICKERS.map((t) => {
           const s = signals?.[t]
           if (!s) return null
-          const colorMap = { green: 'text-green-600', yellow: 'text-amber-600', orange: 'text-orange-500', red: 'text-red-500' }
           return (
             <div key={t} className="flex items-center gap-1.5">
               <span className="font-mono text-[11px] text-[var(--color-text-secondary)]">{t}</span>
-              <span className={`text-[10px] font-medium uppercase ${colorMap[s.color] || 'text-[var(--color-text-muted)]'}`}>
+              <span className={`text-[10px] font-medium uppercase ${signalTextColor(s.color)}`}>
                 {signalLabel(s.signal)}
               </span>
             </div>

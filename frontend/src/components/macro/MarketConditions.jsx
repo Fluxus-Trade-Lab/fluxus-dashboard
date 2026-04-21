@@ -1,16 +1,6 @@
-import { signalColor, signalLabel } from '../../lib/format'
+import { signalLabel, signalTextColor } from '../../lib/format'
 
 const TICKERS = ['SPY', 'QQQ', 'IWM', 'RSP']
-
-function signalTextColor(color) {
-  const map = {
-    green: 'text-green-600',
-    yellow: 'text-amber-600',
-    orange: 'text-orange-500',
-    red: 'text-red-500',
-  }
-  return map[color] || 'text-[var(--color-text-muted)]'
-}
 
 export default function MarketConditions({ signals }) {
   if (!signals) return null

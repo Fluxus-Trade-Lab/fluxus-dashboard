@@ -46,7 +46,7 @@ export default function PowerTrend({ signals }) {
                     <td
                       key={ticker}
                       className={`font-mono text-xs py-0.5 text-center ${
-                        passed ? 'text-green-600' : 'text-red-500'
+                        passed ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'
                       }`}
                     >
                       {passed ? 'Yes' : 'No'}

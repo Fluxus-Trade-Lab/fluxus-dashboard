@@ -54,7 +54,7 @@ export default function EtfRow({ etf }) {
       </span>
 
       {/* Sparkline */}
-      <span className="flex items-center justify-end">
+      <span className="flex items-center justify-end text-[var(--color-text-muted)]">
         <Sparkline data={sparkline} />
       </span>
     </div>

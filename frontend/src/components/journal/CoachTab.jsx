@@ -121,15 +121,17 @@ export default function CoachTab({ strategy }) {
 
     if (reply) {
       setMessages(prev => [...prev, { role: 'assistant', content: reply }])
-    } else if (apiDisabled) {
+    } else {
+      // API failed or disabled — always show copy-paste fallback
       setPendingMessage(userMessage)
     }
   }, [input, apiDisabled, callApi])
 
   const handleCopyPrompt = useCallback(() => {
+    if (!pendingMessage) return
     const allButLast = messagesRef.current.slice(0, -1)
     const prompt = buildCopyPrompt(strategy, config, allButLast, pendingMessage)
-    navigator.clipboard.writeText(prompt)
+    navigator.clipboard.writeText(prompt).catch(() => {})
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }, [strategy, config, pendingMessage])

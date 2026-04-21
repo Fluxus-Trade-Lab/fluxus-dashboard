@@ -1,5 +1,5 @@
 export default function ClassicBreadth({ data }) {
-  const b = data?.breadth
+  const b = data
   if (!b) return null
 
   return (
@@ -19,7 +19,7 @@ export default function ClassicBreadth({ data }) {
         <Stat
           label="McClellan"
           value={b.mcclellan_osc?.toFixed(1)}
-          color={b.mcclellan_osc >= 0 ? 'text-green-600' : 'text-red-500'}
+          color={b.mcclellan_osc >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}
         />
       </div>
     </div>
@@ -46,7 +46,7 @@ function fmt1(val) {
 
 function pctColor(val) {
   if (val == null) return ''
-  if (val >= 60) return 'text-green-600'
-  if (val >= 40) return 'text-amber-600'
-  return 'text-red-500'
+  if (val >= 60) return 'text-[var(--color-profit)]'
+  if (val >= 40) return 'text-[var(--color-signal-caution)]'
+  return 'text-[var(--color-loss)]'
 }

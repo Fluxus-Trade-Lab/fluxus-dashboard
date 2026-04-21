@@ -3,18 +3,20 @@ export default function StockbeeRatio({ data }) {
 
   const ratio = data.ratio_5d
   const ratioColor =
-    ratio < 0.5
-      ? 'text-red-500'
-      : ratio <= 1.0
-        ? 'text-amber-600'
-        : 'text-green-600'
+    ratio == null
+      ? 'text-[var(--color-text-muted)]'
+      : ratio < 0.5
+        ? 'text-[var(--color-loss)]'
+        : ratio <= 1.0
+          ? 'text-[var(--color-signal-caution)]'
+          : 'text-[var(--color-profit)]'
 
   const signalColor =
     data.signal === 'COLLAPSE' || data.signal === 'RISK_OFF'
-      ? 'text-red-500'
+      ? 'text-[var(--color-loss)]'
       : data.signal === 'CAUTION' || data.signal === 'WARNING'
-        ? 'text-amber-600'
-        : 'text-green-600'
+        ? 'text-[var(--color-signal-caution)]'
+        : 'text-[var(--color-profit)]'
 
   return (
     <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-3 py-3">

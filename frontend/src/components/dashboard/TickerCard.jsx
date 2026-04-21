@@ -1,4 +1,4 @@
-import { signalColor, signalLabel } from '../../lib/format'
+import { signalColor, signalLabel, signalTextColor } from '../../lib/format'
 
 function formatPrice(val) {
   if (val == null) return '--'
@@ -16,16 +16,6 @@ function formatChange(val) {
 function changeColor(val) {
   if (val == null || isNaN(val)) return 'text-[var(--color-text-muted)]'
   return val > 0 ? 'text-[var(--color-profit)]' : val < 0 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text-secondary)]'
-}
-
-function signalTextColor(color) {
-  const map = {
-    green: 'text-green-600',
-    yellow: 'text-amber-600',
-    orange: 'text-orange-500',
-    red: 'text-red-500',
-  }
-  return map[color] || 'text-[var(--color-text-muted)]'
 }
 
 export default function TickerCard({ ticker, signal, etf }) {

@@ -7,14 +7,14 @@ export function fmtPct(val) {
 
 export function pctColor(val) {
   if (val == null || isNaN(val)) return 'text-[var(--color-text-muted)]'
-  return val > 0 ? 'text-green-600' : val < 0 ? 'text-red-500' : 'text-[var(--color-text-secondary)]'
+  return val > 0 ? 'text-[var(--color-profit)]' : val < 0 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text-secondary)]'
 }
 
 export function atrBadgeColor(atrExt) {
   if (atrExt == null) return 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]'
-  if (atrExt <= 4) return 'bg-green-50 text-green-700'
-  if (atrExt <= 6) return 'bg-amber-50 text-amber-700'
-  return 'bg-red-50 text-red-700'
+  if (atrExt <= 4) return 'bg-green-500/10 text-[var(--color-profit)]'
+  if (atrExt <= 6) return 'bg-amber-500/10 text-[var(--color-signal-caution)]'
+  return 'bg-red-500/10 text-[var(--color-loss)]'
 }
 
 export function abcColor(abc) {
@@ -25,10 +25,10 @@ export function abcColor(abc) {
 
 export function signalColor(color) {
   const map = {
-    green: 'bg-green-500',
-    yellow: 'bg-amber-600',
-    orange: 'bg-orange-500',
-    red: 'bg-red-500',
+    green: 'bg-[var(--color-signal-power3)]',
+    yellow: 'bg-[var(--color-signal-caution)]',
+    orange: 'bg-[var(--color-signal-warning)]',
+    red: 'bg-[var(--color-signal-riskoff)]',
   }
   return map[color] || 'bg-[var(--color-text-muted)]'
 }
@@ -41,6 +41,16 @@ export function signalLabel(signal) {
     RISK_OFF: 'RISK OFF',
   }
   return map[signal] || signal
+}
+
+export function signalTextColor(color) {
+  const map = {
+    green: 'text-[var(--color-signal-power3)]',
+    yellow: 'text-[var(--color-signal-caution)]',
+    orange: 'text-[var(--color-signal-warning)]',
+    red: 'text-[var(--color-signal-riskoff)]',
+  }
+  return map[color] || 'text-[var(--color-text-muted)]'
 }
 
 // For values already in percent (e.g., pct_to_pivot = 0.1 means 0.1%)

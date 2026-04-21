@@ -11,9 +11,12 @@
  * Environment variables:
  *   ANTHROPIC_API_KEY — Claude API key (required)
  *   COACH_ENABLED     — set to "true" to enable (default: disabled)
+ *   ALLOWED_ORIGIN    — restrict CORS (default: https://fluxus-dashboard.vercel.app)
  */
 
 export const config = { runtime: 'edge' }
+
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || 'https://fluxus-dashboard.vercel.app'
 
 const STRATEGY_PROMPTS = {
   'episodic-pivot': `You are an expert trading coach specializing in Episodic Pivot setups. You help traders identify and execute gap-up breakouts on significant news (earnings, FDA, contracts). Focus on: gap quality, volume confirmation, risk/reward, stop placement, and position sizing. Be direct and specific.`,
@@ -22,24 +25,24 @@ const STRATEGY_PROMPTS = {
   'monthly-review': `You are a trading coach reviewing monthly performance. Be direct, specific, and actionable. No fluff. Analyze the data provided and give concrete findings, patterns, and suggestions.`,
 }
 
+const MAX_MESSAGE_LEN = 5000
+const MAX_CONTEXT_LEN = 10000
+
 export default async function handler(req) {
-  // CORS
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  }
+
   if (req.method === 'OPTIONS') {
-    return new Response(null, {
-      status: 204,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-      },
-    })
+    return new Response(null, { status: 204, headers: corsHeaders })
   }
 
   if (req.method !== 'POST') {
     return Response.json({ error: 'Method not allowed' }, { status: 405 })
   }
 
-  // Gate check
   if (process.env.COACH_ENABLED !== 'true') {
     return Response.json({
       error: 'Coach API is disabled. Use the "Review with Claude" copy-paste flow, or set COACH_ENABLED=true and ANTHROPIC_API_KEY to enable.',
@@ -57,12 +60,18 @@ export default async function handler(req) {
     if (!strategy || !message) {
       return Response.json({ error: 'Missing strategy or message' }, { status: 400 })
     }
+    if (message.length > MAX_MESSAGE_LEN) {
+      return Response.json({ error: 'Message too long' }, { status: 400 })
+    }
+    if (tradeContext && tradeContext.length > MAX_CONTEXT_LEN) {
+      return Response.json({ error: 'Trade context too long' }, { status: 400 })
+    }
 
     const systemPrompt = STRATEGY_PROMPTS[strategy] || STRATEGY_PROMPTS['breakout']
     const contextBlock = tradeContext ? `\n\nTrade context:\n${tradeContext}` : ''
 
     const messages = [
-      ...history.slice(-10), // Keep last 10 messages for context
+      ...history.slice(-10),
       { role: 'user', content: message + contextBlock },
     ]
 
@@ -82,16 +91,14 @@ export default async function handler(req) {
     })
 
     if (!response.ok) {
-      const err = await response.text()
+      console.error('Claude API error:', response.status, await response.text())
       return Response.json({ error: `Claude API error: ${response.status}` }, { status: 502 })
     }
 
     const data = await response.json()
     const reply = data.content?.[0]?.text || 'No response generated.'
 
-    return Response.json({ reply }, {
-      headers: { 'Access-Control-Allow-Origin': '*' },
-    })
+    return Response.json({ reply }, { headers: corsHeaders })
   } catch (err) {
     console.error('Coach API error:', err)
     return Response.json({ error: 'Internal server error' }, { status: 500 })
