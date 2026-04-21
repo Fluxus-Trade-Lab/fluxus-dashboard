@@ -7,12 +7,14 @@ import SummarySection from './analytics/SummarySection'
 import RiskSection from './analytics/RiskSection'
 import VolatilitySection from './analytics/VolatilitySection'
 import TrimStopsSection from './analytics/TrimStopsSection'
+import MonthlyReviewSection from './analytics/MonthlyReviewSection'
 
 const SUB_TABS = [
   { key: 'summary', label: 'Summary' },
   { key: 'risk', label: 'Risk' },
   { key: 'volatility', label: 'Volatility' },
   { key: 'trim-stops', label: 'Trim & Stops' },
+  { key: 'monthly-review', label: 'Monthly Review' },
 ]
 
 export default function AnalyticsTab() {
@@ -153,6 +155,13 @@ function AnalyticsTabInner() {
         <TrimStopsSection
           trimAnalysis={trimAnalysis}
           stopAnalysis={stopAnalysis}
+        />
+      )}
+      {activeTab === 'monthly-review' && (
+        <MonthlyReviewSection
+          enriched={enriched}
+          monthlyStats={monthlyStats}
+          performanceData={performanceData}
         />
       )}
     </div>
