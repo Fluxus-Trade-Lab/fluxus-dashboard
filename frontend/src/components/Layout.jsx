@@ -49,7 +49,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           <EquitiesSection data={data} />
         </main>
       ) : (
-        <main className="max-w-[1800px] mx-auto px-2 py-3">
+        <main className="max-w-[1800px] mx-auto px-3 py-4">
           {current === 'screener' && <ScreenerPage />}
           {current === 'portfolio' && <PortfolioPage />}
           {current === 'journal' && <JournalPage />}

@@ -1,3 +1,5 @@
+import { signalLabel } from '../../lib/format'
+
 const SIGNAL_SCORE = { POWER_3: 3, CAUTION: 2, WARNING: 1, RISK_OFF: 0 }
 const TICKERS = ['SPY', 'QQQ', 'IWM', 'RSP']
 
@@ -63,7 +65,7 @@ export default function MarketPosture({ signals }) {
           ))}
         </div>
         <div>
-          <div className="text-sm font-semibold text-[var(--color-text-bold)]">
+          <div className="text-base font-bold text-[var(--color-text-bold)]">
             {posture.label}
           </div>
           <div className="text-xs text-[var(--color-text-secondary)] mt-0.5">
@@ -73,7 +75,7 @@ export default function MarketPosture({ signals }) {
       </div>
 
       {/* Signal breakdown */}
-      <div className="flex gap-3 mt-3 pt-3 border-t border-[var(--color-border-light)]">
+      <div className="flex gap-3 flex-wrap mt-3 pt-3 border-t border-[var(--color-border-light)]">
         {TICKERS.map((t) => {
           const s = signals?.[t]
           if (!s) return null
@@ -82,7 +84,7 @@ export default function MarketPosture({ signals }) {
             <div key={t} className="flex items-center gap-1.5">
               <span className="font-mono text-[11px] text-[var(--color-text-secondary)]">{t}</span>
               <span className={`text-[10px] font-medium uppercase ${colorMap[s.color] || 'text-[var(--color-text-muted)]'}`}>
-                {s.signal?.replace('_', ' ')}
+                {signalLabel(s.signal)}
               </span>
             </div>
           )
