@@ -1,19 +1,15 @@
 import { useMemo } from 'react'
 import EtfSection from './EtfSection'
+import LeadersLaggards from '../dashboard/LeadersLaggards'
 import { ETF_GROUPS } from '../../lib/etfGroups'
 
-const GROUP_ORDER = [
-  'Indices',
-  'S&P Style',
-  'Sel Sectors',
-  'Industries',
-]
+const TABLE_GROUPS = ['Indices', 'S&P Style', 'Sel Sectors']
 
 export default function EquitiesSection({ data }) {
   const etfData = data?.etf_data
 
-  const groupedEtfs = useMemo(() => {
-    if (!etfData) return {}
+  const { grouped, industryEtfs } = useMemo(() => {
+    if (!etfData) return { grouped: {}, industryEtfs: [] }
 
     const tickerMap = {}
     for (const etf of etfData) {
@@ -21,31 +17,31 @@ export default function EquitiesSection({ data }) {
     }
 
     const groups = {}
-    for (const groupName of GROUP_ORDER) {
+    for (const groupName of TABLE_GROUPS) {
       const tickers = ETF_GROUPS[groupName]
       if (!tickers) continue
-      groups[groupName] = tickers
-        .map((t) => tickerMap[t])
-        .filter(Boolean)
+      groups[groupName] = tickers.map((t) => tickerMap[t]).filter(Boolean)
     }
-    return groups
+
+    const industries = (ETF_GROUPS.Industries || [])
+      .map((t) => tickerMap[t])
+      .filter(Boolean)
+
+    return { grouped: groups, industryEtfs: industries }
   }, [etfData])
 
   if (!etfData) return null
 
   return (
-    <div className="flex flex-col gap-3">
-      {GROUP_ORDER.map((groupName) => {
-        const etfs = groupedEtfs[groupName]
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      {TABLE_GROUPS.map((groupName) => {
+        const etfs = grouped[groupName]
         if (!etfs || etfs.length === 0) return null
         return (
-          <EtfSection
-            key={groupName}
-            title={groupName}
-            etfs={etfs}
-          />
+          <EtfSection key={groupName} title={groupName} etfs={etfs} />
         )
       })}
+      <LeadersLaggards etfs={industryEtfs} />
     </div>
   )
 }

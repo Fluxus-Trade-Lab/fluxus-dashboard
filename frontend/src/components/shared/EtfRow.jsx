@@ -1,6 +1,5 @@
 import { fmtPct, pctColor, abcColor } from '../../lib/format'
 import Sparkline from './Sparkline'
-import LeveragedInfo from './LeveragedInfo'
 
 export default function EtfRow({ etf }) {
   const {
@@ -13,8 +12,6 @@ export default function EtfRow({ etf }) {
     rs,
     abc,
     sparkline,
-    long_etfs,
-    short_etfs,
   } = etf
 
   return (
@@ -26,12 +23,9 @@ export default function EtfRow({ etf }) {
         {abc}
       </span>
 
-      {/* Ticker + leveraged info */}
-      <span className="flex flex-col leading-tight">
-        <span className="font-mono text-xs font-medium text-[var(--color-text-bold)]">
-          {ticker}
-        </span>
-        <LeveragedInfo longEtfs={long_etfs} shortEtfs={short_etfs} />
+      {/* Ticker */}
+      <span className="font-mono text-xs font-medium text-[var(--color-text-bold)]">
+        {ticker}
       </span>
 
       {/* 1D */}

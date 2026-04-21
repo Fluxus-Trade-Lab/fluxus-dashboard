@@ -1,10 +1,10 @@
-import { useState } from 'react'
 import { useHash } from '../hooks/useHash'
 import Header from './Header'
-import TabNav from './TabNav'
-import MacroSection from './macro/MacroSection'
+import TickerStrip from './dashboard/TickerStrip'
+import MarketPosture from './dashboard/MarketPosture'
+import PreMarketChecklist from './dashboard/PreMarketChecklist'
+import MacroGrid from './dashboard/MacroGrid'
 import EquitiesSection from './equities/EquitiesSection'
-import ScreenersSection from './screeners/ScreenersSection'
 import ScreenerPage from './screener/ScreenerPage'
 import PortfolioPage from './portfolio/PortfolioPage'
 import JournalPage from './journal/JournalPage'
@@ -19,7 +19,6 @@ function pageKey(hash) {
 }
 
 export default function Layout({ data, lastUpdated, isOffline }) {
-  const [activeTab, setActiveTab] = useState('macro')
   const [page, navigate] = useHash()
   const current = pageKey(page)
 
@@ -33,25 +32,22 @@ export default function Layout({ data, lastUpdated, isOffline }) {
       />
 
       {current === 'dashboard' ? (
-        <>
-          <TabNav activeTab={activeTab} onTabChange={setActiveTab} />
+        <main className="max-w-[1800px] mx-auto px-3 py-4 space-y-4">
+          {/* Hero: Ticker Strip */}
+          <TickerStrip signals={data?.signals} etfData={data?.etf_data} />
 
-          <main className="max-w-[1800px] mx-auto px-2 py-3">
-            {/* Desktop: 3-column grid */}
-            <div className="hidden sm:grid sm:grid-cols-3 gap-3">
-              <MacroSection data={data} />
-              <EquitiesSection data={data} />
-              <ScreenersSection data={data} />
-            </div>
+          {/* Decision Panel: Market Posture + Pre-Market Checklist */}
+          <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-3">
+            <MarketPosture signals={data?.signals} />
+            <PreMarketChecklist />
+          </div>
 
-            {/* Mobile: tab content */}
-            <div className="sm:hidden">
-              {activeTab === 'macro' && <MacroSection data={data} />}
-              {activeTab === 'equities' && <EquitiesSection data={data} />}
-              {activeTab === 'screeners' && <ScreenersSection data={data} />}
-            </div>
-          </main>
-        </>
+          {/* Macro: Trend Status + Power Trend */}
+          <MacroGrid signals={data?.signals} />
+
+          {/* ETF Performance */}
+          <EquitiesSection data={data} />
+        </main>
       ) : (
         <main className="max-w-[1800px] mx-auto px-2 py-3">
           {current === 'screener' && <ScreenerPage />}
