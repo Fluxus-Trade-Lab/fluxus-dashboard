@@ -25,6 +25,7 @@ export default function Header({ lastUpdated, isOffline, currentPage, onNavigate
             <button
               key={key}
               onClick={() => onNavigate(hash)}
+              aria-current={currentPage === key ? 'page' : undefined}
               className={`px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide rounded flex-shrink-0 focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-1 ${
                 currentPage === key
                   ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'

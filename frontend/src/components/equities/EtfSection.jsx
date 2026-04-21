@@ -57,20 +57,27 @@ export default function EtfSection({ title, etfs, defaultSort = 'perf_1w' }) {
 
       {/* Column headers */}
       <div className="grid grid-cols-[1.5rem_3.5rem_3.5rem_3.5rem_3.5rem_3rem_3rem_4rem] items-center px-2 py-1 border-b border-[var(--color-border)] bg-[var(--color-surface-alt)]/50">
-        {COLUMNS.map((col) => (
-          <span
-            key={col.key}
-            onClick={() => handleSort(col.key, col.sortable)}
-            className={`text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] ${
-              col.sortable ? 'cursor-pointer select-none hover:text-[var(--color-text-secondary)]' : ''
-            } ${sortKey === col.key ? 'text-[var(--color-text-secondary)]' : ''}`}
-          >
-            {col.label}
-            {sortKey === col.key && (
-              <span className="ml-0.5">{sortDir === 'desc' ? '\u2193' : '\u2191'}</span>
-            )}
-          </span>
-        ))}
+        {COLUMNS.map((col) =>
+          col.sortable ? (
+            <button
+              key={col.key}
+              onClick={() => handleSort(col.key, col.sortable)}
+              className={`text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] bg-transparent border-none p-0 text-left cursor-pointer select-none hover:text-[var(--color-text-secondary)] ${sortKey === col.key ? 'text-[var(--color-text-secondary)]' : ''}`}
+            >
+              {col.label}
+              {sortKey === col.key && (
+                <span className="ml-0.5">{sortDir === 'desc' ? '\u2193' : '\u2191'}</span>
+              )}
+            </button>
+          ) : (
+            <span
+              key={col.key}
+              className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]"
+            >
+              {col.label}
+            </span>
+          )
+        )}
       </div>
 
       {/* Rows */}

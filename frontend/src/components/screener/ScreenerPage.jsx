@@ -62,10 +62,12 @@ export default function ScreenerPage() {
   return (
     <div>
       {/* Tab bar */}
-      <div className="flex gap-0 border-b border-[var(--color-border)] mb-5">
+      <div className="flex gap-0 border-b border-[var(--color-border)] mb-5" role="tablist">
         {TABS.map((tab, i) => (
           <button
             key={tab}
+            role="tab"
+            aria-selected={activeTab === i}
             onClick={() => setActiveTab(i)}
             className={`px-5 py-2.5 font-semibold text-sm cursor-pointer bg-transparent border-none border-b-2 transition-colors ${
               activeTab === i
@@ -113,7 +115,7 @@ export default function ScreenerPage() {
             <div className="mb-4 p-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded text-xs font-mono text-[var(--color-text-secondary)] break-all select-all flex items-start gap-2">
               <span className="flex-1">{tickerList}</span>
               <button
-                onClick={() => { navigator.clipboard.writeText(tickerList); setCopied(true); setTimeout(() => setCopied(false), 1500) }}
+                onClick={() => { navigator.clipboard.writeText(tickerList).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1500) }).catch(() => {}) }}
                 className="shrink-0 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide border border-[var(--color-border)] rounded bg-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-text-secondary)] cursor-pointer transition-colors"
               >
                 {copied ? 'Copied' : 'Copy'}

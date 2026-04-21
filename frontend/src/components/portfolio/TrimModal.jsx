@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { usePortfolio } from './context/PortfolioContext'
 import { todayStr } from './lib/portfolioFormat'
 import InputField, { SelectField } from './ui/InputField'
@@ -9,6 +9,13 @@ export default function TrimModal({ trade, onClose }) {
   const [trimType, setTrimType] = useState('trim_1_3')
   const [trimPrice, setTrimPrice] = useState('')
   const [trimDate, setTrimDate] = useState(todayStr())
+  const modalRef = useRef(null)
+
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', handleKey)
+    return () => document.removeEventListener('keydown', handleKey)
+  }, [onClose])
 
   const handleTrim = () => {
     const price = parseFloat(trimPrice)
@@ -24,7 +31,7 @@ export default function TrimModal({ trade, onClose }) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50" role="dialog" aria-modal="true" ref={modalRef}>
       <div className="bg-[var(--color-surface)] rounded-lg p-6 w-[340px] shadow-xl">
         <div className="font-bold mb-1">Trim / Sell — {trade.ticker}</div>
         <div className="text-xs text-[var(--color-text-muted)] mb-4">

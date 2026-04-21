@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo, useEffect } from 'react'
+import { useState, useRef, useMemo, useEffect, useCallback } from 'react'
 import { usePortfolio } from './context/PortfolioContext'
 import { computeCashUsed, enrichTrades, computeMonthlyStats, computeYtdStats, computeRiskMetrics, computeSectorData, computeHoldingsData, computeMergedHoldingsData } from './lib/calculations'
 import { buildEquityCurve } from './lib/equityCurve'
@@ -24,6 +24,21 @@ export default function Layout() {
   const [exportData, setExportData] = useState(null)
   const [capitalInput, setCapitalInput] = useState(String(state.startingCapital))
   const fileInputRef = useRef(null)
+
+  // Escape key to close modals
+  const handleEscape = useCallback((e) => {
+    if (e.key === 'Escape') {
+      if (exportData) setExportData(null)
+      else if (showResetConfirm) setShowResetConfirm(false)
+    }
+  }, [exportData, showResetConfirm])
+
+  useEffect(() => {
+    if (showResetConfirm || exportData) {
+      document.addEventListener('keydown', handleEscape)
+      return () => document.removeEventListener('keydown', handleEscape)
+    }
+  }, [showResetConfirm, exportData, handleEscape])
 
   // Auto-dismiss status bar
   useEffect(() => {

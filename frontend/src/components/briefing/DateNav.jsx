@@ -12,13 +12,13 @@ export default function DateNav({ date, onChange }) {
 
   return (
     <div className="flex items-center gap-2">
-      <button onClick={() => shift(-1)} className="px-2 py-0.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-transparent border border-[var(--color-border)] rounded cursor-pointer">
+      <button onClick={() => shift(-1)} aria-label="Previous day" className="px-2 py-0.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-transparent border border-[var(--color-border)] rounded cursor-pointer">
         &#9664;
       </button>
       <span className="text-xs font-mono text-[var(--color-text)] min-w-[120px] text-center">
         {fmtDate(date)}
       </span>
-      <button onClick={() => shift(1)} className="px-2 py-0.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-transparent border border-[var(--color-border)] rounded cursor-pointer">
+      <button onClick={() => shift(1)} aria-label="Next day" className="px-2 py-0.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-transparent border border-[var(--color-border)] rounded cursor-pointer">
         &#9654;
       </button>
     </div>

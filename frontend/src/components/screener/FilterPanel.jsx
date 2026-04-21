@@ -13,6 +13,7 @@ export default function FilterPanel({ filters, onChange, onSearch }) {
     <div className="border border-[var(--color-border)] rounded-lg mb-4 bg-[var(--color-surface)]">
       <button
         onClick={() => setOpen(!open)}
+        aria-expanded={open}
         className="w-full flex items-center justify-between px-4 py-2 text-xs font-medium uppercase tracking-wide text-[var(--color-text-secondary)]"
       >
         <span>Filter Settings</span>
