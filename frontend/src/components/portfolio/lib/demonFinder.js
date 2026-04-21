@@ -12,6 +12,10 @@ export const DEFAULT_RULES = {
   sizingToleranceLow: 0.6, // 60% of target = too small
   sizingToleranceHigh: 1.4,// 140% of target = too big
   circuitBreakerStreak: 6, // consecutive demons to trigger stop
+  maxTotalHeat: 0.03,      // 3% max total risk exposure
+  maxSectorHeat: 0.015,    // 1.5% max per sector/theme
+  tacticalTrimTarget: 0.33,// first trim should be ~1/3 of position
+  tacticalTrimRR: 3,       // first trim at ~3R profit
 }
 
 // ── Market signal reconstruction ──
@@ -128,9 +132,101 @@ function detectBetTooSmall(trade, rules) {
   return positionRisk < targetRisk * rules.sizingToleranceLow
 }
 
+function detectTotalHeatExceeded(trade, allTrades, rules, dailyPrices) {
+  // Check: at the time of this trade's entry, was total open heat > maxTotalHeat?
+  const entryDate = trade.entryDate
+  const openAtEntry = allTrades.filter(t => {
+    if (t.entryDate > entryDate) return false // opened after
+    if (t.isClosed) {
+      const trims = t.trims || []
+      const lastTrim = trims[trims.length - 1]
+      if (lastTrim && lastTrim.date <= entryDate) return false // closed before
+    }
+    return true
+  })
+
+  let totalHeat = 0
+  for (const t of openAtEntry) {
+    const riskPerShare = Math.abs(t.entryPrice - t.stopPrice)
+    const qty = t.currentQty || t.originalQty
+    totalHeat += riskPerShare * qty
+  }
+
+  return totalHeat / rules.capital > rules.maxTotalHeat
+}
+
+function detectSectorHeatExceeded(trade, allTrades, rules) {
+  if (!trade.sector) return false
+  const entryDate = trade.entryDate
+
+  const sectorOpenAtEntry = allTrades.filter(t => {
+    if (t.sector !== trade.sector) return false
+    if (t.entryDate > entryDate) return false
+    if (t.isClosed) {
+      const trims = t.trims || []
+      const lastTrim = trims[trims.length - 1]
+      if (lastTrim && lastTrim.date <= entryDate) return false
+    }
+    return true
+  })
+
+  let sectorHeat = 0
+  for (const t of sectorOpenAtEntry) {
+    const riskPerShare = Math.abs(t.entryPrice - t.stopPrice)
+    const qty = t.currentQty || t.originalQty
+    sectorHeat += riskPerShare * qty
+  }
+
+  return sectorHeat / rules.capital > rules.maxSectorHeat
+}
+
 function detectNotInPlan() {
   // Placeholder — will cross-reference screener snapshots when available
   return false
+}
+
+// ── Tactical discipline analysis ──
+
+export function computeTacticalStats(enrichedTrades) {
+  const tradesWithTrims = enrichedTrades.filter(t => (t.trims || []).length > 0)
+  if (tradesWithTrims.length === 0) return null
+
+  const analyses = tradesWithTrims.map(t => {
+    const firstTrim = t.trims[0]
+    const trimRatio = firstTrim.qty / t.originalQty
+    const dir = t.direction === 'long' ? 1 : -1
+    const riskPerShare = Math.abs(t.entryPrice - t.stopPrice)
+    const profitPerShare = (firstTrim.price - t.entryPrice) * dir
+    const trimRR = riskPerShare > 0 ? profitPerShare / riskPerShare : 0
+    const daysToTrim = Math.max(0, Math.round((new Date(firstTrim.date) - new Date(t.entryDate)) / 86400000))
+
+    return {
+      ticker: t.ticker,
+      entryDate: t.entryDate,
+      trimDate: firstTrim.date,
+      trimRatio,
+      trimRR,
+      daysToTrim,
+      isGoodSize: trimRatio >= 0.25 && trimRatio <= 0.40, // ~1/3
+      isGoodRR: trimRR >= 2.0, // at least 2R
+    }
+  })
+
+  const goodSizeCount = analyses.filter(a => a.isGoodSize).length
+  const goodRRCount = analyses.filter(a => a.isGoodRR).length
+  const avgTrimRatio = analyses.reduce((s, a) => s + a.trimRatio, 0) / analyses.length
+  const avgTrimRR = analyses.reduce((s, a) => s + a.trimRR, 0) / analyses.length
+  const avgDaysToTrim = analyses.reduce((s, a) => s + a.daysToTrim, 0) / analyses.length
+
+  return {
+    totalTrades: tradesWithTrims.length,
+    avgTrimRatio,
+    avgTrimRR,
+    avgDaysToTrim,
+    goodSizeRate: (goodSizeCount / analyses.length) * 100,
+    goodRRRate: (goodRRCount / analyses.length) * 100,
+    trades: analyses,
+  }
 }
 
 // ── Main analysis ──
@@ -142,6 +238,8 @@ export const DEMONS = [
   { id: 'poor-rr', name: 'Poor R/R', icon: '\u2696', desc: 'Entry R/R below minimum threshold' },
   { id: 'bet-too-big', name: 'Bet Too Big', icon: '\u2B06', desc: 'Position risk exceeds tolerance band' },
   { id: 'bet-too-small', name: 'Bet Too Small', icon: '\u2B07', desc: 'Position risk below tolerance band' },
+  { id: 'total-heat', name: 'Total Heat', icon: '\uD83D\uDD25', desc: 'Total open risk > 3% of equity' },
+  { id: 'sector-heat', name: 'Sector Heat', icon: '\uD83C\uDFAF', desc: 'Sector risk > 1.5% of equity' },
   { id: 'not-in-plan', name: 'Not In Plan', icon: '\u2753', desc: 'Ticker not on screener at entry time' },
 ]
 
@@ -158,6 +256,8 @@ export function analyzeTrades(enrichedTrades, dailyPrices, rules = DEFAULT_RULES
     if (detectPoorRR(trade, rules)) demons.push('poor-rr')
     if (detectBetTooBig(trade, rules)) demons.push('bet-too-big')
     if (detectBetTooSmall(trade, rules)) demons.push('bet-too-small')
+    if (detectTotalHeatExceeded(trade, sorted, rules, dailyPrices)) demons.push('total-heat')
+    if (detectSectorHeatExceeded(trade, sorted, rules)) demons.push('sector-heat')
     if (detectNotInPlan()) demons.push('not-in-plan')
 
     return {

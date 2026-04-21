@@ -6,7 +6,9 @@ const FIELDS = [
   { key: 'riskPerTrade', label: 'Risk Per Trade', suffix: '%', format: v => (v * 100).toFixed(2), parse: v => Number(v) / 100 },
   { key: 'minRR', label: 'Min R/R', suffix: ':1', format: v => v, parse: Number },
   { key: 'overtradingMax', label: 'Max Entries / 5 Days', format: v => v, parse: Number },
-  { key: 'circuitBreakerStreak', label: 'Circuit Breaker Streak', format: v => v, parse: Number },
+  { key: 'maxTotalHeat', label: 'Max Total Heat', suffix: '%', format: v => (v * 100).toFixed(1), parse: v => Number(v) / 100 },
+  { key: 'maxSectorHeat', label: 'Max Sector Heat', suffix: '%', format: v => (v * 100).toFixed(1), parse: v => Number(v) / 100 },
+  { key: 'circuitBreakerStreak', label: 'Circuit Breaker', format: v => v, parse: Number },
 ]
 
 export default function DemonRulesConfig({ rules, onUpdate }) {

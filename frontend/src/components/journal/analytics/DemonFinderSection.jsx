@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from 'react'
 import { usePortfolio } from '../../portfolio/context/PortfolioContext'
-import { analyzeTrades, computeDemonStats, getActiveCircuitBreakers, DEMONS, DEFAULT_RULES } from '../../portfolio/lib/demonFinder'
+import { analyzeTrades, computeDemonStats, getActiveCircuitBreakers, computeTacticalStats, DEMONS, DEFAULT_RULES } from '../../portfolio/lib/demonFinder'
 import { fmtPct, fmt, clr } from '../../portfolio/lib/portfolioFormat'
 import DemonRulesConfig from './DemonRulesConfig'
 
@@ -163,6 +163,11 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
     [stats]
   )
 
+  const tacticalStats = useMemo(
+    () => computeTacticalStats(enriched),
+    [enriched]
+  )
+
   // Filter trade list
   const filteredTrades = useMemo(() => {
     const reversed = [...analyzed].reverse() // most recent first
@@ -220,6 +225,60 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
           </div>
         </button>
       </div>
+
+      {/* Tactical discipline */}
+      {tacticalStats && (
+        <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg px-4 py-3">
+          <h4 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+            Tactical Discipline (First Trim)
+          </h4>
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+            <div>
+              <div className="text-[10px] text-[var(--color-text-muted)] mb-0.5">Avg Trim Size</div>
+              <div className={`font-mono text-sm font-semibold ${
+                tacticalStats.avgTrimRatio >= 0.25 && tacticalStats.avgTrimRatio <= 0.40
+                  ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'
+              }`}>
+                {(tacticalStats.avgTrimRatio * 100).toFixed(0)}%
+              </div>
+              <div className="text-[9px] text-[var(--color-text-muted)]">target: ~33%</div>
+            </div>
+            <div>
+              <div className="text-[10px] text-[var(--color-text-muted)] mb-0.5">Avg Trim R</div>
+              <div className={`font-mono text-sm font-semibold ${
+                tacticalStats.avgTrimRR >= 2.0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'
+              }`}>
+                {tacticalStats.avgTrimRR.toFixed(1)}R
+              </div>
+              <div className="text-[9px] text-[var(--color-text-muted)]">target: 3R</div>
+            </div>
+            <div>
+              <div className="text-[10px] text-[var(--color-text-muted)] mb-0.5">Avg Days to Trim</div>
+              <div className="font-mono text-sm font-semibold text-[var(--color-text-bold)]">
+                {tacticalStats.avgDaysToTrim.toFixed(1)}d
+              </div>
+            </div>
+            <div>
+              <div className="text-[10px] text-[var(--color-text-muted)] mb-0.5">Good Size Rate</div>
+              <div className={`font-mono text-sm font-semibold ${
+                tacticalStats.goodSizeRate >= 70 ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'
+              }`}>
+                {tacticalStats.goodSizeRate.toFixed(0)}%
+              </div>
+              <div className="text-[9px] text-[var(--color-text-muted)]">25-40% trims</div>
+            </div>
+            <div>
+              <div className="text-[10px] text-[var(--color-text-muted)] mb-0.5">Good R/R Rate</div>
+              <div className={`font-mono text-sm font-semibold ${
+                tacticalStats.goodRRRate >= 50 ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'
+              }`}>
+                {tacticalStats.goodRRRate.toFixed(0)}%
+              </div>
+              <div className="text-[9px] text-[var(--color-text-muted)]">trimmed at 2R+</div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Trade list */}
       <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden">
