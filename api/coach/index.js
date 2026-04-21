@@ -93,6 +93,7 @@ export default async function handler(req) {
       headers: { 'Access-Control-Allow-Origin': '*' },
     })
   } catch (err) {
-    return Response.json({ error: err.message }, { status: 500 })
+    console.error('Coach API error:', err)
+    return Response.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

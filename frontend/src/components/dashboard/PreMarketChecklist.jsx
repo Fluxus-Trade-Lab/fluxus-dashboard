@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 
 const QUESTIONS = [
   { id: 'rules', text: 'Am I following my rules?', options: ['Yes', 'No'] },
@@ -12,7 +12,7 @@ const QUESTIONS = [
 const STORAGE_KEY = 'fluxus-checklist'
 
 function todayKey() {
-  return new Date().toISOString().slice(0, 10)
+  return new Date().toLocaleDateString('en-CA') // YYYY-MM-DD in local timezone
 }
 
 function loadChecklist() {
@@ -20,7 +20,6 @@ function loadChecklist() {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return { date: todayKey(), answers: {}, note: '' }
     const parsed = JSON.parse(raw)
-    // Reset if it's a new day
     if (parsed.date !== todayKey()) return { date: todayKey(), answers: {}, note: '' }
     return parsed
   } catch {
@@ -28,21 +27,33 @@ function loadChecklist() {
   }
 }
 
+function persistChecklist(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+}
+
 export default function PreMarketChecklist() {
   const [state, setState] = useState(loadChecklist)
+  const noteTimerRef = useRef(null)
 
-  const save = useCallback((next) => {
-    setState(next)
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+  // Persist immediately for button clicks
+  const setAnswer = useCallback((id, value) => {
+    setState(prev => {
+      const next = { ...prev, answers: { ...prev.answers, [id]: value } }
+      persistChecklist(next)
+      return next
+    })
   }, [])
 
-  const setAnswer = (id, value) => {
-    save({ ...state, answers: { ...state.answers, [id]: value } })
-  }
+  // Debounced persist for note typing
+  const setNote = useCallback((value) => {
+    setState(prev => ({ ...prev, note: value }))
+    clearTimeout(noteTimerRef.current)
+    noteTimerRef.current = setTimeout(() => {
+      setState(prev => { persistChecklist(prev); return prev })
+    }, 500)
+  }, [])
 
-  const setNote = (value) => {
-    save({ ...state, note: value })
-  }
+  useEffect(() => () => clearTimeout(noteTimerRef.current), [])
 
   const answeredCount = Object.keys(state.answers).length
   const totalCount = QUESTIONS.length
@@ -67,6 +78,7 @@ export default function PreMarketChecklist() {
                 <button
                   key={opt}
                   onClick={() => setAnswer(id, opt)}
+                  aria-pressed={state.answers[id] === opt}
                   className={`px-2.5 py-1 text-[11px] font-medium rounded cursor-pointer transition-colors border ${
                     state.answers[id] === opt
                       ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)] border-transparent'
@@ -87,6 +99,7 @@ export default function PreMarketChecklist() {
           value={state.note}
           onChange={(e) => setNote(e.target.value)}
           placeholder="Situational notes — what's on your mind today?"
+          aria-label="Situational notes"
           rows={2}
           className="w-full px-3 py-2 text-xs bg-[var(--color-bg)] border border-[var(--color-border)] rounded resize-none outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)]"
         />

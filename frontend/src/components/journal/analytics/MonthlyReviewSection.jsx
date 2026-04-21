@@ -20,7 +20,7 @@ function buildPrompt(month, stats, trades) {
   const tradeLines = trades.map(t => {
     const dir = t.direction === 'long' ? 'L' : 'S'
     const result = t.totalPL >= 0 ? `+${fmtPct(t.totalReturnPct)}` : fmtPct(t.totalReturnPct)
-    return `  ${t.ticker} (${dir}) | Entry ${t.entryPrice} → ${t.isClosed ? 'Closed' : 'Open'} | ${result} | ${fmt(t.rr, 1)}R | ${t.holdingDays}d`
+    return `  ${t.ticker} (${dir}) | Entry ${t.entryPrice} | ${result} | ${fmt(t.rr, 1)}R | ${t.holdingDays}d`
   }).join('\n')
 
   const prevComparison = stats.prevMonth
@@ -99,7 +99,7 @@ function MiniEquityCurve({ data }) {
 }
 
 function VsPrevMonth({ current, prev }) {
-  if (!prev || prev.totalTrades === 0) return null
+  if (!current || !prev || prev.totalTrades === 0) return null
 
   const metrics = [
     { label: 'Return', curr: current.monthlyRetPct, prev: prev.monthlyRetPct, fmt: fmtPct },

@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { fmtPct, pctColor } from '../../lib/format'
 
 function TopList({ title, items }) {
@@ -25,18 +26,24 @@ function TopList({ title, items }) {
 }
 
 export default function LeadersLaggards({ etfs }) {
+  const { dailyLeaders, dailyLaggards, weeklyLeaders, weeklyLaggards } = useMemo(() => {
+    if (!etfs || etfs.length === 0) return { dailyLeaders: [], dailyLaggards: [], weeklyLeaders: [], weeklyLaggards: [] }
+
+    const sorted1d = [...etfs].sort((a, b) => (b.change_pct ?? 0) - (a.change_pct ?? 0))
+    const sorted1w = [...etfs].sort((a, b) => (b.perf_1w ?? 0) - (a.perf_1w ?? 0))
+
+    return {
+      dailyLeaders: sorted1d.slice(0, 3).map(e => ({ ticker: e.ticker, change: e.change_pct })),
+      dailyLaggards: sorted1d.slice(-3).reverse().map(e => ({ ticker: e.ticker, change: e.change_pct })),
+      weeklyLeaders: sorted1w.slice(0, 3).map(e => ({ ticker: e.ticker, change: e.perf_1w })),
+      weeklyLaggards: sorted1w.slice(-3).reverse().map(e => ({ ticker: e.ticker, change: e.perf_1w })),
+    }
+  }, [etfs])
+
   if (!etfs || etfs.length === 0) return null
 
-  const sorted1d = [...etfs].sort((a, b) => (b.change_pct ?? 0) - (a.change_pct ?? 0))
-  const sorted1w = [...etfs].sort((a, b) => (b.perf_1w ?? 0) - (a.perf_1w ?? 0))
-
-  const dailyLeaders = sorted1d.slice(0, 3).map(e => ({ ticker: e.ticker, change: e.change_pct }))
-  const dailyLaggards = sorted1d.slice(-3).reverse().map(e => ({ ticker: e.ticker, change: e.change_pct }))
-  const weeklyLeaders = sorted1w.slice(0, 3).map(e => ({ ticker: e.ticker, change: e.perf_1w }))
-  const weeklyLaggards = sorted1w.slice(-3).reverse().map(e => ({ ticker: e.ticker, change: e.perf_1w }))
-
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded overflow-hidden">
+    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden">
       <div className="px-3 py-1.5 border-b border-[var(--color-border)]">
         <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Industries

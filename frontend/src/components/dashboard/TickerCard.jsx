@@ -3,7 +3,6 @@ import { signalColor, signalLabel } from '../../lib/format'
 function formatPrice(val) {
   if (val == null) return '--'
   if (val >= 10000) return val.toLocaleString('en-US', { maximumFractionDigits: 0 })
-  if (val >= 100) return val.toFixed(2)
   return val.toFixed(2)
 }
 
@@ -35,7 +34,7 @@ export default function TickerCard({ ticker, signal, etf }) {
   // one or both may be present
 
   const price = signal?.close ?? etf?.close ?? null
-  const change = signal ? null : etf?.change_pct ?? null
+  const change = etf?.change_pct ?? null
   const sigColor = signal?.color ?? null
   const sigLabel = signal?.signal ? signalLabel(signal.signal) : null
 
@@ -55,7 +54,7 @@ export default function TickerCard({ ticker, signal, etf }) {
       </div>
 
       {/* Price */}
-      <div className="font-mono text-lg font-medium text-[var(--color-text-bold)] leading-tight">
+      <div className="font-mono text-xl font-semibold text-[var(--color-text-bold)] leading-tight">
         {formatPrice(price)}
       </div>
 

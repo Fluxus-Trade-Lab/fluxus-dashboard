@@ -20,12 +20,12 @@ export default function Header({ lastUpdated, isOffline, currentPage, onNavigate
         <h1 className="text-sm font-semibold tracking-tight text-[var(--color-text)]">
           Fluxus Capital
         </h1>
-        <div className="flex gap-1 ml-3">
+        <div className="flex gap-1 ml-3 overflow-x-auto">
           {NAV_ITEMS.map(({ key, label, hash }) => (
             <button
               key={key}
               onClick={() => onNavigate(hash)}
-              className={`px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide rounded ${
+              className={`px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide rounded flex-shrink-0 focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-1 ${
                 currentPage === key
                   ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                   : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
@@ -43,7 +43,7 @@ export default function Header({ lastUpdated, isOffline, currentPage, onNavigate
       </div>
 
       <div className="flex items-center gap-3">
-        <div className="text-[10px] text-[var(--color-text-muted)] font-mono">
+        <div className="text-[10px] text-[var(--color-text-muted)] font-mono hidden sm:block">
           {formatTimestamp(lastUpdated)}
         </div>
         <button
