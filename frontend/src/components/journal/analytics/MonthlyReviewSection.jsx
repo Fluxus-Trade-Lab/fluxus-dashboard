@@ -3,6 +3,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import StatCard from '../../portfolio/ui/StatCard'
 import { fmtPct, fmt, clr } from '../../portfolio/lib/portfolioFormat'
 import { usePortfolio } from '../../portfolio/context/PortfolioContext'
+import MonthlyCalendar from './MonthlyCalendar'
 
 const REVIEWS_KEY = 'fluxus-monthly-reviews'
 
@@ -220,11 +221,15 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
       {/* Stats */}
       <MonthStats stats={currentStats} />
 
-      {/* Equity curve + vs prev month */}
-      <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3">
+      {/* Equity curve + calendar + vs prev month */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         <MiniEquityCurve data={monthEquity} />
-        <VsPrevMonth current={currentStats} prev={prevStats} />
+        <MonthlyCalendar
+          monthEquity={monthEquity}
+          startingCapital={portfolioState.startingCapital || 1000000}
+        />
       </div>
+      <VsPrevMonth current={currentStats} prev={prevStats} />
 
       {/* Review section */}
       <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg px-5 py-4">
