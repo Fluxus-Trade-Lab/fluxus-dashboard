@@ -2,9 +2,11 @@ import { useState } from 'react'
 import AnalyticsTab from './AnalyticsTab'
 import CoachTab from './CoachTab'
 import RiskTab from './RiskTab'
+import SizingTab from './SizingTab'
 
 const STRATEGIES = [
   { key: 'analytics', label: 'Analytics' },
+  { key: 'sizing', label: 'Sizing' },
   { key: 'risk', label: 'Risk Management' },
   { key: 'news-failure', label: 'News Failure' },
   { key: 'option-positioning', label: 'Option Positioning' },
@@ -56,6 +58,8 @@ export default function JournalPage() {
 
       {activeStrategy === 'analytics' ? (
         <AnalyticsTab />
+      ) : activeStrategy === 'sizing' ? (
+        <SizingTab />
       ) : activeStrategy === 'risk' ? (
         <RiskTab />
       ) : BLANK_TABS.includes(activeStrategy) ? (
