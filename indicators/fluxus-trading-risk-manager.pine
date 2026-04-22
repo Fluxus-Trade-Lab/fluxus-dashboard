@@ -446,7 +446,7 @@ if barstate.islast
         float displayStop = calcMode == 'Stop Loss' ? longStopLoss : longFinalStop
         int lineStart = calcMode == 'Shares to Buy' and majorStopMode == 'Swing Low' ? swingLow.barIdx : calcMode == 'Shares to Buy' and majorStopMode == 'Swing High' ? swingHigh.barIdx : bar_index
 
-        stopLabel := label.new(bar_index - 2, displayStop, 'Stop: $' + str.tostring(displayStop, format.mintick), color = color.new(color.white, 100), style = label.style_none, textcolor = textColor, size = size.small)
+        stopLabel := label.new(bar_index + 21, displayStop, 'Stop: $' + str.tostring(displayStop, format.mintick), color = color.new(color.white, 100), style = label.style_none, textcolor = textColor, size = size.small, textalign = text.align_left)
         stopLine := line.new(lineStart, displayStop, bar_index + 20, displayStop, extend = extend.none, color = color.red)
         stopLine
 
@@ -454,27 +454,27 @@ if barstate.islast
     if enableNStop and calcMode == 'Shares to Buy'
         // Stop 1
         array.push(nStopLines, line.new(bar_index, nStop1, bar_index + 20, nStop1, extend = extend.none, color = stopLineColor, style = line.style_dashed, width = 1))
-        array.push(nStopLabels, label.new(bar_index + 8, nStop1, 'SL1: $' + str.tostring(nStop1, format.mintick) + ' (' + str.tostring(nQty1) + ')', color = color.new(color.white, 100), style = label.style_none, textcolor = stopLineColor, size = size.small))
+        array.push(nStopLabels, label.new(bar_index + 21, nStop1, 'SL1: $' + str.tostring(nStop1, format.mintick) + ' (' + str.tostring(nQty1) + ')', color = color.new(color.white, 100), style = label.style_none, textcolor = stopLineColor, size = size.small, textalign = text.align_left))
 
         // Stop 2
         array.push(nStopLines, line.new(bar_index, nStop2, bar_index + 20, nStop2, extend = extend.none, color = stopLineColor, style = line.style_dashed, width = 1))
-        array.push(nStopLabels, label.new(bar_index + 8, nStop2, 'SL2: $' + str.tostring(nStop2, format.mintick) + ' (' + str.tostring(nQty2) + ')', color = color.new(color.white, 100), style = label.style_none, textcolor = stopLineColor, size = size.small))
+        array.push(nStopLabels, label.new(bar_index + 21, nStop2, 'SL2: $' + str.tostring(nStop2, format.mintick) + ' (' + str.tostring(nQty2) + ')', color = color.new(color.white, 100), style = label.style_none, textcolor = stopLineColor, size = size.small, textalign = text.align_left))
 
         // Stop 3 (only for 3-stop mode)
         if numStops == 3
             array.push(nStopLines, line.new(bar_index, nStop3, bar_index + 20, nStop3, extend = extend.none, color = stopLineColor, style = line.style_dashed, width = 1))
-            array.push(nStopLabels, label.new(bar_index + 8, nStop3, 'SL3: $' + str.tostring(nStop3, format.mintick) + ' (' + str.tostring(nQty3) + ')', color = color.new(color.white, 100), style = label.style_none, textcolor = stopLineColor, size = size.small))
+            array.push(nStopLabels, label.new(bar_index + 21, nStop3, 'SL3: $' + str.tostring(nStop3, format.mintick) + ' (' + str.tostring(nQty3) + ')', color = color.new(color.white, 100), style = label.style_none, textcolor = stopLineColor, size = size.small, textalign = text.align_left))
 
     // ── R-multiple target lines ──
     if enableNStop and showRTargets and calcMode == 'Shares to Buy'
         string r1Label = str.tostring(rMult1, '#.#') + 'R: $' + str.tostring(target1R, format.mintick)
         array.push(rTargetLines, line.new(bar_index, target1R, bar_index + 20, target1R, extend = extend.none, color = targetColor, style = line.style_dashed, width = 1))
-        array.push(rTargetLabels, label.new(bar_index + 8, target1R, r1Label, color = color.new(color.white, 100), style = label.style_none, textcolor = targetColor, size = size.small))
+        array.push(rTargetLabels, label.new(bar_index + 21, target1R, r1Label, color = color.new(color.white, 100), style = label.style_none, textcolor = targetColor, size = size.small, textalign = text.align_left))
 
         string r2Label = str.tostring(rMult2, '#.#') + 'R: $' + str.tostring(target2R, format.mintick)
         array.push(rTargetLines, line.new(bar_index, target2R, bar_index + 20, target2R, extend = extend.none, color = targetColor, style = line.style_dashed, width = 1))
-        array.push(rTargetLabels, label.new(bar_index + 8, target2R, r2Label, color = color.new(color.white, 100), style = label.style_none, textcolor = targetColor, size = size.small))
+        array.push(rTargetLabels, label.new(bar_index + 21, target2R, r2Label, color = color.new(color.white, 100), style = label.style_none, textcolor = targetColor, size = size.small, textalign = text.align_left))
 
         string r3Label = str.tostring(rMult3, '#.#') + 'R: $' + str.tostring(target3R, format.mintick)
         array.push(rTargetLines, line.new(bar_index, target3R, bar_index + 20, target3R, extend = extend.none, color = targetColor, style = line.style_dashed, width = 1))
-        array.push(rTargetLabels, label.new(bar_index + 8, target3R, r3Label, color = color.new(color.white, 100), style = label.style_none, textcolor = targetColor, size = size.small))
+        array.push(rTargetLabels, label.new(bar_index + 21, target3R, r3Label, color = color.new(color.white, 100), style = label.style_none, textcolor = targetColor, size = size.small, textalign = text.align_left))
