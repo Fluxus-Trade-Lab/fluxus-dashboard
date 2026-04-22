@@ -65,7 +65,10 @@ var GRP_NSTOP = 'N-Stop Risk Management'
 enableNStop = input.bool(true, 'Enable N-Stop Levels', group = GRP_NSTOP)
 numStops = input.int(3, 'Number of Stops', minval = 2, maxval = 3, group = GRP_NSTOP, tooltip = '2-Stop: halves position at each level. 3-Stop: thirds position at each level.')
 showNStopTable = input.bool(false, 'Show N-Stop Table Rows', group = GRP_NSTOP, tooltip = 'Add stop-level details to the info table')
-showRTargets = input.bool(true, 'Show R-Multiple Targets', group = GRP_NSTOP, tooltip = 'Draw 1R, 2R, 3R profit target lines on chart')
+showRTargets = input.bool(true, 'Show R-Multiple Targets', group = GRP_NSTOP, tooltip = 'Draw R-multiple profit target lines on chart')
+rMult1 = input.float(2.0, 'R-Targets', inline = 'rmult', group = GRP_NSTOP)
+rMult2 = input.float(3.0, '', inline = 'rmult', group = GRP_NSTOP)
+rMult3 = input.float(5.0, '', inline = 'rmult', group = GRP_NSTOP)
 stopLineColor = input.color(color.new(color.red, 30), 'Stop Line Color', group = GRP_NSTOP, inline = '1')
 targetColor = input.color(color.new(color.green, 30), 'Target Line Color', group = GRP_NSTOP, inline = '1')
 
@@ -313,9 +316,9 @@ if enableNStop
     fullStopLoss := math.abs(entryPrice - longFinalStop) * longShares
 
     // R-multiple targets (profit side — mirror of risk)
-    target1R := entryPrice + fullR * nDirection
-    target2R := entryPrice + 2 * fullR * nDirection
-    target3R := entryPrice + 3 * fullR * nDirection
+    target1R := entryPrice + rMult1 * fullR * nDirection
+    target2R := entryPrice + rMult2 * fullR * nDirection
+    target3R := entryPrice + rMult3 * fullR * nDirection
     target3R
 
 // ──────────────────────────────────────────────────────────────
@@ -444,34 +447,34 @@ if barstate.islast
         int lineStart = calcMode == 'Shares to Buy' and majorStopMode == 'Swing Low' ? swingLow.barIdx : calcMode == 'Shares to Buy' and majorStopMode == 'Swing High' ? swingHigh.barIdx : bar_index
 
         stopLabel := label.new(bar_index - 2, displayStop, 'Stop: $' + str.tostring(displayStop, format.mintick), color = color.new(color.white, 100), style = label.style_none, textcolor = textColor, size = size.small)
-        stopLine := line.new(lineStart, displayStop, bar_index + 1, displayStop, extend = extend.right, color = color.red)
+        stopLine := line.new(lineStart, displayStop, bar_index + 20, displayStop, extend = extend.none, color = color.red)
         stopLine
 
     // ── N-Stop lines on chart ──
     if enableNStop and calcMode == 'Shares to Buy'
         // Stop 1
-        array.push(nStopLines, line.new(bar_index, nStop1, bar_index + 1, nStop1, extend = extend.right, color = stopLineColor, style = line.style_dashed, width = 1))
+        array.push(nStopLines, line.new(bar_index, nStop1, bar_index + 20, nStop1, extend = extend.none, color = stopLineColor, style = line.style_dashed, width = 1))
         array.push(nStopLabels, label.new(bar_index + 8, nStop1, 'SL1: $' + str.tostring(nStop1, format.mintick) + ' (' + str.tostring(nQty1) + ')', color = color.new(color.white, 100), style = label.style_none, textcolor = stopLineColor, size = size.small))
 
         // Stop 2
-        array.push(nStopLines, line.new(bar_index, nStop2, bar_index + 1, nStop2, extend = extend.right, color = stopLineColor, style = line.style_dashed, width = 1))
+        array.push(nStopLines, line.new(bar_index, nStop2, bar_index + 20, nStop2, extend = extend.none, color = stopLineColor, style = line.style_dashed, width = 1))
         array.push(nStopLabels, label.new(bar_index + 8, nStop2, 'SL2: $' + str.tostring(nStop2, format.mintick) + ' (' + str.tostring(nQty2) + ')', color = color.new(color.white, 100), style = label.style_none, textcolor = stopLineColor, size = size.small))
 
         // Stop 3 (only for 3-stop mode)
         if numStops == 3
-            array.push(nStopLines, line.new(bar_index, nStop3, bar_index + 1, nStop3, extend = extend.right, color = stopLineColor, style = line.style_dashed, width = 1))
+            array.push(nStopLines, line.new(bar_index, nStop3, bar_index + 20, nStop3, extend = extend.none, color = stopLineColor, style = line.style_dashed, width = 1))
             array.push(nStopLabels, label.new(bar_index + 8, nStop3, 'SL3: $' + str.tostring(nStop3, format.mintick) + ' (' + str.tostring(nQty3) + ')', color = color.new(color.white, 100), style = label.style_none, textcolor = stopLineColor, size = size.small))
 
     // ── R-multiple target lines ──
     if enableNStop and showRTargets and calcMode == 'Shares to Buy'
-        // 1R
-        array.push(rTargetLines, line.new(bar_index, target1R, bar_index + 1, target1R, extend = extend.right, color = targetColor, style = line.style_dashed, width = 1))
-        array.push(rTargetLabels, label.new(bar_index + 8, target1R, '1R: $' + str.tostring(target1R, format.mintick), color = color.new(color.white, 100), style = label.style_none, textcolor = targetColor, size = size.small))
+        string r1Label = str.tostring(rMult1, '#.#') + 'R: $' + str.tostring(target1R, format.mintick)
+        array.push(rTargetLines, line.new(bar_index, target1R, bar_index + 20, target1R, extend = extend.none, color = targetColor, style = line.style_dashed, width = 1))
+        array.push(rTargetLabels, label.new(bar_index + 8, target1R, r1Label, color = color.new(color.white, 100), style = label.style_none, textcolor = targetColor, size = size.small))
 
-        // 2R
-        array.push(rTargetLines, line.new(bar_index, target2R, bar_index + 1, target2R, extend = extend.right, color = targetColor, style = line.style_dashed, width = 1))
-        array.push(rTargetLabels, label.new(bar_index + 8, target2R, '2R: $' + str.tostring(target2R, format.mintick), color = color.new(color.white, 100), style = label.style_none, textcolor = targetColor, size = size.small))
+        string r2Label = str.tostring(rMult2, '#.#') + 'R: $' + str.tostring(target2R, format.mintick)
+        array.push(rTargetLines, line.new(bar_index, target2R, bar_index + 20, target2R, extend = extend.none, color = targetColor, style = line.style_dashed, width = 1))
+        array.push(rTargetLabels, label.new(bar_index + 8, target2R, r2Label, color = color.new(color.white, 100), style = label.style_none, textcolor = targetColor, size = size.small))
 
-        // 3R
-        array.push(rTargetLines, line.new(bar_index, target3R, bar_index + 1, target3R, extend = extend.right, color = targetColor, style = line.style_dashed, width = 1))
-        array.push(rTargetLabels, label.new(bar_index + 8, target3R, '3R: $' + str.tostring(target3R, format.mintick), color = color.new(color.white, 100), style = label.style_none, textcolor = targetColor, size = size.small))
+        string r3Label = str.tostring(rMult3, '#.#') + 'R: $' + str.tostring(target3R, format.mintick)
+        array.push(rTargetLines, line.new(bar_index, target3R, bar_index + 20, target3R, extend = extend.none, color = targetColor, style = line.style_dashed, width = 1))
+        array.push(rTargetLabels, label.new(bar_index + 8, target3R, r3Label, color = color.new(color.white, 100), style = label.style_none, textcolor = targetColor, size = size.small))
