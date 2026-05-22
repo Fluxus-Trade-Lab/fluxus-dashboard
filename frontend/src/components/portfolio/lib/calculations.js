@@ -106,6 +106,19 @@ export function computeMonthlyStats(enrichedTrades, performanceData) {
     })
   })
 
+  // Per-trim realized P&L attributed to the month of EACH trim (not last-trim).
+  // Captures partial gains/losses on multi-month trades in the month they actually happened.
+  // Includes trims from still-open positions.
+  const realizedByMonth = {}
+  enrichedTrades.forEach(t => {
+    const dir = t.direction === 'long' ? 1 : -1
+    ;(t.trims || []).forEach(tr => {
+      const m = tr.date?.slice(0, 7)
+      if (!m) return
+      realizedByMonth[m] = (realizedByMonth[m] || 0) + dir * (tr.price - t.entryPrice) * tr.qty
+    })
+  })
+
   // Monthly portfolio return from equity curve
   const monthlyPortRet = {}
   if (performanceData.length > 1) {
@@ -121,7 +134,11 @@ export function computeMonthlyStats(enrichedTrades, performanceData) {
     })
   }
 
-  const allMonths = [...new Set([...Object.keys(byMonth), ...Object.keys(monthlyPortRet)])].sort()
+  const allMonths = [...new Set([
+    ...Object.keys(byMonth),
+    ...Object.keys(monthlyPortRet),
+    ...Object.keys(realizedByMonth),
+  ])].sort()
 
   return allMonths.map(m => {
     const tds = byMonth[m] || []
@@ -130,7 +147,7 @@ export function computeMonthlyStats(enrichedTrades, performanceData) {
     return {
       month: m, totalTrades: tds.length,
       monthlyRetPct: monthlyPortRet[m] || 0,
-      totalPL: tds.reduce((s, x) => s + x.pl, 0),
+      totalPL: realizedByMonth[m] || 0,
       returnPct: tds.length ? tds.reduce((s, x) => s + x.retPct, 0) / tds.length : 0,
       winPct: tds.length ? (wins.length / tds.length) * 100 : 0,
       avgGain: wins.length ? wins.reduce((s, x) => s + x.retPct, 0) / wins.length : 0,
