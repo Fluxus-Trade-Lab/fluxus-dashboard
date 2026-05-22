@@ -26,12 +26,10 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
     }
   }
 
-  // 3. For each date, compute total portfolio value
-  // Cache the entry-day close price per trade for ratio-based normalization.
-  // This makes the curve immune to split adjustments, dividend adjustments,
-  // and price-scale mismatches between trade log and Yahoo Finance data.
-  const entryDayClose = {}
-
+  // 3. For each date, compute total portfolio value.
+  // Use raw daily close for open-position MTM — matches the live header
+  // totalReturnPct computation (cash + currentQty * lookupPrice) so monthly
+  // returns compound to the YTD figure.
   const curve = datePoints.map(date => {
     let cash = startingCapital
     let marketValue = 0
@@ -53,15 +51,7 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
       const qtyAtDate = t.originalQty - soldQty
       if (qtyAtDate <= 0) return
 
-      // Ratio-based price: use daily return relative to entry-day close,
-      // applied to the actual entry price. This avoids split/adjustment errors.
-      const tradeId = t.id || t.ticker + t.entryDate
-      if (entryDayClose[tradeId] == null) {
-        entryDayClose[tradeId] = lookupPrice(t.ticker, t.entryDate.slice(0, 10), dailyPrices, t.entryPrice)
-      }
-      const baseClose = entryDayClose[tradeId]
-      const rawPrice = lookupPrice(t.ticker, date, dailyPrices, baseClose)
-      const price = baseClose !== 0 ? t.entryPrice * (rawPrice / baseClose) : t.entryPrice
+      const price = lookupPrice(t.ticker, date, dailyPrices, t.entryPrice)
       marketValue += qtyAtDate * price * dir
     })
 

@@ -9,10 +9,12 @@ import VolatilitySection from './analytics/VolatilitySection'
 import TrimStopsSection from './analytics/TrimStopsSection'
 import MonthlyReviewSection from './analytics/MonthlyReviewSection'
 import DemonFinderSection from './analytics/DemonFinderSection'
+import BehaviorSection from './analytics/BehaviorSection'
 
 const SUB_TABS = [
   { key: 'summary', label: 'Summary' },
   { key: 'demon-finder', label: 'Demon Finder' },
+  { key: 'behavior', label: 'Behavior' },
   { key: 'risk', label: 'Risk' },
   { key: 'volatility', label: 'Volatility' },
   { key: 'trim-stops', label: 'Trim & Stops' },
@@ -128,6 +130,9 @@ function AnalyticsTabInner() {
           enriched={enriched}
           dailyPrices={dailyPrices}
         />
+      )}
+      {activeTab === 'behavior' && (
+        <BehaviorSection enriched={enriched} />
       )}
       {activeTab === 'summary' && (
         <SummarySection
