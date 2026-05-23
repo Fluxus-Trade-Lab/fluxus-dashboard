@@ -276,7 +276,7 @@ def main():
 
     # 3. Fetch MA signals
     logger.info("Fetching MA signals...")
-    signals = yf_adapter.fetch_ma_data(['SPY', 'QQQ', 'IWM', 'RSP', '^GSPC'])
+    signals = yf_adapter.fetch_ma_data(['SPY', 'QQQ', 'IWM', 'RSP', '^GSPC', 'BTC-USD', '^VIX'])
 
     # 4. Run screeners
     logger.info("Running screeners...")
@@ -364,6 +364,7 @@ def main():
         'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d',
         'trend_base', 'vcs', 'ema21_low_dist',
         'perf_1w_pctile', 'perf_3m_pctile', 'momentum_97',
+        'bo_count_1m', 'bo_count_3m', 'bo_count_6m', 'bo_count_1y',
     ]
     export_cols = [c for c in universe_cols if c in scored_universe.columns]
     # Convert to object dtype so NaN becomes None (valid JSON null, not NaN)

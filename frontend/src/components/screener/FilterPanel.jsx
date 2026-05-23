@@ -141,6 +141,12 @@ export default function FilterPanel({ filters, onChange, onSearch }) {
             <RangeFilter label="1W Pctile" filterKey="perf1wPctile" value={filters.perf1wPctile} onChange={(k,v) => updateFilter(k,v)} />
             <RangeFilter label="3M Pctile" filterKey="perf3mPctile" value={filters.perf3mPctile} onChange={(k,v) => updateFilter(k,v)} />
 
+            <div className="text-xs font-semibold text-[var(--color-text)] uppercase mt-4">Breakouts (9M+ vol, ≥4%)</div>
+            <RangeFilter label="BO 1M" filterKey="boCount1m" value={filters.boCount1m} onChange={(k,v) => updateFilter(k,v)} />
+            <RangeFilter label="BO 3M" filterKey="boCount3m" value={filters.boCount3m} onChange={(k,v) => updateFilter(k,v)} />
+            <RangeFilter label="BO 6M" filterKey="boCount6m" value={filters.boCount6m} onChange={(k,v) => updateFilter(k,v)} />
+            <RangeFilter label="BO 1Y" filterKey="boCount1y" value={filters.boCount1y} onChange={(k,v) => updateFilter(k,v)} />
+
             <div className="text-xs font-semibold text-[var(--color-text)] uppercase mt-4">Other</div>
             <RangeFilter label="52W High%" filterKey="high52wDist" value={filters.high52wDist} onChange={(k,v) => updateFilter(k,v)} />
           </div>

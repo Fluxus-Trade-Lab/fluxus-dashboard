@@ -62,14 +62,25 @@
     }
   },
   {
-    "name": "VCS Setup",
+    "name": "Stockbee 9M Setup",
+    "readonly": true,
+    "filters": {
+      "marketCapMin": 1.0,
+      "vol50dMin": 9.0,
+      "excludeHealthcare": true,
+      "relVolume": { "enabled": true, "min": 1.5, "max": 999 },
+      "dailyPct": { "enabled": true, "min": 5, "max": 999 },
+      "dcrPct": { "enabled": true, "min": 60, "max": 100 }
+    }
+  },
+  {
+    "name": "Sugar Babies",
     "readonly": true,
     "filters": {
       "marketCapMin": 1.0,
       "excludeHealthcare": true,
-      "vcs": { "enabled": true, "min": 60, "max": 100 },
-      "rs21d": { "enabled": true, "min": 60, "max": 99 },
-      "adrPct": { "enabled": true, "min": 3.5, "max": 10 }
+      "boCount1y": { "enabled": true, "min": 10, "max": 999 },
+      "boCount3m": { "enabled": true, "min": 2, "max": 999 }
     }
   },
   {
