@@ -416,6 +416,22 @@ class YfinanceAdapter(BaseAdapter):
                 # 21EMA Low Dist%: how far today's low is from 21EMA
                 ema21_low_dist = (last_low - ema21) / ema21 if ema21 > 0 else None
 
+                # Sugar Babies breakout counts: days with vol >= 9M AND change >= 4%.
+                # Pradeep's literal rule for habitual big-volume movers.
+                closes = hist['Close'].values
+                vols = hist['Volume'].values
+                bo_1m = bo_3m = bo_6m = bo_1y = 0
+                if n >= 2:
+                    prev_close = closes[:-1]
+                    today_close = closes[1:]
+                    chg = (today_close - prev_close) / prev_close
+                    today_vol = vols[1:]
+                    is_bo = (today_vol >= 9_000_000) & (chg >= 0.04)
+                    bo_1y = int(is_bo.sum())
+                    bo_6m = int(is_bo[-126:].sum()) if n - 1 >= 126 else bo_1y
+                    bo_3m = int(is_bo[-63:].sum()) if n - 1 >= 63 else min(bo_1y, int(is_bo.sum()))
+                    bo_1m = int(is_bo[-21:].sum()) if n - 1 >= 21 else min(bo_1y, int(is_bo.sum()))
+
                 enriched[ticker] = {
                     'perf_1w': (close / float(hist['Close'].iloc[-5]) - 1) if n >= 5 else None,
                     'perf_1m': (close / float(hist['Close'].iloc[-21]) - 1) if n >= 21 else None,
@@ -439,6 +455,10 @@ class YfinanceAdapter(BaseAdapter):
                     'trend_base': trend_base,
                     'vcs': vcs,
                     'ema21_low_dist': ema21_low_dist,
+                    'bo_count_1m': bo_1m,
+                    'bo_count_3m': bo_3m,
+                    'bo_count_6m': bo_6m,
+                    'bo_count_1y': bo_1y,
                 }
             except Exception as e:
                 logger.debug(f"  Enrich failed for {ticker}: {e}")

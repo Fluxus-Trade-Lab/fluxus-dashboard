@@ -208,6 +208,26 @@ export function applyFilters(rows, filters, tickerSearch) {
     })
   }
 
+  // Breakout-count ranges (raw integer per lookback window)
+  const boRanges = [
+    ['boCount1m', 'bo_count_1m'],
+    ['boCount3m', 'bo_count_3m'],
+    ['boCount6m', 'bo_count_6m'],
+    ['boCount1y', 'bo_count_1y'],
+  ]
+  for (const [filterKey, dataKey] of boRanges) {
+    const f = filters[filterKey]
+    if (f?.enabled) {
+      result = result.filter(r => {
+        const val = r[dataKey]
+        if (val == null) return false
+        if (f.min !== '' && f.min != null && val < f.min) return false
+        if (f.max !== '' && f.max != null && val > f.max) return false
+        return true
+      })
+    }
+  }
+
   // Relative volume filter
   if (filters.relVolume?.enabled) {
     const f = filters.relVolume
