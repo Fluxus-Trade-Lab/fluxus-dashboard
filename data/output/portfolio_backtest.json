@@ -1,0 +1,402 @@
+{
+  "generated_at": "2026-05-24T04:05:09",
+  "input_csv": "data/portfolio/portfolio_2026-05-23.csv",
+  "summary": {
+    "trades_total": 255,
+    "closed_count": 233,
+    "multiday_count": 46,
+    "simulated_count": 46,
+    "param_combos": 10800,
+    "simulations": 496800
+  },
+  "headline": {
+    "actual_total_R": 116.68564881672513,
+    "optimal_total_R": 133.99289028744573,
+    "lift_pct": 14.832365116214588,
+    "largest_gap_reason": "premature exits on multi-day winners \u2014 optimizer held longer with a wider EMA-based stop"
+  },
+  "best_overall": {
+    "best_idx": 8829,
+    "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+    "best_params": {
+      "trim1_trigger_R": 4.0,
+      "trim1_size_pct": 0.3,
+      "trim2_signal": "wk_close_lt_10ema",
+      "trim2_size_pct": 1.0,
+      "full_stop_signal": "wk_close_lt_20ema",
+      "gain_ratchet": "none",
+      "sell_strength": "none"
+    },
+    "total_R": 133.99289028744573,
+    "mean_R": 2.9128889192922984,
+    "sharpe_adj_R": 2.373914956550857,
+    "trade_count": 46,
+    "actual_total_R": 116.68564881672513
+  },
+  "by_atr_bucket": {
+    "10%+": {
+      "best_idx": 8757,
+      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "best_params": {
+        "trim1_trigger_R": 4.0,
+        "trim1_size_pct": 0.3,
+        "trim2_signal": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.5,
+        "full_stop_signal": "wk_close_lt_20ema",
+        "gain_ratchet": "none",
+        "sell_strength": "none"
+      },
+      "total_R": 23.49998033332037,
+      "mean_R": 3.3571400476171958,
+      "sharpe_adj_R": 1.5936461732765215,
+      "trade_count": 7,
+      "actual_total_R": 23.8894801999832
+    },
+    "3-5%": {
+      "best_idx": 9844,
+      "best_label": "T1=4.0R/50% \u00b7 T2=d5dLow/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=r8\u21925 \u00b7 Strength=s30@15%",
+      "best_params": {
+        "trim1_trigger_R": 4.0,
+        "trim1_size_pct": 0.5,
+        "trim2_signal": "d_close_lt_5d_low",
+        "trim2_size_pct": 0.5,
+        "full_stop_signal": "wk_close_lt_20ema",
+        "gain_ratchet": "8R_to_5R",
+        "sell_strength": "trim_30_on_15pct"
+      },
+      "total_R": 6.961395513446101,
+      "mean_R": 0.994485073349443,
+      "sharpe_adj_R": 1.1305071565474432,
+      "trade_count": 7,
+      "actual_total_R": 20.611420469712748
+    },
+    "5-7%": {
+      "best_idx": 8757,
+      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "best_params": {
+        "trim1_trigger_R": 4.0,
+        "trim1_size_pct": 0.3,
+        "trim2_signal": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.5,
+        "full_stop_signal": "wk_close_lt_20ema",
+        "gain_ratchet": "none",
+        "sell_strength": "none"
+      },
+      "total_R": 72.09341675045248,
+      "mean_R": 4.50583854690328,
+      "sharpe_adj_R": 1.4697403047218616,
+      "trade_count": 16,
+      "actual_total_R": 40.830595698237616
+    },
+    "7-10%": {
+      "best_idx": 4455,
+      "best_label": "T1=3.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 Stop=trail2ATR \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "best_params": {
+        "trim1_trigger_R": 3.0,
+        "trim1_size_pct": 0.3,
+        "trim2_signal": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.5,
+        "full_stop_signal": "trailing_2atr",
+        "gain_ratchet": "none",
+        "sell_strength": "none"
+      },
+      "total_R": 35.585237895210675,
+      "mean_R": 2.372349193014045,
+      "sharpe_adj_R": 1.6982277686437204,
+      "trade_count": 15,
+      "actual_total_R": 35.588573813776726
+    },
+    "<3%": {
+      "best_idx": 10548,
+      "best_label": "T1=4.0R/70% \u00b7 T2=wk10EMA/100% \u00b7 Stop=d20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "best_params": {
+        "trim1_trigger_R": 4.0,
+        "trim1_size_pct": 0.7,
+        "trim2_signal": "wk_close_lt_10ema",
+        "trim2_size_pct": 1.0,
+        "full_stop_signal": "d_close_lt_20ema",
+        "gain_ratchet": "none",
+        "sell_strength": "none"
+      },
+      "total_R": 3.771457080037444,
+      "mean_R": 3.771457080037444,
+      "sharpe_adj_R": 0.0,
+      "trade_count": 1,
+      "actual_total_R": -4.2344213649851605
+    }
+  },
+  "by_hold": {
+    "core (4-8d)": {
+      "best_idx": 10504,
+      "best_label": "T1=4.0R/70% \u00b7 T2=wk10EMA/50% \u00b7 Stop=trail2ATR \u00b7 Ratch=\u2205 \u00b7 Strength=s30@15%",
+      "best_params": {
+        "trim1_trigger_R": 4.0,
+        "trim1_size_pct": 0.7,
+        "trim2_signal": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.5,
+        "full_stop_signal": "trailing_2atr",
+        "gain_ratchet": "none",
+        "sell_strength": "trim_30_on_15pct"
+      },
+      "total_R": 24.17588327254666,
+      "mean_R": 1.7268488051819042,
+      "sharpe_adj_R": 2.6109377370352997,
+      "trade_count": 14,
+      "actual_total_R": 37.12031077595616
+    },
+    "swing (>8d)": {
+      "best_idx": 8829,
+      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "best_params": {
+        "trim1_trigger_R": 4.0,
+        "trim1_size_pct": 0.3,
+        "trim2_signal": "wk_close_lt_10ema",
+        "trim2_size_pct": 1.0,
+        "full_stop_signal": "wk_close_lt_20ema",
+        "gain_ratchet": "none",
+        "sell_strength": "none"
+      },
+      "total_R": 114.48067075619986,
+      "mean_R": 6.025298460852624,
+      "sharpe_adj_R": 2.2256694824058916,
+      "trade_count": 19,
+      "actual_total_R": 63.464780999972376
+    },
+    "tactical (1-3d)": {
+      "best_idx": 6075,
+      "best_label": "T1=3.0R/70% \u00b7 T2=d10EMA/50% \u00b7 Stop=trail2ATR \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "best_params": {
+        "trim1_trigger_R": 3.0,
+        "trim1_size_pct": 0.7,
+        "trim2_signal": "d_close_lt_10ema",
+        "trim2_size_pct": 0.5,
+        "full_stop_signal": "trailing_2atr",
+        "gain_ratchet": "none",
+        "sell_strength": "none"
+      },
+      "total_R": 2.2404946313305274,
+      "mean_R": 0.17234574087157903,
+      "sharpe_adj_R": 0.3448571531585907,
+      "trade_count": 13,
+      "actual_total_R": 16.100557040796602
+    }
+  },
+  "by_regime": {
+    "bull": {
+      "best_idx": 8979,
+      "best_label": "T1=4.0R/30% \u00b7 T2=d5dLow/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=r8\u21925 \u00b7 Strength=\u2205",
+      "best_params": {
+        "trim1_trigger_R": 4.0,
+        "trim1_size_pct": 0.3,
+        "trim2_signal": "d_close_lt_5d_low",
+        "trim2_size_pct": 0.5,
+        "full_stop_signal": "wk_close_lt_20ema",
+        "gain_ratchet": "8R_to_5R",
+        "sell_strength": "none"
+      },
+      "total_R": 75.6829522275888,
+      "mean_R": 2.293422794775418,
+      "sharpe_adj_R": 1.5137977656142176,
+      "trade_count": 33,
+      "actual_total_R": 76.42419207314714
+    },
+    "pullback": {
+      "best_idx": 8757,
+      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "best_params": {
+        "trim1_trigger_R": 4.0,
+        "trim1_size_pct": 0.3,
+        "trim2_signal": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.5,
+        "full_stop_signal": "wk_close_lt_20ema",
+        "gain_ratchet": "none",
+        "sell_strength": "none"
+      },
+      "total_R": 60.10731344274565,
+      "mean_R": 4.623639495595819,
+      "sharpe_adj_R": 2.3829118832748892,
+      "trade_count": 13,
+      "actual_total_R": 40.261456743578
+    }
+  },
+  "top_n": [
+    {
+      "rank": 1,
+      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "total_R": 133.99289028744573,
+      "params": {
+        "trim1_trigger_R": 4.0,
+        "trim1_size_pct": 0.3,
+        "trim2_signal": "wk_close_lt_10ema",
+        "trim2_size_pct": 1.0,
+        "full_stop_signal": "wk_close_lt_20ema",
+        "gain_ratchet": "none",
+        "sell_strength": "none"
+      }
+    },
+    {
+      "rank": 2,
+      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/70% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "total_R": 133.7003214084584,
+      "params": {
+        "trim1_trigger_R": 4.0,
+        "trim1_size_pct": 0.3,
+        "trim2_signal": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.7,
+        "full_stop_signal": "wk_close_lt_20ema",
+        "gain_ratchet": "none",
+        "sell_strength": "none"
+      }
+    },
+    {
+      "rank": 3,
+      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "total_R": 133.50367675208986,
+      "params": {
+        "trim1_trigger_R": 4.0,
+        "trim1_size_pct": 0.3,
+        "trim2_signal": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.5,
+        "full_stop_signal": "wk_close_lt_20ema",
+        "gain_ratchet": "none",
+        "sell_strength": "none"
+      }
+    },
+    {
+      "rank": 4,
+      "label": "T1=4.0R/30% \u00b7 T2=d5dLow/70% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "total_R": 133.01446321673401,
+      "params": {
+        "trim1_trigger_R": 4.0,
+        "trim1_size_pct": 0.3,
+        "trim2_signal": "d_close_lt_5d_low",
+        "trim2_size_pct": 0.7,
+        "full_stop_signal": "wk_close_lt_20ema",
+        "gain_ratchet": "none",
+        "sell_strength": "none"
+      }
+    },
+    {
+      "rank": 5,
+      "label": "T1=4.0R/30% \u00b7 T2=d5dLow/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "total_R": 133.01446321673401,
+      "params": {
+        "trim1_trigger_R": 4.0,
+        "trim1_size_pct": 0.3,
+        "trim2_signal": "d_close_lt_5d_low",
+        "trim2_size_pct": 0.5,
+        "full_stop_signal": "wk_close_lt_20ema",
+        "gain_ratchet": "none",
+        "sell_strength": "none"
+      }
+    }
+  ],
+  "missed_gains": [
+    {
+      "ticker": "MU",
+      "entry_date": "2026-04-12",
+      "actual_R": 10.364728699255132,
+      "optimal_R": 48.91470886410743,
+      "delta_R": 38.5499801648523
+    },
+    {
+      "ticker": "MRVL",
+      "entry_date": "2026-03-31",
+      "actual_R": 5.723951573849878,
+      "optimal_R": 16.295950963202745,
+      "delta_R": 10.571999389352868
+    },
+    {
+      "ticker": "AAOI",
+      "entry_date": "2026-02-18",
+      "actual_R": 2.1319648093841677,
+      "optimal_R": 12.241905477819218,
+      "delta_R": 10.109940668435051
+    },
+    {
+      "ticker": "NBIS",
+      "entry_date": "2026-04-05",
+      "actual_R": 5.941190526389776,
+      "optimal_R": 15.27461580794849,
+      "delta_R": 9.333425281558714
+    },
+    {
+      "ticker": "DOCN",
+      "entry_date": "2026-03-15",
+      "actual_R": 6.342885936359802,
+      "optimal_R": 15.36359886732666,
+      "delta_R": 9.020712930966859
+    },
+    {
+      "ticker": "BABA",
+      "entry_date": "2026-01-11",
+      "actual_R": -4.2344213649851605,
+      "optimal_R": 3.4378782432544757,
+      "delta_R": 7.672299608239636
+    },
+    {
+      "ticker": "BE",
+      "entry_date": "2026-04-08",
+      "actual_R": 7.333333333333343,
+      "optimal_R": 11.85715619255516,
+      "delta_R": 4.523822859221816
+    },
+    {
+      "ticker": "ARM",
+      "entry_date": "2026-03-30",
+      "actual_R": 0.5801653169693008,
+      "optimal_R": 4.530033337027188,
+      "delta_R": 3.9498680200578873
+    },
+    {
+      "ticker": "GEV",
+      "entry_date": "2026-01-15",
+      "actual_R": -0.541987829614604,
+      "optimal_R": 2.9318092454519555,
+      "delta_R": 3.4737970750665594
+    },
+    {
+      "ticker": "KLIC",
+      "entry_date": "2026-04-08",
+      "actual_R": 1.881355932203387,
+      "optimal_R": 4.819013173686098,
+      "delta_R": 2.9376572414827113
+    },
+    {
+      "ticker": "PL",
+      "entry_date": "2026-05-07",
+      "actual_R": 2.0231256993659077,
+      "optimal_R": 4.480589319519773,
+      "delta_R": 2.457463620153865
+    },
+    {
+      "ticker": "FSLY",
+      "entry_date": "2026-05-03",
+      "actual_R": -0.68361581920904,
+      "optimal_R": 1.2008602150537633,
+      "delta_R": 1.8844760342628033
+    },
+    {
+      "ticker": "METU",
+      "entry_date": "2026-04-07",
+      "actual_R": 2.366666666666661,
+      "optimal_R": 4.1341510016611664,
+      "delta_R": 1.7674843349945055
+    },
+    {
+      "ticker": "SLV",
+      "entry_date": "2026-05-07",
+      "actual_R": -1.2348242811501597,
+      "optimal_R": -1.0,
+      "delta_R": 0.23482428115015974
+    },
+    {
+      "ticker": "NOWL",
+      "entry_date": "2026-05-18",
+      "actual_R": -1.1428571428571428,
+      "optimal_R": -1.0,
+      "delta_R": 0.1428571428571428
+    }
+  ],
+  "_schema": "v1"
+}
