@@ -1,6 +1,7 @@
 import { useState, useMemo, Fragment } from 'react'
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { usePortfolio } from '../context/PortfolioContext'
+import SortableHeader from '../ui/SortableHeader'
 import { fmtCur, fmtPct, fmt, clr, SECTOR_COLORS, MASK } from '../lib/portfolioFormat'
 
 export default function ExposureTab({ openTrades, sectorData, holdingsData, mergedHoldingsData }) {
@@ -56,6 +57,48 @@ export default function ExposureTab({ openTrades, sectorData, holdingsData, merg
     }))
   }, [openTrades])
 
+  const DETAIL_HEADERS = [
+    { label: 'Ticker', key: 'ticker' },
+    { label: 'Sector', key: 'sector' },
+    { label: 'Dir', key: 'direction' },
+    { label: 'Qty', key: 'totalQty' },
+    { label: 'Entry', key: 'avgEntry' },
+    { label: 'Last', key: 'lastPrice' },
+    { label: 'Wt%', key: 'weight' },
+    { label: 'Mkt Val', key: 'marketVal' },
+    { label: 'P/L', key: 'totalPL' },
+    { label: 'P/L%', key: 'totalReturnPct' },
+  ]
+
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'desc' })
+
+  const handleSort = (key) => {
+    setSortConfig(prev => {
+      if (prev.key === key) return { key, direction: prev.direction === 'asc' ? 'desc' : 'asc' }
+      const stringCol = ['ticker', 'sector', 'direction'].includes(key)
+      return { key, direction: stringCol ? 'asc' : 'desc' }
+    })
+  }
+
+  const sortedGroupedTrades = useMemo(() => {
+    if (!sortConfig.key) return groupedTrades
+    const arr = [...groupedTrades]
+    arr.sort((a, b) => {
+      const av = a[sortConfig.key]
+      const bv = b[sortConfig.key]
+      const aNull = av == null || av === ''
+      const bNull = bv == null || bv === ''
+      if (aNull && bNull) return 0
+      if (aNull) return 1
+      if (bNull) return -1
+      if (typeof av === 'string' && typeof bv === 'string') {
+        return sortConfig.direction === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av)
+      }
+      return sortConfig.direction === 'asc' ? av - bv : bv - av
+    })
+    return arr
+  }, [groupedTrades, sortConfig])
+
   // Privacy-aware currency
   const cur = (v) => pm ? MASK : fmtCur(v)
 
@@ -110,13 +153,19 @@ export default function ExposureTab({ openTrades, sectorData, holdingsData, merg
         <table className="w-full border-collapse text-xs">
           <thead>
             <tr>
-              {['Ticker', 'Sector', 'Dir', 'Qty', 'Entry', 'Last', 'Wt%', 'Mkt Val', 'P/L', 'P/L%'].map(h => (
-                <th key={h} className="text-left px-2.5 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[10px] uppercase tracking-wide">{h}</th>
+              {DETAIL_HEADERS.map(h => (
+                <SortableHeader
+                  key={h.key}
+                  label={h.label}
+                  sortKey={h.key}
+                  sortConfig={sortConfig}
+                  onSort={handleSort}
+                />
               ))}
             </tr>
           </thead>
           <tbody>
-            {groupedTrades.map((g, idx) => {
+            {sortedGroupedTrades.map((g, idx) => {
               const expanded = expandedTickers[g.ticker]
               const rowBg = idx % 2 === 0 ? 'bg-[var(--color-surface)]' : 'bg-[var(--color-bg)]'
               return (

@@ -1,10 +1,11 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { usePortfolio } from '../context/PortfolioContext'
 import { usePrices } from '../hooks/usePrices'
 import StatCard from '../ui/StatCard'
 import Button from '../ui/Button'
 import EditablePrice from '../ui/EditablePrice'
+import SortableHeader from '../ui/SortableHeader'
 import { fmtCur, fmtPct, fmt, clr, todayStr, MASK } from '../lib/portfolioFormat'
 
 export default function OverviewTab({
@@ -47,8 +48,93 @@ export default function OverviewTab({
 
   const cur = (v) => pm ? MASK : fmtCur(v)
 
-  const TRADE_HEADERS = ['Ticker', 'Dir', 'Status', 'Open', 'Qty', 'Entry', 'Wt%', '1D%', 'P/L 1D', 'Last', 'T1 $', 'T1 Date', 'T2 $', 'T2 Date', 'T3 $', 'T3 Date', 'Stop', 'Unrl%', 'Rlzd%', 'Mkt Val', 'P/L', 'Tot%', 'Days', 'RR', '']
+  const TRADE_HEADERS = [
+    { label: 'Ticker', key: 'ticker' },
+    { label: 'Dir', key: 'direction' },
+    { label: 'Status', key: 'status' },
+    { label: 'Open', key: 'entryDate' },
+    { label: 'Qty', key: 'currentQty' },
+    { label: 'Entry', key: 'entryPrice' },
+    { label: 'Wt%', key: 'weight' },
+    { label: '1D%', key: 'change1D' },
+    { label: 'P/L 1D', key: 'pl1D' },
+    { label: 'Last', key: 'lastPrice' },
+    { label: 'T1 $', key: 't1Price' },
+    { label: 'T1 Date', key: 't1Date' },
+    { label: 'T2 $', key: 't2Price' },
+    { label: 'T2 Date', key: 't2Date' },
+    { label: 'T3 $', key: 't3Price' },
+    { label: 'T3 Date', key: 't3Date' },
+    { label: 'Stop', key: 'stopPrice' },
+    { label: 'Unrl%', key: 'unrealizedPLPct' },
+    { label: 'Rlzd%', key: 'realizedPLPct' },
+    { label: 'Mkt Val', key: 'marketVal' },
+    { label: 'P/L', key: 'totalPL' },
+    { label: 'Tot%', key: 'totalReturnPct' },
+    { label: 'Days', key: 'holdingDays' },
+    { label: 'RR', key: 'rr' },
+    { label: '', key: null },
+  ]
   const MONTHLY_HEADERS = ['', 'Return%', '# Trades', 'Avg Ret%', 'Win%', 'Avg Gain%', 'Avg Loss%', 'Max Gain%', 'Max Loss%', 'Days(W)', 'Days(L)']
+
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'desc' })
+
+  const sortValue = (t, key) => {
+    switch (key) {
+      case 'ticker': return t.ticker
+      case 'direction': return t.direction
+      case 'status': return t.isClosed ? 'z-closed' : (t.trims?.length ? 'm-trimmed' : 'a-open')
+      case 'entryDate': return t.entryDate || ''
+      case 'currentQty': return t.currentQty
+      case 'entryPrice': return t.entryPrice
+      case 'weight': return t.weight
+      case 'change1D': return t.change1D
+      case 'pl1D': return t.pl1D
+      case 'lastPrice': return t.lastPrice || t.entryPrice
+      case 't1Price': return t.trims?.[0]?.price
+      case 't1Date': return t.trims?.[0]?.date
+      case 't2Price': return t.trims?.[1]?.price
+      case 't2Date': return t.trims?.[1]?.date
+      case 't3Price': return t.trims?.[2]?.price
+      case 't3Date': return t.trims?.[2]?.date
+      case 'stopPrice': return t.stopPrice
+      case 'unrealizedPLPct': return t.unrealizedPLPct
+      case 'realizedPLPct': return t.realizedPLPct
+      case 'marketVal': return t.marketVal
+      case 'totalPL': return t.totalPL
+      case 'totalReturnPct': return t.totalReturnPct
+      case 'holdingDays': return t.holdingDays
+      case 'rr': return t.rr
+      default: return null
+    }
+  }
+
+  const handleSort = (key) => {
+    setSortConfig(prev => {
+      if (prev.key === key) return { key, direction: prev.direction === 'asc' ? 'desc' : 'asc' }
+      const stringCol = ['ticker', 'direction', 'status'].includes(key)
+      return { key, direction: stringCol ? 'asc' : 'desc' }
+    })
+  }
+
+  const sortedFiltered = useMemo(() => {
+    if (!sortConfig.key) return filtered
+    const arr = [...filtered]
+    arr.sort((a, b) => {
+      const av = sortValue(a, sortConfig.key)
+      const bv = sortValue(b, sortConfig.key)
+      const aNull = av == null || av === ''
+      const bNull = bv == null || bv === ''
+      if (aNull && bNull) return 0
+      if (aNull) return 1
+      if (bNull) return -1
+      if (typeof av === 'string' && typeof bv === 'string') {
+        return sortConfig.direction === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av)
+      }
+      return sortConfig.direction === 'asc' ? av - bv : bv - av
+    })
+    return arr
+  }, [filtered, sortConfig])
 
   // Last 10D / 20D rolling window stats
   const recentWindowStats = useMemo(() => {
@@ -116,14 +202,18 @@ export default function OverviewTab({
             <thead>
               <tr>
                 {TRADE_HEADERS.map((h, i) => (
-                  <th key={i} className="text-left px-2.5 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[10px] uppercase tracking-wide whitespace-nowrap">
-                    {h}
-                  </th>
+                  <SortableHeader
+                    key={i}
+                    label={h.label}
+                    sortKey={h.key}
+                    sortConfig={sortConfig}
+                    onSort={handleSort}
+                  />
                 ))}
               </tr>
             </thead>
             <tbody>
-              {filtered.map((t, idx) => (
+              {sortedFiltered.map((t, idx) => (
                 <tr key={t.id} className={`${t.isClosed ? 'bg-[var(--color-closed-row)] opacity-55' : idx % 2 === 0 ? 'bg-[var(--color-surface)]' : 'bg-[var(--color-bg)]'}`}>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] font-bold whitespace-nowrap">{t.ticker}</td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)]">
