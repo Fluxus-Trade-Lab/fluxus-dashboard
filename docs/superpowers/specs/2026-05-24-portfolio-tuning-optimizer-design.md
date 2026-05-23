@@ -12,7 +12,7 @@ The output of this phase is a one-shot analysis: a Python script + JSON + markdo
 
 ## Inputs
 
-1. **Trade history CSV** — the user's portfolio export. Default path is `/Users/taolezhu/Downloads/portfolio_2026-05-23.csv` for the first run; a `--input` flag accepts any path. CSV schema (header on row 3, meta rows above):
+1. **Trade history CSV** — the user's portfolio export. Designated folder: `data/portfolio/`. The CLI auto-detects the most recent `portfolio_*.csv` in that folder unless `--input <path>` is passed explicitly. CSV schema (header on row 3, meta rows above):
    - `Ticker, Direction, Sector, Entry Date, Entry Price, Original Qty, Current Qty, Stop Price, Closed, Trim1 Date, Trim1 Price, Trim1 Qty, Trim1 Type, Trim2 Date, Trim2 Price, Trim2 Qty, Trim2 Type, Trim3 Date, Trim3 Price, Trim3 Qty, Trim3 Type`
    - Trim Type vocabulary: `trim_1_2` = ½ of original, `trim_1_3` = ⅓, `trim_1_5` = ⅕, `sell_rest` = exit residual.
 2. **Daily OHLC per ticker** — fetched from yfinance, range `entry_date − 60d` → `exit_date + 30d`. Cached to disk so re-runs are fast.
@@ -25,16 +25,18 @@ The output of this phase is a one-shot analysis: a Python script + JSON + markdo
    - **Recommended params overall** — best-by-total-R combo with deltas vs user's stated defaults
    - **By ATR bucket** — table with `<3% · 3-5% · 5-7% · 7-10% · 10%+` rows; user's primary bucket (5-7%, 7-10%) is highlighted
    - **By hold-duration archetype** — tactical (1-3 day actual hold) vs core (4+ day) with separate recommended params
+   - **By market regime** — separate recommended params for `bull-regime entries` vs `pullback-regime entries`. This is where the sell-into-strength dimension shines: optimizer should reveal whether aggressive single-day-strength trims help in bull regimes and EMA-break weakness trims help in pullback regimes.
    - **Biggest missed-gain trades** — top-N trades by `(optimal_R − actual_R)` with a one-line explanation of what the optimizer would have done differently
    - **Sensitivity / top-5 param sets** — tight cluster vs scattered tells us whether the result is robust or fragile
 3. No frontend changes.
 
 ## Trade classification
 
-Each trade is tagged with two attributes used by the report:
+Each trade is tagged with three attributes used by the report:
 
 - **ATR bucket** — `<3%`, `3-5%`, `5-7%`, `7-10%`, `10%+`, computed from the 14-day ATR / entry price on entry day.
-- **Hold archetype** — `tactical` if `(actual_exit_date − entry_date).business_days <= 3`, else `core`. Based on ACTUAL hold, not simulated hold — this is how we slice the user's existing trade population, not how we score the optimizer.
+- **Hold archetype** — `tactical` if `(actual_exit_date − entry_date).business_days <= 3`, `core` if `4-8 days`, `swing` if `>8 days`. The 3-day boundary is the user's stated working assumption ("usually 3-5 days"); the analyzer reports sensitivity to this boundary by also computing the segmentation at the 4-day and 5-day cutoffs and showing how recommended params shift. Final report uses the 3-day cutoff as primary view with a footnote on alternatives.
+- **Entry market regime** — `bull` if SPY closes above its 21EMA on the entry day, `pullback` otherwise. Lets the report recommend different rules for bull vs pullback entries.
 
 Trades are also classified by exit pattern (used internally, surfaced only in the JSON):
 
@@ -53,8 +55,13 @@ Grid (3,600 combinations):
 | Trim 2 size | `50%, 70%, 100%` of remaining |
 | Full stop | `daily_close < 20EMA`, `weekly_close < 20EMA`, `daily_close < 30EMA`, `trailing 2×ATR` |
 | Gain ratchet | `none`, `≥+5R close → floor at +3R`, `≥+8R close → floor at +5R` |
+| Sell-into-strength | `none`, `trim 30% on single-day +15% from entry`, `trim 50% on single-day +20% from entry` |
 
 *Ratchet semantics: trigger fires the first day the position closes at or above the upper level (+5R or +8R); from then on, if any subsequent daily close falls below the floor (+3R or +5R), the residual exits at the next-day open. Triggers on close, not intraday high — avoids whipsawing on a single spike.*
+
+*Sell-into-strength semantics: a one-off extra trim layered on top of the existing rules. Triggers when a single bar's close is up the specified % from entry price (capturing euphoric extension). Fires at most once per trade and only while in `POST_T1` or `POST_T2`; the trim is taken from whatever is currently held. Use case: locking in extra gain when price has run far ahead of MA support, rather than waiting for an EMA-break.*
+
+Total grid: 5 × 5 × 4 × 3 × 4 × 3 × 3 = **10,800 combinations**. With per-trade vectorization, total run estimated under 2 minutes.
 
 Pre-trim phase always uses the user's existing stop from the CSV. The grid only optimizes post-T1 behavior — that's where the actual decisions are.
 
@@ -91,31 +98,32 @@ Top-5 ranked tables shown for each. The recommended set is the one that is in th
 ## Module layout
 
 ```
+data/portfolio/
+└── portfolio_YYYY-MM-DD.csv    # designated location for all CSV exports
+
 pipeline/portfolio/
 ├── __init__.py
-├── backtest_optimizer.py     # CLI entry point
-├── trade_parser.py           # CSV → typed Trade dataclasses
-├── ohlc_cache.py             # cached yfinance fetcher (parquet on disk)
-├── simulator.py              # single-trade simulation engine
-├── parameter_grid.py         # parameter sweep definition + iteration
-├── reporter.py               # JSON + markdown emitters
+├── backtest_optimizer.py        # CLI entry point
+├── trade_parser.py              # CSV → typed Trade dataclasses
+├── ohlc_cache.py                # cached yfinance fetcher (parquet on disk)
+├── market_regime.py             # SPY 21EMA bull/pullback classifier
+├── simulator.py                 # single-trade simulation engine
+├── parameter_grid.py            # parameter sweep definition + iteration
+├── reporter.py                  # JSON + markdown emitters
 └── tests/
-    ├── test_trade_parser.py  # CSV parsing
-    ├── test_simulator.py     # known-trade × known-params → expected R
+    ├── test_trade_parser.py     # CSV parsing
+    ├── test_simulator.py        # known-trade × known-params → expected R
     └── fixtures/
-        └── sample_trades.csv # 6-row CSV with known outcomes
+        └── sample_trades.csv    # small CSV fixture for tests
 ```
 
 CLI:
 
 ```bash
-python -m pipeline.portfolio.backtest_optimizer \
-  --input /Users/taolezhu/Downloads/portfolio_2026-05-23.csv \
-  --output docs/portfolio-tuning-2026-05-24.md \
-  --json data/output/portfolio_backtest.json
+python -m pipeline.portfolio.backtest_optimizer
 ```
 
-Defaults: `--output` auto-generates a date-stamped path; `--json` defaults to `data/output/portfolio_backtest.json`.
+Default behavior: auto-detects the most recent `data/portfolio/portfolio_*.csv`, generates a date-stamped report at `docs/portfolio-tuning-YYYY-MM-DD.md`, writes JSON to `data/output/portfolio_backtest.json`. Override with `--input`, `--output`, `--json` flags.
 
 ## Performance
 
