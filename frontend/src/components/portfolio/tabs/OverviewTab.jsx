@@ -251,10 +251,7 @@ export default function OverviewTab({
                 return (
                 <tr key={t.id} className={`${t.isClosed ? 'bg-[var(--color-closed-row)] opacity-55' : idx % 2 === 0 ? 'bg-[var(--color-surface)]' : 'bg-[var(--color-bg)]'}`}>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] font-bold whitespace-nowrap">
-                    <div className="flex items-center gap-1.5">
-                      <TickerLink symbol={t.ticker} />
-                      <LegStateBadge state={legState} />
-                    </div>
+                    <TickerLink symbol={t.ticker} />
                   </td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)]">
                     <span className={`font-semibold text-[11px] ${t.direction === 'long' ? 'text-green-600' : 'text-red-500'}`}>
@@ -262,12 +259,13 @@ export default function OverviewTab({
                     </span>
                   </td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)]">
-                    <span className={`px-2 py-0.5 rounded-full text-[11px] ${
-                      t.isClosed ? 'bg-[var(--color-surface-raised)] text-[var(--color-text-muted)]' :
-                      t.trims?.length > 0 ? 'bg-amber-500/10 text-[var(--color-signal-caution)]' : 'bg-green-500/10 text-[var(--color-profit)]'
-                    }`}>
-                      {t.trimStatus}
-                    </span>
+                    {t.isClosed ? (
+                      <span className="px-2 py-0.5 rounded-full text-[11px] bg-[var(--color-surface-raised)] text-[var(--color-text-muted)]">
+                        Closed
+                      </span>
+                    ) : (
+                      <LegStateBadge state={legState} />
+                    )}
                   </td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] text-[11px] text-[var(--color-text-secondary)]">{t.entryDate?.slice(0, 10).replace(/-/g, '/')}</td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">
