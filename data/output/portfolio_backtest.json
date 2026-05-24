@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-05-24T12:09:35",
+  "generated_at": "2026-05-24T12:35:24",
   "input_csv": "data/portfolio/portfolio_2026-05-23.csv",
   "summary": {
     "trades_total": 255,
     "closed_count": 233,
     "multiday_count": 46,
     "simulated_count": 46,
-    "param_combos": 37800,
-    "simulations": 1738800
+    "param_combos": 75600,
+    "simulations": 3477600
   },
   "headline": {
     "actual_total_R": 116.68564881672513,
@@ -16,8 +16,8 @@
     "largest_gap_reason": "premature exits on multi-day winners \u2014 optimizer held longer with a wider EMA-based stop"
   },
   "best_overall": {
-    "best_idx": 30519,
-    "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
+    "best_idx": 61039,
+    "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA(CL) \u00b7 Ratch=\u2205",
     "best_params": {
       "trim1_trigger_R": 4.0,
       "trim1_size_pct": 0.3,
@@ -26,7 +26,8 @@
       "trim3_trigger": "r_8",
       "trim3_size_pct": 1.0,
       "full_stop_signal": "wk_close_lt_20ema",
-      "gain_ratchet": "none"
+      "gain_ratchet": "none",
+      "stop_basis": "close"
     },
     "total_R": 210.5092626108531,
     "mean_R": 4.576288317627242,
@@ -36,8 +37,8 @@
   },
   "by_atr_bucket": {
     "10%+": {
-      "best_idx": 7818,
-      "best_label": "T1=2.5R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=\u2014 \u00b7 Stop=d30EMA \u00b7 Ratch=\u2205",
+      "best_idx": 15637,
+      "best_label": "T1=2.5R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=\u2014 \u00b7 Stop=d30EMA(CL) \u00b7 Ratch=\u2205",
       "best_params": {
         "trim1_trigger_R": 2.5,
         "trim1_size_pct": 0.3,
@@ -46,7 +47,8 @@
         "trim3_trigger": "none",
         "trim3_size_pct": 0.5,
         "full_stop_signal": "d_close_lt_30ema",
-        "gain_ratchet": "none"
+        "gain_ratchet": "none",
+        "stop_basis": "close"
       },
       "total_R": 64.75544709010761,
       "mean_R": 9.250778155729659,
@@ -55,8 +57,8 @@
       "actual_total_R": 23.8894801999832
     },
     "3-5%": {
-      "best_idx": 31325,
-      "best_label": "T1=4.0R/30% \u00b7 T2=+6R/30% \u00b7 T3=+12R/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=r8\u21925",
+      "best_idx": 62651,
+      "best_label": "T1=4.0R/30% \u00b7 T2=+6R/30% \u00b7 T3=+12R/100% \u00b7 Stop=wk20EMA(CL) \u00b7 Ratch=r8\u21925",
       "best_params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
@@ -65,7 +67,8 @@
         "trim3_trigger": "r_12",
         "trim3_size_pct": 1.0,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "8R_to_5R"
+        "gain_ratchet": "8R_to_5R",
+        "stop_basis": "close"
       },
       "total_R": 24.09080253019614,
       "mean_R": 3.4415432185994486,
@@ -74,8 +77,8 @@
       "actual_total_R": 20.611420469712748
     },
     "5-7%": {
-      "best_idx": 30495,
-      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=\u2014 \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
+      "best_idx": 60991,
+      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=\u2014 \u00b7 Stop=wk20EMA(CL) \u00b7 Ratch=\u2205",
       "best_params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
@@ -84,7 +87,8 @@
         "trim3_trigger": "none",
         "trim3_size_pct": 0.5,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none"
+        "gain_ratchet": "none",
+        "stop_basis": "close"
       },
       "total_R": 91.98941225461263,
       "mean_R": 5.7493382659132894,
@@ -93,8 +97,8 @@
       "actual_total_R": 40.830595698237616
     },
     "7-10%": {
-      "best_idx": 31677,
-      "best_label": "T1=4.0R/30% \u00b7 T2=+8R/70% \u00b7 T3=\u2014 \u00b7 Stop=trail2ATR \u00b7 Ratch=\u2205",
+      "best_idx": 63355,
+      "best_label": "T1=4.0R/30% \u00b7 T2=+8R/70% \u00b7 T3=\u2014 \u00b7 Stop=trail2ATR(CL) \u00b7 Ratch=\u2205",
       "best_params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
@@ -103,7 +107,8 @@
         "trim3_trigger": "none",
         "trim3_size_pct": 0.5,
         "full_stop_signal": "trailing_2atr",
-        "gain_ratchet": "none"
+        "gain_ratchet": "none",
+        "stop_basis": "close"
       },
       "total_R": 47.93690064540751,
       "mean_R": 3.1957933763605006,
@@ -112,8 +117,8 @@
       "actual_total_R": 35.588573813776726
     },
     "<3%": {
-      "best_idx": 31417,
-      "best_label": "T1=4.0R/30% \u00b7 T2=+6R/70% \u00b7 T3=\u2014 \u00b7 Stop=d20EMA \u00b7 Ratch=r5\u21923",
+      "best_idx": 62834,
+      "best_label": "T1=4.0R/30% \u00b7 T2=+6R/70% \u00b7 T3=\u2014 \u00b7 Stop=d20EMA(ID) \u00b7 Ratch=r5\u21923",
       "best_params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
@@ -122,7 +127,8 @@
         "trim3_trigger": "none",
         "trim3_size_pct": 0.5,
         "full_stop_signal": "d_close_lt_20ema",
-        "gain_ratchet": "5R_to_3R"
+        "gain_ratchet": "5R_to_3R",
+        "stop_basis": "intraday"
       },
       "total_R": 4.451450753560207,
       "mean_R": 4.451450753560207,
@@ -133,8 +139,8 @@
   },
   "by_hold": {
     "core (4-8d)": {
-      "best_idx": 31698,
-      "best_label": "T1=4.0R/30% \u00b7 T2=+8R/70% \u00b7 T3=+8R/100% \u00b7 Stop=d30EMA \u00b7 Ratch=\u2205",
+      "best_idx": 63397,
+      "best_label": "T1=4.0R/30% \u00b7 T2=+8R/70% \u00b7 T3=+8R/100% \u00b7 Stop=d30EMA(CL) \u00b7 Ratch=\u2205",
       "best_params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
@@ -143,7 +149,8 @@
         "trim3_trigger": "r_8",
         "trim3_size_pct": 1.0,
         "full_stop_signal": "d_close_lt_30ema",
-        "gain_ratchet": "none"
+        "gain_ratchet": "none",
+        "stop_basis": "close"
       },
       "total_R": 56.36249510825125,
       "mean_R": 4.025892507732232,
@@ -152,8 +159,8 @@
       "actual_total_R": 37.12031077595616
     },
     "swing (>8d)": {
-      "best_idx": 30519,
-      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
+      "best_idx": 61039,
+      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA(CL) \u00b7 Ratch=\u2205",
       "best_params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
@@ -162,7 +169,8 @@
         "trim3_trigger": "r_8",
         "trim3_size_pct": 1.0,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none"
+        "gain_ratchet": "none",
+        "stop_basis": "close"
       },
       "total_R": 131.4657483400896,
       "mean_R": 6.919249912636294,
@@ -171,8 +179,8 @@
       "actual_total_R": 63.464780999972376
     },
     "tactical (1-3d)": {
-      "best_idx": 30495,
-      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=\u2014 \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
+      "best_idx": 60991,
+      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=\u2014 \u00b7 Stop=wk20EMA(CL) \u00b7 Ratch=\u2205",
       "best_params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
@@ -181,7 +189,8 @@
         "trim3_trigger": "none",
         "trim3_size_pct": 0.5,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none"
+        "gain_ratchet": "none",
+        "stop_basis": "close"
       },
       "total_R": 32.61750468435287,
       "mean_R": 2.5090388218732977,
@@ -192,8 +201,8 @@
   },
   "by_regime": {
     "bull": {
-      "best_idx": 30521,
-      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=r8\u21925",
+      "best_idx": 61043,
+      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA(CL) \u00b7 Ratch=r8\u21925",
       "best_params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
@@ -202,7 +211,8 @@
         "trim3_trigger": "r_8",
         "trim3_size_pct": 1.0,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "8R_to_5R"
+        "gain_ratchet": "8R_to_5R",
+        "stop_basis": "close"
       },
       "total_R": 148.59255055252902,
       "mean_R": 4.502804562197849,
@@ -211,8 +221,8 @@
       "actual_total_R": 76.42419207314714
     },
     "pullback": {
-      "best_idx": 30915,
-      "best_label": "T1=4.0R/30% \u00b7 T2=d5dLow/70% \u00b7 T3=\u2014 \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
+      "best_idx": 61831,
+      "best_label": "T1=4.0R/30% \u00b7 T2=d5dLow/70% \u00b7 T3=\u2014 \u00b7 Stop=wk20EMA(CL) \u00b7 Ratch=\u2205",
       "best_params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
@@ -221,7 +231,8 @@
         "trim3_trigger": "none",
         "trim3_size_pct": 0.5,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none"
+        "gain_ratchet": "none",
+        "stop_basis": "close"
       },
       "total_R": 68.52072805623777,
       "mean_R": 5.270825235095213,
@@ -233,7 +244,7 @@
   "top_n": [
     {
       "rank": 1,
-      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
+      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA(CL) \u00b7 Ratch=\u2205",
       "total_R": 210.5092626108531,
       "params": {
         "trim1_trigger_R": 4.0,
@@ -243,12 +254,13 @@
         "trim3_trigger": "r_8",
         "trim3_size_pct": 1.0,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none"
+        "gain_ratchet": "none",
+        "stop_basis": "close"
       }
     },
     {
       "rank": 2,
-      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
+      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA(CL) \u00b7 Ratch=\u2205",
       "total_R": 209.58261959598875,
       "params": {
         "trim1_trigger_R": 4.0,
@@ -258,12 +270,13 @@
         "trim3_trigger": "r_8",
         "trim3_size_pct": 1.0,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none"
+        "gain_ratchet": "none",
+        "stop_basis": "close"
       }
     },
     {
       "rank": 3,
-      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
+      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/50% \u00b7 Stop=wk20EMA(CL) \u00b7 Ratch=\u2205",
       "total_R": 209.3699027785363,
       "params": {
         "trim1_trigger_R": 4.0,
@@ -273,12 +286,13 @@
         "trim3_trigger": "r_8",
         "trim3_size_pct": 0.5,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none"
+        "gain_ratchet": "none",
+        "stop_basis": "close"
       }
     },
     {
       "rank": 4,
-      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 T3=+8R/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
+      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 T3=+8R/50% \u00b7 Stop=wk20EMA(CL) \u00b7 Ratch=\u2205",
       "total_R": 208.7687911443339,
       "params": {
         "trim1_trigger_R": 4.0,
@@ -288,12 +302,13 @@
         "trim3_trigger": "r_8",
         "trim3_size_pct": 0.5,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none"
+        "gain_ratchet": "none",
+        "stop_basis": "close"
       }
     },
     {
       "rank": 5,
-      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/70% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
+      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/70% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA(CL) \u00b7 Ratch=\u2205",
       "total_R": 208.6559765811244,
       "params": {
         "trim1_trigger_R": 4.0,
@@ -303,7 +318,8 @@
         "trim3_trigger": "r_8",
         "trim3_size_pct": 1.0,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none"
+        "gain_ratchet": "none",
+        "stop_basis": "close"
       }
     }
   ],
@@ -1986,5 +2002,13 @@
       ]
     }
   ],
-  "_schema": "v2"
+  "stop_basis_comparison": {
+    "best_intraday_total_R": 137.2248403148994,
+    "best_close_total_R": 210.5092626108531,
+    "delta_R": 73.2844222959537,
+    "winner": "close",
+    "best_intraday_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA(ID) \u00b7 Ratch=\u2205",
+    "best_close_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA(CL) \u00b7 Ratch=\u2205"
+  },
+  "_schema": "v3"
 }

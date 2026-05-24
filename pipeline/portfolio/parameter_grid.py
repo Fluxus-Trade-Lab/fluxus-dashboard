@@ -22,6 +22,7 @@ TRIM3_TRIGGERS = ('none', 'r_8', 'r_10', 'r_12')
 TRIM3_SIZES = (0.50, 1.00)
 FULL_STOPS = ('d_close_lt_20ema', 'wk_close_lt_20ema', 'd_close_lt_30ema', 'trailing_2atr')
 RATCHETS = ('none', '5R_to_3R', '8R_to_5R')
+STOP_BASES = ('intraday', 'close')
 
 
 def all_params() -> list[SimParams]:
@@ -30,9 +31,9 @@ def all_params() -> list[SimParams]:
     Skips redundant combinations (e.g., T3 = none with any T3 size > 50%).
     """
     out = []
-    for t1t, t1s, t2t, t2sz, t3t, t3sz, fs, ratch in product(
+    for t1t, t1s, t2t, t2sz, t3t, t3sz, fs, ratch, sb in product(
         TRIM1_TRIGGERS, TRIM1_SIZES, TRIM2_TRIGGERS, TRIM2_SIZES,
-        TRIM3_TRIGGERS, TRIM3_SIZES, FULL_STOPS, RATCHETS,
+        TRIM3_TRIGGERS, TRIM3_SIZES, FULL_STOPS, RATCHETS, STOP_BASES,
     ):
         # When T3 is 'none', T3 size doesn't matter — only emit one variant
         if t3t == 'none' and t3sz != TRIM3_SIZES[0]:
@@ -43,6 +44,7 @@ def all_params() -> list[SimParams]:
             trim3_trigger=t3t, trim3_size_pct=t3sz,
             full_stop_signal=fs,
             gain_ratchet=ratch,
+            stop_basis=sb,
         ))
     return out
 
@@ -70,8 +72,9 @@ def params_to_label(p: SimParams) -> str:
         if p.trim3_trigger == 'none'
         else f"T3={t3_map[p.trim3_trigger]}/{int(p.trim3_size_pct*100)}%"
     )
+    sb_short = 'ID' if p.stop_basis == 'intraday' else 'CL'
     return (f"T1={p.trim1_trigger_R}R/{int(p.trim1_size_pct*100)}% · "
             f"T2={t2_map[p.trim2_trigger]}/{int(p.trim2_size_pct*100)}% · "
             f"{t3_part} · "
-            f"Stop={stop_map[p.full_stop_signal]} · "
+            f"Stop={stop_map[p.full_stop_signal]}({sb_short}) · "
             f"Ratch={ratch_map[p.gain_ratchet]}")

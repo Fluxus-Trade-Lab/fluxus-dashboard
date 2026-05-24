@@ -1,6 +1,6 @@
-# Portfolio Tuning Report — 2026-05-24T12:09:35
+# Portfolio Tuning Report — 2026-05-24T12:35:24
 
-_255 closed trades · 46 multi-day-trim · 37,800 param sets · 1,738,800 simulations_
+_255 closed trades · 46 multi-day-trim · 75,600 param sets · 3,477,600 simulations_
 
 ## TL;DR — Key takeaways
 
@@ -10,6 +10,7 @@ _255 closed trades · 46 multi-day-trim · 37,800 param sets · 1,738,800 simula
 - **Full stop**: `weekly close < 20EMA` — the patient runner-exit signal the optimizer keeps selecting across buckets.
 - **Swing (>8d) trades have the biggest lift potential**: +68.00R of additional R available on 19 swing trades — the optimizer wants weekly-EMA-based exits and a smaller Trim 1 to let trends mature.
 - **Single biggest gap: MU entered 2026-04-12** — actual +10.36R vs optimal +48.91R (+38.55R miss). Review the chart: this is the canonical example of premature trim on a runner.
+- **Close-based stops beat intraday stops by +73.28R** in aggregate. The data says your intraday cut-quickly instinct is costing R on average — trades that get wicked through the stop intraday but close inside it tend to recover. Best with close-confirmed stops: +210.51R; best with intraday stops: +137.22R.
 - **Pyramiding is net positive**: +101.56R of total lift across 50 multi-layer campaigns (28 added R, 22 subtracted). When you pyramid INTO a winning trend you're adding real edge.
 - **Best pyramid: AXTI** (7 layers, 2026-03-23 → 2026-03-31) — actual +144.01R vs first-layer-alone +4.54R = **+139.47R added by the adds.**
 - **Worst pyramid: SNXX** (2 layers) — actual +7.63R vs first-layer-alone +58.05R = **-50.42R drag.** Check whether you were adding to strength (real pyramid) or averaging down (loser-doubling).
@@ -31,6 +32,7 @@ _255 closed trades · 46 multi-day-trim · 37,800 param sets · 1,738,800 simula
 | Trim 2 size | **30%** of remaining |
 | Trim 3 trigger | **price reaches +8R**, trim **100%** of remaining |
 | Full stop | **weekly close < 20EMA** |
+| Stop basis | **close** (intraday wick vs close-confirmed) |
 | Gain ratchet | **none** |
 |  |  |
 | Simulated total R | **+210.51R** |
@@ -43,11 +45,11 @@ _255 closed trades · 46 multi-day-trim · 37,800 param sets · 1,738,800 simula
 
 | ATR% | # trades | Actual R | Optimal R | Best params |
 |---|---:|---:|---:|---|
-| **<3%** | 1 | -4.23R | +4.45R | T1=4.0R/30% · T2=+6R/70% · T3=— · Stop=d20EMA · Ratch=r5→3 |
-| **3-5%** | 7 | +20.61R | +24.09R | T1=4.0R/30% · T2=+6R/30% · T3=+12R/100% · Stop=wk20EMA · Ratch=r8→5 |
-| **5-7%** | 16 | +40.83R | +91.99R | T1=4.0R/30% · T2=wk10EMA/30% · T3=— · Stop=wk20EMA · Ratch=∅ |
-| **7-10%** | 15 | +35.59R | +47.94R | T1=4.0R/30% · T2=+8R/70% · T3=— · Stop=trail2ATR · Ratch=∅ |
-| **10%+** | 7 | +23.89R | +64.76R | T1=2.5R/30% · T2=wk10EMA/30% · T3=— · Stop=d30EMA · Ratch=∅ |
+| **<3%** | 1 | -4.23R | +4.45R | T1=4.0R/30% · T2=+6R/70% · T3=— · Stop=d20EMA(ID) · Ratch=r5→3 |
+| **3-5%** | 7 | +20.61R | +24.09R | T1=4.0R/30% · T2=+6R/30% · T3=+12R/100% · Stop=wk20EMA(CL) · Ratch=r8→5 |
+| **5-7%** | 16 | +40.83R | +91.99R | T1=4.0R/30% · T2=wk10EMA/30% · T3=— · Stop=wk20EMA(CL) · Ratch=∅ |
+| **7-10%** | 15 | +35.59R | +47.94R | T1=4.0R/30% · T2=+8R/70% · T3=— · Stop=trail2ATR(CL) · Ratch=∅ |
+| **10%+** | 7 | +23.89R | +64.76R | T1=2.5R/30% · T2=wk10EMA/30% · T3=— · Stop=d30EMA(CL) · Ratch=∅ |
 
 ## By hold archetype
 
@@ -55,9 +57,9 @@ Tactical (1-3d) trades = positions stopped or scaled out within 3 business days.
 
 | Archetype | # trades | Actual R | Optimal R | Best params |
 |---|---:|---:|---:|---|
-| **tactical (1-3d)** | 13 | +16.10R | +32.62R | T1=4.0R/30% · T2=wk10EMA/30% · T3=— · Stop=wk20EMA · Ratch=∅ |
-| **core (4-8d)** | 14 | +37.12R | +56.36R | T1=4.0R/30% · T2=+8R/70% · T3=+8R/100% · Stop=d30EMA · Ratch=∅ |
-| **swing (>8d)** | 19 | +63.46R | +131.47R | T1=4.0R/30% · T2=wk10EMA/30% · T3=+8R/100% · Stop=wk20EMA · Ratch=∅ |
+| **tactical (1-3d)** | 13 | +16.10R | +32.62R | T1=4.0R/30% · T2=wk10EMA/30% · T3=— · Stop=wk20EMA(CL) · Ratch=∅ |
+| **core (4-8d)** | 14 | +37.12R | +56.36R | T1=4.0R/30% · T2=+8R/70% · T3=+8R/100% · Stop=d30EMA(CL) · Ratch=∅ |
+| **swing (>8d)** | 19 | +63.46R | +131.47R | T1=4.0R/30% · T2=wk10EMA/30% · T3=+8R/100% · Stop=wk20EMA(CL) · Ratch=∅ |
 
 ## By entry market regime
 
@@ -65,8 +67,8 @@ Bull regime = SPY closed above its 21EMA on the trade entry day. Pullback = SPY 
 
 | Regime | # trades | Actual R | Optimal R | Best params |
 |---|---:|---:|---:|---|
-| **bull** | 33 | +76.42R | +148.59R | T1=4.0R/30% · T2=wk10EMA/30% · T3=+8R/100% · Stop=wk20EMA · Ratch=r8→5 |
-| **pullback** | 13 | +40.26R | +68.52R | T1=4.0R/30% · T2=d5dLow/70% · T3=— · Stop=wk20EMA · Ratch=∅ |
+| **bull** | 33 | +76.42R | +148.59R | T1=4.0R/30% · T2=wk10EMA/30% · T3=+8R/100% · Stop=wk20EMA(CL) · Ratch=r8→5 |
+| **pullback** | 13 | +40.26R | +68.52R | T1=4.0R/30% · T2=d5dLow/70% · T3=— · Stop=wk20EMA(CL) · Ratch=∅ |
 
 ## Biggest missed-gain trades
 
@@ -152,15 +154,26 @@ Same-ticker, same-direction trades opened within 60 business days of each other 
 **Net pyramid impact**: 28 campaigns added R, 22 subtracted. Total Δ = +101.56R.
 
 
+## Stop-basis head-to-head — intraday vs close
+
+Best of all parameter sets restricted to each stop-basis discipline. Tells you which approach maximizes R across your trade population.
+
+| Basis | Best total R | Winning param set |
+|---|---:|---|
+| **intraday** (cut on any wick) | +137.22R | T1=4.0R/30% · T2=wk10EMA/30% · T3=+8R/100% · Stop=wk20EMA(ID) · Ratch=∅ |
+| **close** (wait for close confirmation) | +210.51R | T1=4.0R/30% · T2=wk10EMA/30% · T3=+8R/100% · Stop=wk20EMA(CL) · Ratch=∅ |
+
+**Winner: `close`** — by +73.28R over the other basis.
+
 ## Sensitivity — top-5 parameter sets (by total R)
 
 Tight cluster around similar rules = robust recommendation. Scattered = fragile.
 
-1. T1=4.0R/30% · T2=wk10EMA/30% · T3=+8R/100% · Stop=wk20EMA · Ratch=∅ → **+210.51R**
-2. T1=4.0R/30% · T2=wk10EMA/50% · T3=+8R/100% · Stop=wk20EMA · Ratch=∅ → **+209.58R**
-3. T1=4.0R/30% · T2=wk10EMA/30% · T3=+8R/50% · Stop=wk20EMA · Ratch=∅ → **+209.37R**
-4. T1=4.0R/30% · T2=wk10EMA/50% · T3=+8R/50% · Stop=wk20EMA · Ratch=∅ → **+208.77R**
-5. T1=4.0R/30% · T2=wk10EMA/70% · T3=+8R/100% · Stop=wk20EMA · Ratch=∅ → **+208.66R**
+1. T1=4.0R/30% · T2=wk10EMA/30% · T3=+8R/100% · Stop=wk20EMA(CL) · Ratch=∅ → **+210.51R**
+2. T1=4.0R/30% · T2=wk10EMA/50% · T3=+8R/100% · Stop=wk20EMA(CL) · Ratch=∅ → **+209.58R**
+3. T1=4.0R/30% · T2=wk10EMA/30% · T3=+8R/50% · Stop=wk20EMA(CL) · Ratch=∅ → **+209.37R**
+4. T1=4.0R/30% · T2=wk10EMA/50% · T3=+8R/50% · Stop=wk20EMA(CL) · Ratch=∅ → **+208.77R**
+5. T1=4.0R/30% · T2=wk10EMA/70% · T3=+8R/100% · Stop=wk20EMA(CL) · Ratch=∅ → **+208.66R**
 
 ---
 

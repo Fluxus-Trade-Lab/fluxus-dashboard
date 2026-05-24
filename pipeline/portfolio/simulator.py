@@ -36,6 +36,8 @@ class SimParams:
     trim3_size_pct: float           # 0.50 .. 1.0 of remaining at entry to POST_T2
     full_stop_signal: str           # 'd_close_lt_20ema' | 'wk_close_lt_20ema' | 'd_close_lt_30ema' | 'trailing_2atr'
     gain_ratchet: str               # 'none' | '5R_to_3R' | '8R_to_5R'
+    stop_basis: str = 'close'       # 'intraday' (cut on any wick through stop) or 'close' (wait for close confirmation)
+                                    # Governs BOTH the PRE_TRIM stop and the POST_T1 breakeven stop.
 
 
 def _is_r_trigger(s: str) -> Optional[float]:
@@ -163,25 +165,31 @@ def _simulate_from_bars(trade: Trade, bars: np.ndarray, p: SimParams) -> float:
 
         # ── PRE_TRIM ─────────────────────────────────────────────────────────
         if state == 'PRE_TRIM':
-            # initial CSV stop check — CLOSE-based (user's actual practice;
-            # avoids wicking out on intraday spikes on high-ATR names).
-            # If close violates, exit at next-day open. If the gap-open itself
-            # is past the stop, that's the exit price (worst-case execution).
-            stop_hit = (
-                (direction == 1 and c <= stop_price) or
-                (direction == -1 and c >= stop_price)
-            )
-            if stop_hit:
-                if i + 1 < n:
-                    next_open = bars[i + 1][0]
-                    # if gap open is past stop, use that; else use stop
-                    if direction == 1:
-                        exit_at = min(next_open, stop_price)
+            # initial CSV stop check — basis governed by p.stop_basis.
+            if p.stop_basis == 'intraday':
+                # exit if intraday wick goes through stop
+                stop_hit = (
+                    (direction == 1 and l <= stop_price) or
+                    (direction == -1 and h >= stop_price)
+                )
+                if stop_hit:
+                    _exit(qty_remaining, stop_price); break
+            else:  # 'close'
+                stop_hit = (
+                    (direction == 1 and c <= stop_price) or
+                    (direction == -1 and c >= stop_price)
+                )
+                if stop_hit:
+                    if i + 1 < n:
+                        next_open = bars[i + 1][0]
+                        # if gap open is past stop, use that; else use stop
+                        if direction == 1:
+                            exit_at = min(next_open, stop_price)
+                        else:
+                            exit_at = max(next_open, stop_price)
                     else:
-                        exit_at = max(next_open, stop_price)
-                else:
-                    exit_at = c
-                _exit(qty_remaining, exit_at); break
+                        exit_at = c
+                    _exit(qty_remaining, exit_at); break
             # trim1 trigger (R-target only — Trim 1 always uses R)
             trigger_price = entry_price + direction * (p.trim1_trigger_R * R_per_share)
             hit = (direction == 1 and h >= trigger_price) or (direction == -1 and l <= trigger_price)
@@ -196,20 +204,25 @@ def _simulate_from_bars(trade: Trade, bars: np.ndarray, p: SimParams) -> float:
         # Order: 1) hard stop check, 2) full-stop signal, 3) gain ratchet,
         #        4) T3 R-target (POST_T2 only), 5) T2 trigger (POST_T1 only)
 
-        # 1) hard stop — also CLOSE-based now (breakeven stop post-T1).
-        # Exit at next-day open, capped to actual gap.
+        # 1) hard stop — basis governed by p.stop_basis (breakeven stop post-T1).
         stop_triggered = False
         exit_at = None
-        if (direction == 1 and c <= stop_price) or (direction == -1 and c >= stop_price):
-            stop_triggered = True
-            if i + 1 < n:
-                next_open = bars[i + 1][0]
-                if direction == 1:
-                    exit_at = min(next_open, stop_price)
+        if p.stop_basis == 'intraday':
+            if direction == 1 and l <= stop_price:
+                stop_triggered = True; exit_at = stop_price
+            elif direction == -1 and h >= stop_price:
+                stop_triggered = True; exit_at = stop_price
+        else:  # 'close'
+            if (direction == 1 and c <= stop_price) or (direction == -1 and c >= stop_price):
+                stop_triggered = True
+                if i + 1 < n:
+                    next_open = bars[i + 1][0]
+                    if direction == 1:
+                        exit_at = min(next_open, stop_price)
+                    else:
+                        exit_at = max(next_open, stop_price)
                 else:
-                    exit_at = max(next_open, stop_price)
-            else:
-                exit_at = c
+                    exit_at = c
 
         # 2) full-stop signal — confirmed on prior bar's CLOSE, exit at this bar's OPEN
         if not stop_triggered:

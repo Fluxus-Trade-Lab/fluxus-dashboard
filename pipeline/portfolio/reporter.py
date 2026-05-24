@@ -87,6 +87,7 @@ def find_best_param(
             'trim3_size_pct': params[best_idx].trim3_size_pct,
             'full_stop_signal': params[best_idx].full_stop_signal,
             'gain_ratchet': params[best_idx].gain_ratchet,
+            'stop_basis': params[best_idx].stop_basis,
         },
         'total_R': best_total,
         'mean_R': float(means[best_idx]),
@@ -117,6 +118,7 @@ def top_n_params(R_matrix: np.ndarray, params: list[SimParams], n: int = 5) -> l
                 'trim3_size_pct': params[idx].trim3_size_pct,
                 'full_stop_signal': params[idx].full_stop_signal,
                 'gain_ratchet': params[idx].gain_ratchet,
+                'stop_basis': params[idx].stop_basis,
             },
         }
         for i, idx in enumerate(top_idxs)
@@ -238,6 +240,18 @@ def write_markdown(report: dict, path: Path) -> None:
              f"{len(neg_deltas)} subtracted. Total Δ = "
              f"{_fmt_R(sum(c['delta_R'] for c in pos_deltas + neg_deltas))}.\n")
 
+    # Stop-basis head-to-head
+    sb = report.get('stop_basis_comparison')
+    if sb:
+        push("\n## Stop-basis head-to-head — intraday vs close\n")
+        push("Best of all parameter sets restricted to each stop-basis discipline. "
+             "Tells you which approach maximizes R across your trade population.\n")
+        push("| Basis | Best total R | Winning param set |")
+        push("|---|---:|---|")
+        push(f"| **intraday** (cut on any wick) | {_fmt_R(sb['best_intraday_total_R'])} | {sb['best_intraday_label']} |")
+        push(f"| **close** (wait for close confirmation) | {_fmt_R(sb['best_close_total_R'])} | {sb['best_close_label']} |")
+        push(f"\n**Winner: `{sb['winner']}`** — by {_fmt_R(abs(sb['delta_R']))} over the other basis.")
+
     # Sensitivity
     push("\n## Sensitivity — top-5 parameter sets (by total R)\n")
     push("Tight cluster around similar rules = robust recommendation. Scattered = fragile.\n")
@@ -344,6 +358,28 @@ def _build_takeaways(report: dict) -> list[str]:
             f"example of premature trim on a runner."
         )
 
+    # Stop-basis head-to-head
+    sb = report.get('stop_basis_comparison')
+    if sb:
+        winner = sb['winner']
+        delta = abs(sb['delta_R'])
+        if winner == 'close':
+            bullets.append(
+                f"**Close-based stops beat intraday stops by {_fmt_R(delta)}** in aggregate. "
+                f"The data says your intraday cut-quickly instinct is costing R on average — "
+                f"trades that get wicked through the stop intraday but close inside it tend "
+                f"to recover. Best with close-confirmed stops: {_fmt_R(sb['best_close_total_R'])}; "
+                f"best with intraday stops: {_fmt_R(sb['best_intraday_total_R'])}."
+            )
+        else:
+            bullets.append(
+                f"**Intraday stops beat close-based stops by {_fmt_R(delta)}** in aggregate. "
+                f"Your cut-quickly discipline is the right call — waiting for close "
+                f"confirmation costs R because real breakdowns continue overnight. "
+                f"Best with intraday stops: {_fmt_R(sb['best_intraday_total_R'])}; "
+                f"best with close-confirmed stops: {_fmt_R(sb['best_close_total_R'])}."
+            )
+
     # Pyramid callouts
     pyramids = report.get('pyramid_campaigns', [])
     if pyramids:
@@ -410,6 +446,7 @@ def _param_table(rec: Optional[dict]) -> str:
         f"| Trim 2 size | **{int(p['trim2_size_pct']*100)}%** of remaining |",
         f"| Trim 3 trigger | {t3_label} |",
         f"| Full stop | **{_pretty_stop(p['full_stop_signal'])}** |",
+        f"| Stop basis | **{p.get('stop_basis', 'close')}** (intraday wick vs close-confirmed) |",
         f"| Gain ratchet | **{_pretty_ratchet(p['gain_ratchet'])}** |",
         f"|  |  |",
         f"| Simulated total R | **{_fmt_R(rec['total_R'])}** |",
