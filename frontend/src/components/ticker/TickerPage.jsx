@@ -16,6 +16,11 @@ import TickerKeyLevels from './TickerKeyLevels'
 import TickerTrendIndicators from './TickerTrendIndicators'
 import TickerRelativeStrength from './TickerRelativeStrength'
 import TickerCatalysts from './TickerCatalysts'
+import TickerBullBear from './TickerBullBear'
+import TickerTradePlan from './TickerTradePlan'
+import TickerManagement from './TickerManagement'
+import TickerPeers from './TickerPeers'
+import TickerSources from './TickerSources'
 import TickerStats from './TickerStats'
 
 /**
@@ -117,6 +122,24 @@ function TickerPageBody({ symbol }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <TickerCatalysts tickerData={tickerData} />
         <TickerAnalystSentiment tickerData={tickerData} />
+      </div>
+
+      {/* AI Narrative + Trade Plan (Phase 3d) */}
+      <div className="mb-4">
+        <TickerBullBear tickerData={tickerData} />
+      </div>
+
+      <div className="mb-4">
+        <TickerTradePlan tickerData={tickerData} />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <TickerManagement tickerData={tickerData} />
+        <TickerPeers tickerData={tickerData} />
+      </div>
+
+      <div className="mb-4">
+        <TickerSources tickerData={tickerData} />
       </div>
 
       <div>
