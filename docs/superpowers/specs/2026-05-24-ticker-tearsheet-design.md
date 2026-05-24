@@ -1,222 +1,312 @@
-# Ticker Tear-Sheet Design
+# Ticker Tear-Sheet Design (v2 — matched to AAOI reference)
 
 **Date:** 2026-05-24
 **Status:** Draft for user review
-**Replaces:** Inline Phase 1 detail on Tracker rows (to be slimmed down)
-**Sequence:** Phase 3 of the portfolio overhaul (Phase 1 = inline UI shipped, Phase 2 = Capital-at-Risk shipped, this is the consolidation play)
+**Reference:** AAOI · Applied Optoelectronics Trader Tearsheet (2-page PDF the user shared)
+**Sequence:** Phase 3 of the portfolio overhaul (Phase 1 + 2 shipped)
 
 ## Problem
 
-Phase 1 packed leg state, trim targets, EMA proximity chips, and stop suggestions into every Tracker row. That made the Tracker information-dense at the cost of visual cleanliness. The right home for that detail is a **per-ticker tear-sheet page** — one click from any ticker on the Tracker, Screener, or Screener watchlist gets you the full picture: trade history, current status, stop suggestions, chart, fundamentals. The Tracker row goes back to a clean glance.
+User wants a per-ticker tear-sheet, one click from anywhere a ticker is shown (Portfolio Tracker, Exposure Detail, Screener Results, Screener Watchlist). The reference AAOI tearsheet sets the bar: **two pages of technical + fundamental + catalyst + analyst depth**, with the user's own execution detail layered on top.
 
-## Scope
+The Tracker simultaneously becomes cleaner — Phase 1's inline detail (proximity chips, trim targets) moves into the tear-sheet's status panel; the Tracker row goes back to a clean glance with a clickable ticker.
 
-In scope (Phase 3):
-1. **Hash-based route**: `#/ticker/<SYMBOL>` opens a dedicated page
-2. **Tear-sheet page layout**: header + chart + status panel + trades table + key stats
-3. **TradingView Advanced Chart widget** embedded for the symbol
-4. **Trades section**: all of the user's open + closed trades on this ticker, grouped by campaign, with per-trade stats and aggregate stats
-5. **Status panel**: for the most recent open layer (if any) — leg state, current stop, suggested stop with Accept, EMA reference levels, trim target levels
-6. **Stats section**: from universe.json — sector, market cap, ATR%, RS scores, performance metrics
-7. **Linking from Tracker**: ticker text in Portfolio Tracker rows becomes a click-link
-8. **Linking from Screener + Watchlist**: same for those tables
-9. **Tracker simplification**: drop the inline trim-targets line, drop the EMA proximity chips (move to tear-sheet). Keep the leg-state badge (small, glanceable). Keep the StopCell suggestion line (it's actionable inline).
+## Page structure (matches AAOI reference)
 
-Out of scope (Phase 3b, separate):
-- Persisted stop-change history per trade (would need a new array field on Trade)
-- Auto-trailing-stop toggle that writes per-ticker preferences honored by the daily cron
-- Detailed fundamentals (P/E ratio, revenue, EPS growth) — universe.json doesn't have them; would need a pipeline addition
-- News feed for the ticker
-- Editing trades from inside the tear-sheet (use the existing trade form via "+ Trade")
+```
+─── PAGE 1: TECHNICAL ─────────────────────────────────────────────
+[ Header: TICKER · Name · meta · live price + % chg ]
+[ Quick-stats strip: Mkt Cap · 52W Range · Avg Vol 20D · ATR(14)/%Px · RSI(14) · Fwd P/S 26E · Next ER ]
+[ Price Trend & Technical Setup — TradingView Advanced Chart widget (1Y, MA20/50/200 overlay, volume, RSI) ]
+[ Key Levels table (left)         |  Trend & Indicators table (right) ]
+[ Relative Strength vs SPY & QQQ — rebased line chart + period table ]
+─── PAGE 1.5: MY EXECUTION ────────────────────────────────────────
+[ Status Panel — leg state, current stop, suggested stop + Accept, trim targets, EMA refs ]
+[ Trades Section — grouped by campaign, aggregate stats at top ]
+─── PAGE 2: FUNDAMENTALS & CATALYSTS ──────────────────────────────
+[ Earnings — Next + Last 4Q (date, Rev act/est, EPS act/est, beat/miss ✓✗) ]
+[ Valuation Snapshot — Mkt Cap, Rev/Fwd Rev, P/S, EV/Sales, P/E, margins, cash, FCF, D/E, Current Ratio ]
+[ Key Quarterly Metrics — Period, Revenue, YoY, Gross Profit, GM%, Op Inc, EPS, Cash, Op CF (last 5Q) ]
+[ Recent Catalysts & News (left)  |  Analyst Sentiment (right) ]
+```
+
+## Section-by-section detail
+
+### 1. Header
+- Symbol, company name, sector / industry / exchange / HQ / CEO
+- Live price + day change (color-coded)
+- "← Back" link (history.back())
+
+### 2. Quick-stats strip
+Compact row of 7 stats. Pulled from `universe.json` + per-ticker file:
+- Mkt Cap, 52W Range, Avg Vol (20D), ATR(14) / %PX, RSI(14), Fwd P/S (26E), Next ER date
+
+### 3. Price Trend & Technical Setup
+TradingView Advanced Chart widget (free, no API key). Config:
+- 1Y default range
+- MA20/50/200 overlay built-in
+- Volume + RSI(14) sub-panes
+- Dark theme to match app
+
+### 4. Key Levels table
+Left half, below chart. Two columns: Level | Price | Notes.
+
+Rows (derived from existing data + new fields):
+- 52W High / Resistance
+- 20-day high
+- Pivot zone (Mar peak)
+- MA20 (current value, computed from price × (1+sma20_dist))
+- MA50 (same)
+- 10-day low
+- Gap-fill zone (manual annotation, defaults to "—")
+- MA200 (computed)
+- 52W Low
+
+### 5. Trend & Indicators table
+Right half, alongside Key Levels.
+
+Rows:
+- Trend (price vs MAs) — narrative ("Above MA20/50/200 — stacked bullish")
+- MA stack (Golden alignment / mixed / inverted)
+- RSI(14) — numeric + qualitative ("strong, not overbought")
+- ATR(14) — stop sizing reference
+- 1.5×ATR stop ref — computed dollar width
+- 20-day avg volume
+- Position in 52W range — % from low to high
+- Volatility regime (low / normal / high)
+- Setup type (Pullback in uptrend post-breakout / Base / Squeeze / N/A)
+
+### 6. Relative Strength vs SPY & QQQ
+Line chart rebased to 100 over 1 year (AAOI, SPY, QQQ). Plus a flat table:
+
+| Period | AAOI | SPY | QQQ | vs SPY | vs QQQ |
+|---|---|---|---|---|---|
+| 1M | +67.9% | +9.5% | +15.6% | **+58.4%** | **+52.2%** |
+| 3M, 6M, 1Y | … |
+
+Uses `perf_1m`, `perf_3m`, `perf_6m`, `perf_1y` from universe (already there) and the SPY/QQQ benchmark values from `etf_data.json`.
+
+### 7. Status Panel (user's execution)
+For the most recent open layer of the user's position (if any):
+- Leg-state badge (PRE_TRIM / POST_T1 / etc.)
+- Current stop + suggested stop + "→ Accept" (reuses Phase 1 `stopSuggestion` helper)
+- Trim target levels (+4R, +8R, +12R), strike-through if hit
+- EMA reference values (ema10, ema20, wk_ema10, wk_ema20)
+
+If no open position: "No open position. Last trade: <date> @ <price> realized +X.XR" if any closed.
+
+### 8. Trades Section
+Filter all user trades by ticker. Group by campaign (existing `groupByCampaigns`).
+
+Per campaign — header row with aggregate stats (layer count, open/closed, total realized R, blended cost).
+Expanded layers: entry date/price/qty, current qty, trims chain, current state.
+
+Aggregate stats at top of section:
+- Total trades on this ticker
+- Win rate (closed trades with positive R)
+- Total realized R captured
+- Best / worst trade
+
+### 9. Earnings — Next + Last 4Q
+Pulled from yfinance `.earnings_history` + `.calendar`. Five rows:
+- Q1 26 (next) — date, EST rev, EST EPS (highlighted as upcoming)
+- Q4-Q1 trailing — date, Rev (Act / Est), EPS (Act / Est), beat (✓) or miss (✗) markers
+
+### 10. Valuation Snapshot
+Single 2-column table. Source: yfinance `.info` mostly, with FY estimates from analyst data:
+- Market Cap, FY-prior Revenue, FY-next Revenue (est + YoY %), FY+1 Revenue (est + %)
+- P/S TTM, EV/Sales TTM, Fwd P/S (next FY), Fwd P/S (FY+1)
+- P/E TTM (or "neg." if negative)
+- Gross Margin (current FY + est next FY)
+- Op Margin
+- Cash on hand (latest quarter)
+- FY FCF
+- Debt/Equity
+- Current Ratio
+
+### 11. Key Quarterly Metrics
+5-quarter table. Source: yfinance `.quarterly_financials` + `.quarterly_balance_sheet`:
+- Period · Revenue · YoY% · Gross Profit · GM% · Op Inc · Diluted EPS · Cash · Op CF
+
+### 12. Recent Catalysts & News
+Narrative bullets with footnote refs (per AAOI reference, e.g. "Mar 9, 2026: First volume order for 1.6T transceivers ..."). Two source options:
+
+- **Auto (lossy)**: pull yfinance `.news` (titles, links, dates) and display as a list. Less curated than the AAOI reference but free.
+- **AI-curated**: send recent yfinance news + recent earnings transcript excerpts to Claude API, ask it to synthesize 5-8 catalyst bullets. Better quality, costs API tokens, slower.
+- **Manual**: a per-ticker editable field stored in Google Sheets or localStorage.
+
+Default for Phase 3: **auto (lossy)** as MVP. Hook for AI-curated added in 3b once we confirm format.
+
+### 13. Analyst Sentiment
+Source: yfinance `.recommendations` + `.analyst_price_targets`:
+- Consensus rating (Strong Buy / Buy / Hold / Sell)
+- Total ratings count
+- Bullish / Neutral / Bearish split
+- Avg PT / High PT / Low PT
+- Implied % vs current price (color-coded)
+- Most recent rating change
+- Notable upgrade(s) in trailing 60d
+
+## Data architecture
+
+This tear-sheet needs data that doesn't exist in `universe.json` today. New pipeline component:
+
+```
+pipeline/tickers/
+├── __init__.py
+├── ticker_data_fetcher.py     # yfinance-based fetcher (per-ticker JSON)
+└── run_tickers.py             # CLI: refresh per-ticker data for a tracker-relevant set
+```
+
+Output: `data/output/tickers/{SYMBOL}.json` — one file per ticker, ~5-20 KB each.
+
+Schema:
+```json
+{
+  "ticker": "AAOI",
+  "fetched_at": "2026-05-24T...",
+  "info": { /* yfinance .info subset */ },
+  "earnings": [ { "date": "2026-02-26", "rev_actual": 134.3, "rev_estimate": 132.3, "eps_actual": -0.04, "eps_estimate": -0.12 }, ... ],
+  "valuation": { "market_cap": 14.1e9, "ps_ttm": 30.9, "ev_sales_ttm": 30.5, ... },
+  "quarterly_financials": [ { "period": "Q4 2025", "revenue": 134.3e6, "yoy_pct": 0.34, ... }, ... ],
+  "analyst": { "consensus": "Strong Buy", "n_ratings": 4, "avg_pt": 77.25, "high_pt": 140, "low_pt": 35, "recent": [...] },
+  "news": [ { "date": "2026-03-09", "title": "...", "url": "..." }, ... ]
+}
+```
+
+Which tickers get fetched?
+- All tickers in the user's open positions (from `data/portfolio/portfolio_*.csv`)
+- All tickers in the user's recent (90d) closed trades
+- Optionally all tickers from a "watchlist" of interest (future)
+
+For Phase 3, ~50-100 tickers total. yfinance fetch budget ~2 min for that batch.
+
+Cron addition: `pipeline/tickers/run_tickers.py` runs after the main `run_all`, so fresh data is available every day after market close.
+
+Frontend reads `data/output/tickers/{SYMBOL}.json` lazily when the tear-sheet opens. If the file doesn't exist, the tear-sheet shows "Fundamentals not yet fetched for this ticker — falling back to universe data only."
 
 ## Routing
 
-Hash-based, consistent with existing `#/portfolio`, `#/screener`, etc.
+Hash-based, consistent with existing routes:
+- `#/ticker/AAPL` → renders `<TickerPage symbol="AAPL" />`
+- Symbol normalized to uppercase
 
-| Hash | Page |
-|---|---|
-| `#/ticker/AAPL` | AAPL tear-sheet |
-| `#/ticker/MU` | MU tear-sheet |
+Implementation: extend `Layout.jsx` to recognize `#/ticker/<SYM>`. Tiny `tickerUrl.tickerHref(symbol)` helper for consistent link generation.
 
-Implementation: extend `Layout.jsx` to recognize hashes matching `#/ticker/<SYMBOL>` and render `<TickerPage symbol={SYMBOL} />`. The `useHash` hook already returns the raw hash; parse the symbol out of it inline (no hook change needed).
+Back-nav: header "← Back" → `window.history.back()`.
 
-Navigation helper: a small `lib/tickerUrl.js` exports `tickerHref(symbol) → "#/ticker/AAPL"` so all link sources use it consistently.
+## Sub-phasing
 
-Back-navigation: header has a "← Back" link that does `window.history.back()` (works for both Tracker → Tearsheet → Tracker and Screener → Tearsheet → Screener flows).
+This is bigger than originally scoped. Break into three shippable sub-phases:
 
-## Page layout
+### Phase 3a — Skeleton + execution + chart (ships in 1 sitting)
+- Hash routing `#/ticker/<SYM>`
+- Page skeleton with all section placeholders
+- TradingView chart widget
+- Status Panel (uses Phase 1 helpers — leg state, stop suggestion, trim targets, EMAs)
+- Trades Section (uses existing portfolio data, campaign grouping)
+- Stats row (universe.json subset)
+- TickerLink component + wire-up in Tracker, Exposure Detail, Screener Results, Watchlist
+- Tracker simplification (drop inline chips + targets line)
+
+### Phase 3b — Fundamentals pipeline + tables (ships next, in 1 sitting)
+- New `pipeline/tickers/` module
+- Per-ticker JSON output
+- Quick-stats strip filled in
+- Earnings, Valuation Snapshot, Quarterly Metrics, Analyst Sentiment sections
+- Hooked into cron
+
+### Phase 3c — Technicals tables + RS chart (small follow-on)
+- Key Levels table (derived from existing data + ATR + chart highs/lows)
+- Trend & Indicators table (RSI needs pipeline addition; rest computable)
+- Relative Strength chart + table (rebased; needs SPY/QQQ historical from etf_data)
+- Catalysts & News section (auto = yfinance news; AI-curated comes later if useful)
+
+Total estimated work: 3a ~1 hour, 3b ~1.5 hour, 3c ~1 hour. Plus pipeline runs.
+
+## File-level changes (all sub-phases)
 
 ```
-┌────────────────────────────────────────────────────────────────────┐
-│  ← Back   AAPL · Apple Inc.   $185.20 +1.2%      [Sector] [ATR 2.5%]
-├────────────────────────────────────────────────────────────────────┤
-│  ┌──────────────────────────────────────┐  ┌──────────────────────┐
-│  │                                      │  │  STATUS              │
-│  │     TradingView Chart Widget         │  │  POST-T1             │
-│  │                                      │  │                      │
-│  │     (440px tall)                     │  │  Current stop $93.50 │
-│  │                                      │  │  Suggested $108.25   │
-│  │                                      │  │  → Accept            │
-│  │                                      │  │                      │
-│  │                                      │  │  Targets             │
-│  │                                      │  │  +4R $115 ✓          │
-│  │                                      │  │  +8R $135            │
-│  │                                      │  │                      │
-│  │                                      │  │  EMAs                │
-│  │                                      │  │  10EMA $98.40        │
-│  │                                      │  │  20EMA $95.20        │
-│  │                                      │  │  wk-10EMA $92.10     │
-│  │                                      │  │  wk-20EMA $89.30     │
-│  └──────────────────────────────────────┘  └──────────────────────┘
-├────────────────────────────────────────────────────────────────────┤
-│  TRADES — 3 layers · 2 open · +18.4R captured · 67% WR             │
-│  ┌────────────────────────────────────────────────────────────────┐
-│  │  Open: 2026-04-08  Entry $147  Qty 990  Stop $93  R$ $53.4k    │
-│  │   ├ Trim 04-14  $204  330 sh                                   │
-│  │   ├ Trim 04-23  $237  330 sh                                   │
-│  │   └ (residual)  330 sh                                         │
-│  │  Open: 2026-05-19  Entry $267  Qty 276  Stop $260  R$ $1.9k    │
-│  │   └ Trim 05-21  $309  55 sh                                    │
-│  │  Closed: 2026-03-01  Entry $158  +1.2R                         │
-│  └────────────────────────────────────────────────────────────────┘
-├────────────────────────────────────────────────────────────────────┤
-│  STATS                                                              │
-│  Sector: Tech  ·  Mkt Cap: $2.8T  ·  ADR%: 2.5%  ·  Hybrid RS: 87  │
-│  Perf 1W: +2.1%  ·  1M: +8.5%  ·  3M: +14.2%  ·  YTD: +22.0%       │
-│  Distance from 21EMA: +1.2%  ·  50SMA: +5.4%  ·  200SMA: +18.0%    │
-│  Volume: 52M  ·  Avg Vol: 48M  ·  Rel Vol: 1.08                    │
-└────────────────────────────────────────────────────────────────────┘
+data/output/tickers/{SYMBOL}.json         NEW (3b) — fundamentals data per ticker
+pipeline/tickers/__init__.py              NEW (3b)
+pipeline/tickers/ticker_data_fetcher.py   NEW (3b) — yfinance fetcher
+pipeline/tickers/run_tickers.py           NEW (3b) — CLI entry
+.github/workflows/daily-data-update.yml   MODIFY (3b) — add run_tickers step
+
+frontend/src/components/portfolio/lib/tickerUrl.js           NEW (3a)
+frontend/src/components/ticker/                              NEW dir (3a)
+  TickerPage.jsx                                              NEW (3a)
+  TickerHeader.jsx                                            NEW (3a)
+  TickerQuickStats.jsx                                        NEW (3a)
+  TickerChart.jsx                                             NEW (3a) — TradingView widget
+  TickerKeyLevels.jsx                                         NEW (3c)
+  TickerTrendIndicators.jsx                                   NEW (3c)
+  TickerRelativeStrength.jsx                                  NEW (3c)
+  TickerStatusPanel.jsx                                       NEW (3a)
+  TickerTrades.jsx                                            NEW (3a)
+  TickerEarnings.jsx                                          NEW (3b)
+  TickerValuation.jsx                                         NEW (3b)
+  TickerQuarterlyMetrics.jsx                                  NEW (3b)
+  TickerCatalysts.jsx                                         NEW (3b/3c)
+  TickerAnalystSentiment.jsx                                  NEW (3b)
+  TickerLink.jsx                                              NEW (3a)
+frontend/src/hooks/useTickerData.js                          NEW (3b) — fetch per-ticker JSON
+
+frontend/src/components/Layout.jsx                           MODIFY (3a) — add route
+frontend/src/components/portfolio/tabs/OverviewTab.jsx       MODIFY (3a) — ticker → TickerLink, drop chips + targets line
+frontend/src/components/portfolio/tabs/ExposureTab.jsx       MODIFY (3a)
+frontend/src/components/screener/ResultsTable.jsx            MODIFY (3a)
+frontend/src/components/screener/WatchlistTab.jsx            MODIFY (3a)
 ```
-
-Sections, in order:
-
-1. **Header**: ticker, company name (where we can get it), live price, % change today, sector chip, ATR% chip, back link
-2. **Chart + Status row**: TradingView Advanced Chart (left, ~⅔ width) + Status panel (right, ~⅓ width)
-3. **Trades**: grouped-by-campaign list of all open + closed trades on this ticker, with aggregate stats at the top
-4. **Stats**: flat row of universe-data fields, no chart
-
-## TradingView widget
-
-Drop in the free Advanced Chart widget. No API key. One-time `<script>` tag loaded via React useEffect.
-
-```jsx
-<div id={`tv-${symbol}`} className="h-[440px]" />
-// in useEffect, append:
-<script src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" />
-// with stringified config including symbol, theme matching the app, etc.
-```
-
-Config: dark theme (matches the app's dark mode), 1D interval default, ~440px height, hide the toolbar's "save" actions (we're not a TV user).
-
-If symbol changes (route from `#/ticker/AAPL` to `#/ticker/MU`), the component remounts with a new container id; the widget re-initializes cleanly.
-
-## Status panel content
-
-For the **most recent open layer** of the ticker (if any):
-- Leg-state badge
-- Current stop + (if different) suggested stop + Accept link → dispatches `UPDATE_TRADE`
-- Re-uses `stopSuggestion.suggest()` from Phase 1
-- Trim target levels (+4R, +8R, +12R), strike-through if hit
-- EMA reference values: ema10, ema20, wk_ema10, wk_ema20
-
-If **no open position**:
-- Show "No open position" + most recent closed trade summary (if any)
-
-## Trades section content
-
-Filter all user trades by `ticker === symbol`. Apply existing `groupByCampaigns` helper.
-
-Per campaign:
-- Header row: layer count, "open" or "closed" count, total realized R (campaign-level), aggregate cost basis
-- Per-layer detail (expandable): entry date/price/qty, stop, current qty, trims, realized R, current state
-
-Aggregate stats at top of section:
-- Total trades on this ticker (across all campaigns)
-- Win rate (% of closed trades with positive R)
-- Total realized R captured
-
-## Stats section content
-
-Just key fields from `universe.json[symbol]`, displayed as a labeled flat row. No charts. The TradingView widget covers chart concerns.
-
-Fields:
-- Sector, market cap
-- ADR%, ATR
-- Hybrid RS (`h_score`), F Score, I Score, IBD RS
-- Perf 1W / 1M / 3M / YTD
-- Distance from 21EMA, 50SMA, 200SMA, 52W high
-- Volume, avg volume, relative volume
-- (Phase 1 plumbed) ema10/ema20/wk_ema10/wk_ema20
 
 ## Tracker simplification
 
-Reduce noise in Portfolio Tracker rows now that the tear-sheet absorbs the detail:
+Reduce noise in Portfolio Tracker rows:
 
-| Element | Phase 1 | Phase 3 |
+| Element | Today | After 3a |
 |---|---|---|
-| Ticker text | bold + badge + chips + targets line | **bold + badge + click-link** |
-| LegStateBadge | KEEP next to ticker | KEEP |
-| ProximityChips | next to ticker | **REMOVE** (move to tear-sheet status panel) |
+| Ticker text | bold + badge + chips + targets line | **clickable bold link + badge** |
+| LegStateBadge | inline | KEEP |
+| ProximityChips | inline | **REMOVE** (move to tear-sheet status panel) |
 | TrimTargetsLine | below ticker | **REMOVE** (move to tear-sheet status panel) |
-| StopCell suggestion | KEEP inline | KEEP (actionable in place) |
-
-Net effect: each Tracker row goes from a 2-line ticker cell with multiple visual elements back to a clean single-line bold ticker (still color-badged for leg state), but now clickable to drill down.
-
-## Linking sources
-
-Use `tickerHref(symbol)` helper everywhere:
-
-1. **Portfolio Tracker** (`OverviewTab.jsx`) — wrap ticker text in `<a href={tickerHref(t.ticker)}>`
-2. **Exposure tab Detail table** (`ExposureTab.jsx`) — wrap ticker text in `<a>`
-3. **Screener results table** (`ResultsTable.jsx`) — wrap ticker text in `<a>`
-4. **Screener Watchlist tab** (`WatchlistTab.jsx`) — same
-
-All open in same window (regular hash navigation). Back button works as expected.
-
-## File-level changes
-
-```
-frontend/src/components/portfolio/lib/tickerUrl.js       NEW  tiny — exports tickerHref(symbol)
-frontend/src/components/ticker/                          NEW dir
-  TickerPage.jsx                                          NEW  top-level page
-  TickerHeader.jsx                                        NEW  symbol/name/price/back
-  TickerChart.jsx                                         NEW  TradingView widget wrapper
-  TickerStatusPanel.jsx                                   NEW  leg state + stop + targets + EMAs
-  TickerTrades.jsx                                        NEW  grouped trade history + aggregate stats
-  TickerStats.jsx                                         NEW  universe field display
-  TickerLink.jsx                                          NEW  <a href={tickerHref(s)}>{children}</a>
-
-frontend/src/components/Layout.jsx                       MODIFY  add #/ticker/<SYM> route
-frontend/src/components/portfolio/tabs/OverviewTab.jsx   MODIFY  ticker → TickerLink; drop chips + targets line
-frontend/src/components/portfolio/tabs/ExposureTab.jsx   MODIFY  ticker → TickerLink
-frontend/src/components/screener/ResultsTable.jsx        MODIFY  ticker → TickerLink
-frontend/src/components/screener/WatchlistTab.jsx        MODIFY  ticker → TickerLink (if a ticker col exists)
-```
-
-## Testing strategy
-
-- Unit: `tickerUrl.tickerHref(symbol)` — pure function, trivial
-- Visual: load `#/ticker/MU` in dev preview, confirm chart renders, trades list shows real data, status panel matches Tracker row
-- Click flow: from Tracker click on MU → tear-sheet opens; click "← Back" → returns to Tracker preserving scroll position
+| StopCell suggestion | inline | KEEP (actionable in place) |
 
 ## Risks / open questions
 
-1. **TradingView widget reliability**: third-party iframe; if their CDN is slow, the chart loads slowly. Not blocking — page renders without it.
-2. **Symbol case sensitivity**: hashes like `#/ticker/aapl` vs `#/ticker/AAPL`. Normalize to uppercase in `tickerHref` and the route parser.
-3. **Company name source**: not currently in universe.json. For Phase 3, show just the ticker; add company_name in a later pipeline pass if useful.
-4. **"Most recent open layer" definition**: if there are multiple open layers (campaign), use the one with the largest current_qty as the "primary" for the status panel. Alternative is showing a small per-layer status mini-table; can iterate.
+1. **yfinance reliability for fundamentals**: free, but rate-limited and sometimes returns stale or missing fields. For Phase 3b, gracefully handle missing fields (show "—" rather than crash). If yfinance proves insufficient over time, can swap to Finnhub / IEX Cloud / Polygon paid tier.
+2. **Per-ticker JSON file size + repo bloat**: ~10 KB × 100 tickers × refreshed daily = ~1 MB regenerated per day. Existing data files are larger; OK.
+3. **Catalysts section quality**: yfinance news is generic. AAOI-quality narrative bullets need either Claude synthesis (Phase 3c+) or manual curation. Phase 3 ships the auto version; we add Claude synthesis once you've used the auto for a week and we see what's missing.
+4. **TradingView widget customization**: free widget has limited theming controls. We get dark mode, MA overlays, volume + RSI sub-panes. Anything more (custom indicators, drawing tools) requires paid subscription.
+5. **"Most recent open layer" for status panel**: when a campaign has multiple open layers, default to the layer with largest current_qty.
 
-## Acceptance criteria
+## Acceptance criteria (Phase 3a — skeleton ships first)
 
-- [ ] `#/ticker/AAPL` loads a page with header + chart + status panel + trades + stats
-- [ ] TradingView Advanced Chart widget renders for the symbol (dark theme)
-- [ ] Trades section lists all user trades on the ticker, grouped by campaign with aggregate stats
-- [ ] Status panel shows leg state, current/suggested stop with Accept, trim targets, EMA refs (when an open position exists)
-- [ ] "No open position" state renders when applicable
-- [ ] Stats section shows ≥10 universe fields
-- [ ] Clicking a ticker in Portfolio Tracker / Exposure Detail / Screener Results / Watchlist opens the tear-sheet
-- [ ] "← Back" returns to the previous page
-- [ ] Tracker rows no longer show inline ProximityChips or TrimTargetsLine (moved to tear-sheet)
-- [ ] LegStateBadge still shows on Tracker (it's glanceable)
-- [ ] StopCell still shows suggestion + Accept inline (it's actionable)
+- [ ] `#/ticker/AAPL` loads, shows header + chart + status panel + trades + basic stats row
+- [ ] TradingView Advanced Chart widget renders for the symbol with dark theme
+- [ ] Status Panel shows leg state, current/suggested stop with Accept, trim targets, EMA refs (or "No open position" alternative)
+- [ ] Trades Section lists all user trades on ticker, grouped by campaign with aggregate stats
+- [ ] Stats row shows ≥10 universe fields
+- [ ] Clicking a ticker in Tracker / Exposure Detail / Screener Results / Watchlist opens the tear-sheet
+- [ ] "← Back" returns to previous page
+- [ ] Tracker rows no longer show inline ProximityChips or TrimTargetsLine
+- [ ] LegStateBadge + StopCell suggestion remain on Tracker
 - [ ] All existing tests still pass; build still clean
+- [ ] Section placeholders present for Phase 3b/3c content ("loading…" or "coming next phase")
+
+## Acceptance criteria (Phase 3b — fundamentals)
+
+- [ ] `pipeline/tickers/` module written + tested on a small ticker sample
+- [ ] Daily cron runs `run_tickers.py` and writes `data/output/tickers/<SYM>.json` for all tracked tickers
+- [ ] Quick-stats strip filled in (Fwd P/S, RSI, Next ER from per-ticker JSON)
+- [ ] Earnings table renders with last 4Q + next ER
+- [ ] Valuation Snapshot renders with all listed fields
+- [ ] Quarterly Metrics table renders last 5Q
+- [ ] Analyst Sentiment renders with consensus, ratings split, PTs, recent moves
+- [ ] Tear-sheet handles missing data gracefully (no crash; shows "—")
+
+## Acceptance criteria (Phase 3c — technicals + RS + catalysts)
+
+- [ ] Key Levels table renders with all rows
+- [ ] Trend & Indicators table renders with all rows (RSI from pipeline addition)
+- [ ] Relative Strength rebased chart + period table renders
+- [ ] Recent Catalysts & News section renders (auto from yfinance news for now)
