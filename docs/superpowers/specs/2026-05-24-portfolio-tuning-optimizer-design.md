@@ -43,25 +43,40 @@ Trades are also classified by exit pattern (used internally, surfaced only in th
 - **scale-out stop** — all trims fall on a single date. These were tight-stop exits executed in tranches; the trim/trail rules being optimized don't really apply, so they're excluded from the headline lift computation but kept in the per-trade table.
 - **two-leg progression** — trims span ≥2 distinct dates. These are the trades where the optimization actually matters; they drive the headline number.
 
-## Parameter sweep
+## Parameter sweep (v2 — R-target ladder)
 
-Grid (3,600 combinations):
+User feedback after v1 run: switching to weekly-EMA-based exits is psychologically hard
+because it requires sitting through deep mid-trend pullbacks on large positions.
+User's preferred operating mode is an **R-target ladder** — predefined +R-level
+trim targets layered on top of (or as alternative to) the signal-based exit. v2
+sweeps this directly.
+
+Sell-into-strength was dropped — v1 results showed `none` was selected as optimal
+in every bucket. Keeping the dimension only adds noise.
 
 | Parameter | Values |
 |---|---|
 | Trim 1 trigger | `+2R, +2.5R, +3R, +3.5R, +4R` |
 | Trim 1 size | `30%, 40%, 50%, 60%, 70%` of original position |
-| Trim 2 signal | `daily_close < 10EMA`, `weekly_close < 10EMA`, `daily_close < 13EMA`, `daily_close < 5-day low` |
-| Trim 2 size | `50%, 70%, 100%` of remaining |
-| Full stop | `daily_close < 20EMA`, `weekly_close < 20EMA`, `daily_close < 30EMA`, `trailing 2×ATR` |
-| Gain ratchet | `none`, `≥+5R close → floor at +3R`, `≥+8R close → floor at +5R` |
-| Sell-into-strength | `none`, `trim 30% on single-day +15% from entry`, `trim 50% on single-day +20% from entry` |
+| Trim 2 trigger | **`daily_close < 10EMA` · `weekly_close < 10EMA` · `daily_close < 5-day low` · `+5R reached` · `+6R reached` · `+8R reached`** |
+| Trim 2 size | `30%, 50%, 70%` of remaining (after Trim 1) |
+| Trim 3 trigger | **`none` · `+8R reached` · `+10R reached` · `+12R reached`** (R-target only) |
+| Trim 3 size | **`50%, 100%`** of remaining (after Trim 2) |
+| Full stop | `daily_close < 20EMA` · `weekly_close < 20EMA` · `daily_close < 30EMA` · `trailing 2×ATR` |
+| Gain ratchet | `none` · `≥+5R close → floor at +3R` · `≥+8R close → floor at +5R` |
 
-*Ratchet semantics: trigger fires the first day the position closes at or above the upper level (+5R or +8R); from then on, if any subsequent daily close falls below the floor (+3R or +5R), the residual exits at the next-day open. Triggers on close, not intraday high — avoids whipsawing on a single spike.*
+Total grid: 5 × 5 × 6 × 3 × 4 × 2 × 4 × 3 = **86,400 combinations**. Per-trade
+vectorized loop; ~3 min full run on 46 multi-day trades.
 
-*Sell-into-strength semantics: a one-off extra trim layered on top of the existing rules. Triggers when a single bar's close is up the specified % from entry price (capturing euphoric extension). Fires at most once per trade and only while in `POST_T1` or `POST_T2`; the trim is taken from whatever is currently held. Use case: locking in extra gain when price has run far ahead of MA support, rather than waiting for an EMA-break.*
+*R-target trigger semantics (Trim 2 / Trim 3): fires the first day price closes
+at or above `entry + R_multiple × R/qty` for longs (inverted for shorts).
+Execution at the close of that day. If both an R-target and a signal trigger
+fire on the same bar, the R-target wins (acts first).*
 
-Total grid: 5 × 5 × 4 × 3 × 4 × 3 × 3 = **10,800 combinations**. With per-trade vectorization, total run estimated under 2 minutes.
+*Ratchet semantics: trigger fires the first day the position closes at or above
+the upper level (+5R or +8R); from then on, if any subsequent daily close falls
+below the floor (+3R or +5R), the residual exits at the next-day open. Triggers
+on close, not intraday high — avoids whipsawing on a single spike.*
 
 Pre-trim phase always uses the user's existing stop from the CSV. The grid only optimizes post-T1 behavior — that's where the actual decisions are.
 
@@ -145,6 +160,32 @@ Default behavior: auto-detects the most recent `data/portfolio/portfolio_*.csv`,
 - **Unit:** trade parser handles all observed `trim_*` types, multiple trims same date, missing trims (only Trim 1), open trades, shorts.
 - **Unit:** simulator on a hand-constructed trade with synthetic OHLC produces the expected R for each state-machine transition.
 - **Integration:** end-to-end run on a 6-trade fixture CSV produces a deterministic report (snapshot test).
+
+## Pyramid campaign analysis (v2 addition)
+
+The user pyramids — adds to existing winners with a new trade record at a higher
+price (example: DOCN entered $82.70 in April, added $155.89 in May). In the CSV
+these are independent trade records. The optimizer simulates each independently.
+
+Treating them as separate trades is technically correct but misses the campaign
+view. A separate `pyramid_analyzer.py` module:
+
+1. **Detects pyramid campaigns** — same ticker, same direction, entries within 60
+   business days of each other, at least one prior entry still open when the new
+   one is added.
+2. **Computes campaign-level R** — total realized P/L across all layers divided
+   by the *first layer's* R amount (so we measure "how much R did the campaign
+   capture relative to the original risk decision").
+3. **Counterfactual: "what if no pyramid?"** — for each campaign, compute the R
+   that would have been captured if only the first layer had been held under the
+   optimal Phase-3 rules. Pyramid adds value if `campaign_R > counterfactual_R`.
+4. **Reports per-campaign delta** — surfaces which pyramid decisions actually
+   added R vs which were noise / drag.
+
+The optimizer itself does NOT include a "pyramid rule" parameter — that would
+double-count user behavior already present as separate trade records. Pyramid
+rules become a Phase 1 UI concern (campaign grouping, aggregate stop suggestion,
+add-back signal alerts).
 
 ## What this does NOT include (deferred to Phases 1 & 2)
 

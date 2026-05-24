@@ -81,11 +81,12 @@ def find_best_param(
         'best_params': {
             'trim1_trigger_R': params[best_idx].trim1_trigger_R,
             'trim1_size_pct': params[best_idx].trim1_size_pct,
-            'trim2_signal': params[best_idx].trim2_signal,
+            'trim2_trigger': params[best_idx].trim2_trigger,
             'trim2_size_pct': params[best_idx].trim2_size_pct,
+            'trim3_trigger': params[best_idx].trim3_trigger,
+            'trim3_size_pct': params[best_idx].trim3_size_pct,
             'full_stop_signal': params[best_idx].full_stop_signal,
             'gain_ratchet': params[best_idx].gain_ratchet,
-            'sell_strength': params[best_idx].sell_strength,
         },
         'total_R': best_total,
         'mean_R': float(means[best_idx]),
@@ -110,11 +111,12 @@ def top_n_params(R_matrix: np.ndarray, params: list[SimParams], n: int = 5) -> l
             'params': {
                 'trim1_trigger_R': params[idx].trim1_trigger_R,
                 'trim1_size_pct': params[idx].trim1_size_pct,
-                'trim2_signal': params[idx].trim2_signal,
+                'trim2_trigger': params[idx].trim2_trigger,
                 'trim2_size_pct': params[idx].trim2_size_pct,
+                'trim3_trigger': params[idx].trim3_trigger,
+                'trim3_size_pct': params[idx].trim3_size_pct,
                 'full_stop_signal': params[idx].full_stop_signal,
                 'gain_ratchet': params[idx].gain_ratchet,
-                'sell_strength': params[idx].sell_strength,
             },
         }
         for i, idx in enumerate(top_idxs)
@@ -214,6 +216,28 @@ def write_markdown(report: dict, path: Path) -> None:
              f"{_fmt_R(t['actual_R'])} | {_fmt_R(t['optimal_R'])} | "
              f"**{_fmt_R(t['optimal_R'] - t['actual_R'])}** |")
 
+    # Pyramid campaigns
+    pyramids = report.get('pyramid_campaigns', [])
+    if pyramids:
+        push("\n## Pyramid campaigns\n")
+        push("Same-ticker, same-direction trades opened within 60 business days of each other are grouped as a pyramid campaign. ")
+        push("`Counterfactual R` = first layer simulated alone under the optimal Phase-3 rules, out to the campaign's final exit. ")
+        push("`Δ R = Actual − Counterfactual`: positive means pyramiding added value, negative means the additional layers were a drag vs holding the first layer alone with the patient rules.\n")
+        push("| Ticker · # layers | First → Last entry | Actual R | Counterfactual R | Δ R |")
+        push("|---|---|---:|---:|---:|")
+        for c in sorted(pyramids, key=lambda x: -(x.get('actual_R', 0) or 0)):
+            delta_str = _fmt_R(c['delta_R']) if c['delta_R'] is not None else '—'
+            cf_str = _fmt_R(c['counterfactual_R']) if c['counterfactual_R'] is not None else '—'
+            push(f"| **{c['ticker']}** · {c['n_layers']} layers "
+                 f"({c['direction']}) | {c['first_entry']} → {c['last_entry']} | "
+                 f"{_fmt_R(c['actual_R'])} | {cf_str} | **{delta_str}** |")
+        # short interpretation
+        pos_deltas = [c for c in pyramids if c.get('delta_R') is not None and c['delta_R'] > 0]
+        neg_deltas = [c for c in pyramids if c.get('delta_R') is not None and c['delta_R'] < 0]
+        push(f"\n**Net pyramid impact**: {len(pos_deltas)} campaigns added R, "
+             f"{len(neg_deltas)} subtracted. Total Δ = "
+             f"{_fmt_R(sum(c['delta_R'] for c in pos_deltas + neg_deltas))}.\n")
+
     # Sensitivity
     push("\n## Sensitivity — top-5 parameter sets (by total R)\n")
     push("Tight cluster around similar rules = robust recommendation. Scattered = fragile.\n")
@@ -241,25 +265,33 @@ def _build_takeaways(report: dict) -> list[str]:
         f"({h['lift_pct']:+.1f}% lift over actual)."
     )
 
-    # Rule change recommendation
+    # Recommended rule changes
     p = best['best_params']
-    daily_to_weekly = 'wk_close' in p['trim2_signal'] or 'wk_close' in p['full_stop_signal']
-    if daily_to_weekly:
+    bullets.append(
+        f"**Recommended Trim 1**: **+{p['trim1_trigger_R']}R / "
+        f"{int(p['trim1_size_pct']*100)}%** of original. "
+        f"Then Trim 2 = `{_pretty_trigger(p['trim2_trigger'])}`, "
+        f"size {int(p['trim2_size_pct']*100)}% of remaining."
+    )
+    if p['trim3_trigger'] != 'none':
         bullets.append(
-            f"**Move from daily to weekly EMAs**: optimal trim-2 signal is "
-            f"`{_pretty_sig(p['trim2_signal'])}` and full stop is "
-            f"`{_pretty_stop(p['full_stop_signal'])}`. Weekly closes filter out "
-            f"daily whipsaw on high-ATR momentum names."
+            f"**Trim 3 ladder rung adds value**: target "
+            f"`{_pretty_trigger(p['trim3_trigger'])}`, trim "
+            f"**{int(p['trim3_size_pct']*100)}%** of what's left. "
+            f"Validates your stated practice of using a 3-rung R-target ladder "
+            f"rather than relying on a single signal-based exit."
         )
-
-    # Trim 1 sizing change
-    if p['trim1_size_pct'] <= 0.40:
+    else:
         bullets.append(
-            f"**Trim smaller on Trim 1**: optimal is "
-            f"**{int(p['trim1_size_pct']*100)}%** at **+{p['trim1_trigger_R']}R** "
-            f"(your stated default is 50%/+2-3R). Leaving more on the table for "
-            f"the runner is worth more than the early lock-in."
+            f"**Trim 3 R-target did NOT add edge** in aggregate. The optimizer "
+            f"selected `none` for the third trim rung — the residual after Trim 2 "
+            f"is best held until the full-stop signal fires. Override per chart "
+            f"context as always."
         )
+    bullets.append(
+        f"**Full stop**: `{_pretty_stop(p['full_stop_signal'])}` — "
+        f"the patient runner-exit signal the optimizer keeps selecting across buckets."
+    )
 
     # Per-bucket call-outs
     bull_pull = report.get('by_regime', {})
@@ -312,6 +344,39 @@ def _build_takeaways(report: dict) -> list[str]:
             f"example of premature trim on a runner."
         )
 
+    # Pyramid callouts
+    pyramids = report.get('pyramid_campaigns', [])
+    if pyramids:
+        with_delta = [p for p in pyramids if p.get('delta_R') is not None]
+        if with_delta:
+            net_delta = sum(p['delta_R'] for p in with_delta)
+            pos = [p for p in with_delta if p['delta_R'] > 0]
+            neg = [p for p in with_delta if p['delta_R'] < 0]
+            best_pyr = max(with_delta, key=lambda p: p['delta_R'])
+            worst_pyr = min(with_delta, key=lambda p: p['delta_R'])
+            bullets.append(
+                f"**Pyramiding is net positive**: {_fmt_R(net_delta)} of total lift "
+                f"across {len(with_delta)} multi-layer campaigns "
+                f"({len(pos)} added R, {len(neg)} subtracted). When you pyramid INTO "
+                f"a winning trend you're adding real edge."
+            )
+            if best_pyr['delta_R'] > 5:
+                bullets.append(
+                    f"**Best pyramid: {best_pyr['ticker']}** ({best_pyr['n_layers']} layers, "
+                    f"{best_pyr['first_entry']} → {best_pyr['last_entry']}) — "
+                    f"actual {_fmt_R(best_pyr['actual_R'])} vs first-layer-alone "
+                    f"{_fmt_R(best_pyr['counterfactual_R'])} = "
+                    f"**{_fmt_R(best_pyr['delta_R'])} added by the adds.**"
+                )
+            if worst_pyr['delta_R'] < -5:
+                bullets.append(
+                    f"**Worst pyramid: {worst_pyr['ticker']}** ({worst_pyr['n_layers']} layers) — "
+                    f"actual {_fmt_R(worst_pyr['actual_R'])} vs first-layer-alone "
+                    f"{_fmt_R(worst_pyr['counterfactual_R'])} = "
+                    f"**{_fmt_R(worst_pyr['delta_R'])} drag.** Check whether you were "
+                    f"adding to strength (real pyramid) or averaging down (loser-doubling)."
+                )
+
     # Sensitivity / robustness
     top_n = report.get('top_n', [])
     if len(top_n) >= 5:
@@ -332,16 +397,20 @@ def _param_table(rec: Optional[dict]) -> str:
     if rec is None:
         return "_No recommendation — insufficient data._\n"
     p = rec['best_params']
+    t3_label = (
+        '—' if p['trim3_trigger'] == 'none'
+        else f"**{_pretty_trigger(p['trim3_trigger'])}**, trim **{int(p['trim3_size_pct']*100)}%** of remaining"
+    )
     lines = [
         "| Parameter | Value |",
         "|---|---|",
         f"| Trim 1 trigger | **+{p['trim1_trigger_R']}R** |",
         f"| Trim 1 size | **{int(p['trim1_size_pct']*100)}%** of original position |",
-        f"| Trim 2 signal | **{_pretty_sig(p['trim2_signal'])}** |",
+        f"| Trim 2 trigger | **{_pretty_trigger(p['trim2_trigger'])}** |",
         f"| Trim 2 size | **{int(p['trim2_size_pct']*100)}%** of remaining |",
+        f"| Trim 3 trigger | {t3_label} |",
         f"| Full stop | **{_pretty_stop(p['full_stop_signal'])}** |",
         f"| Gain ratchet | **{_pretty_ratchet(p['gain_ratchet'])}** |",
-        f"| Sell-into-strength | **{_pretty_strength(p['sell_strength'])}** |",
         f"|  |  |",
         f"| Simulated total R | **{_fmt_R(rec['total_R'])}** |",
         f"| Mean R per trade | {_fmt_R(rec['mean_R'])} |",
@@ -351,7 +420,10 @@ def _param_table(rec: Optional[dict]) -> str:
     return '\n'.join(lines) + '\n'
 
 
-def _pretty_sig(s: str) -> str:
+def _pretty_trigger(s: str) -> str:
+    """Trigger label that handles both signal-based and R-target triggers."""
+    if s.startswith('r_'):
+        return f"price reaches +{s[2:]}R"
     return {
         'd_close_lt_10ema': 'daily close < 10EMA',
         'wk_close_lt_10ema': 'weekly close < 10EMA',
@@ -377,12 +449,6 @@ def _pretty_ratchet(s: str) -> str:
     }.get(s, s)
 
 
-def _pretty_strength(s: str) -> str:
-    return {
-        'none': 'none',
-        'trim_30_on_15pct': 'trim 30% on single-day close +15% from entry',
-        'trim_50_on_20pct': 'trim 50% on single-day close +20% from entry',
-    }.get(s, s)
 
 
 def write_json(report: dict, path: Path) -> None:

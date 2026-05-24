@@ -22,8 +22,11 @@ import numpy as np
 from pipeline.portfolio.trade_parser import parse_csv, find_latest_csv, Trade
 from pipeline.portfolio.ohlc_cache import fetch_ohlc
 from pipeline.portfolio.market_regime import build_regime_index
-from pipeline.portfolio.simulator import prep_bars, _simulate_from_bars
+from pipeline.portfolio.simulator import prep_bars, _simulate_from_bars, SimParams
 from pipeline.portfolio.parameter_grid import all_params, params_to_label
+from pipeline.portfolio.pyramid_analyzer import (
+    detect_campaigns, compute_counterfactual, build_pyramid_section,
+)
 from pipeline.portfolio.reporter import (
     atr_bucket, hold_archetype, find_best_param, top_n_params,
     write_markdown, write_json,
@@ -171,6 +174,31 @@ def run(input_path: Path, output_md: Path, output_json: Path) -> None:
     # ── Top-5 sensitivity ──────────────────────────────────────────────────
     top5 = top_n_params(R_matrix, params, n=5)
 
+    # ── Pyramid campaign analysis ──────────────────────────────────────────
+    logger.info("Detecting pyramid campaigns...")
+    # Detect across ALL closed-or-open trades (campaigns can include open layers)
+    campaigns = detect_campaigns([t for t in trades if t.R_dollars > 0])
+    logger.info(f"Found {len(campaigns)} pyramid campaigns")
+    if campaigns:
+        # Fetch OHLC for campaign tickers if not already cached
+        for c in campaigns:
+            if c.ticker not in ohlc_by_ticker:
+                s = c.first_entry - timedelta(days=60)
+                # extend to today (campaigns may have open layers)
+                e = max(c.last_entry, date.today()) + timedelta(days=30)
+                df = fetch_ohlc(c.ticker, s, e)
+                if df is not None and len(df):
+                    ohlc_by_ticker[c.ticker] = df
+        # Compute counterfactuals using best-overall params
+        best_simparams = SimParams(**{
+            k: best_overall['best_params'][k]
+            for k in ('trim1_trigger_R', 'trim1_size_pct', 'trim2_trigger',
+                      'trim2_size_pct', 'trim3_trigger', 'trim3_size_pct',
+                      'full_stop_signal', 'gain_ratchet')
+        })
+        compute_counterfactual(campaigns, ohlc_by_ticker, best_simparams)
+    pyramid_section = build_pyramid_section(campaigns)
+
     # ── Biggest missed-gain trades ─────────────────────────────────────────
     best_idx = best_overall['best_idx']
     optimal_per_trade = R_matrix[:, best_idx]
@@ -224,7 +252,8 @@ def run(input_path: Path, output_md: Path, output_json: Path) -> None:
         'by_regime': by_regime,
         'top_n': top5,
         'missed_gains': missed,
-        '_schema': 'v1',
+        'pyramid_campaigns': pyramid_section,
+        '_schema': 'v2',
     }
 
     write_json(report, output_json)
