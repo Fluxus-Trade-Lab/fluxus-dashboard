@@ -2,6 +2,7 @@ import { useState, useMemo, Fragment } from 'react'
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
 import { usePortfolio } from '../context/PortfolioContext'
 import SortableHeader from '../ui/SortableHeader'
+import { groupByCampaigns } from '../lib/campaign'
 import { fmtCur, fmtPct, fmt, clr, SECTOR_COLORS, MASK } from '../lib/portfolioFormat'
 
 export default function ExposureTab({ openTrades, mergedHoldingsData }) {
@@ -18,28 +19,31 @@ export default function ExposureTab({ openTrades, mergedHoldingsData }) {
     setExpandedTickers(prev => ({ ...prev, [ticker]: !prev[ticker] }))
   }
 
-  // Group trades by ticker for the Detail table
+  // Group OPEN trades into pyramid campaigns (Phase 1: campaign view)
   const groupedTrades = useMemo(() => {
-    const groups = {}
-    openTrades.forEach(t => {
-      if (!groups[t.ticker]) groups[t.ticker] = []
-      groups[t.ticker].push(t)
+    const campaigns = groupByCampaigns(openTrades)
+    return campaigns.map(c => {
+      const totalQty = c.layers.reduce((s, t) => s + t.currentQty, 0)
+      const totalCostBasis = c.layers.reduce((s, t) => s + t.entryPrice * t.currentQty, 0)
+      const avgEntry = totalQty > 0 ? totalCostBasis / totalQty : c.blendedEntry
+      return {
+        ticker: c.ticker,
+        trades: c.layers,
+        isGroup: c.layers.length > 1,
+        direction: c.direction,
+        totalQty,
+        avgEntry,
+        lastPrice: c.layers[0].lastPrice,
+        weight: c.layers.reduce((s, t) => s + t.weight, 0),
+        marketVal: c.layers.reduce((s, t) => s + t.marketVal, 0),
+        totalPL: c.layers.reduce((s, t) => s + t.totalPL, 0),
+        totalReturnPct: totalCostBasis > 0
+          ? c.layers.reduce((s, t) => s + t.totalPL, 0) / totalCostBasis * 100
+          : 0,
+        _campaignLayers: c.openLayersCount,
+        _totalRDollars: c.totalRDollars,
+      }
     })
-    return Object.entries(groups).map(([ticker, trades]) => ({
-      ticker,
-      trades,
-      isGroup: trades.length > 1,
-      // Aggregated values
-      sector: trades[0].sector,
-      direction: trades[0].direction,
-      totalQty: trades.reduce((s, t) => s + t.currentQty, 0),
-      avgEntry: trades.reduce((s, t) => s + t.entryPrice * t.currentQty, 0) / trades.reduce((s, t) => s + t.currentQty, 0),
-      lastPrice: trades[0].lastPrice,
-      weight: trades.reduce((s, t) => s + t.weight, 0),
-      marketVal: trades.reduce((s, t) => s + t.marketVal, 0),
-      totalPL: trades.reduce((s, t) => s + t.totalPL, 0),
-      totalReturnPct: trades.reduce((s, t) => s + t.totalPL, 0) / trades.reduce((s, t) => s + t.entryPrice * t.currentQty, 0) * 100,
-    }))
   }, [openTrades])
 
   const DETAIL_HEADERS = [
@@ -139,7 +143,11 @@ export default function ExposureTab({ openTrades, mergedHoldingsData }) {
                     <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] font-bold">
                       {g.isGroup && <span className="inline-block w-3.5 text-[var(--color-text-muted)] text-[10px]">{expanded ? '▼' : '▶'}</span>}
                       {g.ticker}
-                      {g.isGroup && <span className="ml-1 text-[10px] text-[var(--color-text-muted)]">({g.trades.length})</span>}
+                      {g.isGroup && (
+                        <span className="ml-1 text-[10px] text-[var(--color-text-muted)]">
+                          campaign · {g.trades.length} layers
+                        </span>
+                      )}
                     </td>
                     <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)]">
                       <span className={g.direction === 'long' ? 'text-green-600' : 'text-red-500'}>{g.direction.toUpperCase()}</span>
