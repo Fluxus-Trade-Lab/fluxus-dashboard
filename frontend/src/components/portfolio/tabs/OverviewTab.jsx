@@ -6,6 +6,14 @@ import StatCard from '../ui/StatCard'
 import Button from '../ui/Button'
 import EditablePrice from '../ui/EditablePrice'
 import SortableHeader from '../ui/SortableHeader'
+import LegStateBadge from '../ui/LegStateBadge'
+import StopCell from '../ui/StopCell'
+import TrimTargetsLine from '../ui/TrimTargetsLine'
+import ProximityChips from '../ui/ProximityChips'
+import { derive as deriveLegState } from '../lib/legState'
+import { suggest as suggestStop } from '../lib/stopSuggestion'
+import { chips as proximityChipsFn } from '../lib/emaProximity'
+import { useUniverse } from '../../../hooks/useUniverse'
 import { fmtCur, fmtPct, fmt, clr, todayStr, MASK } from '../lib/portfolioFormat'
 
 export default function OverviewTab({
@@ -15,7 +23,22 @@ export default function OverviewTab({
 }) {
   const { state, dispatch } = usePortfolio()
   const { fetchFullHistory } = usePrices()
+  const { universe } = useUniverse()
   const pm = state.privacyMode
+
+  // Per-ticker EMA + ATR lookup from universe.json (Phase 1)
+  const universeByTicker = useMemo(() => {
+    const out = {}
+    if (!universe) return out
+    for (const r of universe) {
+      out[r.ticker] = {
+        ema10: r.ema10, ema20: r.ema20,
+        wk_ema10: r.wk_ema10, wk_ema20: r.wk_ema20,
+        atr_pct: r.adr_pct,  // ADR is the closest proxy already on universe
+      }
+    }
+    return out
+  }, [universe])
 
   // --- Performance section ---
   const spyYtd = (() => {
@@ -213,9 +236,34 @@ export default function OverviewTab({
               </tr>
             </thead>
             <tbody>
-              {sortedFiltered.map((t, idx) => (
+              {sortedFiltered.map((t, idx) => {
+                const legState = deriveLegState({
+                  currentQty: t.currentQty,
+                  originalQty: t.originalQty,
+                  trims: t.trims,
+                })
+                const u = universeByTicker[t.ticker] || {}
+                const px = t.lastPrice || t.entryPrice
+                const atrDollars = (u.atr_pct ?? 0) * 0.01 * px
+                const stopSugg = suggestStop(
+                  { state: legState, stopPrice: t.stopPrice, entryPrice: t.entryPrice, direction: t.direction },
+                  u,
+                  { atr: atrDollars },
+                )
+                const chipsList = proximityChipsFn(
+                  { price: px, direction: t.direction, wkClose: px },
+                  u,
+                )
+                return (
                 <tr key={t.id} className={`${t.isClosed ? 'bg-[var(--color-closed-row)] opacity-55' : idx % 2 === 0 ? 'bg-[var(--color-surface)]' : 'bg-[var(--color-bg)]'}`}>
-                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] font-bold whitespace-nowrap">{t.ticker}</td>
+                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] font-bold whitespace-nowrap">
+                    <div className="flex items-center gap-1.5">
+                      <span>{t.ticker}</span>
+                      <LegStateBadge state={legState} />
+                      <ProximityChips chips={chipsList} />
+                    </div>
+                    <TrimTargetsLine trade={t} />
+                  </td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)]">
                     <span className={`font-semibold text-[11px] ${t.direction === 'long' ? 'text-green-600' : 'text-red-500'}`}>
                       {t.direction === 'long' ? 'LONG' : 'SHORT'}
@@ -252,7 +300,7 @@ export default function OverviewTab({
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{t.trims?.[2] ? fmtCur(t.trims[2].price) : '—'}</td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] text-[10px] text-[var(--color-text-muted)]">{t.trims?.[2]?.date || ''}</td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">
-                    <EditablePrice value={t.stopPrice} onChange={v => updateStop(t.id, v)} />
+                    <StopCell stopPrice={t.stopPrice} suggestion={stopSugg} onChange={v => updateStop(t.id, v)} />
                   </td>
                   <td className={`px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${clr(t.unrealizedPLPct)}`}>{fmtPct(t.unrealizedPLPct)}</td>
                   <td className={`px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${clr(t.realizedPLPct)}`}>{fmtPct(t.realizedPLPct)}</td>
@@ -270,7 +318,7 @@ export default function OverviewTab({
                     </div>
                   </td>
                 </tr>
-              ))}
+              )})}
             </tbody>
           </table>
         </div>
