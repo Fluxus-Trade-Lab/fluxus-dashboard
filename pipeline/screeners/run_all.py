@@ -365,6 +365,7 @@ def main():
         'trend_base', 'vcs', 'ema21_low_dist',
         'perf_1w_pctile', 'perf_3m_pctile', 'momentum_97',
         'bo_count_1m', 'bo_count_3m', 'bo_count_6m', 'bo_count_1y',
+        'ema10', 'ema20', 'wk_ema10', 'wk_ema20',
     ]
     export_cols = [c for c in universe_cols if c in scored_universe.columns]
     # Convert to object dtype so NaN becomes None (valid JSON null, not NaN)

@@ -375,6 +375,12 @@ class YfinanceAdapter(BaseAdapter):
                 last_high = float(hist['High'].iloc[-1])
                 last_low = float(hist['Low'].iloc[-1])
                 ema21 = float(hist['Close'].ewm(span=21, adjust=False).mean().iloc[-1])
+                # Phase 1: additional EMAs for trailing-stop UI
+                ema10 = float(hist['Close'].ewm(span=10, adjust=False).mean().iloc[-1])
+                ema20 = float(hist['Close'].ewm(span=20, adjust=False).mean().iloc[-1])
+                weekly_closes_for_ema = hist['Close'].resample('W-FRI').last().dropna()
+                wk_ema10 = float(weekly_closes_for_ema.ewm(span=10, adjust=False).mean().iloc[-1]) if len(weekly_closes_for_ema) >= 1 else None
+                wk_ema20 = float(weekly_closes_for_ema.ewm(span=20, adjust=False).mean().iloc[-1]) if len(weekly_closes_for_ema) >= 1 else None
 
                 # From Open %: intraday move from open
                 from_open_pct = (close - last_open) / last_open if last_open > 0 else None
@@ -455,6 +461,10 @@ class YfinanceAdapter(BaseAdapter):
                     'trend_base': trend_base,
                     'vcs': vcs,
                     'ema21_low_dist': ema21_low_dist,
+                    'ema10': ema10,
+                    'ema20': ema20,
+                    'wk_ema10': wk_ema10,
+                    'wk_ema20': wk_ema20,
                     'bo_count_1m': bo_1m,
                     'bo_count_3m': bo_3m,
                     'bo_count_6m': bo_6m,
