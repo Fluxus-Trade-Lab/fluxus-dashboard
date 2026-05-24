@@ -2,6 +2,7 @@ import { useState, useMemo, Fragment } from 'react'
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
 import { usePortfolio } from '../context/PortfolioContext'
 import SortableHeader from '../ui/SortableHeader'
+import CapitalAtRiskWidget from '../ui/CapitalAtRiskWidget'
 import { groupByCampaigns } from '../lib/campaign'
 import { fmtCur, fmtPct, fmt, clr, SECTOR_COLORS, MASK } from '../lib/portfolioFormat'
 
@@ -92,29 +93,33 @@ export default function ExposureTab({ openTrades, mergedHoldingsData }) {
 
   return (
     <div>
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5 mb-5">
-        <div className="font-semibold mb-3 text-sm">Holdings</div>
-        <ResponsiveContainer width="100%" height={260}>
-          <PieChart>
-            <Pie
-              data={mergedHoldingsData}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={90}
-              label={({ name, weight }) => `${name} ${weight}%`}
-              labelLine={{ strokeWidth: 1 }}
-              stroke="var(--color-surface)"
-              strokeWidth={2}
-            >
-              {mergedHoldingsData.map((_, i) => (
-                <Cell key={i} fill={SECTOR_COLORS[i % SECTOR_COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip formatter={(v) => pm ? MASK : fmtCur(v)} />
-          </PieChart>
-        </ResponsiveContainer>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+        <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+          <div className="font-semibold mb-3 text-sm">Holdings</div>
+          <ResponsiveContainer width="100%" height={260}>
+            <PieChart>
+              <Pie
+                data={mergedHoldingsData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={90}
+                label={({ name, weight }) => `${name} ${weight}%`}
+                labelLine={{ strokeWidth: 1 }}
+                stroke="var(--color-surface)"
+                strokeWidth={2}
+              >
+                {mergedHoldingsData.map((_, i) => (
+                  <Cell key={i} fill={SECTOR_COLORS[i % SECTOR_COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip formatter={(v) => pm ? MASK : fmtCur(v)} />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        <CapitalAtRiskWidget openTrades={openTrades} pm={pm} />
       </div>
 
       <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
