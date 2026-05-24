@@ -1,125 +1,131 @@
 {
-  "generated_at": "2026-05-24T04:05:09",
+  "generated_at": "2026-05-24T12:09:35",
   "input_csv": "data/portfolio/portfolio_2026-05-23.csv",
   "summary": {
     "trades_total": 255,
     "closed_count": 233,
     "multiday_count": 46,
     "simulated_count": 46,
-    "param_combos": 10800,
-    "simulations": 496800
+    "param_combos": 37800,
+    "simulations": 1738800
   },
   "headline": {
     "actual_total_R": 116.68564881672513,
-    "optimal_total_R": 133.99289028744573,
-    "lift_pct": 14.832365116214588,
+    "optimal_total_R": 210.5092626108531,
+    "lift_pct": 80.4071578172343,
     "largest_gap_reason": "premature exits on multi-day winners \u2014 optimizer held longer with a wider EMA-based stop"
   },
   "best_overall": {
-    "best_idx": 8829,
-    "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+    "best_idx": 30519,
+    "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
     "best_params": {
       "trim1_trigger_R": 4.0,
       "trim1_size_pct": 0.3,
-      "trim2_signal": "wk_close_lt_10ema",
-      "trim2_size_pct": 1.0,
+      "trim2_trigger": "wk_close_lt_10ema",
+      "trim2_size_pct": 0.3,
+      "trim3_trigger": "r_8",
+      "trim3_size_pct": 1.0,
       "full_stop_signal": "wk_close_lt_20ema",
-      "gain_ratchet": "none",
-      "sell_strength": "none"
+      "gain_ratchet": "none"
     },
-    "total_R": 133.99289028744573,
-    "mean_R": 2.9128889192922984,
-    "sharpe_adj_R": 2.373914956550857,
+    "total_R": 210.5092626108531,
+    "mean_R": 4.576288317627242,
+    "sharpe_adj_R": 3.222106186592812,
     "trade_count": 46,
     "actual_total_R": 116.68564881672513
   },
   "by_atr_bucket": {
     "10%+": {
-      "best_idx": 8757,
-      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "best_idx": 7818,
+      "best_label": "T1=2.5R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=\u2014 \u00b7 Stop=d30EMA \u00b7 Ratch=\u2205",
       "best_params": {
-        "trim1_trigger_R": 4.0,
+        "trim1_trigger_R": 2.5,
         "trim1_size_pct": 0.3,
-        "trim2_signal": "wk_close_lt_10ema",
-        "trim2_size_pct": 0.5,
-        "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none",
-        "sell_strength": "none"
+        "trim2_trigger": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.3,
+        "trim3_trigger": "none",
+        "trim3_size_pct": 0.5,
+        "full_stop_signal": "d_close_lt_30ema",
+        "gain_ratchet": "none"
       },
-      "total_R": 23.49998033332037,
-      "mean_R": 3.3571400476171958,
-      "sharpe_adj_R": 1.5936461732765215,
+      "total_R": 64.75544709010761,
+      "mean_R": 9.250778155729659,
+      "sharpe_adj_R": 2.336023796648136,
       "trade_count": 7,
       "actual_total_R": 23.8894801999832
     },
     "3-5%": {
-      "best_idx": 9844,
-      "best_label": "T1=4.0R/50% \u00b7 T2=d5dLow/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=r8\u21925 \u00b7 Strength=s30@15%",
+      "best_idx": 31325,
+      "best_label": "T1=4.0R/30% \u00b7 T2=+6R/30% \u00b7 T3=+12R/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=r8\u21925",
       "best_params": {
         "trim1_trigger_R": 4.0,
-        "trim1_size_pct": 0.5,
-        "trim2_signal": "d_close_lt_5d_low",
-        "trim2_size_pct": 0.5,
+        "trim1_size_pct": 0.3,
+        "trim2_trigger": "r_6",
+        "trim2_size_pct": 0.3,
+        "trim3_trigger": "r_12",
+        "trim3_size_pct": 1.0,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "8R_to_5R",
-        "sell_strength": "trim_30_on_15pct"
+        "gain_ratchet": "8R_to_5R"
       },
-      "total_R": 6.961395513446101,
-      "mean_R": 0.994485073349443,
-      "sharpe_adj_R": 1.1305071565474432,
+      "total_R": 24.09080253019614,
+      "mean_R": 3.4415432185994486,
+      "sharpe_adj_R": 2.4968476653443865,
       "trade_count": 7,
       "actual_total_R": 20.611420469712748
     },
     "5-7%": {
-      "best_idx": 8757,
-      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "best_idx": 30495,
+      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=\u2014 \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
       "best_params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
-        "trim2_signal": "wk_close_lt_10ema",
-        "trim2_size_pct": 0.5,
+        "trim2_trigger": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.3,
+        "trim3_trigger": "none",
+        "trim3_size_pct": 0.5,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none",
-        "sell_strength": "none"
+        "gain_ratchet": "none"
       },
-      "total_R": 72.09341675045248,
-      "mean_R": 4.50583854690328,
-      "sharpe_adj_R": 1.4697403047218616,
+      "total_R": 91.98941225461263,
+      "mean_R": 5.7493382659132894,
+      "sharpe_adj_R": 1.8648960894686546,
       "trade_count": 16,
       "actual_total_R": 40.830595698237616
     },
     "7-10%": {
-      "best_idx": 4455,
-      "best_label": "T1=3.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 Stop=trail2ATR \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "best_idx": 31677,
+      "best_label": "T1=4.0R/30% \u00b7 T2=+8R/70% \u00b7 T3=\u2014 \u00b7 Stop=trail2ATR \u00b7 Ratch=\u2205",
       "best_params": {
-        "trim1_trigger_R": 3.0,
+        "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
-        "trim2_signal": "wk_close_lt_10ema",
-        "trim2_size_pct": 0.5,
+        "trim2_trigger": "r_8",
+        "trim2_size_pct": 0.7,
+        "trim3_trigger": "none",
+        "trim3_size_pct": 0.5,
         "full_stop_signal": "trailing_2atr",
-        "gain_ratchet": "none",
-        "sell_strength": "none"
+        "gain_ratchet": "none"
       },
-      "total_R": 35.585237895210675,
-      "mean_R": 2.372349193014045,
-      "sharpe_adj_R": 1.6982277686437204,
+      "total_R": 47.93690064540751,
+      "mean_R": 3.1957933763605006,
+      "sharpe_adj_R": 3.798075207639563,
       "trade_count": 15,
       "actual_total_R": 35.588573813776726
     },
     "<3%": {
-      "best_idx": 10548,
-      "best_label": "T1=4.0R/70% \u00b7 T2=wk10EMA/100% \u00b7 Stop=d20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "best_idx": 31417,
+      "best_label": "T1=4.0R/30% \u00b7 T2=+6R/70% \u00b7 T3=\u2014 \u00b7 Stop=d20EMA \u00b7 Ratch=r5\u21923",
       "best_params": {
         "trim1_trigger_R": 4.0,
-        "trim1_size_pct": 0.7,
-        "trim2_signal": "wk_close_lt_10ema",
-        "trim2_size_pct": 1.0,
+        "trim1_size_pct": 0.3,
+        "trim2_trigger": "r_6",
+        "trim2_size_pct": 0.7,
+        "trim3_trigger": "none",
+        "trim3_size_pct": 0.5,
         "full_stop_signal": "d_close_lt_20ema",
-        "gain_ratchet": "none",
-        "sell_strength": "none"
+        "gain_ratchet": "5R_to_3R"
       },
-      "total_R": 3.771457080037444,
-      "mean_R": 3.771457080037444,
+      "total_R": 4.451450753560207,
+      "mean_R": 4.451450753560207,
       "sharpe_adj_R": 0.0,
       "trade_count": 1,
       "actual_total_R": -4.2344213649851605
@@ -127,94 +133,99 @@
   },
   "by_hold": {
     "core (4-8d)": {
-      "best_idx": 10504,
-      "best_label": "T1=4.0R/70% \u00b7 T2=wk10EMA/50% \u00b7 Stop=trail2ATR \u00b7 Ratch=\u2205 \u00b7 Strength=s30@15%",
+      "best_idx": 31698,
+      "best_label": "T1=4.0R/30% \u00b7 T2=+8R/70% \u00b7 T3=+8R/100% \u00b7 Stop=d30EMA \u00b7 Ratch=\u2205",
       "best_params": {
         "trim1_trigger_R": 4.0,
-        "trim1_size_pct": 0.7,
-        "trim2_signal": "wk_close_lt_10ema",
-        "trim2_size_pct": 0.5,
-        "full_stop_signal": "trailing_2atr",
-        "gain_ratchet": "none",
-        "sell_strength": "trim_30_on_15pct"
+        "trim1_size_pct": 0.3,
+        "trim2_trigger": "r_8",
+        "trim2_size_pct": 0.7,
+        "trim3_trigger": "r_8",
+        "trim3_size_pct": 1.0,
+        "full_stop_signal": "d_close_lt_30ema",
+        "gain_ratchet": "none"
       },
-      "total_R": 24.17588327254666,
-      "mean_R": 1.7268488051819042,
-      "sharpe_adj_R": 2.6109377370352997,
+      "total_R": 56.36249510825125,
+      "mean_R": 4.025892507732232,
+      "sharpe_adj_R": 4.511190002741702,
       "trade_count": 14,
       "actual_total_R": 37.12031077595616
     },
     "swing (>8d)": {
-      "best_idx": 8829,
-      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "best_idx": 30519,
+      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
       "best_params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
-        "trim2_signal": "wk_close_lt_10ema",
-        "trim2_size_pct": 1.0,
+        "trim2_trigger": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.3,
+        "trim3_trigger": "r_8",
+        "trim3_size_pct": 1.0,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none",
-        "sell_strength": "none"
+        "gain_ratchet": "none"
       },
-      "total_R": 114.48067075619986,
-      "mean_R": 6.025298460852624,
-      "sharpe_adj_R": 2.2256694824058916,
+      "total_R": 131.4657483400896,
+      "mean_R": 6.919249912636294,
+      "sharpe_adj_R": 2.6233303853411307,
       "trade_count": 19,
       "actual_total_R": 63.464780999972376
     },
     "tactical (1-3d)": {
-      "best_idx": 6075,
-      "best_label": "T1=3.0R/70% \u00b7 T2=d10EMA/50% \u00b7 Stop=trail2ATR \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "best_idx": 30495,
+      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=\u2014 \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
       "best_params": {
-        "trim1_trigger_R": 3.0,
-        "trim1_size_pct": 0.7,
-        "trim2_signal": "d_close_lt_10ema",
-        "trim2_size_pct": 0.5,
-        "full_stop_signal": "trailing_2atr",
-        "gain_ratchet": "none",
-        "sell_strength": "none"
+        "trim1_trigger_R": 4.0,
+        "trim1_size_pct": 0.3,
+        "trim2_trigger": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.3,
+        "trim3_trigger": "none",
+        "trim3_size_pct": 0.5,
+        "full_stop_signal": "wk_close_lt_20ema",
+        "gain_ratchet": "none"
       },
-      "total_R": 2.2404946313305274,
-      "mean_R": 0.17234574087157903,
-      "sharpe_adj_R": 0.3448571531585907,
+      "total_R": 32.61750468435287,
+      "mean_R": 2.5090388218732977,
+      "sharpe_adj_R": 1.0075993755158918,
       "trade_count": 13,
       "actual_total_R": 16.100557040796602
     }
   },
   "by_regime": {
     "bull": {
-      "best_idx": 8979,
-      "best_label": "T1=4.0R/30% \u00b7 T2=d5dLow/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=r8\u21925 \u00b7 Strength=\u2205",
+      "best_idx": 30521,
+      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=r8\u21925",
       "best_params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
-        "trim2_signal": "d_close_lt_5d_low",
-        "trim2_size_pct": 0.5,
+        "trim2_trigger": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.3,
+        "trim3_trigger": "r_8",
+        "trim3_size_pct": 1.0,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "8R_to_5R",
-        "sell_strength": "none"
+        "gain_ratchet": "8R_to_5R"
       },
-      "total_R": 75.6829522275888,
-      "mean_R": 2.293422794775418,
-      "sharpe_adj_R": 1.5137977656142176,
+      "total_R": 148.59255055252902,
+      "mean_R": 4.502804562197849,
+      "sharpe_adj_R": 2.522056256711342,
       "trade_count": 33,
       "actual_total_R": 76.42419207314714
     },
     "pullback": {
-      "best_idx": 8757,
-      "best_label": "T1=4.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
+      "best_idx": 30915,
+      "best_label": "T1=4.0R/30% \u00b7 T2=d5dLow/70% \u00b7 T3=\u2014 \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
       "best_params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
-        "trim2_signal": "wk_close_lt_10ema",
-        "trim2_size_pct": 0.5,
+        "trim2_trigger": "d_close_lt_5d_low",
+        "trim2_size_pct": 0.7,
+        "trim3_trigger": "none",
+        "trim3_size_pct": 0.5,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none",
-        "sell_strength": "none"
+        "gain_ratchet": "none"
       },
-      "total_R": 60.10731344274565,
-      "mean_R": 4.623639495595819,
-      "sharpe_adj_R": 2.3829118832748892,
+      "total_R": 68.52072805623777,
+      "mean_R": 5.270825235095213,
+      "sharpe_adj_R": 2.7154693076856793,
       "trade_count": 13,
       "actual_total_R": 40.261456743578
     }
@@ -222,72 +233,77 @@
   "top_n": [
     {
       "rank": 1,
-      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
-      "total_R": 133.99289028744573,
+      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
+      "total_R": 210.5092626108531,
       "params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
-        "trim2_signal": "wk_close_lt_10ema",
-        "trim2_size_pct": 1.0,
+        "trim2_trigger": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.3,
+        "trim3_trigger": "r_8",
+        "trim3_size_pct": 1.0,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none",
-        "sell_strength": "none"
+        "gain_ratchet": "none"
       }
     },
     {
       "rank": 2,
-      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/70% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
-      "total_R": 133.7003214084584,
+      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
+      "total_R": 209.58261959598875,
       "params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
-        "trim2_signal": "wk_close_lt_10ema",
-        "trim2_size_pct": 0.7,
+        "trim2_trigger": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.5,
+        "trim3_trigger": "r_8",
+        "trim3_size_pct": 1.0,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none",
-        "sell_strength": "none"
+        "gain_ratchet": "none"
       }
     },
     {
       "rank": 3,
-      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
-      "total_R": 133.50367675208986,
+      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/30% \u00b7 T3=+8R/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
+      "total_R": 209.3699027785363,
       "params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
-        "trim2_signal": "wk_close_lt_10ema",
-        "trim2_size_pct": 0.5,
+        "trim2_trigger": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.3,
+        "trim3_trigger": "r_8",
+        "trim3_size_pct": 0.5,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none",
-        "sell_strength": "none"
+        "gain_ratchet": "none"
       }
     },
     {
       "rank": 4,
-      "label": "T1=4.0R/30% \u00b7 T2=d5dLow/70% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
-      "total_R": 133.01446321673401,
+      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/50% \u00b7 T3=+8R/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
+      "total_R": 208.7687911443339,
       "params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
-        "trim2_signal": "d_close_lt_5d_low",
-        "trim2_size_pct": 0.7,
+        "trim2_trigger": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.5,
+        "trim3_trigger": "r_8",
+        "trim3_size_pct": 0.5,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none",
-        "sell_strength": "none"
+        "gain_ratchet": "none"
       }
     },
     {
       "rank": 5,
-      "label": "T1=4.0R/30% \u00b7 T2=d5dLow/50% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205 \u00b7 Strength=\u2205",
-      "total_R": 133.01446321673401,
+      "label": "T1=4.0R/30% \u00b7 T2=wk10EMA/70% \u00b7 T3=+8R/100% \u00b7 Stop=wk20EMA \u00b7 Ratch=\u2205",
+      "total_R": 208.6559765811244,
       "params": {
         "trim1_trigger_R": 4.0,
         "trim1_size_pct": 0.3,
-        "trim2_signal": "d_close_lt_5d_low",
-        "trim2_size_pct": 0.5,
+        "trim2_trigger": "wk_close_lt_10ema",
+        "trim2_size_pct": 0.7,
+        "trim3_trigger": "r_8",
+        "trim3_size_pct": 1.0,
         "full_stop_signal": "wk_close_lt_20ema",
-        "gain_ratchet": "none",
-        "sell_strength": "none"
+        "gain_ratchet": "none"
       }
     }
   ],
@@ -298,6 +314,13 @@
       "actual_R": 10.364728699255132,
       "optimal_R": 48.91470886410743,
       "delta_R": 38.5499801648523
+    },
+    {
+      "ticker": "SNXX",
+      "entry_date": "2026-04-21",
+      "actual_R": 2.6837133018671886,
+      "optimal_R": 31.429807245129165,
+      "delta_R": 28.746093943261975
     },
     {
       "ticker": "MRVL",
@@ -328,11 +351,39 @@
       "delta_R": 9.020712930966859
     },
     {
+      "ticker": "NOK",
+      "entry_date": "2026-04-29",
+      "actual_R": 4.105263157894754,
+      "optimal_R": 12.953053684736089,
+      "delta_R": 8.847790526841335
+    },
+    {
       "ticker": "BABA",
       "entry_date": "2026-01-11",
       "actual_R": -4.2344213649851605,
       "optimal_R": 3.4378782432544757,
       "delta_R": 7.672299608239636
+    },
+    {
+      "ticker": "NVTS",
+      "entry_date": "2026-05-10",
+      "actual_R": 4.236680857836311,
+      "optimal_R": 9.991286356582975,
+      "delta_R": 5.754605498746664
+    },
+    {
+      "ticker": "DXYZ",
+      "entry_date": "2026-04-30",
+      "actual_R": 7.296610607031182,
+      "optimal_R": 12.230650612368557,
+      "delta_R": 4.9340400053373745
+    },
+    {
+      "ticker": "AMDL",
+      "entry_date": "2026-03-17",
+      "actual_R": 0.09845514859085495,
+      "optimal_R": 4.89083208537361,
+      "delta_R": 4.792376936782755
     },
     {
       "ticker": "BE",
@@ -361,42 +412,1579 @@
       "actual_R": 1.881355932203387,
       "optimal_R": 4.819013173686098,
       "delta_R": 2.9376572414827113
+    }
+  ],
+  "pyramid_campaigns": [
+    {
+      "ticker": "BABA",
+      "direction": "long",
+      "n_layers": 5,
+      "first_entry": "2026-01-05",
+      "last_entry": "2026-02-02",
+      "span_days": 28,
+      "actual_R": -24.512103276488023,
+      "counterfactual_R": 1.5192832626145245,
+      "delta_R": -26.03138653910255,
+      "layer_entries": [
+        {
+          "date": "2026-01-05",
+          "price": 153.29,
+          "qty": 326
+        },
+        {
+          "date": "2026-01-11",
+          "price": 158.87,
+          "qty": 951
+        },
+        {
+          "date": "2026-01-14",
+          "price": 172.0,
+          "qty": 291
+        },
+        {
+          "date": "2026-01-20",
+          "price": 168.5,
+          "qty": 667
+        },
+        {
+          "date": "2026-02-02",
+          "price": 164.43,
+          "qty": 604
+        }
+      ]
     },
     {
-      "ticker": "PL",
-      "entry_date": "2026-05-07",
-      "actual_R": 2.0231256993659077,
-      "optimal_R": 4.480589319519773,
-      "delta_R": 2.457463620153865
+      "ticker": "FLY",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-01-06",
+      "last_entry": "2026-01-06",
+      "span_days": 0,
+      "actual_R": 2.0443005978722817,
+      "counterfactual_R": 0.5653630577561689,
+      "delta_R": 1.478937540116113,
+      "layer_entries": [
+        {
+          "date": "2026-01-06",
+          "price": 27.11,
+          "qty": 3667
+        },
+        {
+          "date": "2026-01-06",
+          "price": 27.93,
+          "qty": 3559
+        }
+      ]
     },
     {
-      "ticker": "FSLY",
-      "entry_date": "2026-05-03",
-      "actual_R": -0.68361581920904,
-      "optimal_R": 1.2008602150537633,
-      "delta_R": 1.8844760342628033
+      "ticker": "APLD",
+      "direction": "long",
+      "n_layers": 3,
+      "first_entry": "2026-01-06",
+      "last_entry": "2026-01-25",
+      "span_days": 19,
+      "actual_R": 1.2556492807515376,
+      "counterfactual_R": -1.0,
+      "delta_R": 2.2556492807515376,
+      "layer_entries": [
+        {
+          "date": "2026-01-06",
+          "price": 32.1,
+          "qty": 4645
+        },
+        {
+          "date": "2026-01-14",
+          "price": 35.9,
+          "qty": 838
+        },
+        {
+          "date": "2026-01-25",
+          "price": 39.54,
+          "qty": 4152
+        }
+      ]
+    },
+    {
+      "ticker": "PLTR",
+      "direction": "short",
+      "n_layers": 8,
+      "first_entry": "2026-01-07",
+      "last_entry": "2026-03-24",
+      "span_days": 76,
+      "actual_R": 0.08134128586859161,
+      "counterfactual_R": 5.701192080551877,
+      "delta_R": -5.619850794683285,
+      "layer_entries": [
+        {
+          "date": "2026-01-07",
+          "price": 177.79,
+          "qty": 398
+        },
+        {
+          "date": "2026-02-04",
+          "price": 133.8,
+          "qty": 745
+        },
+        {
+          "date": "2026-03-04",
+          "price": 151.7,
+          "qty": 615
+        },
+        {
+          "date": "2026-03-09",
+          "price": 151.3,
+          "qty": 301
+        },
+        {
+          "date": "2026-03-19",
+          "price": 153.2,
+          "qty": 315
+        },
+        {
+          "date": "2026-03-23",
+          "price": 153.5,
+          "qty": 311
+        },
+        {
+          "date": "2026-03-24",
+          "price": 156.0,
+          "qty": 306
+        },
+        {
+          "date": "2026-03-24",
+          "price": 153.6,
+          "qty": 497
+        }
+      ]
+    },
+    {
+      "ticker": "MU",
+      "direction": "long",
+      "n_layers": 3,
+      "first_entry": "2026-01-14",
+      "last_entry": "2026-04-12",
+      "span_days": 88,
+      "actual_R": 13.524411903637223,
+      "counterfactual_R": 5.415856550220203,
+      "delta_R": 8.10855535341702,
+      "layer_entries": [
+        {
+          "date": "2026-01-14",
+          "price": 343.5,
+          "qty": 292
+        },
+        {
+          "date": "2026-01-21",
+          "price": 380.42,
+          "qty": 292
+        },
+        {
+          "date": "2026-04-12",
+          "price": 416.9,
+          "qty": 463
+        }
+      ]
+    },
+    {
+      "ticker": "CRWV",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-01-13",
+      "last_entry": "2026-01-26",
+      "span_days": 13,
+      "actual_R": 1.4406565377328564,
+      "counterfactual_R": 1.1827035747814654,
+      "delta_R": 0.25795296295139103,
+      "layer_entries": [
+        {
+          "date": "2026-01-13",
+          "price": 91.12,
+          "qty": 1317
+        },
+        {
+          "date": "2026-01-26",
+          "price": 104.5,
+          "qty": 519
+        }
+      ]
+    },
+    {
+      "ticker": "RKLB",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-01-14",
+      "last_entry": "2026-03-16",
+      "span_days": 61,
+      "actual_R": -1.0248266296809971,
+      "counterfactual_R": 0.8407293482248589,
+      "delta_R": -1.865555977905856,
+      "layer_entries": [
+        {
+          "date": "2026-01-14",
+          "price": 91.1,
+          "qty": 1236
+        },
+        {
+          "date": "2026-03-16",
+          "price": 75.86,
+          "qty": 1214
+        }
+      ]
+    },
+    {
+      "ticker": "ARM",
+      "direction": "long",
+      "n_layers": 5,
+      "first_entry": "2026-01-20",
+      "last_entry": "2026-04-15",
+      "span_days": 85,
+      "actual_R": 3.525060175794456,
+      "counterfactual_R": -1.382000732421875,
+      "delta_R": 4.907060908216331,
+      "layer_entries": [
+        {
+          "date": "2026-01-20",
+          "price": 114.0,
+          "qty": 1479
+        },
+        {
+          "date": "2026-03-25",
+          "price": 156.9,
+          "qty": 542
+        },
+        {
+          "date": "2026-03-30",
+          "price": 144.1,
+          "qty": 423
+        },
+        {
+          "date": "2026-04-12",
+          "price": 153.92,
+          "qty": 369
+        },
+        {
+          "date": "2026-04-15",
+          "price": 162.78,
+          "qty": 376
+        }
+      ]
+    },
+    {
+      "ticker": "ALAB",
+      "direction": "long",
+      "n_layers": 5,
+      "first_entry": "2026-05-10",
+      "last_entry": "2026-05-18",
+      "span_days": 8,
+      "actual_R": 2.422712719189102,
+      "counterfactual_R": 9.642049872552256,
+      "delta_R": -7.2193371533631545,
+      "layer_entries": [
+        {
+          "date": "2026-05-10",
+          "price": 204.49,
+          "qty": 710
+        },
+        {
+          "date": "2026-05-12",
+          "price": 208.32,
+          "qty": 366
+        },
+        {
+          "date": "2026-05-12",
+          "price": 209.1,
+          "qty": 219
+        },
+        {
+          "date": "2026-05-14",
+          "price": 230.89,
+          "qty": 273
+        },
+        {
+          "date": "2026-05-18",
+          "price": 237.78,
+          "qty": 618
+        }
+      ]
+    },
+    {
+      "ticker": "CSIQ",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-01-22",
+      "last_entry": "2026-01-25",
+      "span_days": 3,
+      "actual_R": -1.5650288288591165,
+      "counterfactual_R": -1.451612985262307,
+      "delta_R": -0.11341584359680956,
+      "layer_entries": [
+        {
+          "date": "2026-01-22",
+          "price": 22.93,
+          "qty": 3838
+        },
+        {
+          "date": "2026-01-25",
+          "price": 22.7,
+          "qty": 3375
+        }
+      ]
+    },
+    {
+      "ticker": "NAIL",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-02-02",
+      "last_entry": "2026-02-26",
+      "span_days": 24,
+      "actual_R": 1.3917128438643367,
+      "counterfactual_R": -1.0,
+      "delta_R": 2.3917128438643367,
+      "layer_entries": [
+        {
+          "date": "2026-02-02",
+          "price": 66.43,
+          "qty": 1481
+        },
+        {
+          "date": "2026-02-26",
+          "price": 65.74,
+          "qty": 1220
+        }
+      ]
+    },
+    {
+      "ticker": "META",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-02-04",
+      "last_entry": "2026-02-04",
+      "span_days": 0,
+      "actual_R": -0.9446981227803115,
+      "counterfactual_R": -1.2243574593646998,
+      "delta_R": 0.27965933658438824,
+      "layer_entries": [
+        {
+          "date": "2026-02-04",
+          "price": 674.3,
+          "qty": 73
+        },
+        {
+          "date": "2026-02-04",
+          "price": 656.3,
+          "qty": 77
+        }
+      ]
     },
     {
       "ticker": "METU",
-      "entry_date": "2026-04-07",
-      "actual_R": 2.366666666666661,
-      "optimal_R": 4.1341510016611664,
-      "delta_R": 1.7674843349945055
+      "direction": "long",
+      "n_layers": 3,
+      "first_entry": "2026-02-08",
+      "last_entry": "2026-05-05",
+      "span_days": 86,
+      "actual_R": 1.9911032844122225,
+      "counterfactual_R": -1.9486633557852306,
+      "delta_R": 3.939766640197453,
+      "layer_entries": [
+        {
+          "date": "2026-02-08",
+          "price": 32.66,
+          "qty": 3154
+        },
+        {
+          "date": "2026-04-07",
+          "price": 25.1,
+          "qty": 3789
+        },
+        {
+          "date": "2026-05-05",
+          "price": 25.12,
+          "qty": 7468
+        }
+      ]
+    },
+    {
+      "ticker": "BE",
+      "direction": "long",
+      "n_layers": 15,
+      "first_entry": "2026-02-10",
+      "last_entry": "2026-05-19",
+      "span_days": 98,
+      "actual_R": 9.999769271828795,
+      "counterfactual_R": -1.7999997956982228,
+      "delta_R": 11.799769067527018,
+      "layer_entries": [
+        {
+          "date": "2026-02-10",
+          "price": 144.95,
+          "qty": 486
+        },
+        {
+          "date": "2026-03-01",
+          "price": 157.8,
+          "qty": 307
+        },
+        {
+          "date": "2026-03-04",
+          "price": 162.5,
+          "qty": 287
+        },
+        {
+          "date": "2026-03-17",
+          "price": 162.5,
+          "qty": 302
+        },
+        {
+          "date": "2026-03-17",
+          "price": 159.2,
+          "qty": 308
+        },
+        {
+          "date": "2026-03-18",
+          "price": 152.7,
+          "qty": 316
+        },
+        {
+          "date": "2026-04-05",
+          "price": 136.7,
+          "qty": 305
+        },
+        {
+          "date": "2026-04-05",
+          "price": 138.9,
+          "qty": 375
+        },
+        {
+          "date": "2026-04-08",
+          "price": 147.2,
+          "qty": 990
+        },
+        {
+          "date": "2026-05-06",
+          "price": 263.98,
+          "qty": 764
+        },
+        {
+          "date": "2026-05-07",
+          "price": 253.37,
+          "qty": 270
+        },
+        {
+          "date": "2026-05-07",
+          "price": 255.84,
+          "qty": 441
+        },
+        {
+          "date": "2026-05-07",
+          "price": 260.12,
+          "qty": 217
+        },
+        {
+          "date": "2026-05-07",
+          "price": 260.12,
+          "qty": 217
+        },
+        {
+          "date": "2026-05-19",
+          "price": 267.87,
+          "qty": 276
+        }
+      ]
+    },
+    {
+      "ticker": "ARKK",
+      "direction": "short",
+      "n_layers": 8,
+      "first_entry": "2026-02-10",
+      "last_entry": "2026-04-05",
+      "span_days": 54,
+      "actual_R": 0.49488788380686,
+      "counterfactual_R": -1.020956987392404,
+      "delta_R": 1.515844871199264,
+      "layer_entries": [
+        {
+          "date": "2026-02-10",
+          "price": 69.93,
+          "qty": 1128
+        },
+        {
+          "date": "2026-02-12",
+          "price": 69.33,
+          "qty": 1446
+        },
+        {
+          "date": "2026-02-16",
+          "price": 69.23,
+          "qty": 1451
+        },
+        {
+          "date": "2026-03-12",
+          "price": 71.3,
+          "qty": 1284
+        },
+        {
+          "date": "2026-03-19",
+          "price": 70.8,
+          "qty": 272
+        },
+        {
+          "date": "2026-03-19",
+          "price": 70.1,
+          "qty": 413
+        },
+        {
+          "date": "2026-03-25",
+          "price": 68.22,
+          "qty": 1390
+        },
+        {
+          "date": "2026-04-05",
+          "price": 69.0,
+          "qty": 1511
+        }
+      ]
+    },
+    {
+      "ticker": "PL",
+      "direction": "long",
+      "n_layers": 12,
+      "first_entry": "2026-02-17",
+      "last_entry": "2026-05-07",
+      "span_days": 79,
+      "actual_R": 1.2865089493144846,
+      "counterfactual_R": 9.783841512237204,
+      "delta_R": -8.49733256292272,
+      "layer_entries": [
+        {
+          "date": "2026-02-17",
+          "price": 23.87,
+          "qty": 4209
+        },
+        {
+          "date": "2026-02-25",
+          "price": 25.35,
+          "qty": 3258
+        },
+        {
+          "date": "2026-03-19",
+          "price": 30.85,
+          "qty": 945
+        },
+        {
+          "date": "2026-03-19",
+          "price": 31.4,
+          "qty": 922
+        },
+        {
+          "date": "2026-03-19",
+          "price": 35.2,
+          "qty": 1645
+        },
+        {
+          "date": "2026-03-22",
+          "price": 32.29,
+          "qty": 2942
+        },
+        {
+          "date": "2026-03-24",
+          "price": 31.52,
+          "qty": 1510
+        },
+        {
+          "date": "2026-03-24",
+          "price": 34.4,
+          "qty": 2215
+        },
+        {
+          "date": "2026-03-31",
+          "price": 29.38,
+          "qty": 3432
+        },
+        {
+          "date": "2026-03-31",
+          "price": 29.4,
+          "qty": 2743
+        },
+        {
+          "date": "2026-04-12",
+          "price": 34.5,
+          "qty": 1649
+        },
+        {
+          "date": "2026-05-07",
+          "price": 35.82,
+          "qty": 1532
+        }
+      ]
+    },
+    {
+      "ticker": "AAOI",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-02-18",
+      "last_entry": "2026-04-29",
+      "span_days": 70,
+      "actual_R": 1.856517601790131,
+      "counterfactual_R": 12.241905477819218,
+      "delta_R": -10.385387876029087,
+      "layer_entries": [
+        {
+          "date": "2026-02-18",
+          "price": 44.41,
+          "qty": 2262
+        },
+        {
+          "date": "2026-04-29",
+          "price": 160.35,
+          "qty": 542
+        }
+      ]
+    },
+    {
+      "ticker": "SNDK",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-02-22",
+      "last_entry": "2026-02-22",
+      "span_days": 0,
+      "actual_R": -2.0534591194968552,
+      "counterfactual_R": -1.4750010172526042,
+      "delta_R": -0.578458102244251,
+      "layer_entries": [
+        {
+          "date": "2026-02-22",
+          "price": 662.0,
+          "qty": 106
+        },
+        {
+          "date": "2026-02-22",
+          "price": 672.0,
+          "qty": 120
+        }
+      ]
+    },
+    {
+      "ticker": "ERO",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-02-22",
+      "last_entry": "2026-02-24",
+      "span_days": 2,
+      "actual_R": -2.6896141215106737,
+      "counterfactual_R": -1.7333327784682773,
+      "delta_R": -0.9562813430423964,
+      "layer_entries": [
+        {
+          "date": "2026-02-22",
+          "price": 31.15,
+          "qty": 1624
+        },
+        {
+          "date": "2026-02-24",
+          "price": 34.47,
+          "qty": 2342
+        }
+      ]
+    },
+    {
+      "ticker": "GLW",
+      "direction": "long",
+      "n_layers": 6,
+      "first_entry": "2026-02-22",
+      "last_entry": "2026-05-10",
+      "span_days": 77,
+      "actual_R": 0.04305807622504401,
+      "counterfactual_R": -1.6074071813512725,
+      "delta_R": 1.6504652575763166,
+      "layer_entries": [
+        {
+          "date": "2026-02-22",
+          "price": 146.8,
+          "qty": 551
+        },
+        {
+          "date": "2026-03-17",
+          "price": 133.6,
+          "qty": 367
+        },
+        {
+          "date": "2026-05-04",
+          "price": 167.43,
+          "qty": 761
+        },
+        {
+          "date": "2026-05-07",
+          "price": 191.23,
+          "qty": 287
+        },
+        {
+          "date": "2026-05-07",
+          "price": 187.78,
+          "qty": 299
+        },
+        {
+          "date": "2026-05-10",
+          "price": 206.1,
+          "qty": 352
+        }
+      ]
+    },
+    {
+      "ticker": "VRT",
+      "direction": "long",
+      "n_layers": 3,
+      "first_entry": "2026-02-23",
+      "last_entry": "2026-03-16",
+      "span_days": 21,
+      "actual_R": 0.9065709386247564,
+      "counterfactual_R": -1.6444683136412457,
+      "delta_R": 2.551039252266002,
+      "layer_entries": [
+        {
+          "date": "2026-02-23",
+          "price": 248.31,
+          "qty": 285
+        },
+        {
+          "date": "2026-03-05",
+          "price": 250.1,
+          "qty": 369
+        },
+        {
+          "date": "2026-03-16",
+          "price": 265.9,
+          "qty": 241
+        }
+      ]
+    },
+    {
+      "ticker": "CCJ",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-02-23",
+      "last_entry": "2026-04-14",
+      "span_days": 50,
+      "actual_R": -1.4130232777370029,
+      "counterfactual_R": -2.161839811724738,
+      "delta_R": 0.7488165339877353,
+      "layer_entries": [
+        {
+          "date": "2026-02-23",
+          "price": 119.87,
+          "qty": 506
+        },
+        {
+          "date": "2026-04-14",
+          "price": 120.34,
+          "qty": 613
+        }
+      ]
+    },
+    {
+      "ticker": "FSLY",
+      "direction": "long",
+      "n_layers": 5,
+      "first_entry": "2026-03-01",
+      "last_entry": "2026-05-03",
+      "span_days": 63,
+      "actual_R": 0.10281638267959059,
+      "counterfactual_R": 1.4719253374063275,
+      "delta_R": -1.369108954726737,
+      "layer_entries": [
+        {
+          "date": "2026-03-01",
+          "price": 19.94,
+          "qty": 4874
+        },
+        {
+          "date": "2026-04-29",
+          "price": 26.12,
+          "qty": 3332
+        },
+        {
+          "date": "2026-04-29",
+          "price": 26.37,
+          "qty": 1885
+        },
+        {
+          "date": "2026-04-29",
+          "price": 24.81,
+          "qty": 3006
+        },
+        {
+          "date": "2026-05-03",
+          "price": 27.39,
+          "qty": 2325
+        }
+      ]
+    },
+    {
+      "ticker": "SOLS",
+      "direction": "long",
+      "n_layers": 3,
+      "first_entry": "2026-03-01",
+      "last_entry": "2026-03-17",
+      "span_days": 16,
+      "actual_R": -2.4530103259942013,
+      "counterfactual_R": -1.5952380952380962,
+      "delta_R": -0.8577722307561051,
+      "layer_entries": [
+        {
+          "date": "2026-03-01",
+          "price": 78.52,
+          "qty": 744
+        },
+        {
+          "date": "2026-03-04",
+          "price": 76.9,
+          "qty": 1213
+        },
+        {
+          "date": "2026-03-17",
+          "price": 75.25,
+          "qty": 643
+        }
+      ]
+    },
+    {
+      "ticker": "RCAT",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-03-13",
+      "last_entry": "2026-03-23",
+      "span_days": 10,
+      "actual_R": -1.2446861817169546,
+      "counterfactual_R": -1.7764704087201273,
+      "delta_R": 0.5317842270031727,
+      "layer_entries": [
+        {
+          "date": "2026-03-13",
+          "price": 16.85,
+          "qty": 2747
+        },
+        {
+          "date": "2026-03-23",
+          "price": 16.3,
+          "qty": 1757
+        }
+      ]
+    },
+    {
+      "ticker": "DOCN",
+      "direction": "long",
+      "n_layers": 3,
+      "first_entry": "2026-03-15",
+      "last_entry": "2026-05-19",
+      "span_days": 65,
+      "actual_R": 26.844177506979367,
+      "counterfactual_R": 15.36359886732666,
+      "delta_R": 11.480578639652707,
+      "layer_entries": [
+        {
+          "date": "2026-03-15",
+          "price": 70.35,
+          "qty": 659
+        },
+        {
+          "date": "2026-04-14",
+          "price": 82.7,
+          "qty": 1323
+        },
+        {
+          "date": "2026-05-19",
+          "price": 155.89,
+          "qty": 489
+        }
+      ]
+    },
+    {
+      "ticker": "NVTS",
+      "direction": "long",
+      "n_layers": 3,
+      "first_entry": "2026-03-15",
+      "last_entry": "2026-05-10",
+      "span_days": 56,
+      "actual_R": 10.950154800840805,
+      "counterfactual_R": -2.836065448698445,
+      "delta_R": 13.78622024953925,
+      "layer_entries": [
+        {
+          "date": "2026-03-15",
+          "price": 11.4,
+          "qty": 2441
+        },
+        {
+          "date": "2026-05-10",
+          "price": 18.95,
+          "qty": 3065
+        },
+        {
+          "date": "2026-05-10",
+          "price": 20.34,
+          "qty": 2856
+        }
+      ]
+    },
+    {
+      "ticker": "VG",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-03-18",
+      "last_entry": "2026-03-19",
+      "span_days": 1,
+      "actual_R": 1.024183492166046,
+      "counterfactual_R": -1.740000915527343,
+      "delta_R": 2.764184407693389,
+      "layer_entries": [
+        {
+          "date": "2026-03-18",
+          "price": 15.6,
+          "qty": 6191
+        },
+        {
+          "date": "2026-03-19",
+          "price": 14.9,
+          "qty": 1943
+        }
+      ]
+    },
+    {
+      "ticker": "CIEN",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-03-23",
+      "last_entry": "2026-04-15",
+      "span_days": 23,
+      "actual_R": -1.1571936959837321,
+      "counterfactual_R": -1.8038364986386617,
+      "delta_R": 0.6466428026549296,
+      "layer_entries": [
+        {
+          "date": "2026-03-23",
+          "price": 406.8,
+          "qty": 281
+        },
+        {
+          "date": "2026-04-15",
+          "price": 485.52,
+          "qty": 302
+        }
+      ]
+    },
+    {
+      "ticker": "AXTI",
+      "direction": "short",
+      "n_layers": 7,
+      "first_entry": "2026-03-23",
+      "last_entry": "2026-03-31",
+      "span_days": 8,
+      "actual_R": 144.01340464760816,
+      "counterfactual_R": 4.539009310055729,
+      "delta_R": 139.47439533755244,
+      "layer_entries": [
+        {
+          "date": "2026-03-23",
+          "price": 68.02,
+          "qty": 421
+        },
+        {
+          "date": "2026-03-23",
+          "price": 68.74,
+          "qty": 690
+        },
+        {
+          "date": "2026-03-25",
+          "price": 64.6,
+          "qty": 733
+        },
+        {
+          "date": "2026-03-26",
+          "price": 63.87,
+          "qty": 1516
+        },
+        {
+          "date": "2026-03-29",
+          "price": 69.32,
+          "qty": 699
+        },
+        {
+          "date": "2026-03-29",
+          "price": 67.1,
+          "qty": 578
+        },
+        {
+          "date": "2026-03-31",
+          "price": 55.48,
+          "qty": 3089
+        }
+      ]
+    },
+    {
+      "ticker": "APA",
+      "direction": "short",
+      "n_layers": 3,
+      "first_entry": "2026-03-30",
+      "last_entry": "2026-03-30",
+      "span_days": 0,
+      "actual_R": 1.944039194338587,
+      "counterfactual_R": 4.064274196420313,
+      "delta_R": -2.120235002081726,
+      "layer_entries": [
+        {
+          "date": "2026-03-30",
+          "price": 43.5,
+          "qty": 1169
+        },
+        {
+          "date": "2026-03-30",
+          "price": 43.23,
+          "qty": 1176
+        },
+        {
+          "date": "2026-03-30",
+          "price": 42.5,
+          "qty": 1922
+        }
+      ]
+    },
+    {
+      "ticker": "CAR",
+      "direction": "short",
+      "n_layers": 5,
+      "first_entry": "2026-04-06",
+      "last_entry": "2026-04-20",
+      "span_days": 14,
+      "actual_R": -3.288297362110284,
+      "counterfactual_R": -10.999999999999936,
+      "delta_R": 7.711702637889652,
+      "layer_entries": [
+        {
+          "date": "2026-04-06",
+          "price": 228.2,
+          "qty": 695
+        },
+        {
+          "date": "2026-04-14",
+          "price": 377.3,
+          "qty": 325
+        },
+        {
+          "date": "2026-04-15",
+          "price": 371.23,
+          "qty": 164
+        },
+        {
+          "date": "2026-04-20",
+          "price": 633.14,
+          "qty": 200
+        },
+        {
+          "date": "2026-04-20",
+          "price": 623.19,
+          "qty": 204
+        }
+      ]
+    },
+    {
+      "ticker": "NBIS",
+      "direction": "long",
+      "n_layers": 9,
+      "first_entry": "2026-04-05",
+      "last_entry": "2026-05-18",
+      "span_days": 43,
+      "actual_R": 7.168276055942116,
+      "counterfactual_R": 15.27461580794849,
+      "delta_R": -8.106339752006374,
+      "layer_entries": [
+        {
+          "date": "2026-04-05",
+          "price": 112.1,
+          "qty": 279
+        },
+        {
+          "date": "2026-04-21",
+          "price": 160.44,
+          "qty": 775
+        },
+        {
+          "date": "2026-04-22",
+          "price": 159.13,
+          "qty": 399
+        },
+        {
+          "date": "2026-04-23",
+          "price": 151.84,
+          "qty": 1641
+        },
+        {
+          "date": "2026-04-28",
+          "price": 136.97,
+          "qty": 919
+        },
+        {
+          "date": "2026-05-03",
+          "price": 170.12,
+          "qty": 449
+        },
+        {
+          "date": "2026-05-04",
+          "price": 177.0,
+          "qty": 432
+        },
+        {
+          "date": "2026-05-12",
+          "price": 194.51,
+          "qty": 1099
+        },
+        {
+          "date": "2026-05-18",
+          "price": 195.31,
+          "qty": 376
+        }
+      ]
+    },
+    {
+      "ticker": "CWEB",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-04-16",
+      "last_entry": "2026-05-12",
+      "span_days": 26,
+      "actual_R": -3.9570362986879823,
+      "counterfactual_R": -1.2913384925662064,
+      "delta_R": -2.665697806121776,
+      "layer_entries": [
+        {
+          "date": "2026-04-16",
+          "price": 30.54,
+          "qty": 1651
+        },
+        {
+          "date": "2026-05-12",
+          "price": 30.09,
+          "qty": 4061
+        }
+      ]
+    },
+    {
+      "ticker": "OPEN",
+      "direction": "long",
+      "n_layers": 4,
+      "first_entry": "2026-04-20",
+      "last_entry": "2026-05-04",
+      "span_days": 14,
+      "actual_R": -2.926750527797322,
+      "counterfactual_R": -1.5624994635581966,
+      "delta_R": -1.3642510642391255,
+      "layer_entries": [
+        {
+          "date": "2026-04-20",
+          "price": 5.32,
+          "qty": 7105
+        },
+        {
+          "date": "2026-04-20",
+          "price": 5.68,
+          "qty": 6655
+        },
+        {
+          "date": "2026-04-23",
+          "price": 5.39,
+          "qty": 12169
+        },
+        {
+          "date": "2026-05-04",
+          "price": 5.1,
+          "qty": 4999
+        }
+      ]
+    },
+    {
+      "ticker": "NMAX",
+      "direction": "long",
+      "n_layers": 4,
+      "first_entry": "2026-04-21",
+      "last_entry": "2026-04-21",
+      "span_days": 0,
+      "actual_R": 3.7909814457507007,
+      "counterfactual_R": -0.36719938857245504,
+      "delta_R": 4.158180834323156,
+      "layer_entries": [
+        {
+          "date": "2026-04-21",
+          "price": 7.84,
+          "qty": 8104
+        },
+        {
+          "date": "2026-04-21",
+          "price": 10.5,
+          "qty": 4849
+        },
+        {
+          "date": "2026-04-21",
+          "price": 9.81,
+          "qty": 3803
+        },
+        {
+          "date": "2026-04-21",
+          "price": 9.31,
+          "qty": 2672
+        }
+      ]
+    },
+    {
+      "ticker": "ACMR",
+      "direction": "long",
+      "n_layers": 3,
+      "first_entry": "2026-04-21",
+      "last_entry": "2026-05-20",
+      "span_days": 29,
+      "actual_R": -1.3948963842206274,
+      "counterfactual_R": -1.0,
+      "delta_R": -0.39489638422062745,
+      "layer_entries": [
+        {
+          "date": "2026-04-21",
+          "price": 53.35,
+          "qty": 1905
+        },
+        {
+          "date": "2026-05-06",
+          "price": 59.12,
+          "qty": 2443
+        },
+        {
+          "date": "2026-05-20",
+          "price": 72.33,
+          "qty": 897
+        }
+      ]
+    },
+    {
+      "ticker": "SNXX",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-04-21",
+      "last_entry": "2026-04-21",
+      "span_days": 0,
+      "actual_R": 7.626550572519169,
+      "counterfactual_R": 58.04611959287586,
+      "delta_R": -50.41956902035669,
+      "layer_entries": [
+        {
+          "date": "2026-04-21",
+          "price": 72.85,
+          "qty": 1048
+        },
+        {
+          "date": "2026-04-21",
+          "price": 71.78,
+          "qty": 1773
+        }
+      ]
+    },
+    {
+      "ticker": "CIFR",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-04-23",
+      "last_entry": "2026-05-04",
+      "span_days": 11,
+      "actual_R": 2.2012913317690876,
+      "counterfactual_R": -1.7090900767933235,
+      "delta_R": 3.910381408562411,
+      "layer_entries": [
+        {
+          "date": "2026-04-23",
+          "price": 19.21,
+          "qty": 5463
+        },
+        {
+          "date": "2026-05-04",
+          "price": 18.5,
+          "qty": 4824
+        }
+      ]
+    },
+    {
+      "ticker": "ONDS",
+      "direction": "long",
+      "n_layers": 4,
+      "first_entry": "2026-04-23",
+      "last_entry": "2026-04-30",
+      "span_days": 7,
+      "actual_R": -1.8722180545136298,
+      "counterfactual_R": -1.1612903225806457,
+      "delta_R": -0.7109277319329841,
+      "layer_entries": [
+        {
+          "date": "2026-04-23",
+          "price": 10.58,
+          "qty": 7439
+        },
+        {
+          "date": "2026-04-28",
+          "price": 9.62,
+          "qty": 9132
+        },
+        {
+          "date": "2026-04-29",
+          "price": 9.71,
+          "qty": 5121
+        },
+        {
+          "date": "2026-04-30",
+          "price": 10.34,
+          "qty": 6052
+        }
+      ]
+    },
+    {
+      "ticker": "NOK",
+      "direction": "long",
+      "n_layers": 3,
+      "first_entry": "2026-04-29",
+      "last_entry": "2026-05-10",
+      "span_days": 11,
+      "actual_R": 3.759267282463668,
+      "counterfactual_R": 12.953053684736089,
+      "delta_R": -9.193786402272421,
+      "layer_entries": [
+        {
+          "date": "2026-04-29",
+          "price": 12.28,
+          "qty": 6074
+        },
+        {
+          "date": "2026-04-30",
+          "price": 12.4,
+          "qty": 3993
+        },
+        {
+          "date": "2026-05-10",
+          "price": 13.05,
+          "qty": 6677
+        }
+      ]
+    },
+    {
+      "ticker": "USAR",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-04-29",
+      "last_entry": "2026-05-04",
+      "span_days": 5,
+      "actual_R": 3.133101687703889,
+      "counterfactual_R": -4.400937129953833,
+      "delta_R": 7.534038817657722,
+      "layer_entries": [
+        {
+          "date": "2026-04-29",
+          "price": 24.24,
+          "qty": 2564
+        },
+        {
+          "date": "2026-05-04",
+          "price": 27.25,
+          "qty": 1871
+        }
+      ]
+    },
+    {
+      "ticker": "SOXS",
+      "direction": "long",
+      "n_layers": 4,
+      "first_entry": "2026-05-06",
+      "last_entry": "2026-05-17",
+      "span_days": 11,
+      "actual_R": 7.7042387584605025,
+      "counterfactual_R": -4.970589357263903,
+      "delta_R": 12.674828115724406,
+      "layer_entries": [
+        {
+          "date": "2026-05-06",
+          "price": 10.34,
+          "qty": 20919
+        },
+        {
+          "date": "2026-05-14",
+          "price": 9.12,
+          "qty": 17290
+        },
+        {
+          "date": "2026-05-17",
+          "price": 9.13,
+          "qty": 16533
+        },
+        {
+          "date": "2026-05-17",
+          "price": 9.88,
+          "qty": 15295
+        }
+      ]
     },
     {
       "ticker": "SLV",
-      "entry_date": "2026-05-07",
-      "actual_R": -1.2348242811501597,
-      "optimal_R": -1.0,
-      "delta_R": 0.23482428115015974
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-05-07",
+      "last_entry": "2026-05-14",
+      "span_days": 7,
+      "actual_R": -1.3722586234905507,
+      "counterfactual_R": -1.0,
+      "delta_R": -0.3722586234905507,
+      "layer_entries": [
+        {
+          "date": "2026-05-07",
+          "price": 73.13,
+          "qty": 1888
+        },
+        {
+          "date": "2026-05-14",
+          "price": 69.85,
+          "qty": 1128
+        }
+      ]
+    },
+    {
+      "ticker": "CRCL",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-05-10",
+      "last_entry": "2026-05-14",
+      "span_days": 4,
+      "actual_R": -1.4947491969360018,
+      "counterfactual_R": -1.8662282374867216,
+      "delta_R": 0.3714790405507198,
+      "layer_entries": [
+        {
+          "date": "2026-05-10",
+          "price": 129.12,
+          "qty": 1349
+        },
+        {
+          "date": "2026-05-14",
+          "price": 112.98,
+          "qty": 976
+        }
+      ]
+    },
+    {
+      "ticker": "TSLL",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-05-10",
+      "last_entry": "2026-05-20",
+      "span_days": 10,
+      "actual_R": -0.31836734693877533,
+      "counterfactual_R": -1.0,
+      "delta_R": 0.6816326530612247,
+      "layer_entries": [
+        {
+          "date": "2026-05-10",
+          "price": 16.45,
+          "qty": 5296
+        },
+        {
+          "date": "2026-05-20",
+          "price": 14.96,
+          "qty": 10816
+        }
+      ]
+    },
+    {
+      "ticker": "DDOG",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-05-14",
+      "last_entry": "2026-05-14",
+      "span_days": 0,
+      "actual_R": -1.384943181818179,
+      "counterfactual_R": 4.810907489121547,
+      "delta_R": -6.195850670939726,
+      "layer_entries": [
+        {
+          "date": "2026-05-14",
+          "price": 205.3,
+          "qty": 384
+        },
+        {
+          "date": "2026-05-14",
+          "price": 209.81,
+          "qty": 375
+        }
+      ]
+    },
+    {
+      "ticker": "FIG",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-05-14",
+      "last_entry": "2026-05-18",
+      "span_days": 4,
+      "actual_R": 0.28056943056943073,
+      "counterfactual_R": -0.22527522831172786,
+      "delta_R": 0.5058446588811586,
+      "layer_entries": [
+        {
+          "date": "2026-05-14",
+          "price": 23.12,
+          "qty": 6820
+        },
+        {
+          "date": "2026-05-18",
+          "price": 24.54,
+          "qty": 1798
+        }
+      ]
+    },
+    {
+      "ticker": "OUST",
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-05-14",
+      "last_entry": "2026-05-14",
+      "span_days": 0,
+      "actual_R": -2.0847457627118633,
+      "counterfactual_R": -2.1299435028248563,
+      "delta_R": 0.045197740112993046,
+      "layer_entries": [
+        {
+          "date": "2026-05-14",
+          "price": 33.77,
+          "qty": 1867
+        },
+        {
+          "date": "2026-05-14",
+          "price": 34.12,
+          "qty": 1386
+        }
+      ]
     },
     {
       "ticker": "NOWL",
-      "entry_date": "2026-05-18",
-      "actual_R": -1.1428571428571428,
-      "optimal_R": -1.0,
-      "delta_R": 0.1428571428571428
+      "direction": "long",
+      "n_layers": 2,
+      "first_entry": "2026-05-18",
+      "last_entry": "2026-05-19",
+      "span_days": 1,
+      "actual_R": -1.7772161703471268,
+      "counterfactual_R": -0.21428578240530838,
+      "delta_R": -1.5629303879418184,
+      "layer_entries": [
+        {
+          "date": "2026-05-18",
+          "price": 5.08,
+          "qty": 28956
+        },
+        {
+          "date": "2026-05-19",
+          "price": 5.06,
+          "qty": 15127
+        }
+      ]
     }
   ],
-  "_schema": "v1"
+  "_schema": "v2"
 }
