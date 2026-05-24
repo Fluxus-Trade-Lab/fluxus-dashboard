@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import TickerLink from '../ticker/TickerLink'
 
 const COLUMNS = [
   { key: 'h_score', label: 'H', type: 'rs', width: 'w-10' },
@@ -117,7 +118,11 @@ export default function ResultsTable({ rows }) {
             <tr key={row.ticker || i} className="border-b border-[var(--color-border-light)] hover:bg-[var(--color-hover-bg)]">
               {COLUMNS.map(col => (
                 <td key={col.key} className={`px-2 py-1 font-mono text-[11px] ${cellClass(row[col.key], col.type)}`}>
-                  {formatCell(row[col.key], col.type)}
+                  {col.type === 'ticker' ? (
+                    <TickerLink symbol={row[col.key]} className="text-[var(--color-accent)] font-semibold" />
+                  ) : (
+                    formatCell(row[col.key], col.type)
+                  )}
                 </td>
               ))}
             </tr>
