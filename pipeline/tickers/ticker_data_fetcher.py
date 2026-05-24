@@ -355,6 +355,95 @@ def fetch_options_implied_move(tk: yf.Ticker, current_price: Optional[float]) ->
         return None
 
 
+# ── OHLC + computed technicals ─────────────────────────────────────────────
+
+def fetch_ohlc_and_technicals(tk: yf.Ticker) -> dict:
+    """Fetch 1y daily OHLC + compute key technical fields.
+
+    Returns:
+        {
+          'ohlc': [{date, open, high, low, close, volume}, ...],
+          'rsi14': float | None,
+          'ma20': float | None,
+          'ma50': float | None,
+          'ma200': float | None,
+          'high_20d': float, 'high_52w': float,
+          'low_5d': float, 'low_10d': float, 'low_52w': float,
+          'atr14_pct': float | None,
+          'position_in_52w_range_pct': float | None,
+        }
+    """
+    out: dict = {'ohlc': []}
+    try:
+        hist = tk.history(period='1y', auto_adjust=True)
+        if hist is None or hist.empty:
+            return out
+        # Convert to list of records
+        records = []
+        for ts, row in hist.iterrows():
+            records.append({
+                'date': ts.date().isoformat(),
+                'open': _safe(row.get('Open')),
+                'high': _safe(row.get('High')),
+                'low': _safe(row.get('Low')),
+                'close': _safe(row.get('Close')),
+                'volume': _safe(row.get('Volume')),
+            })
+        out['ohlc'] = records
+
+        closes = hist['Close']
+        highs = hist['High']
+        lows = hist['Low']
+        last_close = float(closes.iloc[-1])
+
+        # Moving averages (use simple MAs to match TradingView/Stockbee convention)
+        if len(closes) >= 20:
+            out['ma20'] = float(closes.rolling(20).mean().iloc[-1])
+        if len(closes) >= 50:
+            out['ma50'] = float(closes.rolling(50).mean().iloc[-1])
+        if len(closes) >= 200:
+            out['ma200'] = float(closes.rolling(200).mean().iloc[-1])
+
+        # RSI(14) — Wilder's smoothing
+        delta = closes.diff()
+        gain = delta.clip(lower=0)
+        loss = -delta.clip(upper=0)
+        avg_gain = gain.ewm(alpha=1/14, adjust=False).mean()
+        avg_loss = loss.ewm(alpha=1/14, adjust=False).mean()
+        rs = avg_gain / avg_loss.replace(0, float('nan'))
+        rsi = 100 - 100 / (1 + rs)
+        out['rsi14'] = _safe(rsi.iloc[-1])
+
+        # Recent highs / lows
+        if len(highs) >= 20:
+            out['high_20d'] = float(highs.iloc[-20:].max())
+        if len(lows) >= 5:
+            out['low_5d'] = float(lows.iloc[-5:].min())
+        if len(lows) >= 10:
+            out['low_10d'] = float(lows.iloc[-10:].min())
+        out['high_52w'] = float(highs.max())
+        out['low_52w'] = float(lows.min())
+
+        # ATR(14) — TR-based, %
+        tr1 = highs - lows
+        tr2 = (highs - closes.shift(1)).abs()
+        tr3 = (lows - closes.shift(1)).abs()
+        import pandas as _pd  # noqa: F401
+        tr = pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
+        atr = tr.rolling(14, min_periods=1).mean().iloc[-1]
+        if last_close > 0:
+            out['atr14'] = float(atr)
+            out['atr14_pct'] = float(atr / last_close * 100)
+
+        # Position in 52W range (%)
+        h52 = float(highs.max()); l52 = float(lows.min())
+        if h52 > l52:
+            out['position_in_52w_range_pct'] = (last_close - l52) / (h52 - l52) * 100
+    except Exception as e:  # noqa: BLE001
+        logger.debug(f"ohlc_and_technicals fetch failed: {e}")
+    return out
+
+
 # ── main entry ─────────────────────────────────────────────────────────────
 
 def fetch_ticker_data(symbol: str) -> dict:
@@ -368,10 +457,11 @@ def fetch_ticker_data(symbol: str) -> dict:
     except Exception:
         pass
 
+    technicals = fetch_ohlc_and_technicals(tk)
     out = {
         'ticker': symbol.upper(),
         'fetched_at': datetime.utcnow().isoformat(timespec='seconds') + 'Z',
-        '_schema': 'v1',
+        '_schema': 'v2',
         'current_price': current_price,
         'info': info,
         'earnings_history': fetch_earnings_history(tk),
@@ -380,6 +470,10 @@ def fetch_ticker_data(symbol: str) -> dict:
         'analyst': fetch_analyst(tk),
         'news': fetch_news(tk),
         'options_implied_move': fetch_options_implied_move(tk, current_price),
+        'technicals': {
+            k: v for k, v in technicals.items() if k != 'ohlc'
+        },
+        'ohlc_1y': technicals.get('ohlc', []),
         # Layer 2 (AI synthesis) goes here under 'ai_synthesis' when
         # /tearsheet <SYM> Claude Code slash command runs.
         'ai_synthesis': None,

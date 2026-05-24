@@ -12,6 +12,10 @@ import TickerEarnings from './TickerEarnings'
 import TickerValuation from './TickerValuation'
 import TickerQuarterlyMetrics from './TickerQuarterlyMetrics'
 import TickerAnalystSentiment from './TickerAnalystSentiment'
+import TickerKeyLevels from './TickerKeyLevels'
+import TickerTrendIndicators from './TickerTrendIndicators'
+import TickerRelativeStrength from './TickerRelativeStrength'
+import TickerCatalysts from './TickerCatalysts'
 import TickerStats from './TickerStats'
 
 /**
@@ -86,6 +90,16 @@ function TickerPageBody({ symbol }) {
         />
       </div>
 
+      {/* Technicals row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <TickerKeyLevels tickerData={tickerData} />
+        <TickerTrendIndicators tickerData={tickerData} />
+      </div>
+
+      <div className="mb-4">
+        <TickerRelativeStrength tickerData={tickerData} />
+      </div>
+
       <div className="mb-4">
         <TickerTrades symbol={symbol} trades={enrichedAll} />
       </div>
@@ -101,7 +115,7 @@ function TickerPageBody({ symbol }) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        <div>{/* placeholder for Phase 3c Catalysts section */}</div>
+        <TickerCatalysts tickerData={tickerData} />
         <TickerAnalystSentiment tickerData={tickerData} />
       </div>
 
