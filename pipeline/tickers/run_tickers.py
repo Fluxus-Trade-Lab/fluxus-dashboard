@@ -17,8 +17,11 @@ import time
 from datetime import date, timedelta
 from pathlib import Path
 
+import json
+import yfinance as yf
+
 from pipeline.portfolio.trade_parser import parse_csv, find_latest_csv
-from pipeline.tickers.ticker_data_fetcher import fetch_ticker_data, write_ticker_json, OUTPUT_DIR
+from pipeline.tickers.ticker_data_fetcher import fetch_ticker_data, write_ticker_json, OUTPUT_DIR, _safe
 
 logging.basicConfig(
     level=logging.INFO,
@@ -64,6 +67,30 @@ def run(tickers: list[str], output_dir: Path, sleep_between: float = 0.3) -> dic
     return {'succeeded': succeeded, 'failed': failed, 'total': len(tickers)}
 
 
+def write_benchmarks(output_dir: Path) -> None:
+    """Fetch 1y daily closes for SPY + QQQ for the RS rebased chart."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    out: dict = {'fetched_at': None, 'benchmarks': {}}
+    from datetime import datetime
+    out['fetched_at'] = datetime.utcnow().isoformat(timespec='seconds') + 'Z'
+    for sym in ('SPY', 'QQQ'):
+        try:
+            tk = yf.Ticker(sym)
+            hist = tk.history(period='1y', auto_adjust=True)
+            out['benchmarks'][sym] = [
+                {'date': ts.date().isoformat(), 'close': _safe(row.get('Close'))}
+                for ts, row in hist.iterrows()
+            ]
+            logger.info(f"Benchmark {sym}: {len(out['benchmarks'][sym])} closes")
+        except Exception as e:  # noqa: BLE001
+            logger.warning(f"benchmark fetch {sym} failed: {e}")
+            out['benchmarks'][sym] = []
+    path = output_dir / '_benchmarks.json'
+    with open(path, 'w') as f:
+        json.dump(out, f, indent=2, default=str)
+    logger.info(f"Wrote benchmarks to {path}")
+
+
 def main(argv: list[str] | None = None) -> None:
     p = argparse.ArgumentParser(description='Per-ticker fundamentals fetcher')
     p.add_argument('--input', type=Path, default=None,
@@ -94,6 +121,9 @@ def main(argv: list[str] | None = None) -> None:
     print(f"\n✓ Succeeded: {len(summary['succeeded'])}/{summary['total']}")
     if summary['failed']:
         print(f"✗ Failed: {', '.join(summary['failed'])}")
+
+    # Always refresh benchmarks alongside tickers
+    write_benchmarks(args.output)
 
 
 if __name__ == '__main__':
