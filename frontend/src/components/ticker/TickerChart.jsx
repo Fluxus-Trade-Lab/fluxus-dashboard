@@ -2,15 +2,32 @@ import { useEffect, useRef } from 'react'
 
 /**
  * Embeds the free TradingView Advanced Chart widget for a symbol.
- * One-time script injection per mount; re-mounts when symbol changes.
+ *
+ * Important: the widget's `autosize: true` requires the official nested-div
+ * structure to compute height correctly:
+ *   <div class="tradingview-widget-container" style="height:Xpx">
+ *     <div class="tradingview-widget-container__widget" style="height:100%"></div>
+ *     <script src="...embed-widget-advanced-chart.js">{config json}</script>
+ *   </div>
+ *
+ * Without the inner `__widget` div, the widget collapses to ~150px.
  */
-export default function TickerChart({ symbol }) {
+export default function TickerChart({ symbol, height = 520 }) {
   const containerRef = useRef(null)
 
   useEffect(() => {
     if (!containerRef.current || !symbol) return
-    // Clear any previous widget content
-    containerRef.current.innerHTML = ''
+
+    const container = containerRef.current
+    // Reset previous mount (e.g., on symbol change)
+    container.innerHTML = ''
+
+    // Inner div the widget renders into — must have height: 100%
+    const widgetDiv = document.createElement('div')
+    widgetDiv.className = 'tradingview-widget-container__widget'
+    widgetDiv.style.height = '100%'
+    widgetDiv.style.width = '100%'
+    container.appendChild(widgetDiv)
 
     const script = document.createElement('script')
     script.type = 'text/javascript'
@@ -31,10 +48,10 @@ export default function TickerChart({ symbol }) {
       studies: ['MASimple@tv-basicstudies', 'RSI@tv-basicstudies'],
       support_host: 'https://www.tradingview.com',
     })
-    containerRef.current.appendChild(script)
+    container.appendChild(script)
 
     return () => {
-      if (containerRef.current) containerRef.current.innerHTML = ''
+      if (container) container.innerHTML = ''
     }
   }, [symbol])
 
@@ -43,7 +60,7 @@ export default function TickerChart({ symbol }) {
       <div
         ref={containerRef}
         className="tradingview-widget-container"
-        style={{ height: 440, width: '100%' }}
+        style={{ height: `${height}px`, width: '100%' }}
       />
     </div>
   )
