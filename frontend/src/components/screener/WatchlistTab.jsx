@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { applyFilters } from '../../lib/screenerFilter'
+import TickerLink from '../ticker/TickerLink'
 
 const MAX_DISPLAY = 30
 const TOP_COUNT = 15
@@ -46,7 +47,9 @@ function WatchlistCard({ name, tickers }) {
       </div>
       <div className="grid grid-cols-5 gap-x-3 gap-y-1.5">
         {display.map(t => (
-          <div key={t} className="text-xs font-mono text-[var(--color-text-secondary)] text-center">{t}</div>
+          <div key={t} className="text-xs font-mono text-center">
+            <TickerLink symbol={t} className="text-[var(--color-text-secondary)]" />
+          </div>
         ))}
         {hasMore && (
           <div className="text-xs text-[var(--color-text-muted)] text-center italic">etc.</div>
@@ -114,7 +117,7 @@ export default function WatchlistTab({ universe, presets }) {
           <div className="flex flex-wrap gap-2">
             {topTickers.map(([ticker, count]) => (
               <div key={ticker} className="flex items-center gap-1 px-2.5 py-1 rounded bg-green-600/10 border border-green-600/20">
-                <span className="text-xs font-mono font-semibold text-green-600">{ticker}</span>
+                <TickerLink symbol={ticker} className="text-xs font-mono font-semibold text-green-600" />
                 <span className="text-[10px] text-green-600/70">{count}x</span>
               </div>
             ))}

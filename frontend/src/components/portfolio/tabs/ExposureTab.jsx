@@ -3,6 +3,7 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
 import { usePortfolio } from '../context/PortfolioContext'
 import SortableHeader from '../ui/SortableHeader'
 import CapitalAtRiskWidget from '../ui/CapitalAtRiskWidget'
+import TickerLink from '../../ticker/TickerLink'
 import { groupByCampaigns } from '../lib/campaign'
 import { fmtCur, fmtPct, fmt, clr, SECTOR_COLORS, MASK } from '../lib/portfolioFormat'
 
@@ -147,7 +148,7 @@ export default function ExposureTab({ openTrades, mergedHoldingsData }) {
                   <tr key={g.ticker} className={`${rowBg} ${g.isGroup ? 'cursor-pointer hover:bg-[var(--color-surface-raised)]' : ''}`} onClick={() => g.isGroup && toggleTicker(g.ticker)}>
                     <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] font-bold">
                       {g.isGroup && <span className="inline-block w-3.5 text-[var(--color-text-muted)] text-[10px]">{expanded ? '▼' : '▶'}</span>}
-                      {g.ticker}
+                      <TickerLink symbol={g.ticker} />
                       {g.isGroup && (
                         <span className="ml-1 text-[10px] text-[var(--color-text-muted)]">
                           campaign · {g.trades.length} layers
@@ -168,7 +169,9 @@ export default function ExposureTab({ openTrades, mergedHoldingsData }) {
                   {/* Expanded child rows */}
                   {g.isGroup && expanded && g.trades.map((t) => (
                     <tr key={t.id} className="bg-[var(--color-surface-raised)]">
-                      <td className="px-2.5 py-1 border-b border-[var(--color-border-light)] pl-7 text-[var(--color-text-muted)]">{t.ticker}</td>
+                      <td className="px-2.5 py-1 border-b border-[var(--color-border-light)] pl-7 text-[var(--color-text-muted)]">
+                        <TickerLink symbol={t.ticker} className="text-[var(--color-text-muted)]" />
+                      </td>
                       <td className="px-2.5 py-1 border-b border-[var(--color-border-light)]">
                         <span className={t.direction === 'long' ? 'text-green-600' : 'text-red-500'}>{t.direction.toUpperCase()}</span>
                       </td>

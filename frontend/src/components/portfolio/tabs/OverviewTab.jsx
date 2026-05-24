@@ -8,11 +8,9 @@ import EditablePrice from '../ui/EditablePrice'
 import SortableHeader from '../ui/SortableHeader'
 import LegStateBadge from '../ui/LegStateBadge'
 import StopCell from '../ui/StopCell'
-import TrimTargetsLine from '../ui/TrimTargetsLine'
-import ProximityChips from '../ui/ProximityChips'
+import TickerLink from '../../ticker/TickerLink'
 import { derive as deriveLegState } from '../lib/legState'
 import { suggest as suggestStop } from '../lib/stopSuggestion'
-import { chips as proximityChipsFn } from '../lib/emaProximity'
 import { useUniverse } from '../../../hooks/useUniverse'
 import { fmtCur, fmtPct, fmt, clr, todayStr, MASK } from '../lib/portfolioFormat'
 
@@ -250,19 +248,13 @@ export default function OverviewTab({
                   u,
                   { atr: atrDollars },
                 )
-                const chipsList = proximityChipsFn(
-                  { price: px, direction: t.direction, wkClose: px },
-                  u,
-                )
                 return (
                 <tr key={t.id} className={`${t.isClosed ? 'bg-[var(--color-closed-row)] opacity-55' : idx % 2 === 0 ? 'bg-[var(--color-surface)]' : 'bg-[var(--color-bg)]'}`}>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] font-bold whitespace-nowrap">
                     <div className="flex items-center gap-1.5">
-                      <span>{t.ticker}</span>
+                      <TickerLink symbol={t.ticker} />
                       <LegStateBadge state={legState} />
-                      <ProximityChips chips={chipsList} />
                     </div>
-                    <TrimTargetsLine trade={t} />
                   </td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)]">
                     <span className={`font-semibold text-[11px] ${t.direction === 'long' ? 'text-green-600' : 'text-red-500'}`}>
