@@ -18,6 +18,8 @@ import ResultsPage from './public/ResultsPage'
 import PricingPage from './public/PricingPage'
 import BriefPreviewPage from './public/BriefPreviewPage'
 import TickerPage from './ticker/TickerPage'
+import TradeJournalPage from './journal/TradeJournalPage'
+import TradeDetailPage from './journal/TradeDetailPage'
 import { parseTickerHash } from './portfolio/lib/tickerUrl'
 import Footer from './Footer'
 
@@ -32,6 +34,8 @@ export default function Layout({ data, lastUpdated, isOffline }) {
   const [page, navigate] = useHash()
   const current = pageKey(page)
   const tickerSymbol = parseTickerHash(page)
+  const tradeIdMatch = (page || '').match(/^#\/trade\/([A-Za-z0-9._\-]+)$/)
+  const tradeId = tradeIdMatch ? tradeIdMatch[1] : null
 
   // Public pages use PublicLayout
   if (PUBLIC_PAGES.includes(current)) {
@@ -75,11 +79,14 @@ export default function Layout({ data, lastUpdated, isOffline }) {
         </main>
       ) : tickerSymbol ? (
         <TickerPage symbol={tickerSymbol} />
+      ) : tradeId ? (
+        <TradeDetailPage tradeId={tradeId} />
       ) : (
         <main className="max-w-[1800px] mx-auto px-3 py-4">
           {current === 'screener' && <ScreenerPage />}
           {current === 'portfolio' && <PortfolioPage />}
           {current === 'journal' && <JournalPage />}
+          {current === 'trades' && <TradeJournalPage />}
           {current === 'briefing' && <BriefingPage />}
           {current === 'breadth' && <BreadthPage data={data} />}
           {current === 'modelbooks' && <ModelBooksPage />}
