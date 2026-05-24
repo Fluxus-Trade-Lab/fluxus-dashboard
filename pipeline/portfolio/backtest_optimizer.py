@@ -174,6 +174,37 @@ def run(input_path: Path, output_md: Path, output_json: Path) -> None:
     # ── Top-5 sensitivity ──────────────────────────────────────────────────
     top5 = top_n_params(R_matrix, params, n=5)
 
+    # ── Intraday vs close stop_basis head-to-head ──────────────────────────
+    # For each param-cell that has both intraday and close variants, find the best
+    # of each. Compare overall best-intraday vs best-close to surface the answer.
+    intraday_mask = np.array([p.stop_basis == 'intraday' for p in params])
+    close_mask = np.array([p.stop_basis == 'close' for p in params])
+    valid_trade_mask = ~np.isnan(R_matrix).all(axis=1)
+    intraday_totals = np.nansum(R_matrix[valid_trade_mask][:, intraday_mask], axis=0)
+    close_totals = np.nansum(R_matrix[valid_trade_mask][:, close_mask], axis=0)
+    best_intraday_R = float(np.max(intraday_totals)) if len(intraday_totals) else 0
+    best_close_R = float(np.max(close_totals)) if len(close_totals) else 0
+    intraday_best_idx_in_subset = int(np.argmax(intraday_totals)) if len(intraday_totals) else 0
+    close_best_idx_in_subset = int(np.argmax(close_totals)) if len(close_totals) else 0
+    intraday_param_idxs = np.where(intraday_mask)[0]
+    close_param_idxs = np.where(close_mask)[0]
+    intraday_best_label = (
+        params_to_label(params[intraday_param_idxs[intraday_best_idx_in_subset]])
+        if len(intraday_param_idxs) else '—'
+    )
+    close_best_label = (
+        params_to_label(params[close_param_idxs[close_best_idx_in_subset]])
+        if len(close_param_idxs) else '—'
+    )
+    stop_basis_comparison = {
+        'best_intraday_total_R': best_intraday_R,
+        'best_close_total_R': best_close_R,
+        'delta_R': best_close_R - best_intraday_R,
+        'winner': 'close' if best_close_R > best_intraday_R else 'intraday',
+        'best_intraday_label': intraday_best_label,
+        'best_close_label': close_best_label,
+    }
+
     # ── Pyramid campaign analysis ──────────────────────────────────────────
     logger.info("Detecting pyramid campaigns...")
     # Detect across ALL closed-or-open trades (campaigns can include open layers)
@@ -194,7 +225,7 @@ def run(input_path: Path, output_md: Path, output_json: Path) -> None:
             k: best_overall['best_params'][k]
             for k in ('trim1_trigger_R', 'trim1_size_pct', 'trim2_trigger',
                       'trim2_size_pct', 'trim3_trigger', 'trim3_size_pct',
-                      'full_stop_signal', 'gain_ratchet')
+                      'full_stop_signal', 'gain_ratchet', 'stop_basis')
         })
         compute_counterfactual(campaigns, ohlc_by_ticker, best_simparams)
     pyramid_section = build_pyramid_section(campaigns)
@@ -253,7 +284,8 @@ def run(input_path: Path, output_md: Path, output_json: Path) -> None:
         'top_n': top5,
         'missed_gains': missed,
         'pyramid_campaigns': pyramid_section,
-        '_schema': 'v2',
+        'stop_basis_comparison': stop_basis_comparison,
+        '_schema': 'v3',
     }
 
     write_json(report, output_json)
