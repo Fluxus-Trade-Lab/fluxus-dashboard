@@ -1,11 +1,17 @@
 import { useMemo } from 'react'
 import { PortfolioProvider, usePortfolio } from '../portfolio/context/PortfolioContext'
 import { useUniverse } from '../../hooks/useUniverse'
+import { useTickerData } from '../../hooks/useTickerData'
 import { enrichTrades } from '../portfolio/lib/calculations'
 import TickerHeader from './TickerHeader'
+import TickerQuickStats from './TickerQuickStats'
 import TickerChart from './TickerChart'
 import TickerStatusPanel from './TickerStatusPanel'
 import TickerTrades from './TickerTrades'
+import TickerEarnings from './TickerEarnings'
+import TickerValuation from './TickerValuation'
+import TickerQuarterlyMetrics from './TickerQuarterlyMetrics'
+import TickerAnalystSentiment from './TickerAnalystSentiment'
 import TickerStats from './TickerStats'
 
 /**
@@ -26,6 +32,7 @@ export default function TickerPage({ symbol }) {
 function TickerPageBody({ symbol }) {
   const { state, dispatch } = usePortfolio()
   const { universe } = useUniverse()
+  const { data: tickerData } = useTickerData(symbol)
 
   const universeRow = useMemo(() => {
     if (!universe) return null
@@ -66,6 +73,8 @@ function TickerPageBody({ symbol }) {
     <div className="max-w-[1800px] mx-auto px-3 py-4">
       <TickerHeader symbol={symbol} universe={universeRow} />
 
+      <TickerQuickStats tickerData={tickerData} universe={universeRow} />
+
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4 mb-4">
         <TickerChart symbol={symbol} />
         <TickerStatusPanel
@@ -79,6 +88,21 @@ function TickerPageBody({ symbol }) {
 
       <div className="mb-4">
         <TickerTrades symbol={symbol} trades={enrichedAll} />
+      </div>
+
+      {/* Fundamentals row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <TickerEarnings tickerData={tickerData} />
+        <TickerValuation tickerData={tickerData} />
+      </div>
+
+      <div className="mb-4">
+        <TickerQuarterlyMetrics tickerData={tickerData} />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>{/* placeholder for Phase 3c Catalysts section */}</div>
+        <TickerAnalystSentiment tickerData={tickerData} />
       </div>
 
       <div>
