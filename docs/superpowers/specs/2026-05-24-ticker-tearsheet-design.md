@@ -138,7 +138,7 @@ Single 2-column table. Source: yfinance `.info` mostly, with FY estimates from a
 Narrative bullets with footnote refs (per AAOI reference, e.g. "Mar 9, 2026: First volume order for 1.6T transceivers ..."). Two source options:
 
 - **Auto (lossy)**: pull yfinance `.news` (titles, links, dates) and display as a list. Less curated than the AAOI reference but free.
-- **AI-curated**: send recent yfinance news + recent earnings transcript excerpts to Claude API, ask it to synthesize 5-8 catalyst bullets. Better quality, costs API tokens, slower.
+- **AI-curated**: invoked via `/tearsheet <SYM>` slash command; the active Claude Code session uses Max-subscription compute + WebSearch/WebFetch to synthesize 5-8 catalyst bullets with footnote refs. Free under Max.
 - **Manual**: a per-ticker editable field stored in Google Sheets or localStorage.
 
 Default for Phase 3: **auto (lossy)** as MVP. Hook for AI-curated added in 3b once we confirm format.
@@ -163,13 +163,13 @@ Source: yfinance `.info` (companyOfficers, fullTimeEmployees) + AI synthesis for
 ### 15. Competitors / Peers
 Small table of 5-7 peers. Source priority:
 - **(a)** Hardcoded peer map per industry/sector (curated for top sectors)
-- **(b)** AI-generated via Claude API given the ticker + sector + industry, returns peer list with focus notes
+- **(b)** AI-generated via `/tearsheet` slash command (Claude Code session reasons about peers and returns the list)
 - **(c)** Fallback: list other tickers in the same `industry` field from universe.json
 
 Columns: Symbol · Name · Focus (one-line industry niche)
 
 ### 16. Bull vs Bear Summary
-Two-column case-bullet format. **AI-synthesized via Claude API** from:
+Two-column case-bullet format. **AI-synthesized via `/tearsheet` slash command** (Claude Code Max sub) from:
 - Quarterly metrics + valuation snapshot (margin direction, growth, profitability)
 - Analyst sentiment (consensus + recent upgrades)
 - Catalysts (positive news, guidance)
@@ -178,7 +178,7 @@ Two-column case-bullet format. **AI-synthesized via Claude API** from:
 Returns 5-7 bullets per side. Cached in the per-ticker JSON; regenerated when key inputs change (new earnings, big analyst revision, big move).
 
 ### 17. Trade Plan
-The most actionable section — two parallel setups, **AI-synthesized via Claude API** anchored to objective data:
+The most actionable section — two parallel setups, **AI-synthesized via `/tearsheet` slash command** (Claude Code Max sub) anchored to objective data:
 
 **LONG SETUP — Trend Continuation**
 - Trigger condition (price level + volume confirmation)
@@ -209,7 +209,7 @@ Numbered footnote list at bottom of page 3. Auto-aggregated from:
 - Catalysts/news refs (URL + source name + date)
 - Analyst rating sources (broker + date)
 - Earnings transcript references
-- Pipeline note: "Quotes, financials, ratios, estimates, peers, analyst data: yfinance + Claude API (synthesis), <date> snapshot. Technical indicators computed from daily OHLCV. For informational purposes only — not investment advice."
+- Pipeline note: "Quotes, financials, ratios, estimates, peers, analyst data: yfinance (numeric) + Claude Code with WebSearch/WebFetch (narrative synthesis), <date> snapshot. Technical indicators computed from daily OHLCV. For informational purposes only — not investment advice."
 
 References inline use superscript numerals (¹ ² ³) matching the Sources list.
 
@@ -221,7 +221,7 @@ This tear-sheet needs data that doesn't exist in `universe.json` today. New pipe
 pipeline/tickers/
 ├── __init__.py
 ├── ticker_data_fetcher.py     # yfinance-based fetcher (numeric data per ticker)
-├── ticker_ai_synth.py         # Claude API synthesizer (narrative sections)
+# (NO Python AI synthesizer — replaced by Claude Code slash command, see below)
 └── run_tickers.py             # CLI: refresh both layers for tracked tickers
 ```
 
@@ -233,15 +233,29 @@ pipeline/tickers/
 - Company officers, headcount
 - Industry peers (hardcoded map for top sectors, fallback to industry-match from universe)
 
-**Layer 2 — AI synthesis (Claude API):**
+**Layer 2 — AI synthesis (Claude Code via Max subscription):**
 - Bull vs Bear bullets (5-7 per side)
 - Trade Plan: Long Setup + Short/Fade Setup with concrete trigger/entry/stop/targets/R:R
 - Management commentary (1-2 sentences from latest call)
-- Optional: catalyst narrative bullets with footnote refs
+- Catalyst narrative bullets with footnote refs (synthesized from yfinance news + WebSearch)
 
-Layer 2 runs only when layer 1 inputs have meaningfully changed (new earnings print, big analyst revision, ≥5% price move, ≥7d since last synthesis). Cached in the same per-ticker JSON.
+**Invocation model — Claude Code slash commands, not Claude API.**
 
-Claude API call cost estimate: ~3-5K input tokens × ~1-2K output tokens per ticker per synthesis = ~$0.02-0.05 per ticker per refresh. With ~50-100 tracked tickers refreshing 2-3x/week (event-triggered), monthly cost ~$5-15. Acceptable.
+The user has Claude Max which covers Claude Code usage; no API tokens, no monthly bill. Synthesis is invoked on-demand by the user from inside Claude Code via slash commands:
+
+- `/tearsheet AAPL` — synthesize AI sections for a single ticker
+- `/tearsheet refresh` — synthesize for all tickers whose L1 data has changed meaningfully (new earnings, ≥5% price move, ≥7d since last synthesis)
+
+Slash command implementation lives at `.claude/commands/tearsheet.md`. When invoked, the active Claude Code session:
+
+1. Reads `data/output/tickers/<SYM>.json` (L1 numeric data)
+2. Runs WebSearch for `<TICKER> recent catalysts`, `<TICKER> analyst rating change`
+3. WebFetch's the top 3-5 news URLs from yfinance news
+4. Synthesizes L2 sections — Bull/Bear bullets, Trade Plan with concrete entry/stop/targets/R:R anchored to objective technicals, Management commentary, catalyst bullets with numbered footnote refs
+5. Writes back to `data/output/tickers/<SYM>.json` with `ai_synthesized_at: <ISO>` + sources array
+6. Commits the file
+
+Same capability Perplexity Finance uses (LLM + web search) — but free under the Max subscription. Trade-off: synthesis is on-demand rather than automated; user triggers when they want a fresh take. The tear-sheet UI shows the `ai_synthesized_at` timestamp + a "Stale — re-run /tearsheet AAPL" hint when L1 data has moved meaningfully since the last L2 run.
 
 Output: `data/output/tickers/{SYMBOL}.json` — one file per ticker, ~5-20 KB each.
 
@@ -320,7 +334,7 @@ This is bigger than originally scoped. Break into three shippable sub-phases:
 - Catalysts & News section (raw from yfinance news)
 
 ### Phase 3d — Narrative + Trade Plan (AI synthesis)
-- New `pipeline/tickers/ticker_ai_synth.py` Claude API wrapper
+- New `.claude/commands/tearsheet.md` slash command for on-demand AI synthesis (Max sub, no API tokens)
 - Bull vs Bear summary
 - Trade Plan (Long + Short setups)
 - Management commentary
@@ -336,7 +350,7 @@ Total estimated work: 3a ~1 hour, 3b ~1.5 hour, 3c ~1 hour, 3d ~1.5 hour. Plus p
 data/output/tickers/{SYMBOL}.json         NEW (3b/3d) — fundamentals + AI synthesis per ticker
 pipeline/tickers/__init__.py              NEW (3b)
 pipeline/tickers/ticker_data_fetcher.py   NEW (3b) — yfinance fetcher
-pipeline/tickers/ticker_ai_synth.py       NEW (3d) — Claude API synthesizer
+.claude/commands/tearsheet.md             NEW (3d) — slash command for on-demand AI synthesis
 pipeline/tickers/peer_map.py              NEW (3d) — curated peer lookup by industry
 pipeline/tickers/run_tickers.py           NEW (3b) — CLI entry (orchestrates both layers)
 .github/workflows/daily-data-update.yml   MODIFY (3b) — add run_tickers step
@@ -427,7 +441,7 @@ Reduce noise in Portfolio Tracker rows:
 
 ## Acceptance criteria (Phase 3d — narrative + trade plan)
 
-- [ ] Claude API integration written + a Bull/Bear synthesis prompt validated on a sample ticker
+- [ ] `.claude/commands/tearsheet.md` slash command written; validated on a sample ticker (run `/tearsheet AAPL`, confirm JSON updated, sections render in UI)
 - [ ] Management section renders with CEO/CFO/headcount/commentary
 - [ ] Competitors / Peers table renders (5-7 rows, hardcoded map + industry fallback)
 - [ ] Bull vs Bear Summary renders with 5-7 bullets per side
