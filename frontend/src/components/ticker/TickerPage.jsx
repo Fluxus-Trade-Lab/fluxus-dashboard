@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { usePortfolio } from '../portfolio/context/PortfolioContext'
+import { PortfolioProvider, usePortfolio } from '../portfolio/context/PortfolioContext'
 import { useUniverse } from '../../hooks/useUniverse'
 import { enrichTrades } from '../portfolio/lib/calculations'
 import TickerHeader from './TickerHeader'
@@ -11,8 +11,19 @@ import TickerStats from './TickerStats'
 /**
  * Per-ticker tear-sheet page. Phase 3a: skeleton with chart + execution +
  * basic stats. Phase 3b/3c/3d add fundamentals, technicals, and AI narrative.
+ *
+ * Wraps the body in PortfolioProvider so usePortfolio() works when the
+ * tear-sheet is opened outside the Portfolio tab.
  */
 export default function TickerPage({ symbol }) {
+  return (
+    <PortfolioProvider>
+      <TickerPageBody symbol={symbol} />
+    </PortfolioProvider>
+  )
+}
+
+function TickerPageBody({ symbol }) {
   const { state, dispatch } = usePortfolio()
   const { universe } = useUniverse()
 
