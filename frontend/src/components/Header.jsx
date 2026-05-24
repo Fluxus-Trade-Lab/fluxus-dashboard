@@ -5,6 +5,7 @@ const NAV_ITEMS = [
   { key: 'dashboard', label: 'Dashboard', hash: '#/dashboard' },
   { key: 'screener', label: 'Screener', hash: '#/screener' },
   { key: 'portfolio', label: 'Portfolio', hash: '#/portfolio' },
+  { key: 'trades', label: 'Trade Journal', hash: '#/trades' },
   { key: 'journal', label: 'AI Coach', hash: '#/journal' },
   { key: 'briefing', label: 'Briefing', hash: '#/briefing' },
   { key: 'breadth', label: 'Breadth', hash: '#/breadth' },
