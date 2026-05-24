@@ -1,8 +1,8 @@
-# Ticker Tear-Sheet Design (v2 — matched to AAOI reference)
+# Ticker Tear-Sheet Design (v3 — full 3-page AAOI reference)
 
 **Date:** 2026-05-24
 **Status:** Draft for user review
-**Reference:** AAOI · Applied Optoelectronics Trader Tearsheet (2-page PDF the user shared)
+**Reference:** AAOI · Applied Optoelectronics Trader Tearsheet (3-page PDF the user shared, generated via Perplexity Finance)
 **Sequence:** Phase 3 of the portfolio overhaul (Phase 1 + 2 shipped)
 
 ## Problem
@@ -28,6 +28,12 @@ The Tracker simultaneously becomes cleaner — Phase 1's inline detail (proximit
 [ Valuation Snapshot — Mkt Cap, Rev/Fwd Rev, P/S, EV/Sales, P/E, margins, cash, FCF, D/E, Current Ratio ]
 [ Key Quarterly Metrics — Period, Revenue, YoY, Gross Profit, GM%, Op Inc, EPS, Cash, Op CF (last 5Q) ]
 [ Recent Catalysts & News (left)  |  Analyst Sentiment (right) ]
+─── PAGE 3: NARRATIVE & TRADE PLAN ────────────────────────────────
+[ Management (CEO/CFO/headcount/commentary)  |  Competitors/Peers table ]
+[ Bull vs Bear Summary — two-column case bullets ]
+[ Trade Plan — LONG SETUP (Trigger/Entry/Stop/Targets/R:R/Sizing)  |  SHORT/FADE SETUP (same) ]
+[ Earnings risk note — options-implied move + recent post-earnings moves + sizing guidance ]
+[ Sources — numbered footnote refs with URLs ]
 ```
 
 ## Section-by-section detail
@@ -147,16 +153,95 @@ Source: yfinance `.recommendations` + `.analyst_price_targets`:
 - Most recent rating change
 - Notable upgrade(s) in trailing 60d
 
+### 14. Management
+Source: yfinance `.info` (companyOfficers, fullTimeEmployees) + AI synthesis for commentary:
+- CEO name + brief bio (years at company, background)
+- CFO name + role
+- Headcount (global, with breakdown if available)
+- Recent commentary (1-2 sentences synthesized from last earnings call / management guidance, linked to source footnotes)
+
+### 15. Competitors / Peers
+Small table of 5-7 peers. Source priority:
+- **(a)** Hardcoded peer map per industry/sector (curated for top sectors)
+- **(b)** AI-generated via Claude API given the ticker + sector + industry, returns peer list with focus notes
+- **(c)** Fallback: list other tickers in the same `industry` field from universe.json
+
+Columns: Symbol · Name · Focus (one-line industry niche)
+
+### 16. Bull vs Bear Summary
+Two-column case-bullet format. **AI-synthesized via Claude API** from:
+- Quarterly metrics + valuation snapshot (margin direction, growth, profitability)
+- Analyst sentiment (consensus + recent upgrades)
+- Catalysts (positive news, guidance)
+- Risk flags (insider selling, customer concentration, valuation extremes, drawdown risk)
+
+Returns 5-7 bullets per side. Cached in the per-ticker JSON; regenerated when key inputs change (new earnings, big analyst revision, big move).
+
+### 17. Trade Plan
+The most actionable section — two parallel setups, **AI-synthesized via Claude API** anchored to objective data:
+
+**LONG SETUP — Trend Continuation**
+- Trigger condition (price level + volume confirmation)
+- Entry zone (price range, defined from MA20 / pivot zone / breakout retest)
+- Stop level (~1 ATR below entry / below MA20 / below 10-day-low buffer)
+- T1, T2, T3 targets (52W high, measured move, analyst PT)
+- R:R ratio computed
+- Sizing guidance: ATR-based — "1R = $X/share, so a 0.25% account risk = N shares per $1k risked"
+
+**SHORT / FADE SETUP — Earnings Disappointment / Trend Break**
+- Same fields, inverted
+- Stop above broken pivot
+- Targets at MA50, analyst PT zone, bear-case PT
+- Note about short borrow / put spread alternative
+
+Both setups use the user's fixed R = $2,500 and an ATR-based stop convention. Synthesis prompt sends all relevant technicals (price, ATR, MA values, 52W high/low, RSI), fundamentals (Fwd P/S, consensus PT, recent catalysts), and the user's sizing rules; gets back the two trade plans formatted as above.
+
+### 18. Earnings Risk Note
+Highlighted box (amber tint). Computed:
+- Options-implied move from upcoming earnings (if next ER < 60d)
+- Average of last 4 post-earnings moves (computed from OHLC around earnings dates)
+- Specific guidance: "Consider trimming size or hedging into the print. ATR(14) of $X means a normal session moves ~Y%, so use wider mental stops and ATR-based sizing."
+
+Options-implied move requires an options-pricing source (yfinance has `.option_chain()`). If unavailable, fall back to "Recent post-earnings moves averaged ±X% over the last 4 prints — size accordingly."
+
+### 19. Sources
+Numbered footnote list at bottom of page 3. Auto-aggregated from:
+- Catalysts/news refs (URL + source name + date)
+- Analyst rating sources (broker + date)
+- Earnings transcript references
+- Pipeline note: "Quotes, financials, ratios, estimates, peers, analyst data: yfinance + Claude API (synthesis), <date> snapshot. Technical indicators computed from daily OHLCV. For informational purposes only — not investment advice."
+
+References inline use superscript numerals (¹ ² ³) matching the Sources list.
+
 ## Data architecture
 
-This tear-sheet needs data that doesn't exist in `universe.json` today. New pipeline component:
+This tear-sheet needs data that doesn't exist in `universe.json` today. New pipeline component with **two data layers**:
 
 ```
 pipeline/tickers/
 ├── __init__.py
-├── ticker_data_fetcher.py     # yfinance-based fetcher (per-ticker JSON)
-└── run_tickers.py             # CLI: refresh per-ticker data for a tracker-relevant set
+├── ticker_data_fetcher.py     # yfinance-based fetcher (numeric data per ticker)
+├── ticker_ai_synth.py         # Claude API synthesizer (narrative sections)
+└── run_tickers.py             # CLI: refresh both layers for tracked tickers
 ```
+
+**Layer 1 — Numeric data (yfinance, deterministic):**
+- Info, earnings history, quarterly financials, valuation snapshot
+- Analyst ratings + price targets
+- News headlines (raw, for AI to consume in layer 2)
+- Options chain (for implied move on next ER)
+- Company officers, headcount
+- Industry peers (hardcoded map for top sectors, fallback to industry-match from universe)
+
+**Layer 2 — AI synthesis (Claude API):**
+- Bull vs Bear bullets (5-7 per side)
+- Trade Plan: Long Setup + Short/Fade Setup with concrete trigger/entry/stop/targets/R:R
+- Management commentary (1-2 sentences from latest call)
+- Optional: catalyst narrative bullets with footnote refs
+
+Layer 2 runs only when layer 1 inputs have meaningfully changed (new earnings print, big analyst revision, ≥5% price move, ≥7d since last synthesis). Cached in the same per-ticker JSON.
+
+Claude API call cost estimate: ~3-5K input tokens × ~1-2K output tokens per ticker per synthesis = ~$0.02-0.05 per ticker per refresh. With ~50-100 tracked tickers refreshing 2-3x/week (event-triggered), monthly cost ~$5-15. Acceptable.
 
 Output: `data/output/tickers/{SYMBOL}.json` — one file per ticker, ~5-20 KB each.
 
@@ -165,12 +250,24 @@ Schema:
 {
   "ticker": "AAOI",
   "fetched_at": "2026-05-24T...",
+  "ai_synthesized_at": "2026-05-22T...",
   "info": { /* yfinance .info subset */ },
   "earnings": [ { "date": "2026-02-26", "rev_actual": 134.3, "rev_estimate": 132.3, "eps_actual": -0.04, "eps_estimate": -0.12 }, ... ],
   "valuation": { "market_cap": 14.1e9, "ps_ttm": 30.9, "ev_sales_ttm": 30.5, ... },
   "quarterly_financials": [ { "period": "Q4 2025", "revenue": 134.3e6, "yoy_pct": 0.34, ... }, ... ],
   "analyst": { "consensus": "Strong Buy", "n_ratings": 4, "avg_pt": 77.25, "high_pt": 140, "low_pt": 35, "recent": [...] },
-  "news": [ { "date": "2026-03-09", "title": "...", "url": "..." }, ... ]
+  "news": [ { "date": "2026-03-09", "title": "...", "url": "...", "source": "GlobeNewswire" }, ... ],
+  "options_implied_move_next_er": 0.184,
+  "post_earnings_moves_last_4": [0.183, 0.142, -0.071, 0.205],
+  "management": { "ceo": "...", "cfo": "...", "headcount": 3309, "commentary": "..." },
+  "peers": [ { "symbol": "LITE", "name": "Lumentum", "focus": "Optical / DC transceivers" }, ... ],
+  "ai_synthesis": {
+    "bull_case": ["...", "..."],
+    "bear_case": ["...", "..."],
+    "trade_plan_long": { "trigger": "...", "entry_zone": "150-160", "stop": 138, "targets": [192, 215, 235], "rr": 3.5, "sizing_note": "..." },
+    "trade_plan_short": { ... },
+    "earnings_risk_note": "..."
+  }
 }
 ```
 
@@ -220,17 +317,28 @@ This is bigger than originally scoped. Break into three shippable sub-phases:
 - Key Levels table (derived from existing data + ATR + chart highs/lows)
 - Trend & Indicators table (RSI needs pipeline addition; rest computable)
 - Relative Strength chart + table (rebased; needs SPY/QQQ historical from etf_data)
-- Catalysts & News section (auto = yfinance news; AI-curated comes later if useful)
+- Catalysts & News section (raw from yfinance news)
 
-Total estimated work: 3a ~1 hour, 3b ~1.5 hour, 3c ~1 hour. Plus pipeline runs.
+### Phase 3d — Narrative + Trade Plan (AI synthesis)
+- New `pipeline/tickers/ticker_ai_synth.py` Claude API wrapper
+- Bull vs Bear summary
+- Trade Plan (Long + Short setups)
+- Management commentary
+- Earnings risk note (options-implied + recent moves)
+- Sources / footnotes section
+- Peers table (hardcoded map + Claude fallback)
+
+Total estimated work: 3a ~1 hour, 3b ~1.5 hour, 3c ~1 hour, 3d ~1.5 hour. Plus pipeline runs.
 
 ## File-level changes (all sub-phases)
 
 ```
-data/output/tickers/{SYMBOL}.json         NEW (3b) — fundamentals data per ticker
+data/output/tickers/{SYMBOL}.json         NEW (3b/3d) — fundamentals + AI synthesis per ticker
 pipeline/tickers/__init__.py              NEW (3b)
 pipeline/tickers/ticker_data_fetcher.py   NEW (3b) — yfinance fetcher
-pipeline/tickers/run_tickers.py           NEW (3b) — CLI entry
+pipeline/tickers/ticker_ai_synth.py       NEW (3d) — Claude API synthesizer
+pipeline/tickers/peer_map.py              NEW (3d) — curated peer lookup by industry
+pipeline/tickers/run_tickers.py           NEW (3b) — CLI entry (orchestrates both layers)
 .github/workflows/daily-data-update.yml   MODIFY (3b) — add run_tickers step
 
 frontend/src/components/portfolio/lib/tickerUrl.js           NEW (3a)
@@ -249,6 +357,12 @@ frontend/src/components/ticker/                              NEW dir (3a)
   TickerQuarterlyMetrics.jsx                                  NEW (3b)
   TickerCatalysts.jsx                                         NEW (3b/3c)
   TickerAnalystSentiment.jsx                                  NEW (3b)
+  TickerManagement.jsx                                        NEW (3d)
+  TickerPeers.jsx                                             NEW (3d)
+  TickerBullBear.jsx                                          NEW (3d)
+  TickerTradePlan.jsx                                         NEW (3d)
+  TickerEarningsRisk.jsx                                      NEW (3d)
+  TickerSources.jsx                                           NEW (3d)
   TickerLink.jsx                                              NEW (3a)
 frontend/src/hooks/useTickerData.js                          NEW (3b) — fetch per-ticker JSON
 
@@ -309,4 +423,15 @@ Reduce noise in Portfolio Tracker rows:
 - [ ] Key Levels table renders with all rows
 - [ ] Trend & Indicators table renders with all rows (RSI from pipeline addition)
 - [ ] Relative Strength rebased chart + period table renders
-- [ ] Recent Catalysts & News section renders (auto from yfinance news for now)
+- [ ] Recent Catalysts & News section renders (raw from yfinance news)
+
+## Acceptance criteria (Phase 3d — narrative + trade plan)
+
+- [ ] Claude API integration written + a Bull/Bear synthesis prompt validated on a sample ticker
+- [ ] Management section renders with CEO/CFO/headcount/commentary
+- [ ] Competitors / Peers table renders (5-7 rows, hardcoded map + industry fallback)
+- [ ] Bull vs Bear Summary renders with 5-7 bullets per side
+- [ ] Trade Plan renders both LONG and SHORT setups with Trigger/Entry/Stop/Targets/R:R/Sizing
+- [ ] Earnings Risk Note renders with options-implied move (when avail) + recent post-earnings moves
+- [ ] Sources section renders with numbered footnote refs
+- [ ] All AI-synthesized sections include a "synthesized: YYYY-MM-DD" timestamp + refresh button
