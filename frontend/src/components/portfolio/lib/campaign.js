@@ -41,8 +41,10 @@ function buildCampaign(layers) {
   const blendedEntry = totalOriginalQty > 0
     ? layers.reduce((s, l) => s + l.entryPrice * l.originalQty, 0) / totalOriginalQty
     : 0
+  // Campaign-level 1R: sum of each layer's initial-stop risk. Trailing a layer's
+  // live stop must never rewrite the campaign's R denominator.
   const totalRDollars = layers.reduce(
-    (s, l) => s + Math.abs(l.entryPrice - l.stopPrice) * l.originalQty,
+    (s, l) => s + Math.abs(l.entryPrice - (l.initialStop ?? l.stopPrice)) * l.originalQty,
     0
   )
   const openLayersCount = layers.filter(l => l.currentQty > 0).length

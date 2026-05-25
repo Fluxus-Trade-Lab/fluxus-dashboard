@@ -1,5 +1,13 @@
 import { lookupPrice } from './calculations'
 
+// R-multiple math is anchored to the locked-at-entry stop. Trailing the live
+// `stopPrice` (used for stop-out checks and capital-at-risk widgets) must never
+// rewrite historical R / heat / sizing analytics.
+function riskPerShare(t) {
+  const initial = t.initialStop ?? t.stopPrice
+  return Math.abs(t.entryPrice - initial)
+}
+
 // ── Default rules ──
 
 export const DEFAULT_RULES = {
@@ -105,13 +113,13 @@ function detectOvertrading(trade, allTrades, rules) {
 }
 
 function detectPoorRR(trade, rules) {
-  const riskPerShare = Math.abs(trade.entryPrice - trade.stopPrice)
-  if (riskPerShare === 0) return false
+  const rps = riskPerShare(trade)
+  if (rps === 0) return false
   // For the R/R check, we look at the risk distance relative to a reasonable target
   // A 3:1 R/R means the reward target should be 3x the risk
   // We flag if the risk is too wide (stop too far) making 3:1 unrealistic
   // Simple check: is the stop distance > 10% of entry? That makes 30% target needed
-  const riskPct = riskPerShare / trade.entryPrice
+  const riskPct = rps / trade.entryPrice
   if (riskPct > 0.10) return true // stop too far for reasonable R/R
   // Also flag if explicit R/R is below minimum (when we have exit data)
   if (trade.isClosed && trade.rr != null && trade.rr < 0 && Math.abs(trade.rr) > 1) return false // normal loss
@@ -119,15 +127,13 @@ function detectPoorRR(trade, rules) {
 }
 
 function detectBetTooBig(trade, rules) {
-  const riskPerShare = Math.abs(trade.entryPrice - trade.stopPrice)
-  const positionRisk = riskPerShare * trade.originalQty
+  const positionRisk = riskPerShare(trade) * trade.originalQty
   const targetRisk = rules.capital * rules.riskPerTrade
   return positionRisk > targetRisk * rules.sizingToleranceHigh
 }
 
 function detectBetTooSmall(trade, rules) {
-  const riskPerShare = Math.abs(trade.entryPrice - trade.stopPrice)
-  const positionRisk = riskPerShare * trade.originalQty
+  const positionRisk = riskPerShare(trade) * trade.originalQty
   const targetRisk = rules.capital * rules.riskPerTrade
   return positionRisk < targetRisk * rules.sizingToleranceLow
 }
@@ -147,9 +153,8 @@ function detectTotalHeatExceeded(trade, allTrades, rules, dailyPrices) {
 
   let totalHeat = 0
   for (const t of openAtEntry) {
-    const riskPerShare = Math.abs(t.entryPrice - t.stopPrice)
     const qty = t.currentQty || t.originalQty
-    totalHeat += riskPerShare * qty
+    totalHeat += riskPerShare(t) * qty
   }
 
   return totalHeat / rules.capital > rules.maxTotalHeat
@@ -172,9 +177,8 @@ function detectSectorHeatExceeded(trade, allTrades, rules) {
 
   let sectorHeat = 0
   for (const t of sectorOpenAtEntry) {
-    const riskPerShare = Math.abs(t.entryPrice - t.stopPrice)
     const qty = t.currentQty || t.originalQty
-    sectorHeat += riskPerShare * qty
+    sectorHeat += riskPerShare(t) * qty
   }
 
   return sectorHeat / rules.capital > rules.maxSectorHeat
@@ -195,9 +199,9 @@ export function computeTacticalStats(enrichedTrades) {
     const firstTrim = t.trims[0]
     const trimRatio = firstTrim.qty / t.originalQty
     const dir = t.direction === 'long' ? 1 : -1
-    const riskPerShare = Math.abs(t.entryPrice - t.stopPrice)
+    const rps = riskPerShare(t)
     const profitPerShare = (firstTrim.price - t.entryPrice) * dir
-    const trimRR = riskPerShare > 0 ? profitPerShare / riskPerShare : 0
+    const trimRR = rps > 0 ? profitPerShare / rps : 0
     const daysToTrim = Math.max(0, Math.round((new Date(firstTrim.date) - new Date(t.entryDate)) / 86400000))
 
     return {

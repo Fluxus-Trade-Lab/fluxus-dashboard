@@ -11,13 +11,17 @@ import { daysBetween } from './portfolioFormat'
  */
 
 /**
- * 1R dollar risk = |entry - stop| × originalQty.
- * Uses ORIGINAL qty so R-multiples stay comparable across the trade's life;
- * switching to current qty would make R change every time you trim.
+ * 1R dollar risk = |entry - initial_stop| × originalQty.
+ *
+ * Anchored to the locked-at-entry stop so trailing the live `stopPrice` never
+ * rewrites historical R math. Uses ORIGINAL qty so R-multiples stay comparable
+ * across the trade's life; switching to current qty would make R change every
+ * time you trim.
  */
 export function rRisk(t) {
-  if (t.stopPrice == null || t.stopPrice <= 0) return null
-  return Math.abs(t.entryPrice - t.stopPrice) * t.originalQty
+  const initial = t.initialStop ?? t.stopPrice
+  if (initial == null || initial <= 0) return null
+  return Math.abs(t.entryPrice - initial) * t.originalQty
 }
 
 /**
