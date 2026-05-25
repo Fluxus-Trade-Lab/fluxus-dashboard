@@ -3,6 +3,22 @@ import { pullFromSheets, pushToSheets } from '../services/sheetsSync'
 
 const STORAGE_KEY = 'portfolio-v4'
 
+/**
+ * Lock `initialStop` to the entry stop so it survives any later trailing.
+ * If a trade already carries `initialStop`, keep it; otherwise backfill from
+ * the current `stopPrice` (safe since the user has never trailed before this
+ * field existed — every current stop IS the initial stop at backfill time).
+ */
+function withInitialStop(trade) {
+  if (trade == null) return trade
+  if (trade.initialStop != null) return trade
+  return { ...trade, initialStop: trade.stopPrice }
+}
+
+function backfillTrades(trades) {
+  return (trades ?? []).map(withInitialStop)
+}
+
 const initialState = {
   startingCapital: 100000,
   trades: [],
@@ -33,7 +49,7 @@ function loadFromStorage() {
     return {
       ...initialState,
       startingCapital: parsed.startingCapital ?? initialState.startingCapital,
-      trades: parsed.trades ?? [],
+      trades: backfillTrades(parsed.trades),
       dailyPrices: parsed.dailyPrices ?? {},
       benchmarkHistories: parsed.benchmarkHistories ?? {},
       gasUrl: parsed.gasUrl ?? '',
@@ -65,7 +81,7 @@ function reducer(state, action) {
     case 'IMPORT_DATA': {
       const next = {
         ...state,
-        trades: action.trades ?? state.trades,
+        trades: action.trades ? backfillTrades(action.trades) : state.trades,
         capitalSet: true,
       }
       if (action.capital != null) next.startingCapital = action.capital
@@ -76,15 +92,20 @@ function reducer(state, action) {
     }
 
     case 'ADD_TRADE':
-      return { ...state, trades: [...state.trades, action.trade] }
+      return { ...state, trades: [...state.trades, withInitialStop(action.trade)] }
 
-    case 'UPDATE_TRADE':
+    case 'UPDATE_TRADE': {
+      // Strip initialStop from incoming updates — it must never be overwritten
+      // after entry. Trailing the live `stopPrice` is fine and expected.
+      // eslint-disable-next-line no-unused-vars
+      const { initialStop: _ignored, ...safe } = action.updates ?? {}
       return {
         ...state,
         trades: state.trades.map(t =>
-          t.id === action.id ? { ...t, ...action.updates } : t
+          t.id === action.id ? { ...t, ...safe } : t
         ),
       }
+    }
 
     case 'TRIM_TRADE':
       return {
@@ -144,7 +165,7 @@ function reducer(state, action) {
       }
       return {
         ...state,
-        trades: action.stockTrades ?? state.trades,
+        trades: action.stockTrades ? backfillTrades(action.stockTrades) : state.trades,
         optionsTrades: action.optionsTrades ?? state.optionsTrades,
         startingCapital: action.meta?.startingCapital ?? state.startingCapital,
         optionsCapital: action.meta?.optionsCapital ?? state.optionsCapital,

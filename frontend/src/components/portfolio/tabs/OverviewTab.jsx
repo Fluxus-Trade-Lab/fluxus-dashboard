@@ -290,7 +290,7 @@ export default function OverviewTab({
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{t.trims?.[2] ? fmtCur(t.trims[2].price) : '—'}</td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] text-[10px] text-[var(--color-text-muted)]">{t.trims?.[2]?.date || ''}</td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">
-                    <StopCell stopPrice={t.stopPrice} suggestion={stopSugg} onChange={v => updateStop(t.id, v)} />
+                    <StopCell stopPrice={t.stopPrice} initialStop={t.initialStop} suggestion={stopSugg} onChange={v => updateStop(t.id, v)} />
                   </td>
                   <td className={`px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${clr(t.unrealizedPLPct)}`}>{fmtPct(t.unrealizedPLPct)}</td>
                   <td className={`px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${clr(t.realizedPLPct)}`}>{fmtPct(t.realizedPLPct)}</td>

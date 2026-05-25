@@ -1,11 +1,22 @@
 import EditablePrice from './EditablePrice'
 
-export default function StopCell({ stopPrice, suggestion, onChange }) {
+export default function StopCell({ stopPrice, initialStop, suggestion, onChange }) {
   const sug = suggestion?.suggestedStop
   const showSuggestion = sug != null && Math.abs(sug - stopPrice) > 0.01
+  const trailed = initialStop != null && Math.abs(initialStop - stopPrice) > 0.01
   return (
     <div className="flex flex-col gap-0.5">
       <EditablePrice value={stopPrice} onChange={onChange} />
+      {trailed && (
+        <div
+          className="text-[10px] text-[var(--color-text-muted)] tabular-nums"
+          title={`Locked at entry — 1R anchored here. Current stop is trailed ${
+            stopPrice > initialStop ? 'up' : 'down'
+          } by $${Math.abs(stopPrice - initialStop).toFixed(2)}.`}
+        >
+          init ${initialStop.toFixed(2)}
+        </div>
+      )}
       {showSuggestion && (
         <div className="text-[10px] text-[var(--color-text-muted)] flex items-center gap-1.5" title={suggestion.rationale}>
           <span>sug ${sug.toFixed(2)}</span>

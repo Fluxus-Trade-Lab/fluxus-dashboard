@@ -64,11 +64,15 @@ function checkStopTriggers(ticker, entryDate, trims, stopLevels, dir, dailyPrice
  */
 export function computeStopSim(trades, dailyPrices, numStops) {
   const N = numStops
-  const closedTrades = trades.filter(t => t.isClosed && t.stopPrice > 0)
+  // Use initial_stop to determine the simulation R — trailing the live stop
+  // after a trade closes would alias every closed trade's R to whatever the
+  // user last typed into the field.
+  const stopOf = t => t.initialStop ?? t.stopPrice
+  const closedTrades = trades.filter(t => t.isClosed && stopOf(t) > 0)
 
   const rows = closedTrades.map(t => {
     const dir = t.direction === 'long' ? 1 : -1
-    const R = Math.abs(t.entryPrice - t.stopPrice)
+    const R = Math.abs(t.entryPrice - stopOf(t))
 
     // Compute N stop levels: stop_k = entry - (k/N * R) * dir for k=1..N
     const stopLevels = []

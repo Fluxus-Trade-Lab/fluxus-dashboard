@@ -70,7 +70,8 @@ export default function TradeForm({ onClose }) {
         entryPrice: price,
         originalQty: qty,
         currentQty: qty,
-        stopPrice: stop,
+        stopPrice: stop,       // current / trailing
+        initialStop: stop,     // locked at entry — R denominator
         trims: [],
         isClosed: false,
       },

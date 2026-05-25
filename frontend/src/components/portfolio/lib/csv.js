@@ -5,9 +5,12 @@ const esc = (v) => {
   return s.includes(',') || s.includes('"') ? '"' + s.replace(/"/g, '""') + '"' : s
 }
 
+// Column layout — `Stop Price` is the current/trailing stop, `Initial Stop` is
+// the locked-at-entry stop (R denominator). Old CSV exports without the
+// `Initial Stop` column are backfilled at parse time (initialStop := stopPrice).
 const TRADE_HEADERS = [
   'Ticker', 'Direction', 'Sector', 'Entry Date', 'Entry Price',
-  'Original Qty', 'Current Qty', 'Stop Price', 'Closed',
+  'Original Qty', 'Current Qty', 'Stop Price', 'Initial Stop', 'Closed',
   'Trim1 Date', 'Trim1 Price', 'Trim1 Qty', 'Trim1 Type',
   'Trim2 Date', 'Trim2 Price', 'Trim2 Qty', 'Trim2 Type',
   'Trim3 Date', 'Trim3 Price', 'Trim3 Qty', 'Trim3 Type',
@@ -18,7 +21,7 @@ export function generateCSV(trades, startingCapital) {
     const tr = t.trims || []
     return [
       t.ticker, t.direction, t.sector || '', t.entryDate, t.entryPrice,
-      t.originalQty, t.currentQty, t.stopPrice, t.isClosed ? 'YES' : 'NO',
+      t.originalQty, t.currentQty, t.stopPrice, t.initialStop ?? t.stopPrice, t.isClosed ? 'YES' : 'NO',
       tr[0]?.date || '', tr[0]?.price || '', tr[0]?.qty || '', tr[0]?.type || '',
       tr[1]?.date || '', tr[1]?.price || '', tr[1]?.qty || '', tr[1]?.type || '',
       tr[2]?.date || '', tr[2]?.price || '', tr[2]?.qty || '', tr[2]?.type || '',
@@ -36,17 +39,26 @@ export function generateCSV(trades, startingCapital) {
 function parseTradeRows(rows) {
   return rows.filter(r => r.Ticker || r.ticker || r[0]).map((r, i) => {
     const get = (key, idx) => r[key] ?? r[idx] ?? ''
+    // Trims shift by one when the new `Initial Stop` column is present
+    // (Closed moves from idx 8 → 9, trims from base 9 → 10). The named lookup
+    // is preferred; numeric fallback assumes the new layout.
     const trims = []
     for (let n = 1; n <= 3; n++) {
-      const d = get(`Trim${n} Date`, 8 + (n - 1) * 4 + 1)
-      const p = get(`Trim${n} Price`, 8 + (n - 1) * 4 + 2)
-      const q = get(`Trim${n} Qty`, 8 + (n - 1) * 4 + 3)
-      const tp = get(`Trim${n} Type`, 8 + (n - 1) * 4 + 4)
+      const d = get(`Trim${n} Date`, 9 + (n - 1) * 4 + 1)
+      const p = get(`Trim${n} Price`, 9 + (n - 1) * 4 + 2)
+      const q = get(`Trim${n} Qty`, 9 + (n - 1) * 4 + 3)
+      const tp = get(`Trim${n} Type`, 9 + (n - 1) * 4 + 4)
       if (d && p && q) {
         trims.push({ date: String(d), price: parseFloat(p), qty: parseInt(q), type: String(tp) || 'trim_1_3' })
       }
     }
     const oq = parseInt(get('Original Qty', 5)) || 0
+    const stopPrice = parseFloat(get('Stop Price', 7)) || 0
+    // Backfill: legacy CSVs without the `Initial Stop` column lock the initial
+    // stop to whatever the current stop is at import time. Safe because the
+    // schema split happened before any stop was ever trailed.
+    const rawInitial = get('Initial Stop', 8)
+    const initialStop = rawInitial !== '' ? (parseFloat(rawInitial) || stopPrice) : stopPrice
     return {
       id: Date.now().toString() + '_' + i,
       ticker: String(get('Ticker', 0) || '').toUpperCase(),
@@ -56,9 +68,10 @@ function parseTradeRows(rows) {
       entryPrice: parseFloat(get('Entry Price', 4)) || 0,
       originalQty: oq,
       currentQty: parseInt(get('Current Qty', 6)) ?? oq,
-      stopPrice: parseFloat(get('Stop Price', 7)) || 0,
+      stopPrice,
+      initialStop,
       trims,
-      isClosed: String(get('Closed', 8)).toUpperCase() === 'YES',
+      isClosed: String(get('Closed', 9)).toUpperCase() === 'YES',
     }
   })
 }

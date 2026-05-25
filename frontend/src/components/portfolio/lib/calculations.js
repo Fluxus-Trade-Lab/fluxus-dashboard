@@ -36,7 +36,10 @@ export function enrichTrades(trades, totalPortfolioValue, dailyPrices) {
     const trims = t.trims || []
     const totalSoldQty = trims.reduce((s, tr) => s + tr.qty, 0)
     const costBasis = t.originalQty * t.entryPrice
-    const riskUnit = Math.abs(t.entryPrice - t.stopPrice)
+    // R-multiples are anchored to the locked-at-entry stop. Trailing the live
+    // `stopPrice` after the fact must never rewrite historical R.
+    const initialStop = t.initialStop ?? t.stopPrice
+    const riskUnit = Math.abs(t.entryPrice - initialStop)
 
     // Realized P/L from trims
     let realizedPL = 0

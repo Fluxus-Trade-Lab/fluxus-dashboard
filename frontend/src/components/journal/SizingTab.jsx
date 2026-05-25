@@ -167,7 +167,10 @@ function PortfolioAudit({ trades, dailyPrices, startingCapital }) {
     let totalHeat = 0
     const positions = openTrades.map(t => {
       const dir = t.direction === 'long' ? 1 : -1
-      const stopDist = Math.abs(t.entryPrice - t.stopPrice)
+      // Sizing analysis is anchored to the locked-at-entry stop — trailing the
+      // live stop would distort both the heat number and the sizing ratio.
+      const initialStop = t.initialStop ?? t.stopPrice
+      const stopDist = Math.abs(t.entryPrice - initialStop)
       const riskDollar = t.currentQty * stopDist
       const riskPct = (riskDollar / capital) * 100
       totalHeat += riskPct

@@ -1,12 +1,15 @@
 /**
  * Compute price levels for +4R and +8R targets anchored to the trade's
- * CSV initial stop. Direction-aware.
+ * locked-at-entry stop. Direction-aware. Trailing the live `stopPrice` would
+ * shrink R-per-share and quietly move these target prices closer to entry —
+ * we anchor to `initialStop` so the +4R / +8R levels stay constant.
  *
  * @returns {{targetR4: number, targetR8: number}|null} null when R is undefined.
  */
 export function compute(trade) {
-  const { entryPrice, stopPrice, direction } = trade
-  const rPerShare = Math.abs(entryPrice - stopPrice)
+  const { entryPrice, direction } = trade
+  const initialStop = trade.initialStop ?? trade.stopPrice
+  const rPerShare = Math.abs(entryPrice - initialStop)
   if (rPerShare <= 0) return null
   const sign = direction === 'long' ? 1 : -1
   return {
