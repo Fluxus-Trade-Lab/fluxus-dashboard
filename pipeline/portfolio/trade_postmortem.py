@@ -196,7 +196,9 @@ def _compute_path_analytics(df: pd.DataFrame, trade: Trade) -> dict:
 
     entry_price = trade.entry_price
     sign = 1 if trade.direction == 'long' else -1
-    r_per_share = abs(trade.entry_price - trade.stop_price)
+    # R-multiples are anchored to the locked-at-entry stop so trailing the live
+    # stop after the fact never rewrites historical excursion math.
+    r_per_share = abs(trade.entry_price - trade.initial_stop)
     if r_per_share <= 0:
         return {}
 
@@ -291,9 +293,11 @@ def _generate_narrative(trade: Trade, snap: dict, setup: str, analytics: dict, l
     direction = 'long' if trade.direction == 'long' else 'short'
     entry_date_str = trade.entry_date.isoformat()
     entry_price = trade.entry_price
-    stop = trade.stop_price
-    r_per_share = abs(entry_price - stop)
+    initial_stop = trade.initial_stop
+    current_stop = trade.stop_price
+    r_per_share = abs(entry_price - initial_stop)
     R_dollars = r_per_share * trade.original_qty
+    trailed = abs(current_stop - initial_stop) > 0.01
 
     px = snap.get('close')
     ma20 = snap.get('ma20'); ma50 = snap.get('ma50'); ma200 = snap.get('ma200')
@@ -302,9 +306,12 @@ def _generate_narrative(trade: Trade, snap: dict, setup: str, analytics: dict, l
     atr_pct = snap.get('atr14_pct')
 
     # Sentence 1: entry context
+    stop_phrase = f"with stop ${initial_stop:.2f}"
+    if trailed:
+        stop_phrase += f" (currently trailed to ${current_stop:.2f})"
     sent1_parts = [
         f"Entered **{trade.ticker}** {direction} on {entry_date_str} at "
-        f"${entry_price:.2f} (qty {trade.original_qty}) with stop ${stop:.2f}",
+        f"${entry_price:.2f} (qty {trade.original_qty}) {stop_phrase}",
         f"(1R = ${r_per_share:.2f}/sh = ${R_dollars:,.0f}).",
     ]
 
@@ -373,7 +380,8 @@ def _trade_to_dict(trade: Trade) -> dict:
         'entry_price': trade.entry_price,
         'original_qty': trade.original_qty,
         'current_qty': trade.current_qty,
-        'stop_price': trade.stop_price,
+        'stop_price': trade.stop_price,        # current / trailing
+        'initial_stop': trade.initial_stop,    # locked at entry — R denominator
         'closed': trade.closed,
         'exit_date': trade.exit_date.isoformat() if trade.exit_date else None,
         'hold_business_days': trade.hold_business_days,
