@@ -119,7 +119,10 @@ def _simulate_from_bars(trade: Trade, bars: np.ndarray, p: SimParams) -> float:
     """Inner sim loop on a pre-prepped numpy bars array."""
     direction = 1 if trade.direction == 'long' else -1
     entry_price = trade.entry_price
-    stop_price = trade.stop_price
+    # The simulator runs hypothetical management rules that themselves trail the
+    # stop; the *starting* stop must be the one locked at entry, not whatever the
+    # user has since trailed it to in the live tracker.
+    stop_price = trade.initial_stop
     original_qty = trade.original_qty
     R = trade.R_dollars
     R_per_share = R / original_qty

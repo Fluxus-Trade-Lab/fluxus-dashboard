@@ -2,9 +2,15 @@
 
 CSV schema (header on row 3, two `_meta` rows above):
     Ticker, Direction, Sector, Entry Date, Entry Price, Original Qty,
-    Current Qty, Stop Price, Closed, Trim1 Date, Trim1 Price, Trim1 Qty,
-    Trim1 Type, Trim2 Date, Trim2 Price, Trim2 Qty, Trim2 Type,
+    Current Qty, Stop Price, Initial Stop, Closed, Trim1 Date, Trim1 Price,
+    Trim1 Qty, Trim1 Type, Trim2 Date, Trim2 Price, Trim2 Qty, Trim2 Type,
     Trim3 Date, Trim3 Price, Trim3 Qty, Trim3 Type
+
+`Stop Price` is the *current/trailing* stop (used for "where would I be stopped now"
+and live capital-at-risk). `Initial Stop` is the *locked-at-entry* stop and is the
+denominator for every R-multiple calculation. The two values are equal at entry and
+only diverge if the user trails the stop. Older CSVs without the `Initial Stop`
+column backfill `initial_stop := stop_price`.
 
 Trim Type vocabulary:
     trim_1_2  = sell ½ of original position
@@ -34,7 +40,11 @@ class TrimEvent:
 
 @dataclass(frozen=True)
 class Trade:
-    """A single trade as recorded in the portfolio CSV."""
+    """A single trade as recorded in the portfolio CSV.
+
+    `stop_price` is the live/trailing stop. `initial_stop` is locked at entry and
+    is the R-multiple denominator — it never moves once the position is opened.
+    """
     ticker: str
     direction: str  # 'long' or 'short'
     sector: str
@@ -42,7 +52,8 @@ class Trade:
     entry_price: float
     original_qty: int
     current_qty: int
-    stop_price: float
+    stop_price: float       # current / trailing stop
+    initial_stop: float     # locked at entry — R denominator
     closed: bool
     trims: tuple[TrimEvent, ...] = field(default_factory=tuple)
 
@@ -72,8 +83,12 @@ class Trade:
 
     @property
     def R_dollars(self) -> float:
-        """Initial $ at risk = |entry - stop| × original_qty."""
-        return abs(self.entry_price - self.stop_price) * self.original_qty
+        """Initial $ at risk = |entry - initial_stop| × original_qty.
+
+        Anchored to the locked-at-entry stop so trailing the live stop never
+        retroactively rewrites historical R-multiples.
+        """
+        return abs(self.entry_price - self.initial_stop) * self.original_qty
 
     @property
     def has_multiday_trims(self) -> bool:
@@ -137,6 +152,7 @@ def parse_csv(path: Path) -> list[Trade]:
     Logs a warning and skips any row that can't be parsed.
     """
     trades: list[Trade] = []
+    has_initial_stop_col = False
     with open(path, newline='') as f:
         reader = csv.reader(f)
         header = None
@@ -147,9 +163,17 @@ def parse_csv(path: Path) -> list[Trade]:
                 continue
             if header is None:
                 header = row
+                has_initial_stop_col = any(
+                    c.strip().lower() == 'initial stop' for c in header
+                )
+                if not has_initial_stop_col:
+                    logger.info(
+                        f"{path.name}: legacy CSV without 'Initial Stop' column — "
+                        "backfilling initial_stop := stop_price for every row."
+                    )
                 continue
             try:
-                trade = _row_to_trade(row, row_idx)
+                trade = _row_to_trade(row, row_idx, has_initial_stop_col)
                 if trade is not None:
                     trades.append(trade)
             except Exception as e:  # noqa: BLE001
@@ -158,11 +182,21 @@ def parse_csv(path: Path) -> list[Trade]:
     return trades
 
 
-def _row_to_trade(row: list[str], row_idx: int) -> Optional[Trade]:
-    # 21 columns expected
-    if len(row) < 21:
-        # pad with empties if the writer dropped trailing commas
-        row = row + [''] * (21 - len(row))
+def _row_to_trade(
+    row: list[str],
+    row_idx: int,
+    has_initial_stop_col: bool = True,
+) -> Optional[Trade]:
+    """Parse one CSV row → Trade.
+
+    If `has_initial_stop_col` is False (older CSV exports), the row is treated as
+    the legacy 21-column layout (no `Initial Stop`) and `initial_stop` is
+    backfilled from `stop_price`.
+    """
+    expected_cols = 22 if has_initial_stop_col else 21
+    if len(row) < expected_cols:
+        row = row + [''] * (expected_cols - len(row))
+
     ticker = row[0].strip()
     direction = row[1].strip().lower()
     sector = row[2].strip() or 'Unknown'
@@ -171,7 +205,17 @@ def _row_to_trade(row: list[str], row_idx: int) -> Optional[Trade]:
     original_qty = _parse_int(row[5])
     current_qty = _parse_int(row[6]) or 0
     stop_price = _parse_float(row[7])
-    closed = row[8].strip().upper() == 'YES'
+
+    if has_initial_stop_col:
+        initial_stop = _parse_float(row[8])
+        closed_col = 9
+        trim_base = 10
+    else:
+        initial_stop = None  # backfilled below
+        closed_col = 8
+        trim_base = 9
+
+    closed = row[closed_col].strip().upper() == 'YES'
 
     if not ticker or entry_date is None or entry_price is None or original_qty is None:
         logger.warning(f"Row {row_idx}: missing required fields, skipping")
@@ -182,13 +226,17 @@ def _row_to_trade(row: list[str], row_idx: int) -> Optional[Trade]:
 
     trims: list[TrimEvent] = []
     for i in range(3):  # Trim1, Trim2, Trim3
-        base = 9 + i * 4
+        base = trim_base + i * 4
         d = _parse_date(row[base])
         p = _parse_float(row[base + 1])
         q = _parse_int(row[base + 2])
         t_type = row[base + 3].strip()
         if d and p is not None and q is not None and t_type:
             trims.append(TrimEvent(date=d, price=p, qty=q, type=t_type))
+
+    final_stop = stop_price if stop_price is not None else entry_price * 0.95
+    # Backfill: if Initial Stop column is missing or blank, lock it to the current stop.
+    final_initial = initial_stop if initial_stop is not None else final_stop
 
     return Trade(
         ticker=ticker,
@@ -198,7 +246,8 @@ def _row_to_trade(row: list[str], row_idx: int) -> Optional[Trade]:
         entry_price=entry_price,
         original_qty=original_qty,
         current_qty=current_qty,
-        stop_price=stop_price if stop_price is not None else entry_price * 0.95,
+        stop_price=final_stop,
+        initial_stop=final_initial,
         closed=closed,
         trims=tuple(trims),
     )

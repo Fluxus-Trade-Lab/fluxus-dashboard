@@ -99,7 +99,9 @@ def build_trade_sizings(trades: list[Trade], ohlc_by_ticker: dict) -> list[Trade
         initial_R = t.R_dollars / FIXED_R_DOLLARS
         stop_mults_atr = None
         if atr_pct and atr_pct > 0:
-            stop_distance_pct = abs(t.entry_price - t.stop_price) / t.entry_price * 100
+            # Sizing analysis uses the locked-at-entry stop — trailed stops would
+            # bias the ATR-multiple distribution after the fact.
+            stop_distance_pct = abs(t.entry_price - t.initial_stop) / t.entry_price * 100
             stop_mults_atr = stop_distance_pct / atr_pct
         out.append(TradeSizing(
             ticker=t.ticker,
@@ -107,7 +109,7 @@ def build_trade_sizings(trades: list[Trade], ohlc_by_ticker: dict) -> list[Trade
             direction=t.direction,
             entry_price=t.entry_price,
             original_qty=t.original_qty,
-            stop_price=t.stop_price,
+            stop_price=t.initial_stop,
             realized_R=t.realized_R,
             position_dollars=pos_dollars,
             position_pct=pos_pct,
