@@ -1,0 +1,76 @@
+# Pre-Market Digest — Phase 1 of Discord automation
+# Posts a ranked gap-up/down playbook to #premarket-summary at 8:15am ET on weekdays.
+#
+# The script self-guards: it only proceeds when ET hour == 8, so we schedule
+# both 12:00 UTC (EDT match) and 13:00 UTC (EST match) and exactly one runs
+# successfully each day. No manual DST switching needed.
+name: Pre-Market Digest
+
+on:
+  schedule:
+    - cron: '0 12 * * 1-5'  # 12:00 UTC = 08:00 EDT (Mar-Nov)
+    - cron: '0 13 * * 1-5'  # 13:00 UTC = 08:00 EST (Nov-Mar)
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Force run regardless of ET hour'
+        required: false
+        default: 'false'
+      dry_run:
+        description: 'Print payload instead of posting'
+        required: false
+        default: 'false'
+
+permissions:
+  contents: write
+
+jobs:
+  premarket:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: pipeline/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r pipeline/requirements.txt
+
+      - name: Run digest
+        run: |
+          ARGS=""
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then ARGS="$ARGS --force"; fi
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          python -m pipeline.discord.premarket_digest $ARGS
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          DISCORD_PREMARKET_WEBHOOK: ${{ secrets.DISCORD_PREMARKET_WEBHOOK }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+
+      - name: Commit audit JSON
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/output/premarket_*.json 2>/dev/null || true
+          git diff --staged --quiet || (git commit -m "chore: premarket digest $(date +%Y-%m-%d)" && git push)
+
+      - name: Discord failure notification
+        if: failure() && env.DISCORD_WEBHOOK_URL != ''
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          curl -s -H "Content-Type: application/json" \
+            -d "{\"content\":\"⚠️ Pre-market digest FAILED: $(date +%Y-%m-%d) — check Actions logs\"}" \
+            "$DISCORD_WEBHOOK_URL"
