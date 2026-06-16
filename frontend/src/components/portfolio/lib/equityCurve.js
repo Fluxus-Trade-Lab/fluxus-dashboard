@@ -1,5 +1,5 @@
 import { todayStr } from './portfolioFormat'
-import { lookupPrice } from './calculations'
+import { lookupPrice, rejectRevertingSpikes } from './calculations'
 
 /**
  * Build the equity curve: daily portfolio value from first trade to today.
@@ -26,10 +26,24 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
     }
   }
 
-  // 3. For each date, compute total portfolio value.
-  // Use raw daily close for open-position MTM — matches the live header
-  // totalReturnPct computation (cash + currentQty * lookupPrice) so monthly
-  // returns compound to the YTD figure.
+  // 3. Build a spike-cleaned close series per ticker across datePoints.
+  // Raw daily close still drives MTM (so the curve reconciles with the live
+  // header), but one-bar reverting spikes — a split/feed mis-scale that hits a
+  // single bar and re-aligns the next day — are forward-filled. This is what
+  // caused the 2026-04-21 dip: a held leveraged ETF whose Yahoo close was
+  // briefly on the wrong split scale, valued as qty(as-traded) × close(adjusted).
+  // Today's bar is the last point and never an interior index, so it is left
+  // raw and the curve's final value still equals the header.
+  const cleanByTicker = {}
+  ;[...new Set(trades.map(t => t.ticker))].forEach(tk => {
+    const raw = datePoints.map(d => lookupPrice(tk, d, dailyPrices, null))
+    const cleaned = rejectRevertingSpikes(raw)
+    const map = {}
+    datePoints.forEach((d, i) => { if (cleaned[i] != null) map[d] = cleaned[i] })
+    cleanByTicker[tk] = map
+  })
+
+  // 4. For each date, compute total portfolio value.
   const curve = datePoints.map(date => {
     let cash = startingCapital
     let marketValue = 0
@@ -51,7 +65,8 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
       const qtyAtDate = t.originalQty - soldQty
       if (qtyAtDate <= 0) return
 
-      const price = lookupPrice(t.ticker, date, dailyPrices, t.entryPrice)
+      const price = cleanByTicker[t.ticker]?.[date]
+        ?? lookupPrice(t.ticker, date, dailyPrices, t.entryPrice)
       marketValue += qtyAtDate * price * dir
     })
 
@@ -63,7 +78,7 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
     }
   })
 
-  // 4. Add benchmark return series
+  // 5. Add benchmark return series
   if (benchmarkHistories) {
     Object.entries(benchmarkHistories).forEach(([ticker, history]) => {
       if (!history?.length) return
