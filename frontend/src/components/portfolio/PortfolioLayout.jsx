@@ -2,6 +2,7 @@ import { useState, useRef, useMemo, useEffect, useCallback } from 'react'
 import { usePortfolio } from './context/PortfolioContext'
 import { computeCashUsed, enrichTrades, computeMonthlyStats, computeYtdStats, computeRiskMetrics, computeSectorData, computeHoldingsData, computeMergedHoldingsData } from './lib/calculations'
 import { buildEquityCurve } from './lib/equityCurve'
+import { adjustTradesForSplits } from './lib/splits'
 import { parseCSV, generateCSV, downloadFile } from './lib/csv'
 import { fmtCur, TABS } from './lib/portfolioFormat'
 import PortfolioHeader from './PortfolioHeader'
@@ -47,12 +48,22 @@ export default function Layout() {
     return () => clearTimeout(t)
   }, [state.fetchStatus, dispatch])
 
+  // Correct for retroactive stock splits before any valuation. The price feed is
+  // split-adjusted across its whole history, so a position held/closed before a
+  // later split (e.g. SNXX's 8:1 on 2026-06-03) would otherwise be valued as
+  // qty(as-traded) × close(adjusted). adjustTradesForSplits auto-detects the
+  // per-trade scale mismatch and rescales qty/prices onto the feed's scale.
+  const { trades: adjTrades, detected: detectedSplits } = useMemo(
+    () => adjustTradesForSplits(state.trades, state.dailyPrices),
+    [state.trades, state.dailyPrices]
+  )
+
   // Core calculations
-  const cashUsed = useMemo(() => computeCashUsed(state.trades), [state.trades])
+  const cashUsed = useMemo(() => computeCashUsed(adjTrades), [adjTrades])
   const cashAvailable = state.startingCapital - cashUsed
 
   const openMarketValue = useMemo(() =>
-    state.trades.filter(t => !t.isClosed).reduce((s, t) => {
+    adjTrades.filter(t => !t.isClosed).reduce((s, t) => {
       const dir = t.direction === 'long' ? 1 : -1
       // Look up current price
       const today = new Date().toISOString().split('T')[0]
@@ -65,7 +76,7 @@ export default function Layout() {
       }
       return s + t.currentQty * price * dir
     }, 0),
-    [state.trades, state.dailyPrices]
+    [adjTrades, state.dailyPrices]
   )
 
   const totalPortfolioValue = cashAvailable + openMarketValue
@@ -73,14 +84,14 @@ export default function Layout() {
   const totalReturnPct = state.startingCapital > 0 ? (totalPL / state.startingCapital) * 100 : 0
 
   const enrichedTrades = useMemo(
-    () => enrichTrades(state.trades, totalPortfolioValue, state.dailyPrices),
-    [state.trades, totalPortfolioValue, state.dailyPrices]
+    () => enrichTrades(adjTrades, totalPortfolioValue, state.dailyPrices),
+    [adjTrades, totalPortfolioValue, state.dailyPrices]
   )
   const openTrades = useMemo(() => enrichedTrades.filter(t => !t.isClosed), [enrichedTrades])
 
   const performanceData = useMemo(
-    () => buildEquityCurve(state.trades, state.startingCapital, state.dailyPrices, state.benchmarkHistories),
-    [state.trades, state.startingCapital, state.dailyPrices, state.benchmarkHistories]
+    () => buildEquityCurve(adjTrades, state.startingCapital, state.dailyPrices, state.benchmarkHistories),
+    [adjTrades, state.startingCapital, state.dailyPrices, state.benchmarkHistories]
   )
 
   const monthlyStats = useMemo(
@@ -222,6 +233,19 @@ export default function Layout() {
       {state.fetchStatus && (
         <div className="px-6 py-1.5 bg-[var(--color-accent-light)] text-xs text-[var(--color-accent)] border-b border-[var(--color-border)]">
           {state.fetchStatus}
+        </div>
+      )}
+
+      {/* Auto-applied split adjustments — keeps valuations on the feed's scale */}
+      {detectedSplits.length > 0 && (
+        <div className="px-6 py-1.5 bg-[var(--color-surface-raised)] text-xs text-[var(--color-text-muted)] border-b border-[var(--color-border)]">
+          {detectedSplits.map((s, i) => (
+            <span key={`${s.ticker}-${s.entryDate}-${i}`} className="mr-3">
+              {s.straddle
+                ? `⚠ ${s.ticker}: split straddles a trade — verify manually`
+                : `↔ ${s.ticker} ${s.ratioLabel} split auto-adjusted`}
+            </span>
+          ))}
         </div>
       )}
 
