@@ -15,6 +15,39 @@ export function lookupPrice(ticker, date, dailyPrices, fallback) {
   return fallback
 }
 
+/**
+ * Reject one-bar "reverting spikes" from a chronological price series.
+ *
+ * A reverting spike is a bar that deviates from BOTH its neighbours in the same
+ * multiplicative direction (a V or inverted-V) — the signature of a split/feed
+ * mis-scale that registers for a single bar and re-aligns the next day. The
+ * canonical case: a leveraged ETF whose Yahoo close is briefly on the wrong
+ * split scale, so qty(as-traded) × close(adjusted) craters one day's MTM and
+ * "recovers" the next. We forward-fill the last good price for that bar.
+ *
+ * A persistent move (gap up/down that STAYS at the new level) is NOT a revert,
+ * so legitimate large daily moves — including a real 3x-ETF rip — pass through.
+ *
+ * @param {(number|null)[]} prices  chronological closes (null = no data)
+ * @param {number} spikeFactor      min multiplicative deviation vs both neighbours
+ * @returns {(number|null)[]}       cleaned series, same length
+ */
+export function rejectRevertingSpikes(prices, spikeFactor = 1.6) {
+  const clean = prices.slice()
+  for (let i = 1; i < prices.length - 1; i++) {
+    const c = prices[i]
+    const prev = clean[i - 1]
+    const next = prices[i + 1]
+    if (c == null || prev == null || next == null || prev <= 0 || next <= 0) continue
+    const dPrev = c / prev
+    const dNext = c / next
+    const isUpSpike = dPrev > spikeFactor && dNext > spikeFactor
+    const isDownSpike = dPrev < 1 / spikeFactor && dNext < 1 / spikeFactor
+    if (isUpSpike || isDownSpike) clean[i] = prev // forward-fill last good
+  }
+  return clean
+}
+
 /** Net cash committed to all trades (positive = cash out for longs) */
 export function computeCashUsed(trades) {
   return trades.reduce((s, t) => {
