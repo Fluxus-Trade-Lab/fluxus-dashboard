@@ -31,6 +31,24 @@ describe('detectSplitFactor', () => {
     expect(r.ratioLabel).toBe('8:1')
   })
 
+  it('reads NEBX 3:1 correctly via median, despite an entry 33% above the close', () => {
+    // Real NEBX (2x NBIS) 3:1 split. Entry $115.42 on a day that closed ~$86.6
+    // (feed ÷3 = 28.87), so entry-only would give 3.998 → mis-snap to 4. The
+    // 5/15 exits sit near their close, so the median pulls it back to 3.
+    const feed = { 'NEBX:2026-05-12': 28.87, 'NEBX:2026-05-15': 41.67 }
+    const trade = {
+      ticker: 'NEBX', direction: 'long', entryDate: '2026-05-12', entryPrice: 115.42,
+      originalQty: 529, trims: [
+        { date: '2026-05-15', price: 135.32, qty: 176 },
+        { date: '2026-05-15', price: 130.23, qty: 176 },
+        { date: '2026-05-15', price: 125, qty: 177 },
+      ],
+    }
+    const r = detectSplitFactor(trade, feed)
+    expect(r.factor).toBe(3)
+    expect(r.ratioLabel).toBe('3:1')
+  })
+
   it('returns factor 1 for a normal trade (fill ≈ same-day close)', () => {
     const t = { ticker: 'AAPL', entryDate: '2026-04-21', entryPrice: 200, trims: [] }
     expect(detectSplitFactor(t, { 'AAPL:2026-04-21': 201.5 }).factor).toBe(1)

@@ -41,35 +41,45 @@ export function snapToCleanRatio(x, tol = 0.15) {
 
 const ratioLabel = f => (f >= 1 ? `${Math.round(f)}:1` : `1:${Math.round(1 / f)}`)
 
+const median = arr => {
+  const s = [...arr].sort((a, b) => a - b)
+  const m = Math.floor(s.length / 2)
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2
+}
+
 /**
  * Detect the split factor for one trade against the (adjusted) price feed.
+ *
+ * The scale gap is measured per fill as fillPrice / feedClose(fillDate) and we
+ * take the MEDIAN across entry + every trim. A single fill that's off its day's
+ * close (e.g. an entry well above the close) would otherwise bias a one-point
+ * estimate onto the wrong clean ratio — NEBX 3:1 mis-read as 4 because its entry
+ * was ~33% above the close (3 × 1.33 ≈ 4). The median outvotes that one fill.
+ *
  * @returns {{factor:number, ratioLabel?:string, straddle?:boolean, suspect?:number}}
  *          factor === 1 means "no adjustment".
  */
 export function detectSplitFactor(trade, dailyPrices) {
   const feedAt = d => lookupPrice(trade.ticker, (d || '').slice(0, 10), dailyPrices, null)
 
-  const entryFeed = feedAt(trade.entryDate)
-  if (!entryFeed || !(trade.entryPrice > 0)) return { factor: 1 }
-
-  const entryRatio = trade.entryPrice / entryFeed
-  if (entryRatio > 0.67 && entryRatio < 1.5) return { factor: 1 } // your fill ≈ that day's close → no split
-
-  const snapped = snapToCleanRatio(entryRatio)
-  if (!snapped) return { factor: 1, suspect: entryRatio } // off-scale but not a clean split — leave alone
-
-  // Consistency guard: every fill must sit on the SAME (pre-split) scale. A trade
-  // that straddles the ex-date has some fills already on the adjusted (≈1) scale;
-  // one factor can't fix both, so flag it for a manual split record instead of
-  // corrupting the already-correct fills.
   const fills = [[trade.entryPrice, trade.entryDate], ...(trade.trims || []).map(tr => [tr.price, tr.date])]
-  let onAdjustedScale = 0
+  const ratios = []
   for (const [px, d] of fills) {
     const f = feedAt(d)
-    if (!f || !(px > 0)) continue
-    if (Math.abs(px / f - 1) < 0.25) onAdjustedScale++
+    if (f != null && f > 0 && px > 0) ratios.push(px / f)
   }
-  if (onAdjustedScale > 0) return { factor: 1, straddle: true }
+  if (!ratios.length) return { factor: 1 }
+
+  const med = median(ratios)
+  if (med > 0.67 && med < 1.5) return { factor: 1 } // your fills ≈ same-day closes → no split
+
+  const snapped = snapToCleanRatio(med)
+  if (!snapped) return { factor: 1, suspect: med } // off-scale but not a clean split — leave alone
+
+  // Straddle guard: a trade spanning the ex-date has some fills already on the
+  // adjusted (≈1) scale. One factor can't fix both, so flag for manual review
+  // instead of corrupting the already-correct fills.
+  if (ratios.some(r => Math.abs(r - 1) < 0.25)) return { factor: 1, straddle: true }
 
   return { factor: snapped, ratioLabel: ratioLabel(snapped) }
 }
