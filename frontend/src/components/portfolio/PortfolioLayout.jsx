@@ -4,7 +4,7 @@ import { computeCashUsed, enrichTrades, computeMonthlyStats, computeYtdStats, co
 import { buildEquityCurve } from './lib/equityCurve'
 import { adjustTradesForSplits } from './lib/splits'
 import { parseCSV, generateCSV, downloadFile } from './lib/csv'
-import { fmtCur, TABS } from './lib/portfolioFormat'
+import { TABS } from './lib/portfolioFormat'
 import PortfolioHeader from './PortfolioHeader'
 import TradeForm from './TradeForm'
 import TrimModal from './TrimModal'
@@ -236,11 +236,14 @@ export default function Layout() {
         </div>
       )}
 
-      {/* Auto-applied split adjustments — keeps valuations on the feed's scale */}
+      {/* Auto-applied split adjustments — keeps valuations on the feed's scale.
+          Dedupe by ticker+label so multiple lots of the same split show once. */}
       {detectedSplits.length > 0 && (
         <div className="px-6 py-1.5 bg-[var(--color-surface-raised)] text-xs text-[var(--color-text-muted)] border-b border-[var(--color-border)]">
-          {detectedSplits.map((s, i) => (
-            <span key={`${s.ticker}-${s.entryDate}-${i}`} className="mr-3">
+          {[...new Map(detectedSplits.map(s => [
+            s.straddle ? `straddle:${s.ticker}` : `${s.ticker}:${s.ratioLabel}`, s,
+          ])).values()].map((s, i) => (
+            <span key={i} className="mr-3">
               {s.straddle
                 ? `⚠ ${s.ticker}: split straddles a trade — verify manually`
                 : `↔ ${s.ticker} ${s.ratioLabel} split auto-adjusted`}
