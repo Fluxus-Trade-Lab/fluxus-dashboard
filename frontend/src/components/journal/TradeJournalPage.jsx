@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useTradeJournal } from '../../hooks/useTradeJournal'
+import { useLanguage } from '../../i18n/LanguageContext'
 import TickerLink from '../ticker/TickerLink'
 
 const LESSON_COLORS = {
@@ -13,6 +14,7 @@ const LESSON_COLORS = {
 
 export default function TradeJournalPage() {
   const { trades, loading } = useTradeJournal()
+  const { t: tr } = useLanguage()
   const [filter, setFilter] = useState('all')
   const [sortKey, setSortKey] = useState('entry_date')
   const [sortDir, setSortDir] = useState('desc')
@@ -66,7 +68,7 @@ export default function TradeJournalPage() {
   return (
     <div>
       <div className="mb-4">
-        <h1 className="text-xl font-bold mb-2">Trade Journal</h1>
+        <h1 className="text-xl font-bold mb-2">{tr('page.trades.title')}</h1>
         <div className="text-[11px] text-[var(--color-text-muted)]">
           {trades.length} trades · {stats.total} closed · realized {stats.totalR.toFixed(1)}R of {stats.totalOpt.toFixed(1)}R available
           {stats.captureOverall != null && ` (${stats.captureOverall.toFixed(0)}% capture)`}
