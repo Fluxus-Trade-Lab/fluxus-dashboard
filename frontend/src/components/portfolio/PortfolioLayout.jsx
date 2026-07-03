@@ -5,6 +5,7 @@ import { buildEquityCurve } from './lib/equityCurve'
 import { adjustTradesForSplits } from './lib/splits'
 import { parseCSV, generateCSV, downloadFile } from './lib/csv'
 import { TABS } from './lib/portfolioFormat'
+import { useLanguage } from '../../i18n/LanguageContext'
 import PortfolioHeader from './PortfolioHeader'
 import TradeForm from './TradeForm'
 import TrimModal from './TrimModal'
@@ -16,8 +17,11 @@ import OptionsTab from './tabs/OptionsTab'
 import InputField from './ui/InputField'
 import Button from './ui/Button'
 
+const TAB_KEYS = ['pf.tab.overview', 'pf.tab.exposure', 'pf.tab.risk', 'pf.tab.options']
+
 export default function Layout() {
   const { state, dispatch } = usePortfolio()
+  const { t: tr } = useLanguage()
   const [showForm, setShowForm] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const [showResetConfirm, setShowResetConfirm] = useState(false)
@@ -172,10 +176,10 @@ export default function Layout() {
       <div className="flex items-center justify-center py-20">
         {fileInput}
         <div className="text-center max-w-md">
-          <div className="text-3xl font-bold mb-2">Portfolio Tracker</div>
-          <div className="text-[var(--color-text-muted)] mb-6 text-sm">Enter starting capital, or upload an existing trade log</div>
+          <div className="text-3xl font-bold mb-2">{tr('pf.title')}</div>
+          <div className="text-[var(--color-text-muted)] mb-6 text-sm">{tr('pf.intro.subtitle')}</div>
           <InputField
-            label="Starting Capital ($)"
+            label={tr('pf.intro.capitalLabel')}
             type="number"
             value={capitalInput}
             onChange={e => setCapitalInput(e.target.value)}
@@ -192,13 +196,13 @@ export default function Layout() {
               const v = parseFloat(capitalInput)
               if (v > 0) dispatch({ type: 'SET_CAPITAL', capital: v })
             }}>
-              Start Tracking
+              {tr('pf.intro.startTracking')}
             </Button>
             <Button variant="ghost" onClick={() => fileInputRef.current?.click()}>
-              Upload CSV
+              {tr('pf.intro.uploadCsv')}
             </Button>
             <Button variant="ghost" onClick={handleLoadSample}>
-              Try Sample
+              {tr('pf.intro.trySample')}
             </Button>
           </div>
           {state.fetchStatus && (
@@ -306,7 +310,7 @@ export default function Layout() {
                   : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'
               }`}
             >
-              {tab}
+              {tr(TAB_KEYS[i])}
             </button>
           ))}
         </div>
