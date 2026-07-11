@@ -13,6 +13,10 @@
 - QQQ chains: filter to strikes that exist for the expiry (the chain lists 0.5 strikes that error).
 - Sparse greeks (after-hours) must become `null` + a quality flag, never zeros.
 - SPX index quote may be missing without a CBOE sub → fall back to SPY×10.
+- `data/gex/` also holds a legacy SPX→pine launchd tool's output. `.gitignore` now
+  excludes `data/gex/gex_SPX_*`, `data/gex/*.log`, `data/gex/*.pine`, so the engine's
+  `git add data/gex` stages ONLY its own `gex_YYYYMMDD.json` / `latest.json` /
+  `brief_*.html` — never the legacy files. (Added on branch, commit 49c00ba.)
 
 ---
 
