@@ -141,14 +141,25 @@ def run(out_dir=OUT_DIR, offline_fixture=None, offline_spot=None,
                 bases = ibkr.get_bases(ib)
                 for sym in ibkr.INSTRUMENTS:
                     spot = ibkr.get_spot(ib, sym)
-                    if spot is None:
-                        raise RuntimeError(f"no spot for {sym}")
-                    exps, _ = ibkr.get_expirations(ib, sym)
+                    if spot is None:                    # I2: skip instrument, don't kill run
+                        print(f"[gex] no spot for {sym} — skipping instrument")
+                        continue
+                    exps, ch = ibkr.get_expirations(ib, sym)
                     tmap = derive.select_tenors(exps, today)
-                    chains[sym] = {
-                        t: ((e, ibkr.pull_chain(ib, sym, e, spot)) if e else (None, None))
-                        for t, e in tmap.items()}
+                    tenors = {}
+                    for t, e in tmap.items():
+                        if not e:
+                            tenors[t] = (None, None)
+                            continue
+                        try:                            # I1: one tenor failing must not torch the rest
+                            tenors[t] = (e, ibkr.pull_chain(ib, sym, e, spot, chain=ch))
+                        except Exception as ex:         # noqa: BLE001
+                            print(f"[gex] {sym} {t} ({e}) pull failed: {ex}")
+                            tenors[t] = (None, None)
+                    chains[sym] = tenors
                     spots[sym] = spot
+                if not chains:                          # total failure → stale path
+                    raise RuntimeError("no instruments pulled successfully")
             finally:
                 ib.disconnect()
         doc = _assemble(chains, spots, bases, out_dir, today)

@@ -20,6 +20,12 @@ def build_document(asof, stale, stale_reason, opex, instruments, read,
         "assumptions": {
             "dealer_side": "long calls / short puts (v1 baseline heuristic)",
             "gex_formula": "(cgamma*coi - pgamma*poi) * mult * spot^2 * 0.01",
+            "strike_band": "walls, pin and flip are computed within +/-3.5% of spot "
+                           "(v1); a structural wall or the true zero-gamma flip beyond "
+                           "that band is not captured.",
+            "quality_gate": "a tenor is 'degraded' (net_gex_mm=null) when greeks OR "
+                            "open-interest coverage < 50%, so missing data never "
+                            "produces a fake zero.",
         },
     }
 

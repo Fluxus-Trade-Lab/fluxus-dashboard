@@ -26,7 +26,12 @@ def compute_tenor(df: pd.DataFrame, spot: float, multiplier: int) -> dict:
 
     gammas = [_num(g) for g in pd.concat([C["gamma"], P["gamma"]])]
     coverage = (sum(1 for g in gammas if g is not None) / len(gammas)) if gammas else 0.0
-    degraded = coverage < GREEKS_MIN_COVERAGE
+    # OI matters as much as gamma: net GEX = gamma*OI, so missing OI silently zeroes
+    # the notional. Gate on OI coverage too, else a greeks-present/OI-absent pull
+    # collapses to a fake net_gex_mm=0.0 labeled "ok" (C1).
+    ois = [_num(o) for o in pd.concat([C["oi"], P["oi"]])]
+    oi_coverage = (sum(1 for o in ois if o is not None and o > 0) / len(ois)) if ois else 0.0
+    degraded = coverage < GREEKS_MIN_COVERAGE or oi_coverage < GREEKS_MIN_COVERAGE
 
     # --- OI walls (always available; OI is a static daily figure) ---
     def top(side, n=5):
@@ -52,7 +57,8 @@ def compute_tenor(df: pd.DataFrame, spot: float, multiplier: int) -> dict:
                     call_wall=cw, put_wall=pw, wall_basis="oi_fallback",
                     straddle=straddle, atm_iv=atm_iv,
                     walls_top_calls=walls_top_calls, walls_top_puts=walls_top_puts,
-                    greeks_coverage=round(coverage, 2), quality="degraded")
+                    greeks_coverage=round(coverage, 2),
+                    oi_coverage=round(oi_coverage, 2), quality="degraded")
 
     # --- gamma-notional per strike ---
     net, absg, cnot, pnot = {}, {}, {}, {}
@@ -86,4 +92,5 @@ def compute_tenor(df: pd.DataFrame, spot: float, multiplier: int) -> dict:
                 vol_trigger=vol_trigger, call_wall=call_wall, put_wall=put_wall,
                 wall_basis="gamma", straddle=straddle, atm_iv=atm_iv,
                 walls_top_calls=walls_top_calls, walls_top_puts=walls_top_puts,
-                greeks_coverage=round(coverage, 2), quality="ok")
+                greeks_coverage=round(coverage, 2),
+                oi_coverage=round(oi_coverage, 2), quality="ok")

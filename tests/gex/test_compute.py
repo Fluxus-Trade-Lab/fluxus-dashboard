@@ -51,6 +51,25 @@ def test_walls_top_lists():
     assert m["walls_top_calls"][0]["strike"] == 110.0
     assert m["walls_top_puts"][0]["strike"] == 90.0
 
+def test_greeks_present_but_oi_missing_degrades_not_fake_zero():
+    # C1 regression: greeks populated but OI absent (slow reqMktData ticks) must NOT
+    # collapse to net_gex_mm=0.0 / regime negative / walls pinned to lowest strike.
+    df = synthetic_chain()
+    df["oi"] = float("nan")             # OI never arrived
+    m = compute_tenor(df, spot=100.0, multiplier=100)
+    assert m["quality"] == "degraded"
+    assert m["net_gex_mm"] is None      # never a fake 0
+    assert m["flip"] is None and m["pin"] is None
+    assert m["oi_coverage"] == 0.0
+
+def test_partial_oi_below_threshold_degrades():
+    # Only one strike reports OI → far below 50% coverage → degraded.
+    df = synthetic_chain()
+    df.loc[df.strike != 100.0, "oi"] = float("nan")
+    m = compute_tenor(df, spot=100.0, multiplier=100)
+    assert m["quality"] == "degraded"
+    assert m["net_gex_mm"] is None
+
 # append to tests/gex/test_compute.py
 def test_real_es_chain_smoke():
     # Real pull from 2026-07-10 (ES, spot ~7570, ±0.5%/+1% strike band 7535-7650):

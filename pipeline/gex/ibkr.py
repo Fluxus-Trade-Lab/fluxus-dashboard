@@ -105,9 +105,9 @@ def get_expirations(ib: IB, symbol: str) -> list[str]:
     return sorted(ch.expirations), ch
 
 
-def pull_chain(ib: IB, symbol: str, expiry: str, spot: float) -> pd.DataFrame:
+def pull_chain(ib: IB, symbol: str, expiry: str, spot: float, chain=None) -> pd.DataFrame:
     cfg = INSTRUMENTS[symbol]
-    _, ch = get_expirations(ib, symbol)
+    ch = chain if chain is not None else get_expirations(ib, symbol)[1]  # reuse if caller has it
     lo, hi = spot * (1 - CHAIN_WIDTH), spot * (1 + CHAIN_WIDTH)
     step = cfg["strike_step"]
     strikes = sorted(k for k in ch.strikes
@@ -117,20 +117,22 @@ def pull_chain(ib: IB, symbol: str, expiry: str, spot: float) -> pd.DataFrame:
     opts = [o for o in ib.qualifyContracts(*opts) if getattr(o, "conId", None)]
     tickers = ib.reqTickers(*opts)
     handles = {o.conId: ib.reqMktData(o, "100,101", False, False) for o in opts}
-    ib.sleep(SETTLE_SECONDS)
-    rows = []
-    for o, t in zip(opts, tickers):
-        mg = t.modelGreeks
-        h = handles[o.conId]
-        rows.append(dict(
-            strike=float(o.strike), right=o.right,
-            gamma=_num(mg.gamma) if mg else None,
-            iv=_num(mg.impliedVol) if mg else None,
-            mid=_num(t.marketPrice()),
-            oi=_num(h.callOpenInterest if o.right == "C" else h.putOpenInterest),
-        ))
-    for o in opts:
-        ib.cancelMktData(o)
+    try:
+        ib.sleep(SETTLE_SECONDS)
+        rows = []
+        for o, t in zip(opts, tickers):
+            mg = t.modelGreeks
+            h = handles[o.conId]
+            rows.append(dict(
+                strike=float(o.strike), right=o.right,
+                gamma=_num(mg.gamma) if mg else None,
+                iv=_num(mg.impliedVol) if mg else None,
+                mid=_num(t.marketPrice()),
+                oi=_num(h.callOpenInterest if o.right == "C" else h.putOpenInterest),
+            ))
+    finally:                                            # M1: never leak market-data lines
+        for o in opts:
+            ib.cancelMktData(o)
     return pd.DataFrame(rows)
 
 
