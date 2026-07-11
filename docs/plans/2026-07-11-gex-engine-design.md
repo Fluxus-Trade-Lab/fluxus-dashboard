@@ -25,7 +25,7 @@ Solves three things at once: **decision support** (the morning map), **persisten
 IB Gateway + IBC (headless, auto-login)          [one-time infra]
   └─ launchd @ 8:00am ET, Mon–Fri
        └─ pipeline/gex/engine.py
-            ├─ pull SPX + QQQ chains (front 0–2DTE + swing ~5–10DTE tenors)
+            ├─ pull SPX + QQQ chains (3 tenors: front 0–2DTE · swing 5–14DTE · monthly 4–6wk OPEX)
             ├─ pull sync quotes: SPX index, ES fut, QQQ, NQ fut → live bases/ratios
             ├─ compute per instrument+tenor:
             │    spot · net GEX ($mm/1%) · zero-gamma flip · volatility trigger
@@ -44,7 +44,7 @@ IB Gateway + IBC (headless, auto-login)          [one-time infra]
    ```json
    { "version": 1, "asof": "...", "opex_flag": {...},
      "instruments": { "SPX": { "spot":..., "basis_es":...,
-        "tenors": { "front": {...}, "swing": {
+        "tenors": { "front": {...}, "monthly": {...}, "swing": {
            "expiry":"20260717", "net_gex_mm":..., "flip":..., "vol_trigger":...,
            "call_wall":..., "put_wall":..., "pin":..., "straddle":..., "atm_iv":...,
            "walls_top": [...], "delta_vs_prior": {"call_wall": +25, ...},
@@ -59,7 +59,7 @@ IB Gateway + IBC (headless, auto-login)          [one-time infra]
    - *Regime*: sign of net GEX (swing tenor primary).
    - *Vol Trigger*: last significant positive-GEX support strike above the Put Wall (v1 heuristic; distinct from flip).
    - *Wall migration*: Δ call/put wall & flip vs prior day's JSON; call wall rolling up = bullish note (SpotGamma's key signal).
-   - *OPEX flag*: monthly OPEX date proximity (e.g., Jul 17) — gamma roll-off warning.
+   - *OPEX flag*: monthly OPEX date proximity (e.g., Jul 17) — gamma roll-off warning. The **monthly tenor** (4–6 wk, always the next monthly OPEX expiry) carries the big institutional OI and anchors this read.
    - *Strategy fit*: rule table keyed off regime + IV + distance-to-walls (encodes this week's learned rules: no condors/naked in neg γ; far-OTM bull put spreads in pos γ + held floor; dip-fade at put wall; breakout triggers at call-wall clears).
 
 ## Error handling
