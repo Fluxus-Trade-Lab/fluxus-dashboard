@@ -12,7 +12,7 @@ Solves three things at once: **decision support** (the morning map), **persisten
 
 | Question | Decision |
 |---|---|
-| Instruments | **SPX + QQQ** native; converted levels published for ES/SPY (from SPX) and NQ/NDX (from QQQ) |
+| Instruments | **SPX + QQQ** native; converted levels published for ES/SPY (from SPX) and NQ (from QQQ; NDX deferred — needs a reliable NDX index quote) |
 | Cadence (MVP) | **Once daily, 8:00am ET premarket** (OI settles overnight — same reason SpotGamma's morning calc is the day's map). Optional post-close archive run later |
 | Run model | **Fully unattended local**: IB Gateway + IBC (headless auto-login) + launchd cron on the Mac |
 | Publication | Commit `data/gex/*` to the repo → rides the existing Vercel auto-deploy |
