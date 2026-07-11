@@ -226,13 +226,16 @@ Expected: `3 passed`
 ```python
 # append to tests/gex/test_compute.py
 def test_real_es_chain_smoke():
-    # Real pull from 2026-07-10 (ES, spot ~7570): regime was firmly POSITIVE.
+    # Real pull from 2026-07-10 (ES, spot ~7570, ±0.5%/+1% strike band 7535-7650):
+    # regime was firmly POSITIVE. Values verified against the raw CSV before planning.
     df = pd.read_csv("tests/gex/fixtures/chain_es_20260710.csv")
     m = compute_tenor(df, spot=7570.0, multiplier=50)
     assert m["quality"] == "ok"
-    assert m["net_gex_mm"] > 1000            # strongly positive that day (+~2,900)
-    assert 7500 <= m["pin"] <= 7650
-    assert m["put_wall"] < 7570 < m["call_wall"] + 100
+    assert m["net_gex_mm"] > 1000            # strongly positive (~3,972 for this band)
+    assert m["pin"] == 7600.0                # abs-gamma magnet
+    assert m["call_wall"] == 7600.0
+    assert m["put_wall"] == 7580.0           # near-ATM high-gamma put in this narrow chain
+    assert 7535.0 <= m["put_wall"] <= m["call_wall"] <= 7650.0
 ```
 
 - [ ] **Step 6: Run tests**
