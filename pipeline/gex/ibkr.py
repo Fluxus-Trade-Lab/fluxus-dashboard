@@ -11,7 +11,11 @@ from ib_async import IB, Stock, Index, Option, ContFuture
 
 PORTS = (4001, 4002, 7496)
 CLIENT_ID = 9
-CHAIN_WIDTH = 0.035          # +/-3.5% of spot
+CHAIN_WIDTH = 0.025          # +/-2.5% of spot: keeps a tenor under ~200 contracts
+# so successive tenors' reqMktData subscriptions stay within IBKR's per-session
+# pacing envelope. Above ~200 contracts per tenor, greek coverage on the
+# 2nd+ tenor drops from ~100% to <30% and never recovers within our settle
+# windows. Meaningful walls almost always cluster within +/-1% of spot anyway.
 # OI ticks stream over 10-15s in LIVE mode; give them time to arrive.
 OI_SETTLE_SECONDS = 15
 GREEKS_SETTLE_SECONDS = 5
@@ -130,27 +134,27 @@ def pull_chain(ib: IB, symbol: str, expiry: str, spot: float, chain=None) -> pd.
     opts = [Option(symbol, expiry, k, r, "SMART", tradingClass=cfg["tclass"])
             for k in strikes for r in ("C", "P")]
     opts = [o for o in ib.qualifyContracts(*opts) if getattr(o, "conId", None)]
-    # Phase 1: LIVE mode — start OI streams (static clearing data, arrives in ~15s
-    # even off-hours; frozen mode barely delivers OI). Also seeds `close` prices.
+    # Two-phase pull through a SINGLE reqMktData stream per contract:
+    #   phase 1: LIVE mode  -> stream delivers OI ticks (100/101)
+    #   phase 2: FROZEN     -> same stream delivers last-settle modelGreeks + price
+    # A separate reqTickers call would open a second (snapshot) subscription per
+    # contract; across 6 tenors x 200 contracts that piles up faster than
+    # cancelMktData clears, causing greek coverage to degrade monotonically.
     ib.reqMarketDataType(MDT_LIVE)
-    handles = {o.conId: ib.reqMktData(o, "100,101", False, False) for o in opts}
+    handles = [ib.reqMktData(o, "100,101", False, False) for o in opts]
     try:
-        ib.sleep(OI_SETTLE_SECONDS)
-        # Phase 2: FROZEN mode — reqTickers returns the last settle snapshot with
-        # populated modelGreeks + IV + marketPrice (verified 60/60 pre-open).
-        ib.reqMarketDataType(MDT_FROZEN)
-        tickers = ib.reqTickers(*opts)
-        ib.sleep(GREEKS_SETTLE_SECONDS)
+        ib.sleep(OI_SETTLE_SECONDS)                     # ~15s: OI populates
+        ib.reqMarketDataType(MDT_FROZEN)                # same streams now → frozen
+        ib.sleep(GREEKS_SETTLE_SECONDS)                 # ~5s: greeks + close populate
         rows = []
-        for o, t in zip(opts, tickers):
+        for o, t in zip(opts, handles):
             mg = t.modelGreeks
-            h = handles[o.conId]
             rows.append(dict(
                 strike=float(o.strike), right=o.right,
                 gamma=_num(mg.gamma) if mg else None,
                 iv=_num(mg.impliedVol) if mg else None,
                 mid=_num(t.marketPrice()) or _num(t.close),   # close fallback pre-open
-                oi=_num(h.callOpenInterest if o.right == "C" else h.putOpenInterest),
+                oi=_num(t.callOpenInterest if o.right == "C" else t.putOpenInterest),
             ))
     finally:                                            # M1: never leak market-data lines
         for o in opts:
