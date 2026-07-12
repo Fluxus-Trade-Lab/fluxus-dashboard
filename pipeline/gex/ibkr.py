@@ -13,6 +13,10 @@ PORTS = (4001, 4002, 7496)
 CLIENT_ID = 9
 CHAIN_WIDTH = 0.035          # +/-3.5% of spot
 SETTLE_SECONDS = 5
+# Market-data type: 1=live (RTH only), 2=frozen (last settle — works pre-open),
+# 3=delayed, 4=delayed-frozen. Frozen is the 8am default: verified 60/60 coverage
+# on modelGamma/modelIV/marketPrice when live mode returns 0/60.
+MDT_LIVE, MDT_FROZEN = 1, 2
 
 INSTRUMENTS = {
     "SPX": dict(kind="index", exch="CBOE", tclass="SPXW", strike_step=5,
@@ -37,12 +41,19 @@ def _first(*vals):
     return None
 
 
-def connect(client_id: int = CLIENT_ID) -> IB:
+def connect(client_id: int = CLIENT_ID, market_data_type: int = MDT_FROZEN) -> IB:
+    """Connect and set the market-data type.
+
+    Default is FROZEN (2) so the 8am ET run gets the prior settle's greeks/IV
+    even before the options market opens. Pass `market_data_type=MDT_LIVE` for
+    intraday pulls when live quotes are desired.
+    """
     last = None
     for port in PORTS:
         try:
             ib = IB()
             ib.connect("127.0.0.1", port, clientId=client_id, timeout=15)
+            ib.reqMarketDataType(market_data_type)
             return ib
         except Exception as e:      # noqa: BLE001 — try next port
             last = e

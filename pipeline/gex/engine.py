@@ -12,6 +12,7 @@ from pipeline.gex import compute, derive, render, schema
 
 OUT_DIR = Path("data/gex")
 INSTR_MULT = {"SPX": 100, "QQQ": 100}
+PUBLISH_BRANCH = "main"          # unattended cron only pushes when on this branch
 
 
 def _prior_doc(out_dir: Path, today_tag: str):
@@ -110,14 +111,42 @@ def _mark_stale(out_dir: Path, reason: str, today: date) -> None:
     _write(doc, out_dir, today)
 
 
+def _git(*args, check=True, capture=False):
+    return subprocess.run(["git", *args], check=check,
+                          capture_output=capture, text=True)
+
+
 def _git_publish(out_dir: Path, today: date, push: bool) -> None:
+    """Unattended-safe publish. Rules:
+    - Commit is always local (safe on any branch).
+    - Push only when on PUBLISH_BRANCH ('main') AND fetch+ff-only pull succeeds.
+    - If diverged from origin, log clearly and leave the commit for manual review.
+    Never kills the run.
+    """
     try:
-        subprocess.run(["git", "add", str(out_dir)], check=True)
-        subprocess.run(["git", "commit", "-m",
-                        f"chore(gex): daily gex data {today.isoformat()}"],
-                       check=True)
-        if push:
-            subprocess.run(["git", "push"], check=True)
+        _git("add", str(out_dir))
+        # Skip commit if there's nothing to stage (idempotent re-runs).
+        if _git("diff", "--cached", "--quiet", check=False).returncode == 0:
+            print("[gex] no data changes — skipping commit")
+            return
+        _git("commit", "-m", f"chore(gex): daily gex data {today.isoformat()}")
+        if not push:
+            return
+        branch = _git("rev-parse", "--abbrev-ref", "HEAD",
+                      capture=True).stdout.strip()
+        if branch != PUBLISH_BRANCH:
+            print(f"[gex] on '{branch}', not '{PUBLISH_BRANCH}' — commit kept "
+                  "local, skipping push")
+            return
+        _git("fetch", "origin", PUBLISH_BRANCH)
+        # ff-only: publishes when we're ahead; refuses when diverged (safe).
+        pull = _git("pull", "--ff-only", "origin", PUBLISH_BRANCH,
+                    check=False, capture=True)
+        if pull.returncode != 0:
+            print(f"[gex] not ff to origin/{PUBLISH_BRANCH} — commit kept "
+                  f"local, skipping push. git said: {pull.stderr.strip()}")
+            return
+        _git("push", "origin", PUBLISH_BRANCH)
     except subprocess.CalledProcessError as e:
         print(f"[gex] git publish skipped/failed: {e}")  # never kill the run
 
