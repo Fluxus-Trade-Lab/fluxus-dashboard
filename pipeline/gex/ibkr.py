@@ -12,10 +12,14 @@ from ib_async import IB, Stock, Index, Option, ContFuture
 PORTS = (4001, 4002, 7496)
 CLIENT_ID = 9
 CHAIN_WIDTH = 0.035          # +/-3.5% of spot
-SETTLE_SECONDS = 5
+# OI ticks stream over 10-15s in LIVE mode; give them time to arrive.
+OI_SETTLE_SECONDS = 15
+GREEKS_SETTLE_SECONDS = 5
 # Market-data type: 1=live (RTH only), 2=frozen (last settle — works pre-open),
-# 3=delayed, 4=delayed-frozen. Frozen is the 8am default: verified 60/60 coverage
-# on modelGamma/modelIV/marketPrice when live mode returns 0/60.
+# 3=delayed, 4=delayed-frozen. Neither mode alone gives both fields off-hours:
+# LIVE delivers OI (static clearing data, 60/60 verified weekend) but greeks are
+# dark; FROZEN delivers greeks/IV/price snapshot (60/60) but OI ticks stall at
+# ~2/60. So pull_chain requests both — LIVE first for OI, then FROZEN for greeks.
 MDT_LIVE, MDT_FROZEN = 1, 2
 
 INSTRUMENTS = {
@@ -126,10 +130,17 @@ def pull_chain(ib: IB, symbol: str, expiry: str, spot: float, chain=None) -> pd.
     opts = [Option(symbol, expiry, k, r, "SMART", tradingClass=cfg["tclass"])
             for k in strikes for r in ("C", "P")]
     opts = [o for o in ib.qualifyContracts(*opts) if getattr(o, "conId", None)]
-    tickers = ib.reqTickers(*opts)
+    # Phase 1: LIVE mode — start OI streams (static clearing data, arrives in ~15s
+    # even off-hours; frozen mode barely delivers OI). Also seeds `close` prices.
+    ib.reqMarketDataType(MDT_LIVE)
     handles = {o.conId: ib.reqMktData(o, "100,101", False, False) for o in opts}
     try:
-        ib.sleep(SETTLE_SECONDS)
+        ib.sleep(OI_SETTLE_SECONDS)
+        # Phase 2: FROZEN mode — reqTickers returns the last settle snapshot with
+        # populated modelGreeks + IV + marketPrice (verified 60/60 pre-open).
+        ib.reqMarketDataType(MDT_FROZEN)
+        tickers = ib.reqTickers(*opts)
+        ib.sleep(GREEKS_SETTLE_SECONDS)
         rows = []
         for o, t in zip(opts, tickers):
             mg = t.modelGreeks
@@ -138,7 +149,7 @@ def pull_chain(ib: IB, symbol: str, expiry: str, spot: float, chain=None) -> pd.
                 strike=float(o.strike), right=o.right,
                 gamma=_num(mg.gamma) if mg else None,
                 iv=_num(mg.impliedVol) if mg else None,
-                mid=_num(t.marketPrice()),
+                mid=_num(t.marketPrice()) or _num(t.close),   # close fallback pre-open
                 oi=_num(h.callOpenInterest if o.right == "C" else h.putOpenInterest),
             ))
     finally:                                            # M1: never leak market-data lines
