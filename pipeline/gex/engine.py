@@ -70,13 +70,11 @@ def _assemble(chains: dict, spots: dict, bases: dict,
 
     regime = derive.regime_of(primary["net_gex_mm"] if primary else None)
     opex = derive.opex_flag(today)
+    # build_plan reads the whole SPX tenor set so it can cross-reference (front
+    # regime vs swing regime, front walls vs swing target, wall-collapse magnet).
+    spx = instruments.get("SPX", {}).get("tenors", {})
     plan = derive.build_plan(
-        regime=regime,
-        flip=primary.get("flip") if primary else None,
-        put_wall=primary.get("put_wall") if primary else None,
-        call_wall=primary.get("call_wall") if primary else None,
-        pin=primary.get("pin") if primary else None,
-        opex=opex,
+        regime=regime, tenors=spx, opex=opex,
         migration=primary.get("delta_vs_prior") if primary else None)
     read = {"regime": regime,
             "bull": [f"net GEX {primary['net_gex_mm']:+,.0f} $mm — dips get bought"]

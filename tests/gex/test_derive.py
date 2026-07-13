@@ -45,10 +45,44 @@ def test_strategy_fit_rules():
     assert neg["iron_condor"] == "avoid" and neg["calendar_call_wall"] == "avoid"
     assert neg["dip_fade_call"] == "conditional"
 
-def test_build_plan_mentions_levels():
-    txt = " ".join(build_plan(regime="positive", flip=7590.0, put_wall=7550.0,
-                              call_wall=7650.0, pin=7650.0,
+def _t(**kw):
+    """Minimal tenor dict with sensible defaults."""
+    base = dict(net_gex_mm=None, flip=None, put_wall=None, pin=None, call_wall=None)
+    base.update(kw)
+    return base
+
+def test_build_plan_normal_positive_uses_front_walls_and_swing_target():
+    # Front sets today's put wall (support); swing pin is the target; front call is the fade level.
+    tenors = {"front": _t(net_gex_mm=3000, put_wall=7550, pin=7600, call_wall=7650),
+              "swing": _t(net_gex_mm=1500, flip=7580, put_wall=7500, pin=7620, call_wall=7700)}
+    txt = " ".join(build_plan(regime="positive", tenors=tenors,
                               opex={"date": "2026-07-17", "dte": 4, "within_week": True},
                               migration={"note": "call wall rolled up +50"}))
-    for token in ("7590", "7550", "7650", "OPEX", "rolled up"):
-        assert token in txt
+    for token in ("Line in the sand: 7580", "Buy dips at 7550", "target 7620",
+                  "fade rips into 7650", "OPEX", "rolled up"):
+        assert token in txt, f"missing {token} in: {txt}"
+
+def test_build_plan_collapsed_walls_becomes_magnet_not_three_of_same():
+    # Regression for today's bug: put=pin=call=7500 must NOT render "buy 7500 target 7500 fade 7500".
+    tenors = {"front": _t(net_gex_mm=-500, put_wall=7550, pin=7550, call_wall=7545),
+              "swing": _t(net_gex_mm=600, flip=7575, put_wall=7500, pin=7500, call_wall=7500)}
+    plan = build_plan(regime="positive", tenors=tenors, opex={"within_week": False}, migration=None)
+    txt = " ".join(plan)
+    assert "magnet" in txt.lower() and "7500" in txt
+    # And the broken line must NOT be present
+    assert "target 7500; fade" not in txt
+
+def test_build_plan_flags_front_negative_divergence():
+    # 0DTE short-gamma while swing is still positive = the trade IS the divergence.
+    tenors = {"front": _t(net_gex_mm=-2000, put_wall=7550, pin=7550, call_wall=7545),
+              "swing": _t(net_gex_mm=600, flip=7575, put_wall=7500, pin=7500, call_wall=7500)}
+    txt = " ".join(build_plan(regime="positive", tenors=tenors,
+                              opex={"within_week": False}, migration=None))
+    assert "0DTE" in txt and "divergence" in txt and "7550" in txt
+
+def test_build_plan_missing_front_still_produces_swing_plan():
+    tenors = {"front": None,
+              "swing": _t(net_gex_mm=1500, flip=7580, put_wall=7500, pin=7620, call_wall=7700)}
+    txt = " ".join(build_plan(regime="positive", tenors=tenors,
+                              opex={"within_week": False}, migration=None))
+    assert "7580" in txt and ("7500" in txt or "7620" in txt)

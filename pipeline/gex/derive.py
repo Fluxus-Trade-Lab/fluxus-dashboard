@@ -100,17 +100,66 @@ def strategy_fit(regime: str, atm_iv: float | None) -> list[dict]:
     ]
 
 
-def build_plan(regime, flip, put_wall, call_wall, pin, opex, migration) -> list[str]:
+WALL_COLLAPSE_TOL = 0.01           # walls within 1% of each other → magnet
+
+
+def _collapsed(t: dict | None) -> bool:
+    """True when a tenor's put/pin/call walls are all within WALL_COLLAPSE_TOL."""
+    if not t:
+        return False
+    lvls = [t.get(k) for k in ("put_wall", "pin", "call_wall")]
+    if not all(lvls):
+        return False
+    return (max(lvls) - min(lvls)) / max(lvls) < WALL_COLLAPSE_TOL
+
+
+def _g(t: dict | None, key: str):
+    return None if t is None else t.get(key)
+
+
+def build_plan(regime, tenors, opex, migration=None) -> list[str]:
+    """Cross-tenor plan bullets. `tenors` is a dict with keys 'front'/'swing'/'monthly',
+    each a compute_tenor() result or None. The old single-tenor form was ambiguous when
+    walls collapsed onto one strike (put=pin=call → 'buy X target X fade X')."""
     p = []
-    if flip:
-        p.append(f"Line in the sand: {flip:.0f} — above = dampened grind; below = amplify, stand down.")
-    if put_wall and (call_wall or pin):
-        tgt = pin or call_wall
-        p.append(f"Buy dips at the {put_wall:.0f} put wall → target {tgt:.0f}; fade strength into {call_wall:.0f}.")
-    if regime == "negative" and put_wall:
-        p.append(f"Negative gamma: no premium selling; breaks of {put_wall:.0f} accelerate.")
+    front, swing = tenors.get("front"), tenors.get("swing")
+
+    # Line in the sand: prefer the swing flip (multi-day regime line), fall back to front.
+    los = _g(swing, "flip") or _g(front, "flip")
+    if los:
+        p.append(f"Line in the sand: {los:.0f} — above = dampened grind; below = amplify, stand down.")
+
+    # 0DTE divergence: front short-gamma while swing constructive → the trade IS the break.
+    fg, sg = _g(front, "net_gex_mm"), _g(swing, "net_gex_mm")
+    if fg is not None and sg is not None and fg < 0 and sg > 0:
+        line = _g(front, "put_wall") or _g(front, "pin")
+        if line:
+            p.append(f"0DTE net GEX {fg:+,.0f} $mm vs swing {sg:+,.0f} — divergence: "
+                     f"a break of {line:.0f} amplifies today.")
+
+    # Support/target/resistance. If swing walls collapsed, emit magnet msg instead of the 3-level trade.
+    if _collapsed(swing):
+        magnet = _g(swing, "pin") or _g(swing, "put_wall")
+        p.append(f"Weekly walls stacked at {magnet:.0f} — magnet trade; expect pin action, "
+                 "low directional edge unless it breaks.")
+    else:
+        support = _g(front, "put_wall") or _g(swing, "put_wall")
+        target = _g(swing, "pin") or _g(swing, "put_wall")
+        resist = _g(front, "call_wall") or _g(swing, "call_wall")
+        if support and target:
+            tail = f"; fade rips into {resist:.0f}" if resist and resist != support else ""
+            p.append(f"Buy dips at {support:.0f} put wall → target {target:.0f}{tail}.")
+
+    if regime == "negative":
+        wall = _g(swing, "put_wall") or _g(front, "put_wall")
+        if wall:
+            p.append(f"Negative gamma: no premium selling; breaks of {wall:.0f} accelerate.")
+
     if opex and opex.get("within_week"):
-        p.append(f"OPEX {opex['date']} in {opex['dte']}d — monthly gamma rolls off; expect regime shift after.")
+        p.append(f"OPEX {opex['date']} in {opex['dte']}d — monthly gamma rolls off; "
+                 "expect regime shift after.")
+
     if migration and migration.get("note") and "rolled up" in migration["note"]:
         p.append(f"Wall migration: {migration['note']}.")
+
     return p
