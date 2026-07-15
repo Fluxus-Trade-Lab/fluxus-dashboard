@@ -1,6 +1,6 @@
 {
  "version": 1,
- "asof": "2026-07-16T00:48:13+09:00",
+ "asof": "2026-07-16T02:17:44+09:00",
  "stale": false,
  "stale_reason": null,
  "opex": {
@@ -10,22 +10,22 @@
  },
  "instruments": {
   "SPX": {
-   "spot": 7555.56,
+   "spot": 7543.54,
    "basis": {
-    "ES_minus_SPX": 44.9,
-    "NQ_over_QQQ": 41.39
+    "ES_minus_SPX": 44.3,
+    "NQ_over_QQQ": 41.395
    },
    "tenors": {
     "front": {
-     "net_gex_mm": 5366.123,
-     "flip": 7575.0,
+     "net_gex_mm": 365.618,
+     "flip": 7660.0,
      "pin": 7550.0,
-     "vol_trigger": 7555.0,
+     "vol_trigger": 7660.0,
      "call_wall": 7550.0,
      "put_wall": 7550.0,
      "wall_basis": "gamma",
-     "straddle": 18.599999999999998,
-     "atm_iv": 0.14093026636263592,
+     "straddle": 14.2,
+     "atm_iv": 0.13498938063830446,
      "walls_top_calls": [
       {
        "strike": 7660.0,
@@ -70,8 +70,8 @@
        "oi": 2612
       }
      ],
-     "greeks_coverage": 1.0,
-     "oi_coverage": 0.96,
+     "greeks_coverage": 0.97,
+     "oi_coverage": 0.92,
      "quality": "ok",
      "expiry": "20260715",
      "delta_vs_prior": {
@@ -82,13 +82,13 @@
      },
      "converted": {
       "ES": {
-       "flip": 7619.9,
-       "put_wall": 7594.9,
-       "call_wall": 7594.9,
-       "pin": 7594.9
+       "flip": 7704.3,
+       "put_wall": 7594.3,
+       "call_wall": 7594.3,
+       "pin": 7594.3
       },
       "SPY": {
-       "flip": 757.5,
+       "flip": 766.0,
        "put_wall": 755.0,
        "call_wall": 755.0,
        "pin": 755.0
@@ -96,20 +96,16 @@
      }
     },
     "swing": {
-     "net_gex_mm": 121.537,
-     "flip": 7725.0,
+     "net_gex_mm": -1516.297,
+     "flip": null,
      "pin": 7550.0,
-     "vol_trigger": 7725.0,
-     "call_wall": 7600.0,
+     "vol_trigger": null,
+     "call_wall": 7500.0,
      "put_wall": 7550.0,
      "wall_basis": "gamma",
-     "straddle": 105.85,
-     "atm_iv": 0.11084419833795416,
+     "straddle": 106.9,
+     "atm_iv": 0.11260720093873164,
      "walls_top_calls": [
-      {
-       "strike": 7600.0,
-       "oi": 3661
-      },
       {
        "strike": 7500.0,
        "oi": 2449
@@ -125,6 +121,10 @@
       {
        "strike": 7700.0,
        "oi": 1731
+      },
+      {
+       "strike": 7575.0,
+       "oi": 1598
       }
      ],
      "walls_top_puts": [
@@ -149,8 +149,8 @@
        "oi": 2269
       }
      ],
-     "greeks_coverage": 1.0,
-     "oi_coverage": 0.96,
+     "greeks_coverage": 0.91,
+     "oi_coverage": 0.86,
      "quality": "ok",
      "expiry": "20260724",
      "delta_vs_prior": {
@@ -161,29 +161,29 @@
      },
      "converted": {
       "ES": {
-       "flip": 7769.9,
-       "put_wall": 7594.9,
-       "call_wall": 7644.9,
-       "pin": 7594.9
+       "flip": null,
+       "put_wall": 7594.3,
+       "call_wall": 7544.3,
+       "pin": 7594.3
       },
       "SPY": {
-       "flip": 772.5,
+       "flip": null,
        "put_wall": 755.0,
-       "call_wall": 760.0,
+       "call_wall": 750.0,
        "pin": 755.0
       }
      }
     },
     "monthly": {
-     "net_gex_mm": 1.961,
-     "flip": 7375.0,
+     "net_gex_mm": -55.074,
+     "flip": null,
      "pin": 7450.0,
-     "vol_trigger": 7550.0,
+     "vol_trigger": 7505.0,
      "call_wall": 7550.0,
      "put_wall": 7450.0,
      "wall_basis": "gamma",
-     "straddle": 258.0,
-     "atm_iv": 0.13394761293539836,
+     "straddle": 258.6,
+     "atm_iv": 0.13456105800934248,
      "walls_top_calls": [
       {
        "strike": 7550.0,
@@ -228,8 +228,8 @@
        "oi": 426
       }
      ],
-     "greeks_coverage": 1.0,
-     "oi_coverage": 0.97,
+     "greeks_coverage": 0.89,
+     "oi_coverage": 0.93,
      "quality": "ok",
      "expiry": "20260821",
      "delta_vs_prior": {
@@ -240,13 +240,13 @@
      },
      "converted": {
       "ES": {
-       "flip": 7419.9,
-       "put_wall": 7494.9,
-       "call_wall": 7594.9,
-       "pin": 7494.9
+       "flip": null,
+       "put_wall": 7494.3,
+       "call_wall": 7594.3,
+       "pin": 7494.3
       },
       "SPY": {
-       "flip": 737.5,
+       "flip": null,
        "put_wall": 745.0,
        "call_wall": 755.0,
        "pin": 745.0
@@ -256,22 +256,22 @@
    }
   },
   "QQQ": {
-   "spot": 715.25,
+   "spot": 713.68,
    "basis": {
-    "ES_minus_SPX": 44.9,
-    "NQ_over_QQQ": 41.39
+    "ES_minus_SPX": 44.3,
+    "NQ_over_QQQ": 41.395
    },
    "tenors": {
     "front": {
-     "net_gex_mm": -542.282,
+     "net_gex_mm": -656.81,
      "flip": null,
      "pin": 715.0,
      "vol_trigger": null,
      "call_wall": 720.0,
      "put_wall": 715.0,
      "wall_basis": "gamma",
-     "straddle": 3.34,
-     "atm_iv": 0.2574147463732719,
+     "straddle": 2.48,
+     "atm_iv": 0.23095391206516108,
      "walls_top_calls": [
       {
        "strike": 730.0,
@@ -316,8 +316,8 @@
        "oi": 6077
       }
      ],
-     "greeks_coverage": 1.0,
-     "oi_coverage": 0.97,
+     "greeks_coverage": 0.85,
+     "oi_coverage": 0.88,
      "quality": "ok",
      "expiry": "20260715",
      "delta_vs_prior": {
@@ -329,22 +329,22 @@
      "converted": {
       "NQ": {
        "flip": null,
-       "put_wall": 29594,
-       "call_wall": 29801,
-       "pin": 29594
+       "put_wall": 29597,
+       "call_wall": 29804,
+       "pin": 29597
       }
      }
     },
     "swing": {
-     "net_gex_mm": -128.741,
+     "net_gex_mm": -149.071,
      "flip": null,
      "pin": 725.0,
-     "vol_trigger": 714.0,
+     "vol_trigger": 713.0,
      "call_wall": 730.0,
      "put_wall": 710.0,
      "wall_basis": "gamma",
-     "straddle": 20.310000000000002,
-     "atm_iv": 0.22405297753504128,
+     "straddle": 20.16,
+     "atm_iv": 0.22392063092118994,
      "walls_top_calls": [
       {
        "strike": 730.0,
@@ -363,8 +363,8 @@
        "oi": 1647
       },
       {
-       "strike": 732.0,
-       "oi": 1606
+       "strike": 722.0,
+       "oi": 1367
       }
      ],
      "walls_top_puts": [
@@ -389,8 +389,8 @@
        "oi": 2900
       }
      ],
-     "greeks_coverage": 1.0,
-     "oi_coverage": 1.0,
+     "greeks_coverage": 0.97,
+     "oi_coverage": 0.97,
      "quality": "ok",
      "expiry": "20260724",
      "delta_vs_prior": {
@@ -402,22 +402,22 @@
      "converted": {
       "NQ": {
        "flip": null,
-       "put_wall": 29387,
-       "call_wall": 30215,
-       "pin": 30008
+       "put_wall": 29390,
+       "call_wall": 30218,
+       "pin": 30011
       }
      }
     },
     "monthly": {
-     "net_gex_mm": -338.483,
+     "net_gex_mm": -340.357,
      "flip": null,
      "pin": 700.0,
      "vol_trigger": null,
      "call_wall": 730.0,
      "put_wall": 700.0,
      "wall_basis": "gamma",
-     "straddle": 42.79,
-     "atm_iv": 0.23442813694195944,
+     "straddle": 42.489999999999995,
+     "atm_iv": 0.23292792731414314,
      "walls_top_calls": [
       {
        "strike": 700.0,
@@ -475,9 +475,9 @@
      "converted": {
       "NQ": {
        "flip": null,
-       "put_wall": 28973,
-       "call_wall": 30215,
-       "pin": 28973
+       "put_wall": 28977,
+       "call_wall": 30218,
+       "pin": 28977
       }
      }
     }
@@ -485,37 +485,38 @@
   }
  },
  "read": {
-  "regime": "positive",
-  "bull": [
-   "net GEX +122 $mm \u2014 dips get bought"
+  "regime": "negative",
+  "bull": [],
+  "bear": [
+   "net GEX -1,516 $mm \u2014 moves amplify"
   ],
-  "bear": [],
   "plan": [
-   "Line in the sand: 7725 \u2014 above = dampened grind; below = amplify, stand down.",
+   "Line in the sand: 7660 \u2014 above = dampened grind; below = amplify, stand down.",
    "Weekly walls stacked at 7550 \u2014 magnet trade; expect pin action, low directional edge unless it breaks.",
+   "Negative gamma: no premium selling; breaks of 7550 accelerate.",
    "OPEX 2026-07-17 in 2d \u2014 monthly gamma rolls off; expect regime shift after."
   ]
  },
  "strategy_fit": [
   {
    "name": "bull_put_spread",
-   "rating": "favored",
-   "why": "sell far-OTM below the put wall; floor + regime on-side"
+   "rating": "caution",
+   "why": "wait for a held floor before selling puts"
   },
   {
    "name": "dip_fade_call",
-   "rating": "favored",
-   "why": "dips get bought in positive gamma; buy at put wall/pin"
+   "rating": "conditional",
+   "why": "only at a major put wall with the leader confirming"
   },
   {
    "name": "iron_condor",
    "rating": "avoid",
-   "why": "credit too thin (ATM IV 11% < 12%)"
+   "why": "short-gamma risk in negative gamma"
   },
   {
    "name": "calendar_call_wall",
-   "rating": "viable",
-   "why": "short near-term gamma wants a dampened grind"
+   "rating": "avoid",
+   "why": "violent zig-zag chops the short leg"
   },
   {
    "name": "lotto_otm_call",
