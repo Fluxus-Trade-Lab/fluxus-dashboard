@@ -5,6 +5,7 @@ import json
 import subprocess
 from datetime import date, datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import pandas as pd
 
@@ -13,6 +14,18 @@ from pipeline.gex import compute, derive, render, schema
 OUT_DIR = Path("data/gex")
 INSTR_MULT = {"SPX": 100, "QQQ": 100}
 PUBLISH_BRANCH = "main"          # unattended cron only pushes when on this branch
+MARKET_TZ = ZoneInfo("America/New_York")
+
+
+def _market_today() -> date:
+    """Current date in the US Eastern market timezone.
+
+    NOT date.today() — the host clock may be in any timezone (e.g. JST, ~13h
+    ahead of ET), so date.today() returns "tomorrow" for most of the US
+    trading session, corrupting tenor selection, OPEX day-count, and the
+    dated output filename.
+    """
+    return datetime.now(MARKET_TZ).date()
 
 
 def _prior_doc(out_dir: Path, today_tag: str):
@@ -152,7 +165,7 @@ def _git_publish(out_dir: Path, today: date, push: bool) -> None:
 def run(out_dir=OUT_DIR, offline_fixture=None, offline_spot=None,
         do_git=True, push=True) -> dict:
     out_dir = Path(out_dir)
-    today = date.today()
+    today = _market_today()
     try:
         if offline_fixture:
             df = pd.read_csv(offline_fixture)
