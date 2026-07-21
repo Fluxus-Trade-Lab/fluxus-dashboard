@@ -68,6 +68,8 @@ def wall_migration(cur: dict, prior: dict | None) -> dict:
         notes.append(f"call wall rolled down {out['call_wall']:.0f}")
     if out.get("put_wall") and out["put_wall"] > 0:
         notes.append(f"put wall raised +{out['put_wall']:.0f} (floor strengthening)")
+    if out.get("put_wall") and out["put_wall"] < 0:
+        notes.append(f"put wall dropped {out['put_wall']:.0f} (floor weakening)")
     out["note"] = "; ".join(notes) if notes else "walls unchanged"
     return out
 

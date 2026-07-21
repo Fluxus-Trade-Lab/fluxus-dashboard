@@ -33,6 +33,16 @@ def test_wall_migration():
     assert d["call_wall"] == 50.0 and d["put_wall"] == 50.0 and d["flip"] == 40.0
     assert "rolled up" in d["note"]          # SpotGamma's bullish tell
 
+def test_wall_migration_reports_put_wall_drop():
+    # A falling put wall is the floor weakening -- must not go unreported, or a
+    # two-sided widening (call up / put down) reads as a one-sided bullish tell.
+    prior = {"call_wall": 7525.0, "put_wall": 7500.0, "flip": 7523.5}
+    cur = {"call_wall": 7550.0, "put_wall": 7450.0, "flip": 7525.2}
+    d = wall_migration(cur, prior)
+    assert d["put_wall"] == -50.0
+    assert "put wall dropped -50" in d["note"]
+    assert "rolled up" in d["note"]           # both sides reported
+
 def test_strategy_fit_rules():
     pos = {s["name"]: s["rating"] for s in strategy_fit("positive", atm_iv=0.15)}
     assert pos["bull_put_spread"] == "favored"
