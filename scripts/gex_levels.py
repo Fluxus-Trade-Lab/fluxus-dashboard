@@ -37,9 +37,14 @@ Usage:
 
 Output: gex_<SYMBOL>_<YYYYMMDD>.json and .csv in the data/gex/ directory.
 """
-import argparse, datetime as dt, json, math, os
+import argparse, datetime as dt, json, math, os, sys
 import pandas as pd
 from ib_async import IB, Index, Stock, Option
+
+# Running this as a script puts scripts/ on sys.path, not the repo root, so the
+# pipeline package is not importable without help.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from pipeline.gex.derive import iv_tenors
 
 # ----------------------------------------------------------------------------
 # SIGN CONVENTION  (flip here if you disagree with the dealer-positioning model)
@@ -307,20 +312,29 @@ def main():
               f"{'spot ABOVE flip (positive regime)' if spot >= flip else 'spot BELOW flip (negative regime)'}")
 
     # ------------------------------------------------------------------
-    # ATM IV -- front-expiry call IV at the strike nearest spot.
-    #   derive.strategy_fit() gates the iron-condor rule on this; when it is
-    #   absent the rule silently falls back to iv=0.0 and always reports
-    #   "credit too thin" regardless of what IV actually is.
+    # ATM IV -- call IV at the strike nearest spot, per tenor.
+    #   derive.strategy_fit() gates the iron-condor rule on IV; feeding it the
+    #   front expiry meant feeding it 0DTE, whose IV spikes into expiry as
+    #   sqrt(T) collapses and so tracks the clock rather than the vol regime.
+    #   iv_tenors() picks the nearest forward expiry and the swing tenor
+    #   instead; the swing reading is the one the rules consume, matching what
+    #   pipeline/gex/engine.py already does with its swing-tenor primary.
     # ------------------------------------------------------------------
-    atm_iv = None
-    if exps:
-        front = df[(df["expiry"] == min(exps)) & (df["right"] == "C")]
-        front = front[front["iv"].notna() & (front["iv"] > 0)]
-        if not front.empty:
-            atm_row = front.iloc[(front["strike"] - spot).abs().argmin()]
-            atm_iv = round(float(atm_row["iv"]), 4)
-    print(f" ATM IV (front {min(exps) if exps else '-'}) ... "
-          f"{f'{atm_iv:.1%}' if atm_iv is not None else 'unavailable'}")
+    def _atm_iv(expiry):
+        if not expiry:
+            return None
+        side = df[(df["expiry"] == expiry) & (df["right"] == "C")]
+        side = side[side["iv"].notna() & (side["iv"] > 0)]
+        if side.empty:
+            return None
+        return round(float(side.iloc[(side["strike"] - spot).abs().argmin()]["iv"]), 4)
+
+    ivt = iv_tenors(exps, dt.date.today())
+    atm_iv_1dte, atm_iv_swing = _atm_iv(ivt["one_dte"]), _atm_iv(ivt["swing"])
+    for label, exp, iv in (("1DTE ", ivt["one_dte"], atm_iv_1dte),
+                           ("swing", ivt["swing"], atm_iv_swing)):
+        print(f" ATM IV ({label} {exp or '-'}) ... "
+              f"{f'{iv:.1%}' if iv is not None else 'unavailable'}")
 
     # ------------------------------------------------------------------
     # persist
@@ -333,7 +347,9 @@ def main():
         expiries=exps, sign_convention=dict(call=CALL_SIGN, put=PUT_SIGN, flip=FLIP_SIGN),
         total_gex=round(total_gex, 2), regime="positive" if "POSITIVE" in regime else "negative",
         zero_gamma_flip=round(flip, 2) if flip is not None else None,
-        call_wall=call_wall, put_wall=put_wall, pin_strike=pin, atm_iv=atm_iv,
+        call_wall=call_wall, put_wall=put_wall, pin_strike=pin,
+        atm_iv_1dte=atm_iv_1dte, atm_iv_swing=atm_iv_swing,
+        atm_iv_tenors={"one_dte": ivt["one_dte"], "swing": ivt["swing"]},
         positive_pocket=[round(pocket[0], 2), round(pocket[1], 2)] if pocket else None,
         per_strike_gex={float(k): round(v, 2) for k, v in per_strike.items()},
         profile=[[round(s, 2), round(g, 2)] for s, g in zip(grid, profile)],

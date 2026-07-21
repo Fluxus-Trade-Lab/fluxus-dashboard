@@ -1,7 +1,7 @@
 # tests/gex/test_derive.py
 from datetime import date
 from pipeline.gex.derive import (third_friday, select_tenors, opex_flag,
-                                 regime_of, wall_migration, strategy_fit,
+                                 regime_of, wall_migration, strategy_fit, iv_tenors,
                                  build_plan)
 
 EXPIRIES = ["20260713", "20260714", "20260715", "20260716", "20260717",
@@ -42,6 +42,27 @@ def test_wall_migration_reports_put_wall_drop():
     assert d["put_wall"] == -50.0
     assert "put wall dropped -50" in d["note"]
     assert "rolled up" in d["note"]           # both sides reported
+
+def test_iv_tenors_skips_0dte():
+    # 0DTE ATM IV spikes into expiry as sqrt(T) collapses -- it tracks the
+    # clock, not the vol regime, so neither IV reading may come from it.
+    t = iv_tenors(["20260721", "20260722", "20260723", "20260724", "20260727"],
+                  today=date(2026, 7, 21))
+    assert t["one_dte"] == "20260722"     # not 20260721, which expires today
+    assert t["swing"] == "20260727"       # DTE 6, inside [5,14]
+
+def test_iv_tenors_swing_targets_9dte():
+    t = iv_tenors(EXPIRIES, today=date(2026, 7, 11))
+    assert t["one_dte"] == "20260713"     # DTE 2, nearest forward expiry
+    assert t["swing"] == "20260720"       # DTE 9, the SWING_TARGET
+
+def test_iv_tenors_missing_candidates():
+    # A chain that reaches only 3 days out has no swing tenor at all; the
+    # caller must get None rather than a silently-wrong near-dated stand-in.
+    t = iv_tenors(["20260721", "20260722", "20260724"], today=date(2026, 7, 21))
+    assert t["one_dte"] == "20260722"
+    assert t["swing"] is None
+    assert iv_tenors([], today=date(2026, 7, 21)) == {"one_dte": None, "swing": None}
 
 def test_strategy_fit_rules():
     pos = {s["name"]: s["rating"] for s in strategy_fit("positive", atm_iv=0.15)}

@@ -38,6 +38,26 @@ def select_tenors(expiries: list[str], today: date) -> dict:
     return {"front": front, "swing": swing, "monthly": monthly}
 
 
+def iv_tenors(expiries: list[str], today: date) -> dict:
+    """Expiries whose ATM IV is fit to feed the strategy rules.
+
+    Deliberately excludes 0DTE. Its IV spikes into expiry as sqrt(T) collapses,
+    so it tracks the clock rather than the vol regime -- on 2026-07-21 the SPX
+    0DTE printed 21.6% while every other tenor sat at 13-16%. Rules about
+    multi-day structures must not read it.
+
+    Returns the nearest forward expiry ("one_dte") and the swing tenor the rest
+    of this module already targets ("swing"), either of which may be None when
+    the chain does not reach that far.
+    """
+    exps = sorted(set(expiries))
+    one_dte = next((e for e in exps if _dte(e, today) >= 1), None)
+    lo, hi = SWING_WINDOW
+    cands = [e for e in exps if lo <= _dte(e, today) <= hi]
+    swing = min(cands, key=lambda e: abs(_dte(e, today) - SWING_TARGET)) if cands else None
+    return {"one_dte": one_dte, "swing": swing}
+
+
 def opex_flag(today: date) -> dict:
     tf = third_friday(today.year, today.month)
     if tf < today:
