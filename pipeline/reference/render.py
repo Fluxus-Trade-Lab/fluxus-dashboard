@@ -47,6 +47,70 @@ def _page(title: str, body: str) -> str:
             f"<body><div class='doc'>{body}</div></body></html>")
 
 
+def _kv_table(rows: list[tuple[str, str, str]]) -> str:
+    """rows = [(label, value, css_class)] -> a 2-col table."""
+    body = "".join(
+        f"<tr><td class='mut'>{lbl}</td><td class='{cls}'>{val}</td></tr>"
+        for lbl, val, cls in rows
+    )
+    return f"<table><tbody>{body}</tbody></table>"
+
+
+def render_snapshot_html(data: dict) -> str:
+    """Daily market snapshot: GEX rails + expected move + VIX term structure."""
+    g = data["gex"]
+    spot = g.get("spot")
+    regime = (g.get("regime") or "?").upper()
+    reg_cls = "neg" if regime == "NEGATIVE" else ("pos" if regime == "POSITIVE" else "mut")
+    gex_rows = [
+        ("Spot", f"{spot:,.0f}" if spot else "—", "mono"),
+        ("Regime", f"{regime} ({g['total_gex']/1e9:+.2f}B)" if g.get("total_gex") is not None else regime, reg_cls),
+        ("Call wall", f"{g['call_wall']:,.0f}" if g.get("call_wall") else "—", "mono"),
+        ("Zero-gamma flip", f"{g['zero_gamma_flip']:,.0f}" if g.get("zero_gamma_flip") else "—", "mono"),
+        ("Put wall / pin", f"{g['put_wall']:,.0f}" if g.get("put_wall") else "—", "mono"),
+    ]
+    iv1, ivs = g.get("atm_iv_1dte"), g.get("atm_iv_swing")
+    if iv1 or ivs:
+        gex_rows.append(("ATM IV (1DTE / swing)",
+                         f"{(iv1 or 0)*100:.1f}% / {(ivs or 0)*100:.1f}%", "mut"))
+    gex_tbl = _kv_table(gex_rows)
+
+    em = data.get("expected_move")
+    if em:
+        em_rows = []
+        for e in em:
+            rng = f"{e['low']:,.0f} – {e['high']:,.0f}"
+            em_rows.append((f"{e['label']} ({e['expiry']})",
+                            f"±{e['pts']:.0f} ({e['pct']:.2f}%) → {rng}", "mono"))
+        em_html = f"<section><p class='lbl'>Expected move (ATM straddle)</p>{_kv_table(em_rows)}</section>"
+    else:
+        em_html = "<section><p class='lbl'>Expected move</p><p class='mut mono'>unavailable — TWS was down at build time</p></section>"
+
+    vix = data.get("vix")
+    if vix:
+        term = vix.get("vix3m", 0) - vix.get("vix", 0)
+        struct = "contango (calm)" if term > 0 else "backwardation (stress)"
+        vix_html = ("<section><p class='lbl'>Volatility</p>" + _kv_table([
+            ("VIX", f"{vix['vix']:.2f}", "mono"),
+            ("VIX3M", f"{vix['vix3m']:.2f}", "mono"),
+            ("Term (3M − spot)", f"{term:+.2f} — {struct}", "pos" if term > 0 else "neg"),
+        ]) + "</section>")
+    else:
+        vix_html = ""
+
+    body = (
+        f"<p class='eyebrow'>{g.get('symbol','SPX')} · Daily Snapshot</p>"
+        f"<h1>{data['date']} market snapshot</h1>"
+        f"<div class='meta'><span>generated {data['generated_at']}</span>"
+        f"<span class='{reg_cls}'>{regime} gamma</span></div>"
+        f"<section><p class='lbl'>Dealer gamma rails</p>{gex_tbl}</section>"
+        f"{em_html}{vix_html}"
+        f"<p class='foot'>GEX from data/gex/ · EM/VIX pulled live when available · "
+        f"snapshot cached in data/snapshots/. Not advice.</p>"
+    )
+    return _page(f"{g.get('symbol','SPX')} Snapshot {data['date']}", body)
+
+
 def render_seasonality_html(data: dict, symbol: str, generated_at: str) -> str:
     h = data["history"]
     focus = data.get("focus_month")
