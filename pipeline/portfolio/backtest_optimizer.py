@@ -14,11 +14,12 @@ from __future__ import annotations
 import argparse
 import logging
 import sys
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import numpy as np
 
+from pipeline.marketcal import market_today
 from pipeline.portfolio.trade_parser import parse_csv, find_latest_csv, Trade
 from pipeline.portfolio.ohlc_cache import fetch_ohlc
 from pipeline.portfolio.market_regime import build_regime_index
@@ -216,7 +217,7 @@ def run(input_path: Path, output_md: Path, output_json: Path) -> None:
             if c.ticker not in ohlc_by_ticker:
                 s = c.first_entry - timedelta(days=60)
                 # extend to today (campaigns may have open layers)
-                e = max(c.last_entry, date.today()) + timedelta(days=30)
+                e = max(c.last_entry, market_today()) + timedelta(days=30)
                 df = fetch_ohlc(c.ticker, s, e)
                 if df is not None and len(df):
                     ohlc_by_ticker[c.ticker] = df
@@ -261,7 +262,7 @@ def run(input_path: Path, output_md: Path, output_json: Path) -> None:
 
     # ── Assemble report ────────────────────────────────────────────────────
     report = {
-        'generated_at': datetime.now().isoformat(timespec='seconds'),
+        'generated_at': datetime.now(timezone.utc).isoformat(timespec='seconds'),
         'input_csv': str(input_path),
         'summary': {
             'trades_total': len(trades),
@@ -312,7 +313,7 @@ def main(argv: list[str] | None = None) -> None:
             print("ERROR: no CSV found in data/portfolio/", file=sys.stderr)
             sys.exit(1)
     if args.output is None:
-        today = date.today().isoformat()
+        today = market_today().isoformat()
         args.output = Path(f'docs/portfolio-tuning-{today}.md')
     args.output.parent.mkdir(parents=True, exist_ok=True)
 
