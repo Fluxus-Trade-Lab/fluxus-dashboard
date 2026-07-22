@@ -97,10 +97,17 @@ def wall_migration(cur: dict, prior: dict | None) -> dict:
 def strategy_fit(regime: str, atm_iv: float | None) -> list[dict]:
     """v1 rule table encoding the July-2026 validated rules."""
     pos = regime == "positive"
-    iv = atm_iv or 0.0
-    condor = ("avoid", "short-gamma risk in negative gamma") if not pos else \
-             (("avoid", f"credit too thin (ATM IV {iv:.0%} < 12%)") if iv < IV_CONDOR_FLOOR
-              else ("situational", "range supported, but lean with the drift"))
+    if not pos:
+        condor = ("avoid", "short-gamma risk in negative gamma")
+    elif atm_iv is None:
+        # No swing tenor in the chain -- a data gap, not a thin-credit read.
+        # `atm_iv or 0.0` would have fabricated a 0% IV and mislabelled this
+        # as a genuine avoid.
+        condor = ("unknown", "ATM IV unavailable — cannot assess condor credit")
+    elif atm_iv < IV_CONDOR_FLOOR:
+        condor = ("avoid", f"credit too thin (ATM IV {atm_iv:.0%} < 12%)")
+    else:
+        condor = ("situational", "range supported, but lean with the drift")
     return [
         dict(name="bull_put_spread",
              rating="favored" if pos else "caution",

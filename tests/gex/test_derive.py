@@ -76,6 +76,18 @@ def test_strategy_fit_rules():
     assert neg["iron_condor"] == "avoid" and neg["calendar_call_wall"] == "avoid"
     assert neg["dip_fade_call"] == "conditional"
 
+def test_strategy_fit_condor_missing_iv_is_not_thin():
+    # atm_iv=None means "no swing tenor in the chain", NOT "IV is 0%". It must
+    # not masquerade as a genuine credit-too-thin avoid: same rating string
+    # would make a data gap look like a real read.
+    c = next(s for s in strategy_fit("positive", atm_iv=None) if s["name"] == "iron_condor")
+    assert c["rating"] == "unknown"
+    assert "0%" not in c["why"]              # never fabricate a 0% reading
+    assert "unavailable" in c["why"].lower()
+    # A real thin reading still avoids, and stays distinct from the None case.
+    thin = next(s for s in strategy_fit("positive", atm_iv=0.10) if s["name"] == "iron_condor")
+    assert thin["rating"] == "avoid" and "12%" in thin["why"]
+
 def _t(**kw):
     """Minimal tenor dict with sensible defaults."""
     base = dict(net_gex_mm=None, flip=None, put_wall=None, pin=None, call_wall=None)
