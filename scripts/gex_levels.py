@@ -38,7 +38,6 @@ Usage:
 Output: gex_<SYMBOL>_<YYYYMMDD>.json and .csv in the data/gex/ directory.
 """
 import argparse, datetime as dt, json, math, os, sys
-from zoneinfo import ZoneInfo
 import pandas as pd
 from ib_async import IB, Index, Stock, Option
 
@@ -46,19 +45,7 @@ from ib_async import IB, Index, Stock, Option
 # pipeline package is not importable without help.
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pipeline.gex.derive import iv_tenors
-
-MARKET_TZ = ZoneInfo("America/New_York")
-
-
-def _market_now() -> dt.datetime:
-    """Wall-clock time in the US Eastern market timezone.
-
-    NOT datetime.now() / date.today(): this Mac runs in JST (~13h ahead of ET),
-    so for most of the US session the local clock is already "tomorrow". Using
-    it dates the output file a day ahead and shifts tenor selection / DTE by a
-    day (dropping today's real 0DTE). Mirror pipeline/gex/engine._market_today.
-    """
-    return dt.datetime.now(MARKET_TZ)
+from pipeline.marketcal import market_now as _market_now  # trading dates: ET, never host JST
 
 # ----------------------------------------------------------------------------
 # SIGN CONVENTION  (flip here if you disagree with the dealer-positioning model)

@@ -18,6 +18,8 @@ from datetime import date
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+from pipeline.marketcal import market_today
+
 import numpy as np
 import pandas as pd
 
@@ -308,7 +310,7 @@ def run(
 
     # 5. Build today's history entry
     today_entry = {
-        'date': date.today().isoformat(),
+        'date': market_today().isoformat(),
         **snapshot,
         **ratios,
         'ad_line': ad_line,

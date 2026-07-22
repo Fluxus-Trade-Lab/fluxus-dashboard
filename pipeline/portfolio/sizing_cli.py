@@ -10,6 +10,7 @@ import logging
 from datetime import date, timedelta
 from pathlib import Path
 
+from pipeline.marketcal import market_today
 from pipeline.portfolio.trade_parser import parse_csv, find_latest_csv
 from pipeline.portfolio.ohlc_cache import fetch_ohlc
 from pipeline.portfolio.sizing_analyzer import (
@@ -64,7 +65,7 @@ def main(argv: list[str] | None = None) -> None:
         if args.input is None:
             raise SystemExit("ERROR: no CSV found in data/portfolio/")
     if args.output is None:
-        today = date.today().isoformat()
+        today = market_today().isoformat()
         args.output = Path(f'docs/portfolio-sizing-{today}.md')
 
     run(args.input, args.output)

@@ -24,7 +24,9 @@ import json
 import logging
 import math
 from dataclasses import asdict
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
+
+from pipeline.marketcal import market_today
 from pathlib import Path
 from typing import Optional
 
@@ -187,7 +189,7 @@ def _classify_setup(snap: dict, direction: str) -> str:
 def _compute_path_analytics(df: pd.DataFrame, trade: Trade) -> dict:
     """Walk OHLC from entry → exit (or today if open), compute MFE/MAE/optimal."""
     entry_d = trade.entry_date
-    exit_d = trade.exit_date or date.today()
+    exit_d = trade.exit_date or market_today()
     # Use bars from entry day to ~5 trading days after exit (so we can see what happened next)
     end_window = exit_d + timedelta(days=10)
     window = df[(df.index >= entry_d) & (df.index <= end_window)]
@@ -434,7 +436,7 @@ def generate_postmortems(trades: list[Trade], output_dir: Path) -> dict:
 
         record = {
             'trade_id': tid,
-            'generated_at': datetime.now().isoformat(timespec='seconds') + 'Z',
+            'generated_at': datetime.now(timezone.utc).isoformat(timespec='seconds'),
             '_schema': 'v1',
             'trade': _trade_to_dict(trade),
             'entry_snapshot': snap,
@@ -456,7 +458,7 @@ def generate_postmortems(trades: list[Trade], output_dir: Path) -> dict:
 def _slice_ohlc(df: pd.DataFrame, trade: Trade) -> list[dict]:
     """Return OHLC bars for entry-30d to exit+10d (or today+10d if open)."""
     start = trade.entry_date - timedelta(days=30)
-    end = (trade.exit_date or date.today()) + timedelta(days=10)
+    end = (trade.exit_date or market_today()) + timedelta(days=10)
     window = df[(df.index >= start) & (df.index <= end)]
     return [
         {
@@ -499,7 +501,7 @@ def _build_index(output_dir: Path) -> None:
     # Sort by entry date descending (most recent first)
     index.sort(key=lambda r: (r.get('entry_date') or '', r['trade_id']), reverse=True)
     with open(output_dir / '_index.json', 'w') as f:
-        json.dump({'generated_at': datetime.now().isoformat() + 'Z', 'trades': index}, f, indent=2)
+        json.dump({'generated_at': datetime.now(timezone.utc).isoformat(), 'trades': index}, f, indent=2)
     logger.info(f"Wrote index of {len(index)} trades to {output_dir / '_index.json'}")
 
 

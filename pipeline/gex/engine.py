@@ -3,29 +3,17 @@
 import argparse
 import json
 import subprocess
-from datetime import date, datetime, timezone
+from datetime import datetime, timezone
 from pathlib import Path
-from zoneinfo import ZoneInfo
 
 import pandas as pd
 
 from pipeline.gex import compute, derive, render, schema
+from pipeline.marketcal import market_today as _market_today
 
 OUT_DIR = Path("data/gex")
 INSTR_MULT = {"SPX": 100, "QQQ": 100}
 PUBLISH_BRANCH = "main"          # unattended cron only pushes when on this branch
-MARKET_TZ = ZoneInfo("America/New_York")
-
-
-def _market_today() -> date:
-    """Current date in the US Eastern market timezone.
-
-    NOT date.today() — the host clock may be in any timezone (e.g. JST, ~13h
-    ahead of ET), so date.today() returns "tomorrow" for most of the US
-    trading session, corrupting tenor selection, OPEX day-count, and the
-    dated output filename.
-    """
-    return datetime.now(MARKET_TZ).date()
 
 
 def _prior_doc(out_dir: Path, today_tag: str):

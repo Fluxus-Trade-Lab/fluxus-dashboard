@@ -16,6 +16,8 @@ from datetime import date
 from pathlib import Path
 from typing import Any, Dict, List
 
+from pipeline.marketcal import market_today
+
 import pandas as pd
 
 logger = logging.getLogger(__name__)
@@ -105,7 +107,7 @@ def run(universe: pd.DataFrame, history_path: str) -> Dict[str, Any]:
     losers_today = int((universe["change_pct"] <= _LOSER_PCT).sum())
 
     today_entry = {
-        "date": date.today().isoformat(),
+        "date": market_today().isoformat(),
         "gainers": gainers_today,
         "losers": losers_today,
     }

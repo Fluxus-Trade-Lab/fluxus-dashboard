@@ -27,6 +27,8 @@ from dataclasses import dataclass
 from datetime import date, timedelta
 from typing import Optional
 
+from pipeline.marketcal import market_today
+
 import numpy as np
 import pandas as pd
 
@@ -231,7 +233,7 @@ def write_sizing_report(
     lines: list[str] = []
     push = lines.append
 
-    push(f"# Position-Sizing Analysis — {date.today().isoformat()}\n")
+    push(f"# Position-Sizing Analysis — {market_today().isoformat()}\n")
     push(f"_{len(sizings)} closed trades · ${STARTING_CAPITAL:,.0f} starting capital · "
          f"fixed R = ${FIXED_R_DOLLARS:,.0f} ({FIXED_R_PCT:.2f}% of equity)_\n")
 
