@@ -38,6 +38,7 @@ Usage:
 Output: gex_<SYMBOL>_<YYYYMMDD>.json and .csv in the data/gex/ directory.
 """
 import argparse, datetime as dt, json, math, os, sys
+from zoneinfo import ZoneInfo
 import pandas as pd
 from ib_async import IB, Index, Stock, Option
 
@@ -45,6 +46,19 @@ from ib_async import IB, Index, Stock, Option
 # pipeline package is not importable without help.
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pipeline.gex.derive import iv_tenors
+
+MARKET_TZ = ZoneInfo("America/New_York")
+
+
+def _market_now() -> dt.datetime:
+    """Wall-clock time in the US Eastern market timezone.
+
+    NOT datetime.now() / date.today(): this Mac runs in JST (~13h ahead of ET),
+    so for most of the US session the local clock is already "tomorrow". Using
+    it dates the output file a day ahead and shifts tenor selection / DTE by a
+    day (dropping today's real 0DTE). Mirror pipeline/gex/engine._market_today.
+    """
+    return dt.datetime.now(MARKET_TZ)
 
 # ----------------------------------------------------------------------------
 # SIGN CONVENTION  (flip here if you disagree with the dealer-positioning model)
@@ -168,7 +182,7 @@ def main():
     chains = ib.reqSecDefOptParams(u.symbol, "", c["sec"], u.conId)
     ch = next((x for x in chains if x.tradingClass == c["tclass"]
                and x.exchange in ("SMART", "CBOE")), None) or chains[0]
-    today = dt.date.today().strftime("%Y%m%d")
+    today = _market_now().strftime("%Y%m%d")
     exps = sorted(e for e in ch.expirations if e >= today)[:args.expiries]
     if not exps:
         print("No forward expirations found."); ib.disconnect(); return
@@ -210,7 +224,7 @@ def main():
     ib.disconnect()
 
     # --- assemble ---
-    now = dt.datetime.now()
+    now = _market_now()
     rows = []
     for o in opts:
         mg = greeks.get(o.conId)
@@ -329,7 +343,7 @@ def main():
             return None
         return round(float(side.iloc[(side["strike"] - spot).abs().argmin()]["iv"]), 4)
 
-    ivt = iv_tenors(exps, dt.date.today())
+    ivt = iv_tenors(exps, now.date())
     atm_iv_1dte, atm_iv_swing = _atm_iv(ivt["one_dte"]), _atm_iv(ivt["swing"])
     for label, exp, iv in (("1DTE ", ivt["one_dte"], atm_iv_1dte),
                            ("swing", ivt["swing"], atm_iv_swing)):
