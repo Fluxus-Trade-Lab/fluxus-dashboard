@@ -56,6 +56,76 @@ def _kv_table(rows: list[tuple[str, str, str]]) -> str:
     return f"<table><tbody>{body}</tbody></table>"
 
 
+def _gamma_svg(g: dict, window: int = 175) -> str:
+    """Diverging horizontal bar chart of per-strike net GEX around spot.
+
+    Bar length encodes size ($GEX/1%); green = positive (dampening), red =
+    negative (amplifying). Spot, flip and the walls are annotated. Pure inline
+    SVG so it stays self-contained and CSP-safe.
+    """
+    ps = g.get("per_strike_gex") or {}
+    spot = g.get("spot")
+    if not ps or not spot:
+        return ""
+    items = sorted(((float(k), float(v)) for k, v in ps.items()
+                    if abs(float(k) - spot) <= window), key=lambda kv: kv[0])
+    if not items:
+        return ""
+    strikes = [k for k, _ in items]
+    maxabs = max(abs(v) for _, v in items) or 1.0
+
+    W, rowh, padL, padR, padT = 760, 17, 78, 24, 26
+    H = len(items) * rowh + padT + 18
+    cx = padL + (W - padL - padR) / 2.0          # zero axis
+    half = (W - padL - padR) / 2.0 - 46          # leave room for value labels
+    call_wall, put_wall = g.get("call_wall"), g.get("put_wall")
+    flip = g.get("zero_gamma_flip")
+
+    parts = [f"<svg viewBox='0 0 {W} {H}' width='100%' role='img' "
+             f"style='font-family:var(--mono);font-size:10px'>"]
+    parts.append(f"<line x1='{cx:.0f}' y1='{padT-6}' x2='{cx:.0f}' y2='{H-14}' "
+                 f"stroke='#2A3440' stroke-width='1'/>")
+    # bars top=highest strike
+    for i, (k, v) in enumerate(reversed(items)):
+        y = padT + i * rowh
+        w = abs(v) / maxabs * half
+        pos = v >= 0
+        x = cx if pos else cx - w
+        color = "#42B96A" if pos else "#EF5E6B"
+        is_wall = (k == call_wall or k == put_wall)
+        op = "0.95" if is_wall else "0.6"
+        parts.append(f"<rect x='{x:.1f}' y='{y:.0f}' width='{max(w,0.5):.1f}' height='{rowh-4}' "
+                     f"fill='{color}' opacity='{op}' rx='1.5'/>")
+        klbl = f"{k:,.0f}"
+        weight = "700" if is_wall else "400"
+        kcolor = "#C7CDD8" if is_wall else "#79828F"
+        parts.append(f"<text x='{padL-8}' y='{y+rowh-7:.0f}' text-anchor='end' "
+                     f"fill='{kcolor}' font-weight='{weight}'>{klbl}</text>")
+        # value label at bar tip
+        vlbl = f"{v/1e9:+.2f}B"
+        vx = (cx + w + 4) if pos else (cx - w - 4)
+        anchor = "start" if pos else "end"
+        parts.append(f"<text x='{vx:.1f}' y='{y+rowh-7:.0f}' text-anchor='{anchor}' "
+                     f"fill='#525b69'>{vlbl}</text>")
+
+    # spot line (interpolate y from strike grid)
+    lo, hi = strikes[0], strikes[-1]
+    if hi > lo:
+        frac = (hi - spot) / (hi - lo)              # 0 at top(hi) .. 1 at bottom(lo)
+        ys = padT + frac * (len(items) * rowh)
+        parts.append(f"<line x1='{padL-2}' y1='{ys:.0f}' x2='{W-padR}' y2='{ys:.0f}' "
+                     f"stroke='#5AA9FF' stroke-width='1' stroke-dasharray='4 3'/>")
+        parts.append(f"<text x='{W-padR}' y='{ys-3:.0f}' text-anchor='end' "
+                     f"fill='#5AA9FF'>spot {spot:,.0f}</text>")
+    parts.append("</svg>")
+    legend = ("<div class='mut' style='font-size:11px;margin-top:6px'>"
+              "<span class='pos'>■</span> positive (dampens) &nbsp; "
+              "<span class='neg'>■</span> negative (amplifies) &nbsp;·&nbsp; "
+              "bold = wall &nbsp;·&nbsp; bar length = $GEX per 1%</div>")
+    return (f"<section><p class='lbl'>Gamma profile — per-strike net GEX "
+            f"(±{window} around spot)</p>{''.join(parts)}{legend}</section>")
+
+
 def render_snapshot_html(data: dict) -> str:
     """Daily market snapshot: GEX rails + expected move + VIX term structure."""
     g = data["gex"]
@@ -104,6 +174,7 @@ def render_snapshot_html(data: dict) -> str:
         f"<div class='meta'><span>generated {data['generated_at']}</span>"
         f"<span class='{reg_cls}'>{regime} gamma</span></div>"
         f"<section><p class='lbl'>Dealer gamma rails</p>{gex_tbl}</section>"
+        f"{_gamma_svg(g)}"
         f"{em_html}{vix_html}"
         f"<p class='foot'>GEX from data/gex/ · EM/VIX pulled live when available · "
         f"snapshot cached in data/snapshots/. Not advice.</p>"
