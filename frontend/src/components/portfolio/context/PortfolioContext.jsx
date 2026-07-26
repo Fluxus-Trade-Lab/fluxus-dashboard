@@ -136,6 +136,14 @@ function reducer(state, action) {
     case 'SET_DAILY_PRICES':
       return { ...state, dailyPrices: { ...state.dailyPrices, ...action.prices } }
 
+    // Full refresh: REPLACE the cache (don't merge). Merging accumulates stale
+    // bars — e.g. SOXS/TZA dates fetched pre-split (as-traded scale) survive next
+    // to freshly-fetched post-split (adjusted) bars, producing a mixed-scale
+    // series → false straddles + phantom MTM spikes. A full-range refetch is
+    // self-consistent, so replacing it is correct.
+    case 'REPLACE_DAILY_PRICES':
+      return { ...state, dailyPrices: { ...action.prices } }
+
     case 'SET_BENCHMARK':
       return {
         ...state,
