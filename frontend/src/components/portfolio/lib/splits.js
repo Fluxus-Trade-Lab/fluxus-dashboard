@@ -23,10 +23,22 @@ import { lookupPrice } from './calculations'
  * invariant under this — only the qty×feedPrice MTM scale is corrected.
  */
 
-// Forward ratios we recognise; reciprocals cover reverse splits.
-const CLEAN_RATIOS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20, 25, 30, 50]
+// Forward ratios we recognise; reciprocals cover reverse splits. Pairwise
+// products (capped) cover a ticker that split MORE THAN ONCE — e.g. a leveraged
+// ETF that reverse-split twice gives a cumulative gap like 1/90 (=1/9 × 1/10)
+// that no single ratio matches. Without this the detector gave up (factor 1) and
+// the position marked at qty(as-traded) × inflated-feed — the ~6000% May spike.
+const BASE_RATIOS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20, 25, 30, 50]
+const CLEAN_RATIOS = (() => {
+  const s = new Set()
+  for (const a of BASE_RATIOS) {
+    s.add(a)
+    for (const b of BASE_RATIOS) if (a * b <= 200) s.add(a * b)
+  }
+  return [...s].sort((x, y) => x - y)
+})()
 
-/** Snap x to the nearest clean split ratio within relative tolerance, else null. */
+/** Snap x to the nearest clean (single or composite) ratio / reciprocal, else null. */
 export function snapToCleanRatio(x, tol = 0.15) {
   let best = null
   let bestErr = tol

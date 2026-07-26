@@ -3,6 +3,8 @@ import { usePortfolio } from './context/PortfolioContext'
 import { computeCashUsed, enrichTrades, computeMonthlyStats, computeYtdStats, computeRiskMetrics, computeSectorData, computeHoldingsData, computeMergedHoldingsData } from './lib/calculations'
 import { buildEquityCurve } from './lib/equityCurve'
 import { adjustTradesForSplits } from './lib/splits'
+import { suggestSplits, buildFrozenSnapshot } from './lib/snapshot'
+import { SPLIT_TABLE } from './lib/splitTable'
 import { parseCSV, generateCSV, downloadFile } from './lib/csv'
 import { TABS } from './lib/portfolioFormat'
 import { useLanguage } from '../../i18n/LanguageContext'
@@ -115,6 +117,29 @@ export default function Layout() {
   const mergedHoldingsData = useMemo(() => computeMergedHoldingsData(openTrades), [openTrades])
 
   const cashPct = totalPortfolioValue > 0 ? (cashAvailable / totalPortfolioValue) * 100 : 0
+
+  // Split-truth tooling (see lib/splitTable.js + lib/snapshot.js):
+  //  • Suggest split-table entries — auto-detects splits INCLUDING repeated /
+  //    composite leveraged-ETF splits (the SOXS case that mis-valued history).
+  //  • Freeze snapshot — un-adjusts the live feed onto the as-traded scale and
+  //    downloads it as immutable truth so history is immune to FUTURE splits.
+  const handleSuggestSplits = useCallback(() => {
+    const { suggestions, straddles } = suggestSplits(state.trades, state.dailyPrices)
+    const payload = {
+      generatedAt: new Date().toISOString(),
+      note: 'Confirm exDate for each entry, then paste into lib/splitTable.js → SPLIT_TABLE.',
+      suggestions,
+      straddles,
+    }
+    downloadFile(JSON.stringify(payload, null, 2),
+      `split_table_suggestions_${new Date().toISOString().slice(0, 10)}.json`, 'application/json')
+  }, [state.trades, state.dailyPrices])
+
+  const handleFreezeSnapshot = useCallback(() => {
+    const { prices, meta } = buildFrozenSnapshot(state.trades, state.dailyPrices, SPLIT_TABLE)
+    downloadFile(JSON.stringify({ meta, prices }, null, 2),
+      `frozen_prices_${new Date().toISOString().slice(0, 10)}.json`, 'application/json')
+  }, [state.trades, state.dailyPrices])
 
   // Import handler
   const handleImport = (e) => {
@@ -253,6 +278,10 @@ export default function Layout() {
                 : `↔ ${s.ticker} ${s.ratioLabel} split auto-adjusted`}
             </span>
           ))}
+          <span className="ml-2 whitespace-nowrap">
+            <button onClick={handleSuggestSplits} className="text-[var(--color-accent)] hover:underline mr-3">⤓ split-table suggestions</button>
+            <button onClick={handleFreezeSnapshot} className="text-[var(--color-accent)] hover:underline">📌 freeze snapshot</button>
+          </span>
         </div>
       )}
 
