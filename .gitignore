@@ -17,6 +17,15 @@ frontend/dist/
 data/raw/*.csv
 data/raw/*.tmp
 
+# Personal trade logs & performance reviews — LOCAL ONLY, never publish (public repo)
+data/portfolio/
+
+# X bookmarks archive — local grep-only, not for git
+_source_material/
+
+# Content pipeline: rolling AM/PM watermark is local machine state, not shared data
+data/output/threads/.run_state.json
+
 # GEX: legacy SPX->pine launchd tool output + all logs live in data/gex/.
 # The new GEX engine commits its own gex_YYYYMMDD.json / latest.json / brief_*.html
 # there, so ignore the legacy files and logs to keep `git add data/gex` clean.
