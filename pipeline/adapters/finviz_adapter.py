@@ -193,12 +193,21 @@ class FinvizAdapter(BaseAdapter):
                 ]
 
             # Extract data rows
+            ticker_idx = headers.index('Ticker') if 'Ticker' in headers else None
             page_rows = 0
             for row in rows[1:]:
                 cells = row.find_all('td')
                 if len(cells) < 3:
                     continue
                 values = [cell.get_text(strip=True) for cell in cells]
+                # Finviz's ticker cell now embeds a logo <img>, so get_text()
+                # prepends a stray character (e.g. "A" -> "AA"), which invalidates
+                # every symbol and breaks yfinance enrichment. The <td> carries a
+                # clean data-boxover-ticker attribute — use it.
+                if ticker_idx is not None and ticker_idx < len(cells):
+                    clean = cells[ticker_idx].get('data-boxover-ticker')
+                    if clean:
+                        values[ticker_idx] = clean.strip()
                 if len(values) == len(headers):
                     all_rows.append(dict(zip(headers, values)))
                     page_rows += 1
