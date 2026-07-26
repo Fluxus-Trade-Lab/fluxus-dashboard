@@ -1,0 +1,42 @@
+{
+  "_note": "Canonical source of truth. Aggregate-only (public-safe). See PERFORMANCE_TRUTH.md.",
+  "generated": "2026-07-26",
+  "source_csv": "portfolio_2026-07-26.csv",
+  "periods": {
+    "H1_2026": {
+      "range": "2025-12-31..2026-07-22",
+      "starting_capital": 1000000.0,
+      "ending_equity": 1905255,
+      "return_pct": 90.5255,
+      "net_pnl": 905255,
+      "trades": 331,
+      "win_rate_pct": 39.88,
+      "payoff": 3.402,
+      "profit_factor": 2.481,
+      "expectancy": 2735,
+      "avg_R": 0.878,
+      "sum_R": 290.6,
+      "avg_hold_days": 7.5,
+      "drawdown_mtm_pct_of_peak": -11.14,
+      "drawdown_mtm_amount": -223100,
+      "drawdown_mtm_window": [
+        "2026-06-02",
+        "2026-06-10"
+      ],
+      "drawdown_realized_pct_of_peak": -5.4,
+      "peak_equity": 2036318,
+      "sharpe": 2.61,
+      "sortino": 4.65,
+      "vol_ann_pct": 45.4,
+      "monthly_pnl": {
+        "2026-01": 43710,
+        "2026-02": 9569,
+        "2026-03": 20370,
+        "2026-04": 141337,
+        "2026-05": 319907,
+        "2026-06": 271142,
+        "2026-07": 99220
+      }
+    }
+  }
+}
