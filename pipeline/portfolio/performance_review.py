@@ -415,6 +415,16 @@ def render_deep(trades: list[Trade], meta: dict, title: str, mtm: dict | None = 
         A("*无明显纪律破坏。/ No obvious cut-rule breaks.*")
     A("")
 
+    # Graded narrative (offense / defense / trim / leverage / capital efficiency / style)
+    try:
+        try:
+            from . import analysis as _an
+        except ImportError:
+            import analysis as _an  # type: ignore
+        A(_an.render_analysis(trades, cap, s["total_pnl"]))
+    except Exception as e:  # noqa: BLE001 — narrative must never break the review
+        A(f"*（评估段落生成失败 / analysis section unavailable: {type(e).__name__}）*\n")
+
     return "\n".join(L)
 
 
@@ -462,6 +472,17 @@ def render_monthly(trades: list[Trade], meta: dict, month: str) -> str:
             A(f"- 最大漏点 Worst: **{worst[0].ticker}** {money(worst[0].pnl)}"
               + (f" ({worst[0].R:+.1f}R)" if worst[0].R is not None else ""))
         A("- 填空 / fill in: 触发信号对不对?止损执行没?有没有该拿住却砍早 / 该砍却拖?")
+        A("")
+        # Light graded narrative on this month's closed trades (no network fetch).
+        try:
+            try:
+                from . import analysis as _an
+            except ImportError:
+                import analysis as _an  # type: ignore
+            A(_an.render_analysis(closed, cap, sum(t.pnl for t in closed),
+                                  include_characteristics=False))
+        except Exception:  # noqa: BLE001
+            pass
     A("")
     return "\n".join(L)
 
