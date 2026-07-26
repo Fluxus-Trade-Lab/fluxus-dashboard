@@ -64,18 +64,44 @@ describe('buildEquityCurve — split/feed spike rejection', () => {
       dailyPrices[`LEV:${d}`] = 9 + (day % 3) * 0.05 // feed already on post-8:1 scale (~72/8)
     }
 
-    // Without adjustment: 1773 × ~9 = ~16k vs 1773 × 72 cost → ~-98% crater.
+    // RAW trades now stay flat too: the built-in fill-anchored correction detects
+    // entry $72 vs feed ~$9 (ratio 8) and marks the feed × 8 = as-traded. No crater.
     const rawCurve = buildEquityCurve(trades, startingCapital, dailyPrices)
     const rawPt = rawCurve.find(p => p.date === '2026-01-15')
-    expect(rawPt.returnPct).toBeLessThan(-9) // badly cratered
+    expect(rawPt.returnPct).toBeGreaterThan(-2)
+    expect(rawPt.returnPct).toBeLessThan(2)
 
-    // With auto split-adjustment: stays near flat.
+    // Pre-adjusted trades also stay flat (correction is a no-op: fills ≈ closes).
     const { trades: adj, detected } = adjustTradesForSplits(trades, dailyPrices)
     expect(detected[0].ratioLabel).toBe('8:1')
     const fixedCurve = buildEquityCurve(adj, startingCapital, dailyPrices)
     const fixedPt = fixedCurve.find(p => p.date === '2026-01-15')
     expect(fixedPt.returnPct).toBeGreaterThan(-2)
     expect(fixedPt.returnPct).toBeLessThan(2)
+  })
+
+  it('kills the residual straddle-flag phantom (RAW unadjusted reverse split)', () => {
+    // The live 05-17 spike: a SOXS trade the per-trade detector FALSE-flagged as a
+    // straddle → left unadjusted → marked at the ~136× inflated feed. Fill-anchored
+    // correction fixes it with no split-table or detection needed.
+    const startingCapital = 1_000_000
+    const trades = [{
+      ticker: 'SOXS', direction: 'long', entryDate: '2026-05-14T15:00:00.000Z',
+      entryPrice: 9.12, originalQty: 17290, currentQty: 0, initialStop: 8.2,
+      trims: [
+        { date: '2026-05-19', price: 11.0, qty: 5763 },
+        { date: '2026-05-19', price: 10.87, qty: 8645 },
+        { date: '2026-05-19', price: 10.12, qty: 2882 },
+      ],
+    }]
+    const dailyPrices = {
+      'SOXS:2026-05-14': 1240.5, 'SOXS:2026-05-15': 1384.5,
+      'SOXS:2026-05-18': 1492.5, 'SOXS:2026-05-19': 1489.5,
+    }
+    const curve = buildEquityCurve(trades, startingCapital, dailyPrices)
+    const peak = Math.max(...curve.map(p => p.returnPct))
+    // Unfixed: 17290 × $1492 = ~$25M = +2500%+. Fixed: within a few % of flat.
+    expect(peak).toBeLessThan(5)
   })
 
   it('still reflects a genuine persistent move', () => {
@@ -105,24 +131,15 @@ describe('buildEquityCurve — split-table un-adjust kills the reverse-split pha
   for (let day = 4; day <= 9; day++) {
     dailyPrices[`SOXS:2026-06-0${day}`] = 5.91 * 90 // feed inflated 90× by later reverse splits
   }
-  // Both reverse splits are AFTER the held window → cumFactor 1/90 throughout.
-  const splitTable = { SOXS: [{ exDate: '2026-07-15', factor: 1 / 10 }, { exDate: '2026-07-16', factor: 1 / 9 }] }
-
-  it('spikes without correction (reproduces the bug)', () => {
-    const curve = buildEquityCurve(trades, startingCapital, dailyPrices) // default table has SOXS unconfirmed → no fix
-    const pt = curve.find(p => p.date === '2026-06-04')
-    expect(pt.returnPct).toBeGreaterThan(500) // phantom > +500%
-  })
-
-  it('stays flat (~0%) once the split table is applied', () => {
-    const curve = buildEquityCurve(trades, startingCapital, dailyPrices, null, { splitTable })
+  it('stays flat by default — fill-anchored, no split table needed', () => {
+    // entry $5.91 vs feed $531.9 → ratio 1/90 → feed marked back to ~$5.91.
+    const curve = buildEquityCurve(trades, startingCapital, dailyPrices)
     const pt = curve.find(p => p.date === '2026-06-04')
     expect(pt.returnPct).toBeGreaterThan(-2)
     expect(pt.returnPct).toBeLessThan(2)
   })
 
   it('prefers the frozen snapshot over the feed', () => {
-    // Frozen truth says SOXS was $5.91 on 06-05; feed (even uncorrected) is ignored.
     const frozenPrices = { 'SOXS:2026-06-04': 5.91 }
     const curve = buildEquityCurve(trades, startingCapital, dailyPrices, null, { frozenPrices })
     const pt = curve.find(p => p.date === '2026-06-04')

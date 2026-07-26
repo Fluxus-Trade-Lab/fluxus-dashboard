@@ -33,9 +33,16 @@ describe('REAL SOXS composite reverse-split (the live 6000% spike)', () => {
     expect(pk).toBeLessThan(5)   // stays within a few % of flat
   })
 
-  it('PROVES the test bites: raw (unadjusted) trade WOULD spike', () => {
-    const curve = buildEquityCurve([SOXS_TRADE], 1_000_000, FEED) // no adjustment
+  it('PROVES the test bites: unanchored qty × feed WOULD be a ~$21M phantom', () => {
+    // The curve now auto-corrects (fill-anchored), so show the raw magnitude the
+    // fix prevents directly: as-traded shares × the inflated feed close.
+    const phantom = SOXS_TRADE.originalQty * FEED['SOXS:2026-05-18']
+    expect(phantom).toBeGreaterThan(20_000_000) // ~$21M of fabricated equity
+  })
+
+  it('buildEquityCurve stays flat by default (fill-anchored — kills the phantom)', () => {
+    const curve = buildEquityCurve([SOXS_TRADE], 1_000_000, FEED)
     const pk = Math.max(...curve.map(p => p.returnPct))
-    expect(pk).toBeGreaterThan(1000)  // massive phantom without the fix
+    expect(pk).toBeLessThan(5)
   })
 })

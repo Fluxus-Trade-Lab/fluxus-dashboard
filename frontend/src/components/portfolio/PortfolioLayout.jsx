@@ -95,9 +95,12 @@ export default function Layout() {
   )
   const openTrades = useMemo(() => enrichedTrades.filter(t => !t.isClosed), [enrichedTrades])
 
+  // Curve values RAW trades (never mutated) — buildEquityCurve applies a robust
+  // fill-anchored split correction internally, so it needs the as-traded fills.
+  // (adjTrades still drives the split banner + live header valuation above.)
   const performanceData = useMemo(
-    () => buildEquityCurve(adjTrades, state.startingCapital, state.dailyPrices, state.benchmarkHistories),
-    [adjTrades, state.startingCapital, state.dailyPrices, state.benchmarkHistories]
+    () => buildEquityCurve(state.trades, state.startingCapital, state.dailyPrices, state.benchmarkHistories),
+    [state.trades, state.startingCapital, state.dailyPrices, state.benchmarkHistories]
   )
 
   const monthlyStats = useMemo(
