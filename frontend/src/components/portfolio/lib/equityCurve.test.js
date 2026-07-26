@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { buildEquityCurve } from './equityCurve'
+import { buildEquityCurve, computeDrawdown, computeRiskRatios } from './equityCurve'
 import { adjustTradesForSplits } from './splits'
 
 // A single long position held across a one-bar split mis-scale. The feed close
@@ -89,5 +89,66 @@ describe('buildEquityCurve — split/feed spike rejection', () => {
     const pt = curve.find(p => p.date === '2026-01-20')
     // 1000 sh * (45-90) = -45k -> -4.5%. Real moves must NOT be suppressed.
     expect(pt.returnPct).toBeLessThan(-3)
+  })
+})
+
+describe('buildEquityCurve — split-table un-adjust kills the reverse-split phantom spike', () => {
+  // SOXS long held before TWO reverse splits: the feed is inflated ~90×, so
+  // qty(as-traded) × feed would fabricate ~$17M of equity (the ~6000% May hump).
+  const startingCapital = 1_000_000
+  const trades = [{
+    ticker: 'SOXS', direction: 'long',
+    entryDate: '2026-06-04T15:00:00.000Z',
+    entryPrice: 5.91, originalQty: 32031, trims: [],
+  }]
+  const dailyPrices = {}
+  for (let day = 4; day <= 9; day++) {
+    dailyPrices[`SOXS:2026-06-0${day}`] = 5.91 * 90 // feed inflated 90× by later reverse splits
+  }
+  // Both reverse splits are AFTER the held window → cumFactor 1/90 throughout.
+  const splitTable = { SOXS: [{ exDate: '2026-07-15', factor: 1 / 10 }, { exDate: '2026-07-16', factor: 1 / 9 }] }
+
+  it('spikes without correction (reproduces the bug)', () => {
+    const curve = buildEquityCurve(trades, startingCapital, dailyPrices) // default table has SOXS unconfirmed → no fix
+    const pt = curve.find(p => p.date === '2026-06-04')
+    expect(pt.returnPct).toBeGreaterThan(500) // phantom > +500%
+  })
+
+  it('stays flat (~0%) once the split table is applied', () => {
+    const curve = buildEquityCurve(trades, startingCapital, dailyPrices, null, { splitTable })
+    const pt = curve.find(p => p.date === '2026-06-04')
+    expect(pt.returnPct).toBeGreaterThan(-2)
+    expect(pt.returnPct).toBeLessThan(2)
+  })
+
+  it('prefers the frozen snapshot over the feed', () => {
+    // Frozen truth says SOXS was $5.91 on 06-05; feed (even uncorrected) is ignored.
+    const frozenPrices = { 'SOXS:2026-06-04': 5.91 }
+    const curve = buildEquityCurve(trades, startingCapital, dailyPrices, null, { frozenPrices })
+    const pt = curve.find(p => p.date === '2026-06-04')
+    expect(pt.returnPct).toBeGreaterThan(-2)
+    expect(pt.returnPct).toBeLessThan(2)
+  })
+})
+
+describe('computeDrawdown / computeRiskRatios', () => {
+  const curve = [
+    { date: '2026-01-01', value: 1_000_000 },
+    { date: '2026-01-02', value: 1_100_000 }, // peak
+    { date: '2026-01-03', value: 900_000 },   // trough: -200k from peak = -18.18%
+    { date: '2026-01-04', value: 1_050_000 },
+  ]
+  it('finds peak-to-trough max drawdown', () => {
+    const dd = computeDrawdown(curve)
+    expect(dd.maxDrawdown).toBeCloseTo(-200_000, 0)
+    expect(dd.maxDrawdownPct).toBeCloseTo(-18.18, 1)
+    expect(dd.peakDate).toBe('2026-01-02')
+    expect(dd.troughDate).toBe('2026-01-03')
+  })
+  it('computes finite risk ratios and negative max DD', () => {
+    const r = computeRiskRatios(curve)
+    expect(Number.isFinite(r.sharpe)).toBe(true)
+    expect(Number.isFinite(r.sortino)).toBe(true)
+    expect(r.maxDrawdownPct).toBeLessThan(0)
   })
 })

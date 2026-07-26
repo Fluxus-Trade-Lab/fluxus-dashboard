@@ -1,15 +1,36 @@
-import { todayStr } from './portfolioFormat'
+import { todayStr, RISK_FREE_RATE } from './portfolioFormat'
 import { lookupPrice, rejectRevertingSpikes } from './calculations'
+import { unadjustClose } from './splitTable'
 
 /**
  * Build the equity curve: daily portfolio value from first trade to today.
- * Uses dailyPrices (from GAS/Finnhub candle data) for accurate daily valuation.
  *
- * This fixes the original bug where entry price was used as fallback,
- * creating flat lines between trade events.
+ * Trades are valued AS-TRADED (never mutated). Each daily mark uses an
+ * "effective" price on the as-traded scale:
+ *   1. the frozen snapshot (immutable truth), if present for that ticker/date;
+ *   2. else the live feed un-adjusted via the explicit SPLIT_TABLE.
+ * This makes MTM immune to retroactive split re-scaling — the class of bug that
+ * produced the ~6000% May spike (a leveraged ETF that reverse-split repeatedly,
+ * whose feed was inflated ~90× while shares stayed as-traded).
+ *
+ * @param {object} [options]
+ * @param {Record<string,number>} [options.frozenPrices]  `TICKER:DATE` → asTraded close
+ * @param {object} [options.splitTable]                    defaults to SPLIT_TABLE
  */
-export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmarkHistories) {
+export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmarkHistories, options = {}) {
   if (!trades.length) return []
+  // splitTable defaults to {} (no-op) so the legacy caller — which passes
+  // already-adjusted trades — is never double-corrected. The new as-traded model
+  // opts in by passing an explicit splitTable (and/or frozenPrices).
+  const { frozenPrices = {}, splitTable = {} } = options
+
+  // Effective as-traded-scale price: frozen snapshot first, else un-adjusted feed.
+  const effAt = (tk, date) => {
+    const key = `${tk}:${date}`
+    if (frozenPrices[key] != null) return frozenPrices[key]
+    const adj = lookupPrice(tk, date, dailyPrices, null)
+    return unadjustClose(adj, tk, date, splitTable) // null-safe
+  }
 
   // 1. Find date range
   const firstEntry = trades.reduce(
@@ -36,7 +57,7 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
   // raw and the curve's final value still equals the header.
   const cleanByTicker = {}
   ;[...new Set(trades.map(t => t.ticker))].forEach(tk => {
-    const raw = datePoints.map(d => lookupPrice(tk, d, dailyPrices, null))
+    const raw = datePoints.map(d => effAt(tk, d))
     const cleaned = rejectRevertingSpikes(raw)
     const map = {}
     datePoints.forEach((d, i) => { if (cleaned[i] != null) map[d] = cleaned[i] })
@@ -66,7 +87,8 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
       if (qtyAtDate <= 0) return
 
       const price = cleanByTicker[t.ticker]?.[date]
-        ?? lookupPrice(t.ticker, date, dailyPrices, t.entryPrice)
+        ?? effAt(t.ticker, date)
+        ?? t.entryPrice
       marketValue += qtyAtDate * price * dir
     })
 
@@ -105,7 +127,16 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
  * Compute portfolio value at a specific date.
  * Used for weight-based position sizing.
  */
-export function getPortfolioValueAtDate(trades, startingCapital, asOfDate, dailyPrices) {
+export function getPortfolioValueAtDate(trades, startingCapital, asOfDate, dailyPrices, options = {}) {
+  // splitTable defaults to {} (no-op) so the legacy caller — which passes
+  // already-adjusted trades — is never double-corrected. The new as-traded model
+  // opts in by passing an explicit splitTable (and/or frozenPrices).
+  const { frozenPrices = {}, splitTable = {} } = options
+  const effAt = (tk, date) => {
+    const key = `${tk}:${date}`
+    if (frozenPrices[key] != null) return frozenPrices[key]
+    return unadjustClose(lookupPrice(tk, date, dailyPrices, null), tk, date, splitTable)
+  }
   let cash = startingCapital
   let mktVal = 0
 
@@ -122,9 +153,63 @@ export function getPortfolioValueAtDate(trades, startingCapital, asOfDate, daily
 
     if (qtyAtDate <= 0) return
 
-    const price = lookupPrice(t.ticker, asOfDate, dailyPrices, t.entryPrice)
-    mktVal += qtyAtDate * price * dir
+    mktVal += qtyAtDate * (effAt(t.ticker, asOfDate) ?? t.entryPrice) * dir
   })
 
   return cash + mktVal
+}
+
+/**
+ * Max drawdown on the mark-to-market equity curve — the reporting standard
+ * (peak-to-trough of daily net-liq incl. open positions, as % of the peak).
+ * @param {{date:string, value:number}[]} curve
+ */
+export function computeDrawdown(curve) {
+  let peak = -Infinity, peakDate = null
+  let maxDrawdown = 0, maxDrawdownPct = 0, troughDate = null, atPeak = null
+  for (const pt of curve) {
+    if (pt.value > peak) { peak = pt.value; peakDate = pt.date }
+    if (peak <= 0) continue
+    const dd = pt.value - peak
+    if (dd < maxDrawdown) {
+      maxDrawdown = dd
+      maxDrawdownPct = (dd / peak) * 100
+      troughDate = pt.date
+      atPeak = peakDate
+    }
+  }
+  return { maxDrawdown, maxDrawdownPct, peakDate: atPeak, troughDate }
+}
+
+/**
+ * Sharpe / Sortino / Calmar and annualized stats from the daily MTM curve.
+ * Daily returns are computed on the (weekday) value series and annualized ×252.
+ */
+export function computeRiskRatios(curve, options = {}) {
+  const rf = options.riskFreeRate ?? RISK_FREE_RATE // annualized
+  const PPY = 252
+  const rets = []
+  for (let i = 1; i < curve.length; i++) {
+    const prev = curve[i - 1].value
+    if (prev > 0) rets.push(curve[i].value / prev - 1)
+  }
+  if (rets.length < 2) return { sharpe: null, sortino: null, calmar: null, cagr: null, volAnn: null }
+
+  const mean = rets.reduce((a, b) => a + b, 0) / rets.length
+  const variance = rets.reduce((a, b) => a + (b - mean) ** 2, 0) / (rets.length - 1)
+  const sd = Math.sqrt(variance)
+  const downSq = rets.filter(r => r < 0).reduce((a, b) => a + b * b, 0) / rets.length
+  const downside = Math.sqrt(downSq)
+  const rfDaily = rf / PPY
+
+  const sharpe = sd > 0 ? ((mean - rfDaily) / sd) * Math.sqrt(PPY) : null
+  const sortino = downside > 0 ? ((mean - rfDaily) / downside) * Math.sqrt(PPY) : null
+
+  const first = curve[0].value, last = curve[curve.length - 1].value
+  const years = rets.length / PPY
+  const cagr = years > 0 && first > 0 ? Math.pow(last / first, 1 / years) - 1 : null
+  const { maxDrawdownPct } = computeDrawdown(curve)
+  const calmar = cagr != null && maxDrawdownPct < 0 ? cagr / (Math.abs(maxDrawdownPct) / 100) : null
+
+  return { sharpe, sortino, calmar, cagr, volAnn: sd * Math.sqrt(PPY), maxDrawdownPct }
 }

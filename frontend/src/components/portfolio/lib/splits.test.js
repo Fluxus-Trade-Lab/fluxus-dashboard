@@ -22,6 +22,20 @@ describe('snapToCleanRatio', () => {
   it('snaps a reverse ~0.099 to 1/10', () => expect(snapToCleanRatio(0.099)).toBeCloseTo(0.1, 5))
   it('returns null for a non-clean factor (e.g. 2.5, between 2 and 3)', () => expect(snapToCleanRatio(2.5)).toBeNull())
   it('returns null near 1 (no split)', () => expect(snapToCleanRatio(1.03)).toBeNull())
+  it('snaps a COMPOSITE reverse ~1/90 from two reverse splits (the 6000%-spike case)', () =>
+    expect(snapToCleanRatio(1 / 88)).toBeCloseTo(1 / 90, 6))
+  it('snaps a composite forward 72 (=8×9)', () => expect(snapToCleanRatio(71)).toBe(72))
+})
+
+describe('detectSplitFactor — repeated leveraged-ETF reverse split', () => {
+  it('detects the cumulative ~1/90 gap instead of giving up (factor 1)', () => {
+    // SOXS entered before TWO reverse splits: feed inflated ~90×.
+    const trade = { ticker: 'SOXS', direction: 'long', entryDate: '2026-06-04', entryPrice: 5.91, trims: [] }
+    const feed = { 'SOXS:2026-06-04': 5.91 * 90 }
+    const r = detectSplitFactor(trade, feed)
+    expect(r.factor).toBeCloseTo(1 / 90, 6)
+    expect(r.ratioLabel).toBe('1:90')
+  })
 })
 
 describe('detectSplitFactor', () => {
