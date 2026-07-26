@@ -29,6 +29,7 @@ export default function Layout() {
   const [showResetConfirm, setShowResetConfirm] = useState(false)
   const [trimModal, setTrimModal] = useState(null)
   const [exportData, setExportData] = useState(null)
+  const [showSplitNotices, setShowSplitNotices] = useState(false)
   const [capitalInput, setCapitalInput] = useState(String(state.startingCapital))
   const fileInputRef = useRef(null)
 
@@ -268,26 +269,6 @@ export default function Layout() {
         </div>
       )}
 
-      {/* Auto-applied split adjustments — keeps valuations on the feed's scale.
-          Dedupe by ticker+label so multiple lots of the same split show once. */}
-      {detectedSplits.length > 0 && (
-        <div className="px-6 py-1.5 bg-[var(--color-surface-raised)] text-xs text-[var(--color-text-muted)] border-b border-[var(--color-border)]">
-          {[...new Map(detectedSplits.map(s => [
-            s.straddle ? `straddle:${s.ticker}` : `${s.ticker}:${s.ratioLabel}`, s,
-          ])).values()].map((s, i) => (
-            <span key={i} className="mr-3">
-              {s.straddle
-                ? `⚠ ${s.ticker}: split straddles a trade — verify manually`
-                : `↔ ${s.ticker} ${s.ratioLabel} split auto-adjusted`}
-            </span>
-          ))}
-          <span className="ml-2 whitespace-nowrap">
-            <button onClick={handleSuggestSplits} className="text-[var(--color-accent)] hover:underline mr-3">⤓ split-table suggestions</button>
-            <button onClick={handleFreezeSnapshot} className="text-[var(--color-accent)] hover:underline">📌 freeze snapshot</button>
-          </span>
-        </div>
-      )}
-
       <div className="px-6 pb-10">
         {showSettings && <SettingsPanel onClose={() => setShowSettings(false)} />}
         {showForm && <TradeForm onClose={() => setShowForm(false)} />}
@@ -352,6 +333,42 @@ export default function Layout() {
         {state.activeTab === 1 && <ExposureTab openTrades={openTrades} sectorData={sectorData} holdingsData={holdingsData} mergedHoldingsData={mergedHoldingsData} />}
         {state.activeTab === 2 && <RiskTab riskMetrics={riskMetrics} benchmarkTicker={state.benchmarkTicker} />}
         {state.activeTab === 3 && <OptionsTab />}
+
+        {/* Split-adjustment notices — collapsed by default at the bottom of the
+            Overview to keep the visual noise down. */}
+        {state.activeTab === 0 && detectedSplits.length > 0 && (() => {
+          const uniq = [...new Map(detectedSplits.map(s => [
+            s.straddle ? `straddle:${s.ticker}` : `${s.ticker}:${s.ratioLabel}`, s,
+          ])).values()]
+          const straddles = uniq.filter(s => s.straddle).length
+          const adjusts = uniq.length - straddles
+          return (
+            <div className="mt-4 text-xs text-[var(--color-text-muted)]">
+              <button
+                onClick={() => setShowSplitNotices(v => !v)}
+                className="inline-flex items-center gap-1.5 hover:text-[var(--color-text-secondary)]"
+              >
+                <span>{showSplitNotices ? '▾' : '▸'}</span>
+                <span>Split adjustments · {adjusts} auto-applied{straddles ? ` · ⚠ ${straddles} to verify` : ''}</span>
+              </button>
+              {showSplitNotices && (
+                <div className="mt-2 px-3 py-2 bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded leading-6">
+                  {uniq.map((s, i) => (
+                    <span key={i} className="mr-3">
+                      {s.straddle
+                        ? `⚠ ${s.ticker}: split straddles a trade — verify manually`
+                        : `↔ ${s.ticker} ${s.ratioLabel} split auto-adjusted`}
+                    </span>
+                  ))}
+                  <div className="mt-2">
+                    <button onClick={handleSuggestSplits} className="text-[var(--color-accent)] hover:underline mr-3">⤓ split-table suggestions</button>
+                    <button onClick={handleFreezeSnapshot} className="text-[var(--color-accent)] hover:underline">📌 freeze snapshot</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )
+        })()}
       </div>
     </div>
   )
