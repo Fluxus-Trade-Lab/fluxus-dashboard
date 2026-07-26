@@ -75,7 +75,10 @@ export function usePrices() {
         })
       })
 
-      dispatch({ type: 'SET_DAILY_PRICES', prices: newPrices })
+      // REPLACE (not merge): a full-range refetch is self-consistent, so this
+      // purges any stale pre-split bars left over from earlier fetches — the
+      // mixed-scale cache that caused the SOXS/TZA split phantom.
+      dispatch({ type: 'REPLACE_DAILY_PRICES', prices: newPrices })
 
       // Store SPY as benchmark history
       if (batchData.SPY && Array.isArray(batchData.SPY)) {
