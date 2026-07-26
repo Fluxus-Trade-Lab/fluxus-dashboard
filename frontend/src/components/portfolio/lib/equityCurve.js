@@ -2,6 +2,71 @@ import { todayStr, RISK_FREE_RATE } from './portfolioFormat'
 import { lookupPrice, rejectRevertingSpikes } from './calculations'
 import { unadjustClose } from './splitTable'
 
+const _median = (a) => {
+  const s = [...a].sort((x, y) => x - y)
+  const m = Math.floor(s.length / 2)
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2
+}
+
+/**
+ * Fill-anchored split correction — the robust valuation basis.
+ *
+ * The feed is retroactively split-adjusted, and split feeds are unreliable for
+ * leveraged ETFs (yfinance even misses some). Rather than detect/snap a split
+ * per trade (which fails on repeated splits and false-flags straddles, leaving a
+ * position marked at the raw inflated feed = a phantom spike), we anchor each
+ * position's marks to its OWN as-traded fills:
+ *   ratio(fill) = fill_price / feed_close_on_fill_date
+ * grouped into eras that break on a >30% jump (a split). The per-era median is
+ * the multiplier that puts that era's feed closes back on the as-traded scale.
+ * A ratio inside [0.67, 1.5] means "fills ≈ closes" → no split → factor 1, so
+ * ordinary (non-split) tickers are never perturbed. Realized P&L (from the log)
+ * is untouched; only the daily marks are corrected.
+ *
+ * @returns {(ticker:string, date:string)=>number} correction factor (default 1)
+ */
+export function buildFillAnchoredCorrections(trades, dailyPrices) {
+  const fills = {}
+  for (const t of trades) {
+    const pts = [[(t.entryDate || '').slice(0, 10), t.entryPrice],
+      ...(t.trims || []).map(tr => [(tr.date || '').slice(0, 10), tr.price])]
+    for (const [d, px] of pts) {
+      const f = lookupPrice(t.ticker, d, dailyPrices, null)
+      if (f != null && f > 0 && px > 0) (fills[t.ticker] ||= []).push([d, px / f])
+    }
+  }
+  const eras = {}
+  for (const [tk, pts] of Object.entries(fills)) {
+    pts.sort((a, b) => (a[0] < b[0] ? -1 : 1))
+    const es = []
+    for (const [d, r] of pts) {
+      const last = es[es.length - 1]
+      if (last && Math.abs(r - _median(last.f)) / _median(last.f) < 0.30) {
+        last.f.push(r); last.end = d
+      } else {
+        es.push({ start: d, end: d, f: [r] })
+      }
+    }
+    for (const e of es) {
+      const m = _median(e.f)
+      e.factor = (m > 0.67 && m < 1.5) ? 1 : m // near 1 → no split → don't perturb
+    }
+    eras[tk] = es
+  }
+  const dd = (a, b) => Math.abs((new Date(a) - new Date(b)) / 86400000)
+  return (tk, date) => {
+    const es = eras[tk]
+    if (!es || !es.length) return 1
+    for (const e of es) if (e.start <= date && date <= e.end) return e.factor
+    let best = es[0], bd = Infinity
+    for (const e of es) {
+      const g = Math.min(dd(date, e.start), dd(date, e.end))
+      if (g < bd) { bd = g; best = e }
+    }
+    return best.factor
+  }
+}
+
 /**
  * Build the equity curve: daily portfolio value from first trade to today.
  *
@@ -22,14 +87,22 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
   // splitTable defaults to {} (no-op) so the legacy caller — which passes
   // already-adjusted trades — is never double-corrected. The new as-traded model
   // opts in by passing an explicit splitTable (and/or frozenPrices).
-  const { frozenPrices = {}, splitTable = {} } = options
+  const { frozenPrices = {} } = options
 
-  // Effective as-traded-scale price: frozen snapshot first, else un-adjusted feed.
+  // Fill-anchored correction derived from these trades' own fills — robust to
+  // repeated splits, missing split data, and false straddle flags (the residual
+  // 05-17 spike). No-op (factor 1) for non-split tickers and already-adjusted fills.
+  // This supersedes the explicit split-table un-adjust (which double-corrected).
+  const correctionFor = buildFillAnchoredCorrections(trades, dailyPrices)
+
+  // Effective as-traded-scale price: frozen snapshot (immutable truth) first;
+  // else the feed put back on the as-traded scale via the fill-anchored factor.
   const effAt = (tk, date) => {
     const key = `${tk}:${date}`
     if (frozenPrices[key] != null) return frozenPrices[key]
     const adj = lookupPrice(tk, date, dailyPrices, null)
-    return unadjustClose(adj, tk, date, splitTable) // null-safe
+    if (adj == null) return null
+    return adj * correctionFor(tk, date)
   }
 
   // 1. Find date range
