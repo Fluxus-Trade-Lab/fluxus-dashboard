@@ -14,6 +14,8 @@ Usage:
 from __future__ import annotations
 
 import datetime as dt
+
+from pipeline.marketcal import market_today
 import json
 import os
 
@@ -33,7 +35,7 @@ def main() -> None:
 
     truth = {
         "_note": "Canonical source of truth. Aggregate-only (public-safe). See PERFORMANCE_TRUTH.md.",
-        "generated": dt.date.today().isoformat(),
+        "generated": market_today().isoformat(),
         "source_csv": d.get("source_csv"),
         "periods": {
             "H1_2026": {

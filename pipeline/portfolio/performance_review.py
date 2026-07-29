@@ -30,6 +30,8 @@ from __future__ import annotations
 import argparse
 import csv
 import datetime as dt
+
+from pipeline.marketcal import market_today
 import json
 import os
 from collections import defaultdict
@@ -299,7 +301,7 @@ def render_deep(trades: list[Trade], meta: dict, title: str, mtm: dict | None = 
     A = L.append
 
     A(f"# {title}\n")
-    A(f"*Generated {dt.date.today().isoformat()} · source `{os.path.basename(meta.get('_csv',''))}` "
+    A(f"*Generated {market_today().isoformat()} · source `{os.path.basename(meta.get('_csv',''))}` "
       f"· {s['n']} closed trades*\n")
 
     # Headline
@@ -445,7 +447,7 @@ def render_monthly(trades: list[Trade], meta: dict, month: str) -> str:
     L: list[str] = []
     A = L.append
     A(f"# 月度复盘 {month} / Monthly Review\n")
-    A(f"*Generated {dt.date.today().isoformat()} · leg-attributed realized P&L*\n")
+    A(f"*Generated {market_today().isoformat()} · leg-attributed realized P&L*\n")
     A(f"**Realized this month 本月已实现:** {money(mp)}  ({mp/cap*100:+.2f}% on ${cap:,.0f})\n")
     A(f"- Trades closed 平仓: {len(closed)}  ·  opened 开仓: {len(opened)}")
     if closed:
@@ -534,7 +536,7 @@ def build_json(trades: list[Trade], meta: dict, mtm: dict | None = None) -> dict
     return {
         "export_date": meta.get("exportDate"),
         "source_csv": os.path.basename(meta.get("_csv", "")),
-        "generated": dt.date.today().isoformat(),
+        "generated": market_today().isoformat(),
         "overall": overall_stats(trades, cap),
         "mtm": mtm,
         "monthly": monthly_pnl(trades),
