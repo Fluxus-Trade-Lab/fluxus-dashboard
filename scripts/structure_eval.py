@@ -16,6 +16,7 @@ Usage:
   .venv/bin/python scripts/structure_eval.py --expiry 20260731 --condor 7330/7350/7500/7520
 """
 import argparse
+import datetime as dt
 import json
 import math
 import os
@@ -23,6 +24,17 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pipeline.options.structures import Leg, evaluate, crush_pnl
+from pipeline.gex.blackscholes import bs_delta, bs_vega, implied_vol
+from pipeline.marketcal import MARKET_TZ, market_now
+
+MIN_T_YEARS = 1.0 / (365.0 * 24.0)      # floor so an expiring option still prices
+
+
+def _years_to_expiry(expiry: str) -> float:
+    """Year fraction to the 16:00 ET settlement of `expiry` (YYYYMMDD)."""
+    d = dt.datetime.strptime(expiry, "%Y%m%d").date()
+    settle = dt.datetime.combine(d, dt.time(16, 0), tzinfo=MARKET_TZ)
+    return max((settle - market_now()).total_seconds() / (365.0 * 24 * 3600), MIN_T_YEARS)
 
 
 def _parse_legs(args) -> list[tuple]:
@@ -87,15 +99,10 @@ def main():
             return bid, ask, mid, (g.impliedVol if g else None), \
                    (g.delta if g else None), (g.vega if g else None)
 
-        legs = []
-        for action, qty, strike, right in specs:
-            bid, ask, mid, iv, delta, vega = quote(strike, right)
-            if mid is None or (isinstance(mid, float) and math.isnan(mid)):
-                sys.exit(f"no price for {strike}{right} — check strike/expiry")
-            legs.append(Leg(action, qty, strike, right, mid=mid, bid=bid, ask=ask,
-                            iv=iv, delta=delta, vega=vega))
-
-        # Forward + implied move from the ATM straddle (for the sigma reading).
+        T = _years_to_expiry(args.expiry)
+        # Forward first: index options price off the forward, not spot. Solving
+        # IV against raw spot biased it ~1.1 vol points low vs IBKR's own model;
+        # against the parity forward the gap drops to ~0.1.
         atm = round(spot / 25) * 25
         _, _, cm, _, _, _ = quote(atm, "C")
         _, _, pm, _, _, _ = quote(atm, "P")
@@ -103,6 +110,26 @@ def main():
         if cm and pm and not (math.isnan(cm) or math.isnan(pm)):
             implied = cm + pm
             forward = atm + (cm - pm)      # put-call parity, r≈0 over 1-2 days
+        underlying = forward or spot
+
+        legs = []
+        for action, qty, strike, right in specs:
+            bid, ask, mid, iv, delta, vega = quote(strike, right)
+            if mid is None or (isinstance(mid, float) and math.isnan(mid)):
+                sys.exit(f"no price for {strike}{right} — check strike/expiry")
+            src = "feed"
+            # IBKR's model greeks arrive intermittently; a single missing leg
+            # would otherwise blank out net delta/vega for the whole package.
+            # Back IV out of the mid and compute the greeks ourselves instead.
+            if delta is None or vega is None or iv is None:
+                iv_bs = iv if iv else implied_vol(mid, underlying, strike, T, right)
+                if iv_bs:
+                    iv = iv or iv_bs
+                    delta = delta if delta is not None else bs_delta(underlying, strike, T, iv_bs, right)
+                    vega = vega if vega is not None else bs_vega(underlying, strike, T, iv_bs)
+                    src = "bs"
+            legs.append(Leg(action, qty, strike, right, mid=mid, bid=bid, ask=ask,
+                            iv=iv, delta=delta, vega=vega, greeks_src=src))
 
         r = evaluate(legs, spot=spot, forward=forward, implied_move_pts=implied)
         if args.json:
@@ -113,13 +140,16 @@ def main():
         print(f"  SPX {args.expiry}   spot {spot:,.2f}"
               + (f"   forward {forward:,.2f}  implied ±{implied:,.1f}" if forward else ""))
         print("=" * 64)
-        print(f"  {'leg':<12}{'strike':>8} {'mid':>8} {'bid/ask':>14} {'IV':>7} {'Δ':>7} {'vega':>7}")
+        print(f"  {'leg':<12}{'strike':>8} {'mid':>8} {'bid/ask':>14} {'IV':>7} {'Δ':>7} {'vega':>7}  src")
         for l in legs:
             ba = f"{l.bid}×{l.ask}" if (l.bid and l.ask) else "—"
             iv = f"{l.iv:.2%}" if l.iv else "—"
             dl = f"{l.delta:+.3f}" if l.delta is not None else "—"
             vg = f"{l.vega:.3f}" if l.vega is not None else "—"
-            print(f"  {l.action:<4}{l.qty:>3}   {l.right}{l.strike:>8,.0f} {l.mid:>8.2f} {ba:>14} {iv:>7} {dl:>7} {vg:>7}")
+            print(f"  {l.action:<4}{l.qty:>3}   {l.right}{l.strike:>8,.0f} {l.mid:>8.2f} {ba:>14} {iv:>7} {dl:>7} {vg:>7}  {l.greeks_src}")
+        if any(l.greeks_src == "bs" for l in legs):
+            print(f"  (src=bs: IBKR greeks were missing; IV backed out of the mid, "
+                  f"delta/vega from Black-Scholes at T={T*365:.2f}d)")
         print("-" * 64)
         kind = "DEBIT" if r["is_debit"] else "CREDIT"
         print(f"  net {kind:<8}      {abs(r['net_debit']):>9.2f}   (${abs(r['net_debit'])*100:,.0f} / contract)")

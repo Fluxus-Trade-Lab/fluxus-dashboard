@@ -42,6 +42,26 @@ def bs_gamma(S, K, T, sigma, r=0.0):
     return _norm_pdf(d1) / (S * sigma * math.sqrt(T))
 
 
+def bs_delta(S, K, T, sigma, right, r=0.0):
+    """dprice/dS. Call in (0,1), put in (-1,0). None if inputs invalid."""
+    if not (S > 0 and K > 0 and T > 0 and sigma > 0):
+        return None
+    nd1 = _norm_cdf(_d1(S, K, T, sigma, r))
+    return nd1 if right == "C" else nd1 - 1.0
+
+
+def bs_vega(S, K, T, sigma, r=0.0):
+    """dprice/dsigma per ONE VOL POINT (1%), matching how IBKR reports vega.
+
+    Textbook vega is per 1.00 of sigma (i.e. 100 vol points), so it is divided
+    by 100 here — mixing the two conventions silently misstates crush P&L by
+    two orders of magnitude. Same for calls and puts.
+    """
+    if not (S > 0 and K > 0 and T > 0 and sigma > 0):
+        return None
+    return S * _norm_pdf(_d1(S, K, T, sigma, r)) * math.sqrt(T) / 100.0
+
+
 def implied_vol(price, S, K, T, right, r=0.0, lo=0.005, hi=5.0, tol=1e-4, iters=64):
     """Solve BS implied vol from an option price via bisection.
 

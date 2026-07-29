@@ -31,6 +31,7 @@ class Leg:
     vega: float | None = None
     oi: int | None = None
     volume: int | None = None
+    greeks_src: str = "feed"     # "feed" | "bs" — computed greeks must be visible
 
     @property
     def signed(self) -> int:
