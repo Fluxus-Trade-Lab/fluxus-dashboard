@@ -29,9 +29,17 @@ class Leg:
     iv: float | None = None      # decimal, e.g. 0.2285
     delta: float | None = None
     vega: float | None = None
+    gamma: float | None = None
     oi: int | None = None
     volume: int | None = None
     greeks_src: str = "feed"     # "feed" | "bs" — computed greeks must be visible
+
+    @property
+    def spread_pct(self) -> float | None:
+        """Bid-ask as % of mid — per-leg execution cost."""
+        if self.bid is None or self.ask is None or not self.mid:
+            return None
+        return (self.ask - self.bid) / self.mid * 100.0
 
     @property
     def signed(self) -> int:
@@ -69,11 +77,15 @@ def _pnl(spot: float, legs: list[Leg], debit: float) -> float:
 def evaluate(legs: list[Leg],
              spot: float | None = None,
              forward: float | None = None,
-             implied_move_pts: float | None = None) -> dict:
+             implied_move_pts: float | None = None,
+             dealer_gex: dict[float, float] | None = None) -> dict:
     """Full objective metric set for the structure.
 
-    `forward` + `implied_move_pts` are optional; when supplied, the payoff peak
-    is also reported in sigmas of the market's own priced move.
+    `forward` + `implied_move_pts`: when supplied, the payoff peak is also
+    reported in sigmas of the market's own priced move.
+    `dealer_gex`: {strike: net dealer $GEX}. When supplied, reports the sign of
+    dealer gamma at the payoff peak — the computable form of "am I positioned
+    where market makers are long gamma".
     """
     debit = net_debit(legs)
     strikes = sorted({l.strike for l in legs})
@@ -110,7 +122,16 @@ def evaluate(legs: list[Leg],
             return None
         return sum(l.signed * getattr(l, attr) for l in legs)
 
-    net_delta, net_vega = _net("delta"), _net("vega")
+    net_delta, net_vega, net_gamma = _net("delta"), _net("vega"), _net("gamma")
+
+    # A package can only be worked as well as its WORST leg — averaging OI or
+    # spread across legs hides the one that will not fill. Report the binding
+    # constraint, not the mean.
+    ois = [l.oi for l in legs if l.oi is not None]
+    vols = [l.volume for l in legs if l.volume is not None]
+    spreads = [l.spread_pct for l in legs if l.spread_pct is not None]
+    min_oi = min(ois) if ois else None
+    thin = [f"{l.strike:.0f}{l.right}" for l in legs if l.oi is not None and l.oi == min_oi]
 
     # Skew captured: average IV sold vs average IV bought (qty-weighted).
     sold = [(l.qty, l.iv) for l in legs if l.signed < 0 and l.iv is not None]
@@ -137,6 +158,12 @@ def evaluate(legs: list[Leg],
         "profit_zone_width": round(bes[-1] - bes[0], 4) if len(bes) >= 2 else None,
         "net_delta": round(net_delta, 4) if net_delta is not None else None,
         "net_vega": round(net_vega, 4) if net_vega is not None else None,
+        "net_gamma": round(net_gamma, 6) if net_gamma is not None else None,
+        "long_convexity": (net_gamma > 0) if net_gamma is not None else None,
+        "min_leg_oi": min(ois) if ois else None,
+        "min_leg_volume": min(vols) if vols else None,
+        "thinnest_legs": thin or None,
+        "worst_leg_spread_pct": round(max(spreads), 2) if spreads else None,
         "iv_sold": round(iv_sold, 4) if iv_sold is not None else None,
         "iv_bought": round(iv_bought, 4) if iv_bought is not None else None,
         "skew_capture": round(skew_capture, 4) if skew_capture is not None else None,
@@ -152,6 +179,13 @@ def evaluate(legs: list[Leg],
     if forward and implied_move_pts and max_profit is not None:
         out["peak_vs_forward_pct"] = round((best_s - forward) / forward * 100.0, 3)
         out["peak_sigma"] = round((best_s - forward) / implied_move_pts, 3)
+    if dealer_gex and max_profit is not None:
+        # Positive dealer gamma at the peak = dealers hedge AGAINST moves there,
+        # i.e. their hedging pins price toward the strike the payoff peaks on.
+        g = dealer_gex.get(best_s)
+        if g is not None:
+            out["peak_dealer_gex"] = g
+            out["peak_dealer_long_gamma"] = g > 0
     if spot:
         out["spot"] = spot
     return out

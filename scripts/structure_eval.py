@@ -17,6 +17,7 @@ Usage:
 """
 import argparse
 import datetime as dt
+import glob
 import json
 import math
 import os
@@ -24,7 +25,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pipeline.options.structures import Leg, evaluate, crush_pnl
-from pipeline.gex.blackscholes import bs_delta, bs_vega, implied_vol
+from pipeline.gex.blackscholes import bs_delta, bs_gamma, bs_vega, implied_vol
 from pipeline.marketcal import MARKET_TZ, market_now
 
 MIN_T_YEARS = 1.0 / (365.0 * 24.0)      # floor so an expiring option still prices
@@ -35,6 +36,22 @@ def _years_to_expiry(expiry: str) -> float:
     d = dt.datetime.strptime(expiry, "%Y%m%d").date()
     settle = dt.datetime.combine(d, dt.time(16, 0), tzinfo=MARKET_TZ)
     return max((settle - market_now()).total_seconds() / (365.0 * 24 * 3600), MIN_T_YEARS)
+
+
+def _load_dealer_gex() -> dict[float, float] | None:
+    """Per-strike dealer $GEX from the newest gex_levels run, if there is one.
+
+    Lets the evaluator answer "is the payoff peak on a strike where dealers are
+    long gamma" instead of leaving that criterion as a vibe.
+    """
+    files = sorted(glob.glob("data/gex/gex_SPX_2*.json"))
+    if not files:
+        return None
+    try:
+        d = json.loads(open(files[-1]).read())
+        return {float(k): float(v) for k, v in (d.get("per_strike_gex") or {}).items()}
+    except (OSError, json.JSONDecodeError, ValueError):
+        return None
 
 
 def _parse_legs(args) -> list[tuple]:
@@ -91,21 +108,27 @@ def main():
         def quote(strike, right):
             o = Option("SPX", args.expiry, strike, right, "CBOE", tradingClass=tc)
             ib.qualifyContracts(o)
-            tk = ib.reqMktData(o, "", False, False); ib.sleep(1.8)
+            # 101 = open interest, 100 = option volume; both are needed to judge
+            # "liquidity in the wings" and neither arrives on the default tick set.
+            tk = ib.reqMktData(o, "100,101", False, False); ib.sleep(2.0)
             bid = tk.bid if (tk.bid and tk.bid > 0) else None
             ask = tk.ask if (tk.ask and tk.ask > 0) else None
             mid = (bid + ask) / 2 if (bid and ask) else tk.close
             g = tk.modelGreeks
-            return bid, ask, mid, (g.impliedVol if g else None), \
-                   (g.delta if g else None), (g.vega if g else None)
+            oi = tk.putOpenInterest if right == "P" else tk.callOpenInterest
+            oi = int(oi) if (oi and not math.isnan(oi)) else None
+            vol = int(tk.volume) if (tk.volume and not math.isnan(tk.volume)) else None
+            return (bid, ask, mid, (g.impliedVol if g else None),
+                    (g.delta if g else None), (g.vega if g else None),
+                    (g.gamma if g else None), oi, vol)
 
         T = _years_to_expiry(args.expiry)
         # Forward first: index options price off the forward, not spot. Solving
         # IV against raw spot biased it ~1.1 vol points low vs IBKR's own model;
         # against the parity forward the gap drops to ~0.1.
         atm = round(spot / 25) * 25
-        _, _, cm, _, _, _ = quote(atm, "C")
-        _, _, pm, _, _, _ = quote(atm, "P")
+        cm = quote(atm, "C")[2]
+        pm = quote(atm, "P")[2]
         forward = implied = None
         if cm and pm and not (math.isnan(cm) or math.isnan(pm)):
             implied = cm + pm
@@ -114,24 +137,28 @@ def main():
 
         legs = []
         for action, qty, strike, right in specs:
-            bid, ask, mid, iv, delta, vega = quote(strike, right)
+            bid, ask, mid, iv, delta, vega, gamma, oi, vol = quote(strike, right)
             if mid is None or (isinstance(mid, float) and math.isnan(mid)):
                 sys.exit(f"no price for {strike}{right} — check strike/expiry")
             src = "feed"
             # IBKR's model greeks arrive intermittently; a single missing leg
-            # would otherwise blank out net delta/vega for the whole package.
+            # would otherwise blank out the net greeks for the whole package.
             # Back IV out of the mid and compute the greeks ourselves instead.
-            if delta is None or vega is None or iv is None:
+            if delta is None or vega is None or gamma is None or iv is None:
                 iv_bs = iv if iv else implied_vol(mid, underlying, strike, T, right)
                 if iv_bs:
                     iv = iv or iv_bs
                     delta = delta if delta is not None else bs_delta(underlying, strike, T, iv_bs, right)
                     vega = vega if vega is not None else bs_vega(underlying, strike, T, iv_bs)
+                    gamma = gamma if gamma is not None else bs_gamma(underlying, strike, T, iv_bs)
                     src = "bs"
             legs.append(Leg(action, qty, strike, right, mid=mid, bid=bid, ask=ask,
-                            iv=iv, delta=delta, vega=vega, greeks_src=src))
+                            iv=iv, delta=delta, vega=vega, gamma=gamma,
+                            oi=oi, volume=vol, greeks_src=src))
 
-        r = evaluate(legs, spot=spot, forward=forward, implied_move_pts=implied)
+        dealer_gex = _load_dealer_gex()
+        r = evaluate(legs, spot=spot, forward=forward, implied_move_pts=implied,
+                     dealer_gex=dealer_gex)
         if args.json:
             print(json.dumps({"legs": [l.__dict__ for l in legs], "metrics": r}, indent=2))
             return
@@ -140,13 +167,15 @@ def main():
         print(f"  SPX {args.expiry}   spot {spot:,.2f}"
               + (f"   forward {forward:,.2f}  implied ±{implied:,.1f}" if forward else ""))
         print("=" * 64)
-        print(f"  {'leg':<12}{'strike':>8} {'mid':>8} {'bid/ask':>14} {'IV':>7} {'Δ':>7} {'vega':>7}  src")
+        print(f"  {'leg':<12}{'strike':>8} {'mid':>8} {'bid/ask':>14} {'IV':>7} {'Δ':>7} {'vega':>7} {'OI':>7} {'vol':>6}  src")
         for l in legs:
             ba = f"{l.bid}×{l.ask}" if (l.bid and l.ask) else "—"
             iv = f"{l.iv:.2%}" if l.iv else "—"
             dl = f"{l.delta:+.3f}" if l.delta is not None else "—"
             vg = f"{l.vega:.3f}" if l.vega is not None else "—"
-            print(f"  {l.action:<4}{l.qty:>3}   {l.right}{l.strike:>8,.0f} {l.mid:>8.2f} {ba:>14} {iv:>7} {dl:>7} {vg:>7}  {l.greeks_src}")
+            oi = f"{l.oi:,}" if l.oi is not None else "—"
+            vl = f"{l.volume:,}" if l.volume is not None else "—"
+            print(f"  {l.action:<4}{l.qty:>3}   {l.right}{l.strike:>8,.0f} {l.mid:>8.2f} {ba:>14} {iv:>7} {dl:>7} {vg:>7} {oi:>7} {vl:>6}  {l.greeks_src}")
         if any(l.greeks_src == "bs" for l in legs):
             print(f"  (src=bs: IBKR greeks were missing; IV backed out of the mid, "
                   f"delta/vega from Black-Scholes at T={T*365:.2f}d)")
@@ -170,6 +199,18 @@ def main():
         if r["net_vega"] is not None:
             print(f"  net vega            {r['net_vega']:+.4f}"
                   f"   → {args.crush:.0f}pt IV crush = {crush_pnl(r['net_vega'], args.crush):+.2f}")
+        if r["net_gamma"] is not None:
+            conv = "LONG convexity" if r["long_convexity"] else "SHORT convexity"
+            print(f"  net gamma           {r['net_gamma']:+.6f}   ({conv})")
+        if r["min_leg_oi"] is not None:
+            thin = f"  thinnest {'/'.join(r['thinnest_legs'])}" if r["thinnest_legs"] else ""
+            print(f"  liquidity           min OI {r['min_leg_oi']:,}  min vol "
+                  f"{r['min_leg_volume'] if r['min_leg_volume'] is not None else '—'}"
+                  f"  worst spread {r['worst_leg_spread_pct']:.1f}%{thin}")
+        if "peak_dealer_gex" in r:
+            side = "dealers LONG gamma here (they pin toward it)" if r["peak_dealer_long_gamma"] \
+                   else "dealers SHORT gamma here (they amplify away from it)"
+            print(f"  dealer @ peak       {r['peak_dealer_gex']/1e9:+.2f}B   {side}")
         if r["skew_capture"] is not None:
             print(f"  skew                sold {r['iv_sold']:.2%} vs bought {r['iv_bought']:.2%}"
                   f"  → {r['skew_capture']:+.2%}")
