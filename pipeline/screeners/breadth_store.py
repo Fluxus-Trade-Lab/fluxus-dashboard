@@ -14,6 +14,7 @@ can replay any truncated frame through the same code path.
 
 from __future__ import annotations
 
+import datetime as dt
 import logging
 import os
 import tempfile
@@ -116,6 +117,7 @@ def write_archive(frame: pd.DataFrame, csv_path: str) -> None:
         with os.fdopen(fd, 'w', encoding='utf-8', newline='') as f:
             out.to_csv(f, index=False)
         os.replace(tmp_name, path)
+        os.chmod(path, 0o644)  # mkstemp creates 0600; the archive is public data
     except BaseException:
         if os.path.exists(tmp_name):
             os.unlink(tmp_name)
@@ -127,10 +129,31 @@ def write_archive(frame: pd.DataFrame, csv_path: str) -> None:
 _MIN_UNIVERSE = 1500
 _MAX_NULL_RATE = 0.20
 _MAX_PCT200_JUMP = 25.0
+# The Δ-check compares against the archive tail, so a bad tail can wedge the
+# guard shut forever. Skip it when the baseline cannot be trusted: the previous
+# row is itself implausible, or it is too stale for a one-day jump limit.
+_IMPLAUSIBLE_PREV_PCT200 = 5.0
+_MAX_PREV_ROW_AGE_DAYS = 7
 
 
-def check_quality(frame: pd.DataFrame, snapshot: dict, null_rate: float) -> tuple[bool, str]:
-    """Reject implausible snapshots before they poison the archive."""
+def _iso_to_date(value) -> dt.date | None:
+    try:
+        return dt.date.fromisoformat(str(value)[:10])
+    except (TypeError, ValueError):
+        return None
+
+
+def check_quality(
+    frame: pd.DataFrame,
+    snapshot: dict,
+    null_rate: float,
+    today_iso: str,
+) -> tuple[bool, str]:
+    """Reject implausible snapshots before they poison the archive.
+
+    ``today_iso`` is the candidate row's market date (ET, from marketcal) — it
+    is only used to age the Δ-check baseline, never as a clock.
+    """
     size = snapshot.get('universe_size', 0)
     if size < _MIN_UNIVERSE:
         return False, f"universe_size {size} < {_MIN_UNIVERSE}"
@@ -139,7 +162,23 @@ def check_quality(frame: pd.DataFrame, snapshot: dict, null_rate: float) -> tupl
     if len(frame) > 0:
         prev = pd.to_numeric(frame['pct_above_200sma'], errors='coerce').iloc[-1]
         cur = snapshot.get('pct_above_200sma')
-        if pd.notna(prev) and cur is not None and abs(cur - float(prev)) > _MAX_PCT200_JUMP:
+
+        skip = None
+        if pd.notna(prev) and float(prev) < _IMPLAUSIBLE_PREV_PCT200:
+            skip = (f"previous row pct_above_200sma {float(prev):.1f} is itself "
+                    f"implausible (< {_IMPLAUSIBLE_PREV_PCT200})")
+        else:
+            prev_date = _iso_to_date(frame['date'].iloc[-1])
+            today = _iso_to_date(today_iso)
+            if prev_date is not None and today is not None:
+                age = (today - prev_date).days
+                if age > _MAX_PREV_ROW_AGE_DAYS:
+                    skip = (f"previous row {prev_date.isoformat()} is {age} calendar "
+                            f"days stale (> {_MAX_PREV_ROW_AGE_DAYS})")
+
+        if skip is not None:
+            logger.warning("Breadth Δ-check skipped: %s", skip)
+        elif pd.notna(prev) and cur is not None and abs(cur - float(prev)) > _MAX_PCT200_JUMP:
             return False, (f"pct_above_200sma jumped {float(prev):.1f} -> {cur:.1f} "
                            f"(> {_MAX_PCT200_JUMP} pts)")
     return True, ''

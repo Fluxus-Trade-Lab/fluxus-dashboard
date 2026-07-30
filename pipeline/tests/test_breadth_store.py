@@ -158,40 +158,79 @@ class TestUpsertAndWrite:
         leftovers = [f for f in tmp_path.iterdir() if f.name != 'a.csv']
         assert leftovers == []  # temp file cleaned up by os.replace
 
+    def test_written_archive_is_world_readable(self, tmp_path):
+        """mkstemp defaults to 0600; the archive is committed data, not a secret."""
+        import stat
+        from pipeline.screeners.breadth_store import write_archive, load_archive, upsert_row
+        p = tmp_path / 'a.csv'
+        frame = upsert_row(load_archive(str(p)), {'date': '2026-07-28', 'source': 'live'})
+        write_archive(frame, str(p))
+        assert stat.S_IMODE(p.stat().st_mode) == 0o644
+
 
 class TestQualityGuard:
-    def _last_frame(self, pct200=46.0):
+    _TODAY = '2026-07-27'  # 2 calendar days after the frame's last row
+
+    def _last_frame(self, pct200=46.0, date='2026-07-25'):
         import pandas as pd
-        return pd.DataFrame({'date': ['2026-07-25'], 'pct_above_200sma': [pct200]})
+        return pd.DataFrame({'date': [date], 'pct_above_200sma': [pct200]})
 
     def _good_snapshot(self):
         return {'universe_size': 3000, 'pct_above_200sma': 45.0}
 
     def test_accepts_good_row(self):
         from pipeline.screeners.breadth_store import check_quality
-        ok, reason = check_quality(self._last_frame(), self._good_snapshot(), null_rate=0.02)
+        ok, reason = check_quality(self._last_frame(), self._good_snapshot(),
+                                   null_rate=0.02, today_iso=self._TODAY)
         assert ok and reason == ''
 
     def test_rejects_small_universe(self):
         from pipeline.screeners.breadth_store import check_quality
         snap = {**self._good_snapshot(), 'universe_size': 1400}
-        ok, reason = check_quality(self._last_frame(), snap, null_rate=0.02)
+        ok, reason = check_quality(self._last_frame(), snap,
+                                   null_rate=0.02, today_iso=self._TODAY)
         assert not ok and 'universe' in reason
 
     def test_rejects_high_null_rate(self):
         from pipeline.screeners.breadth_store import check_quality
-        ok, reason = check_quality(self._last_frame(), self._good_snapshot(), null_rate=0.35)
+        ok, reason = check_quality(self._last_frame(), self._good_snapshot(),
+                                   null_rate=0.35, today_iso=self._TODAY)
         assert not ok and 'null' in reason
 
     def test_rejects_pct200_jump(self):
         """The 2026-07-26 poisoned row: 46.0 → 0.47 must be rejected."""
         from pipeline.screeners.breadth_store import check_quality
         snap = {**self._good_snapshot(), 'pct_above_200sma': 0.47}
-        ok, reason = check_quality(self._last_frame(46.0), snap, null_rate=0.02)
+        ok, reason = check_quality(self._last_frame(46.0), snap,
+                                   null_rate=0.02, today_iso=self._TODAY)
         assert not ok and 'pct_above_200sma' in reason
 
     def test_first_ever_row_skips_delta_check(self):
         from pipeline.screeners.breadth_store import check_quality, load_archive
         empty = load_archive('/nonexistent/x.csv')
-        ok, _ = check_quality(empty, self._good_snapshot(), null_rate=0.02)
+        ok, _ = check_quality(empty, self._good_snapshot(),
+                              null_rate=0.02, today_iso=self._TODAY)
         assert ok
+
+    def test_delta_check_skipped_when_previous_row_is_implausible(self):
+        """A poisoned tail row must not wedge the guard shut forever."""
+        from pipeline.screeners.breadth_store import check_quality
+        snap = {**self._good_snapshot(), 'pct_above_200sma': 46.0}
+        ok, reason = check_quality(self._last_frame(0.4), snap,
+                                   null_rate=0.02, today_iso=self._TODAY)
+        assert ok and reason == ''
+
+    def test_delta_check_skipped_after_a_long_gap(self):
+        """8 calendar days of staleness makes a 30-pt move legitimate."""
+        from pipeline.screeners.breadth_store import check_quality
+        snap = {**self._good_snapshot(), 'pct_above_200sma': 16.0}
+        ok, reason = check_quality(self._last_frame(46.0, date='2026-07-19'), snap,
+                                   null_rate=0.02, today_iso=self._TODAY)
+        assert ok and reason == ''
+
+    def test_delta_check_still_applies_one_day_later(self):
+        from pipeline.screeners.breadth_store import check_quality
+        snap = {**self._good_snapshot(), 'pct_above_200sma': 16.0}
+        ok, reason = check_quality(self._last_frame(46.0, date='2026-07-26'), snap,
+                                   null_rate=0.02, today_iso=self._TODAY)
+        assert not ok and 'pct_above_200sma' in reason

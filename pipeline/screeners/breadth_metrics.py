@@ -148,10 +148,11 @@ def run(
     else:
         null_rate = 1.0
 
-    ok, reason = check_quality(frame, snapshot, null_rate)
+    today_iso = market_today().isoformat()
+    ok, reason = check_quality(frame, snapshot, null_rate, today_iso)
     if ok:
         row = {
-            'date': market_today().isoformat(),
+            'date': today_iso,
             'source': 'live',
             'spx_close': spx_close,
             **snapshot,
