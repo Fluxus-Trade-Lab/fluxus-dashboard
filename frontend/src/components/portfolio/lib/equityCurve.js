@@ -140,7 +140,8 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
   // 4. For each date, compute total portfolio value.
   const curve = datePoints.map(date => {
     let cash = startingCapital
-    let marketValue = 0
+    let marketValue = 0   // net (signed): longs − shorts
+    let grossExposure = 0 // |long| + |short| — capital at risk
 
     trades.forEach(t => {
       if (t.entryDate.slice(0, 10) > date) return // Trade not yet open
@@ -163,6 +164,7 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
         ?? effAt(t.ticker, date)
         ?? t.entryPrice
       marketValue += qtyAtDate * price * dir
+      grossExposure += Math.abs(qtyAtDate * price)
     })
 
     const totalValue = cash + marketValue
@@ -172,8 +174,10 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
       returnPct: ((totalValue - startingCapital) / startingCapital) * 100,
       cash,
       marketValue,
+      grossExposure,
+      // Leverage = gross exposure vs CURRENT equity (not starting capital).
+      leveragePct: totalValue ? (grossExposure / totalValue) * 100 : 0,
       cashPct: totalValue ? (cash / totalValue) * 100 : 100,
-      deployedPct: totalValue ? (marketValue / totalValue) * 100 : 0,
     }
   })
 
