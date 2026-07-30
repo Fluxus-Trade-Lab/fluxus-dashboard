@@ -15,8 +15,15 @@ export default function DangerPanel({ title, danger }) {
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           {title}
         </h3>
-        <span className={`text-[10px] font-mono ${count >= 4 ? 'text-[var(--color-loss)]' : count >= 2 ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-text-secondary)]'}`}>
-          {count} / 5 active
+        <span className="flex items-baseline gap-1.5">
+          <span className={`text-[10px] font-mono ${count >= 4 ? 'text-[var(--color-loss)]' : count >= 2 ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-text-secondary)]'}`}>
+            {count} / 5 active
+          </span>
+          {danger.date && (
+            <span className="text-[9px] font-mono text-[var(--color-text-muted)]">
+              {danger.date}
+            </span>
+          )}
         </span>
       </div>
       <ul className="space-y-1.5">

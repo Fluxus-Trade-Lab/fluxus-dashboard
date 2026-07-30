@@ -41,7 +41,7 @@ export default function BreadthPage({ data }) {
         <RatioChart rows={rows} />
         <SpreadChart rows={rows} />
       </div>
-      {mh && (
+      {mh && !mh.stale && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
           <DangerPanel title="SPY danger signals" danger={mh.spy?.danger} />
           <DangerPanel title="QQQ danger signals" danger={mh.qqq?.danger} />
