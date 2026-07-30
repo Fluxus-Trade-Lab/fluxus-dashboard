@@ -4,26 +4,39 @@
 
 const HISTORY_WINDOW = 100
 
-function cutSeries(block, keep) {
+// The replay book carries the FULL benchmark history (~750 sessions) so any
+// pin date has depth behind it, but live market_health.json ships 130. Cap the
+// slice to the same trailing window so a pinned-at-latest page matches live and
+// each scrub rebuilds a 130-candle chart instead of a 750-candle one.
+const HEALTH_WINDOW = 130
+
+// `from` = index of the first kept element, `keep` = index one past the last.
+function cutSeries(block, from, keep) {
   return {
-    candles: block.candles.slice(0, keep),
-    sma20: block.sma20.slice(0, keep),
-    sma50: block.sma50.slice(0, keep),
-    sma200: block.sma200.slice(0, keep),
+    candles: block.candles.slice(from, keep),
+    sma20: block.sma20.slice(from, keep),
+    sma50: block.sma50.slice(from, keep),
+    sma200: block.sma200.slice(from, keep),
   }
 }
 
 function healthAt(block, date) {
   const keep = block.candles.filter((c) => c.date <= date).length
   if (!keep) return null
+  const from = Math.max(0, keep - HEALTH_WINDOW)
+
   const sigs = block.signals_history.filter((s) => s.date <= date)
+  // `danger` stays the signals entry at/just before the pin, regardless of the
+  // display window.
   const last = sigs[sigs.length - 1]
   return {
-    ...cutSeries(block, keep),
+    ...cutSeries(block, from, keep),
     danger: last
       ? { signals: last.signals, count: last.count, date: last.date }
       : { signals: {}, count: 0 },
-    warn_history: sigs.map((s) => ({ date: s.date, count: s.count })),
+    warn_history: sigs
+      .slice(-HEALTH_WINDOW)
+      .map((s) => ({ date: s.date, count: s.count })),
   }
 }
 
