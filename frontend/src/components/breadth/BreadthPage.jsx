@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import VerdictBanner from './VerdictBanner'
 import MarketStateSummary from './MarketStateSummary'
 import HealthChart from './HealthChart'
@@ -17,6 +18,18 @@ export default function BreadthPage({ data }) {
   const breadth = (tm.active && tm.sliced) ? tm.sliced.breadth : liveBreadth
   const mh = (tm.active && tm.sliced) ? tm.sliced.marketHealth : data?.market_health
 
+  // Memoised so the HealthChart setup closure (and therefore the chart redraw
+  // effect) only sees a new overlay when the underlying history actually
+  // changes — not on every render. Declared before the early return so hook
+  // order stays stable.
+  const history = breadth?.history
+  const t2108Overlay = useMemo(
+    () => (history
+      ? { dates: history.dates, values: history.rows.map((r) => r.t2108) }
+      : null),
+    [history],
+  )
+
   if (!liveBreadth) {
     return (
       <div className="space-y-3">
@@ -29,9 +42,6 @@ export default function BreadthPage({ data }) {
   }
 
   const verdict = breadth.verdict
-  const t2108Overlay = breadth.history
-    ? { dates: breadth.history.dates, values: breadth.history.rows.map((r) => r.t2108) }
-    : null
   const rows = breadth.history?.rows ?? []
 
   return (

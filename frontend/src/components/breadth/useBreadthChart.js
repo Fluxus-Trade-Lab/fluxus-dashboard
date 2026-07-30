@@ -1,9 +1,19 @@
-import { useEffect, useCallback } from 'react'
+import { useEffect, useRef } from 'react'
 import { createChart, ColorType } from 'lightweight-charts'
 
 // Theme-aware lightweight-charts factory shared by all breadth charts.
+//
+// `setupFn` is held in a ref that is refreshed on EVERY render, and is
+// deliberately NOT an effect dependency. Callers pass inline closures that
+// capture props (e.g. HealthChart's t2108 overlay); memoising the closure once
+// on first render — as `useCallback(setupFn, [])` did — froze those captured
+// props forever, so a Time Machine pin redrew the chart with the ORIGINAL
+// (live, future-extending) overlay data under a "future observations excluded"
+// banner. Reading through a ref keeps the redraw on `[deps, height]` while
+// always running the current closure.
 export function useBreadthChart(containerRef, chartRef, deps, setupFn, height) {
-  const setup = useCallback(setupFn, [])
+  const setupRef = useRef(setupFn)
+  setupRef.current = setupFn
 
   useEffect(() => {
     if (!containerRef.current || !deps) return
@@ -38,7 +48,7 @@ export function useBreadthChart(containerRef, chartRef, deps, setupFn, height) {
       crosshair: { horzLine: { visible: false, labelVisible: false } },
     })
 
-    setup(chart, deps)
+    setupRef.current(chart, deps)
     chart.timeScale().fitContent()
     chartRef.current = chart
 
@@ -58,5 +68,5 @@ export function useBreadthChart(containerRef, chartRef, deps, setupFn, height) {
         chartRef.current = null
       }
     }
-  }, [deps, height, setup])
+  }, [deps, height])
 }
