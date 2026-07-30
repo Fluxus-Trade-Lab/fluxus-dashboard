@@ -37,7 +37,12 @@ export default function Header({ portfolioValue, totalPL, totalReturnPct, cashAv
         <StatCard label={t('pf.stat.pl')} value={pm ? MASK : fmtCur(totalPL)} colorClass={pm ? '' : clr(totalPL)} />
         <StatCard label={t('pf.stat.return')} value={fmtPct(totalReturnPct)} colorClass={clr(totalReturnPct)} />
         <StatCard label={t('pf.stat.cash')} value={pm ? fmtPct(cashPct) : fmtCur(cashAvailable)} />
-        <StatCard label={t('pf.stat.open')} value={openCount} />
+        <StatCard
+          label="Names"
+          value={openCount}
+          colorClass={openCount >= 14 ? 'text-red-500' : openCount >= 12 ? 'text-amber-500' : ''}
+          sub={openCount >= 14 ? '⚠ greed zone — stop adding' : openCount >= 12 ? 'heat building' : undefined}
+        />
       </div>
 
       <div className="flex gap-1 flex-wrap">

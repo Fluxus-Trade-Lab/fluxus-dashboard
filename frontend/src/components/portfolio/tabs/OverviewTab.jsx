@@ -26,6 +26,19 @@ export default function OverviewTab({
   const { t: tr } = useLanguage()
   const pm = state.privacyMode
 
+  // 20-day moving average of the equity return curve — a smoothed performance
+  // trend for sizing: equity above its 20d MA = uptrend (size up), below = cool
+  // off. Null for the first 19 points (not enough window).
+  const chartData = useMemo(() => {
+    const W = 20
+    return (performanceData || []).map((p, i) => {
+      if (i < W - 1) return { ...p, ma20: null }
+      const win = performanceData.slice(i - W + 1, i + 1)
+      const avg = win.reduce((s, x) => s + (x.returnPct || 0), 0) / W
+      return { ...p, ma20: Math.round(avg * 100) / 100 }
+    })
+  }, [performanceData])
+
   // Per-ticker EMA + ATR lookup from universe.json (Phase 1)
   const universeByTicker = useMemo(() => {
     const out = {}
@@ -323,18 +336,19 @@ export default function OverviewTab({
                 {spyYtd != null && <div><span className="text-[var(--color-text-muted)]">{tr('pf.chart.spyYtd')} </span><span className={`font-bold ${clr(spyYtd)}`}>{fmtPct(spyYtd)}</span></div>}
               </div>
               <ResponsiveContainer width="100%" height={280}>
-                <LineChart data={performanceData}>
+                <LineChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
                   <XAxis
                     dataKey="date"
                     tick={{ fontSize: 10 }}
                     tickFormatter={d => d.slice(5)}
-                    interval={Math.max(1, Math.floor(performanceData.length / 10))}
+                    interval={Math.max(1, Math.floor(chartData.length / 10))}
                   />
                   <YAxis tick={{ fontSize: 11 }} tickFormatter={v => `${Number(v).toFixed(0)}%`} />
                   <Tooltip formatter={v => `${Number(v).toFixed(2)}%`} />
                   <Legend />
                   <Line type="monotone" dataKey="returnPct" stroke="#2d5f8a" strokeWidth={2.5} dot={false} name="Portfolio" />
+                  <Line type="monotone" dataKey="ma20" stroke="#c98a2b" strokeWidth={1.5} dot={false} name="20d MA" connectNulls />
                   {hasSPY && (
                     <Line type="monotone" dataKey="SPY" stroke="#d4a574" strokeWidth={1.5} dot={false} name="SPY" strokeDasharray="4 4" />
                   )}
