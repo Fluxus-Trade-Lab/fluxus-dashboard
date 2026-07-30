@@ -1,0 +1,14 @@
+name: Daily content reminder (8:00 JST)
+on:
+  schedule:
+    - cron: '0 23 * * *'   # 23:00 UTC = 08:00 JST 次日
+  workflow_dispatch:
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Send daily digest
+        env:
+          FLUXUS_WEBHOOK_URL: ${{ secrets.FLUXUS_WEBHOOK_URL }}
+        run: python3 scripts/content_reminder.py
