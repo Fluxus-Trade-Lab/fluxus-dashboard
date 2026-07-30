@@ -473,3 +473,33 @@ class TestSignalsHistory:
             sh = health[key]['signals_history']
             assert len(sh) == 130 == len(health[key]['candles'])
             assert sh[-1]['date'] == health[key]['candles'][-1]['date']
+
+
+class TestRunSignalsAtomicity:
+    def test_breadth_result_untouched_when_annotate_fails(self, monkeypatch):
+        from pipeline.screeners import breadth_signals as bs
+        rows = [{'date': '2026-07-29', **_bull_row()}]
+        frame = _frame(rows)
+        result = {'history': {'rows': [dict(r) for r in rows]}, 'mm': {}, 'breadth': {}}
+
+        def boom(*args, **kwargs):
+            raise RuntimeError('annotate exploded')
+
+        monkeypatch.setattr(bs, 'annotate_rows', boom)
+        with pytest.raises(RuntimeError):
+            bs.run_signals(result, frame, None, None)
+        assert 'verdict' not in result
+        assert all('v' not in r for r in result['history']['rows'])
+
+    def test_success_path_unchanged(self):
+        from pipeline.screeners.breadth_signals import run_signals
+        rows = [{'date': '2026-07-28', **_bull_row()},
+                {'date': '2026-07-29', **_bull_row()}]
+        frame = _frame(rows)
+        result = {'history': {'rows': [dict(r) for r in rows]}, 'mm': {}, 'breadth': {}}
+        spy = _ohlc([100.0 + i * 0.1 for i in range(250)])
+        qqq = _ohlc([200.0 + i * 0.2 for i in range(250)])
+        health = run_signals(result, frame, spy, qqq)
+        assert health is not None
+        assert 'context' in result['verdict']
+        assert all(r.get('v') for r in result['history']['rows'])

@@ -453,6 +453,11 @@ def run_signals(breadth_result: Dict[str, Any], frame: pd.DataFrame,
             health['qqq']['danger'] = danger_at(qqq_hist, last_date)
     verdict = evaluate(frame, health)
     verdict['context'] = percentile_context(frame)
+    # Annotate a copy first: a failure here must not leave breadth_result
+    # holding a verdict with missing/partial per-row codes (Spec 2 residual).
+    rows = [dict(r) for r in breadth_result.get('history', {}).get('rows', [])]
+    annotate_rows(rows, frame, health)
     breadth_result['verdict'] = verdict
-    annotate_rows(breadth_result.get('history', {}).get('rows', []), frame, health)
+    if 'history' in breadth_result:
+        breadth_result['history']['rows'] = rows
     return health
