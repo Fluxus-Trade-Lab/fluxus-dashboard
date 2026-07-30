@@ -81,3 +81,77 @@ class TestBreadthVotes:
         assert breadth_signals.THRESHOLDS['thrust']['count'] == 300
         assert breadth_signals.THRESHOLDS['t2108_zone']['oversold'] == 20
         assert breadth_signals.THRESHOLDS['t2108_zone']['overbought'] == 80
+
+
+def _hist(closes, highs=None, lows=None, end='2026-07-29'):
+    n = len(closes)
+    idx = pd.bdate_range(end=end, periods=n)
+    return pd.DataFrame({
+        'Close': closes,
+        'High': highs if highs is not None else [c + 1 for c in closes],
+        'Low': lows if lows is not None else [c - 1 for c in closes],
+    }, index=idx)
+
+
+class TestStochastics:
+    def test_hand_computed_with_fixed_range(self):
+        from pipeline.screeners.breadth_signals import compute_stochastics
+        # Highs pinned at 100, lows at 0 -> raw %K == close, hand-computable
+        closes = [50.0] * 14 + [80.0, 60.0, 40.0]
+        hist = _hist(closes, highs=[100.0] * 17, lows=[0.0] * 17)
+        fast, slow = compute_stochastics(hist)
+        assert fast.iloc[-1] == pytest.approx((80 + 60 + 40) / 3)
+        # slow = SMA3(fast): fast[-3..-1] = mean(50,50,80), mean(50,80,60), mean(80,60,40)
+        f3 = [(50 + 50 + 80) / 3, (50 + 80 + 60) / 3, (80 + 60 + 40) / 3]
+        assert slow.iloc[-1] == pytest.approx(sum(f3) / 3)
+
+    def test_flat_market_carries_forward_no_nan(self):
+        from pipeline.screeners.breadth_signals import compute_stochastics
+        hist = _hist([100.0] * 20, highs=[100.0] * 20, lows=[100.0] * 20)
+        fast, slow = compute_stochastics(hist)
+        assert not fast.tail(5).isna().any()
+        assert fast.iloc[-1] == pytest.approx(50.0)  # seeded carry-forward
+
+    def test_rising_market_pegs_100(self):
+        from pipeline.screeners.breadth_signals import compute_stochastics
+        closes = [100.0 + i for i in range(30)]
+        hist = _hist(closes, highs=closes, lows=[c for c in closes])
+        # highs == closes rising -> close is always the 14d high -> raw = 100
+        fast, slow = compute_stochastics(hist)
+        assert fast.iloc[-1] == pytest.approx(100.0)
+        assert slow.iloc[-1] == pytest.approx(100.0)
+
+
+class TestDangerSignals:
+    def test_healthy_tape_no_signals(self):
+        from pipeline.screeners.breadth_signals import danger_signals
+        closes = [100.0 + i for i in range(40)]   # rising, above SMA20
+        hist = _hist(closes)
+        sig = danger_signals(hist)
+        assert set(sig) == {'below_20sma', 'stoch_cross', 'stoch_down',
+                            'lower_lows', 'close_below_lows'}
+        assert sig['below_20sma'] is False
+        assert sig['lower_lows'] is False
+        assert sig['close_below_lows'] is False
+
+    def test_breakdown_tape_fires_price_signals(self):
+        from pipeline.screeners.breadth_signals import danger_signals
+        closes = [100.0] * 30 + [95.0, 90.0, 85.0, 80.0]  # sharp break
+        lows = [99.0] * 30 + [94.0, 89.0, 84.0, 79.0]      # 3+ lower lows
+        hist = _hist(closes, lows=lows)
+        sig = danger_signals(hist)
+        assert sig['below_20sma'] is True
+        assert sig['lower_lows'] is True     # 79 < 84 < 89 < 94
+        assert sig['close_below_lows'] is True  # 80 < min(94, 89, 84)
+        assert sig['stoch_cross'] is True    # falling tape: fast under slow
+        assert sig['stoch_down'] is True
+
+    def test_warn_counts_shape(self):
+        from pipeline.screeners.breadth_signals import warn_counts
+        closes = [100.0 + (i % 7) - 3 for i in range(200)]
+        hist = _hist(closes)
+        wc = warn_counts(hist, days=130)
+        assert len(wc) == 130
+        assert set(wc[0]) == {'date', 'count'}
+        assert all(0 <= w['count'] <= 5 for w in wc)
+        assert wc[-1]['date'] == hist.index[-1].strftime('%Y-%m-%d')

@@ -111,3 +111,48 @@ def breadth_votes(row: Dict[str, Any]) -> Dict[str, str]:
         votes['t2108_zone'] = 'neutral'
 
     return votes
+
+
+# ── SPY/QQQ danger signals (spec §2) ─────────────────────────────────
+
+def compute_stochastics(hist: pd.DataFrame) -> tuple[pd.Series, pd.Series]:
+    """(fast, slow) stochastic (14,3,3). H14==L14 carries previous raw forward."""
+    h14 = hist['High'].rolling(14).max()
+    l14 = hist['Low'].rolling(14).min()
+    span = h14 - l14
+    raw = (hist['Close'] - l14) / span * 100
+    raw = raw.where(span > 0)          # NaN where flat
+    raw = raw.ffill().fillna(50.0)     # carry forward; seed 50 at the start
+    fast = raw.rolling(3).mean()
+    slow = fast.rolling(3).mean()
+    return fast, slow
+
+
+def _danger_frame(hist: pd.DataFrame) -> pd.DataFrame:
+    """Per-date boolean frame of the five danger signals."""
+    close, low = hist['Close'], hist['Low']
+    sma20 = close.rolling(20).mean()
+    fast, slow = compute_stochastics(hist)
+    lower = low < low.shift(1)
+    return pd.DataFrame({
+        'below_20sma': close < sma20,
+        'stoch_cross': fast < slow,
+        'stoch_down': (fast < fast.shift(1)) & (slow < slow.shift(1)),
+        'lower_lows': lower & lower.shift(1, fill_value=False) & lower.shift(2, fill_value=False),
+        'close_below_lows': close < pd.concat(
+            [low.shift(1), low.shift(2), low.shift(3)], axis=1).min(axis=1),
+    }).fillna(False)
+
+
+def danger_signals(hist: pd.DataFrame) -> Dict[str, bool]:
+    """The five signals evaluated on the last bar."""
+    last = _danger_frame(hist).iloc[-1]
+    return {k: bool(last[k]) for k in last.index}
+
+
+def warn_counts(hist: pd.DataFrame, days: int = 130) -> List[Dict[str, Any]]:
+    """Daily warning counts (0-5) for the trailing `days` sessions."""
+    frame = _danger_frame(hist)
+    counts = frame.sum(axis=1).astype(int).tail(days)
+    return [{'date': d.strftime('%Y-%m-%d'), 'count': int(c)}
+            for d, c in counts.items()]
