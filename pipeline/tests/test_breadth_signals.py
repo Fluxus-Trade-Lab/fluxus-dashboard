@@ -433,3 +433,43 @@ class TestRunSignals:
         assert health is None
         assert result['verdict']['spy_state'] is None
         assert any('unavailable' in n for n in result['verdict']['notes'])
+
+
+class TestSignalsHistory:
+    def test_shape_and_keys(self):
+        from pipeline.screeners.breadth_signals import signals_history
+        closes = [100.0 + (i % 9) - 4 for i in range(220)]
+        hist = _hist(closes)
+        sh = signals_history(hist, days=130)
+        assert len(sh) == 130
+        assert set(sh[0]) == {'date', 'signals', 'count'}
+        assert set(sh[0]['signals']) == {'below_20sma', 'stoch_cross', 'stoch_down',
+                                         'lower_lows', 'close_below_lows'}
+        assert all(s['count'] == sum(s['signals'].values()) for s in sh)
+        assert sh[-1]['date'] == hist.index[-1].strftime('%Y-%m-%d')
+
+    def test_days_none_returns_all_sessions(self):
+        from pipeline.screeners.breadth_signals import signals_history
+        hist = _hist([100.0 + (i % 5) for i in range(210)])
+        assert len(signals_history(hist, days=None)) == 210
+
+    def test_matches_danger_at_for_each_date(self):
+        """The history entry for date D must equal danger_at(hist, D)."""
+        from pipeline.screeners.breadth_signals import signals_history, danger_at
+        hist = _hist([100.0 + (i % 11) - 5 for i in range(230)])
+        sh = signals_history(hist, days=None)
+        for entry in (sh[-1], sh[-40], sh[-100]):
+            da = danger_at(hist, entry['date'])
+            assert da['signals'] == entry['signals']
+            assert da['count'] == entry['count']
+            assert da['date'] == entry['date']
+
+    def test_market_health_includes_signals_history(self):
+        from pipeline.screeners.breadth_signals import market_health
+        spy = _ohlc([100.0 + i * 0.1 for i in range(250)])
+        qqq = _ohlc([200.0 + i * 0.2 for i in range(250)])
+        health = market_health(spy, qqq, days=130)
+        for key in ('spy', 'qqq'):
+            sh = health[key]['signals_history']
+            assert len(sh) == 130 == len(health[key]['candles'])
+            assert sh[-1]['date'] == health[key]['candles'][-1]['date']

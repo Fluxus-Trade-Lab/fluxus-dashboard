@@ -175,6 +175,25 @@ def warn_counts(hist: pd.DataFrame, days: int = 130) -> List[Dict[str, Any]]:
             for d, c in counts.items()]
 
 
+def signals_history(hist: pd.DataFrame, days: Optional[int] = 130) -> List[Dict[str, Any]]:
+    """Per-date five-signal booleans + count. `days=None` returns all sessions.
+
+    Time Machine (Spec 3) needs the per-signal state at any past date; the
+    trailing `warn_counts` view only carries totals.
+    """
+    frame = _danger_frame(hist)
+    if days is not None:
+        frame = frame.tail(days)
+    cols = list(frame.columns)
+    out: List[Dict[str, Any]] = []
+    for d, row in frame.iterrows():
+        sig = {k: bool(row[k]) for k in cols}
+        out.append({'date': d.strftime('%Y-%m-%d'),
+                    'signals': sig,
+                    'count': sum(sig.values())})
+    return out
+
+
 def _round_or_none(x) -> Optional[float]:
     v = _num(x)
     return None if v is None else round(v, 2)
@@ -200,6 +219,7 @@ def market_health(spy_hist: pd.DataFrame, qqq_hist: pd.DataFrame,
             'danger': {'signals': danger_signals(hist),
                        'count': sum(danger_signals(hist).values())},
             'warn_history': warn_counts(hist, days),
+            'signals_history': signals_history(hist, days),
         }
     return out
 
