@@ -48,6 +48,54 @@ class TestComputeBackfillRows:
         rows = compute_backfill_rows(closes, closes['A'])
         assert (rows['new_highs'] == 2).all()
         assert (rows['new_lows'] == 0).all()
+        # Same result when intraday extremes are supplied explicitly and equal close
+        rows_hl = compute_backfill_rows(closes, closes['A'], highs=closes, lows=closes)
+        assert (rows_hl['new_highs'] == 2).all()
+        assert (rows_hl['new_lows'] == 0).all()
+
+    def test_new_highs_use_intraday_extremes_when_given(self):
+        """Live semantics: close vs 1y max of intraday High / min of intraday Low.
+
+        A close that ties the close-based 52w max is NOT a new high when an
+        earlier bar printed a higher intraday High.
+        """
+        from pipeline.tools.backfill_breadth import compute_backfill_rows
+        idx = pd.bdate_range(end='2026-07-24', periods=210)
+        closes = pd.DataFrame({'A': np.full(210, 100.0)}, index=idx)
+        highs = closes.copy()
+        highs.iloc[50, 0] = 130.0  # a lone intraday spike a year's-worth ago
+        lows = closes.copy()
+
+        close_based = compute_backfill_rows(closes, closes['A'])
+        assert (close_based['new_highs'] == 1).all()  # flat closes all tie the max
+
+        intraday = compute_backfill_rows(closes, closes['A'], highs=highs, lows=lows)
+        assert (intraday['new_highs'] == 0).all()  # 100 is far below the 130 High
+
+    def test_new_lows_use_intraday_low_when_given(self):
+        from pipeline.tools.backfill_breadth import compute_backfill_rows
+        idx = pd.bdate_range(end='2026-07-24', periods=210)
+        closes = pd.DataFrame({'A': np.full(210, 100.0)}, index=idx)
+        highs = closes.copy()
+        lows = closes.copy()
+        lows.iloc[50, 0] = 70.0
+        rows = compute_backfill_rows(closes, closes['A'], highs=highs, lows=lows)
+        assert (rows['new_lows'] == 0).all()
+
+    def test_perf_windows_match_live_iloc_offsets(self):
+        """Live uses iloc[-21]/iloc[-63] = 20/62 sessions back; perf_34d = 34."""
+        from pipeline.tools.backfill_breadth import compute_backfill_rows
+        closes = _make_closes(230)
+        rows = compute_backfill_rows(closes, closes['S0'])
+        last = rows.iloc[-1]
+        c = closes.iloc[-1]
+        p1m = c / closes.iloc[-21] - 1
+        p3m = c / closes.iloc[-63] - 1
+        p34 = c / closes.iloc[-35] - 1
+        assert last['up_25pct_month'] == int((p1m >= 0.25).sum())
+        assert last['down_25pct_month'] == int((p1m <= -0.25).sum())
+        assert last['up_25pct_qtr'] == int((p3m >= 0.25).sum())
+        assert last['up_13pct_34d'] == int((p34 >= 0.13).sum())
 
     def test_universe_size_counts_non_nan(self):
         from pipeline.tools.backfill_breadth import compute_backfill_rows
@@ -123,6 +171,52 @@ class TestMergeBackfill:
         merged = merge_backfill(live, back)
         assert list(merged['date']) == ['2026-05-22', '2026-05-26']
         assert merged[merged['date'] == '2026-05-22'].iloc[0]['source'] == 'live'  # honest live still wins
+
+    def test_surviving_live_rows_hydrated_from_same_date_reconstruction(self):
+        """Old live rows carry pre-v2 NH/NL semantics and null 13% columns.
+
+        The reconstruction is the same universe on the same day under the new
+        semantics, so exactly those four columns are overwritten; everything
+        else (source, advances, ...) stays live.
+        """
+        from pipeline.tools.backfill_breadth import merge_backfill
+        live = pd.DataFrame([{
+            'date': '2026-07-28', 'source': 'live', 'advances': 1608,
+            'pct_above_200sma': 46.73, 'universe_size': 3000,
+            'new_highs': 327, 'new_lows': 99,
+            'up_13pct_34d': pd.NA, 'down_13pct_34d': pd.NA,
+        }])
+        back = pd.DataFrame([{
+            'date': '2026-07-28', 'source': 'backfill', 'advances': 1400,
+            'pct_above_200sma': 45.0, 'universe_size': 2980,
+            'new_highs': 30, 'new_lows': 90,
+            'up_13pct_34d': 550, 'down_13pct_34d': 610,
+        }])
+        merged = merge_backfill(live, back)
+        assert len(merged) == 1
+        row = merged.iloc[0]
+        assert row['source'] == 'live'
+        assert row['advances'] == 1608           # live's own measurements untouched
+        assert row['universe_size'] == 3000
+        assert row['pct_above_200sma'] == 46.73
+        assert row['new_highs'] == 30            # new semantics
+        assert row['new_lows'] == 90
+        assert row['up_13pct_34d'] == 550        # previously null
+        assert row['down_13pct_34d'] == 610
+
+    def test_live_rows_without_reconstruction_are_not_hydrated(self):
+        from pipeline.tools.backfill_breadth import merge_backfill
+        live = pd.DataFrame([{
+            'date': '2026-08-02', 'source': 'live', 'advances': 1500,
+            'pct_above_200sma': 50.0, 'new_highs': 42,
+        }])
+        back = pd.DataFrame([{
+            'date': '2026-07-28', 'source': 'backfill', 'advances': 1400,
+            'pct_above_200sma': 45.0, 'new_highs': 30,
+        }])
+        merged = merge_backfill(live, back)
+        row = merged[merged['date'] == '2026-08-02'].iloc[0]
+        assert row['new_highs'] == 42
 
     def test_live_rows_outside_backfill_range_kept(self):
         from pipeline.tools.backfill_breadth import merge_backfill

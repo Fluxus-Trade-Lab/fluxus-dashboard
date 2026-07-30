@@ -40,25 +40,44 @@ _IMPLAUSIBLE_PCT200 = 5.0
 # Live rows with universe_size below this are partial-universe failures (e.g.
 # the Jun 8 2026 200-name Finviz day) — same replacement policy.
 _IMPLAUSIBLE_MIN_UNIVERSE = 1500
+# Columns a surviving LIVE row inherits from its same-date reconstruction:
+# NH/NL because pre-v2 live rows used a ±2% band instead of true extremes, and
+# the 13%/34d pair because the live pipeline did not compute it at all.
+_HYDRATED_COLUMNS = ('new_highs', 'new_lows', 'up_13pct_34d', 'down_13pct_34d')
 
 
-def compute_backfill_rows(closes: pd.DataFrame, spx: pd.Series) -> pd.DataFrame:
+def compute_backfill_rows(
+    closes: pd.DataFrame,
+    spx: pd.Series,
+    highs: pd.DataFrame | None = None,
+    lows: pd.DataFrame | None = None,
+) -> pd.DataFrame:
     """Pure reconstruction: one archive row per date with >=200 prior sessions.
 
     closes: DatetimeIndex (ascending) x tickers, adjusted close.
     spx: date-indexed S&P 500 close (may be missing dates -> NaN spx_close).
+    highs/lows: same shape as closes, adjusted intraday High/Low. When given,
+    NH/NL are measured close-vs-1y-extreme-of-intraday, matching the live
+    pipeline exactly (yfinance_adapter: close/max(High)-1 >= -0.001). When
+    omitted they fall back to close-based extremes — a different, looser rule
+    that reads several times more new highs. Always pass them in production.
+
+    Perf lookbacks mirror the live iloc offsets: perf_1m = iloc[-21] = 20
+    sessions back, perf_3m = iloc[-63] = 62 back, perf_34d = iloc[-35] = 34 back.
     Derived columns are left NA; breadth_store.derive() fills them post-merge.
     """
     chg = closes / closes.shift(1) - 1
-    p1m = closes / closes.shift(21) - 1
+    p1m = closes / closes.shift(20) - 1
     p34 = closes / closes.shift(34) - 1
-    p3m = closes / closes.shift(63) - 1
+    p3m = closes / closes.shift(62) - 1
     sma20 = closes.rolling(20).mean()
     sma40 = closes.rolling(40).mean()
     sma50 = closes.rolling(50).mean()
     sma200 = closes.rolling(200).mean()
-    hi252 = closes.rolling(252, min_periods=_MIN_PRIOR_SESSIONS).max()
-    lo252 = closes.rolling(252, min_periods=_MIN_PRIOR_SESSIONS).min()
+    hi_src = closes if highs is None else highs.reindex(index=closes.index, columns=closes.columns)
+    lo_src = closes if lows is None else lows.reindex(index=closes.index, columns=closes.columns)
+    hi252 = hi_src.rolling(252, min_periods=_MIN_PRIOR_SESSIONS).max()
+    lo252 = lo_src.rolling(252, min_periods=_MIN_PRIOR_SESSIONS).min()
 
     rows = []
     for i in range(_MIN_PRIOR_SESSIONS, len(closes)):
@@ -119,6 +138,14 @@ def merge_backfill(existing: pd.DataFrame, backfill: pd.DataFrame) -> pd.DataFra
     dates was never a trading day (legacy naive-clock re-runs stamped rows on
     e.g. Sunday 2026-05-24 and Memorial Day 2026-05-25). Existing rows outside
     the backfill range are kept regardless — we cannot judge them.
+
+    Finally, surviving live rows are HYDRATED from their same-date
+    reconstruction on _HYDRATED_COLUMNS only. Those live rows predate the v2
+    semantics: NH/NL used a ±2% band (yielding e.g. 327 new highs next to 29
+    under the true-extreme rule) and the 13%/34d columns did not exist at all.
+    The reconstruction is the same universe on the same day under the current
+    rules, so it is the right source for exactly those columns — every other
+    column stays as measured.
     """
     implausible = pd.Series(False, index=existing.index)
     pct = existing.get('pct_above_200sma')
@@ -136,10 +163,26 @@ def merge_backfill(existing: pd.DataFrame, backfill: pd.DataFrame) -> pd.DataFra
         dates = existing['date'].astype(str)
         non_session = dates.between(lo, hi) & ~dates.isin(backfill_dates)
 
-    keep = existing[~existing['date'].isin(replaceable_dates) & ~non_session]
+    keep = existing[~existing['date'].isin(replaceable_dates) & ~non_session].copy()
+    keep = _hydrate_live_rows(keep, backfill)
     add = backfill[~backfill['date'].isin(set(keep['date']))]
     merged = pd.concat([keep, add], ignore_index=True)
     return merged.sort_values('date').reset_index(drop=True)
+
+
+def _hydrate_live_rows(keep: pd.DataFrame, backfill: pd.DataFrame) -> pd.DataFrame:
+    """Overwrite _HYDRATED_COLUMNS on surviving live rows from same-date backfill."""
+    cols = [c for c in _HYDRATED_COLUMNS if c in backfill.columns]
+    if not cols or 'date' not in keep.columns or not len(keep):
+        return keep
+    lookup = backfill.set_index('date')
+    is_live = keep.get('source', pd.Series('live', index=keep.index)).eq('live')
+    targets = keep.index[is_live & keep['date'].isin(lookup.index)]
+    for col in cols:
+        if col not in keep.columns:
+            keep[col] = pd.NA
+        keep.loc[targets, col] = lookup.loc[keep.loc[targets, 'date'], col].to_numpy()
+    return keep
 
 
 # ── Network + CLI (not unit-tested; exercised by --dry-run) ──────────
@@ -149,12 +192,23 @@ def _load_tickers() -> list[str]:
     return sorted({r['ticker'] for r in data['rows'] if r.get('ticker')})
 
 
-def _download_closes(tickers: list[str], years: int, cache: Path) -> pd.DataFrame:
+def _download_ohlc(tickers: list[str], years: int,
+                   cache: Path) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Download adjusted Close/High/Low as three aligned wide frames.
+
+    High and Low are required: NH/NL must be measured against intraday extremes
+    to match the live pipeline. All three share ONE cache file (a dict) so a
+    closes-only cache can never be mistaken for a complete one.
+    """
     if cache.exists():
-        logger.info("Using cached closes: %s", cache)
-        return pd.read_pickle(cache)
+        logger.info("Using cached OHLC: %s", cache)
+        cached = pd.read_pickle(cache)
+        if not isinstance(cached, dict) or not {'close', 'high', 'low'} <= set(cached):
+            raise RuntimeError(
+                f"Cache {cache} is not a close/high/low dict — delete it and re-run")
+        return cached['close'], cached['high'], cached['low']
     import yfinance as yf
-    frames = []
+    parts: dict[str, list[pd.Series]] = {'Close': [], 'High': [], 'Low': []}
     batch_size = 200
     for i in range(0, len(tickers), batch_size):
         batch = tickers[i:i + batch_size]
@@ -163,14 +217,25 @@ def _download_closes(tickers: list[str], years: int, cache: Path) -> pd.DataFram
                            auto_adjust=True, progress=False, threads=True)
         for t in batch:
             try:
-                frames.append(data[t]['Close'].rename(t))
+                cols = {f: data[t][f] for f in parts}
             except KeyError:
                 logger.warning("No data for %s", t)
-    closes = pd.concat(frames, axis=1).sort_index()
-    closes.index = pd.DatetimeIndex(closes.index).tz_localize(None)
+                continue
+            for field, series in cols.items():
+                parts[field].append(series.rename(t))
+
+    def _wide(field: str) -> pd.DataFrame:
+        frame = pd.concat(parts[field], axis=1).sort_index()
+        frame.index = pd.DatetimeIndex(frame.index).tz_localize(None)
+        return frame
+
+    closes, highs, lows = _wide('Close'), _wide('High'), _wide('Low')
+    highs = highs.reindex(index=closes.index, columns=closes.columns)
+    lows = lows.reindex(index=closes.index, columns=closes.columns)
     cache.parent.mkdir(parents=True, exist_ok=True)
-    closes.to_pickle(cache)  # pickle, not parquet: host has no pyarrow/fastparquet
-    return closes
+    # pickle, not parquet: host has no pyarrow/fastparquet
+    pd.to_pickle({'close': closes, 'high': highs, 'low': lows}, cache)
+    return closes, highs, lows
 
 
 def _download_spx(years: int) -> pd.Series:
@@ -188,16 +253,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument('--years', type=int, default=3)
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--csv', default=str(_DEFAULT_CSV))
-    parser.add_argument('--cache', default=str(_REPO / 'data' / 'history' / 'backfill_closes.pkl'))
+    parser.add_argument('--cache', default=str(_REPO / 'data' / 'history' / 'backfill_ohlc.pkl'))
     args = parser.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format='%(levelname)s %(message)s')
 
     tickers = _load_tickers()
     logger.info("Universe: %d tickers", len(tickers))
-    closes = _download_closes(tickers, args.years, Path(args.cache))
+    closes, highs, lows = _download_ohlc(tickers, args.years, Path(args.cache))
     spx = _download_spx(args.years)
 
-    backfill = compute_backfill_rows(closes, spx)
+    backfill = compute_backfill_rows(closes, spx, highs=highs, lows=lows)
     existing = load_archive(args.csv)
     merged = derive(merge_backfill(existing, backfill))
 
