@@ -2,6 +2,7 @@ import { useHash } from '../hooks/useHash'
 import Header from './Header'
 import TickerStrip from './dashboard/TickerStrip'
 import MarketPosture from './dashboard/MarketPosture'
+import BreadthChip from './breadth/BreadthChip'
 import PreMarketChecklist from './dashboard/PreMarketChecklist'
 import MacroGrid from './dashboard/MacroGrid'
 import EquitiesSection from './equities/EquitiesSection'
@@ -64,6 +65,8 @@ export default function Layout({ data, lastUpdated, isOffline }) {
         <main className="max-w-[1800px] mx-auto px-3 py-4 space-y-4">
           {/* Hero: Ticker Strip */}
           <TickerStrip signals={data?.signals} etfData={data?.etf_data} />
+
+          <BreadthChip verdict={data?.breadth?.verdict} onNavigate={navigate} />
 
           {/* Decision Panel: Market Posture + Pre-Market Checklist */}
           <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-3">
