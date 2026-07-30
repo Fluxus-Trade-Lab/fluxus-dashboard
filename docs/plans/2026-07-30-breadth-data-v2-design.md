@@ -75,10 +75,14 @@ reader is `run_all.py:302`, which is rewired by this spec. (`breadth_history.jso
   oscillator = EMA19 − EMA39 over the full series. Values change scale (standard
   McClellan range, roughly ±100) — that is the fix, not a regression.
 - **NH/NL:** true 52-week extremes. Live path: `high_52w >= -0.001` /
-  `low_52w <= 0.001` (0.1% tolerance for float/quote noise; Finviz's 52w range
-  includes today, so equality marks a new extreme). Backfill path: close vs. rolling
-  252-session max/min of close, same tolerance. Counts will drop sharply
-  (today's "251 new highs" becomes an honest few dozen) — expected.
+  `low_52w <= 0.001` (0.1% tolerance for float/quote noise). `high_52w`/`low_52w`
+  come from the yfinance enrichment — close vs. the 1y max of intraday High /
+  min of intraday Low (`yfinance_adapter.py:455-456`) — and the range includes
+  today, so equality marks a new extreme. Backfill path: same formula against
+  rolling 252-session intraday High/Low extremes (amended post-review; the
+  original close-based reconstruction undercounted vs. live by 4-8×). Counts
+  will drop sharply (today's "251 new highs" becomes an honest few dozen) —
+  expected.
 - **13%/34d:** new `perf_34d` column in yfinance enrichment
   (`close / close[-35] − 1`, same pattern as `perf_1m` at
   `yfinance_adapter.py:443`), added to `universe_cols` in `run_all.py`. Snapshot
