@@ -12,11 +12,19 @@ export function useTimeMachine() {
   const [error, setError] = useState(null)
   const timerRef = useRef(null)
 
-  const dates = replay?.dates ?? []
+  // Stable identity so the play-interval effect below is not re-armed on every
+  // render (a fresh `[]` literal churned it once per tick).
+  const dates = useMemo(() => replay?.dates ?? [], [replay])
 
   const engage = useCallback(async () => {
-    setActive(true)
-    if (replay) return
+    // Only claim the historical snapshot AFTER the replay book has landed —
+    // flipping `active` first rendered the amber "future observations
+    // excluded" banner (with an empty date) over live, present-day data for
+    // the whole ~1.4MB fetch.
+    if (replay) {
+      setActive(true)
+      return
+    }
     setLoading(true)
     try {
       const res = await fetch('/data/output/breadth_replay.json')
@@ -25,6 +33,7 @@ export function useTimeMachine() {
       setReplay(json)
       setDateState(json.dates[json.dates.length - 1])
       setError(null)
+      setActive(true)
     } catch (err) {
       setError(err.message)
       setActive(false)
@@ -64,15 +73,22 @@ export function useTimeMachine() {
     if (dates.length) setDateState(dates[dates.length - 1])
   }, [dates])
 
+  // Auto-stop lives here rather than inside the setDateState updater: updaters
+  // must be pure, and React StrictMode double-invokes them (firing setPlaying
+  // twice per tick).
+  useEffect(() => {
+    if (!playing) return
+    if (!dates.length) { setPlaying(false); return }
+    const i = dates.indexOf(date)
+    if (i === -1 || i >= dates.length - 1) setPlaying(false)
+  }, [playing, dates, date])
+
   useEffect(() => {
     if (!playing) return undefined
     timerRef.current = setInterval(() => {
       setDateState((cur) => {
         const i = dates.indexOf(cur)
-        if (i === -1 || i >= dates.length - 1) {
-          setPlaying(false)
-          return cur
-        }
+        if (i === -1 || i >= dates.length - 1) return cur
         return dates[i + 1]
       })
     }, PLAY_INTERVAL_MS)

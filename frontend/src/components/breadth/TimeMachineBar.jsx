@@ -24,6 +24,21 @@ export default function TimeMachineBar({ tm }) {
     )
   }
 
+  // Defensive: never assert "future observations excluded" without a pinned
+  // date to back the claim — show a neutral loading row instead.
+  if (!tm.date) {
+    return (
+      <div className="flex items-center gap-3 bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-4 py-2">
+        <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
+          Market Time Machine
+        </span>
+        <span className="text-[11px] text-[var(--color-text-muted)] flex-1">
+          Loading replay data…
+        </span>
+      </div>
+    )
+  }
+
   return (
     <div className="bg-[var(--color-surface)] border border-[var(--color-signal-caution)] rounded px-4 py-3">
       <div className="flex items-center justify-between mb-2">
