@@ -99,6 +99,13 @@ snapshot(universe)
 Derived-series recomputation is a pure function `derive(frame) -> frame` — the
 Spec 3 replay calls the same function on a truncated frame.
 
+**Dates are US-market trading dates (ET), always.** Today's row is stamped with
+`pipeline.marketcal.market_today()` — never the host clock (this Mac and the
+runner may sit in JST, one calendar day ahead after the close). The backfill tool
+must comply too: its dates come from the yfinance session index (exchange dates),
+with no `date.today()` / `datetime.now()` anywhere. `tests/test_no_naive_clock.py`
+already enforces this repo-wide; the new tool must pass it.
+
 ## 4 · Quality guard + error handling
 
 Reject today's row if **any** of:
