@@ -279,6 +279,7 @@ def main():
     signals, ma_histories = yf_adapter.fetch_ma_data(
         ['SPY', 'QQQ', 'IWM', 'RSP', '^GSPC', 'BTC-USD', '^VIX'],
         return_history=True,
+        history_period='3y',
     )
 
     # 4. Run screeners
@@ -301,6 +302,7 @@ def main():
     logger.info("Running breadth metrics...")
     spx_close = signals.get('^GSPC', {}).get('close')
     market_health_payload = None
+    replay_payload = None
     try:
         breadth_result = run_breadth_metrics(
             universe,
@@ -326,12 +328,18 @@ def main():
                 breadth_result, breadth_frame,
                 ma_histories.get('SPY'), ma_histories.get('QQQ'),
             )
+            from pipeline.screeners.breadth_signals import build_replay
+            replay_payload = build_replay(
+                breadth_frame,
+                ma_histories.get('SPY'), ma_histories.get('QQQ'),
+            )
         except Exception:  # noqa: BLE001 — isolate signals; breadth.json still ships
             logger.exception(
                 "Breadth signals failed — breadth.json will ship without "
                 "verdict/health; market_health.json will be marked stale"
             )
             market_health_payload = None
+            replay_payload = None
 
     # 6. VCP (two-layer — skip if universe too small)
     if len(universe) >= 50:
@@ -395,6 +403,14 @@ def main():
             logger.warning("market_health unavailable — marked previous file stale")
         except (json.JSONDecodeError, OSError) as exc:
             logger.error("Could not stale-mark market_health.json: %s", exc)
+
+    # Save breadth replay (skipped when signals/replay step failed)
+    if replay_payload is not None:
+        (OUTPUT_DIR / 'breadth_replay.json').write_text(
+            json.dumps({'timestamp': timestamp, **replay_payload},
+                       indent=2, default=_json_serializer),
+            encoding='utf-8')
+        logger.info("Saved breadth_replay.json")
 
     # Save ETF data
     (OUTPUT_DIR / 'etf_data.json').write_text(
