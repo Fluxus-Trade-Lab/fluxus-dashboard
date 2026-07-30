@@ -111,3 +111,33 @@ class TestAdLine:
     def test_ad_line_empty(self):
         from pipeline.screeners.breadth_metrics import compute_ad_line
         assert compute_ad_line([]) == 0
+
+
+class Test13Pct34d:
+    def test_counts_13pct_34d(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        universe = _make_universe(10)
+        universe['perf_34d'] = [0.20, 0.13, 0.129, -0.14, -0.13, -0.05, None, 0.0, 0.5, -0.5]
+        result = compute_snapshot(universe)
+        assert result['up_13pct_34d'] == 3    # 0.20, 0.13, 0.5
+        assert result['down_13pct_34d'] == 3  # -0.14, -0.13, -0.5
+
+    def test_missing_column_counts_zero(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        universe = _make_universe(10)  # has no perf_34d column
+        result = compute_snapshot(universe)
+        assert result['up_13pct_34d'] == 0
+        assert result['down_13pct_34d'] == 0
+
+
+class TestTrueNhNl:
+    def test_new_high_requires_at_extreme(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        universe = _make_universe(4)
+        # high_52w is (close/52w_high - 1): 0 = at high, -0.0005 within tolerance,
+        # -0.015 was a "new high" under the old 2% rule and must NOT count now.
+        universe['high_52w'] = [0.0, -0.0005, -0.015, -0.30]
+        universe['low_52w'] = [0.0, 0.0009, 0.015, 0.80]
+        result = compute_snapshot(universe)
+        assert result['new_highs'] == 2
+        assert result['new_lows'] == 2

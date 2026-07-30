@@ -24,8 +24,8 @@ import pandas as pd
 logger = logging.getLogger(__name__)
 
 # ── Thresholds ────────────────────────────────────────────────────────
-_NEW_HIGH_THRESHOLD = -0.02  # within 2% of 52w high
-_NEW_LOW_THRESHOLD = 0.02    # within 2% of 52w low
+_NEW_HIGH_THRESHOLD = -0.001  # true 52w high (0.1% float/quote tolerance)
+_NEW_LOW_THRESHOLD = 0.001    # true 52w low
 _HISTORY_DAYS = 100
 
 
@@ -51,6 +51,7 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
             'up_25pct_qtr': 0, 'down_25pct_qtr': 0,
             'up_25pct_month': 0, 'down_25pct_month': 0,
             'up_50pct_month': 0, 'down_50pct_month': 0,
+            'up_13pct_34d': 0, 'down_13pct_34d': 0,
             't2108': 0.0,
             'pct_above_200sma': 0.0, 'pct_above_50sma': 0.0,
             'pct_above_20sma': 0.0,
@@ -62,6 +63,7 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
     chg = pd.to_numeric(universe['change_pct'], errors='coerce')
     perf_1m = pd.to_numeric(universe.get('perf_1m', pd.Series(dtype=float)), errors='coerce')
     perf_3m = pd.to_numeric(universe.get('perf_3m', pd.Series(dtype=float)), errors='coerce')
+    perf_34d = pd.to_numeric(universe.get('perf_34d', pd.Series(dtype=float)), errors='coerce')
 
     # Stockbee MM scans
     up_4pct = int((chg >= 0.04).sum())
@@ -72,6 +74,8 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
     down_25pct_month = int((perf_1m <= -0.25).sum())
     up_50pct_month = int((perf_1m >= 0.50).sum())
     down_50pct_month = int((perf_1m <= -0.50).sum())
+    up_13pct_34d = int((perf_34d >= 0.13).sum())
+    down_13pct_34d = int((perf_34d <= -0.13).sum())
 
     # Classic breadth: % above MAs
     sma20 = pd.to_numeric(universe.get('sma20_dist', pd.Series(dtype=float)), errors='coerce')
@@ -104,6 +108,8 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
         'down_25pct_month': down_25pct_month,
         'up_50pct_month': up_50pct_month,
         'down_50pct_month': down_50pct_month,
+        'up_13pct_34d': up_13pct_34d,
+        'down_13pct_34d': down_13pct_34d,
         't2108': t2108,
         'pct_above_200sma': pct_above_200,
         'pct_above_50sma': pct_above_50,
