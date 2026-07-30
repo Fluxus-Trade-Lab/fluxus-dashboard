@@ -170,6 +170,10 @@ export function buildEquityCurve(trades, startingCapital, dailyPrices, benchmark
       date,
       value: totalValue,
       returnPct: ((totalValue - startingCapital) / startingCapital) * 100,
+      cash,
+      marketValue,
+      cashPct: totalValue ? (cash / totalValue) * 100 : 100,
+      deployedPct: totalValue ? (marketValue / totalValue) * 100 : 0,
     }
   })
 

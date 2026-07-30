@@ -1,5 +1,5 @@
 import { useState, useMemo, Fragment } from 'react'
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts'
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, ReferenceLine } from 'recharts'
 import { usePortfolio } from '../context/PortfolioContext'
 import SortableHeader from '../ui/SortableHeader'
 import CapitalAtRiskWidget from '../ui/CapitalAtRiskWidget'
@@ -7,9 +7,20 @@ import TickerLink from '../../ticker/TickerLink'
 import { groupByCampaigns } from '../lib/campaign'
 import { fmtCur, fmtPct, fmt, clr, SECTOR_COLORS, MASK } from '../lib/portfolioFormat'
 
-export default function ExposureTab({ openTrades, mergedHoldingsData }) {
+export default function ExposureTab({ openTrades, mergedHoldingsData, performanceData, capitalEfficiency }) {
   const { state } = usePortfolio()
   const pm = state.privacyMode
+
+  // Capital deployment over time: cash % of equity, with cumulative return overlaid.
+  const deployData = useMemo(
+    () => (performanceData || []).map(p => ({
+      date: p.date,
+      cashPct: Math.round((p.cashPct ?? 100) * 10) / 10,
+      returnPct: Math.round((p.returnPct ?? 0) * 10) / 10,
+    })),
+    [performanceData]
+  )
+  const ce = capitalEfficiency
 
   if (openTrades.length === 0) {
     return <div className="text-center py-16 text-[var(--color-text-muted)]">No open positions.</div>
@@ -94,6 +105,49 @@ export default function ExposureTab({ openTrades, mergedHoldingsData }) {
 
   return (
     <div>
+      {deployData.length > 0 && (
+        <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5 mb-5">
+          <div className="flex items-center justify-between mb-3">
+            <span className="font-semibold text-sm">Capital Deployment</span>
+            <span className="text-xs text-[var(--color-text-muted)]">How hard the capital worked over time</span>
+          </div>
+          {ce && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+              {[
+                ['Return on deployed', ce.returnOnDeployed != null ? ce.returnOnDeployed.toFixed(1) + '%' : '—'],
+                ['vs total capital', ce.totalReturnPct != null ? '+' + ce.totalReturnPct.toFixed(1) + '%' : '—'],
+                ['Avg deployed', ce.avgDeployedPct != null ? Math.round(ce.avgDeployedPct) + '%' : '—'],
+                ['Peak deployed', ce.peakDeployedPct != null ? Math.round(ce.peakDeployedPct) + '%' : '—'],
+              ].map(([l, v]) => (
+                <div key={l} className="bg-[var(--color-surface-raised)] rounded p-3">
+                  <div className="text-xs text-[var(--color-text-muted)]">{l}</div>
+                  <div className="text-lg font-bold">{v}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          <ResponsiveContainer width="100%" height={260}>
+            <LineChart data={deployData} margin={{ top: 5, right: 8, left: -8, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" vertical={false} />
+              <XAxis dataKey="date" tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} minTickGap={44} tickFormatter={d => d.slice(5)} />
+              <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={v => v + '%'} width={44} />
+              <Tooltip
+                contentStyle={{ background: 'var(--color-bg)', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
+                formatter={(val, name) => [val + '%', name]}
+              />
+              <ReferenceLine y={0} stroke="var(--color-text-muted)" />
+              <ReferenceLine y={100} stroke="var(--color-border)" strokeDasharray="4 4" />
+              <Line type="monotone" dataKey="cashPct" name="Cash %" stroke="#2a78d6" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="returnPct" name="Cumulative return %" stroke="#1baf7a" strokeWidth={2} dot={false} />
+            </LineChart>
+          </ResponsiveContainer>
+          <div className="flex gap-4 mt-2 text-xs text-[var(--color-text-muted)]">
+            <span><span style={{ color: '#2a78d6' }}>■</span> Cash % of equity</span>
+            <span><span style={{ color: '#1baf7a' }}>■</span> Cumulative return %</span>
+            <span className="ml-auto">100% = fully in cash · below 0 = on margin</span>
+          </div>
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
         <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
           <div className="font-semibold mb-3 text-sm">Holdings</div>
