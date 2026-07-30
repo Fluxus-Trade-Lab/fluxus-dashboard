@@ -132,9 +132,12 @@ archive rotted unnoticed.
    A/D, NH/NL) from that date's trailing window only
 3. SPX close from `^GSPC` (3y)
 4. Write rows with `source=backfill`; **merge under existing live rows** (live wins
-   on date collision); dedupe the current CSV keep-last in the same pass (drops the
-   poisoned 2026-07-26 row, keeps the good one; resolves the 2026-05-24 dup the same
-   way, matching the JSON dedup the dashboard already showed)
+   on date collision — but a live row with `pct_above_200sma < 5` is implausible
+   (enrichment failure) and is replaced by the backfill reconstruction for that
+   date; discovered during implementation: 2026-07-15..24 are eight such poisoned
+   live rows in the production archive); dedupe the current CSV keep-last in the
+   same pass (drops the poisoned 2026-07-26 row, keeps the good one; resolves the
+   2026-05-24 dup the same way, matching the JSON dedup the dashboard already showed)
 5. `--dry-run` prints summary stats (row counts, date range, per-column null rates,
    min/max of each metric) without writing
 
