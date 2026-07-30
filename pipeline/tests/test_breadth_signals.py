@@ -85,7 +85,10 @@ class TestBreadthVotes:
 
 def _hist(closes, highs=None, lows=None, end='2026-07-29'):
     n = len(closes)
-    idx = pd.bdate_range(end=end, periods=n)
+    # Roll a weekend `end` back to the prior business day: pandas' bdate_range
+    # silently yields n-1 periods when `end` is not a business day.
+    end_bd = pd.offsets.BDay().rollback(pd.Timestamp(end))
+    idx = pd.bdate_range(end=end_bd, periods=n)
     return pd.DataFrame({
         'Close': closes,
         'High': highs if highs is not None else [c + 1 for c in closes],
@@ -503,3 +506,66 @@ class TestRunSignalsAtomicity:
         assert health is not None
         assert 'context' in result['verdict']
         assert all(r.get('v') for r in result['history']['rows'])
+
+
+class TestBuildReplay:
+    def _frame_and_hists(self, n=12):
+        rows = []
+        for i in range(n):
+            body = _bull_row() if i % 2 == 0 else _bear_row()
+            rows.append({'date': f'2026-07-{i + 1:02d}', **body})
+        frame = _frame(rows)
+        spy = _ohlc([100.0 + i * 0.1 for i in range(260)], end='2026-07-12')
+        qqq = _ohlc([200.0 + i * 0.2 for i in range(260)], end='2026-07-12')
+        return frame, spy, qqq
+
+    def test_top_level_shape(self):
+        from pipeline.screeners.breadth_signals import build_replay
+        frame, spy, qqq = self._frame_and_hists()
+        r = build_replay(frame, spy, qqq)
+        assert set(r) == {'dates', 'rows', 'verdicts', 'health'}
+        assert r['dates'] == list(frame['date'])
+        assert set(r['rows']) == set(r['dates']) == set(r['verdicts'])
+        for key in ('spy', 'qqq'):
+            assert set(r['health'][key]) == {'candles', 'sma20', 'sma50',
+                                             'sma200', 'signals_history'}
+
+    def test_no_peek_every_date_matches_independent_evaluate(self):
+        """The no-peek rule: every stored verdict equals a fresh prefix evaluate."""
+        from pipeline.screeners.breadth_signals import (
+            build_replay, evaluate, percentile_context, market_health)
+        frame, spy, qqq = self._frame_and_hists()
+        r = build_replay(frame, spy, qqq)
+        health = market_health(spy, qqq, days=None)
+        for i, d in enumerate(r['dates']):
+            prefix = frame.iloc[:i + 1].reset_index(drop=True)
+            expected = evaluate(prefix, health)
+            expected['context'] = percentile_context(prefix)
+            assert r['verdicts'][d] == expected, d
+
+    def test_rows_are_json_safe(self):
+        import json
+        import numpy as np
+        from pipeline.screeners.breadth_signals import build_replay
+        frame, spy, qqq = self._frame_and_hists()
+        frame.loc[0, 'mcclellan_osc'] = np.nan
+        r = build_replay(frame, spy, qqq)
+        assert r['rows'][r['dates'][0]]['mcclellan_osc'] is None
+        json.dumps(r)  # must not raise
+
+    def test_health_none_degrades(self):
+        from pipeline.screeners.breadth_signals import build_replay
+        frame, _, _ = self._frame_and_hists()
+        r = build_replay(frame, None, None)
+        assert r['health'] is None
+        first = r['verdicts'][r['dates'][0]]
+        assert first['spy_state'] is None
+        assert any('unavailable' in n.lower() for n in first['notes'])
+
+    def test_health_spans_full_history(self):
+        from pipeline.screeners.breadth_signals import build_replay
+        frame, spy, qqq = self._frame_and_hists()
+        r = build_replay(frame, spy, qqq)
+        # days=None -> every session of the input history, not just 130
+        assert len(r['health']['spy']['candles']) == len(spy)
+        assert len(r['health']['spy']['signals_history']) == len(spy)

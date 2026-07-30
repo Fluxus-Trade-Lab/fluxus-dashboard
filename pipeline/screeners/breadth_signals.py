@@ -167,10 +167,15 @@ def danger_at(hist: pd.DataFrame, date_iso: str) -> Dict[str, Any]:
     return {'signals': signals, 'count': sum(signals.values()), 'date': last_date}
 
 
-def warn_counts(hist: pd.DataFrame, days: int = 130) -> List[Dict[str, Any]]:
-    """Daily warning counts (0-5) for the trailing `days` sessions."""
+def warn_counts(hist: pd.DataFrame, days: Optional[int] = 130) -> List[Dict[str, Any]]:
+    """Daily warning counts (0-5) for the trailing `days` sessions.
+
+    `days=None` returns all sessions (Time Machine full-span health).
+    """
     frame = _danger_frame(hist)
-    counts = frame.sum(axis=1).astype(int).tail(days)
+    counts = frame.sum(axis=1).astype(int)
+    if days is not None:
+        counts = counts.tail(days)
     return [{'date': d.strftime('%Y-%m-%d'), 'count': int(c)}
             for d, c in counts.items()]
 
@@ -200,14 +205,18 @@ def _round_or_none(x) -> Optional[float]:
 
 
 def market_health(spy_hist: pd.DataFrame, qqq_hist: pd.DataFrame,
-                  days: int = 130) -> Dict[str, Any]:
-    """Assemble the market_health payload for both benchmarks. Pure."""
+                  days: Optional[int] = 130) -> Dict[str, Any]:
+    """Assemble the market_health payload for both benchmarks. Pure.
+
+    `days=None` covers every session of the input history (Time Machine).
+    """
     out: Dict[str, Any] = {}
     for key, hist in (('spy', spy_hist), ('qqq', qqq_hist)):
-        tail = hist.tail(days)
-        sma20 = hist['Close'].rolling(20).mean().tail(days)
-        sma50 = hist['Close'].rolling(50).mean().tail(days)
-        sma200 = hist['Close'].rolling(200).mean().tail(days)
+        n = len(hist) if days is None else days
+        tail = hist.tail(n)
+        sma20 = hist['Close'].rolling(20).mean().tail(n)
+        sma50 = hist['Close'].rolling(50).mean().tail(n)
+        sma200 = hist['Close'].rolling(200).mean().tail(n)
         out[key] = {
             'candles': [{'date': d.strftime('%Y-%m-%d'),
                          'o': round(float(r['Open']), 2), 'h': round(float(r['High']), 2),
@@ -461,3 +470,45 @@ def run_signals(breadth_result: Dict[str, Any], frame: pd.DataFrame,
     if 'history' in breadth_result:
         breadth_result['history']['rows'] = rows
     return health
+
+
+def build_replay(frame: pd.DataFrame,
+                 spy_hist: Optional[pd.DataFrame],
+                 qqq_hist: Optional[pd.DataFrame]) -> Dict[str, Any]:
+    """Full point-in-time replay book: every archive date's row + verdict.
+
+    Pure. `verdicts[d]` is computed from the prefix ending at `d` with health
+    truncated to `d` by evaluate(), so no date can see the future (Spec 3
+    no-peek rule). Health spans the whole input history (days=None) so the
+    replay's charts and danger panels reach back as far as the archive.
+    """
+    health = None
+    if spy_hist is not None and qqq_hist is not None \
+            and len(spy_hist) >= 50 and len(qqq_hist) >= 50:
+        health = market_health(spy_hist, qqq_hist, days=None)
+
+    dates = [str(d) for d in frame['date']]
+    rows: Dict[str, Any] = {}
+    verdicts: Dict[str, Any] = {}
+    for i, d in enumerate(dates):
+        raw = frame.iloc[i].to_dict()
+        rows[d] = {k: (None if pd.isna(v) else v) for k, v in raw.items()}
+        prefix = frame.iloc[:i + 1].reset_index(drop=True)
+        verdict = evaluate(prefix, health)
+        verdict['context'] = percentile_context(prefix)
+        verdicts[d] = verdict
+
+    health_out = None
+    if health is not None:
+        health_out = {
+            key: {
+                'candles': health[key]['candles'],
+                'sma20': health[key]['sma20'],
+                'sma50': health[key]['sma50'],
+                'sma200': health[key]['sma200'],
+                'signals_history': health[key]['signals_history'],
+            }
+            for key in ('spy', 'qqq')
+        }
+
+    return {'dates': dates, 'rows': rows, 'verdicts': verdicts, 'health': health_out}
