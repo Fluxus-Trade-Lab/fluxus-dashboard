@@ -61,3 +61,38 @@ def load_archive(csv_path: str) -> pd.DataFrame:
     frame = frame.drop_duplicates(subset='date', keep='last')
     frame = frame.sort_values('date').reset_index(drop=True)
     return frame[BREADTH_COLUMNS]
+
+
+def derive(frame: pd.DataFrame) -> pd.DataFrame:
+    """Recompute all derived series over the full frame. Pure — no I/O, no clock."""
+    out = frame.copy()
+    if len(out) == 0:
+        return out
+    adv = pd.to_numeric(out['advances'], errors='coerce').fillna(0)
+    dec = pd.to_numeric(out['declines'], errors='coerce').fillna(0)
+    up4 = pd.to_numeric(out['up_4pct'], errors='coerce').fillna(0)
+    down4 = pd.to_numeric(out['down_4pct'], errors='coerce').fillna(0)
+
+    net = adv - dec
+    out['net_advances'] = net.astype(int)
+
+    total = adv + dec
+    rana = pd.Series(0.0, index=out.index)
+    nonzero = total > 0
+    rana[nonzero] = (net[nonzero] / total[nonzero]) * 1000
+    out['rana'] = rana.round(2)
+
+    ema19 = rana.ewm(span=19, adjust=False).mean()
+    ema39 = rana.ewm(span=39, adjust=False).mean()
+    out['mcclellan_osc'] = (ema19 - ema39).round(2)
+
+    out['ad_line'] = net.cumsum().astype(int)
+
+    for n, col in ((5, 'ratio_5d'), (10, 'ratio_10d')):
+        up_sum = up4.rolling(n, min_periods=1).sum()
+        down_sum = down4.rolling(n, min_periods=1).sum()
+        # Divide where the down-sum is positive; else fall back to the up-sum
+        # (mirrors the legacy compute_ratios zero-division behavior).
+        ratio = (up_sum / down_sum).where(down_sum > 0, up_sum)
+        out[col] = ratio.astype(float).round(4)
+    return out
