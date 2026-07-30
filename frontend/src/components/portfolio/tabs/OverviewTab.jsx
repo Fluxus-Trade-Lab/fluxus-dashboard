@@ -25,6 +25,7 @@ export default function OverviewTab({
   const { universe } = useUniverse()
   const { t: tr } = useLanguage()
   const pm = state.privacyMode
+  const [showMA20, setShowMA20] = useState(true)
 
   // 20-day moving average of the equity return curve — a smoothed performance
   // trend for sizing: equity above its 20d MA = uptrend (size up), below = cool
@@ -325,11 +326,20 @@ export default function OverviewTab({
             <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5 relative">
               <div className="font-semibold mb-3 text-sm flex justify-between items-center">
                 <span>{tr('pf.chart.vsSpy')}</span>
-                {hasSPY && (
-                  <Button variant="ghost" onClick={fetchFullHistory} disabled={state.loading}>
-                    {state.loading ? tr('pf.chart.loading') : tr('pf.chart.refreshHistory')}
-                  </Button>
-                )}
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => setShowMA20(v => !v)}
+                    className={`text-[11px] font-medium px-2 py-1 rounded border transition-colors ${showMA20 ? 'border-[#c98a2b] text-[#c98a2b]' : 'border-[var(--color-border)] text-[var(--color-text-muted)]'}`}
+                    aria-pressed={showMA20}
+                  >
+                    20d MA
+                  </button>
+                  {hasSPY && (
+                    <Button variant="ghost" onClick={fetchFullHistory} disabled={state.loading}>
+                      {state.loading ? tr('pf.chart.loading') : tr('pf.chart.refreshHistory')}
+                    </Button>
+                  )}
+                </div>
               </div>
               <div className="absolute top-12 left-14 z-10 flex gap-3 text-[11px]">
                 <div><span className="text-[var(--color-text-muted)]">{tr('pf.chart.portfolio')} </span><span className={`font-bold ${clr(totalReturnPct)}`}>{fmtPct(totalReturnPct)}</span></div>
@@ -348,7 +358,9 @@ export default function OverviewTab({
                   <Tooltip formatter={v => `${Number(v).toFixed(2)}%`} />
                   <Legend />
                   <Line type="monotone" dataKey="returnPct" stroke="#2d5f8a" strokeWidth={2.5} dot={false} name="Portfolio" />
-                  <Line type="monotone" dataKey="ma20" stroke="#c98a2b" strokeWidth={1.5} dot={false} name="20d MA" connectNulls />
+                  {showMA20 && (
+                    <Line type="monotone" dataKey="ma20" stroke="#c98a2b" strokeWidth={1.5} dot={false} name="20d MA" connectNulls />
+                  )}
                   {hasSPY && (
                     <Line type="monotone" dataKey="SPY" stroke="#d4a574" strokeWidth={1.5} dot={false} name="SPY" strokeDasharray="4 4" />
                   )}
