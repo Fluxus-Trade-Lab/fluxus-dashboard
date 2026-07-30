@@ -2,6 +2,7 @@ import { useState, useRef, useMemo, useEffect, useCallback } from 'react'
 import { usePortfolio } from './context/PortfolioContext'
 import { computeCashUsed, enrichTrades, computeMonthlyStats, computeYtdStats, computeRiskMetrics, computeSectorData, computeHoldingsData, computeMergedHoldingsData } from './lib/calculations'
 import { buildEquityCurve } from './lib/equityCurve'
+import { computeReturnOnDeployed } from './lib/capitalEfficiency'
 import { adjustTradesForSplits } from './lib/splits'
 import { suggestSplits, buildFrozenSnapshot } from './lib/snapshot'
 import { SPLIT_TABLE } from './lib/splitTable'
@@ -102,6 +103,11 @@ export default function Layout() {
   const performanceData = useMemo(
     () => buildEquityCurve(state.trades, state.startingCapital, state.dailyPrices, state.benchmarkHistories),
     [state.trades, state.startingCapital, state.dailyPrices, state.benchmarkHistories]
+  )
+
+  const capitalEfficiency = useMemo(
+    () => computeReturnOnDeployed(state.trades, state.startingCapital),
+    [state.trades, state.startingCapital]
   )
 
   const monthlyStats = useMemo(
@@ -330,7 +336,7 @@ export default function Layout() {
 
         {/* Tab content */}
         {state.activeTab === 0 && <OverviewTab performanceData={performanceData} totalReturnPct={totalReturnPct} monthlyStats={monthlyStats} ytdStats={ytdStats} enrichedTrades={enrichedTrades} onTrim={setTrimModal} />}
-        {state.activeTab === 1 && <ExposureTab openTrades={openTrades} sectorData={sectorData} holdingsData={holdingsData} mergedHoldingsData={mergedHoldingsData} />}
+        {state.activeTab === 1 && <ExposureTab openTrades={openTrades} sectorData={sectorData} holdingsData={holdingsData} mergedHoldingsData={mergedHoldingsData} performanceData={performanceData} capitalEfficiency={capitalEfficiency} />}
         {state.activeTab === 2 && <RiskTab riskMetrics={riskMetrics} benchmarkTicker={state.benchmarkTicker} />}
         {state.activeTab === 3 && <OptionsTab />}
 
