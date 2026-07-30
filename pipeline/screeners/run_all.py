@@ -352,7 +352,7 @@ def main():
 
     # Save full universe for screener page
     universe_cols = [
-        'ticker', 'close', 'change_pct', 'perf_1w', 'perf_1m', 'perf_3m',
+        'ticker', 'close', 'change_pct', 'perf_1w', 'perf_1m', 'perf_34d', 'perf_3m',
         'perf_6m', 'perf_1y', 'perf_ytd',
         'sma20_dist', 'sma50_dist', 'sma40_dist', 'sma200_dist',
         'atr', 'rel_volume', 'avg_volume', 'volume',

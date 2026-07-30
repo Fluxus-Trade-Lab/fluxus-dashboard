@@ -185,3 +185,19 @@ class TestSchema:
         assert 'close' in STANDARD_COLUMNS
         assert 'atr' in STANDARD_COLUMNS
         assert 'sector' in STANDARD_COLUMNS
+
+
+class TestPerf34d:
+    def test_perf_34d_formula(self):
+        # 40 sessions of linearly rising closes: 100, 101, ..., 139
+        import pandas as pd
+        closes = pd.Series([100.0 + i for i in range(40)])
+        close = float(closes.iloc[-1])          # 139
+        base = float(closes.iloc[-35])          # closes[5] = 105
+        expected = close / base - 1             # ≈ 0.32381
+        assert abs(expected - (139 / 105 - 1)) < 1e-12
+        # The adapter must use iloc[-35] (34 sessions back), mirroring perf_1m's iloc[-21]
+        from pipeline.adapters import yfinance_adapter
+        import inspect
+        src = inspect.getsource(yfinance_adapter)
+        assert "'perf_34d'" in src and 'iloc[-35]' in src

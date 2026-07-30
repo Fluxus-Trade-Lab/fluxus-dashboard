@@ -441,6 +441,7 @@ class YfinanceAdapter(BaseAdapter):
                 enriched[ticker] = {
                     'perf_1w': (close / float(hist['Close'].iloc[-5]) - 1) if n >= 5 else None,
                     'perf_1m': (close / float(hist['Close'].iloc[-21]) - 1) if n >= 21 else None,
+                    'perf_34d': (close / float(hist['Close'].iloc[-35]) - 1) if n >= 35 else None,
                     'perf_3m': (close / float(hist['Close'].iloc[-63]) - 1) if n >= 63 else None,
                     'perf_6m': (close / float(hist['Close'].iloc[-126]) - 1) if n >= 126 else None,
                     'perf_1y': (close / float(hist['Close'].iloc[0]) - 1) if n >= 200 else None,
