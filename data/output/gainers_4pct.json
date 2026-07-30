@@ -1,1197 +1,5229 @@
 {
-  "timestamp": "2026-07-29T22:31:02.721981+00:00",
-  "count": 149,
+  "timestamp": "2026-07-30T22:38:37.600934+00:00",
+  "count": 653,
   "tickers": [
     {
-      "ticker": "DFNS",
-      "change_pct": 1.0925,
-      "volume": 20852340,
-      "sector": "Industrials",
-      "atr_ext": 176.39,
+      "ticker": "CYCU",
+      "change_pct": 4.9585,
+      "volume": 637538837,
+      "sector": "Technology",
+      "atr_ext": 13.82,
       "atr_color": "red"
     },
     {
-      "ticker": "AMIX",
-      "change_pct": 0.6618,
-      "volume": 69900118,
+      "ticker": "GCTK",
+      "change_pct": 1.7368,
+      "volume": 364843224,
       "sector": "Healthcare",
-      "atr_ext": 1.69,
+      "atr_ext": 5.67,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "DFNS",
+      "change_pct": 0.6922,
+      "volume": 9597875,
+      "sector": "Industrials",
+      "atr_ext": 205.16,
+      "atr_color": "red"
+    },
+    {
+      "ticker": "KSCP",
+      "change_pct": 0.442,
+      "volume": 4549362,
+      "sector": "Industrials",
+      "atr_ext": 0.29,
       "atr_color": "green"
     },
     {
-      "ticker": "GSUN",
-      "change_pct": 0.6574,
-      "volume": 174287006,
-      "sector": "Consumer Defensive",
+      "ticker": "CMCO",
+      "change_pct": 0.4145,
+      "volume": 2397933,
+      "sector": "Industrials",
+      "atr_ext": 6.82,
+      "atr_color": "red"
+    },
+    {
+      "ticker": "FXHO",
+      "change_pct": 0.3729,
+      "volume": 269052,
+      "sector": "Technology",
+      "atr_ext": 0.29,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FCEL",
+      "change_pct": 0.3064,
+      "volume": 12516253,
+      "sector": "Industrials",
       "atr_ext": 0.5,
       "atr_color": "green"
     },
     {
-      "ticker": "AGRZ",
-      "change_pct": 0.5438,
-      "volume": 121690131,
-      "sector": "Consumer Defensive",
-      "atr_ext": 0.05,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "HURN",
-      "change_pct": 0.4037,
-      "volume": 1447331,
-      "sector": "Industrials",
-      "atr_ext": 11.46,
-      "atr_color": "red"
-    },
-    {
-      "ticker": "CLW",
-      "change_pct": 0.2342,
-      "volume": 1110061,
-      "sector": "Basic Materials",
-      "atr_ext": 6.69,
-      "atr_color": "red"
-    },
-    {
-      "ticker": "GWAV",
-      "change_pct": 0.2314,
-      "volume": 4930083,
-      "sector": "Industrials",
-      "atr_ext": 0.48,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "DCX",
-      "change_pct": 0.1973,
-      "volume": 10113194,
-      "sector": "Consumer Cyclical",
-      "atr_ext": 2.07,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "LAD",
-      "change_pct": 0.193,
-      "volume": 1716908,
-      "sector": "Consumer Cyclical",
-      "atr_ext": 10.06,
-      "atr_color": "red"
-    },
-    {
-      "ticker": "BATL",
-      "change_pct": 0.1875,
-      "volume": 14921729,
-      "sector": "Energy",
-      "atr_ext": 0.04,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "GMM",
-      "change_pct": 0.1862,
-      "volume": 22994424,
-      "sector": "Technology",
-      "atr_ext": 1.67,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "BXBL",
-      "change_pct": 0.1857,
-      "volume": 556879,
-      "sector": "Consumer Cyclical",
-      "atr_ext": 2.06,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "EXLS",
-      "change_pct": 0.1788,
-      "volume": 7660095,
-      "sector": "Technology",
-      "atr_ext": 6.79,
-      "atr_color": "red"
-    },
-    {
-      "ticker": "CBZ",
-      "change_pct": 0.1756,
-      "volume": 16958984,
-      "sector": "Industrials",
-      "atr_ext": 11.82,
-      "atr_color": "red"
-    },
-    {
-      "ticker": "BLKB",
-      "change_pct": 0.1739,
-      "volume": 1782474,
-      "sector": "Technology",
-      "atr_ext": 7.43,
-      "atr_color": "red"
-    },
-    {
-      "ticker": "GRMN",
-      "change_pct": 0.1623,
-      "volume": 3664358,
-      "sector": "Technology",
-      "atr_ext": 6.77,
-      "atr_color": "red"
-    },
-    {
-      "ticker": "AVTR",
-      "change_pct": 0.1578,
-      "volume": 42793636,
-      "sector": "Healthcare",
-      "atr_ext": 10.38,
-      "atr_color": "red"
-    },
-    {
-      "ticker": "EDU",
-      "change_pct": 0.1534,
-      "volume": 1772625,
-      "sector": "Consumer Defensive",
-      "atr_ext": 7.87,
-      "atr_color": "red"
-    },
-    {
-      "ticker": "HUHU",
-      "change_pct": 0.1497,
-      "volume": 42758,
-      "sector": "Industrials",
-      "atr_ext": 1.4,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "BRIA",
-      "change_pct": 0.1429,
-      "volume": 11702,
-      "sector": "Consumer Cyclical",
-      "atr_ext": 0.96,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CTXR",
-      "change_pct": 0.1426,
-      "volume": 1102646,
-      "sector": "Healthcare",
-      "atr_ext": 0.04,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "GV",
-      "change_pct": 0.139,
-      "volume": 1217451,
-      "sector": "Consumer Defensive",
-      "atr_ext": 0.74,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "ALVO",
-      "change_pct": 0.1387,
-      "volume": 3035696,
-      "sector": "Healthcare",
-      "atr_ext": 0.01,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CAKE",
-      "change_pct": 0.1363,
-      "volume": 5379673,
-      "sector": "Consumer Cyclical",
-      "atr_ext": 10.17,
-      "atr_color": "red"
-    },
-    {
-      "ticker": "AIXI",
-      "change_pct": 0.1333,
-      "volume": 6185229,
-      "sector": "Technology",
-      "atr_ext": 1.9,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "FIEE",
-      "change_pct": 0.1307,
-      "volume": 2244143,
-      "sector": "Technology",
-      "atr_ext": 0.79,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "DLXY",
-      "change_pct": 0.1295,
-      "volume": 81512,
-      "sector": "Energy",
-      "atr_ext": 0.61,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "JELD",
-      "change_pct": 0.1228,
-      "volume": 2473598,
-      "sector": "Industrials",
-      "atr_ext": 1.62,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "GEHC",
-      "change_pct": 0.1215,
-      "volume": 15270909,
-      "sector": "Healthcare",
-      "atr_ext": 3.74,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "JBDI",
-      "change_pct": 0.1204,
-      "volume": 510932,
-      "sector": "Consumer Cyclical",
-      "atr_ext": 0.24,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CIGL",
-      "change_pct": 0.1195,
-      "volume": 160119,
-      "sector": "Industrials",
-      "atr_ext": 0.89,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "LBRX",
-      "change_pct": 0.1162,
-      "volume": 709321,
-      "sector": "Healthcare",
-      "atr_ext": 4.37,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "CTSH",
-      "change_pct": 0.1125,
-      "volume": 18262767,
-      "sector": "Technology",
-      "atr_ext": 4.04,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "GDYN",
-      "change_pct": 0.1075,
-      "volume": 3952581,
-      "sector": "Technology",
-      "atr_ext": 1.67,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "LAB",
-      "change_pct": 0.0997,
-      "volume": 3925126,
-      "sector": "Healthcare",
-      "atr_ext": 0.52,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CNET",
-      "change_pct": 0.0922,
-      "volume": 221966,
-      "sector": "Communication Services",
-      "atr_ext": 4.11,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "BYRN",
-      "change_pct": 0.0907,
-      "volume": 1763833,
-      "sector": "Industrials",
-      "atr_ext": 1.63,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "ALLO",
-      "change_pct": 0.0904,
-      "volume": 12494482,
-      "sector": "Healthcare",
-      "atr_ext": 1.12,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "FLYX",
-      "change_pct": 0.0893,
-      "volume": 1096412,
-      "sector": "Industrials",
-      "atr_ext": 3.32,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "GDEV",
-      "change_pct": 0.0889,
-      "volume": 23,
-      "sector": "Communication Services",
-      "atr_ext": 1.9,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "GLOB",
-      "change_pct": 0.0866,
-      "volume": 2250089,
-      "sector": "Technology",
-      "atr_ext": 1.64,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CCG",
-      "change_pct": 0.0864,
-      "volume": 14469,
-      "sector": "Communication Services",
-      "atr_ext": 54.7,
-      "atr_color": "red"
-    },
-    {
-      "ticker": "AREN",
-      "change_pct": 0.0841,
-      "volume": 85400,
-      "sector": "Communication Services",
-      "atr_ext": 0.02,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "IPHA",
-      "change_pct": 0.0831,
-      "volume": 1005,
-      "sector": "Healthcare",
-      "atr_ext": 0.05,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "DXC",
-      "change_pct": 0.0828,
-      "volume": 6164399,
-      "sector": "Technology",
-      "atr_ext": 5.26,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "IOND",
-      "change_pct": 0.0811,
-      "volume": 1382057,
-      "sector": "Technology",
-      "atr_ext": null,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "IQST",
-      "change_pct": 0.08,
-      "volume": 456683,
-      "sector": "Communication Services",
-      "atr_ext": 0.43,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "GRAN",
-      "change_pct": 0.0797,
-      "volume": 2299,
-      "sector": "Financial",
-      "atr_ext": 0.97,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "DAVA",
-      "change_pct": 0.0793,
-      "volume": 879203,
-      "sector": "Technology",
-      "atr_ext": 1.04,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "ETS",
-      "change_pct": 0.0792,
-      "volume": 47956,
-      "sector": "Industrials",
-      "atr_ext": 5.71,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "EDSA",
-      "change_pct": 0.0785,
-      "volume": 132860,
-      "sector": "Healthcare",
-      "atr_ext": 1.82,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "BHST",
-      "change_pct": 0.076,
-      "volume": 72362,
-      "sector": "Consumer Defensive",
-      "atr_ext": 2.42,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CLH",
-      "change_pct": 0.0747,
-      "volume": 1490276,
-      "sector": "Industrials",
-      "atr_ext": 4.11,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "FEDU",
-      "change_pct": 0.0744,
-      "volume": 443,
-      "sector": "Consumer Defensive",
-      "atr_ext": 3.46,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "E",
-      "change_pct": 0.0713,
-      "volume": 527542,
-      "sector": "Energy",
-      "atr_ext": 2.29,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "ASH",
-      "change_pct": 0.071,
-      "volume": 2831028,
-      "sector": "Basic Materials",
-      "atr_ext": 4.27,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "CODX",
-      "change_pct": 0.0709,
-      "volume": 828121,
-      "sector": "Healthcare",
-      "atr_ext": 1.94,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "KVAC",
-      "change_pct": 0.0704,
-      "volume": 44658,
-      "sector": "Financial",
-      "atr_ext": 1.85,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CRTO",
-      "change_pct": 0.07,
-      "volume": 197518,
-      "sector": "Communication Services",
-      "atr_ext": 4.15,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "EQNR",
-      "change_pct": 0.07,
-      "volume": 4889740,
-      "sector": "Energy",
-      "atr_ext": 4.21,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "BRZE",
-      "change_pct": 0.0685,
-      "volume": 2590223,
-      "sector": "Technology",
-      "atr_ext": 2.52,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "GKOS",
-      "change_pct": 0.0683,
-      "volume": 3137213,
-      "sector": "Healthcare",
-      "atr_ext": 4.13,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "ANTX",
-      "change_pct": 0.0681,
-      "volume": 181000,
-      "sector": "Healthcare",
-      "atr_ext": 1.07,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "ADIL",
-      "change_pct": 0.0678,
-      "volume": 85790,
-      "sector": "Healthcare",
-      "atr_ext": 3.12,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "ANIK",
-      "change_pct": 0.0673,
-      "volume": 124882,
-      "sector": "Healthcare",
-      "atr_ext": 1.7,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "GTM",
-      "change_pct": 0.0671,
-      "volume": 7551884,
-      "sector": "Technology",
-      "atr_ext": 2.36,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "AIBZ",
-      "change_pct": 0.066,
-      "volume": 724761,
-      "sector": "Technology",
-      "atr_ext": null,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "BZUN",
-      "change_pct": 0.0657,
-      "volume": 436128,
-      "sector": "Consumer Cyclical",
-      "atr_ext": 3.2,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "EPAM",
-      "change_pct": 0.0646,
-      "volume": 1996242,
-      "sector": "Technology",
-      "atr_ext": 3.53,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "INTU",
-      "change_pct": 0.0643,
-      "volume": 5979495,
-      "sector": "Technology",
-      "atr_ext": 2.89,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "IT",
-      "change_pct": 0.0629,
-      "volume": 1431870,
-      "sector": "Technology",
-      "atr_ext": 2.94,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "ALMU",
-      "change_pct": 0.0613,
-      "volume": 806431,
-      "sector": "Technology",
+      "ticker": "FRVO",
+      "change_pct": 0.3056,
+      "volume": 4830077,
+      "sector": "Utilities",
       "atr_ext": 2.3,
       "atr_color": "green"
     },
     {
-      "ticker": "CLPS",
-      "change_pct": 0.0609,
-      "volume": 1944,
-      "sector": "Technology",
-      "atr_ext": 0.39,
+      "ticker": "IREN",
+      "change_pct": 0.3054,
+      "volume": 72759766,
+      "sector": "Financial",
+      "atr_ext": 1.91,
       "atr_color": "green"
     },
     {
-      "ticker": "G",
-      "change_pct": 0.0607,
-      "volume": 3550974,
-      "sector": "Technology",
-      "atr_ext": 5.23,
+      "ticker": "BHC",
+      "change_pct": 0.2885,
+      "volume": 18660045,
+      "sector": "Healthcare",
+      "atr_ext": 4.55,
       "atr_color": "amber"
     },
     {
-      "ticker": "IVDA",
-      "change_pct": 0.0606,
-      "volume": 414177,
+      "ticker": "CIFR",
+      "change_pct": 0.2807,
+      "volume": 36259438,
+      "sector": "Technology",
+      "atr_ext": 0.16,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KEEL",
+      "change_pct": 0.2736,
+      "volume": 66147504,
+      "sector": "Technology",
+      "atr_ext": 1.51,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CORT",
+      "change_pct": 0.2729,
+      "volume": 4497653,
+      "sector": "Healthcare",
+      "atr_ext": 8.51,
+      "atr_color": "red"
+    },
+    {
+      "ticker": "AXTI",
+      "change_pct": 0.2697,
+      "volume": 18301707,
+      "sector": "Technology",
+      "atr_ext": 2.15,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BRUN",
+      "change_pct": 0.2692,
+      "volume": 4033455,
+      "sector": "Technology",
+      "atr_ext": 2.05,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BE",
+      "change_pct": 0.2649,
+      "volume": 35172721,
       "sector": "Industrials",
-      "atr_ext": 1.82,
+      "atr_ext": 1.45,
       "atr_color": "green"
     },
     {
-      "ticker": "CRGY",
-      "change_pct": 0.0605,
-      "volume": 6335952,
-      "sector": "Energy",
-      "atr_ext": 0.04,
+      "ticker": "FORM",
+      "change_pct": 0.2628,
+      "volume": 2468565,
+      "sector": "Technology",
+      "atr_ext": 1.37,
       "atr_color": "green"
     },
     {
-      "ticker": "KOS",
-      "change_pct": 0.0598,
-      "volume": 14266277,
-      "sector": "Energy",
-      "atr_ext": 0.41,
+      "ticker": "AIBZ",
+      "change_pct": 0.2533,
+      "volume": 733263,
+      "sector": "Technology",
+      "atr_ext": null,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "BTDR",
+      "change_pct": 0.2472,
+      "volume": 15313638,
+      "sector": "Technology",
+      "atr_ext": 2.01,
       "atr_color": "green"
     },
     {
-      "ticker": "KGEI",
-      "change_pct": 0.0597,
-      "volume": 110082,
-      "sector": "Energy",
+      "ticker": "ARAY",
+      "change_pct": 0.2343,
+      "volume": 9388889,
+      "sector": "Healthcare",
+      "atr_ext": 0.54,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HUT",
+      "change_pct": 0.2278,
+      "volume": 5488995,
+      "sector": "Financial",
+      "atr_ext": 0.24,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HCWB",
+      "change_pct": 0.2209,
+      "volume": 95272,
+      "sector": "Healthcare",
+      "atr_ext": 2.74,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DAAQ",
+      "change_pct": 0.2192,
+      "volume": 57270,
+      "sector": "Financial",
+      "atr_ext": 3.3,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JLHL",
+      "change_pct": 0.2174,
+      "volume": 283011,
+      "sector": "Industrials",
+      "atr_ext": 1.14,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CRWV",
+      "change_pct": 0.2151,
+      "volume": 44034391,
+      "sector": "Technology",
+      "atr_ext": 2.13,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "INLF",
+      "change_pct": 0.2131,
+      "volume": 2153054,
+      "sector": "Industrials",
+      "atr_ext": 0.27,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AGPU",
+      "change_pct": 0.2108,
+      "volume": 503485,
+      "sector": "Technology",
+      "atr_ext": 1.62,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CLSK",
+      "change_pct": 0.2107,
+      "volume": 30514464,
+      "sector": "Financial",
+      "atr_ext": 0.52,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "APLD",
+      "change_pct": 0.2046,
+      "volume": 25916589,
+      "sector": "Technology",
+      "atr_ext": 2.31,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ACMR",
+      "change_pct": 0.2044,
+      "volume": 1589851,
+      "sector": "Technology",
+      "atr_ext": 1.15,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ICHR",
+      "change_pct": 0.2043,
+      "volume": 842331,
+      "sector": "Technology",
+      "atr_ext": 0.84,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CORZ",
+      "change_pct": 0.2036,
+      "volume": 22585117,
+      "sector": "Technology",
+      "atr_ext": 1.38,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AARD",
+      "change_pct": 0.203,
+      "volume": 152395,
+      "sector": "Healthcare",
+      "atr_ext": 2.41,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CMCT",
+      "change_pct": 0.2007,
+      "volume": 43254,
+      "sector": "Real Estate",
+      "atr_ext": 0.37,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ALAB",
+      "change_pct": 0.2,
+      "volume": 6341681,
+      "sector": "Technology",
+      "atr_ext": 1.28,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CBRS",
+      "change_pct": 0.1988,
+      "volume": 6693594,
+      "sector": "Technology",
+      "atr_ext": 0.43,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ASBP",
+      "change_pct": 0.1979,
+      "volume": 13996,
+      "sector": "Healthcare",
+      "atr_ext": 0.84,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BGDE",
+      "change_pct": 0.1949,
+      "volume": 91552,
+      "sector": "Financial",
+      "atr_ext": 1.31,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EME",
+      "change_pct": 0.1932,
+      "volume": 880559,
+      "sector": "Industrials",
+      "atr_ext": 0.03,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AGEN",
+      "change_pct": 0.1931,
+      "volume": 2999721,
+      "sector": "Healthcare",
+      "atr_ext": 11.99,
+      "atr_color": "red"
+    },
+    {
+      "ticker": "BW",
+      "change_pct": 0.1927,
+      "volume": 5285642,
+      "sector": "Industrials",
+      "atr_ext": 3.07,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HIVE",
+      "change_pct": 0.1834,
+      "volume": 22106852,
+      "sector": "Financial",
+      "atr_ext": 1.78,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FMC",
+      "change_pct": 0.1818,
+      "volume": 9908547,
+      "sector": "Basic Materials",
       "atr_ext": 0.25,
       "atr_color": "green"
     },
     {
-      "ticker": "CGAU",
-      "change_pct": 0.0597,
-      "volume": 2632187,
-      "sector": "Basic Materials",
-      "atr_ext": 1.0,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CHRD",
-      "change_pct": 0.0595,
-      "volume": 651573,
-      "sector": "Energy",
-      "atr_ext": 1.46,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "ADV",
-      "change_pct": 0.0593,
-      "volume": 104848,
-      "sector": "Communication Services",
-      "atr_ext": 1.48,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "KUST",
-      "change_pct": 0.0588,
-      "volume": 640685,
-      "sector": "Communication Services",
-      "atr_ext": 1.4,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "EONR",
-      "change_pct": 0.0586,
-      "volume": 839834,
-      "sector": "Energy",
-      "atr_ext": 0.93,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CVSA",
-      "change_pct": 0.0578,
-      "volume": 402033,
-      "sector": "Consumer Defensive",
-      "atr_ext": 1.9,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "ADBE",
-      "change_pct": 0.0572,
-      "volume": 9865389,
-      "sector": "Technology",
-      "atr_ext": 3.45,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "HCKT",
-      "change_pct": 0.0568,
-      "volume": 1120736,
-      "sector": "Technology",
-      "atr_ext": 1.13,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "COUR",
-      "change_pct": 0.0564,
-      "volume": 14207629,
-      "sector": "Consumer Defensive",
-      "atr_ext": 2.55,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "ILLR",
-      "change_pct": 0.0561,
-      "volume": 341875,
-      "sector": "Technology",
-      "atr_ext": 1.09,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CRAI",
-      "change_pct": 0.0559,
-      "volume": 147920,
-      "sector": "Industrials",
-      "atr_ext": 5.43,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "GOTU",
-      "change_pct": 0.0559,
-      "volume": 254668,
-      "sector": "Consumer Defensive",
-      "atr_ext": 0.04,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "HTLM",
-      "change_pct": 0.0556,
-      "volume": 13166,
+      "ticker": "DBGI",
+      "change_pct": 0.1815,
+      "volume": 78945,
       "sector": "Consumer Cyclical",
-      "atr_ext": 0.02,
-      "atr_color": "green"
+      "atr_ext": 25.16,
+      "atr_color": "red"
     },
     {
-      "ticker": "DOW",
-      "change_pct": 0.0555,
-      "volume": 13814150,
-      "sector": "Basic Materials",
-      "atr_ext": 0.95,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "LIFE",
-      "change_pct": 0.0553,
-      "volume": 1049692,
-      "sector": "Financial",
-      "atr_ext": 1.12,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "HUBS",
-      "change_pct": 0.0549,
-      "volume": 1540460,
+      "ticker": "COHU",
+      "change_pct": 0.1807,
+      "volume": 2411749,
       "sector": "Technology",
-      "atr_ext": 3.79,
+      "atr_ext": 1.6,
       "atr_color": "green"
     },
     {
-      "ticker": "CHEF",
-      "change_pct": 0.0544,
-      "volume": 1559910,
-      "sector": "Consumer Defensive",
-      "atr_ext": 4.21,
-      "atr_color": "amber"
+      "ticker": "GLXY",
+      "change_pct": 0.1785,
+      "volume": 8206462,
+      "sector": "Financial",
+      "atr_ext": 2.01,
+      "atr_color": "green"
     },
     {
-      "ticker": "CLDX",
-      "change_pct": 0.0542,
-      "volume": 1572692,
-      "sector": "Healthcare",
+      "ticker": "AGX",
+      "change_pct": 0.1778,
+      "volume": 630725,
+      "sector": "Industrials",
+      "atr_ext": 1.37,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EFOR",
+      "change_pct": 0.1777,
+      "volume": 1852935,
+      "sector": "Technology",
+      "atr_ext": 6.45,
+      "atr_color": "red"
+    },
+    {
+      "ticker": "AAOI",
+      "change_pct": 0.1776,
+      "volume": 10857451,
+      "sector": "Technology",
+      "atr_ext": 2.33,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ALOY",
+      "change_pct": 0.1769,
+      "volume": 4390527,
+      "sector": "Basic Materials",
+      "atr_ext": 1.88,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AEVA",
+      "change_pct": 0.1766,
+      "volume": 1686478,
+      "sector": "Technology",
+      "atr_ext": 1.96,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AEHR",
+      "change_pct": 0.1754,
+      "volume": 2517436,
+      "sector": "Technology",
+      "atr_ext": 1.03,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "INV",
+      "change_pct": 0.1738,
+      "volume": 1788542,
+      "sector": "Financial",
       "atr_ext": 2.56,
       "atr_color": "green"
     },
     {
-      "ticker": "BFRI",
-      "change_pct": 0.0541,
-      "volume": 728263,
+      "ticker": "BTBT",
+      "change_pct": 0.1736,
+      "volume": 26042476,
+      "sector": "Financial",
+      "atr_ext": 1.89,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GRDX",
+      "change_pct": 0.1731,
+      "volume": 124002,
       "sector": "Healthcare",
-      "atr_ext": 2.84,
+      "atr_ext": 2.19,
       "atr_color": "green"
     },
     {
-      "ticker": "DDOG",
-      "change_pct": 0.0531,
-      "volume": 6588412,
+      "ticker": "IDAI",
+      "change_pct": 0.1719,
+      "volume": 43136,
       "sector": "Technology",
-      "atr_ext": 1.75,
+      "atr_ext": 3.43,
       "atr_color": "green"
     },
     {
-      "ticker": "INDP",
-      "change_pct": 0.052,
-      "volume": 173049,
-      "sector": "Healthcare",
-      "atr_ext": 1.49,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "ACN",
-      "change_pct": 0.0517,
-      "volume": 10917270,
-      "sector": "Technology",
-      "atr_ext": 2.79,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "INDO",
-      "change_pct": 0.0513,
-      "volume": 431500,
-      "sector": "Energy",
-      "atr_ext": 0.17,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CNQ",
-      "change_pct": 0.0511,
-      "volume": 8066769,
-      "sector": "Energy",
-      "atr_ext": 2.26,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CVE",
-      "change_pct": 0.051,
-      "volume": 10374701,
-      "sector": "Energy",
-      "atr_ext": 1.75,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CBRL",
-      "change_pct": 0.0509,
-      "volume": 1142573,
-      "sector": "Consumer Cyclical",
-      "atr_ext": 5.41,
-      "atr_color": "amber"
-    },
-    {
-      "ticker": "APPN",
-      "change_pct": 0.0508,
-      "volume": 1192509,
-      "sector": "Technology",
-      "atr_ext": 3.89,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "APA",
-      "change_pct": 0.0507,
-      "volume": 5360211,
-      "sector": "Energy",
-      "atr_ext": 1.08,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "FRSX",
-      "change_pct": 0.05,
-      "volume": 77014,
-      "sector": "Consumer Cyclical",
-      "atr_ext": 2.44,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "HXHX",
-      "change_pct": 0.0499,
-      "volume": 35806,
-      "sector": "Industrials",
+      "ticker": "CPOP",
+      "change_pct": 0.1717,
+      "volume": 1027995,
+      "sector": "Communication Services",
       "atr_ext": 0.71,
       "atr_color": "green"
     },
     {
-      "ticker": "HRB",
-      "change_pct": 0.0498,
-      "volume": 2332626,
-      "sector": "Consumer Cyclical",
-      "atr_ext": 6.44,
-      "atr_color": "red"
-    },
-    {
-      "ticker": "KD",
-      "change_pct": 0.0494,
-      "volume": 6151514,
+      "ticker": "AMCI",
+      "change_pct": 0.1709,
+      "volume": 167754,
       "sector": "Technology",
-      "atr_ext": 3.74,
+      "atr_ext": 0.35,
       "atr_color": "green"
     },
     {
-      "ticker": "GWRE",
-      "change_pct": 0.0493,
-      "volume": 1657094,
-      "sector": "Technology",
-      "atr_ext": 4.8,
+      "ticker": "BCAR",
+      "change_pct": 0.1707,
+      "volume": 203433,
+      "sector": "Financial",
+      "atr_ext": 4.12,
       "atr_color": "amber"
     },
     {
-      "ticker": "DCBO",
-      "change_pct": 0.0491,
-      "volume": 158119,
+      "ticker": "FEBO",
+      "change_pct": 0.1693,
+      "volume": 12673,
       "sector": "Technology",
-      "atr_ext": 4.46,
+      "atr_ext": 0.49,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GFUZ",
+      "change_pct": 0.1667,
+      "volume": 443926,
+      "sector": "Industrials",
+      "atr_ext": 0.35,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CDTG",
+      "change_pct": 0.1664,
+      "volume": 42590,
+      "sector": "Industrials",
+      "atr_ext": 1.57,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IDCC",
+      "change_pct": 0.1616,
+      "volume": 664936,
+      "sector": "Technology",
+      "atr_ext": 3.06,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GNTA",
+      "change_pct": 0.1615,
+      "volume": 90878,
+      "sector": "Healthcare",
+      "atr_ext": 0.18,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DGNX",
+      "change_pct": 0.1613,
+      "volume": 8146577,
+      "sector": "Industrials",
+      "atr_ext": 5.0,
       "atr_color": "amber"
     },
     {
-      "ticker": "APPF",
-      "change_pct": 0.0489,
-      "volume": 417250,
+      "ticker": "FFAI",
+      "change_pct": 0.158,
+      "volume": 3030855,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 17.84,
+      "atr_color": "red"
+    },
+    {
+      "ticker": "BOOM",
+      "change_pct": 0.155,
+      "volume": 842263,
+      "sector": "Industrials",
+      "atr_ext": 0.57,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ARXS",
+      "change_pct": 0.1533,
+      "volume": 2044261,
+      "sector": "Industrials",
+      "atr_ext": 2.66,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IESC",
+      "change_pct": 0.1518,
+      "volume": 321677,
+      "sector": "Industrials",
+      "atr_ext": 1.8,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DGXX",
+      "change_pct": 0.1515,
+      "volume": 3327257,
+      "sector": "Utilities",
+      "atr_ext": 2.73,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LITE",
+      "change_pct": 0.1509,
+      "volume": 5605945,
+      "sector": "Technology",
+      "atr_ext": 1.51,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BFLY",
+      "change_pct": 0.1507,
+      "volume": 9978600,
+      "sector": "Healthcare",
+      "atr_ext": 3.3,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EOSE",
+      "change_pct": 0.1497,
+      "volume": 25299806,
+      "sector": "Industrials",
+      "atr_ext": 3.1,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AMAT",
+      "change_pct": 0.1497,
+      "volume": 12152409,
+      "sector": "Technology",
+      "atr_ext": 0.83,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CSW",
+      "change_pct": 0.1496,
+      "volume": 224185,
+      "sector": "Industrials",
+      "atr_ext": 2.63,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FRMI",
+      "change_pct": 0.1485,
+      "volume": 18497498,
+      "sector": "Real Estate",
+      "atr_ext": 0.45,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AMSS",
+      "change_pct": 0.1481,
+      "volume": 224972,
+      "sector": "Consumer Defensive",
+      "atr_ext": null,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "DCX",
+      "change_pct": 0.1481,
+      "volume": 7135706,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 1.63,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BDC",
+      "change_pct": 0.1478,
+      "volume": 948998,
+      "sector": "Technology",
+      "atr_ext": 1.55,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KAZR",
+      "change_pct": 0.1462,
+      "volume": 82638,
+      "sector": "Industrials",
+      "atr_ext": 2.0,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ARQQ",
+      "change_pct": 0.1433,
+      "volume": 306736,
+      "sector": "Technology",
+      "atr_ext": 0.41,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CPSH",
+      "change_pct": 0.1425,
+      "volume": 181259,
+      "sector": "Technology",
+      "atr_ext": 2.57,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HII",
+      "change_pct": 0.1409,
+      "volume": 1374466,
+      "sector": "Industrials",
+      "atr_ext": 2.56,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ANY",
+      "change_pct": 0.1408,
+      "volume": 674879,
+      "sector": "Financial",
+      "atr_ext": 0.63,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GMEX",
+      "change_pct": 0.1406,
+      "volume": 5995952,
+      "sector": "Technology",
+      "atr_ext": 1.73,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ATOM",
+      "change_pct": 0.14,
+      "volume": 536042,
+      "sector": "Technology",
+      "atr_ext": 2.76,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FPS",
+      "change_pct": 0.1378,
+      "volume": 12072286,
+      "sector": "Industrials",
+      "atr_ext": 3.04,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FLY",
+      "change_pct": 0.1373,
+      "volume": 4366901,
+      "sector": "Industrials",
+      "atr_ext": 3.21,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CHRN",
+      "change_pct": 0.1371,
+      "volume": 124797,
+      "sector": "Technology",
+      "atr_ext": 0.2,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ABTC",
+      "change_pct": 0.1368,
+      "volume": 1854435,
+      "sector": "Financial",
+      "atr_ext": 3.32,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HYPD",
+      "change_pct": 0.1368,
+      "volume": 211632,
+      "sector": "Healthcare",
+      "atr_ext": 1.64,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ENVX",
+      "change_pct": 0.1359,
+      "volume": 8287260,
+      "sector": "Industrials",
+      "atr_ext": 3.05,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LGVN",
+      "change_pct": 0.135,
+      "volume": 483641,
+      "sector": "Healthcare",
+      "atr_ext": 0.7,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BIVI",
+      "change_pct": 0.1349,
+      "volume": 225471,
+      "sector": "Healthcare",
+      "atr_ext": 1.14,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AIB",
+      "change_pct": 0.1346,
+      "volume": 1684825,
+      "sector": "Technology",
+      "atr_ext": 1.08,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FAC",
+      "change_pct": 0.1346,
+      "volume": 353613,
+      "sector": "Industrials",
+      "atr_ext": 2.26,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CRDO",
+      "change_pct": 0.1332,
+      "volume": 6942165,
+      "sector": "Technology",
+      "atr_ext": 1.2,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FLNC",
+      "change_pct": 0.1329,
+      "volume": 5487203,
+      "sector": "Utilities",
+      "atr_ext": 2.47,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KOPN",
+      "change_pct": 0.1313,
+      "volume": 3518023,
+      "sector": "Technology",
+      "atr_ext": 1.85,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CALC",
+      "change_pct": 0.1309,
+      "volume": 312945,
+      "sector": "Healthcare",
+      "atr_ext": 0.26,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "INFQ",
+      "change_pct": 0.1302,
+      "volume": 8658970,
+      "sector": "Technology",
+      "atr_ext": 2.17,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AMD",
+      "change_pct": 0.13,
+      "volume": 36823412,
+      "sector": "Technology",
+      "atr_ext": 0.6,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AMKR",
+      "change_pct": 0.1294,
+      "volume": 8604784,
+      "sector": "Technology",
+      "atr_ext": 2.39,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DFSC",
+      "change_pct": 0.1294,
+      "volume": 23903,
+      "sector": "Industrials",
+      "atr_ext": 3.05,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GSUN",
+      "change_pct": 0.1278,
+      "volume": 7547045,
+      "sector": "Consumer Defensive",
+      "atr_ext": 0.16,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LGN",
+      "change_pct": 0.1268,
+      "volume": 3046553,
+      "sector": "Industrials",
+      "atr_ext": 2.53,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DOCN",
+      "change_pct": 0.1262,
+      "volume": 4585367,
+      "sector": "Technology",
+      "atr_ext": 1.87,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CIEN",
+      "change_pct": 0.1262,
+      "volume": 2463883,
+      "sector": "Technology",
+      "atr_ext": 2.39,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ECG",
+      "change_pct": 0.1261,
+      "volume": 651558,
+      "sector": "Industrials",
+      "atr_ext": 2.08,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CMG",
+      "change_pct": 0.125,
+      "volume": 35568720,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 4.55,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "IMSR",
+      "change_pct": 0.125,
+      "volume": 2150903,
+      "sector": "Utilities",
+      "atr_ext": 2.31,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ASPI",
+      "change_pct": 0.1243,
+      "volume": 4262598,
+      "sector": "Basic Materials",
+      "atr_ext": 2.81,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AOSL",
+      "change_pct": 0.1231,
+      "volume": 464391,
+      "sector": "Technology",
+      "atr_ext": 2.13,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AMPX",
+      "change_pct": 0.122,
+      "volume": 6015281,
+      "sector": "Industrials",
+      "atr_ext": 3.18,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DY",
+      "change_pct": 0.1216,
+      "volume": 671456,
+      "sector": "Industrials",
+      "atr_ext": 1.21,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "COHR",
+      "change_pct": 0.1216,
+      "volume": 6334857,
+      "sector": "Technology",
+      "atr_ext": 2.46,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GRAL",
+      "change_pct": 0.1214,
+      "volume": 546414,
+      "sector": "Healthcare",
+      "atr_ext": 1.12,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GVH",
+      "change_pct": 0.1209,
+      "volume": 10211652,
+      "sector": "Industrials",
+      "atr_ext": 1.38,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "INIO",
+      "change_pct": 0.1203,
+      "volume": 9511621,
+      "sector": "Industrials",
+      "atr_ext": null,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "BTQ",
+      "change_pct": 0.1203,
+      "volume": 1370363,
+      "sector": "Technology",
+      "atr_ext": 1.45,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BIOA",
+      "change_pct": 0.1199,
+      "volume": 673418,
+      "sector": "Healthcare",
+      "atr_ext": 3.29,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CNXU",
+      "change_pct": 0.1191,
+      "volume": 160709,
+      "sector": "Healthcare",
+      "atr_ext": null,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "IONQ",
+      "change_pct": 0.1182,
+      "volume": 23386415,
+      "sector": "Technology",
+      "atr_ext": 3.16,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ANIK",
+      "change_pct": 0.1175,
+      "volume": 114412,
+      "sector": "Healthcare",
+      "atr_ext": 4.22,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "BWEN",
+      "change_pct": 0.1175,
+      "volume": 778184,
+      "sector": "Industrials",
+      "atr_ext": 0.72,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ACLS",
+      "change_pct": 0.1174,
+      "volume": 339312,
+      "sector": "Technology",
+      "atr_ext": 2.01,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HYLN",
+      "change_pct": 0.1173,
+      "volume": 2800265,
+      "sector": "Industrials",
+      "atr_ext": 2.4,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ASX",
+      "change_pct": 0.1173,
+      "volume": 13739994,
+      "sector": "Technology",
+      "atr_ext": 1.15,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FIX",
+      "change_pct": 0.117,
+      "volume": 696396,
+      "sector": "Industrials",
+      "atr_ext": 0.93,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CNET",
+      "change_pct": 0.1169,
+      "volume": 115239,
+      "sector": "Communication Services",
+      "atr_ext": 5.53,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "AMRC",
+      "change_pct": 0.1162,
+      "volume": 595246,
+      "sector": "Industrials",
+      "atr_ext": 2.94,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ELVA",
+      "change_pct": 0.116,
+      "volume": 644564,
+      "sector": "Industrials",
+      "atr_ext": 1.2,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BLDP",
+      "change_pct": 0.116,
+      "volume": 6516222,
+      "sector": "Industrials",
+      "atr_ext": 3.35,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AIRS",
+      "change_pct": 0.1137,
+      "volume": 329205,
+      "sector": "Healthcare",
+      "atr_ext": 0.12,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FSS",
+      "change_pct": 0.1134,
+      "volume": 901434,
+      "sector": "Industrials",
+      "atr_ext": 1.81,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "INTC",
+      "change_pct": 0.113,
+      "volume": 139443342,
+      "sector": "Technology",
+      "atr_ext": 2.05,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LASR",
+      "change_pct": 0.1124,
+      "volume": 711050,
+      "sector": "Technology",
+      "atr_ext": 0.49,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GSIT",
+      "change_pct": 0.1124,
+      "volume": 1077431,
+      "sector": "Technology",
+      "atr_ext": 2.18,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DXYZ",
+      "change_pct": 0.1122,
+      "volume": 1769449,
+      "sector": "Financial",
+      "atr_ext": 3.1,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LIQT",
+      "change_pct": 0.1111,
+      "volume": 72959,
+      "sector": "Industrials",
+      "atr_ext": 2.07,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LNC",
+      "change_pct": 0.1108,
+      "volume": 5837380,
+      "sector": "Financial",
+      "atr_ext": 6.91,
+      "atr_color": "red"
+    },
+    {
+      "ticker": "CTXR",
+      "change_pct": 0.1107,
+      "volume": 1805629,
+      "sector": "Healthcare",
+      "atr_ext": 1.2,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BLZE",
+      "change_pct": 0.1098,
+      "volume": 1683236,
+      "sector": "Technology",
+      "atr_ext": 1.19,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CMND",
+      "change_pct": 0.1096,
+      "volume": 169713,
+      "sector": "Healthcare",
+      "atr_ext": 2.6,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GEOS",
+      "change_pct": 0.1094,
+      "volume": 69466,
+      "sector": "Energy",
+      "atr_ext": 0.33,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "INVZ",
+      "change_pct": 0.1084,
+      "volume": 7054361,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 2.37,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AVEX",
+      "change_pct": 0.1079,
+      "volume": 1527773,
+      "sector": "Industrials",
+      "atr_ext": 2.14,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AUID",
+      "change_pct": 0.1076,
+      "volume": 137077,
+      "sector": "Technology",
+      "atr_ext": 2.05,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IPWR",
+      "change_pct": 0.1075,
+      "volume": 106227,
       "sector": "Technology",
       "atr_ext": 2.68,
       "atr_color": "green"
     },
     {
-      "ticker": "FVN",
-      "change_pct": 0.0483,
-      "volume": 85118,
-      "sector": "Financial",
-      "atr_ext": 1.59,
+      "ticker": "ABSI",
+      "change_pct": 0.1072,
+      "volume": 3728738,
+      "sector": "Healthcare",
+      "atr_ext": 0.5,
       "atr_color": "green"
     },
     {
-      "ticker": "GLMD",
-      "change_pct": 0.0481,
-      "volume": 87135,
+      "ticker": "LEU",
+      "change_pct": 0.1068,
+      "volume": 704343,
+      "sector": "Energy",
+      "atr_ext": 0.55,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FOSL",
+      "change_pct": 0.1068,
+      "volume": 2172115,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 3.15,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CEPL",
+      "change_pct": 0.1067,
+      "volume": 296820,
+      "sector": "Industrials",
+      "atr_ext": null,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "IRD",
+      "change_pct": 0.1066,
+      "volume": 1036715,
+      "sector": "Healthcare",
+      "atr_ext": 0.14,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AMTX",
+      "change_pct": 0.1064,
+      "volume": 654113,
+      "sector": "Basic Materials",
+      "atr_ext": 1.89,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FGNX",
+      "change_pct": 0.106,
+      "volume": 126600,
+      "sector": "Financial",
+      "atr_ext": 2.15,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CSL",
+      "change_pct": 0.1056,
+      "volume": 715838,
+      "sector": "Industrials",
+      "atr_ext": 1.57,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AMSC",
+      "change_pct": 0.1055,
+      "volume": 767149,
+      "sector": "Industrials",
+      "atr_ext": 3.07,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AKAN",
+      "change_pct": 0.1055,
+      "volume": 89086,
+      "sector": "Healthcare",
+      "atr_ext": 1.94,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CELZ",
+      "change_pct": 0.1045,
+      "volume": 98749,
+      "sector": "Healthcare",
+      "atr_ext": 2.36,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CTRI",
+      "change_pct": 0.1045,
+      "volume": 2407959,
+      "sector": "Utilities",
+      "atr_ext": 1.42,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AMBQ",
+      "change_pct": 0.1043,
+      "volume": 521279,
+      "sector": "Technology",
+      "atr_ext": 1.96,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FLNA",
+      "change_pct": 0.104,
+      "volume": 330743,
+      "sector": "Healthcare",
+      "atr_ext": 3.0,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EZRA",
+      "change_pct": 0.1034,
+      "volume": 495496,
+      "sector": "Financial",
+      "atr_ext": 3.2,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JFB",
+      "change_pct": 0.1033,
+      "volume": 287390,
+      "sector": "Real Estate",
+      "atr_ext": 2.31,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FOXX",
+      "change_pct": 0.103,
+      "volume": 20069,
+      "sector": "Technology",
+      "atr_ext": 1.46,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EFOI",
+      "change_pct": 0.1028,
+      "volume": 14748,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 0.5,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ASPN",
+      "change_pct": 0.1027,
+      "volume": 1303372,
+      "sector": "Industrials",
+      "atr_ext": 2.41,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ELPW",
+      "change_pct": 0.1022,
+      "volume": 2890475,
+      "sector": "Industrials",
+      "atr_ext": 0.99,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CEVA",
+      "change_pct": 0.1022,
+      "volume": 550206,
+      "sector": "Technology",
+      "atr_ext": 2.2,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ASTS",
+      "change_pct": 0.102,
+      "volume": 12818281,
+      "sector": "Technology",
+      "atr_ext": 2.63,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BIAF",
+      "change_pct": 0.1015,
+      "volume": 149094,
+      "sector": "Healthcare",
+      "atr_ext": 3.49,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CAST",
+      "change_pct": 0.1,
+      "volume": 1589022,
+      "sector": "Communication Services",
+      "atr_ext": 1.1,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CVI",
+      "change_pct": 0.0999,
+      "volume": 2388981,
+      "sector": "Energy",
+      "atr_ext": 4.03,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "DEFT",
+      "change_pct": 0.0997,
+      "volume": 1574419,
+      "sector": "Financial",
+      "atr_ext": 2.05,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EROC",
+      "change_pct": 0.099,
+      "volume": 2769873,
+      "sector": "Industrials",
+      "atr_ext": null,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "FBLG",
+      "change_pct": 0.0987,
+      "volume": 128151,
+      "sector": "Healthcare",
+      "atr_ext": 2.0,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BTBD",
+      "change_pct": 0.0986,
+      "volume": 61237,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 0.68,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JCTC",
+      "change_pct": 0.098,
+      "volume": 15408,
+      "sector": "Basic Materials",
+      "atr_ext": 3.67,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AUST",
+      "change_pct": 0.0978,
+      "volume": 209714,
+      "sector": "Basic Materials",
+      "atr_ext": 1.76,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DWSN",
+      "change_pct": 0.0976,
+      "volume": 49224,
+      "sector": "Energy",
+      "atr_ext": 0.28,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ALMS",
+      "change_pct": 0.0974,
+      "volume": 992164,
+      "sector": "Healthcare",
+      "atr_ext": 2.59,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EPRX",
+      "change_pct": 0.0972,
+      "volume": 1104468,
+      "sector": "Healthcare",
+      "atr_ext": 0.17,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ASTI",
+      "change_pct": 0.0968,
+      "volume": 358962,
+      "sector": "Technology",
+      "atr_ext": 2.8,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ADEA",
+      "change_pct": 0.0967,
+      "volume": 1218352,
+      "sector": "Technology",
+      "atr_ext": 1.76,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CECO",
+      "change_pct": 0.0956,
+      "volume": 1345753,
+      "sector": "Industrials",
+      "atr_ext": 2.73,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LEDS",
+      "change_pct": 0.0955,
+      "volume": 186629,
+      "sector": "Technology",
+      "atr_ext": 0.1,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GLSI",
+      "change_pct": 0.0953,
+      "volume": 116975,
+      "sector": "Healthcare",
+      "atr_ext": 2.56,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CTNM",
+      "change_pct": 0.0953,
+      "volume": 337659,
+      "sector": "Healthcare",
+      "atr_ext": 2.41,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CSTL",
+      "change_pct": 0.0953,
+      "volume": 695096,
+      "sector": "Healthcare",
+      "atr_ext": 4.28,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "COSM",
+      "change_pct": 0.0952,
+      "volume": 5358202,
+      "sector": "Healthcare",
+      "atr_ext": 0.97,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DELL",
+      "change_pct": 0.0951,
+      "volume": 6147952,
+      "sector": "Technology",
+      "atr_ext": 0.29,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DPRO",
+      "change_pct": 0.0947,
+      "volume": 634922,
+      "sector": "Technology",
+      "atr_ext": 2.88,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ENTG",
+      "change_pct": 0.0944,
+      "volume": 4346786,
+      "sector": "Technology",
+      "atr_ext": 1.96,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HOVR",
+      "change_pct": 0.0943,
+      "volume": 1187712,
+      "sector": "Industrials",
+      "atr_ext": 1.72,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ICON",
+      "change_pct": 0.0928,
+      "volume": 46370,
+      "sector": "Industrials",
+      "atr_ext": 0.17,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BBAI",
+      "change_pct": 0.0927,
+      "volume": 30718262,
+      "sector": "Technology",
+      "atr_ext": 3.37,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KUST",
+      "change_pct": 0.0926,
+      "volume": 12964568,
+      "sector": "Communication Services",
+      "atr_ext": 1.22,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AIRJ",
+      "change_pct": 0.092,
+      "volume": 1032275,
+      "sector": "Industrials",
+      "atr_ext": 0.21,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ALNT",
+      "change_pct": 0.0917,
+      "volume": 226757,
+      "sector": "Technology",
+      "atr_ext": 0.1,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ACET",
+      "change_pct": 0.0916,
+      "volume": 60762,
+      "sector": "Healthcare",
+      "atr_ext": 1.67,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IBRX",
+      "change_pct": 0.0908,
+      "volume": 11032962,
+      "sector": "Healthcare",
+      "atr_ext": 0.46,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GEV",
+      "change_pct": 0.0907,
+      "volume": 3136312,
+      "sector": "Industrials",
+      "atr_ext": 0.64,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GLW",
+      "change_pct": 0.09,
+      "volume": 18936842,
+      "sector": "Technology",
+      "atr_ext": 2.37,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BMNR",
+      "change_pct": 0.0898,
+      "volume": 35665765,
+      "sector": "Financial",
+      "atr_ext": 1.43,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BKSY",
+      "change_pct": 0.0898,
+      "volume": 1051768,
+      "sector": "Industrials",
+      "atr_ext": 2.87,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DOMH",
+      "change_pct": 0.0897,
+      "volume": 79277,
+      "sector": "Financial",
+      "atr_ext": 2.59,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AHG",
+      "change_pct": 0.089,
+      "volume": 5085,
+      "sector": "Healthcare",
+      "atr_ext": 1.06,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DDD",
+      "change_pct": 0.0887,
+      "volume": 2694235,
+      "sector": "Technology",
+      "atr_ext": 1.58,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JOBY",
+      "change_pct": 0.0887,
+      "volume": 27127831,
+      "sector": "Industrials",
+      "atr_ext": 2.76,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ALLO",
+      "change_pct": 0.0884,
+      "volume": 10517751,
+      "sector": "Healthcare",
+      "atr_ext": 0.01,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BTMD",
+      "change_pct": 0.0882,
+      "volume": 141650,
+      "sector": "Healthcare",
+      "atr_ext": 0.18,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DUOT",
+      "change_pct": 0.0882,
+      "volume": 975306,
+      "sector": "Technology",
+      "atr_ext": 2.67,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HOWL",
+      "change_pct": 0.0878,
+      "volume": 676913,
+      "sector": "Healthcare",
+      "atr_ext": 2.95,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HQ",
+      "change_pct": 0.0874,
+      "volume": 257928,
+      "sector": "Technology",
+      "atr_ext": 1.24,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GDTC",
+      "change_pct": 0.0873,
+      "volume": 9402,
+      "sector": "Healthcare",
+      "atr_ext": 0.61,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CNMD",
+      "change_pct": 0.0872,
+      "volume": 850506,
+      "sector": "Healthcare",
+      "atr_ext": 5.23,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "CVRX",
+      "change_pct": 0.0869,
+      "volume": 268700,
+      "sector": "Healthcare",
+      "atr_ext": 0.15,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AIP",
+      "change_pct": 0.0868,
+      "volume": 494366,
+      "sector": "Technology",
+      "atr_ext": 1.93,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ELOX",
+      "change_pct": 0.0866,
+      "volume": 18875,
+      "sector": "Healthcare",
+      "atr_ext": null,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "ABTS",
+      "change_pct": 0.0865,
+      "volume": 21995,
+      "sector": "Financial",
+      "atr_ext": 0.79,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HAWK",
+      "change_pct": 0.0863,
+      "volume": 545835,
+      "sector": "Industrials",
+      "atr_ext": 1.43,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FLEX",
+      "change_pct": 0.0863,
+      "volume": 8156067,
+      "sector": "Technology",
+      "atr_ext": 2.27,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GCTS",
+      "change_pct": 0.0862,
+      "volume": 2175224,
+      "sector": "Technology",
+      "atr_ext": 2.61,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AEIS",
+      "change_pct": 0.0862,
+      "volume": 1202913,
+      "sector": "Industrials",
+      "atr_ext": 1.79,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BKKT",
+      "change_pct": 0.0861,
+      "volume": 808233,
+      "sector": "Technology",
+      "atr_ext": 1.76,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BRLS",
+      "change_pct": 0.0857,
+      "volume": 19651,
+      "sector": "Consumer Defensive",
+      "atr_ext": 2.01,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DNN",
+      "change_pct": 0.0855,
+      "volume": 30717893,
+      "sector": "Energy",
+      "atr_ext": 1.14,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IZM",
+      "change_pct": 0.0854,
+      "volume": 69043,
+      "sector": "Technology",
+      "atr_ext": 1.68,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CUE",
+      "change_pct": 0.0853,
+      "volume": 267392,
+      "sector": "Healthcare",
+      "atr_ext": 0.58,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FABC",
+      "change_pct": 0.0847,
+      "volume": 139896,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 2.19,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ANNX",
+      "change_pct": 0.0844,
+      "volume": 2612789,
+      "sector": "Healthcare",
+      "atr_ext": 0.2,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "INOD",
+      "change_pct": 0.0843,
+      "volume": 1283053,
+      "sector": "Technology",
+      "atr_ext": 3.22,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AVXL",
+      "change_pct": 0.0843,
+      "volume": 1249738,
+      "sector": "Healthcare",
+      "atr_ext": 0.63,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IPSC",
+      "change_pct": 0.0842,
+      "volume": 571421,
       "sector": "Healthcare",
       "atr_ext": 0.37,
       "atr_color": "green"
     },
     {
-      "ticker": "BLIV",
-      "change_pct": 0.0476,
-      "volume": 266,
-      "sector": "Technology",
-      "atr_ext": 1.84,
+      "ticker": "AIAI",
+      "change_pct": 0.0842,
+      "volume": 152351,
+      "sector": "Industrials",
+      "atr_ext": 2.23,
       "atr_color": "green"
     },
     {
-      "ticker": "KNDI",
-      "change_pct": 0.0473,
-      "volume": 108323,
+      "ticker": "HPAI",
+      "change_pct": 0.0842,
+      "volume": 57861,
+      "sector": "Technology",
+      "atr_ext": 1.75,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CRML",
+      "change_pct": 0.0838,
+      "volume": 6617650,
+      "sector": "Basic Materials",
+      "atr_ext": 3.5,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KALA",
+      "change_pct": 0.0836,
+      "volume": 95287,
+      "sector": "Healthcare",
+      "atr_ext": 2.24,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ASYS",
+      "change_pct": 0.0835,
+      "volume": 275030,
+      "sector": "Technology",
+      "atr_ext": 2.28,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ACTU",
+      "change_pct": 0.0833,
+      "volume": 268400,
+      "sector": "Healthcare",
+      "atr_ext": 1.97,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CPHI",
+      "change_pct": 0.0833,
+      "volume": 931802,
+      "sector": "Healthcare",
+      "atr_ext": 0.3,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AIFU",
+      "change_pct": 0.0831,
+      "volume": 15999,
+      "sector": "Financial",
+      "atr_ext": 1.71,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CGNX",
+      "change_pct": 0.083,
+      "volume": 2041233,
+      "sector": "Technology",
+      "atr_ext": 0.58,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FWDI",
+      "change_pct": 0.0829,
+      "volume": 771655,
       "sector": "Consumer Cyclical",
-      "atr_ext": 0.73,
+      "atr_ext": 0.45,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ANET",
+      "change_pct": 0.0826,
+      "volume": 7287393,
+      "sector": "Technology",
+      "atr_ext": 0.53,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GORO",
+      "change_pct": 0.0825,
+      "volume": 1370203,
+      "sector": "Basic Materials",
+      "atr_ext": 1.89,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GOTU",
+      "change_pct": 0.0824,
+      "volume": 378104,
+      "sector": "Consumer Defensive",
+      "atr_ext": 1.74,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "INCR",
+      "change_pct": 0.0823,
+      "volume": 13840,
+      "sector": "Healthcare",
+      "atr_ext": 0.37,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DNTH",
+      "change_pct": 0.0821,
+      "volume": 929089,
+      "sector": "Healthcare",
+      "atr_ext": 4.21,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "IVDA",
+      "change_pct": 0.0819,
+      "volume": 317260,
+      "sector": "Industrials",
+      "atr_ext": 1.49,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DCO",
+      "change_pct": 0.0817,
+      "volume": 242248,
+      "sector": "Industrials",
+      "atr_ext": 2.54,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HIMS",
+      "change_pct": 0.0816,
+      "volume": 17185066,
+      "sector": "Healthcare",
+      "atr_ext": 1.07,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "INTT",
+      "change_pct": 0.0814,
+      "volume": 144902,
+      "sector": "Technology",
+      "atr_ext": 2.29,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ADUR",
+      "change_pct": 0.0813,
+      "volume": 412987,
+      "sector": "Industrials",
+      "atr_ext": 0.88,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GDS",
+      "change_pct": 0.0808,
+      "volume": 2218270,
+      "sector": "Technology",
+      "atr_ext": 0.56,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CAMT",
+      "change_pct": 0.0808,
+      "volume": 730128,
+      "sector": "Technology",
+      "atr_ext": 1.79,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BB",
+      "change_pct": 0.0807,
+      "volume": 18203213,
+      "sector": "Technology",
+      "atr_ext": 1.29,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EDHL",
+      "change_pct": 0.0805,
+      "volume": 11279,
+      "sector": "Communication Services",
+      "atr_ext": 0.1,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BAX",
+      "change_pct": 0.0799,
+      "volume": 22670869,
+      "sector": "Healthcare",
+      "atr_ext": 6.33,
+      "atr_color": "red"
+    },
+    {
+      "ticker": "ASST",
+      "change_pct": 0.0796,
+      "volume": 2866464,
+      "sector": "Financial",
+      "atr_ext": 1.73,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EYPT",
+      "change_pct": 0.0789,
+      "volume": 1560543,
+      "sector": "Healthcare",
+      "atr_ext": 0.29,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ELAB",
+      "change_pct": 0.0787,
+      "volume": 325789,
+      "sector": "Healthcare",
+      "atr_ext": 2.26,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GRNQ",
+      "change_pct": 0.0787,
+      "volume": 4385,
+      "sector": "Industrials",
+      "atr_ext": 1.97,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LIDR",
+      "change_pct": 0.0784,
+      "volume": 813784,
+      "sector": "Technology",
+      "atr_ext": 3.62,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HMH",
+      "change_pct": 0.0782,
+      "volume": 170898,
+      "sector": "Energy",
+      "atr_ext": 0.13,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CEPU",
+      "change_pct": 0.0779,
+      "volume": 434421,
+      "sector": "Utilities",
+      "atr_ext": 0.93,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GNLX",
+      "change_pct": 0.0777,
+      "volume": 236492,
+      "sector": "Healthcare",
+      "atr_ext": 0.74,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DIOD",
+      "change_pct": 0.0777,
+      "volume": 643116,
+      "sector": "Technology",
+      "atr_ext": 2.27,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GTX",
+      "change_pct": 0.0775,
+      "volume": 2748325,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 1.06,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EVGO",
+      "change_pct": 0.0774,
+      "volume": 2435700,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 1.8,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HIMX",
+      "change_pct": 0.0773,
+      "volume": 1481850,
+      "sector": "Technology",
+      "atr_ext": 2.76,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KB",
+      "change_pct": 0.0773,
+      "volume": 295931,
+      "sector": "Financial",
+      "atr_ext": 3.07,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BWAY",
+      "change_pct": 0.077,
+      "volume": 82210,
+      "sector": "Healthcare",
+      "atr_ext": 0.24,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GRRR",
+      "change_pct": 0.077,
+      "volume": 1027960,
+      "sector": "Technology",
+      "atr_ext": 2.51,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FLS",
+      "change_pct": 0.0769,
+      "volume": 3501575,
+      "sector": "Industrials",
+      "atr_ext": 0.72,
       "atr_color": "green"
     },
     {
       "ticker": "LFUS",
-      "change_pct": 0.047,
-      "volume": 875064,
+      "change_pct": 0.0768,
+      "volume": 729741,
       "sector": "Technology",
-      "atr_ext": 1.42,
+      "atr_ext": 0.03,
       "atr_color": "green"
     },
     {
-      "ticker": "IPCX",
-      "change_pct": 0.047,
-      "volume": 139397,
+      "ticker": "BTGO",
+      "change_pct": 0.0768,
+      "volume": 715060,
       "sector": "Financial",
-      "atr_ext": 1.85,
+      "atr_ext": 1.03,
       "atr_color": "green"
     },
     {
-      "ticker": "AMOD",
-      "change_pct": 0.0468,
-      "volume": 28122,
-      "sector": "Technology",
-      "atr_ext": 3.04,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "HUN",
-      "change_pct": 0.0464,
-      "volume": 3110724,
-      "sector": "Basic Materials",
-      "atr_ext": 1.3,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "FANG",
-      "change_pct": 0.0464,
-      "volume": 1926695,
-      "sector": "Energy",
-      "atr_ext": 1.16,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "ACOG",
-      "change_pct": 0.0464,
-      "volume": 27341,
+      "ticker": "JAGX",
+      "change_pct": 0.0763,
+      "volume": 102678,
       "sector": "Healthcare",
-      "atr_ext": 3.54,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "GEF",
-      "change_pct": 0.0462,
-      "volume": 566609,
-      "sector": "Consumer Cyclical",
-      "atr_ext": 9.59,
-      "atr_color": "red"
-    },
-    {
-      "ticker": "GTE",
-      "change_pct": 0.0454,
-      "volume": 442626,
-      "sector": "Energy",
-      "atr_ext": 1.22,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CNXC",
-      "change_pct": 0.0453,
-      "volume": 1492277,
-      "sector": "Technology",
-      "atr_ext": 1.09,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "AMT",
-      "change_pct": 0.0452,
-      "volume": 5367674,
-      "sector": "Real Estate",
-      "atr_ext": 0.66,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "EOG",
-      "change_pct": 0.0451,
-      "volume": 2557714,
-      "sector": "Energy",
       "atr_ext": 2.57,
       "atr_color": "green"
     },
     {
-      "ticker": "APH",
-      "change_pct": 0.0449,
-      "volume": 12186779,
-      "sector": "Technology",
-      "atr_ext": 0.26,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "LI",
-      "change_pct": 0.0447,
-      "volume": 5242340,
-      "sector": "Consumer Cyclical",
-      "atr_ext": 0.6,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "CNTX",
-      "change_pct": 0.0447,
-      "volume": 1201155,
+      "ticker": "CDNA",
+      "change_pct": 0.076,
+      "volume": 1741275,
       "sector": "Healthcare",
-      "atr_ext": 4.13,
+      "atr_ext": 7.3,
+      "atr_color": "red"
+    },
+    {
+      "ticker": "CSIQ",
+      "change_pct": 0.0758,
+      "volume": 2079516,
+      "sector": "Technology",
+      "atr_ext": 1.1,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CGAU",
+      "change_pct": 0.0757,
+      "volume": 2280832,
+      "sector": "Basic Materials",
+      "atr_ext": 2.77,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BBVA",
+      "change_pct": 0.0756,
+      "volume": 3161770,
+      "sector": "Financial",
+      "atr_ext": 5.12,
       "atr_color": "amber"
     },
     {
-      "ticker": "EXE",
-      "change_pct": 0.0445,
-      "volume": 6435077,
-      "sector": "Energy",
-      "atr_ext": 0.73,
+      "ticker": "AMST",
+      "change_pct": 0.0755,
+      "volume": 44483,
+      "sector": "Technology",
+      "atr_ext": 2.41,
       "atr_color": "green"
     },
     {
-      "ticker": "ICG",
-      "change_pct": 0.0441,
-      "volume": 43654,
+      "ticker": "DKI",
+      "change_pct": 0.0755,
+      "volume": 2281,
+      "sector": "Communication Services",
+      "atr_ext": 2.31,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HUMA",
+      "change_pct": 0.0752,
+      "volume": 4081029,
+      "sector": "Healthcare",
+      "atr_ext": 2.6,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IRON",
+      "change_pct": 0.0752,
+      "volume": 374866,
+      "sector": "Healthcare",
+      "atr_ext": 2.22,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ENVB",
+      "change_pct": 0.0752,
+      "volume": 67886,
+      "sector": "Healthcare",
+      "atr_ext": 1.17,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CITR",
+      "change_pct": 0.0749,
+      "volume": 10061,
+      "sector": "Basic Materials",
+      "atr_ext": 0.0,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DSX",
+      "change_pct": 0.0748,
+      "volume": 1405193,
+      "sector": "Industrials",
+      "atr_ext": 0.44,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ING",
+      "change_pct": 0.0747,
+      "volume": 2886211,
+      "sector": "Financial",
+      "atr_ext": 4.81,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "JBL",
+      "change_pct": 0.0745,
+      "volume": 1243786,
+      "sector": "Technology",
+      "atr_ext": 2.12,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EVTL",
+      "change_pct": 0.0744,
+      "volume": 2136468,
+      "sector": "Industrials",
+      "atr_ext": 3.05,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GPUS",
+      "change_pct": 0.0742,
+      "volume": 22892984,
+      "sector": "Industrials",
+      "atr_ext": 1.72,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ARM",
+      "change_pct": 0.074,
+      "volume": 12788650,
+      "sector": "Technology",
+      "atr_ext": 2.3,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IRDM",
+      "change_pct": 0.0739,
+      "volume": 1545073,
+      "sector": "Communication Services",
+      "atr_ext": 0.08,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CLS",
+      "change_pct": 0.0736,
+      "volume": 3642204,
+      "sector": "Technology",
+      "atr_ext": 0.3,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ANL",
+      "change_pct": 0.0735,
+      "volume": 157677,
+      "sector": "Healthcare",
+      "atr_ext": 1.79,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JXG",
+      "change_pct": 0.0735,
+      "volume": 252,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 2.24,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KITT",
+      "change_pct": 0.0734,
+      "volume": 104221,
+      "sector": "Industrials",
+      "atr_ext": 2.73,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FTK",
+      "change_pct": 0.0734,
+      "volume": 229987,
+      "sector": "Energy",
+      "atr_ext": 0.0,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "APYX",
+      "change_pct": 0.0729,
+      "volume": 76365,
+      "sector": "Healthcare",
+      "atr_ext": 0.36,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AVNW",
+      "change_pct": 0.0727,
+      "volume": 375020,
+      "sector": "Technology",
+      "atr_ext": 1.04,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CTM",
+      "change_pct": 0.0726,
+      "volume": 1890046,
+      "sector": "Technology",
+      "atr_ext": 0.01,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GENB",
+      "change_pct": 0.0726,
+      "volume": 356999,
+      "sector": "Healthcare",
+      "atr_ext": 0.21,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CRE",
+      "change_pct": 0.0725,
+      "volume": 72962,
+      "sector": "Industrials",
+      "atr_ext": 0.72,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JCSE",
+      "change_pct": 0.0725,
+      "volume": 4721,
+      "sector": "Industrials",
+      "atr_ext": 1.32,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LAR",
+      "change_pct": 0.0723,
+      "volume": 1267493,
+      "sector": "Basic Materials",
+      "atr_ext": 3.81,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IMUX",
+      "change_pct": 0.072,
+      "volume": 66909,
+      "sector": "Healthcare",
+      "atr_ext": 0.16,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ADPT",
+      "change_pct": 0.0718,
+      "volume": 5283435,
+      "sector": "Healthcare",
+      "atr_ext": 5.01,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "ITG",
+      "change_pct": 0.0718,
+      "volume": 718006,
+      "sector": "Industrials",
+      "atr_ext": null,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "BHE",
+      "change_pct": 0.0717,
+      "volume": 710443,
+      "sector": "Technology",
+      "atr_ext": 1.19,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ANRO",
+      "change_pct": 0.0715,
+      "volume": 349683,
+      "sector": "Healthcare",
+      "atr_ext": 2.91,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AKBA",
+      "change_pct": 0.0714,
+      "volume": 3113237,
+      "sector": "Healthcare",
+      "atr_ext": 3.36,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IVVD",
+      "change_pct": 0.0711,
+      "volume": 3050549,
+      "sector": "Healthcare",
+      "atr_ext": 2.91,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GLND",
+      "change_pct": 0.071,
+      "volume": 619407,
+      "sector": "Energy",
+      "atr_ext": 2.1,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IE",
+      "change_pct": 0.071,
+      "volume": 1515094,
+      "sector": "Basic Materials",
+      "atr_ext": 1.61,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CDNL",
+      "change_pct": 0.0709,
+      "volume": 404783,
+      "sector": "Industrials",
+      "atr_ext": 0.72,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CYD",
+      "change_pct": 0.0709,
+      "volume": 65011,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 0.24,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CDLR",
+      "change_pct": 0.0709,
+      "volume": 70256,
+      "sector": "Industrials",
+      "atr_ext": 0.89,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AMBA",
+      "change_pct": 0.0708,
+      "volume": 1514665,
       "sector": "Technology",
       "atr_ext": 0.22,
       "atr_color": "green"
     },
     {
-      "ticker": "CCI",
-      "change_pct": 0.0441,
-      "volume": 6981868,
-      "sector": "Real Estate",
-      "atr_ext": 1.59,
+      "ticker": "INSG",
+      "change_pct": 0.0708,
+      "volume": 209977,
+      "sector": "Technology",
+      "atr_ext": 3.74,
       "atr_color": "green"
     },
     {
-      "ticker": "DEC",
-      "change_pct": 0.044,
-      "volume": 810338,
-      "sector": "Energy",
-      "atr_ext": 1.48,
+      "ticker": "AZIO",
+      "change_pct": 0.0705,
+      "volume": 234869,
+      "sector": "Technology",
+      "atr_ext": 0.82,
       "atr_color": "green"
     },
     {
-      "ticker": "AN",
-      "change_pct": 0.0438,
-      "volume": 796260,
+      "ticker": "FROG",
+      "change_pct": 0.0702,
+      "volume": 2242154,
+      "sector": "Technology",
+      "atr_ext": 0.81,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KULR",
+      "change_pct": 0.0702,
+      "volume": 812261,
+      "sector": "Technology",
+      "atr_ext": 2.59,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AREC",
+      "change_pct": 0.0702,
+      "volume": 1875100,
+      "sector": "Basic Materials",
+      "atr_ext": 1.18,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CVM",
+      "change_pct": 0.0702,
+      "volume": 131654,
+      "sector": "Healthcare",
+      "atr_ext": 0.21,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GLMD",
+      "change_pct": 0.0702,
+      "volume": 107962,
+      "sector": "Healthcare",
+      "atr_ext": 0.24,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ERO",
+      "change_pct": 0.07,
+      "volume": 852805,
+      "sector": "Basic Materials",
+      "atr_ext": 0.11,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CTOR",
+      "change_pct": 0.0699,
+      "volume": 28241,
+      "sector": "Healthcare",
+      "atr_ext": 1.71,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LITB",
+      "change_pct": 0.0698,
+      "volume": 6000,
       "sector": "Consumer Cyclical",
-      "atr_ext": 5.44,
+      "atr_ext": 0.53,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JATT",
+      "change_pct": 0.0696,
+      "volume": 22385,
+      "sector": "Financial",
+      "atr_ext": 2.48,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EDN",
+      "change_pct": 0.0695,
+      "volume": 76151,
+      "sector": "Utilities",
+      "atr_ext": 1.12,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ABVC",
+      "change_pct": 0.0693,
+      "volume": 118686,
+      "sector": "Healthcare",
+      "atr_ext": 1.56,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FLR",
+      "change_pct": 0.0692,
+      "volume": 1840970,
+      "sector": "Industrials",
+      "atr_ext": 0.12,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ELMT",
+      "change_pct": 0.0691,
+      "volume": 659160,
+      "sector": "Industrials",
+      "atr_ext": 2.02,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ETN",
+      "change_pct": 0.0691,
+      "volume": 3898017,
+      "sector": "Industrials",
+      "atr_ext": 0.82,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "INBX",
+      "change_pct": 0.0691,
+      "volume": 275522,
+      "sector": "Healthcare",
+      "atr_ext": 1.39,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DARE",
+      "change_pct": 0.069,
+      "volume": 140542,
+      "sector": "Healthcare",
+      "atr_ext": 3.31,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HIPO",
+      "change_pct": 0.0687,
+      "volume": 340380,
+      "sector": "Financial",
+      "atr_ext": 4.1,
       "atr_color": "amber"
     },
     {
-      "ticker": "GIB",
-      "change_pct": 0.0434,
-      "volume": 1631451,
-      "sector": "Technology",
-      "atr_ext": 3.67,
+      "ticker": "AIRE",
+      "change_pct": 0.0687,
+      "volume": 53810,
+      "sector": "Real Estate",
+      "atr_ext": 2.18,
       "atr_color": "green"
     },
     {
-      "ticker": "IRTC",
-      "change_pct": 0.0432,
-      "volume": 918055,
+      "ticker": "KYIV",
+      "change_pct": 0.0686,
+      "volume": 657038,
+      "sector": "Communication Services",
+      "atr_ext": 0.58,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IMCC",
+      "change_pct": 0.0685,
+      "volume": 1892809,
       "sector": "Healthcare",
+      "atr_ext": 2.64,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DVLT",
+      "change_pct": 0.0681,
+      "volume": 12321621,
+      "sector": "Technology",
+      "atr_ext": 1.43,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BNC",
+      "change_pct": 0.068,
+      "volume": 133909,
+      "sector": "Industrials",
+      "atr_ext": 0.12,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GDC",
+      "change_pct": 0.068,
+      "volume": 136090,
+      "sector": "Communication Services",
+      "atr_ext": 0.29,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CLNN",
+      "change_pct": 0.0678,
+      "volume": 37359,
+      "sector": "Healthcare",
+      "atr_ext": 2.06,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EIKN",
+      "change_pct": 0.0677,
+      "volume": 268303,
+      "sector": "Healthcare",
+      "atr_ext": 0.56,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BCTX",
+      "change_pct": 0.0676,
+      "volume": 71781,
+      "sector": "Healthcare",
+      "atr_ext": 1.05,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GHM",
+      "change_pct": 0.0672,
+      "volume": 191335,
+      "sector": "Industrials",
+      "atr_ext": 1.52,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BAK",
+      "change_pct": 0.0664,
+      "volume": 1830258,
+      "sector": "Basic Materials",
+      "atr_ext": 3.22,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LAC",
+      "change_pct": 0.0664,
+      "volume": 8312297,
+      "sector": "Basic Materials",
+      "atr_ext": 4.37,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "HNRG",
+      "change_pct": 0.0664,
+      "volume": 1209724,
+      "sector": "Utilities",
+      "atr_ext": 2.21,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ELE",
+      "change_pct": 0.0662,
+      "volume": 170479,
+      "sector": "Basic Materials",
+      "atr_ext": 0.01,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AYA",
+      "change_pct": 0.0661,
+      "volume": 666826,
+      "sector": "Basic Materials",
+      "atr_ext": 1.13,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DFLI",
+      "change_pct": 0.0661,
+      "volume": 205800,
+      "sector": "Industrials",
+      "atr_ext": 3.22,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EU",
+      "change_pct": 0.066,
+      "volume": 3513773,
+      "sector": "Energy",
+      "atr_ext": 2.27,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ENPH",
+      "change_pct": 0.0659,
+      "volume": 5835333,
+      "sector": "Technology",
+      "atr_ext": 3.0,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KLIC",
+      "change_pct": 0.0659,
+      "volume": 1328475,
+      "sector": "Technology",
+      "atr_ext": 1.96,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ALM",
+      "change_pct": 0.0658,
+      "volume": 8097074,
+      "sector": "Basic Materials",
+      "atr_ext": 2.6,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ALEC",
+      "change_pct": 0.0658,
+      "volume": 453152,
+      "sector": "Healthcare",
+      "atr_ext": 1.05,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KZIA",
+      "change_pct": 0.0657,
+      "volume": 328672,
+      "sector": "Healthcare",
+      "atr_ext": 0.21,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GOGO",
+      "change_pct": 0.0657,
+      "volume": 985620,
+      "sector": "Communication Services",
+      "atr_ext": 1.94,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CYAB",
+      "change_pct": 0.0657,
+      "volume": 137419,
+      "sector": "Technology",
+      "atr_ext": 2.42,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AMPG",
+      "change_pct": 0.0651,
+      "volume": 2189882,
+      "sector": "Technology",
+      "atr_ext": 1.37,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AEMD",
+      "change_pct": 0.0651,
+      "volume": 43295,
+      "sector": "Healthcare",
+      "atr_ext": 3.78,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ASML",
+      "change_pct": 0.065,
+      "volume": 2172409,
+      "sector": "Technology",
+      "atr_ext": 1.01,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JEM",
+      "change_pct": 0.0647,
+      "volume": 438811,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 0.74,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FF",
+      "change_pct": 0.0642,
+      "volume": 404512,
+      "sector": "Basic Materials",
+      "atr_ext": 2.63,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KEP",
+      "change_pct": 0.0641,
+      "volume": 903451,
+      "sector": "Utilities",
+      "atr_ext": 0.67,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JLL",
+      "change_pct": 0.0639,
+      "volume": 727713,
+      "sector": "Real Estate",
+      "atr_ext": 5.4,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "IPX",
+      "change_pct": 0.0637,
+      "volume": 268782,
+      "sector": "Basic Materials",
+      "atr_ext": 3.52,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HURA",
+      "change_pct": 0.0637,
+      "volume": 258557,
+      "sector": "Healthcare",
+      "atr_ext": 0.72,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FATE",
+      "change_pct": 0.0636,
+      "volume": 1693800,
+      "sector": "Healthcare",
+      "atr_ext": 0.4,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DRTS",
+      "change_pct": 0.0635,
+      "volume": 606305,
+      "sector": "Healthcare",
+      "atr_ext": 0.82,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "APH",
+      "change_pct": 0.0633,
+      "volume": 10764828,
+      "sector": "Technology",
+      "atr_ext": 0.93,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BCS",
+      "change_pct": 0.0633,
+      "volume": 4814464,
+      "sector": "Financial",
+      "atr_ext": 1.78,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IPCX",
+      "change_pct": 0.0631,
+      "volume": 17296,
+      "sector": "Financial",
+      "atr_ext": 0.66,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ESCA",
+      "change_pct": 0.0631,
+      "volume": 59221,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 3.07,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "INVE",
+      "change_pct": 0.063,
+      "volume": 143765,
+      "sector": "Industrials",
+      "atr_ext": 3.06,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HSHP",
+      "change_pct": 0.0629,
+      "volume": 209055,
+      "sector": "Industrials",
+      "atr_ext": 2.03,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ACRV",
+      "change_pct": 0.0629,
+      "volume": 384335,
+      "sector": "Healthcare",
+      "atr_ext": 1.11,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BEEM",
+      "change_pct": 0.0625,
+      "volume": 385186,
+      "sector": "Technology",
+      "atr_ext": 2.34,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ATLX",
+      "change_pct": 0.0625,
+      "volume": 155512,
+      "sector": "Basic Materials",
+      "atr_ext": 3.14,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JELD",
+      "change_pct": 0.0625,
+      "volume": 1034501,
+      "sector": "Industrials",
+      "atr_ext": 1.17,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BSP",
+      "change_pct": 0.0624,
+      "volume": 1318993,
+      "sector": "Technology",
+      "atr_ext": null,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "CHEF",
+      "change_pct": 0.0624,
+      "volume": 1055339,
+      "sector": "Consumer Defensive",
+      "atr_ext": 5.89,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "FVN",
+      "change_pct": 0.0622,
+      "volume": 276,
+      "sector": "Financial",
+      "atr_ext": 1.68,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KOD",
+      "change_pct": 0.0622,
+      "volume": 628894,
+      "sector": "Healthcare",
+      "atr_ext": 2.01,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CSHR",
+      "change_pct": 0.0622,
+      "volume": 68386,
+      "sector": "Financial",
+      "atr_ext": 0.04,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ARQ",
+      "change_pct": 0.0619,
+      "volume": 191930,
+      "sector": "Industrials",
+      "atr_ext": 2.19,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ANTX",
+      "change_pct": 0.0618,
+      "volume": 358509,
+      "sector": "Healthcare",
+      "atr_ext": 1.94,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DNA",
+      "change_pct": 0.0617,
+      "volume": 641556,
+      "sector": "Healthcare",
+      "atr_ext": 0.94,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BZAI",
+      "change_pct": 0.0615,
+      "volume": 2889135,
+      "sector": "Technology",
+      "atr_ext": 3.18,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CMPS",
+      "change_pct": 0.0615,
+      "volume": 1962991,
+      "sector": "Healthcare",
+      "atr_ext": 0.94,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CPNG",
+      "change_pct": 0.0613,
+      "volume": 23256155,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 1.01,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GWH",
+      "change_pct": 0.0613,
+      "volume": 581978,
+      "sector": "Industrials",
+      "atr_ext": 1.05,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CAMP",
+      "change_pct": 0.0612,
+      "volume": 48054,
+      "sector": "Healthcare",
+      "atr_ext": 1.31,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JBLU",
+      "change_pct": 0.0612,
+      "volume": 44883527,
+      "sector": "Industrials",
+      "atr_ext": 2.04,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IMA",
+      "change_pct": 0.061,
+      "volume": 4700,
+      "sector": "Healthcare",
+      "atr_ext": 0.5,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ATEX",
+      "change_pct": 0.061,
+      "volume": 257969,
+      "sector": "Communication Services",
+      "atr_ext": 1.39,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CVKD",
+      "change_pct": 0.0609,
+      "volume": 17774,
+      "sector": "Healthcare",
+      "atr_ext": 2.65,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HPE",
+      "change_pct": 0.0608,
+      "volume": 20267521,
+      "sector": "Technology",
+      "atr_ext": 0.56,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BDL",
+      "change_pct": 0.0608,
+      "volume": 30512,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 0.51,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ALP",
+      "change_pct": 0.0608,
+      "volume": 1238576,
+      "sector": "Financial",
       "atr_ext": 1.74,
       "atr_color": "green"
     },
     {
-      "ticker": "BXP",
-      "change_pct": 0.043,
-      "volume": 3899468,
-      "sector": "Real Estate",
-      "atr_ext": 4.63,
+      "ticker": "COAG",
+      "change_pct": 0.0608,
+      "volume": 821199,
+      "sector": "Healthcare",
+      "atr_ext": 4.27,
       "atr_color": "amber"
     },
     {
-      "ticker": "IDAI",
-      "change_pct": 0.0425,
-      "volume": 43408,
-      "sector": "Technology",
-      "atr_ext": 0.96,
+      "ticker": "BTCS",
+      "change_pct": 0.0606,
+      "volume": 496820,
+      "sector": "Financial",
+      "atr_ext": 1.74,
       "atr_color": "green"
     },
     {
-      "ticker": "DVN",
-      "change_pct": 0.0422,
-      "volume": 7894258,
-      "sector": "Energy",
-      "atr_ext": 0.37,
+      "ticker": "GMTL",
+      "change_pct": 0.0604,
+      "volume": 214605,
+      "sector": "Basic Materials",
+      "atr_ext": 2.34,
       "atr_color": "green"
     },
     {
-      "ticker": "CHE",
-      "change_pct": 0.042,
-      "volume": 286058,
+      "ticker": "ALLR",
+      "change_pct": 0.0603,
+      "volume": 55923,
       "sector": "Healthcare",
-      "atr_ext": 6.58,
+      "atr_ext": 1.48,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DPC",
+      "change_pct": 0.0601,
+      "volume": 814618,
+      "sector": "Industrials",
+      "atr_ext": null,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "GFS",
+      "change_pct": 0.0599,
+      "volume": 4041735,
+      "sector": "Technology",
+      "atr_ext": 3.78,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FN",
+      "change_pct": 0.0599,
+      "volume": 811821,
+      "sector": "Technology",
+      "atr_ext": 2.71,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CHPT",
+      "change_pct": 0.0598,
+      "volume": 323958,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 1.94,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JFU",
+      "change_pct": 0.0597,
+      "volume": 92,
+      "sector": "Technology",
+      "atr_ext": 4.3,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "DCH",
+      "change_pct": 0.0597,
+      "volume": 3733429,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 0.06,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HYFM",
+      "change_pct": 0.0596,
+      "volume": 16802,
+      "sector": "Industrials",
+      "atr_ext": 2.58,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KLAC",
+      "change_pct": 0.0596,
+      "volume": 17477535,
+      "sector": "Technology",
+      "atr_ext": 2.02,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ALTO",
+      "change_pct": 0.0596,
+      "volume": 1403282,
+      "sector": "Basic Materials",
+      "atr_ext": 1.42,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KYTX",
+      "change_pct": 0.0594,
+      "volume": 643422,
+      "sector": "Healthcare",
+      "atr_ext": 1.12,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KGS",
+      "change_pct": 0.0593,
+      "volume": 2684519,
+      "sector": "Energy",
+      "atr_ext": 2.42,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AKAM",
+      "change_pct": 0.059,
+      "volume": 3046106,
+      "sector": "Technology",
+      "atr_ext": 2.25,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ENLT",
+      "change_pct": 0.0588,
+      "volume": 245232,
+      "sector": "Utilities",
+      "atr_ext": 0.97,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ITRG",
+      "change_pct": 0.0588,
+      "volume": 1873426,
+      "sector": "Basic Materials",
+      "atr_ext": 1.44,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GWAV",
+      "change_pct": 0.0588,
+      "volume": 179982,
+      "sector": "Industrials",
+      "atr_ext": 0.05,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BJRI",
+      "change_pct": 0.0586,
+      "volume": 798918,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 9.74,
       "atr_color": "red"
     },
     {
-      "ticker": "FIS",
-      "change_pct": 0.0418,
-      "volume": 7774337,
+      "ticker": "IPGP",
+      "change_pct": 0.0585,
+      "volume": 326960,
       "sector": "Technology",
+      "atr_ext": 2.84,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HLIT",
+      "change_pct": 0.0585,
+      "volume": 1035865,
+      "sector": "Technology",
+      "atr_ext": 3.05,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CYN",
+      "change_pct": 0.0583,
+      "volume": 252325,
+      "sector": "Technology",
+      "atr_ext": 2.09,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FIP",
+      "change_pct": 0.0582,
+      "volume": 1029786,
+      "sector": "Industrials",
+      "atr_ext": 1.52,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KVHI",
+      "change_pct": 0.0582,
+      "volume": 129699,
+      "sector": "Communication Services",
+      "atr_ext": 0.14,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ACHR",
+      "change_pct": 0.058,
+      "volume": 31526010,
+      "sector": "Industrials",
+      "atr_ext": 1.56,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BJDX",
+      "change_pct": 0.0577,
+      "volume": 185999,
+      "sector": "Healthcare",
+      "atr_ext": 1.97,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FCX",
+      "change_pct": 0.0575,
+      "volume": 14850990,
+      "sector": "Basic Materials",
+      "atr_ext": 0.02,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GH",
+      "change_pct": 0.0575,
+      "volume": 2733199,
+      "sector": "Healthcare",
+      "atr_ext": 1.62,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AU",
+      "change_pct": 0.0573,
+      "volume": 2992147,
+      "sector": "Basic Materials",
+      "atr_ext": 0.61,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CMDB",
+      "change_pct": 0.0572,
+      "volume": 54388,
+      "sector": "Industrials",
+      "atr_ext": 1.82,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FEAM",
+      "change_pct": 0.0571,
+      "volume": 60989,
+      "sector": "Basic Materials",
+      "atr_ext": 2.32,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CNL",
+      "change_pct": 0.0571,
+      "volume": 28111,
+      "sector": "Basic Materials",
+      "atr_ext": 0.68,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CGON",
+      "change_pct": 0.0566,
+      "volume": 536488,
+      "sector": "Healthcare",
+      "atr_ext": 2.0,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HDL",
+      "change_pct": 0.0566,
+      "volume": 4166,
+      "sector": "Consumer Cyclical",
       "atr_ext": 4.29,
       "atr_color": "amber"
     },
     {
-      "ticker": "ACI",
-      "change_pct": 0.0415,
-      "volume": 11807986,
-      "sector": "Consumer Defensive",
-      "atr_ext": 3.1,
+      "ticker": "ARRY",
+      "change_pct": 0.0561,
+      "volume": 4508393,
+      "sector": "Technology",
+      "atr_ext": 3.55,
       "atr_color": "green"
     },
     {
-      "ticker": "AMPY",
-      "change_pct": 0.0409,
-      "volume": 475687,
-      "sector": "Energy",
-      "atr_ext": 2.31,
-      "atr_color": "green"
-    },
-    {
-      "ticker": "ESLA",
-      "change_pct": 0.0409,
-      "volume": 9572,
+      "ticker": "ABCL",
+      "change_pct": 0.0557,
+      "volume": 4327621,
       "sector": "Healthcare",
-      "atr_ext": 1.98,
+      "atr_ext": 0.67,
       "atr_color": "green"
     },
     {
-      "ticker": "HELP",
-      "change_pct": 0.0408,
-      "volume": 1823464,
+      "ticker": "GPRE",
+      "change_pct": 0.0556,
+      "volume": 1577562,
+      "sector": "Basic Materials",
+      "atr_ext": 1.68,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ANAB",
+      "change_pct": 0.0556,
+      "volume": 1069596,
       "sector": "Healthcare",
-      "atr_ext": 5.99,
+      "atr_ext": 0.68,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DFTX",
+      "change_pct": 0.0553,
+      "volume": 1806080,
+      "sector": "Healthcare",
+      "atr_ext": 4.51,
       "atr_color": "amber"
     },
     {
-      "ticker": "HKPD",
-      "change_pct": 0.0408,
-      "volume": 550468,
+      "ticker": "GEVO",
+      "change_pct": 0.0552,
+      "volume": 3359540,
+      "sector": "Basic Materials",
+      "atr_ext": 0.41,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HL",
+      "change_pct": 0.0551,
+      "volume": 27891167,
+      "sector": "Basic Materials",
+      "atr_ext": 0.93,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IAUX",
+      "change_pct": 0.0551,
+      "volume": 4348020,
+      "sector": "Basic Materials",
+      "atr_ext": 1.25,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CAN",
+      "change_pct": 0.055,
+      "volume": 7810577,
+      "sector": "Technology",
+      "atr_ext": 2.35,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CW",
+      "change_pct": 0.0548,
+      "volume": 215054,
+      "sector": "Industrials",
+      "atr_ext": 0.84,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KALU",
+      "change_pct": 0.0547,
+      "volume": 300242,
+      "sector": "Basic Materials",
+      "atr_ext": 1.45,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JTAI",
+      "change_pct": 0.0546,
+      "volume": 197824,
+      "sector": "Technology",
+      "atr_ext": 4.35,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "CCM",
+      "change_pct": 0.0544,
+      "volume": 52978,
       "sector": "Healthcare",
+      "atr_ext": 0.04,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "COYA",
+      "change_pct": 0.0543,
+      "volume": 151354,
+      "sector": "Healthcare",
+      "atr_ext": 2.1,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BVN",
+      "change_pct": 0.0543,
+      "volume": 1079346,
+      "sector": "Basic Materials",
+      "atr_ext": 0.05,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ERAS",
+      "change_pct": 0.0542,
+      "volume": 3699737,
+      "sector": "Healthcare",
+      "atr_ext": 2.71,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KEYS",
+      "change_pct": 0.0538,
+      "volume": 1280225,
+      "sector": "Technology",
+      "atr_ext": 1.41,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DJT",
+      "change_pct": 0.0538,
+      "volume": 6709674,
+      "sector": "Communication Services",
+      "atr_ext": 3.52,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CDZI",
+      "change_pct": 0.0537,
+      "volume": 1042223,
+      "sector": "Utilities",
+      "atr_ext": 2.28,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GNLN",
+      "change_pct": 0.0536,
+      "volume": 44369,
+      "sector": "Consumer Defensive",
+      "atr_ext": 2.94,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BLLN",
+      "change_pct": 0.0534,
+      "volume": 515531,
+      "sector": "Healthcare",
+      "atr_ext": 4.75,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "BYRN",
+      "change_pct": 0.0531,
+      "volume": 811582,
+      "sector": "Industrials",
+      "atr_ext": 1.34,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IDR",
+      "change_pct": 0.053,
+      "volume": 305251,
+      "sector": "Basic Materials",
+      "atr_ext": 1.73,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ILMN",
+      "change_pct": 0.0527,
+      "volume": 2767120,
+      "sector": "Healthcare",
+      "atr_ext": 4.92,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "CDE",
+      "change_pct": 0.0526,
+      "volume": 31058462,
+      "sector": "Basic Materials",
+      "atr_ext": 1.2,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IMDX",
+      "change_pct": 0.0526,
+      "volume": 96080,
+      "sector": "Healthcare",
+      "atr_ext": 1.72,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CELC",
+      "change_pct": 0.0526,
+      "volume": 1322720,
+      "sector": "Healthcare",
+      "atr_ext": 1.87,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EVC",
+      "change_pct": 0.0525,
+      "volume": 1646172,
+      "sector": "Communication Services",
+      "atr_ext": 1.82,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CXAI",
+      "change_pct": 0.0524,
+      "volume": 3575739,
+      "sector": "Technology",
+      "atr_ext": 2.14,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CRDL",
+      "change_pct": 0.0522,
+      "volume": 897974,
+      "sector": "Healthcare",
+      "atr_ext": 0.98,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KTOS",
+      "change_pct": 0.0522,
+      "volume": 3218994,
+      "sector": "Industrials",
+      "atr_ext": 1.81,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GLAS",
+      "change_pct": 0.0521,
+      "volume": 408946,
+      "sector": "Healthcare",
+      "atr_ext": 2.01,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CENX",
+      "change_pct": 0.052,
+      "volume": 1450679,
+      "sector": "Basic Materials",
+      "atr_ext": 2.54,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CING",
+      "change_pct": 0.0519,
+      "volume": 124732,
+      "sector": "Healthcare",
+      "atr_ext": 0.03,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GLUE",
+      "change_pct": 0.0519,
+      "volume": 1690408,
+      "sector": "Healthcare",
+      "atr_ext": 1.4,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BWXT",
+      "change_pct": 0.0518,
+      "volume": 926787,
+      "sector": "Industrials",
+      "atr_ext": 2.58,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AMLX",
+      "change_pct": 0.0517,
+      "volume": 3542668,
+      "sector": "Healthcare",
+      "atr_ext": 4.96,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "GILT",
+      "change_pct": 0.0516,
+      "volume": 423695,
+      "sector": "Technology",
+      "atr_ext": 2.71,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BFRI",
+      "change_pct": 0.0513,
+      "volume": 790278,
+      "sector": "Healthcare",
+      "atr_ext": 3.68,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AVAL",
+      "change_pct": 0.051,
+      "volume": 132579,
+      "sector": "Financial",
+      "atr_ext": 0.86,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CDT",
+      "change_pct": 0.051,
+      "volume": 27263,
+      "sector": "Healthcare",
+      "atr_ext": 8.46,
+      "atr_color": "red"
+    },
+    {
+      "ticker": "BAND",
+      "change_pct": 0.0509,
+      "volume": 2308289,
+      "sector": "Technology",
+      "atr_ext": 2.29,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DXF",
+      "change_pct": 0.0508,
+      "volume": 207416,
+      "sector": "Financial",
+      "atr_ext": 1.11,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BTSG",
+      "change_pct": 0.0506,
+      "volume": 3426536,
+      "sector": "Healthcare",
+      "atr_ext": 2.74,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CRDF",
+      "change_pct": 0.0506,
+      "volume": 1385682,
+      "sector": "Healthcare",
+      "atr_ext": 3.14,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AGMH",
+      "change_pct": 0.0505,
+      "volume": 47166,
+      "sector": "Technology",
+      "atr_ext": 2.28,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FCUV",
+      "change_pct": 0.0503,
+      "volume": 18259,
+      "sector": "Technology",
+      "atr_ext": 1.49,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LBRT",
+      "change_pct": 0.0503,
+      "volume": 8028453,
+      "sector": "Energy",
+      "atr_ext": 3.42,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DRUG",
+      "change_pct": 0.0502,
+      "volume": 207041,
+      "sector": "Healthcare",
+      "atr_ext": 0.61,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EDRY",
+      "change_pct": 0.0502,
+      "volume": 42558,
+      "sector": "Industrials",
+      "atr_ext": 1.78,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AEON",
+      "change_pct": 0.0502,
+      "volume": 281177,
+      "sector": "Healthcare",
+      "atr_ext": 3.36,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HSLV",
+      "change_pct": 0.0502,
+      "volume": 292277,
+      "sector": "Basic Materials",
+      "atr_ext": 1.07,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ATRO",
+      "change_pct": 0.0502,
+      "volume": 611925,
+      "sector": "Industrials",
+      "atr_ext": 0.94,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EQX",
+      "change_pct": 0.0502,
+      "volume": 13317281,
+      "sector": "Basic Materials",
+      "atr_ext": 1.82,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GGAL",
+      "change_pct": 0.0501,
+      "volume": 750311,
+      "sector": "Financial",
+      "atr_ext": 0.63,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CADL",
+      "change_pct": 0.05,
+      "volume": 873663,
+      "sector": "Healthcare",
+      "atr_ext": 1.33,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FLUX",
+      "change_pct": 0.05,
+      "volume": 159291,
+      "sector": "Industrials",
+      "atr_ext": 2.76,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DSGN",
+      "change_pct": 0.0499,
+      "volume": 539475,
+      "sector": "Healthcare",
+      "atr_ext": 0.37,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BBAR",
+      "change_pct": 0.0499,
+      "volume": 397056,
+      "sector": "Financial",
+      "atr_ext": 0.78,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "INDI",
+      "change_pct": 0.0498,
+      "volume": 5869485,
+      "sector": "Technology",
+      "atr_ext": 2.39,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KDK",
+      "change_pct": 0.0498,
+      "volume": 700105,
+      "sector": "Technology",
+      "atr_ext": 3.86,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BCAB",
+      "change_pct": 0.0497,
+      "volume": 23858,
+      "sector": "Healthcare",
+      "atr_ext": 0.9,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EZGO",
+      "change_pct": 0.0496,
+      "volume": 25268,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 0.29,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JVA",
+      "change_pct": 0.0495,
+      "volume": 29404,
+      "sector": "Consumer Defensive",
+      "atr_ext": 2.54,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CIB",
+      "change_pct": 0.0494,
+      "volume": 338431,
+      "sector": "Financial",
+      "atr_ext": 7.48,
+      "atr_color": "red"
+    },
+    {
+      "ticker": "ASM",
+      "change_pct": 0.0493,
+      "volume": 2890286,
+      "sector": "Basic Materials",
+      "atr_ext": 1.55,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EXOD",
+      "change_pct": 0.0491,
+      "volume": 25973,
+      "sector": "Technology",
+      "atr_ext": 0.97,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BLTE",
+      "change_pct": 0.0491,
+      "volume": 241929,
+      "sector": "Healthcare",
+      "atr_ext": 1.92,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LAES",
+      "change_pct": 0.0489,
+      "volume": 15205312,
+      "sector": "Technology",
+      "atr_ext": 2.67,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IBKR",
+      "change_pct": 0.0489,
+      "volume": 5018924,
+      "sector": "Financial",
+      "atr_ext": 0.08,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DERM",
+      "change_pct": 0.0488,
+      "volume": 82545,
+      "sector": "Healthcare",
+      "atr_ext": 0.15,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BLCO",
+      "change_pct": 0.0488,
+      "volume": 598974,
+      "sector": "Healthcare",
+      "atr_ext": 2.11,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AIRO",
+      "change_pct": 0.0488,
+      "volume": 217002,
+      "sector": "Industrials",
+      "atr_ext": 1.35,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LBRX",
+      "change_pct": 0.0487,
+      "volume": 513972,
+      "sector": "Healthcare",
+      "atr_ext": 5.11,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "AA",
+      "change_pct": 0.0487,
+      "volume": 3586243,
+      "sector": "Basic Materials",
+      "atr_ext": 4.4,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "EH",
+      "change_pct": 0.0486,
+      "volume": 532579,
+      "sector": "Industrials",
+      "atr_ext": 3.36,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CLB",
+      "change_pct": 0.0486,
+      "volume": 1113782,
+      "sector": "Energy",
+      "atr_ext": 2.48,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CRNT",
+      "change_pct": 0.0483,
+      "volume": 367296,
+      "sector": "Technology",
+      "atr_ext": 2.38,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ACFN",
+      "change_pct": 0.0483,
+      "volume": 923,
+      "sector": "Technology",
+      "atr_ext": 2.8,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KE",
+      "change_pct": 0.0482,
+      "volume": 164926,
+      "sector": "Industrials",
+      "atr_ext": 0.43,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GOLD",
+      "change_pct": 0.0481,
+      "volume": 430755,
+      "sector": "Financial",
+      "atr_ext": 0.52,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BENF",
+      "change_pct": 0.0481,
+      "volume": 12513,
+      "sector": "Financial",
+      "atr_ext": 1.14,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IVZ",
+      "change_pct": 0.0481,
+      "volume": 4394455,
+      "sector": "Financial",
+      "atr_ext": 1.31,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CMMB",
+      "change_pct": 0.0479,
+      "volume": 57736,
+      "sector": "Healthcare",
+      "atr_ext": 0.94,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FDMT",
+      "change_pct": 0.0479,
+      "volume": 539942,
+      "sector": "Healthcare",
+      "atr_ext": 0.45,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AUTL",
+      "change_pct": 0.0479,
+      "volume": 1745242,
+      "sector": "Healthcare",
+      "atr_ext": 0.42,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BAP",
+      "change_pct": 0.0478,
+      "volume": 412479,
+      "sector": "Financial",
+      "atr_ext": 2.87,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IRWD",
+      "change_pct": 0.0478,
+      "volume": 1299329,
+      "sector": "Healthcare",
+      "atr_ext": 0.45,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FSM",
+      "change_pct": 0.0478,
+      "volume": 5083912,
+      "sector": "Basic Materials",
+      "atr_ext": 0.17,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FNUC",
+      "change_pct": 0.0476,
+      "volume": 285934,
+      "sector": "Basic Materials",
+      "atr_ext": 1.86,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AAUC",
+      "change_pct": 0.0476,
+      "volume": 927955,
+      "sector": "Basic Materials",
+      "atr_ext": 3.92,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GNSS",
+      "change_pct": 0.0476,
+      "volume": 74411,
+      "sector": "Technology",
+      "atr_ext": 0.43,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BAER",
+      "change_pct": 0.0476,
+      "volume": 645500,
+      "sector": "Industrials",
+      "atr_ext": 0.38,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HYMC",
+      "change_pct": 0.0475,
+      "volume": 1717854,
+      "sector": "Basic Materials",
+      "atr_ext": 2.29,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EQPT",
+      "change_pct": 0.0473,
+      "volume": 2877180,
+      "sector": "Industrials",
+      "atr_ext": 0.63,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FMST",
+      "change_pct": 0.0473,
+      "volume": 54915,
+      "sector": "Basic Materials",
+      "atr_ext": 0.94,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AVGO",
+      "change_pct": 0.0473,
+      "volume": 23611947,
+      "sector": "Technology",
+      "atr_ext": 0.46,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "INMB",
+      "change_pct": 0.0473,
+      "volume": 134191,
+      "sector": "Healthcare",
+      "atr_ext": 1.6,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JZXN",
+      "change_pct": 0.0472,
+      "volume": 468459,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 0.15,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "LCTX",
+      "change_pct": 0.0472,
+      "volume": 1050110,
+      "sector": "Healthcare",
+      "atr_ext": 1.69,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CTGO",
+      "change_pct": 0.0472,
+      "volume": 358136,
+      "sector": "Basic Materials",
+      "atr_ext": 0.86,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ENS",
+      "change_pct": 0.0471,
+      "volume": 581528,
+      "sector": "Industrials",
+      "atr_ext": 2.76,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FMX",
+      "change_pct": 0.0471,
+      "volume": 942176,
+      "sector": "Consumer Defensive",
+      "atr_ext": 0.49,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AXIA",
+      "change_pct": 0.0469,
+      "volume": 1449241,
+      "sector": "Utilities",
+      "atr_ext": 0.8,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BDSX",
+      "change_pct": 0.0469,
+      "volume": 44789,
+      "sector": "Healthcare",
+      "atr_ext": 1.76,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CRCL",
+      "change_pct": 0.0469,
+      "volume": 8108447,
+      "sector": "Financial",
+      "atr_ext": 2.22,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FEMY",
+      "change_pct": 0.0468,
+      "volume": 17886,
+      "sector": "Healthcare",
+      "atr_ext": 2.46,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CLFD",
+      "change_pct": 0.0468,
+      "volume": 229236,
+      "sector": "Technology",
+      "atr_ext": 2.76,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BYND",
+      "change_pct": 0.0467,
+      "volume": 12762540,
+      "sector": "Consumer Defensive",
+      "atr_ext": 2.7,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AEG",
+      "change_pct": 0.0466,
+      "volume": 5950773,
+      "sector": "Financial",
+      "atr_ext": 5.92,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "IMMX",
+      "change_pct": 0.0465,
+      "volume": 1297120,
+      "sector": "Healthcare",
+      "atr_ext": 0.89,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FRHC",
+      "change_pct": 0.0465,
+      "volume": 81272,
+      "sector": "Financial",
+      "atr_ext": 0.83,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AGRO",
+      "change_pct": 0.0463,
+      "volume": 349262,
+      "sector": "Consumer Defensive",
+      "atr_ext": 1.25,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CHOW",
+      "change_pct": 0.0462,
+      "volume": 111615,
+      "sector": "Technology",
+      "atr_ext": 0.76,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ABVX",
+      "change_pct": 0.0462,
+      "volume": 1491889,
+      "sector": "Healthcare",
+      "atr_ext": 0.93,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FIVE",
+      "change_pct": 0.0462,
+      "volume": 978696,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 2.98,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ISOU",
+      "change_pct": 0.0461,
+      "volume": 48697,
+      "sector": "Energy",
+      "atr_ext": 0.93,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FAMI",
+      "change_pct": 0.046,
+      "volume": 271120,
+      "sector": "Consumer Defensive",
+      "atr_ext": 2.04,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ARMP",
+      "change_pct": 0.046,
+      "volume": 64098,
+      "sector": "Healthcare",
+      "atr_ext": 1.95,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ENGS",
+      "change_pct": 0.0459,
+      "volume": 984077,
+      "sector": "Industrials",
+      "atr_ext": 2.36,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AVY",
+      "change_pct": 0.0459,
+      "volume": 2072866,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 2.98,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GAME",
+      "change_pct": 0.0457,
+      "volume": 333716,
+      "sector": "Communication Services",
+      "atr_ext": 0.83,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EXOZ",
+      "change_pct": 0.0455,
+      "volume": 4701,
+      "sector": "Healthcare",
+      "atr_ext": 2.77,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EHTH",
+      "change_pct": 0.0455,
+      "volume": 322987,
+      "sector": "Financial",
+      "atr_ext": 1.69,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ENHA",
+      "change_pct": 0.0453,
+      "volume": 385834,
+      "sector": "Consumer Defensive",
+      "atr_ext": 0.95,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BELFB",
+      "change_pct": 0.0453,
+      "volume": 494312,
+      "sector": "Technology",
+      "atr_ext": 1.25,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "COGT",
+      "change_pct": 0.0452,
+      "volume": 1835779,
+      "sector": "Healthcare",
+      "atr_ext": 3.21,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IAG",
+      "change_pct": 0.0452,
+      "volume": 5347939,
+      "sector": "Basic Materials",
+      "atr_ext": 1.63,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GS",
+      "change_pct": 0.045,
+      "volume": 2330936,
+      "sector": "Financial",
+      "atr_ext": 0.55,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AUGO",
+      "change_pct": 0.045,
+      "volume": 824088,
+      "sector": "Basic Materials",
+      "atr_ext": 1.27,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GPCR",
+      "change_pct": 0.0448,
+      "volume": 383995,
+      "sector": "Healthcare",
+      "atr_ext": 1.51,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EVEX",
+      "change_pct": 0.0448,
+      "volume": 631528,
+      "sector": "Industrials",
+      "atr_ext": 1.83,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AFRM",
+      "change_pct": 0.0448,
+      "volume": 4026384,
+      "sector": "Financial",
+      "atr_ext": 0.19,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ESEA",
+      "change_pct": 0.0447,
+      "volume": 25985,
+      "sector": "Industrials",
+      "atr_ext": 4.28,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "DAO",
+      "change_pct": 0.0447,
+      "volume": 62904,
+      "sector": "Consumer Defensive",
+      "atr_ext": 4.74,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "DXPE",
+      "change_pct": 0.0445,
+      "volume": 106082,
+      "sector": "Industrials",
+      "atr_ext": 0.71,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BFRG",
+      "change_pct": 0.0445,
+      "volume": 160153,
+      "sector": "Healthcare",
+      "atr_ext": 1.45,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EFXT",
+      "change_pct": 0.0445,
+      "volume": 933642,
+      "sector": "Energy",
+      "atr_ext": 2.15,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CMI",
+      "change_pct": 0.0445,
+      "volume": 1062769,
+      "sector": "Industrials",
+      "atr_ext": 1.29,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KEN",
+      "change_pct": 0.0445,
+      "volume": 22365,
+      "sector": "Utilities",
+      "atr_ext": 2.49,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ADIL",
+      "change_pct": 0.0444,
+      "volume": 99344,
+      "sector": "Healthcare",
+      "atr_ext": 3.51,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CCHH",
+      "change_pct": 0.0444,
+      "volume": 96784,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 1.89,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ILLR",
+      "change_pct": 0.0442,
+      "volume": 269463,
+      "sector": "Technology",
+      "atr_ext": 1.12,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ENTA",
+      "change_pct": 0.0442,
+      "volume": 142361,
+      "sector": "Healthcare",
+      "atr_ext": 0.16,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ACIU",
+      "change_pct": 0.0441,
+      "volume": 245779,
+      "sector": "Healthcare",
+      "atr_ext": 0.56,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AGL",
+      "change_pct": 0.0441,
+      "volume": 170153,
+      "sector": "Healthcare",
+      "atr_ext": 0.75,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DB",
+      "change_pct": 0.044,
+      "volume": 2207216,
+      "sector": "Financial",
+      "atr_ext": 3.4,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KN",
+      "change_pct": 0.044,
+      "volume": 771584,
+      "sector": "Technology",
+      "atr_ext": 0.9,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ARTL",
+      "change_pct": 0.044,
+      "volume": 366124,
+      "sector": "Healthcare",
+      "atr_ext": 2.72,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ILAG",
+      "change_pct": 0.0439,
+      "volume": 4271,
+      "sector": "Industrials",
+      "atr_ext": 0.69,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HITI",
+      "change_pct": 0.0439,
+      "volume": 319540,
+      "sector": "Healthcare",
+      "atr_ext": 1.6,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HSBC",
+      "change_pct": 0.0438,
+      "volume": 1680273,
+      "sector": "Financial",
+      "atr_ext": 5.7,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "AEM",
+      "change_pct": 0.0438,
+      "volume": 2743019,
+      "sector": "Basic Materials",
+      "atr_ext": 1.31,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CPA",
+      "change_pct": 0.0437,
+      "volume": 419931,
+      "sector": "Industrials",
+      "atr_ext": 0.16,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JMIA",
+      "change_pct": 0.0437,
+      "volume": 786832,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 2.13,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ENIC",
+      "change_pct": 0.0436,
+      "volume": 806897,
+      "sector": "Utilities",
+      "atr_ext": 1.42,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FTEK",
+      "change_pct": 0.0435,
+      "volume": 49340,
+      "sector": "Industrials",
+      "atr_ext": 1.15,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AUR",
+      "change_pct": 0.0435,
+      "volume": 30487933,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 0.52,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ANGX",
+      "change_pct": 0.0434,
+      "volume": 686838,
+      "sector": "Communication Services",
+      "atr_ext": 3.18,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DDC",
+      "change_pct": 0.0434,
+      "volume": 84373,
+      "sector": "Consumer Defensive",
+      "atr_ext": 2.74,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CCJ",
+      "change_pct": 0.0433,
+      "volume": 4174367,
+      "sector": "Energy",
+      "atr_ext": 2.52,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CCOI",
+      "change_pct": 0.0433,
+      "volume": 1014048,
+      "sector": "Communication Services",
+      "atr_ext": 1.29,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CVV",
+      "change_pct": 0.0433,
+      "volume": 60107,
+      "sector": "Industrials",
+      "atr_ext": 0.48,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IMRX",
+      "change_pct": 0.0432,
+      "volume": 509669,
+      "sector": "Healthcare",
+      "atr_ext": 1.49,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BH",
+      "change_pct": 0.0432,
+      "volume": 136201,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 2.34,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HAPN",
+      "change_pct": 0.0432,
+      "volume": 1093254,
+      "sector": "Financial",
+      "atr_ext": 1.08,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FUSE",
+      "change_pct": 0.0431,
+      "volume": 89123,
+      "sector": "Technology",
+      "atr_ext": 2.57,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AVLN",
+      "change_pct": 0.0431,
+      "volume": 118569,
+      "sector": "Healthcare",
+      "atr_ext": 0.31,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CVE",
+      "change_pct": 0.043,
+      "volume": 8339410,
+      "sector": "Energy",
+      "atr_ext": 3.13,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BVC",
+      "change_pct": 0.043,
+      "volume": 28028,
+      "sector": "Technology",
+      "atr_ext": 0.34,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AVR",
+      "change_pct": 0.043,
+      "volume": 1438132,
+      "sector": "Healthcare",
+      "atr_ext": 1.59,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DK",
+      "change_pct": 0.043,
+      "volume": 1125772,
+      "sector": "Energy",
+      "atr_ext": 6.98,
+      "atr_color": "red"
+    },
+    {
+      "ticker": "CRNC",
+      "change_pct": 0.0428,
+      "volume": 557586,
+      "sector": "Technology",
+      "atr_ext": 2.4,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CHRS",
+      "change_pct": 0.0426,
+      "volume": 508876,
+      "sector": "Healthcare",
+      "atr_ext": 0.19,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KURA",
+      "change_pct": 0.0426,
+      "volume": 1408555,
+      "sector": "Healthcare",
+      "atr_ext": 1.5,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "INTR",
+      "change_pct": 0.0425,
+      "volume": 4475680,
+      "sector": "Financial",
+      "atr_ext": 0.22,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GKOS",
+      "change_pct": 0.0424,
+      "volume": 2559722,
+      "sector": "Healthcare",
+      "atr_ext": 4.69,
+      "atr_color": "amber"
+    },
+    {
+      "ticker": "CGEN",
+      "change_pct": 0.0424,
+      "volume": 164822,
+      "sector": "Healthcare",
+      "atr_ext": 0.36,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IFRX",
+      "change_pct": 0.0424,
+      "volume": 1113984,
+      "sector": "Healthcare",
+      "atr_ext": 1.56,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BLNK",
+      "change_pct": 0.0423,
+      "volume": 1924788,
+      "sector": "Industrials",
+      "atr_ext": 3.22,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BRKR",
+      "change_pct": 0.0421,
+      "volume": 1984999,
+      "sector": "Healthcare",
+      "atr_ext": 2.81,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HY",
+      "change_pct": 0.042,
+      "volume": 78905,
+      "sector": "Industrials",
+      "atr_ext": 0.58,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CODA",
+      "change_pct": 0.0419,
+      "volume": 44013,
+      "sector": "Industrials",
+      "atr_ext": 0.82,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HURC",
+      "change_pct": 0.0418,
+      "volume": 16043,
+      "sector": "Industrials",
+      "atr_ext": 0.54,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CATX",
+      "change_pct": 0.0418,
+      "volume": 621728,
+      "sector": "Healthcare",
+      "atr_ext": 1.24,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "HYPR",
+      "change_pct": 0.0418,
+      "volume": 543190,
+      "sector": "Healthcare",
+      "atr_ext": 3.17,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DPU",
+      "change_pct": 0.0417,
+      "volume": 4570,
+      "sector": "Financial",
+      "atr_ext": 0.07,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CRMD",
+      "change_pct": 0.0417,
+      "volume": 1182713,
+      "sector": "Healthcare",
+      "atr_ext": 1.9,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FSLY",
+      "change_pct": 0.0416,
+      "volume": 3510410,
+      "sector": "Technology",
+      "atr_ext": 2.24,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "EMN",
+      "change_pct": 0.0415,
+      "volume": 2276533,
+      "sector": "Basic Materials",
+      "atr_ext": 0.17,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "JANX",
+      "change_pct": 0.0414,
+      "volume": 690225,
+      "sector": "Healthcare",
+      "atr_ext": 1.09,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GANX",
+      "change_pct": 0.0414,
+      "volume": 696295,
+      "sector": "Healthcare",
+      "atr_ext": 0.19,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "FER",
+      "change_pct": 0.0413,
+      "volume": 2742305,
+      "sector": "Industrials",
+      "atr_ext": 0.97,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CWH",
+      "change_pct": 0.0413,
+      "volume": 4052749,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 1.35,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "KWR",
+      "change_pct": 0.0412,
+      "volume": 243160,
+      "sector": "Basic Materials",
+      "atr_ext": 1.17,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ANVS",
+      "change_pct": 0.0412,
+      "volume": 388614,
+      "sector": "Healthcare",
+      "atr_ext": 0.54,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CNR",
+      "change_pct": 0.0412,
+      "volume": 407057,
+      "sector": "Energy",
+      "atr_ext": 1.33,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "CYPH",
+      "change_pct": 0.0411,
+      "volume": 724645,
+      "sector": "Healthcare",
+      "atr_ext": 1.85,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BDN",
+      "change_pct": 0.041,
+      "volume": 2688760,
+      "sector": "Real Estate",
+      "atr_ext": 0.15,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ARTV",
+      "change_pct": 0.0409,
+      "volume": 230852,
+      "sector": "Healthcare",
+      "atr_ext": 2.01,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "C",
+      "change_pct": 0.0408,
+      "volume": 10467871,
+      "sector": "Financial",
+      "atr_ext": 0.66,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "IQ",
+      "change_pct": 0.0407,
+      "volume": 6687764,
+      "sector": "Communication Services",
+      "atr_ext": 3.34,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BIRD",
+      "change_pct": 0.0407,
+      "volume": 274088,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 2.76,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ATEN",
+      "change_pct": 0.0407,
+      "volume": 1998695,
+      "sector": "Technology",
+      "atr_ext": 1.94,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DGII",
+      "change_pct": 0.0406,
+      "volume": 319187,
+      "sector": "Technology",
+      "atr_ext": 0.11,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "DAR",
+      "change_pct": 0.0406,
+      "volume": 3824702,
+      "sector": "Consumer Defensive",
+      "atr_ext": 1.18,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ABLV",
+      "change_pct": 0.0401,
+      "volume": 30170,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 2.27,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ARKO",
+      "change_pct": 0.0401,
+      "volume": 632552,
+      "sector": "Consumer Cyclical",
       "atr_ext": 0.73,
       "atr_color": "green"
     },
     {
-      "ticker": "LINE",
-      "change_pct": 0.0406,
-      "volume": 2113219,
-      "sector": "Real Estate",
-      "atr_ext": 1.39,
+      "ticker": "GHI",
+      "change_pct": 0.04,
+      "volume": 66189,
+      "sector": "Financial",
+      "atr_ext": 0.86,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "ATER",
+      "change_pct": 0.04,
+      "volume": 290666,
+      "sector": "Consumer Cyclical",
+      "atr_ext": 2.22,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "GFI",
+      "change_pct": 0.04,
+      "volume": 3688255,
+      "sector": "Basic Materials",
+      "atr_ext": 1.33,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "BNZI",
+      "change_pct": 0.04,
+      "volume": 140426,
+      "sector": "Technology",
+      "atr_ext": 2.18,
+      "atr_color": "green"
+    },
+    {
+      "ticker": "AQMS",
+      "change_pct": 0.04,
+      "volume": 30509,
+      "sector": "Industrials",
+      "atr_ext": 1.57,
       "atr_color": "green"
     }
   ]
