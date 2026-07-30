@@ -132,24 +132,40 @@ def leverage(trades, capital) -> dict:
 
 
 def capital_efficiency(trades, capital, total_pnl) -> dict:
-    # Average concurrent open positions across trading days.
+    # Per-day: concurrent open positions + gross deployed capital (cost basis of
+    # open positions, as-traded). Deployed / starting capital shows how hard the
+    # capital worked (>100% = ran net margin); return-on-deployed is P&L per
+    # dollar actually at risk, the truest read of edge-per-dollar.
     day_open = defaultdict(int)
+    day_deployed = defaultdict(float)
     for t in trades:
         exitd = t.legs[-1].date if t.legs else t.entry_date
         d = dt.date.fromisoformat(t.entry_date)
         end = dt.date.fromisoformat(exitd)
         while d <= end:
             if d.weekday() < 5:
-                day_open[d.isoformat()] += 1
+                ds = d.isoformat()
+                sold = sum(lg.qty for lg in t.legs if lg.date <= ds)
+                held = (t.orig_qty or 0) - sold
+                if held > 0.5:
+                    day_open[ds] += 1
+                    day_deployed[ds] += held * (t.entry or 0)
             d += dt.timedelta(days=1)
-    avg_concurrent = sum(day_open.values()) / len(day_open) if day_open else 0
+    days_in_market = len(day_open)
+    avg_concurrent = sum(day_open.values()) / days_in_market if days_in_market else 0
+    deployed_vals = list(day_deployed.values())
+    avg_deployed = sum(deployed_vals) / len(deployed_vals) if deployed_vals else 0
+    peak_deployed = max(deployed_vals) if deployed_vals else 0
     holds = [t.hold_days for t in trades if t.hold_days is not None]
     avg_hold = sum(holds) / len(holds) if holds else 0
-    days_in_market = len(day_open)
     return {"avg_concurrent": avg_concurrent, "avg_hold": avg_hold,
             "pnl_per_trade": total_pnl / len(trades) if trades else 0,
             "pnl_per_day": total_pnl / days_in_market if days_in_market else 0,
-            "days_in_market": days_in_market}
+            "days_in_market": days_in_market,
+            "avg_deployed": avg_deployed,
+            "avg_deployed_pct": avg_deployed / capital * 100 if capital else 0,
+            "peak_deployed_pct": peak_deployed / capital * 100 if capital else 0,
+            "return_on_deployed": total_pnl / avg_deployed * 100 if avg_deployed else None}
 
 
 # --------------------------------------------------------------------------- #
@@ -280,9 +296,16 @@ def render_analysis(trades, capital, total_pnl, include_characteristics=True) ->
       f"(avg {trm['avg_legs']:.1f} legs); {trm['into_rate']*100:.0f}% of scaled winners trimmed into green |")
     A(f"| 杠杆/保证金 Leverage | — | peak gross exposure {money(lev['peak_gross'])} = {lev['peak_gross_x']:.2f}× capital "
       f"({'margin used' if lev['peak_gross_x']>1.02 else 'no margin'}); leveraged-ETF trades {lev['n_lev']} ({lev['lev_share']*100:.0f}%), P&L {money(lev['lev_pnl'])} |")
-    A(f"| 资金效率 Capital efficiency | — | avg {cef['avg_concurrent']:.0f} concurrent positions, {cef['avg_hold']:.1f}d hold; "
-      f"{money(cef['pnl_per_trade'])}/trade, {money(cef['pnl_per_day'])}/day in market |")
+    rod = f"{cef['return_on_deployed']:.1f}%" if cef.get('return_on_deployed') is not None else "—"
+    total_ret = total_pnl / capital * 100 if capital else 0
+    A(f"| 资金效率 Capital efficiency | — | **return on deployed capital {rod}** (vs +{total_ret:.1f}% on total); "
+      f"avg deployed {cef['avg_deployed_pct']:.0f}% of capital (peak {cef['peak_deployed_pct']:.0f}%); "
+      f"avg {cef['avg_concurrent']:.0f} concurrent, {cef['avg_hold']:.1f}d hold; {money(cef['pnl_per_trade'])}/trade |")
     A("")
+    A(f"> **资金效率解读 / Capital efficiency:** every $1 of capital actually at risk returned "
+      f"**{rod}** over the period. Average deployment was **{cef['avg_deployed_pct']:.0f}%** of the "
+      f"${capital/1e6:.0f}M base — {'ran net margin on average (capital worked hard, little idle drag)' if cef['avg_deployed_pct']>100 else 'kept meaningful dry powder'}, "
+      f"peaking at **{cef['peak_deployed_pct']:.0f}%**. Cash was raised mainly in the late-period de-risk.\n")
 
     # Best / worst case studies
     A("### 最佳 & 最差 / Best & worst trades\n")

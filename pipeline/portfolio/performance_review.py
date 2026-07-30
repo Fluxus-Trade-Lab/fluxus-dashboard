@@ -531,6 +531,19 @@ def compute_mtm(trades: list[Trade], meta: dict) -> dict | None:
         return None
 
 
+def _capital_efficiency_json(trades: list[Trade], cap: float) -> dict | None:
+    """Capital-efficiency block for the JSON output (return on deployed, etc.)."""
+    try:
+        try:
+            from . import analysis as _an
+        except ImportError:
+            import analysis as _an  # type: ignore
+        total = sum(t.pnl for t in trades)
+        return _an.capital_efficiency(trades, cap, total)
+    except Exception:  # noqa: BLE001
+        return None
+
+
 def build_json(trades: list[Trade], meta: dict, mtm: dict | None = None) -> dict:
     cap = meta["startingCapital"]
     return {
@@ -538,6 +551,7 @@ def build_json(trades: list[Trade], meta: dict, mtm: dict | None = None) -> dict
         "source_csv": os.path.basename(meta.get("_csv", "")),
         "generated": market_today().isoformat(),
         "overall": overall_stats(trades, cap),
+        "capital_efficiency": _capital_efficiency_json(trades, cap),
         "mtm": mtm,
         "monthly": monthly_pnl(trades),
         "by_direction": {k: v for k, v in by_key(trades, lambda t: t.direction)},

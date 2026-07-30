@@ -32,6 +32,7 @@ def main() -> None:
     m = d.get("mtm") or {}
     dd = m.get("drawdown", {})
     r = m.get("risk", {})
+    ce = d.get("capital_efficiency") or {}
 
     truth = {
         "_note": "Canonical source of truth. Aggregate-only (public-safe). See PERFORMANCE_TRUTH.md.",
@@ -61,6 +62,9 @@ def main() -> None:
                 "sharpe": round(r["sharpe"], 2) if r.get("sharpe") else None,
                 "sortino": round(r["sortino"], 2) if r.get("sortino") else None,
                 "vol_ann_pct": round(r["vol_ann"] * 100, 1) if r.get("vol_ann") is not None else None,
+                "return_on_deployed_pct": round(ce["return_on_deployed"], 1) if ce.get("return_on_deployed") is not None else None,
+                "avg_deployed_pct_of_capital": round(ce["avg_deployed_pct"]) if ce.get("avg_deployed_pct") is not None else None,
+                "peak_deployed_pct_of_capital": round(ce["peak_deployed_pct"]) if ce.get("peak_deployed_pct") is not None else None,
                 "monthly_pnl": {k: round(v["pnl"]) for k, v in d.get("monthly", {}).items()},
             }
         },

@@ -30,6 +30,8 @@ Account: **$1,000,000 → $1,905,255** · **+90.53%** · 331 closed trades · 10
 | Expectancy | +$2,735 / trade (+0.88R) | |
 | Total R captured | +290.6R | |
 | Avg hold | 7.5 days | swing cadence |
+| **Return on deployed capital** | **85.3%** | P&L per $1 actually at risk (vs +90.5% on total capital) |
+| Avg capital deployed | 106% of base | ran net margin on average; peak 248% — capital worked hard, little idle drag |
 
 ### Drawdown & risk — **mark-to-market is the reporting standard**
 | Metric | Value | Notes |
