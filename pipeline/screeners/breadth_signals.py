@@ -205,3 +205,157 @@ def truncate_health(health: Dict[str, Any], date_iso: str) -> Optional[Dict[str,
             'warn_history': wh,
         }
     return out
+
+
+# ── Verdict composition (spec §1) ────────────────────────────────────
+
+_EXPOSURE = {
+    ('BULLISH', 'Low'): 'Full / normal size',
+    ('BULLISH', 'Elevated'): 'Normal, tighter stops',
+    ('BULLISH', 'High'): 'Reduced despite breadth — price warnings stack',
+    ('MIXED', 'Low'): 'Reduced / selective',
+    ('MIXED', 'Elevated'): 'Reduced / selective',
+    ('MIXED', 'High'): 'Defensive lean — wait for alignment',
+    ('BEARISH', 'Low'): 'Defensive / capital preservation',
+    ('BEARISH', 'Elevated'): 'Defensive / capital preservation',
+    ('BEARISH', 'High'): 'Defensive / capital preservation',
+    ('OVERSOLD', 'Low'): 'Defensive but alert — thrust watch',
+    ('OVERSOLD', 'Elevated'): 'Defensive but alert — thrust watch',
+    ('OVERSOLD', 'High'): 'Defensive but alert — thrust watch',
+    ('OVERBOUGHT', 'Low'): 'No chasing; harvest into strength',
+    ('OVERBOUGHT', 'Elevated'): 'No chasing; harvest into strength',
+    ('OVERBOUGHT', 'High'): 'No chasing; harvest into strength',
+}
+
+_PLAYBOOK = {
+    'BULLISH': 'Trend participation — press winners, normal pyramids',
+    'MIXED': 'Smaller size, cleaner setups, demand confirmation',
+    'BEARISH': 'Capital preservation — selective shorts or cash',
+    'OVERSOLD': 'Bottom-hunt protocol — wait for a 300+ up-4% thrust day',
+    'OVERBOUGHT': 'Late-stage strength — take partials, raise stops',
+}
+
+_GUIDANCE = {
+    ('BULLISH', 'Low'): 'Breadth and both benchmarks agree; full participation is supported.',
+    ('BULLISH', 'Elevated'): 'Breadth is constructive but price warnings are stacking; participate with tighter risk.',
+    ('BULLISH', 'High'): 'Breadth says bull, price action disagrees loudly; size down until they reconcile.',
+    ('MIXED', 'Low'): 'Signals disagree across timeframes; smaller positions and cleaner setups until the tape picks a side.',
+    ('MIXED', 'Elevated'): 'Mixed breadth with mounting warnings; reduce exposure and demand confirmation before adding.',
+    ('MIXED', 'High'): 'Mixed breadth and heavy price warnings; defensive posture until alignment returns.',
+    ('BEARISH', 'Low'): 'Breadth is negative; protect capital and let the downtrend exhaust itself.',
+    ('BEARISH', 'Elevated'): 'Negative breadth with active warnings; capital preservation is the position.',
+    ('BEARISH', 'High'): 'Full risk-off: breadth and price agree on the downside.',
+    ('OVERSOLD', 'Low'): 'T2108 in the oversold zone; stop pressing shorts and watch for a reversal thrust day.',
+    ('OVERSOLD', 'Elevated'): 'Deeply oversold; the next 300+ up-4% day is the signal that matters.',
+    ('OVERSOLD', 'High'): 'Max-pain zone; historically where bottoms form — watch for the thrust, do not front-run it.',
+    ('OVERBOUGHT', 'Low'): 'T2108 overbought; strength is late-stage — harvest, do not initiate chases.',
+    ('OVERBOUGHT', 'Elevated'): 'Overbought with warnings building; tighten stops into strength.',
+    ('OVERBOUGHT', 'High'): 'Overbought and deteriorating; distribution risk is elevated.',
+}
+
+
+def _health_last(health: Optional[Dict[str, Any]], key: str) -> Optional[Dict[str, Any]]:
+    if not health:
+        return None
+    blk = health.get(key)
+    if not blk or not blk.get('candles'):
+        return None
+    return {
+        'close': blk['candles'][-1]['c'],
+        'sma20': blk['sma20'][-1], 'sma50': blk['sma50'][-1], 'sma200': blk['sma200'][-1],
+        'count': blk['warn_history'][-1]['count'] if blk.get('warn_history') else
+                 blk.get('danger', {}).get('count', 0),
+    }
+
+
+def _bench_state(h: Optional[Dict[str, Any]]) -> Optional[str]:
+    if h is None:
+        return None
+    t = THRESHOLDS['spy_danger']
+    if (h['sma200'] is not None and h['close'] < h['sma200']) or h['count'] >= t['bear_min']:
+        return 'Downtrend'
+    if h['count'] <= t['bull_max'] and h['sma20'] is not None and h['close'] > h['sma20']:
+        return 'Uptrend'
+    return 'Mixed'
+
+
+def _danger_vote(count: Optional[int]) -> str:
+    if count is None:
+        return 'neutral'
+    t = THRESHOLDS['spy_danger']
+    if count <= t['bull_max']:
+        return 'bull'
+    if count >= t['bear_min']:
+        return 'bear'
+    return 'neutral'
+
+
+def evaluate(frame: pd.DataFrame, health: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+    """Rule-derived verdict for the last row of `frame`. Pure and total."""
+    row = frame.iloc[-1].to_dict()
+    date_iso = str(row.get('date', ''))
+    if health is not None and date_iso:
+        health = truncate_health(health, date_iso)
+
+    votes = breadth_votes(row)
+    spy = _health_last(health, 'spy')
+    qqq = _health_last(health, 'qqq')
+    votes['spy_danger'] = _danger_vote(spy['count'] if spy else None)
+    votes['qqq_danger'] = _danger_vote(qqq['count'] if qqq else None)
+    if spy and qqq and spy['sma50'] is not None and qqq['sma50'] is not None:
+        above = (spy['close'] > spy['sma50'], qqq['close'] > qqq['sma50'])
+        votes['bench_trend'] = 'bull' if all(above) else 'bear' if not any(above) else 'neutral'
+    else:
+        votes['bench_trend'] = 'neutral'
+
+    score = sum(v == 'bull' for v in votes.values()) - sum(v == 'bear' for v in votes.values())
+    env = 'BULLISH' if score >= 4 else 'BEARISH' if score <= -4 else 'MIXED'
+
+    notes: List[str] = []
+    t21 = _num(row.get('t2108'))
+    z = THRESHOLDS['t2108_zone']
+    if t21 is not None and t21 < z['oversold']:
+        env = 'OVERSOLD'
+        notes.append('T2108 below 20 — reversal watch: look for a bullish thrust day')
+    elif t21 is not None and t21 > z['overbought']:
+        env = 'OVERBOUGHT'
+        notes.append('T2108 above 80 — chase risk')
+
+    up4, down4 = _num(row.get('up_4pct')), _num(row.get('down_4pct'))
+    n = THRESHOLDS['thrust']['count']
+    if up4 is not None and down4 is not None and up4 >= n and down4 >= n:
+        notes.append('Churn/volatile: 300+ stocks both up and down 4% — unresolved tape')
+    mc = _num(row.get('mcclellan_osc'))
+    if mc is not None and abs(mc) >= THRESHOLDS['mcclellan']['extreme']:
+        notes.append(f"McClellan at {mc:+.0f} — extreme reading")
+    if health is None:
+        notes.append('Price signals unavailable — breadth-only verdict')
+
+    warn_total = (spy['count'] if spy else 0) + (qqq['count'] if qqq else 0)
+    risk = 'Low' if warn_total <= 2 else 'Elevated' if warn_total <= 6 else 'High'
+
+    spy_state, qqq_state = _bench_state(spy), _bench_state(qqq)
+    alignment = None if spy_state is None or qqq_state is None else (
+        'Aligned' if spy_state == qqq_state else 'Divergent')
+
+    r5, r10 = votes['ratio_5d'], votes['ratio_10d']
+    qs, s13 = votes['qtr_spread'], votes['spread_13_34']
+    if r5 == r10 == 'bull' and qs == s13 == 'bull':
+        confirmation = 'Confirmed bull — ratios and spreads agree'
+    elif r5 == r10 == 'bear' and qs == s13 == 'bear':
+        confirmation = 'Confirmed bear — ratios and spreads agree'
+    else:
+        parts = []
+        if r5 != r10:
+            parts.append('5D vs 10D ratios disagree')
+        if qs != s13:
+            parts.append('quarterly vs 13%/34d spreads disagree')
+        confirmation = 'Inconclusive' + (' — ' + '; '.join(parts) if parts else ' — signals split')
+
+    return {
+        'env': env, 'score': int(score), 'risk': risk, 'warn_total': int(warn_total),
+        'exposure': _EXPOSURE[(env, risk)], 'playbook': _PLAYBOOK[env],
+        'guidance': _GUIDANCE[(env, risk)],
+        'spy_state': spy_state, 'qqq_state': qqq_state, 'alignment': alignment,
+        'confirmation': confirmation, 'notes': notes, 'votes': votes,
+    }

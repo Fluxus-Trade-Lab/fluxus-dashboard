@@ -190,3 +190,114 @@ class TestMarketHealth:
         assert t['spy']['candles'][-1]['date'] == cut_date
         assert t['spy']['danger']['count'] == t['spy']['warn_history'][-1]['count']
         assert truncate_health(health, '1990-01-01') is None
+
+
+def _frame(rows):
+    return pd.DataFrame(rows)
+
+
+def _bull_row(**kw):
+    base = dict(ratio_5d=1.5, ratio_10d=1.3, up_4pct=350, down_4pct=80,
+                up_25pct_qtr=500, down_25pct_qtr=200, up_13pct_34d=700,
+                down_13pct_34d=300, mcclellan_osc=25.0, new_highs=40,
+                new_lows=5, pct_above_200sma=62.0, t2108=65.0)
+    base.update(kw)
+    return _row(**base)
+
+
+def _bear_row(**kw):
+    base = dict(ratio_5d=0.3, ratio_10d=0.4, up_4pct=60, down_4pct=400,
+                up_25pct_qtr=150, down_25pct_qtr=600, up_13pct_34d=200,
+                down_13pct_34d=800, mcclellan_osc=-40.0, new_highs=2,
+                new_lows=30, pct_above_200sma=25.0, t2108=28.0)
+    base.update(kw)
+    return _row(**base)
+
+
+def _health_stub(spy_count=0, qqq_count=0, close=100.0, sma20=95.0,
+                 sma50=90.0, sma200=85.0, date='2026-07-29'):
+    def blk(count):
+        return {'candles': [{'date': date, 'o': close, 'h': close, 'l': close, 'c': close}],
+                'sma20': [sma20], 'sma50': [sma50], 'sma200': [sma200],
+                'danger': {'signals': {}, 'count': count},
+                'warn_history': [{'date': date, 'count': count}]}
+    return {'spy': blk(spy_count), 'qqq': blk(qqq_count)}
+
+
+class TestEvaluate:
+    def test_clean_bull_day(self):
+        from pipeline.screeners.breadth_signals import evaluate
+        frame = _frame([{'date': '2026-07-29', **_bull_row()}])
+        v = evaluate(frame, _health_stub())
+        assert v['env'] == 'BULLISH'
+        assert v['risk'] == 'Low'
+        assert v['spy_state'] == 'Uptrend' and v['qqq_state'] == 'Uptrend'
+        assert v['alignment'] == 'Aligned'
+        assert 'Confirmed bull' in v['confirmation']
+        assert len(v['votes']) == 12
+
+    def test_clean_bear_day(self):
+        from pipeline.screeners.breadth_signals import evaluate
+        health = _health_stub(spy_count=5, qqq_count=4, close=80.0,
+                              sma20=95.0, sma50=100.0, sma200=105.0)
+        frame = _frame([{'date': '2026-07-29', **_bear_row()}])
+        v = evaluate(frame, health)
+        assert v['env'] == 'BEARISH'
+        assert v['risk'] == 'High'          # 5 + 4 = 9 warnings
+        assert v['spy_state'] == 'Downtrend'
+        assert 'Confirmed bear' in v['confirmation']
+
+    def test_oversold_override_outranks_score(self):
+        from pipeline.screeners.breadth_signals import evaluate
+        frame = _frame([{'date': '2026-07-29', **_bear_row(t2108=15.0)}])
+        v = evaluate(frame, _health_stub(spy_count=5, qqq_count=5))
+        assert v['env'] == 'OVERSOLD'
+        assert any('thrust' in n.lower() or 'reversal' in n.lower() for n in v['notes'])
+
+    def test_overbought_override(self):
+        from pipeline.screeners.breadth_signals import evaluate
+        frame = _frame([{'date': '2026-07-29', **_bull_row(t2108=85.0)}])
+        v = evaluate(frame, _health_stub())
+        assert v['env'] == 'OVERBOUGHT'
+
+    def test_churn_day_noted(self):
+        from pipeline.screeners.breadth_signals import evaluate
+        frame = _frame([{'date': '2026-07-29', **_row(up_4pct=400, down_4pct=380)}])
+        v = evaluate(frame, _health_stub())
+        assert any('churn' in n.lower() or 'volatile' in n.lower() for n in v['notes'])
+
+    def test_health_none_degrades(self):
+        from pipeline.screeners.breadth_signals import evaluate
+        frame = _frame([{'date': '2026-07-29', **_bull_row()}])
+        v = evaluate(frame, None)
+        assert v['spy_state'] is None and v['alignment'] is None
+        assert v['warn_total'] == 0 and v['risk'] == 'Low'
+        assert any('price signals unavailable' in n.lower() for n in v['notes'])
+        assert v['votes']['spy_danger'] == 'neutral'
+
+    def test_mixed_day_and_disagreement_named(self):
+        from pipeline.screeners.breadth_signals import evaluate
+        # Genuinely split tape: 3 bull votes (ratio_10d, 13/34 spread, bench),
+        # 3 bear votes (qtr spread, mcclellan, nh_nl), rest neutral -> score 0.
+        frame = _frame([{'date': '2026-07-29',
+                         **_row(ratio_5d=0.6, ratio_10d=1.2,
+                                up_25pct_qtr=200, down_25pct_qtr=300,
+                                up_13pct_34d=500, down_13pct_34d=400,
+                                mcclellan_osc=-5.0, new_highs=10, new_lows=20,
+                                pct_above_200sma=45.0, t2108=50.0)}])
+        v = evaluate(frame, _health_stub(spy_count=2, qqq_count=3))
+        assert v['env'] == 'MIXED'
+        assert 'Inconclusive' in v['confirmation']
+        assert 'disagree' in v['confirmation']
+
+    def test_prefix_purity(self):
+        """A prefix's verdict must not change when later rows exist (Spec 3 replay guard)."""
+        from pipeline.screeners.breadth_signals import evaluate
+        prefix_rows = [{'date': '2026-07-27', **_bull_row()},
+                       {'date': '2026-07-28', **_bull_row()}]
+        v_alone = evaluate(_frame(prefix_rows), None)
+        # Same prefix sliced out of a longer frame that ends with a bear day
+        full = _frame(prefix_rows + [{'date': '2026-07-29', **_bear_row()}])
+        v_sliced = evaluate(full.iloc[:2].reset_index(drop=True), None)
+        assert v_alone == v_sliced
+        assert v_alone['env'] == 'BULLISH'   # the later bear row leaked nothing
