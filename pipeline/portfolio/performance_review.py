@@ -423,7 +423,8 @@ def render_deep(trades: list[Trade], meta: dict, title: str, mtm: dict | None = 
             from . import analysis as _an
         except ImportError:
             import analysis as _an  # type: ignore
-        A(_an.render_analysis(trades, cap, s["total_pnl"]))
+        A(_an.render_analysis(trades, cap, s["total_pnl"],
+                              equity_by_date=(mtm or {}).get("equity_by_date")))
     except Exception as e:  # noqa: BLE001 — narrative must never break the review
         A(f"*（评估段落生成失败 / analysis section unavailable: {type(e).__name__}）*\n")
 
@@ -526,12 +527,13 @@ def compute_mtm(trades: list[Trade], meta: dict) -> dict | None:
             "risk": _mtm.risk_ratios(curve, cap),
             "final_equity": curve[-1][1],
             "points": len(curve),
+            "equity_by_date": {d: v for d, v in curve},
         }
     except Exception:  # noqa: BLE001 — degrade gracefully to realized-only
         return None
 
 
-def _capital_efficiency_json(trades: list[Trade], cap: float) -> dict | None:
+def _capital_efficiency_json(trades: list[Trade], cap: float, mtm: dict | None = None) -> dict | None:
     """Capital-efficiency block for the JSON output (return on deployed, etc.)."""
     try:
         try:
@@ -539,7 +541,7 @@ def _capital_efficiency_json(trades: list[Trade], cap: float) -> dict | None:
         except ImportError:
             import analysis as _an  # type: ignore
         total = sum(t.pnl for t in trades)
-        return _an.capital_efficiency(trades, cap, total)
+        return _an.capital_efficiency(trades, cap, total, (mtm or {}).get("equity_by_date"))
     except Exception:  # noqa: BLE001
         return None
 
@@ -551,7 +553,7 @@ def build_json(trades: list[Trade], meta: dict, mtm: dict | None = None) -> dict
         "source_csv": os.path.basename(meta.get("_csv", "")),
         "generated": market_today().isoformat(),
         "overall": overall_stats(trades, cap),
-        "capital_efficiency": _capital_efficiency_json(trades, cap),
+        "capital_efficiency": _capital_efficiency_json(trades, cap, mtm),
         "mtm": mtm,
         "monthly": monthly_pnl(trades),
         "by_direction": {k: v for k, v in by_key(trades, lambda t: t.direction)},

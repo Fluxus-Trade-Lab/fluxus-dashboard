@@ -31,7 +31,7 @@ Account: **$1,000,000 → $1,905,255** · **+90.53%** · 331 closed trades · 10
 | Total R captured | +290.6R | |
 | Avg hold | 7.5 days | swing cadence |
 | **Return on deployed capital** | **85.3%** | P&L per $1 actually at risk (vs +90.5% on total capital) |
-| Avg capital deployed | 106% of base | ran net margin on average; peak 248% — capital worked hard, little idle drag |
+| Leverage (gross ÷ equity) | avg **0.79×**, peak **1.56×** | mostly under fully-invested; peaked ~1.6× (Reg-T-ish), not 2.5×. (Deployment vs *starting* $1M reads higher — 106%/248% peak — because equity grew; leverage vs current equity is the honest gauge.) |
 
 ### Drawdown & risk — **mark-to-market is the reporting standard**
 | Metric | Value | Notes |

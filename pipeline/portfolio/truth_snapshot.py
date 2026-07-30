@@ -63,8 +63,9 @@ def main() -> None:
                 "sortino": round(r["sortino"], 2) if r.get("sortino") else None,
                 "vol_ann_pct": round(r["vol_ann"] * 100, 1) if r.get("vol_ann") is not None else None,
                 "return_on_deployed_pct": round(ce["return_on_deployed"], 1) if ce.get("return_on_deployed") is not None else None,
-                "avg_deployed_pct_of_capital": round(ce["avg_deployed_pct"]) if ce.get("avg_deployed_pct") is not None else None,
-                "peak_deployed_pct_of_capital": round(ce["peak_deployed_pct"]) if ce.get("peak_deployed_pct") is not None else None,
+                "avg_leverage_x": round(ce["avg_leverage_pct"] / 100, 2) if ce.get("avg_leverage_pct") is not None else None,
+                "peak_leverage_x": round(ce["peak_leverage_pct"] / 100, 2) if ce.get("peak_leverage_pct") is not None else None,
+                "avg_deployed_pct_of_start": round(ce["avg_deployed_pct_of_start"]) if ce.get("avg_deployed_pct_of_start") is not None else None,
                 "monthly_pnl": {k: round(v["pnl"]) for k, v in d.get("monthly", {}).items()},
             }
         },

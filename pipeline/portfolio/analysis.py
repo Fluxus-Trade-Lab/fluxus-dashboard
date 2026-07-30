@@ -131,7 +131,7 @@ def leverage(trades, capital) -> dict:
             "peak_gross": peak, "peak_gross_x": peak_gross_x, "peak_date": peak_date}
 
 
-def capital_efficiency(trades, capital, total_pnl) -> dict:
+def capital_efficiency(trades, capital, total_pnl, equity_by_date=None) -> dict:
     # Per-day: concurrent open positions + gross deployed capital (cost basis of
     # open positions, as-traded). Deployed / starting capital shows how hard the
     # capital worked (>100% = ran net margin); return-on-deployed is P&L per
@@ -158,13 +158,29 @@ def capital_efficiency(trades, capital, total_pnl) -> dict:
     peak_deployed = max(deployed_vals) if deployed_vals else 0
     holds = [t.hold_days for t in trades if t.hold_days is not None]
     avg_hold = sum(holds) / len(holds) if holds else 0
+
+    # Leverage = deployed ÷ CURRENT equity (vs starting capital, which overstates
+    # as the account grows). Needs the daily MTM equity curve; None if unavailable.
+    avg_lev = peak_lev = None
+    if equity_by_date:
+        levs = []
+        for ds, dep in day_deployed.items():
+            eq = equity_by_date.get(ds)
+            if eq and eq > 0:
+                levs.append(dep / eq)
+        if levs:
+            avg_lev = sum(levs) / len(levs) * 100
+            peak_lev = max(levs) * 100
+
     return {"avg_concurrent": avg_concurrent, "avg_hold": avg_hold,
             "pnl_per_trade": total_pnl / len(trades) if trades else 0,
             "pnl_per_day": total_pnl / days_in_market if days_in_market else 0,
             "days_in_market": days_in_market,
             "avg_deployed": avg_deployed,
-            "avg_deployed_pct": avg_deployed / capital * 100 if capital else 0,
-            "peak_deployed_pct": peak_deployed / capital * 100 if capital else 0,
+            "avg_deployed_pct_of_start": avg_deployed / capital * 100 if capital else 0,
+            "peak_deployed_pct_of_start": peak_deployed / capital * 100 if capital else 0,
+            "avg_leverage_pct": avg_lev,
+            "peak_leverage_pct": peak_lev,
             "return_on_deployed": total_pnl / avg_deployed * 100 if avg_deployed else None}
 
 
@@ -274,12 +290,12 @@ def characteristics(trades) -> dict:
 # --------------------------------------------------------------------------- #
 # Render
 # --------------------------------------------------------------------------- #
-def render_analysis(trades, capital, total_pnl, include_characteristics=True) -> str:
+def render_analysis(trades, capital, total_pnl, include_characteristics=True, equity_by_date=None) -> str:
     off = offense(trades)
     dfn = defense(trades)
     trm = trimming(trades)
     lev = leverage(trades, capital)
-    cef = capital_efficiency(trades, capital, total_pnl)
+    cef = capital_efficiency(trades, capital, total_pnl, equity_by_date)
     ch = characteristics(trades) if include_characteristics else None
 
     L = []
@@ -298,14 +314,21 @@ def render_analysis(trades, capital, total_pnl, include_characteristics=True) ->
       f"({'margin used' if lev['peak_gross_x']>1.02 else 'no margin'}); leveraged-ETF trades {lev['n_lev']} ({lev['lev_share']*100:.0f}%), P&L {money(lev['lev_pnl'])} |")
     rod = f"{cef['return_on_deployed']:.1f}%" if cef.get('return_on_deployed') is not None else "—"
     total_ret = total_pnl / capital * 100 if capital else 0
+    has_lev = cef.get('avg_leverage_pct') is not None
+    lev_txt = (f"avg leverage {cef['avg_leverage_pct']/100:.2f}× / peak {cef['peak_leverage_pct']/100:.2f}× (gross ÷ equity)"
+               if has_lev else
+               f"avg deployed {cef['avg_deployed_pct_of_start']:.0f}% / peak {cef['peak_deployed_pct_of_start']:.0f}% of starting capital")
     A(f"| 资金效率 Capital efficiency | — | **return on deployed capital {rod}** (vs +{total_ret:.1f}% on total); "
-      f"avg deployed {cef['avg_deployed_pct']:.0f}% of capital (peak {cef['peak_deployed_pct']:.0f}%); "
-      f"avg {cef['avg_concurrent']:.0f} concurrent, {cef['avg_hold']:.1f}d hold; {money(cef['pnl_per_trade'])}/trade |")
+      f"{lev_txt}; avg {cef['avg_concurrent']:.0f} concurrent, {cef['avg_hold']:.1f}d hold; {money(cef['pnl_per_trade'])}/trade |")
     A("")
-    A(f"> **资金效率解读 / Capital efficiency:** every $1 of capital actually at risk returned "
-      f"**{rod}** over the period. Average deployment was **{cef['avg_deployed_pct']:.0f}%** of the "
-      f"${capital/1e6:.0f}M base — {'ran net margin on average (capital worked hard, little idle drag)' if cef['avg_deployed_pct']>100 else 'kept meaningful dry powder'}, "
-      f"peaking at **{cef['peak_deployed_pct']:.0f}%**. Cash was raised mainly in the late-period de-risk.\n")
+    if has_lev:
+        A(f"> **资金效率解读 / Capital efficiency:** every $1 of capital actually at risk returned **{rod}** "
+          f"over the period. Leverage — gross exposure ÷ current equity — averaged **{cef['avg_leverage_pct']/100:.2f}×** "
+          f"and peaked at **{cef['peak_leverage_pct']/100:.2f}×**, so on average you deployed "
+          f"{'more than' if cef['avg_leverage_pct']>100 else 'under'} your equity "
+          f"({'net margin' if cef['avg_leverage_pct']>100 else 'kept dry powder'}). "
+          f"(Deployment vs the *starting* $1M reads higher — {cef['peak_deployed_pct_of_start']:.0f}% peak — because equity grew; "
+          f"leverage vs current equity is the honest gauge.)\n")
 
     # Best / worst case studies
     A("### 最佳 & 最差 / Best & worst trades\n")
