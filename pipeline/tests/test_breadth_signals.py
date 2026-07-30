@@ -301,3 +301,43 @@ class TestEvaluate:
         v_sliced = evaluate(full.iloc[:2].reset_index(drop=True), None)
         assert v_alone == v_sliced
         assert v_alone['env'] == 'BULLISH'   # the later bear row leaked nothing
+
+
+class TestPercentileContext:
+    def test_ranks_on_known_frame(self):
+        from pipeline.screeners.breadth_signals import percentile_context
+        rows = [{'date': f'2026-07-{d:02d}', **_row(down_4pct=d * 10)} for d in range(1, 11)]
+        frame = _frame(rows)   # down_4pct: 10..100, today = 100 -> 100th pctile
+        ctx = percentile_context(frame)
+        assert ctx['down_4pct'] == 100
+        assert 0 <= ctx['t2108'] <= 100
+        assert 'qtr_spread' in ctx and 'nh_nl_net' in ctx
+
+    def test_missing_today_value_omitted(self):
+        from pipeline.screeners.breadth_signals import percentile_context
+        rows = [{'date': '2026-07-28', **_row()},
+                {'date': '2026-07-29', **_row(mcclellan_osc=None)}]
+        ctx = percentile_context(_frame(rows))
+        assert 'mcclellan_osc' not in ctx
+
+
+class TestAnnotateRows:
+    def test_rows_get_codes_matching_prefix_evaluate(self):
+        from pipeline.screeners.breadth_signals import annotate_rows, evaluate
+        rows_data = [{'date': '2026-07-27', **_bull_row()},
+                     {'date': '2026-07-28', **_bear_row()},
+                     {'date': '2026-07-29', **_bull_row()}]
+        frame = _frame(rows_data)
+        json_rows = [dict(r) for r in rows_data]
+        annotate_rows(json_rows, frame, None)
+        for i, jr in enumerate(json_rows):
+            expect = evaluate(frame.iloc[:i + 1].reset_index(drop=True), None)
+            assert jr['v'] == {'env': expect['env'], 'risk': expect['risk'],
+                               'warn': expect['warn_total']}
+
+    def test_unknown_date_gets_none(self):
+        from pipeline.screeners.breadth_signals import annotate_rows
+        frame = _frame([{'date': '2026-07-29', **_bull_row()}])
+        json_rows = [{'date': '1999-01-01'}]
+        annotate_rows(json_rows, frame, None)
+        assert json_rows[0]['v'] is None

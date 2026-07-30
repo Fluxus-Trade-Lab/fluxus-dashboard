@@ -359,3 +359,40 @@ def evaluate(frame: pd.DataFrame, health: Optional[Dict[str, Any]]) -> Dict[str,
         'spy_state': spy_state, 'qqq_state': qqq_state, 'alignment': alignment,
         'confirmation': confirmation, 'notes': notes, 'votes': votes,
     }
+
+
+# ── Percentile context + per-row codes (spec §1, §3) ─────────────────
+
+def percentile_context(frame: pd.DataFrame) -> Dict[str, int]:
+    """Today's percentile rank per headline metric vs the whole archive."""
+    derived = {
+        'nh_nl_net': pd.to_numeric(frame.get('new_highs'), errors='coerce')
+                     - pd.to_numeric(frame.get('new_lows'), errors='coerce'),
+        'qtr_spread': pd.to_numeric(frame.get('up_25pct_qtr'), errors='coerce')
+                      - pd.to_numeric(frame.get('down_25pct_qtr'), errors='coerce'),
+    }
+    ctx: Dict[str, int] = {}
+    for key in ('up_4pct', 'down_4pct', 'ratio_5d', 't2108', 'mcclellan_osc',
+                'nh_nl_net', 'qtr_spread'):
+        series = derived[key] if key in derived else pd.to_numeric(frame.get(key), errors='coerce')
+        if series is None or len(series) == 0:
+            continue
+        today = series.iloc[-1]
+        if pd.isna(today):
+            continue
+        ctx[key] = int(round(float((series <= today).mean()) * 100))
+    return ctx
+
+
+def annotate_rows(rows: List[Dict[str, Any]], frame: pd.DataFrame,
+                  health: Optional[Dict[str, Any]]) -> None:
+    """Attach compact verdict codes v={env,risk,warn} to breadth.json rows."""
+    dates = list(frame['date'].astype(str))
+    index_of = {d: i for i, d in enumerate(dates)}
+    for row in rows:
+        i = index_of.get(str(row.get('date')))
+        if i is None:
+            row['v'] = None
+            continue
+        v = evaluate(frame.iloc[:i + 1].reset_index(drop=True), health)
+        row['v'] = {'env': v['env'], 'risk': v['risk'], 'warn': v['warn_total']}
