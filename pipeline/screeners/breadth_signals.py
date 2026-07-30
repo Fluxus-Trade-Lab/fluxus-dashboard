@@ -150,6 +150,23 @@ def danger_signals(hist: pd.DataFrame) -> Dict[str, bool]:
     return {k: bool(last[k]) for k in last.index}
 
 
+def danger_at(hist: pd.DataFrame, date_iso: str) -> Dict[str, Any]:
+    """Danger signals as of the last session <= date_iso. Pure.
+
+    Slices `hist` to sessions on or before `date_iso` and evaluates the five
+    danger signals on that slice's last bar, so the returned date always
+    matches the session the signals were computed on (keeps panels and the
+    pinned verdict date in sync — see FINDING A).
+    """
+    session_dates = hist.index.strftime('%Y-%m-%d')
+    keep = session_dates <= date_iso
+    sub = hist.loc[keep] if keep.any() else hist
+    last = _danger_frame(sub).iloc[-1]
+    signals = {k: bool(last[k]) for k in last.index}
+    last_date = sub.index[-1].strftime('%Y-%m-%d')
+    return {'signals': signals, 'count': sum(signals.values()), 'date': last_date}
+
+
 def warn_counts(hist: pd.DataFrame, days: int = 130) -> List[Dict[str, Any]]:
     """Daily warning counts (0-5) for the trailing `days` sessions."""
     frame = _danger_frame(hist)
@@ -269,6 +286,7 @@ def _health_last(health: Optional[Dict[str, Any]], key: str) -> Optional[Dict[st
 
 
 def _bench_state(h: Optional[Dict[str, Any]]) -> Optional[str]:
+    """Downtrend conditions take precedence over Uptrend on overlap (deliberate: fail bearish)."""
     if h is None:
         return None
     t = THRESHOLDS['spy_danger']
@@ -380,7 +398,8 @@ def percentile_context(frame: pd.DataFrame) -> Dict[str, int]:
         today = series.iloc[-1]
         if pd.isna(today):
             continue
-        ctx[key] = int(round(float((series <= today).mean()) * 100))
+        ranked = series.dropna()
+        ctx[key] = int(round(float((ranked <= today).mean()) * 100))
     return ctx
 
 
@@ -406,6 +425,12 @@ def run_signals(breadth_result: Dict[str, Any], frame: pd.DataFrame,
     if spy_hist is not None and qqq_hist is not None \
             and len(spy_hist) >= 50 and len(qqq_hist) >= 50:
         health = market_health(spy_hist, qqq_hist)
+        last_date = str(frame['date'].iloc[-1]) if len(frame) else None
+        if last_date:
+            # Pin the panels' danger block to the same session as the verdict
+            # so the UI never shows a banner and panels disagreeing (FINDING A).
+            health['spy']['danger'] = danger_at(spy_hist, last_date)
+            health['qqq']['danger'] = danger_at(qqq_hist, last_date)
     verdict = evaluate(frame, health)
     verdict['context'] = percentile_context(frame)
     breadth_result['verdict'] = verdict

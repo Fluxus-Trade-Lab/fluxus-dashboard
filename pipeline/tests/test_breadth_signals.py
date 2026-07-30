@@ -163,6 +163,30 @@ def _ohlc(closes, end='2026-07-29'):
     return h
 
 
+class TestDangerAt:
+    def test_slices_to_prior_session(self):
+        from pipeline.screeners.breadth_signals import danger_at
+        closes = [100.0] * 30 + [95.0, 90.0, 85.0, 80.0]
+        lows = [99.0] * 30 + [94.0, 89.0, 84.0, 79.0]
+        hist = _hist(closes, lows=lows, end='2026-07-30')
+        d = danger_at(hist, '2026-07-29')
+        assert d['date'] == '2026-07-29'
+        assert d['count'] == sum(d['signals'].values())
+        # sliced-to-07-29 signals must match evaluating the truncated hist
+        # directly (not the full hist through 07-30) — pins the slicing itself
+        from pipeline.screeners.breadth_signals import danger_signals
+        truncated_hist = hist.loc[hist.index.strftime('%Y-%m-%d') <= '2026-07-29']
+        assert d['signals'] == danger_signals(truncated_hist)
+
+    def test_date_beyond_last_session_clamps(self):
+        from pipeline.screeners.breadth_signals import danger_at
+        closes = [100.0 + i for i in range(40)]
+        hist = _hist(closes, end='2026-07-30')
+        last_date = hist.index[-1].strftime('%Y-%m-%d')
+        d = danger_at(hist, '2099-01-01')
+        assert d['date'] == last_date
+
+
 class TestMarketHealth:
     def test_shape_and_alignment(self):
         from pipeline.screeners.breadth_signals import market_health
@@ -302,6 +326,28 @@ class TestEvaluate:
         assert v_alone == v_sliced
         assert v_alone['env'] == 'BULLISH'   # the later bear row leaked nothing
 
+    def test_evaluate_matches_replay_via_truncate_health(self):
+        """Spec 3 replay guard: evaluating a prefix directly with the full health
+        dict must equal evaluating the same prefix against a pre-truncated
+        health dict (the shape Time Machine hands in for historical replay)."""
+        from pipeline.screeners.breadth_signals import (
+            evaluate, market_health, truncate_health,
+        )
+        prefix_rows = [{'date': '2026-07-27', **_bull_row()},
+                       {'date': '2026-07-28', **_bull_row()},
+                       {'date': '2026-07-29', **_bear_row()}]
+        prefix_frame = _frame(prefix_rows)
+        prefix_last_date = prefix_rows[-1]['date']
+
+        # hists run longer than the prefix (through 2026-07-31)
+        spy = _ohlc([100.0 + i * 0.1 for i in range(250)], end='2026-07-31')
+        qqq = _ohlc([200.0 + i * 0.2 for i in range(250)], end='2026-07-31')
+        full_health = market_health(spy, qqq, days=130)
+
+        v_full = evaluate(prefix_frame, full_health)
+        v_truncated = evaluate(prefix_frame, truncate_health(full_health, prefix_last_date))
+        assert v_full == v_truncated
+
 
 class TestPercentileContext:
     def test_ranks_on_known_frame(self):
@@ -319,6 +365,23 @@ class TestPercentileContext:
                 {'date': '2026-07-29', **_row(mcclellan_osc=None)}]
         ctx = percentile_context(_frame(rows))
         assert 'mcclellan_osc' not in ctx
+
+    def test_nan_row_excluded_from_denominator(self):
+        """A NaN row must not count in the ranking denominator (FINDING F):
+        rank against dropna(), not the raw series (which would deflate the
+        percentile by counting the NaN as a member with an undefined order)."""
+        from pipeline.screeners.breadth_signals import percentile_context
+        rows = [{'date': f'2026-07-{d:02d}', **_row(down_4pct=d * 10)} for d in range(1, 5)]
+        rows.append({'date': '2026-07-05', **_row(down_4pct=None)})
+        rows.append({'date': '2026-07-06', **_row(down_4pct=40)})
+        frame = _frame(rows)  # non-NaN down_4pct values: 10,20,30,40(today),40
+        ctx = percentile_context(frame)
+        # denominator excludes the NaN row: 5 non-NaN values, today (40) ties
+        # the max -> 100th percentile either way here, so pin count via mean directly
+        non_nan = pd.to_numeric(frame['down_4pct'], errors='coerce').dropna()
+        expected = int(round(float((non_nan <= 40).mean()) * 100))
+        assert ctx['down_4pct'] == expected
+        assert len(non_nan) == 5  # confirms the NaN row was excluded from ranking
 
 
 class TestAnnotateRows:
