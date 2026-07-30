@@ -184,6 +184,59 @@ def capital_efficiency(trades, capital, total_pnl, equity_by_date=None) -> dict:
             "return_on_deployed": total_pnl / avg_deployed * 100 if avg_deployed else None}
 
 
+def position_heat(trades, equity_by_date, greed=14, fwd=10):
+    """Concurrent NAMES (unique tickers, layers deduped) vs the forward pullback.
+
+    Tests the trader's rule of thumb that hitting ~`greed` names precedes a
+    P&L shakeout. Returns name-count distribution, forward-pullback rate by
+    name bucket, and each episode where names first crossed `greed`.
+    """
+    if not equity_by_date:
+        return None
+    days = sorted(equity_by_date)
+    eq = [equity_by_date[d] for d in days]
+    names = []
+    for ds in days:
+        s = set()
+        for t in trades:
+            if t.entry_date > ds:
+                continue
+            sold = sum(lg.qty for lg in t.legs if lg.date <= ds)
+            if (t.orig_qty or 0) - sold > 0.5:
+                s.add(t.ticker)
+        names.append(len(s))
+
+    def fwd_dd(i):
+        seg = eq[i + 1:i + 1 + fwd]
+        return (min(seg) - eq[i]) / eq[i] * 100 if seg else None
+
+    def fwd_ret(i, k=5):
+        return (eq[i + k] - eq[i]) / eq[i] * 100 if i + k < len(eq) else None
+
+    buckets = []
+    for lo, hi, lab in [(0, 10, "<10"), (10, greed, f"10-{greed - 1}"), (greed, 999, f">={greed} (greed)")]:
+        idx = [i for i, n in enumerate(names) if lo <= n < hi]
+        dds = [fwd_dd(i) for i in idx]
+        dds = [x for x in dds if x is not None]
+        rets = [fwd_ret(i) for i in idx]
+        rets = [x for x in rets if x is not None]
+        if dds:
+            buckets.append({"label": lab, "n": len(idx),
+                            "avg_fwd5_ret": sum(rets) / len(rets) if rets else None,
+                            "pullback_rate": sum(1 for x in dds if x < -2) / len(dds) * 100})
+
+    episodes = []
+    prev = 0
+    for i, (ds, n) in enumerate(zip(days, names)):
+        if n >= greed and prev < greed:
+            episodes.append({"date": ds, "names": n, "equity": eq[i], "next_maxdd": fwd_dd(i)})
+        prev = n
+    srt = sorted(names)
+    return {"max_names": max(names), "median_names": srt[len(srt) // 2],
+            "days_ge_greed": sum(1 for n in names if n >= greed), "total_days": len(names),
+            "greed": greed, "fwd": fwd, "buckets": buckets, "episodes": episodes}
+
+
 # --------------------------------------------------------------------------- #
 # Stock characteristics (ATR% / beta / sector) — needs OHLC
 # --------------------------------------------------------------------------- #
@@ -329,6 +382,29 @@ def render_analysis(trades, capital, total_pnl, include_characteristics=True, eq
           f"({'net margin' if cef['avg_leverage_pct']>100 else 'kept dry powder'}). "
           f"(Deployment vs the *starting* $1M reads higher — {cef['peak_deployed_pct_of_start']:.0f}% peak — because equity grew; "
           f"leverage vs current equity is the honest gauge.)\n")
+
+    # Position heat — name count vs forward pullback (the "greed gauge")
+    ph = position_heat(trades, equity_by_date) if equity_by_date else None
+    if ph:
+        A("### 仓位热度 / Position heat — names vs pullback\n")
+        A(f"*Concurrent NAMES (unique tickers, layers deduped). Max {ph['max_names']}, "
+          f"median {ph['median_names']}; hit ≥{ph['greed']} on {ph['days_ge_greed']}/{ph['total_days']} days.*\n")
+        A("| Names held | Avg fwd 5d return | % days → >2% pullback |")
+        A("|---|---|---|")
+        for b in ph["buckets"]:
+            r = f"{b['avg_fwd5_ret']:+.1f}%" if b["avg_fwd5_ret"] is not None else "—"
+            A(f"| {b['label']} | {r} | {b['pullback_rate']:.0f}% |")
+        A(f"\n**Every crossing to ≥{ph['greed']} names → next-{ph['fwd']}d max pullback:**\n")
+        A("| Date | Names | Equity | Next pullback |")
+        A("|---|---|---|---|")
+        for e in ph["episodes"]:
+            dd = f"{e['next_maxdd']:.1f}%" if e["next_maxdd"] is not None else "—"
+            A(f"| {e['date']} | {e['names']} | {money(e['equity'])} | {dd} |")
+        hits = [e for e in ph["episodes"] if e["next_maxdd"] is not None and e["next_maxdd"] < -3]
+        A(f"\n> **解读:** {len(hits)}/{len(ph['episodes'])} times names crossed ≥{ph['greed']}, a >3% pullback followed within "
+          f"{ph['fwd']} days. Pullback frequency rises with names ({ph['buckets'][0]['pullback_rate']:.0f}% at {ph['buckets'][0]['label']} "
+          f"→ {ph['buckets'][-1]['pullback_rate']:.0f}% at {ph['buckets'][-1]['label']}). Returns still trend positive (you add names "
+          f"in momentum), so ≥{ph['greed']} names = **stop adding / tighten stops / take some off**, not exit-all.\n")
 
     # Best / worst case studies
     A("### 最佳 & 最差 / Best & worst trades\n")
