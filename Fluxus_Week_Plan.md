@@ -8,8 +8,8 @@
 
 ## 2026-07-31 周五
 - 发:晒数 ×1(盘前 briefing 摘 3 句 + 台账尾注)
-- 发:金句 ×1(队列未建,手动从 Fluxus_Own_Lines.md 挑一条,中文)
-- 备:今晚 ET 周四 = 大科技财报夜 → 明早的素材;企鹅帖分支预想一遍(三选一在兜里)
+- 发:金句 ×1 —— SALP 时事铸句:"Leverage is conviction on loan. This week the lender called."(双语,备选见 Swipe File 文体D)
+- 备:今晚 ET 周四 = 大科技财报夜 → 明早的素材;企鹅帖分支预想一遍(三选一在兜里,失败分支模板=Swipe #2 Ariel 式秒认);Citrini SALP 分析 = 周五决策情报
 
 ## 2026-08-01 周六
 - 发:🎯 第三幕 —— 企鹅帖到期(ET 周五收盘后)。三分支:入场→"The water checked out"+台账首秀 / 未入→"Update: waiting two more days" / 跑了→"The First Penguin missed this one"
