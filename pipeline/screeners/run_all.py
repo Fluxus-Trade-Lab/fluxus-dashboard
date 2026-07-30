@@ -299,7 +299,6 @@ def main():
     spx_close = signals.get('^GSPC', {}).get('close')
     breadth_result = run_breadth_metrics(
         universe,
-        str(HISTORY_DIR / 'breadth_metrics_history.json'),
         str(HISTORY_DIR / 'breadth_archive.csv'),
         spx_close=spx_close,
     )
