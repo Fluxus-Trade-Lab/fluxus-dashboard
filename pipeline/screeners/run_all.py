@@ -328,18 +328,29 @@ def main():
                 breadth_result, breadth_frame,
                 ma_histories.get('SPY'), ma_histories.get('QQQ'),
             )
-            from pipeline.screeners.breadth_signals import build_replay
-            replay_payload = build_replay(
-                breadth_frame,
-                ma_histories.get('SPY'), ma_histories.get('QQQ'),
-            )
         except Exception:  # noqa: BLE001 — isolate signals; breadth.json still ships
             logger.exception(
                 "Breadth signals failed — breadth.json will ship without "
                 "verdict/health; market_health.json will be marked stale"
             )
             market_health_payload = None
-            replay_payload = None
+        else:
+            # Replay is its own failure domain: a build_replay crash must not
+            # stale-mark market_health.json while breadth.json keeps a
+            # health-derived verdict (the banner would show spy/qqq states
+            # while the health panels are hidden). Worst case: no Time Machine.
+            try:
+                from pipeline.screeners.breadth_signals import build_replay
+                replay_payload = build_replay(
+                    breadth_frame,
+                    ma_histories.get('SPY'), ma_histories.get('QQQ'),
+                )
+            except Exception:  # noqa: BLE001
+                logger.exception(
+                    "Replay build failed — breadth_replay.json not written; "
+                    "breadth.json and market_health.json are unaffected"
+                )
+                replay_payload = None
 
     # 6. VCP (two-layer — skip if universe too small)
     if len(universe) >= 50:
@@ -406,9 +417,12 @@ def main():
 
     # Save breadth replay (skipped when signals/replay step failed)
     if replay_payload is not None:
+        # Compact separators (no indent) for this file only: it is a ~1MB
+        # machine-read book fetched by the browser, and indent=2 inflates it
+        # by ~60% for no human benefit. Every other output keeps indent=2.
         (OUTPUT_DIR / 'breadth_replay.json').write_text(
             json.dumps({'timestamp': timestamp, **replay_payload},
-                       indent=2, default=_json_serializer),
+                       separators=(',', ':'), default=_json_serializer),
             encoding='utf-8')
         logger.info("Saved breadth_replay.json")
 
