@@ -300,18 +300,12 @@ def main():
     # 5b. Breadth metrics (Stockbee MM + classic breadth)
     logger.info("Running breadth metrics...")
     spx_close = signals.get('^GSPC', {}).get('close')
+    market_health_payload = None
     try:
         breadth_result = run_breadth_metrics(
             universe,
             str(HISTORY_DIR / 'breadth_archive.csv'),
             spx_close=spx_close,
-        )
-        from pipeline.screeners.breadth_store import load_archive
-        from pipeline.screeners.breadth_signals import run_signals
-        breadth_frame = load_archive(str(HISTORY_DIR / 'breadth_archive.csv'))
-        market_health_payload = run_signals(
-            breadth_result, breadth_frame,
-            ma_histories.get('SPY'), ma_histories.get('QQQ'),
         )
     except Exception:  # noqa: BLE001 — isolate breadth; never abort the whole run
         logger.exception(
@@ -319,7 +313,25 @@ def main():
             "all other outputs still written"
         )
         breadth_result = None
-        market_health_payload = None
+    else:
+        # Signal/health computation is a separate failure domain: a crash here
+        # (e.g. load_archive or run_signals) must not null out breadth_result,
+        # which would silently drop breadth.json even though the metrics run
+        # above succeeded (FINDING B).
+        try:
+            from pipeline.screeners.breadth_store import load_archive
+            from pipeline.screeners.breadth_signals import run_signals
+            breadth_frame = load_archive(str(HISTORY_DIR / 'breadth_archive.csv'))
+            market_health_payload = run_signals(
+                breadth_result, breadth_frame,
+                ma_histories.get('SPY'), ma_histories.get('QQQ'),
+            )
+        except Exception:  # noqa: BLE001 — isolate signals; breadth.json still ships
+            logger.exception(
+                "Breadth signals failed — breadth.json will ship without "
+                "verdict/health; market_health.json will be marked stale"
+            )
+            market_health_payload = None
 
     # 6. VCP (two-layer — skip if universe too small)
     if len(universe) >= 50:
