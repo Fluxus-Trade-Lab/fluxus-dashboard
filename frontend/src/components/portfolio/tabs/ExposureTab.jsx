@@ -21,6 +21,13 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
     [performanceData]
   )
   const ce = capitalEfficiency
+  // Leverage = gross exposure ÷ CURRENT equity (not starting capital, which
+  // overstates as the account grows). Averaged over days with a position.
+  const lev = useMemo(() => {
+    const vals = (performanceData || []).map(p => p.leveragePct).filter(v => v > 0.5)
+    if (!vals.length) return null
+    return { avg: vals.reduce((a, b) => a + b, 0) / vals.length, peak: Math.max(...vals) }
+  }, [performanceData])
 
   if (openTrades.length === 0) {
     return <div className="text-center py-16 text-[var(--color-text-muted)]">No open positions.</div>
@@ -111,21 +118,20 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
             <span className="font-semibold text-sm">Capital Deployment</span>
             <span className="text-xs text-[var(--color-text-muted)]">How hard the capital worked over time</span>
           </div>
-          {ce && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-              {[
-                ['Return on deployed', ce.returnOnDeployed != null ? ce.returnOnDeployed.toFixed(1) + '%' : '—'],
-                ['vs total capital', ce.totalReturnPct != null ? '+' + ce.totalReturnPct.toFixed(1) + '%' : '—'],
-                ['Avg deployed', ce.avgDeployedPct != null ? Math.round(ce.avgDeployedPct) + '%' : '—'],
-                ['Peak deployed', ce.peakDeployedPct != null ? Math.round(ce.peakDeployedPct) + '%' : '—'],
-              ].map(([l, v]) => (
-                <div key={l} className="bg-[var(--color-surface-raised)] rounded p-3">
-                  <div className="text-xs text-[var(--color-text-muted)]">{l}</div>
-                  <div className="text-lg font-bold">{v}</div>
-                </div>
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+            {[
+              ['Return on deployed', ce?.returnOnDeployed != null ? ce.returnOnDeployed.toFixed(1) + '%' : '—', 'P&L per $1 at risk'],
+              ['vs total capital', ce?.totalReturnPct != null ? '+' + ce.totalReturnPct.toFixed(1) + '%' : '—', 'return on full base'],
+              ['Avg leverage', lev ? (lev.avg / 100).toFixed(2) + '×' : '—', 'gross ÷ equity'],
+              ['Peak leverage', lev ? (lev.peak / 100).toFixed(2) + '×' : '—', 'gross ÷ equity'],
+            ].map(([l, v, sub]) => (
+              <div key={l} className="bg-[var(--color-surface-raised)] rounded p-3">
+                <div className="text-xs text-[var(--color-text-muted)]">{l}</div>
+                <div className="text-lg font-bold">{v}</div>
+                <div className="text-[10px] text-[var(--color-text-muted)]">{sub}</div>
+              </div>
+            ))}
+          </div>
           <ResponsiveContainer width="100%" height={260}>
             <LineChart data={deployData} margin={{ top: 5, right: 8, left: -8, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" vertical={false} />
