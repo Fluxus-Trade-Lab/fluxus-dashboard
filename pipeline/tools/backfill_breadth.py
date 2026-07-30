@@ -34,6 +34,9 @@ _REPO = Path(__file__).resolve().parents[2]
 _DEFAULT_CSV = _REPO / 'data' / 'history' / 'breadth_archive.csv'
 _UNIVERSE_JSON = _REPO / 'data' / 'output' / 'universe.json'
 _MIN_PRIOR_SESSIONS = 200
+# Live rows with pct_above_200sma below this are enrichment failures (e.g. the
+# Jul 15-24 2026 poison, ~0.2-0.8%) — backfill may replace them on merge.
+_IMPLAUSIBLE_PCT200 = 5.0
 
 
 def compute_backfill_rows(closes: pd.DataFrame, spx: pd.Series) -> pd.DataFrame:
@@ -97,9 +100,23 @@ def compute_backfill_rows(closes: pd.DataFrame, spx: pd.Series) -> pd.DataFrame:
 
 
 def merge_backfill(existing: pd.DataFrame, backfill: pd.DataFrame) -> pd.DataFrame:
-    """Merge backfill under existing rows. Existing (live) rows win on collision."""
-    add = backfill[~backfill['date'].isin(set(existing['date']))]
-    merged = pd.concat([existing, add], ignore_index=True)
+    """Merge backfill under existing rows.
+
+    Existing (live) rows win on date collision — unless the live row is
+    implausible (pct_above_200sma < _IMPLAUSIBLE_PCT200, an enrichment
+    failure), in which case a backfill row for the same date replaces it.
+    An implausible live row with no backfill replacement stays: better
+    garbage than a hole — downstream dry-run gates surface it.
+    """
+    pct = existing.get('pct_above_200sma')
+    if pct is None:
+        replaceable_dates: set = set()
+    else:
+        implausible = pd.to_numeric(pct, errors='coerce') < _IMPLAUSIBLE_PCT200
+        replaceable_dates = set(existing.loc[implausible, 'date']) & set(backfill['date'])
+    keep = existing[~existing['date'].isin(replaceable_dates)]
+    add = backfill[~backfill['date'].isin(set(keep['date']))]
+    merged = pd.concat([keep, add], ignore_index=True)
     return merged.sort_values('date').reset_index(drop=True)
 
 
