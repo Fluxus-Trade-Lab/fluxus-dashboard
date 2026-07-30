@@ -297,11 +297,18 @@ def main():
     # 5b. Breadth metrics (Stockbee MM + classic breadth)
     logger.info("Running breadth metrics...")
     spx_close = signals.get('^GSPC', {}).get('close')
-    breadth_result = run_breadth_metrics(
-        universe,
-        str(HISTORY_DIR / 'breadth_archive.csv'),
-        spx_close=spx_close,
-    )
+    try:
+        breadth_result = run_breadth_metrics(
+            universe,
+            str(HISTORY_DIR / 'breadth_archive.csv'),
+            spx_close=spx_close,
+        )
+    except Exception:  # noqa: BLE001 — isolate breadth; never abort the whole run
+        logger.exception(
+            "Breadth metrics failed — skipping breadth.json; "
+            "all other outputs still written"
+        )
+        breadth_result = None
 
     # 6. VCP (two-layer — skip if universe too small)
     if len(universe) >= 50:
@@ -337,11 +344,15 @@ def main():
     ))
     logger.info("Saved signals.json")
 
-    # Save breadth metrics
-    (OUTPUT_DIR / 'breadth.json').write_text(json.dumps(
-        {'timestamp': timestamp, **breadth_result}, indent=2, default=_json_serializer
-    ))
-    logger.info("Saved breadth.json")
+    # Save breadth metrics (skipped when the breadth step failed — the previous
+    # breadth.json stays in place rather than being replaced by a partial one)
+    if breadth_result is not None:
+        (OUTPUT_DIR / 'breadth.json').write_text(json.dumps(
+            {'timestamp': timestamp, **breadth_result}, indent=2, default=_json_serializer
+        ))
+        logger.info("Saved breadth.json")
+    else:
+        logger.warning("Skipped breadth.json (breadth step failed)")
 
     # Save ETF data
     (OUTPUT_DIR / 'etf_data.json').write_text(
