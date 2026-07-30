@@ -3,12 +3,13 @@
 *每天 8:00 JST 自动推送当日条目。Claude 在批量日/变更时维护此文件;格式规矩:日期标题必须是 `## YYYY-MM-DD 星期`,条目用 `发:` / `备:` 开头。*
 
 ## 2026-07-30 周四
-- 发:✅ 已完成(企鹅帖 + 蹭号#1),今日收工
-- 备:✅ swipe file 建库
+- 发:✅ 3/3 —— 企鹅帖 · 蹭号#1(Leverage 铸句) · 温度计帖(首条公开 L4,QT Kurt)
+- 备:✅ swipe file 建库(4 标本)· Minervini QT 稿已备
 
 ## 2026-07-31 周五
 - 发:晒数 ×1(盘前 briefing 摘 3 句 + 台账尾注)
-- 发:金句 ×1 —— SALP 时事铸句:"Leverage is conviction on loan. This week the lender called."(双语,备选见 Swipe File 文体D)
+- 发:金句 ×1(库存,从 Fluxus_Own_Lines.md 挑,中文)
+- 发:QT Minervini(稿已备:"Agree with all of this. Scripts were never my edge anyway — price is the only announcement I trade…")
 - 备:今晚 ET 周四 = 大科技财报夜 → 明早的素材;企鹅帖分支预想一遍(三选一在兜里,失败分支模板=Swipe #2 Ariel 式秒认);Citrini SALP 分析 = 周五决策情报
 
 ## 2026-08-01 周六

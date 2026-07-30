@@ -7,3 +7,4 @@
 | 2026-07-30 | X | "One of the best risk/rewards I've seen all year. So I'm going to wait two more days." | https://x.com/Fluxus_Z/status/2082491818361630881 | ⏳ 周五 7/31 ET 见分晓(PCE + 大科技财报消化日),三选一分支已备好 |
 | 2026-07-30 | Discord | 100% 现金满一个月(第一幕素材,如发帖补链接) | — | ⏳ |
 | 2026-07-30 | X(蹭号#1,fintergirl 韩国爆仓帖下) | "Leverage is the cheapest thing to buy and the most expensive thing to own." | https://x.com/Fluxus_Z/status/2082520137824100389 | 铸句已发布;数周后可脱离语境单飞复发(周日排队列) |
+| 2026-07-30 | X(温度计帖,QT Kurt,公开场地首条 L4) | "Fear rising, risk falling… I said I'd wait two more days. Still waiting." + 散户投降数据 + 利空出尽 | https://x.com/Fluxus_Z/status/2082813218893008913 | ⏳ 幕三待价格验证;此帖是幕三 QT 的目标 |
