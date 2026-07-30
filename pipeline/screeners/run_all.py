@@ -276,7 +276,10 @@ def main():
 
     # 3. Fetch MA signals
     logger.info("Fetching MA signals...")
-    signals = yf_adapter.fetch_ma_data(['SPY', 'QQQ', 'IWM', 'RSP', '^GSPC', 'BTC-USD', '^VIX'])
+    signals, ma_histories = yf_adapter.fetch_ma_data(
+        ['SPY', 'QQQ', 'IWM', 'RSP', '^GSPC', 'BTC-USD', '^VIX'],
+        return_history=True,
+    )
 
     # 4. Run screeners
     logger.info("Running screeners...")
@@ -303,12 +306,20 @@ def main():
             str(HISTORY_DIR / 'breadth_archive.csv'),
             spx_close=spx_close,
         )
+        from pipeline.screeners.breadth_store import load_archive
+        from pipeline.screeners.breadth_signals import run_signals
+        breadth_frame = load_archive(str(HISTORY_DIR / 'breadth_archive.csv'))
+        market_health_payload = run_signals(
+            breadth_result, breadth_frame,
+            ma_histories.get('SPY'), ma_histories.get('QQQ'),
+        )
     except Exception:  # noqa: BLE001 — isolate breadth; never abort the whole run
         logger.exception(
             "Breadth metrics failed — skipping breadth.json; "
             "all other outputs still written"
         )
         breadth_result = None
+        market_health_payload = None
 
     # 6. VCP (two-layer — skip if universe too small)
     if len(universe) >= 50:
@@ -353,6 +364,25 @@ def main():
         logger.info("Saved breadth.json")
     else:
         logger.warning("Skipped breadth.json (breadth step failed)")
+
+    # Save market health (stale-mark the previous file when unavailable)
+    mh_path = OUTPUT_DIR / 'market_health.json'
+    if market_health_payload is not None:
+        mh_path.write_text(json.dumps(
+            {'timestamp': timestamp, 'stale': False, **market_health_payload},
+            indent=2, default=_json_serializer
+        ), encoding='utf-8')
+        logger.info("Saved market_health.json")
+    elif mh_path.exists():
+        try:
+            prev = json.loads(mh_path.read_text(encoding='utf-8'))
+            prev['stale'] = True
+            mh_path.write_text(json.dumps(
+                prev, indent=2, default=_json_serializer
+            ), encoding='utf-8')
+            logger.warning("market_health unavailable — marked previous file stale")
+        except (json.JSONDecodeError, OSError) as exc:
+            logger.error("Could not stale-mark market_health.json: %s", exc)
 
     # Save ETF data
     (OUTPUT_DIR / 'etf_data.json').write_text(

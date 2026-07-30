@@ -396,3 +396,18 @@ def annotate_rows(rows: List[Dict[str, Any]], frame: pd.DataFrame,
             continue
         v = evaluate(frame.iloc[:i + 1].reset_index(drop=True), health)
         row['v'] = {'env': v['env'], 'risk': v['risk'], 'warn': v['warn_total']}
+
+
+def run_signals(breadth_result: Dict[str, Any], frame: pd.DataFrame,
+                spy_hist: Optional[pd.DataFrame],
+                qqq_hist: Optional[pd.DataFrame]) -> Optional[Dict[str, Any]]:
+    """Attach verdict + row codes to a breadth.json payload; return health dict."""
+    health = None
+    if spy_hist is not None and qqq_hist is not None \
+            and len(spy_hist) >= 50 and len(qqq_hist) >= 50:
+        health = market_health(spy_hist, qqq_hist)
+    verdict = evaluate(frame, health)
+    verdict['context'] = percentile_context(frame)
+    breadth_result['verdict'] = verdict
+    annotate_rows(breadth_result.get('history', {}).get('rows', []), frame, health)
+    return health

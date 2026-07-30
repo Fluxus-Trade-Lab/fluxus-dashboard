@@ -497,20 +497,25 @@ class YfinanceAdapter(BaseAdapter):
 
         return universe
 
-    def fetch_ma_data(self, tickers: list[str] = None) -> dict:
+    def fetch_ma_data(self, tickers: list[str] = None, return_history: bool = False):
         """Calculate MA data for Power 3 Signal and Trend Status.
         Per plan.md §2.4 fetch_ma_data.
+
+        With ``return_history=True`` returns ``(signals, histories)`` where
+        ``histories`` maps ticker -> full downloaded 1y OHLC DataFrame.
         """
         if tickers is None:
             tickers = ['SPY', 'QQQ', 'IWM', 'RSP', '^GSPC']
 
         signals = {}
+        histories = {}
         for ticker in tickers:
             try:
                 hist = _flatten_yf_columns(yf.download(ticker, period='1y', progress=False))
                 if len(hist) < 200:
                     logger.warning(f"{ticker}: insufficient history ({len(hist)} rows)")
                     continue
+                histories[ticker] = hist
 
                 close = float(hist['Close'].iloc[-1])
 
@@ -561,6 +566,8 @@ class YfinanceAdapter(BaseAdapter):
             except Exception as e:
                 logger.warning(f"Error fetching MA data for {ticker}: {e}")
 
+        if return_history:
+            return signals, histories
         return signals
 
     def fetch_ohlc(self, tickers: list[str], period: str = '90d') -> dict:

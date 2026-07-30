@@ -341,3 +341,32 @@ class TestAnnotateRows:
         json_rows = [{'date': '1999-01-01'}]
         annotate_rows(json_rows, frame, None)
         assert json_rows[0]['v'] is None
+
+
+class TestRunSignals:
+    def _breadth_result(self, rows):
+        return {'history': {'rows': [dict(r) for r in rows]}, 'mm': {}, 'breadth': {}}
+
+    def test_attaches_verdict_context_and_row_codes(self):
+        from pipeline.screeners.breadth_signals import run_signals
+        rows = [{'date': '2026-07-28', **_bull_row()},
+                {'date': '2026-07-29', **_bull_row()}]
+        frame = _frame(rows)
+        spy = _ohlc([100.0 + i * 0.1 for i in range(250)])
+        qqq = _ohlc([200.0 + i * 0.2 for i in range(250)])
+        result = self._breadth_result(rows)
+        health = run_signals(result, frame, spy, qqq)
+        assert health is not None and 'spy' in health and 'qqq' in health
+        assert result['verdict']['env'] in ('BULLISH', 'MIXED', 'BEARISH',
+                                            'OVERSOLD', 'OVERBOUGHT')
+        assert 'context' in result['verdict']
+        assert all('v' in r for r in result['history']['rows'])
+
+    def test_none_history_degrades(self):
+        from pipeline.screeners.breadth_signals import run_signals
+        rows = [{'date': '2026-07-29', **_bull_row()}]
+        result = self._breadth_result(rows)
+        health = run_signals(result, _frame(rows), None, None)
+        assert health is None
+        assert result['verdict']['spy_state'] is None
+        assert any('unavailable' in n for n in result['verdict']['notes'])
