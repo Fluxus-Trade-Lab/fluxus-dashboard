@@ -156,3 +156,52 @@ def warn_counts(hist: pd.DataFrame, days: int = 130) -> List[Dict[str, Any]]:
     counts = frame.sum(axis=1).astype(int).tail(days)
     return [{'date': d.strftime('%Y-%m-%d'), 'count': int(c)}
             for d, c in counts.items()]
+
+
+def _round_or_none(x) -> Optional[float]:
+    v = _num(x)
+    return None if v is None else round(v, 2)
+
+
+def market_health(spy_hist: pd.DataFrame, qqq_hist: pd.DataFrame,
+                  days: int = 130) -> Dict[str, Any]:
+    """Assemble the market_health payload for both benchmarks. Pure."""
+    out: Dict[str, Any] = {}
+    for key, hist in (('spy', spy_hist), ('qqq', qqq_hist)):
+        tail = hist.tail(days)
+        sma20 = hist['Close'].rolling(20).mean().tail(days)
+        sma50 = hist['Close'].rolling(50).mean().tail(days)
+        sma200 = hist['Close'].rolling(200).mean().tail(days)
+        out[key] = {
+            'candles': [{'date': d.strftime('%Y-%m-%d'),
+                         'o': round(float(r['Open']), 2), 'h': round(float(r['High']), 2),
+                         'l': round(float(r['Low']), 2), 'c': round(float(r['Close']), 2)}
+                        for d, r in tail.iterrows()],
+            'sma20': [_round_or_none(v) for v in sma20],
+            'sma50': [_round_or_none(v) for v in sma50],
+            'sma200': [_round_or_none(v) for v in sma200],
+            'danger': {'signals': danger_signals(hist),
+                       'count': sum(danger_signals(hist).values())},
+            'warn_history': warn_counts(hist, days),
+        }
+    return out
+
+
+def truncate_health(health: Dict[str, Any], date_iso: str) -> Optional[Dict[str, Any]]:
+    """Cut all per-date arrays to dates <= date_iso (Time Machine / row codes)."""
+    out: Dict[str, Any] = {}
+    for key in ('spy', 'qqq'):
+        blk = health[key]
+        keep = sum(1 for c in blk['candles'] if c['date'] <= date_iso)
+        if keep == 0:
+            return None
+        wh = [w for w in blk['warn_history'] if w['date'] <= date_iso]
+        out[key] = {
+            'candles': blk['candles'][:keep],
+            'sma20': blk['sma20'][:keep],
+            'sma50': blk['sma50'][:keep],
+            'sma200': blk['sma200'][:keep],
+            'danger': {'signals': {}, 'count': wh[-1]['count'] if wh else 0},
+            'warn_history': wh,
+        }
+    return out

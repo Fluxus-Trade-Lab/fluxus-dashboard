@@ -155,3 +155,38 @@ class TestDangerSignals:
         assert set(wc[0]) == {'date', 'count'}
         assert all(0 <= w['count'] <= 5 for w in wc)
         assert wc[-1]['date'] == hist.index[-1].strftime('%Y-%m-%d')
+
+
+def _ohlc(closes, end='2026-07-29'):
+    h = _hist(closes, end=end)
+    h['Open'] = h['Close'].shift(1).fillna(h['Close'])
+    return h
+
+
+class TestMarketHealth:
+    def test_shape_and_alignment(self):
+        from pipeline.screeners.breadth_signals import market_health
+        spy = _ohlc([100.0 + i * 0.1 for i in range(250)])
+        qqq = _ohlc([200.0 + i * 0.2 for i in range(250)])
+        health = market_health(spy, qqq, days=130)
+        for key in ('spy', 'qqq'):
+            blk = health[key]
+            assert len(blk['candles']) == 130
+            assert len(blk['sma20']) == len(blk['sma50']) == len(blk['sma200']) == 130
+            assert set(blk['candles'][0]) == {'date', 'o', 'h', 'l', 'c'}
+            assert set(blk['danger']) == {'signals', 'count'}
+            assert blk['danger']['count'] == sum(blk['danger']['signals'].values())
+            assert len(blk['warn_history']) == 130
+            assert blk['warn_history'][-1]['date'] == blk['candles'][-1]['date']
+
+    def test_truncate_health(self):
+        from pipeline.screeners.breadth_signals import market_health, truncate_health
+        spy = _ohlc([100.0 + i * 0.1 for i in range(250)])
+        qqq = _ohlc([200.0 + i * 0.2 for i in range(250)])
+        health = market_health(spy, qqq, days=130)
+        cut_date = health['spy']['candles'][99]['date']
+        t = truncate_health(health, cut_date)
+        assert len(t['spy']['candles']) == 100
+        assert t['spy']['candles'][-1]['date'] == cut_date
+        assert t['spy']['danger']['count'] == t['spy']['warn_history'][-1]['count']
+        assert truncate_health(health, '1990-01-01') is None
