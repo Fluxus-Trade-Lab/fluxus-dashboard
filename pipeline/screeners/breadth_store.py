@@ -96,3 +96,50 @@ def derive(frame: pd.DataFrame) -> pd.DataFrame:
         ratio = (up_sum / down_sum).where(down_sum > 0, up_sum)
         out[col] = ratio.astype(float).round(4)
     return out
+
+
+def upsert_row(frame: pd.DataFrame, row: dict) -> pd.DataFrame:
+    """Insert or replace the row for row['date']. Returns a sorted copy."""
+    kept = frame[frame['date'] != row['date']]
+    new = pd.DataFrame([{col: row.get(col, pd.NA) for col in BREADTH_COLUMNS}])
+    out = pd.concat([kept, new], ignore_index=True)
+    return out.sort_values('date').reset_index(drop=True)
+
+
+def write_archive(frame: pd.DataFrame, csv_path: str) -> None:
+    """Atomically write the archive: temp file in the same dir, then rename."""
+    path = Path(csv_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    out = frame[BREADTH_COLUMNS]
+    fd, tmp_name = tempfile.mkstemp(dir=path.parent, suffix='.csv.tmp')
+    try:
+        with os.fdopen(fd, 'w', encoding='utf-8', newline='') as f:
+            out.to_csv(f, index=False)
+        os.replace(tmp_name, path)
+    except BaseException:
+        if os.path.exists(tmp_name):
+            os.unlink(tmp_name)
+        raise
+    logger.info("Wrote breadth archive (%d rows) to %s", len(out), csv_path)
+
+
+# ── Quality guard thresholds (see design doc §4) ─────────────────────
+_MIN_UNIVERSE = 1500
+_MAX_NULL_RATE = 0.20
+_MAX_PCT200_JUMP = 25.0
+
+
+def check_quality(frame: pd.DataFrame, snapshot: dict, null_rate: float) -> tuple[bool, str]:
+    """Reject implausible snapshots before they poison the archive."""
+    size = snapshot.get('universe_size', 0)
+    if size < _MIN_UNIVERSE:
+        return False, f"universe_size {size} < {_MIN_UNIVERSE}"
+    if null_rate > _MAX_NULL_RATE:
+        return False, f"sma200_dist null rate {null_rate:.0%} > {_MAX_NULL_RATE:.0%}"
+    if len(frame) > 0:
+        prev = pd.to_numeric(frame['pct_above_200sma'], errors='coerce').iloc[-1]
+        cur = snapshot.get('pct_above_200sma')
+        if pd.notna(prev) and cur is not None and abs(cur - float(prev)) > _MAX_PCT200_JUMP:
+            return False, (f"pct_above_200sma jumped {float(prev):.1f} -> {cur:.1f} "
+                           f"(> {_MAX_PCT200_JUMP} pts)")
+    return True, ''

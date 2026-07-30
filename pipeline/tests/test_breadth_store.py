@@ -121,3 +121,77 @@ class TestDerive:
         prefix = derive(frame.iloc[:2].reset_index(drop=True))
         for col in ['net_advances', 'rana', 'ad_line', 'mcclellan_osc', 'ratio_5d', 'ratio_10d']:
             assert list(prefix[col]) == list(full[col].iloc[:2]), col
+
+
+class TestUpsertAndWrite:
+    def test_upsert_appends_new_date(self):
+        from pipeline.screeners.breadth_store import load_archive, upsert_row
+        frame = load_archive('/nonexistent/x.csv')
+        frame = upsert_row(frame, {'date': '2026-07-28', 'source': 'live', 'advances': 100, 'declines': 50})
+        assert len(frame) == 1
+
+    def test_upsert_replaces_same_date(self):
+        from pipeline.screeners.breadth_store import load_archive, upsert_row
+        frame = load_archive('/nonexistent/x.csv')
+        frame = upsert_row(frame, {'date': '2026-07-28', 'source': 'backfill', 'advances': 1, 'declines': 1})
+        frame = upsert_row(frame, {'date': '2026-07-28', 'source': 'live', 'advances': 100, 'declines': 50})
+        assert len(frame) == 1
+        assert frame.iloc[0]['source'] == 'live'
+        assert frame.iloc[0]['advances'] == 100
+
+    def test_write_then_load_roundtrip(self, tmp_path):
+        from pipeline.screeners.breadth_store import load_archive, upsert_row, write_archive
+        p = str(tmp_path / 'a.csv')
+        frame = upsert_row(load_archive(p), {'date': '2026-07-28', 'source': 'live',
+                                             'advances': 100, 'declines': 50, 'up_4pct': 10, 'down_4pct': 5})
+        write_archive(frame, p)
+        again = load_archive(p)
+        assert len(again) == 1
+        assert again.iloc[0]['date'] == '2026-07-28'
+
+    def test_write_is_atomic_no_partial_on_same_dir(self, tmp_path):
+        from pipeline.screeners.breadth_store import write_archive, load_archive, upsert_row
+        p = str(tmp_path / 'a.csv')
+        frame = upsert_row(load_archive(p), {'date': '2026-07-28', 'source': 'live',
+                                             'advances': 1, 'declines': 1})
+        write_archive(frame, p)
+        leftovers = [f for f in tmp_path.iterdir() if f.name != 'a.csv']
+        assert leftovers == []  # temp file cleaned up by os.replace
+
+
+class TestQualityGuard:
+    def _last_frame(self, pct200=46.0):
+        import pandas as pd
+        return pd.DataFrame({'date': ['2026-07-25'], 'pct_above_200sma': [pct200]})
+
+    def _good_snapshot(self):
+        return {'universe_size': 3000, 'pct_above_200sma': 45.0}
+
+    def test_accepts_good_row(self):
+        from pipeline.screeners.breadth_store import check_quality
+        ok, reason = check_quality(self._last_frame(), self._good_snapshot(), null_rate=0.02)
+        assert ok and reason == ''
+
+    def test_rejects_small_universe(self):
+        from pipeline.screeners.breadth_store import check_quality
+        snap = {**self._good_snapshot(), 'universe_size': 1400}
+        ok, reason = check_quality(self._last_frame(), snap, null_rate=0.02)
+        assert not ok and 'universe' in reason
+
+    def test_rejects_high_null_rate(self):
+        from pipeline.screeners.breadth_store import check_quality
+        ok, reason = check_quality(self._last_frame(), self._good_snapshot(), null_rate=0.35)
+        assert not ok and 'null' in reason
+
+    def test_rejects_pct200_jump(self):
+        """The 2026-07-26 poisoned row: 46.0 → 0.47 must be rejected."""
+        from pipeline.screeners.breadth_store import check_quality
+        snap = {**self._good_snapshot(), 'pct_above_200sma': 0.47}
+        ok, reason = check_quality(self._last_frame(46.0), snap, null_rate=0.02)
+        assert not ok and 'pct_above_200sma' in reason
+
+    def test_first_ever_row_skips_delta_check(self):
+        from pipeline.screeners.breadth_store import check_quality, load_archive
+        empty = load_archive('/nonexistent/x.csv')
+        ok, _ = check_quality(empty, self._good_snapshot(), null_rate=0.02)
+        assert ok
