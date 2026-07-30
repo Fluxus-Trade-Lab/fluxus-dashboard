@@ -539,6 +539,13 @@ class YfinanceAdapter(BaseAdapter):
                 else:
                     signal, color = "RISK_OFF", "red"
 
+                # 52-week fields must stay 52-week regardless of how much
+                # history the caller asked for. run_all now requests '3y' so the
+                # replay book has depth; anchoring on the last 252 sessions keeps
+                # the meaning of this field independent of history_period.
+                close_52w = hist['Close'].tail(252)
+                high_52w = float(close_52w.max())
+
                 signals[ticker] = {
                     'signal': signal,
                     'color': color,
@@ -562,7 +569,7 @@ class YfinanceAdapter(BaseAdapter):
                         '21ema_dist': round(float((close - ema21) / close * 100), 2),
                         '50sma_dist': round(float((close - sma50) / close * 100), 2),
                         '200sma_dist': round(float((close - sma200) / close * 100), 2),
-                        '52w_high_dist': round(float((close - hist['Close'].max()) / hist['Close'].max() * 100), 2),
+                        '52w_high_dist': round(float((close - high_52w) / high_52w * 100), 2),
                     },
                 }
             except Exception as e:
