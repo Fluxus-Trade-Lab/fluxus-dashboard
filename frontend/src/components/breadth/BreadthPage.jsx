@@ -8,15 +8,22 @@ import MarketMonitor from './MarketMonitor'
 import ClassicBreadth from './ClassicBreadth'
 import BreadthCharts from './BreadthCharts'
 import BreadthTable from './BreadthTable'
+import TimeMachineBar from './TimeMachineBar'
+import { useTimeMachine } from './useTimeMachine'
 
 export default function BreadthPage({ data }) {
-  const breadth = data?.breadth
-  const mh = data?.market_health
+  const tm = useTimeMachine()
+  const liveBreadth = data?.breadth
+  const breadth = (tm.active && tm.sliced) ? tm.sliced.breadth : liveBreadth
+  const mh = (tm.active && tm.sliced) ? tm.sliced.marketHealth : data?.market_health
 
-  if (!breadth) {
+  if (!liveBreadth) {
     return (
-      <div className="text-[var(--color-text-muted)] text-sm font-medium uppercase tracking-wide py-8 text-center">
-        No breadth data available
+      <div className="space-y-3">
+        <TimeMachineBar tm={tm} />
+        <div className="text-[var(--color-text-muted)] text-sm font-medium uppercase tracking-wide py-8 text-center">
+          No breadth data available
+        </div>
       </div>
     )
   }
@@ -29,6 +36,7 @@ export default function BreadthPage({ data }) {
 
   return (
     <div className="space-y-3">
+      <TimeMachineBar tm={tm} />
       <VerdictBanner verdict={verdict} dataQuality={breadth.data_quality} />
       <MarketStateSummary mm={breadth.mm} breadth={breadth.breadth} verdict={verdict} />
       {mh && !mh.stale && (
