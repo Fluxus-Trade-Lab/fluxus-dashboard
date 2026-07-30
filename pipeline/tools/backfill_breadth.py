@@ -130,7 +130,7 @@ def _load_tickers() -> list[str]:
 def _download_closes(tickers: list[str], years: int, cache: Path) -> pd.DataFrame:
     if cache.exists():
         logger.info("Using cached closes: %s", cache)
-        return pd.read_parquet(cache)
+        return pd.read_pickle(cache)
     import yfinance as yf
     frames = []
     batch_size = 200
@@ -147,7 +147,7 @@ def _download_closes(tickers: list[str], years: int, cache: Path) -> pd.DataFram
     closes = pd.concat(frames, axis=1).sort_index()
     closes.index = pd.DatetimeIndex(closes.index).tz_localize(None)
     cache.parent.mkdir(parents=True, exist_ok=True)
-    closes.to_parquet(cache)
+    closes.to_pickle(cache)  # pickle, not parquet: host has no pyarrow/fastparquet
     return closes
 
 
@@ -166,7 +166,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument('--years', type=int, default=3)
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--csv', default=str(_DEFAULT_CSV))
-    parser.add_argument('--cache', default=str(_REPO / 'data' / 'history' / 'backfill_closes.parquet'))
+    parser.add_argument('--cache', default=str(_REPO / 'data' / 'history' / 'backfill_closes.pkl'))
     args = parser.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format='%(levelname)s %(message)s')
 
