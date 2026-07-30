@@ -112,6 +112,13 @@ def merge_backfill(existing: pd.DataFrame, backfill: pd.DataFrame) -> pd.DataFra
     An implausible live row with no backfill replacement stays: better
     garbage than a hole — downstream dry-run gates surface it.
     NaN/absent in either column is NOT implausible.
+
+    Non-session artifacts are dropped outright. The backfill frame has a row
+    for EVERY real session in its date range, so an existing row whose date
+    falls inside [backfill.min, backfill.max] but is absent from the backfill
+    dates was never a trading day (legacy naive-clock re-runs stamped rows on
+    e.g. Sunday 2026-05-24 and Memorial Day 2026-05-25). Existing rows outside
+    the backfill range are kept regardless — we cannot judge them.
     """
     implausible = pd.Series(False, index=existing.index)
     pct = existing.get('pct_above_200sma')
@@ -120,8 +127,16 @@ def merge_backfill(existing: pd.DataFrame, backfill: pd.DataFrame) -> pd.DataFra
     uni = existing.get('universe_size')
     if uni is not None:
         implausible |= pd.to_numeric(uni, errors='coerce') < _IMPLAUSIBLE_MIN_UNIVERSE
-    replaceable_dates = set(existing.loc[implausible, 'date']) & set(backfill['date'])
-    keep = existing[~existing['date'].isin(replaceable_dates)]
+    backfill_dates = set(backfill['date'])
+    replaceable_dates = set(existing.loc[implausible, 'date']) & backfill_dates
+
+    non_session = pd.Series(False, index=existing.index)
+    if len(backfill) and len(existing):
+        lo, hi = min(backfill_dates), max(backfill_dates)
+        dates = existing['date'].astype(str)
+        non_session = dates.between(lo, hi) & ~dates.isin(backfill_dates)
+
+    keep = existing[~existing['date'].isin(replaceable_dates) & ~non_session]
     add = backfill[~backfill['date'].isin(set(keep['date']))]
     merged = pd.concat([keep, add], ignore_index=True)
     return merged.sort_values('date').reset_index(drop=True)

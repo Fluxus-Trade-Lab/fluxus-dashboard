@@ -108,3 +108,29 @@ class TestMergeBackfill:
         merged = merge_backfill(live, back)
         assert len(merged) == 1
         assert merged.iloc[0]['source'] == 'backfill' and merged.iloc[0]['advances'] == 1300
+
+    def test_non_session_live_rows_dropped_inside_backfill_range(self):
+        from pipeline.tools.backfill_breadth import merge_backfill
+        live = pd.DataFrame([
+            {'date': '2026-05-22', 'source': 'live', 'advances': 1449, 'pct_above_200sma': 59.1},
+            {'date': '2026-05-24', 'source': 'live', 'advances': 1448, 'pct_above_200sma': 59.1},  # Sunday
+            {'date': '2026-05-25', 'source': 'live', 'advances': 1449, 'pct_above_200sma': 59.1},  # holiday
+        ])
+        back = pd.DataFrame([
+            {'date': '2026-05-22', 'source': 'backfill', 'advances': 1400, 'pct_above_200sma': 58.0},
+            {'date': '2026-05-26', 'source': 'backfill', 'advances': 1500, 'pct_above_200sma': 58.5},
+        ])
+        merged = merge_backfill(live, back)
+        assert list(merged['date']) == ['2026-05-22', '2026-05-26']
+        assert merged[merged['date'] == '2026-05-22'].iloc[0]['source'] == 'live'  # honest live still wins
+
+    def test_live_rows_outside_backfill_range_kept(self):
+        from pipeline.tools.backfill_breadth import merge_backfill
+        live = pd.DataFrame([
+            {'date': '2026-08-02', 'source': 'live', 'advances': 1500, 'pct_above_200sma': 50.0},  # after range
+        ])
+        back = pd.DataFrame([
+            {'date': '2026-07-28', 'source': 'backfill', 'advances': 1400, 'pct_above_200sma': 45.0},
+        ])
+        merged = merge_backfill(live, back)
+        assert len(merged) == 2
