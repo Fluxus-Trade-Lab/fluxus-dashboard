@@ -94,3 +94,17 @@ class TestMergeBackfill:
         back = pd.DataFrame([{'date': '2026-07-14', 'source': 'backfill', 'advances': 1400, 'pct_above_200sma': 45.0}])
         merged = merge_backfill(live, back)
         assert len(merged) == 2  # implausible live survives when backfill has nothing for that date
+
+    def test_tiny_universe_live_row_replaced_by_backfill(self):
+        from pipeline.tools.backfill_breadth import merge_backfill
+        live = pd.DataFrame([
+            {'date': '2026-06-08', 'source': 'live', 'advances': 84,
+             'universe_size': 200, 'pct_above_200sma': 56.5},
+        ])
+        back = pd.DataFrame([
+            {'date': '2026-06-08', 'source': 'backfill', 'advances': 1300,
+             'universe_size': 2700, 'pct_above_200sma': 55.0},
+        ])
+        merged = merge_backfill(live, back)
+        assert len(merged) == 1
+        assert merged.iloc[0]['source'] == 'backfill' and merged.iloc[0]['advances'] == 1300

@@ -37,6 +37,9 @@ _MIN_PRIOR_SESSIONS = 200
 # Live rows with pct_above_200sma below this are enrichment failures (e.g. the
 # Jul 15-24 2026 poison, ~0.2-0.8%) — backfill may replace them on merge.
 _IMPLAUSIBLE_PCT200 = 5.0
+# Live rows with universe_size below this are partial-universe failures (e.g.
+# the Jun 8 2026 200-name Finviz day) — same replacement policy.
+_IMPLAUSIBLE_MIN_UNIVERSE = 1500
 
 
 def compute_backfill_rows(closes: pd.DataFrame, spx: pd.Series) -> pd.DataFrame:
@@ -104,16 +107,20 @@ def merge_backfill(existing: pd.DataFrame, backfill: pd.DataFrame) -> pd.DataFra
 
     Existing (live) rows win on date collision — unless the live row is
     implausible (pct_above_200sma < _IMPLAUSIBLE_PCT200, an enrichment
+    failure, OR universe_size < _IMPLAUSIBLE_MIN_UNIVERSE, a partial-universe
     failure), in which case a backfill row for the same date replaces it.
     An implausible live row with no backfill replacement stays: better
     garbage than a hole — downstream dry-run gates surface it.
+    NaN/absent in either column is NOT implausible.
     """
+    implausible = pd.Series(False, index=existing.index)
     pct = existing.get('pct_above_200sma')
-    if pct is None:
-        replaceable_dates: set = set()
-    else:
-        implausible = pd.to_numeric(pct, errors='coerce') < _IMPLAUSIBLE_PCT200
-        replaceable_dates = set(existing.loc[implausible, 'date']) & set(backfill['date'])
+    if pct is not None:
+        implausible |= pd.to_numeric(pct, errors='coerce') < _IMPLAUSIBLE_PCT200
+    uni = existing.get('universe_size')
+    if uni is not None:
+        implausible |= pd.to_numeric(uni, errors='coerce') < _IMPLAUSIBLE_MIN_UNIVERSE
+    replaceable_dates = set(existing.loc[implausible, 'date']) & set(backfill['date'])
     keep = existing[~existing['date'].isin(replaceable_dates)]
     add = backfill[~backfill['date'].isin(set(keep['date']))]
     merged = pd.concat([keep, add], ignore_index=True)
