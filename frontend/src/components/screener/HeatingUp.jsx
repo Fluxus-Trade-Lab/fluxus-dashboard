@@ -12,7 +12,7 @@ const LABELS = {
   healthy_charts: 'HLTH',
 }
 
-export default function HeatingUp({ limit = 25 }) {
+export default function HeatingUp({ limit = 25, compact = false }) {
   const [data, setData] = useState(null)
 
   useEffect(() => {
@@ -27,15 +27,46 @@ export default function HeatingUp({ limit = 25 }) {
   if (!data?.rows?.length) return null
   const rows = data.rows.slice(0, limit)
 
+  if (compact) {
+    return (
+      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-3">
+        <div className="flex items-baseline justify-between mb-2">
+          <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
+            Heating Up
+          </h3>
+          <AsOf data={data} />
+        </div>
+        <ul className="space-y-1">
+          {rows.map((r) => (
+            <li key={r.ticker} className="flex items-center gap-2 text-xs">
+              <a
+                href={`#/ticker/${r.ticker}`}
+                className="font-mono font-medium text-[var(--color-text)] hover:underline w-14 shrink-0"
+              >
+                {r.ticker}
+              </a>
+              <span className="font-mono tabular-nums text-[var(--color-text-secondary)] w-10 shrink-0 text-right">
+                {r.score.toFixed(2)}
+              </span>
+              <span className="flex flex-wrap gap-1">
+                {r.screeners.map((s) => (
+                  <Chip key={s.name} s={s} />
+                ))}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
   return (
     <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4">
       <div className="flex items-baseline justify-between mb-3">
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Heating Up · signals stacking
         </h3>
-        <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
-          as of {data.as_of}
-        </span>
+        <AsOf data={data} />
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-xs">
@@ -62,17 +93,7 @@ export default function HeatingUp({ limit = 25 }) {
                 <td className="px-2 py-1.5">
                   <span className="flex flex-wrap gap-1">
                     {r.screeners.map((s) => (
-                      <span
-                        key={s.name}
-                        title={`${s.name} · ${s.hits}× · last ${s.last_date}`}
-                        className={`text-[9px] font-mono px-1 py-0.5 rounded border ${
-                          QUALITY.has(s.name)
-                            ? 'border-[var(--color-profit)] text-[var(--color-profit)]'
-                            : 'border-[var(--color-border)] text-[var(--color-text-secondary)]'
-                        }`}
-                      >
-                        {LABELS[s.name] ?? s.name}{s.hits > 1 ? `×${s.hits}` : ''}
-                      </span>
+                      <Chip key={s.name} s={s} />
                     ))}
                   </span>
                 </td>
@@ -86,6 +107,39 @@ export default function HeatingUp({ limit = 25 }) {
         </table>
       </div>
     </div>
+  )
+}
+
+function AsOf({ data }) {
+  return (
+    <span className="flex items-baseline gap-1.5">
+      {data.stale && (
+        <span
+          title={data.stale_reason ?? 'Stale data'}
+          className="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/10 text-[var(--color-signal-caution)] uppercase tracking-wide"
+        >
+          Stale
+        </span>
+      )}
+      <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
+        as of {data.as_of}
+      </span>
+    </span>
+  )
+}
+
+function Chip({ s }) {
+  return (
+    <span
+      title={`${s.name} · ${s.hits}× · last ${s.last_date}`}
+      className={`text-[9px] font-mono px-1 py-0.5 rounded border ${
+        QUALITY.has(s.name)
+          ? 'border-[var(--color-profit)] text-[var(--color-profit)]'
+          : 'border-[var(--color-border)] text-[var(--color-text-secondary)]'
+      }`}
+    >
+      {LABELS[s.name] ?? s.name}{s.hits > 1 ? `×${s.hits}` : ''}
+    </span>
   )
 }
 

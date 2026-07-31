@@ -5,6 +5,7 @@ import MarketPosture from './dashboard/MarketPosture'
 import BreadthChip from './breadth/BreadthChip'
 import PreMarketChecklist from './dashboard/PreMarketChecklist'
 import MacroGrid from './dashboard/MacroGrid'
+import HeatingUp from './screener/HeatingUp'
 import EquitiesSection from './equities/EquitiesSection'
 import ScreenerPage from './screener/ScreenerPage'
 import PortfolioPage from './portfolio/PortfolioPage'
@@ -73,6 +74,8 @@ export default function Layout({ data, lastUpdated, isOffline }) {
             <MarketPosture signals={data?.signals} />
             <PreMarketChecklist />
           </div>
+
+          <HeatingUp compact limit={5} />
 
           {/* Macro: Trend Status + Power Trend */}
           <MacroGrid signals={data?.signals} />
