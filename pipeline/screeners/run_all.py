@@ -378,7 +378,8 @@ def main():
     ticker_events_payload = None
     try:
         from pipeline.screeners.ticker_events import (
-            SCREENER_FILES, extract_events, load_events, upsert_day, write_events,
+            SCREENER_FILES, extract_events, is_plausible_day, is_session_date,
+            load_events, load_sessions, upsert_day, write_events,
         )
         from pipeline.screeners.ticker_heat import (
             build_heating_up, build_ticker_events_index,
@@ -390,10 +391,17 @@ def main():
             if isinstance(payload, dict):
                 today_rows.extend(extract_events(screener, payload, event_date))
 
-        if not today_rows:
+        sessions = load_sessions(str(HISTORY_DIR / 'breadth_archive.csv'))
+        plausible, reason = is_plausible_day(today_rows)
+        if not is_session_date(event_date, sessions):
             logger.error(
-                "Ticker events: all screeners empty for %s — skipping append "
-                "(pipeline-failure signature, not a quiet tape)", event_date)
+                "Ticker events: %s is not a trading session — skipping append",
+                event_date)
+            events_frame = load_events(str(HISTORY_DIR / 'ticker_events.csv'))
+        elif not plausible:
+            logger.error(
+                "Ticker events: %s looks implausible (%s) — skipping append "
+                "(pipeline-failure signature, not a quiet tape)", event_date, reason)
             events_frame = load_events(str(HISTORY_DIR / 'ticker_events.csv'))
         else:
             events_frame = upsert_day(
