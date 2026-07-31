@@ -48,6 +48,25 @@ def _first_after(candidates: List[str], start_idx: int, window: int,
     return None
 
 
+def _dedupe(instances: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Collapse instances sharing a (ticker, signal_date) to the tightest one.
+
+    Several leg-1 dates often funnel into the SAME confirmation date. The
+    measured outcome is identical for all of them, so counting each one
+    inflates `n` with copies of a single observation. We keep the smallest
+    gap: the earliest-confirming, tightest version of the setup.
+    """
+    best: Dict[tuple, Dict[str, Any]] = {}
+    for inst in instances:
+        key = (inst['ticker'], inst['signal_date'])
+        prev = best.get(key)
+        if prev is None or inst['gap'] < prev['gap']:
+            best[key] = inst
+    out = list(best.values())
+    out.sort(key=lambda r: (r['signal_date'], r['ticker']))
+    return out
+
+
 def find_pair_instances(events: pd.DataFrame, a: str, b: str,
                         window: int = 10) -> List[Dict[str, Any]]:
     """Instances of `a` then `b` within `window` archive sessions."""
@@ -68,8 +87,7 @@ def find_pair_instances(events: pd.DataFrame, a: str, b: str,
                 continue
             out.append({'ticker': ticker, 'signal_date': d2,
                         'leg_dates': [d1, d2], 'gap': idx[d2] - idx[d1]})
-    out.sort(key=lambda r: (r['signal_date'], r['ticker']))
-    return out
+    return _dedupe(out)
 
 
 def find_triple_instances(events: pd.DataFrame, a: str, b: str, c: str,
@@ -96,8 +114,7 @@ def find_triple_instances(events: pd.DataFrame, a: str, b: str, c: str,
                 continue
             out.append({'ticker': ticker, 'signal_date': d3,
                         'leg_dates': [d1, d2, d3], 'gap': idx[d3] - idx[d1]})
-    out.sort(key=lambda r: (r['signal_date'], r['ticker']))
-    return out
+    return _dedupe(out)
 
 
 MIN_N = 20

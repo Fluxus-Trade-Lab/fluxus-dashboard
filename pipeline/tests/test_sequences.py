@@ -114,6 +114,59 @@ class TestFindPairInstances:
             (DATES[1], 'MMM'), (DATES[2], 'AAA'), (DATES[2], 'ZZZ')]
 
 
+class TestDeduplication:
+    """Many leg1 dates can map to the SAME confirmation date. Counting the
+    identical outcome repeatedly inflates n without adding information."""
+
+    def test_three_leg1_dates_one_confirmation_yields_one_instance(self):
+        from pipeline.research.sequences import find_pair_instances
+        ev = _archive([
+            (DATES[0], 'ABC', 'vcp'),
+            (DATES[1], 'ABC', 'vcp'),
+            (DATES[2], 'ABC', 'vcp'),
+            (DATES[3], 'ABC', 'gainers_4pct'),   # the only confirmation
+        ])
+        got = find_pair_instances(ev, 'vcp', 'gainers_4pct', window=10)
+        assert len(got) == 1
+        assert got[0]['signal_date'] == DATES[3]
+
+    def test_retained_instance_has_the_smallest_gap(self):
+        from pipeline.research.sequences import find_pair_instances
+        ev = _archive([
+            (DATES[0], 'ABC', 'vcp'),
+            (DATES[1], 'ABC', 'vcp'),
+            (DATES[2], 'ABC', 'vcp'),
+            (DATES[3], 'ABC', 'gainers_4pct'),
+        ])
+        got = find_pair_instances(ev, 'vcp', 'gainers_4pct', window=10)
+        assert got[0]['gap'] == 1                      # from DATES[2], not DATES[0]
+        assert got[0]['leg_dates'] == [DATES[2], DATES[3]]
+
+    def test_dedup_is_per_ticker(self):
+        from pipeline.research.sequences import find_pair_instances
+        ev = _archive([
+            (DATES[0], 'ABC', 'vcp'), (DATES[1], 'ABC', 'vcp'),
+            (DATES[2], 'ABC', 'gainers_4pct'),
+            (DATES[0], 'XYZ', 'vcp'), (DATES[1], 'XYZ', 'vcp'),
+            (DATES[2], 'XYZ', 'gainers_4pct'),
+        ])
+        got = find_pair_instances(ev, 'vcp', 'gainers_4pct', window=10)
+        assert [(g['ticker'], g['gap']) for g in got] == [('ABC', 1), ('XYZ', 1)]
+
+    def test_triples_dedupe_on_confirmation_too(self):
+        from pipeline.research.sequences import find_triple_instances
+        ev = _archive([
+            (DATES[0], 'ABC', 'vcp'), (DATES[1], 'ABC', 'vcp'),
+            (DATES[2], 'ABC', 'gainers_4pct'),
+            (DATES[4], 'ABC', 'vol_up_gainers'),
+        ])
+        got = find_triple_instances(ev, 'vcp', 'gainers_4pct', 'vol_up_gainers',
+                                    window=10)
+        assert len(got) == 1
+        assert got[0]['gap'] == 3                      # leg1 = DATES[1]
+        assert got[0]['leg_dates'] == [DATES[1], DATES[2], DATES[4]]
+
+
 class TestFindTripleInstances:
     def test_finds_planted_triple(self):
         from pipeline.research.sequences import find_triple_instances
