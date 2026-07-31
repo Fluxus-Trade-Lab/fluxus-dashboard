@@ -23,7 +23,9 @@ import csv
 import itertools
 import logging
 import pickle
+import statistics
 import sys
+import zlib
 from pathlib import Path
 from typing import Any, Dict, List, Sequence, Tuple
 
@@ -51,22 +53,74 @@ RANK_HORIZON = 10
 def measure_instances(instances: List[Dict[str, Any]],
                       panel: Dict[str, pd.DataFrame],
                       spy: pd.DataFrame,
-                      horizons: Sequence[int] = HORIZONS
+                      horizons: Sequence[int] = HORIZONS,
+                      cache: Dict[Tuple[str, str], Any] | None = None
                       ) -> Tuple[List[Dict[str, Any]], int]:
-    """Measure each instance; return (outcomes, count lost to missing data)."""
+    """Measure each instance; return (outcomes, count lost to missing data).
+
+    `cache` memoizes on (ticker, signal_date); the baseline redraws hit the
+    same points many times, and the measurement is deterministic.
+    """
     outcomes: List[Dict[str, Any]] = []
     lost = 0
     for inst in instances:
-        bars = panel.get(inst['ticker'])
-        if bars is None:
-            lost += 1
-            continue
-        out = measure_outcome(bars, spy, inst['signal_date'], horizons=horizons)
+        key = (inst['ticker'], inst['signal_date'])
+        if cache is not None and key in cache:
+            out = cache[key]
+        else:
+            bars = panel.get(inst['ticker'])
+            out = (None if bars is None else
+                   measure_outcome(bars, spy, inst['signal_date'],
+                                   horizons=horizons))
+            if out is not None:
+                out = {**out, 'ticker': inst['ticker'],
+                       'signal_date': inst['signal_date']}
+            if cache is not None:
+                cache[key] = out
         if out is None:
             lost += 1
             continue
         outcomes.append(out)
     return outcomes, lost
+
+
+def sequence_seed(base_seed: int, label: str) -> int:
+    """A per-sequence seed, deterministic in (base_seed, label).
+
+    Sharing one seed across sequences makes the n=110 baseline a strict
+    prefix of the n=412 one: effectively a single sample whose sampling
+    error is a common shift across the whole table.
+    """
+    return (base_seed ^ zlib.crc32(label.encode())) & 0xFFFFFFFF
+
+
+def average_baselines(draws: List[Dict[str, Any]],
+                      horizons: Sequence[int] = HORIZONS) -> Dict[str, Any]:
+    """Mean of each baseline statistic across independent redraws.
+
+    Also records `baseline_sd_median_excess_{h}` — the sample spread of the
+    per-draw medians — so the reader can weigh the comparison's own noise
+    against the net edge it is being asked to believe.
+    """
+    out: Dict[str, Any] = {}
+
+    def _mean(key: str) -> Any:
+        vals = [d[key] for d in draws
+                if d.get(key) is not None and not pd.isna(d.get(key))]
+        return round(statistics.fmean(vals), 6) if vals else None
+
+    for key in ('n', 'lost'):
+        out[key] = _mean(key)
+    for h in horizons:
+        for template in _NET_KEYS:
+            key = template.format(h=h)
+            out[key] = _mean(key)
+        med = [d[f'median_excess_{h}'] for d in draws
+               if d.get(f'median_excess_{h}') is not None]
+        out[f'baseline_sd_median_excess_{h}'] = (
+            None if not med else
+            round(statistics.stdev(med), 6) if len(med) > 1 else 0.0)
+    return out
 
 
 _NET_KEYS = ('median_excess_{h}', 'mean_excess_{h}', 'median_mfe_r_{h}',
@@ -95,17 +149,34 @@ def render_markdown(rows: List[Dict[str, Any]], meta: Dict[str, Any]) -> str:
         f"- **One regime.** {meta['sessions']} archive sessions across a single "
         "market environment. A sequence that works here may only be describing "
         "that environment.\n"
-        f"- **Multiple comparisons.** Many sequences were tested; some will look "
-        "excellent by chance. Every number below is reported **net of a "
-        "random-entry baseline** drawn from the same tickers and dates, and any "
-        "sequence whose two half-samples disagree in sign is flagged unstable "
-        "and excluded from the ranking.\n"
+        f"- **Multiple comparisons.** {meta.get('hypotheses', len(rows))} "
+        "sequences were tested against this one sample; some will look "
+        "excellent by chance. Every number in the ranking table is reported "
+        "**net of a random-entry baseline** drawn from *the same sequence's "
+        "tickers* and the same dates — so it measures timing, not which "
+        f"companies keep clearing screeners. The baseline is the mean of "
+        f"{meta.get('baseline_draws', '?')} independent redraws; its own "
+        "spread is in `baseline_sd_median_excess` — where that is comparable "
+        "to the net edge, the net edge is noise.\n"
+        "- **The stability filter is weak.** Under pure noise two half-samples "
+        "agree in sign about **50%** of the time. "
+        + (f"Observed: **{meta['pass_rate'] * 100:.0f}%** of the "
+           f"{meta['powered']} adequately-powered sequences passed "
+           f"({meta['stable']} of {meta['powered']}). "
+           if meta.get('pass_rate') is not None else "")
+        + "A pass rate near 50% means the filter is not discriminating — it is "
+        "removing coin flips, not identifying edge.\n"
+        "- **Instances are not independent.** Sequences fire in clusters: many "
+        "names confirm on the same session, and those outcomes share one day "
+        "of market. The `distinct_signal_dates` column is a much better guide "
+        "to effective sample size than `n`.\n"
         f"- **Survivorship.** Prices were fetched today, so delisted and renamed "
         f"tickers are missing ({meta['coverage_missing']} of "
         f"{meta['tickers']} tickers). Those failures skew toward losers, so the "
         "surviving numbers are, if anything, flattering. Per-sequence "
         "instances lost to missing prices are in the `lost` column.\n"
-        f"- **Window.** {meta['window']} archive sessions. The archive omits "
+        + _recency_bullet(meta)
+        + f"- **Window.** {meta['window']} archive sessions. The archive omits "
         "non-session and untrustworthy days, so an N-session gap spans more "
         "calendar time than N days.\n"
         f"- Ranked on `{rank_key}`; `--min-n {meta['min_n']}`, `--seed "
@@ -114,8 +185,16 @@ def render_markdown(rows: List[Dict[str, Any]], meta: Dict[str, Any]) -> str:
 
     ranked = [r for r in rows if not r['under_powered'] and not r['unstable']]
     ranked.sort(key=lambda r: (r.get(rank_key) is None, -(r.get(rank_key) or 0)))
+    positive = [r for r in ranked if (r.get(rank_key) or 0) > 0]
+    negative = [r for r in ranked if (r.get(rank_key) or 0) <= 0]
 
-    lines.append("## Ranked sequences\n")
+    lines.append("## Survived the guards (stability + power — NOT a "
+                 "profitability test)\n")
+    lines.append(
+        "Passing here means a sequence had enough instances and did not flip "
+        "sign between the two half-samples. It says nothing about whether the "
+        "sequence made money. Sequences below are split by whether their net "
+        "edge is actually positive.\n")
     if not ranked:
         lines.append(
             "**No sequence cleared the bar.** Every candidate was either "
@@ -123,17 +202,13 @@ def render_markdown(rows: List[Dict[str, Any]], meta: Dict[str, Any]) -> str:
             "real result, not a tooling failure — on this much data, in this one "
             "regime, nothing here is distinguishable from random entry.\n")
     else:
-        lines.append(f"| Sequence | n | lost | net median excess ({RANK_HORIZON}d) "
-                     f"| median MFE (R) | median MAE (R) | win rate |")
-        lines.append("|---|---:|---:|---:|---:|---:|---:|")
-        for r in ranked:
-            lines.append(
-                f"| {r['sequence']} | {r['n']} | {r['lost']} "
-                f"| {_fmt_pct(r.get(rank_key))} "
-                f"| {_fmt_num(r.get(f'median_mfe_r_{RANK_HORIZON}'))} "
-                f"| {_fmt_num(r.get(f'median_mae_r_{RANK_HORIZON}'))} "
-                f"| {_fmt_pct(r.get(f'win_rate_{RANK_HORIZON}'), pct=True)} |")
-        lines.append("")
+        lines.append(f"### Positive net edge ({len(positive)})\n")
+        lines.append(_ranked_table(positive, rank_key)
+                     or "_None. Nothing that survived the guards beat its own "
+                        "random-entry baseline._\n")
+        lines.append(f"### Negative net edge ({len(negative)}) — stable losers\n")
+        lines.append(_ranked_table(negative, rank_key)
+                     or "_None._\n")
 
     unstable = [r for r in rows if r['unstable'] and not r['under_powered']]
     lines.append("## Excluded — unstable across half-samples\n")
@@ -144,6 +219,65 @@ def render_markdown(rows: List[Dict[str, Any]], meta: Dict[str, Any]) -> str:
     lines.append(_simple_list(weak, rank_key) or "_None._\n")
 
     return "\n".join(lines)
+
+
+def _recency_bullet(meta: Dict[str, Any]) -> str:
+    """Disclose the truncated tail and the asymmetry it puts in the split."""
+    if not meta.get('measurable_last'):
+        return ''
+    h1m, h1 = meta['first_half_measurable'], meta['first_half_sessions']
+    h2m, h2 = meta['second_half_measurable'], meta['second_half_sessions']
+    tail = meta['sessions'] - meta['measurable_total']
+    direction = (
+        "the second half is the thinner one, so the stability check leans on "
+        "less data exactly where the market is most recent"
+        if h2m < h1m else
+        "the first half is the thinner one")
+    return (
+        f"- **The tail is unmeasurable.** The price panel ends with the "
+        f"archive, and the longest horizon needs "
+        f"{max(meta.get('horizons', (21,)))} forward sessions, so the last "
+        f"signal date that can be measured at all is "
+        f"**{meta['measurable_last']}** — {tail} of {meta['sessions']} archive "
+        f"sessions contribute zero instances. This makes the half-sample split "
+        f"**asymmetric**: {h1m}/{h1} measurable sessions in the first half vs "
+        f"{h2m}/{h2} in the second. That is not a 50/50 split, and "
+        f"{direction}.\n")
+
+
+def _ranked_table(rows: List[Dict[str, Any]], rank_key: str) -> str:
+    """The ranking table. Every statistic here is NET of the baseline."""
+    if not rows:
+        return ''
+    h = RANK_HORIZON
+    out = [f"| Sequence | n | distinct dates | lost | net median excess ({h}d) "
+           f"| baseline sd | net median MFE (R) | net median MAE (R) "
+           f"| net win rate |",
+           "|---|---:|---:|---:|---:|---:|---:|---:|---:|"]
+    for r in rows:
+        out.append(
+            f"| {r['sequence']} | {r['n']} "
+            f"| {r.get('distinct_signal_dates', '—')} | {r['lost']} "
+            f"| {_fmt_pct(r.get(rank_key))} "
+            f"| {_fmt_pct(r.get(f'baseline_sd_median_excess_{h}'))} "
+            f"| {_fmt_net(r.get(f'net_median_mfe_r_{h}'), r.get(f'median_mfe_r_{h}'))} "
+            f"| {_fmt_net(r.get(f'net_median_mae_r_{h}'), r.get(f'median_mae_r_{h}'))} "
+            f"| {_fmt_net_pct(r.get(f'net_win_rate_{h}'), r.get(f'win_rate_{h}'))} |")
+    return "\n".join(out) + "\n"
+
+
+def _fmt_net(net: Any, raw: Any) -> str:
+    """Net value with the raw one in parentheses, so both claims are honest."""
+    if net is None:
+        return '—' if raw is None else f"— (raw {raw:.2f})"
+    return f"{net:+.2f}" + ('' if raw is None else f" (raw {raw:.2f})")
+
+
+def _fmt_net_pct(net: Any, raw: Any) -> str:
+    if net is None:
+        return '—' if raw is None else f"— (raw {raw * 100:.0f}%)"
+    return (f"{net * 100:+.0f}pp"
+            + ('' if raw is None else f" (raw {raw * 100:.0f}%)"))
 
 
 def _fmt_num(v: Any) -> str:
@@ -165,6 +299,21 @@ def _simple_list(rows: List[Dict[str, Any]], rank_key: str) -> str:
     return "\n".join(out) + "\n"
 
 
+def measurable_dates(archive_dates: Sequence[str], spy: pd.DataFrame,
+                     max_horizon: int) -> List[str]:
+    """Archive sessions with enough forward bars to be measurable at all.
+
+    Entry is the session AFTER the signal, and the longest horizon needs
+    `max_horizon` bars from there. The tail of the archive therefore
+    contributes nothing, silently, unless it is disclosed.
+    """
+    cal = list(spy.index.strftime('%Y-%m-%d'))
+    pos = {d: i for i, d in enumerate(cal)}
+    limit = len(cal) - 1 - max_horizon
+    return [d for d in sorted(set(archive_dates))
+            if d in pos and pos[d] <= limit]
+
+
 # ── CLI (I/O; the pieces above are pure) ─────────────────────────────
 
 def main(argv: List[str] | None = None) -> int:
@@ -173,6 +322,8 @@ def main(argv: List[str] | None = None) -> int:
     parser.add_argument('--min-n', type=int, default=MIN_N)
     parser.add_argument('--horizons', default='5,10,21')
     parser.add_argument('--seed', type=int, default=42)
+    parser.add_argument('--baseline-draws', type=int, default=20,
+                        help='independent baseline redraws averaged per sequence')
     parser.add_argument('--triples', action='store_true')
     parser.add_argument('--events', default=str(_DEFAULT_EVENTS))
     parser.add_argument('--panel', default=str(_DEFAULT_PANEL))
@@ -180,6 +331,13 @@ def main(argv: List[str] | None = None) -> int:
     logging.basicConfig(level=logging.INFO, format='%(levelname)s %(message)s')
 
     horizons = tuple(int(h) for h in args.horizons.split(','))
+    if RANK_HORIZON not in horizons:
+        parser.error(
+            f"--horizons must include the ranking horizon {RANK_HORIZON} "
+            f"(got {args.horizons}); every sequence would otherwise be "
+            f"silently unranked.")
+    if args.baseline_draws < 1:
+        parser.error("--baseline-draws must be at least 1")
     panel_path = Path(args.panel)
     if not panel_path.exists():
         print(f"No price panel at {panel_path}. Run:\n"
@@ -220,34 +378,71 @@ def main(argv: List[str] | None = None) -> int:
         return find_triple_instances(frame, legs[0], legs[1], legs[2],
                                      window=args.window)
 
+    cache: Dict[Tuple[str, str], Any] = {}
     rows: List[Dict[str, Any]] = []
     for label, legs in candidates:
         instances = _find(events, legs)
-        outcomes, lost = measure_instances(instances, panel, spy, horizons)
+        outcomes, lost = measure_instances(instances, panel, spy, horizons, cache)
         seq_stats = summarize(outcomes, horizons=horizons, lost=lost)
         if seq_stats['n'] == 0:
             continue
 
-        base_inst = random_instances(events, n=seq_stats['n'], seed=args.seed)
-        base_out, base_lost = measure_instances(base_inst, panel, spy, horizons)
-        base_stats = summarize(base_out, horizons=horizons, lost=base_lost)
+        # F1: the baseline must be drawn from THIS sequence's tickers. Drawing
+        # from all 3,872 archive names measures which companies keep clearing
+        # screeners, not whether the timing signal is worth anything.
+        seq_tickers = sorted({str(i['ticker']) for i in instances})
+        seed = sequence_seed(args.seed, label)
+        draws = []
+        for k in range(args.baseline_draws):
+            base_inst = random_instances(events, n=seq_stats['n'],
+                                         seed=(seed + k * 7919) & 0xFFFFFFFF,
+                                         rng_tickers=seq_tickers)
+            base_out, base_lost = measure_instances(base_inst, panel, spy,
+                                                    horizons, cache)
+            draws.append(summarize(base_out, horizons=horizons, lost=base_lost))
+        base_stats = average_baselines(draws, horizons=horizons)
 
         half_stats = []
         for half in (first_half, second_half):
-            h_out, h_lost = measure_instances(_find(half, legs), panel, spy, horizons)
+            h_out, h_lost = measure_instances(_find(half, legs), panel, spy,
+                                              horizons, cache)
             half_stats.append(summarize(h_out, horizons=horizons, lost=h_lost))
 
+        measured = sorted(o['signal_date'] for o in outcomes)
         row: Dict[str, Any] = {'sequence': label, **seq_stats}
         row.update(net_of_baseline(seq_stats, base_stats, horizons))
+        for h in horizons:
+            key = f'baseline_sd_median_excess_{h}'
+            row[key] = base_stats.get(key)
+        row['distinct_signal_dates'] = len({o['signal_date'] for o in outcomes})
+        row['measured_first'] = measured[0] if measured else None
+        row['measured_last'] = measured[-1] if measured else None
         row['under_powered'] = seq_stats['n'] < args.min_n
         row['unstable'] = is_unstable(half_stats[0], half_stats[1],
                                       f'median_excess_{RANK_HORIZON}')
         rows.append(row)
 
     coverage = len(set(events['ticker'].astype(str)) - set(panel))
+    archive_dates = sorted(set(events['date'].astype(str)))
+    meas = measurable_dates(archive_dates, spy, max(horizons))
+    meas_set = set(meas)
+    first_dates = [d for d in archive_dates if d <= mid]
+    second_dates = [d for d in archive_dates if d > mid]
+    powered = [r for r in rows if not r['under_powered']]
+    stable = [r for r in powered if not r['unstable']]
     meta = {'as_of': last, 'window': args.window, 'seed': args.seed,
             'min_n': args.min_n, 'sessions': events['date'].nunique(),
-            'tickers': events['ticker'].nunique(), 'coverage_missing': coverage}
+            'tickers': events['ticker'].nunique(), 'coverage_missing': coverage,
+            'horizons': horizons, 'baseline_draws': args.baseline_draws,
+            'hypotheses': len(rows), 'candidates': len(candidates),
+            'powered': len(powered), 'stable': len(stable),
+            'pass_rate': (len(stable) / len(powered)) if powered else None,
+            'measurable_last': meas[-1] if meas else None,
+            'measurable_total': len(meas),
+            'first_half_sessions': len(first_dates),
+            'first_half_measurable': sum(1 for d in first_dates if d in meas_set),
+            'second_half_sessions': len(second_dates),
+            'second_half_measurable': sum(1 for d in second_dates if d in meas_set)}
 
     _OUT_DIR.mkdir(parents=True, exist_ok=True)
     md_path = _OUT_DIR / f"sequences_{last}.md"
@@ -260,8 +455,13 @@ def main(argv: List[str] | None = None) -> int:
             writer.writeheader()
             writer.writerows(rows)
 
-    ranked = [r for r in rows if not r['under_powered'] and not r['unstable']]
-    print(f"\n{len(rows)} sequences evaluated, {len(ranked)} cleared the bar")
+    rank_key = RANK_KEY_TEMPLATE.format(h=RANK_HORIZON)
+    n_pos = sum(1 for r in stable if (r.get(rank_key) or 0) > 0)
+    print(f"\n{len(rows)} sequences evaluated; {len(stable)} passed the "
+          f"stability and power filters; {n_pos} of those have positive net edge")
+    print(f"Last measurable signal date: {meta['measurable_last']} "
+          f"({meta['measurable_total']}/{meta['sessions']} archive sessions "
+          f"measurable)")
     print(f"Report: {md_path}")
     return 0
 

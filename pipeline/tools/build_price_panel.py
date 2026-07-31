@@ -103,6 +103,15 @@ def main(argv: List[str] | None = None) -> int:
     panel = _download(tickers, start, end)
     rep = coverage_report(tickers, sorted(panel))
 
+    spy = panel.get('SPY')
+    if spy is not None:
+        # A duplicated date makes spy_close.loc[date] return a Series instead
+        # of a scalar, and every excess-return measurement blows up. Fail here,
+        # where the cause is visible, rather than 3,829 tickers downstream.
+        assert spy.index.is_unique, (
+            "SPY has duplicate dates in the downloaded panel — refusing to "
+            "write a cache that would break outcome measurement.")
+
     cache.parent.mkdir(parents=True, exist_ok=True)
     with open(cache, 'wb') as f:
         pickle.dump(panel, f)
