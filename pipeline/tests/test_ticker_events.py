@@ -250,6 +250,32 @@ class TestIsSessionDate:
         from pipeline.screeners.ticker_events import is_session_date
         assert is_session_date('2026-07-30', None) is True  # Thursday
 
+    def test_every_2026_nyse_holiday_rejected_without_sessions(self):
+        """The daily path has no sessions record for today — the calendar
+        must reject a weekday holiday on its own."""
+        from pipeline.screeners.ticker_events import is_session_date
+        for d in ('2026-01-01', '2026-01-19', '2026-02-16', '2026-04-03',
+                  '2026-05-25', '2026-06-19', '2026-07-03', '2026-09-07',
+                  '2026-11-26', '2026-12-25'):
+            assert is_session_date(d) is False, d
+
+    def test_columbus_and_veterans_day_are_sessions(self):
+        from pipeline.screeners.ticker_events import is_session_date
+        assert is_session_date('2026-10-12') is True  # Columbus Day, market open
+        assert is_session_date('2026-11-11') is True  # Veterans Day, market open
+
+    def test_known_bad_backfill_dates_all_rejected(self):
+        from pipeline.screeners.ticker_events import is_session_date
+        for d in ('2026-03-07', '2026-04-03', '2026-05-24', '2026-05-25',
+                  '2026-06-19', '2026-07-03'):
+            assert is_session_date(d) is False, d
+
+    def test_malformed_date_returns_false(self):
+        from pipeline.screeners.ticker_events import is_session_date
+        for bad in ('', 'not-a-date', '2026-13-01', '2026-02-30', '20260730',
+                    '2026-07', None, 12345):
+            assert is_session_date(bad) is False, bad
+
 
 class TestLoadSessions:
     def test_load_real_ish_csv(self, tmp_path):

@@ -20,6 +20,8 @@ from typing import Any, Dict, List, Tuple
 
 import pandas as pd
 
+from pipeline.marketcal import is_trading_day
+
 logger = logging.getLogger(__name__)
 
 MIN_SCREENERS_PRESENT = 4      # of 7; <=3 reporting means a broken run
@@ -112,17 +114,26 @@ def is_plausible_day(rows: List[Dict[str, Any]]) -> Tuple[bool, str]:
 
 
 def is_session_date(date_iso: str, sessions: 'set[str] | None' = None) -> bool:
-    """Was this date a real trading session? Pure, no clock.
+    """Was this date a real trading session? Pure, no clock, never raises.
 
-    Weekends are always rejected. When `sessions` is a non-empty set and
-    date_iso falls within its [min, max] range, membership is required —
-    this is how holidays inside our verified range get caught. Dates
-    outside that range (older history we haven't backfilled sessions for,
-    or newer days than our latest session record) are allowed through on
-    weekday-ness alone.
+    Primary test is the NYSE calendar (`marketcal.is_trading_day`): weekends
+    and exchange holidays are rejected outright. This matters on the daily
+    path, where today's date is always >= max(sessions) so the membership
+    branch below can never fire — the cron runs on market holidays too.
+
+    When `sessions` is a non-empty set and date_iso falls within its
+    [min, max] range, membership is required as an *additional* constraint,
+    catching ad-hoc closures the rule-based calendar doesn't model. Dates
+    outside that range pass on the calendar alone.
+
+    Anything unparseable is not a session.
     """
-    year, month, day = (int(p) for p in date_iso.split('-'))
-    if _date(year, month, day).weekday() >= 5:
+    try:
+        year, month, day = (int(p) for p in date_iso.split('-'))
+        day_date = _date(year, month, day)
+    except (AttributeError, TypeError, ValueError):
+        return False
+    if not is_trading_day(day_date):
         return False
     if sessions:
         lo, hi = min(sessions), max(sessions)
