@@ -146,3 +146,100 @@ class TestFindTripleInstances:
         ev = _archive([(DATES[0], 'ABC', 'vcp'), (DATES[2], 'ABC', 'gainers_4pct')])
         assert find_triple_instances(ev, 'vcp', 'gainers_4pct',
                                      'vol_up_gainers', window=10) == []
+
+
+def _outcome(excess_5=None, mfe=1.0, mae=-1.0, ret=0.01):
+    return {'entry_date': '2026-05-05', 'entry_open': 100.0, 'atr': 2.0,
+            'ret_5': ret, 'excess_5': excess_5, 'mfe_r_5': mfe, 'mae_r_5': mae}
+
+
+class TestSummarize:
+    def test_basic_statistics(self):
+        from pipeline.research.sequences import summarize
+        outs = [_outcome(excess_5=0.10, mfe=3.0, mae=-1.0),
+                _outcome(excess_5=-0.02, mfe=1.0, mae=-2.0),
+                _outcome(excess_5=0.04, mfe=2.0, mae=-0.5)]
+        s = summarize(outs, horizons=(5,), lost=2)
+        assert s['n'] == 3 and s['lost'] == 2
+        assert s['median_excess_5'] == pytest.approx(0.04)
+        assert s['mean_excess_5'] == pytest.approx((0.10 - 0.02 + 0.04) / 3)
+        assert s['median_mfe_r_5'] == pytest.approx(2.0)
+        assert s['median_mae_r_5'] == pytest.approx(-1.0)
+        assert s['win_rate_5'] == pytest.approx(2 / 3)
+
+    def test_none_excess_skipped_but_r_still_counted(self):
+        from pipeline.research.sequences import summarize
+        outs = [_outcome(excess_5=None, mfe=4.0, mae=-1.0),
+                _outcome(excess_5=0.06, mfe=2.0, mae=-3.0)]
+        s = summarize(outs, horizons=(5,))
+        assert s['n'] == 2
+        assert s['median_excess_5'] == pytest.approx(0.06)   # only the one
+        assert s['win_rate_5'] == pytest.approx(1.0)
+        assert s['median_mfe_r_5'] == pytest.approx(3.0)     # both counted
+
+    def test_empty(self):
+        from pipeline.research.sequences import summarize
+        s = summarize([], horizons=(5,), lost=7)
+        assert s['n'] == 0 and s['lost'] == 7
+        assert s['median_excess_5'] is None and s['win_rate_5'] is None
+
+
+class TestRandomInstances:
+    def test_deterministic_for_a_seed(self):
+        from pipeline.research.sequences import random_instances
+        ev = _events([(d, t, 'vcp') for d in DATES for t in ('A', 'B', 'C')])
+        first = random_instances(ev, n=10, seed=42)
+        second = random_instances(ev, n=10, seed=42)
+        assert first == second
+        assert len(first) == 10
+        assert set(first[0]) == {'ticker', 'signal_date'}
+
+    def test_different_seeds_differ(self):
+        from pipeline.research.sequences import random_instances
+        ev = _events([(d, t, 'vcp') for d in DATES for t in ('A', 'B', 'C')])
+        assert random_instances(ev, n=10, seed=1) != random_instances(ev, n=10, seed=2)
+
+    def test_draws_come_from_the_archive_universe(self):
+        from pipeline.research.sequences import random_instances
+        ev = _events([(d, t, 'vcp') for d in DATES for t in ('A', 'B')])
+        for inst in random_instances(ev, n=20, seed=7):
+            assert inst['ticker'] in {'A', 'B'}
+            assert inst['signal_date'] in DATES
+
+    def test_ticker_restriction(self):
+        from pipeline.research.sequences import random_instances
+        ev = _events([(d, t, 'vcp') for d in DATES for t in ('A', 'B', 'C')])
+        for inst in random_instances(ev, n=15, seed=3, rng_tickers=['B']):
+            assert inst['ticker'] == 'B'
+
+
+class TestSplitAndStability:
+    def test_split_dates_midpoint(self):
+        from pipeline.research.sequences import split_dates
+        ev = _events([(d, 'A', 'vcp') for d in DATES])
+        mid, last = split_dates(ev)
+        assert mid == DATES[4] and last == DATES[-1]
+
+    def test_unstable_on_sign_disagreement(self):
+        from pipeline.research.sequences import is_unstable
+        a = {'n': 50, 'median_excess_10': 0.05}
+        b = {'n': 50, 'median_excess_10': -0.03}
+        assert is_unstable(a, b, 'median_excess_10') is True
+
+    def test_stable_when_both_positive_and_powered(self):
+        from pipeline.research.sequences import is_unstable
+        a = {'n': 30, 'median_excess_10': 0.05}
+        b = {'n': 25, 'median_excess_10': 0.02}
+        assert is_unstable(a, b, 'median_excess_10') is False
+
+    def test_unstable_when_a_half_is_underpowered(self):
+        from pipeline.research.sequences import is_unstable
+        a = {'n': 30, 'median_excess_10': 0.05}
+        b = {'n': 3, 'median_excess_10': 0.04}
+        assert is_unstable(a, b, 'median_excess_10') is True
+
+    def test_unstable_when_a_half_has_no_value(self):
+        from pipeline.research.sequences import is_unstable
+        a = {'n': 30, 'median_excess_10': 0.05}
+        b = {'n': 30, 'median_excess_10': None}
+        assert is_unstable(a, b, 'median_excess_10') is True

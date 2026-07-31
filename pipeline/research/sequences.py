@@ -14,6 +14,8 @@ Spec: docs/plans/2026-08-01-sequence-mining-design.md
 
 from __future__ import annotations
 
+import random
+import statistics
 from typing import Any, Dict, List
 
 import pandas as pd
@@ -96,3 +98,60 @@ def find_triple_instances(events: pd.DataFrame, a: str, b: str, c: str,
                         'leg_dates': [d1, d2, d3], 'gap': idx[d3] - idx[d1]})
     out.sort(key=lambda r: (r['signal_date'], r['ticker']))
     return out
+
+
+MIN_N = 20
+
+
+def summarize(outcomes: List[Dict[str, Any]],
+              horizons: Any = (5, 10, 21), lost: int = 0) -> Dict[str, Any]:
+    """Aggregate measured outcomes. None values are skipped per-statistic."""
+    out: Dict[str, Any] = {'n': len(outcomes), 'lost': lost}
+
+    def _vals(key: str) -> List[float]:
+        return [o[key] for o in outcomes
+                if o.get(key) is not None and not pd.isna(o.get(key))]
+
+    for h in horizons:
+        excess = _vals(f'excess_{h}')
+        mfe = _vals(f'mfe_r_{h}')
+        mae = _vals(f'mae_r_{h}')
+        out[f'median_excess_{h}'] = round(statistics.median(excess), 6) if excess else None
+        out[f'mean_excess_{h}'] = round(statistics.fmean(excess), 6) if excess else None
+        out[f'median_mfe_r_{h}'] = round(statistics.median(mfe), 4) if mfe else None
+        out[f'median_mae_r_{h}'] = round(statistics.median(mae), 4) if mae else None
+        out[f'win_rate_{h}'] = (round(sum(1 for v in excess if v > 0) / len(excess), 6)
+                                if excess else None)
+    return out
+
+
+def random_instances(events: pd.DataFrame, n: int, seed: int,
+                     rng_tickers: List[str] | None = None) -> List[Dict[str, str]]:
+    """`n` uniform draws from the archive's (ticker, date) universe. Deterministic."""
+    if len(events) == 0 or n <= 0:
+        return []
+    tickers = sorted(set(rng_tickers if rng_tickers is not None
+                         else events['ticker'].astype(str)))
+    dates = sorted(set(events['date'].astype(str)))
+    if not tickers or not dates:
+        return []
+    rng = random.Random(seed)
+    return [{'ticker': rng.choice(tickers), 'signal_date': rng.choice(dates)}
+            for _ in range(n)]
+
+
+def split_dates(events: pd.DataFrame) -> tuple[str, str]:
+    """(midpoint_date, last_date). First half is <= midpoint."""
+    dates = sorted(set(events['date'].astype(str)))
+    return dates[(len(dates) - 1) // 2], dates[-1]
+
+
+def is_unstable(first_half: Dict[str, Any], second_half: Dict[str, Any],
+                key: str) -> bool:
+    """True when the halves disagree in sign, or either is under-powered."""
+    a, b = first_half.get(key), second_half.get(key)
+    if a is None or b is None:
+        return True
+    if first_half.get('n', 0) < MIN_N or second_half.get('n', 0) < MIN_N:
+        return True
+    return (a > 0) != (b > 0)
