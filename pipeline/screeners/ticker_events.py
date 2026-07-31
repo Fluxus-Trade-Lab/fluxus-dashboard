@@ -13,10 +13,11 @@ from __future__ import annotations
 
 import logging
 import os
+import statistics
 import tempfile
 from datetime import date as _date
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Sequence, Tuple
 
 import pandas as pd
 
@@ -25,7 +26,11 @@ from pipeline.marketcal import is_trading_day
 logger = logging.getLogger(__name__)
 
 MIN_SCREENERS_PRESENT = 4      # of 7; <=3 reporting means a broken run
+MIN_TOTAL_ROWS = 100           # healthy days run 350-1230; <100 is a broken run
 MAX_MOMENTUM_97 = 1000         # a third of the universe cannot all be top-decile
+MOMENTUM_MEDIAN_MULTIPLE = 5   # vs. the recent norm, when we have one
+MOMENTUM_MEDIAN_WINDOW = 20    # days of history the norm is taken over
+MOMENTUM_MEDIAN_MIN_DAYS = 5   # below this we have no usable norm
 
 EVENT_COLUMNS: List[str] = [
     'date', 'ticker', 'screener', 'group',
@@ -95,22 +100,50 @@ def extract_events(screener: str, payload: Dict[str, Any], date_iso: str) -> Lis
     return rows
 
 
-def is_plausible_day(rows: List[Dict[str, Any]]) -> Tuple[bool, str]:
+def is_plausible_day(rows: List[Dict[str, Any]],
+                     momentum_median: float | None = None) -> Tuple[bool, str]:
     """Sniff-test one day's mined/appended rows. Pure.
 
-    Catches two known failure signatures: a broken enrichment run that only
-    a handful of screeners reported into, and a momentum_97 blowout where
-    the "top decile" bucket swallowed the whole universe.
+    Catches the known failure signatures: a broken enrichment run that only
+    a handful of screeners reported into, a day whose total row count
+    collapsed (partial run), and a momentum_97 blowout where the "top
+    decile" bucket swallowed a large slice of the universe.
+
+    `momentum_median` is the recent norm for the momentum_97 count (e.g. a
+    rolling median over accepted days). When supplied and positive it
+    replaces the absolute ceiling with a relative one, which catches
+    intermediate degradation the fixed 1000 ceiling waves through.
     """
     if not rows:
         return False, 'no rows'
+    if len(rows) < MIN_TOTAL_ROWS:
+        return False, f'only {len(rows)} rows total (< {MIN_TOTAL_ROWS})'
     screeners_present = {r['screener'] for r in rows if r.get('screener')}
     if len(screeners_present) < MIN_SCREENERS_PRESENT:
         return False, f'only {len(screeners_present)}/7 screeners reporting'
     momentum_count = sum(1 for r in rows if r.get('screener') == 'momentum_97')
-    if momentum_count > MAX_MOMENTUM_97:
+    if momentum_median is not None and momentum_median > 0:
+        ceiling = MOMENTUM_MEDIAN_MULTIPLE * momentum_median
+        if momentum_count > ceiling:
+            return False, (f'momentum_97 {momentum_count} > '
+                           f'{MOMENTUM_MEDIAN_MULTIPLE}x recent median '
+                           f'{momentum_median:g}')
+    elif momentum_count > MAX_MOMENTUM_97:
         return False, f'momentum_97 {momentum_count} > 1000 (universe-wide)'
     return True, ''
+
+
+def rolling_momentum_median(counts: 'Sequence[float]') -> float | None:
+    """Recent norm for the daily momentum_97 count. Pure.
+
+    Median over the last MOMENTUM_MEDIAN_WINDOW entries; None until we have
+    at least MOMENTUM_MEDIAN_MIN_DAYS of history, because a norm drawn from
+    one or two days is worse than no norm at all.
+    """
+    counts = list(counts)
+    if len(counts) < MOMENTUM_MEDIAN_MIN_DAYS:
+        return None
+    return float(statistics.median(counts[-MOMENTUM_MEDIAN_WINDOW:]))
 
 
 def is_session_date(date_iso: str, sessions: 'set[str] | None' = None) -> bool:

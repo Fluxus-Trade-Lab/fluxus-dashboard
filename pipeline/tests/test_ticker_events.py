@@ -170,7 +170,8 @@ class TestIsPlausibleDay:
 
     def test_only_two_screeners_reporting(self):
         from pipeline.screeners.ticker_events import is_plausible_day
-        rows = _screener_rows(('gainers_4pct', 20), ('vcp', 10))
+        # above the total-row floor, so it is the screener count that trips
+        rows = _screener_rows(('gainers_4pct', 70), ('vcp', 50))
         ok, reason = is_plausible_day(rows)
         assert ok is False
         assert '2/7' in reason
@@ -195,8 +196,8 @@ class TestIsPlausibleDay:
     def test_boundary_exactly_four_screeners_plausible(self):
         from pipeline.screeners.ticker_events import is_plausible_day
         rows = _screener_rows(
-            ('gainers_4pct', 5), ('vol_up_gainers', 5),
-            ('episodic_pivot', 5), ('vcp', 5),
+            ('gainers_4pct', 30), ('vol_up_gainers', 30),
+            ('episodic_pivot', 30), ('vcp', 30),
         )
         ok, _ = is_plausible_day(rows)
         assert ok is True
@@ -219,6 +220,78 @@ class TestIsPlausibleDay:
         ok, reason = is_plausible_day(rows)
         assert ok is False
         assert '1001' in reason
+
+    def test_below_total_row_floor_rejected(self):
+        """2026-06-08 shipped with 52 rows against a 350-1230 norm."""
+        from pipeline.screeners.ticker_events import is_plausible_day
+        rows = _screener_rows(
+            ('gainers_4pct', 12), ('vol_up_gainers', 12),
+            ('episodic_pivot', 12), ('vcp', 10), ('momentum_97', 6),
+        )
+        assert len(rows) == 52
+        ok, reason = is_plausible_day(rows)
+        assert ok is False
+        assert '52' in reason
+        assert '100' in reason
+
+    def test_row_floor_boundary_100_accepted(self):
+        from pipeline.screeners.ticker_events import is_plausible_day
+        rows = _screener_rows(
+            ('gainers_4pct', 25), ('vol_up_gainers', 25),
+            ('episodic_pivot', 25), ('vcp', 25),
+        )
+        assert len(rows) == 100
+        ok, _ = is_plausible_day(rows)
+        assert ok is True
+
+    def test_relative_median_rejects_momentum_blowout(self):
+        """2026-04-07 shipped momentum_97=528 against a ~77 norm."""
+        from pipeline.screeners.ticker_events import is_plausible_day
+        rows = _screener_rows(
+            ('gainers_4pct', 30), ('vol_up_gainers', 30),
+            ('episodic_pivot', 30), ('vcp', 30), ('momentum_97', 500),
+        )
+        ok, reason = is_plausible_day(rows, momentum_median=80)
+        assert ok is False
+        assert '500' in reason
+        assert '80' in reason
+
+    def test_relative_median_accepts_normal_variation(self):
+        from pipeline.screeners.ticker_events import is_plausible_day
+        rows = _screener_rows(
+            ('gainers_4pct', 30), ('vol_up_gainers', 30),
+            ('episodic_pivot', 30), ('vcp', 30), ('momentum_97', 300),
+        )
+        ok, reason = is_plausible_day(rows, momentum_median=80)
+        assert ok is True
+        assert reason == ''
+
+    def test_absolute_fallback_when_median_is_none(self):
+        from pipeline.screeners.ticker_events import is_plausible_day
+        rows = _screener_rows(
+            ('gainers_4pct', 30), ('vol_up_gainers', 30),
+            ('episodic_pivot', 30), ('vcp', 30), ('momentum_97', 500),
+        )
+        # 500 is fine against the absolute 1000 ceiling...
+        assert is_plausible_day(rows, momentum_median=None)[0] is True
+        # ...and a zero/absent median must not divide-by-zero into a reject.
+        assert is_plausible_day(rows, momentum_median=0)[0] is True
+
+
+class TestRollingMomentumMedian:
+    def test_none_until_five_days(self):
+        from pipeline.screeners.ticker_events import rolling_momentum_median
+        assert rolling_momentum_median([]) is None
+        assert rolling_momentum_median([80, 80, 80, 80]) is None
+
+    def test_median_at_five_days(self):
+        from pipeline.screeners.ticker_events import rolling_momentum_median
+        assert rolling_momentum_median([70, 75, 80, 85, 90]) == 80.0
+
+    def test_only_last_twenty_days_count(self):
+        from pipeline.screeners.ticker_events import rolling_momentum_median
+        # 5 huge stale days followed by 20 normal ones: the stale ones drop out
+        assert rolling_momentum_median([9999] * 5 + [80] * 20) == 80.0
 
 
 class TestIsSessionDate:

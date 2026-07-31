@@ -28,7 +28,8 @@ from typing import Any, Dict, List, Tuple
 
 from pipeline.screeners.ticker_events import (
     SCREENER_FILES, extract_events, is_plausible_day, is_session_date,
-    load_events, load_sessions, upsert_day, write_events,
+    load_events, load_sessions, rolling_momentum_median, upsert_day,
+    write_events,
 )
 
 logger = logging.getLogger(__name__)
@@ -117,6 +118,9 @@ def main(argv: List[str] | None = None) -> int:
 
     rows: List[Dict[str, Any]] = []
     skipped: List[Tuple[str, str]] = []
+    # momentum_97 counts of the days we have already accepted, oldest first:
+    # the plausibility guard grades each new day against this rolling norm.
+    accepted_momentum: List[int] = []
     for i, date in enumerate(sorted(all_dates), 1):
         payloads = {}
         for screener, by_date in per_screener.items():
@@ -132,12 +136,15 @@ def main(argv: List[str] | None = None) -> int:
             logger.info("Skipping %s: %s", date, reason)
             skipped.append((date, reason))
             continue
-        plausible, reason = is_plausible_day(day_rows)
+        plausible, reason = is_plausible_day(
+            day_rows, momentum_median=rolling_momentum_median(accepted_momentum))
         if not plausible:
             logger.info("Skipping %s: %s", date, reason)
             skipped.append((date, reason))
             continue
 
+        accepted_momentum.append(
+            sum(1 for r in day_rows if r['screener'] == 'momentum_97'))
         rows.extend(day_rows)
         if i % 20 == 0:
             logger.info("  ...%d/%d dates, %d rows so far", i, len(all_dates), len(rows))

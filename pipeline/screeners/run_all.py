@@ -378,8 +378,9 @@ def main():
     ticker_events_payload = None
     try:
         from pipeline.screeners.ticker_events import (
-            SCREENER_FILES, extract_events, is_plausible_day, is_session_date,
-            load_events, load_sessions, upsert_day, write_events,
+            MOMENTUM_MEDIAN_WINDOW, SCREENER_FILES, extract_events,
+            is_plausible_day, is_session_date, load_events, load_sessions,
+            rolling_momentum_median, upsert_day, write_events,
         )
         from pipeline.screeners.ticker_heat import (
             build_heating_up, build_ticker_events_index,
@@ -391,27 +392,54 @@ def main():
             if isinstance(payload, dict):
                 today_rows.extend(extract_events(screener, payload, event_date))
 
+        archive_path = str(HISTORY_DIR / 'ticker_events.csv')
+        existing = load_events(archive_path)
         sessions = load_sessions(str(HISTORY_DIR / 'breadth_archive.csv'))
-        plausible, reason = is_plausible_day(today_rows)
+
+        # Grade today's momentum_97 count against its own recent norm rather
+        # than a fixed ceiling — that is what catches partial degradation.
+        momentum_median = None
+        if len(existing):
+            archive_dates = sorted(set(existing['date'].astype(str)))
+            recent = archive_dates[-MOMENTUM_MEDIAN_WINDOW:]
+            counts = existing[existing['date'].astype(str).isin(recent)]
+            per_day = counts.groupby(counts['date'].astype(str))['screener'].apply(
+                lambda s: int((s == 'momentum_97').sum()))
+            momentum_median = rolling_momentum_median(
+                [int(per_day.get(d, 0)) for d in recent])
+
+        plausible, reason = is_plausible_day(
+            today_rows, momentum_median=momentum_median)
+        stale_reason = None
         if not is_session_date(event_date, sessions):
+            stale_reason = 'not a trading session'
             logger.error(
                 "Ticker events: %s is not a trading session — skipping append",
                 event_date)
-            events_frame = load_events(str(HISTORY_DIR / 'ticker_events.csv'))
+            events_frame = existing
         elif not plausible:
+            stale_reason = reason
             logger.error(
                 "Ticker events: %s looks implausible (%s) — skipping append "
                 "(pipeline-failure signature, not a quiet tape)", event_date, reason)
-            events_frame = load_events(str(HISTORY_DIR / 'ticker_events.csv'))
+            events_frame = existing
         else:
-            events_frame = upsert_day(
-                load_events(str(HISTORY_DIR / 'ticker_events.csv')), today_rows)
-            write_events(events_frame, str(HISTORY_DIR / 'ticker_events.csv'))
+            events_frame = upsert_day(existing, today_rows)
+            write_events(events_frame, archive_path)
             logger.info("Ticker events: appended %d rows for %s",
                         len(today_rows), event_date)
 
-        heating_up_payload = build_heating_up(events_frame, event_date)
-        ticker_events_payload = build_ticker_events_index(events_frame, event_date)
+        # Never stamp outputs with a date the archive has no data for: on a
+        # rejected day the header would otherwise claim today and show
+        # yesterday's tape.
+        as_of = event_date
+        if stale_reason and len(events_frame):
+            as_of = str(events_frame['date'].astype(str).max())
+        heating_up_payload = build_heating_up(events_frame, as_of)
+        if stale_reason:
+            heating_up_payload['stale'] = True
+            heating_up_payload['stale_reason'] = stale_reason
+        ticker_events_payload = build_ticker_events_index(events_frame, as_of)
     except Exception:  # noqa: BLE001 — isolate; every other output still ships
         logger.exception("Ticker event archive failed — its outputs will be skipped")
         heating_up_payload = None
