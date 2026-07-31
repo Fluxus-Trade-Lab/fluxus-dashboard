@@ -166,6 +166,13 @@ def main(argv: List[str] | None = None) -> int:
         return 0
 
     frame = load_events(args.csv)
+    # Skipped dates never produce rows for upsert_day to replace, but the
+    # archive may already hold rows for them from before a guard tightened
+    # (or from a prior run) — purge those explicitly so a rejected day can't
+    # linger in the archive it was rejected from.
+    skipped_dates = {date for date, _ in skipped}
+    if skipped_dates:
+        frame = frame[~frame['date'].isin(skipped_dates)]
     for date in sorted({r['date'] for r in rows}):
         frame = upsert_day(frame, [r for r in rows if r['date'] == date])
     write_events(frame, args.csv)
