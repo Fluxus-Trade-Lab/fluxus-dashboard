@@ -16,9 +16,23 @@
 - 发:🎯 第三幕 —— 企鹅帖到期(ET 周五收盘后)。三分支:入场→"The water checked out"+台账首秀 / 未入→"Update: waiting two more days" / 跑了→"The First Penguin missed this one"
 - 备:把本周想解剖的 bookmark 链接(1–2 条)丢给 Claude
 
-## 2026-08-02 周日
+## 2026-08-02 周日 ⭐ 本周主线 = H1 复盘
 - 发:无硬任务(休市)
-- 备:轻 —— 想一下第一封信想说什么(周一批量用),不用写
+- 备:**开始写 H1 复盘毛坯**。它是三合一:教学长文(获客)+ 可信度证明 + 「how much」定位的论据
+  · 标题方向:"Six out of ten trades lost money this half. The account finished up 90%. The arithmetic is the whole story."
+  · ⚠️ 不要用「我错了六成」框架 —— 39.9% 胜率 + 3.40× 赔率是优秀动能画像;低胜率是设计出来的(输得小)
+  · 素材:H1 报告 + 30 天空仓 + SOXL 超仓认错 + 0.25% 风险系统
+  · 骨架参考 Swipe #1(Shake 坦白局):旧伤疤 → 教训铸句 → 自嘲 → 判据 → 落到当下 → 金句收尾
+  · 你写毛坯,我格式化。**写完即是未来的置顶帖**
+
+## 2026-08-03 周一
+- 发:prep-day 帖(Discord,照常)
+- 备:H1 复盘定稿 → 发布;顺手问那 20 位会员:「这半年你留下来最主要是因为什么?如果只能保留一样,你希望是哪一样?」(受众验证,一条消息)
+
+## 待办(不急,H1 之后)
+- 付费权益文案已存 `Fluxus_Action_Plan.md`,开 Substack 时直接贴,用户待再思考
+- 定时发帖工具 + 首次周日批量(金句队列)
+- 艺术「一图一句」4 周测试
 
 ## 2026-08-03 周一 ⭐ 第一次批量(90 分钟,接在 prep-day 后)
 - 发:prep-day 帖(Discord,照常)

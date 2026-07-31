@@ -202,6 +202,28 @@ Citrini:*"you'll never have to ask 'what's the trade?'"* —— 他不承诺「�
 
 答案直接决定产品保留什么、信长什么样,权重高于任何榜单数据。**「how much」定位在此之前记为已定但未验证。**
 
+### 📝 付费权益文案(草案,开 Substack 时直接贴 —— 2026-07-31 存档,用户待再思考)
+
+**付费层(三条,第一条必须是台账 —— 那是无人区,是与其余 49 家的全部区别):**
+> 1. Every idea arrives complete — entry, stop, size, and the exact percentage of the account at risk.
+> 2. One issue every Sunday, plus a mid-week note when the tape demands one: where I am, what I'm measuring, and whether this is a week to press or to sit out.
+> 3. The whole book, losers included — plus a quarterly review with the drawdown attached.
+
+可选第四条(差异化):
+> 4. What Asia's session said before the US open — the read you only get from this side of the clock.
+
+**免费层(缝在这里:判断免费,仓位付费 —— 与 Le Shrub 实测墙位一致):**
+> The weekly read: what the market is doing and what I'm measuring.
+
+**五条别写:**
+1. **别写品种**(动能股/科技/半导体)—— 会撕掉「只承诺方法」的硬规矩
+2. **别写收益率或胜率** —— 违反「只承诺可控的」
+3. **别把「完整存档」放第一条** —— 通用条款无说服力(Doomberg 那么写是因为已有 38 万订阅)
+4. **⚠️ 别承诺社群/聊天室** —— 社群是 Discord $100 层的核心价值,写进 $40 的信等于自己拆阶梯。对手多数两层不分家;分家是优势
+5. **频率宁可低报** —— cadence 是要守数年的承诺;且「盘面需要时才加发」本身 on-brand:**由测量决定,不由日历决定**
+
+*对标实测:Le Shrub「宏观、梗图、组合构建、个股」+社群 · Citrini 主题大报告(年2–4次)+Trade Ideas · Tic Toc 每周5+篇+每日标普点位 · Capital Flows 每日直播+持仓流报告。规律:**具体的赢,通用的输。***
+
 ### Substack 定位与固定栏目
 
 ### Substack 定位与固定栏目
