@@ -43,3 +43,5 @@ credentials.json
 # Backtest OHLC cache (regenerated on demand)
 .cache/
 data/history/backfill_ohlc.pkl
+
+# Sequence-mining price panel lives in .cache/ (already ignored above)
