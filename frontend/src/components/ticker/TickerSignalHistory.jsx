@@ -37,7 +37,7 @@ export default function TickerSignalHistory({ symbol, trades }) {
         date: String(t.entryDate).slice(0, 10),
         direction: t.direction,
         price: t.entryPrice,
-        qty: t.shares ?? t.currentQty,
+        qty: t.originalQty ?? t.currentQty,
       }))
     return [...signalItems, ...tradeItems].sort((a, b) => b.date.localeCompare(a.date))
   }, [events, trades, symbol])
