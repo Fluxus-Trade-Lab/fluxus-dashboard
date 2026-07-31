@@ -27,13 +27,15 @@ from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
 from pipeline.screeners.ticker_events import (
-    SCREENER_FILES, extract_events, load_events, upsert_day, write_events,
+    SCREENER_FILES, extract_events, is_plausible_day, is_session_date,
+    load_events, load_sessions, upsert_day, write_events,
 )
 
 logger = logging.getLogger(__name__)
 
 _REPO = Path(__file__).resolve().parents[2]
 _DEFAULT_CSV = _REPO / 'data' / 'history' / 'ticker_events.csv'
+_DEFAULT_SESSIONS_CSV = _REPO / 'data' / 'history' / 'breadth_archive.csv'
 
 
 def snapshot_dates(git_log_output: str) -> List[Tuple[str, str]]:
@@ -111,7 +113,10 @@ def main(argv: List[str] | None = None) -> int:
     logger.info("Found %d snapshot dates across %d screeners",
                 len(all_dates), len(SCREENER_FILES))
 
+    sessions = load_sessions(str(_DEFAULT_SESSIONS_CSV))
+
     rows: List[Dict[str, Any]] = []
+    skipped: List[Tuple[str, str]] = []
     for i, date in enumerate(sorted(all_dates), 1):
         payloads = {}
         for screener, by_date in per_screener.items():
@@ -120,7 +125,20 @@ def main(argv: List[str] | None = None) -> int:
                 payload = _payload_at(sha, screener)
                 if payload is not None:
                     payloads[screener] = payload
-        rows.extend(rows_from_snapshot(payloads, date))
+        day_rows = rows_from_snapshot(payloads, date)
+
+        if not is_session_date(date, sessions):
+            reason = 'non-session date'
+            logger.info("Skipping %s: %s", date, reason)
+            skipped.append((date, reason))
+            continue
+        plausible, reason = is_plausible_day(day_rows)
+        if not plausible:
+            logger.info("Skipping %s: %s", date, reason)
+            skipped.append((date, reason))
+            continue
+
+        rows.extend(day_rows)
         if i % 20 == 0:
             logger.info("  ...%d/%d dates, %d rows so far", i, len(all_dates), len(rows))
 
@@ -132,6 +150,9 @@ def main(argv: List[str] | None = None) -> int:
     print("\nBy month (holes here mean the pipeline was down, not a quiet tape):")
     for k, v in sorted(s['by_month'].items()):
         print(f"  {k}  {v}")
+    print(f"\nSkipped days ({len(skipped)}):")
+    for date, reason in skipped:
+        print(f"  {date}  {reason}")
 
     if args.dry_run:
         print("\n--dry-run: nothing written.")
