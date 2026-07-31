@@ -35,6 +35,7 @@ from pipeline.screeners.stockbee_ratio import run as run_stockbee_ratio
 from pipeline.screeners.breadth_metrics import run as run_breadth_metrics
 from pipeline.screeners.vcp_detector import run_vcp_pipeline
 from pipeline.screeners.atr_enrichment import enrich_with_atr
+from pipeline.marketcal import market_today
 
 OUTPUT_DIR = Path('data/output')
 HISTORY_DIR = Path('data/history')
@@ -372,6 +373,42 @@ def main():
                 for bucket_name, ticker_list in data[bucket_key].items():
                     data[bucket_key][bucket_name] = enrich_with_atr(ticker_list, universe)
 
+    # 7b. Ticker event archive + heat (isolated: never breaks other outputs)
+    heating_up_payload = None
+    ticker_events_payload = None
+    try:
+        from pipeline.screeners.ticker_events import (
+            SCREENER_FILES, extract_events, load_events, upsert_day, write_events,
+        )
+        from pipeline.screeners.ticker_heat import (
+            build_heating_up, build_ticker_events_index,
+        )
+        event_date = market_today().isoformat()
+        today_rows = []
+        for screener in SCREENER_FILES:
+            payload = results.get(screener)
+            if isinstance(payload, dict):
+                today_rows.extend(extract_events(screener, payload, event_date))
+
+        if not today_rows:
+            logger.error(
+                "Ticker events: all screeners empty for %s — skipping append "
+                "(pipeline-failure signature, not a quiet tape)", event_date)
+            events_frame = load_events(str(HISTORY_DIR / 'ticker_events.csv'))
+        else:
+            events_frame = upsert_day(
+                load_events(str(HISTORY_DIR / 'ticker_events.csv')), today_rows)
+            write_events(events_frame, str(HISTORY_DIR / 'ticker_events.csv'))
+            logger.info("Ticker events: appended %d rows for %s",
+                        len(today_rows), event_date)
+
+        heating_up_payload = build_heating_up(events_frame, event_date)
+        ticker_events_payload = build_ticker_events_index(events_frame, event_date)
+    except Exception:  # noqa: BLE001 — isolate; every other output still ships
+        logger.exception("Ticker event archive failed — its outputs will be skipped")
+        heating_up_payload = None
+        ticker_events_payload = None
+
     # 8. Save outputs
     for name, data in results.items():
         output = {'timestamp': timestamp, **data}
@@ -425,6 +462,20 @@ def main():
                        separators=(',', ':'), default=_json_serializer),
             encoding='utf-8')
         logger.info("Saved breadth_replay.json")
+
+    if heating_up_payload is not None:
+        (OUTPUT_DIR / 'heating_up.json').write_text(
+            json.dumps({'timestamp': timestamp, **heating_up_payload},
+                       indent=2, default=_json_serializer),
+            encoding='utf-8')
+        logger.info("Saved heating_up.json")
+
+    if ticker_events_payload is not None:
+        (OUTPUT_DIR / 'ticker_events.json').write_text(
+            json.dumps({'timestamp': timestamp, **ticker_events_payload},
+                       separators=(',', ':'), default=_json_serializer),
+            encoding='utf-8')
+        logger.info("Saved ticker_events.json")
 
     # Save ETF data
     (OUTPUT_DIR / 'etf_data.json').write_text(
