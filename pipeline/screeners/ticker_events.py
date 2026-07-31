@@ -14,12 +14,16 @@ from __future__ import annotations
 import logging
 import os
 import tempfile
+from datetime import date as _date
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 import pandas as pd
 
 logger = logging.getLogger(__name__)
+
+MIN_SCREENERS_PRESENT = 4      # of 7; <=3 reporting means a broken run
+MAX_MOMENTUM_97 = 1000         # a third of the universe cannot all be top-decile
 
 EVENT_COLUMNS: List[str] = [
     'date', 'ticker', 'screener', 'group',
@@ -87,6 +91,60 @@ def extract_events(screener: str, payload: Dict[str, Any], date_iso: str) -> Lis
         if row is not None:
             rows.append(row)
     return rows
+
+
+def is_plausible_day(rows: List[Dict[str, Any]]) -> Tuple[bool, str]:
+    """Sniff-test one day's mined/appended rows. Pure.
+
+    Catches two known failure signatures: a broken enrichment run that only
+    a handful of screeners reported into, and a momentum_97 blowout where
+    the "top decile" bucket swallowed the whole universe.
+    """
+    if not rows:
+        return False, 'no rows'
+    screeners_present = {r['screener'] for r in rows if r.get('screener')}
+    if len(screeners_present) < MIN_SCREENERS_PRESENT:
+        return False, f'only {len(screeners_present)}/7 screeners reporting'
+    momentum_count = sum(1 for r in rows if r.get('screener') == 'momentum_97')
+    if momentum_count > MAX_MOMENTUM_97:
+        return False, f'momentum_97 {momentum_count} > 1000 (universe-wide)'
+    return True, ''
+
+
+def is_session_date(date_iso: str, sessions: 'set[str] | None' = None) -> bool:
+    """Was this date a real trading session? Pure, no clock.
+
+    Weekends are always rejected. When `sessions` is a non-empty set and
+    date_iso falls within its [min, max] range, membership is required —
+    this is how holidays inside our verified range get caught. Dates
+    outside that range (older history we haven't backfilled sessions for,
+    or newer days than our latest session record) are allowed through on
+    weekday-ness alone.
+    """
+    year, month, day = (int(p) for p in date_iso.split('-'))
+    if _date(year, month, day).weekday() >= 5:
+        return False
+    if sessions:
+        lo, hi = min(sessions), max(sessions)
+        if lo <= date_iso <= hi:
+            return date_iso in sessions
+    return True
+
+
+def load_sessions(csv_path: str) -> 'set[str]':
+    """Verified trading-session dates from a breadth-archive-style CSV.
+
+    Advisory input only: never raises. A missing or unreadable file just
+    means we have no session calendar to cross-check against.
+    """
+    path = Path(csv_path)
+    if not path.exists():
+        return set()
+    try:
+        frame = pd.read_csv(path, usecols=['date'], dtype={'date': str})
+    except Exception:  # noqa: BLE001 — advisory input, never fatal
+        return set()
+    return set(frame['date'].dropna())
 
 
 class EventArchiveError(RuntimeError):

@@ -146,3 +146,119 @@ class TestArchiveStore:
         p.write_text('ticker,screener\nABC,vcp\n')
         with pytest.raises(EventArchiveError):
             load_events(str(p))
+
+
+def _screener_rows(*screeners_with_counts):
+    """Build rows for is_plausible_day: (screener, count) pairs."""
+    rows = []
+    for screener, count in screeners_with_counts:
+        for i in range(count):
+            rows.append({'ticker': f'T{screener}{i}', 'screener': screener})
+    return rows
+
+
+class TestIsPlausibleDay:
+    def test_healthy_day(self):
+        from pipeline.screeners.ticker_events import is_plausible_day
+        rows = _screener_rows(
+            ('gainers_4pct', 20), ('vol_up_gainers', 15), ('episodic_pivot', 5),
+            ('vcp', 10), ('momentum_97', 100), ('healthy_charts', 30),
+        )
+        ok, reason = is_plausible_day(rows)
+        assert ok is True
+        assert reason == ''
+
+    def test_only_two_screeners_reporting(self):
+        from pipeline.screeners.ticker_events import is_plausible_day
+        rows = _screener_rows(('gainers_4pct', 20), ('vcp', 10))
+        ok, reason = is_plausible_day(rows)
+        assert ok is False
+        assert '2/7' in reason
+
+    def test_momentum_97_universe_wide_blowout(self):
+        from pipeline.screeners.ticker_events import is_plausible_day
+        rows = _screener_rows(
+            ('gainers_4pct', 20), ('vol_up_gainers', 15), ('episodic_pivot', 5),
+            ('vcp', 10), ('momentum_97', 2970),
+        )
+        ok, reason = is_plausible_day(rows)
+        assert ok is False
+        assert '2970' in reason
+        assert '1000' in reason
+
+    def test_empty_day(self):
+        from pipeline.screeners.ticker_events import is_plausible_day
+        ok, reason = is_plausible_day([])
+        assert ok is False
+        assert reason == 'no rows'
+
+    def test_boundary_exactly_four_screeners_plausible(self):
+        from pipeline.screeners.ticker_events import is_plausible_day
+        rows = _screener_rows(
+            ('gainers_4pct', 5), ('vol_up_gainers', 5),
+            ('episodic_pivot', 5), ('vcp', 5),
+        )
+        ok, _ = is_plausible_day(rows)
+        assert ok is True
+
+    def test_boundary_momentum_exactly_1000_plausible(self):
+        from pipeline.screeners.ticker_events import is_plausible_day
+        rows = _screener_rows(
+            ('gainers_4pct', 5), ('vol_up_gainers', 5),
+            ('episodic_pivot', 5), ('vcp', 5), ('momentum_97', 1000),
+        )
+        ok, _ = is_plausible_day(rows)
+        assert ok is True
+
+    def test_boundary_momentum_1001_not_plausible(self):
+        from pipeline.screeners.ticker_events import is_plausible_day
+        rows = _screener_rows(
+            ('gainers_4pct', 5), ('vol_up_gainers', 5),
+            ('episodic_pivot', 5), ('vcp', 5), ('momentum_97', 1001),
+        )
+        ok, reason = is_plausible_day(rows)
+        assert ok is False
+        assert '1001' in reason
+
+
+class TestIsSessionDate:
+    def test_saturday_is_not_a_session(self):
+        from pipeline.screeners.ticker_events import is_session_date
+        assert is_session_date('2026-03-07') is False  # Saturday
+
+    def test_sunday_is_not_a_session(self):
+        from pipeline.screeners.ticker_events import is_session_date
+        assert is_session_date('2026-05-24') is False  # Sunday
+
+    def test_weekday_inside_sessions_set(self):
+        from pipeline.screeners.ticker_events import is_session_date
+        sessions = {'2026-05-20', '2026-05-21', '2026-05-22', '2026-05-26'}
+        assert is_session_date('2026-05-21', sessions) is True
+
+    def test_holiday_weekday_absent_from_sessions_inside_range(self):
+        from pipeline.screeners.ticker_events import is_session_date
+        sessions = {'2026-05-20', '2026-05-21', '2026-05-22', '2026-05-26'}
+        # 2026-05-25 (Memorial Day) is a weekday inside [min, max] but absent
+        assert is_session_date('2026-05-25', sessions) is False
+
+    def test_weekday_after_max_sessions_allowed(self):
+        from pipeline.screeners.ticker_events import is_session_date
+        sessions = {'2026-05-20', '2026-05-21'}
+        assert is_session_date('2026-07-30', sessions) is True  # Thursday, newer than range
+
+    def test_none_sessions_weekday_allowed(self):
+        from pipeline.screeners.ticker_events import is_session_date
+        assert is_session_date('2026-07-30', None) is True  # Thursday
+
+
+class TestLoadSessions:
+    def test_load_real_ish_csv(self, tmp_path):
+        from pipeline.screeners.ticker_events import load_sessions
+        p = tmp_path / 'breadth_archive.csv'
+        p.write_text('date,source,universe_size\n2024-05-15,backfill,2523\n2024-05-16,backfill,2523\n')
+        sessions = load_sessions(str(p))
+        assert sessions == {'2024-05-15', '2024-05-16'}
+
+    def test_missing_file_returns_empty_set(self, tmp_path):
+        from pipeline.screeners.ticker_events import load_sessions
+        assert load_sessions(str(tmp_path / 'nope.csv')) == set()
