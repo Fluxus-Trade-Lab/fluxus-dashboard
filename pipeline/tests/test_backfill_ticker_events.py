@@ -40,6 +40,43 @@ class TestRowsFromSnapshot:
         assert rows == []
 
 
+class TestPlanPurge:
+    def test_archived_skipped_and_mined_is_purged(self):
+        from pipeline.tools.backfill_ticker_events import plan_purge
+        result = plan_purge(existing_dates={'2026-05-04'},
+                             skipped_dates={'2026-05-04'},
+                             mined_dates={'2026-05-04'})
+        assert result == {'2026-05-04'}
+
+    def test_archived_and_skipped_but_not_mined_is_protected(self):
+        """The renamed-file protection: a date the run never looked at
+        (e.g. lost history from a rename without --follow) must never be
+        purged, even if it happens to be archived and skipped."""
+        from pipeline.tools.backfill_ticker_events import plan_purge
+        result = plan_purge(existing_dates={'2026-05-04'},
+                             skipped_dates={'2026-05-04'},
+                             mined_dates=set())
+        assert result == set()
+
+    def test_archived_and_mined_but_not_skipped_is_not_purged(self):
+        from pipeline.tools.backfill_ticker_events import plan_purge
+        result = plan_purge(existing_dates={'2026-05-04'},
+                             skipped_dates=set(),
+                             mined_dates={'2026-05-04'})
+        assert result == set()
+
+    def test_skipped_and_mined_but_not_archived_is_not_purged(self):
+        from pipeline.tools.backfill_ticker_events import plan_purge
+        result = plan_purge(existing_dates=set(),
+                             skipped_dates={'2026-05-04'},
+                             mined_dates={'2026-05-04'})
+        assert result == set()
+
+    def test_empty_inputs(self):
+        from pipeline.tools.backfill_ticker_events import plan_purge
+        assert plan_purge(set(), set(), set()) == set()
+
+
 class TestSummarize:
     def test_counts(self):
         from pipeline.tools.backfill_ticker_events import summarize

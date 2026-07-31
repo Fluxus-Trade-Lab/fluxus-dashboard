@@ -67,6 +67,20 @@ def rows_from_snapshot(payloads: Dict[str, Any], date_iso: str) -> List[Dict[str
     return rows
 
 
+def plan_purge(existing_dates: set[str], skipped_dates: set[str],
+               mined_dates: set[str]) -> set[str]:
+    """Dates safe to delete from an already-written archive.
+
+    A date is purged only when it is BOTH currently archived AND newly
+    judged bad (skipped) AND actually looked at this run (mined). A date
+    absent from `mined_dates` is never purged — that's the renamed-file /
+    lost-history case, where `--follow` failed to find history for a
+    screener and its dates would otherwise look "skipped" by accident.
+    Pure function, no I/O.
+    """
+    return existing_dates & skipped_dates & mined_dates
+
+
 def summarize(rows: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Dry-run report figures."""
     return {
@@ -85,7 +99,10 @@ def _git(args: List[str]) -> str:
 
 
 def _commits_for(screener: str) -> str:
-    return _git(['log', '--format=%H %ad', '--date=short', '--',
+    # --follow keeps history across a rename of the screener's output file;
+    # without it a renamed file looks like it has no history at all, and its
+    # dates would appear "skipped" by accident (see plan_purge).
+    return _git(['log', '--follow', '--format=%H %ad', '--date=short', '--',
                  f'data/output/{screener}.json'])
 
 
@@ -100,6 +117,10 @@ def main(argv: List[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--csv', default=str(_DEFAULT_CSV))
+    parser.add_argument('--allow-purge', action='store_true',
+                        help='Actually delete archived rows for dates this run '
+                             'judged bad. Without this flag, the tool only '
+                             'reports what it would purge.')
     args = parser.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format='%(levelname)s %(message)s')
 
@@ -161,18 +182,36 @@ def main(argv: List[str] | None = None) -> int:
     for date, reason in skipped:
         print(f"  {date}  {reason}")
 
-    if args.dry_run:
-        print("\n--dry-run: nothing written.")
-        return 0
-
     frame = load_events(args.csv)
     # Skipped dates never produce rows for upsert_day to replace, but the
     # archive may already hold rows for them from before a guard tightened
     # (or from a prior run) — purge those explicitly so a rejected day can't
-    # linger in the archive it was rejected from.
-    skipped_dates = {date for date, _ in skipped}
-    if skipped_dates:
-        frame = frame[~frame['date'].isin(skipped_dates)]
+    # linger in the archive it was rejected from. Only dates this run
+    # actually mined are eligible: a screener file that lost history (e.g. a
+    # rename --follow couldn't resolve) must never be treated as "skipped".
+    skipped_reasons = {date: reason for date, reason in skipped}
+    skipped_dates = set(skipped_reasons)
+    existing_dates = set(frame['date']) if len(frame) else set()
+    purge_dates = plan_purge(existing_dates, skipped_dates, all_dates)
+
+    if purge_dates:
+        print(f"\n{'=' * 60}")
+        if args.allow_purge:
+            print(f"PURGING {len(purge_dates)} archived date(s) rejected by this run:")
+        else:
+            print(f"WOULD PURGE {len(purge_dates)} archived date(s) rejected by this run:")
+        for date in sorted(purge_dates):
+            print(f"  {date}  {skipped_reasons.get(date, 'unknown reason')}")
+        if not args.allow_purge:
+            print("\nRe-run with --allow-purge to delete these rows from the archive.")
+        print('=' * 60)
+
+    if args.dry_run:
+        print("\n--dry-run: nothing written.")
+        return 0
+
+    if purge_dates and args.allow_purge:
+        frame = frame[~frame['date'].isin(purge_dates)]
     for date in sorted({r['date'] for r in rows}):
         frame = upsert_day(frame, [r for r in rows if r['date'] == date])
     write_events(frame, args.csv)
