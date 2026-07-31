@@ -28,7 +28,7 @@ class TestComputeHeat:
         quiet = heat[0]
         assert quiet['score'] == pytest.approx(6.0)      # 3 + 3, no repeats
         noisy = heat[1]
-        assert noisy['score'] == pytest.approx(1 + 0.25 * 4)   # 1 * (1 + .25*4) = 2.0
+        assert noisy['score'] == pytest.approx(1.5)   # 1 * min(1+.25*4, 1.5) = 1.5 (cap)
 
     def test_score_shape_and_fields(self):
         from pipeline.screeners.ticker_heat import compute_heat
@@ -82,6 +82,43 @@ class TestComputeHeat:
         heat = compute_heat(_frame(rows), '2026-05-01')
         assert [h['ticker'] for h in heat] == ['AAA', 'BBB']
 
+    def test_repeat_cap_binds_at_15_hits(self):
+        """15 hits on one screener caps out at weight*1.5, not weight*4.5."""
+        from pipeline.screeners.ticker_heat import compute_heat
+        dates = [f'2026-05-{d:02d}' for d in range(1, 16)]   # 15 archive dates
+        rows = [_ev(d, 'SPAM', 'momentum_97') for d in dates]
+        heat = compute_heat(_frame(rows), dates[-1], window=15)
+        assert len(heat) == 1
+        assert heat[0]['score'] == pytest.approx(3 * 1.5)   # weight=3, cap=1.5 -> 4.5
+
+    def test_repeat_cap_binds_exactly_at_3_hits(self):
+        """3 hits: 1+.25*2 = 1.5 lands exactly on the cap, no further reduction."""
+        from pipeline.screeners.ticker_heat import compute_heat
+        rows = [_ev(f'2026-05-0{d}', 'ABC', 'gainers_4pct') for d in (1, 2, 3)]
+        heat = compute_heat(_frame(rows), '2026-05-03')
+        assert heat[0]['score'] == pytest.approx(1 * 1.5)
+
+    def test_repeat_below_cap_unchanged(self):
+        """2 hits: 1+.25*1 = 1.25 is below the cap, unaffected by it."""
+        from pipeline.screeners.ticker_heat import compute_heat
+        rows = [_ev(f'2026-05-0{d}', 'ABC', 'gainers_4pct') for d in (1, 2)]
+        heat = compute_heat(_frame(rows), '2026-05-02')
+        assert heat[0]['score'] == pytest.approx(1 * 1.25)
+
+    def test_single_screener_repeat_ranks_below_multi_screener_confluence(self):
+        """A single-screener name hit 15x (capped at 3*1.5=4.5) must rank below
+        a name with two distinct quality screeners hit once each (3+3=6.0) —
+        confluence beats repeat noise even under the cap."""
+        from pipeline.screeners.ticker_heat import compute_heat
+        dates = [f'2026-05-{d:02d}' for d in range(1, 16)]
+        rows = [_ev(d, 'SPAM', 'momentum_97') for d in dates]
+        rows += [_ev('2026-05-14', 'CONFLUENCE', 'vcp'),
+                 _ev('2026-05-15', 'CONFLUENCE', 'episodic_pivot')]
+        heat = compute_heat(_frame(rows), dates[-1], window=15)
+        assert [h['ticker'] for h in heat] == ['CONFLUENCE', 'SPAM']
+        assert heat[0]['score'] == pytest.approx(6.0)
+        assert heat[1]['score'] == pytest.approx(4.5)
+
     def test_weights_single_source(self):
         from pipeline.screeners.ticker_heat import WEIGHTS
         assert WEIGHTS['vcp'] == 3 and WEIGHTS['episodic_pivot'] == 3
@@ -131,5 +168,17 @@ class TestBuilders:
         from pipeline.screeners.ticker_heat import build_ticker_events_index
         rows = [_ev('2026-05-01', 'ABC', 'vcp', change_pct=np.nan)]
         out = build_ticker_events_index(_frame(rows), '2026-05-01')
-        assert out['events']['ABC'][0]['change_pct'] is None
+        assert 'change_pct' not in out['events']['ABC'][0]   # None-valued keys omitted
         json.dumps(out)
+
+    def test_index_omits_none_keys_retains_present(self):
+        from pipeline.screeners.ticker_heat import build_ticker_events_index
+        rows = [_ev('2026-05-01', 'ABC', 'vcp', change_pct=0.05, num_contractions=None,
+                    rel_volume=None)]
+        out = build_ticker_events_index(_frame(rows), '2026-05-01')
+        entry = out['events']['ABC'][0]
+        assert entry['date'] == '2026-05-01'
+        assert entry['screener'] == 'vcp'
+        assert entry['change_pct'] == 0.05
+        assert 'num_contractions' not in entry
+        assert 'rel_volume' not in entry

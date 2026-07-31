@@ -1,9 +1,11 @@
 """Heat scoring — which tickers are stacking signals right now.
 
 Confluence over repetition: distinct screeners carry their full weight,
-repeat hits on the same screener add a fraction. Setup-quality screeners
-outweigh participation ones. Pure and no-peek: rows after `as_of` are
-invisible. Spec: docs/plans/2026-07-31-ticker-events-design.md
+repeat hits on the same screener add a fraction, capped at REPEAT_CAP so
+that no single screener's repeat noise can outweigh genuine multi-screener
+confluence. Setup-quality screeners outweigh participation ones. Pure and
+no-peek: rows after `as_of` are invisible.
+Spec: docs/plans/2026-07-31-ticker-events-design.md
 """
 
 from __future__ import annotations
@@ -27,6 +29,7 @@ WEIGHTS: Dict[str, int] = {
 
 HEAT_WINDOW = 15        # trailing archive dates
 REPEAT_FACTOR = 0.25    # weight multiplier per extra hit on the same screener
+REPEAT_CAP = 1.5        # per-screener repeat multiplier caps out here
 
 
 def compute_heat(events: pd.DataFrame, as_of: str,
@@ -55,7 +58,7 @@ def compute_heat(events: pd.DataFrame, as_of: str,
         for name, sub in grp.groupby('screener', sort=True):
             hits = len(sub)
             weight = WEIGHTS[name]
-            score += weight * (1 + REPEAT_FACTOR * (hits - 1))
+            score += weight * min(1 + REPEAT_FACTOR * (hits - 1), REPEAT_CAP)
             screeners.append({'name': name, 'hits': int(hits),
                               'last_date': str(sub['date'].max())})
         first_seen, last_seen = str(grp['date'].min()), str(grp['date'].max())
@@ -102,7 +105,7 @@ def build_ticker_events_index(events: pd.DataFrame, as_of: str,
     for ticker, grp in sub.groupby('ticker', sort=True):
         grp = grp.sort_values(['date', 'screener'], ascending=[False, True])
         out[str(ticker)] = [
-            {k: (None if pd.isna(r[k]) else r[k]) for k in _INDEX_FIELDS}
+            {k: r[k] for k in _INDEX_FIELDS if not pd.isna(r[k])}
             for _, r in grp.iterrows()
         ]
     return {'as_of': as_of, 'events': out}
