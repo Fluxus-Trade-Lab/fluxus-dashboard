@@ -8,6 +8,7 @@ import TickerQuickStats from './TickerQuickStats'
 import TickerChart from './TickerChart'
 import TickerStatusPanel from './TickerStatusPanel'
 import TickerTrades from './TickerTrades'
+import TickerSignalHistory from './TickerSignalHistory'
 import TickerEarnings from './TickerEarnings'
 import TickerValuation from './TickerValuation'
 import TickerQuarterlyMetrics from './TickerQuarterlyMetrics'
@@ -103,6 +104,10 @@ function TickerPageBody({ symbol }) {
 
       <div className="mb-4">
         <TickerRelativeStrength tickerData={tickerData} />
+      </div>
+
+      <div className="mb-4">
+        <TickerSignalHistory symbol={symbol} trades={enrichedAll} />
       </div>
 
       <div className="mb-4">
