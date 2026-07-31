@@ -86,9 +86,11 @@ compute_heat(events: pd.DataFrame, as_of: str, window: int = 15) -> pd.DataFrame
 - `WEIGHTS` — the single source of truth, one dict:
   - quality ×3: `episodic_pivot`, `vcp`, `momentum_97`
   - participation ×1: `gainers_4pct`, `vol_up_gainers`, `ema21_watch`, `healthy_charts`
-- Score = Σ over **distinct** screeners hit of `weight`, plus
-  `0.25 × weight × (hits − 1)` for repeats on the same screener — so repetition
-  registers without dominating.
+- Score = Σ over **distinct** screeners hit of
+  `weight × min(1 + 0.25 × (hits − 1), 1.5)` — repeats on the same screener
+  register without dominating, and the per-screener repeat multiplier is
+  capped at 1.5× base weight so repeated noise on one screener can never
+  outscore genuine multi-screener confluence.
 - Emitted per ticker: `score`, `screeners` (list, each with hit count and last
   date), `first_seen` / `last_seen` in window, `days_span` (sessions from first
   to last signal), `sector`.
