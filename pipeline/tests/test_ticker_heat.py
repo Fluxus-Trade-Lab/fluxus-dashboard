@@ -87,3 +87,49 @@ class TestComputeHeat:
         assert WEIGHTS['vcp'] == 3 and WEIGHTS['episodic_pivot'] == 3
         assert WEIGHTS['momentum_97'] == 3 and WEIGHTS['gainers_4pct'] == 1
         assert len(WEIGHTS) == 7
+
+
+class TestBuilders:
+    def test_heating_up_caps_and_orders(self):
+        from pipeline.screeners.ticker_heat import build_heating_up, HEATING_UP_LIMIT
+        rows = []
+        for i in range(60):
+            rows.append(_ev('2026-05-01', f'T{i:03d}', 'vcp'))
+            if i < 10:                      # ten names get a second screener
+                rows.append(_ev('2026-05-02', f'T{i:03d}', 'episodic_pivot'))
+        out = build_heating_up(_frame(rows), '2026-05-02')
+        assert out['as_of'] == '2026-05-02'
+        assert len(out['rows']) == HEATING_UP_LIMIT
+        assert [r['ticker'] for r in out['rows'][:3]] == ['T000', 'T001', 'T002']
+        assert out['rows'][0]['score'] > out['rows'][-1]['score']
+
+    def test_index_groups_by_ticker_newest_first(self):
+        from pipeline.screeners.ticker_heat import build_ticker_events_index
+        rows = [_ev('2026-05-01', 'ABC', 'vcp', num_contractions=3),
+                _ev('2026-05-05', 'ABC', 'gainers_4pct', change_pct=0.06),
+                _ev('2026-05-05', 'XYZ', 'vcp')]
+        out = build_ticker_events_index(_frame(rows), '2026-05-05')
+        assert set(out['events']) == {'ABC', 'XYZ'}
+        abc = out['events']['ABC']
+        assert [e['date'] for e in abc] == ['2026-05-05', '2026-05-01']
+        assert abc[0]['screener'] == 'gainers_4pct'
+        assert abc[0]['change_pct'] == 0.06
+        assert abc[1]['num_contractions'] == 3
+        assert 'ticker' not in abc[0]     # implied by the key
+
+    def test_index_excludes_future_and_old_rows(self):
+        from pipeline.screeners.ticker_heat import build_ticker_events_index
+        rows = [_ev('2025-01-05', 'OLD', 'vcp'),
+                _ev('2026-05-01', 'ABC', 'vcp'),
+                _ev('2026-06-01', 'FUTURE', 'vcp')]
+        out = build_ticker_events_index(_frame(rows), '2026-05-05', months=6)
+        assert set(out['events']) == {'ABC'}
+
+    def test_index_is_json_safe(self):
+        import json
+        import numpy as np
+        from pipeline.screeners.ticker_heat import build_ticker_events_index
+        rows = [_ev('2026-05-01', 'ABC', 'vcp', change_pct=np.nan)]
+        out = build_ticker_events_index(_frame(rows), '2026-05-01')
+        assert out['events']['ABC'][0]['change_pct'] is None
+        json.dumps(out)

@@ -73,3 +73,36 @@ def compute_heat(events: pd.DataFrame, as_of: str,
 
     out.sort(key=lambda h: (-h['score'], h['ticker']))
     return out
+
+
+HEATING_UP_LIMIT = 50
+EVENTS_JSON_MONTHS = 6
+
+_INDEX_FIELDS = ['date', 'screener', 'group', 'change_pct', 'rel_volume',
+                 'volume', 'atr_ext', 'num_contractions', 'pct_to_pivot']
+
+
+def build_heating_up(events: pd.DataFrame, as_of: str) -> Dict[str, Any]:
+    """Top-scoring tickers for the heating-up list."""
+    return {'as_of': as_of,
+            'rows': compute_heat(events, as_of)[:HEATING_UP_LIMIT]}
+
+
+def build_ticker_events_index(events: pd.DataFrame, as_of: str,
+                              months: int = EVENTS_JSON_MONTHS) -> Dict[str, Any]:
+    """Per-ticker event lists (newest first) for the trailing `months`."""
+    out: Dict[str, List[Dict[str, Any]]] = {}
+    if len(events) == 0:
+        return {'as_of': as_of, 'events': out}
+
+    cutoff = (pd.Timestamp(as_of) - pd.DateOffset(months=months)).strftime('%Y-%m-%d')
+    dates = events['date'].astype(str)
+    sub = events[(dates <= as_of) & (dates > cutoff)]
+
+    for ticker, grp in sub.groupby('ticker', sort=True):
+        grp = grp.sort_values(['date', 'screener'], ascending=[False, True])
+        out[str(ticker)] = [
+            {k: (None if pd.isna(r[k]) else r[k]) for k in _INDEX_FIELDS}
+            for _, r in grp.iterrows()
+        ]
+    return {'as_of': as_of, 'events': out}
