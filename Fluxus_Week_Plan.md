@@ -15,6 +15,7 @@
 ## 2026-08-01 周六
 - 发:🎯 第三幕 —— 企鹅帖到期(ET 周五收盘后)。三分支:入场→"The water checked out"+台账首秀 / 未入→"Update: waiting two more days" / 跑了→"The First Penguin missed this one"
 - 备:把本周想解剖的 bookmark 链接(1–2 条)丢给 Claude
+- 💡 新格式候选:**周末阅读书单**(策展 + 每条一句自己的判断)—— 全库收藏率最高的格式(ParadisLabs 1.21%,收藏>点赞),零新增成本(你本来就在读)。周六早上发,亚洲时区 = 美东周五收盘后
 
 ## 2026-08-02 周日 ⭐ 本周主线 = H1 复盘
 - 发:无硬任务(休市)
