@@ -127,6 +127,49 @@
 
 ---
 
+## 🌍 贯穿全年的第二条线:怎么处理宏观 / The Macro Thread
+
+*战争、利率、Warsh、油、韩国 —— 上半年最险恶的一块。**第一原则 3/2 就写死了**,后面七个月没变过。*
+
+> ⏱ **3/2** ⭐⭐⭐ *"**We are not trying to predict the outcome of the war, rather only playing the reaction of the market.** ES has been trading 6830-6930. Only three cases I will be interested in taking the trade… **watch the speed slow down, and slowly test key levels with small starting positions. When working, add size.**"*
+
+**这是「我没有观点,我有测量」的宏观版,而且是他自己写的。** 五种具体手法:
+
+### ① 把地缘变成分支表 + 每支标 ES 点数(赔率表,不是观点)
+> ⏱ **3/23** — *"1. 他炸厂 → 伊朗还手 → 跌 −100/−150 ES,也许 −200。2. 北约不轰炸而开海峡 → +100 ES。3. 伊朗开放但对除美外收税 → +150 ES。4. 全开放含美,收费 → +200 ES。**I'm vibing w/ 3 or 4.**"*
+> **四个情景,每个标价。全程没有一句「我认为战争会如何」。**
+
+### ② 用一个商品替掉整个新闻流 —— **The Truth Detector**(他的原词)
+> ⏱ **3/27** — *"As long as **crude is trending up, rates are up**, equity is not going to be easy for upside."*
+> ⏱ **3/30** — *"we need to see **Crude Oil below 95 and falling** to signal a market reversal… **Crude Oil continue to be the truth detector here.**"* ⭐
+> **原油同时定价战争和利率,所以一个变量替掉了全部头条。**
+
+### ③ 对冲要两边都赢 —— **Win-Win Hedge**
+> ⏱ **1/30** — 一月底就买四月的保护:*"index put 2-3 months out… spy 650p 4/17"*
+> ⏱ **2/19** — *"my hedge for Iran escalation is **XLE call**… **so win win situation**"* ⭐ 战争升级 XLE 涨,战争缓和股票涨
+> ⏱ **3/12** — 反向读表:*"**Put protections are at the historic extreme**, so only waiting till a proper situation improvement."* ← **保护贵到极值 = 别再买保护**
+
+### ④ 明确划出「可以忽略的宏观」
+> ⏱ **5/18** — *"**macro events like Japan bond situation will take care of themselves while we should worry less about them.** This is still AI vs Macro."* ⭐
+> ⏱ **7/28** — 谈 Warsh 加不加息:*"**Nobody knows**, but I tend to believe Warsh will **talk tough** to establish his hawkish credibility… Hard to see him hike right in the face of a sell-off."* ← **给动机分析,不给利率预测**
+
+### ⑤ 韩国当美股动能的杠杆版仪表 —— **The Korean Tell**(亚洲时区独有)
+> ⏱ **6/23** — *"KOSPI down −10% today, second worst day in 25 years. **Korean index is a leveraged product of QQQ.**"* ⭐
+> ⏱ **7/7** — *"Korea getting smoked. momentum continues to get pounded."*
+> ⏱ **7/28** — *"KOSPI approaching 200sma… **Ironically QQQ also approaching 200sma.**"*
+> **这条线从六月追到八月,英文圈几乎无人做。**
+
+### 顺带的几个战场判断
+> ⏱ **3/9** — 引 GS:*"7 geopolitical risk episodes since 1950 — S&P declined ~4% in the first week but **recovered within the subsequent month**."*
+> ⏱ **3/20** — *"**I'm not calling the exact bottom here, I'm giving you reasons to look for confluences**: extreme fear · battle around 200sma · quad-witching opex · DXY topping · VIX rejection · demark 13 · narrative around war shifting."* ⭐ **给合流,不给结论**
+> ⏱ **3/31** — *"funny **Druckenmiller said 'AI trade is over'** a few weeks ago before the war even started."*
+> ⏱ **6/19** — *"MU trade still in the OI. not one trim. they are up 1.5B. **best trade since war dip.**"*
+
+> **可命名的五件武器:** Play the reaction, not the outcome · The odds table · **The truth detector** · Win-win hedge · **The Korean tell**
+> → 已独立成信稿:`Fluxus_Substack/drafts/04_play_the_reaction.md`
+
+---
+
 ## 可直接用于 H1 复盘的四条主线 / Four Threads for the Review
 
 **1. 意图 → 兑现的闭环。** 1/13 说「拿得更久、仓位更大、更集中」;5/26 说「至少七成仓,大钱是坐出来的」。**同一句话,四个月后兑现。**
