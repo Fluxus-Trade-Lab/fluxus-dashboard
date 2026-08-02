@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import StatCard from '../../portfolio/ui/StatCard'
+import RRChart from '../../portfolio/RRChart'
 import { fmtCur, fmtPct, fmt, clr } from '../../portfolio/lib/portfolioFormat'
 
 export default function SummarySection({ enriched, closedTrades, monthlyStats, performanceData, insights, startingCapital }) {
@@ -63,6 +64,9 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
           </ResponsiveContainer>
         </div>
       )}
+
+      {/* RR chart — every trade by R-multiple */}
+      <RRChart enrichedTrades={enriched} />
 
       {/* Monthly performance table */}
       {monthlyStats.length > 0 && (
