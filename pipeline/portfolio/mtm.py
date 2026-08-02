@@ -165,6 +165,38 @@ def build_mtm_curve(trades, prices, starting_capital):
     return curve
 
 
+def open_positions(trades, prices, as_of, equity=None):
+    """Positions still open at `as_of` (entered by then, not fully exited), each
+    marked at its fill-anchored as-traded close — same valuation the MTM curve
+    uses. Returns rows sorted by |unrealized| desc. `equity` (optional) yields the
+    position's share of portfolio equity."""
+    if not trades or not prices:
+        return []
+    eras = _build_corrections(trades, prices)
+    rows = []
+    for t in trades:
+        if t.entry_date > as_of:
+            continue
+        sold = sum(lg.qty for lg in t.legs if lg.date <= as_of)
+        held = t.orig_qty - sold
+        if held <= 0.5:
+            continue
+        sign = 1 if t.direction == "long" else -1
+        a = _adj_close(prices, t.ticker, as_of)
+        mark = a * _correction(eras, t.ticker, as_of) if a is not None else None
+        cost = held * t.entry
+        unreal = sign * (mark - t.entry) * held if mark is not None else None
+        rows.append({
+            "ticker": t.ticker, "direction": t.direction,
+            "entry_date": t.entry_date, "entry": t.entry, "qty": held,
+            "cost": cost, "mark": mark, "unrealized": unreal,
+            "upl_pct": (unreal / cost * 100) if (unreal is not None and cost) else None,
+            "pct_of_equity": (held * (mark or t.entry) / equity * 100) if equity else None,
+        })
+    rows.sort(key=lambda r: -(abs(r["unrealized"]) if r["unrealized"] is not None else 0))
+    return rows
+
+
 def drawdown(curve):
     """Max peak-to-trough drawdown on an [(date, value)] curve."""
     peak = float("-inf")

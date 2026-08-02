@@ -619,6 +619,7 @@ def compute_mtm(trades: list[Trade], meta: dict) -> dict | None:
             "final_equity": curve[-1][1],
             "points": len(curve),
             "equity_by_date": {d: v for d, v in curve},
+            "prices": prices,
         }
     except Exception:  # noqa: BLE001 — degrade gracefully to realized-only
         return None

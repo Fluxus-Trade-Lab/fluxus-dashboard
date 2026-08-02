@@ -78,6 +78,26 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
 
 <p class="eyebrow">Fluxus Capital · Performance Review (auto-generated)</p>
 <h1>{{ d.title }}</h1>
+{% if d.scope == 'month' %}
+<div class="meta"><span>{{ d.period_label }}</span>
+<span>{{ d.m.closed_n }} closed · {{ d.m.open_n }} open at month-end · equity {{ d.m.end_equity | money }}</span>
+<span>{{ d.handle }} · generated {{ d.generated }}</span></div>
+
+{# ---------- Monthly headline ---------- #}
+<section>
+<p class="lbl">概览 · Month headline (MTM, open positions marked)</p>
+<div class="cards">
+  <div class="card"><p class="k">Month return (MTM)</p><p class="v {{ 'pos' if d.m.ret>=0 else 'neg' }}">{{ d.m.ret | pct(1) }}</p></div>
+  <div class="card"><p class="k">Month P&amp;L (MTM)</p><p class="v {{ 'pos' if d.m.pnl>=0 else 'neg' }}">{{ d.m.pnl | money }}</p></div>
+  <div class="card"><p class="k">Realized (closed)</p><p class="v {{ 'pos' if d.m.realized>=0 else 'neg' }}">{{ d.m.realized | money }}</p></div>
+  <div class="card"><p class="k">Cumulative return</p><p class="v {{ 'pos' if d.m.cum>=0 else 'neg' }}">{{ d.m.cum | pct(1) }}</p></div>
+  <div class="card"><p class="k">Closed trades</p><p class="v">{{ d.m.closed_n }}</p></div>
+  <div class="card"><p class="k">Win rate</p><p class="v">{{ d.m.win_rate | pct0(1) if d.m.win_rate is not none else '—' }}</p></div>
+  <div class="card"><p class="k">Sum R / Payoff</p><p class="v {{ 'pos' if (d.m.sum_R or 0)>=0 else 'neg' }}">{{ d.m.sum_R | signR }} <span class="muted" style="font-size:13px">· {{ d.m.payoff | num(2) if d.m.payoff is not none else '—' }}×</span></p></div>
+  <div class="card"><p class="k">Max DD (month)</p><p class="v neg">{{ d.m.dd_pct | pct0(1) }}</p></div>
+</div>
+</section>
+{% else %}
 <div class="meta"><span>{{ d.period_label }}</span>
 <span>{{ d.s.n }} closed trades · avg hold {{ d.s.avg_hold_days | num(1) }}d</span>
 <span>{{ d.handle }} · generated {{ d.generated }}</span></div>
@@ -97,11 +117,12 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
   {% else %}<div class="card"><p class="k">Ending equity</p><p class="v">{{ d.s.ending_equity | money }}</p></div>{% endif %}
 </div>
 </section>
+{% endif %}
 
 {# ---------- Equity curve ---------- #}
 {% if d.charts.equity %}
 <section>
-<p class="lbl">盯市权益曲线 · Mark-to-market equity &amp; drawdown</p>
+<p class="lbl">{{ '本月权益曲线 · Intra-month equity (open positions marked)' if d.scope == 'month' else '盯市权益曲线 · Mark-to-market equity & drawdown' }}</p>
 <div class="chart">{{ chart(d.charts.equity, 'Equity curve') }}</div>
 {% if d.mtm and d.mtm.risk %}
 <table><thead><tr><th>Peak equity</th><th class="r">Max DD</th><th class="r">DD window</th>
@@ -115,6 +136,24 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
 </tr></tbody></table>{% endif %}
 </section>{% endif %}
 
+{# ---------- Open positions at month-end ---------- #}
+{% if d.scope == 'month' and d.opens %}
+<section>
+<p class="lbl">月末持仓 · Open positions at month-end (marked to market)</p>
+<table><thead><tr><th>Ticker</th><th>Dir</th><th>Entry date</th><th class="r">Qty</th>
+<th class="r">Entry</th><th class="r">Mark</th><th class="r">Cost basis</th><th class="r">Unrealized</th>
+<th class="r">% equity</th></tr></thead>
+<tbody>{% for o in d.opens %}
+<tr><td class="mono">{{ o.ticker }}</td><td>{{ o.direction }}</td><td class="mono">{{ o.entry_date }}</td>
+<td class="r">{{ o.qty | num(0) }}</td><td class="r">{{ o.entry | num(2) }}</td>
+<td class="r">{{ o.mark | num(2) if o.mark is not none else '—' }}</td>
+<td class="r">{{ o.cost | money }}</td>
+<td class="r {{ 'pos' if (o.unrealized or 0)>=0 else 'neg' }}">{{ o.unrealized | money if o.unrealized is not none else '—' }}
+{%- if o.upl_pct is not none %} <span class="muted">({{ o.upl_pct | pct(0) }})</span>{% endif %}</td>
+<td class="r">{{ o.pct_of_equity | num(0) if o.pct_of_equity is not none else '—' }}%</td></tr>{% endfor %}</tbody></table>
+<p class="cap">These positions were still open on the last trading day of the month — valued at the fill-anchored as-traded close, the same basis as the equity curve. Their unrealized P&amp;L is already inside the month return above.</p>
+</section>{% endif %}
+
 {# ---------- RR chart ---------- #}
 {% if d.charts.rr %}
 <section>
@@ -124,7 +163,7 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
 
 {# ---------- Monthly + R distribution ---------- #}
 <section>
-<p class="lbl">月度回报 & R 分布 · Monthly returns &amp; R-distribution</p>
+<p class="lbl">{{ 'R 分布 · R-distribution' if d.scope == 'month' else '月度回报 & R 分布 · Monthly returns & R-distribution' }}</p>
 {% if d.charts.monthly %}<div class="chart">{{ chart(d.charts.monthly, 'Monthly returns') }}</div>{% endif %}
 {% if d.monthly_stats %}
 <table style="margin-top:14px"><thead><tr><th>Month</th><th class="r">Return</th><th class="r">P&amp;L</th>

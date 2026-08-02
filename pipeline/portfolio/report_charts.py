@@ -73,8 +73,9 @@ def png_from_file(path: str) -> Optional[str]:
 
 
 # --------------------------------------------------------------------------- #
-def equity_curve(equity_by_date: dict, drawdown: Optional[dict], capital: float, dark: bool = False) -> Optional[str]:
-    """MTM equity as % return, with the max-drawdown window shaded."""
+def equity_curve(equity_by_date: dict, drawdown: Optional[dict], capital: float,
+                 dark: bool = False, ylabel: str = "Return vs start") -> Optional[str]:
+    """MTM equity as % return vs `capital` base, with the max-drawdown window shaded."""
     if not equity_by_date:
         return None
     p = _pal(dark)
@@ -95,7 +96,7 @@ def equity_curve(equity_by_date: dict, drawdown: Optional[dict], capital: float,
                     textcoords="offset points", ha="center", color=RED, fontsize=9, fontweight="bold")
     _pct_axis(ax, p)
     ax.margins(x=0.01)
-    ax.set_ylabel("Return vs start")
+    ax.set_ylabel(ylabel)
     fig.autofmt_xdate(rotation=0, ha="center")
     return _b64(fig, p["face"])
 
