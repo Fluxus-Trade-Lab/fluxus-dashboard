@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { usePortfolio } from '../context/PortfolioContext'
 import { usePrices } from '../hooks/usePrices'
-import RRChart from '../RRChart'
 import StatCard from '../ui/StatCard'
 import Button from '../ui/Button'
 import EditablePrice from '../ui/EditablePrice'
@@ -438,10 +437,6 @@ export default function OverviewTab({
             </div>
           )}
         </div>
-      </div>
-
-      <div className="mt-6">
-        <RRChart enrichedTrades={enrichedTrades} />
       </div>
     </div>
   )
