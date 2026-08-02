@@ -252,11 +252,28 @@ def behavioral_diagnosis(trades, equity_by_date, capital):
         by_tk[t.ticker].append(t)
     reattack = []
     for tk, ts in by_tk.items():
-        if len(ts) >= 3:
-            reattack.append({"ticker": tk, "n": len(ts),
-                             "n_loss": sum(1 for x in ts if x.pnl < 0),
-                             "net": sum(x.pnl for x in ts)})
+        if len(ts) >= 3 and sum(x.pnl for x in ts) < 0:
+            first = ts[0]
+            rest = ts[1:]
+            reattack.append({
+                "ticker": tk, "n": len(ts),
+                "n_loss": sum(1 for x in ts if x.pnl < 0),
+                "net": sum(x.pnl for x in ts),
+                "net_R": sum((x.R or 0) for x in ts),
+                "first_pnl": first.pnl, "first_R": first.R or 0,
+                # damage caused by the re-adds placed AFTER the first entry
+                "readd_pnl": sum(x.pnl for x in rest),
+                "readd_R": sum((x.R or 0) for x in rest),
+            })
     worst_reattack = sorted(reattack, key=lambda r: r["net"])[:5]
+
+    # Counterfactual — what fixing the top-5 leaks recovers.
+    total_pnl = sum(t.pnl for t in trades)
+    total_R = sum(t.R for t in with_R)
+    cf_avoid_pnl = -sum(r["net"] for r in worst_reattack)          # never took them
+    cf_avoid_R = -sum(r["net_R"] for r in worst_reattack)
+    cf_onedone_pnl = -sum(r["readd_pnl"] for r in worst_reattack)  # took entry #1, no re-attacks
+    cf_onedone_R = -sum(r["readd_R"] for r in worst_reattack)
 
     # Hold time + over-held losers
     avg_win_hold = sum(t.hold_days for t in wins if t.hold_days is not None) / max(1, len(wins))
@@ -288,6 +305,9 @@ def behavioral_diagnosis(trades, equity_by_date, capital):
     risks = [t.risk for t in trades if t.risk]
     return {
         "worst_reattack": worst_reattack,
+        "total_pnl": total_pnl, "total_R": total_R,
+        "cf_avoid_pnl": cf_avoid_pnl, "cf_avoid_R": cf_avoid_R,
+        "cf_onedone_pnl": cf_onedone_pnl, "cf_onedone_R": cf_onedone_R,
         "avg_win_hold": avg_win_hold, "avg_loss_hold": avg_loss_hold, "overheld": overheld,
         "risk_dd_pct": (sum(risks_dd) / len(risks_dd) / capital * 100) if risks_dd else None,
         "risk_ok_pct": (sum(risks_ok) / len(risks_ok) / capital * 100) if risks_ok else None,
@@ -482,16 +502,29 @@ def render_analysis(trades, capital, total_pnl, include_characteristics=True, eq
           f"(avg {bd['avg_loss_hold']:.1f}d vs winners {bd['avg_win_hold']:.1f}d) — you're not a chronic "
           "bag-holder. The big losses come from **re-attacking a broken thesis**, not bad entries:")
         A("")
-        A("| Re-traded name | Entries | Losing | Net |")
-        A("|---|---|---|---|")
+        A("| Re-traded name | Entries | Losing | 1st entry | Re-adds after #1 | Net |")
+        A("|---|---|---|---|---|---|")
         for r in bd["worst_reattack"]:
-            A(f"| {r['ticker']} | {r['n']} | {r['n_loss']} | {money(r['net'])} |")
+            A(f"| {r['ticker']} | {r['n']} | {r['n_loss']} | {money(r['first_pnl'])} ({r['first_R']:+.1f}R) "
+              f"| {money(r['readd_pnl'])} ({r['readd_R']:+.1f}R) | {money(r['net'])} |")
         if bd["overheld"]:
             oh = ", ".join(f"{t.ticker} {t.hold_days}d ({t.R:+.1f}R)" for t in bd["overheld"])
             A(f"\n*The only chronic over-holds (>21d losers): {oh} — one campaign, not a habit.*\n")
-        A(f"> **Answer:** Not bottom-fishing, not holding losses long on average. The leak is **averaging into "
-          f"a failing name** (the top row above is your single biggest hole). You need a hard "
-          f"'this thesis is dead — stop re-entering' rule.\n")
+        A("The damage is almost entirely in the **re-adds**, not the first entries — the initial risk on each was "
+          "small (−0.3R to −1.3R); the hole was dug by everything added after it went red. Two distinct modes:")
+        A("")
+        A("- **Mode A — averaging into a rolling/stalling name.** Price range-bound while the 50d MA droops, and you "
+          "keep buying the 'value.' **BABA** is the archetype: all 5 entries in a 16–23% band, 4 losing re-adds = "
+          "−$52.9k of the −$54.4k. This is your single biggest hole.")
+        A("- **Mode B — chasing an already-extended move, then re-adding into the reversal.** First entry on a name "
+          "already stretched (+36% CRCL, +64% SOLS, +145% INTC over 50d), it stalls, and instead of stopping you add "
+          "layers while it's still extended — then it rolls over. Across CRCL/TSLL/OPEN/SOLS/INTC the re-adds placed "
+          "after a prior red cost **−$28k (−5.8R)**. CRCL is the clean case: +36% extended, red, added twice, trend "
+          "flipped to −22%, −$25.5k gone.")
+        A("")
+        A(f"> **Answer:** Not bottom-fishing, not holding losses long on average. The leak is **re-attacking after "
+          f"the first entry goes red** — whether the name is rolling (Mode A) or extended (Mode B). The first entry is "
+          f"a legitimate bet; every add after red is the mistake.\n")
 
         A("**2 · Largest winners — what's working.** Winners are held **longer** "
           f"({bd['avg_win_hold']:.1f}d vs {bd['avg_loss_hold']:.1f}d), scaled out more "
@@ -511,6 +544,35 @@ def render_analysis(trades, capital, total_pnl, include_characteristics=True, eq
           "avg initial risk **{rp:.2f}% of capital vs your 0.25% target** — you run ~2× your intended 1R.\n"
           .format(sr=bd['scale_rate'], i=bd['into_strength_pct'], resp=bd['respect_pct'],
                   blew=bd['blew_pct'], b2=bd['n_blew2'], rp=bd['avg_risk_pct']))
+
+        # 5 · Counterfactual — what fixing the top-5 leaks is worth
+        base_pct = bd['total_pnl'] / capital * 100
+        od_pct = (bd['total_pnl'] + bd['cf_onedone_pnl']) / capital * 100
+        av_pct = (bd['total_pnl'] + bd['cf_avoid_pnl']) / capital * 100
+        A("**5 · What fixing the top-5 leaks is worth.** The five re-attack names above are the whole story. Two "
+          "counterfactuals, holding everything else equal:\n")
+        A("| Scenario | P&L | Total R | Return |")
+        A("|---|---|---|---|")
+        A(f"| Actual | {money(bd['total_pnl'])} | {bd['total_R']:+.0f}R | +{base_pct:.1f}% |")
+        A(f"| **One-and-done** (take entry #1, no re-attacks) | {money(bd['total_pnl'] + bd['cf_onedone_pnl'])} "
+          f"| {bd['total_R'] + bd['cf_onedone_R']:+.0f}R | **+{od_pct:.1f}%** |")
+        A(f"| Avoid all 5 entirely | {money(bd['total_pnl'] + bd['cf_avoid_pnl'])} "
+          f"| {bd['total_R'] + bd['cf_avoid_R']:+.0f}R | +{av_pct:.1f}% |")
+        A(f"\n> **The realistic prize is one-and-done: +{money(bd['cf_onedone_pnl'])} / "
+          f"+{bd['cf_onedone_R']:.0f}R / +{od_pct - base_pct:.1f} points of return** — you can't un-take a first "
+          f"entry, but you *can* stop re-attacking. That's the single highest-ROI behavior change in the book.\n")
+
+        # Actionable suggestions
+        A("**行动项 / What to do instead:**\n")
+        A("1. **One-and-done per name per thesis.** If a name is red after the first entry, no add #2/#3/#4. Re-entry "
+          "is only allowed after a *new* setup prints (fresh base/breakout), never as an average-down. This alone "
+          f"recovers ~{money(bd['cf_onedone_pnl'])}.")
+        A("2. **Pre-commit the full size at entry #1.** You already de-risk in drawdowns and trim into strength — the "
+          "one place discipline breaks is adding to red. Decide the total intended position before the first fill and "
+          "scale *only into green* (pyramid up), never into red (average down). Fixes Mode A (BABA) and Mode B (CRCL).")
+        A("3. **Halve the base 1R back to target.** Your real 1R is ~0.52% vs the 0.25% you intend — 2× size. Cutting "
+          "initial size in half shrinks every one of these holes proportionally and makes a wrong first entry a "
+          "−0.25% event, not −1R+ of real capital.\n")
 
     # Best / worst case studies
     A("### 最佳 & 最差 / Best & worst trades\n")
