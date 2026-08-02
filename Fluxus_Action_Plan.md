@@ -202,6 +202,40 @@ Citrini:*"you'll never have to ask 'what's the trade?'"* —— 他不承诺「�
 
 答案直接决定产品保留什么、信长什么样,权重高于任何榜单数据。**「how much」定位在此之前记为已定但未验证。**
 
+### 🏷️ 刊名与副标题 — 2026-08-01 定稿(开 Substack 时直接贴)
+
+> # How Much
+> *a market letter by Fluxus*
+>
+> Momentum, risk, and the question underneath all of it. How much to risk. How much to hold. How much information is actually enough. Written from Japan on Asian hours by a full-time swing trader — **an ally of volatility, an apprentice of mathematics, and a forecaster of neither.** Built for risk takers who don't need another idea.
+>
+> **The promise: every idea arrives with its size and its stop. You'll never have to ask how much.**
+
+**为什么这个名字成立(用户 2026-08-01 提出,比最初的论证更强):`How much` 既是价格也是数量,它贯穿整门手艺** —— 这家公司值多少 · 这只股票现在多少 · 需要多少信息才够、多少之后是噪音 · 敢冒多少险。**四个问题一个词,而大多数信只回答第二个。** 且自带喜剧空间("How much did you make?" — "Wrong question.")。
+
+**三层各就各位(此前它们挤在一个词组里,所以两边都不锋利):**
+| 层 | 内容 | 位置 |
+|---|---|---|
+| **门牌**(耐久) | Fluxus | 域名/handle/Trade Lab,**不动** |
+| **刊名 + 承诺** | How Much / "You'll never have to ask" | Substack |
+| **立场** | ally of volatility | bio + 副标题第二句 |
+
+**副标题的四段分工(对标实测):** ① 覆盖什么 + 母题展开(学 Citrini)② 我是谁 + 立场(学 Trader Ferg 的资历句;`forecaster of neither` 一次否掉预测波动和迷信数学两件事)③ **受众**(学 Capital Flows *"built for active risk takers…"*)④ **明标 `The promise:`**(Citrini 字面就写 "Our promise:")。
+「Built for risk takers who don't need another idea」同时做三件事:划受众 · 接住承诺句 · 轻嘲整个卖 idea 的品类而不点名。
+
+### 📄 About 页开篇(草案)
+
+> Two words that run under everything in this business. How much is the company actually worth. How much is the stock. How much information do you need before more of it stops helping. How much do you risk.
+>
+> **Most letters answer the second question. This one answers the last — and tries to stay honest about the other three.**
+
+### 💬 Testimonial 位(待授权)
+
+> *"Pays attention to change, divergence, contradiction, and the first signs of something new. Discounts repetition."*
+> — <署名待定>
+
+⚠️ 引用前先问对方能否引用、署什么名。**这句是目前对他 edge 最准的一句描述** —— 说的是「读」(注意变化、贴现重复),而 How Much 说的是「做」。两句合起来才是完整产品:**先看见什么变了,再决定压多少。**
+
 ### 📝 付费权益文案(草案,开 Substack 时直接贴 —— 2026-07-31 存档,用户待再思考)
 
 **付费层(三条,第一条必须是台账 —— 那是无人区,是与其余 49 家的全部区别):**
