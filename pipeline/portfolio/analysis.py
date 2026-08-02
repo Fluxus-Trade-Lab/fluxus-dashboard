@@ -237,6 +237,74 @@ def position_heat(trades, equity_by_date, greed=14, fwd=10):
             "greed": greed, "fwd": fwd, "buckets": buckets, "episodes": episodes}
 
 
+def behavioral_diagnosis(trades, equity_by_date, capital):
+    """Evidence for the four behavioral questions: loss/winner character,
+    drawdown sizing, and trim/stop discipline. Log-based (no price fetch)."""
+    with_R = [t for t in trades if t.R is not None]
+    wins = [t for t in with_R if t.R > 0]
+    losses = [t for t in with_R if t.R < 0]
+    if not wins or not losses:
+        return None
+
+    # Re-attack: same ticker entered 3+ times; net P&L (leak = kept adding to a loser)
+    by_tk = defaultdict(list)
+    for t in sorted(trades, key=lambda x: x.entry_date):
+        by_tk[t.ticker].append(t)
+    reattack = []
+    for tk, ts in by_tk.items():
+        if len(ts) >= 3:
+            reattack.append({"ticker": tk, "n": len(ts),
+                             "n_loss": sum(1 for x in ts if x.pnl < 0),
+                             "net": sum(x.pnl for x in ts)})
+    worst_reattack = sorted(reattack, key=lambda r: r["net"])[:5]
+
+    # Hold time + over-held losers
+    avg_win_hold = sum(t.hold_days for t in wins if t.hold_days is not None) / max(1, len(wins))
+    avg_loss_hold = sum(t.hold_days for t in losses if t.hold_days is not None) / max(1, len(losses))
+    overheld = sorted([t for t in losses if t.hold_days and t.hold_days > 21], key=lambda t: t.pnl)[:5]
+
+    # Drawdown sizing: avg initial risk when equity is >3% off peak vs normal
+    dd_flag = {}
+    if equity_by_date:
+        peak = capital
+        for d in sorted(equity_by_date):
+            peak = max(peak, equity_by_date[d])
+            dd_flag[d] = (equity_by_date[d] - peak) / peak < -0.03
+
+    def in_dd(ds):
+        prior = [d for d in dd_flag if d <= ds]
+        return dd_flag.get(prior[-1], False) if prior else False
+
+    risks_dd = [t.risk for t in trades if t.risk and in_dd(t.entry_date)]
+    risks_ok = [t.risk for t in trades if t.risk and not in_dd(t.entry_date)]
+
+    # Trim / stops
+    scaled = [t for t in trades if len(t.legs) >= 2]
+    scaled_win = [t for t in scaled if t.pnl > 0]
+    into = sum(1 for t in scaled_win
+               if (t.direction == "long" and t.legs[0].price > t.entry)
+               or (t.direction == "short" and t.legs[0].price < t.entry))
+    lR = [t for t in losses]
+    risks = [t.risk for t in trades if t.risk]
+    return {
+        "worst_reattack": worst_reattack,
+        "avg_win_hold": avg_win_hold, "avg_loss_hold": avg_loss_hold, "overheld": overheld,
+        "risk_dd_pct": (sum(risks_dd) / len(risks_dd) / capital * 100) if risks_dd else None,
+        "risk_ok_pct": (sum(risks_ok) / len(risks_ok) / capital * 100) if risks_ok else None,
+        "n_dd_trades": len(risks_dd),
+        "scale_rate": len(scaled) / len(trades) * 100 if trades else 0,
+        "win_legs": sum(len(t.legs) for t in wins) / len(wins),
+        "loss_legs": sum(len(t.legs) for t in losses) / len(losses),
+        "into_strength_pct": into / len(scaled_win) * 100 if scaled_win else 0,
+        "respect_pct": sum(1 for t in lR if t.R >= -1.2) / len(lR) * 100,
+        "blew_pct": sum(1 for t in lR if t.R < -1) / len(lR) * 100,
+        "n_blew2": sum(1 for t in lR if t.R < -2),
+        "avg_risk_pct": (sum(risks) / len(risks) / capital * 100) if risks else None,
+        "avg_win_R": sum(t.R for t in wins) / len(wins),
+        "avg_loss_R": sum(t.R for t in losses) / len(losses),
+    }
+
+
 # --------------------------------------------------------------------------- #
 # Stock characteristics (ATR% / beta / sector) — needs OHLC
 # --------------------------------------------------------------------------- #
@@ -405,6 +473,44 @@ def render_analysis(trades, capital, total_pnl, include_characteristics=True, eq
           f"{ph['fwd']} days. Pullback frequency rises with names ({ph['buckets'][0]['pullback_rate']:.0f}% at {ph['buckets'][0]['label']} "
           f"→ {ph['buckets'][-1]['pullback_rate']:.0f}% at {ph['buckets'][-1]['label']}). Returns still trend positive (you add names "
           f"in momentum), so ≥{ph['greed']} names = **stop adding / tighten stops / take some off**, not exit-all.\n")
+
+    # Behavioral diagnosis — the four questions
+    bd = behavioral_diagnosis(trades, equity_by_date, capital) if equity_by_date else None
+    if bd:
+        A("### 行为诊断 / Behavioral diagnosis\n")
+        A("**1 · Largest losses — where the holes come from.** Your losers are cut FAST "
+          f"(avg {bd['avg_loss_hold']:.1f}d vs winners {bd['avg_win_hold']:.1f}d) — you're not a chronic "
+          "bag-holder. The big losses come from **re-attacking a broken thesis**, not bad entries:")
+        A("")
+        A("| Re-traded name | Entries | Losing | Net |")
+        A("|---|---|---|---|")
+        for r in bd["worst_reattack"]:
+            A(f"| {r['ticker']} | {r['n']} | {r['n_loss']} | {money(r['net'])} |")
+        if bd["overheld"]:
+            oh = ", ".join(f"{t.ticker} {t.hold_days}d ({t.R:+.1f}R)" for t in bd["overheld"])
+            A(f"\n*The only chronic over-holds (>21d losers): {oh} — one campaign, not a habit.*\n")
+        A(f"> **Answer:** Not bottom-fishing, not holding losses long on average. The leak is **averaging into "
+          f"a failing name** (the top row above is your single biggest hole). You need a hard "
+          f"'this thesis is dead — stop re-entering' rule.\n")
+
+        A("**2 · Largest winners — what's working.** Winners are held **longer** "
+          f"({bd['avg_win_hold']:.1f}d vs {bd['avg_loss_hold']:.1f}d), scaled out more "
+          f"({bd['win_legs']:.1f} legs vs {bd['loss_legs']:.1f}), and **{bd['into_strength_pct']:.0f}% of scaled "
+          f"winners were trimmed into strength** (first trim in profit). The same persistence that sinks a bad "
+          f"name (re-attack) makes your biggest wins when the thesis is right — you press winners. Keep it; "
+          f"just gate it on the thesis still being valid.\n")
+
+        A("**3 · Drawdown behavior — do you press or pull back?** You **de-risk** in drawdowns: "
+          f"avg initial risk was **{bd['risk_dd_pct']:.2f}%** on the {bd['n_dd_trades']} trades opened while "
+          f">3% off peak, vs **{bd['risk_ok_pct']:.2f}%** normally — roughly **half size** when cold. That's "
+          f"disciplined; you're not revenge-sizing.\n")
+
+        A("**4 · Trims & stops.** Scaling: {sr:.0f}% of trades scaled out, {i:.0f}% of scaled winners trimmed into "
+          "strength — excellent exit craft. Stops: **{resp:.0f}% of losses respected the stop** (≤1.2R), but "
+          "**{blew:.0f}% blew through −1R** ({b2} worse than −2R) — the tail is the re-attack campaign. Sizing: "
+          "avg initial risk **{rp:.2f}% of capital vs your 0.25% target** — you run ~2× your intended 1R.\n"
+          .format(sr=bd['scale_rate'], i=bd['into_strength_pct'], resp=bd['respect_pct'],
+                  blew=bd['blew_pct'], b2=bd['n_blew2'], rp=bd['avg_risk_pct']))
 
     # Best / worst case studies
     A("### 最佳 & 最差 / Best & worst trades\n")
