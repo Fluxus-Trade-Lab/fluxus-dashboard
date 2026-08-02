@@ -325,6 +325,41 @@ def behavioral_diagnosis(trades, equity_by_date, capital):
     }
 
 
+def trade_case_studies(trades, n=4):
+    """Per-trade technical case studies for the n biggest winners + n biggest
+    losers (by $ P&L). Reuses locally-stored OHLC (data/output/tickers) — no
+    network fetch — and computes point-in-time 20EMA/50SMA/200SMA + ATR + a
+    setup/mistake label, mirroring the dashboard Diagnosis cards."""
+    from pipeline.tickers.ohlc_store import (
+        load_local_ohlc, trade_technicals, classify_trade)
+
+    closed = [t for t in trades if t.pnl is not None]
+    if len(closed) < 2 * n:
+        return None
+    # re-attack flag: entry placed after a prior red entry on the same name
+    by_tk = defaultdict(list)
+    for t in sorted(closed, key=lambda x: x.entry_date):
+        by_tk[t.ticker].append(t)
+
+    def is_reattack(t):
+        priors = [x for x in by_tk[t.ticker] if x.entry_date < t.entry_date]
+        return any(x.pnl < 0 for x in priors)
+
+    ranked = sorted(closed, key=lambda t: t.pnl)
+    picks = ranked[-n:][::-1] + ranked[:n]     # winners (desc) then losers (asc)
+    out = []
+    for t in picks:
+        bars = load_local_ohlc(t.ticker)
+        tech = trade_technicals(bars, t.entry_date, t.direction) if bars else None
+        cls = classify_trade(t.pnl, t.direction, tech, is_reattack(t), t.R)
+        into = bool(t.legs) and (
+            (t.direction == "long" and t.legs[0].price > t.entry)
+            or (t.direction == "short" and t.legs[0].price < t.entry))
+        out.append({"t": t, "tech": tech, "cls": cls, "win": t.pnl > 0,
+                    "into_strength": into, "n_legs": len(t.legs)})
+    return out
+
+
 # --------------------------------------------------------------------------- #
 # Stock characteristics (ATR% / beta / sector) — needs OHLC
 # --------------------------------------------------------------------------- #
@@ -589,6 +624,52 @@ def render_analysis(trades, capital, total_pnl, include_characteristics=True, eq
         rr = f"{t.R:+.1f}R" if t.R is not None else "—"
         A(f"| {money(t.pnl)} | {t.ticker} | {t.direction} | {rr} | {t.hold_days}d | {t.entry_date}→{t.exit_date} |")
     A("")
+
+    # Per-trade technical case studies (mirror of the dashboard Diagnosis cards)
+    cs = trade_case_studies(trades)
+    if cs:
+        A("### 个股复盘 / Trade case studies — technicals at entry\n")
+        A("*Point-in-time as of each entry (entry-day adjusted close vs its own MAs). "
+          "`ext` = distance above the 20EMA in ATRs; `gap` = entry-day move.*\n")
+
+        def _ma(above, ma):
+            if ma is None:
+                return "n/a"
+            return f"{'▲' if above else '▼'}{ma:.2f}"
+
+        def _render(row):
+            t, tech, cls = row["t"], row["tech"], row["cls"]
+            rr = f"{t.R:+.1f}R" if t.R is not None else "—"
+            head = f"**{t.ticker}** {t.direction} {money(t.pnl)} ({rr}) — *{cls['type']}*"
+            scale = ("into strength" if row["into_strength"] else "into weakness") if row["n_legs"] else "no scale-out"
+            meta = f"{t.hold_days}d hold · {row['n_legs']} leg(s) · trimmed {scale}"
+            if not tech:
+                A(f"- {head}  \n  _{meta} · insufficient local OHLC for MAs (run scripts/refresh_case_study_ohlc.py)._")
+                return
+            stack = {"bull": "bull stack", "bull*": "bullish", "bear": "bear stack",
+                     "bear*": "bearish", "mixed": "MAs tangled"}.get(tech["stack"], "—")
+            mas = (f"20EMA {_ma(tech['above_ema20'], tech['ema20'])} · "
+                   f"50SMA {_ma(tech['above_sma50'], tech['sma50'])} · "
+                   f"200SMA {_ma(tech['above_sma200'], tech['sma200'])} ({stack})")
+            nums = []
+            if tech["ext_atr"] is not None:
+                nums.append(f"ext {tech['ext_atr']:+.1f} ATR")
+            if tech["atr_pct"] is not None:
+                nums.append(f"ATR {tech['atr_pct']:.1f}%")
+            if tech["dist_hi20_pct"] is not None:
+                nums.append(f"vs 20d-high {tech['dist_hi20_pct']:+.1f}%")
+            if tech["gap_pct"] is not None:
+                nums.append(f"gap {tech['gap_pct']:+.1f}%")
+            note = f" · ⚠ {', '.join(cls['notes'])}" if cls["notes"] else ""
+            A(f"- {head}  \n  {mas}  \n  {' · '.join(nums)} · {meta}{note}")
+
+        A("**Winners:**")
+        for row in [r for r in cs if r["win"]]:
+            _render(row)
+        A("\n**Losers:**")
+        for row in [r for r in cs if not r["win"]]:
+            _render(row)
+        A("")
 
     if ch:
         A("### 交易风格画像 / What you like to trade\n")

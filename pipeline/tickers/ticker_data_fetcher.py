@@ -375,25 +375,33 @@ def fetch_ohlc_and_technicals(tk: yf.Ticker) -> dict:
     """
     out: dict = {'ohlc': []}
     try:
-        hist = tk.history(period='1y', auto_adjust=True)
+        # Fetch 2y so point-in-time 200-SMA is computable at entries up to ~1y old
+        # (powers the Diagnosis case-study cards). Technical *fields* below are still
+        # computed on the trailing ~1y so 52w-range / MA / ATR semantics are unchanged.
+        hist = tk.history(period='2y', auto_adjust=True)
         if hist is None or hist.empty:
             return out
-        # Convert to list of records
+        # Full 2y OHLC records (rounded to keep files compact)
+        def _round(v):
+            r = _safe(v)
+            return round(r, 4) if isinstance(r, float) else r
         records = []
         for ts, row in hist.iterrows():
             records.append({
                 'date': ts.date().isoformat(),
-                'open': _safe(row.get('Open')),
-                'high': _safe(row.get('High')),
-                'low': _safe(row.get('Low')),
-                'close': _safe(row.get('Close')),
+                'open': _round(row.get('Open')),
+                'high': _round(row.get('High')),
+                'low': _round(row.get('Low')),
+                'close': _round(row.get('Close')),
                 'volume': _safe(row.get('Volume')),
             })
         out['ohlc'] = records
 
-        closes = hist['Close']
-        highs = hist['High']
-        lows = hist['Low']
+        # Trailing ~1y window for the derived technical fields
+        h = hist.iloc[-252:]
+        closes = h['Close']
+        highs = h['High']
+        lows = h['Low']
         last_close = float(closes.iloc[-1])
 
         # Moving averages (use simple MAs to match TradingView/Stockbee convention)
@@ -473,7 +481,8 @@ def fetch_ticker_data(symbol: str) -> dict:
         'technicals': {
             k: v for k, v in technicals.items() if k != 'ohlc'
         },
-        'ohlc_1y': technicals.get('ohlc', []),
+        'ohlc_2y': technicals.get('ohlc', []),
+        'ohlc_1y': technicals.get('ohlc', [])[-252:],
         # Layer 2 (AI synthesis) goes here under 'ai_synthesis' when
         # /tearsheet <SYM> Claude Code slash command runs.
         'ai_synthesis': None,
