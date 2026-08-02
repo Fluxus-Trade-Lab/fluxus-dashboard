@@ -10,9 +10,11 @@ import TrimStopsSection from './analytics/TrimStopsSection'
 import MonthlyReviewSection from './analytics/MonthlyReviewSection'
 import DemonFinderSection from './analytics/DemonFinderSection'
 import BehaviorSection from './analytics/BehaviorSection'
+import BehaviorDiagnosisSection from './analytics/BehaviorDiagnosisSection'
 
 const SUB_TABS = [
   { key: 'summary', label: 'Summary' },
+  { key: 'diagnosis', label: 'Diagnosis' },
   { key: 'demon-finder', label: 'Demon Finder' },
   { key: 'behavior', label: 'Behavior' },
   { key: 'risk', label: 'Risk' },
@@ -130,6 +132,9 @@ function AnalyticsTabInner() {
           enriched={enriched}
           dailyPrices={dailyPrices}
         />
+      )}
+      {activeTab === 'diagnosis' && (
+        <BehaviorDiagnosisSection enriched={enriched} performanceData={performanceData} startingCapital={startingCapital} />
       )}
       {activeTab === 'behavior' && (
         <BehaviorSection enriched={enriched} />
