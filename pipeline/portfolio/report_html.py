@@ -49,7 +49,8 @@ def build_doc(trades, meta, period, month, quarter, out_dir, handle):
 
     mtm = pr.compute_mtm(sub, meta)
     s = pr.overall_stats(sub, cap)
-    monthly = pr.monthly_pnl(sub)
+    eqbd0 = (mtm or {}).get("equity_by_date")
+    ms = pr.monthly_stats(sub, eqbd0, cap)
     rdist = pr.r_distribution(sub)
     by_dir = pr.by_key(sub, lambda t: t.direction)
     by_tk = pr.by_key(sub, lambda t: t.ticker)[:12]
@@ -70,7 +71,7 @@ def build_doc(trades, meta, period, month, quarter, out_dir, handle):
     charts = {
         "rr": rc.png_from_file(rr_path),
         "equity": rc.equity_curve(eqbd, (mtm or {}).get("drawdown"), cap) if eqbd else None,
-        "monthly": rc.monthly_returns(monthly, cap),
+        "monthly": rc.monthly_returns(ms),
         "rdist": rc.r_distribution(rdist),
         "deployment": rc.deployment_curve(sub, eqbd, cap) if eqbd else None,
         "cases": rc.case_studies_grid(cs, load_local_ohlc) if cs else None,
@@ -80,7 +81,7 @@ def build_doc(trades, meta, period, month, quarter, out_dir, handle):
         "title": title, "period_label": period_label, "handle": handle,
         "generated": market_today().isoformat(),
         "source": os.path.basename(meta.get("_csv", "")),
-        "s": s, "mtm": mtm, "monthly": monthly, "rdist": rdist,
+        "s": s, "mtm": mtm, "monthly_stats": ms, "rdist": rdist,
         "by_dir": by_dir, "by_tk": by_tk, "bd": bd, "ce": ce, "cs": cs,
         "charts": charts, "cap": cap,
     }, stem

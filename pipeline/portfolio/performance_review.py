@@ -239,6 +239,55 @@ def monthly_pnl(trades: list[Trade]) -> dict[str, dict]:
     return out
 
 
+def monthly_stats(trades: list[Trade], equity_by_date: dict | None, capital: float) -> list[dict]:
+    """Per-month stats that MIRROR the dashboard's computeMonthlyStats so the
+    report and the app agree:
+      * return% = compounded month-over-month on the MTM equity curve
+        (endEquity / prevMonthEndEquity − 1), NOT realized P&L ÷ starting capital
+      * win% / avg hold(W|L) = trades bucketed by their EXIT month, win/loss by
+        trade P&L, hold = entry→last-exit days
+    """
+    by_m: dict[str, list[Trade]] = defaultdict(list)
+    for t in trades:
+        if t.legs:
+            by_m[t.exit_date[:7]].append(t)
+
+    # month-end MTM equity (last curve point in each month)
+    month_end_eq: dict[str, float] = {}
+    if equity_by_date:
+        for d in sorted(equity_by_date):
+            month_end_eq[d[:7]] = equity_by_date[d]
+
+    def ret_pct(t: Trade) -> float:
+        cost = (t.orig_qty or 0) * (t.entry or 0)
+        return (t.pnl / cost * 100) if cost else 0.0
+
+    months = sorted(set(by_m) | set(month_end_eq))
+    prev_eq = capital
+    out = []
+    for m in months:
+        end_eq = month_end_eq.get(m, prev_eq)
+        mret = (end_eq / prev_eq - 1) * 100 if prev_eq else 0.0
+        prev_eq = end_eq
+        tds = by_m.get(m, [])
+        wins = [t for t in tds if t.pnl > 0]
+        losses = [t for t in tds if t.pnl <= 0]
+        hw = [t.hold_days for t in wins if t.hold_days is not None]
+        hl = [t.hold_days for t in losses if t.hold_days is not None]
+        out.append({
+            "month": m,
+            "ret_pct": mret,
+            "n": len(tds),
+            "win_pct": len(wins) / len(tds) * 100 if tds else 0.0,
+            "avg_hold_win": sum(hw) / len(hw) if hw else 0.0,
+            "avg_hold_loss": sum(hl) / len(hl) if hl else 0.0,
+            "largest_gain": max((ret_pct(t) for t in wins), default=0.0),
+            "largest_loss": min((ret_pct(t) for t in losses), default=0.0),
+            "pnl": sum(t.pnl for t in tds),
+        })
+    return out
+
+
 def by_key(trades: list[Trade], key) -> list[tuple]:
     agg = defaultdict(lambda: {"pnl": 0.0, "n": 0, "wins": 0})
     for t in trades:
@@ -346,14 +395,25 @@ def render_deep(trades: list[Trade], meta: dict, title: str, mtm: dict | None = 
         A(f"| Ann. volatility 年化波动 | {r['vol_ann']*100:.1f}% |" if r.get('vol_ann') is not None else "")
         A("")
 
-    # Monthly
+    # Monthly — return% is compounded month-over-month on the MTM equity curve
+    # (matches the dashboard's Monthly Performance table); hold days by exit month.
     A("## 月度曲线 / Monthly curve\n")
-    A("| Month | P&L | Return | Closes | Equity |")
-    A("|---|---|---|---|---|")
-    eq = cap
-    for m, d in mo.items():
-        eq += d["pnl"]
-        A(f"| {m} | {money(d['pnl'])} | {d['pnl']/cap*100:+.1f}% | {d['closes']} | ${eq:,.0f} |")
+    ms = monthly_stats(trades, (mtm or {}).get("equity_by_date"), cap)
+    if mtm and mtm.get("equity_by_date"):
+        A("*Return = compounded MTM month-over-month (same as dashboard); realized P&L shown alongside.*\n")
+        A("| Month | Return | P&L | # | Win% | Days(W) | Days(L) |")
+        A("|---|---|---|---|---|---|---|")
+        for d in ms:
+            A(f"| {d['month']} | {d['ret_pct']:+.1f}% | {money(d['pnl'])} | {d['n']} | "
+              f"{d['win_pct']:.0f}% | {d['avg_hold_win']:.1f} | {d['avg_hold_loss']:.1f} |")
+    else:  # no MTM curve → fall back to realized ÷ starting capital
+        A("*(MTM curve unavailable — Return shown as realized P&L ÷ starting capital.)*\n")
+        A("| Month | P&L | Return | Closes | Equity |")
+        A("|---|---|---|---|---|")
+        eq = cap
+        for m, d in mo.items():
+            eq += d["pnl"]
+            A(f"| {m} | {money(d['pnl'])} | {d['pnl']/cap*100:+.1f}% | {d['closes']} | ${eq:,.0f} |")
     A("")
 
     # Direction

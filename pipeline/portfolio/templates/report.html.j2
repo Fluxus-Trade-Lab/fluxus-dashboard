@@ -108,6 +108,19 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
 <section>
 <p class="lbl">月度回报 & R 分布 · Monthly returns &amp; R-distribution</p>
 {% if d.charts.monthly %}<div class="chart"><img src="data:image/png;base64,{{ d.charts.monthly }}" alt="Monthly returns"></div>{% endif %}
+{% if d.monthly_stats %}
+<table style="margin-top:14px"><thead><tr><th>Month</th><th class="r">Return</th><th class="r">P&amp;L</th>
+<th class="r">#</th><th class="r">Win%</th><th class="r">Days(W)</th><th class="r">Days(L)</th></tr></thead>
+<tbody>{% for m in d.monthly_stats %}
+<tr><td class="mono">{{ m.month }}</td>
+<td class="r {{ 'pos' if m.ret_pct>=0 else 'neg' }}">{{ m.ret_pct | pct(1) }}</td>
+<td class="r {{ 'pos' if m.pnl>=0 else 'neg' }}">{{ m.pnl | money }}</td>
+<td class="r">{{ m.n }}</td>
+<td class="r">{{ m.win_pct | num(0) }}%</td>
+<td class="r">{{ m.avg_hold_win | num(1) }}</td>
+<td class="r">{{ m.avg_hold_loss | num(1) }}</td></tr>{% endfor %}</tbody></table>
+<p class="cap">Return = compounded MTM month-over-month (same method as the dashboard Monthly Performance table); hold days by exit month.</p>
+{% endif %}
 {% if d.charts.rdist %}<div class="chart" style="margin-top:14px"><img src="data:image/png;base64,{{ d.charts.rdist }}" alt="R distribution"></div>{% endif %}
 </section>
 

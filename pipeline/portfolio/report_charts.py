@@ -92,12 +92,13 @@ def equity_curve(equity_by_date: dict, drawdown: Optional[dict], capital: float)
     return _b64(fig)
 
 
-def monthly_returns(monthly: dict, capital: float) -> Optional[str]:
-    """Bar chart of realized return % per calendar month."""
-    if not monthly:
+def monthly_returns(monthly_stats: list, capital: float = None) -> Optional[str]:
+    """Bar chart of compounded MTM return % per month (matches the dashboard).
+    `monthly_stats` = performance_review.monthly_stats() rows."""
+    if not monthly_stats:
         return None
-    months = sorted(monthly)
-    vals = [monthly[m]["pnl"] / capital * 100 for m in months]
+    months = [d["month"] for d in monthly_stats]
+    vals = [d["ret_pct"] for d in monthly_stats]
     colors = [GREEN if v >= 0 else RED for v in vals]
     fig, ax = plt.subplots(figsize=(11, 3.4), dpi=150)
     bars = ax.bar(range(len(months)), vals, color=colors, width=0.66)
