@@ -217,7 +217,7 @@ Citrini:*"you'll never have to ask 'what's the trade?'"* —— 他不承诺「�
 |---|---|
 | **Name** | `How Much` |
 | **Subtitle** | `a market letter by Fluxus` |
-| **Short description**(150 字符内) | *Everyone tells you what to buy. Nobody tells you how much. That's the part that decides your year.* |
+| **Short description**(150 上限,**定稿 139**) | *Momentum, risk, and the question underneath it all. Written by a full-time swing trader. Built for risk takers who don't need another idea.* + *The promise: every idea arrives with its size and its stop. You'll never have to ask how much.* |
 | **Hero text**(主页大字块) | *Momentum, risk, and how much. From Japan, on Asian hours.* + 三行(承诺 / 公开记录 331 笔 39.9% / Fluxus Analytics)+ *I don't have opinions. I have measurements.* |
 | **About 页** | 用上面的长版 + 母题段 + testimonial |
 

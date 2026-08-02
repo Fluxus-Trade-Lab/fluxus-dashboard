@@ -18,9 +18,17 @@ a market letter by Fluxus
 ```
 > 理由:TSF 用产品名当刊名(The Setup Factory),但 Voice Bible §4.5 已验证 —— 器械/工具命名的刊物是数据里增长最慢的一档(Trader Ferg 441/月、TMT Breakout 438/月),声音/方法命名的最快(Le Shrub 986、Doomberg/Citrini 6,000+)。所以刊名走声音,不走工具。`Fluxus Capital` 留作公司名/域名。
 
-**Short description(Substack 简介,150 字符内):**
+**Short description(Substack 简介,150 字符上限 —— 2026-08-01 定稿,139 字符):**
 ```
-Everyone tells you what to buy. Nobody tells you how much. That's the part that decides your year.
+Momentum, risk, and the question underneath it all. Written by a full-time swing trader. Built for risk takers who don't need another idea.
+```
+> 三句 = **覆盖 / 作者 / 受众**。`Written by… Built for…` 对仗。
+> 立场(ally of volatility)不进这个字段 —— 它在 bio、hero、About 各出现一次已足够,**重复三遍会稀释**;而 `full-time` 是这里唯一的硬凭证,在 SEO 位上比一句气质值钱。
+> 备用(原短描述,可用于 X 置顶或广告位):*Everyone tells you what to buy. Nobody tells you how much. That's the part that decides your year.*
+
+**The promise(紧随简介,或作 hero 首行):**
+```
+The promise: every idea arrives with its size and its stop. You'll never have to ask how much.
 ```
 
 **Hero text(主页大字块 —— ⚠️ 短版。长版留给 Squarespace,见 `Fluxus_Action_Plan.md`):**
