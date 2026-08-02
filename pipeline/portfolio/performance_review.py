@@ -654,6 +654,15 @@ def main() -> None:
             for m in months:
                 md += "\n" + render_monthly(trades, meta, m) + "\n---\n"
 
+    # RR chart (every trade by R-multiple) — generate, then embed it in the report.
+    rr_name = f"{stem}_rr.png"
+    rr_png = _rr_chart(rr_trades, meta["startingCapital"], os.path.join(args.out, rr_name),
+                       rr_title, args.handle)
+    if rr_png:
+        img = f"\n## RR 图 / Every trade by R-multiple\n\n![Every trade by R-multiple]({rr_name})\n"
+        idx = md.find("\n## ")
+        md = (md[:idx] + "\n" + img + md[idx:]) if idx != -1 else (md + "\n" + img)
+
     md_path = os.path.join(args.out, f"{stem}.md")
     json_path = os.path.join(args.out, f"{stem}.json")
     with open(md_path, "w") as f:
@@ -664,12 +673,8 @@ def main() -> None:
     print(f"✓ Review ({args.period}, {title_period}) written:")
     print(f"  {md_path}")
     print(f"  {json_path}")
-
-    # RR chart (every trade by R-multiple) for the reviewed period.
-    rr_png = _rr_chart(rr_trades, meta["startingCapital"], os.path.join(args.out, f"{stem}_rr.png"),
-                       rr_title, args.handle)
     if rr_png:
-        print(f"  {rr_png}")
+        print(f"  {rr_png}  (embedded)")
 
 
 if __name__ == "__main__":
