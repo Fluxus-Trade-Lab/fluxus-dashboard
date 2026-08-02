@@ -37,13 +37,32 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
       const exit = t.trims?.length ? t.trims[t.trims.length - 1].date : t.entryDate
       return (new Date(exit) - new Date(t.entryDate)) / 86400000
     }
-    // re-attack
+    // re-attack — names entered 3+ times that net a loss; split first entry vs re-adds
+    const pnlOf = t => t.realizedPL ?? 0
+    const rOf = t => rMultiple(t) ?? 0
     const byTk = {}
     for (const t of closed) (byTk[t.ticker] ||= []).push(t)
+    for (const tk in byTk) byTk[tk].sort((a, b) => (a.entryDate < b.entryDate ? -1 : 1))
     const reattack = Object.entries(byTk)
-      .filter(([, ts]) => ts.length >= 3)
-      .map(([tk, ts]) => ({ tk, n: ts.length, nLoss: ts.filter(t => (t.realizedPL ?? 0) < 0).length, net: ts.reduce((s, t) => s + (t.realizedPL ?? 0), 0) }))
+      .filter(([, ts]) => ts.length >= 3 && ts.reduce((s, t) => s + pnlOf(t), 0) < 0)
+      .map(([tk, ts]) => {
+        const rest = ts.slice(1)
+        return {
+          tk, n: ts.length, nLoss: ts.filter(t => pnlOf(t) < 0).length,
+          net: ts.reduce((s, t) => s + pnlOf(t), 0),
+          firstPL: pnlOf(ts[0]), firstR: rOf(ts[0]),
+          readdPL: rest.reduce((s, t) => s + pnlOf(t), 0),
+          readdR: rest.reduce((s, t) => s + rOf(t), 0),
+        }
+      })
       .sort((a, b) => a.net - b.net).slice(0, 5)
+
+    // counterfactual — fixing the top-5 leaks
+    const totalPL = closed.reduce((s, t) => s + pnlOf(t), 0)
+    const totalR = withR.reduce((s, x) => s + x.r, 0)
+    const cfOnedonePL = -reattack.reduce((s, r) => s + r.readdPL, 0)
+    const cfOnedoneR = -reattack.reduce((s, r) => s + r.readdR, 0)
+    const cfAvoidPL = -reattack.reduce((s, r) => s + r.net, 0)
 
     // drawdown sizing
     const eq = performanceData || []
@@ -68,6 +87,8 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
       avgWinHold: mean(wins.map(x => holdDays(x.t))),
       avgLossHold: mean(losses.map(x => holdDays(x.t))),
       reattack,
+      totalPL, totalR, cfOnedonePL, cfOnedoneR, cfAvoidPL,
+      capital: startingCapital,
       winLegs: mean(wins.map(x => x.t.trims?.length || 1)),
       lossLegs: mean(losses.map(x => x.t.trims?.length || 1)),
       intoPct: scaledWin.length ? (into / scaledWin.length) * 100 : 0,
@@ -85,14 +106,23 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
   return (
     <div>
       <Card n="1" title="Largest losses — where the holes come from"
-        verdict="The leak isn't bottom-fishing or bag-holding — it's re-attacking a broken thesis (top row). Add a hard 'this name is dead, stop re-entering' rule.">
-        Losers are cut <b>fast</b> (avg {d.avgLossHold.toFixed(1)}d vs winners {d.avgWinHold.toFixed(1)}d). The big losses come from re-entering the same failing name:
-        <table className="w-full text-xs mt-2 mb-1">
-          <thead><tr className="text-[var(--color-text-muted)]"><td>Name</td><td>Entries</td><td>Losing</td><td className="text-right">Net</td></tr></thead>
+        verdict="The leak isn't bottom-fishing or bag-holding — the first entry is small; the hole is dug by everything added after it goes red. Two modes: averaging into a rolling name (A) and chasing an extended one (B).">
+        Losers are cut <b>fast</b> (avg {d.avgLossHold.toFixed(1)}d vs winners {d.avgWinHold.toFixed(1)}d). The damage is in the <b>re-adds</b>, not the first entry:
+        <table className="w-full text-xs mt-2 mb-2">
+          <thead><tr className="text-[var(--color-text-muted)]"><td>Name</td><td>Entries</td><td className="text-right">1st entry</td><td className="text-right">Re-adds after #1</td><td className="text-right">Net</td></tr></thead>
           <tbody>{d.reattack.map(r => (
-            <tr key={r.tk}><td className="font-mono">{r.tk}</td><td>{r.n}</td><td>{r.nLoss}</td><td className={`text-right ${r.net < 0 ? 'text-red-500' : 'text-green-600'}`}>{money(r.net)}</td></tr>
+            <tr key={r.tk}>
+              <td className="font-mono">{r.tk}</td><td>{r.n}</td>
+              <td className="text-right">{money(r.firstPL)} <span className="text-[var(--color-text-muted)]">({r.firstR >= 0 ? '+' : ''}{r.firstR.toFixed(1)}R)</span></td>
+              <td className={`text-right ${r.readdPL < 0 ? 'text-red-500' : 'text-green-600'}`}>{money(r.readdPL)} ({r.readdR >= 0 ? '+' : ''}{r.readdR.toFixed(1)}R)</td>
+              <td className={`text-right font-medium ${r.net < 0 ? 'text-red-500' : 'text-green-600'}`}>{money(r.net)}</td>
+            </tr>
           ))}</tbody>
         </table>
+        <div className="mt-1 space-y-1">
+          <div><b>Mode A — averaging into a rolling/stalling name.</b> Range-bound while the 50d MA droops and you keep buying the "value." BABA: all 5 entries in a 16–23% band, re-adds = −$52.9k of −$54.4k.</div>
+          <div><b>Mode B — chasing an extended move, re-adding into the reversal.</b> First entry on an already-stretched name (CRCL +36%, SOLS +64% over 50d), it stalls, you add while extended, it rolls over. CRCL/TSLL/OPEN/SOLS/INTC re-adds after a red = −$28k (−5.8R).</div>
+        </div>
       </Card>
 
       <Card n="2" title="Largest winners — what's working"
@@ -110,6 +140,27 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
       <Card n="4" title="Trims & stops"
         verdict={`Sizing runs ~2× intended: avg 1R ${d.avgRiskPct ? d.avgRiskPct.toFixed(2) + '%' : '—'} vs 0.25% target.`}>
         {d.scalePct.toFixed(0)}% of trades scaled out; <b>{d.intoPct.toFixed(0)}%</b> of scaled winners trimmed into strength — strong exit craft. Stops: <b>{d.respectPct.toFixed(0)}%</b> of losses respected (≤1.2R), but <b>{d.blewPct.toFixed(0)}%</b> blew through −1R (the re-attack tail).
+      </Card>
+
+      <Card n="5" title="What fixing the top-5 leaks is worth"
+        verdict={`Realistic prize — one-and-done: +${money(d.cfOnedonePL)} / +${d.cfOnedoneR.toFixed(0)}R / +${(d.cfOnedonePL / d.capital * 100).toFixed(1)} pts of return. Highest-ROI change in the book.`}>
+        The five re-attack names are the whole story. Holding everything else equal:
+        <table className="w-full text-xs mt-2 mb-1">
+          <thead><tr className="text-[var(--color-text-muted)]"><td>Scenario</td><td className="text-right">P&L</td><td className="text-right">Total R</td><td className="text-right">Return</td></tr></thead>
+          <tbody>
+            <tr><td>Actual</td><td className="text-right">{money(d.totalPL)}</td><td className="text-right">+{d.totalR.toFixed(0)}R</td><td className="text-right">+{(d.totalPL / d.capital * 100).toFixed(1)}%</td></tr>
+            <tr className="font-medium"><td>One-and-done (entry #1, no re-attacks)</td><td className="text-right">{money(d.totalPL + d.cfOnedonePL)}</td><td className="text-right">+{(d.totalR + d.cfOnedoneR).toFixed(0)}R</td><td className="text-right text-green-600">+{((d.totalPL + d.cfOnedonePL) / d.capital * 100).toFixed(1)}%</td></tr>
+            <tr className="text-[var(--color-text-muted)]"><td>Avoid all 5 entirely</td><td className="text-right">{money(d.totalPL + d.cfAvoidPL)}</td><td className="text-right">—</td><td className="text-right">+{((d.totalPL + d.cfAvoidPL) / d.capital * 100).toFixed(1)}%</td></tr>
+          </tbody>
+        </table>
+      </Card>
+
+      <Card n="→" title="What to do instead / 行动项">
+        <ol className="list-decimal ml-4 space-y-1.5">
+          <li><b>One-and-done per name per thesis.</b> If a name is red after the first entry, no add #2/#3/#4. Re-entry only after a <i>new</i> setup prints (fresh base/breakout) — never as an average-down. Recovers ~{money(d.cfOnedonePL)}.</li>
+          <li><b>Pre-commit full size at entry #1, scale only into green.</b> Decide the total intended position before the first fill and pyramid up into strength, never average down into red. Fixes both Mode A (BABA) and Mode B (CRCL).</li>
+          <li><b>Halve the base 1R back to target.</b> Real 1R ≈ {d.avgRiskPct ? d.avgRiskPct.toFixed(2) + '%' : '0.52%'} vs the 0.25% you intend. Cutting initial size in half shrinks every hole and makes a wrong first entry a −0.25% event, not −1R+ of real capital.</li>
+        </ol>
       </Card>
     </div>
   )
