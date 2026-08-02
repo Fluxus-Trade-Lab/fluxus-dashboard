@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ d.title }}</title>
+<style>
+:root{--bg:#0A0D13;--panel:#111621;--line:#1E2633;--txt:#C7CDD8;--mut:#79828F;
+--dim:#525b69;--accent:#5AA9FF;--good:#42B96A;--bad:#EF5E6B;--warn:#D6A34C;
+--mono:ui-monospace,Menlo,Consolas,monospace;
+--sans:-apple-system,"Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);margin:0;
+padding:40px 20px 70px;line-height:1.5}
+.doc{max-width:900px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+text-transform:uppercase;color:var(--accent);margin:0 0 8px}
+h1{font-size:28px;font-weight:600;margin:2px 0 6px}
+h2{font-size:19px;font-weight:600;margin:0}
+.meta{font-family:var(--mono);font-size:12px;color:var(--dim);
+border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+padding:10px 0;margin-top:14px;display:flex;justify-content:space-between;
+flex-wrap:wrap;gap:10px}
+section{margin-top:34px}
+.lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+text-transform:uppercase;color:var(--mut);margin:0 0 14px;display:flex;
+align-items:center;gap:10px}
+.lbl::after{content:"";flex:1;height:1px;background:var(--line)}
+/* stat cards */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 15px}
+.card .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:0 0 6px}
+.card .v{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.pos{color:var(--good)}.neg{color:var(--bad)}.warn{color:var(--warn)}.muted{color:var(--mut)}
+/* chart cards (white, tearsheet style) */
+.chart{background:#fff;border-radius:10px;padding:14px;margin:0;border:1px solid var(--line)}
+.chart img{width:100%;height:auto;display:block}
+.cap{font-family:var(--mono);font-size:11px;color:var(--mut);margin:8px 2px 0}
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--line);
+border-radius:8px;overflow:hidden;margin-top:6px}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+color:var(--dim);text-align:left;padding:9px 12px;background:#0E131C;border-bottom:1px solid var(--line)}
+td{padding:8px 12px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:none}
+td.r,th.r{text-align:right}
+.mono{font-family:var(--mono)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.callout{background:rgba(90,169,255,.07);border-left:3px solid var(--accent);
+padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;font-size:13.5px}
+ol.act{margin:8px 0 0;padding-left:20px}ol.act li{margin:0 0 8px;font-size:13.5px}
+.mode{font-size:13px;margin:8px 0}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;text-transform:uppercase;
+padding:2px 7px;border-radius:5px;background:#0E131C;border:1px solid var(--line);color:var(--mut)}
+.foot{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);
+font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media print{body{background:#fff;color:#111;padding:0}.doc{max-width:100%}
+.card,.chart,table{break-inside:avoid}section{break-inside:avoid-page}}
+@media (max-width:680px){.cards{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}}
+</style></head>
+<body><div class="doc">
+
+<p class="eyebrow">Fluxus Capital · Performance Review (auto-generated)</p>
+<h1>{{ d.title }}</h1>
+<div class="meta"><span>{{ d.period_label }}</span>
+<span>{{ d.s.n }} closed trades · avg hold {{ d.s.avg_hold_days | num(1) }}d</span>
+<span>{{ d.handle }} · generated {{ d.generated }}</span></div>
+
+{# ---------- Headline ---------- #}
+<section>
+<p class="lbl">概览 · Headline</p>
+<div class="cards">
+  <div class="card"><p class="k">Return vs start</p><p class="v {{ 'pos' if d.s.return_pct>=0 else 'neg' }}">{{ d.s.return_pct | pct(1) }}</p></div>
+  <div class="card"><p class="k">Net P&amp;L</p><p class="v {{ 'pos' if d.s.total_pnl>=0 else 'neg' }}">{{ d.s.total_pnl | money }}</p></div>
+  <div class="card"><p class="k">Win rate</p><p class="v">{{ d.s.win_rate | pct0(1) }}</p></div>
+  <div class="card"><p class="k">Total R</p><p class="v {{ 'pos' if d.s.sum_R>=0 else 'neg' }}">{{ d.s.sum_R | signR }}</p></div>
+  <div class="card"><p class="k">Payoff</p><p class="v">{{ d.s.payoff | num(2) }}×</p></div>
+  <div class="card"><p class="k">Profit factor</p><p class="v">{{ d.s.profit_factor | num(2) }}</p></div>
+  <div class="card"><p class="k">Expectancy</p><p class="v {{ 'pos' if d.s.expectancy>=0 else 'neg' }}">{{ d.s.expectancy | money }}</p></div>
+  {% if d.mtm and d.mtm.drawdown %}<div class="card"><p class="k">Max drawdown (MTM)</p><p class="v neg">{{ d.mtm.drawdown.pct | pct0(1) }}</p></div>
+  {% else %}<div class="card"><p class="k">Ending equity</p><p class="v">{{ d.s.ending_equity | money }}</p></div>{% endif %}
+</div>
+</section>
+
+{# ---------- Equity curve ---------- #}
+{% if d.charts.equity %}
+<section>
+<p class="lbl">盯市权益曲线 · Mark-to-market equity &amp; drawdown</p>
+<div class="chart"><img src="data:image/png;base64,{{ d.charts.equity }}" alt="Equity curve"></div>
+{% if d.mtm and d.mtm.risk %}
+<table><thead><tr><th>Peak equity</th><th class="r">Max DD</th><th class="r">DD window</th>
+<th class="r">Sharpe</th><th class="r">Sortino</th><th class="r">Calmar</th><th class="r">CAGR</th></tr></thead>
+<tbody><tr>
+<td>{{ d.mtm.risk.peak_equity | money }} <span class="muted">(+{{ d.mtm.risk.peak_return_pct | num(0) }}%)</span></td>
+<td class="r neg">{{ d.mtm.drawdown.pct | pct0(1) }}</td>
+<td class="r mono">{{ d.mtm.drawdown.peak_date }} → {{ d.mtm.drawdown.trough_date }}</td>
+<td class="r">{{ d.mtm.risk.sharpe | num(2) }}</td><td class="r">{{ d.mtm.risk.sortino | num(2) }}</td>
+<td class="r">{{ d.mtm.risk.calmar | num(2) }}</td><td class="r">{{ (d.mtm.risk.cagr*100) | num(1) if d.mtm.risk.cagr is not none else '—' }}%</td>
+</tr></tbody></table>{% endif %}
+</section>{% endif %}
+
+{# ---------- RR chart ---------- #}
+{% if d.charts.rr %}
+<section>
+<p class="lbl">每笔 R · Every trade by R-multiple</p>
+<div class="chart"><img src="data:image/png;base64,{{ d.charts.rr }}" alt="RR chart"></div>
+</section>{% endif %}
+
+{# ---------- Monthly + R distribution ---------- #}
+<section>
+<p class="lbl">月度回报 & R 分布 · Monthly returns &amp; R-distribution</p>
+{% if d.charts.monthly %}<div class="chart"><img src="data:image/png;base64,{{ d.charts.monthly }}" alt="Monthly returns"></div>{% endif %}
+{% if d.charts.rdist %}<div class="chart" style="margin-top:14px"><img src="data:image/png;base64,{{ d.charts.rdist }}" alt="R distribution"></div>{% endif %}
+</section>
+
+{# ---------- Capital deployment ---------- #}
+{% if d.charts.deployment %}
+<section>
+<p class="lbl">资金部署 · Capital deployment</p>
+<div class="chart"><img src="data:image/png;base64,{{ d.charts.deployment }}" alt="Capital deployment"></div>
+{% if d.ce %}<table><thead><tr><th class="r">Return on deployed</th><th class="r">Avg leverage</th>
+<th class="r">Peak leverage</th><th class="r">Avg deployed (of start)</th></tr></thead>
+<tbody><tr>
+<td class="r">{{ d.ce.return_on_deployed | pct0(1) if d.ce.return_on_deployed is not none else '—' }}</td>
+<td class="r">{{ (d.ce.avg_leverage_pct/100) | num(2) if d.ce.avg_leverage_pct is not none else '—' }}×</td>
+<td class="r">{{ (d.ce.peak_leverage_pct/100) | num(2) if d.ce.peak_leverage_pct is not none else '—' }}×</td>
+<td class="r">{{ d.ce.avg_deployed_pct_of_start | pct0(0) if d.ce.avg_deployed_pct_of_start is not none else '—' }}</td>
+</tr></tbody></table>{% endif %}
+</section>{% endif %}
+
+{# ---------- Behavioral diagnosis ---------- #}
+{% if d.bd %}
+<section>
+<p class="lbl">行为诊断 · Behavioral diagnosis</p>
+<p style="font-size:13.5px;margin:0 0 6px">Losers are cut <b>fast</b> ({{ d.bd.avg_loss_hold | num(1) }}d vs winners {{ d.bd.avg_win_hold | num(1) }}d) — the leak is <b>re-attacking after the first entry goes red</b>, not bad entries. The damage is in the re-adds:</p>
+<table><thead><tr><th>Re-traded name</th><th class="r">Entries</th><th class="r">1st entry</th><th class="r">Re-adds after #1</th><th class="r">Net</th></tr></thead>
+<tbody>{% for r in d.bd.worst_reattack %}
+<tr><td class="mono">{{ r.ticker }}</td><td class="r">{{ r.n }}</td>
+<td class="r muted">{{ r.first_pnl | money }} ({{ r.first_R | signR }})</td>
+<td class="r neg">{{ r.readd_pnl | money }} ({{ r.readd_R | signR }})</td>
+<td class="r neg">{{ r.net | money }}</td></tr>{% endfor %}</tbody></table>
+<p class="mode"><b>Mode A — averaging into a rolling name</b> (BABA: range-bound, 50d MA drooping). <b>Mode B — chasing an extended move then re-adding into the reversal</b> (CRCL/TSLL/OPEN/SOLS/INTC, re-adds after a red ≈ −$28k).</p>
+{% set base = d.bd.total_pnl / d.cap * 100 %}
+{% set od = (d.bd.total_pnl + d.bd.cf_onedone_pnl) / d.cap * 100 %}
+{% set av = (d.bd.total_pnl + d.bd.cf_avoid_pnl) / d.cap * 100 %}
+<table style="margin-top:14px"><thead><tr><th>Counterfactual</th><th class="r">P&amp;L</th><th class="r">Total R</th><th class="r">Return</th></tr></thead>
+<tbody>
+<tr><td>Actual</td><td class="r">{{ d.bd.total_pnl | money }}</td><td class="r">{{ d.bd.total_R | signR }}</td><td class="r">{{ base | pct(1) }}</td></tr>
+<tr><td><b>One-and-done</b> (take entry #1, no re-attacks)</td><td class="r">{{ (d.bd.total_pnl + d.bd.cf_onedone_pnl) | money }}</td><td class="r">{{ (d.bd.total_R + d.bd.cf_onedone_R) | signR }}</td><td class="r pos">{{ od | pct(1) }}</td></tr>
+<tr><td class="muted">Avoid all 5 entirely</td><td class="r muted">{{ (d.bd.total_pnl + d.bd.cf_avoid_pnl) | money }}</td><td class="r muted">{{ (d.bd.total_R + d.bd.cf_avoid_R) | signR }}</td><td class="r muted">{{ av | pct(1) }}</td></tr>
+</tbody></table>
+<div class="callout">Realistic prize — <b>one-and-done: +{{ d.bd.cf_onedone_pnl | money }} / +{{ d.bd.cf_onedone_R | num(0) }}R / +{{ (od-base) | num(1) }} pts</b>. You can't un-take a first entry, but you can stop re-attacking.</div>
+<p class="lbl" style="margin-top:18px">行动项 · What to do instead</p>
+<ol class="act">
+<li><b>One-and-done per name per thesis.</b> Red after entry #1 → no add #2/#3/#4; re-enter only on a new setup. Recovers ~{{ d.bd.cf_onedone_pnl | money }}.</li>
+<li><b>Pre-commit full size at entry #1, scale only into green</b> — pyramid up, never average down. Fixes Mode A &amp; B.</li>
+<li><b>Halve base 1R</b> — real 1R ≈ {{ d.bd.avg_risk_pct | num(2) }}% vs the 0.25% target (~2× size).</li>
+</ol>
+</section>{% endif %}
+
+{# ---------- Trade case studies ---------- #}
+{% if d.cs %}
+<section>
+<p class="lbl">个股复盘 · Trade case studies — technicals at entry</p>
+{% if d.charts.cases %}<div class="chart"><img src="data:image/png;base64,{{ d.charts.cases }}" alt="Case study charts"></div>{% endif %}
+<table style="margin-top:14px"><thead><tr><th>Trade</th><th>Setup / mistake</th><th class="r">P&amp;L (R)</th>
+<th class="r">MA stack</th><th class="r">ext</th><th class="r">hold · legs</th></tr></thead>
+<tbody>{% for row in d.cs %}
+<tr>
+<td class="mono">{{ row.t.ticker }} <span class="tag">{{ row.t.direction }}</span></td>
+<td class="{{ 'pos' if row.win else 'neg' }}">{{ row.cls.type }}</td>
+<td class="r {{ 'pos' if row.win else 'neg' }}">{{ row.t.pnl | money }} ({{ row.t.R | signR }})</td>
+<td class="r mono">{% if row.tech %}{{ {'bull':'20&gt;50&gt;200','bull*':'20&gt;50','bear':'20&lt;50&lt;200','bear*':'20&lt;50','mixed':'tangled'}.get(row.tech.stack,'—') }}{% else %}—{% endif %}</td>
+<td class="r">{% if row.tech and row.tech.ext_atr is not none %}{{ row.tech.ext_atr | num(1) }} ATR{% else %}—{% endif %}</td>
+<td class="r">{{ row.t.hold_days }}d · {{ row.n_legs }}</td>
+</tr>{% endfor %}</tbody></table>
+</section>{% endif %}
+
+{# ---------- Contribution tables ---------- #}
+<section>
+<p class="lbl">贡献 · By direction &amp; top tickers</p>
+<div class="two">
+<div><table><thead><tr><th>Direction</th><th class="r">P&amp;L</th><th class="r">n</th><th class="r">Win%</th></tr></thead>
+<tbody>{% for k,v in d.by_dir %}<tr><td>{{ k }}</td><td class="r {{ 'pos' if v.pnl>=0 else 'neg' }}">{{ v.pnl | money }}</td>
+<td class="r">{{ v.n }}</td><td class="r">{{ (v.wins/v.n*100) | num(0) }}%</td></tr>{% endfor %}</tbody></table></div>
+<div><table><thead><tr><th>Ticker</th><th class="r">P&amp;L</th><th class="r">n</th></tr></thead>
+<tbody>{% for k,v in d.by_tk %}<tr><td class="mono">{{ k }}</td>
+<td class="r {{ 'pos' if v.pnl>=0 else 'neg' }}">{{ v.pnl | money }}</td><td class="r">{{ v.n }}</td></tr>{% endfor %}</tbody></table></div>
+</div>
+</section>
+
+<div class="foot"><span>Fluxus Capital · {{ d.handle }}</span>
+<span>source {{ d.source }} · numbers reconcile with the .md/.json review</span></div>
+
+</div></body></html>
