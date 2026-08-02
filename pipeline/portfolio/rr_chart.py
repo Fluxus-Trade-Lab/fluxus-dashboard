@@ -18,7 +18,7 @@ def generate_rr_chart(trades, capital, out_path,
                       period_label="Jan 2026 to Jul 2026",
                       handle="@Fluxus_Z",
                       title="Every trade by R-multiple",
-                      headline=None):
+                      headline=None, dark=False):
     """Render the RR bar chart to `out_path` (PNG). Returns out_path or None."""
     try:
         import matplotlib
@@ -27,6 +27,16 @@ def generate_rr_chart(trades, capital, out_path,
         from matplotlib.ticker import MultipleLocator
     except ImportError:
         return None
+
+    # theme palette
+    if dark:
+        C = dict(face="#111621", title="#E8ECF2", head="#9aa4b2", sub="#79828F",
+                 hand="#4b5563", axis="#232c3a", spine="#2b3543", tick="#79828F",
+                 grid="#232c3a", zero="#4b5563", winlbl="#5fd08a", losslbl="#f4838c")
+    else:
+        C = dict(face="white", title="#111", head="#555", sub="#999",
+                 hand="#bbb", axis="#333", spine="#ccc", tick="#666",
+                 grid="#eee", zero="#888", winlbl="#1e7e34", losslbl="#b3241b")
 
     rr = [t for t in trades if t.R is not None]
     if len(rr) < 3:
@@ -49,23 +59,24 @@ def generate_rr_chart(trades, capital, out_path,
     ret_pct = total_pnl / capital * 100 if capital else 0
 
     fig, ax = plt.subplots(figsize=(13, 6.4), dpi=170)
+    ax.set_facecolor(C["face"])
     ax.bar(xs, Rs, color=colors, width=0.85, linewidth=0)
-    ax.axhline(0, color="#888", lw=0.8)
+    ax.axhline(0, color=C["zero"], lw=0.8)
     # reference lines for avg win / loss (unlabeled — numbers are in the subtitle)
     ax.axhline(avg_win, color="#2e9e4f", lw=0.9, ls="--", alpha=0.5)
     ax.axhline(avg_loss, color="#d0362b", lw=0.9, ls="--", alpha=0.5)
     hi = max(Rs)
     ax.set_ylim(min(min(Rs) - 1, -3), hi + 2.5)
-    ax.set_ylabel("R multiple  (profit ÷ initial risk)", fontsize=11, color="#333")
-    ax.set_xlabel(f"Closed trades in sequence  ({period_label})", fontsize=11, color="#333")
+    ax.set_ylabel("R multiple  (profit ÷ initial risk)", fontsize=11, color=C["axis"])
+    ax.set_xlabel(f"Closed trades in sequence  ({period_label})", fontsize=11, color=C["axis"])
     ax.yaxis.set_major_locator(MultipleLocator(2))
-    ax.grid(axis="y", color="#eee", lw=0.7)
+    ax.grid(axis="y", color=C["grid"], lw=0.7)
     ax.set_axisbelow(True)
     for s in ["top", "right"]:
         ax.spines[s].set_visible(False)
     for s in ["left", "bottom"]:
-        ax.spines[s].set_color("#ccc")
-    ax.tick_params(colors="#666", labelsize=9)
+        ax.spines[s].set_color(C["spine"])
+    ax.tick_params(colors=C["tick"], labelsize=9)
     ax.set_xlim(-2, len(Rs) + 1)
 
     # annotate the biggest winners
@@ -73,7 +84,7 @@ def generate_rr_chart(trades, capital, out_path,
         i = rr.index(t)
         ax.annotate(f"{t.ticker} +{t.R:.0f}R", (i, t.R), xytext=(0, 6),
                     textcoords="offset points", ha="center", fontsize=8.5,
-                    color="#1e7e34", fontweight="bold")
+                    color=C["winlbl"], fontweight="bold")
     # annotate the biggest loss
     worst = min(rr, key=lambda t: t.R)
     if worst.R < -1.5:
@@ -81,19 +92,19 @@ def generate_rr_chart(trades, capital, out_path,
         i = rr.index(worst)
         ax.annotate(f"{worst.ticker} {worst.R:.1f}R", (i, worst.R), xytext=(0, -6),
                     textcoords="offset points", ha="center", va="top", fontsize=8.5,
-                    color="#b3241b", fontweight="bold")
+                    color=C["losslbl"], fontweight="bold")
 
     head = headline or (f"{ret_pct:+.1f}%  ·  {len(Rs)} trades  ·  {win_rate:.0f}% win rate  ·  "
                         f"+{sum_r:.0f}R total  ·  avg win {avg_win:.1f}R / avg loss {avg_loss:.1f}R")
-    ax.set_title(f"{title}", fontsize=16, fontweight="bold", color="#111", loc="left", pad=30)
-    fig.text(0.125, 0.905, head, fontsize=11, color="#555")
+    ax.set_title(f"{title}", fontsize=16, fontweight="bold", color=C["title"], loc="left", pad=30)
+    fig.text(0.125, 0.905, head, fontsize=11, color=C["head"])
     risk_note = (f"1R ≈ {avg_risk_pct:.2f}% of capital"
                  if avg_risk_pct is not None else "")
     if risk_note:
-        fig.text(0.125, 0.876, risk_note, fontsize=9.5, color="#999")
-    fig.text(0.9, 0.02, handle, fontsize=10, color="#bbb", ha="right")
+        fig.text(0.125, 0.876, risk_note, fontsize=9.5, color=C["sub"])
+    fig.text(0.9, 0.02, handle, fontsize=10, color=C["hand"], ha="right")
 
     plt.tight_layout(rect=[0, 0.02, 1, 0.98])
-    plt.savefig(out_path, bbox_inches="tight", facecolor="white")
+    plt.savefig(out_path, bbox_inches="tight", facecolor=C["face"])
     plt.close(fig)
     return out_path

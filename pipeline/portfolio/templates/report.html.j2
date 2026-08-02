@@ -5,12 +5,20 @@
 <style>
 :root{--bg:#0A0D13;--panel:#111621;--line:#1E2633;--txt:#C7CDD8;--mut:#79828F;
 --dim:#525b69;--accent:#5AA9FF;--good:#42B96A;--bad:#EF5E6B;--warn:#D6A34C;
+--thead:#0E131C;--chartbg:#111621;
 --mono:ui-monospace,Menlo,Consolas,monospace;
 --sans:-apple-system,"Segoe UI",system-ui,sans-serif}
+:root[data-theme="light"]{--bg:#f6f7f9;--panel:#ffffff;--line:#e4e8ee;--txt:#1a1f2b;
+--mut:#5b6472;--dim:#8a93a3;--accent:#2f6fb0;--good:#2e9e4f;--bad:#d0362b;--warn:#b9822a;
+--thead:#f0f2f5;--chartbg:#ffffff}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--txt);font-family:var(--sans);margin:0;
 padding:40px 20px 70px;line-height:1.5}
 .doc{max-width:900px;margin:0 auto}
+.themebtn{position:fixed;top:14px;right:14px;z-index:20;font-family:var(--mono);
+font-size:11px;letter-spacing:.06em;padding:7px 13px;border-radius:8px;
+border:1px solid var(--line);background:var(--panel);color:var(--txt);cursor:pointer}
+.themebtn:hover{border-color:var(--accent)}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;
 text-transform:uppercase;color:var(--accent);margin:0 0 8px}
 h1{font-size:28px;font-weight:600;margin:2px 0 6px}
@@ -30,15 +38,18 @@ align-items:center;gap:10px}
 .card .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:0 0 6px}
 .card .v{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
 .pos{color:var(--good)}.neg{color:var(--bad)}.warn{color:var(--warn)}.muted{color:var(--mut)}
-/* chart cards (white, tearsheet style) */
-.chart{background:#fff;border-radius:10px;padding:14px;margin:0;border:1px solid var(--line)}
-.chart img{width:100%;height:auto;display:block}
+/* chart cards — bg + baked chart image both follow the theme */
+.chart{background:var(--chartbg);border-radius:10px;padding:14px;margin:0;border:1px solid var(--line)}
+.chart img{width:100%;height:auto}
+.chart img.c-light{display:none}.chart img.c-dark{display:block}
+:root[data-theme="light"] .chart img.c-light{display:block}
+:root[data-theme="light"] .chart img.c-dark{display:none}
 .cap{font-family:var(--mono);font-size:11px;color:var(--mut);margin:8px 2px 0}
 /* tables */
 table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--line);
 border-radius:8px;overflow:hidden;margin-top:6px}
 th{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
-color:var(--dim);text-align:left;padding:9px 12px;background:#0E131C;border-bottom:1px solid var(--line)}
+color:var(--dim);text-align:left;padding:9px 12px;background:var(--thead);border-bottom:1px solid var(--line)}
 td{padding:8px 12px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
 tr:last-child td{border-bottom:none}
 td.r,th.r{text-align:right}
@@ -49,14 +60,21 @@ padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;font-size:13.5px}
 ol.act{margin:8px 0 0;padding-left:20px}ol.act li{margin:0 0 8px;font-size:13.5px}
 .mode{font-size:13px;margin:8px 0}
 .tag{display:inline-block;font-family:var(--mono);font-size:10px;text-transform:uppercase;
-padding:2px 7px;border-radius:5px;background:#0E131C;border:1px solid var(--line);color:var(--mut)}
+padding:2px 7px;border-radius:5px;background:var(--thead);border:1px solid var(--line);color:var(--mut)}
 .foot{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);
 font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-@media print{body{background:#fff;color:#111;padding:0}.doc{max-width:100%}
-.card,.chart,table{break-inside:avoid}section{break-inside:avoid-page}}
+/* print → force light chrome + light charts (better on paper) */
+@media print{
+  :root{--bg:#fff;--panel:#fff;--txt:#111;--line:#ddd;--dim:#666;--mut:#555;--thead:#f0f2f5;--chartbg:#fff}
+  .chart img.c-dark{display:none!important}.chart img.c-light{display:block!important}
+  .themebtn{display:none}body{padding:0}.doc{max-width:100%}
+  .card,.chart,table{break-inside:avoid}section{break-inside:avoid-page}
+}
 @media (max-width:680px){.cards{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}}
 </style></head>
 <body><div class="doc">
+{% macro chart(obj, alt) %}<img class="c-dark" src="data:image/png;base64,{{ obj.dark }}" alt="{{ alt }}"><img class="c-light" src="data:image/png;base64,{{ obj.light }}" alt="{{ alt }}">{% endmacro %}
+<button class="themebtn" id="themebtn" type="button">◑ Light</button>
 
 <p class="eyebrow">Fluxus Capital · Performance Review (auto-generated)</p>
 <h1>{{ d.title }}</h1>
@@ -84,7 +102,7 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
 {% if d.charts.equity %}
 <section>
 <p class="lbl">盯市权益曲线 · Mark-to-market equity &amp; drawdown</p>
-<div class="chart"><img src="data:image/png;base64,{{ d.charts.equity }}" alt="Equity curve"></div>
+<div class="chart">{{ chart(d.charts.equity, 'Equity curve') }}</div>
 {% if d.mtm and d.mtm.risk %}
 <table><thead><tr><th>Peak equity</th><th class="r">Max DD</th><th class="r">DD window</th>
 <th class="r">Sharpe</th><th class="r">Sortino</th><th class="r">Calmar</th><th class="r">CAGR</th></tr></thead>
@@ -101,13 +119,13 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
 {% if d.charts.rr %}
 <section>
 <p class="lbl">每笔 R · Every trade by R-multiple</p>
-<div class="chart"><img src="data:image/png;base64,{{ d.charts.rr }}" alt="RR chart"></div>
+<div class="chart">{{ chart(d.charts.rr, 'RR chart') }}</div>
 </section>{% endif %}
 
 {# ---------- Monthly + R distribution ---------- #}
 <section>
 <p class="lbl">月度回报 & R 分布 · Monthly returns &amp; R-distribution</p>
-{% if d.charts.monthly %}<div class="chart"><img src="data:image/png;base64,{{ d.charts.monthly }}" alt="Monthly returns"></div>{% endif %}
+{% if d.charts.monthly %}<div class="chart">{{ chart(d.charts.monthly, 'Monthly returns') }}</div>{% endif %}
 {% if d.monthly_stats %}
 <table style="margin-top:14px"><thead><tr><th>Month</th><th class="r">Return</th><th class="r">P&amp;L</th>
 <th class="r">#</th><th class="r">Win%</th><th class="r">Days(W)</th><th class="r">Days(L)</th></tr></thead>
@@ -121,14 +139,14 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
 <td class="r">{{ m.avg_hold_loss | num(1) }}</td></tr>{% endfor %}</tbody></table>
 <p class="cap">Return = compounded MTM month-over-month (same method as the dashboard Monthly Performance table); hold days by exit month.</p>
 {% endif %}
-{% if d.charts.rdist %}<div class="chart" style="margin-top:14px"><img src="data:image/png;base64,{{ d.charts.rdist }}" alt="R distribution"></div>{% endif %}
+{% if d.charts.rdist %}<div class="chart" style="margin-top:14px">{{ chart(d.charts.rdist, 'R distribution') }}</div>{% endif %}
 </section>
 
 {# ---------- Capital deployment ---------- #}
 {% if d.charts.deployment %}
 <section>
 <p class="lbl">资金部署 · Capital deployment</p>
-<div class="chart"><img src="data:image/png;base64,{{ d.charts.deployment }}" alt="Capital deployment"></div>
+<div class="chart">{{ chart(d.charts.deployment, 'Capital deployment') }}</div>
 {% if d.ce %}<table><thead><tr><th class="r">Return on deployed</th><th class="r">Avg leverage</th>
 <th class="r">Peak leverage</th><th class="r">Avg deployed (of start)</th></tr></thead>
 <tbody><tr>
@@ -173,7 +191,7 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
 {% if d.cs %}
 <section>
 <p class="lbl">个股复盘 · Trade case studies — technicals at entry</p>
-{% if d.charts.cases %}<div class="chart"><img src="data:image/png;base64,{{ d.charts.cases }}" alt="Case study charts"></div>{% endif %}
+{% if d.charts.cases %}<div class="chart">{{ chart(d.charts.cases, 'Case study charts') }}</div>{% endif %}
 <table style="margin-top:14px"><thead><tr><th>Trade</th><th>Setup / mistake</th><th class="r">P&amp;L (R)</th>
 <th class="r">MA stack</th><th class="r">ext</th><th class="r">hold · legs</th></tr></thead>
 <tbody>{% for row in d.cs %}
@@ -203,4 +221,15 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
 <div class="foot"><span>Fluxus Capital · {{ d.handle }}</span>
 <span>source {{ d.source }} · numbers reconcile with the .md/.json review</span></div>
 
-</div></body></html>
+</div>
+<script>
+(function(){
+  var r=document.documentElement, b=document.getElementById('themebtn');
+  function set(t){r.setAttribute('data-theme',t);b.textContent=t==='light'?'◐ Dark':'◑ Light';
+    try{localStorage.setItem('fluxusReportTheme',t)}catch(e){}}
+  var saved; try{saved=localStorage.getItem('fluxusReportTheme')}catch(e){}
+  set(saved||'dark');
+  b.addEventListener('click',function(){set(r.getAttribute('data-theme')==='light'?'dark':'light')});
+})();
+</script>
+</body></html>

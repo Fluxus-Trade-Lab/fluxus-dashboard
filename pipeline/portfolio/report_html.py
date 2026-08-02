@@ -53,7 +53,7 @@ def build_doc(trades, meta, period, month, quarter, out_dir, handle):
     ms = pr.monthly_stats(sub, eqbd0, cap)
     rdist = pr.r_distribution(sub)
     by_dir = pr.by_key(sub, lambda t: t.direction)
-    by_tk = pr.by_key(sub, lambda t: t.ticker)[:12]
+    by_tk = pr.by_key(sub, lambda t: t.ticker)[:10]
     eqbd = (mtm or {}).get("equity_by_date")
     bd = an.behavioral_diagnosis(sub, eqbd, cap) if eqbd else None
     ce = None
@@ -63,18 +63,28 @@ def build_doc(trades, meta, period, month, quarter, out_dir, handle):
         ce = None
     cs = an.trade_case_studies(sub)
 
-    # RR chart PNG (reuse the review's generator, then embed)
+    # Charts are rendered in BOTH light and dark so the in-page theme toggle can
+    # swap them — keeping the charts consistent with whichever theme is active.
     os.makedirs(out_dir, exist_ok=True)
-    rr_path = os.path.join(out_dir, f"{stem}_rr.png")
-    pr._rr_chart(sub, cap, rr_path, rr_title, handle)
+    dd = (mtm or {}).get("drawdown")
+
+    def _rr_b64(dark):
+        path = os.path.join(out_dir, f"{stem}_rr{'_dark' if dark else ''}.png")
+        from pipeline.portfolio.rr_chart import generate_rr_chart
+        generate_rr_chart(sub, cap, path, period_label=rr_title, handle=handle,
+                          title="Every trade by R-multiple", dark=dark)
+        return rc.png_from_file(path)
+
+    def _both(fn):
+        return {"light": fn(False), "dark": fn(True)}
 
     charts = {
-        "rr": rc.png_from_file(rr_path),
-        "equity": rc.equity_curve(eqbd, (mtm or {}).get("drawdown"), cap) if eqbd else None,
-        "monthly": rc.monthly_returns(ms),
-        "rdist": rc.r_distribution(rdist),
-        "deployment": rc.deployment_curve(sub, eqbd, cap) if eqbd else None,
-        "cases": rc.case_studies_grid(cs, load_local_ohlc) if cs else None,
+        "rr": {"light": _rr_b64(False), "dark": _rr_b64(True)},
+        "equity": _both(lambda d: rc.equity_curve(eqbd, dd, cap, dark=d)) if eqbd else None,
+        "monthly": _both(lambda d: rc.monthly_returns(ms, dark=d)),
+        "rdist": _both(lambda d: rc.r_distribution(rdist, dark=d)),
+        "deployment": _both(lambda d: rc.deployment_curve(sub, eqbd, cap, dark=d)) if eqbd else None,
+        "cases": _both(lambda d: rc.case_studies_grid(cs, load_local_ohlc, dark=d)) if cs else None,
     }
 
     return {

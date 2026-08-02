@@ -285,7 +285,10 @@ def monthly_stats(trades: list[Trade], equity_by_date: dict | None, capital: flo
             "largest_loss": min((ret_pct(t) for t in losses), default=0.0),
             "pnl": sum(t.pnl for t in tds),
         })
-    return out
+    # Drop leading months with no closed trades (e.g. the equity-curve seed month
+    # before the first trade) so 2025-12-style empty rows don't show.
+    first = next((i for i, d in enumerate(out) if d["n"] > 0), 0)
+    return out[first:]
 
 
 def by_key(trades: list[Trade], key) -> list[tuple]:
