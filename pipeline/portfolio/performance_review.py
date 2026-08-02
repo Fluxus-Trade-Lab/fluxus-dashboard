@@ -493,6 +493,34 @@ def render_monthly(trades: list[Trade], meta: dict, month: str) -> str:
 # --------------------------------------------------------------------------- #
 # Main
 # --------------------------------------------------------------------------- #
+def _quarter_of(month_str: str) -> str:
+    """'YYYY-MM' → 'YYYYQN'."""
+    y, m = month_str.split("-")
+    return f"{y}Q{(int(m) - 1) // 3 + 1}"
+
+
+def _rr_chart(rr_trades: list[Trade], cap: float, out_png: str, title: str, handle: str):
+    """Generate the RR chart for a period's trades. Label = exit-date month range."""
+    try:
+        try:
+            from . import rr_chart as _rr
+        except ImportError:
+            import rr_chart as _rr  # type: ignore
+        import calendar
+        exits = sorted(t.exit_date for t in rr_trades if t.R is not None)
+        if not exits:
+            return None
+
+        def fmt(d):
+            y, m, _ = d.split("-")
+            return f"{calendar.month_abbr[int(m)]} {y}"
+        label = fmt(exits[0]) if exits[0][:7] == exits[-1][:7] else f"{fmt(exits[0])} to {fmt(exits[-1])}"
+        return _rr.generate_rr_chart(rr_trades, cap, out_png, period_label=label,
+                                     handle=handle, title=title)
+    except Exception:  # noqa: BLE001 — chart is optional, never fail the review
+        return None
+
+
 def latest_csv(portfolio_dir: str) -> str | None:
     files = [f for f in os.listdir(portfolio_dir) if f.startswith("portfolio_") and f.endswith(".csv")]
     if not files:
@@ -569,10 +597,12 @@ def main() -> None:
 
     ap = argparse.ArgumentParser(description="Trading performance review engine")
     ap.add_argument("--csv", default=None, help="portfolio CSV export (default: latest in data/portfolio)")
-    ap.add_argument("--period", choices=["monthly", "h1", "annual", "all"], default="h1")
+    ap.add_argument("--period", choices=["monthly", "quarterly", "h1", "annual", "all"], default="h1")
     ap.add_argument("--month", default=None, help="YYYY-MM for --period monthly")
+    ap.add_argument("--quarter", default=None, help="YYYYQN for --period quarterly (e.g. 2026Q1)")
     ap.add_argument("--out", default=os.path.join(portfolio_dir, "reviews"))
     ap.add_argument("--label", default=None, help="output file stem")
+    ap.add_argument("--handle", default="@Fluxus_Z", help="handle shown on the RR chart")
     ap.add_argument("--no-mtm", action="store_true", help="skip mark-to-market (no network fetch)")
     args = ap.parse_args()
 
@@ -597,17 +627,28 @@ def main() -> None:
 
     if args.period == "monthly":
         month = args.month or dmax[:7]
+        rr_trades = [t for t in trades if t.exit_date[:7] == month]
         md = render_monthly(trades, meta, month)
         stem = args.label or f"monthly_{month}"
         title_period = month
+        rr_title = f"{month} — every trade by R-multiple"
+    elif args.period == "quarterly":
+        q = args.quarter or _quarter_of(dmax[:7])
+        rr_trades = [t for t in trades if _quarter_of(t.exit_date[:7]) == q]
+        title = f"{q} Review · 交易复盘"
+        md = render_deep(rr_trades, meta, title, compute_mtm(rr_trades, meta) if not args.no_mtm else None)
+        stem = args.label or f"quarterly_{q}"
+        title_period = q
+        rr_title = f"{q} — every trade by R-multiple"
     else:
         period_name = {"h1": "H1", "annual": "Annual", "all": "Full"}[args.period]
+        rr_trades = trades
         title = f"{period_name} Review · 交易复盘 ({dmin} → {dmax})"
         md = render_deep(trades, meta, title, mtm)
         stem = args.label or f"{args.period}_{dmin}_{dmax}"
         title_period = f"{dmin}→{dmax}"
+        rr_title = f"{period_name} 2026 — every trade by R-multiple"
         if args.period == "all":
-            # append monthly sections
             months = sorted({lg.date[:7] for t in trades for lg in t.legs})
             md += "\n\n---\n\n# 逐月明细 / Month-by-month\n"
             for m in months:
@@ -623,6 +664,12 @@ def main() -> None:
     print(f"✓ Review ({args.period}, {title_period}) written:")
     print(f"  {md_path}")
     print(f"  {json_path}")
+
+    # RR chart (every trade by R-multiple) for the reviewed period.
+    rr_png = _rr_chart(rr_trades, meta["startingCapital"], os.path.join(args.out, f"{stem}_rr.png"),
+                       rr_title, args.handle)
+    if rr_png:
+        print(f"  {rr_png}")
 
 
 if __name__ == "__main__":
