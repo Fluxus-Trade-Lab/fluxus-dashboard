@@ -986,6 +986,112 @@
 
 ---
 
+---
+
+# 第四批 · 借来的台词 II(2026-08-01,门槛更高)
+
+*收录标准提高:**拆完必须比原句更有意思**,而且必须落在具体行为上,不能落在美德上。*
+
+## 九、仓位(全部直击 how-much)
+
+**175** ⭐⭐⭐ 最好笑的一条
+- 原句(《疤面煞星》):*"Say hello to my little friend!"*
+- **拆:** 我也想介绍一下我的小朋友 —— 我那 0.3% 的仓位。
+- EN: **"Say hello to my little friend: a 0.3% position."**
+
+**176** ⭐⭐⭐
+- 原句(《大白鲨》):*"You're gonna need a bigger boat."*
+- **拆:** 你需要的不是更大的船,是更小的仓位。
+- EN: **"You don't need a bigger boat. You need a smaller position."**
+
+**177** ⭐⭐⭐ 字面上就是仓位管理
+- 原句(《让子弹飞》):「步子迈大了,容易扯着蛋」
+- **拆:** 中文影史最精准的一句仓位管理教材,而且它出自一部土匪片。
+- EN: **"Best position-sizing advice in Chinese cinema, and it comes out of a bandit movie."**
+
+**178** ⭐⭐⭐
+- 原句(《星球大战》尤达):*"Do or do not. There is no try."*
+- **拆:** 交易里恰恰相反:**只有 try。** 试仓才是唯一正确的姿势,尤达会爆仓。
+- EN: **"In trading it's the opposite — there is only try. A starter position is the correct posture. Yoda would have blown up."**
+
+## 十、波动与情绪
+
+**179** ⭐⭐⭐ 全批最高的一条
+- 原句(《倚天屠龙记》九阳真经):「他强由他强,清风拂山岗」
+- **拆:** 波动是它的,仓位是我的。这两件事一直是分开的,只是大多数人把它们绑在一起了。
+- EN: **"The volatility is theirs. The size is mine. Those were always two different things — most people just tie them together."**
+
+**180** ⭐⭐⭐
+- 原句(《沙丘》):*"Fear is the mind-killer."*
+- **拆:** 恐惧不是杀手,杠杆才是。恐惧只是它的症状。
+- EN: **"Fear isn't the mind-killer. Leverage is. Fear is just the symptom."**
+
+**181** ⭐⭐⭐
+- 原句(《星球大战》):*"I've got a bad feeling about this."*
+- **拆:** 那不是信号。那是仓位太大。
+- EN: **"That's not a signal. That's your size."**
+
+**182** ⭐⭐
+- 原句(《义海雄风》):*"You can't handle the truth!"*
+- **拆:** 你扛不住的不是真相,是波动。真相谁都扛得住 —— 它不上杠杆。
+- EN: **"It's not the truth you can't handle. It's the volatility. The truth is fine — it isn't levered."**
+
+## 十一、回撤与生存
+
+**183** ⭐⭐⭐
+- 原句(《洛奇》):*"It ain't about how hard you hit. It's about how hard you can get hit and keep moving forward."*
+- **拆:** 这是最好的一句回撤定义,而且它来自一个拳击手,不是一个基金经理。
+- EN: **"Best definition of drawdown ever written, and it came from a boxer, not a fund manager."**
+
+**184** ⭐⭐⭐ 反转日本国民台词
+- 原句(《灌篮高手》安西教练):「あきらめたら、そこで試合終了ですよ」(放弃的话,比赛就结束了)
+- **拆:** 交易里正好反过来 —— **不放弃的那个,才是比赛结束的那个。**
+- EN: **"In trading it runs backwards: the one who refuses to give up is the one whose game ends."**
+
+**185** ⭐⭐
+- 原句(《甄嬛传》):「臣妾做不到啊」
+- **拆:** 止损就是每天对市场说一次这句话,然后真的做到。
+- EN: (中文侧专用,不译)
+
+## 十二、顶部与人群
+
+**186** ⭐⭐⭐
+- 原句(《泰坦尼克号》):*"I'm the king of the world!"*
+- **拆:** 每个顶部都有人喊这句。船是四天之后的事。
+- EN: **"Somebody yells this at every top. The iceberg is four days later."**
+
+**187** ⭐⭐⭐ 一句话讲完动能交易
+- 原句(《让子弹飞》):「谁赢他们帮谁」
+- **拆:** 这是动能交易最简洁的定义,而且它讲的是人群,不是图形。
+- EN: **"The most compact definition of momentum ever written, and it's about people, not charts."**
+
+**188** ⭐⭐⭐
+- 原句(《第六感》):*"I see dead people."*
+- **拆:** 我看见的是套牢盘。他们不知道自己已经是阻力位了。
+- EN: **"I see trapped longs. They don't know they've become resistance."**
+
+## 十三、认知与执念
+
+**189** ⭐⭐⭐ 「信念」这个词的解药
+- 原句(《公主新娘》):*"You keep using that word. I do not think it means what you think it means."*
+- **拆:** 每次有人说 conviction,我都想放这一句。多数时候那个词的意思是「我不想止损」。
+- EN: **"Every time someone says 'conviction.' Most of the time the word means 'I don't want to take the stop.'"**
+
+**190** ⭐⭐⭐ 套牢盘的标准时间单位
+- 原句(《无间道》):「三年之后又三年」
+- **拆:** 这不是台词,这是套牢盘的计时单位。
+- EN: **"That's not a movie line, that's the unit of time a bagholder measures in."**
+
+**191** ⭐⭐
+- 原句(《唐人街》):*"Forget it, Jake. It's Chinatown."*
+- **拆:** 有些日子不需要解释。算了,这是市场。
+- EN: **"Some days don't need an explanation. Forget it — it's the market."**
+
+**192** ⭐⭐
+- 原句(《肮脏的哈里》):*"Do you feel lucky, punk?"*
+- **拆:** 市场每天开盘都在问这句。带止损的人不用回答。
+- EN: **"The open asks this every single day. If you have a stop, you don't have to answer."**
+
 ## ⛔ 黑名单(过不了平庸闸,一律不用)
 
 | 台词 | 为什么死 |
