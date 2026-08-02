@@ -74,6 +74,14 @@ def generate_rr_chart(trades, capital, out_path,
         ax.annotate(f"{t.ticker} +{t.R:.0f}R", (i, t.R), xytext=(0, 6),
                     textcoords="offset points", ha="center", fontsize=8.5,
                     color="#1e7e34", fontweight="bold")
+    # annotate the biggest loss
+    worst = min(rr, key=lambda t: t.R)
+    if worst.R < -1.5:
+        ax.set_ylim(min(min(Rs) - 1.6, -3), hi + 2.5)
+        i = rr.index(worst)
+        ax.annotate(f"{worst.ticker} {worst.R:.1f}R", (i, worst.R), xytext=(0, -6),
+                    textcoords="offset points", ha="center", va="top", fontsize=8.5,
+                    color="#b3241b", fontweight="bold")
 
     head = headline or (f"{ret_pct:+.1f}%  ·  {len(Rs)} trades  ·  {win_rate:.0f}% win rate  ·  "
                         f"+{sum_r:.0f}R total  ·  avg win {avg_win:.1f}R / avg loss {avg_loss:.1f}R")
