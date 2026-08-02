@@ -23,12 +23,12 @@ a market letter by Fluxus
 Everyone tells you what to buy. Nobody tells you how much. That's the part that decides your year.
 ```
 
-**Hero text(主页大字块 —— 对标 TSF 那段三行硬广):**
+**Hero text(主页大字块 —— ⚠️ 短版。长版留给 Squarespace,见 `Fluxus_Action_Plan.md`):**
 ```
-Welcome to How Much.
+Momentum, risk, and how much. From Japan, on Asian hours.
 
-• A letter about position size — every idea arrives with its stop and its risk in percent
-• A public record, losers included — 303 trades, 42.7% win rate, and why that's the job
+• Every idea arrives with its size and its stop — you'll never have to ask how much
+• A public record, losers included — 331 trades, 39.9% win rate, and why that's the job
 • Fluxus Analytics — the measurement stack I actually trade off: regime, breadth, dealer gamma
 
 I don't have opinions. I have measurements.
@@ -122,7 +122,7 @@ Every idea comes with its size. This is the whole point. An idea without a size 
 a conversation. You'll see the entry, the stop, the trade risk in percent, and the portfolio risk in
 percent — on every single one, winners and losers alike.
 
-You'll see the losses. My win rate is 42.7%. I lose more often than I win and the year still works,
+You'll see the losses. My win rate is 39.9%. I lose more often than I win and the year still works,
 because the winners are 3.15x the losers. If I only showed you the good ones you'd learn the wrong
 job.
 

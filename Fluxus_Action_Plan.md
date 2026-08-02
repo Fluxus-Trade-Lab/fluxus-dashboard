@@ -211,6 +211,16 @@ Citrini:*"you'll never have to ask 'what's the trade?'"* —— 他不承诺「�
 >
 > **The promise: every idea arrives with its size and its stop. You'll never have to ask how much.**
 
+**⚠️ 以上是长版 —— 留给 Squarespace 官网的 The Letter 区块。Substack 用短版**(字段分配见 `Fluxus_Substack/00_SETUP.md`):
+
+| Substack 字段 | 内容 |
+|---|---|
+| **Name** | `How Much` |
+| **Subtitle** | `a market letter by Fluxus` |
+| **Short description**(150 字符内) | *Everyone tells you what to buy. Nobody tells you how much. That's the part that decides your year.* |
+| **Hero text**(主页大字块) | *Momentum, risk, and how much. From Japan, on Asian hours.* + 三行(承诺 / 公开记录 331 笔 39.9% / Fluxus Analytics)+ *I don't have opinions. I have measurements.* |
+| **About 页** | 用上面的长版 + 母题段 + testimonial |
+
 **为什么这个名字成立(用户 2026-08-01 提出,比最初的论证更强):`How much` 既是价格也是数量,它贯穿整门手艺** —— 这家公司值多少 · 这只股票现在多少 · 需要多少信息才够、多少之后是噪音 · 敢冒多少险。**四个问题一个词,而大多数信只回答第二个。** 且自带喜剧空间("How much did you make?" — "Wrong question.")。
 
 **三层各就各位(此前它们挤在一个词组里,所以两边都不锋利):**
