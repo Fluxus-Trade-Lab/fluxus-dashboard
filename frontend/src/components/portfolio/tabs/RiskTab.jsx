@@ -7,8 +7,8 @@ const METRIC_NOTES = {
     desc: 'Projected yearly return based on your actual cumulative equity curve, geometrically scaled to 252 trading days. Positive means your portfolio is growing; negative means shrinking.',
   },
   maxDrawdown: {
-    title: 'Max Drawdown',
-    desc: 'Largest peak-to-trough decline in your equity curve. Measures worst-case loss from any high point. Above -10% is mild; -10% to -20% is moderate; below -20% is significant. Lower (closer to 0%) is better.',
+    title: 'Max Drawdown (MTM)',
+    desc: 'Largest peak-to-trough decline in the daily mark-to-market equity curve (cash + open positions marked at the close). Same method as the performance report and the Python engine. Above -10% is mild; -10% to -20% is moderate; below -20% is significant.',
   },
   correlation: {
     title: 'Correlation',
@@ -39,7 +39,8 @@ export default function RiskTab({ riskMetrics, benchmarkTicker }) {
 
   const metrics = [
     { key: 'annualizedReturn', value: fmtPct(riskMetrics.annualizedReturn), color: clr(riskMetrics.annualizedReturn) },
-    { key: 'maxDrawdown', value: fmtPct(-riskMetrics.maxDrawdown), color: 'text-red-500' },
+    { key: 'maxDrawdown', value: fmtPct(-riskMetrics.maxDrawdown), color: 'text-red-500',
+      sub: riskMetrics.ddPeakDate ? `${riskMetrics.ddPeakDate} → ${riskMetrics.ddTroughDate}` : undefined },
     ...(riskMetrics.correlation != null ? [{ key: 'correlation', label: `Corr (${benchmarkTicker})`, value: fmt(riskMetrics.correlation, 3), color: '' }] : []),
     ...(riskMetrics.beta != null ? [{ key: 'beta', value: fmt(riskMetrics.beta, 3), color: '' }] : []),
     ...(riskMetrics.alpha != null ? [{ key: 'alpha', value: fmtPct(riskMetrics.alpha), color: clr(riskMetrics.alpha) }] : []),

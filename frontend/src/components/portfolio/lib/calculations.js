@@ -234,12 +234,20 @@ export function computeRiskMetrics(performanceData, benchmarkTicker) {
   const cumReturn = performanceData[performanceData.length - 1].returnPct / 100
   const annRet = n > 0 ? ((1 + cumReturn) ** (252 / n) - 1) * 100 : 0
 
-  let peak = 1, maxDD = 0, eq = 1
-  pr.forEach(r => {
-    eq *= (1 + r)
-    if (eq > peak) peak = eq
-    const dd = (peak - eq) / peak
-    if (dd > maxDD) maxDD = dd
+  // Max drawdown — CANONICAL MTM method: peak-to-trough on the actual daily
+  // mark-to-market equity `value` (cash + open positions), identical to
+  // equityCurve.js computeDrawdown and the Python mtm.drawdown used in the
+  // performance report. (The old version compounded per-day returnPct into an
+  // index; this uses the equity dollars directly and also yields the DD window.)
+  let peakV = -Infinity, maxDD = 0, ddPeakDate = null, ddTroughDate = null, curPeakDate = null
+  performanceData.forEach(pt => {
+    const v = pt.value
+    if (v == null) return
+    if (v > peakV) { peakV = v; curPeakDate = pt.date }
+    if (peakV > 0) {
+      const dd = (peakV - v) / peakV
+      if (dd > maxDD) { maxDD = dd; ddTroughDate = pt.date; ddPeakDate = curPeakDate }
+    }
   })
 
   let correlation = null, beta = null, alpha = null
@@ -274,7 +282,8 @@ export function computeRiskMetrics(performanceData, benchmarkTicker) {
   const dsDev = ds.length > 0 ? Math.sqrt(ds.reduce((s, r) => s + (r - rfD) ** 2, 0) / ds.length) : 0
   const sortino = dsDev > 0 ? ((avgP - rfD) / dsDev) * Math.sqrt(252) : 0
 
-  return { annualizedReturn: annRet, maxDrawdown: maxDD * 100, correlation, beta, alpha, sharpe, sortino }
+  return { annualizedReturn: annRet, maxDrawdown: maxDD * 100, ddPeakDate, ddTroughDate,
+           correlation, beta, alpha, sharpe, sortino }
 }
 
 export function computeSectorData(openTrades) {
