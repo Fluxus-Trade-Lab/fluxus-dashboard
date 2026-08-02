@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { rMultiple, rRisk } from '../../portfolio/lib/diagnosticsR'
+import TradeCaseStudies from './TradeCaseStudies'
 
 const mean = a => (a.length ? a.reduce((s, x) => s + x, 0) / a.length : 0)
 const money = v => (v < 0 ? '-$' : '$') + Math.abs(Math.round(v)).toLocaleString()
@@ -105,6 +106,8 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
 
   return (
     <div>
+      <TradeCaseStudies enriched={enriched} />
+
       <Card n="1" title="Largest losses — where the holes come from"
         verdict="The leak isn't bottom-fishing or bag-holding — the first entry is small; the hole is dug by everything added after it goes red. Two modes: averaging into a rolling name (A) and chasing an extended one (B).">
         Losers are cut <b>fast</b> (avg {d.avgLossHold.toFixed(1)}d vs winners {d.avgWinHold.toFixed(1)}d). The damage is in the <b>re-adds</b>, not the first entry:
