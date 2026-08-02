@@ -51,15 +51,10 @@ def generate_rr_chart(trades, capital, out_path,
     fig, ax = plt.subplots(figsize=(13, 6.4), dpi=170)
     ax.bar(xs, Rs, color=colors, width=0.85, linewidth=0)
     ax.axhline(0, color="#888", lw=0.8)
-    # reference lines for avg win / loss
-    ax.axhline(avg_win, color="#2e9e4f", lw=0.9, ls="--", alpha=0.6)
-    ax.axhline(avg_loss, color="#d0362b", lw=0.9, ls="--", alpha=0.6)
+    # reference lines for avg win / loss (unlabeled — numbers are in the subtitle)
+    ax.axhline(avg_win, color="#2e9e4f", lw=0.9, ls="--", alpha=0.5)
+    ax.axhline(avg_loss, color="#d0362b", lw=0.9, ls="--", alpha=0.5)
     hi = max(Rs)
-    ax.text(len(Rs) - 1, avg_win, f"  avg win +{avg_win:.1f}R", va="bottom", ha="right",
-            fontsize=9, color="#1e7e34", fontweight="bold")
-    ax.text(len(Rs) - 1, avg_loss, f"  avg loss {avg_loss:.1f}R", va="top", ha="right",
-            fontsize=9, color="#b3241b", fontweight="bold")
-
     ax.set_ylim(min(min(Rs) - 1, -3), hi + 2.5)
     ax.set_ylabel("R multiple  (profit ÷ initial risk)", fontsize=11, color="#333")
     ax.set_xlabel(f"Closed trades in sequence  ({period_label})", fontsize=11, color="#333")
@@ -84,7 +79,7 @@ def generate_rr_chart(trades, capital, out_path,
                         f"+{sum_r:.0f}R total  ·  avg win {avg_win:.1f}R / avg loss {avg_loss:.1f}R")
     ax.set_title(f"{title}", fontsize=16, fontweight="bold", color="#111", loc="left", pad=30)
     fig.text(0.125, 0.905, head, fontsize=11, color="#555")
-    risk_note = (f"1R ≈ {avg_risk_pct:.2f}% of capital  (avg initial risk; target 0.25%)"
+    risk_note = (f"1R ≈ {avg_risk_pct:.2f}% of capital"
                  if avg_risk_pct is not None else "")
     if risk_note:
         fig.text(0.125, 0.876, risk_note, fontsize=9.5, color="#999")
