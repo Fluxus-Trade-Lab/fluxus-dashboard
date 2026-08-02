@@ -1,4 +1,6 @@
-# ALLY OF VOLATILITY — 周信
+# HOW MUCH — 周信
+
+*刊名 2026-08-01 定;「ally of volatility」已挪到立场位(bio + 副标题)。全套刊名/副标题/About/testimonial 见 `Fluxus_Action_Plan.md`。*
 
 *⚠️ 2026-08-01 重写。此前版本是 Daily Recap 的低配版 —— 方向错了,已废弃。*
 
@@ -27,7 +29,7 @@ Daily Recap 最后那块教学段(如 *"Change of Character" Off a Capitulation 
 ## 骨架(待第一封毛坯后定版)
 
 ```
-ALLY OF VOLATILITY · <日期>
+HOW MUCH · <日期>
 
 # <标题 = 那个想法>           ← 不是日期,不是「本周回顾」
                               命名的主题会被记住、被等待、被连载

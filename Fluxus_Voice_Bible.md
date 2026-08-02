@@ -1,4 +1,6 @@
-# ALLY OF VOLATILITY — Voice & Character Bible
+# FLUXUS — Voice & Character Bible
+
+*声音属于门牌(Fluxus),覆盖 X · Discord · 信三个场地。信的刊名是 **How Much**;「ally of volatility」是**立场**,活在 bio 和副标题里。*
 
 *The market letter as the flagship product. Voice is the moat. This is the source of truth for tone, cast, and format.*
 
@@ -71,7 +73,7 @@ The actual art movement was built on **event scores** (written instructions to p
 
 ## 6. Repeatable format
 
-1. **Masthead:** ALLY OF VOLATILITY + date
+1. **Masthead:** HOW MUCH + date
 2. **Headline:** an aphorism / market truth
 3. **The tape** in 3–4 cold full sentences: what the Herd is doing (sentiment), what the Algo Monkeys are forced to do (flow), the read
 4. **One daily-life toggle** (grocery low / art high)
@@ -82,7 +84,7 @@ The actual art movement was built on **event scores** (written instructions to p
 
 ## Template issue — April 8, 2025
 
-**ALLY OF VOLATILITY** · *April 8, 2025*
+**HOW MUCH** · *April 8, 2025*
 
 ### Bottoms are an event, tops are a process.
 

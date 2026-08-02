@@ -301,7 +301,7 @@ Citrini:*"you'll never have to ask 'what's the trade?'"* —— 他不承诺「�
 ## PHASE 2 — Voice (do second, deploy what's built)
 
 - [ ] **Ship the homepage rewrite** — hero, "Who is Fluxus," the 2% approach, the three-players section, de-hyped ticker, voiced tiers. All paste-ready in the bible register.
-- [ ] **Launch "Ally of Volatility" on a fixed cadence.** Consistency *is* the product; a beloved free-ish letter is the funnel (warm acquisition vs. his cold funnel).
+- [ ] **Launch *How Much* on a fixed cadence.** Consistency *is* the product; a beloved free-ish letter is the funnel (warm acquisition vs. his cold funnel).
 - [ ] **Run the cast + lexicon consistently** every issue — the Herd, the Algo Monkeys, the First Penguin, banana/cabbage — until readers wait for them.
 - [ ] **Go bilingual (EN + 中文).** The banana/白菜价 toggle already bridges it; this contests J Law's audience with a weapon he lacks.
 
