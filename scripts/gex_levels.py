@@ -45,7 +45,7 @@ from ib_async import IB, Index, Stock, Option
 # pipeline package is not importable without help.
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pipeline.gex.blackscholes import bs_charm
-from pipeline.gex.derive import iv_tenors
+from pipeline.gex.derive import iv_tenors, select_tenors
 from pipeline.marketcal import market_now as _market_now  # trading dates: ET, never host JST
 
 # ----------------------------------------------------------------------------
@@ -186,9 +186,28 @@ def main():
     ch = next((x for x in chains if x.tradingClass == c["tclass"]
                and x.exchange in ("SMART", "CBOE")), None) or chains[0]
     today = _market_now().strftime("%Y%m%d")
-    exps = sorted(e for e in ch.expirations if e >= today)[:args.expiries]
+    fwd = sorted(e for e in ch.expirations if e >= today)
+    # Taking the N nearest is wrong now that SPX expires daily: on a Monday the
+    # five nearest are all this week's dailies, so the 5-14 DTE swing tenor and
+    # the monthly OPEX fall out of the chain entirely. That silently starves
+    # select_tenors/iv_tenors -- 2026-08-03 pulled with swing = None, which in
+    # turn pushes strategy_fit's condor rule down its "IV unavailable" branch.
+    # Take the nearest N, then ADD the swing and monthly anchors if missing.
+    exps = fwd[:args.expiries]
+    anchors = select_tenors(fwd, _market_now().date())
+    for key in ("swing", "monthly"):
+        e = anchors.get(key)
+        if e and e not in exps:
+            exps.append(e)
+    # This week's Friday, which carries the weekly OI even when dailies crowd it out.
+    d0 = _market_now().date()
+    friday = (d0 + dt.timedelta(days=(4 - d0.weekday()) % 7)).strftime("%Y%m%d")
+    if friday in fwd and friday not in exps:
+        exps.append(friday)
+    exps = sorted(set(exps))
     if not exps:
         print("No forward expirations found."); ib.disconnect(); return
+    print(f"Tenor anchors: swing={anchors.get('swing')} monthly={anchors.get('monthly')}")
 
     lo, hi = spot * (1 - args.width), spot * (1 + args.width)
     strikes = sorted(s for s in ch.strikes if lo <= s <= hi
