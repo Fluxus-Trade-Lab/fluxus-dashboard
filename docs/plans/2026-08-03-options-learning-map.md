@@ -82,13 +82,22 @@ thesis survive or die in real time. His own line: *"Watching the flow ... as it 
 is where the edge is."* This is not a levels service; it is a **thinking-out-loud
 service**. That is much harder to copy than a number, and much cheaper to produce.
 
-**3. Path vs displacement, tracked publicly.** From 2026-07-31:
+**3. Path vs displacement, tracked publicly.** *(the FOMC fly closed at "90% of the day's
+potential profit" per his 2026-07-30 update — consistent with the 16.65 mark measured
+here against a ~17.3 ceiling; "90% of potential" is not a 90% return.)* From 2026-07-31:
 > *"Day range ~8.7 points against a ±5 pre-market straddle — realized vol blew past what
 > was priced. IV 30.33% → 21.34%."*
 
 He separates **how far price travelled** from **where it ended**, and scores the day
 against what was priced. (This is the same distinction that corrected the "SPX options
 are overpriced" read earlier in this repo's history.) **He publishes the scorecard.**
+
+**3b. Sequence over position — his actual core claim.**
+> *"The tell isn't where the money sits. It's in the sequence (aka context)."*
+
+Static OI/GEX is where the money sits; he trades the **order events occur in**, counting
+*inflections* rather than levels. Our GEX stack is entirely static snapshots — see
+`2026-08-03-repeatable-process.md`, item A1.
 
 **4. AI-as-analyst as a content format.** The 2026-07-29 "AI option picking" test —
 publish the prompt, publish the machine's answer, follow it as a natural history, and be
