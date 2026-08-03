@@ -62,6 +62,38 @@ def bs_vega(S, K, T, sigma, r=0.0):
     return S * _norm_pdf(_d1(S, K, T, sigma, r)) * math.sqrt(T) / 100.0
 
 
+def bs_charm(S, K, T, sigma, right="C", r=0.0, q=0.0):
+    """Delta decay PER CALENDAR DAY: how far delta drifts if nothing else moves.
+
+    Sign convention is the trap here. This returns d(delta)/dt where t is
+    calendar time moving FORWARD, so it is the negative of d(delta)/dT (T =
+    time to expiry, which shrinks as t advances). Consequences worth stating:
+      * ITM -> charm > 0 (delta climbs toward ±1 as expiry approaches)
+      * OTM -> charm < 0 (delta bleeds toward 0)
+
+    Calls and puts are identical only when q == 0; a dividend yield splits them
+    because put delta is then -e^(-qT)N(-d1), not call delta minus a constant.
+
+    Why it matters: gamma forces dealers to re-hedge when SPOT moves; charm
+    forces them to re-hedge when TIME passes. Two independent drivers, which is
+    why their peaks coinciding on a strike is a stronger pin read than either
+    alone. Returns None if inputs invalid.
+    """
+    if not (S > 0 and K > 0 and T > 0 and sigma > 0):
+        return None
+    srt = sigma * math.sqrt(T)
+    d1 = (math.log(S / K) + (r - q + 0.5 * sigma * sigma) * T) / srt
+    dd1_dT = (-math.log(S / K) / (2 * sigma * T ** 1.5)
+              + (r - q + 0.5 * sigma * sigma) / (2 * srt))
+    disc = math.exp(-q * T)
+    drift = -disc * _norm_pdf(d1) * dd1_dT
+    if q == 0.0:
+        return drift / 365.0
+    carry = (q * disc * _norm_cdf(d1) if right == "C"
+             else -q * disc * _norm_cdf(-d1))
+    return (drift + carry) / 365.0
+
+
 def implied_vol(price, S, K, T, right, r=0.0, lo=0.005, hi=5.0, tol=1e-4, iters=64):
     """Solve BS implied vol from an option price via bisection.
 

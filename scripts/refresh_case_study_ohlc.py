@@ -19,6 +19,8 @@ import glob
 import json
 import sys
 from datetime import datetime, timezone
+
+from pipeline.marketcal import market_today
 from pathlib import Path
 
 import yfinance as yf
@@ -131,6 +133,6 @@ if __name__ == "__main__":
     force = "--force" in sys.argv
     tickers = argv or top_case_study_tickers()
     # A file whose last bar is within ~4 calendar days is treated as fresh (weekends).
-    fresh_cutoff = (date.today() - timedelta(days=4)).isoformat()
+    fresh_cutoff = (market_today() - timedelta(days=4)).isoformat()
     print(f"Refreshing 2y OHLC for: {', '.join(tickers)}{' (force)' if force else ''}")
     main(tickers, force=force, fresh_within=fresh_cutoff)

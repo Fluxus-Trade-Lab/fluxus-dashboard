@@ -44,6 +44,7 @@ from ib_async import IB, Index, Stock, Option
 # Running this as a script puts scripts/ on sys.path, not the repo root, so the
 # pipeline package is not importable without help.
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from pipeline.gex.blackscholes import bs_charm
 from pipeline.gex.derive import iv_tenors
 from pipeline.marketcal import market_now as _market_now  # trading dates: ET, never host JST
 
@@ -100,6 +101,21 @@ def bs_gamma(S, K, T, sigma, r=RISK_FREE, q=DIV_YIELD):
     srt = sigma * math.sqrt(T)
     d1 = (math.log(S / K) + (r - q + 0.5 * sigma * sigma) * T) / srt
     return math.exp(-q * T) * norm_pdf(d1) / (S * srt)
+
+
+def norm_cdf(x):
+    return 0.5 * (1.0 + math.erf(x / math.sqrt(2.0)))
+
+
+def bs_delta_q(S, K, T, sigma, right, r=RISK_FREE, q=DIV_YIELD):
+    """Delta with the same r/q convention as bs_gamma above."""
+    if S <= 0 or K <= 0 or sigma <= 0:
+        return 0.0
+    T = max(T, MIN_T_YEARS)
+    srt = sigma * math.sqrt(T)
+    d1 = (math.log(S / K) + (r - q + 0.5 * sigma * sigma) * T) / srt
+    nd1 = norm_cdf(d1)
+    return math.exp(-q * T) * (nd1 if right == "C" else nd1 - 1.0)
 
 
 def resolve_spot(ib, u, symbol, override, delayed):
@@ -244,6 +260,39 @@ def main():
     df["gex"] = df.apply(lambda r: r["sign"] * eff_gamma(r) * r["oi"] * scale, axis=1)
     per_strike = df.groupby("strike")["gex"].sum().sort_index()
 
+    # ------------------------------------------------------------------
+    # CHARM exposure: $ of dealer delta that drifts per CALENDAR DAY.
+    #   Gamma forces re-hedging when spot moves; charm forces it when time
+    #   passes. They are independent drivers, so a strike where BOTH peak is a
+    #   stronger pin read than either alone -- and charm dominates into expiry,
+    #   which is exactly when GEX alone stops explaining the tape.
+    #   delta notional per contract = mult * spot, hence no spot^2 here.
+    # ------------------------------------------------------------------
+    #   Measured as TOTAL drift to expiry, not the instantaneous per-day rate.
+    #   Charm carries a 1/T^1.5 term and diverges as T->0, so a per-day figure on
+    #   0DTE is set by the MIN_T_YEARS floor rather than by the book: on the
+    #   2026-07-31 chain the floored 0DTE leg supplied 92.6% of the total, which
+    #   is an artifact of the floor, not structure. Delta at expiry is exactly 0
+    #   or +/-1, so (terminal delta - current delta) is bounded, floor-free, and
+    #   answers the question that matters: how much re-hedging MUST still happen.
+    charm_scale = CONTRACT_MULTIPLIER * spot
+
+    def delta_drift(r):
+        """Delta the dealer must still hedge away between now and expiry."""
+        iv = r["iv"] or 0.0
+        if iv <= 0:
+            return 0.0
+        d_now = bs_delta_q(spot, r["strike"], max(r["T"], MIN_T_YEARS), iv, r["right"])
+        itm = (spot > r["strike"]) if r["right"] == "C" else (spot < r["strike"])
+        d_end = (1.0 if r["right"] == "C" else -1.0) if itm else 0.0
+        return d_end - d_now
+
+    df["charm"] = df.apply(
+        lambda r: r["sign"] * delta_drift(r) * r["oi"] * charm_scale, axis=1)
+    per_strike_charm = df.groupby("strike")["charm"].sum().sort_index()
+    charm_peak = per_strike_charm.abs().idxmax() if not per_strike_charm.empty else None
+    total_charm = per_strike_charm.sum()
+
     call_wall = per_strike.idxmax()
     put_wall = per_strike.idxmin()
     pin = per_strike.abs().idxmax()
@@ -336,6 +385,12 @@ def main():
                            ("swing", ivt["swing"], atm_iv_swing)):
         print(f" ATM IV ({label} {exp or '-'}) ... "
               f"{f'{iv:.1%}' if iv is not None else 'unavailable'}")
+    if charm_peak is not None:
+        _gp = per_strike.abs().idxmax()
+        _agree = ("  <-- SAME STRIKE as gamma peak" if _gp == charm_peak
+                  else f"  (gamma peak {_gp:.0f})")
+        print(f" CHARM peak strike ....... {charm_peak:.0f}   "
+              f"total {total_charm/1e9:+.2f} Bn$ delta to expiry{_agree}")
 
     # ------------------------------------------------------------------
     # persist
@@ -353,6 +408,9 @@ def main():
         atm_iv_tenors={"one_dte": ivt["one_dte"], "swing": ivt["swing"]},
         positive_pocket=[round(pocket[0], 2), round(pocket[1], 2)] if pocket else None,
         per_strike_gex={float(k): round(v, 2) for k, v in per_strike.items()},
+        per_strike_charm={float(k): round(v, 2) for k, v in per_strike_charm.items()},
+        total_charm=round(float(total_charm), 2),
+        charm_peak_strike=float(charm_peak) if charm_peak is not None else None,
         profile=[[round(s, 2), round(g, 2)] for s, g in zip(grid, profile)],
     )
     json_path = os.path.join(args.outdir, f"gex_{args.symbol}_{stamp}.json")

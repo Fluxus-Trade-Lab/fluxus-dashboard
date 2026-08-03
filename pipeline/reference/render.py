@@ -56,12 +56,18 @@ def _kv_table(rows: list[tuple[str, str, str]]) -> str:
     return f"<table><tbody>{body}</tbody></table>"
 
 
-def _gamma_svg(g: dict, window: int = 175) -> str:
-    """Diverging horizontal bar chart of per-strike net GEX around spot.
+CONFLUENCE_FRAC = 0.40   # a strike counts as "loaded" at >=40% of that metric's max
 
-    Bar length encodes size ($GEX/1%); green = positive (dampening), red =
-    negative (amplifying). Spot, flip and the walls are annotated. Pure inline
-    SVG so it stays self-contained and CSP-safe.
+
+def _gamma_svg(g: dict, window: int = 175) -> str:
+    """Per-strike dealer positioning: net GEX (thick) over charm drift (thin).
+
+    Bar length encodes size; green = positive, red = negative. The two metrics
+    share a row and a zero axis because the point is the COMPARISON: gamma
+    forces re-hedging when spot moves, charm when time passes. A strike where
+    both are large AND same-signed is under two independent forcings, which is
+    a stronger read than either bar alone — those rows are boxed and listed.
+    Pure inline SVG so it stays self-contained and CSP-safe.
     """
     ps = g.get("per_strike_gex") or {}
     spot = g.get("spot")
@@ -71,15 +77,22 @@ def _gamma_svg(g: dict, window: int = 175) -> str:
                     if abs(float(k) - spot) <= window), key=lambda kv: kv[0])
     if not items:
         return ""
+    charm = {float(k): float(v) for k, v in (g.get("per_strike_charm") or {}).items()}
     strikes = [k for k, _ in items]
     maxabs = max(abs(v) for _, v in items) or 1.0
+    cmax = max((abs(charm.get(k, 0.0)) for k in strikes), default=0.0) or 1.0
 
-    W, rowh, padL, padR, padT = 760, 17, 78, 24, 26
+    # Same sign and both loaded -> two independent forcings agree.
+    conf = {k for k, v in items
+            if charm.get(k) is not None and v * charm.get(k, 0.0) > 0
+            and abs(v) >= CONFLUENCE_FRAC * maxabs
+            and abs(charm.get(k, 0.0)) >= CONFLUENCE_FRAC * cmax}
+
+    W, rowh, padL, padR, padT = 760, 20, 78, 24, 26
     H = len(items) * rowh + padT + 18
     cx = padL + (W - padL - padR) / 2.0          # zero axis
     half = (W - padL - padR) / 2.0 - 46          # leave room for value labels
     call_wall, put_wall = g.get("call_wall"), g.get("put_wall")
-    flip = g.get("zero_gamma_flip")
 
     parts = [f"<svg viewBox='0 0 {W} {H}' width='100%' role='img' "
              f"style='font-family:var(--mono);font-size:10px'>"]
@@ -88,25 +101,33 @@ def _gamma_svg(g: dict, window: int = 175) -> str:
     # bars top=highest strike
     for i, (k, v) in enumerate(reversed(items)):
         y = padT + i * rowh
+        if k in conf:
+            parts.append(f"<rect x='{padL-40}' y='{y-2:.0f}' width='{W-padL-padR+44}' "
+                         f"height='{rowh-1}' fill='#5AA9FF' opacity='0.10' rx='3'/>")
+        # gamma: thick bar
         w = abs(v) / maxabs * half
         pos = v >= 0
-        x = cx if pos else cx - w
         color = "#42B96A" if pos else "#EF5E6B"
         is_wall = (k == call_wall or k == put_wall)
-        op = "0.95" if is_wall else "0.6"
-        parts.append(f"<rect x='{x:.1f}' y='{y:.0f}' width='{max(w,0.5):.1f}' height='{rowh-4}' "
-                     f"fill='{color}' opacity='{op}' rx='1.5'/>")
+        parts.append(f"<rect x='{(cx if pos else cx - w):.1f}' y='{y:.0f}' "
+                     f"width='{max(w,0.5):.1f}' height='9' "
+                     f"fill='{color}' opacity='{'0.95' if is_wall else '0.6'}' rx='1.5'/>")
+        # charm: thin bar underneath, same axis
+        cv = charm.get(k)
+        if cv is not None:
+            cw = abs(cv) / cmax * half
+            cpos = cv >= 0
+            parts.append(f"<rect x='{(cx if cpos else cx - cw):.1f}' y='{y+10:.0f}' "
+                         f"width='{max(cw,0.5):.1f}' height='5' "
+                         f"fill='{'#42B96A' if cpos else '#EF5E6B'}' opacity='0.35' rx='1'/>")
         klbl = f"{k:,.0f}"
-        weight = "700" if is_wall else "400"
-        kcolor = "#C7CDD8" if is_wall else "#79828F"
-        parts.append(f"<text x='{padL-8}' y='{y+rowh-7:.0f}' text-anchor='end' "
-                     f"fill='{kcolor}' font-weight='{weight}'>{klbl}</text>")
-        # value label at bar tip
+        kcolor = "#C7CDD8" if (is_wall or k in conf) else "#79828F"
+        parts.append(f"<text x='{padL-8}' y='{y+rowh-9:.0f}' text-anchor='end' "
+                     f"fill='{kcolor}' font-weight='{'700' if is_wall or k in conf else '400'}'>{klbl}</text>")
         vlbl = f"{v/1e9:+.2f}B"
         vx = (cx + w + 4) if pos else (cx - w - 4)
-        anchor = "start" if pos else "end"
-        parts.append(f"<text x='{vx:.1f}' y='{y+rowh-7:.0f}' text-anchor='{anchor}' "
-                     f"fill='#525b69'>{vlbl}</text>")
+        parts.append(f"<text x='{vx:.1f}' y='{y+rowh-9:.0f}' "
+                     f"text-anchor='{'start' if pos else 'end'}' fill='#525b69'>{vlbl}</text>")
 
     # spot line (interpolate y from strike grid)
     lo, hi = strikes[0], strikes[-1]
@@ -119,10 +140,25 @@ def _gamma_svg(g: dict, window: int = 175) -> str:
                      f"fill='#5AA9FF'>spot {spot:,.0f}</text>")
     parts.append("</svg>")
     legend = ("<div class='mut' style='font-size:11px;margin-top:6px'>"
-              "<span class='pos'>■</span> positive (dampens) &nbsp; "
-              "<span class='neg'>■</span> negative (amplifies) &nbsp;·&nbsp; "
-              "bold = wall &nbsp;·&nbsp; bar length = $GEX per 1%</div>")
-    return (f"<section><p class='lbl'>Gamma profile — per-strike net GEX "
+              "<span class='pos'>■</span> positive &nbsp; <span class='neg'>■</span> negative"
+              " &nbsp;·&nbsp; thick = net GEX per 1% &nbsp;·&nbsp; thin = delta drift to expiry"
+              " &nbsp;·&nbsp; bold = wall</div>")
+    if conf:
+        rows = "".join(
+            f"<tr><td class='mono'>{k:,.0f}</td>"
+            f"<td class='{'pos' if dict(items)[k] > 0 else 'neg'}'>{dict(items)[k]/1e9:+.2f}B</td>"
+            f"<td class='{'pos' if charm[k] > 0 else 'neg'}'>{charm[k]/1e9:+.2f}B</td></tr>"
+            for k in sorted(conf, reverse=True))
+        legend += (
+            "<p class='lbl' style='margin-top:18px'>Gamma × charm confluence</p>"
+            "<table><thead><tr><th>Strike</th><th>Net GEX</th><th>Drift to expiry</th></tr></thead>"
+            f"<tbody>{rows}</tbody></table>"
+            "<div class='mut' style='font-size:11px;margin-top:6px'>Both metrics same-signed and "
+            f"&ge;{CONFLUENCE_FRAC:.0%} of their max — two independent forcings on one strike.</div>")
+    else:
+        legend += ("<div class='mut' style='font-size:11px;margin-top:10px'>"
+                   "No strike carries both a large gamma and a large same-signed charm load today.</div>")
+    return (f"<section><p class='lbl'>Dealer positioning — net GEX + charm drift "
             f"(±{window} around spot)</p>{''.join(parts)}{legend}</section>")
 
 
