@@ -1,7 +1,7 @@
 {
   "symbol": "SPX",
   "date": "2026-08-03",
-  "generated_at": "2026-08-03T03:51:39-04:00",
+  "generated_at": "2026-08-03T04:09:06-04:00",
   "gex_source": "data/gex/gex_SPX_20260731.json",
   "gex": {
     "symbol": "SPX",
@@ -1175,5 +1175,20 @@
       "sign": "negative"
     }
   ],
-  "prior_session": "2026-07-30T07:33:34-04:00"
+  "prior_session": "2026-07-30T07:33:34-04:00",
+  "confluence": [
+    7350.0,
+    7375.0,
+    7400.0
+  ],
+  "intraday_sequence": [
+    {
+      "generated_at": "2026-07-31T11:27:30-04:00",
+      "spot": 7434.76,
+      "call_wall": 7550.0,
+      "put_wall": 7400.0,
+      "flip": 7440.08,
+      "total_gex": -1910712047.04
+    }
+  ]
 }

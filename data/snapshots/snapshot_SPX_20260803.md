@@ -19,4 +19,4 @@
 | 6 | 7,300 | -0.49B | -135 (below) |
 | 7 | 7,250 | -0.36B | -185 (below) |
 ---
-*Generated 2026-08-03T03:51:39-04:00. Levels are computed, not predicted — see method. Not advice.*
+*Generated 2026-08-03T04:09:06-04:00. Levels are computed, not predicted — see method. Not advice.*

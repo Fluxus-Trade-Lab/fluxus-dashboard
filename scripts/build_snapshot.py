@@ -22,6 +22,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pipeline.reference.render import render_snapshot_html, render_snapshot_md
 from pipeline.reference.context import percentile_of, ranked_levels, load_history
 from pipeline.gex.derive import wall_migration
+from pipeline.reference import levels_log as LL
 from pipeline.marketcal import market_now
 
 OUT_DIR = Path("data/snapshots")
@@ -105,6 +106,7 @@ def main():
     ap.add_argument("--symbol", default="SPX")
     ap.add_argument("--gex", help="Explicit GEX json path (default: latest for symbol).")
     ap.add_argument("--no-live", action="store_true", help="Skip the IBKR EM/VIX pull.")
+    ap.add_argument("--no-log", action="store_true", help="Do not append to the levels log.")
     args = ap.parse_args()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -133,9 +135,27 @@ def main():
         spot=g.get("spot") or 0,
         exclude={g.get("call_wall"), g.get("put_wall"), g.get("pin_strike")},
         n=7) if g.get("per_strike_gex") and g.get("spot") else []
+    # Confluence: same-signed and both loaded (mirrors the chart threshold).
+    gx = {float(k): float(v) for k, v in (g.get("per_strike_gex") or {}).items()}
+    ch = {float(k): float(v) for k, v in (g.get("per_strike_charm") or {}).items()}
+    confluence = []
+    if gx and ch:
+        gm = max(abs(v) for v in gx.values()) or 1.0
+        cm = max(abs(v) for v in ch.values()) or 1.0
+        confluence = [k for k in gx if k in ch and gx[k] * ch[k] > 0
+                      and abs(gx[k]) >= 0.4 * gm and abs(ch[k]) >= 0.4 * cm]
+
     g.setdefault("symbol", args.symbol)
     now = market_now()
     date_tag = now.strftime("%Y%m%d")
+
+    # Append-only record BEFORE rendering: what we believed at this moment.
+    if not args.no_log:
+        LL.append(LL.entry_from(g, symbol=args.symbol, confluence=confluence))
+    # Keyed on the DATA's session, not today: a brief built from Friday's chain
+    # should show Friday's sequence, not an empty Monday.
+    data_day = (g.get("generated_at") or now.isoformat())[:10]
+    seq = LL.intraday_sequence(LL.read(), data_day, args.symbol)
 
     em, vix = (None, None) if args.no_live else _try_live(args.symbol, g.get("spot") or 0)
     snap = {
@@ -150,6 +170,8 @@ def main():
         "wall_migration": migration,
         "secondary_levels": ladder,
         "prior_session": prior.get("generated_at") if prior else None,
+        "confluence": sorted(confluence),
+        "intraday_sequence": seq,
     }
     jp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.json"
     hp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.html"
