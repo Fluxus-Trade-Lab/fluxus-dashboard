@@ -55,6 +55,38 @@ def score_session(entry: dict, bar: dict, touch_tol: float = 0.0) -> list[dict]:
     return out
 
 
+def compare_cohorts(results: list[dict], split, labels=("flagged", "unflagged")) -> dict:
+    """Does a flag actually predict anything? Split the same results and compare.
+
+    This is the only way a method change can be judged rather than assumed. If
+    gamma-charm confluence adds information, confluence-flagged levels should
+    hold more often than unflagged ones; if the two rates sit on top of each
+    other, the flag is decoration and should be dropped.
+
+    `edge` is the difference in held-rate. `verdict` is deliberately conservative:
+    with few tested observations the honest answer is "inconclusive", and it says
+    so rather than reporting a difference that a couple of flips would erase.
+    """
+    a = [r for r in results if split(r)]
+    b = [r for r in results if not split(r)]
+    sa, sb = summarise(a)["total"], summarise(b)["total"]
+    edge = (sa["held_pct"] - sb["held_pct"]
+            if sa["held_pct"] is not None and sb["held_pct"] is not None else None)
+    tested = sa["tested"] + sb["tested"]
+    if edge is None or sa["tested"] < MIN_TESTED or sb["tested"] < MIN_TESTED:
+        verdict = "inconclusive — too few tested observations"
+    elif abs(edge) < 10:
+        verdict = "no measurable difference"
+    else:
+        verdict = f"{labels[0] if edge > 0 else labels[1]} held more often"
+    return {labels[0]: sa, labels[1]: sb, "edge_pct": edge,
+            "tested_total": tested, "verdict": verdict}
+
+
+# Below this many tested observations per cohort, refuse to call a winner.
+MIN_TESTED = 30
+
+
 def summarise(results: list[dict]) -> dict:
     """Cumulative table. Tested-only rate is reported next to the raw counts."""
     by_name: dict[str, dict] = {}
