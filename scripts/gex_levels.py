@@ -293,6 +293,30 @@ def main():
     charm_peak = per_strike_charm.abs().idxmax() if not per_strike_charm.empty else None
     total_charm = per_strike_charm.sum()
 
+    #   CHARM FLIP + GRADIENT. The peak says where the drift is biggest; the flip
+    #   says where its SIGN changes (dealers switch from buying to selling the
+    #   drift), and the gradient says how abruptly. A steep gradient at the flip
+    #   is a sharper boundary than a broad one at the same level.
+    charm_flip, charm_gradient = None, {}
+    ks = list(per_strike_charm.index)
+    for a, b in zip(ks, ks[1:]):
+        va, vb = per_strike_charm[a], per_strike_charm[b]
+        if va == 0:
+            charm_flip = float(a)
+        elif va * vb < 0:                       # sign change between adjacent strikes
+            # linear interpolation of the zero crossing
+            cross = a + (b - a) * (-va) / (vb - va)
+            if charm_flip is None or abs(cross - spot) < abs(charm_flip - spot):
+                charm_flip = round(float(cross), 1)
+    for a, b in zip(ks, ks[1:]):
+        if b != a:
+            charm_gradient[float(a)] = round(
+                float((per_strike_charm[b] - per_strike_charm[a]) / (b - a)), 2)
+    charm_flip_gradient = None
+    if charm_flip is not None and charm_gradient:
+        near = min(charm_gradient, key=lambda k: abs(k - charm_flip))
+        charm_flip_gradient = charm_gradient[near]
+
     call_wall = per_strike.idxmax()
     put_wall = per_strike.idxmin()
     pin = per_strike.abs().idxmax()
@@ -391,6 +415,10 @@ def main():
                   else f"  (gamma peak {_gp:.0f})")
         print(f" CHARM peak strike ....... {charm_peak:.0f}   "
               f"total {total_charm/1e9:+.2f} Bn$ delta to expiry{_agree}")
+        if charm_flip is not None:
+            print(f" CHARM flip .............. {charm_flip:.0f}"
+                  + (f"   gradient {charm_flip_gradient/1e6:+.0f} $mm/pt"
+                     if charm_flip_gradient else ""))
 
     # ------------------------------------------------------------------
     # persist
@@ -411,6 +439,9 @@ def main():
         per_strike_charm={float(k): round(v, 2) for k, v in per_strike_charm.items()},
         total_charm=round(float(total_charm), 2),
         charm_peak_strike=float(charm_peak) if charm_peak is not None else None,
+        charm_flip=charm_flip,
+        charm_flip_gradient=charm_flip_gradient,
+        per_strike_charm_gradient=charm_gradient,
         profile=[[round(s, 2), round(g, 2)] for s, g in zip(grid, profile)],
     )
     json_path = os.path.join(args.outdir, f"gex_{args.symbol}_{stamp}.json")
