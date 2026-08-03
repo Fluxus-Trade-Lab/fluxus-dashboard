@@ -228,8 +228,17 @@ def main():
         print(f"  ! {len(opts)} contracts exceeds --max-contracts {args.max_contracts}; "
               f"trimming to nearest expiries first.")
         opts = opts[:args.max_contracts]
-    opts = [o for o in ib.qualifyContracts(*opts) if o.conId]
-    print(f"Qualified {len(opts)} contracts; pulling greeks + OI ...")
+    # qualifyContracts returns None for anything the exchange does not list, and
+    # aggregating several expiries guarantees some: a strike listed on the weekly
+    # need not exist on the monthly. Filter the Nones before touching .conId --
+    # the naive comprehension crashed the whole pull the first time spot ran far
+    # enough for the +/-8% window to reach unlisted wings.
+    requested = len(opts)
+    opts = [o for o in ib.qualifyContracts(*opts) if o is not None and o.conId]
+    dropped = requested - len(opts)
+    print(f"Qualified {len(opts)} contracts"
+          + (f" ({dropped} unlisted strike/expiry pairs skipped)" if dropped else "")
+          + "; pulling greeks + OI ...")
 
     # greeks (snapshot) in batches
     greeks = {}
