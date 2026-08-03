@@ -19,7 +19,9 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from pipeline.reference.render import render_snapshot_html
+from pipeline.reference.render import render_snapshot_html, render_snapshot_md
+from pipeline.reference.context import percentile_of, ranked_levels, load_history
+from pipeline.gex.derive import wall_migration
 from pipeline.marketcal import market_now
 
 OUT_DIR = Path("data/snapshots")
@@ -108,6 +110,29 @@ def main():
 
     gex_path = Path(args.gex) if args.gex else _latest_gex(args.symbol)
     g = json.loads(gex_path.read_text())
+
+    # Prior sessions, oldest->newest, for the percentile and the day-over-day walls.
+    prior_docs = []
+    for p in sorted(glob.glob(str(GEX_DIR / f"gex_{args.symbol}_2*.json"))):
+        if Path(p) == gex_path:
+            continue
+        try:
+            prior_docs.append(json.loads(Path(p).read_text()))
+        except (OSError, json.JSONDecodeError):
+            continue
+    gex_pct = percentile_of(g.get("total_gex"), load_history(prior_docs)) \
+        if g.get("total_gex") is not None else None
+    prior = prior_docs[-1] if prior_docs else None
+    migration = wall_migration(
+        {"call_wall": g.get("call_wall"), "put_wall": g.get("put_wall"),
+         "flip": g.get("zero_gamma_flip")},
+        {"call_wall": prior.get("call_wall"), "put_wall": prior.get("put_wall"),
+         "flip": prior.get("zero_gamma_flip")} if prior else None)
+    ladder = ranked_levels(
+        {float(k): float(v) for k, v in (g.get("per_strike_gex") or {}).items()},
+        spot=g.get("spot") or 0,
+        exclude={g.get("call_wall"), g.get("put_wall"), g.get("pin_strike")},
+        n=7) if g.get("per_strike_gex") and g.get("spot") else []
     g.setdefault("symbol", args.symbol)
     now = market_now()
     date_tag = now.strftime("%Y%m%d")
@@ -121,13 +146,19 @@ def main():
         "gex": g,
         "expected_move": em,
         "vix": vix,
+        "gex_percentile": gex_pct,
+        "wall_migration": migration,
+        "secondary_levels": ladder,
+        "prior_session": prior.get("generated_at") if prior else None,
     }
     jp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.json"
     hp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.html"
+    mp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.md"
     jp.write_text(json.dumps(snap, indent=2))
     hp.write_text(render_snapshot_html(snap))
+    mp.write_text(render_snapshot_md(snap))
     live = "live EM+VIX" if (em and vix) else ("partial" if (em or vix) else "GEX-only (TWS down)")
-    print(f"snapshot [{live}]: {jp}\n                   {hp}")
+    print(f"snapshot [{live}]: {jp}\n                   {hp}\n                   {mp}")
     print(f"  GEX from {gex_path.name}: regime {g.get('regime')}, "
           f"call {g.get('call_wall')} / flip {g.get('zero_gamma_flip')} / put {g.get('put_wall')}")
 

@@ -1,7 +1,7 @@
 {
   "symbol": "SPX",
   "date": "2026-08-03",
-  "generated_at": "2026-08-03T02:49:58-04:00",
+  "generated_at": "2026-08-03T03:51:39-04:00",
   "gex_source": "data/gex/gex_SPX_20260731.json",
   "gex": {
     "symbol": "SPX",
@@ -1103,5 +1103,77 @@
     ]
   },
   "expected_move": null,
-  "vix": null
+  "vix": null,
+  "gex_percentile": {
+    "pct": 61.5,
+    "n": 13,
+    "min": -13257117980.17,
+    "max": 3739019159.68,
+    "thin": true
+  },
+  "wall_migration": {
+    "call_wall": 50.0,
+    "put_wall": 100.0,
+    "flip": 2.6,
+    "note": "call wall rolled up +50 (bullish tell); put wall raised +100 (floor strengthening)"
+  },
+  "secondary_levels": [
+    {
+      "rank": 1,
+      "strike": 7350.0,
+      "gex": -818309657.83,
+      "side": "below",
+      "distance": -84.8,
+      "sign": "negative"
+    },
+    {
+      "rank": 2,
+      "strike": 7375.0,
+      "gex": -805869504.84,
+      "side": "below",
+      "distance": -59.8,
+      "sign": "negative"
+    },
+    {
+      "rank": 3,
+      "strike": 7500.0,
+      "gex": 659276411.52,
+      "side": "above",
+      "distance": 65.2,
+      "sign": "positive"
+    },
+    {
+      "rank": 4,
+      "strike": 7475.0,
+      "gex": 658918547.37,
+      "side": "above",
+      "distance": 40.2,
+      "sign": "positive"
+    },
+    {
+      "rank": 5,
+      "strike": 7525.0,
+      "gex": 529098342.86,
+      "side": "above",
+      "distance": 90.2,
+      "sign": "positive"
+    },
+    {
+      "rank": 6,
+      "strike": 7300.0,
+      "gex": -490894720.88,
+      "side": "below",
+      "distance": -134.8,
+      "sign": "negative"
+    },
+    {
+      "rank": 7,
+      "strike": 7250.0,
+      "gex": -360915052.61,
+      "side": "below",
+      "distance": -184.8,
+      "sign": "negative"
+    }
+  ],
+  "prior_session": "2026-07-30T07:33:34-04:00"
 }

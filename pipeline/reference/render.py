@@ -162,6 +162,80 @@ def _gamma_svg(g: dict, window: int = 175) -> str:
             f"(±{window} around spot)</p>{''.join(parts)}{legend}</section>")
 
 
+def _pct_phrase(p: dict | None) -> str:
+    """Percentile with its sample size — n is never dropped on the way to the page."""
+    if not p or p.get("pct") is None:
+        return "no history yet"
+    warn = " (thin sample)" if p.get("thin") else ""
+    return f"{p['pct']:.0f}th pct of last {p['n']}{warn}"
+
+
+def _migration_html(m: dict | None) -> str:
+    """Day-over-day wall movement — the most narrative-ready number we compute."""
+    if not m or not m.get("note"):
+        return ""
+    rows = [(k.replace("_", " ").title(), f"{m[k]:+.0f}",
+             "pos" if m[k] > 0 else "neg")
+            for k in ("call_wall", "put_wall", "flip") if m.get(k) is not None]
+    body = _kv_table(rows) if rows else ""
+    return (f"<section><p class='lbl'>Since prior session</p>{body}"
+            f"<div class='mut' style='font-size:12px;margin-top:8px'>{m['note']}</div></section>")
+
+
+def _ladder_html(ladder: list | None) -> str:
+    """The strikes behind the headline walls — targets and stops between them."""
+    if not ladder:
+        return ""
+    rows = "".join(
+        f"<tr><td class='mut'>{r['rank']}</td><td class='mono'>{r['strike']:,.0f}</td>"
+        f"<td class='{'pos' if r['gex'] > 0 else 'neg'}'>{r['gex']/1e9:+.2f}B</td>"
+        f"<td class='mut'>{r['distance']:+.0f} {r['side']}</td></tr>" for r in ladder)
+    return ("<section><p class='lbl'>Behind the walls — ranked secondary levels</p>"
+            "<table><thead><tr><th>#</th><th>Strike</th><th>Net GEX</th><th>vs spot</th>"
+            f"</tr></thead><tbody>{rows}</tbody></table></section>")
+
+
+def render_snapshot_md(data: dict) -> str:
+    """Markdown twin of the HTML brief — pasteable into Substack/Discord."""
+    g = data["gex"]
+    L = [f"# {g.get('symbol','SPX')} — {data['date']}", ""]
+    spot = g.get("spot")
+    L.append(f"**Spot** {spot:,.0f}  ·  **Regime** {(g.get('regime') or '?').upper()}"
+             + (f" ({g['total_gex']/1e9:+.2f}B)" if g.get("total_gex") is not None else ""))
+    if data.get("gex_percentile"):
+        L.append(f"**Net GEX vs history:** {_pct_phrase(data['gex_percentile'])}")
+    L += ["", "## Rails", "",
+          "| Level | Strike |", "|---|---|",
+          f"| Call wall | {g.get('call_wall'):,.0f} |" if g.get("call_wall") else "",
+          f"| Zero-gamma flip | {g.get('zero_gamma_flip'):,.0f} |" if g.get("zero_gamma_flip") else "",
+          f"| Put wall / pin | {g.get('put_wall'):,.0f} |" if g.get("put_wall") else ""]
+    m = data.get("wall_migration")
+    if m and m.get("note"):
+        parts = [f"{k.replace('_',' ')} {m[k]:+.0f}" for k in ("call_wall", "put_wall", "flip")
+                 if m.get(k) is not None]
+        L += ["", f"**Since prior session:** {m['note']}"
+              + (f"  ({', '.join(parts)})" if parts else "")]
+    lad = data.get("secondary_levels") or []
+    if lad:
+        L += ["", "## Behind the walls", "",
+              "| # | Strike | Net GEX | vs spot |", "|---|---|---|---|"]
+        L += [f"| {r['rank']} | {r['strike']:,.0f} | {r['gex']/1e9:+.2f}B | "
+              f"{r['distance']:+.0f} ({r['side']}) |" for r in lad]
+    em = data.get("expected_move")
+    if em:
+        L += ["", "## Expected move", "", "| Expiry | Move | Range |", "|---|---|---|"]
+        L += [f"| {e['label']} ({e['expiry']}) | ±{e['pts']:.0f} ({e['pct']:.2f}%) | "
+              f"{e['low']:,.0f} – {e['high']:,.0f} |" for e in em]
+    v = data.get("vix")
+    if v:
+        term = v.get("vix3m", 0) - v.get("vix", 0)
+        L += ["", f"**VIX** {v['vix']:.2f} · **VIX3M** {v['vix3m']:.2f} · "
+              f"term {term:+.2f} ({'contango' if term > 0 else 'backwardation'})"]
+    L += ["", "---", f"*Generated {data['generated_at']}. Levels are computed, not "
+          "predicted — see method. Not advice.*"]
+    return "\n".join(x for x in L if x != "")
+
+
 def render_snapshot_html(data: dict) -> str:
     """Daily market snapshot: GEX rails + expected move + VIX term structure."""
     g = data["gex"]
@@ -175,6 +249,10 @@ def render_snapshot_html(data: dict) -> str:
         ("Zero-gamma flip", f"{g['zero_gamma_flip']:,.0f}" if g.get("zero_gamma_flip") else "—", "mono"),
         ("Put wall / pin", f"{g['put_wall']:,.0f}" if g.get("put_wall") else "—", "mono"),
     ]
+    p = data.get("gex_percentile")
+    if p and p.get("pct") is not None:
+        gex_rows.insert(2, ("Net GEX vs history", _pct_phrase(p),
+                            "warn" if p.get("thin") else "mut"))
     iv1, ivs = g.get("atm_iv_1dte"), g.get("atm_iv_swing")
     if iv1 or ivs:
         gex_rows.append(("ATM IV (1DTE / swing)",
@@ -210,7 +288,9 @@ def render_snapshot_html(data: dict) -> str:
         f"<div class='meta'><span>generated {data['generated_at']}</span>"
         f"<span class='{reg_cls}'>{regime} gamma</span></div>"
         f"<section><p class='lbl'>Dealer gamma rails</p>{gex_tbl}</section>"
+        f"{_migration_html(data.get('wall_migration'))}"
         f"{_gamma_svg(g)}"
+        f"{_ladder_html(data.get('secondary_levels'))}"
         f"{em_html}{vix_html}"
         f"<p class='foot'>GEX from data/gex/ · EM/VIX pulled live when available · "
         f"snapshot cached in data/snapshots/. Not advice.</p>"
