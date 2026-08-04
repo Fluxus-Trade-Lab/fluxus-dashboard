@@ -14,12 +14,14 @@ Usage:
     .venv/bin/python scripts/score_levels.py --md            # markdown for pasting
 """
 import argparse
+import datetime as dt
 import json
 import os
 import sys
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from pipeline.marketcal import market_now, market_today
 from pipeline.reference import levels_log as LL
 from pipeline.reference.scorecard import score_session, summarise
 
@@ -50,6 +52,25 @@ def _fetch_bars(symbol: str, days: int = 60) -> dict[str, dict]:
         ib.disconnect()
 
 
+RTH_CLOSE = dt.time(16, 0)
+
+
+def _drop_unfinished_session(bars: dict[str, dict]) -> dict[str, dict]:
+    """Refuse to score against a session that is still trading.
+
+    IBKR happily returns a partial bar for the current day. Its high/low are
+    whatever has printed so far and its "close" is the last tick — so a level
+    scored mid-session gets graded on a fraction of the range, and the verdict
+    can flip before the bell. That is the same failure mode as measuring an
+    ES-SPX basis from non-simultaneous quotes: the arithmetic is fine, the
+    input is not a finished quantity.
+    """
+    now = market_now()
+    if now.time() >= RTH_CLOSE:
+        return bars
+    return {d: b for d, b in bars.items() if d != str(market_today(now))}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--symbol", default="SPX")
@@ -61,7 +82,7 @@ def main():
     if not rows:
         sys.exit(f"levels log empty at {args.log} — run build_snapshot first")
     per_day = LL.last_entry_per_day(rows, args.symbol)
-    bars = _fetch_bars(args.symbol)
+    bars = _drop_unfinished_session(_fetch_bars(args.symbol))
     sessions = sorted(bars)
 
     results = []
