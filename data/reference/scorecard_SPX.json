@@ -311,41 +311,81 @@
       "verdict": "broke",
       "session": "2026-07-31",
       "published_at": "2026-07-30T07:33:34-04:00"
+    },
+    {
+      "level_name": "call_wall",
+      "kind": "resistance",
+      "level": 7550.0,
+      "verdict": "broke",
+      "session": "2026-08-03",
+      "published_at": "2026-07-31T11:27:30-04:00"
+    },
+    {
+      "level_name": "put_wall",
+      "kind": "support",
+      "level": 7400.0,
+      "verdict": "untested",
+      "session": "2026-08-03",
+      "published_at": "2026-07-31T11:27:30-04:00"
+    },
+    {
+      "level_name": "zero_gamma_flip",
+      "kind": "pivot",
+      "level": 7440.08,
+      "verdict": "broke",
+      "session": "2026-08-03",
+      "published_at": "2026-07-31T11:27:30-04:00"
+    },
+    {
+      "level_name": "charm_peak_strike",
+      "kind": "magnet",
+      "level": 7400.0,
+      "verdict": "untested",
+      "session": "2026-08-03",
+      "published_at": "2026-07-31T11:27:30-04:00"
     }
   ],
   "summary": {
     "by_level": {
       "call_wall": {
         "held": 4,
-        "broke": 1,
+        "broke": 2,
         "untested": 8,
-        "n": 13,
-        "tested": 5,
-        "held_pct": 80.0
+        "n": 14,
+        "tested": 6,
+        "held_pct": 66.7
       },
       "put_wall": {
         "held": 4,
         "broke": 2,
-        "untested": 7,
-        "n": 13,
+        "untested": 8,
+        "n": 14,
         "tested": 6,
         "held_pct": 66.7
       },
       "zero_gamma_flip": {
         "held": 4,
-        "broke": 4,
+        "broke": 5,
         "untested": 5,
-        "n": 13,
-        "tested": 8,
-        "held_pct": 50.0
+        "n": 14,
+        "tested": 9,
+        "held_pct": 44.4
+      },
+      "charm_peak_strike": {
+        "held": 0,
+        "broke": 0,
+        "untested": 1,
+        "n": 1,
+        "tested": 0,
+        "held_pct": null
       }
     },
     "total": {
       "held": 12,
-      "broke": 7,
-      "untested": 20,
-      "tested": 19,
-      "held_pct": 63.2
+      "broke": 9,
+      "untested": 22,
+      "tested": 21,
+      "held_pct": 57.1
     }
   }
 }

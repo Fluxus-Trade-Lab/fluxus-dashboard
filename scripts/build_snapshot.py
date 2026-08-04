@@ -20,6 +20,18 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pipeline.reference.render import render_snapshot_html, render_snapshot_md
+
+
+def _scorecard(symbol: str) -> dict | None:
+    """Our published levels, graded. Missing file is not an error — the brief
+    simply omits the block rather than implying a record we have not earned."""
+    p = Path("data/reference") / f"scorecard_{symbol}.json"
+    if not p.exists():
+        return None
+    try:
+        return json.loads(p.read_text()).get("summary")
+    except (json.JSONDecodeError, OSError):
+        return None
 from pipeline.reference.context import percentile_of, ranked_levels, load_history
 from pipeline.gex.derive import wall_migration
 from pipeline.reference import levels_log as LL
@@ -172,6 +184,7 @@ def main():
         "prior_session": prior.get("generated_at") if prior else None,
         "confluence": sorted(confluence),
         "intraday_sequence": seq,
+        "scorecard": _scorecard(args.symbol),
     }
     jp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.json"
     hp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.html"
