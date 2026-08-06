@@ -11,6 +11,7 @@ Usage:
     .venv/bin/python scripts/build_snapshot.py --gex data/gex/gex_SPX_20260722.json
 """
 import argparse
+import datetime as dt
 import glob
 import json
 import math
@@ -20,6 +21,40 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pipeline.reference.render import render_snapshot_html, render_snapshot_md
+
+
+def _auction_join(g: dict) -> dict:
+    """Attach the auction framework, when a profile exists for a recent session.
+
+    The newest profile no older than 5 calendar days is used — yesterday's
+    auction structure is exactly what today trades against. Missing profile
+    means the brief simply lacks the section; it never fabricates one.
+    """
+    from pipeline.profile import synthesis as SY
+    empty = {"todays_business": None, "reference_map": None,
+             "strongest": None, "conflicts": None, "profile_source": None}
+    files = sorted(Path("data/profile").glob("profile_*.json"))
+    if not files:
+        return empty
+    latest = files[-1]
+    data_day = (g.get("generated_at") or "")[:10]
+    prof_day = latest.stem.split("_")[1]
+    prof_iso = f"{prof_day[:4]}-{prof_day[4:6]}-{prof_day[6:]}"
+    if data_day and prof_iso:
+        gap = abs((dt.date.fromisoformat(data_day)
+                   - dt.date.fromisoformat(prof_iso)).days)
+        if gap > 5:
+            return empty
+    try:
+        prof = json.loads(latest.read_text())
+    except (json.JSONDecodeError, OSError):
+        return empty
+    rows = SY.reference_map(SY.auction_levels(prof), SY.options_levels(g))
+    return {"todays_business": SY.todays_business(prof, g),
+            "reference_map": rows,
+            "strongest": SY.strongest(rows),
+            "conflicts": SY.conflicts(prof, g),
+            "profile_source": str(latest)}
 
 
 def _scorecard(symbol: str) -> dict | None:
@@ -100,7 +135,10 @@ def _try_live(symbol: str, spot: float):
                         continue
                     t = ib.reqMktData(o, "", False, False); ib.sleep(1.6)
                     mid = (t.bid + t.ask) / 2 if (t.bid and t.ask and t.bid > 0 and t.ask > 0) else t.close
-                    legs[r] = mid
+                    # Outside RTH the close itself can be NaN; NaN would ride
+                    # through the sum and crash at round(). Missing is missing.
+                    if mid is not None and not math.isnan(mid):
+                        legs[r] = mid
                 if legs.get("C") and legs.get("P"):
                     s = legs["C"] + legs["P"]
                     em.append({"label": labels[i] if i < len(labels) else f"exp{i}",
@@ -185,6 +223,7 @@ def main():
         "confluence": sorted(confluence),
         "intraday_sequence": seq,
         "scorecard": _scorecard(args.symbol),
+        **_auction_join(g),
     }
     jp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.json"
     hp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.html"

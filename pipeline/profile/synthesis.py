@@ -195,3 +195,67 @@ def strongest(rows: list[dict]) -> dict | None:
     if not conf:
         return None
     return min(conf, key=lambda r: (r["spread"], -r["price"]))
+
+
+def todays_business(profile: dict, gex: dict, spot: float | None = None) -> dict | None:
+    """One question for the session, stated before it opens, with both branches.
+
+    This is a fork, not a forecast: the read commits to what each outcome would
+    MEAN, and the session settles which branch ran. The question is generated
+    from where spot sits relative to yesterday's value area, because that is the
+    auction's own frame: above value = acceptance being tested from above,
+    below = from below, inside = balance until proven otherwise.
+    """
+    t = profile.get("tpo") or {}
+    va = t.get("value_area") or {}
+    if va.get("low") is None or va.get("high") is None:
+        return None
+    s = spot if isinstance(spot, (int, float)) else gex.get("spot")
+    if not isinstance(s, (int, float)):
+        return None
+    tpoc = t.get("tpoc")
+    call_wall, put_wall = gex.get("call_wall"), gex.get("put_wall")
+    flip = gex.get("zero_gamma_flip")
+
+    def lvl(x, name):
+        return f"{name} {x:,.0f}" if isinstance(x, (int, float)) else None
+
+    if s > va["high"]:
+        return {
+            "question": (f"Does price hold ABOVE yesterday's value area high "
+                         f"{va['high']:,.0f} — i.e. is the up-auction being accepted?"),
+            "holds": " → ".join(x for x in (
+                f"acceptance above {va['high']:,.0f} keeps the up-auction alive",
+                lvl(call_wall, "next objection is the call wall")) if x),
+            "fails": " → ".join(x for x in (
+                f"back inside value marks {s:,.0f} as rejected excess",
+                lvl(tpoc, "first magnet is the TPOC"),
+                lvl(va["low"], "then value area low")) if x),
+            "frame": "above_value",
+        }
+    if s < va["low"]:
+        return {
+            "question": (f"Does price hold BELOW yesterday's value area low "
+                         f"{va['low']:,.0f} — i.e. is the down-auction being accepted?"),
+            "holds": " → ".join(x for x in (
+                f"acceptance below {va['low']:,.0f} confirms the down-auction",
+                lvl(flip, "gamma flips at"),
+                lvl(put_wall, "put wall")) if x),
+            "fails": " → ".join(x for x in (
+                f"back inside value marks the break as a failed auction",
+                lvl(tpoc, "first magnet is the TPOC")) if x),
+            "frame": "below_value",
+        }
+    return {
+        "question": (f"Spot opens INSIDE yesterday's value "
+                     f"({va['low']:,.0f}–{va['high']:,.0f}) — does the balance hold?"),
+        "holds": " → ".join(x for x in (
+            f"rotation around {tpoc:,.0f}" if isinstance(tpoc, (int, float))
+            else "two-sided rotation",
+            "responsive trade at the edges") if x),
+        "fails": " → ".join(x for x in (
+            f"acceptance outside either edge starts a new auction",
+            lvl(call_wall, "above, toward"),
+            lvl(flip, "below, gamma flips at")) if x),
+        "frame": "inside_value",
+    }

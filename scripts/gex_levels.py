@@ -138,8 +138,15 @@ def resolve_spot(ib, u, symbol, override, delayed):
 
 
 def pull_open_interest(ib, opts, batch=45, settle=6.0):
-    """Stream generic ticks 100,101 for OI in batches (respects the ~100-line cap)."""
-    oi = {}
+    """Stream generic ticks 100,101 in batches (respects the ~100-line cap).
+
+    Returns (oi, volume). Both ride the SAME subscription — tick 101 fills the
+    open-interest fields, tick 100 fills callVolume/putVolume — so the volume
+    series is free: we paid for these market-data lines all along and read only
+    one of the two fields. OI is accumulated positioning; volume is today's
+    flow. A strike large in one and small in the other is itself information.
+    """
+    oi, vol = {}, {}
     for i in range(0, len(opts), batch):
         group = opts[i:i + batch]
         tks = {o.conId: ib.reqMktData(o, "100,101", False, False) for o in group}
@@ -147,8 +154,9 @@ def pull_open_interest(ib, opts, batch=45, settle=6.0):
         for o in group:
             tk = tks[o.conId]
             oi[o.conId] = tk.callOpenInterest if o.right == "C" else tk.putOpenInterest
+            vol[o.conId] = tk.callVolume if o.right == "C" else tk.putVolume
             ib.cancelMktData(o)
-    return oi
+    return oi, vol
 
 
 def main():
@@ -251,7 +259,7 @@ def main():
             for o, t in zip(opts[i:i + 60], ib.reqTickers(*opts[i:i + 60])):
                 greeks[o.conId] = t.modelGreeks
 
-    oi = pull_open_interest(ib, opts)
+    oi, volume = pull_open_interest(ib, opts)
     ib.disconnect()
 
     # --- assemble ---
@@ -266,6 +274,8 @@ def main():
             iv=(mg.impliedVol if mg else None), gamma=(mg.gamma if mg else None),
             oi=float(oi.get(o.conId) or 0.0) if not (oi.get(o.conId) is None
                or (isinstance(oi.get(o.conId), float) and math.isnan(oi.get(o.conId)))) else 0.0,
+            volume=float(volume.get(o.conId) or 0.0) if not (volume.get(o.conId) is None
+               or (isinstance(volume.get(o.conId), float) and math.isnan(volume.get(o.conId)))) else 0.0,
             T=T,
         ))
     df = pd.DataFrame(rows)
@@ -287,6 +297,18 @@ def main():
     df["sign"] = df["right"].map({"C": CALL_SIGN, "P": PUT_SIGN}) * FLIP_SIGN
     df["gex"] = df.apply(lambda r: r["sign"] * eff_gamma(r) * r["oi"] * scale, axis=1)
     per_strike = df.groupby("strike")["gex"].sum().sort_index()
+
+    # GEX weighted by TODAY'S VOLUME instead of open interest. Same gamma, same
+    # sign convention, different weight: OI is what is positioned, volume is
+    # what traded today. nextSignals heads its table "GEX-VOLUME"; this is that
+    # column. Outside RTH the volume fields are zero or stale, so the series is
+    # only emitted when something actually printed — an all-zero grid published
+    # as data would be the missing-IV bug all over again.
+    df["gex_vol"] = df.apply(lambda r: r["sign"] * eff_gamma(r) * r["volume"] * scale, axis=1)
+    per_strike_vol = df.groupby("strike")["gex_vol"].sum().sort_index()
+    total_traded = float(df["volume"].sum())
+    if total_traded <= 0:
+        per_strike_vol = None
 
     # ------------------------------------------------------------------
     # CHARM exposure: $ of dealer delta that drifts per CALENDAR DAY.
@@ -401,6 +423,12 @@ def main():
     print(f" Total net GEX ............ {total_gex / bn:+.3f}  Bn$/1%")
     print(f" Current regime ........... {regime}")
     print(f" ZERO-GAMMA FLIP .......... {flip:.2f}" if flip is not None else " ZERO-GAMMA FLIP .......... (no crossing in grid)")
+    if per_strike_vol is not None:
+        vw_call, vw_put = per_strike_vol.idxmax(), per_strike_vol.idxmin()
+        tag_c = "" if vw_call == call_wall else "  <-- DIVERGES from OI call wall"
+        tag_p = "" if vw_put == put_wall else "  <-- DIVERGES from OI put wall"
+        print(f" VOLUME-GEX call peak ..... {vw_call:.0f}   ({per_strike_vol[vw_call] / bn:+.3f} Bn){tag_c}")
+        print(f" VOLUME-GEX put  peak ..... {vw_put:.0f}   ({per_strike_vol[vw_put] / bn:+.3f} Bn){tag_p}")
     print(f" CALL WALL (resistance) ... {call_wall:.0f}   ({per_strike[call_wall] / bn:+.3f} Bn)")
     print(f" PUT WALL  (support) ...... {put_wall:.0f}   ({per_strike[put_wall] / bn:+.3f} Bn)")
     print(f" PIN / abs-gamma strike ... {pin:.0f}   ({per_strike[pin] / bn:+.3f} Bn)")
@@ -464,6 +492,11 @@ def main():
         atm_iv_tenors={"one_dte": ivt["one_dte"], "swing": ivt["swing"]},
         positive_pocket=[round(pocket[0], 2), round(pocket[1], 2)] if pocket else None,
         per_strike_gex={float(k): round(v, 2) for k, v in per_strike.items()},
+        per_strike_gex_volume=({float(k): round(v, 2) for k, v in per_strike_vol.items()}
+                               if per_strike_vol is not None else None),
+        gex_volume_note=("weighted by today's traded volume (tick 100); resets daily"
+                         if per_strike_vol is not None
+                         else "unavailable — nothing traded at pull time (outside RTH?)"),
         per_strike_charm={float(k): round(v, 2) for k, v in per_strike_charm.items()},
         total_charm=round(float(total_charm), 2),
         charm_peak_strike=float(charm_peak) if charm_peak is not None else None,

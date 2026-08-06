@@ -108,3 +108,34 @@ def test_strongest_picks_the_tightest_cross_framework_pair():
 
 def test_strongest_is_none_when_nothing_agrees():
     assert SY.strongest(SY.reference_map([], SY.options_levels(GEX))) is None
+
+
+# --------------------------------------------------------- today's business
+
+def test_the_question_above_value_asks_about_acceptance_from_above():
+    q = SY.todays_business(PROFILE, GEX, spot=7790.0)
+    assert q["frame"] == "above_value"
+    assert "7,765" in q["question"]           # yesterday's VAH
+    assert "7,800" in q["holds"]              # call wall is the objection
+    assert "7,745" in q["fails"]              # TPOC is the magnet on failure
+
+
+def test_the_question_below_value_mirrors():
+    q = SY.todays_business(PROFILE, GEX, spot=7700.0)
+    assert q["frame"] == "below_value"
+    assert "7,725" in q["question"]           # VAL
+    assert "7,400" in q["holds"]              # put wall
+
+
+def test_the_question_inside_value_is_about_the_balance_holding():
+    q = SY.todays_business(PROFILE, GEX, spot=7745.0)
+    assert q["frame"] == "inside_value"
+    assert "balance" in q["question"]
+
+
+def test_no_value_area_means_no_question_rather_than_a_generic_one():
+    assert SY.todays_business({"tpo": {}}, GEX, spot=7745.0) is None
+
+
+def test_no_spot_anywhere_means_no_question():
+    assert SY.todays_business(PROFILE, {"call_wall": 7800.0}) is None
