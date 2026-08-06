@@ -154,7 +154,11 @@ def pull_open_interest(ib, opts, batch=45, settle=6.0):
         for o in group:
             tk = tks[o.conId]
             oi[o.conId] = tk.callOpenInterest if o.right == "C" else tk.putOpenInterest
-            vol[o.conId] = tk.callVolume if o.right == "C" else tk.putVolume
+            # Day volume for an OPTION contract is the plain `volume` field.
+            # callVolume/putVolume are NaN on an option ticker -- they belong to
+            # an UNDERLYING with generic tick 100. Measured live 2026-08-06:
+            # 7700C volume=1734, callVolume=nan. Right-sounding name, wrong object.
+            vol[o.conId] = tk.volume
             ib.cancelMktData(o)
     return oi, vol
 

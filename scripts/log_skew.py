@@ -89,7 +89,11 @@ def measure(ib, symbol: str, target_dte: int, wait: float) -> dict | None:
     if not params:
         print(f"  {symbol}: no SMART option params")
         return None
-    ch = params[0]
+    # SPY returns SEVERAL SMART chains and the first can be a special trading
+    # class ("2SPY": three strikes, three expiries). Qualifying normal expiries
+    # against it fails wholesale and read as "no quotes" — the correct chain is
+    # the one that actually lists the strikes.
+    ch = max(params, key=lambda c: len(c.strikes))
     exps = sorted(e for e in ch.expirations if e > today.strftime("%Y%m%d"))
     if not exps:
         return None
