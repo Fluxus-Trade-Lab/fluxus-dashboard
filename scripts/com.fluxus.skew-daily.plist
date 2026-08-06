@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  launchd agent for the daily skew row.
+  Install:
+    cp scripts/com.fluxus.skew-daily.plist ~/Library/LaunchAgents/
+    launchctl load  ~/Library/LaunchAgents/com.fluxus.skew-daily.plist
+  Uninstall:
+    launchctl unload ~/Library/LaunchAgents/com.fluxus.skew-daily.plist
+
+  Fires 04:00 JST (= 15:00 ET under EDT) and 05:00 JST (= 15:00 ET under EST).
+  The wrapper checks actual ET time, so exactly one fire per DST regime runs.
+  The window is inside RTH on purpose: the smile needs live two-sided quotes.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.fluxus.skew-daily</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/taolezhu/Documents/AI-Trading-System/scripts/run_skew_daily.sh</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict><key>Hour</key><integer>4</integer><key>Minute</key><integer>0</integer></dict>
+        <dict><key>Hour</key><integer>5</integer><key>Minute</key><integer>0</integer></dict>
+    </array>
+    <key>StandardOutPath</key>
+    <string>/Users/taolezhu/Documents/AI-Trading-System/data/reference/skew_daily.out</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/taolezhu/Documents/AI-Trading-System/data/reference/skew_daily.err</string>
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>
