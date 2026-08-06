@@ -94,17 +94,24 @@ def test_crossover_ignores_a_tight_gap_between_two_quiet_forces():
 
 
 def test_the_nearest_candidate_is_not_automatically_called_a_handoff():
-    # Both forces are live at 100 but gamma is 3x charm: the closest thing to a
-    # crossover on this grid is not a crossover, and the flag says so.
-    gex = {100.0: 30.0, 101.0: 30.0}
-    charm = {100.0: 10.0, 101.0: -10.0}
+    # Strike 100 is gamma's peak (1.0) and 0.6 of charm's peak: both live, but a
+    # 1.67 ratio is not a draw. The closest thing to a crossover on this grid is
+    # not a crossover, and the flag says so.
+    #
+    # Note the fixture cannot express "gamma is 3x charm in raw size" -- BOTH
+    # normalisations rescale each series by its own spread, which is the only
+    # meaningful comparison between $/1%-move and $-drift-to-expiry. Dominance
+    # is always "more extreme for gamma than for charm, each relative to its own
+    # grid", never a raw magnitude contest.
+    gex = {100.0: 30.0, 101.0: 6.0, 102.0: 6.0}
+    charm = {100.0: 6.0, 101.0: 10.0, 102.0: 2.0}
     x = D.crossover(D.dominant_exposure(gex, charm, method="maxabs"))
     assert x is not None and x["is_handoff"] is False
 
 
 def test_a_real_draw_is_flagged_as_a_handoff():
-    gex = {100.0: 30.0, 101.0: 5.0}
-    charm = {100.0: 29.0, 101.0: 30.0}
+    gex = {100.0: 30.0, 101.0: 5.0, 102.0: 5.0}
+    charm = {100.0: 29.0, 101.0: 30.0, 102.0: 5.0}
     x = D.crossover(D.dominant_exposure(gex, charm, method="maxabs"))
     assert x["strike"] == 100.0 and x["is_handoff"] is True
 
