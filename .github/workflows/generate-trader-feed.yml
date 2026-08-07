@@ -1,0 +1,55 @@
+name: Generate Trader Feeds
+
+on:
+  schedule:
+    # Run daily at 22:00 UTC (07:00 JST, after US market close)
+    - cron: '0 22 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Feed to generate'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - tweets-only
+          - podcasts-only
+          - blogs-only
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: pipeline/traders/scripts
+        run: npm ci
+
+      - name: Generate feeds
+        working-directory: pipeline/traders/scripts
+        env:
+          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+          SUPADATA_API_KEY: ${{ secrets.SUPADATA_API_KEY }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.mode }}" != "all" ]; then
+            node generate-feed.js --${{ inputs.mode }}
+          else
+            node generate-feed.js
+          fi
+
+      - name: Commit and push feeds
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pipeline/traders/feed-x.json pipeline/traders/feed-podcasts.json pipeline/traders/feed-blogs.json pipeline/traders/state-feed.json
+          git diff --staged --quiet || git commit -m "chore: update trader feeds [skip ci]"
+          git push

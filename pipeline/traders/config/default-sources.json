@@ -1,0 +1,78 @@
+{
+  "podcasts": [
+    {
+      "name": "Chat With Traders",
+      "type": "youtube_channel",
+      "url": "https://www.youtube.com/@ChatWithTradersPodcast",
+      "channelHandle": "ChatWithTradersPodcast"
+    },
+    {
+      "name": "Macro Voices",
+      "type": "youtube_channel",
+      "url": "https://www.youtube.com/@MacroVoices",
+      "channelHandle": "MacroVoices"
+    },
+    {
+      "name": "Top Traders Unplugged",
+      "type": "youtube_channel",
+      "url": "https://www.youtube.com/@TopTradersUnplugged",
+      "channelHandle": "TopTradersUnplugged"
+    },
+    {
+      "name": "The Derivative",
+      "type": "youtube_channel",
+      "url": "https://www.youtube.com/@TheDerivative",
+      "channelHandle": "TheDerivative"
+    },
+    {
+      "name": "Trader Lion",
+      "type": "youtube_channel",
+      "url": "https://www.youtube.com/@TraderLion",
+      "channelHandle": "TraderLion"
+    },
+    {
+      "name": "Real Vision",
+      "type": "youtube_channel",
+      "url": "https://www.youtube.com/@RealVisionFinance",
+      "channelHandle": "RealVisionFinance"
+    }
+  ],
+  "blogs": [
+    {
+      "name": "SqueezMetrics",
+      "type": "scrape",
+      "indexUrl": "https://squeezemetrics.com/monitor/blog",
+      "articleBaseUrl": "https://squeezemetrics.com/monitor/blog/",
+      "fetchMethod": "http"
+    },
+    {
+      "name": "Howard Marks Memos",
+      "type": "scrape",
+      "indexUrl": "https://www.oaktreecapital.com/insights/memo",
+      "articleBaseUrl": "https://www.oaktreecapital.com/insights/memo/",
+      "fetchMethod": "http"
+    }
+  ],
+  "x_accounts": [
+    { "name": "Mark Minervini", "handle": "markminervini" },
+    { "name": "Kris Abdelmessih", "handle": "KrisAbdelmessih" },
+    { "name": "Trader Stewie", "handle": "TraderStewie" },
+    { "name": "Dan Zanger", "handle": "DanZanger" },
+    { "name": "Qullamaggie", "handle": "Qullamaggie" },
+    { "name": "Mark Ritchie II", "handle": "MarkRitchie2" },
+    { "name": "Richard Moglen", "handle": "RichardMoglen" },
+    { "name": "Stockbee", "handle": "stockbee" },
+    { "name": "Gil Morales", "handle": "gilmoreport" },
+    { "name": "William O'Neil", "handle": "IBDinvestors" },
+    { "name": "Ryan Detrick", "handle": "RyanDetrick" },
+    { "name": "Helene Meisler", "handle": "habormeisler" },
+    { "name": "Tom Lee", "handle": "fundstrat" },
+    { "name": "Liz Ann Sonders", "handle": "LizAnnSonders" },
+    { "name": "Jeff Hirsch", "handle": "AlmanacTrader" },
+    { "name": "SentimenTrader", "handle": "sentabormentrdr" },
+    { "name": "Bob Elliott", "handle": "BobEUnlworimited" },
+    { "name": "Bespoke Invest", "handle": "baborespoke" },
+    { "name": "Walter Deemer", "handle": "WaltDeemer" },
+    { "name": "SqueezMetrics", "handle": "SqueezeMetrics" }
+  ]
+}
