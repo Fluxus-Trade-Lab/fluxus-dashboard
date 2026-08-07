@@ -198,7 +198,12 @@ def open_positions(trades, prices, as_of, equity=None):
 
 
 def drawdown(curve):
-    """Max peak-to-trough drawdown on an [(date, value)] curve."""
+    """Max peak-to-trough drawdown on an [(date, value)] curve.
+
+    Selects by PERCENTAGE (not dollars): on an account that grows a lot, a later
+    dollar-drop can be bigger in $ yet smaller in %, so a dollar-max search would
+    miss the true (deeper %) drawdown that happened on a smaller equity base.
+    """
     peak = float("-inf")
     peak_date = None
     mdd = 0.0
@@ -212,10 +217,10 @@ def drawdown(curve):
             peak_date = ds
         if peak <= 0:
             continue
-        dd = v - peak
-        if dd < mdd:
-            mdd = dd
-            mdd_pct = dd / peak * 100
+        dd_pct = (v - peak) / peak * 100
+        if dd_pct < mdd_pct:
+            mdd_pct = dd_pct
+            mdd = v - peak
             trough_date = ds
             at_peak = peak_date
             peak_at_mdd = peak
