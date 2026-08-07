@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { usePortfolio } from '../portfolio/context/PortfolioContext'
+import { usePortfolio, PortfolioProvider } from '../portfolio/context/PortfolioContext'
 import { enrichTrades, lookupPrice } from '../portfolio/lib/calculations'
 import { todayStr } from '../portfolio/lib/portfolioFormat'
 
@@ -274,6 +274,14 @@ function PortfolioAudit({ trades, dailyPrices, startingCapital }) {
 /* ── Main Tab ────────────────────────────────────────────── */
 
 export default function SizingTab() {
+  return (
+    <PortfolioProvider>
+      <SizingTabInner />
+    </PortfolioProvider>
+  )
+}
+
+function SizingTabInner() {
   const { state } = usePortfolio()
   const [expandedMethod, setExpandedMethod] = useState('fixed-risk')
 
