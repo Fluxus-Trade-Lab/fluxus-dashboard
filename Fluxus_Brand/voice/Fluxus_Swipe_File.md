@@ -422,6 +422,129 @@
 3. **目录 = 产品。** 读者收藏的是那份清单,正文是兑现。
 4. **回复低、转发高。** 别指望它引发讨论 —— 它的使用方式是**存起来**。
 
+---
+
+## 🔬 深读十篇(2026-08-08)—— 3 篇全文 · 5 篇结构 · 2 篇开头
+
+### A. 收藏率:教学长文是唯一稳定做到「收藏 > 赞」的文体
+
+| 样本 | 文体 | 曝光 | 赞 | **收藏** | 收藏率 | **收藏/赞** |
+|---|---|---|---|---|---|---|
+| **Nick「我的交易日只有 2 小时」** | B | 170K | 1.3K | **2.1K** | **1.24%** | **1.62** |
+| **ohiain「A–Z 系统」** | B | 303K | 1.3K | **2.8K** | 0.92% | **2.15** ⭐ |
+| **FranVezz「完整 swing 系统」** | B | 215K | 713 | 1,109 | 0.52% | 1.56 |
+| ParadisLabs 策展 | H | 66.9K | 655 | 812 | 1.21% | 1.24 |
+| Citrini 反转流 | E | 253K | 1.2K | 515 | 0.20% | 0.43 |
+| AI 视频梗 | 转发 | 980K | 13K | 3.8K | 0.39% | **0.29** |
+
+> **教学长文 1.56–2.15×,策展 1.24×,其余全部 <0.5×。**
+> 策展也能做到收藏>赞,**但它收藏的是链接,不是你**(见文体 H 的战略警告)。**只有 B 是收藏你自己。**
+
+### B. 三种载体,三种 CTA —— 而曝光最高的那个完全不卖
+
+| | 载体 | 正文在哪 | CTA | 曝光 |
+|---|---|---|---|---|
+| **ohiain** | X Article | 站内 | **零。全文没有一个卖点** —— 唯一转化是平台自带的 Subscribe 按钮 | **303K** |
+| **Nick** | X thread | 站内 | **次日单独发一条**,而且是「免费 + 送账号」 | 170K |
+| **FranVezz** | Substack(置顶钩子导流) | 站外 | 文末推 5x weekly newsletter | 215K(钩子) |
+
+> **不卖的那个曝光最高。** 而且 ohiain 全文唯一的两个外链**都是别人的**(自己的 TradingView 布局 + @NickSchmidt_ 的一条帖)。
+
+### C. 八条可直接抄的技术(全部有全文出处)
+
+**1. 把学费标出来 —— 用自己的痛,不用别人的赞**
+> ohiain:*"the real lessons, the ones that **cost me over \$50,000** and countless hours of frustration to learn."*
+> Nick(收尾):*"**I lost \$13K in one day** learning that more hours ≠ more money."*
+
+**2. 承诺要降级,不要升级**
+> ohiain:*"I'm not claiming to have it all figured out (far from it)"* + 开场三个 **maybe**(*maybe it confirms… maybe it challenges… or maybe it just helps you avoid one of the mistakes I made*)
+> **对照 Julian Komar 的「我帮助过 2,000+ 交易者」** —— **邀请式 vs 凭证式**。
+
+**3. 复杂度往下压,不是往上堆 —— 这是反直觉的**
+> Nick:*"**Two boxes. Four lines. That's the whole map.**"* · *"Three questions"* · *"One trade"* · *"2 minutes"* · *"60 seconds"*
+> ohiain:*"I keep it **stupid simple**"* · watchlist 只放 3–5 个 · **99% 的时候止损就放在入场日的低点**
+> **教学长文的价值感来自「少」,不是「多」。**
+
+**4. 可复用判据的密度 = 收藏的直接来源**
+> ohiain 的数字:>3% ADR 才做 · 距 50MA 超 8 ATR = 太远 · 超 4 ATR 很少进 · 距当日低点超 60% = 太伸展 · 1–3% 风险 · 2R 必减仓并移保本 · 分批 20–25%
+> FranVezz 的数字:50DMA>200DMA · 量>50 万股 · 额>\$3000 万 · 价>\$10 · **ADR 2.5–7%** · **风险 0.25–0.5%** · 仓位 15–20% · **三连亏减到 3/4,四连亏减到半仓** · 3–4×ADR 减 1/3 · 10×ADR 再减 · **财报前一律清仓**
+> ⭐ **FranVezz 的每笔风险是 0.25–0.5% —— 和你的 0.25% 完全一样。你的系统已经在这个梯队里。**
+
+**5. 每篇必须有 1–2 个非教科书的刺(反 AI 味的全部秘密)**
+> ohiain:*"…and I'm starting to feel euphoric (**usually right around the time I'm tempted to take a screenshot for Webull**) that's my signal to trim again."*
+> ohiain:*"something I do that helps me stay detached emotionally is **I hide my P&L intraday**."*
+> Nick:*"The journal waits until 8 PM, **after the kids are down**."* · *"…and one line on how it affected the rest of my day. **That line is the one that fixed me.**"*
+> **这些句子是全篇最被记住的,而且一篇只需要一两句。**
+
+**6. 自我诊断要具体到「弱点 → 为它建的规则」**
+> ohiain:*"My strength is discipline and **my weakness is impatience**. So I built rules around my impatience to make sure it doesn't destroy me."* · *"I know I overtrade when I'm on a winning streak because I start to feel invincible."*
+> **不是「要有纪律」,是「我的弱点是 X,所以我建了针对 X 的规则」。**
+
+**7. 时间戳是最普适的组织轴(Nick)**
+> 9:10 → 9:15 → 9:20 → 9:25 → 9:30 → 10:00 → 11:00。**读者不需要懂他的方法就能跟着走。** 而每一节都挂一句反常识:*"First thing I check isn't the charts"* · *"I'm not predicting. I'm picking a side of the road to drive on."*
+
+**8. 收尾不是格言,是邀请**
+> ohiain:*"If you ever need anything or have questions along the way, don't hesitate to reach out and I'll help however I can. Godspeed my friends!"*
+> Nick 的收尾是**三个否定 + 一个等式**:*"No 12-screen setup. No trading til 4PM. No fifth trade to 'make it back.' Two disciplined hours beat eight hours of an emotional roller coaster every time."*
+
+### D. 系列节奏:一篇旗舰 + 四篇分册 + 一条预告
+
+ohiain 的实际操作顺序:
+1. **预告帖**(Jul 28,24K / 601♥ / **90 条回复**):*"I'm 32 pages into what will probably end up being a 40–50 page document on my entire trading philosophy…"* —— **预告本身就是内容,而且是他回复数最高的帖之一**
+2. **旗舰**(Feb 7,303K):封面 = **`+196.18%` 战绩截图**
+3. **四篇分册**(31–62K):封面 = **手绘概念图**
+
+> **旗舰是分册的 5–10 倍,唯一的结构差异是封面。战绩当封面 = 5–10 倍。**
+
+---
+
+## ✍️ Fluxus 版旗舰长文 —— 骨架提案(闭环用)
+
+*spec §0 记了一句:「五轮临帖,26 条骨架,一条帖都没发出去」。这是把骨架变成稿子的第一步。*
+
+**标题**(用「反直觉数字 + 穷举承诺」公式):
+> **"39.9% of my trades lost money. The account still nearly doubled. Here's the whole system, line by line."**
+反直觉的数字自带「怎么可能」的钩子,而且它**先认输再给结果** —— 比「+90%」安全得多。
+
+**封面:** H1 对账单(+90.5%,\$1M → \$1.9M)。ohiain 用 +196.18% 换来 5–10 倍。
+
+**开场**(降级承诺 + 标学费 + 三个 maybe):
+> 上半年每三笔交易有两笔是亏的,账户还是差点翻倍。下面是整套系统 —— 每一个数字、每一条规则,**包括我自己破掉的那几条**。
+> 也许它印证了你已经在想的事,也许它挑战你现在的做法,也许它只是帮你躲掉我犯过的某一个错。
+> 我没有把这件事想明白,远远没有。
+
+**十三节**(照 ohiain 的骨架 + FranVezz 的决策序列):
+
+| # | 节 | 你的素材 | 配比 |
+|---|---|---|---|
+| 1 | 开场 | 39.9% 胜率 · 3.40× 赔付 · +90.5% | 宣言 |
+| 2 | 我从谁那儿学的 | 致敬 + 「不是为了报名字」 | 人格 |
+| 3 | 核心心法 | **我没有观点,我有测量** | **宣言** |
+| 4 | **心理:我的弱点 + 为它建的规则** | ⭐ **行为诊断的真发现:最大的漏洞是「重新攻击一个已破的论点」(BABA 五次 −\$54k)—— 不是抄底,不是死扛** | 宣言 + 笑话 |
+| 5 | 我的风格 | 两腿系统(tactical + core) | 教学 |
+| 6 | ⭐ **环境判断:GEX 与 breadth 怎么读** | **dealer gamma 在哪翻负 · breadth 的极值 · 被迫抛售的量** | **教学** |
+| 7 | 选股 | screener / 52WH 那个 NULL 结果也可以写进来 | 教学 |
+| 8 | 入场 | ASSET 框架 · no tightness no trade | 教学 |
+| 9 | **仓位:0.25%,以及为什么我做成了两倍** | ⭐ **认错:实际仓位是目标的 2 倍** | 教学 + 笑话 |
+| 10 | 止损 | | 教学 |
+| 11 | 卖出规则 | | 教学 |
+| 12 | 回撤规则 | ⭐ **认错:我在回撤里反而降风险,这是错的** | 教学 + 宣言 |
+| 13 | 收尾 | **邀请,不卖任何东西** | 宣言 |
+
+### 三个只有你有的东西(别人这两篇里都没有)
+
+1. **第 6 节。** ohiain 和 FranVezz 的环境判断都是「指数在不在均线上方」。**你有 dealer gamma 和 breadth 的真实测量。这一节就是「别处拿不到」的那部分,也是整篇最该重写三遍的一节。**
+2. **第 4、9、12 节的认错。** 他们认的是「我曾经过度交易」这种通用毛病;**你有一份行为诊断,认的是带金额的、具体的、反直觉的错(BABA 五次 −\$54k;仓位做成两倍;回撤时反而降风险)。**
+3. **可核对的对账单。** ohiain 放的是 Webull 截图,你有完整的 trade log 和 performance_review 引擎。
+
+### 三条必须遵守的(从十篇里提炼)
+
+- **不卖。** 全文零 CTA。曝光最高的那篇(303K)一个卖点都没有。
+- **每节压一个数字,不是压一段道理。** 收藏来自可以抄进自己系统的数。
+- **至少两句「非教科书的刺」。** 你的现成弹药:*"the curse of show off"* · SOXL 超仓打盹 · 30 天不点鼠标 · 想截图的那一刻。
+
+---
+
 ### ⚠️ 我们还没有这条帖 —— 这是发射期的头号缺口
 竞品拆解 2026-07-28 就写了「**我们还没有这条帖 —— 而 H1 复盘 + 那套「盾」的内容,就是这条帖**」。**十天过去了,还是没有。**
 **素材全部现成:+90.5% 对账单(封面)· 四个部件(目录)· 25 分钟的日常流程(Steal it. 版)。**
