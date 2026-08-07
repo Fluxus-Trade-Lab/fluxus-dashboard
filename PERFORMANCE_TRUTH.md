@@ -36,15 +36,21 @@ Account: **$1,000,000 → $1,905,255** · **+90.53%** · 331 closed trades · 10
 ### Drawdown & risk — **mark-to-market is the reporting standard**
 | Metric | Value | Notes |
 |---|---|---|
-| **Max drawdown (MTM, EOD)** | **−$223,100 · −11.1% of peak** | peak 2026-06-02 → trough 2026-06-10. Daily net-liq incl. open positions; split scale anchored to as-traded fills. **This is the number to publish.** |
-| Peak equity | $2,036,318 (+104%) | |
+| **Max drawdown (MTM, EOD)** | **−$207,300 · −17.9% of peak** | peak 2026-01-28 → trough 2026-03-19. Daily net-liq incl. open positions; split scale anchored to as-traded fills. **This is the number to publish.** |
+| Peak equity | $2,036,318 (+104%) | 2026-06-30 |
 | Max drawdown (realized floor) | −$57,300 · −5.4% | closed-trade only; understates true risk — internal use |
 | Sharpe / Sortino | 2.61 / 4.65 | annualized, daily returns |
 | Ann. volatility | 45.4% | |
-| CAGR / Calmar | 206.6% / 18.6 | ⚠ annualized from a 7-month sample — reads high; the honest headline is the **+90.5% actual** period return, not the annualized figure |
+| CAGR / Calmar | 206.6% / 11.5 | ⚠ annualized from a 7-month sample — reads high; the honest headline is the **+90.5% actual** period return, not the annualized figure |
 
-> **Do NOT publish 18% drawdown.** An earlier tool showed ~18%; that was the
-> leveraged-ETF (SOXS) split mis-scaling inflating a phantom. Verified truth is **−11.1%**.
+> **Max DD = −17.9% (Jan 28 → Mar 19), verified real.** The Jan gains were given
+> back in a smooth 7-week slide (biggest day −6.3%), dipping ~5% below the $1M
+> start by mid-March — no single-day spike, curve is clean of split artifacts.
+> **Correction (2026-08-03):** the previously-published −11.1% was a bug — the
+> drawdown routine selected the max *dollar* drop (a June episode on the larger
+> ~$2M base) instead of the max *percentage* drop; fixed to select by %. And the
+> old "~18% is a split phantom" note was itself wrong: the ~18% was always the
+> real Jan–Mar drawdown, not a phantom.
 
 ### Monthly realized P&L
 | Month | P&L | Return |
@@ -62,6 +68,18 @@ Account: **$1,000,000 → $1,905,255** · **+90.53%** · 331 closed trades · 10
 |---|---|---|---|
 | Long | 298 | +$819,327 | 39% |
 | Short | 33 | +$85,928 | 48% |
+
+### Benchmarks — same window (2025-12-31 → 2026-07-22)
+| | Return | Multiple |
+|---|---|---|
+| **Account** | **+90.5%** | — |
+| SPY | **+9.60%** | 9.4× |
+| **QQQ** | **+14.82%** | **6.1×** |
+
+- Source: **IBKR** (TWS, daily `TRADES`, RTH). Never TradingView. SPY 681.92 → 747.41; QQQ 614.31 → 705.35.
+- Reproduce: `python scripts/benchmark_window.py 2025-12-31 2026-07-22`
+- **Price return, not total return** — IBKR's `ADJUSTED_LAST` times out for these ETFs, and price return is the right comparison anyway: the account figure beside it is realized trading P&L, which also excludes dividends. Both sides consistent. (Dividends over this window would add roughly +0.6% to SPY, +0.3% to QQQ.)
+- **Publish both.** SPY alone is the soft benchmark; QQQ is the honest yardstick for a momentum/tech book.
 
 ---
 
