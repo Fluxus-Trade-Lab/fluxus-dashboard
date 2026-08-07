@@ -154,11 +154,26 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
 <p class="cap">These positions were still open on the last trading day of the month — valued at the fill-anchored as-traded close, the same basis as the equity curve. Their unrealized P&amp;L is already inside the month return above.</p>
 </section>{% endif %}
 
-{# ---------- RR chart ---------- #}
+{# ---------- RR chart + position sizes (aligned bar-for-bar) ---------- #}
 {% if d.charts.rr %}
 <section>
 <p class="lbl">每笔 R · Every trade by R-multiple</p>
 <div class="chart">{{ chart(d.charts.rr, 'RR chart') }}</div>
+{% if d.charts.sizes %}
+<div class="chart" style="margin-top:14px">{{ chart(d.charts.sizes, 'Position size per trade') }}</div>
+<p class="cap">仓位大小 · Position size per trade — same order as the RR chart above, so each bar lines up with its outcome. Bet-sizing / conviction calibration: do the big bets earn their size, or are the biggest positions the biggest mistakes?</p>
+{% if d.size_stats %}
+<table style="margin-top:6px"><thead><tr><th class="r">Avg size</th><th class="r">Biggest</th>
+<th class="r">Size ↔ R correlation</th><th class="r">Loss $ from biggest-quartile positions</th></tr></thead>
+<tbody><tr>
+<td class="r">{{ d.size_stats.avg | num(1) }}%</td>
+<td class="r">{{ d.size_stats.max | num(0) }}%</td>
+<td class="r {{ 'pos' if (d.size_stats.corr or 0) > 0.05 else ('neg' if (d.size_stats.corr or 0) < -0.05 else '') }}">{{ d.size_stats.corr | num(2) if d.size_stats.corr is not none else '—' }}</td>
+<td class="r {{ 'neg' if (d.size_stats.loss_share_top_quartile or 0) > 40 else '' }}">{{ d.size_stats.loss_share_top_quartile | num(0) }}%</td>
+</tr></tbody></table>
+<p class="cap">Correlation &gt; 0 = your bigger bets tend to be the better trades (sizing adds edge); ≈ 0 = size doesn't predict outcome; &lt; 0 = the big bets underperform. The last column: what share of all losses came from the top 25% largest positions.</p>
+{% endif %}
+{% endif %}
 </section>{% endif %}
 
 {# ---------- Monthly + R distribution ---------- #}

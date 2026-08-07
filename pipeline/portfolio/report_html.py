@@ -84,8 +84,12 @@ def build_doc(trades, meta, period, month, quarter, out_dir, handle):
     os.makedirs(out_dir, exist_ok=True)
     dd = (mtm or {}).get("drawdown")
 
+    ps_light, ps_stats = rc.position_sizes(sub, eqbd, cap, dark=False)
+    ps_dark, _ = rc.position_sizes(sub, eqbd, cap, dark=True)
+
     charts = {
         "rr": _rr_pair(sub, cap, out_dir, stem, rr_title, handle),
+        "sizes": {"light": ps_light, "dark": ps_dark} if ps_light else None,
         "equity": _both(lambda d: rc.equity_curve(eqbd, dd, cap, dark=d)) if eqbd else None,
         "monthly": _both(lambda d: rc.monthly_returns(ms, dark=d)),
         "rdist": _both(lambda d: rc.r_distribution(rdist, dark=d)),
@@ -98,7 +102,7 @@ def build_doc(trades, meta, period, month, quarter, out_dir, handle):
         "title": title, "period_label": period_label, "handle": handle,
         "generated": market_today().isoformat(),
         "source": os.path.basename(meta.get("_csv", "")),
-        "s": s, "mtm": mtm, "monthly_stats": ms, "rdist": rdist,
+        "s": s, "mtm": mtm, "monthly_stats": ms, "rdist": rdist, "size_stats": ps_stats,
         "by_dir": by_dir, "by_tk": by_tk, "bd": bd, "ce": ce, "cs": cs,
         "charts": charts, "cap": cap,
     }, stem
@@ -138,9 +142,13 @@ def build_month_doc(trades, meta, month, full_mtm, out_dir, handle):
     cs = an.trade_case_studies(closed)
     opens = _mtm.open_positions(trades, prices, m_end, m_end_eq) if prices else []
 
+    ps_light, ps_stats = rc.position_sizes(closed, eqbd, cap, dark=False)
+    ps_dark, _ = rc.position_sizes(closed, eqbd, cap, dark=True)
+
     stem = f"monthly_{month}"
     charts = {
         "rr": _rr_pair(closed, cap, out_dir, stem, f"{month} — every trade by R", handle) if len(closed) >= 3 else None,
+        "sizes": {"light": ps_light, "dark": ps_dark} if ps_light else None,
         "equity": _both(lambda d: rc.equity_curve(month_eqbd, m_dd, prev_eq, dark=d,
                                                   ylabel="Return (month)")),
         "rdist": _both(lambda d: rc.r_distribution(rdist, dark=d)),
@@ -166,7 +174,7 @@ def build_month_doc(trades, meta, month, full_mtm, out_dir, handle):
             "open_n": len(opens), "end_equity": m_end_eq,
         },
         "opens": opens, "rdist": rdist, "by_dir": by_dir, "by_tk": by_tk, "cs": cs,
-        "charts": charts,
+        "size_stats": ps_stats, "charts": charts,
     }
     return doc, stem
 

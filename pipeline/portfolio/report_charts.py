@@ -146,6 +146,65 @@ def r_distribution(rdist: dict, dark: bool = False) -> Optional[str]:
     return _b64(fig, p["face"])
 
 
+def _equity_at(equity_by_date, date, fallback):
+    if not equity_by_date:
+        return fallback
+    prior = [d for d in equity_by_date if d <= date]
+    return equity_by_date[max(prior)] if prior else fallback
+
+
+def position_sizes(trades, equity_by_date: dict, capital: float, dark: bool = False):
+    """Per-trade position size (notional at entry ÷ equity at entry, %), one bar
+    per closed trade in the SAME order as the RR chart (by exit date) so the two
+    align bar-for-bar. Green = the trade won, red = it lost. Returns (b64, stats)."""
+    rr = sorted([t for t in trades if t.R is not None], key=lambda t: t.exit_date)
+    if len(rr) < 3:
+        return None, None
+    p = _pal(dark)
+    sizes, colors = [], []
+    for t in rr:
+        eq = _equity_at(equity_by_date, t.entry_date, capital) or capital
+        notional = (t.orig_qty or 0) * (t.entry or 0)
+        sizes.append(notional / eq * 100 if eq else 0)
+        colors.append(GREEN if t.pnl > 0 else RED)
+
+    import statistics as _st
+    avg = _st.mean(sizes)
+    # correlation between size and R (does betting big earn big?)
+    Rs = [t.R for t in rr]
+    corr = None
+    if len(sizes) > 2 and _st.pstdev(sizes) > 0 and _st.pstdev(Rs) > 0:
+        ms, mr = _st.mean(sizes), _st.mean(Rs)
+        cov = sum((s - ms) * (r - mr) for s, r in zip(sizes, Rs)) / len(sizes)
+        corr = cov / (_st.pstdev(sizes) * _st.pstdev(Rs))
+    # share of gross losses coming from the biggest-quartile positions
+    order = sorted(range(len(rr)), key=lambda i: -sizes[i])
+    top_q = set(order[:max(1, len(rr) // 4)])
+    gross_loss = sum(-t.pnl for t in rr if t.pnl < 0) or 1
+    loss_top_q = sum(-rr[i].pnl for i in top_q if rr[i].pnl < 0)
+    stats = {"avg": avg, "max": max(sizes), "corr": corr,
+             "loss_share_top_quartile": loss_top_q / gross_loss * 100}
+
+    fig, ax = plt.subplots(figsize=(13, 4.2), dpi=150)
+    xs = list(range(len(sizes)))
+    ax.bar(xs, sizes, color=colors, width=0.85, linewidth=0)
+    ax.axhline(avg, color=p["mut"], lw=0.9, ls="--", alpha=0.7)
+    ax.annotate(f"avg {avg:.1f}%", xy=(0, avg), xytext=(4, 3), textcoords="offset points",
+                fontsize=8.5, color=p["mut"])
+    # annotate the 4 biggest positions
+    for i in order[:4]:
+        ax.annotate(f"{rr[i].ticker} {sizes[i]:.0f}%", (i, sizes[i]), xytext=(0, 5),
+                    textcoords="offset points", ha="center", fontsize=8.5,
+                    color=(GREEN if rr[i].pnl > 0 else RED), fontweight="bold")
+    ax.set_ylabel("Position size  (% of equity at entry)")
+    ax.set_xlabel("Closed trades in sequence (same order as the RR chart)")
+    ax.grid(axis="y", color=p["grid"], lw=0.7)
+    ax.set_axisbelow(True)
+    _style(ax, p)
+    ax.set_xlim(-2, len(sizes) + 1)
+    return _b64(fig, p["face"]), stats
+
+
 def deployment_curve(trades, equity_by_date: dict, capital: float, dark: bool = False) -> Optional[str]:
     """% of capital deployed (cost basis of open positions ÷ equity) over time."""
     if not equity_by_date:
