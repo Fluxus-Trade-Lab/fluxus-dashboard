@@ -13,6 +13,12 @@ are stored so neither can stand in for the other.
 `source` is kept per row because the two measurement paths do not always agree
 to the last decimal, and a percentile computed across mixed sources without
 saying so is a silent apples-to-oranges comparison.
+
+`measured_at` is kept for the same reason applied to the clock. Skew moves
+through the session, so a series mixing a 12:37 reading with a 15:00 one is
+partly measuring the time of day. The scheduler aims at 15:00-15:59 ET, but a
+manual run lands wherever it lands, and the row has to say which it was —
+otherwise the contamination is invisible and the percentile looks clean.
 """
 from __future__ import annotations
 
@@ -29,7 +35,7 @@ SOURCES = ("feed_greeks", "solved_mid")
 def entry(*, date: str, symbol: str, expiry: str, dte: int, spot: float,
           forward: float, atm_iv: float, source: str,
           call_25d: dict | None = None, put_25d: dict | None = None,
-          n_solved: int | None = None) -> dict:
+          n_solved: int | None = None, measured_at: str | None = None) -> dict:
     """One day's smile for one underlying at one tenor.
 
     `call_25d`/`put_25d` are {strike, delta, iv} or None when that wing could not
@@ -42,7 +48,7 @@ def entry(*, date: str, symbol: str, expiry: str, dte: int, spot: float,
         raise ValueError(f"implausible ATM IV {atm_iv!r} — expected a decimal fraction")
     row = {"date": date, "symbol": symbol, "expiry": expiry, "dte": dte,
            "spot": spot, "forward": forward, "atm_iv": atm_iv,
-           "source": source, "n_solved": n_solved,
+           "source": source, "n_solved": n_solved, "measured_at": measured_at,
            "call_25d": call_25d, "put_25d": put_25d}
     row["call_skew"] = (call_25d["iv"] - atm_iv) if call_25d else None
     row["put_skew"] = (put_25d["iv"] - atm_iv) if put_25d else None

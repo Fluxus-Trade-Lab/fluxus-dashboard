@@ -148,6 +148,7 @@ def measure(ib, symbol: str, target_dte: int, wait: float) -> dict | None:
 
     return SK.entry(date=str(today), symbol=symbol, expiry=expiry, dte=dte,
                     spot=spot, forward=fwd, atm_iv=atm_iv, source="solved_mid",
+                    measured_at=market_now().isoformat(timespec="seconds"),
                     call_25d=pick(calls, TARGET_DELTA),
                     put_25d=pick(puts, TARGET_DELTA), n_solved=len(rows))
 

@@ -76,3 +76,14 @@ def test_percentile_of_a_thin_series_says_it_is_thin():
     s = SK.series(rows, "DIA")
     pc = percentile_of(s[-1], s)
     assert pc["n"] == 5 and pc["thin"] is True
+
+
+def test_the_measurement_time_is_recorded_because_skew_moves_intraday():
+    # A series mixing a 12:37 reading with a 15:00 one is partly measuring the
+    # clock. The row must say when, or the contamination is invisible.
+    r = _row(call_25d=C, measured_at="2026-08-06T15:02:11-04:00")
+    assert r["measured_at"].endswith("-04:00")
+
+
+def test_a_row_without_a_measurement_time_keeps_none_rather_than_guessing():
+    assert _row(call_25d=C)["measured_at"] is None
