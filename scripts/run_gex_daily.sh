@@ -62,5 +62,12 @@ if [ "$postclose" = true ]; then
 fi
 # The brief renders in both windows — premarket joins yesterday's profile.
 .venv/bin/python scripts/build_snapshot.py --symbol SPX >>"$LOG" 2>&1 \
-    && say "done — levels, profile join, brief (data/snapshots/snapshot_SPX_${DATE}.html)" \
-    || say "FAILED at build_snapshot — see log above"
+    || { say "FAILED at build_snapshot — see log above"; exit 1; }
+say "brief built (data/snapshots/snapshot_SPX_${DATE}.html)"
+
+# Push the card LAST: everything above must have succeeded, or we would be
+# sending a stale card that looks current. A failed push is logged and does not
+# fail the run — the files are on disk either way.
+.venv/bin/python scripts/push_brief.py --symbol SPX --window "$win" >>"$LOG" 2>&1 \
+    && say "pushed card to Discord" \
+    || say "warn: Discord push failed — card still at data/snapshots/card_SPX_${DATE}.png"
