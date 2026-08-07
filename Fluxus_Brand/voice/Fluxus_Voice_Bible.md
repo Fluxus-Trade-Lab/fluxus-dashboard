@@ -85,6 +85,45 @@ Support lines: *"Everyone tells you what to buy. Nobody tells you how much. That
 
 > **⚠️ 引用纪律：和影视台词共用额度，一篇最多一条，且永不以他的名字开头。** Naval 在 fintwit 被转烂了，报名字会把你从「有判断力的交易员」降成「转语录的账号」，正面撞 anti-dopamine 定位。**框架是他的，证据是你的，结论必须是你的。**
 
+## 4.7 内核配比 —— **30% 宣言 / 70% 笑话**(2026-08-08,用户定)
+
+同一个内核,可以说成宣言,也可以说成笑话:
+
+> **宣言:** You can't control the market. You can only control your size.
+> **笑话**(@Clement_Ang17,用户判为「今天最好的一条 · 是我的音区」)**:** *"After weeks of extensive back testing, I have found the secret indicator for the market to go R2G. A shower. And a facemask."*
+
+**同一句话。一个是立场,一个是段子。配比定为 30 宣言 / 70 笑话。**
+
+### 这是单条内部的重量,不是发帖配比
+
+70% 不可能靠「多发段子」达成 —— 晒数是每日锚点不能砍,硬加段子会破掉每日 15 分钟的约束。
+**唯一的路径:让每一条晒数本身带笑。** 这把「撒料 SPICE」从可选调味升成了**必选动作**。
+
+### 30% 该待的位置(按安全度排)
+
+1. **✅ 藏在前提里。** 你花力气描述的那个真实系统动作,本身就是立场的证据。Clement 的「数周详尽回测」就是那 30%,他一个字没解释。
+2. **✅ 就是笑点的落点。** 最后一拍同时是笑和立场:
+   > *「我的 GEX 引擎有 40 个测试。它今天给我的答案是:别动。**我为这个答案写了六周代码。**」*
+   末句既是笑(荒诞的投入产出比),又是立场(测量的价值在于阻止你动手)。
+3. **❌ 补一句解释。** *「……我能控制的只有仓位。」* —— **一补就把笑点讲死。**
+   这是 30% 最容易犯的错,而且它伪装成「点题」。**规矩:宣言不许出现在笑话之后。**
+
+### 三个失败模式
+
+| 病 | 长什么样 | 谁的病 |
+|---|---|---|
+| **宣言过重** | 笑话沦为装饰,通篇说教 | Julian Komar(AI 味标本) |
+| **宣言为零** | 拿到曝光但不带身份 | @legen_eth 转发梗那条:980K 曝光,零身份 |
+| **宣言解释笑话** | 把笑点讲死,读起来像怕人看不懂 | —— 最需要防的一种 |
+
+### 自查一句
+
+> **「把最后一句删掉,这条还成立吗?」**
+> 成立 → 那句是多余的解释,删。
+> 不成立 → 它承重,留。
+
+---
+
 ## 5. Why "Fluxus" already fits
 
 The actual art movement was built on **event scores** (written instructions to perform — a trade plan *is* an event score), **chance & indeterminacy** (Cage / aleatoric — you're the *ally of volatility*), and **deadpan, anti-spectacle** humor. You named the practice after the one movement whose philosophy maps onto it. Letters can *be* scores.
