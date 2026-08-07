@@ -1,36 +1,35 @@
 {
-  "timestamp": "2026-08-07T01:03:54.097123+00:00",
+  "timestamp": "2026-08-07T22:07:45.980508+00:00",
   "universe_size": 3000,
-  "spx_close": 7709.9599609375,
+  "spx_close": 7757.64013671875,
   "mm": {
-    "up_4pct": 289,
-    "down_4pct": 299,
-    "ratio_5d": 1.7539,
-    "ratio_10d": 1.2034,
-    "up_25pct_qtr": 398,
-    "down_25pct_qtr": 460,
-    "up_25pct_month": 135,
-    "down_25pct_month": 207,
-    "up_50pct_month": 37,
+    "up_4pct": 0,
+    "down_4pct": 0,
+    "ratio_5d": 2.0719,
+    "ratio_10d": 1.3421,
+    "up_25pct_qtr": 412,
+    "down_25pct_qtr": 450,
+    "up_25pct_month": 168,
+    "down_25pct_month": 174,
+    "up_50pct_month": 38,
     "down_50pct_month": 38,
-    "up_13pct_34d": 665,
-    "down_13pct_34d": 619
+    "up_13pct_34d": 663,
+    "down_13pct_34d": 611
   },
   "breadth": {
-    "t2108": 53.33,
-    "pct_above_200sma": 50.2,
-    "pct_above_50sma": 52.33,
-    "pct_above_20sma": 57.07,
-    "advances": 1291,
-    "declines": 1577,
+    "t2108": 55.37,
+    "pct_above_200sma": 51.3,
+    "pct_above_50sma": 54.8,
+    "pct_above_20sma": 60.77,
+    "advances": 0,
+    "declines": 0,
     "new_highs": 39,
     "new_lows": 7,
     "ad_line": -14290,
-    "mcclellan_osc": 4.0
+    "mcclellan_osc": 3.15
   },
   "history": {
     "dates": [
-      "2026-03-16",
       "2026-03-17",
       "2026-03-18",
       "2026-03-19",
@@ -129,10 +128,10 @@
       "2026-08-03",
       "2026-08-04",
       "2026-08-05",
-      "2026-08-06"
+      "2026-08-06",
+      "2026-08-07"
     ],
     "pct_above_200sma": [
-      53.2,
       53.73,
       50.87,
       50.69,
@@ -231,10 +230,10 @@
       49.17,
       50.67,
       50.33,
-      50.2
+      50.2,
+      51.3
     ],
     "pct_above_50sma": [
-      32.18,
       33.9,
       28.22,
       28.69,
@@ -333,10 +332,10 @@
       51.1,
       53.6,
       53.8,
-      52.33
+      52.33,
+      54.8
     ],
     "pct_above_20sma": [
-      24.77,
       29.08,
       22.4,
       24.82,
@@ -435,10 +434,10 @@
       51.9,
       59.43,
       57.87,
-      57.07
+      57.07,
+      60.77
     ],
     "mcclellan_osc": [
-      -24.23,
       -3.32,
       -33.37,
       -24.96,
@@ -537,44 +536,10 @@
       1.91,
       20.71,
       10.81,
-      4.0
+      4.0,
+      3.15
     ],
     "rows": [
-      {
-        "date": "2026-03-16",
-        "source": "live",
-        "universe_size": 2483,
-        "spx_close": 6699.3798828125,
-        "up_4pct": 175,
-        "down_4pct": 34,
-        "ratio_5d": 0.622,
-        "ratio_10d": 0.6547,
-        "up_25pct_qtr": 300,
-        "down_25pct_qtr": 253,
-        "up_25pct_month": 69,
-        "down_25pct_month": 63,
-        "up_50pct_month": 14,
-        "down_50pct_month": 1,
-        "up_13pct_34d": 347,
-        "down_13pct_34d": 999,
-        "t2108": 29.4,
-        "pct_above_200sma": 53.2,
-        "pct_above_50sma": 32.18,
-        "pct_above_20sma": 24.77,
-        "advances": 1746,
-        "declines": 714,
-        "new_highs": 7,
-        "new_lows": 9,
-        "net_advances": 1032,
-        "rana": 419.51,
-        "ad_line": -21663,
-        "mcclellan_osc": -24.23,
-        "v": {
-          "env": "MIXED",
-          "risk": "Elevated",
-          "warn": 6
-        }
-      },
       {
         "date": "2026-03-17",
         "source": "live",
@@ -4039,6 +4004,41 @@
           "risk": "Low",
           "warn": 1
         }
+      },
+      {
+        "date": "2026-08-07",
+        "source": "live",
+        "universe_size": 3000,
+        "spx_close": 7757.64013671875,
+        "up_4pct": 0,
+        "down_4pct": 0,
+        "ratio_5d": 2.0719,
+        "ratio_10d": 1.3421,
+        "up_25pct_qtr": 412,
+        "down_25pct_qtr": 450,
+        "up_25pct_month": 168,
+        "down_25pct_month": 174,
+        "up_50pct_month": 38,
+        "down_50pct_month": 38,
+        "up_13pct_34d": 663,
+        "down_13pct_34d": 611,
+        "t2108": 55.37,
+        "pct_above_200sma": 51.3,
+        "pct_above_50sma": 54.8,
+        "pct_above_20sma": 60.77,
+        "advances": 0,
+        "declines": 0,
+        "new_highs": 39,
+        "new_lows": 7,
+        "net_advances": 0,
+        "rana": 0.0,
+        "ad_line": -14290,
+        "mcclellan_osc": 3.15,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 1
+        }
       }
     ]
   },
@@ -4073,13 +4073,13 @@
       "bench_trend": "bull"
     },
     "context": {
-      "up_4pct": 72,
-      "down_4pct": 75,
-      "ratio_5d": 88,
-      "t2108": 57,
-      "mcclellan_osc": 59,
+      "up_4pct": 0,
+      "down_4pct": 0,
+      "ratio_5d": 94,
+      "t2108": 63,
+      "mcclellan_osc": 57,
       "nh_nl_net": 99,
-      "qtr_spread": 34
+      "qtr_spread": 40
     }
   }
 }
