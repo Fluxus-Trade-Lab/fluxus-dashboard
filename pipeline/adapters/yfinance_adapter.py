@@ -441,6 +441,7 @@ class YfinanceAdapter(BaseAdapter):
                 enriched[ticker] = {
                     'perf_1w': (close / float(hist['Close'].iloc[-5]) - 1) if n >= 5 else None,
                     'perf_1m': (close / float(hist['Close'].iloc[-21]) - 1) if n >= 21 else None,
+                    'perf_34d': (close / float(hist['Close'].iloc[-35]) - 1) if n >= 35 else None,
                     'perf_3m': (close / float(hist['Close'].iloc[-63]) - 1) if n >= 63 else None,
                     'perf_6m': (close / float(hist['Close'].iloc[-126]) - 1) if n >= 126 else None,
                     'perf_1y': (close / float(hist['Close'].iloc[0]) - 1) if n >= 200 else None,
@@ -496,20 +497,27 @@ class YfinanceAdapter(BaseAdapter):
 
         return universe
 
-    def fetch_ma_data(self, tickers: list[str] = None) -> dict:
+    def fetch_ma_data(self, tickers: list[str] = None, return_history: bool = False,
+                      history_period: str = '1y'):
         """Calculate MA data for Power 3 Signal and Trend Status.
         Per plan.md §2.4 fetch_ma_data.
+
+        With ``return_history=True`` returns ``(signals, histories)`` where
+        ``histories`` maps ticker -> full downloaded OHLC DataFrame covering
+        ``history_period``.
         """
         if tickers is None:
             tickers = ['SPY', 'QQQ', 'IWM', 'RSP', '^GSPC']
 
         signals = {}
+        histories = {}
         for ticker in tickers:
             try:
-                hist = _flatten_yf_columns(yf.download(ticker, period='1y', progress=False))
+                hist = _flatten_yf_columns(yf.download(ticker, period=history_period, progress=False))
                 if len(hist) < 200:
                     logger.warning(f"{ticker}: insufficient history ({len(hist)} rows)")
                     continue
+                histories[ticker] = hist
 
                 close = float(hist['Close'].iloc[-1])
 
@@ -530,6 +538,13 @@ class YfinanceAdapter(BaseAdapter):
                     signal, color = "WARNING", "orange"
                 else:
                     signal, color = "RISK_OFF", "red"
+
+                # 52-week fields must stay 52-week regardless of how much
+                # history the caller asked for. run_all now requests '3y' so the
+                # replay book has depth; anchoring on the last 252 sessions keeps
+                # the meaning of this field independent of history_period.
+                close_52w = hist['Close'].tail(252)
+                high_52w = float(close_52w.max())
 
                 signals[ticker] = {
                     'signal': signal,
@@ -554,12 +569,14 @@ class YfinanceAdapter(BaseAdapter):
                         '21ema_dist': round(float((close - ema21) / close * 100), 2),
                         '50sma_dist': round(float((close - sma50) / close * 100), 2),
                         '200sma_dist': round(float((close - sma200) / close * 100), 2),
-                        '52w_high_dist': round(float((close - hist['Close'].max()) / hist['Close'].max() * 100), 2),
+                        '52w_high_dist': round(float((close - high_52w) / high_52w * 100), 2),
                     },
                 }
             except Exception as e:
                 logger.warning(f"Error fetching MA data for {ticker}: {e}")
 
+        if return_history:
+            return signals, histories
         return signals
 
     def fetch_ohlc(self, tickers: list[str], period: str = '90d') -> dict:

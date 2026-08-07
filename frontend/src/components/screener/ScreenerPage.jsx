@@ -6,6 +6,7 @@ import PresetBar from './PresetBar'
 import FilterPanel from './FilterPanel'
 import ResultsTable from './ResultsTable'
 import WatchlistTab from './WatchlistTab'
+import HeatingUp from './HeatingUp'
 
 const DEFAULT_FILTERS = {
   marketCapEnabled: true,
@@ -123,6 +124,9 @@ export default function ScreenerPage() {
             </div>
           )}
 
+          <div className="mb-4">
+            <HeatingUp />
+          </div>
           {results && <ResultsTable rows={results} />}
         </>
       )}

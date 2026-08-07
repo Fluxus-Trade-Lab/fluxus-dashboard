@@ -1,5 +1,5 @@
 export default function ClassicBreadth({ data }) {
-  const b = data
+  const b = data?.breadth
   if (!b) return null
 
   return (

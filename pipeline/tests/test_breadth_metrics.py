@@ -84,30 +84,73 @@ class TestComputeSnapshot:
         assert result['down_4pct'] == 0
 
 
-class TestMcClellan:
-    def test_mcclellan_with_sufficient_history(self):
-        from pipeline.screeners.breadth_metrics import compute_mcclellan
-        # Need at least 39 data points for EMA39
-        np.random.seed(42)
-        net_advances_history = list(np.random.randint(-100, 200, 50))
-        result = compute_mcclellan(net_advances_history)
-        assert 'mcclellan_osc' in result
-        assert isinstance(result['mcclellan_osc'], float)
+class Test13Pct34d:
+    def test_counts_13pct_34d(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        universe = _make_universe(10)
+        universe['perf_34d'] = [0.20, 0.13, 0.129, -0.14, -0.13, -0.05, None, 0.0, 0.5, -0.5]
+        result = compute_snapshot(universe)
+        assert result['up_13pct_34d'] == 3    # 0.20, 0.13, 0.5
+        assert result['down_13pct_34d'] == 3  # -0.14, -0.13, -0.5
 
-    def test_mcclellan_with_short_history(self):
-        from pipeline.screeners.breadth_metrics import compute_mcclellan
-        result = compute_mcclellan([100, 200, -50])
-        assert result['mcclellan_osc'] is not None  # Should still compute with EWM
+    def test_missing_column_counts_zero(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        universe = _make_universe(10)  # has no perf_34d column
+        result = compute_snapshot(universe)
+        assert result['up_13pct_34d'] == 0
+        assert result['down_13pct_34d'] == 0
 
 
-class TestAdLine:
-    def test_ad_line_cumulative(self):
-        from pipeline.screeners.breadth_metrics import compute_ad_line
-        net_advances_history = [100, -50, 200, -30]
-        result = compute_ad_line(net_advances_history)
-        # Cumulative sum: 100, 50, 250, 220
-        assert result == 220
+class TestRunOnStore:
+    def _run(self, tmp_path, universe=None):
+        from pipeline.screeners.breadth_metrics import run
+        universe = universe if universe is not None else _make_universe(2000)
+        return run(universe, str(tmp_path / 'archive.csv'), spx_close=7400.0)
 
-    def test_ad_line_empty(self):
-        from pipeline.screeners.breadth_metrics import compute_ad_line
-        assert compute_ad_line([]) == 0
+    def test_output_schema_backward_compatible(self, tmp_path):
+        result = self._run(tmp_path)
+        for key in ['universe_size', 'spx_close', 'mm', 'breadth', 'history']:
+            assert key in result
+        for key in ['up_4pct', 'down_4pct', 'ratio_5d', 'ratio_10d',
+                    'up_25pct_qtr', 'down_25pct_qtr', 'up_13pct_34d', 'down_13pct_34d']:
+            assert key in result['mm']
+        for key in ['t2108', 'pct_above_200sma', 'advances', 'declines',
+                    'new_highs', 'new_lows', 'ad_line', 'mcclellan_osc']:
+            assert key in result['breadth']
+        for key in ['dates', 'pct_above_200sma', 'pct_above_50sma',
+                    'pct_above_20sma', 'mcclellan_osc', 'rows']:
+            assert key in result['history']
+        assert result['data_quality'] == {'stale': False}
+        assert result['history']['rows'][-1]['source'] == 'live'
+
+    def test_rerun_same_day_is_idempotent(self, tmp_path):
+        import pandas as pd
+        self._run(tmp_path)
+        self._run(tmp_path)
+        frame = pd.read_csv(tmp_path / 'archive.csv')
+        assert len(frame) == 1
+
+    def test_guard_rejection_keeps_archive_and_flags_stale(self, tmp_path):
+        import pandas as pd
+        self._run(tmp_path)                                  # good day 1
+        bad = _make_universe(500)                            # universe collapse
+        result = self._run(tmp_path, universe=bad)
+        assert result['data_quality']['stale'] is True
+        assert 'universe' in result['data_quality']['reason']
+        frame = pd.read_csv(tmp_path / 'archive.csv')
+        assert len(frame) == 1                               # untouched
+        # output still serves yesterday's data
+        assert len(result['history']['rows']) == 1
+
+
+class TestTrueNhNl:
+    def test_new_high_requires_at_extreme(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        universe = _make_universe(4)
+        # high_52w is (close/52w_high - 1): 0 = at high, -0.0005 within tolerance,
+        # -0.015 was a "new high" under the old 2% rule and must NOT count now.
+        universe['high_52w'] = [0.0, -0.0005, -0.015, -0.30]
+        universe['low_52w'] = [0.0, 0.0009, 0.015, 0.80]
+        result = compute_snapshot(universe)
+        assert result['new_highs'] == 2
+        assert result['new_lows'] == 2

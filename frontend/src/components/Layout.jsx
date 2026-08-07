@@ -2,8 +2,10 @@ import { useHash } from '../hooks/useHash'
 import Header from './Header'
 import TickerStrip from './dashboard/TickerStrip'
 import MarketPosture from './dashboard/MarketPosture'
+import BreadthChip from './breadth/BreadthChip'
 import PreMarketChecklist from './dashboard/PreMarketChecklist'
 import MacroGrid from './dashboard/MacroGrid'
+import HeatingUp from './screener/HeatingUp'
 import EquitiesSection from './equities/EquitiesSection'
 import ScreenerPage from './screener/ScreenerPage'
 import PortfolioPage from './portfolio/PortfolioPage'
@@ -65,11 +67,15 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           {/* Hero: Ticker Strip */}
           <TickerStrip signals={data?.signals} etfData={data?.etf_data} />
 
+          <BreadthChip verdict={data?.breadth?.verdict} onNavigate={navigate} />
+
           {/* Decision Panel: Market Posture + Pre-Market Checklist */}
           <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-3">
             <MarketPosture signals={data?.signals} />
             <PreMarketChecklist />
           </div>
+
+          <HeatingUp compact limit={5} />
 
           {/* Macro: Trend Status + Power Trend */}
           <MacroGrid signals={data?.signals} />
