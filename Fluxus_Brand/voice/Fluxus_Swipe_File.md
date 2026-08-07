@@ -22,7 +22,7 @@
 | **② 给价值** | **G 机制型短文** | 讲**已发生**的一件事怎么运作,不讲观点 | #6 #9 #17 |
 | | **I 条件句预告** ⭐新 | 对**未发生**的给条件,**不给方向** | #11 #18 #19 |
 | | **E 反转流分析** | 给对手方做钢人 → 资金流机制链 → 非共识结论 + 可证伪让步 | #4 |
-| | **B 教学长文** | 完整体系的一次性交付 | *(空,待收)* |
+| | **B 教学长文** | 完整体系的一次性交付 | **#26 #27 #28**(+2 记结构)· 见「文体 B 专项拆解」 |
 | | **H 策展** | 「我替你读了」+ 每条一句自己的判断 | #7 |
 | **③ 要传播** | **D 时事金句** | 格言 × 当日新闻,**重新定义那件事** | #3 #10 |
 | | **J 换变量 / 打现象** ⭐新 | 引用一句人人在说的话 → 换掉一个变量 → 让对方自己得结论 | #12 #16 |
@@ -356,6 +356,75 @@
 - **装我的素材:** ⭐ **这句话几乎就是 30/40/30 的口语版。** 你的 30 天零成交期正是这个状态。
   你的版本:*「零成交第 31 天。赚不到钱的时候,就只能把话说好。」* 或更冷:*「本周成交:0。本周产出:这条。」*
   ⚠️ **它是回复,只有 165 曝光** —— 收它是因为骨架干净,不是因为数据。**再次:收骨架不收数据。**
+
+---
+
+## 📚 文体 B · 教学长文 —— 专项拆解(2026-08-08,五个样本)
+
+*配比里教学占 40%,而这一档之前库存为零。这次把它补上。*
+
+### 首先:它有两种载体,经济学完全不同
+
+| | **X Article(内容留在 X)** | **钩子帖 + 外链** |
+|---|---|---|
+| 代表 | @ohiain | @FranVezz |
+| 长什么样 | X 原生长文,封面图 + 标题 + 正文全在站内 | 一个 ✅ 目录 + `tinyurl` 链接,正文在站外 |
+| 数据 | 首篇 **303K**,系列后续 31–62K | 215K —— **但主要靠置顶累积主页访客,不是自然传播** |
+| 代价 | 内容留在平台上,带不走 | 竞品拆解 §五 量过:**他的非置顶链接帖只有 3.6K** |
+
+> ⭐ **FranVezz 那条 215K 是「置顶抵消了链接惩罚」的样本。** 链接帖会被压制,但置顶帖吃的是每一个主页访客 —— 两个效应互相抵消。
+> **对我们:长文放 Substack + X 上只留置顶钩子,是可行的;但那条钩子必须置顶,不能当日常帖发。**
+
+### #26 iain(@ohiain)— 一个系列,不是一篇(2026 全年)· 文体 B
+- 链接:`x.com/ohiain/articles` · 五篇 X Article
+| 日期 | 标题 | 曝光 | 赞 | 转 | 回复 |
+|---|---|---|---|---|---|
+| **Feb 7** | **The Exact A–Z System I Use to Trade the Markets** | **303K** | 1.3K | 213 | 61 |
+| Mar 13 | I Simplified My Approach to 6 Core Indicators \| Here's Exactly How I Use Each One | 62K | 771 | 101 | 13 |
+| Mar 31 | How I Use $VIX To Trade Any Environment | 55K | 423 | 69 | 11 |
+| Mar 3 | STOP Buying The OBVIOUS Breakout | 37K | 480 | 66 | 8 |
+| Feb 21 | Not All Reclaims Are Equal: The Speed + Volume Framework That Changed My Trading | 31K | 459 | 57 | 18 |
+- **⭐ 首篇是后续的 5–10 倍,而唯一的结构性差异是封面:** 首篇封面是 **`Account P&L% / YTD +196.18%` 的战绩截图**;其余四篇封面是**手绘概念图**(reclaim 速度对比、breakout 位置标注、6 个指标标注)。**战绩当封面 = 5–10 倍。**
+- **回复 8–61,转发 57–213 —— 转发/回复 ≈ 7–8×。这不是讨论型内容,是收藏转发型**,和策展帖(文体 H)同一个消费模式。
+- **装我的素材:** 你有 **H1 +90.5% 的真实对账单** —— 那就是封面。而「一篇破圈 + 系列留存」的节奏正好配 Substack:**旗舰信一篇,之后每周拆一个零件。**
+
+### #27 Francesco(@FranVezz)— 目录即钩子(2025-03-23,置顶至今)· 文体 B
+- 链接:待补 · 215K / 713 likes / **1,109 bookmarks**(数据来自竞品拆解)
+- **全文只有六行:**
+  > *"Here's a deep dive into my complete swing trading system:*
+  > *✅ The 4 things I look for when selecting stocks*
+  > *✅ Position sizing & progressive exposure*
+  > *✅ Tools for judging market health*
+  > *✅ My buy & sell rules*
+  > *➡️ tinyurl.com/…"*
+- **为什么有效:读者收藏的是那个目录,不是那篇文章。** 四个 ✅ 覆盖了一个交易系统的全部四个部件 —— **穷举感本身就是价值主张**,点不点链接是次要的。
+- **装我的素材:** 你的四个部件现成:**选股(screener/breadth)· 仓位(0.25% 风险 + Kelly)· 环境判断(GEX / breadth)· 买卖规则(ASSET 框架)。** 照抄这个四行结构即可,置顶。
+
+### #28 Nick(@NickDoesFutures)— "Steal it."(2026-07-28)· 文体 B ⭐
+- 链接:待补 · **170K views / 1.3K likes / 97🔁 / 36💬**
+  > *"My entire trading day takes 2 hours.*
+  > *9:00 to 11:00 AM. One/two trades, sometimes zero.*
+  > ***Here's the exact routine, minute by minute. Steal it.** 🧵"*
+- **骨架:** 一个**反直觉的数字**开场(2 小时)→ 把它拆细(9–11 点 · 一两笔 · **有时候零笔**)→ 承诺穷举(minute by minute)→ **两个字的授权:Steal it.**
+- **⭐ 全部样本里最强的两个词是 "Steal it."** —— **明确授权抄袭 = 解除读者的心理负担。** 而且它不要求任何动作,**不是 CTA 却胜过 CTA**。
+- **「sometimes zero」是那 30% 的宣言。** 它藏在前提里,没有解释 —— 正好符合 §4.7 的规矩。
+- **装我的素材:** ⭐ **这条几乎是为你写的。** 你的版本:*「我的交易日只有 25 分钟。收盘后取一次数,一两笔,常常零笔。下面是逐分钟的流程。拿去用。」*
+
+### 另外两个样本(未单独入库,记结构)
+- **@RileyColemanT**(128K / 721♥):九行祈使句清单(*开户 · 存 $50 · 学一个 setup · 上班前起床 · 看一小时 · 做一笔 · 拿走利润 · 合上电脑 · 重复到 $50 变成 $10,000+*)+ *"Here's exactly how it works:"* → **清单本身就是全文,后面的「怎么做」是赠品。**
+- **@NoRiskNoPremium**(83K / 573♥):*"This $SPY 0–1DTE strategy is all you need: Previous Day High/Low + 15 min ORB. **Simple. Repeatable. High probability.** Here's exactly how I trade it"* → **三个单词的节奏(Simple. Repeatable. High probability.)干掉了整段解释。**
+
+### 五个样本共有的四条规律
+
+1. **开场必是「我不做大家都在做的那件事」或「没人讲过这个」**
+   *"I've completely stopped buying the obvious breakout…"* · *"…and I genuinely haven't seen anyone…"* · *"has nothing to do with the setup"* · *"My entire trading day takes 2 hours"*
+2. **标题必带数字或穷举承诺** —— A–Z · 6 core indicators · 4 things · 2 hours · minute by minute。**抽象概念一个都没有。**
+3. **目录 = 产品。** 读者收藏的是那份清单,正文是兑现。
+4. **回复低、转发高。** 别指望它引发讨论 —— 它的使用方式是**存起来**。
+
+### ⚠️ 我们还没有这条帖 —— 这是发射期的头号缺口
+竞品拆解 2026-07-28 就写了「**我们还没有这条帖 —— 而 H1 复盘 + 那套「盾」的内容,就是这条帖**」。**十天过去了,还是没有。**
+**素材全部现成:+90.5% 对账单(封面)· 四个部件(目录)· 25 分钟的日常流程(Steal it. 版)。**
 
 ---
 
