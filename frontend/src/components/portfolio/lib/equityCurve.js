@@ -246,15 +246,18 @@ export function getPortfolioValueAtDate(trades, startingCapital, asOfDate, daily
  * @param {{date:string, value:number}[]} curve
  */
 export function computeDrawdown(curve) {
+  // Select the max drawdown by PERCENTAGE, not dollars: on an account that grows
+  // a lot, a later dollar-drop can be bigger in $ yet shallower in %, so a
+  // dollar-max search misses the true (deeper %) drawdown on a smaller base.
   let peak = -Infinity, peakDate = null
   let maxDrawdown = 0, maxDrawdownPct = 0, troughDate = null, atPeak = null
   for (const pt of curve) {
     if (pt.value > peak) { peak = pt.value; peakDate = pt.date }
     if (peak <= 0) continue
-    const dd = pt.value - peak
-    if (dd < maxDrawdown) {
-      maxDrawdown = dd
-      maxDrawdownPct = (dd / peak) * 100
+    const ddPct = ((pt.value - peak) / peak) * 100
+    if (ddPct < maxDrawdownPct) {
+      maxDrawdownPct = ddPct
+      maxDrawdown = pt.value - peak
       troughDate = pt.date
       atPeak = peakDate
     }
