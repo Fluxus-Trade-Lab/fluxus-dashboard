@@ -58,6 +58,30 @@
 
 **你随时加人删人,我下次自动跟上。不需要改任何文件。**
 
+### ⭐ 抓取方式二选一(2026-08-07 加,实测对比后)
+
+**A. 滚 list 时间线** —— 适合「最近 24 小时」这种宽窗口。
+⚠️ **但 list 时间线是算法排序,不是严格倒序** —— 实测见过 12 小时前的帖插在 1 小时前的帖中间。**靠滚动定位精确时间窗不可靠。**
+
+**B. OR 搜索 + unix 时间边界(精确窗口首选)**
+
+```
+https://x.com/search?q=(from:a OR from:b OR …) since_time:<unix> until_time:<unix>&f=live
+```
+
+一次锁定精确时间窗、**纯倒序**、不受 list 算法干扰。算时间戳:
+
+```bash
+python3 -c "
+from datetime import datetime; from zoneinfo import ZoneInfo
+et = ZoneInfo('America/New_York')
+a = datetime(2026,8,6,16,0,tzinfo=et); b = datetime(2026,8,6,18,0,tzinfo=et)
+print(int(a.timestamp()), int(b.timestamp()))"
+```
+
+**代价:成员名单要手写进 query**(list 里加了人要同步),而且 X 搜索有查询长度上限,约 16 个 handle 是安全区。
+→ **宽窗口用 A,精确窗口(盘后 2 小时 / 开盘后 1 小时)用 B。**
+
 **取帖规则:**
 - 时间窗:最近 24 小时。若当日产出不足 20 条(周末、淡日),放宽到 48 小时;仍不足则如实说明并给少于 25 张。
 - list 时间线**会混入成员的回复**。回复只在互动明显高于该成员日常水平时才收(它说明那条回复本身被看见了),否则丢弃。
