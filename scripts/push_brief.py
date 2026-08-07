@@ -49,18 +49,34 @@ def load_env(path: str | Path = ".env") -> None:
         os.environ.setdefault(k.strip(), v.strip().strip("'\""))
 
 
-def send(image: Path, text: str, channel: str, token: str) -> bool:
-    """Upload the card with its caption as one message."""
+def send(image: Path, text: str, channel: str, token: str,
+         extra: Path | None = None) -> bool:
+    """Upload the card, its caption, and the full HTML, as ONE message.
+
+    The card is what gets read on a phone; the HTML is what gets opened when a
+    number looks wrong. Attaching both to the same message means the detail is
+    one tap away from the summary instead of somewhere on a laptop — and a
+    forwarded message carries both.
+    """
     import requests
 
-    with image.open("rb") as fh:
+    opened = [image.open("rb")]
+    if extra is not None and extra.exists():
+        opened.append(extra.open("rb"))
+    try:
+        files = {f"files[{i}]": (f.name.rsplit("/", 1)[-1], f,
+                                 "image/png" if i == 0 else "text/html")
+                 for i, f in enumerate(opened)}
         resp = requests.post(
             f"{DISCORD_API}/channels/{channel}/messages",
             headers={"Authorization": f"Bot {token}"},
             data={"payload_json": json.dumps({"content": text})},
-            files={"files[0]": (image.name, fh, "image/png")},
+            files=files,
             timeout=30,
         )
+    finally:
+        for f in opened:
+            f.close()
     if resp.status_code not in (200, 201):
         # Never echo the body wholesale — an auth error can carry the token back.
         print(f"discord: HTTP {resp.status_code} ({resp.reason})")
@@ -103,7 +119,8 @@ def main():
         sys.exit("DISCORD_BOT_TOKEN / DISCORD_BRIEF_CHANNEL_ID not set "
                  "(checked the environment and .env)")
 
-    ok = send(card, text, channel, token)
+    html = SNAP_DIR / f"snapshot_{args.symbol}_{day}.html"
+    ok = send(card, text, channel, token, extra=html)
     print(f"pushed {card.name} to Discord" if ok else "push FAILED")
     sys.exit(0 if ok else 1)
 
