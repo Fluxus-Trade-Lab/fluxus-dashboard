@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — Ticker</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+:root{
+  --paper:#f2f1ed;--ink:#12110f;--ink2:#57534e;--ink3:#948f86;--ink4:#b9b3a9;
+  --rule:#d9d5cd;--hair:#e6e3db;
+  --took:#1a5488;--refused:#d1600f;--idle:#c2bdb4;--off:#e2ded6;
+  --sans:Plex,-apple-system,sans-serif;--cond:PlexCond,Plex,sans-serif;--mono:PlexMono,Menlo,monospace;
+  --u:8px;
+}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+     -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.app{max-width:1360px;margin:0 auto;padding:0 calc(var(--u)*4) calc(var(--u)*12)}
+.mast{display:flex;align-items:baseline;gap:calc(var(--u)*3);
+      padding:calc(var(--u)*2) 0 calc(var(--u)*1.5);border-bottom:2px solid var(--ink)}
+.mast .wm{font-family:var(--cond);font-weight:700;font-size:20px;letter-spacing:.3em}
+.mast nav{display:flex;gap:calc(var(--u)*2.5);font-size:12px;color:var(--ink3)}
+.mast nav b{color:var(--ink);font-weight:600;border-bottom:2px solid var(--ink);padding-bottom:3px}
+.mast .file{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink3)}
+.stampx{border:1.6px solid var(--refused);color:var(--refused);padding:3px 7px;
+        font-family:var(--cond);font-weight:700;font-size:10px;letter-spacing:.14em;
+        transform:rotate(-3deg);white-space:nowrap}
+
+.hero{display:grid;grid-template-columns:1fr 380px;gap:calc(var(--u)*6);
+      padding:calc(var(--u)*5) 0 calc(var(--u)*4);border-bottom:1px solid var(--ink)}
+.kick{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;color:var(--ink3);
+      margin-bottom:calc(var(--u)*2)}
+.sym{font-family:var(--cond);font-weight:700;font-size:110px;line-height:.86;letter-spacing:-.02em}
+.read{font-size:19px;line-height:1.42;margin-top:calc(var(--u)*3);max-width:32ch;
+      border-left:2px solid var(--rule);padding-left:calc(var(--u)*1.75)}
+.read .tag{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.18em;
+           color:var(--ink3);text-transform:uppercase;margin-bottom:6px;font-weight:400}
+.read .b{color:var(--refused);font-weight:500}
+.spec{border-top:2px solid var(--ink);align-self:start}
+.spec div{display:flex;justify-content:space-between;align-items:baseline;
+          padding:calc(var(--u)*0.9) 0;border-bottom:1px solid var(--hair)}
+.spec .k{font-size:10.5px;letter-spacing:.09em;color:var(--ink2);text-transform:uppercase}
+.spec .v{font-family:var(--mono);font-size:14px;font-weight:500}
+.nofill{margin-top:calc(var(--u)*3);border:1.4px dashed var(--ink4);
+        padding:calc(var(--u)*1.5) calc(var(--u)*2)}
+.nofill .h{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--ink3);
+           text-transform:uppercase;margin-bottom:6px}
+.nofill p{margin:0;font-size:12px;line-height:1.6;color:var(--ink2)}
+
+h3{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+   color:var(--ink3);margin:calc(var(--u)*7) 0 0;padding-bottom:calc(var(--u)*1.2);
+   border-bottom:1px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline}
+h3 em{font-style:normal;text-transform:none;letter-spacing:.01em;font-family:var(--sans);
+      font-size:11.5px;color:var(--ink2);font-weight:400}
+.note{font-size:12px;line-height:1.65;color:var(--ink2);max-width:84ch;margin:calc(var(--u)*2) 0 0}
+.note.method{border-left:2px dashed var(--ink4);padding-left:calc(var(--u)*1.75)}
+.note .tag{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.18em;
+           color:var(--ink3);text-transform:uppercase;margin-bottom:6px}
+.note b{color:var(--ink);font-weight:600}
+svg{display:block;width:100%;height:auto;overflow:visible;margin-top:calc(var(--u)*2)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <pattern id="hx" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="5" stroke="#7d3908" stroke-width="1.7"/></pattern>
+</defs></svg>
+
+<div class="app">
+  <div class="mast">
+    <span class="wm">FLUXUS</span>
+    <nav><span>Market state</span><span>Screener</span><span>Positions</span><b>Ticker</b><span>Letters</span></nav>
+    <span class="file" id="file">—</span>
+    <span class="stampx">NOT A CALL</span>
+  </div>
+
+  <div class="hero">
+    <div>
+      <div class="kick" id="kick">—</div>
+      <div class="sym" id="sym">—</div>
+      <div class="read" id="read">—</div>
+    </div>
+    <div>
+      <div class="spec" id="spec"></div>
+      <div class="nofill" id="bias"></div>
+      <div class="nofill" id="nofill"></div>
+    </div>
+  </div>
+
+  <h3>Signal history <em>Every appearance placed on the price it appeared at — the point is the gap between signal and move</em></h3>
+  <svg id="tape" viewBox="0 0 1296 430"></svg>
+  <p class="note method" id="tapenote"></p>
+
+  <h3>What fired, and how often <em>One mark is one appearance, oldest on the left</em></h3>
+  <svg id="strip" viewBox="0 0 1296 250"></svg>
+</div>
+
+<script>
+const D = /*__DATA__*/ null;
+const T=D.ticker, BARS=D.bars, EV=D.events, HEAT=D.heat, W=D.weights;
+const NS="http://www.w3.org/2000/svg";
+const C={took:"#1a5488",refused:"#d1600f",idle:"#c2bdb4",off:"#e2ded6",
+         ink:"#12110f",ink2:"#57534e",ink3:"#948f86",ink4:"#b9b3a9"};
+const el=id=>document.getElementById(id);
+function mk(p,t,a={},x){const n=document.createElementNS(NS,t);
+  for(const k in a) n.setAttribute(k,a[k]); if(x!=null) n.textContent=x; p.appendChild(n); return n;}
+const F=(s,f,w)=>`font:${w||400} ${s}px ${f||"Plex,sans-serif"}`;
+const NAME={episodic_pivot:"EP",vcp:"VCP",momentum_97:"MOM",gainers_4pct:"4%",
+            vol_up_gainers:"VOL",ema21_watch:"21D",healthy_charts:"CHART"};
+const QUALITY=Object.keys(W).filter(k=>W[k]===3);
+
+const idx={}; BARS.forEach((b,i)=>idx[b.d]=i);
+const inWin = EV.filter(e=>e.date in idx).slice().sort((a,b)=>a.date<b.date?-1:1);
+const first=inWin[0], last=inWin[inWin.length-1];
+const pFirst=BARS[idx[first.date]].c, pLast=BARS[BARS.length-1].c;
+const move=(pLast/pFirst-1)*100;
+
+el("file").textContent=`FILE FX-TKR · ${BARS[BARS.length-1].d} · CLOSE`;
+el("kick").textContent="SIGNAL HISTORY";
+el("sym").textContent=T;
+el("read").innerHTML =
+  `<span class="tag">Read</span>${inWin.length} appearances since <b>${first.date}</b>, `+
+  `first printed at ${pFirst.toFixed(2)} and closing at ${pLast.toFixed(2)}. `+
+  `<span class="b">This name is on the page because it is currently hot, `+
+  `so ${move>=0?"+":""}${move.toFixed(1)}% is a selection, not a result.</span>`;
+
+const qHits=inWin.filter(e=>QUALITY.includes(e.screener)).length;
+el("spec").innerHTML=[
+  ["Heat score", HEAT.score.toFixed(1)],
+  ["Appearances", inWin.length],
+  ["Quality tier", `${qHits} of ${inWin.length}`],
+  ["First seen", first.date],
+  ["Last seen", last.date],
+  ["Sector", HEAT.sector],
+].map(([k,v])=>`<div><span class="k">${k}</span><span class="v">${v}</span></div>`).join("");
+
+/* The fills belong here and there are none in the payload — say so rather than
+   drawing an empty lane that reads as "no trades were taken". */
+el("bias").innerHTML =
+  `<div class="h">Why this name and not another</div>
+   <p>It was picked off the heat list, which ranks by what has already stacked.
+   <b>Every name reachable from that list is a survivor.</b> The tape below is
+   worth reading for the <em>gap between signal and move</em>; the total return is
+   not worth reading at all, because the sample chose itself.
+   The measured answer to "do these sequences pay" is a separate, matched study —
+   and it came back <b>0 of 42</b>.</p>`;
+
+el("nofill").innerHTML =
+  `<div class="h">Your fills are not on this page</div>
+   <p>The whole point of this view is signals <b>against your own entries</b> — but no trade
+   record is wired into this payload yet, so the entry lane is <b>absent, not empty</b>.
+   Until it is joined, this page shows what the market offered and cannot show what you did
+   about it.</p>`;
+
+/* ── the tape: every appearance placed at the price it appeared at ── */
+(function(){
+  const s=el("tape"), W2=1296, L=64, R=150, TOP=30, BOT=330;
+  const cs=BARS.map(b=>b.c), mn=Math.min(...BARS.map(b=>b.l)), mx=Math.max(...BARS.map(b=>b.h));
+  const x=i=>L+i*(W2-L-R)/(BARS.length-1+1);
+  const y=v=>BOT-(v-mn)/(mx-mn)*(BOT-TOP);
+  // price
+  mk(s,"polyline",{points:cs.map((c,i)=>`${x(i)},${y(c)}`).join(" "),fill:"none",
+    stroke:C.ink,"stroke-width":1.6,"stroke-linejoin":"round"});
+  // gridlines at round levels
+  const step=Math.pow(10,Math.floor(Math.log10(mx-mn)));
+  for(let v=Math.ceil(mn/step)*step; v<mx; v+=step){
+    mk(s,"line",{x1:L,y1:y(v),x2:W2-R,y2:y(v),stroke:"#ddd9d1","stroke-width":.7});
+    mk(s,"text",{x:W2-R+8,y:y(v)+3.5,style:F(9.5,"PlexMono,monospace")+";fill:#b9b3a9"},v.toFixed(0));
+  }
+  // appearances
+  inWin.forEach(e=>{
+    const i=idx[e.date], q=QUALITY.includes(e.screener);
+    const px=x(i), py=y(BARS[i].c);
+    if(q){
+      mk(s,"line",{x1:px,y1:py,x2:px,y2:TOP-6,stroke:C.took,"stroke-width":.8,opacity:.28});
+      mk(s,"rect",{x:px-3.5,y:py-3.5,width:7,height:7,fill:C.took});
+    }else{
+      mk(s,"rect",{x:px-2.5,y:py-2.5,width:5,height:5,fill:"none",
+        stroke:C.idle,"stroke-width":1.1});
+    }
+  });
+  // the pending slot — this page ends one session past the last bar too
+  mk(s,"rect",{x:x(BARS.length-1)+8,y:TOP,width:x(BARS.length)-x(BARS.length-1)-8,
+    height:BOT-TOP,fill:"none",stroke:C.idle,"stroke-dasharray":"3 3"});
+  mk(s,"text",{x:x(BARS.length-1)+14,y:TOP-8,
+    style:F(9.5,"PlexMono,monospace",500)+";fill:#948f86;letter-spacing:.1em"},"NEXT");
+  // ends
+  mk(s,"text",{x:L,y:BOT+22,style:F(9.5,"PlexMono,monospace")+";fill:#b9b3a9"},BARS[0].d);
+  mk(s,"text",{x:x(BARS.length-1),y:BOT+22,"text-anchor":"end",
+    style:F(9.5,"PlexMono,monospace")+";fill:#b9b3a9"},BARS[BARS.length-1].d);
+  // the first quality signal, called out
+  const fq=inWin.find(e=>QUALITY.includes(e.screener));
+  if(fq){
+    const i=idx[fq.date];
+    mk(s,"text",{x:x(i),y:TOP-16,"text-anchor":"middle",
+      style:F(10,"PlexMono,monospace",500)+`;fill:${C.took}`},
+      `first ${NAME[fq.screener]} · ${BARS[i].c.toFixed(2)}`);
+  }
+  mk(s,"text",{x:W2-R+8,y:BOT+22,style:F(9.5,"PlexMono,monospace")+";fill:#948f86"},
+    pLast.toFixed(2));
+})();
+el("tapenote").innerHTML =
+  `<span class="tag">Method</span>Solid squares are the quality tier (${QUALITY.map(k=>NAME[k]).join(" · ")});
+   outlined squares are participation. Each is drawn <b>at the close it appeared at</b>, so the
+   distance between a mark and the line's later position is the thing worth reading — not the
+   count. A signal is only interesting if price went somewhere afterwards.`;
+
+/* ── the strip: countable, oldest left ── */
+(function(){
+  const s=el("strip"), L=150, TOP=24, ROW=34, U=11, G=4;
+  const byScr={};
+  inWin.forEach(e=>{(byScr[e.screener] ||= []).push(e.date);});
+  const order=Object.keys(byScr).sort((a,b)=>(W[b]||0)-(W[a]||0) || byScr[b].length-byScr[a].length);
+  order.forEach((k,ri)=>{
+    const y=TOP+ri*ROW, q=QUALITY.includes(k), n=byScr[k].length;
+    mk(s,"text",{x:L-18,y:y+11,"text-anchor":"end",
+      style:"font:600 13px PlexCond,sans-serif;fill:#12110f;letter-spacing:.02em"},
+      (NAME[k]||k).toUpperCase());
+    mk(s,"text",{x:L-18,y:y+25,"text-anchor":"end",style:F(9)+";fill:#948f86"},
+      q?"quality · ×3":"participation · ×1");
+    byScr[k].forEach((d,i)=>{
+      const px=L+i*(U+G);
+      if(q) mk(s,"rect",{x:px,y,width:U,height:U,fill:C.took});
+      else  mk(s,"rect",{x:px,y,width:U,height:U,fill:"none",stroke:C.idle,"stroke-width":1.1});
+    });
+    mk(s,"text",{x:L+n*(U+G)+12,y:y+10,
+      style:`font:600 14px PlexCond,sans-serif;fill:${q?C.took:C.ink3}`},n);
+  });
+  mk(s,"text",{x:L,y:TOP+order.length*ROW+16,style:F(12,null,500)+";fill:#12110f"},
+    `${qHits} of ${inWin.length} appearances were the quality tier. The rest is participation — a 4% day is not a setup.`);
+})();
+</script>
+</body></html>
