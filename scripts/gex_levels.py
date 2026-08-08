@@ -137,6 +137,37 @@ def resolve_spot(ib, u, symbol, override, delayed):
     return None, None
 
 
+def _resting_by_strike(frame):
+    """{strike: {bid_size, ask_size, imbalance}} from displayed NBBO size.
+
+    Imbalance is (bid - ask) / (bid + ask): +1 all resting size is on the
+    bid, -1 all on the offer. Strikes with nothing quoted are omitted rather
+    than reported as balanced.
+    """
+    out = {}
+    for k, grp in frame.groupby("strike"):
+        b = grp["bid_size"].dropna().sum()
+        a = grp["ask_size"].dropna().sum()
+        if b + a <= 0:
+            continue
+        out[float(k)] = {"bid_size": float(b), "ask_size": float(a),
+                         "imbalance": round((b - a) / (b + a), 4)}
+    return out or None
+
+
+
+def _num(x):
+    """A NaN or missing size is missing, not zero — a strike nobody is quoting
+    and a strike quoted at zero are different facts."""
+    if x is None:
+        return None
+    try:
+        v = float(x)
+    except (TypeError, ValueError):
+        return None
+    return None if v != v else v
+
+
 def pull_open_interest(ib, opts, batch=45, settle=6.0):
     """Stream generic ticks 100,101 in batches (respects the ~100-line cap).
 
@@ -146,13 +177,20 @@ def pull_open_interest(ib, opts, batch=45, settle=6.0):
     one of the two fields. OI is accumulated positioning; volume is today's
     flow. A strike large in one and small in the other is itself information.
     """
-    oi, vol = {}, {}
+    oi, vol, rest = {}, {}, {}
     for i in range(0, len(opts), batch):
         group = opts[i:i + batch]
         tks = {o.conId: ib.reqMktData(o, "100,101", False, False) for o in group}
         ib.sleep(settle)
         for o in group:
             tk = tks[o.conId]
+            # Displayed size resting at the NBBO. Arrives on the SAME
+            # subscription and was being discarded, exactly as day volume was.
+            # This is resting INTENT — a different object from open interest
+            # (settled positioning) and from the tape (completed trades). It is
+            # what the market maker is willing to show, not committed size, and
+            # nothing downstream may call it institutional.
+            rest[o.conId] = (tk.bidSize, tk.askSize)
             oi[o.conId] = tk.callOpenInterest if o.right == "C" else tk.putOpenInterest
             # Day volume for an OPTION contract is the plain `volume` field.
             # callVolume/putVolume are NaN on an option ticker -- they belong to
@@ -160,7 +198,7 @@ def pull_open_interest(ib, opts, batch=45, settle=6.0):
             # 7700C volume=1734, callVolume=nan. Right-sounding name, wrong object.
             vol[o.conId] = tk.volume
             ib.cancelMktData(o)
-    return oi, vol
+    return oi, vol, rest
 
 
 def main():
@@ -263,7 +301,7 @@ def main():
             for o, t in zip(opts[i:i + 60], ib.reqTickers(*opts[i:i + 60])):
                 greeks[o.conId] = t.modelGreeks
 
-    oi, volume = pull_open_interest(ib, opts)
+    oi, volume, resting = pull_open_interest(ib, opts)
     ib.disconnect()
 
     # --- assemble ---
@@ -280,6 +318,8 @@ def main():
                or (isinstance(oi.get(o.conId), float) and math.isnan(oi.get(o.conId)))) else 0.0,
             volume=float(volume.get(o.conId) or 0.0) if not (volume.get(o.conId) is None
                or (isinstance(volume.get(o.conId), float) and math.isnan(volume.get(o.conId)))) else 0.0,
+            bid_size=_num(resting.get(o.conId, (None, None))[0]),
+            ask_size=_num(resting.get(o.conId, (None, None))[1]),
             T=T,
         ))
     df = pd.DataFrame(rows)
@@ -498,6 +538,10 @@ def main():
         per_strike_gex={float(k): round(v, 2) for k, v in per_strike.items()},
         per_strike_gex_volume=({float(k): round(v, 2) for k, v in per_strike_vol.items()}
                                if per_strike_vol is not None else None),
+        per_strike_resting=_resting_by_strike(df),
+        resting_note=("displayed size at the NBBO, sampled at pull time. Resting "
+                      "intent, not committed size — hidden and reserve orders are "
+                      "invisible here, and this is never an institutional read."),
         gex_volume_note=("weighted by today's traded volume (tick 100); resets daily"
                          if per_strike_vol is not None
                          else "unavailable — nothing traded at pull time (outside RTH?)"),
