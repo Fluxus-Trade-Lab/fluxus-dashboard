@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fluxus 视觉改版 — 三张探索稿 · 2026.07.31</title>
+<style>
+:root{
+  --paper:#faf9f7; --ink:#16150f; --ink-2:#57534e; --ink-3:#a8a29e;
+  --rule:#e0ddd8; --plate:#ffffff;
+  /* 市场层：回应质量。蓝=给了机会且接住了；橙=给了机会没接住。不用绿红。 */
+  --works:#1f5f9e; --fails:#c4601f; --idle:#b6b1a9;
+  --ground:#0b0b0c; --ground-2:#141416; --ghost:#3a3934;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:Inter,-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:#e8e6e1;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased}
+/* 数字一律等宽+表格数字；中文永远不进等宽字（会塌） */
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.zh{font-family:var(--sans);font-variant-numeric:tabular-nums}
+
+.sheet{max-width:1180px;margin:0 auto 64px;padding:56px 60px 72px;background:var(--paper);
+       box-shadow:0 1px 0 rgba(0,0,0,.06),0 24px 60px -30px rgba(0,0,0,.35)}
+.sheet.dark{background:var(--ground);color:#e9e6df}
+
+.tab{position:sticky;top:0;z-index:20;background:#e8e6e1;border-bottom:1px solid #d3cfc8;
+     display:flex;gap:2px;padding:10px 20px;align-items:baseline}
+.tab a{font:500 12px/1 var(--sans);letter-spacing:.06em;text-decoration:none;color:var(--ink-2);
+       padding:8px 14px;border:1px solid transparent}
+.tab a:hover{border-color:#cfcac2;background:#f2f0ec;color:var(--ink)}
+.tab .who{margin-left:auto;font:400 11px/1 var(--mono);color:var(--ink-3)}
+
+/* ───────── 共用排版：四个语域必须有可见的层级差 ───────── */
+.reg{display:inline-block;font:500 9px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+     color:var(--ink-3);border:1px solid var(--rule);padding:3px 6px;vertical-align:2px}
+.L-fact{color:var(--ink-2)}
+.L-interpretation{border-color:var(--ink-3)}
+.L-anticipation{border-style:dashed}
+.L-action{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+h2.sec{font:600 11px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;
+       color:var(--ink-3);margin:0 0 18px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+.dark h2.sec{color:#6f6a60;border-color:#26262a}
+.blk{margin:0 0 52px}
+.note{font:400 12px/1.7 var(--sans);color:var(--ink-2);max-width:62ch;margin:10px 0 0}
+.dark .note{color:#8b857a}
+svg{display:block;width:100%;height:auto;overflow:visible}
+</style>
+</head>
+<body>
+
+<nav class="tab">
+  <a href="#score">A · 乐谱</a>
+  <a href="#signal">B · 工业指引</a>
+  <a href="#field">C · 场</a>
+  <span class="who">同一天 · 2026-07-31 · 同一份真实数据 · 三种世界观</span>
+</nav>
+
+<!-- ═══════════════════ A · 乐谱 ═══════════════════ -->
+<section class="sheet" id="score">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;
+              border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:8px">
+    <div>
+      <div class="n" style="font-size:10px;letter-spacing:.28em;color:var(--ink-3)">FLUXUS · OBSERVATION</div>
+      <div style="font:300 46px/1 var(--sans);letter-spacing:-.02em;margin-top:10px">观察 · 第 <span class="n" style="font-weight:400">089</span> 次</div>
+    </div>
+    <div style="text-align:right">
+      <div class="n" style="font-size:26px;letter-spacing:-.01em">2026.07.31</div>
+      <div style="font:400 11px/1.5 var(--sans);color:var(--ink-2);margin-top:6px">为一名操作者而作</div>
+    </div>
+  </div>
+  <div style="font:400 12px/1 var(--sans);color:var(--ink-2);letter-spacing:.04em;margin-bottom:46px">
+    依序读，不得跳读。行动在最后一行，不在第一行。
+  </div>
+
+  <div class="blk"><h2 class="sec">一 · 状态板 <span style="text-transform:none;letter-spacing:0">十格里九格由管线算出，一格诚实留空</span></h2>
+    <div id="score-board"></div></div>
+
+  <div class="blk"><h2 class="sec">二 · 修复的阶梯 <span style="text-transform:none;letter-spacing:0">音高即进度</span></h2>
+    <svg id="score-ladder" viewBox="0 0 1060 470"></svg>
+    <p class="note">八条线是八个梯级。名字落在哪一线，就是它修到哪一步。箭头是这一周的走向，不是今天的涨跌。</p></div>
+
+  <div class="blk"><h2 class="sec">三 · 传导链 <span style="text-transform:none;letter-spacing:0">六个小节，最后一小节是休止符</span></h2>
+    <svg id="score-chain" viewBox="0 0 1060 250"></svg></div>
+
+  <div class="blk"><h2 class="sec">四 · 扩散的证据 <span style="text-transform:none;letter-spacing:0">「领涨扩散」这四个字要拿数字出来</span></h2>
+    <svg id="score-diff" viewBox="0 0 1060 240"></svg></div>
+</section>
+
+<!-- ═══════════════════ B · 工业指引 ═══════════════════ -->
+<section class="sheet" id="signal">
+  <div style="display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;margin-bottom:40px">
+    <div>
+      <div style="height:14px;background:var(--ink);width:88px;margin-bottom:16px"></div>
+      <div style="font:700 40px/1 var(--sans);letter-spacing:-.03em">市场状态</div>
+      <div style="font:400 13px/1 var(--sans);color:var(--ink-2);margin-top:10px;letter-spacing:.02em">
+        MARKET STATE · 收盘后读数</div>
+    </div>
+    <div style="text-align:right">
+      <div class="n" style="font:500 13px/1.6;color:var(--ink-2)">2026-07-31 · 16:00 ET</div>
+      <div class="n" style="font:500 13px/1.6;color:var(--ink-2)">SPX 7489.72 · +0.70%</div>
+      <div style="margin-top:10px;display:inline-block;background:var(--ink);color:var(--paper);
+                  font:700 15px/1 var(--sans);letter-spacing:.1em;padding:10px 16px">等待 · WAIT</div>
+    </div>
+  </div>
+
+  <div class="blk"><h2 class="sec">状态板</h2><div id="sig-board"></div></div>
+  <div class="blk"><h2 class="sec">修复阶梯</h2><svg id="sig-ladder" viewBox="0 0 1060 470"></svg></div>
+  <div class="blk"><h2 class="sec">传导链</h2><svg id="sig-chain" viewBox="0 0 1060 250"></svg>
+    <p class="note">线路图读法：亮起 = 这一环已经发生。断点之后的站都还没到，无论指数今天涨多少。</p></div>
+  <div class="blk"><h2 class="sec">扩散的证据</h2><svg id="sig-diff" viewBox="0 0 1060 240"></svg></div>
+</section>
+
+<!-- ═══════════════════ C · 场 ═══════════════════ -->
+<section class="sheet dark" id="field">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:26px">
+    <div style="font:200 52px/1 var(--sans);letter-spacing:-.03em;color:#f0ece3">场 · <span class="n" style="font-weight:200">07.31</span></div>
+    <div class="n" style="font-size:10px;letter-spacing:.24em;color:#6f6a60">FLUXUS / FIELD / N=19 NAMES · 30 SESSIONS</div>
+  </div>
+  <svg id="fld-field" viewBox="0 0 1060 560"></svg>
+  <p class="note" style="margin-bottom:48px">底层的细线是阈值构造：八个梯级、三条均线、宽度基准。上面每一笔都是一只票 30 天的实际走势，
+    纵向位置由它今天在阶梯上的位置决定 —— 没有一笔是装饰。</p>
+
+  <div class="blk"><h2 class="sec">读数</h2><div id="fld-board"></div></div>
+  <div class="blk"><h2 class="sec">传导链</h2><svg id="fld-chain" viewBox="0 0 1060 250"></svg></div>
+</section>
+
+<script>
+const D = /*__DATA__*/ null;
+const NM = D.names, BR = D.breadth, DF = D.diffusion, T = BR.today;
+const LEVELS = D.levels, RUNGS = D.rungs;
+const ORDER = ["index","leader","damaged"];
+const ROLE_ZH = {index:"指数",leader:"领涨",damaged:"受损"};
+const C = {works:"#1f5f9e", fails:"#c4601f", idle:"#b6b1a9"};
+const el = id => document.getElementById(id);
+const svgns = "http://www.w3.org/2000/svg";
+function mk(p, tag, attrs={}, text){
+  const n = document.createElementNS(svgns, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  if (text != null) n.textContent = text;
+  p.appendChild(n); return n;
+}
+// 回应质量：给了机会接住了 → 蓝；没接住 → 橙；没给机会 → 中性
+const qual = n => n.direction === "up" ? C.works : n.direction === "down" ? C.fails : C.idle;
+const lvlIdx = s => s == null ? -1 : LEVELS.indexOf(s);
+
+/* ───────────────────────── 状态板 ───────────────────────── */
+function board(host, mode){
+  const dark = mode === "field";
+  const rule = dark ? "#26262a" : "var(--rule)";
+  const dim  = dark ? "#7d7870" : "var(--ink-2)";
+  host.innerHTML = "";
+  D.state_board.forEach((r, i) => {
+    const row = document.createElement("div");
+    const bars = LEVELS.map((_, k) => {
+      const on = k <= lvlIdx(r.state);
+      const col = r.state == null ? (dark?"#33323a":"#d8d4cd")
+        : on ? (lvlIdx(r.state) <= 1 ? C.fails : lvlIdx(r.state) >= 3 ? C.works : (dark?"#8a8478":"#8a8478"))
+             : (dark?"#232329":"#e6e2db");
+      return `<i style="display:block;width:${mode==="signal"?22:16}px;height:${mode==="signal"?22:9}px;background:${col}"></i>`;
+    }).join("");
+
+    if (mode === "score"){
+      row.style.cssText = `display:grid;grid-template-columns:118px 92px 1fr;gap:20px;align-items:baseline;
+        padding:13px 0;border-bottom:1px solid ${rule}`;
+      row.innerHTML =
+        `<div style="font:500 15px/1.3 var(--sans)">${r.key}
+           <div style="margin-top:5px"><span class="reg L-${r.layer}">${r.layer}</span></div></div>
+         <div style="font:400 15px/1.3 var(--sans);color:${r.state==null?"var(--ink-3)":"var(--ink)"}">
+           ${r.state ?? "—"}<div style="display:flex;gap:2px;margin-top:7px">${bars}</div></div>
+         <div class="zh" style="font:400 12.5px/1.75 var(--sans);color:${dim}">${r.evidence}</div>`;
+    } else if (mode === "signal"){
+      row.style.cssText = `display:grid;grid-template-columns:150px 130px 1fr;gap:18px;align-items:center;
+        padding:11px 12px;background:${i%2?"#f3f1ed":"transparent"}`;
+      row.innerHTML =
+        `<div style="font:600 15px/1 var(--sans)">${r.key}</div>
+         <div style="display:flex;gap:3px;align-items:center">${bars}</div>
+         <div><div style="font:600 13px/1 var(--sans);margin-bottom:5px">${r.state ?? "未接入"}</div>
+           <div class="zh" style="font:400 12px/1.6 var(--sans);color:${dim}">${r.evidence}</div></div>`;
+    } else {
+      row.style.cssText = `display:grid;grid-template-columns:112px 1fr;gap:18px;align-items:baseline;
+        padding:11px 0;border-bottom:1px solid ${rule}`;
+      row.innerHTML =
+        `<div style="font:400 14px/1.3 var(--sans);color:#efeadf">${r.key}
+           <div style="display:flex;gap:2px;margin-top:7px">${bars}</div></div>
+         <div><span style="font:500 14px/1.3 var(--sans);color:${r.state==null?"#6f6a60":"#f2eee5"}">${r.state ?? "未接入"}</span>
+           <div class="zh" style="font:400 12px/1.7 var(--sans);color:${dim};margin-top:4px">${r.evidence}</div></div>`;
+    }
+    host.appendChild(row);
+  });
+}
+
+/* ───────────────────────── 阶梯 ───────────────────────── */
+function ladder(svg, mode){
+  svg.innerHTML = "";
+  const W = 1060, L = 128, R = 40, TOP = 26, BOT = 404;
+  const y = r => BOT - r * (BOT - TOP) / 7;
+  const dark = mode === "field";
+  const inkc = dark ? "#e9e6df" : "#16150f";
+  const rulec = dark ? "#2a2a30" : (mode==="signal" ? "#d6d2cb" : "#e0ddd8");
+
+  RUNGS.forEach((rg, r) => {
+    if (mode === "signal"){
+      mk(svg,"rect",{x:L-10,y:y(r)-17,width:W-L-R+10,height:34,
+        fill: r%2 ? "#f3f1ed" : "transparent"});
+    }
+    mk(svg,"line",{x1:L-10,y1:y(r),x2:W-R,y2:y(r),stroke:rulec,
+      "stroke-width": mode==="score" ? (r===0?1.4:.8) : 1,
+      "stroke-dasharray": mode==="score" && r>0 ? "" : ""});
+    mk(svg,"text",{x:L-20,y:y(r)+4,"text-anchor":"end",
+      style:`font:${mode==="signal"?"600 12px":"400 12px"} var(--sans);fill:${dark?"#8b857a":"#57534e"}`}, rg.label);
+    mk(svg,"text",{x:L-20,y:y(r)+18,"text-anchor":"end",
+      style:`font:400 9px var(--mono);fill:${dark?"#5b564e":"#b6b1a9"};letter-spacing:.1em`}, "R"+r);
+  });
+
+  // 三组分列，组内按梯级分散
+  let x = L + 24;
+  ORDER.forEach((role, gi) => {
+    const grp = Object.entries(NM).filter(([,v]) => v.role === role);
+    const gw = grp.length * 46;
+    if (gi){
+      mk(svg,"line",{x1:x-24,y1:TOP-16,x2:x-24,y2:BOT+34,stroke:rulec,"stroke-dasharray":"2 4"});
+    }
+    mk(svg,"text",{x:x + gw/2 - 23, y:BOT+58,"text-anchor":"middle",
+      style:`font:500 10px var(--sans);letter-spacing:.2em;fill:${dark?"#6f6a60":"#a8a29e"}`}, ROLE_ZH[role]);
+
+    grp.sort((a,b)=>b[1].rung-a[1].rung).forEach(([t,v]) => {
+      const cy = y(v.rung), col = qual(v);
+      // 30日走势作为音符的「符干」——轨迹，不是单点
+      const tr = v.trace, mn = Math.min(...tr), mx = Math.max(...tr);
+      const pts = tr.map((p,i)=>`${x - 16 + i*1.1},${cy + 15 - (p-mn)/((mx-mn)||1)*22}`).join(" ");
+      mk(svg,"polyline",{points:pts,fill:"none",stroke:col,"stroke-width":.9,opacity:.45});
+
+      if (mode === "signal"){
+        mk(svg,"rect",{x:x-19,y:cy-12,width:42,height:24,fill:col,opacity:v.rung>=5?1:.14,
+          stroke:col,"stroke-width":1});
+        mk(svg,"text",{x:x+2,y:cy+4,"text-anchor":"middle",
+          style:`font:700 11px var(--mono);fill:${v.rung>=5?"#fff":col}`}, t);
+      } else {
+        mk(svg,"ellipse",{cx:x+2,cy:cy,rx:8.5,ry:6,fill:v.rung>=5?col:(dark?"#0b0b0c":"#faf9f7"),
+          stroke:col,"stroke-width":1.5,transform:`rotate(-18 ${x+2} ${cy})`});
+        mk(svg,"text",{x:x+2,y:cy-15,"text-anchor":"middle",
+          style:`font:500 10.5px var(--mono);fill:${inkc}`}, t);
+      }
+      if (v.direction !== "flat"){
+        const up = v.direction === "up";
+        mk(svg,"path",{d:`M${x+20},${cy+(up?4:-4)} l0,${up?-9:9} m-2.6,${up?2.6:-2.6} l2.6,${up?-2.6:2.6} l2.6,${up?2.6:-2.6}`,
+          stroke:col,"stroke-width":1.4,fill:"none"});
+      }
+      x += 46;
+    });
+    x += 34;
+  });
+}
+
+/* ───────────────────────── 传导链 ───────────────────────── */
+function chain(svg, mode){
+  svg.innerHTML = "";
+  const W = 1060, L = 20, seg = (W - L*2) / D.chain.length;
+  const cy = 62, dark = mode === "field";
+  const rulec = dark ? "#2a2a30" : "#ddd9d2";
+
+  mk(svg,"line",{x1:L,y1:cy,x2:W-L,y2:cy,stroke:rulec,"stroke-width":mode==="signal"?6:1.2});
+
+  let broke = false;
+  D.chain.forEach((c, i) => {
+    const x = L + seg*i + seg/2;
+    const on = c.state === "lit", part = c.state === "partial";
+    const col = on ? C.works : part ? "#8a8478" : C.idle;
+    if (!on && !part) broke = true;
+
+    if (mode === "signal"){
+      if (on || part) mk(svg,"line",{x1:L+seg*i,y1:cy,x2:L+seg*(i+1),y2:cy,
+        stroke:col,"stroke-width":6,opacity:part?.45:1});
+      mk(svg,"rect",{x:x-13,y:cy-13,width:26,height:26,fill:on?col:"#faf9f7",stroke:col,"stroke-width":2.5});
+      if (part) mk(svg,"rect",{x:x-13,y:cy-13,width:13,height:26,fill:col});
+    } else if (mode === "score"){
+      // 小节线 + 音符;未点亮 = 休止符
+      mk(svg,"line",{x1:L+seg*i,y1:cy-30,x2:L+seg*i,y2:cy+30,stroke:rulec});
+      if (on) mk(svg,"ellipse",{cx:x,cy:cy,rx:10,ry:7,fill:col,transform:`rotate(-18 ${x} ${cy})`});
+      else if (part) mk(svg,"ellipse",{cx:x,cy:cy,rx:10,ry:7,fill:"none",stroke:col,"stroke-width":1.8,transform:`rotate(-18 ${x} ${cy})`});
+      else { mk(svg,"rect",{x:x-9,y:cy-9,width:18,height:7,fill:C.idle});
+             mk(svg,"rect",{x:x-9,y:cy+3,width:18,height:7,fill:C.idle,opacity:.4}); }
+    } else {
+      mk(svg,"circle",{cx:x,cy:cy,r:on?9:6,fill:on?col:"none",stroke:col,"stroke-width":1.6,opacity:on?1:.65});
+      if (on||part) mk(svg,"line",{x1:L+seg*i,y1:cy,x2:L+seg*(i+1),y2:cy,stroke:col,"stroke-width":2,opacity:part?.4:.9});
+    }
+
+    mk(svg,"text",{x:x,y:cy-32,"text-anchor":"middle",
+      style:`font:${mode==="signal"?"600":"500"} 12.5px var(--sans);fill:${dark?"#e9e6df":"#16150f"}`}, c.label);
+    // CJK ≈ 1em wide, so chars-per-line comes from the segment width, not a
+    // guessed constant — the first pass clipped every evidence string.
+    const per = Math.max(8, Math.floor((seg - 18) / 10.5));
+    wrap(svg, c.evidence.replace(/ —— /g," · "), x, cy+30, per, 4,
+         `font:400 10.5px/1.55 var(--sans);fill:${dark?"#7d7870":"#8a8478"}`);
+  });
+
+  if (broke){
+    mk(svg,"text",{x:W-L,y:cy+150,"text-anchor":"end",
+      style:`font:500 11px var(--sans);letter-spacing:.05em;fill:${C.fails}`},
+      "链条断在第三环 —— 指数今天收红，但传导没有发生");
+  }
+}
+function wrap(svg, s, x, y, per, maxLines, style){
+  // CJK breaks anywhere; Latin runs and numbers stay whole ("Episo dic Pivot"
+  // was the first pass slicing blindly every `per` characters).
+  const tok = s.match(/[A-Za-z0-9][A-Za-z0-9.%+/－-]*|\s+|[\s\S]/g) || [];
+  const lines = [""];
+  for (const t of tok){
+    if (/^\s+$/.test(t)) { if (lines[lines.length-1]) lines[lines.length-1] += " "; continue; }
+    if ((lines[lines.length-1] + t).length > per && lines[lines.length-1]) lines.push(t);
+    else lines[lines.length-1] += t;
+  }
+  const shown = lines.slice(0, maxLines);
+  if (lines.length > maxLines) shown[maxLines-1] = shown[maxLines-1].slice(0,-1) + "…";
+  shown.forEach((t, ln) =>
+    mk(svg,"text",{x:x,y:y+ln*14,"text-anchor":"middle",class:"zh",style}, t));
+}
+
+/* ───────────────── 扩散证据（含缺口与待定格） ───────────────── */
+function diffusion(svg, mode){
+  svg.innerHTML = "";
+  const W=1060, L=132, R=30, TOP=34, H=150;
+  const S = DF.sessions, n = S.length;
+  const step = (W-L-R) / (n + 1);            // +1 = 右侧待定空槽
+  const keys = ["episodic_pivot","vol_up_gainers","ema21_watch","healthy_charts"];
+  const ZH = {episodic_pivot:"Episodic Pivot",vol_up_gainers:"放量上涨",
+              ema21_watch:"21日线关注",healthy_charts:"健康形态"};
+  const dark = mode==="field";
+
+  keys.forEach((k, ki) => {
+    const v = DF.screeners[k], mx = Math.max(...v), y0 = TOP + ki*38;
+    mk(svg,"text",{x:L-14,y:y0+13,"text-anchor":"end",
+      style:`font:400 11px var(--sans);fill:${dark?"#8b857a":"#57534e"}`}, ZH[k]);
+    const rising = v[n-1] > v[0];
+    const col = rising ? C.works : C.fails;
+    v.forEach((val,i) => {
+      const h = Math.max(1.5, val/mx*24), x = L + step*i;
+      if (mode==="signal") mk(svg,"rect",{x:x,y:y0+24-h,width:step-9,height:h,fill:col,opacity:.25+.75*(val/mx)});
+      else mk(svg,"rect",{x:x,y:y0+24-h,width:step-11,height:h,fill:col,opacity:.3+.7*(val/mx)});
+    });
+    // 待定空槽:明天还没发生
+    mk(svg,"rect",{x:L+step*n,y:y0+2,width:step-11,height:22,fill:"none",
+      stroke:dark?"#3a3934":"#cfcac2","stroke-dasharray":"2 3"});
+    mk(svg,"text",{x:W-R+4,y:y0+16,"text-anchor":"start",
+      style:`font:500 11px var(--mono);fill:${col}`}, `${v[0]}→${v[n-1]}`);
+  });
+
+  S.forEach((d,i) => {
+    mk(svg,"text",{x:L+step*i+ (step-11)/2, y:TOP+4*38+2,"text-anchor":"middle",
+      style:`font:400 9px var(--mono);fill:${dark?"#5b564e":"#b6b1a9"}`}, d.slice(5));
+  });
+  mk(svg,"text",{x:L+step*n+(step-11)/2,y:TOP+4*38+2,"text-anchor":"middle",
+    style:`font:400 9px var(--mono);fill:${dark?"#5b564e":"#b6b1a9"}`}, "待定");
+
+  // 归档缺口:07-13 → 07-27 之间的会话被清洗掉了,如实画出来
+  const gap = S.findIndex((d,i)=> i>0 && (new Date(d) - new Date(S[i-1]))/864e5 > 6);
+  if (gap > 0){
+    const gx = L + step*gap - 5;
+    mk(svg,"line",{x1:gx,y1:TOP-22,x2:gx,y2:TOP+4*38-14,stroke:dark?"#4a4842":"#c9c4bc","stroke-dasharray":"3 3"});
+    mk(svg,"text",{x:gx-6,y:TOP-14,"text-anchor":"end",
+      style:`font:400 9.5px var(--sans);fill:${dark?"#6f6a60":"#a8a29e"}`}, "归档缺口 13 个交易日 →");
+  }
+  mk(svg,"text",{x:L,y:H+62,style:`font:400 11.5px/1.6 var(--sans);fill:${dark?"#8b857a":"#57534e"}`,class:"zh"},
+    `Episodic Pivot 从月初 ${DF.screeners.episodic_pivot[0]} 只/日 升到 ${DF.screeners.episodic_pivot[n-1]} 只/日，放量上涨同步增加 ——`);
+  mk(svg,"text",{x:L,y:H+80,style:`font:400 11.5px/1.6 var(--sans);fill:${C.fails}`,class:"zh"},
+    `但健康形态从 ${DF.screeners.healthy_charts[0]} 掉到 ${DF.screeners.healthy_charts[n-1]}。扩散是局部的，不是全面的。`);
+}
+
+/* ───────────────────────── 场（Mehretu） ───────────────────────── */
+function field(svg){
+  svg.innerHTML = "";
+  const W=1060, H=560, L=90, R=40, TOP=40, BOT=470;
+  const y = r => BOT - r*(BOT-TOP)/7;
+
+  // 构造线必须留在纸面里 —— 不裁剪时圆弧会溢到页面背景上
+  const defs = mk(svg,"defs");
+  const cp = mk(defs,"clipPath",{id:"fld-clip"});
+  mk(cp,"rect",{x:0,y:0,width:W,height:H});
+  const g = mk(svg,"g",{"clip-path":"url(#fld-clip)"});
+  mk(g,"rect",{x:0,y:0,width:W,height:H,fill:"#0b0b0c"});
+
+  // ① 构造层:阈值网格 + 长斜线（建筑制图的底子）
+  for (let r=0;r<8;r++) mk(g,"line",{x1:L,y1:y(r),x2:W-R,y2:y(r),stroke:"#26262c","stroke-width":.7});
+  for (let i=0;i<=30;i++) mk(g,"line",{x1:L+i*(W-L-R)/30,y1:TOP-14,x2:L+i*(W-L-R)/30,y2:BOT+14,
+    stroke:"#191920","stroke-width":.5});
+  const vpx = W-R-40, vpy = TOP-10;
+  for (let i=0;i<26;i++) mk(g,"line",{x1:L-30,y1:BOT+30-i*22,x2:vpx,y2:vpy,
+    stroke:"#1f1f26","stroke-width":.45,opacity:.8});
+  for (let i=1;i<=5;i++) mk(g,"circle",{cx:L+210,cy:BOT-40,r:i*54,fill:"none",
+    stroke:"#1d1d24","stroke-width":.5,opacity:.75});
+
+  // ② 宽度层:三条大盘序列作为宽笔触的底（压得比个股的笔更暗，否则会盖过去）
+  [["pct_above_20sma",.10],["pct_above_50sma",.075],["pct_above_200sma",.055]].forEach(([k,op])=>{
+    const v = BR.trace[k], mn=Math.min(...v), mx=Math.max(...v);
+    const pts = v.map((p,i)=>`${L+i*(W-L-R)/(v.length-1)},${BOT - (p-mn)/((mx-mn)||1)*(BOT-TOP)*.9}`).join(" ");
+    mk(g,"polyline",{points:pts,fill:"none",stroke:"#5f8fc4","stroke-width":11,opacity:op,
+      "stroke-linejoin":"round","stroke-linecap":"round"});
+  });
+
+  // ③ 标记层:每只票 30 天走势,纵位由今天的梯级决定
+  Object.entries(NM).forEach(([t,v],idx)=>{
+    const cy = y(v.rung), col = qual(v), tr=v.trace;
+    const mn=Math.min(...tr), mx=Math.max(...tr);
+    const x0 = L + 14 + (idx%7)*8;
+    const pts = tr.map((p,i)=>`${x0+i*((W-L-R-70)/29)},${cy + 26 - (p-mn)/((mx-mn)||1)*52}`).join(" ");
+    mk(g,"polyline",{points:pts,fill:"none",stroke:col,"stroke-width":v.rung>=5?2.1:1.3,
+      opacity:v.rung>=5?1:.7,"stroke-linejoin":"round"});
+    const lx = L+14+29*((W-L-R-70)/29)+(idx%7)*8;
+    mk(g,"text",{x:lx+8,y:cy+26-(tr[29]-mn)/((mx-mn)||1)*52+3,
+      style:`font:500 9.5px var(--mono);fill:${col};opacity:.95`}, t);
+  });
+
+  // ④ 梯级标签
+  RUNGS.forEach((rg,r)=> mk(g,"text",{x:L-12,y:y(r)+3,"text-anchor":"end",
+    style:"font:400 10.5px var(--sans);fill:#7d7870"}, rg.label));
+
+  // ⑤ 判读硬板:压在场之上 —— 场是噪音,板是读法
+  const pw=372, ph=164, px=W-R-pw, py=TOP+4;
+  mk(g,"rect",{x:px,y:py,width:pw,height:ph,fill:"#f6f3ec"});
+  mk(g,"text",{x:px+22,y:py+32,style:"font:600 11px var(--sans);letter-spacing:.22em;fill:#8a8478"},"读 数");
+  mk(g,"text",{x:px+22,y:py+72,style:"font:300 34px var(--sans);fill:#16150f"},"等待确认");
+  mk(g,"rect",{x:px+22,y:py+86,width:46,height:3,fill:C.fails});
+  [`巨头修好了，传导没发生。`,
+   `5 日动能比 ${T.ratio_5d.toFixed(4)}（需 > 1.0）`,
+   `净上涨 ${T.net_advances} · >20日线 ${T.pct_above_20sma.toFixed(1)}%`
+  ].forEach((s,i)=> mk(g,"text",{x:px+22,y:py+110+i*19,class:"zh",
+      style:"font:400 12px var(--sans);fill:#57534e"}, s));
+}
+
+/* ───────────────────────── 渲染 ───────────────────────── */
+board(el("score-board"),"score");  ladder(el("score-ladder"),"score");
+chain(el("score-chain"),"score");  diffusion(el("score-diff"),"score");
+
+board(el("sig-board"),"signal");   ladder(el("sig-ladder"),"signal");
+chain(el("sig-chain"),"signal");   diffusion(el("sig-diff"),"signal");
+
+field(el("fld-field"));            board(el("fld-board"),"field");
+chain(el("fld-chain"),"field");
+</script>
+</body>
+</html>

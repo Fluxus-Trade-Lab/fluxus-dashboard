@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — Market State · 2026-07-31</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+
+:root{
+  --paper:#f4f3f0; --card:#fbfaf8; --ink:#111110; --ink-2:#5c5852; --ink-3:#9c968d;
+  --rule:#dedad3; --hair:#eae7e1;
+  --works:#1f5f9e; --fails:#d1600f; --idle:#c2bdb4;
+  --sans:Plex,-apple-system,sans-serif; --cond:PlexCond,Plex,sans-serif; --mono:PlexMono,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.app{max-width:1440px;margin:0 auto;padding:0 34px 90px}
+
+/* ── chrome ── */
+.bar{display:flex;align-items:center;gap:26px;padding:15px 0 14px;border-bottom:1px solid var(--ink)}
+.mark{font-family:var(--cond);font-weight:700;font-size:19px;letter-spacing:.16em}
+.bar nav{display:flex;gap:22px;font-size:12.5px;color:var(--ink-3)}
+.bar nav b{color:var(--ink);font-weight:600}
+.bar .r{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.04em}
+
+/* ── hero: huge verdict + micro spec table (the TE move) ── */
+.hero{display:grid;grid-template-columns:1fr 372px;gap:44px;padding:44px 0 40px;border-bottom:1px solid var(--ink)}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.26em;color:var(--ink-3);margin-bottom:20px}
+.verdict{font-family:var(--cond);font-weight:700;font-size:104px;line-height:.9;letter-spacing:-.015em;
+         text-transform:uppercase}
+.read{font-size:20px;line-height:1.4;margin-top:24px;max-width:22ch;font-weight:500}
+.read em{font-style:normal;color:var(--fails)}
+.spec{border-top:2px solid var(--ink);padding-top:2px}
+.spec div{display:flex;justify-content:space-between;align-items:baseline;
+          padding:7px 0;border-bottom:1px solid var(--hair)}
+.spec .k{font-size:11px;letter-spacing:.1em;color:var(--ink-2);text-transform:uppercase}
+.spec .v{font-family:var(--mono);font-size:14px;font-weight:500}
+
+h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;
+   color:var(--ink-3);margin:52px 0 0;padding-bottom:9px;border-bottom:1px solid var(--ink)}
+h3 span{float:right;text-transform:none;letter-spacing:.02em;font-family:var(--sans);
+        font-size:11.5px;color:var(--ink-2)}
+
+/* ── state board ── */
+.board{display:grid;grid-template-columns:1fr 1fr;column-gap:38px}
+.row{display:grid;grid-template-columns:150px 96px 1fr;gap:14px;align-items:center;
+     min-height:50px;padding:6px 0;border-bottom:1px solid var(--hair)}
+.row .k{font-family:var(--cond);font-weight:600;font-size:16px;letter-spacing:.005em}
+.row .lv{display:flex;gap:2px} .row .lv i{display:block;width:15px;height:14px}
+.row .st{font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-weight:600;margin-bottom:3px}
+.row .ev{font-size:11.5px;line-height:1.5;color:var(--ink-2)}
+
+/* ── chain ── */
+.chain{display:grid;border:1px solid var(--ink);margin-top:16px}
+.stn{padding:15px 14px 16px;border-right:1px solid var(--rule)}
+.stn:last-child{border-right:0}
+.stn .dot{width:11px;height:11px;border:2px solid var(--idle);margin-bottom:11px}
+.stn .t{font-family:var(--cond);font-weight:600;font-size:15px;line-height:1.15}
+.stn .s{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--ink-3);margin:6px 0 8px}
+.stn .e{font-size:10.5px;line-height:1.5;color:var(--ink-2)}
+.brk{margin-top:12px;font-size:12.5px;color:var(--fails);font-weight:500}
+
+/* ── pending sequence ── */
+.seq{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:16px}
+.step{border:1px solid var(--ink);background:var(--card);padding:15px 15px 17px}
+.step.p{border:1px dashed var(--idle);background:transparent}
+.step .d{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink-3)}
+.step .t{font-family:var(--cond);font-weight:600;font-size:17px;margin-top:9px}
+.step.p .t{font-weight:500;color:var(--ink-3)}
+.step .u{height:3px;width:28px;background:var(--works);margin-top:13px}
+.step.p .u{background:transparent;border-top:1px dashed var(--idle);height:0;margin-top:16px}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="bar">
+    <span class="mark">FLUXUS</span>
+    <nav><b>Market state</b><span>Screener</span><span>Positions</span><span>Ticker</span><span>Letters</span></nav>
+    <span class="r" id="stamp">—</span>
+  </div>
+
+  <div class="hero">
+    <div>
+      <div class="kicker">RISK POSTURE · OBSERVATION 089</div>
+      <div class="verdict">Wait<br>for FTD</div>
+      <div class="read" id="read">—</div>
+    </div>
+    <div class="spec" id="spec"></div>
+  </div>
+
+  <h3>State board <span>Nine rows computed from the pipeline. One left blank on purpose.</span></h3>
+  <div class="board" id="board"></div>
+
+  <h3>Repair ladder <span>Where each name has climbed to. Arrows are the week's travel, not today's move.</span></h3>
+  <svg id="ladder" viewBox="0 0 1372 476" style="width:100%;height:auto;overflow:visible;margin-top:14px"></svg>
+
+  <h3>Propagation chain <span>Lit means it has already happened.</span></h3>
+  <div class="chain" id="chain"></div>
+  <div class="brk" id="brk"></div>
+
+  <h3>Evidence of broadening <span>"Leadership is broadening" has to show its count.</span></h3>
+  <svg id="diff" viewBox="0 0 1372 250" style="width:100%;height:auto;overflow:visible;margin-top:14px"></svg>
+
+  <h3>Sequence <span>The dashed slots have not happened yet.</span></h3>
+  <div class="seq" id="seq"></div>
+
+</div>
+
+<script>
+const D = /*__DATA__*/ null;
+const B = D.state_board, CH = D.chain, T = D.breadth.today, NM = D.names, DF = D.diffusion;
+const C = {works:"#1f5f9e", fails:"#d1600f", idle:"#c2bdb4"};
+const el = id => document.getElementById(id);
+
+/* ── EN vocabulary. The product ships in English; the Chinese layout is a separate pass. ── */
+const LEVELS_EN = {"缺席":"Absent","很弱":"Very weak","早期":"Early","已启动":"Started","良好":"Good"};
+const ORDER = ["Absent","Very weak","Early","Started","Good"];
+const KEY_EN = {"受损程度":"Damage","抛压":"Selling pressure","指数修复":"Index repair",
+  "领涨修复":"Leadership repair","巨头领涨":"Megacap leadership","广义半导体":"Broad semis",
+  "市场宽度":"Breadth","利率":"Rates","确认信号":"Confirmation","风险姿态":"Risk posture"};
+const EV_EN = {
+  "受损程度":"523 names −25% on the quarter against 342 up 25% — 60% sit on the down side",
+  "抛压":"288 names −4% today against a five-day peak of 637, back to 45% of it",
+  "指数修复":"3 of 5 indexes above the 50-day: SPY, RSP, DIA",
+  "领涨修复":"4 of 7 leaders have broken out: AMZN, MSFT, NTAP, DXCM",
+  "巨头领涨":"AMZN rung 5 · MSFT rung 6 · NVDA rung 2 — mean 4.3 of 7",
+  "广义半导体":"7 damaged names average rung 1.0 of 7; five are still stabilizing or broken",
+  "市场宽度":"40.7% above the 20-day, T2108 45.8, net advances −336 while indexes closed green",
+  "利率":"30Y and 20Y broke to 2007 highs — bond data is not wired into the pipeline",
+  "确认信号":"Five-day ratio 0.9905, needs to clear 1.0 · Episodic Pivot 6 today against 1 at month start",
+  "风险姿态":"The sum of the nine rows above, not an independent call",
+};
+const CH_EN = {
+  "巨头站住":["Megacaps hold","AMZN / MSFT / NVDA all at or past a major reclaim — rung 5 / 6 / 2"],
+  "更多领涨跟上":["Leaders follow","4 of 7 broken out · Episodic Pivot 1 → 6 per session"],
+  "QQQ 收回 21/50":["QQQ reclaims 21/50","687.99 against 697.12 and 714.75 — both still overhead"],
+  "宽度扩张":["Breadth expands","Five-day ratio 0.9905 · 40.7% above the 20-day · net advances −336"],
+  "RSP / IWM 跟上":["RSP & IWM follow","RSP rung 4, holding the 21-day · IWM rung 1, lost both"],
+  "突破站得住":["Breakouts hold","Two still holding: MSFT, DXCM"],
+};
+const RUNG_EN = ["Broken","Stabilizing","Reclaim","Above 50D","Pivot","Breakout","Holds","Expansion"];
+const ROLE_EN = {index:"Indexes", leader:"Leaders", damaged:"Damaged"};
+
+const lvl = r => r.state == null ? null : LEVELS_EN[r.state];
+const li  = r => lvl(r) == null ? -1 : ORDER.indexOf(lvl(r));
+const lvColor = (r,k) => {
+  if (li(r) < 0) return "#e3dfd8";
+  if (k > li(r)) return "#e3dfd8";
+  return li(r) <= 1 ? C.fails : li(r) >= 3 ? C.works : "#8d877d";
+};
+const bars = r => ORDER.map((_,k)=>`<i style="background:${lvColor(r,k)}"></i>`).join("");
+
+el("stamp").textContent = `${D.as_of} · CLOSE · SPX ${T.spx_close.toFixed(2)}`;
+el("read").innerHTML = `Megacaps repaired.<br><em>Propagation did not happen.</em>`;
+
+/* ── hero spec table ── */
+el("spec").innerHTML = [
+  ["S&P 500", T.spx_close.toFixed(2)],
+  ["5-day ratio", T.ratio_5d.toFixed(4)],
+  ["Above 20-day", T.pct_above_20sma.toFixed(1) + "%"],
+  ["T2108", T.t2108.toFixed(1)],
+  ["Net advances", (T.net_advances > 0 ? "+" : "") + T.net_advances],
+  ["Leaders broken out", "4 / 7"],
+  ["Chain links lit", "1 / 6"],
+].map(([k,v])=>`<div><span class="k">${k}</span><span class="v">${v}</span></div>`).join("");
+
+/* ── state board ── */
+// Risk posture is the hero, not a tenth piece of evidence — leaving it in the
+// board printed it as "Not wired", which is the opposite of what it means.
+el("board").innerHTML = B.filter(r=>r.key !== "风险姿态").map(r=>`
+  <div class="row">
+    <div class="k">${KEY_EN[r.key]}</div>
+    <div><div class="lv">${bars(r)}</div></div>
+    <div><div class="st" style="color:${li(r)<0?"var(--ink-3)":li(r)<=1?C.fails:li(r)>=3?C.works:"var(--ink-2)"}">
+        ${lvl(r) ?? "Not wired"}</div>
+      <div class="ev">${EV_EN[r.key]}</div></div>
+  </div>`).join("");
+
+/* ── ladder ── */
+(function(){
+  const svg = el("ladder"), W=1372, L=136, R=30, TOP=24, BOT=402;
+  const y = r => BOT - r*(BOT-TOP)/7;
+  const mk = (t,a,txt)=>{const n=document.createElementNS("http://www.w3.org/2000/svg",t);
+    for(const k in a) n.setAttribute(k,a[k]); if(txt!=null) n.textContent=txt; svg.appendChild(n); return n;};
+
+  RUNG_EN.forEach((lab,r)=>{
+    mk("rect",{x:L-12,y:y(r)-17,width:W-L-R+12,height:34,fill:r%2?"#eceae5":"transparent"});
+    mk("line",{x1:L-12,y1:y(r),x2:W-R,y2:y(r),stroke:"#d6d1c9","stroke-width":1});
+    mk("text",{x:L-24,y:y(r)+5,"text-anchor":"end",
+      style:"font:600 13px PlexCond,sans-serif;fill:#5c5852;letter-spacing:.02em"}, lab.toUpperCase());
+    mk("text",{x:L-24,y:y(r)+19,"text-anchor":"end",
+      style:"font:400 9px PlexMono,monospace;fill:#b3ada3;letter-spacing:.1em"}, "R"+r);
+  });
+
+  let x = L + 26;
+  ["index","leader","damaged"].forEach((role,gi)=>{
+    const grp = Object.entries(NM).filter(([,v])=>v.role===role).sort((a,b)=>b[1].rung-a[1].rung);
+    if (gi) mk("line",{x1:x-26,y1:TOP-18,x2:x-26,y2:BOT+34,stroke:"#cdc7be","stroke-dasharray":"2 4"});
+    mk("text",{x:x-4,y:BOT+56,
+      style:"font:600 11px PlexMono,monospace;fill:#9c968d;letter-spacing:.22em"}, ROLE_EN[role].toUpperCase());
+    grp.forEach(([t,v])=>{
+      const cy=y(v.rung), col = v.direction==="up"?C.works:v.direction==="down"?C.fails:C.idle;
+      const tr=v.trace, mn=Math.min(...tr), mx=Math.max(...tr);
+      mk("polyline",{points:tr.map((p,i)=>`${x-18+i*1.25},${cy+14-(p-mn)/((mx-mn)||1)*20}`).join(" "),
+        fill:"none",stroke:col,"stroke-width":.9,opacity:.4});
+      mk("rect",{x:x-19,y:cy-11,width:46,height:22,fill:col,opacity:v.rung>=5?1:.13,stroke:col,"stroke-width":1});
+      mk("text",{x:x+4,y:cy+4,"text-anchor":"middle",
+        style:`font:500 11px PlexMono,monospace;fill:${v.rung>=5?"#fff":col}`}, t);
+      if (v.direction!=="flat"){const up=v.direction==="up";
+        mk("path",{d:`M${x+34},${cy+(up?4:-4)} l0,${up?-9:9} m-2.6,${up?2.6:-2.6} l2.6,${up?-2.6:2.6} l2.6,${up?2.6:-2.6}`,
+          stroke:col,"stroke-width":1.4,fill:"none"});}
+      // 46px tile + a 6px arrow needs more than 52 of pitch — AMZN's arrow was
+      // landing underneath NTAP's tile on the breakout rung.
+      x += 62;
+    });
+    x += 38;
+  });
+})();
+
+/* ── chain ── */
+const chain = el("chain");
+chain.style.gridTemplateColumns = `repeat(${CH.length},1fr)`;
+chain.innerHTML = CH.map(c=>{
+  const on = c.state==="lit", part = c.state==="partial";
+  const col = on ? C.works : part ? "#8d877d" : C.idle;
+  const [t,e] = CH_EN[c.label];
+  return `<div class="stn">
+    <div class="dot" style="border-color:${col};background:${on?col:part?`linear-gradient(90deg,${col} 50%,transparent 50%)`:"transparent"}"></div>
+    <div class="t">${t}</div>
+    <div class="s" style="color:${col}">${on?"LIT":part?"PARTIAL":"NOT YET"}</div>
+    <div class="e">${e}</div></div>`;
+}).join("");
+el("brk").textContent = "The chain breaks at link three. Indexes closed green; propagation did not happen.";
+
+/* ── diffusion ── */
+(function(){
+  const svg = el("diff"), W=1372, L=176, R=112, TOP=30;
+  const S = DF.sessions, n = S.length, step = (W-L-R)/(n+1);
+  const KEYS = [["episodic_pivot","Episodic Pivot"],["vol_up_gainers","Volume gainers"],
+                ["ema21_watch","21-day watch"],["healthy_charts","Healthy charts"]];
+  const mk = (t,a,txt)=>{const nd=document.createElementNS("http://www.w3.org/2000/svg",t);
+    for(const k in a) nd.setAttribute(k,a[k]); if(txt!=null) nd.textContent=txt; svg.appendChild(nd); return nd;};
+
+  KEYS.forEach(([k,lab],ki)=>{
+    const v = DF.screeners[k], mx = Math.max(...v), y0 = TOP + ki*40;
+    const col = v[n-1] > v[0] ? C.works : C.fails;
+    mk("text",{x:L-18,y:y0+17,"text-anchor":"end",
+      style:"font:600 12px PlexCond,sans-serif;fill:#5c5852;letter-spacing:.03em"}, lab.toUpperCase());
+    v.forEach((val,i)=>{const h=Math.max(2,val/mx*26);
+      mk("rect",{x:L+step*i,y:y0+26-h,width:step-10,height:h,fill:col,opacity:.28+.72*(val/mx)});});
+    mk("rect",{x:L+step*n,y:y0+2,width:step-10,height:24,fill:"none",stroke:"#cdc7be","stroke-dasharray":"2 3"});
+    mk("text",{x:W-R+14,y:y0+18,
+      style:`font:500 13px PlexMono,monospace;fill:${col}`}, `${v[0]} → ${v[n-1]}`);
+  });
+  S.forEach((d,i)=> mk("text",{x:L+step*i+(step-10)/2,y:TOP+4*40+4,"text-anchor":"middle",
+    style:"font:400 9px PlexMono,monospace;fill:#b3ada3"}, d.slice(5)));
+  mk("text",{x:L+step*n+(step-10)/2,y:TOP+4*40+4,"text-anchor":"middle",
+    style:"font:500 9px PlexMono,monospace;fill:#9c968d;letter-spacing:.1em"}, "PENDING");
+
+  const gap = S.findIndex((d,i)=> i>0 && (new Date(d)-new Date(S[i-1]))/864e5 > 6);
+  if (gap>0){const gx = L+step*gap-5;
+    mk("line",{x1:gx,y1:TOP-20,x2:gx,y2:TOP+4*40-10,stroke:"#cdc7be","stroke-dasharray":"3 3"});
+    mk("text",{x:gx-8,y:TOP-12,"text-anchor":"end",
+      style:"font:400 10px Plex,sans-serif;fill:#9c968d"}, "archive gap · 13 sessions →");}
+
+  mk("text",{x:L,y:TOP+4*40+38,style:"font:400 13px Plex,sans-serif;fill:#5c5852"},
+    `Episodic Pivot ran ${DF.screeners.episodic_pivot[0]} → ${DF.screeners.episodic_pivot[n-1]} a session and volume gainers ${DF.screeners.vol_up_gainers[0]} → ${DF.screeners.vol_up_gainers[n-1]} —`);
+  mk("text",{x:L,y:TOP+4*40+60,style:`font:500 13px Plex,sans-serif;fill:${C.fails}`},
+    `but healthy charts fell ${DF.screeners.healthy_charts[0]} → ${DF.screeners.healthy_charts[n-1]}. The broadening is partial, not general.`);
+})();
+
+/* ── sequence ── */
+el("seq").innerHTML = [["07.29","Liquidation",1],["07.30","Stabilized · Day 1",1],
+  ["07.31","Follow-through · Day 2",1],["NEXT","FTD?",0],["THEN","Breadth expands?",0]]
+  .map(([d,t,done])=>`<div class="step${done?"":" p"}">
+    <div class="d">${d}</div><div class="t">${t}</div><div class="u"></div></div>`).join("");
+</script>
+</body>
+</html>

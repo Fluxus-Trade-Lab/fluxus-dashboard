@@ -1,0 +1,2059 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>B v2 · 工业指引 — 字体 / 色彩 / 真实页面 / 分享卡</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+
+:root{
+  --paper:#faf9f7; --ink:#16150f; --ink-2:#57534e; --ink-3:#a8a29e; --rule:#e0ddd8; --band:#f2f0ec;
+  /* 市场层 —— 编码的是「回应质量」，不是涨跌方向 */
+  --works:#1f5f9e; --fails:#c4601f; --idle:#b6b1a9;
+  /* 钱层 —— 只有盈亏用绿红，永不越界到市场层 */
+  --pnl-up:#2f6b4f; --pnl-dn:#a33a2a;
+  --cjk:"PingFang SC","Hiragino Sans GB",sans-serif;
+  --f-plex:Plex,var(--cjk); --f-avenir:"Avenir Next","Avenir",var(--cjk); --f-inter:Inter,var(--cjk);
+  --mono:PlexMono,ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:#e8e6e1;font-family:var(--f-plex);color:var(--ink);-webkit-font-smoothing:antialiased}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.sheet{max-width:1180px;margin:0 auto 56px;padding:52px 58px 64px;background:var(--paper);
+       box-shadow:0 1px 0 rgba(0,0,0,.06),0 24px 60px -30px rgba(0,0,0,.35)}
+h2.sec{font:600 11px/1 var(--f-plex);letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);
+       margin:0 0 6px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+h2.sec b{font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-2);margin-left:14px;font-size:12px}
+.blk{margin:0 0 56px}
+.note{font:400 12.5px/1.75 var(--f-plex);color:var(--ink-2);max-width:66ch;margin:14px 0 0}
+.top{position:sticky;top:0;z-index:20;background:#e8e6e1;border-bottom:1px solid #d3cfc8;padding:11px 22px;
+     font:500 12px/1 var(--f-plex);letter-spacing:.06em;color:var(--ink-2);display:flex;gap:20px}
+.top .r{margin-left:auto;font-family:var(--mono);color:var(--ink-3)}
+
+/* ── 状态板（B 语言：信息屏行 + 五格电平） ── */
+.brow{display:grid;grid-template-columns:132px 118px 1fr;gap:16px;align-items:center;padding:9px 12px}
+.brow:nth-child(odd){background:var(--band)}
+.brow .k{font-weight:600;font-size:14px}
+.brow .lv{display:flex;gap:3px}
+.brow .lv i{display:block;width:19px;height:19px}
+.brow .s{font-weight:600;font-size:12.5px;margin-bottom:4px}
+.brow .e{font-size:11.5px;line-height:1.6;color:var(--ink-2)}
+
+/* ── 字体对照 ── */
+.fcmp{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:20px}
+.fcard{border:1px solid var(--rule);padding:20px 20px 24px}
+.fcard .hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;
+           padding-bottom:10px;border-bottom:1px solid var(--rule)}
+.fcard .nm{font-weight:600;font-size:14px} .fcard .tag{font-size:10px;color:var(--ink-3);letter-spacing:.1em}
+.fspec{font-size:30px;letter-spacing:-.02em;line-height:1.15;margin-bottom:4px}
+.fnum{font-size:22px;letter-spacing:-.01em;margin:10px 0 14px}
+.fmini{border-top:1px solid var(--rule);padding-top:12px}
+.fmini .k{font-weight:600;font-size:13px} .fmini .e{font-size:11px;line-height:1.6;color:var(--ink-2);margin-top:3px}
+.verdict{display:inline-block;background:var(--ink);color:var(--paper);font-weight:600;
+         letter-spacing:.1em;padding:7px 12px;font-size:12px;margin-top:12px}
+
+/* ── 真实仪表盘顶部 ── */
+.dash{border:1.5px solid var(--ink);background:#fff}
+.dash .hd{display:flex;align-items:stretch;border-bottom:1.5px solid var(--ink)}
+.dash .hd .a{padding:16px 20px;border-right:1px solid var(--rule)}
+.dash .hd .a.grow{flex:1}
+.dash .lbl{font-size:9.5px;letter-spacing:.2em;color:var(--ink-3);text-transform:uppercase;margin-bottom:7px}
+.dash .big{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.dash .wait{background:var(--ink);color:var(--paper);display:flex;flex-direction:column;
+            justify-content:center;padding:16px 26px;min-width:186px}
+.grid2{display:grid;grid-template-columns:1fr 1fr}
+.grid2>div:first-child{border-right:1px solid var(--rule)}
+/* 固定行高让左右两列的分隔线对齐 —— 证据长短不一时会错位 */
+.cell{display:grid;grid-template-columns:92px 88px 1fr;gap:10px;align-items:center;
+      min-height:52px;padding:7px 14px;border-bottom:1px solid #efece7}
+.cell .k{font-size:12.5px;font-weight:500}
+.cell .lv{display:flex;gap:2px} .cell .lv i{display:block;width:15px;height:11px}
+.cell .s{font-size:11px;line-height:1.55;color:var(--ink-2)}
+.cell .s b{font-weight:600;color:var(--ink)}
+
+.strip{display:grid;border-top:1.5px solid var(--ink)}
+.stn{padding:11px 10px;border-right:1px solid var(--rule);text-align:center}
+.stn:last-child{border-right:0}
+.stn .d{height:12px;margin:0 auto 8px;width:12px;border:2px solid var(--idle)}
+.stn .t{font-size:11px;font-weight:500}
+.stn .m{font-size:9.5px;color:var(--ink-3);margin-top:3px;font-family:var(--mono)}
+
+/* ── 分享卡 ── */
+.cards{display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap}
+.card{width:432px;height:540px;background:var(--paper);border:1px solid var(--rule);
+      padding:40px 40px 32px;display:flex;flex-direction:column}
+.card.dark{background:#12110f;border-color:#12110f;color:#f0ece3}
+</style>
+</head>
+<body>
+<div class="top"><span>B v2 · 工业指引</span><span class="r">2026-07-31 · 真实数据 · 三处待你定</span></div>
+
+<!-- ═════ 1 · 字体 ═════ -->
+<section class="sheet">
+  <div class="blk">
+    <h2 class="sec">一 · 字体 <b>同一行状态板，三种字，看的是它在 12px 上活不活</b></h2>
+    <div class="fcmp" id="fcmp"></div>
+    <p class="note">判据不是哪个漂亮，是<b>哪个在 11–13px 的证据行上仍然能读</b>，以及数字排成列时对不对齐。
+      三个都配 PingFang SC 作中文 —— 中文这一层不动。</p>
+  </div>
+</section>
+
+<!-- ═════ 2 · 色彩 ═════ -->
+<section class="sheet">
+  <div class="blk">
+    <h2 class="sec">二 · 色彩 <b>两层分开：钱用绿红，市场用蓝橙，且蓝橙编码的不是涨跌</b></h2>
+    <div id="palette"></div>
+  </div>
+</section>
+
+<!-- ═════ 3 · 真实仪表盘顶部 ═════ -->
+<section class="sheet">
+  <div class="blk">
+    <h2 class="sec">三 · 仪表盘顶部 <b>你截图分享的就是这一块</b></h2>
+    <div class="dash">
+      <div class="hd">
+        <div class="a"><div class="lbl">收盘</div><div class="big n" id="d-date">—</div></div>
+        <div class="a"><div class="lbl">SPX</div><div class="big n" id="d-spx">—</div></div>
+        <div class="a grow"><div class="lbl">读数 · 九格证据的合成</div>
+          <div class="big" id="d-read">—</div></div>
+        <div class="wait"><div class="lbl" style="color:#8a8478">风险姿态</div>
+          <div style="font-size:23px;font-weight:600;letter-spacing:.04em">等待 FTD</div>
+          <div style="font-size:10.5px;color:#a8a29e;margin-top:5px">确认信号缺席</div></div>
+      </div>
+      <div class="grid2"><div id="d-c1"></div><div id="d-c2"></div></div>
+      <div class="strip" id="d-strip"></div>
+    </div>
+    <p class="note">十格状态 + 六站传导，一屏读完，不需要滚动。最后一行是行动 —— A 稿的读序在这里活下来了：
+      眼睛从左上的事实走到右上的姿态，行动永远在末端。</p>
+  </div>
+
+  <div class="blk">
+    <h2 class="sec">四 · 待定格 <b>把还没发生的事画出来，是这套系统里唯一的「留白」</b></h2>
+    <div id="pending"></div>
+    <p class="note">整个金融界面都在画已经发生的事。空槽是 A 稿留下的第二样东西，
+      它让「等待」变成一个可见的位置，而不是一句形容词。</p>
+  </div>
+</section>
+
+<!-- ═════ 5 · 分享卡 ═════ -->
+<section class="sheet">
+  <div class="blk">
+    <h2 class="sec">五 · 分享卡 <b>4:5 · 对外那一层，不用图，仪器本身就是图</b></h2>
+    <div class="cards" id="cards"></div>
+    <p class="note">这跟已有的海报系统（借来的图 + 展签框）不冲突，是<b>两条线</b>：
+      海报走情绪与语录，分享卡走测量。两者共用同一行展签式的测量位，所以放在一起仍是一家。</p>
+  </div>
+</section>
+
+<script>
+const D = {
+ "as_of": "2026-07-31",
+ "rungs": [
+  {
+   "key": "broken",
+   "label": "破位"
+  },
+  {
+   "key": "stabilizing",
+   "label": "止跌"
+  },
+  {
+   "key": "reclaim",
+   "label": "收回主要均线"
+  },
+  {
+   "key": "above_50",
+   "label": "站上 50日"
+  },
+  {
+   "key": "pivot",
+   "label": "逼近 pivot"
+  },
+  {
+   "key": "breakout",
+   "label": "突破"
+  },
+  {
+   "key": "holds",
+   "label": "突破站住"
+  },
+  {
+   "key": "expansion",
+   "label": "扩张"
+  }
+ ],
+ "names": {
+  "SPY": {
+   "role": "index",
+   "close": 747.03,
+   "chg_pct": 0.72,
+   "rung": 4,
+   "rung_key": "pivot",
+   "rung_label": "逼近 pivot",
+   "evidence": "距 20日高 755.58 仅 1.1%",
+   "direction": "up",
+   "held_21": 1,
+   "held_50": 1,
+   "held_200": 80,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -1.5,
+   "ema21": 743.05,
+   "sma50": 744.22,
+   "sma200": 697.41,
+   "trace": [
+    746.74,
+    744.39,
+    733.58,
+    733.24,
+    734.3,
+    728.99,
+    741.0,
+    746.77,
+    745.76,
+    744.78,
+    751.28,
+    747.71,
+    745.4,
+    751.71,
+    754.95,
+    749.17,
+    751.83,
+    754.81,
+    750.72,
+    743.29,
+    742.09,
+    748.28,
+    747.41,
+    738.18,
+    738.93,
+    739.09,
+    740.86,
+    729.46,
+    741.69,
+    747.03
+   ]
+  },
+  "QQQ": {
+   "role": "index",
+   "close": 687.99,
+   "chg_pct": 0.65,
+   "rung": 1,
+   "rung_key": "stabilizing",
+   "rung_label": "止跌",
+   "evidence": "21/50 日线之下，但守住 200日线 643.83（已 80 日）",
+   "direction": "flat",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 80,
+   "above_21": false,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -8.0,
+   "ema21": 697.12,
+   "sma50": 714.75,
+   "sma200": 643.83,
+   "trace": [
+    739.807,
+    737.95,
+    713.65,
+    710.62,
+    716.38,
+    706.52,
+    724.08,
+    736.4,
+    725.17,
+    712.6,
+    722.82,
+    709.43,
+    711.44,
+    723.28,
+    725.51,
+    711.74,
+    719.69,
+    717.74,
+    705.94,
+    695.33,
+    696.06,
+    708.97,
+    705.35,
+    691.96,
+    684.23,
+    682.12,
+    675.49,
+    661.73,
+    683.55,
+    687.99
+   ]
+  },
+  "RSP": {
+   "role": "index",
+   "close": 215.01,
+   "chg_pct": -0.17,
+   "rung": 4,
+   "rung_key": "pivot",
+   "rung_label": "逼近 pivot",
+   "evidence": "距 20日高 218.11 仅 1.4%",
+   "direction": "flat",
+   "held_21": 6,
+   "held_50": 77,
+   "held_200": 85,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -1.4,
+   "ema21": 213.76,
+   "sma50": 211.05,
+   "sma200": 198.37,
+   "trace": [
+    209.15,
+    209.61,
+    208.89,
+    210.38,
+    211.75,
+    210.31,
+    213.05,
+    212.77,
+    213.41,
+    214.91,
+    215.0,
+    214.73,
+    212.2,
+    213.5,
+    214.3,
+    214.23,
+    213.45,
+    212.97,
+    215.06,
+    213.37,
+    212.42,
+    212.76,
+    212.7,
+    211.92,
+    213.57,
+    215.18,
+    217.69,
+    215.73,
+    215.38,
+    215.01
+   ]
+  },
+  "DIA": {
+   "role": "index",
+   "close": 524.32,
+   "chg_pct": 0.54,
+   "rung": 4,
+   "rung_key": "pivot",
+   "rung_label": "逼近 pivot",
+   "evidence": "距 20日高 532.39 仅 1.5%",
+   "direction": "up",
+   "held_21": 2,
+   "held_50": 79,
+   "held_200": 84,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -1.5,
+   "ema21": 520.96,
+   "sma50": 516.4,
+   "sma200": 487.83,
+   "trace": [
+    515.3737,
+    516.9332,
+    516.4733,
+    518.3728,
+    519.1126,
+    517.603,
+    521.5319,
+    522.2417,
+    522.2517,
+    527.7302,
+    529.9395,
+    528.3,
+    522.6216,
+    524.0412,
+    525.6307,
+    524.321,
+    524.541,
+    525.8007,
+    524.681,
+    520.81,
+    517.94,
+    521.51,
+    521.47,
+    516.26,
+    518.76,
+    521.26,
+    526.89,
+    515.41,
+    521.51,
+    524.32
+   ]
+  },
+  "IWM": {
+   "role": "index",
+   "close": 291.2,
+   "chg_pct": -0.48,
+   "rung": 1,
+   "rung_key": "stabilizing",
+   "rung_label": "止跌",
+   "evidence": "21/50 日线之下，但守住 200日线 264.93（已 85 日）",
+   "direction": "down",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 85,
+   "above_21": false,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -3.8,
+   "ema21": 293.17,
+   "sma50": 292.26,
+   "sma200": 264.93,
+   "trace": [
+    295.59,
+    298.18,
+    295.32,
+    296.69,
+    298.91,
+    299.83,
+    298.97,
+    300.45,
+    299.32,
+    297.58,
+    298.9,
+    296.19,
+    293.48,
+    297.24,
+    295.99,
+    293.48,
+    294.51,
+    295.77,
+    295.59,
+    294.04,
+    292.31,
+    296.54,
+    293.79,
+    292.09,
+    291.17,
+    292.91,
+    293.37,
+    288.57,
+    292.59,
+    291.2
+   ]
+  },
+  "AMZN": {
+   "role": "leader",
+   "close": 271.58,
+   "chg_pct": 15.32,
+   "rung": 5,
+   "rung_key": "breakout",
+   "rung_label": "突破",
+   "evidence": "收 271.58 > 20日高 258.08",
+   "direction": "up",
+   "held_21": 1,
+   "held_50": 1,
+   "held_200": 2,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -2.5,
+   "ema21": 242.72,
+   "sma50": 246.63,
+   "sma200": 235.01,
+   "trace": [
+    244.39,
+    232.79,
+    234.11,
+    234.27,
+    227.01,
+    232.69,
+    240.14,
+    238.34,
+    241.7,
+    242.67,
+    244.16,
+    245.98,
+    243.62,
+    247.04,
+    245.34,
+    247.31,
+    247.49,
+    254.96,
+    249.89,
+    247.23,
+    249.99,
+    247.55,
+    244.85,
+    233.66,
+    232.11,
+    231.39,
+    230.86,
+    226.65,
+    235.5,
+    271.58
+   ]
+  },
+  "MSFT": {
+   "role": "leader",
+   "close": 464.72,
+   "chg_pct": 3.02,
+   "rung": 6,
+   "rung_key": "holds",
+   "rung_label": "突破站住",
+   "evidence": "突破后仍站在 20日高点 458.69 上方",
+   "direction": "up",
+   "held_21": 4,
+   "held_50": 2,
+   "held_200": 2,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -15.7,
+   "ema21": 401.7,
+   "sma50": 399.39,
+   "sma200": 432.26,
+   "trace": [
+    379.4,
+    367.34,
+    373.94,
+    365.46,
+    352.83,
+    372.97,
+    368.57,
+    373.02,
+    384.28,
+    390.49,
+    386.74,
+    388.84,
+    383.34,
+    384.36,
+    385.1,
+    390.99,
+    384.93,
+    395.63,
+    401.1,
+    393.82,
+    402.29,
+    397.75,
+    390.34,
+    381.58,
+    381.7,
+    389.1,
+    393.35,
+    390.54,
+    451.1,
+    464.72
+   ]
+  },
+  "NVDA": {
+   "role": "leader",
+   "close": 200.75,
+   "chg_pct": 2.93,
+   "rung": 2,
+   "rung_key": "reclaim",
+   "rung_label": "收回主要均线",
+   "evidence": "2 个交易日前上穿 200日线 192.93，50日线 206.12 仍在头上",
+   "direction": "up",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 2,
+   "above_21": false,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -15.0,
+   "ema21": 202.11,
+   "sma50": 206.12,
+   "sma200": 192.93,
+   "trace": [
+    210.69,
+    208.65,
+    200.04,
+    199.0,
+    195.74,
+    192.53,
+    194.97,
+    200.09,
+    197.58,
+    194.83,
+    195.55,
+    196.93,
+    204.12,
+    202.78,
+    210.96,
+    203.53,
+    211.8,
+    212.5,
+    207.4,
+    202.81,
+    203.28,
+    207.29,
+    212.06,
+    208.76,
+    206.84,
+    196.51,
+    197.01,
+    190.01,
+    195.04,
+    200.75
+   ]
+  },
+  "ANET": {
+   "role": "leader",
+   "close": 180.35,
+   "chg_pct": 5.46,
+   "rung": 3,
+   "rung_key": "above_50",
+   "rung_label": "站上 50日",
+   "evidence": "收在 50日线 166.58 之上",
+   "direction": "up",
+   "held_21": 2,
+   "held_50": 2,
+   "held_200": 56,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -5.0,
+   "ema21": 171.45,
+   "sma50": 166.58,
+   "sma200": 145.85,
+   "trace": [
+    169.67,
+    174.56,
+    162.2,
+    161.74,
+    165.45,
+    157.6,
+    164.1,
+    169.88,
+    166.62,
+    159.99,
+    173.28,
+    166.46,
+    181.05,
+    184.69,
+    186.96,
+    181.15,
+    182.57,
+    171.92,
+    168.56,
+    168.61,
+    169.35,
+    174.58,
+    174.87,
+    176.61,
+    173.99,
+    170.76,
+    169.71,
+    157.97,
+    171.02,
+    180.35
+   ]
+  },
+  "AXTI": {
+   "role": "leader",
+   "close": 60.43,
+   "chg_pct": 28.74,
+   "rung": 2,
+   "rung_key": "reclaim",
+   "rung_label": "收回主要均线",
+   "evidence": "2 个交易日前上穿 200日线 46.75，50日线 77.52 仍在头上",
+   "direction": "up",
+   "held_21": 1,
+   "held_50": 0,
+   "held_200": 2,
+   "above_21": true,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -57.8,
+   "ema21": 55.15,
+   "sma50": 77.52,
+   "sma200": 46.75,
+   "trace": [
+    84.57,
+    92.44,
+    77.91,
+    70.14,
+    69.06,
+    70.15,
+    71.46,
+    72.08,
+    65.03,
+    56.62,
+    63.52,
+    58.15,
+    60.12,
+    62.55,
+    57.21,
+    50.46,
+    57.57,
+    53.42,
+    45.57,
+    45.86,
+    48.83,
+    56.51,
+    52.98,
+    52.93,
+    47.23,
+    47.88,
+    42.76,
+    36.97,
+    46.94,
+    60.43
+   ]
+  },
+  "NTAP": {
+   "role": "leader",
+   "close": 178.5,
+   "chg_pct": 2.6,
+   "rung": 5,
+   "rung_key": "breakout",
+   "rung_label": "突破",
+   "evidence": "收 178.50 > 20日高 178.29",
+   "direction": "up",
+   "held_21": 9,
+   "held_50": 75,
+   "held_200": 71,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -7.2,
+   "ema21": 167.19,
+   "sma50": 161.14,
+   "sma200": 120.2,
+   "trace": [
+    159.2264,
+    157.8306,
+    157.3421,
+    155.089,
+    154.1219,
+    151.9884,
+    154.5905,
+    154.2914,
+    155.9065,
+    153.7032,
+    163.0548,
+    165.278,
+    164.8992,
+    171.21,
+    168.87,
+    163.93,
+    174.55,
+    162.1,
+    159.69,
+    163.88,
+    161.16,
+    165.76,
+    166.54,
+    164.64,
+    167.74,
+    169.8,
+    174.53,
+    173.23,
+    173.98,
+    178.5
+   ]
+  },
+  "DXCM": {
+   "role": "leader",
+   "close": 83.45,
+   "chg_pct": 11.95,
+   "rung": 7,
+   "rung_key": "expansion",
+   "rung_label": "扩张",
+   "evidence": "收在 50日高点 79.15 之上",
+   "direction": "up",
+   "held_21": 5,
+   "held_50": 5,
+   "held_200": 50,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -4.1,
+   "ema21": 74.36,
+   "sma50": 73.13,
+   "sma200": 67.75,
+   "trace": [
+    72.47,
+    69.07,
+    68.92,
+    69.75,
+    68.65,
+    70.14,
+    69.98,
+    67.35,
+    68.86,
+    71.25,
+    72.38,
+    73.57,
+    74.06,
+    73.02,
+    74.96,
+    76.35,
+    74.12,
+    72.73,
+    77.98,
+    76.65,
+    75.69,
+    74.75,
+    71.43,
+    70.48,
+    71.54,
+    73.37,
+    74.85,
+    75.14,
+    74.54,
+    83.45
+   ]
+  },
+  "TER": {
+   "role": "damaged",
+   "close": 367.69,
+   "chg_pct": 0.6,
+   "rung": 2,
+   "rung_key": "reclaim",
+   "rung_label": "收回主要均线",
+   "evidence": "2 个交易日前上穿 21日线 358.61，50日线 380.44 仍在头上",
+   "direction": "up",
+   "held_21": 2,
+   "held_50": 0,
+   "held_200": 253,
+   "above_21": true,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -24.6,
+   "ema21": 358.61,
+   "sma50": 380.44,
+   "sma200": 289.27,
+   "trace": [
+    437.92,
+    457.0,
+    420.12,
+    427.2,
+    471.96,
+    436.86,
+    463.21,
+    483.84,
+    427.34,
+    369.09,
+    379.52,
+    343.11,
+    351.57,
+    362.75,
+    359.6,
+    341.11,
+    353.23,
+    342.12,
+    322.3,
+    322.36,
+    333.76,
+    374.04,
+    369.46,
+    373.75,
+    349.92,
+    334.77,
+    320.65,
+    319.41,
+    365.49,
+    367.69
+   ]
+  },
+  "MXL": {
+   "role": "damaged",
+   "close": 66.82,
+   "chg_pct": -0.15,
+   "rung": 1,
+   "rung_key": "stabilizing",
+   "rung_label": "止跌",
+   "evidence": "21/50 日线之下，但守住 200日线 40.91（已 85 日）",
+   "direction": "flat",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 85,
+   "above_21": false,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -47.9,
+   "ema21": 77.61,
+   "sma50": 87.2,
+   "sma200": 40.91,
+   "trace": [
+    88.76,
+    96.44,
+    89.08,
+    84.99,
+    94.47,
+    96.6,
+    108.47,
+    128.03,
+    112.39,
+    93.12,
+    95.68,
+    85.82,
+    86.05,
+    95.8,
+    91.3,
+    89.3,
+    92.59,
+    88.84,
+    74.4,
+    71.84,
+    75.01,
+    86.06,
+    86.8,
+    91.24,
+    71.59,
+    64.86,
+    58.94,
+    57.25,
+    66.92,
+    66.82
+   ]
+  },
+  "SNDK": {
+   "role": "damaged",
+   "close": 1214.83,
+   "chg_pct": -5.09,
+   "rung": 1,
+   "rung_key": "stabilizing",
+   "rung_label": "止跌",
+   "evidence": "21/50 日线之下，但守住 200日线 843.09（已 168 日）",
+   "direction": "flat",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 168,
+   "above_21": false,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -48.4,
+   "ema21": 1480.97,
+   "sma50": 1709.22,
+   "sma200": 843.09,
+   "trace": [
+    2184.75,
+    2273.73,
+    1963.6,
+    1914.46,
+    2335.0,
+    2090.71,
+    2050.3899,
+    2273.73,
+    2032.22,
+    1745.0,
+    1744.4301,
+    1617.7,
+    1727.1801,
+    1858.27,
+    1915.92,
+    1673.97,
+    1757.8199,
+    1615.0,
+    1411.08,
+    1354.8199,
+    1390.95,
+    1589.4,
+    1599.27,
+    1610.33,
+    1436.5601,
+    1278.23,
+    1096.1,
+    1015.89,
+    1279.96,
+    1214.83
+   ]
+  },
+  "GLW": {
+   "role": "damaged",
+   "close": 138.25,
+   "chg_pct": 2.24,
+   "rung": 2,
+   "rung_key": "reclaim",
+   "rung_label": "收回主要均线",
+   "evidence": "2 个交易日前上穿 200日线 134.98，50日线 182.45 仍在头上",
+   "direction": "up",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 2,
+   "above_21": false,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -49.1,
+   "ema21": 159.42,
+   "sma50": 182.45,
+   "sma200": 134.98,
+   "trace": [
+    194.92,
+    209.83,
+    194.07,
+    205.83,
+    228.01,
+    221.05,
+    255.69,
+    255.43,
+    220.63,
+    196.79,
+    194.8,
+    185.38,
+    184.03,
+    192.38,
+    190.89,
+    183.11,
+    187.64,
+    174.41,
+    158.39,
+    154.61,
+    153.1,
+    162.41,
+    154.06,
+    156.06,
+    146.65,
+    143.36,
+    126.01,
+    124.05,
+    135.22,
+    138.25
+   ]
+  },
+  "NVTS": {
+   "role": "damaged",
+   "close": 10.86,
+   "chg_pct": -1.36,
+   "rung": 0,
+   "rung_key": "broken",
+   "rung_label": "破位",
+   "evidence": "跌破 200日线 12.82",
+   "direction": "flat",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 0,
+   "above_21": false,
+   "above_50": false,
+   "above_200": false,
+   "from_52wh_pct": -68.2,
+   "ema21": 12.93,
+   "sma50": 18.92,
+   "sma200": 12.82,
+   "trace": [
+    24.02,
+    23.7,
+    21.4,
+    18.32,
+    17.7,
+    17.3,
+    17.74,
+    17.92,
+    16.53,
+    14.46,
+    15.23,
+    13.99,
+    13.36,
+    14.18,
+    13.47,
+    12.87,
+    13.09,
+    13.27,
+    11.755,
+    11.46,
+    11.54,
+    12.825,
+    12.67,
+    12.03,
+    10.92,
+    11.41,
+    10.01,
+    9.735,
+    11.01,
+    10.86
+   ]
+  },
+  "GFS": {
+   "role": "damaged",
+   "close": 49.99,
+   "chg_pct": 0.2,
+   "rung": 0,
+   "rung_key": "broken",
+   "rung_label": "破位",
+   "evidence": "跌破 200日线 51.49",
+   "direction": "flat",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 0,
+   "above_21": false,
+   "above_50": false,
+   "above_200": false,
+   "from_52wh_pct": -45.9,
+   "ema21": 59.14,
+   "sma50": 72.21,
+   "sma200": 51.49,
+   "trace": [
+    85.7065,
+    89.541,
+    83.27,
+    83.7,
+    86.12,
+    79.78,
+    81.0,
+    82.41,
+    77.23,
+    69.84,
+    68.91,
+    65.84,
+    67.97,
+    69.71,
+    68.97,
+    63.94,
+    63.39,
+    61.41,
+    58.24,
+    57.48,
+    56.81,
+    59.39,
+    58.49,
+    56.91,
+    53.53,
+    53.18,
+    49.02,
+    47.07,
+    49.89,
+    49.99
+   ]
+  },
+  "AAPL": {
+   "role": "damaged",
+   "close": 308.91,
+   "chg_pct": -7.35,
+   "rung": 1,
+   "rung_key": "stabilizing",
+   "rung_label": "止跌",
+   "evidence": "21/50 日线之下，但守住 200日线 277.66（已 85 日）",
+   "direction": "down",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 85,
+   "above_21": false,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -10.3,
+   "ema21": 322.13,
+   "sma50": 309.5,
+   "sma200": 277.66,
+   "trace": [
+    298.01,
+    297.01,
+    294.3,
+    293.08,
+    275.15,
+    283.78,
+    281.74,
+    289.36,
+    294.38,
+    308.63,
+    312.66,
+    310.66,
+    313.39,
+    316.22,
+    315.32,
+    317.31,
+    314.86,
+    327.5,
+    333.26,
+    333.74,
+    326.59,
+    327.74,
+    325.89,
+    321.66,
+    333.02,
+    336.91,
+    340.08,
+    338.19,
+    333.43,
+    308.91
+   ]
+  }
+ },
+ "breadth": {
+  "today": {
+   "universe_size": 3000.0,
+   "spx_close": 7489.72021484375,
+   "up_4pct": 231.0,
+   "down_4pct": 288.0,
+   "ratio_5d": 0.9905,
+   "ratio_10d": 0.8484,
+   "up_25pct_qtr": 342.0,
+   "down_25pct_qtr": 523.0,
+   "up_25pct_month": 81.0,
+   "down_25pct_month": 284.0,
+   "up_50pct_month": 24.0,
+   "down_50pct_month": 50.0,
+   "up_13pct_34d": 498.0,
+   "down_13pct_34d": 723.0,
+   "t2108": 45.77,
+   "pct_above_200sma": 46.77,
+   "pct_above_50sma": 46.03,
+   "pct_above_20sma": 40.7,
+   "advances": 1265.0,
+   "declines": 1601.0,
+   "new_highs": 29.0,
+   "new_lows": 12.0,
+   "net_advances": -336.0,
+   "rana": -117.24,
+   "ad_line": -15978.0,
+   "mcclellan_osc": -23.23
+  },
+  "trace": {
+   "t2108": [
+    55.53,
+    55.88,
+    56.83,
+    58.72,
+    59.31,
+    53.53,
+    54.4,
+    54.17,
+    55.83,
+    53.17,
+    56.5,
+    54.03,
+    51.2,
+    53.03,
+    50.63,
+    51.3,
+    43.93,
+    52.64,
+    53.39,
+    50.35,
+    46.64,
+    48.99,
+    48.12,
+    44.24,
+    45.34,
+    48.47,
+    47.73,
+    45.1,
+    46.47,
+    45.77
+   ],
+   "pct_above_20sma": [
+    54.71,
+    53.69,
+    54.16,
+    57.72,
+    58.42,
+    53.37,
+    55.7,
+    56.8,
+    59.23,
+    56.73,
+    60.27,
+    55.37,
+    48.17,
+    51.73,
+    49.37,
+    49.97,
+    42.5,
+    51.02,
+    52.35,
+    47.73,
+    43.11,
+    47.08,
+    42.2,
+    36.99,
+    38.62,
+    44.13,
+    44.97,
+    39.57,
+    41.9,
+    40.7
+   ],
+   "pct_above_50sma": [
+    56.34,
+    55.06,
+    56.56,
+    58.64,
+    59.54,
+    52.87,
+    53.77,
+    53.23,
+    54.27,
+    52.4,
+    55.5,
+    53.23,
+    51.07,
+    52.0,
+    49.8,
+    51.33,
+    43.67,
+    52.23,
+    52.96,
+    51.12,
+    48.66,
+    50.34,
+    50.0,
+    46.73,
+    46.95,
+    49.33,
+    48.7,
+    45.5,
+    47.27,
+    46.03
+   ],
+   "pct_above_200sma": [
+    60.82,
+    60.53,
+    60.74,
+    61.5,
+    61.86,
+    48.6,
+    48.3,
+    48.7,
+    49.5,
+    47.77,
+    50.13,
+    49.0,
+    47.6,
+    48.63,
+    45.37,
+    48.33,
+    41.3,
+    49.11,
+    49.63,
+    48.81,
+    47.58,
+    48.56,
+    47.98,
+    46.42,
+    46.07,
+    47.97,
+    46.73,
+    46.2,
+    47.2,
+    46.77
+   ],
+   "ratio_5d": [
+    1.2744,
+    1.0881,
+    0.7263,
+    0.8956,
+    1.0987,
+    1.2431,
+    1.4169,
+    1.6944,
+    1.7103,
+    1.4315,
+    1.2306,
+    0.8563,
+    0.7328,
+    0.758,
+    0.7669,
+    0.5531,
+    0.7378,
+    0.8467,
+    0.598,
+    0.5871,
+    0.6616,
+    0.8524,
+    0.7612,
+    0.7672,
+    0.6923,
+    0.9126,
+    0.6932,
+    0.5746,
+    0.8791,
+    0.9905
+   ],
+   "ratio_10d": [
+    1.0747,
+    1.4056,
+    1.2477,
+    1.225,
+    1.4413,
+    1.2558,
+    1.2736,
+    1.2121,
+    1.3164,
+    1.2968,
+    1.2361,
+    1.078,
+    1.0838,
+    1.1412,
+    1.0876,
+    0.8456,
+    0.8014,
+    0.781,
+    0.6775,
+    0.6712,
+    0.6024,
+    0.7944,
+    0.8013,
+    0.6739,
+    0.6373,
+    0.7856,
+    0.7661,
+    0.655,
+    0.8315,
+    0.8484
+   ],
+   "mcclellan_osc": [
+    5.19,
+    2.52,
+    4.35,
+    11.1,
+    19.16,
+    33.6,
+    28.63,
+    22.0,
+    24.73,
+    20.57,
+    18.12,
+    0.94,
+    -19.68,
+    -5.47,
+    -6.23,
+    -17.36,
+    -16.07,
+    -9.31,
+    -10.59,
+    -24.45,
+    -39.45,
+    -23.5,
+    -30.92,
+    -44.95,
+    -39.06,
+    -22.94,
+    -14.17,
+    -31.56,
+    -20.08,
+    -23.23
+   ],
+   "up_4pct": [
+    333.0,
+    161.0,
+    114.0,
+    267.0,
+    216.0,
+    648.0,
+    400.0,
+    321.0,
+    428.0,
+    293.0,
+    319.0,
+    159.0,
+    194.0,
+    360.0,
+    169.0,
+    160.0,
+    248.0,
+    245.0,
+    237.0,
+    155.0,
+    155.0,
+    484.0,
+    174.0,
+    139.0,
+    175.0,
+    428.0,
+    311.0,
+    149.0,
+    653.0,
+    231.0
+   ],
+   "down_4pct": [
+    103.0,
+    205.0,
+    308.0,
+    221.0,
+    156.0,
+    241.0,
+    235.0,
+    240.0,
+    305.0,
+    439.0,
+    212.0,
+    579.0,
+    366.0,
+    152.0,
+    257.0,
+    530.0,
+    228.0,
+    229.0,
+    527.0,
+    266.0,
+    322.0,
+    153.0,
+    315.0,
+    387.0,
+    451.0,
+    228.0,
+    389.0,
+    637.0,
+    247.0,
+    288.0
+   ],
+   "net_advances": [
+    695.0,
+    -39.0,
+    172.0,
+    441.0,
+    557.0,
+    1070.0,
+    81.0,
+    -48.0,
+    447.0,
+    75.0,
+    145.0,
+    -724.0,
+    -1066.0,
+    767.0,
+    23.0,
+    -582.0,
+    35.0,
+    349.0,
+    -52.0,
+    -772.0,
+    -955.0,
+    647.0,
+    -538.0,
+    -971.0,
+    12.0,
+    641.0,
+    343.0,
+    -1088.0,
+    415.0,
+    -336.0
+   ],
+   "spx_close": [
+    7500.580078125,
+    7472.7900390625,
+    7365.4599609375,
+    7358.22021484375,
+    7357.490234375,
+    7354.02001953125,
+    7440.43017578125,
+    7499.35986328125,
+    7483.22998046875,
+    7483.240234375,
+    7537.43017578125,
+    7503.85009765625,
+    7482.7099609375,
+    7543.64013671875,
+    7575.39013671875,
+    7515.33984375,
+    7543.58984375,
+    7572.39990234375,
+    7533.77001953125,
+    7457.68994140625,
+    7443.27978515625,
+    7509.2001953125,
+    7498.9599609375,
+    7408.2998046875,
+    7411.97998046875,
+    7413.18017578125,
+    7428.77978515625,
+    7316.14990234375,
+    7437.6298828125,
+    7489.72021484375
+   ]
+  },
+  "dates": [
+   "2026-06-18",
+   "2026-06-22",
+   "2026-06-23",
+   "2026-06-24",
+   "2026-06-25",
+   "2026-06-26",
+   "2026-06-29",
+   "2026-06-30",
+   "2026-07-01",
+   "2026-07-02",
+   "2026-07-06",
+   "2026-07-07",
+   "2026-07-08",
+   "2026-07-09",
+   "2026-07-10",
+   "2026-07-13",
+   "2026-07-14",
+   "2026-07-15",
+   "2026-07-16",
+   "2026-07-17",
+   "2026-07-20",
+   "2026-07-21",
+   "2026-07-22",
+   "2026-07-23",
+   "2026-07-24",
+   "2026-07-27",
+   "2026-07-28",
+   "2026-07-29",
+   "2026-07-30",
+   "2026-07-31"
+  ]
+ },
+ "diffusion": {
+  "sessions": [
+   "2026-07-07",
+   "2026-07-08",
+   "2026-07-09",
+   "2026-07-10",
+   "2026-07-13",
+   "2026-07-27",
+   "2026-07-28",
+   "2026-07-29",
+   "2026-07-30",
+   "2026-07-31"
+  ],
+  "screeners": {
+   "ema21_watch": [
+    80,
+    90,
+    78,
+    46,
+    105,
+    132,
+    70,
+    91,
+    119,
+    133
+   ],
+   "episodic_pivot": [
+    1,
+    2,
+    2,
+    1,
+    2,
+    1,
+    5,
+    8,
+    3,
+    6
+   ],
+   "gainers_4pct": [
+    159,
+    194,
+    360,
+    169,
+    160,
+    428,
+    311,
+    149,
+    653,
+    231
+   ],
+   "healthy_charts": [
+    141,
+    144,
+    104,
+    67,
+    115,
+    116,
+    65,
+    89,
+    94,
+    93
+   ],
+   "momentum_97": [
+    90,
+    90,
+    90,
+    237,
+    90,
+    90,
+    150,
+    90,
+    91,
+    90
+   ],
+   "vcp": [
+    16,
+    15,
+    11,
+    12,
+    9,
+    19,
+    9,
+    14,
+    16,
+    16
+   ],
+   "vol_up_gainers": [
+    42,
+    34,
+    47,
+    30,
+    41,
+    59,
+    86,
+    67,
+    108,
+    82
+   ]
+  },
+  "sectors": {
+   "Financial": [
+    36,
+    36,
+    34,
+    64,
+    33,
+    31,
+    47,
+    29,
+    27,
+    32
+   ],
+   "Healthcare": [
+    25,
+    30,
+    25,
+    34,
+    18,
+    15,
+    26,
+    14,
+    22,
+    19
+   ],
+   "Technology": [
+    8,
+    9,
+    16,
+    33,
+    14,
+    7,
+    22,
+    13,
+    7,
+    11
+   ],
+   "Industrials": [
+    13,
+    10,
+    9,
+    26,
+    13,
+    13,
+    17,
+    9,
+    9,
+    11
+   ],
+   "Consumer Cyclical": [
+    2,
+    4,
+    4,
+    25,
+    7,
+    8,
+    14,
+    12,
+    11,
+    9
+   ],
+   "Communication Services": [
+    2,
+    0,
+    2,
+    13,
+    1,
+    7,
+    6,
+    9,
+    7,
+    5
+   ],
+   "Basic Materials": [
+    1,
+    1,
+    1,
+    12,
+    3,
+    3,
+    8,
+    4,
+    5,
+    4
+   ],
+   "Consumer Defensive": [
+    2,
+    0,
+    0,
+    12,
+    0,
+    2,
+    3,
+    4,
+    2,
+    2
+   ]
+  }
+ },
+ "state_board": [
+  {
+   "key": "受损程度",
+   "layer": "fact",
+   "state": "很弱",
+   "evidence": "季度 −25% 的股票 523 只 vs +25% 的 342 只（60% 在下跌侧）"
+  },
+  {
+   "key": "抛压",
+   "layer": "fact",
+   "state": "已启动",
+   "evidence": "今日 −4% 家数 288，5 日峰值 637（已回落至 45%）"
+  },
+  {
+   "key": "指数修复",
+   "layer": "interpretation",
+   "state": "已启动",
+   "evidence": "5 个指数中 3 个站上 50 日线：SPY、RSP、DIA"
+  },
+  {
+   "key": "领涨修复",
+   "layer": "interpretation",
+   "state": "已启动",
+   "evidence": "7 只领涨中 4 只已突破：AMZN、MSFT、NTAP、DXCM"
+  },
+  {
+   "key": "巨头领涨",
+   "layer": "interpretation",
+   "state": "已启动",
+   "evidence": "AMZN r5 · MSFT r6 · NVDA r2（均值 4.3/7）"
+  },
+  {
+   "key": "广义半导体",
+   "layer": "interpretation",
+   "state": "很弱",
+   "evidence": "7 只受损名字阶梯均值 1.0/7，5 只仍在止跌或破位"
+  },
+  {
+   "key": "市场宽度",
+   "layer": "fact",
+   "state": "很弱",
+   "evidence": ">20日线 40.7%、T2108 45.8、净上涨 -336（指数收红仍为负）"
+  },
+  {
+   "key": "利率",
+   "layer": "fact",
+   "state": null,
+   "evidence": "30Y / 20Y 收益率破 2007 高点 —— 管线未接入债市数据，此格由人工填写"
+  },
+  {
+   "key": "确认信号",
+   "layer": "anticipation",
+   "state": "缺席",
+   "evidence": "5 日动能比 0.9905（需 > 1.0）、Episodic Pivot 今日 6 只（月初 1 只）"
+  },
+  {
+   "key": "风险姿态",
+   "layer": "action",
+   "state": null,
+   "evidence": "等待 FTD —— 上面九格的合成结果，不是独立判断"
+  }
+ ],
+ "chain": [
+  {
+   "label": "巨头站住",
+   "state": "lit",
+   "evidence": "AMZN / MSFT / NVDA 全部 ≥ 收回主要均线（r5 / r6 / r2）"
+  },
+  {
+   "label": "更多领涨跟上",
+   "state": "partial",
+   "evidence": "4/7 只已突破；Episodic Pivot 1 → 6 只/日"
+  },
+  {
+   "label": "QQQ 收回 21/50",
+   "state": "unlit",
+   "evidence": "QQQ 687.99 vs 21日 697.12 / 50日 714.75 —— 两条都在头上"
+  },
+  {
+   "label": "宽度扩张",
+   "state": "unlit",
+   "evidence": "5 日比 0.9905、>20日线 40.7%、净上涨 -336"
+  },
+  {
+   "label": "RSP / IWM 跟上",
+   "state": "partial",
+   "evidence": "RSP r4（在 21日线上）· IWM r1（21/50 双破）"
+  },
+  {
+   "label": "突破站得住",
+   "state": "partial",
+   "evidence": "2 只突破后仍站住：MSFT、DXCM"
+  }
+ ],
+ "counted_screeners": [
+  "episodic_pivot",
+  "vcp",
+  "gainers_4pct",
+  "vol_up_gainers",
+  "ema21_watch",
+  "healthy_charts"
+ ],
+ "levels": [
+  "缺席",
+  "很弱",
+  "早期",
+  "已启动",
+  "良好"
+ ]
+};
+const B = D.state_board, CH = D.chain, T = D.breadth.today, LV = D.levels;
+const C = {works:"#1f5f9e", fails:"#c4601f", idle:"#b6b1a9"};
+const li = s => s==null ? -1 : LV.indexOf(s);
+const lvColor = (r,k) => {
+  if (r.state==null) return "#d8d4cd";
+  if (k > li(r.state)) return "#e6e2db";
+  return li(r.state) <= 1 ? C.fails : li(r.state) >= 3 ? C.works : "#8a8478";
+};
+const bars = (r, w, h) => LV.map((_,k)=>
+  `<i style="width:${w}px;height:${h}px;background:${lvColor(r,k)}"></i>`).join("");
+
+/* ── 1 · 字体 ── */
+const FACES = [
+  {nm:"IBM Plex Sans", tag:"开源 · 有配套 SC 与 Mono", css:"var(--f-plex)",
+   why:"工业出身，等宽/中文/西文同源。可直接部署，无授权成本。"},
+  {nm:"Avenir Next", tag:"Frutiger · Univers 的直系", css:"var(--f-avenir)",
+   why:"Aicher 那条路的血亲，本机已有 24 个字重。网页商用需授权。"},
+  {nm:"Inter", tag:"现状 · SaaS 默认脸", css:"var(--f-inter)",
+   why:"最安全也最没有身份 —— 每个仪表盘都长这样。"},
+];
+document.getElementById("fcmp").innerHTML = FACES.map(f=>{
+  const r = B.find(x=>x.key==="市场宽度");
+  return `<div class="fcard" style="font-family:${f.css}">
+    <div class="hd"><span class="nm">${f.nm}</span><span class="tag">${f.tag}</span></div>
+    <div class="fspec">市场宽度</div>
+    <div class="fspec" style="font-weight:600">Confirmation absent</div>
+    <div class="fnum" style="font-variant-numeric:tabular-nums">7489.72 · 45.8 · −336</div>
+    <div style="font:400 12px var(--mono);color:var(--ink-3);margin:-8px 0 14px">
+      同一串数字走等宽：<span style="color:var(--ink-2)">7489.72 · 45.8 · −336</span></div>
+    <div class="fmini">
+      <div class="k">${r.key} — ${r.state}</div>
+      <div style="display:flex;gap:3px;margin:7px 0">${bars(r,19,9)}</div>
+      <div class="e">${r.evidence}</div>
+    </div>
+    <div class="verdict">等待 FTD</div>
+    <div style="font-size:11px;color:var(--ink-3);margin-top:14px;line-height:1.6">${f.why}</div>
+  </div>`;
+}).join("");
+
+/* ── 2 · 色彩 ── */
+const SW = [
+  ["市场层 · 回应质量", [
+    ["#1f5f9e","接住了","给了机会且拿下 —— 收回、突破、站住"],
+    ["#8a8478","部分","动了但没完成"],
+    ["#c4601f","没接住","给了机会却失败 —— gap-and-fail、跌破"],
+    ["#b6b1a9","未给机会","没有可判定的测试"]]],
+  ["钱层 · 只有盈亏", [
+    ["#2f6b4f","盈利",'仅用于 P/L 数字，永不用于市场状态'],
+    ["#a33a2a","亏损",'同上']]],
+  ["纸与墨", [
+    ["#faf9f7","纸","暖石底，沿用现有系统"],
+    ["#16150f","墨","近黑，不用纯黑"],
+    ["#57534e","次级文字","证据行"],
+    ["#e0ddd8","分隔线","1px，永不加阴影"]]],
+];
+document.getElementById("palette").innerHTML = SW.map(([g,rows])=>`
+  <div style="margin-top:22px">
+    <div style="font-size:11px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase;margin-bottom:12px">${g}</div>
+    ${rows.map(([hex,nm,d])=>`
+      <div style="display:grid;grid-template-columns:56px 108px 1fr 96px;gap:16px;align-items:center;
+                  padding:9px 0;border-bottom:1px solid var(--rule)">
+        <div style="height:30px;background:${hex};border:1px solid rgba(0,0,0,.08)"></div>
+        <div style="font-weight:600;font-size:13px">${nm}</div>
+        <div style="font-size:11.5px;color:var(--ink-2)">${d}</div>
+        <div class="n" style="font-size:11px;color:var(--ink-3)">${hex.toUpperCase()}</div>
+      </div>`).join("")}
+  </div>`).join("");
+
+/* ── 3 · 仪表盘顶部 ── */
+document.getElementById("d-date").textContent = D.as_of;
+document.getElementById("d-spx").textContent = T.spx_close.toFixed(2);
+document.getElementById("d-read").textContent = "巨头修好了，传导没发生";
+const cell = r => `<div class="cell">
+  <div class="k">${r.key}</div>
+  <div class="lv">${bars(r,15,11)}</div>
+  <div class="s">${r.state == null
+      ? `<b style="color:var(--ink-3)">未接入</b> · ${r.evidence}`
+      : `<b>${r.state}</b> · ${r.evidence}`}</div></div>`;
+// 风险姿态不进格子 —— 它是行动，已经占着右上的黑块；重复一次还会被误读成第十项证据
+const rows = B.filter(r => r.key !== "风险姿态");
+document.getElementById("d-c1").innerHTML = rows.slice(0,5).map(cell).join("");
+document.getElementById("d-c2").innerHTML = rows.slice(5).map(cell).join("");
+
+const strip = document.getElementById("d-strip");
+strip.style.gridTemplateColumns = `repeat(${CH.length},1fr)`;
+strip.innerHTML = CH.map(c=>{
+  const col = c.state==="lit" ? C.works : c.state==="partial" ? "#8a8478" : C.idle;
+  const fill = c.state==="lit" ? col : c.state==="partial"
+    ? `linear-gradient(90deg,${col} 50%,transparent 50%)` : "transparent";
+  return `<div class="stn"><div class="d" style="border-color:${col};background:${fill}"></div>
+    <div class="t">${c.label}</div>
+    <div class="m">${c.state==="lit"?"已发生":c.state==="partial"?"部分":"未到"}</div></div>`;
+}).join("");
+
+/* ── 4 · 待定格 ── */
+const SEQ = [["07.29","抛压清算","done"],["07.30","止跌 · 第 1 天","done"],
+             ["07.31","延续 · 第 2 天","done"],["下一步","FTD？","pending"],
+             ["再下一步","宽度扩张？","pending"]];
+document.getElementById("pending").innerHTML =
+  `<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:18px">` +
+  SEQ.map(([d,t,st])=>`
+    <div style="border:${st==="done"?"1.5px solid var(--ink)":"1.5px dashed #cfcac2"};
+                padding:16px 14px;background:${st==="done"?"#fff":"transparent"}">
+      <div class="n" style="font-size:10px;letter-spacing:.14em;color:var(--ink-3)">${d}</div>
+      <div style="font-size:15px;font-weight:${st==="done"?600:400};margin-top:9px;
+                  color:${st==="done"?"var(--ink)":"var(--ink-3)"}">${t}</div>
+      ${st==="done"?`<div style="height:3px;width:26px;background:${C.works};margin-top:12px"></div>`
+                   :`<div style="height:3px;width:26px;border-top:1px dashed #cfcac2;margin-top:12px"></div>`}
+    </div>`).join("") + `</div>`;
+
+/* ── 5 · 分享卡 ── */
+const meta = `SPX ${T.spx_close.toFixed(0)} · T2108 ${T.t2108.toFixed(0)} · >20SMA ${T.pct_above_20sma.toFixed(0)}%`;
+const cardInner = (dark) => {
+  const ink = dark ? "#f0ece3" : "#16150f", dim = dark ? "#8a8478" : "#57534e",
+        rule = dark ? "#2a2823" : "#e0ddd8";
+  const stn = CH.map(c=>{
+    const col = c.state==="lit" ? C.works : c.state==="partial" ? "#8a8478" : (dark?"#3a3833":"#d8d4cd");
+    return `<div style="flex:1;height:5px;background:${col}"></div>`;
+  }).join(`<div style="width:3px"></div>`);
+  // 九格证据压成 3×3 —— 卡的上半部原来是空的，读起来像漏做，不像决定
+  const mini = B.filter(r => r.key !== "风险姿态").map(r => `
+    <div><div style="font-size:9.5px;color:${dim};margin-bottom:5px">${r.key}</div>
+      <div style="display:flex;gap:1.5px">${LV.map((_,k)=>{
+        const c = lvColor(r,k);
+        // 两个「空」灰都要在深色卡上翻过来，否则未接入的利率会读成满格
+        const off = c === "#e6e2db" || c === "#d8d4cd";
+        return `<i style="display:block;width:100%;height:6px;background:${
+          off ? (dark ? "#2a2823" : c) : c}"></i>`;
+      }).join("")}</div></div>`).join("");
+  return `
+  <div style="display:flex;justify-content:space-between;align-items:baseline">
+    <div style="font-size:10px;letter-spacing:.24em;color:${dim};font-family:var(--mono)">FLUXUS · 07.31</div>
+    <div style="font-size:9.5px;letter-spacing:.14em;color:${dim}">九格证据</div></div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px 16px;margin-top:18px">${mini}</div>
+  <div style="font-size:44px;font-weight:600;letter-spacing:-.03em;line-height:1.05;margin-top:auto;color:${ink}">
+    巨头修好了<br>传导没发生</div>
+  <div style="display:flex;align-items:center;margin:26px 0 20px">${stn}</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;padding-bottom:20px;
+              border-bottom:1px solid ${rule}">
+    ${[["5 日动能比", T.ratio_5d.toFixed(4), C.fails],
+       [">20 日线", T.pct_above_20sma.toFixed(1)+"%", C.fails],
+       ["已突破", "4 / 7", C.works]].map(([k,v,c])=>`
+      <div><div style="font-size:10px;color:${dim};letter-spacing:.08em">${k}</div>
+        <div class="n" style="font-size:21px;color:${c};margin-top:5px">${v}</div></div>`).join("")}
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px">
+    <div class="n" style="font-size:10px;letter-spacing:.1em;color:${dim}">${meta}</div>
+    <div style="font-size:11px;font-weight:600;letter-spacing:.3em;color:${ink}">FLUXUS</div>
+  </div>`;
+};
+document.getElementById("cards").innerHTML =
+  `<div class="card">${cardInner(false)}</div><div class="card dark">${cardInner(true)}</div>`;
+</script>
+</body>
+</html>
