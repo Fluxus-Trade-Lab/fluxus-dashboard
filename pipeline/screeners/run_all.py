@@ -336,6 +336,19 @@ def main():
             )
             market_health_payload = None
         else:
+            # The v2 state board is its own failure domain: it is a presentation
+            # block, so a crash here must never cost breadth.json its verdict.
+            # Worst case the v2 UI hides one section.
+            try:
+                from pipeline.screeners.state_board import build as build_state_board
+                breadth_result['state_board'] = build_state_board(
+                    breadth_frame, market_health_payload,
+                )
+            except Exception:  # noqa: BLE001 — isolate; breadth.json still ships
+                logger.exception(
+                    "State board failed — breadth.json ships without it"
+                )
+
             # Replay is its own failure domain: a build_replay crash must not
             # stale-mark market_health.json while breadth.json keeps a
             # health-derived verdict (the banner would show spy/qqq states

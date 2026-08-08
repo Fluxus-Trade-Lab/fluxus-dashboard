@@ -32,6 +32,26 @@
   --color-poster-blue: #3b82c4;
   --color-poster-text: #e7e5e4;
 
+  /* ── v2 encoding (Fluxus_Brand/visual/explorations/2026-08-08/palette.html) ──
+     Additive only; nothing above is redefined. Two fills, and every other
+     distinction is carried by a NON-colour channel:
+       area    — a half-filled cell means "partial"
+       texture — a 45° hatch on every failure
+       outline — not measured, drawn outside the scale
+     Rank is never carried by hue alone. Measured greyscale ΔE between the two
+     fills is 19.3 (the previous blue/orange pair collapsed to 3.3), which is
+     what matters here because this brand travels as screenshots and print. */
+  --color-took: #1a5488;
+  --color-refused: #d1600f;
+  --color-untested: #c2bdb4;
+  --color-v2-paper: #f4f3f0;
+  --color-v2-ink: #111110;
+  --color-v2-rule: #dedad3;
+  --color-v2-hair: #eae7e1;
+  /* unfilled level cell — MUST flip with the theme, or an empty
+     cell reads as a filled one on the dark ground */
+  --color-v2-off: #e6e2db;
+
   --color-active-tab-bg: #292524;
   --color-active-tab-text: #f5f5f4;
   --color-hover-bg: #f5f5f4;
@@ -67,6 +87,13 @@ html.dark {
   --color-signal-caution: #facc15;
   --color-signal-warning: #fb923c;
   --color-signal-riskoff: #f87171;
+
+  --color-v2-paper: #1c1917;
+  --color-v2-ink: #e7e5e4;
+  --color-v2-rule: #44403c;
+  --color-v2-hair: #3a3733;
+  --color-v2-off: #3a3733;
+  --color-untested: #57534e;
 }
 
 html {

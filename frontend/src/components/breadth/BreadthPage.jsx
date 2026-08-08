@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import VerdictBanner from './VerdictBanner'
+import StateBoard from './StateBoard'
 import MarketStateSummary from './MarketStateSummary'
 import HealthChart from './HealthChart'
 import RatioChart from './RatioChart'
@@ -48,6 +49,7 @@ export default function BreadthPage({ data }) {
     <div className="space-y-3">
       <TimeMachineBar tm={tm} />
       <VerdictBanner verdict={verdict} dataQuality={breadth.data_quality} />
+      <StateBoard board={breadth.state_board} />
       <MarketStateSummary mm={breadth.mm} breadth={breadth.breadth} verdict={verdict} />
       {mh && !mh.stale && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
