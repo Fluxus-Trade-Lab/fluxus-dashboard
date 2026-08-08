@@ -19,9 +19,9 @@ import glob
 import json
 import sys
 from datetime import datetime, timezone
+from pathlib import Path
 
 from pipeline.marketcal import market_today
-from pathlib import Path
 
 import yfinance as yf
 
@@ -128,7 +128,7 @@ def main(tickers: list[str], force: bool = False, fresh_within=None) -> None:
 
 
 if __name__ == "__main__":
-    from datetime import date, timedelta
+    from datetime import timedelta
     argv = [a for a in sys.argv[1:] if a != "--force"]
     force = "--force" in sys.argv
     tickers = argv or top_case_study_tickers()

@@ -35,6 +35,7 @@ from pipeline.screeners.stockbee_ratio import run as run_stockbee_ratio
 from pipeline.screeners.breadth_metrics import run as run_breadth_metrics
 from pipeline.screeners.vcp_detector import run_vcp_pipeline
 from pipeline.screeners.atr_enrichment import enrich_with_atr
+from pipeline.marketcal import market_today
 
 OUTPUT_DIR = Path('data/output')
 HISTORY_DIR = Path('data/history')
@@ -276,7 +277,11 @@ def main():
 
     # 3. Fetch MA signals
     logger.info("Fetching MA signals...")
-    signals = yf_adapter.fetch_ma_data(['SPY', 'QQQ', 'IWM', 'RSP', '^GSPC', 'BTC-USD', '^VIX'])
+    signals, ma_histories = yf_adapter.fetch_ma_data(
+        ['SPY', 'QQQ', 'IWM', 'RSP', '^GSPC', 'BTC-USD', '^VIX'],
+        return_history=True,
+        history_period='3y',
+    )
 
     # 4. Run screeners
     logger.info("Running screeners...")
@@ -297,12 +302,56 @@ def main():
     # 5b. Breadth metrics (Stockbee MM + classic breadth)
     logger.info("Running breadth metrics...")
     spx_close = signals.get('^GSPC', {}).get('close')
-    breadth_result = run_breadth_metrics(
-        universe,
-        str(HISTORY_DIR / 'breadth_metrics_history.json'),
-        str(HISTORY_DIR / 'breadth_archive.csv'),
-        spx_close=spx_close,
-    )
+    market_health_payload = None
+    replay_payload = None
+    try:
+        breadth_result = run_breadth_metrics(
+            universe,
+            str(HISTORY_DIR / 'breadth_archive.csv'),
+            spx_close=spx_close,
+        )
+    except Exception:  # noqa: BLE001 — isolate breadth; never abort the whole run
+        logger.exception(
+            "Breadth metrics failed — skipping breadth.json; "
+            "all other outputs still written"
+        )
+        breadth_result = None
+    else:
+        # Signal/health computation is a separate failure domain: a crash here
+        # (e.g. load_archive or run_signals) must not null out breadth_result,
+        # which would silently drop breadth.json even though the metrics run
+        # above succeeded (FINDING B).
+        try:
+            from pipeline.screeners.breadth_store import load_archive
+            from pipeline.screeners.breadth_signals import run_signals
+            breadth_frame = load_archive(str(HISTORY_DIR / 'breadth_archive.csv'))
+            market_health_payload = run_signals(
+                breadth_result, breadth_frame,
+                ma_histories.get('SPY'), ma_histories.get('QQQ'),
+            )
+        except Exception:  # noqa: BLE001 — isolate signals; breadth.json still ships
+            logger.exception(
+                "Breadth signals failed — breadth.json will ship without "
+                "verdict/health; market_health.json will be marked stale"
+            )
+            market_health_payload = None
+        else:
+            # Replay is its own failure domain: a build_replay crash must not
+            # stale-mark market_health.json while breadth.json keeps a
+            # health-derived verdict (the banner would show spy/qqq states
+            # while the health panels are hidden). Worst case: no Time Machine.
+            try:
+                from pipeline.screeners.breadth_signals import build_replay
+                replay_payload = build_replay(
+                    breadth_frame,
+                    ma_histories.get('SPY'), ma_histories.get('QQQ'),
+                )
+            except Exception:  # noqa: BLE001
+                logger.exception(
+                    "Replay build failed — breadth_replay.json not written; "
+                    "breadth.json and market_health.json are unaffected"
+                )
+                replay_payload = None
 
     # 6. VCP (two-layer — skip if universe too small)
     if len(universe) >= 50:
@@ -324,6 +373,78 @@ def main():
                 for bucket_name, ticker_list in data[bucket_key].items():
                     data[bucket_key][bucket_name] = enrich_with_atr(ticker_list, universe)
 
+    # 7b. Ticker event archive + heat (isolated: never breaks other outputs)
+    heating_up_payload = None
+    ticker_events_payload = None
+    try:
+        from pipeline.screeners.ticker_events import (
+            MOMENTUM_MEDIAN_WINDOW, SCREENER_FILES, extract_events,
+            is_plausible_day, is_session_date, load_events, load_sessions,
+            rolling_momentum_median, upsert_day, write_events,
+        )
+        from pipeline.screeners.ticker_heat import (
+            build_heating_up, build_ticker_events_index,
+        )
+        event_date = market_today().isoformat()
+        today_rows = []
+        for screener in SCREENER_FILES:
+            payload = results.get(screener)
+            if isinstance(payload, dict):
+                today_rows.extend(extract_events(screener, payload, event_date))
+
+        archive_path = str(HISTORY_DIR / 'ticker_events.csv')
+        existing = load_events(archive_path)
+        sessions = load_sessions(str(HISTORY_DIR / 'breadth_archive.csv'))
+
+        # Grade today's momentum_97 count against its own recent norm rather
+        # than a fixed ceiling — that is what catches partial degradation.
+        momentum_median = None
+        if len(existing):
+            archive_dates = sorted(set(existing['date'].astype(str)))
+            recent = archive_dates[-MOMENTUM_MEDIAN_WINDOW:]
+            counts = existing[existing['date'].astype(str).isin(recent)]
+            per_day = counts.groupby(counts['date'].astype(str))['screener'].apply(
+                lambda s: int((s == 'momentum_97').sum()))
+            momentum_median = rolling_momentum_median(
+                [int(per_day.get(d, 0)) for d in recent])
+
+        plausible, reason = is_plausible_day(
+            today_rows, momentum_median=momentum_median)
+        stale_reason = None
+        if not is_session_date(event_date, sessions):
+            stale_reason = 'not a trading session'
+            logger.error(
+                "Ticker events: %s is not a trading session — skipping append",
+                event_date)
+            events_frame = existing
+        elif not plausible:
+            stale_reason = reason
+            logger.error(
+                "Ticker events: %s looks implausible (%s) — skipping append "
+                "(pipeline-failure signature, not a quiet tape)", event_date, reason)
+            events_frame = existing
+        else:
+            events_frame = upsert_day(existing, today_rows)
+            write_events(events_frame, archive_path)
+            logger.info("Ticker events: appended %d rows for %s",
+                        len(today_rows), event_date)
+
+        # Never stamp outputs with a date the archive has no data for: on a
+        # rejected day the header would otherwise claim today and show
+        # yesterday's tape.
+        as_of = event_date
+        if stale_reason and len(events_frame):
+            as_of = str(events_frame['date'].astype(str).max())
+        heating_up_payload = build_heating_up(events_frame, as_of)
+        if stale_reason:
+            heating_up_payload['stale'] = True
+            heating_up_payload['stale_reason'] = stale_reason
+        ticker_events_payload = build_ticker_events_index(events_frame, as_of)
+    except Exception:  # noqa: BLE001 — isolate; every other output still ships
+        logger.exception("Ticker event archive failed — its outputs will be skipped")
+        heating_up_payload = None
+        ticker_events_payload = None
+
     # 8. Save outputs
     for name, data in results.items():
         output = {'timestamp': timestamp, **data}
@@ -338,11 +459,59 @@ def main():
     ))
     logger.info("Saved signals.json")
 
-    # Save breadth metrics
-    (OUTPUT_DIR / 'breadth.json').write_text(json.dumps(
-        {'timestamp': timestamp, **breadth_result}, indent=2, default=_json_serializer
-    ))
-    logger.info("Saved breadth.json")
+    # Save breadth metrics (skipped when the breadth step failed — the previous
+    # breadth.json stays in place rather than being replaced by a partial one)
+    if breadth_result is not None:
+        (OUTPUT_DIR / 'breadth.json').write_text(json.dumps(
+            {'timestamp': timestamp, **breadth_result}, indent=2, default=_json_serializer
+        ))
+        logger.info("Saved breadth.json")
+    else:
+        logger.warning("Skipped breadth.json (breadth step failed)")
+
+    # Save market health (stale-mark the previous file when unavailable)
+    mh_path = OUTPUT_DIR / 'market_health.json'
+    if market_health_payload is not None:
+        mh_path.write_text(json.dumps(
+            {'timestamp': timestamp, 'stale': False, **market_health_payload},
+            indent=2, default=_json_serializer
+        ), encoding='utf-8')
+        logger.info("Saved market_health.json")
+    elif mh_path.exists():
+        try:
+            prev = json.loads(mh_path.read_text(encoding='utf-8'))
+            prev['stale'] = True
+            mh_path.write_text(json.dumps(
+                prev, indent=2, default=_json_serializer
+            ), encoding='utf-8')
+            logger.warning("market_health unavailable — marked previous file stale")
+        except (json.JSONDecodeError, OSError) as exc:
+            logger.error("Could not stale-mark market_health.json: %s", exc)
+
+    # Save breadth replay (skipped when signals/replay step failed)
+    if replay_payload is not None:
+        # Compact separators (no indent) for this file only: it is a ~1MB
+        # machine-read book fetched by the browser, and indent=2 inflates it
+        # by ~60% for no human benefit. Every other output keeps indent=2.
+        (OUTPUT_DIR / 'breadth_replay.json').write_text(
+            json.dumps({'timestamp': timestamp, **replay_payload},
+                       separators=(',', ':'), default=_json_serializer),
+            encoding='utf-8')
+        logger.info("Saved breadth_replay.json")
+
+    if heating_up_payload is not None:
+        (OUTPUT_DIR / 'heating_up.json').write_text(
+            json.dumps({'timestamp': timestamp, **heating_up_payload},
+                       indent=2, default=_json_serializer),
+            encoding='utf-8')
+        logger.info("Saved heating_up.json")
+
+    if ticker_events_payload is not None:
+        (OUTPUT_DIR / 'ticker_events.json').write_text(
+            json.dumps({'timestamp': timestamp, **ticker_events_payload},
+                       separators=(',', ':'), default=_json_serializer),
+            encoding='utf-8')
+        logger.info("Saved ticker_events.json")
 
     # Save ETF data
     (OUTPUT_DIR / 'etf_data.json').write_text(
@@ -352,7 +521,7 @@ def main():
 
     # Save full universe for screener page
     universe_cols = [
-        'ticker', 'close', 'change_pct', 'perf_1w', 'perf_1m', 'perf_3m',
+        'ticker', 'close', 'change_pct', 'perf_1w', 'perf_1m', 'perf_34d', 'perf_3m',
         'perf_6m', 'perf_1y', 'perf_ytd',
         'sma20_dist', 'sma50_dist', 'sma40_dist', 'sma200_dist',
         'atr', 'rel_volume', 'avg_volume', 'volume',

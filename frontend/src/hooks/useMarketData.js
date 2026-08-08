@@ -33,6 +33,14 @@ export function useMarketData() {
       )
       const obj = Object.fromEntries(results)
 
+      // market_health is optional — tolerate absence (pipeline may not have shipped it yet)
+      try {
+        const mh = await fetch(`${BASE}/market_health.json`)
+        obj.market_health = mh.ok ? await mh.json() : null
+      } catch {
+        obj.market_health = null
+      }
+
       // etf_data is an array, rest have timestamp
       const timestamp = obj.signals?.timestamp || null
       setData(obj)

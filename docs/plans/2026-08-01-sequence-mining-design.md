@@ -46,8 +46,11 @@ New `pipeline/tools/build_price_panel.py` (one-time, re-runnable):
 - Download daily OHLC covering the archive range with **60 sessions of lead-in**
   (ATR(14) warm-up plus slack) and **25 sessions of tail** beyond the last
   archive date (the 21-session horizon needs forward bars).
-- Cache to `data/history/price_panel.pkl` (pickle, not parquet — no parquet
-  engine on this host); `--refresh` forces re-download. Add to `.gitignore`.
+- Cache to `.cache/price_panel.pkl` (pickle, not parquet — no parquet engine
+  on this host); `--refresh` forces re-download. Already gitignored.
+  (Amended 2026-07-31: this spec originally said `data/history/`, which is the
+  committed-data directory; the panel is a rebuildable local artifact, so the
+  implementation put it under `.cache/`. The code is correct.)
 - Emits a coverage summary: tickers requested / returned / missing, and the
   missing list written to `data/research/price_coverage.json`.
 
