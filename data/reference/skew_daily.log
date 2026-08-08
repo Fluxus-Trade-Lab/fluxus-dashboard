@@ -1,1 +1,32 @@
 [2026-08-06 14:37:24 JST] ET 01:37 outside the 15:00-15:59 RTH window — skip
+[2026-08-07 04:00:05 JST] already logged for 2026-08-06 — skip
+[2026-08-07 05:00:02 JST] ET 16:00 outside the 15:00-15:59 RTH window — skip
+[2026-08-08 04:00:04 JST] measuring skew for 2026-08-07 (ET 15:00)
+Error 200, reqId 80: No security definition has been found for the request, contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260904', strike=717.5, right='C', exchange='SMART', tradingClass='QQQ')
+Error 200, reqId 81: No security definition has been found for the request, contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260904', strike=717.5, right='P', exchange='SMART', tradingClass='QQQ')
+Error 200, reqId 92: No security definition has been found for the request, contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260904', strike=722.5, right='C', exchange='SMART', tradingClass='QQQ')
+Error 200, reqId 93: No security definition has been found for the request, contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260904', strike=722.5, right='P', exchange='SMART', tradingClass='QQQ')
+Unknown contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260904', strike=717.5, right='C', exchange='SMART', tradingClass='QQQ')
+Unknown contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260904', strike=717.5, right='P', exchange='SMART', tradingClass='QQQ')
+Unknown contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260904', strike=722.5, right='C', exchange='SMART', tradingClass='QQQ')
+Unknown contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260904', strike=722.5, right='P', exchange='SMART', tradingClass='QQQ')
+Error 200, reqId 151: No security definition has been found for the request, contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260904', strike=537.5, right='C', exchange='SMART', tradingClass='DIA')
+Error 200, reqId 152: No security definition has been found for the request, contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260904', strike=537.5, right='P', exchange='SMART', tradingClass='DIA')
+Error 200, reqId 163: No security definition has been found for the request, contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260904', strike=542.5, right='C', exchange='SMART', tradingClass='DIA')
+Error 200, reqId 164: No security definition has been found for the request, contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260904', strike=542.5, right='P', exchange='SMART', tradingClass='DIA')
+Unknown contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260904', strike=537.5, right='C', exchange='SMART', tradingClass='DIA')
+Unknown contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260904', strike=537.5, right='P', exchange='SMART', tradingClass='DIA')
+Unknown contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260904', strike=542.5, right='C', exchange='SMART', tradingClass='DIA')
+Unknown contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260904', strike=542.5, right='P', exchange='SMART', tradingClass='DIA')
+Error 200, reqId 190: No security definition has been found for the request, contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260904', strike=552.5, right='P', exchange='SMART', tradingClass='DIA')
+Error 200, reqId 189: No security definition has been found for the request, contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260904', strike=552.5, right='C', exchange='SMART', tradingClass='DIA')
+Unknown contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260904', strike=552.5, right='C', exchange='SMART', tradingClass='DIA')
+Unknown contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260904', strike=552.5, right='P', exchange='SMART', tradingClass='DIA')
+skew log @ 2026-08-07 15:00 ET  target 30 DTE
+  SPY  20260904 (28d)  spot 771.76  ATM 12.48%  callskew -1.10  RR -2.62   -> 75th pct of n=2  [THIN]
+  QQQ  20260904 (28d)  spot 720.69  ATM 20.24%  callskew -1.33  RR -3.48   -> 75th pct of n=2  [THIN]
+  DIA  20260904 (28d)  spot 538.98  ATM 12.19%  callskew -0.34  RR -1.15   -> 75th pct of n=2  [THIN]
+
+3 new row(s) -> data/reference/skew_log.jsonl
+[2026-08-08 04:01:54 JST] exit 0
+[2026-08-08 05:00:05 JST] ET 16:00 outside the 15:00-15:59 RTH window — skip
