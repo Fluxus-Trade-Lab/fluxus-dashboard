@@ -3,6 +3,8 @@ import { usePortfolio, PortfolioProvider } from '../portfolio/context/PortfolioC
 import { enrichTrades, lookupPrice } from '../portfolio/lib/calculations'
 import { todayStr } from '../portfolio/lib/portfolioFormat'
 import TharpLessons from './sizing/TharpLessons'
+import SqnReadout from './sizing/SqnReadout'
+import { closedR } from './lib/sizingStats'
 
 /* ── Educational Content ─────────────────────────────────── */
 
@@ -291,6 +293,8 @@ function SizingTabInner() {
     return enrichTrades(state.trades, state.startingCapital || 1000000, state.dailyPrices)
   }, [state.trades, state.startingCapital, state.dailyPrices])
 
+  const rs = useMemo(() => closedR(enriched), [enriched])
+
   return (
     <div className="space-y-6">
       {/* Section 1: Framework Education */}
@@ -376,6 +380,9 @@ function SizingTabInner() {
 
       {/* Van Tharp curriculum */}
       <TharpLessons />
+
+      {/* Live system quality — SQN + expectancy from the real trade book */}
+      <SqnReadout rs={rs} />
 
       {/* Section 2: Calculator */}
       <SizingCalculator startingCapital={state.startingCapital || 1000000} />
