@@ -259,3 +259,68 @@ def todays_business(profile: dict, gex: dict, spot: float | None = None) -> dict
             lvl(flip, "below, gamma flips at")) if x),
         "frame": "inside_value",
     }
+
+
+# Which framework wins when the two disagree. From @TailThatWagsDog, 2026-04-07:
+# "What's driving the price auction is NOT the options Greeks. Think root cause.
+# Think auction market process development." And in his own report: "under
+# framework-over-opinion the auction structure is primary."
+PRIMARY = AUCTION
+
+
+def resolve(profile: dict, gex: dict, spot: float | None = None) -> dict | None:
+    """Apply the precedence rule instead of leaving a conflict unresolved.
+
+    Reporting that two frameworks disagree and stopping there is not analysis,
+    it is a shrug. The rule is not "ignore the options" — it is that the two
+    answer different questions:
+
+        the auction says WHAT the market is doing
+        the dealer book says WHERE and HOW that would break
+
+    So a conflict resolves to the auction's reading, with the options reading
+    retained as the mechanism. His own example: the auction had accepted higher,
+    the chain showed call overwriting into the move — and the call supply was
+    not a counter-argument, it was *how* a failure would happen if one did.
+
+    Returns None when there is nothing to resolve, so an absent conflict never
+    reads as a resolved one.
+    """
+    cons = conflicts(profile, gex, spot)
+    if not cons:
+        return None
+    t = profile.get("tpo") or {}
+    va = t.get("value_area") or {}
+    s = spot if isinstance(spot, (int, float)) else gex.get("spot")
+
+    if va.get("low") is None or not isinstance(s, (int, float)):
+        return {"primary": PRIMARY, "reading": None, "mechanism": None,
+                "conflicts": cons,
+                "note": "conflicts exist but the auction has no value area to be "
+                        "primary about — reported unresolved rather than guessed"}
+
+    if s > va["high"]:
+        reading = (f"the auction has accepted above value ({va['high']:,.0f}); "
+                   f"that is the operative signal")
+        mech = gex.get("call_wall")
+        mech_txt = (f"the call wall at {mech:,.0f} is not a counter-argument — it is "
+                    f"the supply through which a failure would have to happen"
+                    if isinstance(mech, (int, float)) else None)
+    elif s < va["low"]:
+        reading = (f"the auction has left value to the downside ({va['low']:,.0f}); "
+                   f"that is the operative signal")
+        mech = gex.get("zero_gamma_flip")
+        mech_txt = (f"below the flip at {mech:,.0f} dealer hedging amplifies rather "
+                    f"than damps — that is the mechanism, not a second opinion"
+                    if isinstance(mech, (int, float)) else None)
+    else:
+        reading = (f"the auction is in balance inside {va['low']:,.0f}-{va['high']:,.0f}; "
+                   f"that is the operative signal")
+        mech = gex.get("put_wall")
+        mech_txt = (f"the dealer rails mark where the balance would be tested, not "
+                    f"whether it holds")
+
+    return {"primary": PRIMARY, "reading": reading, "mechanism": mech_txt,
+            "conflicts": cons,
+            "note": "auction is root cause; the dealer book is the mechanism. "
+                    "Stated as a rule so it cannot be applied selectively."}

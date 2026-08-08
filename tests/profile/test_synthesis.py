@@ -139,3 +139,34 @@ def test_no_value_area_means_no_question_rather_than_a_generic_one():
 
 def test_no_spot_anywhere_means_no_question():
     assert SY.todays_business(PROFILE, {"call_wall": 7800.0}) is None
+
+
+# -------------------------------------------------- precedence on conflicts
+
+def test_a_conflict_resolves_to_the_auction_not_to_a_shrug():
+    r = SY.resolve(PROFILE, GEX, spot=7790.0)
+    assert r["primary"] == "auction"
+    assert "accepted above value" in r["reading"]
+    # the options reading survives as the MECHANISM, not as a counter-argument
+    assert "not a counter-argument" in r["mechanism"]
+
+
+def test_below_value_the_mechanism_is_the_flip_not_the_wall():
+    r = SY.resolve(PROFILE, GEX, spot=7700.0)
+    assert "left value to the downside" in r["reading"]
+    assert "amplifies rather than damps" in r["mechanism"]
+
+
+def test_no_conflict_means_no_resolution_rather_than_a_fabricated_one():
+    clean = {"tpo": {"tpoc": 7745.0, "value_area": {"low": 7500.0, "high": 7800.0,
+                                                    "covered": 0.7, "method": "pair"},
+                     "initial_balance": {"low": 7600.0, "high": 7700.0},
+                     "poor_extremes": {}, "tails": {}}}
+    g = {**GEX, "zero_gamma_flip": 7600.0,
+         "per_strike_gex": {"7800": 5.0e9, "7400": -4.0e9}}
+    assert SY.resolve(clean, g, spot=7700.0) is None
+
+
+def test_conflicts_without_a_value_area_are_reported_unresolved():
+    r = SY.resolve({"tpo": {"value_area": {}}}, GEX, spot=7700.0)
+    assert r is None or r["reading"] is None

@@ -57,6 +57,25 @@ def _auction_join(g: dict) -> dict:
             "profile_source": str(latest)}
 
 
+def _flow_ratio(g: dict) -> dict | None:
+    """Today's flow against standing positioning, per strike.
+
+    Only present when the volume-weighted series is — outside RTH the option
+    volume fields are empty, and a ratio against nothing is not a zero reading.
+    """
+    from pipeline.gex import flow_ratio as FR
+    vol = g.get("per_strike_gex_volume")
+    if not vol:
+        return None
+    oi = {float(k): v for k, v in (g.get("per_strike_gex") or {}).items()}
+    rows = FR.flow_ratio(oi, {float(k): v for k, v in vol.items()})
+    if not rows:
+        return None
+    out = FR.summary(rows)
+    out["rows"] = FR.hot_strikes(rows)[:8]
+    return out
+
+
 def _consistency(g: dict) -> dict | None:
     """Replicate every published number by a second route and report drift.
 
@@ -243,6 +262,7 @@ def main():
         "intraday_sequence": seq,
         "scorecard": _scorecard(args.symbol),
         "consistency": _consistency(g),
+        "flow_ratio": _flow_ratio(g),
         **_auction_join(g),
     }
     jp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.json"
