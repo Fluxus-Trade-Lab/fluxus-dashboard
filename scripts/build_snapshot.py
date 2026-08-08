@@ -57,6 +57,25 @@ def _auction_join(g: dict) -> dict:
             "profile_source": str(latest)}
 
 
+def _consistency(g: dict) -> dict | None:
+    """Replicate every published number by a second route and report drift.
+
+    Runs on every brief, not on demand: a check that has to be remembered is a
+    check that fires the day nobody ran it.
+    """
+    from pipeline.reference import consistency as C
+    checks = C.gex_checks(g)
+    files = sorted(Path("data/profile").glob("profile_*.json"))
+    if files:
+        try:
+            checks += C.profile_checks(json.loads(files[-1].read_text()))
+        except (json.JSONDecodeError, OSError):
+            pass
+    run = C.run(checks)
+    run["checks"] = checks
+    return run
+
+
 def _scorecard(symbol: str) -> dict | None:
     """Our published levels, graded. Missing file is not an error — the brief
     simply omits the block rather than implying a record we have not earned."""
@@ -223,6 +242,7 @@ def main():
         "confluence": sorted(confluence),
         "intraday_sequence": seq,
         "scorecard": _scorecard(args.symbol),
+        "consistency": _consistency(g),
         **_auction_join(g),
     }
     jp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.json"
