@@ -13,6 +13,7 @@ CSV = ROOT / 'data' / 'content' / 'posts.csv'
 BUCKETS = {
     'DATA': '晒数', 'REPLY': '蹭号', 'JAB': '冷嘲', 'LINE': '金句',
     'CALLBACK': '翻帖', 'SPICE': '撒料', 'TEACH': '教学长文', 'ARC': '剧情',
+    'BUILD': '建造',
 }
 
 def num(v):

@@ -58,3 +58,12 @@ credentials.json
 
 # Backtest OHLC cache (regenerated on demand)
 .cache/
+
+# 视觉库候选图（网络抓取，版权未核实，不入库）
+visuals/candidates/
+visuals/selected/*.jpg
+visuals/selected/*.jpeg
+visuals/selected/*.png
+visuals/selected/*.webp
+visuals/gallery.html
+visuals/out/
