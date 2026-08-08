@@ -1,8 +1,25 @@
 @import "tailwindcss";
 
+/* ── IBM Plex — chosen 2026-08-09 ───────────────────────────────────────
+   Everything from b2.html onward was already rendering in Plex; the first
+   three explorations were Inter. Self-hosted (OFL) so there is no CDN
+   dependency and no licence cost. Plex Mono also replaces JetBrains Mono,
+   which was never installed here and had been silently falling back to
+   Menlo. `block` display so the condensed display type never flashes in a
+   substitute face — the masthead is the identity. */
+@font-face{font-family:Plex;src:url(/fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Plex;src:url(/fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:Plex;src:url(/fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:PlexCond;src:url(/fonts/IBMPlexSansCondensed-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:PlexCond;src:url(/fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(/fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:PlexMono;src:url(/fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:PlexMono;src:url(/fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+
 @theme {
-  --font-sans: 'Inter', -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans: Plex, 'Inter', -apple-system, sans-serif;
+  --font-cond: PlexCond, Plex, sans-serif;
+  --font-mono: PlexMono, 'JetBrains Mono', ui-monospace, monospace;
 
   --color-bg: #fafaf9;
   --color-surface: #ffffff;

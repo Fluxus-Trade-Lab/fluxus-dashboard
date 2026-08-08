@@ -44,6 +44,17 @@ function Level({ level, count }) {
   )
 }
 
+/* The four registers must be distinguishable without colour, so each gets a
+   structural mark: measurement is plain, a read carries a solid left rule, an
+   expectation a dashed one. The tag is suppressed when a row is unmeasured —
+   printing "measured" beside "not measured" contradicts itself. */
+const REG = { fact: 'measured', interpretation: 'read', anticipation: 'expected' }
+const RULE = {
+  fact: 'none',
+  interpretation: '2px solid var(--color-border)',
+  anticipation: '2px dashed var(--color-text-muted)',
+}
+
 function Row({ row, levels }) {
   const { key, level, level_label: label, evidence, layer } = row
   const colour = level == null ? 'var(--color-text-muted)'
@@ -52,18 +63,21 @@ function Row({ row, levels }) {
   return (
     <div className="grid grid-cols-[132px_92px_1fr] gap-3 items-center py-2
                     border-b border-[var(--color-border-light)] min-h-[48px]">
-      <div className="text-[13px] font-semibold capitalize">{key}</div>
+      <div className="text-[15px] font-semibold capitalize"
+             style={{ fontFamily: 'var(--font-cond)' }}>{key}</div>
       <Level level={level} count={levels.length} />
       <div>
         <div className="text-[10px] font-semibold uppercase tracking-wider mb-[3px]"
              style={{ color: colour }}>
           {label ?? 'not wired'}
-          {layer !== 'fact' && (
-            <span className="ml-2 font-normal tracking-normal normal-case
-                             text-[var(--color-text-muted)]">{layer}</span>
+          {level != null && (
+            <span className="ml-2 font-normal tracking-[.16em] normal-case text-[9px]
+                             text-[var(--color-text-muted)]">{REG[layer] ?? layer}</span>
           )}
         </div>
-        <div className="text-[11px] leading-snug text-[var(--color-text-secondary)]">
+        <div className="text-[11px] leading-snug text-[var(--color-text-secondary)]"
+             style={RULE[layer] === 'none' ? undefined
+               : { borderLeft: RULE[layer], paddingLeft: '9px', marginLeft: '-11px' }}>
           {evidence}
         </div>
       </div>
