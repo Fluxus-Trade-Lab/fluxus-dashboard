@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — Screener</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+:root{
+  --paper:#f2f1ed;--ink:#12110f;--ink2:#57534e;--ink3:#948f86;--ink4:#b9b3a9;
+  --rule:#d9d5cd;--hair:#e6e3db;
+  --took:#1a5488;--refused:#d1600f;--idle:#c2bdb4;--off:#e2ded6;
+  --sans:Plex,-apple-system,sans-serif;--cond:PlexCond,Plex,sans-serif;--mono:PlexMono,Menlo,monospace;
+  --u:8px;
+}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+     -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.app{max-width:1360px;margin:0 auto;padding:0 calc(var(--u)*4) calc(var(--u)*12)}
+.mast{display:flex;align-items:baseline;gap:calc(var(--u)*3);
+      padding:calc(var(--u)*2) 0 calc(var(--u)*1.5);border-bottom:2px solid var(--ink)}
+.mast .wm{font-family:var(--cond);font-weight:700;font-size:20px;letter-spacing:.3em}
+.mast nav{display:flex;gap:calc(var(--u)*2.5);font-size:12px;color:var(--ink3)}
+.mast nav b{color:var(--ink);font-weight:600;border-bottom:2px solid var(--ink);padding-bottom:3px}
+.mast .file{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink3)}
+.stampx{border:1.6px solid var(--refused);color:var(--refused);padding:3px 7px;
+        font-family:var(--cond);font-weight:700;font-size:10px;letter-spacing:.14em;
+        transform:rotate(-3deg);white-space:nowrap}
+
+.hero{display:grid;grid-template-columns:1fr 396px;gap:calc(var(--u)*6);
+      padding:calc(var(--u)*5) 0 calc(var(--u)*4);border-bottom:1px solid var(--ink)}
+.kick{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;color:var(--ink3);
+      margin-bottom:calc(var(--u)*2)}
+.verdict{font-family:var(--cond);font-weight:700;font-size:90px;line-height:.88;
+         letter-spacing:-.018em;text-transform:uppercase}
+.read{font-size:19px;line-height:1.42;margin-top:calc(var(--u)*3);max-width:30ch;
+       border-left:2px solid var(--rule);padding-left:calc(var(--u)*1.75)}
+.read .tag{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.18em;
+           color:var(--ink3);text-transform:uppercase;margin-bottom:6px;font-weight:400}
+.note.method{border-left:2px dashed var(--ink4);padding-left:calc(var(--u)*1.75)}
+.note .tag{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.18em;
+           color:var(--ink3);text-transform:uppercase;margin-bottom:6px}
+.read .b{color:var(--refused);font-weight:500}
+.lagbox{margin-top:calc(var(--u)*3.5);border:1.4px dashed var(--ink4);padding:calc(var(--u)*1.5) calc(var(--u)*2);
+        max-width:520px}
+.lagbox .h{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--ink3);
+           text-transform:uppercase;margin-bottom:6px}
+.lagbox p{margin:0;font-size:12px;line-height:1.6;color:var(--ink2)}
+.spec{border-top:2px solid var(--ink);align-self:start}
+.spec div{display:flex;justify-content:space-between;align-items:baseline;
+          padding:calc(var(--u)*0.9) 0;border-bottom:1px solid var(--hair)}
+.spec .k{font-size:10.5px;letter-spacing:.09em;color:var(--ink2);text-transform:uppercase}
+.spec .v{font-family:var(--mono);font-size:14px;font-weight:500}
+
+h3{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+   color:var(--ink3);margin:calc(var(--u)*7) 0 0;padding-bottom:calc(var(--u)*1.2);
+   border-bottom:1px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline}
+h3 em{font-style:normal;text-transform:none;letter-spacing:.01em;font-family:var(--sans);
+      font-size:11.5px;color:var(--ink2);font-weight:400}
+.note{font-size:12px;line-height:1.65;color:var(--ink2);max-width:84ch;margin:calc(var(--u)*2) 0 0}
+.note b{color:var(--ink);font-weight:600}
+
+/* ── the list is a ledger, not a card grid ── */
+.hd,.row{display:grid;grid-template-columns:62px 54px 1fr 108px 116px;
+         gap:calc(var(--u)*2);align-items:center}
+.hd{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink3);padding:calc(var(--u)*1.5) 0 calc(var(--u)*1);border-bottom:1px solid var(--ink)}
+.row{padding:calc(var(--u)*1.4) 0;border-bottom:1px solid var(--hair)}
+.row .tk{font-family:var(--mono);font-size:15px;font-weight:500}
+.row .sc{font-family:var(--cond);font-weight:700;font-size:20px;letter-spacing:-.01em}
+.marks{display:flex;flex-wrap:wrap;gap:3px;align-items:center}
+.marks .g{display:flex;gap:2px;align-items:center;margin-right:calc(var(--u)*1.5)}
+.marks i{display:block;width:11px;height:11px}
+.marks .nm{font-size:9px;color:var(--ink3);letter-spacing:.04em;margin-right:4px}
+.row .sp{font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.row .sec{font-size:11px;color:var(--ink2)}
+.legend{display:flex;flex-wrap:wrap;gap:calc(var(--u)*3) calc(var(--u)*4);
+        margin-top:calc(var(--u)*2.5);font-size:11px;color:var(--ink2);align-items:center}
+.legend i{display:inline-block;width:11px;height:11px;vertical-align:-1px;margin-right:6px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <pattern id="hx" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="5" stroke="#7d3908" stroke-width="1.7"/></pattern>
+</defs></svg>
+
+<div class="app">
+  <div class="mast">
+    <span class="wm">FLUXUS</span>
+    <nav><span>Market state</span><b>Screener</b><span>Positions</span><span>Ticker</span><span>Letters</span></nav>
+    <span class="file" id="file">—</span>
+    <span class="stampx">NOT A CALL</span>
+  </div>
+
+  <div class="hero">
+    <div>
+      <div class="kick">WHAT IS STACKING</div>
+      <div class="verdict" id="verdict">—</div>
+      <div class="read" id="read">—</div>
+      <div class="lagbox" id="lag"></div>
+    </div>
+    <div class="spec" id="spec"></div>
+  </div>
+
+  <h3>Confluence ledger <em>One mark is one appearance — quality screeners are solid, participation is outlined</em></h3>
+  <div class="hd"><span>Ticker</span><span>Score</span><span>Where it appeared</span>
+    <span>Span</span><span>Sector</span></div>
+  <div id="rows"></div>
+  <div class="legend" id="legend"></div>
+  <p class="note method" id="foot"></p>
+</div>
+
+<script>
+const D = /*__DATA__*/ null;
+const W = D.weights, ROWS = D.rows;
+const C={took:"#1a5488",refused:"#d1600f",idle:"#c2bdb4",off:"#e2ded6",
+         ink:"#12110f",ink2:"#57534e",ink3:"#948f86"};
+const el=id=>document.getElementById(id);
+const NAME={episodic_pivot:"EP",vcp:"VCP",momentum_97:"MOM",gainers_4pct:"4%",
+            vol_up_gainers:"VOL",ema21_watch:"21D",healthy_charts:"CHART"};
+const QUALITY = Object.keys(W).filter(k=>W[k]===3);
+
+el("file").textContent = `FILE FX-SCR · HEAT ${D.as_of} · SCREENERS ${D.screener_as_of}`;
+
+/* the headline is a count, and the count is the claim */
+const qualNames = ROWS.filter(r=>r.screeners.some(s=>QUALITY.includes(s.name)));
+el("verdict").innerHTML = `${qualNames.length}<br>names<br>stacking`;
+el("read").innerHTML =
+  `<span class="tag">Read</span>Every one of them hit at least one <b>quality</b> screener inside a ${D.window}-session window. `+
+  `<span class="b">Confluence is the claim — a single 4% day is not.</span>`;
+
+/* the lag is drawn, not hidden */
+const lagDays = Math.round((new Date(D.screener_as_of) - new Date(D.as_of)) / 864e5);
+el("lag").innerHTML =
+  `<div class="h">One session out of step</div>
+   <p>The heat index is built through <b>${D.as_of}</b>; the raw screeners are through
+   <b>${D.screener_as_of}</b>. Anything that first appeared on the newer session is
+   <b>not in this ledger yet</b>. Drawn rather than smoothed over — ${lagDays} session.</p>`;
+
+const totalHits = ROWS.reduce((a,r)=>a+r.screeners.reduce((b,s)=>b+s.hits,0),0);
+const sectors = [...new Set(ROWS.map(r=>r.sector))];
+const topSector = sectors
+  .map(s=>[s, ROWS.filter(r=>r.sector===s).length])
+  .sort((a,b)=>b[1]-a[1])[0];
+el("spec").innerHTML = [
+  ["Names shown", ROWS.length],
+  ["Window", `${D.window} sessions`],
+  ["Total appearances", totalHits],
+  ["Quality weight", `×${W.episodic_pivot}`],
+  ["Participation weight", `×${W.gainers_4pct}`],
+  ["Heaviest sector", `${topSector[0]} · ${topSector[1]}`],
+].map(([k,v])=>`<div><span class="k">${k}</span><span class="v">${v}</span></div>`).join("");
+
+/* ── the ledger. Isotype: each appearance is one countable mark, and the
+      quality tier is solid while participation is outlined — so the eye
+      counts confluence without reading a single number. ── */
+el("rows").innerHTML = ROWS.map(r=>{
+  const groups = r.screeners
+    .slice().sort((a,b)=>(W[b.name]||0)-(W[a.name]||0) || a.name.localeCompare(b.name))
+    .map(s=>{
+      const q = QUALITY.includes(s.name);
+      const marks = Array.from({length:Math.min(s.hits,8)},()=>
+        q ? `<i style="background:${C.took}"></i>`
+          : `<i style="background:transparent;box-shadow:inset 0 0 0 1.2px ${C.idle}"></i>`).join("");
+      const more = s.hits>8 ? `<span class="nm" style="margin-left:2px">+${s.hits-8}</span>` : "";
+      return `<span class="g"><span class="nm">${NAME[s.name]||s.name}</span>${marks}${more}</span>`;
+    }).join("");
+  return `<div class="row">
+    <span class="tk">${r.ticker}</span>
+    <span class="sc">${r.score.toFixed(1)}</span>
+    <span class="marks">${groups}</span>
+    <span class="sp">${r.days_span} sessions</span>
+    <span class="sec">${r.sector}</span></div>`;
+}).join("");
+
+el("legend").innerHTML =
+  `<span><i style="background:${C.took}"></i>quality screener — ${QUALITY.map(k=>NAME[k]).join(" · ")} · weight ×3</span>`+
+  `<span><i style="background:transparent;box-shadow:inset 0 0 0 1.2px ${C.idle}"></i>participation — weight ×1</span>`+
+  `<span style="color:${C.ink3}">one mark is one appearance · counts above eight are printed, not drawn</span>`;
+
+el("foot").innerHTML =
+  `<span class="tag">Method</span><b>Why marks and not chips.</b> A chip says "this fired"; a row of marks says how often, and lets you
+   compare two names without reading. The score is still printed because the weighting
+   (×${W.episodic_pivot} quality against ×${W.gainers_4pct} participation, repeats capped) cannot be
+   drawn honestly — and anything that cannot be drawn honestly gets written as a number.`;
+</script>
+</body></html>
