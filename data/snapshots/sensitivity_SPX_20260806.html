@@ -1,0 +1,62 @@
+<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Parameter sensitivity — SPX 2026-08-06</title><style>
+:root{--bg:#0A0D13;--panel:#111621;--line:#1E2633;--txt:#C7CDD8;--mut:#79828F;
+--dim:#525b69;--accent:#5AA9FF;--good:#42B96A;--bad:#EF5E6B;--warn:#D6A34C;
+--mono:ui-monospace,Menlo,Consolas,monospace;
+--sans:-apple-system,"Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);margin:0;padding:38px 20px 60px}
+.doc{max-width:820px;margin:0 auto}
+h1{font-size:26px;font-weight:600;margin:2px 0 6px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+.meta{font-family:var(--mono);font-size:12px;color:var(--dim);border-top:1px solid var(--line);
+border-bottom:1px solid var(--line);padding:10px 0;margin-top:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+section{margin-top:28px}
+.lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);
+margin:0 0 12px;display:flex;align-items:center;gap:10px}
+.lbl::after{content:"";flex:1;height:1px;background:var(--line)}
+table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
+text-align:right;padding:9px 12px;background:#0E131C;border-bottom:1px solid var(--line)}
+th:first-child{text-align:left}
+td{padding:9px 12px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;text-align:right}
+td:first-child{text-align:left}
+tr:last-child td{border-bottom:none}
+tr.focus td{background:rgba(90,169,255,.09)}
+.mono{font-family:var(--mono)}
+.pos{color:var(--good)}.neg{color:#F4838C}.warn{color:#E0B463}.mut{color:var(--mut)}
+.bar{display:inline-block;height:9px;border-radius:2px;vertical-align:middle}
+.foot{margin-top:32px;padding-top:12px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--dim)}
+</style></head><body><div class='doc'><p class='eyebrow'>Fluxus Capital · Parameter sensitivity</p>
+<h1>Which conclusions are the market's, and which are mine</h1>
+<div class='meta'><span>SPX 2026-08-06 post-close</span>
+<span class='mut'>13 free parameters, never before swept</span></div>
+
+<section><p class='lbl'>The finding</p>
+<div style='font-size:15px;line-height:1.7'>
+<b class='neg'>The headline conclusion is not stable.</b> At the tolerance we publish
+(<span class='mono'>5.0pt</span>) there is <b>no cross-framework confluence at all</b> on this
+session. One appears only at <span class='mono'>7.5pt</span> and wider — a 7.1-point cluster of
+initial-balance high + selling tail (auction) with call wall + charm peak (options).
+<br><br>
+So "two independent frameworks agree at 7,747" is true at one tolerance and false at another,
+and nothing in the brief said so. That is a statement about a constant I chose, not about the
+market — exactly the thing this sweep exists to catch.
+<br><br>
+The other three conclusions <b class='pos'>hold across their whole plausible range</b>: which
+conflicts get reported survives thin-wall thresholds from 2% to 20%, and today's question frame
+survives value-area coverage from 60% to 80% and both published value-area algorithms.</div>
+</section>
+
+<section><p class='lbl'>strongest confluence price</p><div style='font-size:14px;margin-bottom:8px'><span class='neg mono'>MOVES</span> &nbsp; under <span class='mono'>tolerance</span> swept <span class='mono'>2.5 → 12.5</span> &nbsp;·&nbsp; modal share <b>60%</b></div><table><thead><tr><th>tolerance</th><th>answer</th></tr></thead><tbody><tr><td class='mono'>2.5</td><td class='mono mut'>None</td></tr><tr><td class='mono'>5.0</td><td class='mono mut'>None</td></tr><tr><td class='mono'>7.5</td><td class='mono '>7747.0</td></tr><tr><td class='mono'>10.0</td><td class='mono '>7747.0</td></tr><tr><td class='mono'>12.5</td><td class='mono '>7747.0</td></tr></tbody></table></section><section><p class='lbl'>set of confluence prices</p><div style='font-size:14px;margin-bottom:8px'><span class='neg mono'>MOVES</span> &nbsp; under <span class='mono'>tolerance</span> swept <span class='mono'>2.5 → 12.5</span> &nbsp;·&nbsp; modal share <b>60%</b></div><table><thead><tr><th>tolerance</th><th>answer</th></tr></thead><tbody><tr><td class='mono'>2.5</td><td class='mono mut'>()</td></tr><tr><td class='mono'>5.0</td><td class='mono mut'>()</td></tr><tr><td class='mono'>7.5</td><td class='mono '>(7747.0,)</td></tr><tr><td class='mono'>10.0</td><td class='mono '>(7747.0,)</td></tr><tr><td class='mono'>12.5</td><td class='mono '>(7747.0,)</td></tr></tbody></table></section><section><p class='lbl'>which conflicts are reported</p><div style='font-size:14px;margin-bottom:8px'><span class='pos mono'>STABLE</span> &nbsp; under <span class='mono'>thin_wall_frac</span> swept <span class='mono'>0.02 → 0.2</span> &nbsp;·&nbsp; modal share <b>100%</b></div><table><thead><tr><th>thin_wall_frac</th><th>answer</th></tr></thead><tbody><tr><td class='mono'>0.02</td><td class='mono '>('flip sits below the value area',)</td></tr><tr><td class='mono'>0.04</td><td class='mono '>('flip sits below the value area',)</td></tr><tr><td class='mono'>0.06</td><td class='mono '>('flip sits below the value area',)</td></tr><tr><td class='mono'>0.08</td><td class='mono '>('flip sits below the value area',)</td></tr><tr><td class='mono'>0.1</td><td class='mono '>('flip sits below the value area',)</td></tr><tr><td class='mono'>0.12</td><td class='mono '>('flip sits below the value area',)</td></tr><tr><td class='mono'>0.14</td><td class='mono '>('flip sits below the value area',)</td></tr><tr><td class='mono'>0.16</td><td class='mono '>('flip sits below the value area',)</td></tr><tr><td class='mono'>0.18</td><td class='mono '>('flip sits below the value area',)</td></tr><tr><td class='mono'>0.2</td><td class='mono '>('flip sits below the value area',)</td></tr></tbody></table></section><section><p class='lbl'>today's question frame</p><div style='font-size:14px;margin-bottom:8px'><span class='pos mono'>STABLE</span> &nbsp; under <span class='mono'>value_area_coverage</span> swept <span class='mono'>0.6 → 0.8</span> &nbsp;·&nbsp; modal share <b>100%</b></div><table><thead><tr><th>value_area_coverage</th><th>answer</th></tr></thead><tbody><tr><td class='mono'>0.6</td><td class='mono '>inside_value</td></tr><tr><td class='mono'>0.65</td><td class='mono '>inside_value</td></tr><tr><td class='mono'>0.7</td><td class='mono '>inside_value</td></tr><tr><td class='mono'>0.75</td><td class='mono '>inside_value</td></tr><tr><td class='mono'>0.8</td><td class='mono '>inside_value</td></tr></tbody></table></section><section><p class='lbl'>today's question frame</p><div style='font-size:14px;margin-bottom:8px'><span class='pos mono'>STABLE</span> &nbsp; under <span class='mono'>value_area_method</span> swept <span class='mono'>pair → single</span> &nbsp;·&nbsp; modal share <b>100%</b></div><table><thead><tr><th>value_area_method</th><th>answer</th></tr></thead><tbody><tr><td class='mono'>pair</td><td class='mono '>inside_value</td></tr><tr><td class='mono'>single</td><td class='mono '>inside_value</td></tr></tbody></table></section>
+
+<section><p class='lbl'>What this is not</p>
+<div class='mut' style='font-size:13px;line-height:1.7'>
+Not a search for the best parameter. Tuning a threshold until the answer looks good is how a free
+parameter quietly becomes a conclusion. The sweep only ever reports variance — it never picks a
+winner, and the published defaults are unchanged by running it.
+<br><br>Failures are kept rather than dropped: a value that makes the computation raise marks the
+edge of where the method is defined, and skipping it would make the surviving range look wider
+than it is.</div></section>
+
+<div class='foot'>pipeline/reference/sensitivity.py &middot; generated 2026-08-08 14:10 ET
+&middot; Fluxus Capital &middot; measurements, not advice</div></div></body></html>
