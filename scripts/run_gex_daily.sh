@@ -65,6 +65,12 @@ fi
     || { say "FAILED at build_snapshot — see log above"; exit 1; }
 say "brief built (data/snapshots/snapshot_SPX_${DATE}.html)"
 
+# The machine's half of the centaur pairing. Logged from the brief so the record
+# accrues without anyone remembering to. Andy's half is his to write:
+#   .venv/bin/python scripts/log_view.py down 3 "reason"
+.venv/bin/python scripts/log_view.py --machine >>"$LOG" 2>&1 \
+    && say "machine view logged" || say "warn: machine view not logged"
+
 # Push the card LAST: everything above must have succeeded, or we would be
 # sending a stale card that looks current. A failed push is logged and does not
 # fail the run — the files are on disk either way.
