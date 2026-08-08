@@ -43,7 +43,7 @@ export default function SqnReadout({ rs }) {
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           System Quality — SQN &amp; Expectancy
         </h3>
-        <code className="text-[9px] font-mono text-[var(--color-text-muted)]">SQN = √N × (mean R ÷ stdev R)</code>
+        <code className="text-[9px] font-mono text-[var(--color-text-muted)]">SQN = √min(N,100) × (mean R ÷ stdev R)</code>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
@@ -81,7 +81,7 @@ export default function SqnReadout({ rs }) {
 
       <p className="text-[10px] text-[var(--color-text-secondary)] leading-relaxed border-t border-[var(--color-border-light)] pt-2">
         Tharp grades systems by SQN, not by return: it rewards a consistent R-stream, and the grade sets how much sizing freedom you&rsquo;ve earned.
-        Raising it means tightening the loss tail and letting the payoff work — not betting bigger. Bands: &lt;1.6 poor · 1.6–1.9 below avg · 2.0–2.4 average · 2.5–2.9 good · 3.0–5.0 excellent · 5.1–6.9 superb.
+        Raising it means tightening the loss tail and letting the payoff work — not betting bigger. Bands: &lt;1.6 poor · 1.6 to &lt;2.0 below avg · 2.0 to &lt;2.5 average · 2.5 to &lt;3.0 good · 3.0–5.0 excellent · &gt;5.0 to &lt;7.0 superb · &ge;7.0 holy grail.
         {stats.n < 20 && ' ⚠ Fewer than 20 closed trades — SQN is noisy at this sample size.'}
       </p>
     </div>

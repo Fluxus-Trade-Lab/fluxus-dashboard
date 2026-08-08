@@ -57,11 +57,24 @@ export function expectancyStats(rs) {
   }
 }
 
-/** Tharp's System Quality Number = √N × meanR ÷ stdevR. Null when undefined. */
+/** Tharp caps the trade count at 100 in the SQN formula. */
+const SQN_N_CAP = 100
+
+/**
+ * Tharp's System Quality Number = √min(N,100) × meanR ÷ stdevR. Null when undefined.
+ *
+ * The N ≤ 100 cap is Tharp's own and is what keeps the quality bands
+ * (Poor…Holy Grail) calibrated: without it √N grows without bound and a merely
+ * long track record scores as a better system. At 331 closed trades the
+ * uncapped form inflates the score ~1.8× (√331 = 18.2 vs √100 = 10), which is
+ * the difference between "Good" and "Excellent" on a book that did not change.
+ * The cap applies to the √N factor ONLY — expectancyStats keeps the true n,
+ * which the UI displays as the real closed-trade count.
+ */
 export function sqn(rs) {
   const { n, meanR, stdevR } = expectancyStats(rs)
   if (n < 2 || stdevR === 0) return null
-  return Math.sqrt(n) * meanR / stdevR
+  return Math.sqrt(Math.min(n, SQN_N_CAP)) * meanR / stdevR
 }
 
 /**
