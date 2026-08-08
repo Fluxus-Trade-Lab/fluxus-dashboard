@@ -3,14 +3,15 @@ import { useEffect, useRef } from 'react'
 /**
  * Embeds the free TradingView Advanced Chart widget for a symbol.
  *
- * Important: the widget's `autosize: true` requires the official nested-div
- * structure to compute height correctly:
- *   <div class="tradingview-widget-container" style="height:Xpx">
- *     <div class="tradingview-widget-container__widget" style="height:100%"></div>
- *     <script src="...embed-widget-advanced-chart.js">{config json}</script>
- *   </div>
- *
- * Without the inner `__widget` div, the widget collapses to ~150px.
+ * Important: TradingView's embed script takes over the div it's attached to —
+ * on init it overwrites that div's inline style to `height:100%; width:100%`
+ * and replaces its children (including our inner `__widget` mount div) with
+ * its own iframe. So the fixed pixel height must live on an ANCESTOR that
+ * TradingView doesn't touch (the outer wrapper below), not on the
+ * `.tradingview-widget-container` div itself — anything set there gets
+ * clobbered. Without a definite height somewhere in the chain, the 100%
+ * resolves to `auto` and the iframe collapses to the browser's default
+ * iframe height (150px).
  */
 export default function TickerChart({ symbol, height = 520 }) {
   const containerRef = useRef(null)
@@ -56,11 +57,14 @@ export default function TickerChart({ symbol, height = 520 }) {
   }, [symbol])
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] overflow-hidden">
+    <div
+      className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] overflow-hidden"
+      style={{ height: `${height}px`, width: '100%' }}
+    >
       <div
         ref={containerRef}
         className="tradingview-widget-container"
-        style={{ height: `${height}px`, width: '100%' }}
+        style={{ height: '100%', width: '100%' }}
       />
     </div>
   )
