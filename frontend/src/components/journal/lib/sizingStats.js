@@ -19,6 +19,11 @@ export function mulberry32(seed) {
  * R-multiples of closed trades that had a real initial stop.
  * Consumes the rr already computed by enrichTrades (anchored to the
  * locked-at-entry stop) — never recomputes R.
+ *
+ * Non-finite rr (NaN, ±Infinity, missing) is DROPPED, not coerced to 0: this is
+ * the single boundary where the whole module's finiteness is guaranteed. A single
+ * Infinity downstream makes sqn() return NaN and makes buildHistogram compute a
+ * NaN bin index — which silently zeroes every bucket instead of throwing.
  */
 export function closedR(enrichedTrades) {
   return (enrichedTrades || [])
@@ -27,7 +32,8 @@ export function closedR(enrichedTrades) {
       const stop = t.initialStop ?? t.stopPrice
       return Math.abs(t.entryPrice - stop) > 0
     })
-    .map(t => t.rr || 0)
+    .map(t => t.rr)
+    .filter(Number.isFinite)
 }
 
 /** n, mean R, sample stdev (n−1), win rate, payoff (avg win R ÷ avg |loss R|). */
