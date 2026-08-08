@@ -4,6 +4,7 @@ import { enrichTrades, lookupPrice } from '../portfolio/lib/calculations'
 import { todayStr } from '../portfolio/lib/portfolioFormat'
 import TharpLessons from './sizing/TharpLessons'
 import SqnReadout from './sizing/SqnReadout'
+import ObjectiveSimulator from './sizing/ObjectiveSimulator'
 import { closedR } from './lib/sizingStats'
 
 /* ── Educational Content ─────────────────────────────────── */
@@ -375,6 +376,9 @@ function SizingContent() {
 
       {/* Live system quality — SQN + expectancy from the real trade book */}
       <SqnReadout rs={rs} />
+
+      {/* Size-to-objectives Monte-Carlo on the same live R-distribution */}
+      <ObjectiveSimulator rs={rs} />
 
       {/* Section 2: Calculator */}
       <SizingCalculator startingCapital={state.startingCapital || 1000000} />
