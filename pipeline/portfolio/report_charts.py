@@ -505,3 +505,55 @@ def losing_streaks(trades, dark: bool = False):
         ax.grid(axis="y", color=p["grid"], lw=0.6); _style(ax, p)
     fig.tight_layout()
     return _b64(fig, p["face"])
+
+
+def risk_of_ruin_chart(ruin, actual_risk_pct=None, dark: bool = False):
+    """P(drawdown > 50%) vs risk-per-trade %, under Base / Pessimistic / Zero-edge."""
+    if not ruin:
+        return None
+    p = _pal(dark)
+    colors = {"Base (historical)": p["blue"], "Pessimistic (−0.3R)": "#e0932a", "Zero edge": RED}
+    fig, ax = plt.subplots(figsize=(11, 3.6), dpi=150)
+    for name, pts in ruin.items():
+        xs = [q["risk"] for q in pts]
+        ys = [q["ruin"] for q in pts]
+        ax.plot(xs, ys, lw=1.8, marker="o", ms=3, color=colors.get(name, p["mut"]), label=name)
+    if actual_risk_pct:
+        ax.axvline(actual_risk_pct, color=p["mut"], lw=0.9, ls="--")
+        ax.annotate(f"your 1R ≈ {actual_risk_pct:.2f}%", xy=(actual_risk_pct, 5),
+                    xytext=(4, 0), textcoords="offset points", fontsize=8, color=p["mut"])
+    ax.set_ylabel("P( drawdown > 50% )"); ax.set_xlabel("Risk per trade %")
+    ax.grid(axis="both", color=p["grid"], lw=0.6); _style(ax, p)
+    leg = ax.legend(fontsize=8, frameon=False)
+    for t in leg.get_texts():
+        t.set_color(p["ink"])
+    return _b64(fig, p["face"])
+
+
+def sizing_frontier_chart(curve, actual_risk_pct=None, dark: bool = False):
+    """CAGR and max-drawdown as a function of risk-per-trade % (position sizing to
+    objectives). Left axis = median CAGR (log), right axis = median drawdown %."""
+    if not curve:
+        return None
+    p = _pal(dark)
+    xs = [q["risk"] for q in curve]
+    cagr = [max(q["cagr"], 0.1) for q in curve]
+    dd = [q["dd"] for q in curve]
+    fig, ax = plt.subplots(figsize=(11, 3.8), dpi=150)
+    ax.plot(xs, cagr, color=p["blue"], lw=2, marker="o", ms=3, label="Median CAGR")
+    ax.set_yscale("log")
+    ax.set_ylabel("Median CAGR % (log)", color=p["blue"])
+    ax.set_xlabel("Risk per trade %")
+    ax.grid(axis="both", color=p["grid"], lw=0.6); _style(ax, p)
+    ax2 = ax.twinx()
+    ax2.plot(xs, dd, color=RED, lw=2, marker="s", ms=3, label="Median max DD")
+    ax2.set_ylabel("Median max drawdown %", color=RED)
+    ax2.tick_params(colors=RED, labelsize=9)
+    for s in ("top",):
+        ax2.spines[s].set_visible(False)
+    ax2.spines["right"].set_color(RED)
+    if actual_risk_pct:
+        ax.axvline(actual_risk_pct, color=p["mut"], lw=0.9, ls="--")
+        ax.annotate(f"your 1R ≈ {actual_risk_pct:.2f}%", xy=(actual_risk_pct, cagr[0]),
+                    xytext=(4, 2), textcoords="offset points", fontsize=8, color=p["mut"])
+    return _b64(fig, p["face"])

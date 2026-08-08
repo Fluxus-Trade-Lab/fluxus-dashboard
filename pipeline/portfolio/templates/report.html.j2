@@ -275,6 +275,16 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
 <p class="cap">Losing streaks: observed vs the probability of hitting ≥k in a row — psychological prep.</p>{% endif %}
 </section>{% endif %}
 
+{# ---------- Position sizing to objectives (Van Tharp) ---------- #}
+{% if d.charts.sizing_frontier and d.charts.sizing_frontier.light %}
+<section>
+<p class="lbl">仓位到目标 · Position sizing to objectives (Van Tharp, Monte-Carlo)</p>
+<div class="chart">{{ chart(d.charts.sizing_frontier, 'CAGR and drawdown vs risk per trade') }}</div>
+<p class="cap">Growth vs pain as you vary risk-per-trade — bootstrap of your own R-distribution. CAGR keeps rising with risk, but drawdown rises faster; the objective is the risk % that meets your return goal within a drawdown you can survive — NOT the max.</p>
+{% if d.charts.risk_ruin and d.charts.risk_ruin.light %}<div class="chart" style="margin-top:14px">{{ chart(d.charts.risk_ruin, 'Risk of ruin') }}</div>
+<p class="cap">Risk of ruin — P(a &gt;50% drawdown) vs risk-per-trade, under your historical edge, a −0.3R haircut, and zero edge. ⚠ The historical curve is flattered by a strong sample; the pessimistic/zero-edge lines are the honest guardrails.</p>{% endif %}
+</section>{% endif %}
+
 {# ---------- Contribution tables ---------- #}
 <section>
 <p class="lbl">贡献 · By direction &amp; top tickers</p>

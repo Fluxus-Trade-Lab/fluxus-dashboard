@@ -22,10 +22,68 @@ Run:  python -m pipeline.portfolio.sizing
 from __future__ import annotations
 
 import math
+import random
 import statistics as st
 
 PPY = 252
 RF = 0.04
+
+
+# --------------------------------------------------------------------------- #
+# Position-sizing-to-OBJECTIVES (Van Tharp) — Monte-Carlo over the R-distribution
+# --------------------------------------------------------------------------- #
+def _sim(Rs, f, n_trades, n_sims, seed):
+    """Bootstrap-resample R and compound equity by (1 + f·R) each trade.
+    Returns (final_multiples, max_drawdowns) across n_sims paths."""
+    rng = random.Random(seed)
+    m = len(Rs)
+    finals, mdds = [], []
+    for _ in range(n_sims):
+        eq = peak = 1.0
+        mdd = 0.0
+        for _ in range(n_trades):
+            eq *= (1 + f * Rs[rng.randrange(m)])
+            if eq <= 0:
+                eq = 1e-12
+            if eq > peak:
+                peak = eq
+            d = eq / peak - 1
+            if d < mdd:
+                mdd = d
+        finals.append(eq)
+        mdds.append(mdd)
+    return finals, mdds
+
+
+def sizing_objective_curves(Rs, years, risk_grid=None, n_sims=800, seed=7):
+    """For each risk-per-trade %, the MC-median CAGR, median max-DD, and P(ruin).
+    Ruin = drawdown worse than 50%. Also risk-of-ruin under Base / Pessimistic
+    (edge haircut −0.3R) / Zero-edge (demeaned) R-distributions."""
+    Rs = [r for r in Rs if r is not None]
+    if len(Rs) < 20:
+        return None
+    n = len(Rs)
+    tpy = n / years if years > 0 else n
+    if risk_grid is None:
+        risk_grid = [0.001, 0.0025, 0.005, 0.0075, 0.01, 0.0125, 0.015,
+                     0.02, 0.025, 0.03, 0.04, 0.05]
+    mean = st.mean(Rs)
+    variants = {"Base (historical)": Rs,
+                "Pessimistic (−0.3R)": [r - 0.3 for r in Rs],
+                "Zero edge": [r - mean for r in Rs]}
+    curve, ruin = [], {k: [] for k in variants}
+    for f in risk_grid:
+        finals, mdds = _sim(Rs, f, n, n_sims, seed)
+        med_final = st.median(finals)
+        cagr = (med_final ** (tpy / n) - 1) * 100 if med_final > 0 else -99.9
+        curve.append({"risk": f * 100, "cagr": cagr,
+                      "dd": st.median(mdds) * 100,
+                      "ruin": sum(1 for d in mdds if d < -0.5) / n_sims * 100})
+        for name, rr in variants.items():
+            _, md = _sim(rr, f, n, n_sims, seed)
+            ruin[name].append({"risk": f * 100,
+                               "ruin": sum(1 for d in md if d < -0.5) / n_sims * 100})
+    return {"curve": curve, "ruin": ruin, "n_trades": n, "tpy": tpy}
 
 
 # --------------------------------------------------------------------------- #

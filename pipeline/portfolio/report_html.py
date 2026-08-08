@@ -87,8 +87,19 @@ def build_doc(trades, meta, period, month, quarter, out_dir, handle):
     ps_light, ps_stats = rc.position_sizes(sub, eqbd, cap, dark=False)
     ps_dark, _ = rc.position_sizes(sub, eqbd, cap, dark=True)
 
+    # Position-sizing-to-objectives (Van Tharp) — Monte-Carlo run ONCE, rendered dual-theme
+    import datetime as _dt
+    from pipeline.portfolio import sizing as _sz
+    _Rs = [t.R for t in sub if t.R is not None]
+    _risks = [t.risk for t in sub if t.risk]
+    actual_1r = (sum(_risks) / len(_risks) / cap * 100) if _risks else None
+    _yrs = max(0.1, (_dt.date.fromisoformat(dmax) - _dt.date.fromisoformat(dmin)).days / 365)
+    sz = _sz.sizing_objective_curves(_Rs, _yrs) if len(_Rs) >= 20 else None
+
     charts = {
         "rr": _rr_pair(sub, cap, out_dir, stem, rr_title, handle),
+        "risk_ruin": _both(lambda d: rc.risk_of_ruin_chart(sz["ruin"], actual_1r, dark=d)) if sz else None,
+        "sizing_frontier": _both(lambda d: rc.sizing_frontier_chart(sz["curve"], actual_1r, dark=d)) if sz else None,
         "sizes": {"light": ps_light, "dark": ps_dark} if ps_light else None,
         "equity": _both(lambda d: rc.equity_curve(eqbd, dd, cap, dark=d)) if eqbd else None,
         "monthly": _both(lambda d: rc.monthly_returns(ms, dark=d)),
