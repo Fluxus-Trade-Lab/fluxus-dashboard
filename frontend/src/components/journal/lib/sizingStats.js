@@ -73,3 +73,66 @@ export function sqnBand(value) {
   if (value < 7.0) return { label: 'Superb', tone: 'good' }
   return { label: 'Holy Grail', tone: 'good' }
 }
+
+/**
+ * Tharp's position-sizing-to-objectives Monte-Carlo: bootstrap-resample the
+ * account's own R-distribution at a given risk % per trade. Each path applies
+ * equity *= 1 + (riskPct/100) * R for `horizon` draws, tracking max drawdown.
+ * i.i.d. bootstrap — ignores serial correlation and regime shifts by design;
+ * the UI must caption that caveat.
+ */
+export function bootstrapObjective(rs, {
+  riskPct, horizon, paths = 2000, targetReturnPct, maxDDPct, seed = 42,
+}) {
+  if (!rs?.length) return null
+  const rand = mulberry32(seed)
+  const f = riskPct / 100
+  const endReturns = new Array(paths)
+  const maxDDs = new Array(paths)
+  let reach = 0
+  let breach = 0
+  for (let p = 0; p < paths; p++) {
+    let eq = 1
+    let peak = 1
+    let maxDD = 0
+    for (let i = 0; i < horizon; i++) {
+      const r = rs[Math.floor(rand() * rs.length)]
+      eq *= 1 + f * r
+      if (eq <= 0) { eq = 0; maxDD = 1; break } // busted
+      if (eq > peak) peak = eq
+      const dd = 1 - eq / peak
+      if (dd > maxDD) maxDD = dd
+    }
+    const ret = (eq - 1) * 100
+    endReturns[p] = ret
+    maxDDs[p] = maxDD * 100
+    if (ret >= targetReturnPct) reach++
+    if (maxDD * 100 > maxDDPct) breach++
+  }
+  endReturns.sort((a, b) => a - b)
+  maxDDs.sort((a, b) => a - b)
+  const pct = (arr, q) => arr[Math.min(arr.length - 1, Math.floor(q * arr.length))]
+  return {
+    endReturns,
+    pReachTarget: (reach / paths) * 100,
+    pBreachDD: (breach / paths) * 100,
+    medianReturn: pct(endReturns, 0.5),
+    p5: pct(endReturns, 0.05),
+    p95: pct(endReturns, 0.95),
+    medianMaxDD: pct(maxDDs, 0.5),
+    histogram: buildHistogram(endReturns, 24),
+  }
+}
+
+/** Bucket a sorted array into `bins` equal-width bins; x = bin midpoint. */
+function buildHistogram(sorted, bins) {
+  if (!sorted.length) return []
+  const lo = sorted[0]
+  const hi = sorted[sorted.length - 1]
+  const width = (hi - lo || 1) / bins
+  const counts = new Array(bins).fill(0)
+  for (const v of sorted) {
+    counts[Math.min(bins - 1, Math.floor((v - lo) / width))]++
+  }
+  return counts.map((count, i) => ({ x: lo + (i + 0.5) * width, count }))
+}

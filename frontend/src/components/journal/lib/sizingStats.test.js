@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { mulberry32, closedR, expectancyStats, sqn, sqnBand } from './sizingStats'
+import { mulberry32, closedR, expectancyStats, sqn, sqnBand, bootstrapObjective } from './sizingStats'
 
 describe('mulberry32', () => {
   it('is deterministic for a given seed', () => {
@@ -113,5 +113,52 @@ describe('sqnBand', () => {
     expect(sqnBand(NaN)).toEqual({ label: '—', tone: 'muted' })
     expect(sqnBand(Infinity)).toEqual({ label: '—', tone: 'muted' })
     expect(sqnBand(-Infinity)).toEqual({ label: '—', tone: 'muted' })
+  })
+})
+
+describe('bootstrapObjective', () => {
+  const rs = [2, -1, -1, 3, -0.5, 1, -1, 5, -1, -0.8] // right-tail, +EV
+  const base = { riskPct: 0.25, horizon: 300, paths: 500, targetReturnPct: 50, maxDDPct: 20, seed: 42 }
+
+  it('is deterministic given a seed', () => {
+    const a = bootstrapObjective(rs, base)
+    const b = bootstrapObjective(rs, base)
+    expect(a.medianReturn).toBe(b.medianReturn)
+    expect(a.endReturns).toEqual(b.endReturns)
+  })
+
+  it('returns null for empty distribution', () => {
+    expect(bootstrapObjective([], base)).toBeNull()
+    expect(bootstrapObjective(undefined, base)).toBeNull()
+  })
+
+  it('higher risk % widens the ending-return spread', () => {
+    const lo = bootstrapObjective(rs, { ...base, riskPct: 0.25 })
+    const hi = bootstrapObjective(rs, { ...base, riskPct: 2.0 })
+    expect(hi.p95 - hi.p5).toBeGreaterThan(lo.p95 - lo.p5)
+  })
+
+  it('all-positive R distribution never draws down', () => {
+    const out = bootstrapObjective([1, 2, 3], { ...base, paths: 100 })
+    expect(out.pBreachDD).toBe(0)
+    expect(out.medianMaxDD).toBe(0)
+  })
+
+  it('endReturns is sorted ascending and sized to paths', () => {
+    const out = bootstrapObjective(rs, { ...base, paths: 200 })
+    expect(out.endReturns).toHaveLength(200)
+    const sorted = [...out.endReturns].sort((a, b) => a - b)
+    expect(out.endReturns).toEqual(sorted)
+  })
+
+  it('histogram counts sum to paths', () => {
+    const out = bootstrapObjective(rs, { ...base, paths: 200 })
+    expect(out.histogram.reduce((s, b) => s + b.count, 0)).toBe(200)
+  })
+
+  it('probabilities are consistent with the sorted returns', () => {
+    const out = bootstrapObjective(rs, base)
+    const share = out.endReturns.filter(r => r >= 50).length / out.endReturns.length * 100
+    expect(out.pReachTarget).toBeCloseTo(share, 10)
   })
 })
