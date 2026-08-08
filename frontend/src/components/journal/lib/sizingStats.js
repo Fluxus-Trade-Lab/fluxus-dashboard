@@ -58,9 +58,13 @@ export function sqn(rs) {
   return Math.sqrt(n) * meanR / stdevR
 }
 
-/** Tharp's SQN quality bands (Definitive Guide to Position Sizing). */
+/**
+ * Tharp's SQN quality bands (Definitive Guide to Position Sizing).
+ * Non-finite input (NaN from a bad R series, ±Infinity) is unknown, not top-band —
+ * NaN fails every comparison below and would otherwise fall through to "Holy Grail".
+ */
 export function sqnBand(value) {
-  if (value == null) return { label: '—', tone: 'muted' }
+  if (value == null || !Number.isFinite(value)) return { label: '—', tone: 'muted' }
   if (value < 1.6) return { label: 'Poor', tone: 'bad' }
   if (value < 2.0) return { label: 'Below average', tone: 'warn' }
   if (value < 2.5) return { label: 'Average', tone: 'neutral' }
