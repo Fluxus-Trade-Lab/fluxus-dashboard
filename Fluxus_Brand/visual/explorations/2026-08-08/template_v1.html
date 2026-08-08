@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — Market State</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+
+:root{
+  --paper:#f2f1ed; --plate:#fbfaf7;
+  --ink:#12110f; --ink2:#57534e; --ink3:#948f86; --ink4:#b9b3a9;
+  --rule:#d9d5cd; --hair:#e6e3db;
+  --took:#1a5488; --refused:#d1600f; --idle:#c2bdb4; --off:#e2ded6;
+  --sans:Plex,-apple-system,sans-serif; --cond:PlexCond,Plex,sans-serif; --mono:PlexMono,Menlo,monospace;
+  --u:8px;                       /* one unit — every gap is a multiple of it */
+}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+     -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.app{max-width:1360px;margin:0 auto;padding:0 calc(var(--u)*4) calc(var(--u)*12)}
+.n{font-family:var(--mono)}
+
+/* ── register: four visibly different voices ─────────────────────────
+   fact = plain · interpretation = medium + darker · anticipation =
+   dashed underline · action = reversed block. Never let them blur.   */
+/* Colour and weight alone were invisible at a glance; each register now has a
+   structural mark as well. */
+.r-fact{font-weight:400;color:var(--ink2)}
+.brow .reg{font-family:var(--mono);font-size:8px;letter-spacing:.16em;color:var(--ink4);
+           text-transform:uppercase;margin-left:8px}
+.brow.l-interp .ev{border-left:2px solid var(--rule);padding-left:9px;margin-left:-11px}
+.brow.l-antic .ev{border-left:2px dashed var(--ink4);padding-left:9px;margin-left:-11px}
+.r-interp{font-weight:500;color:var(--ink)}
+.r-antic{font-weight:500;color:var(--ink);border-bottom:1px dashed var(--ink4);padding-bottom:1px}
+.r-action{background:var(--ink);color:var(--paper);padding:2px 6px;font-weight:600}
+
+/* ── masthead ── */
+.mast{display:flex;align-items:baseline;gap:calc(var(--u)*3);
+      padding:calc(var(--u)*2) 0 calc(var(--u)*1.5);border-bottom:2px solid var(--ink)}
+.mast .wm{font-family:var(--cond);font-weight:700;font-size:20px;letter-spacing:.3em}
+.mast nav{display:flex;gap:calc(var(--u)*2.5);font-size:12px;color:var(--ink3)}
+.mast nav b{color:var(--ink);font-weight:600;border-bottom:2px solid var(--ink);padding-bottom:3px}
+.mast .file{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink3)}
+.stampx{border:1.6px solid var(--refused);color:var(--refused);padding:3px 7px;
+        font-family:var(--cond);font-weight:700;font-size:10px;letter-spacing:.14em;
+        transform:rotate(-3deg);white-space:nowrap}
+
+/* ── hero: the screenshot-able third ── */
+.hero{display:grid;grid-template-columns:1fr 348px;gap:calc(var(--u)*6);
+      padding:calc(var(--u)*5) 0 calc(var(--u)*4);border-bottom:1px solid var(--ink)}
+.kick{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;color:var(--ink3);
+      margin-bottom:calc(var(--u)*2)}
+.verdict{font-family:var(--cond);font-weight:700;font-size:96px;line-height:.88;
+         letter-spacing:-.018em;text-transform:uppercase}
+.read{font-size:19px;line-height:1.42;margin-top:calc(var(--u)*3);max-width:26ch}
+.read .a{font-weight:500}
+.read .b{color:var(--refused);font-weight:500}
+.since{margin-top:calc(var(--u)*2);font-family:var(--mono);font-size:11px;color:var(--ink3)}
+/* the verdict's own composition, in the hero — an assertion at the top of a
+   page is only honest if its derivation is in the same glance */
+.compose{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;
+         margin-top:calc(var(--u)*4);max-width:560px}
+.compose .c .bar{height:7px;background:var(--off)}
+.compose .c .bar span{display:block;height:100%}
+.compose .c .lb{font-size:9px;line-height:1.3;color:var(--ink3);margin-top:8px;
+                letter-spacing:.02em}
+.compose .c .pc{font-family:var(--mono);font-size:10px;margin-top:3px}
+.spec{border-top:2px solid var(--ink);align-self:start}
+.spec div{display:flex;justify-content:space-between;align-items:baseline;
+          padding:calc(var(--u)*0.9) 0;border-bottom:1px solid var(--hair)}
+.spec .k{font-size:10.5px;letter-spacing:.09em;color:var(--ink2);text-transform:uppercase}
+.spec .v{font-family:var(--mono);font-size:14px;font-weight:500}
+.spec .v.bad{color:var(--refused)}
+
+/* ── section head ── */
+h3{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+   color:var(--ink3);margin:calc(var(--u)*7) 0 0;padding-bottom:calc(var(--u)*1.2);
+   border-bottom:1px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline}
+h3 em{font-style:normal;text-transform:none;letter-spacing:.01em;font-family:var(--sans);
+      font-size:11.5px;color:var(--ink2);font-weight:400}
+.note{font-size:12px;line-height:1.65;color:var(--ink2);max-width:82ch;margin:calc(var(--u)*2) 0 0}
+.note b{color:var(--ink);font-weight:600}
+svg{display:block;width:100%;height:auto;overflow:visible;margin-top:calc(var(--u)*2)}
+
+/* ── state board ── */
+.board{display:grid;grid-template-columns:1fr 1fr;column-gap:calc(var(--u)*6)}
+.brow{display:grid;grid-template-columns:150px 100px 1fr;gap:calc(var(--u)*1.75);
+      align-items:center;min-height:52px;padding:calc(var(--u)*0.75) 0;
+      border-bottom:1px solid var(--hair)}
+.brow .k{font-family:var(--cond);font-weight:600;font-size:16px;letter-spacing:.005em}
+.lv{display:flex;gap:2px}
+.lv i{display:block;width:16px;height:14px}
+.brow .st{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+          margin-bottom:3px}
+.brow .ev{font-size:11.5px;line-height:1.5;color:var(--ink2)}
+.legend{display:flex;flex-wrap:wrap;gap:calc(var(--u)*3) calc(var(--u)*4);
+        margin-top:calc(var(--u)*2.5);font-size:11px;color:var(--ink2);align-items:center}
+.legend i{display:inline-block;width:26px;height:14px;vertical-align:-2px;margin-right:7px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute;margin:0"><defs>
+  <pattern id="hx" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="5" stroke="#7d3908" stroke-width="1.7"/></pattern>
+</defs></svg>
+
+<div class="app">
+  <div class="mast">
+    <span class="wm">FLUXUS</span>
+    <nav><b>Market state</b><span>Screener</span><span>Positions</span><span>Ticker</span><span>Letters</span></nav>
+    <span class="file" id="file">—</span>
+    <span class="stampx">NOT A CALL</span>
+  </div>
+
+  <div class="hero">
+    <div>
+      <div class="kick" id="kick">—</div>
+      <div class="verdict" id="verdict">—</div>
+      <div class="read" id="read">—</div>
+      <div class="compose" id="compose"></div>
+      <div class="since" id="since">—</div>
+    </div>
+    <div class="spec" id="spec"></div>
+  </div>
+
+  <h3>State board <em id="sb-note">—</em></h3>
+  <div class="board" id="board"></div>
+  <div class="legend" id="legend"></div>
+
+  <h3>Propagation <em>The width is the count — a current that stops does not resume</em></h3>
+  <svg id="flow" viewBox="0 0 1296 300"></svg>
+  <p class="note" id="flow-note"></p>
+
+  <h3>Repair ladder <em>Where each name has climbed to · the stem is its last 30 sessions</em></h3>
+  <svg id="ladder" viewBox="0 0 1296 460"></svg>
+
+  <h3>Evidence of broadening <em>One mark is a countable thing, never a stretched bar</em></h3>
+  <svg id="iso" viewBox="0 0 1296 290"></svg>
+
+  <h3>Breadth, with the rule on it <em>Zones read from THRESHOLDS — the picture cannot drift from the verdict</em></h3>
+  <svg id="breadth" viewBox="0 0 1296 290"></svg>
+
+  <h3>Sequence <em>The dashed slot has not happened yet</em></h3>
+  <svg id="seq" viewBox="0 0 1296 230"></svg>
+</div>
+
+<script>
+const D = /*__DATA__*/ null;
+const B = D.state_board.filter(r=>r.key!=="风险姿态"), CH = D.chain, T = D.breadth.today,
+      NM = D.names, DF = D.diffusion, TR = D.breadth.trace, DATES = D.breadth.dates;
+const NS="http://www.w3.org/2000/svg";
+const C={took:"#1a5488",refused:"#d1600f",idle:"#c2bdb4",off:"#e2ded6",
+         ink:"#12110f",ink2:"#57534e",ink3:"#948f86",ink4:"#b9b3a9"};
+const el=id=>document.getElementById(id);
+function mk(p,t,a={},x){const n=document.createElementNS(NS,t);
+  for(const k in a) n.setAttribute(k,a[k]); if(x!=null) n.textContent=x; p.appendChild(n); return n;}
+const F=(s,f,w)=>`font:${w||400} ${s}px ${f||"Plex,sans-serif"}`;
+
+/* one place for the encoding — every panel calls this, nothing draws its own cell */
+function cell(p,{x,y,w,h,state,label,fs,labelFill}){
+  if(state==="untested"){
+    mk(p,"rect",{x,y,width:w,height:h,fill:"none",stroke:C.idle,"stroke-width":1.2,"stroke-dasharray":"3 2"});
+  }else if(state==="partial"){
+    mk(p,"rect",{x,y,width:w,height:h,fill:"none",stroke:C.took,"stroke-width":1.2});
+    mk(p,"rect",{x,y,width:w/2,height:h,fill:C.took});
+  }else{
+    const col = state==="took"?C.took:C.refused;
+    mk(p,"rect",{x,y,width:w,height:h,fill:col});
+    if(state==="refused") mk(p,"rect",{x,y,width:w,height:h,fill:"url(#hx)",opacity:.5});
+  }
+  if(label!=null) mk(p,"text",{x:x+w/2,y:y+h/2+3.6,"text-anchor":"middle",
+    style:`font:500 ${fs||10.5}px PlexMono,monospace;fill:${
+      labelFill || (state==="took"?"#fff":state==="refused"?"#3a1f06":C.ink3)}`}, label);
+}
+const qual = v => v.direction==="up"?"took":v.direction==="down"?"refused":"untested";
+
+const LEV={"缺席":0,"很弱":1,"早期":2,"已启动":3,"良好":4};
+const LEV_EN={"缺席":"Absent","很弱":"Very weak","早期":"Early","已启动":"Started","良好":"Good"};
+const KEY_EN={"受损程度":"Damage","抛压":"Selling pressure","指数修复":"Index repair",
+ "领涨修复":"Leadership repair","巨头领涨":"Megacap leadership","广义半导体":"Broad semis",
+ "市场宽度":"Breadth","利率":"Rates","确认信号":"Confirmation"};
+const LAYER={"受损程度":"fact","抛压":"fact","指数修复":"interp","领涨修复":"interp",
+ "巨头领涨":"interp","广义半导体":"interp","市场宽度":"fact","利率":"fact","确认信号":"antic"};
+const EV_EN={
+ "受损程度":"523 names −25% on the quarter against 342 up 25% — 60% on the down side",
+ "抛压":"288 names −4% today against a five-day peak of 637 — back to 45% of it",
+ "指数修复":"3 of 5 indexes above the 50-day: SPY, RSP, DIA",
+ "领涨修复":"4 of 7 leaders have broken out: AMZN, MSFT, NTAP, DXCM",
+ "巨头领涨":"AMZN rung 5 · MSFT rung 6 · NVDA rung 2 — mean 4.3 of 7",
+ "广义半导体":"7 damaged names average rung 1.0 of 7; five still stabilizing or broken",
+ "市场宽度":"40.7% above the 20-day · T2108 45.8 · net advances −336 with indexes green",
+ "利率":"30Y and 20Y broke to 2007 highs — no bond feed in the pipeline, so this is left empty",
+ "确认信号":"Five-day ratio 0.9905, needs to clear 1.0 · Episodic Pivot 6 today against 1 at month start"};
+const CH_EN={"巨头站住":"Megacaps hold","更多领涨跟上":"Leaders follow","QQQ 收回 21/50":"QQQ reclaims",
+ "宽度扩张":"Breadth expands","RSP / IWM 跟上":"RSP & IWM","突破站得住":"Breakouts hold"};
+const RUNG=["Broken","Stabilizing","Reclaim","Above 50D","Pivot","Breakout","Holds","Expansion"];
+const ROLE={index:"Indexes",leader:"Leaders",damaged:"Damaged"};
+
+/* ── masthead + hero ── */
+el("file").textContent = `FILE FX-2026-089 · ${D.as_of} · CLOSE`;
+el("kick").textContent = "RISK POSTURE";
+el("verdict").innerHTML = "Wait<br>for FTD";
+el("read").innerHTML =
+  `<span class="a">Megacaps repaired.</span> <span class="b">Propagation did not happen.</span>`;
+
+const brokeOut = Object.values(NM).filter(v=>v.role==="leader"&&v.rung>=5).length;
+const leaders  = Object.values(NM).filter(v=>v.role==="leader").length;
+const lit = CH.filter(c=>c.state==="lit").length;
+const measuredCount = B.filter(r=>r.state!=null).length;
+// No posture history exists in the payload, so the earlier "unchanged for 2
+// sessions" line was invented. Replaced with something the data can back —
+// and declared after its inputs, which the first R2 edit got wrong (TDZ).
+el("since").textContent =
+  `${lit} of ${CH.length} links lit · ${measuredCount} of ${B.length} conditions measured`;
+
+el("spec").innerHTML = [
+  ["S&P 500", T.spx_close.toFixed(2), false],
+  ["5-day ratio", T.ratio_5d.toFixed(4), T.ratio_5d < 1],
+  ["Above 20-day", T.pct_above_20sma.toFixed(1)+"%", T.pct_above_20sma < 50],
+  ["T2108", T.t2108.toFixed(1), false],
+  ["Net advances", (T.net_advances>0?"+":"")+T.net_advances, T.net_advances < 0],
+  ["Leaders broken out", `${brokeOut} / ${leaders}`, false],
+  ["Chain links lit", `${lit} / ${CH.length}`, lit < CH.length],
+].map(([k,v,bad])=>`<div><span class="k">${k}</span><span class="v${bad?" bad":""}">${v}</span></div>`).join("");
+
+/* ── state board ── */
+el("sb-note").textContent =
+  `${measuredCount} of ${B.length} measured — the ninth is left empty because the pipeline cannot see it`;
+el("board").innerHTML = B.map(r=>{
+  const lv = r.state==null ? -1 : LEV[r.state];
+  const cells = [0,1,2,3,4].map(k=>{
+    if(lv<0) return `<i style="border:1.2px dashed ${C.idle}"></i>`;
+    if(k>lv) return `<i style="background:${C.off}"></i>`;
+    const col = lv<=1?C.refused:lv>=3?C.took:"#8d877d";
+    const hatch = lv<=1
+      ? "background-image:repeating-linear-gradient(45deg,rgba(125,57,8,.55) 0 1.7px,transparent 1.7px 5px);"
+      : "";
+    return `<i style="background:${col};${hatch}"></i>`;
+  }).join("");
+  const col = lv<0?C.ink3:lv<=1?C.refused:lv>=3?C.took:C.ink2;
+  const reg = {fact:"r-fact",interp:"r-interp",antic:"r-antic"}[LAYER[r.key]];
+  return `<div class="brow l-${LAYER[r.key]}">
+    <div class="k">${KEY_EN[r.key]}</div>
+    <div class="lv">${cells}</div>
+    <div><div class="st" style="color:${col}">${r.state==null?"not measured":LEV_EN[r.state]}${r.state==null?"":`<span class="reg">${LAYER[r.key]==="fact"?"measured":LAYER[r.key]==="interp"?"read":"expected"}</span>`}</div>
+      <div class="ev ${reg}">${EV_EN[r.key]}</div></div></div>`;
+}).join("");
+// The hero carries the chain, not a second copy of the board: the verdict is
+// literally "wait for the next link", so the six links are its derivation.
+// `carrying` is a running minimum — a stopped current never resumes.
+(function(){
+  const MEAS=[3/3,4/7,0,0,1/2,2/7];
+  let run=null;
+  el("compose").innerHTML = CH.map((c,i)=>{
+    run = run===null ? MEAS[i] : Math.min(run, MEAS[i]);
+    const pct=Math.round(run*100);
+    const col = pct>=75?C.took : pct>0?"#8d877d" : C.refused;
+    const hatch = pct===0
+      ? `background-image:repeating-linear-gradient(45deg,rgba(125,57,8,.55) 0 1.7px,transparent 1.7px 5px);`
+      : "";
+    return `<div class="c">
+      <div class="bar"><span style="width:${Math.max(pct,pct===0?100:0)}%;background:${col};${hatch}"></span></div>
+      <div class="lb">${CH_EN[c.label]}</div>
+      <div class="pc" style="color:${col}">${pct}%</div></div>`;
+  }).join("");
+})();
+
+el("legend").innerHTML =
+ `<span><i style="background:${C.took}"></i>took the chance offered</span>`+
+ `<span><i style="background:${C.refused};background-image:repeating-linear-gradient(45deg,rgba(125,57,8,.55) 0 1.7px,transparent 1.7px 5px)"></i>offered and refused</span>`+
+ `<span><i style="border:1.2px dashed ${C.idle}"></i>not measured — outside the scale</span>`+
+ `<span style="color:${C.ink3}">rank is how many cells are filled · hue only says which side</span>`;
+
+/* ── Minard flow ── */
+(function(){
+  const s=el("flow"), W=1296, L=56, R=228, TOP=42, MID=158, MAXW=94;
+  const seg=(W-L-R)/CH.length;
+  const MEAS=[3/3,4/7,0,0,1/2,2/7];
+  const LAB=["3 of 3 megacaps","4 of 7 leaders","QQQ 0 of 2 MAs","breadth 0 of 3 tests",
+             "1 of 2 — RSP only","2 of 7 still holding"];
+  const FLOW=MEAS.map((_,i)=>Math.min(...MEAS.slice(0,i+1)));
+  const w=i=>Math.max(0.012,FLOW[i])*MAXW/2;
+  let top=[],bot=[];
+  FLOW.forEach((_,i)=>{top.push(`${i?"L":"M"}${L+seg*i},${MID-w(i)}`,`L${L+seg*(i+1)-14},${MID-w(i)}`);});
+  for(let i=FLOW.length-1;i>=0;i--) bot.push(`L${L+seg*(i+1)-14},${MID+w(i)}`,`L${L+seg*i},${MID+w(i)}`);
+  mk(s,"path",{d:top.join(" ")+" "+bot.join(" ")+" Z",fill:C.took});
+  const dead=FLOW.findIndex(v=>v<=0.02);
+  if(dead>0){
+    const dw=(FLOW.length-dead)*seg-14;
+    mk(s,"rect",{x:L+seg*dead,y:MID-3,width:dw,height:6,fill:C.refused});
+    mk(s,"rect",{x:L+seg*dead,y:MID-3,width:dw,height:6,fill:"url(#hx)",opacity:.5});
+  }
+  MEAS.forEach((v,i)=>{
+    const x=L+seg*i;
+    mk(s,"line",{x1:x,y1:TOP-10,x2:x,y2:MID+MAXW/2+52,stroke:"#cdc7be","stroke-width":.8});
+    mk(s,"text",{x:x+9,y:TOP+2,style:"font:600 15px PlexCond,sans-serif;fill:#12110f"},CH_EN[CH[i].label]);
+    mk(s,"text",{x:x+9,y:TOP+19,style:F(10.5)+";fill:#57534e"},LAB[i]);
+    if(v>FLOW[i]+0.02){
+      mk(s,"rect",{x:x+9,y:MID-MAXW/2-30,width:seg-30,height:v*MAXW*0.42,
+        fill:"none",stroke:C.took,"stroke-width":1.1,"stroke-dasharray":"3 3"});
+      mk(s,"text",{x:x+9,y:MID-MAXW/2-38,style:F(9,"PlexMono,monospace")+`;fill:${C.took}`},
+        `${Math.round(v*100)}% MEASURED, NOT FED`);
+    }
+    mk(s,"text",{x:x+9,y:MID+MAXW/2+44,
+      style:F(11,"PlexMono,monospace",500)+`;fill:${FLOW[i]>0.02?C.took:C.refused}`},
+      Math.round(FLOW[i]*100)+"% carrying");
+  });
+  mk(s,"text",{x:L+seg*dead+9,y:MID+MAXW/2+62,style:F(11,null,500)+`;fill:${C.refused}`},
+    "the current stops here and does not resume");
+  mk(s,"text",{x:W-R+20,y:MID-10,style:"font:700 22px PlexCond,sans-serif;fill:#12110f"},"Width is");
+  mk(s,"text",{x:W-R+20,y:MID+14,style:"font:700 22px PlexCond,sans-serif;fill:#12110f"},"the count.");
+  mk(s,"text",{x:W-R+20,y:MID+38,style:F(12)+";fill:#57534e"},"No legend, no second chart.");
+})();
+el("flow-note").innerHTML =
+  `Three megacaps carried, four of seven leaders followed, and then it stopped. `+
+  `<b>RSP and the two surviving breakouts are real but detached</b> — measured, not fed by the chain.`;
+
+/* ── ladder ── */
+(function(){
+  const s=el("ladder"), W=1296,L=132,R=24,TOP=20,BOT=388;
+  const y=r=>BOT-r*(BOT-TOP)/7;
+  RUNG.forEach((lab,r)=>{
+    mk(s,"rect",{x:L-12,y:y(r)-17,width:W-L-R+12,height:34,fill:r%2?"#eae8e2":"transparent"});
+    mk(s,"line",{x1:L-12,y1:y(r),x2:W-R,y2:y(r),stroke:"#d6d1c9"});
+    mk(s,"text",{x:L-22,y:y(r)+5,"text-anchor":"end",
+      style:"font:600 13px PlexCond,sans-serif;fill:#57534e;letter-spacing:.02em"},lab.toUpperCase());
+    mk(s,"text",{x:L-22,y:y(r)+19,"text-anchor":"end",
+      style:F(9,"PlexMono,monospace")+";fill:#b9b3a9;letter-spacing:.1em"},"R"+r);
+  });
+  let x=L+24;
+  ["index","leader","damaged"].forEach((role,gi)=>{
+    const grp=Object.entries(NM).filter(([,v])=>v.role===role).sort((a,b)=>b[1].rung-a[1].rung);
+    if(gi) mk(s,"line",{x1:x-24,y1:TOP-16,x2:x-24,y2:BOT+34,stroke:"#cdc7be","stroke-dasharray":"2 4"});
+    mk(s,"text",{x:x-2,y:BOT+54,
+      style:F(10.5,"PlexMono,monospace",600)+";fill:#948f86;letter-spacing:.22em"},ROLE[role].toUpperCase());
+    grp.forEach(([t,v])=>{
+      const cy=y(v.rung), st=qual(v), tr=v.trace, mn=Math.min(...tr), mx=Math.max(...tr);
+      mk(s,"polyline",{points:tr.map((p,i)=>`${x-17+i*1.2},${cy+13-(p-mn)/((mx-mn)||1)*19}`).join(" "),
+        fill:"none",stroke:st==="refused"?C.refused:st==="took"?C.took:C.idle,
+        "stroke-width":.9,opacity:.36});
+      cell(s,{x:x-18,y:cy-11,w:44,h:22,state:st,label:t,fs:11});
+      x+=60;
+    });
+    x+=34;
+  });
+})();
+
+/* ── isotype ── */
+(function(){
+  const s=el("iso"), L=210,TOP=26,ROW=60,U=13,G=4;
+  const KEYS=[["episodic_pivot","Episodic Pivot",1],["vcp","VCP",1],
+              ["vol_up_gainers","Volume gainers",5],["healthy_charts","Healthy charts",10]];
+  KEYS.forEach(([k,lab,per],ri)=>{
+    const v=DF.screeners[k], a=v[0], b=v[v.length-1], y=TOP+ri*ROW;
+    mk(s,"text",{x:L-20,y:y+13,"text-anchor":"end",
+      style:"font:600 14px PlexCond,sans-serif;fill:#12110f;letter-spacing:.02em"},lab.toUpperCase());
+    mk(s,"text",{x:L-20,y:y+29,"text-anchor":"end",style:F(9.5)+";fill:#948f86"},
+      per===1?"1 mark = 1 name":`1 mark = ${per} names — estimation, admitted`);
+    const n0=Math.round(a/per), n1=Math.round(b/per);
+    for(let i=0;i<Math.max(n0,n1);i++){
+      const px=L+i*(U+G);
+      if(i<Math.min(n0,n1)) mk(s,"rect",{x:px,y,width:U,height:U,fill:"#c9c4bc"});
+      else cell(s,{x:px,y,w:U,h:U,state:n1>n0?"took":"refused"});
+    }
+    const ex=L+Math.max(n0,n1)*(U+G)+16;
+    mk(s,"text",{x:ex,y:y+12,
+      style:`font:600 15px PlexCond,sans-serif;fill:${b>a?C.took:b<a?C.refused:C.ink3}`},`${a} → ${b}`);
+  });
+  mk(s,"text",{x:L,y:TOP+4*ROW+2,style:F(12,null,500)+";fill:#12110f"},
+    "Grey = already there at month start.  Solid = added.  Hatched = lost.");
+  mk(s,"text",{x:L,y:TOP+4*ROW+22,style:F(12)+`;fill:${C.refused}`},
+    "Episodic Pivot ran 1 → 6 a session, but healthy charts fell 141 → 93. The broadening is partial.");
+})();
+
+/* ── breadth zones ── */
+(function(){
+  const s=el("breadth"), W=1296,L=150,R=176,TOP=16,BOT=212;
+  const v=TR.t2108,n=v.length;
+  const y=t=>BOT-(t/100)*(BOT-TOP), x=i=>L+i*(W-L-R)/n;
+  const Z=[[80,100,"OVERBOUGHT","risk of a top","refused"],[60,80,"STRONG","trend intact","took"],
+           [40,60,"NEUTRAL","no edge from breadth",null],[20,40,"WEAK","exposure comes down","refused"],
+           [0,20,"OVERSOLD","where bottoms are made","took"]];
+  Z.forEach(([lo,hi,nm,what,side])=>{
+    mk(s,"rect",{x:L,y:y(hi),width:W-L-R,height:y(lo)-y(hi),
+      fill:side==="took"?C.took:side==="refused"?C.refused:"#000",opacity:side?.05:.02});
+    mk(s,"line",{x1:L,y1:y(hi),x2:W-R,y2:y(hi),stroke:"#d6d1c9","stroke-width":.8});
+    mk(s,"text",{x:L-14,y:(y(lo)+y(hi))/2-1,"text-anchor":"end",
+      style:"font:600 12px PlexCond,sans-serif;fill:#57534e;letter-spacing:.04em"},nm);
+    mk(s,"text",{x:L-14,y:(y(lo)+y(hi))/2+13,"text-anchor":"end",style:F(10)+";fill:#948f86"},what);
+    mk(s,"text",{x:W-R+8,y:y(hi)+4,style:F(9,"PlexMono,monospace")+";fill:#b9b3a9"},hi);
+  });
+  const g=DATES.findIndex((d,i)=>i>0&&(new Date(d)-new Date(DATES[i-1]))/864e5>6);
+  mk(s,"polyline",{points:v.map((p,i)=>`${x(i)},${y(p)}`).join(" "),fill:"none",
+    stroke:C.ink,"stroke-width":2,"stroke-linejoin":"round"});
+  if(g>0){mk(s,"rect",{x:x(g-1),y:TOP,width:x(g)-x(g-1),height:BOT-TOP,fill:"#f2f1ed",opacity:.92});
+    mk(s,"text",{x:(x(g-1)+x(g))/2,y:TOP-4,"text-anchor":"middle",style:F(9.5)+";fill:#948f86"},
+      "archive gap · 13 sessions");}
+  mk(s,"circle",{cx:x(n-1),cy:y(v[n-1]),r:4.5,fill:C.ink});
+  cell(s,{x:x(n)-14,y:TOP,w:28,h:BOT-TOP,state:"untested"});
+  mk(s,"text",{x:x(n),y:BOT+16,"text-anchor":"middle",
+    style:F(9,"PlexMono,monospace",500)+";fill:#948f86;letter-spacing:.1em"},"PENDING");
+  mk(s,"text",{x:x(n-1)+11,y:y(v[n-1])-9,style:"font:600 20px PlexCond,sans-serif;fill:#12110f"},
+    v[n-1].toFixed(1));
+  mk(s,"text",{x:x(n-1)+11,y:y(v[n-1])+7,style:F(10)+";fill:#57534e"},"today · NEUTRAL");
+  [0,n-1].forEach(i=>mk(s,"text",{x:x(i),y:BOT+16,"text-anchor":i?"end":"start",
+    style:F(9,"PlexMono,monospace")+";fill:#b9b3a9"},DATES[i]));
+})();
+
+/* ── sequence ── */
+(function(){
+  const s=el("seq"), W=1296,L=56,R=250,TOP=28,BOT=160;
+  const v=NM.SPY.trace,n=v.length,mn=Math.min(...v),mx=Math.max(...v);
+  const x=i=>L+i*(W-L-R)/n, y=p=>BOT-(p-mn)/(mx-mn)*(BOT-TOP);
+  mk(s,"polyline",{points:v.map((p,i)=>`${x(i)},${y(p)}`).join(" "),fill:"none",
+    stroke:C.ink,"stroke-width":2,"stroke-linejoin":"round"});
+  [[n-3,"07.29","Liquidation","refused"],[n-2,"07.30","Stabilized · D1","untested"],
+   [n-1,"07.31","Follow-through · D2","took"]].forEach(([i,d,lab,st],k)=>{
+    const col=st==="took"?C.took:st==="refused"?C.refused:C.ink2;
+    mk(s,"line",{x1:x(i),y1:y(v[i]),x2:x(i),y2:TOP-2,stroke:col,"stroke-width":.9,opacity:.4});
+    cell(s,{x:x(i)-5,y:y(v[i])-5,w:10,h:10,state:st});
+    mk(s,"text",{x:x(i),y:TOP-24+k*12,"text-anchor":"middle",
+      style:F(9,"PlexMono,monospace",500)+`;fill:${col}`},`${d}  ${lab}`);
+  });
+  cell(s,{x:x(n)-2,y:TOP,w:x(n+1)-x(n),h:BOT-TOP,state:"untested"});
+  mk(s,"text",{x:x(n)+(x(n+1)-x(n))/2,y:TOP-8,"text-anchor":"middle",
+    style:F(10,"PlexMono,monospace",500)+";fill:#948f86;letter-spacing:.1em"},"NEXT");
+  mk(s,"text",{x:x(n)+(x(n+1)-x(n))/2,y:(TOP+BOT)/2,"text-anchor":"middle",
+    style:"font:700 26px PlexCond,sans-serif;fill:#c2bdb4"},"FTD?");
+  mk(s,"text",{x:x(n+1)+24,y:(TOP+BOT)/2-8,style:"font:600 18px PlexCond,sans-serif;fill:#12110f"},
+    "The slot is the position.");
+  mk(s,"text",{x:x(n+1)+24,y:(TOP+BOT)/2+12,style:F(12)+";fill:#57534e"},
+    "Every other price chart stops at the last bar.");
+})();
+</script>
+</body></html>
