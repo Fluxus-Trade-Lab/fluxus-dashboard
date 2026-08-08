@@ -38,6 +38,14 @@ describe('closedR', () => {
     expect(closedR([])).toEqual([])
     expect(closedR(undefined)).toEqual([])
   })
+  it('drops trades whose rr is non-finite', () => {
+    expect(closedR([mk({ rr: Infinity })])).toEqual([])
+    expect(closedR([mk({ rr: -Infinity })])).toEqual([])
+    expect(closedR([mk({ rr: NaN })])).toEqual([])
+    expect(closedR([mk({ rr: undefined })])).toEqual([])
+    // and keeps the finite ones alongside them
+    expect(closedR([mk({ rr: 2 }), mk({ rr: Infinity }), mk({ rr: -1 })])).toEqual([2, -1])
+  })
 })
 
 describe('expectancyStats', () => {
@@ -160,5 +168,51 @@ describe('bootstrapObjective', () => {
     const out = bootstrapObjective(rs, base)
     const share = out.endReturns.filter(r => r >= 50).length / out.endReturns.length * 100
     expect(out.pReachTarget).toBeCloseTo(share, 10)
+  })
+
+  // Single-element rs makes the PRNG draw irrelevant: every path is the same
+  // deterministic sequence, so the arithmetic can be pinned exactly.
+  it('pins exact drawdown on a monotonically losing path', () => {
+    // multiplier = 1 + (10/100) * -0.5 = 0.95 per step, peak stays at 1
+    const out = bootstrapObjective([-0.5], {
+      ...base, riskPct: 10, horizon: 3, paths: 10, maxDDPct: 20,
+    })
+    expect(out.endReturns[0]).toBeCloseTo((0.95 ** 3 - 1) * 100, 10)
+    expect(out.medianReturn).toBeCloseTo((0.95 ** 3 - 1) * 100, 10)
+    expect(out.medianMaxDD).toBeCloseTo((1 - 0.95 ** 3) * 100, 10)
+    expect(out.pBreachDD).toBe(0) // 14.26% max DD does not breach the 20% cap
+  })
+
+  it('a new equity high resets the drawdown to zero', () => {
+    // multiplier = 1 + (100/100) * 1 = 2 per step: equity 1 → 32, peak tracks it
+    const out = bootstrapObjective([1], {
+      ...base, riskPct: 100, horizon: 5, paths: 10,
+    })
+    expect(out.endReturns[0]).toBeCloseTo(3100, 10)
+    expect(out.medianMaxDD).toBeCloseTo(0, 10)
+    expect(out.pBreachDD).toBe(0)
+  })
+
+  // The two tests above are monotone, so they alone cannot tell correct
+  // peak-tracking apart from a fixed `peak = 1`. This one can: it needs a
+  // drawdown measured from a running high that is ABOVE the starting equity.
+  it('measures drawdown from the running high, not from starting equity', () => {
+    // multipliers 2 (up) and 0.5 (down). Over 3 steps only the all-up path
+    // (1 of 8) never dips below its running peak, so ~87.5% of paths draw down.
+    // A fixed peak = 1 would only see paths that dip below the START (~62.5%).
+    const out = bootstrapObjective([1, -0.5], {
+      ...base, riskPct: 100, horizon: 3, paths: 800, maxDDPct: 0,
+    })
+    expect(out.pBreachDD).toBeGreaterThan(80)
+    expect(out.pBreachDD).toBeLessThan(95)
+  })
+
+  it('flags a drawdown that breaches the cap', () => {
+    // 0.95^20 ≈ 0.3585 → max DD ≈ 64.2%, well past the 20% cap
+    const out = bootstrapObjective([-0.5], {
+      ...base, riskPct: 10, horizon: 20, paths: 10, maxDDPct: 20,
+    })
+    expect(out.medianMaxDD).toBeCloseTo((1 - 0.95 ** 20) * 100, 10)
+    expect(out.pBreachDD).toBe(100)
   })
 })
