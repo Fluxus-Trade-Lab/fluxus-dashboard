@@ -77,6 +77,34 @@ describe('sqn', () => {
   it('is null for zero variance', () => {
     expect(sqn([1, 1, 1])).toBeNull()
   })
+
+  // Tharp caps the trade count at 100 — that cap is what keeps the quality
+  // bands calibrated. Expected values come from expectancyStats on the SAME
+  // array, so these assertions pin the cap rather than re-deriving the mean.
+  it('caps N at 100: a 200-trade sample uses sqrt(100), not sqrt(200)', () => {
+    const rs = Array.from({ length: 200 }, (_, i) => (i % 2 === 0 ? 2 : -1))
+    const { n, meanR, stdevR } = expectancyStats(rs)
+    expect(n).toBe(200) // expectancyStats keeps the TRUE count
+    expect(sqn(rs)).toBeCloseTo(Math.sqrt(100) * meanR / stdevR, 10)
+    expect(sqn(rs)).not.toBeCloseTo(Math.sqrt(200) * meanR / stdevR, 6)
+  })
+
+  it('uses sqrt(n) untouched below the cap', () => {
+    const rs = Array.from({ length: 40 }, (_, i) => (i % 2 === 0 ? 2 : -1))
+    const { n, meanR, stdevR } = expectancyStats(rs)
+    expect(n).toBe(40)
+    expect(sqn(rs)).toBeCloseTo(Math.sqrt(40) * meanR / stdevR, 10)
+  })
+
+  it('pins the boundary: exactly n = 100 uses sqrt(100)', () => {
+    const rs = Array.from({ length: 100 }, (_, i) => (i % 2 === 0 ? 2 : -1))
+    const { meanR, stdevR } = expectancyStats(rs)
+    expect(sqn(rs)).toBeCloseTo(Math.sqrt(100) * meanR / stdevR, 10)
+    // n = 101 must not exceed it
+    const rs101 = Array.from({ length: 101 }, (_, i) => (i % 2 === 0 ? 2 : -1))
+    const s101 = expectancyStats(rs101)
+    expect(sqn(rs101)).toBeCloseTo(Math.sqrt(100) * s101.meanR / s101.stdevR, 10)
+  })
 })
 
 describe('sqnBand', () => {
