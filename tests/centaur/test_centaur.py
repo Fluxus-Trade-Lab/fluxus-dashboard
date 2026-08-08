@@ -53,10 +53,10 @@ def test_paired_needs_both_parties():
 
 
 def test_disagreements_are_isolated_because_they_carry_the_information():
-    rows = [mv(session="a", direction="up"), hv(session="a", direction="up"),
-            mv(session="b", direction="up"), hv(session="b", direction="down")]
+    rows = [mv(session="2026-08-03", direction="up"), hv(session="2026-08-03", direction="up"),
+            mv(session="2026-08-04", direction="up"), hv(session="2026-08-04", direction="down")]
     d = L.disagreements(rows)
-    assert [x["session"] for x in d] == ["b"]
+    assert [x["session"] for x in d] == ["2026-08-04"]
 
 
 # ------------------------------------------------- property 3: measurement
@@ -67,15 +67,16 @@ def test_a_close_in_the_middle_of_its_range_is_range_not_a_small_move():
 
 
 def test_abstentions_are_never_counted_as_hits_or_misses():
-    rows = [hv(session="a", direction="stand_aside"),
-            hv(session="b", direction="up")]
-    s = S.skill(rows, "human", {"a": "down", "b": "up"})
+    rows = [hv(session="2026-08-03", direction="stand_aside"),
+            hv(session="2026-08-04", direction="up")]
+    s = S.skill(rows, "human", {"2026-08-03": "down", "2026-08-04": "up"})
     assert s["n_scored"] == 1 and s["n_abstained"] == 1 and s["hits"] == 1
 
 
 def test_a_thin_record_reports_not_enough_rather_than_a_hit_rate():
-    rows = [hv(session=f"d{i}", direction="up") for i in range(3)]
-    s = S.skill(rows, "human", {f"d{i}": "up" for i in range(3)})
+    days = ["2026-08-03", "2026-08-04", "2026-08-05"]
+    rows = [hv(session=d, direction="up") for d in days]
+    s = S.skill(rows, "human", {d: "up" for d in days})
     assert s["hit_rate"] == 1.0          # the raw number is still there...
     assert s["enough"] is False          # ...but it is not a skill estimate
     assert "20 needed" in s["note"]
@@ -83,9 +84,9 @@ def test_a_thin_record_reports_not_enough_rather_than_a_hit_rate():
 
 def test_conviction_weighted_rate_separates_a_confident_judge_from_a_lucky_one():
     # Right when committed, wrong when hedging: better than the flat rate shows.
-    rows = [hv(session="a", direction="up", conviction=3),
-            hv(session="b", direction="up", conviction=1)]
-    s = S.skill(rows, "human", {"a": "up", "b": "down"})
+    rows = [hv(session="2026-08-03", direction="up", conviction=3),
+            hv(session="2026-08-04", direction="up", conviction=1)]
+    s = S.skill(rows, "human", {"2026-08-03": "up", "2026-08-04": "down"})
     assert s["hit_rate"] == 0.5
     assert s["conviction_weighted_rate"] == pytest.approx(0.75)
 
@@ -156,3 +157,13 @@ def test_the_merge_reports_every_input_so_it_can_be_argued_with():
     assert set(out["weights"]) == {"machine", "human"}
     assert all("basis" in w for w in out["weights"].values())
     assert len(out["contributions"]) == 2
+
+
+def test_a_view_cannot_be_filed_against_a_day_that_never_traded():
+    # 2026-08-08 is a Saturday. A view there can never be scored, and would sit
+    # in the record as a call nobody made. This guard exists because the first
+    # row ever written to the log was exactly that.
+    with pytest.raises(ValueError, match="not a trading session"):
+        mv(session="2026-08-08")
+    assert L.is_trading_session("2026-08-07") is True
+    assert L.is_trading_session("not-a-date") is False

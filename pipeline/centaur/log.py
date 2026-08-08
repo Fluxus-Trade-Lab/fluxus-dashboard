@@ -8,6 +8,13 @@ The cost of entry matters more than the richness of the schema. A log the human
 will not fill in is worth nothing, so a human view needs only a direction and a
 conviction — everything else is optional. The one field that is NOT optional is
 `asof`, because a view recorded after the fact is not a view, it is a memory.
+
+**A `human` row may only ever be written by the human.** This log is the sole
+evidence of Andy's judgement, and its value is exactly its authenticity — a
+fabricated row does not merely add noise, it corrupts the measurement the merge
+weights him by. The first thing written to this file was a demo row invented by
+the assistant and filed as `human`; it was deleted, and the session guard below
+exists because that row was also filed against a Saturday.
 """
 from __future__ import annotations
 
@@ -20,6 +27,16 @@ SOURCES = ("machine", "human")
 DIRECTIONS = ("up", "down", "range", "stand_aside")
 HORIZONS = ("intraday", "swing")
 MAX_CONVICTION = 3
+
+
+def is_trading_session(session: str) -> bool:
+    """Weekday check on the ET session date. Not a holiday calendar — it exists
+    to stop a view being filed against a day that never traded."""
+    import datetime as dt
+    try:
+        return dt.date.fromisoformat(session).weekday() < 5
+    except ValueError:
+        return False
 
 
 def view(*, asof: str, session: str, source: str, direction: str,
@@ -46,6 +63,11 @@ def view(*, asof: str, session: str, source: str, direction: str,
         raise ValueError(f"conviction must be an int in 1..{MAX_CONVICTION}")
     if not asof:
         raise ValueError("asof is required — a view recorded after the fact is a memory")
+    if not is_trading_session(session):
+        raise ValueError(
+            f"{session} is not a trading session — a view filed against a day that "
+            f"never traded can never be scored, and would sit in the record as a "
+            f"call nobody made")
     return {"asof": asof, "session": session, "source": source,
             "direction": direction, "conviction": conviction, "horizon": horizon,
             "rationale": rationale, "level": level, "state_ref": state_ref}
