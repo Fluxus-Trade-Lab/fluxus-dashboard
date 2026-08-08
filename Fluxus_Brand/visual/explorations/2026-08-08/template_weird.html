@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — 08 the namesake grammar · and the Bertin colour test</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+:root{--paper:#f4f3f0;--ink:#111110;--ink2:#5c5852;--ink3:#9c968d;--rule:#dedad3;--hair:#eae7e1;
+      --works:#1f5f9e;--fails:#d1600f;--idle:#c2bdb4;
+      --sans:Plex,sans-serif;--cond:PlexCond,Plex,sans-serif;--mono:PlexMono,Menlo,monospace}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.app{max-width:1440px;margin:0 auto;padding:0 34px 110px}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.bar{display:flex;align-items:baseline;gap:24px;padding:15px 0 14px;border-bottom:1px solid var(--ink)}
+.mark{font-family:var(--cond);font-weight:700;font-size:19px;letter-spacing:.16em}
+.bar .r{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+h1{font-family:var(--cond);font-weight:700;font-size:64px;line-height:.94;letter-spacing:-.015em;
+   text-transform:uppercase;margin:44px 0 0;max-width:17ch}
+.lede{font-size:17px;line-height:1.55;max-width:64ch;margin:22px 0 0;color:var(--ink2)}
+.lede b{color:var(--ink);font-weight:600}
+h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink3);
+   margin:66px 0 0;padding-bottom:9px;border-bottom:1px solid var(--ink)}
+h3 span{float:right;text-transform:none;letter-spacing:.02em;font-family:var(--sans);font-size:11.5px;color:var(--ink2)}
+.note{font-size:12.5px;line-height:1.7;color:var(--ink2);max-width:76ch;margin:16px 0 0}
+.note b{color:var(--ink);font-weight:600}
+
+/* ── Fluxkit cards: cheap print, deadpan, deliberately unfinished ── */
+.cards{display:flex;gap:36px;flex-wrap:wrap;margin-top:24px}
+.card{width:412px;background:#f7f5ef;border:1.5px solid var(--ink);padding:26px 28px 22px;position:relative}
+.card .top{display:flex;justify-content:space-between;align-items:baseline;
+           border-bottom:1.5px solid var(--ink);padding-bottom:8px}
+.card .fx{font-family:var(--cond);font-weight:700;font-size:15px;letter-spacing:.28em}
+.card .no{font-family:var(--mono);font-size:11px;letter-spacing:.1em}
+.card h4{font-family:var(--cond);font-weight:700;font-size:26px;letter-spacing:.02em;
+         text-transform:uppercase;margin:20px 0 2px}
+.card .sub{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--ink2)}
+.card ol{margin:20px 0 0;padding:0;list-style:none;counter-reset:s}
+.card ol li{counter-increment:s;display:grid;grid-template-columns:22px 1fr 46px;gap:8px;
+            font-size:13px;line-height:1.5;padding:7px 0;border-bottom:1px dotted #cdc7be}
+.card ol li:before{content:counter(s) "."; font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.card ol li .v{font-family:var(--mono);font-weight:500;text-align:right}
+.card .out{margin-top:20px;border:1.5px solid var(--ink);padding:12px 14px;
+           display:flex;justify-content:space-between;align-items:baseline}
+.card .out b{font-family:var(--cond);font-weight:700;font-size:22px;letter-spacing:.06em}
+.card .foot{margin-top:16px;font-family:var(--mono);font-size:9px;line-height:1.7;
+            letter-spacing:.08em;color:var(--ink2);text-transform:uppercase}
+.stamp{position:absolute;right:20px;bottom:74px;transform:rotate(-13deg);
+       border:2.5px solid var(--fails);color:var(--fails);padding:5px 10px;
+       font-family:var(--cond);font-weight:700;font-size:15px;letter-spacing:.14em;opacity:.82}
+.card.nil{display:flex;flex-direction:column;justify-content:center;min-height:452px}
+.card.nil .big{font-family:var(--cond);font-weight:700;font-size:52px;line-height:.92;
+               text-transform:uppercase;margin:auto 0}
+
+/* ── Bertin test ── */
+.testgrid{display:grid;grid-template-columns:132px repeat(4,1fr);gap:0;margin-top:22px;
+          border-top:1px solid var(--ink)}
+.testgrid > div{padding:14px 12px;border-bottom:1px solid var(--hair)}
+.testgrid .hd{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+              color:var(--ink3);border-bottom:1px solid var(--ink)}
+.testgrid .rl{font-family:var(--cond);font-weight:600;font-size:15px}
+.sw{display:flex;gap:5px;align-items:center}
+.sw i{display:block;width:38px;height:26px}
+.sw span{font-family:var(--mono);font-size:9px;color:var(--ink3)}
+table.res{width:100%;border-collapse:collapse;margin-top:24px;font-size:13px}
+table.res th{text-align:left;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;
+             text-transform:uppercase;color:var(--ink3);font-weight:400;padding:0 14px 9px 0;
+             border-bottom:1px solid var(--ink)}
+table.res td{padding:11px 14px 11px 0;border-bottom:1px solid var(--hair)}
+table.res td.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.pass{color:var(--works);font-weight:600} .fail{color:var(--fails);font-weight:600}
+</style>
+</head>
+<body><div class="app">
+
+<div class="bar"><span class="mark">FLUXUS</span>
+  <span style="font-size:12.5px;color:var(--ink3)">08 · the namesake grammar + the Bertin test</span>
+  <span class="r" id="stamp">—</span></div>
+
+<h1>The strange<br>was in the name</h1>
+<p class="lede">Seven grammars borrowed from seven founders. All professional, none of them
+<b>ours</b>. Strangeness does not come from ornament — it comes from <b>a category violation performed
+completely straight</b>, which is exactly why Mr. Update works.
+<br><br>Maciunas coined <em>Fluxus</em> for "flow" and "effluent." The movement's output was
+<b>scores and instructions</b>, <b>multiples</b>, and work <b>deliberately not finished</b> —
+MoMA files it under "these artworks aren't finished until you participate." A daily market reading,
+issued as a numbered, stamped instruction card that the market has to complete, is a category
+violation the brand name already licenses.</p>
+
+<h3>08 · The instruction card <span>Same 2026-07-31 numbers. Deadpan, cheap print, editioned.</span></h3>
+<div class="cards" id="cards"></div>
+<p class="note"><b>Why this is the "strange" and not just retro:</b> the card is an instrument that
+refuses to perform. It counts, it states one word, and it stamps itself NOT A CALL. The second card is
+the one no financial product will ever ship — <b>a full-bleed admission that nothing happened</b>.
+That is only possible because your system genuinely says <em>wait</em> most days.
+<br><br><b>Dose by surface</b> — this grammar is not for every screen:
+poster and X, full strength · Substack and letter cover, full strength · the letter's interior,
+half · the dashboard, one element only (the number, the stamp), never the whole page.</p>
+
+<h3>The Bertin test <span>Is hue the right variable for an ordered scale? Measured, not argued.</span></h3>
+<p class="note">Bertin ranks the visual variables by what they can carry. For <b>ordered</b> data he puts
+<b>value (lightness) near the top and hue near the bottom</b> — hue is for categories, not for rank.
+Our market scale is ordered: took the chance › partial › refused › not tested. So the question is
+testable: run both encodings through greyscale and through two colour-blindness simulations, and
+measure whether the steps stay distinguishable.</p>
+<div class="testgrid" id="grid"></div>
+<table class="res" id="res"></table>
+<p class="note" id="verdict"></p>
+
+</div>
+<script>
+const D = /*__DATA__*/ null;
+const T = D.breadth.today, NM = D.names, CH = D.chain, DF = D.diffusion;
+document.getElementById("stamp").textContent = `${D.as_of} · real data`;
+
+/* ── counts used by the card, all measured ── */
+const leaders = Object.entries(NM).filter(([,v])=>v.role==="leader");
+const took = Object.values(NM).filter(v=>v.direction==="up").length;
+const refused = Object.values(NM).filter(v=>v.direction==="down").length;
+const untested = Object.values(NM).filter(v=>v.direction==="flat").length;
+const brokeOut = leaders.filter(([,v])=>v.rung>=5).length;
+const lit = CH.filter(c=>c.state==="lit").length;
+const ep = DF.screeners.episodic_pivot;
+
+const card = (o) => `
+<div class="card${o.nil?" nil":""}">
+  <div class="top"><span class="fx">FLUXUS</span>
+    <span class="no">OBSERVATION No. ${o.no}</span></div>
+  ${o.nil ? `
+    <div class="sub" style="margin-top:14px">${o.date}</div>
+    <div class="big">Nothing<br>to<br>report</div>
+    <div class="foot" style="border-top:1.5px solid var(--ink);padding-top:12px">
+      No condition changed state today.<br>
+      This card is issued so that the silence is on the record.<br>
+      Edition of one · issued daily · not a call</div>
+  ` : `
+    <h4>Market event score</h4>
+    <div class="sub">${o.date} · AFTER THE CLOSE</div>
+    <ol>
+      <li><span>Count the names offered a chance that took it.</span><span class="v">${took}</span></li>
+      <li><span>Count the names offered a chance that refused.</span><span class="v">${refused}</span></li>
+      <li><span>Count the names not offered anything.</span><span class="v">${untested}</span></li>
+      <li><span>Count the leaders that broke out.</span><span class="v">${brokeOut} / 7</span></li>
+      <li><span>Count the links in the chain that lit.</span><span class="v">${lit} / 6</span></li>
+      <li><span>If line 5 is 6, add. Otherwise wait.</span><span class="v">—</span></li>
+    </ol>
+    <div class="out"><span class="sub">RESULT</span><b>WAIT</b></div>
+    <div class="stamp">NOT A CALL</div>
+    <div class="foot">
+      SPX ${T.spx_close.toFixed(0)} · 5D ${T.ratio_5d.toFixed(4)} · &gt;20SMA ${T.pct_above_20sma.toFixed(0)}%<br>
+      This card is not finished until the market performs line 6.<br>
+      Edition of one · issued daily</div>
+  `}
+</div>`;
+document.getElementById("cards").innerHTML =
+  card({no:"089", date:"2026 JULY 31"}) + card({no:"090", date:"2026 AUGUST 01", nil:true});
+
+/* ══════════ the Bertin test — real numbers, not an opinion ══════════ */
+const HUE  = ["#1f5f9e","#7f8b96","#d1600f","#c2bdb4"];   // took / partial / refused / untested
+const LIGHT= ["#16150f","#6d675e","#a8a29a","#e2ded7"];   // same order, lightness ramp
+const LABELS=["took it","partial","refused","not tested"];
+
+const hex2rgb = h => [1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const rgb2hex = c => "#"+c.map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,"0")).join("");
+// Colour-vision matrices are defined on LINEAR light. Applying them straight to
+// gamma-encoded sRGB inflated the result — the first run reported the simulated
+// pairs as further apart than the originals, which is impossible.
+const toLin  = v => { v/=255; return v<=.04045 ? v/12.92 : Math.pow((v+.055)/1.055,2.4); };
+const toSrgb = v => 255*(v<=.0031308 ? 12.92*v : 1.055*Math.pow(Math.max(v,0),1/2.4)-.055);
+const mul = (m,c) => {
+  const l = c.map(toLin);
+  return [0,1,2].map(r => toSrgb(m[r][0]*l[0]+m[r][1]*l[1]+m[r][2]*l[2]));
+};
+// Classic Vienot-derived approximations. Good enough to decide a design question.
+const SIM = {
+  normal:      [[1,0,0],[0,1,0],[0,0,1]],
+  greyscale:   [[.2126,.7152,.0722],[.2126,.7152,.0722],[.2126,.7152,.0722]],  // linear luminance
+  deuteranopia:[[.625,.375,0],[.70,.30,0],[0,.30,.70]],
+  protanopia:  [[.567,.433,0],[.558,.442,0],[0,.242,.758]],
+};
+// sRGB → CIELAB, so the distance is perceptual rather than raw RGB
+function lab(rgb){
+  const f=v=>{v/=255; return v<=.04045? v/12.92 : Math.pow((v+.055)/1.055,2.4);};
+  const [r,g,b]=rgb.map(f);
+  let X=(.4124*r+.3576*g+.1805*b)/.95047, Y=.2126*r+.7152*g+.0722*b, Z=(.0193*r+.1192*g+.9505*b)/1.08883;
+  const k=t=> t>.008856? Math.cbrt(t) : (7.787*t)+16/116;
+  [X,Y,Z]=[k(X),k(Y),k(Z)];
+  return [116*Y-16, 500*(X-Y), 200*(Y-Z)];
+}
+const dE = (a,b)=>{const A=lab(a),B=lab(b);return Math.hypot(A[0]-B[0],A[1]-B[1],A[2]-B[2]);};
+
+const grid = document.getElementById("grid");
+const modes = Object.keys(SIM);
+grid.innerHTML = `<div class="hd"></div>` +
+  modes.map(m=>`<div class="hd">${m}</div>`).join("") +
+  [["Hue (current)",HUE],["Lightness (Bertin)",LIGHT]].map(([nm,pal])=>
+    `<div class="rl">${nm}</div>` + modes.map(m=>
+      `<div><div class="sw">${pal.map((h,i)=>{
+        const c=rgb2hex(mul(SIM[m],hex2rgb(h)));
+        return `<i style="background:${c}" title="${LABELS[i]}"></i>`;}).join("")}</div></div>`
+    ).join("")).join("");
+
+// the decisive number: the SMALLEST adjacent step, because a scale is only as
+// readable as its weakest neighbouring pair
+const rows = [["Hue (current)",HUE],["Lightness (Bertin)",LIGHT]].map(([nm,pal])=>{
+  const worst = {};
+  modes.forEach(m=>{
+    const sim = pal.map(h=>mul(SIM[m],hex2rgb(h)));
+    worst[m] = Math.min(...sim.slice(1).map((c,i)=>dE(sim[i],c)));
+  });
+  return {nm,worst};
+});
+const TH = 12;   // below this two adjacent steps read as the same swatch at UI size
+document.getElementById("res").innerHTML =
+  `<tr><th>Encoding</th>${modes.map(m=>`<th>${m}</th>`).join("")}<th>Verdict</th></tr>` +
+  rows.map(r=>{
+    const ok = modes.every(m=>r.worst[m]>=TH);
+    return `<tr><td><b>${r.nm}</b></td>` +
+      modes.map(m=>`<td class="num ${r.worst[m]>=TH?"pass":"fail"}">${r.worst[m].toFixed(1)}</td>`).join("") +
+      `<td class="${ok?"pass":"fail"}">${ok?"survives all four":"breaks"}</td></tr>`;
+  }).join("");
+
+const hueRow = rows[0], litRow = rows[1];
+const worstHue = Math.min(...modes.map(m=>hueRow.worst[m]));
+const worstLit = Math.min(...modes.map(m=>litRow.worst[m]));
+document.getElementById("verdict").innerHTML =
+  `<b>Reading:</b> the number is the smallest gap between two <em>adjacent</em> steps, in CIELAB ΔE —
+   a scale is only as readable as its weakest neighbouring pair. Below about ${TH} the two swatches
+   read as one at UI size.
+   <br><br>Hue bottoms out at <b>ΔE ${worstHue.toFixed(1)}</b>; lightness bottoms out at
+   <b>ΔE ${worstLit.toFixed(1)}</b>.
+   ${worstLit > worstHue
+     ? `<b>Bertin wins on the measurement</b> — but note what it costs: a lightness ramp cannot also
+        say <em>which direction</em>. Blue and orange carry a meaning that grey cannot.`
+     : `<b>The current hue scheme holds up</b> under all four conditions, so Bertin's general rule
+        does not bind here.`}
+   <br><br><b>What I would actually do:</b> encode rank in <b>lightness</b> and keep hue as a
+   <em>second, redundant</em> channel for direction. Redundant encoding is the one move that satisfies
+   both — Bertin's objection is to hue carrying the rank <em>alone</em>.
+   <br><br><em>Which number to trust.</em> Only the greyscale column is load-bearing: it is a true
+   linear-luminance projection, and it is where hue collapses to <b>ΔE ${hueRow.worst.greyscale.toFixed(1)}</b> —
+   two adjacent steps become one swatch. That is the finding that matters here, because this brand is
+   distributed by screenshot and print.
+   <br><br>The two colour-blindness columns read <em>higher</em> than normal vision, which cannot be
+   true of a simulation — the Vienot-style matrices are not luminance-preserving, so they stretch some
+   pairs apart in L*. Treat those two numbers as directional only: blue↔orange is a well-known
+   dichromat-safe pair and it does survive, but do not quote the magnitudes. ΔE 12 is a working
+   threshold, not a standard.`;
+</script>
+</body></html>

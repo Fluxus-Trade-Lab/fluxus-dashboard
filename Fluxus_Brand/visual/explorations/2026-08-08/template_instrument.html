@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — Market state · the instrument</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+:root{
+  --paper:#f4f3f0;--card:#fbfaf8;--ink:#111110;--ink2:#5c5852;--ink3:#9c968d;
+  --rule:#dedad3;--hair:#eae7e1;
+  --took:#1a5488;      /* solid — took the chance offered            */
+  --refused:#d1600f;   /* solid + 45° hatch — offered and failed      */
+  --idle:#c2bdb4;      /* outline only — not tested; out of the scale */
+  --sans:Plex,sans-serif;--cond:PlexCond,Plex,sans-serif;--mono:PlexMono,Menlo,monospace;
+}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.app{max-width:1440px;margin:0 auto;padding:0 34px 96px}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.bar{display:flex;align-items:center;gap:26px;padding:15px 0 14px;border-bottom:1px solid var(--ink)}
+.mark{font-family:var(--cond);font-weight:700;font-size:19px;letter-spacing:.16em}
+.bar nav{display:flex;gap:22px;font-size:12.5px;color:var(--ink3)}
+.bar nav b{color:var(--ink);font-weight:600}
+.bar .r{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+.bar .stampx{border:1.6px solid var(--refused);color:var(--refused);padding:3px 7px;
+  font-family:var(--cond);font-weight:700;font-size:10px;letter-spacing:.13em;transform:rotate(-4deg)}
+
+.hero{display:grid;grid-template-columns:1fr 380px;gap:46px;padding:42px 0 38px;border-bottom:1px solid var(--ink)}
+.kick{font-family:var(--mono);font-size:11px;letter-spacing:.26em;color:var(--ink3);margin-bottom:18px}
+.verdict{font-family:var(--cond);font-weight:700;font-size:100px;line-height:.9;letter-spacing:-.015em;
+         text-transform:uppercase}
+.read{font-size:20px;line-height:1.4;margin-top:22px;max-width:24ch;font-weight:500}
+.read em{font-style:normal;color:var(--refused)}
+.spec{border-top:2px solid var(--ink)}
+.spec div{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;
+          border-bottom:1px solid var(--hair)}
+.spec .k{font-size:11px;letter-spacing:.1em;color:var(--ink2);text-transform:uppercase}
+.spec .v{font-family:var(--mono);font-size:14px;font-weight:500}
+
+h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink3);
+   margin:56px 0 0;padding-bottom:9px;border-bottom:1px solid var(--ink)}
+h3 span{float:right;text-transform:none;letter-spacing:.02em;font-family:var(--sans);
+        font-size:11.5px;color:var(--ink2)}
+.note{font-size:12.5px;line-height:1.7;color:var(--ink2);max-width:80ch;margin:15px 0 0}
+.note b{color:var(--ink);font-weight:600}
+svg{display:block;width:100%;height:auto;overflow:visible;margin-top:16px}
+
+/* state board */
+.board{display:grid;grid-template-columns:1fr 1fr;column-gap:40px;margin-top:6px}
+.row{display:grid;grid-template-columns:152px 104px 1fr;gap:14px;align-items:center;
+     min-height:50px;padding:6px 0;border-bottom:1px solid var(--hair)}
+.row .k{font-family:var(--cond);font-weight:600;font-size:16px}
+.row .lv{display:flex;gap:2px}
+.row .lv i{display:block;width:17px;height:15px}
+.row .st{font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-weight:600;margin-bottom:3px}
+.row .ev{font-size:11.5px;line-height:1.5;color:var(--ink2)}
+/* key */
+.key{display:flex;gap:26px;align-items:center;margin-top:18px;flex-wrap:wrap;
+     font-size:11.5px;color:var(--ink2)}
+.key i{display:inline-block;width:26px;height:15px;vertical-align:-3px;margin-right:7px}
+</style>
+</head>
+<body><div class="app">
+
+<svg width="0" height="0" style="position:absolute;margin:0"><defs>
+  <pattern id="hx" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="5" stroke="#7d3908" stroke-width="1.7"/></pattern>
+</defs></svg>
+
+<div class="bar">
+  <span class="mark">FLUXUS</span>
+  <nav><b>Market state</b><span>Screener</span><span>Positions</span><span>Ticker</span><span>Letters</span></nav>
+  <span class="r" id="stamp">—</span>
+  <span class="stampx">NOT A CALL</span>
+</div>
+
+<div class="hero">
+  <div>
+    <div class="kick">RISK POSTURE · FILE FX-2026-089</div>
+    <div class="verdict">Wait<br>for FTD</div>
+    <div class="read" id="read">—</div>
+  </div>
+  <div class="spec" id="spec"></div>
+</div>
+
+<h3>State board <span>Nine conditions. One left blank because the pipeline cannot measure it.</span></h3>
+<div class="board" id="board"></div>
+<div class="key" id="key"></div>
+
+<h3>Propagation <span>After Minard — the width is the count, so the failure is a shape</span></h3>
+<svg id="flow" viewBox="0 0 1372 330"></svg>
+<p class="note"><b>What changed:</b> six lamps became one current. Lamps told you a link was off;
+a width tells you <em>how much</em> was carrying at each stage — three megacaps, then four of seven
+leaders, then nothing. The stall is visible as a shape before you read a single label.</p>
+
+<h3>Repair ladder <span>Where each name has climbed to · arrows are the week's travel</span></h3>
+<svg id="ladder" viewBox="0 0 1372 470"></svg>
+
+<h3>Evidence of broadening <span>After Isotype — one mark is a countable thing, never a stretched bar</span></h3>
+<svg id="iso" viewBox="0 0 1372 300"></svg>
+<p class="note"><b>What changed:</b> bars became countable marks. "Leadership is broadening" now has to
+show six squares, and the row that lost ground shows its losses as dashed outlines rather than a
+shorter bar. Two rows use a 1-mark-equals-many convention, printed on the row — that reintroduces
+estimation and it should be admitted, not hidden.</p>
+
+<h3>Sorted until it speaks <span>After Bertin — rows and columns permuted, encoded in lightness</span></h3>
+<svg id="matrix" viewBox="0 0 1372 420"></svg>
+
+<h3>Breadth, with the rule drawn on it <span>Zones read from THRESHOLDS, not invented</span></h3>
+<svg id="breadth" viewBox="0 0 1372 300"></svg>
+
+<h3>Sequence <span>The dashed slot has not happened yet</span></h3>
+<svg id="seq" viewBox="0 0 1372 250"></svg>
+
+</div>
+<script>
+const D = /*__DATA__*/ null;
+const B = D.state_board.filter(r=>r.key!=="风险姿态"), CH = D.chain, T = D.breadth.today,
+      NM = D.names, DF = D.diffusion, TR = D.breadth.trace, DATES = D.breadth.dates;
+const NS="http://www.w3.org/2000/svg";
+const C={took:"#1a5488",refused:"#d1600f",idle:"#c2bdb4",ink:"#111110",ink2:"#5c5852",ink3:"#9c968d"};
+const el=id=>document.getElementById(id);
+function mk(p,t,a={},x){const n=document.createElementNS(NS,t);
+  for(const k in a) n.setAttribute(k,a[k]); if(x!=null) n.textContent=x; p.appendChild(n); return n;}
+const F=(s,f,w)=>`font:${w||400} ${s}px ${f||"Plex,sans-serif"}`;
+
+/* ── the encoding, in one place ───────────────────────────────────────
+   fill: two colours only, far enough apart to survive greyscale
+   area: a half-filled cell = "partial"
+   texture: 45° hatch on every failure
+   outline: not tested — outside the scale entirely                    */
+function cell(parent,{x,y,w,h,state,label,fs}){
+  const solid = state==="took" || state==="refused";
+  if (state==="untested"){
+    mk(parent,"rect",{x,y,width:w,height:h,fill:"none",stroke:C.idle,
+      "stroke-width":1.2,"stroke-dasharray":"3 2"});
+  } else if (state==="partial"){
+    mk(parent,"rect",{x,y,width:w,height:h,fill:"none",stroke:C.took,"stroke-width":1.2});
+    mk(parent,"rect",{x,y,width:w/2,height:h,fill:C.took});
+  } else {
+    const col = state==="took" ? C.took : C.refused;
+    mk(parent,"rect",{x,y,width:w,height:h,fill:col});
+    if (state==="refused") mk(parent,"rect",{x,y,width:w,height:h,fill:"url(#hx)",opacity:.5});
+  }
+  if (label!=null) mk(parent,"text",{x:x+w/2,y:y+h/2+3.5,"text-anchor":"middle",
+    style:`font:500 ${fs||10}px PlexMono,monospace;fill:${
+      state==="took"?"#fff":state==="refused"?"#3a1f06":C.ink3}`}, label);
+  return solid;
+}
+const qual = v => v.direction==="up" ? "took" : v.direction==="down" ? "refused" : "untested";
+
+const LEV={"缺席":0,"很弱":1,"早期":2,"已启动":3,"良好":4};
+const ORDER=["Absent","Very weak","Early","Started","Good"];
+const LEV_EN={"缺席":"Absent","很弱":"Very weak","早期":"Early","已启动":"Started","良好":"Good"};
+const KEY_EN={"受损程度":"Damage","抛压":"Selling pressure","指数修复":"Index repair",
+ "领涨修复":"Leadership repair","巨头领涨":"Megacap leadership","广义半导体":"Broad semis",
+ "市场宽度":"Breadth","利率":"Rates","确认信号":"Confirmation"};
+const EV_EN={
+ "受损程度":"523 names −25% on the quarter against 342 up 25% — 60% on the down side",
+ "抛压":"288 names −4% today against a five-day peak of 637, back to 45% of it",
+ "指数修复":"3 of 5 indexes above the 50-day: SPY, RSP, DIA",
+ "领涨修复":"4 of 7 leaders have broken out: AMZN, MSFT, NTAP, DXCM",
+ "巨头领涨":"AMZN rung 5 · MSFT rung 6 · NVDA rung 2 — mean 4.3 of 7",
+ "广义半导体":"7 damaged names average rung 1.0 of 7; five still stabilizing or broken",
+ "市场宽度":"40.7% above the 20-day, T2108 45.8, net advances −336 with indexes green",
+ "利率":"30Y and 20Y broke to 2007 highs — bond data is not wired into the pipeline",
+ "确认信号":"Five-day ratio 0.9905, needs to clear 1.0 · Episodic Pivot 6 today against 1 at month start"};
+const CH_EN={"巨头站住":"Megacaps hold","更多领涨跟上":"Leaders follow","QQQ 收回 21/50":"QQQ reclaims",
+ "宽度扩张":"Breadth expands","RSP / IWM 跟上":"RSP & IWM","突破站得住":"Breakouts hold"};
+const RUNG=["Broken","Stabilizing","Reclaim","Above 50D","Pivot","Breakout","Holds","Expansion"];
+const ROLE={index:"Indexes",leader:"Leaders",damaged:"Damaged"};
+
+el("stamp").textContent=`${D.as_of} · CLOSE · SPX ${T.spx_close.toFixed(2)}`;
+el("read").innerHTML=`Megacaps repaired.<br><em>Propagation did not happen.</em>`;
+el("spec").innerHTML=[["S&P 500",T.spx_close.toFixed(2)],["5-day ratio",T.ratio_5d.toFixed(4)],
+  ["Above 20-day",T.pct_above_20sma.toFixed(1)+"%"],["T2108",T.t2108.toFixed(1)],
+  ["Net advances",(T.net_advances>0?"+":"")+T.net_advances],["Leaders broken out","4 / 7"],
+  ["Chain links lit","1 / 6"]]
+  .map(([k,v])=>`<div><span class="k">${k}</span><span class="v">${v}</span></div>`).join("");
+
+/* ── state board: position carries rank, colour carries side ── */
+el("board").innerHTML=B.map(r=>{
+  const lv = r.state==null ? -1 : LEV[r.state];
+  const cells = ORDER.map((_,k)=>{
+    if (lv<0) return `<i style="border:1.2px dashed ${C.idle}"></i>`;
+    if (k>lv)  return `<i style="background:#e6e2db"></i>`;
+    const col = lv<=1 ? C.refused : lv>=3 ? C.took : "#8d877d";
+    const hatch = lv<=1 ? `background-image:repeating-linear-gradient(45deg,rgba(125,57,8,.55) 0 1.7px,transparent 1.7px 5px);` : "";
+    return `<i style="background:${col};${hatch}"></i>`;
+  }).join("");
+  const col = lv<0?C.ink3:lv<=1?C.refused:lv>=3?C.took:C.ink2;
+  return `<div class="row"><div class="k">${KEY_EN[r.key]}</div>
+    <div><div class="lv">${cells}</div></div>
+    <div><div class="st" style="color:${col}">${r.state==null?"Not wired":LEV_EN[r.state]}</div>
+      <div class="ev">${EV_EN[r.key]}</div></div></div>`;}).join("");
+el("key").innerHTML=
+ `<span><i style="background:${C.took}"></i>took the chance offered</span>`+
+ `<span><i style="background:${C.refused};background-image:repeating-linear-gradient(45deg,rgba(125,57,8,.55) 0 1.7px,transparent 1.7px 5px)"></i>offered and refused</span>`+
+ `<span><i style="border:1.2px solid ${C.took};background:linear-gradient(90deg,${C.took} 50%,transparent 50%)"></i>partial — half the cell</span>`+
+ `<span><i style="border:1.2px dashed ${C.idle}"></i>not tested — outside the scale</span>`+
+ `<span style="color:${C.ink3}">rank is carried by how many cells are filled, never by hue alone</span>`;
+
+/* ── Minard flow ── */
+(function(){
+  const s=el("flow"), W=1372, L=60, R=250, TOP=44, MID=170, MAXW=100;
+  const seg=(W-L-R)/CH.length;
+  const MEAS=[3/3,4/7,0,0,1/2,2/7], LAB=["3 of 3 megacaps","4 of 7 leaders","QQQ 0 of 2 MAs",
+    "breadth 0 of 3 tests","1 of 2 — RSP only","2 of 7 still holding"];
+  // A current that has stopped cannot come back downstream. The band is the
+  // RUNNING MINIMUM of what is still being carried; the first version let it
+  // swell again at links 5 and 6, which is the one thing Minard never does.
+  const FLOW=MEAS.map((_,i)=>Math.min(...MEAS.slice(0,i+1)));
+  const w=i=>Math.max(0.012,FLOW[i])*MAXW/2;
+  let top=[],bot=[];
+  FLOW.forEach((_,i)=>{top.push(`${i?"L":"M"}${L+seg*i},${MID-w(i)}`,`L${L+seg*(i+1)-16},${MID-w(i)}`);});
+  for(let i=FLOW.length-1;i>=0;i--) bot.push(`L${L+seg*(i+1)-16},${MID+w(i)}`,`L${L+seg*i},${MID+w(i)}`);
+  mk(s,"path",{d:top.join(" ")+" "+bot.join(" ")+" Z",fill:C.took});
+
+  const dead=FLOW.findIndex(v=>v<=0.02);
+  if(dead>0){
+    mk(s,"rect",{x:L+seg*dead,y:MID-3,width:(FLOW.length-dead)*seg-16,height:6,fill:C.refused});
+    mk(s,"rect",{x:L+seg*dead,y:MID-3,width:(FLOW.length-dead)*seg-16,height:6,fill:"url(#hx)",opacity:.5});
+  }
+  MEAS.forEach((v,i)=>{
+    const x=L+seg*i;
+    mk(s,"line",{x1:x,y1:TOP-8,x2:x,y2:MID+MAXW/2+64,stroke:"#cdc7be","stroke-width":.8});
+    mk(s,"text",{x:x+9,y:TOP+4,style:"font:600 15px PlexCond,sans-serif;fill:#111110"},CH_EN[CH[i].label]);
+    mk(s,"text",{x:x+9,y:TOP+21,style:F(10.5)+";fill:#5c5852"},LAB[i]);
+    // measured but no longer fed by the chain — drawn detached, above the line
+    if(v>FLOW[i]+0.02){
+      const h=v*MAXW/2;
+      mk(s,"rect",{x:x+8,y:MID-MAXW/2-34,width:seg-32,height:h*0.7,
+        fill:"none",stroke:C.took,"stroke-width":1.2,"stroke-dasharray":"3 3"});
+      mk(s,"text",{x:x+9,y:MID-MAXW/2-42,style:F(9.5,"PlexMono,monospace")+`;fill:${C.took}`},
+        `${Math.round(v*100)}% — MEASURED, NOT FED`);
+    }
+    mk(s,"text",{x:x+9,y:MID+MAXW/2+58,
+      style:F(11,"PlexMono,monospace",500)+`;fill:${FLOW[i]>0.02?C.took:C.refused}`},
+      FLOW[i]>0.02 ? Math.round(FLOW[i]*100)+"% carrying" : "0% carrying");
+  });
+  mk(s,"text",{x:L+seg*dead+9,y:MID+MAXW/2+76,style:F(11,null,500)+`;fill:${C.refused}`},
+    "the current stops here and does not resume");
+  mk(s,"text",{x:W-R+18,y:MID-8,style:"font:700 22px PlexCond,sans-serif;fill:#111110"},"Width is");
+  mk(s,"text",{x:W-R+18,y:MID+16,style:"font:700 22px PlexCond,sans-serif;fill:#111110"},"the count.");
+  mk(s,"text",{x:W-R+18,y:MID+42,style:F(12)+";fill:#5c5852"},"No legend, no second chart.");
+  mk(s,"text",{x:W-R+18,y:MID+60,style:F(12)+";fill:#5c5852"},"The thinning is the finding.");
+})();
+
+/* ── ladder in the resolved encoding ── */
+(function(){
+  const s=el("ladder"), W=1372,L=140,R=30,TOP=22,BOT=400;
+  const y=r=>BOT-r*(BOT-TOP)/7;
+  RUNG.forEach((lab,r)=>{
+    mk(s,"rect",{x:L-12,y:y(r)-17,width:W-L-R+12,height:34,fill:r%2?"#ecebe6":"transparent"});
+    mk(s,"line",{x1:L-12,y1:y(r),x2:W-R,y2:y(r),stroke:"#d6d1c9"});
+    mk(s,"text",{x:L-24,y:y(r)+5,"text-anchor":"end",
+      style:"font:600 13px PlexCond,sans-serif;fill:#5c5852;letter-spacing:.02em"},lab.toUpperCase());
+    mk(s,"text",{x:L-24,y:y(r)+19,"text-anchor":"end",
+      style:F(9,"PlexMono,monospace")+";fill:#b3ada3;letter-spacing:.1em"},"R"+r);
+  });
+  let x=L+26;
+  ["index","leader","damaged"].forEach((role,gi)=>{
+    const grp=Object.entries(NM).filter(([,v])=>v.role===role).sort((a,b)=>b[1].rung-a[1].rung);
+    if(gi) mk(s,"line",{x1:x-26,y1:TOP-18,x2:x-26,y2:BOT+34,stroke:"#cdc7be","stroke-dasharray":"2 4"});
+    mk(s,"text",{x:x-4,y:BOT+56,
+      style:F(11,"PlexMono,monospace",600)+";fill:#9c968d;letter-spacing:.22em"},ROLE[role].toUpperCase());
+    grp.forEach(([t,v])=>{
+      const cy=y(v.rung), st=qual(v);
+      const tr=v.trace,mn=Math.min(...tr),mx=Math.max(...tr);
+      mk(s,"polyline",{points:tr.map((p,i)=>`${x-18+i*1.25},${cy+14-(p-mn)/((mx-mn)||1)*20}`).join(" "),
+        fill:"none",stroke:st==="refused"?C.refused:st==="took"?C.took:C.idle,"stroke-width":.9,opacity:.38});
+      cell(s,{x:x-19,y:cy-11,w:46,h:22,state:st,label:t,fs:11});
+      x+=62;
+    });
+    x+=38;
+  });
+})();
+
+/* ── Isotype units ── */
+(function(){
+  const s=el("iso"), L=220,TOP=30,ROW=62,U=13,G=4;
+  const KEYS=[["episodic_pivot","Episodic Pivot",1],["vcp","VCP",1],
+              ["vol_up_gainers","Volume gainers",5],["healthy_charts","Healthy charts",10]];
+  KEYS.forEach(([k,lab,per],ri)=>{
+    const v=DF.screeners[k], a=v[0], b=v[v.length-1], y=TOP+ri*ROW;
+    mk(s,"text",{x:L-20,y:y+13,"text-anchor":"end",
+      style:"font:600 14px PlexCond,sans-serif;fill:#111110;letter-spacing:.02em"},lab.toUpperCase());
+    mk(s,"text",{x:L-20,y:y+29,"text-anchor":"end",style:F(9.5)+";fill:#9c968d"},
+      per===1?"1 mark = 1 name":`1 mark = ${per} names — estimation, admitted`);
+    const n0=Math.round(a/per), n1=Math.round(b/per);
+    for(let i=0;i<Math.max(n0,n1);i++){
+      const px=L+i*(U+G);
+      if(i<Math.min(n0,n1)) mk(s,"rect",{x:px,y,width:U,height:U,fill:"#c9c4bc"});
+      else if(n1>n0)        cell(s,{x:px,y,w:U,h:U,state:"took"});
+      else                  cell(s,{x:px,y,w:U,h:U,state:"refused"});
+    }
+    const ex=L+Math.max(n0,n1)*(U+G)+16;
+    mk(s,"text",{x:ex,y:y+12,
+      style:`font:600 15px PlexCond,sans-serif;fill:${b>a?C.took:b<a?C.refused:C.ink3}`},`${a} → ${b}`);
+  });
+  mk(s,"text",{x:L,y:TOP+4*ROW+6,style:F(12,null,500)+";fill:#111110"},
+    "Grey = already there at month start. Solid = added. Hatched = lost.");
+})();
+
+/* ── Bertin matrix ── */
+(function(){
+  const s=el("matrix"), L=230,TOP=86,CW=54,RH=17;
+  const CRIT=[["above 21D",v=>v.above_21],["above 50D",v=>v.above_50],["above 200D",v=>v.above_200],
+              ["rung ≥ 3",v=>v.rung>=3],["broke out",v=>v.rung>=5],["travelling up",v=>v.direction==="up"]];
+  const rows=Object.entries(NM).map(([t,v])=>({t,v,sc:CRIT.reduce((a,[,f])=>a+(f(v)?1:0),0)}))
+    .sort((a,b)=>b.sc-a.sc||b.v.rung-a.v.rung);
+  const cols=CRIT.map(([lab,f])=>({lab,f,hits:rows.filter(r=>f(r.v)).length}))
+    .sort((a,b)=>b.hits-a.hits);
+  cols.forEach((c,ci)=>mk(s,"text",{x:L+ci*CW+CW/2,y:TOP-14,
+    transform:`rotate(-46 ${L+ci*CW+CW/2} ${TOP-14})`,
+    style:F(11,null,500)+";fill:#5c5852"},`${c.lab} · ${c.hits}`));
+  rows.forEach((r,ri)=>{
+    mk(s,"text",{x:L-14,y:TOP+ri*RH+12,"text-anchor":"end",
+      style:F(11,"PlexMono,monospace",500)+";fill:#111110"},r.t);
+    mk(s,"text",{x:L-64,y:TOP+ri*RH+12,"text-anchor":"end",style:F(9.5)+";fill:#9c968d"},RUNG[r.v.rung]);
+    cols.forEach((c,ci)=>{
+      const on=c.f(r.v);
+      mk(s,"rect",{x:L+ci*CW,y:TOP+ri*RH+1,width:CW-3,height:RH-3,
+        fill:on?"#111110":"#ffffff",opacity:on?.86:1,stroke:"#e0dcd5"});
+    });
+  });
+  const RX=L+cols.length*CW+64;
+  mk(s,"text",{x:RX,y:TOP+6,style:"font:700 21px PlexCond,sans-serif;fill:#111110"},"Sort until");
+  mk(s,"text",{x:RX,y:TOP+30,style:"font:700 21px PlexCond,sans-serif;fill:#111110"},"it speaks.");
+  ["Rows by how many criteria each name meets, columns by",
+   "how many names meet each criterion. The solid block at the",
+   "top and the empty block at the bottom are the finding —",
+   "narrowness as a shape, not a sentence.","",
+   "Lightness only. No hue at all, so this panel is immune to",
+   "every colour condition and prints as it looks."]
+   .forEach((t,i)=>mk(s,"text",{x:RX,y:TOP+62+i*20,style:F(12.5)+";fill:#5c5852"},t));
+})();
+
+/* ── breadth zones ── */
+(function(){
+  const s=el("breadth"), W=1372,L=160,R=200,TOP=18,BOT=222;
+  const v=TR.t2108,n=v.length;
+  const y=t=>BOT-(t/100)*(BOT-TOP), x=i=>L+i*(W-L-R)/n;
+  const Z=[[80,100,"OVERBOUGHT","risk of a top","refused"],[60,80,"STRONG","trend intact","took"],
+           [40,60,"NEUTRAL","no edge from breadth",null],[20,40,"WEAK","exposure comes down","refused"],
+           [0,20,"OVERSOLD","where bottoms are made","took"]];
+  Z.forEach(([lo,hi,nm,what,side])=>{
+    mk(s,"rect",{x:L,y:y(hi),width:W-L-R,height:y(lo)-y(hi),
+      fill:side==="took"?C.took:side==="refused"?C.refused:"#000",opacity:side?.05:.02});
+    mk(s,"line",{x1:L,y1:y(hi),x2:W-R,y2:y(hi),stroke:"#d8d4cd","stroke-width":.8});
+    mk(s,"text",{x:L-14,y:(y(lo)+y(hi))/2-1,"text-anchor":"end",
+      style:"font:600 12px PlexCond,sans-serif;fill:#5c5852;letter-spacing:.04em"},nm);
+    mk(s,"text",{x:L-14,y:(y(lo)+y(hi))/2+13,"text-anchor":"end",style:F(10)+";fill:#9c968d"},what);
+    mk(s,"text",{x:W-R+8,y:y(hi)+4,style:F(9,"PlexMono,monospace")+";fill:#b3ada3"},hi);
+  });
+  const g=DATES.findIndex((d,i)=>i>0&&(new Date(d)-new Date(DATES[i-1]))/864e5>6);
+  mk(s,"polyline",{points:v.map((p,i)=>`${x(i)},${y(p)}`).join(" "),fill:"none",
+    stroke:C.ink,"stroke-width":2,"stroke-linejoin":"round"});
+  if(g>0){mk(s,"rect",{x:x(g-1),y:TOP,width:x(g)-x(g-1),height:BOT-TOP,fill:"#f4f3f0",opacity:.9});
+    mk(s,"text",{x:(x(g-1)+x(g))/2,y:TOP-5,"text-anchor":"middle",style:F(9.5)+";fill:#9c968d"},
+      "archive gap");}
+  mk(s,"circle",{cx:x(n-1),cy:y(v[n-1]),r:4.5,fill:C.ink});
+  cell(s,{x:x(n)-14,y:TOP,w:28,h:BOT-TOP,state:"untested"});
+  mk(s,"text",{x:x(n),y:BOT+16,"text-anchor":"middle",
+    style:F(9,"PlexMono,monospace",500)+";fill:#9c968d;letter-spacing:.1em"},"PENDING");
+  mk(s,"text",{x:x(n-1)+10,y:y(v[n-1])-9,style:"font:600 20px PlexCond,sans-serif;fill:#111110"},
+    v[n-1].toFixed(1));
+  mk(s,"text",{x:x(n-1)+10,y:y(v[n-1])+7,style:F(10)+";fill:#5c5852"},"today · NEUTRAL");
+  [0,n-1].forEach(i=>mk(s,"text",{x:x(i),y:BOT+16,"text-anchor":i?"end":"start",
+    style:F(9,"PlexMono,monospace")+";fill:#b3ada3"},DATES[i]));
+})();
+
+/* ── sequence ── */
+(function(){
+  const s=el("seq"), W=1372,L=60,R=260,TOP=26,BOT=170;
+  const v=NM.SPY.trace,n=v.length,mn=Math.min(...v),mx=Math.max(...v);
+  const x=i=>L+i*(W-L-R)/n, y=p=>BOT-(p-mn)/(mx-mn)*(BOT-TOP);
+  mk(s,"polyline",{points:v.map((p,i)=>`${x(i)},${y(p)}`).join(" "),fill:"none",
+    stroke:C.ink,"stroke-width":2,"stroke-linejoin":"round"});
+  [[n-3,"07.29","Liquidation","refused"],[n-2,"07.30","Stabilized · D1","untested"],
+   [n-1,"07.31","Follow-through · D2","took"]].forEach(([i,d,lab,st],k)=>{
+    const col=st==="took"?C.took:st==="refused"?C.refused:C.ink2;
+    mk(s,"line",{x1:x(i),y1:y(v[i]),x2:x(i),y2:TOP-4,stroke:col,"stroke-width":.9,opacity:.45});
+    cell(s,{x:x(i)-5,y:y(v[i])-5,w:10,h:10,state:st});
+    mk(s,"text",{x:x(i),y:TOP-24+k*13,"text-anchor":"middle",
+      style:F(9,"PlexMono,monospace",500)+`;fill:${col}`},`${d}  ${lab}`);
+  });
+  cell(s,{x:x(n)-2,y:TOP,w:x(n+1)-x(n),h:BOT-TOP,state:"untested"});
+  mk(s,"text",{x:x(n)+(x(n+1)-x(n))/2,y:TOP-8,"text-anchor":"middle",
+    style:F(10,"PlexMono,monospace",500)+";fill:#9c968d;letter-spacing:.1em"},"NEXT");
+  mk(s,"text",{x:x(n)+(x(n+1)-x(n))/2,y:(TOP+BOT)/2,"text-anchor":"middle",
+    style:"font:700 26px PlexCond,sans-serif;fill:#c2bdb4"},"FTD?");
+  mk(s,"text",{x:x(n+1)+24,y:(TOP+BOT)/2-8,style:"font:600 18px PlexCond,sans-serif;fill:#111110"},
+    "The slot is the position.");
+  mk(s,"text",{x:x(n+1)+24,y:(TOP+BOT)/2+12,style:F(12)+";fill:#5c5852"},
+    "Every other price chart stops at the last bar.");
+})();
+</script>
+</body></html>

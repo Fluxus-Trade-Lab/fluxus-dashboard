@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — Seven grammars, one day</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+:root{--paper:#f4f3f0;--ink:#111110;--ink2:#5c5852;--ink3:#9c968d;--rule:#dedad3;--hair:#eae7e1;
+      --works:#1f5f9e;--fails:#d1600f;--idle:#c2bdb4;
+      --sans:Plex,sans-serif;--cond:PlexCond,Plex,sans-serif;--mono:PlexMono,Menlo,monospace}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.app{max-width:1440px;margin:0 auto;padding:0 34px 110px}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.bar{display:flex;align-items:baseline;gap:24px;padding:15px 0 14px;border-bottom:1px solid var(--ink)}
+.mark{font-family:var(--cond);font-weight:700;font-size:19px;letter-spacing:.16em}
+.bar .r{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+h1{font-family:var(--cond);font-weight:700;font-size:66px;line-height:.94;letter-spacing:-.015em;
+   text-transform:uppercase;margin:44px 0 0;max-width:16ch}
+.lede{font-size:17px;line-height:1.55;max-width:62ch;margin:22px 0 0;color:var(--ink2)}
+.lede b{color:var(--ink);font-weight:600}
+
+.panel{margin-top:78px;padding-top:0}
+.phead{display:grid;grid-template-columns:64px 1fr 300px;gap:26px;align-items:start;
+       border-top:1.5px solid var(--ink);padding-top:14px}
+.pnum{font-family:var(--cond);font-weight:700;font-size:46px;line-height:.8;letter-spacing:-.02em}
+.pname{font-family:var(--cond);font-weight:700;font-size:27px;letter-spacing:-.005em}
+.pyear{font-family:var(--mono);font-size:11px;color:var(--ink3);letter-spacing:.14em;margin-top:6px}
+.pwhat{font-size:13.5px;line-height:1.6;color:var(--ink2);margin-top:11px;max-width:64ch}
+.pwhat b{color:var(--ink);font-weight:600}
+.heir{font-size:11.5px;line-height:1.65;color:var(--ink2);border-left:2px solid var(--rule);padding-left:14px}
+.heir .h{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:var(--ink3);
+         text-transform:uppercase;display:block;margin-bottom:6px}
+.heir b{font-weight:600;color:var(--ink)}
+.seen{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--works)}
+.unseen{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--ink3)}
+svg{display:block;width:100%;height:auto;overflow:visible;margin-top:20px}
+.verdict{margin-top:16px;font-size:13px;line-height:1.65;color:var(--ink);max-width:76ch}
+.verdict b{font-weight:600}
+</style>
+</head>
+<body><div class="app">
+
+<div class="bar"><span class="mark">FLUXUS</span>
+  <span style="font-size:12.5px;color:var(--ink3)">Seven grammars</span>
+  <span class="r" id="stamp">—</span></div>
+
+<h1>Seven grammars,<br>one day</h1>
+<p class="lede">The same 2026-07-31 numbers, drawn seven ways — each borrowing the grammar of one
+founder of the field. Nothing here is a style exercise: <b>each grammar makes a different thing easy
+to see</b>, and the point of putting them side by side is to find out which question our page is
+actually asking. Each panel also names who is carrying that grammar today, and marks whether I
+actually went and looked.</p>
+
+<!-- 1 ISOTYPE -->
+<section class="panel"><div class="phead">
+  <div class="pnum">01</div>
+  <div><div class="pname">Isotype</div><div class="pyear">OTTO NEURATH · GERD ARNTZ · VIENNA, 1925–34</div>
+    <div class="pwhat">Quantity as <b>repeated identical units</b>, never as a stretched bar.
+      A bigger number is more symbols, not a longer rectangle — so the reader <b>counts</b> instead of
+      estimating. Arntz's pictograms are the direct ancestors of Aicher's Munich system.</div></div>
+  <div class="heir"><span class="h">Carrying it now</span>
+    <b>Sonja Kuijpers (studio terp)</b>, <b>The Pudding</b>'s unit pieces, and the whole
+    "one dot = one person" school in news graphics. <span class="unseen">not visited</span></div>
+</div><svg id="p1" viewBox="0 0 1372 300"></svg>
+<div class="verdict"><b>What it wins:</b> "Leadership is broadening" stops being an adjective.
+Six marks are six names. This is the strongest answer we have to <em>show the evidence</em>.
+<b>What it costs:</b> it caps out — 133 marks in a row is unreadable, so big counts need a
+"1 mark = 10" convention, which quietly reintroduces estimation.</div></section>
+
+<!-- 2 MINARD -->
+<section class="panel"><div class="phead">
+  <div class="pnum">02</div>
+  <div><div class="pname">Minard's flow</div><div class="pyear">CHARLES JOSEPH MINARD · PARIS, 1869</div>
+    <div class="pwhat">A single band whose <b>width is the quantity</b>, travelling along the path of the
+      process. On the Russian campaign map the army's thinning <em>is</em> the casualty count —
+      no second chart, no legend. Loss is visible as a shape.</div></div>
+  <div class="heir"><span class="h">Carrying it now</span>
+    <b>Moritz Stefaner (Truth &amp; Beauty)</b> — dark ground, acid accent, terrain and flow work,
+    rigorous and graphically strong. <span class="seen">visited</span></div>
+</div><svg id="p2" viewBox="0 0 1372 300"></svg>
+<div class="verdict"><b>What it wins:</b> the propagation chain finally has a <em>magnitude</em>.
+It is not six lamps, it is a current that gets thinner at each link and dies at link three.
+<b>What it costs:</b> it implies the links are a physical pipeline. They are conditions, not plumbing.</div></section>
+
+<!-- 3 DU BOIS -->
+<section class="panel"><div class="phead">
+  <div class="pnum">03</div>
+  <div><div class="pname">Du Bois portraits</div><div class="pyear">W.E.B. DU BOIS · PARIS EXPOSITION, 1900</div>
+    <div class="pwhat">Hand-drawn modernist abstraction, flat saturated colour on buff paper, forms bent
+      to fit the page — decades before the Bauhaus. And every plate was <b>an argument</b>, made to
+      change what a viewer believed. Proof that rigour and art are not a trade.</div></div>
+  <div class="heir"><span class="h">Carrying it now</span>
+    <b>Mona Chalabi</b> (hand-drawn, argumentative), and the annual <b>#DuBoisChallenge</b>
+    recreation community. <span class="unseen">not visited</span></div>
+</div><svg id="p3" viewBox="0 0 1372 330"></svg>
+<div class="verdict"><b>What it wins:</b> it looks like nothing in finance, and it is still honest.
+This is the closest any of the seven gets to your own taste.
+<b>What it costs:</b> the palette is loud enough to break the anti-dopamine rule if used daily —
+this is a <em>letter cover</em> grammar, not an instrument grammar.</div></section>
+
+<!-- 4 BERTIN -->
+<section class="panel"><div class="phead">
+  <div class="pnum">04</div>
+  <div><div class="pname">Bertin's matrix</div><div class="pyear">JACQUES BERTIN · SÉMIOLOGIE GRAPHIQUE, 1967</div>
+    <div class="pwhat">The <b>reorderable matrix</b>: put every item against every criterion, then permute
+      rows and columns until blocks appear. The structure is found by sorting, not by drawing. Bertin also
+      ranks the visual variables — and <b>hue is one of the weakest for ordered data</b>, which is a
+      direct challenge to how we currently encode response quality.</div></div>
+  <div class="heir"><span class="h">Carrying it now</span>
+    <b>Moritz Stefaner</b> again, and the <b>Observable</b> / Mike Bostock lineage where
+    "sort until it speaks" is standard practice. <span class="seen">visited</span></div>
+</div><svg id="p4" viewBox="0 0 1372 400"></svg>
+<div class="verdict"><b>What it wins:</b> it is testable. Sorted by rung, the damaged cohort forms a solid
+block in the bottom-right — narrowness as a <em>shape</em>, not a sentence. And it uses lightness,
+not hue, so it survives greyscale and colour blindness.
+<b>What it costs:</b> it is the least emotional object on this page. Nobody screenshots a matrix.</div></section>
+
+<!-- 5 BECK / VIGNELLI -->
+<section class="panel"><div class="phead">
+  <div class="pnum">05</div>
+  <div><div class="pname">The transit diagram</div><div class="pyear">HARRY BECK 1933 · MASSIMO VIGNELLI 1972</div>
+    <div class="pwhat">Lie about the geometry to tell the truth about the system. Only 45° and 90°,
+      equal spacing between stops, distance discarded. <b>Topology over geography</b> — the reader
+      needs the order of the stops, not the map.</div></div>
+  <div class="heir"><span class="h">Carrying it now</span>
+    <b>Pentagram</b> (Bierut's MTA work; the Vignelli Standards Manual reissue) and
+    <b>Jug Cerović</b>'s one-line metro systems. <span class="unseen">not visited</span></div>
+</div><svg id="p5" viewBox="0 0 1372 300"></svg>
+<div class="verdict"><b>What it wins:</b> a stranger reads it in three seconds with zero training,
+because they already know how to read this diagram. That is the whole brief.
+<b>What it costs:</b> equal spacing hides that link three is a far bigger jump than link one.</div></section>
+
+<!-- 6 NIGHTINGALE -->
+<section class="panel"><div class="phead">
+  <div class="pnum">06</div>
+  <div><div class="pname">The coxcomb</div><div class="pyear">FLORENCE NIGHTINGALE · LONDON, 1858</div>
+    <div class="pwhat">Polar wedges where <b>area is the quantity</b>, and two periods drawn in the same
+      frame so the change is the picture. She built it to move a government, and it did.
+      The founding case of <b>a chart made to change a decision</b>.</div></div>
+  <div class="heir"><span class="h">Carrying it now</span>
+    <b>Federica Fragapane</b> — organic, radial, unconventional forms that stay rigorous.
+    <span class="unseen">site unreachable from here</span></div>
+</div><svg id="p6" viewBox="0 0 1372 380"></svg>
+<div class="verdict"><b>What it wins:</b> one month against today in a single form, and it is beautiful
+enough to be a cover. <b>What it costs:</b> area is genuinely hard to judge — Nightingale's own
+diagram overstates. For an instrument this is a real accuracy loss, not a style opinion.</div></section>
+
+<!-- 7 LUPI -->
+<section class="panel"><div class="phead">
+  <div class="pnum">07</div>
+  <div><div class="pname">Data humanism</div><div class="pyear">GIORGIA LUPI · DEAR DATA 2015 · MANIFESTO 2017</div>
+    <div class="pwhat">A <b>per-item glyph</b> that carries several attributes at once, plus a key that
+      reads like a personal alphabet. Warmth does not come from decoration — it comes from
+      <b>a visible author who chose what to measure</b>. Which is the exact answer to whether
+      "warm" can coexist with "zero decoration": it can, because they live in different layers.</div></div>
+  <div class="heir"><span class="h">Carrying it now</span>
+    <b>Giorgia Lupi herself</b> — Pentagram partner since 2019, "data as a visual language to
+    tell stories and shape brand missions", first solo show at Gallerie d'Italia.
+    <span class="seen">visited</span> · also <b>Stefanie Posavec</b>. <span class="unseen">not visited</span></div>
+</div><svg id="p7" viewBox="0 0 1372 400"></svg>
+<div class="verdict"><b>What it wins:</b> nineteen names become nineteen individuals instead of nineteen
+rows. And it is the only grammar here with a place for a human author.
+<b>What it costs:</b> every reader must learn the key first. That is fine for a letter, fatal at 6:30am.</div></section>
+
+</div>
+<script>
+const D = /*__DATA__*/ null;
+const B = D.state_board.filter(r=>r.key!=="风险姿态"), CH = D.chain, DF = D.diffusion,
+      NM = D.names, TR = D.breadth.trace, T = D.breadth.today;
+const NS="http://www.w3.org/2000/svg";
+const C={works:"#1f5f9e",fails:"#d1600f",idle:"#c2bdb4",ink:"#111110",ink2:"#5c5852",ink3:"#9c968d"};
+function mk(p,t,a={},x){const n=document.createElementNS(NS,t);
+  for(const k in a) n.setAttribute(k,a[k]); if(x!=null) n.textContent=x; p.appendChild(n); return n;}
+const F=(s,f,w)=>`font:${w||400} ${s}px ${f||"Plex,sans-serif"}`;
+const S=id=>document.getElementById(id);
+document.getElementById("stamp").textContent = `${D.as_of} · one dataset · seven grammars`;
+
+const KEY_EN={"受损程度":"Damage","抛压":"Selling pressure","指数修复":"Index repair",
+ "领涨修复":"Leadership repair","巨头领涨":"Megacap leadership","广义半导体":"Broad semis",
+ "市场宽度":"Breadth","利率":"Rates","确认信号":"Confirmation"};
+const LV_EN={"缺席":0,"很弱":1,"早期":2,"已启动":3,"良好":4};
+const CH_EN={"巨头站住":"Megacaps hold","更多领涨跟上":"Leaders follow","QQQ 收回 21/50":"QQQ reclaims",
+ "宽度扩张":"Breadth expands","RSP / IWM 跟上":"RSP & IWM","突破站得住":"Breakouts hold"};
+const RUNG=["Broken","Stabilizing","Reclaim","Above 50D","Pivot","Breakout","Holds","Expansion"];
+
+/* ═══ 01 · ISOTYPE — count, don't estimate ═══ */
+(function(){
+  const s=S("p1"), L=210, TOP=28, ROW=62, UNIT=13, GAP=4;
+  const KEYS=[["episodic_pivot","Episodic Pivot","1 mark = 1 name"],
+              ["vcp","VCP","1 mark = 1 name"],
+              ["vol_up_gainers","Volume gainers","1 mark = 5 names"],
+              ["healthy_charts","Healthy charts","1 mark = 10 names"]];
+  const PER=[1,1,5,10];
+  KEYS.forEach(([k,lab,note],ri)=>{
+    const v=DF.screeners[k], first=v[0], last=v[v.length-1], y=TOP+ri*ROW;
+    // three-way: flat is not a failure. VCP held 16 → 16 and was being painted
+    // orange, which reads as deterioration.
+    const col = last>first ? C.works : last<first ? C.fails : C.ink3;
+    mk(s,"text",{x:L-20,y:y+13,"text-anchor":"end",
+      style:"font:600 14px PlexCond,sans-serif;fill:#111110;letter-spacing:.02em"},lab.toUpperCase());
+    mk(s,"text",{x:L-20,y:y+28,"text-anchor":"end",style:F(9.5)+";fill:#9c968d"},note);
+    // month start (hollow) then today (solid) — the delta is countable
+    const n0=Math.round(first/PER[ri]), n1=Math.round(last/PER[ri]);
+    for(let i=0;i<Math.max(n0,n1);i++){
+      const x=L+i*(UNIT+GAP);
+      if(i<Math.min(n0,n1))      mk(s,"rect",{x,y,width:UNIT,height:UNIT,fill:C.ink3,opacity:.45});
+      else if(n1>n0)             mk(s,"rect",{x,y,width:UNIT,height:UNIT,fill:col});
+      else                       mk(s,"rect",{x,y,width:UNIT,height:UNIT,fill:"none",
+                                    stroke:col,"stroke-width":1.2,"stroke-dasharray":"2 2"});
+    }
+    const endX=L+Math.max(n0,n1)*(UNIT+GAP)+14;
+    mk(s,"text",{x:endX,y:y+12,style:`font:600 15px PlexCond,sans-serif;fill:${col}`},
+      `${first} → ${last}`);
+  });
+  mk(s,"text",{x:L,y:TOP+4*ROW+4,style:F(12,null,500)+";fill:#111110"},
+    "Grey = what was already there at month start. Solid = added. Dashed outline = lost.");
+})();
+
+/* ═══ 02 · MINARD — width is the quantity ═══ */
+(function(){
+  const s=S("p2"), L=70, R=250, TOP=40, MID=150, W=1372;
+  const seg=(W-L-R)/CH.length;
+  // participation behind each link, measured not invented
+  const WID=[3/3, 4/7, 0/1, 0/1, 1/2, 2/7].map(v=>Math.max(0.02,v));
+  const LAB=["3 of 3 megacaps","4 of 7 leaders","QQQ 0 of 2 MAs","breadth 0 of 3 tests","1 of 2 (RSP)","2 of 7 hold"];
+  const MAXW=86;
+  let path=[], back=[];
+  WID.forEach((w,i)=>{ const h=w*MAXW/2;
+    path.push(`${i?"L":"M"}${L+seg*i},${MID-h}`, `L${L+seg*(i+1)-14},${MID-h}`); });
+  [...WID].reverse().forEach((w,j)=>{ const i=WID.length-1-j, h=w*MAXW/2;
+    back.push(`L${L+seg*(i+1)-14},${MID+h}`, `L${L+seg*i},${MID+h}`); });
+  mk(s,"path",{d:path.join(" ")+" "+back.join(" ")+" Z",fill:C.works,opacity:.85});
+  WID.forEach((w,i)=>{
+    const x=L+seg*i, on=CH[i].state==="lit", part=CH[i].state==="partial";
+    mk(s,"line",{x1:x,y1:TOP-6,x2:x,y2:MID+MAXW/2+34,stroke:"#cdc7be","stroke-width":.8});
+    mk(s,"text",{x:x+8,y:TOP+6,style:"font:600 14px PlexCond,sans-serif;fill:#111110"},CH_EN[CH[i].label]);
+    mk(s,"text",{x:x+8,y:TOP+22,style:F(10.5)+";fill:#5c5852"},LAB[i]);
+    if(!on&&!part&&i>0&&WID[i-1]>0.05){
+      mk(s,"text",{x:x+8,y:MID+MAXW/2+56,style:F(11,null,500)+`;fill:${C.fails}`},"the current stops here");
+    }
+  });
+  mk(s,"text",{x:W-R+16,y:MID-6,style:"font:700 21px PlexCond,sans-serif;fill:#111110"},"Width is");
+  mk(s,"text",{x:W-R+16,y:MID+18,style:"font:700 21px PlexCond,sans-serif;fill:#111110"},"the count.");
+  mk(s,"text",{x:W-R+16,y:MID+44,style:F(12)+";fill:#5c5852"},"No legend. No second chart.");
+  mk(s,"text",{x:W-R+16,y:MID+62,style:F(12)+";fill:#5c5852"},"The thinning is the finding.");
+})();
+
+/* ═══ 03 · DU BOIS — argument as flat modernist form ═══ */
+(function(){
+  const s=S("p3"), W=1372, CX=470, CY=170, R0=34, RMAX=150;
+  const PAL=["#000000","#c8102e","#f0b323","#b6895b","#2b6a4d","#3c5a8a","#7a6a5a","#a03a2a","#6b6b6b"];
+  mk(s,"rect",{x:0,y:0,width:W,height:330,fill:"#e9dfcb"});
+  const n=B.length, step=2*Math.PI/n;
+  B.forEach((r,i)=>{
+    const lv = r.state==null ? 0 : LV_EN[r.state]+1;         // 0 = not wired
+    const rr = R0 + (lv/5)*(RMAX-R0);
+    const a0 = -Math.PI/2 + i*step, a1 = a0+step*0.94;
+    const p = (rad,a)=>[CX+rad*Math.cos(a), CY+rad*Math.sin(a)];
+    const [x0,y0]=p(R0,a0), [x1,y1]=p(rr,a0), [x2,y2]=p(rr,a1), [x3,y3]=p(R0,a1);
+    mk(s,"path",{d:`M${x0},${y0} L${x1},${y1} A${rr},${rr} 0 0 1 ${x2},${y2} L${x3},${y3} Z`,
+      fill: lv===0 ? "none" : PAL[i%PAL.length], stroke:"#000","stroke-width":1.1,
+      "stroke-dasharray": lv===0?"3 3":""});
+    const [lx,ly]=p(RMAX+16,(a0+a1)/2);
+    mk(s,"text",{x:lx,y:ly+3,"text-anchor":lx<CX?"end":"start",
+      style:"font:600 11px PlexCond,sans-serif;fill:#111110;letter-spacing:.06em"},
+      KEY_EN[r.key].toUpperCase());
+  });
+  mk(s,"circle",{cx:CX,cy:CY,r:R0,fill:"#e9dfcb",stroke:"#000","stroke-width":1.1});
+  mk(s,"text",{x:CX,y:CY+5,"text-anchor":"middle",style:"font:700 16px PlexCond,sans-serif;fill:#000"},"WAIT");
+  const TX=760;
+  mk(s,"text",{x:TX,y:70,style:"font:700 30px PlexCond,sans-serif;fill:#000;letter-spacing:.03em"},
+    "CONDITION OF THE MARKET.");
+  mk(s,"text",{x:TX,y:96,style:"font:600 14px PlexCond,sans-serif;fill:#000;letter-spacing:.12em"},
+    "DONE BY A TRADER FOR HIS OWN ACCOUNT.");
+  mk(s,"line",{x1:TX,y1:110,x2:TX+430,y2:110,stroke:"#000","stroke-width":1.4});
+  ["Nine conditions. Length of each ray is how far that",
+   "condition has repaired — the dashed ray is the one",
+   "the pipeline cannot yet measure, and it is left empty",
+   "rather than guessed.","",
+   "Every plate Du Bois drew in 1900 was an argument.",
+   "None of them were neutral. None of them were ugly."]
+   .forEach((t,i)=> mk(s,"text",{x:TX,y:140+i*22,style:F(13)+";fill:#111110"},t));
+})();
+
+/* ═══ 04 · BERTIN — reorderable matrix, lightness not hue ═══ */
+(function(){
+  const s=S("p4"), L=210, TOP=76, CW=52, RH=17;
+  const CRIT=[["above 21D",v=>v.above_21],["above 50D",v=>v.above_50],["above 200D",v=>v.above_200],
+              ["rung ≥ 3",v=>v.rung>=3],["broke out",v=>v.rung>=5],["travelling up",v=>v.direction==="up"]];
+  // permute rows by score, columns by how many names satisfy them — Bertin's whole method
+  const rows=Object.entries(NM).map(([t,v])=>({t,v,score:CRIT.reduce((a,[,f])=>a+(f(v)?1:0),0)}))
+    .sort((a,b)=>b.score-a.score||b.v.rung-a.v.rung);
+  const cols=CRIT.map(([lab,f],i)=>({lab,f,i,hits:rows.filter(r=>f(r.v)).length}))
+    .sort((a,b)=>b.hits-a.hits);
+  cols.forEach((c,ci)=>{
+    mk(s,"text",{x:L+ci*CW+CW/2,y:TOP-14,"text-anchor":"start",
+      transform:`rotate(-46 ${L+ci*CW+CW/2} ${TOP-14})`,
+      style:F(11,null,500)+";fill:#5c5852"},`${c.lab} · ${c.hits}`);
+  });
+  rows.forEach((r,ri)=>{
+    mk(s,"text",{x:L-14,y:TOP+ri*RH+12,"text-anchor":"end",
+      style:F(11,"PlexMono,monospace",500)+";fill:#111110"},r.t);
+    mk(s,"text",{x:L-64,y:TOP+ri*RH+12,"text-anchor":"end",
+      style:F(9.5)+";fill:#9c968d"},RUNG[r.v.rung]);
+    cols.forEach((c,ci)=>{
+      const on=c.f(r.v);
+      mk(s,"rect",{x:L+ci*CW,y:TOP+ri*RH+1,width:CW-3,height:RH-3,
+        fill: on ? "#111110" : "#ffffff", opacity: on ? .88 : 1, stroke:"#e0dcd5"});
+    });
+  });
+  const RX=L+cols.length*CW+58;
+  mk(s,"text",{x:RX,y:TOP+6,style:"font:700 21px PlexCond,sans-serif;fill:#111110"},"Sort until");
+  mk(s,"text",{x:RX,y:TOP+30,style:"font:700 21px PlexCond,sans-serif;fill:#111110"},"it speaks.");
+  ["Rows sorted by how many criteria each name meets,",
+   "columns by how many names meet each criterion.",
+   "The solid block at the top and the empty block at the",
+   "bottom are the whole story — narrowness as a shape.","",
+   "Encoded in lightness, not hue. Bertin ranks hue near the",
+   "bottom for ordered data, which is a direct challenge to",
+   "our blue/orange scheme. This survives greyscale."]
+   .forEach((t,i)=> mk(s,"text",{x:RX,y:TOP+62+i*20,style:F(12.5)+";fill:#5c5852"},t));
+})();
+
+/* ═══ 05 · BECK / VIGNELLI — topology over geography ═══ */
+(function(){
+  const s=S("p5"), L=90, Y=126, STEP=178, W=1372;
+  const pts=CH.map((c,i)=>({x:L+i*STEP, y: Y + (i===2?52:i===3?52:0), c}));
+  // 45° elbows only
+  for(let i=0;i<pts.length-1;i++){
+    const a=pts[i], b=pts[i+1];
+    const lit=a.c.state==="lit"||a.c.state==="partial";
+    const col=lit?C.works:C.idle;
+    let d;
+    if(a.y===b.y) d=`M${a.x},${a.y} L${b.x},${b.y}`;
+    else{const dy=b.y-a.y, k=Math.abs(dy);
+      d=`M${a.x},${a.y} L${b.x-k-26},${a.y} L${b.x-26},${b.y} L${b.x},${b.y}`;}
+    mk(s,"path",{d,fill:"none",stroke:col,"stroke-width":9,"stroke-linecap":"round",
+      "stroke-linejoin":"round",opacity:lit?1:.5,"stroke-dasharray":lit?"":"1 15"});
+  }
+  pts.forEach(({x,y,c},i)=>{
+    const on=c.state==="lit", part=c.state==="partial";
+    const col=on?C.works:part?"#7f8b96":C.idle;
+    mk(s,"circle",{cx:x,cy:y,r:on?11:9,fill:on?col:"#f4f3f0",stroke:col,"stroke-width":3.5});
+    if(part) mk(s,"path",{d:`M${x},${y-9} A9,9 0 0 1 ${x},${y+9} Z`,fill:col});
+    mk(s,"text",{x:x,y:y-26,"text-anchor":"middle",
+      style:"font:600 14px PlexCond,sans-serif;fill:#111110"},CH_EN[c.label]);
+    mk(s,"text",{x:x,y:y+30,"text-anchor":"middle",
+      style:F(9.5,"PlexMono,monospace",500)+`;fill:${col};letter-spacing:.1em`},
+      on?"OPEN":part?"PART":"CLOSED");
+  });
+  mk(s,"text",{x:L,y:246,style:F(12,null,500)+";fill:#111110"},
+    "45° and 90° only, stops equally spaced, distance discarded. A stranger reads a service map without training —");
+  mk(s,"text",{x:L,y:266,style:F(12)+`;fill:${C.fails}`},
+    "the line is running as far as “Leaders follow”, and the service ends there.");
+})();
+
+/* ═══ 06 · NIGHTINGALE — area, and two periods in one frame ═══ */
+(function(){
+  const s=S("p6"), CX=440, CY=196, RMAX=152;
+  const v=TR.t2108, now=v.slice(-10), then=v.slice(0,10);
+  const n=10, step=2*Math.PI/n;
+  const rad = t => 26 + Math.sqrt(Math.max(t,0)/100)*(RMAX-26);   // area ∝ value
+  const wedge=(arr,fill,op,stroke)=>{
+    arr.forEach((t,i)=>{
+      const a0=-Math.PI/2+i*step, a1=a0+step*0.96, rr=rad(t);
+      const p=(r,a)=>[CX+r*Math.cos(a),CY+r*Math.sin(a)];
+      const [x1,y1]=p(rr,a0),[x2,y2]=p(rr,a1);
+      mk(s,"path",{d:`M${CX},${CY} L${x1},${y1} A${rr},${rr} 0 0 1 ${x2},${y2} Z`,
+        fill,opacity:op,stroke,"stroke-width":1});
+    });
+  };
+  wedge(then,"#9c968d",.30,"#8d877d");
+  wedge(now,C.works,.55,"#1f5f9e");
+  [20,40,60,80].forEach(t=>{
+    mk(s,"circle",{cx:CX,cy:CY,r:rad(t),fill:"none",stroke:"#c9c4bc","stroke-dasharray":"2 4"});
+    mk(s,"text",{x:CX+4,y:CY-rad(t)-3,style:F(9,"PlexMono,monospace")+";fill:#9c968d"},t);
+  });
+  const TX=700;
+  mk(s,"text",{x:TX,y:70,style:"font:700 26px PlexCond,sans-serif;fill:#111110"},"Two periods, one frame.");
+  ["Grey wedges: the first ten sessions of the window.",
+   "Blue wedges: the last ten, ending 2026-07-31.",
+   "Radius is scaled by the square root, so area — not radius —",
+   "carries the value. Nightingale's own diagram did not do this,",
+   "and it overstated her case.","",
+   "She drew it to move a government. It worked. This is the",
+   "founding example of a chart built to change a decision,",
+   "which is exactly the job we gave ours."]
+   .forEach((t,i)=> mk(s,"text",{x:TX,y:104+i*23,style:F(13)+";fill:#5c5852"},t));
+})();
+
+/* ═══ 07 · LUPI — a glyph per name, and a key ═══ */
+(function(){
+  const s=S("p7"), L=70, TOP=54, CW=104, RH=118, PER=11;
+  const ents=Object.entries(NM).sort((a,b)=>b[1].rung-a[1].rung);
+  ents.forEach(([t,v],i)=>{
+    const cx=L+(i%PER)*CW+30, cy=TOP+Math.floor(i/PER)*RH+40;
+    const col=v.direction==="up"?C.works:v.direction==="down"?C.fails:C.ink3;
+    // ring = distance from the 52-week high
+    const r=13+Math.min(28,Math.abs(v.from_52wh_pct)/2);
+    mk(s,"circle",{cx,cy,r,fill:"none",stroke:"#cdc7be","stroke-width":1});
+    // petals = rung reached
+    for(let k=0;k<=v.rung;k++){
+      const a=-Math.PI/2+k*(2*Math.PI/8);
+      mk(s,"line",{x1:cx,y1:cy,x2:cx+r*Math.cos(a),y2:cy+r*Math.sin(a),
+        stroke:col,"stroke-width":2,"stroke-linecap":"round"});
+    }
+    // core = role
+    const role=v.role;
+    if(role==="index") mk(s,"rect",{x:cx-4,y:cy-4,width:8,height:8,fill:C.ink});
+    else if(role==="leader") mk(s,"circle",{cx,cy,r:4.5,fill:C.ink});
+    else mk(s,"path",{d:`M${cx},${cy-5} L${cx+5},${cy+4} L${cx-5},${cy+4} Z`,fill:C.ink});
+    mk(s,"text",{x:cx,y:cy+r+15,"text-anchor":"middle",
+      style:F(10.5,"PlexMono,monospace",500)+";fill:#111110"},t);
+  });
+  const KY=TOP+2*RH+8;
+  mk(s,"line",{x1:L,y1:KY-14,x2:1302,y2:KY-14,stroke:"#dedad3"});
+  mk(s,"text",{x:L,y:KY+8,style:"font:700 17px PlexCond,sans-serif;fill:#111110"},"KEY");
+  [["spokes","one per rung climbed — eight is full expansion"],
+   ["ring size","how far below the 52-week high"],
+   ["colour","blue took the chance offered, orange did not, grey was not tested"],
+   ["core","■ index   ● leader   ▲ damaged"]]
+   .forEach(([k,d],i)=>{
+     mk(s,"text",{x:L+72,y:KY+8+i*20,style:F(12,null,600)+";fill:#111110"},k);
+     mk(s,"text",{x:L+184,y:KY+8+i*20,style:F(12)+";fill:#5c5852"},d);
+   });
+  mk(s,"text",{x:L,y:KY+108,style:F(12.5,null,500)+";fill:#111110"},
+    "The key is the author speaking: it says what this person decided was worth measuring.");
+  mk(s,"text",{x:L,y:KY+128,style:F(12.5)+";fill:#5c5852"},
+    "That is where warmth lives in a system with no decoration — not in the marks, in the choosing.");
+})();
+</script>
+</body></html>

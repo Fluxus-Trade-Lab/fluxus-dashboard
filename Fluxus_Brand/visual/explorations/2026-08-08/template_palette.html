@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — the encoding, resolved and measured</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+:root{--paper:#f4f3f0;--ink:#111110;--ink2:#5c5852;--ink3:#9c968d;--rule:#dedad3;--hair:#eae7e1;
+      --sans:Plex,sans-serif;--cond:PlexCond,Plex,sans-serif;--mono:PlexMono,Menlo,monospace}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.app{max-width:1440px;margin:0 auto;padding:0 34px 110px}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.bar{display:flex;align-items:baseline;gap:24px;padding:15px 0 14px;border-bottom:1px solid var(--ink)}
+.mark{font-family:var(--cond);font-weight:700;font-size:19px;letter-spacing:.16em}
+.bar .r{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+h1{font-family:var(--cond);font-weight:700;font-size:60px;line-height:.95;letter-spacing:-.015em;
+   text-transform:uppercase;margin:42px 0 0;max-width:18ch}
+.lede{font-size:16.5px;line-height:1.55;max-width:66ch;margin:22px 0 0;color:var(--ink2)}
+.lede b{color:var(--ink);font-weight:600}
+h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink3);
+   margin:60px 0 0;padding-bottom:9px;border-bottom:1px solid var(--ink)}
+h3 span{float:right;text-transform:none;letter-spacing:.02em;font-family:var(--sans);font-size:11.5px;color:var(--ink2)}
+.note{font-size:12.5px;line-height:1.7;color:var(--ink2);max-width:78ch;margin:16px 0 0}
+.note b{color:var(--ink);font-weight:600}
+table.t{width:100%;border-collapse:collapse;margin-top:20px;font-size:13px}
+table.t th{text-align:left;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+           color:var(--ink3);font-weight:400;padding:0 14px 9px 0;border-bottom:1px solid var(--ink)}
+table.t td{padding:11px 14px 11px 0;border-bottom:1px solid var(--hair);vertical-align:middle}
+table.t td.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.pass{color:#1f5f9e;font-weight:600} .fail{color:#d1600f;font-weight:600}
+.sw{display:flex;gap:6px;align-items:center}
+.chip{width:56px;height:30px;border:1px solid rgba(0,0,0,.12)}
+.grey{filter:grayscale(1)}
+.demo{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:22px}
+.demo .lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:var(--ink3);margin-bottom:12px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+</style>
+</head>
+<body><div class="app">
+
+<div class="bar"><span class="mark">FLUXUS</span>
+  <span style="font-size:12.5px;color:var(--ink3)">the encoding, resolved</span>
+  <span class="r" id="stamp">—</span></div>
+
+<h1>Two colours.<br>Everything else<br>is another channel.</h1>
+<p class="lede">The first fix was wrong. I tried a three-step lightness ramp and it still failed at
+<b>ΔE 3.9</b>, because our scale is <b>diverging</b>, not sequential — "took the chance" and "refused"
+are both <em>strong</em> readings, so no single lightness ramp can hold them apart at the ends and
+still rank the middle.
+<br><br>What actually works is to stop asking colour to do four jobs:
+<b>two fills only</b> (#1A5488 / #D1600F, far enough apart to survive greyscale),
+<b>"partial" as a half-filled cell</b> — area, which Bertin ranks high for ordered data —
+<b>a 45° hatch on failure</b> as a texture channel immune to any colour condition, and
+<b>missing data out of the scale entirely</b>, outline with no fill.
+<br><br>Hue now carries only the sign, and nothing carries rank alone. That is the redundant encoding,
+and below is the measurement.</p>
+
+<h3>The set <span>Two fills, two non-colour channels, and the neutrals</span></h3>
+<table class="t" id="tokens"></table>
+
+<h3>The test, rerun <span>Smallest gap between adjacent steps, CIELAB ΔE · linear-light simulation</span></h3>
+<table class="t" id="res"></table>
+<p class="note" id="verdict"></p>
+
+<h3>On the real objects <span>Left as designed · right forced to greyscale in the browser</span></h3>
+<div class="demo">
+  <div><div class="lab">AS DESIGNED</div><svg id="d1" viewBox="0 0 660 320"></svg></div>
+  <div class="grey"><div class="lab">GREYSCALE — a screenshot, a print, a photocopy</div>
+    <svg id="d2" viewBox="0 0 660 320"></svg></div>
+</div>
+<p class="note">This is the case that matters for you specifically: the brand travels as screenshots.
+If the ladder stops being readable the moment someone prints it or a client views it on a bad screen,
+the encoding has failed at its actual job, whatever a colour-blindness simulator says.</p>
+
+</div>
+<script>
+const D = /*__DATA__*/ null;
+const NM = D.names;
+document.getElementById("stamp").textContent = `${D.as_of} · measured in-page`;
+
+/* ── the proposed set ──────────────────────────────────────────────
+   Ordered by response quality. Lightness is monotonic across the three
+   steps; hue only says which side of neutral you are on; the hatch on
+   "refused" is a texture channel that survives any colour condition. */
+// Only TWO fills. "Partial" is not a third colour — it is a half-filled cell,
+// i.e. area, which Bertin ranks high for ordered data. A three-colour version
+// kept putting "partial" next to "refused" in lightness, and that adjacency is
+// exactly where greyscale collapsed.
+const SET = [
+  {k:"took",    hex:"#1a5488", label:"Took the chance", note:"reclaim · breakout · held — solid fill"},
+  {k:"refused", hex:"#d1600f", label:"Refused",         note:"offered and failed — solid fill + 45° hatch"},
+];
+const HALF = {label:"Partial", note:"half-filled cell of the same colour — area, not a new hue"};
+const OUT = {k:"untested", hex:"none", label:"Not tested", note:"outline only — leaves the scale"};
+const NEU = [
+  {k:"ink",   hex:"#111110", label:"Ink"},
+  {k:"paper", hex:"#f4f3f0", label:"Paper"},
+  {k:"rule",  hex:"#dedad3", label:"Rule"},
+];
+
+const hex2rgb = h => [1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const toLin  = v => { v/=255; return v<=.04045 ? v/12.92 : Math.pow((v+.055)/1.055,2.4); };
+const toSrgb = v => 255*(v<=.0031308 ? 12.92*v : 1.055*Math.pow(Math.max(v,0),1/2.4)-.055);
+const SIM = {
+  normal:      [[1,0,0],[0,1,0],[0,0,1]],
+  greyscale:   [[.2126,.7152,.0722],[.2126,.7152,.0722],[.2126,.7152,.0722]],
+  deuteranopia:[[.625,.375,0],[.70,.30,0],[0,.30,.70]],
+  protanopia:  [[.567,.433,0],[.558,.442,0],[0,.242,.758]],
+};
+const mul=(m,c)=>{const l=c.map(toLin);return [0,1,2].map(r=>toSrgb(m[r][0]*l[0]+m[r][1]*l[1]+m[r][2]*l[2]));};
+function lab(rgb){
+  const f=v=>{v/=255; return v<=.04045? v/12.92 : Math.pow((v+.055)/1.055,2.4);};
+  const [r,g,b]=rgb.map(f);
+  let X=(.4124*r+.3576*g+.1805*b)/.95047, Y=.2126*r+.7152*g+.0722*b, Z=(.0193*r+.1192*g+.9505*b)/1.08883;
+  const k=t=> t>.008856? Math.cbrt(t) : (7.787*t)+16/116;
+  [X,Y,Z]=[k(X),k(Y),k(Z)];
+  return [116*Y-16, 500*(X-Y), 200*(Y-Z)];
+}
+const dE=(a,b)=>{const A=lab(a),B=lab(b);return Math.hypot(A[0]-B[0],A[1]-B[1],A[2]-B[2]);};
+const rgb2hex=c=>"#"+c.map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,"0")).join("");
+
+/* tokens table */
+document.getElementById("tokens").innerHTML =
+  `<tr><th>Swatch</th><th>Role</th><th>Hex</th><th>L*</th><th>Meaning</th></tr>` +
+  SET.map(s=>`<tr>
+    <td><div class="chip" style="background:${s.hex}"></div></td>
+    <td><b>${s.label}</b></td><td class="num">${s.hex.toUpperCase()}</td>
+    <td class="num">${lab(hex2rgb(s.hex))[0].toFixed(0)}</td><td>${s.note}</td></tr>`).join("") +
+  `<tr><td><div class="chip" style="background:linear-gradient(90deg,#1a5488 50%,transparent 50%);
+       border:1px solid #1a5488"></div></td>
+     <td><b>${HALF.label}</b></td><td class="num">—</td><td class="num">—</td><td>${HALF.note}</td></tr>` +
+  `<tr><td><div class="chip" style="background:transparent;border:1.5px dashed #b9b3a9"></div></td>
+     <td><b>${OUT.label}</b></td><td class="num">—</td><td class="num">—</td><td>${OUT.note}</td></tr>` +
+  NEU.map(s=>`<tr>
+    <td><div class="chip" style="background:${s.hex}"></div></td>
+    <td>${s.label}</td><td class="num">${s.hex.toUpperCase()}</td>
+    <td class="num">${lab(hex2rgb(s.hex))[0].toFixed(0)}</td><td></td></tr>`).join("");
+
+/* rerun the test — old scheme vs new */
+const OLD = ["#1f5f9e","#7f8b96","#d1600f","#c2bdb4"];      // incl. "not tested" as a step
+const NEW = SET.map(s=>s.hex);                               // three steps only
+const modes = Object.keys(SIM);
+const worstOf = pal => {
+  const o={}; modes.forEach(m=>{
+    const sim=pal.map(h=>mul(SIM[m],hex2rgb(h)));
+    o[m]=Math.min(...sim.slice(1).map((c,i)=>dE(sim[i],c)));
+  }); return o;
+};
+const rows=[["Old — 4 colours carrying rank",OLD],["New — 2 colours; area and outline do the rest",NEW]]
+  .map(([nm,pal])=>({nm,pal,w:worstOf(pal)}));
+const TH=12;
+document.getElementById("res").innerHTML =
+  `<tr><th>Encoding</th>${modes.map(m=>`<th>${m}</th>`).join("")}<th>Verdict</th></tr>` +
+  rows.map(r=>{
+    const ok=modes.every(m=>r.w[m]>=TH);
+    return `<tr><td><b>${r.nm}</b><div class="sw" style="margin-top:7px">${
+      r.pal.map(h=>`<i class="chip" style="width:34px;height:18px;background:${h}"></i>`).join("")}</div></td>` +
+      modes.map(m=>`<td class="num ${r.w[m]>=TH?"pass":"fail"}">${r.w[m].toFixed(1)}</td>`).join("") +
+      `<td class="${ok?"pass":"fail"}">${ok?"survives all four":"breaks"}</td></tr>`;
+  }).join("");
+
+const oldG=rows[0].w.greyscale, newG=rows[1].w.greyscale;
+document.getElementById("verdict").innerHTML =
+  `Greyscale is the load-bearing column — it is a true linear-luminance projection, and it is the
+   condition this brand actually meets every time someone screenshots or prints a page.
+   <br><br>Old set bottoms out at <b>ΔE ${oldG.toFixed(1)}</b>. New set bottoms out at
+   <b>ΔE ${newG.toFixed(1)}</b>${newG>=TH?" — clear of the ~12 threshold, so the three steps stay separable with no colour at all."
+   :" — still short of the ~12 threshold, so the ramp needs pushing further apart."}
+   <br><br>The colour-blindness columns are directional only: the Vienot-style matrices are not
+   luminance-preserving and can read higher than normal vision, which cannot be true of a simulation.
+   Blue↔orange is a known dichromat-safe pair; do not quote those magnitudes.`;
+
+/* the ladder, drawn in the new set, once in colour and once forced grey */
+function ladder(id){
+  const s=document.getElementById(id), W=660,L=126,TOP=16,BOT=250;
+  const NS="http://www.w3.org/2000/svg";
+  const mk=(t,a={},x)=>{const n=document.createElementNS(NS,t);
+    for(const k in a) n.setAttribute(k,a[k]); if(x!=null) n.textContent=x; s.appendChild(n); return n;};
+  // hatch pattern for "refused" — the third channel, immune to any colour condition
+  const defs=mk("defs");
+  const pat=document.createElementNS(NS,"pattern");
+  pat.setAttribute("id","hatch-"+id); pat.setAttribute("width","5"); pat.setAttribute("height","5");
+  pat.setAttribute("patternUnits","userSpaceOnUse"); pat.setAttribute("patternTransform","rotate(45)");
+  const ln=document.createElementNS(NS,"line");
+  ln.setAttribute("x1","0");ln.setAttribute("y1","0");ln.setAttribute("x2","0");ln.setAttribute("y2","5");
+  ln.setAttribute("stroke","#8a4a15");ln.setAttribute("stroke-width","1.6");
+  pat.appendChild(ln); defs.appendChild(pat);
+
+  const RUNG=["Broken","Stabilizing","Reclaim","Above 50D","Pivot","Breakout","Holds","Expansion"];
+  const y=r=>BOT-r*(BOT-TOP)/7;
+  RUNG.forEach((lab,r)=>{
+    mk("line",{x1:L-10,y1:y(r),x2:W-14,y2:y(r),stroke:"#d8d4cd","stroke-width":.9});
+    mk("text",{x:L-18,y:y(r)+4,"text-anchor":"end",
+      style:"font:600 10px PlexCond,sans-serif;fill:#5c5852;letter-spacing:.03em"},lab.toUpperCase());
+  });
+  let x=L+8;
+  Object.entries(NM).sort((a,b)=>b[1].rung-a[1].rung).forEach(([t,v])=>{
+    const cy=y(v.rung);
+    const q = v.direction==="up" ? SET[0] : v.direction==="down" ? SET[1] : null;
+    if(q===null){
+      mk("rect",{x:x-16,y:cy-9,width:38,height:18,fill:"none",stroke:"#b9b3a9",
+        "stroke-width":1.2,"stroke-dasharray":"3 2"});
+      mk("text",{x:x+3,y:cy+4,"text-anchor":"middle",
+        style:"font:500 9.5px PlexMono,monospace;fill:#9c968d"},t);
+    } else {
+      const isFail = q.k==="refused";
+      mk("rect",{x:x-16,y:cy-9,width:38,height:18,fill:q.hex});
+      if(isFail) mk("rect",{x:x-16,y:cy-9,width:38,height:18,fill:`url(#hatch-${id})`,opacity:.55});
+      mk("rect",{x:x-16,y:cy-9,width:38,height:18,fill:"none",stroke:"#111110","stroke-width":.7,opacity:.35});
+      mk("text",{x:x+3,y:cy+4,"text-anchor":"middle",
+        style:`font:500 9.5px PlexMono,monospace;fill:${q.k==="took"?"#fff":"#3a2410"}`},t);
+    }
+    x+=44; if(x>W-46){x=L+8;}
+  });
+  mk("text",{x:L-18,y:BOT+40,"text-anchor":"end",
+    style:"font:400 9px PlexMono,monospace;fill:#9c968d"},"KEY");
+  [["took",SET[0]],["refused",SET[1]],["untested",null]].forEach(([lab,q],i)=>{
+    const bx=L+i*136, by=BOT+30;
+    if(q){ mk("rect",{x:bx,y:by,width:26,height:14,fill:q.hex});
+      if(q.k==="refused") mk("rect",{x:bx,y:by,width:26,height:14,fill:`url(#hatch-${id})`,opacity:.55});}
+    else mk("rect",{x:bx,y:by,width:26,height:14,fill:"none",stroke:"#b9b3a9","stroke-dasharray":"3 2"});
+    mk("text",{x:bx+32,y:by+11,style:"font:400 10.5px Plex,sans-serif;fill:#5c5852"},lab);
+  });
+}
+ladder("d1"); ladder("d2");
+</script>
+</body></html>
