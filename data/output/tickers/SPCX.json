@@ -1,1 +1,910 @@
-{"ticker":"SPCX","ohlc_2y":[{"date":"2026-06-12","open":150.0,"high":176.52,"low":149.34,"close":160.95,"volume":519234800.0},{"date":"2026-06-15","open":171.74,"high":193.0,"low":168.35,"close":192.5,"volume":256226600.0},{"date":"2026-06-16","open":200.51,"high":225.64,"low":199.98,"close":211.39,"volume":195401600.0},{"date":"2026-06-17","open":209.84,"high":213.8,"low":187.01,"close":191.82,"volume":201719500.0},{"date":"2026-06-18","open":188.39,"high":190.0,"low":172.11,"close":185.0,"volume":272126800.0},{"date":"2026-06-22","open":176.04,"high":176.75,"low":154.0,"close":154.6,"volume":169183800.0},{"date":"2026-06-23","open":151.06,"high":165.5,"low":147.11,"close":156.11,"volume":155848100.0},{"date":"2026-06-24","open":154.2,"high":159.86,"low":150.72,"close":154.54,"volume":76101500.0},{"date":"2026-06-25","open":156.63,"high":160.65,"low":150.0,"close":153.0,"volume":62212400.0},{"date":"2026-06-26","open":150.62,"high":158.4,"low":148.51,"close":153.23,"volume":126932900.0},{"date":"2026-06-29","open":157.36,"high":166.17,"low":151.74,"close":164.19,"volume":81443100.0},{"date":"2026-06-30","open":163.38,"high":172.4,"low":161.64,"close":170.86,"volume":82047500.0},{"date":"2026-07-01","open":171.57,"high":171.74,"low":155.0,"close":157.54,"volume":109317600.0},{"date":"2026-07-02","open":159.73,"high":162.16,"low":155.88,"close":162.0,"volume":61257100.0},{"date":"2026-07-06","open":165.95,"high":167.9,"low":155.04,"close":160.42,"volume":188831300.0},{"date":"2026-07-07","open":158.92,"high":159.3,"low":148.86,"close":149.47,"volume":83779700.0},{"date":"2026-07-08","open":152.55,"high":152.93,"low":145.2,"close":148.3,"volume":60949400.0},{"date":"2026-07-09","open":150.45,"high":153.5,"low":147.59,"close":152.16,"volume":46468600.0},{"date":"2026-07-10","open":150.13,"high":150.57,"low":145.07,"close":145.3,"volume":46826000.0},{"date":"2026-07-13","open":144.7,"high":144.92,"low":136.78,"close":139.14,"volume":71456500.0},{"date":"2026-07-14","open":140.95,"high":143.33,"low":135.52,"close":136.08,"volume":46694800.0},{"date":"2026-07-15","open":137.51,"high":139.34,"low":132.15,"close":135.27,"volume":58040900.0},{"date":"2026-07-16","open":135.01,"high":137.76,"low":130.74,"close":131.11,"volume":58725600.0},{"date":"2026-07-17","open":127.43,"high":130.33,"low":122.12,"close":123.99,"volume":83706200.0},{"date":"2026-07-20","open":125.29,"high":125.7,"low":119.68,"close":119.85,"volume":57337300.0},{"date":"2026-07-21","open":122.11,"high":129.88,"low":120.36,"close":123.54,"volume":79718100.0},{"date":"2026-07-22","open":123.29,"high":124.77,"low":115.19,"close":115.26,"volume":92731800.0},{"date":"2026-07-23","open":115.21,"high":118.55,"low":110.85,"close":118.24,"volume":75246500.0},{"date":"2026-07-24","open":116.01,"high":117.0,"low":111.4,"close":115.07,"volume":56786100.0},{"date":"2026-07-27","open":113.5,"high":114.85,"low":108.66,"close":113.5,"volume":64540700.0},{"date":"2026-07-28","open":109.32,"high":118.13,"low":107.01,"close":116.41,"volume":81714300.0},{"date":"2026-07-29","open":114.4,"high":117.59,"low":110.35,"close":112.55,"volume":53995200.0},{"date":"2026-07-30","open":115.14,"high":118.93,"low":111.35,"close":112.2,"volume":56008000.0},{"date":"2026-07-31","open":113.1,"high":113.64,"low":107.57,"close":108.37,"volume":58835700.0},{"date":"2026-08-03","open":106.4,"high":114.92,"low":104.83,"close":114.53,"volume":70524000.0},{"date":"2026-08-04","open":117.33,"high":126.71,"low":115.72,"close":125.33,"volume":144130100.0},{"date":"2026-08-05","open":112.37,"high":117.5,"low":106.66,"close":108.27,"volume":208488400.0},{"date":"2026-08-06","open":107.09,"high":115.75,"low":105.11,"close":114.92,"volume":254155500.0}],"ohlc_2y_fetched_at":"2026-08-07T09:51:00+00:00"}
+{
+  "ticker": "SPCX",
+  "fetched_at": "2026-08-08T05:18:28Z",
+  "_schema": "v2",
+  "current_price": 133.11000061035156,
+  "info": {
+    "symbol": "SPCX",
+    "longName": "Space Exploration Technologies Corp.",
+    "sector": "Industrials",
+    "industry": "Aerospace & Defense",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Starbase",
+    "website": "https://www.spacex.com",
+    "fullTimeEmployees": 21000,
+    "marketCap": 1754626785280,
+    "enterpriseValue": 3453170745344,
+    "trailingPE": null,
+    "forwardPE": 71.840294,
+    "priceToSalesTrailing12Months": 76.142456,
+    "enterpriseToRevenue": 149.851,
+    "priceToBook": 13.785212,
+    "grossMargins": 0.51875,
+    "operatingMargins": -0.01804,
+    "profitMargins": -0.35661998,
+    "returnOnEquity": null,
+    "totalCash": 100009000960,
+    "totalDebt": 39708000256,
+    "totalRevenue": 23043999744,
+    "freeCashflow": null,
+    "debtToEquity": 31.211,
+    "currentRatio": 5.115,
+    "fiftyTwoWeekHigh": 225.64,
+    "fiftyTwoWeekLow": 104.83,
+    "averageVolume": 120778720,
+    "averageVolume10days": 123401800,
+    "beta": null,
+    "sharesOutstanding": 7696293669,
+    "sharesFloat": 1278105383,
+    "companyOfficers": [
+      {
+        "name": "Mr. Elon R. Musk",
+        "title": "Founder & CEO",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Ms. Gwynne E. Shotwell",
+        "title": "President & COO",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Bret W. Johnsen",
+        "title": "CFO & Secretary",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Michael  Sagan",
+        "title": "Senior Director of Legal",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Timothy R. Hughes",
+        "title": "Senior VP of Global Business & Government Affairs",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Richard J. Lee",
+        "title": "Treasurer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.09,
+      "eps_estimate": -0.28931,
+      "eps_surprise_pct": 0.6889
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -1.27,
+      "eps_estimate": null,
+      "eps_surprise_pct": null
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 10676000000,
+    "revenue_high": 16016800000
+  },
+  "quarterly_metrics": [
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "revenue": 4694000000.0,
+      "gross_profit": 2306000000.0,
+      "operating_income": -1954000000.0,
+      "eps": -0.41,
+      "cash": 15852000000.0,
+      "operating_cashflow": 1047000000.0,
+      "gross_margin_pct": 49.126544524925436,
+      "yoy_pct": null
+    },
+    {
+      "period_end": "2025-03-31T00:00:00",
+      "revenue": 4067000000.0,
+      "gross_profit": 2105000000.0,
+      "operating_income": 55000000.0,
+      "eps": -0.049778,
+      "cash": null,
+      "operating_cashflow": 727000000.0,
+      "gross_margin_pct": 51.75805261863782,
+      "yoy_pct": null
+    }
+  ],
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 11,
+    "bullish": 7,
+    "neutral": 3,
+    "bearish": 1,
+    "avg_price_target": 233.0,
+    "high_price_target": 800.0,
+    "low_price_target": 62.0,
+    "current_price": 133.11,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-07T12:00:24",
+        "firm": "Argus Research",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-05T16:09:41",
+        "firm": "Macquarie",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T15:36:12",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T12:40:29",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-05T11:35:48",
+        "firm": "Piper Sandler",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T09:45:39",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-03T14:40:17",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-03T10:09:25",
+        "firm": "Macquarie",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T13:56:38",
+        "firm": "Macquarie",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T09:35:41",
+        "firm": "HSBC",
+        "to_grade": "Hold",
+        "from_grade": null,
+        "action": "init"
+      }
+    ]
+  },
+  "news": [
+    {
+      "date": "2026-08-07T13:18:28Z",
+      "title": "SpaceX's big week: Stock jumps despite earnings storm, lock-up expiration in crucial test for investors",
+      "url": "https://finance.yahoo.com/markets/stocks/article/spacexs-big-week-stock-jumps-despite-earnings-storm-lock-up-expiration-in-crucial-test-for-investors-131828277.html",
+      "source": "Yahoo Finance"
+    },
+    {
+      "date": "2026-08-07T14:42:05Z",
+      "title": "SpaceX's influence ripples across markets: AlphaCheck",
+      "url": "https://finance.yahoo.com/markets/article/spacexs-influence-ripples-across-markets-alphacheck-144205821.html",
+      "source": "Yahoo Finance"
+    },
+    {
+      "date": "2026-08-07T22:11:00Z",
+      "title": "Weekly Wrap: Bitcoin Hit By Coldcard Hack And Clarity Act Disappointment",
+      "url": "https://www.cryptoprowl.com/releases/weekly-wrap-bitcoin-hit-by-coldcard-hack-and-clarity-act-disappointment-6364",
+      "source": "CryptoProwl"
+    },
+    {
+      "date": "2026-08-07T20:39:00Z",
+      "title": "SpaceX, Doximity, Trade Desk, Rigetti, Coherent, and More Stocks That Explain Today\u2019s Market",
+      "url": "https://www.barrons.com/articles/stock-movers-85c510af?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-08-07T20:28:19Z",
+      "title": "So Much for Those End-of-Lockup SpaceX Fears",
+      "url": "https://www.wsj.com/livecoverage/july-jobs-report-stock-market-08-07-2026/card/so-much-for-those-end-of-lockup-spacex-fears-3aeqsCLMswzWhMKzMgkX?siteid=yhoof2&yptr=yahoo",
+      "source": "The Wall Street Journal"
+    },
+    {
+      "date": "2026-08-07T20:18:45Z",
+      "title": "SpaceX Stock Lands An Upgrade, Rocket Lab Surges After Electron Mission",
+      "url": "https://www.investors.com/news/spacex-stock-upgrade-buy-ai-expenditure-repayment-rocket-lab-stock-electron-mission-rklb/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
+    },
+    {
+      "date": "2026-08-07T19:57:39Z",
+      "title": "Top Analyst Drops Sharp Take on SpaceX Stock",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/top-analyst-drops-sharp-spacex-195739278.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-08-07T19:42:20Z",
+      "title": "SpaceX Soars 13% After Analyst Upgrade Says AI Spending Could Pay Back in Under a Year",
+      "url": "https://www.benzinga.com/markets/prediction-markets/26/08/61055247/spacex-stock-argus-upgrade-ai-spending?utm_source=yahooFinance&utm_campaign=partner_feed&utm_medium=referral",
+      "source": "Benzinga Prediction Markets"
+    },
+    {
+      "date": "2026-08-07T19:39:36Z",
+      "title": "SpaceX Gets Jaw-Dropping Street High Price Target with 560% Upside",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/spacex-gets-jaw-dropping-street-193936018.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-08-07T19:38:44Z",
+      "title": "SpaceX Stock Surges 10.5% as Argus Sees Rapid AI Payback",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/spacex-stock-surges-10-5-193844125.html",
+      "source": "GuruFocus.com"
+    }
+  ],
+  "options_implied_move": 0.10780557384269175,
+  "technicals": {
+    "ma20": 120.83700027465821,
+    "rsi14": 63.13724328280413,
+    "high_20d": 144.9199981689453,
+    "low_5d": 104.83000183105469,
+    "low_10d": 104.83000183105469,
+    "high_52w": 225.63999938964844,
+    "low_52w": 104.83000183105469,
+    "atr14": 10.221427372523717,
+    "atr14_pct": 7.678932706524852,
+    "position_in_52w_range_pct": 23.40865768628202
+  },
+  "ohlc_2y": [
+    {
+      "date": "2026-06-12",
+      "open": 150.0,
+      "high": 176.52,
+      "low": 149.34,
+      "close": 160.95,
+      "volume": 519234800.0
+    },
+    {
+      "date": "2026-06-15",
+      "open": 171.74,
+      "high": 193.0,
+      "low": 168.35,
+      "close": 192.5,
+      "volume": 256226600.0
+    },
+    {
+      "date": "2026-06-16",
+      "open": 200.51,
+      "high": 225.64,
+      "low": 199.98,
+      "close": 211.39,
+      "volume": 195401600.0
+    },
+    {
+      "date": "2026-06-17",
+      "open": 209.84,
+      "high": 213.8,
+      "low": 187.01,
+      "close": 191.82,
+      "volume": 201719500.0
+    },
+    {
+      "date": "2026-06-18",
+      "open": 188.39,
+      "high": 190.0,
+      "low": 172.11,
+      "close": 185.0,
+      "volume": 272126800.0
+    },
+    {
+      "date": "2026-06-22",
+      "open": 176.04,
+      "high": 176.75,
+      "low": 154.0,
+      "close": 154.6,
+      "volume": 169183800.0
+    },
+    {
+      "date": "2026-06-23",
+      "open": 151.06,
+      "high": 165.5,
+      "low": 147.11,
+      "close": 156.11,
+      "volume": 155848100.0
+    },
+    {
+      "date": "2026-06-24",
+      "open": 154.2,
+      "high": 159.86,
+      "low": 150.72,
+      "close": 154.54,
+      "volume": 76101500.0
+    },
+    {
+      "date": "2026-06-25",
+      "open": 156.63,
+      "high": 160.65,
+      "low": 150.0,
+      "close": 153.0,
+      "volume": 62212400.0
+    },
+    {
+      "date": "2026-06-26",
+      "open": 150.62,
+      "high": 158.4,
+      "low": 148.51,
+      "close": 153.23,
+      "volume": 126932900.0
+    },
+    {
+      "date": "2026-06-29",
+      "open": 157.36,
+      "high": 166.17,
+      "low": 151.74,
+      "close": 164.19,
+      "volume": 81443100.0
+    },
+    {
+      "date": "2026-06-30",
+      "open": 163.38,
+      "high": 172.4,
+      "low": 161.64,
+      "close": 170.86,
+      "volume": 82047500.0
+    },
+    {
+      "date": "2026-07-01",
+      "open": 171.57,
+      "high": 171.74,
+      "low": 155.0,
+      "close": 157.54,
+      "volume": 109317600.0
+    },
+    {
+      "date": "2026-07-02",
+      "open": 159.73,
+      "high": 162.16,
+      "low": 155.88,
+      "close": 162.0,
+      "volume": 61257100.0
+    },
+    {
+      "date": "2026-07-06",
+      "open": 165.95,
+      "high": 167.9,
+      "low": 155.04,
+      "close": 160.42,
+      "volume": 188831300.0
+    },
+    {
+      "date": "2026-07-07",
+      "open": 158.92,
+      "high": 159.3,
+      "low": 148.86,
+      "close": 149.47,
+      "volume": 83779700.0
+    },
+    {
+      "date": "2026-07-08",
+      "open": 152.55,
+      "high": 152.93,
+      "low": 145.2,
+      "close": 148.3,
+      "volume": 60949400.0
+    },
+    {
+      "date": "2026-07-09",
+      "open": 150.45,
+      "high": 153.5,
+      "low": 147.59,
+      "close": 152.16,
+      "volume": 46468600.0
+    },
+    {
+      "date": "2026-07-10",
+      "open": 150.13,
+      "high": 150.57,
+      "low": 145.07,
+      "close": 145.3,
+      "volume": 46826000.0
+    },
+    {
+      "date": "2026-07-13",
+      "open": 144.7,
+      "high": 144.92,
+      "low": 136.78,
+      "close": 139.14,
+      "volume": 71456500.0
+    },
+    {
+      "date": "2026-07-14",
+      "open": 140.95,
+      "high": 143.33,
+      "low": 135.52,
+      "close": 136.08,
+      "volume": 46694800.0
+    },
+    {
+      "date": "2026-07-15",
+      "open": 137.51,
+      "high": 139.34,
+      "low": 132.15,
+      "close": 135.27,
+      "volume": 58040900.0
+    },
+    {
+      "date": "2026-07-16",
+      "open": 135.01,
+      "high": 137.76,
+      "low": 130.74,
+      "close": 131.11,
+      "volume": 58725600.0
+    },
+    {
+      "date": "2026-07-17",
+      "open": 127.43,
+      "high": 130.33,
+      "low": 122.12,
+      "close": 123.99,
+      "volume": 83706200.0
+    },
+    {
+      "date": "2026-07-20",
+      "open": 125.29,
+      "high": 125.7,
+      "low": 119.68,
+      "close": 119.85,
+      "volume": 57337300.0
+    },
+    {
+      "date": "2026-07-21",
+      "open": 122.11,
+      "high": 129.88,
+      "low": 120.36,
+      "close": 123.54,
+      "volume": 79718100.0
+    },
+    {
+      "date": "2026-07-22",
+      "open": 123.29,
+      "high": 124.77,
+      "low": 115.19,
+      "close": 115.26,
+      "volume": 92731800.0
+    },
+    {
+      "date": "2026-07-23",
+      "open": 115.21,
+      "high": 118.55,
+      "low": 110.85,
+      "close": 118.24,
+      "volume": 75246500.0
+    },
+    {
+      "date": "2026-07-24",
+      "open": 116.01,
+      "high": 117.0,
+      "low": 111.4,
+      "close": 115.07,
+      "volume": 56786100.0
+    },
+    {
+      "date": "2026-07-27",
+      "open": 113.5,
+      "high": 114.85,
+      "low": 108.66,
+      "close": 113.5,
+      "volume": 64540700.0
+    },
+    {
+      "date": "2026-07-28",
+      "open": 109.32,
+      "high": 118.13,
+      "low": 107.01,
+      "close": 116.41,
+      "volume": 81714300.0
+    },
+    {
+      "date": "2026-07-29",
+      "open": 114.4,
+      "high": 117.59,
+      "low": 110.35,
+      "close": 112.55,
+      "volume": 53995200.0
+    },
+    {
+      "date": "2026-07-30",
+      "open": 115.14,
+      "high": 118.93,
+      "low": 111.35,
+      "close": 112.2,
+      "volume": 56008000.0
+    },
+    {
+      "date": "2026-07-31",
+      "open": 113.1,
+      "high": 113.64,
+      "low": 107.57,
+      "close": 108.37,
+      "volume": 58835700.0
+    },
+    {
+      "date": "2026-08-03",
+      "open": 106.4,
+      "high": 114.92,
+      "low": 104.83,
+      "close": 114.53,
+      "volume": 70524000.0
+    },
+    {
+      "date": "2026-08-04",
+      "open": 117.33,
+      "high": 126.71,
+      "low": 115.72,
+      "close": 125.33,
+      "volume": 144130100.0
+    },
+    {
+      "date": "2026-08-05",
+      "open": 112.37,
+      "high": 117.5,
+      "low": 106.66,
+      "close": 108.27,
+      "volume": 208488400.0
+    },
+    {
+      "date": "2026-08-06",
+      "open": 107.09,
+      "high": 115.75,
+      "low": 105.11,
+      "close": 114.92,
+      "volume": 255176600.0
+    },
+    {
+      "date": "2026-08-07",
+      "open": 114.97,
+      "high": 133.48,
+      "low": 114.53,
+      "close": 133.11,
+      "volume": 240605000.0
+    }
+  ],
+  "ohlc_1y": [
+    {
+      "date": "2026-06-12",
+      "open": 150.0,
+      "high": 176.52,
+      "low": 149.34,
+      "close": 160.95,
+      "volume": 519234800.0
+    },
+    {
+      "date": "2026-06-15",
+      "open": 171.74,
+      "high": 193.0,
+      "low": 168.35,
+      "close": 192.5,
+      "volume": 256226600.0
+    },
+    {
+      "date": "2026-06-16",
+      "open": 200.51,
+      "high": 225.64,
+      "low": 199.98,
+      "close": 211.39,
+      "volume": 195401600.0
+    },
+    {
+      "date": "2026-06-17",
+      "open": 209.84,
+      "high": 213.8,
+      "low": 187.01,
+      "close": 191.82,
+      "volume": 201719500.0
+    },
+    {
+      "date": "2026-06-18",
+      "open": 188.39,
+      "high": 190.0,
+      "low": 172.11,
+      "close": 185.0,
+      "volume": 272126800.0
+    },
+    {
+      "date": "2026-06-22",
+      "open": 176.04,
+      "high": 176.75,
+      "low": 154.0,
+      "close": 154.6,
+      "volume": 169183800.0
+    },
+    {
+      "date": "2026-06-23",
+      "open": 151.06,
+      "high": 165.5,
+      "low": 147.11,
+      "close": 156.11,
+      "volume": 155848100.0
+    },
+    {
+      "date": "2026-06-24",
+      "open": 154.2,
+      "high": 159.86,
+      "low": 150.72,
+      "close": 154.54,
+      "volume": 76101500.0
+    },
+    {
+      "date": "2026-06-25",
+      "open": 156.63,
+      "high": 160.65,
+      "low": 150.0,
+      "close": 153.0,
+      "volume": 62212400.0
+    },
+    {
+      "date": "2026-06-26",
+      "open": 150.62,
+      "high": 158.4,
+      "low": 148.51,
+      "close": 153.23,
+      "volume": 126932900.0
+    },
+    {
+      "date": "2026-06-29",
+      "open": 157.36,
+      "high": 166.17,
+      "low": 151.74,
+      "close": 164.19,
+      "volume": 81443100.0
+    },
+    {
+      "date": "2026-06-30",
+      "open": 163.38,
+      "high": 172.4,
+      "low": 161.64,
+      "close": 170.86,
+      "volume": 82047500.0
+    },
+    {
+      "date": "2026-07-01",
+      "open": 171.57,
+      "high": 171.74,
+      "low": 155.0,
+      "close": 157.54,
+      "volume": 109317600.0
+    },
+    {
+      "date": "2026-07-02",
+      "open": 159.73,
+      "high": 162.16,
+      "low": 155.88,
+      "close": 162.0,
+      "volume": 61257100.0
+    },
+    {
+      "date": "2026-07-06",
+      "open": 165.95,
+      "high": 167.9,
+      "low": 155.04,
+      "close": 160.42,
+      "volume": 188831300.0
+    },
+    {
+      "date": "2026-07-07",
+      "open": 158.92,
+      "high": 159.3,
+      "low": 148.86,
+      "close": 149.47,
+      "volume": 83779700.0
+    },
+    {
+      "date": "2026-07-08",
+      "open": 152.55,
+      "high": 152.93,
+      "low": 145.2,
+      "close": 148.3,
+      "volume": 60949400.0
+    },
+    {
+      "date": "2026-07-09",
+      "open": 150.45,
+      "high": 153.5,
+      "low": 147.59,
+      "close": 152.16,
+      "volume": 46468600.0
+    },
+    {
+      "date": "2026-07-10",
+      "open": 150.13,
+      "high": 150.57,
+      "low": 145.07,
+      "close": 145.3,
+      "volume": 46826000.0
+    },
+    {
+      "date": "2026-07-13",
+      "open": 144.7,
+      "high": 144.92,
+      "low": 136.78,
+      "close": 139.14,
+      "volume": 71456500.0
+    },
+    {
+      "date": "2026-07-14",
+      "open": 140.95,
+      "high": 143.33,
+      "low": 135.52,
+      "close": 136.08,
+      "volume": 46694800.0
+    },
+    {
+      "date": "2026-07-15",
+      "open": 137.51,
+      "high": 139.34,
+      "low": 132.15,
+      "close": 135.27,
+      "volume": 58040900.0
+    },
+    {
+      "date": "2026-07-16",
+      "open": 135.01,
+      "high": 137.76,
+      "low": 130.74,
+      "close": 131.11,
+      "volume": 58725600.0
+    },
+    {
+      "date": "2026-07-17",
+      "open": 127.43,
+      "high": 130.33,
+      "low": 122.12,
+      "close": 123.99,
+      "volume": 83706200.0
+    },
+    {
+      "date": "2026-07-20",
+      "open": 125.29,
+      "high": 125.7,
+      "low": 119.68,
+      "close": 119.85,
+      "volume": 57337300.0
+    },
+    {
+      "date": "2026-07-21",
+      "open": 122.11,
+      "high": 129.88,
+      "low": 120.36,
+      "close": 123.54,
+      "volume": 79718100.0
+    },
+    {
+      "date": "2026-07-22",
+      "open": 123.29,
+      "high": 124.77,
+      "low": 115.19,
+      "close": 115.26,
+      "volume": 92731800.0
+    },
+    {
+      "date": "2026-07-23",
+      "open": 115.21,
+      "high": 118.55,
+      "low": 110.85,
+      "close": 118.24,
+      "volume": 75246500.0
+    },
+    {
+      "date": "2026-07-24",
+      "open": 116.01,
+      "high": 117.0,
+      "low": 111.4,
+      "close": 115.07,
+      "volume": 56786100.0
+    },
+    {
+      "date": "2026-07-27",
+      "open": 113.5,
+      "high": 114.85,
+      "low": 108.66,
+      "close": 113.5,
+      "volume": 64540700.0
+    },
+    {
+      "date": "2026-07-28",
+      "open": 109.32,
+      "high": 118.13,
+      "low": 107.01,
+      "close": 116.41,
+      "volume": 81714300.0
+    },
+    {
+      "date": "2026-07-29",
+      "open": 114.4,
+      "high": 117.59,
+      "low": 110.35,
+      "close": 112.55,
+      "volume": 53995200.0
+    },
+    {
+      "date": "2026-07-30",
+      "open": 115.14,
+      "high": 118.93,
+      "low": 111.35,
+      "close": 112.2,
+      "volume": 56008000.0
+    },
+    {
+      "date": "2026-07-31",
+      "open": 113.1,
+      "high": 113.64,
+      "low": 107.57,
+      "close": 108.37,
+      "volume": 58835700.0
+    },
+    {
+      "date": "2026-08-03",
+      "open": 106.4,
+      "high": 114.92,
+      "low": 104.83,
+      "close": 114.53,
+      "volume": 70524000.0
+    },
+    {
+      "date": "2026-08-04",
+      "open": 117.33,
+      "high": 126.71,
+      "low": 115.72,
+      "close": 125.33,
+      "volume": 144130100.0
+    },
+    {
+      "date": "2026-08-05",
+      "open": 112.37,
+      "high": 117.5,
+      "low": 106.66,
+      "close": 108.27,
+      "volume": 208488400.0
+    },
+    {
+      "date": "2026-08-06",
+      "open": 107.09,
+      "high": 115.75,
+      "low": 105.11,
+      "close": 114.92,
+      "volume": 255176600.0
+    },
+    {
+      "date": "2026-08-07",
+      "open": 114.97,
+      "high": 133.48,
+      "low": 114.53,
+      "close": 133.11,
+      "volume": 240605000.0
+    }
+  ],
+  "ai_synthesis": null,
+  "ai_synthesized_at": null
+}
