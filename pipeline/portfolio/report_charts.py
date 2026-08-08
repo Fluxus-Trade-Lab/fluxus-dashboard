@@ -322,3 +322,186 @@ def case_studies_grid(rows, load_ohlc, dark: bool = False) -> Optional[str]:
             txt.set_color(p["ink"])
     fig.tight_layout(rect=(0, 0, 1, 0.98))
     return _b64(fig, p["face"])
+
+
+# --------------------------------------------------------------------------- #
+# Review charts (cumulative-R, drawdown episodes, rolling PF, Pareto, streaks)
+# --------------------------------------------------------------------------- #
+def _by_exit(trades):
+    return sorted([t for t in trades if t.R is not None], key=lambda t: t.exit_date)
+
+
+def cumulative_r(trades, dark: bool = False):
+    """Equity in R units — position-sizing independent cumulative R."""
+    rr = _by_exit(trades)
+    if len(rr) < 5:
+        return None
+    p = _pal(dark)
+    cum, s = [], 0.0
+    for t in rr:
+        s += t.R
+        cum.append(s)
+    fig, ax = plt.subplots(figsize=(11, 3.4), dpi=150)
+    xs = list(range(len(cum)))
+    ax.plot(xs, cum, color=p["blue"], lw=1.8)
+    ax.fill_between(xs, cum, 0, color=p["blue"], alpha=0.10)
+    ax.axhline(0, color=p["zero"], lw=0.8)
+    ax.set_ylabel("Cumulative R"); ax.set_xlabel("Closed trades in sequence")
+    ax.grid(axis="y", color=p["grid"], lw=0.7); _style(ax, p)
+    ax.annotate(f"+{s:.0f}R · {len(rr)} trades", xy=(xs[-1], cum[-1]), xytext=(-4, 6),
+                textcoords="offset points", ha="right", fontsize=9, color=p["ink"], fontweight="bold")
+    return _b64(fig, p["face"])
+
+
+def _dd_episodes(equity_by_date):
+    ds = sorted(equity_by_date)
+    vals = [equity_by_date[d] for d in ds]
+    eps, peak, trough, in_dd, tdate = [], vals[0], vals[0], False, None
+    for i, v in enumerate(vals):
+        if v >= peak:
+            if in_dd:
+                eps.append({"depth": (trough - peak) / peak * 100, "trough_date": tdate})
+                in_dd = False
+            peak, trough = v, v
+        else:
+            in_dd = True
+            if v < trough:
+                trough, tdate = v, ds[i]
+    if in_dd:
+        eps.append({"depth": (trough - peak) / peak * 100, "trough_date": tdate})
+    return eps
+
+
+def drawdown_distribution(equity_by_date, dark: bool = False):
+    """Every drawdown episode's depth (histogram) + the N worst (horizontal bars)."""
+    eps = [e for e in _dd_episodes(equity_by_date) if e["depth"] < -0.5]
+    if len(eps) < 3:
+        return None
+    p = _pal(dark)
+    depths = [abs(e["depth"]) for e in eps]
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 3.6), dpi=150)
+    fig.patch.set_facecolor(p["face"])
+    ax1.hist(depths, bins=min(14, len(eps)), color=RED, alpha=0.85)
+    ax1.set_title(f"Drawdown distribution ({len(eps)} episodes)", fontsize=10, color=p["ink"], loc="left")
+    ax1.set_xlabel("Drawdown depth %")
+    worst = sorted(eps, key=lambda e: e["depth"])[:12]
+    ax2.barh(range(len(worst)), [abs(e["depth"]) for e in worst], color=RED, alpha=0.85)
+    ax2.set_yticks(range(len(worst)))
+    ax2.set_yticklabels([f"#{i+1} {e['trough_date'][5:]}" for i, e in enumerate(worst)], fontsize=7)
+    ax2.invert_yaxis()
+    ax2.set_title("12 worst drawdowns", fontsize=10, color=p["ink"], loc="left")
+    ax2.set_xlabel("%")
+    for ax in (ax1, ax2):
+        ax.grid(axis="both", color=p["grid"], lw=0.6); _style(ax, p)
+    fig.tight_layout()
+    return _b64(fig, p["face"])
+
+
+def rolling_profit_factor(trades, window: int = 50, dark: bool = False):
+    """Profit factor over a rolling window of trades (in R) — how the edge drifts."""
+    rr = _by_exit(trades)
+    if len(rr) < window + 5:
+        return None
+    p = _pal(dark)
+    Rs = [t.R for t in rr]
+    xs, pf = [], []
+    for i in range(window, len(Rs) + 1):
+        w = Rs[i - window:i]
+        gain = sum(r for r in w if r > 0)
+        loss = -sum(r for r in w if r < 0)
+        xs.append(i)
+        pf.append(gain / loss if loss > 0 else float("nan"))
+    fig, ax = plt.subplots(figsize=(11, 3.2), dpi=150)
+    ax.plot(xs, pf, color=p["blue"], lw=1.6)
+    ax.axhline(1, color=p["zero"], lw=0.9, ls="--")
+    ax.annotate("PF = 1 (break-even)", xy=(xs[0], 1), xytext=(2, 3), textcoords="offset points",
+                fontsize=8, color=p["mut"])
+    ax.set_ylabel("Profit factor"); ax.set_xlabel(f"Trade # (rolling {window}-trade window)")
+    ax.grid(axis="y", color=p["grid"], lw=0.7); _style(ax, p)
+    return _b64(fig, p["face"])
+
+
+def profit_concentration(trades, dark: bool = False):
+    """Pareto curve — cumulative R vs trades ranked by R desc; how few trades carry it."""
+    rr = sorted([t.R for t in trades if t.R is not None], reverse=True)
+    if len(rr) < 10:
+        return None
+    p = _pal(dark)
+    cum, s = [], 0.0
+    for r in rr:
+        s += r
+        cum.append(s)
+    total = cum[-1] if cum[-1] else 1
+    gross_pos = sum(r for r in rr if r > 0) or 1
+    topK = min(15, len(rr))
+    share = sum(rr[:topK]) / gross_pos * 100
+    fig, ax = plt.subplots(figsize=(11, 3.4), dpi=150)
+    xs = list(range(1, len(cum) + 1))
+    ax.plot(xs, cum, color=p["blue"], lw=1.8)
+    ax.axvline(topK, color=p["mut"], lw=0.9, ls="--")
+    ax.annotate(f"top {topK} trades = {share:.0f}% of gross profit",
+                xy=(topK, cum[topK - 1]), xytext=(8, -4), textcoords="offset points",
+                fontsize=9, color=p["ink"], fontweight="bold")
+    ax.set_ylabel("Cumulative R"); ax.set_xlabel("Trades ranked by R (descending)")
+    ax.grid(axis="y", color=p["grid"], lw=0.7); _style(ax, p)
+    return _b64(fig, p["face"])
+
+
+def _p_no_run(n, k, q):
+    """Exact P(no run of >=k losses) in n iid trials, loss prob q. DP over trailing streak."""
+    if k <= 0:
+        return 0.0
+    dp = [0.0] * (k + 1)
+    dp[0] = 1.0
+    for _ in range(n):
+        nxt = [0.0] * (k + 1)
+        for s in range(k):
+            if dp[s] == 0:
+                continue
+            nxt[0] += dp[s] * (1 - q)      # win → reset
+            if s + 1 < k:
+                nxt[s + 1] += dp[s] * q    # loss → extend (s+1==k would be a run → absorbed/dropped)
+        dp = nxt
+    return sum(dp[:k])
+
+
+def losing_streaks(trades, dark: bool = False):
+    """Observed losing-streak histogram + P(experiencing >=k consecutive losses)."""
+    rr = _by_exit(trades)
+    if len(rr) < 20:
+        return None
+    p = _pal(dark)
+    seq = [1 if t.R > 0 else 0 for t in rr]     # 1 win, 0 loss
+    # observed streaks
+    streaks, cur = [], 0
+    for x in seq:
+        if x == 0:
+            cur += 1
+        elif cur:
+            streaks.append(cur); cur = 0
+    if cur:
+        streaks.append(cur)
+    if not streaks:
+        return None
+    n = len(seq)
+    q = sum(1 for x in seq if x == 0) / n
+    ks = [4, 6, 8, 10, 12, 15]
+    probs = [(1 - _p_no_run(n, k, q)) * 100 for k in ks]
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 3.4), dpi=150)
+    fig.patch.set_facecolor(p["face"])
+    mx = max(streaks)
+    ax1.hist(streaks, bins=range(1, mx + 2), color=p["blue"], alpha=0.85, align="left")
+    ax1.set_title(f"Observed losing streaks (max {mx})", fontsize=10, color=p["ink"], loc="left")
+    ax1.set_xlabel("Losing streak length")
+    ax2.bar(range(len(ks)), probs, color=RED, alpha=0.85, width=0.66)
+    ax2.set_xticks(range(len(ks))); ax2.set_xticklabels([f"≥{k}" for k in ks], fontsize=9)
+    ax2.set_title(f"P(≥k consecutive losses) over {n} trades", fontsize=10, color=p["ink"], loc="left")
+    ax2.set_xlabel("Consecutive losses")
+    for b, v in zip(ax2.patches, probs):
+        ax2.annotate(f"{v:.0f}%", xy=(b.get_x() + b.get_width() / 2, v), xytext=(0, 2),
+                     textcoords="offset points", ha="center", fontsize=8, color=p["ink"])
+    for ax in (ax1, ax2):
+        ax.grid(axis="y", color=p["grid"], lw=0.6); _style(ax, p)
+    fig.tight_layout()
+    return _b64(fig, p["face"])

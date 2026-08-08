@@ -95,6 +95,12 @@ def build_doc(trades, meta, period, month, quarter, out_dir, handle):
         "rdist": _both(lambda d: rc.r_distribution(rdist, dark=d)),
         "deployment": _both(lambda d: rc.deployment_curve(sub, eqbd, cap, dark=d)) if eqbd else None,
         "cases": _both(lambda d: rc.case_studies_grid(cs, load_local_ohlc, dark=d)) if cs else None,
+        # review charts
+        "cum_r": _both(lambda d: rc.cumulative_r(sub, dark=d)),
+        "dd_dist": _both(lambda d: rc.drawdown_distribution(eqbd, dark=d)) if eqbd else None,
+        "rolling_pf": _both(lambda d: rc.rolling_profit_factor(sub, dark=d)),
+        "pareto": _both(lambda d: rc.profit_concentration(sub, dark=d)),
+        "streaks": _both(lambda d: rc.losing_streaks(sub, dark=d)),
     }
 
     return {

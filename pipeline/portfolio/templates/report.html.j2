@@ -259,6 +259,22 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
 </tr>{% endfor %}</tbody></table>
 </section>{% endif %}
 
+{# ---------- Deep review charts (Dario-style) ---------- #}
+{% if d.charts.cum_r and d.charts.cum_r.light %}
+<section>
+<p class="lbl">深度复盘 · Deep review — R-equity, drawdowns, concentration, streaks</p>
+<div class="chart">{{ chart(d.charts.cum_r, 'Cumulative R') }}</div>
+<p class="cap">Cumulative R — equity in risk units, independent of position sizing.</p>
+{% if d.charts.pareto and d.charts.pareto.light %}<div class="chart" style="margin-top:14px">{{ chart(d.charts.pareto, 'Profit concentration') }}</div>
+<p class="cap">Profit concentration — a handful of trades carry the account (right-tail dependence).</p>{% endif %}
+{% if d.charts.dd_dist and d.charts.dd_dist.light %}<div class="chart" style="margin-top:14px">{{ chart(d.charts.dd_dist, 'Drawdown distribution') }}</div>
+<p class="cap">Every drawdown episode, not just the max — the shape of the pain.</p>{% endif %}
+{% if d.charts.rolling_pf and d.charts.rolling_pf.light %}<div class="chart" style="margin-top:14px">{{ chart(d.charts.rolling_pf, 'Rolling profit factor') }}</div>
+<p class="cap">Rolling 50-trade profit factor — is the edge steady or drifting?</p>{% endif %}
+{% if d.charts.streaks and d.charts.streaks.light %}<div class="chart" style="margin-top:14px">{{ chart(d.charts.streaks, 'Losing streaks') }}</div>
+<p class="cap">Losing streaks: observed vs the probability of hitting ≥k in a row — psychological prep.</p>{% endif %}
+</section>{% endif %}
+
 {# ---------- Contribution tables ---------- #}
 <section>
 <p class="lbl">贡献 · By direction &amp; top tickers</p>
