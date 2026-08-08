@@ -82,4 +82,36 @@ describe('sqnBand', () => {
     expect(sqnBand(6.0).label).toBe('Superb')
     expect(sqnBand(7.5).label).toBe('Holy Grail')
   })
+
+  it('returns the matching tone for each band', () => {
+    expect(sqnBand(null)).toEqual({ label: '—', tone: 'muted' })
+    expect(sqnBand(1.0)).toEqual({ label: 'Poor', tone: 'bad' })
+    expect(sqnBand(1.7)).toEqual({ label: 'Below average', tone: 'warn' })
+    expect(sqnBand(2.2)).toEqual({ label: 'Average', tone: 'neutral' })
+    expect(sqnBand(2.7)).toEqual({ label: 'Good', tone: 'good' })
+    expect(sqnBand(4.0)).toEqual({ label: 'Excellent', tone: 'good' })
+    expect(sqnBand(6.0)).toEqual({ label: 'Superb', tone: 'good' })
+    expect(sqnBand(7.5)).toEqual({ label: 'Holy Grail', tone: 'good' })
+  })
+
+  it('pins the exact band boundaries (gap-free ladder)', () => {
+    expect(sqnBand(1.6).label).toBe('Below average')
+    expect(sqnBand(1.9999).label).toBe('Below average')
+    expect(sqnBand(2.0).label).toBe('Average')
+    expect(sqnBand(2.4999).label).toBe('Average')
+    expect(sqnBand(2.5).label).toBe('Good')
+    expect(sqnBand(2.9999).label).toBe('Good')
+    expect(sqnBand(3.0).label).toBe('Excellent')
+    // Tharp: 3.0–5.0 Excellent, 5.1+ Superb — the <= 5.0 edge is intentional
+    expect(sqnBand(5.0).label).toBe('Excellent')
+    expect(sqnBand(5.0000001).label).toBe('Superb')
+    expect(sqnBand(6.9999).label).toBe('Superb')
+    expect(sqnBand(7.0).label).toBe('Holy Grail')
+  })
+
+  it('treats non-finite input as unknown, not as the top band', () => {
+    expect(sqnBand(NaN)).toEqual({ label: '—', tone: 'muted' })
+    expect(sqnBand(Infinity)).toEqual({ label: '—', tone: 'muted' })
+    expect(sqnBand(-Infinity)).toEqual({ label: '—', tone: 'muted' })
+  })
 })
