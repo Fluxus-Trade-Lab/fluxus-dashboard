@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { usePortfolio, PortfolioProvider } from '../portfolio/context/PortfolioContext'
 import { enrichTrades, lookupPrice } from '../portfolio/lib/calculations'
 import { todayStr } from '../portfolio/lib/portfolioFormat'
+import TharpLessons from './sizing/TharpLessons'
 
 /* ── Educational Content ─────────────────────────────────── */
 
@@ -372,6 +373,9 @@ function SizingTabInner() {
           })}
         </div>
       </div>
+
+      {/* Van Tharp curriculum */}
+      <TharpLessons />
 
       {/* Section 2: Calculator */}
       <SizingCalculator startingCapital={state.startingCapital || 1000000} />
