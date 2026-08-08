@@ -130,9 +130,14 @@ export default function TharpLessons() {
                     {lesson.principle}
                   </p>
                   <div className="bg-[var(--color-bg)] rounded px-3 py-2">
-                    <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">
-                      {lesson.ourNumber.stat}
-                    </span>
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                      <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
+                        {lesson.ourNumber.stat}
+                      </span>
+                      <span className="text-[8px] font-mono uppercase tracking-wide px-1.5 py-0.5 rounded border border-[var(--color-border-light)] text-[var(--color-text-muted)] shrink-0">
+                        H1 audit ref · 331 tr
+                      </span>
+                    </div>
                     <span className="text-sm font-semibold font-mono text-[var(--color-text)]">{lesson.ourNumber.value}</span>
                     <p className="text-[10px] text-[var(--color-text-secondary)] leading-relaxed mt-1">
                       {lesson.ourNumber.read}

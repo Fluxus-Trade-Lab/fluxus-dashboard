@@ -39,14 +39,19 @@ export default function SqnReadout({ rs }) {
 
   return (
     <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4 space-y-3">
-      <div className="flex items-center justify-between">
-        <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
-          System Quality — SQN &amp; Expectancy
-        </h3>
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <div className="flex items-center gap-2">
+          <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
+            System Quality — SQN &amp; Expectancy
+          </h3>
+          <span className="text-[8px] font-mono uppercase tracking-wide px-1.5 py-0.5 rounded bg-[var(--color-bg)] border border-[var(--color-border-light)] text-[var(--color-text-muted)]">
+            Live · your synced book
+          </span>
+        </div>
         <code className="text-[9px] font-mono text-[var(--color-text-muted)]">SQN = √min(N,100) × (mean R ÷ stdev R)</code>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <div>
           <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Closed Trades</span>
           <span className="text-sm font-semibold font-mono text-[var(--color-text)]">{stats.n}</span>
@@ -64,6 +69,14 @@ export default function SqnReadout({ rs }) {
           >
             {meanKnown ? `${stats.meanR >= 0 ? '+' : ''}${fmt(stats.meanR)}R` : '—'}
           </span>
+        </div>
+        <div>
+          <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Win Rate</span>
+          <span className="text-sm font-medium font-mono text-[var(--color-text)]">{fmt(stats.winRate * 100, 1)}%</span>
+        </div>
+        <div>
+          <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Payoff</span>
+          <span className="text-sm font-medium font-mono text-[var(--color-text)]">{fmt(stats.payoff)}×</span>
         </div>
         <div>
           <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Stdev R</span>
