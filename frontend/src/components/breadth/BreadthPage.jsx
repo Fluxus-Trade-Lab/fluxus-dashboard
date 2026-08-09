@@ -3,6 +3,7 @@ import PageHeader from '../PageHeader'
 import Reading, { readMarketState } from '../Reading'
 import VerdictBanner from './VerdictBanner'
 import StateBoard from './StateBoard'
+import RotationPanel from './RotationPanel'
 import MarketStateSummary from './MarketStateSummary'
 import HealthChart from './HealthChart'
 import RatioChart from './RatioChart'
@@ -58,6 +59,11 @@ export default function BreadthPage({ data }) {
       <TimeMachineBar tm={tm} />
       <VerdictBanner verdict={verdict} dataQuality={breadth.data_quality}
                      session={rows[rows.length - 1]?.date} />
+      {/* Between the verdict and the board: a one-line reading belongs before a
+          nine-cell instrument, and this one usually contradicts the board in a
+          way that only reads if the two are adjacent. */}
+      <RotationPanel />
+
       <StateBoard board={breadth.state_board} session={rows[rows.length - 1]?.date} />
       <MarketStateSummary mm={breadth.mm} breadth={breadth.breadth} verdict={verdict} />
       {mh && !mh.stale && (
