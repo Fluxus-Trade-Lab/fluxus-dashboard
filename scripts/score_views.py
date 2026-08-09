@@ -94,6 +94,9 @@ def main():
                     else "neither")}
         for p in settled]
 
+    ledger = S.consultations(paired, outcomes)
+    pressure = S.under_pressure([r for r in rows if r.get("horizon") == args.horizon])
+
     report = {
         "generated_at": market_now().isoformat(timespec="seconds"),
         "symbol": args.symbol, "horizon": args.horizon,
@@ -102,6 +105,8 @@ def main():
         "paired": len(paired), "disagreements": len(disagree),
         "skills": skills, "weights": weights,
         "scored_disagreements": scored_disagreements,
+        "consultations": ledger,
+        "pressure": pressure,
     }
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / f"skill_{args.symbol}.json").write_text(json.dumps(report, indent=2))
@@ -139,6 +144,16 @@ def main():
     else:
         print("\nno settled disagreements yet — until the two differ on a finished "
               "session, nothing distinguishes them")
+    ab = ledger["automation_bias_rate"]
+    print(f"\nconsultation ledger — did the merge help when it overrode someone?")
+    print(f"  scored pairs {ledger['n_scored_pairs']}   "
+          f"positive {ledger['n_positive']} (saved a wrong human call)   "
+          f"negative {ledger['n_negative']} (broke a right one)")
+    print(f"  automation-bias rate: "
+          f"{'—' if ab is None else f'{ab:.1%}'}"
+          f"   net {ledger['net_consultations']:+d}")
+    print(f"  reference: {ledger['reference']}")
+    print(f"\nviews filed calm {pressure['calm']} / while trading {pressure['live']}")
     print(f"\nwrote {OUT / f'skill_{args.symbol}.json'}")
 
 

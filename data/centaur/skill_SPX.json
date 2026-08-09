@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-08T22:12:45-04:00",
+  "generated_at": "2026-08-08T22:51:23-04:00",
   "symbol": "SPX",
   "horizon": "intraday",
   "sessions_with_outcome": 90,
@@ -42,5 +42,22 @@
       "detail": "only 0 scored views; 20 needed before this is a skill estimate"
     }
   },
-  "scored_disagreements": []
+  "scored_disagreements": [],
+  "consultations": {
+    "n_scored_pairs": 0,
+    "positive": [],
+    "negative": [],
+    "n_positive": 0,
+    "n_negative": 0,
+    "n_agreed_right": 0,
+    "n_agreed_wrong": 0,
+    "automation_bias_rate": null,
+    "net_consultations": 0,
+    "reference": "Kern et al. measured ~7% (38/560) in computational pathology, against 29 positive consultations \u2014 net negative on flips while overall accuracy still improved"
+  },
+  "pressure": {
+    "calm": 7,
+    "live": 2,
+    "note": "views filed during RTH are the ones the literature says carry the same error rate at roughly double the cost"
+  }
 }

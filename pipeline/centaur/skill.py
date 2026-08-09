@@ -98,3 +98,88 @@ def edge_over_chance(s: dict, baseline: float = 1 / 3) -> float | None:
     never says `range` faces a different chance level.
     """
     return None if s["hit_rate"] is None else s["hit_rate"] - baseline
+
+
+# ---------------------------------------------------------- consultations
+
+def consultations(paired: list[dict], outcomes: dict[str, str],
+                  merged: dict[str, str] | None = None) -> dict:
+    """The accounting a centaur owes: when the merge overrode a party, did it help?
+
+    Taken from the automation-bias literature that Harlin's CDSS background sits
+    in. Kern et al. measured 28 pathology experts over 560 AI-aided estimates and
+    split every case where the human changed their mind into:
+
+        positive consultation — AI corrected a decision the human had wrong
+        negative consultation — AI overturned one the human had RIGHT
+
+    They found 29 positive against 38 negative, an **automation-bias rate of
+    ~7%**. Note what that means: on the flip cases alone the AI was net harmful,
+    and overall performance still improved significantly. Both facts are true and
+    a centaur that reports only one of them is selling something.
+
+    So this is the ledger we owe. Without it "the merge helps" is an assertion.
+
+    `merged` maps session -> the direction the merge actually produced. When it
+    is omitted the machine's direction stands in, which is what an unweighted
+    merge would do — stated rather than silently assumed.
+    """
+    pos, neg, both_right, both_wrong = [], [], [], []
+    for p in paired:
+        s = p["session"]
+        actual = outcomes.get(s)
+        if actual is None:
+            continue
+        h = p["human"]["direction"]
+        m = p["machine"]["direction"]
+        if h == "stand_aside" or m == "stand_aside":
+            continue                       # no override happened, so no verdict
+        outcome_of = (merged or {}).get(s, m)
+        h_ok, o_ok = (h == actual), (outcome_of == actual)
+        if h == outcome_of:
+            (both_right if h_ok else both_wrong).append(s)
+        elif o_ok and not h_ok:
+            pos.append(s)                  # the merge saved a wrong human call
+        elif h_ok and not o_ok:
+            neg.append(s)                  # the merge broke a right one
+        else:
+            both_wrong.append(s)
+    n = len(pos) + len(neg) + len(both_right) + len(both_wrong)
+    return {
+        "n_scored_pairs": n,
+        "positive": pos, "negative": neg,
+        "n_positive": len(pos), "n_negative": len(neg),
+        "n_agreed_right": len(both_right), "n_agreed_wrong": len(both_wrong),
+        # The headline: how often the merge broke a call the human had right.
+        "automation_bias_rate": (len(neg) / n) if n else None,
+        "net_consultations": len(pos) - len(neg),
+        "reference": "Kern et al. measured ~7% (38/560) in computational pathology, "
+                     "against 29 positive consultations — net negative on flips while "
+                     "overall accuracy still improved",
+    }
+
+
+def under_pressure(rows: list[dict]) -> dict:
+    """Split views by whether they were filed while the market was trading.
+
+    The same study found time pressure did NOT change the automation-bias RATE
+    (7% either way) but roughly doubled its cost when it happened — mean error
+    19.4 to 27.8 — and that reliance on the machine ROSE under pressure
+    (0.49 to 0.55). The dangerous combination is deferring more at exactly the
+    moment deferring is most expensive.
+
+    We cannot measure reliance directly, but we can record the condition, which
+    is the prerequisite for ever testing it here.
+    """
+    import datetime as dt
+    calm, live = [], []
+    for r in rows:
+        stamp = (r.get("asof") or "")[11:16]
+        try:
+            t = dt.time(int(stamp[:2]), int(stamp[3:5]))
+        except (ValueError, IndexError):
+            continue
+        (live if dt.time(9, 30) <= t <= dt.time(16, 0) else calm).append(r)
+    return {"calm": len(calm), "live": len(live),
+            "note": "views filed during RTH are the ones the literature says carry "
+                    "the same error rate at roughly double the cost"}

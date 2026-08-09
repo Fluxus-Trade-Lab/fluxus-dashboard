@@ -167,3 +167,57 @@ def test_a_view_cannot_be_filed_against_a_day_that_never_traded():
         mv(session="2026-08-08")
     assert L.is_trading_session("2026-08-07") is True
     assert L.is_trading_session("not-a-date") is False
+
+
+# ------------------------------------------- the consultation ledger
+
+def _pair(session, human, machine):
+    return {"session": session, "human": hv(session=session, direction=human),
+            "machine": mv(session=session, direction=machine)}
+
+
+def test_a_merge_that_saves_a_wrong_human_call_is_a_positive_consultation():
+    p = [_pair("2026-08-03", human="down", machine="up")]
+    c = S.consultations(p, {"2026-08-03": "up"})
+    assert c["n_positive"] == 1 and c["n_negative"] == 0
+
+
+def test_a_merge_that_breaks_a_right_human_call_is_the_automation_bias_case():
+    p = [_pair("2026-08-03", human="up", machine="down")]
+    c = S.consultations(p, {"2026-08-03": "up"})
+    assert c["n_negative"] == 1 and c["automation_bias_rate"] == 1.0
+
+
+def test_agreement_is_not_a_consultation_either_way():
+    p = [_pair("2026-08-03", human="up", machine="up"),
+         _pair("2026-08-04", human="down", machine="down")]
+    c = S.consultations(p, {"2026-08-03": "up", "2026-08-04": "up"})
+    assert c["n_positive"] == c["n_negative"] == 0
+    assert c["n_agreed_right"] == 1 and c["n_agreed_wrong"] == 1
+
+
+def test_an_abstention_is_not_an_override_so_it_gets_no_verdict():
+    p = [_pair("2026-08-03", human="stand_aside", machine="up")]
+    assert S.consultations(p, {"2026-08-03": "up"})["n_scored_pairs"] == 0
+
+
+def test_both_wrong_in_different_directions_is_not_scored_as_bias():
+    # The merge did not break anything that was right.
+    p = [_pair("2026-08-03", human="up", machine="down")]
+    c = S.consultations(p, {"2026-08-03": "range"})
+    assert c["n_negative"] == 0 and c["n_agreed_wrong"] == 1
+
+
+def test_an_explicit_merged_direction_overrides_the_machine_stand_in():
+    # The merge can land on the human even when it disagrees with the machine;
+    # the ledger must score what the MERGE did, not what the machine said.
+    p = [_pair("2026-08-03", human="up", machine="down")]
+    c = S.consultations(p, {"2026-08-03": "up"}, merged={"2026-08-03": "up"})
+    assert c["n_negative"] == 0 and c["n_agreed_right"] == 1
+
+
+def test_pressure_split_records_the_condition_the_literature_flags():
+    rows = [hv(asof="2026-08-03T08:00:00-04:00", session="2026-08-03"),
+            hv(asof="2026-08-04T11:30:00-04:00", session="2026-08-04")]
+    u = S.under_pressure(rows)
+    assert u["calm"] == 1 and u["live"] == 1
