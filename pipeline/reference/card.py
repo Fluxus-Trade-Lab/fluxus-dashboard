@@ -238,6 +238,73 @@ def render_card(data: dict, out_path: str | Path, window: str = "") -> Path:
     return out
 
 
+def render_prompt_card(data: dict, out_path: str | Path, window: str = "") -> Path:
+    """The commit-first card: the day's question, and NOTHING that answers it.
+
+    The CDSS deskilling literature says an anchored second opinion is not a
+    second opinion. Our chain had the brief going out first and a view filed
+    after, which builds the merge's weights on a contaminated sample.
+
+    So this card carries the question, the session's own prior structure, and the
+    instruction — and deliberately omits the regime, the levels, the reference
+    map and the machine's own direction. A reader cannot be anchored by an answer
+    they have not been shown.
+    """
+    import matplotlib.pyplot as plt
+
+    def draw(ax, top):
+        c = _Cursor(ax, top)
+        c.at("FLUXUS CAPITAL", 17, ACCENT, MONO, "bold")
+        c.at("COMMIT FIRST", 15, WARN, MONO, ha="right")
+        c.y -= 34
+        head = data.get("date", "")
+        if window:
+            head += f"   ·   {window}"
+        c.text(head, size=32, weight="bold")
+        c.rule()
+
+        q = data.get("todays_business")
+        if q:
+            c.text("TODAY'S QUESTION", size=14, color=MUT, family=MONO, dy=8)
+            c.text(q["question"], size=24, weight="bold", dy=16)
+        else:
+            c.text("No question could be formed from the prior session.",
+                   size=20, color=MUT, dy=16)
+        c.rule()
+
+        c.text("YOUR VIEW, BEFORE YOU SEE OURS", size=14, color=MUT,
+               family=MONO, dy=10)
+        c.text("log_view.py  <up|down|range|aside>  <1-3>  \"reason\"",
+               size=19, family=MONO, color=ACCENT, dy=14)
+        c.text("The full brief follows. A view filed after reading it is recorded "
+               "as anchored and scored separately — not withheld, just labelled, "
+               "because a second opinion formed from the first is not a second "
+               "opinion.", size=16, color=MUT, dy=6)
+        return c.y
+
+    fig, ax = _fig(MAX_H)
+    used = MAX_H - 52 - draw(ax, MAX_H - 52)
+    plt.close(fig)
+    footer = 108
+    height = used + 52 + footer
+
+    fig, ax = _fig(height)
+    draw(ax, height - 52)
+    ax.plot([PAD, W - PAD], [footer - 22, footer - 22], color=LINE, lw=1)
+    ax.text(PAD, 54, "Fluxus Capital", fontsize=19, color=TXT, family=SANS,
+            fontweight="bold", va="bottom")
+    ax.text(W - PAD, 58, f"{data.get('generated_at', '')[:16]} ET",
+            fontsize=14, color=DIM, family=MONO, va="bottom", ha="right")
+    ax.text(PAD, 28, "no levels, no regime, no direction — on purpose",
+            fontsize=14, color=DIM, family=MONO, va="bottom")
+
+    out = Path(out_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(out, facecolor=BG, dpi=DPI)
+    plt.close(fig)
+    return out
+
+
 def caption(data: dict, window: str = "", limit: int = 1900) -> str:
     """The short text that rides with the image, inside Discord's message cap.
 

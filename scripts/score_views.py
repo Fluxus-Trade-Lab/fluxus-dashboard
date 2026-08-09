@@ -23,6 +23,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from pipeline.centaur import anchoring as A
 from pipeline.centaur import blend as B
 from pipeline.centaur import log as L
 from pipeline.centaur import skill as S
@@ -94,6 +95,10 @@ def main():
                     else "neither")}
         for p in settled]
 
+    pushes = A.read()
+    anchored = A.split(rows, pushes)
+    anchor_skill = {k: S.skill(v, "human", outcomes, args.horizon)
+                    for k, v in anchored.items() if v}
     ledger = S.consultations(paired, outcomes)
     pressure = S.under_pressure([r for r in rows if r.get("horizon") == args.horizon])
 
@@ -106,6 +111,8 @@ def main():
         "skills": skills, "weights": weights,
         "scored_disagreements": scored_disagreements,
         "consultations": ledger,
+        "anchoring": {k: len(v) for k, v in anchored.items()},
+        "anchoring_skill": anchor_skill,
         "pressure": pressure,
     }
     OUT.mkdir(parents=True, exist_ok=True)
@@ -154,6 +161,14 @@ def main():
           f"   net {ledger['net_consultations']:+d}")
     print(f"  reference: {ledger['reference']}")
     print(f"\nviews filed calm {pressure['calm']} / while trading {pressure['live']}")
+    print(f"\nanchoring — was the view formed before the brief went out?")
+    for k in (A.INDEPENDENT, A.ANCHORED, A.UNKNOWN):
+        sk = anchor_skill.get(k)
+        n = len(anchored[k])
+        hr = "—" if not sk or sk["hit_rate"] is None else f"{sk['hit_rate']:.1%}"
+        print(f"  {k:<12}{n:>4} view(s)   hit rate {hr}")
+    print("  if these two rates converge, anchoring is not happening here and the "
+          "ordering change is ceremony")
     print(f"\nwrote {OUT / f'skill_{args.symbol}.json'}")
 
 

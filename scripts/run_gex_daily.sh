@@ -78,6 +78,15 @@ say "brief built (data/snapshots/snapshot_SPX_${DATE}.html)"
 # Push the card LAST: everything above must have succeeded, or we would be
 # sending a stale card that looks current. A failed push is logged and does not
 # fail the run — the files are on disk either way.
+# Commit-first ordering. The prompt card carries the day's question and nothing
+# that answers it, so a view filed against it is an independent second opinion
+# rather than an echo. The full brief follows; every push is recorded so the
+# anchoring of each view is MEASURED rather than assumed.
+if [ "$premarket" = true ]; then
+    .venv/bin/python scripts/push_brief.py --symbol SPX --window "$win" --prompt >>"$LOG" 2>&1 \
+        && say "pushed commit-first prompt" || say "warn: prompt push failed"
+    sleep "${BRIEF_DELAY_S:-2700}"          # ~45 min to commit before the answer
+fi
 .venv/bin/python scripts/push_brief.py --symbol SPX --window "$win" >>"$LOG" 2>&1 \
-    && say "pushed card to Discord" \
+    && say "pushed full brief to Discord" \
     || say "warn: Discord push failed — card still at data/snapshots/card_SPX_${DATE}.png"

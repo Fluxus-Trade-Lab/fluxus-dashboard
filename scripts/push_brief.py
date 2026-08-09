@@ -23,7 +23,8 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pipeline.marketcal import market_now, market_today
-from pipeline.reference.card import caption, render_card
+from pipeline.centaur import anchoring as A
+from pipeline.reference.card import caption, render_card, render_prompt_card
 
 SNAP_DIR = Path("data/snapshots")
 DISCORD_API = "https://discord.com/api/v10"
@@ -91,6 +92,9 @@ def main():
     ap.add_argument("--window", default="", help="premarket | post-close")
     ap.add_argument("--dry-run", action="store_true",
                     help="render the card and print the caption; send nothing")
+    ap.add_argument("--prompt", action="store_true",
+                    help="send the commit-first card only — the question, with "
+                         "nothing that answers it")
     args = ap.parse_args()
 
     load_env()
@@ -101,9 +105,19 @@ def main():
         sys.exit(f"no snapshot at {snap} — run build_snapshot.py first")
 
     data = json.loads(snap.read_text())
-    card = render_card(data, SNAP_DIR / f"card_{args.symbol}_{day}.png",
-                       window=args.window)
-    text = caption(data, args.window)
+    if args.prompt:
+        card = render_prompt_card(data, SNAP_DIR / f"prompt_{args.symbol}_{day}.png",
+                                  window=args.window)
+        q = (data.get("todays_business") or {}).get("question", "")
+        text = (f"**{args.symbol} {data.get('date','')}** · commit first\n\n"
+                f"**{q}**\n\n"
+                f"Your view before you see ours:\n"
+                f"`log_view.py <up|down|range|aside> <1-3> \"reason\"`\n"
+                f"— *Fluxus Capital*")
+    else:
+        card = render_card(data, SNAP_DIR / f"card_{args.symbol}_{day}.png",
+                           window=args.window)
+        text = caption(data, args.window)
 
     if args.dry_run:
         print(f"card: {card}\n--- caption ({len(text)} chars) ---\n{text}")
@@ -119,8 +133,14 @@ def main():
         sys.exit("DISCORD_BOT_TOKEN / DISCORD_BRIEF_CHANNEL_ID not set "
                  "(checked the environment and .env)")
 
-    html = SNAP_DIR / f"snapshot_{args.symbol}_{day}.html"
+    # The prompt card ships alone: attaching the HTML would defeat its purpose.
+    html = None if args.prompt else SNAP_DIR / f"snapshot_{args.symbol}_{day}.html"
     ok = send(card, text, channel, token, extra=html)
+    if ok:
+        # Recorded whether or not anyone reads it: the classification of every
+        # human view depends on knowing when the answer became available.
+        A.record_push(data.get("date", ""), market_now().isoformat(timespec="seconds"),
+                      kind="prompt" if args.prompt else "full")
     print(f"pushed {card.name} to Discord" if ok else "push FAILED")
     sys.exit(0 if ok else 1)
 
