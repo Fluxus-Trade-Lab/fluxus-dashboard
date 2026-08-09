@@ -44,7 +44,7 @@ from ib_async import IB, Index, Stock, Option
 # Running this as a script puts scripts/ on sys.path, not the repo root, so the
 # pipeline package is not importable without help.
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from pipeline.gex.blackscholes import bs_charm
+from pipeline.gex.blackscholes import bs_vanna, bs_charm
 from pipeline.gex.derive import iv_tenors, select_tenors
 from pipeline.marketcal import market_now as _market_now  # trading dates: ET, never host JST
 
@@ -201,6 +201,23 @@ def pull_open_interest(ib, opts, batch=45, settle=6.0):
     return oi, vol, rest
 
 
+RTH_OPEN, RTH_CLOSE = dt.time(9, 30), dt.time(16, 0)
+
+
+def _tradeable_now(now) -> bool:
+    """Is there a live book to read, or only closed-market placeholders?
+
+    A closed-market pull returns finite numbers that look like data: on
+    2026-08-08 at 23:13 ET it produced net GEX of -0.02B against a normal +20B
+    and a call wall 235 points BELOW spot. Nothing errored. The file had to be
+    deleted by hand.
+
+    Premarket is admitted because option quotes exist from 04:00 ET even though
+    the cash index does not print — that is the window the daily brief runs in.
+    """
+    return now.weekday() < 5 and dt.time(4, 0) <= now.time() <= dt.time(20, 0)
+
+
 def main():
     p = argparse.ArgumentParser(description="Daily dealer GEX levels for SPX/SPY.")
     p.add_argument("--symbol", default="SPX", choices=["SPX", "SPY"])
@@ -208,6 +225,9 @@ def main():
     p.add_argument("--width", type=float, default=0.08, help="strikes within +/- this frac of spot")
     p.add_argument("--strike-step", type=float, default=None, help="strike granularity (default 25 SPX / 1 SPY)")
     p.add_argument("--max-contracts", type=int, default=900, help="hard cap on contracts pulled (safety)")
+    p.add_argument("--force-closed", action="store_true",
+                   help="pull anyway outside trading hours; the output will be "
+                        "closed-market placeholders that LOOK like data")
     p.add_argument("--profile-range", type=float, default=0.15, help="+/- frac of spot for the flip-profile grid")
     p.add_argument("--profile-points", type=int, default=241)
     p.add_argument("--host", default="127.0.0.1")
@@ -217,6 +237,12 @@ def main():
     p.add_argument("--spot", type=float, default=None, help="manual spot override")
     p.add_argument("--outdir", default="data/gex")
     args = p.parse_args()
+
+    _now = _market_now()
+    if not _tradeable_now(_now) and not args.force_closed:
+        sys.exit(f"{_now:%a %H:%M} ET — no live book. A closed-market pull returns "
+                 f"placeholders that look like data (measured: net GEX -0.02B and a "
+                 f"call wall 235pt below spot). Use --force-closed if you mean it.")
 
     c = CFG[args.symbol]
     step = args.strike_step if args.strike_step is not None else c["step"]
@@ -348,6 +374,21 @@ def main():
     # column. Outside RTH the volume fields are zero or stale, so the series is
     # only emitted when something actually printed — an all-zero grid published
     # as data would be the missing-IV bug all over again.
+    # ------------------------------------------------------------------
+    # VANNA exposure: $ of dealer delta that moves per ONE VOL POINT of IV.
+    #   Gamma fires when spot moves, charm when time passes, vanna when IV
+    #   moves and spot does not — the vol-crush morning, the event reprice.
+    #   Dollar delta = delta * spot * multiplier, so dollar delta per vol point
+    #   is vanna(per vol point) * spot * multiplier * OI.
+    # ------------------------------------------------------------------
+    vscale = CONTRACT_MULTIPLIER * spot
+    df["vanna"] = df.apply(
+        lambda r: r["sign"] * bs_vanna(spot, r["strike"], r["T"], r["iv"] or 0.0)
+        * r["oi"] * vscale, axis=1)
+    per_strike_vanna = df.groupby("strike")["vanna"].sum().sort_index()
+    total_vanna = float(per_strike_vanna.sum())
+    vanna_peak = per_strike_vanna.abs().idxmax() if not per_strike_vanna.empty else None
+
     df["gex_vol"] = df.apply(lambda r: r["sign"] * eff_gamma(r) * r["volume"] * scale, axis=1)
     per_strike_vol = df.groupby("strike")["gex_vol"].sum().sort_index()
     total_traded = float(df["volume"].sum())
@@ -515,6 +556,11 @@ def main():
                   else f"  (gamma peak {_gp:.0f})")
         print(f" CHARM peak strike ....... {charm_peak:.0f}   "
               f"total {total_charm/1e9:+.2f} Bn$ delta to expiry{_agree}")
+        if vanna_peak is not None:
+            print(f" VANNA peak strike ....... {vanna_peak:.0f}   total "
+                  f"{total_vanna/1e9:+.2f} Bn$ delta per vol point"
+                  + ("   <-- dealers BUY as IV rises" if total_vanna > 0
+                     else "   <-- dealers SELL as IV rises"))
         if charm_flip is not None:
             print(f" CHARM flip .............. {charm_flip:.0f}"
                   + (f"   gradient {charm_flip_gradient/1e6:+.0f} $mm/pt"
@@ -546,6 +592,11 @@ def main():
                          if per_strike_vol is not None
                          else "unavailable — nothing traded at pull time (outside RTH?)"),
         per_strike_charm={float(k): round(v, 2) for k, v in per_strike_charm.items()},
+        per_strike_vanna={float(k): round(v, 2) for k, v in per_strike_vanna.items()},
+        total_vanna=round(total_vanna, 2),
+        vanna_peak_strike=float(vanna_peak) if vanna_peak is not None else None,
+        vanna_note=("$ of dealer delta per ONE VOL POINT of IV. Positive means "
+                    "dealers must BUY as IV rises."),
         total_charm=round(float(total_charm), 2),
         charm_peak_strike=float(charm_peak) if charm_peak is not None else None,
         charm_flip=charm_flip,

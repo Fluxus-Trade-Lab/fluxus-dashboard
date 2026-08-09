@@ -1,0 +1,15 @@
+{
+  "_readme": "Weekly surveys entered by hand. AAII blocks automated access (403 + NOINDEX); NAAIM no longer publishes a direct CSV. Append [date, value] each week; oldest first is fine, the loader sorts. Anything missing here is reported as unavailable, never silently omitted.",
+  "_sources": {
+    "AAII bull-bear spread": "aaii.com/sentimentsurvey - bullish % minus bearish %",
+    "NAAIM exposure": "naaim.org/programs/naaim-exposure-index - mean exposure, 0-200"
+  },
+  "AAII bull-bear spread": {
+    "note": "positive = more bulls than bears",
+    "history": []
+  },
+  "NAAIM exposure": {
+    "note": "0-200; >100 means leveraged long",
+    "history": []
+  }
+}

@@ -125,3 +125,56 @@ def implied_vol(price, S, K, T, right, r=0.0, lo=0.005, hi=5.0, tol=1e-4, iters=
         else:
             lo, flo = mid, fm
     return 0.5 * (lo + hi)
+
+
+def bs_vanna(S, K, T, sigma, r=0.0, q=0.0):
+    """Vanna = d(delta)/d(sigma) = d(vega)/d(spot), PER ONE VOL POINT.
+
+    The third dealer-hedging force, and the one that explains the days neither
+    of the others can. Gamma fires when spot moves. Charm fires when time
+    passes. **Vanna fires when implied volatility moves and spot does not** —
+    a vol-crush morning, an event repricing, a Friday afternoon bleed.
+
+    Sign, pinned by a test because I got it backwards on the first pass. For an
+    out-of-the-money call K > S, so log(S/K) < 0 and **d2 < 0**, making vanna
+    POSITIVE: an OTM option gains delta as vol rises, because rising vol makes
+    finishing in the money more likely. An ITM call is the mirror — its delta
+    falls back toward 0.5 as vol rises, so vanna is negative.
+
+    The dealer reading follows. Dealers are typically SHORT the OTM calls
+    customers buy, so they are short positive vanna: **as IV rises their delta
+    goes more negative and they must buy**. That is the squeeze that starts with
+    the vol bid rather than with the tape, and neither gamma nor charm sees it.
+
+    Units follow ``bs_vega``: divided by 100, so the number is the delta change
+    for a **one-point** move in IV (18% -> 19%), not for sigma going 0.18 -> 1.18.
+    Reading it per unit sigma would overstate every hedging estimate 100x, which
+    is the error this project already made once with vega.
+    """
+    if T <= 0 or sigma <= 0 or S <= 0 or K <= 0:
+        return 0.0
+    srt = sigma * math.sqrt(T)
+    d1 = (math.log(S / K) + (r - q + 0.5 * sigma * sigma) * T) / srt
+    d2 = d1 - srt
+    return -math.exp(-q * T) * _norm_pdf(d1) * d2 / sigma / 100.0
+
+
+def bs_vomma(S, K, T, sigma, r=0.0, q=0.0):
+    """Vomma = d(vega)/d(sigma), per one vol point. Vega's own convexity.
+
+    Reported alongside vanna because a book with large vomma re-prices its vega
+    non-linearly: the same one-point IV move costs a different amount depending
+    on where IV already is.
+
+    The /100 below is NOT redundant with the one inside ``bs_vega``. That one
+    makes vega per vol point; this one makes the DIFFERENTIATION per vol point.
+    Omitting it returns a per-sigma number that is 100x too large — the exact
+    error this module's vega docstring warns about, which I committed here on
+    the first pass and a numerical test caught.
+    """
+    if T <= 0 or sigma <= 0 or S <= 0 or K <= 0:
+        return 0.0
+    srt = sigma * math.sqrt(T)
+    d1 = (math.log(S / K) + (r - q + 0.5 * sigma * sigma) * T) / srt
+    d2 = d1 - srt
+    return bs_vega(S, K, T, sigma, r) * d1 * d2 / sigma / 100.0
