@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — Positions</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+:root{
+  --paper:#f2f1ed;--ink:#12110f;--ink2:#57534e;--ink3:#948f86;--ink4:#b9b3a9;
+  --rule:#d9d5cd;--hair:#e6e3db;
+  --took:#1a5488;--refused:#d1600f;--idle:#c2bdb4;--off:#e2ded6;
+  /* the money layer keeps green/red — it is the one place P/L direction is literal */
+  --pnl-up:#2f6b4f;--pnl-dn:#a33a2a;
+  --sans:Plex,-apple-system,sans-serif;--cond:PlexCond,Plex,sans-serif;--mono:PlexMono,Menlo,monospace;
+  --u:8px;
+}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+     -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.app{max-width:1360px;margin:0 auto;padding:0 calc(var(--u)*4) calc(var(--u)*12)}
+.mast{display:flex;align-items:baseline;gap:calc(var(--u)*3);
+      padding:calc(var(--u)*2) 0 calc(var(--u)*1.5);border-bottom:2px solid var(--ink)}
+.mast .wm{font-family:var(--cond);font-weight:700;font-size:20px;letter-spacing:.3em}
+.mast nav{display:flex;gap:calc(var(--u)*2.5);font-size:12px;color:var(--ink3)}
+.mast nav b{color:var(--ink);font-weight:600;border-bottom:2px solid var(--ink);padding-bottom:3px}
+.mast .file{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink3)}
+.stampx{border:1.6px solid var(--refused);color:var(--refused);padding:3px 7px;
+        font-family:var(--cond);font-weight:700;font-size:10px;letter-spacing:.14em;
+        transform:rotate(-3deg);white-space:nowrap}
+
+.hero{display:grid;grid-template-columns:1fr 380px;gap:calc(var(--u)*6);
+      padding:calc(var(--u)*5) 0 calc(var(--u)*4);border-bottom:1px solid var(--ink)}
+.kick{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;color:var(--ink3);
+      margin-bottom:calc(var(--u)*2)}
+.big{font-family:var(--cond);font-weight:700;font-size:104px;line-height:.88;letter-spacing:-.02em}
+.read{font-size:19px;line-height:1.42;margin-top:calc(var(--u)*3);max-width:34ch;
+      border-left:2px solid var(--rule);padding-left:calc(var(--u)*1.75)}
+.read .tag{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.18em;
+           color:var(--ink3);text-transform:uppercase;margin-bottom:6px;font-weight:400}
+.read b{font-weight:500}
+.spec{border-top:2px solid var(--ink);align-self:start}
+.spec div{display:flex;justify-content:space-between;align-items:baseline;
+          padding:calc(var(--u)*0.9) 0;border-bottom:1px solid var(--hair)}
+.spec .k{font-size:10.5px;letter-spacing:.09em;color:var(--ink2);text-transform:uppercase}
+.spec .v{font-family:var(--mono);font-size:14px;font-weight:500}
+.spec .v.up{color:var(--pnl-up)} .spec .v.dn{color:var(--pnl-dn)}
+.box{margin-top:calc(var(--u)*3);border:1.4px dashed var(--ink4);
+     padding:calc(var(--u)*1.5) calc(var(--u)*2)}
+.box .h{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--ink3);
+        text-transform:uppercase;margin-bottom:6px}
+.box p{margin:0;font-size:12px;line-height:1.6;color:var(--ink2)}
+
+h3{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+   color:var(--ink3);margin:calc(var(--u)*7) 0 0;padding-bottom:calc(var(--u)*1.2);
+   border-bottom:1px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline}
+h3 em{font-style:normal;text-transform:none;letter-spacing:.01em;font-family:var(--sans);
+      font-size:11.5px;color:var(--ink2);font-weight:400}
+.note{font-size:12px;line-height:1.65;color:var(--ink2);max-width:86ch;margin:calc(var(--u)*2) 0 0}
+.note.method{border-left:2px dashed var(--ink4);padding-left:calc(var(--u)*1.75)}
+.note .tag{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.18em;
+           color:var(--ink3);text-transform:uppercase;margin-bottom:6px}
+.note b{color:var(--ink);font-weight:600}
+
+.hd,.row{display:grid;grid-template-columns:74px 96px 1fr 132px 92px 104px;
+         gap:calc(var(--u)*2);align-items:center}
+.hd{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink3);padding:calc(var(--u)*1.5) 0 calc(var(--u)*1);border-bottom:1px solid var(--ink)}
+.row{padding:calc(var(--u)*1.6) 0;border-bottom:1px solid var(--hair)}
+.row .tk{font-family:var(--mono);font-size:16px;font-weight:500}
+.row .tk small{display:block;font-size:9.5px;color:var(--ink3);letter-spacing:.04em;margin-top:2px}
+.row .pr{font-family:var(--mono);font-size:11.5px;color:var(--ink2);line-height:1.5}
+.riskcell{display:flex;align-items:center;gap:calc(var(--u)*1.5)}
+.riskbar{height:16px;background:var(--off);flex:0 0 240px}
+.riskbar span{display:block;height:100%;background:var(--refused);
+  background-image:repeating-linear-gradient(45deg,rgba(125,57,8,.55) 0 1.7px,transparent 1.7px 5px)}
+.riskcell em{font-style:normal;font-family:var(--mono);font-size:11px;
+             color:var(--ink2);white-space:nowrap}
+.row .rm{font-family:var(--cond);font-weight:700;font-size:20px}
+.row .pl{font-family:var(--mono);font-size:12px}
+.up{color:var(--pnl-up)} .dn{color:var(--pnl-dn)}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="mast">
+    <span class="wm">FLUXUS</span>
+    <nav><span>Market state</span><span>Screener</span><b>Positions</b><span>Ticker</span><span>Letters</span></nav>
+    <span class="file" id="file">—</span>
+    <span class="stampx">NOT A CALL</span>
+  </div>
+
+  <div class="hero">
+    <div>
+      <div class="kick">OPEN RISK · WHAT CAN BE LOST</div>
+      <div class="big" id="big">—</div>
+      <div class="read" id="read">—</div>
+    </div>
+    <div>
+      <div class="spec" id="spec"></div>
+      <div class="box" id="dates"></div>
+    </div>
+  </div>
+
+  <h3>Risk ledger <em>The bar is what goes if every stop fills — not what the position is worth</em></h3>
+  <div class="hd"><span>Ticker</span><span>Entry</span><span>Risk to stop</span>
+    <span>Price</span><span>R</span><span>Unrealised</span></div>
+  <div id="rows"></div>
+  <p class="note method" id="foot"></p>
+</div>
+
+<script>
+const D = {
+ "as_of": "2026-08-09",
+ "market_today": "2026-08-08",
+ "capital": 1000000.0,
+ "positions": [
+  {
+   "ticker": "HPE",
+   "entry_date": "2026-08-02",
+   "entry": 49.1,
+   "qty": 776,
+   "stop": 46.34,
+   "last": 53.22,
+   "last_date": "2026-08-07",
+   "src": "yfinance",
+   "risk": 2142,
+   "risk_pct": 0.214,
+   "notional": 38102,
+   "notional_pct": 3.81,
+   "unreal": 3197,
+   "r_mult": 1.49,
+   "below_stop": false
+  },
+  {
+   "ticker": "RBRK",
+   "entry_date": "2026-08-03",
+   "entry": 78.84,
+   "qty": 1280,
+   "stop": 76.0,
+   "last": 90.07,
+   "last_date": "2026-08-07",
+   "src": "yfinance",
+   "risk": 3635,
+   "risk_pct": 0.364,
+   "notional": 100915,
+   "notional_pct": 10.09,
+   "unreal": 14374,
+   "r_mult": 3.95,
+   "below_stop": false
+  },
+  {
+   "ticker": "HPE",
+   "entry_date": "2026-08-05",
+   "entry": 50.9,
+   "qty": 1926,
+   "stop": 49.0,
+   "last": 53.22,
+   "last_date": "2026-08-07",
+   "src": "yfinance",
+   "risk": 3659,
+   "risk_pct": 0.366,
+   "notional": 98033,
+   "notional_pct": 9.8,
+   "unreal": 4468,
+   "r_mult": 1.22,
+   "below_stop": false
+  },
+  {
+   "ticker": "PLTR",
+   "entry_date": "2026-08-05",
+   "entry": 155.37,
+   "qty": 1136,
+   "stop": 153.0,
+   "last": 172.01,
+   "last_date": "2026-08-07",
+   "src": "yfinance",
+   "risk": 2692,
+   "risk_pct": 0.269,
+   "notional": 176500,
+   "notional_pct": 17.65,
+   "unreal": 18903,
+   "r_mult": 7.02,
+   "below_stop": false
+  },
+  {
+   "ticker": "AMZU",
+   "entry_date": "2026-08-06",
+   "entry": 42.48,
+   "qty": 6019,
+   "stop": 42.0,
+   "last": 42.43,
+   "last_date": "2026-08-07",
+   "src": "local",
+   "risk": 2889,
+   "risk_pct": 0.289,
+   "notional": 255687,
+   "notional_pct": 25.57,
+   "unreal": -301,
+   "r_mult": -0.1,
+   "below_stop": false
+  }
+ ],
+ "total_risk": 15017,
+ "total_notional": 669237,
+ "total_unreal": 40641,
+ "closed_count": 337,
+ "total_rows": 342
+};
+const P=D.positions, CAP=D.capital;
+const el=id=>document.getElementById(id);
+const money=v=>(v<0?"−":"")+"$"+Math.abs(Math.round(v)).toLocaleString();
+const riskPct=D.total_risk/CAP*100, expPct=D.total_notional/CAP*100;
+
+el("file").textContent=`FILE FX-POS · EXPORT ${D.as_of} · PRICES ${P[0].last_date}`;
+el("big").innerHTML=`${riskPct.toFixed(2)}%<br>at risk`;
+
+/* The refusal on this page: every other product leads with P/L. This one leads
+   with what can be lost, because that is the number the operator controls. */
+el("read").innerHTML =
+  `<span class="tag">Read</span>Five positions, <b>${money(D.total_risk)}</b> between here and every
+   stop — ${riskPct.toFixed(2)}% of capital. Exposure is ${expPct.toFixed(0)}%, which is the number
+   most products would print instead. <b>Size is the decision; the rest is the market's.</b>`;
+
+el("spec").innerHTML=[
+  ["Open risk", `${riskPct.toFixed(2)}%`, ""],
+  ["Exposure", `${expPct.toFixed(1)}%`, ""],
+  ["Positions", `${P.length} in ${new Set(P.map(p=>p.ticker)).size} names`, ""],
+  ["Largest single risk", `${Math.max(...P.map(p=>p.risk_pct)).toFixed(2)}%`, ""],
+  ["Unrealised", money(D.total_unreal), D.total_unreal>=0?"up":"dn"],
+  ["Closed to date", `${D.closed_count} trades`, ""],
+].map(([k,v,c])=>`<div><span class="k">${k}</span><span class="v ${c}">${v}</span></div>`).join("");
+
+/* three different dates are in play; say so rather than implying one moment */
+el("dates").innerHTML =
+  `<div class="h">Three dates, not one</div>
+   <p>The position export is <b>${D.as_of}</b>, the market's last close is
+   <b>${P[0].last_date}</b>, and the session in progress is <b>${D.market_today}</b>.
+   Marks are struck at the last close, so anything that moved today is not here.</p>`;
+
+const maxRisk=Math.max(...P.map(p=>p.risk_pct));
+el("rows").innerHTML=P.map(p=>{
+  const rc = p.r_mult>=0?"up":"dn";
+  const dupe = P.filter(q=>q.ticker===p.ticker).length>1;
+  return `<div class="row">
+    <span class="tk">${p.ticker}${dupe?`<small>add · ${p.entry_date.slice(5)}</small>`:""}</span>
+    <span class="pr">${p.entry.toFixed(2)}<br><span style="color:var(--ink3)">stop ${p.stop.toFixed(2)}</span></span>
+    <span class="riskcell"><span class="riskbar"><span style="width:${p.risk_pct/maxRisk*100}%"></span></span>
+      <em>${money(p.risk)} · ${p.risk_pct.toFixed(2)}%</em></span>
+    <span class="pr">${p.last.toFixed(2)}<br><span style="color:var(--ink3)">${p.src} · ${p.last_date}</span></span>
+    <span class="rm ${rc}">${p.r_mult>=0?"+":""}${p.r_mult.toFixed(2)}R</span>
+    <span class="pl ${rc}">${money(p.unreal)}</span></div>`;
+}).join("");
+
+el("foot").innerHTML =
+  `<span class="tag">Method</span><b>Why the bar is risk and not size.</b> A position's value tells you
+   how it feels; the distance to its stop tells you what it can cost. The bars are drawn against the
+   largest single risk on the book, so the widest one is the trade that would hurt most — which on
+   this book is ${P.reduce((a,b)=>a.risk_pct>b.risk_pct?a:b).ticker} at
+   ${maxRisk.toFixed(2)}% of capital, still inside a 1% per-trade rule.
+   <br><br><b>A caught error worth keeping.</b> The first pass priced PLTR from the local OHLC cache,
+   whose last bar was <b>2026-05-22</b> — two and a half months stale. It printed −7.8R, a
+   catastrophic loser. The real close was 172.01 and the position is <b>+7.02R</b>, the best on the
+   book. The cache has no freshness guard, so every price here now carries its source and its date.`;
+</script>
+</body></html>
