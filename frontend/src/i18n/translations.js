@@ -26,8 +26,25 @@ export const translations = {
     // account; MY BOOK is a framework and a record and cannot exist without one.
     'rail.market': 'Market',
     'rail.market.note': 'Open. No account needed.',
+    'nav.rslive': 'RS Live Tracker',
+    'nav.rsrotation': 'RS Rotation',
+    'nav.rsleaders': 'RS Leaderboard',
+    'nav.defense': 'Defense',
+    'nav.offense': 'Offense',
+    'nav.psychology': 'Psychology',
+    'nav.pfmgmt': 'Portfolio Management',
+    'nav.news': 'News',
+    'nav.masterclass': 'Swing Trading Masterclass',
+
+    // MARKET holds three jobs; the sub-labels say which page does which.
+    'rail.sec.env': 'Read the environment',
+    'rail.sec.rotation': 'Follow the rotation',
+    'rail.sec.leaders': 'Find the leaders early',
+
     'rail.library': 'Library',
     'rail.library.note': 'How to read a market. Not what it did today.',
+    'rail.course': 'Course',
+    'rail.course.note': 'The long-form version, start to finish.',
     'rail.book': 'My Book',
     'rail.book.note': 'Needs an account and your own fills.',
 
@@ -160,8 +177,25 @@ export const translations = {
     // My Book 是你的框架和你的记录,没有账户就不存在。
     'rail.market': '市场',
     'rail.market.note': '开放。不需要账户。',
+    'nav.rslive': 'RS 实时追踪',
+    'nav.rsrotation': 'RS 轮动',
+    'nav.rsleaders': 'RS 排行榜',
+    'nav.defense': '防守',
+    'nav.offense': '进攻',
+    'nav.psychology': '交易心理',
+    'nav.pfmgmt': '组合管理',
+    'nav.news': '新闻',
+    'nav.masterclass': '波段交易大师课',
+
+    // MARKET 装着三件事,子标题说明哪一页干哪件。
+    'rail.sec.env': '读市场环境',
+    'rail.sec.rotation': '跟钱往哪动',
+    'rail.sec.leaders': '提前找到龙头',
+
     'rail.library': '资料库',
     'rail.library.note': '怎么读市场。不是市场今天怎么样。',
+    'rail.course': '课程',
+    'rail.course.note': '完整的长篇版本,从头到尾。',
     'rail.book': '我的账本',
     'rail.book.note': '需要账户 + 你自己的成交。',
 

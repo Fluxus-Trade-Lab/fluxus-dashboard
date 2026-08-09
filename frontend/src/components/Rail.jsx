@@ -1,112 +1,189 @@
+import { useState, useEffect } from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
 
 /**
- * The left rail — two modes, labelled.
+ * The left rail — four layers, and inside MARKET, three functions.
  *
- * Design: Fluxus_Brand/visual/explorations/2026-08-08/market_today.html
+ * Design: Fluxus_Brand/visual/2026-08-09_WHAT_TO_SHOW.md
  *
- * The split is the product's shape, not a tidier menu. MARKET is the state of
- * the market, identical for everyone, and needs no account. LIBRARY is how to
- * read a market at all — teaching, the same for everyone and not tied to today.
- * MY BOOK is a framework and a record, different per person, and cannot exist
- * without one. Flat items could not say that; three labelled groups say it
- * without a sentence.
+ *   MARKET   what the market is doing        open, no account
+ *   LIBRARY  how to read a market at all     open, not tied to today
+ *   COURSE   the long-form version           open
+ *   MY BOOK  what you did about it           needs an account and your fills
  *
- * Route hashes are unchanged. Breadth and Groups are renamed on screen only —
- * #/breadth and #/groups still resolve, so anything already sent out keeps
- * working. A rename that breaks old links is a rename that costs more than it
- * is worth.
+ * MARKET carries sub-labels because it holds three different jobs — read the
+ * environment, follow where money is rotating, find the leaders early — and a
+ * flat list of eight could not say which page does which. One page, one job.
+ *
+ * Collapsed codes are declared, never derived. Slicing the label gave RS Live
+ * Tracker and RS Leaderboard the same three letters, and Portfolio Management
+ * the same as Portfolio — two destinations under one label is a broken rail.
+ *
+ * Route hashes never change when a label does. Breadth still resolves at
+ * #/breadth and Groups at #/groups; a rename that breaks a sent link costs more
+ * than it is worth.
  */
 export const NAV_GROUPS = [
   {
     key: 'market',
-    items: [
-      { key: 'dashboard', hash: '#/dashboard' },
-      { key: 'screener', hash: '#/screener' },
-      { key: 'breadth', hash: '#/breadth' },     // shown as "Market State"
-      // Held open and empty until it clears its own gate. A rung published
-      // before it is earned is the one place a proof ladder can lie.
-      { key: 'correction', hash: '#/correction' },
-      { key: 'groups', hash: '#/groups' },       // shown as "Themes"
+    sections: [
+      {
+        key: 'env',
+        items: [
+          { key: 'dashboard', short: 'DSH', hash: '#/dashboard' },
+          { key: 'breadth', short: 'MST', hash: '#/breadth' },       // shown as "Market State"
+          // Held open and empty until it clears its own gate. A rung published
+          // before it is earned is the one place a proof ladder can lie.
+          { key: 'correction', short: 'COR', hash: '#/correction' },
+        ],
+      },
+      {
+        key: 'rotation',
+        items: [
+          { key: 'groups', short: 'THM', hash: '#/groups' },         // shown as "Themes"
+          { key: 'rslive', short: 'LIV', hash: '#/rs-live' },
+          { key: 'rsrotation', short: 'ROT', hash: '#/rs-rotation' },
+          { key: 'rsleaders', short: 'LDR', hash: '#/rs-leaders' },
+        ],
+      },
+      {
+        key: 'leaders',
+        items: [
+          { key: 'screener', short: 'SCR', hash: '#/screener' },
+        ],
+      },
     ],
   },
   {
-    // Not market, not record — how to read a market at all. Model Books sat
-    // under MARKET and read oddly there: it answers neither "what is the market
-    // doing today" nor "what did I do about it". It is teaching material, and
-    // teaching material is the layer TSF fills with FAQ & Video Tutorials and
-    // we had nowhere to put.
+    // Not market, not record — how to read a market at all.
     key: 'library',
-    items: [
-      { key: 'modelbooks', hash: '#/modelbooks' },
-    ],
+    sections: [{
+      key: null,
+      items: [
+        { key: 'modelbooks', short: 'MDL', hash: '#/modelbooks' },
+        { key: 'defense', short: 'DEF', hash: '#/defense' },
+        { key: 'offense', short: 'OFF', hash: '#/offense' },
+        { key: 'psychology', short: 'PSY', hash: '#/psychology' },
+        { key: 'pfmgmt', short: 'PMG', hash: '#/portfolio-management' },
+        { key: 'news', short: 'NWS', hash: '#/news' },
+      ],
+    }],
+  },
+  {
+    key: 'course',
+    sections: [{
+      key: null,
+      items: [{ key: 'masterclass', short: 'MCL', hash: '#/masterclass' }],
+    }],
   },
   {
     key: 'book',
-    items: [
-      { key: 'portfolio', hash: '#/portfolio' },
-      { key: 'trades', hash: '#/trades' },
-      { key: 'journal', hash: '#/journal' },
-    ],
+    sections: [{
+      key: null,
+      items: [
+        { key: 'portfolio', short: 'PRT', hash: '#/portfolio' },
+        { key: 'trades', short: 'LOG', hash: '#/trades' },
+        { key: 'journal', short: 'COA', hash: '#/journal' },
+      ],
+    }],
   },
 ]
 
-const ALL = NAV_GROUPS.flatMap((g) => g.items)
+const ALL = NAV_GROUPS.flatMap((g) => g.sections.flatMap((s) => s.items))
+const KEY = 'rail-collapsed'
 
 export default function Rail({ currentPage, onNavigate }) {
   const { t } = useLanguage()
+  const [collapsed, setCollapsed] = useState(
+    () => (typeof localStorage !== 'undefined' && localStorage.getItem(KEY) === '1'),
+  )
+  useEffect(() => { localStorage.setItem(KEY, collapsed ? '1' : '0') }, [collapsed])
+
+  const glass = {
+    background: 'var(--glass)',
+    backdropFilter: 'var(--glass-blur)',
+    WebkitBackdropFilter: 'var(--glass-blur)',
+  }
 
   return (
     <>
       {/* wide: the rail itself */}
-      <nav aria-label="Sections"
-           className="hidden lg:flex lg:flex-col w-[212px] shrink-0 min-h-screen pt-4
-                      border-r border-[var(--glass-edge)]"
-           style={{ background: 'var(--glass)', backdropFilter: 'var(--glass-blur)',
-                    WebkitBackdropFilter: 'var(--glass-blur)' }}>
-        <div className="px-5 pb-5 text-[15px] font-semibold tracking-[.16em]"
-             style={{ fontFamily: 'var(--font-cond)' }}>FLUXUS</div>
+      <nav aria-label="Sections" style={glass}
+           className={`hidden lg:flex lg:flex-col shrink-0 min-h-screen pt-4 pb-6
+                       border-r border-[var(--glass-edge)] transition-[width] duration-200
+                       ${collapsed ? 'w-[62px]' : 'w-[214px]'}`}>
+        <div className="flex items-center px-4 pb-4">
+          {!collapsed && (
+            <span className="text-[15px] font-semibold tracking-[.16em] flex-1"
+                  style={{ fontFamily: 'var(--font-cond)' }}>FLUXUS</span>
+          )}
+          <button type="button" onClick={() => setCollapsed((v) => !v)}
+                  title={collapsed ? 'Expand' : 'Collapse'}
+                  aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+                  className="w-6 h-6 mx-auto flex items-center justify-center rounded border-0
+                             bg-transparent text-[var(--color-text-muted)]
+                             hover:text-[var(--color-text)] cursor-pointer text-[13px]">
+            {collapsed ? '»' : '«'}
+          </button>
+        </div>
 
         {NAV_GROUPS.map((g) => (
           <div key={g.key} className="pb-1">
-            <div className="px-5 pt-3 pb-1.5 text-[9px] font-mono uppercase tracking-[.24em]
-                            text-[var(--color-text-muted)]">
-              {t(`rail.${g.key}`)}
-            </div>
-            {g.items.map(({ key, hash }) => (
-              <button key={key} onClick={() => onNavigate(hash)}
-                      aria-current={currentPage === key ? 'page' : undefined}
-                      className={`w-full text-left px-5 py-[7px] text-[13px] border-l-2
-                                  focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] ${
-                        currentPage === key
-                          ? 'border-[var(--color-text)] text-[var(--color-text)] font-semibold bg-[var(--color-hover-bg)]'
-                          : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
-                      }`}>
-                {t(`nav.${key}`)}
-              </button>
+            {collapsed
+              ? <div className="mx-3 my-2 h-px bg-[var(--color-border)]" />
+              : <div className="px-4 pt-3 pb-1 text-[9px] font-mono uppercase tracking-[.24em]
+                                text-[var(--color-text-muted)]">{t(`rail.${g.key}`)}</div>}
+
+            {g.sections.map((sec, si) => (
+              <div key={sec.key ?? si}>
+                {!collapsed && sec.key && (
+                  <div className="px-4 pt-2 pb-0.5 text-[10px] leading-snug
+                                  text-[var(--color-text-muted)]">
+                    {t(`rail.sec.${sec.key}`)}
+                  </div>
+                )}
+                {sec.items.map(({ key, short, hash }) => {
+                  const on = currentPage === key
+                  return (
+                    <button key={key} onClick={() => onNavigate(hash)}
+                            aria-current={on ? 'page' : undefined}
+                            title={collapsed ? t(`nav.${key}`) : undefined}
+                            className={`w-full border-l-2 py-[7px]
+                                        focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]
+                                        ${collapsed
+                                          ? 'text-[9px] font-mono text-center px-0'
+                                          : 'text-[13px] text-left px-4'}
+                                        ${on
+                                          ? 'border-[var(--color-text)] text-[var(--color-text)] font-semibold bg-[var(--color-hover-bg)]'
+                                          : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
+                      {collapsed ? short : t(`nav.${key}`)}
+                    </button>
+                  )
+                })}
+              </div>
             ))}
-            <p className="px-5 pt-2 text-[10px] leading-snug text-[var(--color-text-muted)] m-0">
-              {t(`rail.${g.key}.note`)}
-            </p>
+
+            {!collapsed && (
+              <p className="px-4 pt-2 text-[10px] leading-snug text-[var(--color-text-muted)] m-0">
+                {t(`rail.${g.key}.note`)}
+              </p>
+            )}
           </div>
         ))}
       </nav>
 
-      {/* narrow: the same items as one scrollable strip. A rail that becomes a
-          hamburger hides the split it exists to show, so the groups stay visible
-          as labels in the strip. */}
-      <nav aria-label="Sections"
+      {/* narrow: one scrollable strip, group labels kept. A rail that becomes a
+          hamburger hides the split it exists to show. */}
+      <nav aria-label="Sections" style={glass}
            className="lg:hidden flex gap-1 overflow-x-auto px-3 py-2
-                      border-b border-[var(--glass-edge)]"
-           style={{ background: 'var(--glass)', backdropFilter: 'var(--glass-blur)',
-                    WebkitBackdropFilter: 'var(--glass-blur)' }}>
+                      border-b border-[var(--glass-edge)]">
         {NAV_GROUPS.map((g) => (
           <div key={g.key} className="flex items-center gap-1 shrink-0">
             <span className="px-1.5 text-[8px] font-mono uppercase tracking-[.2em]
                              text-[var(--color-text-muted)] shrink-0">
               {t(`rail.${g.key}`)}
             </span>
-            {g.items.map(({ key, hash }) => (
+            {g.sections.flatMap((s) => s.items).map(({ key, hash }) => (
               <button key={key} onClick={() => onNavigate(hash)}
                       aria-current={currentPage === key ? 'page' : undefined}
                       className={`px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide

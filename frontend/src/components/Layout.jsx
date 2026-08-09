@@ -2,6 +2,7 @@ import { useHash } from '../hooks/useHash'
 import Header from './Header'
 import Rail from './Rail'
 import PageHeader from './PageHeader'
+import Placeholder from './Placeholder'
 
 /** A tier marker. The dashboard's problem was rank, not content — seven blocks
  *  at equal weight read as seven equally important things. */
@@ -125,6 +126,67 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           {current === 'correction' && <CorrectionRiskPage />}
           {current === 'groups' && <GroupsPage />}
           {current === 'modelbooks' && <ModelBooksPage />}
+
+          {/* Reserved. The rail entry, the title and the frame are real from day
+              one; a slot that appears only once it is full was never reserved.
+              Each says what it will hold and which file it will read. */}
+          {current === 'rs-live' && <Placeholder group="market" title="RS Live Tracker"
+            blurb="Every theme against SPY, one bar each, sorted, refreshed through the session. One object on the page and nothing else."
+            willHold={['One horizontal bar per theme, ranked by relative strength',
+                       'Intraday refresh, with the time of the last one printed',
+                       'Member count beside each name — a theme of one stock is one stock']}
+            source="data/output/groups.json" />}
+
+          {current === 'rs-rotation' && <Placeholder group="market" title="RS Rotation"
+            blurb="Where the money left and where it arrived — level against acceleration, over time rather than as a snapshot."
+            willHold={['Each theme\'s path across the four states, session by session',
+                       'The crossings that matter: lagging into improving, leading into weakening',
+                       'How long a theme has held its state, drawn as countable marks']}
+            source="data/output/groups.json · breadth archive" />}
+
+          {current === 'rs-leaders' && <Placeholder group="market" title="RS Leaderboard"
+            blurb="The strongest themes right now, by level and by acceleration — two rankings, because a board that ranks only what has already won cannot show a turn."
+            willHold={['Top themes by 3-month relative strength',
+                       'Top themes by acceleration, which is usually a different list',
+                       'The denominator on every list — how many themes were ranked']}
+            source="data/output/groups.json" />}
+
+          {current === 'defense' && <Placeholder group="library" title="Defense"
+            blurb="What to do when you are wrong, and what cash is for."
+            willHold={['Stops, and why the one you set at entry is the only honest one',
+                       'Cash as a position, not as the absence of one',
+                       'Drawdown rules: what to cut, in what order, before deciding anything']} />}
+
+          {current === 'offense' && <Placeholder group="library" title="Offense"
+            blurb="How much, when to add, and how to tell a good setup from one that merely looks familiar."
+            willHold={['Sizing: fixed R, and why the number is small',
+                       'Pyramiding — adding to a position that has already paid',
+                       'Leverage, and the conditions under which it is not a mistake',
+                       'Grading setups: what separates an A from a B before the outcome']} />}
+
+          {current === 'psychology' && <Placeholder group="library" title="Psychology"
+            blurb="Patience, and what to do on the day after a loss."
+            willHold={['Waiting as a position — the cost of trading a mediocre setup',
+                       'Tilt: recognising it in your own log rather than in the moment',
+                       'The re-attack, which the H1 audit named as the single largest leak']} />}
+
+          {current === 'portfolio-management' && <Placeholder group="library" title="Portfolio Management"
+            blurb="The book as one object rather than a list of trades."
+            willHold={['Open heat — total risk across every position at once',
+                       'Correlation: several positions that are secretly one position',
+                       'Sharpe, expectancy, SQN — what each measures and what none of them do']} />}
+
+          {current === 'news' && <Placeholder group="library" title="News"
+            blurb="Reading the tape's reaction rather than the headline."
+            willHold={['News trading: the setup is the reaction, not the announcement',
+                       'News failure — when a good headline cannot lift a name, that is the signal',
+                       'Using news flow to track where momentum is arriving and leaving']} />}
+
+          {current === 'masterclass' && <Placeholder group="course" title="Swing Trading Masterclass"
+            blurb="Sixteen lessons, beginner first, English with Chinese subtitles. Already written; not yet wired into this app."
+            willHold={['16 lessons plus a four-part epilogue',
+                       'Two gears throughout — foundational and advanced',
+                       'Drafted in full 2026-07-12; lives in ~/Documents/SwingMasterclass']} />}
         </main>
       )}
 
