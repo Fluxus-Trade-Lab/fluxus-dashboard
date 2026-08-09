@@ -5,6 +5,18 @@ import { fmtCur, MASK } from '../lib/portfolioFormat'
 const FIXED_R = 2500
 
 /**
+ * The account's own limits, so the page can say what would break the reading
+ * instead of only what it is (DESIGN.md §5.1: current value against required
+ * value). These are policy, not measurement — edit them here when the policy
+ * changes, and nowhere else.
+ *
+ *   per-trade  0.25% is the fixed-R target ($2,500 on $1M, matching FIXED_R
+ *              above); 0.47% is the top of the stated 1/75–1/40 Kelly band
+ *   book       3% total open risk is the ceiling
+ */
+const LIMITS = { perTradeTarget: 0.25, perTradeMax: 0.47, bookMax: 3.0 }
+
+/**
  * Open risk — the v2 positions object.
  *
  * Design: Fluxus_Brand/visual/explorations/2026-08-08/positions.html (scored 95)
@@ -140,6 +152,32 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
           not in these numbers.</>
         )}
       </p>
+
+      {riskPct != null && (
+        <p className="text-[11px] leading-relaxed text-[var(--color-text-secondary)] mt-2 mb-0">
+          <span className="text-[9px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mr-2">
+            Against the rule
+          </span>
+          Book risk <b className={riskPct > LIMITS.bookMax ? 'text-[var(--color-signal-caution)]'
+                                                            : 'text-[var(--color-text)]'}>
+            {riskPct.toFixed(2)}%
+          </b> against a {LIMITS.bookMax.toFixed(0)}% ceiling —{' '}
+          {riskPct > LIMITS.bookMax
+            ? <b className="text-[var(--color-signal-caution)]">over by {(riskPct - LIMITS.bookMax).toFixed(2)} points.</b>
+            : <>{(LIMITS.bookMax - riskPct).toFixed(2)} points of room.</>}
+          {worstPct != null && (
+            <> Largest single risk <b className={worstPct > LIMITS.perTradeMax
+                  ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-text)]'}>
+                {worstPct.toFixed(2)}%
+              </b> against a {LIMITS.perTradeTarget}% target
+              {worstPct > LIMITS.perTradeMax
+                ? <> — <b className="text-[var(--color-signal-caution)]">past the {LIMITS.perTradeMax}%
+                    top of the band</b>, which is the sizing leak the H1 audit named.</>
+                : <> and a {LIMITS.perTradeMax}% band top.</>}
+            </>
+          )}
+        </p>
+      )}
     </div>
   )
 }
