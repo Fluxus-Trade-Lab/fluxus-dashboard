@@ -23,6 +23,14 @@ import { useState, useEffect } from 'react'
 
 const QUALITY = new Set(['episodic_pivot', 'vcp', 'momentum_97'])
 
+/**
+ * Fixed column order, quality first. Every row reserves every column whether or
+ * not it fired, because the point of a row of marks is comparing it to the row
+ * above — and that only works if a screener sits at the same x on every line.
+ */
+const ORDER = ['episodic_pivot', 'vcp', 'momentum_97',
+               'ema21_watch', 'gainers_4pct', 'healthy_charts', 'vol_up_gainers']
+
 const LABELS = {
   episodic_pivot: 'EP',
   vcp: 'VCP',
@@ -35,6 +43,10 @@ const LABELS = {
 
 /** Counts above this are printed rather than drawn — drawing 40 marks is noise. */
 const MAX_MARKS = 8
+
+/** Ticker · score · one column per screener · span · sector. */
+const GRID = 'grid grid-cols-[58px_50px_repeat(7,minmax(56px,1fr))_74px_104px] ' +
+             'gap-x-2 items-center min-w-[880px]'
 
 export default function HeatingUp({ limit = 25, compact = false }) {
   const [data, setData] = useState(null)
@@ -115,31 +127,37 @@ export default function HeatingUp({ limit = 25, compact = false }) {
       </div>
 
       <div className="overflow-x-auto">
-        <div className="grid grid-cols-[62px_54px_1fr_92px_120px] gap-3 items-center
-                        text-[9px] font-mono uppercase tracking-[.16em]
+        <div className={`${GRID} text-[9px] font-mono uppercase tracking-[.16em]
                         text-[var(--color-text-muted)] pt-4 pb-2
-                        border-b border-[var(--color-v2-ink)] min-w-[720px]">
-          <span>Ticker</span><span>Score</span><span>Where it appeared</span>
+                        border-b border-[var(--color-v2-ink)]`}>
+          <span>Ticker</span><span>Score</span>
+          {ORDER.map((k) => (
+            <span key={k} className={QUALITY.has(k) ? 'text-[var(--color-took)]' : undefined}>
+              {LABELS[k]}
+            </span>
+          ))}
           <span>Span</span><span>Sector</span>
         </div>
-        {rows.map((r) => (
-          <div key={r.ticker}
-               className="grid grid-cols-[62px_54px_1fr_92px_120px] gap-3 items-center py-2.5
-                          border-b border-[var(--color-border-light)] min-w-[720px]
-                          hover:bg-[var(--color-hover-bg)]">
-            <a href={`#/ticker/${r.ticker}`}
-               className="font-mono text-[15px] font-medium text-[var(--color-text)] hover:underline">
-              {r.ticker}
-            </a>
-            <span className="text-[20px] font-bold tabular-nums leading-none"
-                  style={{ fontFamily: 'var(--font-cond)' }}>{r.score.toFixed(1)}</span>
-            <Marks screeners={r.screeners} />
-            <span className="font-mono text-[11px] text-[var(--color-text-secondary)]">
-              {r.days_span} sessions
-            </span>
-            <span className="text-[11px] text-[var(--color-text-secondary)]">{r.sector ?? '—'}</span>
-          </div>
-        ))}
+        {rows.map((r) => {
+          const byName = new Map(r.screeners.map((s) => [s.name, s]))
+          return (
+            <div key={r.ticker}
+                 className={`${GRID} py-2.5 border-b border-[var(--color-border-light)]
+                            hover:bg-[var(--color-hover-bg)]`}>
+              <a href={`#/ticker/${r.ticker}`}
+                 className="font-mono text-[15px] font-medium text-[var(--color-text)] hover:underline">
+                {r.ticker}
+              </a>
+              <span className="text-[20px] font-bold tabular-nums leading-none"
+                    style={{ fontFamily: 'var(--font-cond)' }}>{r.score.toFixed(1)}</span>
+              {ORDER.map((k) => <Cell key={k} hit={byName.get(k)} quality={QUALITY.has(k)} />)}
+              <span className="font-mono text-[11px] text-[var(--color-text-secondary)]">
+                {r.days_span} sessions
+              </span>
+              <span className="text-[11px] text-[var(--color-text-secondary)]">{r.sector ?? '—'}</span>
+            </div>
+          )
+        })}
       </div>
 
       <div className="flex flex-wrap gap-x-6 gap-y-2 pt-3 text-[11px] text-[var(--color-text-secondary)]">
@@ -161,6 +179,32 @@ export default function HeatingUp({ limit = 25, compact = false }) {
         measured answer to that is a separate matched study, and it came back <b>0 of 42</b>.
       </p>
     </div>
+  )
+}
+
+/**
+ * One screener's marks for one ticker. The column header names it, so nothing
+ * is labelled here — seven labels on twenty-five rows is 175 pieces of type
+ * saying what the header already said.
+ */
+function Cell({ hit, quality }) {
+  if (!hit) return <span />
+  const shown = Math.min(hit.hits, MAX_MARKS)
+  return (
+    <span className="flex flex-wrap gap-[2px] items-center"
+          title={`${hit.name} · ${hit.hits}× · last ${hit.last_date}`}>
+      {Array.from({ length: shown }, (_, i) => (
+        <i key={i} className="block w-[10px] h-[10px]" style={{
+          background: quality ? 'var(--color-took)' : 'transparent',
+          boxShadow: quality ? undefined : 'inset 0 0 0 1.2px var(--color-untested)',
+        }} />
+      ))}
+      {hit.hits > MAX_MARKS && (
+        <span className="text-[9px] text-[var(--color-text-muted)] ml-0.5">
+          +{hit.hits - MAX_MARKS}
+        </span>
+      )}
+    </span>
   )
 }
 
