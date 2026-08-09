@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PageHeader from '../PageHeader'
 import { useUniverse } from '../../hooks/useUniverse'
 import { usePresets } from '../../hooks/usePresets'
 import { applyFilters } from '../../lib/screenerFilter'
@@ -62,6 +63,11 @@ export default function ScreenerPage() {
 
   return (
     <div>
+      <PageHeader group="market" title="Screener"
+        blurb="Seven screeners run every session. This ranks the names that show up in more than one of them — one mark is one appearance."
+        meta={['quality tier — EP · VCP · MOM · weight ×3',
+               'participation — 21D · 4% · CHART · VOL · weight ×1',
+               'counts above 8 are printed, not drawn']} />
       {/* Tab bar */}
       <div className="flex gap-0 border-b border-[var(--color-border)] mb-5" role="tablist">
         {TABS.map((tab, i) => (

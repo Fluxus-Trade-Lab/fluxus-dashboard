@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import PageHeader from '../PageHeader'
 import BrowseView from './BrowseView'
 import StudyMode from './StudyMode'
 import TagStats from './TagStats'
@@ -26,6 +27,11 @@ export default function ModelBooksPage() {
 
   return (
     <div className="max-w-6xl mx-auto py-6 px-4">
+      <PageHeader group="market" title="Model Books"
+        blurb="Historical winners and the bases they built before they ran. Reference for what a setup looked like beforehand — not a record of anything you did."
+        meta={['1,514 entries · 1962 to 2026',
+               '50 carry pattern tags and lessons',
+               'every entry is here because it went up — a survivor set']} />
       <div className="flex items-center justify-between mb-5">
         <h2 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Model Books
