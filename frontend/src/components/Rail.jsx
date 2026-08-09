@@ -6,10 +6,11 @@ import { useLanguage } from '../i18n/LanguageContext'
  * Design: Fluxus_Brand/visual/explorations/2026-08-08/market_today.html
  *
  * The split is the product's shape, not a tidier menu. MARKET is the state of
- * the market, identical for everyone, and needs no account. MY BOOK is a
- * framework and a record, different per person, and cannot exist without one.
- * Nine flat items could not say that; two labelled groups say it without a
- * sentence.
+ * the market, identical for everyone, and needs no account. LIBRARY is how to
+ * read a market at all — teaching, the same for everyone and not tied to today.
+ * MY BOOK is a framework and a record, different per person, and cannot exist
+ * without one. Flat items could not say that; three labelled groups say it
+ * without a sentence.
  *
  * Route hashes are unchanged. Breadth and Groups are renamed on screen only —
  * #/breadth and #/groups still resolve, so anything already sent out keeps
@@ -23,7 +24,20 @@ export const NAV_GROUPS = [
       { key: 'dashboard', hash: '#/dashboard' },
       { key: 'screener', hash: '#/screener' },
       { key: 'breadth', hash: '#/breadth' },     // shown as "Market State"
+      // Held open and empty until it clears its own gate. A rung published
+      // before it is earned is the one place a proof ladder can lie.
+      { key: 'correction', hash: '#/correction' },
       { key: 'groups', hash: '#/groups' },       // shown as "Themes"
+    ],
+  },
+  {
+    // Not market, not record — how to read a market at all. Model Books sat
+    // under MARKET and read oddly there: it answers neither "what is the market
+    // doing today" nor "what did I do about it". It is teaching material, and
+    // teaching material is the layer TSF fills with FAQ & Video Tutorials and
+    // we had nowhere to put.
+    key: 'library',
+    items: [
       { key: 'modelbooks', hash: '#/modelbooks' },
     ],
   },

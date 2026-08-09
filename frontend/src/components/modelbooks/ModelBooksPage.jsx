@@ -27,7 +27,7 @@ export default function ModelBooksPage() {
 
   return (
     <div className="max-w-6xl mx-auto py-6 px-4">
-      <PageHeader group="market" title="Model Books"
+      <PageHeader group="library" title="Model Books"
         blurb="Historical winners and the bases they built before they ran. Reference for what a setup looked like beforehand — not a record of anything you did."
         meta={['1,514 entries · 1962 to 2026',
                '50 carry pattern tags and lessons',
