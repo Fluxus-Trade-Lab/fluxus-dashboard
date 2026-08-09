@@ -15,6 +15,12 @@ the component, not the page around it.
         --out visuals/out/ticker_signal_history.png
 
 Requires the fluxus-dashboard dev server to already be running on --port.
+
+Known limitation: the #/portfolio route hangs Chrome. Something on that page
+never lets the virtual-time budget elapse, and neither --headless=new nor
+blocking non-localhost DNS shakes it loose. Every other route shoots fine.
+Verify portfolio cards by reading the DOM in the app instead, and check the
+arithmetic by hand — the numbers are the part worth checking anyway.
 """
 from __future__ import annotations
 
@@ -37,19 +43,30 @@ iframe{{border:0;display:block;width:{w}px;height:{h}px}}</style>
 // same origin, so the app reads this on its first render — both themes are
 // measured designs and both have to be shootable
 localStorage.setItem('theme', {theme});
+// optional synthetic state, for cards whose data is the user's own and must
+// never enter the repo. Seeded here, in a throwaway profile, never committed.
+const SEED={seed};
+if(SEED) for(const k in SEED) localStorage.setItem(k, JSON.stringify(SEED[k]));
 </script>
 <iframe id=f src="{route}"></iframe>
 <script>
-const NEEDLE={needle};
+const NEEDLE={needle}, CLICK={click};
 const f=document.getElementById('f');
 f.addEventListener('load',()=>{{
   // the SPA mounts after load and fetches its data, so poll rather than guess
-  let tries=0;
+  let tries=0, clicked=!CLICK;
   const tick=setInterval(()=>{{
     const d=f.contentDocument;
-    const el=d && [...d.querySelectorAll('h1,h2,h3')].find(e=>e.textContent.includes(NEEDLE));
+    if(!clicked && d){{
+      // some cards live behind a tab; click it by its label before looking
+      const b=[...d.querySelectorAll('button,a,[role=tab]')]
+        .find(e=>e.textContent.trim()===CLICK);
+      if(b){{ b.click(); clicked=true; return; }}
+    }}
+    const el=clicked && d &&
+      [...d.querySelectorAll('h1,h2,h3,span,div')].find(e=>e.textContent.trim()===NEEDLE);
     if(el){{
-      const card=el.parentElement.parentElement;
+      const card=el.closest('[class*="rounded-lg"]')||el.parentElement.parentElement;
       const r=card.getBoundingClientRect();
       f.contentWindow.scrollBy(0,r.top-8);
       // shrink the frame to the card so the shot has no page around it
@@ -64,7 +81,8 @@ f.addEventListener('load',()=>{{
 
 
 def shoot(route: str, needle: str, out: Path, port: int, w: int, h: int,
-          theme: str = "dark") -> None:
+          theme: str = "dark", seed: dict | None = None,
+          click: str | None = None) -> None:
     if not Path(CHROME).exists():
         raise SystemExit(f"Chrome not found: {CHROME}")
     base = f"http://localhost:{port}/"
@@ -76,13 +94,21 @@ def shoot(route: str, needle: str, out: Path, port: int, w: int, h: int,
     harness = PUBLIC / "_shot.html"
     harness.write_text(HARNESS.format(
         route=route if route.startswith("http") else base + route.lstrip("/"),
-        needle=json.dumps(needle), theme=json.dumps(theme), w=w, h=h, maxh=h))
+        needle=json.dumps(needle), theme=json.dumps(theme),
+        seed=json.dumps(seed) if seed else "null",
+        click=json.dumps(click) if click else "null", w=w, h=h, maxh=h))
     url = f"{base}_shot.html"
     try:
         time.sleep(0.4)  # let Vite notice the new file before Chrome asks for it
         out.parent.mkdir(parents=True, exist_ok=True)
         subprocess.run(
-            [CHROME, "--headless", "--disable-gpu", "--hide-scrollbars",
+            [CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars",
+             # Pages that call out to a sync backend or a price proxy never let
+             # the virtual-time budget elapse, so the shot hangs forever. Fail
+             # every non-localhost lookup fast instead — a screenshot tool has
+             # no business reaching the internet anyway.
+             "--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE localhost",
+             "--disable-background-networking",
              f"--window-size={w},{h}", "--force-device-scale-factor=2",
              f"--screenshot={out}", "--virtual-time-budget=20000", url],
             capture_output=True, timeout=180, check=True)
@@ -104,8 +130,12 @@ def main() -> None:
     ap.add_argument("--width", type=int, default=1280)
     ap.add_argument("--height", type=int, default=1400)
     ap.add_argument("--theme", choices=["dark", "light"], default="dark")
+    ap.add_argument("--seed", type=Path,
+                    help="JSON file of {localStorageKey: value} to seed before load")
+    ap.add_argument("--click", help="exact label of a tab/button to click first")
     a = ap.parse_args()
-    shoot(a.route, a.needle, a.out, a.port, a.width, a.height, a.theme)
+    seed = json.loads(a.seed.read_text()) if a.seed else None
+    shoot(a.route, a.needle, a.out, a.port, a.width, a.height, a.theme, seed, a.click)
 
 
 if __name__ == "__main__":

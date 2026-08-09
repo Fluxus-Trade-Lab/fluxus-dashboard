@@ -21,6 +21,9 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
     [performanceData]
   )
   const ce = capitalEfficiency
+  // Risk as a share of capital needs current equity, not starting capital — the
+  // latter overstates the percentage as the account grows.
+  const lastMark = performanceData?.length ? performanceData[performanceData.length - 1] : null
   // Leverage = gross exposure ÷ CURRENT equity (not starting capital, which
   // overstates as the account grows). Averaged over days with a position.
   const lev = useMemo(() => {
@@ -180,7 +183,8 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
           </ResponsiveContainer>
         </div>
 
-        <CapitalAtRiskWidget openTrades={openTrades} pm={pm} />
+        <CapitalAtRiskWidget openTrades={openTrades} pm={pm}
+                             equity={lastMark?.value} markDate={lastMark?.date} />
       </div>
 
       <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
