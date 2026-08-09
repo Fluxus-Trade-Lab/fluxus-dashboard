@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FLUXUS — Market State · nine ladders, drawn by hand</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+:root{
+  --paper:#f4f2ec; --ink:#1a1815; --ink-2:#5c5852; --ink-3:#9c968d;
+  --rule:#ddd8cf; --hair:#e9e4db;
+  --works:#1f5f9e; --fails:#c8590f; --idle:#c2bdb4; --edge:#b8860b;
+  --sans:Plex,-apple-system,sans-serif; --cond:PlexCond,Plex,sans-serif; --mono:PlexMono,Menlo,monospace;
+  --glass:rgba(252,251,247,.6); --glass-edge:rgba(26,24,21,.09);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;display:flex;
+  background:
+    radial-gradient(720px 460px at 10% -8%, rgba(31,95,158,.08), transparent 62%),
+    radial-gradient(600px 400px at 94% 2%, rgba(200,89,15,.07), transparent 60%),
+    var(--paper)}
+.rail{width:230px;flex:0 0 230px;min-height:100vh;padding:22px 0 0;background:var(--glass);
+      backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);
+      border-right:1px solid var(--glass-edge)}
+.rail .mark{font-family:var(--cond);font-weight:700;font-size:18px;letter-spacing:.17em;padding:0 22px 20px}
+.grp>b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;
+       color:var(--ink-3);font-weight:500;padding:14px 22px 6px}
+.grp a{display:block;padding:7px 22px;font-size:13.5px;color:var(--ink-2);
+       text-decoration:none;border-left:2px solid transparent}
+.grp a.on{color:var(--ink);font-weight:600;border-left-color:var(--ink);background:rgba(255,255,255,.6)}
+.rail .lock{padding:9px 22px 0;font-size:10.5px;color:var(--ink-3);line-height:1.5}
+
+.page{flex:1;min-width:0;padding:0 40px 70px;max-width:1180px}
+.bar{position:sticky;top:0;z-index:5;margin:0 -40px;padding:13px 40px;background:var(--glass);
+     backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+     border-bottom:1px solid var(--glass-edge);display:flex;align-items:baseline;gap:14px;
+     font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--ink-3)}
+.bar b{color:var(--ink);font-weight:500}
+.bar .r{margin-left:auto;letter-spacing:.04em}
+
+.say{margin:28px 0 4px;padding-left:16px;border-left:2px solid var(--ink);max-width:700px}
+.say p{margin:0;font-size:18px;line-height:1.45;color:var(--ink)}
+.say p em{font-style:normal;color:var(--ink-2)}
+
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:26px 34px;padding-top:26px}
+.c{position:relative}
+.c .hd{display:flex;align-items:baseline;gap:9px;margin-bottom:5px}
+.c .nm{font-family:var(--cond);font-weight:600;font-size:19px;letter-spacing:.005em}
+.c .lv{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:var(--ink-3)}
+.c.blocked .lv{color:var(--edge)}
+.c svg{display:block;width:100%;height:64px;overflow:visible}
+.c .ev{font-size:11.5px;line-height:1.5;color:var(--ink-2);margin-top:6px}
+.c .gap{font-size:11.5px;line-height:1.5;margin-top:3px;color:var(--ink-3)}
+.c .gap b{color:var(--ink)}
+.c.blocked .gap b{color:var(--edge)}
+.c.blank .nm{color:var(--ink-3)}
+
+.leg{display:flex;flex-wrap:wrap;gap:24px;margin-top:30px;padding-top:14px;
+     border-top:1px solid var(--rule);font-size:11px;color:var(--ink-3)}
+.leg span{display:flex;align-items:center;gap:8px}
+.note{font-size:11.5px;line-height:1.65;color:var(--ink-3);margin:20px 0 0;max-width:940px}
+.note b{color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+<aside class="rail">
+  <div class="mark">FLUXUS</div>
+  <div class="grp"><b>MARKET</b>
+    <a href="#">Today</a><a href="#">Screener</a>
+    <a class="on" href="#">Market State</a><a href="#">Themes</a>
+    <div class="lock">开放。不需要账户。</div></div>
+  <div class="grp"><b>MY BOOK</b>
+    <a href="#">Positions</a><a href="#">Journal</a><a href="#">Coach</a>
+    <div class="lock">需要账户 + 你的成交。</div></div>
+</aside>
+
+<main class="page">
+  <div class="bar"><b>MARKET</b> › MARKET STATE <span class="r">SESSION 2026-08-08 · CLOSE</span></div>
+
+  <div class="say"><p>Two conditions are one number away from their next step —
+    <em>and it is the same number, and it cannot be counted on a weekend.</em></p></div>
+
+  <div class="board" id="board"></div>
+
+  <div class="leg">
+    <span><svg width="30" height="14"><rect x="2" y="3" width="11" height="8" fill="var(--works)"/></svg>
+      where it stands</span>
+    <span><svg width="30" height="14"><line x1="2" y1="7" x2="26" y2="7" stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3"/></svg>
+      the step it has not reached</span>
+    <span><svg width="30" height="14"><rect x="2" y="3" width="11" height="8" fill="none" stroke="var(--idle)" stroke-dasharray="2 2"/></svg>
+      could not be counted today</span>
+    <span style="color:var(--edge)">amber = one measurable number from moving</span>
+  </div>
+
+  <p class="note"><b>Where the hand is allowed to wobble.</b> Every rung, every marker and every
+    gap is placed at an exact coordinate — the drawing is displaced only along the stroke, never
+    at an endpoint. A ladder whose top rung is two pixels vague cannot carry
+    "1.31 points above 50". <b>Irregularity in the line, never in the position.</b>
+    The wobble is seeded per condition, so the same data draws the same picture every time; it is
+    a rendering, not a random one.<br><br>
+    <b>And one ladder is shorter than the rest.</b> Selling pressure can never read "good" —
+    its rule tops out at "started". The board draws the ceiling that actually exists rather than
+    five rungs everywhere for symmetry.</p>
+
+<script>
+/* deterministic wobble — same data must draw the same picture on every render */
+function rng(seed){let s=seed>>>0;return()=>((s=(s*1664525+1013904223)>>>0)/4294967296-.5)}
+function line(x1,y1,x2,y2,r,amp=1.1){
+  const n=6,pts=[];for(let i=0;i<=n;i++){const t=i/n;
+    pts.push([x1+(x2-x1)*t+(i&&i<n?r()*amp:0), y1+(y2-y1)*t+(i&&i<n?r()*amp:0)]);}
+  return 'M'+pts.map(p=>p[0].toFixed(2)+','+p[1].toFixed(2)).join(' L');
+}
+function box(x,y,w,h,r,amp=1.0){
+  return line(x,y,x+w,y,r,amp)+line(x+w,y,x+w,y+h,r,amp).replace('M','L')
+       + line(x+w,y+h,x,y+h,r,amp).replace('M','L')+line(x,y+h,x,y,r,amp).replace('M','L')+'Z';
+}
+
+/* nine conditions · session 2026-08-08 · levels from breadth.json state_board */
+const C=[
+ {k:'Damage', lvl:2, top:4, ev:'836 names −25% on the quarter against 760 up 25% — 52% on the down side',
+  gap:['118 fewer', 'broken names to reach the next step (52.4% → 45%)']},
+ {k:'Selling pressure', lvl:3, top:3, blank:1,
+  ev:'0 names −4% today against a five-day peak of 299', ceiling:1,
+  gap:['not countable', 'today — and this ladder tops out here by rule']},
+ {k:'Breadth', lvl:3, top:4, blocked:1, ev:'60.8% above the 20-day, T2108 56.1, net advances +0',
+  gap:['one net advance', '— the 20-day gate is already passed at 60.8%']},
+ {k:'Trend', lvl:4, top:4, ev:'51.3% above the 200-day',
+  gap:['1.31 points', 'of room before it drops a step']},
+ {k:'Thrust', lvl:2, top:4, blank:1, ev:'0 names +4% against 0 −4%',
+  gap:['300 names', '+4% to reach the top — none countable today']},
+ {k:'Extremes', lvl:4, top:4, ev:'60 new 52-week highs against 11 new lows',
+  gap:['18 more', 'new lows before it drops a step']},
+ {k:'Index repair', lvl:4, top:4, ev:'2 of 2 benchmarks above the 50-day: SPY, QQQ',
+  gap:['at the top', 'of its ladder']},
+ {k:'Confirmation', lvl:2, top:4, blocked:1,
+  ev:'five-day ratio 2.0719, clear of 1.2 — held back by net advances at +0',
+  gap:['one net advance', '— the ratio gate cleared at 2.07']},
+ {k:'Rates', lvl:null, top:4, blank:1, ev:'long-end yields are not wired into the pipeline',
+  gap:['no rung', 'is drawn, because none can be measured']},
+];
+const LBL=['absent','very weak','early','started','good'];
+
+document.getElementById('board').innerHTML=C.map((c,ci)=>{
+  const r=rng(9001+ci*137), W=300,H=64, x0=4, x1=W-4, rows=c.top+1;
+  const y=i=>H-6-(i*(H-16)/(rows-1));                  // exact rung positions
+  let p='';
+  for(let i=0;i<rows;i++){
+    const reached=c.lvl!==null&&i<=c.lvl;
+    const w=(x1-x0)*(0.34+0.66*i/(rows-1));
+    p+=`<path d="${line(x0,y(i),x0+w,y(i),r,1.0)}" fill="none" stroke="${
+        reached?'var(--ink)':'var(--ink-3)'}" stroke-width="${reached?1.3:0.9}"
+        stroke-linecap="round" ${reached?'':'stroke-dasharray="3 3.5"'} opacity="${reached?1:.6}"/>`;
+  }
+  if(c.lvl!==null){
+    const w=(x1-x0)*(0.34+0.66*c.lvl/(rows-1));
+    p+=`<path d="${box(x0+w-13,y(c.lvl)-6,13,12,r,0.9)}" fill="${
+        c.blank?'none':(c.blocked?'var(--edge)':'var(--works)')}"
+        stroke="${c.blank?'var(--idle)':'none'}" ${c.blank?'stroke-dasharray="2 2"':''}/>`;
+    if(c.lvl<c.top&&!c.ceiling){                        // the gap to the next rung
+      p+=`<path d="${line(x0+w-6.5,y(c.lvl)-9,x0+w-6.5,y(c.lvl+1)+4,r,0.8)}" fill="none"
+          stroke="${c.blocked?'var(--edge)':'var(--ink-3)'}" stroke-width="1"
+          stroke-dasharray="2.5 3"/>`;
+    }
+  }
+  const lab=c.lvl===null?'NOT MEASURED':LBL[c.lvl].toUpperCase()
+            +(c.ceiling?' · CEILING':'')+(c.lvl===c.top&&!c.ceiling?' · TOP':'');
+  return `<div class="c${c.blocked?' blocked':''}${c.blank?' blank':''}">
+    <div class="hd"><span class="nm">${c.k}</span><span class="lv">${lab}</span></div>
+    <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${p}</svg>
+    <div class="ev">${c.ev}</div>
+    <div class="gap"><b>${c.gap[0]}</b> ${c.gap[1]}</div>
+  </div>`;
+}).join('');
+</script>
+</main>
+</body>
+</html>
