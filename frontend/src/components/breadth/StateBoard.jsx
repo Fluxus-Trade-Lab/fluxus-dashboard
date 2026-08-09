@@ -12,7 +12,6 @@
  */
 
 import { isWeekend } from './session'
-import HowToRead from '../HowToRead'
 
 const HATCH =
   'repeating-linear-gradient(45deg,rgba(125,57,8,.55) 0 1.7px,transparent 1.7px 5px)'
@@ -205,28 +204,6 @@ export default function StateBoard({ board, session }) {
           <Chain chain={chain} />
         </>
       )}
-
-      <HowToRead>
-        <p>
-          Each row is one condition, and the cells to its right are how far along it
-          is. <b>Rank is how many cells are filled</b> — count them rather than
-          judging the colour, because the same fill is used at every level and hue
-          alone would be unreadable to a third of people.
-        </p>
-        <p>
-          A row drawn as a <b>dashed outline sitting outside the scale</b> was not
-          measured this session. That is different from a row measured at zero: one
-          is missing evidence, the other is evidence of nothing happening. The header
-          prints how many of the {total} were actually measured.
-        </p>
-        <p>
-          The order is a <b>repair ladder</b>. Conditions near the top break first
-          and mend last, so a market repairing from the bottom up is not yet the same
-          market as one that never broke. Propagation, below, shows which currents
-          carried through — its width is a count, and a current that stops does not
-          resume later in the same chain.
-        </p>
-      </HowToRead>
     </section>
   )
 }

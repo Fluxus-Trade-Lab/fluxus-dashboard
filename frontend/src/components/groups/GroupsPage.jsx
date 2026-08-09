@@ -3,6 +3,8 @@ import PageHeader from '../PageHeader'
 import Reading, { readThemes } from '../Reading'
 import { useGroups } from '../../hooks/useGroups'
 import GroupTable from './GroupTable'
+import ThemeBars from './ThemeBars'
+import Reference from '../Reference'
 import HowToRead from '../HowToRead'
 
 const TABS = [
@@ -92,11 +94,20 @@ export default function GroupsPage() {
         </div>
       )}
 
-      <GroupTable
-        rows={rows}
-        showMethod={tab !== 'industries'}
-        emptyNote={tab === 'provisional' ? 'Nothing withheld' : 'No groups'}
-      />
+      {/* The subject: one bar per theme, ranked, and nothing beside it. The
+          eight-column table below holds the same rows plus method and
+          validation — it answers «where does this come from», which is a
+          different question and belongs behind a line, not in front of one. */}
+      <ThemeBars rows={rows} />
+
+      <Reference label="Full table" count={rows.length}
+                 note="every column — accel, persistence, method, validation — and sortable">
+        <GroupTable
+          rows={rows}
+          showMethod={tab !== 'industries'}
+          emptyNote={tab === 'provisional' ? 'Nothing withheld' : 'No groups'}
+        />
+      </Reference>
 
       <p className="text-[11px] text-[var(--color-text-muted)] leading-relaxed">
         <strong>State is descriptive, not a signal.</strong> Over 10 years and

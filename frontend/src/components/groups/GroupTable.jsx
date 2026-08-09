@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import StateBadge from './StateBadge'
+import Squares from '../Squares'
 
 const pct = (v) => (v == null ? '—' : `${(v * 100).toFixed(2)}%`)
 
@@ -84,17 +85,15 @@ export default function GroupTable({ rows, showMethod = false, emptyNote }) {
               <td className="px-2 py-1.5 text-right tabular-nums">{r.members}</td>
               <td className="px-2 py-1.5"><Axis v={r.excess_3m} range={0.7} /></td>
               <td className="px-2 py-1.5"><Axis v={r.rs_accel} range={0.6} /></td>
-              <td
-                className="px-2 py-1.5 text-right tabular-nums"
-                title={r.persistence_of
-                  ? `Top quartile on ${r.persistence} of ${r.persistence_of} horizons`
-                  : undefined}
-              >
-                {/* Denominator shown because it varies: a group scored against
-                    its cohort gets 5 windows, a stock benchmarked against SPY
-                    gets 3. Printing a bare integer would put two different
-                    scales in one column. */}
-                {r.persistence == null ? '—' : `${r.persistence}/${r.persistence_of ?? 5}`}
+              {/* Drawn, not printed. The denominator varies — a group scored
+                  against its cohort gets 5 windows, a proxy benchmarked against
+                  SPY gets 3 — so it is carried by the empty marks rather than by
+                  a slash, and two different scales cannot read as one. */}
+              <td className="px-2 py-1.5 text-right whitespace-nowrap">
+                <Squares n={r.persistence} of={r.persistence_of ?? 5}
+                  title={r.persistence_of
+                    ? `Top quartile on ${r.persistence} of ${r.persistence_of} horizons`
+                    : undefined} />
               </td>
               <td className="px-2 py-1.5"><StateBadge state={r.state} /></td>
               {showMethod && (

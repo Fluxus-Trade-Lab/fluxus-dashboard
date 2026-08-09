@@ -11,6 +11,7 @@ import ResultsTable from './ResultsTable'
 import WatchlistTab from './WatchlistTab'
 import HeatingUp from './HeatingUp'
 import HowToRead from '../HowToRead'
+import Reference from '../Reference'
 
 const DEFAULT_FILTERS = {
   marketCapEnabled: true,
@@ -101,51 +102,61 @@ export default function ScreenerPage() {
 
       {activeTab === 0 && (
         <>
-          <PresetBar
-            presets={allPresets}
-            activePreset={activePreset}
-            onSelect={handleSelectPreset}
-            onSave={handleSave}
-            onDelete={(name) => { deletePreset(name); setActivePreset(null) }}
-            onReset={handleReset}
-          />
-
-          <FilterPanel
-            filters={filters}
-            onChange={setFilters}
-            onSearch={setTickerSearch}
-          />
-
-          <div className="flex items-center gap-4 mb-4">
-            <button
-              onClick={handleRun}
-              className="px-4 py-1.5 bg-green-600 text-white text-xs font-semibold uppercase tracking-wide rounded hover:bg-green-700"
-            >
-              Run Screener
-            </button>
-            {results && (
-              <span className="text-green-600 text-sm font-semibold">
-                {results.length} stocks matched
-              </span>
-            )}
-          </div>
-
-          {tickerList && (
-            <div className="mb-4 p-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded text-xs font-mono text-[var(--color-text-secondary)] break-all select-all flex items-start gap-2">
-              <span className="flex-1">{tickerList}</span>
-              <button
-                onClick={() => { navigator.clipboard.writeText(tickerList).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1500) }).catch(() => {}) }}
-                className="shrink-0 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide border border-[var(--color-border)] rounded bg-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-text-secondary)] cursor-pointer transition-colors"
-              >
-                {copied ? 'Copied' : 'Copy'}
-              </button>
-            </div>
-          )}
-
+          {/* The ledger first. It is what this page is for — the names that
+              stacked, already computed, no input required. The filter panel was
+              sitting above it occupying the top third of the page, which made a
+              tool look like the subject and put a form between the reader and
+              the answer. Demoted, not removed: everything still works, it just
+              no longer goes first. */}
           <div className="mb-4">
             <HeatingUp />
           </div>
-          {results && <ResultsTable rows={results} />}
+
+          <Reference label="Build your own query"
+                     note="presets, every filter, and the run that produces a custom list">
+            <PresetBar
+              presets={allPresets}
+              activePreset={activePreset}
+              onSelect={handleSelectPreset}
+              onSave={handleSave}
+              onDelete={(name) => { deletePreset(name); setActivePreset(null) }}
+              onReset={handleReset}
+            />
+
+            <FilterPanel
+              filters={filters}
+              onChange={setFilters}
+              onSearch={setTickerSearch}
+            />
+
+            <div className="flex items-center gap-4 mb-4">
+              <button
+                onClick={handleRun}
+                className="px-4 py-1.5 bg-green-600 text-white text-xs font-semibold uppercase tracking-wide rounded hover:bg-green-700"
+              >
+                Run Screener
+              </button>
+              {results && (
+                <span className="text-green-600 text-sm font-semibold">
+                  {results.length} stocks matched
+                </span>
+              )}
+            </div>
+
+            {tickerList && (
+              <div className="mb-4 p-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded text-xs font-mono text-[var(--color-text-secondary)] break-all select-all flex items-start gap-2">
+                <span className="flex-1">{tickerList}</span>
+                <button
+                  onClick={() => { navigator.clipboard.writeText(tickerList).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1500) }).catch(() => {}) }}
+                  className="shrink-0 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide border border-[var(--color-border)] rounded bg-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-text-secondary)] cursor-pointer transition-colors"
+                >
+                  {copied ? 'Copied' : 'Copy'}
+                </button>
+              </div>
+            )}
+
+            {results && <ResultsTable rows={results} />}
+          </Reference>
         </>
       )}
 
