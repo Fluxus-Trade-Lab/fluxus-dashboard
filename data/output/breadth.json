@@ -4204,5 +4204,53 @@
     ],
     "measured": 8,
     "total": 9
+  },
+  "regime": {
+    "bands": [
+      {
+        "key": "damaged",
+        "label": "Damaged",
+        "min": 0,
+        "max": 47,
+        "describes": "most conditions absent or very weak"
+      },
+      {
+        "key": "mixed",
+        "label": "Mixed",
+        "min": 47,
+        "max": 63,
+        "describes": "conditions split \u2014 repair started, not carried"
+      },
+      {
+        "key": "healthy",
+        "label": "Healthy",
+        "min": 63,
+        "max": 75,
+        "describes": "most conditions met"
+      },
+      {
+        "key": "extended",
+        "label": "Extended",
+        "min": 75,
+        "max": 101,
+        "describes": "nearly every condition met at once"
+      }
+    ],
+    "score": 75.0,
+    "band": "extended",
+    "band_label": "Extended",
+    "describes": "nearly every condition met at once",
+    "measured": 8,
+    "of": 9,
+    "strong": [
+      "trend",
+      "extremes",
+      "index repair"
+    ],
+    "weak": [],
+    "evidence": "8 of 9 conditions measured, averaging 3.0 of 4; at full strength: trend, extremes, index repair",
+    "predicts_return": false,
+    "separates_tail": true,
+    "caveat": "a risk-budget reading, not a direction call: over 2024-2026 it did not predict the next month's return, but 5% drawdown frequency fell monotonically from 27% in Damaged to 6% in Extended \u2014 on only ten independent episodes, in one rising regime"
   }
 }
