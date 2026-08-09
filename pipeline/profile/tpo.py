@@ -249,3 +249,99 @@ def volume_without_time(vap: dict[float, float], counts: dict[float, int],
     tcut = ts[min(int(tpo_pct * len(ts)), len(ts) - 1)]
     return sorted(p for p in vap
                   if vap[p] >= vcut and counts.get(p, 0) <= tcut)
+
+
+# A price holding less than this share of the profile's peak volume is a
+# low-volume node. Steidlmayer's own framing is that volume marks acceptance;
+# its absence marks a price the auction passed through without agreeing on.
+LVN_FRAC = 0.25
+
+
+def low_volume_nodes(vap: dict[float, float], frac: float = LVN_FRAC,
+                     min_separation: int = 1) -> list[dict]:
+    """Prices the auction moved through without building acceptance.
+
+    From @TailThatWagsDog, 2025-10-01: *"If you're a fan of auction market
+    profile … or Wyckoff and Volume-Spread-Analysis … you know that LOW volume
+    points are often key levels … key decision points."*
+
+    We had the opposite half only. VPOC and the value area find where volume
+    PILED UP; this finds where it did not. The reading is different in kind: a
+    high-volume node is where price is comfortable and tends to rotate, a
+    low-volume node is where it is not and tends to travel — so an LVN is a
+    place to expect speed, not support.
+
+    A node qualifies when it is a local minimum, sits below `frac` of the
+    profile's peak, and has genuine volume on BOTH sides. That last condition is
+    what distinguishes an LVN from the thin tails at the edges of the profile,
+    which are not decision points — they are just where the day ended.
+    """
+    if not vap or frac <= 0:
+        return []
+    prices = sorted(vap)
+    if len(prices) < 3:
+        return []
+    peak = max(vap.values())
+    if peak <= 0:
+        return []
+    cut = frac * peak
+
+    out = []
+    for i in range(min_separation, len(prices) - min_separation):
+        p = prices[i]
+        v = vap[p]
+        if v > cut:
+            continue
+        lo = prices[max(0, i - min_separation):i]
+        hi = prices[i + 1:i + 1 + min_separation]
+        if not lo or not hi:
+            continue
+        # A local minimum, and flanked by real volume on both sides — otherwise
+        # this is the edge of the profile rather than a gap inside it.
+        if v > min(vap[q] for q in lo) or v > min(vap[q] for q in hi):
+            continue
+        left_peak = max(vap[q] for q in prices[:i]) if i else 0.0
+        right_peak = max(vap[q] for q in prices[i + 1:])
+        if left_peak <= cut or right_peak <= cut:
+            continue
+        out.append({"price": p, "volume": v,
+                    "share_of_peak": round(v / peak, 4),
+                    "left_peak": left_peak, "right_peak": right_peak,
+                    "note": "expect speed here, not support — the auction passed "
+                            "through without agreeing"})
+    return sorted(out, key=lambda r: r["share_of_peak"])
+
+
+def profile_gaps(vap: dict[float, float]) -> list[dict]:
+    """Every INTERIOR local minimum with its depth, threshold-free.
+
+    The near-miss discipline, applied to nodes. `low_volume_nodes` answers "what
+    qualified"; this answers "and how close did the rest come", so a session that
+    produced nothing can be distinguished from a threshold that was set too tight.
+
+    Measured on 2026-08-07 the three interior dips came in at 37.8%, 39.2% and
+    50.1% of peak against a 25% cut — nothing qualified, and the day genuinely
+    had no gap rather than the setting being wrong. Without this the two cases
+    look identical, and the temptation is to lower the cut until something
+    appears, which is how a free parameter becomes a finding.
+    """
+    if not vap or len(vap) < 3:
+        return []
+    prices = sorted(vap)
+    peak = max(vap.values()) or 1.0
+    cut_free = []
+    for i in range(1, len(prices) - 1):
+        p_, v = prices[i], vap[prices[i]]
+        if not (v < vap[prices[i - 1]] and v < vap[prices[i + 1]]):
+            continue
+        left = max(vap[q] for q in prices[:i])
+        right = max(vap[q] for q in prices[i + 1:])
+        cut_free.append({
+            "price": p_, "volume": v, "share_of_peak": round(v / peak, 4),
+            "left_peak_share": round(left / peak, 4),
+            "right_peak_share": round(right / peak, 4),
+            # A dip with nothing but tail on one side is where the day ended,
+            # not a gap the auction crossed.
+            "interior": left > 0.25 * peak and right > 0.25 * peak,
+        })
+    return sorted(cut_free, key=lambda r: r["share_of_peak"])

@@ -134,8 +134,13 @@ def main():
         # like with like rather than crossing instruments.
         es_half = MP.build_profile(
             [{"low": b["low"], "high": b["high"]} for b in fine], args.es_tick)
+        lvn = MP.low_volume_nodes(vap)
+        gaps = [g for g in MP.profile_gaps(vap) if g["interior"]]
         out["volume"] = {
             "instrument": "ES", "bar": "1 min", "tick": args.es_tick,
+            "at_price": {str(k): round(v, 1) for k, v in sorted(vap.items())},
+            "low_volume_nodes": lvn,
+            "interior_dips": gaps,
             "provenance": "approximated — each bar's volume spread evenly across "
                           "the prices it spans; not tape-derived volume-at-price",
             "vpoc": MP.vpoc(vap),
@@ -174,6 +179,15 @@ def main():
         vw = v["volume_without_time"]
         print(f"  Volume w/o time ..... {len(vw)} price(s)" +
               (f"   {vw[0]:,.2f} .. {vw[-1]:,.2f}" if vw else ""))
+        ln = v["low_volume_nodes"]
+        ln, gp = v["low_volume_nodes"], v["interior_dips"]
+        if ln:
+            print(f"  Low-volume nodes .... {len(ln)}   " +
+                  ", ".join(f"{r['price']:,.0f} ({r['share_of_peak']:.0%})" for r in ln[:4]))
+        else:
+            near = ", ".join(f"{r['price']:,.0f} ({r['share_of_peak']:.0%})" for r in gp[:3])
+            print(f"  Low-volume nodes .... 0 below the {MP.LVN_FRAC:.0%} cut" +
+                  (f"; deepest interior dips {near}" if near else "; no interior dip at all"))
     print(f"\nwrote {p}")
 
 

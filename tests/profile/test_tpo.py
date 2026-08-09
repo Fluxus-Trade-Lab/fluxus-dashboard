@@ -172,3 +172,54 @@ def test_volume_without_time_finds_the_traded_but_unaccepted_price():
     prof = MP.build_profile(b, tick=1.0)
     out = MP.volume_without_time(MP.volume_at_price(b, 1.0), MP.tpo_counts(prof))
     assert 105.0 in out and 101.0 not in out
+
+
+# ---------------------------------------------------- low-volume nodes
+
+def test_a_gap_between_two_shelves_is_a_low_volume_node():
+    # Two high-volume shelves with a hole between them: the hole is where price
+    # travels, and it is the half of the profile we never computed.
+    vap = {100.0: 100.0, 101.0: 90.0, 102.0: 5.0, 103.0: 95.0, 104.0: 100.0}
+    lvn = MP.low_volume_nodes(vap)
+    assert [r["price"] for r in lvn] == [102.0]
+    assert lvn[0]["share_of_peak"] == pytest.approx(0.05)
+
+
+def test_the_thin_edges_of_a_profile_are_not_decision_points():
+    # A one-sided tail is where the day ended, not a gap the auction crossed.
+    vap = {100.0: 2.0, 101.0: 3.0, 102.0: 90.0, 103.0: 100.0, 104.0: 95.0}
+    assert MP.low_volume_nodes(vap) == []
+
+
+def test_a_dip_that_is_not_actually_thin_does_not_qualify():
+    vap = {100.0: 100.0, 101.0: 80.0, 102.0: 99.0}
+    assert MP.low_volume_nodes(vap) == []
+
+
+def test_nodes_come_back_thinnest_first():
+    vap = {100.0: 100.0, 101.0: 20.0, 102.0: 90.0, 103.0: 5.0, 104.0: 100.0}
+    assert [r["price"] for r in MP.low_volume_nodes(vap)] == [103.0, 101.0]
+
+
+def test_a_profile_too_short_to_have_an_inside_returns_nothing():
+    assert MP.low_volume_nodes({100.0: 1.0, 101.0: 2.0}) == []
+    assert MP.low_volume_nodes({}) == []
+
+
+def test_gaps_report_near_misses_so_a_quiet_day_is_not_a_tight_threshold():
+    # Nothing qualifies at 25%, but the reader must be able to see that the
+    # deepest interior dip came in at 38% rather than assume the cut was wrong.
+    vap = {100.0: 1000.0, 101.0: 380.0, 102.0: 1000.0}
+    assert MP.low_volume_nodes(vap) == []
+    g = MP.profile_gaps(vap)
+    assert len(g) == 1 and g[0]["share_of_peak"] == pytest.approx(0.38)
+    assert g[0]["interior"] is True
+
+
+def test_a_dip_with_only_tail_on_one_side_is_marked_not_interior():
+    # Measured case: a 5.3% dip at index 6/45 with 8% of peak to its left is
+    # where the day ended, not a gap the auction crossed.
+    vap = {100.0: 50.0, 101.0: 80.0, 102.0: 53.0, 103.0: 1000.0, 104.0: 900.0}
+    g = {r["price"]: r for r in MP.profile_gaps(vap)}
+    assert g[102.0]["interior"] is False
+    assert MP.low_volume_nodes(vap) == []
