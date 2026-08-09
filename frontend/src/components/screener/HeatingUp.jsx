@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Reading, { readScreener } from '../Reading'
 
 /**
  * Confluence ledger — the v2 screener object.
@@ -102,6 +103,9 @@ export default function HeatingUp({ limit = 25, compact = false }) {
 
   return (
     <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4">
+      {/* counted over the rows actually on screen, not over the whole file —
+          the sentence says "here", and here is what `limit` left */}
+      <Reading text={readScreener({ ...data, rows })} />
       <div className="flex items-baseline justify-between pb-2 border-b border-[var(--color-v2-ink)]">
         <h3 className="text-[10px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
           Confluence ledger

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import PageHeader from '../PageHeader'
+import Reading, { readThemes } from '../Reading'
 import { useGroups } from '../../hooks/useGroups'
 import GroupTable from './GroupTable'
 
@@ -54,6 +55,7 @@ export default function GroupsPage() {
                'tradeable universe only — cap ≥ $300M, $2M daily volume',
                'member count is printed: a theme of one stock is one stock',
                `${themes.length} published + ${provisional.length} provisional — the counts above cover the published set only`]} />
+      <Reading text={readThemes(themes)} />
       <div className="flex justify-end">
         <StateCounts rows={rows} />
       </div>

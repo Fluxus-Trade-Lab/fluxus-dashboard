@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import PageHeader from '../PageHeader'
+import Reading, { readMarketState } from '../Reading'
 import VerdictBanner from './VerdictBanner'
 import StateBoard from './StateBoard'
 import MarketStateSummary from './MarketStateSummary'
@@ -53,6 +54,7 @@ export default function BreadthPage({ data }) {
         meta={['rank is how many cells are filled, never hue alone',
                'an unmeasured condition renders outside the scale',
                'every condition prints the numbers that produced it']} />
+      <Reading text={readMarketState(verdict)} />
       <TimeMachineBar tm={tm} />
       <VerdictBanner verdict={verdict} dataQuality={breadth.data_quality}
                      session={rows[rows.length - 1]?.date} />
