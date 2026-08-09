@@ -392,9 +392,13 @@ def main():
             # Worst case the v2 UI hides one section.
             try:
                 from pipeline.screeners.state_board import build as build_state_board
-                breadth_result['state_board'] = build_state_board(
-                    breadth_frame, market_health_payload,
-                )
+                from pipeline.screeners.regime import build as build_regime
+                board = build_state_board(breadth_frame, market_health_payload)
+                breadth_result['state_board'] = board
+                # The score is derived from the board, so it lives or dies with
+                # it — no separate try, and no possibility of a score published
+                # beside a board it was not computed from.
+                breadth_result['regime'] = build_regime(board['rows'])
             except Exception:  # noqa: BLE001 — isolate; breadth.json still ships
                 logger.exception(
                     "State board failed — breadth.json ships without it"

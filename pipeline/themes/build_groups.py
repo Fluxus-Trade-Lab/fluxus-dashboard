@@ -386,6 +386,15 @@ def main() -> None:
     out = OUTPUT_DIR / "groups.json"
     out.write_text(json.dumps(payload, indent=2, default=str))
 
+    # Snapshot before anything else can fail: groups.json is overwritten every
+    # session, so a day not recorded here is a day gone. Isolated because the
+    # archive is for a UI ten weeks away and must never cost today's file.
+    try:
+        from pipeline.themes.group_history import record
+        record(payload)
+    except Exception:  # noqa: BLE001 — groups.json still ships
+        logger.exception("group snapshot failed — groups.json is unaffected")
+
     s = payload["summary"]
     logger.info("industries=%d %s", s["industries"], s["industry_states"])
     logger.info("themes=%d %s", s["themes"], s["theme_states"])
