@@ -28,6 +28,7 @@ import PortfolioPage from './portfolio/PortfolioPage'
 import JournalPage from './journal/JournalPage'
 import BriefingPage from './briefing/BriefingPage'
 import BreadthPage from './breadth/BreadthPage'
+import CorrectionRiskPage from './breadth/CorrectionRiskPage'
 import GroupsPage from './groups/GroupsPage'
 import ModelBooksPage from './modelbooks/ModelBooksPage'
 import PublicLayout from './public/PublicLayout'
@@ -121,6 +122,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           {current === 'trades' && <TradeJournalPage />}
           {current === 'briefing' && <BriefingPage />}
           {current === 'breadth' && <BreadthPage data={data} />}
+          {current === 'correction' && <CorrectionRiskPage />}
           {current === 'groups' && <GroupsPage />}
           {current === 'modelbooks' && <ModelBooksPage />}
         </main>
