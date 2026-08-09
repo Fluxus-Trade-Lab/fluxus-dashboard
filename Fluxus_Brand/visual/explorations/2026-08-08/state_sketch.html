@@ -99,19 +99,23 @@ body{color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased
     <span style="color:var(--edge)">amber = one measurable number from moving</span>
   </div>
 
-  <p class="note"><b>Where the hand is allowed to wobble.</b> Every rung, every marker and every
-    gap is placed at an exact coordinate — the drawing is displaced only along the stroke, never
-    at an endpoint. A ladder whose top rung is two pixels vague cannot carry
-    "1.31 points above 50". <b>Irregularity in the line, never in the position.</b>
-    The wobble is seeded per condition, so the same data draws the same picture every time; it is
-    a rendering, not a random one.<br><br>
+  <p class="note"><b>The hand is off on this page.</b> This is the instrument someone opens at
+    6:30, so its marks are drawn exactly — 怪度 2, and the strangeness lives in the sentences,
+    not in the stroke. <b>The sketch register belongs to the weekly recap.</b> The same ladder
+    encoding renders in pen there by flipping one flag, so the two surfaces stay the same
+    drawing in two hands rather than two different drawings.<br><br>
     <b>And one ladder is shorter than the rest.</b> Selling pressure can never read "good" —
     its rule tops out at "started". The board draws the ceiling that actually exists rather than
     five rungs everywhere for symmetry.</p>
 
 <script>
-/* deterministic wobble — same data must draw the same picture on every render */
-function rng(seed){let s=seed>>>0;return()=>((s=(s*1664525+1013904223)>>>0)/4294967296-.5)}
+/* HAND is off on this page.
+   The sketch register belongs to the weekly recap, not to the instrument someone
+   opens at 6:30. The dashboard is 怪度 2 and its marks are drawn exactly.
+   The wobble code stays because the ladder encoding is shared with the recap —
+   set HAND to 1 there and the same drawing comes out in pen. */
+const HAND = 0;
+function rng(seed){let s=seed>>>0;return()=>HAND*((s=(s*1664525+1013904223)>>>0)/4294967296-.5)}
 function line(x1,y1,x2,y2,r,amp=1.1){
   const n=6,pts=[];for(let i=0;i<=n;i++){const t=i/n;
     pts.push([x1+(x2-x1)*t+(i&&i<n?r()*amp:0), y1+(y2-y1)*t+(i&&i<n?r()*amp:0)]);}

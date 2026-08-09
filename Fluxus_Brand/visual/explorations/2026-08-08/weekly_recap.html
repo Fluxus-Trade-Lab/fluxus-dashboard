@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FLUXUS — The Week · with the hand-drawn slot reserved</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+:root{
+  --paper:#f4f2ec; --ink:#1a1815; --ink-2:#5c5852; --ink-3:#9c968d;
+  --rule:#ddd8cf; --hair:#e9e4db;
+  --works:#1f5f9e; --fails:#c8590f; --idle:#c2bdb4; --edge:#b8860b;
+  --sans:Plex,-apple-system,sans-serif; --cond:PlexCond,Plex,sans-serif; --mono:PlexMono,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.sheet{max-width:1180px;margin:0 auto;padding:34px 46px 90px}
+
+.mast{display:flex;align-items:baseline;gap:20px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.mast .mark{font-family:var(--cond);font-weight:700;font-size:19px;letter-spacing:.17em}
+.mast .ti{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;color:var(--ink-3)}
+.mast .r{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.04em}
+
+.lede{display:grid;grid-template-columns:1fr 330px;gap:52px;padding:30px 0 26px;
+      border-bottom:1px solid var(--rule)}
+.lede h1{font-family:var(--cond);font-weight:700;font-size:56px;line-height:.94;margin:0;
+         letter-spacing:-.012em;max-width:11ch}
+.lede p{margin:16px 0 0;font-size:17px;line-height:1.55;color:var(--ink-2);max-width:52ch}
+.lede p b{color:var(--ink)}
+.spec div{display:flex;justify-content:space-between;gap:14px;padding:6px 0;
+          border-bottom:1px solid var(--hair);font-size:12px}
+.spec .k{color:var(--ink-3)}
+.spec .v{font-family:var(--mono);color:var(--ink)}
+
+/* ── THE RESERVED SLOT ───────────────────────────────────────────────
+   Fixed frame, fixed ratio, fixed caption line. What goes inside is drawn
+   by hand — commissioned from an image model, one per week — and nothing
+   about the surrounding layout changes when it does. */
+.slot{margin:30px 0 0;position:relative}
+.slot .frame{position:relative;aspect-ratio:16/9;border:1px dashed var(--edge);
+             background:repeating-linear-gradient(45deg,rgba(184,134,11,.045) 0 10px,transparent 10px 20px);
+             display:flex;align-items:center;justify-content:center;text-align:center}
+.slot .frame .t{max-width:46ch}
+.slot .frame b{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.24em;
+               color:var(--edge);margin-bottom:9px}
+.slot .frame p{margin:0;font-size:13px;line-height:1.65;color:var(--ink-2)}
+.slot .frame p em{font-style:normal;color:var(--ink);font-weight:600}
+.slot .cap{display:flex;align-items:baseline;gap:14px;padding-top:9px;border-top:1px solid var(--ink);
+           margin-top:9px}
+.slot .cap b{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.slot .cap span{font-size:11.5px;color:var(--ink-3)}
+.slot .cap .m{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+
+.band{padding-top:34px}
+.band>h2{display:flex;align-items:baseline;gap:12px;font-family:var(--mono);font-size:10px;
+         letter-spacing:.24em;color:var(--ink-3);font-weight:500;margin:0 0 12px}
+.band>h2 i{flex:1;height:1px;background:var(--rule);font-style:normal}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:46px}
+
+.mv{display:grid;grid-template-columns:150px 1fr 62px;gap:13px;align-items:center;
+    padding:8px 0;border-bottom:1px solid var(--hair);font-size:13px}
+.mv .nm{font-weight:600}
+.mv .nm small{display:block;font-weight:400;font-size:10.5px;color:var(--ink-3)}
+.ax{position:relative;height:12px}
+.ax u{position:absolute;top:-3px;bottom:-3px;left:50%;width:1px;background:var(--rule)}
+.ax span{position:absolute;top:0;bottom:0;height:12px}
+.ax span.p{background:var(--works)} .ax span.n{background:var(--idle)}
+.mv .v{font-family:var(--cond);font-weight:700;font-size:16px;text-align:right}
+
+.claim{margin-top:12px;padding:13px 16px;border-left:2px solid var(--ink);background:rgba(255,255,255,.5)}
+.claim b{font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;color:var(--ink-3);display:block;margin-bottom:5px}
+.claim p{margin:0;font-size:13px;line-height:1.6;color:var(--ink-2)}
+.claim p em{font-style:normal;color:var(--ink);font-weight:600}
+
+.foot{margin-top:38px;padding-top:15px;border-top:2px solid var(--ink);
+      font-size:11.5px;line-height:1.65;color:var(--ink-3)}
+.foot b{color:var(--ink-2)}
+.rules{margin-top:16px;padding:16px 20px;border:1px solid var(--rule)}
+.rules b{font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;color:var(--ink-3)}
+.rules ol{margin:9px 0 0;padding-left:20px;font-size:12.5px;line-height:1.75;color:var(--ink-2)}
+.rules ol em{font-style:normal;color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="mast">
+    <span class="mark">FLUXUS</span>
+    <span class="ti">THE WEEK · 016</span>
+    <span class="r">2026-08-03 → 08-07 · SESSIONS COUNTED 4 OF 5</span>
+  </div>
+
+  <div class="lede">
+    <div>
+      <h1>The leaders stopped leading</h1>
+      <p>Every one of the four strongest themes decelerated this week while the metals turned up
+        from below. <b>The index did not tell you that</b> — SPY closed at its own 52-week high
+        on Thursday. The rotation is underneath it.</p>
+    </div>
+    <div class="spec">
+      <div><span class="k">Market read</span><span class="v">BULLISH +8 / 12</span></div>
+      <div><span class="k">Themes measured</span><span class="v">80</span></div>
+      <div><span class="k">Leading → Weakening</span><span class="v">7 → 21</span></div>
+      <div><span class="k">Improving</span><span class="v">37</span></div>
+      <div><span class="k">Sessions in the file</span><span class="v">4 of 5</span></div>
+      <div><span class="k">Missing</span><span class="v">08-07</span></div>
+    </div>
+  </div>
+
+  <!-- ══ the reserved slot ══ -->
+  <div class="slot">
+    <div class="frame"><div class="t">
+      <b>RESERVED · DATA ARTWORK</b>
+      <p>One piece a week, 16:9, sitting here. <em>Not a chart — nobody has to be able to
+        read a value off it.</em> Its job is the week's identity, the way Lupi's Hennessy marks
+        were an identity and not a readout.<br><br>
+        But it is <em>made from this week's actual numbers</em>, and the line underneath says
+        which ones. Ornament is allowed here; invention is not.<br><br>
+        <em>The layout does not change when it arrives</em> — frame, ratio and caption are fixed
+        now, so the picture drops in and nothing shifts.</p>
+    </div></div>
+    <div class="cap">
+      <b>Fig. 1</b>
+      <span>what the drawing has to be about — stated before it is commissioned</span>
+      <span class="m">80 THEMES · 4 SESSIONS · 2026-08-07</span>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="two">
+      <div>
+        <h2>WHAT ROLLED OVER<i></i></h2>
+        <div class="mv"><span class="nm">High Octane<small>84 names</small></span>
+          <span class="ax"><u></u><span class="n" style="right:50%;width:43%"></span></span>
+          <span class="v">−0.52</span></div>
+        <div class="mv"><span class="nm">Cybersecurity<small>16 names</small></span>
+          <span class="ax"><u></u><span class="n" style="right:50%;width:29%"></span></span>
+          <span class="v">−0.35</span></div>
+        <div class="mv"><span class="nm">52-Week High Leaders<small>86 names</small></span>
+          <span class="ax"><u></u><span class="n" style="right:50%;width:13%"></span></span>
+          <span class="v">−0.16</span></div>
+        <div class="mv"><span class="nm">Growth Factor<small>326 names</small></span>
+          <span class="ax"><u></u><span class="n" style="right:50%;width:12%"></span></span>
+          <span class="v">−0.14</span></div>
+      </div>
+      <div>
+        <h2>WHAT TURNED UP<i></i></h2>
+        <div class="mv"><span class="nm">Drones<small>6 names</small></span>
+          <span class="ax"><u></u><span class="p" style="left:50%;width:37%"></span></span>
+          <span class="v">+0.44</span></div>
+        <div class="mv"><span class="nm">Silver Miners<small>6 names</small></span>
+          <span class="ax"><u></u><span class="p" style="left:50%;width:36%"></span></span>
+          <span class="v">+0.43</span></div>
+        <div class="mv"><span class="nm">Gold Miners<small>41 names</small></span>
+          <span class="ax"><u></u><span class="p" style="left:50%;width:33%"></span></span>
+          <span class="v">+0.40</span></div>
+        <div class="mv"><span class="nm">Rare Earth Metals<small>8 names</small></span>
+          <span class="ax"><u></u><span class="p" style="left:50%;width:29%"></span></span>
+          <span class="v">+0.35</span></div>
+      </div>
+    </div>
+
+    <div class="claim">
+      <b>THE CLAIM, AND WHAT WOULD FALSIFY IT</b>
+      <p>The claim is <em>rotation, not top</em>: leaders decelerating while the breadth score
+        holds at +8. It is wrong if the score breaks +4 while the improving themes stay negative
+        on RS — that would be a market rolling over, not rotating.
+        <em>Both numbers are on the dashboard every session</em>, so this is checkable next week
+        rather than re-argued.</p>
+    </div>
+  </div>
+
+  <p class="foot"><b>Sessions counted 4 of 5.</b> 2026-08-07 is not in the archive — the row
+    written that day was stamped 08-08, a Saturday, and Friday was never captured. Every number
+    on this page is measured through <b>08-06</b> except the theme file, which is through
+    <b>08-09</b>. Stated because a weekly should be the one place that says how much of the week
+    it actually saw.</p>
+
+  <div class="rules">
+    <b>WHAT THIS PAGE RESERVES</b>
+    <ol>
+      <li><em>One data artwork a week</em>, 16:9, in a frame that exists whether or not the piece
+        has arrived. The empty state is this hatched box — <b>not a collapsed layout</b>, because
+        a slot that disappears when unfilled was never reserved.</li>
+      <li><em>It is ornament, and it is still made of the real week.</em> No value has to be
+        legible off it; that is what the bars below are for. But the caption names the numbers it
+        was generated from, so it can be checked. <b>Ornament yes, invention no</b> — the same
+        line the rest of the system already holds.</li>
+      <li><em>The hand is confined to this frame.</em> Everywhere else on the sheet — the bars,
+        the spec table, the ladders — is drawn exactly, same as the dashboard.
+        怪度 4 inside the frame, 怪度 2 outside it.</li>
+      <li><em>Not extended yet, on purpose.</em> The slot is defined so the layout stops moving;
+        what fills it is a later decision.</li>
+    </ol>
+  </div>
+
+</div>
+</body>
+</html>
