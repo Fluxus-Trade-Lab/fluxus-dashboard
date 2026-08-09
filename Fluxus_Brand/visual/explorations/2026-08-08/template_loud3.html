@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — set three: the measurement line under load</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+:root{
+  --ink:#12110f;--ink2:#57534e;
+  --buff:#e9dfcb;--crimson:#c8102e;--gold:#f0b323;--moss:#2b6a4d;--indigo:#3c5a8a;
+  --sans:Plex,-apple-system,sans-serif;--cond:PlexCond,Plex,sans-serif;--mono:PlexMono,Menlo,monospace;
+  --u:8px;
+}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:#dedad3;color:var(--ink);font-family:var(--sans);
+     -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.app{max-width:1400px;margin:0 auto;padding:0 calc(var(--u)*4) calc(var(--u)*14)}
+.bar{display:flex;align-items:baseline;gap:calc(var(--u)*3);padding:calc(var(--u)*2) 0;
+     border-bottom:2px solid var(--ink)}
+.bar .wm{font-family:var(--cond);font-weight:700;font-size:19px;letter-spacing:.3em}
+.bar .r{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:#6f6a60}
+h1{font-family:var(--cond);font-weight:700;font-size:60px;line-height:.93;letter-spacing:-.015em;
+   text-transform:uppercase;margin:calc(var(--u)*5) 0 0;max-width:19ch}
+.lede{font-size:16.5px;line-height:1.55;max-width:70ch;margin:calc(var(--u)*3) 0 0;color:#4a4640}
+.lede b{color:var(--ink);font-weight:600}
+h3{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#6f6a60;
+   margin:calc(var(--u)*7) 0 calc(var(--u)*2);padding-bottom:calc(var(--u)*1.2);
+   border-bottom:1px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline}
+h3 em{font-style:normal;text-transform:none;letter-spacing:.01em;font-family:var(--sans);
+      font-size:11.5px;color:#4a4640;font-weight:400}
+.note{font-size:12.5px;line-height:1.7;color:#4a4640;max-width:88ch;margin:calc(var(--u)*2) 0 0}
+.note b{color:var(--ink);font-weight:600}
+.row3{display:grid;grid-template-columns:repeat(3,432px);gap:calc(var(--u)*4);
+      overflow-x:auto;padding-bottom:calc(var(--u)*1)}
+.piece{background:var(--buff);position:relative;overflow:hidden;width:432px;height:540px;padding:34px}
+.piece .fx{font-family:var(--mono);font-size:9.5px;letter-spacing:.26em;color:#6b6156}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:#6f6a60;
+     text-transform:uppercase;margin-bottom:calc(var(--u)*1.25)}
+.verdict{border-left:3px solid var(--ink);padding-left:calc(var(--u)*2);margin-top:calc(var(--u)*2);
+         font-size:12.5px;line-height:1.65;color:#4a4640}
+.verdict b{color:var(--ink)}
+.cols{display:grid;grid-template-columns:repeat(3,432px);gap:calc(var(--u)*4);
+      margin-top:calc(var(--u)*2);overflow-x:auto}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="bar"><span class="wm">FLUXUS</span>
+    <span style="font-size:12.5px;color:#6f6a60">Set three · the measurement line under load</span>
+    <span class="r">ONE VARIABLE · 2026-07-31 HELD CONSTANT</span></div>
+
+  <h1>Can the smallest<br>line on the page<br>carry the page?</h1>
+  <p class="lede">Set two flagged it: the measurement line survived all six pieces but keeps
+  shrinking while the display type grows. A line nobody reads is the same as not measuring, and
+  the whole claim of this brand is that it measures.
+  <br><br><b>So this is a controlled test, not another set of covers.</b> Same day, same data,
+  same subject — <b>only the measurement line changes</b>. If the answer were obvious from taste
+  it would not need running.</p>
+
+  <h3>The test <em>A: as shipped · B: promoted to subject · C: enlarged in place</em></h3>
+  <div class="row3">
+    <div class="piece" id="a"></div>
+    <div class="piece" id="b"></div>
+    <div class="piece" id="c"></div>
+  </div>
+  <div class="cols">
+    <div><div class="tag">A · as shipped — 9px mono</div>
+      <div class="verdict">The line is present and <b>genuinely ignorable</b>. At 9px under a 150px
+      number it reads as a caption, and a caption is decoration with a job title. This is the
+      failure set two predicted.</div></div>
+    <div><div class="tag">B · promoted to subject</div>
+      <div class="verdict"><b>It holds a page on its own</b> — and it is the most Fluxus of the
+      three, because the reading is derived in front of you rather than asserted. But it stops
+      being a cover: there is no image to stop a thumb, and at feed size it will lose.
+      <b>This is a letter interior, not a cover.</b></div></div>
+    <div><div class="tag">C · enlarged in place — 13px, ruled, above the mark</div>
+      <div class="verdict"><b>This is the answer.</b> Big enough that the eye lands on it after the
+      number instead of skipping it, small enough that it does not compete. The rule above it does
+      most of the work — it turns a caption into a <em>register entry</em>.</div></div>
+  </div>
+
+  <h3>What changes in the spec</h3>
+  <p class="note">
+  <b>Measurement line, revised.</b> Plex Mono <b>13px</b> (was 9), letter-spacing .08em,
+  <b>1px rule above it at full width</b>, sitting directly under the frame's bottom margin with
+  the mark on its right. It is no longer the smallest type on the page — the kicker at the top is.
+  <br><br><b>The rule that follows.</b> <em>The measurement line may never be the smallest type in
+  a piece.</em> It is the thing that separates a measurement from a poster, so if it loses the
+  size contest it has lost its job. Cheap to check, and it fails loudly.
+  <br><br><b>And a form B is now legal.</b> Variant B — the derivation as the subject, display type
+  demoted to a label — is worth keeping as its own template for the letter's interior and for X
+  long-form. It is the only one of the three where <b>the reader watches the conclusion being
+  produced</b> instead of being handed it. It is not a cover and should never be used as one.
+  </p>
+</div>
+
+<script>
+const D = /*__DATA__*/ null;
+const T=D.today;
+const el=id=>document.getElementById(id);
+const C={crimson:"#c8102e",gold:"#f0b323",moss:"#2b6a4d",indigo:"#3c5a8a",ink:"#12110f"};
+const meta = `SPX ${T.spx_close.toFixed(0)} · T2108 ${T.t2108.toFixed(0)} · >20SMA ${T.pct_above_20sma.toFixed(0)}% · NET ${T.net_advances}`;
+// At 13px the one-line form wraps and splits NET from its value. The enlarged
+// line is therefore specified as two deliberate rows, each pair kept whole.
+const metaA = `SPX ${T.spx_close.toFixed(0)} · T2108 ${T.t2108.toFixed(0)}`;
+const metaB = `>20SMA ${T.pct_above_20sma.toFixed(0)}% · NET ${T.net_advances}`;
+
+const head = `<div style="display:flex;justify-content:space-between;align-items:baseline">
+    <span class="fx">FLUXUS · 07.31</span><span class="fx">FIVE-DAY RATIO</span></div>`;
+
+/* A — as shipped: 9px caption under a 150px number */
+el("a").innerHTML = head + `
+  <div style="display:flex;align-items:baseline;gap:8px;margin-top:40px">
+    <span style="font-family:var(--cond);font-weight:700;font-size:150px;line-height:.8;
+                 letter-spacing:-.05em;color:${C.moss};margin-left:-8px">0.99</span>
+    <span style="font-family:var(--cond);font-weight:700;font-size:62px;color:${C.crimson}">05</span></div>
+  <div style="border-left:3px solid ${C.ink};padding-left:14px;margin-top:28px;
+              font-size:13px;line-height:1.55;max-width:31ch">
+    Below 1.00 on four of the last five sessions. My condition is two consecutive closes above it
+    with net advances positive.</div>
+  <div style="position:absolute;left:34px;right:34px;bottom:28px;display:flex;
+              justify-content:space-between;align-items:baseline">
+    <span style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:#6b6156">${meta}</span>
+    <span style="font-family:var(--cond);font-weight:700;font-size:11px;letter-spacing:.3em">FLUXUS</span></div>`;
+
+/* B — the measurement promoted to subject; the display type becomes a label */
+el("b").innerHTML = head + `
+  <div style="font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:#6b6156;
+              margin-top:34px">THE READING, IN FULL</div>
+  <div style="font-family:var(--mono);font-size:15px;line-height:2.05;margin-top:16px;
+              color:${C.ink};letter-spacing:.02em">
+    SPX &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${T.spx_close.toFixed(2)}<br>
+    5-DAY &nbsp;&nbsp;&nbsp;<span style="color:${C.crimson}">${T.ratio_5d.toFixed(4)}</span>
+      <span style="font-size:11px;color:#6b6156"> / 1.0000</span><br>
+    T2108 &nbsp;&nbsp;&nbsp;${T.t2108.toFixed(2)}<br>
+    &gt;20SMA &nbsp;<span style="color:${C.crimson}">${T.pct_above_20sma.toFixed(1)}%</span><br>
+    NET &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:${C.crimson}">${T.net_advances}</span><br>
+    ADV/DEC &nbsp;${T.advances.toFixed(0)} / ${T.declines.toFixed(0)}</div>
+  <div style="border-top:1px solid rgba(18,17,15,.28);margin-top:24px;padding-top:14px;
+              font-family:var(--cond);font-weight:700;font-size:34px;line-height:.95;
+              text-transform:uppercase">Four of six<br>against the<br>repair</div>
+  <div style="position:absolute;left:34px;right:34px;bottom:28px;display:flex;
+              justify-content:space-between;align-items:baseline">
+    <span style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:#6b6156">
+      EVERY FIGURE ABOVE IS THE MEASUREMENT LINE</span>
+    <span style="font-family:var(--cond);font-weight:700;font-size:11px;letter-spacing:.3em">FLUXUS</span></div>`;
+
+/* C — same as A, but the line is enlarged, ruled, and given its own band */
+el("c").innerHTML = head + `
+  <div style="display:flex;align-items:baseline;gap:8px;margin-top:40px">
+    <span style="font-family:var(--cond);font-weight:700;font-size:150px;line-height:.8;
+                 letter-spacing:-.05em;color:${C.moss};margin-left:-8px">0.99</span>
+    <span style="font-family:var(--cond);font-weight:700;font-size:62px;color:${C.crimson}">05</span></div>
+  <div style="border-left:3px solid ${C.ink};padding-left:14px;margin-top:28px;
+              font-size:13px;line-height:1.55;max-width:31ch">
+    Below 1.00 on four of the last five sessions. My condition is two consecutive closes above it
+    with net advances positive.</div>
+  <div style="position:absolute;left:34px;right:34px;bottom:28px">
+    <div style="border-top:1px solid ${C.ink};padding-top:11px">
+      <div style="font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:${C.ink};
+                  line-height:1.55;white-space:nowrap">${metaA}<br>${metaB}</div>
+      <div style="text-align:right;margin-top:8px;font-family:var(--cond);font-weight:700;
+                  font-size:11px;letter-spacing:.3em">FLUXUS</div></div>
+  </div>`;
+</script>
+</body></html>
