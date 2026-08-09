@@ -134,10 +134,23 @@ function Chain({ chain }) {
   )
 }
 
-export default function StateBoard({ board }) {
+/**
+ * Weekends only — the browser has no NYSE holiday calendar and this deliberately
+ * does not pretend otherwise. A row stamped on a Saturday is the case that has
+ * actually occurred; a row stamped on Thanksgiving would still slip through, and
+ * the fix for that belongs in the pipeline, not here.
+ */
+function isWeekend(iso) {
+  if (!iso) return false
+  const d = new Date(`${iso}T12:00:00Z`).getUTCDay()
+  return d === 0 || d === 6
+}
+
+export default function StateBoard({ board, session }) {
   if (!board?.rows?.length) return null
   const { rows, levels, chain, measured, total } = board
   const half = Math.ceil(rows.length / 2)
+  const offSession = isWeekend(session)
 
   return (
     <section className="space-y-1">
@@ -146,9 +159,28 @@ export default function StateBoard({ board }) {
         <h2 className="text-[10px] font-mono uppercase tracking-[.24em]
                        text-[var(--color-text-muted)]">State board</h2>
         <span className="text-[11px] text-[var(--color-text-secondary)]">
+          {session && <span className="font-mono mr-3">{session}</span>}
           {measured} of {total} measured — the rest is left blank on purpose
         </span>
       </div>
+
+      {/* Counts of zero read as "the market did not move". On a row that was
+          never a session they mean "nothing was counted", which is the opposite
+          kind of fact — and the board would otherwise render an all-clear off it. */}
+      {offSession && (
+        <div className="border border-dashed border-[var(--color-untested)] px-3 py-2 mt-2">
+          <div className="text-[9px] font-mono uppercase tracking-[.2em]
+                          text-[var(--color-signal-caution)] mb-1">
+            This row is not a trading session
+          </div>
+          <p className="text-[11px] leading-relaxed text-[var(--color-text-secondary)] m-0">
+            The last row in the archive is <b>{session}</b>, a weekend. Its advance, decline and
+            ±4% counts are <b>zero because nothing was counted</b>, not because nothing moved — so
+            every state below that leans on those counts is reading absence as calm.
+            Wait for a real session before acting on this board.
+          </p>
+        </div>
+      )}
 
       <div className="grid md:grid-cols-2 md:gap-x-10">
         <div>{rows.slice(0, half).map((r) => <Row key={r.key} row={r} levels={levels} />)}</div>
