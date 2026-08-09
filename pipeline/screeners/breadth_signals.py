@@ -18,7 +18,18 @@ import pandas as pd
 THRESHOLDS: Dict[str, Dict[str, float]] = {
     'ratio_5d':    {'bull': 1.0, 'bear': 0.5},
     'ratio_10d':   {'bull': 1.0, 'bear': 0.5},
-    'thrust':      {'count': 300},
+    # A share of that session's own universe, not an absolute count.
+    # 300 names was tuned when the Finviz fetch capped at 150 pages and the
+    # universe sat near 2,650 — a median 11.3% of it, in a tight 10.0–12.2%
+    # band across 558 archived sessions. Raising the fetch to 600 pages took
+    # the universe to 5,615 (M–Z came back, NVDA and MSFT included), which
+    # silently halved the threshold's meaning to 5.3%: half-strength thrust
+    # days would have lit the vote from here on.
+    #
+    # 0.113 holds the historical operating point. Replaying all 558 rows with
+    # the ratio instead of the constant flips 19 of them (3.4%) — cheap
+    # backwards, necessary forwards.
+    'thrust':      {'fraction': 0.113, 'min_count': 60},
     'qtr_spread':  {},              # sign-based
     'spread_13_34': {},             # sign-based
     'mcclellan':   {'extreme': 70},
@@ -42,6 +53,34 @@ def _num(x) -> Optional[float]:
     return None if math.isnan(f) else f
 
 
+# The Finviz fetch capped at 150 pages until 2026-08-09, and a cap that binds
+# does not sample the market, it truncates it mid-alphabet. Rows that hit the cap
+# exactly are undercounts of every whole-universe measure — up_4pct, new highs,
+# new lows — because everything from M to Z was missing. Flagged rather than
+# corrected: the counts cannot be recovered, and a replay crossing this stretch
+# should say so instead of comparing across it silently.
+TRUNCATED_UNIVERSE = 3000
+
+
+def universe_truncated(row: Dict[str, Any]) -> bool:
+    """True when this session's universe was cut off by the page cap."""
+    return _num(row.get('universe_size')) == TRUNCATED_UNIVERSE
+
+
+def thrust_count(row: Dict[str, Any]) -> Optional[float]:
+    """How many names a thrust needs, for this row's own universe.
+
+    Falls back to the historical constant when a row predates the
+    universe_size column, so replaying old archives keeps its old answer
+    rather than silently becoming unmeasurable.
+    """
+    u = _num(row.get('universe_size'))
+    if u is None or u <= 0:
+        return 300.0
+    return max(THRESHOLDS['thrust']['min_count'],
+               THRESHOLDS['thrust']['fraction'] * u)
+
+
 def breadth_votes(row: Dict[str, Any]) -> Dict[str, str]:
     """Votes for the 9 breadth-only rules. Missing/NaN inputs vote neutral."""
     votes: Dict[str, str] = {}
@@ -59,7 +98,7 @@ def breadth_votes(row: Dict[str, Any]) -> Dict[str, str]:
             votes[key] = 'neutral'
 
     up4, down4 = _num(row.get('up_4pct')), _num(row.get('down_4pct'))
-    n = THRESHOLDS['thrust']['count']
+    n = thrust_count(row)
     if up4 is None or down4 is None:
         votes['thrust'] = 'neutral'
     elif up4 >= n and down4 >= n:
@@ -111,6 +150,79 @@ def breadth_votes(row: Dict[str, Any]) -> Dict[str, str]:
         votes['t2108_zone'] = 'neutral'
 
     return votes
+
+
+def vote_detail(row: Dict[str, Any], votes: Dict[str, str],
+                spy_warn: Optional[int] = None,
+                qqq_warn: Optional[int] = None) -> List[Dict[str, Any]]:
+    """Per vote: the value, the line it flips at, and the distance between them.
+
+    The frontend draws one mark per vote carrying four things — side, line,
+    distance, measurability. It must not re-derive the rules to do it: the
+    thresholds live here, and a second copy in JavaScript would drift the first
+    time one of them changed. So the rule stays in one place and the numbers
+    travel.
+
+    `margin` is in the metric's own unit and is never comparable across two
+    votes. A McClellan of 3.2 and 1.31 points of 200-day breadth are not the
+    same distance; `unit` is emitted so the reader is told which is which, and
+    the drawing normalises inside each metric's own range rather than across
+    them.
+    """
+    def n(k):
+        return _num(row.get(k))
+
+    def diff(a, b, unit):
+        av, bv = n(a), n(b)
+        return (None, None) if av is None or bv is None else (av - bv, unit)
+
+    spec: List[Dict[str, Any]] = []
+
+    def add(key, value, line, margin, unit, label):
+        spec.append({
+            'key': key, 'side': votes.get(key, 'neutral'), 'label': label,
+            'value': value, 'line': line, 'margin': margin, 'unit': unit,
+            'measurable': margin is not None,
+        })
+
+    for k, lbl in (('ratio_5d', '5-day ratio'), ('ratio_10d', '10-day ratio')):
+        v, line = n(k), THRESHOLDS[k]['bull']
+        add(k, v, line, None if v is None else v - line, 'ratio', lbl)
+
+    up4, dn4 = n('up_4pct'), n('down_4pct')
+    need = thrust_count(row)
+    # Zero on a non-session is absence, not calm — the mark has to be able to
+    # say "not counted" rather than "nothing happened".
+    thrust_measurable = up4 is not None and dn4 is not None and (up4 + dn4) > 0
+    add('thrust', up4, need, (up4 - need) if thrust_measurable else None,
+        'names', 'Thrust')
+
+    for k, a, b, lbl in (('qtr_spread', 'up_25pct_qtr', 'down_25pct_qtr', 'Quarterly spread'),
+                         ('spread_13_34', 'up_13pct_34d', 'down_13pct_34d', '13%/34d spread'),
+                         ('nh_nl', 'new_highs', 'new_lows', 'New highs vs lows')):
+        m, unit = diff(a, b, 'names')
+        add(k, n(a), 0, m, unit, lbl)
+
+    mc = n('mcclellan_osc')
+    add('mcclellan', mc, 0, mc, 'points', 'McClellan')
+
+    p200 = n('pct_above_200sma')
+    line = THRESHOLDS['pct200']['bull']
+    add('pct200', p200, line, None if p200 is None else p200 - line, 'points', '% above 200-day')
+
+    t21, z = n('t2108'), THRESHOLDS['t2108_zone']
+    add('t2108_zone', t21, z['strong_lo'],
+        None if t21 is None else t21 - z['strong_lo'], 'points', 'T2108 zone')
+
+    # Danger counts are inverted: fewer is safer. Emit the margin, not the raw
+    # count, so "up is safer" holds for every mark in the row.
+    for k, w, lbl in (('spy_danger', spy_warn, 'SPY warnings'),
+                      ('qqq_danger', qqq_warn, 'QQQ warnings')):
+        cap = THRESHOLDS[k]['bull_max']
+        add(k, w, cap, None if w is None else cap - w, 'warnings', lbl)
+
+    add('bench_trend', None, None, None, '', 'Benchmark trend')
+    return spec
 
 
 # ── SPY/QQQ danger signals (spec §2) ─────────────────────────────────
@@ -369,9 +481,9 @@ def evaluate(frame: pd.DataFrame, health: Optional[Dict[str, Any]]) -> Dict[str,
         notes.append('T2108 above 80 — chase risk')
 
     up4, down4 = _num(row.get('up_4pct')), _num(row.get('down_4pct'))
-    n = THRESHOLDS['thrust']['count']
+    n = thrust_count(row)
     if up4 is not None and down4 is not None and up4 >= n and down4 >= n:
-        notes.append('Churn/volatile: 300+ stocks both up and down 4% — unresolved tape')
+        notes.append(f'Churn/volatile: {n:.0f}+ stocks both up and down 4% — unresolved tape')
     mc = _num(row.get('mcclellan_osc'))
     if mc is not None and abs(mc) >= THRESHOLDS['mcclellan']['extreme']:
         notes.append(f"McClellan at {mc:+.0f} — extreme reading")
@@ -405,6 +517,11 @@ def evaluate(frame: pd.DataFrame, health: Optional[Dict[str, Any]]) -> Dict[str,
         'guidance': _GUIDANCE[(env, risk)],
         'spy_state': spy_state, 'qqq_state': qqq_state, 'alignment': alignment,
         'confirmation': confirmation, 'notes': notes, 'votes': votes,
+        'universe_size': _num(row.get('universe_size')),
+        'universe_truncated': universe_truncated(row),
+        'vote_detail': vote_detail(row, votes,
+                                   spy['count'] if spy else None,
+                                   qqq['count'] if qqq else None),
     }
 
 

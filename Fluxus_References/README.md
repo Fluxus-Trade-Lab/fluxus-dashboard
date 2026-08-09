@@ -1,6 +1,6 @@
 # Fluxus References — Reading & Inspiration
 
-Reference kit for the **Fluxus** voice (see `../Fluxus_Voice_Bible.md`). Each item feeds a specific muscle. Drop PDFs / notes in this folder.
+Reference kit for the **Fluxus** voice (see `../Fluxus_Brand/voice/Fluxus_Voice_Bible.md`). Each item feeds a specific muscle. Drop PDFs / notes in this folder.
 
 ## ✅ In the folder
 

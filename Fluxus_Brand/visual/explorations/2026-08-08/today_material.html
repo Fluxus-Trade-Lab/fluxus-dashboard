@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FLUXUS — Today · glass for the shell, flat for the data</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+:root{
+  --paper:#f2f1ed; --ink:#111110; --ink-2:#5c5852; --ink-3:#9c968d;
+  --rule:#dedad3; --hair:#eae7e1;
+  --works:#1f5f9e; --fails:#d1600f; --idle:#c2bdb4;
+  --sans:Plex,-apple-system,sans-serif; --cond:PlexCond,Plex,sans-serif; --mono:PlexMono,Menlo,monospace;
+  /* the glass token set — chrome only, never under a value */
+  --glass:rgba(250,249,246,.62);
+  --glass-line:rgba(255,255,255,.75);
+  --glass-edge:rgba(17,17,16,.09);
+  --lift:0 1px 2px rgba(17,17,16,.05), 0 8px 24px -12px rgba(17,17,16,.16);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;display:flex;
+  background:
+    radial-gradient(680px 420px at 12% -6%, rgba(31,95,158,.09), transparent 62%),
+    radial-gradient(560px 380px at 92% 4%, rgba(209,96,15,.06), transparent 60%),
+    var(--paper);
+}
+/* The ground carries a faint tint so translucency has something to be
+   translucent against. It never sits under a mark — see .flat below. */
+
+.rail{width:236px;flex:0 0 236px;min-height:100vh;padding:22px 0 0;
+      background:var(--glass);backdrop-filter:blur(22px) saturate(150%);
+      -webkit-backdrop-filter:blur(22px) saturate(150%);
+      border-right:1px solid var(--glass-edge);box-shadow:inset -1px 0 0 var(--glass-line)}
+.rail .mark{font-family:var(--cond);font-weight:700;font-size:18px;letter-spacing:.17em;padding:0 22px 20px}
+.grp>b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;
+       color:var(--ink-3);font-weight:500;padding:14px 22px 6px}
+.grp a{display:flex;align-items:baseline;gap:8px;padding:7px 22px;font-size:13.5px;
+       color:var(--ink-2);text-decoration:none;border-left:2px solid transparent;
+       transition:background .18s ease, color .18s ease}
+.grp a:hover{background:rgba(255,255,255,.5);color:var(--ink)}
+.grp a.on{color:var(--ink);font-weight:600;border-left-color:var(--ink);
+          background:linear-gradient(90deg,rgba(255,255,255,.85),rgba(255,255,255,.35))}
+.grp a small{font-family:var(--mono);font-size:9.5px;color:var(--ink-3);margin-left:auto}
+.rail .lock{padding:9px 22px 0;font-size:10.5px;color:var(--ink-3);line-height:1.5}
+
+.page{flex:1;min-width:0;padding:0 40px 80px;max-width:1200px}
+.bar{position:sticky;top:0;z-index:5;margin:0 -40px;padding:13px 40px;
+     background:var(--glass);backdrop-filter:blur(20px) saturate(150%);
+     -webkit-backdrop-filter:blur(20px) saturate(150%);
+     border-bottom:1px solid var(--glass-edge);box-shadow:0 1px 0 var(--glass-line);
+     display:flex;align-items:baseline;gap:14px;
+     font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--ink-3)}
+.bar b{color:var(--ink);font-weight:500}
+.bar .r{margin-left:auto;letter-spacing:.04em}
+
+/* ── the narrator. One line per page, and it reads, it does not instruct. ── */
+.say{margin:30px 0 0;padding:0 0 0 16px;border-left:2px solid var(--ink);max-width:720px}
+.say p{margin:0;font-size:19px;line-height:1.5;color:var(--ink)}
+.say p em{font-style:normal;color:var(--ink-2)}
+.say .who{font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;color:var(--ink-3);margin-top:9px}
+
+.hero{display:grid;grid-template-columns:1fr 372px;gap:52px;padding:26px 0 26px}
+.kick{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;color:var(--ink-3);margin-bottom:10px}
+.env{font-family:var(--cond);font-weight:700;font-size:88px;line-height:.88;
+     letter-spacing:-.017em;text-transform:uppercase;margin:0}
+.score{display:flex;align-items:baseline;gap:11px;margin-top:12px}
+.score b{font-family:var(--cond);font-weight:700;font-size:34px;line-height:1}
+.score span{font-size:13px;color:var(--ink-2)}
+
+/* DATA LAYER — flat, opaque, no blur, no shadow. A value must read the same
+   whatever happens to be behind it. */
+.flat{--x:0}
+.votes{display:flex;gap:3px;margin-top:12px}
+.votes i{width:26px;height:15px;background:var(--idle);position:relative;
+         transition:transform .16s ease}
+.votes i.b{background:var(--works)} .votes i.x{background:var(--fails)}
+.votes i.q{transform:translateY(-4px)}
+.votes i.q::after{content:'';position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--ink)}
+.vk{font-size:11px;color:var(--ink-3);margin-top:8px}
+
+/* ── the explainer: what a hover DOES, drawn as its resting result ── */
+.pop{margin-top:11px;max-width:430px;padding:11px 14px;border-radius:9px;
+     background:var(--glass);backdrop-filter:blur(18px) saturate(150%);
+     -webkit-backdrop-filter:blur(18px) saturate(150%);
+     border:1px solid var(--glass-edge);box-shadow:var(--lift)}
+.pop b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;
+       color:var(--ink-3);margin-bottom:5px}
+.pop p{margin:0;font-size:12.5px;line-height:1.55;color:var(--ink-2)}
+.pop p em{font-style:normal;color:var(--ink);font-weight:600}
+
+.warn{margin:15px 0 0;padding:9px 13px;border:1px dashed var(--fails);max-width:660px;
+      font-size:12.5px;line-height:1.5;color:var(--ink-2);background:rgba(255,255,255,.4)}
+.warn b{color:var(--fails)}
+.breaks{margin:16px 0 0;padding-left:14px;border-left:2px solid var(--ink);max-width:660px}
+.breaks .h{font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;color:var(--ink-3);margin-bottom:5px}
+.breaks p{margin:0;font-size:13px;line-height:1.55;color:var(--ink-2)}
+.breaks p b{color:var(--ink)}
+
+.bench .row{display:grid;grid-template-columns:50px 1fr 76px;gap:12px;align-items:center;
+            padding:10px 0;border-bottom:1px solid var(--hair)}
+.bench .tk{font-family:var(--cond);font-weight:600;font-size:18px}
+.cells{display:flex;gap:3px}
+.cells i{width:18px;height:12px;background:var(--idle)}
+.cells i.on{background:var(--works)}
+.bench .px{font-family:var(--mono);font-size:12px;text-align:right;color:var(--ink-2)}
+.bench .sub{font-size:10.5px;color:var(--ink-3);grid-column:2/4;margin-top:-5px}
+
+/* CHROME LAYER — drawers get material, because nothing is being measured on them */
+.band{padding-top:30px}
+.band>h2{display:flex;align-items:baseline;gap:12px;font-family:var(--mono);font-size:10px;
+         letter-spacing:.24em;color:var(--ink-3);font-weight:500;margin:0 0 8px}
+.band>h2 i{flex:1;height:1px;background:var(--rule);font-style:normal}
+.drawer{display:flex;align-items:baseline;gap:12px;padding:13px 17px;margin-top:9px;
+        border-radius:10px;background:var(--glass);border:1px solid var(--glass-edge);
+        backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+        box-shadow:var(--lift);transition:transform .2s ease, box-shadow .2s ease}
+.drawer:hover{transform:translateY(-1px);
+              box-shadow:0 2px 4px rgba(17,17,16,.06), 0 14px 30px -14px rgba(17,17,16,.24)}
+.drawer b{font-family:var(--cond);font-weight:600;font-size:15px}
+.drawer span{font-size:11.5px;color:var(--ink-3)}
+.drawer .n{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+
+.rules{margin-top:34px;padding:18px 22px;border-radius:12px;
+       background:rgba(255,255,255,.42);border:1px solid var(--glass-edge);
+       backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.rules b{font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;color:var(--ink-3)}
+.rules ol{margin:10px 0 0;padding-left:20px;font-size:12.5px;line-height:1.7;color:var(--ink-2)}
+.rules ol em{font-style:normal;color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+
+<aside class="rail">
+  <div class="mark">FLUXUS</div>
+  <div class="grp"><b>MARKET</b>
+    <a class="on" href="#">Today</a><a href="#">Screener</a>
+    <a href="#">Market State</a><a href="#">Themes</a>
+    <div class="lock">开放。不需要账户。</div>
+  </div>
+  <div class="grp"><b>MY BOOK</b>
+    <a href="#">Positions</a><a href="#">Journal</a>
+    <a href="#">Coach <small>+ MODEL BOOKS</small></a>
+    <div class="lock">需要账户 + 你的成交。</div>
+  </div>
+</aside>
+
+<main class="page">
+  <div class="bar"><b>MARKET</b> › TODAY <span class="r">SESSION 2026-08-08 · CLOSE</span></div>
+
+  <div class="say">
+    <p>Every one of the strongest themes is decelerating.
+      <em>A market can be bullish and tired at the same time — the score does not
+      distinguish between the two.</em></p>
+    <div class="who">THE READING · 2026-08-09</div>
+  </div>
+
+  <div class="hero">
+    <div>
+      <div class="kick">THE MARKET IS</div>
+      <h1 class="env">Bullish</h1>
+      <div class="score"><b>+8</b><span>of 12 signals · risk low</span></div>
+
+      <div class="votes flat">
+        <i class="b"></i><i class="b"></i><i class="b"></i><i class="b"></i><i class="b"></i>
+        <i class="b"></i><i class="b"></i><i class="b"></i><i class="b"></i>
+        <i></i><i></i><i class="x q"></i>
+      </div>
+      <div class="vk">9 for · 2 undecided · 1 against — one cell per signal</div>
+
+      <div class="pop">
+        <b>POINTING AT THE CELL THAT IS AGAINST</b>
+        <p><em>Quarterly spread.</em> 836 names −25% on the quarter against 760 up 25%.
+          It flips back when the up count leads — <em>76 names apart</em> today.</p>
+      </div>
+
+      <div class="warn"><b>Computed from a weekend.</b> The ±4% and advance/decline counts behind
+        these votes are zero because nothing was counted, not because nothing moved.</div>
+
+      <div class="breaks">
+        <div class="h">WHAT WOULD CHANGE THIS</div>
+        <p>Bullish holds while the score stays <b>≥ +4</b>. It takes <b>5 points</b> to break —
+          <b>3</b> of the 9 crossing all the way over, or 5 going undecided.</p>
+      </div>
+    </div>
+
+    <div class="bench">
+      <div class="row"><span class="tk">SPY</span>
+        <span class="cells"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
+        <span class="px">773.26</span></div>
+      <div class="row"><span class="tk">QQQ</span>
+        <span class="cells"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span>
+        <span class="px">723.03</span></div>
+      <div class="row" style="border:0;padding-top:0"><span></span>
+        <span class="sub">20SMA has not crossed the 50 · 2.99% under its high</span></div>
+      <div class="row"><span class="tk">IWM</span>
+        <span class="cells"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
+        <span class="px">301.56</span></div>
+      <div class="row"><span class="tk">RSP</span>
+        <span class="cells"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
+        <span class="px">220.09</span></div>
+    </div>
+  </div>
+
+  <div class="band">
+    <h2>REFERENCE<i></i></h2>
+    <div class="drawer"><b>Trend status</b><span>distance to 9 / 21 / 50 / 200</span><span class="n">4 rows</span></div>
+    <div class="drawer"><b>All 80 themes</b><span>RS level and acceleration</span><span class="n">80 rows</span></div>
+    <div class="drawer"><b>Indices · Style · Sectors · Industries</b><span>relative strength</span><span class="n">62 rows</span></div>
+  </div>
+
+  <div class="rules">
+    <b>THE THREE LAYERS, AS A RULE</b>
+    <ol>
+      <li><em>清晰数据为核心。</em> 记号、条、数字 —— 平、不透明、无模糊无投影。
+        一个值在任何背景上都必须读作同一个值,因为它要被截图、被印黑白。</li>
+      <li><em>用玻璃建立层次。</em> 侧栏、顶栏、抽屉、浮层用玻璃。
+        <b>玻璃永远不出现在数值底下</b> —— 一旦出现,那个值的观感就取决于背后是什么。
+        上面那块浮层是玻璃,但它里面装的是句子,不是刻度。</li>
+      <li><em>用动态交互解释状态。</em> 指向那一格反对票 → 浮层说出它是谁、凭什么、
+        什么条件会翻。<b>动效必须回答一个问题</b>;只做缓动的是装饰,删掉。</li>
+    </ol>
+  </div>
+
+</main>
+</body>
+</html>

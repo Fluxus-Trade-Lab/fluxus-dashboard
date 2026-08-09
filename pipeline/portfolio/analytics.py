@@ -413,6 +413,171 @@ def find_drawdown_windows(
 
 
 # =============================================================================
+# MARK-TO-MARKET EQUITY CURVE (real daily prices)
+# =============================================================================
+#
+# build_equity_curve() above credits only REALIZED trim P&L on trim dates and
+# never marks open positions to market. That is fine for behavioral attribution
+# but it does NOT match the live Fluxus dashboard, whose equity curve marks every
+# open position at its real daily close. Use the MTM builder below when you want
+# numbers that reconcile with the dashboard header (return, drawdown, Sharpe).
+
+from typing import Callable
+
+
+PriceField = Literal["close", "low", "high"]
+# price_fn(ticker, day, field) -> price or None when no bar exists for that day.
+# The caller (e.g. a yfinance/ohlc_cache adapter) owns walk-back-to-last-known-bar.
+PriceFn = Callable[[str, date, str], Optional[float]]
+
+
+@dataclass
+class MTMEquityPoint:
+    """One row in the mark-to-market equity curve."""
+    date: date
+    equity: float            # close book value: cash + Σ remaining_qty·close·dir
+    peak: float              # running max of close equity
+    drawdown: float          # (peak - equity)/peak on a CLOSE basis
+    daily_pnl: float         # close-to-close change
+    intraday_low: float      # worst-case book value (longs@low, shorts@high)
+    intraday_high: float     # best-case book value (longs@high, shorts@low)
+
+
+def build_mtm_equity_curve(
+    trades: list[Trade],
+    starting_capital: float,
+    start_date: date,
+    end_date: date,
+    price_fn: PriceFn,
+) -> list[MTMEquityPoint]:
+    """
+    Daily mark-to-market equity curve over weekdays in [start_date, end_date],
+    mirroring the Fluxus dashboard's buildEquityCurve (equityCurve.js):
+
+        equity(d) = cash(d) + Σ_open remaining_qty · close(ticker, d) · dir
+
+    where cash(d) folds in each trade's entry cost and every trim on/before d.
+    Closed positions contribute purely through realized cash; open positions add
+    their remaining quantity marked at the real daily close.
+
+    price_fn(ticker, day, field) returns the price for that bar or None when no
+    bar exists; on None we fall back to the trade's entry price for that day
+    (identical to the dashboard's lookupPrice fallback). Walk-back to the last
+    known bar is the price_fn's responsibility.
+
+    intraday_low/high mark longs at the daily low/high (and shorts inverted) so
+    that max_intraday_drawdown() can bound the worst peak-to-trough the book
+    could have printed intraday. That envelope is conservative: it assumes every
+    position hits its adverse extreme at the same instant.
+    """
+    points: list[MTMEquityPoint] = []
+    peak = starting_capital
+    prev_equity = starting_capital
+
+    d = start_date
+    while d <= end_date:
+        if d.weekday() >= 5:                       # skip weekends
+            d += timedelta(days=1)
+            continue
+
+        cash = starting_capital
+        mv_close = mv_low = mv_high = 0.0
+
+        for t in trades:
+            if t.entry_date > d:
+                continue
+            sign = 1 if t.direction == "long" else -1
+            cash -= t.orig_qty * t.entry_price * sign
+
+            sold = 0
+            for tr in t.trims:
+                if tr.date <= d:
+                    cash += tr.qty * tr.price * sign
+                    sold += tr.qty
+
+            qty = t.orig_qty - sold
+            if qty <= 0:
+                continue
+
+            close = price_fn(t.ticker, d, "close")
+            if close is None:
+                close = low = high = t.entry_price
+            else:
+                low = price_fn(t.ticker, d, "low") or close
+                high = price_fn(t.ticker, d, "high") or close
+
+            mv_close += qty * close * sign
+            # worst case: long marked at its low, short marked at its high
+            worst = low if sign == 1 else high
+            best = high if sign == 1 else low
+            mv_low += qty * worst * sign
+            mv_high += qty * best * sign
+
+        equity = cash + mv_close
+        peak = max(peak, equity)
+        dd = (peak - equity) / peak if peak > 0 else 0.0
+        points.append(MTMEquityPoint(
+            date=d,
+            equity=equity,
+            peak=peak,
+            drawdown=dd,
+            daily_pnl=equity - prev_equity,
+            intraday_low=cash + mv_low,
+            intraday_high=cash + mv_high,
+        ))
+        prev_equity = equity
+        d += timedelta(days=1)
+
+    return points
+
+
+def max_intraday_drawdown(curve: list[MTMEquityPoint]) -> DrawdownWindow:
+    """
+    Worst peak-to-trough using intraday extremes: the running peak is taken from
+    intraday_high, the trough from intraday_low. Deeper than the close-to-close
+    figure because it captures adverse excursions that recovered by the close.
+
+    CONSERVATIVE: assumes all positions hit their adverse extreme simultaneously,
+    so treat it as an upper bound on the intraday pain, not a realized number.
+    """
+    if not curve:
+        raise ValueError("Empty curve")
+
+    running_peak = curve[0].intraday_high
+    peak_idx = 0
+    cur_peak_idx = 0
+    max_dd = 0.0
+    trough_idx = 0
+    for i, p in enumerate(curve):
+        if p.intraday_high > running_peak:
+            running_peak = p.intraday_high
+            cur_peak_idx = i
+        dd = (running_peak - p.intraday_low) / running_peak if running_peak > 0 else 0.0
+        if dd > max_dd:
+            max_dd = dd
+            trough_idx = i
+            peak_idx = cur_peak_idx
+
+    recovery_idx: Optional[int] = None
+    target = curve[peak_idx].intraday_high
+    for i in range(trough_idx + 1, len(curve)):
+        if curve[i].intraday_high >= target:
+            recovery_idx = i
+            break
+
+    return DrawdownWindow(
+        peak_idx=peak_idx,
+        trough_idx=trough_idx,
+        recovery_idx=recovery_idx,
+        peak_equity=curve[peak_idx].intraday_high,
+        trough_equity=curve[trough_idx].intraday_low,
+        drawdown_pct=max_dd,
+        duration_days=trough_idx - peak_idx,
+        recovery_days=(recovery_idx - trough_idx) if recovery_idx else None,
+    )
+
+
+# =============================================================================
 # RISK-ADJUSTED RETURNS (Sharpe / Sortino)
 # =============================================================================
 

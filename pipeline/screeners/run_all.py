@@ -156,6 +156,7 @@ def _json_serializer(obj):
 
 def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     """Compute RS scores, composite metrics, and derived columns for the screener."""
+    logger = logging.getLogger(__name__)
     df = universe.copy()
 
     # Coerce performance columns to numeric
@@ -163,16 +164,51 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     for col in perf_cols:
         df[col] = pd.to_numeric(df[col], errors='coerce')
 
-    # --- Price RS percentile ranks (0-99 scale) ---
-    df['rs_21d'] = df['perf_1m'].rank(pct=True, na_option='bottom') * 99
-    df['rs_63d'] = df['perf_3m'].rank(pct=True, na_option='bottom') * 99
-    df['rs_126d'] = df['perf_6m'].rank(pct=True, na_option='bottom') * 99
+    # --- Tradeable mask ---
+    # Every score below is a *cross-sectional percentile*, so the field it is
+    # measured against is part of the definition. Ranking against all 5,615
+    # rows meant "RS 90" claimed to beat 90% of a universe where 2,408 names
+    # cannot be traded at this account's size -- a percentile against a field
+    # you cannot buy. Scores are therefore computed on the tradeable subset
+    # only, and left null elsewhere. Raw perf_* data is untouched, so the
+    # screener still shows every name; it just does not pretend to rank the
+    # ones you could not take a position in.
+    from pipeline.themes import is_tradeable  # noqa: PLC0415
+    tradeable = df.apply(is_tradeable, axis=1)
+    df['tradeable'] = tradeable
+    logger.info("Scores computed on %d tradeable of %d rows",
+                int(tradeable.sum()), len(df))
 
-    # --- IBD-style RS (40% 3mo + 40% 6mo + 20% 1yr) ---
-    r3 = df['perf_3m'].rank(pct=True, na_option='bottom') * 99
-    r6 = df['perf_6m'].rank(pct=True, na_option='bottom') * 99
-    r1y = df['perf_1y'].rank(pct=True, na_option='bottom') * 99
-    df['rs_ibd'] = (0.4 * r3 + 0.4 * r6 + 0.2 * r1y)
+    def rank_tradeable(col: str) -> pd.Series:
+        """Percentile rank within the tradeable set; NaN for everyone else."""
+        out = pd.Series(np.nan, index=df.index, dtype=float)
+        sub = df.loc[tradeable, col]
+        out.loc[tradeable] = sub.rank(pct=True, na_option='bottom') * 99
+        return out
+
+    # --- Price RS percentile ranks (0-99 scale) ---
+    df['rs_21d'] = rank_tradeable('perf_1m')
+    df['rs_63d'] = rank_tradeable('perf_3m')
+    df['rs_126d'] = rank_tradeable('perf_6m')
+
+    # --- IBD-style RS: 40% 3mo + 40% 6mo + 20% 1yr ---
+    #
+    # What it looks for: leadership that has already been established. Every
+    # window is a quarter or longer, so a name only scores well if it has been
+    # ahead of the field for months and stayed there. It answers "who has been
+    # winning", and it is the number to sort by when you want the list of names
+    # institutions have been accumulating.
+    #
+    # What it structurally cannot see:
+    #   * anything listed under a year ago -- perf_1y is missing, so recent
+    #     IPOs and 2024-25 listings cannot reach the top however they trade
+    #   * a move that started this month -- three long windows need a quarter
+    #     before they register it
+    #   * a leader that has stopped. A name can hold a top score on last
+    #     year's advance while going nowhere now; this measures the record,
+    #     not the current state. Read it beside rs_21d to see which it is.
+    df['rs_ibd'] = (0.4 * df['rs_63d'] + 0.4 * df['rs_126d']
+                    + 0.2 * rank_tradeable('perf_1y'))
 
     # --- F score (fundamental) ---
     eps = pd.to_numeric(df.get('eps_growth_next_y', pd.Series(dtype=float)), errors='coerce')
@@ -181,11 +217,26 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     both_available = eps.notna() & rev.notna()
     fundamental.loc[both_available] = (eps[both_available] + rev[both_available]) / 2
     df['f_score'] = fundamental.rank(pct=True, na_option='bottom') * 99
+    # Both source columns are empty in the current feed, so this is a constant
+    # 50 for every row. Kept (it is a real weight in h_score and the columns
+    # may come back) but masked outside the tradeable set so a non-tradeable
+    # row does not carry a partial score.
     df['f_score'] = df['f_score'].fillna(50)
+    df.loc[~tradeable, 'f_score'] = np.nan
 
     # --- I score (industry RS) ---
-    industry_rs = df.groupby('industry')['rs_63d'].transform('mean')
-    df['i_score'] = industry_rs.rank(pct=True, na_option='bottom') * 99
+    # Median, not mean: one Finviz corporate-action artefact (an aerospace row
+    # printed +31,192% for perf_1m) moves its whole industry's mean score and
+    # therefore every constituent's i_score, which carries weight 3 of 10 in
+    # h_score. The median is unaffected.
+    # Industry median over tradeable members only, to match the field the
+    # constituent ranks were measured against. groups.json aggregates the same
+    # way, so the two industry readings now describe the same member set.
+    industry_rs = df.loc[tradeable].groupby('industry')['rs_63d'].median()
+    i_raw = df['industry'].map(industry_rs)
+    df['i_score'] = pd.Series(np.nan, index=df.index, dtype=float)
+    df.loc[tradeable, 'i_score'] = (
+        i_raw.loc[tradeable].rank(pct=True, na_option='bottom') * 99)
 
     # --- H score (hybrid composite) ---
     # Weights: F:2, I:3, 21d:1, 63d:2, 126d:2 -> total 10
@@ -212,7 +263,7 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
 
     # Round score columns to integers
     for col in ['rs_21d', 'rs_63d', 'rs_126d', 'rs_ibd', 'f_score', 'i_score', 'h_score']:
-        df[col] = df[col].round(0).astype('Int64')
+        df[col] = df[col].round(0).astype('Int64')  # Int64 keeps NA for non-tradeable
 
     # --- Performance percentile ranks (0-1 scale, relative to full universe) ---
     if 'perf_1w' in df.columns:
@@ -336,6 +387,23 @@ def main():
             )
             market_health_payload = None
         else:
+            # The v2 state board is its own failure domain: it is a presentation
+            # block, so a crash here must never cost breadth.json its verdict.
+            # Worst case the v2 UI hides one section.
+            try:
+                from pipeline.screeners.state_board import build as build_state_board
+                from pipeline.screeners.regime import build as build_regime
+                board = build_state_board(breadth_frame, market_health_payload)
+                breadth_result['state_board'] = board
+                # The score is derived from the board, so it lives or dies with
+                # it — no separate try, and no possibility of a score published
+                # beside a board it was not computed from.
+                breadth_result['regime'] = build_regime(board['rows'])
+            except Exception:  # noqa: BLE001 — isolate; breadth.json still ships
+                logger.exception(
+                    "State board failed — breadth.json ships without it"
+                )
+
             # Replay is its own failure domain: a build_replay crash must not
             # stale-mark market_health.json while breadth.json keeps a
             # health-derived verdict (the banner would show spy/qqq states
@@ -550,6 +618,24 @@ def main():
         json.dumps(universe_export, indent=None, default=_json_serializer)
     )
     logger.info("Saved universe.json")
+
+    # Group layer: industries + curated themes, scored and state-classified.
+    # Depends on universe.json and etf_data.json having just been written, so
+    # it runs last. Non-fatal: a failure here must not cost the whole daily
+    # run, since every other output is already on disk by this point.
+    try:
+        from pipeline.themes.build_groups import run as run_groups
+        groups_payload = run_groups()
+        (OUTPUT_DIR / 'groups.json').write_text(
+            json.dumps(groups_payload, indent=2, default=_json_serializer))
+        gs = groups_payload['summary']
+        logger.info(
+            "Saved groups.json - %d industries, %d themes "
+            "(%d publishable, %d provisional)",
+            gs['industries'], gs['themes'],
+            gs['publishable_themes'], gs['provisional_themes'])
+    except Exception:
+        logger.exception("Group layer failed - groups.json not updated")
 
     # Summary
     total_tickers = sum(

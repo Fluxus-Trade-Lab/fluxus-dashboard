@@ -1,0 +1,63 @@
+<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Claim check — SPX up, VIX up</title><style>
+:root{--bg:#0A0D13;--panel:#111621;--line:#1E2633;--txt:#C7CDD8;--mut:#79828F;
+--dim:#525b69;--accent:#5AA9FF;--good:#42B96A;--bad:#EF5E6B;--warn:#D6A34C;
+--mono:ui-monospace,Menlo,Consolas,monospace;
+--sans:-apple-system,"Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);margin:0;padding:38px 20px 60px}
+.doc{max-width:820px;margin:0 auto}
+h1{font-size:26px;font-weight:600;margin:2px 0 6px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+.meta{font-family:var(--mono);font-size:12px;color:var(--dim);border-top:1px solid var(--line);
+border-bottom:1px solid var(--line);padding:10px 0;margin-top:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+section{margin-top:28px}
+.lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);
+margin:0 0 12px;display:flex;align-items:center;gap:10px}
+.lbl::after{content:"";flex:1;height:1px;background:var(--line)}
+table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
+text-align:right;padding:9px 12px;background:#0E131C;border-bottom:1px solid var(--line)}
+th:first-child{text-align:left}
+td{padding:9px 12px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;text-align:right}
+td:first-child{text-align:left}
+tr:last-child td{border-bottom:none}
+tr.focus td{background:rgba(90,169,255,.09)}
+.mono{font-family:var(--mono)}
+.pos{color:var(--good)}.neg{color:#F4838C}.warn{color:#E0B463}.mut{color:var(--mut)}
+.bar{display:inline-block;height:9px;border-radius:2px;vertical-align:middle}
+.foot{margin-top:32px;padding-top:12px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--dim)}
+</style></head><body><div class='doc'><p class='eyebrow'>Claim check</p>
+<h1>"SPX up, VIX up is rare air"</h1>
+<div class='meta'><span>@spotgamma, 2026-08-05</span><span>SPX+VIX daily closes 2011-08-10 → 2026-08-04, n=3,766</span></div>
+
+<section><p class='lbl'>1 — the frequency claim, on its own</p>
+<table><tbody>
+<tr><td class='mut'>Sessions where SPX closed up AND VIX closed up</td><td class='mono'>390</td></tr>
+<tr><td class='mut'>Share of all sessions</td><td class='mono neg'>10.4%</td></tr>
+<tr><td class='mut'>Share of SPX-up sessions</td><td class='mono neg'>19.0%</td></tr>
+<tr><td class='mut'>Roughly</td><td class='mono'>one session in 10</td></tr>
+</tbody></table>
+<div class='mut' style='font-size:12px;margin-top:6px'>Not rare. It is the ordinary
+minority case — about one trading day in ten, and one up-day in five.</div></section>
+
+<section><p class='lbl'>2 — forward returns vs ALL days</p><table><thead><tr><th>horizon</th><th>n</th><th>mean</th><th>median</th><th>% positive</th><th>control mean</th><th>diff</th><th>diff / SE</th></tr></thead><tbody><tr><td class='mono'>1d</td><td class='mono'>389</td><td class='mono pos'>+0.003%</td><td class='mono neg'>-0.004%</td><td class='mono'>49.9%</td><td class='mono mut'>+0.056%</td><td class='mono'>-0.053%</td><td class='mono mut'>-1.21</td></tr><tr><td class='mono'>2d</td><td class='mono'>389</td><td class='mono pos'>+0.049%</td><td class='mono pos'>+0.095%</td><td class='mono'>54.5%</td><td class='mono mut'>+0.110%</td><td class='mono'>-0.062%</td><td class='mono mut'>-1.02</td></tr><tr><td class='mono'>3d</td><td class='mono'>389</td><td class='mono pos'>+0.047%</td><td class='mono pos'>+0.208%</td><td class='mono'>57.3%</td><td class='mono mut'>+0.164%</td><td class='mono'>-0.116%</td><td class='mono mut'>-1.53</td></tr><tr><td class='mono'>4d</td><td class='mono'>389</td><td class='mono pos'>+0.098%</td><td class='mono pos'>+0.316%</td><td class='mono'>59.6%</td><td class='mono mut'>+0.217%</td><td class='mono'>-0.120%</td><td class='mono mut'>-1.30</td></tr><tr><td class='mono'>5d</td><td class='mono'>389</td><td class='mono pos'>+0.070%</td><td class='mono pos'>+0.287%</td><td class='mono'>58.1%</td><td class='mono mut'>+0.270%</td><td class='mono'>-0.200%</td><td class='mono mut'>-1.95</td></tr></tbody></table><div class='mut' style='font-size:12px;margin-top:6px'>This is the comparison that makes the claim look true. But 'SPX up &amp; VIX up' is a subset of 'SPX up', and up-days as a class already give a little back. Measured this way the sample inherits that, and the VIX condition gets the credit.</div></section>
+
+<section><p class='lbl'>3 — forward returns vs SPX-UP days (the sample it was drawn from)</p><table><thead><tr><th>horizon</th><th>n</th><th>mean</th><th>median</th><th>% positive</th><th>control mean</th><th>diff</th><th>diff / SE</th></tr></thead><tbody><tr><td class='mono'>1d</td><td class='mono'>389</td><td class='mono pos'>+0.003%</td><td class='mono neg'>-0.004%</td><td class='mono'>49.9%</td><td class='mono mut'>+0.027%</td><td class='mono'>-0.024%</td><td class='mono mut'>-0.54</td></tr><tr><td class='mono'>2d</td><td class='mono'>389</td><td class='mono pos'>+0.049%</td><td class='mono pos'>+0.095%</td><td class='mono'>54.5%</td><td class='mono mut'>+0.070%</td><td class='mono'>-0.021%</td><td class='mono mut'>-0.34</td></tr><tr><td class='mono'>3d</td><td class='mono'>389</td><td class='mono pos'>+0.047%</td><td class='mono pos'>+0.208%</td><td class='mono'>57.3%</td><td class='mono mut'>+0.110%</td><td class='mono'>-0.062%</td><td class='mono mut'>-0.80</td></tr><tr><td class='mono'>4d</td><td class='mono'>389</td><td class='mono pos'>+0.098%</td><td class='mono pos'>+0.316%</td><td class='mono'>59.6%</td><td class='mono mut'>+0.136%</td><td class='mono'>-0.038%</td><td class='mono mut'>-0.40</td></tr><tr><td class='mono'>5d</td><td class='mono'>389</td><td class='mono pos'>+0.070%</td><td class='mono pos'>+0.287%</td><td class='mono'>58.1%</td><td class='mono mut'>+0.184%</td><td class='mono'>-0.114%</td><td class='mono mut'>-1.08</td></tr></tbody></table><div class='mut' style='font-size:12px;margin-top:6px'>Against the correct control the effect all but disappears: differences of a few hundredths of a percent, every diff/SE inside ±1.1. At this sample size that is noise.</div></section>
+
+<section><p class='lbl'>4 — mean versus median</p>
+<div class='mut' style='font-size:13px;line-height:1.6'>
+At 3–5 sessions out the event sample's <b>median is +0.21% to +0.32%</b> and
+<b>57–58% of outcomes are positive</b>, while the mean sits near zero. The mean is being
+pulled down by a small left tail. "Flat to small negative" is a true statement about the
+mean and a misleading one about the typical outcome.</div></section>
+
+<section><p class='lbl'>5 — matched to yesterday's actual magnitude</p>
+<div class='mut' style='font-size:13px;line-height:1.6'>
+2026-08-04 was SPX <b>+1.79%</b> with VIX <b>15.86 → 16.50 (+0.64)</b>. Conditioning on a
+move that size with VIX up leaves <b>n = 27</b> at ≥ +1.0% and <b>n = 6</b> at ≥ +1.5%
+across fifteen years. Six observations support no conclusion in either direction, and the
+honest reading of the like-for-like case is that we do not have the sample to say.</div></section>
+
+<div class='foot'>SPX and VIX daily closes from IBKR. The still-trading 2026-08-05 session is
+excluded. Engine: scripts/test_conditional_claim.py. Generated 2026-08-05 11:50 ET.
+Measurements, not a recommendation.</div></div></body></html>

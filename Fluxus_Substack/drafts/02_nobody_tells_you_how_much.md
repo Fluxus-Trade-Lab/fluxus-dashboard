@@ -48,7 +48,7 @@ Two consequences follow, and they're both features.
 
 A setup that's a mess — wide, gappy, no clear place to be wrong — mechanically gets a tiny position. I don't have to summon discipline to pass on bad structure. The arithmetic passes for me. *No tightness, no trade* isn't willpower, it's division.
 
-And when I'm wrong, I'm wrong for a quarter of a percent. Last half I took 303 trades. One hundred and twenty of them ended with nothing happening except the stop firing. That's roughly once a business day, all year, and not one of those days mattered.
+And when I'm wrong, I'm wrong for a quarter of a percent. This year I've taken 331 trades. A hundred and thirty of them ended with nothing happening except the stop firing. That's roughly once a business day, all year, and not one of those days mattered.
 
 ## The two-leg structure
 
@@ -60,7 +60,7 @@ This is the piece I haven't seen written down elsewhere, and it's where most of 
 
 Most people run one stop for the entire life of a trade and it's wrong at both ends: too wide to give them size at entry, too tight to let them hold anything through a normal pullback. Running two legs lets each stop answer the question it's actually good at.
 
-Last half, the 17 trades where I ran both legs properly averaged **about 2.6× what a single well-timed exit made me** — and roughly 12× the average trade overall. Seventeen trades out of 303. Same trader, same six months, same ideas. The difference was structure.
+This year, the 20 trades where I ran both legs properly averaged **about 3× what a single well-timed exit made me** — and roughly nine times the average trade overall. Twenty trades out of 331. Same trader, same seven months, same ideas. The difference was structure.
 
 ## Three caps that sit above all of it
 

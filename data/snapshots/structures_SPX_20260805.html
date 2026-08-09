@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>SPX structure bench 2026-08-05</title><style>
+:root{--bg:#0A0D13;--panel:#111621;--line:#1E2633;--txt:#C7CDD8;--mut:#79828F;
+--dim:#525b69;--accent:#5AA9FF;--good:#42B96A;--bad:#EF5E6B;--warn:#D6A34C;
+--mono:ui-monospace,Menlo,Consolas,monospace;
+--sans:-apple-system,"Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);margin:0;padding:38px 20px 60px}
+.doc{max-width:820px;margin:0 auto}
+h1{font-size:26px;font-weight:600;margin:2px 0 6px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+.meta{font-family:var(--mono);font-size:12px;color:var(--dim);border-top:1px solid var(--line);
+border-bottom:1px solid var(--line);padding:10px 0;margin-top:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+section{margin-top:28px}
+.lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);
+margin:0 0 12px;display:flex;align-items:center;gap:10px}
+.lbl::after{content:"";flex:1;height:1px;background:var(--line)}
+table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
+text-align:right;padding:9px 12px;background:#0E131C;border-bottom:1px solid var(--line)}
+th:first-child{text-align:left}
+td{padding:9px 12px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;text-align:right}
+td:first-child{text-align:left}
+tr:last-child td{border-bottom:none}
+tr.focus td{background:rgba(90,169,255,.09)}
+.mono{font-family:var(--mono)}
+.pos{color:var(--good)}.neg{color:#F4838C}.warn{color:#E0B463}.mut{color:var(--mut)}
+.bar{display:inline-block;height:9px;border-radius:2px;vertical-align:middle}
+.foot{margin-top:32px;padding-top:12px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--dim)}
+</style></head><body><div class='doc'><p class='eyebrow'>SPX · Structure Bench</p>
+<h1>Candidate structures priced off the live chain</h1>
+<div class='meta'><span>spot 7,743.39</span><span>2026-08-05 11:45 ET</span>
+<span class='mut'>calculation only — no recommendation</span></div>
+
+<section><p class='lbl'>Payoff geometry</p>
+<table><thead><tr><th>Structure</th><th>net</th><th>max P</th><th>max L</th>
+<th>R/R mid</th><th>R/R worst fill</th><th>breakevens</th><th>zone</th><th>peak σ</th>
+</tr></thead><tbody><tr><td>1DTE call fly 7700/7750/7800</td><td class='mono '>14.95</td><td class='mono '>35.05</td><td class='mono '>-14.95</td><td class='mono '>2.34</td><td class='mono warn'>2.11</td><td class='mono mut'>7,715 ↔ 7,785</td><td class='mono '>70</td><td class='mono '>+0.10</td></tr><tr><td>1DTE call fly @wall 7750/7800/7850</td><td class='mono '>11.35</td><td class='mono '>38.65</td><td class='mono '>-11.35</td><td class='mono '>3.41</td><td class='mono warn'>3.27</td><td class='mono mut'>7,761 ↔ 7,839</td><td class='mono '>77</td><td class='mono '>+1.00</td></tr><tr><td>1DTE put fly 7650/7700/7750</td><td class='mono '>9.65</td><td class='mono '>40.35</td><td class='mono '>-9.65</td><td class='mono '>4.18</td><td class='mono warn'>3.95</td><td class='mono mut'>7,660 ↔ 7,740</td><td class='mono '>81</td><td class='mono '>-0.79</td></tr><tr><td>1DTE condor 7625/7675/7800/7850</td><td class='mono '>-11.05</td><td class='mono '>11.05</td><td class='mono '>-38.95</td><td class='mono '>0.28</td><td class='mono warn'>0.28</td><td class='mono mut'>7,664 ↔ 7,811</td><td class='mono '>147</td><td class='mono '>-1.25</td></tr><tr><td>1DTE put credit 7650/7700</td><td class='mono '>-7.90</td><td class='mono '>7.90</td><td class='mono '>-42.10</td><td class='mono '>0.19</td><td class='mono warn'>0.18</td><td class='mono mut'>7,692</td><td class='mono '>—</td><td class='mono '>-0.79</td></tr><tr><td>1DTE call credit 7800/7850</td><td class='mono '>-5.75</td><td class='mono '>5.75</td><td class='mono '>-44.25</td><td class='mono '>0.13</td><td class='mono warn'>0.13</td><td class='mono mut'>7,806</td><td class='mono '>—</td><td class='mono '>+0.99</td></tr><tr><td>swing condor 7550/7625/7850/7925</td><td class='mono '>-25.80</td><td class='mono '>25.80</td><td class='mono '>-49.20</td><td class='mono '>0.52</td><td class='mono warn'>0.51</td><td class='mono mut'>7,599 ↔ 7,876</td><td class='mono '>277</td><td class='mono '>-0.96</td></tr><tr><td>swing call fly 7750/7800/7850</td><td class='mono '>6.45</td><td class='mono '>43.55</td><td class='mono '>-6.45</td><td class='mono '>6.75</td><td class='mono warn'>5.76</td><td class='mono mut'>7,756 ↔ 7,844</td><td class='mono '>87</td><td class='mono '>+0.39</td></tr></tbody></table>
+<div class='mut' style='font-size:12px;margin-top:6px'>Negative <b>net</b> = credit received.
+<b>R/R worst fill</b> pays the full bid/ask on every leg — the mid-price R/R is not obtainable.
+<b>peak σ</b> = where max profit sits, in standard deviations from the forward.</div></section>
+
+<section><p class='lbl'>Greeks, vol paid, and cost of entry</p>
+<table><thead><tr><th>Structure</th><th>IV sold</th><th>IV bought</th><th>skew</th>
+<th>Δ</th><th>vega</th><th>gamma</th><th>slip % of debit</th><th>dealer GEX @ peak</th>
+<th>min OI</th><th>worst spread</th></tr></thead><tbody><tr><td>1DTE call fly 7700/7750/7800</td><td class='mono '>15.96%</td><td class='mono '>16.32%</td><td class='mono neg'>-0.36%</td><td class='mono '>+0.007</td><td class='mono '>-0.76</td><td class='mono '>-0.00275</td><td class='mono '>7.7%</td><td class='mono mut'>+2.45B long</td><td class='mono '>801</td><td class='mono '>2.8%</td></tr><tr><td>1DTE call fly @wall 7750/7800/7850</td><td class='mono '>15.38%</td><td class='mono '>16.01%</td><td class='mono neg'>-0.63%</td><td class='mono '>+0.131</td><td class='mono '>-0.14</td><td class='mono '>-0.00066</td><td class='mono '>3.1%</td><td class='mono mut'>+5.27B long</td><td class='mono '>801</td><td class='mono '>4.4%</td></tr><tr><td>1DTE put fly 7650/7700/7750</td><td class='mono '>17.26%</td><td class='mono '>17.57%</td><td class='mono neg'>-0.31%</td><td class='mono '>-0.111</td><td class='mono '>-0.24</td><td class='mono '>-0.00056</td><td class='mono '>4.7%</td><td class='mono mut'>+0.44B long</td><td class='mono '>265</td><td class='mono '>3.7%</td></tr><tr><td>1DTE condor 7625/7675/7800/7850</td><td class='mono '>16.82%</td><td class='mono '>17.92%</td><td class='mono neg'>-1.10%</td><td class='mono '>-0.034</td><td class='mono '>-1.19</td><td class='mono '>-0.00401</td><td class='mono '>2.3%</td><td class='mono mut'>-0.31B short</td><td class='mono '>801</td><td class='mono '>4.3%</td></tr><tr><td>1DTE put credit 7650/7700</td><td class='mono '>17.26%</td><td class='mono '>19.17%</td><td class='mono neg'>-1.91%</td><td class='mono '>+0.146</td><td class='mono '>-0.54</td><td class='mono '>-0.00193</td><td class='mono '>2.5%</td><td class='mono mut'>+0.44B long</td><td class='mono '>3,637</td><td class='mono '>3.8%</td></tr><tr><td>1DTE call credit 7800/7850</td><td class='mono '>15.55%</td><td class='mono '>16.18%</td><td class='mono neg'>-0.63%</td><td class='mono '>-0.141</td><td class='mono '>-0.67</td><td class='mono '>-0.00237</td><td class='mono '>2.6%</td><td class='mono mut'>+5.27B long</td><td class='mono '>801</td><td class='mono '>4.4%</td></tr><tr><td>swing condor 7550/7625/7850/7925</td><td class='mono '>13.74%</td><td class='mono '>14.16%</td><td class='mono neg'>-0.43%</td><td class='mono '>-0.043</td><td class='mono '>-2.32</td><td class='mono '>-0.00126</td><td class='mono '>1.9%</td><td class='mono mut'>+0.18B long</td><td class='mono '>564</td><td class='mono '>1.9%</td></tr><tr><td>swing call fly 7750/7800/7850</td><td class='mono '>12.94%</td><td class='mono '>13.06%</td><td class='mono neg'>-0.12%</td><td class='mono '>+0.008</td><td class='mono '>-0.41</td><td class='mono '>-0.00027</td><td class='mono neg'>14.7%</td><td class='mono mut'>+5.27B long</td><td class='mono '>3,595</td><td class='mono '>1.6%</td></tr></tbody></table>
+<div class='mut' style='font-size:12px;margin-top:6px'><b>skew</b> = IV sold minus IV bought.
+Negative means you are selling cheaper vol than you buy — a structural cost, not an edge.
+<b>dealer GEX @ peak</b> is the net gamma at the strike where this structure pays most:
+dealers long gamma there hedge toward it, short gamma away from it.</div></section>
+
+<section><p class='lbl'>Term structure measured on this chain</p>
+<table><tbody>
+<tr><td class='mut'>ATM IV 1DTE (2026-08-06)</td><td class='mono'>18.1%</td></tr>
+<tr><td class='mut'>ATM IV swing (2026-08-14)</td><td class='mono'>14.3%</td></tr>
+<tr><td class='mut'>front minus swing</td><td class='mono warn'>+3.8 vol pts — front is richer</td></tr>
+<tr><td class='mut'>1DTE IV yesterday premarket</td><td class='mono'>12.2%</td></tr>
+</tbody></table></section>
+
+<div class='foot'>Generated by scripts/structure_eval.py against the live SPX chain.
+Every price is a feed mid unless a leg is labelled src=bs. This page reports measurements,
+not a recommendation, and no position was sized.</div></div></body></html>

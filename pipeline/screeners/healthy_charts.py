@@ -1,14 +1,23 @@
-"""Healthy Charts Screener.
+"""Healthy charts -- uptrends that are resting rather than running.
 
-Identifies stocks with technically healthy chart structures:
+**What it looks for: structure, not a trigger.** Above both the 50- and
+200-SMA, between 5% and 25% below the 52-week high, positive one-month
+momentum, and enough volume to be a live ticker. RS bracket 80 and above.
 
-* Trading above both the 50-SMA and 200-SMA (uptrend).
-* Within 5-25 % of the 52-week high (consolidating, not extended).
-* Positive 1-month momentum.
-* Relative volume >= 0.5 (not a dead ticker).
+The 5-25% band is the point of the screen. Closer than 5% and the name is
+extended -- a stop far enough to survive noise costs too much of the account
+to be worth taking. Further than 25% and the "uptrend" is doing something
+that needs explaining. What is left is names in an uptrend that have paused,
+which is where a tight stop is available and therefore where a real position
+size is available.
 
-Results are grouped by RS bracket (100, 95, 90, ...) using the
-``perf_3m`` percentile rank, identical to the EMA-21 watchlist.
+**What it cannot tell you: when.** Nothing here is time-sensitive; a name can
+sit in this state for two months. This is a shortlist to keep, not a list to
+act on today. It also cannot see the quality of the consolidation -- whether
+volatility is contracting, whether volume is drying up, whether each low is
+higher. Those are what separate a base from a slow roll over, and they are
+read on the chart. ``vcp_detector`` is the screen that attempts the same
+question mechanically.
 """
 
 from __future__ import annotations

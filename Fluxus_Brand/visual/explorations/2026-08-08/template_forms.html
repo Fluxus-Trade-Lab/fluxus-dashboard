@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — three forms, cashed in</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+:root{--paper:#f4f3f0;--card:#f8f6f0;--ink:#111110;--ink2:#5c5852;--ink3:#9c968d;
+      --rule:#dedad3;--hair:#eae7e1;--works:#1a5488;--fails:#d1600f;
+      --sans:Plex,sans-serif;--cond:PlexCond,Plex,sans-serif;--mono:PlexMono,Menlo,monospace}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.app{max-width:1440px;margin:0 auto;padding:0 34px 110px}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.bar{display:flex;align-items:baseline;gap:24px;padding:15px 0 14px;border-bottom:1px solid var(--ink)}
+.mark{font-family:var(--cond);font-weight:700;font-size:19px;letter-spacing:.16em}
+.bar .r{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+h1{font-family:var(--cond);font-weight:700;font-size:62px;line-height:.95;letter-spacing:-.015em;
+   text-transform:uppercase;margin:42px 0 0;max-width:17ch}
+.lede{font-size:16.5px;line-height:1.55;max-width:66ch;margin:22px 0 0;color:var(--ink2)}
+.lede b{color:var(--ink);font-weight:600}
+h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink3);
+   margin:64px 0 0;padding-bottom:9px;border-bottom:1px solid var(--ink)}
+h3 span{float:right;text-transform:none;letter-spacing:.02em;font-family:var(--sans);font-size:11.5px;color:var(--ink2)}
+.note{font-size:12.5px;line-height:1.7;color:var(--ink2);max-width:78ch;margin:16px 0 0}
+.note b{color:var(--ink);font-weight:600}
+.row{display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;margin-top:24px}
+
+/* ── shared paper object ── */
+.doc{background:var(--card);border:1.5px solid var(--ink);padding:30px 32px 24px;position:relative}
+.doc .hd{display:flex;justify-content:space-between;align-items:baseline;
+         border-bottom:1.5px solid var(--ink);padding-bottom:9px}
+.doc .fx{font-family:var(--cond);font-weight:700;font-size:15px;letter-spacing:.28em}
+.doc .no{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em}
+.doc h4{font-family:var(--cond);font-weight:700;font-size:25px;letter-spacing:.02em;
+        text-transform:uppercase;margin:20px 0 2px;line-height:1.05}
+.doc .sub{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--ink2)}
+.doc .foot{margin-top:20px;padding-top:12px;border-top:1px solid var(--rule);
+           font-family:var(--mono);font-size:9px;line-height:1.75;letter-spacing:.07em;
+           color:var(--ink2);text-transform:uppercase}
+.stamp{position:absolute;transform:rotate(-12deg);border:2.5px solid var(--fails);color:var(--fails);
+       padding:5px 11px;font-family:var(--cond);font-weight:700;font-size:15px;letter-spacing:.14em;opacity:.85}
+
+/* 1 · certificate */
+.cert{width:660px}
+.cert table{width:100%;border-collapse:collapse;margin-top:18px;font-size:12.5px}
+.cert th{text-align:left;font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;
+         text-transform:uppercase;color:var(--ink3);font-weight:400;padding:0 10px 7px 0;
+         border-bottom:1px solid var(--ink)}
+.cert td{padding:8px 10px 8px 0;border-bottom:1px dotted #cdc7be;vertical-align:top}
+.cert td.i{font-family:var(--mono);font-size:10px;color:var(--ink2);width:26px}
+.cert td.v{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.sig{display:flex;justify-content:space-between;align-items:flex-end;margin-top:26px;gap:30px}
+.sig .line{flex:1;border-bottom:1px solid var(--ink);height:34px}
+.sig .cap{font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;color:var(--ink3);
+          text-transform:uppercase;padding-bottom:5px}
+
+/* 2 · receipt */
+.rec{width:392px}
+.rec .li{display:grid;grid-template-columns:1fr auto;gap:12px;padding:7px 0;
+         border-bottom:1px dotted #cdc7be;font-size:12.5px}
+.rec .li .v{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.rec .tot{display:grid;grid-template-columns:1fr auto;gap:12px;margin-top:14px;
+          border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);padding:11px 0}
+.rec .tot b{font-family:var(--cond);font-weight:700;font-size:21px;letter-spacing:.05em}
+
+/* 3 · stationery */
+.kit{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:18px;margin-top:22px}
+.st{border:2.2px solid var(--ink);color:var(--ink);padding:9px 12px;text-align:center;
+    font-family:var(--cond);font-weight:700;font-size:14px;letter-spacing:.14em;
+    transform:rotate(-2deg)}
+.st.o{border-color:var(--fails);color:var(--fails)}
+.st.b{border-color:var(--works);color:var(--works)}
+.dept{border-top:1px solid var(--rule);padding-top:12px;font-size:12.5px;line-height:1.6}
+.dept b{font-family:var(--cond);font-weight:600;font-size:15px;display:block;letter-spacing:.02em}
+.dept span{color:var(--ink2)}
+.lh{background:var(--card);border:1px solid var(--rule);padding:26px 30px;width:660px}
+</style>
+</head>
+<body><div class="app">
+
+<div class="bar"><span class="mark">FLUXUS</span>
+  <span style="font-size:12.5px;color:var(--ink3)">three forms, cashed in</span>
+  <span class="r" id="stamp">—</span></div>
+
+<h1>The rules,<br>the silence,<br>the letterhead</h1>
+<p class="lede">Three forms from <b>Fluxus_Work_Forms.md</b>, built with data that already exists.
+No new pipeline, no new fetch. The one thing that did need building was a judgment function:
+<b>"did anything actually change today?"</b> — because a refusal you cannot verify is a pose.</p>
+
+<h3>Measured first <span>How often is the silence real?</span></h3>
+<div class="note" id="freq"></div>
+
+<h3>01 · The rules, as the work <span>After Sol LeWitt — the buyer receives a certificate and instructions</span></h3>
+<div class="row"><div class="doc cert" id="cert"></div>
+  <div style="max-width:340px">
+    <p class="note" style="margin-top:0"><b>Why this form.</b> LeWitt sold a certificate and a set of
+    instructions; other people executed the drawing. "The idea becomes a machine that makes the art."
+    <br><br>That is literally what the verdict engine is: twelve rules, one threshold table, and the
+    conclusion falls out. Publishing the table as the work says the thing no financial account ever
+    says — <b>here is the machine, run it yourself, you do not have to believe me</b>.
+    <br><br>It is also the cheapest possible proof of honesty. Anyone who runs it and gets a different
+    answer has caught you.</p></div></div>
+
+<h3>02 · A receipt for nothing <span>After Yves Klein — he sold a receipt, and the buyer burned it</span></h3>
+<div class="row"><div class="doc rec" id="rec"></div>
+  <div style="max-width:400px">
+    <p class="note" style="margin-top:0"><b>Why this form.</b> Klein sold "zones of immaterial pictorial
+    sensibility": the buyer paid in gold, received a receipt, and burned the receipt.
+    A document certifying that nothing was received.
+    <br><br>This one is dated <b id="recdate">—</b>, the most recent session where the judgment function
+    says nothing moved. It is not a mood — it is the output of a rule, and the rule fires about
+    <b id="recrate">—</b> of sessions.
+    <br><br><b>The catch I hit building it:</b> the first version called 2026-07-29 a still day.
+    That session had <b>637 names down 4%</b>. Bucketed levels had all held, so nothing "changed" —
+    bucketing eats magnitude. A raw-move guard now sits beside the levels, and 07-29 is correctly
+    rejected. Without that guard this card would have gone out on a liquidation day, which would have
+    destroyed the whole device.</p></div></div>
+
+<h3>03 · The institution <span>After Broodthaers — he invented a museum and gave it stationery</span></h3>
+<p class="note" style="margin-top:14px">In 1968 Broodthaers declared a fictional museum —
+<em>Musée d'Art Moderne, Département des Aigles</em> — and the work <em>was</em> its apparatus:
+letterhead, seals, departments, crates, an opening. Institutional furniture as the medium.
+<br><br>These are the reusable elements. Unlike the cards above, <b>these are allowed on the
+dashboard</b> — a stamp and a file number, never a whole document.</p>
+<div class="kit" id="stamps"></div>
+<div class="row" style="margin-top:30px">
+  <div style="flex:1;min-width:300px"><div id="depts"></div></div>
+  <div class="lh" id="letterhead"></div>
+</div>
+
+</div>
+<script>
+const F = /*__DATA__*/ null;
+const TH = F.thresholds, S = F.still_day, P = F.prev_day;
+// measured by nothing_changed.py over data/history/breadth_archive.csv
+const FREQ = {sessions:557, still:13, from:"2024-05-15", to:"2026-08-06", last:"2026-04-27"};
+const pct = (a,b)=>(a/b*100).toFixed(1)+"%";
+document.getElementById("stamp").textContent = "built from data/history/breadth_archive.csv";
+
+document.getElementById("freq").innerHTML =
+  `Over <b>${FREQ.sessions}</b> comparable sessions (${FREQ.from} → ${FREQ.to}), the judgment
+   function finds <b>${FREQ.still}</b> where not one of nine conditions changed level and no raw
+   input moved violently — <b>${pct(FREQ.still,FREQ.sessions)}</b>, roughly five or six days a year.
+   The most recent is <b>${FREQ.last}</b>, over three months ago.
+   <br><br>That is the number the whole device rests on. At 40% it would be wallpaper; at
+   ${pct(FREQ.still,FREQ.sessions)} the card is an event. Function:
+   <code>nothing_changed.py</code>, same folder, re-runnable.`;
+
+/* ── 01 · certificate ── */
+const RULES = [
+  ["5-day up/down ratio","≥ "+TH.ratio_5d.bull+" bullish · < "+TH.ratio_5d.bear+" bearish"],
+  ["10-day up/down ratio","≥ "+TH.ratio_10d.bull+" bullish · < "+TH.ratio_10d.bear+" bearish"],
+  ["Thrust","either side ≥ "+TH.thrust.count+" names on the day"],
+  ["Quarterly 25% spread","sign of (up − down)"],
+  ["13% in 34 days spread","sign of (up − down)"],
+  ["McClellan oscillator","|value| ≥ "+TH.mcclellan.extreme+" is extreme"],
+  ["New highs vs new lows","sign of (highs − lows)"],
+  ["% above the 200-day","> "+TH.pct200.bull+" bullish · < "+TH.pct200.bear+" bearish"],
+  ["T2108 zones",TH.t2108_zone.oversold+" / "+TH.t2108_zone.weak_hi+" / "+
+                 TH.t2108_zone.strong_lo+" / "+TH.t2108_zone.overbought],
+  ["SPY danger checklist","≤ "+TH.spy_danger.bull_max+" bullish · ≥ "+TH.spy_danger.bear_min+" bearish"],
+  ["QQQ danger checklist","≤ "+TH.qqq_danger.bull_max+" bullish · ≥ "+TH.qqq_danger.bear_min+" bearish"],
+  ["Benchmark trend","both closes against their own 50-day"],
+];
+document.getElementById("cert").innerHTML = `
+  <div class="hd"><span class="fx">FLUXUS</span>
+    <span class="no">CERTIFICATE · FX-RULES-01</span></div>
+  <h4>Certificate of the<br>rule set</h4>
+  <div class="sub">TWELVE RULES · ONE THRESHOLD TABLE · EXECUTABLE BY ANY HOLDER</div>
+  <table>
+    <tr><th></th><th>Condition</th><th style="text-align:right">Threshold</th></tr>
+    ${RULES.map(([n,v],i)=>`<tr><td class="i">${String(i+1).padStart(2,"0")}</td>
+      <td>${n}</td><td class="v">${v}</td></tr>`).join("")}
+  </table>
+  <div class="sig">
+    <div><div class="cap">Executed by</div><div class="line"></div></div>
+    <div style="width:150px"><div class="cap">Date</div><div class="line"></div></div>
+  </div>
+  <div class="foot">
+    The holder may execute these rules on any breadth data and is entitled to the resulting verdict.<br>
+    The verdict is produced by the table, not by the issuer. A holder who runs it and disagrees<br>
+    has found an error, and the error is the issuer's.<br>
+    Source: pipeline/screeners/breadth_signals.py · THRESHOLDS
+  </div>`;
+
+/* ── 02 · receipt ── */
+document.getElementById("recdate").textContent = S.date;
+document.getElementById("recrate").textContent = pct(FREQ.still,FREQ.sessions);
+const d = (k,dp=0)=>{const a=P[k],b=S[k];const f=v=>v==null?"—":v.toFixed(dp);
+  return `${f(a)} → ${f(b)}`;};
+document.getElementById("rec").innerHTML = `
+  <div class="hd"><span class="fx">FLUXUS</span><span class="no">RECEIPT No. 0007</span></div>
+  <h4>Received:<br>nothing</h4>
+  <div class="sub">${S.date} · AFTER THE CLOSE</div>
+  <div style="margin-top:18px">
+    ${[["Advancing names",d("advances")],
+       ["Declining names",d("declines")],
+       ["Net advances",d("net_advances")],
+       ["Names +4%",d("up_4pct")],
+       ["Names −4%",d("down_4pct")],
+       ["T2108",d("t2108",2)],
+       ["Above the 20-day",d("pct_above_20sma",2)],
+       ["5-day ratio",d("ratio_5d",4)],
+      ].map(([k,v])=>`<div class="li"><span>${k}</span><span class="v">${v}</span></div>`).join("")}
+  </div>
+  <div class="tot"><span class="sub" style="align-self:center">CONDITIONS CHANGED</span><b>NONE</b></div>
+  <div class="foot">
+    Issued only when nine conditions hold their level and no raw input moves violently.<br>
+    Fires on ${pct(FREQ.still,FREQ.sessions)} of sessions. Previous issue: 2025-09-30.<br>
+    Held: cash. Received: nothing. This receipt is the entire product.
+  </div>
+  <div class="stamp" style="right:26px;bottom:96px">NOTHING TO REPORT</div>`;
+
+/* ── 03 · stationery ── */
+const STAMPS = [["NOT A CALL","o"],["NOTHING TO REPORT","o"],["MEASURED",""],
+                ["NOT WIRED",""],["NULL RESULT","o"],["SAID / PAID","b"],
+                ["UNFINISHED",""],["EDITION OF ONE","b"]];
+document.getElementById("stamps").innerHTML =
+  STAMPS.map(([t,c],i)=>`<div class="st ${c}" style="transform:rotate(${(i%3)-1.4}deg)">${t}</div>`).join("");
+
+const DEPTS = [
+  ["Department of Measurement","issues the daily observation · owns the threshold table"],
+  ["Department of Refusal","issues NOTHING TO REPORT, NOT A CALL, and every null result"],
+  ["Department of the Unfinished","owns the pending slot — everything not yet decided"],
+  ["Department of the Record","the archive, including its 13-session hole"],
+];
+document.getElementById("depts").innerHTML =
+  `<div class="sub" style="font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--ink3);
+     text-transform:uppercase;margin-bottom:14px">Departments</div>` +
+  DEPTS.map(([n,d])=>`<div class="dept"><b>${n}</b><span>${d}</span></div>`).join("");
+
+document.getElementById("letterhead").innerHTML = `
+  <div style="display:flex;justify-content:space-between;align-items:baseline;
+              border-bottom:2px solid var(--ink);padding-bottom:10px">
+    <span class="fx" style="font-family:var(--cond);font-weight:700;font-size:17px;letter-spacing:.3em">FLUXUS</span>
+    <span class="n" style="font-size:10px;letter-spacing:.14em;color:var(--ink2)">DEPARTMENT OF MEASUREMENT</span>
+  </div>
+  <div class="n" style="font-size:10px;letter-spacing:.12em;color:var(--ink3);margin-top:10px">
+    FILE FX-2026-089 · OBSERVATION 089 · 2026-07-31</div>
+  <div style="font-size:14px;line-height:1.65;margin-top:22px;max-width:52ch">
+    The megacaps repaired. The propagation did not happen.<br><br>
+    Four of seven leaders broke out; one of six links in the chain lit.
+    The five-day ratio closed at 0.9905 against a required 1.0.<br><br>
+    Risk posture is unchanged: <b>wait</b>.
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:30px">
+    <div class="n" style="font-size:9px;letter-spacing:.1em;color:var(--ink3)">
+      SPX 7489.72 · T2108 45.8 · &gt;20SMA 40.7%</div>
+    <div class="st o" style="transform:rotate(-7deg);font-size:12px;padding:5px 9px">NOT A CALL</div>
+  </div>`;
+</script>
+</body></html>

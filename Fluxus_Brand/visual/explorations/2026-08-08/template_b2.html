@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>B v2 · 工业指引 — 字体 / 色彩 / 真实页面 / 分享卡</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+
+:root{
+  --paper:#faf9f7; --ink:#16150f; --ink-2:#57534e; --ink-3:#a8a29e; --rule:#e0ddd8; --band:#f2f0ec;
+  /* 市场层 —— 编码的是「回应质量」，不是涨跌方向 */
+  --works:#1f5f9e; --fails:#c4601f; --idle:#b6b1a9;
+  /* 钱层 —— 只有盈亏用绿红，永不越界到市场层 */
+  --pnl-up:#2f6b4f; --pnl-dn:#a33a2a;
+  --cjk:"PingFang SC","Hiragino Sans GB",sans-serif;
+  --f-plex:Plex,var(--cjk); --f-avenir:"Avenir Next","Avenir",var(--cjk); --f-inter:Inter,var(--cjk);
+  --mono:PlexMono,ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:#e8e6e1;font-family:var(--f-plex);color:var(--ink);-webkit-font-smoothing:antialiased}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.sheet{max-width:1180px;margin:0 auto 56px;padding:52px 58px 64px;background:var(--paper);
+       box-shadow:0 1px 0 rgba(0,0,0,.06),0 24px 60px -30px rgba(0,0,0,.35)}
+h2.sec{font:600 11px/1 var(--f-plex);letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);
+       margin:0 0 6px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+h2.sec b{font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-2);margin-left:14px;font-size:12px}
+.blk{margin:0 0 56px}
+.note{font:400 12.5px/1.75 var(--f-plex);color:var(--ink-2);max-width:66ch;margin:14px 0 0}
+.top{position:sticky;top:0;z-index:20;background:#e8e6e1;border-bottom:1px solid #d3cfc8;padding:11px 22px;
+     font:500 12px/1 var(--f-plex);letter-spacing:.06em;color:var(--ink-2);display:flex;gap:20px}
+.top .r{margin-left:auto;font-family:var(--mono);color:var(--ink-3)}
+
+/* ── 状态板（B 语言：信息屏行 + 五格电平） ── */
+.brow{display:grid;grid-template-columns:132px 118px 1fr;gap:16px;align-items:center;padding:9px 12px}
+.brow:nth-child(odd){background:var(--band)}
+.brow .k{font-weight:600;font-size:14px}
+.brow .lv{display:flex;gap:3px}
+.brow .lv i{display:block;width:19px;height:19px}
+.brow .s{font-weight:600;font-size:12.5px;margin-bottom:4px}
+.brow .e{font-size:11.5px;line-height:1.6;color:var(--ink-2)}
+
+/* ── 字体对照 ── */
+.fcmp{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:20px}
+.fcard{border:1px solid var(--rule);padding:20px 20px 24px}
+.fcard .hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;
+           padding-bottom:10px;border-bottom:1px solid var(--rule)}
+.fcard .nm{font-weight:600;font-size:14px} .fcard .tag{font-size:10px;color:var(--ink-3);letter-spacing:.1em}
+.fspec{font-size:30px;letter-spacing:-.02em;line-height:1.15;margin-bottom:4px}
+.fnum{font-size:22px;letter-spacing:-.01em;margin:10px 0 14px}
+.fmini{border-top:1px solid var(--rule);padding-top:12px}
+.fmini .k{font-weight:600;font-size:13px} .fmini .e{font-size:11px;line-height:1.6;color:var(--ink-2);margin-top:3px}
+.verdict{display:inline-block;background:var(--ink);color:var(--paper);font-weight:600;
+         letter-spacing:.1em;padding:7px 12px;font-size:12px;margin-top:12px}
+
+/* ── 真实仪表盘顶部 ── */
+.dash{border:1.5px solid var(--ink);background:#fff}
+.dash .hd{display:flex;align-items:stretch;border-bottom:1.5px solid var(--ink)}
+.dash .hd .a{padding:16px 20px;border-right:1px solid var(--rule)}
+.dash .hd .a.grow{flex:1}
+.dash .lbl{font-size:9.5px;letter-spacing:.2em;color:var(--ink-3);text-transform:uppercase;margin-bottom:7px}
+.dash .big{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.dash .wait{background:var(--ink);color:var(--paper);display:flex;flex-direction:column;
+            justify-content:center;padding:16px 26px;min-width:186px}
+.grid2{display:grid;grid-template-columns:1fr 1fr}
+.grid2>div:first-child{border-right:1px solid var(--rule)}
+/* 固定行高让左右两列的分隔线对齐 —— 证据长短不一时会错位 */
+.cell{display:grid;grid-template-columns:92px 88px 1fr;gap:10px;align-items:center;
+      min-height:52px;padding:7px 14px;border-bottom:1px solid #efece7}
+.cell .k{font-size:12.5px;font-weight:500}
+.cell .lv{display:flex;gap:2px} .cell .lv i{display:block;width:15px;height:11px}
+.cell .s{font-size:11px;line-height:1.55;color:var(--ink-2)}
+.cell .s b{font-weight:600;color:var(--ink)}
+
+.strip{display:grid;border-top:1.5px solid var(--ink)}
+.stn{padding:11px 10px;border-right:1px solid var(--rule);text-align:center}
+.stn:last-child{border-right:0}
+.stn .d{height:12px;margin:0 auto 8px;width:12px;border:2px solid var(--idle)}
+.stn .t{font-size:11px;font-weight:500}
+.stn .m{font-size:9.5px;color:var(--ink-3);margin-top:3px;font-family:var(--mono)}
+
+/* ── 分享卡 ── */
+.cards{display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap}
+.card{width:432px;height:540px;background:var(--paper);border:1px solid var(--rule);
+      padding:40px 40px 32px;display:flex;flex-direction:column}
+.card.dark{background:#12110f;border-color:#12110f;color:#f0ece3}
+</style>
+</head>
+<body>
+<div class="top"><span>B v2 · 工业指引</span><span class="r">2026-07-31 · 真实数据 · 三处待你定</span></div>
+
+<!-- ═════ 1 · 字体 ═════ -->
+<section class="sheet">
+  <div class="blk">
+    <h2 class="sec">一 · 字体 <b>同一行状态板，三种字，看的是它在 12px 上活不活</b></h2>
+    <div class="fcmp" id="fcmp"></div>
+    <p class="note">判据不是哪个漂亮，是<b>哪个在 11–13px 的证据行上仍然能读</b>，以及数字排成列时对不对齐。
+      三个都配 PingFang SC 作中文 —— 中文这一层不动。</p>
+  </div>
+</section>
+
+<!-- ═════ 2 · 色彩 ═════ -->
+<section class="sheet">
+  <div class="blk">
+    <h2 class="sec">二 · 色彩 <b>两层分开：钱用绿红，市场用蓝橙，且蓝橙编码的不是涨跌</b></h2>
+    <div id="palette"></div>
+  </div>
+</section>
+
+<!-- ═════ 3 · 真实仪表盘顶部 ═════ -->
+<section class="sheet">
+  <div class="blk">
+    <h2 class="sec">三 · 仪表盘顶部 <b>你截图分享的就是这一块</b></h2>
+    <div class="dash">
+      <div class="hd">
+        <div class="a"><div class="lbl">收盘</div><div class="big n" id="d-date">—</div></div>
+        <div class="a"><div class="lbl">SPX</div><div class="big n" id="d-spx">—</div></div>
+        <div class="a grow"><div class="lbl">读数 · 九格证据的合成</div>
+          <div class="big" id="d-read">—</div></div>
+        <div class="wait"><div class="lbl" style="color:#8a8478">风险姿态</div>
+          <div style="font-size:23px;font-weight:600;letter-spacing:.04em">等待 FTD</div>
+          <div style="font-size:10.5px;color:#a8a29e;margin-top:5px">确认信号缺席</div></div>
+      </div>
+      <div class="grid2"><div id="d-c1"></div><div id="d-c2"></div></div>
+      <div class="strip" id="d-strip"></div>
+    </div>
+    <p class="note">十格状态 + 六站传导，一屏读完，不需要滚动。最后一行是行动 —— A 稿的读序在这里活下来了：
+      眼睛从左上的事实走到右上的姿态，行动永远在末端。</p>
+  </div>
+
+  <div class="blk">
+    <h2 class="sec">四 · 待定格 <b>把还没发生的事画出来，是这套系统里唯一的「留白」</b></h2>
+    <div id="pending"></div>
+    <p class="note">整个金融界面都在画已经发生的事。空槽是 A 稿留下的第二样东西，
+      它让「等待」变成一个可见的位置，而不是一句形容词。</p>
+  </div>
+</section>
+
+<!-- ═════ 5 · 分享卡 ═════ -->
+<section class="sheet">
+  <div class="blk">
+    <h2 class="sec">五 · 分享卡 <b>4:5 · 对外那一层，不用图，仪器本身就是图</b></h2>
+    <div class="cards" id="cards"></div>
+    <p class="note">这跟已有的海报系统（借来的图 + 展签框）不冲突，是<b>两条线</b>：
+      海报走情绪与语录，分享卡走测量。两者共用同一行展签式的测量位，所以放在一起仍是一家。</p>
+  </div>
+</section>
+
+<script>
+const D = /*__DATA__*/ null;
+const B = D.state_board, CH = D.chain, T = D.breadth.today, LV = D.levels;
+const C = {works:"#1f5f9e", fails:"#c4601f", idle:"#b6b1a9"};
+const li = s => s==null ? -1 : LV.indexOf(s);
+const lvColor = (r,k) => {
+  if (r.state==null) return "#d8d4cd";
+  if (k > li(r.state)) return "#e6e2db";
+  return li(r.state) <= 1 ? C.fails : li(r.state) >= 3 ? C.works : "#8a8478";
+};
+const bars = (r, w, h) => LV.map((_,k)=>
+  `<i style="width:${w}px;height:${h}px;background:${lvColor(r,k)}"></i>`).join("");
+
+/* ── 1 · 字体 ── */
+const FACES = [
+  {nm:"IBM Plex Sans", tag:"开源 · 有配套 SC 与 Mono", css:"var(--f-plex)",
+   why:"工业出身，等宽/中文/西文同源。可直接部署，无授权成本。"},
+  {nm:"Avenir Next", tag:"Frutiger · Univers 的直系", css:"var(--f-avenir)",
+   why:"Aicher 那条路的血亲，本机已有 24 个字重。网页商用需授权。"},
+  {nm:"Inter", tag:"现状 · SaaS 默认脸", css:"var(--f-inter)",
+   why:"最安全也最没有身份 —— 每个仪表盘都长这样。"},
+];
+document.getElementById("fcmp").innerHTML = FACES.map(f=>{
+  const r = B.find(x=>x.key==="市场宽度");
+  return `<div class="fcard" style="font-family:${f.css}">
+    <div class="hd"><span class="nm">${f.nm}</span><span class="tag">${f.tag}</span></div>
+    <div class="fspec">市场宽度</div>
+    <div class="fspec" style="font-weight:600">Confirmation absent</div>
+    <div class="fnum" style="font-variant-numeric:tabular-nums">7489.72 · 45.8 · −336</div>
+    <div style="font:400 12px var(--mono);color:var(--ink-3);margin:-8px 0 14px">
+      同一串数字走等宽：<span style="color:var(--ink-2)">7489.72 · 45.8 · −336</span></div>
+    <div class="fmini">
+      <div class="k">${r.key} — ${r.state}</div>
+      <div style="display:flex;gap:3px;margin:7px 0">${bars(r,19,9)}</div>
+      <div class="e">${r.evidence}</div>
+    </div>
+    <div class="verdict">等待 FTD</div>
+    <div style="font-size:11px;color:var(--ink-3);margin-top:14px;line-height:1.6">${f.why}</div>
+  </div>`;
+}).join("");
+
+/* ── 2 · 色彩 ── */
+const SW = [
+  ["市场层 · 回应质量", [
+    ["#1f5f9e","接住了","给了机会且拿下 —— 收回、突破、站住"],
+    ["#8a8478","部分","动了但没完成"],
+    ["#c4601f","没接住","给了机会却失败 —— gap-and-fail、跌破"],
+    ["#b6b1a9","未给机会","没有可判定的测试"]]],
+  ["钱层 · 只有盈亏", [
+    ["#2f6b4f","盈利",'仅用于 P/L 数字，永不用于市场状态'],
+    ["#a33a2a","亏损",'同上']]],
+  ["纸与墨", [
+    ["#faf9f7","纸","暖石底，沿用现有系统"],
+    ["#16150f","墨","近黑，不用纯黑"],
+    ["#57534e","次级文字","证据行"],
+    ["#e0ddd8","分隔线","1px，永不加阴影"]]],
+];
+document.getElementById("palette").innerHTML = SW.map(([g,rows])=>`
+  <div style="margin-top:22px">
+    <div style="font-size:11px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase;margin-bottom:12px">${g}</div>
+    ${rows.map(([hex,nm,d])=>`
+      <div style="display:grid;grid-template-columns:56px 108px 1fr 96px;gap:16px;align-items:center;
+                  padding:9px 0;border-bottom:1px solid var(--rule)">
+        <div style="height:30px;background:${hex};border:1px solid rgba(0,0,0,.08)"></div>
+        <div style="font-weight:600;font-size:13px">${nm}</div>
+        <div style="font-size:11.5px;color:var(--ink-2)">${d}</div>
+        <div class="n" style="font-size:11px;color:var(--ink-3)">${hex.toUpperCase()}</div>
+      </div>`).join("")}
+  </div>`).join("");
+
+/* ── 3 · 仪表盘顶部 ── */
+document.getElementById("d-date").textContent = D.as_of;
+document.getElementById("d-spx").textContent = T.spx_close.toFixed(2);
+document.getElementById("d-read").textContent = "巨头修好了，传导没发生";
+const cell = r => `<div class="cell">
+  <div class="k">${r.key}</div>
+  <div class="lv">${bars(r,15,11)}</div>
+  <div class="s">${r.state == null
+      ? `<b style="color:var(--ink-3)">未接入</b> · ${r.evidence}`
+      : `<b>${r.state}</b> · ${r.evidence}`}</div></div>`;
+// 风险姿态不进格子 —— 它是行动，已经占着右上的黑块；重复一次还会被误读成第十项证据
+const rows = B.filter(r => r.key !== "风险姿态");
+document.getElementById("d-c1").innerHTML = rows.slice(0,5).map(cell).join("");
+document.getElementById("d-c2").innerHTML = rows.slice(5).map(cell).join("");
+
+const strip = document.getElementById("d-strip");
+strip.style.gridTemplateColumns = `repeat(${CH.length},1fr)`;
+strip.innerHTML = CH.map(c=>{
+  const col = c.state==="lit" ? C.works : c.state==="partial" ? "#8a8478" : C.idle;
+  const fill = c.state==="lit" ? col : c.state==="partial"
+    ? `linear-gradient(90deg,${col} 50%,transparent 50%)` : "transparent";
+  return `<div class="stn"><div class="d" style="border-color:${col};background:${fill}"></div>
+    <div class="t">${c.label}</div>
+    <div class="m">${c.state==="lit"?"已发生":c.state==="partial"?"部分":"未到"}</div></div>`;
+}).join("");
+
+/* ── 4 · 待定格 ── */
+const SEQ = [["07.29","抛压清算","done"],["07.30","止跌 · 第 1 天","done"],
+             ["07.31","延续 · 第 2 天","done"],["下一步","FTD？","pending"],
+             ["再下一步","宽度扩张？","pending"]];
+document.getElementById("pending").innerHTML =
+  `<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:18px">` +
+  SEQ.map(([d,t,st])=>`
+    <div style="border:${st==="done"?"1.5px solid var(--ink)":"1.5px dashed #cfcac2"};
+                padding:16px 14px;background:${st==="done"?"#fff":"transparent"}">
+      <div class="n" style="font-size:10px;letter-spacing:.14em;color:var(--ink-3)">${d}</div>
+      <div style="font-size:15px;font-weight:${st==="done"?600:400};margin-top:9px;
+                  color:${st==="done"?"var(--ink)":"var(--ink-3)"}">${t}</div>
+      ${st==="done"?`<div style="height:3px;width:26px;background:${C.works};margin-top:12px"></div>`
+                   :`<div style="height:3px;width:26px;border-top:1px dashed #cfcac2;margin-top:12px"></div>`}
+    </div>`).join("") + `</div>`;
+
+/* ── 5 · 分享卡 ── */
+const meta = `SPX ${T.spx_close.toFixed(0)} · T2108 ${T.t2108.toFixed(0)} · >20SMA ${T.pct_above_20sma.toFixed(0)}%`;
+const cardInner = (dark) => {
+  const ink = dark ? "#f0ece3" : "#16150f", dim = dark ? "#8a8478" : "#57534e",
+        rule = dark ? "#2a2823" : "#e0ddd8";
+  const stn = CH.map(c=>{
+    const col = c.state==="lit" ? C.works : c.state==="partial" ? "#8a8478" : (dark?"#3a3833":"#d8d4cd");
+    return `<div style="flex:1;height:5px;background:${col}"></div>`;
+  }).join(`<div style="width:3px"></div>`);
+  // 九格证据压成 3×3 —— 卡的上半部原来是空的，读起来像漏做，不像决定
+  const mini = B.filter(r => r.key !== "风险姿态").map(r => `
+    <div><div style="font-size:9.5px;color:${dim};margin-bottom:5px">${r.key}</div>
+      <div style="display:flex;gap:1.5px">${LV.map((_,k)=>{
+        const c = lvColor(r,k);
+        // 两个「空」灰都要在深色卡上翻过来，否则未接入的利率会读成满格
+        const off = c === "#e6e2db" || c === "#d8d4cd";
+        return `<i style="display:block;width:100%;height:6px;background:${
+          off ? (dark ? "#2a2823" : c) : c}"></i>`;
+      }).join("")}</div></div>`).join("");
+  return `
+  <div style="display:flex;justify-content:space-between;align-items:baseline">
+    <div style="font-size:10px;letter-spacing:.24em;color:${dim};font-family:var(--mono)">FLUXUS · 07.31</div>
+    <div style="font-size:9.5px;letter-spacing:.14em;color:${dim}">九格证据</div></div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px 16px;margin-top:18px">${mini}</div>
+  <div style="font-size:44px;font-weight:600;letter-spacing:-.03em;line-height:1.05;margin-top:auto;color:${ink}">
+    巨头修好了<br>传导没发生</div>
+  <div style="display:flex;align-items:center;margin:26px 0 20px">${stn}</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;padding-bottom:20px;
+              border-bottom:1px solid ${rule}">
+    ${[["5 日动能比", T.ratio_5d.toFixed(4), C.fails],
+       [">20 日线", T.pct_above_20sma.toFixed(1)+"%", C.fails],
+       ["已突破", "4 / 7", C.works]].map(([k,v,c])=>`
+      <div><div style="font-size:10px;color:${dim};letter-spacing:.08em">${k}</div>
+        <div class="n" style="font-size:21px;color:${c};margin-top:5px">${v}</div></div>`).join("")}
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px">
+    <div class="n" style="font-size:10px;letter-spacing:.1em;color:${dim}">${meta}</div>
+    <div style="font-size:11px;font-weight:600;letter-spacing:.3em;color:${ink}">FLUXUS</div>
+  </div>`;
+};
+document.getElementById("cards").innerHTML =
+  `<div class="card">${cardInner(false)}</div><div class="card dark">${cardInner(true)}</div>`;
+</script>
+</body>
+</html>

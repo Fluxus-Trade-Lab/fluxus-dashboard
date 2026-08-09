@@ -1,11 +1,22 @@
-"""Stockbee 5-Day Breadth Ratio Screener.
+"""Stockbee 5-day breadth ratio -- how many names are participating.
 
-Counts stocks gaining >= 4 % and losing >= 4 % in a single session,
-then computes a rolling 5-day ratio of gainers to losers.  A ratio
-above 3.0 signals a breadth thrust; below 0.5 signals a collapse.
+**What it looks for: the tape, not a stock.** Counts names up 4%+ against
+names down 4%+ each session and takes a rolling 5-day ratio. Above 3.0 is a
+thrust -- buying broad enough that it is not a handful of leaders carrying an
+index. Below 0.5 is the same reading inverted.
 
-History is persisted in a JSON file so that the pipeline can compute
-the trailing 5-day window across consecutive daily runs.
+This is the one screen here that is not a shortlist. Nothing in it is
+tradeable; it is an input to the question of how much risk the environment
+deserves, which is upstream of which name to buy.
+
+**What it cannot tell you: which way.** A thrust says participation widened,
+not that it continues -- thrusts occur at the start of advances and inside
+bear-market rallies, and the reading is identical. It is also count-based, so
+a 4% move in a $200M name and in a $200B name are one vote each; the ratio
+describes the number of things moving, never the money behind them.
+
+History is persisted to JSON so the trailing 5-day window survives across
+daily runs.
 """
 
 from __future__ import annotations
@@ -15,6 +26,8 @@ import logging
 from datetime import date
 from pathlib import Path
 from typing import Any, Dict, List
+
+from pipeline.marketcal import market_today
 
 import pandas as pd
 
@@ -105,7 +118,7 @@ def run(universe: pd.DataFrame, history_path: str) -> Dict[str, Any]:
     losers_today = int((universe["change_pct"] <= _LOSER_PCT).sum())
 
     today_entry = {
-        "date": date.today().isoformat(),
+        "date": market_today().isoformat(),
         "gainers": gainers_today,
         "losers": losers_today,
     }

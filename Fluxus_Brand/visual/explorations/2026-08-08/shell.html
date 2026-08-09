@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FLUXUS — Shell: two modes, and the seam between them</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+:root{
+  --paper:#f4f3f0; --rail:#eceae5; --ink:#111110; --ink-2:#5c5852; --ink-3:#9c968d;
+  --rule:#dedad3; --hair:#eae7e1;
+  --works:#1f5f9e; --fails:#d1600f; --idle:#c2bdb4;
+  --sans:Plex,-apple-system,sans-serif; --cond:PlexCond,Plex,sans-serif; --mono:PlexMono,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;display:flex}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ── left rail: two modes, labelled ── */
+.rail{width:232px;flex:0 0 232px;min-height:100vh;background:var(--rail);
+      border-right:1px solid var(--rule);padding:22px 0 0}
+.rail .mark{font-family:var(--cond);font-weight:700;font-size:18px;letter-spacing:.17em;padding:0 22px 22px}
+.grp{padding:0 0 6px}
+.grp>b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;
+       color:var(--ink-3);font-weight:500;padding:16px 22px 7px}
+.grp a{display:flex;align-items:baseline;gap:8px;padding:7px 22px;font-size:13.5px;
+       color:var(--ink-2);text-decoration:none;border-left:2px solid transparent}
+.grp a.on{color:var(--ink);font-weight:600;border-left-color:var(--ink);background:#f6f5f2}
+.grp a small{font-family:var(--mono);font-size:9.5px;color:var(--ink-3);margin-left:auto}
+.rail .lock{padding:10px 22px 0;font-size:10.5px;color:var(--ink-3);line-height:1.5}
+.rail .seam{margin:20px 14px 0;padding:11px 12px;border:1px dashed var(--idle)}
+.rail .seam b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--ink-3);margin-bottom:5px}
+.rail .seam p{margin:0;font-size:11px;line-height:1.5;color:var(--ink-2)}
+
+/* ── page ── */
+.page{flex:1;min-width:0;padding:26px 40px 80px;max-width:1180px}
+.crumb{display:flex;align-items:baseline;gap:10px;font-family:var(--mono);font-size:10.5px;
+       letter-spacing:.2em;color:var(--ink-3);padding-bottom:16px}
+.crumb i{font-style:normal;color:var(--idle)}
+.head{display:flex;align-items:flex-end;gap:20px;padding-bottom:12px;border-bottom:1px solid var(--ink)}
+.head h1{font-family:var(--cond);font-weight:700;font-size:62px;line-height:.9;margin:0;letter-spacing:-.01em}
+.head .px{font-family:var(--mono);font-size:22px;color:var(--ink-2)}
+.head .r{margin-left:auto;text-align:right;font-size:11.5px;color:var(--ink-3);line-height:1.55}
+
+.band{padding:30px 0 4px}
+.band>h2{display:flex;align-items:baseline;gap:12px;font-family:var(--mono);font-size:10px;
+         letter-spacing:.24em;color:var(--ink-3);font-weight:500;margin:0 0 14px}
+.band>h2 em{font-style:normal;font-family:var(--sans);letter-spacing:0;font-size:12px;color:var(--ink-3)}
+.band>h2 i{flex:1;height:1px;background:var(--rule);font-style:normal}
+
+.strip{display:grid;grid-template-columns:112px 1fr 54px;gap:12px;align-items:center;
+       padding:7px 0;border-bottom:1px solid var(--hair)}
+.strip .k{font-size:12.5px;font-weight:600}
+.strip .k small{display:block;font-weight:400;font-size:10px;color:var(--ink-3)}
+.marks{display:flex;flex-wrap:wrap;gap:2px}
+.marks i{width:10px;height:10px;background:var(--works)}
+.marks i.o{background:none;box-shadow:inset 0 0 0 1.1px var(--idle)}
+.strip .c{font-family:var(--cond);font-weight:700;font-size:17px;text-align:right}
+
+.mb{display:grid;grid-template-columns:56px 1fr 96px 74px;gap:14px;align-items:center;
+    padding:8px 0;border-bottom:1px solid var(--hair);font-size:12.5px}
+.mb .yr{font-family:var(--mono);font-weight:500}
+.bar{height:11px;background:var(--works)}
+.mb .g{font-family:var(--cond);font-weight:700;font-size:16px;text-align:right}
+.mb .d{font-size:11px;color:var(--ink-3);text-align:right}
+
+.tr{display:grid;grid-template-columns:84px 60px 1fr 70px 70px;gap:12px;align-items:center;
+    padding:7px 0;border-bottom:1px solid var(--hair);font-size:12px}
+.tr .dt{font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+.tr .rr{font-family:var(--cond);font-weight:700;font-size:16px}
+.tr .rr.up{color:var(--works)} .tr .rr.dn{color:var(--fails)}
+/* One shared R axis across every row, domain −3R … +35R, so the rows compare.
+   Grey runs 0 → optimal_R (what was there); the tick sits at realized_R and may
+   fall left of zero. Drawing each bar to its own width, which is what the first
+   pass did, makes a 0.18R trade look like a 34R one. */
+.gauge{position:relative;height:11px}
+.gauge u{position:absolute;top:-3px;bottom:-3px;left:7.89%;width:1px;background:var(--rule)}
+.gauge span{position:absolute;left:7.89%;top:0;bottom:0;background:var(--idle)}
+.gauge b{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.axis{display:grid;grid-template-columns:84px 60px 1fr 70px 70px;gap:12px;
+      font-family:var(--mono);font-size:9.5px;color:var(--ink-3);padding-top:3px}
+.axis .a{position:relative;height:12px}
+.axis .a i{position:absolute;font-style:normal;transform:translateX(-50%)}
+.tr .op{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-align:right}
+.tr .st{font-size:10.5px;color:var(--ink-3)}
+
+.note{font-size:11.5px;line-height:1.6;color:var(--ink-3);margin:12px 0 0;max-width:820px}
+.note b{color:var(--ink-2)}
+.gate{margin:12px 0 0;padding:13px 16px;border:1px dashed var(--idle);max-width:820px}
+.gate b{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--ink-3);display:block;margin-bottom:5px}
+.gate p{margin:0;font-size:12px;line-height:1.6;color:var(--ink-2)}
+.foot{margin-top:34px;padding-top:16px;border-top:1px solid var(--ink);
+      font-size:11.5px;line-height:1.65;color:var(--ink-3);max-width:900px}
+.foot b{color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+<aside class="rail">
+  <div class="mark">FLUXUS</div>
+
+  <div class="grp">
+    <b>MARKET</b>
+    <a href="#">Today</a>
+    <a href="#">Screener</a>
+    <a href="#">Market State</a>
+    <a href="#">Themes</a>
+    <div class="lock">开放。不需要账户,不碰任何私人数据。</div>
+  </div>
+
+  <div class="grp">
+    <b>MY BOOK</b>
+    <a href="#">Positions</a>
+    <a href="#">Journal</a>
+    <a href="#">Coach <small>+ MODEL BOOKS</small></a>
+    <div class="lock">需要账户 + 你自己上传的成交。<br>Model Books 在这里 —— 它是训练场,不是行情。</div>
+  </div>
+
+  <div class="seam">
+    <b>SEAM</b>
+    <p>个股页不属于任何一边。没有账户也能看市场那两段;第三段等你的成交进来。</p>
+  </div>
+</aside>
+
+<main class="page">
+
+  <div class="crumb">MARKET <i>›</i> SCREENER <i>›</i> BE <i>·</i> SEAM PAGE</div>
+
+  <div class="head">
+    <h1>BE</h1>
+    <span class="px">—</span>
+    <span class="r">Bloom Energy<br>
+      筛选器 <b>106 次</b> · 2026-03-09 → 08-04<br>
+      模型册 <b>5 条</b> · 你的成交 <b>15 笔</b></span>
+  </div>
+
+  <!-- ── 1 · 市场给了什么(向外,谁都能看) ── -->
+  <div class="band">
+    <h2>1 · WHAT THE MARKET OFFERED <em>— 向外。没有账户也是这一段</em><i></i></h2>
+
+    <div class="strip"><span class="k">CHART<small>healthy chart</small></span>
+      <span class="marks"><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i></span>
+      <span class="c">38</span></div>
+
+    <div class="strip"><span class="k">4%<small>participation</small></span>
+      <span class="marks"><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i></span>
+      <span class="c">28</span></div>
+
+    <div class="strip"><span class="k">MOM<small>quality · ×3</small></span>
+      <span class="marks"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="c">23</span></div>
+
+    <div class="strip"><span class="k">21D<small>participation</small></span>
+      <span class="marks"><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i></span>
+      <span class="c">14</span></div>
+
+    <div class="strip"><span class="k">VOL<small>participation</small></span>
+      <span class="marks"><i class="o"></i><i class="o"></i><i class="o"></i></span>
+      <span class="c">3</span></div>
+
+    <p class="note">五个月里 <b>106 次</b>出现,其中质量层 23 次。实心是质量层,空心是参与度。
+      这一段对所有人相同 —— 它说的是市场,不是你。</p>
+  </div>
+
+  <!-- ── 2 · 这只票历史上做过什么(向外) ── -->
+  <div class="band">
+    <h2>2 · WHAT THIS NAME HAS DONE BEFORE <em>— 模型册,同样向外</em><i></i></h2>
+
+    <div class="mb"><span class="yr">2020</span><span><span class="bar" style="width:100%"></span></span>
+      <span class="g">+952.7%</span><span class="d">204 天</span></div>
+    <div class="mb"><span class="yr">2025</span><span><span class="bar" style="width:92%"></span></span>
+      <span class="g">+876.0%</span><span class="d">154 天</span></div>
+    <div class="mb"><span class="yr">2024</span><span><span class="bar" style="width:25.3%"></span></span>
+      <span class="g">+241.2%</span><span class="d">199 天</span></div>
+    <div class="mb"><span class="yr">2022</span><span><span class="bar" style="width:18.3%"></span></span>
+      <span class="g">+174.4%</span><span class="d">67 天</span></div>
+    <div class="mb"><span class="yr">2026</span><span><span class="bar" style="width:10.9%"></span></span>
+      <span class="g">+103.6%</span><span class="d">39 天</span></div>
+
+    <p class="note"><b>BE 在模型册里出现五次。</b>这不是一只偶尔跑一次的票,它反复做同一件事。
+      —— 但这五条<b>没有形态标注</b>:全部来自 "Big Movers",只有「涨了多少」,没有「基底长什么样」。
+      1,514 条里只有 50 条带 patterns 和 key_lessons。
+      <b>模型册现在能告诉你「它跑过」,还不能告诉你「它跑之前长什么样」。</b></p>
+  </div>
+
+  <!-- ── 3 · 你做了什么(向内,要账户) ── -->
+  <div class="band">
+    <h2>3 · WHAT YOU DID WITH IT <em>— 向内。没有账户时,这一段是关着的</em><i></i></h2>
+
+    <div class="tr" style="border-bottom:1px solid var(--ink);padding-bottom:6px">
+      <span class="st">入场</span><span class="st">结果 R</span>
+      <span class="st">你拿到的 ▌ / 当时可拿的</span><span class="st" style="text-align:right">optimal</span>
+      <span class="st">脉络</span></div>
+
+    <div class="tr"><span class="dt">2026-02-10</span><span class="rr dn">−0.56</span>
+      <span class="gauge"><u></u><span style="width:3.3%"></span><b style="left:6.4%"></b></span>
+      <span class="op">1.27R</span><span class="st">mixed</span></div>
+    <div class="tr"><span class="dt">2026-03-04</span><span class="rr dn">−0.67</span>
+      <span class="gauge"><u></u><span style="width:0.5%"></span><b style="left:6.1%"></b></span>
+      <span class="op">0.18R</span><span class="st">mixed</span></div>
+    <div class="tr"><span class="dt">2026-03-17</span><span class="rr dn">−1.22</span>
+      <span class="gauge"><u></u><span style="width:2.8%"></span><b style="left:4.7%"></b></span>
+      <span class="op">1.07R</span><span class="st">pullback</span></div>
+    <div class="tr"><span class="dt">2026-03-18</span><span class="rr dn">−2.62</span>
+      <span class="gauge"><u></u><span style="width:11.7%"></span><b style="left:1.0%"></b></span>
+      <span class="op">4.43R</span><span class="st">mixed</span></div>
+    <div class="tr"><span class="dt">2026-04-05</span><span class="rr dn">−0.23</span>
+      <span class="gauge"><u></u><span style="width:61.2%"></span><b style="left:7.3%"></b></span>
+      <span class="op">23.24R</span><span class="st">pullback &lt;MA50</span></div>
+    <div class="tr"><span class="dt">2026-04-05</span><span class="rr up">+0.11</span>
+      <span class="gauge"><u></u><span style="width:90.5%"></span><b style="left:8.2%"></b></span>
+      <span class="op">34.39R</span><span class="st">pullback &lt;MA50</span></div>
+    <div class="tr"><span class="dt">2026-04-08</span><span class="rr up">+7.33</span>
+      <span class="gauge"><u></u><span style="width:40.2%"></span><b style="left:27.2%"></b></span>
+      <span class="op">15.27R</span><span class="st">pullback &lt;MA50</span></div>
+    <div class="tr"><span class="dt">2026-05-07</span><span class="rr up">+4.72</span>
+      <span class="gauge"><u></u><span style="width:61.9%"></span><b style="left:20.3%"></b></span>
+      <span class="op">23.53R</span><span class="st">mixed</span></div>
+
+    <div class="axis"><span></span><span></span>
+      <span class="a"><i style="left:7.89%">0R</i><i style="left:34.2%">+10</i>
+        <i style="left:60.5%">+20</i><i style="left:86.8%">+30</i></span>
+      <span></span><span></span></div>
+
+    <p class="note">灰条是当时可拿的,黑线是你实际停在哪。
+      <b>前六笔全亏,四月之后转正。</b>4/05 那两笔:可拿 23R 和 34R,你拿到 −0.23 和 +0.11 ——
+      在对的票、对的时候,几乎没拿到。<br>
+      ⚠️ <b>optimal 这一列的定义刚修过</b>(2026-08-09):旧算法把平仓后 10 天的高点也算进「可拿」,
+      198 笔里有 101 笔的峰值发生在你卖出之后。上面的数还是旧口径,重跑后会变小。</p>
+
+    <div class="gate"><b>未登录时这一段长这样</b>
+      <p>市场给了什么、这只票历史上做过什么 —— 照常显示。
+      <b>你做了什么 —— 空着,并且说明它为什么空着</b>,而不是假装没有这一段。
+      这和利率那一格留空是同一条纪律。</p></div>
+  </div>
+
+  <p class="foot"><b>这一页为什么是接缝。</b>三段用同一套记号讲同一只票:市场给的机会(向外)、
+    这只票的历史(向外)、你的执行(向内)。前两段谁都能看,第三段要账户。
+    <b>它是唯一一个能把「你离优秀有多远」放在「优秀长什么样」旁边的地方</b> ——
+    而这正是模型册该挂进来的接口:BE 跑过五次,你交易了十五次,第三段和第二段应该能互相解释。
+    今天还不能,因为你的分类讲均线位置、模型册讲基底形状,两套词汇没有连接字段。</p>
+
+</main>
+</body>
+</html>

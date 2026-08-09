@@ -30,6 +30,19 @@ if blk_t:
     first = '\n'.join(blk_t.splitlines()[:2])
     msg_parts.append(f'**— 明天预告 —**\n{first}')
 
+# 📓 每日临帖(Copybook)—— 窗口固定为美东盘后 2h = ET 16:00–18:00
+# 本脚本 08:00 JST 触发 = 美东当地仍是前一天的傍晚,窗口刚闭合。
+# 用真实时区换算(不硬编码时差 —— 夏令时 13h、冬令时 14h)。
+# 只在那个美东日是交易日时提醒(周末跳过;⚠️ 未排除美股假日)。
+from zoneinfo import ZoneInfo
+et_prev = datetime.datetime.now(ZoneInfo('America/New_York')).date()
+if et_prev.weekday() < 5:
+    msg_parts.append(
+        '**— 📓 今日临帖 —**\n'
+        f'窗口:**ET {et_prev} 16:00–18:00**(盘后 2h)\n'
+        '开会话说一句「**今天的临帖**」即可。⚠️ 需要登录态 Chrome —— 云端跑不了抓取。\n'
+        '规格:`Fluxus_Brand/copybook/Fluxus_Copybook_Spec.md`')
+
 if RECEIPTS.exists():
     pend = [l.strip() for l in RECEIPTS.read_text(encoding='utf-8').splitlines() if '⏳' in l]
     keep = []

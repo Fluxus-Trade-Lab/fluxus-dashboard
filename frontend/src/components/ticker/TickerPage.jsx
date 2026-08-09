@@ -107,7 +107,8 @@ function TickerPageBody({ symbol }) {
       </div>
 
       <div className="mb-4">
-        <TickerSignalHistory symbol={symbol} trades={enrichedAll} />
+        <TickerSignalHistory symbol={symbol} trades={enrichedAll}
+                             ohlc={tickerData?.ohlc_2y ?? tickerData?.ohlc_1y} />
       </div>
 
       <div className="mb-4">

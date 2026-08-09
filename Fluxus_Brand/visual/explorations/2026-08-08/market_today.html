@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FLUXUS — MARKET · Today (outward)</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+:root{
+  --paper:#f4f3f0; --rail:#eceae5; --ink:#111110; --ink-2:#5c5852; --ink-3:#9c968d;
+  --rule:#dedad3; --hair:#eae7e1;
+  --works:#1f5f9e; --fails:#d1600f; --idle:#c2bdb4;
+  --sans:Plex,-apple-system,sans-serif; --cond:PlexCond,Plex,sans-serif; --mono:PlexMono,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;display:flex}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.rail{width:232px;flex:0 0 232px;min-height:100vh;background:var(--rail);
+      border-right:1px solid var(--rule);padding:22px 0 0}
+.rail .mark{font-family:var(--cond);font-weight:700;font-size:18px;letter-spacing:.17em;padding:0 22px 22px}
+.grp>b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;
+       color:var(--ink-3);font-weight:500;padding:16px 22px 7px}
+.grp a{display:flex;align-items:baseline;gap:8px;padding:7px 22px;font-size:13.5px;
+       color:var(--ink-2);text-decoration:none;border-left:2px solid transparent}
+.grp a.on{color:var(--ink);font-weight:600;border-left-color:var(--ink);background:#f6f5f2}
+.grp a small{font-family:var(--mono);font-size:9.5px;color:var(--ink-3);margin-left:auto}
+.rail .lock{padding:10px 22px 0;font-size:10.5px;color:var(--ink-3);line-height:1.5}
+
+.page{flex:1;min-width:0;padding:26px 40px 80px;max-width:1200px}
+.crumb{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--ink-3);padding-bottom:18px}
+
+/* hero: the market read. NOT a sizing instruction — that needs a personal
+   framework and lives behind an account. */
+.hero{display:grid;grid-template-columns:1fr 392px;gap:52px;padding-bottom:26px;border-bottom:1px solid var(--ink)}
+.kick{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;color:var(--ink-3);margin-bottom:12px}
+.env{font-family:var(--cond);font-weight:700;font-size:92px;line-height:.88;
+     letter-spacing:-.017em;text-transform:uppercase;margin:0}
+.score{display:flex;align-items:baseline;gap:11px;margin-top:14px}
+.score b{font-family:var(--cond);font-weight:700;font-size:38px;line-height:1}
+.score span{font-size:13px;color:var(--ink-2)}
+.votes{display:flex;gap:3px;margin-top:12px}
+.votes i{width:26px;height:14px;background:var(--idle)}
+.votes i.b{background:var(--works)}
+.votes i.x{background:var(--fails)}
+.vk{font-size:11px;color:var(--ink-3);margin-top:7px}
+.warn{margin:16px 0 0;padding:9px 13px;border:1px dashed var(--fails);font-size:12.5px;
+      line-height:1.5;color:var(--ink-2)}
+.warn b{color:var(--fails)}
+.breaks{margin:18px 0 0;padding-left:14px;border-left:2px solid var(--ink)}
+.breaks .h{font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;color:var(--ink-3);margin-bottom:5px}
+.breaks p{margin:0;font-size:13px;line-height:1.55;color:var(--ink-2)}
+.breaks p b{color:var(--ink)}
+
+.bench .row{display:grid;grid-template-columns:50px 1fr 76px;gap:12px;align-items:center;
+            padding:10px 0;border-bottom:1px solid var(--hair)}
+.bench .tk{font-family:var(--cond);font-weight:600;font-size:18px}
+.cells{display:flex;gap:3px}
+.cells i{width:18px;height:12px;background:var(--idle)}
+.cells i.on{background:var(--works)}
+.bench .px{font-family:var(--mono);font-size:12px;text-align:right;color:var(--ink-2)}
+.bench .sub{font-size:10.5px;color:var(--ink-3);grid-column:2/4;margin-top:-5px}
+.bench .cap{font-size:10.5px;color:var(--ink-3);padding-top:9px;line-height:1.55}
+
+.band{padding-top:34px}
+.band>h2{display:flex;align-items:baseline;gap:12px;font-family:var(--mono);font-size:10px;
+         letter-spacing:.24em;color:var(--ink-3);font-weight:500;margin:0 0 4px}
+.band>h2 em{font-style:normal;font-family:var(--sans);letter-spacing:0;font-size:12px}
+.band>h2 i{flex:1;height:1px;background:var(--rule);font-style:normal}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:46px}
+
+.th{display:grid;grid-template-columns:20px 1fr 96px 62px;gap:11px;align-items:center;
+    padding:8px 0;border-bottom:1px solid var(--hair);font-size:13px}
+.th .r{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.th .nm{font-weight:600}
+.th .nm small{font-weight:400;color:var(--ink-3);font-size:10.5px;margin-left:6px}
+.bar{height:11px;background:var(--works)}
+.bar.dn{background:var(--idle)}
+.th .v{font-family:var(--cond);font-weight:700;font-size:16px;text-align:right}
+.method{font-size:11px;line-height:1.6;color:var(--ink-3);margin:11px 0 0}
+.method b{color:var(--ink-2)}
+
+.heat{display:grid;grid-template-columns:58px 42px 1fr;gap:12px;align-items:center;
+      padding:8px 0;border-bottom:1px solid var(--hair)}
+.heat .tk{font-family:var(--mono);font-size:13px;font-weight:500}
+.heat .sc{font-family:var(--cond);font-weight:700;font-size:18px;line-height:1}
+.marks{display:flex;gap:8px}
+.marks span{display:flex;gap:2px}
+.marks i{width:9px;height:9px;background:var(--works)}
+.marks i.o{background:none;box-shadow:inset 0 0 0 1.1px var(--idle)}
+
+.drawer{border:1px solid var(--rule);padding:13px 16px;margin-top:9px;display:flex;
+        align-items:baseline;gap:12px}
+.drawer b{font-family:var(--cond);font-weight:600;font-size:15px}
+.drawer span{font-size:11.5px;color:var(--ink-3)}
+.drawer .n{margin-left:auto;font-size:10.5px;color:var(--ink-3)}
+.foot{margin-top:34px;padding-top:15px;border-top:1px solid var(--ink);
+      font-size:11.5px;line-height:1.65;color:var(--ink-3);max-width:940px}
+.foot b{color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+<aside class="rail">
+  <div class="mark">FLUXUS</div>
+  <div class="grp"><b>MARKET</b>
+    <a class="on" href="#">Today</a>
+    <a href="#">Screener</a>
+    <a href="#">Market State</a>
+    <a href="#">Themes</a>
+    <div class="lock">开放。不需要账户。</div>
+  </div>
+  <div class="grp"><b>MY BOOK</b>
+    <a href="#">Positions</a>
+    <a href="#">Journal</a>
+    <a href="#">Coach <small>+ MODEL BOOKS</small></a>
+    <div class="lock">需要账户 + 你的成交。</div>
+  </div>
+</aside>
+
+<main class="page">
+  <div class="crumb">MARKET › TODAY · SESSION 2026-08-08</div>
+
+  <div class="hero">
+    <div>
+      <div class="kick">THE MARKET IS</div>
+      <h1 class="env">Bullish</h1>
+
+      <div class="score"><b>+8</b><span>of 12 signals · risk low · 1 warning active</span></div>
+
+      <div class="votes">
+        <i class="b"></i><i class="b"></i><i class="b"></i><i class="b"></i><i class="b"></i>
+        <i class="b"></i><i class="b"></i><i class="b"></i><i class="b"></i>
+        <i></i><i></i><i class="x"></i>
+      </div>
+      <div class="vk">9 for · 2 undecided · 1 against — one cell per signal, so the majority is
+        counted, not asserted</div>
+
+      <div class="warn"><b>Computed from a weekend.</b> The ±4% and advance/decline counts behind
+        these votes are zero because nothing was counted, not because nothing moved.</div>
+
+      <div class="breaks">
+        <div class="h">WHAT WOULD CHANGE THIS</div>
+        <p>Bullish holds while the score stays <b>≥ +4</b>. It takes <b>5 points</b> to break —
+          <b>3</b> of the 9 crossing all the way over, or 5 going undecided.
+          Already against: quarterly spread.</p>
+      </div>
+    </div>
+
+    <div class="bench">
+      <div class="row"><span class="tk">SPY</span>
+        <span class="cells"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
+        <span class="px">773.26</span></div>
+      <div class="row"><span class="tk">QQQ</span>
+        <span class="cells"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span>
+        <span class="px">723.03</span></div>
+      <div class="row" style="border:0;padding-top:0"><span></span>
+        <span class="sub">20SMA has not crossed the 50 · 2.99% under its high</span></div>
+      <div class="row"><span class="tk">IWM</span>
+        <span class="cells"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
+        <span class="px">301.56</span></div>
+      <div class="row"><span class="tk">RSP</span>
+        <span class="cells"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
+        <span class="px">220.09</span></div>
+      <p class="cap">Five cells, five power-trend checks. Rank is how many are filled — no traffic
+        light, because a lamp carries one dimension and hides the other four.</p>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="two">
+      <div>
+        <h2>WHERE THE STRENGTH IS <em>— 3-month RS</em><i></i></h2>
+        <div class="th"><span class="r">1</span><span class="nm">High Octane <small>84</small></span>
+          <span><span class="bar" style="width:100%"></span></span><span class="v">+0.66</span></div>
+        <div class="th"><span class="r">2</span><span class="nm">52-Week High Leaders <small>86</small></span>
+          <span><span class="bar" style="width:79%"></span></span><span class="v">+0.52</span></div>
+        <div class="th"><span class="r">3</span><span class="nm">Cybersecurity <small>16</small></span>
+          <span><span class="bar" style="width:72%"></span></span><span class="v">+0.48</span></div>
+        <div class="th"><span class="r">4</span><span class="nm">Growth Factor <small>326</small></span>
+          <span><span class="bar" style="width:51%"></span></span><span class="v">+0.33</span></div>
+        <div class="th"><span class="r">5</span><span class="nm">Banks — Money Center <small>20</small></span>
+          <span><span class="bar" style="width:21%"></span></span><span class="v">+0.14</span></div>
+        <p class="method"><b>80 themes ranked, 3,207 names, against SPY.</b> The count after each
+          name is how many stocks are in it — a theme of one stock is one stock, and we print the
+          number so you can see which is which.</p>
+      </div>
+
+      <div>
+        <h2>WHERE IT IS TURNING <em>— RS acceleration</em><i></i></h2>
+        <div class="th"><span class="r">1</span><span class="nm">Drones</span>
+          <span><span class="bar" style="width:100%"></span></span><span class="v">+0.44</span></div>
+        <div class="th"><span class="r">2</span><span class="nm">Silver Miners</span>
+          <span><span class="bar" style="width:97%"></span></span><span class="v">+0.43</span></div>
+        <div class="th"><span class="r">3</span><span class="nm">Gold Miners</span>
+          <span><span class="bar" style="width:90%"></span></span><span class="v">+0.40</span></div>
+        <div class="th"><span class="r">4</span><span class="nm">Rare Earth Metals</span>
+          <span><span class="bar" style="width:80%"></span></span><span class="v">+0.35</span></div>
+        <div class="th"><span class="r">5</span><span class="nm">Silver</span>
+          <span><span class="bar" style="width:74%"></span></span><span class="v">+0.33</span></div>
+        <p class="method"><b>All five are still negative on 3-month RS.</b> Gold Miners sits at
+          −0.14 while accelerating at +0.40 — that is the whole point of separating the two
+          columns. A leaderboard that shows only what has already won cannot show you a turn.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="band">
+    <h2>WHAT IS STACKING <em>— names appearing in more than one screener</em><i></i></h2>
+    <div class="two" style="gap:46px">
+      <div>
+        <div class="heat"><span class="tk">DDD</span><span class="sc">13.0</span>
+          <span class="marks"><span><i></i></span><span><i></i><i></i><i></i></span>
+            <span><i class="o"></i><i class="o"></i></span>
+            <span><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i></span></span></div>
+        <div class="heat"><span class="tk">FTK</span><span class="sc">13.0</span>
+          <span class="marks"><span><i></i></span><span><i></i><i></i><i></i><i></i></span>
+            <span><i class="o"></i><i class="o"></i></span>
+            <span><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i></span></span></div>
+        <div class="heat"><span class="tk">APPS</span><span class="sc">12.8</span>
+          <span class="marks"><span><i></i></span><span><i></i><i></i></span>
+            <span><i class="o"></i><i class="o"></i><i class="o"></i></span>
+            <span><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i></span></span></div>
+      </div>
+      <div>
+        <div class="heat"><span class="tk">CAKE</span><span class="sc">12.5</span>
+          <span class="marks"><span><i></i></span><span><i></i><i></i><i></i><i></i></span>
+            <span><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i></span>
+            <span><i class="o"></i><i class="o"></i></span></span></div>
+        <div class="heat"><span class="tk">CORT</span><span class="sc">12.5</span>
+          <span class="marks"><span><i></i></span><span><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i></span>
+            <span><i class="o"></i></span></span></div>
+        <div class="heat"><span class="tk">KNSA</span><span class="sc">12.5</span>
+          <span class="marks"><span><i></i></span><span><i></i><i></i><i></i></span>
+            <span><i class="o"></i><i class="o"></i></span>
+            <span><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i></span></span></div>
+      </div>
+    </div>
+    <p class="method">Solid is the quality tier, outlined is participation — one mark per
+      appearance. Counted through <b>2026-08-06</b>.
+      <b>This list ranks by what has already stacked, so every name on it is a survivor.</b>
+      Read it for what is confluent now, not as evidence that confluence pays — the matched study
+      of that came back <b>0 of 42</b>.</p>
+  </div>
+
+  <div class="band">
+    <h2>REFERENCE <em>— opened on purpose</em><i></i></h2>
+    <div class="drawer"><b>Trend status</b><span>distance to 9 / 21 / 50 / 200</span><span class="n">4 rows</span></div>
+    <div class="drawer"><b>Indices · Style · Sectors · Industries</b><span>relative strength tables</span><span class="n">62 rows</span></div>
+    <div class="drawer"><b>All 80 themes</b><span>RS level and acceleration, full list</span><span class="n">80 rows</span></div>
+  </div>
+
+  <p class="foot"><b>What is deliberately not on this page.</b> No position size, no exposure
+    instruction, no playbook. Those need a risk framework — an R, a per-trade limit, a book
+    ceiling — and that is personal, so it lives behind an account in MY BOOK. This page answers
+    <b>what the market is doing</b>. It does not answer what you should do about it, because it
+    does not know who you are.<br><br>
+    <b>And what is on it that a leaderboard usually leaves out:</b> the denominator (80 themes,
+    3,207 names), the member count per theme, the session the numbers come from, the condition
+    that would break the verdict, and the fact that the confluence list is made of survivors.</p>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,88 @@
+{
+  "date": "2026-08-05",
+  "generated_at": "2026-08-06T01:55:38-04:00",
+  "tpo": {
+    "instrument": "SPX",
+    "bar": "30 mins",
+    "tick": 2.5,
+    "periods": 13,
+    "high": 7795.0,
+    "low": 7720.0,
+    "tpoc": 7745.0,
+    "value_area": {
+      "low": 7725.0,
+      "high": 7765.0,
+      "poc": 7745.0,
+      "covered": 0.7345132743362832,
+      "method": "pair",
+      "coverage_target": 0.7
+    },
+    "single_prints": [
+      7795.0
+    ],
+    "tails": {
+      "buying": null,
+      "selling": {
+        "low": 7795.0,
+        "high": 7795.0,
+        "length": 1,
+        "significant": false
+      }
+    },
+    "poor_extremes": {
+      "poor_high": false,
+      "poor_low": true,
+      "high": 7795.0,
+      "low": 7720.0,
+      "high_tpos": 1,
+      "low_tpos": 2
+    },
+    "initial_balance": {
+      "low": 7768.85,
+      "high": 7793.68,
+      "periods": 2
+    },
+    "counts": {
+      "7720.0": 2,
+      "7722.5": 2,
+      "7725.0": 3,
+      "7727.5": 3,
+      "7730.0": 3,
+      "7732.5": 5,
+      "7735.0": 9,
+      "7737.5": 10,
+      "7740.0": 10,
+      "7742.5": 10,
+      "7745.0": 10,
+      "7747.5": 5,
+      "7750.0": 3,
+      "7752.5": 2,
+      "7755.0": 2,
+      "7757.5": 2,
+      "7760.0": 2,
+      "7762.5": 2,
+      "7765.0": 2,
+      "7767.5": 2,
+      "7770.0": 3,
+      "7772.5": 3,
+      "7775.0": 3,
+      "7777.5": 2,
+      "7780.0": 2,
+      "7782.5": 2,
+      "7785.0": 2,
+      "7787.5": 2,
+      "7790.0": 2,
+      "7792.5": 2,
+      "7795.0": 1
+    }
+  },
+  "volume": {
+    "instrument": "ES",
+    "bar": "1 min",
+    "tick": 1.0,
+    "provenance": "approximated \u2014 each bar's volume spread evenly across the prices it spans; not tape-derived volume-at-price",
+    "vpoc": 7767.0,
+    "volume_without_time": [],
+    "total": 1144993.0
+  }
+}

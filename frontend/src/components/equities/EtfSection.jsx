@@ -8,7 +8,10 @@ const COLUMNS = [
   { key: 'perf_1w', label: '5D', sortable: true },
   { key: 'perf_1m', label: '20D', sortable: true },
   { key: 'dist_sma50_atr', label: 'ATR', sortable: true },
-  { key: 'rs', label: 'RS', sortable: true },
+  // RRS, not the stock-side RS: a 21-day percentile of the ATR-normalised
+  // relative-strength ratio vs SPY. Labelled distinctly so it is not read
+  // as comparable with the screener's rs_* percentiles.
+  { key: 'rrs_rank', label: 'RRS', sortable: true },
   { key: 'sparkline', label: 'CHART', sortable: false },
 ]
 

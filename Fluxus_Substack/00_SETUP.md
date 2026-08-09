@@ -1,7 +1,7 @@
 # Substack 开台设置 — 逐字段粘贴稿
 
 *目标站:`fluxuscapital.substack.com`(空置 3 年,内容 0)*
-*结构照抄 TSF(见 `Fluxus_TSF_Teardown.md`),文案走 Fluxus 声音(见 `Fluxus_Voice_Bible.md`)。*
+*结构照抄 TSF(见 `../Fluxus_Brand/research/Fluxus_TSF_Teardown.md`),文案走 Fluxus 声音(见 `../Fluxus_Brand/voice/Fluxus_Voice_Bible.md`)。*
 *⚠️ 全部为本地草稿。我不会替你发布任何东西 —— 你逐项审完自己粘贴。*
 
 ---
@@ -31,7 +31,7 @@ Momentum, risk, and the question underneath it all. Written by a full-time swing
 The promise: every idea arrives with its size and its stop. You'll never have to ask how much.
 ```
 
-**Hero text(主页大字块 —— ⚠️ 短版。长版留给 Squarespace,见 `Fluxus_Action_Plan.md`):**
+**Hero text(主页大字块 —— ⚠️ 短版。长版留给 Squarespace,见 `../Fluxus_Brand/ops/Fluxus_Action_Plan.md`):**
 ```
 Momentum, risk, and how much. From Japan, on Asian hours.
 
@@ -131,7 +131,7 @@ a conversation. You'll see the entry, the stop, the trade risk in percent, and t
 percent — on every single one, winners and losers alike.
 
 You'll see the losses. My win rate is 39.9%. I lose more often than I win and the year still works,
-because the winners are 3.15x the losers. If I only showed you the good ones you'd learn the wrong
+because the winners are 3.40x the losers. If I only showed you the good ones you'd learn the wrong
 job.
 
 Start here → [Start Here 那篇的链接]

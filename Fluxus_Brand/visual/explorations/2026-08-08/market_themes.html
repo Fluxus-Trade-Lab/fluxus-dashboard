@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FLUXUS — MARKET · Themes</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+:root{
+  --paper:#f4f3f0; --rail:#eceae5; --ink:#111110; --ink-2:#5c5852; --ink-3:#9c968d;
+  --rule:#dedad3; --hair:#eae7e1;
+  --works:#1f5f9e; --fails:#d1600f; --idle:#c2bdb4;
+  --sans:Plex,-apple-system,sans-serif; --cond:PlexCond,Plex,sans-serif; --mono:PlexMono,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;display:flex}
+.rail{width:232px;flex:0 0 232px;min-height:100vh;background:var(--rail);
+      border-right:1px solid var(--rule);padding:22px 0 0}
+.rail .mark{font-family:var(--cond);font-weight:700;font-size:18px;letter-spacing:.17em;padding:0 22px 22px}
+.grp>b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;
+       color:var(--ink-3);font-weight:500;padding:16px 22px 7px}
+.grp a{display:flex;align-items:baseline;gap:8px;padding:7px 22px;font-size:13.5px;
+       color:var(--ink-2);text-decoration:none;border-left:2px solid transparent}
+.grp a.on{color:var(--ink);font-weight:600;border-left-color:var(--ink);background:#f6f5f2}
+.grp a small{font-family:var(--mono);font-size:9.5px;color:var(--ink-3);margin-left:auto}
+.rail .lock{padding:10px 22px 0;font-size:10.5px;color:var(--ink-3);line-height:1.5}
+
+.page{flex:1;min-width:0;padding:26px 40px 80px;max-width:1220px}
+.crumb{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--ink-3);padding-bottom:16px}
+.head{display:grid;grid-template-columns:1fr 430px;gap:52px;align-items:end;
+      padding-bottom:14px;border-bottom:1px solid var(--ink)}
+.head h1{font-family:var(--cond);font-weight:700;font-size:58px;line-height:.9;margin:0}
+.head p{margin:10px 0 0;font-size:14px;line-height:1.5;color:var(--ink-2);max-width:560px}
+.head p b{color:var(--ink)}
+.head .r{font-size:11px;color:var(--ink-3);line-height:1.6;text-align:right}
+
+/* the four states, counted — the same axes TSF draws as a donut, but with all
+   eighty themes in the denominator instead of the three on screen */
+.states{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);
+        border:1px solid var(--rule);margin-top:26px}
+.st{background:var(--paper);padding:14px 16px 16px}
+.st b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--ink-3);margin-bottom:8px}
+.st .n{font-family:var(--cond);font-weight:700;font-size:44px;line-height:.9}
+.st .of{font-size:11px;color:var(--ink-3);margin-top:3px}
+.st .d{font-size:11.5px;color:var(--ink-2);line-height:1.5;margin-top:9px}
+.st.hot .n{color:var(--works)}
+.st.cold .n{color:var(--fails)}
+
+.band{padding-top:34px}
+.band>h2{display:flex;align-items:baseline;gap:12px;font-family:var(--mono);font-size:10px;
+         letter-spacing:.24em;color:var(--ink-3);font-weight:500;margin:0 0 6px}
+.band>h2 em{font-style:normal;font-family:var(--sans);letter-spacing:0;font-size:12px}
+.band>h2 i{flex:1;height:1px;background:var(--rule);font-style:normal}
+
+/* one row per theme, both axes on one line so a turn is visible without a scatter */
+.row{display:grid;grid-template-columns:24px 190px 46px 1fr 1fr 58px;gap:12px;align-items:center;
+     padding:8px 0;border-bottom:1px solid var(--hair);font-size:13px}
+.row .rk{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.row .nm{font-weight:600}
+.row .mem{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);text-align:right}
+.row .mem.thin{color:var(--fails)}
+.ax{position:relative;height:12px}
+.ax u{position:absolute;top:-3px;bottom:-3px;left:50%;width:1px;background:var(--rule)}
+.ax span{position:absolute;top:0;bottom:0;height:12px}
+.ax span.p{background:var(--works)}
+.ax span.n{background:var(--idle)}
+.row .tag{font-family:var(--mono);font-size:9.5px;color:var(--ink-3);text-align:right}
+.hdr{display:grid;grid-template-columns:24px 190px 46px 1fr 1fr 58px;gap:12px;
+     font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;color:var(--ink-3);
+     padding-bottom:7px;border-bottom:1px solid var(--ink)}
+.hdr .c{text-align:center}
+.method{font-size:11px;line-height:1.6;color:var(--ink-3);margin:12px 0 0;max-width:900px}
+.method b{color:var(--ink-2)}
+.foot{margin-top:32px;padding-top:15px;border-top:1px solid var(--ink);
+      font-size:11.5px;line-height:1.65;color:var(--ink-3);max-width:960px}
+.foot b{color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+<aside class="rail">
+  <div class="mark">FLUXUS</div>
+  <div class="grp"><b>MARKET</b>
+    <a href="#">Today</a><a href="#">Screener</a><a href="#">Market State</a>
+    <a class="on" href="#">Themes</a>
+    <div class="lock">开放。不需要账户。</div>
+  </div>
+  <div class="grp"><b>MY BOOK</b>
+    <a href="#">Positions</a><a href="#">Journal</a>
+    <a href="#">Coach <small>+ MODEL BOOKS</small></a>
+    <div class="lock">需要账户 + 你的成交。</div>
+  </div>
+</aside>
+
+<main class="page">
+  <div class="crumb">MARKET › THEMES · 2026-08-09</div>
+
+  <div class="head">
+    <div>
+      <h1>Themes</h1>
+      <p><b>The leaders are rolling over and the metals are turning up.</b>
+        All four of the strongest themes by 3-month RS are decelerating, and every one of the
+        fastest accelerations is still negative on RS.</p>
+    </div>
+    <div class="r">80 themes · 3,207 names · measured against SPY<br>
+      RS level = 3-month relative strength<br>
+      RS acceleration = change in that strength</div>
+  </div>
+
+  <div class="states">
+    <div class="st hot"><b>LEADING</b><div class="n">7</div><div class="of">of 80 · strong and still gaining</div>
+      <div class="d">Copper Miners · Software · Consumer Retail</div></div>
+    <div class="st cold"><b>WEAKENING</b><div class="n">21</div><div class="of">of 80 · strong but decelerating</div>
+      <div class="d">High Octane · Cybersecurity · 52-Week High Leaders</div></div>
+    <div class="st hot"><b>IMPROVING</b><div class="n">37</div><div class="of">of 80 · weak but accelerating</div>
+      <div class="d">Silver Miners · Gold Miners · Rare Earth Metals</div></div>
+    <div class="st"><b>LAGGING</b><div class="n">15</div><div class="of">of 80 · weak and still losing</div>
+      <div class="d">Semiconductors Broad · Crypto Equities</div></div>
+  </div>
+  <p class="method"><b>Every theme is in exactly one box and the four add to 80.</b>
+    A donut showing three themes on screen can say "Leading 2, Lagging 1" without telling you
+    what the other seventy-seven are doing. The denominator is the point.</p>
+
+  <div class="band">
+    <h2>THE LEADERS <em>— highest 3-month RS, and what each is doing now</em><i></i></h2>
+    <div class="hdr"><span></span><span>THEME</span><span>N</span>
+      <span class="c">RS LEVEL −.7 · 0 · +.7</span><span class="c">ACCELERATION −.6 · 0 · +.6</span><span></span></div>
+
+    <div class="row"><span class="rk">1</span><span class="nm">High Octane</span><span class="mem">84</span>
+      <span class="ax"><u></u><span class="p" style="left:50%;width:47%"></span></span>
+      <span class="ax"><u></u><span class="n" style="right:50%;width:43%"></span></span>
+      <span class="tag">WEAK'G</span></div>
+    <div class="row"><span class="rk">2</span><span class="nm">52-Week High Leaders</span><span class="mem">86</span>
+      <span class="ax"><u></u><span class="p" style="left:50%;width:37%"></span></span>
+      <span class="ax"><u></u><span class="n" style="right:50%;width:13%"></span></span>
+      <span class="tag">WEAK'G</span></div>
+    <div class="row"><span class="rk">3</span><span class="nm">Cybersecurity</span><span class="mem">16</span>
+      <span class="ax"><u></u><span class="p" style="left:50%;width:34%"></span></span>
+      <span class="ax"><u></u><span class="n" style="right:50%;width:29%"></span></span>
+      <span class="tag">WEAK'G</span></div>
+    <div class="row"><span class="rk">4</span><span class="nm">Growth Factor</span><span class="mem">326</span>
+      <span class="ax"><u></u><span class="p" style="left:50%;width:24%"></span></span>
+      <span class="ax"><u></u><span class="n" style="right:50%;width:12%"></span></span>
+      <span class="tag">WEAK'G</span></div>
+    <div class="row"><span class="rk">5</span><span class="nm">Software</span><span class="mem">227</span>
+      <span class="ax"><u></u><span class="p" style="left:50%;width:6%"></span></span>
+      <span class="ax"><u></u><span class="p" style="left:50%;width:3%"></span></span>
+      <span class="tag">LEADING</span></div>
+    <p class="method"><b>Four of the top five are weakening.</b> Software is the only one of them
+      still gaining, and it is gaining slightly. This is the reading a single-column leaderboard
+      cannot produce, because rank and direction are different questions.</p>
+  </div>
+
+  <div class="band">
+    <h2>THE TURNS <em>— fastest acceleration, all still below zero on RS</em><i></i></h2>
+    <div class="hdr"><span></span><span>THEME</span><span>N</span>
+      <span class="c">RS LEVEL</span><span class="c">ACCELERATION</span><span></span></div>
+
+    <div class="row"><span class="rk">1</span><span class="nm">Drones</span><span class="mem">6</span>
+      <span class="ax"><u></u><span class="n" style="right:50%;width:2%"></span></span>
+      <span class="ax"><u></u><span class="p" style="left:50%;width:37%"></span></span>
+      <span class="tag">IMPROV'G</span></div>
+    <div class="row"><span class="rk">2</span><span class="nm">Silver Miners</span><span class="mem">6</span>
+      <span class="ax"><u></u><span class="n" style="right:50%;width:10%"></span></span>
+      <span class="ax"><u></u><span class="p" style="left:50%;width:36%"></span></span>
+      <span class="tag">IMPROV'G</span></div>
+    <div class="row"><span class="rk">3</span><span class="nm">Gold Miners</span><span class="mem">41</span>
+      <span class="ax"><u></u><span class="n" style="right:50%;width:10%"></span></span>
+      <span class="ax"><u></u><span class="p" style="left:50%;width:33%"></span></span>
+      <span class="tag">IMPROV'G</span></div>
+    <div class="row"><span class="rk">4</span><span class="nm">Rare Earth Metals</span><span class="mem">8</span>
+      <span class="ax"><u></u><span class="n" style="right:50%;width:24%"></span></span>
+      <span class="ax"><u></u><span class="p" style="left:50%;width:29%"></span></span>
+      <span class="tag">IMPROV'G</span></div>
+    <div class="row"><span class="rk">5</span><span class="nm">Silver</span><span class="mem thin">1</span>
+      <span class="ax"><u></u><span class="n" style="right:50%;width:19%"></span></span>
+      <span class="ax"><u></u><span class="p" style="left:50%;width:27%"></span></span>
+      <span class="tag">IMPROV'G</span></div>
+    <p class="method"><b>Silver has one member.</b> A theme of one stock is one stock, so the count
+      is printed in the same weight as the name and turns amber below three.
+      <b>16 of the 80 themes have fewer than three members</b> — they are kept, and marked, rather
+      than quietly dropped or quietly averaged in.</p>
+  </div>
+
+  <p class="foot"><b>What this page refuses to do.</b> It does not rank themes by what they
+    returned. A list sorted by past gain puts a name at the top precisely because it already
+    moved, which is a selection, not a finding — and it is the reason our own confluence study
+    came back 0 of 42. Level and acceleration are both measured against SPY over fixed windows
+    and neither is chosen after the fact.<br><br>
+    <b>What it still cannot tell you.</b> Whether Improving becomes Leading more often than it
+    falls back to Lagging. The four states are computable today; the transition rates are not
+    measured yet, so no claim is made about them.</p>
+
+</main>
+</body>
+</html>

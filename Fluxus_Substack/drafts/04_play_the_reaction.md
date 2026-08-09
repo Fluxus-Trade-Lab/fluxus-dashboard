@@ -1,6 +1,6 @@
 ---
 status: 草稿(Claude 起草,待用户改写声音 + 补一个比喻)
-source: 全部引文取自 Discord 实录,带精确日期,见 Fluxus_H1_2026_Timeline.md
+source: 全部引文取自 Discord 实录,带精确日期,见 ../../Fluxus_Brand/record/Fluxus_H1_2026_Timeline.md
 seam: 判断🆓 / 当前仓位与点位🔒
 theme: 可连载 —— 每次宏观事件都能出一期
 ---

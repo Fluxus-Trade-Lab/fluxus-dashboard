@@ -24,7 +24,9 @@ import json
 import logging
 import math
 from dataclasses import asdict
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
+
+from pipeline.marketcal import market_today
 from pathlib import Path
 from typing import Optional
 
@@ -38,6 +40,11 @@ logger = logging.getLogger(__name__)
 OUTPUT_DIR = Path('data/output/trades')
 TICKERS_DIR = Path('data/output/tickers')
 FIXED_R_DOLLARS = 2500.0
+
+# capture_pct is realized_R / optimal_R, so it is only meaningful once the trade
+# actually offered something to capture. Below this the percentage is withheld
+# and `missed_R` carries the reading instead.
+MIN_OPTIMAL_R_FOR_RATIO = 0.25
 
 
 # ── helpers ────────────────────────────────────────────────────────────────
@@ -185,12 +192,24 @@ def _classify_setup(snap: dict, direction: str) -> str:
 
 
 def _compute_path_analytics(df: pd.DataFrame, trade: Trade) -> dict:
-    """Walk OHLC from entry → exit (or today if open), compute MFE/MAE/optimal."""
+    """Walk OHLC from entry → exit, compute MFE/MAE/optimal, and separately what
+    the name did for ten days after the exit.
+
+    The two windows are kept apart on purpose. Until 2026-08-09 the excursion
+    window ran to exit + 10 days, so `optimal_R` could sit on a high printed
+    after the position was already closed — on this book that was true for
+    101 of 198 closed trades, a bare majority. `capture_pct` then answered two
+    questions at once ("did you hold your winner to its peak" and "did you sell
+    too early") and you could not tell from the number which one it was
+    reporting. Holding to a peak you have already sold past is not a thing a
+    trader can do, so it does not belong in a metric called capture.
+    """
     entry_d = trade.entry_date
-    exit_d = trade.exit_date or date.today()
-    # Use bars from entry day to ~5 trading days after exit (so we can see what happened next)
-    end_window = exit_d + timedelta(days=10)
-    window = df[(df.index >= entry_d) & (df.index <= end_window)]
+    exit_d = trade.exit_date or market_today()
+    # The capturable window: only bars you were actually holding through.
+    window = df[(df.index >= entry_d) & (df.index <= exit_d)]
+    # What it did next, reported separately as "left on the table".
+    after = df[(df.index > exit_d) & (df.index <= exit_d + timedelta(days=10))]
     if len(window) < 1:
         return {}
 
@@ -227,11 +246,33 @@ def _compute_path_analytics(df: pd.DataFrame, trade: Trade) -> dict:
         else None
     )
 
-    # Realized R captured / R available
+    # Realized R captured / R available while holding.
     realized_R = trade.realized_R if trade.closed else None
+
+    # The ratio is unstable as optimal_R approaches zero: a name that never got
+    # meaningfully above entry gives a denominator near nothing, so an ordinary
+    # loss divides into hundreds of percent. LLY on this book read −947% off an
+    # optimal_R of 0.084. Below the floor the percentage is withheld and the
+    # additive gap is the number to read instead — it never blows up.
     capture_pct = None
-    if realized_R is not None and optimal_R is not None and optimal_R > 0:
+    if (realized_R is not None and optimal_R is not None
+            and optimal_R >= MIN_OPTIMAL_R_FOR_RATIO):
         capture_pct = realized_R / optimal_R * 100
+    missed_R = (
+        optimal_R - realized_R
+        if realized_R is not None and optimal_R is not None else None
+    )
+
+    # Left on the table: the best it printed in the ten days after the exit,
+    # measured in the same R. This is the "did I sell too early" question, kept
+    # as its own field so it can never be mistaken for capture.
+    post_exit_R = None
+    if len(after) >= 1:
+        if trade.direction == 'long':
+            post_fav = (after['high'] - entry_price) / r_per_share
+        else:
+            post_fav = (entry_price - after['low']) / r_per_share
+        post_exit_R = _safe_float(post_fav.max())
 
     days_to_optimal = (
         (optimal_date - entry_d).days if optimal_date is not None else None
@@ -249,6 +290,8 @@ def _compute_path_analytics(df: pd.DataFrame, trade: Trade) -> dict:
         'days_to_optimal': days_to_optimal,
         'realized_R': realized_R,
         'capture_pct': capture_pct,
+        'missed_R': missed_R,
+        'post_exit_R': post_exit_R,
         'hold_calendar_days': hold_days,
     }
 
@@ -434,7 +477,7 @@ def generate_postmortems(trades: list[Trade], output_dir: Path) -> dict:
 
         record = {
             'trade_id': tid,
-            'generated_at': datetime.now().isoformat(timespec='seconds') + 'Z',
+            'generated_at': datetime.now(timezone.utc).isoformat(timespec='seconds'),
             '_schema': 'v1',
             'trade': _trade_to_dict(trade),
             'entry_snapshot': snap,
@@ -456,7 +499,7 @@ def generate_postmortems(trades: list[Trade], output_dir: Path) -> dict:
 def _slice_ohlc(df: pd.DataFrame, trade: Trade) -> list[dict]:
     """Return OHLC bars for entry-30d to exit+10d (or today+10d if open)."""
     start = trade.entry_date - timedelta(days=30)
-    end = (trade.exit_date or date.today()) + timedelta(days=10)
+    end = (trade.exit_date or market_today()) + timedelta(days=10)
     window = df[(df.index >= start) & (df.index <= end)]
     return [
         {
@@ -499,7 +542,7 @@ def _build_index(output_dir: Path) -> None:
     # Sort by entry date descending (most recent first)
     index.sort(key=lambda r: (r.get('entry_date') or '', r['trade_id']), reverse=True)
     with open(output_dir / '_index.json', 'w') as f:
-        json.dump({'generated_at': datetime.now().isoformat() + 'Z', 'trades': index}, f, indent=2)
+        json.dump({'generated_at': datetime.now(timezone.utc).isoformat(), 'trades': index}, f, indent=2)
     logger.info(f"Wrote index of {len(index)} trades to {output_dir / '_index.json'}")
 
 

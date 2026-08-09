@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — the loud side, set two</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+:root{
+  --ink:#12110f;--ink2:#57534e;
+  --buff:#e9dfcb;--crimson:#c8102e;--gold:#f0b323;--moss:#2b6a4d;
+  --indigo:#3c5a8a;--ochre:#b6895b;
+  --sans:Plex,-apple-system,sans-serif;--cond:PlexCond,Plex,sans-serif;--mono:PlexMono,Menlo,monospace;
+  --u:8px;
+}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:#dedad3;color:var(--ink);font-family:var(--sans);
+     -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.app{max-width:1400px;margin:0 auto;padding:0 calc(var(--u)*4) calc(var(--u)*14)}
+.bar{display:flex;align-items:baseline;gap:calc(var(--u)*3);padding:calc(var(--u)*2) 0;
+     border-bottom:2px solid var(--ink)}
+.bar .wm{font-family:var(--cond);font-weight:700;font-size:19px;letter-spacing:.3em}
+.bar .r{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:#6f6a60}
+h1{font-family:var(--cond);font-weight:700;font-size:64px;line-height:.93;letter-spacing:-.015em;
+   text-transform:uppercase;margin:calc(var(--u)*5) 0 0;max-width:17ch}
+.lede{font-size:16.5px;line-height:1.55;max-width:68ch;margin:calc(var(--u)*3) 0 0;color:#4a4640}
+.lede b{color:var(--ink);font-weight:600}
+h3{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#6f6a60;
+   margin:calc(var(--u)*8) 0 calc(var(--u)*2.5);padding-bottom:calc(var(--u)*1.2);
+   border-bottom:1px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline}
+h3 em{font-style:normal;text-transform:none;letter-spacing:.01em;font-family:var(--sans);
+      font-size:11.5px;color:#4a4640;font-weight:400}
+.note{font-size:12.5px;line-height:1.7;color:#4a4640;max-width:86ch;margin:calc(var(--u)*2) 0 0}
+.note b{color:var(--ink);font-weight:600}
+.stage{display:flex;gap:calc(var(--u)*5);flex-wrap:wrap;align-items:flex-start}
+.piece{background:var(--buff);position:relative;overflow:hidden;width:432px;height:540px;padding:34px}
+.piece .fx{font-family:var(--mono);font-size:9.5px;letter-spacing:.26em;color:#6b6156}
+.piece .meta{position:absolute;left:34px;right:34px;bottom:28px;display:flex;
+             justify-content:space-between;align-items:baseline;
+             border-top:1px solid rgba(18,17,15,.22);padding-top:9px}
+.piece .meta .m{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:#6b6156}
+.piece .meta .mk{font-family:var(--cond);font-weight:700;font-size:11px;letter-spacing:.3em}
+.cap{font-size:11.5px;line-height:1.65;color:#4a4640;max-width:440px}
+.cap b{color:var(--ink)}
+.verdict{border-left:3px solid var(--ink);padding-left:calc(var(--u)*2);margin-top:calc(var(--u)*2.5)}
+.verdict .h{font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:#6f6a60;
+            text-transform:uppercase;margin-bottom:6px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="bar"><span class="wm">FLUXUS</span>
+    <span style="font-size:12.5px;color:#6f6a60">The loud side · set two · the repetition test</span>
+    <span class="r">THREE TRIGGERS · REAL DATA</span></div>
+
+  <h1>Does it hold<br>at a different<br>emotion?</h1>
+  <p class="lede">Set one was one day and one mood. The real question is whether the same five
+  colours survive <b>euphoria, silence and deflation</b> without turning into decoration —
+  because a palette that only works on the day it was designed for is a mood board, not a system.
+  <br><br>Three real triggers, none of them 07-31. Same frame, same expression set, same
+  measurement line. What changes is only which colour is doing the work — and, on one of them,
+  <b>whether any colour is allowed at all</b>.</p>
+
+  <h3>04 · Thrust <em>2026-06-11 — 705 names up 4%, 36 down</em></h3>
+  <div class="stage">
+    <div class="piece" id="thrust"></div>
+    <div style="flex:1;min-width:320px">
+      <p class="cap"><b>Euphoria drawn as a ratio, not an adjective.</b> 705 against 36 is 19.6 to
+      one. Nothing about that needs a word — the two bars at true scale are the whole statement,
+      and the smaller one is almost invisible, which is the point.
+      <br><br>Gold does the work here. It is not "up" — <b>it is the category "the market said
+      yes"</b>. On 07-31 the same position was held by indigo and crimson. The palette assigns by
+      what the day <em>is</em>, never by direction.</p>
+      <div class="verdict"><div class="h">Holds?</div>
+        <b>Yes.</b> Gold at this scale is genuinely loud and still not hype, because the loudness
+        is carried by a measured ratio rather than by the colour alone.</div>
+    </div>
+  </div>
+
+  <h3>05 · Nothing to report <em>2026-04-27 — 1318 up, 1203 down, net +115</em></h3>
+  <div class="stage">
+    <div class="piece" id="nothing"></div>
+    <div style="flex:1;min-width:320px">
+      <p class="cap"><b>This is the one that tested the palette hardest — by refusing it.</b>
+      Every colour I tried made the card worse. Silence with a gold accent is not silence; it is
+      silence wearing a hat.
+      <br><br>So this piece is ink on buff and nothing else. The only colour is the crimson stamp,
+      and it earns its place because it is a stamp on a document rather than a decorative mark.</p>
+      <div class="verdict"><div class="h">Holds?</div>
+        <b>Only by leaving.</b> The finding: <b>"no colour" has to be a legal state of the
+        expression set</b>, not an omission. A system that cannot say nothing will fill every
+        silence, and then it is just a brand that always talks.</div>
+    </div>
+  </div>
+
+  <h3>06 · Null result <em>42 sequences tested · 0 beat their baseline</em></h3>
+  <div class="stage">
+    <div class="piece" id="nullres"></div>
+    <div style="flex:1;min-width:320px">
+      <p class="cap"><b>Refusal 5, which has never actually been published.</b> 42 ordered
+      screener sequences were measured against a matched random-entry baseline drawn from the same
+      tickers and the same dates. <b>None of them beat it.</b> The best was −0.41% and the median
+      −2.28% — even the winner loses.
+      <br><br>Crimson here is not failure-as-drama. It is the same crimson that marked the dead
+      link on the 07-31 cover: <b>the category "this stopped"</b>.</p>
+      <div class="verdict"><div class="h">Holds?</div>
+        <b>Yes, and this is the strongest of the three.</b> Nobody in this category publishes the
+        study that killed their own idea at poster scale. It is the only piece here that could not
+        be made by someone who did not run the study.</div>
+    </div>
+  </div>
+
+  <h3>What the second set changed</h3>
+  <p class="note">
+  <b>1 · "No colour" is now a state, not an absence.</b> The nothing-to-report card rejected every
+  member of the expression set. That is not a gap in the palette — it is the palette's fifth
+  legal move, and it needs to be written down or the next person will reach for gold to fill it.
+  <br><b>2 · Colour assigns by category, never by direction.</b> Gold carried euphoria on 06-11
+  and crimson carried a stopped current on both 07-31 and the null result. The same crimson meant
+  "the chain died" and "the study died" — same category, different subject. That is the rule
+  working, not a coincidence.
+  <br><b>3 · The frame survived three moods unchanged.</b> Same margins, same measurement line,
+  same corner mark. On the tenth piece a reader should recognise the frame before the subject,
+  and after six there is no sign of it bending.
+  <br><b>4 · The measurement line is now the weakest part.</b> It held on all six, but it is
+  small and getting smaller as the type grows. On the next set it should be tested at the point
+  where it is genuinely inconvenient — otherwise it will quietly become a footnote nobody reads,
+  which is the same as not measuring.
+  </p>
+</div>
+
+<script>
+const D = {"thrust": {"date": "2026-06-11", "up": 705, "down": 36, "spx": 7394.2998046875, "t2108": 55.99, "net": 1262}, "nothing": {"date": "2026-04-27", "adv": 1318, "dec": 1203, "net": 115}, "nul": {"date": "2026-07-30", "tested": 42, "positive": 0, "best": -0.00408, "median": -0.022772}};
+const el=id=>document.getElementById(id);
+const C={crimson:"#c8102e",gold:"#f0b323",moss:"#2b6a4d",indigo:"#3c5a8a",ink:"#12110f"};
+
+/* ── 04 thrust · 2026-06-11 ── */
+(function(){
+  const d=D.thrust, ratio=d.up/d.down;
+  const H=196, upH=H, dnH=Math.max(3, H*d.down/d.up);
+  el("thrust").innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <span class="fx">FLUXUS · THRUST</span><span class="fx">${d.date.replace(/-/g,".")}</span></div>
+    <div style="font-family:var(--cond);font-weight:700;font-size:78px;line-height:.85;
+                letter-spacing:-.02em;text-transform:uppercase;margin-top:24px">
+      <span style="color:${C.gold};-webkit-text-stroke:1.5px ${C.ink}">705</span> up<br>
+      <span style="font-size:44px">36 down</span></div>
+    <div style="display:flex;align-items:flex-end;gap:16px;margin-top:30px;height:${H}px">
+      <div style="width:96px;height:${upH}px;background:${C.gold};
+                  box-shadow:inset 0 0 0 1.5px ${C.ink}"></div>
+      <div style="width:96px;height:${dnH}px;background:${C.crimson}"></div>
+      <div style="font-family:var(--cond);font-weight:700;font-size:40px;color:${C.ink};
+                  line-height:1;padding-bottom:2px">${ratio.toFixed(1)}<span
+                  style="font-size:16px;font-family:var(--mono);font-weight:400">:1</span></div>
+    </div>
+    <div style="font-size:12px;line-height:1.5;color:#4a4640;margin-top:14px;max-width:30ch">
+      Nineteen names moved four percent up for every one that moved four percent down.</div>
+    <div class="meta"><span class="m">SPX ${d.spx.toFixed(0)} · T2108 ${d.t2108.toFixed(0)} ·
+      NET ${d.net>0?"+":""}${d.net}</span><span class="mk">FLUXUS</span></div>`;
+})();
+
+/* ── 05 nothing to report · 2026-04-27 — the palette is refused ── */
+(function(){
+  const d=D.nothing;
+  el("nothing").innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <span class="fx">FLUXUS · OBSERVATION</span><span class="fx">${d.date.replace(/-/g,".")}</span></div>
+    <div style="font-family:var(--cond);font-weight:700;font-size:82px;line-height:.86;
+                letter-spacing:-.02em;text-transform:uppercase;margin-top:112px;color:${C.ink}">
+      Nothing<br>to<br>report</div>
+    <div style="margin-top:26px;font-family:var(--mono);font-size:10.5px;line-height:2;
+                color:#4a4640;letter-spacing:.04em">
+      ADVANCING &nbsp;${d.adv}<br>DECLINING &nbsp;${d.dec}<br>NET &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+${d.net}</div>
+    <div style="position:absolute;right:32px;bottom:96px;transform:rotate(-11deg);
+                border:2.5px solid ${C.crimson};color:${C.crimson};padding:6px 11px;
+                font-family:var(--cond);font-weight:700;font-size:15px;letter-spacing:.14em">
+      NOT A CALL</div>
+    <div class="meta"><span class="m">NOT ONE OF NINE CONDITIONS CHANGED LEVEL</span>
+      <span class="mk">FLUXUS</span></div>`;
+})();
+
+/* ── 06 null result — publishing the study that killed the idea ── */
+(function(){
+  const d=D.nul;
+  el("nullres").innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <span class="fx">FLUXUS · NULL RESULT</span><span class="fx">${d.date.replace(/-/g,".")}</span></div>
+    <div style="display:flex;align-items:baseline;gap:8px;margin-top:34px">
+      <span style="font-family:var(--cond);font-weight:700;font-size:150px;line-height:.8;
+                   letter-spacing:-.05em;color:${C.crimson};margin-left:-8px">0</span>
+      <span style="font-family:var(--cond);font-weight:700;font-size:66px;line-height:1;
+                   color:${C.ink}">of ${d.tested}</span></div>
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:#6b6156;
+                margin-top:6px">SEQUENCES THAT BEAT A MATCHED RANDOM ENTRY</div>
+    <div style="border-left:3px solid ${C.crimson};padding-left:14px;margin-top:26px;
+                font-size:13px;line-height:1.55;max-width:32ch">
+      Best of the ${d.tested}: <b>${(d.best*100).toFixed(2)}%</b>. Median:
+      <b>${(d.median*100).toFixed(2)}%</b>.
+      <br><br>Even the winner loses. I built the screeners, I mined the sequences, and the
+      honest answer is that the ordering carries no edge.</div>
+    <div style="position:absolute;left:34px;right:34px;bottom:28px">
+      <div style="border-top:1px solid ${C.ink};padding-top:11px">
+        <div style="font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:${C.ink};
+                    line-height:1.55;white-space:nowrap">n ≥ 20 · SEED 42<br>NET OF BASELINE</div>
+        <div style="text-align:right;margin-top:8px;font-family:var(--cond);font-weight:700;
+                    font-size:11px;letter-spacing:.3em">FLUXUS</div></div>
+    </div>`;
+})();
+</script>
+</body></html>

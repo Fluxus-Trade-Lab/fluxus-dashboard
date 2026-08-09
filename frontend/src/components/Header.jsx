@@ -2,43 +2,34 @@ import { formatTimestamp } from '../lib/format'
 import { useTheme } from '../hooks/useTheme'
 import { useLanguage } from '../i18n/LanguageContext'
 
-const NAV_ITEMS = [
-  { key: 'dashboard', label: 'Dashboard', hash: '#/dashboard' },
-  { key: 'screener', label: 'Screener', hash: '#/screener' },
-  { key: 'portfolio', label: 'Portfolio', hash: '#/portfolio' },
-  { key: 'trades', label: 'Trade Journal', hash: '#/trades' },
-  { key: 'journal', label: 'AI Coach', hash: '#/journal' },
-  { key: 'briefing', label: 'Briefing', hash: '#/briefing' },
-  { key: 'breadth', label: 'Breadth', hash: '#/breadth' },
-  { key: 'modelbooks', label: 'Model Books', hash: '#/modelbooks' },
-]
-
-export default function Header({ lastUpdated, isOffline, currentPage, onNavigate }) {
+/**
+ * Status bar, not navigation. The sections moved to Rail.jsx when the nav split
+ * into MARKET and MY BOOK — nine flat buttons could not carry that split, and
+ * two labelled groups do not fit across the top.
+ *
+ * What stays here is everything that is true of the whole app rather than of a
+ * page: when the data was last written, whether we are offline, language, theme.
+ *
+ * Briefing is gone from both. briefs.json holds five entries dated 2026-03-17
+ * to 03-21, so the page served five-month-old writing as today's brief. The
+ * route still resolves, so sent links keep working; put it back when something
+ * writes daily, or delete the page.
+ */
+export default function Header({ lastUpdated, isOffline }) {
   const { theme, toggle } = useTheme()
   const { lang, toggle: toggleLang, t } = useLanguage()
 
   return (
-    <header className="flex items-center justify-between px-4 py-3 bg-[var(--color-surface)] border-b border-[var(--color-border)]">
+    <header className="sticky top-0 z-20 flex items-center justify-between px-4 py-3
+                       border-b border-[var(--glass-edge)]"
+            style={{ background: 'var(--glass)', backdropFilter: 'var(--glass-blur)',
+                     WebkitBackdropFilter: 'var(--glass-blur)' }}>
       <div className="flex items-center gap-3">
-        <h1 className="text-sm font-semibold tracking-tight text-[var(--color-text)]">
+        {/* the mark lives in the rail on wide screens; repeated here only where
+            there is no rail to carry it */}
+        <h1 className="lg:hidden text-sm font-semibold tracking-tight text-[var(--color-text)]">
           Fluxus Capital
         </h1>
-        <div className="flex gap-1 ml-3 overflow-x-auto">
-          {NAV_ITEMS.map(({ key, hash }) => (
-            <button
-              key={key}
-              onClick={() => onNavigate(hash)}
-              aria-current={currentPage === key ? 'page' : undefined}
-              className={`px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide rounded flex-shrink-0 focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-1 ${
-                currentPage === key
-                  ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
-                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'
-              }`}
-            >
-              {t(`nav.${key}`)}
-            </button>
-          ))}
-        </div>
         {isOffline && (
           <span className="px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] rounded">
             {t('header.offline')}

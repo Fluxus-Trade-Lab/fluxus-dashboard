@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — Charts · what we do differently</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+:root{
+  --paper:#f4f3f0; --ink:#111110; --ink-2:#5c5852; --ink-3:#9c968d; --rule:#dedad3; --hair:#eae7e1;
+  --works:#1f5f9e; --fails:#d1600f; --idle:#c2bdb4;
+  --sans:Plex,sans-serif; --cond:PlexCond,Plex,sans-serif; --mono:PlexMono,Menlo,monospace;
+}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.app{max-width:1440px;margin:0 auto;padding:0 34px 100px}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.bar{display:flex;align-items:baseline;gap:26px;padding:15px 0 14px;border-bottom:1px solid var(--ink)}
+.mark{font-family:var(--cond);font-weight:700;font-size:19px;letter-spacing:.16em}
+.bar .r{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+h1{font-family:var(--cond);font-weight:700;font-size:62px;line-height:.95;letter-spacing:-.015em;
+   text-transform:uppercase;margin:44px 0 0;max-width:17ch}
+.lede{font-size:17px;line-height:1.55;max-width:58ch;margin:22px 0 0;color:var(--ink-2)}
+.lede b{color:var(--ink);font-weight:600}
+h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3);
+   margin:64px 0 0;padding-bottom:9px;border-bottom:1px solid var(--ink)}
+h3 span{float:right;text-transform:none;letter-spacing:.02em;font-family:var(--sans);font-size:11.5px;color:var(--ink-2)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:18px}
+.pane{border:1px solid var(--rule);background:#fbfaf8;padding:16px 18px 18px}
+.pane.ours{border:1.5px solid var(--ink);background:transparent}
+.ptag{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--ink-3);margin-bottom:12px}
+.pane.ours .ptag{color:var(--ink)}
+.cmp{width:100%;border-collapse:collapse;margin-top:20px;font-size:13px}
+.cmp th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+        color:var(--ink-3);font-weight:400;padding:0 14px 9px 0;border-bottom:1px solid var(--ink)}
+.cmp td{padding:12px 14px 12px 0;border-bottom:1px solid var(--hair);vertical-align:top;line-height:1.55}
+.cmp td:first-child{font-family:var(--cond);font-weight:600;font-size:15px;width:172px}
+.cmp .us{color:var(--ink);font-weight:500}
+.note{font-size:12.5px;line-height:1.7;color:var(--ink-2);max-width:74ch;margin:14px 0 0}
+svg{display:block;width:100%;height:auto;overflow:visible}
+</style>
+</head>
+<body><div class="app">
+
+<div class="bar"><span class="mark">FLUXUS</span>
+  <span style="font-size:12.5px;color:var(--ink-3)">Charts</span>
+  <span class="r" id="stamp">—</span></div>
+
+<h1>A chart that<br>argues</h1>
+<p class="lede">TradingView and a terminal are built for <b>operating</b> — the tools are the product.
+Counted on a live TradingView chart just now: <b>14 icons down the left, 12 across the top, 9 down the right</b>
+before a single pixel of data. That is correct for someone who already knows what they are looking for.
+It is useless for the person you are handing a screenshot to.
+<br><br>Our charts have a different job: <b>carry the argument</b>. Same numbers, drawn so the conclusion
+is visible without being trusted.</p>
+
+<h3>The same day, two ways <span>SPY · RSP · IWM · QQQ, last 30 sessions, indexed to 100</span></h3>
+<div class="two">
+  <div class="pane"><div class="ptag">CONVENTIONAL — every series equal, no claim</div>
+    <svg id="c-conv" viewBox="0 0 620 330"></svg></div>
+  <div class="pane ours"><div class="ptag">FLUXUS — the gap is the subject</div>
+    <svg id="c-ours" viewBox="0 0 620 330"></svg></div>
+</div>
+<p class="note">Same four series. On the left you must already know that RSP is the equal-weight proxy,
+and you must do the subtraction yourself. On the right the subtraction <em>is</em> the drawing —
+the wedge is the distance between the average stock and the index. Nothing was added; one relationship
+was promoted.<br><br>
+<b>And it caught an error.</b> The first version of this chart was captioned "the index is carried by a
+few names." Over these 30 sessions the equal-weight is <b>+2.80%</b> against the index's <b>+0.04%</b> —
+the average stock <em>led</em>. The narrowness is a one-day fact: today SPY +0.72% against RSP −0.17%.
+The honest reading is the decay: the lead peaked at +5.5 points on 07/29 and has halved in two sessions.
+A chart that carries its argument also has to be able to lose it.</p>
+
+<h3>Breadth, with the rule drawn on it <span>T2108, 30 sessions · zones from THRESHOLDS, not invented</span></h3>
+<svg id="c-breadth" viewBox="0 0 1372 300" style="margin-top:16px"></svg>
+<p class="note">An oscillator with 20/80 lines tells you where the line is. Naming the zones tells you what
+the engine will do there. These four boundaries are read straight out of
+<code>pipeline/screeners/breadth_signals.py</code> — the picture and the verdict cannot drift apart.</p>
+
+<h3>The sequence, with the slot that has not happened <span>SPY, last 30 sessions</span></h3>
+<svg id="c-seq" viewBox="0 0 1372 300" style="margin-top:16px"></svg>
+<p class="note">Every price chart in the world ends at the last bar. This one continues one slot past it
+and leaves it empty. That empty slot is the whole posture: <em>waiting for FTD</em> is a position on a
+timeline, not an adjective.</p>
+
+<h3>Where the quality names are coming from <span>Sector mix of VCP + Episodic Pivot + Momentum, 10 sessions</span></h3>
+<svg id="c-sector" viewBox="0 0 1372 300" style="margin-top:16px"></svg>
+<p class="note">"Leadership is rotating" is the other claim that needs a count. This is the sector composition
+of the quality tier only — participation screeners are excluded, because a 4% day is not leadership.</p>
+
+<h3>What we take and what we refuse</h3>
+<table class="cmp">
+  <tr><th></th><th>TradingView / terminal</th><th>Fluxus</th></tr>
+  <tr><td>Job</td><td>Operate. Let a professional do anything to the chart.</td>
+      <td class="us">Argue. Carry one conclusion, visibly derived.</td></tr>
+  <tr><td>Density</td><td>Everything needed for a decision on one screen.</td>
+      <td class="us"><b>Kept.</b> This is the one thing worth inheriting.</td></tr>
+  <tr><td>Chrome</td><td>~35 controls framing the data.</td>
+      <td class="us">Refused. No toolbar. The page is not an instrument panel you drive.</td></tr>
+  <tr><td>Colour</td><td>Green up, red down, everywhere.</td>
+      <td class="us">Green/red reserved for money. Market colour encodes
+      <b>response quality</b> — offered a chance and took it, or didn't.</td></tr>
+  <tr><td>Annotation</td><td>User draws their own; the chart asserts nothing.</td>
+      <td class="us">The chart states its reading, in a typographic register
+      visibly separated from measurement.</td></tr>
+  <tr><td>The future</td><td>Chart ends at the last bar.</td>
+      <td class="us">One empty slot past it. What we are waiting for is drawn.</td></tr>
+  <tr><td>Missing data</td><td>Interpolated or invisible.</td>
+      <td class="us">Drawn as a gap and labelled. The 13-session archive hole is on the page.</td></tr>
+</table>
+<p class="note">One honest limit on the comparison above: the left column for TradingView is measured from a
+live session. The Bloomberg <em>terminal</em> is behind a licence and was not screenshotted — its column here
+is from description, not observation. Worth separating too: the terminal is an operating surface,
+while Bloomberg's graphics desk does explanatory work much closer to this page's job.</p>
+
+</div>
+<script>
+const D = /*__DATA__*/ null;
+const NM = D.names, BR = D.breadth, DF = D.diffusion, T = BR.today;
+const C = {works:"#1f5f9e", fails:"#d1600f", idle:"#c2bdb4", ink:"#111110", ink2:"#5c5852", ink3:"#9c968d"};
+const NS = "http://www.w3.org/2000/svg";
+const svg = id => document.getElementById(id);
+function mk(p,t,a={},txt){const n=document.createElementNS(NS,t);
+  for(const k in a) n.setAttribute(k,a[k]); if(txt!=null) n.textContent=txt; p.appendChild(n); return n;}
+const F = (s,c,w) => `font:${w||400} ${s}px ${c||"Plex,sans-serif"}`;
+const idx100 = a => a.map(v => v/a[0]*100);
+
+document.getElementById("stamp").textContent = `${D.as_of} · CLOSE · real data`;
+
+/* ─────────── 1a · conventional: every series equal ─────────── */
+(function(){
+  const s = svg("c-conv"), W=620,H=330, L=44,R=14,TOP=14,BOT=286;
+  const SER = [["SPY","#c0392b"],["RSP","#27ae60"],["IWM","#2980b9"],["QQQ","#e67e22"]];
+  const data = SER.map(([k,c])=>[k,c,idx100(NM[k].trace)]);
+  const all = data.flatMap(d=>d[2]), mn=Math.min(...all), mx=Math.max(...all);
+  const x = i => L + i*(W-L-R)/29, y = v => BOT-(v-mn)/(mx-mn)*(BOT-TOP);
+  // dense grid + dense ticks: the default output of a charting library
+  for(let g=0;g<=10;g++){const v=mn+(mx-mn)*g/10;
+    mk(s,"line",{x1:L,y1:y(v),x2:W-R,y2:y(v),stroke:"#d8d4cd","stroke-width":.6});
+    mk(s,"text",{x:L-6,y:y(v)+3,"text-anchor":"end",style:F(8,"PlexMono,monospace")+";fill:#9c968d"},v.toFixed(1));}
+  for(let i=0;i<30;i+=3) mk(s,"line",{x1:x(i),y1:TOP,x2:x(i),y2:BOT,stroke:"#e4e0d9","stroke-width":.6});
+  data.forEach(([k,c,v])=> mk(s,"polyline",{points:v.map((p,i)=>`${x(i)},${y(p)}`).join(" "),
+    fill:"none",stroke:c,"stroke-width":1.5}));
+  mk(s,"rect",{x:L+8,y:TOP+8,width:74,height:60,fill:"#fff",stroke:"#c9c4bc"});
+  SER.forEach(([k,c],i)=>{mk(s,"line",{x1:L+15,y1:TOP+22+i*13,x2:L+29,y2:TOP+22+i*13,stroke:c,"stroke-width":2});
+    mk(s,"text",{x:L+34,y:TOP+25+i*13,style:F(9)+";fill:#5c5852"},k);});
+  mk(s,"text",{x:L,y:BOT+20,style:F(8,"PlexMono,monospace")+";fill:#9c968d"},"30 sessions");
+  mk(s,"text",{x:W-R,y:BOT+20,"text-anchor":"end",style:F(8,"PlexMono,monospace")+";fill:#9c968d"},"2026-07-31");
+})();
+
+/* ─────────── 1b · ours: the gap is the subject ─────────── */
+(function(){
+  const s = svg("c-ours"), W=620,H=330, L=16,R=118,TOP=22,BOT=272;
+  const spy = idx100(NM.SPY.trace), rsp = idx100(NM.RSP.trace),
+        iwm = idx100(NM.IWM.trace), qqq = idx100(NM.QQQ.trace);
+  const all=[...spy,...rsp,...iwm,...qqq], mn=Math.min(...all), mx=Math.max(...all);
+  const x = i => L + i*(W-L-R)/29, y = v => BOT-(v-mn)/(mx-mn)*(BOT-TOP);
+
+  // the wedge between the index and the average stock IS the drawing
+  mk(s,"path",{d:spy.map((p,i)=>`${i?"L":"M"}${x(i)},${y(p)}`).join(" ")+" "+
+    rsp.map((p,i)=>`L${x(29-i)},${y(rsp[29-i])}`).join(" ")+"Z",
+    fill:C.fails,opacity:.12});
+  // context series stay, but recede
+  [[iwm,"IWM"],[qqq,"QQQ"]].forEach(([v,k])=>{
+    mk(s,"polyline",{points:v.map((p,i)=>`${x(i)},${y(p)}`).join(" "),
+      fill:"none",stroke:C.idle,"stroke-width":1});
+    mk(s,"text",{x:x(29)+7,y:y(v[29])+3,style:F(10,"PlexMono,monospace")+";fill:#9c968d"},k);});
+  mk(s,"polyline",{points:rsp.map((p,i)=>`${x(i)},${y(p)}`).join(" "),
+    fill:"none",stroke:C.fails,"stroke-width":2.2});
+  mk(s,"polyline",{points:spy.map((p,i)=>`${x(i)},${y(p)}`).join(" "),
+    fill:"none",stroke:C.ink,"stroke-width":2.2});
+  mk(s,"text",{x:x(29)+7,y:y(spy[29])+3,style:F(11,"PlexMono,monospace",500)+";fill:#111110"},"SPY");
+  mk(s,"text",{x:x(29)+7,y:y(rsp[29])+3,style:F(11,"PlexMono,monospace",500)+`;fill:${C.fails}`},"RSP");
+
+  // The wedge is the equal-weight LEAD, and the honest story is its decay.
+  // The first pass captioned this "the index is carried by a few names" — the
+  // data says the opposite over 30 sessions. The chart corrected the claim.
+  const lead = spy.map((p,i)=> rsp[i]-p);
+  const pk = lead.indexOf(Math.max(...lead));
+
+  mk(s,"line",{x1:x(pk),y1:y(spy[pk]),x2:x(pk),y2:y(rsp[pk]),stroke:C.fails,"stroke-width":1,opacity:.6});
+  mk(s,"circle",{cx:x(pk),cy:y(rsp[pk]),r:3,fill:C.fails});
+  mk(s,"text",{x:x(pk),y:y(rsp[pk])-10,"text-anchor":"middle",
+    style:F(10,"PlexMono,monospace",500)+`;fill:${C.fails}`},"+"+lead[pk].toFixed(1));
+  mk(s,"text",{x:x(pk),y:y(rsp[pk])-22,"text-anchor":"middle",style:F(9)+";fill:#9c968d"},"peak 07.29");
+
+  mk(s,"line",{x1:x(29)+50,y1:y(spy[29]),x2:x(29)+50,y2:y(rsp[29]),stroke:C.fails,"stroke-width":1});
+  mk(s,"text",{x:x(29)+58,y:(y(spy[29])+y(rsp[29]))/2-4,
+    style:"font:600 17px PlexCond,sans-serif;fill:"+C.fails},"+"+lead[29].toFixed(1)+" pts");
+  mk(s,"text",{x:x(29)+58,y:(y(spy[29])+y(rsp[29]))/2+10,style:F(9.5)+";fill:#5c5852"},"average stock");
+  mk(s,"text",{x:x(29)+58,y:(y(spy[29])+y(rsp[29]))/2+22,style:F(9.5)+";fill:#5c5852"},"still ahead");
+
+  mk(s,"line",{x1:L,y1:BOT+14,x2:x(29),y2:BOT+14,stroke:"#dedad3"});
+  mk(s,"text",{x:L,y:BOT+34,style:F(12,null,500)+";fill:#111110"},
+    `The average stock led all month. Its lead halved in two sessions — ${lead[pk].toFixed(1)} → ${lead[29].toFixed(1)}.`);
+  mk(s,"text",{x:L,y:BOT+52,style:F(12)+`;fill:${C.fails}`},
+    "Narrowing is starting. It is not yet the state.");
+})();
+
+/* ─────────── 2 · breadth with the real zones ─────────── */
+(function(){
+  const s = svg("c-breadth"), W=1372, L=150,R=190,TOP=18,BOT=222;
+  const v = BR.trace.t2108, dts = BR.dates, n=v.length;
+  const y = t => BOT-(t/100)*(BOT-TOP), x = i => L+i*(W-L-R)/(n-1+1); // +1 leaves the pending slot
+  const Z = [[80,100,"OVERBOUGHT","risk of a top",C.fails],
+             [60,80,"STRONG","trend intact",C.works],
+             [40,60,"NEUTRAL","no edge from breadth",null],
+             [20,40,"WEAK","exposure comes down",C.fails],
+             [0,20,"OVERSOLD","where bottoms are made",C.works]];
+  Z.forEach(([lo,hi,nm,what,col])=>{
+    mk(s,"rect",{x:L,y:y(hi),width:W-L-R,height:y(lo)-y(hi),
+      fill: col===C.works?"#1f5f9e":col===C.fails?"#d1600f":"#000",opacity: col?.045:.018});
+    mk(s,"line",{x1:L,y1:y(hi),x2:W-R,y2:y(hi),stroke:"#d8d4cd","stroke-width":.8});
+    mk(s,"text",{x:L-14,y:(y(lo)+y(hi))/2-1,"text-anchor":"end",
+      style:"font:600 12px PlexCond,sans-serif;fill:#5c5852;letter-spacing:.04em"},nm);
+    mk(s,"text",{x:L-14,y:(y(lo)+y(hi))/2+13,"text-anchor":"end",style:F(10)+";fill:#9c968d"},what);
+    mk(s,"text",{x:W-R+8,y:y(hi)+4,style:F(9,"PlexMono,monospace")+";fill:#b3ada3"},hi);
+  });
+  mk(s,"polyline",{points:v.map((p,i)=>`${x(i)},${y(p)}`).join(" "),
+    fill:"none",stroke:C.ink,"stroke-width":2,"stroke-linejoin":"round"});
+  mk(s,"circle",{cx:x(n-1),cy:y(v[n-1]),r:4.5,fill:C.ink});
+  mk(s,"rect",{x:x(n)-16,y:TOP,width:32,height:BOT-TOP,fill:"none",
+    stroke:"#cdc7be","stroke-dasharray":"2 3"});
+  mk(s,"text",{x:x(n),y:BOT+16,"text-anchor":"middle",
+    style:F(9,"PlexMono,monospace",500)+";fill:#9c968d;letter-spacing:.1em"},"PENDING");
+  mk(s,"text",{x:x(n-1)+10,y:y(v[n-1])-9,style:"font:600 20px PlexCond,sans-serif;fill:#111110"},
+    v[n-1].toFixed(1));
+  mk(s,"text",{x:x(n-1)+10,y:y(v[n-1])+7,style:F(10)+";fill:#5c5852"},"today · NEUTRAL");
+  // archive gap, drawn not interpolated
+  const g = dts.findIndex((d,i)=> i>0 && (new Date(d)-new Date(dts[i-1]))/864e5 > 6);
+  if (g>0){ mk(s,"rect",{x:x(g-1),y:TOP,width:x(g)-x(g-1),height:BOT-TOP,fill:"#f4f3f0",opacity:.85});
+    mk(s,"text",{x:(x(g-1)+x(g))/2,y:TOP-4,"text-anchor":"middle",style:F(9)+";fill:#9c968d"},"archive gap"); }
+  [0,n-1].forEach(i=> mk(s,"text",{x:x(i),y:BOT+16,"text-anchor":i?"end":"start",
+    style:F(9,"PlexMono,monospace")+";fill:#b3ada3"}, dts[i]));
+  mk(s,"text",{x:L,y:BOT+52,style:F(12,null,500)+";fill:#111110"},
+    "Boundaries at 20 / 40 / 60 / 80 come straight from THRESHOLDS — the picture cannot drift from the verdict.");
+})();
+
+/* ─────────── 3 · the sequence, plus the empty slot ─────────── */
+(function(){
+  const s = svg("c-seq"), W=1372, L=60,R=250,TOP=20,BOT=210;
+  const v = NM.SPY.trace, n=v.length, mn=Math.min(...v), mx=Math.max(...v);
+  const x = i => L+i*(W-L-R)/n, y = p => BOT-(p-mn)/(mx-mn)*(BOT-TOP);
+  mk(s,"polyline",{points:v.map((p,i)=>`${x(i)},${y(p)}`).join(" "),
+    fill:"none",stroke:C.ink,"stroke-width":2,"stroke-linejoin":"round"});
+  const MARK = [[n-3,"07.29","Liquidation",C.fails],[n-2,"07.30","Stabilized · D1",C.ink2],
+                [n-1,"07.31","Follow-through · D2",C.works]];
+  MARK.forEach(([i,d,lab,col],k)=>{
+    mk(s,"line",{x1:x(i),y1:y(v[i]),x2:x(i),y2:TOP-6+k*0,stroke:col,"stroke-width":.9,opacity:.5});
+    mk(s,"circle",{cx:x(i),cy:y(v[i]),r:4,fill:col});
+    mk(s,"text",{x:x(i),y:TOP-24+k*13,"text-anchor":"middle",
+      style:F(9,"PlexMono,monospace",500)+`;fill:${col}`},`${d}  ${lab}`);
+  });
+  // the slot past the last bar — nobody draws this
+  mk(s,"rect",{x:x(n)-2,y:TOP,width:x(n+1)-x(n),height:BOT-TOP,fill:"none",
+    stroke:C.idle,"stroke-dasharray":"3 4"});
+  mk(s,"text",{x:x(n)+(x(n+1)-x(n))/2,y:TOP-8,"text-anchor":"middle",
+    style:F(10,"PlexMono,monospace",500)+";fill:#9c968d;letter-spacing:.1em"},"NEXT");
+  mk(s,"text",{x:x(n)+(x(n+1)-x(n))/2,y:(TOP+BOT)/2,"text-anchor":"middle",
+    style:"font:700 26px PlexCond,sans-serif;fill:#c2bdb4"},"FTD?");
+  mk(s,"text",{x:x(n+1)+22,y:(TOP+BOT)/2-8,style:"font:600 18px PlexCond,sans-serif;fill:#111110"},
+    "The slot is the position.");
+  mk(s,"text",{x:x(n+1)+22,y:(TOP+BOT)/2+12,style:F(12)+";fill:#5c5852"},
+    "Every other price chart stops at the last bar.");
+  mk(s,"text",{x:x(n+1)+22,y:(TOP+BOT)/2+30,style:F(12)+";fill:#5c5852"},
+    "“Waiting” is a place on the timeline, not an adjective.");
+})();
+
+/* ─────────── 4 · sector mix of the quality tier ─────────── */
+(function(){
+  const s = svg("c-sector"), W=1372, L=150,R=210,TOP=18,BOT=214;
+  const S = DF.sessions, secs = Object.keys(DF.sectors), n = S.length;
+  const tot = S.map((_,i)=> secs.reduce((a,k)=>a+DF.sectors[k][i],0));
+  const x = i => L+i*(W-L-R)/(n-1);
+  const PAL = ["#1f5f9e","#3f7fb5","#6f9ec9","#a8bed6","#c9b9a4","#d1a06a","#d1600f","#8d877d"];
+  let acc = S.map(()=>0);
+  secs.forEach((k,si)=>{
+    const top = S.map((_,i)=> acc[i] + DF.sectors[k][i]/tot[i]*100);
+    mk(s,"path",{d: top.map((p,i)=>`${i?"L":"M"}${x(i)},${BOT-(p/100)*(BOT-TOP)}`).join(" ") + " " +
+      acc.map((p,i)=>`L${x(n-1-i)},${BOT-(acc[n-1-i]/100)*(BOT-TOP)}`).join(" ") + "Z",
+      fill:PAL[si%PAL.length], opacity:.9});
+    const midY = BOT-((acc[n-1]+top[n-1])/2/100)*(BOT-TOP);
+    const share = DF.sectors[k][n-1]/tot[n-1]*100;
+    if (share > 4){
+      mk(s,"text",{x:W-R+10,y:midY+4,style:F(11,null,500)+";fill:#5c5852"},k);
+      mk(s,"text",{x:W-R+150,y:midY+4,"text-anchor":"end",
+        style:F(11,"PlexMono,monospace")+";fill:#9c968d"},share.toFixed(0)+"%");
+    }
+    acc = top;
+  });
+  S.forEach((d,i)=>{ if(i===0||i===n-1) mk(s,"text",{x:x(i),y:BOT+16,"text-anchor":i?"end":"start",
+    style:F(9,"PlexMono,monospace")+";fill:#b3ada3"}, d); });
+  const g = S.findIndex((d,i)=> i>0 && (new Date(d)-new Date(S[i-1]))/864e5 > 6);
+  if (g>0){ mk(s,"rect",{x:x(g-1),y:TOP,width:x(g)-x(g-1),height:BOT-TOP,fill:"#f4f3f0",opacity:.88});
+    mk(s,"text",{x:(x(g-1)+x(g))/2,y:TOP-4,"text-anchor":"middle",style:F(9)+";fill:#9c968d"},"archive gap");}
+  mk(s,"text",{x:L,y:BOT+50,style:F(12,null,500)+";fill:#111110"},
+    "Financials and Healthcare still hold the top of the quality tier — the rotation into Tech has not happened yet.");
+})();
+</script>
+</body></html>

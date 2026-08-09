@@ -1,11 +1,21 @@
-"""21-EMA Pullback Watchlist Screener.
+"""21-EMA pullback watchlist -- strong names that have come back to the line.
 
-Finds stocks in an uptrend that are near their 21-day EMA -- the classic
-pullback-to-moving-average setup.  ``sma20_dist`` is used as a proxy for
-the 21-EMA distance (approx. 90 % overlap per the design plan).
+**What it looks for: an entry inside an existing trend.** Names sitting
+between 2% below and 3% above their 20-SMA (a ~90% proxy for the 21-EMA),
+filtered to RS bracket 80 and above. The premise is that a leader pulling
+back to its rising average is offering a second entry at a place where the
+stop is close, which is what makes the position size work.
 
-Stocks are grouped into RS brackets (100, 95, 90, 85, ...) derived from
-the percentile rank of ``perf_3m`` across the entire universe.
+**What it cannot tell you: whether the trend is still alive.** A name that has
+topped passes through this band on its way down and looks exactly like one
+pausing on its way up. The screen sees distance from a line, not the
+direction the name is travelling through it. That distinction is the entire
+trade, and it lives on the chart -- the shape of the pullback, whether volume
+dried up into it, whether the low is higher than the last one.
+
+The RS bracket is the guard against the worst version of this: a name still
+in the top fifth of the field is less likely to be pulling back for good. It
+is a guard, not a guarantee.
 """
 
 from __future__ import annotations

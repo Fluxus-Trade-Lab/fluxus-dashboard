@@ -1,30 +1,30 @@
 {
-  "timestamp": "2026-08-07T22:07:45.980508+00:00",
-  "universe_size": 3000,
+  "timestamp": "2026-08-09T01:33:22.993785+00:00",
+  "universe_size": 5615,
   "spx_close": 7757.64013671875,
   "mm": {
     "up_4pct": 0,
     "down_4pct": 0,
     "ratio_5d": 2.0719,
     "ratio_10d": 1.3421,
-    "up_25pct_qtr": 412,
-    "down_25pct_qtr": 450,
-    "up_25pct_month": 168,
-    "down_25pct_month": 174,
-    "up_50pct_month": 38,
-    "down_50pct_month": 38,
-    "up_13pct_34d": 663,
-    "down_13pct_34d": 611
+    "up_25pct_qtr": 760,
+    "down_25pct_qtr": 836,
+    "up_25pct_month": 322,
+    "down_25pct_month": 346,
+    "up_50pct_month": 75,
+    "down_50pct_month": 79,
+    "up_13pct_34d": 1229,
+    "down_13pct_34d": 1161
   },
   "breadth": {
-    "t2108": 55.37,
-    "pct_above_200sma": 51.3,
-    "pct_above_50sma": 54.8,
+    "t2108": 56.15,
+    "pct_above_200sma": 51.31,
+    "pct_above_50sma": 55.1,
     "pct_above_20sma": 60.77,
     "advances": 0,
     "declines": 0,
-    "new_highs": 39,
-    "new_lows": 7,
+    "new_highs": 60,
+    "new_lows": 11,
     "ad_line": -14290,
     "mcclellan_osc": 3.15
   },
@@ -129,7 +129,7 @@
       "2026-08-04",
       "2026-08-05",
       "2026-08-06",
-      "2026-08-07"
+      "2026-08-08"
     ],
     "pct_above_200sma": [
       53.73,
@@ -231,7 +231,7 @@
       50.67,
       50.33,
       50.2,
-      51.3
+      51.31
     ],
     "pct_above_50sma": [
       33.9,
@@ -333,7 +333,7 @@
       53.6,
       53.8,
       52.33,
-      54.8
+      55.1
     ],
     "pct_above_20sma": [
       29.08,
@@ -4006,30 +4006,30 @@
         }
       },
       {
-        "date": "2026-08-07",
+        "date": "2026-08-08",
         "source": "live",
-        "universe_size": 3000,
+        "universe_size": 5615,
         "spx_close": 7757.64013671875,
         "up_4pct": 0,
         "down_4pct": 0,
         "ratio_5d": 2.0719,
         "ratio_10d": 1.3421,
-        "up_25pct_qtr": 412,
-        "down_25pct_qtr": 450,
-        "up_25pct_month": 168,
-        "down_25pct_month": 174,
-        "up_50pct_month": 38,
-        "down_50pct_month": 38,
-        "up_13pct_34d": 663,
-        "down_13pct_34d": 611,
-        "t2108": 55.37,
-        "pct_above_200sma": 51.3,
-        "pct_above_50sma": 54.8,
+        "up_25pct_qtr": 760,
+        "down_25pct_qtr": 836,
+        "up_25pct_month": 322,
+        "down_25pct_month": 346,
+        "up_50pct_month": 75,
+        "down_50pct_month": 79,
+        "up_13pct_34d": 1229,
+        "down_13pct_34d": 1161,
+        "t2108": 56.15,
+        "pct_above_200sma": 51.31,
+        "pct_above_50sma": 55.1,
         "pct_above_20sma": 60.77,
         "advances": 0,
         "declines": 0,
-        "new_highs": 39,
-        "new_lows": 7,
+        "new_highs": 60,
+        "new_lows": 11,
         "net_advances": 0,
         "rana": 0.0,
         "ad_line": -14290,
@@ -4076,10 +4076,133 @@
       "up_4pct": 0,
       "down_4pct": 0,
       "ratio_5d": 94,
-      "t2108": 63,
+      "t2108": 66,
       "mcclellan_osc": 57,
-      "nh_nl_net": 99,
-      "qtr_spread": 40
+      "nh_nl_net": 100,
+      "qtr_spread": 33
     }
+  },
+  "state_board": {
+    "levels": [
+      "absent",
+      "very weak",
+      "early",
+      "started",
+      "good"
+    ],
+    "rows": [
+      {
+        "key": "damage",
+        "layer": "fact",
+        "level": 2,
+        "level_label": "early",
+        "evidence": "836 names \u221225% on the quarter against 760 up 25% \u2014 52% on the down side"
+      },
+      {
+        "key": "selling pressure",
+        "layer": "fact",
+        "level": 3,
+        "level_label": "started",
+        "evidence": "0 names \u22124% today against a five-day peak of 299, back to 0% of it"
+      },
+      {
+        "key": "breadth",
+        "layer": "fact",
+        "level": 3,
+        "level_label": "started",
+        "evidence": "60.8% above the 20-day, T2108 56.1, net advances +0"
+      },
+      {
+        "key": "trend",
+        "layer": "fact",
+        "level": 4,
+        "level_label": "good",
+        "evidence": "51.3% above the 200-day"
+      },
+      {
+        "key": "thrust",
+        "layer": "fact",
+        "level": 2,
+        "level_label": "early",
+        "evidence": "0 names +4% against 0 \u22124%"
+      },
+      {
+        "key": "extremes",
+        "layer": "fact",
+        "level": 4,
+        "level_label": "good",
+        "evidence": "60 new 52-week highs against 11 new lows"
+      },
+      {
+        "key": "index repair",
+        "layer": "interpretation",
+        "level": 4,
+        "level_label": "good",
+        "evidence": "2 of 2 benchmarks above the 50-day: SPY, QQQ"
+      },
+      {
+        "key": "confirmation",
+        "layer": "anticipation",
+        "level": 2,
+        "level_label": "early",
+        "evidence": "five-day ratio 2.0719, above 1.0 but not yet clear of 1.2"
+      },
+      {
+        "key": "rates",
+        "layer": "fact",
+        "level": null,
+        "level_label": null,
+        "evidence": "long-end yields are not wired into the pipeline \u2014 filled by hand"
+      }
+    ],
+    "chain": [
+      {
+        "key": "index repair",
+        "label": "Indexes repair",
+        "state": "lit",
+        "carrying": 1.0,
+        "measured": 1.0,
+        "fed": true,
+        "evidence": "2 of 2 benchmarks above the 50-day: SPY, QQQ"
+      },
+      {
+        "key": "thrust",
+        "label": "Buyers show up",
+        "state": "partial",
+        "carrying": 0.5,
+        "measured": 0.5,
+        "fed": true,
+        "evidence": "0 names +4% against 0 \u22124%"
+      },
+      {
+        "key": "breadth",
+        "label": "Breadth expands",
+        "state": "partial",
+        "carrying": 0.5,
+        "measured": 0.75,
+        "fed": false,
+        "evidence": "60.8% above the 20-day, T2108 56.1, net advances +0"
+      },
+      {
+        "key": "extremes",
+        "label": "New highs take over",
+        "state": "partial",
+        "carrying": 0.5,
+        "measured": 1.0,
+        "fed": false,
+        "evidence": "60 new 52-week highs against 11 new lows"
+      },
+      {
+        "key": "confirmation",
+        "label": "Confirmation arrives",
+        "state": "partial",
+        "carrying": 0.5,
+        "measured": 0.5,
+        "fed": true,
+        "evidence": "five-day ratio 2.0719, above 1.0 but not yet clear of 1.2"
+      }
+    ],
+    "measured": 8,
+    "total": 9
   }
 }

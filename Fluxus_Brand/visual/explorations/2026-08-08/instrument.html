@@ -1,0 +1,2156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — Market state · the instrument</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+:root{
+  --paper:#f4f3f0;--card:#fbfaf8;--ink:#111110;--ink2:#5c5852;--ink3:#9c968d;
+  --rule:#dedad3;--hair:#eae7e1;
+  --took:#1a5488;      /* solid — took the chance offered            */
+  --refused:#d1600f;   /* solid + 45° hatch — offered and failed      */
+  --idle:#c2bdb4;      /* outline only — not tested; out of the scale */
+  --sans:Plex,sans-serif;--cond:PlexCond,Plex,sans-serif;--mono:PlexMono,Menlo,monospace;
+}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.app{max-width:1440px;margin:0 auto;padding:0 34px 96px}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.bar{display:flex;align-items:center;gap:26px;padding:15px 0 14px;border-bottom:1px solid var(--ink)}
+.mark{font-family:var(--cond);font-weight:700;font-size:19px;letter-spacing:.16em}
+.bar nav{display:flex;gap:22px;font-size:12.5px;color:var(--ink3)}
+.bar nav b{color:var(--ink);font-weight:600}
+.bar .r{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+.bar .stampx{border:1.6px solid var(--refused);color:var(--refused);padding:3px 7px;
+  font-family:var(--cond);font-weight:700;font-size:10px;letter-spacing:.13em;transform:rotate(-4deg)}
+
+.hero{display:grid;grid-template-columns:1fr 380px;gap:46px;padding:42px 0 38px;border-bottom:1px solid var(--ink)}
+.kick{font-family:var(--mono);font-size:11px;letter-spacing:.26em;color:var(--ink3);margin-bottom:18px}
+.verdict{font-family:var(--cond);font-weight:700;font-size:100px;line-height:.9;letter-spacing:-.015em;
+         text-transform:uppercase}
+.read{font-size:20px;line-height:1.4;margin-top:22px;max-width:24ch;font-weight:500}
+.read em{font-style:normal;color:var(--refused)}
+.spec{border-top:2px solid var(--ink)}
+.spec div{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;
+          border-bottom:1px solid var(--hair)}
+.spec .k{font-size:11px;letter-spacing:.1em;color:var(--ink2);text-transform:uppercase}
+.spec .v{font-family:var(--mono);font-size:14px;font-weight:500}
+
+h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink3);
+   margin:56px 0 0;padding-bottom:9px;border-bottom:1px solid var(--ink)}
+h3 span{float:right;text-transform:none;letter-spacing:.02em;font-family:var(--sans);
+        font-size:11.5px;color:var(--ink2)}
+.note{font-size:12.5px;line-height:1.7;color:var(--ink2);max-width:80ch;margin:15px 0 0}
+.note b{color:var(--ink);font-weight:600}
+svg{display:block;width:100%;height:auto;overflow:visible;margin-top:16px}
+
+/* state board */
+.board{display:grid;grid-template-columns:1fr 1fr;column-gap:40px;margin-top:6px}
+.row{display:grid;grid-template-columns:152px 104px 1fr;gap:14px;align-items:center;
+     min-height:50px;padding:6px 0;border-bottom:1px solid var(--hair)}
+.row .k{font-family:var(--cond);font-weight:600;font-size:16px}
+.row .lv{display:flex;gap:2px}
+.row .lv i{display:block;width:17px;height:15px}
+.row .st{font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-weight:600;margin-bottom:3px}
+.row .ev{font-size:11.5px;line-height:1.5;color:var(--ink2)}
+/* key */
+.key{display:flex;gap:26px;align-items:center;margin-top:18px;flex-wrap:wrap;
+     font-size:11.5px;color:var(--ink2)}
+.key i{display:inline-block;width:26px;height:15px;vertical-align:-3px;margin-right:7px}
+</style>
+</head>
+<body><div class="app">
+
+<svg width="0" height="0" style="position:absolute;margin:0"><defs>
+  <pattern id="hx" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="5" stroke="#7d3908" stroke-width="1.7"/></pattern>
+</defs></svg>
+
+<div class="bar">
+  <span class="mark">FLUXUS</span>
+  <nav><b>Market state</b><span>Screener</span><span>Positions</span><span>Ticker</span><span>Letters</span></nav>
+  <span class="r" id="stamp">—</span>
+  <span class="stampx">NOT A CALL</span>
+</div>
+
+<div class="hero">
+  <div>
+    <div class="kick">RISK POSTURE · FILE FX-2026-089</div>
+    <div class="verdict">Wait<br>for FTD</div>
+    <div class="read" id="read">—</div>
+  </div>
+  <div class="spec" id="spec"></div>
+</div>
+
+<h3>State board <span>Nine conditions. One left blank because the pipeline cannot measure it.</span></h3>
+<div class="board" id="board"></div>
+<div class="key" id="key"></div>
+
+<h3>Propagation <span>After Minard — the width is the count, so the failure is a shape</span></h3>
+<svg id="flow" viewBox="0 0 1372 330"></svg>
+<p class="note"><b>What changed:</b> six lamps became one current. Lamps told you a link was off;
+a width tells you <em>how much</em> was carrying at each stage — three megacaps, then four of seven
+leaders, then nothing. The stall is visible as a shape before you read a single label.</p>
+
+<h3>Repair ladder <span>Where each name has climbed to · arrows are the week's travel</span></h3>
+<svg id="ladder" viewBox="0 0 1372 470"></svg>
+
+<h3>Evidence of broadening <span>After Isotype — one mark is a countable thing, never a stretched bar</span></h3>
+<svg id="iso" viewBox="0 0 1372 300"></svg>
+<p class="note"><b>What changed:</b> bars became countable marks. "Leadership is broadening" now has to
+show six squares, and the row that lost ground shows its losses as dashed outlines rather than a
+shorter bar. Two rows use a 1-mark-equals-many convention, printed on the row — that reintroduces
+estimation and it should be admitted, not hidden.</p>
+
+<h3>Sorted until it speaks <span>After Bertin — rows and columns permuted, encoded in lightness</span></h3>
+<svg id="matrix" viewBox="0 0 1372 420"></svg>
+
+<h3>Breadth, with the rule drawn on it <span>Zones read from THRESHOLDS, not invented</span></h3>
+<svg id="breadth" viewBox="0 0 1372 300"></svg>
+
+<h3>Sequence <span>The dashed slot has not happened yet</span></h3>
+<svg id="seq" viewBox="0 0 1372 250"></svg>
+
+</div>
+<script>
+const D = {
+ "as_of": "2026-07-31",
+ "rungs": [
+  {
+   "key": "broken",
+   "label": "破位"
+  },
+  {
+   "key": "stabilizing",
+   "label": "止跌"
+  },
+  {
+   "key": "reclaim",
+   "label": "收回主要均线"
+  },
+  {
+   "key": "above_50",
+   "label": "站上 50日"
+  },
+  {
+   "key": "pivot",
+   "label": "逼近 pivot"
+  },
+  {
+   "key": "breakout",
+   "label": "突破"
+  },
+  {
+   "key": "holds",
+   "label": "突破站住"
+  },
+  {
+   "key": "expansion",
+   "label": "扩张"
+  }
+ ],
+ "names": {
+  "SPY": {
+   "role": "index",
+   "close": 747.03,
+   "chg_pct": 0.72,
+   "rung": 4,
+   "rung_key": "pivot",
+   "rung_label": "逼近 pivot",
+   "evidence": "距 20日高 755.58 仅 1.1%",
+   "direction": "up",
+   "held_21": 1,
+   "held_50": 1,
+   "held_200": 80,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -1.5,
+   "ema21": 743.05,
+   "sma50": 744.22,
+   "sma200": 697.41,
+   "trace": [
+    746.74,
+    744.39,
+    733.58,
+    733.24,
+    734.3,
+    728.99,
+    741.0,
+    746.77,
+    745.76,
+    744.78,
+    751.28,
+    747.71,
+    745.4,
+    751.71,
+    754.95,
+    749.17,
+    751.83,
+    754.81,
+    750.72,
+    743.29,
+    742.09,
+    748.28,
+    747.41,
+    738.18,
+    738.93,
+    739.09,
+    740.86,
+    729.46,
+    741.69,
+    747.03
+   ]
+  },
+  "QQQ": {
+   "role": "index",
+   "close": 687.99,
+   "chg_pct": 0.65,
+   "rung": 1,
+   "rung_key": "stabilizing",
+   "rung_label": "止跌",
+   "evidence": "21/50 日线之下，但守住 200日线 643.83（已 80 日）",
+   "direction": "flat",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 80,
+   "above_21": false,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -8.0,
+   "ema21": 697.12,
+   "sma50": 714.75,
+   "sma200": 643.83,
+   "trace": [
+    739.807,
+    737.95,
+    713.65,
+    710.62,
+    716.38,
+    706.52,
+    724.08,
+    736.4,
+    725.17,
+    712.6,
+    722.82,
+    709.43,
+    711.44,
+    723.28,
+    725.51,
+    711.74,
+    719.69,
+    717.74,
+    705.94,
+    695.33,
+    696.06,
+    708.97,
+    705.35,
+    691.96,
+    684.23,
+    682.12,
+    675.49,
+    661.73,
+    683.55,
+    687.99
+   ]
+  },
+  "RSP": {
+   "role": "index",
+   "close": 215.01,
+   "chg_pct": -0.17,
+   "rung": 4,
+   "rung_key": "pivot",
+   "rung_label": "逼近 pivot",
+   "evidence": "距 20日高 218.11 仅 1.4%",
+   "direction": "flat",
+   "held_21": 6,
+   "held_50": 77,
+   "held_200": 85,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -1.4,
+   "ema21": 213.76,
+   "sma50": 211.05,
+   "sma200": 198.37,
+   "trace": [
+    209.15,
+    209.61,
+    208.89,
+    210.38,
+    211.75,
+    210.31,
+    213.05,
+    212.77,
+    213.41,
+    214.91,
+    215.0,
+    214.73,
+    212.2,
+    213.5,
+    214.3,
+    214.23,
+    213.45,
+    212.97,
+    215.06,
+    213.37,
+    212.42,
+    212.76,
+    212.7,
+    211.92,
+    213.57,
+    215.18,
+    217.69,
+    215.73,
+    215.38,
+    215.01
+   ]
+  },
+  "DIA": {
+   "role": "index",
+   "close": 524.32,
+   "chg_pct": 0.54,
+   "rung": 4,
+   "rung_key": "pivot",
+   "rung_label": "逼近 pivot",
+   "evidence": "距 20日高 532.39 仅 1.5%",
+   "direction": "up",
+   "held_21": 2,
+   "held_50": 79,
+   "held_200": 84,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -1.5,
+   "ema21": 520.96,
+   "sma50": 516.4,
+   "sma200": 487.83,
+   "trace": [
+    515.3737,
+    516.9332,
+    516.4733,
+    518.3728,
+    519.1126,
+    517.603,
+    521.5319,
+    522.2417,
+    522.2517,
+    527.7302,
+    529.9395,
+    528.3,
+    522.6216,
+    524.0412,
+    525.6307,
+    524.321,
+    524.541,
+    525.8007,
+    524.681,
+    520.81,
+    517.94,
+    521.51,
+    521.47,
+    516.26,
+    518.76,
+    521.26,
+    526.89,
+    515.41,
+    521.51,
+    524.32
+   ]
+  },
+  "IWM": {
+   "role": "index",
+   "close": 291.2,
+   "chg_pct": -0.48,
+   "rung": 1,
+   "rung_key": "stabilizing",
+   "rung_label": "止跌",
+   "evidence": "21/50 日线之下，但守住 200日线 264.93（已 85 日）",
+   "direction": "down",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 85,
+   "above_21": false,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -3.8,
+   "ema21": 293.17,
+   "sma50": 292.26,
+   "sma200": 264.93,
+   "trace": [
+    295.59,
+    298.18,
+    295.32,
+    296.69,
+    298.91,
+    299.83,
+    298.97,
+    300.45,
+    299.32,
+    297.58,
+    298.9,
+    296.19,
+    293.48,
+    297.24,
+    295.99,
+    293.48,
+    294.51,
+    295.77,
+    295.59,
+    294.04,
+    292.31,
+    296.54,
+    293.79,
+    292.09,
+    291.17,
+    292.91,
+    293.37,
+    288.57,
+    292.59,
+    291.2
+   ]
+  },
+  "AMZN": {
+   "role": "leader",
+   "close": 271.58,
+   "chg_pct": 15.32,
+   "rung": 5,
+   "rung_key": "breakout",
+   "rung_label": "突破",
+   "evidence": "收 271.58 > 20日高 258.08",
+   "direction": "up",
+   "held_21": 1,
+   "held_50": 1,
+   "held_200": 2,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -2.5,
+   "ema21": 242.72,
+   "sma50": 246.63,
+   "sma200": 235.01,
+   "trace": [
+    244.39,
+    232.79,
+    234.11,
+    234.27,
+    227.01,
+    232.69,
+    240.14,
+    238.34,
+    241.7,
+    242.67,
+    244.16,
+    245.98,
+    243.62,
+    247.04,
+    245.34,
+    247.31,
+    247.49,
+    254.96,
+    249.89,
+    247.23,
+    249.99,
+    247.55,
+    244.85,
+    233.66,
+    232.11,
+    231.39,
+    230.86,
+    226.65,
+    235.5,
+    271.58
+   ]
+  },
+  "MSFT": {
+   "role": "leader",
+   "close": 464.72,
+   "chg_pct": 3.02,
+   "rung": 6,
+   "rung_key": "holds",
+   "rung_label": "突破站住",
+   "evidence": "突破后仍站在 20日高点 458.69 上方",
+   "direction": "up",
+   "held_21": 4,
+   "held_50": 2,
+   "held_200": 2,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -15.7,
+   "ema21": 401.7,
+   "sma50": 399.39,
+   "sma200": 432.26,
+   "trace": [
+    379.4,
+    367.34,
+    373.94,
+    365.46,
+    352.83,
+    372.97,
+    368.57,
+    373.02,
+    384.28,
+    390.49,
+    386.74,
+    388.84,
+    383.34,
+    384.36,
+    385.1,
+    390.99,
+    384.93,
+    395.63,
+    401.1,
+    393.82,
+    402.29,
+    397.75,
+    390.34,
+    381.58,
+    381.7,
+    389.1,
+    393.35,
+    390.54,
+    451.1,
+    464.72
+   ]
+  },
+  "NVDA": {
+   "role": "leader",
+   "close": 200.75,
+   "chg_pct": 2.93,
+   "rung": 2,
+   "rung_key": "reclaim",
+   "rung_label": "收回主要均线",
+   "evidence": "2 个交易日前上穿 200日线 192.93，50日线 206.12 仍在头上",
+   "direction": "up",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 2,
+   "above_21": false,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -15.0,
+   "ema21": 202.11,
+   "sma50": 206.12,
+   "sma200": 192.93,
+   "trace": [
+    210.69,
+    208.65,
+    200.04,
+    199.0,
+    195.74,
+    192.53,
+    194.97,
+    200.09,
+    197.58,
+    194.83,
+    195.55,
+    196.93,
+    204.12,
+    202.78,
+    210.96,
+    203.53,
+    211.8,
+    212.5,
+    207.4,
+    202.81,
+    203.28,
+    207.29,
+    212.06,
+    208.76,
+    206.84,
+    196.51,
+    197.01,
+    190.01,
+    195.04,
+    200.75
+   ]
+  },
+  "ANET": {
+   "role": "leader",
+   "close": 180.35,
+   "chg_pct": 5.46,
+   "rung": 3,
+   "rung_key": "above_50",
+   "rung_label": "站上 50日",
+   "evidence": "收在 50日线 166.58 之上",
+   "direction": "up",
+   "held_21": 2,
+   "held_50": 2,
+   "held_200": 56,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -5.0,
+   "ema21": 171.45,
+   "sma50": 166.58,
+   "sma200": 145.85,
+   "trace": [
+    169.67,
+    174.56,
+    162.2,
+    161.74,
+    165.45,
+    157.6,
+    164.1,
+    169.88,
+    166.62,
+    159.99,
+    173.28,
+    166.46,
+    181.05,
+    184.69,
+    186.96,
+    181.15,
+    182.57,
+    171.92,
+    168.56,
+    168.61,
+    169.35,
+    174.58,
+    174.87,
+    176.61,
+    173.99,
+    170.76,
+    169.71,
+    157.97,
+    171.02,
+    180.35
+   ]
+  },
+  "AXTI": {
+   "role": "leader",
+   "close": 60.43,
+   "chg_pct": 28.74,
+   "rung": 2,
+   "rung_key": "reclaim",
+   "rung_label": "收回主要均线",
+   "evidence": "2 个交易日前上穿 200日线 46.75，50日线 77.52 仍在头上",
+   "direction": "up",
+   "held_21": 1,
+   "held_50": 0,
+   "held_200": 2,
+   "above_21": true,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -57.8,
+   "ema21": 55.15,
+   "sma50": 77.52,
+   "sma200": 46.75,
+   "trace": [
+    84.57,
+    92.44,
+    77.91,
+    70.14,
+    69.06,
+    70.15,
+    71.46,
+    72.08,
+    65.03,
+    56.62,
+    63.52,
+    58.15,
+    60.12,
+    62.55,
+    57.21,
+    50.46,
+    57.57,
+    53.42,
+    45.57,
+    45.86,
+    48.83,
+    56.51,
+    52.98,
+    52.93,
+    47.23,
+    47.88,
+    42.76,
+    36.97,
+    46.94,
+    60.43
+   ]
+  },
+  "NTAP": {
+   "role": "leader",
+   "close": 178.5,
+   "chg_pct": 2.6,
+   "rung": 5,
+   "rung_key": "breakout",
+   "rung_label": "突破",
+   "evidence": "收 178.50 > 20日高 178.29",
+   "direction": "up",
+   "held_21": 9,
+   "held_50": 75,
+   "held_200": 71,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -7.2,
+   "ema21": 167.19,
+   "sma50": 161.14,
+   "sma200": 120.2,
+   "trace": [
+    159.2264,
+    157.8306,
+    157.3421,
+    155.089,
+    154.1219,
+    151.9884,
+    154.5905,
+    154.2914,
+    155.9065,
+    153.7032,
+    163.0548,
+    165.278,
+    164.8992,
+    171.21,
+    168.87,
+    163.93,
+    174.55,
+    162.1,
+    159.69,
+    163.88,
+    161.16,
+    165.76,
+    166.54,
+    164.64,
+    167.74,
+    169.8,
+    174.53,
+    173.23,
+    173.98,
+    178.5
+   ]
+  },
+  "DXCM": {
+   "role": "leader",
+   "close": 83.45,
+   "chg_pct": 11.95,
+   "rung": 7,
+   "rung_key": "expansion",
+   "rung_label": "扩张",
+   "evidence": "收在 50日高点 79.15 之上",
+   "direction": "up",
+   "held_21": 5,
+   "held_50": 5,
+   "held_200": 50,
+   "above_21": true,
+   "above_50": true,
+   "above_200": true,
+   "from_52wh_pct": -4.1,
+   "ema21": 74.36,
+   "sma50": 73.13,
+   "sma200": 67.75,
+   "trace": [
+    72.47,
+    69.07,
+    68.92,
+    69.75,
+    68.65,
+    70.14,
+    69.98,
+    67.35,
+    68.86,
+    71.25,
+    72.38,
+    73.57,
+    74.06,
+    73.02,
+    74.96,
+    76.35,
+    74.12,
+    72.73,
+    77.98,
+    76.65,
+    75.69,
+    74.75,
+    71.43,
+    70.48,
+    71.54,
+    73.37,
+    74.85,
+    75.14,
+    74.54,
+    83.45
+   ]
+  },
+  "TER": {
+   "role": "damaged",
+   "close": 367.69,
+   "chg_pct": 0.6,
+   "rung": 2,
+   "rung_key": "reclaim",
+   "rung_label": "收回主要均线",
+   "evidence": "2 个交易日前上穿 21日线 358.61，50日线 380.44 仍在头上",
+   "direction": "up",
+   "held_21": 2,
+   "held_50": 0,
+   "held_200": 253,
+   "above_21": true,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -24.6,
+   "ema21": 358.61,
+   "sma50": 380.44,
+   "sma200": 289.27,
+   "trace": [
+    437.92,
+    457.0,
+    420.12,
+    427.2,
+    471.96,
+    436.86,
+    463.21,
+    483.84,
+    427.34,
+    369.09,
+    379.52,
+    343.11,
+    351.57,
+    362.75,
+    359.6,
+    341.11,
+    353.23,
+    342.12,
+    322.3,
+    322.36,
+    333.76,
+    374.04,
+    369.46,
+    373.75,
+    349.92,
+    334.77,
+    320.65,
+    319.41,
+    365.49,
+    367.69
+   ]
+  },
+  "MXL": {
+   "role": "damaged",
+   "close": 66.82,
+   "chg_pct": -0.15,
+   "rung": 1,
+   "rung_key": "stabilizing",
+   "rung_label": "止跌",
+   "evidence": "21/50 日线之下，但守住 200日线 40.91（已 85 日）",
+   "direction": "flat",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 85,
+   "above_21": false,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -47.9,
+   "ema21": 77.61,
+   "sma50": 87.2,
+   "sma200": 40.91,
+   "trace": [
+    88.76,
+    96.44,
+    89.08,
+    84.99,
+    94.47,
+    96.6,
+    108.47,
+    128.03,
+    112.39,
+    93.12,
+    95.68,
+    85.82,
+    86.05,
+    95.8,
+    91.3,
+    89.3,
+    92.59,
+    88.84,
+    74.4,
+    71.84,
+    75.01,
+    86.06,
+    86.8,
+    91.24,
+    71.59,
+    64.86,
+    58.94,
+    57.25,
+    66.92,
+    66.82
+   ]
+  },
+  "SNDK": {
+   "role": "damaged",
+   "close": 1214.83,
+   "chg_pct": -5.09,
+   "rung": 1,
+   "rung_key": "stabilizing",
+   "rung_label": "止跌",
+   "evidence": "21/50 日线之下，但守住 200日线 843.09（已 168 日）",
+   "direction": "flat",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 168,
+   "above_21": false,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -48.4,
+   "ema21": 1480.97,
+   "sma50": 1709.22,
+   "sma200": 843.09,
+   "trace": [
+    2184.75,
+    2273.73,
+    1963.6,
+    1914.46,
+    2335.0,
+    2090.71,
+    2050.3899,
+    2273.73,
+    2032.22,
+    1745.0,
+    1744.4301,
+    1617.7,
+    1727.1801,
+    1858.27,
+    1915.92,
+    1673.97,
+    1757.8199,
+    1615.0,
+    1411.08,
+    1354.8199,
+    1390.95,
+    1589.4,
+    1599.27,
+    1610.33,
+    1436.5601,
+    1278.23,
+    1096.1,
+    1015.89,
+    1279.96,
+    1214.83
+   ]
+  },
+  "GLW": {
+   "role": "damaged",
+   "close": 138.25,
+   "chg_pct": 2.24,
+   "rung": 2,
+   "rung_key": "reclaim",
+   "rung_label": "收回主要均线",
+   "evidence": "2 个交易日前上穿 200日线 134.98，50日线 182.45 仍在头上",
+   "direction": "up",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 2,
+   "above_21": false,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -49.1,
+   "ema21": 159.42,
+   "sma50": 182.45,
+   "sma200": 134.98,
+   "trace": [
+    194.92,
+    209.83,
+    194.07,
+    205.83,
+    228.01,
+    221.05,
+    255.69,
+    255.43,
+    220.63,
+    196.79,
+    194.8,
+    185.38,
+    184.03,
+    192.38,
+    190.89,
+    183.11,
+    187.64,
+    174.41,
+    158.39,
+    154.61,
+    153.1,
+    162.41,
+    154.06,
+    156.06,
+    146.65,
+    143.36,
+    126.01,
+    124.05,
+    135.22,
+    138.25
+   ]
+  },
+  "NVTS": {
+   "role": "damaged",
+   "close": 10.86,
+   "chg_pct": -1.36,
+   "rung": 0,
+   "rung_key": "broken",
+   "rung_label": "破位",
+   "evidence": "跌破 200日线 12.82",
+   "direction": "flat",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 0,
+   "above_21": false,
+   "above_50": false,
+   "above_200": false,
+   "from_52wh_pct": -68.2,
+   "ema21": 12.93,
+   "sma50": 18.92,
+   "sma200": 12.82,
+   "trace": [
+    24.02,
+    23.7,
+    21.4,
+    18.32,
+    17.7,
+    17.3,
+    17.74,
+    17.92,
+    16.53,
+    14.46,
+    15.23,
+    13.99,
+    13.36,
+    14.18,
+    13.47,
+    12.87,
+    13.09,
+    13.27,
+    11.755,
+    11.46,
+    11.54,
+    12.825,
+    12.67,
+    12.03,
+    10.92,
+    11.41,
+    10.01,
+    9.735,
+    11.01,
+    10.86
+   ]
+  },
+  "GFS": {
+   "role": "damaged",
+   "close": 49.99,
+   "chg_pct": 0.2,
+   "rung": 0,
+   "rung_key": "broken",
+   "rung_label": "破位",
+   "evidence": "跌破 200日线 51.49",
+   "direction": "flat",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 0,
+   "above_21": false,
+   "above_50": false,
+   "above_200": false,
+   "from_52wh_pct": -45.9,
+   "ema21": 59.14,
+   "sma50": 72.21,
+   "sma200": 51.49,
+   "trace": [
+    85.7065,
+    89.541,
+    83.27,
+    83.7,
+    86.12,
+    79.78,
+    81.0,
+    82.41,
+    77.23,
+    69.84,
+    68.91,
+    65.84,
+    67.97,
+    69.71,
+    68.97,
+    63.94,
+    63.39,
+    61.41,
+    58.24,
+    57.48,
+    56.81,
+    59.39,
+    58.49,
+    56.91,
+    53.53,
+    53.18,
+    49.02,
+    47.07,
+    49.89,
+    49.99
+   ]
+  },
+  "AAPL": {
+   "role": "damaged",
+   "close": 308.91,
+   "chg_pct": -7.35,
+   "rung": 1,
+   "rung_key": "stabilizing",
+   "rung_label": "止跌",
+   "evidence": "21/50 日线之下，但守住 200日线 277.66（已 85 日）",
+   "direction": "down",
+   "held_21": 0,
+   "held_50": 0,
+   "held_200": 85,
+   "above_21": false,
+   "above_50": false,
+   "above_200": true,
+   "from_52wh_pct": -10.3,
+   "ema21": 322.13,
+   "sma50": 309.5,
+   "sma200": 277.66,
+   "trace": [
+    298.01,
+    297.01,
+    294.3,
+    293.08,
+    275.15,
+    283.78,
+    281.74,
+    289.36,
+    294.38,
+    308.63,
+    312.66,
+    310.66,
+    313.39,
+    316.22,
+    315.32,
+    317.31,
+    314.86,
+    327.5,
+    333.26,
+    333.74,
+    326.59,
+    327.74,
+    325.89,
+    321.66,
+    333.02,
+    336.91,
+    340.08,
+    338.19,
+    333.43,
+    308.91
+   ]
+  }
+ },
+ "breadth": {
+  "today": {
+   "universe_size": 3000.0,
+   "spx_close": 7489.72021484375,
+   "up_4pct": 231.0,
+   "down_4pct": 288.0,
+   "ratio_5d": 0.9905,
+   "ratio_10d": 0.8484,
+   "up_25pct_qtr": 342.0,
+   "down_25pct_qtr": 523.0,
+   "up_25pct_month": 81.0,
+   "down_25pct_month": 284.0,
+   "up_50pct_month": 24.0,
+   "down_50pct_month": 50.0,
+   "up_13pct_34d": 498.0,
+   "down_13pct_34d": 723.0,
+   "t2108": 45.77,
+   "pct_above_200sma": 46.77,
+   "pct_above_50sma": 46.03,
+   "pct_above_20sma": 40.7,
+   "advances": 1265.0,
+   "declines": 1601.0,
+   "new_highs": 29.0,
+   "new_lows": 12.0,
+   "net_advances": -336.0,
+   "rana": -117.24,
+   "ad_line": -15978.0,
+   "mcclellan_osc": -23.23
+  },
+  "trace": {
+   "t2108": [
+    55.53,
+    55.88,
+    56.83,
+    58.72,
+    59.31,
+    53.53,
+    54.4,
+    54.17,
+    55.83,
+    53.17,
+    56.5,
+    54.03,
+    51.2,
+    53.03,
+    50.63,
+    51.3,
+    43.93,
+    52.64,
+    53.39,
+    50.35,
+    46.64,
+    48.99,
+    48.12,
+    44.24,
+    45.34,
+    48.47,
+    47.73,
+    45.1,
+    46.47,
+    45.77
+   ],
+   "pct_above_20sma": [
+    54.71,
+    53.69,
+    54.16,
+    57.72,
+    58.42,
+    53.37,
+    55.7,
+    56.8,
+    59.23,
+    56.73,
+    60.27,
+    55.37,
+    48.17,
+    51.73,
+    49.37,
+    49.97,
+    42.5,
+    51.02,
+    52.35,
+    47.73,
+    43.11,
+    47.08,
+    42.2,
+    36.99,
+    38.62,
+    44.13,
+    44.97,
+    39.57,
+    41.9,
+    40.7
+   ],
+   "pct_above_50sma": [
+    56.34,
+    55.06,
+    56.56,
+    58.64,
+    59.54,
+    52.87,
+    53.77,
+    53.23,
+    54.27,
+    52.4,
+    55.5,
+    53.23,
+    51.07,
+    52.0,
+    49.8,
+    51.33,
+    43.67,
+    52.23,
+    52.96,
+    51.12,
+    48.66,
+    50.34,
+    50.0,
+    46.73,
+    46.95,
+    49.33,
+    48.7,
+    45.5,
+    47.27,
+    46.03
+   ],
+   "pct_above_200sma": [
+    60.82,
+    60.53,
+    60.74,
+    61.5,
+    61.86,
+    48.6,
+    48.3,
+    48.7,
+    49.5,
+    47.77,
+    50.13,
+    49.0,
+    47.6,
+    48.63,
+    45.37,
+    48.33,
+    41.3,
+    49.11,
+    49.63,
+    48.81,
+    47.58,
+    48.56,
+    47.98,
+    46.42,
+    46.07,
+    47.97,
+    46.73,
+    46.2,
+    47.2,
+    46.77
+   ],
+   "ratio_5d": [
+    1.2744,
+    1.0881,
+    0.7263,
+    0.8956,
+    1.0987,
+    1.2431,
+    1.4169,
+    1.6944,
+    1.7103,
+    1.4315,
+    1.2306,
+    0.8563,
+    0.7328,
+    0.758,
+    0.7669,
+    0.5531,
+    0.7378,
+    0.8467,
+    0.598,
+    0.5871,
+    0.6616,
+    0.8524,
+    0.7612,
+    0.7672,
+    0.6923,
+    0.9126,
+    0.6932,
+    0.5746,
+    0.8791,
+    0.9905
+   ],
+   "ratio_10d": [
+    1.0747,
+    1.4056,
+    1.2477,
+    1.225,
+    1.4413,
+    1.2558,
+    1.2736,
+    1.2121,
+    1.3164,
+    1.2968,
+    1.2361,
+    1.078,
+    1.0838,
+    1.1412,
+    1.0876,
+    0.8456,
+    0.8014,
+    0.781,
+    0.6775,
+    0.6712,
+    0.6024,
+    0.7944,
+    0.8013,
+    0.6739,
+    0.6373,
+    0.7856,
+    0.7661,
+    0.655,
+    0.8315,
+    0.8484
+   ],
+   "mcclellan_osc": [
+    5.19,
+    2.52,
+    4.35,
+    11.1,
+    19.16,
+    33.6,
+    28.63,
+    22.0,
+    24.73,
+    20.57,
+    18.12,
+    0.94,
+    -19.68,
+    -5.47,
+    -6.23,
+    -17.36,
+    -16.07,
+    -9.31,
+    -10.59,
+    -24.45,
+    -39.45,
+    -23.5,
+    -30.92,
+    -44.95,
+    -39.06,
+    -22.94,
+    -14.17,
+    -31.56,
+    -20.08,
+    -23.23
+   ],
+   "up_4pct": [
+    333.0,
+    161.0,
+    114.0,
+    267.0,
+    216.0,
+    648.0,
+    400.0,
+    321.0,
+    428.0,
+    293.0,
+    319.0,
+    159.0,
+    194.0,
+    360.0,
+    169.0,
+    160.0,
+    248.0,
+    245.0,
+    237.0,
+    155.0,
+    155.0,
+    484.0,
+    174.0,
+    139.0,
+    175.0,
+    428.0,
+    311.0,
+    149.0,
+    653.0,
+    231.0
+   ],
+   "down_4pct": [
+    103.0,
+    205.0,
+    308.0,
+    221.0,
+    156.0,
+    241.0,
+    235.0,
+    240.0,
+    305.0,
+    439.0,
+    212.0,
+    579.0,
+    366.0,
+    152.0,
+    257.0,
+    530.0,
+    228.0,
+    229.0,
+    527.0,
+    266.0,
+    322.0,
+    153.0,
+    315.0,
+    387.0,
+    451.0,
+    228.0,
+    389.0,
+    637.0,
+    247.0,
+    288.0
+   ],
+   "net_advances": [
+    695.0,
+    -39.0,
+    172.0,
+    441.0,
+    557.0,
+    1070.0,
+    81.0,
+    -48.0,
+    447.0,
+    75.0,
+    145.0,
+    -724.0,
+    -1066.0,
+    767.0,
+    23.0,
+    -582.0,
+    35.0,
+    349.0,
+    -52.0,
+    -772.0,
+    -955.0,
+    647.0,
+    -538.0,
+    -971.0,
+    12.0,
+    641.0,
+    343.0,
+    -1088.0,
+    415.0,
+    -336.0
+   ],
+   "spx_close": [
+    7500.580078125,
+    7472.7900390625,
+    7365.4599609375,
+    7358.22021484375,
+    7357.490234375,
+    7354.02001953125,
+    7440.43017578125,
+    7499.35986328125,
+    7483.22998046875,
+    7483.240234375,
+    7537.43017578125,
+    7503.85009765625,
+    7482.7099609375,
+    7543.64013671875,
+    7575.39013671875,
+    7515.33984375,
+    7543.58984375,
+    7572.39990234375,
+    7533.77001953125,
+    7457.68994140625,
+    7443.27978515625,
+    7509.2001953125,
+    7498.9599609375,
+    7408.2998046875,
+    7411.97998046875,
+    7413.18017578125,
+    7428.77978515625,
+    7316.14990234375,
+    7437.6298828125,
+    7489.72021484375
+   ]
+  },
+  "dates": [
+   "2026-06-18",
+   "2026-06-22",
+   "2026-06-23",
+   "2026-06-24",
+   "2026-06-25",
+   "2026-06-26",
+   "2026-06-29",
+   "2026-06-30",
+   "2026-07-01",
+   "2026-07-02",
+   "2026-07-06",
+   "2026-07-07",
+   "2026-07-08",
+   "2026-07-09",
+   "2026-07-10",
+   "2026-07-13",
+   "2026-07-14",
+   "2026-07-15",
+   "2026-07-16",
+   "2026-07-17",
+   "2026-07-20",
+   "2026-07-21",
+   "2026-07-22",
+   "2026-07-23",
+   "2026-07-24",
+   "2026-07-27",
+   "2026-07-28",
+   "2026-07-29",
+   "2026-07-30",
+   "2026-07-31"
+  ]
+ },
+ "diffusion": {
+  "sessions": [
+   "2026-07-07",
+   "2026-07-08",
+   "2026-07-09",
+   "2026-07-10",
+   "2026-07-13",
+   "2026-07-27",
+   "2026-07-28",
+   "2026-07-29",
+   "2026-07-30",
+   "2026-07-31"
+  ],
+  "screeners": {
+   "ema21_watch": [
+    80,
+    90,
+    78,
+    46,
+    105,
+    132,
+    70,
+    91,
+    119,
+    133
+   ],
+   "episodic_pivot": [
+    1,
+    2,
+    2,
+    1,
+    2,
+    1,
+    5,
+    8,
+    3,
+    6
+   ],
+   "gainers_4pct": [
+    159,
+    194,
+    360,
+    169,
+    160,
+    428,
+    311,
+    149,
+    653,
+    231
+   ],
+   "healthy_charts": [
+    141,
+    144,
+    104,
+    67,
+    115,
+    116,
+    65,
+    89,
+    94,
+    93
+   ],
+   "momentum_97": [
+    90,
+    90,
+    90,
+    237,
+    90,
+    90,
+    150,
+    90,
+    91,
+    90
+   ],
+   "vcp": [
+    16,
+    15,
+    11,
+    12,
+    9,
+    19,
+    9,
+    14,
+    16,
+    16
+   ],
+   "vol_up_gainers": [
+    42,
+    34,
+    47,
+    30,
+    41,
+    59,
+    86,
+    67,
+    108,
+    82
+   ]
+  },
+  "sectors": {
+   "Financial": [
+    36,
+    36,
+    34,
+    64,
+    33,
+    31,
+    47,
+    29,
+    27,
+    32
+   ],
+   "Healthcare": [
+    25,
+    30,
+    25,
+    34,
+    18,
+    15,
+    26,
+    14,
+    22,
+    19
+   ],
+   "Technology": [
+    8,
+    9,
+    16,
+    33,
+    14,
+    7,
+    22,
+    13,
+    7,
+    11
+   ],
+   "Industrials": [
+    13,
+    10,
+    9,
+    26,
+    13,
+    13,
+    17,
+    9,
+    9,
+    11
+   ],
+   "Consumer Cyclical": [
+    2,
+    4,
+    4,
+    25,
+    7,
+    8,
+    14,
+    12,
+    11,
+    9
+   ],
+   "Communication Services": [
+    2,
+    0,
+    2,
+    13,
+    1,
+    7,
+    6,
+    9,
+    7,
+    5
+   ],
+   "Basic Materials": [
+    1,
+    1,
+    1,
+    12,
+    3,
+    3,
+    8,
+    4,
+    5,
+    4
+   ],
+   "Consumer Defensive": [
+    2,
+    0,
+    0,
+    12,
+    0,
+    2,
+    3,
+    4,
+    2,
+    2
+   ]
+  }
+ },
+ "state_board": [
+  {
+   "key": "受损程度",
+   "layer": "fact",
+   "state": "很弱",
+   "evidence": "季度 −25% 的股票 523 只 vs +25% 的 342 只（60% 在下跌侧）"
+  },
+  {
+   "key": "抛压",
+   "layer": "fact",
+   "state": "已启动",
+   "evidence": "今日 −4% 家数 288，5 日峰值 637（已回落至 45%）"
+  },
+  {
+   "key": "指数修复",
+   "layer": "interpretation",
+   "state": "已启动",
+   "evidence": "5 个指数中 3 个站上 50 日线：SPY、RSP、DIA"
+  },
+  {
+   "key": "领涨修复",
+   "layer": "interpretation",
+   "state": "已启动",
+   "evidence": "7 只领涨中 4 只已突破：AMZN、MSFT、NTAP、DXCM"
+  },
+  {
+   "key": "巨头领涨",
+   "layer": "interpretation",
+   "state": "已启动",
+   "evidence": "AMZN r5 · MSFT r6 · NVDA r2（均值 4.3/7）"
+  },
+  {
+   "key": "广义半导体",
+   "layer": "interpretation",
+   "state": "很弱",
+   "evidence": "7 只受损名字阶梯均值 1.0/7，5 只仍在止跌或破位"
+  },
+  {
+   "key": "市场宽度",
+   "layer": "fact",
+   "state": "很弱",
+   "evidence": ">20日线 40.7%、T2108 45.8、净上涨 -336（指数收红仍为负）"
+  },
+  {
+   "key": "利率",
+   "layer": "fact",
+   "state": null,
+   "evidence": "30Y / 20Y 收益率破 2007 高点 —— 管线未接入债市数据，此格由人工填写"
+  },
+  {
+   "key": "确认信号",
+   "layer": "anticipation",
+   "state": "缺席",
+   "evidence": "5 日动能比 0.9905（需 > 1.0）、Episodic Pivot 今日 6 只（月初 1 只）"
+  },
+  {
+   "key": "风险姿态",
+   "layer": "action",
+   "state": null,
+   "evidence": "等待 FTD —— 上面九格的合成结果，不是独立判断"
+  }
+ ],
+ "chain": [
+  {
+   "label": "巨头站住",
+   "state": "lit",
+   "evidence": "AMZN / MSFT / NVDA 全部 ≥ 收回主要均线（r5 / r6 / r2）"
+  },
+  {
+   "label": "更多领涨跟上",
+   "state": "partial",
+   "evidence": "4/7 只已突破；Episodic Pivot 1 → 6 只/日"
+  },
+  {
+   "label": "QQQ 收回 21/50",
+   "state": "unlit",
+   "evidence": "QQQ 687.99 vs 21日 697.12 / 50日 714.75 —— 两条都在头上"
+  },
+  {
+   "label": "宽度扩张",
+   "state": "unlit",
+   "evidence": "5 日比 0.9905、>20日线 40.7%、净上涨 -336"
+  },
+  {
+   "label": "RSP / IWM 跟上",
+   "state": "partial",
+   "evidence": "RSP r4（在 21日线上）· IWM r1（21/50 双破）"
+  },
+  {
+   "label": "突破站得住",
+   "state": "partial",
+   "evidence": "2 只突破后仍站住：MSFT、DXCM"
+  }
+ ],
+ "counted_screeners": [
+  "episodic_pivot",
+  "vcp",
+  "gainers_4pct",
+  "vol_up_gainers",
+  "ema21_watch",
+  "healthy_charts"
+ ],
+ "levels": [
+  "缺席",
+  "很弱",
+  "早期",
+  "已启动",
+  "良好"
+ ]
+};
+const B = D.state_board.filter(r=>r.key!=="风险姿态"), CH = D.chain, T = D.breadth.today,
+      NM = D.names, DF = D.diffusion, TR = D.breadth.trace, DATES = D.breadth.dates;
+const NS="http://www.w3.org/2000/svg";
+const C={took:"#1a5488",refused:"#d1600f",idle:"#c2bdb4",ink:"#111110",ink2:"#5c5852",ink3:"#9c968d"};
+const el=id=>document.getElementById(id);
+function mk(p,t,a={},x){const n=document.createElementNS(NS,t);
+  for(const k in a) n.setAttribute(k,a[k]); if(x!=null) n.textContent=x; p.appendChild(n); return n;}
+const F=(s,f,w)=>`font:${w||400} ${s}px ${f||"Plex,sans-serif"}`;
+
+/* ── the encoding, in one place ───────────────────────────────────────
+   fill: two colours only, far enough apart to survive greyscale
+   area: a half-filled cell = "partial"
+   texture: 45° hatch on every failure
+   outline: not tested — outside the scale entirely                    */
+function cell(parent,{x,y,w,h,state,label,fs}){
+  const solid = state==="took" || state==="refused";
+  if (state==="untested"){
+    mk(parent,"rect",{x,y,width:w,height:h,fill:"none",stroke:C.idle,
+      "stroke-width":1.2,"stroke-dasharray":"3 2"});
+  } else if (state==="partial"){
+    mk(parent,"rect",{x,y,width:w,height:h,fill:"none",stroke:C.took,"stroke-width":1.2});
+    mk(parent,"rect",{x,y,width:w/2,height:h,fill:C.took});
+  } else {
+    const col = state==="took" ? C.took : C.refused;
+    mk(parent,"rect",{x,y,width:w,height:h,fill:col});
+    if (state==="refused") mk(parent,"rect",{x,y,width:w,height:h,fill:"url(#hx)",opacity:.5});
+  }
+  if (label!=null) mk(parent,"text",{x:x+w/2,y:y+h/2+3.5,"text-anchor":"middle",
+    style:`font:500 ${fs||10}px PlexMono,monospace;fill:${
+      state==="took"?"#fff":state==="refused"?"#3a1f06":C.ink3}`}, label);
+  return solid;
+}
+const qual = v => v.direction==="up" ? "took" : v.direction==="down" ? "refused" : "untested";
+
+const LEV={"缺席":0,"很弱":1,"早期":2,"已启动":3,"良好":4};
+const ORDER=["Absent","Very weak","Early","Started","Good"];
+const LEV_EN={"缺席":"Absent","很弱":"Very weak","早期":"Early","已启动":"Started","良好":"Good"};
+const KEY_EN={"受损程度":"Damage","抛压":"Selling pressure","指数修复":"Index repair",
+ "领涨修复":"Leadership repair","巨头领涨":"Megacap leadership","广义半导体":"Broad semis",
+ "市场宽度":"Breadth","利率":"Rates","确认信号":"Confirmation"};
+const EV_EN={
+ "受损程度":"523 names −25% on the quarter against 342 up 25% — 60% on the down side",
+ "抛压":"288 names −4% today against a five-day peak of 637, back to 45% of it",
+ "指数修复":"3 of 5 indexes above the 50-day: SPY, RSP, DIA",
+ "领涨修复":"4 of 7 leaders have broken out: AMZN, MSFT, NTAP, DXCM",
+ "巨头领涨":"AMZN rung 5 · MSFT rung 6 · NVDA rung 2 — mean 4.3 of 7",
+ "广义半导体":"7 damaged names average rung 1.0 of 7; five still stabilizing or broken",
+ "市场宽度":"40.7% above the 20-day, T2108 45.8, net advances −336 with indexes green",
+ "利率":"30Y and 20Y broke to 2007 highs — bond data is not wired into the pipeline",
+ "确认信号":"Five-day ratio 0.9905, needs to clear 1.0 · Episodic Pivot 6 today against 1 at month start"};
+const CH_EN={"巨头站住":"Megacaps hold","更多领涨跟上":"Leaders follow","QQQ 收回 21/50":"QQQ reclaims",
+ "宽度扩张":"Breadth expands","RSP / IWM 跟上":"RSP & IWM","突破站得住":"Breakouts hold"};
+const RUNG=["Broken","Stabilizing","Reclaim","Above 50D","Pivot","Breakout","Holds","Expansion"];
+const ROLE={index:"Indexes",leader:"Leaders",damaged:"Damaged"};
+
+el("stamp").textContent=`${D.as_of} · CLOSE · SPX ${T.spx_close.toFixed(2)}`;
+el("read").innerHTML=`Megacaps repaired.<br><em>Propagation did not happen.</em>`;
+el("spec").innerHTML=[["S&P 500",T.spx_close.toFixed(2)],["5-day ratio",T.ratio_5d.toFixed(4)],
+  ["Above 20-day",T.pct_above_20sma.toFixed(1)+"%"],["T2108",T.t2108.toFixed(1)],
+  ["Net advances",(T.net_advances>0?"+":"")+T.net_advances],["Leaders broken out","4 / 7"],
+  ["Chain links lit","1 / 6"]]
+  .map(([k,v])=>`<div><span class="k">${k}</span><span class="v">${v}</span></div>`).join("");
+
+/* ── state board: position carries rank, colour carries side ── */
+el("board").innerHTML=B.map(r=>{
+  const lv = r.state==null ? -1 : LEV[r.state];
+  const cells = ORDER.map((_,k)=>{
+    if (lv<0) return `<i style="border:1.2px dashed ${C.idle}"></i>`;
+    if (k>lv)  return `<i style="background:#e6e2db"></i>`;
+    const col = lv<=1 ? C.refused : lv>=3 ? C.took : "#8d877d";
+    const hatch = lv<=1 ? `background-image:repeating-linear-gradient(45deg,rgba(125,57,8,.55) 0 1.7px,transparent 1.7px 5px);` : "";
+    return `<i style="background:${col};${hatch}"></i>`;
+  }).join("");
+  const col = lv<0?C.ink3:lv<=1?C.refused:lv>=3?C.took:C.ink2;
+  return `<div class="row"><div class="k">${KEY_EN[r.key]}</div>
+    <div><div class="lv">${cells}</div></div>
+    <div><div class="st" style="color:${col}">${r.state==null?"Not wired":LEV_EN[r.state]}</div>
+      <div class="ev">${EV_EN[r.key]}</div></div></div>`;}).join("");
+el("key").innerHTML=
+ `<span><i style="background:${C.took}"></i>took the chance offered</span>`+
+ `<span><i style="background:${C.refused};background-image:repeating-linear-gradient(45deg,rgba(125,57,8,.55) 0 1.7px,transparent 1.7px 5px)"></i>offered and refused</span>`+
+ `<span><i style="border:1.2px solid ${C.took};background:linear-gradient(90deg,${C.took} 50%,transparent 50%)"></i>partial — half the cell</span>`+
+ `<span><i style="border:1.2px dashed ${C.idle}"></i>not tested — outside the scale</span>`+
+ `<span style="color:${C.ink3}">rank is carried by how many cells are filled, never by hue alone</span>`;
+
+/* ── Minard flow ── */
+(function(){
+  const s=el("flow"), W=1372, L=60, R=250, TOP=44, MID=170, MAXW=100;
+  const seg=(W-L-R)/CH.length;
+  const MEAS=[3/3,4/7,0,0,1/2,2/7], LAB=["3 of 3 megacaps","4 of 7 leaders","QQQ 0 of 2 MAs",
+    "breadth 0 of 3 tests","1 of 2 — RSP only","2 of 7 still holding"];
+  // A current that has stopped cannot come back downstream. The band is the
+  // RUNNING MINIMUM of what is still being carried; the first version let it
+  // swell again at links 5 and 6, which is the one thing Minard never does.
+  const FLOW=MEAS.map((_,i)=>Math.min(...MEAS.slice(0,i+1)));
+  const w=i=>Math.max(0.012,FLOW[i])*MAXW/2;
+  let top=[],bot=[];
+  FLOW.forEach((_,i)=>{top.push(`${i?"L":"M"}${L+seg*i},${MID-w(i)}`,`L${L+seg*(i+1)-16},${MID-w(i)}`);});
+  for(let i=FLOW.length-1;i>=0;i--) bot.push(`L${L+seg*(i+1)-16},${MID+w(i)}`,`L${L+seg*i},${MID+w(i)}`);
+  mk(s,"path",{d:top.join(" ")+" "+bot.join(" ")+" Z",fill:C.took});
+
+  const dead=FLOW.findIndex(v=>v<=0.02);
+  if(dead>0){
+    mk(s,"rect",{x:L+seg*dead,y:MID-3,width:(FLOW.length-dead)*seg-16,height:6,fill:C.refused});
+    mk(s,"rect",{x:L+seg*dead,y:MID-3,width:(FLOW.length-dead)*seg-16,height:6,fill:"url(#hx)",opacity:.5});
+  }
+  MEAS.forEach((v,i)=>{
+    const x=L+seg*i;
+    mk(s,"line",{x1:x,y1:TOP-8,x2:x,y2:MID+MAXW/2+64,stroke:"#cdc7be","stroke-width":.8});
+    mk(s,"text",{x:x+9,y:TOP+4,style:"font:600 15px PlexCond,sans-serif;fill:#111110"},CH_EN[CH[i].label]);
+    mk(s,"text",{x:x+9,y:TOP+21,style:F(10.5)+";fill:#5c5852"},LAB[i]);
+    // measured but no longer fed by the chain — drawn detached, above the line
+    if(v>FLOW[i]+0.02){
+      const h=v*MAXW/2;
+      mk(s,"rect",{x:x+8,y:MID-MAXW/2-34,width:seg-32,height:h*0.7,
+        fill:"none",stroke:C.took,"stroke-width":1.2,"stroke-dasharray":"3 3"});
+      mk(s,"text",{x:x+9,y:MID-MAXW/2-42,style:F(9.5,"PlexMono,monospace")+`;fill:${C.took}`},
+        `${Math.round(v*100)}% — MEASURED, NOT FED`);
+    }
+    mk(s,"text",{x:x+9,y:MID+MAXW/2+58,
+      style:F(11,"PlexMono,monospace",500)+`;fill:${FLOW[i]>0.02?C.took:C.refused}`},
+      FLOW[i]>0.02 ? Math.round(FLOW[i]*100)+"% carrying" : "0% carrying");
+  });
+  mk(s,"text",{x:L+seg*dead+9,y:MID+MAXW/2+76,style:F(11,null,500)+`;fill:${C.refused}`},
+    "the current stops here and does not resume");
+  mk(s,"text",{x:W-R+18,y:MID-8,style:"font:700 22px PlexCond,sans-serif;fill:#111110"},"Width is");
+  mk(s,"text",{x:W-R+18,y:MID+16,style:"font:700 22px PlexCond,sans-serif;fill:#111110"},"the count.");
+  mk(s,"text",{x:W-R+18,y:MID+42,style:F(12)+";fill:#5c5852"},"No legend, no second chart.");
+  mk(s,"text",{x:W-R+18,y:MID+60,style:F(12)+";fill:#5c5852"},"The thinning is the finding.");
+})();
+
+/* ── ladder in the resolved encoding ── */
+(function(){
+  const s=el("ladder"), W=1372,L=140,R=30,TOP=22,BOT=400;
+  const y=r=>BOT-r*(BOT-TOP)/7;
+  RUNG.forEach((lab,r)=>{
+    mk(s,"rect",{x:L-12,y:y(r)-17,width:W-L-R+12,height:34,fill:r%2?"#ecebe6":"transparent"});
+    mk(s,"line",{x1:L-12,y1:y(r),x2:W-R,y2:y(r),stroke:"#d6d1c9"});
+    mk(s,"text",{x:L-24,y:y(r)+5,"text-anchor":"end",
+      style:"font:600 13px PlexCond,sans-serif;fill:#5c5852;letter-spacing:.02em"},lab.toUpperCase());
+    mk(s,"text",{x:L-24,y:y(r)+19,"text-anchor":"end",
+      style:F(9,"PlexMono,monospace")+";fill:#b3ada3;letter-spacing:.1em"},"R"+r);
+  });
+  let x=L+26;
+  ["index","leader","damaged"].forEach((role,gi)=>{
+    const grp=Object.entries(NM).filter(([,v])=>v.role===role).sort((a,b)=>b[1].rung-a[1].rung);
+    if(gi) mk(s,"line",{x1:x-26,y1:TOP-18,x2:x-26,y2:BOT+34,stroke:"#cdc7be","stroke-dasharray":"2 4"});
+    mk(s,"text",{x:x-4,y:BOT+56,
+      style:F(11,"PlexMono,monospace",600)+";fill:#9c968d;letter-spacing:.22em"},ROLE[role].toUpperCase());
+    grp.forEach(([t,v])=>{
+      const cy=y(v.rung), st=qual(v);
+      const tr=v.trace,mn=Math.min(...tr),mx=Math.max(...tr);
+      mk(s,"polyline",{points:tr.map((p,i)=>`${x-18+i*1.25},${cy+14-(p-mn)/((mx-mn)||1)*20}`).join(" "),
+        fill:"none",stroke:st==="refused"?C.refused:st==="took"?C.took:C.idle,"stroke-width":.9,opacity:.38});
+      cell(s,{x:x-19,y:cy-11,w:46,h:22,state:st,label:t,fs:11});
+      x+=62;
+    });
+    x+=38;
+  });
+})();
+
+/* ── Isotype units ── */
+(function(){
+  const s=el("iso"), L=220,TOP=30,ROW=62,U=13,G=4;
+  const KEYS=[["episodic_pivot","Episodic Pivot",1],["vcp","VCP",1],
+              ["vol_up_gainers","Volume gainers",5],["healthy_charts","Healthy charts",10]];
+  KEYS.forEach(([k,lab,per],ri)=>{
+    const v=DF.screeners[k], a=v[0], b=v[v.length-1], y=TOP+ri*ROW;
+    mk(s,"text",{x:L-20,y:y+13,"text-anchor":"end",
+      style:"font:600 14px PlexCond,sans-serif;fill:#111110;letter-spacing:.02em"},lab.toUpperCase());
+    mk(s,"text",{x:L-20,y:y+29,"text-anchor":"end",style:F(9.5)+";fill:#9c968d"},
+      per===1?"1 mark = 1 name":`1 mark = ${per} names — estimation, admitted`);
+    const n0=Math.round(a/per), n1=Math.round(b/per);
+    for(let i=0;i<Math.max(n0,n1);i++){
+      const px=L+i*(U+G);
+      if(i<Math.min(n0,n1)) mk(s,"rect",{x:px,y,width:U,height:U,fill:"#c9c4bc"});
+      else if(n1>n0)        cell(s,{x:px,y,w:U,h:U,state:"took"});
+      else                  cell(s,{x:px,y,w:U,h:U,state:"refused"});
+    }
+    const ex=L+Math.max(n0,n1)*(U+G)+16;
+    mk(s,"text",{x:ex,y:y+12,
+      style:`font:600 15px PlexCond,sans-serif;fill:${b>a?C.took:b<a?C.refused:C.ink3}`},`${a} → ${b}`);
+  });
+  mk(s,"text",{x:L,y:TOP+4*ROW+6,style:F(12,null,500)+";fill:#111110"},
+    "Grey = already there at month start. Solid = added. Hatched = lost.");
+})();
+
+/* ── Bertin matrix ── */
+(function(){
+  const s=el("matrix"), L=230,TOP=86,CW=54,RH=17;
+  const CRIT=[["above 21D",v=>v.above_21],["above 50D",v=>v.above_50],["above 200D",v=>v.above_200],
+              ["rung ≥ 3",v=>v.rung>=3],["broke out",v=>v.rung>=5],["travelling up",v=>v.direction==="up"]];
+  const rows=Object.entries(NM).map(([t,v])=>({t,v,sc:CRIT.reduce((a,[,f])=>a+(f(v)?1:0),0)}))
+    .sort((a,b)=>b.sc-a.sc||b.v.rung-a.v.rung);
+  const cols=CRIT.map(([lab,f])=>({lab,f,hits:rows.filter(r=>f(r.v)).length}))
+    .sort((a,b)=>b.hits-a.hits);
+  cols.forEach((c,ci)=>mk(s,"text",{x:L+ci*CW+CW/2,y:TOP-14,
+    transform:`rotate(-46 ${L+ci*CW+CW/2} ${TOP-14})`,
+    style:F(11,null,500)+";fill:#5c5852"},`${c.lab} · ${c.hits}`));
+  rows.forEach((r,ri)=>{
+    mk(s,"text",{x:L-14,y:TOP+ri*RH+12,"text-anchor":"end",
+      style:F(11,"PlexMono,monospace",500)+";fill:#111110"},r.t);
+    mk(s,"text",{x:L-64,y:TOP+ri*RH+12,"text-anchor":"end",style:F(9.5)+";fill:#9c968d"},RUNG[r.v.rung]);
+    cols.forEach((c,ci)=>{
+      const on=c.f(r.v);
+      mk(s,"rect",{x:L+ci*CW,y:TOP+ri*RH+1,width:CW-3,height:RH-3,
+        fill:on?"#111110":"#ffffff",opacity:on?.86:1,stroke:"#e0dcd5"});
+    });
+  });
+  const RX=L+cols.length*CW+64;
+  mk(s,"text",{x:RX,y:TOP+6,style:"font:700 21px PlexCond,sans-serif;fill:#111110"},"Sort until");
+  mk(s,"text",{x:RX,y:TOP+30,style:"font:700 21px PlexCond,sans-serif;fill:#111110"},"it speaks.");
+  ["Rows by how many criteria each name meets, columns by",
+   "how many names meet each criterion. The solid block at the",
+   "top and the empty block at the bottom are the finding —",
+   "narrowness as a shape, not a sentence.","",
+   "Lightness only. No hue at all, so this panel is immune to",
+   "every colour condition and prints as it looks."]
+   .forEach((t,i)=>mk(s,"text",{x:RX,y:TOP+62+i*20,style:F(12.5)+";fill:#5c5852"},t));
+})();
+
+/* ── breadth zones ── */
+(function(){
+  const s=el("breadth"), W=1372,L=160,R=200,TOP=18,BOT=222;
+  const v=TR.t2108,n=v.length;
+  const y=t=>BOT-(t/100)*(BOT-TOP), x=i=>L+i*(W-L-R)/n;
+  const Z=[[80,100,"OVERBOUGHT","risk of a top","refused"],[60,80,"STRONG","trend intact","took"],
+           [40,60,"NEUTRAL","no edge from breadth",null],[20,40,"WEAK","exposure comes down","refused"],
+           [0,20,"OVERSOLD","where bottoms are made","took"]];
+  Z.forEach(([lo,hi,nm,what,side])=>{
+    mk(s,"rect",{x:L,y:y(hi),width:W-L-R,height:y(lo)-y(hi),
+      fill:side==="took"?C.took:side==="refused"?C.refused:"#000",opacity:side?.05:.02});
+    mk(s,"line",{x1:L,y1:y(hi),x2:W-R,y2:y(hi),stroke:"#d8d4cd","stroke-width":.8});
+    mk(s,"text",{x:L-14,y:(y(lo)+y(hi))/2-1,"text-anchor":"end",
+      style:"font:600 12px PlexCond,sans-serif;fill:#5c5852;letter-spacing:.04em"},nm);
+    mk(s,"text",{x:L-14,y:(y(lo)+y(hi))/2+13,"text-anchor":"end",style:F(10)+";fill:#9c968d"},what);
+    mk(s,"text",{x:W-R+8,y:y(hi)+4,style:F(9,"PlexMono,monospace")+";fill:#b3ada3"},hi);
+  });
+  const g=DATES.findIndex((d,i)=>i>0&&(new Date(d)-new Date(DATES[i-1]))/864e5>6);
+  mk(s,"polyline",{points:v.map((p,i)=>`${x(i)},${y(p)}`).join(" "),fill:"none",
+    stroke:C.ink,"stroke-width":2,"stroke-linejoin":"round"});
+  if(g>0){mk(s,"rect",{x:x(g-1),y:TOP,width:x(g)-x(g-1),height:BOT-TOP,fill:"#f4f3f0",opacity:.9});
+    mk(s,"text",{x:(x(g-1)+x(g))/2,y:TOP-5,"text-anchor":"middle",style:F(9.5)+";fill:#9c968d"},
+      "archive gap");}
+  mk(s,"circle",{cx:x(n-1),cy:y(v[n-1]),r:4.5,fill:C.ink});
+  cell(s,{x:x(n)-14,y:TOP,w:28,h:BOT-TOP,state:"untested"});
+  mk(s,"text",{x:x(n),y:BOT+16,"text-anchor":"middle",
+    style:F(9,"PlexMono,monospace",500)+";fill:#9c968d;letter-spacing:.1em"},"PENDING");
+  mk(s,"text",{x:x(n-1)+10,y:y(v[n-1])-9,style:"font:600 20px PlexCond,sans-serif;fill:#111110"},
+    v[n-1].toFixed(1));
+  mk(s,"text",{x:x(n-1)+10,y:y(v[n-1])+7,style:F(10)+";fill:#5c5852"},"today · NEUTRAL");
+  [0,n-1].forEach(i=>mk(s,"text",{x:x(i),y:BOT+16,"text-anchor":i?"end":"start",
+    style:F(9,"PlexMono,monospace")+";fill:#b3ada3"},DATES[i]));
+})();
+
+/* ── sequence ── */
+(function(){
+  const s=el("seq"), W=1372,L=60,R=260,TOP=26,BOT=170;
+  const v=NM.SPY.trace,n=v.length,mn=Math.min(...v),mx=Math.max(...v);
+  const x=i=>L+i*(W-L-R)/n, y=p=>BOT-(p-mn)/(mx-mn)*(BOT-TOP);
+  mk(s,"polyline",{points:v.map((p,i)=>`${x(i)},${y(p)}`).join(" "),fill:"none",
+    stroke:C.ink,"stroke-width":2,"stroke-linejoin":"round"});
+  [[n-3,"07.29","Liquidation","refused"],[n-2,"07.30","Stabilized · D1","untested"],
+   [n-1,"07.31","Follow-through · D2","took"]].forEach(([i,d,lab,st],k)=>{
+    const col=st==="took"?C.took:st==="refused"?C.refused:C.ink2;
+    mk(s,"line",{x1:x(i),y1:y(v[i]),x2:x(i),y2:TOP-4,stroke:col,"stroke-width":.9,opacity:.45});
+    cell(s,{x:x(i)-5,y:y(v[i])-5,w:10,h:10,state:st});
+    mk(s,"text",{x:x(i),y:TOP-24+k*13,"text-anchor":"middle",
+      style:F(9,"PlexMono,monospace",500)+`;fill:${col}`},`${d}  ${lab}`);
+  });
+  cell(s,{x:x(n)-2,y:TOP,w:x(n+1)-x(n),h:BOT-TOP,state:"untested"});
+  mk(s,"text",{x:x(n)+(x(n+1)-x(n))/2,y:TOP-8,"text-anchor":"middle",
+    style:F(10,"PlexMono,monospace",500)+";fill:#9c968d;letter-spacing:.1em"},"NEXT");
+  mk(s,"text",{x:x(n)+(x(n+1)-x(n))/2,y:(TOP+BOT)/2,"text-anchor":"middle",
+    style:"font:700 26px PlexCond,sans-serif;fill:#c2bdb4"},"FTD?");
+  mk(s,"text",{x:x(n+1)+24,y:(TOP+BOT)/2-8,style:"font:600 18px PlexCond,sans-serif;fill:#111110"},
+    "The slot is the position.");
+  mk(s,"text",{x:x(n+1)+24,y:(TOP+BOT)/2+12,style:F(12)+";fill:#5c5852"},
+    "Every other price chart stops at the last bar.");
+})();
+</script>
+</body></html>

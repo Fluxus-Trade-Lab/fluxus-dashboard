@@ -1,8 +1,25 @@
 @import "tailwindcss";
 
+/* ── IBM Plex — chosen 2026-08-09 ───────────────────────────────────────
+   Everything from b2.html onward was already rendering in Plex; the first
+   three explorations were Inter. Self-hosted (OFL) so there is no CDN
+   dependency and no licence cost. Plex Mono also replaces JetBrains Mono,
+   which was never installed here and had been silently falling back to
+   Menlo. `block` display so the condensed display type never flashes in a
+   substitute face — the masthead is the identity. */
+@font-face{font-family:Plex;src:url(/fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Plex;src:url(/fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:Plex;src:url(/fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:PlexCond;src:url(/fonts/IBMPlexSansCondensed-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:PlexCond;src:url(/fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(/fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:PlexMono;src:url(/fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:PlexMono;src:url(/fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+
 @theme {
-  --font-sans: 'Inter', -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans: Plex, 'Inter', -apple-system, sans-serif;
+  --font-cond: PlexCond, Plex, sans-serif;
+  --font-mono: PlexMono, 'JetBrains Mono', ui-monospace, monospace;
 
   --color-bg: #fafaf9;
   --color-surface: #ffffff;
@@ -25,6 +42,48 @@
   --color-neutral: #78716c;
   --color-accent: #2d5f8a;
   --color-accent-light: #dbeafe;
+
+  /* Poster palette — from the Masterclass poster */
+  --color-poster-bg: #0a0a0a;
+  --color-poster-red: #d94032;
+  --color-poster-blue: #3b82c4;
+  --color-poster-text: #e7e5e4;
+
+  /* ── v2 encoding (Fluxus_Brand/visual/explorations/2026-08-08/palette.html) ──
+     Additive only; nothing above is redefined. Two fills, and every other
+     distinction is carried by a NON-colour channel:
+       area    — a half-filled cell means "partial"
+       texture — a 45° hatch on every failure
+       outline — not measured, drawn outside the scale
+     Rank is never carried by hue alone. Measured greyscale ΔE between the two
+     fills is 19.3 (the previous blue/orange pair collapsed to 3.3), which is
+     what matters here because this brand travels as screenshots and print. */
+  --color-took: #1a5488;
+  --color-refused: #d1600f;
+  --color-untested: #c2bdb4;
+  --color-v2-paper: #f4f3f0;
+
+  /* ── glass · chrome only ────────────────────────────────────────────
+     Rule the encoding depends on: glass NEVER sits beneath a value. The rail,
+     the status bar and overlays may be translucent; a mark, a bar or a number
+     may not, because a value whose appearance depends on what is behind it
+     cannot be screenshotted or printed. Both themes are written out in full —
+     partial coverage is how the fills silently inherited light-mode values and
+     put "not measured" and "took the chance" at ΔE 0.8 in greyscale. */
+  --glass: rgba(250, 249, 246, .68);
+  --glass-edge: rgba(17, 17, 16, .09);
+  --glass-line: rgba(255, 255, 255, .7);
+  --glass-blur: blur(20px) saturate(150%);
+  --lift: 0 1px 2px rgba(17,17,16,.05), 0 8px 24px -12px rgba(17,17,16,.16);
+  /* a faint ground, so translucency has something to be translucent against */
+  --ground: radial-gradient(680px 420px at 12% -6%, rgba(31,95,158,.07), transparent 62%),
+            radial-gradient(560px 380px at 92% 2%, rgba(209,96,15,.05), transparent 60%);
+  --color-v2-ink: #111110;
+  --color-v2-rule: #dedad3;
+  --color-v2-hair: #eae7e1;
+  /* unfilled level cell — MUST flip with the theme, or an empty
+     cell reads as a filled one on the dark ground */
+  --color-v2-off: #e6e2db;
 
   --color-active-tab-bg: #292524;
   --color-active-tab-text: #f5f5f4;
@@ -61,6 +120,38 @@ html.dark {
   --color-signal-caution: #facc15;
   --color-signal-warning: #fb923c;
   --color-signal-riskoff: #f87171;
+
+  --color-v2-paper: #1c1917;
+
+  /* glass, dark — written out rather than inherited, same lesson as the fills */
+  --glass: rgba(41, 37, 36, .72);
+  --glass-edge: rgba(255, 255, 255, .07);
+  --glass-line: rgba(255, 255, 255, .05);
+  --glass-blur: blur(20px) saturate(140%);
+  --lift: 0 1px 2px rgba(0,0,0,.30), 0 10px 28px -14px rgba(0,0,0,.55);
+  --ground: radial-gradient(680px 420px at 12% -6%, rgba(31,95,158,.13), transparent 62%),
+            radial-gradient(560px 380px at 92% 2%, rgba(209,96,15,.07), transparent 60%);
+  --color-v2-ink: #e7e5e4;
+  --color-v2-rule: #44403c;
+  --color-v2-hair: #3a3733;
+  --color-v2-off: #3a3733;
+
+  /* ── v2 encoding, dark ground (Fluxus_Brand/visual/explorations/2026-08-08/palette_dark.html) ──
+     The light proof does not carry into the dark, because dark moves the two
+     things the fills were measured AGAINST: the ground (L* 95 → 9) and the empty
+     cell --color-v2-off (near-white → near-black). took/refused were previously
+     absent from this block and inherited the light values, which measured:
+       took | v2-off      ΔE 11.4  ✗   a filled cell ≈ an empty one, so rank
+                                       stopped being countable in greyscale
+       took | untested    ΔE  0.8  ✗   "not measured" ≈ "took the chance"
+     Both fixed below. All four encoding colours are now stated explicitly here
+     so nothing in this set can silently inherit across the theme flip again.
+     Corrected greyscale ladder on #1C1917 — greyscale ΔE is exactly |ΔL*|:
+       ground 9.0 → off 23.2 → took 38.8 → refused 54.0   (steps 14.2 · 15.5 · 15.2)
+     untested leaves the scale upward at L* 71.0 (≥17 from every fill). */
+  --color-took: #1d5e98;      /* #1A5488 × 1.12 in sRGB — hue held at 272° */
+  --color-refused: #d1600f;   /* unchanged: the brand orange, explicit on purpose */
+  --color-untested: #b3ada6;  /* was #57534E — 0.8 ΔE from took in greyscale */
 }
 
 html {
@@ -77,3 +168,151 @@ body {
   color: var(--color-text);
   min-height: 100vh;
 }
+
+/* ── Public page typography & layout ── */
+
+.public-section {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (min-width: 640px) {
+  .public-section { padding-left: 3rem; padding-right: 3rem; }
+}
+
+.public-section-wide {
+  max-width: 1200px;
+}
+
+.public-section-prose {
+  max-width: 720px;
+}
+
+.public-h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.public-h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--color-text);
+}
+
+.public-body {
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+.public-stat-number {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-text);
+}
+@media (min-width: 640px) {
+  .public-stat-number { font-size: 3rem; }
+}
+
+.public-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+}
+
+.public-cta {
+  display: inline-block;
+  background-color: var(--color-accent);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  min-height: 44px;
+}
+.public-cta:hover {
+  opacity: 0.9;
+}
+
+.public-cta-secondary {
+  display: inline-block;
+  background: transparent;
+  color: var(--color-text);
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-border);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  min-height: 44px;
+}
+.public-cta-secondary:hover {
+  background-color: var(--color-hover-bg);
+}
+
+/* ── Dark hero (poster-inspired) ── */
+
+.public-hero-dark {
+  background-color: var(--color-poster-bg);
+  color: var(--color-poster-text);
+  position: relative;
+  overflow: hidden;
+}
+.public-hero-dark .public-h1 {
+  color: var(--color-poster-text);
+}
+.public-hero-dark .public-stat-number {
+  color: var(--color-poster-text);
+}
+.public-hero-dark .public-label {
+  color: #78716c;
+}
+.public-hero-dark .public-cta {
+  background-color: var(--color-poster-red);
+}
+.public-hero-dark .public-cta:hover {
+  opacity: 0.85;
+}
+
+/* Abstract data-art dots — poster-inspired bubble clusters */
+.pillar-art {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+@media (min-width: 640px) {
+  .pillar-art { height: 160px; }
+}
+
+.pillar-dot {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+.pillar-dot-red { background-color: var(--color-poster-red); }
+.pillar-dot-blue { background-color: var(--color-poster-blue); }
+.pillar-dot-muted { background-color: #44403c; }
+
+/* Hero background abstract dots */
+.hero-dot {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.12;
+}
+.hero-dot-red { background-color: var(--color-poster-red); }
+.hero-dot-blue { background-color: var(--color-poster-blue); }

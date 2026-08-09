@@ -127,7 +127,13 @@ class FinvizAdapter(BaseAdapter):
             'f': 'cap_1.0to,ind_stocksonly',
             'ft': '4',
         }
-        max_pages = 150  # safety cap (~3000 stocks)
+        # Finviz returns rows alphabetically, so a binding page cap does not
+        # sample the market -- it truncates it mid-alphabet.  At 150 pages the
+        # universe stopped at LNTH: every ticker from M to Z was missing,
+        # including NVDA, MSFT, TSLA and PLTR.  Sized to clear the full
+        # cap_1.0to,ind_stocksonly list with headroom; _scrape_view warns
+        # loudly if it ever binds again.
+        max_pages = 600
 
         session = requests.Session()
         session.headers.update(self.HEADERS)
@@ -221,6 +227,16 @@ class FinvizAdapter(BaseAdapter):
 
             page += 1
             time.sleep(0.2)  # be polite to Finviz
+        else:
+            # Loop exhausted max_pages without hitting a short page: the cap is
+            # binding and the universe is silently truncated mid-alphabet.
+            # This went unnoticed once and cost every ticker from M to Z.
+            logger.error(
+                "Finviz page cap (%d) bound at %d rows - universe is TRUNCATED. "
+                "Last ticker: %s. Raise max_pages.",
+                max_pages, len(all_rows),
+                all_rows[-1].get('Ticker') if all_rows else 'n/a',
+            )
 
         if not all_rows:
             return None

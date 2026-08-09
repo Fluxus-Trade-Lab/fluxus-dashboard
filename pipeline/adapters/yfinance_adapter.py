@@ -303,7 +303,12 @@ class YfinanceAdapter(BaseAdapter):
                     'high_52w_dist': float((close - hist['Close'].max()) / hist['Close'].max()),
                     'atr_pct': round(atr_pct, 1) if atr_pct else None,
                     'dist_sma50_atr': round(dist_sma50_atr, 2) if dist_sma50_atr else None,
-                    'rs': round(rs_score, 0) if rs_score else None,
+                    # Not comparable with the stock-side rs_* columns. This is
+                    # the 21-day percentile of a *rolling ATR-normalised
+                    # relative-strength ratio* vs SPY; the stock columns are
+                    # cross-sectional percentiles of raw returns. Same three
+                    # letters, different construction, different scale.
+                    'rrs_rank': round(rs_score, 0) if rs_score else None,
                     'abc': abc,
                     'sparkline': sparkline,
                     'long_etfs': long_etfs,

@@ -44,8 +44,11 @@ def _claude_api(prompt: str, system: str, api_key: str) -> str:
 def _claude_cli(prompt: str, system: str) -> str:
     """Call Claude Code CLI with a prompt and system instruction."""
     full_prompt = f"<system>\n{system}\n</system>\n\n{prompt}"
+    claude_bin = os.path.expanduser("~/.local/bin/claude")
+    if not os.path.exists(claude_bin):
+        claude_bin = "claude"  # fallback to PATH
     result = subprocess.run(
-        ["claude", "-p", full_prompt],
+        [claude_bin, "-p", full_prompt],
         capture_output=True,
         text=True,
         timeout=120,

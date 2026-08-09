@@ -1,5 +1,8 @@
 import { useMemo } from 'react'
+import PageHeader from '../PageHeader'
+import Reading, { readMarketState } from '../Reading'
 import VerdictBanner from './VerdictBanner'
+import StateBoard from './StateBoard'
 import MarketStateSummary from './MarketStateSummary'
 import HealthChart from './HealthChart'
 import RatioChart from './RatioChart'
@@ -46,8 +49,16 @@ export default function BreadthPage({ data }) {
 
   return (
     <div className="space-y-3">
+      <PageHeader group="market" title="Market State"
+        blurb="Nine conditions, measured every session, and the order they repair in. It was called Breadth — a family of indicators. This is the question it answers."
+        meta={['rank is how many cells are filled, never hue alone',
+               'an unmeasured condition renders outside the scale',
+               'every condition prints the numbers that produced it']} />
+      <Reading text={readMarketState(verdict)} />
       <TimeMachineBar tm={tm} />
-      <VerdictBanner verdict={verdict} dataQuality={breadth.data_quality} />
+      <VerdictBanner verdict={verdict} dataQuality={breadth.data_quality}
+                     session={rows[rows.length - 1]?.date} />
+      <StateBoard board={breadth.state_board} session={rows[rows.length - 1]?.date} />
       <MarketStateSummary mm={breadth.mm} breadth={breadth.breadth} verdict={verdict} />
       {mh && !mh.stale && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">

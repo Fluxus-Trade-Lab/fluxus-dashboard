@@ -1,7 +1,9 @@
 # I Lose More Often Than I Win
 
 *Section: Method  ·  Audience: everyone  ·  Day 1*
-*所有数字来自 `data/output/h1_2026_stats.json`(H1 2026,自有交易记录)。发布前用 `pipeline/portfolio/performance_review.py` 复核一次。*
+*所有数字口径:**2025-12-31 → 2026-07-22,331 笔已平仓**。源 `data/portfolio/reviews/h1_2026.md` + `h1_2026_full.json`;exit style 与 R 分桶由 `portfolio_2026-07-26.csv` 重算。*
+*⚠️ 7/22–7/31 无交易,所以「到七月底」与「到 7/22」数值相同 —— 可以放心写 "this year so far"。*
+*✅ 基准已补(2026-08-03,**IBKR TWS 实取**,非 TradingView):同窗口 **SPY +9.60%**(681.92→747.41)· **QQQ +14.82%**(614.31→705.35),价格口径。*
 
 ---
 
@@ -9,13 +11,13 @@
 
 ---
 
-In the first half of this year I took 303 trades to completion. Fewer than half of them made money.
+This year so far I have taken 331 trades to completion. Fewer than half of them made money.
 
-The account finished up 90.8%. Both of those sentences are true at the same time, and the space between them is the only thing in this letter worth learning.
+The account is up 90.5%. Both of those sentences are true at the same time, and the space between them is the only thing in this letter worth learning.
 
 ## The number
 
-H1 2026 finished **+90.8%**. SPY did **+9.31%** over the same six months. Max drawdown along the way was **18%** — which is to say there was a stretch where nearly a fifth of the account was gone and the only correct response was to keep doing the same boring thing.
+Through July 22nd the account is **+90.5%**. SPY did **+9.6%** over the same window — and QQQ, which is the fairer benchmark for what I actually trade, did **+14.8%**. Max drawdown along the way was **11.1%** — marked to market, daily, not the flattering closed-trade version. Which is to say there was a week in June where the account gave back a ninth of its high and the only correct response was to keep doing the same boring thing.
 
 That's the flex, and I'm going to spend the rest of this piece taking it apart, because the number is the result and the method is the product. A number without its shape is just a lottery ticket someone is waving at you.
 
@@ -23,12 +25,12 @@ That's the flex, and I'm going to spend the rest of this piece taking it apart, 
 
 | | |
 |---|---|
-| Closed trades | 303 |
+| Closed trades | 331 |
 | Win rate | **39.9%** |
-| Average winner | **+3.19R** |
-| Average loser | **–0.76R** |
-| Payoff ratio | **3.15×** |
-| Profit factor | 2.35 |
+| Average winner | **+3.22R** |
+| Average loser | **–0.75R** |
+| Payoff ratio | **3.40×** |
+| Profit factor | 2.48 |
 | Expectancy per trade | **+0.88R** |
 
 *Everything here is in R — multiples of what I'd decided to risk before entering. R is the only unit that travels. Dollar figures tell you about the size of my account, which is none of your business and no use to you; R tells you about the shape of the method, which is the entire point.*
@@ -43,20 +45,20 @@ Sorted by R — that is, by multiples of what I'd decided to risk before I enter
 
 | Bucket | Trades |
 |---|---|
-| Worse than –1R | **29** |
-| –1R to 0 | 136 |
-| 0 to 1R | 48 |
-| 1R to 2R | 27 |
+| Worse than –1R | **31** |
+| –1R to 0 | 150 |
+| 0 to 1R | 53 |
+| 1R to 2R | 31 |
 | 2R to 3R | 19 |
-| **Better than 3R** | **44** |
+| **Better than 3R** | **47** |
 
 Two rows in that table are the whole shield.
 
-**Twenty-nine.** Out of 303 trades, twenty-nine got away from me — a gap, a gut call, a stop I moved because I had a feeling. Nine percent. The other ninety-one percent stopped where I said they'd stop, before I felt anything about it. That number is the defense, and it's the only number on this page I'd actually defend in a fight.
+**Thirty-one.** Out of 331 trades, thirty-one got away from me — a gap, a gut call, a stop I moved because I had a feeling. Nine percent. The other ninety-one percent stopped where I said they'd stop, before I felt anything about it. That number is the defense, and it's the only number on this page I'd actually defend in a fight.
 
-**Forty-four.** Forty-four trades better than 3R. My average winning trade is 3.19R and my average loser is –0.76R, which means the fat right tail isn't a bonus sitting on top of the year — it *is* the year. Cut those 44 and the whole thing goes flat.
+**Forty-seven.** Forty-seven trades better than 3R. My average winning trade is 3.22R and my average loser is –0.75R, which means the fat right tail isn't a bonus sitting on top of the year — it *is* the year. Cut those 47 and the whole thing goes flat.
 
-So the job is not being right. The job is surviving the 136 mediocre losses cheaply enough to still be holding size when one of the 44 shows up.
+So the job is not being right. The job is surviving the 150 mediocre losses cheaply enough to still be holding size when one of the 47 shows up.
 
 ## How the trades ended
 
@@ -66,16 +68,16 @@ Indexed so that a clean sell-into-strength exit = 1.0:
 
 | Exit | Trades | Relative outcome |
 |---|---|---|
-| Stop only | **120** | **–0.35** |
-| Sold into weakness | 97 | +0.21 |
-| Sold into strength | 69 | +1.00 |
-| Scaled out in pieces | 17 | **+2.58** |
+| Stop only | **130** | **–0.36** |
+| Sold into weakness | 108 | +0.23 |
+| Sold into strength | 73 | +1.00 |
+| Scaled out in pieces | 20 | **+3.14** |
 
-One hundred and twenty times this half, the entire event was: I bought something, it didn't work, the stop fired, and I went and did something else. Roughly once every business day. No insight in it, no story to tell afterward, nothing to post about.
+A hundred and thirty times this year, the entire event was: I bought something, it didn't work, the stop fired, and I went and did something else. Roughly once every business day. No insight in it, no story to tell afterward, nothing to post about.
 
-Meanwhile the 17 trades where I scaled out in pieces returned about **2.6× what a clean single exit did** — and something like 12× the average trade. Seventeen out of 303. Same trader, same six months, same ideas. The difference was whether the position was worth managing in stages.
+Meanwhile the 20 trades where I scaled out in pieces returned about **3× what a clean single exit did** — and roughly nine times the average trade. Twenty out of 331. Same trader, same seven months, same ideas. The difference was whether the position was worth managing in stages.
 
-The Herd looks at a year like this and sees the 44. The job is mostly the 120.
+The Herd looks at a year like this and sees the 47. The job is mostly the 130.
 
 ## What this means for you
 
@@ -89,14 +91,15 @@ I lose more often than I win. The year works anyway. That's not a paradox and it
 
 ---
 
-*P.S. — The drawdown was 18%. I'd love to tell you I was serene through it. What actually kept me in was that the size was decided when I was calm and the stops were already sitting where I'd put them, so there was nothing left to decide while I was scared. That's the whole reason to do the arithmetic first — not because it makes you smarter, but because it means the frightened version of you has no buttons left to press.*
+*P.S. — The drawdown was 11.1%, and I reported it in my own channel while it was happening — "60% invested and down 1.5%, 12% drawdown from peak" — which is the only version of a drawdown number worth anything. I'd love to tell you I was serene through it. What actually kept me in was that the size was decided when I was calm and the stops were already sitting where I'd put them, so there was nothing left to decide while I was scared. That's the whole reason to do the arithmetic first — not because it makes you smarter, but because it means the frightened version of you has no buttons left to press.*
 
 ---
 
 ## 发布前必做
 
-- [ ] 用 `performance_review.py` 复核每一个数字
-- [ ] `r_distribution` 画成柱状图配进「Where the trades actually landed」
-- [ ] equity curve vs SPY 配进「The number」
+- [x] ~~补 SPY 同窗口涨幅~~ ← 已取:SPY +9.60% / QQQ +14.82%(IBKR)
+- [ ] `r_distribution` 画成柱状图配进「Where the trades actually landed」(用 `h1_2026_rr.png`)
+- [ ] equity curve vs SPY **和 QQQ** 配进「The number」(两条基准都画,QQQ 那条才是硬的)
 - [ ] 决定要不要贴具体标的(建议**不贴** —— 这篇讲形状不讲名字,贴了会被读成荐股)
-- [ ] 七道闸:**收藏闸**已过(给了判据「你的胜率不是那个旋钮」+ 29/303 的具体口径);**AI 味闸**注意表格后不要每段都是双拍对称句
+- [ ] 七道闸:**收藏闸**已过(给了判据「你的胜率不是那个旋钮」+ 31/331 的具体口径);**AI 味闸**注意表格后不要每段都是双拍对称句
+- [ ] 口径一致性:全文窗口 = **12/31 → 7/22**;胜率 39.9% = 132 胜 /331(18 笔打平算不赢,保守口径,被人核也站得住)

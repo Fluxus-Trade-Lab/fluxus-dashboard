@@ -17,6 +17,8 @@ import time
 from datetime import date, timedelta
 from pathlib import Path
 
+from pipeline.marketcal import market_today
+
 import json
 import yfinance as yf
 
@@ -84,7 +86,7 @@ def merge_ticker_sources(portfolio: list[str], heat: list[str]) -> list[str]:
 def relevant_tickers(csv_path: Path, closed_window_days: int = 90) -> list[str]:
     """Open positions + tickers from trades closed in the last N days."""
     trades = parse_csv(csv_path)
-    cutoff = date.today() - timedelta(days=closed_window_days)
+    cutoff = market_today() - timedelta(days=closed_window_days)
     seen = set()
     for t in trades:
         # Always include open positions

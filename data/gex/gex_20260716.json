@@ -1,0 +1,537 @@
+{
+ "version": 1,
+ "asof": "2026-07-16T00:42:44+09:00",
+ "stale": false,
+ "stale_reason": null,
+ "opex": {
+  "date": "2026-07-17",
+  "dte": 1,
+  "within_week": true
+ },
+ "instruments": {
+  "SPX": {
+   "spot": 7562.11,
+   "basis": {
+    "ES_minus_SPX": 44.4,
+    "NQ_over_QQQ": 41.385
+   },
+   "tenors": {
+    "front": {
+     "net_gex_mm": 2342.266,
+     "flip": 7595.0,
+     "pin": 7600.0,
+     "vol_trigger": 7595.0,
+     "call_wall": 7600.0,
+     "put_wall": 7600.0,
+     "wall_basis": "gamma",
+     "straddle": 39.55,
+     "atm_iv": 0.11582887503913358,
+     "walls_top_calls": [
+      {
+       "strike": 7600.0,
+       "oi": 3082
+      },
+      {
+       "strike": 7650.0,
+       "oi": 1698
+      },
+      {
+       "strike": 7655.0,
+       "oi": 1512
+      },
+      {
+       "strike": 7685.0,
+       "oi": 1354
+      },
+      {
+       "strike": 7675.0,
+       "oi": 1237
+      }
+     ],
+     "walls_top_puts": [
+      {
+       "strike": 7600.0,
+       "oi": 1547
+      },
+      {
+       "strike": 7500.0,
+       "oi": 1484
+      },
+      {
+       "strike": 7525.0,
+       "oi": 1301
+      },
+      {
+       "strike": 7550.0,
+       "oi": 1228
+      },
+      {
+       "strike": 7450.0,
+       "oi": 1109
+      }
+     ],
+     "greeks_coverage": 0.98,
+     "oi_coverage": 0.9,
+     "quality": "ok",
+     "expiry": "20260716",
+     "delta_vs_prior": {
+      "call_wall": null,
+      "put_wall": null,
+      "flip": null,
+      "note": "no prior day"
+     },
+     "converted": {
+      "ES": {
+       "flip": 7639.4,
+       "put_wall": 7644.4,
+       "call_wall": 7644.4,
+       "pin": 7644.4
+      },
+      "SPY": {
+       "flip": 759.5,
+       "put_wall": 760.0,
+       "call_wall": 760.0,
+       "pin": 760.0
+      }
+     }
+    },
+    "swing": {
+     "net_gex_mm": 1397.905,
+     "flip": 7650.0,
+     "pin": 7600.0,
+     "vol_trigger": 7470.0,
+     "call_wall": 7600.0,
+     "put_wall": 7460.0,
+     "wall_basis": "gamma",
+     "straddle": 105.35,
+     "atm_iv": 0.11005048090579696,
+     "walls_top_calls": [
+      {
+       "strike": 7600.0,
+       "oi": 3661
+      },
+      {
+       "strike": 7750.0,
+       "oi": 2500
+      },
+      {
+       "strike": 7690.0,
+       "oi": 1936
+      },
+      {
+       "strike": 7700.0,
+       "oi": 1731
+      },
+      {
+       "strike": 7470.0,
+       "oi": 1476
+      }
+     ],
+     "walls_top_puts": [
+      {
+       "strike": 7450.0,
+       "oi": 2671
+      },
+      {
+       "strike": 7460.0,
+       "oi": 2559
+      },
+      {
+       "strike": 7400.0,
+       "oi": 2250
+      },
+      {
+       "strike": 7375.0,
+       "oi": 1841
+      },
+      {
+       "strike": 7425.0,
+       "oi": 1436
+      }
+     ],
+     "greeks_coverage": 0.95,
+     "oi_coverage": 0.74,
+     "quality": "ok",
+     "expiry": "20260724",
+     "delta_vs_prior": {
+      "call_wall": null,
+      "put_wall": null,
+      "flip": null,
+      "note": "no prior day"
+     },
+     "converted": {
+      "ES": {
+       "flip": 7694.4,
+       "put_wall": 7504.4,
+       "call_wall": 7644.4,
+       "pin": 7644.4
+      },
+      "SPY": {
+       "flip": 765.0,
+       "put_wall": 746.0,
+       "call_wall": 760.0,
+       "pin": 760.0
+      }
+     }
+    },
+    "monthly": {
+     "net_gex_mm": 38.584,
+     "flip": 7740.0,
+     "pin": 7450.0,
+     "vol_trigger": 7550.0,
+     "call_wall": 7550.0,
+     "put_wall": 7450.0,
+     "wall_basis": "gamma",
+     "straddle": 257.55,
+     "atm_iv": 0.1336328204785972,
+     "walls_top_calls": [
+      {
+       "strike": 7550.0,
+       "oi": 1421
+      },
+      {
+       "strike": 7700.0,
+       "oi": 1043
+      },
+      {
+       "strike": 7545.0,
+       "oi": 926
+      },
+      {
+       "strike": 7600.0,
+       "oi": 880
+      },
+      {
+       "strike": 7500.0,
+       "oi": 581
+      }
+     ],
+     "walls_top_puts": [
+      {
+       "strike": 7450.0,
+       "oi": 2735
+      },
+      {
+       "strike": 7500.0,
+       "oi": 2124
+      },
+      {
+       "strike": 7400.0,
+       "oi": 1592
+      },
+      {
+       "strike": 7600.0,
+       "oi": 543
+      },
+      {
+       "strike": 7550.0,
+       "oi": 426
+      }
+     ],
+     "greeks_coverage": 1.0,
+     "oi_coverage": 0.99,
+     "quality": "ok",
+     "expiry": "20260821",
+     "delta_vs_prior": {
+      "call_wall": null,
+      "put_wall": null,
+      "flip": null,
+      "note": "no prior day"
+     },
+     "converted": {
+      "ES": {
+       "flip": 7784.4,
+       "put_wall": 7494.4,
+       "call_wall": 7594.4,
+       "pin": 7494.4
+      },
+      "SPY": {
+       "flip": 774.0,
+       "put_wall": 745.0,
+       "call_wall": 755.0,
+       "pin": 745.0
+      }
+     }
+    }
+   }
+  },
+  "QQQ": {
+   "spot": 715.97,
+   "basis": {
+    "ES_minus_SPX": 44.4,
+    "NQ_over_QQQ": 41.385
+   },
+   "tenors": {
+    "front": {
+     "net_gex_mm": 34.021,
+     "flip": 730.0,
+     "pin": 725.0,
+     "vol_trigger": 730.0,
+     "call_wall": 725.0,
+     "put_wall": 715.0,
+     "wall_basis": "gamma",
+     "straddle": 7.885,
+     "atm_iv": 0.2437365678997907,
+     "walls_top_calls": [
+      {
+       "strike": 725.0,
+       "oi": 10225
+      },
+      {
+       "strike": 730.0,
+       "oi": 6320
+      },
+      {
+       "strike": 720.0,
+       "oi": 2373
+      },
+      {
+       "strike": 715.0,
+       "oi": 1298
+      },
+      {
+       "strike": 710.0,
+       "oi": 734
+      }
+     ],
+     "walls_top_puts": [
+      {
+       "strike": 700.0,
+       "oi": 4801
+      },
+      {
+       "strike": 715.0,
+       "oi": 4561
+      },
+      {
+       "strike": 710.0,
+       "oi": 2847
+      },
+      {
+       "strike": 720.0,
+       "oi": 2018
+      },
+      {
+       "strike": 705.0,
+       "oi": 1840
+      }
+     ],
+     "greeks_coverage": 1.0,
+     "oi_coverage": 1.0,
+     "quality": "ok",
+     "expiry": "20260716",
+     "delta_vs_prior": {
+      "call_wall": null,
+      "put_wall": null,
+      "flip": null,
+      "note": "no prior day"
+     },
+     "converted": {
+      "NQ": {
+       "flip": 30211,
+       "put_wall": 29590,
+       "call_wall": 30004,
+       "pin": 30004
+      }
+     }
+    },
+    "swing": {
+     "net_gex_mm": null,
+     "flip": null,
+     "pin": null,
+     "vol_trigger": null,
+     "call_wall": 720.0,
+     "put_wall": 700.0,
+     "wall_basis": "oi_fallback",
+     "straddle": 20.235,
+     "atm_iv": 0.22312157279742004,
+     "walls_top_calls": [
+      {
+       "strike": 720.0,
+       "oi": 3369
+      },
+      {
+       "strike": 732.0,
+       "oi": 1606
+      },
+      {
+       "strike": 722.0,
+       "oi": 1367
+      },
+      {
+       "strike": 700.0,
+       "oi": 978
+      },
+      {
+       "strike": 718.0,
+       "oi": 645
+      }
+     ],
+     "walls_top_puts": [
+      {
+       "strike": 700.0,
+       "oi": 8771
+      },
+      {
+       "strike": 720.0,
+       "oi": 2295
+      },
+      {
+       "strike": 718.0,
+       "oi": 741
+      },
+      {
+       "strike": 699.0,
+       "oi": 737
+      },
+      {
+       "strike": 722.0,
+       "oi": 524
+      }
+     ],
+     "greeks_coverage": 0.96,
+     "oi_coverage": 0.31,
+     "quality": "degraded",
+     "expiry": "20260724",
+     "delta_vs_prior": {
+      "call_wall": null,
+      "put_wall": null,
+      "flip": null,
+      "note": "no prior day"
+     },
+     "converted": {
+      "NQ": {
+       "flip": null,
+       "put_wall": 28970,
+       "call_wall": 29797,
+       "pin": null
+      }
+     }
+    },
+    "monthly": {
+     "net_gex_mm": -315.833,
+     "flip": null,
+     "pin": 700.0,
+     "vol_trigger": 715.0,
+     "call_wall": 730.0,
+     "put_wall": 700.0,
+     "wall_basis": "gamma",
+     "straddle": 43.0,
+     "atm_iv": 0.23437637488075486,
+     "walls_top_calls": [
+      {
+       "strike": 700.0,
+       "oi": 12051
+      },
+      {
+       "strike": 730.0,
+       "oi": 10738
+      },
+      {
+       "strike": 720.0,
+       "oi": 9973
+      },
+      {
+       "strike": 725.0,
+       "oi": 6418
+      },
+      {
+       "strike": 710.0,
+       "oi": 5569
+      }
+     ],
+     "walls_top_puts": [
+      {
+       "strike": 700.0,
+       "oi": 46604
+      },
+      {
+       "strike": 705.0,
+       "oi": 41856
+      },
+      {
+       "strike": 720.0,
+       "oi": 17677
+      },
+      {
+       "strike": 710.0,
+       "oi": 16674
+      },
+      {
+       "strike": 730.0,
+       "oi": 8665
+      }
+     ],
+     "greeks_coverage": 1.0,
+     "oi_coverage": 0.93,
+     "quality": "ok",
+     "expiry": "20260821",
+     "delta_vs_prior": {
+      "call_wall": null,
+      "put_wall": null,
+      "flip": null,
+      "note": "no prior day"
+     },
+     "converted": {
+      "NQ": {
+       "flip": null,
+       "put_wall": 28970,
+       "call_wall": 30211,
+       "pin": 28970
+      }
+     }
+    }
+   }
+  }
+ },
+ "read": {
+  "regime": "positive",
+  "bull": [
+   "net GEX +1,398 $mm \u2014 dips get bought"
+  ],
+  "bear": [],
+  "plan": [
+   "Line in the sand: 7650 \u2014 above = dampened grind; below = amplify, stand down.",
+   "Buy dips at 7600 put wall \u2192 target 7600.",
+   "OPEX 2026-07-17 in 1d \u2014 monthly gamma rolls off; expect regime shift after."
+  ]
+ },
+ "strategy_fit": [
+  {
+   "name": "bull_put_spread",
+   "rating": "favored",
+   "why": "sell far-OTM below the put wall; floor + regime on-side"
+  },
+  {
+   "name": "dip_fade_call",
+   "rating": "favored",
+   "why": "dips get bought in positive gamma; buy at put wall/pin"
+  },
+  {
+   "name": "iron_condor",
+   "rating": "avoid",
+   "why": "credit too thin (ATM IV 11% < 12%)"
+  },
+  {
+   "name": "calendar_call_wall",
+   "rating": "viable",
+   "why": "short near-term gamma wants a dampened grind"
+  },
+  {
+   "name": "lotto_otm_call",
+   "rating": "lotto",
+   "why": "~6% hit rate for 4x; tiny size only, on violent reversals"
+  },
+  {
+   "name": "naked_short_put",
+   "rating": "avoid",
+   "why": "undefined tail; use the defined-risk spread instead"
+  }
+ ],
+ "assumptions": {
+  "dealer_side": "long calls / short puts (v1 baseline heuristic)",
+  "gex_formula": "(cgamma*coi - pgamma*poi) * mult * spot^2 * 0.01",
+  "strike_band": "walls, pin and flip are computed within +/-3.5% of spot (v1); a structural wall or the true zero-gamma flip beyond that band is not captured.",
+  "quality_gate": "a tenor is 'degraded' (net_gex_mm=null) when greeks OR open-interest coverage < 50%, so missing data never produces a fake zero."
+ }
+}

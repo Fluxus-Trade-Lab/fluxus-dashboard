@@ -73,7 +73,7 @@ recommendation. Positions change without notice and I don't post every change in
 ```
 
 **为什么必须每篇都放:**
-- 他每篇都放,而他**连业绩都没公开过**。你有 7 年真实记录 + H1 +90.8%,这个块在你手里的说服力是他的数倍
+- 他每篇都放,而他**连业绩都没公开过**。你有 7 年真实记录 + H1 +90.5%,这个块在你手里的说服力是他的数倍
 - 成本为零 —— 你本来就在管这个组合
 - 它把「风险台账(x% trade risk, y% port risk)」这个你已有的语言习惯变成**刊物的固定资产**
 

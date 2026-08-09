@@ -21,6 +21,8 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+from pipeline.marketcal import market_today
+
 import yfinance as yf
 
 OUTPUT_DIR = Path("data/output/tickers")
@@ -87,10 +89,26 @@ def fetch_ohlc_2y(symbol: str) -> list[dict]:
     return out
 
 
-def main(tickers: list[str]) -> None:
+def _local_last_date(sym: str):
+    """Last date already stored locally (ohlc_2y), or None. Check-before-fetch:
+    the daily ticker pipeline already writes ohlc_2y, so a fresh file needs no refetch."""
+    path = OUTPUT_DIR / f"{sym.upper()}.json"
+    if not path.exists():
+        return None
+    try:
+        bars = json.load(open(path)).get("ohlc_2y")
+        return bars[-1]["date"] if bars else None
+    except (ValueError, OSError, KeyError, IndexError):
+        return None
+
+
+def main(tickers: list[str], force: bool = False, fresh_within=None) -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     for sym in tickers:
         sym = sym.upper()
+        if not force and fresh_within and (last := _local_last_date(sym)) and last >= fresh_within:
+            print(f"  {sym}: already fresh (through {last}) — skipped")
+            continue
         bars = fetch_ohlc_2y(sym)
         if not bars:
             print(f"  {sym}: no data (skipped)")
@@ -110,6 +128,11 @@ def main(tickers: list[str]) -> None:
 
 
 if __name__ == "__main__":
-    tickers = sys.argv[1:] or top_case_study_tickers()
-    print(f"Refreshing 2y OHLC for: {', '.join(tickers)}")
-    main(tickers)
+    from datetime import timedelta
+    argv = [a for a in sys.argv[1:] if a != "--force"]
+    force = "--force" in sys.argv
+    tickers = argv or top_case_study_tickers()
+    # A file whose last bar is within ~4 calendar days is treated as fresh (weekends).
+    fresh_cutoff = (market_today() - timedelta(days=4)).isoformat()
+    print(f"Refreshing 2y OHLC for: {', '.join(tickers)}{' (force)' if force else ''}")
+    main(tickers, force=force, fresh_within=fresh_cutoff)

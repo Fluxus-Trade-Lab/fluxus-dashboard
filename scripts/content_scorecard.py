@@ -13,6 +13,7 @@ CSV = ROOT / 'data' / 'content' / 'posts.csv'
 BUCKETS = {
     'DATA': '晒数', 'REPLY': '蹭号', 'JAB': '冷嘲', 'LINE': '金句',
     'CALLBACK': '翻帖', 'SPICE': '撒料', 'TEACH': '教学长文', 'ARC': '剧情',
+    'BUILD': '建造',
 }
 
 def num(v):
@@ -25,7 +26,7 @@ def num(v):
 def load(weeks):
     if not CSV.exists():
         sys.exit(f'缺少 {CSV}')
-    cutoff = datetime.date.today() - datetime.timedelta(days=7 * weeks)
+    cutoff = datetime.date.today() - datetime.timedelta(days=7 * weeks)  # localtime-ok: content cadence, not a trading session
     rows = []
     for r in csv.DictReader(CSV.open(encoding='utf-8')):
         try:
@@ -119,7 +120,7 @@ def main():
                     url, data=json.dumps(payload).encode(),
                     headers={'Content-Type': 'application/json'}), timeout=10)
             except Exception:
-                payload['thread_name'] = f'📊 记分卡 · {datetime.date.today()}'
+                payload['thread_name'] = f'📊 记分卡 · {datetime.date.today()}'  # localtime-ok: post label, not a trading date
                 try:
                     urllib.request.urlopen(urllib.request.Request(
                         url, data=json.dumps(payload).encode(),

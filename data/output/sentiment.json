@@ -1,0 +1,54 @@
+{
+  "date": "2026-08-08",
+  "generated_at": "2026-08-09T03:10:44.275884+00:00",
+  "readings": [
+    {
+      "name": "MOVE",
+      "value": 70.88,
+      "pctile_1y": 48.0,
+      "change_1w": 0.0,
+      "source": "yfinance",
+      "note": ""
+    },
+    {
+      "name": "HYG/SPY",
+      "value": 0.103,
+      "pctile_1y": 0.4,
+      "change_1w": -0.0276,
+      "source": "yfinance",
+      "note": "ratio vs SPY, not absolute price"
+    },
+    {
+      "name": "XLP/SPY",
+      "value": 0.1101,
+      "pctile_1y": 3.2,
+      "change_1w": -0.0331,
+      "source": "yfinance",
+      "note": "ratio vs SPY, not absolute price"
+    },
+    {
+      "name": "USO",
+      "value": 117.98,
+      "pctile_1y": 70.2,
+      "change_1w": -0.0866,
+      "source": "yfinance",
+      "note": ""
+    },
+    {
+      "name": "IPO/SPY",
+      "value": 0.0717,
+      "pctile_1y": 60.3,
+      "change_1w": 0.0477,
+      "source": "yfinance",
+      "note": "ratio vs SPY, not absolute price"
+    }
+  ],
+  "unavailable": [
+    "AAII bull-bear spread",
+    "NAAIM exposure"
+  ],
+  "deliberately_excluded": {
+    "CTA positioning": "bank model estimate, revised after the fact",
+    "vol-control exposure": "same -- an estimate presented as an observation"
+  }
+}

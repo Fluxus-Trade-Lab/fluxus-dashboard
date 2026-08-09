@@ -1,0 +1,83 @@
+<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Gap analysis — nextSignals daily report</title><style>
+:root{--bg:#0A0D13;--panel:#111621;--line:#1E2633;--txt:#C7CDD8;--mut:#79828F;
+--dim:#525b69;--accent:#5AA9FF;--good:#42B96A;--bad:#EF5E6B;--warn:#D6A34C;
+--mono:ui-monospace,Menlo,Consolas,monospace;
+--sans:-apple-system,"Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);margin:0;padding:38px 20px 60px}
+.doc{max-width:820px;margin:0 auto}
+h1{font-size:26px;font-weight:600;margin:2px 0 6px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+.meta{font-family:var(--mono);font-size:12px;color:var(--dim);border-top:1px solid var(--line);
+border-bottom:1px solid var(--line);padding:10px 0;margin-top:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+section{margin-top:28px}
+.lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);
+margin:0 0 12px;display:flex;align-items:center;gap:10px}
+.lbl::after{content:"";flex:1;height:1px;background:var(--line)}
+table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
+text-align:right;padding:9px 12px;background:#0E131C;border-bottom:1px solid var(--line)}
+th:first-child{text-align:left}
+td{padding:9px 12px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;text-align:right}
+td:first-child{text-align:left}
+tr:last-child td{border-bottom:none}
+tr.focus td{background:rgba(90,169,255,.09)}
+.mono{font-family:var(--mono)}
+.pos{color:var(--good)}.neg{color:#F4838C}.warn{color:#E0B463}.mut{color:var(--mut)}
+.bar{display:inline-block;height:9px;border-radius:2px;vertical-align:middle}
+.foot{margin-top:32px;padding-top:12px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--dim)}
+</style></head><body><div class='doc'><p class='eyebrow'>Gap analysis</p>
+<h1>What we would need to produce nextSignals' daily report</h1>
+<div class='meta'><span>@TailThatWagsDog · 2026-08-04 · SPY front month</span>
+<span class='mut'>page 4 of 4, "Data Synthesis"</span></div>
+
+<section><p class='lbl'>Input by input</p>
+<table><thead><tr><th>Input the report uses</th><th>us</th><th></th></tr></thead>
+<tbody><tr><td>Per-strike gamma exposure (from OI)</td><td class='mono pos'>have</td><td class='mut' style='font-size:12px'>pipeline/gex/</td></tr><tr><td>Per-strike charm exposure</td><td class='mono pos'>have</td><td class='mut' style='font-size:12px'>bs_charm, charm flip/peak</td></tr><tr><td>Call/put walls, zero-gamma flip</td><td class='mono pos'>have</td><td class='mut' style='font-size:12px'></td></tr><tr><td>Volume + OI per strike</td><td class='mono pos'>have</td><td class='mut' style='font-size:12px'>fetched; only OI used downstream</td></tr><tr><td>ATM IV by tenor, expected move</td><td class='mono pos'>have</td><td class='mut' style='font-size:12px'></td></tr><tr><td>25-delta skew, stored daily</td><td class='mono warn'>new today</td><td class='mut' style='font-size:12px'>skew_log.py — n=0, needs ~30d</td></tr><tr><td>Forward-scored track record</td><td class='mono pos'>have</td><td class='mut' style='font-size:12px'>he does not publish one</td></tr><tr><td>Market Profile: TPOC / VPOC / singles / value area / time diversity</td><td class='mono neg'>MISSING</td><td class='mut' style='font-size:12px'>7 of his 8 levels come from this</td></tr><tr><td>Gamma computed from VOLUME not OI</td><td class='mono neg'>MISSING</td><td class='mut' style='font-size:12px'>his column is headed GEX-VOLUME</td></tr><tr><td>Dominant-exposure label (gamma vs charm per strike)</td><td class='mono neg'>MISSING</td><td class='mut' style='font-size:12px'>we have both series, no normalization</td></tr><tr><td>Side-classified flow per strike (bought/sold bands)</td><td class='mono warn'>partial</td><td class='mut' style='font-size:12px'>OptionsFlow: ATM-core only, separate repo</td></tr><tr><td>Normalized skew sentiment ('55% bearish')</td><td class='mono neg'>MISSING</td><td class='mut' style='font-size:12px'>blocked on history, not on method</td></tr></tbody></table></section>
+
+<section><p class='lbl'>The one that matters — Market Profile</p>
+<div class='mut' style='font-size:13px;line-height:1.7'>
+Seven of the eight levels in his reference map are named by <b>auction structure</b>,
+not by options: <span class='mono'>8/4 single-print high · 8/3 TPOC · 8/3 VPOC without time
+diversity · 8/3 period 1–3 area · 8/3 low singles · 7/31 TPOC</span>. We compute none of it.
+<br><br>
+It needs <b>no new data source</b> — intraday bars from IBKR, which we already pull. TPO letter
+brackets give TPOC; volume-at-price gives VPOC; the difference between them is precisely what he
+means by "VPOC without time diversity".
+<br><br>
+<b>Why it outranks every options feature:</b> his method is two <i>independent</i> frameworks landing
+on the same price. Our "confluence" today is gamma vs charm — two views of the <i>same</i> dealer
+book. That is confirming ourselves. His is the auction against the dealer book, which is being
+confirmed by something else.</div></section>
+
+<section><p class='lbl'>His gamma is not our gamma</p>
+<table><thead><tr><th>strike</th><th>GEX-VOLUME</th><th>charm</th><th>dominant</th><th>activated by</th>
+</tr></thead><tbody>
+<tr><td class='mono'>760</td><td class='mono neg'>-35.3</td><td class='mono pos'>+1,935.5</td><td class='mono'>charm</td><td class='mut'>the passage of time</td></tr>
+<tr><td class='mono'>755</td><td class='mono neg'>-9.4</td><td class='mono neg'>-579.0</td><td class='mono'>both, modest</td><td class='mut'>the crossover</td></tr>
+<tr><td class='mono'>750</td><td class='mono neg'>-54.9</td><td class='mono neg'>-450.0</td><td class='mono'>gamma</td><td class='mut'>displacement</td></tr>
+</tbody></table>
+<div class='mut' style='font-size:12px;margin-top:6px'>The column is headed <b>GEX-VOLUME</b>. He
+weights by today's <i>volume</i>; we weight by accumulated <i>open interest</i>. Neither is wrong and
+a strike can be large in one and small in the other — that gap is itself information we currently
+throw away, and we already fetch the volume.</div></section>
+
+<section><p class='lbl'>What costs nothing but discipline</p>
+<div class='mut' style='font-size:13px;line-height:1.7'>
+<b>One question per day, asked before the session</b> — "Does the nascent 758.0–760.3 balance hold as
+acceptance above 8/3's TPOC?" with two named branches and the consequence of each. A fork, not a
+forecast.<br>
+<b>A WHAT CONFLICTS section</b> — he writes down where his own two frameworks disagree and names the
+rule that breaks the tie. Publishing the disagreement is what makes the agreement mean anything.<br>
+<b>Ranking the evidence in one sentence</b> — "Two independent methods landing on 755.6 is the
+strongest thing in this read."<br><br>
+All three are format. None need data. They can be in tomorrow's brief.</div></section>
+
+<section><p class='lbl'>Order of work</p>
+<table><thead><tr><th>#</th><th>item</th><th>effort</th><th>unlocks</th></tr></thead>
+<tbody><tr class='focus'><td class='mono'>1</td><td>TPO profile + VPOC + singles + value area</td><td class='mono mut'>days</td><td class='mut' style='font-size:12px'>the second INDEPENDENT framework — everything else is decoration without it</td></tr><tr class=''><td class='mono'>2</td><td>GEX from volume, alongside GEX from OI</td><td class='mono mut'>hours</td><td class='mut' style='font-size:12px'>flow-vs-positioning divergence per strike</td></tr><tr class=''><td class='mono'>3</td><td>Dominant-exposure label (gamma vs charm)</td><td class='mono mut'>hours</td><td class='mut' style='font-size:12px'>his 'activated by' column</td></tr><tr class=''><td class='mono'>4</td><td>One-question-per-day + a WHAT CONFLICTS section</td><td class='mono mut'>hours</td><td class='mut' style='font-size:12px'>format only, no new data</td></tr><tr class=''><td class='mono'>5</td><td>Full-chain side-classified flow</td><td class='mono mut'>weeks</td><td class='mut' style='font-size:12px'>the bought-put / sold-put bands</td></tr><tr class=''><td class='mono'>6</td><td>Normalized skew sentiment</td><td class='mono mut'>6 weeks of waiting</td><td class='mut' style='font-size:12px'>'N% bearish'</td></tr></tbody></table>
+<div class='mut' style='font-size:12px;margin-top:6px'>2, 3 and 4 are a single afternoon and would
+close most of the <i>visible</i> gap. 1 is the only one that changes what we actually know.</div></section>
+
+<div class='foot'>Full write-up: docs/plans/2026-08-06-nextsignals-gap.md.
+Generated 2026-08-06 01:39 ET.</div></div></body></html>

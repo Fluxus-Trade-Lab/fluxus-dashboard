@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — the loud side</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+:root{
+  /* instrument set — unchanged, and never joined by the set below */
+  --paper:#f2f1ed;--ink:#12110f;--ink2:#57534e;--ink3:#948f86;
+  --took:#1a5488;--refused:#d1600f;
+  /* expression set — LEVEL 4–5 ONLY. Flat, saturated, on buff, never on white,
+     and never carrying rank. Category and feeling only. */
+  --buff:#e9dfcb;--crimson:#c8102e;--gold:#f0b323;--moss:#2b6a4d;
+  --indigo:#3c5a8a;--ochre:#b6895b;
+  --sans:Plex,-apple-system,sans-serif;--cond:PlexCond,Plex,sans-serif;--mono:PlexMono,Menlo,monospace;
+  --u:8px;
+}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:#dedad3;color:var(--ink);font-family:var(--sans);
+     -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.app{max-width:1400px;margin:0 auto;padding:0 calc(var(--u)*4) calc(var(--u)*14)}
+.bar{display:flex;align-items:baseline;gap:calc(var(--u)*3);padding:calc(var(--u)*2) 0;
+     border-bottom:2px solid var(--ink)}
+.bar .wm{font-family:var(--cond);font-weight:700;font-size:19px;letter-spacing:.3em}
+.bar .r{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:#6f6a60}
+h1{font-family:var(--cond);font-weight:700;font-size:64px;line-height:.93;letter-spacing:-.015em;
+   text-transform:uppercase;margin:calc(var(--u)*5) 0 0;max-width:16ch}
+.lede{font-size:16.5px;line-height:1.55;max-width:66ch;margin:calc(var(--u)*3) 0 0;color:#4a4640}
+.lede b{color:var(--ink);font-weight:600}
+h3{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#6f6a60;
+   margin:calc(var(--u)*8) 0 calc(var(--u)*2.5);padding-bottom:calc(var(--u)*1.2);
+   border-bottom:1px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline}
+h3 em{font-style:normal;text-transform:none;letter-spacing:.01em;font-family:var(--sans);
+      font-size:11.5px;color:#4a4640;font-weight:400}
+.note{font-size:12px;line-height:1.7;color:#4a4640;max-width:84ch;margin:calc(var(--u)*2) 0 0}
+.note b{color:var(--ink);font-weight:600}
+.stage{display:flex;gap:calc(var(--u)*5);flex-wrap:wrap;align-items:flex-start}
+
+/* ── the frame stays the frame: generous margin, nothing bleeds ── */
+.piece{background:var(--buff);position:relative;overflow:hidden}
+.p45{width:432px;height:540px;padding:34px}
+.p169{width:768px;height:432px;padding:38px}
+.piece .fx{font-family:var(--mono);font-size:9.5px;letter-spacing:.26em;color:#6b6156}
+.piece .meta{position:absolute;left:34px;right:34px;bottom:28px;display:flex;
+             justify-content:space-between;align-items:baseline;
+             border-top:1px solid rgba(18,17,15,.22);padding-top:9px}
+.p169 .meta{left:38px;right:38px;bottom:30px}
+.piece .meta .m{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:#6b6156}
+.piece .meta .mk{font-family:var(--cond);font-weight:700;font-size:11px;letter-spacing:.3em}
+.cap{font-size:11.5px;line-height:1.6;color:#4a4640;max-width:432px;margin-top:calc(var(--u)*1.5)}
+.cap b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="bar"><span class="wm">FLUXUS</span>
+    <span style="font-size:12.5px;color:#6f6a60">The loud side · level 4</span>
+    <span class="r">2026-07-31 · REAL DATA</span></div>
+
+  <h1>Colour is free<br>where it means<br>nothing</h1>
+  <p class="lede">The encoding rules — two fills, greyscale-safe, rank never carried by hue —
+  exist because a decision is being read off the instrument. <b>Nothing is being decided on a
+  cover.</b> So hue is free here for category and for feeling, and still never for rank.
+  <br><br>Three constraints hold even at level 4: the <b>frame stays</b> (nothing bleeds — the
+  full-bleed variant was killed as the mediocrity gate and is not coming back), the
+  <b>expression set never touches the dashboard</b>, and the <b>measurement line is still there</b>,
+  because a loud page that stops measuring is just a poster.</p>
+
+  <h3>01 · Letter cover <em>HOW MUCH · the chain dying is the image</em></h3>
+  <div class="stage">
+    <div class="piece p169" id="letter"></div>
+    <div style="flex:1;min-width:300px">
+      <p class="cap"><b>Why this and not a quote.</b> The subject of 07-31 is not a sentence, it is
+      a shape: three megacaps carried, four of seven leaders followed, then nothing. Drawn at
+      cover scale in flat colour, the failure is the composition. The reader gets the whole letter
+      before reading a word.
+      <br><br><b>Level 4</b> — the refusal <em>is</em> the subject. Crimson is not "down"; it is
+      the segment where the current stopped. It carries a category, not a rank.</p>
+    </div>
+  </div>
+
+  <h3>02 · Substack cover <em>The promise, at the size of the promise</em></h3>
+  <div class="stage">
+    <div class="piece p45" id="substack"></div>
+    <div style="flex:1;min-width:300px">
+      <p class="cap"><b>Why the promise and not the record.</b> A stranger's first contact should
+      meet the thing that can never be broken. Accuracy is not ours to control; <em>walking the
+      last step</em> is. So the cover carries the sentence, and directly under it the one number
+      that proves the sentence is operational rather than a slogan — today's actual open risk
+      expressed as a fraction of capital.
+      <br><br>Gold on buff, at 96px. The only other mark is the rule.</p>
+    </div>
+  </div>
+
+  <h3>03 · X main visual <em>One number, one criterion — at poster scale</em></h3>
+  <div class="stage">
+    <div class="piece p45" id="xmain"></div>
+    <div style="flex:1;min-width:300px">
+      <p class="cap"><b>Template 04, turned up one level.</b> On the timeline this is a number and
+      a criterion in plain type. As an image the scale contrast does the work — not the colour.
+      <br><br><b>A first pass that failed.</b> The number ran off the frame at 250px, which cut it
+      mid-digit and made the one piece of content on the page unreadable. That is overflow, not
+      cropping. The split now falls where the meaning falls: <b>0.99</b> is the story, the trailing
+      <b>05</b> is precision — and the threshold it missed is stated underneath rather than implied
+      by a cut edge.</p>
+    </div>
+  </div>
+
+  <h3>What stays true at every level</h3>
+  <p class="note">
+  <b>1 · The measurement line.</b> Every piece above still ends with the day's real numbers in
+  mono. A cover that stops measuring is decoration with a logo on it.
+  <br><b>2 · The expression set is quarantined.</b> Crimson, gold, moss, indigo and ochre may
+  never appear on the dashboard. One breach and the blue/orange stop meaning anything.
+  <br><b>3 · Hue never carries rank.</b> Here it carries category and feeling. The moment a colour
+  starts meaning "more" or "less", it goes back under the instrument rules and gets measured.
+  <br><b>4 · Occasional means triggered.</b> These run on the poster calendar's triggers — extremes,
+  a judgement paying off, a month boundary — capped at three a week. Loud every day is not loud.
+  </p>
+</div>
+
+<script>
+const D = /*__DATA__*/ null;
+const T=D.breadth.today, CH=D.chain;
+const el=id=>document.getElementById(id);
+const C={crimson:"#c8102e",gold:"#f0b323",moss:"#2b6a4d",indigo:"#3c5a8a",ochre:"#b6895b",ink:"#12110f"};
+const meta = `SPX ${T.spx_close.toFixed(0)} · T2108 ${T.t2108.toFixed(0)} · >20SMA ${T.pct_above_20sma.toFixed(0)}%`;
+
+/* ── 01 letter cover — the chain, at cover scale ── */
+(function(){
+  const MEAS=[3/3,4/7,0,0,1/2,2/7];
+  let run=null; const FLOW=MEAS.map(v=>{run=run===null?v:Math.min(run,v);return run;});
+  const seg=FLOW.map((v,i)=>{
+    const dead=v<=0.02;
+    const h=Math.max(6, v*118);
+    return `<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;
+       align-items:stretch;gap:6px">
+      <div style="height:${h}px;background:${dead?C.crimson:C.indigo}"></div>
+      <div style="font:400 8px var(--mono);letter-spacing:.08em;color:#6b6156;
+                  text-align:left">${Math.round(v*100)}%</div></div>`;
+  }).join("");
+  el("letter").innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <span class="fx">HOW MUCH · LETTER 021</span>
+      <span class="fx">2026.07.31</span></div>
+    <div style="font-family:var(--cond);font-weight:700;font-size:74px;line-height:.86;
+                letter-spacing:-.02em;text-transform:uppercase;margin-top:26px;max-width:11ch">
+      The chain<br>stops at<br><span style="color:${C.crimson}">link three</span></div>
+    <div style="display:flex;gap:7px;align-items:flex-end;margin-top:24px;height:140px">${seg}</div>
+    <div class="meta"><span class="m">${meta}</span><span class="mk">FLUXUS</span></div>`;
+})();
+
+/* ── 02 substack cover — the promise, and the number that operationalises it ── */
+(function(){
+  el("substack").innerHTML = `
+    <div class="fx">FLUXUS · THE MARKET LETTER</div>
+    <div style="font-family:var(--cond);font-weight:700;font-size:66px;line-height:.88;
+                letter-spacing:-.02em;text-transform:uppercase;margin-top:30px;color:${C.ink}">
+      You'll<br>never<br>have to<br><span style="color:${C.gold};
+        -webkit-text-stroke:1.5px ${C.ink}">ask how<br>much</span></div>
+    <div style="margin-top:26px;height:4px;background:${C.ink};width:64px"></div>
+    <div style="font-size:12.5px;line-height:1.55;color:#4a4640;margin-top:16px;max-width:26ch">
+      Everyone tells you what to buy. Nobody tells you how much. That is the part that
+      decides your year.</div>
+    <div class="meta"><span class="m">EVERY IDEA CARRIES ITS SIZE AND ITS STOP</span>
+      <span class="mk">FLUXUS</span></div>`;
+})();
+
+/* ── 03 X main visual — scale is the strangeness ── */
+(function(){
+  el("xmain").innerHTML = `
+    <div class="fx">FLUXUS · 07.31 · FIVE-DAY RATIO</div>
+    <div style="margin-top:10px;display:flex;align-items:baseline;gap:2px">
+      <span style="font-family:var(--cond);font-weight:700;font-size:158px;line-height:.8;
+                   letter-spacing:-.045em;color:${C.moss};margin-left:-9px">0.99</span>
+      <span style="font-family:var(--cond);font-weight:700;font-size:62px;line-height:1;
+                   letter-spacing:-.02em;color:${C.crimson}">05</span>
+    </div>
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:#6b6156;
+                margin-top:2px">THRESHOLD 1.0000 — NOT CLEARED</div>
+    <div style="border-left:3px solid ${C.ink};padding-left:14px;margin-top:2px;
+                font-size:13.5px;line-height:1.5;max-width:30ch">
+      It has closed below <b>1.00</b> on four of the last five sessions.
+      <br><br>So my condition is two consecutive closes above it with net advances positive —
+      or the repair is not confirmed and nothing gets added.</div>
+    <div class="meta"><span class="m">${meta}</span><span class="mk">FLUXUS</span></div>`;
+})();
+</script>
+</body></html>
