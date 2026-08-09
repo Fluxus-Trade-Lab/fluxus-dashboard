@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — the encoding, measured again on the dark ground</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+/* the dark ground, taken verbatim from html.dark in frontend/src/index.css */
+:root{--paper:#1c1917;--ink:#e7e5e4;--ink2:#a8a29e;--ink3:#78716c;--rule:#44403c;--hair:#3a3733;
+      --sans:Plex,sans-serif;--cond:PlexCond,Plex,sans-serif;--mono:PlexMono,Menlo,monospace}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.app{max-width:1440px;margin:0 auto;padding:0 34px 110px}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.bar{display:flex;align-items:baseline;gap:24px;padding:15px 0 14px;border-bottom:1px solid var(--ink)}
+.mark{font-family:var(--cond);font-weight:700;font-size:19px;letter-spacing:.16em}
+.bar .r{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink3)}
+h1{font-family:var(--cond);font-weight:700;font-size:60px;line-height:.95;letter-spacing:-.015em;
+   text-transform:uppercase;margin:42px 0 0;max-width:19ch}
+.lede{font-size:16.5px;line-height:1.55;max-width:66ch;margin:22px 0 0;color:var(--ink2)}
+.lede b{color:var(--ink);font-weight:600}
+h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink3);
+   margin:60px 0 0;padding-bottom:9px;border-bottom:1px solid var(--ink)}
+h3 span{float:right;text-transform:none;letter-spacing:.02em;font-family:var(--sans);font-size:11.5px;color:var(--ink2)}
+.note{font-size:12.5px;line-height:1.7;color:var(--ink2);max-width:78ch;margin:16px 0 0}
+.note b{color:var(--ink);font-weight:600}
+table.t{width:100%;border-collapse:collapse;margin-top:20px;font-size:13px}
+table.t th{text-align:left;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+           color:var(--ink3);font-weight:400;padding:0 14px 9px 0;border-bottom:1px solid var(--ink)}
+table.t td{padding:11px 14px 11px 0;border-bottom:1px solid var(--hair);vertical-align:middle}
+table.t td.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.pass{color:#7ab6ec;font-weight:600} .fail{color:#f08c48;font-weight:600}
+.dim{color:var(--ink3)}
+.sw{display:flex;gap:6px;align-items:center}
+.chip{width:56px;height:30px;border:1px solid rgba(255,255,255,.14)}
+.grey{filter:grayscale(1)}
+.demo{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:22px}
+.demo .lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:var(--ink3);margin-bottom:12px}
+.demo .lab b{color:var(--ink2);font-weight:500}
+svg{display:block;width:100%;height:auto;overflow:visible}
+code{font-family:var(--mono);font-size:12px;color:var(--ink)}
+</style>
+</head>
+<body><div class="app">
+
+<div class="bar"><span class="mark">FLUXUS</span>
+  <span style="font-size:12.5px;color:var(--ink3)">the encoding, on the dark ground</span>
+  <span class="r" id="stamp">—</span></div>
+
+<h1>The light proof<br>does not carry<br>into the dark.</h1>
+<p class="lede">Light mode was measured on 2026-08-08 and passed: the two fills bottom out at
+<b>ΔE 19.3</b> in greyscale, against <b>3.3</b> for the old four-colour scheme. That number is a
+property of the <em>pair</em>, so it survives the theme flip unchanged — and it is the wrong number
+to be reassured by.
+<br><br>Dark mode moves the two things the pair was measured <em>against</em>: the ground drops from
+<b>L* 95</b> to <b>L* 9</b>, and <code>--color-v2-off</code> — the empty cell, the thing that makes
+<b>rank = how many cells are filled</b> legible — flips from a near-white <code>#E6E2DB</code> to a
+near-black <code>#3A3733</code>. The fills did not move with them. <code>--color-took</code> and
+<code>--color-refused</code> are not overridden under <code>html.dark</code> at all; they inherit the
+light values.
+<br><br>So the question here is not "are the two fills still separable" (they are). It is
+<b>is a filled cell still separable from an empty one</b>, and <b>is any fill still separable from
+the ground it now sits on</b>. Both are measured below, and one of them fails.</p>
+
+<h3>The dark set <span>Read out of <code>html.dark</code> in frontend/src/index.css</span></h3>
+<table class="t" id="tokens"></table>
+
+<h3>Every adjacency that occurs in the real components <span>CIELAB ΔE · linear-light simulation · shipped vs corrected</span></h3>
+<table class="t" id="pairs"></table>
+<p class="note" id="pairnote"></p>
+
+<h3>Each fill against the ground itself <span>A fill can clear its neighbour and still vanish into the page</span></h3>
+<table class="t" id="ground"></table>
+
+<h3>The headline, in the same shape as the light sheet <span>Smallest separation anywhere in the set</span></h3>
+<table class="t" id="res"></table>
+<p class="note" id="verdict"></p>
+
+<h3>The level cells — the object that actually breaks <span>Rank is the count of filled cells; if filled ≉ empty, the count is unreadable</span></h3>
+<div class="demo">
+  <div><div class="lab"><b>SHIPPED</b> — as designed</div><svg id="c1" viewBox="0 0 660 190"></svg></div>
+  <div class="grey"><div class="lab"><b>SHIPPED</b> — greyscale: a screenshot, a print</div>
+    <svg id="c2" viewBox="0 0 660 190"></svg></div>
+</div>
+<div class="demo" style="margin-top:26px">
+  <div><div class="lab"><b>CORRECTED</b> — as designed</div><svg id="c3" viewBox="0 0 660 190"></svg></div>
+  <div class="grey"><div class="lab"><b>CORRECTED</b> — greyscale</div>
+    <svg id="c4" viewBox="0 0 660 190"></svg></div>
+</div>
+<p class="note">Count the filled cells in each row of the greyscale column. On the shipped set the
+row for <b>受损程度</b> and the row for <b>指数修复</b> end in the same smear, because
+<code>--color-took</code> at L* 34.7 sits only <b id="gapWas">—</b> ΔE from the empty cell at
+L* 23.2. Rank stops being countable, which is the one thing this encoding promised.</p>
+
+<h3>The ladder, on the dark ground <span>Left as designed · right forced to greyscale in the browser</span></h3>
+<div class="demo">
+  <div><div class="lab"><b>CORRECTED</b> — AS DESIGNED</div><svg id="d1" viewBox="0 0 660 320"></svg></div>
+  <div class="grey"><div class="lab"><b>CORRECTED</b> — GREYSCALE</div>
+    <svg id="d2" viewBox="0 0 660 320"></svg></div>
+</div>
+<div class="demo" style="margin-top:26px">
+  <div><div class="lab"><b>SHIPPED</b> — AS DESIGNED</div><svg id="d3" viewBox="0 0 660 320"></svg></div>
+  <div class="grey"><div class="lab"><b>SHIPPED</b> — GREYSCALE · the dashed "not tested" cells
+      read as filled "took" cells</div>
+    <svg id="d4" viewBox="0 0 660 320"></svg></div>
+</div>
+<p class="note">The ladder is the milder of the two failures, and it is still a failure: shipped
+<code>--color-untested</code> <code>#57534E</code> lands at <b>L* 35.5</b> and shipped
+<code>--color-took</code> at <b>L* 34.7</b>. In greyscale a cell that means <em>we did not measure
+this</em> and a cell that means <em>it took the chance</em> are 0.8 ΔE apart — indistinguishable.
+The same two tokens are 42 ΔE apart in light mode, which is why nobody caught it.</p>
+
+<h3>The correction <span>Two tokens move; the orange does not</span></h3>
+<table class="t" id="fix"></table>
+<p class="note" id="fixnote"></p>
+
+<h3>What these numbers are, and are not</h3>
+<p class="note"><b>Greyscale is the only load-bearing column.</b> It is a true linear-luminance
+projection — after it, a* and b* are exactly zero, so greyscale ΔE <em>is</em> |ΔL*| and nothing
+else. It is also the condition this brand actually meets every time a page is screenshotted,
+pasted into a letter, or printed.
+<br><br><b>The colour-blindness columns are directional only.</b> The Vienot-style matrices used
+here are not luminance-preserving, so they routinely read <em>higher</em> than normal vision — which
+cannot be true of a simulation: removing a channel can never add discriminability. Read them as
+"blue↔orange is a known dichromat-safe pair", never as magnitudes.
+<br><br><b>The rendered panels are illustration, not measurement.</b> CSS <code>filter:grayscale(1)</code>
+uses the non-linear sRGB luma matrix, which is close to but not identical to the linear-light
+projection in the tables. The tables are the authority; the panels are there so the failure is
+something you can see rather than something you have to trust.</p>
+
+</div>
+<script>
+/* ── the two sets under test ──────────────────────────────────────────────────
+   SHIPPED is html.dark exactly as it stands in frontend/src/index.css today:
+   --color-took and --color-refused are absent from that block, so they fall
+   through to the light @theme values. That inheritance is the bug under test. */
+const GROUND = "#1c1917";                 // --color-v2-paper (dark)
+const INK    = "#e7e5e4";                 // --color-v2-ink   (dark)
+
+const SHIPPED = {
+  took:     {hex:"#1a5488", src:"inherited from light @theme — NOT overridden"},
+  refused:  {hex:"#d1600f", src:"inherited from light @theme — NOT overridden"},
+  untested: {hex:"#57534e", src:"html.dark"},
+  off:      {hex:"#3a3733", src:"html.dark  (--color-v2-off)"},
+};
+const FIXED = {
+  took:     {hex:"#1d5e98", src:"proposed html.dark override"},
+  refused:  {hex:"#d1600f", src:"unchanged — the brand orange"},
+  untested: {hex:"#b3ada6", src:"proposed html.dark override"},
+  off:      {hex:"#3a3733", src:"unchanged"},
+};
+/* Not a token: hardcoded in StateBoard.jsx for the middle rungs. Measured here
+   for completeness, and left alone — it behaves identically in light mode, so
+   it is a pre-existing issue, not a dark-mode regression. */
+const MID = "#8d877d";
+
+/* ── colour machinery, identical to palette.html ───────────────────────────── */
+const hex2rgb = h => [1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const toLin  = v => { v/=255; return v<=.04045 ? v/12.92 : Math.pow((v+.055)/1.055,2.4); };
+const toSrgb = v => 255*(v<=.0031308 ? 12.92*v : 1.055*Math.pow(Math.max(v,0),1/2.4)-.055);
+const SIM = {
+  normal:      [[1,0,0],[0,1,0],[0,0,1]],
+  greyscale:   [[.2126,.7152,.0722],[.2126,.7152,.0722],[.2126,.7152,.0722]],
+  deuteranopia:[[.625,.375,0],[.70,.30,0],[0,.30,.70]],
+  protanopia:  [[.567,.433,0],[.558,.442,0],[0,.242,.758]],
+};
+const mul=(m,c)=>{const l=c.map(toLin);return [0,1,2].map(r=>toSrgb(m[r][0]*l[0]+m[r][1]*l[1]+m[r][2]*l[2]));};
+function lab(rgb){
+  const f=v=>{v/=255; return v<=.04045? v/12.92 : Math.pow((v+.055)/1.055,2.4);};
+  const [r,g,b]=rgb.map(f);
+  let X=(.4124*r+.3576*g+.1805*b)/.95047, Y=.2126*r+.7152*g+.0722*b, Z=(.0193*r+.1192*g+.9505*b)/1.08883;
+  const k=t=> t>.008856? Math.cbrt(t) : (7.787*t)+16/116;
+  [X,Y,Z]=[k(X),k(Y),k(Z)];
+  return [116*Y-16, 500*(X-Y), 200*(Y-Z)];
+}
+const dE=(a,b)=>{const A=lab(a),B=lab(b);return Math.hypot(A[0]-B[0],A[1]-B[1],A[2]-B[2]);};
+const L  = h => lab(hex2rgb(h))[0];
+const Yl = h => {const c=hex2rgb(h).map(toLin); return .2126*c[0]+.7152*c[1]+.0722*c[2];};
+const CR = (a,b) => {const x=Yl(a),y=Yl(b); return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);};
+const dEm = (a,b,m) => dE(mul(SIM[m],hex2rgb(a)), mul(SIM[m],hex2rgb(b)));
+const modes = Object.keys(SIM);
+const TH = 12;
+const f1 = v => v.toFixed(1);
+const cls = v => v>=TH ? "pass" : "fail";
+
+document.getElementById("stamp").textContent =
+  "dark mode · measured in-page · light sheet: palette.html";
+
+/* ── the set ───────────────────────────────────────────────────────────────── */
+const chip = h => h==="none"
+  ? `<div class="chip" style="background:transparent;border:1.5px dashed ${SHIPPED.untested.hex}"></div>`
+  : `<div class="chip" style="background:${h}"></div>`;
+document.getElementById("tokens").innerHTML =
+  `<tr><th>Shipped</th><th>Token</th><th>Hex</th><th>L*</th><th>Where it comes from</th></tr>` +
+  [["took","--color-took","fill · took the chance"],
+   ["refused","--color-refused","fill + 45° hatch · offered and refused"],
+   ["off","--color-v2-off","the EMPTY cell — this is what makes rank countable"],
+   ["untested","--color-untested","dashed outline · outside the scale"]]
+  .map(([k,tok,meaning])=>`<tr>
+    <td>${chip(SHIPPED[k].hex)}</td>
+    <td><b>${tok}</b><div class="dim" style="font-size:11px;margin-top:3px">${meaning}</div></td>
+    <td class="num">${SHIPPED[k].hex.toUpperCase()}</td>
+    <td class="num">${L(SHIPPED[k].hex).toFixed(1)}</td>
+    <td class="dim" style="font-size:12px">${SHIPPED[k].src}</td></tr>`).join("") +
+  `<tr><td>${chip(GROUND)}</td><td>--color-v2-paper<div class="dim" style="font-size:11px;margin-top:3px">the dark ground everything is measured against</div></td>
+     <td class="num">${GROUND.toUpperCase()}</td><td class="num">${L(GROUND).toFixed(1)}</td>
+     <td class="dim" style="font-size:12px">html.dark</td></tr>` +
+  `<tr><td>${chip(INK)}</td><td>--color-v2-ink</td>
+     <td class="num">${INK.toUpperCase()}</td><td class="num">${L(INK).toFixed(1)}</td>
+     <td class="dim" style="font-size:12px">html.dark</td></tr>` +
+  `<tr><td>${chip(MID)}</td><td>(no token)<div class="dim" style="font-size:11px;margin-top:3px">middle rungs — hardcoded in StateBoard.jsx</div></td>
+     <td class="num">${MID.toUpperCase()}</td><td class="num">${L(MID).toFixed(1)}</td>
+     <td class="dim" style="font-size:12px">literal, same in both themes</td></tr>`;
+
+/* ── every adjacency that actually occurs in the components ─────────────────
+   Level():  filled cell vs empty cell, and one fill colour vs another across rows
+   Chain():  lit bar vs unlit bar on the off-coloured track
+   Legend:   the three keys sit in one line together                            */
+const PAIRS = [
+  ["took","off",      "filled vs EMPTY cell — Level(), rank = the count"],
+  ["refused","off",   "filled vs EMPTY cell — Level(), weak rows"],
+  ["took","refused",  "the two fills — the pair the light sheet measured"],
+  ["took","untested", "lit vs unlit bar — Chain(), and the legend row"],
+  ["untested","off",  "unlit bar vs its own track — Chain()"],
+  ["refused","untested","hatched fill vs hatched unlit — legend row"],
+];
+document.getElementById("pairs").innerHTML =
+  `<tr><th>Adjacency</th><th>Shipped Δ<sub>grey</sub></th><th>Corrected Δ<sub>grey</sub></th>` +
+  modes.filter(m=>m!=="greyscale").map(m=>`<th>${m} (shipped)</th>`).join("") + `</tr>` +
+  PAIRS.map(([a,b,why])=>{
+    const s = dEm(SHIPPED[a].hex, SHIPPED[b].hex, "greyscale");
+    const f = dEm(FIXED[a].hex,   FIXED[b].hex,   "greyscale");
+    return `<tr>
+      <td><b>${a} | ${b}</b><div class="dim" style="font-size:11px;margin-top:3px">${why}</div></td>
+      <td class="num ${cls(s)}">${f1(s)}</td>
+      <td class="num ${cls(f)}">${f1(f)}</td>` +
+      modes.filter(m=>m!=="greyscale")
+        .map(m=>`<td class="num dim">${f1(dEm(SHIPPED[a].hex,SHIPPED[b].hex,m))}</td>`).join("") +
+      `</tr>`;
+  }).join("") +
+  `<tr><td><b>mid | refused</b><div class="dim" style="font-size:11px;margin-top:3px">
+      #8D877D (middle rungs) vs the orange. Identical in light mode, so not a dark regression —
+      and <b>not actually a failure</b>: refused always carries the 45° hatch and mid never does,
+      so the texture channel separates them where lightness does not. This is the redundant
+      encoding doing its job, and it is why the threshold is a guide and not a verdict.</div></td>
+    <td class="num dim">${f1(dEm(MID,SHIPPED.refused.hex,"greyscale"))}</td>
+    <td class="num dim">${f1(dEm(MID,FIXED.refused.hex,"greyscale"))}</td>
+    <td class="dim" colspan="3" style="font-size:12px">carried by texture · mid clears took by
+      ${f1(dEm(MID,FIXED.took.hex,"greyscale"))} and the empty cell by ${f1(dEm(MID,FIXED.off.hex,"greyscale"))}</td></tr>`;
+
+const worstShipped = Math.min(...PAIRS.map(([a,b])=>dEm(SHIPPED[a].hex,SHIPPED[b].hex,"greyscale")));
+const worstFixed   = Math.min(...PAIRS.map(([a,b])=>dEm(FIXED[a].hex,  FIXED[b].hex,  "greyscale")));
+document.getElementById("pairnote").innerHTML =
+  `Smallest adjacency in greyscale: shipped <b class="${cls(worstShipped)}">ΔE ${f1(worstShipped)}</b> →
+   corrected <b class="${cls(worstFixed)}">ΔE ${f1(worstFixed)}</b>, against a working threshold of ~${TH}.
+   Two adjacencies fail as shipped and both involve a token the light sheet never had to think about:
+   the <b>empty cell</b>, and the <b>outside-the-scale outline</b> — the two things dark mode moved and
+   the fills did not follow.`;
+
+/* ── each fill against the ground ──────────────────────────────────────────── */
+document.getElementById("ground").innerHTML =
+  `<tr><th>Fill</th><th>Shipped Δ<sub>grey</sub> vs #1C1917</th><th>Contrast ratio</th>
+       <th>Corrected Δ<sub>grey</sub></th><th>Contrast ratio</th><th>Reads on the ground?</th></tr>` +
+  ["took","refused","off","untested"].map(k=>{
+    const s=dEm(SHIPPED[k].hex,GROUND,"greyscale"), f=dEm(FIXED[k].hex,GROUND,"greyscale");
+    return `<tr>
+      <td><div class="sw"><i class="chip" style="width:26px;height:16px;background:${SHIPPED[k].hex}"></i>
+        <i class="chip" style="width:26px;height:16px;background:${FIXED[k].hex}"></i><b>${k}</b></div></td>
+      <td class="num ${cls(s)}">${f1(s)}</td>
+      <td class="num dim">${CR(SHIPPED[k].hex,GROUND).toFixed(2)}:1</td>
+      <td class="num ${cls(f)}">${f1(f)}</td>
+      <td class="num dim">${CR(FIXED[k].hex,GROUND).toFixed(2)}:1</td>
+      <td class="${cls(f)}">${f>=TH?"yes":"no"}</td></tr>`;
+  }).join("");
+
+/* ── the headline, same shape as the light sheet ───────────────────────────── */
+const worstOf = (set) => {
+  const o={};
+  modes.forEach(m=>{ o[m]=Math.min(...PAIRS.map(([a,b])=>dEm(set[a].hex,set[b].hex,m)),
+                                   ...["took","refused","off","untested"].map(k=>dEm(set[k].hex,GROUND,m))); });
+  return o;
+};
+const rows=[["Dark — as shipped today",SHIPPED],["Dark — corrected",FIXED]]
+  .map(([nm,set])=>({nm,set,w:worstOf(set)}));
+document.getElementById("res").innerHTML =
+  `<tr><th>Set</th>${modes.map(m=>`<th>${m}</th>`).join("")}<th>Verdict</th></tr>` +
+  rows.map(r=>{
+    const ok = r.w.greyscale>=TH;
+    return `<tr><td><b>${r.nm}</b><div class="sw" style="margin-top:7px">${
+      ["took","refused","off","untested"].map(k=>
+        `<i class="chip" style="width:34px;height:18px;background:${r.set[k].hex}"></i>`).join("")}</div></td>` +
+      modes.map(m=>`<td class="num ${m==="greyscale"?cls(r.w[m]):"dim"}">${f1(r.w[m])}</td>`).join("") +
+      `<td class="${ok?"pass":"fail"}">${ok?"holds":"breaks in greyscale"}</td></tr>`;
+  }).join("");
+
+document.getElementById("verdict").innerHTML =
+  `This is the weakest link anywhere in the dark set — every adjacency plus every fill against the
+   ground, minimised. Shipped bottoms out at <b class="${cls(rows[0].w.greyscale)}">ΔE
+   ${f1(rows[0].w.greyscale)}</b>; corrected bottoms out at <b class="${cls(rows[1].w.greyscale)}">ΔE
+   ${f1(rows[1].w.greyscale)}</b>.
+   <br><br>Note what did <em>not</em> change: <b>took | refused stays at ΔE
+   ${f1(dEm(SHIPPED.took.hex,SHIPPED.refused.hex,"greyscale"))} as shipped</b> — the exact number the
+   light sheet published. Quoting it as the dark-mode result would have been true and useless. The
+   pair was never the thing at risk; what the pair is measured <em>against</em> was.`;
+document.getElementById("gapWas").textContent =
+  f1(dEm(SHIPPED.took.hex, SHIPPED.off.hex, "greyscale"));
+
+/* ── the correction ────────────────────────────────────────────────────────── */
+document.getElementById("fix").innerHTML =
+  `<tr><th>Token</th><th>Was</th><th>L*</th><th>Now</th><th>L*</th><th>Why</th></tr>` +
+  [["--color-took","took",
+    "Lifted to sit midway between the empty cell (L* 23.2) and the orange (L* 54.0), so the two gaps "+
+    "are as near equal as the span allows rather than one of them being spent. It is literally #1A5488 "+
+    "scaled 1.12× in sRGB: hue holds at 272°, identical to the light value. Same blue, one step brighter, "+
+    "which is what the darker ground was always going to need."],
+   ["--color-untested","untested",
+    "Was 0.8 ΔE from took in greyscale. Moved to a light warm grey, the dark counterpart of the "+
+    "light sheet's #C2BDB4, so 'not measured' cannot be misread as 'took the chance'."],
+   ["--color-refused","refused","Unchanged. #D1600F is the brand colour and it already clears everything it sits next to."],
+   ["--color-v2-off","off",
+    "Unchanged. It is squeezed between the ground below and the fills above; at L* 23.2 it is 14.2 from "+
+    "the ground and, once took moves, 16.3 from the fill. Moving it would cost more than it gains."]]
+  .map(([tok,k,why])=>{
+    const changed = SHIPPED[k].hex.toLowerCase()!==FIXED[k].hex.toLowerCase();
+    return `<tr>
+      <td><b>${tok}</b>${changed?"":` <span class="dim">— no change</span>`}</td>
+      <td><div class="sw"><i class="chip" style="width:26px;height:16px;background:${SHIPPED[k].hex}"></i>
+        <span class="n">${SHIPPED[k].hex.toUpperCase()}</span></div></td>
+      <td class="num">${L(SHIPPED[k].hex).toFixed(1)}</td>
+      <td><div class="sw"><i class="chip" style="width:26px;height:16px;background:${FIXED[k].hex}"></i>
+        <span class="n">${FIXED[k].hex.toUpperCase()}</span></div></td>
+      <td class="num">${L(FIXED[k].hex).toFixed(1)}</td>
+      <td style="font-size:12px" class="dim">${why}</td></tr>`;
+  }).join("");
+
+const ladderL = [GROUND, FIXED.off.hex, FIXED.took.hex, FIXED.refused.hex].map(L);
+document.getElementById("fixnote").innerHTML =
+  `The corrected set is a monotone lightness ladder on the dark ground:
+   <b class="n">ground L* ${ladderL[0].toFixed(1)} → empty ${ladderL[1].toFixed(1)} →
+   took ${ladderL[2].toFixed(1)} → refused ${ladderL[3].toFixed(1)}</b>, with steps of
+   <b class="n">${(ladderL[1]-ladderL[0]).toFixed(1)} · ${(ladderL[2]-ladderL[1]).toFixed(1)} ·
+   ${(ladderL[3]-ladderL[2]).toFixed(1)}</b>. Because greyscale ΔE is exactly |ΔL*|, those three
+   numbers <em>are</em> the greyscale result — there is nowhere for the encoding to hide.`;
+
+/* ═══ the real objects ═══════════════════════════════════════════════════════ */
+const NS="http://www.w3.org/2000/svg";
+function maker(s){
+  return (t,a={},x)=>{const n=document.createElementNS(NS,t);
+    for(const k in a) n.setAttribute(k,a[k]); if(x!=null) n.textContent=x; s.appendChild(n); return n;};
+}
+function hatchDefs(mk,id,stroke){
+  const defs=mk("defs");
+  const pat=document.createElementNS(NS,"pattern");
+  pat.setAttribute("id","hatch-"+id); pat.setAttribute("width","5"); pat.setAttribute("height","5");
+  pat.setAttribute("patternUnits","userSpaceOnUse"); pat.setAttribute("patternTransform","rotate(45)");
+  const ln=document.createElementNS(NS,"line");
+  ln.setAttribute("x1","0");ln.setAttribute("y1","0");ln.setAttribute("x2","0");ln.setAttribute("y2","5");
+  ln.setAttribute("stroke",stroke);ln.setAttribute("stroke-width","1.6");
+  pat.appendChild(ln); defs.appendChild(pat);
+}
+
+/* ── StateBoard level cells, verbatim structure from StateBoard.jsx ─────────
+   Rows and levels are the 2026-07-31 state_board payload the light sheet used. */
+const BOARD = [
+  {key:"受损程度", level:1, layer:"fact"},
+  {key:"抛压",     level:3, layer:"fact"},
+  {key:"指数修复", level:3, layer:"interpretation"},
+  {key:"领涨修复", level:3, layer:"interpretation"},
+  {key:"广义半导体",level:1, layer:"interpretation"},
+  {key:"确认信号", level:0, layer:"anticipation"},
+  {key:"利率",     level:null, layer:"fact"},
+];
+function cells(id, set){
+  const s=document.getElementById(id); s.innerHTML=""; const mk=maker(s);
+  hatchDefs(mk,id,"#7d3908");
+  const X=118, W=15, H=13, GAP=2, N=5;
+  mk("rect",{x:0,y:0,width:660,height:190,fill:GROUND});
+  BOARD.forEach((row,i)=>{
+    const y=14+i*24;
+    mk("text",{x:X-12,y:y+11,"text-anchor":"end",
+      style:`font:600 12px PlexCond,Plex,sans-serif;fill:${INK}`},row.key);
+    for(let c=0;c<N;c++){
+      const cx=X+c*(W+GAP);
+      if(row.level==null){
+        mk("rect",{x:cx,y,width:W,height:H,fill:"none",stroke:set.untested.hex,
+          "stroke-width":1,"stroke-dasharray":"2.5 2"});
+      } else {
+        const on = c<=row.level;
+        const weak = row.level<=1, strong = row.level>=3;
+        const bg = !on ? set.off.hex : weak ? set.refused.hex : strong ? set.took.hex : MID;
+        mk("rect",{x:cx,y,width:W,height:H,fill:bg});
+        if(on && weak) mk("rect",{x:cx,y,width:W,height:H,fill:`url(#hatch-${id})`,opacity:.55});
+      }
+    }
+    const lbl = row.level==null ? "not measured" : ["缺席","很弱","早期","已启动","良好"][row.level];
+    mk("text",{x:X+N*(W+GAP)+14,y:y+11,
+      style:`font:400 11px Plex,sans-serif;fill:${row.level==null?set.untested.hex
+        : row.level<=1?set.refused.hex : row.level>=3?set.took.hex : MID}`},
+      lbl+"   ·   rank = "+(row.level==null?"—":(row.level+1)+" of 5 filled"));
+  });
+}
+
+/* ── the ladder, structure verbatim from palette.html ───────────────────────
+   rung + direction extracted from the same 2026-07-31 payload. */
+const NM = {
+  SPY:{rung:4,direction:"up"},   QQQ:{rung:1,direction:"flat"}, RSP:{rung:4,direction:"flat"},
+  DIA:{rung:4,direction:"up"},   IWM:{rung:1,direction:"down"}, AMZN:{rung:5,direction:"up"},
+  MSFT:{rung:6,direction:"up"},  NVDA:{rung:2,direction:"up"},  ANET:{rung:3,direction:"up"},
+  AXTI:{rung:2,direction:"up"},  NTAP:{rung:5,direction:"up"},  DXCM:{rung:7,direction:"up"},
+  TER:{rung:2,direction:"up"},   MXL:{rung:1,direction:"flat"}, SNDK:{rung:1,direction:"flat"},
+  GLW:{rung:2,direction:"up"},   NVTS:{rung:0,direction:"flat"},GFS:{rung:0,direction:"flat"},
+  AAPL:{rung:1,direction:"down"},
+};
+function ladder(id, set){
+  const s=document.getElementById(id); s.innerHTML=""; const mk=maker(s);
+  const W=660,LX=126,TOP=16,BOT=250;
+  mk("rect",{x:0,y:-10,width:660,height:330,fill:GROUND});
+  hatchDefs(mk,id,"#7d3908");
+  const RUNG=["Broken","Stabilizing","Reclaim","Above 50D","Pivot","Breakout","Holds","Expansion"];
+  const y=r=>BOT-r*(BOT-TOP)/7;
+  RUNG.forEach((lab,r)=>{
+    mk("line",{x1:LX-10,y1:y(r),x2:W-14,y2:y(r),stroke:"#44403c","stroke-width":.9});
+    mk("text",{x:LX-18,y:y(r)+4,"text-anchor":"end",
+      style:"font:600 10px PlexCond,sans-serif;fill:#a8a29e;letter-spacing:.03em"},lab.toUpperCase());
+  });
+  let x=LX+8;
+  Object.entries(NM).sort((a,b)=>b[1].rung-a[1].rung).forEach(([t,v])=>{
+    const cy=y(v.rung);
+    const q = v.direction==="up" ? {k:"took",hex:set.took.hex}
+            : v.direction==="down" ? {k:"refused",hex:set.refused.hex} : null;
+    if(q===null){
+      mk("rect",{x:x-16,y:cy-9,width:38,height:18,fill:"none",stroke:set.untested.hex,
+        "stroke-width":1.2,"stroke-dasharray":"3 2"});
+      mk("text",{x:x+3,y:cy+4,"text-anchor":"middle",
+        style:`font:500 9.5px PlexMono,monospace;fill:${set.untested.hex}`},t);
+    } else {
+      mk("rect",{x:x-16,y:cy-9,width:38,height:18,fill:q.hex});
+      if(q.k==="refused") mk("rect",{x:x-16,y:cy-9,width:38,height:18,fill:`url(#hatch-${id})`,opacity:.55});
+      mk("rect",{x:x-16,y:cy-9,width:38,height:18,fill:"none",stroke:INK,"stroke-width":.7,opacity:.28});
+      mk("text",{x:x+3,y:cy+4,"text-anchor":"middle",
+        style:`font:500 9.5px PlexMono,monospace;fill:${q.k==="took"?"#f2f6fa":"#2a1a08"}`},t);
+    }
+    x+=44; if(x>W-46){x=LX+8;}
+  });
+  mk("text",{x:LX-18,y:BOT+40,"text-anchor":"end",
+    style:"font:400 9px PlexMono,monospace;fill:#78716c"},"KEY");
+  [["took",{k:"took",hex:set.took.hex}],["refused",{k:"refused",hex:set.refused.hex}],["untested",null]]
+    .forEach(([lab,q],i)=>{
+    const bx=LX+i*136, by=BOT+30;
+    if(q){ mk("rect",{x:bx,y:by,width:26,height:14,fill:q.hex});
+      if(q.k==="refused") mk("rect",{x:bx,y:by,width:26,height:14,fill:`url(#hatch-${id})`,opacity:.55});}
+    else mk("rect",{x:bx,y:by,width:26,height:14,fill:"none",stroke:set.untested.hex,"stroke-dasharray":"3 2"});
+    mk("text",{x:bx+32,y:by+11,style:"font:400 10.5px Plex,sans-serif;fill:#a8a29e"},lab);
+  });
+}
+
+cells("c1",SHIPPED); cells("c2",SHIPPED); cells("c3",FIXED); cells("c4",FIXED);
+ladder("d1",FIXED);  ladder("d2",FIXED);  ladder("d3",SHIPPED); ladder("d4",SHIPPED);
+
+/* machine-readable result, so this page can be read by a tool and not an eyeball */
+window.__RESULT__ = {
+  ground: GROUND, threshold: TH,
+  shipped: { worst_greyscale: rows[0].w.greyscale, by_mode: rows[0].w,
+    pairs: Object.fromEntries(PAIRS.map(([a,b])=>[a+"|"+b, dEm(SHIPPED[a].hex,SHIPPED[b].hex,"greyscale")])),
+    vs_ground: Object.fromEntries(["took","refused","off","untested"].map(k=>[k, dEm(SHIPPED[k].hex,GROUND,"greyscale")])),
+    L: Object.fromEntries(["took","refused","off","untested"].map(k=>[k, L(SHIPPED[k].hex)])) },
+  corrected: { worst_greyscale: rows[1].w.greyscale, by_mode: rows[1].w,
+    pairs: Object.fromEntries(PAIRS.map(([a,b])=>[a+"|"+b, dEm(FIXED[a].hex,FIXED[b].hex,"greyscale")])),
+    vs_ground: Object.fromEntries(["took","refused","off","untested"].map(k=>[k, dEm(FIXED[k].hex,GROUND,"greyscale")])),
+    L: Object.fromEntries(["took","refused","off","untested"].map(k=>[k, L(FIXED[k].hex)])) },
+  hexes: { shipped: Object.fromEntries(Object.entries(SHIPPED).map(([k,v])=>[k,v.hex])),
+           corrected: Object.fromEntries(Object.entries(FIXED).map(([k,v])=>[k,v.hex])) },
+};
+</script>
+</body></html>

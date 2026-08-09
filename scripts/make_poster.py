@@ -18,10 +18,12 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import html
 import subprocess
 import tempfile
 from datetime import date
+from functools import lru_cache
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -29,25 +31,60 @@ VISUALS = ROOT / "visuals"
 OUTDIR = VISUALS / "out"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
+# v2 字体：IBM Plex,自托管,OFL。见 DESIGN.md 第一节。
+# 机器上没装 Plex,所以把 woff2 内联进临时 HTML —— 不留系统字体的回退余地,
+# 缺文件就报错,绝不悄悄退回 Helvetica。
+FONTDIR = ROOT / "Fluxus_Brand" / "visual" / "explorations" / "2026-08-08" / "fonts"
+FACES = [                       # (CSS family, weight, 文件名)
+    ("Plex",     400, "IBMPlexSans-Regular.woff2"),
+    ("Plex",     600, "IBMPlexSans-SemiBold.woff2"),
+    ("PlexCond", 700, "IBMPlexSansCondensed-Bold.woff2"),
+    ("PlexMono", 400, "IBMPlexMono-Regular.woff2"),
+]
+# 中文永不进等宽字(海报系统 2026 年验证:会塌)。Plex 无中文字形,
+# 主句/副句都靠这条链落到 PingFang SC;展签行按规格只写测量,不写中文。
+SANS_STACK = 'Plex,"PingFang SC",-apple-system,"Helvetica Neue",sans-serif'
+COND_STACK = 'PlexCond,Plex,"PingFang SC",-apple-system,sans-serif'
+MONO_STACK = 'PlexMono,ui-monospace,"SF Mono",Menlo,monospace'
+
 SIZES = {"4x5": (1080, 1350), "16x9": (1600, 900), "1x1": (1080, 1080)}
 
+
+@lru_cache(maxsize=1)
+def fontface_css() -> str:
+    """把 woff2 内联成 data: URI —— file:// 页面加载字体不受 CORS 摆布。"""
+    out = []
+    for family, weight, fname in FACES:
+        path = FONTDIR / fname
+        if not path.exists():
+            raise SystemExit(
+                f"缺字体：{path}\n"
+                "海报系统不许回退到替代字体。补齐 IBM Plex woff2 再跑。")
+        b64 = base64.b64encode(path.read_bytes()).decode("ascii")
+        out.append(f"@font-face{{font-family:{family};font-weight:{weight};"
+                   f"font-display:block;src:url(data:font/woff2;base64,{b64}) "
+                   'format("woff2")}')
+    return "\n  ".join(out)
+
+
 TEMPLATE = """<!doctype html><html><head><meta charset="utf-8"><style>
+  {fontface}
   *{{box-sizing:border-box;margin:0}}
   html,body{{width:{w}px;height:{h}px;overflow:hidden}}
   body{{background:{bg};color:{fg};
-        font-family:Inter,-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+        font-family:{sans};
         font-size:{base}px;padding:{pad}em {pad}em {padb}em;
         display:flex;flex-direction:column;{flex}}}
   .frame{{{framecss};background:{mat};overflow:hidden;flex-shrink:0}}
   .frame img{{width:100%;height:100%;object-fit:cover;display:block}}
   .label{{{labelcss};display:flex;flex-direction:column}}
   .en{{font-size:2.15em;font-weight:600;letter-spacing:-.01em;line-height:1.28}}
-  .zh{{font-size:1.28em;color:{fg2};line-height:1.6;margin-top:.7em}}
+  .zh{{font-size:1.28em;font-weight:400;color:{fg2};line-height:1.6;margin-top:.7em}}
   .foot{{display:flex;justify-content:space-between;align-items:baseline;
          margin-top:auto;padding-top:1.1em;border-top:1px solid {rule}}}
-  .meta{{font-family:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  .meta{{font-family:{mono};
          font-size:1em;letter-spacing:.1em;text-transform:uppercase;color:{fg3}}}
-  .mark{{font-weight:700;letter-spacing:.3em;font-size:1.05em}}
+  .mark{{font-family:{cond};font-weight:700;letter-spacing:.3em;font-size:1.05em}}
 </style></head><body>
   <div class="frame"><img src="{img}" alt=""></div>
   <div class="label">
@@ -57,8 +94,8 @@ TEMPLATE = """<!doctype html><html><head><meta charset="utf-8"><style>
   </div>
 </body></html>"""
 
-LIGHT = dict(bg="#fafaf9", fg="#1c1917", fg2="#78716c", fg3="#a8a29e",
-             mat="#f5f5f4", rule="#e7e5e4")
+LIGHT = dict(bg="#F2F1ED", fg="#1c1917", fg2="#57534E", fg3="#948F86",
+             mat="#EDECE7", rule="#e7e5e4")
 DARK = dict(bg="#12110f", fg="#f5f4f2", fg2="#8a8480", fg3="#6b6560",
             mat="#1c1a18", rule="#332e29")
 
@@ -82,6 +119,7 @@ def build_html(img: Path, en: str, zh: str, meta: str, ratio: str, dark: bool) -
     return TEMPLATE.format(
         w=w, h=h, base=base, pad=pad, padb=padb, flex=flex,
         framecss=framecss, labelcss=labelcss,
+        fontface=fontface_css(), sans=SANS_STACK, cond=COND_STACK, mono=MONO_STACK,
         img=html.escape(img.resolve().as_uri()),
         en=html.escape(en),
         zh=f'<div class="zh">{html.escape(zh)}</div>' if zh else "",

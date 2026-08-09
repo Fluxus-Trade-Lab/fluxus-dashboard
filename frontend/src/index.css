@@ -110,7 +110,23 @@ html.dark {
   --color-v2-rule: #44403c;
   --color-v2-hair: #3a3733;
   --color-v2-off: #3a3733;
-  --color-untested: #57534e;
+
+  /* ── v2 encoding, dark ground (Fluxus_Brand/visual/explorations/2026-08-08/palette_dark.html) ──
+     The light proof does not carry into the dark, because dark moves the two
+     things the fills were measured AGAINST: the ground (L* 95 → 9) and the empty
+     cell --color-v2-off (near-white → near-black). took/refused were previously
+     absent from this block and inherited the light values, which measured:
+       took | v2-off      ΔE 11.4  ✗   a filled cell ≈ an empty one, so rank
+                                       stopped being countable in greyscale
+       took | untested    ΔE  0.8  ✗   "not measured" ≈ "took the chance"
+     Both fixed below. All four encoding colours are now stated explicitly here
+     so nothing in this set can silently inherit across the theme flip again.
+     Corrected greyscale ladder on #1C1917 — greyscale ΔE is exactly |ΔL*|:
+       ground 9.0 → off 23.2 → took 38.8 → refused 54.0   (steps 14.2 · 15.5 · 15.2)
+     untested leaves the scale upward at L* 71.0 (≥17 from every fill). */
+  --color-took: #1d5e98;      /* #1A5488 × 1.12 in sRGB — hue held at 272° */
+  --color-refused: #d1600f;   /* unchanged: the brand orange, explicit on purpose */
+  --color-untested: #b3ada6;  /* was #57534E — 0.8 ΔE from took in greyscale */
 }
 
 html {
