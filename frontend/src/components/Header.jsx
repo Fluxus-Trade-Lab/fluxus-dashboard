@@ -2,14 +2,23 @@ import { formatTimestamp } from '../lib/format'
 import { useTheme } from '../hooks/useTheme'
 import { useLanguage } from '../i18n/LanguageContext'
 
+/**
+ * Briefing is deliberately absent. briefs.json holds five entries, all dated
+ * 2026-03-17 to 03-21, so the page has been serving five-month-old writing as
+ * today's brief — on the surface that most looks like a product. A nav item
+ * that stale costs more than the missing page does.
+ *
+ * The route still resolves, so any link already sent out keeps working. Put it
+ * back when something writes to briefs.json daily, or delete the page.
+ */
 const NAV_ITEMS = [
   { key: 'dashboard', label: 'Dashboard', hash: '#/dashboard' },
   { key: 'screener', label: 'Screener', hash: '#/screener' },
   { key: 'portfolio', label: 'Portfolio', hash: '#/portfolio' },
   { key: 'trades', label: 'Trade Journal', hash: '#/trades' },
   { key: 'journal', label: 'AI Coach', hash: '#/journal' },
-  { key: 'briefing', label: 'Briefing', hash: '#/briefing' },
   { key: 'breadth', label: 'Breadth', hash: '#/breadth' },
+  { key: 'groups', label: 'Groups', hash: '#/groups' },
   { key: 'modelbooks', label: 'Model Books', hash: '#/modelbooks' },
 ]
 
