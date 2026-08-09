@@ -818,6 +818,16 @@
 - 原话:「THE MARKET GOD has decided」「keep market god on your side too」「you will be happy to give back your 2% to the market god」
 - 用法:**收编进 Voice Bible 演员表:Arcade 的庄家。Herd 向它祈祷,Algo Monkeys 伺候它,你只测量它。**
 
+**193** ⭐⭐⭐ 重复的复利 —— 2026-08-10 用户口述
+- 原话:**「重复可以让你幸福」**
+- 用户自己补的语境:「交易里的重复和枯燥是对未来好的」「有点像**每一次亏损都在教你,每一次盈利都在强化**」
+- 打磨(中文):**「每一次亏损都在教你,每一次盈利都在强化。所以重复可以让你幸福。」**
+- EN: **"Every loss teaches you. Every win reinforces you. Which is why the dullest part of this job is the part that makes you happy."**
+- **备用 EN(更短,更狠):** *"Repetition is the only part of this job where being wrong still pays."*
+- ⚠️ **单发「重复可以让你幸福」会被读成鸡汤** —— 用户自己第一时间就察觉了(「好像缺了语境」)。**必须带前半句**,那两拍才是引擎。
+- 数据背书:331 笔 —— **130 笔止损在教,47 笔 >3R 在强化**。重复本身就是课程表。
+- 亲缘:#129(围棋复盘)讲的是同一件事的反面(多数人只翻篇不复盘)。**两条别排在同一周。**
+
 ---
 
 ---

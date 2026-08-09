@@ -10,21 +10,21 @@
 
 ---
 
-## 本周队列（2026-08-04 → 08-10）· 状态：待灌
+## 本周队列（2026-08-10 → 08-16）· 状态：待灌
 
 | # | 日期 | 语言 | 文案（直接粘） | 出处 |
 |---|---|---|---|---|
-| 1 | 08-04 二 | EN | I do treat the market like a video game. The difference is my respawns cost real money. | #120 |
-| 2 | 08-05 三 | 中 | 你知道自己的痛点在哪个价位，市场多半会去刺探一下。它就是干这个的。 | #130 |
-| 3 | 08-06 四 | EN | When my opinion and my system disagree, I go with the system. | #1 |
-| 4 | 08-07 五 | 中 | 股市有风险，入市先烧纸。 | #115 |
-| 5 | 08-08 六 | EN | Copy-trading is someone holding your handlebars. Hold them long enough, and you'll believe that's as fast as you can ride. | #128 |
-| 6 | 08-09 日 | 中 | 最惨的不是亏钱，是折腾了一年，旁边的人不经意来了句：他躺赢了。 | #117 |
-| 7 | 08-10 一 | EN | Go players review every game they finish. Most traders live through three full cycles and stay exactly where they started — they turn the page, but never read it back. | #129 |
+| 1 | 08-10 一 | EN | Go players review every game they finish. Most traders live through three full cycles and stay exactly where they started — they turn the page, but never read it back. | [#129](../voice/Fluxus_Own_Lines.md) |
+| 2 | 08-11 二 | 中 | 手里捧着尚方宝剑，偏当破铜烂铁，反倒捡根树枝当剑耍。要耍到什么时候。 | [#53](../voice/Fluxus_Own_Lines.md:315) |
+| 3 | 08-12 三 | EN | I don't care much about being right. I care that being wrong stays small. | [#30](../voice/Fluxus_Own_Lines.md:179) |
+| 4 | 08-13 四 | 中 | 股市不是薛定谔的猫。你不看，它也已经决定了。 | [#34](../voice/Fluxus_Own_Lines.md:203) |
+| 5 | 08-14 五 | EN | You'll notice I get stopped out a lot. Part of that is discipline. Part of it is that I trade too much. | [#28](../voice/Fluxus_Own_Lines.md:169) |
+| 6 | 08-15 六 | 中 | 资金净流入创了新高。可那是净额——菜贩子收摊前清仓甩卖，一堆人来抢，花出去的钱当然变多了。可菜价还在跌。 | [#51](../voice/Fluxus_Own_Lines.md:305) |
+| 7 | 08-16 日 | EN | You're driving home and you're not there yet. You're allowed to slow down on the way. | [#52](../voice/Fluxus_Own_Lines.md:310) |
 
 **这七条的编排逻辑**（下次自己挑的时候照这个来）：
-身份 → 教学 → 主张 → 幽默 → 教学 → 疼 → 教学。
-**别把好笑的排在一起**，也别连着三天说教。一周里要有一条让人疼的（#117），有一条只有中文圈能懂的（#115）。
+教学 → 疼 → 主张 → 幽默 → 自嘲 → 教学 → 温。
+**别把好笑的排在一起**，也别连着三天说教。一周里要有一条只有中文圈能懂的（#53 尚方宝剑），有一条承认自己毛病的（#28 —— 自嘲是最难仿的部分，也是最少人敢发的）。
 
 ---
 
@@ -61,4 +61,16 @@ H1 复盘发布后有 **12 条拆帖**（见 `../../Fluxus_Substack/drafts/H1_fl
 
 ## 历史队列（发完归档，避免重复）
 
-*（空 —— 第一周从 2026-08-04 开始）*
+### 2026-08-04 → 08-10 · ❌ **从未灌进 Typefully，5 条全部作废**
+
+工具装了，队列没灌 —— 保险买了没生效。8/4–8/8 实际只发了 1 条（8/6 VOICE，70 views，全库最低）。
+**这五条没发过，仍可复用**，别当成已用过的弹药：
+
+| 日期 | 语言 | 文案 | 出处 | 状态 |
+|---|---|---|---|---|
+| 08-04 二 | EN | I do treat the market like a video game. The difference is my respawns cost real money. | #120 | 未发，可复用 |
+| 08-05 三 | 中 | 你知道自己的痛点在哪个价位，市场多半会去刺探一下。它就是干这个的。 | #130 | 未发，可复用 |
+| 08-06 四 | EN | When my opinion and my system disagree, I go with the system. | #1 | 未发，可复用 |
+| 08-07 五 | 中 | 股市有风险，入市先烧纸。 | #115 | 未发，可复用 |
+| 08-08 六 | EN | Copy-trading is someone holding your handlebars. Hold them long enough, and you'll believe that's as fast as you can ride. | #128 | 未发，可复用 |
+| 08-09 日 | 中 | 最惨的不是亏钱，是折腾了一年，旁边的人不经意来了句：他躺赢了。 | #117 | 8/9 手动补发 |
