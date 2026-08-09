@@ -72,3 +72,8 @@ data/history/backfill_ohlc.pkl
 # Sequence-mining price panel lives in .cache/ (already ignored above)
 
 frontend/public/data/output
+
+# Live position data must never enter the repo — data/portfolio/ is already
+# ignored for this reason, and the design explorations render the same numbers.
+Fluxus_Brand/visual/explorations/**/positions_data.json
+Fluxus_Brand/visual/explorations/**/positions.html
