@@ -36,10 +36,6 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
     return { rows, totalBetaAdj, portfolioBeta }
   }, [openTrades, dailyPrices, spyHistory, portfolioValue])
 
-  if (!openTrades.length) {
-    return <div className="text-center py-16 text-[var(--color-text-muted)]">No open positions to analyze.</div>
-  }
-
   // Heat bar chart data
   const heatChartData = heatData.positions
     .filter(p => p.hasStop)
@@ -76,6 +72,14 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
       grossPct: portfolioValue > 0 ? (gross / portfolioValue) * 100 : 0,
     }
   }, [openTrades, portfolioValue])
+
+  // Below every hook, so the hook count cannot change when the last position
+  // closes. Sitting above `tickerConcentration` and `exposure`, this guard was
+  // the same conditional-hook bug that took out the Screener page on
+  // 2026-08-09.
+  if (!openTrades.length) {
+    return <div className="text-center py-16 text-[var(--color-text-muted)]">No open positions to analyze.</div>
+  }
 
   const heatColor = (v) => v > 2 ? '#ef4444' : v > 1 ? '#f59e0b' : '#22c55e'
 
