@@ -82,8 +82,12 @@ TEMPLATE = """<!doctype html><html><head><meta charset="utf-8"><style>
   .zh{{font-size:1.28em;font-weight:400;color:{fg2};line-height:1.6;margin-top:.7em}}
   .foot{{display:flex;justify-content:space-between;align-items:baseline;
          margin-top:auto;padding-top:1.1em;border-top:1px solid {rule}}}
+  /* Measurement line — DESIGN.md §5.3. It may never be the smallest type in a
+     piece: it is what separates a measurement from a poster, so at 1em (below
+     .zh 1.28 and .mark 1.05) it was losing the size contest and reading as a
+     caption. Set in ink rather than the palest grey for the same reason. */
   .meta{{font-family:{mono};
-         font-size:1em;letter-spacing:.1em;text-transform:uppercase;color:{fg3}}}
+         font-size:1.15em;letter-spacing:.06em;text-transform:uppercase;color:{fg}}}
   .mark{{font-family:{cond};font-weight:700;letter-spacing:.3em;font-size:1.05em}}
 </style></head><body>
   <div class="frame"><img src="{img}" alt=""></div>
@@ -183,7 +187,7 @@ def main() -> None:
 
     render(build_html(img, args.en, args.zh, meta, args.ratio, args.dark), out, args.ratio)
     w, h = SIZES[args.ratio]
-    print(f"{out.relative_to(ROOT)}  ({w}×{h} @2x)")
+    print(f"{(out.relative_to(ROOT) if out.is_relative_to(ROOT) else out)}  ({w}×{h} @2x)")
 
 
 if __name__ == "__main__":
