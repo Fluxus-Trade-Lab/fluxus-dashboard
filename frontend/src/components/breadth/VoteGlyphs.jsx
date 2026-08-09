@@ -126,3 +126,66 @@ function fmt(v) {
   const s = a >= 100 ? v.toFixed(0) : a >= 10 ? v.toFixed(1) : v.toFixed(2)
   return v > 0 ? `+${s}` : s
 }
+
+
+/* ------------------------------------------------------------------ */
+
+/** Display labels for the flat fallback. vote_detail carries its own labels;
+ *  until the pipeline emits it, the keys are the pipeline's and these are ours. */
+const VOTE_LABEL = {
+  ratio_5d: '5D ratio', ratio_10d: '10D ratio', thrust: 'Thrust',
+  qtr_spread: 'Qtr spread', spread_13_34: '13/34', nh_nl: 'NH/NL',
+  mcclellan: 'McClellan', pct200: '%>200d', t2108_zone: 'T2108',
+  spy_danger: 'SPY danger', qqq_danger: 'QQQ danger', bench_trend: 'Bench trend',
+}
+
+/**
+ * The twelve votes with three states and nothing else — the fallback for
+ * payloads that predate `vote_detail`.
+ *
+ * Three states, not four, because three is what this payload measures. The
+ * fourth dimension (distance from each vote's own line) exists only in
+ * vote_detail; drawing it off data that is not there is the exact failure this
+ * dashboard exists to avoid. When the field lands, the caller renders the full
+ * glyphs instead and this stays as the degraded mode for old archives.
+ *
+ * No channel carries a vote alone: for = solid, against = hatched, undecided =
+ * dashed outline — all three survive greyscale.
+ */
+export function VoteMarks({ votes }) {
+  if (!votes) return null
+  const entries = Object.entries(votes)
+  const tally = entries.reduce((a, [, v]) => ({ ...a, [v]: (a[v] ?? 0) + 1 }), {})
+  const HATCH = 'repeating-linear-gradient(45deg,rgba(0,0,0,.45) 0 1.7px,transparent 1.7px 5px)'
+  const style = (v) =>
+    v === 'bull' ? { background: 'var(--color-took)' }
+    : v === 'bear' ? { background: 'var(--color-refused)', backgroundImage: HATCH }
+    : { border: '1px dashed var(--color-untested)', background: 'transparent' }
+
+  return (
+    <div>
+      <div className="flex flex-wrap gap-x-3 gap-y-2">
+        {entries.map(([key, v]) => (
+          <span key={key} className="flex flex-col items-center gap-1 w-[52px]"
+                title={`${VOTE_LABEL[key] ?? key}: ${v}`}>
+            <i className="block w-[26px] h-[20px]" style={style(v)} />
+            <span className="text-[8px] font-mono leading-tight text-center
+                             text-[var(--color-text-muted)]">{VOTE_LABEL[key] ?? key}</span>
+          </span>
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-x-5 gap-y-1 mt-2 text-[10px] text-[var(--color-text-muted)]">
+        <span className="flex items-center gap-1.5">
+          <i className="block w-3.5 h-[10px]" style={style('bull')} />for {tally.bull ?? 0}
+        </span>
+        <span className="flex items-center gap-1.5">
+          <i className="block w-3.5 h-[10px]" style={style('bear')} />against {tally.bear ?? 0}
+        </span>
+        <span className="flex items-center gap-1.5">
+          <i className="block w-3.5 h-[10px]" style={style('neutral')} />undecided {tally.neutral ?? 0}
+        </span>
+        <span>· one mark is one vote — count them rather than reading the score</span>
+      </div>
+    </div>
+  )
+}

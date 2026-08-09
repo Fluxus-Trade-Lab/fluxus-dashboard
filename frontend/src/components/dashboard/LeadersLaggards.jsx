@@ -1,9 +1,23 @@
 import { useMemo } from 'react'
 import { fmtPct, pctColor } from '../../lib/format'
 
+/**
+ * Best and worst industries over a set of windows.
+ *
+ * Two mounts, one component. The Today strip shows weekly + monthly at top-1 —
+ * TSF's giant best/worst cards, answered with fields etf_data already carried
+ * (perf_1m was computed all along and simply never drawn). The reference grid
+ * keeps daily + weekly at top-3. `limit` exists so top-1 can become top-3
+ * without touching the component again.
+ */
+const WINDOWS = {
+  daily: { key: 'change_pct', label: 'Daily' },
+  weekly: { key: 'perf_1w', label: 'Weekly' },
+  monthly: { key: 'perf_1m', label: 'Monthly' },
+}
+
 function TopList({ title, items }) {
   if (!items || items.length === 0) return null
-
   return (
     <div>
       <h4 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] mb-1.5">
@@ -25,20 +39,19 @@ function TopList({ title, items }) {
   )
 }
 
-export default function LeadersLaggards({ etfs }) {
-  const { dailyLeaders, dailyLaggards, weeklyLeaders, weeklyLaggards } = useMemo(() => {
-    if (!etfs || etfs.length === 0) return { dailyLeaders: [], dailyLaggards: [], weeklyLeaders: [], weeklyLaggards: [] }
-
-    const sorted1d = [...etfs].sort((a, b) => (b.change_pct ?? 0) - (a.change_pct ?? 0))
-    const sorted1w = [...etfs].sort((a, b) => (b.perf_1w ?? 0) - (a.perf_1w ?? 0))
-
-    return {
-      dailyLeaders: sorted1d.slice(0, 3).map(e => ({ ticker: e.ticker, change: e.change_pct })),
-      dailyLaggards: sorted1d.slice(-3).reverse().map(e => ({ ticker: e.ticker, change: e.change_pct })),
-      weeklyLeaders: sorted1w.slice(0, 3).map(e => ({ ticker: e.ticker, change: e.perf_1w })),
-      weeklyLaggards: sorted1w.slice(-3).reverse().map(e => ({ ticker: e.ticker, change: e.perf_1w })),
-    }
-  }, [etfs])
+export default function LeadersLaggards({ etfs, windows = ['daily', 'weekly'], limit = 3, title = 'Industries' }) {
+  const lists = useMemo(() => {
+    if (!etfs || etfs.length === 0) return []
+    return windows.map((w) => {
+      const { key, label } = WINDOWS[w]
+      const sorted = [...etfs].sort((a, b) => (b[key] ?? 0) - (a[key] ?? 0))
+      return {
+        w,
+        leaders: { title: `${label} Leaders`, items: sorted.slice(0, limit).map((e) => ({ ticker: e.ticker, change: e[key] })) },
+        laggards: { title: `${label} Laggards`, items: sorted.slice(-limit).reverse().map((e) => ({ ticker: e.ticker, change: e[key] })) },
+      }
+    })
+  }, [etfs, windows, limit])
 
   if (!etfs || etfs.length === 0) return null
 
@@ -46,14 +59,12 @@ export default function LeadersLaggards({ etfs }) {
     <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden">
       <div className="px-3 py-1.5 border-b border-[var(--color-border)]">
         <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
-          Industries
+          {title}
         </span>
       </div>
       <div className="grid grid-cols-2 gap-x-4 gap-y-3 px-3 py-2.5">
-        <TopList title="Daily Leaders" items={dailyLeaders} />
-        <TopList title="Weekly Leaders" items={weeklyLeaders} />
-        <TopList title="Daily Laggards" items={dailyLaggards} />
-        <TopList title="Weekly Laggards" items={weeklyLaggards} />
+        {lists.map(({ w, leaders }) => <TopList key={`${w}-l`} {...leaders} />)}
+        {lists.map(({ w, laggards }) => <TopList key={`${w}-g`} {...laggards} />)}
       </div>
     </div>
   )

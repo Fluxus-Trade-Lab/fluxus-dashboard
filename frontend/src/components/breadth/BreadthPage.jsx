@@ -17,6 +17,7 @@ import TimeMachineBar from './TimeMachineBar'
 import { useTimeMachine } from './useTimeMachine'
 import Reference from '../Reference'
 import HowToRead from '../HowToRead'
+import Tier from '../Tier'
 
 export default function BreadthPage({ data }) {
   const tm = useTimeMachine()
@@ -59,15 +60,22 @@ export default function BreadthPage({ data }) {
                'every condition prints the numbers that produced it']} />
       <Reading text={readMarketState(verdict)} />
       <TimeMachineBar tm={tm} />
-      <VerdictBanner verdict={verdict} dataQuality={breadth.data_quality}
-                     session={rows[rows.length - 1]?.date} />
-      {/* Between the verdict and the board: a one-line reading belongs before a
-          nine-cell instrument, and this one usually contradicts the board in a
-          way that only reads if the two are adjacent. */}
-      <RotationPanel />
 
+      {/* SUBJECT — the nine-cell board, first and alone.
+          It used to sit third, behind the verdict banner and a full-width style
+          ribbon, which meant the page's stated subject was the third thing you
+          saw. Nothing is deleted by moving it; the banner becomes what it
+          always was, which is a summary OF this. */}
       <StateBoard board={breadth.state_board} session={rows[rows.length - 1]?.date} />
-      <MarketStateSummary mm={breadth.mm} breadth={breadth.breadth} verdict={verdict} />
+
+      {/* EVIDENCE — open, but underneath, and smaller. */}
+      <Tier label="Evidence" supports="what the board adds up to, and the numbers under it">
+        <div className="space-y-3">
+          <VerdictBanner verdict={verdict} dataQuality={breadth.data_quality}
+                         session={rows[rows.length - 1]?.date} />
+          <MarketStateSummary mm={breadth.mm} breadth={breadth.breadth} verdict={verdict} />
+        </div>
+      </Tier>
 
       {/* Teaching sits with the objects it explains — the board, the chain and
           the summary are one subject, and this closes it before the reference
@@ -101,6 +109,11 @@ export default function BreadthPage({ data }) {
           </p>
         </HowToRead>
       )}
+
+      <Reference label="Style rotation" count={1}
+                 note="risk-on / risk-off across three cuts — a different question from the nine">
+        <RotationPanel />
+      </Reference>
 
       {/* Everything below answers «where», never «so what».
           This page rendered thirteen objects at equal weight, so none of them

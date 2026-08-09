@@ -4,6 +4,8 @@ import Rail from './Rail'
 import PageHeader from './PageHeader'
 import Placeholder from './Placeholder'
 import HowToRead from './HowToRead'
+import Reference from './Reference'
+import Tier from './Tier'
 
 /** A tier marker. The dashboard's problem was rank, not content — seven blocks
  *  at equal weight read as seven equally important things. */
@@ -20,9 +22,13 @@ function Band({ label, note }) {
 }
 import TickerStrip from './dashboard/TickerStrip'
 import MarketPosture from './dashboard/MarketPosture'
-import BreadthChip from './breadth/BreadthChip'
 import PreMarketChecklist from './dashboard/PreMarketChecklist'
-import MacroGrid from './dashboard/MacroGrid'
+import TrendStatus from './macro/TrendStatus'
+import PowerTrend from './macro/PowerTrend'
+import RegimeBand from './dashboard/RegimeBand'
+import LeadersLaggards from './dashboard/LeadersLaggards'
+import { VoteMarks } from './breadth/VoteGlyphs'
+import { ETF_GROUPS } from '../lib/etfGroups'
 import HeatingUp from './screener/HeatingUp'
 import EquitiesSection from './equities/EquitiesSection'
 import ScreenerPage from './screener/ScreenerPage'
@@ -32,6 +38,7 @@ import BriefingPage from './briefing/BriefingPage'
 import BreadthPage from './breadth/BreadthPage'
 import CorrectionRiskPage from './breadth/CorrectionRiskPage'
 import GroupsPage from './groups/GroupsPage'
+import ThemeLeaderboard from './groups/ThemeLeaderboard'
 import ModelBooksPage from './modelbooks/ModelBooksPage'
 import PublicLayout from './public/PublicLayout'
 import LandingPage from './public/LandingPage'
@@ -86,25 +93,87 @@ export default function Layout({ data, lastUpdated, isOffline }) {
       />
 
       {current === 'dashboard' ? (
-        /* Seven blocks at equal weight, so none of them was first. Ordered now:
-           the read, then what is stacking, then reference, then the two personal
-           objects — which belong to MY BOOK and are only still here because that
-           half has not been rebuilt and he uses them at 06:30. */
+        /* Today, in the three tiers of 2026-08-09_WHAT_TO_SHOW.md §4.
+
+           SUBJECT    the read and the twelve votes that produced it. This used
+                      to be a one-line chip and eight prices; eight prices
+                      answer "what happened", which is not the page's question.
+           EVIDENCE   regime band · best/worst industries · the five checks per
+                      benchmark · what is stacking.
+           REFERENCE  the price strip, the trend table, the full cross-section.
+
+           The Founders-note slot is deliberately an empty frame: Andy writes
+           it, the layout only reserves the space. */
         <main className="max-w-[1800px] mx-auto px-3 py-4 space-y-4">
           <PageHeader group="market" title="Today"
             blurb="What the market is doing, before you decide what to do about it."
-            meta={['the read, then what is stacking, then reference',
+            meta={['the read, then the evidence, then reference',
                    'sizing is not on this page — it needs an R and a ceiling, and those are yours']} />
 
-          <BreadthChip verdict={data?.breadth?.verdict} onNavigate={navigate} />
-          <TickerStrip signals={data?.signals} etfData={data?.etf_data} />
+          {/* SUBJECT */}
+          {data?.breadth?.verdict && (
+            <section>
+              <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1 mb-4">
+                <h2 className="text-[34px] leading-none font-semibold m-0"
+                    style={{ fontFamily: 'var(--font-cond)',
+                             color: /BULL/i.test(data.breadth.verdict.env)
+                               ? 'var(--color-took)' : 'var(--color-refused)' }}>
+                  {data.breadth.verdict.env}
+                </h2>
+                <span className="text-[19px] font-mono tabular-nums">
+                  {data.breadth.verdict.score > 0 ? '+' : ''}{data.breadth.verdict.score}
+                  <span className="text-[var(--color-text-muted)]"> / 12</span>
+                </span>
+                <button type="button" onClick={() => navigate('#/breadth')}
+                        className="text-[11px] bg-transparent border-0 p-0 cursor-pointer underline
+                                   text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
+                  the nine conditions behind it →
+                </button>
+              </div>
+              <VoteMarks votes={data.breadth.verdict.votes} />
+            </section>
+          )}
 
-          <Band label="What is stacking" />
-          <HeatingUp compact limit={5} />
+          <RegimeBand verdict={data?.breadth?.verdict} signals={data?.signals}
+                      onNavigate={navigate} />
 
-          <Band label="Reference" note="answers where, never so what" />
-          <MacroGrid signals={data?.signals} />
-          <EquitiesSection data={data} />
+          {/* Reserved for the founder's own words — written, never generated.
+              An empty frame, because a slot that appears only once it is full
+              was never reserved. */}
+          <section className="border border-dashed border-[var(--color-border)] rounded-lg
+                              px-4 py-3">
+            <span className="text-[10px] font-mono uppercase tracking-[.24em]
+                             text-[var(--color-text-muted)]">Founders note</span>
+            <p className="text-[11px] text-[var(--color-text-muted)] m-0 mt-1">
+              Reserved. Written by hand on the days there is something to say — an
+              empty slot on the other days is the honest state.
+            </p>
+          </section>
+
+          <Tier label="Evidence" supports="what the read leans on">
+            <div className="space-y-3">
+              <LeadersLaggards title="Industries — best and worst"
+                etfs={(ETF_GROUPS.Industries || [])
+                  .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
+                  .filter(Boolean)}
+                windows={['weekly', 'monthly']} limit={1} />
+              <PowerTrend signals={data?.signals} />
+              <HeatingUp compact limit={5} />
+            </div>
+          </Tier>
+
+          <Reference label="Benchmarks" count={2}
+                     note="the price strip and where each benchmark sits against its averages">
+            <div className="space-y-3">
+              <TickerStrip signals={data?.signals} etfData={data?.etf_data} />
+              <TrendStatus signals={data?.signals} />
+            </div>
+          </Reference>
+
+          <Reference label="Indices, style, sectors, industries" count={4}
+                     note="the full cross-section — 1D, 5D, 20D and ATR for every name">
+            <EquitiesSection data={data} />
+          </Reference>
 
           <Band label="Yours" note="belongs to My Book — parked here until that half is rebuilt" />
           <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-3">
@@ -114,17 +183,18 @@ export default function Layout({ data, lastUpdated, isOffline }) {
 
           <HowToRead>
             <p>
-              Read this page top to bottom — the order is the argument. The reading
-              comes first, then <b>what is stacking</b> (names clearing more than one
-              screen, and recently), then reference, then the two objects that are
-              yours rather than the market's.
+              Read this page top to bottom — the order is the argument. The read
+              and its twelve votes come first, then the regime band, then the
+              evidence, then reference, then the two objects that are yours
+              rather than the market&rsquo;s.
             </p>
             <p>
-              The score at the top is a <b>count of conditions, not a confidence
-              level</b>. Nine votes plus their weights make twelve; +8 means the
-              balance of measured conditions leans one way, and the line beside it
-              says how many would have to cross before the reading changes. That
-              number is the useful one, because it tells you how close this is.
+              The score is a <b>count of conditions, not a confidence level</b> —
+              count the marks rather than trusting the number. The regime band is
+              the <b>weakest of three voters, never their average</b>: averaging
+              dilutes one danger into a caution, and that danger is the most
+              expensive information on the page. The line under it names exactly
+              which voter is holding the reading down, and on what condition.
             </p>
             <p>
               Nothing here sizes a trade. Sizing needs an R and a ceiling, and both
@@ -166,12 +236,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                        'How long a theme has held its state, drawn as countable marks']}
             source="data/output/groups.json · breadth archive" />}
 
-          {current === 'rs-leaders' && <Placeholder group="market" title="RS Leaderboard"
-            blurb="The strongest themes right now, by level and by acceleration — two rankings, because a board that ranks only what has already won cannot show a turn."
-            willHold={['Top themes by 3-month relative strength',
-                       'Top themes by acceleration, which is usually a different list',
-                       'The denominator on every list — how many themes were ranked']}
-            source="data/output/groups.json" />}
+          {current === 'rs-leaders' && <ThemeLeaderboard />}
 
           {current === 'defense' && <Placeholder group="library" title="Defense"
             blurb="What to do when you are wrong, and what cash is for."
