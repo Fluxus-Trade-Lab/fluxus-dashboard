@@ -14,9 +14,9 @@ would be an unfalsifiable opinion about which dimension matters more, dressed
 up as arithmetic. `coverage` is published beside the score for the same reason
 -- an eight-of-nine score and a six-of-nine score are not the same claim.
 
-**What it is not: a forecast.** Tested over 558 sessions (2024-05 to 2026-08),
-the score does not predict the next month, and what signal there is runs the
-wrong way for acting on it:
+**It says nothing about the mean.** Tested over 558 sessions (2024-05 to
+2026-08), the score does not predict the next month's return, and what signal
+there is runs the wrong way for acting on it:
 
     forward 21d, SPX                Spearman -0.08 full, -0.29 non-overlapping
     forward 21d, IWM over SPY       -0.15 full, -0.16 non-overlapping
@@ -24,15 +24,37 @@ wrong way for acting on it:
 
 Negative in fifteen of sixteen cells across full / non-overlapping / half
 samples. High readings were followed by *less* reward for taking risk, not
-more. Two caveats that matter as much as the numbers: the sample is a single
-rising regime, in which every damaged reading was in fact a dip to buy; and
-twenty-six non-overlapping observations cannot carry an estimate.
+more.
 
-So the bands are named for the tape they describe, never for the action they
-imply. There is no "tactical bull" band here, because we cannot show that a
-high reading makes swing trading work. Same disposition as the four-state
-classification in `pipeline/themes/`: built, measured, published as description
-because it did not earn the right to be a condition.
+**It does separate the left tail.** Mean and tail are different statistical
+objects, and the same score that is flat against one is monotone against the
+other. Probability that SPX draws down 5% or more within the next 21 sessions,
+by band, over the same window:
+
+    Damaged   27.2%   (first half 30.7, second half 23.7)
+    Mixed     10.9%   (15.3, 6.7)
+    Healthy    9.8%   (14.3, 5.4)
+    Extended   5.8%   (9.1, 2.6)
+
+Monotone in the full sample and in both halves; the worst band carries about
+4.7x the drawdown frequency of the best. This is close to mechanical rather
+than clairvoyant -- "damaged" means breadth is already broken, and a broken
+tape is more likely to break further -- which is also why the mean washes out:
+the drawdown is followed by the recovery.
+
+**So its use is the risk budget, not the direction.** It answers how much can
+be lost here, never which way to lean.
+
+Three caveats that matter as much as the numbers. The sample is a single
+rising regime, in which every damaged reading was in fact a dip to buy. Those
+537 observations overlap: they contain only **ten independent 5% drawdown
+episodes**, so the effective sample is ten, not five hundred. And at roughly
+5.5 such episodes a year, a defensible tail model needs about twenty years of
+inputs -- which our breadth archive, 2.2 years old, does not have.
+
+The bands are therefore named for the tape they describe, never for the action
+they imply. There is no "tactical bull" band here, because we cannot show that
+a high reading makes swing trading work.
 
 Pure functions, no I/O and no clock -- the Time Machine replays these.
 """
@@ -112,10 +134,15 @@ def score(board: Sequence[Mapping[str, Any]]) -> Optional[Dict[str, Any]]:
         "evidence": "; ".join(parts),
         # Carried on every payload so no consumer can render the number
         # without the finding that qualifies it.
-        "predictive": False,
-        "caveat": ("describes today's conditions; over 2024-2026 it did not "
-                   "predict the next month, and risk-taking paid slightly "
-                   "less at high readings"),
+        # Two separate claims, because they point opposite ways and a single
+        # boolean would have to lie about one of them.
+        "predicts_return": False,
+        "separates_tail": True,
+        "caveat": ("a risk-budget reading, not a direction call: over "
+                   "2024-2026 it did not predict the next month's return, but "
+                   "5% drawdown frequency fell monotonically from 27% in "
+                   "Damaged to 6% in Extended — on only ten independent "
+                   "episodes, in one rising regime"),
     }
 
 

@@ -78,11 +78,15 @@ class TestEvidence:
                           {"key": "trend", "level": MAX}])
         assert s["weak"] == ["thrust"] and "thrust" in s["evidence"]
 
-    def test_every_payload_carries_the_null(self):
-        """The number must never travel without the finding that qualifies it."""
+    def test_every_payload_carries_both_findings(self):
+        """The number must never travel without what qualifies it — and the two
+        findings point opposite ways, so one flag cannot carry both. Flat
+        against the mean, monotone against the left tail."""
         s = regime.score(board(4, 3))
-        assert s["predictive"] is False
+        assert s["predicts_return"] is False
+        assert s["separates_tail"] is True
         assert "did not predict" in s["caveat"]
+        assert "drawdown" in s["caveat"] and "ten independent" in s["caveat"]
 
 
 class TestBuild:
