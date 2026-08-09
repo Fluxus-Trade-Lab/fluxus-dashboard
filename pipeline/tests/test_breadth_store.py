@@ -176,7 +176,10 @@ class TestQualityGuard:
         return pd.DataFrame({'date': [date], 'pct_above_200sma': [pct200]})
 
     def _good_snapshot(self):
-        return {'universe_size': 3000, 'pct_above_200sma': 45.0}
+        # advances+declines mirror a real session (~95% of the universe moves);
+        # the coverage guard reads them.
+        return {'universe_size': 3000, 'pct_above_200sma': 45.0,
+                'advances': 1291, 'declines': 1577}
 
     def test_accepts_good_row(self):
         from pipeline.screeners.breadth_store import check_quality
@@ -196,6 +199,35 @@ class TestQualityGuard:
         ok, reason = check_quality(self._last_frame(), self._good_snapshot(),
                                    null_rate=0.35, today_iso=self._TODAY)
         assert not ok and 'null' in reason
+
+    def test_rejects_blank_change_column(self):
+        """The 2026-08-07 row: 3000 Finviz rows, Change blank on every one.
+
+        universe_size and sma200_dist were both fine that day, so this is the
+        only check standing between a blank column and a fake zero-breadth
+        session in the archive.
+        """
+        from pipeline.screeners.breadth_store import check_quality
+        snap = {**self._good_snapshot(), 'advances': 0, 'declines': 0}
+        ok, reason = check_quality(self._last_frame(), snap,
+                                   null_rate=0.02, today_iso=self._TODAY)
+        assert not ok and 'coverage' in reason
+
+    def test_rejects_partial_change_column(self):
+        """Degradation short of total blanking is still not a usable session."""
+        from pipeline.screeners.breadth_store import check_quality
+        snap = {**self._good_snapshot(), 'advances': 300, 'declines': 200}
+        ok, reason = check_quality(self._last_frame(), snap,
+                                   null_rate=0.02, today_iso=self._TODAY)
+        assert not ok and 'coverage' in reason
+
+    def test_accepts_quiet_but_real_session(self):
+        """A thin session still moves far more than 20% of the universe."""
+        from pipeline.screeners.breadth_store import check_quality
+        snap = {**self._good_snapshot(), 'advances': 900, 'declines': 800}
+        ok, reason = check_quality(self._last_frame(), snap,
+                                   null_rate=0.02, today_iso=self._TODAY)
+        assert ok and reason == ''
 
     def test_rejects_pct200_jump(self):
         """The 2026-07-26 poisoned row: 46.0 → 0.47 must be rejected."""

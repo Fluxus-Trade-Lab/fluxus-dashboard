@@ -361,6 +361,12 @@ class YfinanceAdapter(BaseAdapter):
                 close = float(hist['Close'].iloc[-1])
                 n = len(hist)
 
+                # Last session's move. Only ever used to fill a change_pct the
+                # source universe left null (the merge below is fill-only), so
+                # a good Finviz value always wins. Named apart from the
+                # `prev_close` array in the breakout-count block further down.
+                last_prev_close = float(hist['Close'].iloc[-2]) if n >= 2 else None
+
                 sma20 = float(hist['Close'].rolling(20).mean().iloc[-1])
                 sma50 = float(hist['Close'].rolling(50).mean().iloc[-1]) if n >= 50 else None
                 sma40 = float(hist['Close'].rolling(40).mean().iloc[-1]) if n >= 40 else None
@@ -439,6 +445,7 @@ class YfinanceAdapter(BaseAdapter):
                     bo_1m = int(is_bo[-21:].sum()) if n - 1 >= 21 else min(bo_1y, int(is_bo.sum()))
 
                 enriched[ticker] = {
+                    'change_pct': (close / last_prev_close - 1) if last_prev_close else None,
                     'perf_1w': (close / float(hist['Close'].iloc[-5]) - 1) if n >= 5 else None,
                     'perf_1m': (close / float(hist['Close'].iloc[-21]) - 1) if n >= 21 else None,
                     'perf_34d': (close / float(hist['Close'].iloc[-35]) - 1) if n >= 35 else None,

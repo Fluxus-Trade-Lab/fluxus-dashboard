@@ -134,6 +134,13 @@ _MAX_PCT200_JUMP = 25.0
 # row is itself implausible, or it is too stale for a one-day jump limit.
 _IMPLAUSIBLE_PREV_PCT200 = 5.0
 _MAX_PREV_ROW_AGE_DAYS = 7
+# advances+declines counts every name whose change_pct is non-null and non-zero,
+# so it doubles as the coverage rate of that column. On a real session it runs
+# ~95% of the universe; on 2026-08-07 Finviz served the Change column blank on
+# all 3000 rows and it was 0%, which the size and sma200 checks both waved
+# through. Every count downstream of change_pct is then a fake zero, so the row
+# is worthless even though the yfinance-derived half of it is fine.
+_MIN_CHANGE_COVERAGE = 0.20
 
 
 def _iso_to_date(value) -> dt.date | None:
@@ -159,6 +166,13 @@ def check_quality(
         return False, f"universe_size {size} < {_MIN_UNIVERSE}"
     if null_rate > _MAX_NULL_RATE:
         return False, f"sma200_dist null rate {null_rate:.0%} > {_MAX_NULL_RATE:.0%}"
+    moved = snapshot.get('advances', 0) + snapshot.get('declines', 0)
+    coverage = moved / size if size else 0.0
+    if coverage < _MIN_CHANGE_COVERAGE:
+        return False, (
+            f"change_pct coverage {coverage:.0%} < {_MIN_CHANGE_COVERAGE:.0%} "
+            f"(advances+declines {moved} of {size})"
+        )
     if len(frame) > 0:
         prev = pd.to_numeric(frame['pct_above_200sma'], errors='coerce').iloc[-1]
         cur = snapshot.get('pct_above_200sma')

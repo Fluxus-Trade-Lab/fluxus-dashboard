@@ -58,6 +58,12 @@ PCT_COLUMNS = [
     'eps_growth_next_y', 'eps_growth_this_y', 'revenue_growth',
 ]
 
+# Columns the free-tier Overview view is expected to populate on every row.
+# Anything else in STANDARD_COLUMNS arrives via yfinance enrichment instead.
+CRITICAL_COLUMNS = ['ticker', 'close', 'change_pct']
+_WARN_NULL_RATE = 0.10
+_CRITICAL_NULL_RATE = 0.50
+
 
 class FinvizAdapter(BaseAdapter):
     """Primary data adapter using Finviz CSV or HTML scraping."""
@@ -81,6 +87,7 @@ class FinvizAdapter(BaseAdapter):
                 logger.info(f"Finviz CSV export succeeded: {len(df)} rows")
                 df = self._normalize(df)
                 self.validate(df)
+                self._log_column_health(df)
                 return df
         except Exception as e:
             logger.info(f"Finviz CSV export unavailable (likely needs Elite): {e}")
@@ -93,12 +100,43 @@ class FinvizAdapter(BaseAdapter):
             df = self._normalize(df)
             # Relax validation for HTML scraping (may get fewer rows per page)
             if len(df) >= 20:
+                self._log_column_health(df)
                 return df
 
         raise RuntimeError(
             "Finviz data unavailable. Both CSV export and HTML scraping failed. "
             "Pipeline will use yfinance fallback universe."
         )
+
+    def _log_column_health(self, df: pd.DataFrame) -> None:
+        """Report per-column null rates so a blank column is visible in the log.
+
+        Row count alone does not detect degradation: on 2026-08-07 Finviz served
+        a full 3000 rows with the Change column empty on every one of them, and
+        every downstream count silently collapsed to zero. This only reports —
+        the universe is still worth keeping, since most screeners do not read
+        change_pct and yfinance enrichment refills it. The archive-side guard in
+        breadth_store.check_quality is what refuses to store a degenerate row.
+        """
+        n = len(df)
+        if n == 0:
+            return
+        for col in CRITICAL_COLUMNS:
+            if col not in df.columns:
+                logger.error("Finviz universe is missing column %r entirely", col)
+                continue
+            null_rate = float(df[col].isna().mean())
+            if null_rate >= _CRITICAL_NULL_RATE:
+                logger.error(
+                    "Finviz column %r is %.0f%% null over %d rows — treating as "
+                    "unusable; yfinance enrichment will refill it",
+                    col, null_rate * 100, n,
+                )
+            elif null_rate >= _WARN_NULL_RATE:
+                logger.warning(
+                    "Finviz column %r is %.0f%% null over %d rows",
+                    col, null_rate * 100, n,
+                )
 
     def _fetch_csv(self) -> pd.DataFrame | None:
         """Try CSV export endpoint (requires Finviz Elite)."""
