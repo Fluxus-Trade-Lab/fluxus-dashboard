@@ -3,6 +3,7 @@ import PageHeader from '../PageHeader'
 import Reading, { readThemes } from '../Reading'
 import { useGroups } from '../../hooks/useGroups'
 import GroupTable from './GroupTable'
+import HowToRead from '../HowToRead'
 
 const TABS = [
   { key: 'themes', label: 'Themes' },
@@ -104,6 +105,30 @@ export default function GroupsPage() {
         Use these to read where a group sits, not as an entry rule.
         {summary && ` · ${summary.publishable_themes} published, ${summary.provisional_themes} provisional.`}
       </p>
+
+      <HowToRead>
+        <p>
+          A theme's <b>level</b> is how it has performed against SPY over three
+          months; its <b>acceleration</b> is whether that gap is still widening.
+          The two are independent, and the interesting cases are where they
+          disagree — a leader that has stopped accelerating is a leader that is
+          being sold into.
+        </p>
+        <p>
+          Every mark sits on a <b>shared zero rule</b>, and which side of that line
+          it falls on is the sign. Bars are measured against the same scale across
+          rows, so a bar twice as long is twice the number — never rescaled per row
+          to fill the column.
+        </p>
+        <p>
+          Each row prints its <b>member count</b>. A theme of three names is three
+          names wearing a theme's clothes, and its average will swing on one of
+          them; treat the denominator as part of the reading rather than as
+          footnote. Themes whose members do not co-move more than a random basket
+          of the same size are held in <b>Provisional</b> — visible, labelled, and
+          kept out of the ranking.
+        </p>
+      </HowToRead>
     </div>
   )
 }

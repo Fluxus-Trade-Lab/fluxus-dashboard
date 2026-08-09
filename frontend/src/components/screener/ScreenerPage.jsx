@@ -10,6 +10,7 @@ import FilterPanel from './FilterPanel'
 import ResultsTable from './ResultsTable'
 import WatchlistTab from './WatchlistTab'
 import HeatingUp from './HeatingUp'
+import HowToRead from '../HowToRead'
 
 const DEFAULT_FILTERS = {
   marketCapEnabled: true,
@@ -151,6 +152,31 @@ export default function ScreenerPage() {
       {activeTab === 1 && (
         <WatchlistTab universe={universe} presets={allPresets} />
       )}
+
+      <HowToRead>
+        <p>
+          The ledger is a record of <b>which screens a name cleared, on which
+          sessions</b> — not a recommendation and not a ranking of quality. A name
+          appears because it passed a test, and the test is named beside it.
+        </p>
+        <p>
+          Heat is <b>how many screens a name cleared and how recently</b>, with the
+          quality screens weighted more heavily. It is a count, not a score out of
+          anything; the marks beside the number are the appearances that produced
+          it, so the arithmetic is checkable by eye.
+        </p>
+        <p>
+          Appearances are only counted from sessions the archive actually holds. Where
+          a name's price history stops short of the last screener run, the rows that
+          fall past the end are <b>counted out loud rather than silently dropped</b> —
+          a gap in the record is a fact about the record, not about the stock.
+        </p>
+        <p>
+          The filter panel narrows what you are looking at. It does not change what
+          any mark means: <b>filtering never re-encodes</b>, so a bar you saw before
+          filtering is the same bar afterwards.
+        </p>
+      </HowToRead>
     </div>
   )
 }

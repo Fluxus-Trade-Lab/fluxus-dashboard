@@ -3,6 +3,7 @@ import Header from './Header'
 import Rail from './Rail'
 import PageHeader from './PageHeader'
 import Placeholder from './Placeholder'
+import HowToRead from './HowToRead'
 
 /** A tier marker. The dashboard's problem was rank, not content — seven blocks
  *  at equal weight read as seven equally important things. */
@@ -110,6 +111,27 @@ export default function Layout({ data, lastUpdated, isOffline }) {
             <MarketPosture signals={data?.signals} />
             <PreMarketChecklist />
           </div>
+
+          <HowToRead>
+            <p>
+              Read this page top to bottom — the order is the argument. The reading
+              comes first, then <b>what is stacking</b> (names clearing more than one
+              screen, and recently), then reference, then the two objects that are
+              yours rather than the market's.
+            </p>
+            <p>
+              The score at the top is a <b>count of conditions, not a confidence
+              level</b>. Nine votes plus their weights make twelve; +8 means the
+              balance of measured conditions leans one way, and the line beside it
+              says how many would have to cross before the reading changes. That
+              number is the useful one, because it tells you how close this is.
+            </p>
+            <p>
+              Nothing here sizes a trade. Sizing needs an R and a ceiling, and both
+              of those are yours — the market half of this app deliberately stops at
+              what the market is doing.
+            </p>
+          </HowToRead>
         </main>
       ) : tickerSymbol ? (
         <TickerPage symbol={tickerSymbol} />

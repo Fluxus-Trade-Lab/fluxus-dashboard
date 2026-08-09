@@ -63,7 +63,11 @@ f.addEventListener('load',()=>{{
       if(b){{ b.click(); clicked=true; return; }}
     }}
     const el=clicked && d &&
-      [...d.querySelectorAll('h1,h2,h3,span,div')].find(e=>e.textContent.trim()===NEEDLE);
+      // button and p are in the list because some objects are identified by a
+      // control or a line of prose rather than a heading — an expandable
+      // "how to read this" has no heading of its own by design.
+      [...d.querySelectorAll('h1,h2,h3,span,div,button,p')]
+        .find(e=>e.textContent.trim()===NEEDLE);
     if(el){{
       const card=el.closest('[class*="rounded-lg"]')||el.parentElement.parentElement;
       const r=card.getBoundingClientRect();
