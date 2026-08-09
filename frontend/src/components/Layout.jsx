@@ -1,5 +1,6 @@
 import { useHash } from '../hooks/useHash'
 import Header from './Header'
+import Rail from './Rail'
 import TickerStrip from './dashboard/TickerStrip'
 import MarketPosture from './dashboard/MarketPosture'
 import BreadthChip from './breadth/BreadthChip'
@@ -12,6 +13,7 @@ import PortfolioPage from './portfolio/PortfolioPage'
 import JournalPage from './journal/JournalPage'
 import BriefingPage from './briefing/BriefingPage'
 import BreadthPage from './breadth/BreadthPage'
+import GroupsPage from './groups/GroupsPage'
 import ModelBooksPage from './modelbooks/ModelBooksPage'
 import PublicLayout from './public/PublicLayout'
 import LandingPage from './public/LandingPage'
@@ -52,9 +54,11 @@ export default function Layout({ data, lastUpdated, isOffline }) {
     )
   }
 
-  // Dashboard pages use existing layout
+  // Dashboard pages: rail on the left, status bar across the content
   return (
-    <div className="min-h-screen bg-[var(--color-bg)]">
+    <div className="min-h-screen bg-[var(--color-bg)] lg:flex">
+      <Rail currentPage={current} onNavigate={navigate} />
+      <div className="flex-1 min-w-0">
       <Header
         lastUpdated={lastUpdated}
         isOffline={isOffline}
@@ -95,11 +99,13 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           {current === 'trades' && <TradeJournalPage />}
           {current === 'briefing' && <BriefingPage />}
           {current === 'breadth' && <BreadthPage data={data} />}
+          {current === 'groups' && <GroupsPage />}
           {current === 'modelbooks' && <ModelBooksPage />}
         </main>
       )}
 
       <Footer lastUpdated={lastUpdated} isOffline={isOffline} />
+      </div>
     </div>
   )
 }
