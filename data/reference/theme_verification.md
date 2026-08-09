@@ -1,8 +1,8 @@
 # Theme member verification
 
-86 hand-written members across 10 themes. **35** are >= $10B market cap.
+85 hand-written members across 11 themes. **38** are >= $10B market cap.
 
-- PASS: 85
+- PASS: 84
 - FLAG: 1
 - UNKNOWN: 0
 
@@ -34,11 +34,6 @@ A FLAG means the company's own business description contains none of the theme's
 | TLN | Talen Energy Corporation | 16.7 | AI - Datacenters | power, nuclear, electricity |
 | MOD | Modine Manufacturing Company | 10.4 | AI - Datacenters | data cent, cooling |
 | APLD | Applied Digital Corporation | 8.5 | AI - Datacenters | data cent, power |
-| COIN | Coinbase Global, Inc. | 40.5 | Bitcoin | crypto |
-| MSTR | Strategy Inc | 38.4 | Bitcoin | bitcoin |
-| RIOT | Riot Platforms, Inc. | 7.8 | Bitcoin | bitcoin, mining |
-| MARA | MARA Holdings, Inc. | 3.9 | Bitcoin | bitcoin, mining |
-| CLSK | CleanSpark, Inc. | 3.2 | Bitcoin | bitcoin, mining |
 | COIN | Coinbase Global, Inc. | 40.5 | Crypto Equities | crypto, exchange |
 | MSTR | Strategy Inc | 38.4 | Crypto Equities | bitcoin |
 | IREN | IREN Limited | 14.7 | Crypto Equities | bitcoin, digital asset |
@@ -66,16 +61,16 @@ A FLAG means the company's own business description contains none of the theme's
 | TENB | Tenable Holdings, Inc. | 4.0 | Cybersecurity | security, threat, identity |
 | RPD | Rapid7, Inc. | 0.8 | Cybersecurity | cybersecur, security, threat |
 | KTOS | Kratos Defense & Security Soluti | 11.4 | Drones | drone, unmanned, aerial |
-| AVAV | AeroVironment, Inc. | 9.4 | Drones | unmanned, autonomous system, counter-uas |
-| ONDS | Ondas Inc. | 5.2 | Drones | drone, autonomous system, counter-uas |
-| RCAT | Red Cat Holdings, Inc. | 1.4 | Drones | drone, unmanned, robotic |
+| AVAV | AeroVironment, Inc. | 9.4 | Drones | unmanned, uas, counter-uas |
+| ONDS | Ondas Inc. | 5.2 | Drones | drone, uas, counter-uas |
+| RCAT | Red Cat Holdings, Inc. | 1.4 | Drones | drone, unmanned, uas |
 | UMAC | Unusual Machines, Inc. | 1.3 | Drones | drone |
 | EH | EHang Holdings Limited | 0.3 | Drones | uav, aerial |
-| LLY | Eli Lilly and Company | 1116.2 | GLP-1 / Obesity | obesity |
-| NVO | Novo Nordisk A/S | 158.1 | GLP-1 / Obesity | glp-1, glucagon-like, obesity |
-| VKTX | Viking Therapeutics, Inc. | 4.0 | GLP-1 / Obesity | glucagon-like |
-| GPCR | Structure Therapeutics Inc. | 3.8 | GLP-1 / Obesity | glp-1, glucagon-like, obesity |
-| ALT | Altimmune, Inc. | 0.6 | GLP-1 / Obesity | glp-1 |
+| VKTX | Viking Therapeutics, Inc. | 4.0 | GLP-1 - Clinical Stage | glucagon-like |
+| GPCR | Structure Therapeutics Inc. | 3.8 | GLP-1 - Clinical Stage | glp-1, glucagon-like, obesity |
+| ALT | Altimmune, Inc. | 0.6 | GLP-1 - Clinical Stage | glp-1 |
+| LLY | Eli Lilly and Company | 1116.2 | GLP-1 - Commercial | obesity |
+| NVO | Novo Nordisk A/S | 158.1 | GLP-1 - Commercial | glp-1, glucagon-like, obesity |
 | ALB | Albemarle Corporation | 15.5 | Lithium & Battery Tech | lithium, batter, energy storage |
 | FLNC | Fluence Energy, Inc. | 2.4 | Lithium & Battery Tech | energy storage |
 | AMPX | Amprius Technologies, Inc. | 1.7 | Lithium & Battery Tech | lithium, batter, anode |
@@ -83,6 +78,11 @@ A FLAG means the company's own business description contains none of the theme's
 | ELVR | Elevra Lithium Limited | 1.2 | Lithium & Battery Tech | lithium |
 | LAC | Lithium Americas Corp. | 1.1 | Lithium & Battery Tech | lithium |
 | SLI | Standard Lithium Ltd. | 0.6 | Lithium & Battery Tech | lithium |
+| MU | Micron Technology, Inc. | 991.1 | Memory & Storage | memory, storage, nand |
+| STX | Seagate Technology Holdings plc | 184.2 | Memory & Storage | storage, data storage |
+| SNDK | Sandisk Corporation | 179.5 | Memory & Storage | storage, nand, flash |
+| WDC | Western Digital Corporation | 149.7 | Memory & Storage | storage, hard disk, data storage |
+| NTAP | NetApp, Inc. | 37.2 | Memory & Storage | storage |
 | IONQ | IonQ, Inc. | 17.6 | Quantum Computing | quantum, qubit |
 | QBTS | D-Wave Quantum Inc. | 7.7 | Quantum Computing | quantum |
 | RGTI | Rigetti Computing, Inc. | 6.0 | Quantum Computing | quantum, qubit |
@@ -102,4 +102,3 @@ A FLAG means the company's own business description contains none of the theme's
 | RDW | Redwire Corporation | 3.4 | Space | space, spacecraft |
 | BKSY | BlackSky Technology Inc. | 1.2 | Space | space, satellite |
 | SPIR | Spire Global, Inc. | 0.6 | Space | space, satellite |
-| MNTS | Momentus Inc. | 0.1 | Space | space, satellite, orbit |

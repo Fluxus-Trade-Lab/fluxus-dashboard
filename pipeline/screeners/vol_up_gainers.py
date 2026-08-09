@@ -1,8 +1,19 @@
-"""Volume-Confirmed 4 %+ Gainers Screener.
+"""Volume-confirmed 4%+ gainers -- moves someone had to pay for.
 
-A stricter variant of the daily-gainers screen: the stock must gain at
-least 4 % **and** trade on relative volume of 1.5x or higher, confirming
-that institutional activity is behind the move.
+**What it looks for: a move with a buyer behind it.** Up 4%+ on relative
+volume of 1.5x or better. The volume condition is doing the work -- price can
+travel on nothing, but 50% more volume than usual means size had to be
+absorbed, which is the footprint institutional accumulation leaves.
+
+**What it cannot tell you.** Relative volume is measured against the name's
+own average, so a normally-dead ticker clears 1.5x on very little real money.
+Read the dollar volume, not the multiple, before treating a hit as
+institutional. It also cannot distinguish accumulation from distribution: a
+high-volume 4% day into a resistance level that has already rejected the name
+four times scores identically to a clean breakout.
+
+One day of confirmation is not a trend. This finds the day; whether it starts
+anything is a chart question.
 """
 
 from __future__ import annotations

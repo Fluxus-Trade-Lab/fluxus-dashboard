@@ -1,10 +1,33 @@
-"""Momentum RS-97 Screener.
+"""Momentum RS-97 screener -- the top 3% of composite relative strength.
 
-Identifies stocks in the top 3 % of composite relative strength,
-bucketed by percentile (100, 99, 98, 97).
+**What it looks for: names that are moving now.**
 
-Composite RS is the equal-weighted average of the percentile ranks of
-perf_1w, perf_1m, perf_3m and perf_6m across the entire Finviz universe.
+The composite is the equal-weighted average of four percentile ranks --
+perf_1w, perf_1m, perf_3m, perf_6m -- so the last five sessions carry the
+same weight as the last two quarters. That is the whole design: a stock that
+was ordinary a month ago and has since taken off can reach the top of this
+list, which is exactly what it is for. Use it to find starts.
+
+**What it cannot tell you.** With a week weighted as heavily as a quarter,
+three different things score alike:
+
+  * a genuine new trend beginning
+  * a sharp bounce inside a downtrend, which looks identical for a few weeks
+  * the fifth attempt at a level that has already rejected four times
+
+The score cannot separate them, and neither can any other single number --
+that is what the chart and the setup are for. Names surfaced here have
+typically already made a large part of the move by the time they appear;
+treat the list as candidates to examine, not as entries.
+
+**How it differs from ``rs_ibd``.** That one weights 3mo/6mo/1yr and answers
+"who has been winning". This one answers "who is winning right now". They
+share roughly half their top 200 on a given day; the halves they do not share
+are different kinds of stock, not better and worse ones. Keep both -- they
+are two questions, and the second cannot be answered by the first.
+
+Buckets (100, 99, 98, 97) are percentiles of the composite within the
+tradeable universe.
 """
 
 from __future__ import annotations

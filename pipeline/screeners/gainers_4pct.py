@@ -1,7 +1,20 @@
-"""4 %+ Daily Gainers Screener.
+"""4%+ daily gainers -- who moved today.
 
-Surfaces every stock whose intraday ``change_pct`` is at least 4 %,
-sorted from the biggest gainer downward.
+**What it looks for: participation.** Every name up 4% or more in a single
+session, nothing else asked. It is a census of today's movers, not a
+selection of good ones.
+
+**What it cannot tell you.** Nothing about why, and nothing about whether the
+move continues. A 4% day is a 4% day whether it is the first thrust out of a
+year-long base or a dead-cat bounce on a broken name. There is no volume
+requirement here, so a move on no participation looks the same as one on
+heavy accumulation -- ``vol_up_gainers`` is the same screen with that filter
+added, and is the one to read when you want the move to have a buyer behind
+it.
+
+Its real use is aggregate, not individual: the *count* of 4% gainers against
+the count of 4% losers is the input to the Stockbee breadth ratio, and that
+count says more about the tape than any single row in this list.
 """
 
 from __future__ import annotations

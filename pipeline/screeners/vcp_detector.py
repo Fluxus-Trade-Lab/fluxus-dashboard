@@ -1,4 +1,23 @@
-"""VCP (Volatility Contraction Pattern) Detector — Two-Layer Architecture.
+"""VCP detector -- bases where the selling is running out.
+
+**What it looks for: contraction, not price.** A base of progressively
+shallower pullbacks on declining volume. The premise (Minervini's pattern,
+not ours) is that each successive dip finding buyers higher means the supply
+overhang is being worked off, and that the last, tightest contraction is
+where a stop can sit close enough to make the position size worth taking.
+Depth ratios of 30-75% between contractions are what "progressively
+shallower" is operationalised as.
+
+**What it cannot tell you: whether it resolves up.** A contraction sequence
+is a description of the last 90 days; it carries no claim about the next
+ten. Tight bases fail, and when they fail they fail from exactly the place
+that made them attractive. What the pattern buys is not a higher hit rate but
+a cheaper stop -- which is a sizing advantage, not a direction call.
+
+It also cannot see the reason for the contraction. A name coiling ahead of an
+earnings date and one coiling on genuine accumulation look identical here.
+
+Two-layer architecture below.
 
 Layer 1 (``layer1_finviz_filter``):
     Coarse filter on the Finviz universe.  Reduces ~2 400 stocks down to

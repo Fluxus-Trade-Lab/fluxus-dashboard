@@ -1,9 +1,21 @@
-"""Episodic Pivot Screener.
+"""Episodic pivots -- the day the story changed.
 
-Identifies catalyst-driven gap-ups: stocks gapping >= 10 % on >= 3x
-relative volume with a minimum market cap of $500 M.  These are
-typically earnings surprises, FDA approvals, or other binary events
-that can trigger a new trend leg.
+**What it looks for: a repricing, not a rally.** A gap of 10% or more on 3x
+relative volume, market cap above $500M. The size of the gap is the filter's
+whole logic: a move that large overnight is not accumulation, it is the
+market marking the name to a different set of facts -- an earnings surprise,
+an approval, a contract. The premise is that such a repricing is often the
+start of a leg rather than the end of one, because estimates take weeks to
+catch up to news that arrived in a night.
+
+**What it cannot tell you: whether the gap holds.** It fires on the open,
+before the session has decided anything. A gap that closes red on the day is
+the same row in this table as one that never fills. The $500M floor removes
+the worst of the noise but not the pattern where the news is real and the
+price already reflected all of it.
+
+It also has no memory. A name gapping 10% for the third time this year on a
+thesis that has failed twice looks identical to a first-time repricing.
 """
 
 from __future__ import annotations

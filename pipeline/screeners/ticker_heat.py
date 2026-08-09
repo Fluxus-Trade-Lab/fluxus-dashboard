@@ -1,4 +1,21 @@
-"""Heat scoring — which tickers are stacking signals right now.
+"""Heat scoring -- which tickers are stacking signals right now.
+
+**What it looks for: agreement between screens.** Every other screener here
+answers one question. Heat asks how many of them a name is answering at once,
+and weights confluence above repetition: three distinct screens beat the same
+screen firing three days running, and setup-quality screens (VCP, healthy
+charts) outweigh participation ones (4% gainers).
+
+**What it cannot tell you: whether the screens are independent.** They are
+not. `gainers_4pct` and `vol_up_gainers` share a condition by construction, so
+a name clearing both has produced roughly one piece of evidence, not two. The
+weights lean against this; they do not eliminate it. Read a high score as
+"several different lenses noticed this", never as a probability.
+
+It is also strictly backward-looking -- a count of what has already fired.
+A name at the top of this list is by definition one that has already moved,
+which is the same reason to look and the same reason to be careful about
+where the stop would have to go.
 
 Confluence over repetition: distinct screeners carry their full weight,
 repeat hits on the same screener add a fraction, capped at REPEAT_CAP so
