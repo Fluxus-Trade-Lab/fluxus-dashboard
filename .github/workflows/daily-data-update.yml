@@ -5,8 +5,19 @@ name: Daily Market Data Update
 
 on:
   schedule:
-    # 16:30 EST = 21:30 UTC Mon-Fri (after US market close)
-    - cron: '30 21 * * 1-5'
+    # 22:47 UTC = 18:47 ET Mon-Fri, well after the US close and after Finviz
+    # has finished its end-of-day recompute.
+    #
+    # Two things drove this from the old '30 21 * * 1-5':
+    #   - :00 and :30 are the most contended cron minutes on GitHub. Over the 40
+    #     scheduled runs to 2026-08-07 the queue delay ran 37-213 min (median
+    #     ~66), so the job never actually started when it was told to.
+    #   - The one run that did start early (2026-08-07, 18:07 ET) is the one run
+    #     where Finviz served a blank Change column and every breadth count
+    #     collapsed to zero. Nominal 18:47 ET keeps even a zero-delay start late.
+    # Delay can still push a run past midnight UTC; the commit message below
+    # uses the ET market date, so that no longer misnames the data.
+    - cron: '47 22 * * 1-5'
   workflow_dispatch: # Manual trigger for testing
 
 permissions:
@@ -74,11 +85,35 @@ jobs:
           echo "All output files validated successfully"
 
       - name: Commit and push
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
+          # Name the commit after the ET market date the pipeline actually
+          # produced, not the runner's UTC date. A queue delay past midnight UTC
+          # used to shift the message a day: the 2026-08-06 data landed as
+          # "chore: market data 2026-08-07", colliding with the real 08-07
+          # commit and making the 08-06 session look like it never ran.
+          MARKET_DATE=$(python -c "from pipeline.marketcal import market_today; print(market_today().isoformat())")
+          echo "Market date (ET): $MARKET_DATE"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/output/ data/history/
-          git diff --staged --quiet || (git commit -m "chore: market data $(date +%Y-%m-%d)" && git push)
+          git diff --staged --quiet || (git commit -m "chore: market data $MARKET_DATE" && git push)
+
+      # Runs AFTER the push on purpose. A stale breadth row must not block the
+      # commit — every other screener is still good and worth shipping. This
+      # step only turns the run red so the failure webhook fires, instead of
+      # letting a rejected breadth row pass as a silent green.
+      - name: Check breadth freshness
+        run: |
+          python - <<'PY'
+          import json, sys
+          q = json.load(open('data/output/breadth.json')).get('data_quality', {})
+          if q.get('stale'):
+              print(f"BREADTH STALE: {q.get('reason')} (serving {q.get('as_of')})")
+              sys.exit(1)
+          print("Breadth row accepted for today")
+          PY
 
       - name: Discord notification (success)
         if: success() && env.DISCORD_WEBHOOK_URL != ''
