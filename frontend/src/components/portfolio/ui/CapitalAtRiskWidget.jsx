@@ -63,19 +63,24 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
         </span>
       </div>
 
-      {/* the headline is the number he sets, not the one the market sets */}
-      <div className="flex items-baseline gap-4 mt-3">
-        <span className="text-[38px] leading-none font-bold tabular-nums text-[var(--color-text)]"
-              style={{ fontFamily: 'var(--font-cond)' }}>
+      {/* The headline is the number he sets, not the one the market sets. Stacked
+          rather than set beside the sentence: this card is half of a two-column
+          grid — 594px at desktop — and side by side the sentence was crushed into
+          three lines against a 38px number. */}
+      <div className="mt-3">
+        <div className="text-[42px] leading-none font-bold tabular-nums text-[var(--color-text)]"
+             style={{ fontFamily: 'var(--font-cond)' }}>
           {pm ? MASK : riskPct != null ? `${riskPct.toFixed(2)}%` : fmtCur(data.totalRiskDollars)}
-        </span>
-        <span className="text-[11px] leading-snug text-[var(--color-text-secondary)]">
+          <span className="text-[11px] font-normal tracking-[.16em] uppercase
+                           text-[var(--color-text-muted)] ml-2"
+                style={{ fontFamily: 'var(--font-mono)' }}>at risk</span>
+        </div>
+        <p className="text-[11px] leading-relaxed text-[var(--color-text-secondary)] mt-2 mb-0">
           {data.perTrade.length} position{data.perTrade.length === 1 ? '' : 's'} in {names} name
           {names === 1 ? '' : 's'}, {pm ? MASK : fmtCur(data.totalRiskDollars)} between here and
-          every stop{riskPct != null && <> — {riskPct.toFixed(2)}% of capital</>}.
-          <br />
+          every stop.{' '}
           <b className="text-[var(--color-text)]">Size is the decision; the rest is the market's.</b>
-        </span>
+        </p>
       </div>
 
       {data.totalLockedDollars > 0 && (
@@ -107,7 +112,7 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
                     : 'var(--color-profit)',
                 }} />
               </div>
-              <span className={`w-24 text-right tabular-nums ${
+              <span className={`w-[116px] shrink-0 text-right tabular-nums ${
                 row.atRisk ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-profit)]'}`}>
                 {pm ? MASK : `${row.atRisk ? '−' : '+'}${fmtCur(amount)}`}
                 {!pm && pct != null && (
@@ -117,14 +122,7 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
             </div>
           )
         })}
-        {hiddenCount > 0 && (
-          <div className="text-[10px] text-[var(--color-text-muted)] mt-1">
-            {hiddenCount} more position{hiddenCount === 1 ? '' : 's'} below the tenth, not drawn —
-            they carry {pm ? MASK : fmtCur(
-              data.perTrade.slice(10).reduce((s, p) => s + (p.atRisk ? p.riskDollars : 0), 0))} of
-            the total.
-          </div>
-        )}
+        {hiddenCount > 0 && <Hidden rows={data.perTrade.slice(10)} pm={pm} />}
       </div>
 
       <p className="text-[11px] leading-relaxed text-[var(--color-text-secondary)] mt-3 pt-3
@@ -142,6 +140,30 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
           not in these numbers.</>
         )}
       </p>
+    </div>
+  )
+}
+
+/**
+ * What the tenth row cuts off. A hidden remainder reads as a small one, so it
+ * gets stated — but stated by what it actually is. The rows below the cut are
+ * the smallest risks and then the positions with no risk left at all, so
+ * summing their risk can legitimately come to nothing. Printing "$0.00 of the
+ * total" for that case looks like a broken number rather than a true one.
+ */
+function Hidden({ rows, pm }) {
+  const risky = rows.filter(r => r.atRisk)
+  const risk = risky.reduce((s, r) => s + r.riskDollars, 0)
+  const n = rows.length
+  return (
+    <div className="text-[10px] text-[var(--color-text-muted)] mt-1">
+      {n} more position{n === 1 ? '' : 's'} below the tenth, not drawn —{' '}
+      {risky.length === 0
+        ? <>none of {n === 1 ? 'it' : 'them'} has any open risk left.</>
+        : <>
+            {risky.length === n ? (n === 1 ? 'it carries' : 'they carry') : `${risky.length} of them carry`}{' '}
+            {pm ? MASK : fmtCur(risk)} of the total.
+          </>}
     </div>
   )
 }
