@@ -19,12 +19,15 @@ export const translations = {
     'nav.journal': 'AI Coach',
     'nav.briefing': 'Briefing',
     'nav.breadth': 'Market State',
+    'nav.correction': 'Correction Risk',
     'nav.groups': 'Themes',
     'nav.modelbooks': 'Model Books',
     // The rail's two groups. MARKET is the state of the market and needs no
     // account; MY BOOK is a framework and a record and cannot exist without one.
     'rail.market': 'Market',
     'rail.market.note': 'Open. No account needed.',
+    'rail.library': 'Library',
+    'rail.library.note': 'How to read a market. Not what it did today.',
     'rail.book': 'My Book',
     'rail.book.note': 'Needs an account and your own fills.',
 
@@ -149,6 +152,7 @@ export const translations = {
     'nav.journal': 'AI 教练',
     'nav.briefing': '每日简报',
     'nav.breadth': '市场状态',
+    'nav.correction': '回撤风险',
     'nav.groups': '主题',
     'nav.modelbooks': '标杆案例',
 
@@ -156,6 +160,8 @@ export const translations = {
     // My Book 是你的框架和你的记录,没有账户就不存在。
     'rail.market': '市场',
     'rail.market.note': '开放。不需要账户。',
+    'rail.library': '资料库',
+    'rail.library.note': '怎么读市场。不是市场今天怎么样。',
     'rail.book': '我的账本',
     'rail.book.note': '需要账户 + 你自己的成交。',
 
