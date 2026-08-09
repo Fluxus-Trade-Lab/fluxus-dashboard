@@ -15,11 +15,17 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from datetime import date
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from pipeline.marketcal import is_trading_day  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
-LIBRARY = ROOT / "Fluxus_Visual_Library.md"
+# 2026-08-03 品牌文档整体搬进 Fluxus_Brand/,这里没跟着改,于是整个触发器
+# 从那天起就是死的 —— 报的还是一个 FileNotFoundError 的裸栈。
+LIBRARY = ROOT / "Fluxus_Brand/visual/Fluxus_Visual_Library.md"
 BREADTH = ROOT / "data/output/breadth.json"
 
 # 触发 → (情绪关键词,理由模板)。情绪关键词用来在视觉库索引表里查代码。
@@ -41,6 +47,10 @@ TRIGGERS = [
 
 def load_index(path: Path = LIBRARY) -> dict[str, list[str]]:
     """从视觉库底部的快速索引表里读 情绪 → 代码。"""
+    if not path.exists():
+        raise SystemExit(
+            f"视觉库不在 {path.relative_to(ROOT)} —— 文档搬过家?\n"
+            f"新旧路径对照在 Fluxus_Brand/_MOVED.json,改这个文件顶上的 LIBRARY。")
     index: dict[str, list[str]] = {}
     for line in path.read_text(encoding="utf-8").splitlines():
         m = re.match(r"^\|\s*([^|]+?)\s*\|\s*((?:V\d+\s*)+)\|", line)
@@ -60,6 +70,10 @@ def load_metrics() -> dict:
     d = {**raw.get("breadth", {}), **raw.get("mm", {})}
     d["spx_close"] = raw.get("spx_close")
     d["timestamp"] = raw.get("timestamp", "")
+    # `timestamp` 是管线跑的时刻,不是它覆盖的交易日 —— 归档的最后一行才是。
+    # 这条线要印上海报,所以日期必须是能担保的那个。
+    dates = (raw.get("history") or {}).get("dates") or []
+    d["session"] = dates[-1] if dates else None
     return d
 
 
@@ -82,8 +96,19 @@ def main() -> None:
     today = date.today()  # localtime-ok: poster label, not a trading date
     meta = meta_line(d)
 
-    print(f"日期 {today:%Y-%m-%d}  ·  数据 {d['timestamp'][:10]}")
+    session = d.get("session")
+    bad_session = session is not None and not is_trading_day(date.fromisoformat(session))
+
+    print(f"日期 {today:%Y-%m-%d}  ·  数据 {session or '未知'}")
     print(f"测量行  {meta}\n")
+
+    # 这行会印在公开的图上。归档最后一行落在非交易日,说明那一行是收盘后
+    # 跑出来的快照被当成一个交易日写进去了 —— 它的涨跌家数是 0,不是真的。
+    if bad_session:
+        wd = date.fromisoformat(session).strftime("%a")
+        print(f"⚠️  归档最后一行是 {session}({wd}) —— 不是交易日。")
+        print(f"    这一行的 up_4pct / advances 都是 0,不是市场真的没动,是当天没有数据。")
+        print(f"    **别用这条测量行出图**,先补上真正的上一个交易日。\n")
 
     fired = []
     for name, test, keyword, why in TRIGGERS:
