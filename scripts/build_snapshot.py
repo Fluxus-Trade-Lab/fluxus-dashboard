@@ -54,6 +54,9 @@ def _auction_join(g: dict) -> dict:
             "reference_map": rows,
             "strongest": SY.strongest(rows),
             "conflicts": SY.conflicts(prof, g),
+            # Conflicts without a resolution are a shrug. The precedence rule
+            # says the auction is root cause and the dealer book is mechanism.
+            "resolution": SY.resolve(prof, g),
             "profile_source": str(latest)}
 
 

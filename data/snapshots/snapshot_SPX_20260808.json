@@ -1,7 +1,7 @@
 {
   "symbol": "SPX",
   "date": "2026-08-08",
-  "generated_at": "2026-08-08T14:42:36-04:00",
+  "generated_at": "2026-08-08T22:13:35-04:00",
   "gex_source": "data/gex/gex_SPX_20260807.json",
   "gex": {
     "symbol": "SPX",
@@ -1489,6 +1489,37 @@
       }
     ]
   },
+  "flow_ratio": {
+    "n_strikes": 23,
+    "n_hot": 1,
+    "hot_threshold": 2.0,
+    "adding": [],
+    "opposing": [
+      7675.0
+    ],
+    "hottest": {
+      "strike": 7675.0,
+      "gex_oi": 292614640.03,
+      "gex_volume": -969677978.3,
+      "share_oi": 0.02481,
+      "share_volume": 0.0529,
+      "ratio": 2.132,
+      "same_sign": false,
+      "note": null
+    },
+    "rows": [
+      {
+        "strike": 7675.0,
+        "gex_oi": 292614640.03,
+        "gex_volume": -969677978.3,
+        "share_oi": 0.02481,
+        "share_volume": 0.0529,
+        "ratio": 2.132,
+        "same_sign": false,
+        "note": null
+      }
+    ]
+  },
   "todays_business": {
     "question": "Does price hold ABOVE yesterday's value area high 7,758 \u2014 i.e. is the up-auction being accepted?",
     "holds": "acceptance above 7,758 keeps the up-auction alive \u2192 next objection is the call wall 7,800",
@@ -1641,5 +1672,17 @@
       "detail": "zero-gamma flip 7,638 is 99 pts below the value-area low 7,738. The options book calls the whole balance dampened; the auction's own floor is much higher and would break first."
     }
   ],
+  "resolution": {
+    "primary": "auction",
+    "reading": "the auction has accepted above value (7,758); that is the operative signal",
+    "mechanism": "the call wall at 7,800 is not a counter-argument \u2014 it is the supply through which a failure would have to happen",
+    "conflicts": [
+      {
+        "issue": "flip sits below the value area",
+        "detail": "zero-gamma flip 7,638 is 99 pts below the value-area low 7,738. The options book calls the whole balance dampened; the auction's own floor is much higher and would break first."
+      }
+    ],
+    "note": "auction is root cause; the dealer book is the mechanism. Stated as a rule so it cannot be applied selectively."
+  },
   "profile_source": "data/profile/profile_20260807.json"
 }

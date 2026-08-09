@@ -59,6 +59,10 @@ if [ "$postclose" = true ]; then
         && say "profile built for $DATE" || say "warn: build_profile failed"
     .venv/bin/python scripts/score_levels.py --symbol SPX >>"$LOG" 2>&1 \
         && say "scorecard updated" || say "warn: score_levels failed"
+    # The centaur only learns if both parties get graded. Runs post-close, when
+    # the session that the views were filed against has an outcome.
+    .venv/bin/python scripts/score_views.py --symbol SPX >>"$LOG" 2>&1 \
+        && say "centaur skill updated" || say "warn: score_views failed"
 fi
 # The brief renders in both windows — premarket joins yesterday's profile.
 .venv/bin/python scripts/build_snapshot.py --symbol SPX >>"$LOG" 2>&1 \
