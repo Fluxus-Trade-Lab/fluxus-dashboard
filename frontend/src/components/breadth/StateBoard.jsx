@@ -11,6 +11,8 @@
  *   · every condition prints the numbers that produced it, in a lighter register
  */
 
+import { isWeekend } from './session'
+
 const HATCH =
   'repeating-linear-gradient(45deg,rgba(125,57,8,.55) 0 1.7px,transparent 1.7px 5px)'
 
@@ -132,18 +134,6 @@ function Chain({ chain }) {
       </div>
     </div>
   )
-}
-
-/**
- * Weekends only — the browser has no NYSE holiday calendar and this deliberately
- * does not pretend otherwise. A row stamped on a Saturday is the case that has
- * actually occurred; a row stamped on Thanksgiving would still slip through, and
- * the fix for that belongs in the pipeline, not here.
- */
-function isWeekend(iso) {
-  if (!iso) return false
-  const d = new Date(`${iso}T12:00:00Z`).getUTCDay()
-  return d === 0 || d === 6
 }
 
 export default function StateBoard({ board, session }) {

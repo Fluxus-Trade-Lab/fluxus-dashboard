@@ -48,7 +48,8 @@ export default function BreadthPage({ data }) {
   return (
     <div className="space-y-3">
       <TimeMachineBar tm={tm} />
-      <VerdictBanner verdict={verdict} dataQuality={breadth.data_quality} />
+      <VerdictBanner verdict={verdict} dataQuality={breadth.data_quality}
+                     session={rows[rows.length - 1]?.date} />
       <StateBoard board={breadth.state_board} session={rows[rows.length - 1]?.date} />
       <MarketStateSummary mm={breadth.mm} breadth={breadth.breadth} verdict={verdict} />
       {mh && !mh.stale && (
