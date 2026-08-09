@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import PageHeader from '../PageHeader'
+import Reading, { readScreener } from '../Reading'
+import { useHeatingUp } from '../../hooks/useHeatingUp'
 import { useUniverse } from '../../hooks/useUniverse'
 import { usePresets } from '../../hooks/usePresets'
 import { applyFilters } from '../../lib/screenerFilter'
@@ -61,6 +63,8 @@ export default function ScreenerPage() {
     )
   }
 
+  const heat = useHeatingUp()
+
   return (
     <div>
       <PageHeader group="market" title="Screener"
@@ -68,6 +72,9 @@ export default function ScreenerPage() {
         meta={['quality tier — EP · VCP · MOM · weight ×3',
                'participation — 21D · 4% · CHART · VOL · weight ×1',
                'counts above 8 are printed, not drawn']} />
+      {/* Page level, same as Themes and Market State. Counted over the rows the
+          ledger actually renders, because the sentence says "here". */}
+      <Reading text={readScreener(heat && { ...heat, rows: (heat.rows ?? []).slice(0, 25) })} />
       {/* Tab bar */}
       <div className="flex gap-0 border-b border-[var(--color-border)] mb-5" role="tablist">
         {TABS.map((tab, i) => (

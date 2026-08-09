@@ -20,7 +20,10 @@ export default function Header({ lastUpdated, isOffline }) {
   const { lang, toggle: toggleLang, t } = useLanguage()
 
   return (
-    <header className="flex items-center justify-between px-4 py-3 bg-[var(--color-surface)] border-b border-[var(--color-border)]">
+    <header className="sticky top-0 z-20 flex items-center justify-between px-4 py-3
+                       border-b border-[var(--glass-edge)]"
+            style={{ background: 'var(--glass)', backdropFilter: 'var(--glass-blur)',
+                     WebkitBackdropFilter: 'var(--glass-blur)' }}>
       <div className="flex items-center gap-3">
         {/* the mark lives in the rail on wide screens; repeated here only where
             there is no rail to carry it */}

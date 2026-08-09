@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import Reading, { readScreener } from '../Reading'
+import { useHeatingUp } from '../../hooks/useHeatingUp'
 
 /**
  * Confluence ledger — the v2 screener object.
@@ -50,16 +49,7 @@ const GRID = 'grid grid-cols-[58px_50px_repeat(7,minmax(56px,1fr))_74px_104px] '
              'gap-x-2 items-center min-w-[880px]'
 
 export default function HeatingUp({ limit = 25, compact = false }) {
-  const [data, setData] = useState(null)
-
-  useEffect(() => {
-    let cancelled = false
-    fetch('/data/output/heating_up.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .then((json) => { if (!cancelled) setData(json) })
-      .catch(() => { if (!cancelled) setData(null) })
-    return () => { cancelled = true }
-  }, [])
+  const data = useHeatingUp()
 
   if (!data?.rows?.length) return null
   const rows = data.rows.slice(0, limit)
@@ -103,9 +93,6 @@ export default function HeatingUp({ limit = 25, compact = false }) {
 
   return (
     <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4">
-      {/* counted over the rows actually on screen, not over the whole file —
-          the sentence says "here", and here is what `limit` left */}
-      <Reading text={readScreener({ ...data, rows })} />
       <div className="flex items-baseline justify-between pb-2 border-b border-[var(--color-v2-ink)]">
         <h3 className="text-[10px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
           Confluence ledger

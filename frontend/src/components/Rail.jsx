@@ -47,7 +47,9 @@ export default function Rail({ currentPage, onNavigate }) {
       {/* wide: the rail itself */}
       <nav aria-label="Sections"
            className="hidden lg:flex lg:flex-col w-[212px] shrink-0 min-h-screen pt-4
-                      bg-[var(--color-surface)] border-r border-[var(--color-border)]">
+                      border-r border-[var(--glass-edge)]"
+           style={{ background: 'var(--glass)', backdropFilter: 'var(--glass-blur)',
+                    WebkitBackdropFilter: 'var(--glass-blur)' }}>
         <div className="px-5 pb-5 text-[15px] font-semibold tracking-[.16em]"
              style={{ fontFamily: 'var(--font-cond)' }}>FLUXUS</div>
 
@@ -81,7 +83,9 @@ export default function Rail({ currentPage, onNavigate }) {
           as labels in the strip. */}
       <nav aria-label="Sections"
            className="lg:hidden flex gap-1 overflow-x-auto px-3 py-2
-                      bg-[var(--color-surface)] border-b border-[var(--color-border)]">
+                      border-b border-[var(--glass-edge)]"
+           style={{ background: 'var(--glass)', backdropFilter: 'var(--glass-blur)',
+                    WebkitBackdropFilter: 'var(--glass-blur)' }}>
         {NAV_GROUPS.map((g) => (
           <div key={g.key} className="flex items-center gap-1 shrink-0">
             <span className="px-1.5 text-[8px] font-mono uppercase tracking-[.2em]

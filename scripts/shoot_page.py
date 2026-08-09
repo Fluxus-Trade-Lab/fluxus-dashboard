@@ -16,11 +16,10 @@ the component, not the page around it.
 
 Requires the fluxus-dashboard dev server to already be running on --port.
 
-Known limitation: the #/portfolio route hangs Chrome. Something on that page
-never lets the virtual-time budget elapse, and neither --headless=new nor
-blocking non-localhost DNS shakes it loose. Every other route shoots fine.
-Verify portfolio cards by reading the DOM in the app instead, and check the
-arithmetic by hand — the numbers are the part worth checking anyway.
+Note on flags: the app uses backdrop-filter for the rail and the status bar, and
+backdrop-filter needs a GL backend. Run with --disable-gpu and every glass
+surface screenshots as a blank rectangle while the DOM is perfectly fine — the
+picture lies, the DOM does not.
 """
 from __future__ import annotations
 
@@ -102,7 +101,12 @@ def shoot(route: str, needle: str, out: Path, port: int, w: int, h: int,
         time.sleep(0.4)  # let Vite notice the new file before Chrome asks for it
         out.parent.mkdir(parents=True, exist_ok=True)
         subprocess.run(
-            [CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars",
+            [CHROME, "--headless=new",
+             # backdrop-filter does not composite without a GL backend, so
+             # --disable-gpu renders every glass surface as a blank rectangle.
+             # Software GL is slower and actually draws the chrome layer.
+             "--use-gl=swiftshader", "--enable-unsafe-swiftshader",
+             "--hide-scrollbars",
              # Pages that call out to a sync backend or a price proxy never let
              # the virtual-time budget elapse, so the shot hangs forever. Fail
              # every non-localhost lookup fast instead — a screenshot tool has

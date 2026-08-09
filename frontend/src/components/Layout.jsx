@@ -71,7 +71,8 @@ export default function Layout({ data, lastUpdated, isOffline }) {
 
   // Dashboard pages: rail on the left, status bar across the content
   return (
-    <div className="min-h-screen bg-[var(--color-bg)] lg:flex">
+    <div className="min-h-screen lg:flex"
+         style={{ background: 'var(--ground), var(--color-bg)' }}>
       <Rail currentPage={current} onNavigate={navigate} />
       <div className="flex-1 min-w-0">
       <Header
