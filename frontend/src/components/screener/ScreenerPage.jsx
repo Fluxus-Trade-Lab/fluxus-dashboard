@@ -28,6 +28,11 @@ export default function ScreenerPage() {
   const [tickerSearch, setTickerSearch] = useState('')
   const [results, setResults] = useState(null)
   const [activeTab, setActiveTab] = useState(0)
+  // Every hook runs before the `loading` early-return below. Calling this one
+  // after it made the hook count change the moment the universe resolved, and
+  // React tore the page down — the same conditional-hook bug already filed
+  // against ExposureTab, committed here by the person who filed it.
+  const heat = useHeatingUp()
   const [copied, setCopied] = useState(false)
 
   const handleSelectPreset = (preset) => {
@@ -63,7 +68,6 @@ export default function ScreenerPage() {
     )
   }
 
-  const heat = useHeatingUp()
 
   return (
     <div>

@@ -32,10 +32,6 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
     return { avg: vals.reduce((a, b) => a + b, 0) / vals.length, peak: Math.max(...vals) }
   }, [performanceData])
 
-  if (openTrades.length === 0) {
-    return <div className="text-center py-16 text-[var(--color-text-muted)]">No open positions.</div>
-  }
-
   const [expandedTickers, setExpandedTickers] = useState({})
 
   const toggleTicker = (ticker) => {
@@ -109,6 +105,14 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
     })
     return arr
   }, [groupedTrades, sortConfig])
+
+  // Every hook above runs unconditionally. This guard used to sit near the top
+  // with four hooks below it, so the hook count changed the moment the last
+  // position closed and React tore the tab down — the same conditional-hook
+  // bug that took out the Screener page on 2026-08-09.
+  if (openTrades.length === 0) {
+    return <div className="text-center py-16 text-[var(--color-text-muted)]">No open positions.</div>
+  }
 
   // Privacy-aware currency
   const cur = (v) => pm ? MASK : fmtCur(v)
