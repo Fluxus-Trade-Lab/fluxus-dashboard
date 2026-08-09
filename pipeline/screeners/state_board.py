@@ -154,8 +154,16 @@ def state_board(frame: pd.DataFrame, health: Optional[Dict[str, Any]] = None
         if r5 > 1.2 and (net or 0) > 0:
             why = f"five-day ratio {r5:.4f}, clear of 1.2 with net advances positive"
         elif r5 > 1.0:
-            why = (f"five-day ratio {r5:.4f}, above 1.0 but "
-                   + ("net advances still negative" if (net or 0) < 0 else "not yet clear of 1.2"))
+            # Two independent gates, so the caption has to name the one that is
+            # actually shut. The earlier version only asked whether net was
+            # negative, which meant a ratio of 2.07 held back by net advances of
+            # exactly zero printed "not yet clear of 1.2" — a caption denying a
+            # number printed beside it.
+            if r5 > 1.2:
+                why = (f"five-day ratio {r5:.4f}, clear of 1.2 — held back by net advances at "
+                       f"{(net or 0):+.0f}")
+            else:
+                why = f"five-day ratio {r5:.4f}, above 1.0 but not yet clear of 1.2"
         else:
             why = f"five-day ratio {r5:.4f}, needs to clear 1.0"
         out.append(_row(

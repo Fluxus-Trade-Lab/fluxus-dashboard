@@ -128,11 +128,27 @@ def test_empty_frame_returns_nothing_rather_than_crashing():
 
 @pytest.mark.parametrize("r5,net,expect", [
     (0.9905, -336, "needs to clear 1.0"),
-    (1.7539, -286, "net advances still negative"),
+    (1.7539, -286, "net advances"),      # ratio is fine; name the gate that is shut
     (1.3000,  120, "clear of 1.2"),
+    # Regression: two gates, and net sitting at exactly zero used to fall through
+    # to the ratio branch — printing "not yet clear of 1.2" beside a 2.07 reading.
+    (2.0719,    0, "net advances"),
 ])
 def test_confirmation_evidence_matches_its_own_number(r5, net, expect):
     """A caption reading 'needs to clear 1.0' under a 1.75 reading is a lie."""
     board = state_board(frame(ratio_5d=r5, net_advances=net), health())
     conf = next(r for r in board if r["key"] == "confirmation")
     assert expect in conf["evidence"], conf["evidence"]
+
+
+def test_confirmation_never_denies_a_number_it_prints():
+    """Whatever the caption says, it must not contradict the ratio beside it."""
+    for r5 in (0.8, 1.05, 1.25, 2.07):
+        for net in (-300, 0, 300):
+            conf = next(r for r in state_board(frame(ratio_5d=r5, net_advances=net), health())
+                        if r["key"] == "confirmation")
+            ev = conf["evidence"]
+            if r5 > 1.2:
+                assert "not yet clear of 1.2" not in ev, (r5, net, ev)
+            if r5 > 1.0:
+                assert "needs to clear 1.0" not in ev, (r5, net, ev)
