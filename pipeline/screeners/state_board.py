@@ -24,6 +24,10 @@ from typing import Any, Dict, List, Optional
 
 import pandas as pd
 
+# One owner for the thrust rule. It scales to each session's own universe,
+# and a second copy of the constant here is exactly how the two would drift.
+from pipeline.screeners.breadth_signals import thrust_count
+
 # Five ordinal levels, worst → best. The board reads as a shape, so the count
 # has to stay small and fixed.
 LEVELS: List[str] = ["absent", "very weak", "early", "started", "good"]
@@ -122,13 +126,17 @@ def state_board(frame: pd.DataFrame, health: Optional[Dict[str, Any]] = None
 
     # 5 · Thrust
     up4 = _num(row.get("up_4pct"))
+    # One owner for the rule: breadth_signals scales it to the row's own
+    # universe, and the board must not keep a second copy of the constant.
+    need = thrust_count(row)
     if up4 is None or dn4 is None:
         out.append(_row("thrust", FACT, None, "4% counts unavailable"))
     else:
         out.append(_row(
             "thrust", FACT,
-            _lvl((up4 >= 300 and up4 > dn4, 4), (dn4 >= 300 and dn4 > up4, 0), (True, 2)),
-            f"{up4:.0f} names +4% against {dn4:.0f} −4%"))
+            _lvl((up4 >= need and up4 > dn4, 4), (dn4 >= need and dn4 > up4, 0), (True, 2)),
+            f"{up4:.0f} names +4% against {dn4:.0f} −4% "
+            f"(a thrust needs {need:.0f} of today's {_num(row.get('universe_size')) or 0:.0f})"))
 
     # 6 · Extremes
     nh, nl = _num(row.get("new_highs")), _num(row.get("new_lows"))

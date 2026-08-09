@@ -18,7 +18,18 @@ import pandas as pd
 THRESHOLDS: Dict[str, Dict[str, float]] = {
     'ratio_5d':    {'bull': 1.0, 'bear': 0.5},
     'ratio_10d':   {'bull': 1.0, 'bear': 0.5},
-    'thrust':      {'count': 300},
+    # A share of that session's own universe, not an absolute count.
+    # 300 names was tuned when the Finviz fetch capped at 150 pages and the
+    # universe sat near 2,650 — a median 11.3% of it, in a tight 10.0–12.2%
+    # band across 558 archived sessions. Raising the fetch to 600 pages took
+    # the universe to 5,615 (M–Z came back, NVDA and MSFT included), which
+    # silently halved the threshold's meaning to 5.3%: half-strength thrust
+    # days would have lit the vote from here on.
+    #
+    # 0.113 holds the historical operating point. Replaying all 558 rows with
+    # the ratio instead of the constant flips 19 of them (3.4%) — cheap
+    # backwards, necessary forwards.
+    'thrust':      {'fraction': 0.113, 'min_count': 60},
     'qtr_spread':  {},              # sign-based
     'spread_13_34': {},             # sign-based
     'mcclellan':   {'extreme': 70},
@@ -42,6 +53,34 @@ def _num(x) -> Optional[float]:
     return None if math.isnan(f) else f
 
 
+# The Finviz fetch capped at 150 pages until 2026-08-09, and a cap that binds
+# does not sample the market, it truncates it mid-alphabet. Rows that hit the cap
+# exactly are undercounts of every whole-universe measure — up_4pct, new highs,
+# new lows — because everything from M to Z was missing. Flagged rather than
+# corrected: the counts cannot be recovered, and a replay crossing this stretch
+# should say so instead of comparing across it silently.
+TRUNCATED_UNIVERSE = 3000
+
+
+def universe_truncated(row: Dict[str, Any]) -> bool:
+    """True when this session's universe was cut off by the page cap."""
+    return _num(row.get('universe_size')) == TRUNCATED_UNIVERSE
+
+
+def thrust_count(row: Dict[str, Any]) -> Optional[float]:
+    """How many names a thrust needs, for this row's own universe.
+
+    Falls back to the historical constant when a row predates the
+    universe_size column, so replaying old archives keeps its old answer
+    rather than silently becoming unmeasurable.
+    """
+    u = _num(row.get('universe_size'))
+    if u is None or u <= 0:
+        return 300.0
+    return max(THRESHOLDS['thrust']['min_count'],
+               THRESHOLDS['thrust']['fraction'] * u)
+
+
 def breadth_votes(row: Dict[str, Any]) -> Dict[str, str]:
     """Votes for the 9 breadth-only rules. Missing/NaN inputs vote neutral."""
     votes: Dict[str, str] = {}
@@ -59,7 +98,7 @@ def breadth_votes(row: Dict[str, Any]) -> Dict[str, str]:
             votes[key] = 'neutral'
 
     up4, down4 = _num(row.get('up_4pct')), _num(row.get('down_4pct'))
-    n = THRESHOLDS['thrust']['count']
+    n = thrust_count(row)
     if up4 is None or down4 is None:
         votes['thrust'] = 'neutral'
     elif up4 >= n and down4 >= n:
@@ -151,7 +190,7 @@ def vote_detail(row: Dict[str, Any], votes: Dict[str, str],
         add(k, v, line, None if v is None else v - line, 'ratio', lbl)
 
     up4, dn4 = n('up_4pct'), n('down_4pct')
-    need = THRESHOLDS['thrust']['count']
+    need = thrust_count(row)
     # Zero on a non-session is absence, not calm — the mark has to be able to
     # say "not counted" rather than "nothing happened".
     thrust_measurable = up4 is not None and dn4 is not None and (up4 + dn4) > 0
@@ -442,9 +481,9 @@ def evaluate(frame: pd.DataFrame, health: Optional[Dict[str, Any]]) -> Dict[str,
         notes.append('T2108 above 80 — chase risk')
 
     up4, down4 = _num(row.get('up_4pct')), _num(row.get('down_4pct'))
-    n = THRESHOLDS['thrust']['count']
+    n = thrust_count(row)
     if up4 is not None and down4 is not None and up4 >= n and down4 >= n:
-        notes.append('Churn/volatile: 300+ stocks both up and down 4% — unresolved tape')
+        notes.append(f'Churn/volatile: {n:.0f}+ stocks both up and down 4% — unresolved tape')
     mc = _num(row.get('mcclellan_osc'))
     if mc is not None and abs(mc) >= THRESHOLDS['mcclellan']['extreme']:
         notes.append(f"McClellan at {mc:+.0f} — extreme reading")
@@ -478,6 +517,8 @@ def evaluate(frame: pd.DataFrame, health: Optional[Dict[str, Any]]) -> Dict[str,
         'guidance': _GUIDANCE[(env, risk)],
         'spy_state': spy_state, 'qqq_state': qqq_state, 'alignment': alignment,
         'confirmation': confirmation, 'notes': notes, 'votes': votes,
+        'universe_size': _num(row.get('universe_size')),
+        'universe_truncated': universe_truncated(row),
         'vote_detail': vote_detail(row, votes,
                                    spy['count'] if spy else None,
                                    qqq['count'] if qqq else None),

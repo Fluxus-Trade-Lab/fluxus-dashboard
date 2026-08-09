@@ -78,9 +78,33 @@ class TestBreadthVotes:
 
     def test_thresholds_single_source(self):
         from pipeline.screeners import breadth_signals
-        assert breadth_signals.THRESHOLDS['thrust']['count'] == 300
+        assert breadth_signals.THRESHOLDS['thrust']['fraction'] == 0.113
         assert breadth_signals.THRESHOLDS['t2108_zone']['oversold'] == 20
         assert breadth_signals.THRESHOLDS['t2108_zone']['overbought'] == 80
+
+    def test_thrust_scales_with_the_universe_it_was_measured_in(self):
+        """300 names meant 11.3% of a ~2,650 universe. When the Finviz fetch
+        went from 150 to 600 pages the universe doubled to 5,615 and a fixed
+        300 would have meant 5.3% — half-strength thrusts lighting the vote."""
+        from pipeline.screeners.breadth_signals import thrust_count
+        assert round(thrust_count({'universe_size': 3000})) == 339
+        assert round(thrust_count({'universe_size': 5615})) == 634
+        # a row predating the column keeps its historical answer rather than
+        # silently becoming unmeasurable
+        assert thrust_count({}) == 300.0
+
+    def test_thrust_vote_needs_more_names_in_a_bigger_universe(self):
+        """The same 400 up-4% names is a thrust in 3,000 and is not in 5,615."""
+        from pipeline.screeners.breadth_signals import breadth_votes
+        small = _row(up_4pct=400, down_4pct=50, universe_size=3000)
+        big = _row(up_4pct=400, down_4pct=50, universe_size=5615)
+        assert breadth_votes(small)['thrust'] == 'bull'
+        assert breadth_votes(big)['thrust'] == 'neutral'
+
+    def test_thrust_floor_holds_on_a_tiny_universe(self):
+        """A ratio alone would let a 200-name universe call 23 names a thrust."""
+        from pipeline.screeners.breadth_signals import thrust_count
+        assert thrust_count({'universe_size': 200}) == 60
 
 
 def _hist(closes, highs=None, lows=None, end='2026-07-29'):
