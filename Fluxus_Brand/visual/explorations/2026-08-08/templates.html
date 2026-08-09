@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FLUXUS — Templates &amp; cast marks</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500;font-display:block}
+:root{
+  --paper:#f2f1ed;--ink:#12110f;--ink2:#57534e;--ink3:#948f86;--ink4:#b9b3a9;
+  --rule:#d9d5cd;--hair:#e6e3db;
+  --took:#1a5488;--refused:#d1600f;--idle:#c2bdb4;--off:#e2ded6;
+  --sans:Plex,-apple-system,sans-serif;--cond:PlexCond,Plex,sans-serif;--mono:PlexMono,Menlo,monospace;
+  --u:8px;
+}
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+     -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.app{max-width:1240px;margin:0 auto;padding:0 calc(var(--u)*4) calc(var(--u)*14)}
+.mast{display:flex;align-items:baseline;gap:calc(var(--u)*3);
+      padding:calc(var(--u)*2) 0 calc(var(--u)*1.5);border-bottom:2px solid var(--ink)}
+.mast .wm{font-family:var(--cond);font-weight:700;font-size:20px;letter-spacing:.3em}
+.mast .r{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink3)}
+h1{font-family:var(--cond);font-weight:700;font-size:62px;line-height:.94;letter-spacing:-.015em;
+   text-transform:uppercase;margin:calc(var(--u)*5) 0 0;max-width:18ch}
+.lede{font-size:16.5px;line-height:1.55;max-width:66ch;margin:calc(var(--u)*3) 0 0;color:var(--ink2)}
+.lede b{color:var(--ink);font-weight:600}
+h3{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink3);
+   margin:calc(var(--u)*8) 0 0;padding-bottom:calc(var(--u)*1.2);border-bottom:1px solid var(--ink);
+   display:flex;justify-content:space-between;align-items:baseline}
+h3 em{font-style:normal;text-transform:none;letter-spacing:.01em;font-family:var(--sans);
+      font-size:11.5px;color:var(--ink2);font-weight:400}
+.note{font-size:12px;line-height:1.7;color:var(--ink2);max-width:84ch;margin:calc(var(--u)*2) 0 0}
+.note b{color:var(--ink);font-weight:600}
+.spec{font-family:var(--mono);font-size:11px;line-height:1.9;color:var(--ink2);
+      background:#eae8e2;padding:calc(var(--u)*2);margin-top:calc(var(--u)*2);white-space:pre-wrap}
+
+.tpl{border:1.5px solid var(--ink);background:#fbfaf7;padding:calc(var(--u)*3.5);
+     margin-top:calc(var(--u)*2.5)}
+.slot{color:var(--took);font-family:var(--mono);font-weight:500}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--u)*4);margin-top:calc(var(--u)*2.5)}
+
+/* 1 risk ledger footer */
+.ledger{border-top:1.5px solid var(--ink);margin-top:calc(var(--u)*2.5);
+        padding-top:calc(var(--u)*1.25);display:flex;gap:calc(var(--u)*4);
+        font-family:var(--mono);font-size:12px;color:var(--ink2)}
+.ledger b{color:var(--ink);font-weight:500}
+
+/* 2 judgment vs execution */
+.je{display:grid;grid-template-columns:1fr 96px 1fr;gap:0;align-items:stretch}
+.je .col{padding:calc(var(--u)*2)}
+.je .gap{border-left:1px dashed var(--ink4);border-right:1px dashed var(--ink4);
+         display:flex;flex-direction:column;align-items:center;justify-content:center;
+         background:repeating-linear-gradient(45deg,#eae8e2 0 2px,transparent 2px 7px)}
+.je .gap b{font-family:var(--cond);font-weight:700;font-size:26px;line-height:1}
+.je .gap span{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--ink3);margin-top:4px}
+.je .lb{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--ink3);
+        text-transform:uppercase;margin-bottom:calc(var(--u)*1.25)}
+
+/* 3 two loss registers */
+.loss{padding:calc(var(--u)*2.5);border:1px solid var(--rule);background:#fbfaf7}
+.loss.judgment{border:1.5px solid var(--ink);background:transparent}
+.loss .lb{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--ink3);
+          text-transform:uppercase;margin-bottom:calc(var(--u)*1.5)}
+.loss h4{font-family:var(--cond);font-weight:700;font-size:22px;margin:0 0 calc(var(--u)*1.25)}
+.loss p{margin:0;font-size:13px;line-height:1.65;color:var(--ink2)}
+
+/* 4 number + criterion */
+.numcrit .n{font-family:var(--cond);font-weight:700;font-size:52px;line-height:1;letter-spacing:-.02em}
+.numcrit .c{font-size:15px;line-height:1.6;margin-top:calc(var(--u)*1.5);max-width:56ch;
+            border-left:2px dashed var(--ink4);padding-left:calc(var(--u)*1.75)}
+
+/* 5 three X registers */
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--u)*3);margin-top:calc(var(--u)*2.5)}
+.xcard{border:1px solid var(--rule);padding:calc(var(--u)*2.5);background:#fbfaf7}
+.xcard.joke{border:1px dashed var(--ink4);background:transparent}
+.xcard .lb{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--ink3);
+           text-transform:uppercase;margin-bottom:calc(var(--u)*1.5)}
+.xcard .body{font-size:14px;line-height:1.6}
+.xcard .rule{font-size:11px;line-height:1.6;color:var(--ink3);margin-top:calc(var(--u)*2);
+             padding-top:calc(var(--u)*1.25);border-top:1px solid var(--hair)}
+
+/* cast marks */
+.cast{display:grid;grid-template-columns:132px 120px 1fr 200px;gap:calc(var(--u)*2.5);
+      align-items:center;padding:calc(var(--u)*2) 0;border-bottom:1px solid var(--hair)}
+.cast .nm{font-family:var(--cond);font-weight:600;font-size:17px}
+.cast .desc{font-size:12px;line-height:1.6;color:var(--ink2)}
+.cast .field{font-family:var(--mono);font-size:11px;color:var(--ink2)}
+.cast .field small{display:block;color:var(--ink3);font-size:9.5px;margin-top:3px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <pattern id="hx" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="5" stroke="#7d3908" stroke-width="1.7"/></pattern>
+</defs></svg>
+
+<div class="app">
+  <div class="mast"><span class="wm">FLUXUS</span>
+    <span style="font-size:12.5px;color:var(--ink3)">Templates &amp; cast marks</span>
+    <span class="r">ONE VOICE, ONE TEMPLATE</span></div>
+
+  <h1>Six templates,<br>five marks</h1>
+  <p class="lede">Every entry in the voice bible that describes <b>how something should be said</b>
+  gets one reusable form here. A template with no matching entry in the bible is decoration and
+  gets deleted; an entry with no template is a voice that only exists in prose.
+  <br><br>These are <b>specs, not data views</b> — the slots are shown as
+  <span class="slot">slots</span>. Where a filled example appears it uses public market data only.
+  Source: <b>Fluxus_Voice_To_Template.md</b>.</p>
+
+  <!-- 1 -->
+  <h3>01 · Risk ledger footer <em>Voice bible §3 — "the ledger is the shield made visible"</em></h3>
+  <div class="tpl">
+    <div style="font-size:15px;line-height:1.6;color:var(--ink2)">
+      …the body of any public trade, ending here ↓</div>
+    <div class="ledger">
+      <span>TRADE RISK <b class="slot">x.xx%</b></span>
+      <span>PORT RISK <b class="slot">y.yy%</b></span>
+      <span>STOP <b class="slot">nn.nn</b></span>
+      <span>R TARGET <b class="slot">n.nR</b></span>
+    </div>
+  </div>
+  <div class="spec">position   fixed footer, always last, always the same four fields
+size       Plex Mono 12px · labels #948F86 · values ink
+rule       every public trade carries it — no exceptions, no "this one is obvious"
+never      never as a headline, never coloured, never with a % sign on the R
+why        an unbroken footer is the only proof the discipline is not selective</div>
+
+  <!-- 2 -->
+  <h3>02 · Judgment, then execution <em>§4.6 rule 1 — "the blank between them is the product"</em></h3>
+  <div class="tpl">
+    <div class="je">
+      <div class="col"><div class="lb">What I saw</div>
+        <div style="font-size:14px;line-height:1.6"><span class="slot">the condition, as it read
+        at the time — no hindsight, no outcome</span></div></div>
+      <div class="gap"><b id="gapdays">—</b><span>DAYS</span></div>
+      <div class="col"><div class="lb">What I did</div>
+        <div style="font-size:14px;line-height:1.6"><span class="slot">the action, and how long
+        after — or nothing, which is still the answer</span></div></div>
+    </div>
+  </div>
+  <p class="note" id="gapnote"></p>
+  <div class="spec">gap        hatched, labelled in days, NEVER collapsed to "then"
+rule       the number in the middle is computed, never estimated
+rule       if the action was "nothing", the right column says nothing — it does not go blank
+why        the interval is the judgement; deleting it turns a decision into a story</div>
+
+  <!-- 3 -->
+  <h3>03 · Two losses, never mixed <em>§4.6 rule 3</em></h3>
+  <div class="two">
+    <div class="loss">
+      <div class="lb">Probe loss · a cost</div>
+      <h4>Flat, and it may be funny</h4>
+      <p><span class="slot">150 of these at −0.75R is what the method costs to run.</span>
+      Written level. Humour allowed. No mechanism, no apology, no lesson —
+      a probe that fails is the method working.</p>
+    </div>
+    <div class="loss judgment">
+      <div class="lb">Judgment loss · an error</div>
+      <h4>Cold, down to the mechanism</h4>
+      <p><span class="slot">One name, one thesis, re-attacked after it broke.</span>
+      Written cold. No humour. Take it apart to the mechanism and say plainly why
+      position discipline could not have saved it.</p>
+    </div>
+  </div>
+  <div class="spec">visual     probe = light rule, sits inside the flow
+           judgment = full ink border, stands alone on the page
+rule       the two forms NEVER appear in the same block, and never share a heading
+rule       win rate belongs to probes; judgement belongs to leverage — never the same table
+why        mixing them is the most expensive statistical error in the category</div>
+
+  <!-- 4 -->
+  <h3>04 · One number, one reusable criterion <em>§4.7 — the extra sentence IS the 40% teaching</em></h3>
+  <div class="tpl numcrit">
+    <div class="n" id="numline">—</div>
+    <div class="c" id="critline">—</div>
+  </div>
+  <div class="spec">form       number large in Condensed · criterion directly beneath, dashed rule
+sentence   fixed shape — "N times. M of them did X. So my condition is Y."
+rule       the criterion must be REUSABLE by the reader without you
+test       "having read this, what does the reader most want to ask next?" — answer that
+why        a number alone is a flex; a number with a criterion is a method</div>
+
+  <!-- 5 -->
+  <h3>05 · The three X registers <em>§4.7 — 30 manifesto / 40 teaching / 30 joke</em></h3>
+  <div class="three">
+    <div class="xcard"><div class="lb">Manifesto · 30%</div>
+      <div class="body"><span class="slot">One line. A position, not a prediction.</span></div>
+      <div class="rule">Full-bleed single line. No image. Never follows a joke.</div></div>
+    <div class="xcard"><div class="lb">Teaching · 40%</div>
+      <div class="body"><span class="slot">A number, then the criterion under it.</span></div>
+      <div class="rule">Template 04. This is the one that earns saves, not likes.</div></div>
+    <div class="xcard joke"><div class="lb">Joke · 30%</div>
+      <div class="body"><span class="slot">Plain text. That is the whole spec.</span></div>
+      <div class="rule"><b>No layout at all, and never an image.</b> Giving a joke a template is
+        the same mistake as explaining it.</div></div>
+  </div>
+  <div class="spec">registers  X = fragments · the letter = full paragraphs. Never cross the streams.
+sizes      X fragment 15px/1.45 · letter body 18px/1.7 — the difference must be obvious
+rule       a manifesto line may never appear after a joke (it kills the joke)
+note       30/40/30 is a CONTENT ratio, not a layout ratio</div>
+
+  <!-- 6 -->
+  <h3>06 · The letter, six parts <em>§6 repeatable format</em></h3>
+  <div class="spec">1 masthead   HOW MUCH + date · Plex Cond Bold, letter-spacing .3em
+2 headline   an aphorism, not a summary · Plex Cond 34px
+3 the tape   3–4 cold full sentences: what the Herd does · what the Algo Monkeys
+             are forced to do · the read
+4 toggle     exactly ONE — art high at tops, grocery low at bottoms. Never both.
+5 the trade  as measurement: size, stop, R, 1% risk. Defence shown, never bragged.
+             Carries template 01 as its footer.
+6 P.S.       teaches. **Always warm.** The body is cold and the P.S. is warm —
+             that temperature difference is the retention engine.
+
+column       720px · body Plex Sans 18px/1.7 · never fragment lists (reads as AI slop)</div>
+
+  <!-- cast -->
+  <h3>Cast marks <em>Each one hangs on a computable quantity — no quantity, no mark</em></h3>
+  <div id="cast"></div>
+  <p class="note"><b>The rule that keeps this honest.</b> A character may only enter a drawing if
+  something in the pipeline can be counted for it. The First Penguin has no public field — his
+  mark needs the trade log, so until that is joined he stays in the prose and off the charts.
+  That is the same discipline as the blank Rates cell.</p>
+</div>
+
+<script>
+const D = {"breadth": {"today": {"universe_size": 3000.0, "spx_close": 7489.72021484375, "up_4pct": 231.0, "down_4pct": 288.0, "ratio_5d": 0.9905, "ratio_10d": 0.8484, "up_25pct_qtr": 342.0, "down_25pct_qtr": 523.0, "up_25pct_month": 81.0, "down_25pct_month": 284.0, "up_50pct_month": 24.0, "down_50pct_month": 50.0, "up_13pct_34d": 498.0, "down_13pct_34d": 723.0, "t2108": 45.77, "pct_above_200sma": 46.77, "pct_above_50sma": 46.03, "pct_above_20sma": 40.7, "advances": 1265.0, "declines": 1601.0, "new_highs": 29.0, "new_lows": 12.0, "net_advances": -336.0, "rana": -117.24, "ad_line": -15978.0, "mcclellan_osc": -23.23}, "trace": {"t2108": [55.53, 55.88, 56.83, 58.72, 59.31, 53.53, 54.4, 54.17, 55.83, 53.17, 56.5, 54.03, 51.2, 53.03, 50.63, 51.3, 43.93, 52.64, 53.39, 50.35, 46.64, 48.99, 48.12, 44.24, 45.34, 48.47, 47.73, 45.1, 46.47, 45.77], "pct_above_20sma": [54.71, 53.69, 54.16, 57.72, 58.42, 53.37, 55.7, 56.8, 59.23, 56.73, 60.27, 55.37, 48.17, 51.73, 49.37, 49.97, 42.5, 51.02, 52.35, 47.73, 43.11, 47.08, 42.2, 36.99, 38.62, 44.13, 44.97, 39.57, 41.9, 40.7], "pct_above_50sma": [56.34, 55.06, 56.56, 58.64, 59.54, 52.87, 53.77, 53.23, 54.27, 52.4, 55.5, 53.23, 51.07, 52.0, 49.8, 51.33, 43.67, 52.23, 52.96, 51.12, 48.66, 50.34, 50.0, 46.73, 46.95, 49.33, 48.7, 45.5, 47.27, 46.03], "pct_above_200sma": [60.82, 60.53, 60.74, 61.5, 61.86, 48.6, 48.3, 48.7, 49.5, 47.77, 50.13, 49.0, 47.6, 48.63, 45.37, 48.33, 41.3, 49.11, 49.63, 48.81, 47.58, 48.56, 47.98, 46.42, 46.07, 47.97, 46.73, 46.2, 47.2, 46.77], "ratio_5d": [1.2744, 1.0881, 0.7263, 0.8956, 1.0987, 1.2431, 1.4169, 1.6944, 1.7103, 1.4315, 1.2306, 0.8563, 0.7328, 0.758, 0.7669, 0.5531, 0.7378, 0.8467, 0.598, 0.5871, 0.6616, 0.8524, 0.7612, 0.7672, 0.6923, 0.9126, 0.6932, 0.5746, 0.8791, 0.9905], "ratio_10d": [1.0747, 1.4056, 1.2477, 1.225, 1.4413, 1.2558, 1.2736, 1.2121, 1.3164, 1.2968, 1.2361, 1.078, 1.0838, 1.1412, 1.0876, 0.8456, 0.8014, 0.781, 0.6775, 0.6712, 0.6024, 0.7944, 0.8013, 0.6739, 0.6373, 0.7856, 0.7661, 0.655, 0.8315, 0.8484], "mcclellan_osc": [5.19, 2.52, 4.35, 11.1, 19.16, 33.6, 28.63, 22.0, 24.73, 20.57, 18.12, 0.94, -19.68, -5.47, -6.23, -17.36, -16.07, -9.31, -10.59, -24.45, -39.45, -23.5, -30.92, -44.95, -39.06, -22.94, -14.17, -31.56, -20.08, -23.23], "up_4pct": [333.0, 161.0, 114.0, 267.0, 216.0, 648.0, 400.0, 321.0, 428.0, 293.0, 319.0, 159.0, 194.0, 360.0, 169.0, 160.0, 248.0, 245.0, 237.0, 155.0, 155.0, 484.0, 174.0, 139.0, 175.0, 428.0, 311.0, 149.0, 653.0, 231.0], "down_4pct": [103.0, 205.0, 308.0, 221.0, 156.0, 241.0, 235.0, 240.0, 305.0, 439.0, 212.0, 579.0, 366.0, 152.0, 257.0, 530.0, 228.0, 229.0, 527.0, 266.0, 322.0, 153.0, 315.0, 387.0, 451.0, 228.0, 389.0, 637.0, 247.0, 288.0], "net_advances": [695.0, -39.0, 172.0, 441.0, 557.0, 1070.0, 81.0, -48.0, 447.0, 75.0, 145.0, -724.0, -1066.0, 767.0, 23.0, -582.0, 35.0, 349.0, -52.0, -772.0, -955.0, 647.0, -538.0, -971.0, 12.0, 641.0, 343.0, -1088.0, 415.0, -336.0], "spx_close": [7500.580078125, 7472.7900390625, 7365.4599609375, 7358.22021484375, 7357.490234375, 7354.02001953125, 7440.43017578125, 7499.35986328125, 7483.22998046875, 7483.240234375, 7537.43017578125, 7503.85009765625, 7482.7099609375, 7543.64013671875, 7575.39013671875, 7515.33984375, 7543.58984375, 7572.39990234375, 7533.77001953125, 7457.68994140625, 7443.27978515625, 7509.2001953125, 7498.9599609375, 7408.2998046875, 7411.97998046875, 7413.18017578125, 7428.77978515625, 7316.14990234375, 7437.6298828125, 7489.72021484375]}, "dates": ["2026-06-18", "2026-06-22", "2026-06-23", "2026-06-24", "2026-06-25", "2026-06-26", "2026-06-29", "2026-06-30", "2026-07-01", "2026-07-02", "2026-07-06", "2026-07-07", "2026-07-08", "2026-07-09", "2026-07-10", "2026-07-13", "2026-07-14", "2026-07-15", "2026-07-16", "2026-07-17", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31"]}, "gap_from": "2026-03-25", "gap_to": "2026-08-04", "gap_days": 132};
+const T=D.breadth.today;
+const el=id=>document.getElementById(id);
+
+/* 02 — the gap is computed from real public event data, never estimated */
+el("gapdays").textContent = D.gap_days;
+el("gapnote").innerHTML =
+  `Filled with public data: CORT's first quality signal printed <b>${D.gap_from}</b> and its most
+   recent <b>${D.gap_to}</b> — <b>${D.gap_days} days</b>. On a real entry this middle column is
+   signal date to fill date, and it is computed from the trade log, never typed.`;
+
+/* 04 — a real, current example */
+el("numline").textContent = `${T.ratio_5d.toFixed(4)}`;
+el("critline").innerHTML =
+  `Five-day up/down ratio, against a threshold of 1.0. <b>It has closed below 1.0 on 4 of the
+   last 5 sessions.</b> So my condition is: two consecutive closes above 1.0 with net advances
+   positive, or the repair is not confirmed and nothing gets added.`;
+
+/* cast marks — mark, meaning, and the field it hangs on */
+const CAST=[
+  ["The First Penguin",
+   `<svg width="52" height="20"><rect x="4" y="4" width="12" height="12" fill="#1a5488"/>
+     <line x1="10" y1="16" x2="10" y2="20" stroke="#1a5488" stroke-width="1.5"/></svg>`,
+   "Solid square with an entry stem. He goes first because he measured, so the mark sits at the moment of entry.",
+   `trade log · first fill<br><small>NOT WIRED — stays in prose</small>`],
+  ["The Herd",
+   `<svg width="86" height="20">${Array.from({length:9},(_,i)=>
+     `<rect x="${2+i*9}" y="6" width="7" height="7" fill="none" stroke="#c2bdb4" stroke-width="1.1"/>`).join("")}</svg>`,
+   "A dense row of small hollow marks. Many, identical, late — the count is the character.",
+   `up_4pct<br><small>today ${T.up_4pct.toFixed(0)} names</small>`],
+  ["The Algo Monkeys",
+   `<svg width="86" height="20"><rect x="2" y="5" width="80" height="10" fill="#d1600f"/>
+     <rect x="2" y="5" width="80" height="10" fill="url(#hx)" opacity=".55"/></svg>`,
+   "A hatched band — the same texture as a failure, because forced selling is not a decision.",
+   `down_4pct<br><small>today ${T.down_4pct.toFixed(0)} names</small>`],
+  ["The Market God",
+   `<svg width="86" height="20"><line x1="0" y1="6" x2="86" y2="6" stroke="#12110f" stroke-width="1.4"/>
+     <text x="0" y="18" style="font:400 8px PlexMono,monospace;fill:#948f86">THRESHOLD</text></svg>`,
+   "A hairline running the full width, above everything. He is the rule layer, not the price layer.",
+   `THRESHOLDS<br><small>ratio_5d bull = 1.0</small>`],
+  ["The Weatherman",
+   `<svg width="86" height="20"><rect x="2" y="5" width="40" height="10" fill="#1a5488"/>
+     <rect x="2" y="5" width="80" height="10" fill="none" stroke="#1a5488" stroke-width="1.1"/></svg>`,
+   "A half-filled cell — a probability, issued daily, with no ego in the forecast.",
+   `state board coverage<br><small>8 of 9 measured today</small>`],
+];
+el("cast").innerHTML =
+  `<div class="cast" style="border-bottom:1px solid #12110f;padding-bottom:8px">
+     <span class="lb" style="font-family:var(--mono);font-size:9px;letter-spacing:.16em;
+       text-transform:uppercase;color:var(--ink3)">Character</span>
+     <span class="lb" style="font-family:var(--mono);font-size:9px;letter-spacing:.16em;
+       text-transform:uppercase;color:var(--ink3)">Mark</span>
+     <span class="lb" style="font-family:var(--mono);font-size:9px;letter-spacing:.16em;
+       text-transform:uppercase;color:var(--ink3)">Why that shape</span>
+     <span class="lb" style="font-family:var(--mono);font-size:9px;letter-spacing:.16em;
+       text-transform:uppercase;color:var(--ink3)">Hangs on</span></div>` +
+  CAST.map(([n,svg,why,field])=>`<div class="cast">
+    <span class="nm">${n}</span><span>${svg}</span>
+    <span class="desc">${why}</span><span class="field">${field}</span></div>`).join("");
+</script>
+</body></html>
