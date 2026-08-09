@@ -1,4 +1,5 @@
 import { isWeekend } from './session'
+import VoteGlyphs from './VoteGlyphs'
 
 const ENV_STYLE = {
   BULLISH: 'text-[var(--color-profit)]',
@@ -63,6 +64,15 @@ export default function VerdictBanner({ verdict, dataQuality, session }) {
         <Col label="Breadth confirmation" value={v.confirmation} />
         <Col label="Playbook" value={v.playbook} />
       </div>
+
+      {/* The marks carry the reading; the sentence stays as the fallback for
+          payloads written before vote_detail existed, and as the thing a
+          screenshot of the top third can still be read from. */}
+      {v.vote_detail?.length > 0 && (
+        <div className="pt-1 pb-3 border-t border-[var(--color-border-light)] mt-1">
+          <VoteGlyphs detail={v.vote_detail} />
+        </div>
+      )}
 
       <Falsification votes={v.votes} score={v.score} env={v.env} />
 

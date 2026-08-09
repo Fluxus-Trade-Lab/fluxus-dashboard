@@ -113,6 +113,79 @@ def breadth_votes(row: Dict[str, Any]) -> Dict[str, str]:
     return votes
 
 
+def vote_detail(row: Dict[str, Any], votes: Dict[str, str],
+                spy_warn: Optional[int] = None,
+                qqq_warn: Optional[int] = None) -> List[Dict[str, Any]]:
+    """Per vote: the value, the line it flips at, and the distance between them.
+
+    The frontend draws one mark per vote carrying four things — side, line,
+    distance, measurability. It must not re-derive the rules to do it: the
+    thresholds live here, and a second copy in JavaScript would drift the first
+    time one of them changed. So the rule stays in one place and the numbers
+    travel.
+
+    `margin` is in the metric's own unit and is never comparable across two
+    votes. A McClellan of 3.2 and 1.31 points of 200-day breadth are not the
+    same distance; `unit` is emitted so the reader is told which is which, and
+    the drawing normalises inside each metric's own range rather than across
+    them.
+    """
+    def n(k):
+        return _num(row.get(k))
+
+    def diff(a, b, unit):
+        av, bv = n(a), n(b)
+        return (None, None) if av is None or bv is None else (av - bv, unit)
+
+    spec: List[Dict[str, Any]] = []
+
+    def add(key, value, line, margin, unit, label):
+        spec.append({
+            'key': key, 'side': votes.get(key, 'neutral'), 'label': label,
+            'value': value, 'line': line, 'margin': margin, 'unit': unit,
+            'measurable': margin is not None,
+        })
+
+    for k, lbl in (('ratio_5d', '5-day ratio'), ('ratio_10d', '10-day ratio')):
+        v, line = n(k), THRESHOLDS[k]['bull']
+        add(k, v, line, None if v is None else v - line, 'ratio', lbl)
+
+    up4, dn4 = n('up_4pct'), n('down_4pct')
+    need = THRESHOLDS['thrust']['count']
+    # Zero on a non-session is absence, not calm — the mark has to be able to
+    # say "not counted" rather than "nothing happened".
+    thrust_measurable = up4 is not None and dn4 is not None and (up4 + dn4) > 0
+    add('thrust', up4, need, (up4 - need) if thrust_measurable else None,
+        'names', 'Thrust')
+
+    for k, a, b, lbl in (('qtr_spread', 'up_25pct_qtr', 'down_25pct_qtr', 'Quarterly spread'),
+                         ('spread_13_34', 'up_13pct_34d', 'down_13pct_34d', '13%/34d spread'),
+                         ('nh_nl', 'new_highs', 'new_lows', 'New highs vs lows')):
+        m, unit = diff(a, b, 'names')
+        add(k, n(a), 0, m, unit, lbl)
+
+    mc = n('mcclellan_osc')
+    add('mcclellan', mc, 0, mc, 'points', 'McClellan')
+
+    p200 = n('pct_above_200sma')
+    line = THRESHOLDS['pct200']['bull']
+    add('pct200', p200, line, None if p200 is None else p200 - line, 'points', '% above 200-day')
+
+    t21, z = n('t2108'), THRESHOLDS['t2108_zone']
+    add('t2108_zone', t21, z['strong_lo'],
+        None if t21 is None else t21 - z['strong_lo'], 'points', 'T2108 zone')
+
+    # Danger counts are inverted: fewer is safer. Emit the margin, not the raw
+    # count, so "up is safer" holds for every mark in the row.
+    for k, w, lbl in (('spy_danger', spy_warn, 'SPY warnings'),
+                      ('qqq_danger', qqq_warn, 'QQQ warnings')):
+        cap = THRESHOLDS[k]['bull_max']
+        add(k, w, cap, None if w is None else cap - w, 'warnings', lbl)
+
+    add('bench_trend', None, None, None, '', 'Benchmark trend')
+    return spec
+
+
 # ── SPY/QQQ danger signals (spec §2) ─────────────────────────────────
 
 def compute_stochastics(hist: pd.DataFrame) -> tuple[pd.Series, pd.Series]:
@@ -405,6 +478,9 @@ def evaluate(frame: pd.DataFrame, health: Optional[Dict[str, Any]]) -> Dict[str,
         'guidance': _GUIDANCE[(env, risk)],
         'spy_state': spy_state, 'qqq_state': qqq_state, 'alignment': alignment,
         'confirmation': confirmation, 'notes': notes, 'votes': votes,
+        'vote_detail': vote_detail(row, votes,
+                                   spy['count'] if spy else None,
+                                   qqq['count'] if qqq else None),
     }
 
 

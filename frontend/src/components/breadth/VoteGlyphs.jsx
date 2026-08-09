@@ -1,0 +1,128 @@
+/**
+ * The twelve votes, each carrying four things instead of one.
+ *
+ * Design: Fluxus_Brand/visual/explorations/2026-08-08/today_glyphs.html
+ *
+ *   fill      which side the vote is on
+ *   the rule  the line it flips at
+ *   height    how far it sits from that line, in its own unit
+ *   dashed    it could not be counted at all
+ *
+ * Why this exists: with one bit per cell the reasoning had to be written out
+ * underneath — "three of the nine are close to turning" was a sentence. It is
+ * now three ringed dots and no sentence.
+ *
+ * Two rules the drawing holds:
+ *
+ *   · Heights are normalised inside each vote's own range and are never
+ *     compared across two of them. A McClellan of 3.2 and 1.31 points of
+ *     200-day breadth are not the same distance.
+ *   · Up is always safer. The danger counts arrive as margin rather than as raw
+ *     count for exactly this reason — plotted raw, fewer warnings would point
+ *     down while every other mark points up.
+ *
+ * `vote_detail` comes from pipeline/screeners/breadth_signals.py, which owns the
+ * thresholds. This file must not re-derive them; a second copy in JavaScript
+ * drifts the first time one changes. When the payload predates that field this
+ * renders nothing and the caller falls back.
+ */
+
+/** Below this share of its own range, a vote is sitting on its line. */
+const ON_THE_LINE = 0.08
+
+/** Per-vote half-range, in the vote's own unit — the frame each mark is drawn
+ *  inside. Chosen to be wide enough that an ordinary day does not peg the top. */
+const RANGE = {
+  ratio_5d: 1.5, ratio_10d: 1.5, thrust: 300,
+  qtr_spread: 400, spread_13_34: 400, nh_nl: 200,
+  mcclellan: 70, pct200: 20, t2108_zone: 20,
+  spy_danger: 5, qqq_danger: 5, bench_trend: 1,
+}
+
+export default function VoteGlyphs({ detail }) {
+  if (!detail?.length) return null
+
+  return (
+    <div>
+      <div className="flex gap-2 items-end overflow-x-auto pb-1">
+        {detail.map((d) => <Glyph key={d.key} d={d} />)}
+      </div>
+      <div className="flex flex-wrap gap-x-5 gap-y-1 mt-2 text-[10px] text-[var(--color-text-muted)]">
+        <span className="flex items-center gap-1.5">
+          <i className="block w-4 h-px bg-[var(--color-text)]" />the line it flips at
+        </span>
+        <span className="flex items-center gap-1.5">
+          <i className="block w-2.5 h-2.5" style={{ background: 'var(--color-took)' }} />for
+        </span>
+        <span className="flex items-center gap-1.5">
+          <i className="block w-2.5 h-2.5" style={{ background: 'var(--color-refused)' }} />against
+        </span>
+        <span className="flex items-center gap-1.5">
+          <i className="block w-2.5 h-2.5 border border-dashed"
+             style={{ borderColor: 'var(--color-untested)' }} />could not be counted
+        </span>
+        <span className="flex items-center gap-1.5">
+          <i className="block w-2.5 h-2.5" style={{
+            background: 'var(--color-took)',
+            boxShadow: '0 0 0 2.5px rgba(184,134,11,.4)' }} />within a hair of its line
+        </span>
+        <span>height is inside each vote&rsquo;s own range — <b>up is always safer</b></span>
+      </div>
+    </div>
+  )
+}
+
+function Glyph({ d }) {
+  const range = RANGE[d.key] ?? 1
+  const frac = d.margin == null ? 0 : Math.max(-1, Math.min(1, d.margin / range))
+  const onLine = d.measurable && Math.abs(frac) < ON_THE_LINE
+  const fill = !d.measurable ? 'transparent'
+    : d.side === 'bear' ? 'var(--color-refused)'
+    : d.side === 'bull' ? 'var(--color-took)' : 'var(--color-untested)'
+
+  // 0 is the line, at mid-height; the dot rides above or below it
+  const dotBottom = 50 + frac * 42
+
+  return (
+    <div className="w-[58px] shrink-0" title={`${d.label} · ${d.side}`}>
+      <div className="relative h-[62px] border-b border-[var(--color-border-light)]">
+        <div className="absolute left-0 right-0 h-px bg-[var(--color-text)] opacity-50"
+             style={{ bottom: '50%' }} />
+        {d.measurable && (
+          <div className="absolute left-1/2 -translate-x-1/2 w-[2px]"
+               style={{
+                 background: fill, opacity: .55,
+                 bottom: `${Math.min(50, dotBottom)}%`,
+                 height: `${Math.abs(dotBottom - 50)}%`,
+               }} />
+        )}
+        <div className="absolute left-1/2 -translate-x-1/2 translate-y-1/2 w-[11px] h-[11px]"
+             style={{
+               bottom: `${d.measurable ? dotBottom : 50}%`,
+               background: fill,
+               border: d.measurable ? undefined : '1px dashed var(--color-untested)',
+               boxShadow: onLine ? '0 0 0 2.5px rgba(184,134,11,.4)' : undefined,
+             }} />
+      </div>
+      <div className="text-[8px] font-mono leading-[1.25] text-center mt-1.5
+                      text-[var(--color-text-muted)] break-words">
+        {d.label}
+      </div>
+      <div className="text-[12px] font-bold text-center leading-none mt-0.5"
+           style={{ fontFamily: 'var(--font-cond)',
+                    color: onLine ? '#b8860b'
+                      : d.measurable ? 'var(--color-text)' : 'var(--color-text-muted)' }}>
+        {d.margin == null ? '—' : fmt(d.margin)}
+      </div>
+      <div className="text-[8px] font-mono text-center text-[var(--color-text-muted)] leading-tight">
+        {d.margin == null ? 'not counted' : d.unit}
+      </div>
+    </div>
+  )
+}
+
+function fmt(v) {
+  const a = Math.abs(v)
+  const s = a >= 100 ? v.toFixed(0) : a >= 10 ? v.toFixed(1) : v.toFixed(2)
+  return v > 0 ? `+${s}` : s
+}
