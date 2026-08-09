@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FLUXUS — Home, three viewing distances · 2026-08-08</title>
+<style>
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:Plex;src:url(fonts/IBMPlexSans-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Medium.woff2) format("woff2");font-weight:500}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-SemiBold.woff2) format("woff2");font-weight:600}
+@font-face{font-family:PlexCond;src:url(fonts/IBMPlexSansCondensed-Bold.woff2) format("woff2");font-weight:700}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400}
+@font-face{font-family:PlexMono;src:url(fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500}
+
+:root{
+  --paper:#f4f3f0; --ink:#111110; --ink-2:#5c5852; --ink-3:#9c968d;
+  --rule:#dedad3; --hair:#eae7e1;
+  --works:#1f5f9e; --fails:#d1600f; --idle:#c2bdb4;
+  --sans:Plex,-apple-system,sans-serif; --cond:PlexCond,Plex,sans-serif; --mono:PlexMono,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.app{max-width:1440px;margin:0 auto;padding:0 34px 90px}
+
+.bar{display:flex;align-items:center;gap:26px;padding:15px 0 14px;border-bottom:1px solid var(--ink)}
+.mark{font-family:var(--cond);font-weight:700;font-size:19px;letter-spacing:.16em}
+.bar nav{display:flex;gap:22px;font-size:12.5px;color:var(--ink-3)}
+.bar nav b{color:var(--ink);font-weight:600}
+.bar .r{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.04em}
+
+/* the band that names each distance — a scaffold for this exploration only,
+   not a component. It exists so the three tiers can be argued about. */
+.dist{display:flex;align-items:baseline;gap:14px;margin:0 0 4px;padding-top:38px}
+.dist b{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;color:var(--ink-3);font-weight:500}
+.dist span{font-size:12px;color:var(--ink-3)}
+.dist i{flex:1;height:1px;background:var(--rule);font-style:normal}
+
+/* ── distance 1 · across the room. One decision, one number, one way it breaks ── */
+.one{padding:26px 0 30px;border-bottom:1px solid var(--ink)}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.26em;color:var(--ink-3);margin-bottom:14px}
+.verdict{font-family:var(--cond);font-weight:700;font-size:118px;line-height:.86;
+         letter-spacing:-.018em;text-transform:uppercase;margin:0}
+.sub{font-size:19px;line-height:1.45;max-width:660px;margin:18px 0 0;color:var(--ink-2)}
+.sub b{color:var(--ink);font-weight:600}
+.warn{margin:16px 0 0;padding:9px 13px;border:1px dashed var(--fails);max-width:660px;
+      font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+.warn b{color:var(--fails)}
+.breaks{margin:20px 0 0;padding-left:15px;border-left:2px solid var(--ink);max-width:660px}
+.breaks .h{font-family:var(--mono);font-size:10px;letter-spacing:.22em;color:var(--ink-3);margin-bottom:5px}
+.breaks p{margin:0;font-size:13.5px;line-height:1.55;color:var(--ink-2)}
+.breaks p b{color:var(--ink)}
+
+.one-grid{display:grid;grid-template-columns:1fr 400px;gap:56px;align-items:start}
+/* four benchmarks as filled cells, not traffic lights — count, not hue */
+.bench{border-top:1px solid var(--ink);padding-top:2px}
+.bench .row{display:grid;grid-template-columns:52px 1fr 78px;gap:12px;align-items:center;
+            padding:11px 0;border-bottom:1px solid var(--hair)}
+.bench .tk{font-family:var(--cond);font-weight:600;font-size:19px;letter-spacing:.01em}
+.cells{display:flex;gap:3px}
+.cells i{width:19px;height:13px;background:var(--idle)}
+.cells i.on{background:var(--works)}
+.bench .px{font-family:var(--mono);font-size:12.5px;text-align:right;color:var(--ink-2)}
+.bench .note{font-size:11px;color:var(--ink-3);grid-column:2/4;margin-top:-6px}
+.bench .cap{font-size:11px;color:var(--ink-3);padding-top:9px;line-height:1.5}
+
+/* ── distance 2 · seated. The evidence that produced the decision ── */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:44px;padding-top:22px}
+.sect h3{font-family:var(--mono);font-size:10px;letter-spacing:.24em;color:var(--ink-3);
+         font-weight:500;margin:0 0 2px;padding-bottom:7px;border-bottom:1px solid var(--ink)}
+.cond{display:grid;grid-template-columns:104px 118px 1fr;gap:12px;align-items:center;
+      padding:9px 0;border-bottom:1px solid var(--hair)}
+.cond .nm{font-weight:600;font-size:14px}
+.cond .ev{font-size:11.5px;color:var(--ink-3);line-height:1.4}
+.cells.sm i{width:16px;height:11px}
+.cells i.off{background:none;border:1px dashed var(--idle)}
+.heat{display:grid;grid-template-columns:56px 44px 1fr;gap:12px;align-items:center;
+      padding:9px 0;border-bottom:1px solid var(--hair)}
+.heat .tk{font-family:var(--mono);font-size:13.5px;font-weight:500}
+.heat .sc{font-family:var(--cond);font-weight:700;font-size:19px;line-height:1}
+.marks{display:flex;gap:9px;align-items:center}
+.marks span{display:flex;gap:2px}
+.marks i{width:9px;height:9px;background:var(--works)}
+.marks i.o{background:none;box-shadow:inset 0 0 0 1.1px var(--idle)}
+.foot{font-size:11px;color:var(--ink-3);line-height:1.55;margin:10px 0 0}
+.foot b{color:var(--ink-2)}
+
+/* ── distance 3 · leaning in. Everything that is reference, not decision ── */
+.three{padding-top:6px}
+.drawer{border:1px solid var(--rule);padding:15px 18px;margin-top:10px}
+.drawer .hd{display:flex;align-items:baseline;gap:12px}
+.drawer .hd b{font-family:var(--cond);font-weight:600;font-size:16px}
+.drawer .hd span{font-size:11.5px;color:var(--ink-3)}
+.drawer .hd .n{margin-left:auto;font-size:11px;color:var(--ink-3)}
+.drawer p{margin:7px 0 0;font-size:11.5px;color:var(--ink-3);line-height:1.55}
+.note{font-size:11.5px;color:var(--ink-3);line-height:1.6;margin:26px 0 0;max-width:900px}
+.note b{color:var(--ink-2)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="bar">
+    <span class="mark">FLUXUS</span>
+    <nav><b>Home</b><span>Screener</span><span>Portfolio</span><span>Breadth</span>
+         <span>Journal</span><span>Coach</span></nav>
+    <span class="r">SESSION 2026-08-08 · CLOSE</span>
+  </div>
+
+  <!-- ══ 3 m ══ -->
+  <div class="dist"><b>3 M</b><span>across the room · this is the screenshot</span><i></i></div>
+
+  <div class="one">
+    <div class="one-grid">
+      <div>
+        <div class="kicker">TODAY YOU MAY TRADE AT</div>
+        <h1 class="verdict">Full<br>size</h1>
+        <p class="sub">Breadth and both benchmarks agree. <b>Score +8 of 12</b>, risk low,
+          one warning active.</p>
+
+        <div class="warn">
+          <b>Computed from a weekend.</b> The ±4% and advance/decline counts behind these
+          votes are zero because nothing was counted, not because nothing moved.
+        </div>
+
+        <div class="breaks">
+          <div class="h">WHAT WOULD CHANGE THIS</div>
+          <p>Full size holds while the score stays <b>≥ +4</b>. It takes <b>5 points</b> to
+            break — <b>3</b> of the 9 bull votes crossing all the way over, or 5 going
+            undecided. Already against it: quarterly spread.</p>
+        </div>
+      </div>
+
+      <div class="bench">
+        <div class="row">
+          <span class="tk">SPY</span>
+          <span class="cells"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
+          <span class="px">773.26</span>
+        </div>
+        <div class="row">
+          <span class="tk">QQQ</span>
+          <span class="cells"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span>
+          <span class="px">723.03</span>
+        </div>
+        <div class="row" style="border:0;padding-top:0">
+          <span></span><span class="note">20SMA has not crossed the 50 — 2.99% under its high</span>
+        </div>
+        <div class="row">
+          <span class="tk">IWM</span>
+          <span class="cells"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
+          <span class="px">301.56</span>
+        </div>
+        <div class="row">
+          <span class="tk">RSP</span>
+          <span class="cells"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
+          <span class="px">220.09</span>
+        </div>
+        <p class="cap">Five cells, five power-trend checks. Rank is how many are filled —
+          three of four benchmarks pass all five, QQQ fails one. No traffic light: a lamp
+          carries one dimension and hides the other four.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 1 m ══ -->
+  <div class="dist"><b>1 M</b><span>seated · why the decision says that</span><i></i></div>
+
+  <div class="two">
+    <div class="sect">
+      <h3>The repair, by stage</h3>
+      <div class="cond"><span class="nm">Trend</span>
+        <span class="cells sm"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
+        <span class="ev">51.3% above the 200-day</span></div>
+      <div class="cond"><span class="nm">Extremes</span>
+        <span class="cells sm"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
+        <span class="ev">60 new 52-week highs against 11 new lows</span></div>
+      <div class="cond"><span class="nm">Index repair</span>
+        <span class="cells sm"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>
+        <span class="ev">2 of 2 benchmarks above the 50-day</span></div>
+      <div class="cond"><span class="nm">Breadth</span>
+        <span class="cells sm"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span>
+        <span class="ev">60.8% above the 20-day, T2108 56.1</span></div>
+      <div class="cond"><span class="nm">Selling pressure</span>
+        <span class="cells sm"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span>
+        <span class="ev">not countable on a weekend</span></div>
+      <div class="cond"><span class="nm">Confirmation</span>
+        <span class="cells sm"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span>
+        <span class="ev">five-day ratio 2.07, above 1.0 but not clear of 1.2</span></div>
+      <div class="cond"><span class="nm">Rates</span>
+        <span class="cells sm"><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i><i class="off"></i></span>
+        <span class="ev">not wired into the pipeline — filled by hand</span></div>
+      <p class="foot">Nine conditions, <b>8 measured</b>. The blank one stays blank; an
+        outline is not a zero.</p>
+    </div>
+
+    <div class="sect">
+      <h3>Where the confluence is</h3>
+      <div class="heat"><span class="tk">DDD</span><span class="sc">13.0</span>
+        <span class="marks"><span><i></i></span><span><i></i><i></i><i></i></span>
+          <span><i class="o"></i><i class="o"></i></span>
+          <span><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i></span></span></div>
+      <div class="heat"><span class="tk">FTK</span><span class="sc">13.0</span>
+        <span class="marks"><span><i></i></span><span><i></i><i></i><i></i><i></i></span>
+          <span><i class="o"></i><i class="o"></i></span>
+          <span><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i></span></span></div>
+      <div class="heat"><span class="tk">APPS</span><span class="sc">12.8</span>
+        <span class="marks"><span><i></i></span><span><i></i><i></i></span>
+          <span><i class="o"></i><i class="o"></i><i class="o"></i></span>
+          <span><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i></span></span></div>
+      <div class="heat"><span class="tk">CAKE</span><span class="sc">12.5</span>
+        <span class="marks"><span><i></i></span><span><i></i><i></i><i></i><i></i></span>
+          <span><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i></span>
+          <span><i class="o"></i><i class="o"></i></span></span></div>
+      <div class="heat"><span class="tk">CORT</span><span class="sc">12.5</span>
+        <span class="marks"><span><i></i></span><span><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <span><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i></span>
+          <span><i class="o"></i></span></span></div>
+      <p class="foot">Solid is the quality tier, outlined is participation.
+        Counted through <b>2026-08-06</b>, while the board above is stamped 2026-08-08 —
+        which is not a session at all. The two are built by different jobs and neither is
+        current; how far apart they really are is not something either file can say.
+        This list ranks by what has already stacked, so <b>every name on it is a survivor</b>;
+        the matched study of whether that pays came back <b>0 of 42</b>.</p>
+    </div>
+  </div>
+
+  <!-- ══ 20 cm ══ -->
+  <div class="dist"><b>20 CM</b><span>leaning in · reference, opened on purpose</span><i></i></div>
+
+  <div class="three">
+    <div class="drawer"><div class="hd"><b>Trend status</b>
+      <span>distance to 9 / 21 / 50 / 200 for the four benchmarks</span><span class="n">4 rows</span></div>
+      <p>Closed. Nothing here changes the decision above — it is the arithmetic underneath it.</p></div>
+    <div class="drawer"><div class="hd"><b>Indices · Style · Sectors · Industries</b>
+      <span>relative strength tables</span><span class="n">62 rows</span></div>
+      <p>Closed. Four tables that answer "where", never "so what" — so they open when asked,
+         not by default.</p></div>
+    <div class="drawer"><div class="hd"><b>Pre-market checklist</b>
+      <span>six questions, answered by you</span><span class="n">0 / 6</span></div>
+      <p>Closed until the open. It is an input, not a reading.</p></div>
+  </div>
+
+  <p class="note"><b>What changed.</b> The current home page is twelve objects at equal weight,
+    so nothing is first. Here the page has one decision, and everything else is demoted to
+    what supports it or what you go looking for. The three bands are labels for this argument
+    only — in the product they are silent, carried by size, rule weight and what is folded away.
+    <b>The test is whether the top band survives being cropped and sent on its own.</b></p>
+
+</div>
+</body>
+</html>
