@@ -624,10 +624,13 @@ def main():
     # it runs last. Non-fatal: a failure here must not cost the whole daily
     # run, since every other output is already on disk by this point.
     try:
-        from pipeline.themes.build_groups import run as run_groups
+        # save() rather than a local write: it also appends the daily group
+        # snapshot, and the two came apart once already — the snapshot lived in
+        # build_groups.main(), which this pipeline never calls, so the archive
+        # silently never grew.
+        from pipeline.themes.build_groups import run as run_groups, save as save_groups
         groups_payload = run_groups()
-        (OUTPUT_DIR / 'groups.json').write_text(
-            json.dumps(groups_payload, indent=2, default=_json_serializer))
+        save_groups(groups_payload, OUTPUT_DIR)
         gs = groups_payload['summary']
         logger.info(
             "Saved groups.json - %d industries, %d themes "
@@ -636,6 +639,21 @@ def main():
             gs['publishable_themes'], gs['provisional_themes'])
     except Exception:
         logger.exception("Group layer failed - groups.json not updated")
+
+    # Style rotation: fetch basket closes, then score. Its own failure domain
+    # and last in the run, because it is the only step that reaches the network
+    # after every other output is already on disk.
+    try:
+        from pipeline.rotation.fetch_baskets import fetch as fetch_baskets
+        from pipeline.rotation.build_rotation import build as build_rotation
+        fetch_baskets()
+        rotation_payload = build_rotation()
+        (OUTPUT_DIR / 'rotation.json').write_text(
+            json.dumps(rotation_payload, indent=2, default=_json_serializer))
+        rv = rotation_payload['verdict']
+        logger.info("Saved rotation.json - %s", rv['sentence'])
+    except Exception:
+        logger.exception("Rotation layer failed - rotation.json not updated")
 
     # Summary
     total_tickers = sum(

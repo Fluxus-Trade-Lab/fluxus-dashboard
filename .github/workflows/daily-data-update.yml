@@ -57,6 +57,8 @@ jobs:
             "data/output/stockbee_ratio.json"
             "data/output/vcp.json"
             "data/output/breadth.json"
+            "data/output/groups.json"
+            "data/output/rotation.json"
           )
           FAIL=0
           for f in "${EXPECTED_FILES[@]}"; do

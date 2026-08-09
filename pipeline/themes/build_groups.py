@@ -379,21 +379,38 @@ def run() -> Dict[str, Any]:
     return payload
 
 
+def save(payload: Dict[str, Any], output_dir: Path = OUTPUT_DIR,
+         archive: Path | None = None) -> Path:
+    """Write groups.json **and** append today's snapshot.
+
+    One function because these two writes must not come apart. They did: the
+    snapshot was wired into `main()` while the daily pipeline calls `run()` and
+    saved the file itself, so in production the archive never grew and the ten
+    weeks it needs never started counting. Anything that writes groups.json now
+    goes through here, so a third caller cannot repeat that.
+
+    The snapshot is isolated: it serves a UI ten weeks out and must never cost
+    today's file.
+    """
+    output_dir.mkdir(parents=True, exist_ok=True)
+    out = output_dir / "groups.json"
+    out.write_text(json.dumps(payload, indent=2, default=str))
+
+    try:
+        # Module attribute read at call time rather than a bound default, so the
+        # archive location is injectable. It was not, which is why this pairing
+        # had no test until it had already broken in production.
+        from pipeline.themes import group_history
+        group_history.record(payload, archive or group_history.ARCHIVE)
+    except Exception:  # noqa: BLE001 — groups.json still ships
+        logger.exception("group snapshot failed — groups.json is unaffected")
+    return out
+
+
 def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     payload = run()
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    out = OUTPUT_DIR / "groups.json"
-    out.write_text(json.dumps(payload, indent=2, default=str))
-
-    # Snapshot before anything else can fail: groups.json is overwritten every
-    # session, so a day not recorded here is a day gone. Isolated because the
-    # archive is for a UI ten weeks away and must never cost today's file.
-    try:
-        from pipeline.themes.group_history import record
-        record(payload)
-    except Exception:  # noqa: BLE001 — groups.json still ships
-        logger.exception("group snapshot failed — groups.json is unaffected")
+    out = save(payload)
 
     s = payload["summary"]
     logger.info("industries=%d %s", s["industries"], s["industry_states"])

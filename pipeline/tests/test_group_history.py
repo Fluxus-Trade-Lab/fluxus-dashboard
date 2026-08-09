@@ -84,3 +84,40 @@ class TestAppend:
         path = tmp_path / "g.csv"
         GH.record(payload(), path)
         assert list(GH.read(path)[0]) == GH.FIELDS
+
+
+class TestSaveKeepsTheTwoWritesTogether:
+    """The defect this guards: the snapshot lived in `build_groups.main()`,
+    the daily pipeline calls `run()` and wrote groups.json itself, so in
+    production the archive never grew and the ten weeks it needs to become
+    useful never started. Both writes now go through `save()`."""
+
+    def test_save_writes_the_json_and_appends_the_archive(self, tmp_path):
+        from pipeline.themes import build_groups
+        archive = tmp_path / "archive.csv"
+        out = build_groups.save(payload(), tmp_path, archive)
+        assert out.exists()
+        assert len(GH.read(archive)) == 2
+
+    def test_a_snapshot_failure_does_not_cost_groups_json(self, tmp_path, monkeypatch):
+        monkeypatch.setattr(GH, "record",
+                            lambda *a, **k: (_ for _ in ()).throw(OSError("disk")))
+        from pipeline.themes import build_groups
+        out = build_groups.save(payload(), tmp_path, tmp_path / "a.csv")
+        assert out.exists()
+
+    def test_run_all_saves_groups_through_save(self):
+        """Asserted on the source because the alternative is running the whole
+        daily pipeline. A local write here is the exact regression."""
+        import inspect
+        from pipeline.screeners import run_all
+        src = inspect.getsource(run_all.main)
+        assert "save_groups(" in src
+        assert "'groups.json'" not in src.split("save_groups(")[0][-400:]
+
+    def test_the_cron_can_call_the_rotation_steps(self):
+        """A module whose only entry point is `main()` is a module the cron
+        cannot use — the same shape as the bug above."""
+        from pipeline.rotation.fetch_baskets import fetch
+        from pipeline.rotation.build_rotation import build
+        assert callable(fetch) and callable(build)
