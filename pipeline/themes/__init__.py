@@ -12,7 +12,23 @@ rather than inside whichever module happened to need them first.
 """
 
 # Applied to theme and industry aggregation. NOT applied to universe.json.
-MIN_MARKET_CAP = 3e8
+#
+# Raised from $300M to $1B on 2026-08-10. Measured through a real build on that
+# session's universe, not estimated: 2,991 tradeable names to 2,379 (-20.5%),
+# 126 industries to 118, 73 themes to 72.
+#
+# The eight industries that fall out are the small-cap-heavy ones -- Luxury
+# Goods, Broadcasting, Mortgage Finance and similar -- which lose members below
+# the five a group needs to be scored at all.
+#
+# One theme dies by definition rather than by liquidity: Microcaps. A floor of
+# $1B removes the thing it is built to track. If it is ever wanted back it needs
+# its own floor, not this one.
+#
+# ETF-backed themes are untouched. Their members are funds, which never appear
+# in universe.json, so this filter has never applied to them -- a proxy theme
+# holding one ETF reads exactly as before.
+MIN_MARKET_CAP = 1e9
 MIN_DOLLAR_VOLUME = 2e6
 
 
