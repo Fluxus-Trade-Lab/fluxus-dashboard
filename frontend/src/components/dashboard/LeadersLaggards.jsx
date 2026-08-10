@@ -1,14 +1,14 @@
 import { useMemo } from 'react'
-import { etfName, rsTone, fmtExcess, excessOver, PERF_WINDOWS } from '../../lib/etfRank'
+import { etfName, rsTone, fmtRs, rankWithin, PERF_WINDOWS } from '../../lib/etfRank'
 
 /**
  * Best and worst industries, four things per row.
  *
- *   RS        excess over SPY on this row's own window, in percentage points
- *             — the same construction rs_engine uses for themes. It used to
- *             read rrs_*, which ranks today's RS inside recent sessions rather
- *             than measuring strength against SPY, so a fund down 5.8pp on the
- *             month could show 100.
+ *   RS        0-99 percentile of this row's own window, ranked inside this
+ *             card's group — the scale run_all.rank_tradeable puts on stocks.
+ *             It briefly read rrs_*, which ranks today against recent sessions
+ *             rather than against peers, so a fund 5.8pp behind on the month
+ *             could show 100.
  *   ticker    the instrument
  *   name      what it is exposed to
  *   change    the move over that window
@@ -18,19 +18,19 @@ import { etfName, rsTone, fmtExcess, excessOver, PERF_WINDOWS } from '../../lib/
  * reads at a glance, "$83.92" does not.
  */
 
-function Row({ etf, benchmark, changeKey, windowLabel }) {
+function Row({ etf, ranks, changeKey, windowLabel, cohort }) {
   const name = etfName(etf.ticker)
   const change = etf[changeKey]
-  const rs = excessOver(etf, benchmark, changeKey)
+  const rs = ranks.get(etf.ticker)
   const up = change > 0
   return (
     <div className="flex items-center gap-2.5 h-[34px]">
-      <span className="w-[42px] shrink-0 text-center text-[10px] font-mono tabular-nums
+      <span className="w-7 shrink-0 text-center text-[10px] font-mono tabular-nums
                        leading-[17px] rounded-sm"
             style={rsTone(rs)}
-            title={rs == null ? 'no benchmark reading for this window'
-                              : `${windowLabel} RS: ${fmtExcess(rs)}pp vs SPY`}>
-        {fmtExcess(rs)}
+            title={rs == null ? 'no reading for this window'
+                              : `${windowLabel} RS ${rs} of 99 — ranked among ${cohort} funds`}>
+        {fmtRs(rs)}
       </span>
       <span className="min-w-0 flex-1">
         <span className="block text-[12px] font-mono font-medium leading-[13px]
@@ -49,21 +49,21 @@ function Row({ etf, benchmark, changeKey, windowLabel }) {
   )
 }
 
-function Column({ label, rows, benchmark, changeKey, windowLabel }) {
+function Column({ label, rows, ranks, changeKey, windowLabel, cohort }) {
   return (
     <div>
       <h4 className="text-[9px] font-mono uppercase tracking-[.2em]
                      text-[var(--color-text-muted)] mb-1">{label}</h4>
       {rows.map((e) => (
-        <Row key={e.ticker} etf={e} benchmark={benchmark}
-             changeKey={changeKey} windowLabel={windowLabel} />
+        <Row key={e.ticker} etf={e} ranks={ranks} changeKey={changeKey}
+             windowLabel={windowLabel} cohort={cohort} />
       ))}
     </div>
   )
 }
 
 export default function LeadersLaggards({
-  etfs, benchmark, windows = ['1W', '1M'], limit = 3, title = 'Industries',
+  etfs, windows = ['1W', '1M'], limit = 3, title = 'Industries',
 }) {
   const cols = useMemo(() => {
     if (!etfs?.length) return []
@@ -72,7 +72,7 @@ export default function LeadersLaggards({
       const sorted = [...etfs].filter((e) => Number.isFinite(e[changeKey]))
         .sort((a, b) => b[changeKey] - a[changeKey])
       return {
-        w, changeKey,
+        w, changeKey, ranks: rankWithin(etfs, changeKey),
         leaders: sorted.slice(0, limit),
         laggards: sorted.slice(-limit).reverse(),
       }
@@ -100,19 +100,22 @@ export default function LeadersLaggards({
         <div className="grid grid-cols-2 gap-x-5">
           {cols.map((c) => (
             <Column key={`${c.w}-lead`} label={`${c.w} leaders`} rows={c.leaders}
-                    benchmark={benchmark} changeKey={c.changeKey} windowLabel={c.w} />
+                    ranks={c.ranks} changeKey={c.changeKey} windowLabel={c.w}
+                    cohort={etfs.length} />
           ))}
         </div>
         <div className="grid grid-cols-2 gap-x-5">
           {cols.map((c) => (
             <Column key={`${c.w}-lag`} label={`${c.w} laggards`} rows={c.laggards}
-                    benchmark={benchmark} changeKey={c.changeKey} windowLabel={c.w} />
+                    ranks={c.ranks} changeKey={c.changeKey} windowLabel={c.w}
+                    cohort={etfs.length} />
           ))}
         </div>
       </div>
       <p className="px-3 pb-2 m-0 text-[9.5px] leading-snug text-[var(--color-text-muted)]">
-        The boxed number is relative strength: this fund&rsquo;s return minus SPY&rsquo;s over
-        the same window, in percentage points. The figure on the right is the raw move.
+        The boxed number is relative strength, 0-99 — this fund&rsquo;s return over that
+        window ranked against the other {etfs.length}, on the same scale as a
+        stock&rsquo;s rs_21d. The figure on the right is the raw move.
       </p>
     </section>
   )
