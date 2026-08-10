@@ -596,37 +596,66 @@ class TestBuildReplay:
 
 
 class TestConditionsSeries:
-    """Market Conditions 0-100: percentile of each measurement, then averaged."""
+    """Market Conditions 0-100: partial credit against absolute neutral lines."""
 
     def _archive(self):
         import pandas as pd
         return pd.read_csv("data/history/breadth_archive.csv")
 
     def test_neither_end_of_the_scale_is_pinned(self):
-        # The failure this replaced: binary conditions flattened both extremes.
+        # The failure this replaced: counting positives flattened both ends.
         # 2026-04-17 (ratio_5d 4.29) and 2026-04-30 (ratio_5d 1.25) both scored
-        # exactly 100, and five separate months bottomed at exactly 0.
+        # a flat 100, and five separate months bottomed at exactly 0 -- dozens
+        # of sessions sharing one value.
+        #
+        # What matters is that the extremes stay distinguishable, not that they
+        # avoid a round number: the worst session in the archive rounds to 0.0
+        # for display while actually sitting at 0.043, and the one below it at
+        # 0.069. So this counts how many sessions share each extreme rather
+        # than asserting the extreme is never reached.
+        from collections import Counter
         from pipeline.screeners.breadth_signals import conditions_series
-        out = conditions_series(self._archive(), days=None)
-        raws = [h["raw"] for h in out["history"]]
-        assert max(raws) < 100
-        assert min(raws) > 0
+        raws = [h["raw"] for h in conditions_series(self._archive(), days=None)["history"]]
+        counts = Counter(raws)
+        assert counts[min(raws)] <= 2
+        assert counts[max(raws)] <= 2
 
     def test_a_stronger_day_outranks_a_barely_positive_one(self):
         from pipeline.screeners.breadth_signals import conditions_series
-        out = conditions_series(self._archive(), days=None)
-        by_date = {h["date"]: h["raw"] for h in out["history"]}
+        by_date = {h["date"]: h["raw"]
+                   for h in conditions_series(self._archive(), days=None)["history"]}
         assert by_date["2026-04-17"] > by_date["2026-04-30"]
 
-    def test_percentiles_never_look_forward(self):
-        # Expanding, not centred or trailing-windowed: a rank that sees the
-        # future repaints history every time the pipeline runs. Scoring a
-        # prefix must give the same answers as scoring the whole frame.
+    def test_score_tracks_the_share_that_are_positive(self):
+        # The anchor. A percentile version orbited 50 by construction and read
+        # a strong year as ordinary; this keeps absolute neutral lines, so the
+        # score has to stay near the plain "how many are positive" count.
+        from pipeline.screeners.breadth_signals import conditions_series
+        hist = conditions_series(self._archive(), days=None)["history"]
+        gaps = [abs(h["raw"] - h["positive"] / h["of"] * 100) for h in hist]
+        assert sum(gaps) / len(gaps) < 8
+
+    def test_one_iqr_from_neutral_earns_the_declared_credit(self):
+        # The curve's steepness is fixed by this constant, not chosen to make a
+        # reading come out right.
+        import math
+        from pipeline.screeners.breadth_signals import _CONDITION_CREDIT_AT_ONE_IQR
+        k = math.log(_CONDITION_CREDIT_AT_ONE_IQR / (1 - _CONDITION_CREDIT_AT_ONE_IQR))
+        assert abs(1 / (1 + math.exp(-k)) - _CONDITION_CREDIT_AT_ONE_IQR) < 1e-9
+
+    def test_neutral_lines_are_thresholds_or_natural_boundaries(self):
+        # Half the market, a net-positive day, a higher price. Nothing tuned.
+        from pipeline.screeners.breadth_signals import _CONDITION_NEUTRAL
+        assert set(_CONDITION_NEUTRAL.values()) <= {0.0, 1.0, 50.0}
+
+    def test_spread_estimate_never_looks_forward(self):
+        # An expanding window: scoring a prefix must match scoring the whole
+        # frame, or history repaints itself every time the pipeline runs.
         from pipeline.screeners.breadth_signals import conditions_series
         frame = self._archive()
-        cut = len(frame) - 40
-        full = {h["date"]: h["raw"] for h in conditions_series(frame, days=None)["history"]}
-        prefix = conditions_series(frame.iloc[:cut], days=None)["history"]
+        full = {h["date"]: h["raw"]
+                for h in conditions_series(frame, days=None)["history"]}
+        prefix = conditions_series(frame.iloc[:len(frame) - 40], days=None)["history"]
         for h in prefix[-20:]:
             assert h["raw"] == full[h["date"]]
 
@@ -639,33 +668,31 @@ class TestConditionsSeries:
             assert 0 <= h["score"] <= 100
             assert lo <= h["score"] <= hi   # an EMA cannot overshoot its input
 
-    def test_resolution_is_far_finer_than_the_old_vote_step(self):
+    def test_resolution_is_far_finer_than_a_vote_step(self):
         from pipeline.screeners.breadth_signals import conditions_series
         out = conditions_series(self._archive(), days=None)
         assert len({h["score"] for h in out["history"]}) > 200
 
     def test_positive_count_is_reported_beside_the_score(self):
-        # The explainable companion: "11 of 15 above their own median".
         from pipeline.screeners.breadth_signals import conditions_series
         out = conditions_series(self._archive(), days=5)
         for h in out["history"]:
             assert 0 <= h["positive"] <= h["of"]
         assert out["positive_today"] == out["history"][-1]["positive"]
 
-    def test_short_history_abstains_rather_than_ranking_against_noise(self):
+    def test_short_history_abstains_rather_than_guessing_a_spread(self):
         import pandas as pd
         from pipeline.screeners.breadth_signals import conditions_series
         frame = pd.DataFrame({"date": [f"2026-01-{d:02d}" for d in range(1, 21)],
                               "t2108": list(range(20))})
-        out = conditions_series(frame, days=None)
-        assert out["today"] is None   # under the 60-session minimum
+        assert conditions_series(frame, days=None)["today"] is None
 
     def test_percentiles_use_the_run_up_not_just_the_visible_tail(self):
         from pipeline.screeners.breadth_signals import conditions_series
         frame = self._archive()
-        tail = conditions_series(frame, days=30)["history"]
-        full = {h["date"]: h["raw"] for h in conditions_series(frame, days=None)["history"]}
-        for h in tail:
+        full = {h["date"]: h["raw"]
+                for h in conditions_series(frame, days=None)["history"]}
+        for h in conditions_series(frame, days=30)["history"]:
             assert h["raw"] == full[h["date"]]
 
     def test_first_point_is_seeded_not_ramped(self):
@@ -682,7 +709,6 @@ class TestConditionsSeries:
     def test_missing_columns_degrade_instead_of_raising(self):
         import pandas as pd
         from pipeline.screeners.breadth_signals import conditions_series
-        # No spx_close, no spreads — the measure should shrink, not crash.
         frame = pd.DataFrame({"date": [f"2026-01-{d:02d}" for d in range(1, 29)],
                               "t2108": list(range(28))})
         assert conditions_series(frame, days=None)["today"] is None
@@ -691,7 +717,7 @@ class TestConditionsSeries:
         import pandas as pd
         from pipeline.screeners.breadth_signals import conditions_series
         out = conditions_series(pd.DataFrame(), days=10)
-        # 0 means "worst in its own history", which is a reading. No data must
+        # 0 means "everything is negative", which is a reading. No data must
         # not borrow that meaning.
         assert out["today"] is None
         assert out["history"] == []

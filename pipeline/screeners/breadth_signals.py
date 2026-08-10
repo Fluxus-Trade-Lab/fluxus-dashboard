@@ -517,14 +517,40 @@ _CONDITION_SPREADS = {
     'thrust': ('up_4pct', 'down_4pct'),
 }
 
-# At least this many prior sessions before a percentile means anything. Below
-# it the rank is an artefact of a short sample, so the measure abstains.
+# The neutral line for each measurement -- the value at which it stops being a
+# positive and starts being a negative. Every one is either a published
+# threshold or a natural boundary (more than half the market, a net-positive
+# day, a rising price). None of them was chosen to make a chart look right.
+_CONDITION_NEUTRAL = {
+    'ratio_5d': 1.0, 'ratio_10d': 1.0,          # advancing = declining
+    't2108': 50.0, 'pct_above_200sma': 50.0,    # half the market
+    'pct_above_50sma': 50.0, 'pct_above_20sma': 50.0,
+    'mcclellan_osc': 0.0, 'net_advances': 0.0,  # net positive day
+    'nh_nl': 0.0, 'qtr_spread': 0.0, 'spread_13_34': 0.0, 'thrust': 0.0,
+    'px_1m': 0.0, 'px_3m': 0.0, 'px_1y': 0.0,   # price higher than it was
+}
+
+# How fast a measurement earns credit as it moves away from its neutral line.
+#
+# ln(99) is not a tuned constant: it is the value at which a measurement one
+# full interquartile range above neutral scores 99%. That fixes the shape of
+# the curve to the spread of the data itself, so nothing here is chosen to
+# produce a particular reading.
+#
+# The scale matters because the two obvious constructions both fail. Counting
+# positives (Oratnek's) pins at 0 and 100 -- 2026-04-17 with ratio_5d at 4.29
+# and 2026-04-30 with 1.25 both scored a flat 100. Ranking against history
+# fixes the ends but throws away the absolute level: a percentile orbits 50 by
+# construction, so a genuinely strong year reads as ordinary. This keeps the
+# absolute neutral lines and gives partial credit around them, which is both.
+_CONDITION_CREDIT_AT_ONE_IQR = 0.99
+
+# At least this many prior sessions before a spread estimate means anything.
 _CONDITIONS_MIN_HISTORY = 60
 
 # Light filter. Span 2 will not hide a turn; it stops one session flipping the
 # reading, which is what Oratnek's EMA2 is for.
 _CONDITIONS_SPAN = 2
-
 
 def _condition_frame(frame: pd.DataFrame) -> pd.DataFrame:
     """Every measurement the score reads, oriented so higher is better."""
@@ -582,19 +608,27 @@ def conditions_series(frame: pd.DataFrame, days: Optional[int] = 260) -> Dict[st
     if measures.empty or not len(measures.columns):
         return empty
 
-    ranks = measures.apply(
-        lambda col: col.expanding(min_periods=_CONDITIONS_MIN_HISTORY).rank(pct=True))
-    mean_rank = ranks.mean(axis=1, skipna=True) * 100
+    # Spread is estimated on an expanding window: each session sees only the
+    # sessions before it, so a rank can never repaint the past when new data
+    # arrives.
+    q75 = measures.expanding(min_periods=_CONDITIONS_MIN_HISTORY).quantile(0.75)
+    q25 = measures.expanding(min_periods=_CONDITIONS_MIN_HISTORY).quantile(0.25)
+    iqr = (q75 - q25).replace(0.0, np.nan)
+    neutral = pd.Series({c: _CONDITION_NEUTRAL[c] for c in measures.columns})
+    k = math.log(_CONDITION_CREDIT_AT_ONE_IQR / (1.0 - _CONDITION_CREDIT_AT_ONE_IQR))
 
-    # The explainable companion: how many measurements are above their own
-    # median so far. Same inputs, same history, no second model.
-    positive = (ranks > 0.5).sum(axis=1)
-    counted = ranks.notna().sum(axis=1)
+    credit = 1.0 / (1.0 + np.exp(-k * (measures - neutral) / iqr))
+    mean_credit = credit.mean(axis=1, skipna=True) * 100
+
+    # The explainable companion: how many measurements are simply on the good
+    # side of their neutral line. Same inputs, same lines, no second model.
+    positive = (measures > neutral).sum(axis=1)
+    counted = credit.notna().sum(axis=1)
 
     tail_start = 0 if days is None else max(0, len(frame) - days)
     raw: List[Dict[str, Any]] = []
     for pos in range(tail_start, len(frame)):
-        value = mean_rank.iloc[pos]
+        value = mean_credit.iloc[pos]
         if pd.isna(value):
             continue
         raw.append({
