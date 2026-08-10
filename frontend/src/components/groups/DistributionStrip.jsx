@@ -34,7 +34,7 @@ function laneHash(name) {
 
 const H = 96          // svg height = rendered height, so vertical scale is 1:1
 
-export default function DistributionStrip({ rows, scale, colourOf, onToggle, atLimit }) {
+export default function DistributionStrip({ rows, scale, colourOf, onToggle, atLimit, dim }) {
   const scored = rows.filter((r) => Number.isFinite(r._value))
   if (scored.length < 4) return null
 
@@ -90,7 +90,7 @@ export default function DistributionStrip({ rows, scale, colourOf, onToggle, atL
                     fill={colour ?? 'var(--color-text-muted)'}
                     stroke={colour ? 'var(--color-bg)' : 'none'}
                     strokeWidth={colour ? 1.5 : 0}
-                    opacity={colour ? 1 : 0.42}
+                    opacity={colour ? 1 : dim ? 0.22 : 0.4}
                     style={{ cursor: atLimit && !colour ? 'not-allowed' : 'pointer' }}
                     onClick={() => onToggle(r.group)}>
               <title>{r.group} {(r._value * 100).toFixed(1)}% — click to compare</title>

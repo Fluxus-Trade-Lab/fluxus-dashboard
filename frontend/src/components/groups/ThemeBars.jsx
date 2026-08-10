@@ -44,7 +44,7 @@ const HEAD = 8
 const TAIL = 4
 const NEIGHBOURS = 1
 
-export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit }) {
+export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, dim }) {
   const [showAll, setShowAll] = useState(false)
   const sorted = [...rows]
     .filter((r) => Number.isFinite(r._value))
@@ -110,9 +110,10 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit }) 
                  cursor: blocked ? 'not-allowed' : 'pointer',
                  borderLeft: colour ? `3px solid ${colour}` : '3px solid transparent',
                }}
-               className="group grid grid-cols-[24px_minmax(126px,206px)_34px_1fr_66px_18px]
-                          gap-2 items-center py-[3px] pl-1
-                          hover:bg-[var(--color-hover-bg)]">
+               className={`group grid grid-cols-[24px_minmax(126px,206px)_34px_1fr_66px_18px]
+                          gap-2 items-center py-[3px] pl-1 transition-opacity
+                          hover:bg-[var(--color-hover-bg)] hover:opacity-100
+                          ${dim && !colour ? 'opacity-40' : ''}`}>
             <span className="text-[9px] font-mono tabular-nums text-right
                              text-[var(--color-text-muted)]">{i + 1}</span>
             <span className="text-[12.5px] truncate"

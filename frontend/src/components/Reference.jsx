@@ -39,7 +39,13 @@ export default function Reference({ label, note, count, children }) {
           </span>
         )}
         {note && (
-          <span className="text-[11px] text-[var(--color-text-muted)] truncate">{note}</span>
+          /* the note earns its ink on approach: label and count are the
+             always-on promise, the description appears when the reader is
+             already looking at the line */
+          <span className="text-[11px] text-[var(--color-text-muted)] truncate
+                           opacity-0 group-hover:opacity-100 transition-opacity">
+            {note}
+          </span>
         )}
       </button>
 

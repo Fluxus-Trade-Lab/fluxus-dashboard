@@ -140,9 +140,8 @@ export default function GroupsPage() {
   return (
     <div className="space-y-5">
       <PageHeader group="market" title="Themes"
-        blurb="Where the strength is, and where it is turning — two different questions, so two measurements. A board that only ranks what has already won cannot show a turn."
-        meta={[`relative strength vs ${benchmark} · ${date}`,
-               `${themes.length} published + ${provisional.length} provisional`]} />
+        blurb="Where the strength is, and where it is turning."
+        meta={[`vs ${benchmark} · ${date} · ${themes.length} published + ${provisional.length} provisional`]} />
       <Reading text={readThemes(themes)} />
 
       {/* THE CONTROL BAR — every control on the page, in one sticky line. */}
@@ -170,13 +169,13 @@ export default function GroupsPage() {
         </div>
       </div>
 
-            <Section label="Field" question="is picking worth anything today?">
+            <Section label="Field" question="worth picking today?">
         <DistributionStrip rows={windowed} scale={scale}
                            colourOf={colourOf} onToggle={onToggle}
-                           atLimit={compare.atLimit} />
+                           atLimit={compare.atLimit} dim={compare.picks.length > 0} />
       </Section>
 
-      <Section label="Compare" question="trend, or bounce? — the ranking cannot tell them apart">
+      <Section label="Compare" question="trend, or bounce?">
         <TrajectoryPanel picks={compare.picks} byName={byName} highlight={win.hl} />
       </Section>
 
@@ -185,16 +184,16 @@ export default function GroupsPage() {
                right={<StateCensus rows={rows} />}>
         <ThemeBars rows={windowed} scale={scale}
                    colourOf={colourOf} onToggle={onToggle}
-                   atLimit={compare.atLimit} />
+                   atLimit={compare.atLimit} dim={compare.picks.length > 0} />
       </Section>
 
       <Reference label="Where the lead was earned" count={20}
-                 note="the four stretches for the top 20 by 3m — the wide view of the compare layer">
+                 note="top 20, all four stretches">
         <RsSegments rows={rows} />
       </Reference>
 
       <Reference label="Full table" count={rows.length}
-                 note="every column — accel, persistence, method, validation — and sortable">
+                 note="all columns, sortable">
         <GroupTable rows={rows} showMethod emptyNote="No groups" />
       </Reference>
 
