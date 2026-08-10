@@ -1,38 +1,48 @@
 import NAMES from './etfNames.json'
 
 /**
- * Relative strength for an ETF, straight off the pipeline.
+ * Relative strength for an ETF: its return minus the benchmark's, same window.
  *
- * `rrs_1w/1m/3m` are computed in pipeline/adapters/yfinance_adapter.py as the
- * percentile of today's rolling volatility-adjusted RS-vs-SPY inside the last
- * 5 / 21 / 63 sessions. 100 means today is the strongest reading of that
- * stretch, 0 the weakest. It is a rank in time, not a return, and not a
- * cross-sectional rank against other funds.
+ * This is the definition the pipeline already uses — rs_engine.relative_strength
+ * subtracts the benchmark's bucket from the row's, and excess_3m is "the
+ * three-month return minus the benchmark's". Reusing it means the number beside
+ * an industry means the same thing as the number beside a theme.
  *
- * The front end does NOT recompute this. An earlier version of this file
- * ranked each fund against its group here, which was a second definition of
- * "RS" living in the UI — same three letters, different construction, and no
- * way for a reader to know which one they were looking at.
+ * It is NOT `rrs_1w/1m/3m` from etf_data, which an earlier version of this file
+ * used and which was wrong here. Those are the percentile of today's rolling
+ * volatility-adjusted RS reading *inside the last N sessions* — a rank in time,
+ * not strength against SPY. The two disagree hard: REMX was down 3.4% on the
+ * month and 5.8pp behind SPY while its rrs_1w read 100, because today was its
+ * strongest reading of a bad stretch. Same three letters, different question.
  *
- * There is no 1-day window on purpose: a percentile needs something to rank
- * against and a single session ranks against nothing.
+ * Units are percentage points of excess, not a 0-100 score. A rank would need a
+ * cohort to rank against and would hide the size of the lead, which is the part
+ * that decides whether a group is worth the attention.
  */
 export const RS_WINDOWS = [
-  { key: 'rrs_1w', label: '1W', note: 'percentile within the last 5 sessions' },
-  { key: 'rrs_1m', label: '1M', note: 'percentile within the last 21 sessions' },
-  { key: 'rrs_3m', label: '3M', note: 'percentile within the last 63 sessions' },
+  { key: 'change_pct', label: '1D', note: 'today, against SPY' },
+  { key: 'perf_1w', label: '1W', note: 'five sessions, against SPY' },
+  { key: 'perf_1m', label: '1M', note: 'twenty-one sessions, against SPY' },
 ]
 
-/** Performance columns, for the leader/laggard sort and the printed change. */
+/** Performance columns, for sorting leaders and printing the raw move. */
 export const PERF_WINDOWS = {
   '1D': 'change_pct',
   '1W': 'perf_1w',
   '1M': 'perf_1m',
+  '3M': 'perf_3m',
 }
 
-/** The RS window that matches a performance window, so a row's rank and its
- *  change describe the same stretch of time. */
-export const RS_FOR_PERF = { '1D': 'rrs_1w', '1W': 'rrs_1w', '1M': 'rrs_1m' }
+/**
+ * Excess over the benchmark for one window, in percentage points.
+ * Null when either side is missing — an unmeasured leg must not read as zero.
+ */
+export function excessOver(etf, benchmark, key) {
+  const mine = etf?.[key]
+  const theirs = benchmark?.[key]
+  if (!Number.isFinite(mine) || !Number.isFinite(theirs)) return null
+  return (mine - theirs) * 100
+}
 
 /** Display name, or null when the vendor had none — never a guess. */
 export function etfName(ticker) {
@@ -40,13 +50,22 @@ export function etfName(ticker) {
 }
 
 /**
- * Rank → background tint. Three steps, not a gradient: the eye cannot read a
+ * Excess → background tint. Three steps, not a gradient: the eye cannot read a
  * continuous ramp back to a number, and the number is printed on top of it.
- * Strong / middle / weak is all the fill is asked to carry.
+ *
+ * The cuts are at ±2 percentage points against SPY, which is a real move at
+ * these horizons rather than noise, and the same cut is used at every window so
+ * a row's colour can be compared across columns.
  */
-export function rankTone(rank) {
-  if (rank == null) return { color: 'var(--color-text-muted)' }
-  if (rank >= 67) return { background: 'color-mix(in srgb, var(--color-took) 30%, transparent)' }
-  if (rank <= 33) return { background: 'color-mix(in srgb, var(--color-refused) 26%, transparent)' }
+export function rsTone(excess) {
+  if (excess == null) return { color: 'var(--color-text-muted)' }
+  if (excess >= 2) return { background: 'color-mix(in srgb, var(--color-took) 30%, transparent)' }
+  if (excess <= -2) return { background: 'color-mix(in srgb, var(--color-refused) 26%, transparent)' }
   return { color: 'var(--color-text-secondary)' }
+}
+
+/** One decimal, always signed: the sign is the whole point of an excess. */
+export function fmtExcess(v) {
+  if (v == null) return '—'
+  return `${v > 0 ? '+' : ''}${v.toFixed(1)}`
 }

@@ -49,6 +49,9 @@ import TradeDetailPage from './journal/TradeDetailPage'
 import { parseTickerHash } from './portfolio/lib/tickerUrl'
 import Footer from './Footer'
 
+/** The benchmark every RS reading on this page is measured against. */
+const SPY = (data) => (data?.etf_data || []).find((e) => e.ticker === 'SPY') ?? null
+
 const PUBLIC_PAGES = ['', 'method', 'results', 'pricing', 'brief']
 
 function pageKey(hash) {
@@ -158,12 +161,12 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                 other's layout. items-stretch is the default and is what makes
                 them end level regardless of how many rows each holds. */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 items-stretch">
-              <LeadersLaggards title="Industries"
+              <LeadersLaggards title="Industries" benchmark={SPY(data)}
                 etfs={(ETF_GROUPS.Industries || [])
                   .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                   .filter(Boolean)}
                 windows={['1W', '1M']} limit={3} />
-              <SectorStrength title="Sectors"
+              <SectorStrength title="Sectors" benchmark={SPY(data)}
                 etfs={(ETF_GROUPS['Sel Sectors'] || [])
                   .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                   .filter(Boolean)} />
