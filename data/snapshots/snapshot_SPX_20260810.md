@@ -21,8 +21,7 @@
 ## Expected move
 | Expiry | Move | Range |
 |---|---|---|
-| 0DTE (20260810) | ±31 (0.40%) | 7,727 – 7,789 |
-| 1DTE (20260811) | ±48 (0.62%) | 7,710 – 7,806 |
-**VIX** 15.45 · **VIX3M** 18.72 · term +3.27 (contango)
+| 0DTE (20260810) | ±28 (0.36%) | 7,730 – 7,785 |
+| 1DTE (20260811) | ±46 (0.59%) | 7,712 – 7,803 |
 ---
-*Generated 2026-08-10T08:09:48-04:00. Levels are computed, not predicted — see method. Not advice.*
+*Generated 2026-08-10T09:03:37-04:00. Levels are computed, not predicted — see method. Not advice.*

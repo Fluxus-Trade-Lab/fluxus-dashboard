@@ -1,7 +1,7 @@
 {
   "symbol": "SPX",
   "date": "2026-08-10",
-  "generated_at": "2026-08-10T08:09:48-04:00",
+  "generated_at": "2026-08-10T09:03:37-04:00",
   "gex_source": "data/gex/gex_SPX_20260810.json",
   "gex": {
     "symbol": "SPX",
@@ -1529,24 +1529,21 @@
     {
       "label": "0DTE",
       "expiry": "20260810",
-      "pts": 30.9,
-      "pct": 0.4,
-      "low": 7727,
-      "high": 7789
+      "pts": 27.8,
+      "pct": 0.36,
+      "low": 7730,
+      "high": 7785
     },
     {
       "label": "1DTE",
       "expiry": "20260811",
-      "pts": 48.0,
-      "pct": 0.62,
-      "low": 7710,
-      "high": 7806
+      "pts": 45.7,
+      "pct": 0.59,
+      "low": 7712,
+      "high": 7803
     }
   ],
-  "vix": {
-    "vix": 15.45,
-    "vix3m": 18.72
-  },
+  "vix": null,
   "gex_percentile": {
     "pct": 78.9,
     "n": 19,
@@ -1841,6 +1838,90 @@
         "ratio": 2.137,
         "same_sign": false,
         "note": null
+      }
+    ]
+  },
+  "gex_transition": {
+    "n": 19,
+    "n_history": 20,
+    "calibrated": false,
+    "mean_speed": 0.84,
+    "max_speed": 2,
+    "n_notable": 3,
+    "latest": {
+      "from": "positive",
+      "to": "positive",
+      "speed": 0,
+      "direction": "held",
+      "delta": 1.6187631190600005
+    },
+    "testable": false,
+    "note": "20 sessions held. The source's strongest finding fires about once in 950, so nothing here tests it \u2014 930 sessions short. Boundaries are percentiles of our own series and will move as it grows.",
+    "recent": [
+      {
+        "from_session": "2026-08-03",
+        "session": "2026-08-04",
+        "from_state": "positive",
+        "to_state": "deeply positive",
+        "from_value": 19.0832547353,
+        "to_value": 30.85039013572,
+        "delta": 11.767135400420003,
+        "speed": 1,
+        "direction": "rebuild",
+        "n_history": 20,
+        "calibrated": false
+      },
+      {
+        "from_session": "2026-08-04",
+        "session": "2026-08-05",
+        "from_state": "deeply positive",
+        "to_state": "deeply positive",
+        "from_value": 30.85039013572,
+        "to_value": 25.44733878229,
+        "delta": -5.403051353430001,
+        "speed": 0,
+        "direction": "held",
+        "n_history": 20,
+        "calibrated": false
+      },
+      {
+        "from_session": "2026-08-05",
+        "session": "2026-08-06",
+        "from_state": "deeply positive",
+        "to_state": "positive",
+        "from_value": 25.44733878229,
+        "to_value": 10.93019205425,
+        "delta": -14.51714672804,
+        "speed": 1,
+        "direction": "erosion",
+        "n_history": 20,
+        "calibrated": false
+      },
+      {
+        "from_session": "2026-08-06",
+        "session": "2026-08-07",
+        "from_state": "positive",
+        "to_state": "positive",
+        "from_value": 10.93019205425,
+        "to_value": 8.884928252649999,
+        "delta": -2.045263801600001,
+        "speed": 0,
+        "direction": "held",
+        "n_history": 20,
+        "calibrated": false
+      },
+      {
+        "from_session": "2026-08-07",
+        "session": "2026-08-10",
+        "from_state": "positive",
+        "to_state": "positive",
+        "from_value": 8.884928252649999,
+        "to_value": 10.50369137171,
+        "delta": 1.6187631190600005,
+        "speed": 0,
+        "direction": "held",
+        "n_history": 20,
+        "calibrated": false
       }
     ]
   },

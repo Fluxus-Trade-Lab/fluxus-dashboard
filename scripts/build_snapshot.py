@@ -60,6 +60,26 @@ def _auction_join(g: dict) -> dict:
             "profile_source": str(latest)}
 
 
+def _transition(symbol: str) -> dict | None:
+    """The GEX series read as a state move, not as a number.
+
+    The level is what we have always published; the source's fifteen-year test
+    says the level is mostly noise and the transition is the signal. This makes
+    the transition visible. It does not make it tested — see the note it carries.
+    """
+    from pipeline.reference import levels_log as LL
+    from pipeline.reference import transitions as TR
+    per = LL.last_entry_per_day(LL.read(), symbol)
+    ser = [(k, per[k]["total_gex"] / 1e9) for k in sorted(per)
+           if per[k].get("total_gex") is not None]
+    rows = TR.transitions(ser)
+    if not rows:
+        return None
+    out = TR.summary(rows)
+    out["recent"] = rows[-5:]
+    return out
+
+
 def _flow_ratio(g: dict) -> dict | None:
     """Today's flow against standing positioning, per strike.
 
@@ -266,6 +286,7 @@ def main():
         "scorecard": _scorecard(args.symbol),
         "consistency": _consistency(g),
         "flow_ratio": _flow_ratio(g),
+        "gex_transition": _transition(args.symbol),
         **_auction_join(g),
     }
     jp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.json"
