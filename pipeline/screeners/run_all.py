@@ -180,16 +180,52 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
                 int(tradeable.sum()), len(df))
 
     def rank_tradeable(col: str) -> pd.Series:
-        """Percentile rank within the tradeable set; NaN for everyone else."""
+        """Percentile rank within the tradeable set; NaN for everyone else.
+
+        `na_option='top'`, not `'bottom'`. Pandas names these by where the NaN
+        sits in the *ranking order*, not by where it lands on the score: with
+        `'bottom'` a missing value takes the LARGEST rank, which after the x99
+        becomes 99 -- top of the scale. That is what shipped, and it meant a row
+        with no quarterly return was not merely excluded from the leaders, it
+        WAS the leader: on 2026-08-09, 27 tradeable names had no perf_3m and
+        every one of them scored rs_63d = 99 against a median of 49; 61 had no
+        perf_6m and scored 98. Those scores then carried into rs_ibd at 0.4
+        weight each, so a handful of names sat at the top of the IBD list for
+        the single reason that we knew nothing about them.
+
+        `'top'` gives a missing value the smallest rank instead, so no reading
+        scores as the strongest reading. It still occupies a rank rather than
+        being dropped, which keeps the denominator -- and therefore every other
+        name's percentile -- unchanged.
+        """
         out = pd.Series(np.nan, index=df.index, dtype=float)
         sub = df.loc[tradeable, col]
-        out.loc[tradeable] = sub.rank(pct=True, na_option='bottom') * 99
+        out.loc[tradeable] = sub.rank(pct=True, na_option='top') * 99
         return out
 
     # --- Price RS percentile ranks (0-99 scale) ---
-    df['rs_21d'] = rank_tradeable('perf_1m')
-    df['rs_63d'] = rank_tradeable('perf_3m')
-    df['rs_126d'] = rank_tradeable('perf_6m')
+    #
+    # NAMING: these say sessions and mean calendar months. The underlying
+    # perf_1m/3m/6m come from Finviz's Perf Month / Perf Quart / Perf Half,
+    # which are calendar windows; yfinance enrichment only fills the gaps, and
+    # it fills them with 21/63/126 *sessions*. Measured on 129 names with local
+    # bars, under 4% of stored values match a session-based recompute -- so the
+    # column is calendar-based in all but a rounding of cases.
+    #
+    # rs_1m / rs_3m / rs_6m are the honest names and are the ones to use. The
+    # rs_21d / rs_63d / rs_126d aliases are kept only until the frontend moves
+    # off them (ResultsTable, screenerFilter, TickerStats, ThemeMembers all
+    # read the old keys today). Same Series object, not a recomputation.
+    #
+    # The ETF side is the opposite and stays that way: etf_data has no vendor
+    # perf at all, so its perf_1w/1m/3m really are 5/21/63 sessions. Dashboard's
+    # "1M" and the screener's "1M" are therefore different months by a few days.
+    df['rs_1m'] = rank_tradeable('perf_1m')
+    df['rs_3m'] = rank_tradeable('perf_3m')
+    df['rs_6m'] = rank_tradeable('perf_6m')
+    df['rs_21d'] = df['rs_1m']
+    df['rs_63d'] = df['rs_3m']
+    df['rs_126d'] = df['rs_6m']
 
     # --- IBD-style RS: 40% 3mo + 40% 6mo + 20% 1yr ---
     #
@@ -206,8 +242,8 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     #     before they register it
     #   * a leader that has stopped. A name can hold a top score on last
     #     year's advance while going nowhere now; this measures the record,
-    #     not the current state. Read it beside rs_21d to see which it is.
-    df['rs_ibd'] = (0.4 * df['rs_63d'] + 0.4 * df['rs_126d']
+    #     not the current state. Read it beside rs_1m to see which it is.
+    df['rs_ibd'] = (0.4 * df['rs_3m'] + 0.4 * df['rs_6m']
                     + 0.2 * rank_tradeable('perf_1y'))
 
     # --- F score (fundamental) ---
@@ -232,7 +268,7 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # Industry median over tradeable members only, to match the field the
     # constituent ranks were measured against. groups.json aggregates the same
     # way, so the two industry readings now describe the same member set.
-    industry_rs = df.loc[tradeable].groupby('industry')['rs_63d'].median()
+    industry_rs = df.loc[tradeable].groupby('industry')['rs_3m'].median()
     i_raw = df['industry'].map(industry_rs)
     df['i_score'] = pd.Series(np.nan, index=df.index, dtype=float)
     df.loc[tradeable, 'i_score'] = (
@@ -243,9 +279,9 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     df['h_score'] = (
         df['f_score'] * 2 +
         df['i_score'] * 3 +
-        df['rs_21d'] * 1 +
-        df['rs_63d'] * 2 +
-        df['rs_126d'] * 2
+        df['rs_1m'] * 1 +
+        df['rs_3m'] * 2 +
+        df['rs_6m'] * 2
     ) / 10
 
     # --- Derived technical columns ---
@@ -262,7 +298,8 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
         df['high_52w_dist'] = h
 
     # Round score columns to integers
-    for col in ['rs_21d', 'rs_63d', 'rs_126d', 'rs_ibd', 'f_score', 'i_score', 'h_score']:
+    for col in ['rs_1m', 'rs_3m', 'rs_6m', 'rs_21d', 'rs_63d', 'rs_126d',
+                'rs_ibd', 'f_score', 'i_score', 'h_score']:
         df[col] = df[col].round(0).astype('Int64')  # Int64 keeps NA for non-tradeable
 
     # --- Performance percentile ranks (0-1 scale, relative to full universe) ---
@@ -596,7 +633,9 @@ def main():
         'atr', 'rel_volume', 'avg_volume', 'volume',
         'market_cap', 'sector', 'industry',
         'high_52w', 'low_52w', 'eps_growth_next_y',
-        'rs_21d', 'rs_63d', 'rs_126d', 'rs_ibd',
+        'rs_1m', 'rs_3m', 'rs_6m',
+        'rs_21d', 'rs_63d', 'rs_126d',   # deprecated aliases, drop once the UI moves
+        'rs_ibd',
         'f_score', 'i_score', 'h_score',
         'adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist',
         'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d',
