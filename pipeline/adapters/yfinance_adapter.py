@@ -270,8 +270,33 @@ class YfinanceAdapter(BaseAdapter):
                 # ABC Rating
                 abc = calculate_abc_rating(hist)
 
-                # RRS vs SPY
+                # RRS vs SPY — a SELF-percentile, not a cross-sectional one.
+                #
+                # `recent_21` is this ETF's own last 21 readings, so the score
+                # answers "where does today sit inside this fund's own recent
+                # month" — improvement against its own baseline. It does NOT
+                # answer "how strong is this fund against the others", which is
+                # what the letters RRS and the UI column header both suggest.
+                #
+                # Measured 2026-08-09, 11 sector ETFs: the score ranks against
+                # the underlying RRS *level* at Spearman +0.075 — the two are
+                # effectively unrelated. XLK was the strongest sector on the
+                # week (+3.52pp over SPY) and scored 5, the bottom bucket,
+                # because a fund that has been strong for months is rarely at
+                # an extreme within its own trailing 21 days. Same reason the
+                # score runs *negative* against perf_3m (-0.193).
+                #
+                # Kept as-is deliberately: "improvement against own baseline"
+                # is a real second-order momentum reading, and perf_1w/perf_1m
+                # already answer the strength question elsewhere on the page.
+                # Do not sort a "who is strongest" list by this column.
+                #
+                # Two properties that follow from the construction and will
+                # look like bugs if you don't expect them: values are quantised
+                # to multiples of 5 ((k-1)/20 x 100 over 21 ranks), and the
+                # scale is bounded 0..100 by definition rather than empirically.
                 rs_score = None
+                rrs_windows = {}
                 if spy_hist is not None and ticker != 'SPY':
                     rrs_data = calculate_rrs(
                         hist[['High', 'Low', 'Close']], spy_hist
@@ -280,6 +305,21 @@ class YfinanceAdapter(BaseAdapter):
                         recent_21 = rrs_data['rollingRRS'].iloc[-21:]
                         ranks = rankdata(recent_21, method='average')
                         rs_score = ((ranks[-1] - 1) / (len(recent_21) - 1)) * 100
+
+                    # Same construction over three lookbacks, so a card can show
+                    # whether strength is arriving or leaving. There is no
+                    # one-day window: a percentile needs something to rank
+                    # against, and a single point ranks against nothing.
+                    if rrs_data is not None:
+                        series = rrs_data['rollingRRS']
+                        for label, n in (('1w', 5), ('1m', 21), ('3m', 63)):
+                            if len(series) < n:
+                                rrs_windows[f'rrs_{label}'] = None
+                                continue
+                            window = series.iloc[-n:]
+                            r = rankdata(window, method='average')
+                            rrs_windows[f'rrs_{label}'] = round(
+                                ((r[-1] - 1) / (len(window) - 1)) * 100)
 
                 # Leveraged ETF mapping
                 long_etfs, short_etfs = get_leveraged_etfs(ticker)
@@ -308,7 +348,16 @@ class YfinanceAdapter(BaseAdapter):
                     # relative-strength ratio* vs SPY; the stock columns are
                     # cross-sectional percentiles of raw returns. Same three
                     # letters, different construction, different scale.
-                    'rrs_rank': round(rs_score, 0) if rs_score else None,
+                    # `is not None`, not truthiness: 0.0 is the most informative
+                    # reading this column has — today sits at the bottom of the
+                    # fund's own trailing month — and a falsy test deleted it.
+                    # Eight of the nine nulls on 2026-08-09 (XTN EWY EWT TAN EEM
+                    # ICLN WGMI BLOK) were genuine zeros with 251 bars each, so
+                    # the published distribution was truncated at its left edge:
+                    # the minimum observed value was 5, never 0.
+                    'rrs_rank': round(rs_score, 0) if rs_score is not None else None,
+                    # 1w/1m/3m percentiles of the same rolling RRS series.
+                    **rrs_windows,
                     'abc': abc,
                     'sparkline': sparkline,
                     'long_etfs': long_etfs,
