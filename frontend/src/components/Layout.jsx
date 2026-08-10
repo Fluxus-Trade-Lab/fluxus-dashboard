@@ -24,6 +24,7 @@ import TickerStrip from './dashboard/TickerStrip'
 import TrendStatus from './macro/TrendStatus'
 import RegimeBand from './dashboard/RegimeBand'
 import LeadersLaggards from './dashboard/LeadersLaggards'
+import SectorStrength from './dashboard/SectorStrength'
 import { VoteMarks } from './breadth/VoteGlyphs'
 import { ETF_GROUPS } from '../lib/etfGroups'
 import EquitiesSection from './equities/EquitiesSection'
@@ -153,20 +154,19 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           </section>
 
           <Tier label="Evidence" supports="what the read leans on">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-              <LeadersLaggards title="Industries — best and worst"
+            {/* Equal width, equal row height, so neither card decides the
+                other's layout. items-stretch is the default and is what makes
+                them end level regardless of how many rows each holds. */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 items-stretch">
+              <LeadersLaggards title="Industries"
                 etfs={(ETF_GROUPS.Industries || [])
                   .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                   .filter(Boolean)}
-                windows={['weekly', 'monthly']} limit={3} />
-              {/* Promoted out of the folded cross-section: sectors answer the
-                  same question as industries at a coarser grain, so they
-                  belong beside them rather than three clicks apart. */}
-              <LeadersLaggards title="Sectors — best and worst"
+                windows={['1W', '1M']} limit={3} />
+              <SectorStrength title="Sectors"
                 etfs={(ETF_GROUPS['Sel Sectors'] || [])
                   .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
-                  .filter(Boolean)}
-                windows={['weekly', 'monthly']} limit={3} />
+                  .filter(Boolean)} />
             </div>
           </Tier>
 
