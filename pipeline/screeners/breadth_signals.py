@@ -449,6 +449,55 @@ def _danger_vote(count: Optional[int]) -> str:
     return 'neutral'
 
 
+def conditions_series(frame: pd.DataFrame, days: Optional[int] = 260) -> Dict[str, Any]:
+    """Market Conditions 0-100 over history, from the breadth-only votes.
+
+    Construction is Oratnek's: fix a set of binary conditions, score each
+    against its own threshold, and report the percentage that came back
+    positive. Unweighted on purpose -- a weighting is a second model, and this
+    one exists to be objective rather than clever.
+
+    Ours counts the nine breadth rules, not his forty-three ETFs, so the two
+    numbers are not comparable and should never be printed as if they were. The
+    reason for nine is history: `breadth_votes` is a pure function of one
+    archive row, so every session back to 2024-05 can be rescored with the
+    thresholds in force today. The other three votes in the verdict
+    (spy_danger, qqq_danger, bench_trend) need market_health, which the archive
+    does not carry -- including them would give a line that stops where the
+    health data starts and a today-value on a different scale from its own past.
+
+    Resolution is 100/9 ≈ 11.1 points and the line steps rather than glides.
+    That is the real resolution of nine binary votes; smoothing it would draw
+    precision the measurement does not have.
+
+    Thresholds are not re-derived here. This calls breadth_votes, which owns
+    them, so a threshold change moves the whole history at once.
+    """
+    if frame is None or frame.empty:
+        return {'today': None, 'n_votes': 0, 'history': []}
+
+    tail = frame if days is None else frame.tail(days)
+    history: List[Dict[str, Any]] = []
+    for _, raw in tail.iterrows():
+        row = raw.to_dict()
+        votes = breadth_votes(row)
+        if not votes:
+            continue
+        bull = sum(1 for v in votes.values() if v == 'bull')
+        history.append({
+            'date': str(row.get('date', '')),
+            'score': round(bull / len(votes) * 100),
+            'bull': bull,
+            'of': len(votes),
+        })
+
+    return {
+        'today': history[-1]['score'] if history else None,
+        'n_votes': history[-1]['of'] if history else 0,
+        'history': history,
+    }
+
+
 def evaluate(frame: pd.DataFrame, health: Optional[Dict[str, Any]]) -> Dict[str, Any]:
     """Rule-derived verdict for the last row of `frame`. Pure and total."""
     row = frame.iloc[-1].to_dict()
@@ -584,6 +633,10 @@ def run_signals(breadth_result: Dict[str, Any], frame: pd.DataFrame,
     rows = [dict(r) for r in breadth_result.get('history', {}).get('rows', [])]
     annotate_rows(rows, frame, health)
     breadth_result['verdict'] = verdict
+    # Market Conditions: the same nine votes as a 0-100 line with two years
+    # behind it. Sits beside the verdict rather than inside it -- one is
+    # today's decision, the other is where today sits in its own history.
+    breadth_result['conditions'] = conditions_series(frame)
     if 'history' in breadth_result:
         breadth_result['history']['rows'] = rows
     return health

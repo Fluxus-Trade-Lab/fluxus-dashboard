@@ -131,7 +131,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           )}
 
           <RegimeBand verdict={data?.breadth?.verdict} signals={data?.signals}
-                      onNavigate={navigate} />
+                      conditions={data?.breadth?.conditions} onNavigate={navigate} />
 
           {/* Reserved for the founder's own words — written, never generated.
               An empty frame, because a slot that appears only once it is full

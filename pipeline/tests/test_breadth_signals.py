@@ -593,3 +593,51 @@ class TestBuildReplay:
         # days=None -> every session of the input history, not just 130
         assert len(r['health']['spy']['candles']) == len(spy)
         assert len(r['health']['spy']['signals_history']) == len(spy)
+
+
+class TestConditionsSeries:
+    """Market Conditions 0-100: percentage of the breadth votes that are bull."""
+
+    def _frame_from(self, rows):
+        import pandas as pd
+        return pd.DataFrame(rows)
+
+    def test_score_is_the_bull_percentage_of_its_own_votes(self):
+        import pandas as pd
+        from pipeline.screeners.breadth_signals import (
+            breadth_votes, conditions_series)
+        frame = pd.read_csv("data/history/breadth_archive.csv")
+        out = conditions_series(frame, days=5)
+        for entry in out["history"]:
+            row = frame[frame["date"] == entry["date"]].iloc[-1].to_dict()
+            votes = breadth_votes(row)
+            bull = sum(1 for v in votes.values() if v == "bull")
+            assert entry["bull"] == bull
+            assert entry["of"] == len(votes)
+            assert entry["score"] == round(bull / len(votes) * 100)
+
+    def test_score_stays_inside_the_scale_over_the_whole_archive(self):
+        import pandas as pd
+        from pipeline.screeners.breadth_signals import conditions_series
+        frame = pd.read_csv("data/history/breadth_archive.csv")
+        out = conditions_series(frame, days=None)
+        assert len(out["history"]) == len(frame)
+        for e in out["history"]:
+            assert 0 <= e["score"] <= 100
+            assert 0 <= e["bull"] <= e["of"]
+
+    def test_today_is_the_last_row_not_the_best_row(self):
+        import pandas as pd
+        from pipeline.screeners.breadth_signals import conditions_series
+        frame = pd.read_csv("data/history/breadth_archive.csv")
+        out = conditions_series(frame, days=30)
+        assert out["today"] == out["history"][-1]["score"]
+
+    def test_empty_frame_reports_no_reading_rather_than_zero(self):
+        import pandas as pd
+        from pipeline.screeners.breadth_signals import conditions_series
+        out = conditions_series(pd.DataFrame(), days=10)
+        # A score of 0 means "every vote is bearish", which is a reading.
+        # No data must not borrow that meaning.
+        assert out["today"] is None
+        assert out["history"] == []
