@@ -243,12 +243,11 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
           {score != null && (
             <span className="text-[26px] font-semibold tabular-nums leading-none cursor-help"
                   style={{ fontFamily: 'var(--font-cond)' }}
-                  title={conditions?.raw_today != null
-                    ? `Mean percentile of ${conditions.n_votes} measurements against this market's own history`
-                      + ` — ${conditions.raw_today} before smoothing (EMA${conditions.span});`
-                      + ` ${conditions.positive_today} of ${conditions.n_votes} above their own median`
+                  title={conditions?.positive_today != null
+                    ? `${conditions.positive_today} of ${conditions.n_votes} measurements positive`
+                      + ` — ${conditions.raw_today} before smoothing (EMA${conditions.span})`
                     : undefined}>
-              {score.toFixed(1)}<span className="text-[13px] text-[var(--color-text-muted)]"> / 100</span>
+              {score}<span className="text-[13px] text-[var(--color-text-muted)]"> / 100</span>
             </span>
           )}
         </div>

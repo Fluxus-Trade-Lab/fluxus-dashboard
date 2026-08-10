@@ -530,21 +530,14 @@ _CONDITION_NEUTRAL = {
     'px_1m': 0.0, 'px_3m': 0.0, 'px_1y': 0.0,   # price higher than it was
 }
 
-# How fast a measurement earns credit as it moves away from its neutral line.
-#
-# ln(99) is not a tuned constant: it is the value at which a measurement one
-# full interquartile range above neutral scores 99%. That fixes the shape of
-# the curve to the spread of the data itself, so nothing here is chosen to
-# produce a particular reading.
-#
-# The scale matters because the two obvious constructions both fail. Counting
-# positives (Oratnek's) pins at 0 and 100 -- 2026-04-17 with ratio_5d at 4.29
-# and 2026-04-30 with 1.25 both scored a flat 100. Ranking against history
-# fixes the ends but throws away the absolute level: a percentile orbits 50 by
-# construction, so a genuinely strong year reads as ordinary. This keeps the
-# absolute neutral lines and gives partial credit around them, which is both.
-_CONDITION_CREDIT_AT_ONE_IQR = 0.99
-
+# There is deliberately no steepness parameter here, and the reason is worth
+# keeping. An earlier version gave partial credit on a logistic curve whose
+# slope was set to ln(99) -- dressed up as "one interquartile range from
+# neutral earns 99%", but actually chosen by scanning slopes until the reading
+# landed where it was expected to. The justification was written afterwards.
+# Smoothing the plain count turned out to separate the extremes better anyway
+# (2026-04-17 and 2026-04-30 read 97 and 91, against 94 and 90 from the fitted
+# curve), so the curve bought nothing except a number to tune.
 # At least this many prior sessions before a spread estimate means anything.
 _CONDITIONS_MIN_HISTORY = 60
 
@@ -608,32 +601,20 @@ def conditions_series(frame: pd.DataFrame, days: Optional[int] = 260) -> Dict[st
     if measures.empty or not len(measures.columns):
         return empty
 
-    # Spread is estimated on an expanding window: each session sees only the
-    # sessions before it, so a rank can never repaint the past when new data
-    # arrives.
-    q75 = measures.expanding(min_periods=_CONDITIONS_MIN_HISTORY).quantile(0.75)
-    q25 = measures.expanding(min_periods=_CONDITIONS_MIN_HISTORY).quantile(0.25)
-    iqr = (q75 - q25).replace(0.0, np.nan)
     neutral = pd.Series({c: _CONDITION_NEUTRAL[c] for c in measures.columns})
-    k = math.log(_CONDITION_CREDIT_AT_ONE_IQR / (1.0 - _CONDITION_CREDIT_AT_ONE_IQR))
-
-    credit = 1.0 / (1.0 + np.exp(-k * (measures - neutral) / iqr))
-    mean_credit = credit.mean(axis=1, skipna=True) * 100
-
-    # The explainable companion: how many measurements are simply on the good
-    # side of their neutral line. Same inputs, same lines, no second model.
     positive = (measures > neutral).sum(axis=1)
-    counted = credit.notna().sum(axis=1)
+    counted = measures.notna().sum(axis=1)
+    share = (positive / counted.replace(0, np.nan)) * 100
 
     tail_start = 0 if days is None else max(0, len(frame) - days)
     raw: List[Dict[str, Any]] = []
     for pos in range(tail_start, len(frame)):
-        value = mean_credit.iloc[pos]
+        value = share.iloc[pos]
         if pd.isna(value):
             continue
         raw.append({
             'date': str(frame['date'].iloc[pos]) if 'date' in frame.columns else '',
-            'raw': round(float(value), 1),
+            'raw': int(round(float(value))),
             'positive': int(positive.iloc[pos]),
             'of': int(counted.iloc[pos]),
         })
@@ -643,9 +624,13 @@ def conditions_series(frame: pd.DataFrame, days: Optional[int] = 260) -> Dict[st
 
     # Seeded on the first value (adjust=False) so the line does not open with a
     # warm-up ramp that would read as a trend nobody traded.
+    # Integers out. The score is "how many of fifteen are positive", smoothed;
+    # a decimal place would claim a precision the count does not have, and the
+    # separation the chart needs already survives rounding (the two April days
+    # that used to tie read 97 and 91).
     smoothed = pd.Series([r['raw'] for r in raw], dtype=float) \
         .ewm(span=_CONDITIONS_SPAN, adjust=False).mean()
-    history = [{**r, 'score': round(float(v), 1)} for r, v in zip(raw, smoothed)]
+    history = [{**r, 'score': int(round(float(v)))} for r, v in zip(raw, smoothed)]
 
     return {
         'today': history[-1]['score'],
