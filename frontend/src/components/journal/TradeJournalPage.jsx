@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useTradeJournal } from '../../hooks/useTradeJournal'
 import { useLanguage } from '../../i18n/LanguageContext'
 import TickerLink from '../ticker/TickerLink'
+import PreMarketChecklist from '../dashboard/PreMarketChecklist'
 
 const LESSON_COLORS = {
   'Good execution':    'text-[var(--color-profit)]',
@@ -73,6 +74,24 @@ export default function TradeJournalPage() {
           {trades.length} trades · {stats.total} closed · realized {stats.totalR.toFixed(1)}R of {stats.totalOpt.toFixed(1)}R available
           {stats.captureOverall != null && ` (${stats.captureOverall.toFixed(0)}% capture)`}
         </div>
+      </div>
+
+      {/* Two standing cards, before the log itself: what you asked yourself
+          before the session, and what you concluded after it. They moved here
+          off the dashboard because neither is market data — the dashboard
+          answers what the market is doing, and both of these are yours. */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-5">
+        <PreMarketChecklist />
+        <section className="border border-dashed border-[var(--color-border)]
+                            rounded-lg px-4 py-3">
+          <span className="text-[10px] font-mono uppercase tracking-[.24em]
+                           text-[var(--color-text-muted)]">Market recap</span>
+          <p className="text-[11px] leading-relaxed text-[var(--color-text-muted)] m-0 mt-1.5">
+            Reserved. The other half of the checklist: what the session actually
+            did, written after the close. Empty until there is something to
+            write — a card that only appears once it is full was never reserved.
+          </p>
+        </section>
       </div>
 
       {/* Lesson filter chips */}

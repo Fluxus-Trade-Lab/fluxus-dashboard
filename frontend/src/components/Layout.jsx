@@ -21,15 +21,11 @@ function Band({ label, note }) {
   )
 }
 import TickerStrip from './dashboard/TickerStrip'
-import MarketPosture from './dashboard/MarketPosture'
-import PreMarketChecklist from './dashboard/PreMarketChecklist'
 import TrendStatus from './macro/TrendStatus'
-import PowerTrend from './macro/PowerTrend'
 import RegimeBand from './dashboard/RegimeBand'
 import LeadersLaggards from './dashboard/LeadersLaggards'
 import { VoteMarks } from './breadth/VoteGlyphs'
 import { ETF_GROUPS } from '../lib/etfGroups'
-import HeatingUp from './screener/HeatingUp'
 import EquitiesSection from './equities/EquitiesSection'
 import ScreenerPage from './screener/ScreenerPage'
 import PortfolioPage from './portfolio/PortfolioPage'
@@ -151,14 +147,20 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           </section>
 
           <Tier label="Evidence" supports="what the read leans on">
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
               <LeadersLaggards title="Industries — best and worst"
                 etfs={(ETF_GROUPS.Industries || [])
                   .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                   .filter(Boolean)}
-                windows={['weekly', 'monthly']} limit={1} />
-              <PowerTrend signals={data?.signals} />
-              <HeatingUp compact limit={5} />
+                windows={['weekly', 'monthly']} limit={3} />
+              {/* Promoted out of the folded cross-section: sectors answer the
+                  same question as industries at a coarser grain, so they
+                  belong beside them rather than three clicks apart. */}
+              <LeadersLaggards title="Sectors — best and worst"
+                etfs={(ETF_GROUPS['Sel Sectors'] || [])
+                  .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
+                  .filter(Boolean)}
+                windows={['weekly', 'monthly']} limit={3} />
             </div>
           </Tier>
 
@@ -175,18 +177,12 @@ export default function Layout({ data, lastUpdated, isOffline }) {
             <EquitiesSection data={data} />
           </Reference>
 
-          <Band label="Yours" note="belongs to My Book — parked here until that half is rebuilt" />
-          <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-3">
-            <MarketPosture signals={data?.signals} />
-            <PreMarketChecklist />
-          </div>
-
           <HowToRead>
             <p>
               Read this page top to bottom — the order is the argument. The read
               and its twelve votes come first, then the regime band, then the
-              evidence, then reference, then the two objects that are yours
-              rather than the market&rsquo;s.
+              evidence — where the money went this week and this month, at two
+              grains — then reference.
             </p>
             <p>
               The score is a <b>count of conditions, not a confidence level</b> —

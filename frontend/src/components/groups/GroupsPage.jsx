@@ -4,6 +4,7 @@ import Reading, { readThemes } from '../Reading'
 import { useGroups } from '../../hooks/useGroups'
 import GroupTable from './GroupTable'
 import ThemeBars from './ThemeBars'
+import RsSegments from './RsSegments'
 import Reference from '../Reference'
 import HowToRead from '../HowToRead'
 
@@ -99,6 +100,10 @@ export default function GroupsPage() {
           validation — it answers «where does this come from», which is a
           different question and belongs behind a line, not in front of one. */}
       <ThemeBars rows={rows} />
+
+      {/* Evidence for the bar above it: the same quarter, taken apart. The
+          chart says which themes lead; this says when they earned it. */}
+      <RsSegments rows={rows} />
 
       <Reference label="Full table" count={rows.length}
                  note="every column — accel, persistence, method, validation — and sortable">

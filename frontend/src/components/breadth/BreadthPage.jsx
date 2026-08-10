@@ -110,6 +110,26 @@ export default function BreadthPage({ data }) {
         </HowToRead>
       )}
 
+      {/* Its own rail entry until now, which promised a page and delivered an
+          empty one. Held here instead: named, reachable, and honest about
+          being unbuilt. The rung is not published before it is earned. */}
+      <Reference label="Correction risk" count={1}
+                 note="not built yet — the slot is reserved, not missing">
+        <div className="border border-dashed border-[var(--color-untested)]
+                        px-4 py-4 text-[12px] leading-relaxed
+                        text-[var(--color-text-muted)]">
+          <p className="m-0 mb-2">Will hold:</p>
+          <ul className="m-0 pl-4 space-y-1">
+            <li>Distribution-day count against its own threshold, with the sessions named</li>
+            <li>How far each benchmark sits below its own high, and for how many sessions</li>
+            <li>What would have to break next, in the repair ladder&rsquo;s order</li>
+          </ul>
+          <p className="m-0 mt-2 text-[11px]">
+            Reads breadth.json and market_health.json — both already on disk.
+          </p>
+        </div>
+      </Reference>
+
       <Reference label="Style rotation" count={1}
                  note="risk-on / risk-off across three cuts — a different question from the nine">
         <RotationPanel />

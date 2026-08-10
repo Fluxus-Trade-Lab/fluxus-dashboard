@@ -31,10 +31,13 @@ export const NAV_GROUPS = [
         key: 'env',
         items: [
           { key: 'dashboard', short: 'DSH', hash: '#/dashboard' },
-          { key: 'breadth', short: 'MST', hash: '#/breadth' },       // shown as "Market State"
-          // Held open and empty until it clears its own gate. A rung published
-          // before it is earned is the one place a proof ladder can lie.
-          { key: 'correction', short: 'COR', hash: '#/correction' },
+          // Market State and Correction Risk are off the rail on purpose.
+          // Today already answers "what is the market doing"; the nine-cell
+          // instrument is where you go when you want to know WHY, reached from
+          // the link under the read. Two rail entries for one question made the
+          // rail a table of contents instead of a set of destinations. The
+          // routes still resolve — #/breadth and #/correction — so links that
+          // were sent keep working.
         ],
       },
       {
