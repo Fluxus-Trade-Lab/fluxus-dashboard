@@ -49,6 +49,13 @@ class Scheme:
     mid: int         # prior bucket: near .. mid
     far: int         # level window: 0 .. far
     note: str = ""
+    # Rescale the prior bucket to the near bucket's length before subtracting.
+    # Without it, accel compares one month against two months *of total*, so a
+    # group compounding a steady +2% monthly excess reads -2.04% -- decelerating
+    # by construction, having never decelerated. V5 equalises the other way, by
+    # shortening the prior window and discarding the 42-63 stretch; this keeps
+    # the whole stretch and converts it to a per-period rate instead.
+    normalise_prior: bool = False
 
 
 SCHEMES: List[Scheme] = [
@@ -61,6 +68,8 @@ SCHEMES: List[Scheme] = [
            note="slow: everything >= 1 month"),
     Scheme("V5  1m/2m  lvl=3m", near=21, mid=42, far=63),
     Scheme("V6  1w/1m  lvl=3m", near=5, mid=21, far=63),
+    Scheme("V7  1m/3m  lvl=3m  norm", near=21, mid=63, far=63,
+           note="V4 with a length-matched prior", normalise_prior=True),
 ]
 
 
@@ -109,6 +118,15 @@ def states_for_scheme(close: pd.DataFrame, s: Scheme) -> pd.DataFrame:
     rs_near = near_r.sub(bench(near_r), axis=0)
     rs_prior = prior_r.sub(bench(prior_r), axis=0)
     level = level_r.sub(bench(level_r), axis=0)
+
+    if s.normalise_prior and s.mid > s.near:
+        # Geometric, not linear: these are compounded returns, so the per-period
+        # rate is the k-th root, and a linear divide would understate a positive
+        # stretch and overstate a negative one.
+        k = (s.mid - s.near) / s.near
+        to_rate = lambda r: np.sign(1.0 + r) * np.abs(1.0 + r) ** (1.0 / k) - 1.0  # noqa: E731
+        rs_prior = to_rate(prior_r).sub(to_rate(bench(prior_r)), axis=0)
+
     accel = rs_near - rs_prior
 
     state = pd.DataFrame(np.nan, index=close.index, columns=close.columns, dtype=object)
