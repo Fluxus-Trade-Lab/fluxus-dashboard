@@ -106,32 +106,38 @@ export default function Layout({ data, lastUpdated, isOffline }) {
             meta={['the read, then the evidence, then reference',
                    'sizing is not on this page — it needs an R and a ceiling, and those are yours']} />
 
-          {/* SUBJECT */}
-          {data?.breadth?.verdict && (
-            <section>
-              <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1 mb-4">
-                <h2 className="text-[34px] leading-none font-semibold m-0"
-                    style={{ fontFamily: 'var(--font-cond)',
-                             color: /BULL/i.test(data.breadth.verdict.env)
-                               ? 'var(--color-took)' : 'var(--color-refused)' }}>
-                  {data.breadth.verdict.env}
-                </h2>
-                <span className="text-[19px] font-mono tabular-nums">
-                  {data.breadth.verdict.score > 0 ? '+' : ''}{data.breadth.verdict.score}
-                  <span className="text-[var(--color-text-muted)]"> / 12</span>
-                </span>
-                <button type="button" onClick={() => navigate('#/breadth')}
-                        className="text-[11px] bg-transparent border-0 p-0 cursor-pointer underline
-                                   text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
-                  the nine conditions behind it →
-                </button>
-              </div>
-              <VoteMarks votes={data.breadth.verdict.votes} />
-            </section>
-          )}
+          {/* SUBJECT — the read on the left, its own history on the right.
+              Side by side because they answer one question in two tenses:
+              what the market is today, and whether today is unusual for it.
+              Stacked, the chart read as a second object; beside the votes it
+              reads as their denominator. */}
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,7fr)_minmax(0,9fr)] gap-4 items-start">
+            {data?.breadth?.verdict && (
+              <section>
+                <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1 mb-4">
+                  <h2 className="text-[34px] leading-none font-semibold m-0"
+                      style={{ fontFamily: 'var(--font-cond)',
+                               color: /BULL/i.test(data.breadth.verdict.env)
+                                 ? 'var(--color-took)' : 'var(--color-refused)' }}>
+                    {data.breadth.verdict.env}
+                  </h2>
+                  <span className="text-[19px] font-mono tabular-nums">
+                    {data.breadth.verdict.score > 0 ? '+' : ''}{data.breadth.verdict.score}
+                    <span className="text-[var(--color-text-muted)]"> / 12</span>
+                  </span>
+                  <button type="button" onClick={() => navigate('#/breadth')}
+                          className="text-[11px] bg-transparent border-0 p-0 cursor-pointer underline
+                                     text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
+                    the nine conditions behind it →
+                  </button>
+                </div>
+                <VoteMarks votes={data.breadth.verdict.votes} />
+              </section>
+            )}
 
-          <RegimeBand verdict={data?.breadth?.verdict} signals={data?.signals}
-                      conditions={data?.breadth?.conditions} onNavigate={navigate} />
+            <RegimeBand verdict={data?.breadth?.verdict} signals={data?.signals}
+                        conditions={data?.breadth?.conditions} onNavigate={navigate} />
+          </div>
 
           {/* Reserved for the founder's own words — written, never generated.
               An empty frame, because a slot that appears only once it is full

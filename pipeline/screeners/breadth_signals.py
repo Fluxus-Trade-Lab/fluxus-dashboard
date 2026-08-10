@@ -449,51 +449,176 @@ def _danger_vote(count: Optional[int]) -> str:
     return 'neutral'
 
 
+# Three conditions that exist only for the Market Conditions score, on top of
+# the nine the verdict votes. Every one splits at a natural boundary -- more
+# than half the market, or a net-positive day -- so there is no tunable
+# parameter here and nothing to overfit. They are NOT added to the verdict:
+# that instrument is nine rules with published thresholds and stays that way.
+def _conditions_extra(row: Dict[str, Any]) -> Dict[str, str]:
+    out: Dict[str, str] = {}
+    for key, col in (('pct50', 'pct_above_50sma'), ('pct20', 'pct_above_20sma')):
+        v = _num(row.get(col))
+        out[key] = 'neutral' if v is None else ('bull' if v > 50 else 'bear' if v < 50 else 'neutral')
+    n = _num(row.get('net_advances'))
+    out['net_adv'] = 'neutral' if n is None else ('bull' if n > 0 else 'bear' if n < 0 else 'neutral')
+    return out
+
+
+# Trailing price direction over a month, a quarter and a year. These are the
+# slow half of the score and they are the reason different bottoms have
+# different depths: breadth collapses in a week, trend does not. Without them
+# every washout looked alike -- November 2025 and March 2026 both pinned the
+# floor, when only one of them had a broken trend underneath it.
+#
+# Sign of a trailing return is a natural boundary; there is no threshold to
+# tune. NaN while the window is still filling, which votes neutral rather than
+# borrowing a direction it cannot see.
+_SLOW_WINDOWS = {'px_1m': 21, 'px_3m': 63, 'px_1y': 252}
+
+
+def _slow_conditions(frame: pd.DataFrame) -> Dict[str, List[str]]:
+    # A frame without spx_close is not an error and must not raise: some
+    # callers pass a minimal history. pd.to_numeric(None) returns a scalar NaN
+    # rather than an empty Series, so the column is checked before use --
+    # every slow condition then votes neutral, which is what "cannot see the
+    # trend" should score.
+    col = frame['spx_close'] if 'spx_close' in frame.columns else None
+    if col is None:
+        return {key: ['neutral'] * len(frame) for key in _SLOW_WINDOWS}
+
+    close = pd.to_numeric(col, errors='coerce')
+    out: Dict[str, List[str]] = {}
+    for key, n in _SLOW_WINDOWS.items():
+        chg = close / close.shift(n) - 1.0
+        out[key] = ['neutral' if pd.isna(v) else ('bull' if v > 0 else 'bear' if v < 0 else 'neutral')
+                    for v in chg]
+    return out
+
+
+# bull / neutral / bear -> 1 / 0.5 / 0.
+#
+# Counting only the bulls made an undecided condition score identically to a
+# bearish one, which is the same category error as reading a missing
+# measurement as a zero. It also guaranteed a floor: on the days everything
+# turned at once the score pinned at 0 and stopped distinguishing between
+# washouts. Half-credit for undecided fixes both.
+_CONDITION_WEIGHT = {'bull': 1.0, 'neutral': 0.5, 'bear': 0.0}
+
+# The measurements the score reads, each as a signed quantity where higher is
+# always better. Spreads are differenced here rather than voted on, because the
+# score wants magnitude and a vote throws magnitude away.
+_CONDITION_COLS = ('ratio_5d', 'ratio_10d', 't2108', 'pct_above_200sma',
+                   'pct_above_50sma', 'pct_above_20sma', 'mcclellan_osc',
+                   'net_advances')
+_CONDITION_SPREADS = {
+    'nh_nl': ('new_highs', 'new_lows'),
+    'qtr_spread': ('up_25pct_qtr', 'down_25pct_qtr'),
+    'spread_13_34': ('up_13pct_34d', 'down_13pct_34d'),
+    'thrust': ('up_4pct', 'down_4pct'),
+}
+
+# At least this many prior sessions before a percentile means anything. Below
+# it the rank is an artefact of a short sample, so the measure abstains.
+_CONDITIONS_MIN_HISTORY = 60
+
+# Light filter. Span 2 will not hide a turn; it stops one session flipping the
+# reading, which is what Oratnek's EMA2 is for.
+_CONDITIONS_SPAN = 2
+
+
+def _condition_frame(frame: pd.DataFrame) -> pd.DataFrame:
+    """Every measurement the score reads, oriented so higher is better."""
+    out: Dict[str, pd.Series] = {}
+    for col in _CONDITION_COLS:
+        if col in frame.columns:
+            out[col] = pd.to_numeric(frame[col], errors='coerce')
+    for key, (up, down) in _CONDITION_SPREADS.items():
+        if up in frame.columns and down in frame.columns:
+            out[key] = (pd.to_numeric(frame[up], errors='coerce')
+                        - pd.to_numeric(frame[down], errors='coerce'))
+    if 'spx_close' in frame.columns:
+        close = pd.to_numeric(frame['spx_close'], errors='coerce')
+        for key, n in _SLOW_WINDOWS.items():
+            out[key] = close / close.shift(n) - 1.0
+    return pd.DataFrame(out, index=frame.index)
+
+
 def conditions_series(frame: pd.DataFrame, days: Optional[int] = 260) -> Dict[str, Any]:
-    """Market Conditions 0-100 over history, from the breadth-only votes.
+    """Market Conditions 0-100: where today sits in this market's own history.
 
-    Construction is Oratnek's: fix a set of binary conditions, score each
-    against its own threshold, and report the percentage that came back
-    positive. Unweighted on purpose -- a weighting is a second model, and this
-    one exists to be objective rather than clever.
+    Oratnek's construction — a fixed set of conditions, unweighted, smoothed —
+    but scored by percentile rather than by a yes/no against a threshold.
 
-    Ours counts the nine breadth rules, not his forty-three ETFs, so the two
-    numbers are not comparable and should never be printed as if they were. The
-    reason for nine is history: `breadth_votes` is a pure function of one
-    archive row, so every session back to 2024-05 can be rescored with the
-    thresholds in force today. The other three votes in the verdict
-    (spy_danger, qqq_danger, bench_trend) need market_health, which the archive
-    does not carry -- including them would give a line that stops where the
-    health data starts and a today-value on a different scale from its own past.
+    The vote version was built first and had to be replaced, for a reason worth
+    keeping written down. Binary conditions collapse at both ends: on
+    2026-04-17 ratio_5d was 4.29 and on 2026-04-30 it was 1.25, and both days
+    scored a flat 100 because every condition was simply "positive". Five
+    separate months bottomed at exactly 0 the same way. A score that cannot
+    separate "barely positive" from "overwhelming" has no comparative left in
+    it, which is the one thing a history chart exists to provide.
 
-    Resolution is 100/9 ≈ 11.1 points and the line steps rather than glides.
-    That is the real resolution of nine binary votes; smoothing it would draw
-    precision the measurement does not have.
+    A percentile against the series' own expanding history fixes both ends and
+    introduces no parameter: the scale is set by the data rather than chosen.
+    Expanding, never centred or trailing-windowed, so each session is ranked
+    only against sessions that had already happened — a rank that peeks at the
+    future would repaint the past every time the pipeline runs.
 
-    Thresholds are not re-derived here. This calls breadth_votes, which owns
-    them, so a threshold change moves the whole history at once.
+    `positive` is still reported per session: how many of the same measurements
+    are on the good side of neutral. It is the explainable number ("11 of 15"),
+    the score is the comparable one, and they answer different questions.
+
+    Both are kept: `raw` is the unsmoothed percentile mean, `score` is what the
+    chart and the band read.
     """
+    empty = {'today': None, 'raw_today': None, 'positive_today': None,
+             'n_votes': 0, 'span': _CONDITIONS_SPAN, 'history': []}
     if frame is None or frame.empty:
-        return {'today': None, 'n_votes': 0, 'history': []}
+        return empty
 
-    tail = frame if days is None else frame.tail(days)
-    history: List[Dict[str, Any]] = []
-    for _, raw in tail.iterrows():
-        row = raw.to_dict()
-        votes = breadth_votes(row)
-        if not votes:
+    # Percentiles need the whole run-up, so they are computed on the full frame
+    # and sliced afterwards -- ranking the tail alone would score a quiet month
+    # against nothing but itself.
+    measures = _condition_frame(frame)
+    if measures.empty or not len(measures.columns):
+        return empty
+
+    ranks = measures.apply(
+        lambda col: col.expanding(min_periods=_CONDITIONS_MIN_HISTORY).rank(pct=True))
+    mean_rank = ranks.mean(axis=1, skipna=True) * 100
+
+    # The explainable companion: how many measurements are above their own
+    # median so far. Same inputs, same history, no second model.
+    positive = (ranks > 0.5).sum(axis=1)
+    counted = ranks.notna().sum(axis=1)
+
+    tail_start = 0 if days is None else max(0, len(frame) - days)
+    raw: List[Dict[str, Any]] = []
+    for pos in range(tail_start, len(frame)):
+        value = mean_rank.iloc[pos]
+        if pd.isna(value):
             continue
-        bull = sum(1 for v in votes.values() if v == 'bull')
-        history.append({
-            'date': str(row.get('date', '')),
-            'score': round(bull / len(votes) * 100),
-            'bull': bull,
-            'of': len(votes),
+        raw.append({
+            'date': str(frame['date'].iloc[pos]) if 'date' in frame.columns else '',
+            'raw': round(float(value), 1),
+            'positive': int(positive.iloc[pos]),
+            'of': int(counted.iloc[pos]),
         })
 
+    if not raw:
+        return empty
+
+    # Seeded on the first value (adjust=False) so the line does not open with a
+    # warm-up ramp that would read as a trend nobody traded.
+    smoothed = pd.Series([r['raw'] for r in raw], dtype=float) \
+        .ewm(span=_CONDITIONS_SPAN, adjust=False).mean()
+    history = [{**r, 'score': round(float(v), 1)} for r, v in zip(raw, smoothed)]
+
     return {
-        'today': history[-1]['score'] if history else None,
-        'n_votes': history[-1]['of'] if history else 0,
+        'today': history[-1]['score'],
+        'raw_today': history[-1]['raw'],
+        'positive_today': history[-1]['positive'],
+        'n_votes': history[-1]['of'],
+        'span': _CONDITIONS_SPAN,
         'history': history,
     }
 

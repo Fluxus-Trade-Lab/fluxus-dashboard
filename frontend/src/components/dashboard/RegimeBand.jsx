@@ -134,7 +134,7 @@ function monthTicks(history, maxLabels = 7) {
  */
 function ConditionsLine({ history, score }) {
   if (!history?.length) return null
-  const W = 1000, H = 100, PAD = 4
+  const W = 1000, H = 130, PAD = 4
   const x = (i) => PAD + (i / Math.max(1, history.length - 1)) * (W - PAD * 2)
   const y = (v) => PAD + (1 - v / 100) * (H - PAD * 2)
   const pts = history.map((d, i) => `${x(i).toFixed(1)},${y(d.score).toFixed(1)}`)
@@ -144,10 +144,10 @@ function ConditionsLine({ history, score }) {
   return (
     <div className="mt-2 pr-9">
       <div className="relative">
-        <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[110px] block" role="img"
+        <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[150px] block" role="img"
              aria-label={`Market conditions ${score} of 100 over ${history.length} sessions`}
              preserveAspectRatio="none">
-          {[0, 50, 100].map((lvl) => (
+          {[0, 20, 40, 50, 60, 80, 100].map((lvl) => (
             <line key={lvl} x1={PAD} x2={W - PAD} y1={y(lvl)} y2={y(lvl)} strokeWidth="1"
                   stroke={lvl === 50 ? 'var(--color-text-muted)' : 'var(--color-border)'}
                   strokeDasharray={lvl === 50 ? '3 5' : undefined}
@@ -163,10 +163,14 @@ function ConditionsLine({ history, score }) {
         </svg>
 
         {/* right-hand scale, outside the plot so it never sits over the line */}
-        {[100, 50, 0].map((lvl) => (
-          <span key={lvl} className="absolute left-full ml-1.5 -translate-y-1/2
-                                     text-[9px] font-mono text-[var(--color-text-muted)]"
-                style={{ top: `${(y(lvl) / H) * 100}%` }}>{lvl}</span>
+        {[100, 80, 60, 40, 20, 0].map((lvl) => (
+          // hidden when today's badge would sit on top of it — two numbers in
+          // the same place is worse than one missing tick
+          score != null && Math.abs(score - lvl) < 6 ? null : (
+            <span key={lvl} className="absolute left-full ml-1.5 -translate-y-1/2
+                                       text-[9px] font-mono text-[var(--color-text-muted)]"
+                  style={{ top: `${(y(lvl) / H) * 100}%` }}>{lvl}</span>
+          )
         ))}
 
         {/* today's value, pinned to where the line ends */}
@@ -237,9 +241,14 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
           <span className="text-[10px] font-mono uppercase tracking-[.24em]
                            text-[var(--color-text-muted)]">Market conditions</span>
           {score != null && (
-            <span className="text-[26px] font-semibold tabular-nums leading-none"
-                  style={{ fontFamily: 'var(--font-cond)' }}>
-              {score}<span className="text-[13px] text-[var(--color-text-muted)]"> / 100</span>
+            <span className="text-[26px] font-semibold tabular-nums leading-none cursor-help"
+                  style={{ fontFamily: 'var(--font-cond)' }}
+                  title={conditions?.raw_today != null
+                    ? `Mean percentile of ${conditions.n_votes} measurements against this market's own history`
+                      + ` — ${conditions.raw_today} before smoothing (EMA${conditions.span});`
+                      + ` ${conditions.positive_today} of ${conditions.n_votes} above their own median`
+                    : undefined}>
+              {score.toFixed(1)}<span className="text-[13px] text-[var(--color-text-muted)]"> / 100</span>
             </span>
           )}
         </div>

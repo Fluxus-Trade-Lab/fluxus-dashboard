@@ -164,17 +164,21 @@ export function VoteMarks({ votes }) {
 
   return (
     <div>
-      <div className="flex flex-wrap gap-x-3 gap-y-2">
+      {/* Six across, two rows. Twelve on one wrapping line broke at whatever
+          width the column happened to be, so the grid changed shape as the
+          layout did and the marks stopped being a fixed, countable object.
+          Six and six also splits the ballot the way it is actually read:
+          the breadth rules on top, the benchmark ones underneath. */}
+      <div className="grid grid-cols-6 gap-x-2.5 gap-y-3">
         {entries.map(([key, v]) => (
-          <span key={key} className="flex flex-col items-center gap-1 w-[52px]"
-                title={`${VOTE_LABEL[key] ?? key}: ${v}`}>
-            <i className="block w-[26px] h-[20px]" style={style(v)} />
-            <span className="text-[8px] font-mono leading-tight text-center
+          <span key={key} className="flex flex-col gap-1.5" title={`${VOTE_LABEL[key] ?? key}: ${v}`}>
+            <i className="block w-full h-[32px]" style={style(v)} />
+            <span className="text-[8.5px] font-mono leading-tight
                              text-[var(--color-text-muted)]">{VOTE_LABEL[key] ?? key}</span>
           </span>
         ))}
       </div>
-      <div className="flex flex-wrap gap-x-5 gap-y-1 mt-2 text-[10px] text-[var(--color-text-muted)]">
+      <div className="flex flex-wrap gap-x-5 gap-y-1 mt-4 text-[10px] text-[var(--color-text-muted)]">
         <span className="flex items-center gap-1.5">
           <i className="block w-3.5 h-[10px]" style={style('bull')} />for {tally.bull ?? 0}
         </span>
