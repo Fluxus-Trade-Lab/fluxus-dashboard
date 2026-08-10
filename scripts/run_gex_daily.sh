@@ -42,9 +42,21 @@ if [ "$premarket" = true ] && [ -f "data/gex/gex_SPX_${DATE}.json" ]; then
     say "premarket: already have $DATE — skip"; exit 0
 fi
 
-if ! nc -z -w3 127.0.0.1 7496 2>/dev/null; then
-    say "TWS/Gateway not reachable on 127.0.0.1:7496 — is it running + logged in? skip"; exit 1
-fi
+# TWS is launched by hand and is sometimes not up when the first window fires —
+# it wasn't at 07:30 on 2026-08-10 and the whole premarket chain was lost with
+# nothing but an exit code to show for it. Wait rather than give up: the second
+# scheduled fire is an hour away, and the open is closer than that.
+_waited=0
+until nc -z -w3 127.0.0.1 7496 2>/dev/null; do
+    if [ "$_waited" -ge "${TWS_WAIT_S:-1500}" ]; then
+        say "TWS unreachable on 127.0.0.1:7496 after ${_waited}s — is it logged in? skip"
+        exit 1
+    fi
+    [ "$_waited" = 0 ] && say "TWS not up yet — waiting up to ${TWS_WAIT_S:-1500}s"
+    sleep 60
+    _waited=$((_waited + 60))
+done
+[ "$_waited" -gt 0 ] && say "TWS came up after ${_waited}s"
 
 win=$([ "$postclose" = true ] && echo "post-close" || echo "premarket")
 say "running GEX pull for $DATE ($win, ET ${ET_HOUR}:${ET_MIN})"
