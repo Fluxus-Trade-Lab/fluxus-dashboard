@@ -73,6 +73,25 @@ from pipeline.screeners.state_board import LEVELS
 #
 # Frozen constants, not recomputed per run: a threshold that drifts with every
 # new session would relabel yesterday's reading without yesterday changing.
+#
+# ⚠ THERE ARE TWO BAND SCHEMES OVER THE SAME 0-100 SCORE. They are deliberate,
+# not a duplication -- but they are not interchangeable, and mixing them up
+# silently produces wrong attribution tables (it already did once):
+#
+#   THIS FILE  Damaged / Mixed / Healthy / Extended, cuts 47 / 63 / 75.
+#              Empirical quartiles, validated monotone against 5% drawdown
+#              frequency. USE FOR ANALYSIS: bucketing trades by regime,
+#              risk-budget work, anything statistical.
+#
+#   frontend/src/components/dashboard/RegimeBand.jsx
+#              Defence / Caution / Neutral / Constructive / Full, even cuts
+#              12 / 34 / 56 / 78. Position language -- what the state permits
+#              you to hold. USE FOR DISPLAY: the dashboard's regime band.
+#              Even cuts on purpose; a fitted curve there would be a second,
+#              unvalidated model sitting on top of this one.
+#
+# If you are attributing trade performance to market state, use THIS file's
+# bands and say so in the output label.
 BANDS: List[Dict[str, Any]] = [
     {"key": "damaged",  "label": "Damaged",  "min": 0,  "max": 47,
      "describes": "most conditions absent or very weak"},

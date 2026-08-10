@@ -20,6 +20,22 @@
  * Market State's "what would change this".
  */
 
+/**
+ * ⚠ THERE ARE TWO BAND SCHEMES OVER THE SAME 0-100 score. Deliberate, not a
+ * duplication — but not interchangeable, and mixing them up silently produces
+ * wrong numbers (it already did once, in a trade-attribution table):
+ *
+ *   THIS FILE — Defence / Caution / Neutral / Constructive / Full, even cuts
+ *     12 / 34 / 56 / 78. Position language: what the state permits you to hold.
+ *     USE FOR DISPLAY (this band, any "how much can I carry today" reading).
+ *
+ *   pipeline/screeners/regime.py — Damaged / Mixed / Healthy / Extended, cuts
+ *     47 / 63 / 75. Empirical quartiles of 558 archived sessions, validated
+ *     monotone against 5% drawdown frequency. USE FOR ANALYSIS (bucketing
+ *     trades by regime, risk-budget work, anything statistical).
+ *
+ * Whichever you use, label it in the output so the two can't be confused.
+ */
 export const BANDS = ['Defence', 'Caution', 'Neutral', 'Constructive', 'Full']
 
 /** Market Conditions 0-100 -> a band. Cuts are even because the score is an
