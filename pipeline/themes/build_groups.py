@@ -24,7 +24,7 @@ from typing import Any, Dict, List, Mapping, Sequence
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from pipeline.marketcal import market_today
+from pipeline.marketcal import last_trading_day
 from pipeline.themes import is_tradeable, rs_engine, taxonomy
 from pipeline.themes.etf_holdings import load_holdings
 
@@ -33,6 +33,7 @@ logger = logging.getLogger(__name__)
 OUTPUT_DIR = Path("data/output")
 UNIVERSE_PATH = OUTPUT_DIR / "universe.json"
 ETF_PATH = OUTPUT_DIR / "etf_data.json"
+BASKET_DIR = OUTPUT_DIR / "baskets"
 VERDICTS_PATH = Path("data/reference/taxonomy_verdicts.json")
 
 # How old a verdict may be before it stops being trusted. Themes drift as
@@ -76,19 +77,93 @@ def load_universe(path: Path = UNIVERSE_PATH,
     return rows
 
 
-def load_benchmark(path: Path = ETF_PATH, ticker: str = BENCHMARK) -> Dict[str, Any]:
-    """Benchmark perf_* row.
+# Lookback in bars for each cumulative window, reverse-engineered from
+# etf_data and confirmed on SPY, QQQ, IWM and XLV to within 1e-7: the vendor
+# uses (trading days - 1), i.e. 5/21/63/126-day windows measured close-to-close.
+_BARS_BACK = {"perf_1w": 4, "perf_1m": 20, "perf_3m": 62, "perf_6m": 125}
 
-    etf_data carries perf_1w/1m/3m but not perf_6m, so the 3m..6m bucket
-    degrades to NaN for the benchmark and therefore for everything measured
-    against it.  That is correct behaviour -- better a missing far bucket
-    than one silently benchmarked against zero.
+
+def _perf_from_bars(bars: Sequence[Mapping[str, Any]], key: str) -> float | None:
+    """Cumulative return over `key`'s window, or None if history is short."""
+    n = _BARS_BACK[key]
+    if len(bars) <= n:
+        return None
+    try:
+        last = float(bars[-1]["close"])
+        prior = float(bars[-1 - n]["close"])
+    except (KeyError, TypeError, ValueError):
+        return None
+    if not prior:
+        return None
+    return last / prior - 1.0
+
+
+def fill_far_window(row: Mapping[str, Any], ticker: str,
+                    basket_dir: Path = BASKET_DIR) -> Dict[str, Any]:
+    """Return `row` with perf_6m filled from local bars, when they agree.
+
+    etf_data stops at perf_3m, which blanks the 3m..6m bucket for every ETF it
+    describes -- the benchmark (and so all 80 themes) and the 15 proxy themes
+    whose fund IS the instrument. The bars for some of these are already on
+    disk under data/output/baskets, so this reads rather than fetches.
+
+    The agreement check is the point: perf_3m is reported by both sources, so
+    if they disagree beyond rounding the two series are not the same series
+    (stale file, unadjusted split, different close convention) and the far
+    bucket stays unmeasured instead of being silently mixed. A missing bucket
+    renders outside the scale; a wrong one does not announce itself.
+    """
+    if row.get("perf_6m") is not None:
+        return dict(row)
+
+    bar_path = basket_dir / f"{ticker}.json"
+    if not bar_path.exists():
+        return dict(row)
+
+    try:
+        bars = json.loads(bar_path.read_text()).get("bars") or []
+    except (json.JSONDecodeError, OSError) as exc:
+        logger.warning("Could not read %s (%s); far window stays unmeasured",
+                       bar_path, exc)
+        return dict(row)
+
+    vendor_3m = row.get("perf_3m")
+    ours_3m = _perf_from_bars(bars, "perf_3m")
+    if vendor_3m is None or ours_3m is None or abs(ours_3m - float(vendor_3m)) > 1e-4:
+        logger.warning(
+            "%s bars disagree with etf_data on perf_3m (%s vs %s); "
+            "far window stays unmeasured", ticker, ours_3m, vendor_3m)
+        return dict(row)
+
+    perf_6m = _perf_from_bars(bars, "perf_6m")
+    if perf_6m is None:
+        logger.warning("%s has %d bars, too few for a 6m window", ticker, len(bars))
+        return dict(row)
+
+    logger.info("Filled %s perf_6m=%.6f from %d local bars", ticker, perf_6m, len(bars))
+    return {**row, "perf_6m": perf_6m}
+
+
+def load_benchmark(path: Path = ETF_PATH, ticker: str = BENCHMARK,
+                   basket_dir: Path = BASKET_DIR) -> Dict[str, Any]:
+    """Benchmark perf_* row, with the far window filled from local bars.
+
+    etf_data carries perf_1w/1m/3m but not perf_6m. Missing it does not just
+    blank one column: rs_3m_6m degrades to NaN for the benchmark and therefore
+    for every theme measured against it -- 80 of 80 themes had a null far
+    bucket, so a quarter of the RS decomposition was dark.
+
+    The bars are already on disk (data/output/baskets/SPY.json, two years of
+    daily closes), so this reads rather than fetches. The lookback is checked
+    against the windows etf_data does report: if the vendor's perf_3m and ours
+    disagree by more than a rounding difference, the series is not the same
+    series and the far bucket stays None rather than being silently mixed.
     """
     rows = json.loads(path.read_text())
-    for row in rows:
-        if row.get("ticker") == ticker:
-            return row
-    raise ValueError(f"Benchmark {ticker} not found in {path}")
+    row = next((r for r in rows if r.get("ticker") == ticker), None)
+    if row is None:
+        raise ValueError(f"Benchmark {ticker} not found in {path}")
+    return fill_far_window(row, ticker, basket_dir)
 
 
 def build_industries(
@@ -171,6 +246,9 @@ def build_themes(
                     "reason": f"proxy ETF {theme.etf[:1]} not in etf_data",
                 })
                 continue
+            # Same gap as the benchmark's: etf_data has no perf_6m, so a
+            # proxy theme's far bucket is dark unless local bars fill it.
+            row = fill_far_window(row, theme.etf[0])
             payload = rs_engine.score_row(row, benchmark)
             if payload["state"] is None:
                 skipped.append({
@@ -357,7 +435,10 @@ def run() -> Dict[str, Any]:
     audit = audit_taxonomy(universe, holdings, etf_rows)
 
     payload = {
-        "date": market_today().isoformat(),
+        # Session label, not wall date: group_history keys its append-only
+        # archive off this field, so a weekend run would mint a session that
+        # never traded. See marketcal.last_trading_day.
+        "date": last_trading_day().isoformat(),
         "benchmark": BENCHMARK,
         "universe_size": len(universe),
         "industries": industries,
