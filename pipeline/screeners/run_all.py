@@ -649,15 +649,45 @@ def main():
     export_df = scored_universe[export_cols].astype(object).where(
         scored_universe[export_cols].notna(), None
     )
+    rows_out = export_df.to_dict('records')
+
+    # Quality gate. A row count is not a shape check: the 2026-08-09 run
+    # produced exactly 5,615 rows with avg_volume 7x more missing than usual,
+    # and nothing noticed until a $49.5B name showed up as untradeable.
+    from pipeline.quality import check as check_quality, tradeable_status
+    from pipeline.themes import MIN_MARKET_CAP, MIN_DOLLAR_VOLUME
+    quality = check_quality(rows_out, last_trading_day().isoformat())
+
+    statuses = [tradeable_status(r, MIN_MARKET_CAP, MIN_DOLLAR_VOLUME)
+                for r in rows_out]
+    quality['tradeable'] = {
+        s: statuses.count(s) for s in ('tradeable', 'excluded', 'unmeasurable')
+    }
+    logger.info("Universe quality: %s — tradeable %d, excluded %d, unmeasurable %d",
+                quality['status'], quality['tradeable']['tradeable'],
+                quality['tradeable']['excluded'], quality['tradeable']['unmeasurable'])
+
     universe_export = {
         'timestamp': timestamp,
         'count': len(scored_universe),
-        'rows': export_df.to_dict('records'),
+        'quality': quality,
+        'rows': rows_out,
     }
     (OUTPUT_DIR / 'universe.json').write_text(
         json.dumps(universe_export, indent=None, default=_json_serializer)
     )
     logger.info("Saved universe.json")
+
+    # Severe means a feed is broken, not noisy. Stopping here leaves yesterday's
+    # outputs in place, which is the better of two bad days: a shifted universe
+    # moves every percentile in the product without looking wrong anywhere.
+    # Degraded only warns — one flaky vendor morning should not cost a day.
+    if quality['status'] == 'severe':
+        broken = [f for f, v in quality['fields'].items() if v['status'] == 'severe']
+        raise SystemExit(
+            f"Universe quality severe on {', '.join(broken)} — refusing to "
+            f"publish. Yesterday's outputs are unchanged."
+        )
 
     # Group layer: industries + curated themes, scored and state-classified.
     # Depends on universe.json and etf_data.json having just been written, so
