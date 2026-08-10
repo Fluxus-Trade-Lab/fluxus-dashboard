@@ -8,6 +8,7 @@ import RsSegments from './RsSegments'
 import CompareBar from './CompareBar'
 import DistributionStrip from './DistributionStrip'
 import TrajectoryPanel from './TrajectoryPanel'
+import ThemeMembers from './ThemeMembers'
 import { useThemeCompare } from './useThemeCompare'
 import { useSpyRow } from './useSpyRow'
 import Reference from '../Reference'
@@ -90,9 +91,13 @@ function Section({ label, question, right, children }) {
 }
 
 export default function GroupsPage() {
-  const { industries, themes, provisional, summary, date, benchmark, loading, error } =
+  const { industries, themes, provisional, stocks, summary, date, benchmark, loading, error } =
     useGroups()
   const [winKey, setWinKey] = useState('3M')
+  // Which picks have their member table open. Keyed by name, survives
+  // re-picks; the panel itself only mounts (and only fetches the universe)
+  // while open.
+  const [openMembers, setOpenMembers] = useState(() => new Set())
   const spy = useSpyRow()
   const compare = useThemeCompare()
 
@@ -170,7 +175,7 @@ export default function GroupsPage() {
         </div>
       </div>
 
-            <Section label="Field" question="worth picking today?">
+      <Section label="Field" question="worth picking today?">
         <DistributionStrip rows={windowed} scale={scale}
                            colourOf={colourOf} onToggle={onToggle}
                            atLimit={compare.atLimit} dim={compare.picks.length > 0} />
@@ -178,6 +183,45 @@ export default function GroupsPage() {
 
       <Section label="Compare" question="trend, or bounce?">
         <TrajectoryPanel picks={compare.picks} byName={byName} highlight={win.hl} />
+
+        {/* The set behind each chosen average. A theme's bar is a claim about
+            members you cannot see; one fold per pick opens them on the
+            screener's own measurements. Mounted lazily — the 5,615-row
+            universe is fetched the first time a fold opens, not on page load. */}
+        {compare.picks.map((pick) => {
+          const row = byName.get(pick.name)
+          if (!row?.tickers?.length) return null
+          const open = openMembers.has(pick.name)
+          return (
+            <div key={pick.name} className="mt-2">
+              <button type="button"
+                      onClick={() => setOpenMembers((prev) => {
+                        const next = new Set(prev)
+                        if (next.has(pick.name)) next.delete(pick.name)
+                        else next.add(pick.name)
+                        return next
+                      })}
+                      className="w-full flex items-baseline gap-2.5 bg-transparent border-0
+                                 p-0 cursor-pointer text-left group">
+                <span className="text-[10px] font-mono text-[var(--color-text-muted)]
+                                 group-hover:text-[var(--color-text)] w-3">
+                  {open ? '−' : '+'}
+                </span>
+                <span className="text-[11px] font-medium" style={{ color: pick.colour }}>
+                  {pick.name}
+                </span>
+                <span className="text-[10.5px] font-mono text-[var(--color-text-muted)]">
+                  {row.members} members
+                </span>
+              </button>
+              {open && (
+                <div className="pl-[22px] pt-1.5">
+                  <ThemeMembers theme={row} colour={pick.colour} rsByTicker={stocks} />
+                </div>
+              )}
+            </div>
+          )
+        })}
       </Section>
 
       <Section label="Ranked"

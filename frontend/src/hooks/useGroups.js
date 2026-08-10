@@ -40,6 +40,9 @@ export function useGroups() {
 
   const themes = data?.themes ?? []
   return {
+    // per-ticker RS payload (rs windows, state, cohort percentile,
+    // top_quartile) — keyed by ticker, computed by rs_engine
+    stocks: data?.stocks ?? {},
     date: data?.date ?? null,
     benchmark: data?.benchmark ?? 'SPY',
     industries: data?.industries ?? [],
