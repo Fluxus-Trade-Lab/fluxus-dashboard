@@ -1,64 +1,105 @@
 /**
- * The comparison: the chosen themes' four stretches, as lines and as state.
+ * The comparison: the chosen themes' four stretches, as a curve and a ribbon.
  *
- * The LINES answer "by how much" — excess vs SPY per disjoint stretch, drawn
- * straight between measured points. Never splined: a curve through four
- * samples manufactures readings between them, which is the exact sin the rest
- * of this dashboard exists to avoid.
+ * BOTH prettier forms are allowed by the encoding rules, each under one law:
  *
- * Lines are labelled AT THEIR ENDS — name and latest value in the line's own
- * colour — instead of through a legend. Direct labelling is the difference
- * between reading a chart and decoding one: the eye never leaves the line to
- * look up what it was. Intermediate values live in hover titles; printing
- * every point was the old version's clutter.
+ * The CURVE is monotone cubic (Fritsch–Carlson), not a free spline. A straight
+ * segment and a curve are both assumptions about the unmeasured space between
+ * two samples; what a free spline adds — and what stays forbidden — is
+ * OVERSHOOT: highs and lows that were never measured. Monotone interpolation
+ * cannot leave the range of its neighbouring samples, so the curve is exactly
+ * as honest as the polyline it replaces, and the measured points stay drawn
+ * on top of it.
  *
- * The HEATSTRIPS below are the same four stretches as state, in the site's
- * one grammar: tone = ahead/behind SPY, solid = widening, outlined =
- * narrowing — which IS Leading/Weakening/Improving/Lagging. The first stretch
- * has no predecessor, so it carries tone only at half strength: direction
- * unknown is not direction flat.
+ * The RIBBON is the heatstrip rebuilt as a value gradient. A gradient between
+ * two measured colours is linear interpolation in colour space — the same
+ * assumption as the line segment between two measured points. The anchors are
+ * the four measurements; between anchors, linear; nothing else. Tone still
+ * carries the one grammar: blue for ahead of SPY, grey for behind, intensity
+ * for how far. Discrete four-state cells threw away magnitude that the data
+ * had; the gradient keeps it.
  *
  * The window chosen up top is shaded across the chart, so "what you are
  * ranking on" and "how it got there" stay visibly the same stretch of time.
  */
 import { SEGMENTS } from './segments'
 
-const TONE = { strong: 'var(--color-took)', weak: 'var(--color-untested)' }
-
-function cellState(v, prev) {
-  if (v == null || !Number.isFinite(v)) return null
-  const tone = v > 0 ? 'strong' : 'weak'
-  if (prev == null || !Number.isFinite(prev)) return { tone, dir: null }
-  return { tone, dir: v > prev ? 'widening' : 'narrowing' }
+/** Excess value → colour. Anchors only; the gradient does the interpolation. */
+function valueColour(v, span) {
+  if (v == null || !Number.isFinite(v)) return 'transparent'
+  const tone = v > 0 ? 'var(--color-took)' : 'var(--color-untested)'
+  const strength = Math.round(12 + 78 * Math.min(1, Math.abs(v) / span))
+  return `color-mix(in srgb, ${tone} ${strength}%, transparent)`
 }
 
-const STATE_NAME = {
-  'strong widening': 'Leading', 'strong narrowing': 'Weakening',
-  'weak widening': 'Improving', 'weak narrowing': 'Lagging',
-}
-
-function Heatstrip({ row }) {
+/**
+ * One theme's four stretches as a continuous ribbon. Gradient stops sit at
+ * the same x as the chart's sample columns, so ribbon and curve are one
+ * coordinate system. Hover splits into the four measured stretches, each
+ * titled with its own number — the beauty is continuous, the measurements
+ * stay countable.
+ */
+function Ribbon({ row, span, xsPct }) {
   const vals = SEGMENTS.map((s) => row[s.key])
+  const stops = vals.map((v, i) => `${valueColour(v, span)} ${xsPct(i)}%`)
   return (
-    <div className="grid grid-cols-4 gap-[3px]" role="img"
-         aria-label={`${row.group} state by stretch`}>
-      {vals.map((v, i) => {
-        const st = cellState(v, i > 0 ? vals[i - 1] : null)
-        if (!st) {
-          return <span key={i} className="h-[12px] border border-dashed"
-                       style={{ borderColor: 'var(--color-untested)' }}
-                       title={`${SEGMENTS[i].label}: not measured`} />
-        }
-        const name = st.dir ? STATE_NAME[`${st.tone} ${st.dir}`]
-          : (st.tone === 'strong' ? 'ahead' : 'behind')
-        const style = st.dir === 'narrowing'
-          ? { border: `1px solid ${TONE[st.tone]}`, background: 'transparent' }
-          : { background: TONE[st.tone], opacity: st.dir ? 1 : 0.5 }
-        return <span key={i} className="h-[12px]" style={style}
-                     title={`${SEGMENTS[i].label}: ${name}${st.dir ? '' : ' — no prior stretch to compare'} (${(v * 100).toFixed(1)}%)`} />
+    <div className="relative h-[10px]"
+         style={{ background: `linear-gradient(90deg, ${stops.join(', ')})` }}
+         role="img" aria-label={`${row.group} excess by stretch`}>
+      {SEGMENTS.map((seg, i) => {
+        const v = vals[i]
+        const lo = i === 0 ? 0 : (xsPct(i - 1) + xsPct(i)) / 2
+        const hi = i === SEGMENTS.length - 1 ? 100 : (xsPct(i) + xsPct(i + 1)) / 2
+        const dead = v == null || !Number.isFinite(v)
+        return (
+          <span key={seg.key} className="absolute inset-y-0"
+                style={{ left: `${lo}%`, width: `${hi - lo}%`,
+                         /* an unmeasured stretch must not fade elegantly into
+                            its neighbours — it wears the dashed outline */
+                         border: dead ? '1px dashed var(--color-untested)' : undefined }}
+                title={`${seg.label}: ${dead ? 'not measured'
+                  : `${v > 0 ? '+' : ''}${(v * 100).toFixed(1)}%`}`} />
+        )
       })}
     </div>
   )
+}
+
+/**
+ * Monotone cubic (Fritsch–Carlson) through the measured points, emitted as
+ * cubic Béziers. Tangents are clamped so the curve never leaves the range of
+ * its neighbouring samples — smooth, but incapable of inventing an extreme.
+ */
+function monotonePath(pts) {
+  if (pts.length < 2) return ''
+  if (pts.length === 2) {
+    return `M${pts[0][0]},${pts[0][1]} L${pts[1][0]},${pts[1][1]}`
+  }
+  const n = pts.length
+  const dx = [], dy = [], slope = []
+  for (let i = 0; i < n - 1; i++) {
+    dx.push(pts[i + 1][0] - pts[i][0])
+    dy.push(pts[i + 1][1] - pts[i][1])
+    slope.push(dy[i] / dx[i])
+  }
+  const m = [slope[0]]
+  for (let i = 1; i < n - 1; i++) {
+    if (slope[i - 1] * slope[i] <= 0) m.push(0)
+    else {
+      const w1 = 2 * dx[i] + dx[i - 1], w2 = dx[i] + 2 * dx[i - 1]
+      m.push((w1 + w2) / (w1 / slope[i - 1] + w2 / slope[i]))
+    }
+  }
+  m.push(slope[n - 2])
+  let path = `M${pts[0][0]},${pts[0][1]}`
+  for (let i = 0; i < n - 1; i++) {
+    const c1x = pts[i][0] + dx[i] / 3
+    const c1y = pts[i][1] + (m[i] * dx[i]) / 3
+    const c2x = pts[i + 1][0] - dx[i] / 3
+    const c2y = pts[i + 1][1] - (m[i + 1] * dx[i]) / 3
+    path += ` C${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${pts[i + 1][0]},${pts[i + 1][1]}`
+  }
+  return path
 }
 
 export default function TrajectoryPanel({ picks, byName, highlight }) {
@@ -137,9 +178,10 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
             return (
               <g key={c.name}>
                 {runs.map((r, j) => (
-                  <polyline key={j} points={r.join(' ')} fill="none"
-                            stroke={c.colour} strokeWidth="2"
-                            vectorEffect="non-scaling-stroke" strokeLinejoin="round" />
+                  <path key={j}
+                        d={monotonePath(r.map((pt) => pt.split(',').map(Number)))}
+                        fill="none" stroke={c.colour} strokeWidth="2"
+                        vectorEffect="non-scaling-stroke" strokeLinecap="round" />
                 ))}
                 {SEGMENTS.map((s, i) => {
                   const v = c.row[s.key]
@@ -193,9 +235,10 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
         ))}
       </div>
 
-      {/* Strips share the chart's plot edges — two objects on two coordinate
-          systems read as two charts that happen to be stacked. The name lives
-          at the line's end already; a colour dot is identity enough here. */}
+      {/* Ribbons share the chart's plot edges and its sample columns — one
+          coordinate system, two readings: the curve is the path, the ribbon is
+          the temperature along it. Identity is the dot; the name lives at the
+          line's end. */}
       <div className="mt-2.5 space-y-[5px]">
         {chosen.map((c) => (
           <div key={c.name} className="relative"
@@ -203,7 +246,10 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
             <span className="absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full"
                   style={{ left: `calc(${LEFT}% - 17px)`, background: c.colour }}
                   title={c.name} />
-            <Heatstrip row={c.row} />
+            {/* ribbon x is relative to its own padded box, so re-map the
+                chart's absolute percents into box-local ones */}
+            <Ribbon row={c.row} span={span}
+                    xsPct={(i) => ((xsPct(i) - LEFT) / (100 - LEFT - RIGHT)) * 100} />
           </div>
         ))}
       </div>

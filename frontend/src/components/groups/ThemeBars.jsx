@@ -1,5 +1,16 @@
+import { useState } from 'react'
+
 /**
  * The ranking: one bar per theme, ordered on the window chosen at page level.
+ *
+ * FOLDED BY DEFAULT. Seventy-two rows is a wall, and the middle fifty are
+ * themes within a point or two of SPY — the distribution strip already says
+ * "nothing much here" about them collectively. What shows: the head (where
+ * leadership is), the tail (where the damage is), and every selected theme
+ * with one neighbour of context so its rank reads as a place, not a number.
+ * The hidden stretches are labelled with their count and expand on click —
+ * a fold that says how much it holds is a decision; one that hides silently
+ * is a lie of omission.
  *
  * Pure rows. The section header, the scale note, the state counts and the
  * teaching all live on the page — this component draws marks and nothing
@@ -29,15 +40,59 @@ export function barStyle(state) {
     : { border: `1px solid ${tone}`, background: 'transparent' }
 }
 
+const HEAD = 8
+const TAIL = 4
+const NEIGHBOURS = 1
+
 export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit }) {
+  const [showAll, setShowAll] = useState(false)
   const sorted = [...rows]
     .filter((r) => Number.isFinite(r._value))
     .sort((a, b) => b._value - a._value)
   if (!sorted.length) return null
 
+  // Which ranks stay visible when folded.
+  const keep = new Set()
+  if (showAll || sorted.length <= HEAD + TAIL + 4) {
+    sorted.forEach((_, i) => keep.add(i))
+  } else {
+    for (let i = 0; i < HEAD; i++) keep.add(i)
+    for (let i = sorted.length - TAIL; i < sorted.length; i++) keep.add(i)
+    sorted.forEach((r, i) => {
+      if (colourOf(r.group)) {
+        for (let d = -NEIGHBOURS; d <= NEIGHBOURS; d++) {
+          const j = i + d
+          if (j >= 0 && j < sorted.length) keep.add(j)
+        }
+      }
+    })
+  }
+
+  // Rows plus gap markers, in rank order.
+  const display = []
+  let hidden = 0
+  sorted.forEach((r, i) => {
+    if (keep.has(i)) {
+      if (hidden > 0) { display.push({ gap: hidden }); hidden = 0 }
+      display.push({ r, i })
+    } else hidden += 1
+  })
+  if (hidden > 0) display.push({ gap: hidden })
+
   return (
     <div>
-      {sorted.map((r, i) => {
+      {display.map((d) => d.gap ? (
+        <button key={`gap-after-${display.indexOf(d)}`} type="button"
+                onClick={() => setShowAll(true)}
+                className="w-full py-[5px] pl-1 grid grid-cols-[24px_1fr] gap-2 items-center
+                           bg-transparent border-0 cursor-pointer text-left
+                           text-[10px] font-mono text-[var(--color-text-muted)]
+                           hover:text-[var(--color-text)]">
+          <span className="text-right">⋮</span>
+          <span>{d.gap} more — show</span>
+        </button>
+      ) : (() => {
+        const { r, i } = d
         const v = r._value
         const pos = v > 0
         const frac = Math.min(1, Math.abs(v) / scale)
@@ -90,7 +145,17 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit }) 
             </span>
           </div>
         )
-      })}
+      })())}
+      {showAll && sorted.length > HEAD + TAIL + 4 && (
+        <button type="button" onClick={() => setShowAll(false)}
+                className="w-full py-[6px] pl-1 grid grid-cols-[24px_1fr] gap-2
+                           bg-transparent border-0 cursor-pointer text-left
+                           text-[10px] font-mono text-[var(--color-text-muted)]
+                           hover:text-[var(--color-text)]">
+          <span className="text-right">⌃</span>
+          <span>show fewer</span>
+        </button>
+      )}
     </div>
   )
 }

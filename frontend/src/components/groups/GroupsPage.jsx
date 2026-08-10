@@ -36,12 +36,6 @@ import HowToRead from '../HowToRead'
  * which is a textbook, not a panel.
  */
 
-const TABS = [
-  { key: 'themes', label: 'Themes' },
-  { key: 'industries', label: 'Industries' },
-  { key: 'provisional', label: 'Provisional' },
-]
-
 /**
  * All three windows use the pipeline's own excess construction — theme return
  * minus benchmark return over the same window. rs_0_1w IS that for one week
@@ -98,7 +92,6 @@ function Section({ label, question, right, children }) {
 export default function GroupsPage() {
   const { industries, themes, provisional, summary, date, benchmark, loading, error } =
     useGroups()
-  const [tab, setTab] = useState('themes')
   const [winKey, setWinKey] = useState('3M')
   const spy = useSpyRow()
   const compare = useThemeCompare()
@@ -120,9 +113,12 @@ export default function GroupsPage() {
     </div>
   }
 
-  const rows = tab === 'themes' ? themes
-    : tab === 'industries' ? industries
-    : provisional
+  // Themes only. The tabs are gone by subtraction: Industries was one chart
+  // with no interaction wearing a page's worth of rows — that layer already
+  // lives on the Dashboard's industry and sector cards — and Provisional's
+  // honest home is the count in the header, not a tab. Both datasets stay in
+  // groups.json untouched.
+  const rows = themes
   const win = WINDOWS.find((w) => w.key === winKey)
   const windowed = rows.map((r) => ({ ...r, _value: win.value(r, spy) }))
   const measured = windowed.filter((r) => Number.isFinite(r._value)).length
@@ -130,11 +126,8 @@ export default function GroupsPage() {
   const scale = windowed.reduce(
     (m, r) => (Number.isFinite(r._value) ? Math.max(m, Math.abs(r._value)) : m), 0) || 1
 
-  // Industries are a different cohort with a different denominator; mixing
-  // them into the comparison would draw two different claims as one chart.
-  const comparable = tab !== 'industries'
-  const colourOf = comparable ? compare.colourOf : () => null
-  const onToggle = comparable ? compare.toggle : () => {}
+  const colourOf = compare.colourOf
+  const onToggle = compare.toggle
 
   // Controls are typography, not boxes: state is carried by weight and an
   // underline, never by a filled pill. Borders on this page are reserved for
@@ -157,15 +150,6 @@ export default function GroupsPage() {
            style={{ background: 'var(--glass)', backdropFilter: 'var(--glass-blur)',
                     WebkitBackdropFilter: 'var(--glass-blur)' }}>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-          <div className="flex gap-4">
-            {TABS.map((t) => (
-              <button key={t.key} type="button" onClick={() => setTab(t.key)}
-                      className={seg(tab === t.key)}>
-                {t.label}
-              </button>
-            ))}
-          </div>
-          <i aria-hidden className="h-[14px] w-px bg-[var(--color-border)]" />
           <div className="flex gap-3.5">
             {WINDOWS.map((w) => {
               const waiting = w.needsSpy && !spy
@@ -181,33 +165,20 @@ export default function GroupsPage() {
             })}
           </div>
           <i aria-hidden className="h-[14px] w-px bg-[var(--color-border)]" />
-          {comparable && (
-            <CompareBar rows={rows} picks={compare.picks} atLimit={compare.atLimit}
-                        onToggle={compare.toggle} />
-          )}
+          <CompareBar rows={rows} picks={compare.picks} atLimit={compare.atLimit}
+                      onToggle={compare.toggle} />
         </div>
       </div>
 
-      {tab === 'provisional' && (
-        <p className="m-0 text-[11.5px] leading-relaxed text-[var(--color-text-muted)]
-                      border-l-2 border-amber-500/40 pl-3">
-          Held back: members do not co-move more than a random basket, or too few
-          tradeable names to read a group. Shown so a withheld theme looks withheld,
-          not missing.
-        </p>
-      )}
-
-      <Section label="Field" question="is picking worth anything today?">
+            <Section label="Field" question="is picking worth anything today?">
         <DistributionStrip rows={windowed} scale={scale}
                            colourOf={colourOf} onToggle={onToggle}
                            atLimit={compare.atLimit} />
       </Section>
 
-      {comparable && (
-        <Section label="Compare" question="trend, or bounce? — the ranking cannot tell them apart">
-          <TrajectoryPanel picks={compare.picks} byName={byName} highlight={win.hl} />
-        </Section>
-      )}
+      <Section label="Compare" question="trend, or bounce? — the ranking cannot tell them apart">
+        <TrajectoryPanel picks={compare.picks} byName={byName} highlight={win.hl} />
+      </Section>
 
       <Section label="Ranked"
                question={`${measured} of ${rows.length} measured · scale ±${(scale * 100).toFixed(0)}%`}
@@ -224,11 +195,7 @@ export default function GroupsPage() {
 
       <Reference label="Full table" count={rows.length}
                  note="every column — accel, persistence, method, validation — and sortable">
-        <GroupTable
-          rows={rows}
-          showMethod={tab !== 'industries'}
-          emptyNote={tab === 'provisional' ? 'Nothing withheld' : 'No groups'}
-        />
+        <GroupTable rows={rows} showMethod emptyNote="No groups" />
       </Reference>
 
       <HowToRead>
