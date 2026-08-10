@@ -1,31 +1,30 @@
 /**
- * The trajectory: the chosen themes' four stretches, as lines and as state.
+ * The comparison: the chosen themes' four stretches, as lines and as state.
  *
- * Two synchronised readings of the same row of groups.json:
+ * The LINES answer "by how much" — excess vs SPY per disjoint stretch, drawn
+ * straight between measured points. Never splined: a curve through four
+ * samples manufactures readings between them, which is the exact sin the rest
+ * of this dashboard exists to avoid.
  *
- *   the LINES answer "by how much" — excess vs SPY per disjoint stretch,
- *   drawn as straight segments between measured points. Never splined: a
- *   curve through four samples manufactures readings between them, which is
- *   the exact sin the rest of this dashboard exists to avoid. TSF's smooth
- *   waves are interpolation wearing a measurement's clothes.
+ * Lines are labelled AT THEIR ENDS — name and latest value in the line's own
+ * colour — instead of through a legend. Direct labelling is the difference
+ * between reading a chart and decoding one: the eye never leaves the line to
+ * look up what it was. Intermediate values live in hover titles; printing
+ * every point was the old version's clutter.
  *
- *   the HEATSTRIPS answer "in what state" — each stretch classified with the
- *   site's one state grammar: tone says strong or weak against SPY, fill says
- *   the gap is widening or narrowing versus the stretch before. Leading =
- *   solid strong, Weakening = outlined strong, Improving = solid weak,
- *   Lagging = outlined weak. Same vocabulary as every other theme surface, so
- *   nothing new to learn here. The first stretch has nothing before it, so it
- *   carries tone only, at half strength — direction unknown is not direction
- *   flat.
+ * The HEATSTRIPS below are the same four stretches as state, in the site's
+ * one grammar: tone = ahead/behind SPY, solid = widening, outlined =
+ * narrowing — which IS Leading/Weakening/Improving/Lagging. The first stretch
+ * has no predecessor, so it carries tone only at half strength: direction
+ * unknown is not direction flat.
  *
- * The window chosen up top is shaded across both, so "what you are ranking
- * on" and "how it got there" stay visibly the same stretch of time.
+ * The window chosen up top is shaded across the chart, so "what you are
+ * ranking on" and "how it got there" stay visibly the same stretch of time.
  */
 import { SEGMENTS } from './segments'
 
 const TONE = { strong: 'var(--color-took)', weak: 'var(--color-untested)' }
 
-/** One stretch → the state grammar. Returns null when unmeasured. */
 function cellState(v, prev) {
   if (v == null || !Number.isFinite(v)) return null
   const tone = v > 0 ? 'strong' : 'weak'
@@ -69,59 +68,65 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
 
   if (!chosen.length) {
     return (
-      <div className="border border-dashed border-[var(--color-border)] rounded px-4 py-5
-                      text-[11.5px] leading-relaxed text-[var(--color-text-muted)]">
-        <span className="font-mono text-[9px] uppercase tracking-[.2em] block mb-1.5">
-          Trajectory — waiting for a selection
-        </span>
-        Pick up to three themes above (chips, dots, or ranking rows all select) and their
-        four stretches draw here — the line for how much, the strip for what state. This
-        is the layer that tells a trend from a bounce: the ranking cannot.
+      <div className="h-[52px] rounded border border-dashed border-[var(--color-border)]
+                      flex items-center px-4 text-[11.5px] text-[var(--color-text-muted)]">
+        Pick up to three themes — search above, or click a dot or a row.
       </div>
     )
   }
 
-  const W = 1000, H = 190, PADX = 46, PADY = 22
+  // Geometry in svg, text in HTML: the svg stretches non-uniformly to fill
+  // its column, which distorts glyphs — the first version's end labels came
+  // out widened and clipped. HTML overlays position by percentage and stay
+  // crisp at any width.
+  const H = 190, PADY = 24
+  const LEFT = 5, RIGHT = 20            // % of width reserved either side
   const n = SEGMENTS.length
-  const xs = (i) => PADX + (i / (n - 1)) * (W - PADX * 2)
+  const xsPct = (i) => LEFT + (i / (n - 1)) * (100 - LEFT - RIGHT)
   const all = chosen.flatMap((c) => SEGMENTS.map((s) => c.row[s.key]))
     .filter((v) => Number.isFinite(v))
   const span = Math.max(...all.map(Math.abs), 0.02)
   const ys = (v) => H / 2 - (v / span) * (H / 2 - PADY)
 
+  // End labels in HTML, nudged apart so converging lines cannot smear them.
+  const ends = chosen.map((c) => {
+    let last = null
+    SEGMENTS.forEach((s) => {
+      if (Number.isFinite(c.row[s.key])) last = c.row[s.key]
+    })
+    return last != null && { c, y: ys(last), v: last }
+  }).filter(Boolean).sort((a, b) => a.y - b.y)
+  for (let i = 1; i < ends.length; i++) {
+    if (ends[i].y - ends[i - 1].y < 16) ends[i].y = ends[i - 1].y + 16
+  }
+
   return (
     <div>
       <div className="relative">
-        <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[180px] block"
+        <svg viewBox={`0 0 1000 ${H}`} className="w-full h-[190px] block"
              preserveAspectRatio="none">
-          {/* the window being ranked on, shaded under everything */}
           {highlight?.length > 0 && (
-            <rect x={xs(Math.min(...highlight)) - (W - PADX * 2) / (n - 1) / 2}
+            <rect x={(xsPct(Math.min(...highlight)) - (100 - LEFT - RIGHT) / (n - 1) / 2) * 10}
                   y={4}
-                  width={(Math.max(...highlight) - Math.min(...highlight)
-                          + 1) * (W - PADX * 2) / (n - 1) * 0.999}
+                  width={(Math.max(...highlight) - Math.min(...highlight) + 1)
+                         * (100 - LEFT - RIGHT) / (n - 1) * 10 * 0.999}
                   height={H - 8}
-                  fill="var(--color-hover-bg)" />
+                  fill="var(--color-hover-bg)" opacity="0.45" />
           )}
-          <line x1={PADX} x2={W - PADX} y1={H / 2} y2={H / 2}
+          <line x1={LEFT * 10} x2={(100 - RIGHT) * 10 + 30} y1={H / 2} y2={H / 2}
                 stroke="var(--color-text-muted)" strokeWidth="1"
                 vectorEffect="non-scaling-stroke" />
           {SEGMENTS.map((s, i) => (
-            <line key={s.key} x1={xs(i)} x2={xs(i)} y1={8} y2={H - 8}
+            <line key={s.key} x1={xsPct(i) * 10} x2={xsPct(i) * 10} y1={10} y2={H - 10}
                   stroke="var(--color-border)" strokeWidth="1"
                   vectorEffect="non-scaling-stroke" />
           ))}
-          {chosen.map((c, ci) => {
-            // Per-series label side: when two lines converge (the usual case at
-            // the newest stretch), labels on the same side collide into one
-            // unreadable smudge. Series 0 labels above, 1 below, 2 further
-            // above — deterministic, no measuring.
-            const dy = [-8, 16, -19][ci] ?? -8
+
+          {chosen.map((c) => {
             const pts = SEGMENTS.map((s, i) => {
               const v = c.row[s.key]
-              return Number.isFinite(v) ? `${xs(i)},${ys(v)}` : null
+              return Number.isFinite(v) ? `${xsPct(i) * 10},${ys(v)}` : null
             })
-            // straight segments between measured points; a gap stays a gap
             const runs = []
             let cur = []
             pts.forEach((p) => {
@@ -140,68 +145,67 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
                   const v = c.row[s.key]
                   if (!Number.isFinite(v)) return null
                   return (
-                    <g key={s.key}>
-                      <circle cx={xs(i)} cy={ys(v)} r="3.4" fill={c.colour} />
-                      <text x={xs(i)} y={ys(v) + dy} textAnchor="middle"
-                            style={{ font: '10px var(--font-mono, monospace)',
-                                     fill: c.colour }}>
-                        {v > 0 ? '+' : ''}{(v * 100).toFixed(1)}
-                      </text>
-                    </g>
+                    <circle key={s.key} cx={xsPct(i) * 10} cy={ys(v)} r="3.4" fill={c.colour}>
+                      <title>{c.name} · {s.label}: {v > 0 ? '+' : ''}{(v * 100).toFixed(1)}%</title>
+                    </circle>
                   )
                 })}
               </g>
             )
           })}
         </svg>
-        <span className="absolute left-1 top-1/2 -translate-y-1/2 text-[9px] font-mono
-                         text-[var(--color-text-muted)] pointer-events-none">SPY</span>
+
+        <span className="absolute text-[10px] font-mono text-[var(--color-text-muted)]
+                         pointer-events-none"
+              style={{ left: `${LEFT}%`, top: H / 2, transform: 'translate(-110%, -50%)' }}>
+          SPY
+        </span>
+        {/* the chart's own extent — an axis without numbers is not an axis,
+            which was this page's first finding and applies to itself */}
+        <span className="absolute text-[9px] font-mono text-[var(--color-text-muted)]
+                         pointer-events-none" style={{ left: `${LEFT + 0.5}%`, top: 2 }}>
+          +{(span * 100).toFixed(0)}%
+        </span>
+        <span className="absolute text-[9px] font-mono text-[var(--color-text-muted)]
+                         pointer-events-none" style={{ left: `${LEFT + 0.5}%`, bottom: 2 }}>
+          −{(span * 100).toFixed(0)}%
+        </span>
+        {ends.map(({ c, y, v }) => (
+          <span key={c.name}
+                className="absolute text-[11px] font-mono whitespace-nowrap
+                           pointer-events-none -translate-y-1/2"
+                style={{ left: `${100 - RIGHT + 1.2}%`, top: y, color: c.colour }}>
+            {c.name.length > 18 ? `${c.name.slice(0, 17)}…` : c.name}
+            {' '}{v > 0 ? '+' : ''}{(v * 100).toFixed(1)}%
+          </span>
+        ))}
       </div>
 
-      <div className="flex justify-between px-[3%] text-[9px] font-mono
-                      text-[var(--color-text-muted)]">
+      <div className="flex justify-between text-[9px] font-mono
+                      text-[var(--color-text-muted)]"
+           style={{ paddingLeft: `${LEFT - 1}%`, paddingRight: `${RIGHT - 1}%` }}>
         {SEGMENTS.map((s, i) => (
           <span key={s.key} title={s.note}
-                className={highlight?.includes(i) ? 'text-[var(--color-text-secondary)] font-semibold' : ''}>
+                className={highlight?.includes(i)
+                  ? 'text-[var(--color-text-secondary)] font-semibold' : ''}>
             {s.label}
           </span>
         ))}
       </div>
 
-      {/* one strip per theme: the same four stretches as state instead of size */}
-      <div className="mt-3 space-y-1.5">
+      {/* Strips share the chart's plot edges — two objects on two coordinate
+          systems read as two charts that happen to be stacked. The name lives
+          at the line's end already; a colour dot is identity enough here. */}
+      <div className="mt-2.5 space-y-[5px]">
         {chosen.map((c) => (
-          <div key={c.name}
-               className="grid grid-cols-[minmax(130px,200px)_1fr] gap-3 items-center">
-            <span className="text-[11.5px] truncate font-medium" style={{ color: c.colour }}>
-              {c.name}
-            </span>
+          <div key={c.name} className="relative"
+               style={{ paddingLeft: `${LEFT}%`, paddingRight: `${RIGHT}%` }}>
+            <span className="absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full"
+                  style={{ left: `calc(${LEFT}% - 17px)`, background: c.colour }}
+                  title={c.name} />
             <Heatstrip row={c.row} />
           </div>
         ))}
-      </div>
-
-      <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2.5 text-[10px]
-                      text-[var(--color-text-muted)]">
-        <span className="flex items-center gap-1.5">
-          <i className="inline-block w-3.5 h-[10px]" style={{ background: TONE.strong }} />Leading
-        </span>
-        <span className="flex items-center gap-1.5">
-          <i className="inline-block w-3.5 h-[10px] border"
-             style={{ borderColor: TONE.strong }} />Weakening
-        </span>
-        <span className="flex items-center gap-1.5">
-          <i className="inline-block w-3.5 h-[10px]" style={{ background: TONE.weak }} />Improving
-        </span>
-        <span className="flex items-center gap-1.5">
-          <i className="inline-block w-3.5 h-[10px] border"
-             style={{ borderColor: TONE.weak }} />Lagging
-        </span>
-        <span>
-          · same grammar as the ranking bars — tone is ahead/behind, solid is widening,
-          outlined is narrowing. Lines are straight between measured points; nothing is
-          smoothed.
-        </span>
       </div>
     </div>
   )

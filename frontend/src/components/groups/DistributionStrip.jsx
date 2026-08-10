@@ -1,73 +1,114 @@
 /**
- * The distribution: every theme as one dot on one axis, zero = SPY.
+ * The field: every theme as one dot on one axis, zero = SPY.
  *
- * This strip answers the question the ranking cannot: is today's spread worth
- * picking through at all? Dots bunched on the rule mean the choice barely
- * matters; long tails mean it is worth being right. The reading is the SHAPE —
- * names deliberately do not appear here, they live one layer down.
+ * Answers the question the ranking cannot — is picking worth anything today?
+ * Dots bunched on the rule mean the choice barely matters; long tails mean
+ * being right pays. The reading is the SHAPE; names live one layer down.
  *
- * The shaded box is the middle half of the field (quartile to quartile).
- * Data-derived, no threshold to tune: an earlier sketch shaded a fixed ±5%
- * band, which was one more invented parameter — the IQR moves with the field
- * and needs no defending.
+ * TEXT LIVES IN HTML, MARKS LIVE IN SVG. The svg stretches to full width with
+ * preserveAspectRatio="none", which is fine for geometry and fatal for glyphs
+ * — the first version put its tick numbers inside the svg and they rendered
+ * stretched. Labels are absolutely-positioned HTML at percentage offsets, so
+ * they stay crisp at any width.
  *
- * Vertical position is deterministic jitter (i·47 mod n), so overlapping dots
- * separate without implying a second dimension, and the same theme lands on
- * the same spot every render.
- *
- * Shares its scale with the ranking below by contract — the caller computes
- * one scale for both. Two objects on one axis are one instrument; on two
- * axes they are two charts that happen to be adjacent.
+ * The box is quartile-to-quartile: data-derived, nothing to tune. Dot lanes
+ * hash the theme's NAME, not its index — index lanes gave adjacent themes
+ * adjacent lanes and drew diagonal streaks through the pile that read as a
+ * pattern in the data. A name hash is just as deterministic and has no order
+ * to leak.
  */
+
+function tickStep(scale) {
+  const raw = scale / 2.5
+  const mag = 10 ** Math.floor(Math.log10(raw))
+  const n = raw / mag
+  return (n < 1.5 ? 1 : n < 3.5 ? 2 : n < 7.5 ? 5 : 10) * mag
+}
+
+/** Small stable string hash for lane assignment. */
+function laneHash(name) {
+  let h = 0
+  for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0
+  return h
+}
+
+const H = 96          // svg height = rendered height, so vertical scale is 1:1
+
 export default function DistributionStrip({ rows, scale, colourOf, onToggle, atLimit }) {
   const scored = rows.filter((r) => Number.isFinite(r._value))
   if (scored.length < 4) return null
 
-  const W = 1000, H = 74, PAD = 8
-  const x = (v) => PAD + ((v + scale) / (2 * scale)) * (W - PAD * 2)
+  // 0.8% padding either side keeps the extreme dot's full circle on canvas —
+  // the strongest theme is the one reading that must not be half-cropped.
+  const pct = (v) => 0.8 + ((v + scale) / (2 * scale)) * 98.4
 
   const sorted = [...scored].sort((a, b) => a._value - b._value)
   const q = (p) => sorted[Math.round(p * (sorted.length - 1))]._value
   const [q25, mid, q75] = [q(0.25), q(0.5), q(0.75)]
 
+  const step = tickStep(scale)
+  const ticks = [0]
+  for (let t = step; t <= scale + 1e-9; t += step) ticks.push(t, -t)
+
   return (
     <div>
-      <div className="relative">
-        <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[64px] block"
-             preserveAspectRatio="none" role="img"
-             aria-label={`${scored.length} themes; median ${(mid * 100).toFixed(1)}%; middle half ${(q25 * 100).toFixed(1)} to ${(q75 * 100).toFixed(1)}%`}>
-          <rect x={x(q25)} y={6} width={Math.max(1, x(q75) - x(q25))} height={H - 12}
-                fill="var(--color-hover-bg)" />
-          <line x1={x(0)} x2={x(0)} y1={2} y2={H - 2}
+      {/* the median, said where it sits rather than in a caption */}
+      <div className="relative h-[15px] text-[10px] font-mono
+                      text-[var(--color-text-secondary)]">
+        <span className="absolute -translate-x-1/2 whitespace-nowrap"
+              style={{ left: `${pct(mid)}%` }}>
+          median {(mid * 100).toFixed(1)}%
+        </span>
+      </div>
+
+      <svg viewBox={`0 0 1000 ${H}`} className="w-full h-[96px] block"
+           preserveAspectRatio="none" role="img"
+           aria-label={`${scored.length} themes; median ${(mid * 100).toFixed(1)}%; middle half ${(q25 * 100).toFixed(1)} to ${(q75 * 100).toFixed(1)}%`}>
+        {/* the middle half — where "just the market" lives today */}
+        <rect x={pct(q25) * 10} y={0} width={Math.max(4, (pct(q75) - pct(q25)) * 10)}
+              height={H - 1} fill="var(--color-hover-bg)" />
+        <line x1={0} x2={1000} y1={H - 1} y2={H - 1}
+              stroke="var(--color-border)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+        {ticks.map((t) => (
+          <line key={t} x1={pct(t) * 10} x2={pct(t) * 10} y1={H - 6} y2={H - 1}
                 stroke="var(--color-text-muted)" strokeWidth="1"
                 vectorEffect="non-scaling-stroke" />
-          {scored.map((r, i) => {
-            const colour = colourOf(r.group)
-            const cy = H / 2 + (((i * 47) % (H - 26)) - (H - 26) / 2) * 0.9
-            return (
-              <circle key={r.group} cx={x(r._value)} cy={cy}
-                      r={colour ? 5.5 : 3}
-                      fill={colour ?? 'var(--color-text-muted)'}
-                      opacity={colour ? 1 : 0.4}
-                      style={{ cursor: atLimit && !colour ? 'not-allowed' : 'pointer' }}
-                      onClick={() => onToggle(r.group)}>
-                <title>{r.group} {(r._value * 100).toFixed(1)}% — click to compare</title>
-              </circle>
-            )
-          })}
-        </svg>
-        <span className="absolute left-1/2 -translate-x-1/2 -top-1 text-[9px] font-mono
-                         text-[var(--color-text-muted)] pointer-events-none">SPY</span>
+        ))}
+        <line x1={pct(0) * 10} x2={pct(0) * 10} y1={2} y2={H - 1}
+              stroke="var(--color-text-muted)" strokeWidth="1"
+              vectorEffect="non-scaling-stroke" />
+        <line x1={pct(mid) * 10} x2={pct(mid) * 10} y1={0} y2={7}
+              stroke="var(--color-text-secondary)" strokeWidth="1"
+              vectorEffect="non-scaling-stroke" />
+
+        {scored.map((r) => {
+          const colour = colourOf(r.group)
+          const cy = 14 + (laneHash(r.group) % (H - 34))
+          return (
+            <circle key={r.group} cx={pct(r._value) * 10} cy={cy}
+                    r={colour ? 6 : 3.2}
+                    fill={colour ?? 'var(--color-text-muted)'}
+                    stroke={colour ? 'var(--color-bg)' : 'none'}
+                    strokeWidth={colour ? 1.5 : 0}
+                    opacity={colour ? 1 : 0.42}
+                    style={{ cursor: atLimit && !colour ? 'not-allowed' : 'pointer' }}
+                    onClick={() => onToggle(r.group)}>
+              <title>{r.group} {(r._value * 100).toFixed(1)}% — click to compare</title>
+            </circle>
+          )
+        })}
+      </svg>
+
+      {/* the axis's own numbers, crisp in HTML */}
+      <div className="relative h-[15px] text-[10px] font-mono
+                      text-[var(--color-text-muted)]">
+        {ticks.map((t) => (
+          <span key={t} className="absolute -translate-x-1/2 whitespace-nowrap"
+                style={{ left: `${pct(t)}%` }}>
+            {t === 0 ? 'SPY' : `${t > 0 ? '+' : ''}${Math.round(t * 100)}%`}
+          </span>
+        ))}
       </div>
-      <p className="m-0 mt-1 text-[10.5px] leading-snug text-[var(--color-text-muted)]">
-        One dot per theme. The box is the middle half: median{' '}
-        <span className="font-mono tabular-nums">{(mid * 100).toFixed(1)}%</span>, half the
-        field inside{' '}
-        <span className="font-mono tabular-nums">
-          {(q25 * 100).toFixed(1)}…{(q75 * 100).toFixed(1)}%
-        </span>
-        {' '}— a narrow box says picking barely matters today; long tails say it does.
-      </p>
     </div>
   )
 }

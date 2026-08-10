@@ -3,9 +3,9 @@ import PageHeader from '../PageHeader'
 import Reading, { readThemes } from '../Reading'
 import { useGroups } from '../../hooks/useGroups'
 import GroupTable from './GroupTable'
-import ThemeBars from './ThemeBars'
+import ThemeBars, { barStyle } from './ThemeBars'
 import RsSegments from './RsSegments'
-import CompareChips from './CompareChips'
+import CompareBar from './CompareBar'
 import DistributionStrip from './DistributionStrip'
 import TrajectoryPanel from './TrajectoryPanel'
 import { useThemeCompare } from './useThemeCompare'
@@ -14,23 +14,26 @@ import Reference from '../Reference'
 import HowToRead from '../HowToRead'
 
 /**
- * Themes + RS Rotation, one page — TSF's Thematic Focus View absorbed into
- * the three-layer structure instead of being a fourth page.
+ * Themes — the rotation instrument. Three sections, one control bar.
  *
- * One SWITCH (the window) drives the distribution and the ranking together,
- * and shades the same stretch on the trajectory. They share an x-scale by
- * construction; two switches would let one instrument show two different
- * windows on what claims to be one axis.
+ * The controls live in ONE sticky bar: tabs, window, selection. Scattered
+ * controls each grow a caption explaining themselves; gathered in one place
+ * they explain each other, and the sticky bar doubles as the interaction's
+ * receipt — a row clicked at rank 60 fills a slot that is still on screen.
  *
- * One SELECTION (up to three themes) has three entry points — chips by name,
- * dots by position, ranking rows by rank — and every layer answers it at
- * once. Selection carries identity colour only; the state grammar stays on
- * the bars and strips.
+ * The sections each answer one question, in reading order:
  *
- * The three layers answer, in order: is picking worth it today (distribution),
- * what to pick (ranking), and whether the pick is a trend or a bounce
- * (trajectory + heatstrip) — the last being the question a snapshot can never
- * answer.
+ *   FIELD     is picking worth anything today?
+ *   COMPARE   is your pick a trend or a bounce?
+ *   RANKED    the full order, and the place selections are made from.
+ *
+ * Compare sits ABOVE the 70-row ranking although it depends on it, because
+ * an instrument that responds three screens below the gesture reads as
+ * broken. The empty state is one quiet line, not a lecture.
+ *
+ * All teaching lives in HowToRead at the bottom. The objects themselves are
+ * silent — the page used to carry seven captions and two duplicate legends,
+ * which is a textbook, not a panel.
  */
 
 const TABS = [
@@ -40,11 +43,11 @@ const TABS = [
 ]
 
 /**
- * The three windows, all in the pipeline's own construction: theme return
- * minus benchmark return over the same window (rs_engine's excess).
- * rs_0_1w IS that quantity for one week — the first disjoint bucket minus the
- * benchmark's reduces to perf_1w − SPY.perf_1w. 1M needs SPY's row, so it
- * stays disabled until that row has loaded rather than guessing a zero line.
+ * All three windows use the pipeline's own excess construction — theme return
+ * minus benchmark return over the same window. rs_0_1w IS that for one week
+ * (the first disjoint bucket reduces to perf_1w − SPY.perf_1w); 3M ships as
+ * excess_3m; 1M derives the same way and needs SPY's row, so the button waits
+ * for it rather than guessing a zero line.
  */
 const WINDOWS = [
   { key: '1W', hl: [3], value: (r) => r.rs_0_1w },
@@ -57,20 +60,38 @@ const WINDOWS = [
   { key: '3M', hl: [1, 2, 3], value: (r) => r.excess_3m },
 ]
 
-function StateCounts({ rows }) {
+/** Legend and census in one object: each state's swatch wears its own count. */
+function StateCensus({ rows }) {
   const counts = rows.reduce((acc, r) => {
     if (r.state) acc[r.state] = (acc[r.state] ?? 0) + 1
     return acc
   }, {})
-  const order = ['Leading', 'Weakening', 'Improving', 'Lagging']
   return (
-    <div className="flex gap-4 text-[11px] uppercase tracking-wide
+    <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10.5px]
                     text-[var(--color-text-muted)]">
-      {order.map((s) => (
-        <span key={s}>{s} <span className="tabular-nums font-medium
-          text-[var(--color-text)]">{counts[s] ?? 0}</span></span>
+      {['Leading', 'Weakening', 'Improving', 'Lagging'].map((s) => (
+        <span key={s} className="flex items-center gap-1.5">
+          <i className="inline-block w-3 h-[9px]" style={barStyle(s)} />
+          {s} <span className="tabular-nums text-[var(--color-text-secondary)]">
+            {counts[s] ?? 0}</span>
+        </span>
       ))}
     </div>
+  )
+}
+
+function Section({ label, question, right, children }) {
+  return (
+    <section className="pt-2">
+      <div className="flex items-baseline gap-3 pb-2.5">
+        <span className="text-[9px] font-mono uppercase tracking-[.24em]
+                         text-[var(--color-text-muted)]">{label}</span>
+        <span className="text-[11px] text-[var(--color-text-muted)]">{question}</span>
+        <i className="flex-1 h-px bg-[var(--color-border)]" />
+        {right}
+      </div>
+      {children}
+    </section>
   )
 }
 
@@ -82,8 +103,6 @@ export default function GroupsPage() {
   const spy = useSpyRow()
   const compare = useThemeCompare()
 
-  // Selection survives tab switches: a picked theme resolves against every
-  // group on the page, so flipping to Industries does not blank the chart.
   const byName = useMemo(() => {
     const m = new Map()
     for (const r of [...themes, ...provisional, ...industries]) m.set(r.group, r)
@@ -104,116 +123,100 @@ export default function GroupsPage() {
   const rows = tab === 'themes' ? themes
     : tab === 'industries' ? industries
     : provisional
-
   const win = WINDOWS.find((w) => w.key === winKey)
   const windowed = rows.map((r) => ({ ...r, _value: win.value(r, spy) }))
-  // One scale for the strip and the bars — one axis, one instrument.
+  const measured = windowed.filter((r) => Number.isFinite(r._value)).length
+  // One scale for the dots and the bars — one axis, one instrument.
   const scale = windowed.reduce(
     (m, r) => (Number.isFinite(r._value) ? Math.max(m, Math.abs(r._value)) : m), 0) || 1
 
-  // The comparison instrument lives on the theme tabs. Industries are a
-  // different cohort with a different denominator; mixing them into one
-  // chart would compare ranks that are not the same claim.
+  // Industries are a different cohort with a different denominator; mixing
+  // them into the comparison would draw two different claims as one chart.
   const comparable = tab !== 'industries'
+  const colourOf = comparable ? compare.colourOf : () => null
+  const onToggle = comparable ? compare.toggle : () => {}
+
+  // Never two bg-* classes on one element: which wins is decided by the
+  // stylesheet's generation order, not by the string — the active tab rendered
+  // dark-on-dark because bg-transparent happened to outrank the active fill.
+  const seg = (active) => `px-3.5 py-[5px] text-[12px] border-r
+    border-[var(--color-border)] last:border-r-0 cursor-pointer
+    ${active ? 'bg-[var(--color-accent)] text-white font-semibold'
+             : 'bg-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       <PageHeader group="market" title="Themes"
         blurb="Where the strength is, and where it is turning — two different questions, so two measurements. A board that only ranks what has already won cannot show a turn."
         meta={[`relative strength vs ${benchmark} · ${date}`,
-               'tradeable universe only — cap ≥ $300M, $2M daily volume',
-               'member count is printed: a theme of one stock is one stock',
-               `${themes.length} published + ${provisional.length} provisional — the counts above cover the published set only`]} />
+               `${themes.length} published + ${provisional.length} provisional`]} />
       <Reading text={readThemes(themes)} />
 
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex gap-1 border-b border-[var(--color-border)]">
-          {TABS.map((t) => {
-            const n = t.key === 'themes' ? themes.length
-              : t.key === 'industries' ? industries.length
-              : provisional.length
-            return (
-              <button
-                key={t.key}
-                onClick={() => setTab(t.key)}
-                className={`px-3 py-1.5 text-sm font-medium border-b-2 -mb-px transition
-                  ${tab === t.key
-                    ? 'border-[var(--color-accent)] text-[var(--color-text)]'
-                    : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text)]'}`}
-              >
-                {t.label} <span className="tabular-nums opacity-60">{n}</span>
+      {/* THE CONTROL BAR — every control on the page, in one sticky line. */}
+      <div className="sticky top-0 z-20 -mx-3 px-3 py-2.5 border-b border-[var(--glass-edge)]"
+           style={{ background: 'var(--glass)', backdropFilter: 'var(--glass-blur)',
+                    WebkitBackdropFilter: 'var(--glass-blur)' }}>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <div className="flex border border-[var(--color-border)] rounded overflow-hidden">
+            {TABS.map((t) => (
+              <button key={t.key} type="button" onClick={() => setTab(t.key)}
+                      className={seg(tab === t.key)}>
+                {t.label}
               </button>
-            )
-          })}
+            ))}
+          </div>
+          <div className="flex border border-[var(--color-border)] rounded overflow-hidden">
+            {WINDOWS.map((w) => {
+              const waiting = w.needsSpy && !spy
+              return (
+                <button key={w.key} type="button"
+                        onClick={() => !waiting && setWinKey(w.key)}
+                        disabled={waiting}
+                        className={`${seg(w.key === winKey)} font-mono
+                                    ${waiting ? 'opacity-40 cursor-wait' : ''}`}>
+                  {w.key}
+                </button>
+              )
+            })}
+          </div>
+          {comparable && (
+            <CompareBar rows={rows} picks={compare.picks} atLimit={compare.atLimit}
+                        onToggle={compare.toggle} />
+          )}
         </div>
-        <StateCounts rows={rows} />
       </div>
 
       {tab === 'provisional' && (
-        <div className="text-[12px] leading-relaxed text-[var(--color-text-muted)]
-                        border-l-2 border-amber-500/40 pl-3 py-1">
-          Held back from the main list. Either their members do not co-move more
-          than a random basket of the same size — so the grouping is a label
-          rather than a driver — or there are too few tradeable names to read a
-          group at all. Shown here because a withheld theme should look
-          withheld, not missing.
-        </div>
+        <p className="m-0 text-[11.5px] leading-relaxed text-[var(--color-text-muted)]
+                      border-l-2 border-amber-500/40 pl-3">
+          Held back: members do not co-move more than a random basket, or too few
+          tradeable names to read a group. Shown so a withheld theme looks withheld,
+          not missing.
+        </p>
       )}
 
-      {/* THE SWITCH. One control, three layers. It sits above everything it
-          governs and names what it governs, so nobody has to discover the
-          coupling by accident. */}
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="flex border border-[var(--color-border)] rounded overflow-hidden">
-          {WINDOWS.map((w) => {
-            const waiting = w.needsSpy && !spy
-            return (
-              <button key={w.key} type="button"
-                      onClick={() => !waiting && setWinKey(w.key)}
-                      disabled={waiting}
-                      title={waiting ? 'waiting for the benchmark row' : undefined}
-                      className={`px-4 py-[5px] text-[12px] font-mono border-r
-                                  border-[var(--color-border)] last:border-r-0
-                                  ${w.key === winKey
-                                    ? 'bg-[var(--color-accent)] text-white font-bold'
-                                    : waiting
-                                      ? 'bg-transparent text-[var(--color-text-muted)] opacity-40 cursor-wait'
-                                      : 'bg-transparent text-[var(--color-text-secondary)] cursor-pointer hover:text-[var(--color-text)]'}`}>
-                {w.key}
-              </button>
-            )
-          })}
-        </div>
-        <span className="text-[10.5px] text-[var(--color-text-muted)]">
-          one window for the dots and the ranking; the trajectory always shows all
-          four stretches and shades this one
-        </span>
-      </div>
+      <Section label="Field" question="is picking worth anything today?">
+        <DistributionStrip rows={windowed} scale={scale}
+                           colourOf={colourOf} onToggle={onToggle}
+                           atLimit={compare.atLimit} />
+      </Section>
 
       {comparable && (
-        <CompareChips rows={rows} picks={compare.picks} atLimit={compare.atLimit}
-                      onToggle={compare.toggle} onClear={compare.clear} />
+        <Section label="Compare" question="trend, or bounce? — the ranking cannot tell them apart">
+          <TrajectoryPanel picks={compare.picks} byName={byName} highlight={win.hl} />
+        </Section>
       )}
 
-      {/* LAYER 1 — the field. Worth picking at all today? */}
-      <DistributionStrip rows={windowed} scale={scale}
-                         colourOf={comparable ? compare.colourOf : () => null}
-                         onToggle={comparable ? compare.toggle : () => {}}
-                         atLimit={compare.atLimit} />
-
-      {/* LAYER 2 — the order. Same axis as the dots above. */}
-      <ThemeBars rows={windowed} scale={scale}
-                 colourOf={comparable ? compare.colourOf : () => null}
-                 onToggle={comparable ? compare.toggle : () => {}}
-                 atLimit={compare.atLimit} />
-
-      {/* LAYER 3 — the history of the chosen few: trend or bounce. */}
-      {comparable && (
-        <TrajectoryPanel picks={compare.picks} byName={byName} highlight={win.hl} />
-      )}
+      <Section label="Ranked"
+               question={`${measured} of ${rows.length} measured · scale ±${(scale * 100).toFixed(0)}%`}
+               right={<StateCensus rows={rows} />}>
+        <ThemeBars rows={windowed} scale={scale}
+                   colourOf={colourOf} onToggle={onToggle}
+                   atLimit={compare.atLimit} />
+      </Section>
 
       <Reference label="Where the lead was earned" count={20}
-                 note="the four stretches for the top 20 by 3m — the wide view of what the trajectory shows for your picks">
+                 note="the four stretches for the top 20 by 3m — the wide view of the compare layer">
         <RsSegments rows={rows} />
       </Reference>
 
@@ -226,41 +229,40 @@ export default function GroupsPage() {
         />
       </Reference>
 
-      <p className="text-[11px] text-[var(--color-text-muted)] leading-relaxed">
-        <strong>State is descriptive, not a signal.</strong> Over 10 years and
-        112 non-overlapping periods, filtering a momentum-ranked list by
-        acceleration subtracted −0.18pp and Weakening beat Leading by +0.37pp.
-        Use these to read where a group sits, not as an entry rule.
-        {summary && ` · ${summary.publishable_themes} published, ${summary.provisional_themes} provisional.`}
-      </p>
-
       <HowToRead>
         <p>
-          One switch, one selection, three layers. The <b>window switch</b> (1W / 1M / 3M)
-          moves the dots and the ranking together — they share one axis — and shades the
-          same stretch on the trajectory. The <b>selection</b> (up to three themes) can be
-          made three ways: chips by name, dots by position, ranking rows by rank. All
-          three are the same gesture.
+          One control bar, three layers. The <b>window</b> (1W / 1M / 3M) moves the dots
+          and the ranking together — they share one axis — and shades the same stretch on
+          the compare chart. All three windows are the same construction: theme return
+          minus SPY&rsquo;s over that window. The universe is tradeable names only
+          (cap ≥ $300M, $2M daily volume), and every row prints its member count because
+          a theme of one stock is one stock.
         </p>
         <p>
-          Read the layers in order. The <b>dots</b> say whether picking is worth anything
-          today: a narrow middle box means most themes are the market, long tails mean
-          being right pays. The <b>ranking</b> says what to pick. The <b>trajectory</b>{' '}
-          says what kind of strength you picked — a line that climbed there is a trend, a
-          line that fell and snapped back is a bounce, and the ranking cannot tell those
-          apart by construction.
+          <b>Selecting</b>: search in the bar, or click a dot in the field, or click a
+          row in the ranking — one gesture, three doors. Three at most, because three
+          overlaid lines are what an eye can follow through a crossing; at the cap the
+          pointer refuses (⃠) before the click does. The three slots in the bar show
+          capacity without a caption, and colour only ever answers &laquo;which line is
+          which&raquo; — it never grades a theme.
         </p>
         <p>
-          The <b>heatstrip</b> under each chosen theme is the same four stretches as
-          state: tone for ahead/behind SPY, solid for widening, outlined for narrowing —
-          the exact grammar of the ranking bars. Lines are straight between measured
-          points; nothing is smoothed, because a curve through four samples would invent
-          readings between them.
+          <b>Field</b>: one dot per theme, zero is SPY, the box is the middle half. A
+          narrow box says most themes ARE the market today and picking barely matters; long
+          tails say being right pays. <b>Compare</b>: straight lines between the four
+          measured stretches — nothing is smoothed, a curve through four samples would
+          invent readings between them. A line that climbed to its rank is a trend; one
+          that fell and snapped back is a bounce. The heatstrip repeats those stretches as
+          state: tone is ahead/behind, solid is widening, outlined is narrowing — the same
+          grammar as the ranking bars, so Leading / Weakening / Improving / Lagging read
+          identically everywhere. A first cell at half strength means direction unknown,
+          not flat.
         </p>
         <p>
-          Selection colour answers only <b>which line is which</b> — it never grades a
-          theme. Grades stay with the state grammar, and the sign stays with which side
-          of the zero rule a mark sits on.
+          <b>State is descriptive, not a signal.</b> Over 10 years and 112 non-overlapping
+          periods, filtering a momentum-ranked list by acceleration subtracted −0.18pp,
+          and Weakening beat Leading by +0.37pp. Read where a group sits; do not trade the
+          label.{summary && ` ${summary.publishable_themes} published, ${summary.provisional_themes} provisional.`}
         </p>
       </HowToRead>
     </div>
