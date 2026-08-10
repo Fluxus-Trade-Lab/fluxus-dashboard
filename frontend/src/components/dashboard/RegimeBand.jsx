@@ -95,37 +95,110 @@ function powerVoter(signals) {
  * resolution of 100/9 ≈ 11 points. Smoothing would draw precision the
  * measurement does not have.
  */
+/** Month ticks: the first session of each month, thinned so labels never
+ *  collide, with January carrying the year instead of the month name. */
+function monthTicks(history, maxLabels = 7) {
+  const marks = []
+  let prev = null
+  history.forEach((d, i) => {
+    const m = d.date?.slice(0, 7)
+    if (!m || m === prev) return
+    prev = m
+    const [y, mm] = m.split('-')
+    marks.push({
+      i,
+      label: mm === '01' ? y : new Date(`${m}-02T00:00:00Z`)
+        .toLocaleString('en', { month: 'short', timeZone: 'UTC' }),
+      isYear: mm === '01',
+    })
+  })
+  const step = Math.max(1, Math.ceil(marks.length / maxLabels))
+  // Always keep January: a year boundary is the one tick you cannot infer.
+  return marks.filter((m, i) => i % step === 0 || m.isYear)
+}
+
+/**
+ * Two years of the score behind today's, drawn as one line.
+ *
+ * The band alone says where the market is; it cannot say whether 67 is a good
+ * day or an ordinary one for this market. The line is the denominator for the
+ * number.
+ *
+ * The line steps rather than glides because nine binary votes have a
+ * resolution of 100/9 ≈ 11 points. Smoothing would draw precision the
+ * measurement does not have.
+ *
+ * Labels live in HTML rather than in the SVG: the plot uses
+ * preserveAspectRatio="none" so it can stretch to any width, and text inside
+ * it would stretch with it.
+ */
 function ConditionsLine({ history, score }) {
   if (!history?.length) return null
-  const W = 1000, H = 120, PAD = 6
-  const pts = history.map((d, i) => {
-    const x = PAD + (i / Math.max(1, history.length - 1)) * (W - PAD * 2)
-    const y = PAD + (1 - d.score / 100) * (H - PAD * 2)
-    return `${x.toFixed(1)},${y.toFixed(1)}`
-  })
-  const first = history[0]?.date
-  const last = history[history.length - 1]?.date
+  const W = 1000, H = 100, PAD = 4
+  const x = (i) => PAD + (i / Math.max(1, history.length - 1)) * (W - PAD * 2)
+  const y = (v) => PAD + (1 - v / 100) * (H - PAD * 2)
+  const pts = history.map((d, i) => `${x(i).toFixed(1)},${y(d.score).toFixed(1)}`)
+  const ticks = monthTicks(history)
+  const pos = (i) => `${(x(i) / W) * 100}%`
 
   return (
-    <div className="mt-3">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[104px]" role="img"
-           aria-label={`Market conditions ${score} of 100, ${history.length} sessions`}
-           preserveAspectRatio="none">
-        {[0, 50, 100].map((lvl) => {
-          const y = PAD + (1 - lvl / 100) * (H - PAD * 2)
-          return (
-            <line key={lvl} x1={PAD} x2={W - PAD} y1={y} y2={y} strokeWidth="1"
+    <div className="mt-2 pr-9">
+      <div className="relative">
+        <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[110px] block" role="img"
+             aria-label={`Market conditions ${score} of 100 over ${history.length} sessions`}
+             preserveAspectRatio="none">
+          {[0, 50, 100].map((lvl) => (
+            <line key={lvl} x1={PAD} x2={W - PAD} y1={y(lvl)} y2={y(lvl)} strokeWidth="1"
                   stroke={lvl === 50 ? 'var(--color-text-muted)' : 'var(--color-border)'}
-                  strokeDasharray={lvl === 50 ? '3 4' : undefined} />
+                  strokeDasharray={lvl === 50 ? '3 5' : undefined}
+                  vectorEffect="non-scaling-stroke" />
+          ))}
+          {ticks.map((t) => (
+            <line key={t.i} x1={x(t.i)} x2={x(t.i)} y1={PAD} y2={H - PAD} strokeWidth="1"
+                  stroke="var(--color-border)" vectorEffect="non-scaling-stroke" />
+          ))}
+          <polyline points={pts.join(' ')} fill="none" strokeWidth="1.6"
+                    stroke="var(--color-text)" vectorEffect="non-scaling-stroke"
+                    strokeLinejoin="round" />
+        </svg>
+
+        {/* right-hand scale, outside the plot so it never sits over the line */}
+        {[100, 50, 0].map((lvl) => (
+          <span key={lvl} className="absolute left-full ml-1.5 -translate-y-1/2
+                                     text-[9px] font-mono text-[var(--color-text-muted)]"
+                style={{ top: `${(y(lvl) / H) * 100}%` }}>{lvl}</span>
+        ))}
+
+        {/* today's value, pinned to where the line ends */}
+        {score != null && (
+          <span className="absolute -translate-y-1/2 px-1.5 py-[1px] text-[10px] font-mono
+                           font-semibold tabular-nums whitespace-nowrap"
+                style={{ top: `${(y(score) / H) * 100}%`, left: '100%',
+                         background: 'var(--color-text)', color: 'var(--color-bg)' }}>
+            {score}
+          </span>
+        )}
+      </div>
+
+      <div className="relative h-[13px] mt-0.5">
+        {ticks.map((t) => {
+          // A centred label at either extreme hangs half outside the box and
+          // gets clipped; the edge ones align to the edge instead.
+          const frac = x(t.i) / W
+          const edge = frac < 0.03 ? 'left' : frac > 0.97 ? 'right' : null
+          return (
+            <span key={t.i}
+                  className={`absolute text-[9px] font-mono whitespace-nowrap
+                              ${edge ? '' : '-translate-x-1/2'}
+                              ${t.isYear ? 'text-[var(--color-text-secondary)] font-semibold'
+                                         : 'text-[var(--color-text-muted)]'}`}
+                  style={edge === 'left' ? { left: 0 }
+                       : edge === 'right' ? { right: 0 }
+                       : { left: pos(t.i) }}>
+              {t.label}
+            </span>
           )
         })}
-        <polyline points={pts.join(' ')} fill="none" strokeWidth="1.6"
-                  stroke="var(--color-text)" vectorEffect="non-scaling-stroke" />
-      </svg>
-      <div className="flex justify-between text-[9px] font-mono text-[var(--color-text-muted)]">
-        <span>{first}</span>
-        <span>0 · 50 · 100 — the share of breadth votes that are positive</span>
-        <span>{last}</span>
       </div>
     </div>
   )
@@ -147,7 +220,14 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
      names which voter did the pulling and on what condition. */
   const level = scoreBand == null ? weakest.level : Math.min(scoreBand, weakest.level)
   const pulled = scoreBand != null && weakest.level < scoreBand
-  const binding = pulled ? weakest : voters.reduce((a, b) => (a.level <= b.level ? a : b))
+  const binding = weakest
+  const reasoning = [
+    voters.map((v) => `${v.name} ${v.word}`).join(' · '),
+    pulled
+      ? `conditions alone read ${BANDS[scoreBand]}; pulled down to ${BANDS[level]} by ${binding.name}`
+        + (binding.binding ? ` (${binding.binding})` : '')
+      : binding.binding ? `nearest to turning: ${binding.name}, ${binding.binding}` : '',
+  ].filter(Boolean).join(' — ')
 
   return (
     <section className="border border-[var(--color-border)] rounded-lg px-4 py-3
@@ -163,8 +243,12 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
             </span>
           )}
         </div>
-        {/* The regime word, top right — the one thing to read if you read nothing else */}
-        <span className="text-[13px] font-semibold uppercase tracking-wide px-2.5 py-[3px]"
+        {/* The regime word, top right — the one thing to read if you read
+            nothing else. The three voters and which of them is binding used to
+            be a line of prose under the chart; it is a tooltip now, so the
+            reasoning is still reachable without competing with the picture. */}
+        <span title={reasoning}
+              className="text-[13px] font-semibold uppercase tracking-wide px-2.5 py-[3px] cursor-help"
               style={{ background: level <= 1 ? 'var(--color-refused)' : 'var(--color-took)',
                        color: 'var(--color-bg)' }}>
           {BANDS[level]}
@@ -172,39 +256,6 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
       </div>
 
       <ConditionsLine history={conditions?.history} score={score} />
-
-      <div className="flex items-center gap-[3px] mt-3">
-        {BANDS.map((b, i) => (
-          <div key={b} className="flex-1 text-center py-[5px] text-[11px] font-semibold
-                                  uppercase tracking-wide"
-               style={i === level
-                 ? { background: level <= 1 ? 'var(--color-refused)' : 'var(--color-took)',
-                     color: 'var(--color-bg)' }
-                 : { border: '1px solid var(--color-border)',
-                     color: 'var(--color-text-muted)' }}>
-            {b}
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-2 text-[11px] text-[var(--color-text-secondary)]">
-        {voters.map((v, i) => (
-          <span key={v.name}>
-            {i > 0 && ' · '}
-            <span className={v === binding ? 'font-semibold text-[var(--color-text)]' : ''}>
-              {v.name} {v.word}
-            </span>
-          </span>
-        ))}
-        {pulled
-          ? <span className="text-[var(--color-text-muted)]">
-              {' '}— conditions alone read {BANDS[scoreBand]}; pulled down to {BANDS[level]} by{' '}
-              {binding.name}{binding.binding ? `: ${binding.binding}` : ''}
-            </span>
-          : binding.binding && (
-              <span className="text-[var(--color-text-muted)]"> — nearest to turning: {binding.name}, {binding.binding}</span>
-            )}
-      </div>
     </section>
   )
 }
