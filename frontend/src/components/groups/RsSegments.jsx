@@ -22,15 +22,7 @@
  * twice as long is twice the number, in any row and any column.
  */
 
-const SEGMENTS = [
-  // `inQuarter: false` is load-bearing, not decoration: 3–6m sits OUTSIDE the
-  // three-month total on the right, and a reader who adds the row across gets
-  // a number that means nothing.
-  { key: 'rs_3m_6m', label: '3–6m', note: 'the quarter before this one — outside the 3m total', inQuarter: false },
-  { key: 'rs_1m_3m', label: '1–3m', note: 'two months back', inQuarter: true },
-  { key: 'rs_1w_1m', label: '1w–1m', note: 'the last month, minus the last week', inQuarter: true },
-  { key: 'rs_0_1w', label: '0–1w', note: 'this week', inQuarter: true },
-]
+import { SEGMENTS } from './segments'
 
 function Bar({ v, scale }) {
   if (v == null || !Number.isFinite(v)) {

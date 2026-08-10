@@ -45,7 +45,9 @@ export const NAV_GROUPS = [
         items: [
           { key: 'groups', short: 'THM', hash: '#/groups' },         // shown as "Themes"
           { key: 'rslive', short: 'LIV', hash: '#/rs-live' },
-          { key: 'rsrotation', short: 'ROT', hash: '#/rs-rotation' },
+          // RS Rotation merged into Themes (the trajectory layer). The rail
+          // entry promised a page whose whole content was one layer of another
+          // page; the route still resolves so sent links land on Themes.
           { key: 'rsleaders', short: 'LDR', hash: '#/rs-leaders' },
         ],
       },

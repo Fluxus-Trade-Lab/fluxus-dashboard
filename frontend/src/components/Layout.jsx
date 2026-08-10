@@ -226,12 +226,9 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                        'Member count beside each name — a theme of one stock is one stock']}
             source="data/output/groups.json" />}
 
-          {current === 'rs-rotation' && <Placeholder group="market" title="RS Rotation"
-            blurb="Where the money left and where it arrived — level against acceleration, over time rather than as a snapshot."
-            willHold={['Each theme\'s path across the four states, session by session',
-                       'The crossings that matter: lagging into improving, leading into weakening',
-                       'How long a theme has held its state, drawn as countable marks']}
-            source="data/output/groups.json · breadth archive" />}
+          {/* RS Rotation lives inside Themes now (the trajectory layer);
+              the route survives so sent links keep working. */}
+          {current === 'rs-rotation' && <GroupsPage />}
 
           {current === 'rs-leaders' && <ThemeLeaderboard />}
 
