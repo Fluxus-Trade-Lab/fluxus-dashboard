@@ -73,6 +73,46 @@ def view(*, asof: str, session: str, source: str, direction: str,
             "rationale": rationale, "level": level, "state_ref": state_ref}
 
 
+RTH_OPEN = "09:30"
+
+
+def amend(v: dict, now_hhmm: str, path: Path | str = DEFAULT_LOG) -> dict:
+    """Replace an existing view — allowed ONLY before the session opens.
+
+    The no-revision rule exists to stop a view being rewritten after the tape
+    moved. Before the open nothing has moved: no print, no brief. A trader
+    clarifying that his conviction-3 was about the week and his intraday read is
+    a 2 is not revising, he is stating the thing he meant.
+
+    So the line is the opening bell, which is checkable rather than a judgement
+    about intent. After 09:30 ET this refuses, and the original stands.
+
+    The superseded view is KEPT in the file with `amended: True` and the
+    replacement carries `amends`. Nothing is deleted — the record of what he
+    first said is part of the record of how he thinks, and a log that quietly
+    rewrites history is worth less than no log.
+    """
+    if now_hhmm >= RTH_OPEN:
+        raise ValueError(
+            f"the session opened at {RTH_OPEN} ET — a view cannot be amended once "
+            f"the tape has moved. Log a new session's view instead.")
+    p = Path(path)
+    rows = read(p)
+    key = (v.get("session"), v.get("source"), v.get("horizon"))
+    idx = [i for i, r in enumerate(rows)
+           if (r.get("session"), r.get("source"), r.get("horizon")) == key
+           and not r.get("amended")]
+    if not idx:
+        raise ValueError(f"nothing on record to amend for {key}")
+    prior = rows[idx[-1]]
+    rows[idx[-1]] = {**prior, "amended": True}
+    rows.append({**v, "amends": prior.get("asof")})
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in rows))
+    return {"was": prior["direction"], "now": v["direction"],
+            "was_conviction": prior["conviction"], "now_conviction": v["conviction"]}
+
+
 def append(v: dict, path: Path | str = DEFAULT_LOG) -> bool:
     """Append unless this (session, source, horizon) is already recorded.
 
@@ -83,7 +123,7 @@ def append(v: dict, path: Path | str = DEFAULT_LOG) -> bool:
     p = Path(path)
     key = (v.get("session"), v.get("source"), v.get("horizon"))
     if any((r.get("session"), r.get("source"), r.get("horizon")) == key
-           for r in read(p)):
+           for r in read(p) if not r.get("amended")):
         return False
     p.parent.mkdir(parents=True, exist_ok=True)
     with p.open("a") as fh:

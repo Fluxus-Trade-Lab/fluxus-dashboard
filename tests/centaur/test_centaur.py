@@ -221,3 +221,40 @@ def test_pressure_split_records_the_condition_the_literature_flags():
             hv(asof="2026-08-04T11:30:00-04:00", session="2026-08-04")]
     u = S.under_pressure(rows)
     assert u["calm"] == 1 and u["live"] == 1
+
+
+# ------------------------------------------------- amendment, before the bell
+
+def test_a_view_can_be_amended_before_the_open_and_the_original_is_kept(tmp_path):
+    p = tmp_path / "v.jsonl"
+    L.append(hv(direction="range", conviction=3), p)
+    out = L.amend(hv(direction="range", conviction=2,
+                     asof="2026-08-03T08:10:00-04:00"), "08:10", p)
+    assert out["was_conviction"] == 3 and out["now_conviction"] == 2
+    rows = L.read(p)
+    assert len(rows) == 2                       # nothing deleted
+    assert rows[0]["amended"] is True
+    assert rows[1]["amends"] == rows[0]["asof"]
+
+
+def test_amendment_is_refused_once_the_tape_has_moved(tmp_path):
+    p = tmp_path / "v.jsonl"
+    L.append(hv(direction="range", conviction=3), p)
+    with pytest.raises(ValueError, match="opened at"):
+        L.amend(hv(direction="up", conviction=3), "09:31", p)
+
+
+def test_the_live_view_is_the_amendment_not_the_superseded_one(tmp_path):
+    p = tmp_path / "v.jsonl"
+    L.append(hv(direction="range", conviction=3), p)
+    L.amend(hv(direction="range", conviction=2,
+               asof="2026-08-03T08:10:00-04:00"), "08:10", p)
+    # append must now see the amendment as the one on record
+    assert L.append(hv(direction="down", conviction=1), p) is False
+    live = [r for r in L.read(p) if not r.get("amended")]
+    assert len(live) == 1 and live[0]["conviction"] == 2
+
+
+def test_amending_something_that_was_never_logged_is_an_error(tmp_path):
+    with pytest.raises(ValueError, match="nothing on record"):
+        L.amend(hv(), "08:00", tmp_path / "v.jsonl")

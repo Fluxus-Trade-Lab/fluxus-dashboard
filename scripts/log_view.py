@@ -39,6 +39,9 @@ def main():
     ap.add_argument("--machine", action="store_true",
                     help="derive and log the machine's view from today's brief")
     ap.add_argument("--show", action="store_true", help="print the log and exit")
+    ap.add_argument("--amend", action="store_true",
+                    help="replace today's view for this horizon. Allowed only "
+                         "before 09:30 ET; the superseded view is kept.")
     args = ap.parse_args()
 
     if args.show:
@@ -82,8 +85,20 @@ def main():
                      source="human", direction=d, conviction=args.conviction,
                      horizon=args.horizon, rationale=args.rationale)
 
-    fresh = L.append(row)
     who = row["source"]
+    if args.amend:
+        try:
+            ch = L.amend(row, now.strftime("%H:%M"))
+        except ValueError as e:
+            sys.exit(str(e))
+        print(f"amended {who} {args.horizon} view for {session}: "
+              f"{ch['was']} @ {ch['was_conviction']} -> {ch['now']} @ {ch['now_conviction']}")
+        if row.get("rationale"):
+            print(f"  {row['rationale']}")
+        print("  the superseded view is kept in the log, marked amended")
+        return
+
+    fresh = L.append(row)
     if fresh:
         print(f"logged {who} view for {session} ({args.horizon}): "
               f"{row['direction']} @ conviction {row['conviction']}")
