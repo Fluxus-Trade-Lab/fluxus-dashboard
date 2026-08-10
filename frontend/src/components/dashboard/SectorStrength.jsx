@@ -41,7 +41,7 @@ export default function SectorStrength({ etfs, title = 'Sectors' }) {
         <span className="text-[10px] font-mono uppercase tracking-[.2em]
                          text-[var(--color-text-secondary)]">{title}</span>
         <span className="text-[9px] text-[var(--color-text-muted)]">
-          relative strength vs SPY, three clocks
+          relative strength within these eleven, three clocks
         </span>
       </div>
 

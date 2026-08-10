@@ -27,7 +27,6 @@ import LeadersLaggards from './dashboard/LeadersLaggards'
 import SectorStrength from './dashboard/SectorStrength'
 import { VoteMarks } from './breadth/VoteGlyphs'
 import { ETF_GROUPS } from '../lib/etfGroups'
-import EquitiesSection from './equities/EquitiesSection'
 import ScreenerPage from './screener/ScreenerPage'
 import PortfolioPage from './portfolio/PortfolioPage'
 import JournalPage from './journal/JournalPage'
@@ -154,34 +153,30 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           </section>
 
           <Tier label="Evidence" supports="what the read leans on">
-            {/* Equal width, equal row height, so neither card decides the
-                other's layout. items-stretch is the default and is what makes
-                them end level regardless of how many rows each holds. */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 items-stretch">
-              <LeadersLaggards title="Industries"
-                etfs={(ETF_GROUPS.Industries || [])
-                  .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
-                  .filter(Boolean)}
-                windows={['1W', '1M']} limit={3} />
-              <SectorStrength title="Sectors"
-                etfs={(ETF_GROUPS['Sel Sectors'] || [])
-                  .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
-                  .filter(Boolean)} />
-            </div>
-          </Tier>
-
-          <Reference label="Benchmarks" count={2}
-                     note="the price strip and where each benchmark sits against its averages">
             <div className="space-y-3">
+              {/* Benchmarks first, unfolded: where the four indices sit is the
+                  context every row under it is measured against, and it was
+                  behind a click. */}
               <TickerStrip signals={data?.signals} etfData={data?.etf_data} />
               <TrendStatus signals={data?.signals} />
-            </div>
-          </Reference>
 
-          <Reference label="Indices, style, sectors, industries" count={4}
-                     note="the full cross-section — 1D, 5D, 20D and ATR for every name">
-            <EquitiesSection data={data} />
-          </Reference>
+              {/* Equal width, equal row height, so neither card decides the
+                  other's layout. items-stretch is the default and is what makes
+                  them end level regardless of how many rows each holds. */}
+              <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]
+                              gap-3 items-stretch">
+                <LeadersLaggards title="Industries"
+                  etfs={(ETF_GROUPS.Industries || [])
+                    .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
+                    .filter(Boolean)}
+                  windows={['1D', '1W', '1M']} limit={3} />
+                <SectorStrength title="Sectors"
+                  etfs={(ETF_GROUPS['Sel Sectors'] || [])
+                    .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
+                    .filter(Boolean)} />
+              </div>
+            </div>
+          </Tier>
 
           <HowToRead>
             <p>
