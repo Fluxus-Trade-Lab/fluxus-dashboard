@@ -98,3 +98,35 @@ def test_is_trading_day_is_pure_and_accepts_datetime_date_only():
     # Called twice with the same input, same answer; no clock involved.
     d = dt.date(2026, 4, 3)
     assert marketcal.is_trading_day(d) == marketcal.is_trading_day(d) is False
+
+
+def test_last_trading_day_files_a_weekend_under_friday():
+    # The bug this exists for: a Sunday cron wrote 2026-08-09 into an archive
+    # keyed by session, carrying the identical SPX close and identical zero
+    # advance/decline counts as the real 2026-08-07 row. Same scrape, two dates.
+    assert marketcal.last_trading_day(dt.date(2026, 8, 9)) == dt.date(2026, 8, 7)
+    assert marketcal.last_trading_day(dt.date(2026, 8, 8)) == dt.date(2026, 8, 7)
+
+
+def test_last_trading_day_is_identity_on_a_session():
+    d = dt.date(2026, 8, 7)
+    assert marketcal.last_trading_day(d) == d
+
+
+def test_last_trading_day_walks_back_over_a_holiday():
+    # Good Friday 2026-04-03 closes the exchange, so the Saturday after it and
+    # the holiday itself both file under Thursday.
+    assert marketcal.is_market_holiday(dt.date(2026, 4, 3)) is True
+    assert marketcal.last_trading_day(dt.date(2026, 4, 3)) == dt.date(2026, 4, 2)
+    assert marketcal.last_trading_day(dt.date(2026, 4, 5)) == dt.date(2026, 4, 2)
+
+
+def test_last_trading_day_never_returns_a_non_session():
+    # Sweep a year: whatever comes back must itself be a trading day, and must
+    # never be later than the date asked about.
+    d = dt.date(2026, 1, 1)
+    while d < dt.date(2027, 1, 1):
+        got = marketcal.last_trading_day(d)
+        assert marketcal.is_trading_day(got), (d, got)
+        assert got <= d, (d, got)
+        d += dt.timedelta(days=1)

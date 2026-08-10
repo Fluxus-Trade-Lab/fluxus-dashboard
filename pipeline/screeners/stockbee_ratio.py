@@ -27,7 +27,7 @@ from datetime import date
 from pathlib import Path
 from typing import Any, Dict, List
 
-from pipeline.marketcal import market_today
+from pipeline.marketcal import last_trading_day
 
 import pandas as pd
 
@@ -117,8 +117,10 @@ def run(universe: pd.DataFrame, history_path: str) -> Dict[str, Any]:
     gainers_today = int((universe["change_pct"] >= _GAINER_PCT).sum())
     losers_today = int((universe["change_pct"] <= _LOSER_PCT).sum())
 
+    # Session label, not wall date — a weekend run files under the last
+    # session rather than minting one. See marketcal.last_trading_day.
     today_entry = {
-        "date": market_today().isoformat(),
+        "date": last_trading_day().isoformat(),
         "gainers": gainers_today,
         "losers": losers_today,
     }

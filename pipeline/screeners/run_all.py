@@ -35,7 +35,7 @@ from pipeline.screeners.stockbee_ratio import run as run_stockbee_ratio
 from pipeline.screeners.breadth_metrics import run as run_breadth_metrics
 from pipeline.screeners.vcp_detector import run_vcp_pipeline
 from pipeline.screeners.atr_enrichment import enrich_with_atr
-from pipeline.marketcal import market_today
+from pipeline.marketcal import last_trading_day
 
 OUTPUT_DIR = Path('data/output')
 HISTORY_DIR = Path('data/history')
@@ -453,7 +453,8 @@ def main():
         from pipeline.screeners.ticker_heat import (
             build_heating_up, build_ticker_events_index,
         )
-        event_date = market_today().isoformat()
+        # Events are keyed by session; a weekend run must attach to Friday.
+        event_date = last_trading_day().isoformat()
         today_rows = []
         for screener in SCREENER_FILES:
             payload = results.get(screener)

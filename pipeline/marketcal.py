@@ -104,3 +104,29 @@ def is_market_holiday(d: dt.date) -> bool:
 def is_trading_day(d: dt.date) -> bool:
     """Is this date a regular NYSE trading session? Pure, no clock."""
     return d.weekday() < 5 and not is_market_holiday(d)
+
+
+def last_trading_day(d: dt.date | None = None) -> dt.date:
+    """The most recent NYSE session on or before `d` (default: today in ET).
+
+    `market_today()` answers "what is the date in New York", which is the right
+    question for a timestamp and the wrong one for a session label. A cron that
+    fires on a Saturday, a Sunday or Good Friday gets a real calendar date back
+    and, if that date is written into an archive keyed by session, invents a
+    trading day that never happened.
+
+    That is not hypothetical: the 2026-08-09 (Sunday) row and the 2026-08-07
+    (Friday) row carried an identical SPX close and identical zero advance /
+    decline counts, because they were the same scrape labelled twice.
+
+    Pure with respect to the clock once `d` is supplied, so it is testable
+    without freezing time.
+    """
+    day = market_today() if d is None else d
+    # NYSE never closes for more than a handful of consecutive days; the bound
+    # keeps a bad holiday table from turning this into an infinite loop.
+    for _ in range(10):
+        if is_trading_day(day):
+            return day
+        day -= dt.timedelta(days=1)
+    raise RuntimeError(f"no trading day within 10 days of {d or 'today'}")

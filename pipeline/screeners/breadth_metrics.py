@@ -18,7 +18,7 @@ from typing import Any, Dict, Optional
 
 import pandas as pd
 
-from pipeline.marketcal import market_today
+from pipeline.marketcal import last_trading_day
 from pipeline.screeners.breadth_store import (
     load_archive,
     upsert_row,
@@ -148,7 +148,10 @@ def run(
     else:
         null_rate = 1.0
 
-    today_iso = market_today().isoformat()
+    # The archive is keyed by SESSION, not by wall date: a Sunday cron run must
+    # file its numbers under Friday or it invents a trading day. See
+    # marketcal.last_trading_day.
+    today_iso = last_trading_day().isoformat()
     ok, reason = check_quality(frame, snapshot, null_rate, today_iso)
     if ok:
         row = {
