@@ -141,7 +141,8 @@ export default function GroupsPage() {
     <div className="space-y-5">
       <PageHeader group="market" title="Themes"
         blurb="Where the strength is, and where it is turning."
-        meta={[`vs ${benchmark} · ${date} · ${themes.length} published + ${provisional.length} provisional`]} />
+        meta={[`vs ${benchmark} · ${date} · ${themes.length} published${
+          provisional.length ? ` + ${provisional.length} provisional` : ''}`]} />
       <Reading text={readThemes(themes)} />
 
       {/* THE CONTROL BAR — every control on the page, in one sticky line. */}
