@@ -98,6 +98,11 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
         const frac = Math.min(1, Math.abs(v) / scale)
         const colour = colourOf(r.group)
         const blocked = atLimit && !colour
+        // With a selection active, unselected rows become ghosts: a faint
+        // name and a faint bar, their numbers surfacing only on hover. The
+        // bar alone is still an honest mark — the shared axis carries scale —
+        // and the numbers are one hover away, not gone.
+        const ghost = dim && !colour
         return (
           <div key={r.group}
                role="button" tabIndex={0}
@@ -113,17 +118,19 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
                className={`group grid grid-cols-[24px_minmax(126px,206px)_34px_1fr_66px_18px]
                           gap-2 items-center py-[3px] pl-1 transition-opacity
                           hover:bg-[var(--color-hover-bg)] hover:opacity-100
-                          ${dim && !colour ? 'opacity-40' : ''}`}>
-            <span className="text-[9px] font-mono tabular-nums text-right
-                             text-[var(--color-text-muted)]">{i + 1}</span>
+                          ${ghost ? 'opacity-30' : ''}`}>
+            <span className={`text-[9px] font-mono tabular-nums text-right
+                             text-[var(--color-text-muted)]
+                             ${ghost ? 'opacity-0 group-hover:opacity-100' : ''}`}>{i + 1}</span>
             <span className="text-[12.5px] truncate"
                   style={colour ? { color: colour, fontWeight: 600 } : undefined}
                   title={r.tickers?.join(' · ')}>
               {r.group}
             </span>
             {/* the denominator, on every row: a theme of one stock is one stock */}
-            <span className="text-[11px] tabular-nums text-right
-                             text-[var(--color-text-muted)]">{r.members}</span>
+            <span className={`text-[11px] tabular-nums text-right
+                             text-[var(--color-text-muted)]
+                             ${ghost ? 'opacity-0 group-hover:opacity-100' : ''}`}>{r.members}</span>
             <span className="relative block h-[12px]">
               {/* the rule overshoots the row so the segments join into one
                   continuous zero — an axis with holes is not an axis */}
@@ -135,7 +142,8 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
                 width: `${frac * 50}%`,
               }} />
             </span>
-            <span className="text-[12px] font-mono tabular-nums text-right">
+            <span className={`text-[12px] font-mono tabular-nums text-right
+                              ${ghost ? 'opacity-0 group-hover:opacity-100' : ''}`}>
               {v > 0 ? '+' : ''}{(v * 100).toFixed(1)}%
             </span>
             <span aria-hidden
