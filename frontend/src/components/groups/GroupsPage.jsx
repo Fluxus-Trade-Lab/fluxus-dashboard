@@ -136,13 +136,13 @@ export default function GroupsPage() {
   const colourOf = comparable ? compare.colourOf : () => null
   const onToggle = comparable ? compare.toggle : () => {}
 
-  // Never two bg-* classes on one element: which wins is decided by the
-  // stylesheet's generation order, not by the string — the active tab rendered
-  // dark-on-dark because bg-transparent happened to outrank the active fill.
-  const seg = (active) => `px-3.5 py-[5px] text-[12px] border-r
-    border-[var(--color-border)] last:border-r-0 cursor-pointer
-    ${active ? 'bg-[var(--color-accent)] text-white font-semibold'
-             : 'bg-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`
+  // Controls are typography, not boxes: state is carried by weight and an
+  // underline, never by a filled pill. Borders on this page are reserved for
+  // separating data from data.
+  const seg = (active) => `px-0.5 pb-[3px] text-[12.5px] bg-transparent border-0
+    border-b-2 cursor-pointer transition-colors
+    ${active ? 'text-[var(--color-text)] font-semibold border-[var(--color-text)]'
+             : 'text-[var(--color-text-muted)] border-transparent hover:text-[var(--color-text)]'}`
 
   return (
     <div className="space-y-5">
@@ -156,8 +156,8 @@ export default function GroupsPage() {
       <div className="sticky top-0 z-20 -mx-3 px-3 py-2.5 border-b border-[var(--glass-edge)]"
            style={{ background: 'var(--glass)', backdropFilter: 'var(--glass-blur)',
                     WebkitBackdropFilter: 'var(--glass-blur)' }}>
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-          <div className="flex border border-[var(--color-border)] rounded overflow-hidden">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+          <div className="flex gap-4">
             {TABS.map((t) => (
               <button key={t.key} type="button" onClick={() => setTab(t.key)}
                       className={seg(tab === t.key)}>
@@ -165,7 +165,8 @@ export default function GroupsPage() {
               </button>
             ))}
           </div>
-          <div className="flex border border-[var(--color-border)] rounded overflow-hidden">
+          <i aria-hidden className="h-[14px] w-px bg-[var(--color-border)]" />
+          <div className="flex gap-3.5">
             {WINDOWS.map((w) => {
               const waiting = w.needsSpy && !spy
               return (
@@ -179,6 +180,7 @@ export default function GroupsPage() {
               )
             })}
           </div>
+          <i aria-hidden className="h-[14px] w-px bg-[var(--color-border)]" />
           {comparable && (
             <CompareBar rows={rows} picks={compare.picks} atLimit={compare.atLimit}
                         onToggle={compare.toggle} />

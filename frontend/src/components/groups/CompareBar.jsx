@@ -43,8 +43,8 @@ export default function CompareBar({ rows, picks, atLimit, onToggle }) {
                }}
                disabled={atLimit}
                placeholder={atLimit ? 'full — remove one' : 'Add theme…'}
-               className="w-[150px] h-[30px] px-2.5 text-[12px] rounded border
-                          border-[var(--color-border)] bg-transparent
+               className="w-[136px] h-[26px] px-0.5 text-[12px] bg-transparent
+                          border-0 border-b border-[var(--color-border)] rounded-none
                           text-[var(--color-text)] placeholder:text-[var(--color-text-muted)]
                           focus:outline-none focus:border-[var(--color-text-muted)]
                           disabled:opacity-50 disabled:cursor-not-allowed" />
@@ -73,20 +73,19 @@ export default function CompareBar({ rows, picks, atLimit, onToggle }) {
         return p ? (
           <button key={colour} type="button" onClick={() => onToggle(p.name)}
                   title={`${p.name} — click to remove`}
-                  style={{ borderColor: p.colour, color: p.colour }}
-                  className="h-[30px] max-w-[190px] px-2.5 rounded border bg-transparent
+                  style={{ color: p.colour }}
+                  className="h-[26px] max-w-[190px] px-0.5 bg-transparent border-0
                              cursor-pointer flex items-center gap-1.5 text-[12px] font-medium">
             <i className="w-2 h-2 rounded-full shrink-0" style={{ background: p.colour }} />
             <span className="truncate">{p.name}</span>
-            <span aria-hidden className="opacity-60">×</span>
+            <span aria-hidden className="opacity-50">×</span>
           </button>
         ) : (
+          /* an empty slot is the caption: a hollow dot says "room for one
+             more" without a box or a sentence */
           <span key={colour} aria-hidden
-                className="h-[30px] w-[76px] rounded border border-dashed
-                           border-[var(--color-border)] flex items-center justify-center
-                           text-[var(--color-text-muted)] text-[13px] select-none">
-            +
-          </span>
+                className="w-2 h-2 rounded-full border border-[var(--color-border)]
+                           select-none shrink-0" />
         )
       })}
     </div>

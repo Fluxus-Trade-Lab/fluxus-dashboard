@@ -111,7 +111,7 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
                   width={(Math.max(...highlight) - Math.min(...highlight) + 1)
                          * (100 - LEFT - RIGHT) / (n - 1) * 10 * 0.999}
                   height={H - 8}
-                  fill="var(--color-hover-bg)" opacity="0.45" />
+                  fill="var(--color-hover-bg)" opacity="0.3" />
           )}
           <line x1={LEFT * 10} x2={(100 - RIGHT) * 10 + 30} y1={H / 2} y2={H / 2}
                 stroke="var(--color-text-muted)" strokeWidth="1"
