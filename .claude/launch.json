@@ -2,65 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "fluxus-dashboard",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "run",
-        "dev"
-      ],
-      "port": 5173,
-      "cwd": "frontend",
-      "autoPort": true
-    },
-    {
-      "name": "optionsflow-display",
+      "name": "dataart-web",
       "runtimeExecutable": "python3",
-      "runtimeArgs": [
-        "-m",
-        "http.server",
-        "8321",
-        "--directory",
-        "/Users/taolezhu/Documents/OptionsFlow/tests/fixtures/_replay_out"
-      ],
-      "port": 8321
-    },
-    {
-      "name": "visual-explorations",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": [
-        "-m",
-        "http.server",
-        "8399",
-        "--directory",
-        "/Users/taolezhu/Documents/AI-Trading-System/Fluxus_Brand/visual/explorations/2026-08-08"
-      ],
-      "port": 8399
-    },
-    {
-      "name": "ib-order-panel",
-      "runtimeExecutable": "/Users/taolezhu/ibkr_order_panel/venv/bin/python",
-      "runtimeArgs": [
-        "-m",
-        "uvicorn",
-        "server.main:app",
-        "--host",
-        "0.0.0.0",
-        "--port",
-        "7777",
-        "--loop",
-        "asyncio"
-      ],
-      "port": 7777,
-      "cwd": "/Users/taolezhu/ibkr_order_panel"
-    },
-    {
-      "name": "ib-order-panel-preview",
-      "runtimeExecutable": "bash",
-      "runtimeArgs": [
-        "-c",
-        "cd /Users/taolezhu/ibkr_order_panel && exec venv/bin/python -m uvicorn server.main:app --host 127.0.0.1 --port 7787 --loop asyncio"
-      ],
-      "port": 7787
+      "runtimeArgs": ["-m", "http.server", "8792", "--directory", "Fluxus_DataArt/web"],
+      "port": 8792
     }
   ]
 }
