@@ -75,6 +75,52 @@ function StateCensus({ rows }) {
   )
 }
 
+/**
+ * The sentence Andy read off TSF's chart, computed instead of typed:
+ * "AI - Datacenters is lagging based on past 1 week performance."
+ *
+ * Two rules keep it honest. It NAMES ITS WINDOW, because the same theme can
+ * lead the week and trail the quarter — a verdict without its clock is how
+ * two true readings turn into one false one. And the official state word
+ * rides in parentheses with a tooltip saying it runs on month-scale windows
+ * (FOUR_STATE_DESIGN: every faster scheme flipped sign between half-samples)
+ * — the switch does not change it, and pretending it did would be a second
+ * definition of the same word.
+ */
+function CompareReading({ picks, windowed, winKey }) {
+  if (!picks.length) return null
+  const byName = new Map(windowed.map((r) => [r.group, r]))
+  const read = picks
+    .map((pick) => ({ pick, row: byName.get(pick.name) }))
+    .filter((x) => x.row && Number.isFinite(x.row._value))
+    .sort((a, b) => b.row._value - a.row._value)
+  if (!read.length) return null
+
+  const word = (v) => (v > 0.01 ? 'leads SPY' : v < -0.01 ? 'trails SPY' : 'is even with SPY')
+  const windowName = { '1W': 'the past week', '1M': 'the past month', '3M': 'the past quarter' }[winKey]
+
+  return (
+    <p className="m-0 mb-2.5 text-[12.5px] leading-relaxed border-l-2
+                  border-[var(--color-border)] pl-3 text-[var(--color-text-secondary)]">
+      Over {windowName}:{' '}
+      {read.map(({ pick, row }, i) => (
+        <span key={pick.name}>
+          {i > 0 && (i === read.length - 1 ? ' while ' : ', ')}
+          <span style={{ color: pick.colour, fontWeight: 600 }}>{pick.name}</span>
+          {' '}{word(row._value)} at {row._value > 0 ? '+' : ''}{(row._value * 100).toFixed(1)}%
+          {row.state && (
+            <span className="text-[var(--color-text-muted)] cursor-help"
+                  title="the state label runs on month-scale windows, not this switch — faster schemes flipped sign between half-samples">
+              {' '}({row.state})
+            </span>
+          )}
+        </span>
+      ))}
+      .
+    </p>
+  )
+}
+
 function Section({ label, question, right, children }) {
   return (
     <section className="pt-2">
@@ -182,6 +228,7 @@ export default function GroupsPage() {
       </Section>
 
       <Section label="Compare" question="trend, or bounce?">
+        <CompareReading picks={compare.picks} windowed={windowed} winKey={winKey} />
         <TrajectoryPanel picks={compare.picks} byName={byName} highlight={win.hl} />
 
         {/* The set behind each chosen average. A theme's bar is a claim about

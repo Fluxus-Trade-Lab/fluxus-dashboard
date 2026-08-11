@@ -142,3 +142,60 @@ Industries 层由 Dashboard 的行业/板块卡承担，Provisional 的诚实归
 - **渐变 ribbon**：色带渐变 = 颜色空间里的线性插值，与线段是同一个假设。
   锚点必须是四个测量值，锚点之间线性。四态色块反而先把连续 RS 离散化丢了幅度；
   渐变把幅度留下。未测量的段仍穿虚线框，不许优雅地融进邻居。
+
+---
+
+## 六、Live RS 可行性回复（2026-08-11 记录，Andy 暂缓）
+
+问题：TSF 的 Live RS 是盘中每 15 分钟刷新的观察功能。我们是纯静态管线
+（每日 cron → JSON → Vercel），免费做得到吗？
+
+**可行路径（唯一一条不花钱、不碰仓库的）**：走已有的 GAS 代理
+（`Interactive Portfolio Tracker/gas/Code.gs`，Portfolio 页已在用它拉价）。
+前端盘中直接请求 GAS → `GOOGLEFINANCE` 报价 → 现算 intraday excess。
+不产生 commit，不碰 GitHub Actions 配额。
+
+**三个硬约束，页面上必须原样承认**：
+1. `GOOGLEFINANCE` 延迟 15–20 分钟——标注「delayed quotes」，不许装实时；
+2. 只能做 **ETF 代理子集**（每主题挑一只代表 ETF）。3,000 只成分股逐只报价
+   会烧穿 GAS 配额，也没必要——盘中问题是「今天谁在动」，不是重算排名；
+3. 它是**观察，不是测量**：日度 RS 是收盘对收盘的定义，盘中数字不进任何
+   状态机、不改任何 state 词，两套数字不许互相冒充。
+
+**否决的路径**：GitHub Actions 每 15 分钟 commit 一次数据——一天 26 个
+垃圾提交污染历史，且 cron 实测迟到 37–213 分钟，「每 15 分钟」是谎言。
+
+**决定**：Andy 2026-08-11 暂缓（"先暂定 我回过头来想"）。槽位继续空着，
+此记录即回来时的起点。
+
+---
+
+## 七、对 TSF 的读数核对（2026-08-11）
+
+Andy 在 TSF 上比较 Broad AI vs AI - Datacenters，秒读出
+"AI datacenters is lagging based on past 1 week performance"。核对我们的数据：
+
+| 主题 | TSF 状态（注明 based on last 2 weeks） | 我们状态（月尺度窗口） | 我们 1W excess | 我们 3M |
+|---|---|---|---|---|
+| AI - Datacenters | Lagging | Improving | +0.8% | −14.7% |
+| Broad AI Theme | Leading | Weakening | +4.6% | +0.3% |
+| Genomics | Leading | **不在我们的发布分类里** | — | — |
+| Biotech | Leading | Weakening | +3.8% | +12.6% |
+| Healthcare | Lagging | Weakening | +3.7% | +13.4% |
+
+**结论：分歧是真实的，而且两边各自成立——用的不是同一个钟。**
+TSF 的状态词挂在「过去两周」上（他们自己脚注写明）；我们的状态词挂在月尺度
+窗口上，因为 FOUR_STATE_DESIGN 测过：所有近窗 ≤2 周的方案在半样本间翻符号。
+AI - Datacenters 两个读数都对：两周内落后（TSF），季度深坑但近端在修复
+（我们的 Improving）。同一个词，不同的钟，不构成谁错。
+
+**Genomics 是真实的覆盖缺口**（TSF 有该主题，我们的分类没有）——记下，
+不在本轮补。
+
+**落地**：Andy 那句提炼出的话可以呈现，但必须是**算出来的而非手打的**，
+且句子必须报出自己的窗口。已实现 `CompareReading`（GroupsPage 内）：
+从当前窗口开关的 `_value` 生成一句话，如
+"Over the past week: Broad AI Theme leads SPY at +4.6% (Weakening)
+while AI - Datacenters is even with SPY at +0.8% (Improving)"。
+状态词入括号并带 tooltip 声明它跑在月尺度窗口上、不随开关变——
+两个钟同屏，各自署名。
