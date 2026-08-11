@@ -20,7 +20,7 @@ from datetime import datetime, timezone
 
 import numpy as np
 from pathlib import Path
-from typing import Any, Dict, List, Mapping, Sequence
+from typing import Any, Dict, List, Mapping, Optional, Sequence
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
@@ -34,6 +34,9 @@ OUTPUT_DIR = Path("data/output")
 UNIVERSE_PATH = OUTPUT_DIR / "universe.json"
 ETF_PATH = OUTPUT_DIR / "etf_data.json"
 BASKET_DIR = OUTPUT_DIR / "baskets"
+# Four fortnight steps back, plus the 63-session level window and the
+# 21-session near window the oldest of them is measured over.
+MIN_RIBBON_SESSIONS = 10 * 4 + 63 + 21 + 1
 VERDICTS_PATH = Path("data/reference/taxonomy_verdicts.json")
 
 # How old a verdict may be before it stops being trusted. Themes drift as
@@ -142,6 +145,40 @@ def fill_far_window(row: Mapping[str, Any], ticker: str,
 
     logger.info("Filled %s perf_6m=%.6f from %d local bars", ticker, perf_6m, len(bars))
     return {**row, "perf_6m": perf_6m}
+
+
+def load_bars(ticker: str, basket_dir: Path = BASKET_DIR) -> List[float]:
+    """Closes for one fund from the shared bar store, oldest first."""
+    path = basket_dir / f"{ticker}.json"
+    if not path.exists():
+        return []
+    try:
+        payload = json.loads(path.read_text())
+    except (ValueError, OSError):
+        return []
+    return [float(b["close"]) for b in (payload.get("bars") or [])
+            if b.get("close") is not None]
+
+
+def proxy_ribbon(ticker: str, bench_bars: Sequence[float],
+                 basket_dir: Path = BASKET_DIR) -> Optional[List[Dict[str, Any]]]:
+    """Ten weeks of four-state for a proxy theme, computed from price today.
+
+    The same `rotation.engine.ribbon` the style baskets use, on the same
+    fortnight grid and the same month-scale state windows -- one object, not a
+    second implementation that would drift.
+
+    None when the store has no usable bars for either leg. The UI draws a
+    missing segment as an outline, so an absent ribbon is honest; a fabricated
+    one is not.
+    """
+    from pipeline.rotation.engine import ribbon
+
+    bars = load_bars(ticker, basket_dir)
+    n = min(len(bars), len(bench_bars))
+    if n < MIN_RIBBON_SESSIONS:
+        return None
+    return ribbon(bars[-n:], list(bench_bars)[-n:])
 
 
 def load_benchmark(path: Path = ETF_PATH, ticker: str = BENCHMARK,
@@ -259,6 +296,14 @@ def build_themes(
             payload.update({
                 "group": theme.name, "method": "proxy", "source": theme.source,
                 "members": 1, "tickers": [theme.etf[0]], "needs_manual": False,
+                # Ten weeks of state, available now rather than in October.
+                # A fund carries its own history: one close per day, kept by
+                # the vendor, so any past window is still computable today. A
+                # constituent theme's reading is a median across a set at a
+                # moment, which leaves no trace unless it was written down --
+                # hence `groups_archive.csv` for the other 58, and nothing to
+                # wait for here.
+                "ribbon": proxy_ribbon(theme.etf[0], load_bars(BENCHMARK)),
                 # n=1 by design. The fund *is* the instrument, so its RS
                 # reading is exact -- not the same situation as a constituent
                 # theme that only managed to find two members.

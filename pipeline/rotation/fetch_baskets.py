@@ -1,4 +1,4 @@
-"""Fetch and store daily closes for every basket the rotation layer needs.
+"""Fetch and store daily closes for every fund the bar store carries.
 
 Small and separate from `build_rotation` on purpose: eleven ETFs plus the
 benchmark is a single yfinance call, and keeping the network out of the build
@@ -12,29 +12,46 @@ import argparse
 import json
 import logging
 from pathlib import Path
-from typing import Dict
+from typing import Dict, List
 
 import yfinance as yf
 
 from pipeline.rotation import baskets as B
+from pipeline.themes import taxonomy
 
 log = logging.getLogger(__name__)
 OUT_DIR = Path("data/output/baskets")
 
 
+def required_tickers() -> List[str]:
+    """Every fund whose bars this store has to carry.
+
+    Two consumers, one store. Rotation needs its style baskets; the theme layer
+    needs the funds behind its `proxy` themes — both to fill the 3m..6m bucket
+    etf_data cannot reach, and to draw ten weeks of state from price today
+    rather than waiting on the archive. Fetching the union once removes the
+    failure mode where a fund is present for one consumer and missing for the
+    other.
+    """
+    proxies = {t.etf[0] for t in taxonomy.THEMES
+               if t.method == "proxy" and t.etf}
+    return sorted(set(B.REQUIRED) | proxies)
+
+
 def fetch(period: str = "2y", out_dir: Path = OUT_DIR) -> Dict[str, int]:
-    """Download and store closes for every required basket.
+    """Download and store closes for every fund the store carries.
 
     A callable, not just a CLI: the daily pipeline runs this step itself, and a
     module whose only entry point is `main()` is a module the cron cannot use —
     which is exactly how the group snapshot ended up never running.
     """
-    data = yf.download(B.REQUIRED, period=period, group_by="ticker",
+    tickers = required_tickers()
+    data = yf.download(tickers, period=period, group_by="ticker",
                        auto_adjust=True, progress=False, threads=True)
     out_dir.mkdir(parents=True, exist_ok=True)
 
     written, failed = 0, []
-    for ticker in B.REQUIRED:
+    for ticker in tickers:
         try:
             sub = data[ticker].dropna(subset=["Close"])
         except KeyError:
@@ -49,7 +66,7 @@ def fetch(period: str = "2y", out_dir: Path = OUT_DIR) -> Dict[str, int]:
             json.dumps({"ticker": ticker, "bars": bars}))
         written += 1
 
-    log.info("stored %d/%d baskets in %s", written, len(B.REQUIRED), out_dir)
+    log.info("stored %d/%d baskets in %s", written, len(tickers), out_dir)
     if failed:
         # Loud, not silent: a basket that vanishes changes which cuts can vote,
         # and a cut voting on one leg would read as agreement.
