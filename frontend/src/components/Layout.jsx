@@ -23,7 +23,6 @@ function Band({ label, note }) {
 import TickerStrip from './dashboard/TickerStrip'
 import RegimeBand from './dashboard/RegimeBand'
 import LeadersLaggards from './dashboard/LeadersLaggards'
-import SectorStrength from './dashboard/SectorStrength'
 import { VoteMarks } from './breadth/VoteGlyphs'
 import { ETF_GROUPS } from '../lib/etfGroups'
 import ScreenerPage from './screener/ScreenerPage'
@@ -164,15 +163,20 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                   them end level regardless of how many rows each holds. */}
               <div className="grid grid-cols-1 xl:grid-cols-2
                               gap-3 items-stretch">
+                {/* One component, two cohorts (Andy 2026-08-11: Sectors learns
+                    the Industries grammar, not the reverse) — the symmetry is
+                    structural, not imitated. Each window column shows that
+                    window's leaders and laggards WITH that window's move. */}
                 <LeadersLaggards title="Industries"
                   etfs={(ETF_GROUPS.Industries || [])
                     .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                     .filter(Boolean)}
-                  limit={6} />
-                <SectorStrength title="Sectors"
+                  windows={['1D', '1W', '1M']} limit={3} />
+                <LeadersLaggards title="Sectors"
                   etfs={(ETF_GROUPS['Sel Sectors'] || [])
                     .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
-                    .filter(Boolean)} />
+                    .filter(Boolean)}
+                  windows={['1D', '1W', '1M']} limit={3} />
               </div>
             </div>
           </Tier>
