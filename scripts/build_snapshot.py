@@ -131,6 +131,7 @@ def _scorecard(symbol: str) -> dict | None:
 from pipeline.reference.context import percentile_of, ranked_levels, load_history
 from pipeline.gex.derive import wall_migration
 from pipeline.reference import levels_log as LL
+from pipeline.reference import events as EV
 from pipeline.marketcal import market_now
 
 OUT_DIR = Path("data/snapshots")
@@ -287,6 +288,14 @@ def main():
         "consistency": _consistency(g),
         "flow_ratio": _flow_ratio(g),
         "gex_transition": _transition(args.symbol),
+        # Carried so the calendar premise is on the page BEFORE a view is
+        # committed. On 2026-08-11 a logged view read "CPI day" on a day that
+        # was not, and nothing in this repo could have contradicted it.
+        "calendar": {
+            "today": EV.on(now.strftime("%Y-%m-%d")),
+            "upcoming": EV.upcoming(now.strftime("%Y-%m-%d"), within=7),
+            "line": EV.summary(now.strftime("%Y-%m-%d")),
+        },
         **_auction_join(g),
     }
     jp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.json"

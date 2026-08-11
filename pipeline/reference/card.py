@@ -270,6 +270,28 @@ def render_prompt_card(data: dict, out_path: str | Path, window: str = "") -> Pa
         else:
             c.text("No question could be formed from the prior session.",
                    size=20, color=MUT, dy=16)
+
+        # The calendar belongs on THIS card, not the brief. It is a fact about
+        # the date, not an opinion about the tape -- it names no level, no
+        # regime and no direction, so it cannot anchor a view. Withholding it
+        # would not protect independence, only leave a checkable premise
+        # unchecked, which is how "CPI day" was written on 2026-08-11.
+        cal = data.get("calendar") or {}
+        today, soon = cal.get("today") or [], cal.get("upcoming") or []
+        if cal:
+            c.rule()
+            c.text("ON THE CALENDAR", size=14, color=MUT, family=MONO, dy=8)
+            if today:
+                c.text("  ·  ".join(f"{r['event']} {r.get('time') or ''}".strip()
+                                    for r in today),
+                       size=21, weight="bold", color=WARN, dy=12)
+            else:
+                c.text("nothing scheduled today", size=21, color=MUT, dy=12)
+            ahead = [r for r in soon if r.get("days_out")]
+            if ahead:
+                c.text("next:  " + "   ".join(
+                    f"{r['event']} {r['date'][5:]} (+{r['days_out']}d)"
+                    for r in ahead[:3]), size=17, family=MONO, color=TXT, dy=8)
         c.rule()
 
         c.text("YOUR VIEW, BEFORE YOU SEE OURS", size=14, color=MUT,
