@@ -282,6 +282,35 @@ def _scorecard_html(sc: dict | None, session: str | None = None) -> str:
             f"<tbody>{rows}</tbody></table>{note}</section>")
 
 
+def _calendar_html(cal: dict | None) -> str:
+    """What is scheduled, and — as loudly — what we do not track.
+
+    A calendar listing two events reads as "those are the only two". We hold CPI
+    and FOMC and nothing else, so the untracked list is printed beside them;
+    without it the section is a lie of omission, which is the exact failure it
+    was built to stop.
+    """
+    if not cal:
+        return ""
+    today, soon = cal.get("today") or [], cal.get("upcoming") or []
+    if today:
+        head = " · ".join(
+            f"<b class='neg'>{r['event']}</b> {r.get('time') or ''} ET"
+            f" <span class='mut'>{r.get('name','')}</span>" for r in today)
+    else:
+        head = "<span class='mut'>nothing scheduled today</span>"
+    ahead = [r for r in soon if r.get("days_out")]
+    nxt = ("<div class='mono mut' style='font-size:12px;margin-top:8px'>next &nbsp; "
+           + " &nbsp; ".join(f"{r['event']} {r['date']} (+{r['days_out']}d)"
+                             for r in ahead[:4]) + "</div>") if ahead else ""
+    tracked = sorted({r["event"] for r in (today + soon)}) or ["CPI", "FOMC"]
+    note = ("<div class='mut' style='font-size:11px;margin-top:10px'>Tracking "
+            f"{', '.join(tracked)} only. Any other event is reported as "
+            "<i>unknown</i>, never as absent.</div>")
+    return (f"<section><p class='lbl'>On the calendar</p>"
+            f"<div style='font-size:14px'>{head}</div>{nxt}{note}</section>")
+
+
 def _business_html(q: dict | None) -> str:
     """The day's one question, asked before the session — a fork, not a forecast."""
     if not q:
@@ -448,6 +477,7 @@ def render_snapshot_html(data: dict) -> str:
         f"{_gamma_svg(g)}"
         f"{_ladder_html(data.get('secondary_levels'))}"
         f"{_sequence_html(data.get('intraday_sequence'))}"
+        f"{_calendar_html(data.get('calendar'))}"
         f"{_business_html(data.get('todays_business'))}"
         f"{_refmap_html(data.get('reference_map'), data.get('strongest'))}"
         f"{_conflicts_html(data.get('conflicts'))}"
