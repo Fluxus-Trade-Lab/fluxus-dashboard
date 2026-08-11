@@ -104,6 +104,9 @@ const id = (own.href.match(/status\/(\d+)/) || [])[1];
 
 **验证一条帖归属的办法：** `navigate` 到 `x.com/i/status/<id>`，看 batch 末尾 Tab Context 里解析后的 URL（`location.pathname` / `document.title` 都会被安全过滤器拦掉）。
 
+**⚠️ 排收藏比之前必须看正文是不是自己的（2026-08-10 加）：**
+@Clement_Ang17 收藏比最高的那条（1.81 / 600 收藏）正文只有三个字 `This is gold!` —— 转发别人的东西。**收藏给的是被转的内容,不是他。** 排行前先确认作者身份,否则会把「别人的好东西」记成「他的好骨架」。
+
 **⚠️ 三个 Discord 爬取时踩过、这里同样适用的坑：**
 1. **`stats` 存原始 aria-label 字符串，落盘后再解析** —— 别在浏览器里解析数字（"8.3K"/"12万" 格式随语言环境变，解析错了原始串还在）
 2. **滚动用 `computer` 的滚动，不用 JS `setTimeout` 循环** —— 后台 tab 的 JS 定时器被降频，Discord 那次就是这么卡死的
@@ -175,7 +178,7 @@ window.__X.clear();   // 清掉，下一窗从零计
 | @ohiain | 2024-Q3 → 2026-Q3（8 窗） | ✅ **完成** 79 条抓取 / 72 条有效 | `ohiain_index.csv` · `ohiain_top100.json` | 2026-08-10 |
 | @ZaStocks | 2024-Q3 → 2026-Q2（8 窗） | ✅ **完成** 71 条有效 | `zastocks_index.csv` · `zastocks_top100.json` | 2026-08-10 |
 | @thesetupfactory | 2025-01 → 2026-Q2（5 窗，他 2025-01 才开始发） | ✅ **完成** 39 条有效 | `tsf_index.csv` · `tsf_top100.json` | 2026-08-10 |
-| @Clement_Ang17 | — | ⬜ **下一个**(音区标杆,小号) | — | — |
+| @Clement_Ang17 | 2024-08 → 2026-08(3 宽窗) | ✅ **完成** 18 条 · **唯一用了修好的抓取器** | `clement_index.csv` · `clement_top100.json` | 2026-08-10 |
 
 ---
 
