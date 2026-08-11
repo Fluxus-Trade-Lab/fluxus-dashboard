@@ -49,7 +49,7 @@ export default function ThemeMembers({ theme, colour, rsByTicker }) {
     }
     // ranked as the theme itself ranks — by the 3M window — so the drill-down
     // and the bar above it tell the same story in the same order
-    found.sort((a, b) => (b.rs_63d ?? -Infinity) - (a.rs_63d ?? -Infinity))
+    found.sort((a, b) => ((b.rs_3m ?? b.rs_63d) ?? -Infinity) - ((a.rs_3m ?? a.rs_63d) ?? -Infinity))
     return { rows: found, missing: gone }
   }, [theme, universe, rsByTicker])
 
@@ -79,8 +79,10 @@ export default function ThemeMembers({ theme, colour, rsByTicker }) {
                            bg-[var(--color-bg)]">
               <th className="text-left py-1 pr-3 font-medium">Ticker</th>
               <th className="text-left py-1 pr-3 font-medium">State</th>
-              <th className="text-right py-1 pr-3 font-medium">RS 21d</th>
-              <th className="text-right py-1 pr-3 font-medium">RS 63d</th>
+              <th className="text-right py-1 pr-3 font-medium">RS 1M</th>
+              <th className="text-right py-1 pr-3 font-medium">RS 3M</th>
+              <th className="text-right py-1 pr-3 font-medium"
+                  title="percentile within its own industry — a 90 here beside a soft RS says the whole industry is soft">Ind pct</th>
               <th className="text-right py-1 pr-3 font-medium">1W</th>
               <th className="text-right py-1 pr-3 font-medium">1M</th>
               <th className="text-left py-1 pr-3 font-medium">Top quartile</th>
@@ -99,8 +101,9 @@ export default function ThemeMembers({ theme, colour, rsByTicker }) {
                     style={{ color: STATE_TONE[r.rs?.state] ?? 'var(--color-text-muted)' }}>
                   {r.rs?.state ?? '—'}
                 </td>
-                <td className="py-[3px] pr-3 text-right tabular-nums">{num(r.rs_21d)}</td>
-                <td className="py-[3px] pr-3 text-right tabular-nums">{num(r.rs_63d)}</td>
+                <td className="py-[3px] pr-3 text-right tabular-nums">{num(r.rs_1m ?? r.rs_21d)}</td>
+                <td className="py-[3px] pr-3 text-right tabular-nums">{num(r.rs_3m ?? r.rs_63d)}</td>
+                <td className="py-[3px] pr-3 text-right tabular-nums">{num(r.rs?.group_pctile)}</td>
                 <td className="py-[3px] pr-3 text-right tabular-nums">{pct(r.perf_1w)}</td>
                 <td className="py-[3px] pr-3 text-right tabular-nums">{pct(r.perf_1m)}</td>
                 <td className="py-[3px] pr-3 whitespace-nowrap">

@@ -117,7 +117,7 @@ export default function LeadersLaggards({
       <p className="px-3 pb-2 m-0 text-[9.5px] leading-snug text-[var(--color-text-muted)]">
         The boxed number is relative strength, 0-99 — this fund&rsquo;s return over that
         window ranked against the other {etfs.length}, on the same scale as a
-        stock&rsquo;s rs_21d. The figure on the right is the raw move.
+        stock&rsquo;s rs_1m. The figure on the right is the raw move.
       </p>
     </section>
   )

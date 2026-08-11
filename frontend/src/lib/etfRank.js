@@ -8,7 +8,7 @@ import NAMES from './etfNames.json'
  *     sub.rank(pct=True, na_option='bottom') * 99
  *
  * a cross-sectional percentile of the window's return, times 99 — the IBD
- * scale, which is where universe.json's `rs_21d` (perf_1m) and `rs_63d`
+ * scale, which is where universe.json's `rs_1m` (perf_1m) and `rs_3m`
  * (perf_3m) come from. This file applies the same construction to ETFs, which
  * are not in universe.json and so have no rs_* of their own.
  *

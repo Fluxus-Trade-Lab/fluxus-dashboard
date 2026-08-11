@@ -23,6 +23,35 @@
  * ranking on" and "how it got there" stay visibly the same stretch of time.
  */
 import { SEGMENTS } from './segments'
+import { barStyle } from './ThemeBars'
+
+/**
+ * The real fortnight ribbon, when the archive carries it: five segments of
+ * {state, level, accel}, drawn in THIS page's grammar (tone + fill via
+ * barStyle) — not StateRibbon's four-hue palette. One page, one grammar; the
+ * same four words must not wear two palettes on one screen.
+ *
+ * Its time axis is five fortnights, which is NOT the curve's four stretches —
+ * so the caller only uses it when EVERY chosen theme has one, and labels the
+ * axis once. Mixing real-fortnight rows with synthetic-stretch rows in one
+ * stack would put two time axes in one object.
+ */
+function FortnightRibbon({ ribbon, group }) {
+  return (
+    <div className="grid grid-cols-5 gap-[3px]" role="img"
+         aria-label={`${group} state by fortnight`}>
+      {ribbon.map((seg, i) => (
+        seg?.state ? (
+          <span key={i} className="h-[10px]" style={barStyle(seg.state)}
+                title={`${seg.state} · level ${(seg.level * 100).toFixed(1)}% · accel ${(seg.accel * 100).toFixed(1)}pp — state computed on month-scale windows; each block is a fortnight of drawing`} />
+        ) : (
+          <span key={i} className="h-[10px] border border-dashed"
+                style={{ borderColor: 'var(--color-untested)' }} title="not measured" />
+        )
+      ))}
+    </div>
+  )
+}
 
 /** Excess value → colour. Anchors only; the gradient does the interpolation. */
 function valueColour(v, span) {
@@ -239,20 +268,33 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
           coordinate system, two readings: the curve is the path, the ribbon is
           the temperature along it. Identity is the dot; the name lives at the
           line's end. */}
-      <div className="mt-2.5 space-y-[5px]">
-        {chosen.map((c) => (
-          <div key={c.name} className="relative"
-               style={{ paddingLeft: `${LEFT}%`, paddingRight: `${RIGHT}%` }}>
-            <span className="absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full"
-                  style={{ left: `calc(${LEFT}% - 17px)`, background: c.colour }}
-                  title={c.name} />
-            {/* ribbon x is relative to its own padded box, so re-map the
-                chart's absolute percents into box-local ones */}
-            <Ribbon row={c.row} span={span}
-                    xsPct={(i) => ((xsPct(i) - LEFT) / (100 - LEFT - RIGHT)) * 100} />
+      {(() => {
+        // Real fortnight ribbons only when every pick has one — otherwise the
+        // stack would carry two different time axes.
+        const real = chosen.every((c) => Array.isArray(c.row.ribbon) && c.row.ribbon.length > 0)
+        return (
+          <div className="mt-2.5 space-y-[5px]">
+            {chosen.map((c) => (
+              <div key={c.name} className="relative"
+                   style={{ paddingLeft: `${LEFT}%`, paddingRight: `${RIGHT}%` }}>
+                <span className="absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full"
+                      style={{ left: `calc(${LEFT}% - 17px)`, background: c.colour }}
+                      title={c.name} />
+                {real
+                  ? <FortnightRibbon ribbon={c.row.ribbon} group={c.name} />
+                  : <Ribbon row={c.row} span={span}
+                            xsPct={(i) => ((xsPct(i) - LEFT) / (100 - LEFT - RIGHT)) * 100} />}
+              </div>
+            ))}
+            {real && (
+              <p className="m-0 text-[9px] font-mono text-[var(--color-text-muted)]"
+                 style={{ paddingLeft: `${LEFT}%` }}>
+                fortnights, oldest first — 10w ago → last 2w
+              </p>
+            )}
           </div>
-        ))}
-      </div>
+        )
+      })()}
     </div>
   )
 }
