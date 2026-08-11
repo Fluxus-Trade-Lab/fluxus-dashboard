@@ -6,7 +6,7 @@
 - **入门篇** —— 第一次做复盘。不需要写代码，只要有完整的交易记录。
 - **进阶篇** —— 已经会看胜率盈亏比了，想知道那些数字什么时候会骗你。
 
-配套：[`PROMPTS.md`](./PROMPTS.md)（复制即用的 prompt）
+配套：[`TRADE_ANALYSIS_PROMPTS.zh.md`](./TRADE_ANALYSIS_PROMPTS.zh.md)（复制即用的 prompt）
 
 ---
 

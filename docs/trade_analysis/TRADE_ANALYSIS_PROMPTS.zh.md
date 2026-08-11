@@ -3,7 +3,7 @@
 把一份交易流水交给 AI，让它产出**能改进决策的结论**而不是一堆漂亮图表。
 下面的 prompt 复制即用；每一条都写进了我们实际踩过坑之后学到的要求。
 
-配套文档：[`TEACHING.md`](./TEACHING.md)（概念与方法）· [`../../PERFORMANCE_TRUTH.md`](../../PERFORMANCE_TRUTH.md)（本账户口径基准）
+配套文档：[`TRADE_ANALYSIS_GUIDE.zh.md`](./TRADE_ANALYSIS_GUIDE.zh.md)（概念与方法）· [`../../PERFORMANCE_TRUTH.md`](../../PERFORMANCE_TRUTH.md)（本账户口径基准）
 
 ---
 
