@@ -59,26 +59,55 @@ done
 [ "$_waited" -gt 0 ] && say "TWS came up after ${_waited}s"
 
 win=$([ "$postclose" = true ] && echo "post-close" || echo "premarket")
+# Hard wall-clock ceiling on every IBKR-touching step.
+#
+# On 2026-08-10 the post-close chain started at 16:36 ET and was still running
+# six hours later with 1.5 seconds of CPU: blocked on a market-data subscription
+# that never arrives once the session has closed. It produced no file and logged
+# no failure, and it held an IBKR client slot the whole time. Nobody would have
+# known -- it was found by hand.
+#
+# A step that cannot finish in this long is not going to finish.
+STEP_TIMEOUT="${STEP_TIMEOUT:-900}"
+run_step() {                     # run_step <label> <cmd...>
+    local label="$1"; shift
+    if command -v timeout >/dev/null 2>&1; then
+        timeout --signal=TERM --kill-after=30 "$STEP_TIMEOUT" "$@" >>"$LOG" 2>&1
+    else
+        "$@" >>"$LOG" 2>&1 &
+        local pid=$! waited=0
+        while kill -0 "$pid" 2>/dev/null && [ "$waited" -lt "$STEP_TIMEOUT" ]; do
+            sleep 5; waited=$((waited+5))
+        done
+        if kill -0 "$pid" 2>/dev/null; then
+            kill -TERM "$pid" 2>/dev/null; sleep 5; kill -KILL "$pid" 2>/dev/null
+            say "TIMEOUT after ${STEP_TIMEOUT}s: $label — killed"
+            return 124
+        fi
+        wait "$pid"
+    fi
+}
+
 say "running GEX pull for $DATE ($win, ET ${ET_HOUR}:${ET_MIN})"
-.venv/bin/python scripts/gex_levels.py --symbol SPX >>"$LOG" 2>&1 \
-    || { say "FAILED at gex_levels — see log above"; exit 1; }
-.venv/bin/python scripts/gex_to_pine.py --symbol SPX >/dev/null 2>>"$LOG" || say "warn: pine overlay failed"
+run_step gex_levels .venv/bin/python scripts/gex_levels.py --symbol SPX \
+    || { say "FAILED or TIMED OUT at gex_levels"; exit 1; }
+run_step pine .venv/bin/python scripts/gex_to_pine.py --symbol SPX || say "warn: pine overlay failed"
 
 if [ "$postclose" = true ]; then
     # The session just closed: its Market Profile is now computable, the brief
     # can join it, and the scorecard has one more finished bar to grade against.
-    .venv/bin/python scripts/build_profile.py >>"$LOG" 2>&1 \
-        && say "profile built for $DATE" || say "warn: build_profile failed"
-    .venv/bin/python scripts/score_levels.py --symbol SPX >>"$LOG" 2>&1 \
-        && say "scorecard updated" || say "warn: score_levels failed"
+    run_step build_profile .venv/bin/python scripts/build_profile.py \
+        && say "profile built for $DATE" || say "warn: build_profile failed or timed out"
+    run_step score_levels .venv/bin/python scripts/score_levels.py --symbol SPX \
+        && say "scorecard updated" || say "warn: score_levels failed or timed out"
     # The centaur only learns if both parties get graded. Runs post-close, when
     # the session that the views were filed against has an outcome.
-    .venv/bin/python scripts/score_views.py --symbol SPX >>"$LOG" 2>&1 \
-        && say "centaur skill updated" || say "warn: score_views failed"
+    run_step score_views .venv/bin/python scripts/score_views.py --symbol SPX \
+        && say "centaur skill updated" || say "warn: score_views failed or timed out"
 fi
 # The brief renders in both windows — premarket joins yesterday's profile.
-.venv/bin/python scripts/build_snapshot.py --symbol SPX >>"$LOG" 2>&1 \
-    || { say "FAILED at build_snapshot — see log above"; exit 1; }
+run_step build_snapshot .venv/bin/python scripts/build_snapshot.py --symbol SPX \
+    || { say "FAILED or TIMED OUT at build_snapshot"; exit 1; }
 say "brief built (data/snapshots/snapshot_SPX_${DATE}.html)"
 
 # The machine's half of the centaur pairing. Logged from the brief so the record

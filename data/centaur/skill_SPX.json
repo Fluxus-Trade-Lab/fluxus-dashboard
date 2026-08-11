@@ -1,68 +1,90 @@
 {
-  "generated_at": "2026-08-08T22:58:14-04:00",
+  "generated_at": "2026-08-10T22:46:02-04:00",
   "symbol": "SPX",
   "horizon": "intraday",
   "sessions_with_outcome": 90,
-  "views_on_record": 9,
-  "paired": 0,
-  "disagreements": 0,
+  "views_on_record": 13,
+  "paired": 1,
+  "disagreements": 1,
   "skills": {
     "machine": {
       "source": "machine",
-      "n_scored": 5,
+      "n_scored": 6,
       "n_abstained": 4,
       "hits": 2,
-      "misses": 3,
-      "hit_rate": 0.4,
-      "conviction_weighted_rate": 0.4,
+      "misses": 4,
+      "hit_rate": 0.3333333333333333,
+      "conviction_weighted_rate": 0.3333333333333333,
       "enough": false,
-      "note": "only 5 scored views; 20 needed before this is a skill estimate"
+      "note": "only 6 scored views; 20 needed before this is a skill estimate"
     },
     "human": {
       "source": "human",
-      "n_scored": 0,
+      "n_scored": 2,
       "n_abstained": 0,
-      "hits": 0,
+      "hits": 2,
       "misses": 0,
-      "hit_rate": null,
-      "conviction_weighted_rate": null,
+      "hit_rate": 1.0,
+      "conviction_weighted_rate": 1.0,
       "enough": false,
-      "note": "only 0 scored views; 20 needed before this is a skill estimate"
+      "note": "only 2 scored views; 20 needed before this is a skill estimate"
     }
   },
   "weights": {
     "machine": {
       "weight": 0.35,
       "basis": "unproven",
-      "detail": "only 5 scored views; 20 needed before this is a skill estimate"
+      "detail": "only 6 scored views; 20 needed before this is a skill estimate"
     },
     "human": {
       "weight": 0.35,
       "basis": "unproven",
-      "detail": "only 0 scored views; 20 needed before this is a skill estimate"
+      "detail": "only 2 scored views; 20 needed before this is a skill estimate"
     }
   },
-  "scored_disagreements": [],
+  "scored_disagreements": [
+    {
+      "session": "2026-08-10",
+      "actual": "range",
+      "machine": "up",
+      "human": "range",
+      "winner": "human"
+    }
+  ],
   "consultations": {
-    "n_scored_pairs": 0,
+    "n_scored_pairs": 1,
     "positive": [],
-    "negative": [],
+    "negative": [
+      "2026-08-10"
+    ],
     "n_positive": 0,
-    "n_negative": 0,
+    "n_negative": 1,
     "n_agreed_right": 0,
     "n_agreed_wrong": 0,
-    "automation_bias_rate": null,
-    "net_consultations": 0,
+    "automation_bias_rate": 1.0,
+    "net_consultations": -1,
     "reference": "Kern et al. measured ~7% (38/560) in computational pathology, against 29 positive consultations \u2014 net negative on flips while overall accuracy still improved"
   },
   "anchoring": {
-    "independent": 0,
+    "independent": 3,
     "anchored": 0,
     "unknown": 0
   },
-  "anchoring_skill": {},
+  "anchoring_skill": {
+    "independent": {
+      "source": "human",
+      "n_scored": 2,
+      "n_abstained": 0,
+      "hits": 2,
+      "misses": 0,
+      "hit_rate": 1.0,
+      "conviction_weighted_rate": 1.0,
+      "enough": false,
+      "note": "only 2 scored views; 20 needed before this is a skill estimate"
+    }
+  },
   "pressure": {
-    "calm": 7,
+    "calm": 10,
     "live": 2,
     "note": "views filed during RTH are the ones the literature says carry the same error rate at roughly double the cost"
   }

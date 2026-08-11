@@ -1,0 +1,150 @@
+{
+  "date": "2026-08-10",
+  "generated_at": "2026-08-10T22:45:34-04:00",
+  "tpo": {
+    "instrument": "SPX",
+    "bar": "30 mins",
+    "tick": 2.5,
+    "periods": 13,
+    "high": 7775.0,
+    "low": 7742.5,
+    "tpoc": 7757.5,
+    "value_area": {
+      "low": 7747.5,
+      "high": 7762.5,
+      "poc": 7757.5,
+      "covered": 0.7662337662337663,
+      "method": "pair",
+      "coverage_target": 0.7
+    },
+    "single_prints": [
+      7742.5,
+      7772.5,
+      7775.0
+    ],
+    "tails": {
+      "buying": {
+        "low": 7742.5,
+        "high": 7742.5,
+        "length": 1,
+        "significant": false
+      },
+      "selling": {
+        "low": 7772.5,
+        "high": 7775.0,
+        "length": 2,
+        "significant": true
+      }
+    },
+    "poor_extremes": {
+      "poor_high": false,
+      "poor_low": false,
+      "high": 7775.0,
+      "low": 7742.5,
+      "high_tpos": 1,
+      "low_tpos": 1
+    },
+    "initial_balance": {
+      "low": 7748.42,
+      "high": 7768.21,
+      "periods": 2
+    },
+    "counts": {
+      "7742.5": 1,
+      "7745.0": 3,
+      "7747.5": 7,
+      "7750.0": 8,
+      "7752.5": 8,
+      "7755.0": 11,
+      "7757.5": 12,
+      "7760.0": 7,
+      "7762.5": 6,
+      "7765.0": 5,
+      "7767.5": 4,
+      "7770.0": 3,
+      "7772.5": 1,
+      "7775.0": 1
+    }
+  },
+  "volume": {
+    "instrument": "ES",
+    "bar": "1 min",
+    "tick": 1.0,
+    "at_price": {
+      "7764.0": 287.9,
+      "7765.0": 1471.3,
+      "7766.0": 2701.0,
+      "7767.0": 3083.7,
+      "7768.0": 3448.5,
+      "7769.0": 5462.5,
+      "7770.0": 10015.4,
+      "7771.0": 22988.4,
+      "7772.0": 41853.7,
+      "7773.0": 47562.3,
+      "7774.0": 47951.5,
+      "7775.0": 47327.6,
+      "7776.0": 47801.9,
+      "7777.0": 43323.2,
+      "7778.0": 38595.0,
+      "7779.0": 38368.7,
+      "7780.0": 29998.6,
+      "7781.0": 25506.9,
+      "7782.0": 25177.2,
+      "7783.0": 26147.0,
+      "7784.0": 28762.6,
+      "7785.0": 25549.8,
+      "7786.0": 22419.8,
+      "7787.0": 23805.8,
+      "7788.0": 17183.0,
+      "7789.0": 19622.9,
+      "7790.0": 14794.2,
+      "7791.0": 11117.0,
+      "7792.0": 8509.0,
+      "7793.0": 5272.2,
+      "7794.0": 3096.4,
+      "7795.0": 3964.1,
+      "7796.0": 3495.3,
+      "7797.0": 2032.4,
+      "7798.0": 727.0
+    },
+    "low_volume_nodes": [],
+    "interior_dips": [
+      {
+        "price": 7788.0,
+        "volume": 17182.983333333334,
+        "share_of_peak": 0.3583,
+        "left_peak_share": 1.0,
+        "right_peak_share": 0.4092,
+        "interior": true
+      },
+      {
+        "price": 7786.0,
+        "volume": 22419.833333333336,
+        "share_of_peak": 0.4676,
+        "left_peak_share": 1.0,
+        "right_peak_share": 0.4965,
+        "interior": true
+      },
+      {
+        "price": 7782.0,
+        "volume": 25177.180701754398,
+        "share_of_peak": 0.5251,
+        "left_peak_share": 1.0,
+        "right_peak_share": 0.5998,
+        "interior": true
+      },
+      {
+        "price": 7775.0,
+        "volume": 47327.57038429406,
+        "share_of_peak": 0.987,
+        "left_peak_share": 1.0,
+        "right_peak_share": 0.9969,
+        "interior": true
+      }
+    ],
+    "provenance": "approximated \u2014 each bar's volume spread evenly across the prices it spans; not tape-derived volume-at-price",
+    "vpoc": 7774.0,
+    "volume_without_time": [],
+    "total": 699424.0
+  }
+}
