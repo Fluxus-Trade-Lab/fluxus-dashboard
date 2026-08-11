@@ -123,3 +123,36 @@ def test_bad_inputs_raise_rather_than_returning_a_plausible_number():
         P.interval(0)
     with pytest.raises(ValueError):
         P.family_error(-1)
+
+
+# --- the frontier: what is knowable on a daily cadence -------------------
+
+def test_a_rare_setup_needs_calendar_years_even_with_a_big_edge():
+    # 10-condition pattern, 75% hit rate, fires ~4x a year.
+    d = P.years_to_decide(0.75, fires_per_year=4)
+    assert d["occurrences_needed"] == 23
+    assert d["years"] > 5
+    assert d["decidable_within_3y"] is False
+
+
+def test_the_same_edge_becomes_decidable_when_the_setup_is_common():
+    d = P.years_to_decide(0.75, fires_per_year=26)  # ~twice a month
+    assert d["years"] < 1
+    assert d["decidable_within_3y"] is True
+
+
+def test_a_daily_signal_with_a_small_edge_is_the_slow_case():
+    # Fires every session, but only 60/50 -- still most of a year.
+    d = P.years_to_decide(0.60, fires_per_year=252)
+    assert 0.5 < d["years"] < 0.7
+
+
+def test_a_setup_that_never_fires_is_refused_not_returned_as_infinite():
+    with pytest.raises(ValueError, match="never fires"):
+        P.years_to_decide(0.70, fires_per_year=0)
+
+
+def test_frontier_marks_which_cells_are_reachable():
+    f = P.frontier()
+    assert "settled inside 3 years" in f
+    assert "." in f

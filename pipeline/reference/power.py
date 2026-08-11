@@ -132,6 +132,54 @@ def verdict(n: int, claimed: float, p0: float = 0.5, alpha: float = 0.05,
     }
 
 
+def years_to_decide(p1: float, fires_per_year: float, p0: float = 0.5,
+                    alpha: float = 0.05, beta: float = 0.20) -> dict:
+    """Calendar time before a CONDITIONAL claim becomes decidable.
+
+    The question that actually matters, and the one `sessions_needed` alone
+    cannot answer. A pattern is not observed every session — it is observed when
+    its conditions are met — so the wait is set by two numbers together: how big
+    the edge is, and how often the setup appears.
+
+    They pull against each other. A filter selective enough to produce a large
+    edge fires rarely, and a filter that fires daily is too loose to produce
+    one. Between them sits a narrow band of claims a daily practice can settle
+    inside a working horizon, and everything outside it is a claim we may hold
+    but must not pretend to be testing.
+
+    This is why a published setup arrives as a ten-condition checklist rather
+    than a tendency. The conditions are not decoration; they are what buys an
+    effect large enough to be found before the decade is out.
+    """
+    if fires_per_year <= 0:
+        raise ValueError("a setup that never fires can never be decided")
+    n = sessions_needed(p1, p0, alpha, beta)
+    return {"edge": p1, "occurrences_needed": n,
+            "fires_per_year": fires_per_year,
+            "years": n / fires_per_year,
+            "decidable_within_3y": n / fires_per_year <= 3.0}
+
+
+def frontier(edges=(0.60, 0.65, 0.70, 0.75, 0.80),
+             rates=(4, 12, 26, 52, 126, 252)) -> str:
+    """Years-to-decide across effect size and how often the setup appears.
+
+    Read it as the shape of what is knowable here, not as a target. Cells inside
+    three years are claims a daily practice can actually settle.
+    """
+    out = ["Years to decide, by edge (rows) and setups per year (columns).",
+           "  '.' = settled inside 3 years.", ""]
+    out.append("  edge  n   " + "".join(f"{r:>8}/yr" for r in rates))
+    for e in edges:
+        n = sessions_needed(e)
+        cells = ""
+        for r in rates:
+            y = n / r
+            cells += f"{y:>7.1f}{'.' if y <= 3 else ' '}"
+        out.append(f"  {e:.0%}  {n:>3}   {cells}")
+    return "\n".join(out)
+
+
 def report(ns=(6, 20, 60, 120, 252, 504), edges=(0.55, 0.60, 0.65, 0.70)) -> str:
     """The table this module exists to keep in front of us."""
     out = ["Sessions needed for 80% power against a 50% null:"]
