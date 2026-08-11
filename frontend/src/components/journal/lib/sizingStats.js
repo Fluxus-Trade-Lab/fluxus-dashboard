@@ -25,12 +25,28 @@ export function mulberry32(seed) {
  * Infinity downstream makes sqn() return NaN and makes buildHistogram compute a
  * NaN bin index — which silently zeroes every bucket instead of throwing.
  */
+/**
+ * The R denominator, or null when it was never recorded.
+ *
+ * Deliberately not `t.initialStop ?? t.stopPrice`. That fallback was in three
+ * places, each under a comment saying the live stop must not be used — and
+ * each one used it. It is invisible while nothing has been trailed and wrong
+ * from the first time something is, at which point every past R for that trade
+ * silently re-anchors to whatever the stop was last dragged to.
+ *
+ * Returning null makes the trade drop out of R statistics instead. A gap in a
+ * sample announces itself; a re-anchored R does not.
+ */
+export function rDenominatorStop(trade) {
+  return trade?.initialStop ?? null
+}
+
 export function closedR(enrichedTrades) {
   return (enrichedTrades || [])
     .filter(t => t.isClosed)
     .filter(t => {
-      const stop = t.initialStop ?? t.stopPrice
-      return Math.abs(t.entryPrice - stop) > 0
+      const stop = rDenominatorStop(t)
+      return stop != null && Math.abs(t.entryPrice - stop) > 0
     })
     .map(t => t.rr)
     .filter(Number.isFinite)

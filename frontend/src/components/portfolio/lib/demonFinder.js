@@ -4,7 +4,10 @@ import { lookupPrice } from './calculations'
 // `stopPrice` (used for stop-out checks and capital-at-risk widgets) must never
 // rewrite historical R / heat / sizing analytics.
 function riskPerShare(t) {
-  const initial = t.initialStop ?? t.stopPrice
+  // Unknown anchor -> no R. See sizingStats.rDenominatorStop.
+  const initial = t.initialStop ?? null
+  // Explicit: `entryPrice - null` coerces to `entryPrice - 0`.
+  if (initial == null) return null
   return Math.abs(t.entryPrice - initial)
 }
 

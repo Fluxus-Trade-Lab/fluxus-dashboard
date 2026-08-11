@@ -71,8 +71,13 @@ export function enrichTrades(trades, totalPortfolioValue, dailyPrices) {
     const costBasis = t.originalQty * t.entryPrice
     // R-multiples are anchored to the locked-at-entry stop. Trailing the live
     // `stopPrice` after the fact must never rewrite historical R.
-    const initialStop = t.initialStop ?? t.stopPrice
-    const riskUnit = Math.abs(t.entryPrice - initialStop)
+    // No initialStop means no R anchor, so riskUnit is unknown and every rr
+    // below comes out null. Falling back to the live `stopPrice` here would
+    // re-anchor a closed trade's R to whatever the stop was last dragged to,
+    // which is exactly what the comment above forbids.
+    const initialStop = t.initialStop ?? null
+    const riskUnit = initialStop == null
+      ? null : Math.abs(t.entryPrice - initialStop)
 
     // Realized P/L from trims
     let realizedPL = 0

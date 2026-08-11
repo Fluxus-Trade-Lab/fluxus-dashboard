@@ -30,9 +30,18 @@ describe('closedR', () => {
   it('excludes trades whose stop equals entry (no risk unit)', () => {
     expect(closedR([mk({ initialStop: 100, stopPrice: 100 })])).toEqual([])
   })
-  it('falls back to stopPrice when initialStop is missing', () => {
-    expect(closedR([mk({ initialStop: undefined, stopPrice: 95 })])).toEqual([1.5])
-    expect(closedR([mk({ initialStop: undefined, stopPrice: 100 })])).toEqual([])
+  // Inverted 2026-08-10. This test used to assert the fallback, which is the
+  // bug: stopPrice is the live trailing stop, so once a stop is dragged the
+  // trade's R silently re-anchors to wherever it was dragged to. A trade with
+  // no recorded entry stop has no R denominator and leaves the sample.
+  it('excludes trades with no initialStop rather than using the live stop', () => {
+    expect(closedR([mk({ initialStop: undefined, stopPrice: 95 })])).toEqual([])
+    expect(closedR([mk({ initialStop: null, stopPrice: 95 })])).toEqual([])
+  })
+  it('a trailed stopPrice does not change a recorded R', () => {
+    const before = closedR([mk({ initialStop: 95, stopPrice: 95 })])
+    const after = closedR([mk({ initialStop: 95, stopPrice: 99 })])
+    expect(after).toEqual(before)
   })
   it('handles empty/undefined input', () => {
     expect(closedR([])).toEqual([])

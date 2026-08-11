@@ -5,7 +5,7 @@ import { todayStr } from '../portfolio/lib/portfolioFormat'
 import TharpLessons from './sizing/TharpLessons'
 import SqnReadout from './sizing/SqnReadout'
 import ObjectiveSimulator from './sizing/ObjectiveSimulator'
-import { closedR } from './lib/sizingStats'
+import { closedR, rDenominatorStop } from './lib/sizingStats'
 
 /* ── Educational Content ─────────────────────────────────── */
 
@@ -173,13 +173,17 @@ function PortfolioAudit({ trades, dailyPrices, startingCapital }) {
       const dir = t.direction === 'long' ? 1 : -1
       // Sizing analysis is anchored to the locked-at-entry stop — trailing the
       // live stop would distort both the heat number and the sizing ratio.
-      const initialStop = t.initialStop ?? t.stopPrice
-      const stopDist = Math.abs(t.entryPrice - initialStop)
-      const riskDollar = t.currentQty * stopDist
-      const riskPct = (riskDollar / capital) * 100
-      totalHeat += riskPct
+      const initialStop = rDenominatorStop(t)
+      // Unknown anchor contributes no heat and no sizing ratio. Counting it
+      // off the live stop would understate heat exactly where a stop has
+      // been trailed up, which is where heat matters most.
+      const stopDist = initialStop == null
+        ? null : Math.abs(t.entryPrice - initialStop)
+      const riskDollar = stopDist == null ? null : t.currentQty * stopDist
+      const riskPct = riskDollar == null ? null : (riskDollar / capital) * 100
+      if (riskPct != null) totalHeat += riskPct
 
-      const targetShares = stopDist > 0 ? Math.floor(targetRisk / stopDist) : 0
+      const targetShares = stopDist > 0 ? Math.floor(targetRisk / stopDist) : 0  // null → 0
       const sizeRatio = targetShares > 0 ? t.originalQty / targetShares : 0
 
       let status = 'ok'

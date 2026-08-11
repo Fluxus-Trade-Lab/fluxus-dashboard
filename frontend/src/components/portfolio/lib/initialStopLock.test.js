@@ -64,8 +64,11 @@ describe('initial-stop lock — R denominator survives trailing the live stop', 
     expect(groups[0].totalRDollars).toBeCloseTo(10200, 0)
   })
 
-  it('rRisk falls back to stopPrice when initialStop is absent (legacy data)', () => {
+  // Inverted 2026-08-10. The fallback this used to assert is the bug: once a
+  // stop is trailed, "legacy data" means the R denominator quietly becomes the
+  // trailed price. No recorded entry stop now means no R at all.
+  it('rRisk is null with no initialStop rather than using the live stop', () => {
     const legacy = { ...baseTrade, initialStop: undefined }
-    expect(rRisk(legacy)).toBeCloseTo(10098, 1)
+    expect(rRisk(legacy)).toBeNull()
   })
 })

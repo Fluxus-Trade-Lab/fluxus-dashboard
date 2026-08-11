@@ -1,3 +1,4 @@
+import { rDenominatorStop } from './sizingStats'
 /**
  * Walk daily close prices to determine which stop levels were triggered.
  * Checks sequentially: stop k must trigger before stop k+1.
@@ -67,7 +68,9 @@ export function computeStopSim(trades, dailyPrices, numStops) {
   // Use initial_stop to determine the simulation R — trailing the live stop
   // after a trade closes would alias every closed trade's R to whatever the
   // user last typed into the field.
-  const stopOf = t => t.initialStop ?? t.stopPrice
+  // No initialStop means no R anchor; the trade leaves the simulation
+  // rather than being simulated against a stop it was never sized on.
+  const stopOf = rDenominatorStop
   const closedTrades = trades.filter(t => t.isClosed && stopOf(t) > 0)
 
   const rows = closedTrades.map(t => {

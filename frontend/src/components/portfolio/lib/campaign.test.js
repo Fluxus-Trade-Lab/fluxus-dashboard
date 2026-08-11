@@ -2,7 +2,11 @@ import { describe, it, expect } from 'vitest'
 import { groupByCampaigns } from './campaign'
 
 const t = (id, ticker, direction, entryDate, entryPrice, originalQty, stopPrice, currentQty) =>
-  ({ id, ticker, direction, entryDate, entryPrice, originalQty, stopPrice, currentQty, trims: [] })
+  ({ id, ticker, direction, entryDate, entryPrice, originalQty, stopPrice,
+    // Real trades always carry this — TradeForm writes it at entry. The
+    // fixture predates the field.
+    initialStop: stopPrice,
+    currentQty, trims: [] })
 
 describe('campaign.groupByCampaigns', () => {
   it('returns singletons when nothing overlaps', () => {

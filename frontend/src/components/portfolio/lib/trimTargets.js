@@ -8,7 +8,12 @@
  */
 export function compute(trade) {
   const { entryPrice, direction } = trade
-  const initialStop = trade.initialStop ?? trade.stopPrice
+  // Trim targets are R multiples off the entry stop. With no entry stop
+  // there are no targets -- better blank than measured from a moved line.
+  const initialStop = trade.initialStop ?? null
+  // Explicit, not arithmetic: `entryPrice - null` is `entryPrice - 0`, so a
+  // null anchor would silently produce targets measured from zero.
+  if (initialStop == null) return null
   const rPerShare = Math.abs(entryPrice - initialStop)
   if (rPerShare <= 0) return null
   const sign = direction === 'long' ? 1 : -1

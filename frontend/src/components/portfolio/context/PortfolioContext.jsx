@@ -4,10 +4,11 @@ import { pullFromSheets, pushToSheets } from '../services/sheetsSync'
 const STORAGE_KEY = 'portfolio-v4'
 
 /**
- * Lock `initialStop` to the entry stop so it survives any later trailing.
- * If a trade already carries `initialStop`, keep it; otherwise backfill from
- * the current `stopPrice` (safe since the user has never trailed before this
- * field existed — every current stop IS the initial stop at backfill time).
+ * `initialStop` is the R denominator, locked at entry. `stopPrice` is the live
+ * trailing stop. Keeping them apart is the whole point, and there is exactly
+ * one moment when they are known to be equal: the moment the trade is opened.
+ *
+ * At entry, and only at entry, `initialStop := stopPrice` is a fact.
  */
 function withInitialStop(trade) {
   if (trade == null) return trade
@@ -15,8 +16,74 @@ function withInitialStop(trade) {
   return { ...trade, initialStop: trade.stopPrice }
 }
 
-function backfillTrades(trades) {
-  return (trades ?? []).map(withInitialStop)
+/**
+ * Loaded trades are NOT backfilled. This used to run on every load and every
+ * pull, on the assumption that no stop had ever been trailed — which was true
+ * when the field was introduced and stops being true the first time one moves.
+ *
+ * After that, backfilling a stored trade means writing today's trailed stop
+ * into the denominator of a trade that was sized against a different one, and
+ * every past R silently changes. There is no way to detect it afterwards: the
+ * number still looks like a number.
+ *
+ * So a stored trade with no `initialStop` keeps none, and the R consumers
+ * exclude it and say how many they excluded. A missing R is a gap; a wrong R
+ * is a lie that reads as a measurement.
+ */
+function countMissingInitialStop(trades) {
+  return (trades ?? []).filter(t => t && t.initialStop == null).length
+}
+
+function loadedTrades(trades) {
+  const missing = countMissingInitialStop(trades)
+  if (missing > 0) {
+    console.warn(
+      `[portfolio] ${missing} trade(s) have no initialStop. Their R is ` +
+      `excluded rather than computed from the live stop. Fill the initialStop ` +
+      `column in the sheet for these rows — and only while their stop has not ` +
+      `been trailed, because after that the original is unrecoverable.`
+    )
+  }
+  return trades ?? []
+}
+
+/**
+ * Merge a pull, keeping any `initialStop` we already hold.
+ *
+ * A pull is the one path where a remote value can overwrite the R denominator
+ * of a trade that already has one, and the remote side has its own backfill
+ * (`Code.gs`, on read) that can invent one from a trailed stop. Two backfills
+ * pointed at the same field is how a denominator changes without anyone
+ * editing it.
+ *
+ * So: local wins where local exists, remote fills where it does not, and a
+ * disagreement is reported rather than resolved. Silently taking either side
+ * would make the sheet and the app disagree about what a past trade risked,
+ * with no trace of which one moved.
+ */
+function reconcilePulled(local, pulled) {
+  const byId = new Map((local ?? []).map(t => [t.id, t]))
+  const conflicts = []
+
+  const merged = (pulled ?? []).map(remote => {
+    const mine = byId.get(remote.id)
+    if (mine?.initialStop == null) return remote
+    if (remote.initialStop != null
+        && Math.abs(remote.initialStop - mine.initialStop) > 0.005) {
+      conflicts.push(`${remote.ticker ?? remote.id}: local ${mine.initialStop} vs sheet ${remote.initialStop}`)
+    }
+    return { ...remote, initialStop: mine.initialStop }
+  })
+
+  if (conflicts.length) {
+    console.error(
+      `[portfolio] initialStop disagrees with the sheet on ${conflicts.length} ` +
+      `trade(s); kept the local value and changed nothing remotely. ` +
+      `Resolve by hand before trusting their R:\n  ${conflicts.join('\n  ')}`
+    )
+  }
+  loadedTrades(merged)
+  return merged
 }
 
 const initialState = {
@@ -49,7 +116,7 @@ function loadFromStorage() {
     return {
       ...initialState,
       startingCapital: parsed.startingCapital ?? initialState.startingCapital,
-      trades: backfillTrades(parsed.trades),
+      trades: loadedTrades(parsed.trades),
       dailyPrices: parsed.dailyPrices ?? {},
       benchmarkHistories: parsed.benchmarkHistories ?? {},
       gasUrl: parsed.gasUrl ?? '',
@@ -81,7 +148,7 @@ function reducer(state, action) {
     case 'IMPORT_DATA': {
       const next = {
         ...state,
-        trades: action.trades ? backfillTrades(action.trades) : state.trades,
+        trades: action.trades ? loadedTrades(action.trades) : state.trades,
         capitalSet: true,
       }
       if (action.capital != null) next.startingCapital = action.capital
@@ -173,7 +240,9 @@ function reducer(state, action) {
       }
       return {
         ...state,
-        trades: action.stockTrades ? backfillTrades(action.stockTrades) : state.trades,
+        trades: action.stockTrades
+          ? reconcilePulled(state.trades, action.stockTrades)
+          : state.trades,
         optionsTrades: action.optionsTrades ?? state.optionsTrades,
         startingCapital: action.meta?.startingCapital ?? state.startingCapital,
         optionsCapital: action.meta?.optionsCapital ?? state.optionsCapital,

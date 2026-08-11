@@ -19,7 +19,8 @@ import { daysBetween } from './portfolioFormat'
  * time you trim.
  */
 export function rRisk(t) {
-  const initial = t.initialStop ?? t.stopPrice
+  // Unknown anchor -> no R. See sizingStats.rDenominatorStop.
+  const initial = t.initialStop ?? null
   if (initial == null || initial <= 0) return null
   return Math.abs(t.entryPrice - initial) * t.originalQty
 }

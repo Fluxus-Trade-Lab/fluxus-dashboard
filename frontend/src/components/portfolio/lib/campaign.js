@@ -44,7 +44,10 @@ function buildCampaign(layers) {
   // Campaign-level 1R: sum of each layer's initial-stop risk. Trailing a layer's
   // live stop must never rewrite the campaign's R denominator.
   const totalRDollars = layers.reduce(
-    (s, l) => s + Math.abs(l.entryPrice - (l.initialStop ?? l.stopPrice)) * l.originalQty,
+    // Legs with no entry stop contribute nothing rather than a figure taken
+    // off the live stop; the count of legs is reported beside this sum.
+    (s, l) => s + (l.initialStop == null
+      ? 0 : Math.abs(l.entryPrice - l.initialStop) * l.originalQty),
     0
   )
   const openLayersCount = layers.filter(l => l.currentQty > 0).length

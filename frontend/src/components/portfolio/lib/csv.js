@@ -21,7 +21,10 @@ export function generateCSV(trades, startingCapital) {
     const tr = t.trims || []
     return [
       t.ticker, t.direction, t.sector || '', t.entryDate, t.entryPrice,
-      t.originalQty, t.currentQty, t.stopPrice, t.initialStop ?? t.stopPrice, t.isClosed ? 'YES' : 'NO',
+      t.originalQty, t.currentQty, t.stopPrice,
+      // Empty, never the live stop: this column round-trips back in on
+      // import, so a substitution here would harden a guess into the record.
+      t.initialStop ?? '', t.isClosed ? 'YES' : 'NO',
       tr[0]?.date || '', tr[0]?.price || '', tr[0]?.qty || '', tr[0]?.type || '',
       tr[1]?.date || '', tr[1]?.price || '', tr[1]?.qty || '', tr[1]?.type || '',
       tr[2]?.date || '', tr[2]?.price || '', tr[2]?.qty || '', tr[2]?.type || '',
