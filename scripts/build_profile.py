@@ -108,6 +108,12 @@ def main():
     finally:
         ib.disconnect()
 
+    # Which bracket printed the extreme. "Poor high made late, periods 7-8" is
+    # a statement about WHEN, and a profile that only stores the price cannot
+    # answer it.
+    hi_i = max(range(len(half)), key=lambda i: half[i]["high"])
+    lo_i = min(range(len(half)), key=lambda i: half[i]["low"])
+
     prof = MP.build_profile(half, args.tick)
     counts = MP.tpo_counts(prof)
     va = MP.value_area(counts, method=args.method)
@@ -118,6 +124,10 @@ def main():
             "instrument": "SPX", "bar": "30 mins", "tick": args.tick,
             "periods": len(half),
             "high": max(counts), "low": min(counts),
+            # Open and close were never stored; four of the pattern's conditions
+            # are about where the session closed relative to its own structure.
+            "open": half[0]["open"], "close": half[-1]["close"],
+            "high_period": hi_i + 1, "low_period": lo_i + 1,
             "tpoc": MP.poc(counts),
             "value_area": va,
             "single_prints": MP.single_prints(prof),
@@ -136,8 +146,16 @@ def main():
             [{"low": b["low"], "high": b["high"]} for b in fine], args.es_tick)
         lvn = MP.low_volume_nodes(vap)
         gaps = [g for g in MP.profile_gaps(vap) if g["interior"]]
+        es_counts = MP.tpo_counts(es_half)
         out["volume"] = {
             "instrument": "ES", "bar": "1 min", "tick": args.es_tick,
+            # TPOC on the SAME instrument as the VPOC. Our headline TPOC is SPX
+            # and the VPOC is ES, deliberately never converted -- which makes
+            # "VPOC and TPOC coincide" unanswerable across them. Computing both
+            # on ES answers it without inventing a basis.
+            "tpoc": MP.poc(es_counts),
+            "coincide": (abs((MP.poc(es_counts) or 0) - (MP.vpoc(vap) or 0))
+                         <= 2 * args.es_tick) if (es_counts and vap) else None,
             "at_price": {str(k): round(v, 1) for k, v in sorted(vap.items())},
             "low_volume_nodes": lvn,
             "interior_dips": gaps,
@@ -156,7 +174,9 @@ def main():
     t = out["tpo"]
     print(f"Market Profile  {pretty}   SPX {t['low']:,.0f} - {t['high']:,.0f}  "
           f"({t['periods']} brackets, {args.tick:g}pt buckets)")
-    print(f"  TPOC ................ {t['tpoc']:,.0f}")
+    print(f"  TPOC ................ {t['tpoc']:,.0f}   "
+          f"open {t['open']:,.0f} close {t['close']:,.0f}   "
+          f"high in period {t['high_period']}, low in period {t['low_period']}")
     print(f"  Value area .......... {va['low']:,.0f} - {va['high']:,.0f}  "
           f"({va['covered']*100:.0f}% of TPOs, method={va['method']})")
     ib_ = t["initial_balance"]
@@ -175,7 +195,10 @@ def main():
           (f"   {sp[0]:,.0f} .. {sp[-1]:,.0f}" if sp else ""))
     if out["volume"]:
         v = out["volume"]
-        print(f"  ES VPOC ............. {v['vpoc']:,.2f}   (ES units, approximated)")
+        print(f"  ES VPOC ............. {v['vpoc']:,.2f}   (ES units, approximated)"
+              + (f"   TPOC {v['tpoc']:,.2f}"
+                 f"   {'COINCIDE' if v.get('coincide') else 'apart'}"
+                 if v.get("tpoc") else ""))
         vw = v["volume_without_time"]
         print(f"  Volume w/o time ..... {len(vw)} price(s)" +
               (f"   {vw[0]:,.2f} .. {vw[-1]:,.2f}" if vw else ""))
