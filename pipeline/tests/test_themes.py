@@ -202,3 +202,56 @@ class TestJsonSerialisable:
 
 def _reject(name):  # pragma: no cover - only fires on a regression
     raise AssertionError(f"non-finite constant {name!r} in groups.json")
+
+
+class TestPrimaryGroup:
+    """One home per stock. Rule themes are screens (properties), not
+    identities — a stock can hold five properties at once but comes from
+    exactly one place."""
+
+    THEMES = [
+        {"group": "Broad AI Theme", "method": "etf", "members": 155,
+         "tickers": ["AEVA", "NVDA"]},
+        {"group": "Semiconductors Large Caps", "method": "etf", "members": 10,
+         "tickers": ["NVDA"]},
+        {"group": "High Octane", "method": "rule", "members": 300,
+         "tickers": ["AEVA", "NVDA", "ORPH"]},
+        {"group": "Bitcoin", "method": "proxy", "members": 1,
+         "tickers": ["IBIT"]},
+    ]
+    UNIVERSE = [
+        {"ticker": "AEVA", "industry": "Software - Application"},
+        {"ticker": "NVDA", "industry": "Semiconductors"},
+        {"ticker": "ORPH", "industry": "Biotechnology"},
+    ]
+
+    def _run(self):
+        stocks = {t["ticker"]: {} for t in self.UNIVERSE}
+        build_groups.assign_primary_group(stocks, self.THEMES, self.UNIVERSE)
+        return stocks
+
+    def test_smallest_curated_theme_wins(self):
+        s = self._run()
+        assert s["NVDA"] == {"primary_group": "Semiconductors Large Caps",
+                             "primary_kind": "theme"}
+
+    def test_rule_themes_are_never_a_home(self):
+        """ORPH is only in High Octane — a screen it happens to pass this
+        week. Its home is its industry."""
+        s = self._run()
+        assert s["ORPH"] == {"primary_group": "Biotechnology",
+                             "primary_kind": "industry"}
+
+    def test_curated_theme_beats_industry(self):
+        s = self._run()
+        assert s["AEVA"]["primary_group"] == "Broad AI Theme"
+
+    def test_every_stock_gets_exactly_one_home(self):
+        s = self._run()
+        assert all(v.get("primary_group") for v in s.values())
+
+    def test_deterministic_under_theme_order(self):
+        stocks = {t["ticker"]: {} for t in self.UNIVERSE}
+        build_groups.assign_primary_group(
+            stocks, list(reversed(self.THEMES)), self.UNIVERSE)
+        assert stocks == self._run()

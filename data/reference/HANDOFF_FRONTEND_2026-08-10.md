@@ -70,6 +70,33 @@ persistence · persistence_of · group_pctile · top_quartile
 
 ---
 
+## 一·五、每股一条 ribbon —— 归属问题已解决
+
+`groups.json.stocks` 每条新增两个字段:
+
+```json
+"NVDA": { …, "primary_group": "Semiconductors Large Caps", "primary_kind": "theme" }
+"LLY":  { …, "primary_group": "Drug Manufacturers - General", "primary_kind": "industry" }
+```
+
+**规则(数据端定死,UI 不用再判):**
+
+- rule 主题(High Octane / Growth Factor / Small Caps / High Beta…)**永不作为归属** —— 它们是筛选条件(性质),不是身份。一只股票可以同时有五个性质,只来自一个地方
+- 策展主题(industry/etf 方法)里,**最小的赢**(成员越少描述越准),平局按字母序,完全确定
+- 没有策展主题的,归 **Finviz 行业**(天然一对一,全覆盖)
+
+当前分布:theme 1702 只 · industry 833 只 · 无归属 0。
+
+**行内 ribbon 的画法:** 按 `primary_kind` 去对应层拿 `primary_group` 的 ribbon。
+主题层现在只有 16 个 proxy 有 ribbon;行业层和其余主题 10-19 之后从归档长出来。
+在那之前大多数行是虚线空框 —— 和主题页同一套行为,不用分支。
+
+> 这个规则第一次跑就逮住一个策展错误:LLY 被 MGK(**大盘成长**基金,不是科技基金)带进了
+> Tech Mega Caps。已按 AMGN 判例剔除,LLY 归 Drug Manufacturers - General。
+> **如果你看到某只票的归属反直觉,报给数据端 —— 那可能又是一个策展缺陷,这个字段就是它的探测器。**
+
+---
+
 ## 二、字段改名 —— 旧名仍可用,但请换
 
 `universe.json` 每行现在同时有:

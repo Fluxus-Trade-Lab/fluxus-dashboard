@@ -369,6 +369,49 @@ def build_themes(
     return scored, skipped
 
 
+def assign_primary_group(stocks: Mapping[str, Dict[str, Any]],
+                         themes: Sequence[Mapping[str, Any]],
+                         universe: Sequence[Mapping[str, Any]]) -> None:
+    """One home per stock: `primary_group` + `primary_kind`, written in place.
+
+    A stock belongs to many groups, and the overlap is not noise -- it is two
+    kinds of membership wearing one word. Rule themes (High Octane, Growth
+    Factor, Small Caps...) are screens: properties a stock has this week and
+    may not have next week, and a stock can hold five of them at once. Curated
+    themes and industries are identities: what the company is. A row that
+    wants exactly one ribbon needs exactly one identity, so:
+
+    * rule themes are never a primary group -- a filter is not a home
+    * proxy themes cannot be -- their one member is a fund, not a stock
+    * among curated themes (industry/etf method), the SMALLEST wins: a name in
+      both Semiconductors Broad (63) and Memory & Storage (10) is better
+      described by the tighter set. Ties break alphabetically, so the choice
+      is deterministic rather than an accident of list order.
+    * with no curated theme, the Finviz industry is the home -- every stock
+      has exactly one, so this fallback is total.
+
+    The membership lists themselves are untouched: a stock still appears in
+    every group it qualifies for. This adds a pointer, not a partition.
+    """
+    claim: Dict[str, tuple] = {}
+    for t in themes:
+        if t.get("method") not in ("industry", "etf"):
+            continue
+        rank = (t.get("members") or 0, t["group"])
+        for tk in (t.get("tickers") or ()):
+            if tk not in claim or rank < claim[tk]:
+                claim[tk] = rank
+
+    industry_of = {r.get("ticker"): r.get("industry") for r in universe}
+    for tk, payload in stocks.items():
+        if tk in claim:
+            payload["primary_group"] = claim[tk][1]
+            payload["primary_kind"] = "theme"
+        else:
+            payload["primary_group"] = industry_of.get(tk)
+            payload["primary_kind"] = "industry" if industry_of.get(tk) else None
+
+
 def audit_taxonomy(
     universe: Sequence[Mapping[str, Any]],
     holdings: Mapping[str, Sequence[str]],
@@ -477,6 +520,7 @@ def run() -> Dict[str, Any]:
                  or v.get("verdict") in ("real", "weak"))
         )
     stocks = rs_engine.rank_within_group(universe, "industry", benchmark)
+    assign_primary_group(stocks, themes, universe)
     audit = audit_taxonomy(universe, holdings, etf_rows)
 
     payload = {

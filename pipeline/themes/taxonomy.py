@@ -342,7 +342,13 @@ _ETF_THEMES: list[Theme] = [
     Theme("China Tech", "proxy", etf=("KWEB",),
           note="The fund is the instrument; its HK holdings are not US-tradeable."),
     Theme("Speculative Tech", "etf", etf=("ARKK", "ARKF")),
-    Theme("Tech Mega Caps", "etf", etf=("MGK",)),
+    Theme("Tech Mega Caps", "etf", etf=("MGK",), exclude=("LLY",),
+          note="MGK is a mega-cap GROWTH fund, not a tech fund, so its top "
+               "holdings can include growth names that are not technology. "
+               "LLY excluded 2026-08-10 on the AMGN precedent: a pharma "
+               "priced off drug franchises does not belong in a theme named "
+               "Tech, however it screens. Found when the primary-group rule "
+               "assigned LLY here as its identity."),
     Theme("Semiconductors Large Caps", "etf", etf=("SMH",)),
     # `proxy`, not `etf`: you cannot buy the list, you buy the fund that tracks
     # it, which is exactly the case this method exists for. It also settles the
