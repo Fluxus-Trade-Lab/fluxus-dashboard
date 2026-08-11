@@ -4,6 +4,7 @@ import pytest
 from pipeline.centaur import blend as B
 from pipeline.centaur import log as L
 from pipeline.centaur import skill as S
+from pipeline.reference import power as PW
 
 
 def mv(**kw):
@@ -79,7 +80,10 @@ def test_a_thin_record_reports_not_enough_rather_than_a_hit_rate():
     s = S.skill(rows, "human", {d: "up" for d in days})
     assert s["hit_rate"] == 1.0          # the raw number is still there...
     assert s["enough"] is False          # ...but it is not a skill estimate
-    assert "20 needed" in s["note"]
+    assert f"{S.MIN_SCORED} needed" in s["note"]
+    # The note must say not-enough FOR WHAT, or the gate is a bare number again.
+    assert "60% edge" in s["note"] and "80% power" in s["note"]
+    assert s["power"]["status"] == "underpowered"
 
 
 def test_conviction_weighted_rate_separates_a_confident_judge_from_a_lucky_one():
@@ -98,8 +102,17 @@ def test_edge_is_measured_against_chance_not_against_zero():
 
 # ----------------------------------------------------- property 2: the merge
 
-def _sk(hr, n=40):
-    return {"enough": n >= S.MIN_SCORED, "hit_rate": hr, "note": "thin"}
+def _sk(hr, n=None):
+    """A skill dict at, by default, exactly the sample the gate demands.
+
+    Pinned to S.MIN_SCORED rather than a literal. The gate is now derived from
+    a named effect size, so it moves when that claim changes -- and a helper
+    holding a stale literal would have silently turned every "measured" case in
+    this file into an "unproven" one, which is how these tests started failing
+    when MIN_SCORED went from an invented 20 to a computed 153.
+    """
+    return {"enough": (S.MIN_SCORED if n is None else n) >= S.MIN_SCORED,
+            "hit_rate": hr, "note": "thin"}
 
 
 def test_neither_party_can_be_silenced_or_take_over():
@@ -258,3 +271,22 @@ def test_the_live_view_is_the_amendment_not_the_superseded_one(tmp_path):
 def test_amending_something_that_was_never_logged_is_an_error(tmp_path):
     with pytest.raises(ValueError, match="nothing on record"):
         L.amend(hv(), "08:00", tmp_path / "v.jsonl")
+
+
+def test_the_thin_note_reads_as_a_sentence_at_every_sample_size():
+    """A guard is only as good as the string that reports it.
+
+    n=2 once produced "only an edge of no size is visible" -- the third time in
+    this project a correct check was let down by its own prose.
+    """
+    for n in (1, 2, 3, 6, 20, 60):
+        note = S._thin_note(n, PW.verdict(n, S.CLAIMED_EDGE, S.NULL_RATE))
+        assert "edge of no size" not in note
+        assert "and no edge of any size is visible" in note or "or better is visible" in note
+        assert f"only {n} scored views" in note
+
+
+def test_the_gate_is_derived_from_a_named_effect_not_a_bare_number():
+    assert S.MIN_SCORED == PW.sessions_needed(S.CLAIMED_EDGE, S.NULL_RATE)
+    # Claiming a smaller edge must cost more sessions, or the gate is backwards.
+    assert PW.sessions_needed(0.55) > S.MIN_SCORED > PW.sessions_needed(0.70)

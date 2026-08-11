@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-08-10T22:46:02-04:00",
+  "generated_at": "2026-08-11T10:47:47-04:00",
   "symbol": "SPX",
   "horizon": "intraday",
-  "sessions_with_outcome": 90,
-  "views_on_record": 13,
-  "paired": 1,
+  "sessions_with_outcome": 89,
+  "views_on_record": 15,
+  "paired": 2,
   "disagreements": 1,
   "skills": {
     "machine": {
@@ -16,7 +16,19 @@
       "hit_rate": 0.3333333333333333,
       "conviction_weighted_rate": 0.3333333333333333,
       "enough": false,
-      "note": "only 6 scored views; 20 needed before this is a skill estimate"
+      "power": {
+        "n": 6,
+        "claimed": 0.6,
+        "null": 0.5,
+        "power": 0.11924454743546065,
+        "sessions_needed": 153,
+        "short_by": 147,
+        "interval_half_width": 0.40007597302960907,
+        "smallest_detectable": 0.9258051652896342,
+        "status": "underpowered",
+        "note": "n=6 gives 12% power against a claimed 60%; 153 sessions needed (0.6 trading years), short by 147. At this n only an edge of 93% or better is visible at all"
+      },
+      "note": "only 6 scored views; 153 needed to detect a 60% edge against 50% at 80% power \u2014 at n=6 the rate is +/-40 points, and only an edge of 93% or better is visible"
     },
     "human": {
       "source": "human",
@@ -27,19 +39,31 @@
       "hit_rate": 1.0,
       "conviction_weighted_rate": 1.0,
       "enough": false,
-      "note": "only 2 scored views; 20 needed before this is a skill estimate"
+      "power": {
+        "n": 2,
+        "claimed": 0.6,
+        "null": 0.5,
+        "power": 0.0822497775783031,
+        "sessions_needed": 153,
+        "short_by": 151,
+        "interval_half_width": 0.6929519121748388,
+        "smallest_detectable": null,
+        "status": "underpowered",
+        "note": "n=2 gives 8% power against a claimed 60%; 153 sessions needed (0.6 trading years), short by 151. At this n no edge is reliably visible"
+      },
+      "note": "only 2 scored views; 153 needed to detect a 60% edge against 50% at 80% power \u2014 at n=2 the rate is +/-69 points, and no edge of any size is visible"
     }
   },
   "weights": {
     "machine": {
       "weight": 0.35,
       "basis": "unproven",
-      "detail": "only 6 scored views; 20 needed before this is a skill estimate"
+      "detail": "only 6 scored views; 153 needed to detect a 60% edge against 50% at 80% power \u2014 at n=6 the rate is +/-40 points, and only an edge of 93% or better is visible"
     },
     "human": {
       "weight": 0.35,
       "basis": "unproven",
-      "detail": "only 2 scored views; 20 needed before this is a skill estimate"
+      "detail": "only 2 scored views; 153 needed to detect a 60% edge against 50% at 80% power \u2014 at n=2 the rate is +/-69 points, and no edge of any size is visible"
     }
   },
   "scored_disagreements": [
@@ -66,7 +90,7 @@
     "reference": "Kern et al. measured ~7% (38/560) in computational pathology, against 29 positive consultations \u2014 net negative on flips while overall accuracy still improved"
   },
   "anchoring": {
-    "independent": 3,
+    "independent": 4,
     "anchored": 0,
     "unknown": 0
   },
@@ -80,11 +104,23 @@
       "hit_rate": 1.0,
       "conviction_weighted_rate": 1.0,
       "enough": false,
-      "note": "only 2 scored views; 20 needed before this is a skill estimate"
+      "power": {
+        "n": 2,
+        "claimed": 0.6,
+        "null": 0.5,
+        "power": 0.0822497775783031,
+        "sessions_needed": 153,
+        "short_by": 151,
+        "interval_half_width": 0.6929519121748388,
+        "smallest_detectable": null,
+        "status": "underpowered",
+        "note": "n=2 gives 8% power against a claimed 60%; 153 sessions needed (0.6 trading years), short by 151. At this n no edge is reliably visible"
+      },
+      "note": "only 2 scored views; 153 needed to detect a 60% edge against 50% at 80% power \u2014 at n=2 the rate is +/-69 points, and no edge of any size is visible"
     }
   },
   "pressure": {
-    "calm": 10,
+    "calm": 12,
     "live": 2,
     "note": "views filed during RTH are the ones the literature says carry the same error rate at roughly double the cost"
   }

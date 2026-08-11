@@ -19,9 +19,26 @@ the discipline:
 """
 from __future__ import annotations
 
-# Enough that a hit rate is not dominated by one lucky week. Ten sessions of
-# noise reads as 70% often enough to fool anyone, including us.
-MIN_SCORED = 20
+# The size of edge this gate is entitled to claim it can find. Everything below
+# follows from it: `MIN_SCORED` is now computed, not chosen.
+#
+# It was chosen once. `MIN_SCORED = 20` sat here as a bare number with no
+# reference to any effect, and the arithmetic it implied was never run. At
+# n=20 the 95% interval on a hit rate is +/-22 points and the power to see a
+# 60%-vs-50% edge is 22% -- so four times in five a real edge would be in the
+# data and this gate would still say "not enough", without ever saying not
+# enough FOR WHAT. That is the `free_parameter` class from our own taxonomy,
+# committed inside the module whose job is to police it.
+#
+# 0.60 is a deliberate choice and an expensive one: 153 sessions, most of a
+# trading year. Claiming to detect 0.55 instead would cost 617 sessions, about
+# two and a half years, which is the honest price of a small edge and the
+# reason small-edge claims are not decidable on a daily cadence.
+from pipeline.reference import power as PW
+
+CLAIMED_EDGE = 0.60
+NULL_RATE = 0.50
+MIN_SCORED = PW.sessions_needed(CLAIMED_EDGE, NULL_RATE)  # 153
 
 # What actually happened in a session, in the same vocabulary as a view.
 OUTCOMES = ("up", "down", "range")
@@ -79,15 +96,38 @@ def skill(rows: list[dict], source: str, outcomes: dict[str, str],
     n = len(scored)
     hits = scored.count("hit")
     enough = n >= MIN_SCORED
+    # Carried alongside the rate so the rate can never be read without it. A
+    # hit rate at n=6 is not a weak measurement of skill; it is not a
+    # measurement of skill, and `power` is what says so in numbers.
+    pw = PW.verdict(n, CLAIMED_EDGE, NULL_RATE) if n else None
     return {
         "source": source, "n_scored": n, "n_abstained": abstained,
         "hits": hits, "misses": n - hits,
         "hit_rate": (hits / n) if n else None,
         "conviction_weighted_rate": (weighted_hits / weight) if weight else None,
         "enough": enough,
-        "note": None if enough else
-                f"only {n} scored views; {MIN_SCORED} needed before this is a skill estimate",
+        "power": pw,
+        "note": None if enough else _thin_note(n, pw),
     }
+
+
+def _thin_note(n: int, pw: dict | None) -> str:
+    """Say not-enough FOR WHAT, and what this sample could see if it were there.
+
+    The floor clause is built as a whole sentence per branch rather than by
+    concatenating a shared prefix onto two endings — that shape produced "only
+    an edge of no size is visible" at n=2, which is the third time in this
+    project a correct guard has been let down by the string that reports it.
+    """
+    head = (f"only {n} scored views; {MIN_SCORED} needed to detect a "
+            f"{CLAIMED_EDGE:.0%} edge against {NULL_RATE:.0%} at 80% power")
+    if not pw:
+        return head
+    tail = f" — at n={n} the rate is +/-{pw['interval_half_width'] * 100:.0f} points"
+    floor = pw["smallest_detectable"]
+    if floor is None:
+        return f"{head}{tail}, and no edge of any size is visible"
+    return f"{head}{tail}, and only an edge of {floor:.0%} or better is visible"
 
 
 def edge_over_chance(s: dict, baseline: float = 1 / 3) -> float | None:
