@@ -1,0 +1,199 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Screener 草图 — 2026-08-11</title>
+<style>
+  :root{
+    --bg:#1c1917; --surface:#292524; --raised:#44403c; --border:#44403c; --border-l:#3a3733;
+    --text:#e7e5e4; --sec:#a8a29e; --muted:#78716c; --bold:#fafaf9;
+    --took:#5b8fc4; --refused:#d1600f; --untested:#c2bdb4; --caution:#facc15;
+    --anno:#facc15;
+  }
+  *{box-sizing:border-box} body{margin:0;background:#141210;color:var(--text);
+    font:13px/1.5 -apple-system,"Helvetica Neue",sans-serif;padding:28px 20px 40px 190px}
+  .page{max-width:1080px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:26px 30px;position:relative}
+  .mono{font-family:ui-monospace,Menlo,monospace}
+  .num{font-variant-numeric:tabular-nums;font-family:ui-monospace,Menlo,monospace}
+
+  /* annotation machinery */
+  .anno{position:absolute;left:-172px;width:150px;font-size:10.5px;line-height:1.45;color:var(--anno);
+    border-right:1px dashed var(--anno);padding-right:8px;text-align:right;opacity:.85}
+  .anno b{display:block;font-size:9px;letter-spacing:.18em;text-transform:uppercase}
+  .tag{display:inline-block;border:1px dashed var(--anno);color:var(--anno);border-radius:3px;
+    font-size:9px;padding:0 5px;margin-left:8px;vertical-align:middle;letter-spacing:.05em}
+
+  h1{font-size:20px;margin:0;color:var(--bold);font-weight:650}
+  .blurb{color:var(--sec);font-size:12.5px;margin:4px 0 2px;max-width:640px}
+  .meta{color:var(--muted);font-size:10.5px}
+  .mclight{float:right;text-align:right;font-size:11px;color:var(--sec)}
+  .mclight .n{font-size:20px;color:var(--bold);font-weight:600}
+  .reading{border-left:2px solid var(--border);padding-left:12px;margin:14px 0 18px;color:var(--sec);font-size:12.5px;max-width:720px}
+
+  .tabs{border-bottom:1px solid var(--border);margin-bottom:0}
+  .bar{display:flex;align-items:baseline;gap:26px;padding:10px 2px;margin-bottom:14px;
+    border-bottom:1px solid var(--border-l);font-size:11.5px;flex-wrap:wrap}
+  .bar .lbl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-right:8px}
+  .seg{color:var(--muted);cursor:pointer;padding-bottom:1px}
+  .seg.on{color:var(--bold);border-bottom:1px solid var(--bold)}
+  .seg .n{color:var(--muted);font-size:10px;margin-left:3px}
+  .segL.on{color:var(--took);border-color:var(--took)} .segI.on{color:var(--took)}
+  .search{border:none;border-bottom:1px solid var(--border);background:transparent;color:var(--text);
+    font:inherit;width:110px;padding:1px 2px}
+  .tab{display:inline-block;padding:7px 18px;font-weight:600;font-size:13px}
+  .tab.on{border-bottom:2px solid var(--took);color:var(--took)}
+  .tab.off{color:var(--muted)}
+
+  table{border-collapse:collapse;width:100%;font-size:11.5px}
+  th{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+    text-align:right;padding:4px 8px;font-weight:500;border-bottom:1px solid var(--border)}
+  th.l{text-align:left} td{padding:4px 8px;text-align:right;border-top:1px solid var(--border-l)}
+  td.l{text-align:left}
+  tr.row:hover{background:#2a2723}
+  .tk{color:var(--bold);font-weight:600}
+  .heatmarks{color:var(--muted);letter-spacing:1px;font-size:9px}
+  .rs-hi{background:rgba(91,143,196,.30);border-radius:2px;padding:0 4px}
+  .rs-lo{background:rgba(209,96,15,.26);border-radius:2px;padding:0 4px}
+  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin:0 1.5px;vertical-align:middle}
+  .d-took{background:var(--took)} .d-out{border:1px solid var(--took);background:transparent}
+  .d-un{background:var(--untested)} .d-unout{border:1px solid var(--untested);background:transparent}
+  .d-miss{border:1px dashed var(--muted);background:transparent}
+  .st{font-size:10.5px}
+  .up{color:var(--took)} .wk{color:var(--caution);opacity:.85} .lg{color:var(--untested)} .dn{color:var(--refused)} .mut{color:var(--muted)}
+  .gt{display:inline-flex;gap:1.5px}
+  .gt i{width:11px;height:8px;border:1px dashed var(--muted);border-radius:1px;opacity:.5}
+  .sq{display:inline-flex;gap:2px}
+  .sq i{width:8px;height:8px;border-radius:1px;background:var(--took)}
+  .sq i.off{background:transparent;border:1px solid var(--border)}
+  .rib{display:inline-flex;gap:1.5px;vertical-align:middle;margin-left:8px}
+  .rib i{width:13px;height:9px;border-radius:1px}
+  .r-lead{background:var(--took)} .r-weak{background:transparent;border:1px solid var(--took)}
+  .r-lag{background:transparent;border:1px solid var(--untested)} .r-imp{background:var(--untested)}
+  .ghost td{opacity:.45}
+
+  .fold{margin-top:6px;border:1px solid var(--border-l);border-radius:6px;background:var(--surface);padding:8px 14px;font-size:11px;color:var(--sec)}
+  .fold .scr{display:inline-block;margin-right:16px}
+  .fold .scr b{color:var(--text);font-weight:600}
+  .ref{margin-top:18px;border-top:1px solid var(--border);padding-top:10px;color:var(--muted);font-size:12px}
+  .ref span{margin-right:26px}
+  .caret{color:var(--muted)}
+  section{position:relative;margin-top:6px}
+</style></head><body>
+<div class="page">
+
+  <section>
+    <div class="anno" style="top:0"><b>页眉</b>第三盏灯挂在这里：大盘条件是全页共用的一个数，不进每一行</div>
+    <div class="mclight">Market conditions <span class="n">80</span><br>12 of 15 positive · Full<span class="tag">灯③ 大盘</span></div>
+    <h1>Screener</h1>
+    <p class="blurb">One table over the tradeable universe, read through four vocabularies the pipeline already speaks — a scan, a state, a theme, a name. Nothing here is typed in; everything is selected.</p>
+    <p class="meta">quality tier — EP · VCP · MOM ×3 &nbsp;·&nbsp; participation — 21D · 4% · CHART · VOL ×1 &nbsp;·&nbsp; 2026-08-10</p>
+  </section>
+
+  <section>
+    <div class="anno" style="top:4px"><b>Reading</b>叙述句照旧由数据生成，此处示意</div>
+    <p class="reading">50 names cleared more than one screen. Healthcare carries 6 of the top 12 — but its industry states read Weakening across the board; the only aligned rows are APPS and FTK.</p>
+  </section>
+
+  <div class="tabs"><span class="tab on">Screener</span><span class="tab off">Watchlist</span></div>
+
+  <section>
+    <div class="anno" style="top:14px"><b>控制条 · 四本词汇表</b>全部是选择，零构造，四者取交集。主题 ribbon 挂控制条（黄框示例），不进行内——归属不唯一，中位 2-3 个主题</div>
+    <div class="bar">
+      <span><span class="lbl">Scan</span>
+        <span class="seg on">Confluence<span class="n">50</span></span>&ensp;
+        <span class="seg">Momentum 97<span class="n">169</span></span>&ensp;
+        <span class="seg">Healthy charts<span class="n">265</span></span>&ensp;
+        <span class="seg">EMA21<span class="n">137</span></span>&ensp;
+        <span class="seg">VCP<span class="n">18</span></span>&ensp;
+        <span class="seg" style="opacity:.45">EP<span class="n">0 today</span></span>&ensp;
+        <span class="seg" style="opacity:.45">4%<span class="n">0</span></span>&ensp;
+        <span class="seg" style="opacity:.45">Vol-up<span class="n">0</span></span>
+      </span>
+    </div>
+    <div class="bar" style="margin-top:-10px">
+      <span><span class="lbl">State</span>
+        <span class="seg">Leading<span class="n">447</span></span>&ensp;
+        <span class="seg">Improving<span class="n">640</span></span>&ensp;
+        <span class="seg">Weakening<span class="n">907</span></span>&ensp;
+        <span class="seg">Lagging<span class="n">517</span></span>
+      </span>
+      <span><span class="lbl">Theme</span><span class="seg">All themes ▾<span class="n">74</span></span>
+      <span style="border:1px dashed var(--anno);border-radius:3px;padding:1px 7px;margin-left:10px;font-size:10.5px;color:var(--anno)">选中时：<span style="color:var(--text)">Biotech ▾</span><span class="rib"><i class="r-lag"></i><i class="r-lead"></i><i class="r-lead"></i><i class="r-weak"></i><i class="r-weak"></i></span><span style="margin-left:6px">← 该主题 ribbon 进控制条</span></span></span>
+      <span><span class="lbl">Find</span><input class="search" placeholder="ticker…"></span>
+      <span style="margin-left:auto;color:var(--muted);font-size:10.5px">50 rows · Confluence, no state, all themes</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="anno" style="top:30px"><b>主体 · 一张表</b>Confluence 是默认 scan（= 他的 Leaderboard 位）。换 scan 只换行集，列不变、编码不变。整行可点 → Ticker 页。RS 守 0-99，无 Acc/COC</div>
+    <div class="anno" style="top:190px"><b>灯①②</b>Align 两点：个股 RS（≥67 实心蓝，rsTone 既有阈值）× 所在行业 state。不合成总分。Heat 列只有 confluence 名单有数，其余行印 —（没进多筛共振 ≠ 零）</div>
+    <div class="anno" style="top:345px"><b>七项对照</b>①Group trend 虚线待测（数据端）②State ③RS 1M/3M/6M ④Accel ⑤52wH ⑥Rel vol=我们的定义 ⑦独家指标不抄</div>
+    <table>
+      <tr>
+        <th>#</th><th class="l">Ticker</th><th class="l">Heat</th><th>Align</th>
+        <th class="l">State</th><th class="l" title="所在群体的状态变化 — 等数据端：行业 ribbon 或一股一主主题">Group trend</th>
+        <th>RS 1M</th><th>RS 3M</th><th>RS 6M</th><th title="rs_accel — 状态机用的同一个数">Accel</th>
+        <th>From 52wH</th><th title="当日量 ÷ 3个月均量（Finviz 定义；TSF 用 5日均÷50日均，构造不同）">Rel vol</th>
+        <th class="l">Top quartile</th><th></th>
+      </tr>
+      <tr class="row"><td class="num mut">1</td><td class="l tk num">APPS</td>
+        <td class="l"><span class="num">13.3</span> <span class="heatmarks">|||&nbsp;|||&nbsp;||</span></td>
+        <td><span class="dot d-took"></span><span class="dot d-took"></span></td>
+        <td class="l st wk">Weakening</td><td class="l"><span class="gt"><i></i><i></i><i></i><i></i><i></i></span></td><td class="num"><span class="rs-hi">97</span></td><td class="num"><span class="rs-hi">99</span></td><td class="num"><span class="rs-hi">99</span></td><td class="num dn">−1.27</td>
+        <td class="num">−6.5%</td><td class="num">1.16</td><td class="l"><span class="sq"><i></i><i></i><i></i><i></i></span> <span class="mut" style="font-size:9.5px">4/4</span></td>
+        <td class="caret">▸</td></tr>
+<tr><td colspan="14" style="padding:0 8px 8px 24px;border-top:none">
+        <div class="fold">APPS — the marks behind 13.3:&nbsp;
+          <span class="scr"><b>momentum_97</b> ×4 · 08-10</span>
+          <span class="scr"><b>healthy_charts</b> ×5 · 08-10</span>
+          <span class="scr"><b>gainers_4pct</b> ×5 · 08-06</span>
+          <span class="scr"><b>vol_up</b> ×3 · 08-06</span>
+          <span class="scr"><b>ep</b> ×1 · 08-05</span>
+          <span class="scr"><b>ema21</b> ×2 · 07-10</span>
+          <span class="tag">证据：点开行内摊开，算术可查；Ind pct、1W 等细项也住这里</span>
+        </div></td></tr>
+      <tr class="row ghost"><td class="num mut">2</td><td class="l tk num">BLMN</td>
+        <td class="l"><span class="num">13.0</span> <span class="heatmarks">|||&nbsp;|||&nbsp;|</span></td>
+        <td><span class="dot d-miss"></span><span class="dot d-miss"></span></td>
+        <td class="l st mut">not in universe</td><td class="l"><span class="gt"><i></i><i></i><i></i><i></i><i></i></span></td><td class="num mut">—</td><td class="num mut">—</td><td class="num mut">—</td><td class="num mut">—</td>
+        <td class="num">−13.3%</td><td class="num">0.92</td><td class="l"><span class="mut" style="font-size:10px">—</span></td>
+        <td class="caret">▸</td></tr>
+      <tr class="row"><td class="num mut">3</td><td class="l tk num">FTK</td>
+        <td class="l"><span class="num">12.8</span> <span class="heatmarks">|||&nbsp;|||&nbsp;|||&nbsp;|</span></td>
+        <td><span class="dot d-took"></span><span class="dot d-took"></span></td>
+        <td class="l st wk">Weakening</td><td class="l"><span class="gt"><i></i><i></i><i></i><i></i><i></i></span></td><td class="num"><span class="rs-hi">98</span></td><td class="num"><span class="rs-hi">99</span></td><td class="num"><span class="rs-hi">96</span></td><td class="num dn">−0.23</td>
+        <td class="num">−5.6%</td><td class="num">1.09</td><td class="l"><span class="sq"><i></i><i></i><i></i><i></i></span> <span class="mut" style="font-size:9.5px">4/4</span></td>
+        <td class="caret">▸</td></tr>
+      <tr class="row"><td class="num mut">4</td><td class="l tk num">IOVA</td>
+        <td class="l"><span class="num">12.8</span> <span class="heatmarks">|||&nbsp;|||&nbsp;||</span></td>
+        <td><span class="dot d-took"></span><span class="dot d-unout"></span></td>
+        <td class="l st up">Leading</td><td class="l"><span class="gt"><i></i><i></i><i></i><i></i><i></i></span></td><td class="num"><span class="rs-hi">98</span></td><td class="num"><span class="rs-hi">98</span></td><td class="num"><span class="rs-hi">98</span></td><td class="num up">+0.31</td>
+        <td class="num">−8.4%</td><td class="num">1.52</td><td class="l"><span class="sq"><i></i><i></i><i></i><i></i></span> <span class="mut" style="font-size:9.5px">4/4</span></td>
+        <td class="caret">▸</td></tr>
+      <tr class="row"><td class="num mut">5</td><td class="l tk num">CORT</td>
+        <td class="l"><span class="num">12.5</span> <span class="heatmarks">|||&nbsp;|||&nbsp;|||</span></td>
+        <td><span class="dot d-took"></span><span class="dot d-unout"></span></td>
+        <td class="l st wk">Weakening</td><td class="l"><span class="gt"><i></i><i></i><i></i><i></i><i></i></span></td><td class="num"><span class="rs-hi">91</span></td><td class="num"><span class="rs-hi">99</span></td><td class="num"><span class="rs-hi">98</span></td><td class="num dn">−0.57</td>
+        <td class="num">−9.4%</td><td class="num">0.56</td><td class="l"><span class="sq"><i></i><i></i><i></i><i class="off"></i></span> <span class="mut" style="font-size:9.5px">3/4</span></td>
+        <td class="caret">▸</td></tr>
+      <tr class="row"><td class="num mut">6</td><td class="l tk num">CAKE</td>
+        <td class="l"><span class="num">12.3</span> <span class="heatmarks">|||&nbsp;|||</span></td>
+        <td><span class="dot d-took"></span><span class="dot d-un"></span></td>
+        <td class="l st wk">Weakening</td><td class="l"><span class="gt"><i></i><i></i><i></i><i></i><i></i></span></td><td class="num"><span class="rs-hi">96</span></td><td class="num"><span class="rs-hi">98</span></td><td class="num"><span class="rs-hi">93</span></td><td class="num dn">−0.07</td>
+        <td class="num">−0.8%</td><td class="num">0.67</td><td class="l"><span class="sq"><i></i><i></i><i></i><i></i></span> <span class="mut" style="font-size:9.5px">4/4</span></td>
+        <td class="caret">▸</td></tr>
+      <tr class="row"><td class="num mut">7</td><td class="l tk num">EWTX</td>
+        <td class="l"><span class="num">12.0</span> <span class="heatmarks">|||&nbsp;|||</span></td>
+        <td><span class="dot d-un"></span><span class="dot d-unout"></span></td>
+        <td class="l st wk">Weakening</td><td class="l"><span class="gt"><i></i><i></i><i></i><i></i><i></i></span></td><td class="num"><span class="rs-lo">22</span></td><td class="num"><span class="rs-hi">82</span></td><td class="num"><span class="rs-hi">88</span></td><td class="num dn">−0.34</td>
+        <td class="num">−10.1%</td><td class="num">1.29</td><td class="l"><span class="sq"><i></i><i></i><i></i><i class="off"></i></span> <span class="mut" style="font-size:9.5px">3/4</span></td>
+        <td class="caret">▸</td></tr>
+      <tr><td colspan="14" style="text-align:center;color:var(--muted);font-size:10.5px;padding:6px">⋮ 43 more — show</td></tr>
+    </table>
+  </section>
+
+  <section class="ref" style="margin-top:34px;padding-bottom:110px">
+    <div class="anno" style="top:130px"><b>参考</b>min/max 查询器下线；Watchlist 保留为页签。过滤只选行集，永不改编码</div>
+    <span style="text-decoration:line-through;opacity:.5">Build your own query</span> <span class="tag">退休（指令③）</span>
+    <span style="margin-left:26px">▸ How to read</span>
+  </section>
+
+</div>
+</body></html>

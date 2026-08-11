@@ -199,3 +199,48 @@ AI - Datacenters 两个读数都对：两周内落后（TSF），季度深坑但
 while AI - Datacenters is even with SPY at +0.8% (Improving)"。
 状态词入括号并带 tooltip 声明它跑在月尺度窗口上、不随开关变——
 两个钟同屏，各自署名。
+
+---
+
+## 八、Screener 落地记录（2026-08-11）
+
+**读懂了才动手的那一课**：TSF 的 screener 不是查询构造器。四个选择器
+（Category / Theme / TSF Scans / Search）没有一个让用户输入数字——全部是在
+系统已算好的分类词汇表上做选择，四者取交集。我们的 min/max 填表式查询器
+与此哲学相反，退休（代码留仓库，不再挂载；Watchlist 页签保留）。
+
+**四本词汇表的映射**：
+
+| TSF | 我们 | 来源 |
+|---|---|---|
+| Select category | 四态 state 多选 | groups.json stocks |
+| Select theme | 已发布主题（单选 + 搜索） | groups.json themes |
+| TSF Scans | All + Confluence + 七筛 | universe / heating_up / 各筛 JSON |
+| Search stock | ticker 包含匹配 | universe |
+
+Confluence ledger 降为 Scans 词汇表的默认一项（= 他的 Leaderboard 位）。
+换 scan 只换行集，列与编码永不变。日敏感筛（EP/4%/Vol-up）空的时候灰显
+"0 today"——今天没有 ≠ 不存在。State 计数是 facet 计数（当前 scan∩theme∩search
+内数出），被 state 过滤藏掉的无状态行在收据里报数（"151 without a state hidden"）。
+
+**列组**（Andy 的七项对照，2026-08-11 定）：
+Heat（confluence 才有，其余印 —）· Align 双灯（个股 RS 3M ≥67 × 行业 state，
+永不合成总分）· State · **Group trend 五虚线格**（所在群体状态史——个股主题
+归属中位 2-3 个不唯一，Andy 确认数据端给**每股一个归属指针**后点亮）·
+RS 1M/3M/6M（0-99）· Accel（rs_accel 原数）· From 52wH · Rel vol（当日÷3月均，
+Finviz 定义，表头注明与 TSF 的 5d/50d 构造不同）· **Vol 5d/50d 占位**（Andy
+确认数据端补 vol_5d_50d，先印 —）· Top quartile 方块。
+TSF 独家三指标（Accumulation/COC 等）按「不抄不明物」不做。
+
+**主题 ribbon 的挂点裁定**：选中主题时其 fortnight ribbon 出现在控制条，
+不进每一行——ribbon 是主题的性质不是股票的性质，且今日 16/76 的 ribbon
+全在 ETF 代理主题上。归档积累后自动点亮更多。
+
+**灯③**：Market conditions 挂页眉（全页共用一个数，链接 → #/breadth）。
+
+**顺手修的真 bug**：high_52w_dist 是小数分数（−0.065 = 低于高点 6.5%），
+ThemeMembers 此前直接 toFixed(1) 当百分数印，−8.4% 印成了 −0.1%。已修。
+
+**交给数据端的两个字段**（Andy 已确认，先占位）：
+1. 每股一个归属指针（群体状态史列的前提）
+2. vol_5d_50d（5 日均量 ÷ 50 日均量）

@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import Squares from '../Squares'
+import { barStyle } from './ThemeBars'
 import { useUniverse } from '../../hooks/useUniverse'
 
 /**
@@ -23,12 +24,9 @@ import { useUniverse } from '../../hooks/useUniverse'
  * loud. A member list that silently shrinks is a member count that lies.
  */
 
-const STATE_TONE = {
-  Leading: 'var(--color-took)',
-  Improving: 'var(--color-took)',
-  Weakening: 'var(--color-signal-caution)',
-  Lagging: 'var(--color-untested)',
-}
+// The state word wears the grammar's own glyph (tone × fill via barStyle) —
+// an earlier version gave Weakening a caution-yellow of its own, which put a
+// third colour claim on a two-channel encoding.
 
 const pct = (v) =>
   v == null || !Number.isFinite(v) ? '—' : `${v > 0 ? '+' : ''}${(v * 100).toFixed(1)}%`
@@ -97,9 +95,14 @@ export default function ThemeMembers({ theme, colour, rsByTicker }) {
                              hover:bg-[var(--color-hover-bg)]">
                 <td className="py-[3px] pr-3 font-mono font-medium"
                     style={colour ? { color: colour } : undefined}>{r.ticker}</td>
-                <td className="py-[3px] pr-3 text-[10.5px]"
-                    style={{ color: STATE_TONE[r.rs?.state] ?? 'var(--color-text-muted)' }}>
-                  {r.rs?.state ?? '—'}
+                <td className="py-[3px] pr-3 text-[10.5px]">
+                  {r.rs?.state ? (
+                    <span className="text-[var(--color-text-secondary)] whitespace-nowrap">
+                      <i className="inline-block w-[7px] h-[7px] rounded-[1px] mr-[5px] align-[-0.5px]"
+                         style={barStyle(r.rs.state)} />
+                      {r.rs.state}
+                    </span>
+                  ) : <span className="text-[var(--color-text-muted)]">—</span>}
                 </td>
                 <td className="py-[3px] pr-3 text-right tabular-nums">{num(r.rs_1m ?? r.rs_21d)}</td>
                 <td className="py-[3px] pr-3 text-right tabular-nums">{num(r.rs_3m ?? r.rs_63d)}</td>
@@ -113,7 +116,8 @@ export default function ThemeMembers({ theme, colour, rsByTicker }) {
                       : undefined} />
                 </td>
                 <td className="py-[3px] pr-3 text-right tabular-nums">
-                  {r.high_52w_dist == null ? '—' : `${r.high_52w_dist.toFixed(1)}%`}
+                  {/* high_52w_dist is a fraction, not a percent — ×100 or −8.4% prints as −0.1% */}
+                  {r.high_52w_dist == null ? '—' : `${(r.high_52w_dist * 100).toFixed(1)}%`}
                 </td>
                 <td className="py-[3px] text-right tabular-nums">
                   {r.rel_volume == null ? '—' : r.rel_volume.toFixed(2)}
