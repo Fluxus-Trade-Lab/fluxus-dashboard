@@ -697,3 +697,99 @@ def render_analysis(trades, capital, total_pnl, include_characteristics=True, eq
       f"{'using margin at peak' if lev['peak_gross_x']>1.02 else 'staying within capital'}.")
     A("")
     return "\n".join(L)
+
+
+# --------------------------------------------------------------------------- #
+# System quality (Van Tharp SQN) + regime attribution
+# --------------------------------------------------------------------------- #
+def system_quality(trades):
+    """Van Tharp SQN + expectancy over the R-distribution.
+
+    N is CAPPED AT 100 — that cap is what makes Tharp's bands calibrated; an
+    uncapped sqrt(N) inflates a long record into a band it hasn't earned.
+    Same formula as the dashboard's SqnReadout so the two never disagree.
+    """
+    import statistics as _st
+    Rs = [t.R for t in trades if t.R is not None]
+    n = len(Rs)
+    if n < 2:
+        return None
+    mean = _st.mean(Rs)
+    sd = _st.stdev(Rs)
+    sqn = (min(n, 100) ** 0.5) * mean / sd if sd > 0 else None
+    bands = [(1.6, "Poor"), (2.0, "Below average"), (2.5, "Average"),
+             (3.0, "Good"), (5.0, "Excellent"), (7.0, "Superb")]
+    label = "Holy grail"
+    for hi, lb in bands:
+        if sqn is not None and sqn < hi:
+            label = lb
+            break
+    wins = [r for r in Rs if r > 0]
+    losses = [r for r in Rs if r < 0]
+    avg_w = _st.mean(wins) if wins else 0
+    avg_l = abs(_st.mean(losses)) if losses else 0
+    return {"n": n, "expectancy_R": mean, "stdev_R": sd, "sqn": sqn, "band": label,
+            "win_rate": len(wins) / n * 100,
+            "payoff": (avg_w / avg_l) if avg_l else None}
+
+
+def regime_attribution(trades, breadth_path="data/output/breadth.json"):
+    """Bucket trades by the Market Conditions score on their ENTRY day.
+
+    Uses `pipeline/screeners/regime.py` BANDS — the empirical quartiles that are
+    validated monotone against drawdown frequency. (The dashboard's five
+    position-language bands are a DISPLAY scheme; see that module's note.)
+    Returns None if the breadth history isn't available.
+    """
+    import json
+    import statistics as _st
+    try:
+        from pipeline.screeners.regime import BANDS
+        doc = json.load(open(breadth_path))
+        hist = {h["date"]: h["score"] for h in doc["conditions"]["history"]}
+    except Exception:  # noqa: BLE001 — a review must not depend on breadth
+        return None
+    if not hist:
+        return None
+    dates = sorted(hist)
+
+    def score_at(day):
+        prior = [d for d in dates if d <= day]
+        return hist[prior[-1]] if prior else None
+
+    def band_of(s):
+        for b in BANDS:
+            if b["min"] <= s < b["max"]:
+                return b["label"]
+        return BANDS[-1]["label"]
+
+    rows = {b["label"]: [] for b in BANDS}
+    matched = 0
+    total = 0
+    for t in trades:
+        if t.R is None:
+            continue
+        total += 1
+        s = score_at(t.entry_date)
+        if s is None:
+            continue
+        matched += 1
+        rows[band_of(s)].append(t)
+    if not matched:
+        return None
+    out = []
+    for b in BANDS:
+        g = rows[b["label"]]
+        if not g:
+            out.append({"band": b["label"], "n": 0})
+            continue
+        Rs = [t.R for t in g]
+        out.append({
+            "band": b["label"], "range": f"{b['min']}–{b['max'] if b['max'] < 100 else 100}",
+            "n": len(g),
+            "win_rate": sum(1 for r in Rs if r > 0) / len(Rs) * 100,
+            "mean_R": _st.mean(Rs), "sum_R": sum(Rs),
+            "pnl": sum(t.pnl for t in g),
+        })
+    return {"rows": out, "matched": matched, "total": total,
+            "span": f"{dates[0]} → {dates[-1]}"}

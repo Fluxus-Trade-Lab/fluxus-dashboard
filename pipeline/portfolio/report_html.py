@@ -78,6 +78,8 @@ def build_doc(trades, meta, period, month, quarter, out_dir, handle):
     except Exception:  # noqa: BLE001
         ce = None
     cs = an.trade_case_studies(sub)
+    sq = an.system_quality(sub)
+    regime = an.regime_attribution(sub)
 
     # Charts are rendered in BOTH light and dark so the in-page theme toggle can
     # swap them — keeping the charts consistent with whichever theme is active.
@@ -112,6 +114,7 @@ def build_doc(trades, meta, period, month, quarter, out_dir, handle):
         "rolling_pf": _both(lambda d: rc.rolling_profit_factor(sub, dark=d)),
         "pareto": _both(lambda d: rc.profit_concentration(sub, dark=d)),
         "streaks": _both(lambda d: rc.losing_streaks(sub, dark=d)),
+        "regime": _both(lambda d: rc.regime_attribution_chart(regime, dark=d)) if regime else None,
     }
 
     return {
@@ -120,6 +123,7 @@ def build_doc(trades, meta, period, month, quarter, out_dir, handle):
         "generated": market_today().isoformat(),
         "source": os.path.basename(meta.get("_csv", "")),
         "s": s, "mtm": mtm, "monthly_stats": ms, "rdist": rdist, "size_stats": ps_stats,
+        "sq": sq, "regime": regime,
         "by_dir": by_dir, "by_tk": by_tk, "bd": bd, "ce": ce, "cs": cs,
         "charts": charts, "cap": cap,
     }, stem

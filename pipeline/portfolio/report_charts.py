@@ -557,3 +557,38 @@ def sizing_frontier_chart(curve, actual_risk_pct=None, dark: bool = False):
         ax.annotate(f"your 1R ≈ {actual_risk_pct:.2f}%", xy=(actual_risk_pct, cagr[0]),
                     xytext=(4, 2), textcoords="offset points", fontsize=8, color=p["mut"])
     return _b64(fig, p["face"])
+
+
+def regime_attribution_chart(attr, dark: bool = False):
+    """Win rate + mean R by market-conditions band at entry (twin axes)."""
+    if not attr:
+        return None
+    rows = [r for r in attr["rows"] if r.get("n")]
+    if len(rows) < 2:
+        return None
+    p = _pal(dark)
+    labels = [f"{r['band']}\n{r['range']}" for r in rows]
+    xs = list(range(len(rows)))
+    wr = [r["win_rate"] for r in rows]
+    mr = [r["mean_R"] for r in rows]
+    ns = [r["n"] for r in rows]
+
+    fig, ax = plt.subplots(figsize=(11, 3.8), dpi=150)
+    bars = ax.bar(xs, wr, color=p["blue"], width=0.6, alpha=0.85, label="Win rate")
+    ax.set_ylabel("Win rate %", color=p["blue"])
+    ax.set_xticks(xs)
+    ax.set_xticklabels(labels, fontsize=9)
+    ax.grid(axis="y", color=p["grid"], lw=0.7)
+    _style(ax, p)
+    for b, v, n in zip(bars, wr, ns):
+        ax.annotate(f"{v:.0f}%\nn={n}", xy=(b.get_x() + b.get_width() / 2, v),
+                    xytext=(0, 4), textcoords="offset points", ha="center",
+                    fontsize=8.5, color=p["ink"])
+    ax2 = ax.twinx()
+    ax2.plot(xs, mr, color=GREEN, lw=2, marker="o", ms=5, label="Mean R")
+    ax2.set_ylabel("Mean R per trade", color=GREEN)
+    ax2.tick_params(colors=GREEN, labelsize=9)
+    ax2.spines["top"].set_visible(False)
+    ax2.spines["right"].set_color(GREEN)
+    ax2.axhline(0, color=p["zero"], lw=0.8)
+    return _b64(fig, p["face"])

@@ -259,6 +259,35 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
 </tr>{% endfor %}</tbody></table>
 </section>{% endif %}
 
+{# ---------- System quality (Van Tharp SQN) ---------- #}
+{% if d.sq and d.sq.sqn %}
+<section>
+<p class="lbl">系统质量 · System quality (Van Tharp SQN)</p>
+<div class="cards">
+  <div class="card"><p class="k">SQN</p><p class="v">{{ d.sq.sqn | num(2) }}</p></div>
+  <div class="card"><p class="k">Tharp band</p><p class="v">{{ d.sq.band }}</p></div>
+  <div class="card"><p class="k">Expectancy</p><p class="v {{ 'pos' if d.sq.expectancy_R>=0 else 'neg' }}">{{ d.sq.expectancy_R | signR }}</p></div>
+  <div class="card"><p class="k">Stdev R</p><p class="v">{{ d.sq.stdev_R | num(2) }}</p></div>
+</div>
+<p class="cap"><code>SQN = √min(N,100) × (mean R ÷ stdev R)</code> — N is capped at 100; an uncapped √N inflates a long record into a band it hasn't earned. Bands: &lt;1.6 poor · 1.6–2.0 below avg · 2.0–2.5 average · 2.5–3.0 good · 3.0–5.0 excellent · 5.0–7.0 superb · ≥7.0 holy grail. Tharp grades a system by the consistency of its R-stream, not by return — raising it means tightening the loss tail, not betting bigger. Same formula as the dashboard's Sizing tab.</p>
+</section>{% endif %}
+
+{# ---------- Regime attribution ---------- #}
+{% if d.charts.regime and d.charts.regime.light %}
+<section>
+<p class="lbl">市场状态归因 · By market conditions at entry</p>
+<div class="chart">{{ chart(d.charts.regime, 'Regime attribution') }}</div>
+<table style="margin-top:14px"><thead><tr><th>Band（入场时）</th><th class="r">笔数</th><th class="r">胜率</th>
+<th class="r">平均 R</th><th class="r">总 R</th><th class="r">总盈亏</th></tr></thead>
+<tbody>{% for r in d.regime.rows %}{% if r.n %}
+<tr><td>{{ r.band }} <span class="muted">{{ r.range }}</span></td><td class="r">{{ r.n }}</td>
+<td class="r">{{ r.win_rate | num(1) }}%</td><td class="r {{ 'pos' if r.mean_R>=0 else 'neg' }}">{{ r.mean_R | signR }}</td>
+<td class="r">{{ r.sum_R | signR }}</td><td class="r {{ 'pos' if r.pnl>=0 else 'neg' }}">{{ r.pnl | money }}</td></tr>
+{% endif %}{% endfor %}</tbody></table>
+<p class="cap">每笔按<b>入场当天</b>的 Market Conditions 分数归档（{{ d.regime.matched }}/{{ d.regime.total }} 匹配，可用区间 {{ d.regime.span }}）。分档用 <code>regime.py</code> 的经验四分位——它验证过对回撤频率单调；dashboard 上那套五档仓位语言是<b>显示</b>口径，两者不可混用。<br>
+⚠ 该分数<b>不预测收益</b>（558 个交易日验证），只分离回撤风险；且按入场日归档，盈亏可能在之后的行情里实现——把它当风险预算的读数，不是择时信号。</p>
+</section>{% endif %}
+
 {# ---------- Deep review charts (Dario-style) ---------- #}
 {% if d.charts.cum_r and d.charts.cum_r.light %}
 <section>
