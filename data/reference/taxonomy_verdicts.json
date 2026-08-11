@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-09T04:46:29.557641+00:00",
+  "generated_at": "2026-08-11T11:41:17.072223+00:00",
   "panel": {
     "sessions": 2514,
     "tickers": 3025,
@@ -18,19 +18,33 @@
       "n": 9,
       "coverage": 0.9
     },
+    "Copper Miners": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.3901,
+      "n": 6,
+      "coverage": 1.0
+    },
     "Banks - Money Center": {
       "verdict": "real",
       "kind": "business",
       "excess": 0.3892,
       "n": 19,
-      "coverage": 0.95
+      "coverage": 1.0
     },
-    "Copper Miners": {
+    "Regional Banks": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.3574,
-      "n": 7,
-      "coverage": 1.0
+      "excess": 0.3656,
+      "n": 155,
+      "coverage": 0.994
+    },
+    "Gold Miners": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.3504,
+      "n": 30,
+      "coverage": 0.968
     },
     "Memory & Storage": {
       "verdict": "real",
@@ -39,47 +53,61 @@
       "n": 4,
       "coverage": 0.8
     },
-    "Regional Banks": {
+    "Tech Mega Caps": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.3238,
-      "n": 219,
-      "coverage": 0.973
+      "excess": 0.3092,
+      "n": 9,
+      "coverage": 1.0
     },
     "Uranium & Nuclear Energy": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.3113,
-      "n": 9,
+      "excess": 0.2852,
+      "n": 7,
       "coverage": 1.0
     },
-    "Tech Mega Caps": {
+    "Homebuilders": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.2437,
-      "n": 10,
-      "coverage": 1.0
-    },
-    "Gold Miners": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.2427,
-      "n": 40,
-      "coverage": 0.976
-    },
-    "Solar": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.2327,
-      "n": 12,
-      "coverage": 1.0
+      "excess": 0.2838,
+      "n": 34,
+      "coverage": 0.971
     },
     "Semiconductors Broad": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.2312,
-      "n": 74,
-      "coverage": 0.914
+      "excess": 0.2601,
+      "n": 69,
+      "coverage": 0.908
+    },
+    "Steel": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.2558,
+      "n": 14,
+      "coverage": 0.933
+    },
+    "Real Estate": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.2381,
+      "n": 125,
+      "coverage": 0.969
+    },
+    "AI Power & Infrastructure": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.2334,
+      "n": 44,
+      "coverage": 1.0
+    },
+    "Solar": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.2293,
+      "n": 9,
+      "coverage": 1.0
     },
     "Silver Miners": {
       "verdict": "real",
@@ -88,33 +116,19 @@
       "n": 5,
       "coverage": 0.833
     },
-    "Real Estate": {
+    "Coal": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.2246,
-      "n": 162,
-      "coverage": 0.964
-    },
-    "Homebuilders": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.2243,
-      "n": 42,
-      "coverage": 0.977
+      "excess": 0.2265,
+      "n": 6,
+      "coverage": 1.0
     },
     "Cybersecurity": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.2101,
-      "n": 15,
-      "coverage": 0.938
-    },
-    "Steel": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.2023,
-      "n": 17,
-      "coverage": 0.944
+      "excess": 0.2064,
+      "n": 14,
+      "coverage": 0.933
     },
     "Speculative Tech": {
       "verdict": "real",
@@ -123,19 +137,40 @@
       "n": 12,
       "coverage": 0.857
     },
-    "Coal": {
+    "Robotics & Automation": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.1995,
-      "n": 8,
-      "coverage": 1.0
+      "excess": 0.1992,
+      "n": 56,
+      "coverage": 0.949
     },
-    "AI Power & Infrastructure": {
+    "Insurance": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.1863,
-      "n": 47,
-      "coverage": 0.979
+      "excess": 0.1937,
+      "n": 79,
+      "coverage": 0.952
+    },
+    "Crypto Equities": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.1921,
+      "n": 12,
+      "coverage": 0.857
+    },
+    "Electronic Components": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.1892,
+      "n": 23,
+      "coverage": 0.958
+    },
+    "Oil & Gas": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.1838,
+      "n": 146,
+      "coverage": 0.98
     },
     "AI - Datacenters": {
       "verdict": "real",
@@ -144,138 +179,145 @@
       "n": 15,
       "coverage": 0.938
     },
-    "Crypto Equities": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.1816,
-      "n": 13,
-      "coverage": 0.867
-    },
-    "Quantum Computing": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.1723,
-      "n": 6,
-      "coverage": 1.0
-    },
-    "Insurance": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.1687,
-      "n": 89,
-      "coverage": 0.957
-    },
-    "Oil & Gas": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.1658,
-      "n": 169,
-      "coverage": 0.971
-    },
-    "Robotics & Automation": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.1589,
-      "n": 63,
-      "coverage": 0.94
-    },
     "Travel & Leisure": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.1518,
-      "n": 80,
-      "coverage": 0.964
+      "excess": 0.1754,
+      "n": 66,
+      "coverage": 0.971
     },
     "Reshoring / Industrial Renaissance": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.1488,
-      "n": 49,
-      "coverage": 0.942
-    },
-    "Utilities": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.1414,
-      "n": 85,
-      "coverage": 0.955
+      "excess": 0.1736,
+      "n": 43,
+      "coverage": 0.956
     },
     "Chemicals & Materials": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.1323,
-      "n": 64,
-      "coverage": 0.97
+      "excess": 0.1706,
+      "n": 51,
+      "coverage": 0.962
     },
-    "Mega Caps": {
-      "verdict": "definitional",
-      "kind": "factor",
-      "excess": 0.1289,
-      "n": 71,
-      "coverage": 0.959
-    },
-    "Electronic Components": {
+    "Utilities": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.127,
-      "n": 29,
-      "coverage": 0.967
+      "excess": 0.1671,
+      "n": 78,
+      "coverage": 0.963
     },
     "Industrials": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.1249,
-      "n": 152,
-      "coverage": 0.95
+      "excess": 0.1642,
+      "n": 127,
+      "coverage": 0.955
     },
     "Fintech": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.1232,
-      "n": 43,
-      "coverage": 0.956
-    },
-    "Agribusiness": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.1202,
-      "n": 34,
-      "coverage": 0.971
-    },
-    "Financials": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.1115,
-      "n": 162,
-      "coverage": 0.91
-    },
-    "Energy": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.1067,
-      "n": 114,
-      "coverage": 0.983
+      "excess": 0.1386,
+      "n": 35,
+      "coverage": 0.946
     },
     "Grid & Electrification": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.102,
-      "n": 33,
-      "coverage": 0.943
+      "excess": 0.1362,
+      "n": 28,
+      "coverage": 0.966
+    },
+    "Financials": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.1339,
+      "n": 127,
+      "coverage": 0.907
+    },
+    "Mega Caps": {
+      "verdict": "definitional",
+      "kind": "factor",
+      "excess": 0.13,
+      "n": 70,
+      "coverage": 0.959
+    },
+    "Quantum Computing": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.1264,
+      "n": 5,
+      "coverage": 1.0
     },
     "Space": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.1014,
-      "n": 7,
+      "excess": 0.1242,
+      "n": 6,
       "coverage": 1.0
+    },
+    "Energy": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.1222,
+      "n": 96,
+      "coverage": 0.99
+    },
+    "Agribusiness": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.1177,
+      "n": 27,
+      "coverage": 0.964
+    },
+    "Transportation & Logistics": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.1133,
+      "n": 45,
+      "coverage": 0.978
+    },
+    "Defense": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.1129,
+      "n": 42,
+      "coverage": 0.764
     },
     "Clean Energy": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.098,
-      "n": 22,
-      "coverage": 0.917
+      "excess": 0.0982,
+      "n": 18,
+      "coverage": 0.9
+    },
+    "Household & Personal Products": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.0953,
+      "n": 14,
+      "coverage": 1.0
+    },
+    "Broad AI Theme": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.0895,
+      "n": 124,
+      "coverage": 0.892
+    },
+    "Software": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.0887,
+      "n": 161,
+      "coverage": 0.885
+    },
+    "Beverages": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.0831,
+      "n": 10,
+      "coverage": 1.0
     },
     "Tobacco": {
       "verdict": "real",
@@ -284,187 +326,96 @@
       "n": 6,
       "coverage": 1.0
     },
-    "Transportation & Logistics": {
+    "Optics & Networking Equipment": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.0717,
-      "n": 57,
-      "coverage": 0.983
+      "excess": 0.081,
+      "n": 19,
+      "coverage": 1.0
     },
-    "Software": {
+    "Rare Earth Metals": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.0681,
-      "n": 200,
-      "coverage": 0.881
+      "excess": 0.0712,
+      "n": 7,
+      "coverage": 1.0
+    },
+    "Drones": {
+      "verdict": "real",
+      "kind": "business",
+      "excess": 0.0673,
+      "n": 5,
+      "coverage": 1.0
     },
     "Lithium & Battery Tech": {
       "verdict": "real",
       "kind": "business",
-      "excess": 0.0678,
-      "n": 9,
-      "coverage": 0.9
-    },
-    "Beverages": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.0676,
-      "n": 11,
-      "coverage": 1.0
-    },
-    "Optics & Networking Equipment": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.0598,
-      "n": 25,
-      "coverage": 1.0
-    },
-    "Broad AI Theme": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.0569,
-      "n": 146,
-      "coverage": 0.88
-    },
-    "Defense": {
-      "verdict": "real",
-      "kind": "business",
-      "excess": 0.0521,
-      "n": 52,
-      "coverage": 0.788
+      "excess": 0.0633,
+      "n": 8,
+      "coverage": 0.889
     },
     "Consumer Retail": {
-      "verdict": "weak",
+      "verdict": "real",
       "kind": "business",
-      "excess": 0.0447,
-      "n": 77,
-      "coverage": 0.987
+      "excess": 0.0563,
+      "n": 59,
+      "coverage": 0.983
     },
-    "Rare Earth Metals": {
-      "verdict": "weak",
+    "Genomics": {
+      "verdict": "real",
       "kind": "business",
-      "excess": 0.04,
-      "n": 8,
-      "coverage": 1.0
-    },
-    "Household & Personal Products": {
-      "verdict": "weak",
-      "kind": "business",
-      "excess": 0.0359,
-      "n": 18,
-      "coverage": 1.0
+      "excess": 0.0524,
+      "n": 35,
+      "coverage": 0.875
     },
     "IT Services": {
       "verdict": "weak",
       "kind": "business",
-      "excess": 0.0295,
-      "n": 42,
-      "coverage": 0.913
-    },
-    "Drones": {
-      "verdict": "weak",
-      "kind": "business",
-      "excess": 0.0278,
-      "n": 6,
-      "coverage": 1.0
-    },
-    "Packaged Foods": {
-      "verdict": "label",
-      "kind": "business",
-      "excess": 0.0092,
-      "n": 34,
-      "coverage": 0.919
-    },
-    "Telecom Services": {
-      "verdict": "label",
-      "kind": "business",
-      "excess": 0.0042,
-      "n": 42,
-      "coverage": 0.977
+      "excess": 0.0472,
+      "n": 36,
+      "coverage": 0.923
     },
     "Small Caps": {
       "verdict": "definitional",
       "kind": "factor",
-      "excess": 0.0023,
-      "n": 1484,
+      "excess": 0.002,
+      "n": 1474,
       "coverage": 0.931
-    },
-    "Computer Hardware": {
-      "verdict": "label",
-      "kind": "business",
-      "excess": 0.0005,
-      "n": 25,
-      "coverage": 0.926
-    },
-    "Industrial Metals": {
-      "verdict": "label",
-      "kind": "business",
-      "excess": -0.0161,
-      "n": 26,
-      "coverage": 0.897
     },
     "Value Factor": {
       "verdict": "definitional",
       "kind": "factor",
-      "excess": -0.0305,
-      "n": 292,
-      "coverage": 0.948
-    },
-    "Growth Factor": {
-      "verdict": "definitional",
-      "kind": "factor",
-      "excess": -0.0354,
-      "n": 313,
-      "coverage": 0.96
+      "excess": 0.0002,
+      "n": 207,
+      "coverage": 0.945
     },
     "High Beta Factor": {
       "verdict": "definitional",
       "kind": "factor",
-      "excess": -0.0404,
-      "n": 1493,
-      "coverage": 0.908
+      "excess": -0.0202,
+      "n": 1050,
+      "coverage": 0.898
+    },
+    "Growth Factor": {
+      "verdict": "definitional",
+      "kind": "factor",
+      "excess": -0.0216,
+      "n": 261,
+      "coverage": 0.963
     },
     "52-Week High Leaders": {
       "verdict": "definitional",
       "kind": "factor",
-      "excess": -0.0457,
-      "n": 71,
-      "coverage": 0.826
-    },
-    "Microcaps": {
-      "verdict": "definitional",
-      "kind": "factor",
-      "excess": -0.0534,
-      "n": 612,
-      "coverage": 0.937
+      "excess": -0.0264,
+      "n": 72,
+      "coverage": 0.96
     },
     "High Octane": {
       "verdict": "definitional",
       "kind": "factor",
-      "excess": -0.0629,
-      "n": 50,
-      "coverage": 0.595
-    },
-    "IBD 50": {
-      "verdict": "too few in panel",
-      "kind": "business",
-      "excess": null,
-      "n": 0,
-      "coverage": 0.0
-    },
-    "GLP-1 - Clinical Stage": {
-      "verdict": "too few in panel",
-      "kind": "business",
-      "excess": null,
-      "n": 3,
-      "coverage": 1.0
-    },
-    "GLP-1 - Commercial": {
-      "verdict": "too few in panel",
-      "kind": "business",
-      "excess": null,
-      "n": 2,
-      "coverage": 1.0
+      "excess": -0.0519,
+      "n": 64,
+      "coverage": 0.941
     },
     "IPOs": {
       "verdict": "too few in panel",

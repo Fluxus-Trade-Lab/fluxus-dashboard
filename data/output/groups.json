@@ -4986,7 +4986,7 @@
       "perf_6m": 1.121198,
       "perf_1y": 1.831818,
       "validation": "definitional",
-      "validation_excess": -0.0629,
+      "validation_excess": -0.0519,
       "publish": true
     },
     {
@@ -5028,7 +5028,7 @@
       "perf_6m": 0.655957,
       "perf_1y": 0.428304,
       "validation": "real",
-      "validation_excess": 0.2101,
+      "validation_excess": 0.2064,
       "publish": true
     },
     {
@@ -5130,7 +5130,7 @@
       "perf_6m": 0.708958,
       "perf_1y": 1.088167,
       "validation": "definitional",
-      "validation_excess": -0.0457,
+      "validation_excess": -0.0264,
       "publish": true
     },
     {
@@ -5428,7 +5428,7 @@
       "perf_6m": 0.640803,
       "perf_1y": 1.011555,
       "validation": "definitional",
-      "validation_excess": -0.0354,
+      "validation_excess": -0.0216,
       "publish": true
     },
     {
@@ -5793,7 +5793,74 @@
       "perf_6m": 0.167572,
       "perf_1y": -0.027619,
       "validation": "real",
-      "validation_excess": 0.0681,
+      "validation_excess": 0.0887,
+      "publish": true
+    },
+    {
+      "rs_0_1w": 0.056431,
+      "rs_1w_1m": -0.08044,
+      "rs_1m_3m": 0.126278,
+      "rs_3m_6m": -0.01818,
+      "excess_3m": 0.099394,
+      "rs_accel": -0.153335,
+      "state": "Weakening",
+      "persistence": 4,
+      "persistence_of": 5,
+      "group": "Genomics",
+      "method": "etf",
+      "source": "tsf",
+      "members": 40,
+      "measurable": true,
+      "tickers": [
+        "ABSI",
+        "ADPT",
+        "ALMR",
+        "ALNY",
+        "ARWR",
+        "BEAM",
+        "BLLN",
+        "BNTX",
+        "CAI",
+        "CDNA",
+        "CRSP",
+        "DYN",
+        "GENB",
+        "GH",
+        "GRAL",
+        "ILMN",
+        "IONS",
+        "KRYS",
+        "LEGN",
+        "MRNA",
+        "MRVI",
+        "NEO",
+        "NTLA",
+        "NTRA",
+        "PRAX",
+        "PSNL",
+        "QGEN",
+        "QURE",
+        "RARE",
+        "RXRX",
+        "SDGR",
+        "SRPT",
+        "STOK",
+        "TEM",
+        "TSHA",
+        "TWST",
+        "TXG",
+        "VCYT",
+        "WGS",
+        "WVE"
+      ],
+      "needs_manual": false,
+      "perf_1w": 0.058635,
+      "perf_1m": 0.004792,
+      "perf_3m": 0.147712,
+      "perf_6m": 0.205189,
+      "perf_1y": 1.015588,
+      "validation": "real",
+      "validation_excess": 0.0524,
       "publish": true
     },
     {
@@ -5903,7 +5970,7 @@
       "perf_6m": 0.104542,
       "perf_1y": 0.20246,
       "validation": "real",
-      "validation_excess": 0.1687,
+      "validation_excess": 0.1937,
       "publish": true
     },
     {
@@ -5943,8 +6010,8 @@
       "perf_3m": 0.121976,
       "perf_6m": 0.069517,
       "perf_1y": -0.01694,
-      "validation": "weak",
-      "validation_excess": 0.0359,
+      "validation": "real",
+      "validation_excess": 0.0953,
       "publish": true
     },
     {
@@ -6127,7 +6194,7 @@
       "perf_6m": 0.078731,
       "perf_1y": 0.352603,
       "validation": "real",
-      "validation_excess": 0.3238,
+      "validation_excess": 0.3656,
       "publish": true
     },
     {
@@ -6191,7 +6258,7 @@
       "perf_6m": 0.054412,
       "perf_1y": 0.044551,
       "validation": "real",
-      "validation_excess": 0.1232,
+      "validation_excess": 0.1386,
       "publish": true
     },
     {
@@ -6291,7 +6358,7 @@
       "perf_6m": 0.128693,
       "perf_1y": 0.390789,
       "validation": "definitional",
-      "validation_excess": 0.1289,
+      "validation_excess": 0.13,
       "publish": true
     },
     {
@@ -6353,7 +6420,7 @@
       "perf_6m": -0.021032,
       "perf_1y": 0.065392,
       "validation": "real",
-      "validation_excess": 0.2243,
+      "validation_excess": 0.2838,
       "publish": true
     },
     {
@@ -6439,8 +6506,8 @@
       "perf_3m": 0.089865,
       "perf_6m": -0.01209,
       "perf_1y": 0.076681,
-      "validation": "weak",
-      "validation_excess": 0.0447,
+      "validation": "real",
+      "validation_excess": 0.0563,
       "publish": true
     },
     {
@@ -6522,7 +6589,7 @@
       "perf_6m": 0.065721,
       "perf_1y": 0.270068,
       "validation": "real",
-      "validation_excess": 0.0521,
+      "validation_excess": 0.1129,
       "publish": true
     },
     {
@@ -6744,7 +6811,7 @@
       "perf_6m": 0.077051,
       "perf_1y": 0.029614,
       "validation": "real",
-      "validation_excess": 0.1115,
+      "validation_excess": 0.1339,
       "publish": true
     },
     {
@@ -6755,7 +6822,7 @@
       "excess_3m": 0.028886,
       "rs_accel": -0.082477,
       "state": "Weakening",
-      "persistence": 1,
+      "persistence": 0,
       "persistence_of": 5,
       "group": "Travel & Leisure",
       "method": "industry",
@@ -6839,7 +6906,7 @@
       "perf_6m": -0.011949,
       "perf_1y": 0.188008,
       "validation": "real",
-      "validation_excess": 0.1518,
+      "validation_excess": 0.1754,
       "publish": true
     },
     {
@@ -8450,7 +8517,7 @@
       "perf_6m": 0.085265,
       "perf_1y": 0.252514,
       "validation": "definitional",
-      "validation_excess": 0.0023,
+      "validation_excess": 0.002,
       "publish": true
     },
     {
@@ -8483,7 +8550,7 @@
       "perf_6m": 0.088489,
       "perf_1y": 0.928151,
       "validation": "real",
-      "validation_excess": 0.3574,
+      "validation_excess": 0.3901,
       "publish": true
     },
     {
@@ -8624,7 +8691,7 @@
       "perf_6m": 0.061693,
       "perf_1y": 0.229475,
       "validation": "real",
-      "validation_excess": 0.1589,
+      "validation_excess": 0.1992,
       "publish": true
     },
     {
@@ -8702,7 +8769,7 @@
       "perf_6m": 0.094727,
       "perf_1y": 0.094763,
       "validation": "real",
-      "validation_excess": 0.0676,
+      "validation_excess": 0.0831,
       "publish": true
     },
     {
@@ -8923,7 +8990,7 @@
       "perf_6m": 0.32008,
       "perf_1y": 0.41182,
       "validation": "real",
-      "validation_excess": 0.0569,
+      "validation_excess": 0.0895,
       "publish": true
     },
     {
@@ -8991,8 +9058,8 @@
       "perf_3m": 0.04975,
       "perf_6m": -0.270784,
       "perf_1y": -0.012862,
-      "validation": "weak",
-      "validation_excess": 0.0278,
+      "validation": "real",
+      "validation_excess": 0.0673,
       "publish": true
     },
     {
@@ -9207,7 +9274,7 @@
       "perf_6m": 0.013535,
       "perf_1y": 0.200985,
       "validation": "real",
-      "validation_excess": 0.1249,
+      "validation_excess": 0.1642,
       "publish": true
     },
     {
@@ -9273,7 +9340,7 @@
       "perf_6m": -0.162437,
       "perf_1y": -0.195169,
       "validation": "weak",
-      "validation_excess": 0.0295,
+      "validation_excess": 0.0472,
       "publish": true
     },
     {
@@ -9377,7 +9444,7 @@
       "perf_6m": 0.070569,
       "perf_1y": 0.354818,
       "validation": "real",
-      "validation_excess": 0.1488,
+      "validation_excess": 0.1736,
       "publish": true
     },
     {
@@ -9533,7 +9600,7 @@
       "perf_6m": 0.093987,
       "perf_1y": 0.182814,
       "validation": "real",
-      "validation_excess": 0.2246,
+      "validation_excess": 0.2381,
       "publish": true
     },
     {
@@ -9589,7 +9656,7 @@
       "perf_6m": 0.116353,
       "perf_1y": 0.456966,
       "validation": "real",
-      "validation_excess": 0.102,
+      "validation_excess": 0.1362,
       "publish": true
     },
     {
@@ -9717,7 +9784,7 @@
       "perf_6m": 0.144562,
       "perf_1y": 0.438896,
       "validation": "real",
-      "validation_excess": 0.0717,
+      "validation_excess": 0.1133,
       "publish": true
     },
     {
@@ -10913,7 +10980,7 @@
       "perf_6m": 0.109654,
       "perf_1y": 0.326935,
       "validation": "definitional",
-      "validation_excess": -0.0404,
+      "validation_excess": -0.0202,
       "publish": true
     },
     {
@@ -10955,7 +11022,7 @@
       "perf_6m": 0.189976,
       "perf_1y": 0.733848,
       "validation": "real",
-      "validation_excess": 0.2023,
+      "validation_excess": 0.2558,
       "publish": true
     },
     {
@@ -10988,7 +11055,7 @@
       "perf_6m": -0.062682,
       "perf_1y": 0.127213,
       "validation": "real",
-      "validation_excess": 0.1995,
+      "validation_excess": 0.2265,
       "publish": true
     },
     {
@@ -11234,7 +11301,7 @@
       "perf_6m": 0.27737,
       "perf_1y": 0.563761,
       "validation": "definitional",
-      "validation_excess": -0.0305,
+      "validation_excess": 0.0002,
       "publish": true
     },
     {
@@ -11393,7 +11460,7 @@
       "perf_6m": 0.036209,
       "perf_1y": 0.261826,
       "validation": "real",
-      "validation_excess": 0.1323,
+      "validation_excess": 0.1706,
       "publish": true
     },
     {
@@ -11429,7 +11496,7 @@
       "perf_6m": 0.128693,
       "perf_1y": 0.232565,
       "validation": "real",
-      "validation_excess": 0.2437,
+      "validation_excess": 0.3092,
       "publish": true
     },
     {
@@ -11484,7 +11551,7 @@
       "perf_6m": -0.038789,
       "perf_1y": 0.073473,
       "validation": "real",
-      "validation_excess": 0.1202,
+      "validation_excess": 0.1177,
       "publish": true
     },
     {
@@ -11660,7 +11727,7 @@
       "perf_6m": 0.155004,
       "perf_1y": 0.444039,
       "validation": "real",
-      "validation_excess": 0.1658,
+      "validation_excess": 0.1838,
       "publish": true
     },
     {
@@ -11731,7 +11798,7 @@
       "perf_6m": 0.040451,
       "perf_1y": 0.082371,
       "validation": "real",
-      "validation_excess": 0.1863,
+      "validation_excess": 0.2334,
       "publish": true
     },
     {
@@ -11815,7 +11882,7 @@
       "perf_6m": 0.316213,
       "perf_1y": 0.77285,
       "validation": "real",
-      "validation_excess": 0.127,
+      "validation_excess": 0.1892,
       "publish": true
     },
     {
@@ -11923,7 +11990,7 @@
       "perf_6m": 0.03871,
       "perf_1y": 0.111044,
       "validation": "real",
-      "validation_excess": 0.1414,
+      "validation_excess": 0.1671,
       "publish": true
     },
     {
@@ -12047,7 +12114,7 @@
       "perf_6m": 0.131393,
       "perf_1y": 0.292614,
       "validation": "real",
-      "validation_excess": 0.1067,
+      "validation_excess": 0.1222,
       "publish": true
     },
     {
@@ -12058,7 +12125,7 @@
       "excess_3m": -0.063399,
       "rs_accel": 0.053502,
       "state": "Improving",
-      "persistence": 3,
+      "persistence": 2,
       "persistence_of": 5,
       "group": "Optics & Networking Equipment",
       "method": "industry",
@@ -12093,7 +12160,7 @@
       "perf_6m": 0.444762,
       "perf_1y": 0.542784,
       "validation": "real",
-      "validation_excess": 0.0598,
+      "validation_excess": 0.081,
       "publish": true
     },
     {
@@ -12361,7 +12428,7 @@
       "perf_6m": 0.442638,
       "perf_1y": 1.075326,
       "validation": "real",
-      "validation_excess": 0.2312,
+      "validation_excess": 0.2601,
       "publish": true
     },
     {
@@ -12372,7 +12439,7 @@
       "excess_3m": -0.101116,
       "rs_accel": 0.107012,
       "state": "Improving",
-      "persistence": 1,
+      "persistence": 0,
       "persistence_of": 5,
       "group": "Quantum Computing",
       "method": "etf",
@@ -12393,7 +12460,7 @@
       "perf_6m": 0.001931,
       "perf_1y": 0.061649,
       "validation": "real",
-      "validation_excess": 0.1723,
+      "validation_excess": 0.1264,
       "publish": true
     },
     {
@@ -12451,7 +12518,7 @@
       "perf_6m": -0.066789,
       "perf_1y": 0.594616,
       "validation": "real",
-      "validation_excess": 0.2427,
+      "validation_excess": 0.3504,
       "publish": true
     },
     {
@@ -12605,7 +12672,7 @@
       "excess_3m": -0.147366,
       "rs_accel": 0.015356,
       "state": "Improving",
-      "persistence": 1,
+      "persistence": 0,
       "persistence_of": 5,
       "group": "AI - Datacenters",
       "method": "etf",
@@ -12691,7 +12758,7 @@
       "perf_3m": -0.126429,
       "perf_6m": -0.035235,
       "perf_1y": null,
-      "validation": "too few in panel",
+      "validation": null,
       "validation_excess": null,
       "publish": true
     },
@@ -12728,7 +12795,7 @@
       "perf_6m": -0.134915,
       "perf_1y": 0.354184,
       "validation": "real",
-      "validation_excess": 0.2327,
+      "validation_excess": 0.2293,
       "publish": true
     },
     {
@@ -12775,7 +12842,7 @@
       "perf_6m": -0.118168,
       "perf_1y": 0.359339,
       "validation": "real",
-      "validation_excess": 0.098,
+      "validation_excess": 0.0982,
       "publish": true
     },
     {
@@ -12864,7 +12931,7 @@
       "perf_6m": -0.273655,
       "perf_1y": 0.268586,
       "validation": "real",
-      "validation_excess": 0.3113,
+      "validation_excess": 0.2852,
       "publish": true
     },
     {
@@ -12905,7 +12972,7 @@
       "perf_6m": 0.093538,
       "perf_1y": 0.043501,
       "validation": "real",
-      "validation_excess": 0.1816,
+      "validation_excess": 0.1921,
       "publish": true
     },
     {
@@ -12993,7 +13060,7 @@
       "perf_6m": 0.110174,
       "perf_1y": 0.689012,
       "validation": "real",
-      "validation_excess": 0.1014,
+      "validation_excess": 0.1242,
       "publish": true
     },
     {
@@ -13081,8 +13148,8 @@
       "perf_3m": -0.283012,
       "perf_6m": -0.193424,
       "perf_1y": 0.480628,
-      "validation": "weak",
-      "validation_excess": 0.04,
+      "validation": "real",
+      "validation_excess": 0.0712,
       "publish": true
     },
     {
@@ -13118,7 +13185,7 @@
       "perf_6m": -0.193424,
       "perf_1y": 0.470223,
       "validation": "real",
-      "validation_excess": 0.0678,
+      "validation_excess": 0.0633,
       "publish": true
     }
   ],
@@ -13150,6 +13217,90 @@
         "ticker": "HIVE"
       },
       {
+        "theme": "Genomics",
+        "ticker": "SOPH"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "ABEO"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "SCTX"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "CSTL"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "ARCT"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "RGNX"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "BNTC"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "FLGT"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "RCKT"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "SANA"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "SLDB"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "EDIT"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "PRME"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "LXEO"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "VYGR"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "CRBU"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "DNA"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "LAB"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "QSI"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "PACB"
+      },
+      {
+        "theme": "Genomics",
+        "ticker": "MYGN"
+      },
+      {
         "theme": "Quantum Computing",
         "ticker": "ARQQ"
       },
@@ -13160,7 +13311,12 @@
     ],
     "unknown_industries": [],
     "proxy_etf_not_in_etf_data": [],
-    "etf_without_cached_holdings": [],
+    "etf_without_cached_holdings": [
+      {
+        "theme": "Genomics",
+        "etf": "ARKG"
+      }
+    ],
     "clean": false
   },
   "stocks": {
@@ -13479,8 +13635,8 @@
       "group": "Biotechnology",
       "group_pctile": 86.34,
       "top_quartile": true,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "ABT": {
       "rs_0_1w": 0.004237,
@@ -13879,8 +14035,8 @@
       "group": "Diagnostics & Research",
       "group_pctile": 82.14,
       "top_quartile": true,
-      "primary_group": "Diagnostics & Research",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "ADT": {
       "rs_0_1w": -0.032661,
@@ -14791,8 +14947,8 @@
       "group": "Medical Devices",
       "group_pctile": 55.0,
       "top_quartile": false,
-      "primary_group": "Medical Devices",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "ALMS": {
       "rs_0_1w": 0.054458,
@@ -14839,8 +14995,8 @@
       "group": "Biotechnology",
       "group_pctile": 3.73,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "ALRM": {
       "rs_0_1w": 0.033626,
@@ -16135,8 +16291,8 @@
       "group": "Biotechnology",
       "group_pctile": 56.52,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "ARX": {
       "rs_0_1w": 0.034402,
@@ -17799,8 +17955,8 @@
       "group": "Biotechnology",
       "group_pctile": 11.8,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "BEKE": {
       "rs_0_1w": -0.016663,
@@ -18599,8 +18755,8 @@
       "group": "Diagnostics & Research",
       "group_pctile": 3.57,
       "top_quartile": false,
-      "primary_group": "Diagnostics & Research",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "BLSH": {
       "rs_0_1w": 0.027888,
@@ -18823,8 +18979,8 @@
       "group": "Biotechnology",
       "group_pctile": 26.09,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "BNY": {
       "rs_0_1w": 0.006823,
@@ -19779,8 +19935,8 @@
       "group": "Biotechnology",
       "group_pctile": 78.88,
       "top_quartile": true,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "CAKE": {
       "rs_0_1w": 0.018389,
@@ -20337,8 +20493,8 @@
       "group": "Diagnostics & Research",
       "group_pctile": 96.43,
       "top_quartile": true,
-      "primary_group": "Diagnostics & Research",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "CDNL": {
       "rs_0_1w": 0.012542,
@@ -24655,8 +24811,8 @@
       "group": "Biotechnology",
       "group_pctile": 84.47,
       "top_quartile": true,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "E": {
       "rs_0_1w": -0.018534,
@@ -28295,8 +28451,8 @@
       "group": "Biotechnology",
       "group_pctile": 29.81,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "GENI": {
       "rs_0_1w": 0.071346,
@@ -28471,8 +28627,8 @@
       "group": "Diagnostics & Research",
       "group_pctile": 78.57,
       "top_quartile": true,
-      "primary_group": "Diagnostics & Research",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "GHC": {
       "rs_0_1w": -0.024758,
@@ -29143,8 +29299,8 @@
       "group": "Diagnostics & Research",
       "group_pctile": 10.71,
       "top_quartile": false,
-      "primary_group": "Diagnostics & Research",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "GRBK": {
       "rs_0_1w": 0.01114,
@@ -31413,7 +31569,7 @@
       "group": "Diagnostics & Research",
       "group_pctile": 60.71,
       "top_quartile": false,
-      "primary_group": "Robotics & Automation",
+      "primary_group": "Genomics",
       "primary_kind": "theme"
     },
     "IMAX": {
@@ -31923,8 +32079,8 @@
       "group": "Biotechnology",
       "group_pctile": 4.35,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "IOSP": {
       "rs_0_1w": 0.079219,
@@ -33505,8 +33661,8 @@
       "group": "Biotechnology",
       "group_pctile": 32.3,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "KSPI": {
       "rs_0_1w": -0.020682,
@@ -34047,8 +34203,8 @@
       "group": "Biotechnology",
       "group_pctile": 3.11,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "LEN": {
       "rs_0_1w": 0.032773,
@@ -36825,8 +36981,8 @@
       "group": "Biotechnology",
       "group_pctile": 36.02,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "MRP": {
       "rs_0_1w": 0.009314,
@@ -36889,8 +37045,8 @@
       "group": "Biotechnology",
       "group_pctile": 68.94,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "MRVL": {
       "rs_0_1w": 0.126499,
@@ -37769,8 +37925,8 @@
       "group": "Diagnostics & Research",
       "group_pctile": 85.71,
       "top_quartile": true,
-      "primary_group": "Diagnostics & Research",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "NEOG": {
       "rs_0_1w": -0.038338,
@@ -38649,8 +38805,8 @@
       "group": "Biotechnology",
       "group_pctile": 9.94,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "NTNX": {
       "rs_0_1w": 0.024163,
@@ -38697,8 +38853,8 @@
       "group": "Diagnostics & Research",
       "group_pctile": 75.0,
       "top_quartile": true,
-      "primary_group": "Diagnostics & Research",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "NTRS": {
       "rs_0_1w": 0.015908,
@@ -42053,8 +42209,8 @@
       "group": "Biotechnology",
       "group_pctile": 36.65,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "PRCH": {
       "rs_0_1w": -0.015894,
@@ -42421,8 +42577,8 @@
       "group": "Diagnostics & Research",
       "group_pctile": 100.0,
       "top_quartile": true,
-      "primary_group": "Diagnostics & Research",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "PSNY": {
       "rs_0_1w": -0.023525,
@@ -42805,8 +42961,8 @@
       "group": "Diagnostics & Research",
       "group_pctile": 53.57,
       "top_quartile": false,
-      "primary_group": "Diagnostics & Research",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "QLYS": {
       "rs_0_1w": 0.182379,
@@ -42947,8 +43103,8 @@
       "group": "Biotechnology",
       "group_pctile": 94.41,
       "top_quartile": true,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "QXO": {
       "rs_0_1w": 0.144709,
@@ -43059,8 +43215,8 @@
       "group": "Biotechnology",
       "group_pctile": 24.22,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "RBA": {
       "rs_0_1w": -0.158148,
@@ -44371,8 +44527,8 @@
       "group": "Biotechnology",
       "group_pctile": 21.74,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "RXT": {
       "rs_0_1w": 0.02505,
@@ -44995,8 +45151,8 @@
       "group": "Health Information Services",
       "group_pctile": 75.0,
       "top_quartile": true,
-      "primary_group": "Health Information Services",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "SDRL": {
       "rs_0_1w": 0.01282,
@@ -46653,8 +46809,8 @@
       "group": "Biotechnology",
       "group_pctile": 9.32,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "SRRK": {
       "rs_0_1w": 0.151994,
@@ -47003,8 +47159,8 @@
       "group": "Biotechnology",
       "group_pctile": 24.84,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "STRA": {
       "rs_0_1w": 0.011894,
@@ -49211,8 +49367,8 @@
       "group": "Biotechnology",
       "group_pctile": 20.5,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "TSLA": {
       "rs_0_1w": 0.017977,
@@ -49563,8 +49719,8 @@
       "group": "Diagnostics & Research",
       "group_pctile": 92.86,
       "top_quartile": true,
-      "primary_group": "Diagnostics & Research",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "TX": {
       "rs_0_1w": 0.081431,
@@ -50763,8 +50919,8 @@
       "group": "Diagnostics & Research",
       "group_pctile": 21.43,
       "top_quartile": false,
-      "primary_group": "Diagnostics & Research",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "VECO": {
       "rs_0_1w": 0.033503,
@@ -52155,8 +52311,8 @@
       "group": "Diagnostics & Research",
       "group_pctile": 89.29,
       "top_quartile": true,
-      "primary_group": "Diagnostics & Research",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "WH": {
       "rs_0_1w": -0.021601,
@@ -52889,8 +53045,8 @@
       "group": "Biotechnology",
       "group_pctile": 11.18,
       "top_quartile": false,
-      "primary_group": "Biotechnology",
-      "primary_kind": "industry"
+      "primary_group": "Genomics",
+      "primary_kind": "theme"
     },
     "WWD": {
       "rs_0_1w": -0.004074,
@@ -53678,7 +53834,7 @@
     }
   },
   "summary": {
-    "publishable_themes": 74,
+    "publishable_themes": 75,
     "provisional_themes": 0,
     "industries": 121,
     "industry_states": {
@@ -53687,24 +53843,24 @@
       "Improving": 32,
       "Lagging": 27
     },
-    "themes": 74,
+    "themes": 75,
     "theme_states": {
       "Leading": 8,
-      "Weakening": 21,
+      "Weakening": 22,
       "Improving": 30,
       "Lagging": 15
     },
     "themes_skipped": 0,
     "taxonomy": {
-      "total": 74,
+      "total": 75,
       "by_method": {
         "industry": 28,
         "proxy": 16,
-        "etf": 22,
+        "etf": 23,
         "rule": 8
       },
       "by_source": {
-        "tsf": 61,
+        "tsf": 62,
         "fluxus": 13
       },
       "needs_manual": [

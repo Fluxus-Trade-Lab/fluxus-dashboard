@@ -350,6 +350,22 @@ _ETF_THEMES: list[Theme] = [
                "Tech, however it screens. Found when the primary-group rule "
                "assigned LLY here as its identity."),
     Theme("Semiconductors Large Caps", "etf", etf=("SMH",)),
+    # TSF's Genomics list, transcribed from their Thematic Focus table
+    # 2026-08-11 — all 61 names, verified present in our universe. ~21 sit
+    # under the $1B floor and drop from scoring while staying on the record
+    # here; the floor is the filter, not the transcription. ARKG seeds the
+    # theme so holdings drift tracks the fund even if this list ages.
+    # Publication is NOT automatic: etf-method themes need a co-movement
+    # verdict of real/weak, same bar as every other curated theme.
+    Theme("Genomics", "etf", etf=("ARKG",),
+          extra=("TWST", "SOPH", "CAI", "CDNA", "TXG", "NEO", "NTRA", "ABEO",
+                 "SCTX", "WGS", "SDGR", "ADPT", "DYN", "CSTL", "ARCT", "PSNL",
+                 "PRAX", "TEM", "QURE", "ABSI", "TSHA", "ALMR", "RGNX", "ARWR",
+                 "BNTC", "GH", "NTLA", "STOK", "LEGN", "IONS", "ILMN", "FLGT",
+                 "CRSP", "RCKT", "GRAL", "SANA", "RXRX", "BEAM", "SLDB", "SRPT",
+                 "GENB", "MRNA", "QGEN", "EDIT", "PRME", "LXEO", "VYGR", "CRBU",
+                 "WVE", "DNA", "LAB", "BNTX", "QSI", "RARE", "KRYS", "MRVI",
+                 "PACB", "VCYT", "ALNY", "BLLN", "MYGN")),
     # `proxy`, not `etf`: you cannot buy the list, you buy the fund that tracks
     # it, which is exactly the case this method exists for. It also settles the
     # sourcing question -- the IBD 50 is Investor's Business Daily subscription
