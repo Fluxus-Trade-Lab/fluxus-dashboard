@@ -159,8 +159,9 @@ window.__X.clear();   // 清掉，下一窗从零计
 | 账号 | 窗口 | 状态 | 落盘文件 | 日期 |
 |---|---|---|---|---|
 | @ohiain | 2024-Q3 → 2026-Q3（8 窗） | ✅ **完成** 79 条抓取 / 72 条有效 | `ohiain_index.csv` · `ohiain_top100.json` | 2026-08-10 |
-| @ZaStocks | — | ⬜ 排队 | — | — |
-| @thesetupfactory | — | ⬜ 排队 | — | — |
+| @ZaStocks | 2024-Q3 → 2026-Q2（8 窗） | ✅ **完成** 71 条有效 | `zastocks_index.csv` · `zastocks_top100.json` | 2026-08-10 |
+| @thesetupfactory | — | ⬜ **下一个** | — | — |
+| @Clement_Ang17 | — | ⬜ 排队(音区标杆,小号) | — | — |
 
 ---
 
