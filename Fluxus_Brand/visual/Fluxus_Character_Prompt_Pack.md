@@ -47,25 +47,33 @@
 ```
 A wide horizontal pen-and-ink cartoon scene, drawn by hand.
 
-SUBJECT — An ordinary office worker in his forties, seated at a plain desk,
-doing absolutely nothing. Deadpan expression: not sad, not smug, not amused.
-Slightly rumpled shirt, sleeves pushed up, unremarkable haircut. He is small
-in the frame. His hands are still — resting on the desk, or holding a mug of
-tea. He is NOT looking at the wall behind him.
+SUBJECT — MR. FLUXUS: a middle-aged East Asian man with a round face and
+full cheeks, slightly heavyset. He wears a black knitted bucket hat with a
+visible crochet texture, pulled low; thin round gold wire-rimmed glasses;
+and a rumpled checked button-up shirt, sleeves pushed up. Expression:
+deadpan with a faint hint of grumpiness — the face of a man who has been
+asked for stock tips one time too many. Not sad, not smug, never smiling.
+He must NOT look cool, heroic, or successful — he looks like an ordinary
+tired man doing paperwork. He is small in the frame. His hands are still,
+one holding a transparent ballpoint pen.
 
-ENVIRONMENT — Behind and above him, an enormous wall of instruments and
-readouts fills most of the picture: rows of small dials, gauges, printed
-tickers, pinned sheets of paper, tiny numeric displays, a paper tape spilling
-onto the floor. Everything on the wall is switched on and busy. The wall
-dwarfs him. Analogue and mechanical, like a 1970s control room — not screens,
-not futuristic.
+ENVIRONMENT — A small home trading den, not an office: a desk with several
+monitors on arms, the charts on them drawn as loose hand-inked squiggles
+(never realistic UI), lace curtains behind, a half-finished mug of tea,
+and geological strata of paper on the desk — stopped-out order slips, each
+stamped NO. A plump indifferent cat sleeps next to the keyboard. One desk
+drawer sits slightly open, with a small hand-lettered label reading
+"OLD THESIS". Domestic, cluttered, unglamorous.
+(The analogue 1970s instrument-wall of v1 is NOT dead — it has moved: it now
+lives only in the brain-world scenes, see the spec's inner-world rules.)
 
-THE JOKE — The whole apparatus is running at full tilt and the man is doing
-nothing. That contrast is the entire content of the drawing.
+THE JOKE — Everything about him says small, ordinary, losing-most-days.
+The stack of NO-stamped slips keeps growing. He is completely fine.
 
-PROPS — A small hand-lettered cardboard sign propped on the desk reading
-"NOT A CALL". A rubber stamp on the desk. One small open notebook with a
-single line written in it.
+PROPS — A hand-lettered cardboard sign propped on the desk reading
+"NOT FINANCIAL ADVICE". A rubber stamp. One small open notebook with a
+single line written in it. The stamped word NO may be the picture's single
+burnt-orange (#D1600F) element.
 
 STYLE — Hand-drawn ink line with visible variation in line weight, slightly
 imperfect, confident. Shading built from cross-hatching only — no grey fills,
@@ -86,8 +94,53 @@ money, no computer screens or glowing monitors, no neon, no 3D rendering, no
 gradients, no glossy highlights, no flat vector "corporate" illustration
 style, no oversized head or exaggerated cartoon proportions, no anime styling,
 no logos or brand marks, no smiling, no suit and tie, no yacht, no city
-skyline, no robot, no hooded figure, no monk, no meditation pose.
+skyline, no robot, no hooded figure, no glowing eyes, no transformation
+effects, no heroic low-angle shot, no lens flare, no clenched fist of
+determination, no "focused genius" trope, no monk, no meditation pose.
 ```
+
+---
+
+## 四点五、Model-sheet prompt（定妆表 —— 第一批产出）
+
+*定妆表先于一切场景图。五个场景必须是同一个人,这页就是「同一个人」的定义。*
+
+```
+A character model sheet, hand-drawn in pen and ink on a flat warm off-white
+page (#F4F3F0), laid out like an animator's reference sheet with small
+hand-lettered labels. Cross-hatched shading only, no grey fills, no
+gradients. Roughly 4:3 landscape.
+
+ROW 1 — THE SAME MAN, THREE VIEWS: front view, three-quarter view, profile.
+A middle-aged East Asian man, round face, full cheeks, slightly heavyset,
+wearing a black knitted bucket hat with visible crochet texture pulled low,
+thin round gold wire-rimmed glasses, and a rumpled checked button-up shirt.
+Identical hat, glasses, shirt and body in all three views.
+
+ROW 2 — EXPRESSION STUDIES, three heads: (a) baseline deadpan; (b) faintly
+annoyed, eyes half-lidded, being asked for a stock tip; (c) asleep upright
+in a chair, glasses slipping, a small hand-drawn "zzz". No smiling, no
+glowing eyes, no heroic expressions.
+
+ROW 3 — PROP STUDIES, drawn separately and labelled by hand: the black
+knitted bucket hat; the round gold wire glasses; a rubber stamp and the
+stamped word "NO" (this stamped NO, in burnt orange #D1600F, is the only
+colour on the page); a transparent ballpoint pen; a mug of tea; a
+hand-lettered cardboard sign reading "NOT FINANCIAL ADVICE"; a desk drawer,
+slightly open, with a hand-written label "OLD THESIS".
+
+ROW 4 — THE CAT: a plump indifferent cat, two poses: curled asleep beside
+a keyboard; standing on the keyboard mid-mischief, one paw on a key.
+
+DO NOT INCLUDE — no charts, no candlesticks, no arrows, no bulls or bears,
+no currency symbols, no computer screens, no neon, no 3D rendering, no
+gradients, no flat corporate vector style, no anime, no oversized head
+proportions, no smiling, no suit, no glowing eyes, no heroic poses.
+```
+
+*猫是真实存在的那只 —— Andy 若提供猫的照片,把品种特征(毛色/花纹)补进 ROW 4;
+没有照片就先按 "plump indifferent cat" 出,后补。*
+*抽屉标签公开版用 "OLD THESIS";内部版可用 "BABA"(H1 审计的实价出处)。*
 
 ---
 
@@ -134,3 +187,7 @@ skyline, no robot, no hooded figure, no monk, no meditation pose.
    —— 要靠姿态,不能靠文字解释。
 3. **它像不像一张理财 App 的插画?**
    —— 像就是失败。这张画必须让人第一眼**不觉得跟市场有关**。
+4. **剪影测试:** 涂黑整个人形,只留轮廓 —— 渔夫帽 + 圆镜 + 格衬衫的组合还认得出是他吗?
+   认不出就是三件套画弱了。
+5. **反英雄测试:** 他看起来像一个会赢的人吗? —— **像就重来。**
+   这张脸必须属于一个胜率四成、靠纪律活着的人。
