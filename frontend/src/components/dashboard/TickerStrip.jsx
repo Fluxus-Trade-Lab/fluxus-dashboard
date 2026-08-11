@@ -26,17 +26,18 @@ export default function TickerStrip({ signals, etfData }) {
   }, [etfData])
 
   return (
-    <div className="overflow-x-auto pb-2 -mx-2 px-2">
-      <div className="flex gap-2">
-        {STRIP_TICKERS.map(({ key, source }) => (
-          <TickerCard
-            key={key}
-            ticker={key}
-            signal={source === 'signals' ? signals?.[key] : null}
-            etf={etfMap[key] || null}
-          />
-        ))}
-      </div>
+    // auto-fit + 1fr: the cards divide whatever width exists — ultrawide, laptop
+    // or phone — and wrap instead of scrolling, so the row never ends in a blank
+    <div className="grid gap-2"
+         style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(128px, 1fr))' }}>
+      {STRIP_TICKERS.map(({ key, source }) => (
+        <TickerCard
+          key={key}
+          ticker={key}
+          signal={source === 'signals' ? signals?.[key] : null}
+          etf={etfMap[key] || null}
+        />
+      ))}
     </div>
   )
 }

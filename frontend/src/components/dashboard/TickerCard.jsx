@@ -32,7 +32,7 @@ export default function TickerCard({ ticker, signal, etf }) {
   const displayName = ticker === 'BTC-USD' ? 'BTC' : ticker === '^VIX' ? 'VIX' : ticker
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg px-4 py-3 min-w-[140px] flex-shrink-0">
+    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg px-4 py-3 min-w-0">
       {/* Ticker + signal dot */}
       <div className="flex items-center gap-2 mb-1.5">
         {sigColor && (

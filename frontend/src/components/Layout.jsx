@@ -21,7 +21,6 @@ function Band({ label, note }) {
   )
 }
 import TickerStrip from './dashboard/TickerStrip'
-import TrendStatus from './macro/TrendStatus'
 import RegimeBand from './dashboard/RegimeBand'
 import LeadersLaggards from './dashboard/LeadersLaggards'
 import SectorStrength from './dashboard/SectorStrength'
@@ -158,7 +157,6 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                   context every row under it is measured against, and it was
                   behind a click. */}
               <TickerStrip signals={data?.signals} etfData={data?.etf_data} />
-              <TrendStatus signals={data?.signals} />
 
               {/* Equal width, equal row height, so neither card decides the
                   other's layout. items-stretch is the default and is what makes

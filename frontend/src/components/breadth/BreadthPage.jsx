@@ -18,6 +18,7 @@ import { useTimeMachine } from './useTimeMachine'
 import Reference from '../Reference'
 import HowToRead from '../HowToRead'
 import Tier from '../Tier'
+import TrendStatus from '../macro/TrendStatus'
 
 export default function BreadthPage({ data }) {
   const tm = useTimeMachine()
@@ -74,6 +75,9 @@ export default function BreadthPage({ data }) {
           <VerdictBanner verdict={verdict} dataQuality={breadth.data_quality}
                          session={rows[rows.length - 1]?.date} />
           <MarketStateSummary mm={breadth.mm} breadth={breadth.breadth} verdict={verdict} />
+          {/* moved off the Dashboard 2026-08-11 (Andy) — the benchmarks' MA
+              distances are state evidence, and this is the state page */}
+          <TrendStatus signals={data?.signals} />
         </div>
       </Tier>
 
