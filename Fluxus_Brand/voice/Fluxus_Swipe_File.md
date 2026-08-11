@@ -636,6 +636,59 @@ ohiain 的实际操作顺序:
 
 ---
 
+## 🏆 三账号帖库交叉验证(2026-08-10)——「目录/长文」是唯一稳定拿收藏的东西
+
+*来源:`../research/Fluxus_Ohiain_Corpus.md` · `Fluxus_ZaStocks_Corpus.md` · `Fluxus_TSF_Corpus.md`(共 145 条有效帖的定量底座)*
+
+### 三个风格完全不同的账号,收藏比最高的那条全是同一种东西
+
+| 账号 | 粉丝 | **最高收藏比的那条是什么** | 收藏/赞 |
+|---|---|---|---|
+| **@ohiain** | 44.5K | **A–Z 体系文章**(带编号目录) | **2.17** |
+| **@thesetupfactory** | **5,075** | **周度分析的 14 行议程**(纯目录) | **2.13** |
+| **@ZaStocks** | 87K | **2025 年度前瞻长文**(自评 B+ + 认错卖太早) | **0.94** |
+
+**Za 是传播型账号(中位收藏比 0.15,最大的四条帖 0.03–0.22),而他唯一 0.94 的那条是长文复盘。**
+**TSF 只有 5,075 粉,收藏比和 44.5K 粉的 ohiain 持平。**
+
+> ### 🔑 **收藏比不看粉丝、不看风格,只看你有没有给一份「目录」。**
+
+### 四个独立样本的原话(目录即产品)
+
+| 样本 | 开场 |
+|---|---|
+| **TSF** 2.13 | *"Our market analysis is out… It's a long read, hope you enjoy it.* ***Today's agenda:*** *-A close look at the major indices and the levels to watch / -Gamma & Skew / -CTAs and vol control fund positioning / -Higher timeframe structure supersedes lower timeframes / -MAGS is key / -Dispersion & correlation / -Breadth is a headache / -VIX & VIX term structure / -Sentiment incompletely reset / -Always look at the bond market…"*(**14 行**) |
+| **ohiain** 1.75(2025-01,仅 6.5K 曝光) | *"The following information below outlines my trading strategy…* ***Feel free to bookmark for later!*** *… 1) Core Philosophy 2) Criteria for Trades 3) Trade Execution 4) Timeframe Analysis 5) Stock Selection 6) Daily Key Levels 7) Indicators…"* |
+| **FranVezz** 1,109 收藏 | *"Here's a deep dive into my complete swing trading system: ✅ The 4 things I look for ✅ Position sizing & progressive exposure ✅ Tools for judging market health ✅ My buy & sell rules"* |
+| **Za** 0.94 | *"The 2025 preview.* ***This is a very long read so feel free scroll past if you don't want to take a few minutes.*** *2024 was a great year, if I had to grade myself I'd give a **B+**… I sold some of the biggest winners far too early."* |
+
+### 三条共同技术
+
+**1. 目录本身就是产品。** 四条全部在正文里列出「里面有什么」。读者收藏的是那份清单,不是那篇文章。
+
+**2. 开场都在降低门槛,不是抬高期待。**
+> TSF:*"It's a long read, hope you enjoy it"* · Za:*"**feel free scroll past** if you don't want to"* · ohiain:*"I'm not claiming to have it all figured out (far from it)"*
+**没有一条说「这是你必读的」。**
+
+**3. Za 那条多一样别人没有的:自评 + 认错。** *"I'd give myself a B+… I sold the biggest winners far too early."* —— **他最高收藏的帖,是他唯一一条公开给自己打分的帖。**
+
+### ⭐ 这解开了「测量工具不上主时间线」的一个边界
+
+用户定过:**GEX/breadth 是 craft 的底层,不上主时间线**(见 `../research/Fluxus_Za_Ohiain_Study.md` §二之二)。
+
+**但 TSF 那条 2.13 的议程里明写着 "Gamma & Skew"、"CTAs and vol control positioning"、"VIX term structure"、"Breadth"。**
+
+**不矛盾 —— 而且这正好划出了那条线:**
+
+| ❌ 不做 | ✅ 可以做 |
+|---|---|
+| **发 gamma 读数本身**(「今天 dealer gamma 在 6450 翻负」)—— 陌生人拿不走任何东西 | **在目录里列出「这封信里有 Gamma & Skew 这一节」** —— 陌生人看得懂那是一个话题 |
+
+> **目录卖的是「这里面有什么」,不是「现在的数是多少」。**
+> **术语可以当菜名,不能当菜。**
+
+---
+
 ## 入库通道(2026-08-01 加)
 
 本库现在有两条进货渠道:
@@ -648,6 +701,63 @@ ohiain 的实际操作顺序:
 **卡片上的「形态 1–9」不是文体号。** 形态是描述性的(见 `../research/Fluxus_Fintwit_Voice_Codes.md` §五),覆盖所有帖子包括坏的;文体 A–H 是录取编号,只有进了本库才有。一条卡片可能形态 4 而入库为文体 B,也可能形态 4 却根本不入库。
 
 **Copybook 的「靶」类样本永不进本库** —— 它们留在 `../copybook/Fluxus_Copybook_Ledger.md` 的「杀」行。
+
+---
+
+## 📥 待解剖 — 2026-08-10 入库
+
+### 「Turtle Trader 风控」帖 — **Tito A · @GnT_Trades · 2026-03-05** ⚠️ 他人所写
+
+**📊 数据（原帖实测）：24K views · 177 赞 · 119 收藏 · 13 转发 · 10 回复**
+> ⭐ **收藏/点赞 = 0.67** —— 极高（一般帖收藏是点赞的零头）。收藏率 0.50%，逼近本库最高的 ParadisLabs 1.21%。
+> **而这条没有图、没有点名个股、没有任何可操作项。纯原则 + 个人代价。**
+> → **收藏闸的实证**：立场拿赞，判据被收藏。「我因为仓位太大被自己震出赢家」在读者那里是**判据**，不是立场。
+
+> ⚠️ **这不是用户的字。** 用户 2026-08-10 丢进来只为存档。**任何场合都不得当作他的语料/金句使用。**
+>
+> **署名三层，别搞混（2026-08-10 核实）：**
+> | | 谁 |
+> |---|---|
+> | 名言 *"The important thing is to limit portfolio risk. The trades will take care of themselves."* | **William Eckhardt**（Richard Dennis 的合伙人） |
+> | 引用它的书《The Complete Turtle Trader》 | **Michael Covel** |
+> | **写这篇帖的人** | **Tito A · [@GnT_Trades](https://x.com/GnT_Trades/status/2029358753687191691) · 2026-03-05**（已核实） |
+>
+> 用户一度以为发帖人是 Covel。不是 —— 帖子开头 *"Reading 'The Complete Turtle Trader' by Michael Covel"* 说明叙述者是**读者**；而且「我头几年反复爆自己的风控」是第一人称交易史，Covel 是写书的记者。
+>
+> ⚠️ **Tito 不在我们 2026-07-31 那次 Top 10 全扫的名单里**（Burry · Doomberg · JB · Capital Wars · Compounding Quality · TMT Breakout · Mancini · Capital Mischief · Tic Toc · Le Shrub）。用户称他也在财经榜 Top 10 —— **刊名仍待查**，查到回填进 `../research/Fluxus_Substack_Top10.md`「榜单变动」节。
+>
+> ⚠️ **用户转来的版本和原帖有两处出入（2026-08-10 核实）：**
+> 1. **缺开头第一句** —— 原帖是 *"Pulled this off the shelf again this weekend."* **钩子是这句，不是后面那句名言。** 随手、非大师腔，"again" 暗示重读。
+> 2. **结尾不同。** 用户那版结在 *"Position sizing is one of the three pillars… the other two, a system with an edge and the ability to control oneself."* —— **原帖没有这句。** 原帖结在 ***"Risk management is one of the only things you can truly control in the market."***
+> → 一句干净落地 vs 最后一秒引入两个新概念。**原帖的结尾更好，印证了「别在结尾开新概念」这条。** 以本条存档的原帖为准。
+
+**原文（全文存档）：**
+
+> Pulled this off the shelf again this weekend.
+>
+> Reading "The Complete Turtle Trader" by Michael Covel, the thing that jumped out most wasn't the entry signals or the breakout system. It was this:
+>
+> "The important thing is to limit portfolio risk. The trades will take care of themselves."
+>
+> A group of beginners, hand-picked by Richard Dennis, made hundreds of millions of dollars. Not because they had the best entries. Not because they were smarter than Wall Street. Because they had ironclad risk management and the discipline to follow it without exception.
+>
+> This hit different after blowing through my risk time after time in my first few years. I had great conviction on a setup. The thesis was right. The entry was good. But I sized too big because I was "sure" about it. When it pulled back 3% before going my direction, I couldn't hold it. Shaken out of a winner because my position size turned normal volatility into unbearable drawdown.
+>
+> Most of us spend 90% of our time optimizing entries and 10% on risk. The Turtles did the opposite. Their entries were almost laughably simple. All of their edge was in how they managed risk and sized positions. That's the part nobody wants to hear because it's boring. But boring is what compounds.
+>
+> Risk management is one of the only things you can truly control in the market.
+
+**配图：** 书内页截图（Covel《The Complete Turtle Trader》），高亮 Eckhardt 那句。页面另含 —— System 1 盈亏平衡胜率 **41.1%**、System 2 **25.9%**、*"Percent accuracy means nothing."*
+
+**结构（文体 A · 坦白局）：** 引书 → 一句借来的核心 → 反直觉事实（新手赚了几亿，不是因为入场好）→ **自己的代价**（仓位太大 → 3% 回撤拿不住 → 被自己的仓位震出赢家）→ 反转（多数人 90% 时间调入场）→ 收在 *"boring is what compounds"*。
+
+**为什么存 —— 它撞了我们两个现成的东西：**
+1. **和 #193 是同一个命题。** 用户 2026-08-10 刚发的 *"Every loss teaches you. Every win reinforces you. Which is why the most boring part of this job is the part that makes you happy."* —— 对方的落点 *"boring is what compounds"* 说的是同一件事。**别人已经在这个音区里写了，说明这个命题有市场，也说明用户得写出比这条更硬的版本。**
+2. **⭐ 那一页给了用户一个只有他能打的点：书上写 System 1 盈亏平衡胜率是 41.1%，而用户的胜率是 39.9% —— 在它下面。按那套参数他该是亏钱的，实际 +90.5%。**「Percent accuracy means nothing」这句，用户能用自己 331 笔在同一个数字上证明一遍。**原帖作者做不到这件事，因为他没有公开账本。**
+
+**差距（用户版该补什么）：** 原帖全程零自有数据，是「我读了书我同意」。用户手上有 331 笔 · 130 笔纯止损 · 31 笔（9.4%）跑出说好的位置 / 九成没跑 · 47 笔 >3R 决定全年 · 1R ≈ 0.52% 账户。**加上这些，同一个命题就从书评变成证据。**
+
+**→ 建议归档为 文体 A（坦白局）候选样本，不作为可复用结构直接套用（作者未明）。**
 
 ---
 

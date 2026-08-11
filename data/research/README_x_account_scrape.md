@@ -90,6 +90,20 @@ window.__xgrab = () => {
 - **`f=top` 每窗返回的是封顶切片**（实测 1–20 条,不是「Top 15–20」保证）。窗口内容少时就是真的少,不是限流
 - **滚动改用 `javascript_tool` 里的 `window.scrollBy()` + `await sleep`** —— `computer` 的滚动每次返回一张截图,8 窗下来图像开销极大。单次 scrollBy 不是定时器循环,不触发后台降频问题
 
+**🚨 抓取器污染（2026-08-10 实测，必须修）：**
+
+**X 会在搜索结果里注入推荐的其他人的帖**，而原抓取器取 article 里第一个 `a[href*="/status/"]`，会把**被引用者/被推荐者**的 ID 当成本人的。实测 TSF 一个窗口 6 条里有 1 条是 @RichardMoglen 的（约 **17% 污染率**）。
+
+**修法：选择器必须带 handle 作用域。**
+
+```js
+const own = a.querySelector('a[href^="/' + HANDLE + '/status/"]');
+if (!own) return;                       // 不是本人的，跳过
+const id = (own.href.match(/status\/(\d+)/) || [])[1];
+```
+
+**验证一条帖归属的办法：** `navigate` 到 `x.com/i/status/<id>`，看 batch 末尾 Tab Context 里解析后的 URL（`location.pathname` / `document.title` 都会被安全过滤器拦掉）。
+
 **⚠️ 三个 Discord 爬取时踩过、这里同样适用的坑：**
 1. **`stats` 存原始 aria-label 字符串，落盘后再解析** —— 别在浏览器里解析数字（"8.3K"/"12万" 格式随语言环境变，解析错了原始串还在）
 2. **滚动用 `computer` 的滚动，不用 JS `setTimeout` 循环** —— 后台 tab 的 JS 定时器被降频，Discord 那次就是这么卡死的
