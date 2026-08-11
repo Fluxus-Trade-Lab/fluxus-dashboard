@@ -244,3 +244,27 @@ ThemeMembers 此前直接 toFixed(1) 当百分数印，−8.4% 印成了 −0.1%
 **交给数据端的两个字段**（Andy 已确认，先占位）：
 1. 每股一个归属指针（群体状态史列的前提）
 2. vol_5d_50d（5 日均量 ÷ 50 日均量）
+
+### §八 追记（2026-08-12，Andy 验收后的落地轮）
+
+- **Genomics**：数据端已入 taxonomy（ARKG 种子 + TSF 61 名单转录）并通过
+  co-movement 验证发布（40 成员）。覆盖缺口关闭，前端零改动自动出现。
+- **归属指针**：数据端已实现 `primary_group`/`primary_kind`（最小策展主题
+  优先，行业兜底，规则主题永不为 home）。前端 Group trend 列改读 home 组的
+  归档 ribbon。
+- **归档 ribbon**（`build_groups.attach_archive_ribbons`）：行业 + 无代理
+  ribbon 的合成主题，从 groups_archive.csv 只取**完整** 10 会话块，cell 存
+  已发布的 state/level/accel（永不重算）。归档 2026-08-07 起跑，首格约
+  2026-08-21 点亮，右起渐进、未活过的过去画虚线。
+- **vol_5d_50d**（`volume_enrichment.py`）：yfinance 全 universe 批量 3mo
+  日线量，5 日均÷50 日均；<50 会话印 —（IPO 的"50 日均"不存在）。首日实测
+  5,481/5,618。定义测试锁死 NEAR=5/BASE=50——改数字就是换测量，须换名。
+- **叙述句随选择**：非默认选择时 Reading 由当前行集生成（计数 + 州普查 +
+  榜首三名），空交集也是一句读数。
+- **列排序**：单箭头只在活跃列（十个常驻箭头是十个多余记号）；null 永远沉底，
+  升降序都一样——"没有读数"不属于任何一端。
+- **退休代码删除**（Andy: 确认不回头）：FilterPanel/RangeFilter/PresetBar/
+  ResultsTable/HeatingUp/SectorStrength 六件出仓库；WatchlistTab 与
+  screenerFilter 保留。
+- **fade 阶梯扩展**：Portfolio 持仓表参考列（入场日、trim 价/日）静息 55%。
+- i18n 单语现状记入 memory，Andy：先不管。

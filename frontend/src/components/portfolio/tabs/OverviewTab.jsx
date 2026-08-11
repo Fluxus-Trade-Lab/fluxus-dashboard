@@ -244,7 +244,7 @@ export default function OverviewTab({
                   { atr: atrDollars },
                 )
                 return (
-                <tr key={t.id} className={`${t.isClosed ? 'bg-[var(--color-closed-row)] opacity-55' : idx % 2 === 0 ? 'bg-[var(--color-surface)]' : 'bg-[var(--color-bg)]'}`}>
+                <tr key={t.id} className={`group ${t.isClosed ? 'bg-[var(--color-closed-row)] opacity-55' : idx % 2 === 0 ? 'bg-[var(--color-surface)]' : 'bg-[var(--color-bg)]'}`}>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] font-bold whitespace-nowrap">
                     <TickerLink symbol={t.ticker} />
                   </td>
@@ -262,7 +262,7 @@ export default function OverviewTab({
                       <LegStateBadge state={legState} />
                     )}
                   </td>
-                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] text-[11px] text-[var(--color-text-secondary)]">{t.entryDate?.slice(0, 10).replace(/-/g, '/')}</td>
+                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] opacity-55 group-hover:opacity-100 transition-opacity text-[11px] text-[var(--color-text-secondary)]">{t.entryDate?.slice(0, 10).replace(/-/g, '/')}</td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">
                     {pm ? MASK : (
                       <>
@@ -278,10 +278,10 @@ export default function OverviewTab({
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">
                     <EditablePrice value={t.lastPrice || t.entryPrice} onChange={v => updatePrice(t.id, v)} />
                   </td>
-                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{t.trims?.[0] ? fmtCur(t.trims[0].price) : '—'}</td>
-                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] text-[10px] text-[var(--color-text-muted)]">{t.trims?.[0]?.date || ''}</td>
-                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{t.trims?.[1] ? fmtCur(t.trims[1].price) : '—'}</td>
-                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] text-[10px] text-[var(--color-text-muted)]">{t.trims?.[1]?.date || ''}</td>
+                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] opacity-55 group-hover:opacity-100 transition-opacity tabular-nums">{t.trims?.[0] ? fmtCur(t.trims[0].price) : '—'}</td>
+                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] opacity-55 group-hover:opacity-100 transition-opacity text-[10px] text-[var(--color-text-muted)]">{t.trims?.[0]?.date || ''}</td>
+                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] opacity-55 group-hover:opacity-100 transition-opacity tabular-nums">{t.trims?.[1] ? fmtCur(t.trims[1].price) : '—'}</td>
+                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] opacity-55 group-hover:opacity-100 transition-opacity text-[10px] text-[var(--color-text-muted)]">{t.trims?.[1]?.date || ''}</td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{t.trims?.[2] ? fmtCur(t.trims[2].price) : '—'}</td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] text-[10px] text-[var(--color-text-muted)]">{t.trims?.[2]?.date || ''}</td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">

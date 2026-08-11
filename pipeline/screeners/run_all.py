@@ -625,12 +625,23 @@ def main():
     )
     logger.info("Saved etf_data.json")
 
+    # vol_5d_50d -- the screener's volume column (5-day over 50-day average
+    # volume, TSF's construction, from daily bars). Guarded: the universe must
+    # ship even when the vendor does not.
+    try:
+        from pipeline.screeners.volume_enrichment import enrich_universe
+        scored_universe = enrich_universe(scored_universe)
+    except Exception as e:
+        logger.warning(f"vol_5d_50d enrichment failed, column ships unmeasured: {e}")
+        if 'vol_5d_50d' not in scored_universe.columns:
+            scored_universe['vol_5d_50d'] = None
+
     # Save full universe for screener page
     universe_cols = [
         'ticker', 'close', 'change_pct', 'perf_1w', 'perf_1m', 'perf_34d', 'perf_3m',
         'perf_6m', 'perf_1y', 'perf_ytd',
         'sma20_dist', 'sma50_dist', 'sma40_dist', 'sma200_dist',
-        'atr', 'rel_volume', 'avg_volume', 'volume',
+        'atr', 'rel_volume', 'avg_volume', 'volume', 'vol_5d_50d',
         'market_cap', 'sector', 'industry',
         'high_52w', 'low_52w', 'eps_growth_next_y',
         'rs_1m', 'rs_3m', 'rs_6m',

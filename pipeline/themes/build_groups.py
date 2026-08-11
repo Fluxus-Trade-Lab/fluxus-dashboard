@@ -369,6 +369,97 @@ def build_themes(
     return scored, skipped
 
 
+def archive_ribbon(rows: Sequence[Mapping[str, Any]],
+                   session_dates: Sequence[str],
+                   sessions_per_cell: int = 10,
+                   cells: int = 5) -> List[Optional[Dict[str, Any]]]:
+    """State ribbon from the append-only archive, for groups with no bars.
+
+    A cross-sectional aggregate leaves no price history, so its ribbon can
+    only be read back from what `group_history` wrote down each session --
+    stored state, level and accel, never recomputed (recomputing would apply
+    today's window constants to yesterday's data).
+
+    Two rules keep the cells comparable across groups:
+
+    * Blocks are cut on the GLOBAL session calendar (`session_dates`), not on
+      the group's own row count. A theme that skipped scoring for a stretch
+      must not stitch non-contiguous sessions into one "fortnight" -- cell k
+      covers the same dates for every group, and a block in which the group
+      never appeared is an explicit gap (None), which the UI draws dashed.
+    * Only COMPLETE ten-session blocks count, taken from the end: a fortnight
+      still filling is not a fortnight reading. A young archive returns fewer
+      than five cells -- possibly zero.
+
+    Cells are oldest-first, matching proxy_ribbon. Each cell is the group's
+    LAST stored row within its block -- the state as last published in that
+    fortnight, never an average the archive does not hold.
+    """
+    by_date: Dict[str, Mapping[str, Any]] = {}
+    for r in rows:
+        d = r.get("date")
+        if d:
+            by_date[d] = r  # idempotent archive: last write for a date wins
+    dates = list(session_dates)
+    out: List[Optional[Dict[str, Any]]] = []
+    n_blocks = min(len(dates) // sessions_per_cell, cells)
+    for k in range(n_blocks, 0, -1):
+        hi = len(dates) - (k - 1) * sessions_per_cell
+        block = dates[hi - sessions_per_cell:hi]
+        row = next((by_date[d] for d in reversed(block) if d in by_date), None)
+        if row is None:
+            out.append(None)
+            continue
+        try:
+            out.append({
+                "state": row.get("state"),
+                "level": float(row["excess_3m"]),
+                "accel": float(row["rs_accel"]),
+            })
+        except (KeyError, TypeError, ValueError):
+            # a stored row missing its numbers is a gap, not a zero
+            out.append({"state": row.get("state"), "level": None, "accel": None})
+    return out
+
+
+def attach_archive_ribbons(industries: Sequence[Dict[str, Any]],
+                           themes: Sequence[Dict[str, Any]],
+                           session_date: str) -> None:
+    """Give archive-backed ribbons to every group that lacks a proxy one.
+
+    Proxy themes keep the ribbon their fund's bars produced -- two years of
+    vendor history beats three weeks of archive. Everything else (industries,
+    composite themes) gets whatever complete fortnights the archive holds.
+
+    `session_date` -- the session being built -- is EXCLUDED from the
+    calendar: the archive is written after this function runs, so on a first
+    run today is absent and on a re-run it is present, and counting it would
+    make the same session ship different ribbons depending on run count. Both
+    runs therefore read strictly from sessions before this one.
+    """
+    try:
+        from pipeline.themes import group_history
+        arch = group_history.read()
+    except Exception:  # noqa: BLE001 -- a missing archive must not cost groups.json
+        logger.exception("archive ribbon: archive unreadable, groups ship without")
+        return
+    session_dates = sorted({r.get("date") for r in arch
+                            if r.get("date") and r.get("date") != session_date})
+    by_group: Dict[tuple, List[Mapping[str, Any]]] = {}
+    for r in arch:
+        if r.get("date") == session_date:
+            continue
+        by_group.setdefault((r.get("kind"), r.get("group")), []).append(r)
+    for kind, groups in (("industry", industries), ("theme", themes)):
+        for g in groups:
+            if g.get("ribbon"):
+                continue
+            cells_out = archive_ribbon(by_group.get((kind, g["group"]), []), session_dates)
+            if any(c is not None for c in cells_out):
+                g["ribbon"] = cells_out
+                g["ribbon_source"] = "archive"
+
+
 def assign_primary_group(stocks: Mapping[str, Dict[str, Any]],
                          themes: Sequence[Mapping[str, Any]],
                          universe: Sequence[Mapping[str, Any]]) -> None:
@@ -548,6 +639,10 @@ def run() -> Dict[str, Any]:
             and (t["method"] in ("proxy", "rule")
                  or v.get("verdict") in ("real", "weak"))
         )
+    # One session label for the whole payload, computed once: the ribbon
+    # excludes it from its calendar and the payload ships it as `date`.
+    session_date = last_trading_day().isoformat()
+    attach_archive_ribbons(industries, themes, session_date)
     stocks = rs_engine.rank_within_group(universe, "industry", benchmark)
     assign_primary_group(stocks, themes, universe)
     resolve_dangling_primaries(stocks, industries)
@@ -557,7 +652,7 @@ def run() -> Dict[str, Any]:
         # Session label, not wall date: group_history keys its append-only
         # archive off this field, so a weekend run would mint a session that
         # never traded. See marketcal.last_trading_day.
-        "date": last_trading_day().isoformat(),
+        "date": session_date,
         "benchmark": BENCHMARK,
         "universe_size": len(universe),
         "industries": industries,

@@ -20,8 +20,9 @@ import HowToRead from '../HowToRead'
  * The min/max query builder that used to live here is retired (2026-08-11).
  * It let a reader construct questions the pipeline had never answered; every
  * selector on this page only chooses between answers that already exist.
- * Its files remain in the repo unmounted, alongside HeatingUp, whose ledger
- * became the Confluence scan — the default vocabulary word, not the page.
+ * Its files were deleted 2026-08-12 (Andy: 确认不回头) along with HeatingUp,
+ * whose ledger became the Confluence scan — the default vocabulary word, not
+ * the page. WatchlistTab and its filter lib stay.
  */
 
 const TABS = ['Screener', 'Watchlist']
@@ -87,6 +88,15 @@ export default function ScreenerPage() {
     return m
   }, [groups.industries])
 
+  // ribbons by home group — proxy themes carry bars-backed ribbons today;
+  // composite themes and industries fill in from the archive as it matures
+  const ribbonByHome = useMemo(() => {
+    const m = new Map()
+    for (const g of groups.industries) if (g.ribbon?.length) m.set(`industry|${g.group}`, g.ribbon)
+    for (const t of groups.themes) if (t.ribbon?.length) m.set(`theme|${t.group}`, t.ribbon)
+    return m
+  }, [groups.industries, groups.themes])
+
   // `count: null` means the file has not arrived — a different claim from a
   // measured zero, and the bar renders them differently. Collapsing the two
   // would print "found nothing this session" about a fetch that never landed.
@@ -134,6 +144,10 @@ export default function ScreenerPage() {
       // measured state must not render as "not measured" just because this
       // member went unranked.
       const indName = s?.group ?? u?.industry ?? null
+      // one home per stock: the pipeline's primary_group (smallest curated
+      // theme, industry as the total fallback) — never chosen by the frontend
+      const home = s?.primary_group ?? indName
+      const homeKind = s?.primary_kind ?? (indName ? 'industry' : null)
       out.push({
         ticker: t,
         inUniverse: Boolean(u),
@@ -141,6 +155,15 @@ export default function ScreenerPage() {
         state: s?.state ?? null,
         ind: indName,
         indState: indName ? industryState.get(indName) ?? null : null,
+        home,
+        homeKind,
+        // primary_kind carries a third value, industry_unscored — its home is
+        // still an industry, so the ribbon lookup normalises; the raw kind
+        // stays on the row for the tooltip to state honestly
+        homeRibbon: home && homeKind
+          ? ribbonByHome.get(`${homeKind === 'industry_unscored' ? 'industry' : homeKind}|${home}`) ?? null
+          : null,
+        vol5050: u?.vol_5d_50d ?? null,
         indPct: s?.group_pctile ?? null,
         accel: s?.rs_accel ?? null,
         tq: s?.persistence ?? null,
@@ -156,10 +179,17 @@ export default function ScreenerPage() {
       })
     }
     return out
-  }, [universe, activeScan, themeRow, search, groups.stocks, heatByTicker, industryState])
+  }, [universe, activeScan, themeRow, search, groups.stocks, heatByTicker, industryState, ribbonByHome])
 
   // null while groups.json is absent — "Leading 0" is a reading, not a shrug
   const statesLoaded = !groups.loading && !groups.error
+
+  const untouched = scan === 'confluence' && !states.size && !theme && !search.trim()
+  // A state or theme filter needs the group layer; while groups.json is in
+  // flight (or failed) the filter has nothing measured to act on, and a page
+  // that filtered anyway would ship an empty set claiming to be a reading.
+  const needsGroups = states.size > 0 || Boolean(theme)
+  const viewReady = activeScan.loaded && (!needsGroups || statesLoaded)
   const stateCounts = useMemo(() => {
     if (!statesLoaded) return null
     const c = {}
@@ -184,10 +214,34 @@ export default function ScreenerPage() {
   // and restating them here was the duplication Andy flagged.
   const receipt = useMemo(() => {
     if (!activeScan.loaded) return `${activeScan.label} — loading`
+    if (needsGroups && !statesLoaded) return 'group layer — loading' 
     let s = `${rows.length} rows`
     if (noState) s += ` · ${noState} unstated hidden`
     return s
-  }, [rows.length, activeScan, noState])
+  }, [rows.length, activeScan, noState, needsGroups, statesLoaded])
+
+  // The narrator follows the selection: the default view keeps the ledger's
+  // own sentence, and any other vocabulary choice gets one computed from the
+  // rows it actually produced — never typed, and it names its selection.
+  const selectionReading = useMemo(() => {
+    if (untouched || !viewReady) return null
+    // built from the selection itself — the receipt is just a row count now,
+    // and deriving words from it would couple the sentence to a display string
+    const parts = [activeScan.label]
+    if (states.size) parts.push([...states].join('+'))
+    if (theme) parts.push(theme)
+    if (search.trim()) parts.push(`"${search.trim().toUpperCase()}"`)
+    const desc = parts.join(' ∩ ')
+    if (!rows.length) {
+      return `Nothing clears ${desc} today — an empty intersection is a reading, not an error.`
+    }
+    const census = {}
+    for (const r of rows) if (r.state) census[r.state] = (census[r.state] ?? 0) + 1
+    const censusStr = ['Leading', 'Weakening', 'Improving', 'Lagging']
+      .filter((st) => census[st]).map((st) => `${census[st]} ${st}`).join(' · ')
+    const front = rows.slice(0, 3).map((r) => r.ticker).join(', ')
+    return `${rows.length} names under ${desc}. States: ${censusStr || 'none measured'}. Front of the board: ${front}.`
+  }, [scan, states, theme, search, activeScan, rows])
 
   const conditions = market?.breadth?.conditions
   const toggleState = (st) => setStates((prev) => {
@@ -221,7 +275,7 @@ export default function ScreenerPage() {
 
       {/* the whole confluence ledger, not the old 25-row display slice — the
           sentence says "here", and here now holds all fifty */}
-      <Reading text={readScreener(heat)} />
+      <Reading text={untouched ? readScreener(heat) : selectionReading} />
 
       <div className="flex gap-0 border-b border-[var(--color-border)] mb-4" role="tablist">
         {TABS.map((tab, i) => (
@@ -245,14 +299,16 @@ export default function ScreenerPage() {
             themes={groups.themes} theme={theme} onTheme={setTheme}
             search={search} onSearch={setSearch}
             receipt={receipt} />
-          {activeScan.loaded ? (
+          {viewReady ? (
             // key: normalized search only — a trailing space changes nothing
             // about the row set and must not remount the table
             <StockTable key={`${scan}|${[...states].join()}|${theme}|${search.trim().toUpperCase()}`}
-                        rows={rows} />
+                        rows={rows} defaultSort={scan === 'confluence' ? 'heat' : 'rs3'} />
           ) : (
             <p className="m-0 py-8 text-center text-[12px] text-[var(--color-text-muted)]">
-              {activeScan.label} has not loaded yet.
+              {!activeScan.loaded
+                ? `${activeScan.label} has not loaded yet.`
+                : 'The group layer (states and themes) has not loaded yet.'}
             </p>
           )}
         </>
@@ -275,9 +331,15 @@ export default function ScreenerPage() {
           summed into a score.
         </p>
         <p>
-          <b>Group trend</b> and <b>Vol 5d/50d</b> are awaiting pipeline fields
-          and print as unmeasured. A dash or dashed cell always means not
-          measured — never zero. Click a row for the full tear-sheet.
+          <b>Group trend</b> is the state history of the stock&rsquo;s home group —
+          the pipeline&rsquo;s one-home-per-stock pointer (smallest curated theme,
+          industry as the total fallback). Each cell is a completed fortnight
+          from the group archive, which began 2026-08-07: cells light as
+          fortnights complete, and a dashed cell is a fortnight the archive has
+          not lived through yet — never a zero. <b>Vol 5d/50d</b> is the
+          five-day average volume over the fifty-day; names younger than fifty
+          sessions print a dash because their fifty-day average does not exist.
+          Click a row for the full tear-sheet.
         </p>
       </HowToRead>
     </div>

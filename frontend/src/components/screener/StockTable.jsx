@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Squares from '../Squares'
 import { barStyle } from '../groups/ThemeBars'
 import { tickerHref } from '../portfolio/lib/tickerUrl'
@@ -19,11 +19,14 @@ import { tickerHref } from '../portfolio/lib/tickerUrl'
  *               already uses). Right: its industry's state, in the state
  *               grammar. Adding them into one score would need a weight
  *               nobody measured.
- *   Group trend five dashed cells — the home group's state history, not
- *               measured yet. The pipeline owes one membership pointer per
- *               stock (confirmed 2026-08-11); the cells light up when it
- *               lands. Unmeasured ≠ zero, so they are drawn, not omitted.
- *   Vol 5d/50d  same status: field confirmed, data not yet supplied.
+ *   Group trend the home group's state history, one cell per completed
+ *               fortnight of the group archive (began 2026-08-07). The home
+ *               is the pipeline's primary_group pointer; cells light from
+ *               the right as the archive matures. Unmeasured ≠ zero, so the
+ *               unlived past is drawn dashed, not omitted.
+ *   Vol 5d/50d  five-day over fifty-day average volume, from daily bars;
+ *               younger than fifty sessions prints a dash, not a ratio over
+ *               a shorter window.
  *   Rel vol     today's volume over the 3-month average (Finviz construction)
  *               — a different measurement from 5d/50d and labelled as such,
  *               not a stand-in for it.
@@ -84,15 +87,37 @@ function AlignDots({ rs3, indState, indName }) {
   )
 }
 
-/** Five dashed cells: the home group's state history, awaiting its pointer. */
-function GroupTrendCell() {
+/** The home group's state history — five fortnight cells, oldest first.
+ *  The home is the pipeline's one-per-stock pointer (smallest curated theme,
+ *  industry as the total fallback); the cells come from the group archive,
+ *  which began 2026-08-07, so a young archive lights from the right and the
+ *  unlived past stays dashed. A lit ribbon earns full opacity — only the
+ *  still-empty ones rest faded. */
+function GroupTrendCell({ home, homeKind, ribbon }) {
+  // a cell can be null INSIDE the array too — a fortnight the group sat out
+  // (skipped scoring, thin membership); the calendar keeps the slot, drawn
+  // dashed, so cell k means the same dates on every row
+  const cells = ribbon ?? []
+  const measured = cells.filter(Boolean)
+  const pad = Math.max(0, 5 - cells.length)
+  const kindWord = homeKind === 'industry_unscored' ? 'industry, unscored' : homeKind
+  const title = home
+    ? measured.length
+      ? `${home} (home ${kindWord}) — ${measured.length} of 5 fortnights, oldest first: ${measured.map((c) => c.state).join(' · ')}`
+      : `${home} (home ${kindWord}) — 0 of 5 fortnights measured; the archive is accumulating`
+    : 'no home group — not in the group layer'
   return (
-    <td className="py-[4px] pr-2.5 opacity-40 group-hover:opacity-100 transition-opacity">
-      <span className="inline-flex gap-[2px]"
-            title="group state history — not measured yet">
-        {Array.from({ length: 5 }, (_, i) => (
-          <i key={i} className="block w-[10px] h-[8px] rounded-[1px] opacity-50"
+    <td className={`py-[4px] pr-2.5 transition-opacity group-hover:opacity-100
+                    ${measured.length ? '' : 'opacity-40'}`}>
+      <span className="inline-flex gap-[2px]" title={title}>
+        {Array.from({ length: pad }, (_, i) => (
+          <i key={`p${i}`} className="block w-[10px] h-[8px] rounded-[1px] opacity-50"
              style={{ border: '1px dashed var(--color-text-muted)' }} />
+        ))}
+        {cells.map((c, i) => (
+          <i key={i} className="block w-[10px] h-[8px] rounded-[1px]"
+             style={c ? barStyle(c.state)
+                      : { border: '1px dashed var(--color-text-muted)', opacity: 0.5 }} />
         ))}
       </span>
     </td>
@@ -136,12 +161,66 @@ function EvidenceFold({ row }) {
   )
 }
 
-export default function StockTable({ rows }) {
+/** Sortable columns and how each one reads its row. Sorting re-orders and
+ *  nothing else — no column re-encodes, and nulls sink to the bottom in both
+ *  directions, because "no reading" belongs at neither extreme. */
+const SORTS = {
+  ticker: { get: (r) => r.ticker, str: true },
+  heat: { get: (r) => r.heat?.score ?? null },
+  rs1: { get: (r) => r.rs1 },
+  rs3: { get: (r) => r.rs3 },
+  rs6: { get: (r) => r.rs6 },
+  accel: { get: (r) => r.accel },
+  h52: { get: (r) => r.h52 },
+  relVol: { get: (r) => r.relVol },
+  vol5050: { get: (r) => r.vol5050 },
+  tq: { get: (r) => (r.tqOf ? r.tq / r.tqOf : null) },
+}
+
+/** A header that sorts. The arrow only appears on the active column — ten
+ *  permanent arrows would be ten more marks on a page fighting overload. */
+function SortTh({ k, sort, onSort, align = 'right', title, children }) {
+  const on = sort.key === k
+  // literal classes only — `text-${align}` would never reach the stylesheet
+  const alignCls = align === 'left' ? 'text-left' : 'text-right'
+  return (
+    <th className={`py-1 pr-2.5 font-medium ${alignCls}`} title={title}>
+      <button type="button" onClick={() => onSort(k)}
+        className={`bg-transparent border-none p-0 cursor-pointer font-inherit uppercase
+                    tracking-wider text-[9.5px] outline-none focus-visible:ring-1
+                    ${on ? 'text-[var(--color-text-secondary)]' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'}`}>
+        {children}{on && <span className="ml-0.5">{sort.dir === 'desc' ? '▼' : '▲'}</span>}
+      </button>
+    </th>
+  )
+}
+
+export default function StockTable({ rows, defaultSort = 'rs3' }) {
   const [shown, setShown] = useState(HEAD)
   const [open, setOpen] = useState(() => new Set())
+  const [sort, setSort] = useState(() => ({ key: defaultSort, dir: 'desc' }))
 
-  const visible = rows.slice(0, shown)
-  const hidden = rows.length - visible.length
+  const sorted = useMemo(() => {
+    const spec = SORTS[sort.key]
+    if (!spec) return rows
+    const sign = sort.dir === 'asc' ? 1 : -1
+    return [...rows].sort((a, b) => {
+      const va = spec.get(a); const vb = spec.get(b)
+      if (va == null && vb == null) return 0
+      if (va == null) return 1
+      if (vb == null) return -1
+      if (spec.str) return sign * String(va).localeCompare(String(vb))
+      return sign * (va - vb)
+    })
+  }, [rows, sort])
+
+  const clickSort = (key) => setSort((prev) =>
+    prev.key === key
+      ? { key, dir: prev.dir === 'desc' ? 'asc' : 'desc' }
+      : { key, dir: SORTS[key]?.str ? 'asc' : 'desc' })
+
+  const visible = sorted.slice(0, shown)
+  const hidden = sorted.length - visible.length
 
   const toggle = (t) => setOpen((prev) => {
     const next = new Set(prev)
@@ -163,26 +242,26 @@ export default function StockTable({ rows }) {
         <thead>
           <tr className="text-[9.5px] font-mono uppercase tracking-wider text-[var(--color-text-muted)]">
             <th className="text-right py-1 pr-2.5 font-medium w-7">#</th>
-            <th className="text-left py-1 pr-2.5 font-medium">Ticker</th>
-            <th className="text-left py-1 pr-2.5 font-medium"
-                title="confluence score — how many screens stacked, quality tier ×3">Heat</th>
+            <SortTh k="ticker" sort={sort} onSort={clickSort} align="left">Ticker</SortTh>
+            <SortTh k="heat" sort={sort} onSort={clickSort} align="left"
+                title="confluence score — how many screens stacked, quality tier ×3">Heat</SortTh>
             <th className="text-center py-1 pr-2.5 font-medium"
                 title="left dot: own RS 3M ≥ 67 · right dot: industry state">Align</th>
             <th className="text-left py-1 pr-2.5 font-medium">State</th>
             <th className="text-left py-1 pr-2.5 font-medium"
-                title="home-group state history — awaiting the per-stock membership pointer">Group trend</th>
-            <th className="text-right py-1 pr-2.5 font-medium">RS 1M</th>
-            <th className="text-right py-1 pr-2.5 font-medium">RS 3M</th>
-            <th className="text-right py-1 pr-2.5 font-medium">RS 6M</th>
-            <th className="text-right py-1 pr-2.5 font-medium"
-                title="rs_accel — the same number the state machine reads">Accel</th>
-            <th className="text-right py-1 pr-2.5 font-medium">From 52wH</th>
-            <th className="text-right py-1 pr-2.5 font-medium"
-                title="today's volume ÷ 3-month average (Finviz construction)">Rel vol</th>
-            <th className="text-right py-1 pr-2.5 font-medium"
-                title="5-day ÷ 50-day average volume — not measured yet">Vol 5d/50d</th>
-            <th className="text-left py-1 pr-2.5 font-medium"
-                title="windows spent in the top quartile of its own cohort">Top quartile</th>
+                title="state history of the stock's home group; cells light as the archive completes fortnights">Group trend</th>
+            <SortTh k="rs1" sort={sort} onSort={clickSort}>RS 1M</SortTh>
+            <SortTh k="rs3" sort={sort} onSort={clickSort}>RS 3M</SortTh>
+            <SortTh k="rs6" sort={sort} onSort={clickSort}>RS 6M</SortTh>
+            <SortTh k="accel" sort={sort} onSort={clickSort}
+                title="rs_accel — the same number the state machine reads">Accel</SortTh>
+            <SortTh k="h52" sort={sort} onSort={clickSort}>From 52wH</SortTh>
+            <SortTh k="relVol" sort={sort} onSort={clickSort}
+                title="today's volume ÷ 3-month average (Finviz construction)">Rel vol</SortTh>
+            <SortTh k="vol5050" sort={sort} onSort={clickSort}
+                title="5-day average volume over 50-day average volume, from daily bars">Vol 5d/50d</SortTh>
+            <SortTh k="tq" sort={sort} onSort={clickSort} align="left"
+                title="windows spent in the top quartile of its own cohort">Top quartile</SortTh>
             <th className="py-1 font-medium w-5"></th>
           </tr>
         </thead>
@@ -226,7 +305,7 @@ function RowPair({ r, i, open, onToggle }) {
         <td className="py-[4px] pr-2.5 text-[10.5px]">
           <StateWord state={r.state} fallback={r.inUniverse ? '—' : 'not in universe'} />
         </td>
-        <GroupTrendCell />
+        <GroupTrendCell home={r.home} homeKind={r.homeKind} ribbon={r.homeRibbon} />
         <RsCell v={r.rs1} />
         <RsCell v={r.rs3} />
         <RsCell v={r.rs6} />
@@ -241,8 +320,12 @@ function RowPair({ r, i, open, onToggle }) {
         <td className="py-[4px] pr-2.5 text-right tabular-nums opacity-55 group-hover:opacity-100 transition-opacity">
           {r.relVol == null ? '—' : r.relVol.toFixed(2)}
         </td>
-        <td className="py-[4px] pr-2.5 text-right text-[var(--color-text-muted)] opacity-40 group-hover:opacity-100 transition-opacity"
-            title="not measured yet">—</td>
+        <td className="py-[4px] pr-2.5 text-right tabular-nums opacity-55 group-hover:opacity-100 transition-opacity"
+            title={r.vol5050 == null
+              ? 'not measured — fewer than fifty sessions of bars, or the vendor had none'
+              : `5-day avg volume is ${r.vol5050}x the 50-day avg`}>
+          {r.vol5050 == null ? '—' : r.vol5050.toFixed(2)}
+        </td>
         <td className="py-[4px] pr-2.5 whitespace-nowrap opacity-55 group-hover:opacity-100 transition-opacity">
           <Squares n={r.tq} of={r.tqOf}
             title={r.tqOf ? `top quartile of its cohort on ${r.tq} of ${r.tqOf} windows` : undefined} />
