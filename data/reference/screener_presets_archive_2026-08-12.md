@@ -125,3 +125,11 @@
 | `excludeHealthcare` | `sector` | True | 剔除 Healthcare |
 | `weeklyPct` | `perf_1w` | 20 … 500 | %(日历周) |
 | `adrPct` | `adr_pct` | 3.5 … 10 | % |
+
+---
+
+## 基线后的变更记录
+
+| 日期 | 预设 | 变更 | 当日影响 |
+|---|---|---|---|
+| 2026-08-12 | 21EMA Watch | `adrPct.min` 3.5 → 3 | 复算与当日截图逐字吻合(4 只);降档后 +1 只(EBAY)。ADR 3–3.5% 档的名字波动更温和,回踩名单会略宽 |
