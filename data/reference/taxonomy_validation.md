@@ -2,7 +2,7 @@
 
 A business theme claims its members share a driver, so they should co-move more than a size-matched random basket from the same pool. `excess` is that difference in mean pairwise correlation.
 
-**Business themes: 50 real · 1 weak · 0 label** (thresholds: real >= +0.05, weak >= +0.02)
+**Business themes: 51 real · 1 weak · 0 label** (thresholds: real >= +0.05, weak >= +0.02)
 
 Factor themes (7) are reported but not scored — see below. 1 themes had too few names in the panel.
 
@@ -57,6 +57,7 @@ Factor themes (7) are reported but not scored — see below. 1 themes had too fe
 | Beverages | tsf | 10/10 | 100% | 0.310 | 0.227 | **+0.083** | ±0.051 | real |
 | Tobacco | tsf | 6/6 | 100% | 0.296 | 0.214 | **+0.083** | ±0.070 | real |
 | Optics & Networking Equipment | tsf | 19/19 | 100% | 0.305 | 0.224 | **+0.081** | ±0.032 | real |
+| Medical Devices | tsf | 57/60 | 95% | 0.290 | 0.218 | **+0.072** | ±0.019 | real |
 | Rare Earth Metals | tsf | 7/7 | 100% | 0.298 | 0.227 | **+0.071** | ±0.051 | real |
 | Drones | tsf | 5/5 | 100% | 0.281 | 0.214 | **+0.067** | ±0.070 | real |
 | Lithium & Battery Tech | tsf | 8/9 | 89% | 0.290 | 0.227 | **+0.063** | ±0.051 | real |

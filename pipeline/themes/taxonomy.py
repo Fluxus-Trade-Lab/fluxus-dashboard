@@ -350,6 +350,24 @@ _ETF_THEMES: list[Theme] = [
                "Tech, however it screens. Found when the primary-group rule "
                "assigned LLY here as its identity."),
     Theme("Semiconductors Large Caps", "etf", etf=("SMH",)),
+    # TSF's Medical Devices list, transcribed from their Thematic Focus
+    # table 2026-08-11 — all 81 names verified present in our universe, 21
+    # under the $1B floor (on record, not scored). IHI seeds the theme so
+    # holdings drift keeps tracking the fund as the hand list ages. Same
+    # co-movement gate as every curated theme; no exemption for borrowing.
+    Theme("Medical Devices", "etf", etf=("IHI",),
+          extra=("VREX", "BFLY", "SMTI", "UFPT", "SGHT", "ITGR", "MMSI",
+                 "KIDS", "ANGO", "TNDM", "PLSE", "KMTS", "GKOS", "TMDX",
+                 "AXGN", "SENS", "PRCT", "DXCM", "BAX", "INSP", "BDX",
+                 "ATRC", "MMED", "GEHC", "CNMD", "ICUI", "DRTS", "EW",
+                 "ABT", "TMCI", "BVS", "NYXH", "BSX", "ISRG", "GMED",
+                 "AVR", "ATEC", "STAA", "STE", "COO", "HAE", "RMD",
+                 "SOLV", "NVST", "BLCO", "SI", "MOBI", "IRTC", "SIBN",
+                 "ALC", "PHG", "IDXX", "CBLL", "ZBH", "MDT", "TCMD",
+                 "ALGN", "SYK", "BBNX", "PEN", "NVCR", "TFX", "AORT",
+                 "CLPT", "INMD", "NPCE", "SNN", "IRMD", "LIVN", "LNTH",
+                 "OMCL", "XRAY", "IART", "PODD", "OFIX", "ENOV", "MDLN",
+                 "CERS", "LMAT", "QDEL", "ESTA")),
     # TSF's Genomics list, transcribed from their Thematic Focus table
     # 2026-08-11 — all 61 names, verified present in our universe. ~21 sit
     # under the $1B floor and drop from scoring while staying on the record
