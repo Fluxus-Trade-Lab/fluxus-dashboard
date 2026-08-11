@@ -7,7 +7,7 @@ Two layers ship side by side:
 * **Theme layer** -- this file.  Themes cut *across* industries ("AI -
   Datacenters" spans semiconductors, utilities, industrials and REITs), or
   express factors and lists that are not industries at all ("High Octane",
-  "Microcaps", "Recent IPOs").
+  "Mega Caps", "Recent IPOs").
 
 Every theme resolves by exactly one of four methods:
 
@@ -83,11 +83,6 @@ def _high_octane(row: Mapping[str, Any]) -> bool:
         and rs is not None and rs >= 90.0
         and cap is not None and cap >= 3e8
     )
-
-
-def _microcaps(row: Mapping[str, Any]) -> bool:
-    cap = _num(row, "market_cap")
-    return cap is not None and 5e7 <= cap < 1e9
 
 
 def _small_caps(row: Mapping[str, Any]) -> bool:
@@ -197,8 +192,11 @@ _INDUSTRY_THEMES: list[Theme] = [
     # coal averaged away the one grouping that was working.
     Theme("Steel", "industry", industries=("Steel", "Aluminum")),
     Theme("Coal", "industry", industries=("Coking Coal", "Thermal Coal")),
-    Theme("Industrial Metals", "industry",
-          industries=("Other Industrial Metals & Mining",)),
+    # Industrial Metals removed 2026-08-10: 20 members correlated -0.0161
+    # against size-matched random baskets -- its members were less synchronised
+    # than a random draw. "Other Industrial Metals & Mining" is a Finviz
+    # residual bucket, which is a filing category, not a trade. Still visible in
+    # the industry layer; it just no longer claims to be a theme.
     Theme("Chemicals & Materials", "industry",
           industries=("Specialty Chemicals", "Chemicals", "Agricultural Inputs")),
     Theme("Agribusiness", "industry",
@@ -206,10 +204,10 @@ _INDUSTRY_THEMES: list[Theme] = [
     Theme("Consumer Retail", "industry",
           industries=("Specialty Retail", "Internet Retail", "Apparel Retail",
                       "Discount Stores", "Home Improvement Retail")),
-    # Read exactly 0.000 excess on 96% coverage. Split; Confectioners (3)
-    # folds into Packaged Foods.
-    Theme("Packaged Foods", "industry",
-          industries=("Packaged Foods", "Confectioners")),
+    # Packaged Foods removed 2026-08-10: +0.0092 against random on 29 members,
+    # short of the +0.02 a weak verdict needs. The earlier split that folded
+    # Confectioners in did not rescue it -- 29 packaged-food names move no more
+    # together than 29 names drawn at random.
     Theme("Beverages", "industry", industries=("Beverages - Non-Alcoholic",)),
     Theme("Household & Personal Products", "industry",
           industries=("Household & Personal Products",)),
@@ -246,7 +244,9 @@ _INDUSTRY_THEMES: list[Theme] = [
     # on 99% coverage. A telco's revenue is a subscriber base; an optical
     # component maker's is a capex cycle. Nothing made them one theme but the
     # word "telecom".
-    Theme("Telecom Services", "industry", industries=("Telecom Services",)),
+    # Telecom Services removed 2026-08-10: +0.0042 on 37 members. Splitting the
+    # carriers out from the equipment vendors was the right call and still left
+    # a group that does not trade as one.
     Theme("Optics & Networking Equipment", "industry",
           industries=("Communication Equipment",)),
     # "Diversified Tech" read +0.016 on 93% coverage -- the label was doing
@@ -254,8 +254,10 @@ _INDUSTRY_THEMES: list[Theme] = [
     # names to score; Consumer Electronics (4) folds into Computer Hardware.
     Theme("Electronic Components", "industry",
           industries=("Electronic Components",)),
-    Theme("Computer Hardware", "industry",
-          industries=("Computer Hardware", "Consumer Electronics")),
+    # Computer Hardware removed 2026-08-10: +0.0005 on 20 members -- effectively
+    # zero. Consumer Electronics had been folded in here and now has no theme
+    # home, which is the honest outcome: neither label describes a group the
+    # market prices together.
     Theme("IT Services", "industry",
           industries=("Information Technology Services",)),
     # Was mapped to the whole Computer Hardware industry, which is servers and
@@ -342,30 +344,38 @@ _ETF_THEMES: list[Theme] = [
     Theme("Speculative Tech", "etf", etf=("ARKK", "ARKF")),
     Theme("Tech Mega Caps", "etf", etf=("MGK",)),
     Theme("Semiconductors Large Caps", "etf", etf=("SMH",)),
-    Theme("IBD 50", "etf", etf=(),
-          note="No ETF proxy; populate via `extra` from the published list."),
+    # `proxy`, not `etf`: you cannot buy the list, you buy the fund that tracks
+    # it, which is exactly the case this method exists for. It also settles the
+    # sourcing question -- the IBD 50 is Investor's Business Daily subscription
+    # content and not ours to republish, while FFTY's price is public. The two
+    # routes that would have given constituents both fail on their own terms:
+    # yfinance returns only the top 10 holdings, which would ship a ten-name
+    # basket under a fifty-name label, and the issuer's holdings file is not at
+    # any path worth guessing at. Tracking the fund needs no fetch at all, and
+    # it re-weights itself whenever the list does.
+    Theme("IBD 50", "proxy", etf=("FFTY",)),
 
     # --- Fluxus additions: TSF has no slot for these ---
     Theme("Quantum Computing", "etf", source="fluxus", etf=(),
-          extra=("IONQ", "RGTI", "QBTS", "QUBT", "ARQQ", "QMCO")),
-    Theme("GLP-1 - Clinical Stage", "etf", source="fluxus", etf=(),
-          extra=("VKTX", "ALT", "GPCR"),
-          note="Members verified against company filings 2026-08-09. "
-               "AMGN removed: MariTide is Phase 3 with no revenue, and a "
-               "$222B diversified biotech priced off Enbrel/Repatha drags a "
-               "6-name median toward big-pharma RS. CORT removed: Corcept is "
-               "Cushing's syndrome and oncology, not obesity -- it only passed "
-               "because 'cortisol' was in the keyword profile. GPCR added: "
-               "GSBR-1290 is an oral GLP-1 agonist in Phase 2 for obesity. "
-               "HIMS considered and rejected: its own description never "
-               "mentions GLP-1 or weight loss."),
-    Theme("GLP-1 - Commercial", "etf", source="fluxus", etf=(),
-          extra=("LLY", "NVO"),
-          note="Split from clinical stage 2026-08-09: the five-name combined "
-               "theme correlated BELOW random (-0.068) on 100% coverage. "
-               "Every member was verified as a genuine obesity name, which is "
-               "the point -- a correct business list is not automatically a "
-               "group that trades together."),
+          extra=("IONQ", "RGTI", "QBTS", "QUBT", "ARQQ", "QMCO", "IBM"),
+          note="IBM added by hand 2026-08-10. It fails the standard's first "
+               "two tests the way AMGN did for GLP-1: quantum is a rounding "
+               "error against ~$62B of revenue, and the share price is set by "
+               "software, consulting and mainframe. Kept because the operator "
+               "asked for it; watch the co-movement verdict, which is the "
+               "check that does not care who asked."),
+    # Both GLP-1 themes removed 2026-08-10. Not for failing validation -- for
+    # being unable to face it. The $1B floor left Clinical Stage with 2 members
+    # and Commercial with 2, and two members make one pair, which cannot be
+    # compared against random baskets at all. They read `measurable=False`.
+    #
+    # The membership work behind them is worth keeping in mind if they are ever
+    # rebuilt: AMGN and CORT were both rejected on the standard (a diversified
+    # $222B biotech is priced off its other franchises; Corcept is Cushing's,
+    # and only matched because "cortisol" sat in a keyword list), and the
+    # combined five-name version correlated BELOW random at -0.068 on full
+    # coverage. A correct business list is not automatically a group that
+    # trades together, and that finding survives the themes being deleted.
     Theme("Grid & Electrification", "etf", source="fluxus", etf=("PAVE",),
           industries=("Electrical Equipment & Parts",)),
     Theme("Reshoring / Industrial Renaissance", "etf", source="fluxus", etf=("PAVE",),
@@ -392,7 +402,9 @@ _RULE_THEMES: list[Theme] = [
     Theme("Growth Factor", "rule", rule=_growth_factor),
     Theme("Value Factor", "rule", rule=_value_factor),
     Theme("High Beta Factor", "rule", rule=_high_beta),
-    Theme("Microcaps", "rule", rule=_microcaps),
+    # Microcaps removed 2026-08-10: the $1B tradeable floor deletes by
+    # definition the thing this theme exists to track, so it reported 0 members.
+    # It needs its own floor to come back, not this one.
     Theme("Small Caps", "rule", rule=_small_caps),
     Theme("Mega Caps", "rule", rule=_mega_caps),
     Theme("IPOs", "rule", rule=_recent_ipo),
@@ -407,10 +419,11 @@ THEMES: list[Theme] = _INDUSTRY_THEMES + _ETF_THEMES + _RULE_THEMES
 NEEDS_MANUAL: tuple[str, ...] = (
     "AI - Datacenters",
     "Quantum Computing",
-    "GLP-1 / Obesity",
-    "IBD 50",
     "Memory & Storage",
 )
+# Dropped from this list 2026-08-10: "GLP-1 / Obesity" (both halves removed --
+# the $1B floor left two members each, too few to validate at all) and
+# "IBD 50", which now tracks FFTY as a proxy and needs no hand list.
 
 
 def by_name() -> Dict[str, Theme]:

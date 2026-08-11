@@ -112,8 +112,10 @@ class TestRuleThemesAgainstRealShape:
          "eps_growth_next_y": None, "perf_1y": -0.2, "perf_3m": -0.1},
     ]
 
+    # Microcaps dropped from this list 2026-08-10 with the theme itself: the
+    # $1B tradeable floor deletes by definition the thing it selected for.
     @pytest.mark.parametrize("name", ["Growth Factor", "High Octane",
-                                      "52-Week High Leaders", "Microcaps"])
+                                      "52-Week High Leaders"])
     def test_rule_matches_at_least_one_row(self, name):
         theme = taxonomy.by_name()[name]
         matched = [r for r in self.ROWS if theme.rule(r)]
