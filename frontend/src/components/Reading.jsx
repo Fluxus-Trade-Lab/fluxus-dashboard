@@ -97,16 +97,20 @@ export function readThemes(rows) {
 export function readScreener(data) {
   const rows = data?.rows ?? []
   if (rows.length < 5) return null
-  const QUALITY = new Set(['episodic_pivot', 'vcp', 'momentum_97'])
-  const withQuality = rows.filter(
-    (r) => (r.screeners ?? []).some((s) => QUALITY.has(s.name)),
-  ).length
-  if (withQuality === rows.length) {
-    return `All ${rows.length} names here cleared at least one quality screen — which is what put them here, not what makes them work.`
-  }
-  const share = Math.round((withQuality / rows.length) * 100)
-  if (share <= 60) {
-    return `${withQuality} of ${rows.length} names cleared a quality screen; the rest are here on participation alone.`
-  }
-  return null
+  // Three things a reader trades on: where the heat concentrates, how much of
+  // it is fresh, and who leads. (An earlier version printed an epistemology
+  // lesson here; Andy's rule 2026-08-11 — page copy is judgment and execution
+  // only.)
+  const bySector = new Map()
+  for (const r of rows) if (r.sector) bySector.set(r.sector, (bySector.get(r.sector) ?? 0) + 1)
+  const top = [...bySector.entries()].sort((a, b) => b[1] - a[1])[0]
+  const asOf = data.as_of ? new Date(data.as_of) : null
+  const fresh = asOf ? rows.filter((r) =>
+    r.first_seen && (asOf - new Date(r.first_seen)) / 86400000 <= 7).length : 0
+  const lead = rows[0]
+  const parts = []
+  if (top && top[1] / rows.length >= 0.25) parts.push(`${top[0]} carries ${top[1]} of ${rows.length} names`)
+  if (fresh) parts.push(`${fresh} arrived within the last week`)
+  if (lead?.score != null) parts.push(`${lead.ticker} leads at ${lead.score.toFixed(1)}`)
+  return parts.length ? parts.join(' · ') + '.' : null
 }

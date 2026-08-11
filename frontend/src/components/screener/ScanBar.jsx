@@ -33,32 +33,48 @@ function Seg({ on, dim, onClick, children, title }) {
   )
 }
 
-/** null = the file has not arrived; 0 = it arrived and found nothing.
- *  Different claims, different marks — an em-dash is not a zero. "0 today"
- *  belongs to scans (a session reading); a facet count's zero is just 0. */
-function Count({ n, zeroLabel = '0' }) {
+/** A count earns ink in exactly three cases: the word is selected (the reader
+ *  asked), the count is a measured zero (dimming alone cannot be told apart
+ *  from "not loaded"), or the file has not arrived (an em-dash is not a zero).
+ *  Thirteen grey numbers at rest were the overflow Andy pointed at — every
+ *  positive count now lives in the word's tooltip instead. */
+function Count({ n, on }) {
+  if (n != null && n > 0 && !on) return null
   return (
     <span className="text-[10.5px] ml-[3px] text-[var(--color-text-muted)]">
-      {n == null ? '—' : n === 0 ? zeroLabel : n}
+      {n == null ? '—' : n === 0 ? '0' : n}
     </span>
   )
 }
 
-/** Five ribbon cells for the chosen theme — dashed while the archive is short. */
+/** The chosen theme's ribbon — rendered only when measured, the same
+ *  all-or-nothing rule the trajectory panel follows. Five dashed boxes in a
+ *  control bar were decoration pretending to be honesty; the unmeasured case
+ *  is stated in the theme's tooltip instead. */
 function ThemeRibbon({ theme }) {
   const cells = theme?.ribbon?.length ? theme.ribbon : null
+  if (!cells) return null
   return (
     <span className="inline-flex gap-[2px] ml-2 align-middle"
-          title={cells
-            ? `${theme.group} — five fortnights, oldest first: ${cells.map((c) => c.state).join(' · ')}`
-            : `${theme?.group} — state history not measured yet; the archive is still accumulating`}>
-      {(cells ?? Array.from({ length: 5 })).map((c, i) => (
-        <i key={i} className="block w-[13px] h-[9px] rounded-[1px]"
-           style={c ? barStyle(c.state)
-                    : { border: '1px dashed var(--color-text-muted)', opacity: 0.5 }} />
+          title={`${theme.group} — five fortnights, oldest first: ${cells.map((c) => c.state).join(' · ')}`}>
+      {cells.map((c, i) => (
+        <i key={i} className="block w-[13px] h-[9px] rounded-[1px]" style={barStyle(c.state)} />
       ))}
     </span>
   )
+}
+
+/** One label style, one width, both rows — the bar reads as a grid, not a
+ *  sentence. Groups on the second row are separated by hairlines, not labels
+ *  floating mid-flow. */
+function Lbl({ children }) {
+  return (
+    <span className="w-11 shrink-0 text-[9.5px] font-mono uppercase tracking-[.14em]
+                     text-[var(--color-text-muted)]">{children}</span>
+  )
+}
+function Divider() {
+  return <span className="self-center h-3 w-px bg-[var(--color-border)]" />
 }
 
 export default function ScanBar({
@@ -83,28 +99,34 @@ export default function ScanBar({
   return (
     <div className="sticky top-0 z-10 mb-4 border-b border-[var(--color-border)]
                     bg-[color-mix(in_srgb,var(--color-bg)_88%,transparent)] backdrop-blur-sm">
-      <div className="flex items-baseline gap-x-5 gap-y-1 flex-wrap py-2">
-        <span className="text-[9.5px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">Scan</span>
+      <div className="flex items-baseline gap-x-4 gap-y-1 flex-wrap py-2">
+        <Lbl>Scan</Lbl>
         {scans.map((s) => (
           <Seg key={s.key} on={scan === s.key} dim={s.count === 0}
                onClick={() => onScan(s.key)}
-               title={s.count === 0 ? `${s.label} found nothing this session`
-                    : s.count == null ? `${s.label} has not loaded yet` : undefined}>
-            {s.label}<Count n={s.count} zeroLabel="0 today" />
+               title={s.count === 0 ? `${s.label} — 0 today`
+                    : s.count == null ? `${s.label} — not loaded yet`
+                    : `${s.label} — ${s.count} names`}>
+            {s.label}<Count n={s.count} on={scan === s.key} />
           </Seg>
         ))}
       </div>
-      <div className="flex items-baseline gap-x-5 gap-y-1 flex-wrap pb-2">
-        <span className="text-[9.5px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">State</span>
-        {STATE_ORDER.map((st) => (
-          <Seg key={st} on={states.has(st)} onClick={() => onToggleState(st)}>
-            <i className="inline-block w-[8px] h-[8px] rounded-[1px] mr-[5px] align-[-1px]"
-               style={barStyle(st)} />
-            {st}<Count n={stateCounts ? (stateCounts[st] ?? 0) : null} />
-          </Seg>
-        ))}
+      <div className="flex items-baseline gap-x-4 gap-y-1 flex-wrap pb-2">
+        <Lbl>State</Lbl>
+        {STATE_ORDER.map((st) => {
+          const n = stateCounts ? (stateCounts[st] ?? 0) : null
+          return (
+            <Seg key={st} on={states.has(st)} onClick={() => onToggleState(st)}
+                 title={n == null ? `${st} — not loaded yet` : `${st} — ${n} in this cut`}>
+              <i className="inline-block w-[8px] h-[8px] rounded-[1px] mr-[5px] align-[-1px]"
+                 style={barStyle(st)} />
+              {st}<Count n={n} on={states.has(st)} />
+            </Seg>
+          )
+        })}
 
-        <span className="text-[9.5px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)] ml-2">Theme</span>
+        <Divider />
+        <span className="text-[9.5px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">Theme</span>
         {chosen ? (
           <span className="text-[12.5px] text-[var(--color-text-bold)]">
             {chosen.group}
@@ -158,11 +180,11 @@ export default function ScanBar({
           </span>
         )}
 
-        <span className="text-[9.5px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)] ml-2">Find</span>
+        <Divider />
         <input value={search} onChange={(e) => onSearch(e.target.value)}
-          placeholder="ticker…"
+          placeholder="find ticker…"
           className="bg-transparent border-none border-b border-solid border-[var(--color-border)]
-                     text-[12.5px] font-mono text-[var(--color-text)] w-[90px] px-0.5 outline-none
+                     text-[12.5px] font-mono text-[var(--color-text)] w-[104px] px-0.5 outline-none
                      placeholder:text-[var(--color-text-muted)]" />
 
         <span className="ml-auto text-[11px] text-[var(--color-text-muted)]">{receipt}</span>

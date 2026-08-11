@@ -43,7 +43,7 @@ function WatchlistCard({ name, tickers }) {
           <span className="font-semibold text-sm text-[var(--color-text)]">{name}</span>
           {tickers.length > 0 && <CopyButton text={tickerStr} />}
         </div>
-        <div className="text-xs font-semibold text-green-600">{tickers.length} tickers</div>
+        <div className="text-xs font-semibold text-[var(--color-text-secondary)]">{tickers.length} tickers</div>
       </div>
       <div className="grid grid-cols-5 gap-x-3 gap-y-1.5">
         {display.map(t => (
@@ -106,19 +106,19 @@ export default function WatchlistTab({ universe, presets }) {
       </div>
 
       {topTickers.length > 0 && (
-        <div className="border border-green-600/30 rounded-lg bg-[var(--color-surface)] p-4 mb-5">
+        <div className="border border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] p-4 mb-5">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center">
-              <span className="font-semibold text-sm text-green-600">Top Overlap</span>
+              <span className="font-semibold text-sm text-[var(--color-text-bold)]">Top Overlap</span>
               <span className="text-xs text-[var(--color-text-muted)] ml-2">Tickers appearing in 2+ screeners</span>
               <CopyButton text={topTickerStr} />
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
             {topTickers.map(([ticker, count]) => (
-              <div key={ticker} className="flex items-center gap-1 px-2.5 py-1 rounded bg-green-600/10 border border-green-600/20">
-                <TickerLink symbol={ticker} className="text-xs font-mono font-semibold text-green-600" />
-                <span className="text-[10px] text-green-600/70">{count}x</span>
+              <div key={ticker} className="flex items-center gap-1 px-2.5 py-1 rounded border border-[var(--color-border)]" style={{ background: 'color-mix(in srgb, var(--color-took) 10%, transparent)' }}>
+                <TickerLink symbol={ticker} className="text-xs font-mono font-semibold text-[var(--color-took)]" />
+                <span className="text-[10px] text-[var(--color-text-muted)]">{count}x</span>
               </div>
             ))}
           </div>

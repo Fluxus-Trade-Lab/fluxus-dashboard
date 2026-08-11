@@ -180,16 +180,14 @@ export default function ScreenerPage() {
 
   const noState = states.size ? preState.filter((r) => !r.state).length : 0
 
+  // Numbers only — the selections themselves are already visible as underlines,
+  // and restating them here was the duplication Andy flagged.
   const receipt = useMemo(() => {
-    if (!activeScan.loaded) return `${activeScan.label} — still loading`
-    const parts = [activeScan.label]
-    if (states.size) parts.push([...states].join('+'))
-    if (theme) parts.push(theme)
-    if (search.trim()) parts.push(`"${search.trim().toUpperCase()}"`)
-    let s = `${rows.length} rows · ${parts.join(' ∩ ')}`
-    if (noState) s += ` · ${noState} without a state hidden`
+    if (!activeScan.loaded) return `${activeScan.label} — loading`
+    let s = `${rows.length} rows`
+    if (noState) s += ` · ${noState} unstated hidden`
     return s
-  }, [rows.length, activeScan, states, theme, search, noState])
+  }, [rows.length, activeScan, noState])
 
   const conditions = market?.breadth?.conditions
   const toggleState = (st) => setStates((prev) => {
@@ -209,7 +207,6 @@ export default function ScreenerPage() {
   return (
     <div>
       <PageHeader group="market" title="Screener"
-        blurb="One table over the tradeable universe, read through four vocabularies the pipeline already speaks — a scan, a state, a theme, a name. Nothing here is typed in; everything is selected."
         meta={[
           conditions ? (
             <a key="mc" href="#/breadth" className="no-underline text-inherit"
@@ -232,7 +229,7 @@ export default function ScreenerPage() {
             onClick={() => setActiveTab(i)}
             className={`px-5 py-2.5 font-semibold text-sm cursor-pointer bg-transparent border-none border-b-2 transition-colors ${
               activeTab === i
-                ? 'border-green-600 text-green-600'
+                ? 'border-[var(--color-text-bold)] text-[var(--color-text-bold)]'
                 : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'
             }`}>
             {tab}
@@ -267,33 +264,20 @@ export default function ScreenerPage() {
 
       <HowToRead>
         <p>
-          Every control on this page is a <b>vocabulary, not a query</b>. A scan is a
-          list a screener wrote this session; a state is the four-state read the
-          group engine assigned; a theme is a membership the taxonomy defines; a
-          name is a ticker. The table is their intersection, and changing a
-          selection changes only which rows you see — never what any column means.
+          <b>Heat</b> — how many screens a name stacked (quality screens ×3).
+          Only the confluence 50 carry one. The caret opens the appearances
+          behind the number.
         </p>
         <p>
-          <b>Heat</b> exists only for names on the confluence ledger — the fifty
-          that stacked more than one screen. Everything else prints a dash,
-          because absence from a top-50 list is not a score of zero. The marks
-          beside the number are the appearances that produced it; the caret opens
-          them so the arithmetic stays checkable.
+          <b>Align</b> — left dot: own RS 3M in the top third. Right dot: its
+          industry&rsquo;s state. The market-conditions number in the header is the
+          third light. Three lit together is the aligned setup; they are never
+          summed into a score.
         </p>
         <p>
-          <b>Align</b> is two lights that are never added together: the stock&rsquo;s
-          own 3-month RS in the top third, and its industry&rsquo;s state. The
-          market-conditions number in the header is the third light, printed once
-          because it is the same for every row. Three lights agreeing is something
-          you see; a weighted total would be something we invented.
-        </p>
-        <p>
-          Two columns are drawn <b>unmeasured on purpose</b>: Group trend (five
-          dashed cells awaiting the per-stock home pointer) and Vol 5d/50d
-          (awaiting the pipeline field). A dashed outline means not measured yet —
-          it never means zero. The theme ribbon, when you choose a theme, appears
-          on the control bar rather than in every row: it is a property of the
-          theme, not of each stock.
+          <b>Group trend</b> and <b>Vol 5d/50d</b> are awaiting pipeline fields
+          and print as unmeasured. A dash or dashed cell always means not
+          measured — never zero. Click a row for the full tear-sheet.
         </p>
       </HowToRead>
     </div>

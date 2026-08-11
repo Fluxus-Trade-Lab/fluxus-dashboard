@@ -89,7 +89,7 @@ function GroupTrendCell() {
   return (
     <td className="py-[4px] pr-2.5 opacity-40 group-hover:opacity-100 transition-opacity">
       <span className="inline-flex gap-[2px]"
-            title="home-group state history — not measured yet; awaiting the per-stock membership pointer from the pipeline">
+            title="group state history — not measured yet">
         {Array.from({ length: 5 }, (_, i) => (
           <i key={i} className="block w-[10px] h-[8px] rounded-[1px] opacity-50"
              style={{ border: '1px dashed var(--color-text-muted)' }} />
@@ -102,13 +102,13 @@ function GroupTrendCell() {
 function HeatCell({ heat }) {
   if (!heat) {
     return <td className="py-[4px] pr-2.5 text-[var(--color-text-muted)]"
-               title="not on the confluence ledger — no heat measured">—</td>
+               title="not on the confluence ledger">—</td>
   }
   const marks = heat.screeners.map((s) => '|'.repeat(s.hits)).join(' ')
   return (
     <td className="py-[4px] pr-2.5 whitespace-nowrap">
       <span className="tabular-nums font-mono">{heat.score.toFixed(1)}</span>
-      <span className="text-[8.5px] tracking-[1px] text-[var(--color-text-muted)] opacity-60 ml-1.5">{marks}</span>
+      <span className="text-[8.5px] tracking-[1px] text-[var(--color-text-muted)] opacity-0 group-hover:opacity-60 transition-opacity ml-1.5">{marks}</span>
     </td>
   )
 }
@@ -152,7 +152,7 @@ export default function StockTable({ rows }) {
   if (!rows.length) {
     return (
       <p className="m-0 py-8 text-center text-[12px] text-[var(--color-text-muted)]">
-        No names under this selection — the vocabularies intersect to nothing.
+        0 names match this selection.
       </p>
     )
   }
@@ -167,7 +167,7 @@ export default function StockTable({ rows }) {
             <th className="text-left py-1 pr-2.5 font-medium"
                 title="confluence score — how many screens stacked, quality tier ×3">Heat</th>
             <th className="text-center py-1 pr-2.5 font-medium"
-                title="two lights, never summed: own RS 3M ≥ 67 · industry state">Align</th>
+                title="left dot: own RS 3M ≥ 67 · right dot: industry state">Align</th>
             <th className="text-left py-1 pr-2.5 font-medium">State</th>
             <th className="text-left py-1 pr-2.5 font-medium"
                 title="home-group state history — awaiting the per-stock membership pointer">Group trend</th>
@@ -180,7 +180,7 @@ export default function StockTable({ rows }) {
             <th className="text-right py-1 pr-2.5 font-medium"
                 title="today's volume ÷ 3-month average (Finviz construction)">Rel vol</th>
             <th className="text-right py-1 pr-2.5 font-medium"
-                title="5-day ÷ 50-day average volume — field confirmed, data not yet supplied">Vol 5d/50d</th>
+                title="5-day ÷ 50-day average volume — not measured yet">Vol 5d/50d</th>
             <th className="text-left py-1 pr-2.5 font-medium"
                 title="windows spent in the top quartile of its own cohort">Top quartile</th>
             <th className="py-1 font-medium w-5"></th>
@@ -242,7 +242,7 @@ function RowPair({ r, i, open, onToggle }) {
           {r.relVol == null ? '—' : r.relVol.toFixed(2)}
         </td>
         <td className="py-[4px] pr-2.5 text-right text-[var(--color-text-muted)] opacity-40 group-hover:opacity-100 transition-opacity"
-            title="not measured yet — awaiting vol_5d_50d from the pipeline">—</td>
+            title="not measured yet">—</td>
         <td className="py-[4px] pr-2.5 whitespace-nowrap opacity-55 group-hover:opacity-100 transition-opacity">
           <Squares n={r.tq} of={r.tqOf}
             title={r.tqOf ? `top quartile of its cohort on ${r.tq} of ${r.tqOf} windows` : undefined} />
