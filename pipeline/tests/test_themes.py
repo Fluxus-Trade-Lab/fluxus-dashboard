@@ -255,3 +255,20 @@ class TestPrimaryGroup:
         build_groups.assign_primary_group(
             stocks, list(reversed(self.THEMES)), self.UNIVERSE)
         assert stocks == self._run()
+
+    def test_unscored_industry_is_marked_not_left_dangling(self):
+        """48 stocks pointed at industries the scoring step had dropped
+        (<5 tradeable members). The pointer stays truthful instead of being
+        reassigned: kind flips to industry_unscored and the UI draws no
+        ribbon — unmeasured is not zero, and it is not someone else's group
+        either."""
+        stocks = {"LUX1": {"primary_group": "Luxury Goods",
+                           "primary_kind": "industry"},
+                  "NVDA": {"primary_group": "Semiconductors",
+                           "primary_kind": "industry"}}
+        industries = [{"group": "Semiconductors"}]
+        moved = build_groups.resolve_dangling_primaries(stocks, industries)
+        assert moved == 1
+        assert stocks["LUX1"]["primary_kind"] == "industry_unscored"
+        assert stocks["LUX1"]["primary_group"] == "Luxury Goods"
+        assert stocks["NVDA"]["primary_kind"] == "industry"

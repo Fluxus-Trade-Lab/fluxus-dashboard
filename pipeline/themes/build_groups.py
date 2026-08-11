@@ -412,6 +412,35 @@ def assign_primary_group(stocks: Mapping[str, Dict[str, Any]],
             payload["primary_kind"] = "industry" if industry_of.get(tk) else None
 
 
+def resolve_dangling_primaries(stocks: Mapping[str, Dict[str, Any]],
+                               industries: Sequence[Mapping[str, Any]]) -> int:
+    """Mark primaries whose target industry was dropped from the output.
+
+    Industries under MIN_INDUSTRY_MEMBERS tradeable names are not scored, so a
+    stock can hold a pointer to a group that is not in the file -- 48 of 2,535
+    did on 2026-08-10 (Luxury Goods, Broadcasting, Mortgage Finance...). The
+    assignment rule cannot see that, because it reads the universe and the
+    dropped rows are a property of the scoring step.
+
+    The name is kept and the kind changes to `industry_unscored`: the identity
+    is still true (the stock IS in Luxury Goods), there is just no scored row
+    behind it. The UI reads the kind, prints the name, and draws no ribbon --
+    the same unmeasured-is-not-zero rule as everywhere else. Reassigning these
+    stocks to some other group would fabricate an identity to make a pointer
+    resolve, which is backwards.
+    """
+    scored = {i["group"] for i in industries}
+    moved = 0
+    for payload in stocks.values():
+        if payload.get("primary_kind") == "industry"                 and payload.get("primary_group") not in scored:
+            payload["primary_kind"] = "industry_unscored"
+            moved += 1
+    if moved:
+        logger.info("%d stocks have an unscored industry as their primary group",
+                    moved)
+    return moved
+
+
 def audit_taxonomy(
     universe: Sequence[Mapping[str, Any]],
     holdings: Mapping[str, Sequence[str]],
@@ -521,6 +550,7 @@ def run() -> Dict[str, Any]:
         )
     stocks = rs_engine.rank_within_group(universe, "industry", benchmark)
     assign_primary_group(stocks, themes, universe)
+    resolve_dangling_primaries(stocks, industries)
     audit = audit_taxonomy(universe, holdings, etf_rows)
 
     payload = {
