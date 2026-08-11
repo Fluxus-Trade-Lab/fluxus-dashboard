@@ -303,10 +303,17 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
         df[col] = df[col].round(0).astype('Int64')  # Int64 keeps NA for non-tradeable
 
     # --- Performance percentile ranks (0-1 scale, relative to full universe) ---
+    #
+    # `na_option='top'` for the same reason as rank_tradeable above: pandas
+    # names the option by rank position, so 'bottom' hands a missing value the
+    # LARGEST rank — the top of the scale. These two slipped through the first
+    # fix, and they feed both the 97 Club preset and the momentum_97 flag two
+    # lines down: on 2026-08-12, 112 names with no weekly return sat at the
+    # >=97th weekly percentile, ADSK among them.
     if 'perf_1w' in df.columns:
-        df['perf_1w_pctile'] = df['perf_1w'].rank(pct=True, na_option='bottom').round(4)
+        df['perf_1w_pctile'] = df['perf_1w'].rank(pct=True, na_option='top').round(4)
     if 'perf_3m' in df.columns:
-        df['perf_3m_pctile'] = df['perf_3m'].rank(pct=True, na_option='bottom').round(4)
+        df['perf_3m_pctile'] = df['perf_3m'].rank(pct=True, na_option='top').round(4)
 
     # --- Momentum 97 flag: 1W pctile >= 0.97 AND 3M pctile >= 0.85 ---
     _w = df.get('perf_1w_pctile', pd.Series(0, index=df.index))
