@@ -26,10 +26,12 @@ export default function TickerStrip({ signals, etfData }) {
   }, [etfData])
 
   return (
-    // auto-fit + 1fr: the cards divide whatever width exists — ultrawide, laptop
-    // or phone — and wrap instead of scrolling, so the row never ends in a blank
-    <div className="grid gap-2"
-         style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(128px, 1fr))' }}>
+    // 2 / 5 / 10 — every count divides the ten cards, so each row is always
+    // full: 2-up on a phone, 5+5 on a laptop, one row on wide screens. auto-fit
+    // packed 7+3 at laptop width. The 10-across step needs ~150px per card
+    // after the 214px rail, so it starts at 1720px, not at Tailwind's xl=1280
+    // (which squeezed ten cards to 101px and clipped their text).
+    <div className="ticker-strip-10 grid gap-2 grid-cols-2 sm:grid-cols-5">
       {STRIP_TICKERS.map(({ key, source }) => (
         <TickerCard
           key={key}

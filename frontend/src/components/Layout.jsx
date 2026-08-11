@@ -110,9 +110,10 @@ export default function Layout({ data, lastUpdated, isOffline }) {
               what the market is today, and whether today is unusual for it.
               Stacked, the chart read as a second object; beside the votes it
               reads as their denominator. */}
-          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,7fr)_minmax(0,9fr)] gap-4 items-start">
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,7fr)_minmax(0,9fr)] gap-4 items-stretch">
             {data?.breadth?.verdict && (
-              <section>
+              <section className="border border-[var(--color-border)] rounded-lg px-4 py-3
+                                  bg-[var(--color-surface)]">
                 <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1 mb-4">
                   <h2 className="text-[34px] leading-none font-semibold m-0"
                       style={{ fontFamily: 'var(--font-cond)',
@@ -161,13 +162,13 @@ export default function Layout({ data, lastUpdated, isOffline }) {
               {/* Equal width, equal row height, so neither card decides the
                   other's layout. items-stretch is the default and is what makes
                   them end level regardless of how many rows each holds. */}
-              <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]
+              <div className="grid grid-cols-1 xl:grid-cols-2
                               gap-3 items-stretch">
                 <LeadersLaggards title="Industries"
                   etfs={(ETF_GROUPS.Industries || [])
                     .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                     .filter(Boolean)}
-                  windows={['1D', '1W', '1M']} limit={3} />
+                  limit={6} />
                 <SectorStrength title="Sectors"
                   etfs={(ETF_GROUPS['Sel Sectors'] || [])
                     .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))

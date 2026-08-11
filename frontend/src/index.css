@@ -178,6 +178,13 @@ body {
   min-height: 100vh;
 }
 
+/* Dashboard benchmark cards: the 10-across step. Tailwind's arbitrary
+   min-[1720px] variant did not generate in this setup, so the rule lives here.
+   Ten cards need ~150px each beside the 214px rail — hence 1720, not xl. */
+@media (min-width: 1720px) {
+  .ticker-strip-10 { grid-template-columns: repeat(10, minmax(0, 1fr)); }
+}
+
 /* ── Public page typography & layout ── */
 
 .public-section {

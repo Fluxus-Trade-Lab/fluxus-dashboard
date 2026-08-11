@@ -117,19 +117,11 @@ export default function Rail({ currentPage, onNavigate }) {
            className={`hidden lg:flex lg:flex-col shrink-0 min-h-screen pt-4 pb-6
                        border-r border-[var(--glass-edge)] transition-[width] duration-200
                        ${collapsed ? 'w-[62px]' : 'w-[214px]'}`}>
-        <div className="flex items-center px-4 pb-4">
+        <div className="flex items-center px-4 pb-4 h-[36px]">
           {!collapsed && (
             <span className="text-[15px] font-semibold tracking-[.16em] flex-1"
                   style={{ fontFamily: 'var(--font-cond)' }}>FLUXUS</span>
           )}
-          <button type="button" onClick={() => setCollapsed((v) => !v)}
-                  title={collapsed ? 'Expand' : 'Collapse'}
-                  aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-                  className="w-6 h-6 mx-auto flex items-center justify-center rounded border-0
-                             bg-transparent text-[var(--color-text-muted)]
-                             hover:text-[var(--color-text)] cursor-pointer text-[13px]">
-            {collapsed ? '»' : '«'}
-          </button>
         </div>
 
         {NAV_GROUPS.map((g) => (
@@ -176,6 +168,22 @@ export default function Rail({ currentPage, onNavigate }) {
           </div>
         ))}
       </nav>
+
+      {/* The collapse handle rides the rail's edge at the viewport's vertical
+          middle — fixed, so it is under the hand at any scroll depth instead
+          of back at the top of the page. */}
+      <button type="button" onClick={() => setCollapsed((v) => !v)}
+              title={collapsed ? 'Expand' : 'Collapse'}
+              aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              style={{ left: collapsed ? 62 : 214 }}
+              className="hidden lg:flex fixed top-1/2 -translate-y-1/2 -ml-[11px] z-30
+                         w-[22px] h-11 items-center justify-center rounded-full
+                         border border-[var(--color-border)] bg-[var(--color-surface)]
+                         text-[var(--color-text-muted)] hover:text-[var(--color-text)]
+                         cursor-pointer text-[12px] transition-[left] duration-200"
+              >
+        {collapsed ? '»' : '«'}
+      </button>
 
       {/* narrow: one scrollable strip, group labels kept. A rail that becomes a
           hamburger hides the split it exists to show. */}

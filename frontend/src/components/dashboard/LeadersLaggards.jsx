@@ -1,85 +1,66 @@
 import { useMemo } from 'react'
-import { etfName, rsTone, fmtRs, rankWithin, PERF_WINDOWS } from '../../lib/etfRank'
+import { etfName, rsTone, fmtRs, rankAllWindows, RS_WINDOWS } from '../../lib/etfRank'
 
 /**
- * Best and worst industries, four things per row.
+ * Best and worst industries, in the exact row grammar the sectors card uses:
+ * three RS clocks · the instrument · today's move. The two cards sit side by
+ * side, and until 2026-08-11 they spoke different layouts — six mini-sections
+ * with their own headers here, one table there. Same anatomy now, so the pair
+ * reads as one instrument at two grains (Andy: 统一设计，左右和谐对称).
  *
- *   RS        0-99 percentile of this row's own window, ranked inside this
- *             card's group — the scale run_all.rank_tradeable puts on stocks.
- *             It briefly read rrs_*, which ranks today against recent sessions
- *             rather than against peers, so a fund 5.8pp behind on the month
- *             could show 100.
- *   ticker    the instrument
- *   name      what it is exposed to
- *   change    the move over that window
- *
- * Price is deliberately gone. A fund's dollar level says nothing about the
- * market and was taking the width the exposure needed — "GDX / Gold Miners"
- * reads at a glance, "$83.92" does not.
+ * Ranks are 0-99 within the full industry list (the cohort is printed in the
+ * header), not within the twelve rows shown — a leader's 99 means best of 68,
+ * not best of what fits on the card. Sorted by the shortest clock; the top
+ * six and bottom six of that sort are shown, worst last, with the cut marked.
  */
 
-function Row({ etf, ranks, changeKey, windowLabel, cohort }) {
-  const name = etfName(etf.ticker)
-  const change = etf[changeKey]
-  const rs = ranks.get(etf.ticker)
-  const up = change > 0
-  return (
-    <div className="flex items-center gap-2.5 h-[34px]">
-      <span className="w-7 shrink-0 text-center text-[10px] font-mono tabular-nums
-                       leading-[17px] rounded-sm"
-            style={rsTone(rs)}
-            title={rs == null ? 'no reading for this window'
-                              : `${windowLabel} RS ${rs} of 99 — ranked among ${cohort} funds`}>
-        {fmtRs(rs)}
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="block text-[12px] font-mono font-medium leading-[13px]
-                         text-[var(--color-text-bold)]">{etf.ticker}</span>
-        {/* absent rather than guessed when the vendor had no name */}
-        <span className="block text-[10px] leading-[13px] truncate
-                         text-[var(--color-text-muted)]" title={name ?? undefined}>
-          {name ?? '\u00a0'}
+export default function LeadersLaggards({ etfs, limit = 6, title = 'Industries' }) {
+  const ranks = useMemo(() => rankAllWindows(etfs), [etfs])
+  const { leaders, laggards } = useMemo(() => {
+    if (!etfs?.length) return { leaders: [], laggards: [] }
+    const near = ranks[RS_WINDOWS[0].key]
+    const sorted = [...etfs].sort(
+      (a, b) => (near.get(b.ticker) ?? -1) - (near.get(a.ticker) ?? -1))
+    return { leaders: sorted.slice(0, limit), laggards: sorted.slice(-limit) }
+  }, [etfs, ranks, limit])
+
+  if (!leaders.length) return null
+
+  const Row = ({ e }) => {
+    const name = etfName(e.ticker)
+    const day = e.change_pct
+    return (
+      <div className="grid grid-cols-[repeat(3,28px)_1fr_54px] gap-x-2 items-center h-[34px]">
+        {RS_WINDOWS.map((w) => {
+          const v = ranks[w.key].get(e.ticker)
+          return (
+            <span key={w.key}
+                  className="text-center text-[10px] font-mono tabular-nums
+                             leading-[17px] rounded-sm"
+                  style={rsTone(v)}
+                  title={v == null ? 'no reading for this window'
+                                   : `RS ${v} of 99 — ${w.note}`}>
+              {fmtRs(v)}
+            </span>
+          )
+        })}
+        <span className="min-w-0">
+          <span className="block text-[12px] font-mono font-medium leading-[13px]
+                           text-[var(--color-text-bold)]">{e.ticker}</span>
+          <span className="block text-[10px] leading-[13px] truncate
+                           text-[var(--color-text-muted)]" title={name ?? undefined}>
+            {name ?? ' '}
+          </span>
         </span>
-      </span>
-      <span className="shrink-0 text-[12px] font-mono tabular-nums"
-            style={{ color: up ? 'var(--color-took)' : 'var(--color-refused)' }}>
-        {up ? '+' : ''}{(change * 100).toFixed(2)}%
-      </span>
-    </div>
-  )
-}
-
-function Column({ label, rows, ranks, changeKey, windowLabel, cohort }) {
-  return (
-    <div>
-      <h4 className="text-[9px] font-mono uppercase tracking-[.2em]
-                     text-[var(--color-text-muted)] mb-1">{label}</h4>
-      {rows.map((e) => (
-        <Row key={e.ticker} etf={e} ranks={ranks} changeKey={changeKey}
-             windowLabel={windowLabel} cohort={cohort} />
-      ))}
-    </div>
-  )
-}
-
-export default function LeadersLaggards({
-  etfs, windows = ['1W', '1M'], limit = 3, title = 'Industries',
-}) {
-  const cols = useMemo(() => {
-    if (!etfs?.length) return []
-    return windows.map((w) => {
-      const changeKey = PERF_WINDOWS[w]
-      const sorted = [...etfs].filter((e) => Number.isFinite(e[changeKey]))
-        .sort((a, b) => b[changeKey] - a[changeKey])
-      return {
-        w, changeKey, ranks: rankWithin(etfs, changeKey),
-        leaders: sorted.slice(0, limit),
-        laggards: sorted.slice(-limit).reverse(),
-      }
-    })
-  }, [etfs, windows, limit])
-
-  if (!etfs?.length) return null
+        <span className="text-right text-[12px] font-mono tabular-nums"
+              style={{ color: !Number.isFinite(day) ? 'var(--color-text-muted)'
+                : day > 0 ? 'var(--color-took)' : 'var(--color-refused)' }}>
+          {!Number.isFinite(day) ? '—'
+            : `${day > 0 ? '+' : ''}${(day * 100).toFixed(2)}%`}
+        </span>
+      </div>
+    )
+  }
 
   return (
     <section className="bg-[var(--color-surface)] border border-[var(--color-border)]
@@ -88,36 +69,41 @@ export default function LeadersLaggards({
         <span className="text-[10px] font-mono uppercase tracking-[.2em]
                          text-[var(--color-text-secondary)]">{title}</span>
         <span className="text-[9px] text-[var(--color-text-muted)]">
-          {etfs.length} funds
+          relative strength within {etfs.length} funds, three clocks · top {limit} and bottom {limit} by today
         </span>
       </div>
-      {/* Two stacked grids rather than one four-cell grid. A single grid gives
-          every row the height of the tallest, so when this card stretches to
-          match the sectors card beside it the gap opens between leaders and
-          laggards — in the middle, where it reads as missing rows. Stacked,
-          the slack lands at the bottom where it reads as space. */}
-      <div className="px-3 py-2 flex-1 flex flex-col gap-3">
-        <div className="grid gap-x-4"
-             style={{ gridTemplateColumns: `repeat(${cols.length}, minmax(0, 1fr))` }}>
-          {cols.map((c) => (
-            <Column key={`${c.w}-lead`} label={`${c.w} leaders`} rows={c.leaders}
-                    ranks={c.ranks} changeKey={c.changeKey} windowLabel={c.w}
-                    cohort={etfs.length} />
+
+      <div className="px-3 py-2 flex-1">
+        <div className="grid grid-cols-[repeat(3,28px)_1fr_54px] gap-x-2 mb-1">
+          {RS_WINDOWS.map((w) => (
+            <span key={w.key} title={w.note}
+                  className="text-[9px] font-mono uppercase tracking-wide text-center
+                             text-[var(--color-text-muted)]">{w.label}</span>
           ))}
+          <span className="text-[9px] font-mono uppercase tracking-[.2em]
+                           text-[var(--color-text-muted)]">Industry</span>
+          <span className="text-[9px] font-mono uppercase tracking-wide text-right
+                           text-[var(--color-text-muted)]">Day</span>
         </div>
-        <div className="grid gap-x-4"
-             style={{ gridTemplateColumns: `repeat(${cols.length}, minmax(0, 1fr))` }}>
-          {cols.map((c) => (
-            <Column key={`${c.w}-lag`} label={`${c.w} laggards`} rows={c.laggards}
-                    ranks={c.ranks} changeKey={c.changeKey} windowLabel={c.w}
-                    cohort={etfs.length} />
-          ))}
+
+        {leaders.map((e) => <Row key={e.ticker} e={e} />)}
+
+        {/* the cut between the top and bottom of the ranked list — the middle
+            is not shown, and a hidden middle should look cut, not continuous */}
+        <div className="flex items-center gap-2 h-[20px]">
+          <span className="flex-1 border-t border-dashed border-[var(--color-border)]" />
+          <span className="text-[8.5px] font-mono uppercase tracking-[.2em]
+                           text-[var(--color-text-muted)]">{etfs.length - 2 * limit} not shown</span>
+          <span className="flex-1 border-t border-dashed border-[var(--color-border)]" />
         </div>
+
+        {laggards.map((e) => <Row key={e.ticker} e={e} />)}
       </div>
+
       <p className="px-3 pb-2 m-0 text-[9.5px] leading-snug text-[var(--color-text-muted)]">
-        The boxed number is relative strength, 0-99 — this fund&rsquo;s return over that
-        window ranked against the other {etfs.length}, on the same scale as a
-        stock&rsquo;s rs_1m. The figure on the right is the raw move.
+        Each number is a 0-99 rank of that window&rsquo;s return among
+        all {etfs.length}{' '}industry funds — the same three clocks as the sectors card. Left to right is
+        backwards in time, so a row that climbs to the left is an industry turning up.
       </p>
     </section>
   )
