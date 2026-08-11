@@ -53,14 +53,14 @@ const fmtPct = (v) =>
   v == null || !Number.isFinite(v) ? '—' : `${v > 0 ? '+' : ''}${(v * 100).toFixed(1)}%`
 
 function RsCell({ v }) {
-  if (v == null || !Number.isFinite(v)) return <td className="py-[3px] pr-2.5 text-right tabular-nums text-[var(--color-text-muted)]">—</td>
+  if (v == null || !Number.isFinite(v)) return <td className="py-[4px] pr-2.5 text-right tabular-nums text-[var(--color-text-muted)]">—</td>
   const style = v >= 67
     ? { background: 'color-mix(in srgb, var(--color-took) 30%, transparent)' }
     : v <= 33
       ? { background: 'color-mix(in srgb, var(--color-refused) 26%, transparent)' }
       : undefined
   return (
-    <td className="py-[3px] pr-2.5 text-right tabular-nums">
+    <td className="py-[4px] pr-2.5 text-right tabular-nums">
       <span className="rounded-sm px-1" style={style}>{Math.round(v)}</span>
     </td>
   )
@@ -69,7 +69,7 @@ function RsCell({ v }) {
 function AlignDots({ rs3, indState, indName }) {
   const stockKnown = Number.isFinite(rs3)
   return (
-    <td className="py-[3px] pr-2.5 text-center whitespace-nowrap">
+    <td className="py-[4px] pr-2.5 text-center whitespace-nowrap">
       <i className="inline-block w-[7px] h-[7px] rounded-full mx-[1.5px] align-middle"
          title={stockKnown ? `own RS 3M ${Math.round(rs3)} of 99` : 'no RS reading'}
          style={!stockKnown
@@ -87,7 +87,7 @@ function AlignDots({ rs3, indState, indName }) {
 /** Five dashed cells: the home group's state history, awaiting its pointer. */
 function GroupTrendCell() {
   return (
-    <td className="py-[3px] pr-2.5">
+    <td className="py-[4px] pr-2.5 opacity-40 group-hover:opacity-100 transition-opacity">
       <span className="inline-flex gap-[2px]"
             title="home-group state history — not measured yet; awaiting the per-stock membership pointer from the pipeline">
         {Array.from({ length: 5 }, (_, i) => (
@@ -101,14 +101,14 @@ function GroupTrendCell() {
 
 function HeatCell({ heat }) {
   if (!heat) {
-    return <td className="py-[3px] pr-2.5 text-[var(--color-text-muted)]"
+    return <td className="py-[4px] pr-2.5 text-[var(--color-text-muted)]"
                title="not on the confluence ledger — no heat measured">—</td>
   }
   const marks = heat.screeners.map((s) => '|'.repeat(s.hits)).join(' ')
   return (
-    <td className="py-[3px] pr-2.5 whitespace-nowrap">
+    <td className="py-[4px] pr-2.5 whitespace-nowrap">
       <span className="tabular-nums font-mono">{heat.score.toFixed(1)}</span>
-      <span className="text-[8.5px] tracking-[1px] text-[var(--color-text-muted)] ml-1.5">{marks}</span>
+      <span className="text-[8.5px] tracking-[1px] text-[var(--color-text-muted)] opacity-60 ml-1.5">{marks}</span>
     </td>
   )
 }
@@ -118,7 +118,7 @@ function EvidenceFold({ row }) {
     <tr>
       <td colSpan={15} className="pb-2 pt-0 pl-9 border-none">
         <div className="border border-[var(--color-border-light)] rounded-md bg-[var(--color-surface)]
-                        px-3.5 py-2 text-[11px] text-[var(--color-text-secondary)] flex flex-wrap gap-x-5 gap-y-1">
+                        px-3.5 py-2 text-[12px] text-[var(--color-text-secondary)] flex flex-wrap gap-x-5 gap-y-1">
           {row.heat && row.heat.screeners.map((s) => (
             <span key={s.name}>
               <b className="font-semibold text-[var(--color-text)]">{s.name}</b>
@@ -159,9 +159,9 @@ export default function StockTable({ rows }) {
 
   return (
     <div>
-      <table className="w-full text-[11.5px] border-collapse">
+      <table className="w-full text-[12.5px] border-collapse">
         <thead>
-          <tr className="text-[9px] font-mono uppercase tracking-wider text-[var(--color-text-muted)]">
+          <tr className="text-[9.5px] font-mono uppercase tracking-wider text-[var(--color-text-muted)]">
             <th className="text-right py-1 pr-2.5 font-medium w-7">#</th>
             <th className="text-left py-1 pr-2.5 font-medium">Ticker</th>
             <th className="text-left py-1 pr-2.5 font-medium"
@@ -216,38 +216,38 @@ function RowPair({ r, i, open, onToggle }) {
               window.location.hash = tickerHref(r.ticker)
             }
           }}
-          className={`border-t border-[var(--color-border-light)] cursor-pointer
+          className={`group border-t border-[var(--color-border-light)] cursor-pointer
                       hover:bg-[var(--color-hover-bg)] outline-none focus-visible:ring-1
                       ${r.inUniverse ? '' : 'opacity-45'}`}>
-        <td className="py-[3px] pr-2.5 text-right tabular-nums text-[var(--color-text-muted)]">{i + 1}</td>
-        <td className="py-[3px] pr-2.5 font-mono font-semibold text-[var(--color-text-bold)]">{r.ticker}</td>
+        <td className="py-[4px] pr-2.5 text-right tabular-nums text-[var(--color-text-muted)]">{i + 1}</td>
+        <td className="py-[4px] pr-2.5 font-mono font-semibold text-[var(--color-text-bold)]">{r.ticker}</td>
         <HeatCell heat={r.heat} />
         <AlignDots rs3={r.rs3} indState={r.indState} indName={r.ind} />
-        <td className="py-[3px] pr-2.5 text-[10.5px]">
+        <td className="py-[4px] pr-2.5 text-[10.5px]">
           <StateWord state={r.state} fallback={r.inUniverse ? '—' : 'not in universe'} />
         </td>
         <GroupTrendCell />
         <RsCell v={r.rs1} />
         <RsCell v={r.rs3} />
         <RsCell v={r.rs6} />
-        <td className="py-[3px] pr-2.5 text-right tabular-nums"
+        <td className="py-[4px] pr-2.5 text-right tabular-nums"
             style={r.accel == null ? { color: 'var(--color-text-muted)' }
                  : { color: r.accel > 0 ? 'var(--color-took)' : 'var(--color-refused)' }}>
           {r.accel == null ? '—' : `${r.accel > 0 ? '+' : '−'}${Math.abs(r.accel).toFixed(2)}`}
         </td>
-        <td className="py-[3px] pr-2.5 text-right tabular-nums">
+        <td className="py-[4px] pr-2.5 text-right tabular-nums opacity-55 group-hover:opacity-100 transition-opacity">
           {r.h52 == null ? '—' : `${(r.h52 * 100).toFixed(1)}%`}
         </td>
-        <td className="py-[3px] pr-2.5 text-right tabular-nums">
+        <td className="py-[4px] pr-2.5 text-right tabular-nums opacity-55 group-hover:opacity-100 transition-opacity">
           {r.relVol == null ? '—' : r.relVol.toFixed(2)}
         </td>
-        <td className="py-[3px] pr-2.5 text-right text-[var(--color-text-muted)]"
+        <td className="py-[4px] pr-2.5 text-right text-[var(--color-text-muted)] opacity-40 group-hover:opacity-100 transition-opacity"
             title="not measured yet — awaiting vol_5d_50d from the pipeline">—</td>
-        <td className="py-[3px] pr-2.5 whitespace-nowrap">
+        <td className="py-[4px] pr-2.5 whitespace-nowrap opacity-55 group-hover:opacity-100 transition-opacity">
           <Squares n={r.tq} of={r.tqOf}
             title={r.tqOf ? `top quartile of its cohort on ${r.tq} of ${r.tqOf} windows` : undefined} />
         </td>
-        <td className="py-[3px] text-right">
+        <td className="py-[4px] text-right">
           {hasEvidence && (
             <button type="button"
               onClick={(e) => { e.stopPropagation(); onToggle(r.ticker) }}

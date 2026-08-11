@@ -21,15 +21,18 @@
   --font-cond: PlexCond, Plex, sans-serif;
   --font-mono: PlexMono, 'JetBrains Mono', ui-monospace, monospace;
 
-  --color-bg: #fafaf9;
-  --color-surface: #ffffff;
-  --color-surface-alt: #fafaf9;
-  --color-surface-raised: #f5f5f4;
-  --color-border: #e7e5e4;
-  --color-border-light: #f5f5f4;
+  /* Warm paper (2026-08-11, Andy: 白可以偏暖). The greys were stone already;
+     this pushes the ground to cream so the site reads as print, not screen.
+     border/bg contrast 1.24 (was 1.14) — the hairlines Andy couldn't see. */
+  --color-bg: #f7f4ee;
+  --color-surface: #fffdf8;
+  --color-surface-alt: #f7f4ee;
+  --color-surface-raised: #efeae1;
+  --color-border: #e2dcd0;
+  --color-border-light: #ede8de;
   --color-text: #1c1917;
   --color-text-secondary: #78716c;
-  --color-text-muted: #a8a29e;
+  --color-text-muted: #9c968f;
   --color-text-bold: #292524;
 
   --color-signal-power3: #22c55e;
@@ -61,7 +64,7 @@
   --color-took: #1a5488;
   --color-refused: #d1600f;
   --color-untested: #c2bdb4;
-  --color-v2-paper: #f4f3f0;
+  --color-v2-paper: #f3efe7;
 
   /* ── glass · chrome only ────────────────────────────────────────────
      Rule the encoding depends on: glass NEVER sits beneath a value. The rail,
@@ -70,7 +73,7 @@
      cannot be screenshotted or printed. Both themes are written out in full —
      partial coverage is how the fills silently inherited light-mode values and
      put "not measured" and "took the chance" at ΔE 0.8 in greyscale. */
-  --glass: rgba(250, 249, 246, .68);
+  --glass: rgba(249, 246, 239, .68);
   --glass-edge: rgba(17, 17, 16, .09);
   --glass-line: rgba(255, 255, 255, .7);
   --glass-blur: blur(20px) saturate(150%);
@@ -79,38 +82,43 @@
   --ground: radial-gradient(680px 420px at 12% -6%, rgba(31,95,158,.07), transparent 62%),
             radial-gradient(560px 380px at 92% 2%, rgba(209,96,15,.05), transparent 60%);
   --color-v2-ink: #111110;
-  --color-v2-rule: #dedad3;
-  --color-v2-hair: #eae7e1;
+  --color-v2-rule: #d9d3c7;
+  --color-v2-hair: #e9e4da;
   /* unfilled level cell — MUST flip with the theme, or an empty
      cell reads as a filled one on the dark ground */
-  --color-v2-off: #e6e2db;
+  --color-v2-off: #e2ddd1;
 
   --color-active-tab-bg: #292524;
   --color-active-tab-text: #f5f5f4;
-  --color-hover-bg: #f5f5f4;
-  --color-input-bg: #ffffff;
-  --color-input-border: #d6d3d1;
-  --color-closed-row: #f5f5f4;
+  --color-hover-bg: #f1ece3;
+  --color-input-bg: #fffdf8;
+  --color-input-border: #d3ccc0;
+  --color-closed-row: #f1ece3;
 }
 
 html.dark {
-  --color-bg: #1c1917;
-  --color-surface: #292524;
-  --color-surface-alt: #1c1917;
-  --color-surface-raised: #44403c;
-  --color-border: #44403c;
-  --color-border-light: #3a3733;
+  /* Lifted 2026-08-11 (Andy: 黑得看不清线，界面沉闷). The failures were
+     measured before touching anything: border-light on surface sat at 1.28:1
+     (invisible), muted on bg at 3.65:1. Ground rises L* 9.0 → 11.1 with a warm
+     cast, structure lines rise to 1.5–1.9:1, muted to 4.5:1. The v2 encoding
+     ladder is re-measured against the new ground at the bottom of this block. */
+  --color-bg: #211d1a;
+  --color-surface: #2b2723;
+  --color-surface-alt: #211d1a;
+  --color-surface-raised: #4a4540;
+  --color-border: #544e46;
+  --color-border-light: #47413a;
   --color-text: #e7e5e4;
-  --color-text-secondary: #a8a29e;
-  --color-text-muted: #78716c;
+  --color-text-secondary: #b2aca5;
+  --color-text-muted: #8a847c;
   --color-text-bold: #fafaf9;
 
   --color-active-tab-bg: #fafaf9;
   --color-active-tab-text: #1c1917;
-  --color-hover-bg: #44403c;
-  --color-input-bg: #1c1917;
-  --color-input-border: #57534e;
-  --color-closed-row: #44403c;
+  --color-hover-bg: #3b3630;
+  --color-input-bg: #211d1a;
+  --color-input-border: #625b52;
+  --color-closed-row: #4a4540;
 
   --color-accent-light: #1e3a5f;
 
@@ -121,10 +129,10 @@ html.dark {
   --color-signal-warning: #fb923c;
   --color-signal-riskoff: #f87171;
 
-  --color-v2-paper: #1c1917;
+  --color-v2-paper: #211d1a;
 
   /* glass, dark — written out rather than inherited, same lesson as the fills */
-  --glass: rgba(41, 37, 36, .72);
+  --glass: rgba(43, 39, 35, .72);
   --glass-edge: rgba(255, 255, 255, .07);
   --glass-line: rgba(255, 255, 255, .05);
   --glass-blur: blur(20px) saturate(140%);
@@ -132,9 +140,9 @@ html.dark {
   --ground: radial-gradient(680px 420px at 12% -6%, rgba(31,95,158,.13), transparent 62%),
             radial-gradient(560px 380px at 92% 2%, rgba(209,96,15,.07), transparent 60%);
   --color-v2-ink: #e7e5e4;
-  --color-v2-rule: #44403c;
-  --color-v2-hair: #3a3733;
-  --color-v2-off: #3a3733;
+  --color-v2-rule: #4f4a43;
+  --color-v2-hair: #47413a;
+  --color-v2-off: #3f3a34;
 
   /* ── v2 encoding, dark ground (Fluxus_Brand/visual/explorations/2026-08-08/palette_dark.html) ──
      The light proof does not carry into the dark, because dark moves the two
@@ -146,8 +154,9 @@ html.dark {
        took | untested    ΔE  0.8  ✗   "not measured" ≈ "took the chance"
      Both fixed below. All four encoding colours are now stated explicitly here
      so nothing in this set can silently inherit across the theme flip again.
-     Corrected greyscale ladder on #1C1917 — greyscale ΔE is exactly |ΔL*|:
-       ground 9.0 → off 23.2 → took 38.8 → refused 54.0   (steps 14.2 · 15.5 · 15.2)
+     Corrected greyscale ladder, re-measured 2026-08-11 on the lifted ground
+     #211D1A — greyscale ΔE is exactly |ΔL*|:
+       ground 11.1 → off 24.7 → took 38.8 → refused 54.0   (steps 13.6 · 14.1 · 15.2)
      untested leaves the scale upward at L* 71.0 (≥17 from every fill). */
   --color-took: #1d5e98;      /* #1A5488 × 1.12 in sRGB — hue held at 272° */
   --color-refused: #d1600f;   /* unchanged: the brand orange, explicit on purpose */

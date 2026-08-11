@@ -23,7 +23,7 @@ const STATE_ORDER = ['Leading', 'Weakening', 'Improving', 'Lagging']
 function Seg({ on, dim, onClick, children, title }) {
   return (
     <button type="button" onClick={onClick} title={title}
-      className={`bg-transparent border-none p-0 cursor-pointer text-[11.5px] font-inherit
+      className={`bg-transparent border-none p-0 cursor-pointer text-[12.5px] font-inherit
                   pb-[1px] outline-none focus-visible:ring-1
                   ${on ? 'text-[var(--color-text-bold)] border-b border-solid border-[var(--color-text-bold)]'
                        : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'}
@@ -38,7 +38,7 @@ function Seg({ on, dim, onClick, children, title }) {
  *  belongs to scans (a session reading); a facet count's zero is just 0. */
 function Count({ n, zeroLabel = '0' }) {
   return (
-    <span className="text-[10px] ml-[3px] text-[var(--color-text-muted)]">
+    <span className="text-[10.5px] ml-[3px] text-[var(--color-text-muted)]">
       {n == null ? '—' : n === 0 ? zeroLabel : n}
     </span>
   )
@@ -84,7 +84,7 @@ export default function ScanBar({
     <div className="sticky top-0 z-10 mb-4 border-b border-[var(--color-border)]
                     bg-[color-mix(in_srgb,var(--color-bg)_88%,transparent)] backdrop-blur-sm">
       <div className="flex items-baseline gap-x-5 gap-y-1 flex-wrap py-2">
-        <span className="text-[9px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">Scan</span>
+        <span className="text-[9.5px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">Scan</span>
         {scans.map((s) => (
           <Seg key={s.key} on={scan === s.key} dim={s.count === 0}
                onClick={() => onScan(s.key)}
@@ -95,7 +95,7 @@ export default function ScanBar({
         ))}
       </div>
       <div className="flex items-baseline gap-x-5 gap-y-1 flex-wrap pb-2">
-        <span className="text-[9px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">State</span>
+        <span className="text-[9.5px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">State</span>
         {STATE_ORDER.map((st) => (
           <Seg key={st} on={states.has(st)} onClick={() => onToggleState(st)}>
             <i className="inline-block w-[8px] h-[8px] rounded-[1px] mr-[5px] align-[-1px]"
@@ -104,9 +104,9 @@ export default function ScanBar({
           </Seg>
         ))}
 
-        <span className="text-[9px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)] ml-2">Theme</span>
+        <span className="text-[9.5px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)] ml-2">Theme</span>
         {chosen ? (
-          <span className="text-[11.5px] text-[var(--color-text-bold)]">
+          <span className="text-[12.5px] text-[var(--color-text-bold)]">
             {chosen.group}
             <ThemeRibbon theme={chosen} />
             <button type="button" onClick={() => onTheme(null)}
@@ -137,7 +137,7 @@ export default function ScanBar({
               }}
               placeholder={`all themes · ${themes.length}`}
               className="bg-transparent border-none border-b border-solid border-[var(--color-border)]
-                         text-[11.5px] text-[var(--color-text)] w-[130px] px-0.5 outline-none
+                         text-[12.5px] text-[var(--color-text)] w-[130px] px-0.5 outline-none
                          placeholder:text-[var(--color-text-muted)]" />
             {themeOpen && themeMatches.length > 0 && (
               <div className="absolute left-0 top-full mt-1 z-20 min-w-[220px] max-h-[300px] overflow-auto
@@ -147,7 +147,7 @@ export default function ScanBar({
                   <div key={t.group}
                     onMouseDown={() => { onTheme(t.group); setThemeQuery(''); setThemeOpen(false); setThemeIdx(0) }}
                     onMouseEnter={() => setThemeIdx(i)}
-                    className={`px-2.5 py-1 text-[11.5px] cursor-pointer flex items-baseline gap-2
+                    className={`px-2.5 py-1 text-[12.5px] cursor-pointer flex items-baseline gap-2
                                 ${i === themeIdx ? 'bg-[var(--color-hover-bg)]' : ''}`}>
                     <span>{t.group}</span>
                     <span className="text-[9.5px] text-[var(--color-text-muted)] ml-auto">{t.members}</span>
@@ -158,14 +158,14 @@ export default function ScanBar({
           </span>
         )}
 
-        <span className="text-[9px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)] ml-2">Find</span>
+        <span className="text-[9.5px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)] ml-2">Find</span>
         <input value={search} onChange={(e) => onSearch(e.target.value)}
           placeholder="ticker…"
           className="bg-transparent border-none border-b border-solid border-[var(--color-border)]
-                     text-[11.5px] font-mono text-[var(--color-text)] w-[90px] px-0.5 outline-none
+                     text-[12.5px] font-mono text-[var(--color-text)] w-[90px] px-0.5 outline-none
                      placeholder:text-[var(--color-text-muted)]" />
 
-        <span className="ml-auto text-[10.5px] text-[var(--color-text-muted)]">{receipt}</span>
+        <span className="ml-auto text-[11px] text-[var(--color-text-muted)]">{receipt}</span>
       </div>
     </div>
   )
