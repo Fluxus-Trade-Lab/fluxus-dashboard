@@ -471,6 +471,70 @@
       "verdict": "broke",
       "session": "2026-08-07",
       "published_at": "2026-08-06T16:34:44-04:00"
+    },
+    {
+      "level_name": "call_wall",
+      "kind": "resistance",
+      "level": 7800.0,
+      "verdict": "untested",
+      "session": "2026-08-10",
+      "published_at": "2026-08-07T16:34:40-04:00"
+    },
+    {
+      "level_name": "put_wall",
+      "kind": "support",
+      "level": 7650.0,
+      "verdict": "untested",
+      "session": "2026-08-10",
+      "published_at": "2026-08-07T16:34:40-04:00"
+    },
+    {
+      "level_name": "zero_gamma_flip",
+      "kind": "pivot",
+      "level": 7638.42,
+      "verdict": "untested",
+      "session": "2026-08-10",
+      "published_at": "2026-08-07T16:34:40-04:00"
+    },
+    {
+      "level_name": "charm_peak_strike",
+      "kind": "magnet",
+      "level": 7800.0,
+      "verdict": "untested",
+      "session": "2026-08-10",
+      "published_at": "2026-08-07T16:34:40-04:00"
+    },
+    {
+      "level_name": "call_wall",
+      "kind": "resistance",
+      "level": 7800.0,
+      "verdict": "untested",
+      "session": "2026-08-11",
+      "published_at": "2026-08-10T07:53:36-04:00"
+    },
+    {
+      "level_name": "put_wall",
+      "kind": "support",
+      "level": 7650.0,
+      "verdict": "untested",
+      "session": "2026-08-11",
+      "published_at": "2026-08-10T07:53:36-04:00"
+    },
+    {
+      "level_name": "zero_gamma_flip",
+      "kind": "pivot",
+      "level": 7697.3,
+      "verdict": "untested",
+      "session": "2026-08-11",
+      "published_at": "2026-08-10T07:53:36-04:00"
+    },
+    {
+      "level_name": "charm_peak_strike",
+      "kind": "magnet",
+      "level": 7800.0,
+      "verdict": "untested",
+      "session": "2026-08-11",
+      "published_at": "2026-08-10T07:53:36-04:00"
     }
   ],
   "summary": {
@@ -478,32 +542,32 @@
       "call_wall": {
         "held": 4,
         "broke": 5,
-        "untested": 9,
-        "n": 18,
+        "untested": 11,
+        "n": 20,
         "tested": 9,
         "held_pct": 44.4
       },
       "put_wall": {
         "held": 4,
         "broke": 2,
-        "untested": 12,
-        "n": 18,
+        "untested": 14,
+        "n": 20,
         "tested": 6,
         "held_pct": 66.7
       },
       "zero_gamma_flip": {
         "held": 4,
         "broke": 5,
-        "untested": 9,
-        "n": 18,
+        "untested": 11,
+        "n": 20,
         "tested": 9,
         "held_pct": 44.4
       },
       "charm_peak_strike": {
         "held": 0,
         "broke": 1,
-        "untested": 4,
-        "n": 5,
+        "untested": 6,
+        "n": 7,
         "tested": 1,
         "held_pct": 0.0
       }
@@ -511,7 +575,7 @@
     "total": {
       "held": 12,
       "broke": 13,
-      "untested": 34,
+      "untested": 42,
       "tested": 25,
       "held_pct": 48.0
     }

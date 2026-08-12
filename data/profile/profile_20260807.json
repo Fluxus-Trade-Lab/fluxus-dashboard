@@ -76,6 +76,42 @@
       "7760.0": 5,
       "7762.5": 3,
       "7765.0": 1
+    },
+    "value_area_sigma": {
+      "low": 7735.8604,
+      "high": 7755.5474,
+      "poc": 7747.5,
+      "covered": 0.6893203883495146,
+      "method": "sigma",
+      "coverage_target": null,
+      "mean": 7745.7039,
+      "sd": 9.8435,
+      "note": "Jones: mean \u00b1 1\u03c3 of the TPO distribution. Follows the mean, not the mode, so it parts from the POC-grown band in the direction of the skew."
+    },
+    "value_area_disagreement": {
+      "pair": {
+        "low": 7737.5,
+        "high": 7757.5,
+        "covered": 0.7572815533980582
+      },
+      "sigma": {
+        "low": 7735.8604,
+        "high": 7755.5474,
+        "covered": 0.6893203883495146
+      },
+      "low_delta": -1.6396,
+      "high_delta": -1.9526,
+      "skew": -0.445,
+      "excess_kurtosis": -0.0097,
+      "note": "the two bands part in the direction of the skew: one follows the mode, the other the mean"
+    },
+    "moments": {
+      "mean": 7745.7039,
+      "sd": 9.8435,
+      "skew": -0.445,
+      "excess_kurtosis": -0.0097,
+      "n_prices": 20,
+      "note": null
     }
   },
   "volume": {

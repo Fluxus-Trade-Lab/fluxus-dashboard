@@ -48,3 +48,11 @@ Error 1100, reqId -1: Connectivity between IBKR and Trader Workstation has been 
 Error 1100, reqId -1: Connectivity between IBKR and Trader Workstation has been lost.
 Error 1102, reqId -1: Connectivity between IBKR and Trader Workstation has been restored - data maintained. All data farms are connected: usfarm.nj; usfuture; usopt; usfarm; ushmds; secdefnj.
 Error 322, reqId 9: Error processing request.-'bX' : cause - Maximum number of account summary requests exceeded; desubscribe to previous request first
+Peer closed connection.
+skew log @ 2026-08-10 15:18 ET  target 30 DTE
+  SPY: ConnectionError: Socket disconnect
+  QQQ: ConnectionError: Not connected
+  DIA: ConnectionError: Not connected
+
+0 new row(s) -> data/reference/skew_log.jsonl
+[2026-08-12 06:00:05 JST] exit 0

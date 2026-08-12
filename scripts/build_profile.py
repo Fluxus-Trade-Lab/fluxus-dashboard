@@ -130,6 +130,14 @@ def main():
             "high_period": hi_i + 1, "low_period": lo_i + 1,
             "tpoc": MP.poc(counts),
             "value_area": va,
+            # Jones defines value as 1 sigma of the distribution, not as a 70%
+            # window grown from the POC. Both are stored because they disagree
+            # by up to 6 SPX points on a skewed session, and a pattern phrased
+            # as "the close travels from below value to above value" can come
+            # out either way on that gap.
+            "value_area_sigma": MP.value_area(counts, method="sigma"),
+            "value_area_disagreement": MP.value_area_disagreement(counts),
+            "moments": MP.moments(counts),
             "single_prints": MP.single_prints(prof),
             "tails": MP.tails(prof),
             "poor_extremes": MP.poor_extremes(prof),
@@ -179,6 +187,17 @@ def main():
           f"high in period {t['high_period']}, low in period {t['low_period']}")
     print(f"  Value area .......... {va['low']:,.0f} - {va['high']:,.0f}  "
           f"({va['covered']*100:.0f}% of TPOs, method={va['method']})")
+    d, mo = out["tpo"]["value_area_disagreement"], out["tpo"]["moments"]
+    if d:
+        s = d["sigma"]
+        print(f"  Jones 1-sigma ....... {s['low']:,.1f} - {s['high']:,.1f}  "
+              f"({s['covered']*100:.0f}% held)   "
+              f"low {d['low_delta']:+.1f}, high {d['high_delta']:+.1f} vs above")
+    if mo and mo["skew"] is not None:
+        print(f"  Shape ............... skew {mo['skew']:+.2f}   "
+              f"excess kurtosis {mo['excess_kurtosis']:+.2f}"
+              + ("   FLAT — the POC is an argmax over near-ties"
+                 if mo["excess_kurtosis"] < -1.0 else ""))
     ib_ = t["initial_balance"]
     print(f"  Initial balance ..... {ib_['low']:,.0f} - {ib_['high']:,.0f}")
     for side in ("buying", "selling"):
