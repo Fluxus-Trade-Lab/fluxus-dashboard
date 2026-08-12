@@ -82,7 +82,7 @@ export default function ScanBar({
   stateCounts, states, onToggleState,
   themes, theme, onTheme,
   search, onSearch,
-  receipt,
+  receipt, hiddenNote,
 }) {
   const [themeQuery, setThemeQuery] = useState('')
   const [themeOpen, setThemeOpen] = useState(false)
@@ -187,7 +187,8 @@ export default function ScanBar({
                      text-[12.5px] font-mono text-[var(--color-text)] w-[104px] px-0.5 outline-none
                      placeholder:text-[var(--color-text-muted)]" />
 
-        <span className="ml-auto text-[11px] text-[var(--color-text-muted)]">{receipt}</span>
+        <span className="ml-auto text-[11px] text-[var(--color-text-muted)]"
+              title={hiddenNote || undefined}>{receipt}</span>
       </div>
     </div>
   )

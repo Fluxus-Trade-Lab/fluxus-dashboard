@@ -22,7 +22,7 @@ import HowToRead from '../HowToRead'
  * they explain each other, and the sticky bar doubles as the interaction's
  * receipt — a row clicked at rank 60 fills a slot that is still on screen.
  *
- * The sections each answer one question, in reading order:
+ * The sections, in reading order:
  *
  *   FIELD     is picking worth anything today?
  *   COMPARE   is your pick a trend or a bounce?
@@ -121,13 +121,13 @@ function CompareReading({ picks, windowed, winKey }) {
   )
 }
 
-function Section({ label, question, right, children }) {
+function Section({ label, note, right, children }) {
   return (
     <section className="pt-2">
       <div className="flex items-baseline gap-3 pb-2.5">
         <span className="text-[9px] font-mono uppercase tracking-[.24em]
                          text-[var(--color-text-muted)]">{label}</span>
-        <span className="text-[11px] text-[var(--color-text-muted)]">{question}</span>
+        {note && <span className="text-[11px] text-[var(--color-text-muted)]">{note}</span>}
         <i className="flex-1 h-px bg-[var(--color-border)]" />
         {right}
       </div>
@@ -192,8 +192,7 @@ export default function GroupsPage() {
     <div className="space-y-5">
       <PageHeader group="market" title="Themes"
         blurb="Where the strength is, and where it is turning."
-        meta={[`vs ${benchmark} · ${date} · ${themes.length} published${
-          provisional.length ? ` + ${provisional.length} provisional` : ''}`]} />
+        meta={[`vs ${benchmark} · ${date} · ${themes.length} themes`]} />
       <Reading text={readThemes(themes)} />
 
       {/* THE CONTROL BAR — every control on the page, in one sticky line. */}
@@ -221,13 +220,13 @@ export default function GroupsPage() {
         </div>
       </div>
 
-      <Section label="Field" question="worth picking today?">
+      <Section label="Field">
         <DistributionStrip rows={windowed} scale={scale}
                            colourOf={colourOf} onToggle={onToggle}
                            atLimit={compare.atLimit} dim={compare.picks.length > 0} />
       </Section>
 
-      <Section label="Compare" question="trend, or bounce?">
+      <Section label="Compare">
         <CompareReading picks={compare.picks} windowed={windowed} winKey={winKey} />
         <TrajectoryPanel picks={compare.picks} byName={byName} highlight={win.hl} />
 
@@ -272,7 +271,7 @@ export default function GroupsPage() {
       </Section>
 
       <Section label="Ranked"
-               question={`${measured} of ${rows.length} measured · scale ±${(scale * 100).toFixed(0)}%`}
+               note={`${measured} of ${rows.length} measured · scale ±${(scale * 100).toFixed(0)}%`}
                right={<StateCensus rows={rows} />}>
         <ThemeBars rows={windowed} scale={scale}
                    colourOf={colourOf} onToggle={onToggle}

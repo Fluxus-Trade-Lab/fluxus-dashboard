@@ -91,15 +91,13 @@ export default function ThemeLeaderboard() {
   return (
     <div className="space-y-4">
       <PageHeader group="market" title="RS Leaderboard"
-        blurb="The strongest themes on two clocks. A board that ranks only what has already won cannot show a turn — the short list is where the turn appears first."
-        meta={[`relative strength vs ${benchmark ?? 'SPY'} · ${date ?? ''}`,
-               `top ${TOP} of ${ranked} ranked — the denominator is part of the reading`,
-               `${newcomers} of the short list are not on the long list`]} />
+        blurb="The strongest themes on two clocks."
+        meta={[`vs ${benchmark ?? 'SPY'} · ${date ?? ''} · top ${TOP} of ${ranked}`]} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-6">
-        <Board title="Short — last week" note="with acceleration beside it"
+        <Board title="Short — last week"
                rows={short} metric="rs_0_1w" showAccel />
-        <Board title="Long — three months" note="the trend that has proven itself"
+        <Board title="Long — three months"
                rows={long} metric="excess_3m" showAccel={false} />
       </div>
 

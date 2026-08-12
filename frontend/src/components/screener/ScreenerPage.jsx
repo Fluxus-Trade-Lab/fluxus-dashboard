@@ -215,9 +215,9 @@ export default function ScreenerPage() {
   const receipt = useMemo(() => {
     if (!activeScan.loaded) return `${activeScan.label} — loading`
     if (needsGroups && !statesLoaded) return 'group layer — loading' 
-    let s = `${rows.length} rows`
-    if (noState) s += ` · ${noState} unstated hidden`
-    return s
+    // the hidden count is honesty, not a headline — it rides the tooltip so a
+    // four-digit number does not sit beside the one the reader came for
+    return `${rows.length} rows`
   }, [rows.length, activeScan, noState, needsGroups, statesLoaded])
 
   // The narrator follows the selection: the default view keeps the ledger's
@@ -298,7 +298,8 @@ export default function ScreenerPage() {
             stateCounts={stateCounts} states={states} onToggleState={toggleState}
             themes={groups.themes} theme={theme} onTheme={setTheme}
             search={search} onSearch={setSearch}
-            receipt={receipt} />
+            receipt={receipt}
+            hiddenNote={noState ? `${noState} rows carry no state and are not shown` : null} />
           {viewReady ? (
             // key: normalized search only — a trailing space changes nothing
             // about the row set and must not remount the table

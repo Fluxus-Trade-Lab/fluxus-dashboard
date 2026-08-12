@@ -188,7 +188,7 @@ export function VoteMarks({ votes }) {
         <span className="flex items-center gap-1.5">
           <i className="block w-3.5 h-[10px]" style={style('neutral')} />undecided {tally.neutral ?? 0}
         </span>
-        <span>· one mark is one vote — count them rather than reading the score</span>
+
       </div>
     </div>
   )

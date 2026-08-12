@@ -59,9 +59,7 @@ export default function GroupTable({ rows, showMethod = false, emptyNote }) {
                 {sortKey === c.key && <span className="ml-1">{asc ? '▲' : '▼'}</span>}
               </th>
             ))}
-            {showMethod && (
-              <th className="px-2 py-1.5 text-left font-medium">Source</th>
-            )}
+
           </tr>
         </thead>
         <tbody>
@@ -71,7 +69,13 @@ export default function GroupTable({ rows, showMethod = false, emptyNote }) {
               className="border-t border-[var(--color-border)] hover:bg-[var(--color-surface-hover)]"
             >
               <td className="px-2 py-1.5">
-                <span className="font-medium">{r.group}</span>
+                {/* How a group was built is provenance, not a reading — it
+                    rode a column of its own until 2026-08-12 and now rides
+                    the name's tooltip, still checkable, no longer in the way. */}
+                <span className="font-medium"
+                      title={showMethod && r.method
+                        ? `${r.method}${r.validation ? ` · ${r.validation}` : ''}`
+                        : undefined}>{r.group}</span>
                 {r.tickers?.length > 0 && (
                   <span
                     className="ml-2 text-[11px] text-[var(--color-text-muted)]"
@@ -96,12 +100,7 @@ export default function GroupTable({ rows, showMethod = false, emptyNote }) {
                     : undefined} />
               </td>
               <td className="px-2 py-1.5"><StateBadge state={r.state} /></td>
-              {showMethod && (
-                <td className="px-2 py-1.5 text-[11px] text-[var(--color-text-muted)]">
-                  {r.method}
-                  {r.validation && ` · ${r.validation}`}
-                </td>
-              )}
+
             </tr>
           ))}
         </tbody>

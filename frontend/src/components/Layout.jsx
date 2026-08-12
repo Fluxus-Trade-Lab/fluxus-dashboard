@@ -101,8 +101,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
         <main className="max-w-[1800px] mx-auto px-3 py-4 space-y-4">
           <PageHeader group="market" title="Today"
             blurb="What the market is doing, before you decide what to do about it."
-            meta={['the read, then the evidence, then reference',
-                   'sizing is not on this page — it needs an R and a ceiling, and those are yours']} />
+            meta={[]} />
 
           {/* SUBJECT — the read on the left, its own history on the right.
               Side by side because they answer one question in two tenses:
@@ -151,7 +150,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
             </p>
           </section>
 
-          <Tier label="Evidence" supports="what the read leans on">
+          <Tier label="Evidence">
             <div className="space-y-3">
               {/* Benchmarks first, unfolded: where the four indices sit is the
                   context every row under it is measured against, and it was
