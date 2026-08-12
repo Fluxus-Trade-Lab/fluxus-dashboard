@@ -1,0 +1,1761 @@
+{
+  "generated_at": "2026-08-12T08:26:45-04:00",
+  "months": 6,
+  "min_brackets": 8,
+  "thresholds": {
+    "min_build_share": 0.5,
+    "min_built_periods": 2
+  },
+  "instruments": {
+    "SPX": {
+      "n_sessions": 123,
+      "skipped_short_sessions": 0,
+      "states": {
+        "facilitated": 76,
+        "two_sided": 23,
+        "rejected": 22,
+        "no_extension": 2
+      },
+      "tradeable": 96,
+      "tradeable_rate": 0.7804878048780488,
+      "sessions": [
+        {
+          "date": "2026-02-13",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 7,
+          "down_built": 0
+        },
+        {
+          "date": "2026-02-17",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 4,
+          "down_built": 0
+        },
+        {
+          "date": "2026-02-18",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 1,
+          "down_built": 0
+        },
+        {
+          "date": "2026-02-19",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 1
+        },
+        {
+          "date": "2026-02-20",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-02-23",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 11
+        },
+        {
+          "date": "2026-02-24",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 8,
+          "down_built": 0
+        },
+        {
+          "date": "2026-02-25",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 8,
+          "down_built": 0
+        },
+        {
+          "date": "2026-02-26",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-02-27",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 1,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-02",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 8,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-03",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 6,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-04",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 4,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-05",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 7
+        },
+        {
+          "date": "2026-03-06",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-09",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 8,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-10",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 9,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-11",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 5
+        },
+        {
+          "date": "2026-03-12",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 4
+        },
+        {
+          "date": "2026-03-13",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 10
+        },
+        {
+          "date": "2026-03-16",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-17",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 6
+        },
+        {
+          "date": "2026-03-18",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 3
+        },
+        {
+          "date": "2026-03-19",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 2,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-20",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 5
+        },
+        {
+          "date": "2026-03-23",
+          "state": "two_sided",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-24",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-25",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-26",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 8
+        },
+        {
+          "date": "2026-03-27",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 6
+        },
+        {
+          "date": "2026-03-30",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 6
+        },
+        {
+          "date": "2026-03-31",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 7,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-01",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 6,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-02",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 11,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-06",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-07",
+          "state": "two_sided",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-08",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 1
+        },
+        {
+          "date": "2026-04-09",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 9,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-10",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 8
+        },
+        {
+          "date": "2026-04-13",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-14",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 11,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-15",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 9,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-16",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 1,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-17",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 11,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-20",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 9
+        },
+        {
+          "date": "2026-04-21",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 10
+        },
+        {
+          "date": "2026-04-22",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 1,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-23",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 2,
+          "down_built": 6
+        },
+        {
+          "date": "2026-04-24",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-27",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 5,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-28",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 6
+        },
+        {
+          "date": "2026-04-29",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 1,
+          "down_built": 3
+        },
+        {
+          "date": "2026-04-30",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 6,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-01",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-04",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 9
+        },
+        {
+          "date": "2026-05-05",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 5,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-06",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 11,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-07",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 8
+        },
+        {
+          "date": "2026-05-08",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 1,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-11",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 5,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-12",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 1,
+          "down_built": 6
+        },
+        {
+          "date": "2026-05-13",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-14",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 11,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-15",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-18",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 10
+        },
+        {
+          "date": "2026-05-19",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 3,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-20",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 11,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-21",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 6,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-22",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-26",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 2
+        },
+        {
+          "date": "2026-05-27",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 1
+        },
+        {
+          "date": "2026-05-28",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 9,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-29",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-01",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 7,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-02",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 11,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-03",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 3
+        },
+        {
+          "date": "2026-06-04",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-05",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 9
+        },
+        {
+          "date": "2026-06-08",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 2
+        },
+        {
+          "date": "2026-06-09",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 11
+        },
+        {
+          "date": "2026-06-10",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 9
+        },
+        {
+          "date": "2026-06-11",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 5,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-12",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 7,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-15",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-16",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 9
+        },
+        {
+          "date": "2026-06-17",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 6
+        },
+        {
+          "date": "2026-06-18",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-22",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 11
+        },
+        {
+          "date": "2026-06-23",
+          "state": "no_extension",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-24",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 4,
+          "down_built": 5
+        },
+        {
+          "date": "2026-06-25",
+          "state": "no_extension",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-26",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 3,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-29",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 5,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-30",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 9,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-01",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 8,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-02",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 10
+        },
+        {
+          "date": "2026-07-06",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-07",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-08",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 3,
+          "down_built": 4
+        },
+        {
+          "date": "2026-07-09",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-10",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 7,
+          "down_built": 1
+        },
+        {
+          "date": "2026-07-13",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 7
+        },
+        {
+          "date": "2026-07-14",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 7,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-15",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 4
+        },
+        {
+          "date": "2026-07-16",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 3
+        },
+        {
+          "date": "2026-07-17",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-20",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 4
+        },
+        {
+          "date": "2026-07-21",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 9,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-22",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 3,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-23",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 7
+        },
+        {
+          "date": "2026-07-24",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 7,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-27",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 7
+        },
+        {
+          "date": "2026-07-28",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-29",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 4
+        },
+        {
+          "date": "2026-07-30",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 6,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-31",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 2,
+          "down_built": 0
+        },
+        {
+          "date": "2026-08-03",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 11,
+          "down_built": 0
+        },
+        {
+          "date": "2026-08-04",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-08-05",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 11
+        },
+        {
+          "date": "2026-08-06",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 7
+        },
+        {
+          "date": "2026-08-07",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 1,
+          "down_built": 0
+        },
+        {
+          "date": "2026-08-10",
+          "state": "two_sided",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-08-11",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 9
+        }
+      ]
+    },
+    "SPY": {
+      "n_sessions": 123,
+      "skipped_short_sessions": 0,
+      "states": {
+        "facilitated": 76,
+        "two_sided": 28,
+        "rejected": 15,
+        "no_extension": 4
+      },
+      "tradeable": 101,
+      "tradeable_rate": 0.8211382113821138,
+      "sessions": [
+        {
+          "date": "2026-02-13",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 7,
+          "down_built": 0
+        },
+        {
+          "date": "2026-02-17",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 4,
+          "down_built": 0
+        },
+        {
+          "date": "2026-02-18",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 1,
+          "down_built": 0
+        },
+        {
+          "date": "2026-02-19",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-02-20",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-02-23",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 11
+        },
+        {
+          "date": "2026-02-24",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 8,
+          "down_built": 0
+        },
+        {
+          "date": "2026-02-25",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 8,
+          "down_built": 0
+        },
+        {
+          "date": "2026-02-26",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-02-27",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 1,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-02",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 8,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-03",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 8,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-04",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 3,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-05",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 6
+        },
+        {
+          "date": "2026-03-06",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 7,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-09",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-10",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 9,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-11",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 5
+        },
+        {
+          "date": "2026-03-12",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 4
+        },
+        {
+          "date": "2026-03-13",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 11
+        },
+        {
+          "date": "2026-03-16",
+          "state": "two_sided",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-17",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 8
+        },
+        {
+          "date": "2026-03-18",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 3
+        },
+        {
+          "date": "2026-03-19",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 2,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-20",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 5
+        },
+        {
+          "date": "2026-03-23",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 3
+        },
+        {
+          "date": "2026-03-24",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 9,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-25",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-03-26",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 8
+        },
+        {
+          "date": "2026-03-27",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 6
+        },
+        {
+          "date": "2026-03-30",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 6
+        },
+        {
+          "date": "2026-03-31",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 7,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-01",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 6,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-02",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 11,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-06",
+          "state": "no_extension",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-07",
+          "state": "two_sided",
+          "tradeable": false,
+          "up_built": 1,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-08",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 3
+        },
+        {
+          "date": "2026-04-09",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 9,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-10",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 8
+        },
+        {
+          "date": "2026-04-13",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 8,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-14",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 11,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-15",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 9,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-16",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 3,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-17",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-20",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 9
+        },
+        {
+          "date": "2026-04-21",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 10
+        },
+        {
+          "date": "2026-04-22",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 1,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-23",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 2,
+          "down_built": 6
+        },
+        {
+          "date": "2026-04-24",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-27",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 5,
+          "down_built": 0
+        },
+        {
+          "date": "2026-04-28",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 7
+        },
+        {
+          "date": "2026-04-29",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 1,
+          "down_built": 3
+        },
+        {
+          "date": "2026-04-30",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 7,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-01",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-04",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 9
+        },
+        {
+          "date": "2026-05-05",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 5,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-06",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 11,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-07",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 2,
+          "down_built": 8
+        },
+        {
+          "date": "2026-05-08",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 1,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-11",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 5,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-12",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 1,
+          "down_built": 6
+        },
+        {
+          "date": "2026-05-13",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-14",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 11,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-15",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-18",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 10
+        },
+        {
+          "date": "2026-05-19",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 3,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-20",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-21",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 6,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-22",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-26",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 2
+        },
+        {
+          "date": "2026-05-27",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 2
+        },
+        {
+          "date": "2026-05-28",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 8,
+          "down_built": 0
+        },
+        {
+          "date": "2026-05-29",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-01",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 8,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-02",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 11,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-03",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 4
+        },
+        {
+          "date": "2026-06-04",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-05",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 9
+        },
+        {
+          "date": "2026-06-08",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 2
+        },
+        {
+          "date": "2026-06-09",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 11
+        },
+        {
+          "date": "2026-06-10",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 9
+        },
+        {
+          "date": "2026-06-11",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 5,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-12",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 7,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-15",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-16",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 9
+        },
+        {
+          "date": "2026-06-17",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 6
+        },
+        {
+          "date": "2026-06-18",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-22",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 11
+        },
+        {
+          "date": "2026-06-23",
+          "state": "no_extension",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-24",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 4,
+          "down_built": 5
+        },
+        {
+          "date": "2026-06-25",
+          "state": "no_extension",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-26",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 3,
+          "down_built": 1
+        },
+        {
+          "date": "2026-06-29",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 5,
+          "down_built": 0
+        },
+        {
+          "date": "2026-06-30",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 9,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-01",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 8,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-02",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 10
+        },
+        {
+          "date": "2026-07-06",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-07",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-08",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 3,
+          "down_built": 4
+        },
+        {
+          "date": "2026-07-09",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-10",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 7,
+          "down_built": 1
+        },
+        {
+          "date": "2026-07-13",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 7
+        },
+        {
+          "date": "2026-07-14",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 8,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-15",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 4
+        },
+        {
+          "date": "2026-07-16",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 3
+        },
+        {
+          "date": "2026-07-17",
+          "state": "no_extension",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-20",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 4
+        },
+        {
+          "date": "2026-07-21",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 9,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-22",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 3,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-23",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 7
+        },
+        {
+          "date": "2026-07-24",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 7,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-27",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 6
+        },
+        {
+          "date": "2026-07-28",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-29",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 4
+        },
+        {
+          "date": "2026-07-30",
+          "state": "two_sided",
+          "tradeable": true,
+          "up_built": 6,
+          "down_built": 0
+        },
+        {
+          "date": "2026-07-31",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 2,
+          "down_built": 0
+        },
+        {
+          "date": "2026-08-03",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 11,
+          "down_built": 0
+        },
+        {
+          "date": "2026-08-04",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 10,
+          "down_built": 0
+        },
+        {
+          "date": "2026-08-05",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 11
+        },
+        {
+          "date": "2026-08-06",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 7
+        },
+        {
+          "date": "2026-08-07",
+          "state": "rejected",
+          "tradeable": false,
+          "up_built": 1,
+          "down_built": 0
+        },
+        {
+          "date": "2026-08-10",
+          "state": "two_sided",
+          "tradeable": false,
+          "up_built": 0,
+          "down_built": 0
+        },
+        {
+          "date": "2026-08-11",
+          "state": "facilitated",
+          "tradeable": true,
+          "up_built": 0,
+          "down_built": 9
+        }
+      ]
+    }
+  }
+}
