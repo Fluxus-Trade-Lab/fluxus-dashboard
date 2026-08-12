@@ -35,7 +35,7 @@ from pipeline.screeners.stockbee_ratio import run as run_stockbee_ratio
 from pipeline.screeners.breadth_metrics import run as run_breadth_metrics
 from pipeline.screeners.vcp_detector import run_vcp_pipeline
 from pipeline.screeners.atr_enrichment import enrich_with_atr
-from pipeline.marketcal import last_trading_day
+from pipeline.marketcal import last_completed_session, last_trading_day
 
 OUTPUT_DIR = Path('data/output')
 HISTORY_DIR = Path('data/history')
@@ -498,7 +498,10 @@ def main():
             build_heating_up, build_ticker_events_index,
         )
         # Events are keyed by session; a weekend run must attach to Friday.
-        event_date = last_trading_day().isoformat()
+        # Completed session, not calendar session: a premarket run must
+        # label its scrape with the close it actually contains. The event
+        # archive is append-only, so a wrong label here is forever.
+        event_date = last_completed_session().isoformat()
         today_rows = []
         for screener in SCREENER_FILES:
             payload = results.get(screener)
@@ -674,7 +677,7 @@ def main():
     # and nothing noticed until a $49.5B name showed up as untradeable.
     from pipeline.quality import check as check_quality, tradeable_status
     from pipeline.themes import MIN_MARKET_CAP, MIN_DOLLAR_VOLUME
-    quality = check_quality(rows_out, last_trading_day().isoformat())
+    quality = check_quality(rows_out, last_completed_session().isoformat())
 
     statuses = [tradeable_status(r, MIN_MARKET_CAP, MIN_DOLLAR_VOLUME)
                 for r in rows_out]

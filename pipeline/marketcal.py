@@ -130,3 +130,35 @@ def last_trading_day(d: dt.date | None = None) -> dt.date:
             return day
         day -= dt.timedelta(days=1)
     raise RuntimeError(f"no trading day within 10 days of {d or 'today'}")
+
+
+# Regular NYSE close. Half-days close at 13:00 and are not modelled here; the
+# cost of ignoring them is a label that stays on the previous session for
+# three extra hours, which errs in the safe direction.
+MARKET_CLOSE = dt.time(16, 0)
+
+
+def last_completed_session(now: dt.datetime | None = None) -> dt.date:
+    """The most recent NYSE session whose close has already happened.
+
+    `last_trading_day()` answers "what session is on or before this date",
+    which is right for interpreting a dated file and wrong for labelling data
+    scraped NOW: asked at 05:44 ET on a Monday it says Monday, but Monday's
+    session has not opened and every vendor is still serving Friday's close.
+
+    Not hypothetical either: a premarket-Monday manual run stamped 589 rows of
+    Friday's tape as 2026-08-10 in the ticker-events archive, which is
+    append-only and would have kept them forever. Archives keyed by date and
+    rewritten by the post-close cron self-heal; append-only ones do not, and
+    this is the label they must use.
+
+    Pure once `now` is supplied. A naive datetime is assumed to be ET
+    wall-clock already, matching `market_today`.
+    """
+    ts = market_now() if now is None else now
+    if ts.tzinfo is not None:
+        ts = ts.astimezone(MARKET_TZ)
+    day = ts.date()
+    if not is_trading_day(day) or ts.time() < MARKET_CLOSE:
+        day -= dt.timedelta(days=1)
+    return last_trading_day(day)

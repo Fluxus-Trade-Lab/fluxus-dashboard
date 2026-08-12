@@ -24,7 +24,7 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from pipeline.marketcal import last_trading_day
+from pipeline.marketcal import last_completed_session
 from pipeline.themes import is_tradeable, rs_engine, taxonomy
 from pipeline.themes.etf_holdings import load_holdings
 
@@ -641,7 +641,10 @@ def run() -> Dict[str, Any]:
         )
     # One session label for the whole payload, computed once: the ribbon
     # excludes it from its calendar and the payload ships it as `date`.
-    session_date = last_trading_day().isoformat()
+    # Completed session: a premarket build labels the close it is actually
+    # reading. Date-keyed archives self-heal when the post-close cron
+    # rewrites the date, but the label should not need healing.
+    session_date = last_completed_session().isoformat()
     attach_archive_ribbons(industries, themes, session_date)
     stocks = rs_engine.rank_within_group(universe, "industry", benchmark)
     assign_primary_group(stocks, themes, universe)
