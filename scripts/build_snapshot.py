@@ -134,6 +134,23 @@ from pipeline.reference import levels_log as LL
 from pipeline.reference import events as EV
 from pipeline.marketcal import market_now
 
+VIEWS = Path("data/centaur/views.jsonl")
+
+
+def _views_referencing(path: Path) -> list[dict]:
+    """Every logged view whose state_ref is this file."""
+    if not VIEWS.exists():
+        return []
+    want = str(path)
+    out = []
+    for line in VIEWS.read_text().splitlines():
+        if not line.strip():
+            continue
+        r = json.loads(line)
+        if (r.get("state_ref") or "").endswith(want) or r.get("state_ref") == want:
+            out.append(r)
+    return out
+
 OUT_DIR = Path("data/snapshots")
 GEX_DIR = Path("data/gex")
 
@@ -219,6 +236,12 @@ def main():
     ap.add_argument("--gex", help="Explicit GEX json path (default: latest for symbol).")
     ap.add_argument("--no-live", action="store_true", help="Skip the IBKR EM/VIX pull.")
     ap.add_argument("--no-log", action="store_true", help="Do not append to the levels log.")
+    ap.add_argument("--suffix", default="",
+                    help="Write to snapshot_<SYM>_<DATE>_<SUFFIX>.* instead of "
+                         "the plain name. Use for an intraday refresh so the "
+                         "morning file a logged view points at stays intact.")
+    ap.add_argument("--force", action="store_true",
+                    help="Overwrite even a snapshot a logged view references.")
     args = ap.parse_args()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -298,9 +321,25 @@ def main():
         },
         **_auction_join(g),
     }
-    jp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.json"
-    hp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.html"
-    mp = OUT_DIR / f"snapshot_{args.symbol}_{date_tag}.md"
+    stem = f"snapshot_{args.symbol}_{date_tag}" + (f"_{args.suffix}" if args.suffix else "")
+    jp = OUT_DIR / f"{stem}.json"
+    hp = OUT_DIR / f"{stem}.html"
+    mp = OUT_DIR / f"{stem}.md"
+
+    # A view's `state_ref` is the record of what was in front of the reader when
+    # the view was formed. Rewriting that file changes the past: the view would
+    # then appear to have been made against numbers it never saw. An intraday
+    # refresh is a legitimate thing to want -- it just needs its own name.
+    if jp.exists() and not args.force:
+        referenced = [r for r in _views_referencing(jp)]
+        if referenced:
+            sys.exit(
+                f"{jp.name} is the state_ref of {len(referenced)} logged view(s) "
+                f"({', '.join(sorted({r['source'] for r in referenced}))}, "
+                f"{referenced[0]['asof'][11:16]} ET).\n"
+                f"Overwriting it would change what those views were formed "
+                f"against.\nRe-run with --suffix intraday (or --force if you "
+                f"really mean to replace the record).")
     jp.write_text(json.dumps(snap, indent=2))
     hp.write_text(render_snapshot_html(snap))
     mp.write_text(render_snapshot_md(snap))
