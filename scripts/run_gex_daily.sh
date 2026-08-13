@@ -140,6 +140,17 @@ say "brief built (data/snapshots/snapshot_SPX_${DATE}.html)"
 .venv/bin/python scripts/log_view.py --machine >>"$LOG" 2>&1 \
     && say "machine view logged" || say "warn: machine view not logged"
 
+# The flow read goes LAST of the data steps and is never fatal. It is the only
+# step with a real data cost -- ~100 contracts of trade ticks, about five
+# minutes -- and it must never be able to delay the levels pull or the brief.
+# Quote ticks are NOT pulled: measured at 142s per contract against 1.9s for
+# trades, and the cheap 1-minute-bar substitute agreed with tick NBBO on only
+# 56.7% of prints against a 50% coin. See scripts/flow_session.py.
+if [ "$postclose" = true ]; then
+    run_step flow_session .venv/bin/python scripts/flow_session.py --symbol SPX \
+        && say "flow read stored" || say "warn: flow_session failed or timed out"
+fi
+
 # Push the card LAST: everything above must have succeeded, or we would be
 # sending a stale card that looks current. A failed push is logged and does not
 # fail the run — the files are on disk either way.
