@@ -1,0 +1,124 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>编码色的分工 — 现状 vs 参考图的规矩</title>
+<style>
+  :root{ --bg:#211d1a; --surface:#2b2723; --border:#544e46; --border-l:#47413a;
+         --text:#e7e5e4; --bold:#fafaf9; --sec:#b2aca5; --muted:#9d968c;
+         --took:#1d5e98; --refused:#d1600f; --untested:#b3ada6; }
+  *{box-sizing:border-box}
+  body{margin:0;background:#151311;color:var(--text);padding:26px 30px 40px;
+       font:13px/1.5 Plex,-apple-system,"Helvetica Neue",sans-serif}
+  h1{font-size:19px;margin:0 0 3px;font-weight:650}
+  .sub{color:var(--sec);font-size:12.5px;margin:0 0 22px;max-width:80ch}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .col > h2{font:600 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;text-transform:uppercase;
+            color:var(--muted);margin:0 0 3px}
+  .col > p.k{font-size:11px;color:var(--sec);margin:0 0 12px;min-height:32px}
+  .panel{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:12px}
+  .mono{font-family:ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+  .verdict{font:650 34px/1 PlexCond,Plex,sans-serif;letter-spacing:-.01em}
+  .score{font:13px/1 ui-monospace,Menlo,monospace;margin-left:14px;color:var(--sec)}
+  .marks{display:flex;gap:5px;margin-top:12px}
+  .marks i{display:block;width:56px;height:15px;border-radius:2px}
+  .fill{background:var(--took)} .out{border:1px dashed var(--untested)}
+  .hatch{background:repeating-linear-gradient(45deg,var(--refused) 0 3px,transparent 3px 6px);
+         border:1px solid var(--refused)}
+  .legend{font:10px/1.4 ui-monospace,Menlo,monospace;color:var(--muted);margin-top:8px}
+
+  table{border-collapse:collapse;width:100%;font-size:12px;margin-top:2px}
+  td{padding:5px 0;border-top:1px solid var(--border-l)}
+  .tk{font:500 12px/1 ui-monospace,Menlo,monospace;color:var(--bold)}
+  .nm{font-size:10px;color:var(--muted)}
+  .rs{display:inline-block;width:26px;text-align:center;font:10px/17px ui-monospace,Menlo,monospace;
+      border-radius:2px}
+  .pct{font:12px/1 ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums;text-align:right}
+  /* 提案：数字回中性，条承担方向与幅度 */
+  .track{position:relative;height:9px;background:transparent}
+  .track i{position:absolute;top:0;height:9px;border-radius:1px}
+  .zero{position:absolute;top:-2px;bottom:-2px;width:1px;background:var(--border)}
+  .flag{display:inline-block;padding:1px 5px;border-radius:3px;font:9px/1.5 ui-monospace,Menlo,monospace;
+        letter-spacing:.1em;text-transform:uppercase}
+  .bad{color:#d1605a;border:1px dashed #d1605a}
+  .good{color:#7fb069;border:1px dashed #7fb069}
+</style></head><body>
+
+<h1>编码色的分工</h1>
+<p class="sub">参考图的规矩：<b>编码色属于图形；数字只有在给自己的图形做标签时才借用它；判词永不穿它。</b>
+左边是现状，右边是照规矩改后。两边数据完全相同。</p>
+
+<div class="cols">
+  <!-- ── 现状 ── -->
+  <div class="col">
+    <h2>现状</h2>
+    <p class="k"><span class="flag bad">越界</span> 判词 BULLISH 自己是蓝的；44 个裸百分数穿编码色，旁边没有任何图形归它们。</p>
+
+    <div class="panel">
+      <span class="verdict" style="color:var(--took)">BULLISH</span>
+      <span class="score">+9 <span style="color:var(--muted)">/ 12</span></span>
+      <div class="marks">
+        <i class="fill"></i><i class="fill"></i><i class="out"></i><i class="hatch"></i><i class="fill"></i><i class="fill"></i>
+      </div>
+      <div class="legend">蓝出现了两次：一次当判词，一次当票标记</div>
+    </div>
+
+    <div class="panel">
+      <table>
+        <tr><td><span class="rs" style="background:color-mix(in srgb,var(--took) 30%,transparent)">99</span></td>
+            <td style="padding-left:10px"><span class="tk">USO</span><br><span class="nm">Oil</span></td>
+            <td class="pct" style="color:var(--took)">+6.73%</td></tr>
+        <tr><td><span class="rs" style="background:color-mix(in srgb,var(--took) 30%,transparent)">98</span></td>
+            <td style="padding-left:10px"><span class="tk">OIH</span><br><span class="nm">Oil Services</span></td>
+            <td class="pct" style="color:var(--took)">+5.94%</td></tr>
+        <tr><td><span class="rs" style="background:color-mix(in srgb,var(--refused) 26%,transparent)">3</span></td>
+            <td style="padding-left:10px"><span class="tk">JETS</span><br><span class="nm">Jets</span></td>
+            <td class="pct" style="color:var(--refused)">−3.38%</td></tr>
+        <tr><td><span class="rs" style="background:color-mix(in srgb,var(--refused) 26%,transparent)">1</span></td>
+            <td style="padding-left:10px"><span class="tk">WGMI</span><br><span class="nm">Bitcoin Mining</span></td>
+            <td class="pct" style="color:var(--refused)">−5.95%</td></tr>
+      </table>
+      <div class="legend">数字是彩色的，但幅度只能靠读——没有可比的长度</div>
+    </div>
+  </div>
+
+  <!-- ── 提案 ── -->
+  <div class="col">
+    <h2>照规矩改后</h2>
+    <p class="k"><span class="flag good">合规</span> 判词回白，颜色全部下沉到票标记；每个百分数配一根自己的条，颜色属于条，数字是条的标签。</p>
+
+    <div class="panel">
+      <span class="verdict" style="color:var(--bold)">BULLISH</span>
+      <span class="score">+9 <span style="color:var(--muted)">/ 12</span></span>
+      <div class="marks">
+        <i class="fill"></i><i class="fill"></i><i class="out"></i><i class="hatch"></i><i class="fill"></i><i class="fill"></i>
+      </div>
+      <div class="legend">蓝只出现一次——在标记里。判词由字号和字重承担，不靠色相</div>
+    </div>
+
+    <div class="panel">
+      <table>
+        <tr><td><span class="rs" style="background:color-mix(in srgb,var(--took) 30%,transparent)">99</span></td>
+            <td style="padding-left:10px"><span class="tk">USO</span><br><span class="nm">Oil</span></td>
+            <td style="width:120px"><div class="track"><span class="zero" style="left:20%"></span>
+              <i style="left:20%;width:80%;background:var(--took)"></i></div></td>
+            <td class="pct" style="color:var(--sec);padding-left:8px">+6.73%</td></tr>
+        <tr><td><span class="rs" style="background:color-mix(in srgb,var(--took) 30%,transparent)">98</span></td>
+            <td style="padding-left:10px"><span class="tk">OIH</span><br><span class="nm">Oil Services</span></td>
+            <td><div class="track"><span class="zero" style="left:20%"></span>
+              <i style="left:20%;width:70.6%;background:var(--took)"></i></div></td>
+            <td class="pct" style="color:var(--sec);padding-left:8px">+5.94%</td></tr>
+        <tr><td><span class="rs" style="background:color-mix(in srgb,var(--refused) 26%,transparent)">3</span></td>
+            <td style="padding-left:10px"><span class="tk">JETS</span><br><span class="nm">Jets</span></td>
+            <td><div class="track"><span class="zero" style="left:20%"></span>
+              <i style="left:9.9%;width:10.1%;background:var(--refused)"></i></div></td>
+            <td class="pct" style="color:var(--sec);padding-left:8px">−3.38%</td></tr>
+        <tr><td><span class="rs" style="background:color-mix(in srgb,var(--refused) 26%,transparent)">1</span></td>
+            <td style="padding-left:10px"><span class="tk">WGMI</span><br><span class="nm">Bitcoin Mining</span></td>
+            <td><div class="track"><span class="zero" style="left:20%"></span>
+              <i style="left:2.3%;width:17.7%;background:var(--refused)"></i></div></td>
+            <td class="pct" style="color:var(--sec);padding-left:8px">−5.95%</td></tr>
+      </table>
+      <div class="legend">同一根零线，长度可比——多出来的是幅度，不是装饰</div>
+    </div>
+  </div>
+</div>
+
+</body></html>
