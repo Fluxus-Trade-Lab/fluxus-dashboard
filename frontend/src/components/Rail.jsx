@@ -128,13 +128,13 @@ export default function Rail({ currentPage, onNavigate }) {
           <div key={g.key} className="pb-1">
             {collapsed
               ? <div className="mx-3 my-2 h-px bg-[var(--color-border)]" />
-              : <div className="px-4 pt-3 pb-1 text-[9px] font-mono uppercase tracking-[.24em]
-                                text-[var(--color-text-muted)]">{t(`rail.${g.key}`)}</div>}
+              : <div className="px-4 pt-3 pb-1 text-[9.5px] font-mono font-medium uppercase
+                                tracking-[.24em] text-[var(--color-text-muted)]">{t(`rail.${g.key}`)}</div>}
 
             {g.sections.map((sec, si) => (
               <div key={sec.key ?? si}>
                 {!collapsed && sec.key && (
-                  <div className="px-4 pt-2 pb-0.5 text-[10px] leading-snug
+                  <div className="px-4 pt-2 pb-0.5 text-[11px] leading-snug
                                   text-[var(--color-text-muted)]">
                     {t(`rail.sec.${sec.key}`)}
                   </div>
@@ -148,7 +148,7 @@ export default function Rail({ currentPage, onNavigate }) {
                             className={`w-full border-l-2 py-[7px]
                                         focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]
                                         ${collapsed
-                                          ? 'text-[9px] font-mono text-center px-0'
+                                          ? 'text-[10px] font-mono font-medium text-center px-0'
                                           : 'text-[13px] text-left px-4'}
                                         ${on
                                           ? 'border-[var(--color-text)] text-[var(--color-text)] font-semibold bg-[var(--color-hover-bg)]'
@@ -161,7 +161,7 @@ export default function Rail({ currentPage, onNavigate }) {
             ))}
 
             {!collapsed && (
-              <p className="px-4 pt-2 text-[10px] leading-snug text-[var(--color-text-muted)] m-0">
+              <p className="px-4 pt-2 text-[11px] leading-snug text-[var(--color-text-muted)] m-0">
                 {t(`rail.${g.key}.note`)}
               </p>
             )}
@@ -192,7 +192,7 @@ export default function Rail({ currentPage, onNavigate }) {
                       border-b border-[var(--glass-edge)]">
         {NAV_GROUPS.map((g) => (
           <div key={g.key} className="flex items-center gap-1 shrink-0">
-            <span className="px-1.5 text-[8px] font-mono uppercase tracking-[.2em]
+            <span className="px-1.5 text-[9.5px] font-mono font-medium uppercase tracking-[.2em]
                              text-[var(--color-text-muted)] shrink-0">
               {t(`rail.${g.key}`)}
             </span>
