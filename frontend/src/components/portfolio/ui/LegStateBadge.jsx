@@ -13,6 +13,9 @@ import Squares from '../../Squares'
  * Counted instead, on the site's own isotype construction: one filled square
  * per trim taken, of the three the plan has. POST-T2 is two filled and one
  * empty — the same shape the vote marks and the top-quartile column use.
+ *
+ * Marks only. The word rode beside the squares for one revision and said the
+ * same thing a second time; it lives in the tooltip now.
  */
 
 const TAKEN = { PRE_TRIM: 0, POST_T1: 1, POST_T2: 2, POST_T3: 3 }
@@ -23,13 +26,10 @@ export default function LegStateBadge({ state }) {
   if (!state || state === 'CLOSED') return null
   const n = TAKEN[state] ?? 0
   const label = tr(`pf.leg.${state}`)
+  // The word went with the count: ▪▫▫ already says POST-T1, so printing both
+  // was the same reading twice, in the widest column of a dense table. The
+  // name stays reachable on hover — dropped from sight, not from the record.
   return (
-    <span className="inline-flex items-center gap-1.5 whitespace-nowrap
-                     text-[10px] font-mono font-medium uppercase tracking-[.1em]
-                     text-[var(--color-text-secondary)]"
-          title={`${label} — ${n} of ${OF} trims taken`}>
-      <Squares n={n} of={OF} title={`${n} of ${OF} trims taken`} />
-      {label}
-    </span>
+    <Squares n={n} of={OF} title={`${label} — ${n} of ${OF} trims taken`} />
   )
 }
