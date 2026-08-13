@@ -5,16 +5,24 @@ export function fmtPct(val) {
   return `${sign}${pct.toFixed(1)}%`
 }
 
+/**
+ * Neutral. This handed the money palette (profit/loss green-red) to six
+ * market-half components, every one of them printing a naked figure with no
+ * mark of its own to belong to. The encoding colour lives in marks; a signed
+ * number already says which way it went.
+ */
 export function pctColor(val) {
   if (val == null || isNaN(val)) return 'text-[var(--color-text-muted)]'
-  return val > 0 ? 'text-[var(--color-profit)]' : val < 0 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text-secondary)]'
+  return 'text-[var(--color-text-secondary)]'
 }
 
+/** A badge IS a mark, so it keeps its colour — but on the site's tokens
+ *  rather than raw Tailwind, and as a tint the figure sits on. */
 export function atrBadgeColor(atrExt) {
   if (atrExt == null) return 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]'
-  if (atrExt <= 4) return 'bg-green-500/10 text-[var(--color-profit)]'
-  if (atrExt <= 6) return 'bg-amber-500/10 text-[var(--color-signal-caution)]'
-  return 'bg-red-500/10 text-[var(--color-loss)]'
+  if (atrExt <= 4) return 'bg-[color-mix(in_srgb,var(--color-took)_28%,transparent)]'
+  if (atrExt <= 6) return 'bg-[color-mix(in_srgb,var(--color-signal-caution)_20%,transparent)]'
+  return 'bg-[color-mix(in_srgb,var(--color-refused)_26%,transparent)]'
 }
 
 export function abcColor(abc) {

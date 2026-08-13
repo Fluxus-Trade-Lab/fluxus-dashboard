@@ -22,11 +22,6 @@ import StateRibbon from '../shared/StateRibbon'
 
 const pp = (v) => (v == null ? '—' : `${(v * 100 >= 0 ? '+' : '')}${(v * 100).toFixed(1)}pp`)
 
-const CALL_STYLE = {
-  risk_on: 'text-[var(--color-profit)]',
-  risk_off: 'text-[var(--color-loss)]',
-}
-
 const PHASE_NOTE = {
   established: 'Both horizons agree — a regime.',
   turning: 'The fortnight has flipped and the month has not — a turn.',
@@ -70,7 +65,9 @@ export default function RotationPanel() {
       </div>
 
       {/* The one line. Everything below exists to let it be checked. */}
-      <p className={`m-0 text-[15px] leading-snug font-medium ${CALL_STYLE[v.call] ?? ''}`}>
+      {/* a whole sentence in the encoding colour was the loudest instance of
+          the leak — the phase note under it carries the reading in words */}
+      <p className="m-0 text-[15px] leading-snug font-medium text-[var(--color-text)]">
         {v.sentence}
       </p>
       {PHASE_NOTE[v.phase] && (
@@ -100,10 +97,13 @@ export default function RotationPanel() {
                     {c.long.join('/')} − {c.short.join('/')}
                   </span>
                 </td>
-                <td className={`py-1.5 px-2 text-right tabular-nums ${CALL_STYLE[c.vote] ?? ''}`}>
+                {/* neutral, like the delta column beside them — a signed pp
+                    figure says its own direction, and this table has no mark
+                    for the colour to belong to */}
+                <td className="py-1.5 px-2 text-right tabular-nums text-[var(--color-text-secondary)]">
                   {pp(c.spread)}
                 </td>
-                <td className={`py-1.5 px-2 text-right tabular-nums ${CALL_STYLE[c.month_vote] ?? ''}`}>
+                <td className="py-1.5 px-2 text-right tabular-nums text-[var(--color-text-secondary)]">
                   {pp(c.month_spread)}
                 </td>
                 <td className="py-1.5 pl-2 text-right tabular-nums text-[var(--color-text-secondary)]">

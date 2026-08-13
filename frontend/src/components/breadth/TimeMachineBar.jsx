@@ -17,8 +17,9 @@ export default function TimeMachineBar({ tm }) {
         >
           {tm.loading ? 'Loading…' : 'Enable'}
         </button>
+        {/* an error is chrome, not a market reading — it leaves the encoding pair */}
         {tm.error && (
-          <span className="text-[10px] text-[var(--color-loss)]">{tm.error}</span>
+          <span className="text-[10px] text-[var(--color-signal-riskoff)]">{tm.error}</span>
         )}
       </div>
     )

@@ -434,3 +434,25 @@ tone × fill 拼四态，蓝一提亮就会和浅灰的 untested 在灰度里合
 
 副产品：新的 took 对比度 5.99（旧的 2.47），**填充和文字两个角色它都能担**了——
 Watchlist 那些 chip 当初只能做成实心底加浅字来绕过，现在不必了。
+
+### Market State 归队（2026-08-13）
+
+市场半边最后一块用着资金半边颜色的页面。原以为是 9 个组件，实际做完是 **13 处**——
+四个是搜 `profit/loss` 搜不到的，因为它们用的是**裸 Tailwind 颜色**（`text-green-600`、
+`bg-emerald-500/70`），根本不在任何一个已声明的调色板里。
+
+| 处理 | 组件 |
+|---|---|
+| 判词/整句去色 | VerdictBanner（"Bullish market environment"）· RotationPanel（整句 15px 被涂色） |
+| 裸数字去色 | MarketStateSummary tiles · ClassicBreadth McClellan · DangerPanel 计数 · RotationPanel 两列 pp · **lib/format.js `pctColor`（一个共享函数把绿红发给 6 个市场半边组件，从源头改中性）** |
+| 换成色块（格子即标记） | BreadthTable 三个着色函数 · ClassicBreadth `pctColor` · MarketMonitor（原是裸 Tailwind） · `atrBadgeColor` |
+| 标记换 token | BreadthChip 圆点 · DangerPanel 圆点 · SpreadChart 数字（给自己的图做标签，可借色） |
+| 归位到统一状态语法 | **StateBadge** 与 **StateRibbon**——同一组四态的第二、第三套编码（emerald/amber/sky/rose），且四色是「靠色相扛等级」，编码文档明令禁止 |
+| 离开编码对 | TimeMachineBar 错误信息（错误是 chrome，不是市场读数） |
+
+**验收（浏览器计算样式，所有折叠展开）**：资金绿红 **0** · 编码色当填充 **55** ·
+编码色当文字 **2**（都是给自己那根条做标签的，合规）· 裸 Tailwind 色 **0**。
+
+**过程中的教训**：删常量定义前必须全文件搜引用。`CALL_STYLE` 和 `STATE_FILL` 各漏了一次，
+第一次让整页白屏——而白屏页面的颜色审计会返回"0 残留"，是**假通过**。验收必须先确认页面
+真的渲染了。

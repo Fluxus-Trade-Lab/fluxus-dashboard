@@ -1,14 +1,6 @@
 import { isWeekend } from './session'
 import VoteGlyphs from './VoteGlyphs'
 
-const ENV_STYLE = {
-  BULLISH: 'text-[var(--color-profit)]',
-  BEARISH: 'text-[var(--color-loss)]',
-  MIXED: 'text-[var(--color-signal-caution)]',
-  OVERSOLD: 'text-[var(--color-signal-caution)]',
-  OVERBOUGHT: 'text-[var(--color-signal-caution)]',
-}
-
 const ENV_LABEL = {
   BULLISH: 'Bullish market environment',
   BEARISH: 'Bearish market environment',
@@ -32,7 +24,7 @@ export default function VerdictBanner({ verdict, dataQuality, session }) {
             Market Environment · Decision First
           </h3>
           {dataQuality?.stale && (
-            <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-[var(--color-signal-caution)] uppercase tracking-wide">
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-[color-mix(in_srgb,var(--color-signal-caution)_18%,transparent)] text-[var(--color-signal-caution)] uppercase tracking-wide">
               Stale data · as of {dataQuality.as_of ?? '—'}
             </span>
           )}
@@ -42,7 +34,9 @@ export default function VerdictBanner({ verdict, dataQuality, session }) {
         </span>
       </div>
 
-      <div className={`text-xl font-semibold ${ENV_STYLE[v.env] ?? ''}`}>
+      {/* The verdict is a sentence, and sentences do not wear the encoding
+          colour — the vote glyphs below already say it in took/refused. */}
+      <div className="text-xl font-semibold text-[var(--color-text-bold)]">
         {ENV_LABEL[v.env] ?? v.env}
       </div>
 

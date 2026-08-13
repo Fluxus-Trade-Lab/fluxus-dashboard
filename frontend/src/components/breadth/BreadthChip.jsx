@@ -1,6 +1,6 @@
 const ENV_DOT = {
-  BULLISH: 'bg-[var(--color-profit)]',
-  BEARISH: 'bg-[var(--color-loss)]',
+  BULLISH: 'bg-[var(--color-took)]',
+  BEARISH: 'bg-[var(--color-refused)]',
   MIXED: 'bg-[var(--color-signal-caution)]',
   OVERSOLD: 'bg-[var(--color-signal-caution)]',
   OVERBOUGHT: 'bg-[var(--color-signal-caution)]',

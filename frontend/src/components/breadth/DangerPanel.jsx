@@ -16,7 +16,9 @@ export default function DangerPanel({ title, danger }) {
           {title}
         </h3>
         <span className="flex items-baseline gap-1.5">
-          <span className={`text-[10px] font-mono ${count >= 4 ? 'text-[var(--color-loss)]' : count >= 2 ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-text-secondary)]'}`}>
+          {/* the dots below are this count's marks; the number does not need
+              to say in colour what they already say in fills */}
+          <span className="text-[10px] font-mono text-[var(--color-text-secondary)]">
             {count} / 5 active
           </span>
           {danger.date && (
@@ -34,7 +36,7 @@ export default function DangerPanel({ title, danger }) {
               <span className={active ? 'text-[var(--color-text)]' : 'text-[var(--color-text-muted)]'}>
                 {label}
               </span>
-              <span className={`w-2 h-2 rounded-full ${active ? 'bg-[var(--color-loss)]' : 'bg-[var(--color-border)]'}`} />
+              <span className={`w-2 h-2 rounded-full ${active ? 'bg-[var(--color-refused)]' : 'bg-[var(--color-border)]'}`} />
             </li>
           )
         })}

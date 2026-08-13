@@ -16,11 +16,8 @@ export default function ClassicBreadth({ data }) {
         <Stat label="New Highs" value={b.new_highs?.toLocaleString()} />
         <Stat label="New Lows" value={b.new_lows?.toLocaleString()} />
         <Stat label="A/D Line" value={b.ad_line?.toLocaleString()} />
-        <Stat
-          label="McClellan"
-          value={b.mcclellan_osc?.toFixed(1)}
-          color={b.mcclellan_osc >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}
-        />
+        {/* neutral like its five neighbours — the sign is on the number */}
+        <Stat label="McClellan" value={b.mcclellan_osc?.toFixed(1)} />
       </div>
     </div>
   )
@@ -44,9 +41,11 @@ function fmt1(val) {
   return `${val.toFixed(1)}%`
 }
 
+/* a tint behind the figure, not coloured type — the same construction the
+ * breadth table and the screener's RS cells use */
 function pctColor(val) {
   if (val == null) return ''
-  if (val >= 60) return 'text-[var(--color-profit)]'
-  if (val >= 40) return 'text-[var(--color-signal-caution)]'
-  return 'text-[var(--color-loss)]'
+  if (val >= 60) return 'bg-[color-mix(in_srgb,var(--color-took)_28%,transparent)] rounded-sm px-1'
+  if (val >= 40) return 'bg-[color-mix(in_srgb,var(--color-signal-caution)_20%,transparent)] rounded-sm px-1'
+  return 'bg-[color-mix(in_srgb,var(--color-refused)_26%,transparent)] rounded-sm px-1'
 }

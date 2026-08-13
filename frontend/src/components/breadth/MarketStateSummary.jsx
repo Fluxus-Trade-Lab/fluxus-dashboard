@@ -54,15 +54,15 @@ export default function MarketStateSummary({ mm, breadth, verdict }) {
   )
 }
 
-function Tile({ label, value, note, pct, tone }) {
-  const toneClass =
-    tone === 'up' ? 'text-[var(--color-profit)]' : tone === 'down' ? 'text-[var(--color-loss)]' : 'text-[var(--color-text)]'
+function Tile({ label, value, note, pct }) {
+  // A naked figure with no mark of its own does not take the encoding colour;
+  // the note under it says which way, in words.
   return (
     <div className="bg-[var(--color-bg)] rounded p-3">
       <div className="text-[10px] text-[var(--color-text-secondary)] font-medium uppercase tracking-wide mb-1">
         {label}
       </div>
-      <div className={`text-lg font-mono tabular-nums ${toneClass}`}>{value}</div>
+      <div className="text-[17px] font-mono tabular-nums text-[var(--color-text)]">{value}</div>
       <div className="text-[11px] text-[var(--color-text-secondary)]">{note}</div>
       {pct && <div className="text-[10px] text-[var(--color-text-muted)]">{pct}</div>}
     </div>

@@ -1,3 +1,5 @@
+import { barStyle } from '../groups/ThemeBars'
+
 /**
  * Ten weeks of four-state, drawn as one row.
  *
@@ -14,18 +16,17 @@
  * blocks will assume a fortnight reading, so the caller is required to pass
  * `windowNote` and it is surfaced on hover of every segment.
  *
- * Colour matches `groups/StateBadge` because the same four words must not be
- * two different palettes in one product. An unmeasured segment is drawn as an
- * outline rather than a colour — the board's rule that unmeasurable is never
- * zero, carried into a shape.
+ * Colour comes from `barStyle` — the site's one state grammar, tone × fill —
+ * because the same four words must not be two palettes in one product. It was
+ * two: this drew emerald / amber / sky / rose, a fourth hue set in no palette
+ * the brand declares, beside a board drawing the same four states in took and
+ * untested. Four hues also carry rank by hue alone, which the encoding doc
+ * forbids; tone × fill survives greyscale and colour blindness. An unmeasured
+ * segment is still an outline — unmeasurable is never zero, carried into a
+ * shape.
  */
 
-const FILL = {
-  Leading: 'bg-emerald-500/70',
-  Weakening: 'bg-amber-500/70',
-  Improving: 'bg-sky-500/70',
-  Lagging: 'bg-rose-500/70',
-}
+
 
 const pct = (v) => (v == null ? '—' : `${(v * 100).toFixed(1)}%`)
 
@@ -47,16 +48,13 @@ export default function StateRibbon({ steps, labels, windowNote }) {
             key={i}
             title={title}
             aria-label={title}
-            className={`flex-1 rounded-[2px] ${
-              s?.state
-                ? FILL[s.state] ?? 'bg-[var(--color-text-muted)]/40'
-                : 'border border-dashed border-[var(--color-border)]'
-            }`}
+            className="flex-1 rounded-[2px]"
+            style={s?.state
+              ? barStyle(s.state)
+              : { border: '1px dashed var(--color-border)' }}
           />
         )
       })}
     </span>
   )
 }
-
-export { FILL as STATE_FILL }

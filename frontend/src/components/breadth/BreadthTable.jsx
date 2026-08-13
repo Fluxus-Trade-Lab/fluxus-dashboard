@@ -122,21 +122,27 @@ function fmtDate(iso) {
   return `${parseInt(m)}/${parseInt(d)}`
 }
 
+/* Tints, not coloured type. The cell IS the mark and the number sits on it —
+ * the same construction rsTone uses in the screener. It read
+ * `bg-green-500/10 text-[var(--color-profit)]`: raw Tailwind green off the
+ * system entirely, plus the money palette on a market-half page. */
+function tint(level) {
+  if (level === 'high') return 'bg-[color-mix(in_srgb,var(--color-took)_28%,transparent)]'
+  if (level === 'mid') return 'bg-[color-mix(in_srgb,var(--color-signal-caution)_20%,transparent)]'
+  return 'bg-[color-mix(in_srgb,var(--color-refused)_26%,transparent)]'
+}
+
 function ratioColor(val) {
   if (val == null) return ''
-  if (val >= 1.0) return 'bg-green-500/10 text-[var(--color-profit)]'
-  if (val >= 0.5) return 'bg-amber-500/10 text-[var(--color-signal-caution)]'
-  return 'bg-red-500/10 text-[var(--color-loss)]'
+  return tint(val >= 1.0 ? 'high' : val >= 0.5 ? 'mid' : 'low')
 }
 
 function pctAboveColor(val) {
   if (val == null) return ''
-  if (val >= 60) return 'bg-green-500/10 text-[var(--color-profit)]'
-  if (val >= 40) return 'bg-amber-500/10 text-[var(--color-signal-caution)]'
-  return 'bg-red-500/10 text-[var(--color-loss)]'
+  return tint(val >= 60 ? 'high' : val >= 40 ? 'mid' : 'low')
 }
 
 function mcColor(val) {
   if (val == null) return ''
-  return val >= 0 ? 'bg-green-500/10 text-[var(--color-profit)]' : 'bg-red-500/10 text-[var(--color-loss)]'
+  return tint(val >= 0 ? 'high' : 'low')
 }

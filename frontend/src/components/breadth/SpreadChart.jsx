@@ -32,7 +32,7 @@ export default function SpreadChart({ rows }) {
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Quarterly Breadth (stocks moving 25%+ over the quarter)
         </h3>
-        <span className={`text-[10px] font-mono ${spread > 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
+        <span className={`text-[10px] font-mono ${spread > 0 ? 'text-[var(--color-took)]' : 'text-[var(--color-refused)]'}`}>
           {spread > 0 ? '+' : ''}{spread} spread
         </span>
       </div>

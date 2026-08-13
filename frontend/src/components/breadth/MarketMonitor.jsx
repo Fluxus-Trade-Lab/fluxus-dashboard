@@ -70,16 +70,21 @@ function Row({ label, value, color = '' }) {
   )
 }
 
+/* Tints on the site's own tokens. These read `text-green-600 / text-amber-600
+ * / text-red-500` — raw Tailwind, in no palette the brand declares, and
+ * coloured type rather than a mark. */
+function tint(level) {
+  if (level === 'high') return 'bg-[color-mix(in_srgb,var(--color-took)_28%,transparent)] rounded-sm px-1'
+  if (level === 'mid') return 'bg-[color-mix(in_srgb,var(--color-signal-caution)_20%,transparent)] rounded-sm px-1'
+  return 'bg-[color-mix(in_srgb,var(--color-refused)_26%,transparent)] rounded-sm px-1'
+}
+
 function ratioColor(val) {
   if (val == null) return ''
-  if (val >= 1.0) return 'text-green-600'
-  if (val >= 0.5) return 'text-amber-600'
-  return 'text-red-500'
+  return tint(val >= 1.0 ? 'high' : val >= 0.5 ? 'mid' : 'low')
 }
 
 function pctColor(val) {
   if (val == null) return ''
-  if (val >= 60) return 'text-green-600'
-  if (val >= 40) return 'text-amber-600'
-  return 'text-red-500'
+  return tint(val >= 60 ? 'high' : val >= 40 ? 'mid' : 'low')
 }
