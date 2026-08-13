@@ -6,10 +6,14 @@ Built 2026-08-12 from the rule he stated that morning, ahead of CPI:
     extends beyond the initial balance and BUILDS there, rather than merely
     printing through it on the headline."
 
-This is the usable half of Donald Jones' Trade Facilitation Factor. Jones'
-original is a ratio across TPO expansion, tick activity and volume movement; we
-do not have clean tick data wired, so we do not claim to have implemented TFF.
-What we do have is the distinction the rule turns on, and it is the whole point:
+CORRECTION, same day. This paragraph used to say TFF was "a ratio across TPO
+expansion, tick activity and volume movement" and that we could not implement it
+for want of tick data. Both halves were wrong, and reading Jones' 1988 paper
+settled it: volume is explicitly NOT part of TFF, and his "ticks" are price ticks
+traversed, not a trade tape. TFF is implemented in full in `tff.py`. This module
+is the narrower rule -- initial-balance extension and acceptance -- which Jones
+does not cover and which is a different question from how much trade the session
+facilitated overall. The distinction it turns on:
 
     **extension** — price traded beyond the initial balance at all
     **acceptance** — price STAYED out there and built structure

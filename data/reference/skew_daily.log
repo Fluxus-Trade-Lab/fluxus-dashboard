@@ -56,3 +56,28 @@ skew log @ 2026-08-10 15:18 ET  target 30 DTE
 
 0 new row(s) -> data/reference/skew_log.jsonl
 [2026-08-12 06:00:05 JST] exit 0
+[2026-08-13 04:00:05 JST] measuring skew for 2026-08-12 (ET 15:00)
+Error 200, reqId 82: No security definition has been found for the request, contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260911', strike=722.5, right='C', exchange='SMART', tradingClass='QQQ')
+Error 200, reqId 83: No security definition has been found for the request, contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260911', strike=722.5, right='P', exchange='SMART', tradingClass='QQQ')
+Error 200, reqId 94: No security definition has been found for the request, contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260911', strike=727.5, right='C', exchange='SMART', tradingClass='QQQ')
+Error 200, reqId 95: No security definition has been found for the request, contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260911', strike=727.5, right='P', exchange='SMART', tradingClass='QQQ')
+Unknown contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260911', strike=722.5, right='C', exchange='SMART', tradingClass='QQQ')
+Unknown contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260911', strike=722.5, right='P', exchange='SMART', tradingClass='QQQ')
+Unknown contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260911', strike=727.5, right='C', exchange='SMART', tradingClass='QQQ')
+Unknown contract: Option(symbol='QQQ', lastTradeDateOrContractMonth='20260911', strike=727.5, right='P', exchange='SMART', tradingClass='QQQ')
+Error 200, reqId 155: No security definition has been found for the request, contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260911', strike=537.5, right='C', exchange='SMART', tradingClass='DIA')
+Error 200, reqId 156: No security definition has been found for the request, contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260911', strike=537.5, right='P', exchange='SMART', tradingClass='DIA')
+Unknown contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260911', strike=537.5, right='C', exchange='SMART', tradingClass='DIA')
+Unknown contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260911', strike=537.5, right='P', exchange='SMART', tradingClass='DIA')
+Error 200, reqId 193: No security definition has been found for the request, contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260911', strike=552.5, right='C', exchange='SMART', tradingClass='DIA')
+Error 200, reqId 194: No security definition has been found for the request, contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260911', strike=552.5, right='P', exchange='SMART', tradingClass='DIA')
+Unknown contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260911', strike=552.5, right='C', exchange='SMART', tradingClass='DIA')
+Unknown contract: Option(symbol='DIA', lastTradeDateOrContractMonth='20260911', strike=552.5, right='P', exchange='SMART', tradingClass='DIA')
+skew log @ 2026-08-12 15:00 ET  target 30 DTE
+  SPY  20260911 (30d)  spot 773.11  ATM 12.22%  callskew -1.16  RR -2.71   -> 50th pct of n=3  [THIN]
+  QQQ  20260911 (30d)  spot 724.90  ATM 18.64%  callskew -1.41  RR -3.51   -> 50th pct of n=3  [THIN]
+  DIA  20260911 (30d)  spot 537.92  ATM 11.87%  callskew -0.36  RR -1.29   -> 50th pct of n=3  [THIN]
+
+3 new row(s) -> data/reference/skew_log.jsonl
+[2026-08-13 04:01:55 JST] exit 0
+[2026-08-13 05:00:04 JST] ET 16:00 outside the 15:00-15:59 RTH window — skip
