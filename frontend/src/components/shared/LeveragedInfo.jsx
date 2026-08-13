@@ -14,7 +14,7 @@ export default function LeveragedInfo({ longEtfs, shortEtfs }) {
       onMouseEnter={() => setShow(true)}
       onMouseLeave={() => setShow(false)}
     >
-      <span className="cursor-default text-[9px] font-mono text-[var(--color-text-muted)] leading-none">
+      <span className="cursor-default text-[10px] font-mono text-[var(--color-text-muted)] leading-none">
         {hasLong && <span>L:{longEtfs.join(',')}</span>}
         {hasLong && hasShort && <span> </span>}
         {hasShort && <span>S:{shortEtfs.join(',')}</span>}

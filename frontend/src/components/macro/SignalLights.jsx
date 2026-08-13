@@ -19,10 +19,10 @@ export default function SignalLights({ signals }) {
               <span
                 className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${signalColor(s.color)}`}
               />
-              <span className="font-mono text-sm text-[var(--color-text-bold)]">
+              <span className="font-mono text-[14px] text-[var(--color-text-bold)]">
                 {ticker}
               </span>
-              <span className="text-xs text-[var(--color-text-secondary)]">
+              <span className="text-[12.5px] text-[var(--color-text-secondary)]">
                 {signalLabel(s.signal)}
               </span>
             </div>

@@ -20,7 +20,7 @@ export default function ModelBooksPage() {
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto py-6 px-4">
-        <div className="text-xs text-[var(--color-text-muted)] animate-pulse">Loading model books...</div>
+        <div className="text-[12.5px] text-[var(--color-text-muted)] animate-pulse">Loading model books...</div>
       </div>
     )
   }

@@ -21,10 +21,10 @@ export default function TickerHeader({ symbol, universe }) {
           >
             ← Back
           </button>
-          <h1 className="text-2xl font-bold tracking-tight">
+          <h1 className="text-[26px] font-bold tracking-tight">
             {symbol}
             {industry && (
-              <span className="ml-2 text-sm font-normal text-[var(--color-text-muted)]">{industry}</span>
+              <span className="ml-2 text-[14px] font-normal text-[var(--color-text-muted)]">{industry}</span>
             )}
           </h1>
           <div className="text-[11px] text-[var(--color-text-muted)] flex items-center gap-2 flex-wrap">
@@ -39,9 +39,9 @@ export default function TickerHeader({ symbol, universe }) {
         </div>
         {price != null && (
           <div className="text-right">
-            <div className="text-2xl font-bold tabular-nums">{fmtCur(price)}</div>
+            <div className="text-[26px] font-bold tabular-nums">{fmtCur(price)}</div>
             {changePct != null && (
-              <div className={`text-sm tabular-nums ${clr(changePct)}`}>
+              <div className={`text-[14px] tabular-nums ${clr(changePct)}`}>
                 {fmtPct(changePct)}
               </div>
             )}

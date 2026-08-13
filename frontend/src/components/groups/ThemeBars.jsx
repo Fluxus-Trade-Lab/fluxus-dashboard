@@ -121,7 +121,7 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
                           focus-visible:ring-[var(--color-text-muted)]
                           hover:bg-[var(--color-hover-bg)] hover:opacity-100
                           ${ghost ? 'opacity-30' : ''}`}>
-            <span className={`text-[9px] font-mono tabular-nums text-right
+            <span className={`text-[10px] font-mono tabular-nums text-right
                              text-[var(--color-text-muted)]
                              ${ghost ? 'opacity-0 group-hover:opacity-100' : ''}`}>{i + 1}</span>
             {/* the denominator moved off the surface into the tooltip — one
@@ -142,12 +142,12 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
                 width: `${frac * 50}%`,
               }} />
             </span>
-            <span className={`text-[12px] font-mono tabular-nums text-right
+            <span className={`text-[12.5px] font-mono tabular-nums text-right
                               ${ghost ? 'opacity-0 group-hover:opacity-100' : ''}`}>
               {v > 0 ? '+' : ''}{(v * 100).toFixed(1)}%
             </span>
             <span aria-hidden
-                  className={`text-[13px] text-center text-[var(--color-text-muted)]
+                  className={`text-[12.5px] text-center text-[var(--color-text-muted)]
                               ${blocked ? 'invisible'
                                         : 'opacity-0 group-hover:opacity-100'}`}>
               {colour ? '−' : '+'}

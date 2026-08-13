@@ -139,7 +139,7 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
   if (!chosen.length) {
     return (
       <div className="h-[52px] rounded border border-dashed border-[var(--color-border)]
-                      flex items-center px-4 text-[11.5px] text-[var(--color-text-muted)]">
+                      flex items-center px-4 text-[11px] text-[var(--color-text-muted)]">
         Pick up to three themes — search above, or click a dot or a row.
       </div>
     )
@@ -233,11 +233,11 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
         </span>
         {/* the chart's own extent — an axis without numbers is not an axis,
             which was this page's first finding and applies to itself */}
-        <span className="absolute text-[9px] font-mono text-[var(--color-text-muted)]
+        <span className="absolute text-[10px] font-mono text-[var(--color-text-muted)]
                          pointer-events-none" style={{ left: `${LEFT + 0.5}%`, top: 2 }}>
           +{(span * 100).toFixed(0)}%
         </span>
-        <span className="absolute text-[9px] font-mono text-[var(--color-text-muted)]
+        <span className="absolute text-[10px] font-mono text-[var(--color-text-muted)]
                          pointer-events-none" style={{ left: `${LEFT + 0.5}%`, bottom: 2 }}>
           −{(span * 100).toFixed(0)}%
         </span>
@@ -252,7 +252,7 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
         ))}
       </div>
 
-      <div className="flex justify-between text-[9px] font-mono
+      <div className="flex justify-between text-[10px] font-mono
                       text-[var(--color-text-muted)]"
            style={{ paddingLeft: `${LEFT - 1}%`, paddingRight: `${RIGHT - 1}%` }}>
         {SEGMENTS.map((s, i) => (
@@ -287,7 +287,7 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
               </div>
             ))}
             {real && (
-              <p className="m-0 text-[9px] font-mono text-[var(--color-text-muted)]"
+              <p className="m-0 text-[10px] font-mono text-[var(--color-text-muted)]"
                  style={{ paddingLeft: `${LEFT}%` }}>
                 fortnights, oldest first — 10w ago → last 2w
               </p>

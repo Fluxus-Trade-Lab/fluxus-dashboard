@@ -227,7 +227,7 @@ function GymChart({ data, revealIndex, height = 350 }) {
 
   if (!data?.length) {
     return (
-      <div className="flex items-center justify-center text-[var(--color-text-muted)] text-xs" style={{ height }}>
+      <div className="flex items-center justify-center text-[var(--color-text-muted)] text-[12.5px]" style={{ height }}>
         No chart data
       </div>
     )
@@ -239,7 +239,7 @@ function GymChart({ data, revealIndex, height = 350 }) {
         {MA_CONFIGS.map(ma => (
           <span key={ma.label} className="flex items-center gap-1">
             <span className="inline-block w-3 h-0.5 rounded-full" style={{ backgroundColor: ma.color }} />
-            <span className="text-[9px] text-[var(--color-text-muted)] font-mono">{ma.label}</span>
+            <span className="text-[10px] text-[var(--color-text-muted)] font-mono">{ma.label}</span>
           </span>
         ))}
       </div>
@@ -380,7 +380,7 @@ export default function TradingGym({ cards }) {
 
   if (!eligible().length) {
     return (
-      <div className="text-xs text-[var(--color-text-muted)] py-8 text-center">
+      <div className="text-[12.5px] text-[var(--color-text-muted)] py-8 text-center">
         No entries with chart data{difficulty === 'easy' ? ' and 100%+ gains' : ''}.
       </div>
     )
@@ -408,7 +408,7 @@ export default function TradingGym({ cards }) {
             <button
               key={d}
               onClick={() => { setDifficulty(d); }}
-              className={`px-2 py-1 text-[9px] font-medium rounded cursor-pointer transition-colors ${
+              className={`px-2 py-1 text-[10px] font-medium rounded cursor-pointer transition-colors ${
                 difficulty === d
                   ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                   : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] bg-[var(--color-surface-raised)]'
@@ -422,7 +422,7 @@ export default function TradingGym({ cards }) {
 
       {/* Chart */}
       {loading ? (
-        <div className="flex items-center justify-center h-[350px] text-xs text-[var(--color-text-muted)] animate-pulse">
+        <div className="flex items-center justify-center h-[350px] text-[12.5px] text-[var(--color-text-muted)] animate-pulse">
           Loading chart...
         </div>
       ) : ohlcv ? (
@@ -430,7 +430,7 @@ export default function TradingGym({ cards }) {
           <GymChart data={ohlcv} revealIndex={revealIndex} height={350} />
         </div>
       ) : (
-        <div className="flex items-center justify-center h-[350px] text-xs text-[var(--color-text-muted)]">
+        <div className="flex items-center justify-center h-[350px] text-[12.5px] text-[var(--color-text-muted)]">
           Failed to load chart data
         </div>
       )}
@@ -475,9 +475,9 @@ export default function TradingGym({ cards }) {
         <div className="border border-[var(--color-border)] rounded-lg p-4 bg-[var(--color-surface)]">
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-[9px] uppercase tracking-wide text-[var(--color-text-muted)] mb-1">Result</div>
+              <div className="text-[10px] uppercase tracking-wide text-[var(--color-text-muted)] mb-1">Result</div>
               <div className="flex items-center gap-3">
-                <span className={`text-sm font-mono font-semibold ${result.changePct >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                <span className={`text-[14px] font-mono font-semibold ${result.changePct >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                   {result.changePct >= 0 ? '+' : ''}{result.changePct.toFixed(1)}%
                 </span>
                 <span className={`text-[11px] font-medium px-2 py-0.5 rounded ${
@@ -492,7 +492,7 @@ export default function TradingGym({ cards }) {
                 </span>
               </div>
               {entry && (
-                <div className="text-[9px] text-[var(--color-text-muted)] mt-2">
+                <div className="text-[10px] text-[var(--color-text-muted)] mt-2">
                   {entry.ticker} ({entry.year}) — {entry.source}
                   {entry.patterns?.length > 0 && (
                     <span className="ml-2">{entry.patterns.join(', ')}</span>

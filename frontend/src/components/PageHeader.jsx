@@ -36,7 +36,7 @@ export default function PageHeader({ group, title, blurb, meta = [] }) {
             {title}
           </h1>
           {blurb && (
-            <p className="text-[13.5px] leading-relaxed text-[var(--color-text-secondary)] mt-2 mb-0
+            <p className="text-[14px] leading-relaxed text-[var(--color-text-secondary)] mt-2 mb-0
                           max-w-[62ch]">
               {blurb}
             </p>

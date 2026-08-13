@@ -30,7 +30,7 @@ export default function RecapViewer({ date }) {
   if (loading) {
     return (
       <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6">
-        <div className="text-xs text-[var(--color-text-muted)] animate-pulse">Loading briefing...</div>
+        <div className="text-[12.5px] text-[var(--color-text-muted)] animate-pulse">Loading briefing...</div>
       </div>
     )
   }
@@ -38,7 +38,7 @@ export default function RecapViewer({ date }) {
   if (!content) {
     return (
       <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6 flex items-center justify-center h-32">
-        <span className="text-xs text-[var(--color-text-muted)] uppercase tracking-wide">No briefing for this date</span>
+        <span className="text-[12.5px] text-[var(--color-text-muted)] uppercase tracking-wide">No briefing for this date</span>
       </div>
     )
   }
@@ -48,8 +48,8 @@ export default function RecapViewer({ date }) {
       <div
         className="prose prose-stone prose-sm max-w-none
           prose-headings:text-[var(--color-text-bold)] prose-headings:tracking-tight
-          prose-p:text-[var(--color-text-secondary)] prose-p:text-sm prose-p:leading-relaxed
-          prose-li:text-[var(--color-text-secondary)] prose-li:text-sm
+          prose-p:text-[var(--color-text-secondary)] prose-p:text-[14px] prose-p:leading-relaxed
+          prose-li:text-[var(--color-text-secondary)] prose-li:text-[14px]
           prose-strong:text-[var(--color-text-bold)]
           prose-code:text-[var(--color-text)] prose-code:bg-[var(--color-surface-raised)] prose-code:px-1 prose-code:rounded
           prose-a:text-[var(--color-accent)]"
@@ -74,7 +74,7 @@ function simpleMarkdown(md) {
   // Escape HTML first to prevent injection, then apply markdown transforms
   let html = escapeHtml(md)
     // Code blocks (escaped content is fine inside <code>)
-    .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre class="bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-3 overflow-x-auto text-xs font-mono"><code>$2</code></pre>')
+    .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre class="bg-[var(--color-bg)] border border-[var(--color-border)] rounded p-3 overflow-x-auto text-[12.5px] font-mono"><code>$2</code></pre>')
     // Headings
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
     .replace(/^## (.+)$/gm, '<h2>$1</h2>')

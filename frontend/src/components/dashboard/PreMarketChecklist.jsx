@@ -72,7 +72,7 @@ export default function PreMarketChecklist() {
       <div className="space-y-2.5">
         {QUESTIONS.map(({ id, text, options }) => (
           <div key={id}>
-            <div className="text-xs text-[var(--color-text)] mb-1">{text}</div>
+            <div className="text-[12.5px] text-[var(--color-text)] mb-1">{text}</div>
             <div className="flex gap-1 flex-wrap">
               {options.map((opt) => (
                 <button
@@ -101,7 +101,7 @@ export default function PreMarketChecklist() {
           placeholder="Situational notes — what's on your mind today?"
           aria-label="Situational notes"
           rows={2}
-          className="w-full px-3 py-2 text-xs bg-[var(--color-bg)] border border-[var(--color-border)] rounded resize-none outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)]"
+          className="w-full px-3 py-2 text-[12.5px] bg-[var(--color-bg)] border border-[var(--color-border)] rounded resize-none outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)]"
         />
       </div>
     </div>

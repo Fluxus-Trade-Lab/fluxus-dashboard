@@ -56,7 +56,7 @@ export default function HealthChart({ title, block, state, t2108 }) {
         </span>
       </div>
       <div ref={containerRef} />
-      <div className="text-[9px] text-[var(--color-text-muted)] mt-1">
+      <div className="text-[10px] text-[var(--color-text-muted)] mt-1">
         20 SMA (blue) · 50 SMA (amber) · T2108 overlay (grey, 20/80 dashed)
       </div>
     </div>

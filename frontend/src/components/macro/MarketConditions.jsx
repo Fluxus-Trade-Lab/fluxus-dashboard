@@ -19,10 +19,10 @@ export default function MarketConditions({ signals }) {
               key={ticker}
               className="grid grid-cols-[48px_1fr_auto] items-center gap-2"
             >
-              <span className="font-mono text-sm text-[var(--color-text-bold)]">
+              <span className="font-mono text-[14px] text-[var(--color-text-bold)]">
                 {ticker}
               </span>
-              <span className="font-mono text-xs text-[var(--color-text)]">
+              <span className="font-mono text-[12.5px] text-[var(--color-text)]">
                 {s.close != null ? s.close.toFixed(2) : '--'}
               </span>
               <span

@@ -41,7 +41,7 @@ function CopyButton({ text }) {
       onClick={() => navigator.clipboard.writeText(text).then(() => {
         setCopied(true); setTimeout(() => setCopied(false), 1500)
       }).catch(() => {})}
-      className="bg-transparent border-none p-0 cursor-pointer text-[9px] font-mono font-medium
+      className="bg-transparent border-none p-0 cursor-pointer text-[10px] font-mono font-medium
                  uppercase tracking-[.14em] text-[var(--color-text-muted)]
                  hover:text-[var(--color-text)] outline-none focus-visible:ring-1">
       {copied ? 'copied' : 'copy'}
@@ -59,7 +59,7 @@ function WatchlistCard({ name, tickers }) {
                       bg-[var(--color-surface)] px-3.5 py-2.5 flex items-baseline gap-3 opacity-70">
         <span className="text-[10px] font-mono font-medium uppercase tracking-[.18em]
                          text-[var(--color-text-muted)]">{name}</span>
-        <span className="ml-auto text-[10.5px] text-[var(--color-text-muted)]">0 today</span>
+        <span className="ml-auto text-[10px] text-[var(--color-text-muted)]">0 today</span>
       </div>
     )
   }
@@ -71,13 +71,13 @@ function WatchlistCard({ name, tickers }) {
         <span className="text-[10px] font-mono font-medium uppercase tracking-[.18em]
                          text-[var(--color-text-secondary)]">{name}</span>
         <CopyButton text={tickers.join(',')} />
-        <span className="ml-auto text-[10.5px] font-mono tabular-nums
+        <span className="ml-auto text-[10px] font-mono tabular-nums
                          text-[var(--color-text-muted)]">{tickers.length}</span>
       </div>
       <div className="grid grid-cols-5 gap-x-2 gap-y-1">
         {display.map((t) => (
           <TickerLink key={t} symbol={t}
-            className="text-[11.5px] font-mono text-[var(--color-text-secondary)]" />
+            className="text-[11px] font-mono text-[var(--color-text-secondary)]" />
         ))}
       </div>
       {hidden > 0 && (
@@ -122,7 +122,7 @@ export default function WatchlistTab({ universe, presets }) {
       {topTickers.length > 0 && (
         <section className="mb-5">
           <div className="flex items-baseline gap-3 pb-2">
-            <span className="text-[9.5px] font-mono font-medium uppercase tracking-[.24em]
+            <span className="text-[10px] font-mono font-medium uppercase tracking-[.24em]
                              text-[var(--color-text-muted)]">Top overlap</span>
             {/* the count is of NAMES, not of lists — it briefly read
                 "on 15 lists at once", which is the cap on this board */}
@@ -141,8 +141,8 @@ export default function WatchlistTab({ universe, presets }) {
                 style={{ background: 'var(--color-took)' }}
                 title={`${ticker} — on ${count} of the preset lists`}>
                 <TickerLink symbol={ticker}
-                  className="text-[12px] font-mono font-medium text-[#f2f5f8]" />
-                <span className="text-[9.5px] font-mono tabular-nums text-[#f2f5f8] opacity-75">
+                  className="text-[12.5px] font-mono font-medium text-[#f2f5f8]" />
+                <span className="text-[10px] font-mono tabular-nums text-[#f2f5f8] opacity-75">
                   {count}
                 </span>
               </span>

@@ -30,10 +30,10 @@ function Row({ r, value, accel, rank }) {
     <div className="grid grid-cols-[18px_1fr_38px_72px_64px] gap-2 items-baseline py-[5px]
                     border-b border-[var(--color-border-light)]">
       <span className="text-[10px] font-mono text-[var(--color-text-muted)]">{rank}</span>
-      <span className="text-[13px] truncate" title={r.tickers?.join(' · ')}>{r.group}</span>
+      <span className="text-[12.5px] truncate" title={r.tickers?.join(' · ')}>{r.group}</span>
       <span className="text-[10px] tabular-nums text-right text-[var(--color-text-muted)]"
             title="members — a theme of one stock is one stock">{r.members}</span>
-      <span className="text-[13px] font-mono tabular-nums text-right">
+      <span className="text-[12.5px] font-mono tabular-nums text-right">
         {value > 0 ? '+' : ''}{(value * 100).toFixed(1)}%
       </span>
       {accel != null
@@ -51,12 +51,12 @@ function Board({ title, note, rows, metric, showAccel }) {
   return (
     <section>
       <div className="flex items-baseline gap-3 pb-2 border-b border-[var(--color-v2-ink)]">
-        <h2 className="text-[15px] font-semibold m-0" style={{ fontFamily: 'var(--font-cond)' }}>
+        <h2 className="text-[17px] font-semibold m-0" style={{ fontFamily: 'var(--font-cond)' }}>
           {title}
         </h2>
         <span className="text-[11px] text-[var(--color-text-muted)]">{note}</span>
       </div>
-      <div className="grid grid-cols-[18px_1fr_38px_72px_64px] gap-2 pt-2 pb-1 text-[9px]
+      <div className="grid grid-cols-[18px_1fr_38px_72px_64px] gap-2 pt-2 pb-1 text-[10px]
                       font-mono uppercase tracking-wider text-[var(--color-text-muted)]">
         <span>#</span><span>Theme</span><span className="text-right">n</span>
         <span className="text-right">RS</span>
@@ -82,8 +82,8 @@ export default function ThemeLeaderboard() {
     }
   }, [themes])
 
-  if (loading) return <div className="text-[var(--color-text-muted)] text-sm py-8 text-center">Loading…</div>
-  if (error) return <div className="text-[var(--color-signal-riskoff)] text-[13px] py-8 text-center">groups.json unavailable</div>
+  if (loading) return <div className="text-[var(--color-text-muted)] text-[14px] py-8 text-center">Loading…</div>
+  if (error) return <div className="text-[var(--color-signal-riskoff)] text-[12.5px] py-8 text-center">groups.json unavailable</div>
 
   const shortSet = new Set(short.map((r) => r.group))
   const newcomers = short.filter((r) => !long.some((l) => l.group === r.group)).length

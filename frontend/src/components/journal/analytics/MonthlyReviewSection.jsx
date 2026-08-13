@@ -57,7 +57,7 @@ ${tradeLines || '  No closed trades this month.'}
 
 function MonthStats({ stats }) {
   if (!stats || stats.totalTrades === 0) {
-    return <div className="text-xs text-[var(--color-text-muted)] py-4 text-center">No closed trades this month.</div>
+    return <div className="text-[12.5px] text-[var(--color-text-muted)] py-4 text-center">No closed trades this month.</div>
   }
 
   return (
@@ -121,7 +121,7 @@ function VsPrevMonth({ current, prev }) {
           return (
             <div key={label} className="flex items-center gap-1.5">
               <span className="text-[10px] text-[var(--color-text-secondary)]">{label}</span>
-              <span className={`text-xs font-mono font-medium ${color}`}>{arrow} {f(curr)}</span>
+              <span className={`text-[12.5px] font-mono font-medium ${color}`}>{arrow} {f(curr)}</span>
             </div>
           )
         })}
@@ -213,7 +213,7 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
             }`}
           >
             {m}
-            {reviews[m] && <span className="ml-1 text-[9px] opacity-60">*</span>}
+            {reviews[m] && <span className="ml-1 text-[10px] opacity-60">*</span>}
           </button>
         ))}
       </div>
@@ -255,7 +255,7 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
               onChange={e => setDraftReview(e.target.value)}
               placeholder="Paste Claude's review here..."
               rows={12}
-              className="w-full px-3 py-2 text-xs bg-[var(--color-bg)] border border-[var(--color-border)] rounded resize-y outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] leading-relaxed"
+              className="w-full px-3 py-2 text-[12.5px] bg-[var(--color-bg)] border border-[var(--color-border)] rounded resize-y outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] leading-relaxed"
             />
             <div className="flex gap-2">
               <button
@@ -275,7 +275,7 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
           </div>
         ) : savedReview ? (
           <div>
-            <div className="text-xs text-[var(--color-text)] whitespace-pre-wrap leading-relaxed">
+            <div className="text-[12.5px] text-[var(--color-text)] whitespace-pre-wrap leading-relaxed">
               {savedReview.text}
             </div>
             <div className="flex items-center justify-between mt-3 pt-2 border-t border-[var(--color-border-light)]">
@@ -292,7 +292,7 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
           </div>
         ) : (
           <div className="text-center py-6">
-            <p className="text-xs text-[var(--color-text-muted)] mb-3">
+            <p className="text-[12.5px] text-[var(--color-text-muted)] mb-3">
               Click "Review with Claude" to copy a prompt with your {selectedMonth} data.
               <br />
               Paste it in claude.ai, then save the response here.

@@ -22,7 +22,7 @@ export default function DangerPanel({ title, danger }) {
             {count} / 5 active
           </span>
           {danger.date && (
-            <span className="text-[9px] font-mono text-[var(--color-text-muted)]">
+            <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
               {danger.date}
             </span>
           )}

@@ -7,7 +7,7 @@ export default function TickerSources({ tickerData }) {
 
   return (
     <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-      <div className="font-semibold mb-3 text-sm">Sources</div>
+      <div className="font-semibold mb-3 text-[14px]">Sources</div>
       <ol className="text-[11px] flex flex-col gap-1.5 list-decimal pl-5">
         {sources.map(s => (
           <li key={s.id}>

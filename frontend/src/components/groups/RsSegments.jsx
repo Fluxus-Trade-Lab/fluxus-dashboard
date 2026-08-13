@@ -71,7 +71,7 @@ export default function RsSegments({ rows, limit = 20 }) {
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1
                       pb-2 border-b border-[var(--color-v2-ink)]">
         <div className="flex items-baseline gap-3">
-          <h2 className="text-[15px] font-semibold m-0"
+          <h2 className="text-[17px] font-semibold m-0"
               style={{ fontFamily: 'var(--font-cond)' }}>Where the lead was earned</h2>
           <span className="text-[11px] text-[var(--color-text-muted)]">
             four disjoint windows, oldest first — they do not overlap
@@ -84,7 +84,7 @@ export default function RsSegments({ rows, limit = 20 }) {
       </div>
 
       <div className="grid grid-cols-[minmax(120px,190px)_repeat(4,1fr)_64px] gap-x-3 gap-y-0
-                      pt-2 pb-1 text-[9px] font-mono uppercase tracking-wider
+                      pt-2 pb-1 text-[10px] font-mono uppercase tracking-wider
                       text-[var(--color-text-muted)]">
         <span>Theme</span>
         {SEGMENTS.map((s) => (
@@ -112,7 +112,7 @@ export default function RsSegments({ rows, limit = 20 }) {
               <Bar v={r[s.key]} scale={scale} />
             </span>
           ))}
-          <span className="text-[12px] font-mono tabular-nums text-right">
+          <span className="text-[12.5px] font-mono tabular-nums text-right">
             {r.excess_3m > 0 ? '+' : ''}{(r.excess_3m * 100).toFixed(1)}%
           </span>
         </div>

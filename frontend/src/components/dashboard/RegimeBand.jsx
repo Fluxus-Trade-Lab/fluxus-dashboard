@@ -184,7 +184,7 @@ function ConditionsLine({ history, score }) {
           // the same place is worse than one missing tick
           score != null && Math.abs(score - lvl) < 6 ? null : (
             <span key={lvl} className="absolute left-full ml-1.5 -translate-y-1/2
-                                       text-[9px] font-mono text-[var(--color-text-muted)]"
+                                       text-[10px] font-mono text-[var(--color-text-muted)]"
                   style={{ top: `${(y(lvl) / H) * 100}%` }}>{lvl}</span>
           )
         ))}
@@ -208,7 +208,7 @@ function ConditionsLine({ history, score }) {
           const edge = frac < 0.03 ? 'left' : frac > 0.97 ? 'right' : null
           return (
             <span key={t.i}
-                  className={`absolute text-[9px] font-mono whitespace-nowrap
+                  className={`absolute text-[10px] font-mono whitespace-nowrap
                               ${edge ? '' : '-translate-x-1/2'}
                               ${t.isYear ? 'text-[var(--color-text-secondary)] font-semibold'
                                          : 'text-[var(--color-text-muted)]'}`}
@@ -263,7 +263,7 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
                     ? `${conditions.positive_today} of ${conditions.n_votes} measurements positive`
                       + ` — ${conditions.raw_today} before smoothing (EMA${conditions.span})`
                     : undefined}>
-              {score}<span className="text-[13px] text-[var(--color-text-muted)]"> / 100</span>
+              {score}<span className="text-[12.5px] text-[var(--color-text-muted)]"> / 100</span>
             </span>
           )}
         </div>
@@ -272,7 +272,7 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
             be a line of prose under the chart; it is a tooltip now, so the
             reasoning is still reachable without competing with the picture. */}
         <span title={reasoning}
-              className="text-[13px] font-semibold uppercase tracking-wide px-2.5 py-[3px] cursor-help"
+              className="text-[12.5px] font-semibold uppercase tracking-wide px-2.5 py-[3px] cursor-help"
               style={{ background: level <= 1 ? 'var(--color-refused)' : 'var(--color-took)',
                        color: 'var(--color-bg)' }}>
           {BANDS[level]}

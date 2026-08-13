@@ -68,15 +68,15 @@ export default function TickerRelativeStrength({ tickerData }) {
   if (!ohlc.length) {
     return (
       <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-        <div className="font-semibold mb-3 text-sm">Relative Strength vs SPY & QQQ</div>
-        <div className="text-[var(--color-text-muted)] text-sm">No price history available.</div>
+        <div className="font-semibold mb-3 text-[14px]">Relative Strength vs SPY & QQQ</div>
+        <div className="text-[var(--color-text-muted)] text-[14px]">No price history available.</div>
       </div>
     )
   }
 
   return (
     <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-      <div className="font-semibold mb-3 text-sm">Relative Strength vs SPY & QQQ</div>
+      <div className="font-semibold mb-3 text-[14px]">Relative Strength vs SPY & QQQ</div>
       <ResponsiveContainer width="100%" height={240}>
         <LineChart data={chartData}>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
@@ -95,7 +95,7 @@ export default function TickerRelativeStrength({ tickerData }) {
         </LineChart>
       </ResponsiveContainer>
 
-      <table className="w-full text-xs mt-4">
+      <table className="w-full text-[12.5px] mt-4">
         <thead>
           <tr className="text-left text-[10px] text-[var(--color-text-muted)] uppercase tracking-wide border-b border-[var(--color-border-light)]">
             <th className="px-2 py-1.5">Period</th>

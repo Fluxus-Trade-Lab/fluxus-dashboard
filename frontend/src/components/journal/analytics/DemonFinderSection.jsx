@@ -23,11 +23,11 @@ function CircuitBreakerBanner({ breakers }) {
   return (
     <div className="bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] border border-[var(--color-loss)] rounded-lg px-5 py-4">
       <div className="flex items-center gap-2 mb-1">
-        <span className="text-lg">&#x1F6D1;</span>
-        <span className="text-sm font-bold text-[var(--color-loss)]">STOP TRADING</span>
+        <span className="text-[17px]">&#x1F6D1;</span>
+        <span className="text-[14px] font-bold text-[var(--color-loss)]">STOP TRADING</span>
       </div>
       {breakers.map(b => (
-        <p key={b.id} className="text-xs text-[var(--color-text)] mt-1">
+        <p key={b.id} className="text-[12.5px] text-[var(--color-text)] mt-1">
           <strong>{b.name}</strong> triggered {b.currentStreak} times in a row. Review these trades before taking new entries.
         </p>
       ))}
@@ -50,9 +50,9 @@ function DemonCard({ stat, isActive, onClick }) {
       }`}
     >
       <div className="flex items-center justify-between mb-2">
-        <span className="text-sm">{stat.icon}</span>
+        <span className="text-[14px]">{stat.icon}</span>
         {stat.currentStreak >= 3 && (
-          <span className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${
+          <span className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${
             stat.currentStreak >= 6 ? 'bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] text-[var(--color-loss)]' : 'bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] text-[var(--color-signal-caution)]'
           }`}>
             {stat.currentStreak} streak
@@ -63,7 +63,7 @@ function DemonCard({ stat, isActive, onClick }) {
         {stat.name}
       </div>
       <div className="flex items-baseline gap-2">
-        <span className="text-lg font-mono font-bold text-[var(--color-text-bold)]">{stat.fireCount}</span>
+        <span className="text-[17px] font-mono font-bold text-[var(--color-text-bold)]">{stat.fireCount}</span>
         <span className="text-[10px] text-[var(--color-text-muted)]">/ 30 trades</span>
       </div>
       <div className="text-[10px] text-[var(--color-text-muted)] mt-1">
@@ -100,7 +100,7 @@ function TradeRow({ trade }) {
       {/* Trade info */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="font-mono text-xs font-medium text-[var(--color-text-bold)]">{trade.ticker}</span>
+          <span className="font-mono text-[12.5px] font-medium text-[var(--color-text-bold)]">{trade.ticker}</span>
           <span className="text-[10px] text-[var(--color-text-muted)] uppercase">{trade.direction}</span>
           <span className="text-[10px] text-[var(--color-text-muted)]">{trade.entryDate}</span>
         </div>
@@ -113,7 +113,7 @@ function TradeRow({ trade }) {
                 <span
                   key={dId}
                   title={d?.desc}
-                  className="px-1.5 py-0.5 text-[9px] font-medium rounded bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] text-[var(--color-loss)]"
+                  className="px-1.5 py-0.5 text-[10px] font-medium rounded bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] text-[var(--color-loss)]"
                 >
                   {d?.icon} {d?.name}
                 </span>
@@ -126,7 +126,7 @@ function TradeRow({ trade }) {
       {/* R/R and result */}
       <div className="text-right flex-shrink-0">
         {trade.rr != null && (
-          <div className={`font-mono text-xs ${clr(trade.rr)}`}>{fmt(trade.rr, 1)}R</div>
+          <div className={`font-mono text-[12.5px] ${clr(trade.rr)}`}>{fmt(trade.rr, 1)}R</div>
         )}
         {trade.totalReturnPct != null && (
           <div className={`font-mono text-[10px] ${clr(trade.totalReturnPct)}`}>
@@ -192,7 +192,7 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
       <CircuitBreakerBanner breakers={breakers} />
 
       {/* Summary line */}
-      <div className="flex items-center gap-4 text-xs text-[var(--color-text-secondary)]">
+      <div className="flex items-center gap-4 text-[12.5px] text-[var(--color-text-secondary)]">
         <span>{analyzed.length} trades analyzed</span>
         <span className="text-[var(--color-profit)]">{cleanCount} clean</span>
         <span className="text-[var(--color-loss)]">{flaggedCount} flagged</span>
@@ -215,12 +215,12 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
             activeFilter === 'clean' ? 'ring-2 ring-[var(--color-accent)]' : ''
           }`}
         >
-          <div className="text-sm mb-2">{'\u2713'}</div>
+          <div className="text-[14px] mb-2">{'\u2713'}</div>
           <div className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-1">
             Clean Trades
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-lg font-mono font-bold text-[var(--color-profit)]">{cleanCount}</span>
+            <span className="text-[17px] font-mono font-bold text-[var(--color-profit)]">{cleanCount}</span>
             <span className="text-[10px] text-[var(--color-text-muted)]">/ {analyzed.length}</span>
           </div>
         </button>
@@ -235,46 +235,46 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
             <div>
               <div className="text-[10px] text-[var(--color-text-muted)] mb-0.5">Avg Trim Size</div>
-              <div className={`font-mono text-sm font-semibold ${
+              <div className={`font-mono text-[14px] font-semibold ${
                 tacticalStats.avgTrimRatio >= 0.25 && tacticalStats.avgTrimRatio <= 0.40
                   ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'
               }`}>
                 {(tacticalStats.avgTrimRatio * 100).toFixed(0)}%
               </div>
-              <div className="text-[9px] text-[var(--color-text-muted)]">target: ~33%</div>
+              <div className="text-[10px] text-[var(--color-text-muted)]">target: ~33%</div>
             </div>
             <div>
               <div className="text-[10px] text-[var(--color-text-muted)] mb-0.5">Avg Trim R</div>
-              <div className={`font-mono text-sm font-semibold ${
+              <div className={`font-mono text-[14px] font-semibold ${
                 tacticalStats.avgTrimRR >= 2.0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'
               }`}>
                 {tacticalStats.avgTrimRR.toFixed(1)}R
               </div>
-              <div className="text-[9px] text-[var(--color-text-muted)]">target: 3R</div>
+              <div className="text-[10px] text-[var(--color-text-muted)]">target: 3R</div>
             </div>
             <div>
               <div className="text-[10px] text-[var(--color-text-muted)] mb-0.5">Avg Days to Trim</div>
-              <div className="font-mono text-sm font-semibold text-[var(--color-text-bold)]">
+              <div className="font-mono text-[14px] font-semibold text-[var(--color-text-bold)]">
                 {tacticalStats.avgDaysToTrim.toFixed(1)}d
               </div>
             </div>
             <div>
               <div className="text-[10px] text-[var(--color-text-muted)] mb-0.5">Good Size Rate</div>
-              <div className={`font-mono text-sm font-semibold ${
+              <div className={`font-mono text-[14px] font-semibold ${
                 tacticalStats.goodSizeRate >= 70 ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'
               }`}>
                 {tacticalStats.goodSizeRate.toFixed(0)}%
               </div>
-              <div className="text-[9px] text-[var(--color-text-muted)]">25-40% trims</div>
+              <div className="text-[10px] text-[var(--color-text-muted)]">25-40% trims</div>
             </div>
             <div>
               <div className="text-[10px] text-[var(--color-text-muted)] mb-0.5">Good R/R Rate</div>
-              <div className={`font-mono text-sm font-semibold ${
+              <div className={`font-mono text-[14px] font-semibold ${
                 tacticalStats.goodRRRate >= 50 ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'
               }`}>
                 {tacticalStats.goodRRRate.toFixed(0)}%
               </div>
-              <div className="text-[9px] text-[var(--color-text-muted)]">trimmed at 2R+</div>
+              <div className="text-[10px] text-[var(--color-text-muted)]">trimmed at 2R+</div>
             </div>
           </div>
         </div>
@@ -303,7 +303,7 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
             <TradeRow key={trade.id} trade={trade} />
           ))}
           {filteredTrades.length === 0 && (
-            <div className="text-center py-8 text-xs text-[var(--color-text-muted)]">
+            <div className="text-center py-8 text-[12.5px] text-[var(--color-text-muted)]">
               No trades match this filter.
             </div>
           )}

@@ -34,7 +34,7 @@ export default function DemonRulesConfig({ rules, onUpdate }) {
                   {label}
                 </label>
                 <div className="flex items-center gap-1">
-                  {prefix && <span className="text-xs text-[var(--color-text-muted)]">{prefix}</span>}
+                  {prefix && <span className="text-[12.5px] text-[var(--color-text-muted)]">{prefix}</span>}
                   <input
                     type="text"
                     value={format(rules[key])}
@@ -42,9 +42,9 @@ export default function DemonRulesConfig({ rules, onUpdate }) {
                       const val = parse(e.target.value)
                       if (!isNaN(val) && val > 0) onUpdate({ ...rules, [key]: val })
                     }}
-                    className="w-full px-2 py-1 text-xs font-mono bg-[var(--color-bg)] border border-[var(--color-border)] rounded outline-none focus:border-[var(--color-text-muted)] text-[var(--color-text)]"
+                    className="w-full px-2 py-1 text-[12.5px] font-mono bg-[var(--color-bg)] border border-[var(--color-border)] rounded outline-none focus:border-[var(--color-text-muted)] text-[var(--color-text)]"
                   />
-                  {suffix && <span className="text-xs text-[var(--color-text-muted)]">{suffix}</span>}
+                  {suffix && <span className="text-[12.5px] text-[var(--color-text-muted)]">{suffix}</span>}
                 </div>
               </div>
             ))}

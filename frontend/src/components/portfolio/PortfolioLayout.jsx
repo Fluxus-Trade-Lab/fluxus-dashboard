@@ -211,8 +211,8 @@ export default function Layout() {
       <div className="flex items-center justify-center py-20">
         {fileInput}
         <div className="text-center max-w-md">
-          <div className="text-3xl font-bold mb-2">{tr('pf.title')}</div>
-          <div className="text-[var(--color-text-muted)] mb-6 text-sm">{tr('pf.intro.subtitle')}</div>
+          <div className="text-[26px] font-bold mb-2">{tr('pf.title')}</div>
+          <div className="text-[var(--color-text-muted)] mb-6 text-[14px]">{tr('pf.intro.subtitle')}</div>
           <InputField
             label={tr('pf.intro.capitalLabel')}
             type="number"
@@ -224,7 +224,7 @@ export default function Layout() {
                 if (v > 0) dispatch({ type: 'SET_CAPITAL', capital: v })
               }
             }}
-            className="text-lg text-center w-[220px] mx-auto"
+            className="text-[17px] text-center w-[220px] mx-auto"
           />
           <div className="mt-4 flex gap-2 justify-center">
             <Button onClick={() => {
@@ -241,7 +241,7 @@ export default function Layout() {
             </Button>
           </div>
           {state.fetchStatus && (
-            <div className="mt-3 text-xs text-[var(--color-accent)]">{state.fetchStatus}</div>
+            <div className="mt-3 text-[12.5px] text-[var(--color-accent)]">{state.fetchStatus}</div>
           )}
         </div>
       </div>
@@ -270,7 +270,7 @@ export default function Layout() {
 
       {/* Status bar — PortfolioHeader end */}
       {state.fetchStatus && (
-        <div className="px-6 py-1.5 bg-[var(--color-accent-light)] text-xs text-[var(--color-accent)] border-b border-[var(--color-border)]">
+        <div className="px-6 py-1.5 bg-[var(--color-accent-light)] text-[12.5px] text-[var(--color-accent)] border-b border-[var(--color-border)]">
           {state.fetchStatus}
         </div>
       )}
@@ -284,7 +284,7 @@ export default function Layout() {
           <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
             <div className="bg-[var(--color-surface)] rounded-lg p-6 w-80 shadow-xl">
               <div className="font-bold mb-2">Reset All Data?</div>
-              <div className="text-sm text-[var(--color-text-secondary)] mb-4">This deletes everything. Export first if needed.</div>
+              <div className="text-[14px] text-[var(--color-text-secondary)] mb-4">This deletes everything. Export first if needed.</div>
               <div className="flex gap-2">
                 <Button variant="danger" onClick={() => { dispatch({ type: 'RESET_ALL' }); setShowResetConfirm(false) }}>Yes, Reset</Button>
                 <Button variant="ghost" onClick={() => setShowResetConfirm(false)}>Cancel</Button>
@@ -299,9 +299,9 @@ export default function Layout() {
             <div className="bg-[var(--color-surface)] rounded-lg p-6 w-[600px] max-h-[80vh] shadow-xl flex flex-col">
               <div className="font-bold mb-2 flex justify-between">
                 <span>Export Data</span>
-                <button onClick={() => setExportData(null)} className="text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] cursor-pointer text-lg">&times;</button>
+                <button onClick={() => setExportData(null)} className="text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] cursor-pointer text-[17px]">&times;</button>
               </div>
-              <div className="text-xs text-[var(--color-text-secondary)] mb-2">Copy the CSV below, or save as .csv to open in Excel.</div>
+              <div className="text-[12.5px] text-[var(--color-text-secondary)] mb-2">Copy the CSV below, or save as .csv to open in Excel.</div>
               <div className="flex gap-2 mb-2">
                 <Button onClick={() => {
                   navigator.clipboard.writeText(exportData)
@@ -323,7 +323,7 @@ export default function Layout() {
             <button
               key={tab}
               onClick={() => dispatch({ type: 'SET_ACTIVE_TAB', tab: i })}
-              className={`px-5 py-2.5 font-semibold text-sm cursor-pointer bg-transparent border-none border-b-2 transition-colors ${
+              className={`px-5 py-2.5 font-semibold text-[14px] cursor-pointer bg-transparent border-none border-b-2 transition-colors ${
                 state.activeTab === i
                   ? 'border-[var(--color-accent)] text-[var(--color-accent)]'
                   : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'
@@ -349,7 +349,7 @@ export default function Layout() {
           const straddles = uniq.filter(s => s.straddle).length
           const adjusts = uniq.length - straddles
           return (
-            <div className="mt-4 text-xs text-[var(--color-text-muted)]">
+            <div className="mt-4 text-[12.5px] text-[var(--color-text-muted)]">
               <button
                 onClick={() => setShowSplitNotices(v => !v)}
                 className="inline-flex items-center gap-1.5 hover:text-[var(--color-text-secondary)]"

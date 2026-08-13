@@ -34,7 +34,7 @@ export default function TrimModal({ trade, onClose }) {
     <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50" role="dialog" aria-modal="true" ref={modalRef}>
       <div className="bg-[var(--color-surface)] rounded-lg p-6 w-[340px] shadow-xl">
         <div className="font-bold mb-1">Trim / Sell — {trade.ticker}</div>
-        <div className="text-xs text-[var(--color-text-muted)] mb-4">
+        <div className="text-[12.5px] text-[var(--color-text-muted)] mb-4">
           Remaining: {trade.currentQty} of {trade.originalQty}
         </div>
 

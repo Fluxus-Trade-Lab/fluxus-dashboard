@@ -214,7 +214,7 @@ export default function OverviewTab({
             </button>
           </div>
 
-          <table className="w-full border-collapse text-xs">
+          <table className="w-full border-collapse text-[12.5px]">
             <thead>
               <tr>
                 {TRADE_HEADERS.map((h, i) => (
@@ -314,7 +314,7 @@ export default function OverviewTab({
         {/* Left: Equity Curve */}
         <div className="min-w-0">
           {!hasSPY && (
-            <div className="p-3 bg-[var(--color-accent-light)] border border-[var(--color-border)] rounded-md mb-4 text-xs text-[var(--color-accent)] flex items-center justify-between">
+            <div className="p-3 bg-[var(--color-accent-light)] border border-[var(--color-border)] rounded-md mb-4 text-[12.5px] text-[var(--color-accent)] flex items-center justify-between">
               <span>{tr('pf.chart.loadHistoryHint')}</span>
               <Button onClick={fetchFullHistory} disabled={state.loading}>
                 {state.loading ? tr('pf.chart.loading') : tr('pf.chart.loadHistory')}
@@ -324,7 +324,7 @@ export default function OverviewTab({
 
           {performanceData.length > 2 ? (
             <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5 relative">
-              <div className="font-semibold mb-3 text-sm flex justify-between items-center">
+              <div className="font-semibold mb-3 text-[14px] flex justify-between items-center">
                 <span>{tr('pf.chart.vsSpy')}</span>
                 <div className="flex items-center gap-3">
                   <button
@@ -368,7 +368,7 @@ export default function OverviewTab({
               </ResponsiveContainer>
             </div>
           ) : (
-            <div className="text-center py-10 text-[var(--color-text-muted)] text-sm border border-[var(--color-border)] rounded-lg">Need trades to build equity curve.</div>
+            <div className="text-center py-10 text-[var(--color-text-muted)] text-[14px] border border-[var(--color-border)] rounded-lg">Need trades to build equity curve.</div>
           )}
         </div>
 
@@ -376,8 +376,8 @@ export default function OverviewTab({
         <div className="min-w-0">
           {monthlyStats.length > 0 && (
             <div className="overflow-x-auto bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-              <div className="font-semibold mb-3 text-sm">{tr('pf.monthly.title')}</div>
-              <table className="w-full border-collapse text-xs">
+              <div className="font-semibold mb-3 text-[14px]">{tr('pf.monthly.title')}</div>
+              <table className="w-full border-collapse text-[12.5px]">
                 <thead>
                   <tr>
                     {MONTHLY_HEADERS.map(h => (

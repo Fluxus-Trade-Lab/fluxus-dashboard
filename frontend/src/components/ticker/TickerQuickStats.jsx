@@ -26,7 +26,7 @@ export default function TickerQuickStats({ tickerData, universe }) {
         {stats.map(([label, value]) => (
           <div key={label} className="flex flex-col">
             <span className="text-[10px] text-[var(--color-text-muted)] uppercase tracking-wide">{label}</span>
-            <span className="tabular-nums text-sm font-semibold">{value}</span>
+            <span className="tabular-nums text-[14px] font-semibold">{value}</span>
           </div>
         ))}
       </div>

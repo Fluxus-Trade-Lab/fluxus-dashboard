@@ -22,8 +22,8 @@ const BLANK_TABS = ['news-failure', 'option-positioning', 'tape-reading', 'thema
 function BlankTab({ label }) {
   return (
     <div className="text-center py-20">
-      <div className="text-sm font-semibold text-[var(--color-text-muted)] mb-2">{label}</div>
-      <div className="text-xs text-[var(--color-text-muted)]">Coming soon</div>
+      <div className="text-[14px] font-semibold text-[var(--color-text-muted)] mb-2">{label}</div>
+      <div className="text-[12.5px] text-[var(--color-text-muted)]">Coming soon</div>
     </div>
   )
 }

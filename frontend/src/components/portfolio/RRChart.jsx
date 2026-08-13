@@ -34,8 +34,8 @@ export default function RRChart({ enrichedTrades }) {
   return (
     <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
       <div className="flex items-center justify-between mb-1">
-        <span className="font-semibold text-sm">Every trade by R-multiple</span>
-        <span className="text-xs text-[var(--color-text-muted)]">
+        <span className="font-semibold text-[14px]">Every trade by R-multiple</span>
+        <span className="text-[12.5px] text-[var(--color-text-muted)]">
           {data.length} trades · {wr.toFixed(0)}% win · +{sumR.toFixed(0)}R · avg win +{avgWin.toFixed(1)}R / loss {avgLoss.toFixed(1)}R
         </span>
       </div>

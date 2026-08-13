@@ -37,7 +37,7 @@ function Row({ etf, ranks, changeKey, windowLabel, cohort, scale }) {
           {fmtRs(rs)}
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-[12px] font-mono font-medium leading-[12px]
+          <span className="block text-[12.5px] font-mono font-medium leading-[12px]
                            text-[var(--color-text-bold)]">{etf.ticker}</span>
           {/* absent rather than guessed when the vendor had no name */}
           <span className="block text-[10px] leading-[12px] truncate
@@ -47,7 +47,7 @@ function Row({ etf, ranks, changeKey, windowLabel, cohort, scale }) {
         </span>
         {/* The number no longer carries the colour — the bar under it does, and
             a figure that labels its own mark does not need to repeat it. */}
-        <span className="shrink-0 text-[12px] font-mono tabular-nums
+        <span className="shrink-0 text-[12.5px] font-mono tabular-nums
                          text-[var(--color-text-secondary)]">
           {ok ? `${up ? '+' : ''}${(change * 100).toFixed(2)}%` : '—'}
         </span>
@@ -70,7 +70,7 @@ function Row({ etf, ranks, changeKey, windowLabel, cohort, scale }) {
 function Column({ label, rows, ranks, changeKey, windowLabel, cohort, scale }) {
   return (
     <div>
-      <h4 className="text-[9px] font-mono font-medium uppercase tracking-[.2em]
+      <h4 className="text-[10px] font-mono font-medium uppercase tracking-[.2em]
                      text-[var(--color-text-muted)] mb-1">{label}</h4>
       {rows.map((e) => (
         <Row key={e.ticker} etf={e} ranks={ranks} changeKey={changeKey}
@@ -110,10 +110,10 @@ export default function LeadersLaggards({
       <div className="px-3 py-1.5 border-b border-[var(--color-border)] flex items-baseline gap-3">
         <span className="text-[10px] font-mono font-medium uppercase tracking-[.2em]
                          text-[var(--color-text-secondary)]">{title}</span>
-        <span className="text-[9px] text-[var(--color-text-muted)]">
+        <span className="text-[10px] text-[var(--color-text-muted)]">
           {etfs.length} funds
         </span>
-        <span className="ml-auto text-[9px] font-mono text-[var(--color-text-muted)]"
+        <span className="ml-auto text-[10px] font-mono text-[var(--color-text-muted)]"
               title="each window's bars are scaled to that window's widest move across the whole cohort">
           {cols.map((c) => `${c.w} ±${(c.scale * 100).toFixed(1)}%`).join('  ·  ')}
         </span>

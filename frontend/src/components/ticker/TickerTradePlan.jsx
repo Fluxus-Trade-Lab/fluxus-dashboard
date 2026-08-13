@@ -10,8 +10,8 @@ export default function TickerTradePlan({ tickerData }) {
   if (!longSetup && !shortSetup) {
     return (
       <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-        <div className="font-semibold mb-3 text-sm">Trade Plan</div>
-        <div className="text-[var(--color-text-muted)] text-xs">
+        <div className="font-semibold mb-3 text-[14px]">Trade Plan</div>
+        <div className="text-[var(--color-text-muted)] text-[12.5px]">
           Awaiting AI synthesis. Run <code className="bg-[var(--color-surface)] px-1 rounded">/tearsheet {tickerData?.ticker}</code> to generate.
         </div>
       </div>
@@ -20,11 +20,11 @@ export default function TickerTradePlan({ tickerData }) {
 
   return (
     <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-      <div className="font-semibold mb-3 text-sm flex items-center justify-between">
+      <div className="font-semibold mb-3 text-[14px] flex items-center justify-between">
         <span>Trade Plan</span>
         <span className="text-[10px] text-[var(--color-text-muted)] font-normal">for swing trading; not investment advice</span>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[12.5px]">
         {longSetup && <SetupCard tone="long" setup={longSetup} />}
         {shortSetup && <SetupCard tone="short" setup={shortSetup} />}
       </div>

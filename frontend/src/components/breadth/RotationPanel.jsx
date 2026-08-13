@@ -41,7 +41,7 @@ export default function RotationPanel() {
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] m-0">
           Style Rotation
         </h3>
-        <p className="mt-2 mb-0 text-sm text-[var(--color-text-muted)]">
+        <p className="mt-2 mb-0 text-[14px] text-[var(--color-text-muted)]">
           Rotation data unavailable — the verdict above is unaffected.
         </p>
       </div>
@@ -67,7 +67,7 @@ export default function RotationPanel() {
       {/* The one line. Everything below exists to let it be checked. */}
       {/* a whole sentence in the encoding colour was the loudest instance of
           the leak — the phase note under it carries the reading in words */}
-      <p className="m-0 text-[15px] leading-snug font-medium text-[var(--color-text)]">
+      <p className="m-0 text-[14px] leading-snug font-medium text-[var(--color-text)]">
         {v.sentence}
       </p>
       {PHASE_NOTE[v.phase] && (
@@ -77,9 +77,9 @@ export default function RotationPanel() {
       )}
 
       <div className="mt-4 overflow-x-auto">
-        <table className="w-full text-[12px] border-collapse">
+        <table className="w-full text-[12.5px] border-collapse">
           <thead>
-            <tr className="text-[var(--color-text-muted)] text-[9px] uppercase tracking-[.14em]">
+            <tr className="text-[var(--color-text-muted)] text-[10px] uppercase tracking-[.14em]">
               <th className="text-left font-medium py-1 pr-2">Cut</th>
               <th className="text-right font-medium py-1 px-2">Fortnight</th>
               <th className="text-right font-medium py-1 px-2">Month</th>
@@ -139,7 +139,7 @@ export default function RotationPanel() {
               Five equal columns so each label centres under its own segment —
               justify-between would pin the ends and let the middle three wander. */}
           <span />
-          <span className="grid mt-1 text-[9px] font-mono text-[var(--color-text-muted)]"
+          <span className="grid mt-1 text-[10px] font-mono text-[var(--color-text-muted)]"
                 style={{ gridTemplateColumns: `repeat(${labels?.length ?? 5}, minmax(0, 1fr))`,
                          gap: '2px' }}>
             {labels?.map((l) => <span key={l} className="text-center">{l}</span>)}

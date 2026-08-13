@@ -18,38 +18,38 @@ export default function EtfRow({ etf }) {
     <div className="grid grid-cols-[1.5rem_3.5rem_3.5rem_3.5rem_3.5rem_3rem_3rem_4rem] items-center px-2 py-1 border-b border-[var(--color-border-light)] hover:bg-[var(--color-hover-bg)]">
       {/* ABC dot */}
       <span
-        className={`w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white ${abcColor(abc)}`}
+        className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold text-white ${abcColor(abc)}`}
       >
         {abc}
       </span>
 
       {/* Ticker */}
-      <span className="font-mono text-xs font-medium text-[var(--color-text-bold)]">
+      <span className="font-mono text-[12.5px] font-medium text-[var(--color-text-bold)]">
         {ticker}
       </span>
 
       {/* 1D */}
-      <span className={`font-mono text-xs ${pctColor(change_pct)}`}>
+      <span className={`font-mono text-[12.5px] ${pctColor(change_pct)}`}>
         {fmtPct(change_pct)}
       </span>
 
       {/* 5D */}
-      <span className={`font-mono text-xs ${pctColor(perf_1w)}`}>
+      <span className={`font-mono text-[12.5px] ${pctColor(perf_1w)}`}>
         {fmtPct(perf_1w)}
       </span>
 
       {/* 20D */}
-      <span className={`font-mono text-xs ${pctColor(perf_1m)}`}>
+      <span className={`font-mono text-[12.5px] ${pctColor(perf_1m)}`}>
         {fmtPct(perf_1m)}
       </span>
 
       {/* ATR dist */}
-      <span className="font-mono text-xs text-[var(--color-text-secondary)]">
+      <span className="font-mono text-[12.5px] text-[var(--color-text-secondary)]">
         {dist_sma50_atr != null ? dist_sma50_atr.toFixed(1) : '—'}
       </span>
 
       {/* RRS */}
-      <span className="font-mono text-xs text-[var(--color-text-secondary)]">
+      <span className="font-mono text-[12.5px] text-[var(--color-text-secondary)]">
         {rs != null ? `${Math.round(rs)}%` : '—'}
       </span>
 

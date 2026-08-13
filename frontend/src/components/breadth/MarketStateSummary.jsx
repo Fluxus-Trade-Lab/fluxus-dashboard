@@ -49,7 +49,7 @@ export default function MarketStateSummary({ mm, breadth, verdict }) {
           tone={t2108Zone === 'strong' ? 'up' : t2108Zone === 'weak' ? 'down' : ''}
         />
       </div>
-      <p className="text-[12px] text-[var(--color-text)]">{verdict.guidance}</p>
+      <p className="text-[12.5px] text-[var(--color-text)]">{verdict.guidance}</p>
     </div>
   )
 }

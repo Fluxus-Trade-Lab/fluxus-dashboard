@@ -119,7 +119,7 @@ export default function Rail({ currentPage, onNavigate }) {
                        ${collapsed ? 'w-[62px]' : 'w-[214px]'}`}>
         <div className="flex items-center px-4 pb-4 h-[36px]">
           {!collapsed && (
-            <span className="text-[15px] font-semibold tracking-[.16em] flex-1"
+            <span className="text-[14px] font-semibold tracking-[.16em] flex-1"
                   style={{ fontFamily: 'var(--font-cond)' }}>FLUXUS</span>
           )}
         </div>
@@ -128,7 +128,7 @@ export default function Rail({ currentPage, onNavigate }) {
           <div key={g.key} className="pb-1">
             {collapsed
               ? <div className="mx-3 my-2 h-px bg-[var(--color-border)]" />
-              : <div className="px-4 pt-3 pb-1 text-[9.5px] font-mono font-medium uppercase
+              : <div className="px-4 pt-3 pb-1 text-[10px] font-mono font-medium uppercase
                                 tracking-[.24em] text-[var(--color-text-muted)]">{t(`rail.${g.key}`)}</div>}
 
             {g.sections.map((sec, si) => (
@@ -149,7 +149,7 @@ export default function Rail({ currentPage, onNavigate }) {
                                         focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]
                                         ${collapsed
                                           ? 'text-[10px] font-mono font-medium text-center px-0'
-                                          : 'text-[13px] text-left px-4'}
+                                          : 'text-[12.5px] text-left px-4'}
                                         ${on
                                           ? 'border-[var(--color-text)] text-[var(--color-text)] font-semibold bg-[var(--color-hover-bg)]'
                                           : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
@@ -180,7 +180,7 @@ export default function Rail({ currentPage, onNavigate }) {
                          w-[22px] h-11 items-center justify-center rounded-full
                          border border-[var(--color-border)] bg-[var(--color-surface)]
                          text-[var(--color-text-muted)] hover:text-[var(--color-text)]
-                         cursor-pointer text-[12px] transition-[left] duration-200"
+                         cursor-pointer text-[12.5px] transition-[left] duration-200"
               >
         {collapsed ? '»' : '«'}
       </button>
@@ -192,7 +192,7 @@ export default function Rail({ currentPage, onNavigate }) {
                       border-b border-[var(--glass-edge)]">
         {NAV_GROUPS.map((g) => (
           <div key={g.key} className="flex items-center gap-1 shrink-0">
-            <span className="px-1.5 text-[9.5px] font-mono font-medium uppercase tracking-[.2em]
+            <span className="px-1.5 text-[10px] font-mono font-medium uppercase tracking-[.2em]
                              text-[var(--color-text-muted)] shrink-0">
               {t(`rail.${g.key}`)}
             </span>

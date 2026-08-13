@@ -11,7 +11,7 @@ export default function SortableHeader({ label, sortKey, sortConfig, onSort, cla
       <span className="inline-flex items-center gap-1">
         {label}
         {sortable && (
-          <span className={`text-[9px] leading-none ${active ? 'text-[var(--color-accent)]' : 'text-[var(--color-text-muted)] opacity-50'}`}>
+          <span className={`text-[10px] leading-none ${active ? 'text-[var(--color-accent)]' : 'text-[var(--color-text-muted)] opacity-50'}`}>
             {arrow}
           </span>
         )}

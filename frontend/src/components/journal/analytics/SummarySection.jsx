@@ -77,7 +77,7 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
             Monthly Performance
           </h3>
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-xs">
+            <table className="w-full border-collapse text-[12.5px]">
               <thead>
                 <tr>
                   {['Month', 'Return%', '# Trades', 'Win%', 'Avg R', 'Max Gain%', 'Max Loss%', 'Days(W)', 'Days(L)'].map(h => (
@@ -113,7 +113,7 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
           </h3>
           <div className="space-y-2">
             {insights.map((ins, i) => (
-              <div key={i} className="flex gap-2 text-sm">
+              <div key={i} className="flex gap-2 text-[14px]">
                 <span className={`flex-shrink-0 ${ins.type === 'positive' ? 'text-[var(--color-profit)]' : ins.type === 'warning' ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-text-muted)]'}`}>
                   {ins.type === 'positive' ? '+' : ins.type === 'warning' ? '!' : '-'}
                 </span>

@@ -35,15 +35,15 @@ function TradeCard({ t, bars }) {
     <div className={`rounded-lg border p-3.5 bg-[var(--color-bg)] ${win ? 'border-[color-mix(in_srgb,var(--color-profit)_40%,transparent)]' : 'border-[color-mix(in_srgb,var(--color-loss)_40%,transparent)]'}`}>
       <div className="flex items-baseline justify-between mb-0.5">
         <div className="flex items-baseline gap-2">
-          <span className="font-mono font-bold text-sm">{t.ticker}</span>
+          <span className="font-mono font-bold text-[14px]">{t.ticker}</span>
           <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-[var(--color-surface)] text-[var(--color-text-muted)]">{t.direction}</span>
         </div>
-        <span className={`font-semibold text-sm tabular-nums ${win ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
-          {money(pl)} {R != null && <span className="text-xs font-normal">· {R >= 0 ? '+' : ''}{R.toFixed(1)}R</span>}
+        <span className={`font-semibold text-[14px] tabular-nums ${win ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
+          {money(pl)} {R != null && <span className="text-[12.5px] font-normal">· {R >= 0 ? '+' : ''}{R.toFixed(1)}R</span>}
         </span>
       </div>
 
-      <div className={`text-xs font-medium mb-2 ${win ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>{cls.type}</div>
+      <div className={`text-[12.5px] font-medium mb-2 ${win ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>{cls.type}</div>
 
       {tech ? (
         <>
@@ -126,7 +126,7 @@ export default function TradeCaseStudies({ enriched }) {
 
   const Grid = ({ title, list, tint }) => (
     <div className="mb-5">
-      <h4 className={`text-xs font-semibold uppercase tracking-wide mb-2 ${tint}`}>{title}</h4>
+      <h4 className={`text-[12.5px] font-semibold uppercase tracking-wide mb-2 ${tint}`}>{title}</h4>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {list.map((t, i) => <TradeCard key={`${t.ticker}-${t.entryDate}-${i}`} t={t} bars={ohlc[t.ticker]} />)}
       </div>
@@ -136,8 +136,8 @@ export default function TradeCaseStudies({ enriched }) {
   return (
     <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-4 mb-4">
       <div className="flex items-baseline gap-2 mb-1">
-        <span className="text-xs font-bold text-[var(--color-accent)]">★</span>
-        <span className="font-semibold text-sm">Trade case studies — 4 biggest winners & 4 biggest losers</span>
+        <span className="text-[12.5px] font-bold text-[var(--color-accent)]">★</span>
+        <span className="font-semibold text-[14px]">Trade case studies — 4 biggest winners & 4 biggest losers</span>
       </div>
       <p className="text-[11px] text-[var(--color-text-muted)] mb-3">
         Point-in-time as of each entry: 20EMA / 50SMA / 200SMA alignment, ATR(14) extension, and the setup or

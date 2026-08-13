@@ -62,7 +62,7 @@ export default function TimeMachineBar({ tm }) {
         onChange={(e) => tm.setDate(tm.dates[Number(e.target.value)])}
         className="w-full accent-[var(--color-signal-caution)]"
       />
-      <div className="flex justify-between text-[9px] font-mono text-[var(--color-text-muted)] mt-1">
+      <div className="flex justify-between text-[10px] font-mono text-[var(--color-text-muted)] mt-1">
         <span>{tm.dates[0]}</span>
         <span>{tm.dates[tm.dates.length - 1]}</span>
       </div>

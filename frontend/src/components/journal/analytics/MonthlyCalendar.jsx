@@ -123,7 +123,7 @@ export default function MonthlyCalendar({ monthEquity, startingCapital, riskPct 
             <button
               key={v}
               onClick={() => setView(v)}
-              className={`px-2 py-0.5 text-[9px] font-mono rounded cursor-pointer transition-colors ${
+              className={`px-2 py-0.5 text-[10px] font-mono rounded cursor-pointer transition-colors ${
                 view === v
                   ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                   : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'
@@ -138,7 +138,7 @@ export default function MonthlyCalendar({ monthEquity, startingCapital, riskPct 
       {/* Weekday headers */}
       <div className="grid grid-cols-5 gap-1 mb-1">
         {WEEKDAYS.map(d => (
-          <div key={d} className="text-center text-[9px] font-medium text-[var(--color-text-muted)] uppercase">
+          <div key={d} className="text-center text-[10px] font-medium text-[var(--color-text-muted)] uppercase">
             {d}
           </div>
         ))}
@@ -160,7 +160,7 @@ export default function MonthlyCalendar({ monthEquity, startingCapital, riskPct 
                   className={`h-12 rounded flex flex-col items-center justify-center ${color || 'bg-[var(--color-surface-alt)]'}`}
                   title={cell.date}
                 >
-                  <span className="text-[9px] text-[var(--color-text-muted)] leading-none">{cell.day}</span>
+                  <span className="text-[10px] text-[var(--color-text-muted)] leading-none">{cell.day}</span>
                   <span className="text-[10px] font-mono font-medium leading-tight">
                     {value != null ? formatter(value) : ''}
                   </span>
@@ -174,7 +174,7 @@ export default function MonthlyCalendar({ monthEquity, startingCapital, riskPct 
       {/* Month total */}
       <div className="flex items-center justify-between mt-3 pt-2 border-t border-[var(--color-border-light)]">
         <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Month Total</span>
-        <span className={`text-xs font-semibold font-mono ${monthTotal.dollar >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
+        <span className={`text-[12.5px] font-semibold font-mono ${monthTotal.dollar >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
           {view === 'dollar' ? fmt$(monthTotal.dollar) : fmtR(monthTotal.r)}
         </span>
       </div>

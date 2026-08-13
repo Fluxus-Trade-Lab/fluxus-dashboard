@@ -7,7 +7,7 @@ export default function InputField({ label, className = '', ...props }) {
         </label>
       )}
       <input
-        className={`px-2 py-1.5 border border-[var(--color-input-border)] rounded text-sm bg-[var(--color-input-bg)]
+        className={`px-2 py-1.5 border border-[var(--color-input-border)] rounded text-[14px] bg-[var(--color-input-bg)]
           outline-none focus:border-[var(--color-accent)] font-sans ${className}`}
         {...props}
       />
@@ -24,7 +24,7 @@ export function SelectField({ label, children, className = '', ...props }) {
         </label>
       )}
       <select
-        className={`px-2 py-1.5 border border-[var(--color-input-border)] rounded text-sm bg-[var(--color-input-bg)]
+        className={`px-2 py-1.5 border border-[var(--color-input-border)] rounded text-[14px] bg-[var(--color-input-bg)]
           outline-none focus:border-[var(--color-accent)] font-sans ${className}`}
         {...props}
       >

@@ -7,16 +7,16 @@ export default function TickerQuarterlyMetrics({ tickerData }) {
   if (!quarters.length) {
     return (
       <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-        <div className="font-semibold mb-3 text-sm">Key Quarterly Metrics</div>
-        <div className="text-[var(--color-text-muted)] text-sm">No quarterly data available.</div>
+        <div className="font-semibold mb-3 text-[14px]">Key Quarterly Metrics</div>
+        <div className="text-[var(--color-text-muted)] text-[14px]">No quarterly data available.</div>
       </div>
     )
   }
 
   return (
     <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5 overflow-x-auto">
-      <div className="font-semibold mb-3 text-sm">Key Quarterly Metrics</div>
-      <table className="w-full text-xs">
+      <div className="font-semibold mb-3 text-[14px]">Key Quarterly Metrics</div>
+      <table className="w-full text-[12.5px]">
         <thead>
           <tr className="text-left text-[10px] text-[var(--color-text-muted)] uppercase tracking-wide border-b border-[var(--color-border-light)]">
             <th className="px-2 py-1.5">Period</th>

@@ -43,7 +43,7 @@ export default function CompareBar({ rows, picks, atLimit, onToggle }) {
                }}
                disabled={atLimit}
                placeholder={atLimit ? 'full — remove one' : 'Add theme…'}
-               className="w-[136px] h-[26px] px-0.5 text-[12px] bg-transparent
+               className="w-[136px] h-[26px] px-0.5 text-[12.5px] bg-transparent
                           border-0 border-b border-[var(--color-border)] rounded-none
                           text-[var(--color-text)] placeholder:text-[var(--color-text-muted)]
                           focus:outline-none focus:border-[var(--color-text-muted)]
@@ -56,7 +56,7 @@ export default function CompareBar({ rows, picks, atLimit, onToggle }) {
               <li key={n}>
                 {/* mousedown, not click: click fires after blur has closed the list */}
                 <button type="button" onMouseDown={(e) => { e.preventDefault(); pick(n) }}
-                        className="w-full text-left px-2 py-1.5 text-[12px] rounded-sm
+                        className="w-full text-left px-2 py-1.5 text-[12.5px] rounded-sm
                                    bg-transparent border-0 cursor-pointer
                                    text-[var(--color-text-secondary)]
                                    hover:bg-[var(--color-hover-bg)] hover:text-[var(--color-text)]">
@@ -75,7 +75,7 @@ export default function CompareBar({ rows, picks, atLimit, onToggle }) {
                   title={`${p.name} — click to remove`}
                   style={{ color: p.colour }}
                   className="h-[26px] max-w-[190px] px-0.5 bg-transparent border-0
-                             cursor-pointer flex items-center gap-1.5 text-[12px] font-medium">
+                             cursor-pointer flex items-center gap-1.5 text-[12.5px] font-medium">
             <i className="w-2 h-2 rounded-full shrink-0" style={{ background: p.colour }} />
             <span className="truncate">{p.name}</span>
             <span aria-hidden className="opacity-50">×</span>

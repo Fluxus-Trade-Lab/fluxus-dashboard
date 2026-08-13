@@ -51,8 +51,8 @@ function RiskTabInner() {
 
   return (
     <div>
-      <h3 className="text-sm font-semibold text-[var(--color-text)] mb-3">Stop-Loss Simulation</h3>
-      <p className="text-xs text-[var(--color-text-muted)] mb-4">
+      <h3 className="text-[14px] font-semibold text-[var(--color-text)] mb-3">Stop-Loss Simulation</h3>
+      <p className="text-[12.5px] text-[var(--color-text-muted)] mb-4">
         Compares your actual exits against a graduated N-stop system that splits positions into equal tranches with incremental stop levels.
       </p>
 
@@ -60,7 +60,7 @@ function RiskTabInner() {
       <div className="flex mb-4">
         <button
           onClick={() => setMode(2)}
-          className={`px-4 py-1.5 text-xs font-semibold rounded-l-md border cursor-pointer ${
+          className={`px-4 py-1.5 text-[12.5px] font-semibold rounded-l-md border cursor-pointer ${
             mode === 2
               ? 'bg-[var(--color-accent)] text-white border-[var(--color-accent)]'
               : 'bg-transparent text-[var(--color-text-muted)] border-[var(--color-border)]'
@@ -70,7 +70,7 @@ function RiskTabInner() {
         </button>
         <button
           onClick={() => setMode(3)}
-          className={`px-4 py-1.5 text-xs font-semibold rounded-r-md border border-l-0 cursor-pointer ${
+          className={`px-4 py-1.5 text-[12.5px] font-semibold rounded-r-md border border-l-0 cursor-pointer ${
             mode === 3
               ? 'bg-[var(--color-accent)] text-white border-[var(--color-accent)]'
               : 'bg-transparent text-[var(--color-text-muted)] border-[var(--color-border)]'
@@ -81,7 +81,7 @@ function RiskTabInner() {
       </div>
 
       {hasHistoryGap && (
-        <div className="p-3 bg-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md mb-4 text-xs text-[var(--color-signal-caution)]">
+        <div className="p-3 bg-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md mb-4 text-[12.5px] text-[var(--color-signal-caution)]">
           Some trades lack daily price history — using worst-case (all stops triggered) for those.
           Load full history on the Portfolio → Overview tab for accurate simulation.
         </div>
@@ -94,7 +94,7 @@ function RiskTabInner() {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-xs font-mono">
+        <table className="w-full text-[12.5px] font-mono">
           <thead>
             <tr className="border-b border-[var(--color-border)] text-[10px] text-[var(--color-text-muted)] uppercase tracking-wider">
               <th className="text-left py-2 px-2">Ticker</th>

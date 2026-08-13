@@ -45,7 +45,7 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
         <div className="text-[10px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
           Open risk
         </div>
-        <div className="text-center py-8 text-[var(--color-text-muted)] text-sm">
+        <div className="text-center py-8 text-[var(--color-text-muted)] text-[14px]">
           No open positions — nothing is at risk.
         </div>
       </div>
@@ -139,7 +139,7 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
 
       <p className="text-[11px] leading-relaxed text-[var(--color-text-secondary)] mt-3 pt-3
                     border-t border-[var(--color-border-light)] mb-0">
-        <span className="text-[9px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mr-2">
+        <span className="text-[10px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mr-2">
           Method
         </span>
         Bars are scaled to the largest single risk on the book, so the widest one is the trade that
@@ -155,7 +155,7 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
 
       {riskPct != null && (
         <p className="text-[11px] leading-relaxed text-[var(--color-text-secondary)] mt-2 mb-0">
-          <span className="text-[9px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mr-2">
+          <span className="text-[10px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mr-2">
             Against the rule
           </span>
           Book risk <b className={riskPct > LIMITS.bookMax ? 'text-[var(--color-signal-caution)]'

@@ -18,12 +18,12 @@ export default function Placeholder({ group, title, blurb, willHold = [], source
       <div className="border border-dashed border-[var(--color-untested)] rounded-lg p-6
                       max-w-[70ch]"
            style={{ background: 'repeating-linear-gradient(45deg,rgba(184,134,11,.04) 0 10px,transparent 10px 20px)' }}>
-        <div className="text-[9px] font-mono uppercase tracking-[.24em]
+        <div className="text-[10px] font-mono uppercase tracking-[.24em]
                         text-[var(--color-signal-caution)] mb-3">
           Reserved
         </div>
         {willHold.length > 0 && (
-          <ul className="m-0 pl-4 space-y-1.5 text-[13px] leading-relaxed
+          <ul className="m-0 pl-4 space-y-1.5 text-[12.5px] leading-relaxed
                          text-[var(--color-text-secondary)]">
             {willHold.map((w) => <li key={w}>{w}</li>)}
           </ul>

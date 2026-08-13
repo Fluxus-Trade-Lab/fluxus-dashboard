@@ -27,11 +27,11 @@ export default function Header({ lastUpdated, isOffline }) {
       <div className="flex items-center gap-3">
         {/* the mark lives in the rail on wide screens; repeated here only where
             there is no rail to carry it */}
-        <h1 className="lg:hidden text-sm font-semibold tracking-tight text-[var(--color-text)]">
+        <h1 className="lg:hidden text-[14px] font-semibold tracking-tight text-[var(--color-text)]">
           Fluxus Capital
         </h1>
         {isOffline && (
-          <span className="px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] rounded">
+          <span className="px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] rounded">
             {t('header.offline')}
           </span>
         )}
@@ -53,7 +53,7 @@ export default function Header({ lastUpdated, isOffline }) {
         </button>
         <button
           onClick={toggle}
-          className="w-7 h-7 flex items-center justify-center rounded-full bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors cursor-pointer border-none text-sm"
+          className="w-7 h-7 flex items-center justify-center rounded-full bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)] transition-colors cursor-pointer border-none text-[14px]"
           title={theme === 'dark' ? t('header.lightMode') : t('header.darkMode')}
         >
           {theme === 'dark' ? '\u2600' : '\u263E'}

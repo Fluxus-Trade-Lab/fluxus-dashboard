@@ -15,10 +15,10 @@ export default function TradeDetailPage({ tradeId }) {
     }))
   }, [data])
 
-  if (loading) return <div className="text-[var(--color-text-muted)] py-10 text-center text-sm">Loading…</div>
+  if (loading) return <div className="text-[var(--color-text-muted)] py-10 text-center text-[14px]">Loading…</div>
   if (error || !data) {
     return (
-      <div className="py-10 text-center text-sm text-[var(--color-text-muted)]">
+      <div className="py-10 text-center text-[14px] text-[var(--color-text-muted)]">
         <button onClick={() => window.history.back()} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] mb-3 block mx-auto">← Back</button>
         No post-mortem found for <code>{tradeId}</code>.
       </div>
@@ -39,9 +39,9 @@ export default function TradeDetailPage({ tradeId }) {
         >← Back to journal</button>
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight flex items-center gap-3">
+            <h1 className="text-[26px] font-bold tracking-tight flex items-center gap-3">
               <TickerLink symbol={t.ticker} className="text-[var(--color-accent)]" />
-              <span className={`text-sm font-normal text-[var(--color-text-secondary)]`}>
+              <span className={`text-[14px] font-normal text-[var(--color-text-secondary)]`}>
                 {t.direction.toUpperCase()}
               </span>
               <span className={`px-2 py-0.5 rounded text-[11px] uppercase tracking-wide ${t.closed ? 'bg-gray-500/15 text-gray-500' : 'bg-blue-500/15 text-blue-600'}`}>
@@ -53,7 +53,7 @@ export default function TradeDetailPage({ tradeId }) {
             </div>
           </div>
           <div className="text-right">
-            <div className={`text-2xl font-bold tabular-nums ${analytics.realized_R == null ? 'text-[var(--color-text-muted)]' : analytics.realized_R >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
+            <div className={`text-[26px] font-bold tabular-nums ${analytics.realized_R == null ? 'text-[var(--color-text-muted)]' : analytics.realized_R >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
               {fmtR(analytics.realized_R)}
             </div>
             <div className="text-[11px] text-[var(--color-text-muted)]">
@@ -66,18 +66,18 @@ export default function TradeDetailPage({ tradeId }) {
 
       {/* Narrative */}
       <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5 mb-4">
-        <div className="text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: markdownish(data.narrative) }} />
+        <div className="text-[14px] leading-relaxed" dangerouslySetInnerHTML={{ __html: markdownish(data.narrative) }} />
         <div className="mt-3 pt-3 border-t border-[var(--color-border-light)]">
           <span className="text-[10px] uppercase tracking-wide text-[var(--color-text-muted)]">Lesson</span>
-          <div className={`text-base font-bold ${lessonColor(data.lesson)}`}>{data.lesson}</div>
+          <div className={`text-[17px] font-bold ${lessonColor(data.lesson)}`}>{data.lesson}</div>
         </div>
       </div>
 
       {/* Annotated chart */}
       <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5 mb-4">
-        <div className="font-semibold mb-3 text-sm">Price path · entry → exit + buffer</div>
+        <div className="font-semibold mb-3 text-[14px]">Price path · entry → exit + buffer</div>
         {chartData.length === 0 ? (
-          <div className="text-[var(--color-text-muted)] text-sm">No OHLC data available for this window.</div>
+          <div className="text-[var(--color-text-muted)] text-[14px]">No OHLC data available for this window.</div>
         ) : (
           <ResponsiveContainer width="100%" height={320}>
             <LineChart data={chartData}>
@@ -142,8 +142,8 @@ export default function TradeDetailPage({ tradeId }) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         {/* Entry snapshot */}
         <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-          <div className="font-semibold mb-3 text-sm">Entry snapshot</div>
-          <div className="text-xs flex flex-col gap-1.5">
+          <div className="font-semibold mb-3 text-[14px]">Entry snapshot</div>
+          <div className="text-[12.5px] flex flex-col gap-1.5">
             <Row label="Entry price" value={fmtCur(t.entry_price)} />
             <Row label="Stop" value={fmtCur(t.stop_price)} />
             <Row label="Original qty" value={String(t.original_qty)} />
@@ -160,8 +160,8 @@ export default function TradeDetailPage({ tradeId }) {
 
         {/* Execution */}
         <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-          <div className="font-semibold mb-3 text-sm">Execution</div>
-          <div className="text-xs flex flex-col gap-1.5">
+          <div className="font-semibold mb-3 text-[14px]">Execution</div>
+          <div className="text-[12.5px] flex flex-col gap-1.5">
             <Row label="Status" value={t.closed ? 'Closed' : 'Open'} />
             <Row label="Exit date" value={t.exit_date ? String(t.exit_date).slice(0, 10) : '—'} />
             <Row label="Hold (cal days)" value={analytics.hold_calendar_days ?? '—'} />
@@ -184,8 +184,8 @@ export default function TradeDetailPage({ tradeId }) {
 
         {/* Path analytics */}
         <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-          <div className="font-semibold mb-3 text-sm">Path analytics</div>
-          <div className="text-xs flex flex-col gap-1.5">
+          <div className="font-semibold mb-3 text-[14px]">Path analytics</div>
+          <div className="text-[12.5px] flex flex-col gap-1.5">
             <Row label="Optimal exit" value={analytics.optimal_exit_price != null ? fmtCur(analytics.optimal_exit_price) : '—'} />
             <Row label="Optimal date" value={analytics.optimal_exit_date ? String(analytics.optimal_exit_date).slice(0, 10) : '—'} />
             <Row label="Days to optimal" value={analytics.days_to_optimal ?? '—'} />

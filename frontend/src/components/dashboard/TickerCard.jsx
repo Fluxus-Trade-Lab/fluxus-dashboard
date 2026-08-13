@@ -4,7 +4,7 @@ import { signalColor, signalLabel, signalTextColor } from '../../lib/format'
  * One benchmark, on the market half's own type ladder and its own palette.
  *
  * Until 2026-08-12 this card was the only component on the Dashboard still
- * written in Tailwind's named type scale (text-xl / text-xs) while everything
+ * written in Tailwind's named type scale (text-[17px] / text-[12.5px]) while everything
  * around it used explicit px, and the only one painting a market move in
  * profit-green / loss-red while the Industries and Sectors cards beside it
  * painted the same kind of number in took / refused. Two ladders and two
@@ -67,7 +67,7 @@ export default function TickerCard({ ticker, signal, etf, scale = 0 }) {
         </span>
       </div>
 
-      <div className="font-mono text-[15px] tabular-nums leading-tight
+      <div className="font-mono text-[17px] tabular-nums leading-tight
                       text-[var(--color-text-bold)]">
         {formatPrice(price)}
       </div>
@@ -75,12 +75,12 @@ export default function TickerCard({ ticker, signal, etf, scale = 0 }) {
       <div className="flex items-baseline gap-2 mt-0.5 flex-wrap">
         {/* neutral: the bar below owns the direction, and a figure that labels
             its own mark does not need to say it twice */}
-        <span className="font-mono text-[12px] tabular-nums text-[var(--color-text-secondary)]"
+        <span className="font-mono text-[12.5px] tabular-nums text-[var(--color-text-secondary)]"
               title={change == null ? 'no move measured for this instrument' : undefined}>
           {formatChange(change)}
         </span>
         {sigLabel && (
-          <span className={`text-[9px] font-mono font-medium uppercase tracking-[.14em] ${signalTextColor(sigColor)}`}>
+          <span className={`text-[10px] font-mono font-medium uppercase tracking-[.14em] ${signalTextColor(sigColor)}`}>
             {sigLabel}
           </span>
         )}

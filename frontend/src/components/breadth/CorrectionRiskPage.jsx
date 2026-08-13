@@ -85,7 +85,7 @@ export default function CorrectionRiskPage() {
     <div className="max-w-[760px]">
       <header className="pb-5 mb-6 border-b border-[var(--color-border)]">
         <div className="flex items-baseline gap-3 flex-wrap">
-          <h1 className="text-xl font-semibold m-0">
+          <h1 className="text-[17px] font-semibold m-0">
             {zh ? '回撤风险' : 'Correction Risk'}
           </h1>
           <span className="px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-[.18em]
@@ -94,7 +94,7 @@ export default function CorrectionRiskPage() {
             {zh ? '未上线' : 'Not shipped'}
           </span>
         </div>
-        <p className="mt-2 mb-0 text-sm text-[var(--color-text-secondary)]">
+        <p className="mt-2 mb-0 text-[14px] text-[var(--color-text-secondary)]">
           {zh
             ? '这一格是空的,而且是故意空着的。下面写的是它要回答什么、卡在哪里、以及凭什么才算做完 —— 先立标准,再动手。'
             : 'This slot is empty, deliberately. Below is what it has to answer, what is ' +
@@ -110,10 +110,10 @@ export default function CorrectionRiskPage() {
               {String(i + 1).padStart(2, '0')}
             </span>
             <div>
-              <h2 className="text-[13px] font-semibold m-0 mb-1">
+              <h2 className="text-[12.5px] font-semibold m-0 mb-1">
                 {zh ? g.zh : g.en}
               </h2>
-              <p className="m-0 text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
+              <p className="m-0 text-[12.5px] leading-relaxed text-[var(--color-text-secondary)]">
                 {zh ? g.zh_body : g.en_body}
               </p>
             </div>

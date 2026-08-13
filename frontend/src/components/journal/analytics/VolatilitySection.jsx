@@ -85,12 +85,12 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
             Per-Position Volatility Contribution
           </h3>
           {volContrib.slice(0, 3).some(v => v.volContribution != null) && (
-            <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-xs text-[var(--color-signal-caution)] mb-4">
+            <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-[12.5px] text-[var(--color-signal-caution)] mb-4">
               Top 3 vol contributors: {volContrib.slice(0, 3).filter(v => v.volContribution != null).map(v => `${v.ticker} (${fmt(v.volContribution, 2)}%)`).join(', ')}
             </div>
           )}
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-xs">
+            <table className="w-full border-collapse text-[12.5px]">
               <thead>
                 <tr>
                   {['Ticker', 'Weight%', 'Daily Vol', 'Ann. Vol', 'Beta', 'Vol Contrib%'].map(h => (
@@ -123,10 +123,10 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
           <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             High-Beta Watchlist (Beta &gt; 1.5)
           </h3>
-          <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-xs text-[var(--color-signal-caution)] mb-4">
+          <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-[12.5px] text-[var(--color-signal-caution)] mb-4">
             {highBeta.length} position{highBeta.length > 1 ? 's' : ''} with beta above 1.5. Consider sizing these smaller or widening stops.
           </div>
-          <table className="w-full border-collapse text-xs">
+          <table className="w-full border-collapse text-[12.5px]">
             <thead>
               <tr>
                 {['Ticker', 'Beta', 'Weight%', 'Mkt Val', 'SPY Equiv'].map(h => (

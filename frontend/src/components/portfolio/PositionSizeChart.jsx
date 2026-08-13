@@ -53,8 +53,8 @@ export default function PositionSizeChart({ enrichedTrades, performanceData, sta
   return (
     <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
       <div className="flex items-center justify-between mb-1">
-        <span className="font-semibold text-sm">Position size per trade</span>
-        <span className="text-xs text-[var(--color-text-muted)]">
+        <span className="font-semibold text-[14px]">Position size per trade</span>
+        <span className="text-[12.5px] text-[var(--color-text-muted)]">
           avg {avg.toFixed(1)}% · size↔R corr {corr != null ? (corr >= 0 ? '+' : '') + corr.toFixed(2) : '—'} · {lossShareTopQ.toFixed(0)}% of losses from biggest quartile
         </span>
       </div>

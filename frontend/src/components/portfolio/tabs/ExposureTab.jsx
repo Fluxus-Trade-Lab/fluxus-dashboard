@@ -122,8 +122,8 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
       {deployData.length > 0 && (
         <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5 mb-5">
           <div className="flex items-center justify-between mb-3">
-            <span className="font-semibold text-sm">Capital Deployment</span>
-            <span className="text-xs text-[var(--color-text-muted)]">How hard the capital worked over time</span>
+            <span className="font-semibold text-[14px]">Capital Deployment</span>
+            <span className="text-[12.5px] text-[var(--color-text-muted)]">How hard the capital worked over time</span>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
             {[
@@ -133,8 +133,8 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
               ['Peak leverage', lev ? (lev.peak / 100).toFixed(2) + '×' : '—', 'gross ÷ equity'],
             ].map(([l, v, sub]) => (
               <div key={l} className="bg-[var(--color-surface-raised)] rounded p-3">
-                <div className="text-xs text-[var(--color-text-muted)]">{l}</div>
-                <div className="text-lg font-bold">{v}</div>
+                <div className="text-[12.5px] text-[var(--color-text-muted)]">{l}</div>
+                <div className="text-[17px] font-bold">{v}</div>
                 <div className="text-[10px] text-[var(--color-text-muted)]">{sub}</div>
               </div>
             ))}
@@ -154,7 +154,7 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
               <Line type="monotone" dataKey="returnPct" name="Cumulative return %" stroke="#1baf7a" strokeWidth={2} dot={false} />
             </LineChart>
           </ResponsiveContainer>
-          <div className="flex gap-4 mt-2 text-xs text-[var(--color-text-muted)]">
+          <div className="flex gap-4 mt-2 text-[12.5px] text-[var(--color-text-muted)]">
             <span><span style={{ color: '#2a78d6' }}>■</span> Cash % of equity</span>
             <span><span style={{ color: '#1baf7a' }}>■</span> Cumulative return %</span>
             <span className="ml-auto">100% = fully in cash · below 0 = on margin</span>
@@ -163,7 +163,7 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
         <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-          <div className="font-semibold mb-3 text-sm">Holdings</div>
+          <div className="font-semibold mb-3 text-[14px]">Holdings</div>
           <ResponsiveContainer width="100%" height={260}>
             <PieChart>
               <Pie
@@ -192,8 +192,8 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
       </div>
 
       <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-        <div className="font-semibold mb-3 text-sm">Detail</div>
-        <table className="w-full border-collapse text-xs">
+        <div className="font-semibold mb-3 text-[14px]">Detail</div>
+        <table className="w-full border-collapse text-[12.5px]">
           <thead>
             <tr>
               {DETAIL_HEADERS.map(h => (

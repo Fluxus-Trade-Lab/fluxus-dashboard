@@ -32,7 +32,7 @@ export default function GroupTable({ rows, showMethod = false, emptyNote }) {
 
   if (!rows.length) {
     return (
-      <div className="text-[var(--color-text-muted)] text-sm py-6 text-center">
+      <div className="text-[var(--color-text-muted)] text-[14px] py-6 text-center">
         {emptyNote ?? 'Nothing to show'}
       </div>
     )
@@ -45,7 +45,7 @@ export default function GroupTable({ rows, showMethod = false, emptyNote }) {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm border-collapse">
+      <table className="w-full text-[14px] border-collapse">
         <thead>
           <tr className="text-[var(--color-text-muted)] text-[11px] uppercase tracking-wide">
             {COLS.map((c) => (

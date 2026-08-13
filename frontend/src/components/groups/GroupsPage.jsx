@@ -62,7 +62,7 @@ function StateCensus({ rows }) {
     return acc
   }, {})
   return (
-    <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10.5px]
+    <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px]
                     text-[var(--color-text-muted)]">
       {['Leading', 'Weakening', 'Improving', 'Lagging'].map((s) => (
         <span key={s} className="flex items-center gap-1.5">
@@ -125,7 +125,7 @@ function Section({ label, note, right, children }) {
   return (
     <section className="pt-2">
       <div className="flex items-baseline gap-3 pb-2.5">
-        <span className="text-[9px] font-mono font-medium uppercase tracking-[.24em]
+        <span className="text-[10px] font-mono font-medium uppercase tracking-[.24em]
                          text-[var(--color-text-muted)]">{label}</span>
         {note && <span className="text-[11px] text-[var(--color-text-muted)]">{note}</span>}
         <i className="flex-1 h-px bg-[var(--color-border)]" />
@@ -154,12 +154,12 @@ export default function GroupsPage() {
   }, [themes, provisional, industries])
 
   if (loading) {
-    return <div className="text-[var(--color-text-muted)] text-sm py-8 text-center">
+    return <div className="text-[var(--color-text-muted)] text-[14px] py-8 text-center">
       Loading groups…
     </div>
   }
   if (error) {
-    return <div className="text-[var(--color-signal-riskoff)] text-[13px] py-8 text-center">
+    return <div className="text-[var(--color-signal-riskoff)] text-[12.5px] py-8 text-center">
       groups.json unavailable — run <code>python -m pipeline.themes.build_groups</code>
     </div>
   }
@@ -256,7 +256,7 @@ export default function GroupsPage() {
                 <span className="text-[11px] font-medium" style={{ color: pick.colour }}>
                   {pick.name}
                 </span>
-                <span className="text-[10.5px] font-mono text-[var(--color-text-muted)]">
+                <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
                   {row.members} members
                 </span>
               </button>

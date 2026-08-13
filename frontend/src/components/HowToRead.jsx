@@ -33,7 +33,7 @@ export default function HowToRead({ children, video }) {
             /* accent, not --color-took: that token means "quality" on this
                dashboard, and a link is not a signal. */
             <a href={video} target="_blank" rel="noreferrer"
-               className="inline-block mt-1 text-[12px] text-[var(--color-accent)] underline">
+               className="inline-block mt-1 text-[12.5px] text-[var(--color-accent)] underline">
               Walkthrough video →
             </a>
           )}

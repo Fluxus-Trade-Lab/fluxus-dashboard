@@ -252,7 +252,7 @@ export default function ScreenerPage() {
 
   if (loading) {
     return (
-      <div className="text-[var(--color-text-muted)] text-sm font-medium uppercase tracking-wide text-center py-20">
+      <div className="text-[var(--color-text-muted)] text-[14px] font-medium uppercase tracking-wide text-center py-20">
         Loading universe...
       </div>
     )
@@ -266,7 +266,7 @@ export default function ScreenerPage() {
             <a key="mc" href="#/breadth" className="no-underline text-inherit"
                title="the fifteen conditions behind this number — the page-level third light">
               Market conditions{' '}
-              <b className="text-[15px] text-[var(--color-text-bold)]">{conditions.today}</b>
+              <b className="text-[17px] text-[var(--color-text-bold)]">{conditions.today}</b>
               {' '}· {conditions.positive_today} of {conditions.n_votes} positive
             </a>
           ) : 'Market conditions — not loaded',
@@ -281,7 +281,7 @@ export default function ScreenerPage() {
         {TABS.map((tab, i) => (
           <button key={tab} role="tab" aria-selected={activeTab === i}
             onClick={() => setActiveTab(i)}
-            className={`px-5 py-2.5 font-semibold text-sm cursor-pointer bg-transparent border-none border-b-2 transition-colors ${
+            className={`px-5 py-2.5 font-semibold text-[14px] cursor-pointer bg-transparent border-none border-b-2 transition-colors ${
               activeTab === i
                 ? 'border-[var(--color-text-bold)] text-[var(--color-text-bold)]'
                 : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'
@@ -306,7 +306,7 @@ export default function ScreenerPage() {
             <StockTable key={`${scan}|${[...states].join()}|${theme}|${search.trim().toUpperCase()}`}
                         rows={rows} defaultSort={scan === 'confluence' ? 'heat' : 'rs3'} />
           ) : (
-            <p className="m-0 py-8 text-center text-[12px] text-[var(--color-text-muted)]">
+            <p className="m-0 py-8 text-center text-[12.5px] text-[var(--color-text-muted)]">
               {!activeScan.loaded
                 ? `${activeScan.label} has not loaded yet.`
                 : 'The group layer (states and themes) has not loaded yet.'}

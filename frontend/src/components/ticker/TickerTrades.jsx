@@ -31,8 +31,8 @@ export default function TickerTrades({ symbol, trades }) {
   if (!onTicker.length) {
     return (
       <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-        <div className="font-semibold mb-3 text-sm">Trades</div>
-        <div className="text-[var(--color-text-muted)] text-sm">No trades recorded for {symbol}.</div>
+        <div className="font-semibold mb-3 text-[14px]">Trades</div>
+        <div className="text-[var(--color-text-muted)] text-[14px]">No trades recorded for {symbol}.</div>
       </div>
     )
   }
@@ -42,7 +42,7 @@ export default function TickerTrades({ symbol, trades }) {
   return (
     <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
       <div className="flex items-center justify-between mb-3">
-        <div className="font-semibold text-sm">Trades</div>
+        <div className="font-semibold text-[14px]">Trades</div>
         <div className="text-[11px] text-[var(--color-text-muted)] tabular-nums">
           {stats.total} trade{stats.total === 1 ? '' : 's'} ·{' '}
           {stats.open} open · {stats.closed} closed · {stats.winRate.toFixed(0)}% WR ·{' '}
@@ -52,7 +52,7 @@ export default function TickerTrades({ symbol, trades }) {
         </div>
       </div>
 
-      <table className="w-full border-collapse text-xs">
+      <table className="w-full border-collapse text-[12.5px]">
         <thead>
           <tr className="text-left text-[10px] text-[var(--color-text-muted)] uppercase tracking-wide">
             <th className="px-2 py-1.5">Entry date</th>

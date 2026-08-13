@@ -65,7 +65,7 @@ export default function EtfSection({ title, etfs, defaultSort = 'perf_1w' }) {
             <button
               key={col.key}
               onClick={() => handleSort(col.key, col.sortable)}
-              className={`text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] bg-transparent border-none p-0 text-left cursor-pointer select-none hover:text-[var(--color-text-secondary)] ${sortKey === col.key ? 'text-[var(--color-text-secondary)]' : ''}`}
+              className={`text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] bg-transparent border-none p-0 text-left cursor-pointer select-none hover:text-[var(--color-text-secondary)] ${sortKey === col.key ? 'text-[var(--color-text-secondary)]' : ''}`}
             >
               {col.label}
               {sortKey === col.key && (
@@ -75,7 +75,7 @@ export default function EtfSection({ title, etfs, defaultSort = 'perf_1w' }) {
           ) : (
             <span
               key={col.key}
-              className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]"
+              className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]"
             >
               {col.label}
             </span>

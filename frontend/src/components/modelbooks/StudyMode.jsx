@@ -119,7 +119,7 @@ export default function StudyMode({ cards }) {
   if (!card) {
     return (
       <div className="flex items-center justify-center h-64">
-        <span className="text-xs text-[var(--color-text-muted)]">No cards available</span>
+        <span className="text-[12.5px] text-[var(--color-text-muted)]">No cards available</span>
       </div>
     )
   }
@@ -138,7 +138,7 @@ export default function StudyMode({ cards }) {
                 {reviewCount} flagged
               </span>
             )}
-            <span className="text-[9px] text-[var(--color-text-muted)] font-mono">
+            <span className="text-[10px] text-[var(--color-text-muted)] font-mono">
               Space=reveal  N=next  M=flag
             </span>
           </div>
@@ -162,11 +162,11 @@ export default function StudyMode({ cards }) {
             <div className="bg-[var(--color-surface-raised)] h-[220px] flex items-center justify-center">
               {!revealed ? (
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-[var(--color-border)] tracking-wide mb-2">?</div>
-                  <div className="text-xs text-[var(--color-text-muted)]">Can you identify the pattern?</div>
+                  <div className="text-[38px] font-bold text-[var(--color-border)] tracking-wide mb-2">?</div>
+                  <div className="text-[12.5px] text-[var(--color-text-muted)]">Can you identify the pattern?</div>
                 </div>
               ) : (
-                <span className="text-3xl font-bold text-[var(--color-text-muted)] tracking-wide">
+                <span className="text-[26px] font-bold text-[var(--color-text-muted)] tracking-wide">
                   {card.ticker}
                 </span>
               )}
@@ -198,25 +198,25 @@ export default function StudyMode({ cards }) {
                   <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
                     Ticker
                   </span>
-                  <span className="text-sm font-semibold text-[var(--color-text-bold)]">{card.ticker}</span>
+                  <span className="text-[14px] font-semibold text-[var(--color-text-bold)]">{card.ticker}</span>
                 </div>
                 <div>
                   <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
                     Year
                   </span>
-                  <span className="text-sm text-[var(--color-text)]">{card.year}</span>
+                  <span className="text-[14px] text-[var(--color-text)]">{card.year}</span>
                 </div>
                 <div>
                   <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
                     Source
                   </span>
-                  <span className="text-sm text-[var(--color-text)]">{card.source}</span>
+                  <span className="text-[14px] text-[var(--color-text)]">{card.source}</span>
                 </div>
                 <div className="ml-auto">
                   <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
                     Outcome
                   </span>
-                  <span className="text-xs font-medium text-[var(--color-text)]">{card.outcome}</span>
+                  <span className="text-[12.5px] font-medium text-[var(--color-text)]">{card.outcome}</span>
                 </div>
               </div>
 
@@ -239,7 +239,7 @@ export default function StudyMode({ cards }) {
                 </span>
                 <ul className="space-y-1">
                   {card.key_lessons.map((lesson, i) => (
-                    <li key={i} className="text-xs text-[var(--color-text-secondary)] flex gap-2">
+                    <li key={i} className="text-[12.5px] text-[var(--color-text-secondary)] flex gap-2">
                       <span className="text-[var(--color-text-muted)] select-none shrink-0">&bull;</span>
                       {lesson}
                     </li>

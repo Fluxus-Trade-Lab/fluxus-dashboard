@@ -16,7 +16,7 @@ export default function BreadthTable({ data }) {
   return (
     <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="w-full text-xs">
+        <table className="w-full text-[12.5px]">
           <thead>
             <tr className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
               <Th>Date</Th>

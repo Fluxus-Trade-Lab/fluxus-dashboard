@@ -104,17 +104,17 @@ function Glyph({ d }) {
                boxShadow: onLine ? '0 0 0 2.5px rgba(184,134,11,.4)' : undefined,
              }} />
       </div>
-      <div className="text-[8px] font-mono leading-[1.25] text-center mt-1.5
+      <div className="text-[10px] font-mono leading-[1.25] text-center mt-1.5
                       text-[var(--color-text-muted)] break-words">
         {d.label}
       </div>
-      <div className="text-[12px] font-bold text-center leading-none mt-0.5"
+      <div className="text-[12.5px] font-bold text-center leading-none mt-0.5"
            style={{ fontFamily: 'var(--font-cond)',
                     color: onLine ? '#b8860b'
                       : d.measurable ? 'var(--color-text)' : 'var(--color-text-muted)' }}>
         {d.margin == null ? '—' : fmt(d.margin)}
       </div>
-      <div className="text-[8px] font-mono text-center text-[var(--color-text-muted)] leading-tight">
+      <div className="text-[10px] font-mono text-center text-[var(--color-text-muted)] leading-tight">
         {d.margin == null ? 'not counted' : d.unit}
       </div>
     </div>
@@ -173,7 +173,7 @@ export function VoteMarks({ votes }) {
         {entries.map(([key, v]) => (
           <span key={key} className="flex flex-col gap-1.5" title={`${VOTE_LABEL[key] ?? key}: ${v}`}>
             <i className="block w-full h-[32px]" style={style(v)} />
-            <span className="text-[8.5px] font-mono leading-tight
+            <span className="text-[10px] font-mono leading-tight
                              text-[var(--color-text-muted)]">{VOTE_LABEL[key] ?? key}</span>
           </span>
         ))}

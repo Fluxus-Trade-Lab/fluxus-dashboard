@@ -41,7 +41,7 @@ function Seg({ on, dim, onClick, children, title }) {
 function Count({ n, on }) {
   if (n != null && n > 0 && !on) return null
   return (
-    <span className="text-[10.5px] ml-[3px] text-[var(--color-text-muted)]">
+    <span className="text-[10px] ml-[3px] text-[var(--color-text-muted)]">
       {n == null ? '—' : n === 0 ? '0' : n}
     </span>
   )
@@ -69,7 +69,7 @@ function ThemeRibbon({ theme }) {
  *  floating mid-flow. */
 function Lbl({ children }) {
   return (
-    <span className="w-11 shrink-0 text-[9.5px] font-mono font-medium uppercase tracking-[.14em]
+    <span className="w-11 shrink-0 text-[10px] font-mono font-medium uppercase tracking-[.14em]
                      text-[var(--color-text-muted)]">{children}</span>
   )
 }
@@ -126,7 +126,7 @@ export default function ScanBar({
         })}
 
         <Divider />
-        <span className="text-[9.5px] font-mono font-medium uppercase tracking-[.14em] text-[var(--color-text-muted)]">Theme</span>
+        <span className="text-[10px] font-mono font-medium uppercase tracking-[.14em] text-[var(--color-text-muted)]">Theme</span>
         {chosen ? (
           <span className="text-[12.5px] text-[var(--color-text-bold)]">
             {chosen.group}
@@ -172,7 +172,7 @@ export default function ScanBar({
                     className={`px-2.5 py-1 text-[12.5px] cursor-pointer flex items-baseline gap-2
                                 ${i === themeIdx ? 'bg-[var(--color-hover-bg)]' : ''}`}>
                     <span>{t.group}</span>
-                    <span className="text-[9.5px] text-[var(--color-text-muted)] ml-auto">{t.members}</span>
+                    <span className="text-[10px] text-[var(--color-text-muted)] ml-auto">{t.members}</span>
                   </div>
                 ))}
               </div>

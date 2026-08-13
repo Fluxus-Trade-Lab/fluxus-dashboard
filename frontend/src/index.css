@@ -199,6 +199,27 @@ body {
   min-height: 100vh;
 }
 
+/* ── Type ladder ──────────────────────────────────────────────────────
+   One ladder for the whole instrument, both halves. Before 2026-08-13 the app
+   used 28 distinct sizes — twenty explicit px plus eight Tailwind names — which
+   is drift, not a scale: 9 / 9.5 / 10 / 10.5 / 11 / 11.5 / 12 / 12.5 / 13 /
+   13.5 all appeared, and no two of those are perceptibly different.
+
+   Six steps plus a title pair. Each is far enough from its neighbour to read as
+   a different rank, and every step earns its place by the job it does:
+
+     10px  label    mono, uppercase, tracked — column heads, section labels
+     11px  meta     captions, notes, denominators, timestamps
+     12.5  body     table rows, controls, the numbers you read
+     14px  prose    sentences — Reading lines, guidance, HowToRead
+     17px  lead     a card's headline figure, a panel's own h2
+     26px  display  the page's subject number
+     38/46 title    the page name, responsive (PageHeader owns this pair)
+
+   Nothing renders below 10px. `components/public/*` is the marketing site and
+   keeps its own scale (.public-h1 and friends below) — a landing page and an
+   instrument do not share a rhythm. */
+
 /* Dashboard benchmark cards: the 10-across step. Tailwind's arbitrary
    min-[1720px] variant did not generate in this setup, so the rule lives here.
    Ten cards need ~150px each beside the 214px rail — hence 1720, not xl. */

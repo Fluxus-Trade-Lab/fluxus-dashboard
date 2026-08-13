@@ -106,12 +106,12 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
         </div>
 
         {heatData.totalHeat > 8 && (
-          <div className="bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-loss)_30%,transparent)] rounded-md px-3 py-2 text-xs text-[var(--color-loss)] mb-4">
+          <div className="bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-loss)_30%,transparent)] rounded-md px-3 py-2 text-[12.5px] text-[var(--color-loss)] mb-4">
             Total heat is {fmt(heatData.totalHeat, 1)}% — above 8% threshold. Consider reducing position sizes or tightening stops.
           </div>
         )}
         {heatData.noStopCount > 0 && (
-          <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-xs text-[var(--color-signal-caution)] mb-4">
+          <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-[12.5px] text-[var(--color-signal-caution)] mb-4">
             {heatData.noStopCount} position{heatData.noStopCount > 1 ? 's have' : ' has'} no stop set — untracked risk.
           </div>
         )}
@@ -140,7 +140,7 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
           </h3>
           <div className="space-y-1.5">
             {tickerConcentration.slice(0, 10).map(t => (
-              <div key={t.name} className="flex items-center gap-2 text-xs">
+              <div key={t.name} className="flex items-center gap-2 text-[12.5px]">
                 <span className="w-12 font-medium">{t.name}</span>
                 <div className="flex-1 bg-[var(--color-bg)] rounded-full h-3 overflow-hidden">
                   <div
@@ -156,7 +156,7 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
             ))}
           </div>
           {tickerConcentration.some(t => t.weight > 15) && (
-            <div className="mt-3 bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-xs text-[var(--color-signal-caution)]">
+            <div className="mt-3 bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-[12.5px] text-[var(--color-signal-caution)]">
               Single-name concentration above 15% detected.
             </div>
           )}
@@ -170,19 +170,19 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
           <div className="grid grid-cols-2 gap-3 mb-4">
             <div>
               <div className="text-[10px] text-[var(--color-text-muted)] uppercase mb-1">Long</div>
-              <div className="text-lg font-bold tabular-nums text-[var(--color-profit)]">{fmt(exposure.longPct, 1)}%</div>
+              <div className="text-[17px] font-bold tabular-nums text-[var(--color-profit)]">{fmt(exposure.longPct, 1)}%</div>
             </div>
             <div>
               <div className="text-[10px] text-[var(--color-text-muted)] uppercase mb-1">Short</div>
-              <div className="text-lg font-bold tabular-nums text-[var(--color-loss)]">{fmt(exposure.shortPct, 1)}%</div>
+              <div className="text-[17px] font-bold tabular-nums text-[var(--color-loss)]">{fmt(exposure.shortPct, 1)}%</div>
             </div>
             <div>
               <div className="text-[10px] text-[var(--color-text-muted)] uppercase mb-1">Net</div>
-              <div className={`text-lg font-bold tabular-nums ${clr(exposure.netPct)}`}>{fmt(exposure.netPct, 1)}%</div>
+              <div className={`text-[17px] font-bold tabular-nums ${clr(exposure.netPct)}`}>{fmt(exposure.netPct, 1)}%</div>
             </div>
             <div>
               <div className="text-[10px] text-[var(--color-text-muted)] uppercase mb-1">Gross</div>
-              <div className="text-lg font-bold tabular-nums">{fmt(exposure.grossPct, 1)}%</div>
+              <div className="text-[17px] font-bold tabular-nums">{fmt(exposure.grossPct, 1)}%</div>
             </div>
           </div>
 
@@ -194,7 +194,7 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
                 {sectorData.map(s => {
                   const pct = portfolioValue > 0 ? (s.value / portfolioValue) * 100 : 0
                   return (
-                    <div key={s.name} className="flex items-center gap-2 text-xs">
+                    <div key={s.name} className="flex items-center gap-2 text-[12.5px]">
                       <span className="w-24 truncate">{s.name}</span>
                       <div className="flex-1 bg-[var(--color-bg)] rounded-full h-3 overflow-hidden">
                         <div className="h-full rounded-full bg-[#5b8fa8]" style={{ width: `${Math.min(100, pct)}%` }} />
@@ -227,7 +227,7 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-xs">
+            <table className="w-full border-collapse text-[12.5px]">
               <thead>
                 <tr>
                   {['Ticker', 'Dir', 'Qty', 'Mkt Val', 'Wt%', 'Beta', 'Beta-Adj Exp'].map(h => (

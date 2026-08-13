@@ -134,7 +134,7 @@ export default function TagStats({ cards }) {
       {/* Stats grid */}
       {stats.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-48 rounded-lg border border-dashed border-[var(--color-border)] bg-[var(--color-surface-alt)] gap-2">
-          <span className="text-xs text-[var(--color-text-muted)]">No tagged patterns in this selection</span>
+          <span className="text-[12.5px] text-[var(--color-text-muted)]">No tagged patterns in this selection</span>
           {untaggedCount > 0 && (
             <span className="text-[10px] text-amber-600 dark:text-amber-400">
               {untaggedCount} setups need pattern tags
@@ -161,7 +161,7 @@ export default function TagStats({ cards }) {
                 <div className="space-y-2">
                   <div>
                     <div className="flex items-baseline justify-between mb-0.5">
-                      <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Count</span>
+                      <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Count</span>
                       <span className="text-[11px] font-semibold text-[var(--color-text)]">{count}</span>
                     </div>
                     <div className="w-full h-1 bg-[var(--color-border)] rounded-full overflow-hidden">
@@ -170,7 +170,7 @@ export default function TagStats({ cards }) {
                   </div>
                   <div>
                     <div className="flex items-baseline justify-between mb-0.5">
-                      <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Avg Gain</span>
+                      <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Avg Gain</span>
                       <span className="text-[11px] font-medium text-green-700 dark:text-green-400">
                         {avgGain != null ? `${avgGain.toFixed(0)}%` : '—'}
                       </span>
@@ -180,7 +180,7 @@ export default function TagStats({ cards }) {
                     </div>
                   </div>
                   <div className="flex items-baseline justify-between">
-                    <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Avg Duration</span>
+                    <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Avg Duration</span>
                     <span className="text-[11px] font-medium text-[var(--color-text-secondary)]">
                       {avgDuration != null ? `${Math.round(avgDuration)}d` : '—'}
                     </span>

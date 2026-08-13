@@ -36,7 +36,7 @@ export default function VerdictBanner({ verdict, dataQuality, session }) {
 
       {/* The verdict is a sentence, and sentences do not wear the encoding
           colour — the vote glyphs below already say it in took/refused. */}
-      <div className="text-xl font-semibold text-[var(--color-text-bold)]">
+      <div className="text-[17px] font-semibold text-[var(--color-text-bold)]">
         {ENV_LABEL[v.env] ?? v.env}
       </div>
 
@@ -70,7 +70,7 @@ export default function VerdictBanner({ verdict, dataQuality, session }) {
 
       <Falsification votes={v.votes} score={v.score} env={v.env} />
 
-      <p className="text-[12px] text-[var(--color-text)] border-t border-[var(--color-border-light)] pt-3">
+      <p className="text-[12.5px] text-[var(--color-text)] border-t border-[var(--color-border-light)] pt-3">
         <span className="font-medium">Guidance:</span> {v.guidance}
       </p>
       {v.notes?.length > 0 && (
@@ -127,10 +127,10 @@ function Falsification({ votes, score, env }) {
 
   return (
     <div className="border-t border-[var(--color-border-light)] pt-3 mt-1">
-      <div className="text-[9px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mb-1.5">
+      <div className="text-[10px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mb-1.5">
         What would change this
       </div>
-      <p className="text-[12px] leading-relaxed text-[var(--color-text-secondary)] m-0">
+      <p className="text-[12.5px] leading-relaxed text-[var(--color-text-secondary)] m-0">
         {env === 'MIXED' ? (
           <>Score is <b className="text-[var(--color-text)]">{score >= 0 ? `+${score}` : score}</b>.
             It becomes {target > 0 ? 'BULLISH' : 'BEARISH'} at{' '}
@@ -158,10 +158,10 @@ function Falsification({ votes, score, env }) {
 function Col({ label, value, sub }) {
   return (
     <div>
-      <div className="text-[9px] font-medium uppercase tracking-wider text-[var(--color-text-muted)] mb-1">
+      <div className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)] mb-1">
         {label}
       </div>
-      <div className="text-[12px] text-[var(--color-text)] leading-snug">{value}</div>
+      <div className="text-[12.5px] text-[var(--color-text)] leading-snug">{value}</div>
       {sub && <div className="text-[10px] text-[var(--color-text-secondary)]">{sub}</div>}
     </div>
   )

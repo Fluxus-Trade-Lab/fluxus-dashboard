@@ -12,7 +12,7 @@ import Tier from './Tier'
 function Band({ label, note }) {
   return (
     <div className="flex items-baseline gap-3 pt-4">
-      <span className="text-[9px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
+      <span className="text-[10px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
         {label}
       </span>
       {note && <span className="text-[11px] text-[var(--color-text-muted)]">{note}</span>}
@@ -118,12 +118,12 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                       took/refused, so colouring the word said it twice. Weight
                       and size carry the emphasis instead (Andy 2026-08-13,
                       reading nextSignals: colour lives in the graphic). */}
-                  <h2 className="text-[34px] leading-none font-semibold m-0
+                  <h2 className="text-[26px] leading-none font-semibold m-0
                                  text-[var(--color-text-bold)]"
                       style={{ fontFamily: 'var(--font-cond)' }}>
                     {data.breadth.verdict.env}
                   </h2>
-                  <span className="text-[19px] font-mono tabular-nums">
+                  <span className="text-[17px] font-mono tabular-nums">
                     {data.breadth.verdict.score > 0 ? '+' : ''}{data.breadth.verdict.score}
                     <span className="text-[var(--color-text-muted)]"> / 12</span>
                   </span>

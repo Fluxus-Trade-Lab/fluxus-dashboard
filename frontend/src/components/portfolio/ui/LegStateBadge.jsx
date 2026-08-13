@@ -15,7 +15,7 @@ export default function LegStateBadge({ state }) {
   const label = tr(`pf.leg.${state}`)
   return (
     <span
-      className={`inline-block px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wide ring-1 ${c.bg} ${c.text} ${c.ring}`}
+      className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide ring-1 ${c.bg} ${c.text} ${c.ring}`}
       title={label}
     >
       {label}

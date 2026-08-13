@@ -29,7 +29,7 @@ function Stat({ label, value, color = '' }) {
       <div className="text-[10px] text-[var(--color-text-secondary)] font-medium uppercase tracking-wide mb-1">
         {label}
       </div>
-      <div className={`text-lg font-mono tabular-nums text-[var(--color-text)] ${color}`}>
+      <div className={`text-[17px] font-mono tabular-nums text-[var(--color-text)] ${color}`}>
         {value ?? '—'}
       </div>
     </div>

@@ -65,7 +65,7 @@ export default function BehaviorSection({ enriched }) {
           Exit-Style Breakdown
         </h3>
         <div className="overflow-x-auto bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg">
-          <table className="w-full text-xs">
+          <table className="w-full text-[12.5px]">
             <thead>
               <tr>
                 <th className="text-left px-3 py-2 border-b border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[10px] uppercase tracking-wide">Style</th>
@@ -109,7 +109,7 @@ export default function BehaviorSection({ enriched }) {
           <div className="text-[11px] text-[var(--color-text-muted)] py-4">No clusters detected.</div>
         ) : (
           <div className="overflow-x-auto bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg">
-            <table className="w-full text-xs">
+            <table className="w-full text-[12.5px]">
               <thead>
                 <tr>
                   <th className="text-left px-3 py-2 border-b border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[10px] uppercase tracking-wide">Ticker</th>
@@ -152,7 +152,7 @@ export default function BehaviorSection({ enriched }) {
         </div>
         {panic.perTrade.length > 0 && (
           <div className="overflow-x-auto bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg">
-            <table className="w-full text-xs">
+            <table className="w-full text-[12.5px]">
               <thead>
                 <tr>
                   <th className="text-left px-3 py-2 border-b border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[10px] uppercase tracking-wide">Ticker</th>

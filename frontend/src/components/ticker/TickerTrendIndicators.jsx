@@ -10,8 +10,8 @@ export default function TickerTrendIndicators({ tickerData }) {
   if (!t) {
     return (
       <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-        <div className="font-semibold mb-3 text-sm">Trend & Indicators</div>
-        <div className="text-[var(--color-text-muted)] text-sm">No technical data available.</div>
+        <div className="font-semibold mb-3 text-[14px]">Trend & Indicators</div>
+        <div className="text-[var(--color-text-muted)] text-[14px]">No technical data available.</div>
       </div>
     )
   }
@@ -75,8 +75,8 @@ export default function TickerTrendIndicators({ tickerData }) {
 
   return (
     <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-      <div className="font-semibold mb-3 text-sm">Trend & Indicators</div>
-      <table className="w-full text-xs">
+      <div className="font-semibold mb-3 text-[14px]">Trend & Indicators</div>
+      <table className="w-full text-[12.5px]">
         <thead>
           <tr className="text-left text-[10px] text-[var(--color-text-muted)] uppercase tracking-wide border-b border-[var(--color-border-light)]">
             <th className="px-2 py-1.5">Indicator</th>

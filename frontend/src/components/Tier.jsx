@@ -20,7 +20,7 @@ export default function Tier({ label, supports, children }) {
   return (
     <section className="pt-5">
       <div className="flex items-baseline gap-3 pb-2">
-        <span className="text-[9px] font-mono uppercase tracking-[.24em]
+        <span className="text-[10px] font-mono uppercase tracking-[.24em]
                          text-[var(--color-text-muted)]">
           {label}
         </span>

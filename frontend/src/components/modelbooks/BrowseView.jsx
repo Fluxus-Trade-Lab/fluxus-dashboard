@@ -55,7 +55,7 @@ function formatPattern(key) {
 function PatternBadge({ pattern }) {
   const colors = PATTERN_COLORS[pattern] || 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]'
   return (
-    <span className={`inline-block px-1.5 py-0.5 text-[9px] font-medium rounded-full ${colors} leading-tight`}>
+    <span className={`inline-block px-1.5 py-0.5 text-[10px] font-medium rounded-full ${colors} leading-tight`}>
       {formatPattern(pattern)}
     </span>
   )
@@ -93,7 +93,7 @@ function NotesPanel({ entry, onTickerClick }) {
   if (!entry) {
     return (
       <div className="flex items-center justify-center h-48 rounded-lg border border-dashed border-[var(--color-border)] bg-[var(--color-surface-alt)]">
-        <span className="text-xs text-[var(--color-text-muted)]">Select an entry to view details</span>
+        <span className="text-[12.5px] text-[var(--color-text-muted)]">Select an entry to view details</span>
       </div>
     )
   }
@@ -104,11 +104,11 @@ function NotesPanel({ entry, onTickerClick }) {
       <div>
         <button
           onClick={() => onTickerClick(entry.ticker)}
-          className="text-base font-semibold text-[var(--color-text-bold)] hover:text-blue-700 dark:hover:text-blue-400 hover:underline cursor-pointer"
+          className="text-[17px] font-semibold text-[var(--color-text-bold)] hover:text-blue-700 dark:hover:text-blue-400 hover:underline cursor-pointer"
         >
           {entry.ticker}
         </button>
-        <span className="ml-2 text-xs text-[var(--color-text-muted)]">{entry.year}</span>
+        <span className="ml-2 text-[12.5px] text-[var(--color-text-muted)]">{entry.year}</span>
       </div>
 
       {/* Source */}
@@ -124,7 +124,7 @@ function NotesPanel({ entry, onTickerClick }) {
       )}
 
       {/* Gain + Duration stat row */}
-      <div className="flex items-center gap-4 text-xs">
+      <div className="flex items-center gap-4 text-[12.5px]">
         {entry.gain_pct != null && (
           <span>
             <span className="text-[var(--color-text-muted)]">Gain </span>
@@ -150,7 +150,7 @@ function NotesPanel({ entry, onTickerClick }) {
           {entry.key_lessons.map((lesson, i) => (
             <blockquote
               key={i}
-              className="border-l-2 border-[var(--color-border)] pl-3 text-xs italic text-[var(--color-text-secondary)] leading-relaxed"
+              className="border-l-2 border-[var(--color-border)] pl-3 text-[12.5px] italic text-[var(--color-text-secondary)] leading-relaxed"
             >
               {lesson}
             </blockquote>
@@ -346,10 +346,10 @@ export default function BrowseView({ cards }) {
     <div className="flex flex-col min-h-0">
       {/* Chart header (SPY toggle only -- ticker info moved to notes panel) */}
       <div className="flex items-center gap-2 mb-2">
-        <h3 className="text-sm font-semibold text-[var(--color-text-bold)]">
+        <h3 className="text-[14px] font-semibold text-[var(--color-text-bold)]">
           {selectedEntry.ticker}
         </h3>
-        <span className="text-xs text-[var(--color-text-muted)]">{selectedEntry.year}</span>
+        <span className="text-[12.5px] text-[var(--color-text-muted)]">{selectedEntry.year}</span>
         <button
           onClick={() => setShowSpy(s => !s)}
           className={`ml-auto text-[10px] font-medium px-2 py-1 rounded border transition-colors ${
@@ -364,11 +364,11 @@ export default function BrowseView({ cards }) {
 
       <div className="border border-[var(--color-border)] rounded-lg overflow-hidden bg-[var(--color-surface)]">
         {ohlcvLoading ? (
-          <div className="flex items-center justify-center text-xs text-[var(--color-text-muted)]" style={{ height: chartHeight }}>
+          <div className="flex items-center justify-center text-[12.5px] text-[var(--color-text-muted)]" style={{ height: chartHeight }}>
             Loading chart data...
           </div>
         ) : !selectedEntry.ohlcv_file ? (
-          <div className="flex items-center justify-center text-xs text-[var(--color-text-muted)]" style={{ height: chartHeight }}>
+          <div className="flex items-center justify-center text-[12.5px] text-[var(--color-text-muted)]" style={{ height: chartHeight }}>
             No chart data available for this entry
           </div>
         ) : (
@@ -378,7 +378,7 @@ export default function BrowseView({ cards }) {
     </div>
   ) : (
     <div className="flex items-center justify-center h-64 rounded-lg border border-dashed border-[var(--color-border)] bg-[var(--color-surface-alt)]">
-      <span className="text-xs text-[var(--color-text-muted)]">Select an entry to view its chart</span>
+      <span className="text-[12.5px] text-[var(--color-text-muted)]">Select an entry to view its chart</span>
     </div>
   )
 
@@ -423,7 +423,7 @@ export default function BrowseView({ cards }) {
 
       {/* Table */}
       <div className="overflow-y-auto border border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] flex-1 max-h-[40vh] lg:max-h-[calc(100vh-180px)]">
-        <table className="w-full text-xs">
+        <table className="w-full text-[12.5px]">
           <thead className="sticky top-0 z-10">
             <tr className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
               {TABLE_COLUMNS.map(col => (
@@ -441,7 +441,7 @@ export default function BrowseView({ cards }) {
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={TABLE_COLUMNS.length} className="px-4 py-8 text-center text-xs text-[var(--color-text-muted)]">
+                <td colSpan={TABLE_COLUMNS.length} className="px-4 py-8 text-center text-[12.5px] text-[var(--color-text-muted)]">
                   No entries match the current filters
                 </td>
               </tr>
@@ -467,7 +467,7 @@ export default function BrowseView({ cards }) {
                           <PatternBadge key={p} pattern={p} />
                         ))}
                         {card.patterns.length > 2 && (
-                          <span className="text-[9px] text-[var(--color-text-muted)]">+{card.patterns.length - 2}</span>
+                          <span className="text-[10px] text-[var(--color-text-muted)]">+{card.patterns.length - 2}</span>
                         )}
                       </div>
                     </td>

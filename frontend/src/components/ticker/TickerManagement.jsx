@@ -15,8 +15,8 @@ export default function TickerManagement({ tickerData }) {
 
   return (
     <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-      <div className="font-semibold mb-3 text-sm">Management</div>
-      <div className="text-xs flex flex-col gap-1.5">
+      <div className="font-semibold mb-3 text-[14px]">Management</div>
+      <div className="text-[12.5px] flex flex-col gap-1.5">
         {ceo && (
           <div>
             <span className="text-[var(--color-text-muted)]">CEO: </span>

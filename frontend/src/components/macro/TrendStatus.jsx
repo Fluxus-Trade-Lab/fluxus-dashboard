@@ -48,7 +48,7 @@ export default function TrendStatus({ signals }) {
               const ts = s.trend_status || {}
               return (
                 <tr key={ticker}>
-                  <td className="font-mono text-sm text-[var(--color-text-bold)] py-0.5 pr-2">
+                  <td className="font-mono text-[14px] text-[var(--color-text-bold)] py-0.5 pr-2">
                     {ticker}
                   </td>
                   {COLUMNS.map((col) => {
@@ -56,7 +56,7 @@ export default function TrendStatus({ signals }) {
                     return (
                       <td
                         key={col.key}
-                        className={`font-mono text-xs py-0.5 pr-2 text-right ${pctColor(val)}`}
+                        className={`font-mono text-[12.5px] py-0.5 pr-2 text-right ${pctColor(val)}`}
                       >
                         {formatDist(val)}
                       </td>

@@ -81,7 +81,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
       {callouts.length > 0 && (
         <div className="space-y-2">
           {callouts.map((c, i) => (
-            <div key={i} className={`flex gap-2 text-sm px-3 py-2 rounded-md border ${
+            <div key={i} className={`flex gap-2 text-[14px] px-3 py-2 rounded-md border ${
               c.type === 'warning' ? 'bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] text-[var(--color-signal-caution)]'
               : c.type === 'positive' ? 'bg-[color-mix(in_srgb,var(--color-profit)_10%,transparent)] border-[color-mix(in_srgb,var(--color-profit)_30%,transparent)] text-[var(--color-profit)]'
               : 'bg-[var(--color-surface)] border-[var(--color-border)] text-[var(--color-text-secondary)]'
@@ -110,7 +110,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
 
         {trimGroups.length > 0 && (
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-xs">
+            <table className="w-full border-collapse text-[12.5px]">
               <thead>
                 <tr>
                   {['Ticker', 'Dir', 'Trims', 'Early', 'Avg Left%', 'Worst Left%', 'Avg Captured%'].map(h => (
@@ -182,7 +182,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
           </div>
         )}
         {trimAnalysis.length === 0 && (
-          <div className="text-center py-8 text-[var(--color-text-muted)] text-sm">No trim data available for closed trades.</div>
+          <div className="text-center py-8 text-[var(--color-text-muted)] text-[14px]">No trim data available for closed trades.</div>
         )}
       </div>
 
@@ -200,7 +200,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
 
         {stopAnalysis.length > 0 && (
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-xs">
+            <table className="w-full border-collapse text-[12.5px]">
               <thead>
                 <tr>
                   {['Ticker', 'Dir', 'Entry', 'Stop', 'Exit', 'Recovery Peak', 'Recovery%', 'Stop Dist%'].map(h => (
@@ -241,7 +241,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
           </div>
         )}
         {stopAnalysis.length === 0 && (
-          <div className="text-center py-8 text-[var(--color-text-muted)] text-sm">No stop-out trades detected (exit within 1% of stop price).</div>
+          <div className="text-center py-8 text-[var(--color-text-muted)] text-[14px]">No stop-out trades detected (exit within 1% of stop price).</div>
         )}
       </div>
     </div>

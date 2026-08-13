@@ -9,11 +9,11 @@ export default function TickerCatalysts({ tickerData }) {
   if (synth && synth.length) {
     return (
       <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-        <div className="font-semibold mb-3 text-sm flex items-center justify-between">
+        <div className="font-semibold mb-3 text-[14px] flex items-center justify-between">
           <span>Recent Catalysts & News</span>
           <span className="text-[10px] text-[var(--color-text-muted)] font-normal">AI-synthesized</span>
         </div>
-        <ul className="text-xs flex flex-col gap-1.5 list-disc pl-4 text-[var(--color-text)]">
+        <ul className="text-[12.5px] flex flex-col gap-1.5 list-disc pl-4 text-[var(--color-text)]">
           {synth.map((c, i) => (
             <li key={i}>{c}</li>
           ))}
@@ -25,21 +25,21 @@ export default function TickerCatalysts({ tickerData }) {
   if (!news.length) {
     return (
       <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-        <div className="font-semibold mb-3 text-sm">Recent Catalysts & News</div>
-        <div className="text-[var(--color-text-muted)] text-sm">No recent news.</div>
+        <div className="font-semibold mb-3 text-[14px]">Recent Catalysts & News</div>
+        <div className="text-[var(--color-text-muted)] text-[14px]">No recent news.</div>
       </div>
     )
   }
 
   return (
     <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
-      <div className="font-semibold mb-3 text-sm flex items-center justify-between">
+      <div className="font-semibold mb-3 text-[14px] flex items-center justify-between">
         <span>Recent News</span>
         <span className="text-[10px] text-[var(--color-text-muted)] font-normal">
           Run <code className="bg-[var(--color-surface)] px-1 rounded">/tearsheet {tickerData.ticker}</code> for AI synthesis
         </span>
       </div>
-      <ul className="text-xs flex flex-col gap-2 max-h-96 overflow-y-auto">
+      <ul className="text-[12.5px] flex flex-col gap-2 max-h-96 overflow-y-auto">
         {news.slice(0, 10).map((n, i) => (
           <li key={i} className="flex flex-col gap-0.5 pb-1.5 border-b border-[var(--color-border-light)]">
             <div className="text-[10px] text-[var(--color-text-muted)] flex gap-2">

@@ -133,7 +133,7 @@ function HeatCell({ heat }) {
   return (
     <td className="py-[4px] pr-2.5 whitespace-nowrap">
       <span className="tabular-nums font-mono">{heat.score.toFixed(1)}</span>
-      <span className="text-[8.5px] tracking-[1px] text-[var(--color-text-muted)] opacity-0 group-hover:opacity-60 transition-opacity ml-1.5">{marks}</span>
+      <span className="text-[10px] tracking-[1px] text-[var(--color-text-muted)] opacity-0 group-hover:opacity-60 transition-opacity ml-1.5">{marks}</span>
     </td>
   )
 }
@@ -143,7 +143,7 @@ function EvidenceFold({ row }) {
     <tr>
       <td colSpan={15} className="pb-2 pt-0 pl-9 border-none">
         <div className="border border-[var(--color-border-light)] rounded-md bg-[var(--color-surface)]
-                        px-3.5 py-2 text-[12px] text-[var(--color-text-secondary)] flex flex-wrap gap-x-5 gap-y-1">
+                        px-3.5 py-2 text-[12.5px] text-[var(--color-text-secondary)] flex flex-wrap gap-x-5 gap-y-1">
           {row.heat && row.heat.screeners.map((s) => (
             <span key={s.name}>
               <b className="font-semibold text-[var(--color-text)]">{s.name}</b>
@@ -187,7 +187,7 @@ function SortTh({ k, sort, onSort, align = 'right', title, children }) {
     <th className={`py-1 pr-2.5 font-medium ${alignCls}`} title={title}>
       <button type="button" onClick={() => onSort(k)}
         className={`bg-transparent border-none p-0 cursor-pointer font-inherit uppercase
-                    tracking-wider text-[9.5px] outline-none focus-visible:ring-1
+                    tracking-wider text-[10px] outline-none focus-visible:ring-1
                     ${on ? 'text-[var(--color-text-secondary)]' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'}`}>
         {children}{on && <span className="ml-0.5">{sort.dir === 'desc' ? '▼' : '▲'}</span>}
       </button>
@@ -230,7 +230,7 @@ export default function StockTable({ rows, defaultSort = 'rs3' }) {
 
   if (!rows.length) {
     return (
-      <p className="m-0 py-8 text-center text-[12px] text-[var(--color-text-muted)]">
+      <p className="m-0 py-8 text-center text-[12.5px] text-[var(--color-text-muted)]">
         0 names match this selection.
       </p>
     )
@@ -240,7 +240,7 @@ export default function StockTable({ rows, defaultSort = 'rs3' }) {
     <div>
       <table className="w-full text-[12.5px] border-collapse">
         <thead>
-          <tr className="text-[9.5px] font-mono font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
+          <tr className="text-[10px] font-mono font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
             <th className="text-right py-1 pr-2.5 font-medium w-7">#</th>
             <SortTh k="ticker" sort={sort} onSort={clickSort} align="left">Ticker</SortTh>
             <SortTh k="heat" sort={sort} onSort={clickSort} align="left"
@@ -274,7 +274,7 @@ export default function StockTable({ rows, defaultSort = 'rs3' }) {
       {hidden > 0 && (
         <button type="button" onClick={() => setShown((n) => n + STEP)}
           className="block w-full bg-transparent border-none cursor-pointer text-center
-                     text-[10.5px] text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] py-1.5">
+                     text-[10px] text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] py-1.5">
           ⋮ {hidden} more — show
         </button>
       )}
@@ -302,7 +302,7 @@ function RowPair({ r, i, open, onToggle }) {
         <td className="py-[4px] pr-2.5 font-mono font-semibold text-[var(--color-text-bold)]">{r.ticker}</td>
         <HeatCell heat={r.heat} />
         <AlignDots rs3={r.rs3} indState={r.indState} indName={r.ind} />
-        <td className="py-[4px] pr-2.5 text-[10.5px]">
+        <td className="py-[4px] pr-2.5 text-[10px]">
           <StateWord state={r.state} fallback={r.inUniverse ? '—' : 'not in universe'} />
         </td>
         <GroupTrendCell home={r.home} homeKind={r.homeKind} ribbon={r.homeRibbon} />

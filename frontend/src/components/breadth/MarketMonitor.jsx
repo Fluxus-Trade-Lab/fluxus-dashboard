@@ -10,7 +10,7 @@ export default function MarketMonitor({ data }) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Primary */}
         <div>
-          <div className="text-[9px] font-medium uppercase tracking-wider text-[var(--color-text-muted)] mb-2">
+          <div className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)] mb-2">
             Primary
           </div>
           <div className="flex flex-col gap-1">
@@ -25,7 +25,7 @@ export default function MarketMonitor({ data }) {
 
         {/* Secondary */}
         <div>
-          <div className="text-[9px] font-medium uppercase tracking-wider text-[var(--color-text-muted)] mb-2">
+          <div className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)] mb-2">
             Secondary
           </div>
           <div className="flex flex-col gap-1">
@@ -38,7 +38,7 @@ export default function MarketMonitor({ data }) {
 
         {/* Reference */}
         <div>
-          <div className="text-[9px] font-medium uppercase tracking-wider text-[var(--color-text-muted)] mb-2">
+          <div className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)] mb-2">
             Reference
           </div>
           <div className="flex flex-col gap-1">
@@ -63,7 +63,7 @@ function Row({ label, value, color = '' }) {
   return (
     <div className="flex items-center justify-between">
       <span className="text-[11px] text-[var(--color-text-secondary)]">{label}</span>
-      <span className={`font-mono tabular-nums text-[12px] text-[var(--color-text)] ${color}`}>
+      <span className={`font-mono tabular-nums text-[12.5px] text-[var(--color-text)] ${color}`}>
         {value ?? '—'}
       </span>
     </div>

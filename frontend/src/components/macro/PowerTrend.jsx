@@ -36,7 +36,7 @@ export default function PowerTrend({ signals }) {
           <tbody>
             {CHECKS.map((check) => (
               <tr key={check.key}>
-                <td className="text-xs text-[var(--color-text-secondary)] py-0.5 pr-2">
+                <td className="text-[12.5px] text-[var(--color-text-secondary)] py-0.5 pr-2">
                   {check.label}
                 </td>
                 {TICKERS.map((ticker) => {
@@ -45,7 +45,7 @@ export default function PowerTrend({ signals }) {
                   return (
                     <td
                       key={ticker}
-                      className={`font-mono text-xs py-0.5 text-center ${
+                      className={`font-mono text-[12.5px] py-0.5 text-center ${
                         passed ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'
                       }`}
                     >

@@ -117,13 +117,13 @@ function MaLegend({ showMAs, spyData }) {
       {MA_CONFIGS.map(ma => (
         <span key={ma.label} className="flex items-center gap-1">
           <span className="inline-block w-3 h-0.5 rounded-full" style={{ backgroundColor: ma.color }} />
-          <span className="text-[9px] text-[var(--color-text-muted)] font-mono">{ma.label}</span>
+          <span className="text-[10px] text-[var(--color-text-muted)] font-mono">{ma.label}</span>
         </span>
       ))}
       {spyData?.length > 0 && (
         <span className="flex items-center gap-1">
           <span className="inline-block w-3 h-0.5 rounded-full border-b border-dashed" style={{ borderColor: '#6366f1' }} />
-          <span className="text-[9px] text-indigo-500 font-mono">SPY</span>
+          <span className="text-[10px] text-indigo-500 font-mono">SPY</span>
         </span>
       )}
     </div>
@@ -299,7 +299,7 @@ export default function OhlcvChart({
   if (!data?.length) {
     return (
       <div
-        className="flex items-center justify-center text-[var(--color-text-muted)] text-xs"
+        className="flex items-center justify-center text-[var(--color-text-muted)] text-[12.5px]"
         style={{ height }}
       >
         No chart data
@@ -318,7 +318,7 @@ export default function OhlcvChart({
               <button
                 key={tf}
                 onClick={() => setTimeframe(tf)}
-                className={`text-[9px] font-mono px-1.5 py-0.5 rounded transition-colors cursor-pointer ${
+                className={`text-[10px] font-mono px-1.5 py-0.5 rounded transition-colors cursor-pointer ${
                   timeframe === tf
                     ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                     : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'
@@ -330,7 +330,7 @@ export default function OhlcvChart({
             <span className="w-px h-3 bg-[var(--color-border)] mx-0.5" />
             <button
               onClick={() => setLogScale(s => !s)}
-              className={`text-[9px] font-mono px-1.5 py-0.5 rounded transition-colors cursor-pointer ${
+              className={`text-[10px] font-mono px-1.5 py-0.5 rounded transition-colors cursor-pointer ${
                 logScale
                   ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                   : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'

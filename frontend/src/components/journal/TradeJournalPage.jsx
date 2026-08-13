@@ -58,10 +58,10 @@ export default function TradeJournalPage() {
   }, [trades])
 
   if (loading) {
-    return <div className="text-[var(--color-text-muted)] text-sm py-10 text-center">Loading trade journal…</div>
+    return <div className="text-[var(--color-text-muted)] text-[14px] py-10 text-center">Loading trade journal…</div>
   }
   if (!trades.length) {
-    return <div className="text-[var(--color-text-muted)] text-sm py-10 text-center">
+    return <div className="text-[var(--color-text-muted)] text-[14px] py-10 text-center">
       No trade post-mortems found. Run <code>python -m pipeline.portfolio.trade_postmortem</code>.
     </div>
   }
@@ -69,7 +69,7 @@ export default function TradeJournalPage() {
   return (
     <div>
       <div className="mb-4">
-        <h1 className="text-xl font-bold mb-2">{tr('page.trades.title')}</h1>
+        <h1 className="text-[17px] font-bold mb-2">{tr('page.trades.title')}</h1>
         <div className="text-[11px] text-[var(--color-text-muted)]">
           {trades.length} trades · {stats.total} closed · realized {stats.totalR.toFixed(1)}R of {stats.totalOpt.toFixed(1)}R available
           {stats.captureOverall != null && ` (${stats.captureOverall.toFixed(0)}% capture)`}
@@ -111,7 +111,7 @@ export default function TradeJournalPage() {
       </div>
 
       <div className="overflow-x-auto border border-[var(--color-border)] rounded-lg bg-[var(--color-surface)]">
-        <table className="w-full text-xs">
+        <table className="w-full text-[12.5px]">
           <thead>
             <tr className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
               <Th onClick={() => handleSort('entry_date')} active={sortKey === 'entry_date'} dir={sortDir}>Entry</Th>

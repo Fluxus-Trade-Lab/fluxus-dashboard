@@ -4,7 +4,7 @@ export default function StatCard({ label, value, sub, colorClass }) {
       <div className="text-[11px] text-[var(--color-text-muted)] font-medium uppercase tracking-wider mb-1">
         {label}
       </div>
-      <div className={`text-xl font-bold tabular-nums ${colorClass || 'text-[var(--color-text)]'}`}>
+      <div className={`text-[17px] font-bold tabular-nums ${colorClass || 'text-[var(--color-text)]'}`}>
         {value}
       </div>
       {sub && <div className="text-[11px] text-[var(--color-text-muted)] mt-0.5">{sub}</div>}

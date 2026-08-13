@@ -230,7 +230,7 @@ export default function OptionsTab() {
   }
 
   const thStyle = 'text-left px-2.5 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[10px] uppercase tracking-wide whitespace-nowrap'
-  const tdStyle = 'px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-xs'
+  const tdStyle = 'px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-[12.5px]'
 
   return (
     <div>
@@ -250,19 +250,19 @@ export default function OptionsTab() {
           </div>
           {editingCapital ? (
             <div className="flex gap-1 items-center mt-1">
-              <span className="text-[var(--color-text-muted)] text-sm">$</span>
+              <span className="text-[var(--color-text-muted)] text-[14px]">$</span>
               <input
                 type="number"
                 value={capitalInput}
                 onChange={e => setCapitalInput(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter') handleCapitalSave(); if (e.key === 'Escape') setEditingCapital(false) }}
                 autoFocus
-                className="w-[100px] text-lg font-bold bg-[var(--color-input-bg)] border border-[var(--color-input-border)] rounded px-1.5 py-0.5 font-mono tabular-nums outline-none focus:border-[var(--color-text-secondary)]"
+                className="w-[100px] text-[17px] font-bold bg-[var(--color-input-bg)] border border-[var(--color-input-border)] rounded px-1.5 py-0.5 font-mono tabular-nums outline-none focus:border-[var(--color-text-secondary)]"
               />
-              <button onClick={handleCapitalSave} className="text-[var(--color-profit)] font-bold text-sm cursor-pointer bg-transparent border-none">OK</button>
+              <button onClick={handleCapitalSave} className="text-[var(--color-profit)] font-bold text-[14px] cursor-pointer bg-transparent border-none">OK</button>
             </div>
           ) : (
-            <div className="text-lg font-bold font-mono tabular-nums">{pm ? MASK : fmtCur(state.optionsCapital)}</div>
+            <div className="text-[17px] font-bold font-mono tabular-nums">{pm ? MASK : fmtCur(state.optionsCapital)}</div>
           )}
         </div>
         <StatCard

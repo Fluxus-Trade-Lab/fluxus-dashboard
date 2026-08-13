@@ -25,15 +25,15 @@ export default function StockbeeRatio({ data }) {
       </h3>
 
       <div className="flex items-baseline gap-3 mb-3">
-        <span className={`text-3xl font-mono font-medium ${ratioColor}`}>
+        <span className={`text-[26px] font-mono font-medium ${ratioColor}`}>
           {ratio != null ? ratio.toFixed(4) : '\u2014'}
         </span>
-        <span className={`text-xs font-medium uppercase tracking-wide ${signalColor}`}>
+        <span className={`text-[12.5px] font-medium uppercase tracking-wide ${signalColor}`}>
           {data.signal}
         </span>
       </div>
 
-      <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+      <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[12.5px]">
         <div className="flex items-center justify-between">
           <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
             Gainers Today
