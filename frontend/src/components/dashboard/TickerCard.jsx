@@ -42,7 +42,7 @@ function changeColour(val) {
   return val > 0 ? 'var(--color-took)' : 'var(--color-refused)'
 }
 
-export default function TickerCard({ ticker, signal, etf }) {
+export default function TickerCard({ ticker, signal, etf, scale = 0 }) {
   // signal data comes from signals.json (SPY, QQQ, IWM, BTC-USD, ^VIX)
   // etf data comes from etf_data.json (DIA, RSP, QQQE, GLD, TLT)
   // one or both may be present
@@ -52,6 +52,7 @@ export default function TickerCard({ ticker, signal, etf }) {
   const sigLabel = signal?.signal ? signalLabel(signal.signal) : null
 
   const displayName = ticker === 'BTC-USD' ? 'BTC' : ticker === '^VIX' ? 'VIX' : ticker
+  const ok = Number.isFinite(change)
 
   return (
     <div className="bg-[var(--color-surface)] border border-[var(--color-border)]
@@ -72,8 +73,9 @@ export default function TickerCard({ ticker, signal, etf }) {
       </div>
 
       <div className="flex items-baseline gap-2 mt-0.5 flex-wrap">
-        <span className="font-mono text-[12px] tabular-nums"
-              style={{ color: changeColour(change) }}
+        {/* neutral: the bar below owns the direction, and a figure that labels
+            its own mark does not need to say it twice */}
+        <span className="font-mono text-[12px] tabular-nums text-[var(--color-text-secondary)]"
               title={change == null ? 'no move measured for this instrument' : undefined}>
           {formatChange(change)}
         </span>
@@ -81,6 +83,20 @@ export default function TickerCard({ ticker, signal, etf }) {
           <span className={`text-[9px] font-mono font-medium uppercase tracking-[.14em] ${signalTextColor(sigColor)}`}>
             {sigLabel}
           </span>
+        )}
+      </div>
+
+      {/* the mark — one scale across the ten cards, zero in the middle */}
+      <div className="relative h-[3px] mt-1.5"
+           title={ok && scale > 0
+             ? `${(change * 100).toFixed(2)}% against today's widest benchmark move, ±${(scale * 100).toFixed(2)}%`
+             : 'no move measured'}>
+        <span className="absolute inset-y-[-1px] w-px left-1/2 bg-[var(--color-border)]" />
+        {ok && scale > 0 && (
+          <span className="absolute top-0 h-[3px] rounded-[1px]"
+                style={{ background: changeColour(change),
+                         left: change > 0 ? '50%' : `${50 - Math.min(Math.abs(change) / scale, 1) * 50}%`,
+                         width: `${Math.min(Math.abs(change) / scale, 1) * 50}%` }} />
         )}
       </div>
     </div>

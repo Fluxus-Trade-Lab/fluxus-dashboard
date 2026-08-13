@@ -113,10 +113,14 @@ export default function Layout({ data, lastUpdated, isOffline }) {
               <section className="border border-[var(--color-border)] rounded-lg px-4 py-3
                                   bg-[var(--color-surface)]">
                 <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1 mb-4">
-                  <h2 className="text-[34px] leading-none font-semibold m-0"
-                      style={{ fontFamily: 'var(--font-cond)',
-                               color: /BULL/i.test(data.breadth.verdict.env)
-                                 ? 'var(--color-took)' : 'var(--color-refused)' }}>
+                  {/* The verdict is a WORD, and words do not wear the encoding
+                      colour — the marks below it already say the same thing in
+                      took/refused, so colouring the word said it twice. Weight
+                      and size carry the emphasis instead (Andy 2026-08-13,
+                      reading nextSignals: colour lives in the graphic). */}
+                  <h2 className="text-[34px] leading-none font-semibold m-0
+                                 text-[var(--color-text-bold)]"
+                      style={{ fontFamily: 'var(--font-cond)' }}>
                     {data.breadth.verdict.env}
                   </h2>
                   <span className="text-[19px] font-mono tabular-nums">

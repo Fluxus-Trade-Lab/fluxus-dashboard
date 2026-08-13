@@ -309,9 +309,11 @@ function RowPair({ r, i, open, onToggle }) {
         <RsCell v={r.rs1} />
         <RsCell v={r.rs3} />
         <RsCell v={r.rs6} />
-        <td className="py-[4px] pr-2.5 text-right tabular-nums"
-            style={r.accel == null ? { color: 'var(--color-text-muted)' }
-                 : { color: r.accel > 0 ? 'var(--color-took)' : 'var(--color-refused)' }}>
+        {/* neutral: the sign already carries the direction, and this row's
+            encoding lives in the Align dots and the State glyph. A naked
+            coloured number with no mark of its own was the leak Andy named. */}
+        <td className={`py-[4px] pr-2.5 text-right tabular-nums ${
+          r.accel == null ? 'text-[var(--color-text-muted)]' : 'text-[var(--color-text-secondary)]'}`}>
           {r.accel == null ? '—' : `${r.accel > 0 ? '+' : '−'}${Math.abs(r.accel).toFixed(2)}`}
         </td>
         <td className="py-[4px] pr-2.5 text-right tabular-nums opacity-78 group-hover:opacity-100 transition-opacity">

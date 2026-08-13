@@ -18,45 +18,63 @@ import { etfName, rsTone, fmtRs, rankWithin, PERF_WINDOWS } from '../../lib/etfR
  * reads at a glance, "$83.92" does not.
  */
 
-function Row({ etf, ranks, changeKey, windowLabel, cohort }) {
+function Row({ etf, ranks, changeKey, windowLabel, cohort, scale }) {
   const name = etfName(etf.ticker)
   const change = etf[changeKey]
   const rs = ranks.get(etf.ticker)
+  const ok = Number.isFinite(change) && scale > 0
   const up = change > 0
+  // half the track each side of a shared zero, so two rows are comparable
+  const w = ok ? Math.min(Math.abs(change) / scale, 1) * 50 : 0
   return (
-    <div className="flex items-center gap-2.5 h-[34px]">
-      <span className="w-7 shrink-0 text-center text-[10px] font-mono tabular-nums
-                       leading-[17px] rounded-sm"
-            style={rsTone(rs)}
-            title={rs == null ? 'no reading for this window'
-                              : `${windowLabel} RS ${rs} of 99 — ranked among ${cohort} funds`}>
-        {fmtRs(rs)}
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="block text-[12px] font-mono font-medium leading-[13px]
-                         text-[var(--color-text-bold)]">{etf.ticker}</span>
-        {/* absent rather than guessed when the vendor had no name */}
-        <span className="block text-[10px] leading-[13px] truncate
-                         text-[var(--color-text-muted)]" title={name ?? undefined}>
-          {name ?? '\u00a0'}
+    <div className="h-[36px] flex flex-col justify-center gap-[3px]">
+      <div className="flex items-center gap-2.5">
+        <span className="w-7 shrink-0 text-center text-[10px] font-mono tabular-nums
+                         leading-[17px] rounded-sm"
+              style={rsTone(rs)}
+              title={rs == null ? 'no reading for this window'
+                                : `${windowLabel} RS ${rs} of 99 — ranked among ${cohort} funds`}>
+          {fmtRs(rs)}
         </span>
-      </span>
-      <span className="shrink-0 text-[12px] font-mono tabular-nums"
-            style={{ color: up ? 'var(--color-took)' : 'var(--color-refused)' }}>
-        {up ? '+' : ''}{(change * 100).toFixed(2)}%
-      </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-[12px] font-mono font-medium leading-[12px]
+                           text-[var(--color-text-bold)]">{etf.ticker}</span>
+          {/* absent rather than guessed when the vendor had no name */}
+          <span className="block text-[10px] leading-[12px] truncate
+                           text-[var(--color-text-muted)]" title={name ?? undefined}>
+            {name ?? '\u00a0'}
+          </span>
+        </span>
+        {/* The number no longer carries the colour — the bar under it does, and
+            a figure that labels its own mark does not need to repeat it. */}
+        <span className="shrink-0 text-[12px] font-mono tabular-nums
+                         text-[var(--color-text-secondary)]">
+          {ok ? `${up ? '+' : ''}${(change * 100).toFixed(2)}%` : '—'}
+        </span>
+      </div>
+      {/* the mark: same zero, same scale, so length is comparable down the column */}
+      <div className="relative h-[3px]"
+           title={ok ? `${(change * 100).toFixed(2)}% of a ±${(scale * 100).toFixed(1)}% ${windowLabel} range`
+                     : 'no move measured'}>
+        <span className="absolute inset-y-[-1px] w-px left-1/2 bg-[var(--color-border)]" />
+        {ok && (
+          <span className="absolute top-0 h-[3px] rounded-[1px]"
+                style={{ background: up ? 'var(--color-took)' : 'var(--color-refused)',
+                         left: up ? '50%' : `${50 - w}%`, width: `${w}%` }} />
+        )}
+      </div>
     </div>
   )
 }
 
-function Column({ label, rows, ranks, changeKey, windowLabel, cohort }) {
+function Column({ label, rows, ranks, changeKey, windowLabel, cohort, scale }) {
   return (
     <div>
       <h4 className="text-[9px] font-mono font-medium uppercase tracking-[.2em]
                      text-[var(--color-text-muted)] mb-1">{label}</h4>
       {rows.map((e) => (
         <Row key={e.ticker} etf={e} ranks={ranks} changeKey={changeKey}
-             windowLabel={windowLabel} cohort={cohort} />
+             windowLabel={windowLabel} cohort={cohort} scale={scale} />
       ))}
     </div>
   )
@@ -71,8 +89,13 @@ export default function LeadersLaggards({
       const changeKey = PERF_WINDOWS[w]
       const sorted = [...etfs].filter((e) => Number.isFinite(e[changeKey]))
         .sort((a, b) => b[changeKey] - a[changeKey])
+      // The bar's scale is this window's full-cohort extreme — the same
+      // denominator the RS rank uses. Taking it from the six rows shown would
+      // make every card's longest bar look identical no matter the day.
+      const vals = sorted.map((e) => Math.abs(e[changeKey]))
       return {
         w, changeKey, ranks: rankWithin(etfs, changeKey),
+        scale: vals.length ? Math.max(...vals) : 0,
         leaders: sorted.slice(0, limit),
         laggards: sorted.slice(-limit).reverse(),
       }
@@ -90,6 +113,10 @@ export default function LeadersLaggards({
         <span className="text-[9px] text-[var(--color-text-muted)]">
           {etfs.length} funds
         </span>
+        <span className="ml-auto text-[9px] font-mono text-[var(--color-text-muted)]"
+              title="each window's bars are scaled to that window's widest move across the whole cohort">
+          {cols.map((c) => `${c.w} ±${(c.scale * 100).toFixed(1)}%`).join('  ·  ')}
+        </span>
       </div>
       {/* Two stacked grids rather than one four-cell grid. A single grid gives
           every row the height of the tallest, so when this card stretches to
@@ -102,7 +129,7 @@ export default function LeadersLaggards({
           {cols.map((c) => (
             <Column key={`${c.w}-lead`} label={`${c.w} leaders`} rows={c.leaders}
                     ranks={c.ranks} changeKey={c.changeKey} windowLabel={c.w}
-                    cohort={etfs.length} />
+                    cohort={etfs.length} scale={c.scale} />
           ))}
         </div>
         <div className="grid gap-x-4"
@@ -110,7 +137,7 @@ export default function LeadersLaggards({
           {cols.map((c) => (
             <Column key={`${c.w}-lag`} label={`${c.w} laggards`} rows={c.laggards}
                     ranks={c.ranks} changeKey={c.changeKey} windowLabel={c.w}
-                    cohort={etfs.length} />
+                    cohort={etfs.length} scale={c.scale} />
           ))}
         </div>
       </div>
