@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import { barStyle } from '../groups/ThemeBars'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 /**
  * The control bar: four vocabularies, all selection, no query construction.
@@ -84,6 +85,7 @@ export default function ScanBar({
   search, onSearch,
   receipt, hiddenNote,
 }) {
+  const { t: tr } = useLanguage()
   const [themeQuery, setThemeQuery] = useState('')
   const [themeOpen, setThemeOpen] = useState(false)
   const [themeIdx, setThemeIdx] = useState(0)
@@ -100,7 +102,7 @@ export default function ScanBar({
     <div className="sticky top-0 z-10 mb-4 border-b border-[var(--color-border)]
                     bg-[color-mix(in_srgb,var(--color-bg)_88%,transparent)] backdrop-blur-sm">
       <div className="flex items-baseline gap-x-4 gap-y-1 flex-wrap py-2">
-        <Lbl>Scan</Lbl>
+        <Lbl>{tr('scr.bar.scan')}</Lbl>
         {scans.map((s) => (
           <Seg key={s.key} on={scan === s.key} dim={s.count === 0}
                onClick={() => onScan(s.key)}
@@ -112,7 +114,7 @@ export default function ScanBar({
         ))}
       </div>
       <div className="flex items-baseline gap-x-4 gap-y-1 flex-wrap pb-2">
-        <Lbl>State</Lbl>
+        <Lbl>{tr('scr.bar.state')}</Lbl>
         {STATE_ORDER.map((st) => {
           const n = stateCounts ? (stateCounts[st] ?? 0) : null
           return (
@@ -120,13 +122,13 @@ export default function ScanBar({
                  title={n == null ? `${st} — not loaded yet` : `${st} — ${n} in this cut`}>
               <i className="inline-block w-[8px] h-[8px] rounded-[1px] mr-[5px] align-[-1px]"
                  style={barStyle(st)} />
-              {st}<Count n={n} on={states.has(st)} />
+              {tr(`state.${st}`)}<Count n={n} on={states.has(st)} />
             </Seg>
           )
         })}
 
         <Divider />
-        <span className="text-[10px] font-mono font-medium uppercase tracking-[.14em] text-[var(--color-text-muted)]">Theme</span>
+        <span className="text-[10px] font-mono font-medium uppercase tracking-[.14em] text-[var(--color-text-muted)]">{tr('scr.bar.theme')}</span>
         {chosen ? (
           <span className="text-[12.5px] text-[var(--color-text-bold)]">
             {chosen.group}
@@ -134,7 +136,7 @@ export default function ScanBar({
             <button type="button" onClick={() => onTheme(null)}
               className="bg-transparent border-none cursor-pointer text-[var(--color-text-muted)]
                          hover:text-[var(--color-text)] ml-1.5 p-0 text-[11px]"
-              aria-label="clear theme">×</button>
+              aria-label={tr('scr.bar.clearTheme')}>×</button>
           </span>
         ) : (
           <span className="relative">
@@ -157,7 +159,7 @@ export default function ScanBar({
                   onTheme(pick.group); setThemeQuery(''); setThemeOpen(false); setThemeIdx(0)
                 }
               }}
-              placeholder={`all themes · ${themes.length}`}
+              placeholder={`${tr('scr.bar.allThemes')} · ${themes.length}`}
               className="bg-transparent border-none border-b border-solid border-[var(--color-border)]
                          text-[12.5px] text-[var(--color-text)] w-[130px] px-0.5 outline-none
                          placeholder:text-[var(--color-text-muted)]" />

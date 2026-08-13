@@ -16,6 +16,25 @@ describe('translations', () => {
     expect(missingInEn, `keys missing in en: ${missingInEn.join(', ')}`).toEqual([])
   })
 
+
+  /**
+   * A zh value that is pure ASCII is almost always English pasted into the
+   * Chinese column — the failure that makes a dictionary look complete while
+   * half of it never got written. Latin is legitimate for the trade's proper
+   * nouns (RS 1M, T2108, VCP…), so a value is allowed through when it still
+   * carries Han characters, or when it is listed here on purpose.
+   */
+  it('zh values are actually Chinese, or deliberately Latin', () => {
+    const DELIBERATE = new Set([
+      'brand.name', 'nav.briefing',
+    ])
+    const han = /[\u4e00-\u9fff]/
+    const suspects = Object.entries(translations.zh)
+      .filter(([k, v]) => !DELIBERATE.has(k) && !han.test(v) && /[A-Za-z]{3}/.test(v))
+      .map(([k, v]) => `${k} = "${v}"`)
+    expect(suspects, `zh looks like untranslated English:\n${suspects.join('\n')}`).toEqual([])
+  })
+
   it('has no empty string values', () => {
     for (const lang of ['en', 'zh']) {
       for (const [key, val] of Object.entries(translations[lang])) {

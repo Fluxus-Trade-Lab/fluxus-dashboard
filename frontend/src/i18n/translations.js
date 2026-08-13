@@ -1,6 +1,29 @@
-// Professional finance zh-CN translations for UI chrome (labels, headers, buttons, badges).
-// Flat dotted keys. Data values (tickers, numbers, prices, dates) are never translated.
-// Missing keys fall back to English, then to the key string itself (see LanguageContext).
+// zh-CN alongside English, for everything a reader sees.
+//
+// Flat dotted keys. A missing key falls back to English and, in development,
+// logs once (see LanguageContext) — silence would make an untranslated screen
+// look finished.
+//
+// ── What is NEVER translated ────────────────────────────────────────────────
+// Tickers, numbers, prices, dates. Metric names that are proper nouns of the
+// trade — RS 1M, T2108, McClellan, VCP, EMA21, ATR, SQN, R — stay in Latin
+// script, mixed into Chinese sentences the way the operator writes them. A
+// Chinese trader reads "RS 1M"; "一个月相对强弱" is a translation nobody uses.
+//
+// ── Glossary — one Chinese word per concept, everywhere ──────────────────────
+// The four-state vocabulary and the encoding words are the ones that must not
+// drift, because two Chinese words for one state is the same fault as two
+// palettes for one state.
+//
+//   Leading 领先      Weakening 走弱     Improving 改善     Lagging 落后
+//   took the chance offered 抓住了机会    offered and refused 给了机会没抓住
+//   not measured 未测量  (never 无 / 0 — unmeasured is not zero)
+//   relative strength 相对强弱           breadth 广度
+//   screener 选股器     scan 扫描        theme 主题        industry 行业
+//   confluence 共振     persistence 持续性  acceleration 加速度
+//   trim 减仓           stop 止损        risk 风险         exposure 敞口
+//   realized 已实现     optimal 最优      capture 捕获率
+//
 
 export const translations = {
   en: {
@@ -151,6 +174,65 @@ export const translations = {
     'pf.mh.maxLoss': 'Max Loss%',
     'pf.mh.daysW': 'Days(W)',
     'pf.mh.daysL': 'Days(L)',
+
+    // ── Screener ────────────────────────────────────────────────────────────
+    'scr.blurb': 'One table over the tradeable universe, read through four vocabularies the pipeline already speaks — a scan, a state, a theme, a name. Nothing here is typed in; everything is selected.',
+    'scr.tab.screener': 'Screener',
+    'scr.tab.watchlist': 'Watchlist',
+    'scr.bar.scan': 'Scan',
+    'scr.bar.state': 'State',
+    'scr.bar.theme': 'Theme',
+    'scr.bar.find': 'Find',
+    'scr.bar.allThemes': 'all themes',
+    'scr.bar.findPlaceholder': 'ticker…',
+    'scr.bar.clearTheme': 'clear theme',
+    'scr.rows': 'rows',
+    'scr.loading': 'still loading',
+    'scr.groupLayerLoading': 'The group layer (states and themes) has not loaded yet.',
+    'scr.notLoadedYet': 'has not loaded yet.',
+    'scr.noRows': '0 names match this selection.',
+    'scr.more': 'more — show',
+    // columns
+    'scr.col.ticker': 'Ticker',
+    'scr.col.heat': 'Heat',
+    'scr.col.align': 'Align',
+    'scr.col.state': 'State',
+    'scr.col.groupTrend': 'Group trend',
+    'scr.col.accel': 'Accel',
+    'scr.col.from52wh': 'From 52wH',
+    'scr.col.relVol': 'Rel vol',
+    'scr.col.vol5d50d': 'Vol 5d/50d',
+    'scr.col.topQuartile': 'Top quartile',
+    'scr.col.indPct': 'Ind pct',
+    // states
+    'state.Leading': 'Leading',
+    'state.Weakening': 'Weakening',
+    'state.Improving': 'Improving',
+    'state.Lagging': 'Lagging',
+    'scr.notInUniverse': 'not in universe',
+    'scr.showEvidence': 'show evidence',
+    'scr.hideEvidence': 'hide evidence',
+
+    // ── Watchlist ───────────────────────────────────────────────────────────
+    'wl.topOverlap': 'Top overlap',
+    'wl.onTwoOrMore': 'names on two or more of the {n} lists',
+    'wl.copy': 'copy',
+    'wl.copied': 'copied',
+    'wl.zeroToday': '0 today',
+    'wl.moreInList': 'more, in the copied list',
+
+    // ── Dashboard ───────────────────────────────────────────────────────────
+    'dash.blurb': 'What the market is doing, before you decide what to do about it.',
+    'dash.tier.evidence': 'Evidence',
+    'dash.foundersNote': 'Founders note',
+    'dash.foundersNoteBody': 'Reserved. Written by hand on the days there is something to say — an empty slot on the other days is the honest state.',
+    'dash.conditionsLink': 'the nine conditions behind it →',
+    'dash.industries': 'Industries',
+    'dash.sectors': 'Sectors',
+    'dash.funds': 'funds',
+    'dash.leaders': 'leaders',
+    'dash.laggards': 'laggards',
+    'dash.noMove': 'no move measured for this instrument',
   },
 
   zh: {
@@ -302,5 +384,64 @@ export const translations = {
     'pf.mh.maxLoss': '最大亏损%',
     'pf.mh.daysW': '持仓天(盈)',
     'pf.mh.daysL': '持仓天(亏)',
+
+    // ── Screener ────────────────────────────────────────────────────────────
+    'scr.blurb': '一张表覆盖全部可交易标的，用管线已经会说的四本词汇表来读——扫描、状态、主题、代码。这里没有需要填写的东西，全部是选择。',
+    'scr.tab.screener': '选股器',
+    'scr.tab.watchlist': '自选',
+    'scr.bar.scan': '扫描',
+    'scr.bar.state': '状态',
+    'scr.bar.theme': '主题',
+    'scr.bar.find': '查找',
+    'scr.bar.allThemes': '全部主题',
+    'scr.bar.findPlaceholder': '代码…',
+    'scr.bar.clearTheme': '清除主题',
+    'scr.rows': '行',
+    'scr.loading': '加载中',
+    'scr.groupLayerLoading': '群体层（状态与主题）尚未加载。',
+    'scr.notLoadedYet': '尚未加载。',
+    'scr.noRows': '没有标的符合这个选择。',
+    'scr.more': '条未显示 — 展开',
+    // columns
+    'scr.col.ticker': '代码',
+    'scr.col.heat': '热度',
+    'scr.col.align': '对齐',
+    'scr.col.state': '状态',
+    'scr.col.groupTrend': '群体走势',
+    'scr.col.accel': '加速度',
+    'scr.col.from52wh': '距52周高',
+    'scr.col.relVol': '相对量',
+    'scr.col.vol5d50d': '量 5日/50日',
+    'scr.col.topQuartile': '前四分之一',
+    'scr.col.indPct': '行业百分位',
+    // states
+    'state.Leading': '领先',
+    'state.Weakening': '走弱',
+    'state.Improving': '改善',
+    'state.Lagging': '落后',
+    'scr.notInUniverse': '不在标的池内',
+    'scr.showEvidence': '展开证据',
+    'scr.hideEvidence': '收起证据',
+
+    // ── Watchlist ───────────────────────────────────────────────────────────
+    'wl.topOverlap': '重叠榜',
+    'wl.onTwoOrMore': '只同时出现在 {n} 张名单中的两张以上',
+    'wl.copy': '复制',
+    'wl.copied': '已复制',
+    'wl.zeroToday': '今日 0',
+    'wl.moreInList': '只未显示，已在复制的名单里',
+
+    // ── Dashboard ───────────────────────────────────────────────────────────
+    'dash.blurb': '在你决定做什么之前，先看市场在做什么。',
+    'dash.tier.evidence': '证据',
+    'dash.foundersNote': '主理人手记',
+    'dash.foundersNoteBody': '留白。有话说的日子手写，其余日子空着就是诚实的状态。',
+    'dash.conditionsLink': '背后的九个条件 →',
+    'dash.industries': '行业',
+    'dash.sectors': '板块',
+    'dash.funds': '只基金',
+    'dash.leaders': '领先',
+    'dash.laggards': '落后',
+    'dash.noMove': '该标的没有测到涨跌幅',
   },
 }

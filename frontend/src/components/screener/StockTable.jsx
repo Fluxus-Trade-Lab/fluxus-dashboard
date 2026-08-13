@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import Squares from '../Squares'
 import { barStyle } from '../groups/ThemeBars'
 import { tickerHref } from '../portfolio/lib/tickerUrl'
+import { useLanguage } from '../../i18n/LanguageContext'
 
 /**
  * One table, whatever the vocabularies selected. Changing a scan or a state
@@ -42,12 +43,13 @@ const STEP = 100
  *  the same square the control bar's chips wear, so one state never makes
  *  two different colour claims on one screen. */
 function StateWord({ state, fallback }) {
+  const { t: tr } = useLanguage()
   if (!state) return <span className="text-[var(--color-text-muted)]">{fallback}</span>
   return (
     <span className="text-[var(--color-text-secondary)] whitespace-nowrap">
       <i className="inline-block w-[7px] h-[7px] rounded-[1px] mr-[5px] align-[-0.5px]"
          style={barStyle(state)} />
-      {state}
+      {tr(`state.${state}`)}
     </span>
   )
 }
@@ -196,6 +198,7 @@ function SortTh({ k, sort, onSort, align = 'right', title, children }) {
 }
 
 export default function StockTable({ rows, defaultSort = 'rs3' }) {
+  const { t: tr } = useLanguage()
   const [shown, setShown] = useState(HEAD)
   const [open, setOpen] = useState(() => new Set())
   const [sort, setSort] = useState(() => ({ key: defaultSort, dir: 'desc' }))
@@ -231,7 +234,7 @@ export default function StockTable({ rows, defaultSort = 'rs3' }) {
   if (!rows.length) {
     return (
       <p className="m-0 py-8 text-center text-[12.5px] text-[var(--color-text-muted)]">
-        0 names match this selection.
+        {tr('scr.noRows')}
       </p>
     )
   }
@@ -242,26 +245,26 @@ export default function StockTable({ rows, defaultSort = 'rs3' }) {
         <thead>
           <tr className="text-[10px] font-mono font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
             <th className="text-right py-1 pr-2.5 font-medium w-7">#</th>
-            <SortTh k="ticker" sort={sort} onSort={clickSort} align="left">Ticker</SortTh>
+            <SortTh k="ticker" sort={sort} onSort={clickSort} align="left">{tr('scr.col.ticker')}</SortTh>
             <SortTh k="heat" sort={sort} onSort={clickSort} align="left"
-                title="confluence score — how many screens stacked, quality tier ×3">Heat</SortTh>
+                title="confluence score — how many screens stacked, quality tier ×3">{tr('scr.col.heat')}</SortTh>
             <th className="text-center py-1 pr-2.5 font-medium"
-                title="left dot: own RS 3M ≥ 67 · right dot: industry state">Align</th>
-            <th className="text-left py-1 pr-2.5 font-medium">State</th>
+                title="left dot: own RS 3M ≥ 67 · right dot: industry state">{tr('scr.col.align')}</th>
+            <th className="text-left py-1 pr-2.5 font-medium">{tr('scr.col.state')}</th>
             <th className="text-left py-1 pr-2.5 font-medium"
-                title="state history of the stock's home group; cells light as the archive completes fortnights">Group trend</th>
+                title="state history of the stock's home group; cells light as the archive completes fortnights">{tr('scr.col.groupTrend')}</th>
             <SortTh k="rs1" sort={sort} onSort={clickSort}>RS 1M</SortTh>
             <SortTh k="rs3" sort={sort} onSort={clickSort}>RS 3M</SortTh>
             <SortTh k="rs6" sort={sort} onSort={clickSort}>RS 6M</SortTh>
             <SortTh k="accel" sort={sort} onSort={clickSort}
-                title="rs_accel — the same number the state machine reads">Accel</SortTh>
-            <SortTh k="h52" sort={sort} onSort={clickSort}>From 52wH</SortTh>
+                title="rs_accel — the same number the state machine reads">{tr('scr.col.accel')}</SortTh>
+            <SortTh k="h52" sort={sort} onSort={clickSort}>{tr('scr.col.from52wh')}</SortTh>
             <SortTh k="relVol" sort={sort} onSort={clickSort}
-                title="today's volume ÷ 3-month average (Finviz construction)">Rel vol</SortTh>
+                title="today's volume ÷ 3-month average (Finviz construction)">{tr('scr.col.relVol')}</SortTh>
             <SortTh k="vol5050" sort={sort} onSort={clickSort}
-                title="5-day average volume over 50-day average volume, from daily bars">Vol 5d/50d</SortTh>
+                title="5-day average volume over 50-day average volume, from daily bars">{tr('scr.col.vol5d50d')}</SortTh>
             <SortTh k="tq" sort={sort} onSort={clickSort} align="left"
-                title="windows spent in the top quartile of its own cohort">Top quartile</SortTh>
+                title="windows spent in the top quartile of its own cohort">{tr('scr.col.topQuartile')}</SortTh>
             <th className="py-1 font-medium w-5"></th>
           </tr>
         </thead>
@@ -275,7 +278,7 @@ export default function StockTable({ rows, defaultSort = 'rs3' }) {
         <button type="button" onClick={() => setShown((n) => n + STEP)}
           className="block w-full bg-transparent border-none cursor-pointer text-center
                      text-[10px] text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] py-1.5">
-          ⋮ {hidden} more — show
+          ⋮ {hidden} {tr('scr.more')}
         </button>
       )}
     </div>
@@ -283,6 +286,7 @@ export default function StockTable({ rows, defaultSort = 'rs3' }) {
 }
 
 function RowPair({ r, i, open, onToggle }) {
+  const { t: tr } = useLanguage()
   const hasEvidence = Boolean(r.heat) || r.indPct != null || r.perf1w != null
   return (
     <>
@@ -303,7 +307,7 @@ function RowPair({ r, i, open, onToggle }) {
         <HeatCell heat={r.heat} />
         <AlignDots rs3={r.rs3} indState={r.indState} indName={r.ind} />
         <td className="py-[4px] pr-2.5 text-[10px]">
-          <StateWord state={r.state} fallback={r.inUniverse ? '—' : 'not in universe'} />
+          <StateWord state={r.state} fallback={r.inUniverse ? '—' : tr('scr.notInUniverse')} />
         </td>
         <GroupTrendCell home={r.home} homeKind={r.homeKind} ribbon={r.homeRibbon} />
         <RsCell v={r.rs1} />
@@ -336,7 +340,7 @@ function RowPair({ r, i, open, onToggle }) {
           {hasEvidence && (
             <button type="button"
               onClick={(e) => { e.stopPropagation(); onToggle(r.ticker) }}
-              aria-label={open ? 'hide evidence' : 'show evidence'}
+              aria-label={open ? tr('scr.hideEvidence') : tr('scr.showEvidence')}
               className="bg-transparent border-none cursor-pointer p-0 text-[var(--color-text-muted)]
                          hover:text-[var(--color-text)] outline-none focus-visible:ring-1">
               {open ? '▾' : '▸'}
