@@ -124,7 +124,7 @@ function fmtDate(iso) {
 
 /* Tints, not coloured type. The cell IS the mark and the number sits on it —
  * the same construction rsTone uses in the screener. It read
- * `bg-green-500/10 text-[var(--color-profit)]`: raw Tailwind green off the
+ * `bg-[color-mix(in_srgb,var(--color-profit)_10%,transparent)] text-[var(--color-profit)]`: raw Tailwind green off the
  * system entirely, plus the money palette on a market-half page. */
 function tint(level) {
   if (level === 'high') return 'bg-[color-mix(in_srgb,var(--color-took)_28%,transparent)]'

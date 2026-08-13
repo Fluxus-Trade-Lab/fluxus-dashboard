@@ -3,11 +3,12 @@ import { useTradeJournal } from '../../hooks/useTradeJournal'
 import { useLanguage } from '../../i18n/LanguageContext'
 import TickerLink from '../ticker/TickerLink'
 import PreMarketChecklist from '../dashboard/PreMarketChecklist'
+import PageHeader from '../PageHeader'
 
 const LESSON_COLORS = {
   'Good execution':    'text-[var(--color-profit)]',
   'Premature trim':    'text-[var(--color-signal-caution)]',
-  'Stopped too tight': 'text-orange-500',
+  'Stopped too tight': 'text-[var(--color-signal-warning)]',
   'Failed setup':      'text-[var(--color-loss)]',
   'Choppy / no edge':  'text-[var(--color-text-muted)]',
   'In progress':       'text-[var(--color-accent)]',
@@ -68,13 +69,14 @@ export default function TradeJournalPage() {
 
   return (
     <div>
-      <div className="mb-4">
-        <h1 className="text-[17px] font-bold mb-2">{tr('page.trades.title')}</h1>
-        <div className="text-[11px] text-[var(--color-text-muted)]">
-          {trades.length} trades · {stats.total} closed · realized {stats.totalR.toFixed(1)}R of {stats.totalOpt.toFixed(1)}R available
-          {stats.captureOverall != null && ` (${stats.captureOverall.toFixed(0)}% capture)`}
-        </div>
-      </div>
+      {/* The same frame the market half wears. This page wrote its own header —
+          17px bold, no crumb — so one product had two ideas of what a page
+          title is, and the money half's read a tier smaller for no reason. */}
+      <PageHeader group="book" title={tr('page.trades.title')}
+        blurb="Every fill, and what each one was worth against what it could have been worth."
+        meta={[`${trades.length} trades · ${stats.total} closed`,
+               `realized ${stats.totalR.toFixed(1)}R of ${stats.totalOpt.toFixed(1)}R available${
+                 stats.captureOverall != null ? ` · ${stats.captureOverall.toFixed(0)}% capture` : ''}`]} />
 
       {/* Two standing cards, before the log itself: what you asked yourself
           before the session, and what you concluded after it. They moved here

@@ -508,3 +508,25 @@ Screener 的 MC 数、RsSegments h2、Leaderboard h2、TickerCard 价格）—�
 
 `components/public/*` 是营销站，保留自己那套（.public-h1 等）：落地页和仪器不共享节奏。
 全站无任何文字渲染在 10px 以下。
+
+### 分类词汇表与页框（2026-08-13）
+
+**"分类色"里大半其实是有序的。** 逐个看语义之后，五套里只有一套是真并列：
+
+| 词汇表 | 原样 | 判定 | 现在 |
+|---|---|---|---|
+| 持仓腿状态 PRE-T1→POST-T3 | 琥珀/蓝/青/绿/灰 5 色 | **有序**：已执行的减仓次数 | 可数方块 `n of 3` + 中性词（复用全站 Squares） |
+| 邻近度 chips | 琥珀/橙/红 裸色 | **有序**：提醒→行动→立刻 | 站内已声明的 caution / warning / riskoff |
+| 难度档 beginner→professional | 蓝/紫 裸色 | **有序**：技能层级 | 中性——词本身已说明 |
+| 错误标签「Stopped too tight」 | 裸橙 | 过程告警 | signal-warning |
+| **形态标签**（12 种） | 12 色相，且**三个文件各存一份** | **真并列** | 一处共享定义；中性 chip，名字自己识别；`faulty_base` 例外保留 refused |
+
+形态标签那条是最有说服力的：每个 chip 上**已经印着形态名**，12 种色相既没人记得住（没人能回忆"青色 = pocket pivot"），又在做名字已经做完的事。唯一保留着色的是 `faulty_base`——它不是第 12 个形态，是**失败的那个**，在一墙标签里正是要被扫到的那个。
+
+顺带修了一处我自己造成的损伤：字号批量替换改到了**引用旧类名的注释**里，把历史记录改错了（"Tailwind's named type scale (text-[17px])" 这种自相矛盾的句子）。已复原。
+
+**页框统一**：Trade Journal / AI Coach / Portfolio 此前各写各的页头（17px 粗体、无面包屑），
+而市场半边统一用 PageHeader。三页接入后，十个页面里九个有面包屑；Portfolio 的引导屏
+（尚无账本时）仍是自己的居中布局，那是首次使用屏不是页面。
+
+**全站裸 Tailwind 颜色归零**（`components/public/*` 营销站除外）。

@@ -19,6 +19,7 @@ import RiskTab from './tabs/RiskTab'
 import OptionsTab from './tabs/OptionsTab'
 import InputField from './ui/InputField'
 import Button from './ui/Button'
+import PageHeader from '../PageHeader'
 
 const TAB_KEYS = ['pf.tab.overview', 'pf.tab.exposure', 'pf.tab.risk', 'pf.tab.options']
 
@@ -252,6 +253,12 @@ export default function Layout() {
   return (
     <div>
       {fileInput}
+
+      {/* The page frame goes above the working header, not instead of it —
+          PortfolioHeader carries the account switcher, the privacy mask and
+          the sync state, all of which have to keep working. */}
+      <PageHeader group="book" title="Portfolio"
+        blurb="What you are holding, what it is risking, and how much of the plan is still on the table." />
 
       <PortfolioHeader
         portfolioValue={totalPortfolioValue}

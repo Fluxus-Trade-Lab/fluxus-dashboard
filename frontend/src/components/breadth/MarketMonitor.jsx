@@ -70,8 +70,8 @@ function Row({ label, value, color = '' }) {
   )
 }
 
-/* Tints on the site's own tokens. These read `text-green-600 / text-amber-600
- * / text-red-500` — raw Tailwind, in no palette the brand declares, and
+/* Tints on the site's own tokens. These read `text-[var(--color-profit)] / text-[var(--color-signal-caution)]
+ * / text-[var(--color-loss)]` — raw Tailwind, in no palette the brand declares, and
  * coloured type rather than a mark. */
 function tint(level) {
   if (level === 'high') return 'bg-[color-mix(in_srgb,var(--color-took)_28%,transparent)] rounded-sm px-1'

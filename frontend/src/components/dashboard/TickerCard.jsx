@@ -4,15 +4,15 @@ import { signalColor, signalLabel, signalTextColor } from '../../lib/format'
  * One benchmark, on the market half's own type ladder and its own palette.
  *
  * Until 2026-08-12 this card was the only component on the Dashboard still
- * written in Tailwind's named type scale (text-[17px] / text-[12.5px]) while everything
+ * written in Tailwind's named type scale (text-xl / text-xs) while everything
  * around it used explicit px, and the only one painting a market move in
  * profit-green / loss-red while the Industries and Sectors cards beside it
  * painted the same kind of number in took / refused. Two ladders and two
  * palettes for one row of evidence.
  *
  *   name    10px mono, .24em — the site's standard small label
- *   level   15px mono — card headline, one tier under the 26px page subject
- *           and one over the 12px table numbers
+ *   level   17px mono — the ladder's `lead` step: one under the 26px page
+ *           subject, one over the 12.5px table numbers
  *   move    12px mono, took / refused — the same colours every other
  *           percentage on the market half wears
  *   signal  9px mono label, traffic-light hue. Kept, because this is a named

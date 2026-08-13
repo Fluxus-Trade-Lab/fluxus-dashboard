@@ -1,27 +1,11 @@
 import { useState, useCallback, useMemo, useEffect } from 'react'
 import OhlcvChart from './OhlcvChart'
+import { patternTag, formatPattern } from './patternTag'
 
-const PATTERN_COLORS = {
-  cup_with_handle: 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300',
-  flat_base: 'bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300',
-  vcp: 'bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300',
-  high_tight_flag: 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
-  pocket_pivot: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300',
-  episodic_pivot: 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300',
-  range_breakout: 'bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300',
-  base_on_base: 'bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-300',
-  double_bottom: 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300',
-  ipo_base: 'bg-lime-50 text-lime-700 dark:bg-lime-950 dark:text-lime-300',
-  faulty_base: 'bg-red-50 text-red-600 dark:bg-red-950 dark:text-red-400',
-  cup_without_handle: 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300',
-}
 
-function formatPattern(key) {
-  return key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-}
 
 function PatternBadge({ pattern }) {
-  const colors = PATTERN_COLORS[pattern] || 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]'
+  const colors = patternTag(pattern)
   return (
     <span className={`inline-block px-2 py-0.5 text-[10px] font-medium rounded-full ${colors}`}>
       {formatPattern(pattern)}
@@ -134,7 +118,7 @@ export default function StudyMode({ cards }) {
           </span>
           <div className="flex items-center gap-3">
             {reviewCount > 0 && (
-              <span className="text-[10px] text-amber-600 dark:text-amber-400">
+              <span className="text-[10px] text-[var(--color-signal-caution)] dark:text-[var(--color-signal-caution)]">
                 {reviewCount} flagged
               </span>
             )}
@@ -173,7 +157,7 @@ export default function StudyMode({ cards }) {
             </div>
           )}
           {isMarked && (
-            <span className="absolute top-3 right-3 text-[10px] font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
+            <span className="absolute top-3 right-3 text-[10px] font-medium text-[var(--color-signal-caution)] bg-[color-mix(in_srgb,var(--color-signal-caution)_100%,transparent)] px-2 py-0.5 rounded-full">
               Flagged
             </span>
           )}
@@ -259,7 +243,7 @@ export default function StudyMode({ cards }) {
                   onClick={handleMarkForReview}
                   className={`px-4 py-2 text-[11px] font-medium rounded transition-colors cursor-pointer ${
                     isMarked
-                      ? 'bg-amber-50 text-amber-700 hover:bg-amber-100'
+                      ? 'bg-[color-mix(in_srgb,var(--color-signal-caution)_100%,transparent)] text-[var(--color-signal-caution)] hover:bg-[color-mix(in_srgb,var(--color-signal-caution)_100%,transparent)]'
                       : 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-[var(--color-hover-bg)]'
                   }`}
                 >

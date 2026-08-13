@@ -1,7 +1,20 @@
+/* The three tones are a severity ladder, not three categories: near the
+ * 10EMA is a heads-up, a weekly T2 trigger is act, a fired STOP is act now.
+ * The site already declares that ladder — caution / warning / riskoff — so
+ * these stop being raw Tailwind and start being the same words the rest of
+ * the product uses. */
 const TONE = {
-  amber:  'bg-[color-mix(in_srgb,var(--color-signal-caution)_15%,transparent)] text-[var(--color-signal-caution)] ring-amber-500/30',
-  red:    'bg-[color-mix(in_srgb,var(--color-loss)_15%,transparent)] text-[var(--color-loss)] ring-red-500/30',
-  orange: 'bg-orange-500/15 text-orange-600 ring-orange-500/30',
+  amber:  'caution',
+  orange: 'warning',
+  red:    'riskoff',
+}
+const tone = (k) => {
+  const v = `var(--color-signal-${TONE[k] ?? 'caution'})`
+  return {
+    background: `color-mix(in srgb, ${v} 15%, transparent)`,
+    color: v,
+    boxShadow: `inset 0 0 0 1px color-mix(in srgb, ${v} 30%, transparent)`,
+  }
 }
 
 export default function ProximityChips({ chips }) {
@@ -11,7 +24,8 @@ export default function ProximityChips({ chips }) {
       {chips.map((c, i) => (
         <span
           key={i}
-          className={`px-1 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ring-1 ${TONE[c.tone] || TONE.amber}`}
+          className="px-1 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider"
+          style={tone(c.tone)}
         >
           {c.label}
         </span>

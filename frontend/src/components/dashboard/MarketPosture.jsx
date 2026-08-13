@@ -26,16 +26,16 @@ function derivePosture(signals) {
 
 const LIGHT_STYLES = {
   green: {
-    active: 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]',
-    ring: 'ring-green-500/20',
+    active: 'bg-[color-mix(in_srgb,var(--color-profit)_100%,transparent)] shadow-[0_0_8px_rgba(34,197,94,0.5)]',
+    ring: 'ring-[color-mix(in_srgb,var(--color-profit)_20%,transparent)]',
   },
   yellow: {
-    active: 'bg-amber-500 shadow-[0_0_8px_rgba(234,179,8,0.5)]',
-    ring: 'ring-amber-500/20',
+    active: 'bg-[color-mix(in_srgb,var(--color-signal-caution)_100%,transparent)] shadow-[0_0_8px_rgba(234,179,8,0.5)]',
+    ring: 'ring-[color-mix(in_srgb,var(--color-signal-caution)_20%,transparent)]',
   },
   red: {
-    active: 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]',
-    ring: 'ring-red-500/20',
+    active: 'bg-[color-mix(in_srgb,var(--color-loss)_100%,transparent)] shadow-[0_0_8px_rgba(239,68,68,0.5)]',
+    ring: 'ring-[color-mix(in_srgb,var(--color-loss)_20%,transparent)]',
   },
 }
 

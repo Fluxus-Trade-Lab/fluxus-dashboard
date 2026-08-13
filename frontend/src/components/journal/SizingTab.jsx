@@ -58,9 +58,9 @@ const METHODS = [
 
 const VERDICT_LABELS = {
   beginner: { label: 'Beginner', color: 'text-[var(--color-signal-caution)]' },
-  intermediate: { label: 'Intermediate', color: 'text-blue-600 dark:text-blue-400' },
+  intermediate: { label: 'Intermediate', color: 'text-[var(--color-text-secondary)]' },
   professional: { label: 'Professional', color: 'text-[var(--color-profit)]' },
-  advanced: { label: 'Advanced', color: 'text-purple-600 dark:text-purple-400' },
+  advanced: { label: 'Advanced', color: 'text-[var(--color-text-secondary)]' },
 }
 
 /* ── Position Size Calculator ────────────────────────────── */
@@ -257,7 +257,7 @@ function PortfolioAudit({ trades, dailyPrices, startingCapital }) {
           <tbody>
             {audit.positions.map(p => (
               <tr key={p.ticker} className="border-b border-[var(--color-border-light)]">
-                <td className="px-2 py-1.5 font-semibold text-blue-700 dark:text-blue-400">{p.ticker}</td>
+                <td className="px-2 py-1.5 font-semibold text-[var(--color-accent)] dark:text-[var(--color-accent)]">{p.ticker}</td>
                 <td className="px-2 py-1.5 text-right font-mono">{p.currentQty}</td>
                 <td className="px-2 py-1.5 text-right font-mono">${p.entryPrice.toFixed(2)}</td>
                 <td className="px-2 py-1.5 text-right font-mono">${p.stopPrice.toFixed(2)}</td>

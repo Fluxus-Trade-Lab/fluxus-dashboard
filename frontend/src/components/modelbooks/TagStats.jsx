@@ -1,19 +1,6 @@
 import { useState, useMemo } from 'react'
+import { patternTag, formatPattern } from './patternTag'
 
-const PATTERN_COLORS = {
-  cup_with_handle: 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300',
-  flat_base: 'bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300',
-  vcp: 'bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300',
-  high_tight_flag: 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
-  pocket_pivot: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300',
-  episodic_pivot: 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300',
-  range_breakout: 'bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300',
-  base_on_base: 'bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-300',
-  double_bottom: 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300',
-  ipo_base: 'bg-lime-50 text-lime-700 dark:bg-lime-950 dark:text-lime-300',
-  faulty_base: 'bg-red-50 text-red-600 dark:bg-red-950 dark:text-red-400',
-  cup_without_handle: 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300',
-}
 
 const ERA_FILTERS = [
   { label: 'All Time', value: 'all' },
@@ -22,9 +9,6 @@ const ERA_FILTERS = [
   { label: '2000s', value: '2000' },
 ]
 
-function formatPattern(key) {
-  return key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-}
 
 function getDecade(year) {
   return `${Math.floor(year / 10) * 10}`
@@ -124,7 +108,7 @@ export default function TagStats({ cards }) {
         <span className="text-[10px] text-[var(--color-text-muted)] ml-auto">
           {filtered.length} setups
           {untaggedCount > 0 && (
-            <span className="ml-2 text-amber-600 dark:text-amber-400">
+            <span className="ml-2 text-[var(--color-signal-caution)] dark:text-[var(--color-signal-caution)]">
               {untaggedCount} untagged
             </span>
           )}
@@ -136,7 +120,7 @@ export default function TagStats({ cards }) {
         <div className="flex flex-col items-center justify-center h-48 rounded-lg border border-dashed border-[var(--color-border)] bg-[var(--color-surface-alt)] gap-2">
           <span className="text-[12.5px] text-[var(--color-text-muted)]">No tagged patterns in this selection</span>
           {untaggedCount > 0 && (
-            <span className="text-[10px] text-amber-600 dark:text-amber-400">
+            <span className="text-[10px] text-[var(--color-signal-caution)] dark:text-[var(--color-signal-caution)]">
               {untaggedCount} setups need pattern tags
             </span>
           )}
@@ -144,7 +128,7 @@ export default function TagStats({ cards }) {
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {stats.map(({ pattern, count, avgGain, avgDuration }) => {
-            const badgeColors = PATTERN_COLORS[pattern] || 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]'
+            const badgeColors = patternTag(pattern)
             const countPct = (count / maxCount) * 100
             const gainPct = avgGain != null ? (avgGain / maxGain) * 100 : 0
             return (
@@ -171,12 +155,12 @@ export default function TagStats({ cards }) {
                   <div>
                     <div className="flex items-baseline justify-between mb-0.5">
                       <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Avg Gain</span>
-                      <span className="text-[11px] font-medium text-green-700 dark:text-green-400">
+                      <span className="text-[11px] font-medium text-[var(--color-profit)] dark:text-[var(--color-profit)]">
                         {avgGain != null ? `${avgGain.toFixed(0)}%` : '—'}
                       </span>
                     </div>
                     <div className="w-full h-1 bg-[var(--color-border)] rounded-full overflow-hidden">
-                      <div className="h-full bg-green-500 dark:bg-green-600 rounded-full" style={{ width: `${gainPct}%` }} />
+                      <div className="h-full bg-[color-mix(in_srgb,var(--color-profit)_100%,transparent)] dark:bg-[color-mix(in_srgb,var(--color-profit)_100%,transparent)] rounded-full" style={{ width: `${gainPct}%` }} />
                     </div>
                   </div>
                   <div className="flex items-baseline justify-between">

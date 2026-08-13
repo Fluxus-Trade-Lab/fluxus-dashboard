@@ -3,6 +3,7 @@ import AnalyticsTab from './AnalyticsTab'
 import CoachTab from './CoachTab'
 import RiskTab from './RiskTab'
 import SizingTab from './SizingTab'
+import PageHeader from '../PageHeader'
 
 const STRATEGIES = [
   { key: 'analytics', label: 'Analytics' },
@@ -35,9 +36,8 @@ export default function JournalPage() {
 
   return (
     <div className="max-w-5xl mx-auto py-6 px-4">
-      <h2 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-4">
-        AI Coach
-      </h2>
+      <PageHeader group="book" title="AI Coach"
+        blurb="Your own log, read back to you — sizing, risk, and the patterns in what you did." />
 
       {/* Strategy tabs */}
       <div className="flex gap-1 mb-5 flex-wrap">

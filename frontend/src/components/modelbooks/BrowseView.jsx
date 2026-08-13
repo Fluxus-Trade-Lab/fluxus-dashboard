@@ -1,22 +1,9 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import OhlcvChart from './OhlcvChart'
+import { patternTag, formatPattern } from './patternTag'
 
 /* -- Constants ---------------------------------------------------------- */
 
-const PATTERN_COLORS = {
-  cup_with_handle: 'bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300',
-  flat_base: 'bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300',
-  vcp: 'bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300',
-  high_tight_flag: 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
-  pocket_pivot: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300',
-  episodic_pivot: 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300',
-  range_breakout: 'bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300',
-  base_on_base: 'bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-300',
-  double_bottom: 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300',
-  ipo_base: 'bg-lime-50 text-lime-700 dark:bg-lime-950 dark:text-lime-300',
-  faulty_base: 'bg-red-50 text-red-600 dark:bg-red-950 dark:text-red-400',
-  cup_without_handle: 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300',
-}
 
 const TABLE_COLUMNS = [
   { key: 'ticker', label: 'Ticker', width: '' },
@@ -48,12 +35,9 @@ function abbreviateSource(source) {
 
 /* -- Helpers ------------------------------------------------------------ */
 
-function formatPattern(key) {
-  return key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-}
 
 function PatternBadge({ pattern }) {
-  const colors = PATTERN_COLORS[pattern] || 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]'
+  const colors = patternTag(pattern)
   return (
     <span className={`inline-block px-1.5 py-0.5 text-[10px] font-medium rounded-full ${colors} leading-tight`}>
       {formatPattern(pattern)}
@@ -104,7 +88,7 @@ function NotesPanel({ entry, onTickerClick }) {
       <div>
         <button
           onClick={() => onTickerClick(entry.ticker)}
-          className="text-[17px] font-semibold text-[var(--color-text-bold)] hover:text-blue-700 dark:hover:text-blue-400 hover:underline cursor-pointer"
+          className="text-[17px] font-semibold text-[var(--color-text-bold)] hover:text-[var(--color-accent)] dark:hover:text-[var(--color-accent)] hover:underline cursor-pointer"
         >
           {entry.ticker}
         </button>
@@ -128,7 +112,7 @@ function NotesPanel({ entry, onTickerClick }) {
         {entry.gain_pct != null && (
           <span>
             <span className="text-[var(--color-text-muted)]">Gain </span>
-            <span className={`font-semibold ${entry.gain_pct > 0 ? 'text-green-700 dark:text-green-400' : 'text-[var(--color-text-secondary)]'}`}>
+            <span className={`font-semibold ${entry.gain_pct > 0 ? 'text-[var(--color-profit)] dark:text-[var(--color-profit)]' : 'text-[var(--color-text-secondary)]'}`}>
               {entry.gain_pct.toFixed(1)}%
             </span>
           </span>
@@ -354,7 +338,7 @@ export default function BrowseView({ cards }) {
           onClick={() => setShowSpy(s => !s)}
           className={`ml-auto text-[10px] font-medium px-2 py-1 rounded border transition-colors ${
             showSpy
-              ? 'bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-950 dark:text-indigo-300 dark:border-indigo-800'
+              ? 'bg-[color-mix(in_srgb,var(--color-accent)_100%,transparent)] text-[var(--color-accent)] border-[color-mix(in_srgb,var(--color-accent)_100%,transparent)] dark:bg-[color-mix(in_srgb,var(--color-accent)_100%,transparent)] dark:text-[var(--color-accent)] dark:border-[color-mix(in_srgb,var(--color-accent)_100%,transparent)]'
               : 'bg-[var(--color-surface)] text-[var(--color-text-muted)] border-[var(--color-border)] hover:text-[var(--color-text-secondary)]'
           }`}
         >
@@ -459,7 +443,7 @@ export default function BrowseView({ cards }) {
                         : 'even:bg-[var(--color-surface-alt)] hover:bg-[var(--color-hover-bg)]'
                     }`}
                   >
-                    <td className="px-1.5 py-1.5 text-[11px] font-semibold text-blue-700 dark:text-blue-400">{card.ticker}</td>
+                    <td className="px-1.5 py-1.5 text-[11px] font-semibold text-[var(--color-accent)] dark:text-[var(--color-accent)]">{card.ticker}</td>
                     <td className="px-1.5 py-1.5 text-[10px] text-[var(--color-text-secondary)] font-mono">{card.year}</td>
                     <td className="px-1.5 py-1.5">
                       <div className="flex flex-wrap gap-0.5">
@@ -472,7 +456,7 @@ export default function BrowseView({ cards }) {
                       </div>
                     </td>
                     <td className={`px-1.5 py-1.5 text-[11px] font-mono ${
-                      card.gain_pct != null && card.gain_pct > 0 ? 'text-green-700 dark:text-green-400' : 'text-[var(--color-text-secondary)]'
+                      card.gain_pct != null && card.gain_pct > 0 ? 'text-[var(--color-profit)] dark:text-[var(--color-profit)]' : 'text-[var(--color-text-secondary)]'
                     }`}>
                       {card.gain_pct != null ? `${card.gain_pct.toFixed(0)}%` : '\u2014'}
                     </td>

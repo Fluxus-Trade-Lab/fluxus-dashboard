@@ -442,7 +442,7 @@ export default function TradingGym({ cards }) {
           <button
             onClick={() => handleChoice('buy')}
             disabled={animating || !!choice}
-            className="px-4 py-1.5 text-[11px] font-medium rounded bg-green-600 text-white cursor-pointer transition-opacity disabled:opacity-40 disabled:cursor-not-allowed hover:bg-green-700"
+            className="px-4 py-1.5 text-[11px] font-medium rounded bg-[color-mix(in_srgb,var(--color-profit)_100%,transparent)] text-white cursor-pointer transition-opacity disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[color-mix(in_srgb,var(--color-profit)_100%,transparent)]"
           >
             Buy
           </button>
@@ -456,7 +456,7 @@ export default function TradingGym({ cards }) {
           <button
             onClick={() => handleChoice('fade')}
             disabled={animating || !!choice}
-            className="px-4 py-1.5 text-[11px] font-medium rounded bg-red-600 text-white cursor-pointer transition-opacity disabled:opacity-40 disabled:cursor-not-allowed hover:bg-red-700"
+            className="px-4 py-1.5 text-[11px] font-medium rounded bg-[color-mix(in_srgb,var(--color-loss)_100%,transparent)] text-white cursor-pointer transition-opacity disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[color-mix(in_srgb,var(--color-loss)_100%,transparent)]"
           >
             Fade
           </button>
@@ -477,13 +477,13 @@ export default function TradingGym({ cards }) {
             <div>
               <div className="text-[10px] uppercase tracking-wide text-[var(--color-text-muted)] mb-1">Result</div>
               <div className="flex items-center gap-3">
-                <span className={`text-[14px] font-mono font-semibold ${result.changePct >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                <span className={`text-[14px] font-mono font-semibold ${result.changePct >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
                   {result.changePct >= 0 ? '+' : ''}{result.changePct.toFixed(1)}%
                 </span>
                 <span className={`text-[11px] font-medium px-2 py-0.5 rounded ${
                   result.isCorrect
-                    ? 'bg-green-600/15 text-green-500'
-                    : 'bg-red-600/15 text-red-500'
+                    ? 'bg-[color-mix(in_srgb,var(--color-profit)_15%,transparent)] text-[var(--color-profit)]'
+                    : 'bg-[color-mix(in_srgb,var(--color-loss)_15%,transparent)] text-[var(--color-loss)]'
                 }`}>
                   {result.isCorrect ? 'CORRECT' : 'WRONG'}
                 </span>

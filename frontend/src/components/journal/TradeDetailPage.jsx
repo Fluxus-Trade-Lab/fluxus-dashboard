@@ -44,7 +44,7 @@ export default function TradeDetailPage({ tradeId }) {
               <span className={`text-[14px] font-normal text-[var(--color-text-secondary)]`}>
                 {t.direction.toUpperCase()}
               </span>
-              <span className={`px-2 py-0.5 rounded text-[11px] uppercase tracking-wide ${t.closed ? 'bg-gray-500/15 text-gray-500' : 'bg-blue-500/15 text-blue-600'}`}>
+              <span className={`px-2 py-0.5 rounded text-[11px] uppercase tracking-wide ${t.closed ? 'bg-[var(--color-surface-raised)] text-[var(--color-text-muted)]' : 'bg-[color-mix(in_srgb,var(--color-accent)_15%,transparent)] text-[var(--color-accent)]'}`}>
                 {t.closed ? 'CLOSED' : 'OPEN'}
               </span>
             </h1>
@@ -222,7 +222,7 @@ function lessonColor(lesson) {
   const map = {
     'Good execution':    'text-[var(--color-profit)]',
     'Premature trim':    'text-[var(--color-signal-caution)]',
-    'Stopped too tight': 'text-orange-500',
+    'Stopped too tight': 'text-[var(--color-signal-warning)]',
     'Failed setup':      'text-[var(--color-loss)]',
     'Choppy / no edge':  'text-[var(--color-text-muted)]',
     'In progress':       'text-[var(--color-accent)]',

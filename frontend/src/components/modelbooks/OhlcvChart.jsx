@@ -123,7 +123,7 @@ function MaLegend({ showMAs, spyData }) {
       {spyData?.length > 0 && (
         <span className="flex items-center gap-1">
           <span className="inline-block w-3 h-0.5 rounded-full border-b border-dashed" style={{ borderColor: '#6366f1' }} />
-          <span className="text-[10px] text-indigo-500 font-mono">SPY</span>
+          <span className="text-[10px] text-[var(--color-accent)] font-mono">SPY</span>
         </span>
       )}
     </div>
