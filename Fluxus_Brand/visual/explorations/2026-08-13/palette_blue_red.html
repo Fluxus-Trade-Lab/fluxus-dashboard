@@ -1,0 +1,117 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>蓝/红编码色 — 三选一</title>
+<style>
+  :root{ --bg:#211d1a; --surface:#2b2723; --border:#544e46;
+         --text:#e7e5e4; --sec:#b2aca5; --muted:#9d968c; }
+  *{box-sizing:border-box}
+  body{margin:0;background:#151311;color:var(--text);
+       font:13px/1.5 Plex,-apple-system,"Helvetica Neue",sans-serif;padding:26px 30px 40px}
+  h1{font-size:19px;margin:0 0 3px;font-weight:650}
+  .sub{color:var(--sec);font-size:12.5px;margin:0 0 22px;max-width:78ch}
+  .row{display:grid;grid-template-columns:180px repeat(3,1fr);gap:14px;align-items:start;margin-bottom:14px}
+  .cap{font:500 9.5px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.16em;
+       text-transform:uppercase;color:var(--muted);padding-top:6px;text-align:right}
+  .card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
+  .name{font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;
+        color:var(--text);margin-bottom:2px}
+  .note{font-size:10.5px;color:var(--muted);margin:0 0 10px}
+  .bar{height:15px;border-radius:2px;margin-bottom:3px}
+  .lbl{font:10px/1.4 ui-monospace,Menlo,monospace;color:var(--muted);margin-bottom:8px}
+  .astext{font:600 12.5px/1.5 ui-monospace,Menlo,monospace;margin-top:2px}
+  .metrics{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;
+           border-top:1px solid var(--border);padding-top:8px}
+  .m{font:10.5px/1.3 ui-monospace,Menlo,monospace;color:var(--muted)}
+  .m b{display:block;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+  .pass{color:#7fb069} .warn{color:#d9a441} .fail{color:#d1605a}
+  .verdict{margin-top:6px;font-size:10.5px;line-height:1.45;color:var(--sec)}
+  h2{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+     color:var(--muted);margin:26px 0 10px;font-family:ui-monospace,Menlo,monospace}
+</style></head><body>
+
+<h1>蓝 / 红编码色 — 三选一</h1>
+<p class="sub">上面是同一组数值用三套色画出来的。下面两排是同一张图在<b>灰度</b>（截图转黑白、打印）
+和<b>绿色盲</b>（deuteranopia，男性约 6%）下的样子——编码色的真正考验在这两排，因为色相在那里消失，
+只剩明度差。我们的文档要求灰度 ΔL* ≥ 14。</p>
+
+<div id="grid"></div>
+
+<script>
+const SETS = [
+  { name: '现行 took / refused', up:'#1d5e98', down:'#d1600f',
+    note:'测量过的一对，但蓝太暗——当文字用只有 2.47:1，Watchlist 的 ticker 就是这么看不清的' },
+  { name: '参考图 蓝 / 红', up:'#3b9eff', down:'#e8455f',
+    note:'你喜欢的那对：亮、艳，两个都能当文字用' },
+  { name: '候选 亮蓝 / 深红', up:'#3b9eff', down:'#c02a48',
+    note:'保留你要的亮蓝，红压深一档以拉开明度' },
+];
+
+function lin(c){c/=255;return c<=0.04045?c/12.92:((c+0.055)/1.055)**2.4}
+function unlin(c){c=c<=0.0031308?12.92*c:1.055*Math.pow(c,1/2.4)-0.055;return Math.max(0,Math.min(255,Math.round(c*255)))}
+function rgb(h){return [1,3,5].map(i=>parseInt(h.substr(i,2),16))}
+function hex(a){return '#'+a.map(v=>v.toString(16).padStart(2,'0')).join('')}
+function Lstar(h){const [r,g,b]=rgb(h).map(lin);const Y=.2126*r+.7152*g+.0722*b;
+  return Y>0.008856?116*Math.cbrt(Y)-16:903.3*Y}
+function ratio(a,b){const f=h=>{const[r,g,b2]=rgb(h).map(lin);return .2126*r+.7152*g+.0722*b2};
+  const [x,y]=[f(a),f(b)].sort((p,q)=>q-p);return (x+.05)/(y+.05)}
+function grey(h){const L=rgb(h).map(lin);const Y=.2126*L[0]+.7152*L[1]+.0722*L[2];
+  const v=unlin(Y);return hex([v,v,v])}
+function deutan(h){
+  const [r,g,b]=rgb(h).map(lin);
+  const L=17.8824*r+43.5161*g+4.11935*b, M=3.45565*r+27.1554*g+3.86714*b, S=.0299566*r+.184309*g+1.46709*b;
+  const M2=.494207*L+1.24827*S;
+  const r2=.080944*L-.130504*M2+.116721*S, g2=-.0102485*L+.0540194*M2-.113615*S, b2=-.000365294*L-.00412163*M2+.693513*S;
+  return hex([r2,g2,b2].map(x=>unlin(Math.max(0,Math.min(1,x)))));
+}
+
+// 真实数量级：今天 Themes 榜的两端
+const DATA = [
+  {n:'High Octane', v:  50.1}, {n:'Cybersecurity', v: 47.7},
+  {n:'Software',    v:  10.9}, {n:'Silver',        v:-28.7},
+  {n:'Rare Earth',  v: -33.1}, {n:'Lithium',       v:-40.2},
+];
+const MAX = 50.1;
+
+function bars(up, down, tint) {
+  return DATA.map(d => {
+    const c0 = d.v > 0 ? up : down;
+    const c = tint === 'grey' ? grey(c0) : tint === 'deutan' ? deutan(c0) : c0;
+    return `<div class="bar" style="width:${Math.abs(d.v)/MAX*100}%;background:${c}"></div>
+            <div class="lbl">${d.n} ${d.v>0?'+':''}${d.v}%</div>`;
+  }).join('');
+}
+
+const rows = [
+  { cap:'原色', tint:'none' },
+  { cap:'灰度 / 打印', tint:'grey' },
+  { cap:'绿色盲', tint:'deutan' },
+];
+
+let html = '';
+for (const r of rows) {
+  html += `<div class="row"><div class="cap">${r.cap}</div>`;
+  for (const s of SETS) {
+    const dl  = Math.abs(Lstar(s.up) - Lstar(s.down));
+    const dlG = Math.abs(Lstar(deutan(s.up)) - Lstar(deutan(s.down)));
+    const cUp = ratio(s.up, '#211d1a');
+    html += `<div class="card">`;
+    if (r.tint === 'none') {
+      html += `<div class="name">${s.name}</div><p class="note">${s.note}</p>`;
+    }
+    html += bars(s.up, s.down, r.tint);
+    if (r.tint === 'none') {
+      const k = v => v>=14 ? 'pass' : v>=10 ? 'warn' : 'fail';
+      const kc = v => v>=4.5 ? 'pass' : v>=3 ? 'warn' : 'fail';
+      html += `<div class="metrics">
+        <div class="m">灰度 ΔL*<b class="${k(dl)}">${dl.toFixed(1)}</b></div>
+        <div class="m">绿色盲 ΔL*<b class="${k(dlG)}">${dlG.toFixed(1)}</b></div>
+        <div class="m">蓝当文字<b class="${kc(cUp)}">${cUp.toFixed(2)}:1</b></div>
+      </div>
+      <div class="astext" style="color:${s.up}">SPY +0.34% · 当文字看是否清楚</div>`;
+    }
+    html += `</div>`;
+  }
+  html += `</div>`;
+}
+document.getElementById('grid').innerHTML = html;
+</script>
+</body></html>
