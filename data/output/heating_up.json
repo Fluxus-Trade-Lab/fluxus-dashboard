@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-08-12T22:19:56.982973+00:00",
-  "as_of": "2026-08-11",
+  "timestamp": "2026-08-13T01:50:55.117816+00:00",
+  "as_of": "2026-08-12",
   "rows": [
     {
       "ticker": "APPS",
-      "score": 13.25,
+      "score": 13.0,
       "screeners": [
         {
           "name": "episodic_pivot",
@@ -18,7 +18,7 @@
         },
         {
           "name": "ema21_watch",
-          "hits": 2,
+          "hits": 1,
           "last_date": "2026-07-10"
         },
         {
@@ -29,7 +29,7 @@
         {
           "name": "healthy_charts",
           "hits": 5,
-          "last_date": "2026-08-11"
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -37,8 +37,8 @@
           "last_date": "2026-08-06"
         }
       ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-11",
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-08-12",
       "days_span": 15,
       "sector": "Technology"
     },
@@ -68,8 +68,8 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 7,
-          "last_date": "2026-08-11"
+          "hits": 8,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -78,8 +78,8 @@
         }
       ],
       "first_seen": "2026-07-09",
-      "last_seen": "2026-08-11",
-      "days_span": 14,
+      "last_seen": "2026-08-12",
+      "days_span": 15,
       "sector": "Consumer Cyclical"
     },
     {
@@ -123,44 +123,44 @@
       "sector": "Technology"
     },
     {
-      "ticker": "FTK",
+      "ticker": "IOVA",
       "score": 12.75,
       "screeners": [
         {
           "name": "episodic_pivot",
           "hits": 1,
-          "last_date": "2026-08-05"
+          "last_date": "2026-08-06"
         },
         {
           "name": "momentum_97",
-          "hits": 5,
-          "last_date": "2026-08-07"
+          "hits": 3,
+          "last_date": "2026-08-12"
         },
         {
           "name": "ema21_watch",
-          "hits": 1,
-          "last_date": "2026-07-08"
+          "hits": 3,
+          "last_date": "2026-07-30"
         },
         {
           "name": "gainers_4pct",
-          "hits": 5,
-          "last_date": "2026-08-05"
+          "hits": 2,
+          "last_date": "2026-08-06"
         },
         {
           "name": "healthy_charts",
           "hits": 6,
-          "last_date": "2026-08-07"
+          "last_date": "2026-08-11"
         },
         {
           "name": "vol_up_gainers",
-          "hits": 2,
-          "last_date": "2026-08-05"
+          "hits": 1,
+          "last_date": "2026-08-06"
         }
       ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-07",
-      "days_span": 14,
-      "sector": "Energy"
+      "first_seen": "2026-07-27",
+      "last_seen": "2026-08-12",
+      "days_span": 12,
+      "sector": "Healthcare"
     },
     {
       "ticker": "CORT",
@@ -174,7 +174,7 @@
         {
           "name": "momentum_97",
           "hits": 5,
-          "last_date": "2026-08-04"
+          "last_date": "2026-08-12"
         },
         {
           "name": "ema21_watch",
@@ -197,90 +197,50 @@
           "last_date": "2026-07-30"
         }
       ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-11",
-      "days_span": 15,
+      "first_seen": "2026-07-13",
+      "last_seen": "2026-08-12",
+      "days_span": 13,
       "sector": "Healthcare"
     },
     {
-      "ticker": "CAKE",
-      "score": 12.25,
+      "ticker": "KFRC",
+      "score": 12.5,
       "screeners": [
         {
-          "name": "episodic_pivot",
+          "name": "momentum_97",
           "hits": 1,
-          "last_date": "2026-07-29"
+          "last_date": "2026-07-27"
         },
         {
-          "name": "momentum_97",
-          "hits": 4,
-          "last_date": "2026-08-03"
+          "name": "vcp",
+          "hits": 3,
+          "last_date": "2026-08-12"
         },
         {
           "name": "ema21_watch",
-          "hits": 2,
-          "last_date": "2026-07-09"
+          "hits": 9,
+          "last_date": "2026-08-12"
         },
         {
           "name": "gainers_4pct",
-          "hits": 2,
-          "last_date": "2026-07-29"
+          "hits": 1,
+          "last_date": "2026-07-27"
         },
         {
           "name": "healthy_charts",
-          "hits": 1,
-          "last_date": "2026-07-08"
-        },
-        {
-          "name": "vol_up_gainers",
-          "hits": 2,
-          "last_date": "2026-07-29"
-        }
-      ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-03",
-      "days_span": 10,
-      "sector": "Consumer Cyclical"
-    },
-    {
-      "ticker": "EWTX",
-      "score": 12.25,
-      "screeners": [
-        {
-          "name": "episodic_pivot",
-          "hits": 1,
-          "last_date": "2026-08-04"
-        },
-        {
-          "name": "momentum_97",
-          "hits": 2,
-          "last_date": "2026-07-09"
-        },
-        {
-          "name": "ema21_watch",
-          "hits": 3,
-          "last_date": "2026-07-30"
-        },
-        {
-          "name": "gainers_4pct",
-          "hits": 3,
-          "last_date": "2026-08-04"
-        },
-        {
-          "name": "healthy_charts",
-          "hits": 3,
-          "last_date": "2026-08-11"
+          "hits": 6,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
           "hits": 1,
-          "last_date": "2026-08-04"
+          "last_date": "2026-07-27"
         }
       ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-11",
-      "days_span": 15,
-      "sector": "Healthcare"
+      "first_seen": "2026-07-27",
+      "last_seen": "2026-08-12",
+      "days_span": 12,
+      "sector": "Industrials"
     },
     {
       "ticker": "KNSA",
@@ -308,8 +268,8 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 7,
-          "last_date": "2026-08-05"
+          "hits": 8,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -318,8 +278,8 @@
         }
       ],
       "first_seen": "2026-07-13",
-      "last_seen": "2026-08-05",
-      "days_span": 9,
+      "last_seen": "2026-08-12",
+      "days_span": 13,
       "sector": "Healthcare"
     },
     {
@@ -388,43 +348,38 @@
       "sector": "Healthcare"
     },
     {
-      "ticker": "IOVA",
-      "score": 12.0,
+      "ticker": "AMLX",
+      "score": 11.75,
       "screeners": [
         {
-          "name": "episodic_pivot",
-          "hits": 1,
-          "last_date": "2026-08-06"
-        },
-        {
           "name": "momentum_97",
-          "hits": 2,
+          "hits": 3,
           "last_date": "2026-08-07"
         },
         {
-          "name": "ema21_watch",
-          "hits": 3,
-          "last_date": "2026-07-30"
+          "name": "vcp",
+          "hits": 1,
+          "last_date": "2026-07-27"
         },
         {
           "name": "gainers_4pct",
-          "hits": 2,
+          "hits": 4,
           "last_date": "2026-08-06"
         },
         {
           "name": "healthy_charts",
-          "hits": 6,
-          "last_date": "2026-08-11"
+          "hits": 2,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
-          "hits": 1,
+          "hits": 4,
           "last_date": "2026-08-06"
         }
       ],
       "first_seen": "2026-07-27",
-      "last_seen": "2026-08-11",
-      "days_span": 11,
+      "last_seen": "2026-08-12",
+      "days_span": 12,
       "sector": "Healthcare"
     },
     {
@@ -438,8 +393,8 @@
         },
         {
           "name": "momentum_97",
-          "hits": 4,
-          "last_date": "2026-08-03"
+          "hits": 5,
+          "last_date": "2026-08-12"
         },
         {
           "name": "gainers_4pct",
@@ -458,8 +413,8 @@
         }
       ],
       "first_seen": "2026-07-09",
-      "last_seen": "2026-08-11",
-      "days_span": 14,
+      "last_seen": "2026-08-12",
+      "days_span": 15,
       "sector": "Healthcare"
     },
     {
@@ -473,8 +428,8 @@
         },
         {
           "name": "momentum_97",
-          "hits": 4,
-          "last_date": "2026-08-05"
+          "hits": 5,
+          "last_date": "2026-08-12"
         },
         {
           "name": "gainers_4pct",
@@ -483,8 +438,8 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 6,
-          "last_date": "2026-08-11"
+          "hits": 7,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -493,84 +448,44 @@
         }
       ],
       "first_seen": "2026-07-09",
-      "last_seen": "2026-08-11",
-      "days_span": 14,
+      "last_seen": "2026-08-12",
+      "days_span": 15,
       "sector": "Technology"
     },
     {
-      "ticker": "KFRC",
+      "ticker": "FTK",
       "score": 11.75,
       "screeners": [
         {
+          "name": "episodic_pivot",
+          "hits": 1,
+          "last_date": "2026-08-05"
+        },
+        {
           "name": "momentum_97",
-          "hits": 1,
-          "last_date": "2026-07-27"
-        },
-        {
-          "name": "vcp",
-          "hits": 2,
-          "last_date": "2026-08-11"
-        },
-        {
-          "name": "ema21_watch",
-          "hits": 8,
-          "last_date": "2026-08-11"
-        },
-        {
-          "name": "gainers_4pct",
-          "hits": 1,
-          "last_date": "2026-07-27"
-        },
-        {
-          "name": "healthy_charts",
           "hits": 5,
-          "last_date": "2026-08-06"
-        },
-        {
-          "name": "vol_up_gainers",
-          "hits": 1,
-          "last_date": "2026-07-27"
-        }
-      ],
-      "first_seen": "2026-07-27",
-      "last_seen": "2026-08-11",
-      "days_span": 11,
-      "sector": "Industrials"
-    },
-    {
-      "ticker": "AMLX",
-      "score": 11.5,
-      "screeners": [
-        {
-          "name": "momentum_97",
-          "hits": 3,
           "last_date": "2026-08-07"
-        },
-        {
-          "name": "vcp",
-          "hits": 1,
-          "last_date": "2026-07-27"
         },
         {
           "name": "gainers_4pct",
-          "hits": 4,
-          "last_date": "2026-08-06"
+          "hits": 5,
+          "last_date": "2026-08-05"
         },
         {
           "name": "healthy_charts",
-          "hits": 1,
-          "last_date": "2026-08-07"
+          "hits": 7,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
-          "hits": 4,
-          "last_date": "2026-08-06"
+          "hits": 2,
+          "last_date": "2026-08-05"
         }
       ],
-      "first_seen": "2026-07-27",
-      "last_seen": "2026-08-07",
-      "days_span": 10,
-      "sector": "Healthcare"
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-08-12",
+      "days_span": 15,
+      "sector": "Energy"
     },
     {
       "ticker": "BVS",
@@ -583,18 +498,18 @@
         },
         {
           "name": "momentum_97",
-          "hits": 8,
+          "hits": 7,
           "last_date": "2026-08-05"
         },
         {
           "name": "gainers_4pct",
-          "hits": 4,
+          "hits": 3,
           "last_date": "2026-08-05"
         },
         {
           "name": "healthy_charts",
-          "hits": 3,
-          "last_date": "2026-08-11"
+          "hits": 4,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -602,8 +517,8 @@
           "last_date": "2026-08-05"
         }
       ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-11",
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-08-12",
       "days_span": 15,
       "sector": "Healthcare"
     },
@@ -628,8 +543,8 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 6,
-          "last_date": "2026-08-07"
+          "hits": 7,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -638,49 +553,49 @@
         }
       ],
       "first_seen": "2026-07-13",
-      "last_seen": "2026-08-07",
-      "days_span": 11,
+      "last_seen": "2026-08-12",
+      "days_span": 13,
       "sector": "Industrials"
     },
     {
-      "ticker": "BZH",
+      "ticker": "EWTX",
       "score": 11.25,
       "screeners": [
         {
           "name": "episodic_pivot",
           "hits": 1,
-          "last_date": "2026-07-08"
+          "last_date": "2026-08-04"
         },
         {
           "name": "momentum_97",
-          "hits": 2,
-          "last_date": "2026-07-13"
+          "hits": 1,
+          "last_date": "2026-07-09"
         },
         {
           "name": "ema21_watch",
-          "hits": 8,
-          "last_date": "2026-08-11"
+          "hits": 3,
+          "last_date": "2026-07-30"
         },
         {
           "name": "gainers_4pct",
-          "hits": 1,
-          "last_date": "2026-07-08"
+          "hits": 2,
+          "last_date": "2026-08-04"
         },
         {
           "name": "healthy_charts",
-          "hits": 1,
-          "last_date": "2026-07-31"
+          "hits": 4,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
           "hits": 1,
-          "last_date": "2026-07-08"
+          "last_date": "2026-08-04"
         }
       ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-11",
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-08-12",
       "days_span": 15,
-      "sector": "Consumer Cyclical"
+      "sector": "Healthcare"
     },
     {
       "ticker": "LIFE",
@@ -693,8 +608,8 @@
         },
         {
           "name": "momentum_97",
-          "hits": 3,
-          "last_date": "2026-08-05"
+          "hits": 4,
+          "last_date": "2026-08-12"
         },
         {
           "name": "gainers_4pct",
@@ -708,9 +623,44 @@
         }
       ],
       "first_seen": "2026-07-10",
-      "last_seen": "2026-08-06",
-      "days_span": 11,
+      "last_seen": "2026-08-12",
+      "days_span": 14,
       "sector": "Financial"
+    },
+    {
+      "ticker": "CAKE",
+      "score": 11.0,
+      "screeners": [
+        {
+          "name": "episodic_pivot",
+          "hits": 1,
+          "last_date": "2026-07-29"
+        },
+        {
+          "name": "momentum_97",
+          "hits": 5,
+          "last_date": "2026-08-12"
+        },
+        {
+          "name": "ema21_watch",
+          "hits": 1,
+          "last_date": "2026-07-09"
+        },
+        {
+          "name": "gainers_4pct",
+          "hits": 2,
+          "last_date": "2026-07-29"
+        },
+        {
+          "name": "vol_up_gainers",
+          "hits": 2,
+          "last_date": "2026-07-29"
+        }
+      ],
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-08-12",
+      "days_span": 15,
+      "sector": "Consumer Cyclical"
     },
     {
       "ticker": "LGIH",
@@ -728,7 +678,7 @@
         },
         {
           "name": "ema21_watch",
-          "hits": 8,
+          "hits": 7,
           "last_date": "2026-08-11"
         },
         {
@@ -738,7 +688,7 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 6,
+          "hits": 5,
           "last_date": "2026-08-07"
         },
         {
@@ -747,9 +697,9 @@
           "last_date": "2026-08-04"
         }
       ],
-      "first_seen": "2026-07-08",
+      "first_seen": "2026-07-09",
       "last_seen": "2026-08-11",
-      "days_span": 15,
+      "days_span": 14,
       "sector": "Consumer Cyclical"
     },
     {
@@ -773,8 +723,8 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 3,
-          "last_date": "2026-08-11"
+          "hits": 4,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -783,8 +733,8 @@
         }
       ],
       "first_seen": "2026-07-27",
-      "last_seen": "2026-08-11",
-      "days_span": 11,
+      "last_seen": "2026-08-12",
+      "days_span": 12,
       "sector": "Technology"
     },
     {
@@ -808,8 +758,8 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 3,
-          "last_date": "2026-08-11"
+          "hits": 4,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -818,8 +768,8 @@
         }
       ],
       "first_seen": "2026-07-27",
-      "last_seen": "2026-08-11",
-      "days_span": 11,
+      "last_seen": "2026-08-12",
+      "days_span": 12,
       "sector": "Technology"
     },
     {
@@ -833,7 +783,7 @@
         },
         {
           "name": "ema21_watch",
-          "hits": 5,
+          "hits": 4,
           "last_date": "2026-08-03"
         },
         {
@@ -843,8 +793,8 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 4,
-          "last_date": "2026-08-06"
+          "hits": 5,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -852,9 +802,9 @@
           "last_date": "2026-08-05"
         }
       ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-07",
-      "days_span": 14,
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-08-12",
+      "days_span": 15,
       "sector": "Healthcare"
     },
     {
@@ -913,8 +863,8 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 4,
-          "last_date": "2026-08-11"
+          "hits": 5,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -923,8 +873,8 @@
         }
       ],
       "first_seen": "2026-07-28",
-      "last_seen": "2026-08-11",
-      "days_span": 10,
+      "last_seen": "2026-08-12",
+      "days_span": 11,
       "sector": "Technology"
     },
     {
@@ -948,8 +898,8 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 3,
-          "last_date": "2026-08-11"
+          "hits": 4,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -958,8 +908,8 @@
         }
       ],
       "first_seen": "2026-08-04",
-      "last_seen": "2026-08-11",
-      "days_span": 5,
+      "last_seen": "2026-08-12",
+      "days_span": 6,
       "sector": "Consumer Defensive"
     },
     {
@@ -968,8 +918,8 @@
       "screeners": [
         {
           "name": "momentum_97",
-          "hits": 5,
-          "last_date": "2026-08-07"
+          "hits": 6,
+          "last_date": "2026-08-12"
         },
         {
           "name": "ema21_watch",
@@ -984,7 +934,7 @@
         {
           "name": "healthy_charts",
           "hits": 9,
-          "last_date": "2026-08-11"
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -992,9 +942,44 @@
           "last_date": "2026-08-03"
         }
       ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-11",
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-08-12",
       "days_span": 15,
+      "sector": "Healthcare"
+    },
+    {
+      "ticker": "DCTH",
+      "score": 10.25,
+      "screeners": [
+        {
+          "name": "episodic_pivot",
+          "hits": 1,
+          "last_date": "2026-08-06"
+        },
+        {
+          "name": "momentum_97",
+          "hits": 2,
+          "last_date": "2026-08-12"
+        },
+        {
+          "name": "gainers_4pct",
+          "hits": 2,
+          "last_date": "2026-08-06"
+        },
+        {
+          "name": "healthy_charts",
+          "hits": 1,
+          "last_date": "2026-08-07"
+        },
+        {
+          "name": "vol_up_gainers",
+          "hits": 2,
+          "last_date": "2026-08-06"
+        }
+      ],
+      "first_seen": "2026-08-03",
+      "last_seen": "2026-08-12",
+      "days_span": 7,
       "sector": "Healthcare"
     },
     {
@@ -1033,41 +1018,6 @@
       "sector": "Consumer Cyclical"
     },
     {
-      "ticker": "ACOG",
-      "score": 10.0,
-      "screeners": [
-        {
-          "name": "momentum_97",
-          "hits": 3,
-          "last_date": "2026-07-30"
-        },
-        {
-          "name": "ema21_watch",
-          "hits": 3,
-          "last_date": "2026-08-05"
-        },
-        {
-          "name": "gainers_4pct",
-          "hits": 4,
-          "last_date": "2026-08-04"
-        },
-        {
-          "name": "healthy_charts",
-          "hits": 9,
-          "last_date": "2026-08-11"
-        },
-        {
-          "name": "vol_up_gainers",
-          "hits": 1,
-          "last_date": "2026-07-08"
-        }
-      ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-11",
-      "days_span": 15,
-      "sector": "Healthcare"
-    },
-    {
       "ticker": "FA",
       "score": 10.0,
       "screeners": [
@@ -1078,8 +1028,8 @@
         },
         {
           "name": "ema21_watch",
-          "hits": 6,
-          "last_date": "2026-08-11"
+          "hits": 7,
+          "last_date": "2026-08-12"
         },
         {
           "name": "gainers_4pct",
@@ -1088,7 +1038,7 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 9,
+          "hits": 8,
           "last_date": "2026-08-11"
         },
         {
@@ -1097,9 +1047,9 @@
           "last_date": "2026-08-06"
         }
       ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-11",
-      "days_span": 15,
+      "first_seen": "2026-07-13",
+      "last_seen": "2026-08-12",
+      "days_span": 13,
       "sector": "Industrials"
     },
     {
@@ -1123,8 +1073,8 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 7,
-          "last_date": "2026-08-05"
+          "hits": 8,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -1133,8 +1083,8 @@
         }
       ],
       "first_seen": "2026-07-13",
-      "last_seen": "2026-08-05",
-      "days_span": 9,
+      "last_seen": "2026-08-12",
+      "days_span": 13,
       "sector": "Industrials"
     },
     {
@@ -1203,23 +1153,28 @@
       "sector": "Technology"
     },
     {
-      "ticker": "KC",
+      "ticker": "LBRX",
       "score": 9.75,
       "screeners": [
         {
-          "name": "episodic_pivot",
-          "hits": 1,
-          "last_date": "2026-07-08"
+          "name": "momentum_97",
+          "hits": 9,
+          "last_date": "2026-08-07"
         },
         {
-          "name": "momentum_97",
-          "hits": 2,
-          "last_date": "2026-07-28"
+          "name": "ema21_watch",
+          "hits": 1,
+          "last_date": "2026-07-13"
         },
         {
           "name": "gainers_4pct",
-          "hits": 6,
-          "last_date": "2026-08-04"
+          "hits": 5,
+          "last_date": "2026-08-06"
+        },
+        {
+          "name": "healthy_charts",
+          "hits": 2,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -1227,10 +1182,10 @@
           "last_date": "2026-08-04"
         }
       ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-04",
-      "days_span": 11,
-      "sector": "Technology"
+      "first_seen": "2026-07-10",
+      "last_seen": "2026-08-12",
+      "days_span": 14,
+      "sector": "Healthcare"
     },
     {
       "ticker": "ATKR",
@@ -1263,39 +1218,34 @@
       "sector": "Industrials"
     },
     {
-      "ticker": "BFLY",
+      "ticker": "ATRO",
       "score": 9.5,
       "screeners": [
         {
           "name": "momentum_97",
-          "hits": 4,
-          "last_date": "2026-08-04"
+          "hits": 1,
+          "last_date": "2026-08-12"
         },
         {
-          "name": "ema21_watch",
-          "hits": 1,
-          "last_date": "2026-07-08"
+          "name": "vcp",
+          "hits": 2,
+          "last_date": "2026-07-10"
         },
         {
           "name": "gainers_4pct",
-          "hits": 5,
+          "hits": 2,
           "last_date": "2026-08-04"
         },
         {
           "name": "healthy_charts",
-          "hits": 8,
-          "last_date": "2026-08-11"
-        },
-        {
-          "name": "vol_up_gainers",
-          "hits": 1,
-          "last_date": "2026-08-03"
+          "hits": 4,
+          "last_date": "2026-08-07"
         }
       ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-11",
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-08-12",
       "days_span": 15,
-      "sector": "Healthcare"
+      "sector": "Industrials"
     },
     {
       "ticker": "BJRI",
@@ -1308,8 +1258,8 @@
         },
         {
           "name": "ema21_watch",
-          "hits": 3,
-          "last_date": "2026-08-11"
+          "hits": 4,
+          "last_date": "2026-08-12"
         },
         {
           "name": "gainers_4pct",
@@ -1318,8 +1268,8 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 7,
-          "last_date": "2026-08-11"
+          "hits": 8,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -1328,8 +1278,8 @@
         }
       ],
       "first_seen": "2026-07-13",
-      "last_seen": "2026-08-11",
-      "days_span": 12,
+      "last_seen": "2026-08-12",
+      "days_span": 13,
       "sector": "Consumer Cyclical"
     },
     {
@@ -1353,8 +1303,8 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 4,
-          "last_date": "2026-08-11"
+          "hits": 5,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
@@ -1363,43 +1313,43 @@
         }
       ],
       "first_seen": "2026-07-27",
-      "last_seen": "2026-08-11",
-      "days_span": 11,
+      "last_seen": "2026-08-12",
+      "days_span": 12,
       "sector": "Healthcare"
     },
     {
-      "ticker": "DCTH",
+      "ticker": "ELVN",
       "score": 9.5,
       "screeners": [
         {
-          "name": "episodic_pivot",
-          "hits": 1,
-          "last_date": "2026-08-06"
+          "name": "momentum_97",
+          "hits": 3,
+          "last_date": "2026-08-05"
         },
         {
-          "name": "momentum_97",
+          "name": "ema21_watch",
           "hits": 1,
-          "last_date": "2026-08-06"
+          "last_date": "2026-07-29"
         },
         {
           "name": "gainers_4pct",
           "hits": 2,
-          "last_date": "2026-08-06"
+          "last_date": "2026-08-04"
         },
         {
           "name": "healthy_charts",
-          "hits": 1,
-          "last_date": "2026-08-07"
+          "hits": 3,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
           "hits": 2,
-          "last_date": "2026-08-06"
+          "last_date": "2026-08-04"
         }
       ],
-      "first_seen": "2026-08-03",
-      "last_seen": "2026-08-07",
-      "days_span": 5,
+      "first_seen": "2026-07-29",
+      "last_seen": "2026-08-12",
+      "days_span": 10,
       "sector": "Healthcare"
     },
     {
@@ -1468,73 +1418,38 @@
       "sector": "Healthcare"
     },
     {
-      "ticker": "LBRX",
+      "ticker": "JRSH",
       "score": 9.5,
       "screeners": [
         {
           "name": "momentum_97",
-          "hits": 9,
+          "hits": 3,
+          "last_date": "2026-08-12"
+        },
+        {
+          "name": "ema21_watch",
+          "hits": 6,
+          "last_date": "2026-08-03"
+        },
+        {
+          "name": "gainers_4pct",
+          "hits": 1,
+          "last_date": "2026-08-06"
+        },
+        {
+          "name": "healthy_charts",
+          "hits": 5,
           "last_date": "2026-08-07"
         },
         {
-          "name": "ema21_watch",
-          "hits": 1,
-          "last_date": "2026-07-13"
-        },
-        {
-          "name": "gainers_4pct",
-          "hits": 5,
-          "last_date": "2026-08-06"
-        },
-        {
-          "name": "healthy_charts",
-          "hits": 1,
-          "last_date": "2026-08-11"
-        },
-        {
-          "name": "vol_up_gainers",
-          "hits": 4,
-          "last_date": "2026-08-04"
-        }
-      ],
-      "first_seen": "2026-07-10",
-      "last_seen": "2026-08-11",
-      "days_span": 13,
-      "sector": "Healthcare"
-    },
-    {
-      "ticker": "LIND",
-      "score": 9.5,
-      "screeners": [
-        {
-          "name": "momentum_97",
-          "hits": 8,
-          "last_date": "2026-08-06"
-        },
-        {
-          "name": "ema21_watch",
-          "hits": 3,
-          "last_date": "2026-07-13"
-        },
-        {
-          "name": "gainers_4pct",
-          "hits": 3,
-          "last_date": "2026-08-03"
-        },
-        {
-          "name": "healthy_charts",
-          "hits": 1,
-          "last_date": "2026-07-08"
-        },
-        {
           "name": "vol_up_gainers",
           "hits": 1,
-          "last_date": "2026-08-03"
+          "last_date": "2026-08-06"
         }
       ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-06",
-      "days_span": 13,
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-08-12",
+      "days_span": 15,
       "sector": "Consumer Cyclical"
     },
     {
@@ -1573,6 +1488,41 @@
       "sector": "Industrials"
     },
     {
+      "ticker": "AMPL",
+      "score": 9.25,
+      "screeners": [
+        {
+          "name": "momentum_97",
+          "hits": 3,
+          "last_date": "2026-08-12"
+        },
+        {
+          "name": "ema21_watch",
+          "hits": 1,
+          "last_date": "2026-07-29"
+        },
+        {
+          "name": "gainers_4pct",
+          "hits": 4,
+          "last_date": "2026-08-06"
+        },
+        {
+          "name": "healthy_charts",
+          "hits": 1,
+          "last_date": "2026-08-07"
+        },
+        {
+          "name": "vol_up_gainers",
+          "hits": 2,
+          "last_date": "2026-08-06"
+        }
+      ],
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-08-12",
+      "days_span": 15,
+      "sector": "Technology"
+    },
+    {
       "ticker": "ASPN",
       "score": 9.25,
       "screeners": [
@@ -1603,74 +1553,74 @@
       "sector": "Basic Materials"
     },
     {
-      "ticker": "ELVN",
+      "ticker": "BWEN",
       "score": 9.25,
       "screeners": [
         {
           "name": "momentum_97",
-          "hits": 3,
-          "last_date": "2026-08-05"
+          "hits": 2,
+          "last_date": "2026-08-12"
         },
         {
           "name": "ema21_watch",
-          "hits": 1,
-          "last_date": "2026-07-29"
-        },
-        {
-          "name": "gainers_4pct",
-          "hits": 2,
-          "last_date": "2026-08-04"
-        },
-        {
-          "name": "healthy_charts",
-          "hits": 2,
-          "last_date": "2026-08-11"
-        },
-        {
-          "name": "vol_up_gainers",
-          "hits": 2,
-          "last_date": "2026-08-04"
-        }
-      ],
-      "first_seen": "2026-07-29",
-      "last_seen": "2026-08-11",
-      "days_span": 9,
-      "sector": "Healthcare"
-    },
-    {
-      "ticker": "FTDR",
-      "score": 9.25,
-      "screeners": [
-        {
-          "name": "momentum_97",
-          "hits": 2,
+          "hits": 4,
           "last_date": "2026-08-07"
         },
         {
-          "name": "ema21_watch",
-          "hits": 3,
-          "last_date": "2026-07-29"
-        },
-        {
           "name": "gainers_4pct",
-          "hits": 3,
-          "last_date": "2026-08-06"
+          "hits": 2,
+          "last_date": "2026-08-04"
         },
         {
           "name": "healthy_charts",
-          "hits": 4,
-          "last_date": "2026-08-11"
+          "hits": 7,
+          "last_date": "2026-08-07"
+        },
+        {
+          "name": "vol_up_gainers",
+          "hits": 2,
+          "last_date": "2026-08-04"
+        }
+      ],
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-08-12",
+      "days_span": 15,
+      "sector": "Industrials"
+    },
+    {
+      "ticker": "HGTY",
+      "score": 9.25,
+      "screeners": [
+        {
+          "name": "episodic_pivot",
+          "hits": 1,
+          "last_date": "2026-08-05"
+        },
+        {
+          "name": "vcp",
+          "hits": 1,
+          "last_date": "2026-08-12"
+        },
+        {
+          "name": "gainers_4pct",
+          "hits": 1,
+          "last_date": "2026-08-05"
+        },
+        {
+          "name": "healthy_charts",
+          "hits": 2,
+          "last_date": "2026-08-12"
         },
         {
           "name": "vol_up_gainers",
           "hits": 1,
-          "last_date": "2026-08-06"
+          "last_date": "2026-08-05"
         }
       ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-11",
-      "days_span": 15,
-      "sector": "Consumer Cyclical"
+      "first_seen": "2026-08-05",
+      "last_seen": "2026-08-12",
+      "days_span": 5,
+      "sector": "Financial"
     },
     {
       "ticker": "KRO",
@@ -1703,13 +1653,43 @@
       "sector": "Basic Materials"
     },
     {
+      "ticker": "ACOG",
+      "score": 9.0,
+      "screeners": [
+        {
+          "name": "momentum_97",
+          "hits": 3,
+          "last_date": "2026-07-30"
+        },
+        {
+          "name": "ema21_watch",
+          "hits": 3,
+          "last_date": "2026-08-05"
+        },
+        {
+          "name": "gainers_4pct",
+          "hits": 3,
+          "last_date": "2026-08-04"
+        },
+        {
+          "name": "healthy_charts",
+          "hits": 10,
+          "last_date": "2026-08-12"
+        }
+      ],
+      "first_seen": "2026-07-10",
+      "last_seen": "2026-08-12",
+      "days_span": 14,
+      "sector": "Healthcare"
+    },
+    {
       "ticker": "ANIK",
       "score": 9.0,
       "screeners": [
         {
           "name": "momentum_97",
-          "hits": 4,
-          "last_date": "2026-08-04"
+          "hits": 5,
+          "last_date": "2026-08-12"
         },
         {
           "name": "gainers_4pct",
@@ -1728,8 +1708,8 @@
         }
       ],
       "first_seen": "2026-07-29",
-      "last_seen": "2026-08-11",
-      "days_span": 9,
+      "last_seen": "2026-08-12",
+      "days_span": 10,
       "sector": "Healthcare"
     },
     {
@@ -1738,8 +1718,8 @@
       "screeners": [
         {
           "name": "momentum_97",
-          "hits": 3,
-          "last_date": "2026-08-04"
+          "hits": 4,
+          "last_date": "2026-08-12"
         },
         {
           "name": "ema21_watch",
@@ -1753,16 +1733,14 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 7,
+          "hits": 6,
           "last_date": "2026-08-07"
         }
       ],
-      "first_seen": "2026-07-08",
-      "last_seen": "2026-08-07",
-      "days_span": 14,
+      "first_seen": "2026-07-09",
+      "last_seen": "2026-08-12",
+      "days_span": 15,
       "sector": "Technology"
     }
-  ],
-  "stale": true,
-  "stale_reason": "only 2/7 screeners reporting"
+  ]
 }
