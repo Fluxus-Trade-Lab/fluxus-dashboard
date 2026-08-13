@@ -282,6 +282,52 @@ def _scorecard_html(sc: dict | None, session: str | None = None) -> str:
             f"<tbody>{rows}</tbody></table>{note}</section>")
 
 
+def _auction_state_html(fac: dict | None, tff: dict | None) -> str:
+    """The two readings that gate rather than describe.
+
+    Both carry the session they were computed for. They are shown together and
+    never merged: TFF asks how much trade the whole session facilitated, the
+    gate asks whether the initial balance was extended AND accepted. A session
+    can be quiet overall and still accept an extension, and the reverse, so a
+    single combined score would destroy exactly the case worth seeing.
+    """
+    if not fac and not tff:
+        return ""
+    out = ["<section><p class='lbl'>Auction state</p>"]
+
+    if tff and tff.get("measurable"):
+        m = tff["measures"]
+        cells = " &nbsp; ".join(
+            f"<b>{k}</b> {v['tff']:.0%} <span class='mut'>"
+            f"{(v.get('band') or '').replace('_', ' ')}</span>"
+            for k, v in m.items())
+        out.append(f"<div style='font-size:14px'>TFF &nbsp; {cells}</div>"
+                   f"<div class='mut' style='font-size:11.5px;margin-top:5px'>"
+                   f"session {tff.get('session', '?')} vs "
+                   f"{tff.get('baseline_sessions', '?')} of its own history "
+                   f"(Jones 1988). The ratio table runs the other way: a high "
+                   f"reading is a fat profile.</div>")
+    elif tff:
+        out.append(f"<div class='mut' style='font-size:13px'>TFF unmeasurable — "
+                   f"{tff.get('note', 'no baseline')}</div>")
+
+    if fac:
+        cls = "pos" if fac.get("tradeable") else "neg"
+        out.append(
+            f"<div style='margin-top:11px;font-size:14px'>Gate &nbsp; "
+            f"<b class='{cls}'>{'OPEN' if fac.get('tradeable') else 'SHUT'}</b>"
+            f" &nbsp; <span class='mut'>{fac.get('state', '').replace('_', ' ')}"
+            f"</span></div>"
+            f"<div class='mut' style='font-size:12px;margin-top:4px'>"
+            f"{fac.get('note', '')}</div>"
+            f"<div class='mut' style='font-size:11.5px;margin-top:5px'>"
+            f"session {fac.get('session', '?')} · non-facilitation is neither "
+            f"bullish nor bearish — it is an absence of information and a "
+            f"warning of range expansion.</div>")
+    out.append("</section>")
+    return "".join(out)
+
+
 def _calendar_html(cal: dict | None) -> str:
     """What is scheduled, and — as loudly — what we do not track.
 
@@ -478,6 +524,7 @@ def render_snapshot_html(data: dict) -> str:
         f"{_ladder_html(data.get('secondary_levels'))}"
         f"{_sequence_html(data.get('intraday_sequence'))}"
         f"{_calendar_html(data.get('calendar'))}"
+        f"{_auction_state_html(data.get('facilitation'), data.get('tff'))}"
         f"{_business_html(data.get('todays_business'))}"
         f"{_refmap_html(data.get('reference_map'), data.get('strongest'))}"
         f"{_conflicts_html(data.get('conflicts'))}"

@@ -154,6 +154,18 @@ def test_the_stored_base_rate_file_matches_the_module(tmp_path):
         pytest.skip("base rate not measured in this checkout")
     d = json.loads(p.read_text())
     spx = d["instruments"]["SPX"]
-    assert spx["n_sessions"] == F.BASE_RATE_SESSIONS
-    assert spx["tradeable_rate"] == pytest.approx(F.BASE_RATE_GATE_OPENS, abs=0.005)
+    # A drift alarm, not an equality. The measurement re-runs on the daily
+    # chain, so n grows and the rate moves a little; pinning the exact figure
+    # would turn a routine refresh into a red suite and teach us to ignore it.
+    # What must stay true is that the constants in the module still describe the
+    # file, and that the file was built with the thresholds the module ships.
     assert d["thresholds"]["min_build_share"] == F.MIN_BUILD_SHARE
+    assert d["thresholds"]["min_built_periods"] == F.MIN_BUILT_PERIODS
+    assert spx["n_sessions"] >= F.BASE_RATE_SESSIONS, (
+        "the stored base rate has FEWER sessions than the module claims — "
+        "the file was rebuilt over a shorter window")
+    assert spx["tradeable_rate"] == pytest.approx(F.BASE_RATE_GATE_OPENS, abs=0.05), (
+        f"gate rate drifted to {spx['tradeable_rate']:.1%} from the "
+        f"{F.BASE_RATE_GATE_OPENS:.1%} pinned in facilitation.py over "
+        f"{spx['n_sessions']} sessions — update the constant and the docstring "
+        f"table together, or explain the move")

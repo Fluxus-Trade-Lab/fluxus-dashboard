@@ -124,6 +124,12 @@ if [ "$postclose" = true ]; then
         && say "centaur skill updated" || say "warn: score_views failed or timed out"
 fi
 # The brief renders in both windows — premarket joins yesterday's profile.
+# Jones' TFF needs its own history pull and rebuilds the baseline each day,
+# excluding the session it is about to read. Non-fatal: a brief without a TFF
+# reading says so, and a brief that waited for one would be no brief at all.
+run_step build_tff .venv/bin/python scripts/build_tff.py --months 6 \
+    || say "warn: TFF tables failed — brief will show no reading"
+
 run_step build_snapshot .venv/bin/python scripts/build_snapshot.py --symbol SPX \
     || { say "FAILED or TIMED OUT at build_snapshot"; exit 1; }
 say "brief built (data/snapshots/snapshot_SPX_${DATE}.html)"

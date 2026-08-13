@@ -27,6 +27,7 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pipeline.marketcal import MARKET_TZ, market_now, market_today
+from pipeline.profile import facilitation as FAC
 from pipeline.profile import tpo as MP
 
 OUT = Path("data/profile")
@@ -142,6 +143,10 @@ def main():
             "tails": MP.tails(prof),
             "poor_extremes": MP.poor_extremes(prof),
             "initial_balance": MP.initial_balance(half),
+            # His cardinal-rule precondition, computed from the same brackets
+            # the profile is built on. Stored rather than recomputed downstream
+            # so the brief and any later audit read the identical verdict.
+            "facilitation": FAC.facilitation(half, MP.initial_balance(half)),
             "counts": {str(k): v for k, v in sorted(counts.items())},
         },
         "volume": None,
@@ -200,6 +205,11 @@ def main():
                  if mo["excess_kurtosis"] < -1.0 else ""))
     ib_ = t["initial_balance"]
     print(f"  Initial balance ..... {ib_['low']:,.0f} - {ib_['high']:,.0f}")
+    fac = t.get("facilitation")
+    if fac:
+        print(f"  Facilitation ........ {fac['state'].upper():<13} "
+              f"gate {'OPEN' if fac['tradeable'] else 'shut'}")
+        print(f"                        {fac['note']}")
     for side in ("buying", "selling"):
         tl = t["tails"][side]
         if tl:

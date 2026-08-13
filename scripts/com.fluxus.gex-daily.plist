@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  launchd agent for the daily premarket GEX pull.
+  Install:
+    cp scripts/com.fluxus.gex-daily.plist ~/Library/LaunchAgents/
+    launchctl load  ~/Library/LaunchAgents/com.fluxus.gex-daily.plist
+  Uninstall:
+    launchctl unload ~/Library/LaunchAgents/com.fluxus.gex-daily.plist
+  Fires at 05:30/06:30 JST (→ 16:30 ET post-close, PRIMARY) and 20:30/21:30 JST
+  (→ 07:30 ET premarket, bonus). The wrapper self-guards on actual ET time so
+  exactly one fire per window proceeds year-round (handles US DST), weekdays only.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.fluxus.gex-daily</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/taolezhu/Documents/AI-Trading-System/scripts/run_gex_daily.sh</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <array>
+        <!-- post-close ~16:30 ET (primary): 05:30 JST in EDT, 06:30 JST in EST -->
+        <dict>
+            <key>Hour</key><integer>5</integer>
+            <key>Minute</key><integer>30</integer>
+        </dict>
+        <dict>
+            <key>Hour</key><integer>6</integer>
+            <key>Minute</key><integer>30</integer>
+        </dict>
+        <!-- premarket ~07:30 ET (bonus): 20:30 JST in EDT, 21:30 JST in EST -->
+        <dict>
+            <key>Hour</key><integer>20</integer>
+            <key>Minute</key><integer>30</integer>
+        </dict>
+        <dict>
+            <key>Hour</key><integer>21</integer>
+            <key>Minute</key><integer>30</integer>
+        </dict>
+    </array>
+    <key>StandardOutPath</key>
+    <string>/Users/taolezhu/Documents/AI-Trading-System/data/gex/launchd.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/taolezhu/Documents/AI-Trading-System/data/gex/launchd.err.log</string>
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>

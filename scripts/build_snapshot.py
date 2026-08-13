@@ -137,6 +137,49 @@ from pipeline.marketcal import market_now
 VIEWS = Path("data/centaur/views.jsonl")
 
 
+TFF_TABLES = Path("data/profile/tff_tables.json")
+
+
+def _latest_profile() -> Path | None:
+    files = sorted(Path("data/profile").glob("profile_*.json"))
+    return files[-1] if files else None
+
+
+def _facilitation() -> dict | None:
+    """The gate verdict stored by build_profile, for the session it covers.
+
+    The session is carried with the verdict. Profiles older than the brief are
+    normal -- the brief runs against yesterday's auction -- but a gate state
+    shown without saying WHICH session it gated is the same unlabelled
+    comparison the calendar and the basis work both had to fix.
+    """
+    p = _latest_profile()
+    if not p:
+        return None
+    d = json.loads(p.read_text())
+    f = (d.get("tpo") or {}).get("facilitation")
+    return {**f, "session": d.get("date")} if f else None
+
+
+def _tff(symbol: str) -> dict | None:
+    """Today's Jones reading, if build_tff has run against a fresh baseline.
+
+    Reported with the session it was computed for. A TFF from a stale file is a
+    statement about a different day, and a brief that shows it unlabelled would
+    be the non-simultaneous comparison this project keeps auditing for.
+    """
+    if not TFF_TABLES.exists():
+        return None
+    d = json.loads(TFF_TABLES.read_text())
+    inst = (d.get("instruments") or {}).get(symbol)
+    if not inst or not inst.get("reading"):
+        return None
+    return {"session": inst.get("session_read"),
+            "baseline_sessions": inst.get("baseline_sessions"),
+            "generated_at": d.get("generated_at"),
+            **inst["reading"]}
+
+
 def _views_referencing(path: Path) -> list[dict]:
     """Every logged view whose state_ref is this file."""
     if not VIEWS.exists():
@@ -311,6 +354,11 @@ def main():
         "consistency": _consistency(g),
         "flow_ratio": _flow_ratio(g),
         "gex_transition": _transition(args.symbol),
+        # The auction's own two readings, from the layer that gates rather than
+        # describes. Both were built on 2026-08-12 and neither reached the brief
+        # until now, which is the cheapest gap this project has ever had.
+        "facilitation": _facilitation(),
+        "tff": _tff(args.symbol),
         # Carried so the calendar premise is on the page BEFORE a view is
         # committed. On 2026-08-11 a logged view read "CPI day" on a day that
         # was not, and nothing in this repo could have contradicted it.

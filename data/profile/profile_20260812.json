@@ -1,0 +1,202 @@
+{
+  "date": "2026-08-12",
+  "generated_at": "2026-08-12T21:02:43-04:00",
+  "tpo": {
+    "instrument": "SPX",
+    "bar": "30 mins",
+    "tick": 2.5,
+    "periods": 13,
+    "high": 7767.5,
+    "low": 7737.5,
+    "open": 7765.46,
+    "close": 7748.71,
+    "high_period": 1,
+    "low_period": 3,
+    "tpoc": 7752.5,
+    "value_area": {
+      "low": 7742.5,
+      "high": 7757.5,
+      "poc": 7752.5,
+      "covered": 0.8378378378378378,
+      "method": "pair",
+      "coverage_target": 0.7
+    },
+    "value_area_sigma": {
+      "low": 7743.3674,
+      "high": 7756.2272,
+      "poc": 7752.5,
+      "covered": 0.6486486486486487,
+      "method": "sigma",
+      "coverage_target": null,
+      "mean": 7749.7973,
+      "sd": 6.4299,
+      "note": "Jones: mean \u00b1 1\u03c3 of the TPO distribution. Follows the mean, not the mode, so it parts from the POC-grown band in the direction of the skew."
+    },
+    "value_area_disagreement": {
+      "pair": {
+        "low": 7742.5,
+        "high": 7757.5,
+        "covered": 0.8378378378378378
+      },
+      "sigma": {
+        "low": 7743.3674,
+        "high": 7756.2272,
+        "covered": 0.6486486486486487
+      },
+      "low_delta": 0.8674,
+      "high_delta": -1.2728,
+      "skew": 0.2566,
+      "excess_kurtosis": -0.2542,
+      "note": "the two bands part in the direction of the skew: one follows the mode, the other the mean"
+    },
+    "moments": {
+      "mean": 7749.7973,
+      "sd": 6.4299,
+      "skew": 0.2566,
+      "excess_kurtosis": -0.2542,
+      "n_prices": 13,
+      "note": null
+    },
+    "single_prints": [
+      7762.5,
+      7765.0,
+      7767.5
+    ],
+    "tails": {
+      "buying": null,
+      "selling": {
+        "low": 7762.5,
+        "high": 7767.5,
+        "length": 3,
+        "significant": true
+      }
+    },
+    "poor_extremes": {
+      "poor_high": false,
+      "poor_low": true,
+      "high": 7767.5,
+      "low": 7737.5,
+      "high_tpos": 1,
+      "low_tpos": 2
+    },
+    "initial_balance": {
+      "low": 7741.72,
+      "high": 7766.01,
+      "periods": 2
+    },
+    "facilitation": {
+      "state": "rejected",
+      "up": {
+        "side": "up",
+        "reference": 7766.01,
+        "extended": false,
+        "n_periods_beyond": 0,
+        "n_periods_built": 0,
+        "first_period": null,
+        "extreme": null,
+        "distance": null,
+        "accepted": false
+      },
+      "down": {
+        "side": "down",
+        "reference": 7741.72,
+        "extended": true,
+        "n_periods_beyond": 3,
+        "n_periods_built": 0,
+        "first_period": 3,
+        "extreme": 7737.95,
+        "distance": 3.77,
+        "accepted": false
+      },
+      "initial_balance": {
+        "low": 7741.72,
+        "high": 7766.01,
+        "periods": 2
+      },
+      "tradeable": false,
+      "thresholds": {
+        "min_build_share": 0.5,
+        "min_built_periods": 2
+      },
+      "note": "down extension rejected \u2014 reached 3.77 beyond 7,741.72 but only 0 bracket(s) built there; the market went to look and declined"
+    },
+    "counts": {
+      "7737.5": 2,
+      "7740.0": 5,
+      "7742.5": 8,
+      "7745.0": 8,
+      "7747.5": 10,
+      "7750.0": 10,
+      "7752.5": 10,
+      "7755.0": 10,
+      "7757.5": 6,
+      "7760.0": 2,
+      "7762.5": 1,
+      "7765.0": 1,
+      "7767.5": 1
+    }
+  },
+  "volume": {
+    "instrument": "ES",
+    "bar": "1 min",
+    "tick": 1.0,
+    "tpoc": 7773.0,
+    "coincide": true,
+    "at_price": {
+      "7756.0": 687.7,
+      "7757.0": 687.7,
+      "7758.0": 687.7,
+      "7759.0": 687.7,
+      "7760.0": 1538.7,
+      "7761.0": 3761.2,
+      "7762.0": 9380.1,
+      "7763.0": 17204.4,
+      "7764.0": 26539.9,
+      "7765.0": 26991.7,
+      "7766.0": 36223.4,
+      "7767.0": 43930.7,
+      "7768.0": 45024.1,
+      "7769.0": 47417.0,
+      "7770.0": 44106.2,
+      "7771.0": 48693.4,
+      "7772.0": 56409.1,
+      "7773.0": 60464.1,
+      "7774.0": 55206.4,
+      "7775.0": 49084.7,
+      "7776.0": 31065.8,
+      "7777.0": 27384.5,
+      "7778.0": 22463.9,
+      "7779.0": 14197.1,
+      "7780.0": 12582.1,
+      "7781.0": 5920.1,
+      "7782.0": 2629.5,
+      "7783.0": 1770.5,
+      "7784.0": 1770.5,
+      "7785.0": 903.2,
+      "7786.0": 903.2,
+      "7787.0": 903.2,
+      "7788.0": 903.2,
+      "7789.0": 903.2,
+      "7790.0": 903.2,
+      "7791.0": 903.2,
+      "7792.0": 903.2,
+      "7793.0": 903.2,
+      "7794.0": 903.2
+    },
+    "low_volume_nodes": [],
+    "interior_dips": [
+      {
+        "price": 7770.0,
+        "volume": 44106.22142857145,
+        "share_of_peak": 0.7295,
+        "left_peak_share": 0.7842,
+        "right_peak_share": 1.0,
+        "interior": true
+      }
+    ],
+    "provenance": "approximated \u2014 each bar's volume spread evenly across the prices it spans; not tape-derived volume-at-price",
+    "vpoc": 7773.0,
+    "volume_without_time": [],
+    "total": 703541.0
+  }
+}
