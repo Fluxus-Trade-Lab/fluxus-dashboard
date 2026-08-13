@@ -282,6 +282,28 @@ def _scorecard_html(sc: dict | None, session: str | None = None) -> str:
             f"<tbody>{rows}</tbody></table>{note}</section>")
 
 
+def _development_html(dev: dict | None) -> str:
+    """The auction's development stage, with the rule that fired.
+
+    The rule is shown, not just the label. A five-way classifier whose output is
+    a bare word is unfalsifiable to a reader; the sentence beside it is what
+    lets Andy disagree with the call rather than only with the outcome.
+    """
+    if not dev:
+        return ""
+    d, o = dev.get("day") or {}, dev.get("open") or {}
+    return (f"<section><p class='lbl'>Development stage</p>"
+            f"<div style='font-size:15px'><b>{d.get('type', '?').replace('_', ' ')}"
+            f"</b> <span class='mut'>· open {o.get('type', '?').replace('_', ' ')}"
+            f"</span></div>"
+            f"<div class='mut' style='font-size:12.5px;margin-top:5px'>"
+            f"{d.get('rule', '')}</div>"
+            f"<div class='mut' style='font-size:12px;margin-top:3px'>"
+            f"{o.get('rule', '')}</div>"
+            f"<div class='mut' style='font-size:11.5px;margin-top:7px'>"
+            f"{dev.get('note', '')}</div></section>")
+
+
 def _auction_state_html(fac: dict | None, tff: dict | None) -> str:
     """The two readings that gate rather than describe.
 
@@ -524,6 +546,7 @@ def render_snapshot_html(data: dict) -> str:
         f"{_ladder_html(data.get('secondary_levels'))}"
         f"{_sequence_html(data.get('intraday_sequence'))}"
         f"{_calendar_html(data.get('calendar'))}"
+        f"{_development_html(data.get('development'))}"
         f"{_auction_state_html(data.get('facilitation'), data.get('tff'))}"
         f"{_business_html(data.get('todays_business'))}"
         f"{_refmap_html(data.get('reference_map'), data.get('strongest'))}"

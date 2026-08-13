@@ -27,6 +27,7 @@ from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pipeline.marketcal import MARKET_TZ, market_now, market_today
+from pipeline.profile import daytype as DT
 from pipeline.profile import facilitation as FAC
 from pipeline.profile import tpo as MP
 
@@ -55,6 +56,24 @@ def _bars(ib, contract, size: str, day: str, rth: bool = True):
                              useRTH=rth, formatDate=1, timeout=120)
     return [{"time": str(x.date), "open": x.open, "high": x.high, "low": x.low,
              "close": x.close, "volume": float(x.volume or 0)} for x in b]
+
+
+def _prior_value(day: str) -> dict | None:
+    """The value area of the newest stored profile BEFORE `day`.
+
+    Returns None rather than the nearest available when there is none, so the
+    open type reports "no prior value area was supplied" instead of quietly
+    treating an unknown location as outside value.
+    """
+    files = sorted(OUT.glob("profile_*.json"))
+    prior = [f for f in files if f.stem.split("_")[1] < day]
+    if not prior:
+        return None
+    try:
+        va = json.loads(prior[-1].read_text())["tpo"]["value_area"]
+    except (json.JSONDecodeError, OSError, KeyError):
+        return None
+    return {"low": va["low"], "high": va["high"]}
 
 
 def main():
@@ -147,6 +166,12 @@ def main():
             # the profile is built on. Stored rather than recomputed downstream
             # so the brief and any later audit read the identical verdict.
             "facilitation": FAC.facilitation(half, MP.initial_balance(half)),
+            # The auction's development stage. `prior_value` comes from the
+            # previous stored profile, because "opened inside value" is a
+            # question about YESTERDAY's value and cannot be answered from
+            # today's bars alone.
+            "development": DT.classify(half, prior_value=_prior_value(day),
+                                       tick=args.tick),
             "counts": {str(k): v for k, v in sorted(counts.items())},
         },
         "volume": None,
@@ -205,6 +230,11 @@ def main():
                  if mo["excess_kurtosis"] < -1.0 else ""))
     ib_ = t["initial_balance"]
     print(f"  Initial balance ..... {ib_['low']:,.0f} - {ib_['high']:,.0f}")
+    dev = t.get("development")
+    if dev:
+        print(f"  Development ......... day {dev['day']['type'].upper()}  ·  "
+              f"open {dev['open']['type']}")
+        print(f"                        {dev['day']['rule']}")
     fac = t.get("facilitation")
     if fac:
         print(f"  Facilitation ........ {fac['state'].upper():<13} "

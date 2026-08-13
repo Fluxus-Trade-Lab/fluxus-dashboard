@@ -1,6 +1,6 @@
 {
   "date": "2026-08-12",
-  "generated_at": "2026-08-12T21:02:43-04:00",
+  "generated_at": "2026-08-12T21:42:34-04:00",
   "tpo": {
     "instrument": "SPX",
     "bar": "30 mins",
@@ -119,6 +119,41 @@
         "min_built_periods": 2
       },
       "note": "down extension rejected \u2014 reached 3.77 beyond 7,741.72 but only 0 bracket(s) built there; the market went to look and declined"
+    },
+    "development": {
+      "open": {
+        "type": "unclassified",
+        "rule": "traded back into the opening bracket 2 times without a directional resolution",
+        "measurements": {
+          "opening_range": [
+            7744.03,
+            7766.01
+          ],
+          "open": 7765.46,
+          "open_window_brackets": 3,
+          "brackets_returning_to_open": 2,
+          "opened_inside_prior_value": false,
+          "left_up": false,
+          "left_down": true
+        }
+      },
+      "day": {
+        "type": "normal",
+        "rule": "the initial balance set 87% of the day's range, at or above the 85% cut",
+        "measurements": {
+          "ib_share": 0.8656,
+          "close_position": 0.3835,
+          "range": 28.06,
+          "facilitation_state": "rejected",
+          "double_distribution": {
+            "is_double": false,
+            "split_price": 7745.0,
+            "depth": 1.0,
+            "note": "deepest interior trough is 100% of the smaller peak, against a 40% cut"
+          }
+        }
+      },
+      "note": "no day type is bullish or bearish; a trend day is a trend day in whichever direction it ran"
     },
     "counts": {
       "7737.5": 2,

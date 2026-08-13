@@ -161,6 +161,16 @@ def _facilitation() -> dict | None:
     return {**f, "session": d.get("date")} if f else None
 
 
+def _development() -> dict | None:
+    """The auction's development stage for the session the profile covers."""
+    p = _latest_profile()
+    if not p:
+        return None
+    d = json.loads(p.read_text())
+    dev = (d.get("tpo") or {}).get("development")
+    return {**dev, "session": d.get("date")} if dev else None
+
+
 def _tff(symbol: str) -> dict | None:
     """Today's Jones reading, if build_tff has run against a fresh baseline.
 
@@ -358,6 +368,7 @@ def main():
         # describes. Both were built on 2026-08-12 and neither reached the brief
         # until now, which is the cheapest gap this project has ever had.
         "facilitation": _facilitation(),
+        "development": _development(),
         "tff": _tff(args.symbol),
         # Carried so the calendar premise is on the page BEFORE a view is
         # committed. On 2026-08-11 a logged view read "CPI day" on a day that
