@@ -22,9 +22,9 @@ export default function Header({ portfolioValue, totalPL, totalReturnPct, cashAv
               state.syncStatus === 'syncing' ? 'Syncing...' :
               state.syncStatus === 'error' ? 'Sync failed' : 'Not synced'
             }>
-              {state.syncStatus === 'success' && <span className="text-green-500">●</span>}
-              {state.syncStatus === 'syncing' && <span className="text-amber-500 animate-pulse">●</span>}
-              {state.syncStatus === 'error' && <span className="text-red-500">●</span>}
+              {state.syncStatus === 'success' && <span className="text-[var(--color-profit)]">●</span>}
+              {state.syncStatus === 'syncing' && <span className="text-[var(--color-signal-caution)] animate-pulse">●</span>}
+              {state.syncStatus === 'error' && <span className="text-[var(--color-loss)]">●</span>}
               {state.syncStatus === 'idle' && <span className="text-[var(--color-text-muted)]">○</span>}
             </span>
           )}
@@ -40,7 +40,7 @@ export default function Header({ portfolioValue, totalPL, totalReturnPct, cashAv
         <StatCard
           label="Names"
           value={openCount}
-          colorClass={openCount >= 14 ? 'text-red-500' : openCount >= 12 ? 'text-amber-500' : ''}
+          colorClass={openCount >= 14 ? 'text-[var(--color-loss)]' : openCount >= 12 ? 'text-[var(--color-signal-caution)]' : ''}
           sub={openCount >= 14 ? '⚠ greed zone — stop adding' : openCount >= 12 ? 'heat building' : undefined}
         />
       </div>
@@ -60,7 +60,7 @@ export default function Header({ portfolioValue, totalPL, totalReturnPct, cashAv
         >
           {pm ? `◉ ${t('pf.btn.private')}` : `○ ${t('pf.btn.private')}`}
         </button>
-        <Button variant="ghost" onClick={onReset} className="!text-red-500">{t('pf.btn.reset')}</Button>
+        <Button variant="ghost" onClick={onReset} className="!text-[var(--color-loss)]">{t('pf.btn.reset')}</Button>
       </div>
     </div>
   )

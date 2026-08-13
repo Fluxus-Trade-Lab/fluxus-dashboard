@@ -83,7 +83,7 @@ export default function ThemeLeaderboard() {
   }, [themes])
 
   if (loading) return <div className="text-[var(--color-text-muted)] text-sm py-8 text-center">Loading…</div>
-  if (error) return <div className="text-rose-400 text-sm py-8 text-center">groups.json unavailable</div>
+  if (error) return <div className="text-[var(--color-signal-riskoff)] text-[13px] py-8 text-center">groups.json unavailable</div>
 
   const shortSet = new Set(short.map((r) => r.group))
   const newcomers = short.filter((r) => !long.some((l) => l.group === r.group)).length

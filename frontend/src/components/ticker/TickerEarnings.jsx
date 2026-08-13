@@ -28,7 +28,7 @@ export default function TickerEarnings({ tickerData }) {
         </thead>
         <tbody>
           {next.date && (
-            <tr className="bg-amber-500/5 border-b border-[var(--color-border-light)]">
+            <tr className="bg-[color-mix(in_srgb,var(--color-signal-caution)_5%,transparent)] border-b border-[var(--color-border-light)]">
               <td className="px-2 py-1.5 font-semibold text-[var(--color-signal-caution)]">Next</td>
               <td className="px-2 py-1.5">{String(next.date).slice(0, 10)}</td>
               <td className="px-2 py-1.5 text-right tabular-nums">

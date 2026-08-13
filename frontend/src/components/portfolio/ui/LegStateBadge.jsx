@@ -1,10 +1,10 @@
 import { useLanguage } from '../../../i18n/LanguageContext'
 
 const COLORS = {
-  PRE_TRIM:  { bg: 'bg-amber-500/15',  text: 'text-amber-600',  ring: 'ring-amber-500/30' },
+  PRE_TRIM:  { bg: 'bg-[color-mix(in_srgb,var(--color-signal-caution)_15%,transparent)]',  text: 'text-[var(--color-signal-caution)]',  ring: 'ring-amber-500/30' },
   POST_T1:   { bg: 'bg-blue-500/15',   text: 'text-blue-600',   ring: 'ring-blue-500/30' },
   POST_T2:   { bg: 'bg-teal-500/15',   text: 'text-teal-600',   ring: 'ring-teal-500/30' },
-  POST_T3:   { bg: 'bg-green-500/15',  text: 'text-green-600',  ring: 'ring-green-500/30' },
+  POST_T3:   { bg: 'bg-[color-mix(in_srgb,var(--color-profit)_15%,transparent)]',  text: 'text-[var(--color-profit)]',  ring: 'ring-green-500/30' },
   CLOSED:    { bg: 'bg-gray-500/10',   text: 'text-gray-500',   ring: 'ring-gray-500/20' },
 }
 

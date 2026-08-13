@@ -21,7 +21,7 @@ function CircuitBreakerBanner({ breakers }) {
   if (breakers.length === 0) return null
 
   return (
-    <div className="bg-red-500/10 border border-[var(--color-loss)] rounded-lg px-5 py-4">
+    <div className="bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] border border-[var(--color-loss)] rounded-lg px-5 py-4">
       <div className="flex items-center gap-2 mb-1">
         <span className="text-lg">&#x1F6D1;</span>
         <span className="text-sm font-bold text-[var(--color-loss)]">STOP TRADING</span>
@@ -53,7 +53,7 @@ function DemonCard({ stat, isActive, onClick }) {
         <span className="text-sm">{stat.icon}</span>
         {stat.currentStreak >= 3 && (
           <span className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded ${
-            stat.currentStreak >= 6 ? 'bg-red-500/10 text-[var(--color-loss)]' : 'bg-amber-500/10 text-[var(--color-signal-caution)]'
+            stat.currentStreak >= 6 ? 'bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] text-[var(--color-loss)]' : 'bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] text-[var(--color-signal-caution)]'
           }`}>
             {stat.currentStreak} streak
           </span>
@@ -91,8 +91,8 @@ function TradeRow({ trade }) {
       {/* Clean/flagged indicator */}
       <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] flex-shrink-0 ${
         trade.isClean
-          ? 'bg-green-500/10 text-[var(--color-profit)]'
-          : 'bg-red-500/10 text-[var(--color-loss)]'
+          ? 'bg-[color-mix(in_srgb,var(--color-profit)_10%,transparent)] text-[var(--color-profit)]'
+          : 'bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] text-[var(--color-loss)]'
       }`}>
         {trade.isClean ? '\u2713' : demons.length}
       </span>
@@ -113,7 +113,7 @@ function TradeRow({ trade }) {
                 <span
                   key={dId}
                   title={d?.desc}
-                  className="px-1.5 py-0.5 text-[9px] font-medium rounded bg-red-500/10 text-[var(--color-loss)]"
+                  className="px-1.5 py-0.5 text-[9px] font-medium rounded bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] text-[var(--color-loss)]"
                 >
                   {d?.icon} {d?.name}
                 </span>

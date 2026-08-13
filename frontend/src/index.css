@@ -44,8 +44,11 @@
   --color-signal-warning: #f97316;
   --color-signal-riskoff: #ef4444;
 
-  --color-profit: #16a34a;
-  --color-loss: #dc2626;
+  /* The money half's pair, measured on the warm ground 2026-08-13: profit was
+     3.00:1 here, below the bar for normal text, while its dark-theme twin sat
+     at 7.34. Deepened to 4.57 and 5.23. Dark values are unchanged. */
+  --color-profit: #15803d;
+  --color-loss: #c81e1e;
   --color-neutral: #78716c;
   --color-accent: #2d5f8a;
   --color-accent-light: #dbeafe;

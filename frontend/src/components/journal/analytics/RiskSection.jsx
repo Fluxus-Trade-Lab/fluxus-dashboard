@@ -94,24 +94,24 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
           <StatCard
             label="Total Heat"
             value={fmtPct(heatData.totalHeat)}
-            colorClass={heatData.totalHeat > 8 ? 'text-red-500' : heatData.totalHeat > 6 ? 'text-amber-500' : 'text-green-600'}
+            colorClass={heatData.totalHeat > 8 ? 'text-[var(--color-loss)]' : heatData.totalHeat > 6 ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-profit)]'}
           />
           <StatCard label="Positions" value={openTrades.length} />
           <StatCard
             label="No Stop Set"
             value={heatData.noStopCount}
-            colorClass={heatData.noStopCount > 0 ? 'text-red-500' : 'text-green-600'}
+            colorClass={heatData.noStopCount > 0 ? 'text-[var(--color-loss)]' : 'text-[var(--color-profit)]'}
           />
           <StatCard label="Avg Heat/Pos" value={fmtPct(heatData.positions.filter(p => p.hasStop).length > 0 ? heatData.totalHeat / heatData.positions.filter(p => p.hasStop).length : 0)} />
         </div>
 
         {heatData.totalHeat > 8 && (
-          <div className="bg-red-500/10 border border-red-500/30 rounded-md px-3 py-2 text-xs text-red-400 mb-4">
+          <div className="bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-loss)_30%,transparent)] rounded-md px-3 py-2 text-xs text-[var(--color-loss)] mb-4">
             Total heat is {fmt(heatData.totalHeat, 1)}% — above 8% threshold. Consider reducing position sizes or tightening stops.
           </div>
         )}
         {heatData.noStopCount > 0 && (
-          <div className="bg-amber-500/10 border border-amber-500/30 rounded-md px-3 py-2 text-xs text-amber-400 mb-4">
+          <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-xs text-[var(--color-signal-caution)] mb-4">
             {heatData.noStopCount} position{heatData.noStopCount > 1 ? 's have' : ' has'} no stop set — untracked risk.
           </div>
         )}
@@ -151,12 +151,12 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
                     }}
                   />
                 </div>
-                <span className={`w-12 text-right tabular-nums ${t.weight > 15 ? 'text-red-500 font-semibold' : ''}`}>{fmt(t.weight, 1)}%</span>
+                <span className={`w-12 text-right tabular-nums ${t.weight > 15 ? 'text-[var(--color-loss)] font-semibold' : ''}`}>{fmt(t.weight, 1)}%</span>
               </div>
             ))}
           </div>
           {tickerConcentration.some(t => t.weight > 15) && (
-            <div className="mt-3 bg-amber-500/10 border border-amber-500/30 rounded-md px-3 py-2 text-xs text-amber-400">
+            <div className="mt-3 bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-xs text-[var(--color-signal-caution)]">
               Single-name concentration above 15% detected.
             </div>
           )}
@@ -170,11 +170,11 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
           <div className="grid grid-cols-2 gap-3 mb-4">
             <div>
               <div className="text-[10px] text-[var(--color-text-muted)] uppercase mb-1">Long</div>
-              <div className="text-lg font-bold tabular-nums text-green-600">{fmt(exposure.longPct, 1)}%</div>
+              <div className="text-lg font-bold tabular-nums text-[var(--color-profit)]">{fmt(exposure.longPct, 1)}%</div>
             </div>
             <div>
               <div className="text-[10px] text-[var(--color-text-muted)] uppercase mb-1">Short</div>
-              <div className="text-lg font-bold tabular-nums text-red-500">{fmt(exposure.shortPct, 1)}%</div>
+              <div className="text-lg font-bold tabular-nums text-[var(--color-loss)]">{fmt(exposure.shortPct, 1)}%</div>
             </div>
             <div>
               <div className="text-[10px] text-[var(--color-text-muted)] uppercase mb-1">Net</div>
@@ -199,7 +199,7 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
                       <div className="flex-1 bg-[var(--color-bg)] rounded-full h-3 overflow-hidden">
                         <div className="h-full rounded-full bg-[#5b8fa8]" style={{ width: `${Math.min(100, pct)}%` }} />
                       </div>
-                      <span className={`w-12 text-right tabular-nums ${pct > 30 ? 'text-red-500 font-semibold' : ''}`}>{fmt(pct, 1)}%</span>
+                      <span className={`w-12 text-right tabular-nums ${pct > 30 ? 'text-[var(--color-loss)] font-semibold' : ''}`}>{fmt(pct, 1)}%</span>
                     </div>
                   )
                 })}
@@ -217,7 +217,7 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
           </h3>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
-            <StatCard label="Portfolio Beta" value={fmt(betaData.portfolioBeta, 2)} colorClass={betaData.portfolioBeta > 1.3 ? 'text-amber-500' : ''} />
+            <StatCard label="Portfolio Beta" value={fmt(betaData.portfolioBeta, 2)} colorClass={betaData.portfolioBeta > 1.3 ? 'text-[var(--color-signal-caution)]' : ''} />
             <StatCard label="Beta-Adj Net" value={fmtCur(betaData.totalBetaAdj)} />
             <StatCard
               label="SPY Equivalent"
@@ -240,12 +240,12 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
                   <tr key={r.id || r.ticker + i} className={i % 2 === 0 ? 'bg-[var(--color-surface)]' : 'bg-[var(--color-bg)]'}>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] font-medium">{r.ticker}</td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)]">
-                      <span className={r.direction === 'long' ? 'text-green-600' : 'text-red-500'}>{r.direction?.toUpperCase()}</span>
+                      <span className={'text-[var(--color-text-secondary)]'}>{r.direction?.toUpperCase()}</span>
                     </td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{r.qty}</td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{fmtCur(r.mktVal)}</td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{fmt(r.weight, 1)}%</td>
-                    <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${r.beta != null && r.beta > 1.5 ? 'text-amber-500 font-semibold' : ''}`}>
+                    <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${r.beta != null && r.beta > 1.5 ? 'text-[var(--color-signal-caution)] font-semibold' : ''}`}>
                       {r.beta != null ? fmt(r.beta, 2) : '—'}
                     </td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{r.betaAdj != null ? fmtCur(r.betaAdj) : '—'}</td>

@@ -29,7 +29,7 @@ export default function TickerTradePlan({ tickerData }) {
         {shortSetup && <SetupCard tone="short" setup={shortSetup} />}
       </div>
       {synth?.earnings_risk_note && (
-        <div className="mt-4 p-3 rounded bg-amber-500/5 border border-amber-500/30 text-[11px] text-[var(--color-text)]">
+        <div className="mt-4 p-3 rounded bg-[color-mix(in_srgb,var(--color-signal-caution)_5%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] text-[11px] text-[var(--color-text)]">
           <span className="font-semibold text-[var(--color-signal-caution)]">Earnings risk: </span>
           {synth.earnings_risk_note}
         </div>
@@ -41,8 +41,8 @@ export default function TickerTradePlan({ tickerData }) {
 function SetupCard({ tone, setup }) {
   const isLong = tone === 'long'
   const wrapClass = isLong
-    ? 'bg-green-500/5 border-green-500/30'
-    : 'bg-rose-500/5 border-rose-500/30'
+    ? 'bg-[color-mix(in_srgb,var(--color-profit)_5%,transparent)] border-[color-mix(in_srgb,var(--color-profit)_30%,transparent)]'
+    : 'bg-[color-mix(in_srgb,var(--color-loss)_5%,transparent)] border-[color-mix(in_srgb,var(--color-loss)_30%,transparent)]'
   const headerClass = isLong ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'
   const heading = isLong ? 'LONG SETUP' : 'SHORT / FADE SETUP'
 

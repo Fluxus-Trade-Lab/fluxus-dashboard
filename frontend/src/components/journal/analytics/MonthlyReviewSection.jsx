@@ -117,7 +117,7 @@ function VsPrevMonth({ current, prev }) {
         {metrics.map(({ label, curr, prev: p, fmt: f }) => {
           const delta = curr - p
           const arrow = delta > 0 ? '\u2191' : delta < 0 ? '\u2193' : '\u2192'
-          const color = delta > 0 ? 'text-green-600' : delta < 0 ? 'text-red-500' : 'text-[var(--color-text-muted)]'
+          const color = delta > 0 ? 'text-[var(--color-profit)]' : delta < 0 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text-muted)]'
           return (
             <div key={label} className="flex items-center gap-1.5">
               <span className="text-[10px] text-[var(--color-text-secondary)]">{label}</span>

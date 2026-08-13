@@ -82,8 +82,8 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
         <div className="space-y-2">
           {callouts.map((c, i) => (
             <div key={i} className={`flex gap-2 text-sm px-3 py-2 rounded-md border ${
-              c.type === 'warning' ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
-              : c.type === 'positive' ? 'bg-green-500/10 border-green-500/30 text-green-400'
+              c.type === 'warning' ? 'bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] text-[var(--color-signal-caution)]'
+              : c.type === 'positive' ? 'bg-[color-mix(in_srgb,var(--color-profit)_10%,transparent)] border-[color-mix(in_srgb,var(--color-profit)_30%,transparent)] text-[var(--color-profit)]'
               : 'bg-[var(--color-surface)] border-[var(--color-border)] text-[var(--color-text-secondary)]'
             }`}>
               <span className="flex-shrink-0">{c.type === 'warning' ? '!' : c.type === 'positive' ? '+' : '-'}</span>
@@ -101,11 +101,11 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
           <StatCard label="Trims Analyzed" value={trimStats.total} />
           <StatCard label="Too Early %" value={fmtPct(trimStats.tooEarlyPct)}
-            colorClass={trimStats.tooEarlyPct > 40 ? 'text-red-500' : trimStats.tooEarlyPct > 25 ? 'text-amber-500' : 'text-green-600'} />
+            colorClass={trimStats.tooEarlyPct > 40 ? 'text-[var(--color-loss)]' : trimStats.tooEarlyPct > 25 ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-profit)]'} />
           <StatCard label="Avg Left on Table" value={fmtPct(trimStats.avgLeftOnTable)}
-            colorClass={trimStats.avgLeftOnTable > 5 ? 'text-amber-500' : ''} />
+            colorClass={trimStats.avgLeftOnTable > 5 ? 'text-[var(--color-signal-caution)]' : ''} />
           <StatCard label="Avg Captured" value={fmtPct(trimStats.avgCaptured)}
-            colorClass={trimStats.avgCaptured > 70 ? 'text-green-600' : 'text-amber-500'} />
+            colorClass={trimStats.avgCaptured > 70 ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'} />
         </div>
 
         {trimGroups.length > 0 && (
@@ -133,19 +133,19 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
                           {g.ticker}
                         </td>
                         <td className="px-2 py-1.5 border-b border-[var(--color-border-light)]">
-                          <span className={g.direction === 'long' ? 'text-green-600' : 'text-red-500'}>{g.direction?.toUpperCase()}</span>
+                          <span className={'text-[var(--color-text-secondary)]'}>{g.direction?.toUpperCase()}</span>
                         </td>
                         <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{g.trimCount}</td>
-                        <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${g.tooEarlyCount > 0 ? 'text-amber-500' : 'text-green-600'}`}>
+                        <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${g.tooEarlyCount > 0 ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-profit)]'}`}>
                           {g.tooEarlyCount}/{g.trimCount}
                         </td>
-                        <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums font-semibold ${g.avgLeftOnTable > 5 ? 'text-amber-500' : 'text-green-600'}`}>
+                        <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums font-semibold ${g.avgLeftOnTable > 5 ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-profit)]'}`}>
                           {fmtPct(g.avgLeftOnTable)}
                         </td>
-                        <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${g.worstLeft > 10 ? 'text-red-500' : g.worstLeft > 5 ? 'text-amber-500' : ''}`}>
+                        <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${g.worstLeft > 10 ? 'text-[var(--color-loss)]' : g.worstLeft > 5 ? 'text-[var(--color-signal-caution)]' : ''}`}>
                           {fmtPct(g.worstLeft)}
                         </td>
-                        <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${g.avgCaptured > 70 ? 'text-green-600' : 'text-amber-500'}`}>
+                        <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${g.avgCaptured > 70 ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'}`}>
                           {fmtPct(g.avgCaptured)}
                         </td>
                       </tr>
@@ -157,11 +157,11 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
                           <td className="px-2 py-1 border-b border-[var(--color-border-light)] tabular-nums text-[var(--color-text-muted)]" colSpan={2}>
                             Peak {fmtCur(t.peakAfterTrim)} ({t.peakDate})
                           </td>
-                          <td className={`px-2 py-1 border-b border-[var(--color-border-light)] tabular-nums ${t.leftOnTable > 5 ? 'text-amber-500' : 'text-green-600'}`}>
+                          <td className={`px-2 py-1 border-b border-[var(--color-border-light)] tabular-nums ${t.leftOnTable > 5 ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-profit)]'}`}>
                             {fmtPct(t.leftOnTable)}
                           </td>
                           <td className="px-2 py-1 border-b border-[var(--color-border-light)]" />
-                          <td className={`px-2 py-1 border-b border-[var(--color-border-light)] tabular-nums ${t.captured > 70 ? 'text-green-600' : 'text-amber-500'}`}>
+                          <td className={`px-2 py-1 border-b border-[var(--color-border-light)] tabular-nums ${t.captured > 70 ? 'text-[var(--color-profit)]' : 'text-[var(--color-signal-caution)]'}`}>
                             {fmtPct(t.captured)}
                           </td>
                         </tr>
@@ -194,7 +194,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
           <StatCard label="Stopped Out" value={stopStats.total} />
           <StatCard label="Stop Too Tight %" value={stopStats.total > 0 ? fmtPct(stopStats.tooTightPct) : '—'}
-            colorClass={stopStats.tooTightPct > 30 ? 'text-red-500' : stopStats.tooTightPct > 15 ? 'text-amber-500' : 'text-green-600'} />
+            colorClass={stopStats.tooTightPct > 30 ? 'text-[var(--color-loss)]' : stopStats.tooTightPct > 15 ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-profit)]'} />
           <StatCard label="Avg Stop Distance" value={stopStats.total > 0 ? fmtPct(stopStats.avgStopDist) : '—'} />
         </div>
 
@@ -216,13 +216,13 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
                   >
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] font-medium">{s.ticker}</td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)]">
-                      <span className={s.direction === 'long' ? 'text-green-600' : 'text-red-500'}>{s.direction?.toUpperCase()}</span>
+                      <span className={'text-[var(--color-text-secondary)]'}>{s.direction?.toUpperCase()}</span>
                     </td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{fmtCur(s.entryPrice)}</td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{fmtCur(s.stopPrice)}</td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)]">{s.exitDate}</td>
-                    <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-green-600">{fmtCur(s.recoveryPeak)}</td>
-                    <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums font-semibold ${s.stopTooTight ? 'text-red-500' : 'text-green-600'}`}>
+                    <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-[var(--color-profit)]">{fmtCur(s.recoveryPeak)}</td>
+                    <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums font-semibold ${s.stopTooTight ? 'text-[var(--color-loss)]' : 'text-[var(--color-profit)]'}`}>
                       {fmtPct(s.recoveryPct)}
                     </td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{fmtPct(s.stopDistPct)}</td>

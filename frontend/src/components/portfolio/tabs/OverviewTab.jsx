@@ -249,7 +249,7 @@ export default function OverviewTab({
                     <TickerLink symbol={t.ticker} />
                   </td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)]">
-                    <span className={`font-semibold text-[11px] ${t.direction === 'long' ? 'text-green-600' : 'text-red-500'}`}>
+                    <span className={`font-semibold text-[11px] text-[var(--color-text-secondary)]`}>
                       {t.direction === 'long' ? tr('pf.dir.long') : tr('pf.dir.short')}
                     </span>
                   </td>
@@ -299,7 +299,7 @@ export default function OverviewTab({
                       {!t.isClosed && (
                         <button onClick={() => onTrim(t)} className="bg-transparent border border-[var(--color-input-border)] rounded px-2 py-0.5 text-[11px] cursor-pointer hover:bg-[var(--color-hover-bg)]">Trim</button>
                       )}
-                      <button onClick={() => dispatch({ type: 'DELETE_TRADE', id: t.id })} className="bg-transparent border border-red-200 rounded px-1.5 py-0.5 text-[11px] cursor-pointer text-red-500 hover:bg-red-50">&times;</button>
+                      <button onClick={() => dispatch({ type: 'DELETE_TRADE', id: t.id })} className="bg-transparent border border-[color-mix(in_srgb,var(--color-loss)_15%,transparent)] rounded px-1.5 py-0.5 text-[11px] cursor-pointer text-[var(--color-loss)] hover:bg-[color-mix(in_srgb,var(--color-loss)_15%,transparent)]">&times;</button>
                     </div>
                   </td>
                 </tr>
@@ -393,10 +393,10 @@ export default function OverviewTab({
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{m.totalTrades || '—'}</td>
                       <td className={`px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${clr(m.returnPct)}`}>{m.totalTrades ? fmtPct(m.returnPct) : '—'}</td>
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{m.totalTrades ? fmtPct(m.winPct) : '—'}</td>
-                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-green-600">{m.avgGain ? fmtPct(m.avgGain) : '—'}</td>
-                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-red-500">{m.avgLoss ? fmtPct(m.avgLoss) : '—'}</td>
-                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-green-600">{m.largestGain ? fmtPct(m.largestGain) : '—'}</td>
-                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-red-500">{m.largestLoss ? fmtPct(m.largestLoss) : '—'}</td>
+                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-[var(--color-profit)]">{m.avgGain ? fmtPct(m.avgGain) : '—'}</td>
+                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-[var(--color-loss)]">{m.avgLoss ? fmtPct(m.avgLoss) : '—'}</td>
+                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-[var(--color-profit)]">{m.largestGain ? fmtPct(m.largestGain) : '—'}</td>
+                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-[var(--color-loss)]">{m.largestLoss ? fmtPct(m.largestLoss) : '—'}</td>
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{m.avgHoldWin ? fmt(m.avgHoldWin, 2) : '—'}</td>
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{m.avgHoldLoss ? fmt(m.avgHoldLoss, 2) : '—'}</td>
                     </tr>
@@ -409,10 +409,10 @@ export default function OverviewTab({
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{m.totalTrades || '—'}</td>
                       <td className={`px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${clr(m.returnPct)}`}>{m.totalTrades ? fmtPct(m.returnPct) : '—'}</td>
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{m.totalTrades ? fmtPct(m.winPct) : '—'}</td>
-                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-green-600">{m.avgGain ? fmtPct(m.avgGain) : '—'}</td>
-                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-red-500">{m.avgLoss ? fmtPct(m.avgLoss) : '—'}</td>
-                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-green-600">{m.largestGain ? fmtPct(m.largestGain) : '—'}</td>
-                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-red-500">{m.largestLoss ? fmtPct(m.largestLoss) : '—'}</td>
+                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-[var(--color-profit)]">{m.avgGain ? fmtPct(m.avgGain) : '—'}</td>
+                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-[var(--color-loss)]">{m.avgLoss ? fmtPct(m.avgLoss) : '—'}</td>
+                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-[var(--color-profit)]">{m.largestGain ? fmtPct(m.largestGain) : '—'}</td>
+                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-[var(--color-loss)]">{m.largestLoss ? fmtPct(m.largestLoss) : '—'}</td>
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{m.avgHoldWin ? fmt(m.avgHoldWin, 2) : '—'}</td>
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{m.avgHoldLoss ? fmt(m.avgHoldLoss, 2) : '—'}</td>
                     </tr>
@@ -424,10 +424,10 @@ export default function OverviewTab({
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums">{ytdStats.totalTrades}</td>
                       <td className={`px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums ${clr(ytdStats.returnPct)}`}>{fmtPct(ytdStats.returnPct)}</td>
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums">{fmtPct(ytdStats.winPct)}</td>
-                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums text-green-600">{fmtPct(ytdStats.avgGain)}</td>
-                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums text-red-500">{fmtPct(ytdStats.avgLoss)}</td>
-                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums text-green-600">{fmtPct(ytdStats.largestGain)}</td>
-                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums text-red-500">{fmtPct(ytdStats.largestLoss)}</td>
+                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums text-[var(--color-profit)]">{fmtPct(ytdStats.avgGain)}</td>
+                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums text-[var(--color-loss)]">{fmtPct(ytdStats.avgLoss)}</td>
+                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums text-[var(--color-profit)]">{fmtPct(ytdStats.largestGain)}</td>
+                      <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums text-[var(--color-loss)]">{fmtPct(ytdStats.largestLoss)}</td>
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums">{fmt(ytdStats.avgHoldWin, 2)}</td>
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums">{fmt(ytdStats.avgHoldLoss, 2)}</td>
                     </tr>

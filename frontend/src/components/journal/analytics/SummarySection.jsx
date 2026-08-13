@@ -33,11 +33,11 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
       {/* Stat cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
         <StatCard label="Total Trades" value={stats.totalTrades} />
-        <StatCard label="Win Rate" value={fmtPct(stats.winRate)} colorClass={stats.winRate >= 50 ? 'text-green-600' : 'text-red-500'} />
-        <StatCard label="Avg R-Multiple" value={`${fmt(stats.avgR, 1)}R`} colorClass={stats.avgR >= 1 ? 'text-green-600' : 'text-red-500'} />
+        <StatCard label="Win Rate" value={fmtPct(stats.winRate)} colorClass={stats.winRate >= 50 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'} />
+        <StatCard label="Avg R-Multiple" value={`${fmt(stats.avgR, 1)}R`} colorClass={stats.avgR >= 1 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'} />
         <StatCard label="Expectancy" value={fmtCur(stats.expectancy)} colorClass={clr(stats.expectancy)} />
         <StatCard label="Avg Hold" value={`${fmt(stats.avgHold, 0)}d`} />
-        <StatCard label="Profit Factor" value={fmt(stats.profitFactor, 2)} colorClass={stats.profitFactor >= 1 ? 'text-green-600' : 'text-red-500'} />
+        <StatCard label="Profit Factor" value={fmt(stats.profitFactor, 2)} colorClass={stats.profitFactor >= 1 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'} />
       </div>
 
       {/* Equity curve */}
@@ -91,10 +91,10 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] font-medium">{m.month}</td>
                     <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums font-semibold ${clr(m.monthlyRetPct)}`}>{fmtPct(m.monthlyRetPct)}</td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{m.totalTrades}</td>
-                    <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${m.winPct >= 50 ? 'text-green-600' : 'text-red-500'}`}>{m.totalTrades > 0 ? fmtPct(m.winPct) : '—'}</td>
+                    <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${m.winPct >= 50 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>{m.totalTrades > 0 ? fmtPct(m.winPct) : '—'}</td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{m.totalTrades > 0 ? fmt(m.returnPct / (m.totalTrades || 1), 1) : '—'}</td>
-                    <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-green-600">{m.largestGain > 0 ? fmtPct(m.largestGain) : '—'}</td>
-                    <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-red-500">{m.largestLoss < 0 ? fmtPct(m.largestLoss) : '—'}</td>
+                    <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-[var(--color-profit)]">{m.largestGain > 0 ? fmtPct(m.largestGain) : '—'}</td>
+                    <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-[var(--color-loss)]">{m.largestLoss < 0 ? fmtPct(m.largestLoss) : '—'}</td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{m.avgHoldWin > 0 ? fmt(m.avgHoldWin, 0) : '—'}</td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{m.avgHoldLoss > 0 ? fmt(m.avgHoldLoss, 0) : '—'}</td>
                   </tr>
@@ -114,7 +114,7 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
           <div className="space-y-2">
             {insights.map((ins, i) => (
               <div key={i} className="flex gap-2 text-sm">
-                <span className={`flex-shrink-0 ${ins.type === 'positive' ? 'text-green-600' : ins.type === 'warning' ? 'text-amber-500' : 'text-[var(--color-text-muted)]'}`}>
+                <span className={`flex-shrink-0 ${ins.type === 'positive' ? 'text-[var(--color-profit)]' : ins.type === 'warning' ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-text-muted)]'}`}>
                   {ins.type === 'positive' ? '+' : ins.type === 'warning' ? '!' : '-'}
                 </span>
                 <span className="text-[var(--color-text-secondary)]">{ins.text}</span>

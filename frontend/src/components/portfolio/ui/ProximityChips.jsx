@@ -1,6 +1,6 @@
 const TONE = {
-  amber:  'bg-amber-500/15 text-amber-600 ring-amber-500/30',
-  red:    'bg-red-500/15 text-red-600 ring-red-500/30',
+  amber:  'bg-[color-mix(in_srgb,var(--color-signal-caution)_15%,transparent)] text-[var(--color-signal-caution)] ring-amber-500/30',
+  red:    'bg-[color-mix(in_srgb,var(--color-loss)_15%,transparent)] text-[var(--color-loss)] ring-red-500/30',
   orange: 'bg-orange-500/15 text-orange-600 ring-orange-500/30',
 }
 

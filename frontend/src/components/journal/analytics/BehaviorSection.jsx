@@ -45,10 +45,10 @@ export default function BehaviorSection({ enriched }) {
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             <StatCard label="Trades w/ Stop" value={rStats.n} />
-            <StatCard label="Avg R" value={`${fmt(rStats.avgR, 2)}R`} colorClass={rStats.avgR >= 0 ? 'text-green-600' : 'text-red-500'} />
-            <StatCard label="Median R" value={`${fmt(rStats.medianR, 2)}R`} colorClass={rStats.medianR >= 0 ? 'text-green-600' : 'text-red-500'} />
-            <StatCard label="Avg Winning R" value={`${fmt(rStats.avgWinR, 2)}R`} colorClass="text-green-600" />
-            <StatCard label="Avg Losing R" value={`${fmt(rStats.avgLossR, 2)}R`} colorClass="text-red-500" />
+            <StatCard label="Avg R" value={`${fmt(rStats.avgR, 2)}R`} colorClass={rStats.avgR >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'} />
+            <StatCard label="Median R" value={`${fmt(rStats.medianR, 2)}R`} colorClass={rStats.medianR >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'} />
+            <StatCard label="Avg Winning R" value={`${fmt(rStats.avgWinR, 2)}R`} colorClass="text-[var(--color-profit)]" />
+            <StatCard label="Avg Losing R" value={`${fmt(rStats.avgLossR, 2)}R`} colorClass="text-[var(--color-loss)]" />
           </div>
           {rStats.medianR < 0 && rStats.avgR > 0 && (
             <p className="text-[11px] text-[var(--color-text-muted)] mt-2">
@@ -86,8 +86,8 @@ export default function BehaviorSection({ enriched }) {
                     <td className="px-3 py-2 border-b border-[var(--color-border-light)] tabular-nums text-right">{s.count}</td>
                     <td className={`px-3 py-2 border-b border-[var(--color-border-light)] tabular-nums text-right ${clr(s.totalPL)}`}>{fmtCur(s.totalPL)}</td>
                     <td className={`px-3 py-2 border-b border-[var(--color-border-light)] tabular-nums text-right ${clr(s.avgPL)}`}>{fmtCur(s.avgPL)}</td>
-                    <td className="px-3 py-2 border-b border-[var(--color-border-light)] tabular-nums text-right text-green-600">{s.wins}</td>
-                    <td className="px-3 py-2 border-b border-[var(--color-border-light)] tabular-nums text-right text-red-500">{s.losses}</td>
+                    <td className="px-3 py-2 border-b border-[var(--color-border-light)] tabular-nums text-right text-[var(--color-profit)]">{s.wins}</td>
+                    <td className="px-3 py-2 border-b border-[var(--color-border-light)] tabular-nums text-right text-[var(--color-loss)]">{s.losses}</td>
                     <td className="px-3 py-2 border-b border-[var(--color-border-light)] text-[var(--color-text-muted)]">{STYLE_HINT[style]}</td>
                   </tr>
                 )
@@ -148,7 +148,7 @@ export default function BehaviorSection({ enriched }) {
         </p>
         <div className="grid grid-cols-2 gap-3 mb-3">
           <StatCard label="Trades affected" value={panic.count} />
-          <StatCard label="Total leak" value={fmtCur(panic.totalLeak)} colorClass="text-red-500" />
+          <StatCard label="Total leak" value={fmtCur(panic.totalLeak)} colorClass="text-[var(--color-loss)]" />
         </div>
         {panic.perTrade.length > 0 && (
           <div className="overflow-x-auto bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg">
@@ -169,7 +169,7 @@ export default function BehaviorSection({ enriched }) {
                     <td className="px-3 py-2 border-b border-[var(--color-border-light)]">{x.direction}</td>
                     <td className="px-3 py-2 border-b border-[var(--color-border-light)] text-[var(--color-text-muted)] tabular-nums">{x.entryDate?.slice(0, 10)}</td>
                     <td className={`px-3 py-2 border-b border-[var(--color-border-light)] tabular-nums text-right ${clr(x.realizedPL)}`}>{fmtCur(x.realizedPL)}</td>
-                    <td className="px-3 py-2 border-b border-[var(--color-border-light)] tabular-nums text-right text-red-500">{fmtCur(x.leak)}</td>
+                    <td className="px-3 py-2 border-b border-[var(--color-border-light)] tabular-nums text-right text-[var(--color-loss)]">{fmtCur(x.leak)}</td>
                   </tr>
                 ))}
               </tbody>

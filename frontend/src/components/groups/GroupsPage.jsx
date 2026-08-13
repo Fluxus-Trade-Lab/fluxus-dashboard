@@ -159,7 +159,7 @@ export default function GroupsPage() {
     </div>
   }
   if (error) {
-    return <div className="text-rose-400 text-sm py-8 text-center">
+    return <div className="text-[var(--color-signal-riskoff)] text-[13px] py-8 text-center">
       groups.json unavailable — run <code>python -m pipeline.themes.build_groups</code>
     </div>
   }

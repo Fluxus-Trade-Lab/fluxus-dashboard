@@ -224,7 +224,7 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
                       )}
                     </td>
                     <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)]">
-                      <span className={g.direction === 'long' ? 'text-green-600' : 'text-red-500'}>{g.direction.toUpperCase()}</span>
+                      <span className={'text-[var(--color-text-secondary)]'}>{g.direction.toUpperCase()}</span>
                     </td>
                     <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{fmtCur(g.avgEntry)}</td>
                     <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{fmtCur(g.lastPrice)}</td>
@@ -241,7 +241,7 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
                         <TickerLink symbol={t.ticker} className="text-[var(--color-text-muted)]" />
                       </td>
                       <td className="px-2.5 py-1 border-b border-[var(--color-border-light)]">
-                        <span className={t.direction === 'long' ? 'text-green-600' : 'text-red-500'}>{t.direction.toUpperCase()}</span>
+                        <span className={'text-[var(--color-text-secondary)]'}>{t.direction.toUpperCase()}</span>
                       </td>
                       <td className="px-2.5 py-1 border-b border-[var(--color-border-light)] tabular-nums">{fmtCur(t.entryPrice)}</td>
                       <td className="px-2.5 py-1 border-b border-[var(--color-border-light)] tabular-nums">{fmtCur(t.lastPrice)}</td>

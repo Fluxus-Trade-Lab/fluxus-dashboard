@@ -42,8 +42,8 @@ function RiskTabInner() {
     { label: 'Actual Total P&L', value: fmtCur(summary.totalActualPL), color: clr(summary.totalActualPL) },
     { label: `${mode}-Stop Total P&L`, value: fmtCur(summary.totalSimPL), color: clr(summary.totalSimPL) },
     { label: 'P&L Difference', value: fmtCur(summary.totalDiff), color: clr(summary.totalDiff), sub: summary.totalDiff > 0 ? `${mode}-stop would save` : summary.totalDiff < 0 ? `${mode}-stop would cost` : 'No change' },
-    { label: 'Actual Avg Loss', value: fmtPct(summary.avgActualLoss), color: 'text-red-500' },
-    { label: `${mode}-Stop Avg Loss`, value: fmtPct(summary.avgSimLoss), color: 'text-red-500' },
+    { label: 'Actual Avg Loss', value: fmtPct(summary.avgActualLoss), color: 'text-[var(--color-loss)]' },
+    { label: `${mode}-Stop Avg Loss`, value: fmtPct(summary.avgSimLoss), color: 'text-[var(--color-loss)]' },
     { label: 'Trades Affected', value: `${summary.tradesAffected} / ${summary.totalTrades}`, color: '', sub: 'Had stops triggered' },
   ]
 
@@ -81,7 +81,7 @@ function RiskTabInner() {
       </div>
 
       {hasHistoryGap && (
-        <div className="p-3 bg-amber-900/30 border border-amber-600/30 rounded-md mb-4 text-xs text-amber-400">
+        <div className="p-3 bg-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md mb-4 text-xs text-[var(--color-signal-caution)]">
           Some trades lack daily price history — using worst-case (all stops triggered) for those.
           Load full history on the Portfolio → Overview tab for accurate simulation.
         </div>
@@ -116,7 +116,7 @@ function RiskTabInner() {
             {rows.map(r => (
               <tr key={r.id} className="border-b border-[var(--color-border-light)] hover:bg-[var(--color-hover-bg)]">
                 <td className="py-2 px-2 font-semibold text-[var(--color-accent)]">{r.ticker}</td>
-                <td className={`py-2 px-1 font-semibold ${r.direction === 'long' ? 'text-green-600' : 'text-red-500'}`}>
+                <td className={`py-2 px-1 font-semibold text-[var(--color-text-secondary)]`}>
                   {r.direction.toUpperCase()}
                 </td>
                 <td className="text-right py-2 px-2">{r.qty}</td>
@@ -124,7 +124,7 @@ function RiskTabInner() {
                 <td className="text-right py-2 px-2">{fmtCur(r.stopPrice)}</td>
                 <td className="text-right py-2 px-2">{fmt(r.R, 2)}</td>
                 {r.stops.map((stop, i) => (
-                  <td key={i} className={`text-right py-2 px-2 ${stop.triggered ? 'text-red-500 font-semibold' : 'text-[var(--color-text-muted)]'}`}>
+                  <td key={i} className={`text-right py-2 px-2 ${stop.triggered ? 'text-[var(--color-loss)] font-semibold' : 'text-[var(--color-text-muted)]'}`}>
                     {fmtCur(stop.level)}
                   </td>
                 ))}

@@ -136,7 +136,7 @@ export default function TradeJournalPage() {
                 <td className="px-2 py-1.5 font-semibold">
                   <TickerLink symbol={t.ticker} />
                 </td>
-                <td className={`px-2 py-1.5 ${t.direction === 'long' ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
+                <td className={`px-2 py-1.5 text-[var(--color-text-secondary)]`}>
                   {t.direction.toUpperCase()}
                 </td>
                 <td className="px-2 py-1.5 tabular-nums">{t.hold_days ?? '—'}</td>

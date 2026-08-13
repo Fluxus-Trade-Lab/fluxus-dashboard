@@ -1,6 +1,6 @@
 const variants = {
   primary: 'bg-[var(--color-accent)] text-white hover:opacity-90',
-  danger: 'bg-red-600 text-white hover:bg-red-700',
+  danger: 'bg-[color-mix(in_srgb,var(--color-loss)_15%,transparent)] text-white hover:bg-[color-mix(in_srgb,var(--color-loss)_15%,transparent)]',
   ghost: 'bg-[var(--color-surface-raised)] text-[var(--color-text)] hover:bg-[var(--color-hover-bg)]',
 }
 

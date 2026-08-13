@@ -10,7 +10,7 @@ function MAcell({ label, ma, above }) {
   if (ma == null) return <div className="text-[var(--color-text-muted)]">{label} <span className="opacity-60">n/a</span></div>
   return (
     <div>
-      {label} <span className={above ? 'text-green-600' : 'text-red-500'}>{above ? '▲' : '▼'}</span>{' '}
+      {label} <span className={above ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}>{above ? '▲' : '▼'}</span>{' '}
       <span className="tabular-nums">{ma.toFixed(2)}</span>
     </div>
   )
@@ -32,18 +32,18 @@ function TradeCard({ t, bars }) {
   const extreme = tech?.extAtr != null && Math.abs(tech.extAtr) >= 2
 
   return (
-    <div className={`rounded-lg border p-3.5 bg-[var(--color-bg)] ${win ? 'border-green-600/40' : 'border-red-500/40'}`}>
+    <div className={`rounded-lg border p-3.5 bg-[var(--color-bg)] ${win ? 'border-[color-mix(in_srgb,var(--color-profit)_40%,transparent)]' : 'border-[color-mix(in_srgb,var(--color-loss)_40%,transparent)]'}`}>
       <div className="flex items-baseline justify-between mb-0.5">
         <div className="flex items-baseline gap-2">
           <span className="font-mono font-bold text-sm">{t.ticker}</span>
           <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-[var(--color-surface)] text-[var(--color-text-muted)]">{t.direction}</span>
         </div>
-        <span className={`font-semibold text-sm tabular-nums ${win ? 'text-green-600' : 'text-red-500'}`}>
+        <span className={`font-semibold text-sm tabular-nums ${win ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
           {money(pl)} {R != null && <span className="text-xs font-normal">· {R >= 0 ? '+' : ''}{R.toFixed(1)}R</span>}
         </span>
       </div>
 
-      <div className={`text-xs font-medium mb-2 ${win ? 'text-green-600' : 'text-red-500'}`}>{cls.type}</div>
+      <div className={`text-xs font-medium mb-2 ${win ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>{cls.type}</div>
 
       {tech ? (
         <>
@@ -55,7 +55,7 @@ function TradeCard({ t, bars }) {
           <div className="text-[11px] text-[var(--color-text-secondary)] mb-1.5">{STACK_LABEL[tech.stack] || '—'}</div>
 
           <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 text-[11px] text-[var(--color-text-secondary)]">
-            <div>Entry vs 20EMA: <b className={extreme ? (win ? 'text-green-600' : 'text-red-500') : ''}>
+            <div>Entry vs 20EMA: <b className={extreme ? (win ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]') : ''}>
               {tech.extAtr >= 0 ? '+' : ''}{tech.extAtr?.toFixed(1)} ATR</b></div>
             <div>ATR(14): {tech.atrPct?.toFixed(1)}% of price</div>
             <div>vs 20d high: {tech.distHi20Pct >= 0 ? '+' : ''}{tech.distHi20Pct?.toFixed(1)}%</div>
@@ -64,7 +64,7 @@ function TradeCard({ t, bars }) {
             <div>{intoStrength ? 'Trimmed into strength' : trims.length ? 'Trimmed into weakness' : 'No scale-out'}</div>
           </div>
           {cls.notes?.length > 0 && (
-            <div className="mt-1.5 text-[11px] text-amber-500">⚠ {cls.notes.join(' · ')}</div>
+            <div className="mt-1.5 text-[11px] text-[var(--color-signal-caution)]">⚠ {cls.notes.join(' · ')}</div>
           )}
         </>
       ) : (
@@ -143,8 +143,8 @@ export default function TradeCaseStudies({ enriched }) {
         Point-in-time as of each entry: 20EMA / 50SMA / 200SMA alignment, ATR(14) extension, and the setup or
         mistake it fits. Computed from daily OHLC — refresh ticker data if a name shows “insufficient history”.
       </p>
-      <Grid title="Biggest winners" list={winners} tint="text-green-600" />
-      <Grid title="Biggest losers" list={losers} tint="text-red-500" />
+      <Grid title="Biggest winners" list={winners} tint="text-[var(--color-profit)]" />
+      <Grid title="Biggest losers" list={losers} tint="text-[var(--color-loss)]" />
     </div>
   )
 }

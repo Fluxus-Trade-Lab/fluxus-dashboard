@@ -123,9 +123,9 @@ export default function ObjectiveSimulator({ rs }) {
           {/* Verdict */}
           <p className="text-xs text-[var(--color-text)] leading-relaxed bg-[var(--color-bg)] rounded px-3 py-2">
             At <span className="font-semibold font-mono">{riskPct}%</span> risk over <span className="font-mono">{horizon}</span> trades:
-            median <span className={`font-semibold font-mono ${sim.medianReturn >= 0 ? 'text-green-700 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>{sim.medianReturn >= 0 ? '+' : ''}{sim.medianReturn.toFixed(0)}%</span>,
+            median <span className={`font-semibold font-mono ${sim.medianReturn >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>{sim.medianReturn >= 0 ? '+' : ''}{sim.medianReturn.toFixed(0)}%</span>,
             reaches ≥ {targetSign}{targetReturnPct}% in <span className="font-semibold font-mono">{sim.pReachTarget.toFixed(0)}%</span> of paths,
-            with a <span className={`font-semibold font-mono ${sim.pBreachDD > 25 ? 'text-red-600 dark:text-red-400' : 'text-[var(--color-text)]'}`}>{sim.pBreachDD.toFixed(0)}%</span> chance of a drawdown greater than {maxDDPct}%.
+            with a <span className={`font-semibold font-mono ${sim.pBreachDD > 25 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text)]'}`}>{sim.pBreachDD.toFixed(0)}%</span> chance of a drawdown greater than {maxDDPct}%.
           </p>
 
           {/* Stat tiles */}
@@ -144,11 +144,11 @@ export default function ObjectiveSimulator({ rs }) {
             </div>
             <div>
               <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">P(≥ Target)</span>
-              <span className="text-sm font-semibold font-mono text-green-700 dark:text-green-400">{sim.pReachTarget.toFixed(0)}%</span>
+              <span className="text-sm font-semibold font-mono text-[var(--color-profit)]">{sim.pReachTarget.toFixed(0)}%</span>
             </div>
             <div>
               <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">P(DD &gt; {maxDDPct}%)</span>
-              <span className={`text-sm font-semibold font-mono ${sim.pBreachDD > 25 ? 'text-red-600 dark:text-red-400' : 'text-[var(--color-text)]'}`}>{sim.pBreachDD.toFixed(0)}%</span>
+              <span className={`text-sm font-semibold font-mono ${sim.pBreachDD > 25 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text)]'}`}>{sim.pBreachDD.toFixed(0)}%</span>
             </div>
           </div>
 

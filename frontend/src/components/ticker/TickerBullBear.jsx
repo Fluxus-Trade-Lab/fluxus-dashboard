@@ -28,13 +28,13 @@ export default function TickerBullBear({ tickerData }) {
         )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-        <div className="bg-green-500/5 rounded p-3 border border-green-500/20">
+        <div className="bg-[color-mix(in_srgb,var(--color-profit)_5%,transparent)] rounded p-3 border border-[color-mix(in_srgb,var(--color-profit)_20%,transparent)]">
           <div className="text-[10px] uppercase tracking-wide font-bold text-[var(--color-profit)] mb-2">Bull Case</div>
           <ul className="flex flex-col gap-1.5 list-disc pl-4 text-[var(--color-text)]">
             {bull.map((b, i) => <li key={i}>{b}</li>)}
           </ul>
         </div>
-        <div className="bg-red-500/5 rounded p-3 border border-red-500/20">
+        <div className="bg-[color-mix(in_srgb,var(--color-loss)_5%,transparent)] rounded p-3 border border-[color-mix(in_srgb,var(--color-loss)_20%,transparent)]">
           <div className="text-[10px] uppercase tracking-wide font-bold text-[var(--color-loss)] mb-2">Bear Case</div>
           <ul className="flex flex-col gap-1.5 list-disc pl-4 text-[var(--color-text)]">
             {bear.map((b, i) => <li key={i}>{b}</li>)}

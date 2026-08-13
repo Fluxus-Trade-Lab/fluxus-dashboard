@@ -117,8 +117,8 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
             <tr key={r.tk}>
               <td className="font-mono">{r.tk}</td><td>{r.n}</td>
               <td className="text-right">{money(r.firstPL)} <span className="text-[var(--color-text-muted)]">({r.firstR >= 0 ? '+' : ''}{r.firstR.toFixed(1)}R)</span></td>
-              <td className={`text-right ${r.readdPL < 0 ? 'text-red-500' : 'text-green-600'}`}>{money(r.readdPL)} ({r.readdR >= 0 ? '+' : ''}{r.readdR.toFixed(1)}R)</td>
-              <td className={`text-right font-medium ${r.net < 0 ? 'text-red-500' : 'text-green-600'}`}>{money(r.net)}</td>
+              <td className={`text-right ${r.readdPL < 0 ? 'text-[var(--color-loss)]' : 'text-[var(--color-profit)]'}`}>{money(r.readdPL)} ({r.readdR >= 0 ? '+' : ''}{r.readdR.toFixed(1)}R)</td>
+              <td className={`text-right font-medium ${r.net < 0 ? 'text-[var(--color-loss)]' : 'text-[var(--color-profit)]'}`}>{money(r.net)}</td>
             </tr>
           ))}</tbody>
         </table>
@@ -152,7 +152,7 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
           <thead><tr className="text-[var(--color-text-muted)]"><td>Scenario</td><td className="text-right">P&L</td><td className="text-right">Total R</td><td className="text-right">Return</td></tr></thead>
           <tbody>
             <tr><td>Actual</td><td className="text-right">{money(d.totalPL)}</td><td className="text-right">+{d.totalR.toFixed(0)}R</td><td className="text-right">+{(d.totalPL / d.capital * 100).toFixed(1)}%</td></tr>
-            <tr className="font-medium"><td>One-and-done (entry #1, no re-attacks)</td><td className="text-right">{money(d.totalPL + d.cfOnedonePL)}</td><td className="text-right">+{(d.totalR + d.cfOnedoneR).toFixed(0)}R</td><td className="text-right text-green-600">+{((d.totalPL + d.cfOnedonePL) / d.capital * 100).toFixed(1)}%</td></tr>
+            <tr className="font-medium"><td>One-and-done (entry #1, no re-attacks)</td><td className="text-right">{money(d.totalPL + d.cfOnedonePL)}</td><td className="text-right">+{(d.totalR + d.cfOnedoneR).toFixed(0)}R</td><td className="text-right text-[var(--color-profit)]">+{((d.totalPL + d.cfOnedonePL) / d.capital * 100).toFixed(1)}%</td></tr>
             <tr className="text-[var(--color-text-muted)]"><td>Avoid all 5 entirely</td><td className="text-right">{money(d.totalPL + d.cfAvoidPL)}</td><td className="text-right">—</td><td className="text-right">+{((d.totalPL + d.cfAvoidPL) / d.capital * 100).toFixed(1)}%</td></tr>
           </tbody>
         </table>

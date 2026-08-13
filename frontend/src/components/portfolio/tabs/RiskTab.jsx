@@ -39,7 +39,7 @@ export default function RiskTab({ riskMetrics, benchmarkTicker }) {
 
   const metrics = [
     { key: 'annualizedReturn', value: fmtPct(riskMetrics.annualizedReturn), color: clr(riskMetrics.annualizedReturn) },
-    { key: 'maxDrawdown', value: fmtPct(-riskMetrics.maxDrawdown), color: 'text-red-500',
+    { key: 'maxDrawdown', value: fmtPct(-riskMetrics.maxDrawdown), color: 'text-[var(--color-loss)]',
       sub: riskMetrics.ddPeakDate ? `${riskMetrics.ddPeakDate} → ${riskMetrics.ddTroughDate}` : undefined },
     ...(riskMetrics.correlation != null ? [{ key: 'correlation', label: `Corr (${benchmarkTicker})`, value: fmt(riskMetrics.correlation, 3), color: '' }] : []),
     ...(riskMetrics.beta != null ? [{ key: 'beta', value: fmt(riskMetrics.beta, 3), color: '' }] : []),

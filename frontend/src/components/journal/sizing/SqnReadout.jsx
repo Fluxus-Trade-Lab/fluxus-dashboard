@@ -2,10 +2,10 @@ import { useMemo } from 'react'
 import { expectancyStats, sqn, sqnBand } from '../lib/sizingStats'
 
 const TONE_CLASS = {
-  bad: 'text-red-600 dark:text-red-400',
-  warn: 'text-amber-600 dark:text-amber-400',
+  bad: 'text-[var(--color-loss)]',
+  warn: 'text-[var(--color-signal-caution)]',
   neutral: 'text-[var(--color-text)]',
-  good: 'text-green-700 dark:text-green-400',
+  good: 'text-[var(--color-profit)]',
   muted: 'text-[var(--color-text-muted)]',
 }
 
@@ -63,8 +63,8 @@ export default function SqnReadout({ rs }) {
               !meanKnown
                 ? 'text-[var(--color-text-muted)]'
                 : stats.meanR >= 0
-                  ? 'text-green-700 dark:text-green-400'
-                  : 'text-red-600 dark:text-red-400'
+                  ? 'text-[var(--color-profit)]'
+                  : 'text-[var(--color-loss)]'
             }`}
           >
             {meanKnown ? `${stats.meanR >= 0 ? '+' : ''}${fmt(stats.meanR)}R` : '—'}

@@ -41,7 +41,7 @@ export default function TradeDetailPage({ tradeId }) {
           <div>
             <h1 className="text-2xl font-bold tracking-tight flex items-center gap-3">
               <TickerLink symbol={t.ticker} className="text-[var(--color-accent)]" />
-              <span className={`text-sm font-normal ${t.direction === 'long' ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
+              <span className={`text-sm font-normal text-[var(--color-text-secondary)]`}>
                 {t.direction.toUpperCase()}
               </span>
               <span className={`px-2 py-0.5 rounded text-[11px] uppercase tracking-wide ${t.closed ? 'bg-gray-500/15 text-gray-500' : 'bg-blue-500/15 text-blue-600'}`}>

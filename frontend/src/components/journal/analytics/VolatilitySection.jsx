@@ -36,7 +36,7 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
         <StatCard
           label="Portfolio Vol (ann.)"
           value={portfolioVol ? fmtPct(portfolioVol.annualizedVol) : '—'}
-          colorClass={portfolioVol && portfolioVol.annualizedVol > 25 ? 'text-amber-500' : ''}
+          colorClass={portfolioVol && portfolioVol.annualizedVol > 25 ? 'text-[var(--color-signal-caution)]' : ''}
         />
         <StatCard
           label="SPY Vol (ann.)"
@@ -46,7 +46,7 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
           label="Vol Ratio"
           value={portfolioVol && spyVol ? fmt(portfolioVol.annualizedVol / spyVol.annualizedVol, 2) + 'x' : '—'}
           sub={portfolioVol && spyVol ? (portfolioVol.annualizedVol / spyVol.annualizedVol > 1.5 ? 'High relative vol' : 'Moderate') : ''}
-          colorClass={portfolioVol && spyVol && portfolioVol.annualizedVol / spyVol.annualizedVol > 1.5 ? 'text-amber-500' : ''}
+          colorClass={portfolioVol && spyVol && portfolioVol.annualizedVol / spyVol.annualizedVol > 1.5 ? 'text-[var(--color-signal-caution)]' : ''}
         />
         <StatCard
           label="Daily Vol"
@@ -85,7 +85,7 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
             Per-Position Volatility Contribution
           </h3>
           {volContrib.slice(0, 3).some(v => v.volContribution != null) && (
-            <div className="bg-amber-500/10 border border-amber-500/30 rounded-md px-3 py-2 text-xs text-amber-400 mb-4">
+            <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-xs text-[var(--color-signal-caution)] mb-4">
               Top 3 vol contributors: {volContrib.slice(0, 3).filter(v => v.volContribution != null).map(v => `${v.ticker} (${fmt(v.volContribution, 2)}%)`).join(', ')}
             </div>
           )}
@@ -105,7 +105,7 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{fmt(v.weight, 1)}%</td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{v.dailyVol != null ? fmtPct(v.dailyVol) : '—'}</td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{v.annualizedVol != null ? fmtPct(v.annualizedVol) : '—'}</td>
-                    <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${v.beta != null && v.beta > 1.5 ? 'text-amber-500 font-semibold' : ''}`}>
+                    <td className={`px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums ${v.beta != null && v.beta > 1.5 ? 'text-[var(--color-signal-caution)] font-semibold' : ''}`}>
                       {v.beta != null ? fmt(v.beta, 2) : '—'}
                     </td>
                     <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums font-semibold">{v.volContribution != null ? fmtPct(v.volContribution) : '—'}</td>
@@ -123,7 +123,7 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
           <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             High-Beta Watchlist (Beta &gt; 1.5)
           </h3>
-          <div className="bg-amber-500/10 border border-amber-500/30 rounded-md px-3 py-2 text-xs text-amber-400 mb-4">
+          <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-xs text-[var(--color-signal-caution)] mb-4">
             {highBeta.length} position{highBeta.length > 1 ? 's' : ''} with beta above 1.5. Consider sizing these smaller or widening stops.
           </div>
           <table className="w-full border-collapse text-xs">
@@ -138,7 +138,7 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
               {highBeta.map((v, i) => (
                 <tr key={v.id || v.ticker + i} className={i % 2 === 0 ? 'bg-[var(--color-surface)]' : 'bg-[var(--color-bg)]'}>
                   <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] font-medium">{v.ticker}</td>
-                  <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-amber-500 font-semibold">{fmt(v.beta, 2)}</td>
+                  <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-[var(--color-signal-caution)] font-semibold">{fmt(v.beta, 2)}</td>
                   <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{fmt(v.weight, 1)}%</td>
                   <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{fmtCur(v.mktVal)}</td>
                   <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{fmtCur(v.mktVal * v.beta)}</td>

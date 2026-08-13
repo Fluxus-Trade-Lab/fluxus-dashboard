@@ -57,9 +57,9 @@ const METHODS = [
 ]
 
 const VERDICT_LABELS = {
-  beginner: { label: 'Beginner', color: 'text-amber-600 dark:text-amber-400' },
+  beginner: { label: 'Beginner', color: 'text-[var(--color-signal-caution)]' },
   intermediate: { label: 'Intermediate', color: 'text-blue-600 dark:text-blue-400' },
-  professional: { label: 'Professional', color: 'text-green-600 dark:text-green-400' },
+  professional: { label: 'Professional', color: 'text-[var(--color-profit)]' },
   advanced: { label: 'Advanced', color: 'text-purple-600 dark:text-purple-400' },
 }
 
@@ -140,7 +140,7 @@ function SizingCalculator({ startingCapital }) {
           </div>
           <div>
             <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">$ at Risk</span>
-            <span className="text-sm font-medium text-red-600 dark:text-red-400">${calc.riskDollar.toLocaleString()}</span>
+            <span className="text-sm font-medium text-[var(--color-loss)]">${calc.riskDollar.toLocaleString()}</span>
             <span className="text-[9px] text-[var(--color-text-muted)] ml-1">({calc.stopPct.toFixed(1)}% stop)</span>
           </div>
           <div>
@@ -222,9 +222,9 @@ function PortfolioAudit({ trades, dailyPrices, startingCapital }) {
   }
 
   const STATUS_COLORS = {
-    ok: 'text-green-700 dark:text-green-400',
-    undersized: 'text-amber-600 dark:text-amber-400',
-    oversized: 'text-red-600 dark:text-red-400',
+    ok: 'text-[var(--color-profit)]',
+    undersized: 'text-[var(--color-signal-caution)]',
+    oversized: 'text-[var(--color-loss)]',
   }
 
   return (
@@ -233,7 +233,7 @@ function PortfolioAudit({ trades, dailyPrices, startingCapital }) {
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Current Positions — Sizing Audit
         </h3>
-        <span className={`text-xs font-mono font-semibold ${audit.totalHeat > 3 ? 'text-red-600 dark:text-red-400' : 'text-[var(--color-text)]'}`}>
+        <span className={`text-xs font-mono font-semibold ${audit.totalHeat > 3 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text)]'}`}>
           Total Heat: {audit.totalHeat.toFixed(2)}%
           {audit.totalHeat > 3 && ' ⚠'}
         </span>
@@ -261,10 +261,10 @@ function PortfolioAudit({ trades, dailyPrices, startingCapital }) {
                 <td className="px-2 py-1.5 text-right font-mono">{p.currentQty}</td>
                 <td className="px-2 py-1.5 text-right font-mono">${p.entryPrice.toFixed(2)}</td>
                 <td className="px-2 py-1.5 text-right font-mono">${p.stopPrice.toFixed(2)}</td>
-                <td className="px-2 py-1.5 text-right font-mono text-red-600 dark:text-red-400">${p.riskDollar.toLocaleString()}</td>
+                <td className="px-2 py-1.5 text-right font-mono text-[var(--color-loss)]">${p.riskDollar.toLocaleString()}</td>
                 <td className="px-2 py-1.5 text-right font-mono">{p.riskPct.toFixed(2)}%</td>
                 <td className="px-2 py-1.5 text-right font-mono text-[var(--color-text-muted)]">{p.targetShares}</td>
-                <td className={`px-2 py-1.5 text-right font-mono ${p.rr >= 0 ? 'text-green-700 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                <td className={`px-2 py-1.5 text-right font-mono ${p.rr >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
                   {p.rr.toFixed(1)}R
                 </td>
                 <td className={`px-2 py-1.5 text-center font-medium ${STATUS_COLORS[p.status]}`}>
@@ -355,21 +355,21 @@ function SizingTabInner() {
                     {/* Pros / Cons */}
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <span className="text-[9px] font-medium uppercase tracking-wide text-green-600 dark:text-green-400 block mb-1">Pros</span>
+                        <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-profit)] block mb-1">Pros</span>
                         <ul className="space-y-0.5">
                           {method.pros.map((p, i) => (
                             <li key={i} className="text-[10px] text-[var(--color-text-secondary)] flex gap-1.5">
-                              <span className="text-green-500 shrink-0">+</span>{p}
+                              <span className="text-[var(--color-profit)] shrink-0">+</span>{p}
                             </li>
                           ))}
                         </ul>
                       </div>
                       <div>
-                        <span className="text-[9px] font-medium uppercase tracking-wide text-red-600 dark:text-red-400 block mb-1">Cons</span>
+                        <span className="text-[9px] font-medium uppercase tracking-wide text-[var(--color-loss)] block mb-1">Cons</span>
                         <ul className="space-y-0.5">
                           {method.cons.map((c, i) => (
                             <li key={i} className="text-[10px] text-[var(--color-text-secondary)] flex gap-1.5">
-                              <span className="text-red-500 shrink-0">−</span>{c}
+                              <span className="text-[var(--color-loss)] shrink-0">−</span>{c}
                             </li>
                           ))}
                         </ul>

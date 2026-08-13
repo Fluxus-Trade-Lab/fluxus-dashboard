@@ -13,8 +13,8 @@ const WEIGHT_LABELS = { 0.25: 'Bird', 1: 'Cat', 2: 'Goat', 4: 'Elephant' }
 function weightBadge(w) {
   const label = WEIGHT_LABELS[w] || w
   const col =
-    w >= 4 ? 'bg-green-500/10 text-[var(--color-profit)]' :
-    w >= 2 ? 'bg-amber-500/10 text-[var(--color-signal-caution)]' :
+    w >= 4 ? 'bg-[color-mix(in_srgb,var(--color-profit)_10%,transparent)] text-[var(--color-profit)]' :
+    w >= 2 ? 'bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] text-[var(--color-signal-caution)]' :
     w >= 1 ? 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]' :
     'bg-[var(--color-bg)] text-[var(--color-text-muted)]'
   return <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold ${col}`}>{w} — {label}</span>
@@ -259,7 +259,7 @@ export default function OptionsTab() {
                 autoFocus
                 className="w-[100px] text-lg font-bold bg-[var(--color-input-bg)] border border-[var(--color-input-border)] rounded px-1.5 py-0.5 font-mono tabular-nums outline-none focus:border-[var(--color-text-secondary)]"
               />
-              <button onClick={handleCapitalSave} className="text-green-600 font-bold text-sm cursor-pointer bg-transparent border-none">OK</button>
+              <button onClick={handleCapitalSave} className="text-[var(--color-profit)] font-bold text-sm cursor-pointer bg-transparent border-none">OK</button>
             </div>
           ) : (
             <div className="text-lg font-bold font-mono tabular-nums">{pm ? MASK : fmtCur(state.optionsCapital)}</div>
@@ -334,7 +334,7 @@ export default function OptionsTab() {
                       <td className={`${tdStyle} font-mono text-[11px]`}>{t.strike}</td>
                       <td className={`${tdStyle} text-[11px] text-[var(--color-text-secondary)]`}>{shortDate(t.expiry)}</td>
                       <td className={tdStyle}>
-                        <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold ${isOpen ? 'bg-green-500/10 text-[var(--color-profit)]' : 'bg-red-500/10 text-[var(--color-loss)]'}`}>
+                        <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold ${isOpen ? 'bg-[color-mix(in_srgb,var(--color-profit)_10%,transparent)] text-[var(--color-profit)]' : 'bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] text-[var(--color-loss)]'}`}>
                           {isOpen ? 'OPEN' : 'CLOSED'}
                         </span>
                       </td>
@@ -345,7 +345,7 @@ export default function OptionsTab() {
                       <td className={`${tdStyle} text-[11px] text-[var(--color-text-secondary)]`}>{t.exitDate ? shortDate(t.exitDate) : '—'}</td>
                       <td className={`${tdStyle} font-semibold ${pct != null ? clr(pct) : ''}`}>
                         {pct != null ? (
-                          <span className={`px-1.5 py-0.5 rounded text-[11px] ${pct > 0 ? 'bg-green-500/5' : pct < 0 ? 'bg-red-500/5' : ''}`}>
+                          <span className={`px-1.5 py-0.5 rounded text-[11px] ${pct > 0 ? 'bg-[color-mix(in_srgb,var(--color-profit)_5%,transparent)]' : pct < 0 ? 'bg-[color-mix(in_srgb,var(--color-loss)_5%,transparent)]' : ''}`}>
                             {pm ? MASK : fmtPctSigned(pct)}
                           </span>
                         ) : '—'}
@@ -418,7 +418,7 @@ export default function OptionsTab() {
                               </button>
                               <button
                                 onClick={() => handleDelete(t.id)}
-                                className="bg-transparent border border-red-200 rounded px-1.5 py-0.5 text-[11px] cursor-pointer text-red-500 hover:bg-red-50"
+                                className="bg-transparent border border-[color-mix(in_srgb,var(--color-loss)_15%,transparent)] rounded px-1.5 py-0.5 text-[11px] cursor-pointer text-[var(--color-loss)] hover:bg-[color-mix(in_srgb,var(--color-loss)_15%,transparent)]"
                               >
                                 &times;
                               </button>
@@ -427,7 +427,7 @@ export default function OptionsTab() {
                         ) : (
                           <button
                             onClick={() => handleDelete(t.id)}
-                            className="bg-transparent border border-red-200 rounded px-1.5 py-0.5 text-[11px] cursor-pointer text-red-500 hover:bg-red-50"
+                            className="bg-transparent border border-[color-mix(in_srgb,var(--color-loss)_15%,transparent)] rounded px-1.5 py-0.5 text-[11px] cursor-pointer text-[var(--color-loss)] hover:bg-[color-mix(in_srgb,var(--color-loss)_15%,transparent)]"
                           >
                             &times;
                           </button>

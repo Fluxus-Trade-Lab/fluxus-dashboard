@@ -21,8 +21,8 @@ function fmtR(v) {
 
 function cellColor(value) {
   if (value == null) return ''
-  if (value > 0) return 'bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-300'
-  if (value < 0) return 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300'
+  if (value > 0) return 'bg-[color-mix(in_srgb,var(--color-profit)_15%,transparent)] text-[var(--color-profit)] dark:bg-[color-mix(in_srgb,var(--color-profit)_15%,transparent)]'
+  if (value < 0) return 'bg-[color-mix(in_srgb,var(--color-loss)_15%,transparent)] text-[var(--color-loss)] dark:bg-[color-mix(in_srgb,var(--color-loss)_15%,transparent)]'
   return 'bg-[var(--color-surface-alt)] text-[var(--color-text-muted)]'
 }
 
@@ -174,7 +174,7 @@ export default function MonthlyCalendar({ monthEquity, startingCapital, riskPct 
       {/* Month total */}
       <div className="flex items-center justify-between mt-3 pt-2 border-t border-[var(--color-border-light)]">
         <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Month Total</span>
-        <span className={`text-xs font-semibold font-mono ${monthTotal.dollar >= 0 ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
+        <span className={`text-xs font-semibold font-mono ${monthTotal.dollar >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
           {view === 'dollar' ? fmt$(monthTotal.dollar) : fmtR(monthTotal.r)}
         </span>
       </div>

@@ -93,7 +93,7 @@ function CampaignRows({ campaign }) {
         >
           <td className="px-2 py-1.5 whitespace-nowrap">{t.entryDate?.slice(0, 10).replace(/-/g, '/')}</td>
           <td className="px-2 py-1.5">
-            <span className={t.direction === 'long' ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}>
+            <span className={'text-[var(--color-text-secondary)]'}>
               {t.direction === 'long' ? 'LONG' : 'SHORT'}
             </span>
           </td>
