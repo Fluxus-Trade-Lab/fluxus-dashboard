@@ -101,6 +101,76 @@ determination, no "focused genius" trope, no monk, no meditation pose.
 
 ---
 
+## 四点四、v3 出图实战守则（2026-08-13 · 优先级最高）
+
+*一整天出图打出来的经验。与本文件任何旧条款冲突时,以这一节为准。*
+*定稿图:`explorations/2026-08-11_mr_fluxus/`(脸/定妆表/场景 01)*
+
+### 角色锁定段（每次出图整段复制）
+
+```
+MR. FLUXUS: a 35-year-old East Asian man, quietly good-looking and artistic -
+the kind of handsome that survives being scruffy. Round friendly face but a
+visible jawline, solid healthy build, NOT overweight, no jowls, no wrinkles.
+Light stubble, slightly long messy hair showing under the hat. He wears a
+black crochet bucket hat and thin round PALE BRASS glasses, both read as
+deliberate fashion choices, never old-man gear; an oversized checked shirt
+worn open over a white tee, art-school scruffy, relaxed slightly slouched
+posture.
+
+THE ONE FACE - he has no other expression, ever: BUSY BUT FOCUSED. Head
+tipped slightly down over his work, EYES CLEARLY OPEN with visible irises and
+pupils, gaze aimed low at the desk - he looks at his work, never at the
+viewer and never at the screens. Brows relaxed, mouth a flat line. The
+sharpness is in the stillness and the exactness of the look, never in
+intensity. Never closed eyes, never squinting shut, never smiling, no
+furrowed brow, no glowing eyes, no heroic angle.
+
+THE CAT - exactly ONE in the entire picture, never two: an American
+Shorthair, compact and sturdy, broad round face, classic silver tabby
+markings drawn as ink pattern - bold dark swirls on the flanks, striped legs
+and tail, an M on the forehead.
+```
+
+### 唯一的颜色（这是整个画面的机关）
+
+```
+A single unbroken burnt orange (#D1600F) line rises from the lip of his tea
+mug: it starts as a curl of steam, and as it passes his head it becomes a
+jagged rising-and-falling line like a day's price action before drifting off
+the top edge of the frame. ONE CONTINUOUS STROKE, orange from mug to frame
+edge - it must never turn black partway. Keep it rising close above the mug
+and his head so the smoke and the line are obviously the same thing. This is
+the ONLY colour in the picture (the pale brass glasses aside), the only
+curve in a picture otherwise built from straight lines and rectangles, and
+the only thing that is moving. He never looks at it.
+```
+
+### 屏幕内容（不许画走势）
+
+```
+No price charts on any screen - the orange steam is the only chart-like line
+in the picture. Screens instead carry other live data drawn as loose ink
+marks: a dense matrix of small numbers, a scatter plot, a barcode-like
+column of tick data, a heat grid of squares at different densities.
+```
+
+### 五条硬约束（每次出图后逐条数）
+
+1. **猫的数量 = 1。** 模型会反复偷加第二只在键盘旁,必须点数后再交
+2. **橙线不许断色。** 全线橙,中途转黑即废
+3. **家具正常尺寸。** 「人小环境大」靠**把镜头拉远、房间画大**,绝不靠放大家具——放大显示器会变成超现实错误
+4. **人物比例接受约四分之一**(要不到 Sempé 的八分之一;极端远景另开画面)
+5. **墨线漫画,不是插画。** 笔画少而狠、粗细有变化,阴影只用粗排线或整块死黑,不做柔和调子,留白见纸
+
+### 与 teenage engineering 的关系（查证后修正）
+
+TE 官网上 Mr. Update **只有一张脸、只有一个场景**,变化全靠情境。
+**我们不照抄**:脸固定不变,但**场景一直换、猫有很多戏**。
+可偷的只有技术:大黑块 vs 细抓痕的强对比;唯一的彩色是**一根线**不是一块面。
+
+---
+
 ## 四点五、Model-sheet prompt（定妆表 —— 第一批产出）
 
 *定妆表先于一切场景图。五个场景必须是同一个人,这页就是「同一个人」的定义。*
