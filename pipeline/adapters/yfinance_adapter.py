@@ -4,6 +4,7 @@ Cherry-picked calculation functions from traderwillhu/market_dashboard build_dat
 Per plan.md §2.4.
 """
 import logging
+import time
 
 import numpy as np
 import pandas as pd
@@ -382,31 +383,65 @@ class YfinanceAdapter(BaseAdapter):
         tickers = universe['ticker'].dropna().unique().tolist()
         logger.info(f"Enriching {len(tickers)} tickers with yfinance data...")
 
-        # Download in batches to avoid yfinance timeouts
-        all_data = {}
-        for i in range(0, len(tickers), batch_size):
-            batch = tickers[i:i + batch_size]
-            logger.info(f"  yfinance batch {i // batch_size + 1}: "
-                        f"{len(batch)} tickers")
-            try:
-                data = yf.download(batch, period='1y', group_by='ticker',
-                                   progress=False, threads=True)
-                if data.empty:
-                    continue
-                for t in batch:
-                    try:
-                        if len(batch) == 1:
-                            hist = _flatten_yf_columns(data).dropna()
-                        else:
-                            hist = data[t].dropna()
-                        if len(hist) >= 20:
-                            all_data[t] = hist
-                    except Exception:
-                        pass
-            except Exception as e:
-                logger.warning(f"  Batch download failed: {e}")
+        all_data: dict = {}
 
-        logger.info(f"  Got OHLC for {len(all_data)}/{len(tickers)} tickers")
+        def sweep(symbols: list, size: int, tag: str) -> None:
+            """One pass of batched downloads into `all_data`."""
+            for i in range(0, len(symbols), size):
+                batch = symbols[i:i + size]
+                logger.info(f"  yfinance {tag} batch {i // size + 1}: "
+                            f"{len(batch)} tickers")
+                try:
+                    data = yf.download(batch, period='1y', group_by='ticker',
+                                       progress=False, threads=True)
+                    if data.empty:
+                        continue
+                    for t in batch:
+                        try:
+                            if len(batch) == 1:
+                                hist = _flatten_yf_columns(data).dropna()
+                            else:
+                                hist = data[t].dropna()
+                            if len(hist) >= 20:
+                                all_data[t] = hist
+                        except Exception:
+                            pass
+                except Exception as e:
+                    logger.warning(f"  Batch download failed: {e}")
+
+        sweep(tickers, batch_size, "pass 1")
+
+        # One pass is not enough on a rate-limited egress. Yahoo throttles the
+        # GitHub runner's shared IP, and when it does, the misses arrive in
+        # blocks — whole batches return empty, not scattered names. Measured:
+        # 2.0% missing from a residential IP, 8.2% and then 22.4% from CI, and
+        # the 22.4% night knocked three screeners over at once. The tickers a
+        # throttled batch dropped are recoverable the same minute; they just
+        # have to be asked for again, smaller and slower.
+        #
+        # Retries target only what is still missing, in quarter-size batches
+        # after a pause. The loop stops early when a round recovers nothing —
+        # the residue at that point is delisted symbols and unit tickers, which
+        # no amount of retrying converts into price history. ~2% of the
+        # universe is the healthy floor, not a failure.
+        for attempt in (1, 2):
+            missing = [t for t in tickers if t not in all_data]
+            if len(missing) <= max(1, int(0.03 * len(tickers))):
+                break
+            logger.warning(
+                "  %d/%d tickers still missing after %s pass(es) — retrying "
+                "in smaller batches", len(missing), len(tickers), attempt)
+            time.sleep(20 * attempt)
+            before = len(all_data)
+            sweep(missing, max(50, batch_size // 4), f"retry {attempt}")
+            if len(all_data) == before:
+                logger.warning("  retry %d recovered nothing — stopping", attempt)
+                break
+
+        final_missing = len(tickers) - len(all_data)
+        logger.info(f"  Got OHLC for {len(all_data)}/{len(tickers)} tickers "
+                    f"({final_missing} missing, "
+                    f"{final_missing / max(1, len(tickers)) * 100:.1f}%)")
 
         # Compute columns for each ticker
         enriched: dict[str, dict] = {}
