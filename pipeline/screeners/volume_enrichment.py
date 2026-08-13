@@ -21,7 +21,8 @@ a 12-day-old listing's "50-day average" does not exist.
 from __future__ import annotations
 
 import logging
-from typing import Dict, Iterable, List, Optional
+import time
+from typing import Dict, Iterable, List, Optional, Sequence
 
 import pandas as pd
 
@@ -31,7 +32,18 @@ logger = logging.getLogger(__name__)
 # is a different measurement that must ship under a different name.
 NEAR = 5
 BASE = 50
+
+# Transport, not measurement: batch sizes and the pause change how reliably we
+# reach the vendor, never what the number means. The retry batch is smaller
+# because the misses arrive per-batch, so a smaller batch loses less when one
+# is refused.
 _CHUNK = 500
+_RETRY_CHUNK = 100
+_RETRY_PAUSE_S = 20
+# What this feed carries on a healthy run: 97.6% on 2026-08-11, against 51.6%
+# on the throttled run that put this guard here. Only a log threshold -- it
+# gates nothing and enters no calculation.
+_EXPECT_COVERAGE = 0.90
 
 
 def ratio_from_volumes(vols: pd.Series) -> Optional[float]:
@@ -51,29 +63,24 @@ def ratio_from_volumes(vols: pd.Series) -> Optional[float]:
     return round(near / base, 4)
 
 
-def fetch_volume_ratios(tickers: Iterable[str], chunk: int = _CHUNK,
-                        ) -> Dict[str, Optional[float]]:
-    """Batch-download daily volumes and return {ticker: vol_5d_50d | None}.
-
-    Never raises: a failed chunk logs and leaves its tickers as None, because
-    the universe build must not die on a vendor hiccup. Total failure returns
-    all-None, which the UI already renders as unmeasured.
-    """
+def _one_pass(names: Sequence[str], out: Dict[str, Optional[float]],
+              chunk: int, label: str) -> None:
+    """Fill `out` for `names`, in batches. Never raises."""
     import yfinance as yf
 
-    names: List[str] = [t for t in tickers if t]
-    out: Dict[str, Optional[float]] = {t: None for t in names}
-
     for i in range(0, len(names), chunk):
-        batch = names[i:i + chunk]
+        batch = list(names[i:i + chunk])
         try:
             df = yf.download(batch, period="3mo", interval="1d",
                              group_by="column", threads=True,
                              progress=False, auto_adjust=False)
         except Exception as e:  # noqa: BLE001 -- vendor errors are data, not bugs
-            logger.warning("vol_5d_50d: chunk %d-%d failed: %s", i, i + len(batch), e)
+            logger.warning("vol_5d_50d %s: batch %d-%d failed: %s",
+                           label, i, i + len(batch), e)
             continue
         if df is None or df.empty:
+            logger.warning("vol_5d_50d %s: batch %d-%d came back empty",
+                           label, i, i + len(batch))
             continue
         try:
             vol = df['Volume']
@@ -86,8 +93,45 @@ def fetch_volume_ratios(tickers: Iterable[str], chunk: int = _CHUNK,
             if t in vol.columns:
                 out[t] = ratio_from_volumes(vol[t])
 
+
+def fetch_volume_ratios(tickers: Iterable[str], chunk: int = _CHUNK,
+                        ) -> Dict[str, Optional[float]]:
+    """Batch-download daily volumes and return {ticker: vol_5d_50d | None}.
+
+    Two passes, because one is demonstrably not enough. The first cron run of
+    this column measured 2,904 of 5,625 against 5,481 the day before, and the
+    misses arrived in blocks -- whole 500-name batches at 8/500 and 13/500
+    beside neighbours at 486/500. That shape is the vendor throttling a long
+    run, not thousands of names simultaneously losing their history, and a
+    single pass turns one throttled batch into 500 unmeasured rows.
+
+    So the leftovers go around again in smaller batches after a pause. A name
+    that is genuinely dataless (delisted, too new) simply fails twice and
+    stays None, which is the honest answer; a throttled one usually lands.
+
+    Never raises: the universe build must not die on a vendor hiccup, and a
+    total failure returns all-None, which the UI already draws as unmeasured.
+    """
+    names: List[str] = [t for t in tickers if t]
+    out: Dict[str, Optional[float]] = {t: None for t in names}
+
+    _one_pass(names, out, chunk, "pass 1")
+
+    missing = [t for t in names if out[t] is None]
+    if missing:
+        logger.info("vol_5d_50d: retrying %d names in smaller batches", len(missing))
+        time.sleep(_RETRY_PAUSE_S)
+        _one_pass(missing, out, _RETRY_CHUNK, "pass 2")
+
     measured = sum(1 for v in out.values() if v is not None)
-    logger.info("vol_5d_50d: measured %d / %d tickers", measured, len(names))
+    share = measured / len(names) if names else 0
+    logger.info("vol_5d_50d: measured %d / %d tickers (%.1f%%)",
+                measured, len(names), share * 100)
+    # Loud, because a silent halving is how a column stops meaning anything.
+    if share < _EXPECT_COVERAGE:
+        logger.warning("vol_5d_50d: coverage %.1f%% is below the %.0f%% the feed "
+                       "normally carries -- suspect throttling, not the market",
+                       share * 100, _EXPECT_COVERAGE * 100)
     return out
 
 
