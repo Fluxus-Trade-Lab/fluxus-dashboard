@@ -65,9 +65,15 @@
      Rank is never carried by hue alone. Measured greyscale ΔE between the two
      fills is 19.3 (the previous blue/orange pair collapsed to 3.3), which is
      what matters here because this brand travels as screenshots and print. */
-  --color-took: #1a5488;
-  --color-refused: #d1600f;
-  --color-untested: #c2bdb4;
+  /* Blue/red, 2026-08-13. Andy asked for the vivid pair off nextSignals; the
+     role fix (colour lives in marks) is what made it affordable, because a
+     bar's length now carries magnitude and the hue only has to say WHICH SIDE.
+     Light ground inverts the constraint — both fills want to go dark for
+     contrast and would collide — so the separation is bought one-dark-one-
+     light rather than two-dark: blue L* 39.5, red L* 54.3, ΔL* 14.8. */
+  --color-took: #0f5ea8;
+  --color-refused: #e8455f;
+  --color-untested: #b0aaa2;
   --color-v2-paper: #f3efe7;
 
   /* ── glass · chrome only ────────────────────────────────────────────
@@ -160,13 +166,19 @@ html.dark {
        took | untested    ΔE  0.8  ✗   "not measured" ≈ "took the chance"
      Both fixed below. All four encoding colours are now stated explicitly here
      so nothing in this set can silently inherit across the theme flip again.
-     Corrected greyscale ladder, re-measured 2026-08-11 on the lifted ground
-     #211D1A — greyscale ΔE is exactly |ΔL*|:
-       ground 11.1 → off 24.7 → took 38.8 → refused 54.0   (steps 13.6 · 14.1 · 15.2)
-     untested leaves the scale upward at L* 71.0 (≥17 from every fill). */
-  --color-took: #1d5e98;      /* #1A5488 × 1.12 in sRGB — hue held at 272° */
-  --color-refused: #d1600f;   /* unchanged: the brand orange, explicit on purpose */
-  --color-untested: #b3ada6;  /* was #57534E — 0.8 ΔE from took in greyscale */
+     Greyscale ladder, re-measured 2026-08-13 for the blue/red pair — greyscale
+     ΔE is exactly |ΔL*|, and the binding constraint turned out to be took vs
+     UNTESTED, not took vs refused: the state grammar builds four states from
+     tone × fill, so those two families must stay apart in black and white or
+     four states collapse to two.
+       ground 11.1 → off 24.7 → refused 49.2 → took 63.8 → untested 78.7
+       pairwise: took/refused 14.7 · took/untested 14.9 · refused/untested 29.5
+     Every gap clears 14. Contrast on the ground: took 5.99 (it can now be text
+     as well as fill — the old took was 2.47, which is why the Watchlist chips
+     had to be solid blocks), refused 3.62, untested 8.59. */
+  --color-took: #3b9eff;      /* the reference blue, unaltered */
+  --color-refused: #e0264a;   /* held a stop under the blue so the pair survives greyscale */
+  --color-untested: #c8c2b8;  /* lifted with them: it is took's partner in the state grammar */
 }
 
 html {
