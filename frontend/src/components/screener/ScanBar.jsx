@@ -69,7 +69,7 @@ function ThemeRibbon({ theme }) {
  *  floating mid-flow. */
 function Lbl({ children }) {
   return (
-    <span className="w-11 shrink-0 text-[9.5px] font-mono uppercase tracking-[.14em]
+    <span className="w-11 shrink-0 text-[9.5px] font-mono font-medium uppercase tracking-[.14em]
                      text-[var(--color-text-muted)]">{children}</span>
   )
 }
@@ -126,7 +126,7 @@ export default function ScanBar({
         })}
 
         <Divider />
-        <span className="text-[9.5px] font-mono uppercase tracking-[.14em] text-[var(--color-text-muted)]">Theme</span>
+        <span className="text-[9.5px] font-mono font-medium uppercase tracking-[.14em] text-[var(--color-text-muted)]">Theme</span>
         {chosen ? (
           <span className="text-[12.5px] text-[var(--color-text-bold)]">
             {chosen.group}

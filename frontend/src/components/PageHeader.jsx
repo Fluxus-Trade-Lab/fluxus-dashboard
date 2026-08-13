@@ -23,7 +23,7 @@ export default function PageHeader({ group, title, blurb, meta = [] }) {
   return (
     <header className="pb-3 mb-4 border-b border-[var(--color-v2-ink)]">
       {group && (
-        <div className="text-[10px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] pb-3">
+        <div className="text-[10px] font-mono font-medium uppercase tracking-[.2em] text-[var(--color-text-muted)] pb-3">
           {t(`rail.${group}`)}
           <span className="mx-2 opacity-50">›</span>
           {title}

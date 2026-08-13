@@ -60,7 +60,7 @@ export default function TickerCard({ ticker, signal, etf }) {
         {sigColor && (
           <span className={`w-[6px] h-[6px] rounded-full shrink-0 ${signalColor(sigColor)}`} />
         )}
-        <span className="text-[10px] font-mono uppercase tracking-[.24em]
+        <span className="text-[10px] font-mono font-medium uppercase tracking-[.24em]
                          text-[var(--color-text-muted)] truncate">
           {displayName}
         </span>
@@ -78,7 +78,7 @@ export default function TickerCard({ ticker, signal, etf }) {
           {formatChange(change)}
         </span>
         {sigLabel && (
-          <span className={`text-[9px] font-mono uppercase tracking-[.14em] ${signalTextColor(sigColor)}`}>
+          <span className={`text-[9px] font-mono font-medium uppercase tracking-[.14em] ${signalTextColor(sigColor)}`}>
             {sigLabel}
           </span>
         )}

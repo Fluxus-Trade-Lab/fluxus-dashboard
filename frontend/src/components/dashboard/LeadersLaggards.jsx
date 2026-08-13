@@ -52,7 +52,7 @@ function Row({ etf, ranks, changeKey, windowLabel, cohort }) {
 function Column({ label, rows, ranks, changeKey, windowLabel, cohort }) {
   return (
     <div>
-      <h4 className="text-[9px] font-mono uppercase tracking-[.2em]
+      <h4 className="text-[9px] font-mono font-medium uppercase tracking-[.2em]
                      text-[var(--color-text-muted)] mb-1">{label}</h4>
       {rows.map((e) => (
         <Row key={e.ticker} etf={e} ranks={ranks} changeKey={changeKey}
@@ -85,7 +85,7 @@ export default function LeadersLaggards({
     <section className="bg-[var(--color-surface)] border border-[var(--color-border)]
                         rounded-lg overflow-hidden flex flex-col">
       <div className="px-3 py-1.5 border-b border-[var(--color-border)] flex items-baseline gap-3">
-        <span className="text-[10px] font-mono uppercase tracking-[.2em]
+        <span className="text-[10px] font-mono font-medium uppercase tracking-[.2em]
                          text-[var(--color-text-secondary)]">{title}</span>
         <span className="text-[9px] text-[var(--color-text-muted)]">
           {etfs.length} funds

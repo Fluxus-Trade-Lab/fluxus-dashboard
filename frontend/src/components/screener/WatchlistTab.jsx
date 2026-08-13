@@ -2,6 +2,27 @@ import { useMemo, useState } from 'react'
 import { applyFilters } from '../../lib/screenerFilter'
 import TickerLink from '../ticker/TickerLink'
 
+/**
+ * The preset lists, and the names that appear on more than one of them.
+ *
+ * Rewritten 2026-08-13 (Andy: 夜色几乎为0，极其枯燥 · 蓝色的 ticker 看不清晰).
+ * Two faults, one visual and one measurable:
+ *
+ * COLOUR. The overlap chips printed their ticker in `--color-took` on the dark
+ * surface — 2.19:1, which is why they could not be read. took is a FILL: its
+ * place in the measured greyscale ladder (L* 38.8) was set for a solid block
+ * on the ground, never for text on top of it. The chips now use it as a fill
+ * with light type over it, 5.38:1, which is the role it was measured for.
+ *
+ * TONE. Nine identical boxes at one value, in Tailwind's named type scale
+ * while the Screener tab beside it — the same page — spoke in explicit px and
+ * mono labels. Sorting by size and letting the empty lists collapse gives the
+ * page a range: the full lists lead with a grid of names, the empty ones
+ * become a single quiet line. An empty list stays on the page, because a
+ * screen that found nothing today is a reading; it just stops taking the room
+ * of one that found 196.
+ */
+
 const MAX_DISPLAY = 30
 const TOP_COUNT = 15
 
@@ -15,48 +36,54 @@ const DEFAULT_FILTERS = {
 
 function CopyButton({ text }) {
   const [copied, setCopied] = useState(false)
-  const handleCopy = () => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1500)
-    })
-  }
   return (
-    <button
-      onClick={handleCopy}
-      className="ml-2 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide border border-[var(--color-border)] rounded bg-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-text-secondary)] cursor-pointer transition-colors"
-    >
-      {copied ? 'Copied' : 'Copy'}
+    <button type="button"
+      onClick={() => navigator.clipboard.writeText(text).then(() => {
+        setCopied(true); setTimeout(() => setCopied(false), 1500)
+      }).catch(() => {})}
+      className="bg-transparent border-none p-0 cursor-pointer text-[9px] font-mono font-medium
+                 uppercase tracking-[.14em] text-[var(--color-text-muted)]
+                 hover:text-[var(--color-text)] outline-none focus-visible:ring-1">
+      {copied ? 'copied' : 'copy'}
     </button>
   )
 }
 
 function WatchlistCard({ name, tickers }) {
   const display = tickers.slice(0, MAX_DISPLAY)
-  const hasMore = tickers.length > MAX_DISPLAY
-  const tickerStr = tickers.join(',')
+  const hidden = tickers.length - display.length
+
+  if (!tickers.length) {
+    return (
+      <div className="border border-[var(--color-border-light)] rounded-lg
+                      bg-[var(--color-surface)] px-3.5 py-2.5 flex items-baseline gap-3 opacity-70">
+        <span className="text-[10px] font-mono font-medium uppercase tracking-[.18em]
+                         text-[var(--color-text-muted)]">{name}</span>
+        <span className="ml-auto text-[10.5px] text-[var(--color-text-muted)]">0 today</span>
+      </div>
+    )
+  }
 
   return (
-    <div className="border border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] p-4">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center">
-          <span className="font-semibold text-sm text-[var(--color-text)]">{name}</span>
-          {tickers.length > 0 && <CopyButton text={tickerStr} />}
-        </div>
-        <div className="text-xs font-semibold text-[var(--color-text-secondary)]">{tickers.length} tickers</div>
+    <div className="border border-[var(--color-border)] rounded-lg
+                    bg-[var(--color-surface)] px-3.5 py-3">
+      <div className="flex items-baseline gap-2.5 mb-2">
+        <span className="text-[10px] font-mono font-medium uppercase tracking-[.18em]
+                         text-[var(--color-text-secondary)]">{name}</span>
+        <CopyButton text={tickers.join(',')} />
+        <span className="ml-auto text-[10.5px] font-mono tabular-nums
+                         text-[var(--color-text-muted)]">{tickers.length}</span>
       </div>
-      <div className="grid grid-cols-5 gap-x-3 gap-y-1.5">
-        {display.map(t => (
-          <div key={t} className="text-xs font-mono text-center">
-            <TickerLink symbol={t} className="text-[var(--color-text-secondary)]" />
-          </div>
+      <div className="grid grid-cols-5 gap-x-2 gap-y-1">
+        {display.map((t) => (
+          <TickerLink key={t} symbol={t}
+            className="text-[11.5px] font-mono text-[var(--color-text-secondary)]" />
         ))}
-        {hasMore && (
-          <div className="text-xs text-[var(--color-text-muted)] text-center italic">etc.</div>
-        )}
       </div>
-      {tickers.length === 0 && (
-        <div className="text-xs text-[var(--color-text-muted)] text-center py-4">No matches</div>
+      {hidden > 0 && (
+        <p className="m-0 mt-1.5 text-[10px] text-[var(--color-text-muted)]">
+          + {hidden} more, in the copied list
+        </p>
       )}
     </div>
   )
@@ -66,24 +93,20 @@ export default function WatchlistTab({ universe, presets }) {
   const watchlistData = useMemo(() => {
     if (!universe || !presets) return []
     return presets
-      .filter(p => p.readonly)
-      .map(preset => {
+      .filter((p) => p.readonly)
+      .map((preset) => {
         const rows = applyFilters(universe, { ...DEFAULT_FILTERS, ...preset.filters }, '')
-        // Sort by rs_21d descending (RS 1M)
-        rows.sort((a, b) => (b.rs_21d ?? 0) - (a.rs_21d ?? 0))
-        return {
-          name: preset.name,
-          tickers: rows.map(r => r.ticker),
-        }
+        rows.sort((a, b) => ((b.rs_1m ?? b.rs_21d) ?? 0) - ((a.rs_1m ?? a.rs_21d) ?? 0))
+        return { name: preset.name, tickers: rows.map((r) => r.ticker) }
       })
+      // longest first: the page gets a top and a bottom instead of nine equals
+      .sort((a, b) => b.tickers.length - a.tickers.length)
   }, [universe, presets])
 
   const topTickers = useMemo(() => {
     const counts = {}
     for (const item of watchlistData) {
-      for (const t of item.tickers) {
-        counts[t] = (counts[t] || 0) + 1
-      }
+      for (const t of item.tickers) counts[t] = (counts[t] || 0) + 1
     }
     return Object.entries(counts)
       .filter(([, c]) => c >= 2)
@@ -91,45 +114,56 @@ export default function WatchlistTab({ universe, presets }) {
       .slice(0, TOP_COUNT)
   }, [watchlistData])
 
-  const now = new Date()
-  const dateStr = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-  const topTickerStr = topTickers.map(([t]) => t).join(',')
+  const live = watchlistData.filter((d) => d.tickers.length)
+  const empty = watchlistData.filter((d) => !d.tickers.length)
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-5">
-        <div>
-          <span className="text-lg font-bold text-[var(--color-text)]">Today's Watchlist</span>
-          <span className="text-sm text-[var(--color-text-muted)] ml-3">{dateStr}</span>
-        </div>
-        <div className="text-xs text-[var(--color-text-muted)]">Sorted by RS1M</div>
-      </div>
-
       {topTickers.length > 0 && (
-        <div className="border border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] p-4 mb-5">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center">
-              <span className="font-semibold text-sm text-[var(--color-text-bold)]">Top Overlap</span>
-              <span className="text-xs text-[var(--color-text-muted)] ml-2">Tickers appearing in 2+ screeners</span>
-              <CopyButton text={topTickerStr} />
-            </div>
+        <section className="mb-5">
+          <div className="flex items-baseline gap-3 pb-2">
+            <span className="text-[9.5px] font-mono font-medium uppercase tracking-[.24em]
+                             text-[var(--color-text-muted)]">Top overlap</span>
+            {/* the count is of NAMES, not of lists — it briefly read
+                "on 15 lists at once", which is the cap on this board */}
+            <span className="text-[11px] text-[var(--color-text-secondary)]">
+              {topTickers.length} names on two or more of the {watchlistData.length} lists
+            </span>
+            <CopyButton text={topTickers.map(([t]) => t).join(',')} />
+            <i className="flex-1 h-px bg-[var(--color-border)]" />
           </div>
-          <div className="flex flex-wrap gap-2">
+          {/* Solid fill, light type — took in the role its contrast was
+              measured for. As text on this ground it read 2.19:1. */}
+          <div className="flex flex-wrap gap-1.5">
             {topTickers.map(([ticker, count]) => (
-              <div key={ticker} className="flex items-center gap-1 px-2.5 py-1 rounded border border-[var(--color-border)]" style={{ background: 'color-mix(in srgb, var(--color-took) 10%, transparent)' }}>
-                <TickerLink symbol={ticker} className="text-xs font-mono font-semibold text-[var(--color-took)]" />
-                <span className="text-[10px] text-[var(--color-text-muted)]">{count}x</span>
-              </div>
+              <span key={ticker}
+                className="inline-flex items-baseline gap-1.5 px-2 py-[3px] rounded"
+                style={{ background: 'var(--color-took)' }}
+                title={`${ticker} — on ${count} of the preset lists`}>
+                <TickerLink symbol={ticker}
+                  className="text-[12px] font-mono font-medium text-[#f2f5f8]" />
+                <span className="text-[9.5px] font-mono tabular-nums text-[#f2f5f8] opacity-75">
+                  {count}
+                </span>
+              </span>
             ))}
           </div>
-        </div>
+        </section>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        {watchlistData.map(item => (
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+        {live.map((item) => (
           <WatchlistCard key={item.name} name={item.name} tickers={item.tickers} />
         ))}
       </div>
+
+      {empty.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 mt-3">
+          {empty.map((item) => (
+            <WatchlistCard key={item.name} name={item.name} tickers={item.tickers} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

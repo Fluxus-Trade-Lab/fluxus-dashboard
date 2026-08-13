@@ -125,7 +125,7 @@ function Section({ label, note, right, children }) {
   return (
     <section className="pt-2">
       <div className="flex items-baseline gap-3 pb-2.5">
-        <span className="text-[9px] font-mono uppercase tracking-[.24em]
+        <span className="text-[9px] font-mono font-medium uppercase tracking-[.24em]
                          text-[var(--color-text-muted)]">{label}</span>
         {note && <span className="text-[11px] text-[var(--color-text-muted)]">{note}</span>}
         <i className="flex-1 h-px bg-[var(--color-border)]" />

@@ -240,7 +240,7 @@ export default function StockTable({ rows, defaultSort = 'rs3' }) {
     <div>
       <table className="w-full text-[12.5px] border-collapse">
         <thead>
-          <tr className="text-[9.5px] font-mono uppercase tracking-wider text-[var(--color-text-muted)]">
+          <tr className="text-[9.5px] font-mono font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
             <th className="text-right py-1 pr-2.5 font-medium w-7">#</th>
             <SortTh k="ticker" sort={sort} onSort={clickSort} align="left">Ticker</SortTh>
             <SortTh k="heat" sort={sort} onSort={clickSort} align="left"
@@ -314,19 +314,19 @@ function RowPair({ r, i, open, onToggle }) {
                  : { color: r.accel > 0 ? 'var(--color-took)' : 'var(--color-refused)' }}>
           {r.accel == null ? '—' : `${r.accel > 0 ? '+' : '−'}${Math.abs(r.accel).toFixed(2)}`}
         </td>
-        <td className="py-[4px] pr-2.5 text-right tabular-nums opacity-55 group-hover:opacity-100 transition-opacity">
+        <td className="py-[4px] pr-2.5 text-right tabular-nums opacity-78 group-hover:opacity-100 transition-opacity">
           {r.h52 == null ? '—' : `${(r.h52 * 100).toFixed(1)}%`}
         </td>
-        <td className="py-[4px] pr-2.5 text-right tabular-nums opacity-55 group-hover:opacity-100 transition-opacity">
+        <td className="py-[4px] pr-2.5 text-right tabular-nums opacity-78 group-hover:opacity-100 transition-opacity">
           {r.relVol == null ? '—' : r.relVol.toFixed(2)}
         </td>
-        <td className="py-[4px] pr-2.5 text-right tabular-nums opacity-55 group-hover:opacity-100 transition-opacity"
+        <td className="py-[4px] pr-2.5 text-right tabular-nums opacity-78 group-hover:opacity-100 transition-opacity"
             title={r.vol5050 == null
               ? 'not measured — fewer than fifty sessions of bars, or the vendor had none'
               : `5-day avg volume is ${r.vol5050}x the 50-day avg`}>
           {r.vol5050 == null ? '—' : r.vol5050.toFixed(2)}
         </td>
-        <td className="py-[4px] pr-2.5 whitespace-nowrap opacity-55 group-hover:opacity-100 transition-opacity">
+        <td className="py-[4px] pr-2.5 whitespace-nowrap opacity-78 group-hover:opacity-100 transition-opacity">
           <Squares n={r.tq} of={r.tqOf}
             title={r.tqOf ? `top quartile of its cohort on ${r.tq} of ${r.tqOf} windows` : undefined} />
         </td>

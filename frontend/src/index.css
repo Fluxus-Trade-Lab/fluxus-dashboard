@@ -31,8 +31,12 @@
   --color-border: #e2dcd0;
   --color-border-light: #ede8de;
   --color-text: #1c1917;
-  --color-text-secondary: #78716c;
-  --color-text-muted: #9c968f;
+  /* Contrast measured on this ground, 2026-08-13 (Andy: 文字都有点细,看不清楚).
+     The small-label tier was the LOWEST contrast on the page while carrying
+     the SMALLEST type -- exactly backwards, since 9px needs more separation
+     than 15px, not less. secondary 4.37 -> 6.39, muted 2.67 -> 4.08. */
+  --color-text-secondary: #5f584f;
+  --color-text-muted: #7d766d;
   --color-text-bold: #292524;
 
   --color-signal-power3: #22c55e;
@@ -110,7 +114,9 @@ html.dark {
   --color-border-light: #47413a;
   --color-text: #e7e5e4;
   --color-text-secondary: #b2aca5;
-  --color-text-muted: #8a847c;
+  /* 4.52 -> 5.72 on the lifted ground: it was clearing the 4.5 bar by 0.02,
+     and that bar assumes body type, not the 9px labels this token paints. */
+  --color-text-muted: #9d968c;
   --color-text-bold: #fafaf9;
 
   --color-active-tab-bg: #fafaf9;
