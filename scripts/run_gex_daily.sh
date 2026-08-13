@@ -31,9 +31,27 @@ DATE=$(TZ=America/New_York date +%Y%m%d)
 # 10#$ForcesBase-10 so a leading-zero minute (e.g. "08") isn't read as octal.
 premarket=false; postclose=false
 { [ "$ET_HOUR" = "07" ] || [ "$ET_HOUR" = "08" ]; } && premarket=true
+# Post-close runs 16:15 through 17:59 ET. It used to end at 16:59, and on
+# 2026-08-12 that cost a whole session: the 16:30 pull hung on IBKR account
+# subscriptions, run_step killed it at 900s exactly as designed, and the
+# fallback fire an hour later landed at ET 17:30 and was refused as "outside
+# pull windows". The timeout guard and the retry schedule disagreed, so a single
+# hang meant no settled chain that day and no second chance.
+#
+# The window now covers the fallback fire. 18:00 is the stop because TWS
+# auto-logs-out around 17:00-18:00 and a pull after that reads a dead book,
+# which is the failure the _tradeable_now guard exists to refuse.
 { [ "$ET_HOUR" = "16" ] && [ "$((10#$ET_MIN))" -ge 15 ]; } && postclose=true
+{ [ "$ET_HOUR" = "17" ]; } && postclose=true
 if [ "$premarket" = false ] && [ "$postclose" = false ]; then
-    say "ET ${ET_HOUR}:${ET_MIN} outside pull windows (07-08 premarket / 16:15+ post-close) — skip"; exit 0
+    say "ET ${ET_HOUR}:${ET_MIN} outside pull windows (07-08 premarket / 16:15-17:59 post-close) — skip"; exit 0
+fi
+# A retry must not clobber a good run. Post-close is the primary and always
+# re-runs at 16:xx; from 17:00 it only runs if the 16:xx attempt left nothing
+# newer than the last session, which is what "the retry" means.
+if [ "$ET_HOUR" = "17" ] && [ -f "data/gex/gex_SPX_${DATE}.json" ] \
+   && [ "$(TZ=America/New_York date -r "data/gex/gex_SPX_${DATE}.json" +%H)" = "16" ]; then
+    say "post-close retry: 16:xx run already produced $DATE — skip"; exit 0
 fi
 # Premarket is a bonus pass: skip if today's file exists. Post-close ALWAYS
 # re-runs — it is the primary, its OI is settled and its volume fields are the
