@@ -62,7 +62,18 @@ def _compute_composite_rs(df: pd.DataFrame) -> pd.Series:
             logger.warning("Column %s missing – treating as NaN", col)
             pct_ranks[col] = np.nan
         else:
-            pct_ranks[col] = df[col].rank(pct=True, na_option="bottom") * 100
+            # `na_option="top"`, not `"bottom"`: pandas names the option by
+            # rank position, and "bottom" gives a missing value the LARGEST
+            # rank, i.e. the top of this scale. With a partly-missing feed the
+            # damage compounds across the four columns, because a row missing
+            # all four gets the same top rank four times and every such row
+            # lands on an identical composite. On 2026-08-12, 1,259 rows had
+            # none of the four and every one scored exactly 88.26; the 97th
+            # percentile then fell INSIDE that constant block, so the cutoff
+            # was 88.26 and the screener returned those 1,259 rows and nothing
+            # else -- 22% of the universe, all of it names we knew nothing
+            # about, every one labelled bucket 100.
+            pct_ranks[col] = df[col].rank(pct=True, na_option="top") * 100
 
     composite = pct_ranks.mean(axis=1)
     return composite

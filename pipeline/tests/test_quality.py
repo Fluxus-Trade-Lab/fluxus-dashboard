@@ -76,10 +76,18 @@ class TestAssess:
         assert v["fields"]["avg_volume"]["status"] == "ok"
 
     def test_no_baseline_yet_says_so_rather_than_guessing(self):
-        v = Q.assess({"avg_volume": 0.08}, history(0.01, n=2))
+        """A healthy rate with no baseline reports the absence honestly."""
+        v = Q.assess({"avg_volume": 0.015}, history(0.01, n=2))
         f = v["fields"]["avg_volume"]
         assert f["status"] == "ok" and f["baseline"] is None
         assert "no baseline yet" in f["evidence"]
+
+    # Inverted 2026-08-12. This used to assert that 8% missing with no baseline
+    # was "ok" — it was pinning the blind spot, not a behaviour. See
+    # TestBootstrapLimit for what replaced it.
+    def test_a_broken_rate_with_no_baseline_no_longer_passes(self):
+        v = Q.assess({"avg_volume": 0.08}, history(0.01, n=2))
+        assert v["fields"]["avg_volume"]["status"] == "degraded"
 
     def test_the_ceiling_applies_without_any_baseline(self):
         v = Q.assess({"avg_volume": 0.5}, [])
@@ -124,3 +132,29 @@ class TestCheck:
         assert v["fields"]["avg_volume"]["rate"] == pytest.approx(0.08)
         assert set(v) >= {"status", "fields", "runs_in_baseline"}
         assert len(Q.read_history(p)) == 1
+
+
+class TestBootstrapLimit:
+    """A guard with no history graded nothing, which is exactly the week it is
+    newest. On 2026-08-12, with two runs stored, avg_volume hit 22.4% and the
+    run passed as ok: no baseline to depart from, and under the ceiling."""
+
+    def test_the_actual_2026_08_12_collapse_trips_without_a_baseline(self):
+        v = Q.assess({"avg_volume": 0.2238}, history(0.0199, n=2))
+        assert v["fields"]["avg_volume"]["status"] == "degraded"
+        assert "bootstrap" in v["fields"]["avg_volume"]["evidence"]
+
+    def test_a_healthy_rate_still_passes_without_a_baseline(self):
+        for rate in (0.012, 0.0199):
+            v = Q.assess({"avg_volume": rate}, history(0.0199, n=2))
+            assert v["fields"]["avg_volume"]["status"] == "ok"
+
+    def test_the_bootstrap_sits_between_the_observed_clusters(self):
+        """Healthy runs measured 1.2% and 2.0%; broken ones 8.2% and 22.4%."""
+        assert 0.02 < Q.BOOTSTRAP_DEGRADED < 0.082
+
+    def test_a_real_baseline_overrides_the_bootstrap(self):
+        """A field that genuinely sits above the bootstrap limit must not alarm
+        forever once its own history says that level is normal."""
+        v = Q.assess({"avg_volume": 0.09}, history(0.088, n=10))
+        assert v["fields"]["avg_volume"]["status"] == "ok"

@@ -60,6 +60,18 @@ DEGRADED_ABSOLUTE = 0.03
 # whatever last week looked like.
 SEVERE_CEILING = 0.33
 
+# Used only while `MIN_HISTORY` runs have not accumulated. A guard that grades
+# nothing until it has five days of history is blind for exactly the week it is
+# newest, and that week happened: on 2026-08-12, with two runs stored,
+# avg_volume reached 22.4% missing and the run passed as "ok" because there was
+# no baseline to depart from and 22.4% sits under the ceiling.
+#
+# The number is read off the four observations we have rather than asserted.
+# Healthy enrichment runs: 1.2%, 2.0%. Broken ones: 8.2%, 22.4%. Five per cent
+# sits in the empty gap between those clusters. It is a bootstrap, not a
+# permanent threshold -- once a real baseline exists it is never consulted.
+BOOTSTRAP_DEGRADED = 0.05
+
 
 def null_rate(rows: Sequence[Mapping[str, Any]], field: str) -> float:
     """Share of rows where `field` is absent, None, or empty string."""
@@ -128,6 +140,11 @@ def assess(rates: Mapping[str, float],
         base = baseline(history, field)
         if rate >= SEVERE_CEILING:
             status, why = "severe", f"{rate*100:.1f}% missing, above the {SEVERE_CEILING*100:.0f}% ceiling"
+        elif base is None and rate > BOOTSTRAP_DEGRADED:
+            status, why = "degraded", (
+                f"{rate*100:.1f}% missing, above the {BOOTSTRAP_DEGRADED*100:.0f}% "
+                f"bootstrap limit used while no baseline exists "
+                f"({len(history)} of {MIN_HISTORY} runs stored)")
         elif base is None:
             status, why = "ok", f"{rate*100:.1f}% missing, no baseline yet ({len(history)} runs stored)"
         elif rate > base * DEGRADED_RATIO and rate - base > DEGRADED_ABSOLUTE:

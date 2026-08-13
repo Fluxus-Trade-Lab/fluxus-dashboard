@@ -252,7 +252,9 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     fundamental = eps.copy()
     both_available = eps.notna() & rev.notna()
     fundamental.loc[both_available] = (eps[both_available] + rev[both_available]) / 2
-    df['f_score'] = fundamental.rank(pct=True, na_option='bottom') * 99
+    # 'top', not 'bottom' -- see rank_tradeable. A name with no fundamentals
+    # must not outscore one whose fundamentals we have and are poor.
+    df['f_score'] = fundamental.rank(pct=True, na_option='top') * 99
     # Both source columns are empty in the current feed, so this is a constant
     # 50 for every row. Kept (it is a real weight in h_score and the columns
     # may come back) but masked outside the tradeable set so a non-tradeable
@@ -272,7 +274,7 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     i_raw = df['industry'].map(industry_rs)
     df['i_score'] = pd.Series(np.nan, index=df.index, dtype=float)
     df.loc[tradeable, 'i_score'] = (
-        i_raw.loc[tradeable].rank(pct=True, na_option='bottom') * 99)
+        i_raw.loc[tradeable].rank(pct=True, na_option='top') * 99)
 
     # --- H score (hybrid composite) ---
     # Weights: F:2, I:3, 21d:1, 63d:2, 126d:2 -> total 10

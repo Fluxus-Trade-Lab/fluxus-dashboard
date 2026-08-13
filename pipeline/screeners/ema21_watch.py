@@ -41,8 +41,17 @@ _MIN_RS_BRACKET = 80
 
 
 def _perf_3m_rs(series: pd.Series) -> pd.Series:
-    """Return 0-100 percentile rank of *series* across the universe."""
-    return series.rank(pct=True, na_option="bottom") * 100
+    """Return 0-100 percentile rank of *series* across the universe.
+
+    `na_option="top"`, not `"bottom"`. Pandas names the option by rank
+    position, so "bottom" hands every missing value the LARGEST rank -- the
+    top of this scale. That is invisible while the feed is complete and
+    catastrophic when it is not: on 2026-08-12 the yfinance enrichment left
+    23.8% of perf_3m missing, those rows took the top 23.8% of the ranking,
+    and no real name could reach past 76.2 -- under the bracket floor of 80,
+    so this screener returned zero rows on a perfectly ordinary tape.
+    """
+    return series.rank(pct=True, na_option="top") * 100
 
 
 def _bracket_label(rs: float) -> int:
