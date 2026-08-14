@@ -67,8 +67,13 @@ const MORPH = 2.4     // seconds spent becoming the next one
 const SEG = HOLD + MORPH
 const HOLD_F = HOLD / SEG
 
-const SPIN_IN = Math.PI * 3      // a turn and a half, unwound as the taiji lands
-const SPIN_HELD = 0.063          // ~100 s a revolution once it has
+// A turn and a half, unwound as the taiji lands — and it LANDS, at exactly
+// zero, eyes vertical, the poster's own orientation. The first version kept
+// turning forever (one lap per hundred seconds, "a contest does not finish"),
+// which meant the resting form was a random angle: Andy caught it at 90° and
+// the figure read as two eyes side by side instead of the poster's panel. The
+// poster is the spec; the story loses.
+const SPIN_IN = Math.PI * 3
 const POINTER_TAU = 0.42         // seconds for the pointer lag to decay by 1/e
 
 /** Smootherstep — zero velocity AND zero acceleration at both ends, so a stage
@@ -244,23 +249,9 @@ export default function HeroField() {
       // to the viewport's aspect would turn every circle into an ellipse and
       // the taiji into an egg.
       //
-      // The square takes the whole band above the copy, then DIP past its floor
-      // so the diagram sinks into the scrim instead of stopping politely on a
-      // line. Two versions were wrong before this one: a square in the right
-      // third read as an ornament balancing a headline, and a square the full
-      // height of the page buried every stage's punchline — the bottom of the
-      // V, the leader at the end of the funnel, the green triangle at the turn
-      // — under the solid part of the scrim. The bottom of each stage is where
-      // its point is; it has to stay above the black.
-      //
-      // The band is measured off the copy, never guessed. It is what changes
-      // when the headline wraps to a fourth line, when the viewport turns, when
-      // someone adds a stat — and a fixed fraction would be wrong the first
-      // time any of those happened.
-      // 1.28 put the funnel's leader — the circle the whole stage is about —
-      // half behind the headline. 1.12 keeps every stage's lowest mark clear of
-      // the copy while the square still runs past the band into the scrim.
-      const DIP = 1.12
+      // The scrim is still measured off the copy, never guessed — it is what
+      // changes when the headline wraps to a fourth line, when the viewport
+      // turns, when someone adds a stat.
       let box = { cx: 0, cy: 0, s: 1 }, alpha = 1
       const measure = () => {
         const w = host.clientWidth, h = host.clientHeight
@@ -273,11 +264,19 @@ export default function HeroField() {
         const wide = w >= 900
         const copy = host.parentElement?.querySelector('[data-hero-copy]')
         const reserved = copy?.getBoundingClientRect().height || h * 0.5
-        const band = Math.max(h - reserved, h * 0.3)
 
-        const s = Math.min(band * DIP, w * (wide ? 0.58 : 0.96))
-        box = { s, cx: 0, cy: h / 2 - s / 2 - h * 0.02 }   // hung from the top
-        alpha = wide ? 0.92 : 0.7
+        // The square takes the page — Andy's call, made twice, overruling the
+        // buried-punchline concern the band sizing was protecting. The deepest
+        // marks of a stage now sink into the scrim; what survives above the
+        // fade is the picture. The copy keeps its ground because the scrim is
+        // still measured off the copy, not off the square.
+        const s = Math.min(h * 0.92, w * (wide ? 0.86 : 0.98))
+        box = { s, cx: 0, cy: h / 2 - s / 2 - h * 0.03 }   // hung from the top
+        // Poster ink is opaque. The old 0.92 was meant as restraint but it made
+        // every overlap translucent — six taiji parts stacked into a muddle,
+        // and overlapping circles in every stage showing through each other
+        // where the poster has them occluding cleanly.
+        alpha = wide ? 1 : 0.8
         setScrim(Math.min(Math.round(reserved + h * 0.08), h))
         return true
       }
@@ -407,7 +406,7 @@ export default function HeroField() {
           taiji.scale.set(box.s, box.s, 1)
           // it arrives spinning — a turn and a half unwinding as it appears —
           // and then never quite stops
-          taiji.rotation.z = -SPIN_IN * (1 - wTaiji) - clock * SPIN_HELD
+          taiji.rotation.z = -SPIN_IN * (1 - wTaiji)
           Object.values(taijiParts).forEach((o) => { o.material.opacity = wTaiji * alpha })
         }
 
@@ -494,7 +493,11 @@ export default function HeroField() {
       <div className="absolute inset-x-0 bottom-0 z-[2]"
            style={{
              height: scrim || '58%',
-             background: 'linear-gradient(to top, var(--color-poster-bg) 0%, var(--color-poster-bg) 42%, color-mix(in srgb, var(--color-poster-bg) 76%, transparent) 70%, transparent 100%)',
+             // 94%, not solid: a circle behind the words survives as a ghost of
+             // itself, so the field sinks into the copy's ground instead of
+             // being sheared off at a line. The headline stays legible because
+             // 6% of poster-ink is a whisper under 38px bold white.
+             background: 'linear-gradient(to top, color-mix(in srgb, var(--color-poster-bg) 94%, transparent) 0%, color-mix(in srgb, var(--color-poster-bg) 94%, transparent) 30%, color-mix(in srgb, var(--color-poster-bg) 72%, transparent) 64%, transparent 100%)',
            }} />
     </div>
   )
