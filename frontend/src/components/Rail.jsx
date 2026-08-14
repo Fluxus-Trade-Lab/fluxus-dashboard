@@ -11,9 +11,18 @@ import { useLanguage } from '../i18n/LanguageContext'
  *   COURSE   the long-form version           open
  *   MY BOOK  what you did about it           needs an account and your fills
  *
- * MARKET carries sub-labels because it holds three different jobs — read the
- * environment, follow where money is rotating, find the leaders early — and a
- * flat list of eight could not say which page does which. One page, one job.
+ * Until 2026-08-14 each of those four lines carried a sentence explaining it
+ * ("Open. No account needed."), and MARKET carried three more naming its
+ * clusters ("Read the environment"). Seven lines of prose in a 214px column,
+ * every one of them read once and never again — the rail spent more ink
+ * explaining itself than naming its destinations. The clusters survive as a
+ * gap; the sentences are gone.
+ *
+ * Two levels, two highlights, and deliberately different in kind: a page marks
+ * itself with GEOMETRY (a left bar and a filled row — it is a row), a group
+ * marks itself with CONTRAST (its word lifts muted → bold when the page you
+ * are on lives inside it — it is a region). Neither uses hue, and neither can
+ * be mistaken for the other.
  *
  * Collapsed codes are declared, never derived. Slicing the label gave RS Live
  * Tracker and RS Leaderboard the same three letters, and Portfolio Management
@@ -97,6 +106,11 @@ export const NAV_GROUPS = [
 const ALL = NAV_GROUPS.flatMap((g) => g.sections.flatMap((s) => s.items))
 const KEY = 'rail-collapsed'
 
+/** page key → the group that holds it, so a group can say "you are in here". */
+const GROUP_OF = Object.fromEntries(
+  NAV_GROUPS.flatMap((g) => g.sections.flatMap((s) => s.items.map((i) => [i.key, g.key]))),
+)
+
 export default function Rail({ currentPage, onNavigate }) {
   const { t } = useLanguage()
   const [collapsed, setCollapsed] = useState(
@@ -124,49 +138,49 @@ export default function Rail({ currentPage, onNavigate }) {
           )}
         </div>
 
-        {NAV_GROUPS.map((g) => (
-          <div key={g.key} className="pb-1">
-            {collapsed
-              ? <div className="mx-3 my-2 h-px bg-[var(--color-border)]" />
-              : <div className="px-4 pt-3 pb-1 text-[10px] font-mono font-medium uppercase
-                                tracking-[.24em] text-[var(--color-text-muted)]">{t(`rail.${g.key}`)}</div>}
+        {NAV_GROUPS.map((g, gi) => {
+          const here = GROUP_OF[currentPage] === g.key
+          return (
+            <div key={g.key} className={gi === 0 ? '' : (collapsed ? 'mt-2' : 'mt-5')}>
+              {collapsed
+                // no rule above the first group — there is nothing above it to
+                // separate from, and the codes carry no group word to lift.
+                ? (gi > 0 && <div className="mx-3 mb-2 h-px bg-[var(--color-border)]" />)
+                : <div className={`px-4 pb-1.5 text-[10px] font-mono font-medium uppercase
+                                   tracking-[.24em] ${here
+                                     ? 'text-[var(--color-text-bold)]'
+                                     : 'text-[var(--color-text-muted)]'}`}>
+                    {t(`rail.${g.key}`)}
+                  </div>}
 
-            {g.sections.map((sec, si) => (
-              <div key={sec.key ?? si}>
-                {!collapsed && sec.key && (
-                  <div className="px-4 pt-2 pb-0.5 text-[11px] leading-snug
-                                  text-[var(--color-text-muted)]">
-                    {t(`rail.sec.${sec.key}`)}
-                  </div>
-                )}
-                {sec.items.map(({ key, short, hash }) => {
-                  const on = currentPage === key
-                  return (
-                    <button key={key} onClick={() => onNavigate(hash)}
-                            aria-current={on ? 'page' : undefined}
-                            title={collapsed ? t(`nav.${key}`) : undefined}
-                            className={`w-full border-l-2 py-[7px]
-                                        focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]
-                                        ${collapsed
-                                          ? 'text-[10px] font-mono font-medium text-center px-0'
-                                          : 'text-[12.5px] text-left px-4'}
-                                        ${on
-                                          ? 'border-[var(--color-text)] text-[var(--color-text)] font-semibold bg-[var(--color-hover-bg)]'
-                                          : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
-                      {collapsed ? short : t(`nav.${key}`)}
-                    </button>
-                  )
-                })}
-              </div>
-            ))}
-
-            {!collapsed && (
-              <p className="px-4 pt-2 text-[11px] leading-snug text-[var(--color-text-muted)] m-0">
-                {t(`rail.${g.key}.note`)}
-              </p>
-            )}
-          </div>
-        ))}
+              {g.sections.map((sec, si) => (
+                // the three MARKET clusters keep their grouping as a gap. The gap
+                // says these belong together without claiming what they mean —
+                // which is all the sentences ever added.
+                <div key={sec.key ?? si} className={si === 0 ? '' : 'mt-3'}>
+                  {sec.items.map(({ key, short, hash }) => {
+                    const on = currentPage === key
+                    return (
+                      <button key={key} onClick={() => onNavigate(hash)}
+                              aria-current={on ? 'page' : undefined}
+                              title={collapsed ? t(`nav.${key}`) : undefined}
+                              className={`w-full border-l-2 py-[7px]
+                                          focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]
+                                          ${collapsed
+                                            ? 'text-[10px] font-mono font-medium text-center px-0'
+                                            : 'text-[12.5px] text-left px-4'}
+                                          ${on
+                                            ? 'border-[var(--color-text)] text-[var(--color-text)] font-semibold bg-[var(--color-hover-bg)]'
+                                            : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
+                        {collapsed ? short : t(`nav.${key}`)}
+                      </button>
+                    )
+                  })}
+                </div>
+              ))}
+            </div>
+          )
+        })}
       </nav>
 
       {/* The collapse handle rides the rail's edge at the viewport's vertical
@@ -192,8 +206,10 @@ export default function Rail({ currentPage, onNavigate }) {
                       border-b border-[var(--glass-edge)]">
         {NAV_GROUPS.map((g) => (
           <div key={g.key} className="flex items-center gap-1 shrink-0">
-            <span className="px-1.5 text-[10px] font-mono font-medium uppercase tracking-[.2em]
-                             text-[var(--color-text-muted)] shrink-0">
+            <span className={`px-1.5 text-[10px] font-mono font-medium uppercase tracking-[.2em]
+                              shrink-0 ${GROUP_OF[currentPage] === g.key
+                                ? 'text-[var(--color-text-bold)]'
+                                : 'text-[var(--color-text-muted)]'}`}>
               {t(`rail.${g.key}`)}
             </span>
             {g.sections.flatMap((s) => s.items).map(({ key, hash }) => (
