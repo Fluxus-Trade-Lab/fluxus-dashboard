@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import {
   STAGES, BLUE_N, RED_N, PARK, TRIANGLE, TAIJI, FUNNEL_LINKS, GRID_LINES,
 } from './heroStages'
+import { createBodies, snap, step as solve } from './heroSolver'
 
 /**
  * The hero's field — the Masterclass poster's five panels, as one motion.
@@ -286,12 +287,22 @@ export default function HeroField() {
       const Y = (v) => box.cy - (v - 0.5) * box.s
       const R = (r) => Math.max(r * box.s, 0.0001)
 
-      const pointer = { x: 0, y: 0, tx: 0, ty: 0 }
+      // Two readings of the same cursor, because they answer different
+      // questions. `x`/`y` are -1..1 across the hero and drive the parallax.
+      // `u`/`v` are the cursor IN THE FIELD'S OWN unit square — the inverse of
+      // X() and Y() — which is the only frame the solver speaks.
+      const pointer = { x: 0, y: 0, tx: 0, ty: 0, u: -9, v: -9, over: false }
       const onPointer = (e) => {
         const b = host.getBoundingClientRect()
         pointer.tx = ((e.clientX - b.left) / b.width - 0.5) * 2
         pointer.ty = ((e.clientY - b.top) / b.height - 0.5) * 2
+        const wx = e.clientX - b.left - b.width / 2      // world, y up, origin centre
+        const wy = b.height / 2 - (e.clientY - b.top)
+        pointer.u = (wx - box.cx) / box.s + 0.5
+        pointer.v = 0.5 - (wy - box.cy) / box.s
+        pointer.over = true
       }
+      const onLeave = () => { pointer.over = false }
 
       const place = (o, x, y, r, a) => {
         o.visible = a > 0.004 && r > 0.0002
@@ -301,6 +312,12 @@ export default function HeroField() {
         o.scale.set(R(r), R(r), 1)
         o.material.opacity = a * alpha
       }
+
+      // One body and one target per circle, blue first then red, allocated once
+      // — the loop must not make garbage sixty times a second.
+      const bodies = createBodies(BLUE_N + RED_N)
+      const targets = Array.from({ length: BLUE_N + RED_N }, () => [0.47, 0.47, 0])
+      let seeded = false
 
       let last = 0
       const draw = (t) => {
@@ -332,12 +349,42 @@ export default function HeroField() {
          *  stage owns, so they fade with their own diagram, not on a timer */
         const weight = (j) => (i === j ? 1 - k : 0) + ((i + 1) % STAGES.length === j ? k : 0)
 
-        const run = (pool, key) => pool.forEach((o, n) => {
-          const a = A[key][n] ?? PARK, b = B[key][n] ?? PARK
-          place(o, mix(a[0], b[0]), mix(a[1], b[1]), mix(a[2], b[2]), 1)
-        })
-        run(blues, 'blue')
-        run(reds, 'red')
+        // Where the arrangement WANTS each circle. The solver decides where it
+        // actually is — loosely on the way, exactly once the stage has landed.
+        for (let n = 0; n < BLUE_N; n++) {
+          const a = A.blue[n] ?? PARK, b = B.blue[n] ?? PARK
+          const t2 = targets[n]
+          t2[0] = mix(a[0], b[0]); t2[1] = mix(a[1], b[1]); t2[2] = mix(a[2], b[2])
+        }
+        for (let n = 0; n < RED_N; n++) {
+          const a = A.red[n] ?? PARK, b = B.red[n] ?? PARK
+          const t2 = targets[BLUE_N + n]
+          t2[0] = mix(a[0], b[0]); t2[1] = mix(a[1], b[1]); t2[2] = mix(a[2], b[2])
+        }
+
+        if (pinned != null || !seeded) {
+          // The first frame and the review mode both have to BE the authored
+          // panel, not an approach to it — otherwise the hero opens on a blur
+          // of circles springing in from the centre.
+          snap(bodies, targets)
+          seeded = true
+        } else {
+          // A bell on the morph, not a ramp: physics is loudest mid-flight and
+          // gone at both ends, so a stage is entered and left as the poster
+          // draws it and only the crossing is alive.
+          const blend = Math.sin(Math.PI * k)
+          solve(bodies, targets, dt, blend,
+            pointer.over ? { x: pointer.u, y: pointer.v, r: 0.15, force: 1.8 } : null)
+        }
+
+        for (let n = 0; n < BLUE_N; n++) {
+          const b = bodies[n]
+          place(blues[n], b.x, b.y, b.r, 1)
+        }
+        for (let n = 0; n < RED_N; n++) {
+          const b = bodies[BLUE_N + n]
+          place(reds[n], b.x, b.y, b.r, 1)
+        }
 
         place(triangle, TRIANGLE.x, TRIANGLE.y, TRIANGLE.r, weight(0))
 
@@ -387,14 +434,22 @@ export default function HeroField() {
       document.addEventListener('visibilitychange', pump)
       const ro = new ResizeObserver(() => { if (measure() && !raf) draw(0) })
       ro.observe(host)
-      host.addEventListener('pointermove', onPointer)
+      // On the SECTION, not on the field. The field carries pointer-events:none
+      // so it can never eat a click meant for the CTA — which also meant it
+      // never received a pointermove, so the parallax had been dead since the
+      // day it was written. Nothing showed it: the only browser it was checked
+      // in does not fire requestAnimationFrame, so there was no motion to miss.
+      const surface = host.parentElement ?? host
+      surface.addEventListener('pointermove', onPointer)
+      surface.addEventListener('pointerleave', onLeave)
       pump()
 
       teardown = () => {
         if (raf) cancelAnimationFrame(raf)
         io.disconnect(); ro.disconnect()
         document.removeEventListener('visibilitychange', pump)
-        host.removeEventListener('pointermove', onPointer)
+        surface.removeEventListener('pointermove', onPointer)
+        surface.removeEventListener('pointerleave', onLeave)
         canvas.removeEventListener('webglcontextlost', onLost)
         owned.forEach((m) => m.dispose())
         disc.dispose(); half.dispose(); tri.dispose()
