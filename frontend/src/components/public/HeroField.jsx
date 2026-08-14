@@ -88,9 +88,6 @@ function cssVar(name, fallback) {
 export default function HeroField() {
   const hostRef = useRef(null)
   const [live, setLive] = useState(false)
-  /** how far up the scrim has to reach — the copy's own height plus a tenth of
-   *  the hero, so the words never start inside the gradient's fading half */
-  const [scrim, setScrim] = useState(0)
 
   useEffect(() => {
     const host = hostRef.current
@@ -120,10 +117,7 @@ export default function HeroField() {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
 
       const canvas = renderer.domElement
-      // z-1: above the CSS floor it supersedes, below the scrim that gives the
-      // copy its ground. The canvas is appended last, so without this it would
-      // paint over the scrim and the headline would sit under the circles.
-      canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1'
+      canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block'
       const onLost = (e) => { e.preventDefault(); setLive(false) }
       canvas.addEventListener('webglcontextlost', onLost)
 
@@ -244,14 +238,13 @@ export default function HeroField() {
       }))
 
       // ── the field's box inside the hero ───────────────────────────────────
-      // The field owns the page, so it takes the largest square that fits —
-      // square, because the stage layouts are authored in one, and stretching
-      // to the viewport's aspect would turn every circle into an ellipse and
-      // the taiji into an egg.
-      //
-      // The scrim is still measured off the copy, never guessed — it is what
-      // changes when the headline wraps to a fourth line, when the viewport
-      // turns, when someone adds a stat.
+      // The viewport is the field's alone now — the copy lives below the fold —
+      // so the box is simply the largest centred square that fits, with a small
+      // margin. Square, because the stage layouts are authored in one, and
+      // stretching to the viewport's aspect would turn every circle into an
+      // ellipse and the taiji into an egg. The scrim, the copy measurement and
+      // the layout compression that existed to share this screen with a
+      // headline are all gone with the sharing.
       let box = { cx: 0, cy: 0, s: 1 }, alpha = 1
       const measure = () => {
         const w = host.clientWidth, h = host.clientHeight
@@ -261,23 +254,12 @@ export default function HeroField() {
         camera.top = h / 2; camera.bottom = -h / 2
         camera.updateProjectionMatrix()
 
-        const wide = w >= 900
-        const copy = host.parentElement?.querySelector('[data-hero-copy]')
-        const reserved = copy?.getBoundingClientRect().height || h * 0.5
-
-        // The square takes the page — Andy's call, made twice, overruling the
-        // buried-punchline concern the band sizing was protecting. The deepest
-        // marks of a stage now sink into the scrim; what survives above the
-        // fade is the picture. The copy keeps its ground because the scrim is
-        // still measured off the copy, not off the square.
-        const s = Math.min(h * 0.92, w * (wide ? 0.86 : 0.98))
-        box = { s, cx: 0, cy: h / 2 - s / 2 - h * 0.03 }   // hung from the top
-        // Poster ink is opaque. The old 0.92 was meant as restraint but it made
-        // every overlap translucent — six taiji parts stacked into a muddle,
-        // and overlapping circles in every stage showing through each other
-        // where the poster has them occluding cleanly.
-        alpha = wide ? 1 : 0.8
-        setScrim(Math.min(Math.round(reserved + h * 0.08), h))
+        box = { s: Math.min(h * 0.9, w * 0.9), cx: 0, cy: 0 }
+        // Poster ink is opaque. An earlier 0.92 was meant as restraint but it
+        // made every overlap translucent — six taiji parts stacked into a
+        // muddle, and circles showing through each other where the poster has
+        // them occluding cleanly.
+        alpha = 1
         return true
       }
 
@@ -485,20 +467,6 @@ export default function HeroField() {
                         left: d.left, right: d.right }} />
         ))}
       </div>
-      {/* The copy sits ON the field now, not beside it, so the field has to
-          give it ground. The scrim is the poster's own black fading up out of
-          the floor: the circles do not stop at a line, they sink. Its height
-          is the copy's, measured, so the words always begin above the point
-          where the gradient has gone solid. */}
-      <div className="absolute inset-x-0 bottom-0 z-[2]"
-           style={{
-             height: scrim || '58%',
-             // 94%, not solid: a circle behind the words survives as a ghost of
-             // itself, so the field sinks into the copy's ground instead of
-             // being sheared off at a line. The headline stays legible because
-             // 6% of poster-ink is a whisper under 38px bold white.
-             background: 'linear-gradient(to top, color-mix(in srgb, var(--color-poster-bg) 94%, transparent) 0%, color-mix(in srgb, var(--color-poster-bg) 94%, transparent) 30%, color-mix(in srgb, var(--color-poster-bg) 72%, transparent) 64%, transparent 100%)',
-           }} />
     </div>
   )
 }

@@ -4,26 +4,24 @@ export default function LandingPage({ onNavigate }) {
   return (
     <div>
       {/*
-        The hero is now the field, at the size of the page, and the words sit
-        underneath it rather than beside it.
+        The first viewport belongs to the field, whole. Three layouts fought
+        for this screen and lost: a square beside the headline read as an
+        ornament; a square behind the copy needed a scrim, and the scrim
+        needed every stage's layout compressed away from the poster's own
+        proportions; and still the words sat ON the picture — Andy's screenshot
+        had the triangle inside "compounds." The reference he pointed at gets
+        its impact from one thing: the graphic owns the frame, uncontested.
 
-        The diagram used to be a square in the right-hand third, which made it
-        an ornament balancing a headline. It is the five stages of the method —
-        the thing being sold — so it gets the screen, and the copy takes the
-        floor. `justify-end` is the whole layout: whatever the viewport, the
-        words are at the bottom and the field has everything above them.
-
-        100svh, not 100vh: on mobile the address bar makes vh taller than what
-        you can actually see, which would push the CTA off the bottom.
+        So the copy is not IN the hero any more. It is the next thing — scroll
+        once and the pitch begins. 100svh, not 100vh, so the mobile address bar
+        cannot push the field's bottom edge off screen.
       */}
-      <section className="public-hero-dark min-h-[100svh] flex flex-col justify-end">
+      <section className="public-hero-dark h-[100svh] relative">
         <HeroField />
+      </section>
 
-        {/* data-hero-copy: HeroField measures this to know how much floor the
-            words need, and sizes itself to the band above. Rename it and the
-            field falls back to a guess — so don't. */}
-        <div data-hero-copy
-             className="public-section public-section-wide pb-16 sm:pb-20 relative z-10">
+      <section className="public-hero-dark">
+        <div className="public-section public-section-wide pt-14 sm:pt-20 pb-16 sm:pb-20 relative z-10">
           <h1 className="public-h1 max-w-[600px]">
             No 10-baggers. No YOLO plays.
             <br />

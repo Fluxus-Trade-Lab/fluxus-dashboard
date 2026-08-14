@@ -35,41 +35,32 @@ export const PARK = [0.47, 0.47, 0]
 const park = (n) => Array.from({ length: n }, () => PARK)
 
 // ── 0 · reversal ────────────────────────────────────────────────────────────
-// Compressed toward the top against the poster's own proportions, because the
-// full-page square runs behind the copy and the TURN — the two heavy circles
-// and the triangle, the entire meaning of the stage — must land above the
-// scrim, not behind the call-to-action button.
 const S_REVERSAL = {
   red: [
-    [0.14, 0.08, 0.030], [0.21, 0.14, 0.017], [0.18, 0.23, 0.052],
-    [0.26, 0.31, 0.025], [0.29, 0.44, 0.086], [0.35, 0.52, 0.019],
+    [0.14, 0.13, 0.030], [0.21, 0.21, 0.017], [0.18, 0.31, 0.052],
+    [0.26, 0.42, 0.025], [0.29, 0.57, 0.086], [0.35, 0.68, 0.019],
     ...park(8),
   ],
   blue: [
-    [0.45, 0.47, 0.066], [0.39, 0.56, 0.020], [0.53, 0.35, 0.027],
-    [0.58, 0.26, 0.042], [0.65, 0.17, 0.050], [0.71, 0.10, 0.022],
+    [0.45, 0.61, 0.066], [0.39, 0.72, 0.020], [0.53, 0.46, 0.027],
+    [0.58, 0.35, 0.042], [0.65, 0.24, 0.050], [0.71, 0.15, 0.022],
     ...park(8),
   ],
 }
 
 // ── 1 · funnel ──────────────────────────────────────────────────────────────
-// The rows sit higher than the poster draws them because the full-page square
-// runs behind the copy: the funnel's story is the narrowing, and its last two
-// steps have to happen above the scrim or the stage reads as dots with no
-// destination. The leader still dips into the fade — sinking is the aesthetic —
-// but as a presence, not a rumour.
 const S_FUNNEL = {
   red: [
-    [0.12, 0.10, 0.015], [0.32, 0.10, 0.015], [0.52, 0.10, 0.015], [0.72, 0.10, 0.015],
-    [0.20, 0.30, 0.027], [0.56, 0.30, 0.027],
-    [0.30, 0.46, 0.033], [0.66, 0.46, 0.033],
+    [0.12, 0.11, 0.015], [0.32, 0.11, 0.015], [0.52, 0.11, 0.015], [0.72, 0.11, 0.015],
+    [0.20, 0.33, 0.027], [0.56, 0.33, 0.027],
+    [0.30, 0.52, 0.033], [0.66, 0.52, 0.033],
     ...park(6),
   ],
   blue: [
-    [0.22, 0.10, 0.015], [0.42, 0.10, 0.015], [0.62, 0.10, 0.015], [0.82, 0.10, 0.015],
-    [0.38, 0.30, 0.027], [0.74, 0.30, 0.027],
-    [0.50, 0.46, 0.033],
-    [0.46, 0.62, 0.100],          // the one leader the funnel was for
+    [0.22, 0.11, 0.015], [0.42, 0.11, 0.015], [0.62, 0.11, 0.015], [0.82, 0.11, 0.015],
+    [0.38, 0.33, 0.027], [0.74, 0.33, 0.027],
+    [0.50, 0.52, 0.033],
+    [0.46, 0.78, 0.100],          // the one leader the funnel was for
     ...park(6),
   ],
 }
@@ -94,7 +85,7 @@ const S_SCATTER = {
 // Every circle sits exactly on the lattice, so GRID_LINES below can be drawn
 // through the nodes rather than near them.
 const GX = [0.17, 0.45, 0.70]
-const GY = [0.15, 0.43, 0.68]   // bottom row lifted clear of the scrim's solid zone
+const GY = [0.15, 0.45, 0.74]
 const S_GRID = {
   blue: [
     [GX[0], GY[0], 0.088], [GX[2], GY[0], 0.019], [GX[1], GY[1], 0.023], [GX[2], GY[2], 0.046],
@@ -118,11 +109,8 @@ export const STAGE_NAMES = ['reversal', 'funnel', 'scatter', 'grid', 'taiji']
 
 /** The shapes a single stage owns, kept here so the renderer and the contact
  *  sheet cannot drift apart on where they sit. */
-export const TRIANGLE = { x: 0.40, y: 0.615, r: 0.030 }   // stage 0, the turn
-// The finale is the one stage whose form must survive whole — the poster's
-// fifth panel is a complete circle. At cy 0.47 the full-page square sank its
-// bottom lobe into the scrim behind the headline, leaving a one-eyed figure.
-export const TAIJI = { cx: 0.47, cy: 0.32, r: 0.30 }      // stage 4, the contest
+export const TRIANGLE = { x: 0.40, y: 0.775, r: 0.030 }   // stage 0, the turn
+export const TAIJI = { cx: 0.47, cy: 0.47, r: 0.30 }      // stage 4, the contest
 
 /**
  * The connective tissue — and it is not decoration.
@@ -139,15 +127,15 @@ export const TAIJI = { cx: 0.47, cy: 0.32, r: 0.30 }      // stage 4, the contes
  */
 export const FUNNEL_LINKS = [
   // eight names → four
-  [0.12, 0.10, 0.20, 0.30], [0.22, 0.10, 0.20, 0.30],
-  [0.32, 0.10, 0.38, 0.30], [0.42, 0.10, 0.38, 0.30],
-  [0.52, 0.10, 0.56, 0.30], [0.62, 0.10, 0.56, 0.30],
-  [0.72, 0.10, 0.74, 0.30], [0.82, 0.10, 0.74, 0.30],
+  [0.12, 0.11, 0.20, 0.33], [0.22, 0.11, 0.20, 0.33],
+  [0.32, 0.11, 0.38, 0.33], [0.42, 0.11, 0.38, 0.33],
+  [0.52, 0.11, 0.56, 0.33], [0.62, 0.11, 0.56, 0.33],
+  [0.72, 0.11, 0.74, 0.33], [0.82, 0.11, 0.74, 0.33],
   // four → three
-  [0.20, 0.30, 0.30, 0.46], [0.38, 0.30, 0.30, 0.46],
-  [0.56, 0.30, 0.50, 0.46], [0.74, 0.30, 0.66, 0.46],
+  [0.20, 0.33, 0.30, 0.52], [0.38, 0.33, 0.30, 0.52],
+  [0.56, 0.33, 0.50, 0.52], [0.74, 0.33, 0.66, 0.52],
   // three → the one it was all for
-  [0.30, 0.46, 0.46, 0.62], [0.50, 0.46, 0.46, 0.62], [0.66, 0.46, 0.46, 0.62],
+  [0.30, 0.52, 0.46, 0.78], [0.50, 0.52, 0.46, 0.78], [0.66, 0.52, 0.46, 0.78],
 ]
 
 /** Straight rules through the lattice, run past the outer nodes so the grid
