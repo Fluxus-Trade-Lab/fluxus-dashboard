@@ -27,6 +27,7 @@ from pipeline.centaur import anchoring as A
 from pipeline.centaur import blend as B
 from pipeline.centaur import log as L
 from pipeline.centaur import skill as S
+from pipeline import ibkr as IBKR
 from pipeline.marketcal import market_now, market_today
 
 OUT = Path("data/centaur")
@@ -35,15 +36,12 @@ RTH_CLOSE = dt.time(16, 0)
 
 def fetch_bars(symbol: str = "SPX", days: int = 90) -> dict[str, dict]:
     from ib_async import IB, Index, Stock
-    ib = IB()
-    for port in (7496, 4001, 4002):
-        try:
-            ib.connect("127.0.0.1", port, clientId=197, timeout=10)
-            break
-        except Exception:
-            continue
-    if not ib.isConnected():
-        sys.exit("no IBKR endpoint — is TWS logged in?")
+    # Shared connect: no startup account/order/position fetch.
+    # That fetch hung the post-close chain twice; see pipeline/ibkr.py.
+    try:
+        ib = IBKR.connect(197, timeout=10)
+    except ConnectionError as e:
+        sys.exit(str(e))
     try:
         c = Index(symbol, "CBOE") if symbol in ("SPX", "VIX") else Stock(symbol, "SMART", "USD")
         ib.qualifyContracts(c)

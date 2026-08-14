@@ -48,6 +48,7 @@ import pandas as pd
 
 from pipeline.flow import atm_core, enrich, quote_rule
 from pipeline.flow import session as FS
+from pipeline import ibkr as IBKR
 from pipeline.marketcal import MARKET_TZ, market_now, market_today
 
 OUT_DIR = Path("data/flow")
@@ -134,15 +135,12 @@ def main():
     pretty = f"{day[:4]}-{day[4:6]}-{day[6:]}"
 
     from ib_async import IB, Index, Option, Stock
-    ib = IB()
-    for port in (7496, 4001, 4002):
-        try:
-            ib.connect("127.0.0.1", port, clientId=187, timeout=10)
-            break
-        except Exception:
-            continue
-    if not ib.isConnected():
-        sys.exit("no IBKR endpoint — is TWS logged in?")
+    # Shared connect: no startup account/order/position fetch.
+    # That fetch hung the post-close chain twice; see pipeline/ibkr.py.
+    try:
+        ib = IBKR.connect(187, timeout=10)
+    except ConnectionError as e:
+        sys.exit(str(e))
 
     try:
         under = (Index("SPX", "CBOE") if args.symbol == "SPX"

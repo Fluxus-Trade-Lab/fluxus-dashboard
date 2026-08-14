@@ -247,7 +247,15 @@ def main():
     c = CFG[args.symbol]
     step = args.strike_step if args.strike_step is not None else c["step"]
 
-    ib = IB(); ib.connect(args.host, args.port, clientId=args.clientid, timeout=20)
+    # fetchFields=NONE: ib_async otherwise requests positions, orders,
+    # executions and account updates for every sub-account before returning.
+    # We read market data only, and that fetch hung this pull post-close on
+    # 2026-08-12 and 2026-08-13 -- two sessions of settled chain lost. See
+    # pipeline/ibkr.py. readonly because nothing here places an order.
+    from ib_async import StartupFetchNONE
+    ib = IB(); ib.connect(args.host, args.port, clientId=args.clientid,
+                          timeout=20, readonly=True,
+                          fetchFields=StartupFetchNONE)
     if args.delayed:
         ib.reqMarketDataType(3)
 

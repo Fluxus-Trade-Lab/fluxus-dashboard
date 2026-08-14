@@ -26,6 +26,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from pipeline import ibkr as IBKR
 from pipeline.marketcal import MARKET_TZ, market_now, market_today
 from pipeline.profile import daytype as DT
 from pipeline.profile import facilitation as FAC
@@ -100,15 +101,12 @@ def main():
     pretty = f"{day[:4]}-{day[4:6]}-{day[6:]}"
 
     from ib_async import IB, ContFuture, Future, Index
-    ib = IB()
-    for port in (7496, 4001, 4002):
-        try:
-            ib.connect("127.0.0.1", port, clientId=171, timeout=10)
-            break
-        except Exception:
-            continue
-    if not ib.isConnected():
-        sys.exit("no IBKR endpoint — is TWS logged in?")
+    # Shared connect: no startup account/order/position fetch.
+    # That fetch hung the post-close chain twice; see pipeline/ibkr.py.
+    try:
+        ib = IBKR.connect(171, timeout=10)
+    except ConnectionError as e:
+        sys.exit(str(e))
 
     try:
         spx = Index("SPX", "CBOE")

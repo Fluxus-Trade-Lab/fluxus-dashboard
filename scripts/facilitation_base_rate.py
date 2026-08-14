@@ -24,6 +24,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from pipeline import ibkr as IBKR
 from pipeline.marketcal import market_now
 from pipeline.profile import facilitation as F
 from pipeline.profile import tpo as MP
@@ -85,15 +86,12 @@ def main():
     args = ap.parse_args()
 
     from ib_async import IB, Index, Stock
-    ib = IB()
-    for port in (7496, 4001, 4002):
-        try:
-            ib.connect("127.0.0.1", port, clientId=173, timeout=10)
-            break
-        except Exception:
-            continue
-    if not ib.isConnected():
-        sys.exit("no IBKR endpoint — is TWS logged in?")
+    # Shared connect: no startup account/order/position fetch.
+    # That fetch hung the post-close chain twice; see pipeline/ibkr.py.
+    try:
+        ib = IBKR.connect(173, timeout=10)
+    except ConnectionError as e:
+        sys.exit(str(e))
 
     results = {}
     try:
