@@ -3,6 +3,7 @@ import {
   STAGES, BLUE_N, RED_N, PARK, TRIANGLE, TAIJI, FUNNEL_LINKS, GRID_LINES,
 } from './heroStages'
 import { createBodies, snap, step as solve } from './heroSolver'
+import { parsePinnedStage } from './parsePinnedStage'
 
 /**
  * The hero's field — the Masterclass poster's five panels, as one motion.
@@ -100,8 +101,7 @@ export default function HeroField() {
     // is no way to judge a layout — and because requestAnimationFrame does not
     // fire in every embedded browser, which makes the running version
     // unobservable in exactly the places you would want to check it.
-    const asked = Number(new URLSearchParams(window.location.search).get('stage'))
-    const pinned = Number.isInteger(asked) && asked >= 0 && asked < STAGES.length ? asked : null
+    const pinned = parsePinnedStage(window.location.search, STAGES.length)
 
     ;(async () => {
       let THREE
