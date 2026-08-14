@@ -67,6 +67,7 @@ const HOLD_F = HOLD / SEG
 
 const SPIN_IN = Math.PI * 3      // a turn and a half, unwound as the taiji lands
 const SPIN_HELD = 0.063          // ~100 s a revolution once it has
+const POINTER_TAU = 0.42         // seconds for the pointer lag to decay by 1/e
 
 /** Smootherstep — zero velocity AND zero acceleration at both ends, so a stage
  *  settles instead of arriving. */
@@ -301,9 +302,19 @@ export default function HeroField() {
         o.material.opacity = a * alpha
       }
 
+      let last = 0
       const draw = (t) => {
-        pointer.x += (pointer.tx - pointer.x) * 0.03
-        pointer.y += (pointer.ty - pointer.y) * 0.03
+        const dt = Math.min(Math.max(t - last, 0), 0.1)   // a tab that slept must not jump
+        last = t
+        // Damped by ELAPSED TIME, not per frame. `x += (target - x) * 0.03`
+        // reads like a constant but is a rate per frame, so the pointer caught
+        // up twice as fast on a 120 Hz display as on a 60 Hz one — the same
+        // gesture, two different feels, decided by the monitor. The exponential
+        // form has a half-life in seconds and behaves the same everywhere.
+        // (Read off maath's `easing.damp`, which the r3f demos use for this.)
+        const lag = 1 - Math.exp(-dt / POINTER_TAU)
+        pointer.x += (pointer.tx - pointer.x) * lag
+        pointer.y += (pointer.ty - pointer.y) * lag
 
         // A clock that runs backwards or arrives NaN would index STAGES out of
         // range and throw inside the animation loop, which leaves the canvas
