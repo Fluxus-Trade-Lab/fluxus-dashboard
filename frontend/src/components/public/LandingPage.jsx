@@ -1,15 +1,13 @@
+import HeroField from './HeroField'
+
 export default function LandingPage({ onNavigate }) {
   return (
     <div>
       {/* Dark hero — poster-inspired */}
       <section className="public-hero-dark">
-        {/* Abstract background dots — like the poster's bubble clusters */}
-        <div className="hero-dot hero-dot-blue" style={{ width: 280, height: 280, top: -60, right: -40 }} />
-        <div className="hero-dot hero-dot-red" style={{ width: 180, height: 180, top: 80, right: 120 }} />
-        <div className="hero-dot hero-dot-blue" style={{ width: 100, height: 100, bottom: 20, left: '15%' }} />
-        <div className="hero-dot hero-dot-red" style={{ width: 60, height: 60, top: 40, left: '10%' }} />
-        <div className="hero-dot hero-dot-blue" style={{ width: 40, height: 40, bottom: 60, right: '30%' }} />
-        <div className="hero-dot hero-dot-red" style={{ width: 140, height: 140, bottom: -40, left: '40%' }} />
+        {/* The poster's five panels, as one motion. The static dots this
+            replaces live on inside HeroField as its no-WebGL floor. */}
+        <HeroField />
 
         <div className="public-section public-section-wide pt-20 sm:pt-32 pb-16 sm:pb-24 relative z-10">
           <h1 className="public-h1 max-w-[600px]">
