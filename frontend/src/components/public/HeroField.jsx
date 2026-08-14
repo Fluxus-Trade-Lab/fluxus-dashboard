@@ -419,20 +419,37 @@ export default function HeroField() {
       draw(0)
       setLive(true)
 
-      // Off screen or in a background tab it stops dead. An ambient field is
-      // not worth one frame of anybody's battery once nobody is looking.
-      let raf = 0, visible = true
+      // The loop runs whenever the component is mounted, and each frame decides
+      // for itself whether there is anything to draw.
+      //
+      // The first version gated the loop on three LATCHED booleans — an
+      // IntersectionObserver's saved answer, a saved visibilitychange, a saved
+      // media query — and started or cancelled the rAF chain when they changed.
+      // That design froze the hero on Andy's own machine with zero errors: the
+      // page loaded in an occluded window, the observer's initial callback
+      // reported not-intersecting, and since the element's layout never changed
+      // afterwards the observer never spoke again — a stale `false` no event
+      // would ever correct, holding the gate shut while the window sat in
+      // plain view. Diagnosed live over CDP: injected rAF counter advancing,
+      // app canvas frozen, every other gate condition measured true.
+      //
+      // So: no latches. A hidden or occluded window costs nothing anyway — the
+      // browser stops firing rAF there, which is the battery saving the
+      // observer was supposed to provide, provided for free and never stale.
+      // The one case that keeps a per-frame check is the hero scrolled out of
+      // view in a visible tab, and that is a one-line read of scrollY — the
+      // hero starts at the top of the page, so it is off screen exactly when a
+      // full viewport has been scrolled past. A parked frame skips drawing but
+      // keeps the chain alive; a no-op rAF is nanoseconds.
+      let raf = 0
       const t0 = performance.now()
-      const loop = () => { raf = requestAnimationFrame(loop); draw((performance.now() - t0) / 1000) }
-      const pump = () => {
-        const go = visible && !document.hidden && !still && pinned == null
-        if (go && !raf) loop()
-        else if (!go && raf) { cancelAnimationFrame(raf); raf = 0 }
+      const loop = () => {
+        raf = requestAnimationFrame(loop)
+        if (window.scrollY > window.innerHeight) return   // parked below the fold
+        draw((performance.now() - t0) / 1000)
       }
-      const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; pump() }, { threshold: 0 })
-      io.observe(host)
-      document.addEventListener('visibilitychange', pump)
-      const ro = new ResizeObserver(() => { if (measure() && !raf) draw(0) })
+      if (!still && pinned == null) loop()
+      const ro = new ResizeObserver(() => { if (measure()) draw((performance.now() - t0) / 1000) })
       ro.observe(host)
       // On the SECTION, not on the field. The field carries pointer-events:none
       // so it can never eat a click meant for the CTA — which also meant it
@@ -442,12 +459,10 @@ export default function HeroField() {
       const surface = host.parentElement ?? host
       surface.addEventListener('pointermove', onPointer)
       surface.addEventListener('pointerleave', onLeave)
-      pump()
 
       teardown = () => {
         if (raf) cancelAnimationFrame(raf)
-        io.disconnect(); ro.disconnect()
-        document.removeEventListener('visibilitychange', pump)
+        ro.disconnect()
         surface.removeEventListener('pointermove', onPointer)
         surface.removeEventListener('pointerleave', onLeave)
         canvas.removeEventListener('webglcontextlost', onLost)
