@@ -65,6 +65,9 @@ const MORPH = 2.4     // seconds spent becoming the next one
 const SEG = HOLD + MORPH
 const HOLD_F = HOLD / SEG
 
+const SPIN_IN = Math.PI * 3      // a turn and a half, unwound as the taiji lands
+const SPIN_HELD = 0.063          // ~100 s a revolution once it has
+
 /** Smootherstep — zero velocity AND zero acceleration at both ends, so a stage
  *  settles instead of arriving. */
 const ease = (x) => x * x * x * (x * (x * 6 - 15) + 10)
@@ -77,6 +80,9 @@ function cssVar(name, fallback) {
 export default function HeroField() {
   const hostRef = useRef(null)
   const [live, setLive] = useState(false)
+  /** how far up the scrim has to reach — the copy's own height plus a tenth of
+   *  the hero, so the words never start inside the gradient's fading half */
+  const [scrim, setScrim] = useState(0)
 
   useEffect(() => {
     const host = hostRef.current
@@ -86,6 +92,14 @@ export default function HeroField() {
     let teardown = null
 
     const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    // ?stage=0..4 holds one stage and never starts the loop. It exists because
+    // the five panels have to be reviewable one at a time — a 29-second cycle
+    // is no way to judge a layout — and because requestAnimationFrame does not
+    // fire in every embedded browser, which makes the running version
+    // unobservable in exactly the places you would want to check it.
+    const asked = Number(new URLSearchParams(window.location.search).get('stage'))
+    const pinned = Number.isInteger(asked) && asked >= 0 && asked < STAGES.length ? asked : null
 
     ;(async () => {
       let THREE
@@ -99,7 +113,10 @@ export default function HeroField() {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
 
       const canvas = renderer.domElement
-      canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block'
+      // z-1: above the CSS floor it supersedes, below the scrim that gives the
+      // copy its ground. The canvas is appended last, so without this it would
+      // paint over the scrim and the headline would sit under the circles.
+      canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1'
       const onLost = (e) => { e.preventDefault(); setLive(false) }
       canvas.addEventListener('webglcontextlost', onLost)
 
@@ -122,13 +139,17 @@ export default function HeroField() {
         color: colour, transparent: true, opacity: 1, depthWrite: false, depthTest: false,
       })
       const owned = []
-      const mesh = (geo, colour, z) => {
+      // Everything is drawn on ONE plane at z = 0 and ordered by renderOrder,
+      // never by depth. Stacking meshes along z would have put the taiji's last
+      // three pieces past the near plane and clipped them out of the scene —
+      // and with depthTest off, z was never buying the ordering anyway.
+      const mesh = (geo, colour, order, parent = scene) => {
         const m = mat(colour)
         owned.push(m)
         const o = new THREE.Mesh(geo, m)
-        o.position.z = z
-        o.renderOrder = z
-        scene.add(o)
+        o.renderOrder = order
+        o.frustumCulled = false
+        parent.add(o)
         return o
       }
 
@@ -138,17 +159,37 @@ export default function HeroField() {
       // stage 1's marker for the turn — the only green on the page
       const triangle = mesh(tri, GREEN, 3)
 
-      // stage 5, painted back to front: the two halves, the two lobes that bend
-      // the seam into an S, then each side's seed of the other
-      const taiji = {
-        left: mesh(half, BLUE, 4),
-        right: mesh(half, RED, 5),
-        lobeA: mesh(disc, RED, 6),
-        lobeB: mesh(disc, BLUE, 7),
-        seedA: mesh(disc, BLUE, 8),
-        seedB: mesh(disc, RED, 9),
+      // Stage 5, built as one rigid assembly so it can TURN. Two colours that
+      // rotate and settle into the figure say the thing a cross-fade cannot:
+      // long and short are not two states, they are one contest in motion, and
+      // the shape only resolves when it stops. It keeps turning after it lands,
+      // one revolution every hundred seconds — a contest does not finish.
+      //
+      // Painted back to front: the two halves, the two lobes that bend the seam
+      // into an S, then each side's seed of the other. Children are positioned
+      // in unit-square units about the centre, and the group carries the scale,
+      // so the rotation is a single number rather than six.
+      const taiji = new THREE.Group()
+      scene.add(taiji)
+      const taijiParts = {
+        left: mesh(half, BLUE, 4, taiji),
+        right: mesh(half, RED, 5, taiji),
+        lobeA: mesh(disc, RED, 6, taiji),
+        lobeB: mesh(disc, BLUE, 7, taiji),
+        seedA: mesh(disc, BLUE, 8, taiji),
+        seedB: mesh(disc, RED, 9, taiji),
       }
-      taiji.right.rotation.z = Math.PI     // mirror the half onto the other side
+      taijiParts.right.rotation.z = Math.PI   // mirror the half onto the other side
+      {
+        const r = TAIJI.r
+        const at = (o, y, s) => { o.position.set(0, y, 0); o.scale.set(s, s, 1) }
+        at(taijiParts.left, 0, r)
+        at(taijiParts.right, 0, r)
+        at(taijiParts.lobeA, r / 2, r / 2)
+        at(taijiParts.lobeB, -r / 2, r / 2)
+        at(taijiParts.seedA, r / 2, r / 6)
+        at(taijiParts.seedB, -r / 2, r / 6)
+      }
 
       // The connective tissue — stage 1's links and stage 3's rules. Both are
       // built once in the unit square (x right, y down, origin at the centre)
@@ -180,7 +221,9 @@ export default function HeroField() {
         )
         const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(24))
         owned.push(geo)
-        return new THREE.Line(geo, linkMat)
+        const l = new THREE.Line(geo, linkMat)
+        l.frustumCulled = false
+        return l
       }))
       const ruleMat = lineMat()
       const rules = group(GRID_LINES.map(([x0, y0, x1, y1]) => {
@@ -188,13 +231,34 @@ export default function HeroField() {
           new THREE.Vector3(ux(x0), uy(y0), 0), new THREE.Vector3(ux(x1), uy(y1), 0),
         ])
         owned.push(geo)
-        return new THREE.Line(geo, ruleMat)
+        const l = new THREE.Line(geo, ruleMat)
+        l.frustumCulled = false
+        return l
       }))
 
       // ── the field's box inside the hero ───────────────────────────────────
-      // Wide: a square in the right-hand third, clear of the copy, at strength.
-      // Narrow: the copy spans everything, so the field goes back to being the
-      // wash it is today rather than fighting the headline for the same pixels.
+      // The field owns the page, so it takes the largest square that fits —
+      // square, because the stage layouts are authored in one, and stretching
+      // to the viewport's aspect would turn every circle into an ellipse and
+      // the taiji into an egg.
+      //
+      // The square takes the whole band above the copy, then DIP past its floor
+      // so the diagram sinks into the scrim instead of stopping politely on a
+      // line. Two versions were wrong before this one: a square in the right
+      // third read as an ornament balancing a headline, and a square the full
+      // height of the page buried every stage's punchline — the bottom of the
+      // V, the leader at the end of the funnel, the green triangle at the turn
+      // — under the solid part of the scrim. The bottom of each stage is where
+      // its point is; it has to stay above the black.
+      //
+      // The band is measured off the copy, never guessed. It is what changes
+      // when the headline wraps to a fourth line, when the viewport turns, when
+      // someone adds a stat — and a fixed fraction would be wrong the first
+      // time any of those happened.
+      // 1.28 put the funnel's leader — the circle the whole stage is about —
+      // half behind the headline. 1.12 keeps every stage's lowest mark clear of
+      // the copy while the square still runs past the band into the scrim.
+      const DIP = 1.12
       let box = { cx: 0, cy: 0, s: 1 }, alpha = 1
       const measure = () => {
         const w = host.clientWidth, h = host.clientHeight
@@ -205,9 +269,14 @@ export default function HeroField() {
         camera.updateProjectionMatrix()
 
         const wide = w >= 900
-        const s = wide ? Math.min(h * 0.86, w * 0.42) : Math.min(w * 0.92, h * 0.62)
-        box = { s, cx: wide ? w * 0.29 : 0, cy: wide ? 0 : -h * 0.08 }
-        alpha = wide ? 0.82 : 0.15
+        const copy = host.parentElement?.querySelector('[data-hero-copy]')
+        const reserved = copy?.getBoundingClientRect().height || h * 0.5
+        const band = Math.max(h - reserved, h * 0.3)
+
+        const s = Math.min(band * DIP, w * (wide ? 0.58 : 0.96))
+        box = { s, cx: 0, cy: h / 2 - s / 2 - h * 0.02 }   // hung from the top
+        alpha = wide ? 0.92 : 0.7
+        setScrim(Math.min(Math.round(reserved + h * 0.08), h))
         return true
       }
 
@@ -242,7 +311,7 @@ export default function HeroField() {
         // cover. Cheaper to make the clock impossible to misuse.
         const span = SEG * STAGES.length
         const clock = Number.isFinite(t) ? ((t % span) + span) % span : 0
-        const u = clock / SEG
+        const u = pinned != null ? pinned : clock / SEG
         const i = Math.floor(u)
         const f = u - i
         const k = f <= HOLD_F ? 0 : ease((f - HOLD_F) / (1 - HOLD_F))
@@ -271,16 +340,17 @@ export default function HeroField() {
         }
 
         const wTaiji = weight(4)
-        if (wTaiji > 0.004) {
-          const { cx, cy, r: rr } = TAIJI
-          place(taiji.left, cx, cy, rr, wTaiji)
-          place(taiji.right, cx, cy, rr, wTaiji)
-          place(taiji.lobeA, cx, cy - rr / 2, rr / 2, wTaiji)
-          place(taiji.lobeB, cx, cy + rr / 2, rr / 2, wTaiji)
-          place(taiji.seedA, cx, cy - rr / 2, rr / 6, wTaiji)
-          place(taiji.seedB, cx, cy + rr / 2, rr / 6, wTaiji)
-        } else {
-          Object.values(taiji).forEach((o) => { o.visible = false })
+        taiji.visible = wTaiji > 0.004
+        if (taiji.visible) {
+          taiji.position.set(
+            X(TAIJI.cx) + pointer.x * box.s * 0.012,
+            Y(TAIJI.cy) - pointer.y * box.s * 0.012, 0,
+          )
+          taiji.scale.set(box.s, box.s, 1)
+          // it arrives spinning — a turn and a half unwinding as it appears —
+          // and then never quite stops
+          taiji.rotation.z = -SPIN_IN * (1 - wTaiji) - clock * SPIN_HELD
+          Object.values(taijiParts).forEach((o) => { o.material.opacity = wTaiji * alpha })
         }
 
         renderer.render(scene, camera)
@@ -297,7 +367,7 @@ export default function HeroField() {
       const t0 = performance.now()
       const loop = () => { raf = requestAnimationFrame(loop); draw((performance.now() - t0) / 1000) }
       const pump = () => {
-        const go = visible && !document.hidden && !still
+        const go = visible && !document.hidden && !still && pinned == null
         if (go && !raf) loop()
         else if (!go && raf) { cancelAnimationFrame(raf); raf = 0 }
       }
@@ -335,6 +405,16 @@ export default function HeroField() {
                         left: d.left, right: d.right }} />
         ))}
       </div>
+      {/* The copy sits ON the field now, not beside it, so the field has to
+          give it ground. The scrim is the poster's own black fading up out of
+          the floor: the circles do not stop at a line, they sink. Its height
+          is the copy's, measured, so the words always begin above the point
+          where the gradient has gone solid. */}
+      <div className="absolute inset-x-0 bottom-0 z-[2]"
+           style={{
+             height: scrim || '58%',
+             background: 'linear-gradient(to top, var(--color-poster-bg) 0%, var(--color-poster-bg) 42%, color-mix(in srgb, var(--color-poster-bg) 76%, transparent) 70%, transparent 100%)',
+           }} />
     </div>
   )
 }

@@ -3,13 +3,27 @@ import HeroField from './HeroField'
 export default function LandingPage({ onNavigate }) {
   return (
     <div>
-      {/* Dark hero — poster-inspired */}
-      <section className="public-hero-dark">
-        {/* The poster's five panels, as one motion. The static dots this
-            replaces live on inside HeroField as its no-WebGL floor. */}
+      {/*
+        The hero is now the field, at the size of the page, and the words sit
+        underneath it rather than beside it.
+
+        The diagram used to be a square in the right-hand third, which made it
+        an ornament balancing a headline. It is the five stages of the method —
+        the thing being sold — so it gets the screen, and the copy takes the
+        floor. `justify-end` is the whole layout: whatever the viewport, the
+        words are at the bottom and the field has everything above them.
+
+        100svh, not 100vh: on mobile the address bar makes vh taller than what
+        you can actually see, which would push the CTA off the bottom.
+      */}
+      <section className="public-hero-dark min-h-[100svh] flex flex-col justify-end">
         <HeroField />
 
-        <div className="public-section public-section-wide pt-20 sm:pt-32 pb-16 sm:pb-24 relative z-10">
+        {/* data-hero-copy: HeroField measures this to know how much floor the
+            words need, and sizes itself to the band above. Rename it and the
+            field falls back to a guess — so don't. */}
+        <div data-hero-copy
+             className="public-section public-section-wide pb-16 sm:pb-20 relative z-10">
           <h1 className="public-h1 max-w-[600px]">
             No 10-baggers. No YOLO plays.
             <br />
@@ -18,7 +32,7 @@ export default function LandingPage({ onNavigate }) {
           <p className="public-body mt-6 max-w-[540px]" style={{ color: '#a8a29e' }}>
             Fluxus is a trading community for traders who want to get better, not just get lucky.
           </p>
-          <div className="mt-10">
+          <div className="mt-9">
             <button
               onClick={() => onNavigate('#/results')}
               className="public-cta"
@@ -26,11 +40,8 @@ export default function LandingPage({ onNavigate }) {
               See the results
             </button>
           </div>
-        </div>
 
-        {/* Stats row — still inside dark section */}
-        <div className="public-section public-section-wide pb-20 sm:pb-28 relative z-10">
-          <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-[540px]">
+          <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-[540px] mt-12">
             <div>
               <div className="public-stat-number" style={{ color: 'var(--color-poster-blue)' }}>72%</div>
               <div className="public-label mt-1">Win Rate</div>
