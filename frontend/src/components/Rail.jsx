@@ -6,10 +6,15 @@ import { useLanguage } from '../i18n/LanguageContext'
  *
  * Design: Fluxus_Brand/visual/2026-08-09_WHAT_TO_SHOW.md
  *
+ * The order is the operator's, not a taxonomy's: what the market is doing,
+ * then what you did about it, then the two that teach. The daily loop is the
+ * first two; Course and Library are where you go between sessions, so they sit
+ * below the fold of attention rather than between the two halves of the loop.
+ *
  *   MARKET   what the market is doing        open, no account
- *   LIBRARY  how to read a market at all     open, not tied to today
- *   COURSE   the long-form version           open
  *   MY BOOK  what you did about it           needs an account and your fills
+ *   COURSE   the long-form version           open
+ *   LIBRARY  how to read a market at all     open, not tied to today
  *
  * Until 2026-08-14 each of those four lines carried a sentence explaining it
  * ("Open. No account needed."), and MARKET carried three more naming its
@@ -18,11 +23,12 @@ import { useLanguage } from '../i18n/LanguageContext'
  * explaining itself than naming its destinations. The clusters survive as a
  * gap; the sentences are gone.
  *
- * Two levels, two highlights, and deliberately different in kind: a page marks
- * itself with GEOMETRY (a left bar and a filled row — it is a row), a group
- * marks itself with CONTRAST (its word lifts muted → bold when the page you
- * are on lives inside it — it is a region). Neither uses hue, and neither can
- * be mistaken for the other.
+ * Two levels, kept apart on three channels at once, because one was not enough
+ * to feel: a group is a label + a RULE out to the edge (the site's own section
+ * idiom, Tier.jsx) and its pages are INDENTED under it; a page is a row with a
+ * left bar and a fill. Then the active marks: a group lifts its word and its
+ * rule muted → bold when the page you are on lives inside it — it marks a
+ * REGION; a page fills and bolds itself — it marks a ROW. Neither uses hue.
  *
  * Collapsed codes are declared, never derived. Slicing the label gave RS Live
  * Tracker and RS Leaderboard the same three letters, and Portfolio Management
@@ -34,81 +40,62 @@ import { useLanguage } from '../i18n/LanguageContext'
  */
 export const NAV_GROUPS = [
   {
+    // MARKET's eight pages were briefly split into three clusters — environment,
+    // rotation, leaders — with a gap between them. They are one class: every one
+    // of them reads the market. The gap claimed a distinction the operator does
+    // not make, so it is gone and the group is flat like the other three.
     key: 'market',
-    sections: [
-      {
-        key: 'env',
-        items: [
-          { key: 'dashboard', short: 'DSH', hash: '#/dashboard' },
-          // Market State and Correction Risk are off the rail on purpose.
-          // Today already answers "what is the market doing"; the nine-cell
-          // instrument is where you go when you want to know WHY, reached from
-          // the link under the read. Two rail entries for one question made the
-          // rail a table of contents instead of a set of destinations. The
-          // routes still resolve — #/breadth and #/correction — so links that
-          // were sent keep working.
-        ],
-      },
-      {
-        key: 'rotation',
-        items: [
-          { key: 'groups', short: 'THM', hash: '#/groups' },         // shown as "Themes"
-          { key: 'rslive', short: 'LIV', hash: '#/rs-live' },
-          // RS Rotation merged into Themes (the trajectory layer). The rail
-          // entry promised a page whose whole content was one layer of another
-          // page; the route still resolves so sent links land on Themes.
-          { key: 'rsleaders', short: 'LDR', hash: '#/rs-leaders' },
-        ],
-      },
-      {
-        key: 'leaders',
-        items: [
-          { key: 'screener', short: 'SCR', hash: '#/screener' },
-        ],
-      },
+    items: [
+      { key: 'dashboard', short: 'DSH', hash: '#/dashboard' },
+      // Market State and Correction Risk are off the rail on purpose.
+      // Today already answers "what is the market doing"; the nine-cell
+      // instrument is where you go when you want to know WHY, reached from
+      // the link under the read. Two rail entries for one question made the
+      // rail a table of contents instead of a set of destinations. The
+      // routes still resolve — #/breadth and #/correction — so links that
+      // were sent keep working.
+      { key: 'groups', short: 'THM', hash: '#/groups' },         // shown as "Themes"
+      { key: 'rslive', short: 'LIV', hash: '#/rs-live' },
+      // RS Rotation merged into Themes (the trajectory layer). The rail
+      // entry promised a page whose whole content was one layer of another
+      // page; the route still resolves so sent links land on Themes.
+      { key: 'rsleaders', short: 'LDR', hash: '#/rs-leaders' },
+      { key: 'screener', short: 'SCR', hash: '#/screener' },
     ],
+  },
+  {
+    // The record. Second, because market → book is the daily loop.
+    key: 'book',
+    items: [
+      { key: 'portfolio', short: 'PRT', hash: '#/portfolio' },
+      { key: 'trades', short: 'LOG', hash: '#/trades' },
+      { key: 'journal', short: 'COA', hash: '#/journal' },
+    ],
+  },
+  {
+    key: 'course',
+    items: [{ key: 'masterclass', short: 'MCL', hash: '#/masterclass' }],
   },
   {
     // Not market, not record — how to read a market at all.
     key: 'library',
-    sections: [{
-      key: null,
-      items: [
-        { key: 'modelbooks', short: 'MDL', hash: '#/modelbooks' },
-        { key: 'defense', short: 'DEF', hash: '#/defense' },
-        { key: 'offense', short: 'OFF', hash: '#/offense' },
-        { key: 'psychology', short: 'PSY', hash: '#/psychology' },
-        { key: 'pfmgmt', short: 'PMG', hash: '#/portfolio-management' },
-        { key: 'news', short: 'NWS', hash: '#/news' },
-      ],
-    }],
-  },
-  {
-    key: 'course',
-    sections: [{
-      key: null,
-      items: [{ key: 'masterclass', short: 'MCL', hash: '#/masterclass' }],
-    }],
-  },
-  {
-    key: 'book',
-    sections: [{
-      key: null,
-      items: [
-        { key: 'portfolio', short: 'PRT', hash: '#/portfolio' },
-        { key: 'trades', short: 'LOG', hash: '#/trades' },
-        { key: 'journal', short: 'COA', hash: '#/journal' },
-      ],
-    }],
+    items: [
+      { key: 'modelbooks', short: 'MDL', hash: '#/modelbooks' },
+      { key: 'defense', short: 'DEF', hash: '#/defense' },
+      { key: 'offense', short: 'OFF', hash: '#/offense' },
+      { key: 'psychology', short: 'PSY', hash: '#/psychology' },
+      { key: 'pfmgmt', short: 'PMG', hash: '#/portfolio-management' },
+      { key: 'news', short: 'NWS', hash: '#/news' },
+    ],
   },
 ]
 
-const ALL = NAV_GROUPS.flatMap((g) => g.sections.flatMap((s) => s.items))
+const ALL = NAV_GROUPS.flatMap((g) => g.items)
 const KEY = 'rail-collapsed'
 
 /** page key → the group that holds it, so a group can say "you are in here". */
 const GROUP_OF = Object.fromEntries(
-  NAV_GROUPS.flatMap((g) => g.sections.flatMap((s) => s.items.map((i) => [i.key, g.key]))),
+  NAV_GROUPS.flatMap((g) => g.items.map((i) => [i.key, g.key])),
 )
 
 export default function Rail({ currentPage, onNavigate }) {
@@ -146,38 +133,43 @@ export default function Rail({ currentPage, onNavigate }) {
                 // no rule above the first group — there is nothing above it to
                 // separate from, and the codes carry no group word to lift.
                 ? (gi > 0 && <div className="mx-3 mb-2 h-px bg-[var(--color-border)]" />)
-                : <div className={`px-4 pb-1.5 text-[10px] font-mono font-medium uppercase
-                                   tracking-[.24em] ${here
-                                     ? 'text-[var(--color-text-bold)]'
-                                     : 'text-[var(--color-text-muted)]'}`}>
-                    {t(`rail.${g.key}`)}
-                  </div>}
+                : (
+                  // The site's own section-label idiom (see Tier.jsx): the word,
+                  // then a rule running out to the edge. Colour alone was not
+                  // enough separation — a small grey word above a list still
+                  // reads as another item in the list. The rule makes it a
+                  // header, structurally, before any colour is applied.
+                  <div className="flex items-center gap-2.5 px-4 pb-2">
+                    <span className={`text-[10px] font-mono font-medium uppercase tracking-[.24em]
+                                      ${here ? 'text-[var(--color-text-bold)]'
+                                             : 'text-[var(--color-text-muted)]'}`}>
+                      {t(`rail.${g.key}`)}
+                    </span>
+                    <i className={`flex-1 h-px ${here ? 'bg-[var(--color-text-muted)]'
+                                                      : 'bg-[var(--color-border)]'}`} />
+                  </div>
+                )}
 
-              {g.sections.map((sec, si) => (
-                // the three MARKET clusters keep their grouping as a gap. The gap
-                // says these belong together without claiming what they mean —
-                // which is all the sentences ever added.
-                <div key={sec.key ?? si} className={si === 0 ? '' : 'mt-3'}>
-                  {sec.items.map(({ key, short, hash }) => {
-                    const on = currentPage === key
-                    return (
-                      <button key={key} onClick={() => onNavigate(hash)}
-                              aria-current={on ? 'page' : undefined}
-                              title={collapsed ? t(`nav.${key}`) : undefined}
-                              className={`w-full border-l-2 py-[7px]
-                                          focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]
-                                          ${collapsed
-                                            ? 'text-[10px] font-mono font-medium text-center px-0'
-                                            : 'text-[12.5px] text-left px-4'}
-                                          ${on
-                                            ? 'border-[var(--color-text)] text-[var(--color-text)] font-semibold bg-[var(--color-hover-bg)]'
-                                            : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
-                        {collapsed ? short : t(`nav.${key}`)}
-                      </button>
-                    )
-                  })}
-                </div>
-              ))}
+              {g.items.map(({ key, short, hash }) => {
+                const on = currentPage === key
+                return (
+                  <button key={key} onClick={() => onNavigate(hash)}
+                          aria-current={on ? 'page' : undefined}
+                          title={collapsed ? t(`nav.${key}`) : undefined}
+                          className={`w-full border-l-2 py-[7px]
+                                      focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]
+                                      ${collapsed
+                                        ? 'text-[10px] font-mono font-medium text-center px-0'
+                                        // indented past the header's word: the
+                                        // second level sits under the first
+                                        : 'text-[12.5px] text-left pl-6 pr-3'}
+                                      ${on
+                                        ? 'border-[var(--color-text)] text-[var(--color-text)] font-semibold bg-[var(--color-hover-bg)]'
+                                        : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
+                    {collapsed ? short : t(`nav.${key}`)}
+                  </button>
+                )
+              })}
             </div>
           )
         })}
@@ -212,7 +204,7 @@ export default function Rail({ currentPage, onNavigate }) {
                                 : 'text-[var(--color-text-muted)]'}`}>
               {t(`rail.${g.key}`)}
             </span>
-            {g.sections.flatMap((s) => s.items).map(({ key, hash }) => (
+            {g.items.map(({ key, hash }) => (
               <button key={key} onClick={() => onNavigate(hash)}
                       aria-current={currentPage === key ? 'page' : undefined}
                       className={`px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide
