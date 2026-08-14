@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import {
-  STAGES, BLUE_N, RED_N, PARK, TRIANGLE, FUNNEL_LINKS, GRID_LINES,
+  STAGES, BLUE_N, RED_N, PARK, TRIANGLE, TAIJI, FUNNEL_LINKS, GRID_LINES,
 } from './heroStages'
 import { createBodies, snap, step as solve } from './heroSolver'
 import { parsePinnedStage } from './parsePinnedStage'
@@ -67,6 +67,13 @@ const MORPH = 2.4     // seconds spent becoming the next one
 const SEG = HOLD + MORPH
 const HOLD_F = HOLD / SEG
 
+// A turn and a half, unwound as the taiji lands — and it LANDS, at exactly
+// zero, eyes vertical, the poster's own orientation. The first version kept
+// turning forever (one lap per hundred seconds, "a contest does not finish"),
+// which meant the resting form was a random angle: Andy caught it at 90° and
+// the figure read as two eyes side by side instead of the poster's panel. The
+// poster is the spec; the story loses.
+const SPIN_IN = Math.PI * 3
 const POINTER_TAU = 0.42         // seconds for the pointer lag to decay by 1/e
 
 /** Smootherstep — zero velocity AND zero acceleration at both ends, so a stage
@@ -114,86 +121,84 @@ export default function HeroField() {
       const onLost = (e) => { e.preventDefault(); setLive(false) }
       canvas.addEventListener('webglcontextlost', onLost)
 
-      // Material and light, off the reference Andy pointed at. What is copied
-      // is exactly that pair — a studio: bright neutral room reflections
-      // (RoomEnvironment through PMREM, no HDR file to fetch), glossy
-      // clearcoated spheres, one key light that lets the spheres shadow each
-      // other so a cluster reads as touching bodies rather than pasted discs.
-      // What is NOT copied is the identity: the palette stays poster red and
-      // blue, and the five stages stay the five stages.
-      renderer.shadowMap.enabled = true
-      renderer.shadowMap.type = THREE.PCFSoftShadowMap
-      // Neutral, not ACESFilmic: ACES desaturates saturated primaries by
-      // design, and it was bleaching poster red to coral. Neutral (Khronos
-      // PBR) holds the hue and still rolls off the highlights.
-      renderer.toneMapping = THREE.NeutralToneMapping
-
       const scene = new THREE.Scene()
-      // Still orthographic — the reference's own lens (fov 17.5 at z=30) is a
-      // telephoto pretending to be one. Depth is now real for LIGHT: spheres
-      // occlude and shadow one another. It is still not a dimension to read.
-      const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 4000)
-      camera.position.z = 1200
-
-      const pmrem = new THREE.PMREMGenerator(renderer)
-      let env = null
-      try {
-        const { RoomEnvironment } = await import('three/examples/jsm/environments/RoomEnvironment.js')
-        env = pmrem.fromScene(new RoomEnvironment(), 0.04)
-        scene.environment = env.texture
-      } catch { /* no env — the key light still shades the spheres */ }
-
-      const key = new THREE.DirectionalLight(0xffffff, 2.0)
-      key.castShadow = true
-      key.shadow.mapSize.set(2048, 2048)
-      key.shadow.bias = -0.0005
-      scene.add(key, new THREE.AmbientLight(0xffffff, 0.25))
+      // Orthographic: the poster's circles are flat and hard-edged, and a
+      // perspective camera would make the same radius render at two sizes.
+      // Depth here orders the painting; it is not a third dimension to read.
+      const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 10)
+      camera.position.z = 5
 
       const BLUE = new THREE.Color(cssVar('--color-poster-blue', '#3b82c4'))
       const RED = new THREE.Color(cssVar('--color-poster-red', '#d94032'))
       const GREEN = new THREE.Color(cssVar('--color-poster-green', '#22c55e'))
 
-      const ball = new THREE.SphereGeometry(1, 48, 32)
-      const cone = new THREE.ConeGeometry(1, 1.5, 32)
+      const disc = new THREE.CircleGeometry(1, 64)
+      const half = new THREE.CircleGeometry(1, 64, Math.PI / 2, Math.PI)   // left half
+      const tri = new THREE.CircleGeometry(1, 3)
 
+      const mat = (colour) => new THREE.MeshBasicMaterial({
+        color: colour, transparent: true, opacity: 1, depthWrite: false, depthTest: false,
+      })
       const owned = []
-      const mat = (colour, extra = {}) => {
-        const m = new THREE.MeshPhysicalMaterial({
-          color: colour, roughness: 0.16, clearcoat: 1, clearcoatRoughness: 0.12,
-          // the room at full strength washed poster red out to coral — the
-          // reflections stay, the bleaching goes
-          envMapIntensity: 0.55,
-          ...extra,
-        })
+      // Everything is drawn on ONE plane at z = 0 and ordered by renderOrder,
+      // never by depth. Stacking meshes along z would have put the taiji's last
+      // three pieces past the near plane and clipped them out of the scene —
+      // and with depthTest off, z was never buying the ordering anyway.
+      const mesh = (geo, colour, order, parent = scene) => {
+        const m = mat(colour)
         owned.push(m)
-        return m
-      }
-      const mesh = (geo, material) => {
-        const o = new THREE.Mesh(geo, material)
-        o.castShadow = true
-        o.receiveShadow = true
-        scene.add(o)
+        const o = new THREE.Mesh(geo, m)
+        o.renderOrder = order
+        o.frustumCulled = false
+        parent.add(o)
         return o
       }
 
-      // the reference's red carries a faint inner glow; ours does the same
-      const blues = Array.from({ length: BLUE_N }, () => mesh(ball, mat(BLUE)))
-      const reds = Array.from({ length: RED_N }, () =>
-        mesh(ball, mat(RED, { emissive: RED, emissiveIntensity: 0.14 })))
+      const blues = Array.from({ length: BLUE_N }, () => mesh(disc, BLUE, 1))
+      const reds = Array.from({ length: RED_N }, () => mesh(disc, RED, 1))
 
-      // stage 1's marker for the turn — the only green in the field, now a
-      // small glossy cone pointing the way up
-      const triMat = mat(GREEN, { transparent: true })
-      const triangle = mesh(cone, triMat)
+      // stage 1's marker for the turn — the only green on the page
+      const triangle = mesh(tri, GREEN, 3)
+
+      // Stage 5, built as one rigid assembly so it can TURN. Two colours that
+      // rotate and settle into the figure say the thing a cross-fade cannot:
+      // long and short are not two states, they are one contest in motion, and
+      // the shape only resolves when it stops. It keeps turning after it lands,
+      // one revolution every hundred seconds — a contest does not finish.
+      //
+      // Painted back to front: the two halves, the two lobes that bend the seam
+      // into an S, then each side's seed of the other. Children are positioned
+      // in unit-square units about the centre, and the group carries the scale,
+      // so the rotation is a single number rather than six.
+      const taiji = new THREE.Group()
+      scene.add(taiji)
+      const taijiParts = {
+        left: mesh(half, BLUE, 4, taiji),
+        right: mesh(half, RED, 5, taiji),
+        lobeA: mesh(disc, RED, 6, taiji),
+        lobeB: mesh(disc, BLUE, 7, taiji),
+        seedA: mesh(disc, BLUE, 8, taiji),
+        seedB: mesh(disc, RED, 9, taiji),
+      }
+      taijiParts.right.rotation.z = Math.PI   // mirror the half onto the other side
+      {
+        const r = TAIJI.r
+        const at = (o, y, s) => { o.position.set(0, y, 0); o.scale.set(s, s, 1) }
+        at(taijiParts.left, 0, r)
+        at(taijiParts.right, 0, r)
+        at(taijiParts.lobeA, r / 2, r / 2)
+        at(taijiParts.lobeB, -r / 2, r / 2)
+        at(taijiParts.seedA, r / 2, r / 6)
+        at(taijiParts.seedB, -r / 2, r / 6)
+      }
 
       // The connective tissue — stage 1's links and stage 3's rules. Both are
       // built once in the unit square (x right, y down, origin at the centre)
       // and carried by a group that is scaled and placed with the box, so a
       // resize never touches a vertex.
       const lineMat = () => {
-        // graphite on paper now, not chalk on black
         const m = new THREE.LineBasicMaterial({
-          color: 0x9a958c, transparent: true, opacity: 0,
+          color: 0x8c847a, transparent: true, opacity: 0, depthWrite: false, depthTest: false,
         })
         owned.push(m)
         return m
@@ -250,16 +255,11 @@ export default function HeroField() {
         camera.updateProjectionMatrix()
 
         box = { s: Math.min(h * 0.9, w * 0.9), cx: 0, cy: 0 }
+        // Poster ink is opaque. An earlier 0.92 was meant as restraint but it
+        // made every overlap translucent — six taiji parts stacked into a
+        // muddle, and circles showing through each other where the poster has
+        // them occluding cleanly.
         alpha = 1
-
-        // the key light rides the box so its shadow camera always covers the
-        // field exactly — a fixed frustum would clip shadows on a big screen
-        // or waste its whole map on a small one
-        key.position.set(box.s * 0.5, box.s * 0.7, box.s * 0.9)
-        const sc = key.shadow.camera
-        sc.left = -box.s; sc.right = box.s; sc.top = box.s; sc.bottom = -box.s
-        sc.near = 0.1; sc.far = box.s * 3
-        sc.updateProjectionMatrix()
         return true
       }
 
@@ -285,18 +285,13 @@ export default function HeroField() {
       }
       const onLeave = () => { pointer.over = false }
 
-      // `a` fades a shape that only one stage owns; spheres never fade, they
-      // shrink into PARK. A fading shape scales down with its weight instead of
-      // going translucent — physical materials pay for transparency, and a
-      // shrinking cone reads better than a ghost of one anyway.
       const place = (o, x, y, r, a) => {
         o.visible = a > 0.004 && r > 0.0002
         if (!o.visible) return
-        const rr = R(r) * a
         o.position.x = X(x) + pointer.x * box.s * 0.012
         o.position.y = Y(y) - pointer.y * box.s * 0.012
-        o.position.z = rr                     // resting on the z = 0 glass, toward the light
-        o.scale.set(rr, rr, rr)
+        o.scale.set(R(r), R(r), 1)
+        o.material.opacity = a * alpha
       }
 
       // One body and one target per circle, blue first then red, allocated once
@@ -383,6 +378,20 @@ export default function HeroField() {
           m.opacity = wt * alpha * 0.55   // the poster draws these faint on purpose
         }
 
+        const wTaiji = weight(4)
+        taiji.visible = wTaiji > 0.004
+        if (taiji.visible) {
+          taiji.position.set(
+            X(TAIJI.cx) + pointer.x * box.s * 0.012,
+            Y(TAIJI.cy) - pointer.y * box.s * 0.012, 0,
+          )
+          taiji.scale.set(box.s, box.s, 1)
+          // it arrives spinning — a turn and a half unwinding as it appears —
+          // and then never quite stops
+          taiji.rotation.z = -SPIN_IN * (1 - wTaiji)
+          Object.values(taijiParts).forEach((o) => { o.material.opacity = wTaiji * alpha })
+        }
+
         renderer.render(scene, camera)
       }
 
@@ -439,9 +448,7 @@ export default function HeroField() {
         surface.removeEventListener('pointerleave', onLeave)
         canvas.removeEventListener('webglcontextlost', onLost)
         owned.forEach((m) => m.dispose())
-        ball.dispose(); cone.dispose()
-        if (env) env.dispose()
-        pmrem.dispose()
+        disc.dispose(); half.dispose(); tri.dispose()
         renderer.dispose()
         canvas.remove()
       }

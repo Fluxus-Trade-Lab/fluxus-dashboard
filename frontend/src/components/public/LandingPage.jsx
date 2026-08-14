@@ -16,12 +16,7 @@ export default function LandingPage({ onNavigate }) {
         once and the pitch begins. 100svh, not 100vh, so the mobile address bar
         cannot push the field's bottom edge off screen.
       */}
-      {/* The studio: the reference's light room, not the poster's black. The
-          spheres carry the poster's red and blue; the ground carries the
-          light that makes them material. Everything below the fold returns
-          to poster black — the cut IS the design. */}
-      <section className="h-[100svh] relative"
-               style={{ backgroundColor: 'var(--color-poster-paper)' }}>
+      <section className="public-hero-dark h-[100svh] relative">
         <HeroField />
       </section>
 

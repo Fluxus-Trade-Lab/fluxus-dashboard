@@ -99,36 +99,7 @@ const S_GRID = {
 }
 
 // ── 4 · taiji ───────────────────────────────────────────────────────────────
-// Pointillist, because the field's circles are now material spheres and a flat
-// vector taiji would be a sticker in a photograph. The spheres THEMSELVES form
-// the figure: two interlocking commas, each a head sweeping into a tail that
-// wraps the other's head, each head carrying the other colour's seed. Same
-// cast, no extra geometry — the finale is made of the same bodies that were
-// the market, the funnel and the grid, which is the claim anyway.
-//
-// Authored on a circle at C = (0.47, 0.47). Each fish is a MASS, not an
-// outline — a big head and a body of shrinking spheres that curls around the
-// other's head — because the first draft traced the rim and read as a ring
-// with a hole where the S should be. The blue fish is the red one rotated
-// half a turn about C, coordinate for coordinate, so the balance is exact.
-const S_TAIJI = {
-  red: [
-    [0.47, 0.335, 0.095],                                    // head, upper centre
-    [0.575, 0.305, 0.042], [0.545, 0.24, 0.030],             // shoulder over the top
-    [0.585, 0.40, 0.050], [0.63, 0.50, 0.055],               // body down the right
-    [0.60, 0.60, 0.045], [0.52, 0.655, 0.035],               // tail curling under the blue head
-    [0.47, 0.605, 0.038],                                    // seed in the blue head
-    ...park(6),
-  ],
-  blue: [
-    [0.47, 0.605, 0.095],
-    [0.365, 0.635, 0.042], [0.395, 0.70, 0.030],
-    [0.355, 0.54, 0.050], [0.31, 0.44, 0.055],
-    [0.34, 0.34, 0.045], [0.42, 0.285, 0.035],
-    [0.47, 0.335, 0.038],                                    // seed in the red head
-    ...park(6),
-  ],
-}
+const S_TAIJI = { red: park(RED_N), blue: park(BLUE_N) }
 
 export const STAGES = [S_REVERSAL, S_FUNNEL, S_SCATTER, S_GRID, S_TAIJI]
 
@@ -136,11 +107,10 @@ export const STAGES = [S_REVERSAL, S_FUNNEL, S_SCATTER, S_GRID, S_TAIJI]
  *  wants to caption the field. */
 export const STAGE_NAMES = ['reversal', 'funnel', 'scatter', 'grid', 'taiji']
 
-/** The one shape a single stage owns, kept here so the renderer and the
- *  contact sheet cannot drift apart on where it sits. (The taiji used to be a
- *  second one, drawn from vector halves and lobes; it is now a sphere layout
- *  like every other stage, in STAGES[4].) */
+/** The shapes a single stage owns, kept here so the renderer and the contact
+ *  sheet cannot drift apart on where they sit. */
 export const TRIANGLE = { x: 0.40, y: 0.775, r: 0.030 }   // stage 0, the turn
+export const TAIJI = { cx: 0.47, cy: 0.47, r: 0.30 }      // stage 4, the contest
 
 /**
  * The connective tissue — and it is not decoration.
