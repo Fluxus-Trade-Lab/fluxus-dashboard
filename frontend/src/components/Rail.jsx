@@ -33,6 +33,14 @@ import { useLanguage } from '../i18n/LanguageContext'
  * Collapsed codes are declared, never derived. Slicing the label gave RS Live
  * Tracker and RS Leaderboard the same three letters, and Portfolio Management
  * the same as Portfolio — two destinations under one label is a broken rail.
+ * Being declared makes them exact and unlearnable in equal measure, so each one
+ * names itself on hover, beside the code, without the native tooltip's delay.
+ *
+ * The you-are-here bar is the one coloured thing on the rail, in `accent` — the
+ * chrome colour, never an encoding one. It is what survives the collapse: the
+ * group word goes, the page name goes, and the same coloured bar in the same
+ * place is still under your eye. Collapsing should move the rail, not restart
+ * the reader.
  *
  * Route hashes never change when a label does. Breadth still resolves at
  * #/breadth and Groups at #/groups; a rename that breaks a sent link costs more
@@ -155,8 +163,8 @@ export default function Rail({ currentPage, onNavigate }) {
                 return (
                   <button key={key} onClick={() => onNavigate(hash)}
                           aria-current={on ? 'page' : undefined}
-                          title={collapsed ? t(`nav.${key}`) : undefined}
-                          className={`w-full border-l-2 py-[7px]
+                          aria-label={collapsed ? t(`nav.${key}`) : undefined}
+                          className={`group relative w-full border-l-2 py-[7px]
                                       focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]
                                       ${collapsed
                                         ? 'text-[10px] font-mono font-medium text-center px-0'
@@ -164,9 +172,24 @@ export default function Rail({ currentPage, onNavigate }) {
                                         // second level sits under the first
                                         : 'text-[12.5px] text-left pl-6 pr-3'}
                                       ${on
-                                        ? 'border-[var(--color-text)] text-[var(--color-text)] font-semibold bg-[var(--color-hover-bg)]'
+                                        ? 'border-[var(--color-accent)] text-[var(--color-text-bold)] font-semibold bg-[var(--color-hover-bg)]'
                                         : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
                     {collapsed ? short : t(`nav.${key}`)}
+                    {collapsed && (
+                      // The codes are declared, not derived, which makes them
+                      // exact but unlearnable — nobody arrives knowing that LDR
+                      // is the RS Leaderboard. The name was already in `title`,
+                      // but a native tooltip waits a second and appears under
+                      // the cursor rather than beside the code it explains.
+                      <span className="pointer-events-none absolute left-full top-1/2 z-40 ml-1
+                                       hidden -translate-y-1/2 whitespace-nowrap rounded
+                                       border border-[var(--color-border)] bg-[var(--color-surface)]
+                                       px-2 py-1 text-[11px] font-sans font-normal tracking-normal
+                                       normal-case text-[var(--color-text)] shadow-lg
+                                       group-hover:block group-focus-visible:block">
+                        {t(`nav.${key}`)}
+                      </span>
+                    )}
                   </button>
                 )
               })}

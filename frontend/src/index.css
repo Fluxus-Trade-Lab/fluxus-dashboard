@@ -50,6 +50,17 @@
   --color-profit: #15803d;
   --color-loss: #c81e1e;
   --color-neutral: #78716c;
+
+  /* ACCENT is chrome: it answers "the interface is pointing at this" — links,
+     the focus ring, the active sort arrow, the rail's you-are-here bar. It is
+     not an encoding colour, and it must never carry a reading that took /
+     refused / profit / loss / the signal hues already carry, because those
+     answer "the data says this".
+     Two known violations, both charts, both predating this rule and both left
+     for a separate pass: the equity line in journal/analytics/MonthlyReview
+     and the SPY series label in modelbooks/OhlcvChart paint a data series in
+     accent. Do not add a third.
+     6.14:1 on the warm ground (measured in-browser). Dark twin in html.dark. */
   --color-accent: #2d5f8a;
   --color-accent-light: #dbeafe;
 
@@ -135,6 +146,12 @@ html.dark {
   --color-input-border: #625b52;
   --color-closed-row: #4a4540;
 
+  /* Never had a dark value, so it inherited the light one and sat at 2.46:1 on
+     the lifted ground — under the 3:1 floor a UI component needs, which is why
+     the focus ring was hard to find here. Lifted to 3.91:1, and kept muted so
+     it reads as steel, not as `took` (#3b9eff): accent is chrome, took is a
+     measurement, and they must not be mistaken for each other. */
+  --color-accent: #4d7fa8;
   --color-accent-light: #1e3a5f;
 
   --color-profit: #22c55e;
