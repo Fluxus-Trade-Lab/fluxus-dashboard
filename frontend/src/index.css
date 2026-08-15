@@ -39,16 +39,23 @@
   --color-text-muted: #7d766d;
   --color-text-bold: #292524;
 
-  --color-signal-power3: #22c55e;
-  --color-signal-caution: #eab308;
-  --color-signal-warning: #f97316;
-  --color-signal-riskoff: #ef4444;
+  /* v3 charter (2026-08-15): the signal WORD carries the reading; hue only
+     ever reinforced it. POWER 3 / CAUTION / WARNING fold into the grey ladder
+     — bold, muted, secondary — and RISK OFF alone keeps colour, because a
+     lone red means exactly one thing on this site: the binding constraint. */
+  --color-signal-power3: #292524;
+  --color-signal-caution: #7d766d;
+  --color-signal-warning: #5f584f;
+  --color-signal-riskoff: #d94032;
 
   /* The money half's pair, measured on the warm ground 2026-08-13: profit was
      3.00:1 here, below the bar for normal text, while its dark-theme twin sat
      at 7.34. Deepened to 4.57 and 5.23. Dark values are unchanged. */
-  --color-profit: #15803d;
-  --color-loss: #c81e1e;
+  /* v3: blue-profit / red-loss — the taiji's own language (blue long, red
+     short) reaches the money half. Approved by Andy off the Portfolio sketch
+     2026-08-15, replacing green/red. Same pair as the market half: one ink. */
+  --color-profit: #1f5288;
+  --color-loss: #d94032;
   --color-neutral: #78716c;
 
   /* ACCENT is chrome: it answers "the interface is pointing at this" — links,
@@ -88,8 +95,15 @@
      Light ground inverts the constraint — both fills want to go dark for
      contrast and would collide — so the separation is bought one-dark-one-
      light rather than two-dark: blue L* 39.5, red L* 54.3, ΔL* 14.8. */
-  --color-took: #0f5ea8;
-  --color-refused: #e8455f;
+  /* v3 charter: the pair is the poster's own hues, greyscale-proofed. Poster
+     blue verbatim vs poster red is ΔL* 2.5 (collapses in print); blue driven
+     to L* 34.2 gives ΔL* 16.1 over the ≥14 bar. Rules: grey is the floor;
+     blue and red only as a PAIR when one chart draws both poles (blue the
+     pole for you, red against); red ALONE marks the binding constraint, and
+     blue never appears alone. took/refused keep their names as the pair's
+     call sites — the meaning (favourable/adverse pole) is unchanged. */
+  --color-took: #1f5288;
+  --color-refused: #d94032;
   --color-untested: #b0aaa2;
   --color-v2-paper: #f3efe7;
 
@@ -157,12 +171,12 @@ html.dark {
   --color-accent: #4d7fa8;
   --color-accent-light: #1e3a5f;
 
-  --color-profit: #22c55e;
-  --color-loss: #f87171;
-  --color-signal-power3: #4ade80;
-  --color-signal-caution: #facc15;
-  --color-signal-warning: #fb923c;
-  --color-signal-riskoff: #f87171;
+  --color-profit: #437bb8;
+  --color-loss: #ea826f;
+  --color-signal-power3: #fafaf9;
+  --color-signal-caution: #9d968c;
+  --color-signal-warning: #b2aca5;
+  --color-signal-riskoff: #ea826f;
 
   --color-v2-paper: #211d1a;
 
@@ -199,8 +213,12 @@ html.dark {
      Every gap clears 14. Contrast on the ground: took 5.99 (it can now be text
      as well as fill — the old took was 2.47, which is why the Watchlist chips
      had to be solid blocks), refused 3.62, untested 8.59. */
-  --color-took: #3b9eff;      /* the reference blue, unaltered */
-  --color-refused: #e0264a;   /* held a stop under the blue so the pair survives greyscale */
+  /* v3 dark pair, measured on the lifted ground 2026-08-15: #437bb8 L* 50.5
+     (4.28:1) against #ea826f L* 65.4 (6.31:1), ΔL* 15.0 ≥ 14. Note the
+     polarity flips on dark — red sits LIGHTER than blue — which is fine: the
+     bar is separation, not order. */
+  --color-took: #437bb8;
+  --color-refused: #ea826f;
   --color-untested: #c8c2b8;  /* lifted with them: it is took's partner in the state grammar */
 }
 

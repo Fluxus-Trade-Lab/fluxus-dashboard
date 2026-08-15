@@ -25,9 +25,16 @@ import { useState } from 'react'
  * is this" must never overwrite "what state is this in".
  */
 
+/* v3 charter (2026-08-15): the four states are data states, not poles and not
+   constraints, so they live on the grey floor. The grammar stays two-channel
+   — tone × fill — it just stops borrowing the pair's blue: Leading is the
+   bold ink solid, Weakening the same ink outlined (was-strong, hollowing),
+   Improving the light grey solid (substance arriving), Lagging light grey
+   outlined (neither strength nor substance). Blue now appears on this page
+   only where its red twin can appear too. */
 const STATE_MARK = {
-  Leading:   { tone: 'var(--color-took)',      solid: true },
-  Weakening: { tone: 'var(--color-took)',      solid: false },
+  Leading:   { tone: 'var(--color-text-bold)', solid: true },
+  Weakening: { tone: 'var(--color-text-bold)', solid: false },
   Improving: { tone: 'var(--color-untested)',  solid: true },
   Lagging:   { tone: 'var(--color-untested)',  solid: false },
 }
