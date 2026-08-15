@@ -500,3 +500,23 @@ body {
 .recharts-tooltip-item  { color: var(--color-text) !important; }
 .recharts-cartesian-axis-line,
 .recharts-cartesian-axis-tick-line { stroke: var(--color-border) !important; }
+
+/* ---- the focus ring -------------------------------------------------
+   This site had never declared one. It was inheriting the browser's
+   default, which resolved to rgb(41,37,36) — a near-black ring, and on the
+   dark theme that is a near-black ring on a near-black card. A keyboard
+   user could not see where they were.
+
+   accent is the token for "the interface is pointing at this", which is
+   exactly what a focus ring says, and it is measured in both themes well
+   above the 3:1 a UI component needs (light 6.7 on paper, dark 5.8 on the
+   card). The offset keeps it clear of the element's own edge so it reads
+   as a ring rather than a border that changed colour. */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+/* Inside a scrolling table an offset ring gets clipped by the row above;
+   these draw it inside their own box instead. */
+td :focus-visible, th :focus-visible { outline-offset: -2px; }

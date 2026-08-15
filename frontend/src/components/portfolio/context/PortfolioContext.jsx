@@ -236,7 +236,13 @@ function reducer(state, action) {
     case 'HYDRATE_FROM_SHEETS': {
       let reviews = state.monthlyReviews
       if (action.meta?.monthlyReviews) {
-        try { reviews = JSON.parse(action.meta.monthlyReviews) } catch {}
+        try { reviews = JSON.parse(action.meta.monthlyReviews) }
+        catch (err) {
+          // Silently keeping the local copy here means a corrupt Meta cell
+          // looks exactly like an empty one, and the reviews just stop
+          // arriving with nothing to point at.
+          console.warn('[portfolio] monthlyReviews from Sheets did not parse; keeping the local copy', err)
+        }
       }
       return {
         ...state,

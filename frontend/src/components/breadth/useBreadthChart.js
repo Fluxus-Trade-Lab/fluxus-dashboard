@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { createChart, ColorType } from 'lightweight-charts'
 
 /** v3 pair + greys, resolved to literals because lightweight-charts cannot
@@ -29,7 +29,10 @@ export function chartTokens() {
 // always running the current closure.
 export function useBreadthChart(containerRef, chartRef, deps, setupFn, height) {
   const setupRef = useRef(setupFn)
-  setupRef.current = setupFn
+  // In a layout effect, not during render: writing a ref while rendering is
+  // the thing that breaks under a re-entrant render. Layout effects run
+  // before the redraw effect below, so it still reads the current closure.
+  useLayoutEffect(() => { setupRef.current = setupFn })
 
   useEffect(() => {
     if (!containerRef.current || !deps) return
