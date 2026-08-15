@@ -106,22 +106,21 @@ export default function LeadersLaggards({
 
   return (
     <section className="bg-[var(--color-surface)] rounded-3xl overflow-hidden flex flex-col">
-      <div className="px-5 pt-4 pb-2 flex items-baseline gap-3">
-        <span className="text-[17px] font-semibold text-[var(--color-text-bold)]">{title}</span>
-        <span className="text-[10px] text-[var(--color-text-muted)]">
-          {etfs.length} funds
-        </span>
-        <span className="ml-auto text-[10px] font-mono text-[var(--color-text-muted)]"
-              title="each window's bars are scaled to that window's widest move across the whole cohort">
-          {cols.map((c) => `${c.w} ±${(c.scale * 100).toFixed(1)}%`).join('  ·  ')}
-        </span>
+      {/* the 17px title needs its own line of air: meta drops to a subtitle
+          row instead of crowding the baseline, the lieflat card head exactly */}
+      <div className="px-5 pt-4 pb-3">
+        <div className="text-[17px] font-semibold leading-tight text-[var(--color-text-bold)]">{title}</div>
+        <div className="mt-0.5 text-[11px] text-[var(--color-text-muted)]"
+             title="each window's bars are scaled to that window's widest move across the whole cohort">
+          {etfs.length} funds · {cols.map((c) => `${c.w} ±${(c.scale * 100).toFixed(1)}%`).join(' · ')}
+        </div>
       </div>
       {/* Two stacked grids rather than one four-cell grid. A single grid gives
           every row the height of the tallest, so when this card stretches to
           match the sectors card beside it the gap opens between leaders and
           laggards — in the middle, where it reads as missing rows. Stacked,
           the slack lands at the bottom where it reads as space. */}
-      <div className="px-5 pb-4 pt-1 flex-1 flex flex-col gap-3">
+      <div className="px-5 pb-4 flex-1 flex flex-col gap-4">
         <div className="grid gap-x-4"
              style={{ gridTemplateColumns: `repeat(${cols.length}, minmax(0, 1fr))` }}>
           {cols.map((c) => (

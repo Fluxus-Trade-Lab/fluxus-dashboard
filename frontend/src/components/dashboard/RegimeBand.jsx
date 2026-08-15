@@ -168,23 +168,24 @@ function ConditionsLine({ history, score }) {
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[150px] block" role="img"
              aria-label={`Market conditions ${score} of 100 over ${history.length} sessions`}
              preserveAspectRatio="none">
-          {[0, 20, 40, 50, 60, 80, 100].map((lvl) => (
+          {/* v3 chart grammar: three rules, not seven — the frame is 0/100
+              and the 50 line; month ticks live in the label row below, so the
+              vertical gridlines go too. The line steps (vote resolution) but
+              steps BOLDLY, and it ends in a dot: the reader's eye lands where
+              the data does. */}
+          {[0, 50, 100].map((lvl) => (
             <line key={lvl} x1={PAD} x2={W - PAD} y1={y(lvl)} y2={y(lvl)} strokeWidth="1"
                   stroke={lvl === 50 ? 'var(--color-text-muted)' : 'var(--color-border)'}
                   strokeDasharray={lvl === 50 ? '3 5' : undefined}
                   vectorEffect="non-scaling-stroke" />
           ))}
-          {ticks.map((t) => (
-            <line key={t.i} x1={x(t.i)} x2={x(t.i)} y1={PAD} y2={H - PAD} strokeWidth="1"
-                  stroke="var(--color-border)" vectorEffect="non-scaling-stroke" />
-          ))}
-          <polyline points={pts.join(' ')} fill="none" strokeWidth="1.6"
+          <polyline points={pts.join(' ')} fill="none" strokeWidth="2.4"
                     stroke="var(--color-text)" vectorEffect="non-scaling-stroke"
-                    strokeLinejoin="round" />
+                    strokeLinejoin="round" strokeLinecap="round" />
         </svg>
 
         {/* right-hand scale, outside the plot so it never sits over the line */}
-        {[100, 80, 60, 40, 20, 0].map((lvl) => (
+        {[100, 50, 0].map((lvl) => (
           // hidden when today's badge would sit on top of it — two numbers in
           // the same place is worse than one missing tick
           score != null && Math.abs(score - lvl) < 6 ? null : (
@@ -194,6 +195,11 @@ function ConditionsLine({ history, score }) {
           )
         ))}
 
+        {score != null && (
+          <span className="absolute w-[9px] h-[9px] rounded-full -translate-y-1/2 -translate-x-1/2"
+                style={{ top: `${(y(score) / H) * 100}%`, left: '100%',
+                         background: 'var(--color-text)' }} />
+        )}
         {/* today's value, pinned to where the line ends */}
         {score != null && (
           <span className="absolute -translate-y-1/2 px-1.5 py-[1px] text-[10px] font-mono
