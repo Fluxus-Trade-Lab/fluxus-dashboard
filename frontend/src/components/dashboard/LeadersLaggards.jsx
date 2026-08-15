@@ -105,11 +105,9 @@ export default function LeadersLaggards({
   if (!etfs?.length) return null
 
   return (
-    <section className="bg-[var(--color-surface)] border border-[var(--color-border)]
-                        rounded-lg overflow-hidden flex flex-col">
-      <div className="px-3 py-1.5 border-b border-[var(--color-border)] flex items-baseline gap-3">
-        <span className="text-[10px] font-mono font-medium uppercase tracking-[.2em]
-                         text-[var(--color-text-secondary)]">{title}</span>
+    <section className="bg-[var(--color-surface)] rounded-3xl overflow-hidden flex flex-col">
+      <div className="px-5 pt-4 pb-2 flex items-baseline gap-3">
+        <span className="text-[17px] font-semibold text-[var(--color-text-bold)]">{title}</span>
         <span className="text-[10px] text-[var(--color-text-muted)]">
           {etfs.length} funds
         </span>
@@ -123,7 +121,7 @@ export default function LeadersLaggards({
           match the sectors card beside it the gap opens between leaders and
           laggards — in the middle, where it reads as missing rows. Stacked,
           the slack lands at the bottom where it reads as space. */}
-      <div className="px-3 py-2 flex-1 flex flex-col gap-3">
+      <div className="px-5 pb-4 pt-1 flex-1 flex flex-col gap-3">
         <div className="grid gap-x-4"
              style={{ gridTemplateColumns: `repeat(${cols.length}, minmax(0, 1fr))` }}>
           {cols.map((c) => (

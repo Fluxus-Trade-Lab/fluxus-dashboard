@@ -109,9 +109,12 @@ export default function Layout({ data, lastUpdated, isOffline }) {
               Stacked, the chart read as a second object; beside the votes it
               reads as their denominator. */}
           <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,7fr)_minmax(0,9fr)] gap-4 items-stretch">
+            {/* v3 card chrome (slice 5): 24px corners, no border — cards are
+                separated by ground, not fenced by hairlines. The source line
+                at the foot is the lieflat habit the sketches were approved
+                with: every card says where its numbers came from. */}
             {data?.breadth?.verdict && (
-              <section className="border border-[var(--color-border)] rounded-lg px-4 py-3
-                                  bg-[var(--color-surface)]">
+              <section className="rounded-3xl px-6 py-5 bg-[var(--color-surface)]">
                 <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1 mb-4">
                   {/* The verdict is a WORD, and words do not wear the encoding
                       colour — the marks below it already say the same thing in
@@ -134,6 +137,10 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                   </button>
                 </div>
                 <VoteMarks votes={data.breadth.verdict.votes} />
+                <div className="mt-4 text-[9.5px] font-mono font-medium uppercase tracking-[.14em]
+                                text-[var(--color-text-muted)] opacity-70">
+                  source: breadth verdict · twelve voters · count, not confidence
+                </div>
               </section>
             )}
 
@@ -144,8 +151,8 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           {/* Reserved for the founder's own words — written, never generated.
               An empty frame, because a slot that appears only once it is full
               was never reserved. */}
-          <section className="border border-dashed border-[var(--color-border)] rounded-lg
-                              px-4 py-3">
+          <section className="border border-dashed border-[var(--color-border)] rounded-3xl
+                              px-6 py-4">
             <span className="text-[10px] font-mono uppercase tracking-[.24em]
                              text-[var(--color-text-muted)]">Founders note</span>
             <p className="text-[11px] text-[var(--color-text-muted)] m-0 mt-1">

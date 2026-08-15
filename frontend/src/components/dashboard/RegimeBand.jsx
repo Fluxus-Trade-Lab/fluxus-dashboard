@@ -255,8 +255,7 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
   ].filter(Boolean).join(' — ')
 
   return (
-    <section className="border border-[var(--color-border)] rounded-lg px-4 py-3
-                        bg-[var(--color-surface)]">
+    <section className="rounded-3xl px-6 py-5 bg-[var(--color-surface)]">
       <div className="flex items-baseline justify-between gap-4 flex-wrap">
         <div className="flex items-baseline gap-3">
           <span className="text-[10px] font-mono uppercase tracking-[.24em]
@@ -289,6 +288,10 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
       </div>
 
       <ConditionsLine history={conditions?.history} score={score} />
+      <div className="mt-3 text-[9.5px] font-mono font-medium uppercase tracking-[.14em]
+                      text-[var(--color-text-muted)] opacity-70">
+        source: market conditions 0–100 · the band is the weakest voter, never the average
+      </div>
     </section>
   )
 }
