@@ -565,22 +565,25 @@ def _condition_frame(frame: pd.DataFrame) -> pd.DataFrame:
 def conditions_series(frame: pd.DataFrame, days: Optional[int] = 260) -> Dict[str, Any]:
     """Market Conditions 0-100: where today sits in this market's own history.
 
-    Oratnek's construction — a fixed set of conditions, unweighted, smoothed —
-    but scored by percentile rather than by a yes/no against a threshold.
+    Oratnek's construction: fifteen conditions against absolute neutral
+    lines, the positive share, EMA-2 smoothed. The plain count, on purpose.
 
-    The vote version was built first and had to be replaced, for a reason worth
-    keeping written down. Binary conditions collapse at both ends: on
-    2026-04-17 ratio_5d was 4.29 and on 2026-04-30 it was 1.25, and both days
-    scored a flat 100 because every condition was simply "positive". Five
-    separate months bottomed at exactly 0 the same way. A score that cannot
-    separate "barely positive" from "overwhelming" has no comparative left in
-    it, which is the one thing a history chart exists to provide.
+    Three versions existed and the sequence is recorded in git (c484951 ->
+    b07a152 -> 1afb4ba -> 1055c51). A percentile against the series' own
+    history was tried and rejected: a percentile orbits 50 by construction,
+    so a genuinely strong year reads as ordinary and the card can no longer
+    say "this is a good market" — a different question from the one it asks.
+    A logistic partial-credit curve was tried and retracted as after-the-fact
+    curve fitting. The plain count remains, with its known cost stated below.
 
-    A percentile against the series' own expanding history fixes both ends and
-    introduces no parameter: the scale is set by the data rather than chosen.
-    Expanding, never centred or trailing-windowed, so each session is ranked
-    only against sessions that had already happened — a rank that peeks at the
-    future would repaint the past every time the pipeline runs.
+    KNOWN COST: the count saturates. Every condition merely positive and
+    every condition overwhelmingly positive both read raw=100 (22 of the
+    trailing 260 sessions, ~8.5%). The EMA-2 recovers ordering between
+    nearby days (the two April days that tied at 100 read 97 and 91 after
+    smoothing) but a long uniform stretch still pins the ceiling. Inside the
+    top band this is cosmetic — Constructive starts at 78 and the band, not
+    the digit, is the actionable layer. For statistics use
+    pipeline/screeners/regime.py, whose bands are empirical quartiles.
 
     `positive` is still reported per session: how many of the same measurements
     are on the good side of neutral. It is the explainable number ("11 of 15"),
