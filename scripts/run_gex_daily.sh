@@ -178,6 +178,21 @@ if [ "$postclose" = true ]; then
     done
 fi
 
+# The last word: what did NOT get produced. This runs after everything else
+# because it is the only step whose job is to notice absence, and it cannot tell
+# until the others have had their turn.
+#
+# It exits 1 only when a gap is still RECOVERABLE TODAY. Unrecoverable ones are
+# reported and do not raise the alarm -- this repo already holds eight of them,
+# and an alarm that fires daily for something nobody can fix is an alarm that
+# gets ignored. Never fatal: a gap report is information, not a reason to
+# withhold the brief.
+if .venv/bin/python scripts/check_gaps.py --symbol SPX >>"$LOG" 2>&1; then
+    say "gap check clean"
+else
+    say "GAP CHECK: something is recoverable TODAY and not tomorrow — see above"
+fi
+
 # Push the card LAST: everything above must have succeeded, or we would be
 # sending a stale card that looks current. A failed push is logged and does not
 # fail the run — the files are on disk either way.
