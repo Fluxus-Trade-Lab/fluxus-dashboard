@@ -132,17 +132,18 @@ export default function WatchlistTab({ universe, presets }) {
             <CopyButton text={topTickers.map(([t]) => t).join(',')} />
             <i className="flex-1 h-px bg-[var(--color-border)]" />
           </div>
-          {/* Solid fill, light type — took in the role its contrast was
-              measured for. As text on this ground it read 2.19:1. */}
+          {/* v3: overlap has no adverse pole, so the chip is ink, not blue —
+              solid fill with ground-coloured type, same contrast logic as
+              before (fill + light text, never coloured text on ground). */}
           <div className="flex flex-wrap gap-1.5">
             {topTickers.map(([ticker, count]) => (
               <span key={ticker}
                 className="inline-flex items-baseline gap-1.5 px-2 py-[3px] rounded"
-                style={{ background: 'var(--color-took)' }}
+                style={{ background: 'var(--color-text-bold)' }}
                 title={`${ticker} — on ${count} of the preset lists`}>
                 <TickerLink symbol={ticker}
-                  className="text-[12.5px] font-mono font-medium text-[#f2f5f8]" />
-                <span className="text-[10px] font-mono tabular-nums text-[#f2f5f8] opacity-75">
+                  className="text-[12.5px] font-mono font-medium text-[var(--color-bg)]" />
+                <span className="text-[10px] font-mono tabular-nums text-[var(--color-bg)] opacity-75">
                   {count}
                 </span>
               </span>

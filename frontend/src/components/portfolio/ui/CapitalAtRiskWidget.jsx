@@ -119,13 +119,15 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
               <div className="flex-1 bg-[var(--color-surface-raised)] h-3.5 overflow-hidden">
                 <div className="h-full" style={{
                   width: `${widthPct}%`,
+                  // v3 pair: what the stop would take (adverse) against what
+                  // it already locked (favourable) — both poles of one number
                   background: row.atRisk
-                    ? 'var(--color-signal-caution)'
+                    ? 'var(--color-loss)'
                     : 'var(--color-profit)',
                 }} />
               </div>
               <span className={`w-[116px] shrink-0 text-right tabular-nums ${
-                row.atRisk ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-profit)]'}`}>
+                row.atRisk ? 'text-[var(--color-loss)]' : 'text-[var(--color-profit)]'}`}>
                 {pm ? MASK : `${row.atRisk ? '−' : '+'}${fmtCur(amount)}`}
                 {!pm && pct != null && (
                   <span className="text-[var(--color-text-muted)]"> · {pct.toFixed(2)}%</span>

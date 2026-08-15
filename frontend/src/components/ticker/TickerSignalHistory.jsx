@@ -133,9 +133,9 @@ export default function TickerSignalHistory({ symbol, trades, ohlc }) {
                     thirty-odd of them it stops pointing at anything and becomes a fence */}
                 {m === firstQuality && (
                   <line x1={m.x} y1={m.y} x2={m.x} y2={TAPE.top - 6}
-                        stroke="var(--color-took)" strokeWidth=".8" opacity=".45" />
+                        stroke="var(--color-text-bold)" strokeWidth=".8" opacity=".45" />
                 )}
-                <rect x={m.x - 3.5} y={m.y - 3.5} width="7" height="7" fill="var(--color-took)">
+                <rect x={m.x - 3.5} y={m.y - 3.5} width="7" height="7" fill="var(--color-text-bold)">
                   <title>{`${LONG_LABELS[m.screener] ?? m.screener} · ${m.date} · ${m.close.toFixed(2)}`}</title>
                 </rect>
               </g>
@@ -158,7 +158,7 @@ export default function TickerSignalHistory({ symbol, trades, ohlc }) {
 
             {firstQuality && (
               <text x={firstQuality.x} y={TAPE.top - 16} textAnchor="middle"
-                    fill="var(--color-took)"
+                    fill="var(--color-text-bold)"
                     style={{ font: '500 10px var(--font-mono)' }}>
                 {`first ${LABELS[firstQuality.screener] ?? firstQuality.screener} · ${firstQuality.close.toFixed(2)}`}
               </text>
@@ -224,13 +224,13 @@ export default function TickerSignalHistory({ symbol, trades, ohlc }) {
             <span className="flex flex-wrap gap-1 items-center">
               {c.dates.map((d) => (
                 <i key={d} title={d} className="block w-[11px] h-[11px]" style={{
-                  background: c.quality ? 'var(--color-took)' : 'transparent',
+                  background: c.quality ? 'var(--color-text-bold)' : 'transparent',
                   boxShadow: c.quality ? undefined : 'inset 0 0 0 1.1px var(--color-untested)',
                 }} />
               ))}
               <span className="text-[12.5px] font-semibold ml-1"
                     style={{ fontFamily: 'var(--font-cond)',
-                             color: c.quality ? 'var(--color-took)' : 'var(--color-text-muted)' }}>
+                             color: c.quality ? 'var(--color-text-bold)' : 'var(--color-text-muted)' }}>
                 {c.dates.length}
               </span>
             </span>

@@ -56,7 +56,7 @@ function FortnightRibbon({ ribbon, group }) {
 /** Excess value → colour. Anchors only; the gradient does the interpolation. */
 function valueColour(v, span) {
   if (v == null || !Number.isFinite(v)) return 'transparent'
-  const tone = v > 0 ? 'var(--color-took)' : 'var(--color-untested)'
+  const tone = v > 0 ? 'var(--color-took)' : 'var(--color-refused)'
   const strength = Math.round(12 + 78 * Math.min(1, Math.abs(v) / span))
   return `color-mix(in srgb, ${tone} ${strength}%, transparent)`
 }

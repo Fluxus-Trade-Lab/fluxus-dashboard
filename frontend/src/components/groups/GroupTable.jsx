@@ -141,12 +141,12 @@ function Axis({ v, range }) {
             sits on, so a rule you cannot see takes the encoding with it */}
         <i className="absolute top-[-3px] bottom-[-3px] left-1/2 w-px bg-[var(--color-text-muted)]" />
         <i className="absolute top-0 bottom-0" style={{
-          background: pos ? 'var(--color-took)' : 'var(--color-untested)',
+          background: pos ? 'var(--color-took)' : 'var(--color-refused)',
           left: pos ? '50%' : `${50 + frac * 50}%`,
           width: `${Math.abs(frac) * 50}%`,
         }} />
         {clamped && (
-          <i className="absolute top-0 bottom-0 w-[2px] bg-[var(--color-refused)]"
+          <i className="absolute top-0 bottom-0 w-[2px] bg-[var(--color-text-bold)]"
              style={{ [pos ? 'right' : 'left']: 0 }} title="beyond the axis" />
         )}
       </span>

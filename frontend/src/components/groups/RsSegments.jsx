@@ -41,7 +41,7 @@ function Bar({ v, scale }) {
       <i className="absolute top-[-2px] bottom-[-2px] left-1/2 w-px
                     bg-[var(--color-text-muted)]" />
       <i className="absolute inset-y-0" style={{
-        background: pos ? 'var(--color-took)' : 'var(--color-untested)',
+        background: pos ? 'var(--color-took)' : 'var(--color-refused)',
         left: pos ? '50%' : `${50 + frac * 50}%`,
         width: `${Math.abs(frac) * 50}%`,
       }} />
@@ -122,6 +122,7 @@ export default function RsSegments({ rows, limit = 20 }) {
                       text-[var(--color-text-muted)]">
         <span className="flex items-center gap-1.5">
           <i className="block w-3 h-[9px]" style={{ background: 'var(--color-took)' }} />ahead of SPY
+          <i className="block w-3 h-[9px] ml-3" style={{ background: 'var(--color-refused)' }} />behind
         </span>
         <span className="flex items-center gap-1.5">
           <i className="block w-3 h-[9px]" style={{ background: 'var(--color-untested)' }} />behind

@@ -26,7 +26,7 @@ export default function Squares({ n, of, title }) {
       {Array.from({ length: of }, (_, i) => (
         <i key={i} className="block w-[7px] h-[11px]"
            style={i < n
-             ? { background: 'var(--color-took)' }
+             ? { background: 'var(--color-text-bold)' }
              : { border: '1px solid var(--color-untested)' }} />
       ))}
     </span>

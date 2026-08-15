@@ -97,10 +97,15 @@ export function etfName(ticker) {
  * continuous ramp back to a number, and the number is printed on top of it.
  * Top and bottom third, which is what a percentile makes meaningful.
  */
+/* v3: an RS percentile is a position in a ranking, not a pole around zero, so
+   the chip lives on the grey floor — strong third raised, weak third faded,
+   middle plain. The bar beside it already carries the pair for the actual
+   two-poled quantity (the move); tinting the rank as well was saying one
+   thing twice in two vocabularies. */
 export function rsTone(score) {
   if (score == null) return { color: 'var(--color-text-muted)' }
-  if (score >= 67) return { background: 'color-mix(in srgb, var(--color-took) 30%, transparent)' }
-  if (score <= 33) return { background: 'color-mix(in srgb, var(--color-refused) 26%, transparent)' }
+  if (score >= 67) return { background: 'var(--color-surface-raised)', color: 'var(--color-text-bold)' }
+  if (score <= 33) return { color: 'var(--color-text-muted)' }
   return { color: 'var(--color-text-secondary)' }
 }
 

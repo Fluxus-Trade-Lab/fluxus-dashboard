@@ -77,7 +77,7 @@ export default function SettingsPanel({ onClose }) {
       )}
 
       {testResult && (
-        <div className={`mt-2 text-[12.5px] ${testResult.ok ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
+        <div className={`mt-2 text-[12.5px] ${testResult.ok ? 'text-[var(--color-text-secondary)]' : 'text-[var(--color-loss)]'}`}>
           {testResult.ok
             ? `Connected — ${testResult.stockTradeCount} stock trades, ${testResult.optionsTradeCount} options trades`
             : `Failed: ${testResult.error}`}

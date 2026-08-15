@@ -59,10 +59,11 @@ const fmtPct = (v) =>
 
 function RsCell({ v }) {
   if (v == null || !Number.isFinite(v)) return <td className="py-[4px] pr-2.5 text-right tabular-nums text-[var(--color-text-muted)]">—</td>
+  // v3: a percentile is a position in a ranking, not a pole — grey ladder
   const style = v >= 67
-    ? { background: 'color-mix(in srgb, var(--color-took) 30%, transparent)' }
+    ? { background: 'var(--color-surface-raised)', fontWeight: 600 }
     : v <= 33
-      ? { background: 'color-mix(in srgb, var(--color-refused) 26%, transparent)' }
+      ? { color: 'var(--color-text-muted)' }
       : undefined
   return (
     <td className="py-[4px] pr-2.5 text-right tabular-nums">
@@ -80,7 +81,7 @@ function AlignDots({ rs3, indState, indName }) {
          style={!stockKnown
            ? { border: '1px dashed var(--color-text-muted)' }
            : rs3 >= 67
-             ? { background: 'var(--color-took)' }
+             ? { background: 'var(--color-text-bold)' }
              : { border: '1px solid var(--color-untested)' }} />
       <i className="inline-block w-[7px] h-[7px] rounded-[1px] mx-[1.5px] align-middle"
          title={indState ? `${indName}: ${indState}` : 'industry state not measured'}

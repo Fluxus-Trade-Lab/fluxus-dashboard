@@ -759,3 +759,16 @@ Andy 看过实物后判：**挺糟糕的，回平面**。已 revert。
 1. **蓝盈红亏**是否接受？（最大胆的一条；不接受则钱半边保留绿/红，宪章加一条豁免）
 2. signal 三色归灰是否接受？（CAUTION/WARNING 只剩词+灰）
 3. 版式层（24px 圆角卡、结论式标题、来源行）是否随色彩一起进 v3，还是只换色？
+
+### v3 落地进度（2026-08-15）
+
+✅ 切片1 token 层+四态灰化（9cbdc19）  ✅ 切片2-4+6 页扫（本提交）：
+band 徽章去孤蓝（墨底，Defence/Caution 独红）、RS/百分位芯片归灰阶、
+RS-vs-SPY 与 accel 补齐红极（原「蓝 vs 灰」半对改全对）、GroupTable 溢出标记
+红→墨（溢出是事实不是不利极）、Watchlist 重合芯片蓝→墨、Squares 计数蓝→墨、
+CapitalAtRisk 风险/锁定改真配对（红险蓝锁）、sync 成功点/测试通过/达标划线
+等状态性绿蓝全部归灰、TickerSignalHistory 命中标记蓝→墨。
+computed-style 审计：Dashboard 33蓝/29红（对称）、Themes 0/0、Screener 0/0、
+Market State 58蓝/2红（数据偏斜非语法）。
+**余量**：切片5 版式层（24px 卡/结论式标题/来源行）未动；journal 深处零星
+状态色待下轮细扫。

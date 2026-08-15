@@ -275,10 +275,14 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
         {/* The regime word, top right — the one thing to read if you read
             nothing else. The three voters and which of them is binding used to
             be a line of prose under the chart; it is a tooltip now, so the
-            reasoning is still reachable without competing with the picture. */}
+            reasoning is still reachable without competing with the picture.
+            v3: ink when the state permits carrying risk, red only when it does
+            not (Defence/Caution) — a lone red means the band itself is what
+            binds you today. Blue is gone: a band alone is one pole, and blue
+            never appears without its red twin. */}
         <span title={reasoning}
               className="text-[12.5px] font-semibold uppercase tracking-wide px-2.5 py-[3px] cursor-help"
-              style={{ background: level <= 1 ? 'var(--color-refused)' : 'var(--color-took)',
+              style={{ background: level <= 1 ? 'var(--color-refused)' : 'var(--color-text-bold)',
                        color: 'var(--color-bg)' }}>
           {BANDS[level]}
         </span>

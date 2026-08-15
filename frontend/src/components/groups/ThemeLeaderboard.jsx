@@ -38,7 +38,7 @@ function Row({ r, value, accel, rank }) {
       </span>
       {accel != null
         ? <span className="text-[11px] font-mono tabular-nums text-right"
-                style={{ color: accel > 0 ? 'var(--color-took)' : 'var(--color-text-muted)' }}
+                style={{ color: accel > 0 ? 'var(--color-took)' : 'var(--color-refused)' }}
                 title="acceleration — is the gap still widening">
             {accel > 0 ? '+' : ''}{(accel * 100).toFixed(1)}
           </span>

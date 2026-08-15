@@ -22,7 +22,7 @@ export default function Header({ portfolioValue, totalPL, totalReturnPct, cashAv
               state.syncStatus === 'syncing' ? 'Syncing...' :
               state.syncStatus === 'error' ? 'Sync failed' : 'Not synced'
             }>
-              {state.syncStatus === 'success' && <span className="text-[var(--color-profit)]">●</span>}
+              {state.syncStatus === 'success' && <span className="text-[var(--color-text-muted)]">●</span>}
               {state.syncStatus === 'syncing' && <span className="text-[var(--color-signal-caution)] animate-pulse">●</span>}
               {state.syncStatus === 'error' && <span className="text-[var(--color-loss)]">●</span>}
               {state.syncStatus === 'idle' && <span className="text-[var(--color-text-muted)]">○</span>}
