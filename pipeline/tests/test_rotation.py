@@ -183,3 +183,51 @@ class TestBasketTaxonomy:
     def test_required_covers_the_benchmark_and_every_basket(self):
         assert B.BENCHMARK in B.REQUIRED
         assert set(B.BASKETS) <= set(B.REQUIRED)
+
+
+class TestFetchNeverReplacesBetterWithWorse:
+    """A throttled batch returns a PARTIAL series, and overwriting turned a
+    complete file into a holey one — SPLV lost three mid-July sessions Yahoo
+    has, align refused the file, and the volatility cut silently lost its
+    vote. Fresh-but-holey must lose to stale-but-complete."""
+
+    def _bars(self, n):
+        return [{"date": f"2026-01-{i+1:02d}", "close": 100.0 + i} for i in range(n)]
+
+    def test_sparser_fetch_keeps_the_stored_file(self, tmp_path, monkeypatch):
+        import json as J
+        from pipeline.rotation import fetch_baskets as FB
+        stored = tmp_path / "SPY.json"
+        stored.write_text(J.dumps({"ticker": "SPY", "bars": self._bars(10)}))
+
+        import pandas as pd
+        idx = pd.to_datetime([f"2026-01-{i+1:02d}" for i in range(6)])
+        frame = pd.DataFrame({"Close": [100.0 + i for i in range(6)]}, index=idx)
+
+        class FakeData(dict):
+            def __getitem__(self, k): return frame
+        monkeypatch.setattr(FB, "required_tickers", lambda: ["SPY"])
+        monkeypatch.setattr(FB.yf, "download",
+                            lambda *a, **k: FakeData())
+        out = FB.fetch(out_dir=tmp_path)
+        kept = J.loads(stored.read_text())["bars"]
+        assert len(kept) == 10, "a 6-bar partial response overwrote a 10-bar file"
+        assert out["failed"] == 1
+
+    def test_equal_or_longer_fetch_replaces(self, tmp_path, monkeypatch):
+        import json as J
+        from pipeline.rotation import fetch_baskets as FB
+        stored = tmp_path / "SPY.json"
+        stored.write_text(J.dumps({"ticker": "SPY", "bars": self._bars(6)}))
+
+        import pandas as pd
+        idx = pd.to_datetime([f"2026-01-{i+1:02d}" for i in range(10)])
+        frame = pd.DataFrame({"Close": [200.0 + i for i in range(10)]}, index=idx)
+
+        class FakeData(dict):
+            def __getitem__(self, k): return frame
+        monkeypatch.setattr(FB, "required_tickers", lambda: ["SPY"])
+        monkeypatch.setattr(FB.yf, "download", lambda *a, **k: FakeData())
+        FB.fetch(out_dir=tmp_path)
+        kept = J.loads(stored.read_text())["bars"]
+        assert len(kept) == 10 and kept[0]["close"] == 200.0

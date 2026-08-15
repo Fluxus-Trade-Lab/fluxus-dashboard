@@ -312,6 +312,48 @@
       "accel": -0.03948
     },
     {
+      "ticker": "SPLV",
+      "name": "Low Volatility",
+      "side": "risk_off",
+      "line": [
+        0.040061830787703756,
+        0.040886633440406106,
+        -8.45732209040495e-05,
+        -0.007635407178804843,
+        -0.03753000673168194
+      ],
+      "ribbon": [
+        {
+          "state": "Improving",
+          "level": -0.123833,
+          "accel": 0.117204
+        },
+        {
+          "state": "Improving",
+          "level": -0.087331,
+          "accel": 0.268652
+        },
+        {
+          "state": "Improving",
+          "level": -0.025154,
+          "accel": 0.098955
+        },
+        {
+          "state": "Improving",
+          "level": -0.013033,
+          "accel": 0.039822
+        },
+        {
+          "state": "Weakening",
+          "level": 0.012457,
+          "accel": -0.092666
+        }
+      ],
+      "state": "Weakening",
+      "level": 0.012457,
+      "accel": -0.092666
+    },
+    {
       "ticker": "ARKK",
       "name": "Speculative Tech",
       "side": "risk_on",
@@ -449,11 +491,11 @@
       "short": [
         "SPLV"
       ],
-      "spread": null,
-      "delta": null,
-      "month_spread": null,
-      "vote": null,
-      "month_vote": null
+      "spread": 0.082242,
+      "delta": 0.087372,
+      "month_spread": 0.06637,
+      "vote": "risk_on",
+      "month_vote": "risk_on"
     },
     {
       "key": "style",
@@ -493,23 +535,21 @@
   ],
   "verdict": {
     "call": "risk_on",
-    "agree": 2,
-    "of": 2,
+    "agree": 3,
+    "of": 3,
     "month_call": "risk_on",
-    "month_agree": 2,
-    "month_of": 2,
+    "month_agree": 3,
+    "month_of": 3,
     "phase": "established",
-    "sentence": "every way we cut it, risk on \u2014 all 2 agree, widest on speculation at +8.7pp over the fortnight; the month agrees \u2014 this is the regime"
+    "sentence": "every way we cut it, risk on \u2014 all 3 agree, widest on speculation at +8.7pp over the fortnight; the month agrees \u2014 this is the regime"
   },
   "state_windows": {
     "level_sessions": 63,
     "near_sessions": 21
   },
   "coverage": {
-    "baskets": 10,
+    "baskets": 11,
     "of": 11,
-    "missing": [
-      "SPLV"
-    ]
+    "missing": []
   }
 }

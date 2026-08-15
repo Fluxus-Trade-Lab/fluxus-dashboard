@@ -62,8 +62,27 @@ def fetch(period: str = "2y", out_dir: Path = OUT_DIR) -> Dict[str, int]:
             continue
         bars = [{"date": idx.strftime("%Y-%m-%d"), "close": round(float(row.Close), 4)}
                 for idx, row in sub.iterrows()]
-        (out_dir / f"{ticker}.json").write_text(
-            json.dumps({"ticker": ticker, "bars": bars}))
+
+        # Never replace a series with a sparser one. A throttled batch can
+        # return a PARTIAL series — SPLV came back missing three mid-July
+        # sessions Yahoo actually has — and overwriting meant a good file on
+        # disk became a holey one, which align then (correctly) refused,
+        # which silently cost the volatility cut its vote. Fresh-but-holey
+        # loses to stale-but-complete; the next clean fetch still wins
+        # because it has at least as many bars plus the new session.
+        path = out_dir / f"{ticker}.json"
+        if path.exists():
+            try:
+                old_bars = json.loads(path.read_text()).get("bars") or []
+            except (ValueError, OSError):
+                old_bars = []
+            if len(bars) < len(old_bars):
+                log.error("%s: fetched %d bars but the stored file has %d — "
+                          "keeping the stored file (partial response)",
+                          ticker, len(bars), len(old_bars))
+                failed.append(ticker)
+                continue
+        path.write_text(json.dumps({"ticker": ticker, "bars": bars}))
         written += 1
 
     log.info("stored %d/%d baskets in %s", written, len(tickers), out_dir)
