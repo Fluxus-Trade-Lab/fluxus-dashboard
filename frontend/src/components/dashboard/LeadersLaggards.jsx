@@ -18,63 +18,49 @@ import { etfName, rsTone, fmtRs, rankWithin, PERF_WINDOWS } from '../../lib/etfR
  * reads at a glance, "$83.92" does not.
  */
 
-function Row({ etf, ranks, changeKey, windowLabel, cohort, scale }) {
+function Row({ etf, ranks, changeKey, windowLabel, cohort }) {
   const name = etfName(etf.ticker)
   const change = etf[changeKey]
   const rs = ranks.get(etf.ticker)
-  const ok = Number.isFinite(change) && scale > 0
-  const up = change > 0
-  // half the track each side of a shared zero, so two rows are comparable
-  const w = ok ? Math.min(Math.abs(change) / scale, 1) * 50 : 0
+  const ok = Number.isFinite(change)
+  // Andy 2026-08-16: the bar retires and the move wears the pair directly —
+  // same call as the ticker cards, a coloured figure plus a coloured bar was
+  // one reading twice.
   return (
-    <div className="h-[36px] flex flex-col justify-center gap-[3px]">
-      <div className="flex items-center gap-2.5">
-        <span className="w-7 shrink-0 text-center text-[10px] font-mono tabular-nums
-                         leading-[17px] rounded-sm"
-              style={rsTone(rs)}
-              title={rs == null ? 'no reading for this window'
-                                : `${windowLabel} RS ${rs} of 99 — ranked among ${cohort} funds`}>
-          {fmtRs(rs)}
+    <div className="h-[32px] flex items-center gap-2.5">
+      <span className="w-7 shrink-0 text-center text-[10px] font-mono tabular-nums
+                       leading-[17px] rounded-sm"
+            style={rsTone(rs)}
+            title={rs == null ? 'no reading for this window'
+                              : `${windowLabel} RS ${rs} of 99 — ranked among ${cohort} funds`}>
+        {fmtRs(rs)}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block text-[12.5px] font-mono font-medium leading-[12px]
+                         text-[var(--color-text-bold)]">{etf.ticker}</span>
+        {/* absent rather than guessed when the vendor had no name */}
+        <span className="block text-[10px] leading-[12px] truncate
+                         text-[var(--color-text-muted)]" title={name ?? undefined}>
+          {name ?? '\u00a0'}
         </span>
-        <span className="min-w-0 flex-1">
-          <span className="block text-[12.5px] font-mono font-medium leading-[12px]
-                           text-[var(--color-text-bold)]">{etf.ticker}</span>
-          {/* absent rather than guessed when the vendor had no name */}
-          <span className="block text-[10px] leading-[12px] truncate
-                           text-[var(--color-text-muted)]" title={name ?? undefined}>
-            {name ?? '\u00a0'}
-          </span>
-        </span>
-        {/* The number no longer carries the colour — the bar under it does, and
-            a figure that labels its own mark does not need to repeat it. */}
-        <span className="shrink-0 text-[12.5px] font-mono tabular-nums
-                         text-[var(--color-text-secondary)]">
-          {ok ? `${up ? '+' : ''}${(change * 100).toFixed(2)}%` : '—'}
-        </span>
-      </div>
-      {/* the mark: same zero, same scale, so length is comparable down the column */}
-      <div className="relative h-[3px]"
-           title={ok ? `${(change * 100).toFixed(2)}% of a ±${(scale * 100).toFixed(1)}% ${windowLabel} range`
-                     : 'no move measured'}>
-        <span className="absolute inset-y-[-1px] w-px left-1/2 bg-[var(--color-border)]" />
-        {ok && (
-          <span className="absolute top-0 h-[3px] rounded-[1px]"
-                style={{ background: up ? 'var(--color-took)' : 'var(--color-refused)',
-                         left: up ? '50%' : `${50 - w}%`, width: `${w}%` }} />
-        )}
-      </div>
+      </span>
+      <span className="shrink-0 text-[12.5px] font-mono tabular-nums font-medium"
+            style={{ color: !ok ? 'var(--color-text-muted)'
+                          : change > 0 ? 'var(--color-took)' : 'var(--color-refused)' }}>
+        {ok ? `${change > 0 ? '+' : ''}${(change * 100).toFixed(2)}%` : '—'}
+      </span>
     </div>
   )
 }
 
-function Column({ label, rows, ranks, changeKey, windowLabel, cohort, scale }) {
+function Column({ label, rows, ranks, changeKey, windowLabel, cohort }) {
   return (
     <div>
       <h4 className="text-[10px] font-mono font-medium uppercase tracking-[.2em]
-                     text-[var(--color-text-muted)] mb-1">{label}</h4>
+                     text-[var(--color-text-muted)] mb-1.5">{label}</h4>
       {rows.map((e) => (
         <Row key={e.ticker} etf={e} ranks={ranks} changeKey={changeKey}
-             windowLabel={windowLabel} cohort={cohort} scale={scale} />
+             windowLabel={windowLabel} cohort={cohort} />
       ))}
     </div>
   )
@@ -89,13 +75,8 @@ export default function LeadersLaggards({
       const changeKey = PERF_WINDOWS[w]
       const sorted = [...etfs].filter((e) => Number.isFinite(e[changeKey]))
         .sort((a, b) => b[changeKey] - a[changeKey])
-      // The bar's scale is this window's full-cohort extreme — the same
-      // denominator the RS rank uses. Taking it from the six rows shown would
-      // make every card's longest bar look identical no matter the day.
-      const vals = sorted.map((e) => Math.abs(e[changeKey]))
       return {
         w, changeKey, ranks: rankWithin(etfs, changeKey),
-        scale: vals.length ? Math.max(...vals) : 0,
         leaders: sorted.slice(0, limit),
         laggards: sorted.slice(-limit).reverse(),
       }
@@ -106,13 +87,9 @@ export default function LeadersLaggards({
 
   return (
     <section className="bg-[var(--color-surface)] rounded-3xl overflow-hidden flex flex-col">
-      {/* Andy 2026-08-15: the meta line goes entirely. The honesty the scale
-          note carried (per-window bars, per-window extremes) survives in the
-          hover title, costing no ink at rest. */}
-      <div className="px-5 pt-4 pb-2">
+      <div className="px-5 pt-4 pb-4">
         <div className="text-[17px] font-semibold leading-tight text-[var(--color-text-bold)] cursor-help"
-             title={`${etfs.length} funds · bars scaled per window: ` +
-                    cols.map((c) => `${c.w} ±${(c.scale * 100).toFixed(1)}%`).join(' · ')}>
+             title={`${etfs.length} funds · leaders above, laggards below · ranked per window`}>
           {title}
         </div>
       </div>
@@ -121,21 +98,25 @@ export default function LeadersLaggards({
           match the sectors card beside it the gap opens between leaders and
           laggards — in the middle, where it reads as missing rows. Stacked,
           the slack lands at the bottom where it reads as space. */}
-      <div className="px-5 pb-4 flex-1 flex flex-col gap-4">
+      {/* The window words went with the bars: the title already says leaders
+          then laggards, so the blocks are separated by a hairline and air
+          instead of by repeating the words six times. */}
+      <div className="px-5 pb-4 flex-1 flex flex-col">
         <div className="grid gap-x-4"
              style={{ gridTemplateColumns: `repeat(${cols.length}, minmax(0, 1fr))` }}>
           {cols.map((c) => (
-            <Column key={`${c.w}-lead`} label={`${c.w} leaders`} rows={c.leaders}
+            <Column key={`${c.w}-lead`} label={c.w} rows={c.leaders}
                     ranks={c.ranks} changeKey={c.changeKey} windowLabel={c.w}
-                    cohort={etfs.length} scale={c.scale} />
+                    cohort={etfs.length} />
           ))}
         </div>
+        <i className="block h-px bg-[var(--color-border-light)] my-3" />
         <div className="grid gap-x-4"
              style={{ gridTemplateColumns: `repeat(${cols.length}, minmax(0, 1fr))` }}>
           {cols.map((c) => (
-            <Column key={`${c.w}-lag`} label={`${c.w} laggards`} rows={c.laggards}
+            <Column key={`${c.w}-lag`} label={c.w} rows={c.laggards}
                     ranks={c.ranks} changeKey={c.changeKey} windowLabel={c.w}
-                    cohort={etfs.length} scale={c.scale} />
+                    cohort={etfs.length} />
           ))}
         </div>
       </div>

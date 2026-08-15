@@ -5,7 +5,6 @@ import PageHeader from './PageHeader'
 import Placeholder from './Placeholder'
 import HowToRead from './HowToRead'
 import Reference from './Reference'
-import Tier from './Tier'
 
 /** A tier marker. The dashboard's problem was rank, not content — seven blocks
  *  at equal weight read as seven equally important things. */
@@ -156,7 +155,10 @@ export default function Layout({ data, lastUpdated, isOffline }) {
             </p>
           </section>
 
-          <Tier label="Evidence">
+          {/* the tier word went (Andy 2026-08-16); the rule alone now marks
+              the seam between the read and its evidence */}
+          <div className="pt-5">
+            <i className="block h-px bg-[var(--color-border)] mb-4" />
             <div className="space-y-3">
               {/* Benchmarks first, unfolded: where the four indices sit is the
                   context every row under it is measured against, and it was
@@ -172,19 +174,19 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                     the Industries grammar, not the reverse) — the symmetry is
                     structural, not imitated. Each window column shows that
                     window's leaders and laggards WITH that window's move. */}
-                <LeadersLaggards title="Industries"
+                <LeadersLaggards title="Industry leaders and laggards"
                   etfs={(ETF_GROUPS.Industries || [])
                     .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                     .filter(Boolean)}
                   windows={['1D', '1W', '1M']} limit={3} />
-                <LeadersLaggards title="Sectors"
+                <LeadersLaggards title="Sectors Leaders and Laggards"
                   etfs={(ETF_GROUPS['Sel Sectors'] || [])
                     .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                     .filter(Boolean)}
                   windows={['1D', '1W', '1M']} limit={3} />
               </div>
             </div>
-          </Tier>
+          </div>
 
           <HowToRead>
             <p>
