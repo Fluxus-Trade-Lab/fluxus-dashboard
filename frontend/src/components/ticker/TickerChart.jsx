@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 /**
  * Embeds the free TradingView Advanced Chart widget for a symbol.
@@ -15,6 +15,20 @@ import { useEffect, useRef } from 'react'
  */
 export default function TickerChart({ symbol, height = 520 }) {
   const containerRef = useRef(null)
+  // The widget's theme was hardcoded to dark, so on the light paper this was
+  // a black rectangle in the middle of the page. It is a third-party iframe
+  // and cannot read our tokens, but it does take a theme on init — and it
+  // has to be re-initialised when ours changes, since the iframe will not
+  // repaint on its own.
+  const [dark, setDark] = useState(() =>
+    document.documentElement.classList.contains('dark'))
+
+  useEffect(() => {
+    const el = document.documentElement
+    const obs = new MutationObserver(() => setDark(el.classList.contains('dark')))
+    obs.observe(el, { attributes: true, attributeFilter: ['class'] })
+    return () => obs.disconnect()
+  }, [])
 
   useEffect(() => {
     if (!containerRef.current || !symbol) return
@@ -39,7 +53,7 @@ export default function TickerChart({ symbol, height = 520 }) {
       symbol: symbol,
       interval: 'D',
       timezone: 'America/New_York',
-      theme: 'dark',
+      theme: dark ? 'dark' : 'light',
       style: '1',
       locale: 'en',
       enable_publishing: false,
@@ -54,7 +68,7 @@ export default function TickerChart({ symbol, height = 520 }) {
     return () => {
       if (container) container.innerHTML = ''
     }
-  }, [symbol])
+  }, [symbol, dark])
 
   return (
     <div
