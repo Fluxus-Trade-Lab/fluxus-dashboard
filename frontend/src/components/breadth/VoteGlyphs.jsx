@@ -136,7 +136,7 @@ const VOTE_LABEL = {
   ratio_5d: '5D ratio', ratio_10d: '10D ratio', thrust: 'Thrust',
   qtr_spread: 'Qtr spread', spread_13_34: '13/34', nh_nl: 'NH/NL',
   mcclellan: 'McClellan', pct200: '%>200d', t2108_zone: 'T2108',
-  spy_danger: 'SPY danger', qqq_danger: 'QQQ danger', bench_trend: 'Bench trend',
+  spy_danger: 'SPY risk regime', qqq_danger: 'QQQ risk regime', bench_trend: 'Bench trend',
 }
 
 /**

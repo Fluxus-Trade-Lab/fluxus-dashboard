@@ -153,7 +153,7 @@ function monthTicks(history, maxLabels = 7) {
  * preserveAspectRatio="none" so it can stretch to any width, and text inside
  * it would stretch with it.
  */
-function ConditionsLine({ history, score }) {
+function ConditionsLine({ history, score, binds }) {
   if (!history?.length) return null
   const W = 1000, H = 130, PAD = 4
   const x = (i) => PAD + (i / Math.max(1, history.length - 1)) * (W - PAD * 2)
@@ -163,7 +163,7 @@ function ConditionsLine({ history, score }) {
   const pos = (i) => `${(x(i) / W) * 100}%`
 
   return (
-    <div className="mt-2 pr-9">
+    <div className="mt-5 pr-9">
       <div className="relative">
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-[150px] block" role="img"
              aria-label={`Market conditions ${score} of 100 over ${history.length} sessions`}
@@ -198,14 +198,15 @@ function ConditionsLine({ history, score }) {
         {score != null && (
           <span className="absolute w-[9px] h-[9px] rounded-full -translate-y-1/2 -translate-x-1/2"
                 style={{ top: `${(y(score) / H) * 100}%`, left: '100%',
-                         background: 'var(--color-text)' }} />
+                         background: binds ? 'var(--color-refused)' : 'var(--color-text)' }} />
         )}
         {/* today's value, pinned to where the line ends */}
         {score != null && (
           <span className="absolute -translate-y-1/2 px-1.5 py-[1px] text-[10px] font-mono
                            font-semibold tabular-nums whitespace-nowrap"
                 style={{ top: `${(y(score) / H) * 100}%`, left: '100%',
-                         background: 'var(--color-text)', color: 'var(--color-bg)' }}>
+                         background: binds ? 'var(--color-refused)' : 'var(--color-text)',
+                         color: 'var(--color-bg)' }}>
             {score}
           </span>
         )}
@@ -293,7 +294,9 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
         </span>
       </div>
 
-      <ConditionsLine history={conditions?.history} score={score} />
+      {/* rule three, same as the badge: the endpoint wears red only when
+          the band itself binds (Defence/Caution); an all-clear day stays ink */}
+      <ConditionsLine history={conditions?.history} score={score} binds={level <= 1} />
     </section>
   )
 }
