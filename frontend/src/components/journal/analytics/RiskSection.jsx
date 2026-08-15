@@ -123,8 +123,8 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
           <ResponsiveContainer width="100%" height={Math.max(200, heatChartData.length * 28)}>
             <BarChart data={heatChartData} layout="vertical" margin={{ left: 10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
-              <XAxis type="number" tick={{ fontSize: 10 }} tickFormatter={v => `${v}%`} />
-              <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} width={60} />
+              <XAxis type="number" tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${v}%`} />
+              <YAxis type="category" dataKey="name" tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} width={60} />
               <Tooltip formatter={v => `${v}%`} contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text)' }} />
               <Bar dataKey="heat" radius={[0, 4, 4, 0]}>
                 {heatChartData.map((d, i) => <Cell key={i} fill={heatColor(d.heat)} />)}
@@ -201,7 +201,9 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
                     <div key={s.name} className="flex items-center gap-2 text-[12.5px]">
                       <span className="w-24 truncate">{s.name}</span>
                       <div className="flex-1 bg-[var(--color-bg)] rounded-full h-3 overflow-hidden">
-                        <div className="h-full rounded-full bg-[#5b8fa8]" style={{ width: `${Math.min(100, pct)}%` }} />
+                        <div className="h-full rounded-full"
+                             style={{ width: `${Math.min(100, pct)}%`,
+                                      background: pct > 30 ? 'var(--color-loss)' : 'var(--color-text-secondary)' }} />
                       </div>
                       <span className={`w-12 text-right tabular-nums ${pct > 30 ? 'text-[var(--color-loss)] font-semibold' : ''}`}>{fmt(pct, 1)}%</span>
                     </div>

@@ -145,7 +145,7 @@ function EvidenceFold({ row }) {
   return (
     <tr>
       <td colSpan={15} className="pb-2 pt-0 pl-9 border-none">
-        <div className="border border-[var(--color-border-light)] rounded-md bg-[var(--color-surface)]
+        <div className="rounded-2xl bg-[var(--color-bg)]
                         px-3.5 py-2 text-[12.5px] text-[var(--color-text-secondary)] flex flex-wrap gap-x-5 gap-y-1">
           {row.heat && row.heat.screeners.map((s) => (
             <span key={s.name}>

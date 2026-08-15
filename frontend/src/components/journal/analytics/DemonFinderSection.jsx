@@ -21,7 +21,7 @@ function CircuitBreakerBanner({ breakers }) {
   if (breakers.length === 0) return null
 
   return (
-    <div className="bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] border border-[var(--color-loss)] rounded-lg px-5 py-4">
+    <div className="bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] border border-[var(--color-loss)] rounded-2xl px-5 py-4">
       <div className="flex items-center gap-2 mb-1">
         <span className="text-[17px]">&#x1F6D1;</span>
         <span className="text-[14px] font-bold text-[var(--color-loss)]">STOP TRADING</span>
@@ -45,7 +45,7 @@ function DemonCard({ stat, isActive, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`bg-[var(--color-surface)] border ${borderColor} rounded-lg px-3 py-3 text-left cursor-pointer transition-colors hover:bg-[var(--color-hover-bg)] ${
+      className={`bg-[var(--color-surface)] border ${borderColor} rounded-2xl px-3 py-3 text-left cursor-pointer transition-colors hover:bg-[var(--color-hover-bg)] ${
         isActive ? 'ring-2 ring-[var(--color-accent)]' : ''
       }`}
     >

@@ -49,8 +49,8 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
           <ResponsiveContainer width="100%" height={280}>
             <LineChart data={performanceData}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
-              <XAxis dataKey="date" tick={{ fontSize: 10 }} tickFormatter={d => d.slice(5)} interval="preserveStartEnd" />
-              <YAxis tick={{ fontSize: 10 }} tickFormatter={v => `${v.toFixed(0)}%`} />
+              <XAxis dataKey="date" tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }} tickFormatter={d => d.slice(5)} interval="preserveStartEnd" />
+              <YAxis tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${v.toFixed(0)}%`} />
               <Tooltip
                 contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text)' }}
                 formatter={(v, name) => [`${Number(v).toFixed(2)}%`, name === 'returnPct' ? 'Portfolio' : name]}

@@ -25,10 +25,19 @@ export function atrBadgeColor(atrExt) {
   return 'bg-[color-mix(in_srgb,var(--color-refused)_26%,transparent)]'
 }
 
+/**
+ * A / B / C is a rank, and a rank has no adverse pole — so it is drawn in ink
+ * density, not in hue. It survived every colour audit until now because it
+ * returned Tailwind class names (blue-500 / emerald-500 / amber-500) rather
+ * than hex, which is exactly the shape the greps were looking for.
+ *
+ * The chip's letter is the surface, so each step keeps its own contrast:
+ * 15.3 / 6.2 / 4.9 on light, 14.7 / 6.1 / 4.3 on dark.
+ */
 export function abcColor(abc) {
-  if (abc === 'A') return 'bg-blue-500'
-  if (abc === 'B') return 'bg-emerald-500'
-  return 'bg-amber-500'
+  if (abc === 'A') return 'bg-[var(--color-text)]'
+  if (abc === 'B') return 'bg-[var(--color-text-secondary)]'
+  return 'bg-[var(--color-text-muted)]'
 }
 
 export function signalColor(color) {

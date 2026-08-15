@@ -67,7 +67,7 @@ export default function RiskTab({ riskMetrics, benchmarkTicker }) {
           const note = METRIC_NOTES[m.key]
           if (!note) return null
           return (
-            <div key={m.key} className="p-3 bg-[var(--color-bg)] rounded-md border border-[var(--color-border-light)]">
+            <div key={m.key} className="p-3 bg-[var(--color-bg)] rounded-2xl">
               <div className="text-[11px] font-semibold text-[var(--color-text-secondary)] mb-0.5">{note.title}</div>
               <div className="text-[11px] text-[var(--color-text-muted)] leading-relaxed">{note.desc}</div>
             </div>

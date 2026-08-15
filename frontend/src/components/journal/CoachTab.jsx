@@ -228,7 +228,7 @@ export default function CoachTab({ strategy }) {
                 <div className="flex gap-2">
                   <button
                     onClick={handleCopyPrompt}
-                    className="px-3 py-1 text-[11px] font-medium rounded cursor-pointer bg-[var(--color-accent)] text-white hover:opacity-90 transition-opacity"
+                    className="px-3 py-1 text-[11px] font-medium rounded cursor-pointer bg-[var(--color-accent-solid)] text-white hover:opacity-90 transition-opacity"
                   >
                     {copied ? 'Copied!' : 'Copy Prompt'}
                   </button>

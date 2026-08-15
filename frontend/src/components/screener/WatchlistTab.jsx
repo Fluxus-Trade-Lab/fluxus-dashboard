@@ -55,7 +55,7 @@ function WatchlistCard({ name, tickers }) {
 
   if (!tickers.length) {
     return (
-      <div className="border border-[var(--color-border-light)] rounded-lg
+      <div className="rounded-3xl
                       bg-[var(--color-surface)] px-3.5 py-2.5 flex items-baseline gap-3 opacity-70">
         <span className="text-[10px] font-mono font-medium uppercase tracking-[.18em]
                          text-[var(--color-text-muted)]">{name}</span>

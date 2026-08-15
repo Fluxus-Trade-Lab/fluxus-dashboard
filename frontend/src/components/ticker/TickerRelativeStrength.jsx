@@ -82,11 +82,11 @@ export default function TickerRelativeStrength({ tickerData }) {
           <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
           <XAxis
             dataKey="date"
-            tick={{ fontSize: 10 }}
+            tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }}
             tickFormatter={d => d?.slice(5)}
             interval={Math.max(1, Math.floor(chartData.length / 8))}
           />
-          <YAxis tick={{ fontSize: 11 }} tickFormatter={v => `${Number(v).toFixed(0)}`} />
+          <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${Number(v).toFixed(0)}`} />
           <Tooltip formatter={v => v != null ? Number(v).toFixed(1) : '—'} />
           <Legend />
           <Line type="monotone" dataKey="sym" stroke="var(--color-text-bold)" strokeWidth={2.4} dot={false} name={tickerData.ticker} />

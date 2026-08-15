@@ -314,7 +314,7 @@ export default function OverviewTab({
         {/* Left: Equity Curve */}
         <div className="min-w-0">
           {!hasSPY && (
-            <div className="p-3 bg-[var(--color-accent-light)] rounded-3xl mb-4 text-[12.5px] text-[var(--color-accent)] flex items-center justify-between">
+            <div className="p-3 bg-[var(--color-bg)] rounded-3xl mb-4 text-[12.5px] text-[var(--color-text-secondary)] flex items-center justify-between">
               <span>{tr('pf.chart.loadHistoryHint')}</span>
               <Button onClick={fetchFullHistory} disabled={state.loading}>
                 {state.loading ? tr('pf.chart.loading') : tr('pf.chart.loadHistory')}
@@ -350,11 +350,11 @@ export default function OverviewTab({
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
                   <XAxis
                     dataKey="date"
-                    tick={{ fontSize: 10 }}
+                    tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }}
                     tickFormatter={d => d.slice(5)}
                     interval={Math.max(1, Math.floor(chartData.length / 10))}
                   />
-                  <YAxis tick={{ fontSize: 11 }} tickFormatter={v => `${Number(v).toFixed(0)}%`} />
+                  <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${Number(v).toFixed(0)}%`} />
                   <Tooltip formatter={v => `${Number(v).toFixed(2)}%`} />
                   <Legend />
                   <Line type="monotone" dataKey="returnPct" stroke="var(--color-text-bold)" strokeWidth={2.4} dot={false} name="Portfolio" />

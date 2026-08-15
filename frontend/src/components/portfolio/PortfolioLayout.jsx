@@ -276,7 +276,7 @@ export default function Layout() {
 
       {/* Status bar — PortfolioHeader end */}
       {state.fetchStatus && (
-        <div className="px-6 py-1.5 bg-[var(--color-accent-light)] text-[12.5px] text-[var(--color-accent)] border-b border-[var(--color-border)]">
+        <div className="px-6 py-1.5 bg-[var(--color-bg)] text-[12.5px] text-[var(--color-text-secondary)] border-b border-[var(--color-border)]">
           {state.fetchStatus}
         </div>
       )}

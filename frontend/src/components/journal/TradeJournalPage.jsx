@@ -179,7 +179,7 @@ function FilterChip({ current, value, onChange, children }) {
       onClick={() => onChange(value)}
       className={`px-2 py-1 rounded text-[11px] border cursor-pointer ${
         isActive
-          ? 'bg-[var(--color-accent)] text-white border-[var(--color-accent)]'
+          ? 'bg-[var(--color-accent-solid)] text-white border-[var(--color-accent)]'
           : 'bg-[var(--color-surface)] border-[var(--color-border)] hover:bg-[var(--color-hover-bg)]'
       }`}
     >

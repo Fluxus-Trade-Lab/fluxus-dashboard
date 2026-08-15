@@ -84,11 +84,11 @@ export default function TradeDetailPage({ tradeId }) {
               <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
               <XAxis
                 dataKey="date"
-                tick={{ fontSize: 10 }}
+                tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }}
                 tickFormatter={d => d?.slice(5)}
                 interval={Math.max(1, Math.floor(chartData.length / 10))}
               />
-              <YAxis tick={{ fontSize: 11 }} tickFormatter={v => `$${Number(v).toFixed(0)}`} domain={['auto', 'auto']} />
+              <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={v => `$${Number(v).toFixed(0)}`} domain={['auto', 'auto']} />
               <Tooltip
                 formatter={(v, name) => [name === 'close' ? `$${Number(v).toFixed(2)}` : v, name]}
                 labelFormatter={l => `Date: ${l}`}
@@ -98,7 +98,7 @@ export default function TradeDetailPage({ tradeId }) {
               {/* Entry */}
               <ReferenceLine y={t.entry_price} stroke="var(--color-text-muted)" strokeDasharray="3 3" label={{ value: `Entry $${t.entry_price.toFixed(2)}`, fill: 'var(--color-text-muted)', fontSize: 10, position: 'left' }} />
               <ReferenceLine x={String(t.entry_date).slice(0, 10)} stroke="var(--color-text-muted)" strokeDasharray="2 2" />
-              <ReferenceDot x={String(t.entry_date).slice(0, 10)} y={t.entry_price} r={5} fill="#5b8fa8" stroke="#fff" strokeWidth={1.5} />
+              <ReferenceDot x={String(t.entry_date).slice(0, 10)} y={t.entry_price} r={5} fill="var(--color-text)" stroke="var(--color-surface)" strokeWidth={1.5} />
 
               {/* Stop */}
               <ReferenceLine y={t.stop_price} stroke="var(--color-loss)" strokeDasharray="3 3" label={{ value: `Stop $${t.stop_price.toFixed(2)}`, fill: 'var(--color-loss)', fontSize: 10, position: 'left' }} />
@@ -111,7 +111,7 @@ export default function TradeDetailPage({ tradeId }) {
                   y={tr.price}
                   r={4}
                   fill={tr.type === 'sell_rest' ? 'var(--color-loss)' : 'var(--color-text-secondary)'}
-                  stroke="#fff"
+                  stroke="var(--color-surface)"
                   strokeWidth={1.5}
                 />
               ))}
@@ -123,7 +123,7 @@ export default function TradeDetailPage({ tradeId }) {
                   y={analytics.optimal_exit_price}
                   r={6}
                   fill="var(--color-profit)"
-                  stroke="#fff"
+                  stroke="var(--color-surface)"
                   strokeWidth={2}
                 />
               )}
@@ -131,10 +131,10 @@ export default function TradeDetailPage({ tradeId }) {
           </ResponsiveContainer>
         )}
         <div className="text-[10px] text-[var(--color-text-muted)] mt-2 flex flex-wrap gap-3">
-          <span><span className="inline-block w-2 h-2 rounded-full bg-[#5b8fa8] mr-1"/>Entry</span>
-          <span><span className="inline-block w-2 h-2 rounded-full bg-[#c89a4e] mr-1"/>Trim</span>
-          <span><span className="inline-block w-2 h-2 rounded-full bg-[#b85a5a] mr-1"/>Exit / Stop</span>
-          <span><span className="inline-block w-2 h-2 rounded-full bg-[#5a9c6f] mr-1"/>Optimal exit</span>
+          <span><span className="inline-block w-2 h-2 rounded-full bg-[var(--color-text)] mr-1"/>Entry</span>
+          <span><span className="inline-block w-2 h-2 rounded-full bg-[var(--color-text-secondary)] mr-1"/>Trim</span>
+          <span><span className="inline-block w-2 h-2 rounded-full bg-[var(--color-loss)] mr-1"/>Exit / Stop</span>
+          <span><span className="inline-block w-2 h-2 rounded-full bg-[var(--color-profit)] mr-1"/>Optimal exit</span>
         </div>
       </div>
 

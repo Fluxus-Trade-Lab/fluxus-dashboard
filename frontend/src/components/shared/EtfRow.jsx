@@ -18,7 +18,7 @@ export default function EtfRow({ etf }) {
     <div className="grid grid-cols-[1.5rem_3.5rem_3.5rem_3.5rem_3.5rem_3rem_3rem_4rem] items-center px-2 py-1 border-b border-[var(--color-border-light)] hover:bg-[var(--color-hover-bg)]">
       {/* ABC dot */}
       <span
-        className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold text-white ${abcColor(abc)}`}
+        className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold text-[var(--color-surface)] ${abcColor(abc)}`}
       >
         {abc}
       </span>

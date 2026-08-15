@@ -62,7 +62,7 @@ function RiskTabInner() {
           onClick={() => setMode(2)}
           className={`px-4 py-1.5 text-[12.5px] font-semibold rounded-l-md border cursor-pointer ${
             mode === 2
-              ? 'bg-[var(--color-accent)] text-white border-[var(--color-accent)]'
+              ? 'bg-[var(--color-accent-solid)] text-white border-[var(--color-accent)]'
               : 'bg-transparent text-[var(--color-text-muted)] border-[var(--color-border)]'
           }`}
         >
@@ -72,7 +72,7 @@ function RiskTabInner() {
           onClick={() => setMode(3)}
           className={`px-4 py-1.5 text-[12.5px] font-semibold rounded-r-md border border-l-0 cursor-pointer ${
             mode === 3
-              ? 'bg-[var(--color-accent)] text-white border-[var(--color-accent)]'
+              ? 'bg-[var(--color-accent-solid)] text-white border-[var(--color-accent)]'
               : 'bg-transparent text-[var(--color-text-muted)] border-[var(--color-border)]'
           }`}
         >

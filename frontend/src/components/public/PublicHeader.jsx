@@ -40,7 +40,7 @@ export default function PublicHeader({ currentPage, onNavigate }) {
           ))}
           <button
             onClick={() => onNavigate('#/pricing')}
-            className="bg-[var(--color-accent)] text-white px-4 py-2 rounded text-sm font-semibold uppercase tracking-wide cursor-pointer border-none"
+            className="bg-[var(--color-accent-solid)] text-white px-4 py-2 rounded text-sm font-semibold uppercase tracking-wide cursor-pointer border-none"
           >
             Join
           </button>
@@ -57,7 +57,7 @@ export default function PublicHeader({ currentPage, onNavigate }) {
         <div className="flex sm:hidden items-center gap-2">
           <button
             onClick={() => onNavigate('#/pricing')}
-            className="bg-[var(--color-accent)] text-white px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-wide cursor-pointer border-none"
+            className="bg-[var(--color-accent-solid)] text-white px-3 py-1.5 rounded text-xs font-semibold uppercase tracking-wide cursor-pointer border-none"
           >
             Join
           </button>
