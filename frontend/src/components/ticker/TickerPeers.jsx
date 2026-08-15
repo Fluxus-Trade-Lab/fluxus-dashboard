@@ -11,7 +11,7 @@ export default function TickerPeers({ tickerData }) {
   }
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-5">
       <div className="font-semibold mb-3 text-[14px]">Competitors / Peers</div>
       <table className="w-full text-[12.5px]">
         <thead>

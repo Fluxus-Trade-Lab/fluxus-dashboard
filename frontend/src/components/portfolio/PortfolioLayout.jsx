@@ -257,8 +257,7 @@ export default function Layout() {
       {/* The page frame goes above the working header, not instead of it —
           PortfolioHeader carries the account switcher, the privacy mask and
           the sync state, all of which have to keep working. */}
-      <PageHeader group="book" title="Portfolio"
-        blurb="What you are holding, what it is risking, and how much of the plan is still on the table." />
+      <PageHeader group="book" title="Portfolio" />
 
       <PortfolioHeader
         portfolioValue={totalPortfolioValue}
@@ -316,7 +315,7 @@ export default function Layout() {
                 }}>Copy</Button>
                 <Button variant="ghost" onClick={() => downloadFile(exportData, `portfolio_${new Date().toISOString().split('T')[0]}.csv`, 'text/csv')}>Download Again</Button>
               </div>
-              <textarea readOnly value={exportData} className="flex-1 min-h-[300px] p-2.5 border border-[var(--color-border)] rounded text-[11px] font-mono resize-y whitespace-pre overflow-auto" />
+              <textarea readOnly value={exportData} className="flex-1 min-h-[300px] p-2.5 rounded-3xl text-[11px] font-mono resize-y whitespace-pre overflow-auto" />
             </div>
           </div>
         )}

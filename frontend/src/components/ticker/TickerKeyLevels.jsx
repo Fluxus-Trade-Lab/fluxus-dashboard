@@ -9,7 +9,7 @@ export default function TickerKeyLevels({ tickerData }) {
   const price = tickerData?.current_price
   if (!t) {
     return (
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5">
         <div className="font-semibold mb-3 text-[14px]">Key Levels</div>
         <div className="text-[var(--color-text-muted)] text-[14px]">No technical data available.</div>
       </div>
@@ -28,7 +28,7 @@ export default function TickerKeyLevels({ tickerData }) {
   ]
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-5">
       <div className="font-semibold mb-3 text-[14px]">Key Levels</div>
       <table className="w-full text-[12.5px]">
         <thead>

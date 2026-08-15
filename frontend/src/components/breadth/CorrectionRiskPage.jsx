@@ -89,8 +89,7 @@ export default function CorrectionRiskPage() {
             {zh ? '回撤风险' : 'Correction Risk'}
           </h1>
           <span className="px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-[.18em]
-                           rounded border border-[var(--color-border)]
-                           text-[var(--color-text-muted)]">
+                           rounded-3xl text-[var(--color-text-muted)]">
             {zh ? '未上线' : 'Not shipped'}
           </span>
         </div>

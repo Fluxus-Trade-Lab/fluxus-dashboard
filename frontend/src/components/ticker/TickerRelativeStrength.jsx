@@ -67,7 +67,7 @@ export default function TickerRelativeStrength({ tickerData }) {
 
   if (!ohlc.length) {
     return (
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5">
         <div className="font-semibold mb-3 text-[14px]">Relative Strength vs SPY & QQQ</div>
         <div className="text-[var(--color-text-muted)] text-[14px]">No price history available.</div>
       </div>
@@ -75,7 +75,7 @@ export default function TickerRelativeStrength({ tickerData }) {
   }
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-5">
       <div className="font-semibold mb-3 text-[14px]">Relative Strength vs SPY & QQQ</div>
       <ResponsiveContainer width="100%" height={240}>
         <LineChart data={chartData}>

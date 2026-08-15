@@ -7,7 +7,7 @@ const money = v => (v < 0 ? '-$' : '$') + Math.abs(Math.round(v)).toLocaleString
 
 function Card({ n, title, verdict, children }) {
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-4 mb-4">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-4 mb-4">
       <div className="flex items-baseline gap-2 mb-1">
         <span className="text-[12.5px] font-bold text-[var(--color-accent)]">{n}</span>
         <span className="font-semibold text-[14px]">{title}</span>

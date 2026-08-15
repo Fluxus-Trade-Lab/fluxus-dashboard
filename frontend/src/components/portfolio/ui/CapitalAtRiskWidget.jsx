@@ -41,7 +41,7 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
 
   if (!data.perTrade.length) {
     return (
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5">
         <div className="text-[10px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
           Open risk
         </div>
@@ -65,7 +65,7 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
   const hiddenCount = data.perTrade.length - visible.length
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-5">
       <div className="flex items-baseline justify-between pb-2 border-b border-[var(--color-v2-ink)]">
         <span className="text-[10px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
           Open risk · what can be lost

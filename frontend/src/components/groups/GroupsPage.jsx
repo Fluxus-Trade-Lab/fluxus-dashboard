@@ -191,7 +191,6 @@ export default function GroupsPage() {
   return (
     <div className="space-y-5">
       <PageHeader group="market" title="Themes"
-        blurb="Where the strength is, and where it is turning."
         meta={[`vs ${benchmark} · ${date} · ${themes.length} themes`]} />
       <Reading text={readThemes(themes)} />
 

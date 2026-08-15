@@ -5,7 +5,7 @@ export default function TickerValuation({ tickerData }) {
   const info = tickerData?.info
   if (!info) {
     return (
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5">
         <div className="font-semibold mb-3 text-[14px]">Valuation Snapshot</div>
         <div className="text-[var(--color-text-muted)] text-[14px]">No valuation data available.</div>
       </div>
@@ -32,7 +32,7 @@ export default function TickerValuation({ tickerData }) {
   ]
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-5">
       <div className="font-semibold mb-3 text-[14px]">Valuation Snapshot</div>
       <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-[12.5px]">
         {rows.map(([label, value]) => (

@@ -8,7 +8,7 @@ export default function TickerStats({ universe }) {
   const u = universe
   if (!u) {
     return (
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5">
         <div className="font-semibold mb-3 text-[14px]">Stats</div>
         <div className="text-[var(--color-text-muted)] text-[14px]">
           Not in current screener universe (delisted or under filter floor).
@@ -39,7 +39,7 @@ export default function TickerStats({ universe }) {
   ]
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-5">
       <div className="font-semibold mb-3 text-[14px]">Stats</div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-4 gap-y-2 text-[12.5px]">
         {cells.map(([label, value]) => (

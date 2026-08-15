@@ -6,7 +6,7 @@ export default function TickerAnalystSentiment({ tickerData }) {
   const a = tickerData?.analyst
   if (!a || Object.keys(a).length === 0) {
     return (
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5">
         <div className="font-semibold mb-3 text-[14px]">Analyst Sentiment</div>
         <div className="text-[var(--color-text-muted)] text-[14px]">No analyst data available.</div>
       </div>
@@ -29,7 +29,7 @@ export default function TickerAnalystSentiment({ tickerData }) {
   const recent = a.recent_rating_changes || []
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-5">
       <div className="font-semibold mb-3 text-[14px]">Analyst Sentiment</div>
       <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-[12.5px] mb-3">
         <div className="flex justify-between border-b border-[var(--color-border-light)] pb-1">

@@ -16,7 +16,7 @@ import { fmtCur } from '../portfolio/lib/portfolioFormat'
 export default function TickerStatusPanel({ symbol, openTrade, lastClosed, universe, onAcceptStop }) {
   if (!openTrade && !lastClosed) {
     return (
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5 h-full">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5 h-full">
         <div className="font-semibold mb-3 text-[14px]">Status</div>
         <div className="text-[var(--color-text-muted)] text-[14px]">No record of trading {symbol}.</div>
       </div>
@@ -24,7 +24,7 @@ export default function TickerStatusPanel({ symbol, openTrade, lastClosed, unive
   }
   if (!openTrade) {
     return (
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5 h-full">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5 h-full">
         <div className="font-semibold mb-3 text-[14px]">Status</div>
         <div className="text-[14px]">No open position.</div>
         <div className="text-[11px] text-[var(--color-text-muted)] mt-1">
@@ -55,7 +55,7 @@ export default function TickerStatusPanel({ symbol, openTrade, lastClosed, unive
   )
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5 h-full flex flex-col gap-3">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-5 h-full flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div className="font-semibold text-[14px]">Status</div>
         <LegStateBadge state={legState} />

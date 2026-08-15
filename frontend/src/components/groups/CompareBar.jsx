@@ -84,8 +84,7 @@ export default function CompareBar({ rows, picks, atLimit, onToggle }) {
           /* an empty slot is the caption: a hollow dot says "room for one
              more" without a box or a sentence */
           <span key={colour} aria-hidden
-                className="w-2 h-2 rounded-full border border-[var(--color-border)]
-                           select-none shrink-0" />
+                className="w-2 h-2 rounded-full select-none shrink-0" />
         )
       })}
     </div>

@@ -189,7 +189,7 @@ export default function CoachTab({ strategy }) {
                   <button
                     key={i}
                     onClick={() => setInput(prompt)}
-                    className="px-3 py-1.5 text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-full hover:bg-[var(--color-hover-bg)] cursor-pointer transition-colors"
+                    className="px-3 py-1.5 text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-bg)] rounded-full hover:bg-[var(--color-hover-bg)] cursor-pointer transition-colors"
                   >
                     {prompt}
                   </button>
@@ -200,10 +200,10 @@ export default function CoachTab({ strategy }) {
 
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[80%] px-3 py-2 rounded-lg text-[14px] ${
+              <div className={`max-w-[80%] px-3 py-2 rounded-3xl text-[14px] ${
                 msg.role === 'user'
                   ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
-                  : 'bg-[var(--color-bg)] text-[var(--color-text)] border border-[var(--color-border)]'
+                  : 'bg-[var(--color-bg)] text-[var(--color-text)] '
               }`}>
                 <div className="whitespace-pre-wrap">{msg.content}</div>
               </div>
@@ -212,7 +212,7 @@ export default function CoachTab({ strategy }) {
 
           {loading && (
             <div className="flex justify-start">
-              <div className="px-3 py-2 rounded-lg text-[14px] bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text-muted)]">
+              <div className="px-3 py-2 rounded-3xl text-[14px] bg-[var(--color-bg)] text-[var(--color-text-muted)]">
                 Thinking...
               </div>
             </div>

@@ -30,7 +30,7 @@ export default function TickerTrades({ symbol, trades }) {
 
   if (!onTicker.length) {
     return (
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5">
         <div className="font-semibold mb-3 text-[14px]">Trades</div>
         <div className="text-[var(--color-text-muted)] text-[14px]">No trades recorded for {symbol}.</div>
       </div>
@@ -40,7 +40,7 @@ export default function TickerTrades({ symbol, trades }) {
   const campaigns = groupByCampaigns(onTicker)
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-5">
       <div className="flex items-center justify-between mb-3">
         <div className="font-semibold text-[14px]">Trades</div>
         <div className="text-[11px] text-[var(--color-text-muted)] tabular-nums">

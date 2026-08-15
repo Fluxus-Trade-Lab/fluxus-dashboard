@@ -13,7 +13,7 @@ export default function TimeMachineBar({ tm }) {
         <button
           onClick={tm.engage}
           disabled={tm.loading}
-          className="text-[11px] px-2 py-1 rounded border border-[var(--color-border)] text-[var(--color-text)] hover:bg-[var(--color-hover-bg)] disabled:opacity-50"
+          className="text-[11px] px-2 py-1 rounded-3xl text-[var(--color-text)] hover:bg-[var(--color-hover-bg)] disabled:opacity-50"
         >
           {tm.loading ? 'Loading…' : 'Enable'}
         </button>
@@ -74,7 +74,7 @@ function BarButton({ onClick, label }) {
   return (
     <button
       onClick={onClick}
-      className="text-[10px] font-mono px-2 py-1 rounded border border-[var(--color-border)] text-[var(--color-text)] hover:bg-[var(--color-hover-bg)]"
+      className="text-[10px] font-mono px-2 py-1 rounded-3xl text-[var(--color-text)] hover:bg-[var(--color-hover-bg)]"
     >
       {label}
     </button>

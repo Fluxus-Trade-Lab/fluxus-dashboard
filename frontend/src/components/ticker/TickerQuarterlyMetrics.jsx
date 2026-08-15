@@ -6,7 +6,7 @@ export default function TickerQuarterlyMetrics({ tickerData }) {
   const quarters = tickerData?.quarterly_metrics || []
   if (!quarters.length) {
     return (
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5">
         <div className="font-semibold mb-3 text-[14px]">Key Quarterly Metrics</div>
         <div className="text-[var(--color-text-muted)] text-[14px]">No quarterly data available.</div>
       </div>
@@ -14,7 +14,7 @@ export default function TickerQuarterlyMetrics({ tickerData }) {
   }
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5 overflow-x-auto">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-5 overflow-x-auto">
       <div className="font-semibold mb-3 text-[14px]">Key Quarterly Metrics</div>
       <table className="w-full text-[12.5px]">
         <thead>

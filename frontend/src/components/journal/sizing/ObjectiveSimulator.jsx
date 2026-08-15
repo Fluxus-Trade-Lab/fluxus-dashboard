@@ -42,7 +42,7 @@ function NumField({ label, value, onChange, step = 1, suffix, min, max }) {
           const next = parseFloat(e.target.value) || 0
           onChange(max != null ? Math.min(next, max) : next)
         }}
-        className="w-full text-[12.5px] bg-[var(--color-bg)] border border-[var(--color-border)] rounded px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
+        className="w-full text-[12.5px] bg-[var(--color-bg)] rounded-3xl px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
       />
     </div>
   )

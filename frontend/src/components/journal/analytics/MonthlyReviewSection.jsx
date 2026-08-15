@@ -255,7 +255,7 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
               onChange={e => setDraftReview(e.target.value)}
               placeholder="Paste Claude's review here..."
               rows={12}
-              className="w-full px-3 py-2 text-[12.5px] bg-[var(--color-bg)] border border-[var(--color-border)] rounded resize-y outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] leading-relaxed"
+              className="w-full px-3 py-2 text-[12.5px] bg-[var(--color-bg)] rounded-3xl resize-y outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] leading-relaxed"
             />
             <div className="flex gap-2">
               <button

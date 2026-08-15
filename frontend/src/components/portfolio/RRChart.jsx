@@ -32,7 +32,7 @@ export default function RRChart({ enrichedTrades }) {
   if (data.length < 3) return null
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-5">
       <div className="flex items-center justify-between mb-1">
         <span className="font-semibold text-[14px]">Every trade by R-multiple</span>
         <span className="text-[12.5px] text-[var(--color-text-muted)]">

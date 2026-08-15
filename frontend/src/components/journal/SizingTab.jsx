@@ -102,7 +102,7 @@ function SizingCalculator({ startingCapital }) {
             value={entry}
             onChange={e => setEntry(e.target.value)}
             placeholder="150.00"
-            className="w-full text-[12.5px] bg-[var(--color-bg)] border border-[var(--color-border)] rounded px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
+            className="w-full text-[12.5px] bg-[var(--color-bg)] rounded-3xl px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
           />
         </div>
         <div>
@@ -112,7 +112,7 @@ function SizingCalculator({ startingCapital }) {
             value={stop}
             onChange={e => setStop(e.target.value)}
             placeholder="145.00"
-            className="w-full text-[12.5px] bg-[var(--color-bg)] border border-[var(--color-border)] rounded px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
+            className="w-full text-[12.5px] bg-[var(--color-bg)] rounded-3xl px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
           />
         </div>
         <div>
@@ -122,7 +122,7 @@ function SizingCalculator({ startingCapital }) {
             value={riskPct}
             onChange={e => setRiskPct(parseFloat(e.target.value) || 0)}
             step="0.05"
-            className="w-full text-[12.5px] bg-[var(--color-bg)] border border-[var(--color-border)] rounded px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
+            className="w-full text-[12.5px] bg-[var(--color-bg)] rounded-3xl px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
           />
         </div>
       </div>

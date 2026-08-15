@@ -238,7 +238,7 @@ export default function OptionsTab() {
       {/* Stats row */}
       <div className="flex gap-3 flex-wrap mb-5">
         <div
-          className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] px-4 py-3 min-w-[130px] cursor-pointer group"
+          className="bg-[var(--color-bg)] rounded-3xl px-4 py-3 min-w-[130px] cursor-pointer group"
           onClick={() => {
             setEditingCapital(true)
             setCapitalInput(state.optionsCapital.toString())
@@ -446,7 +446,7 @@ export default function OptionsTab() {
       {equityCurve.length >= 2 && (
         <div className="mt-6">
           <div className="text-[11px] uppercase tracking-wide text-[var(--color-text-secondary)] font-semibold mb-2">Cumulative Weight-Adjusted P&L</div>
-          <div className="bg-[var(--color-bg)] rounded-md border border-[var(--color-border)] p-4">
+          <div className="bg-[var(--color-bg)] rounded-3xl p-4">
             <ResponsiveContainer width="100%" height={220}>
               <LineChart data={equityCurve}>
                 <XAxis

@@ -134,7 +134,7 @@ export default function TradeCaseStudies({ enriched }) {
   )
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-4 mb-4">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-4 mb-4">
       <div className="flex items-baseline gap-2 mb-1">
         <span className="text-[12.5px] font-bold text-[var(--color-accent)]">★</span>
         <span className="font-semibold text-[14px]">Trade case studies — 4 biggest winners & 4 biggest losers</span>

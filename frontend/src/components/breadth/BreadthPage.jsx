@@ -55,7 +55,6 @@ export default function BreadthPage({ data }) {
   return (
     <div className="space-y-3">
       <PageHeader group="market" title="Market State"
-        blurb="Nine conditions, measured every session, and the order they repair in. It was called Breadth — a family of indicators. This is the question it answers."
         meta={['rank is how many cells are filled, never hue alone',
                'an unmeasured condition renders outside the scale',
                'every condition prints the numbers that produced it']} />

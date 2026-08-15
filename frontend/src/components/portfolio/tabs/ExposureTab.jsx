@@ -120,7 +120,7 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
   return (
     <div>
       {deployData.length > 0 && (
-        <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5 mb-5">
+        <div className="bg-[var(--color-bg)] rounded-3xl p-5 mb-5">
           <div className="flex items-center justify-between mb-3">
             <span className="font-semibold text-[14px]">Capital Deployment</span>
             <span className="text-[12.5px] text-[var(--color-text-muted)]">How hard the capital worked over time</span>
@@ -162,7 +162,7 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
         </div>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-        <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+        <div className="bg-[var(--color-bg)] rounded-3xl p-5">
           <div className="font-semibold mb-3 text-[14px]">Holdings</div>
           <ResponsiveContainer width="100%" height={260}>
             <PieChart>
@@ -191,7 +191,7 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
                              equity={lastMark?.value} markDate={lastMark?.date} />
       </div>
 
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5">
         <div className="font-semibold mb-3 text-[14px]">Detail</div>
         <table className="w-full border-collapse text-[12.5px]">
           <thead>

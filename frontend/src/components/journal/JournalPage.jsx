@@ -36,8 +36,7 @@ export default function JournalPage() {
 
   return (
     <div className="max-w-5xl mx-auto py-6 px-4">
-      <PageHeader group="book" title="AI Coach"
-        blurb="Your own log, read back to you — sizing, risk, and the patterns in what you did." />
+      <PageHeader group="book" title="AI Coach" />
 
       {/* Strategy tabs */}
       <div className="flex gap-1 mb-5 flex-wrap">

@@ -64,6 +64,12 @@ const MA_CONFIGS = [
   { period: 200, type: 'sma', color: null, tone: '--color-text-bold', width: 1.5, label: '200' },
 ]
 
+/** MA line colours resolve at call time: lightweight-charts takes literals,
+ *  and the ladder must follow the theme. */
+const maColor = (ma) =>
+  ma.color ?? getComputedStyle(document.documentElement).getPropertyValue(ma.tone).trim()
+
+
 /* ── GymChart — incremental bar reveal ──────────────────── */
 
 function GymChart({ data, revealIndex, height = 350 }) {

@@ -8,7 +8,7 @@ export default function TickerBullBear({ tickerData }) {
 
   if (!bull.length && !bear.length) {
     return (
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5">
         <div className="font-semibold mb-3 text-[14px]">Bull vs Bear Summary</div>
         <div className="text-[var(--color-text-muted)] text-[12.5px]">
           Awaiting AI synthesis. Run <code className="bg-[var(--color-surface)] px-1 rounded">/tearsheet {tickerData?.ticker}</code> to generate.
@@ -18,7 +18,7 @@ export default function TickerBullBear({ tickerData }) {
   }
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-5">
       <div className="font-semibold mb-3 text-[14px] flex items-center justify-between">
         <span>Bull vs Bear Summary</span>
         {synth?.synthesized_at && (

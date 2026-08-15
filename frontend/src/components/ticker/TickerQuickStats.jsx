@@ -21,7 +21,7 @@ export default function TickerQuickStats({ tickerData, universe }) {
   ]
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-4 mb-4">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-4 mb-4">
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
         {stats.map(([label, value]) => (
           <div key={label} className="flex flex-col">

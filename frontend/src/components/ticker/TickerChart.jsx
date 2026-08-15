@@ -58,7 +58,7 @@ export default function TickerChart({ symbol, height = 520 }) {
 
   return (
     <div
-      className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] overflow-hidden"
+      className="bg-[var(--color-bg)] rounded-3xl overflow-hidden"
       style={{ height: `${height}px`, width: '100%' }}
     >
       <div

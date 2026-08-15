@@ -73,7 +73,6 @@ export default function TradeJournalPage() {
           17px bold, no crumb — so one product had two ideas of what a page
           title is, and the money half's read a tier smaller for no reason. */}
       <PageHeader group="book" title={tr('page.trades.title')}
-        blurb="Every fill, and what each one was worth against what it could have been worth."
         meta={[`${trades.length} trades · ${stats.total} closed`,
                `realized ${stats.totalR.toFixed(1)}R of ${stats.totalOpt.toFixed(1)}R available${
                  stats.captureOverall != null ? ` · ${stats.captureOverall.toFixed(0)}% capture` : ''}`]} />

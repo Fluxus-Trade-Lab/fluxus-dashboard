@@ -42,7 +42,7 @@ export default function DemonRulesConfig({ rules, onUpdate }) {
                       const val = parse(e.target.value)
                       if (!isNaN(val) && val > 0) onUpdate({ ...rules, [key]: val })
                     }}
-                    className="w-full px-2 py-1 text-[12.5px] font-mono bg-[var(--color-bg)] border border-[var(--color-border)] rounded outline-none focus:border-[var(--color-text-muted)] text-[var(--color-text)]"
+                    className="w-full px-2 py-1 text-[12.5px] font-mono bg-[var(--color-bg)] rounded-3xl outline-none focus:border-[var(--color-text-muted)] text-[var(--color-text)]"
                   />
                   {suffix && <span className="text-[12.5px] text-[var(--color-text-muted)]">{suffix}</span>}
                 </div>

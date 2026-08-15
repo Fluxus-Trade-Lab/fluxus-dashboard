@@ -91,7 +91,6 @@ export default function ThemeLeaderboard() {
   return (
     <div className="space-y-4">
       <PageHeader group="market" title="RS Leaderboard"
-        blurb="The strongest themes on two clocks."
         meta={[`vs ${benchmark ?? 'SPY'} · ${date ?? ''} · top ${TOP} of ${ranked}`]} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-6">

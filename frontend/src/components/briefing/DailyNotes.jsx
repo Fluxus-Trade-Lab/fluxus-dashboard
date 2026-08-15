@@ -42,7 +42,7 @@ export default function DailyNotes({ date }) {
         value={text}
         onChange={handleChange}
         placeholder="Write your observations, key levels, trade ideas..."
-        className="w-full min-h-[160px] p-3 border border-[var(--color-border)] rounded text-[14px] text-[var(--color-text)]
+        className="w-full min-h-[160px] p-3 rounded-3xl text-[14px] text-[var(--color-text)]
           bg-[var(--color-bg)] resize-y outline-none focus:border-[var(--color-text-muted)] font-sans leading-relaxed
           placeholder:text-[var(--color-text-muted)]"
       />

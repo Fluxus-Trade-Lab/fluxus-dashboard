@@ -8,7 +8,7 @@ export default function TickerCatalysts({ tickerData }) {
 
   if (synth && synth.length) {
     return (
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5">
         <div className="font-semibold mb-3 text-[14px] flex items-center justify-between">
           <span>Recent Catalysts & News</span>
           <span className="text-[10px] text-[var(--color-text-muted)] font-normal">AI-synthesized</span>
@@ -24,7 +24,7 @@ export default function TickerCatalysts({ tickerData }) {
 
   if (!news.length) {
     return (
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5">
         <div className="font-semibold mb-3 text-[14px]">Recent Catalysts & News</div>
         <div className="text-[var(--color-text-muted)] text-[14px]">No recent news.</div>
       </div>
@@ -32,7 +32,7 @@ export default function TickerCatalysts({ tickerData }) {
   }
 
   return (
-    <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+    <div className="bg-[var(--color-bg)] rounded-3xl p-5">
       <div className="font-semibold mb-3 text-[14px] flex items-center justify-between">
         <span>Recent News</span>
         <span className="text-[10px] text-[var(--color-text-muted)] font-normal">

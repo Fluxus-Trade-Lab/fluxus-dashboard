@@ -65,7 +65,7 @@ export default function TradeDetailPage({ tradeId }) {
       </div>
 
       {/* Narrative */}
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5 mb-4">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5 mb-4">
         <div className="text-[14px] leading-relaxed" dangerouslySetInnerHTML={{ __html: markdownish(data.narrative) }} />
         <div className="mt-3 pt-3 border-t border-[var(--color-border-light)]">
           <span className="text-[10px] uppercase tracking-wide text-[var(--color-text-muted)]">Lesson</span>
@@ -74,7 +74,7 @@ export default function TradeDetailPage({ tradeId }) {
       </div>
 
       {/* Annotated chart */}
-      <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5 mb-4">
+      <div className="bg-[var(--color-bg)] rounded-3xl p-5 mb-4">
         <div className="font-semibold mb-3 text-[14px]">Price path · entry → exit + buffer</div>
         {chartData.length === 0 ? (
           <div className="text-[var(--color-text-muted)] text-[14px]">No OHLC data available for this window.</div>
@@ -141,7 +141,7 @@ export default function TradeDetailPage({ tradeId }) {
       {/* Three-column detail */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         {/* Entry snapshot */}
-        <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+        <div className="bg-[var(--color-bg)] rounded-3xl p-5">
           <div className="font-semibold mb-3 text-[14px]">Entry snapshot</div>
           <div className="text-[12.5px] flex flex-col gap-1.5">
             <Row label="Entry price" value={fmtCur(t.entry_price)} />
@@ -159,7 +159,7 @@ export default function TradeDetailPage({ tradeId }) {
         </div>
 
         {/* Execution */}
-        <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+        <div className="bg-[var(--color-bg)] rounded-3xl p-5">
           <div className="font-semibold mb-3 text-[14px]">Execution</div>
           <div className="text-[12.5px] flex flex-col gap-1.5">
             <Row label="Status" value={t.closed ? 'Closed' : 'Open'} />
@@ -183,7 +183,7 @@ export default function TradeDetailPage({ tradeId }) {
         </div>
 
         {/* Path analytics */}
-        <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-border)] p-5">
+        <div className="bg-[var(--color-bg)] rounded-3xl p-5">
           <div className="font-semibold mb-3 text-[14px]">Path analytics</div>
           <div className="text-[12.5px] flex flex-col gap-1.5">
             <Row label="Optimal exit" value={analytics.optimal_exit_price != null ? fmtCur(analytics.optimal_exit_price) : '—'} />
