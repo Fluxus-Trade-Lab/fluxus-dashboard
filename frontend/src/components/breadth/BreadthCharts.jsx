@@ -52,12 +52,12 @@ function MaChart({ history }) {
     const sma50 = chart.addSeries(LineSeries, { color: tk.secondary, lineWidth: 1.5, title: '50 SMA' })
     sma50.setData(dates.map((d, i) => ({ time: d, value: hist.pct_above_50sma[i] ?? 0 })))
 
-    const sma20 = chart.addSeries(LineSeries, { color: '#a8a29e', lineWidth: 1, title: '20 SMA' })
+    const sma20 = chart.addSeries(LineSeries, { color: tk.muted, lineWidth: 1, title: '20 SMA' })
     sma20.setData(dates.map((d, i) => ({ time: d, value: hist.pct_above_20sma[i] ?? 0 })))
   })
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-3 py-3">
+    <div className="bg-[var(--color-surface)] rounded-3xl px-3 py-3">
       <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
         % Above Moving Averages
       </h3>
@@ -78,7 +78,7 @@ function McClellanChart({ history }) {
     }))
 
     const mcSeries = chart.addSeries(LineSeries, {
-      color: '#78716c',
+      color: chartTokens().muted,
       lineWidth: 1.5,
       title: 'McClellan',
       crosshairMarkerRadius: 3,
@@ -88,14 +88,14 @@ function McClellanChart({ history }) {
     // Zero line baseline
     mcSeries.createPriceLine({
       price: 0,
-      color: '#d6d3d1',
+      color: chartTokens().border,
       lineWidth: 1,
       lineStyle: 2, // dashed
     })
   })
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-3 py-3">
+    <div className="bg-[var(--color-surface)] rounded-3xl px-3 py-3">
       <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
         McClellan Oscillator
       </h3>

@@ -15,7 +15,7 @@ export default function MarketStateSummary({ mm, breadth, verdict }) {
     : t <= 80 ? 'strong' : 'overbought'
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+    <div className="bg-[var(--color-surface)] rounded-3xl p-5">
       <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
         Market State Summary
       </h3>

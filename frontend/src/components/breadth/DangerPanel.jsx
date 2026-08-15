@@ -10,7 +10,7 @@ export default function DangerPanel({ title, danger }) {
   if (!danger?.signals) return null
   const count = danger.count ?? 0
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-4 py-3">
+    <div className="bg-[var(--color-surface)] rounded-3xl px-4 py-3">
       <div className="flex items-baseline justify-between mb-2">
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           {title}

@@ -17,7 +17,7 @@ export default function VerdictBanner({ verdict, dataQuality, session }) {
   const offSession = isWeekend(session)
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+    <div className="bg-[var(--color-surface)] rounded-3xl p-5">
       <div className="flex items-baseline justify-between mb-3">
         <div className="flex items-baseline gap-3">
           <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">

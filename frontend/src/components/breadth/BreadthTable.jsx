@@ -14,7 +14,7 @@ export default function BreadthTable({ data }) {
   const sorted = [...deduped].reverse()
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded overflow-hidden">
+    <div className="bg-[var(--color-surface)] rounded-3xl overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-[12.5px]">
           <thead>

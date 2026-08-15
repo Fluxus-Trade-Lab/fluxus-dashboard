@@ -112,7 +112,7 @@ export default function MonthlyCalendar({ monthEquity, startingCapital, riskPct 
   const valueKey = view === 'dollar' ? 'dollar' : 'r'
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4">
+    <div className="bg-[var(--color-surface)] rounded-3xl p-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <h4 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">

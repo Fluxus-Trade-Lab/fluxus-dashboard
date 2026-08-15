@@ -3,7 +3,7 @@ export default function TimeMachineBar({ tm }) {
 
   if (!tm.active) {
     return (
-      <div className="flex items-center gap-3 bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-4 py-2">
+      <div className="flex items-center gap-3 bg-[var(--color-surface)] rounded-3xl px-4 py-2">
         <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Market Time Machine
         </span>
@@ -29,7 +29,7 @@ export default function TimeMachineBar({ tm }) {
   // date to back the claim — show a neutral loading row instead.
   if (!tm.date) {
     return (
-      <div className="flex items-center gap-3 bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-4 py-2">
+      <div className="flex items-center gap-3 bg-[var(--color-surface)] rounded-3xl px-4 py-2">
         <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Market Time Machine
         </span>

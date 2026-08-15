@@ -162,7 +162,7 @@ export default function CoachTab({ strategy }) {
   return (
     <div className="space-y-4">
       {/* Strategy header */}
-      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+      <div className="bg-[var(--color-surface)] rounded-3xl p-5">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-[14px] font-semibold text-[var(--color-text-bold)] mb-1">{config.name}</h3>
@@ -177,7 +177,7 @@ export default function CoachTab({ strategy }) {
       </div>
 
       {/* Chat area */}
-      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden">
+      <div className="bg-[var(--color-surface)] rounded-3xl overflow-hidden">
         <div className="min-h-[200px] max-h-[60vh] overflow-y-auto p-4 space-y-3">
           {messages.length === 0 && !loading && (
             <div className="text-center py-12">
@@ -247,7 +247,7 @@ export default function CoachTab({ strategy }) {
                       placeholder="Paste Claude's response here..."
                       aria-label="Paste coach response"
                       rows={6}
-                      className="w-full px-3 py-2 text-[12.5px] bg-[var(--color-surface)] border border-[var(--color-border)] rounded resize-y outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)]"
+                      className="w-full px-3 py-2 text-[12.5px] bg-[var(--color-surface)] rounded-3xl resize-y outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)]"
                     />
                     <button
                       onClick={handleSubmitPaste}
@@ -275,7 +275,7 @@ export default function CoachTab({ strategy }) {
             placeholder={`Ask about ${config.name?.toLowerCase() || 'trading'}...`}
             aria-label={`Ask the ${config.name} coach`}
             disabled={loading}
-            className="flex-1 px-3 py-2 border border-[var(--color-border)] rounded text-[14px] bg-[var(--color-surface)] outline-none focus:border-[var(--color-text-muted)] font-sans disabled:opacity-50"
+            className="flex-1 px-3 py-2 rounded-3xl text-[14px] bg-[var(--color-surface)] outline-none focus:border-[var(--color-text-muted)] font-sans disabled:opacity-50"
           />
           <button
             onClick={handleSend}

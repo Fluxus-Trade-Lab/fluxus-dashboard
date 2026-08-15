@@ -83,7 +83,7 @@ function NotesPanel({ entry, onTickerClick }) {
   }
 
   return (
-    <div className="p-4 border border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] space-y-3">
+    <div className="p-4 rounded-3xl bg-[var(--color-surface)] space-y-3">
       {/* Ticker + year */}
       <div>
         <button
@@ -112,7 +112,7 @@ function NotesPanel({ entry, onTickerClick }) {
         {entry.gain_pct != null && (
           <span>
             <span className="text-[var(--color-text-muted)]">Gain </span>
-            <span className={`font-semibold ${entry.gain_pct > 0 ? 'text-[var(--color-profit)] dark:text-[var(--color-profit)]' : 'text-[var(--color-text-secondary)]'}`}>
+            <span className={`font-semibold ${entry.gain_pct > 0 ? 'text-[var(--color-profit)] dark:text-[var(--color-profit)]' : 'text-[var(--color-loss)] dark:text-[var(--color-loss)]'}`}>
               {entry.gain_pct.toFixed(1)}%
             </span>
           </span>
@@ -346,7 +346,7 @@ export default function BrowseView({ cards }) {
         </button>
       </div>
 
-      <div className="border border-[var(--color-border)] rounded-lg overflow-hidden bg-[var(--color-surface)]">
+      <div className="rounded-3xl overflow-hidden bg-[var(--color-surface)]">
         {ohlcvLoading ? (
           <div className="flex items-center justify-center text-[12.5px] text-[var(--color-text-muted)]" style={{ height: chartHeight }}>
             Loading chart data...
@@ -378,12 +378,12 @@ export default function BrowseView({ cards }) {
           placeholder="Search ticker, lessons..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-2 py-1.5 w-36 focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
+          className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] rounded-3xl px-2 py-1.5 w-36 focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
         />
         <select
           value={patternFilter}
           onChange={e => setPatternFilter(e.target.value)}
-          className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-1.5 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
+          className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] rounded-3xl px-1.5 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
         >
           <option value="all">All Patterns</option>
           {allPatterns.map(p => (
@@ -393,7 +393,7 @@ export default function BrowseView({ cards }) {
         <select
           value={sourceFilter}
           onChange={e => setSourceFilter(e.target.value)}
-          className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-1.5 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
+          className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] rounded-3xl px-1.5 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
         >
           <option value="all">All Sources</option>
           {allSources.map(s => (
@@ -406,7 +406,7 @@ export default function BrowseView({ cards }) {
       </div>
 
       {/* Table */}
-      <div className="overflow-y-auto border border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] flex-1 max-h-[40vh] lg:max-h-[calc(100vh-180px)]">
+      <div className="overflow-y-auto rounded-3xl bg-[var(--color-surface)] flex-1 max-h-[40vh] lg:max-h-[calc(100vh-180px)]">
         <table className="w-full text-[12.5px]">
           <thead className="sticky top-0 z-10">
             <tr className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
@@ -456,7 +456,7 @@ export default function BrowseView({ cards }) {
                       </div>
                     </td>
                     <td className={`px-1.5 py-1.5 text-[11px] font-mono ${
-                      card.gain_pct != null && card.gain_pct > 0 ? 'text-[var(--color-profit)] dark:text-[var(--color-profit)]' : 'text-[var(--color-text-secondary)]'
+                      card.gain_pct != null && card.gain_pct > 0 ? 'text-[var(--color-profit)] dark:text-[var(--color-profit)]' : 'text-[var(--color-loss)] dark:text-[var(--color-loss)]'
                     }`}>
                       {card.gain_pct != null ? `${card.gain_pct.toFixed(0)}%` : '\u2014'}
                     </td>

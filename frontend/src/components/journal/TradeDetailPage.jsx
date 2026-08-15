@@ -93,15 +93,15 @@ export default function TradeDetailPage({ tradeId }) {
                 formatter={(v, name) => [name === 'close' ? `$${Number(v).toFixed(2)}` : v, name]}
                 labelFormatter={l => `Date: ${l}`}
               />
-              <Line type="monotone" dataKey="close" stroke="#5b8fa8" strokeWidth={2} dot={false} name="Close" />
+              <Line type="monotone" dataKey="close" stroke="var(--color-text-muted)" strokeWidth={2} dot={false} name="Close" />
 
               {/* Entry */}
-              <ReferenceLine y={t.entry_price} stroke="#9da6b3" strokeDasharray="3 3" label={{ value: `Entry $${t.entry_price.toFixed(2)}`, fill: '#9da6b3', fontSize: 10, position: 'left' }} />
-              <ReferenceLine x={String(t.entry_date).slice(0, 10)} stroke="#5b8fa8" strokeDasharray="2 2" />
+              <ReferenceLine y={t.entry_price} stroke="var(--color-text-muted)" strokeDasharray="3 3" label={{ value: `Entry $${t.entry_price.toFixed(2)}`, fill: 'var(--color-text-muted)', fontSize: 10, position: 'left' }} />
+              <ReferenceLine x={String(t.entry_date).slice(0, 10)} stroke="var(--color-text-muted)" strokeDasharray="2 2" />
               <ReferenceDot x={String(t.entry_date).slice(0, 10)} y={t.entry_price} r={5} fill="#5b8fa8" stroke="#fff" strokeWidth={1.5} />
 
               {/* Stop */}
-              <ReferenceLine y={t.stop_price} stroke="#b85a5a" strokeDasharray="3 3" label={{ value: `Stop $${t.stop_price.toFixed(2)}`, fill: '#b85a5a', fontSize: 10, position: 'left' }} />
+              <ReferenceLine y={t.stop_price} stroke="var(--color-loss)" strokeDasharray="3 3" label={{ value: `Stop $${t.stop_price.toFixed(2)}`, fill: 'var(--color-loss)', fontSize: 10, position: 'left' }} />
 
               {/* Trims */}
               {t.trims.map((tr, i) => (
@@ -110,7 +110,7 @@ export default function TradeDetailPage({ tradeId }) {
                   x={tr.date}
                   y={tr.price}
                   r={4}
-                  fill={tr.type === 'sell_rest' ? '#b85a5a' : '#c89a4e'}
+                  fill={tr.type === 'sell_rest' ? 'var(--color-loss)' : 'var(--color-text-secondary)'}
                   stroke="#fff"
                   strokeWidth={1.5}
                 />
@@ -122,7 +122,7 @@ export default function TradeDetailPage({ tradeId }) {
                   x={String(analytics.optimal_exit_date).slice(0, 10)}
                   y={analytics.optimal_exit_price}
                   r={6}
-                  fill="#5a9c6f"
+                  fill="var(--color-profit)"
                   stroke="#fff"
                   strokeWidth={2}
                 />

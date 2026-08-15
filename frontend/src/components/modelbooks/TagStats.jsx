@@ -96,7 +96,7 @@ export default function TagStats({ cards }) {
         <select
           value={sourceFilter}
           onChange={e => setSourceFilter(e.target.value)}
-          className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
+          className="text-[11px] text-[var(--color-text-secondary)] bg-[var(--color-surface)] rounded-3xl px-2 py-1.5 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
         >
           <option value="all">All Sources</option>
           {allSources.map(s => (
@@ -134,7 +134,7 @@ export default function TagStats({ cards }) {
             return (
               <div
                 key={pattern}
-                className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-3 space-y-2.5"
+                className="bg-[var(--color-surface)] rounded-3xl p-3 space-y-2.5"
               >
                 {/* Pattern badge */}
                 <span className={`inline-block px-2 py-0.5 text-[10px] font-medium rounded-full ${badgeColors}`}>

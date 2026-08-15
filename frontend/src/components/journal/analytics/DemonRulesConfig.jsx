@@ -15,7 +15,7 @@ export default function DemonRulesConfig({ rules, onUpdate }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden">
+    <div className="bg-[var(--color-surface)] rounded-3xl overflow-hidden">
       <button
         onClick={() => setOpen(!open)}
         aria-expanded={open}

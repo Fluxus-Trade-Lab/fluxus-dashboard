@@ -42,7 +42,7 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
 
       {/* Equity curve */}
       {performanceData.length > 1 && (
-        <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+        <div className="bg-[var(--color-surface)] rounded-3xl p-5">
           <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Equity Curve
           </h3>
@@ -57,9 +57,9 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
                 labelFormatter={l => l}
               />
               <Legend wrapperStyle={{ fontSize: 11 }} />
-              <Line type="monotone" dataKey="returnPct" name="Portfolio" stroke="#5b8fa8" dot={false} strokeWidth={2} />
+              <Line type="monotone" dataKey="returnPct" name="Portfolio" stroke="var(--color-text-bold)" dot={false} strokeWidth={2.4} />
               {performanceData[0]?.SPY != null && (
-                <Line type="monotone" dataKey="SPY" name="SPY" stroke="#999" dot={false} strokeWidth={1} strokeDasharray="4 2" />
+                <Line type="monotone" dataKey="SPY" name="SPY" stroke="var(--color-text-muted)" dot={false} strokeWidth={1} strokeDasharray="4 2" />
               )}
             </LineChart>
           </ResponsiveContainer>
@@ -72,7 +72,7 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
 
       {/* Monthly performance table */}
       {monthlyStats.length > 0 && (
-        <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+        <div className="bg-[var(--color-surface)] rounded-3xl p-5">
           <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Monthly Performance
           </h3>
@@ -107,7 +107,7 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
 
       {/* Insights */}
       {insights.length > 0 && (
-        <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+        <div className="bg-[var(--color-surface)] rounded-3xl p-5">
           <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Insights
           </h3>

@@ -28,15 +28,15 @@ export default function HealthChart({ title, block, state, t2108 }) {
 
     if (t2108?.dates?.length) {
       const overlay = chart.addSeries(LineSeries, {
-        color: '#a8a29e', lineWidth: 1, priceScaleId: 't2108',
+        color: chartTokens().muted, lineWidth: 1, priceScaleId: 't2108',
         priceLineVisible: false,
       })
       overlay.setData(t2108.dates.map((d, i) => ({ time: d, value: t2108.values[i] ?? 0 })))
       chart.priceScale('t2108').applyOptions({
         scaleMargins: { top: 0.05, bottom: 0.05 }, visible: false,
       })
-      overlay.createPriceLine({ price: 20, color: '#d6d3d1', lineWidth: 1, lineStyle: 2 })
-      overlay.createPriceLine({ price: 80, color: '#d6d3d1', lineWidth: 1, lineStyle: 2 })
+      overlay.createPriceLine({ price: 20, color: chartTokens().border, lineWidth: 1, lineStyle: 2 })
+      overlay.createPriceLine({ price: 80, color: chartTokens().border, lineWidth: 1, lineStyle: 2 })
     }
   })
 
@@ -46,7 +46,7 @@ export default function HealthChart({ title, block, state, t2108 }) {
   const dayPct = prev ? ((last.c / prev.c - 1) * 100).toFixed(2) : null
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-3 py-3">
+    <div className="bg-[var(--color-surface)] rounded-3xl px-3 py-3">
       <div className="flex items-baseline justify-between mb-2">
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           {title} {state ? `· ${state}` : ''}

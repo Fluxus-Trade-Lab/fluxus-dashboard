@@ -112,7 +112,7 @@ export default function TradeJournalPage() {
         ))}
       </div>
 
-      <div className="overflow-x-auto border border-[var(--color-border)] rounded-lg bg-[var(--color-surface)]">
+      <div className="overflow-x-auto rounded-3xl bg-[var(--color-surface)]">
         <table className="w-full text-[12.5px]">
           <thead>
             <tr className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">

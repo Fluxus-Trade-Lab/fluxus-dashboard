@@ -89,7 +89,7 @@ function SizingCalculator({ startingCapital }) {
   }, [entry, stop, riskPct, startingCapital])
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4 space-y-4">
+    <div className="bg-[var(--color-surface)] rounded-3xl p-4 space-y-4">
       <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
         Position Size Calculator
       </h3>
@@ -228,7 +228,7 @@ function PortfolioAudit({ trades, dailyPrices, startingCapital }) {
   }
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4 space-y-3">
+    <div className="bg-[var(--color-surface)] rounded-3xl p-4 space-y-3">
       <div className="flex items-center justify-between">
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Current Positions — Sizing Audit
@@ -314,7 +314,7 @@ function SizingTabInner() {
             return (
               <div
                 key={method.key}
-                className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden"
+                className="bg-[var(--color-surface)] rounded-3xl overflow-hidden"
               >
                 {/* Header — always visible */}
                 <button

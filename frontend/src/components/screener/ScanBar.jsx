@@ -165,7 +165,7 @@ export default function ScanBar({
                          placeholder:text-[var(--color-text-muted)]" />
             {themeOpen && themeMatches.length > 0 && (
               <div className="absolute left-0 top-full mt-1 z-20 min-w-[220px] max-h-[300px] overflow-auto
-                              bg-[var(--color-surface)] border border-[var(--color-border)] rounded shadow-lg">
+                              bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg shadow-lg">
                 {themeMatches.map((t, i) => (
                   // mousedown, not click — click fires after the input's blur closes the list
                   <div key={t.group}

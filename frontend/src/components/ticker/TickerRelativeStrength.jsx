@@ -89,9 +89,9 @@ export default function TickerRelativeStrength({ tickerData }) {
           <YAxis tick={{ fontSize: 11 }} tickFormatter={v => `${Number(v).toFixed(0)}`} />
           <Tooltip formatter={v => v != null ? Number(v).toFixed(1) : '—'} />
           <Legend />
-          <Line type="monotone" dataKey="sym" stroke="#5b8fa8" strokeWidth={2.5} dot={false} name={tickerData.ticker} />
-          <Line type="monotone" dataKey="spy" stroke="#9da6b3" strokeWidth={1.5} dot={false} name="SPY" strokeDasharray="4 4" />
-          <Line type="monotone" dataKey="qqq" stroke="#c89a4e" strokeWidth={1.5} dot={false} name="QQQ" strokeDasharray="4 4" />
+          <Line type="monotone" dataKey="sym" stroke="var(--color-text-bold)" strokeWidth={2.4} dot={false} name={tickerData.ticker} />
+          <Line type="monotone" dataKey="spy" stroke="var(--color-text-muted)" strokeWidth={1.5} dot={false} name="SPY" strokeDasharray="4 4" />
+          <Line type="monotone" dataKey="qqq" stroke="var(--color-text-secondary)" strokeWidth={1.5} dot={false} name="QQQ" strokeDasharray="4 4" />
         </LineChart>
       </ResponsiveContainer>
 

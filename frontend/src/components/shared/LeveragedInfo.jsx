@@ -21,7 +21,7 @@ export default function LeveragedInfo({ longEtfs, shortEtfs }) {
       </span>
 
       {show && (
-        <span className="absolute bottom-full left-0 mb-1 z-10 whitespace-nowrap bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-2 py-1 text-[10px] font-mono text-[var(--color-text-secondary)]">
+        <span className="absolute bottom-full left-0 mb-1 z-10 whitespace-nowrap bg-[var(--color-surface)] rounded-3xl px-2 py-1 text-[10px] font-mono text-[var(--color-text-secondary)]">
           {hasLong && <span className="block">Long: {longEtfs.join(', ')}</span>}
           {hasShort && <span className="block">Short: {shortEtfs.join(', ')}</span>}
         </span>

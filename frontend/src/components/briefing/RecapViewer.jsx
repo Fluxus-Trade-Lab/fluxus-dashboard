@@ -29,7 +29,7 @@ export default function RecapViewer({ date }) {
 
   if (loading) {
     return (
-      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6">
+      <div className="bg-[var(--color-surface)] rounded-3xl p-6">
         <div className="text-[12.5px] text-[var(--color-text-muted)] animate-pulse">Loading briefing...</div>
       </div>
     )
@@ -37,14 +37,14 @@ export default function RecapViewer({ date }) {
 
   if (!content) {
     return (
-      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6 flex items-center justify-center h-32">
+      <div className="bg-[var(--color-surface)] rounded-3xl p-6 flex items-center justify-center h-32">
         <span className="text-[12.5px] text-[var(--color-text-muted)] uppercase tracking-wide">No briefing for this date</span>
       </div>
     )
   }
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-6">
+    <div className="bg-[var(--color-surface)] rounded-3xl p-6">
       <div
         className="prose prose-stone prose-sm max-w-none
           prose-headings:text-[var(--color-text-bold)] prose-headings:tracking-tight

@@ -63,10 +63,9 @@
      not an encoding colour, and it must never carry a reading that took /
      refused / profit / loss / the signal hues already carry, because those
      answer "the data says this".
-     Two known violations, both charts, both predating this rule and both left
-     for a separate pass: the equity line in journal/analytics/MonthlyReview
-     and the SPY series label in modelbooks/OhlcvChart paint a data series in
-     accent. Do not add a third.
+     The two violations once recorded here (MonthlyReview's equity line, the
+     OhlcvChart SPY label) were closed in the v3 sweep 2026-08-15. Do not
+     open a new one.
      6.14:1 on the warm ground (measured in-browser). Dark twin in html.dark. */
   --color-accent: #2d5f8a;
   --color-accent-light: #dbeafe;

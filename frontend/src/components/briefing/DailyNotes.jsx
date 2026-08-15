@@ -29,7 +29,7 @@ export default function DailyNotes({ date }) {
   }, [])
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+    <div className="bg-[var(--color-surface)] rounded-3xl p-5">
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           My Notes

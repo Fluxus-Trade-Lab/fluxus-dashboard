@@ -75,7 +75,7 @@ export default function ObjectiveSimulator({ rs }) {
   const targetSign = targetReturnPct >= 0 ? '+' : ''
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4 space-y-4">
+    <div className="bg-[var(--color-surface)] rounded-3xl p-4 space-y-4">
       <div>
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Size to Objectives — Monte-Carlo
@@ -171,7 +171,7 @@ export default function ObjectiveSimulator({ rs }) {
                 />
                 <Bar dataKey="count" isAnimationActive={false}>
                   {sim.histogram.map((b, i) => (
-                    <Cell key={i} fill={b.x >= targetReturnPct ? '#15803d' : 'var(--color-border)'} />
+                    <Cell key={i} fill={b.x >= targetReturnPct ? 'var(--color-profit)' : 'var(--color-border)'} />
                   ))}
                 </Bar>
               </BarChart>

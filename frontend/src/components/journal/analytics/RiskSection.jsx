@@ -81,12 +81,15 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
     return <div className="text-center py-16 text-[var(--color-text-muted)]">No open positions to analyze.</div>
   }
 
-  const heatColor = (v) => v > 2 ? '#ef4444' : v > 1 ? '#f59e0b' : '#22c55e'
+  // v3: risk heat is a constraint scale — red only where risk binds (>2R),
+  // grey below it. Green retired: an acceptable risk is not good news to
+  // celebrate, it is the absence of a problem.
+  const heatColor = (v) => v > 2 ? 'var(--color-loss)' : v > 1 ? 'var(--color-text-secondary)' : 'var(--color-untested)'
 
   return (
     <div className="space-y-5">
       {/* Portfolio Heat */}
-      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+      <div className="bg-[var(--color-surface)] rounded-3xl p-5">
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
           Portfolio Heat
         </h3>
@@ -134,7 +137,7 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
       {/* Concentration & Exposure */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {/* Ticker concentration */}
-        <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+        <div className="bg-[var(--color-surface)] rounded-3xl p-5">
           <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Concentration by Ticker
           </h3>
@@ -163,7 +166,7 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
         </div>
 
         {/* Direction exposure */}
-        <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+        <div className="bg-[var(--color-surface)] rounded-3xl p-5">
           <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Exposure
           </h3>
@@ -211,7 +214,7 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
 
       {/* Beta-weighted exposure */}
       {betaData && (
-        <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+        <div className="bg-[var(--color-surface)] rounded-3xl p-5">
           <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Beta-Weighted Exposure
           </h3>

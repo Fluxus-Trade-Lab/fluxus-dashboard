@@ -52,8 +52,8 @@ export default function RRChart({ enrichedTrades }) {
             labelFormatter={(i) => data[i]?.ticker + ' · ' + data[i]?.exit}
           />
           <ReferenceLine y={0} stroke="var(--color-text-muted)" />
-          <ReferenceLine y={avgWin} stroke="#2e9e4f" strokeDasharray="4 4" strokeOpacity={0.6} />
-          <ReferenceLine y={avgLoss} stroke="#d0362b" strokeDasharray="4 4" strokeOpacity={0.6} />
+          <ReferenceLine y={avgWin} stroke="var(--color-profit)" strokeDasharray="4 4" strokeOpacity={0.6} />
+          <ReferenceLine y={avgLoss} stroke="var(--color-loss)" strokeDasharray="4 4" strokeOpacity={0.6} />
           <Bar dataKey="r" isAnimationActive={false}>
             {data.map((d, i) => <Cell key={i} fill={d.r > 0 ? '#2e9e4f' : '#d0362b'} />)}
           </Bar>

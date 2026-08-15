@@ -211,7 +211,7 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
         {/* Clean trades card */}
         <button
           onClick={() => setActiveFilter(activeFilter === 'clean' ? null : 'clean')}
-          className={`bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg px-3 py-3 text-left cursor-pointer transition-colors hover:bg-[var(--color-hover-bg)] ${
+          className={`bg-[var(--color-surface)] rounded-3xl px-3 py-3 text-left cursor-pointer transition-colors hover:bg-[var(--color-hover-bg)] ${
             activeFilter === 'clean' ? 'ring-2 ring-[var(--color-accent)]' : ''
           }`}
         >
@@ -228,7 +228,7 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
 
       {/* Tactical discipline */}
       {tacticalStats && (
-        <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg px-4 py-3">
+        <div className="bg-[var(--color-surface)] rounded-3xl px-4 py-3">
           <h4 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Tactical Discipline (First Trim)
           </h4>
@@ -281,7 +281,7 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
       )}
 
       {/* Trade list */}
-      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden">
+      <div className="bg-[var(--color-surface)] rounded-3xl overflow-hidden">
         <div className="px-3 py-2 border-b border-[var(--color-border)] flex items-center justify-between">
           <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
             {activeFilter

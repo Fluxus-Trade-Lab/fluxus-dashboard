@@ -779,3 +779,21 @@ v3 版式层至此三件套齐：Plex 字体 + 24px 无边框卡 + 来源行。
 图表语法同日落到旗舰图（Market Conditions 线）：网格 7 根→3 根（0/50/100）、
 竖网格删（月份刻度本来就在下方标签行）、线宽 1.6→2.4、终点加 9px 圆点——
 眼睛落在数据结束的地方。步进保留（票数分辨率 ≈11 分，平滑是画出不存在的精度）。
+
+### v3 完成（2026-08-15 · Andy：全部继续不要停）
+
+最后一轮扫清（969ec1f 之后的收官提交）：
+- **硬编码图表色清零**：journal recharts 五张（Monthly/Summary/Volatility/RiskSection/
+  Simulator）、TradeDetail 参考线（止损=loss红=约束）、Ticker RS 线、Exposure、RRChart、
+  modelbooks 两套 K线+四条均线阶梯（lightweight-charts 不吃 CSS 变量 → getThemeColors/
+  chartTokens 实时解析，主题翻转随图重建重解析）。`grep` 审计：**0 残留**（营销半边除外）。
+- **两条 accent 旧违例全部关闭**（MonthlyReview 权益线→墨 2.4、OhlcvChart SPY 标签→
+  跟自己的线同灰）；index.css 注释同步改为「已关闭，勿再开」。
+- **卡壳批量 v3 化**：46 文件 79 处 `border+rounded-lg` 卡 → `rounded-3xl` 无边框；
+  两处**浮层**（Rail 悬停名牌、ScanBar 下拉）刻意保留描边——浮在任意底上需要边。
+- **查漏**：BrowseView 负 gain 半对（蓝 vs 灰）补成全对；TradingGym 买/卖按钮脱下编码色
+  （按钮是 chrome，读者的动作不穿数据的颜色）。
+- **终审计**（computed，8 页）：dashboard 33/27、breadth 52/2、trades 325/157（全是
+  配对或数据偏斜）；groups/screener 0/0（灰地板成立）。
+**v3 状态：完成。** 余项仅：journal 空态页待有数据时复查；来源行未铺满全站（Dashboard 有，
+其余页可按需补）。

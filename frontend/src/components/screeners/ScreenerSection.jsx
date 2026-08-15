@@ -4,7 +4,7 @@ export default function ScreenerSection({ title, count, children, defaultOpen = 
   const [open, setOpen] = useState(defaultOpen)
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded overflow-hidden">
+    <div className="bg-[var(--color-surface)] rounded-3xl overflow-hidden">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}

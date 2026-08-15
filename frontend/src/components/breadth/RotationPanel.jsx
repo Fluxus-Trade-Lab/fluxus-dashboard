@@ -37,7 +37,7 @@ export default function RotationPanel() {
   if (loading) return null
   if (error || !rotation?.verdict) {
     return (
-      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+      <div className="bg-[var(--color-surface)] rounded-3xl p-5">
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] m-0">
           Style Rotation
         </h3>
@@ -54,7 +54,7 @@ export default function RotationPanel() {
     `${win?.near_sessions ?? 21}-session near windows, not on the fortnight grid.`
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-5">
+    <div className="bg-[var(--color-surface)] rounded-3xl p-5">
       <div className="flex items-baseline justify-between gap-3 mb-3">
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] m-0">
           Style Rotation · Risk On / Risk Off

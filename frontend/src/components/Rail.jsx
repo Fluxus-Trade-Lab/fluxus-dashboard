@@ -182,7 +182,7 @@ export default function Rail({ currentPage, onNavigate }) {
                       // but a native tooltip waits a second and appears under
                       // the cursor rather than beside the code it explains.
                       <span className="pointer-events-none absolute left-full top-1/2 z-40 ml-1
-                                       hidden -translate-y-1/2 whitespace-nowrap rounded
+                                       hidden -translate-y-1/2 whitespace-nowrap rounded-lg
                                        border border-[var(--color-border)] bg-[var(--color-surface)]
                                        px-2 py-1 text-[11px] font-sans font-normal tracking-normal
                                        normal-case text-[var(--color-text)] shadow-lg

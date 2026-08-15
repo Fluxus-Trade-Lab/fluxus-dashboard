@@ -12,7 +12,7 @@ export default function BreadthChip({ verdict, onNavigate }) {
   return (
     <button
       onClick={() => onNavigate('#/breadth')}
-      className="w-full flex items-center gap-2 bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-3 py-1.5 hover:bg-[var(--color-hover-bg)] text-left"
+      className="w-full flex items-center gap-2 bg-[var(--color-surface)] rounded-3xl px-3 py-1.5 hover:bg-[var(--color-hover-bg)] text-left"
     >
       <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${ENV_DOT[verdict.env] ?? ''}`} />
       <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] shrink-0">

@@ -72,7 +72,7 @@ export default function TickerSignalHistory({ symbol, trades, ohlc }) {
           qualityHits, move, priceAt, offTape, tapeEnd } = model
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4">
+    <div className="bg-[var(--color-surface)] rounded-3xl p-4">
       <div className="flex items-baseline justify-between pb-2 border-b border-[var(--color-v2-ink)]">
         <h3 className="text-[10px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
           Signal history

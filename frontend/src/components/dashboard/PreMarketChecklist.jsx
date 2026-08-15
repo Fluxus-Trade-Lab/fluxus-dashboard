@@ -59,7 +59,7 @@ export default function PreMarketChecklist() {
   const totalCount = QUESTIONS.length
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg px-5 py-4">
+    <div className="bg-[var(--color-surface)] rounded-3xl px-5 py-4">
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Pre-Market Checklist

@@ -81,10 +81,10 @@ function toWeekly(daily) {
 /* ── MA config ──────────────────────────────────────────── */
 
 const MA_CONFIGS = [
-  { period: 10, type: 'ema', color: '#22d3ee', width: 1,   label: '10E' },
-  { period: 21, type: 'ema', color: '#3b82f6', width: 1.5, label: '21E' },
-  { period: 50, type: 'sma', color: '#f59e0b', width: 1.5, label: '50' },
-  { period: 200, type: 'sma', color: '#a8a29e', width: 1,  label: '200' },
+  { period: 10, type: 'ema', color: null, tone: '--color-untested', width: 1,   label: '10E' },
+  { period: 21, type: 'ema', color: null, tone: '--color-text-muted', width: 1.5, label: '21E' },
+  { period: 50, type: 'sma', color: null, tone: '--color-text-secondary', width: 1.5, label: '50' },
+  { period: 200, type: 'sma', color: null, tone: '--color-text-bold', width: 1.5,  label: '200' },
 ]
 
 /* ── Theme helpers ───────────────────────────────────────── */
@@ -94,17 +94,18 @@ function isDarkMode() {
 }
 
 function getThemeColors() {
-  const dark = isDarkMode()
+  // lightweight-charts cannot read CSS variables, so the v3 tokens are
+  // resolved to literals here; a theme flip re-resolves on chart rebuild.
+  const g = (n, fb) => getComputedStyle(document.documentElement).getPropertyValue(n).trim() || fb
+  const rgba = (h, a) => `rgba(${parseInt(h.slice(1,3),16)}, ${parseInt(h.slice(3,5),16)}, ${parseInt(h.slice(5,7),16)}, ${a})`
+  const took = g('--color-took', '#1f5288'), refused = g('--color-refused', '#d94032')
   return {
-    background: dark ? '#1c1917' : '#ffffff',
-    textColor: dark ? '#a8a29e' : '#78716c',
-    gridColor: dark ? '#292524' : '#f5f5f4',
-    candleUp: '#16a34a',
-    candleDown: '#dc2626',
-    wickUp: '#16a34a',
-    wickDown: '#dc2626',
-    volUp: dark ? 'rgba(22, 163, 74, 0.3)' : 'rgba(22, 163, 74, 0.18)',
-    volDown: dark ? 'rgba(220, 38, 38, 0.3)' : 'rgba(220, 38, 38, 0.18)',
+    background: g('--color-surface', '#ffffff'),
+    textColor: g('--color-text-muted', '#78716c'),
+    gridColor: g('--color-border-light', '#f5f5f4'),
+    candleUp: took, candleDown: refused,
+    wickUp: took, wickDown: refused,
+    volUp: rgba(took, 0.22), volDown: rgba(refused, 0.22),
   }
 }
 
@@ -116,14 +117,14 @@ function MaLegend({ showMAs, spyData }) {
     <div className="flex items-center gap-2.5 px-2 py-1">
       {MA_CONFIGS.map(ma => (
         <span key={ma.label} className="flex items-center gap-1">
-          <span className="inline-block w-3 h-0.5 rounded-full" style={{ backgroundColor: ma.color }} />
+          <span className="inline-block w-3 h-0.5 rounded-full" style={{ backgroundColor: maColor(ma) }} />
           <span className="text-[10px] text-[var(--color-text-muted)] font-mono">{ma.label}</span>
         </span>
       ))}
       {spyData?.length > 0 && (
         <span className="flex items-center gap-1">
-          <span className="inline-block w-3 h-0.5 rounded-full border-b border-dashed" style={{ borderColor: '#6366f1' }} />
-          <span className="text-[10px] text-[var(--color-accent)] font-mono">SPY</span>
+          <span className="inline-block w-3 h-0.5 rounded-full border-b border-dashed" style={{ borderColor: 'var(--color-text-muted)' }} />
+          <span className="text-[10px] text-[var(--color-text-muted)] font-mono">SPY</span>
         </span>
       )}
     </div>
@@ -236,7 +237,7 @@ export default function OhlcvChart({
         }
         if (lineData.length > 0) {
           const series = chart.addSeries(LineSeries, {
-            color: ma.color,
+            color: maColor(ma),
             lineWidth: ma.width,
             crosshairMarkerVisible: false,
             priceLineVisible: false,
@@ -256,7 +257,7 @@ export default function OhlcvChart({
       }))
 
       const spySeries = chart.addSeries(LineSeries, {
-        color: '#6366f1',
+        color: getComputedStyle(document.documentElement).getPropertyValue('--color-text-muted').trim(),
         lineWidth: 1.5,
         lineStyle: 2, // dashed
         crosshairMarkerVisible: false,

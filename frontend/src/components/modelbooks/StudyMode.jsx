@@ -137,7 +137,7 @@ export default function StudyMode({ cards }) {
       </div>
 
       {/* Flashcard */}
-      <div className="w-full max-w-xl bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden shadow-sm">
+      <div className="w-full max-w-xl bg-[var(--color-surface)] rounded-3xl overflow-hidden shadow-sm">
         {/* Chart area */}
         <div className="relative">
           {card.ohlcv_file && ohlcv ? (

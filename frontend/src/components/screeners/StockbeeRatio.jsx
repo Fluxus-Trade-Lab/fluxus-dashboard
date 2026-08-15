@@ -19,7 +19,7 @@ export default function StockbeeRatio({ data }) {
         : 'text-[var(--color-profit)]'
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded px-3 py-3">
+    <div className="bg-[var(--color-surface)] rounded-3xl px-3 py-3">
       <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
         Stockbee Ratio
       </h3>

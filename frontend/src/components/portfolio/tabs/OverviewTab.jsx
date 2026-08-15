@@ -329,7 +329,7 @@ export default function OverviewTab({
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => setShowMA20(v => !v)}
-                    className={`text-[11px] font-medium px-2 py-1 rounded border transition-colors ${showMA20 ? 'border-[#c98a2b] text-[#c98a2b]' : 'border-[var(--color-border)] text-[var(--color-text-muted)]'}`}
+                    className={`text-[11px] font-medium px-2 py-1 rounded border transition-colors ${showMA20 ? 'border-[var(--color-text-secondary)] text-[var(--color-text-secondary)]' : 'border-[var(--color-border)] text-[var(--color-text-muted)]'}`}
                     aria-pressed={showMA20}
                   >
                     20d MA
@@ -357,12 +357,12 @@ export default function OverviewTab({
                   <YAxis tick={{ fontSize: 11 }} tickFormatter={v => `${Number(v).toFixed(0)}%`} />
                   <Tooltip formatter={v => `${Number(v).toFixed(2)}%`} />
                   <Legend />
-                  <Line type="monotone" dataKey="returnPct" stroke="#2d5f8a" strokeWidth={2.5} dot={false} name="Portfolio" />
+                  <Line type="monotone" dataKey="returnPct" stroke="var(--color-text-bold)" strokeWidth={2.4} dot={false} name="Portfolio" />
                   {showMA20 && (
-                    <Line type="monotone" dataKey="ma20" stroke="#c98a2b" strokeWidth={1.5} dot={false} name="20d MA" connectNulls />
+                    <Line type="monotone" dataKey="ma20" stroke="var(--color-text-muted)" strokeWidth={1.5} dot={false} name="20d MA" connectNulls />
                   )}
                   {hasSPY && (
-                    <Line type="monotone" dataKey="SPY" stroke="#d4a574" strokeWidth={1.5} dot={false} name="SPY" strokeDasharray="4 4" />
+                    <Line type="monotone" dataKey="SPY" stroke="var(--color-text-muted)" strokeWidth={1.5} dot={false} name="SPY" strokeDasharray="4 4" />
                   )}
                 </LineChart>
               </ResponsiveContainer>

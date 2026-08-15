@@ -365,7 +365,7 @@ export default function Layout() {
                 <span>Split adjustments · {adjusts} auto-applied{straddles ? ` · ⚠ ${straddles} to verify` : ''}</span>
               </button>
               {showSplitNotices && (
-                <div className="mt-2 px-3 py-2 bg-[var(--color-surface-raised)] border border-[var(--color-border)] rounded leading-6">
+                <div className="mt-2 px-3 py-2 bg-[var(--color-surface-raised)] rounded-3xl leading-6">
                   {uniq.map((s, i) => (
                     <span key={i} className="mr-3">
                       {s.straddle

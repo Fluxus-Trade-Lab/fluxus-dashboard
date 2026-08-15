@@ -26,7 +26,7 @@ export default function SqnReadout({ rs }) {
 
   if (!stats.n) {
     return (
-      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4">
+      <div className="bg-[var(--color-surface)] rounded-3xl p-4">
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
           System Quality — SQN &amp; Expectancy
         </h3>
@@ -38,7 +38,7 @@ export default function SqnReadout({ rs }) {
   const meanKnown = Number.isFinite(stats.meanR)
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4 space-y-3">
+    <div className="bg-[var(--color-surface)] rounded-3xl p-4 space-y-3">
       <div className="flex items-center justify-between gap-2 flex-wrap">
         <div className="flex items-center gap-2">
           <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">

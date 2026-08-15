@@ -64,7 +64,7 @@ export default function BehaviorSection({ enriched }) {
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
           Exit-Style Breakdown
         </h3>
-        <div className="overflow-x-auto bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg">
+        <div className="overflow-x-auto bg-[var(--color-surface)] rounded-3xl">
           <table className="w-full text-[12.5px]">
             <thead>
               <tr>
@@ -108,7 +108,7 @@ export default function BehaviorSection({ enriched }) {
         {revengeClusters.length === 0 ? (
           <div className="text-[11px] text-[var(--color-text-muted)] py-4">No clusters detected.</div>
         ) : (
-          <div className="overflow-x-auto bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg">
+          <div className="overflow-x-auto bg-[var(--color-surface)] rounded-3xl">
             <table className="w-full text-[12.5px]">
               <thead>
                 <tr>
@@ -151,7 +151,7 @@ export default function BehaviorSection({ enriched }) {
           <StatCard label="Total leak" value={fmtCur(panic.totalLeak)} colorClass="text-[var(--color-loss)]" />
         </div>
         {panic.perTrade.length > 0 && (
-          <div className="overflow-x-auto bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg">
+          <div className="overflow-x-auto bg-[var(--color-surface)] rounded-3xl">
             <table className="w-full text-[12.5px]">
               <thead>
                 <tr>

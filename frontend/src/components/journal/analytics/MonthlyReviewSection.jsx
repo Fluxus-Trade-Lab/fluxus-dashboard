@@ -78,7 +78,7 @@ function MiniEquityCurve({ data }) {
   if (!data || data.length < 2) return null
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4">
+    <div className="bg-[var(--color-surface)] rounded-3xl p-4">
       <h4 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
         Equity Curve (Month)
       </h4>
@@ -92,7 +92,7 @@ function MiniEquityCurve({ data }) {
             formatter={v => [`${v.toFixed(2)}%`, 'Return']}
             labelFormatter={l => l}
           />
-          <Line type="monotone" dataKey="returnPct" stroke="var(--color-accent)" dot={false} strokeWidth={1.5} />
+          <Line type="monotone" dataKey="returnPct" stroke="var(--color-text-bold)" dot={false} strokeWidth={2.4} />
         </LineChart>
       </ResponsiveContainer>
     </div>
@@ -109,7 +109,7 @@ function VsPrevMonth({ current, prev }) {
   ]
 
   return (
-    <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg px-4 py-3">
+    <div className="bg-[var(--color-surface)] rounded-3xl px-4 py-3">
       <h4 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
         vs {prev.month}
       </h4>
@@ -232,7 +232,7 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
       <VsPrevMonth current={currentStats} prev={prevStats} />
 
       {/* Review section */}
-      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg px-5 py-4">
+      <div className="bg-[var(--color-surface)] rounded-3xl px-5 py-4">
         <div className="flex items-center justify-between mb-3">
           <h4 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
             Monthly Review

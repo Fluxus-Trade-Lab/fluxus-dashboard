@@ -150,13 +150,13 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
               />
               <ReferenceLine y={0} stroke="var(--color-text-muted)" />
               <ReferenceLine y={100} stroke="var(--color-border)" strokeDasharray="4 4" />
-              <Line type="monotone" dataKey="cashPct" name="Cash %" stroke="#2a78d6" strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="returnPct" name="Cumulative return %" stroke="#1baf7a" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="cashPct" name="Cash %" stroke="var(--color-text-muted)" strokeWidth={1.5} dot={false} />
+              <Line type="monotone" dataKey="returnPct" name="Cumulative return %" stroke="var(--color-text-bold)" strokeWidth={2.4} dot={false} />
             </LineChart>
           </ResponsiveContainer>
           <div className="flex gap-4 mt-2 text-[12.5px] text-[var(--color-text-muted)]">
-            <span><span style={{ color: '#2a78d6' }}>■</span> Cash % of equity</span>
-            <span><span style={{ color: '#1baf7a' }}>■</span> Cumulative return %</span>
+            <span><span style={{ color: 'var(--color-text-muted)' }}>■</span> Cash % of equity</span>
+            <span><span style={{ color: 'var(--color-text-bold)' }}>■</span> Cumulative return %</span>
             <span className="ml-auto">100% = fully in cash · below 0 = on margin</span>
           </div>
         </div>

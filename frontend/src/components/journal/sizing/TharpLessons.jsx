@@ -109,7 +109,7 @@ export default function TharpLessons() {
         {LESSONS.map(lesson => {
           const isExpanded = expanded === lesson.key
           return (
-            <div key={lesson.key} className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg overflow-hidden">
+            <div key={lesson.key} className="bg-[var(--color-surface)] rounded-3xl overflow-hidden">
               <button
                 onClick={() => setExpanded(isExpanded ? null : lesson.key)}
                 className="w-full flex items-center justify-between px-4 py-3 text-left cursor-pointer hover:bg-[var(--color-hover-bg)] transition-colors"
