@@ -39,6 +39,11 @@ function changeColour(val) {
   return val > 0 ? 'var(--color-took)' : 'var(--color-refused)'
 }
 
+/** The left edge wears the day's direction — Andy 2026-08-16, off a
+ *  reference card. Same pair as the move figure; a stripe and a figure is
+ *  not double-speak the way bar+figure was, because the stripe reads at
+ *  strip-scan distance where the number cannot. No measured move, no
+ *  stripe: an unmeasured day has no direction to paint. */
 export default function TickerCard({ ticker, signal, etf }) {
   // signal data comes from signals.json (SPY, QQQ, IWM, BTC-USD, ^VIX)
   // etf data comes from etf_data.json (DIA, RSP, QQQE, GLD, TLT)
@@ -49,8 +54,15 @@ export default function TickerCard({ ticker, signal, etf }) {
 
   const displayName = ticker === 'BTC-USD' ? 'BTC' : ticker === '^VIX' ? 'VIX' : ticker
 
+  const dir = Number.isFinite(change)
+    ? (change > 0 ? 'var(--color-took)' : 'var(--color-refused)') : null
+
   return (
-    <div className="bg-[var(--color-surface)] rounded-2xl px-4 py-3 min-w-0">
+    <div className="relative bg-[var(--color-surface)] rounded-2xl px-4 py-3 min-w-0 overflow-hidden">
+      {dir && (
+        <span aria-hidden className="absolute left-0 top-2 bottom-2 w-[3px] rounded-r-full"
+              style={{ background: dir }} />
+      )}
       <div className="flex items-baseline justify-between gap-2 mb-1">
         <span className="text-[10px] font-mono font-medium uppercase tracking-[.24em]
                          text-[var(--color-text-muted)] truncate">
