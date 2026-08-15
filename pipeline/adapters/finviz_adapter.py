@@ -24,6 +24,11 @@ FINVIZ_COL_MAP = {
     'Ticker': 'ticker',
     'Price': 'close',
     'Change': 'change_pct',
+    # Finviz renamed this header around 2026-08-07. The map only knew the old
+    # name, so the column silently went 100% null for a week: 4% counts read
+    # 0/0, three gainers screeners returned nothing, and the thrust vote in
+    # the breadth verdict was cast on an empty column. Keep both spellings.
+    'Change %': 'change_pct',
     'Perf Week': 'perf_1w',
     'Perf Month': 'perf_1m',
     'Perf Quart': 'perf_3m',

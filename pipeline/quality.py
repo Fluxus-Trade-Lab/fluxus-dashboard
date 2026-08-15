@@ -38,13 +38,42 @@ log = logging.getLogger(__name__)
 
 HISTORY = Path("data/history/universe_quality.csv")
 
-# Columns whose absence changes what the product says. Everything here either
-# gates membership of the tradeable set or feeds a score computed within it.
+# The tracked set maintains ITSELF. It began as a hand-kept list, and a
+# hand-kept list has exactly one failure mode: the column nobody added.
+# change_pct was that column — Finviz renamed its header on 2026-08-07, the
+# column went 100% null, three screeners emptied and the thrust vote in the
+# breadth verdict was cast on nothing, for a week, while the guard reported
+# every run "ok" because change_pct was not on its list.
+#
+# So the list is now derived, not written: every column present in today's
+# rows is measured, UNIONED with every column the history file has ever
+# recorded. The union is the part that matters — a column that is renamed
+# away does not just degrade, it vanishes from the rows, and a guard that
+# only reads today's keys would stop watching at the exact moment it should
+# scream. History remembers the column existed; its rate reads 100%.
+#
+# TRACKED remains as the floor: columns measured even before any history
+# exists (first run ever).
 TRACKED: List[str] = [
-    "market_cap", "avg_volume", "close", "volume",
+    "market_cap", "avg_volume", "close", "volume", "change_pct",
     "perf_1w", "perf_1m", "perf_3m", "perf_6m", "perf_1y",
     "sector", "industry",
 ]
+
+# Identity/bookkeeping columns: never graded, a null ticker is a row bug not
+# a feed regression, and grading free-text noise would drown real alarms.
+UNGRADED: frozenset = frozenset({"ticker"})
+
+
+def discovered_fields(rows: Sequence[Mapping[str, Any]],
+                      history: Sequence[Mapping[str, str]]) -> List[str]:
+    """Union of the floor, today's columns, and every column history knows."""
+    fields = set(TRACKED)
+    for r in rows[:50]:                       # keys are uniform; sampling is enough
+        fields.update(r.keys())
+    for h in history[:1]:                     # header via first row's keys
+        fields.update(k for k in h.keys() if k != "date")
+    return sorted(fields - UNGRADED)
 
 # Enough history for a median to mean anything. Below this the guard uses the
 # absolute ceiling only, and says so rather than pretending to a baseline.
@@ -132,15 +161,63 @@ def baseline(history: Sequence[Mapping[str, str]], field: str) -> Optional[float
     return vals[mid] if len(vals) % 2 else (vals[mid - 1] + vals[mid]) / 2
 
 
+def min_reference(history: Sequence[Mapping[str, str]], field: str) -> Optional[float]:
+    """The best (lowest) null rate this field has ever recorded.
+
+    The baseline (median of >=5 runs) answers "what is normal"; this answers a
+    prior question -- "has this column ever actually been populated". One
+    stored value is enough for that, which is what lets the guard grade a
+    brand-new column the day after it first appears instead of five runs
+    later, and lets it tell a dead feed from a column that never lived.
+    """
+    vals = []
+    for row in history:
+        raw = row.get(field)
+        if raw in (None, ""):
+            continue
+        try:
+            vals.append(float(raw))
+        except ValueError:
+            continue
+    return min(vals) if vals else None
+
+
 def assess(rates: Mapping[str, float],
            history: Sequence[Mapping[str, str]]) -> Dict[str, Any]:
-    """Grade each field against its own past, and the run as a whole."""
+    """Grade each field against its own past, and the run as a whole.
+
+    The severity ladder distinguishes three ways a column can be empty:
+
+    * **dead feed** -- it used to be populated (min reference < 30%) and now a
+      third or more is missing. Severe: the run does not publish.
+    * **never lived** -- every recorded rate is ~100% (eps_growth_next_y has
+      been null for its whole life). `unpopulated`, informational: a column
+      that never carried data cannot have broken, and halting the pipeline
+      over it would teach everyone to ignore the guard.
+    * **degrading** -- above its own baseline (or, before one exists, its own
+      best-ever plus the bootstrap gates). Warns, still publishes.
+    """
     fields: Dict[str, Any] = {}
     for field, rate in rates.items():
         base = baseline(history, field)
-        if rate >= SEVERE_CEILING:
-            status, why = "severe", f"{rate*100:.1f}% missing, above the {SEVERE_CEILING*100:.0f}% ceiling"
-        elif base is None and rate > BOOTSTRAP_DEGRADED:
+        ref = min_reference(history, field)
+        if rate >= 0.95 and (ref is None or ref >= 0.90):
+            status, why = "unpopulated", (
+                f"{rate*100:.1f}% missing and never below "
+                f"{(ref if ref is not None else 1)*100:.0f}% — this column has "
+                f"never carried data, so nothing has broken")
+        elif rate >= SEVERE_CEILING and ref is not None and ref < 0.30:
+            status, why = "severe", (
+                f"{rate*100:.1f}% missing in a column that has been as low as "
+                f"{ref*100:.1f}% — a feed that worked has died")
+        elif rate >= SEVERE_CEILING and ref is None:
+            # First run ever: no way to tell dead from never-lived, so warn
+            # loudly and publish rather than halt on ignorance.
+            status, why = "degraded", (
+                f"{rate*100:.1f}% missing on the first recorded run — cannot "
+                f"yet distinguish a dead feed from an unpopulated column")
+        elif base is None and rate > BOOTSTRAP_DEGRADED \
+                and (ref is None or rate > ref * DEGRADED_RATIO + DEGRADED_ABSOLUTE):
             status, why = "degraded", (
                 f"{rate*100:.1f}% missing, above the {BOOTSTRAP_DEGRADED*100:.0f}% "
                 f"bootstrap limit used while no baseline exists "
@@ -168,10 +245,19 @@ def assess(rates: Mapping[str, float],
 
 def append_history(date: str, rates: Mapping[str, float],
                    path: Path = HISTORY) -> None:
-    """One row per run, replacing any row already stored for `date`."""
-    cols = ["date", *TRACKED]
+    """One row per run, replacing any row already stored for `date`.
+
+    Columns are dynamic: the header is the union of what history already
+    records and what today measured, so a newly discovered column starts its
+    own history the day it first appears and an old column keeps its record
+    after it stops appearing. Widening the ledger is how the tracked set
+    maintains itself; a fixed header here would quietly discard exactly the
+    measurements the discovery step was added to keep.
+    """
     kept = [r for r in read_history(path) if r.get("date") != date]
-    row = {"date": date, **{f: rates.get(f) for f in TRACKED}}
+    old_cols = [c for c in (kept[0].keys() if kept else []) if c != "date"]
+    cols = ["date", *sorted({*old_cols, *rates.keys()})]
+    row = {"date": date, **rates}
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=cols, extrasaction="ignore")
@@ -187,8 +273,9 @@ def check(rows: Sequence[Mapping[str, Any]], date: str,
     baseline's history as much as a good one, and excluding it would let a slow
     drift raise the baseline until nothing ever trips.
     """
-    rates = null_rates(rows)
-    verdict = assess(rates, read_history(path))
+    history = read_history(path)
+    rates = null_rates(rows, discovered_fields(rows, history))
+    verdict = assess(rates, history)
     append_history(date, rates, path)
 
     for field, f in verdict["fields"].items():
@@ -197,3 +284,118 @@ def check(rows: Sequence[Mapping[str, Any]], date: str,
         elif f["status"] == "degraded":
             log.warning("universe quality: %s — %s", field, f["evidence"])
     return verdict
+
+
+# ── Site-wide coverage ──────────────────────────────────────────────────
+#
+# The operator's directive after the change_pct week: the maintenance scope is
+# every file the site actually reads, not just universe.json. Same machinery,
+# one ledger per source, so each file's columns accumulate their own history
+# and a column dying in etf_data is caught by the same dead-feed rule that now
+# guards the universe.
+
+QUALITY_DIR = Path("data/history/quality")
+
+
+def check_source(source: str, rows: Sequence[Mapping[str, Any]], date: str,
+                 history_dir: Path = QUALITY_DIR) -> Dict[str, Any]:
+    """Measure, grade and record one site-consumed source.
+
+    Unlike the universe check, a severe verdict here does not halt anything:
+    by the time these run the files are already written, and a halt after the
+    fact protects nobody. Severe is logged at ERROR and lands in the
+    consolidated quality.json where the site itself can show it.
+    """
+    path = history_dir / f"{source}.csv"
+    history = read_history(path)
+    rates = null_rates(rows, discovered_fields(rows, history))
+    verdict = assess(rates, history)
+    append_history(date, rates, path)
+    for field, f in verdict["fields"].items():
+        if f["status"] == "severe":
+            log.error("quality[%s]: %s — %s", source, field, f["evidence"])
+        elif f["status"] == "degraded":
+            log.warning("quality[%s]: %s — %s", source, field, f["evidence"])
+    return verdict
+
+
+def site_rows(name: str, payload: Any) -> Optional[List[Mapping[str, Any]]]:
+    """Flatten one site file into gradeable rows, or None to skip it.
+
+    Extractors are deliberately shallow: they pull the row lists the frontend
+    actually iterates. Derived screener outputs (momentum_97, gainers...) are
+    not listed -- their columns are projections of universe columns, and
+    grading them would alarm twice for one upstream failure.
+    """
+    try:
+        if name == "etf_data":
+            return payload if isinstance(payload, list) else None
+        if name == "groups_themes":
+            return payload.get("themes")
+        if name == "groups_stocks":
+            s = payload.get("stocks")
+            return list(s.values()) if isinstance(s, dict) else None
+        if name == "rotation_baskets":
+            return payload.get("baskets")
+        if name == "breadth_last":
+            # breadth.json's history is columnar; the gradeable row is the
+            # current snapshot: the `mm` block (counts, ratios) merged with
+            # the `breadth` block (percent-above, highs/lows).
+            mm = payload.get("mm") or {}
+            br = payload.get("breadth") or {}
+            row = {**br, **mm}
+            return [row] if row else None
+        if name == "signals":
+            return [v for v in payload.values() if isinstance(v, dict)]
+    except Exception:  # noqa: BLE001 — an extractor must never break the run
+        return None
+    return None
+
+
+# Which output file feeds each source name.
+SITE_SOURCES: Dict[str, str] = {
+    "etf_data": "etf_data.json",
+    "groups_themes": "groups.json",
+    "groups_stocks": "groups.json",
+    "rotation_baskets": "rotation.json",
+    "breadth_last": "breadth.json",
+    "signals": "signals.json",
+}
+
+
+def check_site(output_dir: Path, date: str,
+               history_dir: Path = QUALITY_DIR) -> Dict[str, Any]:
+    """Grade every site-consumed source; return the consolidated report."""
+    import json as _json
+    report: Dict[str, Any] = {"date": date, "sources": {}}
+    for source, filename in SITE_SOURCES.items():
+        fp = output_dir / filename
+        if not fp.exists():
+            report["sources"][source] = {"status": "missing"}
+            log.error("quality[%s]: %s does not exist", source, filename)
+            continue
+        try:
+            payload = _json.loads(fp.read_text())
+        except ValueError:
+            report["sources"][source] = {"status": "unparsable"}
+            log.error("quality[%s]: %s is not valid JSON", source, filename)
+            continue
+        rows = site_rows(source, payload)
+        if not rows:
+            report["sources"][source] = {"status": "no_rows"}
+            continue
+        v = check_source(source, rows, date, history_dir)
+        report["sources"][source] = {
+            "status": v["status"],
+            "flagged": {f: x["status"] for f, x in v["fields"].items()
+                        if x["status"] not in ("ok", "unpopulated")},
+        }
+    worst = "ok"
+    for s in report["sources"].values():
+        if s["status"] in ("severe", "missing", "unparsable"):
+            worst = "severe"
+            break
+        if s["status"] == "degraded":
+            worst = "degraded"
+    report["status"] = worst
+    return report

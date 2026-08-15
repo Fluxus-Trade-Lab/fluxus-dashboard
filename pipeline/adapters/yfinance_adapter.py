@@ -528,6 +528,11 @@ class YfinanceAdapter(BaseAdapter):
                     bo_1m = int(is_bo[-21:].sum()) if n - 1 >= 21 else min(bo_1y, int(is_bo.sum()))
 
                 enriched[ticker] = {
+                    # Belt for the Finviz 'Change %' rename: with a second
+                    # source, a header change upstream degrades this column to
+                    # ~2% missing instead of 100%. Fill-only merge, so Finviz
+                    # still wins when it parses.
+                    'change_pct': (close / float(hist['Close'].iloc[-2]) - 1) if n >= 2 else None,
                     'perf_1w': (close / float(hist['Close'].iloc[-5]) - 1) if n >= 5 else None,
                     'perf_1m': (close / float(hist['Close'].iloc[-21]) - 1) if n >= 21 else None,
                     'perf_34d': (close / float(hist['Close'].iloc[-35]) - 1) if n >= 35 else None,

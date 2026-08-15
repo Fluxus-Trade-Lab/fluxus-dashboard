@@ -748,6 +748,19 @@ def main():
     except Exception:
         logger.exception("Rotation layer failed - rotation.json not updated")
 
+    # Site-wide quality: grade every file the frontend reads, write the
+    # consolidated report beside them. Its own failure domain — a grading
+    # crash must not cost the outputs it grades.
+    try:
+        from pipeline.quality import check_site
+        site_report = check_site(OUTPUT_DIR, last_completed_session().isoformat())
+        (OUTPUT_DIR / 'quality.json').write_text(
+            json.dumps(site_report, indent=2, default=_json_serializer))
+        logger.info("Site quality: %s (%s)", site_report['status'],
+                    {k: v['status'] for k, v in site_report['sources'].items()})
+    except Exception:  # noqa: BLE001
+        logger.exception("Site quality check failed — outputs unaffected")
+
     # Summary
     total_tickers = sum(
         d.get('count', 0) for d in results.values() if isinstance(d, dict)

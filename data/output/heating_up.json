@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-14T21:51:58.996740+00:00",
+  "timestamp": "2026-08-15T02:28:27.412411+00:00",
   "as_of": "2026-08-14",
   "rows": [
     {
@@ -84,7 +84,7 @@
     },
     {
       "ticker": "IOVA",
-      "score": 12.75,
+      "score": 13.0,
       "screeners": [
         {
           "name": "episodic_pivot",
@@ -103,8 +103,8 @@
         },
         {
           "name": "gainers_4pct",
-          "hits": 2,
-          "last_date": "2026-08-06"
+          "hits": 3,
+          "last_date": "2026-08-14"
         },
         {
           "name": "healthy_charts",
@@ -160,6 +160,46 @@
       "first_seen": "2026-07-13",
       "last_seen": "2026-08-14",
       "days_span": 15,
+      "sector": "Healthcare"
+    },
+    {
+      "ticker": "ETON",
+      "score": 12.5,
+      "screeners": [
+        {
+          "name": "episodic_pivot",
+          "hits": 1,
+          "last_date": "2026-08-14"
+        },
+        {
+          "name": "momentum_97",
+          "hits": 4,
+          "last_date": "2026-08-14"
+        },
+        {
+          "name": "ema21_watch",
+          "hits": 1,
+          "last_date": "2026-08-07"
+        },
+        {
+          "name": "gainers_4pct",
+          "hits": 2,
+          "last_date": "2026-08-14"
+        },
+        {
+          "name": "healthy_charts",
+          "hits": 10,
+          "last_date": "2026-08-13"
+        },
+        {
+          "name": "vol_up_gainers",
+          "hits": 2,
+          "last_date": "2026-08-14"
+        }
+      ],
+      "first_seen": "2026-07-27",
+      "last_seen": "2026-08-14",
+      "days_span": 14,
       "sector": "Healthcare"
     },
     {
@@ -398,8 +438,8 @@
         },
         {
           "name": "gainers_4pct",
-          "hits": 4,
-          "last_date": "2026-08-05"
+          "hits": 5,
+          "last_date": "2026-08-14"
         },
         {
           "name": "healthy_charts",
@@ -661,6 +701,41 @@
       "last_seen": "2026-08-13",
       "days_span": 8,
       "sector": "Healthcare"
+    },
+    {
+      "ticker": "UMAC",
+      "score": 11.0,
+      "screeners": [
+        {
+          "name": "episodic_pivot",
+          "hits": 1,
+          "last_date": "2026-08-14"
+        },
+        {
+          "name": "momentum_97",
+          "hits": 3,
+          "last_date": "2026-08-14"
+        },
+        {
+          "name": "gainers_4pct",
+          "hits": 1,
+          "last_date": "2026-08-14"
+        },
+        {
+          "name": "healthy_charts",
+          "hits": 3,
+          "last_date": "2026-08-13"
+        },
+        {
+          "name": "vol_up_gainers",
+          "hits": 1,
+          "last_date": "2026-08-14"
+        }
+      ],
+      "first_seen": "2026-08-11",
+      "last_seen": "2026-08-14",
+      "days_span": 4,
+      "sector": "Technology"
     },
     {
       "ticker": "AEVA",
@@ -993,8 +1068,8 @@
         },
         {
           "name": "gainers_4pct",
-          "hits": 5,
-          "last_date": "2026-08-06"
+          "hits": 6,
+          "last_date": "2026-08-14"
         },
         {
           "name": "healthy_charts",
@@ -1523,6 +1598,41 @@
       "sector": "Industrials"
     },
     {
+      "ticker": "ILMN",
+      "score": 9.5,
+      "screeners": [
+        {
+          "name": "vcp",
+          "hits": 5,
+          "last_date": "2026-08-14"
+        },
+        {
+          "name": "ema21_watch",
+          "hits": 9,
+          "last_date": "2026-08-14"
+        },
+        {
+          "name": "gainers_4pct",
+          "hits": 1,
+          "last_date": "2026-07-30"
+        },
+        {
+          "name": "healthy_charts",
+          "hits": 3,
+          "last_date": "2026-08-14"
+        },
+        {
+          "name": "vol_up_gainers",
+          "hits": 1,
+          "last_date": "2026-07-30"
+        }
+      ],
+      "first_seen": "2026-07-27",
+      "last_seen": "2026-08-14",
+      "days_span": 14,
+      "sector": "Healthcare"
+    },
+    {
       "ticker": "ITGR",
       "score": 9.5,
       "screeners": [
@@ -1651,101 +1761,6 @@
       "last_seen": "2026-08-07",
       "days_span": 7,
       "sector": "Basic Materials"
-    },
-    {
-      "ticker": "HAE",
-      "score": 9.25,
-      "screeners": [
-        {
-          "name": "momentum_97",
-          "hits": 1,
-          "last_date": "2026-08-12"
-        },
-        {
-          "name": "vcp",
-          "hits": 2,
-          "last_date": "2026-08-13"
-        },
-        {
-          "name": "ema21_watch",
-          "hits": 1,
-          "last_date": "2026-07-13"
-        },
-        {
-          "name": "healthy_charts",
-          "hits": 3,
-          "last_date": "2026-08-05"
-        }
-      ],
-      "first_seen": "2026-07-13",
-      "last_seen": "2026-08-13",
-      "days_span": 14,
-      "sector": "Healthcare"
-    },
-    {
-      "ticker": "ILMN",
-      "score": 9.25,
-      "screeners": [
-        {
-          "name": "vcp",
-          "hits": 4,
-          "last_date": "2026-08-12"
-        },
-        {
-          "name": "ema21_watch",
-          "hits": 9,
-          "last_date": "2026-08-14"
-        },
-        {
-          "name": "gainers_4pct",
-          "hits": 1,
-          "last_date": "2026-07-30"
-        },
-        {
-          "name": "healthy_charts",
-          "hits": 2,
-          "last_date": "2026-08-13"
-        },
-        {
-          "name": "vol_up_gainers",
-          "hits": 1,
-          "last_date": "2026-07-30"
-        }
-      ],
-      "first_seen": "2026-07-27",
-      "last_seen": "2026-08-14",
-      "days_span": 14,
-      "sector": "Healthcare"
-    },
-    {
-      "ticker": "ACOG",
-      "score": 9.0,
-      "screeners": [
-        {
-          "name": "momentum_97",
-          "hits": 3,
-          "last_date": "2026-07-30"
-        },
-        {
-          "name": "ema21_watch",
-          "hits": 4,
-          "last_date": "2026-08-13"
-        },
-        {
-          "name": "gainers_4pct",
-          "hits": 3,
-          "last_date": "2026-08-04"
-        },
-        {
-          "name": "healthy_charts",
-          "hits": 11,
-          "last_date": "2026-08-14"
-        }
-      ],
-      "first_seen": "2026-07-13",
-      "last_seen": "2026-08-14",
-      "days_span": 15,
-      "sector": "Healthcare"
     }
   ]
 }

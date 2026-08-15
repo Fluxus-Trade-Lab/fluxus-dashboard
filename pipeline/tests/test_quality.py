@@ -89,10 +89,13 @@ class TestAssess:
         v = Q.assess({"avg_volume": 0.08}, history(0.01, n=2))
         assert v["fields"]["avg_volume"]["status"] == "degraded"
 
-    def test_the_ceiling_applies_without_any_baseline(self):
+    # Inverted 2026-08-15: with no history at all there is no way to tell a
+    # dead feed from a column that never lived, and halting the whole pipeline
+    # on ignorance is worse than publishing with a loud warning.
+    def test_no_history_at_all_warns_rather_than_halts(self):
         v = Q.assess({"avg_volume": 0.5}, [])
-        assert v["fields"]["avg_volume"]["status"] == "severe"
-        assert v["status"] == "severe"
+        assert v["fields"]["avg_volume"]["status"] == "degraded"
+        assert "first recorded run" in v["fields"]["avg_volume"]["evidence"]
 
     def test_severe_outranks_degraded_in_the_run_verdict(self):
         v = Q.assess({"avg_volume": 0.5, "perf_3m": 0.09},
@@ -158,3 +161,98 @@ class TestBootstrapLimit:
         forever once its own history says that level is normal."""
         v = Q.assess({"avg_volume": 0.09}, history(0.088, n=10))
         assert v["fields"]["avg_volume"]["status"] == "ok"
+
+
+class TestSelfMaintainingLedger:
+    """The change_pct lesson: a hand-kept TRACKED list has exactly one failure
+    mode — the column nobody added. Finviz renamed a header, the column went
+    100% null for a week, and the guard said "ok" every night because the
+    column was not on its list. The list is now derived from the data and the
+    guard's own history."""
+
+    def test_discovery_includes_every_row_column(self):
+        rows_ = [{"ticker": "A", "change_pct": 0.01, "brand_new_col": 5}]
+        fields = Q.discovered_fields(rows_, [])
+        assert "brand_new_col" in fields and "change_pct" in fields
+        assert "ticker" not in fields
+
+    def test_a_renamed_away_column_is_still_watched(self):
+        """The column vanishes from the rows; history remembers it existed."""
+        rows_ = [{"ticker": "A", "close": 1.0}]
+        hist = [{"date": "2026-08-13", "close": "0.002", "change_pct": "0.001"}]
+        fields = Q.discovered_fields(rows_, hist)
+        assert "change_pct" in fields
+
+    def test_a_dead_feed_is_severe(self):
+        """Used to be populated (0.1% missing), now gone entirely."""
+        v = Q.assess({"change_pct": 1.0},
+                     [{"date": "d", "change_pct": "0.001"}])
+        assert v["fields"]["change_pct"]["status"] == "severe"
+        assert "died" in v["fields"]["change_pct"]["evidence"]
+
+    def test_a_never_populated_column_is_unpopulated_not_severe(self):
+        """eps_growth_next_y has been 100% null its whole life. Halting the
+        pipeline over it would teach everyone to ignore the guard."""
+        v = Q.assess({"eps_growth_next_y": 1.0},
+                     [{"date": "d", "eps_growth_next_y": "1.0"}])
+        f = v["fields"]["eps_growth_next_y"]
+        assert f["status"] == "unpopulated"
+        assert v["status"] == "ok"
+
+    def test_one_stored_run_is_enough_to_catch_a_death(self):
+        """min_reference needs one observation, not five — a new column is
+        protected the day after it first appears."""
+        assert Q.min_reference([{"date": "d", "x": "0.01"}], "x") == 0.01
+        assert Q.min_reference([], "x") is None
+
+    def test_the_ledger_widens_for_new_columns(self, tmp_path):
+        p = tmp_path / "q.csv"
+        Q.append_history("2026-08-14", {"avg_volume": 0.01}, p)
+        Q.append_history("2026-08-15", {"avg_volume": 0.01, "change_pct": 0.002}, p)
+        rows_ = Q.read_history(p)
+        assert "change_pct" in rows_[0]           # 旧行获得空值列
+        assert rows_[1]["change_pct"] == "0.002"
+
+    def test_check_grades_undeclared_columns(self, tmp_path):
+        """End to end: a column absent from TRACKED still gets measured."""
+        p = tmp_path / "q.csv"
+        data = [{"ticker": "A", "market_cap": 1e10, "avg_volume": 1e6,
+                 "close": 5.0, "volume": 1e6, "perf_1w": 0.1, "perf_1m": 0.1,
+                 "perf_3m": 0.1, "perf_6m": 0.1, "perf_1y": 0.1,
+                 "sector": "T", "industry": "S", "mystery_col": 1.0}] * 10
+        v = Q.check(data, "2026-08-15", p)
+        assert "mystery_col" in v["fields"]
+
+
+class TestSiteWideGuard:
+    """The maintenance scope is every file the site reads, per the operator's
+    directive after change_pct died unwatched for a week."""
+
+    ROWS = [{"ticker": "SPY", "perf_1w": 0.01, "rrs_rank": 50}] * 10
+
+    def test_check_source_keeps_a_ledger_per_source(self, tmp_path):
+        v = Q.check_source("etf_data", self.ROWS, "2026-08-15", tmp_path)
+        assert (tmp_path / "etf_data.csv").exists()
+        assert "perf_1w" in v["fields"]
+
+    def test_a_source_column_death_is_caught_next_run(self, tmp_path):
+        Q.check_source("etf_data", self.ROWS, "2026-08-14", tmp_path)
+        dead = [{"ticker": "SPY", "perf_1w": None, "rrs_rank": 50}] * 10
+        v = Q.check_source("etf_data", dead, "2026-08-15", tmp_path)
+        assert v["fields"]["perf_1w"]["status"] == "severe"
+
+    def test_extractors_never_raise(self):
+        for name in Q.SITE_SOURCES:
+            assert Q.site_rows(name, {"garbage": True}) in (None, [],)
+        assert Q.site_rows("signals", {"timestamp": "x", "SPY": {"close": 1}}) \
+            == [{"close": 1}]
+
+    def test_check_site_consolidates(self, tmp_path):
+        import json as J
+        out = tmp_path / "out"; out.mkdir()
+        (out / "signals.json").write_text(J.dumps(
+            {"timestamp": "t", "SPY": {"close": 1.0, "sma50": 2.0}}))
+        rep = Q.check_site(out, "2026-08-15", tmp_path / "hist")
+        assert rep["sources"]["signals"]["status"] in ("ok", "degraded")
+        assert rep["sources"]["etf_data"]["status"] == "missing"
+        assert rep["status"] == "severe"   # missing files are severe
