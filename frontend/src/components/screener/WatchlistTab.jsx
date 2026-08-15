@@ -77,7 +77,7 @@ function WatchlistCard({ name, tickers }) {
       <div className="grid grid-cols-5 gap-x-2 gap-y-1">
         {display.map((t) => (
           <TickerLink key={t} symbol={t}
-            className="text-[11px] font-mono text-[var(--color-text-secondary)]" />
+            className="text-[11px] font-mono font-semibold text-[var(--color-text-bold)]" />
         ))}
       </div>
       {hidden > 0 && (
@@ -142,7 +142,7 @@ export default function WatchlistTab({ universe, presets }) {
                 style={{ background: 'var(--color-text-bold)' }}
                 title={`${ticker} — on ${count} of the preset lists`}>
                 <TickerLink symbol={ticker}
-                  className="text-[12.5px] font-mono font-medium text-[var(--color-bg)]" />
+                  className="text-[12.5px] font-mono font-semibold text-[var(--color-bg)]" />
                 <span className="text-[10px] font-mono tabular-nums text-[var(--color-bg)] opacity-75">
                   {count}
                 </span>

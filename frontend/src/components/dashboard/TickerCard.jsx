@@ -64,8 +64,10 @@ export default function TickerCard({ ticker, signal, etf }) {
               style={{ background: dir }} />
       )}
       <div className="flex items-baseline justify-between gap-2 mb-1">
-        <span className="text-[10px] font-mono font-medium uppercase tracking-[.24em]
-                         text-[var(--color-text-muted)] truncate">
+        {/* Every ticker on the site is bold ink (Andy 2026-08-16). It is the
+            card's identity, not a caption for it. */}
+        <span className="text-[10px] font-mono font-semibold uppercase tracking-[.24em]
+                         text-[var(--color-text-bold)] truncate">
           {displayName}
         </span>
         {riskOff && (

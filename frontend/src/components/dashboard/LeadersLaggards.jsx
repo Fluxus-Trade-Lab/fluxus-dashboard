@@ -36,7 +36,7 @@ function Row({ etf, ranks, changeKey, windowLabel, cohort }) {
         {fmtRs(rs)}
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block text-[12.5px] font-mono font-medium leading-[12px]
+        <span className="block text-[12.5px] font-mono font-semibold leading-[12px]
                          text-[var(--color-text-bold)]">{etf.ticker}</span>
         {/* absent rather than guessed when the vendor had no name */}
         <span className="block text-[10px] leading-[12px] truncate

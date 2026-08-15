@@ -93,7 +93,7 @@ export default function ThemeMembers({ theme, colour, rsByTicker }) {
               <tr key={r.ticker}
                   className="border-t border-[var(--color-border-light)]
                              hover:bg-[var(--color-hover-bg)]">
-                <td className="py-[3px] pr-3 font-mono font-medium"
+                <td className="py-[3px] pr-3 font-mono font-semibold"
                     style={colour ? { color: colour } : undefined}>{r.ticker}</td>
                 <td className="py-[3px] pr-3 text-[10px]">
                   {r.rs?.state ? (
