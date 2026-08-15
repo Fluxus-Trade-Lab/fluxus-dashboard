@@ -53,11 +53,17 @@ function Row({ etf, ranks, changeKey, windowLabel, cohort }) {
   )
 }
 
+/** `label` is the window, and only the TOP block carries it: the column
+ *  establishes 1D / 1W / 1M once, and the laggards under the rule inherit it
+ *  (Andy 2026-08-16). A second identical row of headers was the same word
+ *  printed twice in one column. */
 function Column({ label, rows, ranks, changeKey, windowLabel, cohort }) {
   return (
     <div>
-      <h4 className="text-[10px] font-mono font-medium uppercase tracking-[.2em]
-                     text-[var(--color-text-muted)] mb-1.5">{label}</h4>
+      {label && (
+        <h4 className="text-[10px] font-mono font-medium uppercase tracking-[.2em]
+                       text-[var(--color-text-muted)] mb-1.5">{label}</h4>
+      )}
       {rows.map((e) => (
         <Row key={e.ticker} etf={e} ranks={ranks} changeKey={changeKey}
              windowLabel={windowLabel} cohort={cohort} />
@@ -119,7 +125,7 @@ export default function LeadersLaggards({
         <div className="grid gap-x-4"
              style={{ gridTemplateColumns: `repeat(${cols.length}, minmax(0, 1fr))` }}>
           {cols.map((c) => (
-            <Column key={`${c.w}-lag`} label={c.w} rows={c.laggards}
+            <Column key={`${c.w}-lag`} label={null} rows={c.laggards}
                     ranks={c.ranks} changeKey={c.changeKey} windowLabel={c.w}
                     cohort={etfs.length} />
           ))}
