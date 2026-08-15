@@ -439,7 +439,7 @@ export default function BrowseView({ cards }) {
                     onClick={() => setSelectedId(card.id)}
                     className={`border-b border-[var(--color-border-light)] cursor-pointer transition-colors ${
                       isSelected
-                        ? 'bg-[var(--color-hover-bg)] ring-1 ring-inset ring-[var(--color-input-border)]'
+                        ? 'ring-1 ring-inset ring-[var(--color-accent)]'
                         : 'even:bg-[var(--color-surface-alt)] hover:bg-[var(--color-hover-bg)]'
                     }`}
                   >

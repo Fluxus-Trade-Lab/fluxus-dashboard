@@ -60,7 +60,7 @@ export default function Header({ portfolioValue, totalPL, totalReturnPct, cashAv
         >
           {pm ? `◉ ${t('pf.btn.private')}` : `○ ${t('pf.btn.private')}`}
         </button>
-        <Button variant="ghost" onClick={onReset} className="!text-[var(--color-loss)]">{t('pf.btn.reset')}</Button>
+        <Button variant="ghost" onClick={onReset}>{t('pf.btn.reset')}</Button>
       </div>
     </div>
   )

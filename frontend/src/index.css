@@ -42,9 +42,18 @@
      the SMALLEST type -- exactly backwards, since 9px needs more separation
      than 15px, not less. secondary 4.37 -> 6.39, muted 2.67 -> 4.08.
      2026-08-16, on the grey paper: the old muted fell back to 3.89 on the
-     darker ground, so it deepens again — 4.85 on bg, 5.21 on surface. */
-  --color-text-secondary: #5f584f;
-  --color-text-muted: #6e675d;
+     darker ground, so it deepens again — 4.85 on bg, 5.21 on surface.
+
+     Later the same day, measured rather than estimated: muted was 4.22 on
+     the page ground across every route — under the bar, on the ink this site
+     uses more than any other. Deepening it alone would have closed the gap
+     to secondary to 2.7 L*, which is no gap at all, so both steps moved and
+     the ladder kept its spacing (20.6 and 10.6 L* apart).
+
+       secondary  bg 7.15  surface 8.30  raised 6.69
+       muted      bg 4.83  surface 5.61  raised 4.52   */
+  --color-text-secondary: #4b453e;
+  --color-text-muted: #655e55;
   --color-text-bold: #292524;
 
   /* v3 charter (2026-08-15): the signal WORD carries the reading; hue only
@@ -52,9 +61,9 @@
      — bold, muted, secondary — and RISK OFF alone keeps colour, because a
      lone red means exactly one thing on this site: the binding constraint. */
   --color-signal-power3: #292524;
-  --color-signal-caution: #6e675d;
-  --color-signal-warning: #5f584f;
-  --color-signal-riskoff: #d94032;
+  --color-signal-caution: #655e55;
+  --color-signal-warning: #4b453e;
+  --color-signal-riskoff: #b5342c;
 
   /* The money half's pair, measured on the warm ground 2026-08-13: profit was
      3.00:1 here, below the bar for normal text, while its dark-theme twin sat
@@ -62,8 +71,19 @@
   /* v3: blue-profit / red-loss — the taiji's own language (blue long, red
      short) reaches the money half. Approved by Andy off the Portfolio sketch
      2026-08-15, replacing green/red. Same pair as the market half: one ink. */
-  --color-profit: #1f5288;
-  --color-loss: #d94032;
+  /* 2026-08-16 — the conflict I had written down as unresolvable, resolved.
+     Red as small text measured 3.89 on the page ground, and every red that
+     cleared 4.5 collapsed the pair's greyscale separation. What I had never
+     tried was moving BOTH: with the blue one step deeper there is a red that
+     clears the bar AND holds the 14 L* the pair needs to survive a printed
+     screenshot. Andy's poster red is untouched — it lives in
+     --color-poster-red, on the hero, where it is a large graphic and needs
+     3:1, not 4.5.
+
+       red   bg 4.54  surface 5.27      blue  bg 7.62  surface 8.84
+       ΔL* 14.1  */
+  --color-profit: #194371;
+  --color-loss: #b5342c;
   --color-neutral: #78716c;
 
   /* ACCENT is chrome: it answers "the interface is pointing at this" — links,
@@ -128,8 +148,8 @@
      rests on for screenshots and print. The pair's separation is load-bearing
      and the shortfall applies only where red is a percentage figure, never
      where it is a mark, so the red stays. */
-  --color-took: #1f5288;
-  --color-refused: #d94032;
+  --color-took: #194371;
+  --color-refused: #b5342c;
   --color-untested: #b0aaa2;
   --color-v2-paper: #f3efe7;
 
@@ -184,8 +204,10 @@ html.dark {
   --color-text: #e7e5e4;
   --color-text-secondary: #b2aca5;
   /* 4.52 -> 5.72 on the lifted ground: it was clearing the 4.5 bar by 0.02,
-     and that bar assumes body type, not the 9px labels this token paints. */
-  --color-text-muted: #9d968c;
+     and that bar assumes body type, not the 9px labels this token paints.
+     2026-08-16: still 4.09 on surface-raised, the ground the chips use.
+     bg 6.73 · surface 5.80 · raised 4.51. */
+  --color-text-muted: #a59e94;
   --color-text-bold: #fafaf9;
 
   --color-active-tab-bg: #fafaf9;
@@ -198,9 +220,16 @@ html.dark {
   /* Never had a dark value, so it inherited the light one and sat at 2.46:1 on
      the lifted ground — under the 3:1 floor a UI component needs, which is why
      the focus ring was hard to find here. Lifted to 3.91:1, and kept muted so
-     it reads as steel, not as `took` (#3b9eff): accent is chrome, took is a
-     measurement, and they must not be mistaken for each other. */
-  --color-accent: #4d7fa8;
+     it reads as steel, not as `took`: accent is chrome, took is a
+     measurement, and they must not be mistaken for each other.
+
+     2026-08-16: that lift was measured against the 3:1 a focus RING needs,
+     but this token is also the ink of every link and ticker, and as ink it
+     was 3.60 on the card — every ticker in the trade log and the model books
+     was under the bar. Lifted again to clear 4.5 as text (bg 5.75, surface
+     4.96) while staying 13.8 L* off `took`, which is what keeps chrome and
+     measurement from reading as the same blue. */
+  --color-accent: #6a97bd;
   --color-accent-light: var(--color-bg);
   --color-accent-solid: #47749a;  /* white on it: 4.96 */
   --color-loss-solid: #cc3c2f;
@@ -208,7 +237,7 @@ html.dark {
   --color-profit: #8bbcec;
   --color-loss: #e0705c;
   --color-signal-power3: #fafaf9;
-  --color-signal-caution: #9d968c;
+  --color-signal-caution: #a59e94;
   --color-signal-warning: #b2aca5;
   --color-signal-riskoff: #e0705c;
 

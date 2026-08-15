@@ -418,7 +418,7 @@ export default function OverviewTab({
                     </tr>
                   ))}
                   {ytdStats && (
-                    <tr className="bg-[var(--color-surface-raised)] font-bold">
+                    <tr className="font-bold border-t-2 border-[var(--color-border)]">
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border)]">YTD</td>
                       <td className={`px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums ${clr(totalReturnPct)}`}>{fmtPct(totalReturnPct)}</td>
                       <td className="px-2.5 py-1.5 border-b border-[var(--color-border)] tabular-nums">{ytdStats.totalTrades}</td>
