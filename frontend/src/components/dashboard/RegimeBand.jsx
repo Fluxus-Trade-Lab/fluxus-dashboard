@@ -26,7 +26,7 @@
  * wrong numbers (it already did once, in a trade-attribution table):
  *
  *   THIS FILE — Defence / Caution / Neutral / Constructive / Full, even cuts
- *     12 / 34 / 56 / 78. Position language: what the state permits you to hold.
+ *     18 / 40 / 62 / 84. Position language: what the state permits you to hold.
  *     USE FOR DISPLAY (this band, any "how much can I carry today" reading).
  *
  *   pipeline/screeners/regime.py — Damaged / Mixed / Healthy / Extended, cuts
@@ -38,11 +38,16 @@
  */
 export const BANDS = ['Defence', 'Caution', 'Neutral', 'Constructive', 'Full']
 
-/** Market Conditions 0-100 -> a band. Cuts are even because the score is an
- *  unweighted percentage; a clever curve here would be a second model. */
+/** Market Conditions 0-100 -> a band. Cuts are even (width 22) because the
+ *  score is an unweighted percentage; a clever curve here would be a second
+ *  model. Shifted up 6 from 12/34/56/78 on the data session's occupancy audit
+ *  (2026-08-15): the old cuts were top-heavy — Full held 35% of 558 archived
+ *  sessions — and 18/40/62/84 reads near-equal occupancy (Full 25.8%), takes
+ *  Defence from 3 days to 7 with all seven inside the April crash, and leaves
+ *  forward stratification intact. Same-day readings unchanged. */
 function bandFromScore(score) {
   if (score == null) return null
-  return score >= 78 ? 4 : score >= 56 ? 3 : score >= 34 ? 2 : score >= 12 ? 1 : 0
+  return score >= 84 ? 4 : score >= 62 ? 3 : score >= 40 ? 2 : score >= 18 ? 1 : 0
 }
 
 const POWER_LEVEL = { POWER_3: 4, CAUTION: 3, WARNING: 1, RISK_OFF: 0 }
