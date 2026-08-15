@@ -1,24 +1,21 @@
-import { signalColor, signalLabel, signalTextColor } from '../../lib/format'
-
 /**
- * One benchmark, on the market half's own type ladder and its own palette.
+ * One benchmark, two lines — Andy's layout, 2026-08-16.
  *
- * Until 2026-08-12 this card was the only component on the Dashboard still
- * written in Tailwind's named type scale (text-xl / text-xs) while everything
- * around it used explicit px, and the only one painting a market move in
- * profit-green / loss-red while the Industries and Sectors cards beside it
- * painted the same kind of number in took / refused. Two ladders and two
- * palettes for one row of evidence.
+ *   line 1   ticker · and RISK OFF, red, right-aligned, when that is the state
+ *   line 2   price left · move right, and the move wears the pair
  *
- *   name    10px mono, .24em — the site's standard small label
- *   level   17px mono — the ladder's `lead` step: one under the 26px page
- *           subject, one over the 12.5px table numbers
- *   move    12px mono, took / refused — the same colours every other
- *           percentage on the market half wears
- *   signal  9px mono label, traffic-light hue. Kept, because this is a named
- *           four-level signal from the pipeline rather than a direction, and
- *           the hue only ever reinforces a word that is already printed —
- *           it is never the sole carrier.
+ * What the previous card carried and this one deliberately does not:
+ *
+ *   the dot        the signal light. It repeated the printed word in hue, and
+ *                  hue that only restates a word is decoration by our own rule.
+ *   POWER 3 etc.   price-structure states. Market state details carries the
+ *                  full read; on a strip of ten small cards they were noise.
+ *                  RISK OFF alone survives, because a lone red on this site
+ *                  means the binding constraint — it is the one signal that
+ *                  should stop the eye here.
+ *   the 3px bar    the shared-scale mark. The move number now carries the
+ *                  pair directly (Andy's call), and a coloured figure plus a
+ *                  coloured bar is the same reading twice.
  *
  * A move the feed did not carry (BTC and VIX are absent from etf_data) prints
  * an em-dash rather than nothing: an unmeasured move is a fact about the
@@ -42,61 +39,41 @@ function changeColour(val) {
   return val > 0 ? 'var(--color-took)' : 'var(--color-refused)'
 }
 
-export default function TickerCard({ ticker, signal, etf, scale = 0 }) {
+export default function TickerCard({ ticker, signal, etf }) {
   // signal data comes from signals.json (SPY, QQQ, IWM, BTC-USD, ^VIX)
   // etf data comes from etf_data.json (DIA, RSP, QQQE, GLD, TLT)
   // one or both may be present
   const price = signal?.close ?? etf?.close ?? null
   const change = etf?.change_pct ?? null
-  const sigColor = signal?.color ?? null
-  const sigLabel = signal?.signal ? signalLabel(signal.signal) : null
+  const riskOff = signal?.signal === 'RISK_OFF'
 
   const displayName = ticker === 'BTC-USD' ? 'BTC' : ticker === '^VIX' ? 'VIX' : ticker
-  const ok = Number.isFinite(change)
 
   return (
     <div className="bg-[var(--color-surface)] rounded-2xl px-4 py-3 min-w-0">
-      <div className="flex items-center gap-1.5 mb-1">
-        {sigColor && (
-          <span className={`w-[6px] h-[6px] rounded-full shrink-0 ${signalColor(sigColor)}`} />
-        )}
+      <div className="flex items-baseline justify-between gap-2 mb-1">
         <span className="text-[10px] font-mono font-medium uppercase tracking-[.24em]
                          text-[var(--color-text-muted)] truncate">
           {displayName}
         </span>
-      </div>
-
-      <div className="font-mono text-[17px] tabular-nums leading-tight
-                      text-[var(--color-text-bold)]">
-        {formatPrice(price)}
-      </div>
-
-      <div className="flex items-baseline gap-2 mt-0.5 flex-wrap">
-        {/* neutral: the bar below owns the direction, and a figure that labels
-            its own mark does not need to say it twice */}
-        <span className="font-mono text-[12.5px] tabular-nums text-[var(--color-text-secondary)]"
-              title={change == null ? 'no move measured for this instrument' : undefined}>
-          {formatChange(change)}
-        </span>
-        {sigLabel && (
-          <span className={`text-[10px] font-mono font-medium uppercase tracking-[.14em] ${signalTextColor(sigColor)}`}>
-            {sigLabel}
+        {riskOff && (
+          <span className="text-[9px] font-mono font-semibold uppercase tracking-[.12em]
+                           text-[var(--color-signal-riskoff)] shrink-0">
+            RISK OFF
           </span>
         )}
       </div>
 
-      {/* the mark — one scale across the ten cards, zero in the middle */}
-      <div className="relative h-[3px] mt-1.5"
-           title={ok && scale > 0
-             ? `${(change * 100).toFixed(2)}% against today's widest benchmark move, ±${(scale * 100).toFixed(2)}%`
-             : 'no move measured'}>
-        <span className="absolute inset-y-[-1px] w-px left-1/2 bg-[var(--color-border)]" />
-        {ok && scale > 0 && (
-          <span className="absolute top-0 h-[3px] rounded-[1px]"
-                style={{ background: changeColour(change),
-                         left: change > 0 ? '50%' : `${50 - Math.min(Math.abs(change) / scale, 1) * 50}%`,
-                         width: `${Math.min(Math.abs(change) / scale, 1) * 50}%` }} />
-        )}
+      <div className="flex items-baseline justify-between gap-2">
+        <span className="font-mono text-[17px] tabular-nums leading-tight
+                         text-[var(--color-text-bold)]">
+          {formatPrice(price)}
+        </span>
+        <span className="font-mono text-[12.5px] tabular-nums font-medium"
+              style={{ color: changeColour(change) }}
+              title={change == null ? 'no move measured for this instrument' : undefined}>
+          {formatChange(change)}
+        </span>
       </div>
     </div>
   )

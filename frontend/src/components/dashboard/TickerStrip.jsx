@@ -25,17 +25,6 @@ export default function TickerStrip({ signals, etfData }) {
     return map
   }, [etfData])
 
-  // One scale across the ten, so the bars are comparable card to card: today's
-  // widest move among the benchmarks that carry one. Naming a fixed ±X% would
-  // be a constant nobody measured.
-  const scale = useMemo(() => {
-    const vals = STRIP_TICKERS
-      .map(({ key }) => etfMap[key]?.change_pct)
-      .filter((v) => Number.isFinite(v))
-      .map(Math.abs)
-    return vals.length ? Math.max(...vals) : 0
-  }, [etfMap])
-
   return (
     // 2 / 5 / 10 — every count divides the ten cards, so each row is always
     // full: 2-up on a phone, 5+5 on a laptop, one row on wide screens. auto-fit
@@ -49,7 +38,6 @@ export default function TickerStrip({ signals, etfData }) {
           ticker={key}
           signal={source === 'signals' ? signals?.[key] : null}
           etf={etfMap[key] || null}
-          scale={scale}
         />
       ))}
     </div>
