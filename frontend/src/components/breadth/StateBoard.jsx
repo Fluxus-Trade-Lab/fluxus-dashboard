@@ -36,7 +36,7 @@ function Level({ level, count }) {
         const on = i <= level
         const bg = !on ? 'var(--color-v2-off)'
           : weak ? 'var(--color-refused)'
-          : strong ? 'var(--color-took)' : '#8d877d'
+          : strong ? 'var(--color-took)' : 'var(--color-text-muted)'
         return (
           <i key={i} className="block w-[15px] h-[13px]"
              style={{ background: bg, backgroundImage: on && weak ? HATCH : undefined }} />
@@ -102,7 +102,7 @@ function Chain({ chain }) {
           const lit = l.state === 'lit'
           const partial = l.state === 'partial'
           const colour = lit ? 'var(--color-took)'
-            : partial ? '#8d877d' : 'var(--color-untested)'
+            : partial ? 'var(--color-text-muted)' : 'var(--color-untested)'
           return (
             <div key={l.key}
                  className="px-3 py-3 border-r border-[var(--color-border)] last:border-r-0">

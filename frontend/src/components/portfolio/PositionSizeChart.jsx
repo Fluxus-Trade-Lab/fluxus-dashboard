@@ -74,7 +74,7 @@ export default function PositionSizeChart({ enrichedTrades, performanceData, sta
           />
           <ReferenceLine y={avg} stroke="var(--color-text-muted)" strokeDasharray="4 4" strokeOpacity={0.6} />
           <Bar dataKey="size" isAnimationActive={false}>
-            {data.map((d, i) => <Cell key={i} fill={d.pl > 0 ? '#2e9e4f' : '#d0362b'} />)}
+            {data.map((d, i) => <Cell key={i} fill={d.pl > 0 ? 'var(--color-profit)' : 'var(--color-loss)'} />)}
           </Bar>
         </BarChart>
       </ResponsiveContainer>

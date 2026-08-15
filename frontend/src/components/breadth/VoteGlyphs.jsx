@@ -110,7 +110,10 @@ function Glyph({ d }) {
       </div>
       <div className="text-[12.5px] font-bold text-center leading-none mt-0.5"
            style={{ fontFamily: 'var(--font-cond)',
-                    color: onLine ? '#b8860b'
+                    // v3: sitting exactly on the line is the vote nearest to
+                    // turning — the binding one on this board, so it is red,
+                    // not a gold nobody declared.
+                    color: onLine ? 'var(--color-refused)'
                       : d.measurable ? 'var(--color-text)' : 'var(--color-text-muted)' }}>
         {d.margin == null ? '—' : fmt(d.margin)}
       </div>

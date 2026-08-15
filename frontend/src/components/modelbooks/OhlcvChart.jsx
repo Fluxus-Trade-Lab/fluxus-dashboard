@@ -193,8 +193,8 @@ export default function OhlcvChart({
       timeScale: { borderVisible: false },
       crosshair: {
         mode: 0, // Normal crosshair
-        horzLine: { visible: true, labelVisible: true, style: 3, color: isDarkMode() ? '#44403c' : '#d6d3d1' },
-        vertLine: { style: 3, color: isDarkMode() ? '#44403c' : '#d6d3d1' },
+        horzLine: { visible: true, labelVisible: true, style: 3, color: getComputedStyle(document.documentElement).getPropertyValue('--color-border').trim() },
+        vertLine: { style: 3, color: getComputedStyle(document.documentElement).getPropertyValue('--color-border').trim() },
       },
     })
 

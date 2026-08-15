@@ -150,7 +150,8 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
                     className="h-full rounded-full"
                     style={{
                       width: `${Math.min(100, t.weight)}%`,
-                      background: t.weight > 15 ? '#ef4444' : '#5b8fa8',
+                      // v3: red only where the weight binds (>15%); under it, grey
+                      background: t.weight > 15 ? 'var(--color-loss)' : 'var(--color-text-secondary)',
                     }}
                   />
                 </div>

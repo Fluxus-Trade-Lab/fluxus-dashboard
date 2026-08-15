@@ -18,7 +18,10 @@ import { useCallback, useEffect, useState } from 'react'
  * follows the SLOT, not the theme — two sessions comparing different themes
  * still read the same way.
  */
-export const SLOT_COLOURS = ['#4a90c9', '#c8763f', '#9c7bb5']
+/* v3: identity colours for the three compare slots. Deliberately NOT the
+   pair's blue or red — these say "which line is this", never "which side is
+   this" — so they sit off the pair's hues entirely. */
+export const SLOT_COLOURS = ['#6b7f8c', '#8c7f6b', '#7d6b8c']
 export const MAX_COMPARE = SLOT_COLOURS.length
 
 const KEY = 'themes-compare'

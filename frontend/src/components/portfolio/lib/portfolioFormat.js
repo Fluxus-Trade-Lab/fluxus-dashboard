@@ -31,9 +31,12 @@ export const daysBetween = (a, b) =>
 
 export const todayStr = () => new Date().toISOString().split('T')[0]
 
+/* Sector identity — eleven muted hues that say WHICH sector, never which
+   side. Kept off the pair's blue and red so a sector chip can never be read
+   as a direction. */
 export const SECTOR_COLORS = [
-  '#5b8fa8', '#8fbc8f', '#d4a574', '#9b8ec2', '#c7796d',
-  '#6db6b0', '#b8a960', '#a87fb8', '#7da6c4', '#c4917d', '#82b882',
+  '#7a8b94', '#8b9480', '#9c9078', '#8d8397', '#997f7f',
+  '#75908c', '#918a70', '#8a7d92', '#7f8b9c', '#94867a', '#7e8f7e',
 ]
 
 export const TABS = ['Overview', 'Exposure', 'Risk', 'Options Port']
