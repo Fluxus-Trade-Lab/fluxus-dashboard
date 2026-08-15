@@ -111,7 +111,7 @@ function AnalyticsTabInner() {
   return (
     <div>
       {/* Sub-tab switcher */}
-      <div className="flex gap-1 mb-5 border-b border-[var(--color-border)] pb-2">
+      <div className="flex gap-1 flex-wrap mb-5 border-b border-[var(--color-border)] pb-2">
         {SUB_TABS.map(({ key, label }) => (
           <button
             key={key}

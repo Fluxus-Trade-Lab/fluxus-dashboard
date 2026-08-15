@@ -172,7 +172,7 @@ export function VoteMarks({ votes }) {
           layout did and the marks stopped being a fixed, countable object.
           Six and six also splits the ballot the way it is actually read:
           the breadth rules on top, the benchmark ones underneath. */}
-      <div className="grid grid-cols-6 gap-x-2.5 gap-y-3">
+      <div className="grid grid-cols-3 sm:grid-cols-6 gap-x-2.5 gap-y-3">
         {entries.map(([key, v]) => (
           <span key={key} className="flex flex-col gap-1.5" title={`${VOTE_LABEL[key] ?? key}: ${v}`}>
             <i className="block w-full h-[32px]" style={style(v)} />

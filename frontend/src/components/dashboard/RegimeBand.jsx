@@ -135,7 +135,27 @@ function monthTicks(history, maxLabels = 7) {
   })
   const step = Math.max(1, Math.ceil(marks.length / maxLabels))
   // Always keep January: a year boundary is the one tick you cannot infer.
-  return marks.filter((m, i) => i % step === 0 || m.isYear)
+  const kept = marks
+    .map((m, ord) => ({ ...m, ord }))
+    .filter(({ ord, isYear }) => ord % step === 0 || isYear)
+
+  // ...but forcing it in is what put "Dec 2026 Feb" on top of itself on a
+  // phone: the year lands BETWEEN two ticks the step had already chosen, so
+  // three consecutive months print in a row that has room for one. The year
+  // wins the collision — it is the tick that cannot be inferred — and the
+  // neighbour that is merely a month steps aside.
+  const out = []
+  for (const m of kept) {
+    const prev = out[out.length - 1]
+    // ord is the month's place in the sequence, not its day index — the
+    // spacing rule is "how many months apart", and step counts months.
+    if (prev && m.ord - prev.ord < step) {
+      if (m.isYear && !prev.isYear) out[out.length - 1] = m
+      continue
+    }
+    out.push(m)
+  }
+  return out
 }
 
 /**

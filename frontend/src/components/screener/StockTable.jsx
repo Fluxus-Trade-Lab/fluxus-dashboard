@@ -241,8 +241,10 @@ export default function StockTable({ rows, defaultSort = 'rs3' }) {
   }
 
   return (
-    <div>
-      <table className="w-full text-[12.5px] border-collapse">
+    // The table is wider than a phone. It scrolls inside its own box so the
+    // page does not scroll with it — every wide table on the site does this.
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-[720px] text-[12.5px] border-collapse">
         <thead>
           <tr className="text-[10px] font-mono font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
             <th className="text-right py-1 pr-2.5 font-medium w-7">#</th>

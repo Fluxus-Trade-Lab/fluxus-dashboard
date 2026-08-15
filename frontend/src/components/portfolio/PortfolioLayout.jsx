@@ -324,15 +324,18 @@ export default function Layout() {
         {trimModal && <TrimModal trade={trimModal} onClose={() => setTrimModal(null)} />}
 
         {/* Tabs */}
-        <div className="flex gap-0 border-b border-[var(--color-border)] mt-4 mb-5">
+        {/* The one tab row on the site that was its own shape: 14px semibold
+            with an underline, where every other page uses an 11px pill. Same
+            job, so it wears the same clothes now. */}
+        <div className="flex gap-1 flex-wrap mt-4 mb-5">
           {TABS.map((tab, i) => (
             <button
               key={tab}
               onClick={() => dispatch({ type: 'SET_ACTIVE_TAB', tab: i })}
-              className={`px-5 py-2.5 font-semibold text-[14px] cursor-pointer bg-transparent border-none border-b-2 transition-colors ${
+              className={`px-3 py-1.5 text-[11px] font-medium rounded cursor-pointer border-none transition-colors ${
                 state.activeTab === i
-                  ? 'border-[var(--color-accent)] text-[var(--color-accent)]'
-                  : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'
+                  ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-[var(--color-surface-raised)]'
               }`}
             >
               {tr(TAB_KEYS[i])}
