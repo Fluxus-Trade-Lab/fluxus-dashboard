@@ -167,8 +167,15 @@ say "brief built (data/snapshots/snapshot_SPX_${DATE}.html)"
 # trades, and the cheap 1-minute-bar substitute agreed with tick NBBO on only
 # 56.7% of prints against a 50% coin. See scripts/flow_session.py.
 if [ "$postclose" = true ]; then
-    run_step flow_session .venv/bin/python scripts/flow_session.py --symbol SPX \
-        && say "flow read stored" || say "warn: flow_session failed or timed out"
+    # Both tenors, each in its own step so one failing cannot cost the other.
+    # ~5 minutes per tenor at 100 contracts; the 0DTE is the heavier of the two
+    # (792k prints on 2026-08-14 against ~110k for a 1DTE).
+    for _t in 0 1; do
+        run_step "flow_${_t}dte" .venv/bin/python scripts/flow_session.py \
+            --symbol SPX --tenor "$_t" \
+            && say "flow read stored (tenor $_t)" \
+            || say "warn: flow_session tenor $_t failed or timed out"
+    done
 fi
 
 # Push the card LAST: everything above must have succeeded, or we would be

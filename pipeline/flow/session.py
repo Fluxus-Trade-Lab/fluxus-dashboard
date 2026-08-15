@@ -52,22 +52,29 @@ What IS affordable without quotes: premium per strike, block share, the
 call/put split, and belt-versus-wings by premium. That is most of the read and
 it is stated for what it is.
 
-## The tenor must match, or the comparison is about the tenor
+## Two pinned series, and why the slot is not the calendar
 
-A read is of ONE expiry, and the expiry the puller lands on is not stable
-across sessions. Measured on the first three we stored:
+A read is of ONE expiry, and letting the puller take whatever expiry came first
+is how the first three landed on 1DTE, 1DTE and 0DTE:
 
-    2026-08-12   expiry 20260813   1DTE     69,100 prints   $2,783/print
-    2026-08-13   expiry 20260814   1DTE    111,629 prints   $3,305/print
-    2026-08-14   expiry 20260814   0DTE    792,338 prints   $1,140/print
+    2026-08-12   expiry 20260813   slot 1     69,100 prints   $2,783/print
+    2026-08-13   expiry 20260814   slot 1    111,629 prints   $3,305/print
+    2026-08-14   expiry 20260814   slot 0    792,338 prints   $1,140/print
 
 Seven times the prints and a third the premium each. **That is not the market
-changing, it is a different instrument.** A 0DTE on its own expiry day and a
-1DTE are different books with different participants, and a "trend" read across
-them measures which one the chain happened to offer.
+changing, it is a different instrument** — a 0DTE on its own expiry day and a
+1DTE are different books with different participants.
 
-So `dte` rides with every read, and `comparable()` refuses a set that mixes
-tenors instead of averaging them into a number about nothing.
+So two series are pinned and kept apart:
+
+  ``tenor 0``   the expiry equal to the session date
+  ``tenor 1``   the FIRST expiry strictly after it
+
+**`tenor` is the slot and `dte` is the calendar**, and they are different on
+purpose. A Friday's tenor-1 expires Monday — one expiry step, three calendar
+days. Normalising that away would hide a real property of the instrument: a
+weekend sits inside it, and a weekend is not nothing. `comparable()` therefore
+keys on the SLOT, and `dte` rides along as the fact it is.
 
 ## Belt and wings
 
@@ -238,11 +245,11 @@ def comparable(reads: list[dict]) -> dict:
     """
     tenors = {}
     for r in reads:
-        tenors.setdefault(r.get("dte"), []).append(r.get("session"))
+        tenors.setdefault(r.get("tenor"), []).append(r.get("session"))
     ok = len(tenors) == 1
     return {
         "comparable": ok, "tenors": {k: sorted(v) for k, v in tenors.items()},
-        "note": (f"all {len(reads)} reads are {next(iter(tenors))}DTE" if ok else
+        "note": (f"all {len(reads)} reads are tenor {next(iter(tenors))}" if ok else
                  "mixed tenors — a 0DTE on its expiry day and a 1DTE are "
                  "different books with different participants, so a difference "
                  "across them is about which the chain offered, not the market"),
@@ -311,14 +318,15 @@ def sides_available(prints: list[dict], min_share: float = MIN_CLASSIFIED) -> bo
 
 
 def session_read(prints: list[dict], spot: float, session: str,
-                 belt_pct: float = BELT_PCT, dte: int | None = None) -> dict:
+                 belt_pct: float = BELT_PCT, dte: int | None = None,
+                 tenor: int | None = None) -> dict:
     """The whole flow read for one session, ready to store and to juxtapose."""
     strikes = per_strike(prints)
     z = zones(strikes, spot, belt_pct)
     tagged = B.tag_prints(prints)
     have_sides = sides_available(prints)
     return {
-        "session": session, "spot": spot, "dte": dte,
+        "session": session, "spot": spot, "tenor": tenor, "dte": dte,
         "n_prints": len(prints),
         "sides_available": have_sides,
         "block_summary": B.block_share(tagged),

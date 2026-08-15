@@ -30,8 +30,22 @@ side-dependent reading comes back `unknown` rather than guessed. `--with-quotes`
 does it properly and takes hours; it exists for a single session worth studying,
 not for the chain.
 
+## Two pinned series
+
+  tenor 0   the expiry equal to the session date
+  tenor 1   the FIRST expiry strictly after it
+
+Both are pulled by default and stored separately, because they are different
+books: on 2026-08-14 the 0DTE printed 792,338 times at $1,140 of premium each
+while that week's 1DTEs printed ~90,000 times at ~$3,000. `--tenor` runs one.
+
+The slot is not the calendar. A Friday's tenor-1 expires Monday -- one expiry
+step, three calendar days -- and both numbers are stored, because a weekend
+inside the tenor is a real property of that instrument and not noise.
+
 Usage:
-    .venv/bin/python scripts/flow_session.py --symbol SPX
+    .venv/bin/python scripts/flow_session.py --symbol SPX              # both
+    .venv/bin/python scripts/flow_session.py --symbol SPX --tenor 0
     .venv/bin/python scripts/flow_session.py --symbol SPX --with-quotes   # hours
 """
 from __future__ import annotations
@@ -108,11 +122,94 @@ def _frame(ticks, kind: str) -> pd.DataFrame:
     return df
 
 
+def _pull_tenor(ib, chain, under, strikes, spot, day, pretty, expiry,
+                tenor, with_quotes: bool) -> dict:
+    """Every print for one tenor, and the read built from them."""
+    from ib_async import Option
+
+    _d = dt.date.fromisoformat(f"{expiry[:4]}-{expiry[4:6]}-{expiry[6:]}")
+    dte = (_d - dt.date.fromisoformat(pretty)).days
+    print(f"\n  --- tenor {tenor} · expiry {expiry} · {dte} calendar day(s) ---",
+          flush=True)
+
+    prints, missing, done = [], 0, 0
+    for k in strikes:
+        for right in ("C", "P"):
+            opt = Option(under.symbol, expiry, k, right, "SMART",
+                         tradingClass=chain.tradingClass)
+            try:
+                ib.qualifyContracts(opt)
+            except Exception:
+                missing += 1
+                continue
+            if not opt.conId:
+                missing += 1
+                continue
+            trades = _frame(_ticks(ib, opt, day, "TRADES"), "trades")
+            if trades.empty:
+                continue
+            if with_quotes:
+                quotes = _frame(_ticks(ib, opt, day, "BID_ASK"), "quotes")
+                merged = enrich.enrich_trades(trades, quotes)
+                for row in merged.itertuples():
+                    prints.append({
+                        "strike": float(k), "right": right,
+                        "price": float(row.price), "size": float(row.size),
+                        "side": quote_rule.classify(
+                            row.price,
+                            None if pd.isna(row.bid) else float(row.bid),
+                            None if pd.isna(row.ask) else float(row.ask),
+                            None if pd.isna(row.prev_price)
+                            else float(row.prev_price)),
+                    })
+            else:
+                # No quotes pulled, so no print gets a side. UNKNOWN is the
+                # honest label and session.py turns it into an explicit
+                # "unknown" reading rather than a balanced one.
+                for row in trades.itertuples():
+                    prints.append({"strike": float(k), "right": right,
+                                   "price": float(row.price),
+                                   "size": float(row.size), "side": "UNKNOWN"})
+            done += 1
+            if done % 20 == 0:
+                print(f"      ... {done} contracts, {len(prints):,} prints",
+                      flush=True)
+
+    if not prints:
+        print(f"      no prints for tenor {tenor} — nothing to read")
+        return {}
+    read = FS.session_read(prints, spot, pretty, dte=dte, tenor=tenor)
+    read.update({"expiry": expiry, "contracts_unavailable": missing,
+                 "quotes_pulled": bool(with_quotes)})
+    return read
+
+
+def _report(read: dict) -> None:
+    bs = read["block_summary"]
+    print(f"      {read['n_prints']:,} prints   "
+          f"${read['total_premium'] / 1e6:,.1f}M premium   "
+          f"blocks {bs['block_share']:.1%} (lot rule {bs['large_lot_share']:.1%}, "
+          f"agree {bs['agreement']:.0%})")
+    for z, b in read["zones"].items():
+        if not b["premium"]:
+            print(f"      {z:<11} —")
+            continue
+        print(f"      {z:<11} {b['share_of_session']:>6.1%} of premium   "
+              f"blocks {b['block_share']:.0%}   "
+              f"classified {b['classified_share']:.0%}")
+    if not read["zones_covered"]:
+        print(f"      !! {read['coverage_note']}")
+    print(f"      BELT: {read['belt_bid']['state'].upper()}")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--symbol", default="SPX")
     ap.add_argument("--date", help="YYYYMMDD (ET). Default: last complete session.")
     ap.add_argument("--budget", type=int, default=BUDGET_CONTRACTS)
+    ap.add_argument("--tenor", type=int, choices=(0, 1), action="append",
+                    help="0 = expiry ON the session date, 1 = the FIRST expiry "
+                         "after it. Repeatable; default is both.")
     ap.add_argument("--with-quotes", action="store_true",
                     help="Also pull BID_ASK ticks so prints can be classified. "
                          "~142s PER CONTRACT — hours for a full chain. Without "
@@ -134,14 +231,15 @@ def main():
         day = d.strftime("%Y%m%d")
     pretty = f"{day[:4]}-{day[4:6]}-{day[6:]}"
 
-    from ib_async import IB, Index, Option, Stock
-    # Shared connect: no startup account/order/position fetch.
-    # That fetch hung the post-close chain twice; see pipeline/ibkr.py.
+    from ib_async import Index, Stock
+    # Shared connect: no startup account/order/position fetch. That fetch hung
+    # the post-close chain twice; see pipeline/ibkr.py.
     try:
         ib = IBKR.connect(187, timeout=10)
     except ConnectionError as e:
         sys.exit(str(e))
 
+    reads = []
     try:
         under = (Index("SPX", "CBOE") if args.symbol == "SPX"
                  else Stock(args.symbol, "SMART", "USD"))
@@ -160,121 +258,62 @@ def main():
         # every qualify fail once already. Take the richest.
         chains = [c for c in params if c.exchange == "SMART"] or params
         chain = max(chains, key=lambda c: len(c.strikes))
-        expiries = sorted(e for e in chain.expirations if e >= day)
-        if not expiries:
-            sys.exit(f"no expiry at or after {pretty} in the chain")
-        expiry = expiries[0]
+
+        # The slot, resolved against what the chain actually lists. A tenor that
+        # does not exist is reported and SKIPPED -- never silently replaced by
+        # the neighbouring one, which is exactly the substitution that made the
+        # first three stored reads incomparable.
+        same = sorted(e for e in chain.expirations if e == day)
+        after = sorted(e for e in chain.expirations if e > day)
+        slots = {0: (same[0] if same else None), 1: (after[0] if after else None)}
+        wanted = sorted(set(args.tenor or (0, 1)))
+        todo = [(t, slots[t]) for t in wanted if slots[t]]
+        for t in wanted:
+            if not slots[t]:
+                print(f"  tenor {t}: no such expiry listed for {pretty} — "
+                      f"skipped, NOT substituted")
+        if not todo:
+            sys.exit(f"no requested tenor exists for {pretty}")
 
         strikes = atm_core.select_core(spot, sorted(chain.strikes),
                                        budget_contracts=args.budget,
                                        max_sigma=args.sigma,
                                        daily_sigma_pct=0.01)
-        print(f"{args.symbol} {pretty}  spot {spot:,.2f}  expiry {expiry}  "
-              f"{len(strikes)} strikes {min(strikes):,.0f}-{max(strikes):,.0f}")
+        print(f"{args.symbol} {pretty}  spot {spot:,.2f}  "
+              f"{len(strikes)} strikes {min(strikes):,.0f}-{max(strikes):,.0f}  "
+              f"tenors {[t for t, _ in todo]}")
 
-        prints, missing, done = [], 0, 0
-        for k in strikes:
-            for right in ("C", "P"):
-                opt = Option(under.symbol, expiry, k, right,
-                             "SMART", tradingClass=chain.tradingClass)
-                try:
-                    ib.qualifyContracts(opt)
-                except Exception:
-                    missing += 1
-                    continue
-                if not opt.conId:
-                    missing += 1
-                    continue
-                trades = _frame(_ticks(ib, opt, day, "TRADES"), "trades")
-                if trades.empty:
-                    continue
-                if args.with_quotes:
-                    quotes = _frame(_ticks(ib, opt, day, "BID_ASK"), "quotes")
-                    merged = enrich.enrich_trades(trades, quotes)
-                    for row in merged.itertuples():
-                        prints.append({
-                            "strike": float(k), "right": right,
-                            "price": float(row.price), "size": float(row.size),
-                            "side": quote_rule.classify(
-                                row.price,
-                                None if pd.isna(row.bid) else float(row.bid),
-                                None if pd.isna(row.ask) else float(row.ask),
-                                None if pd.isna(row.prev_price) else float(row.prev_price)),
-                        })
-                else:
-                    # No quotes pulled, so no print gets a side. UNKNOWN is the
-                    # honest label and session.py turns it into an explicit
-                    # "unknown" reading rather than a balanced one.
-                    for row in trades.itertuples():
-                        prints.append({"strike": float(k), "right": right,
-                                       "price": float(row.price),
-                                       "size": float(row.size),
-                                       "side": "UNKNOWN"})
-                done += 1
-                if done % 10 == 0:
-                    print(f"    ... {done} contracts, {len(prints):,} prints",
-                          flush=True)
+        for tenor, expiry in todo:
+            r = _pull_tenor(ib, chain, under, strikes, spot, day, pretty,
+                            expiry, tenor, args.with_quotes)
+            if r:
+                r.update({"symbol": args.symbol,
+                          "generated_at": market_now().isoformat(timespec="seconds")})
+                reads.append(r)
+                _report(r)
     finally:
         ib.disconnect()
 
-    if not prints:
-        sys.exit(f"no prints for {pretty} — nothing to read")
-
-    # The tenor is part of the identity of the read, not a footnote. The first
-    # three sessions stored landed on 1DTE, 1DTE and 0DTE, and a comparison
-    # across them would have measured the tenor.
-    _d = dt.date.fromisoformat(f"{expiry[:4]}-{expiry[4:6]}-{expiry[6:]}")
-    dte = (_d - dt.date.fromisoformat(pretty)).days
-    read = FS.session_read(prints, spot, pretty, dte=dte)
-    read["symbol"] = args.symbol
-    read["expiry"] = expiry
-    read["generated_at"] = now.isoformat(timespec="seconds")
-    read["contracts_unavailable"] = missing
-    read["quotes_pulled"] = bool(args.with_quotes)
+    if not reads:
+        sys.exit(f"no prints for {pretty} on any requested tenor")
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    (OUT_DIR / f"flow_{args.symbol}_{day}.json").write_text(json.dumps(read, indent=2))
-    # Append-only history is what makes "does it repeat" answerable at all.
+    for r in reads:
+        # The tenor is in the FILENAME. Two reads of one session are two
+        # different books and must not overwrite each other.
+        (OUT_DIR / f"flow_{args.symbol}_{day}_{r['tenor']}dte.json").write_text(
+            json.dumps(r, indent=2))
     with LOG.open("a") as f:
-        f.write(json.dumps({k: read[k] for k in
-                            ("session", "symbol", "spot", "dte", "expiry",
-                             "n_prints", "total_premium", "belt_bid",
-                             "generated_at")}) + "\n")
+        for r in reads:
+            f.write(json.dumps({k: r[k] for k in
+                                ("session", "symbol", "tenor", "dte", "expiry",
+                                 "spot", "n_prints", "total_premium",
+                                 "belt_bid", "generated_at")}) + "\n")
 
-    bs = read["block_summary"]
-    print(f"  tenor {read['dte']}DTE (expiry {expiry}) — reads of different "
-          f"tenors do not compare")
-    print(f"  {read['n_prints']:,} prints   "
-          f"${read['total_premium'] / 1e6:,.1f}M premium   "
-          f"blocks {bs['block_share']:.1%} (lot rule would say "
-          f"{bs['large_lot_share']:.1%}, they agree on {bs['agreement']:.0%})")
-    for z, b in read["zones"].items():
-        if not b["premium"]:
-            print(f"  {z:<11} —")
-            continue
-        lift = f"{b['net_lift']:+.0%}" if b["net_lift"] is not None else "  ?  "
-        print(f"  {z:<11} {b['share_of_session']:>6.1%} of premium   "
-              f"net lift {lift}   classified {b['classified_share']:.0%}   "
-              f"blocks {b['block_share']:.0%}")
-    if not read["zones_covered"]:
-        print(f"\n  !! {read['coverage_note']}")
-    bb = read["belt_bid"]
-    print(f"\n  BELT: {bb['state'].upper()} — {bb['note']}")
-
-    hist = [json.loads(l) for l in LOG.read_text().splitlines() if l.strip()]
-    hist = [h for h in hist if h.get("symbol") == args.symbol]
-    r = FS.repeats(hist, bb["state"]) if bb["state"] != "unknown" else None
-    if r:
-        print(f"  RUN:  {r['consecutive']} consecutive '{r['state']}' "
-              f"through {r['through']} — {r['reading']}")
-    print("\n  belt width sweep:")
-    for row in read["belt_sweep"]:
-        star = "  <- shipped" if row["belt_pct"] == FS.BELT_PCT else ""
-        lift = f"{row['net_lift']:+.0%}" if row["net_lift"] is not None else "   ?"
-        print(f"    {row['belt_pct']:>6.3%}  {row['belt_strikes']:>2} strikes  "
-              f"{row['belt_share']:>6.1%} of premium  {row['belt_state']:<9} "
-              f"{lift}{star}")
-    print(f"\nwrote {OUT_DIR}/flow_{args.symbol}_{day}.json")
+    if len(reads) > 1:
+        c = FS.comparable(reads)
+        print(f"\n  the two tenors: comparable={c['comparable']} — {c['note']}")
+    print(f"\nwrote {len(reads)} read(s) to {OUT_DIR}/")
 
 
 if __name__ == "__main__":

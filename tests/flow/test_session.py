@@ -267,11 +267,19 @@ def test_sessions_are_ordered_by_date_not_by_file_order():
 # --- the tenor is part of the read's identity ---------------------------
 
 def test_reads_of_the_same_tenor_are_comparable():
-    reads = [{"session": "2026-08-12", "dte": 1},
-             {"session": "2026-08-13", "dte": 1}]
+    reads = [{"session": "2026-08-12", "tenor": 1, "dte": 1},
+             {"session": "2026-08-13", "tenor": 1, "dte": 1}]
     c = S.comparable(reads)
     assert c["comparable"] is True
-    assert "1DTE" in c["note"]
+    assert "tenor 1" in c["note"]
+
+
+def test_the_slot_is_the_key_not_the_calendar():
+    """A Friday's tenor-1 expires Monday: one expiry step, three calendar days.
+    Both are true and only the slot makes the two sessions comparable."""
+    reads = [{"session": "2026-08-13", "tenor": 1, "dte": 1},   # Thu -> Fri
+             {"session": "2026-08-14", "tenor": 1, "dte": 3}]   # Fri -> Mon
+    assert S.comparable(reads)["comparable"] is True
 
 
 def test_a_mixed_tenor_set_is_refused_not_averaged():
@@ -279,9 +287,9 @@ def test_a_mixed_tenor_set_is_refused_not_averaged():
     69k / 112k / 792k prints and $2,783 / $3,305 / $1,140 per print. Seven times
     the prints and a third the premium each is a different instrument, not a
     market that changed."""
-    reads = [{"session": "2026-08-12", "dte": 1},
-             {"session": "2026-08-13", "dte": 1},
-             {"session": "2026-08-14", "dte": 0}]
+    reads = [{"session": "2026-08-12", "tenor": 1},
+             {"session": "2026-08-13", "tenor": 1},
+             {"session": "2026-08-14", "tenor": 0}]
     c = S.comparable(reads)
     assert c["comparable"] is False
     assert "different books" in c["note"]
@@ -292,14 +300,15 @@ def test_a_mixed_tenor_set_is_refused_not_averaged():
 def test_the_odd_session_out_is_named_not_dropped():
     """Which one is excluded is the caller's decision and usually the
     interesting one."""
-    c = S.comparable([{"session": "a", "dte": 1}, {"session": "b", "dte": 0}])
+    c = S.comparable([{"session": "a", "tenor": 1}, {"session": "b", "tenor": 0}])
     assert set(c["tenors"]) == {0, 1}
 
 
-def test_a_read_carries_its_tenor():
-    r = S.session_read([p(7750, 10, 5)], SPOT, "2026-08-14", dte=0)
-    assert r["dte"] == 0
+def test_a_read_carries_both_its_slot_and_its_calendar():
+    r = S.session_read([p(7750, 10, 5)], SPOT, "2026-08-14", tenor=1, dte=3)
+    assert r["tenor"] == 1 and r["dte"] == 3
 
 
 def test_a_read_with_no_tenor_says_none_rather_than_guessing_zero():
-    assert S.session_read([p(7750, 10, 5)], SPOT, "2026-08-14")["dte"] is None
+    r = S.session_read([p(7750, 10, 5)], SPOT, "2026-08-14")
+    assert r["tenor"] is None and r["dte"] is None
