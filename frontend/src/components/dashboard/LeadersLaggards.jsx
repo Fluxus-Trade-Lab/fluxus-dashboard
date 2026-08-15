@@ -90,9 +90,11 @@ export default function LeadersLaggards({
     // so it stands on the ground like every other section heading, and the
     // card holds only the data.
     <div className="flex flex-col min-w-0">
+      {/* breathing room above and below: the heading sits between the ticker
+          strip and its card, and needs air on both sides to read as a
+          heading rather than a squeezed caption. Tooltip cut (Andy). */}
       <div className="text-[17px] font-semibold leading-tight text-[var(--color-text-bold)]
-                      cursor-help mb-2 px-1"
-           title={`${etfs.length} funds · leaders above, laggards below · ranked per window`}>
+                      mt-4 mb-3 px-1">
         {title}
       </div>
       <section className="bg-[var(--color-surface)] rounded-3xl overflow-hidden flex flex-col flex-1 pt-4">

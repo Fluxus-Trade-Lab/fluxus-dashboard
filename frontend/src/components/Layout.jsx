@@ -174,12 +174,12 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                     the Industries grammar, not the reverse) — the symmetry is
                     structural, not imitated. Each window column shows that
                     window's leaders and laggards WITH that window's move. */}
-                <LeadersLaggards title="Industry leaders and laggards"
+                <LeadersLaggards title="Industry Leaders and Laggards"
                   etfs={(ETF_GROUPS.Industries || [])
                     .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                     .filter(Boolean)}
                   windows={['1D', '1W', '1M']} limit={3} />
-                <LeadersLaggards title="Sector leaders and laggards"
+                <LeadersLaggards title="Sector Leaders and Laggards"
                   etfs={(ETF_GROUPS['Sel Sectors'] || [])
                     .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                     .filter(Boolean)}
