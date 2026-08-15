@@ -99,9 +99,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
            The Founders-note slot is deliberately an empty frame: Andy writes
            it, the layout only reserves the space. */
         <main className="max-w-[1800px] mx-auto px-3 py-4 space-y-4">
-          <PageHeader group="market" title="Today"
-            blurb="What the market is doing, before you decide what to do about it."
-            meta={[]} />
+          <PageHeader group="market" title="Today" meta={[]} />
 
           {/* SUBJECT — the read on the left, its own history on the right.
               Side by side because they answer one question in two tenses:
@@ -109,10 +107,11 @@ export default function Layout({ data, lastUpdated, isOffline }) {
               Stacked, the chart read as a second object; beside the votes it
               reads as their denominator. */}
           <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,7fr)_minmax(0,9fr)] gap-4 items-stretch">
-            {/* v3 card chrome (slice 5): 24px corners, no border — cards are
-                separated by ground, not fenced by hairlines. The source line
-                at the foot is the lieflat habit the sketches were approved
-                with: every card says where its numbers came from. */}
+            {/* v3 card chrome: 24px corners, no border — cards are separated
+                by ground, not fenced by hairlines. Source lines were tried
+                here and cut by Andy (2026-08-15): on the sketches they carried
+                provenance, on the live page they repeated what the card
+                already was. 页面文案只留交易内容. */}
             {data?.breadth?.verdict && (
               <section className="rounded-3xl px-6 py-5 bg-[var(--color-surface)]">
                 <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1 mb-4">
@@ -133,14 +132,10 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                   <button type="button" onClick={() => navigate('#/breadth')}
                           className="text-[11px] bg-transparent border-0 p-0 cursor-pointer underline
                                      text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
-                    the nine conditions behind it →
+                    market state details →
                   </button>
                 </div>
                 <VoteMarks votes={data.breadth.verdict.votes} />
-                <div className="mt-4 text-[9.5px] font-mono font-medium uppercase tracking-[.14em]
-                                text-[var(--color-text-muted)] opacity-70">
-                  source: breadth verdict · twelve voters · count, not confidence
-                </div>
               </section>
             )}
 

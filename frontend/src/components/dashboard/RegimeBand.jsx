@@ -294,10 +294,6 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
       </div>
 
       <ConditionsLine history={conditions?.history} score={score} />
-      <div className="mt-3 text-[9.5px] font-mono font-medium uppercase tracking-[.14em]
-                      text-[var(--color-text-muted)] opacity-70">
-        source: market conditions 0–100 · the band is the weakest voter, never the average
-      </div>
     </section>
   )
 }
