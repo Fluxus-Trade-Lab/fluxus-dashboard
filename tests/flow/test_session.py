@@ -236,3 +236,70 @@ def test_a_pull_that_reached_both_wings_is_covered():
                        SPOT, "2026-08-13")
     assert r["zones_covered"] is True
     assert r["coverage_note"] is None
+
+
+def test_a_re_run_cannot_become_a_second_session():
+    """The append-only log gets a new row every run. The first live day left two
+    rows for 2026-08-12, and without collapsing them a single re-pull would
+    clear his two-session campaign threshold from one day of data."""
+    hist = [{"session": "2026-08-12", "belt_bid": {"state": "bid"}},
+            {"session": "2026-08-12", "belt_bid": {"state": "bid"}}]
+    r = S.repeats(hist)
+    assert r["consecutive"] == 1
+    assert "single desk" in r["reading"]
+
+
+def test_the_last_row_for_a_session_wins():
+    hist = [{"session": "2026-08-12", "belt_bid": {"state": "offered"}},
+            {"session": "2026-08-12", "belt_bid": {"state": "bid"}}]
+    assert S.repeats(hist)["consecutive"] == 1
+    assert S.repeats(hist, "offered")["consecutive"] == 0
+
+
+def test_sessions_are_ordered_by_date_not_by_file_order():
+    hist = [{"session": "2026-08-12", "belt_bid": {"state": "bid"}},
+            {"session": "2026-08-10", "belt_bid": {"state": "offered"}},
+            {"session": "2026-08-11", "belt_bid": {"state": "bid"}}]
+    assert S.repeats(hist)["consecutive"] == 2      # 08-11 and 08-12
+    assert S.repeats(hist)["through"] == "2026-08-11"
+
+
+# --- the tenor is part of the read's identity ---------------------------
+
+def test_reads_of_the_same_tenor_are_comparable():
+    reads = [{"session": "2026-08-12", "dte": 1},
+             {"session": "2026-08-13", "dte": 1}]
+    c = S.comparable(reads)
+    assert c["comparable"] is True
+    assert "1DTE" in c["note"]
+
+
+def test_a_mixed_tenor_set_is_refused_not_averaged():
+    """Measured on the first three sessions stored: 1DTE, 1DTE, 0DTE gave
+    69k / 112k / 792k prints and $2,783 / $3,305 / $1,140 per print. Seven times
+    the prints and a third the premium each is a different instrument, not a
+    market that changed."""
+    reads = [{"session": "2026-08-12", "dte": 1},
+             {"session": "2026-08-13", "dte": 1},
+             {"session": "2026-08-14", "dte": 0}]
+    c = S.comparable(reads)
+    assert c["comparable"] is False
+    assert "different books" in c["note"]
+    assert c["tenors"][1] == ["2026-08-12", "2026-08-13"]
+    assert c["tenors"][0] == ["2026-08-14"]
+
+
+def test_the_odd_session_out_is_named_not_dropped():
+    """Which one is excluded is the caller's decision and usually the
+    interesting one."""
+    c = S.comparable([{"session": "a", "dte": 1}, {"session": "b", "dte": 0}])
+    assert set(c["tenors"]) == {0, 1}
+
+
+def test_a_read_carries_its_tenor():
+    r = S.session_read([p(7750, 10, 5)], SPOT, "2026-08-14", dte=0)
+    assert r["dte"] == 0
+
+
+def test_a_read_with_no_tenor_says_none_rather_than_guessing_zero():
+    assert S.session_read([p(7750, 10, 5)], SPOT, "2026-08-14")["dte"] is None

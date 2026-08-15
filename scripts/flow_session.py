@@ -220,7 +220,12 @@ def main():
     if not prints:
         sys.exit(f"no prints for {pretty} — nothing to read")
 
-    read = FS.session_read(prints, spot, pretty)
+    # The tenor is part of the identity of the read, not a footnote. The first
+    # three sessions stored landed on 1DTE, 1DTE and 0DTE, and a comparison
+    # across them would have measured the tenor.
+    _d = dt.date.fromisoformat(f"{expiry[:4]}-{expiry[4:6]}-{expiry[6:]}")
+    dte = (_d - dt.date.fromisoformat(pretty)).days
+    read = FS.session_read(prints, spot, pretty, dte=dte)
     read["symbol"] = args.symbol
     read["expiry"] = expiry
     read["generated_at"] = now.isoformat(timespec="seconds")
@@ -232,10 +237,13 @@ def main():
     # Append-only history is what makes "does it repeat" answerable at all.
     with LOG.open("a") as f:
         f.write(json.dumps({k: read[k] for k in
-                            ("session", "symbol", "spot", "n_prints",
-                             "total_premium", "belt_bid", "generated_at")}) + "\n")
+                            ("session", "symbol", "spot", "dte", "expiry",
+                             "n_prints", "total_premium", "belt_bid",
+                             "generated_at")}) + "\n")
 
     bs = read["block_summary"]
+    print(f"  tenor {read['dte']}DTE (expiry {expiry}) — reads of different "
+          f"tenors do not compare")
     print(f"  {read['n_prints']:,} prints   "
           f"${read['total_premium'] / 1e6:,.1f}M premium   "
           f"blocks {bs['block_share']:.1%} (lot rule would say "

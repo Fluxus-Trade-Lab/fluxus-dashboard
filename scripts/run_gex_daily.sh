@@ -92,19 +92,39 @@ run_step() {                     # run_step <label> <cmd...>
     if command -v timeout >/dev/null 2>&1; then
         timeout --signal=TERM --kill-after=30 "$STEP_TIMEOUT" "$@" >>"$LOG" 2>&1
     else
+        # Wall clock via date, NOT a count of sleeps. `sleep` does not advance
+        # while the Mac is asleep, so counting them measured AWAKE seconds: on
+        # 2026-08-14 the post-close run logged "TIMEOUT after 900s" five hours
+        # and eighteen minutes after it started, because the machine slept
+        # through most of it in fifteen-minute cycles.
         "$@" >>"$LOG" 2>&1 &
-        local pid=$! waited=0
-        while kill -0 "$pid" 2>/dev/null && [ "$waited" -lt "$STEP_TIMEOUT" ]; do
-            sleep 5; waited=$((waited+5))
+        local pid=$! t0
+        t0=$(date +%s)
+        while kill -0 "$pid" 2>/dev/null \
+              && [ "$(( $(date +%s) - t0 ))" -lt "$STEP_TIMEOUT" ]; do
+            sleep 5
         done
         if kill -0 "$pid" 2>/dev/null; then
             kill -TERM "$pid" 2>/dev/null; sleep 5; kill -KILL "$pid" 2>/dev/null
-            say "TIMEOUT after ${STEP_TIMEOUT}s: $label — killed"
+            say "TIMEOUT after $(( $(date +%s) - t0 ))s wall clock: $label — killed"
             return 124
         fi
         wait "$pid"
     fi
 }
+
+# Hold sleep off for as long as this script runs. launchd wakes the Mac for the
+# scheduled fire, but SleepService puts it straight back -- pmset shows it
+# cycling back to sleep within a minute and DarkWaking for two seconds at a
+# time. A chain that needs several minutes of network work cannot make progress
+# through that, and the 2026-08-14 post-close run died in exactly this way.
+#
+# -i blocks idle sleep only; closing the lid still sleeps, which is correct --
+# we are asking to finish a job, not to override the user.
+if command -v caffeinate >/dev/null 2>&1; then
+    caffeinate -i -w $$ &
+    say "caffeinate holding idle sleep off for pid $$"
+fi
 
 say "running GEX pull for $DATE ($win, ET ${ET_HOUR}:${ET_MIN})"
 run_step gex_levels .venv/bin/python scripts/gex_levels.py --symbol SPX \

@@ -1,0 +1,298 @@
+{
+  "date": "2026-08-14",
+  "generated_at": "2026-08-14T21:58:13-04:00",
+  "tpo": {
+    "instrument": "SPX",
+    "bar": "30 mins",
+    "tick": 2.5,
+    "periods": 13,
+    "high": 7812.5,
+    "low": 7775.0,
+    "open": 7806.6,
+    "close": 7786.01,
+    "high_period": 2,
+    "low_period": 9,
+    "tpoc": 7782.5,
+    "value_area": {
+      "low": 7777.5,
+      "high": 7792.5,
+      "poc": 7782.5,
+      "covered": 0.746268656716418,
+      "method": "pair",
+      "coverage_target": 0.7
+    },
+    "value_area_sigma": {
+      "low": 7779.0543,
+      "high": 7797.7367,
+      "poc": 7782.5,
+      "covered": 0.7313432835820896,
+      "method": "sigma",
+      "coverage_target": null,
+      "mean": 7788.3955,
+      "sd": 9.3412,
+      "note": "Jones: mean \u00b1 1\u03c3 of the TPO distribution. Follows the mean, not the mode, so it parts from the POC-grown band in the direction of the skew."
+    },
+    "value_area_disagreement": {
+      "pair": {
+        "low": 7777.5,
+        "high": 7792.5,
+        "covered": 0.746268656716418
+      },
+      "sigma": {
+        "low": 7779.0543,
+        "high": 7797.7367,
+        "covered": 0.7313432835820896
+      },
+      "low_delta": 1.5543,
+      "high_delta": 5.2367,
+      "skew": 0.9372,
+      "excess_kurtosis": -0.0454,
+      "note": "the two bands part in the direction of the skew: one follows the mode, the other the mean"
+    },
+    "moments": {
+      "mean": 7788.3955,
+      "sd": 9.3412,
+      "skew": 0.9372,
+      "excess_kurtosis": -0.0454,
+      "n_prices": 16,
+      "note": null
+    },
+    "single_prints": [
+      7775.0,
+      7812.5
+    ],
+    "tails": {
+      "buying": {
+        "low": 7775.0,
+        "high": 7775.0,
+        "length": 1,
+        "significant": false
+      },
+      "selling": {
+        "low": 7812.5,
+        "high": 7812.5,
+        "length": 1,
+        "significant": false
+      }
+    },
+    "poor_extremes": {
+      "poor_high": false,
+      "poor_low": false,
+      "high": 7812.5,
+      "low": 7775.0,
+      "high_tpos": 1,
+      "low_tpos": 1
+    },
+    "initial_balance": {
+      "low": 7792.41,
+      "high": 7810.01,
+      "periods": 2
+    },
+    "facilitation": {
+      "state": "facilitated",
+      "up": {
+        "side": "up",
+        "reference": 7810.01,
+        "extended": false,
+        "n_periods_beyond": 0,
+        "n_periods_built": 0,
+        "first_period": null,
+        "extreme": null,
+        "distance": null,
+        "accepted": false
+      },
+      "down": {
+        "side": "down",
+        "reference": 7792.41,
+        "extended": true,
+        "n_periods_beyond": 11,
+        "n_periods_built": 10,
+        "first_period": 3,
+        "extreme": 7776.31,
+        "distance": 16.1,
+        "accepted": true
+      },
+      "initial_balance": {
+        "low": 7792.41,
+        "high": 7810.01,
+        "periods": 2
+      },
+      "tradeable": true,
+      "thresholds": {
+        "min_build_share": 0.5,
+        "min_built_periods": 2
+      },
+      "note": "down extension accepted \u2014 10 brackets built beyond 7,792.41, 16.10 at the extreme"
+    },
+    "development": {
+      "open": {
+        "type": "open_rejection_reverse",
+        "rule": "left the opening bracket in BOTH directions \u2014 one side was rejected and the auction turned",
+        "measurements": {
+          "opening_range": [
+            7797.81,
+            7808.44
+          ],
+          "open": 7806.6,
+          "open_window_brackets": 3,
+          "brackets_returning_to_open": 1,
+          "opened_inside_prior_value": false,
+          "left_up": true,
+          "left_down": true
+        }
+      },
+      "day": {
+        "type": "normal_variation",
+        "rule": "the initial balance set 52% of the range \u2014 one side extended without the day running",
+        "measurements": {
+          "ib_share": 0.5223,
+          "close_position": 0.2878,
+          "range": 33.7,
+          "facilitation_state": "facilitated",
+          "double_distribution": {
+            "is_double": false,
+            "split_price": 7795.0,
+            "depth": 0.6667,
+            "note": "deepest interior trough is 67% of the smaller peak, against a 40% cut"
+          }
+        }
+      },
+      "note": "no day type is bullish or bearish; a trend day is a trend day in whichever direction it ran"
+    },
+    "counts": {
+      "7775.0": 1,
+      "7777.5": 6,
+      "7780.0": 9,
+      "7782.5": 10,
+      "7785.0": 9,
+      "7787.5": 8,
+      "7790.0": 5,
+      "7792.5": 3,
+      "7795.0": 2,
+      "7797.5": 3,
+      "7800.0": 2,
+      "7802.5": 2,
+      "7805.0": 2,
+      "7807.5": 2,
+      "7810.0": 2,
+      "7812.5": 1
+    }
+  },
+  "volume": {
+    "instrument": "ES",
+    "bar": "1 min",
+    "tick": 1.0,
+    "tpoc": 7804.0,
+    "coincide": true,
+    "at_price": {
+      "7796.0": 2255.6,
+      "7797.0": 4704.7,
+      "7798.0": 8873.6,
+      "7799.0": 12640.9,
+      "7800.0": 25212.5,
+      "7801.0": 38895.7,
+      "7802.0": 53115.8,
+      "7803.0": 61639.4,
+      "7804.0": 67502.9,
+      "7805.0": 54891.7,
+      "7806.0": 40700.5,
+      "7807.0": 27631.8,
+      "7808.0": 19726.9,
+      "7809.0": 14576.8,
+      "7810.0": 12988.8,
+      "7811.0": 10540.9,
+      "7812.0": 14703.9,
+      "7813.0": 16574.9,
+      "7814.0": 14850.4,
+      "7815.0": 11653.4,
+      "7816.0": 12427.0,
+      "7817.0": 9018.9,
+      "7818.0": 6037.8,
+      "7819.0": 4702.8,
+      "7820.0": 7353.9,
+      "7821.0": 12646.0,
+      "7822.0": 15511.2,
+      "7823.0": 17364.1,
+      "7824.0": 16321.7,
+      "7825.0": 19909.7,
+      "7826.0": 18326.9,
+      "7827.0": 16875.0,
+      "7828.0": 14056.0,
+      "7829.0": 7554.1,
+      "7830.0": 3903.2,
+      "7831.0": 1765.6
+    },
+    "low_volume_nodes": [
+      {
+        "price": 7819.0,
+        "volume": 4702.8,
+        "share_of_peak": 0.0697,
+        "left_peak": 67502.85952380951,
+        "right_peak": 19909.7,
+        "note": "expect speed here, not support \u2014 the auction passed through without agreeing"
+      },
+      {
+        "price": 7811.0,
+        "volume": 10540.916666666666,
+        "share_of_peak": 0.1562,
+        "left_peak": 67502.85952380951,
+        "right_peak": 19909.7,
+        "note": "expect speed here, not support \u2014 the auction passed through without agreeing"
+      },
+      {
+        "price": 7815.0,
+        "volume": 11653.35,
+        "share_of_peak": 0.1726,
+        "left_peak": 67502.85952380951,
+        "right_peak": 19909.7,
+        "note": "expect speed here, not support \u2014 the auction passed through without agreeing"
+      },
+      {
+        "price": 7824.0,
+        "volume": 16321.666666666666,
+        "share_of_peak": 0.2418,
+        "left_peak": 67502.85952380951,
+        "right_peak": 19909.7,
+        "note": "expect speed here, not support \u2014 the auction passed through without agreeing"
+      }
+    ],
+    "interior_dips": [
+      {
+        "price": 7819.0,
+        "volume": 4702.8,
+        "share_of_peak": 0.0697,
+        "left_peak_share": 1.0,
+        "right_peak_share": 0.2949,
+        "interior": true
+      },
+      {
+        "price": 7811.0,
+        "volume": 10540.916666666666,
+        "share_of_peak": 0.1562,
+        "left_peak_share": 1.0,
+        "right_peak_share": 0.2949,
+        "interior": true
+      },
+      {
+        "price": 7815.0,
+        "volume": 11653.35,
+        "share_of_peak": 0.1726,
+        "left_peak_share": 1.0,
+        "right_peak_share": 0.2949,
+        "interior": true
+      },
+      {
+        "price": 7824.0,
+        "volume": 16321.666666666666,
+        "share_of_peak": 0.2418,
+        "left_peak_share": 1.0,
+        "right_peak_share": 0.2949,
+        "interior": true
+      }
+    ],
+    "provenance": "approximated \u2014 each bar's volume spread evenly across the prices it spans; not tape-derived volume-at-price",
+    "vpoc": 7804.0,
+    "volume_without_time": [],
+    "total": 697455.0
+  }
+}
