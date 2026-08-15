@@ -21,22 +21,26 @@
   --font-cond: PlexCond, Plex, sans-serif;
   --font-mono: PlexMono, 'JetBrains Mono', ui-monospace, monospace;
 
-  /* Warm paper (2026-08-11, Andy: 白可以偏暖). The greys were stone already;
-     this pushes the ground to cream so the site reads as print, not screen.
-     border/bg contrast 1.24 (was 1.14) — the hairlines Andy couldn't see. */
-  --color-bg: #f7f4ee;
-  --color-surface: #fffdf8;
-  --color-surface-alt: #f7f4ee;
-  --color-surface-raised: #efeae1;
-  --color-border: #e2dcd0;
-  --color-border-light: #ede8de;
+  /* Grey paper (2026-08-16, Andy: 亮色界面太亮，lieflat 灰阶背景舒服).
+     The ground drops from cream L* 96.3 to the lieflat trial's own paper,
+     L* 94.4 (#f0efe9 ≈ the F0EFEA he approved on the sketches). Every
+     dependent token re-measured on the new ground, not carried over:
+     border 1.28:1, surface lift 1.07 (the same as the approved trial). */
+  --color-bg: #f0efe9;
+  --color-surface: #f8f7f2;
+  --color-surface-alt: #f0efe9;
+  --color-surface-raised: #e7e4db;
+  --color-border: #d9d4c8;
+  --color-border-light: #e5e1d7;
   --color-text: #1c1917;
   /* Contrast measured on this ground, 2026-08-13 (Andy: 文字都有点细,看不清楚).
      The small-label tier was the LOWEST contrast on the page while carrying
      the SMALLEST type -- exactly backwards, since 9px needs more separation
-     than 15px, not less. secondary 4.37 -> 6.39, muted 2.67 -> 4.08. */
+     than 15px, not less. secondary 4.37 -> 6.39, muted 2.67 -> 4.08.
+     2026-08-16, on the grey paper: the old muted fell back to 3.89 on the
+     darker ground, so it deepens again — 4.85 on bg, 5.21 on surface. */
   --color-text-secondary: #5f584f;
-  --color-text-muted: #7d766d;
+  --color-text-muted: #6e675d;
   --color-text-bold: #292524;
 
   /* v3 charter (2026-08-15): the signal WORD carries the reading; hue only
@@ -44,7 +48,7 @@
      — bold, muted, secondary — and RISK OFF alone keeps colour, because a
      lone red means exactly one thing on this site: the binding constraint. */
   --color-signal-power3: #292524;
-  --color-signal-caution: #7d766d;
+  --color-signal-caution: #6e675d;
   --color-signal-warning: #5f584f;
   --color-signal-riskoff: #d94032;
 
@@ -113,7 +117,7 @@
      cannot be screenshotted or printed. Both themes are written out in full —
      partial coverage is how the fills silently inherited light-mode values and
      put "not measured" and "took the chance" at ΔE 0.8 in greyscale. */
-  --glass: rgba(249, 246, 239, .68);
+  --glass: rgba(240, 239, 233, .68);
   --glass-edge: rgba(17, 17, 16, .09);
   --glass-line: rgba(255, 255, 255, .7);
   --glass-blur: blur(20px) saturate(150%);
@@ -130,10 +134,10 @@
 
   --color-active-tab-bg: #292524;
   --color-active-tab-text: #f5f5f4;
-  --color-hover-bg: #f1ece3;
-  --color-input-bg: #fffdf8;
-  --color-input-border: #d3ccc0;
-  --color-closed-row: #f1ece3;
+  --color-hover-bg: #eae7de;
+  --color-input-bg: #f8f7f2;
+  --color-input-border: #ccc6ba;
+  --color-closed-row: #eae7de;
 }
 
 html.dark {

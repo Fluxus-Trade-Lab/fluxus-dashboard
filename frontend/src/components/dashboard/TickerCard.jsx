@@ -69,7 +69,7 @@ export default function TickerCard({ ticker, signal, etf }) {
           {displayName}
         </span>
         {riskOff && (
-          <span className="text-[9px] font-mono font-semibold uppercase tracking-[.12em]
+          <span className="text-[10px] font-mono font-semibold uppercase tracking-[.12em]
                            text-[var(--color-signal-riskoff)] shrink-0">
             RISK OFF
           </span>
