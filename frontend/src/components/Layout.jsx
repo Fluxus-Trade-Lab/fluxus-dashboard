@@ -131,7 +131,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                   <button type="button" onClick={() => navigate('#/breadth')}
                           className="text-[11px] bg-transparent border-0 p-0 cursor-pointer underline
                                      text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
-                    market state details →
+                    Market State Details →
                   </button>
                 </div>
                 <VoteMarks votes={data.breadth.verdict.votes} />

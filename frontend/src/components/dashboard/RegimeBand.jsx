@@ -251,15 +251,6 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
      danger is the expensive half. When the two disagree the line underneath
      names which voter did the pulling and on what condition. */
   const level = scoreBand == null ? weakest.level : Math.min(scoreBand, weakest.level)
-  const pulled = scoreBand != null && weakest.level < scoreBand
-  const binding = weakest
-  const reasoning = [
-    voters.map((v) => `${v.name} ${v.word}`).join(' · '),
-    pulled
-      ? `conditions alone read ${BANDS[scoreBand]}; pulled down to ${BANDS[level]} by ${binding.name}`
-        + (binding.binding ? ` (${binding.binding})` : '')
-      : binding.binding ? `nearest to turning: ${binding.name}, ${binding.binding}` : '',
-  ].filter(Boolean).join(' — ')
 
   return (
     <section className="rounded-3xl px-6 py-5 bg-[var(--color-surface)]">
@@ -268,12 +259,8 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
           <span className="text-[10px] font-mono uppercase tracking-[.24em]
                            text-[var(--color-text-muted)]">Market conditions</span>
           {score != null && (
-            <span className="text-[26px] font-semibold tabular-nums leading-none cursor-help"
-                  style={{ fontFamily: 'var(--font-cond)' }}
-                  title={conditions?.positive_today != null
-                    ? `${conditions.positive_today} of ${conditions.n_votes} measurements positive`
-                      + ` — ${conditions.raw_today} before smoothing (EMA${conditions.span})`
-                    : undefined}>
+            <span className="text-[26px] font-semibold tabular-nums leading-none"
+                  style={{ fontFamily: 'var(--font-cond)' }}>
               {score}<span className="text-[12.5px] text-[var(--color-text-muted)]"> / 100</span>
             </span>
           )}
@@ -286,8 +273,8 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
             not (Defence/Caution) — a lone red means the band itself is what
             binds you today. Blue is gone: a band alone is one pole, and blue
             never appears without its red twin. */}
-        <span title={reasoning}
-              className="text-[12.5px] font-semibold uppercase tracking-wide px-2.5 py-[3px] cursor-help"
+        <span
+              className="text-[12.5px] font-semibold uppercase tracking-wide px-2.5 py-[3px]"
               style={{ background: level <= 1 ? 'var(--color-refused)' : 'var(--color-text-bold)',
                        color: 'var(--color-bg)' }}>
           {BANDS[level]}
