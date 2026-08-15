@@ -179,7 +179,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                     .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                     .filter(Boolean)}
                   windows={['1D', '1W', '1M']} limit={3} />
-                <LeadersLaggards title="Sectors Leaders and Laggards"
+                <LeadersLaggards title="Sector leaders and laggards"
                   etfs={(ETF_GROUPS['Sel Sectors'] || [])
                     .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                     .filter(Boolean)}

@@ -86,13 +86,16 @@ export default function LeadersLaggards({
   if (!etfs?.length) return null
 
   return (
-    <section className="bg-[var(--color-surface)] rounded-3xl overflow-hidden flex flex-col">
-      <div className="px-5 pt-4 pb-4">
-        <div className="text-[17px] font-semibold leading-tight text-[var(--color-text-bold)] cursor-help"
-             title={`${etfs.length} funds · leaders above, laggards below · ranked per window`}>
-          {title}
-        </div>
+    // The title moved OUT of the card (Andy 2026-08-16): it names the block,
+    // so it stands on the ground like every other section heading, and the
+    // card holds only the data.
+    <div className="flex flex-col min-w-0">
+      <div className="text-[17px] font-semibold leading-tight text-[var(--color-text-bold)]
+                      cursor-help mb-2 px-1"
+           title={`${etfs.length} funds · leaders above, laggards below · ranked per window`}>
+        {title}
       </div>
+      <section className="bg-[var(--color-surface)] rounded-3xl overflow-hidden flex flex-col flex-1 pt-4">
       {/* Two stacked grids rather than one four-cell grid. A single grid gives
           every row the height of the tallest, so when this card stretches to
           match the sectors card beside it the gap opens between leaders and
@@ -120,6 +123,7 @@ export default function LeadersLaggards({
           ))}
         </div>
       </div>
-    </section>
+      </section>
+    </div>
   )
 }
