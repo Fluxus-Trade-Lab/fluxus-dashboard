@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import PageHeader from '../PageHeader'
+import DataUnavailable from '../DataUnavailable'
 import Reading, { readThemes } from '../Reading'
 import { useGroups } from '../../hooks/useGroups'
 import GroupTable from './GroupTable'
@@ -159,9 +160,11 @@ export default function GroupsPage() {
     </div>
   }
   if (error) {
-    return <div className="text-[var(--color-signal-riskoff)] text-[12.5px] py-8 text-center">
-      groups.json unavailable — run <code>python -m pipeline.themes.build_groups</code>
-    </div>
+    return <DataUnavailable
+      group="market" title="Themes"
+      what="The theme rankings did not load."
+      why="They are read from a file the daily pipeline writes; if today's run has not finished, or did not finish, there is nothing here to rank."
+      command="python -m pipeline.themes.build_groups" />
   }
 
   // Themes only. The tabs are gone by subtraction: Industries was one chart

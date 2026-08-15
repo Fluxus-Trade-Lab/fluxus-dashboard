@@ -4,6 +4,7 @@ import { useLanguage } from '../../i18n/LanguageContext'
 import TickerLink from '../ticker/TickerLink'
 import PreMarketChecklist from '../dashboard/PreMarketChecklist'
 import PageHeader from '../PageHeader'
+import DataUnavailable from '../DataUnavailable'
 
 const LESSON_COLORS = {
   'Good execution':    'text-[var(--color-profit)]',
@@ -62,9 +63,11 @@ export default function TradeJournalPage() {
     return <div className="text-[var(--color-text-muted)] text-[14px] py-10 text-center">Loading trade journal…</div>
   }
   if (!trades.length) {
-    return <div className="text-[var(--color-text-muted)] text-[14px] py-10 text-center">
-      No trade post-mortems found. Run <code>python -m pipeline.portfolio.trade_postmortem</code>.
-    </div>
+    return <DataUnavailable
+      group="book" title="Trade Journal"
+      what="No trade post-mortems were found."
+      why="Each entry is written from a closed trade in the log; until the post-mortem pass has run over them, there is nothing to read back."
+      command="python -m pipeline.portfolio.trade_postmortem" />
   }
 
   return (

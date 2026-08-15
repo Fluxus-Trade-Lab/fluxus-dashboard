@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import PageHeader from '../PageHeader'
 import { useGroups } from '../../hooks/useGroups'
 import HowToRead from '../HowToRead'
+import DataUnavailable from '../DataUnavailable'
 
 /**
  * The strongest themes right now — two clocks, two lists.
@@ -83,7 +84,11 @@ export default function ThemeLeaderboard() {
   }, [themes])
 
   if (loading) return <div className="text-[var(--color-text-muted)] text-[14px] py-8 text-center">Loading…</div>
-  if (error) return <div className="text-[var(--color-signal-riskoff)] text-[12.5px] py-8 text-center">groups.json unavailable</div>
+  if (error) return <DataUnavailable
+    group="market" title="RS Leaderboard"
+    what="The leaderboard did not load."
+    why="It ranks the same themes the pipeline writes each day; with that file missing there is no ranking to show."
+    command="python -m pipeline.themes.build_groups" />
 
   const shortSet = new Set(short.map((r) => r.group))
   const newcomers = short.filter((r) => !long.some((l) => l.group === r.group)).length
