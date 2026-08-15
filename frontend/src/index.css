@@ -191,12 +191,12 @@ html.dark {
   --color-accent: #4d7fa8;
   --color-accent-light: #1e3a5f;
 
-  --color-profit: #437bb8;
-  --color-loss: #ea826f;
+  --color-profit: #8bbcec;
+  --color-loss: #e0705c;
   --color-signal-power3: #fafaf9;
   --color-signal-caution: #9d968c;
   --color-signal-warning: #b2aca5;
-  --color-signal-riskoff: #ea826f;
+  --color-signal-riskoff: #e0705c;
 
   --color-v2-paper: #211d1a;
 
@@ -233,12 +233,20 @@ html.dark {
      Every gap clears 14. Contrast on the ground: took 5.99 (it can now be text
      as well as fill — the old took was 2.47, which is why the Watchlist chips
      had to be solid blocks), refused 3.62, untested 8.59. */
-  /* v3 dark pair, measured on the lifted ground 2026-08-15: #437bb8 L* 50.5
-     (4.28:1) against #ea826f L* 65.4 (6.31:1), ΔL* 15.0 ≥ 14. Note the
-     polarity flips on dark — red sits LIGHTER than blue — which is fine: the
-     bar is separation, not order. */
-  --color-took: #437bb8;
-  --color-refused: #ea826f;
+  /* v3 dark pair, brightened 2026-08-16 (Andy: 暗色下的蓝有些闷，亮度应该
+     接近 BULLISH). The complaint had a measurement behind it: the old blue
+     read 3.49:1 on the recalibrated card, under the 4.5 text bar and far
+     below the white BULLISH sits at. Brightening blue alone would have
+     collapsed the pair, so the red moves with it — blue L* 50.5 → 74.5
+     (3.49 → 7.70), red L* 65.4 → 60.1 (5.80 → 4.87), ΔL* 14.4, still over
+     the ≥14 bar. Red deepens rather than paling further, because red also
+     carries RISK OFF and a washed-out constraint is a weak one.
+     The pair's greyscale ORDER now differs between themes (blue lighter on
+     dark, darker on light). That stays acceptable under the same rule as
+     before: a screenshot is one theme or the other, never both, so what has
+     to hold is separation inside a single image, not a global ordering. */
+  --color-took: #8bbcec;
+  --color-refused: #e0705c;
   --color-untested: #c8c2b8;  /* lifted with them: it is took's partner in the state grammar */
 }
 
