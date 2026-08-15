@@ -1,25 +1,29 @@
 import { useRef } from 'react'
 import { BaselineSeries, LineSeries } from 'lightweight-charts'
-import { useBreadthChart } from './useBreadthChart'
+import { useBreadthChart, chartTokens } from './useBreadthChart'
 
 export default function SpreadChart({ rows }) {
   const containerRef = useRef(null)
   const chartRef = useRef(null)
 
   useBreadthChart(containerRef, chartRef, rows, (chart, data) => {
+    // v3: green retires — the spread around zero is the pair's home ground.
+    // The spread is the subject (2.4); the two raw counts are context (1).
+    const tk = chartTokens()
+    const rgba = (h, a) => `rgba(${parseInt(h.slice(1,3),16)}, ${parseInt(h.slice(3,5),16)}, ${parseInt(h.slice(5,7),16)}, ${a})`
     const pts = data.filter((r) => r.up_25pct_qtr != null && r.down_25pct_qtr != null)
     const spread = chart.addSeries(BaselineSeries, {
       baseValue: { type: 'price', price: 0 },
-      topLineColor: '#4d7c0f', topFillColor1: 'rgba(77, 124, 15, 0.15)',
-      topFillColor2: 'rgba(77, 124, 15, 0.02)',
-      bottomLineColor: '#b91c1c', bottomFillColor1: 'rgba(185, 28, 28, 0.02)',
-      bottomFillColor2: 'rgba(185, 28, 28, 0.15)',
-      lineWidth: 1.5,
+      topLineColor: tk.took, topFillColor1: rgba(tk.took, 0.14),
+      topFillColor2: rgba(tk.took, 0.02),
+      bottomLineColor: tk.refused, bottomFillColor1: rgba(tk.refused, 0.02),
+      bottomFillColor2: rgba(tk.refused, 0.14),
+      lineWidth: 2.4,
     })
     spread.setData(pts.map((r) => ({ time: r.date, value: r.up_25pct_qtr - r.down_25pct_qtr })))
-    const up = chart.addSeries(LineSeries, { color: 'rgba(77,124,15,0.5)', lineWidth: 1 })
+    const up = chart.addSeries(LineSeries, { color: rgba(tk.took, 0.45), lineWidth: 1 })
     up.setData(pts.map((r) => ({ time: r.date, value: r.up_25pct_qtr })))
-    const down = chart.addSeries(LineSeries, { color: 'rgba(185,28,28,0.5)', lineWidth: 1 })
+    const down = chart.addSeries(LineSeries, { color: rgba(tk.refused, 0.45), lineWidth: 1 })
     down.setData(pts.map((r) => ({ time: r.date, value: r.down_25pct_qtr })))
   })
 

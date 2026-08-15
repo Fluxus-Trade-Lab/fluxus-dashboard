@@ -106,13 +106,14 @@ export default function LeadersLaggards({
 
   return (
     <section className="bg-[var(--color-surface)] rounded-3xl overflow-hidden flex flex-col">
-      {/* the 17px title needs its own line of air: meta drops to a subtitle
-          row instead of crowding the baseline, the lieflat card head exactly */}
-      <div className="px-5 pt-4 pb-3">
-        <div className="text-[17px] font-semibold leading-tight text-[var(--color-text-bold)]">{title}</div>
-        <div className="mt-0.5 text-[11px] text-[var(--color-text-muted)]"
-             title="each window's bars are scaled to that window's widest move across the whole cohort">
-          {etfs.length} funds · {cols.map((c) => `${c.w} ±${(c.scale * 100).toFixed(1)}%`).join(' · ')}
+      {/* Andy 2026-08-15: the meta line goes entirely. The honesty the scale
+          note carried (per-window bars, per-window extremes) survives in the
+          hover title, costing no ink at rest. */}
+      <div className="px-5 pt-4 pb-2">
+        <div className="text-[17px] font-semibold leading-tight text-[var(--color-text-bold)] cursor-help"
+             title={`${etfs.length} funds · bars scaled per window: ` +
+                    cols.map((c) => `${c.w} ±${(c.scale * 100).toFixed(1)}%`).join(' · ')}>
+          {title}
         </div>
       </div>
       {/* Two stacked grids rather than one four-cell grid. A single grid gives

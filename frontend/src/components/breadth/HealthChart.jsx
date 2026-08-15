@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { CandlestickSeries, LineSeries } from 'lightweight-charts'
-import { useBreadthChart } from './useBreadthChart'
+import { useBreadthChart, chartTokens } from './useBreadthChart'
 
 export default function HealthChart({ title, block, state, t2108 }) {
   const containerRef = useRef(null)
@@ -8,8 +8,8 @@ export default function HealthChart({ title, block, state, t2108 }) {
 
   useBreadthChart(containerRef, chartRef, block, (chart, blk) => {
     const candles = chart.addSeries(CandlestickSeries, {
-      upColor: '#4d7c0f', downColor: '#b91c1c',
-      wickUpColor: '#4d7c0f', wickDownColor: '#b91c1c',
+      upColor: chartTokens().took, downColor: chartTokens().refused,
+      wickUpColor: chartTokens().took, wickDownColor: chartTokens().refused,
       borderVisible: false,
     })
     candles.setData(blk.candles.map((c) => ({
@@ -23,8 +23,8 @@ export default function HealthChart({ title, block, state, t2108 }) {
         .filter((p) => p.value != null))
       return s
     }
-    mkLine(blk.sma20, '#3b82f6', 1)
-    mkLine(blk.sma50, '#f59e0b', 1)
+    mkLine(blk.sma20, chartTokens().muted, 1)
+    mkLine(blk.sma50, chartTokens().secondary, 1)
 
     if (t2108?.dates?.length) {
       const overlay = chart.addSeries(LineSeries, {

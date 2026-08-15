@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { LineSeries } from 'lightweight-charts'
-import { useBreadthChart } from './useBreadthChart'
+import { useBreadthChart, chartTokens } from './useBreadthChart'
 
 // Deduplicate history by date (keep last occurrence) to prevent
 // lightweight-charts from crashing on duplicate timestamps.
@@ -45,10 +45,11 @@ function MaChart({ history }) {
   useBreadthChart(containerRef, chartRef, history, (chart, hist) => {
     const dates = hist.dates
 
-    const sma200 = chart.addSeries(LineSeries, { color: '#3b82f6', lineWidth: 1.5, title: '200 SMA' })
+    const tk = chartTokens()
+    const sma200 = chart.addSeries(LineSeries, { color: tk.inkBold, lineWidth: 2.4, title: '200 SMA' })
     sma200.setData(dates.map((d, i) => ({ time: d, value: hist.pct_above_200sma[i] ?? 0 })))
 
-    const sma50 = chart.addSeries(LineSeries, { color: '#f59e0b', lineWidth: 1.5, title: '50 SMA' })
+    const sma50 = chart.addSeries(LineSeries, { color: tk.secondary, lineWidth: 1.5, title: '50 SMA' })
     sma50.setData(dates.map((d, i) => ({ time: d, value: hist.pct_above_50sma[i] ?? 0 })))
 
     const sma20 = chart.addSeries(LineSeries, { color: '#a8a29e', lineWidth: 1, title: '20 SMA' })

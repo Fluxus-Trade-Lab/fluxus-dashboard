@@ -1,13 +1,14 @@
 import { useRef } from 'react'
 import { LineSeries } from 'lightweight-charts'
-import { useBreadthChart } from './useBreadthChart'
+import { useBreadthChart, chartTokens } from './useBreadthChart'
 
 export default function RatioChart({ rows }) {
   const containerRef = useRef(null)
   const chartRef = useRef(null)
 
   useBreadthChart(containerRef, chartRef, rows, (chart, data) => {
-    const r5 = chart.addSeries(LineSeries, { color: '#4d7c0f', lineWidth: 1.5, title: '5D' })
+    const tk = chartTokens()
+    const r5 = chart.addSeries(LineSeries, { color: tk.ink, lineWidth: 2.4, title: '5D' })
     r5.setData(data.filter((r) => r.ratio_5d != null)
       .map((r) => ({ time: r.date, value: r.ratio_5d })))
     const r10 = chart.addSeries(LineSeries, {

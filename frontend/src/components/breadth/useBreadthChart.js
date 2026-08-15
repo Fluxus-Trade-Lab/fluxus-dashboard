@@ -1,6 +1,22 @@
 import { useEffect, useRef } from 'react'
 import { createChart, ColorType } from 'lightweight-charts'
 
+/** v3 pair + greys, resolved to literals because lightweight-charts cannot
+ *  read CSS variables. Resolved at call time, so a theme flip re-resolves on
+ *  the next chart rebuild. */
+export function chartTokens() {
+  const g = (n, fb) => getComputedStyle(document.documentElement).getPropertyValue(n).trim() || fb
+  return {
+    took: g('--color-took', '#1f5288'),
+    refused: g('--color-refused', '#d94032'),
+    ink: g('--color-text', '#1c1917'),
+    inkBold: g('--color-text-bold', '#292524'),
+    secondary: g('--color-text-secondary', '#5f584f'),
+    muted: g('--color-text-muted', '#7d766d'),
+    border: g('--color-border', '#e2dcd0'),
+  }
+}
+
 // Theme-aware lightweight-charts factory shared by all breadth charts.
 //
 // `setupFn` is held in a ref that is refreshed on EVERY render, and is
