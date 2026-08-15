@@ -21,17 +21,21 @@
   --font-cond: PlexCond, Plex, sans-serif;
   --font-mono: PlexMono, 'JetBrains Mono', ui-monospace, monospace;
 
-  /* Grey paper (2026-08-16, Andy: 亮色界面太亮，lieflat 灰阶背景舒服).
-     The ground drops from cream L* 96.3 to the lieflat trial's own paper,
-     L* 94.4 (#f0efe9 ≈ the F0EFEA he approved on the sketches). Every
-     dependent token re-measured on the new ground, not carried over:
-     border 1.28:1, surface lift 1.07 (the same as the approved trial). */
-  --color-bg: #f0efe9;
-  --color-surface: #f8f7f2;
-  --color-surface-alt: #f0efe9;
-  --color-surface-raised: #e7e4db;
-  --color-border: #d9d4c8;
-  --color-border-light: #e5e1d7;
+  /* Grey paper, second pass (2026-08-16). The first attempt dropped the
+     GROUND 96.3 → 94.4 and Andy said it looked identical — correctly, because
+     on this dashboard the ground is the minority surface: cards cover most of
+     the viewport and they had only gone 99.3 → 97.2. Brightness is what the
+     cards do, not what the ground does.
+     So the ground drops properly (96.3 → 89.1, −7.2 L*, cards now clearly
+     float on it at 1.19:1) while the cards drop only as far as their text can
+     afford (99.3 → 95.0). Measured on the new card: text 15.3, secondary 6.1,
+     muted 4.9, took 7.1. */
+  --color-bg: #e2e0d6;
+  --color-surface: #f2f0e9;
+  --color-surface-alt: #e8e6dd;
+  --color-surface-raised: #dcd9ce;
+  --color-border: #cbc6b8;
+  --color-border-light: #dbd7cb;
   --color-text: #1c1917;
   /* Contrast measured on this ground, 2026-08-13 (Andy: 文字都有点细,看不清楚).
      The small-label tier was the LOWEST contrast on the page while carrying
@@ -105,6 +109,13 @@
      pole for you, red against); red ALONE marks the binding constraint, and
      blue never appears alone. took/refused keep their names as the pair's
      call sites — the meaning (favourable/adverse pole) is unchanged. */
+  /* Known and accepted, recorded rather than quietly fixed: as SMALL TEXT on
+     the light card, refused reads 3.9:1, under the 4.5 bar. Deepening the red
+     to clear it costs the pair's greyscale separation — #c32f22 passes at 4.7
+     but collapses ΔL* from 16.1 to 9.7, under the ≥14 the whole encoding
+     rests on for screenshots and print. The pair's separation is load-bearing
+     and the shortfall applies only where red is a percentage figure, never
+     where it is a mark, so the red stays. */
   --color-took: #1f5288;
   --color-refused: #d94032;
   --color-untested: #b0aaa2;
@@ -117,7 +128,7 @@
      cannot be screenshotted or printed. Both themes are written out in full —
      partial coverage is how the fills silently inherited light-mode values and
      put "not measured" and "took the chance" at ΔE 0.8 in greyscale. */
-  --glass: rgba(240, 239, 233, .68);
+  --glass: rgba(226, 224, 214, .70);
   --glass-edge: rgba(17, 17, 16, .09);
   --glass-line: rgba(255, 255, 255, .7);
   --glass-blur: blur(20px) saturate(150%);
@@ -134,10 +145,10 @@
 
   --color-active-tab-bg: #292524;
   --color-active-tab-text: #f5f5f4;
-  --color-hover-bg: #eae7de;
-  --color-input-bg: #f8f7f2;
-  --color-input-border: #ccc6ba;
-  --color-closed-row: #eae7de;
+  --color-hover-bg: #e6e3d9;
+  --color-input-bg: #f2f0e9;
+  --color-input-border: #c3bdae;
+  --color-closed-row: #e6e3d9;
 }
 
 html.dark {
@@ -146,12 +157,18 @@ html.dark {
      (invisible), muted on bg at 3.65:1. Ground rises L* 9.0 → 11.1 with a warm
      cast, structure lines rise to 1.5–1.9:1, muted to 4.5:1. The v2 encoding
      ladder is re-measured against the new ground at the bottom of this block. */
-  --color-bg: #211d1a;
-  --color-surface: #2b2723;
-  --color-surface-alt: #211d1a;
-  --color-surface-raised: #4a4540;
-  --color-border: #544e46;
-  --color-border-light: #47413a;
+  /* Levels re-calibrated 2026-08-16 (Andy: 暗色也校对一遍层级). The old set
+     had ground 11.1 and card 15.9 — 1.13:1, so cards barely lifted off the
+     page and the v3 borderless chrome had nothing left to read as an edge.
+     Ground drops to 8.0 and the card rises to 14.5: 1.16:1, and every text
+     tier gains rather than loses (text 12.3 on card, secondary 6.8, muted
+     5.3, bold 14.7). */
+  --color-bg: #1a1715;
+  --color-surface: #282421;
+  --color-surface-alt: #1f1c19;
+  --color-surface-raised: #3b362f;
+  --color-border: #4d473f;
+  --color-border-light: #3a352e;
   --color-text: #e7e5e4;
   --color-text-secondary: #b2aca5;
   /* 4.52 -> 5.72 on the lifted ground: it was clearing the 4.5 bar by 0.02,
@@ -184,7 +201,7 @@ html.dark {
   --color-v2-paper: #211d1a;
 
   /* glass, dark — written out rather than inherited, same lesson as the fills */
-  --glass: rgba(43, 39, 35, .72);
+  --glass: rgba(26, 23, 21, .72);
   --glass-edge: rgba(255, 255, 255, .07);
   --glass-line: rgba(255, 255, 255, .05);
   --glass-blur: blur(20px) saturate(140%);
