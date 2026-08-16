@@ -1,26 +1,93 @@
 {
+  "_source": "data/portfolio/reviews/h1_2026.json (H1 2026, 2025-12-31 → 2026-07-22)",
+  "_note": "maxDrawdown is recomputed from daily mark-to-market equity by PERCENT. The review engine selects it by dollar amount and reports -11.1%; by percent the worst episode is 2026-01-28 → 2026-03-19. This is the error L15.4 documents.",
   "stats": {
-    "winRate": 72,
-    "avgReturn": 2.1,
-    "totalTrades": 347,
-    "profitFactor": 3.2,
-    "avgHoldDays": 4.8,
-    "maxDrawdown": -8.4
+    "winRate": 39.9,
+    "avgReturn": 0.88,
+    "totalTrades": 331,
+    "profitFactor": 2.48,
+    "avgHoldDays": 7.5,
+    "maxDrawdown": -17.9
   },
   "monthly": [
-    { "month": "Oct 2025", "trades": 28, "winRate": 75, "returnR": 18.2 },
-    { "month": "Nov 2025", "trades": 31, "winRate": 68, "returnR": 14.5 },
-    { "month": "Dec 2025", "trades": 22, "winRate": 77, "returnR": 16.8 },
-    { "month": "Jan 2026", "trades": 35, "winRate": 71, "returnR": 21.3 },
-    { "month": "Feb 2026", "trades": 29, "winRate": 69, "returnR": 12.7 },
-    { "month": "Mar 2026", "trades": 24, "winRate": 75, "returnR": 15.1 }
+    {
+      "month": "Jan 2026",
+      "trades": 36,
+      "pnl": 43710
+    },
+    {
+      "month": "Feb 2026",
+      "trades": 23,
+      "pnl": 9569
+    },
+    {
+      "month": "Mar 2026",
+      "trades": 58,
+      "pnl": 20370
+    },
+    {
+      "month": "Apr 2026",
+      "trades": 59,
+      "pnl": 141337
+    },
+    {
+      "month": "May 2026",
+      "trades": 70,
+      "pnl": 319907
+    },
+    {
+      "month": "Jun 2026",
+      "trades": 57,
+      "pnl": 271142
+    },
+    {
+      "month": "Jul 2026",
+      "trades": 28,
+      "pnl": 99220
+    }
   ],
   "recentTrades": [
-    { "ticker": "PLTR", "entry": "2026-03-14", "exit": "2026-03-19", "returnR": 2.8, "result": "win" },
-    { "ticker": "NVDA", "entry": "2026-03-10", "exit": "2026-03-13", "returnR": -1.0, "result": "loss" },
-    { "ticker": "CELH", "entry": "2026-03-07", "exit": "2026-03-12", "returnR": 3.4, "result": "win" },
-    { "ticker": "ANET", "entry": "2026-03-05", "exit": "2026-03-10", "returnR": 1.9, "result": "win" },
-    { "ticker": "CRWD", "entry": "2026-03-03", "exit": "2026-03-06", "returnR": 2.1, "result": "win" },
-    { "ticker": "SMCI", "entry": "2026-02-28", "exit": "2026-03-04", "returnR": -0.7, "result": "loss" }
+    {
+      "ticker": "DOCN",
+      "entry": "2026-04-14",
+      "exit": "2026-07-09",
+      "returnR": 17.4,
+      "result": "win"
+    },
+    {
+      "ticker": "ALAB",
+      "entry": "2026-05-12",
+      "exit": "2026-06-23",
+      "returnR": 21.0,
+      "result": "win"
+    },
+    {
+      "ticker": "BE",
+      "entry": "2026-04-08",
+      "exit": "2026-04-28",
+      "returnR": 7.3,
+      "result": "win"
+    },
+    {
+      "ticker": "SNDK",
+      "entry": "2026-06-24",
+      "exit": "2026-06-25",
+      "returnR": 4.1,
+      "result": "win"
+    },
+    {
+      "ticker": "BABA",
+      "entry": "2026-01-11",
+      "exit": "2026-04-23",
+      "returnR": -4.2,
+      "result": "loss"
+    },
+    {
+      "ticker": "CRCL",
+      "entry": "2026-05-10",
+      "exit": "2026-05-15",
+      "returnR": -1.3,
+      "result": "loss"
+    }
   ]
 }
