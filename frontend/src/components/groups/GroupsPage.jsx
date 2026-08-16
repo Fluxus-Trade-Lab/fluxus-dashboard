@@ -286,8 +286,12 @@ export default function GroupsPage() {
         </div>
       </div>
 
-      <Reference label="Where the lead was earned" count={20}
-                 note="top 20, all four stretches">
+      {/* Same units as the trajectory panel above, and the same three
+          stretches — Compare reads three themes closely, this reads ten at a
+          glance. Before 2026-08-16 it drew four stretches as raw totals while
+          Compare drew three as rates, and the page said two things. */}
+      <Reference label="Where the lead was earned" count={10}
+                 note="top 10 · excess per session · the quarter's three stretches">
         <RsSegments rows={rows} />
       </Reference>
 

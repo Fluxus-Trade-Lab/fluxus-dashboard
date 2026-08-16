@@ -5,13 +5,25 @@
  *
  * `excess_3m` is one number for a quarter, and one number cannot tell a theme
  * that has been grinding ahead all quarter apart from one that did nothing for
- * two months and gapped last week. The pipeline has always decomposed it into
- * four disjoint windows — 0–1w, 1w–1m, 1m–3m, 3m–6m — and the front end has
- * never drawn them.
+ * two months and gapped last week. The pipeline decomposes it into disjoint
+ * windows; this draws the three that fall inside the quarter — 1m–3m, 1w–1m,
+ * 0–1w. The fourth, 3m–6m, is outside the total this page ranks on and is not
+ * drawn here or in the trajectory panel.
  *
- * Four bars on one shared scale, in time order, oldest at the left. Disjoint,
+ * Three bars on one shared scale, in time order, oldest at the left. Disjoint,
  * so they do not double-count: each is that stretch alone, chained apart from
  * the cumulative figures rather than differenced (see rs_engine).
+ *
+ * 2026-08-16 — SAME UNITS AS THE TRAJECTORY PANEL. This drew the stretches'
+ * raw totals over four windows while Compare drew three windows as excess per
+ * session, so one page said High Octane's 1–3m was +34.7% in one place and
+ * +0.83% in another, with nothing connecting them. Both are now per session,
+ * and 3–6m is gone from both: segments.js has always marked it outside the
+ * quarter this page ranks on.
+ *
+ * That makes the two views the same sentence at two volumes — Compare reads
+ * three themes closely, this reads ten at a glance — rather than two claims a
+ * reader has to reconcile.
  *
  * An unmeasured window is drawn as a dashed outline sitting ON the zero rule,
  * not as a gap and not as zero. Fourteen proxy themes have no local bars for
@@ -22,9 +34,9 @@
  * twice as long is twice the number, in any row and any column.
  */
 
-import { SEGMENTS } from './segments'
+import { QUARTER_SEGMENTS, ratePerSession } from './segments'
 
-function Bar({ v, scale }) {
+function Bar({ v, scale, raw, sessions }) {
   if (v == null || !Number.isFinite(v)) {
     return (
       <span className="relative block h-[13px]" title="not measured">
@@ -37,7 +49,9 @@ function Bar({ v, scale }) {
   const frac = Math.max(-1, Math.min(1, v / scale))
   const pos = v > 0
   return (
-    <span className="relative block h-[13px]" title={`${(v * 100).toFixed(2)}%`}>
+    <span className="relative block h-[13px]"
+          title={`${(v * 100).toFixed(2)}% per session`
+            + (Number.isFinite(raw) ? ` · ${sessions} sessions, ${raw > 0 ? '+' : ''}${(raw * 100).toFixed(1)}% over the stretch` : '')}>
       <i className="absolute top-[-2px] bottom-[-2px] left-1/2 w-px
                     bg-[var(--color-text-muted)]" />
       <i className="absolute inset-y-0" style={{
@@ -49,7 +63,7 @@ function Bar({ v, scale }) {
   )
 }
 
-export default function RsSegments({ rows, limit = 20 }) {
+export default function RsSegments({ rows, limit = 10 }) {
   if (!rows?.length) return null
 
   const shown = [...rows]
@@ -58,13 +72,13 @@ export default function RsSegments({ rows, limit = 20 }) {
     .slice(0, limit)
 
   const scale = shown.reduce((m, r) =>
-    SEGMENTS.reduce((mm, s) => {
-      const v = r[s.key]
-      return v == null || !Number.isFinite(v) ? mm : Math.max(mm, Math.abs(v))
+    QUARTER_SEGMENTS.reduce((mm, s) => {
+      const v = ratePerSession(r, s)
+      return v == null ? mm : Math.max(mm, Math.abs(v))
     }, m), 0) || 1
 
   const unmeasured = shown.reduce((n, r) =>
-    n + SEGMENTS.filter((s) => r[s.key] == null).length, 0)
+    n + QUARTER_SEGMENTS.filter((s) => ratePerSession(r, s) == null).length, 0)
 
   return (
     <section>
@@ -74,11 +88,11 @@ export default function RsSegments({ rows, limit = 20 }) {
           <h2 className="text-[17px] font-semibold m-0"
               style={{ fontFamily: 'var(--font-cond)' }}>Where the lead was earned</h2>
           <span className="text-[11px] text-[var(--color-text-muted)]">
-            four disjoint windows, oldest first — they do not overlap
+            the quarter's three disjoint stretches, oldest first · excess per session
           </span>
         </div>
         <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
-          scale ±{(scale * 100).toFixed(0)}% · top {shown.length} by 3m
+          scale ±{(scale * 100).toFixed(2)}%/session · top {shown.length} by 3m
           {unmeasured > 0 && ` · ${unmeasured} windows unmeasured`}
         </span>
       </div>
@@ -87,7 +101,7 @@ export default function RsSegments({ rows, limit = 20 }) {
                       pt-2 pb-1 text-[10px] font-mono uppercase tracking-wider
                       text-[var(--color-text-muted)]">
         <span>Theme</span>
-        {SEGMENTS.map((s) => (
+        {QUARTER_SEGMENTS.map((s) => (
           <span key={s.key} title={s.note}
                 className={`text-center ${s.inQuarter ? '' : 'opacity-70'}`}
                 style={s.inQuarter ? undefined
@@ -105,11 +119,12 @@ export default function RsSegments({ rows, limit = 20 }) {
           <span className="text-[12.5px] truncate" title={r.tickers?.join(' · ')}>
             {r.group}
           </span>
-          {SEGMENTS.map((s) => (
-            <span key={s.key}
-                  style={s.inQuarter ? undefined
-                    : { borderRight: '1px solid var(--color-border)', paddingRight: '10px' }}>
-              <Bar v={r[s.key]} scale={scale} />
+          {QUARTER_SEGMENTS.map((s) => (
+            <span key={s.key}>
+              {/* the rate, not the stretch's total — the same number the
+                  trajectory panel plots, so the two cannot disagree */}
+              <Bar v={ratePerSession(r, s)} scale={scale}
+                   raw={r[s.key]} sessions={s.sessions} />
             </span>
           ))}
           <span className="text-[12.5px] font-mono tabular-nums text-right">
@@ -132,11 +147,13 @@ export default function RsSegments({ rows, limit = 20 }) {
              style={{ borderColor: 'var(--color-untested)' }} />not measured
         </span>
         <span>
-          · one scale across all four columns — a bar twice as long is twice the number.
-          The windows do not overlap, but they do not sum either: excess returns compound
-          rather than add, and <b>3–6m sits outside the three-month total</b> — that is what
-          the rule after it marks. Read each bar as its own stretch, not as a term in an
-          addition.
+          · one scale across all three columns — a bar twice as long is twice the number.
+          Each bar is that stretch&rsquo;s excess <b>divided by its own length</b>, which is
+          the only way a five-session week and a forty-two-session run compare: on the
+          totals the short stretch is always the small bar, and every theme looks like it
+          is fading. Same units as the trajectory panel above. The stretches do not
+          overlap, and they do not sum either — excess returns compound rather than add,
+          so read each bar as its own stretch, not as a term in an addition.
         </span>
       </div>
     </section>
