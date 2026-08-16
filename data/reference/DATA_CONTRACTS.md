@@ -186,6 +186,17 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 
 ---
 
+## 四点五、`data/output/universe.json` —— 2026-08-17 新增两列
+
+| 字段 | 定义 | 口径 |
+|---|---|---|
+| `atr_from_sma50` | **ATR Matrix** = `(close − SMA50) / ATR`,股价高于 50 日线几个 ATR | 浮点,可负(低于 SMA50);ATR=0 或缺任一输入 → `null`。**不是** `sma50_r`(那是 close/SMA50 的比值,原样保留)。黄金样本:6 只对 Wilder-14 ATR 直算逐位吻合 |
+| `pp_count_10d` | 最近 10 个交易日里的口袋支点根数 | 与 `pp_count_30d` 同一实现(`pocket_pivot_count`)、不同 lookback;阳线且量 > 前 10 根最大量;首次富集后才有值 |
+
+Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `≥7` 分批减;oratnek:选股 `<5`(理想 `<4`),`≥7` 减 33%。出处 `data/research/screener_competitors_2026-08-17.md`。
+
+---
+
 ## 五、当前未接入的东西
 
 | 文件 | 状态 |

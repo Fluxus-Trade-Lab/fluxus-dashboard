@@ -101,6 +101,28 @@ def calculate_rrs(stock_data: pd.DataFrame, spy_data: pd.DataFrame,
         return None
 
 
+def pocket_pivot_count(closes, opens, vols, lookback: int = 30) -> int:
+    """How many of the last `lookback` bars were pocket pivots.
+
+    A pocket pivot here is a green bar whose volume exceeds the highest volume
+    of the ten bars before it. (Morales's original compares only the DOWN days
+    among those ten; ours compares all ten, which is a stricter bar. Audited
+    2026-08-11 and deliberately left as-is.)
+
+    Factored out of the enrichment loop so the 10-session window oratnek
+    screens on and the 30-session window we already shipped are one
+    implementation read over two lookbacks -- a second inline copy would drift.
+    """
+    n = len(closes)
+    if n < 11:
+        return 0
+    count = 0
+    for j in range(max(11, n - lookback), n):
+        if closes[j] > opens[j] and vols[j] > max(vols[max(0, j - 10):j]):
+            count += 1
+    return count
+
+
 def calculate_vcs(hist: pd.DataFrame, len_short: int = 13, len_long: int = 63,
                    len_vol: int = 50, sensitivity: float = 2.0,
                    trend_penalty_weight: float = 1.0, hl_lookback: int = 63,
@@ -481,6 +503,7 @@ class YfinanceAdapter(BaseAdapter):
                 # Pocket Pivot: green candle + vol > max(prior 10 bars vol)
                 pp = False
                 pp_count = 0
+                pp_count_10 = 0
                 if n >= 11:
                     closes = hist['Close'].values
                     opens = hist['Open'].values
@@ -489,11 +512,12 @@ class YfinanceAdapter(BaseAdapter):
                     if closes[-1] > opens[-1]:
                         max_prior_vol = max(vols[-11:-1])
                         pp = bool(vols[-1] > max_prior_vol)
-                    # Count pocket pivots in last 30 bars
-                    lookback = min(n, 30)
-                    for j in range(max(11, n - lookback), n):
-                        if closes[j] > opens[j] and vols[j] > max(vols[max(0, j-10):j]):
-                            pp_count += 1
+                    # Two windows off one implementation: 30 is what we
+                    # already shipped, 10 is the window oratnek screens on
+                    # ("a day within the last 10 sessions that posted the
+                    # highest volume in 10 days along with a green candle").
+                    pp_count = pocket_pivot_count(closes, opens, vols, 30)
+                    pp_count_10 = pocket_pivot_count(closes, opens, vols, 10)
 
                 # Trend Base: price > 50SMA AND 10WMA > 30WMA
                 trend_base = False
@@ -553,6 +577,7 @@ class YfinanceAdapter(BaseAdapter):
                     'dcr_pct': dcr_pct,
                     'pocket_pivot': pp,
                     'pp_count_30d': pp_count,
+                    'pp_count_10d': pp_count_10,
                     'trend_base': trend_base,
                     'vcs': vcs,
                     'ema21_low_dist': ema21_low_dist,

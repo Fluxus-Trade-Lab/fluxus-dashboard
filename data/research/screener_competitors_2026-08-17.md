@@ -129,7 +129,7 @@ Telechart 语法,原文照抄:
 
 | # | 缺什么 | 谁在用 | 难度 | 影响(2026-08-14 实算) |
 |---|---|---|---|---|
-| **1** | **ATR Matrix** `(close−SMA50)/ATR` | 三家都用 | **极低**(现有 `close/atr/sma50_dist` 直接算) | 全池 5,476 行可算:**41.2% 低于 SMA50(该忽略)· 45.9% 在 0–4x 建仓区 · 9.8% 4–7x · 3.1% ≥7x 过度延伸** |
+| **1** | **ATR Matrix** `(close−SMA50)/ATR` | 三家都用 | **极低**(现有 `close/atr/sma50_dist` 直接算) | 全池 5,476 行可算:**41.2% 低于 SMA50(该忽略)· 49.6% 在 0–4x 建仓区 · 7.9% 4–7x · 1.3% ≥7x 过度延伸** |
 | 2 | **PP 10 日窗** `pp_count_10d` | oratnek | 极低(改一个 lookback) | 他的 "PP (Vol > 10D)" 栏目直接可复现 |
 | 3 | **均线序列布尔** `ma_stack` | Steve、Alex | 低 | Price≥EMA10≥SMA20≥SMA50≥SMA100≥SMA200 |
 | 4 | **ADR 上限口径错** | Steve | 零(改预设) | 我们 8 个预设用 `adrPct max 10`;Steve 的上限是 **maxLoss÷1.5 ≈ 6**。10 会放进注定打穿止损的票 |
@@ -141,10 +141,12 @@ Telechart 语法,原文照抄:
 
 | 口径 | 今日命中 |
 |---|---|
-| **Steve**(ATR% 3–6% 且 ATR Matrix 0–4x) | **1,075 只** |
-| **oratnek**(mcap>$1B · avgvol>1M · RS21>70 · RS63>80 · ATR-from-50SMA<5) | **91 只** — AEHR, ALOY, APPS, SMCI, BLZE, LPTH, REPL, BETA, BFLY, CRSR, GENI, CAI … |
+| **Steve**(ATR% 3–6% 且 ATR Matrix 0–4x) | **1,179 只** |
+| **oratnek**(mcap>$1B · avgvol>1M · RS21>70 · RS63>80 · ATR-from-50SMA<5) | **134 只** — UMAC, AEHR, ALOY, APPS, SMCI, BLZE, FSLY, LPTH, REPL, BETA, IOVA, TNDM … |
 
-oratnek 那 91 只是**今天就能出的一张单**,只差 ATR Matrix 这一个字段。
+oratnek 那 134 只是**今天就能出的一张单**,只差 ATR Matrix 这一个字段。
+
+> **勘误(同日)**:本文首版的速算用了 `close×dist/atr`,漏了 `(1+dist)` 分母,把延伸度整体高估了 (1+dist) 倍 —— 30% 以上的票高估 30%,恰好是这个数存在要抓的那条尾巴。已按 `sma50_dist=(close−SMA50)/SMA50` 的口径(6 只逐位核对)修正,字段 `atr_from_sma50` 已上线并有回归测试钉住这个分母。
 
 ---
 

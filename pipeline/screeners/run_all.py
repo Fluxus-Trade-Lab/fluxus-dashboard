@@ -288,8 +288,27 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
 
     # --- Derived technical columns ---
     df['adr_pct'] = pd.to_numeric(df['atr'], errors='coerce') / pd.to_numeric(df['close'], errors='coerce') * 100
+    # These two are RATIOS (close / MA), not ATR multiples, despite the `_r`.
+    # Kept unchanged because things read them; the ATR reading is the separate
+    # column below. See data/reference/screener_inventory_2026-08-17.md.
     df['ema21_r'] = 1 + pd.to_numeric(df['sma20_dist'], errors='coerce')
     df['sma50_r'] = 1 + pd.to_numeric(df['sma50_dist'], errors='coerce')
+
+    # --- ATR Matrix: how many ATRs the price sits above its 50-day SMA ---
+    # Steve Jacobs's framing (learnt from @jfsrev and @RealSimpleAriel), and
+    # the same number oratnek uses as both an entry gate (<5, ideally <4) and
+    # an exit trigger (>=7 -> trim). Jacobs's bands: <0 ignore, 0-4x entry,
+    # 5-7x hold, >=7x scale out.
+    #
+    # We carry sma50_dist = (close - SMA50)/SMA50 -- verified against
+    # date-aligned bars on 2026-08-14, five of six names to four decimals --
+    # so SMA50 = close/(1+dist) and the gap is close*dist/(1+dist). Dropping
+    # that denominator overstates a name 30% above its line by 30%, precisely
+    # in the extended tail this column exists to flag.
+    _c = pd.to_numeric(df['close'], errors='coerce')
+    _a = pd.to_numeric(df['atr'], errors='coerce').replace(0, np.nan)
+    _d = pd.to_numeric(df['sma50_dist'], errors='coerce')
+    df['atr_from_sma50'] = (_c * _d / (1 + _d)) / _a
 
     # 52W high distance
     h = pd.to_numeric(df['high_52w'], errors='coerce')
@@ -661,7 +680,8 @@ def main():
         'rs_ibd',
         'f_score', 'i_score', 'h_score',
         'adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist',
-        'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d',
+        'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d', 'pp_count_10d',
+        'atr_from_sma50',
         'trend_base', 'vcs', 'ema21_low_dist',
         'perf_1w_pctile', 'perf_3m_pctile', 'momentum_97',
         'bo_count_1m', 'bo_count_3m', 'bo_count_6m', 'bo_count_1y',
