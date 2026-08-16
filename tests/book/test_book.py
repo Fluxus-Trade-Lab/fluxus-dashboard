@@ -308,3 +308,36 @@ def test_the_search_is_priced_on_hypotheses_not_on_runs(tmp_path):
     assert fe["tested"] == 12
     assert fe["hypotheses"] == 6
     assert fe["p_at_least_one_false_survivor"] == pytest.approx(0.2649, abs=0.002)
+
+
+def test_the_shuffled_control_matches_the_firing_count_OUT_OF_SAMPLE():
+    """The correction that made the control a control.
+
+    Shuffling across the full series only matches the total. A signal that
+    concentrates in sample leaves its control scattered uniformly, so the
+    control fires more out of sample -- where the verdict is made. On the first
+    flat-exposure run the real rule fired 15 OOS days and its control fired 38,
+    and the control 'survived' while the rule did not.
+    """
+    n = 400
+    base = [0.001] * n
+    for i in range(300, 340):
+        base[i] = -0.02
+    overlay = [-1.0 * b for b in base]
+    # Concentrated in sample: 60 of the first 280 days, none after.
+    active = [50 <= i < 110 for i in range(n)]
+    i = K.split(n, K.DEFAULT_TRAIN)
+    sh = K.shuffled_control("x", base, overlay, active, draws=100)
+    assert sum(active) == sh["n_fired_total"]
+    # ...and the OOS count matches too, which is the part that was broken.
+    assert sh["n_fired_oos"] == sum(active[i:]) == 0
+
+
+def test_the_control_matches_the_count_in_both_segments():
+    n, i = 300, K.split(300, K.DEFAULT_TRAIN)
+    base = [0.001] * n
+    overlay = [-1.0 * b for b in base]
+    active = [i - 20 <= j < i + 40 for j in range(n)]     # straddles the split
+    sh = K.shuffled_control("x", base, overlay, active, draws=100)
+    assert sh["n_fired_oos"] == sum(active[i:])
+    assert sh["n_fired_total"] == sum(active)

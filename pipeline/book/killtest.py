@@ -153,16 +153,32 @@ def _explain(verdict: str, name: str, adv: dict, fired: int, n: int) -> str:
 
 
 def shuffled_control(name: str, base: list[float], overlay: list[float],
-                     active: list[bool], seed: int = 7, **kw) -> dict:
+                     active: list[bool], seed: int = 7,
+                     train: float = DEFAULT_TRAIN, **kw) -> dict:
     """The same test against a rule that fires the same number of times at random.
 
     A rule can beat `base` merely by being ON during a calm stretch. Holding the
     firing COUNT fixed and moving WHEN it fires asks the sharper question: does
     the timing carry anything, or only the exposure?
+
+    **The count is held fixed SEPARATELY in each segment**, and that correction
+    is the whole reason this function is worth having. Shuffling across the full
+    series only matches the total: a signal that happened to concentrate in
+    sample leaves its control scattered uniformly, so the control fires MORE out
+    of sample -- where the verdict is made. On the first flat-exposure run the
+    real rule fired 15 out-of-sample days and its control fired 38, and the
+    control "survived" while the rule did not. That was not a finding about the
+    market. It was a control carrying 2.5x the exposure in the only window that
+    counted.
     """
     import random
     rng = random.Random(seed)
-    k = sum(active)
-    idx = set(rng.sample(range(len(active)), k)) if k else set()
+    i = split(len(active), train)
+    idx: set[int] = set()
+    for lo, hi in ((0, i), (i, len(active))):
+        k = sum(active[lo:hi])
+        if k:
+            idx.update(rng.sample(range(lo, hi), k))
     return kill_test(f"{name} [timing-shuffled]", base, overlay,
-                     [i in idx for i in range(len(active))], seed=seed, **kw)
+                     [j in idx for j in range(len(active))], seed=seed,
+                     train=train, **kw)

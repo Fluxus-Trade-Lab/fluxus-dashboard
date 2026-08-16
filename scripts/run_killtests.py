@@ -11,6 +11,13 @@ He runs defined-risk option structures on dislocations. We have no historical
 option chains, so the overlay here is modelled as **de-risking**: on an active
 day the book holds `1 - HEDGE` of the base exposure.
 
+`--hedge 1.0` holds NOTHING on an active day. That is not an extra knob for
+tuning: it is his own stated mechanism. Both SCE and APMEM "systematically sit
+out drawdowns" -- he reduces damage by being OUT, not by being hedged inside --
+and a half-sized position is a different thing from a flat one. Running both is
+one idea executed two ways, so the kill log carries the SAME hypothesis string
+for each and the search is still priced at six hypotheses, not twelve.
+
 This understates a real defined-risk overlay in one direction and overstates it
 in the other, and both should be stated:
 
@@ -51,7 +58,7 @@ from pipeline.profile import facilitation as F
 from pipeline.profile import tff as T
 from pipeline.profile import tpo as MP
 
-HEDGE = 0.50            # how much exposure comes off on an active day
+DEFAULT_HEDGE = 0.50    # how much exposure comes off on an active day
 TICK = 0.25             # SPY price bucket, ~ SPX 2.5 at a 10:1 index ratio
 MIN_BRACKETS = 8
 OUT = Path("data/book/killtest_run.json")
@@ -70,6 +77,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--years", type=int, default=2)
     ap.add_argument("--draws", type=int, default=1500)
+    ap.add_argument("--hedge", type=float, default=DEFAULT_HEDGE,
+                    help="Fraction of exposure removed on an active day. "
+                         "1.0 = flat, which is his stated mechanism.")
     args = ap.parse_args()
 
     from ib_async import IB, Stock
@@ -144,9 +154,11 @@ def main():
     results, rows = [], []
     for name, (flags, hypothesis) in candidates.items():
         active = _lag(flags, days)
-        overlay = [-HEDGE * b for b in base]
-        r = K.kill_test(name, base, overlay, active, draws=args.draws)
-        sh = K.shuffled_control(name, base, overlay, active, draws=args.draws)
+        overlay = [-args.hedge * b for b in base]
+        tag = "flat" if args.hedge >= 1.0 else f"{args.hedge:.0%} de-risk"
+        r = K.kill_test(f"{name} [{tag}]", base, overlay, active, draws=args.draws)
+        sh = K.shuffled_control(f"{name} [{tag}]", base, overlay, active,
+                                draws=args.draws)
         results.append({"rule": r, "shuffled": sh})
         for res in (r, sh):
             row = KL.entry(res, hypothesis=hypothesis,
@@ -159,16 +171,19 @@ def main():
         print(f"     timing-shuffled control -> {sh['verdict']}")
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(
+    out = OUT.with_name(f"killtest_run_{int(args.hedge*100)}.json")
+    out.write_text(json.dumps(
         {"generated_at": now.isoformat(timespec="seconds"),
          "sessions": len(days), "first": days[0], "last": days[-1],
-         "hedge": HEDGE, "overlay_model": "linear de-risk proxy, no convexity, "
-                                          "no premium cost",
+         "hedge": args.hedge,
+         "overlay_model": ("fully flat on active days -- his stated mechanism"
+                           if args.hedge >= 1.0 else
+                           "linear de-risk proxy, no convexity, no premium cost"),
          "buy_and_hold": M.summary(base),
          "results": results}, indent=2))
     print("\n" + "=" * 66)
     print(KL.report())
-    print(f"\nwrote {OUT}")
+    print(f"\nwrote {out}")
 
 
 if __name__ == "__main__":

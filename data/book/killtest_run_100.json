@@ -1,0 +1,725 @@
+{
+  "generated_at": "2026-08-16T14:16:02-04:00",
+  "sessions": 496,
+  "first": "2024-08-15",
+  "last": "2026-08-14",
+  "hedge": 1.0,
+  "overlay_model": "fully flat on active days -- his stated mechanism",
+  "buy_and_hold": {
+    "n": 496,
+    "max_drawdown": -0.189989,
+    "total_return": 0.403692,
+    "time_underwater": 0.8169,
+    "ann_vol": 0.166738
+  },
+  "results": [
+    {
+      "rule": {
+        "rule": "gate shut (rejected or no extension) [flat]",
+        "n_days": 496,
+        "split_index": 347,
+        "train_fraction": 0.7,
+        "n_oos_days": 149,
+        "n_fired_total": 61,
+        "n_fired_oos": 26,
+        "in_sample": {
+          "book": {
+            "n": 347,
+            "max_drawdown": -0.159592,
+            "total_return": 0.311059,
+            "time_underwater": 0.773,
+            "ann_vol": 0.171619
+          },
+          "control": {
+            "n": 347,
+            "max_drawdown": -0.189989,
+            "total_return": 0.254941,
+            "time_underwater": 0.8075,
+            "ann_vol": 0.177114
+          }
+        },
+        "out_of_sample": {
+          "book": {
+            "n": 149,
+            "max_drawdown": -0.068765,
+            "total_return": 0.183883,
+            "time_underwater": 0.7533,
+            "ann_vol": 0.127757
+          },
+          "control": {
+            "n": 149,
+            "max_drawdown": -0.091331,
+            "total_return": 0.118533,
+            "time_underwater": 0.8333,
+            "ann_vol": 0.139609
+          }
+        },
+        "verdict": "undecided",
+        "advantage": {
+          "book_max_drawdown": -0.068765,
+          "control_max_drawdown": -0.091331,
+          "advantage": 0.022566,
+          "ci_low": -0.001336,
+          "ci_high": 0.040506,
+          "conf": 0.9,
+          "p_book_worse": 0.0653,
+          "p_tied": 0.048,
+          "excludes_zero": false,
+          "block": 21,
+          "draws": 1500,
+          "n_days": 149,
+          "note": "observed advantage +2.3 points of drawdown over 149 days; the interval [-0.1, +4.1] straddles zero and the book is worse in 7% of resamples \u2014 this sample cannot tell the two apart"
+        },
+        "note": "gate shut (rejected or no extension) [flat] undecided: fired 26 of 149 out-of-sample days, advantage +2.3 points but the interval [-0.1, +4.1] straddles zero \u2014 open, not failed"
+      },
+      "shuffled": {
+        "rule": "gate shut (rejected or no extension) [flat] [timing-shuffled]",
+        "n_days": 496,
+        "split_index": 347,
+        "train_fraction": 0.7,
+        "n_oos_days": 149,
+        "n_fired_total": 61,
+        "n_fired_oos": 26,
+        "in_sample": {
+          "book": {
+            "n": 347,
+            "max_drawdown": -0.189989,
+            "total_return": 0.225548,
+            "time_underwater": 0.8132,
+            "ann_vol": 0.173575
+          },
+          "control": {
+            "n": 347,
+            "max_drawdown": -0.189989,
+            "total_return": 0.254941,
+            "time_underwater": 0.8075,
+            "ann_vol": 0.177114
+          }
+        },
+        "out_of_sample": {
+          "book": {
+            "n": 149,
+            "max_drawdown": -0.077919,
+            "total_return": 0.108813,
+            "time_underwater": 0.8267,
+            "ann_vol": 0.131939
+          },
+          "control": {
+            "n": 149,
+            "max_drawdown": -0.091331,
+            "total_return": 0.118533,
+            "time_underwater": 0.8333,
+            "ann_vol": 0.139609
+          }
+        },
+        "verdict": "undecided",
+        "advantage": {
+          "book_max_drawdown": -0.077919,
+          "control_max_drawdown": -0.091331,
+          "advantage": 0.013412,
+          "ci_low": -0.017938,
+          "ci_high": 0.023322,
+          "conf": 0.9,
+          "p_book_worse": 0.366,
+          "p_tied": 0.0027,
+          "excludes_zero": false,
+          "block": 21,
+          "draws": 1500,
+          "n_days": 149,
+          "note": "observed advantage +1.3 points of drawdown over 149 days; the interval [-1.8, +2.3] straddles zero and the book is worse in 37% of resamples \u2014 this sample cannot tell the two apart"
+        },
+        "note": "gate shut (rejected or no extension) [flat] [timing-shuffled] undecided: fired 26 of 149 out-of-sample days, advantage +1.3 points but the interval [-1.8, +2.3] straddles zero \u2014 open, not failed"
+      }
+    },
+    {
+      "rule": {
+        "rule": "gate shut, rejected only [flat]",
+        "n_days": 496,
+        "split_index": 347,
+        "train_fraction": 0.7,
+        "n_oos_days": 149,
+        "n_fired_total": 50,
+        "n_fired_oos": 21,
+        "in_sample": {
+          "book": {
+            "n": 347,
+            "max_drawdown": -0.190948,
+            "total_return": 0.256131,
+            "time_underwater": 0.8017,
+            "ann_vol": 0.173025
+          },
+          "control": {
+            "n": 347,
+            "max_drawdown": -0.189989,
+            "total_return": 0.254941,
+            "time_underwater": 0.8075,
+            "ann_vol": 0.177114
+          }
+        },
+        "out_of_sample": {
+          "book": {
+            "n": 149,
+            "max_drawdown": -0.083152,
+            "total_return": 0.155269,
+            "time_underwater": 0.7733,
+            "ann_vol": 0.130032
+          },
+          "control": {
+            "n": 149,
+            "max_drawdown": -0.091331,
+            "total_return": 0.118533,
+            "time_underwater": 0.8333,
+            "ann_vol": 0.139609
+          }
+        },
+        "verdict": "undecided",
+        "advantage": {
+          "book_max_drawdown": -0.083152,
+          "control_max_drawdown": -0.091331,
+          "advantage": 0.008179,
+          "ci_low": -0.012609,
+          "ci_high": 0.032288,
+          "conf": 0.9,
+          "p_book_worse": 0.2293,
+          "p_tied": 0.0467,
+          "excludes_zero": false,
+          "block": 21,
+          "draws": 1500,
+          "n_days": 149,
+          "note": "observed advantage +0.8 points of drawdown over 149 days; the interval [-1.3, +3.2] straddles zero and the book is worse in 23% of resamples \u2014 this sample cannot tell the two apart"
+        },
+        "note": "gate shut, rejected only [flat] undecided: fired 21 of 149 out-of-sample days, advantage +0.8 points but the interval [-1.3, +3.2] straddles zero \u2014 open, not failed"
+      },
+      "shuffled": {
+        "rule": "gate shut, rejected only [flat] [timing-shuffled]",
+        "n_days": 496,
+        "split_index": 347,
+        "train_fraction": 0.7,
+        "n_oos_days": 149,
+        "n_fired_total": 50,
+        "n_fired_oos": 21,
+        "in_sample": {
+          "book": {
+            "n": 347,
+            "max_drawdown": -0.189989,
+            "total_return": 0.213884,
+            "time_underwater": 0.8161,
+            "ann_vol": 0.173816
+          },
+          "control": {
+            "n": 347,
+            "max_drawdown": -0.189989,
+            "total_return": 0.254941,
+            "time_underwater": 0.8075,
+            "ann_vol": 0.177114
+          }
+        },
+        "out_of_sample": {
+          "book": {
+            "n": 149,
+            "max_drawdown": -0.092051,
+            "total_return": 0.090402,
+            "time_underwater": 0.8333,
+            "ann_vol": 0.136323
+          },
+          "control": {
+            "n": 149,
+            "max_drawdown": -0.091331,
+            "total_return": 0.118533,
+            "time_underwater": 0.8333,
+            "ann_vol": 0.139609
+          }
+        },
+        "verdict": "undecided",
+        "advantage": {
+          "book_max_drawdown": -0.092051,
+          "control_max_drawdown": -0.091331,
+          "advantage": -0.00072,
+          "ci_low": -0.013444,
+          "ci_high": 0.012867,
+          "conf": 0.9,
+          "p_book_worse": 0.5707,
+          "p_tied": 0.0173,
+          "excludes_zero": false,
+          "block": 21,
+          "draws": 1500,
+          "n_days": 149,
+          "note": "observed advantage -0.1 points of drawdown over 149 days; the interval [-1.3, +1.3] straddles zero and the book is worse in 57% of resamples \u2014 this sample cannot tell the two apart"
+        },
+        "note": "gate shut, rejected only [flat] [timing-shuffled] undecided: fired 21 of 149 out-of-sample days, advantage -0.1 points but the interval [-1.3, +1.3] straddles zero \u2014 open, not failed"
+      }
+    },
+    {
+      "rule": {
+        "rule": "two-sided extension [flat]",
+        "n_days": 496,
+        "split_index": 347,
+        "train_fraction": 0.7,
+        "n_oos_days": 149,
+        "n_fired_total": 129,
+        "n_fired_oos": 33,
+        "in_sample": {
+          "book": {
+            "n": 347,
+            "max_drawdown": -0.126822,
+            "total_return": 0.264843,
+            "time_underwater": 0.7931,
+            "ann_vol": 0.156013
+          },
+          "control": {
+            "n": 347,
+            "max_drawdown": -0.189989,
+            "total_return": 0.254941,
+            "time_underwater": 0.8075,
+            "ann_vol": 0.177114
+          }
+        },
+        "out_of_sample": {
+          "book": {
+            "n": 149,
+            "max_drawdown": -0.097842,
+            "total_return": -0.017546,
+            "time_underwater": 0.9867,
+            "ann_vol": 0.122996
+          },
+          "control": {
+            "n": 149,
+            "max_drawdown": -0.091331,
+            "total_return": 0.118533,
+            "time_underwater": 0.8333,
+            "ann_vol": 0.139609
+          }
+        },
+        "verdict": "undecided",
+        "advantage": {
+          "book_max_drawdown": -0.097842,
+          "control_max_drawdown": -0.091331,
+          "advantage": -0.006511,
+          "ci_low": -0.055174,
+          "ci_high": 0.016786,
+          "conf": 0.9,
+          "p_book_worse": 0.7333,
+          "p_tied": 0.0007,
+          "excludes_zero": false,
+          "block": 21,
+          "draws": 1500,
+          "n_days": 149,
+          "note": "observed advantage -0.7 points of drawdown over 149 days; the interval [-5.5, +1.7] straddles zero and the book is worse in 73% of resamples \u2014 this sample cannot tell the two apart"
+        },
+        "note": "two-sided extension [flat] undecided: fired 33 of 149 out-of-sample days, advantage -0.7 points but the interval [-5.5, +1.7] straddles zero \u2014 open, not failed"
+      },
+      "shuffled": {
+        "rule": "two-sided extension [flat] [timing-shuffled]",
+        "n_days": 496,
+        "split_index": 347,
+        "train_fraction": 0.7,
+        "n_oos_days": 149,
+        "n_fired_total": 129,
+        "n_fired_oos": 33,
+        "in_sample": {
+          "book": {
+            "n": 347,
+            "max_drawdown": -0.181026,
+            "total_return": 0.13284,
+            "time_underwater": 0.8218,
+            "ann_vol": 0.13158
+          },
+          "control": {
+            "n": 347,
+            "max_drawdown": -0.189989,
+            "total_return": 0.254941,
+            "time_underwater": 0.8075,
+            "ann_vol": 0.177114
+          }
+        },
+        "out_of_sample": {
+          "book": {
+            "n": 149,
+            "max_drawdown": -0.093018,
+            "total_return": 0.153033,
+            "time_underwater": 0.74,
+            "ann_vol": 0.120438
+          },
+          "control": {
+            "n": 149,
+            "max_drawdown": -0.091331,
+            "total_return": 0.118533,
+            "time_underwater": 0.8333,
+            "ann_vol": 0.139609
+          }
+        },
+        "verdict": "undecided",
+        "advantage": {
+          "book_max_drawdown": -0.093018,
+          "control_max_drawdown": -0.091331,
+          "advantage": -0.001687,
+          "ci_low": -0.020039,
+          "ci_high": 0.034901,
+          "conf": 0.9,
+          "p_book_worse": 0.3047,
+          "p_tied": 0.0,
+          "excludes_zero": false,
+          "block": 21,
+          "draws": 1500,
+          "n_days": 149,
+          "note": "observed advantage -0.2 points of drawdown over 149 days; the interval [-2.0, +3.5] straddles zero and the book is worse in 30% of resamples \u2014 this sample cannot tell the two apart"
+        },
+        "note": "two-sided extension [flat] [timing-shuffled] undecided: fired 33 of 149 out-of-sample days, advantage -0.2 points but the interval [-2.0, +3.5] straddles zero \u2014 open, not failed"
+      }
+    },
+    {
+      "rule": {
+        "rule": "TFF non-facilitating (bottom quartile) [flat]",
+        "n_days": 496,
+        "split_index": 347,
+        "train_fraction": 0.7,
+        "n_oos_days": 149,
+        "n_fired_total": 139,
+        "n_fired_oos": 15,
+        "in_sample": {
+          "book": {
+            "n": 347,
+            "max_drawdown": -0.178792,
+            "total_return": 0.258443,
+            "time_underwater": 0.6264,
+            "ann_vol": 0.168566
+          },
+          "control": {
+            "n": 347,
+            "max_drawdown": -0.189989,
+            "total_return": 0.254941,
+            "time_underwater": 0.8075,
+            "ann_vol": 0.177114
+          }
+        },
+        "out_of_sample": {
+          "book": {
+            "n": 149,
+            "max_drawdown": -0.086769,
+            "total_return": 0.142697,
+            "time_underwater": 0.7667,
+            "ann_vol": 0.132829
+          },
+          "control": {
+            "n": 149,
+            "max_drawdown": -0.091331,
+            "total_return": 0.118533,
+            "time_underwater": 0.8333,
+            "ann_vol": 0.139609
+          }
+        },
+        "verdict": "undecided",
+        "advantage": {
+          "book_max_drawdown": -0.086769,
+          "control_max_drawdown": -0.091331,
+          "advantage": 0.004562,
+          "ci_low": -0.001681,
+          "ci_high": 0.032894,
+          "conf": 0.9,
+          "p_book_worse": 0.0873,
+          "p_tied": 0.1307,
+          "excludes_zero": false,
+          "block": 21,
+          "draws": 1500,
+          "n_days": 149,
+          "note": "observed advantage +0.5 points of drawdown over 149 days; the interval [-0.2, +3.3] straddles zero and the book is worse in 9% of resamples \u2014 this sample cannot tell the two apart"
+        },
+        "note": "TFF non-facilitating (bottom quartile) [flat] undecided: fired 15 of 149 out-of-sample days, advantage +0.5 points but the interval [-0.2, +3.3] straddles zero \u2014 open, not failed"
+      },
+      "shuffled": {
+        "rule": "TFF non-facilitating (bottom quartile) [flat] [timing-shuffled]",
+        "n_days": 496,
+        "split_index": 347,
+        "train_fraction": 0.7,
+        "n_oos_days": 149,
+        "n_fired_total": 139,
+        "n_fired_oos": 15,
+        "in_sample": {
+          "book": {
+            "n": 347,
+            "max_drawdown": -0.134976,
+            "total_return": 0.108152,
+            "time_underwater": 0.8333,
+            "ann_vol": 0.119527
+          },
+          "control": {
+            "n": 347,
+            "max_drawdown": -0.189989,
+            "total_return": 0.254941,
+            "time_underwater": 0.8075,
+            "ann_vol": 0.177114
+          }
+        },
+        "out_of_sample": {
+          "book": {
+            "n": 149,
+            "max_drawdown": -0.090679,
+            "total_return": 0.101091,
+            "time_underwater": 0.8267,
+            "ann_vol": 0.128927
+          },
+          "control": {
+            "n": 149,
+            "max_drawdown": -0.091331,
+            "total_return": 0.118533,
+            "time_underwater": 0.8333,
+            "ann_vol": 0.139609
+          }
+        },
+        "verdict": "undecided",
+        "advantage": {
+          "book_max_drawdown": -0.090679,
+          "control_max_drawdown": -0.091331,
+          "advantage": 0.000652,
+          "ci_low": -0.006247,
+          "ci_high": 0.027243,
+          "conf": 0.9,
+          "p_book_worse": 0.24,
+          "p_tied": 0.0433,
+          "excludes_zero": false,
+          "block": 21,
+          "draws": 1500,
+          "n_days": 149,
+          "note": "observed advantage +0.1 points of drawdown over 149 days; the interval [-0.6, +2.7] straddles zero and the book is worse in 24% of resamples \u2014 this sample cannot tell the two apart"
+        },
+        "note": "TFF non-facilitating (bottom quartile) [flat] [timing-shuffled] undecided: fired 15 of 149 out-of-sample days, advantage +0.1 points but the interval [-0.6, +2.7] straddles zero \u2014 open, not failed"
+      }
+    },
+    {
+      "rule": {
+        "rule": "TFF dead (bottom 5%) [flat]",
+        "n_days": 496,
+        "split_index": 347,
+        "train_fraction": 0.7,
+        "n_oos_days": 149,
+        "n_fired_total": 46,
+        "n_fired_oos": 2,
+        "in_sample": {
+          "book": {
+            "n": 347,
+            "max_drawdown": -0.189989,
+            "total_return": 0.277588,
+            "time_underwater": 0.7414,
+            "ann_vol": 0.173787
+          },
+          "control": {
+            "n": 347,
+            "max_drawdown": -0.189989,
+            "total_return": 0.254941,
+            "time_underwater": 0.8075,
+            "ann_vol": 0.177114
+          }
+        },
+        "out_of_sample": {
+          "book": {
+            "n": 149,
+            "max_drawdown": -0.09124,
+            "total_return": 0.12655,
+            "time_underwater": 0.8067,
+            "ann_vol": 0.13924
+          },
+          "control": {
+            "n": 149,
+            "max_drawdown": -0.091331,
+            "total_return": 0.118533,
+            "time_underwater": 0.8333,
+            "ann_vol": 0.139609
+          }
+        },
+        "verdict": "undecided",
+        "advantage": {
+          "book_max_drawdown": -0.09124,
+          "control_max_drawdown": -0.091331,
+          "advantage": 9.1e-05,
+          "ci_low": 0.0,
+          "ci_high": 0.009315,
+          "conf": 0.9,
+          "p_book_worse": 0.0,
+          "p_tied": 0.4467,
+          "excludes_zero": false,
+          "block": 21,
+          "draws": 1500,
+          "n_days": 149,
+          "note": "observed advantage +0.0 points of drawdown over 149 days; the interval [+0.0, +0.9] straddles zero and the book is worse in 0% of resamples \u2014 this sample cannot tell the two apart"
+        },
+        "note": "TFF dead (bottom 5%) [flat] undecided: fired 2 of 149 out-of-sample days, advantage +0.0 points but the interval [+0.0, +0.9] straddles zero \u2014 open, not failed"
+      },
+      "shuffled": {
+        "rule": "TFF dead (bottom 5%) [flat] [timing-shuffled]",
+        "n_days": 496,
+        "split_index": 347,
+        "train_fraction": 0.7,
+        "n_oos_days": 149,
+        "n_fired_total": 46,
+        "n_fired_oos": 2,
+        "in_sample": {
+          "book": {
+            "n": 347,
+            "max_drawdown": -0.154757,
+            "total_return": 0.295089,
+            "time_underwater": 0.773,
+            "ann_vol": 0.163376
+          },
+          "control": {
+            "n": 347,
+            "max_drawdown": -0.189989,
+            "total_return": 0.254941,
+            "time_underwater": 0.8075,
+            "ann_vol": 0.177114
+          }
+        },
+        "out_of_sample": {
+          "book": {
+            "n": 149,
+            "max_drawdown": -0.086678,
+            "total_return": 0.124261,
+            "time_underwater": 0.8267,
+            "ann_vol": 0.139481
+          },
+          "control": {
+            "n": 149,
+            "max_drawdown": -0.091331,
+            "total_return": 0.118533,
+            "time_underwater": 0.8333,
+            "ann_vol": 0.139609
+          }
+        },
+        "verdict": "undecided",
+        "advantage": {
+          "book_max_drawdown": -0.086678,
+          "control_max_drawdown": -0.091331,
+          "advantage": 0.004653,
+          "ci_low": 0.0,
+          "ci_high": 0.006745,
+          "conf": 0.9,
+          "p_book_worse": 0.0,
+          "p_tied": 0.25,
+          "excludes_zero": false,
+          "block": 21,
+          "draws": 1500,
+          "n_days": 149,
+          "note": "observed advantage +0.5 points of drawdown over 149 days; the interval [+0.0, +0.7] straddles zero and the book is worse in 0% of resamples \u2014 this sample cannot tell the two apart"
+        },
+        "note": "TFF dead (bottom 5%) [flat] [timing-shuffled] undecided: fired 2 of 149 out-of-sample days, advantage +0.5 points but the interval [+0.0, +0.7] straddles zero \u2014 open, not failed"
+      }
+    },
+    {
+      "rule": {
+        "rule": "TFF expansive (top decile) [flat]",
+        "n_days": 496,
+        "split_index": 347,
+        "train_fraction": 0.7,
+        "n_oos_days": 149,
+        "n_fired_total": 79,
+        "n_fired_oos": 35,
+        "in_sample": {
+          "book": {
+            "n": 347,
+            "max_drawdown": -0.088192,
+            "total_return": 0.22328,
+            "time_underwater": 0.819,
+            "ann_vol": 0.11473
+          },
+          "control": {
+            "n": 347,
+            "max_drawdown": -0.189989,
+            "total_return": 0.254941,
+            "time_underwater": 0.8075,
+            "ann_vol": 0.177114
+          }
+        },
+        "out_of_sample": {
+          "book": {
+            "n": 149,
+            "max_drawdown": -0.089293,
+            "total_return": 0.002077,
+            "time_underwater": 0.9133,
+            "ann_vol": 0.108117
+          },
+          "control": {
+            "n": 149,
+            "max_drawdown": -0.091331,
+            "total_return": 0.118533,
+            "time_underwater": 0.8333,
+            "ann_vol": 0.139609
+          }
+        },
+        "verdict": "undecided",
+        "advantage": {
+          "book_max_drawdown": -0.089293,
+          "control_max_drawdown": -0.091331,
+          "advantage": 0.002038,
+          "ci_low": -0.080892,
+          "ci_high": 0.028901,
+          "conf": 0.9,
+          "p_book_worse": 0.676,
+          "p_tied": 0.008,
+          "excludes_zero": false,
+          "block": 21,
+          "draws": 1500,
+          "n_days": 149,
+          "note": "observed advantage +0.2 points of drawdown over 149 days; the interval [-8.1, +2.9] straddles zero and the book is worse in 68% of resamples \u2014 this sample cannot tell the two apart"
+        },
+        "note": "TFF expansive (top decile) [flat] undecided: fired 35 of 149 out-of-sample days, advantage +0.2 points but the interval [-8.1, +2.9] straddles zero \u2014 open, not failed"
+      },
+      "shuffled": {
+        "rule": "TFF expansive (top decile) [flat] [timing-shuffled]",
+        "n_days": 496,
+        "split_index": 347,
+        "train_fraction": 0.7,
+        "n_oos_days": 149,
+        "n_fired_total": 79,
+        "n_fired_oos": 35,
+        "in_sample": {
+          "book": {
+            "n": 347,
+            "max_drawdown": -0.154757,
+            "total_return": 0.295089,
+            "time_underwater": 0.773,
+            "ann_vol": 0.163376
+          },
+          "control": {
+            "n": 347,
+            "max_drawdown": -0.189989,
+            "total_return": 0.254941,
+            "time_underwater": 0.8075,
+            "ann_vol": 0.177114
+          }
+        },
+        "out_of_sample": {
+          "book": {
+            "n": 149,
+            "max_drawdown": -0.091935,
+            "total_return": 0.067098,
+            "time_underwater": 0.8533,
+            "ann_vol": 0.127268
+          },
+          "control": {
+            "n": 149,
+            "max_drawdown": -0.091331,
+            "total_return": 0.118533,
+            "time_underwater": 0.8333,
+            "ann_vol": 0.139609
+          }
+        },
+        "verdict": "undecided",
+        "advantage": {
+          "book_max_drawdown": -0.091935,
+          "control_max_drawdown": -0.091331,
+          "advantage": -0.000604,
+          "ci_low": -0.03909,
+          "ci_high": 0.01258,
+          "conf": 0.9,
+          "p_book_worse": 0.7353,
+          "p_tied": 0.0207,
+          "excludes_zero": false,
+          "block": 21,
+          "draws": 1500,
+          "n_days": 149,
+          "note": "observed advantage -0.1 points of drawdown over 149 days; the interval [-3.9, +1.3] straddles zero and the book is worse in 74% of resamples \u2014 this sample cannot tell the two apart"
+        },
+        "note": "TFF expansive (top decile) [flat] [timing-shuffled] undecided: fired 35 of 149 out-of-sample days, advantage -0.1 points but the interval [-3.9, +1.3] straddles zero \u2014 open, not failed"
+      }
+    }
+  ]
+}
