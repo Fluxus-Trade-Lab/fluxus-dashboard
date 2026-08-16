@@ -40,6 +40,7 @@
  * The stretch's own total is not lost — it is in every dot's tooltip.
  */
 import { SEGMENTS, QUARTER_SEGMENTS, ratePerSession } from './segments'
+import { slotDash } from './useThemeCompare'
 import { barStyle } from './ThemeBars'
 
 /**
@@ -241,6 +242,7 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
                   <path key={j}
                         d={monotonePath(r.map((pt) => pt.split(',').map(Number)))}
                         fill="none" stroke={c.colour} strokeWidth="2"
+                        strokeDasharray={slotDash(c.colour) ?? undefined}
                         vectorEffect="non-scaling-stroke" strokeLinecap="round" />
                 ))}
                 {SEG.map((s, i) => {

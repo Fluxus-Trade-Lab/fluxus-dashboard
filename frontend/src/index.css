@@ -113,11 +113,22 @@
      side is this", so they stay off the pair's blue and red — but they are
      used as INK (the chip label, the line's end label), and the first values
      I picked were chosen as identity fills and never measured as text: 2.96,
-     3.15 and 3.64 on the page ground. Measured now, on #e2e0d6: 5.9 / 5.7 /
-     6.5, and 35 / 36 / 32 L* apart enough to tell from each other. */
-  --color-slot-1: #3f5560;
-  --color-slot-2: #63513f;
-  --color-slot-3: #574560;
+     3.15 and 3.64 on the page ground.
+
+     Fixed that by darkening all three — and thereby made a second mistake,
+     which the design review caught: measured against each OTHER they were
+     1.04, 1.10 and 1.15 to one, 1.0 to 3.7 L* apart. Three lines separated by
+     hue at one lightness are one grey line in a screenshot, and this page is
+     read in screenshots. So the three slots are a LIGHTNESS ladder now —
+     14, 27 and 40 L*, 12.7 to 26 apart — and the trajectory lines carry a
+     dash pattern as well, because colour alone should not have to hold three
+     identities apart. The vote legend on the dashboard settled this same
+     question the same way years of hatching ago.
+
+     On #e2e0d6: 11.8 / 7.9 / 4.9. */
+  --color-slot-1: #1c252b;
+  --color-slot-2: #32442e;
+  --color-slot-3: #6f5b47;
   /* Same split as accent-solid, for the destructive button. The pair's red
      cannot move — its separation from the blue is load-bearing — so the fill
      that has to carry white text is its own token. White on it: 4.94. */
@@ -245,10 +256,11 @@ html.dark {
   --color-accent: #6a97bd;
   --color-accent-light: var(--color-bg);
   --color-accent-solid: #47749a;  /* white on it: 4.96 */
-  /* Same three roles, lifted for the dark card — 7.1 / 7.2 / 6.5 on #282421. */
-  --color-slot-1: #9fb3bf;
-  --color-slot-2: #bfae9f;
-  --color-slot-3: #b3a3bf;
+  /* The same ladder inverted — 92 / 76 / 62 L*, 13.9 to 29.9 apart.
+     On #282421: 12.6 / 8.1 / 5.2. */
+  --color-slot-1: #e3e9ec;
+  --color-slot-2: #a8c3a1;
+  --color-slot-3: #ae9175;
   --color-loss-solid: #cc3c2f;
 
   --color-profit: #8bbcec;

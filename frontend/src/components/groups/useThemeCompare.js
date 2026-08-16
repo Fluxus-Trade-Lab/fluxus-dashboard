@@ -24,6 +24,19 @@ import { useCallback, useEffect, useState } from 'react'
 export const SLOT_COLOURS = [
   'var(--color-slot-1)', 'var(--color-slot-2)', 'var(--color-slot-3)',
 ]
+
+/**
+ * The second channel. Three lines told apart by colour alone are one line in
+ * a greyscale screenshot, and this page travels as screenshots — so the slot
+ * also owns a stroke pattern, and the pattern is what survives the print.
+ * Indexed the same way as the colours, so slot and dash never disagree.
+ */
+export const SLOT_DASHES = [null, '7 3', '2 3']
+
+export function slotDash(colour) {
+  const i = SLOT_COLOURS.indexOf(colour)
+  return i >= 0 ? SLOT_DASHES[i] : null
+}
 export const MAX_COMPARE = SLOT_COLOURS.length
 
 const KEY = 'themes-compare'
