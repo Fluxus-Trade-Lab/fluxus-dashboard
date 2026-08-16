@@ -23,6 +23,19 @@ import { useState } from 'react'
  * refuses a fourth pick before the click. Identity colour goes on the NAME
  * and a left rule only — the bar keeps the state grammar, because "which line
  * is this" must never overwrite "what state is this in".
+ *
+ * 2026-08-16 — MIRRORED. The zero has been centred since this was written, but
+ * the name sat in a fixed left column, which pushed the axis out to about
+ * two-thirds of the row: geometrically a diverging chart, visually a left-
+ * aligned bar chart with a line through it. The name now sits in the half the
+ * bar does not use — a theme that beats SPY grows right and is named on the
+ * left, one that trails grows left and is named on the right — so the two
+ * sides read as two sides, and the centre is where the eye already is.
+ *
+ * The fill still carries STATE, not direction. In a diverging bar the side
+ * already says the sign; coloring by sign would be the same fact twice, which
+ * is the rule this page applied when it took the hue off the ticker cards.
+ * State is the one thing position cannot say.
  */
 
 /* v3 charter (2026-08-15): the four states are data states, not poles and not
@@ -122,7 +135,7 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
                  cursor: blocked ? 'not-allowed' : 'pointer',
                  borderLeft: colour ? `3px solid ${colour}` : '3px solid transparent',
                }}
-               className={`group grid grid-cols-[24px_minmax(126px,206px)_1fr_66px_18px]
+               className={`group grid grid-cols-[24px_1fr_18px]
                           gap-2 items-center py-[3px] pl-1 transition-opacity
                           outline-none focus-visible:ring-1
                           focus-visible:ring-[var(--color-text-muted)]
@@ -131,28 +144,60 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
             <span className={`text-[10px] font-mono tabular-nums text-right
                              text-[var(--color-text-muted)]
                              ${ghost ? 'opacity-0 group-hover:opacity-100' : ''}`}>{i + 1}</span>
-            {/* the denominator moved off the surface into the tooltip — one
-                hover away, same as a ghost row's numbers, not deleted */}
-            <span className="text-[12.5px] truncate"
-                  style={colour ? { color: colour, fontWeight: 600 } : undefined}
-                  title={`${r.members} member${r.members === 1 ? '' : 's'}${r.tickers?.length ? ' · ' + r.tickers.join(' · ') : ''}`}>
+
+            {/* One grid cell holding two stacked things, not two cells. As
+                siblings the mobile name claimed a column of its own and pushed
+                the whole chart into the 18px affordance column. */}
+            <span className="block min-w-0">
+            {/* Below sm the name rides above its bar: mirroring needs twice
+                the width, because a name and a bar cannot share half a row —
+                at 390px the names truncated to 71px, which is not a ranking. */}
+            <span className="sm:hidden block text-[12px] truncate pb-[1px]"
+                  style={colour ? { color: colour, fontWeight: 600 } : undefined}>
               {r.group}
+              <span className="ml-2 font-mono tabular-nums text-[11px]
+                               text-[var(--color-text-secondary)]">
+                {v > 0 ? '+' : ''}{(v * 100).toFixed(1)}%
+              </span>
             </span>
-            <span className="relative block h-[12px]">
+
+            {/* One field, split at the middle. Everything inside is positioned
+                against that centre, so the axis is the row's spine rather than
+                a line that happens to fall two-thirds along it. The gutters
+                hold the value labels at a bar's far end. */}
+            <span className="relative block h-[15px] mx-0 sm:mx-[68px]">
               {/* the rule overshoots the row so the segments join into one
                   continuous zero — an axis with holes is not an axis */}
               <i className="absolute top-[-3px] bottom-[-3px] left-1/2 w-px
                             bg-[var(--color-text-muted)]" />
-              <i className="absolute top-0 bottom-0" style={{
+
+              <i className="absolute top-[1.5px] bottom-[1.5px] rounded-[2px]" style={{
                 ...barStyle(r.state),
                 left: pos ? '50%' : `${50 - frac * 50}%`,
                 width: `${frac * 50}%`,
               }} />
+
+              {/* the name takes the half the bar left empty */}
+              <span className={`hidden sm:block absolute top-1/2 -translate-y-1/2 text-[12.5px] truncate
+                                ${pos ? 'right-[calc(50%+9px)] text-right' : 'left-[calc(50%+9px)] text-left'}`}
+                    style={{ maxWidth: 'calc(50% - 12px)',
+                             ...(colour ? { color: colour, fontWeight: 600 } : {}) }}
+                    title={`${r.members} member${r.members === 1 ? '' : 's'}${r.tickers?.length ? ' · ' + r.tickers.join(' · ') : ''}`}>
+                {r.group}
+              </span>
+
+              {/* the number rides the bar's far end, outside it */}
+              <span className={`hidden sm:block absolute top-1/2 -translate-y-1/2 text-[12px] font-mono
+                                tabular-nums whitespace-nowrap
+                                ${ghost ? 'opacity-0 group-hover:opacity-100' : ''}`}
+                    style={pos
+                      ? { left: `calc(${50 + frac * 50}% + 8px)` }
+                      : { right: `calc(${50 + frac * 50}% + 8px)` }}>
+                {v > 0 ? '+' : ''}{(v * 100).toFixed(1)}%
+              </span>
             </span>
-            <span className={`text-[12.5px] font-mono tabular-nums text-right
-                              ${ghost ? 'opacity-0 group-hover:opacity-100' : ''}`}>
-              {v > 0 ? '+' : ''}{(v * 100).toFixed(1)}%
             </span>
+
             <span aria-hidden
                   className={`text-[12.5px] text-center text-[var(--color-text-muted)]
                               ${blocked ? 'invisible'

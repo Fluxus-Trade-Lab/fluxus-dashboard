@@ -283,9 +283,13 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
                          pointer-events-none" style={{ left: `${LEFT + 0.5}%`, bottom: 2 }}>
           −{(span * 100).toFixed(2)}%/session
         </span>
+        {/* Hidden below sm: at 390px these ran 51px past the right edge and
+            took the whole page's width with them. The names are not lost —
+            the chip bar above carries all three with the same colours, which
+            is where a phone reader looks anyway. */}
         {ends.map(({ c, y, v }) => (
           <span key={c.name}
-                className="absolute text-[11px] font-mono whitespace-nowrap
+                className="hidden sm:block absolute text-[11px] font-mono whitespace-nowrap
                            pointer-events-none -translate-y-1/2"
                 style={{ left: `${100 - RIGHT + 1.2}%`, top: y, color: c.colour }}>
             {c.name.length > 18 ? `${c.name.slice(0, 17)}…` : c.name}
