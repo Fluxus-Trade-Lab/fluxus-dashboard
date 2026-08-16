@@ -94,7 +94,13 @@ export default function MethodPage({ onNavigate }) {
       <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
         <div className="public-section public-section-prose py-16">
           <SelectArt />
-          <p className="public-label" style={{ color: 'var(--color-poster-blue)' }}>Pillar 1</p>
+          {/* The eyebrow is an enumeration — Select, Read, Size — and an
+              enumeration has no sides. Colouring 1 and 3 blue against 2 red
+              claimed a grouping that is not there, and did it in the poster's
+              palette, which is measured for large graphics: as 14px ink it
+              read 3.79. The poster colours stay where they belong, in the
+              illustration above each of these. */}
+          <p className="public-label">Pillar 1</p>
           <h2 className="public-h2 mt-2">Select</h2>
           <p className="public-body mt-4 text-[var(--color-text-secondary)]">
             Strong stocks in strong themes. Not hot tips — systematic screening.
@@ -118,7 +124,7 @@ export default function MethodPage({ onNavigate }) {
       <section className="border-t border-[var(--color-border)]">
         <div className="public-section public-section-prose py-16">
           <ReadArt />
-          <p className="public-label" style={{ color: 'var(--color-poster-red)' }}>Pillar 2</p>
+          <p className="public-label">Pillar 2</p>
           <h2 className="public-h2 mt-2">Read</h2>
           <p className="public-body mt-4 text-[var(--color-text-secondary)]">
             Interpret risk in real time. Not predict — read.
@@ -142,7 +148,7 @@ export default function MethodPage({ onNavigate }) {
       <section className="border-t border-[var(--color-border)] bg-[var(--color-surface)]">
         <div className="public-section public-section-prose py-16">
           <SizeArt />
-          <p className="public-label" style={{ color: 'var(--color-poster-blue)' }}>Pillar 3</p>
+          <p className="public-label">Pillar 3</p>
           <h2 className="public-h2 mt-2">Size</h2>
           <p className="public-body mt-4 text-[var(--color-text-secondary)]">
             Position sizing is the only edge that doesn't decay.
