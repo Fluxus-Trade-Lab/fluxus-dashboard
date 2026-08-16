@@ -235,7 +235,7 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
                   width={(Math.max(...shade) - Math.min(...shade) + 1)
                          * (100 - LEFT - RIGHT) / (n - 1) * 10 * 0.999}
                   height={H - 8}
-                  /* same shade, same reason — see DistributionStrip */
+                  /* ink at low alpha so the step reads the same in both themes */
                   fill="var(--color-text)" opacity="0.07" />
           )}
           <line x1={LEFT * 10} x2={(100 - RIGHT) * 10 + 30} y1={ys(0)} y2={ys(0)}
