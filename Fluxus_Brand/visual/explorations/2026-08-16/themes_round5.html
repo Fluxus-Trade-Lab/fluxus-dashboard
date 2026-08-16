@@ -1,0 +1,151 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Themes 第五轮 · 回到原有形状</title><style>
+:root{--bg:#e2e0d6;--surface:#f2f0e9;--ink:#1c1917;--sec:#4b453e;--mut:#655e55;
+ --line:#cbc6b8;--took:#194371;--refused:#b5342c;--dark:#1a1715}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',Inter,system-ui,sans-serif;font-size:12.5px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding:26px 22px 90px}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:var(--mut);font-size:11px;margin-bottom:24px}
+.block{margin:44px 0 0;padding-top:22px;border-top:2px solid var(--ink)}
+.block>h2{font-size:19px;margin:0 0 2px}
+.block>.why{color:var(--sec);font-size:12.5px;margin:0 0 18px;max-width:78ch}
+.opt{margin:22px 0 0}
+.opt-h{display:flex;align-items:baseline;gap:10px;margin:0 0 8px}
+.opt-h b{font-size:10px;text-transform:uppercase;letter-spacing:.24em;color:var(--mut);font-weight:500}
+.opt-h span{font-size:11.5px;color:var(--sec)}
+.card{background:var(--surface);border-radius:24px;padding:18px 20px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.note{font-size:11px;color:var(--mut);margin-top:8px;max-width:78ch}
+.replay{font:inherit;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mut);
+ background:var(--bg);border:0;border-radius:999px;padding:5px 12px;cursor:pointer;margin-top:10px}
+.replay:hover{color:var(--ink)}
+.warn{background:color-mix(in srgb,var(--refused) 8%,transparent);border-radius:16px;padding:12px 16px;margin:14px 0;font-size:12px}
+table{border-collapse:collapse;width:100%;font-size:11.5px}
+th{text-align:center;padding:6px 8px;border-bottom:1.5px solid var(--ink);font-weight:600;white-space:nowrap}
+td{padding:5px 8px;border-bottom:1px solid var(--line)}
+</style></head><body><div class="wrap">
+<h1>Themes 第五轮 · 回到原有形状</h1>
+<div class="sub mono">DATA 2026-08-14 · 保留原有的分段形状与渐变条 · 窗口收到 3 个月 · 纵轴二选一：原始分段值 vs 每日速度</div>
+<div id="app"></div></div>
+<script>const D={"date": "2026-08-14", "segLabels": ["1\u20133m", "1w\u20131m", "this week"], "segDays": [61, 23, 7], "rows": [{"group": "High Octane", "state": "Weakening", "members": 61, "excess_3m": 0.598214, "rs_accel": -0.17272, "seg": [0.346847, 0.129479, 0.037703], "rate": [0.005686, 0.00563, 0.005386]}, {"group": "52-Week High Leaders", "state": "Weakening", "members": 88, "excess_3m": 0.470125, "rs_accel": -0.184594, "seg": [0.302354, 0.074652, 0.038387], "rate": [0.004957, 0.003246, 0.005484]}, {"group": "Growth Factor", "state": "Weakening", "members": 286, "excess_3m": 0.397651, "rs_accel": -0.148702, "seg": [0.253774, 0.081952, 0.020294], "rate": [0.00416, 0.003563, 0.002899]}, {"group": "Cybersecurity", "state": "Weakening", "members": 15, "excess_3m": 0.393675, "rs_accel": -0.341634, "seg": [0.356927, 0.018322, -0.002936], "rate": [0.005851, 0.000797, -0.000419]}, {"group": "Software", "state": "Weakening", "members": 186, "excess_3m": 0.21595, "rs_accel": -0.065186, "seg": [0.132845, 0.060164, 0.006578], "rate": [0.002178, 0.002616, 0.00094]}, {"group": "Memory & Storage", "state": "Leading", "members": 5, "excess_3m": 0.17161, "rs_accel": 0.164041, "seg": [0.002807, 0.003555, 0.156461], "rate": [4.6e-05, 0.000155, 0.022352]}, {"group": "Drones", "state": "Leading", "members": 5, "excess_3m": 0.167325, "rs_accel": 0.518042, "seg": [-0.146415, 0.328717, 0.030323], "rate": [-0.0024, 0.014292, 0.004332]}, {"group": "Banks - Money Center", "state": "Weakening", "members": 19, "excess_3m": 0.160826, "rs_accel": -0.157034, "seg": [0.155589, -0.018883, 0.017157], "rate": [0.002551, -0.000821, 0.002451]}, {"group": "Biotech", "state": "Weakening", "members": 1, "excess_3m": 0.152644, "rs_accel": -0.197389, "seg": [0.173345, -0.015572, -0.008205], "rate": [0.002842, -0.000677, -0.001172]}, {"group": "Medical Devices", "state": "Weakening", "members": 60, "excess_3m": 0.146346, "rs_accel": -0.017096, "seg": [0.077418, 0.051543, 0.007841], "rate": [0.001269, 0.002241, 0.00112]}, {"group": "Speculative Tech", "state": "Weakening", "members": 14, "excess_3m": 0.132986, "rs_accel": -0.031225, "seg": [0.078327, 0.051918, -0.004614], "rate": [0.001284, 0.002257, -0.000659]}, {"group": "Regional Banks", "state": "Weakening", "members": 155, "excess_3m": 0.12807, "rs_accel": -0.170574, "seg": [0.147811, -0.040443, 0.017861], "rate": [0.002423, -0.001758, 0.002552]}, {"group": "Taiwan", "state": "Weakening", "members": 1, "excess_3m": 0.119992, "rs_accel": -0.002508, "seg": [0.058115, 0.009819, 0.043575], "rate": [0.000953, 0.000427, 0.006225]}, {"group": "Household & Personal Products", "state": "Weakening", "members": 14, "excess_3m": 0.117275, "rs_accel": -0.161821, "seg": [0.138204, -0.009189, -0.013959], "rate": [0.002266, -0.0004, -0.001994]}, {"group": "Healthcare", "state": "Weakening", "members": 1, "excess_3m": 0.105575, "rs_accel": -0.112412, "seg": [0.106932, 0.005615, -0.010634], "rate": [0.001753, 0.000244, -0.001519]}, {"group": "Genomics", "state": "Weakening", "members": 41, "excess_3m": 0.10336, "rs_accel": -0.082677, "seg": [0.090612, 0.034441, -0.024806], "rate": [0.001485, 0.001497, -0.003544]}, {"group": "Insurance", "state": "Weakening", "members": 85, "excess_3m": 0.096184, "rs_accel": -0.154675, "seg": [0.124652, -0.026146, -0.003714], "rate": [0.002043, -0.001137, -0.000531]}, {"group": "Homebuilders", "state": "Weakening", "members": 34, "excess_3m": 0.095555, "rs_accel": -0.143379, "seg": [0.118414, -0.026787, 0.001911], "rate": [0.001941, -0.001165, 0.000273]}, {"group": "Consumer Retail", "state": "Weakening", "members": 61, "excess_3m": 0.091644, "rs_accel": -0.123022, "seg": [0.105951, 0.009565, -0.025417], "rate": [0.001737, 0.000416, -0.003631]}, {"group": "Travel & Leisure", "state": "Weakening", "members": 69, "excess_3m": 0.087091, "rs_accel": -0.147618, "seg": [0.116691, -0.03925, 0.008485], "rate": [0.001913, -0.001707, 0.001212]}, {"group": "Fintech", "state": "Weakening", "members": 37, "excess_3m": 0.08668, "rs_accel": -0.077283, "seg": [0.080078, -0.019279, 0.021706], "rate": [0.001313, -0.000838, 0.003101]}, {"group": "Mega Caps", "state": "Weakening", "members": 77, "excess_3m": 0.066967, "rs_accel": -0.040778, "seg": [0.052358, 0.006858, 0.004482], "rate": [0.000858, 0.000298, 0.00064]}, {"group": "Semiconductors Large Caps", "state": "Weakening", "members": 10, "excess_3m": 0.056971, "rs_accel": -0.027075, "seg": [0.040781, -0.009565, 0.022624], "rate": [0.000669, -0.000416, 0.003232]}, {"group": "Equal-Weighted S&P 500", "state": "Weakening", "members": 1, "excess_3m": 0.056518, "rs_accel": -0.054938, "seg": [0.054528, -0.007907, 0.007297], "rate": [0.000894, -0.000344, 0.001042]}, {"group": "Defense", "state": "Leading", "members": 55, "excess_3m": 0.051959, "rs_accel": 0.103301, "seg": [-0.024484, 0.062023, 0.014998], "rate": [-0.000401, 0.002697, 0.002143]}, {"group": "Small Caps", "state": "Weakening", "members": 1583, "excess_3m": 0.04949, "rs_accel": -0.074773, "seg": [0.06124, -0.022748, 0.009154], "rate": [0.001004, -0.000989, 0.001308]}, {"group": "Value Factor", "state": "Leading", "members": 196, "excess_3m": 0.044148, "rs_accel": 0.023479, "seg": [0.009817, 0.003461, 0.028578], "rate": [0.000161, 0.00015, 0.004083]}, {"group": "Financials", "state": "Weakening", "members": 140, "excess_3m": 0.043828, "rs_accel": -0.009727, "seg": [0.025925, 0.002559, 0.013072], "rate": [0.000425, 0.000111, 0.001867]}, {"group": "Europe", "state": "Weakening", "members": 1, "excess_3m": 0.037428, "rs_accel": -0.041425, "seg": [0.038633, -0.000203, -0.002489], "rate": [0.000633, -9e-06, -0.000356]}, {"group": "Robotics & Automation", "state": "Weakening", "members": 59, "excess_3m": 0.035837, "rs_accel": -0.008388, "seg": [0.021443, 0.014028, -0.00098], "rate": [0.000352, 0.00061, -0.00014]}, {"group": "Japan", "state": "Leading", "members": 1, "excess_3m": 0.031269, "rs_accel": 0.049983, "seg": [-0.009134, 0.021432, 0.018206], "rate": [-0.00015, 0.000932, 0.002601]}, {"group": "IT Services", "state": "Leading", "members": 42, "excess_3m": 0.027421, "rs_accel": 0.074728, "seg": [-0.022768, 0.036389, 0.014322], "rate": [-0.000373, 0.001582, 0.002046]}, {"group": "Broad AI Theme", "state": "Leading", "members": 139, "excess_3m": 0.026732, "rs_accel": 0.015013, "seg": [0.005593, 0.000246, 0.019572], "rate": [9.2e-05, 1.1e-05, 0.002796]}, {"group": "High Beta Factor", "state": "Leading", "members": 1057, "excess_3m": 0.020918, "rs_accel": 0.007877, "seg": [0.006279, 0.003634, 0.010067], "rate": [0.000103, 0.000158, 0.001438]}, {"group": "Real Estate", "state": "Weakening", "members": 128, "excess_3m": 0.019382, "rs_accel": -0.190998, "seg": [0.107624, -0.090495, 0.007908], "rate": [0.001764, -0.003935, 0.00113]}, {"group": "Copper Miners", "state": "Leading", "members": 7, "excess_3m": 0.004799, "rs_accel": 0.336363, "seg": [-0.149264, 0.2563, -0.05423], "rate": [-0.002447, 0.011143, -0.007747]}, {"group": "Coal", "state": "Leading", "members": 6, "excess_3m": 0.004374, "rs_accel": 0.188577, "seg": [-0.086191, 0.076097, 0.023262], "rate": [-0.001413, 0.003309, 0.003323]}, {"group": "Industrials", "state": "Weakening", "members": 133, "excess_3m": 0.003468, "rs_accel": -0.033232, "seg": [0.018145, -0.013454, -0.001534], "rate": [0.000297, -0.000585, -0.000219]}, {"group": "Beverages", "state": "Weakening", "members": 11, "excess_3m": 0.002388, "rs_accel": -0.056742, "seg": [0.029425, -0.042013, 0.014904], "rate": [0.000482, -0.001827, 0.002129]}, {"group": "Transportation & Logistics", "state": "Weakening", "members": 46, "excess_3m": 0.002267, "rs_accel": -0.140345, "seg": [0.072433, -0.089797, 0.023436], "rate": [0.001187, -0.003904, 0.003348]}, {"group": "Electronic Components", "state": "Leading", "members": 25, "excess_3m": 2.5e-05, "rs_accel": 0.056481, "seg": [-0.027341, -0.019638, 0.047886], "rate": [-0.000448, -0.000854, 0.006841]}, {"group": "AI - Datacenters", "state": "Improving", "members": 16, "excess_3m": -0.001656, "rs_accel": 0.154984, "seg": [-0.074009, 0.016723, 0.060735], "rate": [-0.001213, 0.000727, 0.008676]}, {"group": "Steel", "state": "Improving", "members": 15, "excess_3m": -0.004616, "rs_accel": 0.136229, "seg": [-0.066899, 0.094274, -0.022348], "rate": [-0.001097, 0.004099, -0.003193]}, {"group": "Grid & Electrification", "state": "Improving", "members": 28, "excess_3m": -0.013608, "rs_accel": 0.040941, "seg": [-0.026552, 0.001142, 0.012719], "rate": [-0.000435, 5e-05, 0.001817]}, {"group": "IPOs", "state": "Improving", "members": 56, "excess_3m": -0.014469, "rs_accel": 0.13725, "seg": [-0.072172, 0.038469, 0.02452], "rate": [-0.001183, 0.001673, 0.003503]}, {"group": "India", "state": "Lagging", "members": 1, "excess_3m": -0.015693, "rs_accel": -0.037683, "seg": [0.011006, -0.014863, -0.011462], "rate": [0.00018, -0.000646, -0.001637]}, {"group": "Emerging Markets", "state": "Improving", "members": 1, "excess_3m": -0.024004, "rs_accel": 0.038456, "seg": [-0.030464, -0.010307, 0.017814], "rate": [-0.000499, -0.000448, 0.002545]}, {"group": "AI Power & Infrastructure", "state": "Lagging", "members": 44, "excess_3m": -0.02465, "rs_accel": -0.126111, "seg": [0.051807, -0.092196, 0.019294], "rate": [0.000849, -0.004009, 0.002756]}, {"group": "Gold Miners", "state": "Improving", "members": 31, "excess_3m": -0.026539, "rs_accel": 0.455171, "seg": [-0.211384, 0.24277, -1.8e-05], "rate": [-0.003465, 0.010555, -3e-06]}, {"group": "Reshoring / Industrial Renaissance", "state": "Improving", "members": 46, "excess_3m": -0.030075, "rs_accel": 0.049533, "seg": [-0.038777, 0.008078, 0.002522], "rate": [-0.000636, 0.000351, 0.00036]}, {"group": "Utilities", "state": "Lagging", "members": 81, "excess_3m": -0.0312, "rs_accel": -0.104034, "seg": [0.037107, -0.085502, 0.019843], "rate": [0.000608, -0.003717, 0.002835]}, {"group": "Silver Miners", "state": "Improving", "members": 6, "excess_3m": -0.037268, "rs_accel": 0.584529, "seg": [-0.264026, 0.32019, -0.000779], "rate": [-0.004328, 0.013921, -0.000111]}, {"group": "Oil & Gas", "state": "Improving", "members": 152, "excess_3m": -0.045604, "rs_accel": 0.080556, "seg": [-0.061206, -0.000308, 0.018909], "rate": [-0.001003, -1.3e-05, 0.002701]}, {"group": "Korea", "state": "Improving", "members": 1, "excess_3m": -0.048072, "rs_accel": 0.160765, "seg": [-0.099409, -0.036443, 0.097606], "rate": [-0.00163, -0.001584, 0.013944]}, {"group": "Energy", "state": "Improving", "members": 99, "excess_3m": -0.056733, "rs_accel": 0.091046, "seg": [-0.071681, 0.007239, 0.011549], "rate": [-0.001175, 0.000315, 0.00165]}, {"group": "Chemicals & Materials", "state": "Improving", "members": 53, "excess_3m": -0.057741, "rs_accel": 0.042308, "seg": [-0.049072, -0.011417, 0.004571], "rate": [-0.000804, -0.000496, 0.000653]}, {"group": "Bonds - Long Duration", "state": "Lagging", "members": 1, "excess_3m": -0.060882, "rs_accel": -0.079731, "seg": [0.009835, -0.065206, -0.004526], "rate": [0.000161, -0.002835, -0.000647]}, {"group": "Agribusiness", "state": "Lagging", "members": 26, "excess_3m": -0.069068, "rs_accel": -0.059771, "seg": [-0.00443, -0.059014, -0.00503], "rate": [-7.3e-05, -0.002566, -0.000719]}, {"group": "Quantum Computing", "state": "Improving", "members": 6, "excess_3m": -0.080585, "rs_accel": 0.423744, "seg": [-0.225607, 0.157534, 0.033342], "rate": [-0.003698, 0.006849, 0.004763]}, {"group": "Semiconductors Broad", "state": "Improving", "members": 75, "excess_3m": -0.083653, "rs_accel": 0.082702, "seg": [-0.081319, -0.040202, 0.041765], "rate": [-0.001333, -0.001748, 0.005966]}, {"group": "Gold", "state": "Improving", "members": 1, "excess_3m": -0.090879, "rs_accel": 0.170601, "seg": [-0.125301, 0.05263, -0.006915], "rate": [-0.002054, 0.002288, -0.000988]}, {"group": "Tech Mega Caps", "state": "Lagging", "members": 9, "excess_3m": -0.091794, "rs_accel": -0.002425, "seg": [-0.044549, -0.021056, -0.025347], "rate": [-0.00073, -0.000915, -0.003621]}, {"group": "China Tech", "state": "Improving", "members": 1, "excess_3m": -0.09417, "rs_accel": 0.019438, "seg": [-0.056443, 0.046151, -0.076741], "rate": [-0.000925, 0.002007, -0.010963]}, {"group": "Optics & Networking Equipment", "state": "Improving", "members": 19, "excess_3m": -0.098897, "rs_accel": 0.296255, "seg": [-0.183612, 0.084422, 0.024776], "rate": [-0.00301, 0.003671, 0.003539]}, {"group": "Brazil", "state": "Lagging", "members": 1, "excess_3m": -0.10756, "rs_accel": -0.054856, "seg": [-0.026509, -0.041147, -0.040087], "rate": [-0.000435, -0.001789, -0.005727]}, {"group": "IBD 50", "state": "Improving", "members": 1, "excess_3m": -0.122891, "rs_accel": 0.003705, "seg": [-0.063542, -0.084045, 0.025699], "rate": [-0.001042, -0.003654, 0.003671]}, {"group": "Uranium & Nuclear Energy", "state": "Improving", "members": 8, "excess_3m": -0.136241, "rs_accel": 0.390441, "seg": [-0.240577, 0.153209, -0.003354], "rate": [-0.003944, 0.006661, -0.000479]}, {"group": "Tobacco", "state": "Lagging", "members": 6, "excess_3m": -0.147751, "rs_accel": -0.085457, "seg": [-0.031827, -0.10221, -0.015606], "rate": [-0.000522, -0.004444, -0.002229]}, {"group": "Silver", "state": "Improving", "members": 1, "excess_3m": -0.205947, "rs_accel": 0.379819, "seg": [-0.272649, 0.129937, -0.019936], "rate": [-0.00447, 0.005649, -0.002848]}, {"group": "Clean Energy", "state": "Improving", "members": 20, "excess_3m": -0.227356, "rs_accel": 0.135231, "seg": [-0.181246, -0.072959, 0.028185], "rate": [-0.002971, -0.003172, 0.004026]}, {"group": "Crypto Equities", "state": "Improving", "members": 14, "excess_3m": -0.232114, "rs_accel": 0.091757, "seg": [-0.16391, -0.091882, 0.021224], "rate": [-0.002687, -0.003995, 0.003032]}, {"group": "Rare Earth Metals", "state": "Improving", "members": 6, "excess_3m": -0.232885, "rs_accel": 0.484364, "seg": [-0.326222, 0.111871, 0.039753], "rate": [-0.005348, 0.004864, 0.005679]}, {"group": "Solar", "state": "Improving", "members": 9, "excess_3m": -0.234986, "rs_accel": 0.116744, "seg": [-0.177018, -0.045124, -0.015035], "rate": [-0.002902, -0.001962, -0.002148]}, {"group": "Bitcoin", "state": "Improving", "members": 1, "excess_3m": -0.258034, "rs_accel": 0.132871, "seg": [-0.197143, -0.043313, -0.020843], "rate": [-0.003232, -0.001883, -0.002978]}, {"group": "Lithium & Battery Tech", "state": "Improving", "members": 9, "excess_3m": -0.29627, "rs_accel": 0.341714, "seg": [-0.306977, -0.001054, 0.034453], "rate": [-0.005032, -4.6e-05, 0.004922]}, {"group": "Space", "state": "Improving", "members": 6, "excess_3m": -0.332432, "rs_accel": 0.724682, "seg": [-0.458423, 0.205988, 0.047664], "rate": [-0.007515, 0.008956, 0.006809]}]};</script>
+<script>
+const R=D.rows, LAB=D.segLabels, DAYS=D.segDays;
+const SORTED=[...R].sort((a,b)=>b.excess_3m-a.excess_3m);
+const INK='var(--ink)',SEC='var(--sec)',MUT='var(--mut)',LINE='var(--line)',TOOK='var(--took)',REF='var(--refused)';
+const pol=v=>v>0?TOOK:REF;
+const fmtPct=(v,d=1)=>(v>0?'+':'')+(v*100).toFixed(d)+'%';
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const PICKS=['High Octane','Drones','Cybersecurity','Silver'].map(n=>R.find(r=>r.group===n)).filter(Boolean);
+const el=s=>{const d=document.createElement('div');d.innerHTML=s.trim();return d.firstChild};
+const app=document.getElementById('app');let UID=0;
+function block(t,w,opts,extra){const b=el('<section class="block"></section>');
+ b.appendChild(el('<h2>'+t+'</h2>'));b.appendChild(el('<p class="why">'+w+'</p>'));
+ if(extra)b.insertAdjacentHTML('beforeend',extra);
+ opts.forEach(([tag,note,html,foot])=>{const o=el('<div class="opt"></div>');
+  o.appendChild(el('<div class="opt-h"><b>'+tag+'</b><span>'+note+'</span></div>'));
+  const c=el('<div class="card"></div>');c.innerHTML=html;o.appendChild(c);
+  if(foot)o.insertAdjacentHTML('beforeend','<p class="note">'+foot+'</p>');b.appendChild(o);});
+ app.appendChild(b);}
+function replayable(h,l='重播'){const id='rp'+(++UID);
+ return `<div id="${id}">${h}</div><button class="replay" onclick="(()=>{const n=document.getElementById('${id}');n.innerHTML=n.innerHTML})()">▶ ${l}</button>`;}
+/* Fritsch–Carlson 单调三次插值：曲线永远不越过相邻两个测点的范围，
+   所以它和折线一样诚实，只是好看。这是线上那张图用的同一套。 */
+function monotone(pts){
+  const n=pts.length; if(n<2)return '';
+  const dx=[],dy=[],m=[];
+  for(let i=0;i<n-1;i++){dx.push(pts[i+1][0]-pts[i][0]);dy.push(pts[i+1][1]-pts[i][1]);m.push(dy[i]/dx[i]);}
+  const t=[m[0]];
+  for(let i=1;i<n-1;i++) t.push(m[i-1]*m[i]<=0?0:(m[i-1]+m[i])/2);
+  t.push(m[n-2]);
+  for(let i=0;i<n-1;i++){if(m[i]===0){t[i]=0;t[i+1]=0;continue;}
+    const a=t[i]/m[i],b=t[i+1]/m[i],h=Math.hypot(a,b);
+    if(h>3){t[i]=3*a/h*m[i];t[i+1]=3*b/h*m[i];}}
+  let d=`M${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)}`;
+  for(let i=0;i<n-1;i++){const h=dx[i];
+    d+=` C${(pts[i][0]+h/3).toFixed(1)},${(pts[i][1]+t[i]*h/3).toFixed(1)}`
+     + ` ${(pts[i+1][0]-h/3).toFixed(1)},${(pts[i+1][1]-t[i+1]*h/3).toFixed(1)}`
+     + ` ${pts[i+1][0].toFixed(1)},${pts[i+1][1].toFixed(1)}`;}
+  return d;}
+/* 渐变条：原样保留线上那条——四段（现三段）连成一条连续色带，
+   蓝=领先 红=落后，浓度=多远；停靠点与曲线的取样列同一个坐标系。 */
+function ribbon(r,key,span,xsPct){
+  const v=r[key];
+  const col=x=>x==null?'transparent':
+    `color-mix(in srgb, ${x>0?'var(--took)':'var(--refused)'} ${Math.round(12+78*Math.min(1,Math.abs(x)/span))}%, transparent)`;
+  const stops=v.map((x,i)=>`${col(x)} ${xsPct(i)}%`).join(', ');
+  return `<div style="height:10px;border-radius:5px;background:linear-gradient(90deg,${stops})"
+    title="${r.group}"></div>`;}
+function chart(key,opts={}){
+  const {ident=false,W=1080,H=300,L=92,Rp=210,T=26,B=44}=opts;
+  const vals=R.flatMap(r=>r[key]); const span=Math.max(...vals.map(Math.abs))*0.86;
+  const X=i=>L+i*((W-L-Rp)/(LAB.length-1));
+  const Y=v=>T+(1-(Math.max(-span,Math.min(span,v))+span)/(2*span))*(H-T-B);
+  const IDENT=['#6b7f8c','#8c7f6b','#7d6b8c','#6b8c7f'];
+  const yfmt=v=>key==='rate'?(v*100).toFixed(2)+'%/日':fmtPct(v,0);
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  s+=`<line x1="${L}" y1="${Y(0)}" x2="${W-Rp}" y2="${Y(0)}" stroke="${INK}" stroke-width="1"/>`;
+  s+=`<text x="${L-8}" y="${Y(0)+3}" text-anchor="end" class="mono" font-size="9" fill="${MUT}">SPY</text>`;
+  [span*0.55,-span*0.55].forEach(t=>s+=`<line x1="${L}" y1="${Y(t)}" x2="${W-Rp}" y2="${Y(t)}" stroke="${LINE}" stroke-dasharray="2 4"/>`
+   +`<text x="${L-8}" y="${Y(t)+3}" text-anchor="end" class="mono" font-size="9" fill="${LINE}">${yfmt(t)}</text>`);
+  LAB.forEach((l,i)=>{s+=`<line x1="${X(i)}" y1="${T}" x2="${X(i)}" y2="${H-B}" stroke="${LINE}" stroke-width=".7"/>`
+   +`<text x="${X(i)}" y="${H-B+17}" text-anchor="middle" class="mono" font-size="9.5" fill="${MUT}">${l}</text>`
+   +`<text x="${X(i)}" y="${H-B+29}" text-anchor="middle" class="mono" font-size="8" fill="${LINE}">${DAYS[i]} 天</text>`;});
+  R.forEach(r=>s+=`<path d="${monotone(r[key].map((v,i)=>[X(i),Y(v)]))}" fill="none" stroke="${LINE}" stroke-width=".7" opacity=".5"/>`);
+  const used=[];
+  PICKS.forEach((r,pi)=>{const v=r[key], base=ident?IDENT[pi%4]:pol(v[v.length-1]);
+    const d=monotone(v.map((x,i)=>[X(i),Y(x)]));
+    s+=`<path d="${d}" fill="none" stroke="${base}" stroke-width="2.6" stroke-linecap="round"
+         stroke-dasharray="1400" stroke-dashoffset="1400">
+         <animate attributeName="stroke-dashoffset" from="1400" to="0" dur="1.2s" begin="0s" fill="freeze"/></path>`;
+    v.forEach((x,i)=>s+=`<circle cx="${X(i)}" cy="${Y(x)}" r="${i===v.length-1?4.4:2.8}" fill="${base}" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" dur=".26s" begin="${(i*0.4).toFixed(2)}s" fill="freeze"/></circle>`);
+    let ly=Y(v[v.length-1]); while(used.some(u=>Math.abs(u-ly)<25))ly-=25; used.push(ly);
+    s+=`<text x="${W-Rp+12}" y="${ly+3}" font-size="11.5" font-weight="600" fill="${base}" opacity="0">${esc(r.group)}
+      <animate attributeName="opacity" from="0" to="1" dur=".4s" begin="1.2s" fill="freeze"/></text>`;
+    s+=`<text x="${W-Rp+12}" y="${ly+16}" class="mono" font-size="9.5" fill="${MUT}" opacity="0">${yfmt(v[v.length-1])}
+      <animate attributeName="opacity" from="0" to="1" dur=".4s" begin="1.28s" fill="freeze"/></text>`;});
+  s+='</svg>';
+  const xsPct=i=>(L+i*((W-L-Rp)/(LAB.length-1)))/W*100;
+  let rib='<div style="margin-top:10px">';
+  PICKS.forEach((r,pi)=>{const base=ident?IDENT[pi%4]:pol(r[key][r[key].length-1]);
+    rib+=`<div style="display:flex;align-items:center;gap:8px;margin:3px 0">
+      <span style="width:7px;height:7px;border-radius:50%;background:${base};flex:none"></span>
+      <div style="flex:1">${ribbon(r,key,span,xsPct)}</div>
+      <span class="mono" style="font-size:9.5px;color:var(--mut);width:120px;text-align:right">${esc(r.group)}</span></div>`;});
+  rib+='</div>';
+  return s+rib;}
+
+const HO=R.find(r=>r.group==='High Octane');
+block('Compare · 保留你原有的形状和渐变条，只在一处二选一',
+ '你说得对，原版透露的概念就是「三个月前本来就不一样，然后慢慢变化」——那正是我上一轮的 α（全部归零起步）<b>抹掉</b>的东西。所以这一轮回到你原来的构造：<b>每个点是那一段里的相对强弱</b>，线天生从不同高度出发，单调三次插值让它平滑地变（和线上那张同一套算法，曲线永远不越过相邻测点的范围）。<b>渐变条原样保留</b>。窗口按你说的收到 3 个月，砍掉 3–6m 那段——仓库里 <code>segments.js</code> 早就写着它「在三个月之外，把一行加总没有意义」。<br><br>唯一要你选的是纵轴：<b>原始分段值</b>，还是<b>每日速度</b>。',
+ [['读法 δ · 原始分段值','y = 那一段里跑赢 SPY 多少（你现在线上的口径）',replayable(chart('seg')),
+   '和你截图里一样，三条线到右端会收拢——但那<b>不是</b>大家都在变弱，是三段的长度不同（61 天 / 23 天 / 7 天），短的那段数值天然就小。'],
+  ['读法 γ · 每日速度','y = 每天跑赢 SPY 多少（分段值 ÷ 该段天数）· 三段口径统一',replayable(chart('rate')),
+   '收拢消失了。而且它的纵轴<b>就是 Field 象限的纵轴（加速度）</b>——上下两层会互相印证，而不是各说各话。']],
+ `<div class="warn"><b>为什么我建议 γ</b>，用你截图里那条数据说：<b>High Octane</b> 原始分段是
+  ${HO?HO.seg.map(v=>fmtPct(v,1)).join(' → '):''}，看起来像<b>崩塌</b>；
+  换成每日速度是 ${HO?HO.rate.map(v=>(v*100).toFixed(2)+'%').join(' → '):''}，
+  <b>三段几乎一模一样，它根本没有减速</b>。那个"崩塌"完全是段越来越短造成的假象。
+  δ 会让几乎每一个主题看起来都在褪色，而这是一个读图的人最容易做错决定的地方。</div>`);
+
+block('对照 · 两种读法下，同样四条线说的话',
+ '把四个主题在两种纵轴下的数字并排放。这不是配色或排版问题，是<b>同一份数据被读成两件事</b>。',
+ [['数字对照',' ', (()=>{
+   let t='<table style="width:100%;border-collapse:collapse;font-size:11.5px">'
+    +'<tr><th style="text-align:left;padding:6px 8px;border-bottom:1.5px solid var(--ink)">主题</th>'
+    +LAB.map(l=>`<th style="padding:6px 8px;border-bottom:1.5px solid var(--ink)">${l} <span class="mono" style="color:var(--mut);font-weight:400">原始</span></th>`).join('')
+    +LAB.map(l=>`<th style="padding:6px 8px;border-bottom:1.5px solid var(--ink);background:color-mix(in srgb,var(--took) 6%,transparent)">${l} <span class="mono" style="color:var(--mut);font-weight:400">每日</span></th>`).join('')
+    +'<th style="text-align:left;padding:6px 8px;border-bottom:1.5px solid var(--ink)">两种读法的差别</th></tr>';
+   const NOTE={'High Octane':'原始像崩塌 · 每日<b>纹丝不动</b>','Drones':'两种读法一致：第二段爆发',
+     'Cybersecurity':'原始像放缓 · 每日<b>已经转负</b>','Silver':'两种读法一致：来回抽'};
+   PICKS.forEach(r=>{t+=`<tr><td style="padding:5px 8px;border-bottom:1px solid var(--line);font-weight:600">${esc(r.group)}</td>`
+    +r.seg.map(v=>`<td class="mono" style="text-align:center;padding:5px 8px;border-bottom:1px solid var(--line);color:${v>0?'var(--took)':'var(--refused)'}">${fmtPct(v,1)}</td>`).join('')
+    +r.rate.map(v=>`<td class="mono" style="text-align:center;padding:5px 8px;border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--took) 6%,transparent);color:${v>0?'var(--took)':'var(--refused)'}">${(v*100).toFixed(2)}%</td>`).join('')
+    +`<td style="padding:5px 8px;border-bottom:1px solid var(--line);color:var(--mut)">${NOTE[r.group]||''}</td></tr>`;});
+   return t+'</table>';})()]]);
+
+</script>
+</body></html>
