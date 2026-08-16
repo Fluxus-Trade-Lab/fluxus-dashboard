@@ -84,7 +84,11 @@
        ΔL* 14.1  */
   --color-profit: #194371;
   --color-loss: #b5342c;
-  --color-neutral: #78716c;
+  /* A P/L of exactly zero is not a third side — it is an ordinary number
+     with nothing to say. It used to be Tailwind stone-500, which was 3.62 on
+     the page ground and, having never been given a dark value, 3.21 there.
+     It is the measured grey ladder now, and it follows the theme for free. */
+  --color-neutral: var(--color-text-secondary);
 
   /* ACCENT is chrome: it answers "the interface is pointing at this" — links,
      the focus ring, the active sort arrow, the rail's you-are-here bar. It is
@@ -398,7 +402,9 @@ body {
 
 .public-cta {
   display: inline-block;
-  background-color: var(--color-accent);
+  /* accent-solid, not accent: this fill has white text on it, and accent has
+     to stay light enough to read as ink elsewhere. White on it: 6.74. */
+  background-color: var(--color-accent-solid);
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 0.25rem;
@@ -445,10 +451,17 @@ body {
   color: var(--color-poster-text);
 }
 .public-hero-dark .public-label {
-  color: #78716c;
+  /* Was #78716c — Tailwind stone-500, hardcoded, and 4.13 on the poster's
+     near-black. This ground is darker than the app's, so the label needs to
+     be lighter than the app's muted, not the same. 6.05. */
+  color: #948d86;
 }
 .public-hero-dark .public-cta {
-  background-color: var(--color-poster-red);
+  /* Not --color-poster-red: white on Andy's poster red is 4.44, just under.
+     loss-solid is the same family one step down and exists for exactly this
+     — white on it: 4.94. The poster red itself is untouched everywhere it is
+     a large graphic, which is everywhere else on this page. */
+  background-color: var(--color-loss-solid);
 }
 .public-hero-dark .public-cta:hover {
   opacity: 0.85;
