@@ -34,6 +34,9 @@ import numpy as np
 import pandas as pd
 
 from pipeline.portfolio.trade_parser import parse_csv, find_latest_csv, Trade
+from pipeline.portfolio.sheets_source import (
+    ENV_TOKEN, ENV_URL, SheetsUnavailable, fetch_trades,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -552,18 +555,41 @@ def main(argv: list[str] | None = None) -> None:
         format='%(asctime)s %(levelname)s %(name)s: %(message)s',
     )
     p = argparse.ArgumentParser(description='Per-trade post-mortem generator')
+    p.add_argument('--source', choices=('sheets', 'csv'), default='sheets',
+                   help='Where the book comes from. Default is the Sheet the '
+                        'browser writes to; csv reads a hand-made export.')
     p.add_argument('--input', type=Path, default=None,
-                   help='Portfolio CSV (defaults to latest in data/portfolio/)')
+                   help='Portfolio CSV (implies --source csv; defaults to the '
+                        'latest in data/portfolio/)')
     p.add_argument('--output', type=Path, default=OUTPUT_DIR)
     args = p.parse_args(argv)
 
-    csv = args.input or find_latest_csv(Path('data/portfolio'))
-    if not csv or not csv.exists():
-        raise SystemExit("ERROR: no portfolio CSV found")
+    # --input names a file, which is an unambiguous statement about where the
+    # book should come from; honouring it without making the caller also say
+    # --source csv keeps every existing invocation working.
+    source = 'csv' if args.input else args.source
 
-    logger.info(f"Reading trades from {csv}")
-    trades = parse_csv(csv)
-    logger.info(f"Loaded {len(trades)} trades")
+    if source == 'sheets':
+        # Deliberately no CSV fallback. A silent fallback is how this went 84
+        # days out of date without anyone noticing: the run "succeeded" every
+        # time, against a file nobody had refreshed. If the Sheet cannot be
+        # read, the run fails and says so.
+        try:
+            trades = fetch_trades()
+        except SheetsUnavailable as e:
+            raise SystemExit(
+                f"ERROR: could not read the Sheet ({e}).\n"
+                f"       Set {ENV_URL} and {ENV_TOKEN}, or pass --source csv "
+                f"to read a hand-made export instead."
+            ) from None
+        logger.info("Loaded %d trades from the Sheet", len(trades))
+    else:
+        csv = args.input or find_latest_csv(Path('data/portfolio'))
+        if not csv or not csv.exists():
+            raise SystemExit("ERROR: no portfolio CSV found")
+        logger.info(f"Reading trades from {csv}")
+        trades = parse_csv(csv)
+        logger.info(f"Loaded {len(trades)} trades")
 
     summary = generate_postmortems(trades, args.output)
     _build_index(args.output)

@@ -175,11 +175,25 @@ export function computeMonthlyStats(enrichedTrades, performanceData) {
     })
   }
 
+  // A month is a row when something happened in it. The union below picks up
+  // the equity curve's first partial month, which has no closed trade, no
+  // realized P&L and — being the first — a return of exactly 0 by
+  // construction: a row of dashes that reads as a flat month rather than as
+  // no month at all. Andy asked for 2025-12 to go; the rule rather than the
+  // date, so the next one does not arrive.
+  //
+  // All three tests, not just the trade count: holding through a month without
+  // closing anything is a real month, and its mark-to-market return is the
+  // whole point of showing it.
   const allMonths = [...new Set([
     ...Object.keys(byMonth),
     ...Object.keys(monthlyPortRet),
     ...Object.keys(realizedByMonth),
-  ])].sort()
+  ])].sort().filter((m) => (
+    (byMonth[m]?.length ?? 0) > 0
+    || Math.abs(realizedByMonth[m] ?? 0) > 1e-9
+    || Math.abs(monthlyPortRet[m] ?? 0) > 1e-9
+  ))
 
   return allMonths.map(m => {
     const tds = byMonth[m] || []

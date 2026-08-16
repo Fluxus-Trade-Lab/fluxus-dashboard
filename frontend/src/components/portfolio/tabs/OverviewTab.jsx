@@ -248,9 +248,25 @@ export default function OverviewTab({
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] font-bold whitespace-nowrap">
                     <TickerLink symbol={t.ticker} />
                   </td>
+                  {/* Direction as shape, not a word. 322 of 355 trades in the
+                      log are long, so the column printed the same five letters
+                      on nine rows in ten — width spent on a fact that is almost
+                      constant. Shape carries both poles and stays on the grey
+                      floor: colour is reserved for a chart that draws both, and
+                      marking only shorts in red would read as rule 3 (red alone
+                      = the binding constraint), which a short is not.
+                      The norm sits light, the exception carries the bold ink,
+                      so the eye lands on the 9%. Title + sr-only keep the word
+                      for screen readers and for anyone who hovers. */}
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)]">
-                    <span className={`font-semibold text-[11px] text-[var(--color-text-secondary)]`}>
-                      {t.direction === 'long' ? tr('pf.dir.long') : tr('pf.dir.short')}
+                    <span title={t.direction === 'long' ? tr('pf.dir.long') : tr('pf.dir.short')}
+                          className={`text-[11px] leading-none ${t.direction === 'long'
+                            ? 'text-[var(--color-untested)]'
+                            : 'text-[var(--color-text-bold)] font-semibold'}`}>
+                      {t.direction === 'long' ? '▲' : '▼'}
+                      <span className="sr-only">
+                        {t.direction === 'long' ? tr('pf.dir.long') : tr('pf.dir.short')}
+                      </span>
                     </span>
                   </td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)]">

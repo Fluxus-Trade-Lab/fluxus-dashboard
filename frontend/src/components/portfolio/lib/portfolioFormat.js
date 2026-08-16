@@ -39,4 +39,7 @@ export const SECTOR_COLORS = [
   '#75908c', '#918a70', '#8a7d92', '#7f8b9c', '#94867a', '#7e8f7e',
 ]
 
-export const TABS = ['Overview', 'Exposure', 'Risk', 'Options Port']
+// 'Options Port' unwired 2026-08-17 (Andy: 暂时下线). This array and
+// PortfolioLayout's TAB_KEYS are indexed together — they must stay the
+// same length, which is why removing one meant touching both.
+export const TABS = ['Overview', 'Exposure', 'Risk']

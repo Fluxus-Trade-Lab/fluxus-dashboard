@@ -16,15 +16,23 @@ import SettingsPanel from './SettingsPanel'
 import OverviewTab from './tabs/OverviewTab'
 import ExposureTab from './tabs/ExposureTab'
 import RiskTab from './tabs/RiskTab'
-import OptionsTab from './tabs/OptionsTab'
+// OptionsTab is off the tab bar (Andy, 2026-08-17: "可以暂时下线"). The file
+// and its route back are intact — this is an unwiring, not a deletion.
+// import OptionsTab from './tabs/OptionsTab'
 import InputField from './ui/InputField'
 import Button from './ui/Button'
 import PageHeader from '../PageHeader'
 
-const TAB_KEYS = ['pf.tab.overview', 'pf.tab.exposure', 'pf.tab.risk', 'pf.tab.options']
+const TAB_KEYS = ['pf.tab.overview', 'pf.tab.exposure', 'pf.tab.risk']
 
 export default function Layout() {
   const { state, dispatch } = usePortfolio()
+  // Options Port came off the bar, so a reader parked on its index has a
+  // persisted activeTab that no longer resolves. Clamped at read time rather
+  // than dispatched during render (a side effect in render) or migrated in
+  // storage — the tab may come back, and a migration would forget where they
+  // were.
+  const tabIx = Math.min(state.activeTab ?? 0, TAB_KEYS.length - 1)
   const { t: tr } = useLanguage()
   const [showForm, setShowForm] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
@@ -333,7 +341,7 @@ export default function Layout() {
               key={tab}
               onClick={() => dispatch({ type: 'SET_ACTIVE_TAB', tab: i })}
               className={`px-3 py-1.5 text-[11px] font-medium rounded cursor-pointer border-none transition-colors ${
-                state.activeTab === i
+                tabIx === i
                   ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                   : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-[var(--color-surface-raised)]'
               }`}
@@ -344,14 +352,18 @@ export default function Layout() {
         </div>
 
         {/* Tab content */}
-        {state.activeTab === 0 && <OverviewTab performanceData={performanceData} totalReturnPct={totalReturnPct} monthlyStats={monthlyStats} ytdStats={ytdStats} enrichedTrades={enrichedTrades} onTrim={setTrimModal} />}
-        {state.activeTab === 1 && <ExposureTab openTrades={openTrades} sectorData={sectorData} holdingsData={holdingsData} mergedHoldingsData={mergedHoldingsData} performanceData={performanceData} capitalEfficiency={capitalEfficiency} />}
-        {state.activeTab === 2 && <RiskTab riskMetrics={riskMetrics} benchmarkTicker={state.benchmarkTicker} />}
-        {state.activeTab === 3 && <OptionsTab />}
+        {/* Options Port came off the bar, so a reader parked on its index has a
+            persisted activeTab that no longer resolves. Clamped at read time
+            rather than dispatched during render (a side effect in render) or
+            migrated in storage (the tab may come back, and a migration would
+            forget where they were). */}
+        {tabIx === 0 && <OverviewTab performanceData={performanceData} totalReturnPct={totalReturnPct} monthlyStats={monthlyStats} ytdStats={ytdStats} enrichedTrades={enrichedTrades} onTrim={setTrimModal} />}
+        {tabIx === 1 && <ExposureTab openTrades={openTrades} sectorData={sectorData} holdingsData={holdingsData} mergedHoldingsData={mergedHoldingsData} performanceData={performanceData} capitalEfficiency={capitalEfficiency} />}
+        {tabIx === 2 && <RiskTab riskMetrics={riskMetrics} benchmarkTicker={state.benchmarkTicker} />}
 
         {/* Split-adjustment notices — collapsed by default at the bottom of the
             Overview to keep the visual noise down. */}
-        {state.activeTab === 0 && detectedSplits.length > 0 && (() => {
+        {tabIx === 0 && detectedSplits.length > 0 && (() => {
           const uniq = [...new Map(detectedSplits.map(s => [
             s.straddle ? `straddle:${s.ticker}` : `${s.ticker}:${s.ratioLabel}`, s,
           ])).values()]
