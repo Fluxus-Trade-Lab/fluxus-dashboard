@@ -159,6 +159,40 @@ def to_trades(stock_trades: Sequence[Mapping[str, Any]]) -> list[Trade]:
     return out
 
 
+def _diagnose(resp: 'requests.Response', gas_url: str) -> str:
+    """Name the failure shape without ever quoting the token.
+
+    Apps Script answers a bad deployment, a login-walled deployment and a bad
+    token with three different things, and all three look alike from the status
+    line: a 404 page, an HTML sign-in page, and a JSON error respectively.
+    """
+    from urllib.parse import urlparse
+
+    parts = urlparse(gas_url)
+    notes: list[str] = []
+
+    if not parts.path.endswith('/exec'):
+        tail = parts.path.rsplit('/', 1)[-1] or '/'
+        notes.append(
+            f"the URL ends in {tail!r}, not 'exec' — a deployment URL ends "
+            "/exec; /dev and the editor link are not callable from CI"
+        )
+    if resp.history:
+        hosts = ' → '.join(dict.fromkeys(urlparse(r.url).netloc for r in resp.history))
+        notes.append(f'redirected via {hosts}')
+    if 'text/html' in resp.headers.get('content-type', ''):
+        body = resp.text[:400].lower()
+        if 'accounts.google.com' in body or 'sign in' in body or 'signin' in body:
+            notes.append(
+                'the response is a Google sign-in page: the deployment is set '
+                'to "Anyone with a Google account", which a browser satisfies '
+                'and a CI runner cannot. Redeploy with access "Anyone"'
+            )
+        else:
+            notes.append('the response is an HTML page, not the API')
+
+    return '; '.join(notes) or 'the endpoint answered, but not with the API'
+
 def fetch_trades(gas_url: Optional[str] = None,
                  token: Optional[str] = None) -> list[Trade]:
     """Pull the live stock trades. Credentials default to the environment."""
@@ -175,14 +209,20 @@ def fetch_trades(gas_url: Optional[str] = None,
     except requests.RequestException as e:
         # str(e) on a requests error can embed the full URL, token included.
         raise SheetsUnavailable(f'request failed: {type(e).__name__}') from None
+
     if resp.status_code != 200:
-        raise SheetsUnavailable(f'HTTP {resp.status_code}')
+        # "HTTP 404" on its own sent one debugging session looking at the token
+        # when the deployment was the problem. Apps Script fails in a handful
+        # of distinguishable ways and the status code alone separates none of
+        # them, so say which shape this is. Hosts and paths only — the token
+        # rides in the query string, which is why nothing here prints a URL.
+        raise SheetsUnavailable(f'HTTP {resp.status_code} — {_diagnose(resp, gas_url)}')
 
     try:
         data = resp.json()
     except ValueError:
-        # A GAS auth failure answers with an HTML login page, not JSON.
-        raise SheetsUnavailable('response was not JSON (check the token)') from None
+        raise SheetsUnavailable(
+            f'response was not JSON — {_diagnose(resp, gas_url)}') from None
     if not data.get('ok'):
         raise SheetsUnavailable(str(data.get('error') or 'pull rejected'))
 
