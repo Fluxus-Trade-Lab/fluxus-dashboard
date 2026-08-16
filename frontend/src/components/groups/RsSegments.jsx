@@ -34,7 +34,8 @@
  * twice as long is twice the number, in any row and any column.
  */
 
-import { QUARTER_SEGMENTS, ratePerSession } from './segments'
+import { useState } from 'react'
+import { QUARTER_SEGMENTS, ratePerSession, paceChange } from './segments'
 
 function Bar({ v, scale, raw, sessions }) {
   if (v == null || !Number.isFinite(v)) {
@@ -63,12 +64,28 @@ function Bar({ v, scale, raw, sessions }) {
   )
 }
 
+/* Two questions, one chart. "Who is furthest ahead" and "who is speeding up"
+   are answered by the same three bars — the second one is their slope — so
+   this is a sort, not a second component. And because the bars are per
+   session, a row that sorts to the top of the pace list visibly leans right;
+   the chart shows its own reasoning. */
+const SORTS = [
+  { key: 'total', label: 'by 3M total',
+    of: (r) => r.excess_3m,
+    col: '3M TOTAL', fmt: (v) => `${v > 0 ? '+' : ''}${(v * 100).toFixed(1)}%` },
+  { key: 'pace', label: 'by change in pace',
+    of: paceChange,
+    col: 'Δ PACE', fmt: (v) => `${v > 0 ? '+' : ''}${(v * 100).toFixed(2)}%` },
+]
+
 export default function RsSegments({ rows, limit = 10 }) {
+  const [sortKey, setSortKey] = useState('total')
   if (!rows?.length) return null
 
+  const sort = SORTS.find((s) => s.key === sortKey) ?? SORTS[0]
   const shown = [...rows]
-    .filter((r) => r.excess_3m != null)
-    .sort((a, b) => b.excess_3m - a.excess_3m)
+    .filter((r) => r.excess_3m != null && sort.of(r) != null)
+    .sort((a, b) => sort.of(b) - sort.of(a))
     .slice(0, limit)
 
   const scale = shown.reduce((m, r) =>
@@ -91,13 +108,31 @@ export default function RsSegments({ rows, limit = 10 }) {
             the quarter's three disjoint stretches, oldest first · excess per session
           </span>
         </div>
-        <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
-          scale ±{(scale * 100).toFixed(2)}%/session · top {shown.length} by 3m
-          {unmeasured > 0 && ` · ${unmeasured} windows unmeasured`}
-        </span>
+        <div className="flex items-baseline gap-3">
+          {/* The sort is the second question, made explicit. It used to be an
+              invisible default — always by 3M total — which also meant this
+              block quietly disagreed with the ranking whenever the window at
+              the top of the page was 1W or 1M. */}
+          <div className="flex gap-1" role="group" aria-label="sort">
+            {SORTS.map((o) => (
+              <button key={o.key} type="button" onClick={() => setSortKey(o.key)}
+                      aria-pressed={sortKey === o.key}
+                      className={`px-2 py-[3px] text-[10px] font-mono rounded cursor-pointer
+                                  border-none transition-colors ${sortKey === o.key
+                        ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
+                        : 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
+                {o.label}
+              </button>
+            ))}
+          </div>
+          <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
+            scale ±{(scale * 100).toFixed(2)}%/session · top {shown.length}
+            {unmeasured > 0 && ` · ${unmeasured} windows unmeasured`}
+          </span>
+        </div>
       </div>
 
-      <div className="grid grid-cols-[minmax(120px,190px)_repeat(4,1fr)_64px] gap-x-3 gap-y-0
+      <div className="grid grid-cols-[minmax(120px,190px)_repeat(3,1fr)_78px] gap-x-3 gap-y-0
                       pt-2 pb-1 text-[10px] font-mono uppercase tracking-wider
                       text-[var(--color-text-muted)]">
         <span>Theme</span>
@@ -109,12 +144,12 @@ export default function RsSegments({ rows, limit = 10 }) {
             {s.label}
           </span>
         ))}
-        <span className="text-right">3m total</span>
+        <span className="text-right">{sort.col}</span>
       </div>
 
       {shown.map((r) => (
         <div key={r.group}
-             className="grid grid-cols-[minmax(120px,190px)_repeat(4,1fr)_64px] gap-x-3
+             className="grid grid-cols-[minmax(120px,190px)_repeat(3,1fr)_78px] gap-x-3
                         items-center py-[4px] hover:bg-[var(--color-hover-bg)]">
           <span className="text-[12.5px] truncate" title={r.tickers?.join(' · ')}>
             {r.group}
@@ -127,8 +162,11 @@ export default function RsSegments({ rows, limit = 10 }) {
                    raw={r[s.key]} sessions={s.sessions} />
             </span>
           ))}
-          <span className="text-[12.5px] font-mono tabular-nums text-right">
-            {r.excess_3m > 0 ? '+' : ''}{(r.excess_3m * 100).toFixed(1)}%
+          <span className="text-[12.5px] font-mono tabular-nums text-right"
+                title={sortKey === 'pace'
+                  ? 'last month per session minus the two months before it, per session'
+                  : 'excess over the whole quarter'}>
+            {sort.fmt(sort.of(r))}
           </span>
         </div>
       ))}
