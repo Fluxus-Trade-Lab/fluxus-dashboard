@@ -205,8 +205,16 @@ def fetch_trades(gas_url: Optional[str] = None,
             n for n, v in ((ENV_URL, gas_url), (ENV_TOKEN, token)) if not v)
         raise SheetsUnavailable(f'{missing} not set in the environment')
 
+    # Take only the endpoint. A URL pasted whole from a browser address bar can
+    # arrive carrying ?action=pull&token=..., and requests would append a second
+    # pair rather than replace the first — two `token` values, and which one
+    # Apps Script reads is not something to find out in production.
+    from urllib.parse import urlsplit, urlunsplit
+    parts = urlsplit(gas_url)
+    endpoint = urlunsplit((parts.scheme, parts.netloc, parts.path, '', ''))
+
     try:
-        resp = requests.get(gas_url, params={'action': 'pull', 'token': token},
+        resp = requests.get(endpoint, params={'action': 'pull', 'token': token},
                             timeout=TIMEOUT_S)
     except requests.RequestException as e:
         # str(e) on a requests error can embed the full URL, token included.
@@ -218,13 +226,13 @@ def fetch_trades(gas_url: Optional[str] = None,
         # of distinguishable ways and the status code alone separates none of
         # them, so say which shape this is. Hosts and paths only — the token
         # rides in the query string, which is why nothing here prints a URL.
-        raise SheetsUnavailable(f'HTTP {resp.status_code} — {_diagnose(resp, gas_url)}')
+        raise SheetsUnavailable(f'HTTP {resp.status_code} — {_diagnose(resp, endpoint)}')
 
     try:
         data = resp.json()
     except ValueError:
         raise SheetsUnavailable(
-            f'response was not JSON — {_diagnose(resp, gas_url)}') from None
+            f'response was not JSON — {_diagnose(resp, endpoint)}') from None
     if not data.get('ok'):
         raise SheetsUnavailable(str(data.get('error') or 'pull rejected'))
 
