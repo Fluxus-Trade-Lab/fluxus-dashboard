@@ -129,7 +129,7 @@ Telechart 语法,原文照抄:
 
 | # | 缺什么 | 谁在用 | 难度 | 影响(2026-08-14 实算) |
 |---|---|---|---|---|
-| **1** | **ATR Matrix** `(close−SMA50)/ATR` | 三家都用 | **极低**(现有 `close/atr/sma50_dist` 直接算) | 全池 5,476 行可算:**41.2% 低于 SMA50(该忽略)· 49.6% 在 0–4x 建仓区 · 7.9% 4–7x · 1.3% ≥7x 过度延伸** |
+| **1** | **ATR Matrix** `(close−SMA50)/ATR` | 三家都用 | **极低**(现有 `close/atr/sma50_dist` 直接算) | 全池 5,251 行可算(225 只 ATR<0.5% 的壳/并购锁价票判 null):**42.4% 低于 SMA50(该忽略)· 50.0% 在 0–4x 建仓区 · 6.9% 4–7x · 0.7% ≥7x 过度延伸** |
 | 2 | **PP 10 日窗** `pp_count_10d` | oratnek | 极低(改一个 lookback) | 他的 "PP (Vol > 10D)" 栏目直接可复现 |
 | 3 | **均线序列布尔** `ma_stack` | Steve、Alex | 低 | Price≥EMA10≥SMA20≥SMA50≥SMA100≥SMA200 |
 | 4 | **ADR 上限口径错** | Steve | 零(改预设) | 我们 8 个预设用 `adrPct max 10`;Steve 的上限是 **maxLoss÷1.5 ≈ 6**。10 会放进注定打穿止损的票 |
@@ -145,6 +145,8 @@ Telechart 语法,原文照抄:
 | **oratnek**(mcap>$1B · avgvol>1M · RS21>70 · RS63>80 · ATR-from-50SMA<5) | **134 只** — UMAC, AEHR, ALOY, APPS, SMCI, BLZE, FSLY, LPTH, REPL, BETA, IOVA, TNDM … |
 
 oratnek 那 134 只是**今天就能出的一张单**,只差 ATR Matrix 这一个字段。
+
+> **第三轮独立复算(同日)**:helper 对 8 只原始日线黄金样本逐位吻合(Wilder-14、auto-adjusted);两条头条数字 1,179 / 134 **复现**;band 行已按 floor 后的 5,251 行更新。两点保留意见:①「08-14 实算」实际用的是 08-16 时间戳的文件(close 仍是 08-14 收盘,行数 5,614 vs 08-14 文件的 5,628,Steve 那条在 08-14 文件上是 1,190);② `≥7x` 尾巴里至少 11 只是**近 60 天内跳空后钉价的并购标的**(CRNX/UTZ/APGE/FBRX…)—— Wilder-14 还记着跳空那天的 TR,所以过得了 0.5% 地板。这是 ATR Matrix 的构造性质(价格跳上去、波动塌下来的名字必然排最高),不是算错;作为 <4 的入场门槛无影响,作为「最延伸」排行要配 industry / 成交量一起读。
 
 > **勘误(同日)**:本文首版的速算用了 `close×dist/atr`,漏了 `(1+dist)` 分母,把延伸度整体高估了 (1+dist) 倍 —— 30% 以上的票高估 30%,恰好是这个数存在要抓的那条尾巴。已按 `sma50_dist=(close−SMA50)/SMA50` 的口径(6 只逐位核对)修正,字段 `atr_from_sma50` 已上线并有回归测试钉住这个分母。
 

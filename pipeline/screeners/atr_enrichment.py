@@ -74,6 +74,22 @@ def atr_multiple_from_sma50(close, atr, sma50_dist):
     return None if not np.isfinite(v) else v
 
 
+def atr_multiple_from_levels(close, atr, sma50):
+    """Same quantity from price LEVELS (close, ATR, SMA50) instead of a dist.
+
+    For callers that hold the SMA50 itself (the ETF enrichment loop). Converts
+    to dist and delegates, so the floor and the null rules are the same as
+    everywhere else. Scalars only.
+    """
+    try:
+        c, s = float(close), float(sma50)
+    except (TypeError, ValueError):
+        return None
+    if not (np.isfinite(c) and np.isfinite(s)) or s <= 0:
+        return None
+    return atr_multiple_from_sma50(c, atr, c / s - 1.0)
+
+
 def _is_vector(x) -> bool:
     return isinstance(x, pd.Series) or (hasattr(x, "__len__") and not isinstance(x, (str, bytes)))
 

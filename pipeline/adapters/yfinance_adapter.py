@@ -14,6 +14,7 @@ from scipy.stats import rankdata
 from .base_adapter import BaseAdapter
 from ..constants.tickers import STOCK_GROUPS
 from ..constants.leveraged import get_leveraged_etfs
+from ..screeners.atr_enrichment import atr_multiple_from_levels
 
 logger = logging.getLogger(__name__)
 
@@ -305,10 +306,10 @@ class YfinanceAdapter(BaseAdapter):
                 atr = calculate_atr(hist)
                 sma50 = calculate_sma(hist, 50)
                 atr_pct = (atr / close) * 100 if atr and close else None
-                dist_sma50_atr = (
-                    (100 * (close / sma50 - 1) / atr_pct)
-                    if (sma50 and atr_pct and atr_pct != 0) else None
-                )
+                # The ATR Matrix, one implementation with the ticker badge and
+                # the universe column. The inline formula this replaces was
+                # dist*close/atr (no (1+dist)) and nulled an exact zero.
+                dist_sma50_atr = atr_multiple_from_levels(close, atr, sma50)
 
                 # ABC Rating
                 abc = calculate_abc_rating(hist)
@@ -385,7 +386,7 @@ class YfinanceAdapter(BaseAdapter):
                     'perf_3m': float((close - hist['Close'].iloc[-63]) / hist['Close'].iloc[-63]) if len(hist) >= 63 else None,
                     'high_52w_dist': float((close - hist['Close'].max()) / hist['Close'].max()),
                     'atr_pct': round(atr_pct, 1) if atr_pct else None,
-                    'dist_sma50_atr': round(dist_sma50_atr, 2) if dist_sma50_atr else None,
+                    'dist_sma50_atr': round(dist_sma50_atr, 2) if dist_sma50_atr is not None else None,
                     # Not comparable with the stock-side rs_* columns. This is
                     # the 21-day percentile of a *rolling ATR-normalised
                     # relative-strength ratio* vs SPY; the stock columns are

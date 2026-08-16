@@ -147,6 +147,22 @@ class TestAtrFromSma50:
         frame_dn = _frame(close=100.0, atr=3.0, sma50_dist=-0.30)
         assert enrich_with_atr([{"ticker": "T"}], frame_dn)[0]["atr_ext"] < 0
 
+    def test_levels_form_agrees_with_dist_form(self):
+        """The ETF loop has close, atr and SMA50 as levels, not a dist. Its own
+        inline formula was the third implementation of this quantity -- and
+        the naive one (dist*close/atr), plus a falsy-zero that nulled a name
+        sitting exactly on its 50-day. Same helper, same answer, zero is zero."""
+        from pipeline.screeners.atr_enrichment import (atr_multiple_from_levels,
+                                                       atr_multiple_from_sma50)
+        close, atr, sma50 = 100.0, 3.0, 76.923077          # dist = +0.30
+        by_levels = atr_multiple_from_levels(close, atr, sma50)
+        by_dist = atr_multiple_from_sma50(close, atr, close / sma50 - 1.0)
+        assert by_levels == pytest.approx(by_dist, abs=1e-6)
+        assert by_levels == pytest.approx((close - sma50) / atr, abs=1e-6)
+        assert atr_multiple_from_levels(100.0, 3.0, 100.0) == 0.0     # on the line, not null
+        assert atr_multiple_from_levels(100.0, 3.0, None) is None
+        assert atr_multiple_from_levels(100.0, 3.0, 0.0) is None      # no SMA50 yet
+
     def test_missing_sma50_dist_yields_null(self):
         out = compute_universe_scores(_frame(sma50_dist=None))
         assert pd.isna(out["atr_from_sma50"].iloc[0])
