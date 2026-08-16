@@ -30,9 +30,9 @@ import { useLanguage } from '../i18n/LanguageContext'
  * rule muted → bold when the page you are on lives inside it — it marks a
  * REGION; a page fills and bolds itself — it marks a ROW. Neither uses hue.
  *
- * Collapsed codes are declared, never derived. Slicing the label gave RS Live
- * Tracker and RS Leaderboard the same three letters, and Portfolio Management
- * the same as Portfolio — two destinations under one label is a broken rail.
+ * Collapsed codes are declared, never derived. Slicing the label gave Portfolio
+ * Management the same three letters as Portfolio, and did the same to every
+ * RS-prefixed page — two destinations under one label is a broken rail.
  * Being declared makes them exact and unlearnable in equal measure, so each one
  * names itself on hover, beside the code, without the native tooltip's delay.
  *
@@ -64,10 +64,9 @@ export const NAV_GROUPS = [
       // were sent keep working.
       { key: 'groups', short: 'THM', hash: '#/groups' },         // shown as "Themes"
       { key: 'rslive', short: 'LIV', hash: '#/rs-live' },
-      // RS Rotation merged into Themes (the trajectory layer). The rail
-      // entry promised a page whose whole content was one layer of another
-      // page; the route still resolves so sent links land on Themes.
-      { key: 'rsleaders', short: 'LDR', hash: '#/rs-leaders' },
+      // RS Rotation and RS Leaderboard both merged into Themes — the first
+      // was one of its layers, the second is what the whole page became. Both
+      // routes still resolve so sent links land on Themes.
       { key: 'screener', short: 'SCR', hash: '#/screener' },
     ],
   },
@@ -177,8 +176,8 @@ export default function Rail({ currentPage, onNavigate }) {
                     {collapsed ? short : t(`nav.${key}`)}
                     {collapsed && (
                       // The codes are declared, not derived, which makes them
-                      // exact but unlearnable — nobody arrives knowing that LDR
-                      // is the RS Leaderboard. The name was already in `title`,
+                      // exact but unlearnable — nobody arrives knowing that THM
+                      // is the Themes page. The name was already in `title`,
                       // but a native tooltip waits a second and appears under
                       // the cursor rather than beside the code it explains.
                       <span className="pointer-events-none absolute left-full top-1/2 z-40 ml-1

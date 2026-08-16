@@ -25,7 +25,7 @@ import HowToRead from '../HowToRead'
  *
  *   FIELD     is picking worth anything today?
  *   COMPARE   is your pick a trend or a bounce?
- *   RANKED    the full order, and the place selections are made from.
+ *   RANK      the full order, and the place selections are made from.
  *
  * Compare sits ABOVE the 70-row ranking although it depends on it, because
  * an instrument that responds three screens below the gesture reads as
@@ -126,7 +126,13 @@ function Section({ label, note, right, children }) {
       <div className="flex items-baseline gap-3 pb-2.5">
         <span className="text-[10px] font-mono font-medium uppercase tracking-[.24em]
                          text-[var(--color-text-muted)]">{label}</span>
-        {note && <span className="text-[11px] text-[var(--color-text-muted)]">{note}</span>}
+        {/* the slot beside the label: a control belongs here, next to the
+            thing it controls. The state legend is an annotation of the marks
+            below and lives on the right, away from it — they were crammed
+            together and read as one row of chips. */}
+        {typeof note === 'string'
+          ? <span className="text-[11px] text-[var(--color-text-muted)]">{note}</span>
+          : note}
         <i className="flex-1 h-px bg-[var(--color-border)]" />
         {right}
       </div>
@@ -138,7 +144,11 @@ function Section({ label, note, right, children }) {
 export default function GroupsPage() {
   const { industries, themes, provisional, stocks, summary, date, benchmark, loading, error } =
     useGroups()
-  const [winKey, setWinKey] = useState('3M')
+  // Opens on the week. The narrator's line follows the window now, and the
+  // week is where the news is — a page that opens on the quarter opens on a
+  // sentence that was already true yesterday. Andy's call. It also changes
+  // what the ranking sorts by on arrival, which is the same decision twice.
+  const [winKey, setWinKey] = useState('1W')
   // Which picks have their member table open. Keyed by name, survives
   // re-picks; the panel itself only mounts (and only fetches the universe)
   // while open.
@@ -199,7 +209,7 @@ export default function GroupsPage() {
     <div className="space-y-5">
       <PageHeader group="market" title="Themes"
         meta={[`vs ${benchmark} · ${date} · ${themes.length} themes`]} />
-      <Reading text={readThemes(themes)} />
+      <Reading text={readThemes(windowed, winKey)} />
 
       {/* THE CONTROL BAR — every control on the page, in one sticky line. */}
       <div className="sticky top-0 z-20 -mx-3 px-3 py-2.5 border-b border-[var(--glass-edge)]"
@@ -237,30 +247,26 @@ export default function GroupsPage() {
           need width, and half of a tablet is not width. */}
       <div className="xl:grid xl:grid-cols-2 xl:gap-x-8 xl:items-start">
         <div className="min-w-0 order-2 xl:order-1">
-        <Section label="Ranked"
-                 note={`${measured} of ${rows.length} · scale ±${(scale * 100).toFixed(0)}%`
-                       + ` · the three cells are the quarter's stretches, excess per session`}
-                 right={
-                   <div className="flex items-center gap-3">
-                     {/* The second question the cells answer, made explicit.
-                         "by pace" reads rs_accel_rate — the engine's slope —
-                         not rs_accel, which is the gate behind the states and
-                         scores a steady outperformer negative on purpose. */}
-                     <div className="flex gap-1" role="group" aria-label="rank by">
-                       {[['window', `by ${winKey}`], ['pace', 'by change in pace']].map(([k, label]) => (
-                         <button key={k} type="button" onClick={() => setRankSort(k)}
-                                 aria-pressed={rankSort === k}
-                                 className={`px-2 py-[3px] text-[10px] font-mono rounded cursor-pointer
-                                             border-none transition-colors ${rankSort === k
-                                   ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
-                                   : 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
-                           {label}
-                         </button>
-                       ))}
-                     </div>
-                     <StateCensus rows={rows} />
+        <Section label="Rank"
+                 note={
+                   <div className="flex gap-1" role="group" aria-label="rank by">
+                     {/* "by Time" rather than "by 1W": the label names the KIND of sort, not
+                          the window, so it stops changing under the reader every time
+                          they switch window — and it sits parallel to "by Acceleration",
+                          which is the choice actually being offered. */}
+                     {[['window', 'by Time'], ['pace', 'by Acceleration']].map(([k, label]) => (
+                       <button key={k} type="button" onClick={() => setRankSort(k)}
+                               aria-pressed={rankSort === k}
+                               className={`px-2 py-[2px] text-[10px] font-mono rounded cursor-pointer
+                                           border-none transition-colors whitespace-nowrap ${rankSort === k
+                                 ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
+                                 : 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
+                         {label}
+                       </button>
+                     ))}
                    </div>
-                 }>
+                 }
+                 right={<StateCensus rows={rows} />}>
           <ThemeBars rows={windowed} scale={scale} sortKey={rankSort}
                      colourOf={colourOf} onToggle={onToggle}
                      atLimit={compare.atLimit} dim={compare.picks.length > 0} />

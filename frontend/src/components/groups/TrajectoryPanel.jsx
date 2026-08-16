@@ -221,7 +221,10 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
     return last != null && { c, y: ys(last), v: last }
   }).filter(Boolean).sort((a, b) => a.y - b.y)
   for (let i = 1; i < ends.length; i++) {
-    if (ends[i].y - ends[i - 1].y < 26) ends[i].y = ends[i - 1].y + 26
+    // 32, not 26: the label is a two-line block and it measures 32px tall, so
+    // a 26px minimum left consecutive blocks overlapping by six — which is
+    // what "Space" and "Rare Earth Metals" were doing, 0.15% apart.
+    if (ends[i].y - ends[i - 1].y < 32) ends[i].y = ends[i - 1].y + 32
   }
 
   return (
@@ -229,16 +232,24 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
       <div className="relative">
         <svg viewBox={`0 0 1000 ${H}`} className="w-full h-[190px] block"
              preserveAspectRatio="none">
-          {shade.length > 0 && (
-            <rect x={(xsPct(Math.min(...shade)) - (100 - LEFT - RIGHT) / (n - 1) / 2) * 10}
-                  y={4}
-                  width={(Math.max(...shade) - Math.min(...shade) + 1)
-                         * (100 - LEFT - RIGHT) / (n - 1) * 10 * 0.999}
-                  height={H - 8}
-                  /* ink at low alpha so the step reads the same in both themes */
-                  fill="var(--color-text)" opacity="0.07" />
-          )}
-          <line x1={LEFT * 10} x2={(100 - RIGHT) * 10 + 30} y1={ys(0)} y2={ys(0)}
+          {shade.length > 0 && (() => {
+            // A band is half a column either side of its samples, and at the
+            // ends that half has nothing under it: the last stretch's band ran
+            // to 937 in a plot that stops at 760, so it slid out from under
+            // the chart and lay beneath the end labels. Clamped to the plot.
+            const half = (100 - LEFT - RIGHT) / (n - 1) / 2
+            const x0 = Math.max(LEFT, xsPct(Math.min(...shade)) - half) * 10
+            const x1 = Math.min(100 - RIGHT, xsPct(Math.max(...shade)) + half) * 10
+            return (
+              <rect x={x0} y={4} width={x1 - x0} height={H - 8}
+                    /* ink at low alpha so the step reads the same in both themes */
+                    fill="var(--color-text)" opacity="0.07" />
+            )
+          })()}
+          {/* The benchmark ends where the data ends. It used to carry a +30
+              overshoot — 3% of the width past the last sample, sticking out
+              into the label reserve with no curve beside it. */}
+          <line x1={LEFT * 10} x2={(100 - RIGHT) * 10} y1={ys(0)} y2={ys(0)}
                 stroke="var(--color-text-muted)" strokeWidth="1"
                 vectorEffect="non-scaling-stroke" />
           {SEG.map((s, i) => (
@@ -290,16 +301,6 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
               style={{ left: `${LEFT}%`, top: ys(0), transform: 'translate(-110%, -50%)' }}>
           SPY
         </span>
-        {/* the chart's own extent — an axis without numbers is not an axis,
-            which was this page's first finding and applies to itself */}
-        <span className="absolute text-[10px] font-mono text-[var(--color-text-muted)]
-                         pointer-events-none" style={{ left: `${LEFT + 0.5}%`, top: 2 }}>
-          +{(top * 100).toFixed(2)}%/session
-        </span>
-        <span className="absolute text-[10px] font-mono text-[var(--color-text-muted)]
-                         pointer-events-none" style={{ left: `${LEFT + 0.5}%`, bottom: 2 }}>
-          {bot < 0 ? '−' : '+'}{(Math.abs(bot) * 100).toFixed(2)}%/session
-        </span>
         {/* Hidden below sm: at 390px these ran 51px past the right edge and
             took the whole page's width with them. The names are not lost —
             the chip bar above carries all three with the same colours, which
@@ -308,12 +309,19 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
           <span key={c.name}
                 className="hidden sm:block absolute text-[11px] font-mono whitespace-nowrap
                            pointer-events-none -translate-y-1/2"
-                style={{ left: `${100 - RIGHT + 1.2}%`, top: y, color: c.colour }}>
+                style={{ left: `${100 - RIGHT + 1.2}%`, top: y, color: c.colour,
+                         maxWidth: `${RIGHT - 2}%` }}>
             {/* name and number stacked, not strung together. In one column
                 the pair ran past the right edge — the panel is half as wide
                 as it was when the labels were written. */}
-            <span className="block">
-              {c.name.length > 16 ? `${c.name.slice(0, 15)}…` : c.name}
+            {/* Truncation is CSS, not a character count. The reserve is a
+                percentage of a panel that ranges 505–786px wide, so a fixed
+                16 chars was either cutting names that fit (1512: 36px spare)
+                or about to overflow (1280: 10px). An ellipsis against the
+                same percentage cuts exactly where the room actually runs
+                out — "Rare Earth Metals" now survives wherever it fits. */}
+            <span className="block font-semibold overflow-hidden text-ellipsis">
+              {c.name}
             </span>
             <span className="block text-[10px] text-[var(--color-text-muted)]">
               {v > 0 ? '+' : ''}{(v * 100).toFixed(2)}%
@@ -337,11 +345,7 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
           </span>
         ))}
       </div>
-      <p className="m-0 mt-1 text-[10px] font-mono text-[var(--color-text-muted)]"
-         style={{ paddingLeft: `${LEFT - 1}%` }}>
-        excess per session — each stretch divided by its own length, so a
-        five-session week and a forty-two-session run read on one scale
-      </p>
+
 
       {/* Ribbons share the chart's plot edges and its sample columns — one
           coordinate system, two readings: the curve is the path, the ribbon is

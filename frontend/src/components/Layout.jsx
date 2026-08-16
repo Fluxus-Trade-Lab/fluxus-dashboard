@@ -31,7 +31,6 @@ import BriefingPage from './briefing/BriefingPage'
 import BreadthPage from './breadth/BreadthPage'
 import CorrectionRiskPage from './breadth/CorrectionRiskPage'
 import GroupsPage from './groups/GroupsPage'
-import ThemeLeaderboard from './groups/ThemeLeaderboard'
 import ModelBooksPage from './modelbooks/ModelBooksPage'
 import PublicLayout from './public/PublicLayout'
 import LandingPage from './public/LandingPage'
@@ -240,7 +239,11 @@ export default function Layout({ data, lastUpdated, isOffline }) {
               the route survives so sent links keep working. */}
           {current === 'rs-rotation' && <GroupsPage />}
 
-          {current === 'rs-leaders' && <ThemeLeaderboard />}
+          {/* RS Leaderboard deleted. Its content — themes ranked, members
+              underneath — is what the Themes page now IS, from the Rank layer
+              down through the top-10 tables. Same treatment as RS Rotation
+              above: the route resolves so sent links land somewhere true. */}
+          {current === 'rs-leaders' && <GroupsPage />}
 
           {current === 'defense' && <Placeholder group="library" title="Defense"
             blurb="What to do when you are wrong, and what cash is for."

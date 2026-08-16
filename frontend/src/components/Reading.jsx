@@ -64,46 +64,55 @@ export function readMarketState(verdict) {
 }
 
 /**
- * Themes. Level and acceleration disagreeing is the whole reason the page has
- * two columns, so the line reports that disagreement when it exists.
+ * Themes.
  *
- * Reads `rs_accel_rate`, not `rs_accel`. The engine ships both and they are
- * not the same claim: rs_accel subtracts a two-month total from a one-month
- * total, so a theme running at a perfectly steady pace scores negative — it is
- * the validated GATE that separates Leading from Weakening, a high bar rather
- * than a slope. rs_accel_rate folds the prior stretch to a one-month rate, so
- * steady reads zero. This sentence says the words "decelerating" and
- * "accelerating" out loud, and those words mean slope.
+ * It follows the WINDOW. Until 2026-08-16 it did not — it read excess_3m no
+ * matter which of 1W / 1M / 3M was selected, so a reader looking at the week
+ * got a sentence about the quarter. Andy caught it the obvious way: Memory &
+ * Storage was up 15.6% on the week, plainly the standout on screen, and the
+ * line was talking about something else entirely.
  *
- * Concretely: on 2026-08-14 High Octane had rs_accel −0.173 and
- * rs_accel_rate +0.014. This line used to call it decelerating; its pace had
- * not fallen. The state badge still reads rs_accel, correctly — the gate is
- * the gate.
+ * Two clauses, and the second only when it has something to say.
+ *
+ * The first names who leads the window the reader chose. That is a restatement
+ * of the top bar, and it earns its place anyway: it is the anchor the rest of
+ * the sentence hangs off, and a narrator that never says the obvious thing
+ * reads as evasive.
+ *
+ * The second is the part the charts cannot say at a glance — the disagreement
+ * between where a theme IS and where it is GOING. Either the leader's own pace
+ * is falling, or there are themes still behind the benchmark that are speeding
+ * up. Named, not counted: "26 themes are accelerating from behind" is a number
+ * nobody can act on; the two furthest along are two places to look.
+ *
+ * Slope comes from `rs_accel_rate`, never `rs_accel`. The engine ships both and
+ * only the first is a slope — the second scores a steady outperformer negative
+ * on purpose, because it is the validated gate behind the four states.
  */
-export function readThemes(rows) {
+export function readThemes(rows, winKey = '3M') {
   const ok = (rows ?? []).filter(
-    (r) => r.excess_3m != null && r.rs_accel_rate != null,
+    (r) => Number.isFinite(r._value) && r.rs_accel_rate != null,
   )
   if (ok.length < 8) return null
 
-  const top = [...ok].sort((a, b) => b.excess_3m - a.excess_3m).slice(0, 4)
-  const fading = top.filter((r) => r.rs_accel_rate < 0).length
-  // Named, not counted. "26 themes are accelerating from behind" is a number
-  // nobody can act on; the two furthest along are two places to look.
-  const turning = ok.filter((r) => r.excess_3m < 0 && r.rs_accel_rate > 0)
+  const [leader] = [...ok].sort((a, b) => b._value - a._value)
+  if (!leader) return null
+  const window = winKey === '1W' ? 'the week'
+    : winKey === '1M' ? 'the month' : 'the quarter'
+  const pct = `${leader._value > 0 ? '+' : ''}${(leader._value * 100).toFixed(1)}%`
+  const lead = `${leader.group} leads ${window} at ${pct}`
+
+  const turning = ok.filter((r) => r._value < 0 && r.rs_accel_rate > 0)
     .sort((a, b) => b.rs_accel_rate - a.rs_accel_rate)
   const names = turning.slice(0, 2).map((r) => r.group).join(' and ')
 
-  if (fading === top.length && turning.length >= 3) {
-    return `Every one of the four strongest themes is decelerating; ${names} are accelerating from behind.`
-  }
-  if (fading === top.length) {
-    return 'Every one of the four strongest themes is decelerating.'
-  }
   if (turning.length >= 5) {
-    return `${names} lead the themes accelerating while still behind the benchmark.`
+    return `${lead}, while ${names} accelerate from behind it.`
   }
-  return null
+  if (leader.rs_accel_rate < 0) {
+    return `${lead}, but its pace is already falling.`
+  }
+  return `${lead}, and it is still speeding up.`
 }
 
 /**

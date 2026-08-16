@@ -120,15 +120,16 @@
      1.04, 1.10 and 1.15 to one, 1.0 to 3.7 L* apart. Three lines separated by
      hue at one lightness are one grey line in a screenshot, and this page is
      read in screenshots. So the three slots are a LIGHTNESS ladder now —
-     14, 27 and 40 L*, 12.7 to 26 apart — and the trajectory lines carry a
-     dash pattern as well, because colour alone should not have to hold three
-     identities apart. The vote legend on the dashboard settled this same
+     12, 26 and 40 L*, 14 to 28 apart — and their hues sit about 120° apart as
+     well, because at a dot's size a lightness ladder alone still read as three
+     near-neighbours (Andy, 2026-08-16). The trajectory lines carry a dash
+     pattern too, so neither channel is holding three identities on its own. The vote legend on the dashboard settled this same
      question the same way years of hatching ago.
 
      On #e2e0d6: 11.8 / 7.9 / 4.9. */
-  --color-slot-1: #1c252b;
-  --color-slot-2: #32442e;
-  --color-slot-3: #6f5b47;
+  --color-slot-1: #12212e;
+  --color-slot-2: #184718;
+  --color-slot-3: #895028;
   /* Same split as accent-solid, for the destructive button. The pair's red
      cannot move — its separation from the blue is load-bearing — so the fill
      that has to carry white text is its own token. White on it: 4.94. */
@@ -258,9 +259,9 @@ html.dark {
   --color-accent-solid: #47749a;  /* white on it: 4.96 */
   /* The same ladder inverted — 92 / 76 / 62 L*, 13.9 to 29.9 apart.
      On #282421: 12.6 / 8.1 / 5.2. */
-  --color-slot-1: #e3e9ec;
-  --color-slot-2: #a8c3a1;
-  --color-slot-3: #ae9175;
+  --color-slot-1: #e0e9f2;
+  --color-slot-2: #85cd83;
+  --color-slot-3: #c48658;
   --color-loss-solid: #cc3c2f;
 
   --color-profit: #8bbcec;
