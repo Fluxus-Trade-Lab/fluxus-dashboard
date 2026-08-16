@@ -9,9 +9,16 @@ const SAMPLE_STATS = {
   totalTrades: 331,
   profitFactor: 2.48,
   avgHoldDays: 7.5,
-  // Recomputed from daily MTM equity BY PERCENT (2026-01-28 → 2026-03-19).
-  // The review engine picks the drawdown by dollar amount and reports -11.1%;
-  // that is the selection error documented in the masterclass, L15.4.
+  // Deepest MTM decline BY PERCENT: -17.9% (2026-01-28 -> 2026-03-19).
+  //
+  // Two conventions exist and they disagree. compute_mtm_drawdown() in
+  // pipeline/portfolio/h1_report.py returns both and calls the DOLLAR-max one
+  // canonical: -11.1% / -$223k (2026-06-02 -> 2026-06-10, on a ~$2.00M peak).
+  // The masterclass (L15.4) and the Track Record standard both say percent, on
+  // the grounds that a later dollar-drop on a bigger account understates the
+  // real damage. We publish the percent figure to stay consistent with those.
+  // If the canonical label in h1_report.py is the one that is right, this
+  // number and the course both need to change — it is a decision, not a bug.
   maxDrawdown: -17.9,
 }
 

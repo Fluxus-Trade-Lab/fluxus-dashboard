@@ -1,6 +1,6 @@
 {
   "_source": "data/portfolio/reviews/h1_2026.json (H1 2026, 2025-12-31 → 2026-07-22)",
-  "_note": "maxDrawdown is recomputed from daily mark-to-market equity by PERCENT. The review engine selects it by dollar amount and reports -11.1%; by percent the worst episode is 2026-01-28 → 2026-03-19. This is the error L15.4 documents.",
+  "_note": "maxDrawdown is the deepest MTM decline BY PERCENT (-17.9%, 2026-01-28 -> 2026-03-19). h1_report.compute_mtm_drawdown() returns two conventions and labels the DOLLAR-max one canonical (-11.1%, 2026-06-02 -> 2026-06-10). The masterclass L15.4 and the Track Record standard both use percent, so that is what is published here. The two labels disagree; reconciling them is a decision, not a bug fix.",
   "stats": {
     "winRate": 39.9,
     "avgReturn": 0.88,
