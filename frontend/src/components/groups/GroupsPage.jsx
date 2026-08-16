@@ -143,7 +143,10 @@ export default function GroupsPage() {
   // Which picks have their member table open. Keyed by name, survives
   // re-picks; the panel itself only mounts (and only fetches the universe)
   // while open.
-  const [openMembers, setOpenMembers] = useState(() => new Set())
+  // One at a time. Three tables open at once pushed the comparison column
+  // hundreds of pixels past the ranking and turned a paired layout into a
+  // scroll; and a members table is a thing you read one of, not three of.
+  const [openMember, setOpenMember] = useState(null)
   const spy = useSpyRow()
   const compare = useThemeCompare()
 
@@ -252,16 +255,12 @@ export default function GroupsPage() {
           {compare.picks.map((pick) => {
             const row = byName.get(pick.name)
             if (!row?.tickers?.length) return null
-            const open = openMembers.has(pick.name)
+            const open = openMember === pick.name
             return (
               <div key={pick.name} className="mt-2">
                 <button type="button"
-                        onClick={() => setOpenMembers((prev) => {
-                          const next = new Set(prev)
-                          if (next.has(pick.name)) next.delete(pick.name)
-                          else next.add(pick.name)
-                          return next
-                        })}
+                        onClick={() => setOpenMember((cur) =>
+                          cur === pick.name ? null : pick.name)}
                         className="w-full flex items-baseline gap-2.5 bg-transparent border-0
                                    p-0 cursor-pointer text-left group">
                   <span className="text-[10px] font-mono text-[var(--color-text-muted)]

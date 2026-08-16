@@ -33,12 +33,13 @@ const pct = (v) =>
 export default function ThemeMembers({ theme, colour, rsByTicker }) {
   const { universe } = useUniverse()
 
-  // Eight rows, on the theme's own ordering. A drill-down that prints 286
-  // rows is a second screener, and the question this answers is "what is
-  // actually in here" — which the head answers and the tail does not. Eight
-  // rather than ten because each row swings the right column 23px past the
-  // left, and the two are meant to read as a pair.
-  const TOP = 8
+  // Eight rows of height, not eight rows of data. Every member is rendered;
+  // the box is sized to show eight and scrolls for the rest, so the panel's
+  // cost to the layout is fixed no matter whether a theme holds nine members
+  // or 286 — which is what lets the two columns stay a pair.
+  const VISIBLE = 8
+  const ROW = 23.5        // measured row pitch
+  const HEAD_H = 25
 
   const { rows, missing } = useMemo(() => {
     if (!theme?.tickers || !universe) return { rows: [], missing: 0 }
@@ -72,11 +73,14 @@ export default function ThemeMembers({ theme, colour, rsByTicker }) {
       {/* the denominator is always stated: a list that silently shows ten of
           286 is a list that lies about what it is */}
       <p className="m-0 pb-1.5 text-[10px] text-[var(--color-text-muted)]">
-        top {Math.min(TOP, rows.length)} of {rows.length}
+        {rows.length} member{rows.length === 1 ? '' : 's'}
         {rows.length !== theme.members ? ` carried · ${missing} not in the universe` : ''}
         {' · by 3M relative strength'}
+        {rows.length > VISIBLE ? ' · scroll for the rest' : ''}
       </p>
-      <div className="overflow-x-auto">
+      <div className="overflow-auto"
+           style={{ maxHeight: rows.length > VISIBLE
+             ? `${HEAD_H + VISIBLE * ROW}px` : undefined }}>
         <table className="w-full text-[11px] border-collapse">
           <thead>
             <tr className="text-[10px] font-mono uppercase tracking-wider
@@ -91,7 +95,7 @@ export default function ThemeMembers({ theme, colour, rsByTicker }) {
             </tr>
           </thead>
           <tbody>
-            {rows.slice(0, TOP).map((r) => (
+            {rows.map((r) => (
               <tr key={r.ticker}
                   className="border-t border-[var(--color-border-light)]
                              hover:bg-[var(--color-hover-bg)]">
