@@ -66,19 +66,32 @@ export function readMarketState(verdict) {
 /**
  * Themes. Level and acceleration disagreeing is the whole reason the page has
  * two columns, so the line reports that disagreement when it exists.
+ *
+ * Reads `rs_accel_rate`, not `rs_accel`. The engine ships both and they are
+ * not the same claim: rs_accel subtracts a two-month total from a one-month
+ * total, so a theme running at a perfectly steady pace scores negative — it is
+ * the validated GATE that separates Leading from Weakening, a high bar rather
+ * than a slope. rs_accel_rate folds the prior stretch to a one-month rate, so
+ * steady reads zero. This sentence says the words "decelerating" and
+ * "accelerating" out loud, and those words mean slope.
+ *
+ * Concretely: on 2026-08-14 High Octane had rs_accel −0.173 and
+ * rs_accel_rate +0.014. This line used to call it decelerating; its pace had
+ * not fallen. The state badge still reads rs_accel, correctly — the gate is
+ * the gate.
  */
 export function readThemes(rows) {
   const ok = (rows ?? []).filter(
-    (r) => r.excess_3m != null && r.rs_accel != null,
+    (r) => r.excess_3m != null && r.rs_accel_rate != null,
   )
   if (ok.length < 8) return null
 
   const top = [...ok].sort((a, b) => b.excess_3m - a.excess_3m).slice(0, 4)
-  const fading = top.filter((r) => r.rs_accel < 0).length
+  const fading = top.filter((r) => r.rs_accel_rate < 0).length
   // Named, not counted. "26 themes are accelerating from behind" is a number
   // nobody can act on; the two furthest along are two places to look.
-  const turning = ok.filter((r) => r.excess_3m < 0 && r.rs_accel > 0)
-    .sort((a, b) => b.rs_accel - a.rs_accel)
+  const turning = ok.filter((r) => r.excess_3m < 0 && r.rs_accel_rate > 0)
+    .sort((a, b) => b.rs_accel_rate - a.rs_accel_rate)
   const names = turning.slice(0, 2).map((r) => r.group).join(' and ')
 
   if (fading === top.length && turning.length >= 3) {

@@ -5,7 +5,6 @@ import Reading, { readThemes } from '../Reading'
 import { useGroups } from '../../hooks/useGroups'
 import GroupTable from './GroupTable'
 import ThemeBars, { barStyle } from './ThemeBars'
-import RsSegments from './RsSegments'
 import CompareBar from './CompareBar'
 import TrajectoryPanel from './TrajectoryPanel'
 import ThemeMembers from './ThemeMembers'
@@ -147,6 +146,9 @@ export default function GroupsPage() {
   // hundreds of pixels past the ranking and turned a paired layout into a
   // scroll; and a members table is a thing you read one of, not three of.
   const [openMember, setOpenMember] = useState(null)
+  // Rank by the window the page is set to, or by how the pace has changed —
+  // the second question the stretch cells answer.
+  const [rankSort, setRankSort] = useState('window')
   const spy = useSpyRow()
   const compare = useThemeCompare()
 
@@ -236,9 +238,30 @@ export default function GroupsPage() {
       <div className="xl:grid xl:grid-cols-2 xl:gap-x-8 xl:items-start">
         <div className="min-w-0 order-2 xl:order-1">
         <Section label="Ranked"
-                 note={`${measured} of ${rows.length} measured · scale ±${(scale * 100).toFixed(0)}%`}
-                 right={<StateCensus rows={rows} />}>
-          <ThemeBars rows={windowed} scale={scale}
+                 note={`${measured} of ${rows.length} · scale ±${(scale * 100).toFixed(0)}%`
+                       + ` · the three cells are the quarter's stretches, excess per session`}
+                 right={
+                   <div className="flex items-center gap-3">
+                     {/* The second question the cells answer, made explicit.
+                         "by pace" reads rs_accel_rate — the engine's slope —
+                         not rs_accel, which is the gate behind the states and
+                         scores a steady outperformer negative on purpose. */}
+                     <div className="flex gap-1" role="group" aria-label="rank by">
+                       {[['window', `by ${winKey}`], ['pace', 'by change in pace']].map(([k, label]) => (
+                         <button key={k} type="button" onClick={() => setRankSort(k)}
+                                 aria-pressed={rankSort === k}
+                                 className={`px-2 py-[3px] text-[10px] font-mono rounded cursor-pointer
+                                             border-none transition-colors ${rankSort === k
+                                   ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
+                                   : 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
+                           {label}
+                         </button>
+                       ))}
+                     </div>
+                     <StateCensus rows={rows} />
+                   </div>
+                 }>
+          <ThemeBars rows={windowed} scale={scale} sortKey={rankSort}
                      colourOf={colourOf} onToggle={onToggle}
                      atLimit={compare.atLimit} dim={compare.picks.length > 0} />
         </Section>
@@ -285,15 +308,6 @@ export default function GroupsPage() {
         </Section>
         </div>
       </div>
-
-      {/* Same units as the trajectory panel above, and the same three
-          stretches — Compare reads three themes closely, this reads ten at a
-          glance. Before 2026-08-16 it drew four stretches as raw totals while
-          Compare drew three as rates, and the page said two things. */}
-      <Reference label="Where the lead was earned" count={10}
-                 note="top 10 · excess per session · the quarter's three stretches">
-        <RsSegments rows={rows} />
-      </Reference>
 
       <Reference label="Full table" count={rows.length}
                  note="all columns, sortable">

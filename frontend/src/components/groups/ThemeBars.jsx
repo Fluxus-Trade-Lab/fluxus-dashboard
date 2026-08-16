@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { QUARTER_SEGMENTS, ratePerSession, paceChange } from './segments'
 
 /**
  * The ranking: one bar per theme, ordered on the window chosen at page level.
@@ -26,6 +27,20 @@ import { useState } from 'react'
  * revision and then dropped at Andy's call. So the page no longer states the
  * median anywhere: that reading is gone, not relocated. Written down because
  * a thing deliberately removed and a thing forgotten look identical later.
+ *
+ * THE STRETCHES CAME TOO. "Where the lead was earned" was a separate section
+ * showing the same themes in the same order with their quarter decomposed —
+ * which made it the ranking's own head, printed twice, in a block that did not
+ * follow the window the page was ranking on. It is three cells per row now.
+ *
+ * Uniform geometry, varying ink: same width, same height, only the density
+ * changes. Andy's read on the earlier version was that bars of varying height
+ * looked ragged, and he was right — height was carrying the value, so three
+ * cells came out three different sizes for no reason a reader benefits from.
+ *
+ * And the sort follows: rank by the window, or rank by the change in pace.
+ * Because the cells are per session, choosing pace puts rows at the top that
+ * visibly darken left to right. The chart shows why it is sorted that way.
  *
  * Rows are selection targets (same gesture as the dots and the search). The
  * affordance is shown, not written: a + surfaces on hover at the row's end,
@@ -80,12 +95,22 @@ const HEAD = 12
 const TAIL = 4
 const NEIGHBOURS = 1
 
-export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, dim }) {
+export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, dim,
+                                   sortKey = 'window' }) {
   const [showAll, setShowAll] = useState(false)
+  const key = sortKey === 'pace' ? paceChange : (r) => r._value
   const sorted = [...rows]
-    .filter((r) => Number.isFinite(r._value))
-    .sort((a, b) => b._value - a._value)
+    .filter((r) => Number.isFinite(r._value) && key(r) != null)
+    .sort((a, b) => key(b) - key(a))
   if (!sorted.length) return null
+
+  // One scale for every cell on screen, so a darker cell is a bigger number
+  // in any row and any column.
+  const legScale = sorted.reduce((m, r) =>
+    QUARTER_SEGMENTS.reduce((mm, sg) => {
+      const v = ratePerSession(r, sg)
+      return v == null ? mm : Math.max(mm, Math.abs(v))
+    }, m), 0) || 1
 
 
 
@@ -154,6 +179,7 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
                  borderLeft: colour ? `3px solid ${colour}` : '3px solid transparent',
                }}
                className={`group grid grid-cols-[24px_1fr_18px]
+                          sm:grid-cols-[24px_1fr_84px_18px]
                           gap-2 items-center py-[3px] pl-1 transition-opacity
                           outline-none focus-visible:ring-1
                           focus-visible:ring-[var(--color-text-muted)]
@@ -214,6 +240,26 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
                 {v > 0 ? '+' : ''}{(v * 100).toFixed(1)}%
               </span>
             </span>
+            </span>
+
+            {/* the quarter's three stretches, oldest at the left. Equal cells;
+                only the ink moves. */}
+            <span className="hidden sm:flex gap-[2px] items-center">
+              {QUARTER_SEGMENTS.map((sg) => {
+                const v = ratePerSession(r, sg)
+                if (v == null) {
+                  return <i key={sg.key} className="flex-1 h-[11px] rounded-[2px] border border-dashed"
+                            style={{ borderColor: 'var(--color-untested)' }}
+                            title={`${sg.label}: not measured`} />
+                }
+                return (
+                  <i key={sg.key} className="flex-1 h-[11px] rounded-[2px]"
+                     style={{ background: v > 0 ? 'var(--color-took)' : 'var(--color-refused)',
+                              opacity: (0.12 + Math.min(1, Math.abs(v) / legScale) * 0.88).toFixed(2) }}
+                     title={`${sg.label}: ${v > 0 ? '+' : ''}${(v * 100).toFixed(2)}% per session`
+                       + ` · ${sg.sessions} sessions, ${r[sg.key] > 0 ? '+' : ''}${(r[sg.key] * 100).toFixed(1)}% over the stretch`} />
+                )
+              })}
             </span>
 
             <span aria-hidden

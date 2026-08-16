@@ -37,36 +37,18 @@ export function ratePerSession(row, seg) {
 }
 
 /**
- * The change in pace: how fast a theme is running lately against how fast it
- * ran before, both per session.
+ * The slope, straight from the engine.
  *
- * The engine ships `rs_accel` for this, and it is NOT the same number. That one
- * subtracts a 42-session bucket's TOTAL from a 21-session bucket's total, so a
- * theme running at a perfectly constant pace scores negative — the longer
- * bucket simply accumulated more. High Octane is the clearest case: rs_accel
- * −0.173, which reads as a collapse and classifies it Weakening, while its
- * pace went 0.83% per session to 0.80% — a rounding error by comparison.
- * Across the 76 themes the two disagree in SIGN on nine of them.
+ * This used to be computed here, because the field did not exist yet. It does
+ * now: `rs_accel_rate` is the same comparison with the prior stretch folded to
+ * a one-month rate, so a steady pace reads zero. Two implementations of one
+ * definition is how two numbers start disagreeing — and these two did, in sign,
+ * on High Octane — so the local one is gone and the pipeline owns it.
  *
- * rs_accel is not wrong — rs_engine.py records that the scheme was validated
- * across 139 ETFs over two years and the Leading-minus-Lagging spread held up
- * on all four tests, so the bias may well be load-bearing as a stricter filter.
- * It is simply not a comparison of pace, which is what a chart of per-session
- * bars is showing. Sorting those bars by rs_accel would put visibly flat rows
- * at the top of a "decelerating" list.
- *
- * So this is computed here, in the units the bars are drawn in, and it is
- * named for what it measures rather than borrowing the engine's word.
+ * Not to be confused with `rs_accel`, which is the validated gate behind the
+ * four states and scores a steady outperformer negative on purpose.
  */
 export function paceChange(row) {
-  const [prior, ...recent] = QUARTER_SEGMENTS
-  const priorRate = ratePerSession(row, prior)
-  if (priorRate == null) return null
-  let sum = 0, sessions = 0
-  for (const s of recent) {
-    const v = row?.[s.key]
-    if (!Number.isFinite(v)) return null
-    sum += v; sessions += s.sessions
-  }
-  return sessions ? sum / sessions - priorRate : null
+  const v = row?.rs_accel_rate
+  return Number.isFinite(v) ? v : null
 }
