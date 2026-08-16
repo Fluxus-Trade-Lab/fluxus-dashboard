@@ -1,30 +1,37 @@
 import { useState, useEffect } from 'react'
 
+// Real H1 2026 figures — source: data/portfolio/reviews/h1_2026.json.
+// These are the FALLBACKS; performance.json carries the same numbers. They used
+// to be invented placeholders (72% win rate, 347 trades) sitting on a public page.
 const SAMPLE_STATS = {
-  winRate: 72,
-  avgReturn: 2.1,
-  totalTrades: 347,
-  profitFactor: 3.2,
-  avgHoldDays: 4.8,
-  maxDrawdown: -8.4,
+  winRate: 39.9,
+  avgReturn: 0.88,
+  totalTrades: 331,
+  profitFactor: 2.48,
+  avgHoldDays: 7.5,
+  // Recomputed from daily MTM equity BY PERCENT (2026-01-28 → 2026-03-19).
+  // The review engine picks the drawdown by dollar amount and reports -11.1%;
+  // that is the selection error documented in the masterclass, L15.4.
+  maxDrawdown: -17.9,
 }
 
 const SAMPLE_MONTHLY = [
-  { month: 'Oct 2025', trades: 28, winRate: 75, returnR: 18.2 },
-  { month: 'Nov 2025', trades: 31, winRate: 68, returnR: 14.5 },
-  { month: 'Dec 2025', trades: 22, winRate: 77, returnR: 16.8 },
-  { month: 'Jan 2026', trades: 35, winRate: 71, returnR: 21.3 },
-  { month: 'Feb 2026', trades: 29, winRate: 69, returnR: 12.7 },
-  { month: 'Mar 2026', trades: 24, winRate: 75, returnR: 15.1 },
+  { month: 'Jan 2026', trades: 36, pnl: 43710 },
+  { month: 'Feb 2026', trades: 23, pnl: 9569 },
+  { month: 'Mar 2026', trades: 58, pnl: 20370 },
+  { month: 'Apr 2026', trades: 59, pnl: 141337 },
+  { month: 'May 2026', trades: 70, pnl: 319907 },
+  { month: 'Jun 2026', trades: 57, pnl: 271142 },
+  { month: 'Jul 2026', trades: 28, pnl: 99220 },
 ]
 
 const SAMPLE_RECENT = [
-  { ticker: 'PLTR', entry: '2026-03-14', exit: '2026-03-19', returnR: 2.8, result: 'win' },
-  { ticker: 'NVDA', entry: '2026-03-10', exit: '2026-03-13', returnR: -1.0, result: 'loss' },
-  { ticker: 'CELH', entry: '2026-03-07', exit: '2026-03-12', returnR: 3.4, result: 'win' },
-  { ticker: 'ANET', entry: '2026-03-05', exit: '2026-03-10', returnR: 1.9, result: 'win' },
-  { ticker: 'CRWD', entry: '2026-03-03', exit: '2026-03-06', returnR: 2.1, result: 'win' },
-  { ticker: 'SMCI', entry: '2026-02-28', exit: '2026-03-04', returnR: -0.7, result: 'loss' },
+  { ticker: 'ALAB', entry: '2026-05-12', exit: '2026-06-23', returnR: 21.0, result: 'win' },
+  { ticker: 'DOCN', entry: '2026-04-14', exit: '2026-07-09', returnR: 17.4, result: 'win' },
+  { ticker: 'BE',   entry: '2026-04-08', exit: '2026-04-28', returnR: 7.3,  result: 'win' },
+  { ticker: 'SNDK', entry: '2026-06-24', exit: '2026-06-25', returnR: 4.1,  result: 'win' },
+  { ticker: 'BABA', entry: '2026-01-11', exit: '2026-04-23', returnR: -4.2, result: 'loss' },
+  { ticker: 'CRCL', entry: '2026-05-10', exit: '2026-05-15', returnR: -1.3, result: 'loss' },
 ]
 
 function StatCard({ label, value, suffix }) {
@@ -84,8 +91,7 @@ export default function ResultsPage() {
                 <tr className="border-b border-[var(--color-border)]">
                   <th className="text-left py-2 font-medium text-[var(--color-text-muted)] uppercase text-xs tracking-wide">Month</th>
                   <th className="text-right py-2 font-medium text-[var(--color-text-muted)] uppercase text-xs tracking-wide">Trades</th>
-                  <th className="text-right py-2 font-medium text-[var(--color-text-muted)] uppercase text-xs tracking-wide">Win Rate</th>
-                  <th className="text-right py-2 font-medium text-[var(--color-text-muted)] uppercase text-xs tracking-wide">Return (R)</th>
+                  <th className="text-right py-2 font-medium text-[var(--color-text-muted)] uppercase text-xs tracking-wide">P&amp;L</th>
                 </tr>
               </thead>
               <tbody>
@@ -93,9 +99,8 @@ export default function ResultsPage() {
                   <tr key={m.month} className="border-b border-[var(--color-border-light)]">
                     <td className="py-2 text-[var(--color-text)]">{m.month}</td>
                     <td className="py-2 text-right font-mono text-[var(--color-text-secondary)]">{m.trades}</td>
-                    <td className="py-2 text-right font-mono text-[var(--color-text-secondary)]">{m.winRate}%</td>
-                    <td className={`py-2 text-right font-mono ${m.returnR >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
-                      {m.returnR >= 0 ? '+' : ''}{m.returnR}R
+                    <td className={`py-2 text-right font-mono ${m.pnl >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>
+                      {m.pnl >= 0 ? '+' : '-'}${Math.abs(m.pnl).toLocaleString()}
                     </td>
                   </tr>
                 ))}

@@ -21,8 +21,25 @@
  *
  * The window chosen up top is shaded across the chart, so "what you are
  * ranking on" and "how it got there" stay visibly the same stretch of time.
+ *
+ * 2026-08-16 — the y-axis is excess PER SESSION, not the stretch's total, and
+ * the chart covers the quarter only. Both changes are Andy's call and the
+ * first one is not cosmetic.
+ *
+ * The stretches are 42, 16 and 5 sessions long. Plotted raw, a shorter stretch
+ * yields a smaller number for purely mechanical reasons, so almost every theme
+ * appears to fade toward the right edge — including ones whose pace has not
+ * changed at all. High Octane read +34.7% → +12.9% → +3.8%, which looks like a
+ * collapse; per session it is 0.83% → 0.81% → 0.76%, which is a straight line.
+ * Cybersecurity runs the other way: +35.7% → +1.8% → −0.3% reads as a slowdown
+ * while per session it is 0.85% → 0.11% → −0.06%, already negative.
+ *
+ * Dividing by the stretch's length is the whole fix, and it lands the axis on
+ * the same quantity the field quadrant plots vertically (acceleration), so the
+ * two layers of this page now corroborate instead of each saying its own thing.
+ * The stretch's own total is not lost — it is in every dot's tooltip.
  */
-import { SEGMENTS } from './segments'
+import { SEGMENTS, QUARTER_SEGMENTS, ratePerSession } from './segments'
 import { barStyle } from './ThemeBars'
 
 /**
@@ -69,16 +86,16 @@ function valueColour(v, span) {
  * stay countable.
  */
 function Ribbon({ row, span, xsPct }) {
-  const vals = SEGMENTS.map((s) => row[s.key])
+  const vals = QUARTER_SEGMENTS.map((s) => ratePerSession(row, s))
   const stops = vals.map((v, i) => `${valueColour(v, span)} ${xsPct(i)}%`)
   return (
     <div className="relative h-[10px]"
          style={{ background: `linear-gradient(90deg, ${stops.join(', ')})` }}
          role="img" aria-label={`${row.group} excess by stretch`}>
-      {SEGMENTS.map((seg, i) => {
+      {QUARTER_SEGMENTS.map((seg, i) => {
         const v = vals[i]
         const lo = i === 0 ? 0 : (xsPct(i - 1) + xsPct(i)) / 2
-        const hi = i === SEGMENTS.length - 1 ? 100 : (xsPct(i) + xsPct(i + 1)) / 2
+        const hi = i === QUARTER_SEGMENTS.length - 1 ? 100 : (xsPct(i) + xsPct(i + 1)) / 2
         const dead = v == null || !Number.isFinite(v)
         return (
           <span key={seg.key} className="absolute inset-y-0"
@@ -87,7 +104,9 @@ function Ribbon({ row, span, xsPct }) {
                             its neighbours — it wears the dashed outline */
                          border: dead ? '1px dashed var(--color-untested)' : undefined }}
                 title={`${seg.label}: ${dead ? 'not measured'
-                  : `${v > 0 ? '+' : ''}${(v * 100).toFixed(1)}%`}`} />
+                  : `${v > 0 ? '+' : ''}${(v * 100).toFixed(2)}%/session`
+                    + ` · ${seg.sessions} sessions · stretch total `
+                    + `${row[seg.key] > 0 ? '+' : ''}${(row[seg.key] * 100).toFixed(1)}%`}`} />
         )
       })}
     </div>
@@ -151,18 +170,30 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
   // crisp at any width.
   const H = 190, PADY = 24
   const LEFT = 5, RIGHT = 20            // % of width reserved either side
-  const n = SEGMENTS.length
+  const SEG = QUARTER_SEGMENTS
+  const n = SEG.length
   const xsPct = (i) => LEFT + (i / (n - 1)) * (100 - LEFT - RIGHT)
-  const all = chosen.flatMap((c) => SEGMENTS.map((s) => c.row[s.key]))
+  const all = chosen.flatMap((c) => SEG.map((s) => ratePerSession(c.row, s)))
     .filter((v) => Number.isFinite(v))
-  const span = Math.max(...all.map(Math.abs), 0.02)
+  // 0.001 = a tenth of a percent per session; below that the axis is noise
+  const span = Math.max(...all.map(Math.abs), 0.001)
   const ys = (v) => H / 2 - (v / span) * (H / 2 - PADY)
+
+  // The window buttons index into SEGMENTS, which still has four entries; this
+  // chart draws three. Remapping rather than subtracting one keeps the shade on
+  // the right stretch if the segment list ever changes shape again.
+  const hl = (highlight || [])
+    .map((i) => SEG.indexOf(SEGMENTS[i]))
+    .filter((i) => i >= 0)
+  // Shading all three says nothing — 3M IS the chart.
+  const shade = hl.length > 0 && hl.length < n ? hl : []
 
   // End labels in HTML, nudged apart so converging lines cannot smear them.
   const ends = chosen.map((c) => {
     let last = null
-    SEGMENTS.forEach((s) => {
-      if (Number.isFinite(c.row[s.key])) last = c.row[s.key]
+    SEG.forEach((s) => {
+      const r = ratePerSession(c.row, s)
+      if (Number.isFinite(r)) last = r
     })
     return last != null && { c, y: ys(last), v: last }
   }).filter(Boolean).sort((a, b) => a.y - b.y)
@@ -175,10 +206,10 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
       <div className="relative">
         <svg viewBox={`0 0 1000 ${H}`} className="w-full h-[190px] block"
              preserveAspectRatio="none">
-          {highlight?.length > 0 && (
-            <rect x={(xsPct(Math.min(...highlight)) - (100 - LEFT - RIGHT) / (n - 1) / 2) * 10}
+          {shade.length > 0 && (
+            <rect x={(xsPct(Math.min(...shade)) - (100 - LEFT - RIGHT) / (n - 1) / 2) * 10}
                   y={4}
-                  width={(Math.max(...highlight) - Math.min(...highlight) + 1)
+                  width={(Math.max(...shade) - Math.min(...shade) + 1)
                          * (100 - LEFT - RIGHT) / (n - 1) * 10 * 0.999}
                   height={H - 8}
                   fill="var(--color-hover-bg)" opacity="0.3" />
@@ -186,15 +217,15 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
           <line x1={LEFT * 10} x2={(100 - RIGHT) * 10 + 30} y1={H / 2} y2={H / 2}
                 stroke="var(--color-text-muted)" strokeWidth="1"
                 vectorEffect="non-scaling-stroke" />
-          {SEGMENTS.map((s, i) => (
+          {SEG.map((s, i) => (
             <line key={s.key} x1={xsPct(i) * 10} x2={xsPct(i) * 10} y1={10} y2={H - 10}
                   stroke="var(--color-border)" strokeWidth="1"
                   vectorEffect="non-scaling-stroke" />
           ))}
 
           {chosen.map((c) => {
-            const pts = SEGMENTS.map((s, i) => {
-              const v = c.row[s.key]
+            const pts = SEG.map((s, i) => {
+              const v = ratePerSession(c.row, s)
               return Number.isFinite(v) ? `${xsPct(i) * 10},${ys(v)}` : null
             })
             const runs = []
@@ -212,12 +243,15 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
                         fill="none" stroke={c.colour} strokeWidth="2"
                         vectorEffect="non-scaling-stroke" strokeLinecap="round" />
                 ))}
-                {SEGMENTS.map((s, i) => {
-                  const v = c.row[s.key]
+                {SEG.map((s, i) => {
+                  const v = ratePerSession(c.row, s)
                   if (!Number.isFinite(v)) return null
                   return (
                     <circle key={s.key} cx={xsPct(i) * 10} cy={ys(v)} r="3.4" fill={c.colour}>
-                      <title>{c.name} · {s.label}: {v > 0 ? '+' : ''}{(v * 100).toFixed(1)}%</title>
+                      {/* both readings: the pace, and the total it came from */}
+                      <title>{c.name} · {s.label}: {v > 0 ? '+' : ''}{(v * 100).toFixed(2)}% per session
+                        {' · '}{s.sessions} sessions, {c.row[s.key] > 0 ? '+' : ''}
+                        {(c.row[s.key] * 100).toFixed(1)}% over the stretch</title>
                     </circle>
                   )
                 })}
@@ -235,11 +269,11 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
             which was this page's first finding and applies to itself */}
         <span className="absolute text-[10px] font-mono text-[var(--color-text-muted)]
                          pointer-events-none" style={{ left: `${LEFT + 0.5}%`, top: 2 }}>
-          +{(span * 100).toFixed(0)}%
+          +{(span * 100).toFixed(2)}%/session
         </span>
         <span className="absolute text-[10px] font-mono text-[var(--color-text-muted)]
                          pointer-events-none" style={{ left: `${LEFT + 0.5}%`, bottom: 2 }}>
-          −{(span * 100).toFixed(0)}%
+          −{(span * 100).toFixed(2)}%/session
         </span>
         {ends.map(({ c, y, v }) => (
           <span key={c.name}
@@ -247,7 +281,7 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
                            pointer-events-none -translate-y-1/2"
                 style={{ left: `${100 - RIGHT + 1.2}%`, top: y, color: c.colour }}>
             {c.name.length > 18 ? `${c.name.slice(0, 17)}…` : c.name}
-            {' '}{v > 0 ? '+' : ''}{(v * 100).toFixed(1)}%
+            {' '}{v > 0 ? '+' : ''}{(v * 100).toFixed(2)}%
           </span>
         ))}
       </div>
@@ -255,14 +289,23 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
       <div className="flex justify-between text-[10px] font-mono
                       text-[var(--color-text-muted)]"
            style={{ paddingLeft: `${LEFT - 1}%`, paddingRight: `${RIGHT - 1}%` }}>
-        {SEGMENTS.map((s, i) => (
-          <span key={s.key} title={s.note}
-                className={highlight?.includes(i)
+        {SEG.map((s, i) => (
+          <span key={s.key} title={`${s.note} · ${s.sessions} sessions`}
+                className={hl.includes(i)
                   ? 'text-[var(--color-text-secondary)] font-semibold' : ''}>
             {s.label}
+            {/* the length is the reason the axis is a rate; printing it here
+                means the reader never has to take that on trust — so it has to
+                be legible. --color-border is a hairline, not an ink: 1.29:1. */}
+            <span className="text-[var(--color-text-muted)] font-normal"> · {s.sessions}</span>
           </span>
         ))}
       </div>
+      <p className="m-0 mt-1 text-[10px] font-mono text-[var(--color-text-muted)]"
+         style={{ paddingLeft: `${LEFT - 1}%` }}>
+        excess per session — each stretch divided by its own length, so a
+        five-session week and a forty-two-session run read on one scale
+      </p>
 
       {/* Ribbons share the chart's plot edges and its sample columns — one
           coordinate system, two readings: the curve is the path, the ribbon is

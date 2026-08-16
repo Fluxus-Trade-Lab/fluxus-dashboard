@@ -21,7 +21,9 @@ import { useCallback, useEffect, useState } from 'react'
 /* v3: identity colours for the three compare slots. Deliberately NOT the
    pair's blue or red — these say "which line is this", never "which side is
    this" — so they sit off the pair's hues entirely. */
-export const SLOT_COLOURS = ['#6b7f8c', '#8c7f6b', '#7d6b8c']
+export const SLOT_COLOURS = [
+  'var(--color-slot-1)', 'var(--color-slot-2)', 'var(--color-slot-3)',
+]
 export const MAX_COMPARE = SLOT_COLOURS.length
 
 const KEY = 'themes-compare'
@@ -29,7 +31,16 @@ const KEY = 'themes-compare'
 function load() {
   try {
     const raw = JSON.parse(localStorage.getItem(KEY) ?? '[]')
-    return Array.isArray(raw) ? raw.slice(0, MAX_COMPARE) : []
+    if (!Array.isArray(raw)) return []
+    // Picks persist across sessions, and the slot colours became CSS variables
+    // on 2026-08-16 — a pick saved before that carries a literal hex. Left
+    // alone it would render its old colour AND leave its new slot looking
+    // unused, so the next pick would get a colour already on screen. The slot
+    // is the position, so reassigning by index is the whole migration.
+    return raw.slice(0, MAX_COMPARE)
+      .map((p, i) => (p && typeof p === 'object' && p.name
+        ? { name: p.name, colour: SLOT_COLOURS[i] } : null))
+      .filter(Boolean)
   } catch {
     return []
   }
