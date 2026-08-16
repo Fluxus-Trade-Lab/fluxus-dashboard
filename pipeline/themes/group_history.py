@@ -40,6 +40,10 @@ FIELDS: List[str] = [
     "excess_3m", "rs_accel", "state",
     "persistence", "persistence_of",
     "perf_1w", "perf_1m", "perf_3m", "perf_6m",
+    # Appended 2026-08-16 (rows before that date read blank here): the
+    # length-matched slope that words like "decelerating" must come from.
+    # `rs_accel` above stays the state gate. See rs_engine module docstring.
+    "rs_accel_rate",
 ]
 
 

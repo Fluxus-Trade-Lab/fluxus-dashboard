@@ -126,10 +126,18 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 
 顶层:`date` `benchmark` `universe_size` `industries[]` `themes[]` `themes_skipped` `audit` `stocks` `summary`
 
-行字段:`group` `members` `tickers[]` `excess_3m` `rs_accel` `state` `persistence` `persistence_of` `perf_1w/1m/3m/6m/1y`
+行字段:`group` `members` `tickers[]` `excess_3m` `rs_accel` `rs_accel_rate` `state` `persistence` `persistence_of` `perf_1w/1m/3m/6m/1y`
 主题另有:`method` `source` `publish` `measurable` `needs_manual` `validation` `validation_excess`
 
-### 三条陷阱
+### 四条陷阱
+
+**`rs_accel` 是门槛,`rs_accel_rate` 才是斜率 —— 「加速/减速」这两个词只能从后者来。**(2026-08-16 加,`stocks` 行同样带)
+`rs_accel` = 最近 1 个月超额 − 前面 **2 个月合计**超额。窗口不等长是刻意的:一个匀速跑赢的组在这里是**负数**、被判 Weakening。
+它是验证过的 Leading/Weakening 分界(等长版 V7 在四种切法上全面更弱,`FOUR_STATE_DESIGN.md` §8),**保留**。
+但它的名字和它做的事不是一回事 —— 76 条主题里 9 条(12%)`rs_accel<0` 而 `rs_accel_rate≥0`,High Octane 就是:gate −0.17,rate +0.01,**匀速不是减速**。
+`rs_accel_rate` 把前段几何折成月率再相减,匀速=0。
+所以:`state` 徽章按 `rs_accel`;任何写着「decelerating / 减速 / slowing」的文案、以及「四强都在减速」这类汇总句,读 `rs_accel_rate` 的符号。
+2026-08-14 的实话是「四强里三个在减速,High Octane 匀速」。
 
 **`publish=false` 不能静默丢掉。** 它表示「这个主题没通过共动性验证」。
 悄悄过滤会让「未验证」和「不存在」变成同一件事 —— `useGroups` 现在把它们分开返回,保持这个行为。
@@ -148,7 +156,7 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 **消费方**:暂无。**这是为 10 周后的主题色带准备的**
 
 每日 195 行(121 行业 + 74 主题,随分类学变动),按日期幂等替换。
-列:`date` `kind`(`industry`/`theme`)`group` `members` `excess_3m` `rs_accel` `state` `persistence` `persistence_of` `perf_1w/1m/3m/6m`
+列:`date` `kind`(`industry`/`theme`)`group` `members` `excess_3m` `rs_accel` `state` `persistence` `persistence_of` `perf_1w/1m/3m/6m` `rs_accel_rate`(末列,2026-08-14 起有值,更早的行为空)
 
 **存的是当天发布的 `state`,不是原始 perf。** 事后重算会把今天的窗口常数套到昨天的数据上,
 等于偷改我们说过的话。UI 要画历史色带,直接读这一列。

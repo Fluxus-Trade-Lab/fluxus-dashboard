@@ -8,8 +8,18 @@ would double-count the recent period.  We first convert them into
     r(1w..1m) = (1 + perf_1m) / (1 + perf_1w) - 1
 
 Relative strength is then the excess of each disjoint bucket over the
-benchmark's same bucket, and acceleration is the near bucket minus the
-prior one -- i.e. a discrete second derivative of relative performance.
+benchmark's same bucket.  Two "acceleration" quantities are shipped and they
+answer different questions (FOUR_STATE_DESIGN.md, section 8):
+
+* ``rs_accel``       -- last month's excess minus the *total* excess of the
+                        two months before it.  Unequal windows on purpose: a
+                        steady-pace outperformer scores NEGATIVE here.  This
+                        is the validated gate that separates Leading from
+                        Weakening; it is a high bar, not a slope.
+* ``rs_accel_rate``  -- the same comparison with the prior stretch folded to
+                        a one-month rate, so a steady pace reads zero.  This
+                        is the slope.  Anything that says "accelerating" or
+                        "decelerating" in words must read THIS field.
 
 The same functions apply to a single stock, an industry aggregate or a
 curated theme aggregate; only the input rows differ.
@@ -104,15 +114,57 @@ def acceleration(
     row: Mapping[str, Any],
     benchmark: Mapping[str, Any],
 ) -> float:
-    """Last month's relative strength minus the two months before it.
+    """Last month's excess minus the TOTAL excess of the two months before it.
 
-    Positive means the outperformance is widening, negative means it is
-    narrowing -- the only thing separating Leading from Weakening.
+    The windows are unequal (21 vs 42 sessions) and that is deliberate: a group
+    that outperforms at a perfectly steady pace comes out negative here, so
+    this is a high bar ("did the last month beat the two before it combined"),
+    not a slope. It is the only thing separating Leading from Weakening, and
+    the length-matched variant (V7) was weaker on every validation cut, so the
+    gate stays. For the slope, see `acceleration_rate`.
     """
     rs_near = (_as_float(row.get(_NEAR_COL))
                - _as_float(benchmark.get(_NEAR_COL)))
     prior = relative_strength(row, benchmark).get(_PRIOR_BUCKET, np.nan)
     return rs_near - prior
+
+
+# The prior bucket spans two months against a one-month near bucket.
+_PRIOR_MONTHS = 2.0
+
+
+def _to_monthly_rate(r: float) -> float:
+    """Fold a two-month compounded return to its one-month rate.
+
+    Geometric, not linear: these are compounded returns, so the per-period
+    rate is the k-th root; a linear divide would understate a positive stretch
+    and overstate a negative one. Sign-preserving so a stretch worse than
+    -100% (a data artefact) does not raise.
+    """
+    if not np.isfinite(r):
+        return np.nan
+    return float(np.sign(1.0 + r) * np.abs(1.0 + r) ** (1.0 / _PRIOR_MONTHS) - 1.0)
+
+
+def acceleration_rate(
+    row: Mapping[str, Any],
+    benchmark: Mapping[str, Any],
+) -> float:
+    """Last month's excess minus the prior stretch's excess AT A MONTHLY RATE.
+
+    Length-matched, so a steady pace reads zero, faster-than-before reads
+    positive, slower reads negative -- the quantity the words "accelerating"
+    and "decelerating" actually mean. Descriptive only: it does NOT feed
+    `classify`, because as a gate it separated Leading from Lagging less well
+    than the unequal-window `acceleration` on every cut (V7 in
+    validate_accel.py). Ship both; state from the gate, words from the rate.
+    """
+    rs_near = (_as_float(row.get(_NEAR_COL))
+               - _as_float(benchmark.get(_NEAR_COL)))
+    mine = disjoint_returns(row).get(_PRIOR_BUCKET, np.nan)
+    theirs = disjoint_returns(benchmark).get(_PRIOR_BUCKET, np.nan)
+    prior_rate = _to_monthly_rate(mine) - _to_monthly_rate(theirs)
+    return rs_near - prior_rate
 
 
 def classify(excess_3m: float, rs_accel: float) -> str | None:
@@ -209,6 +261,7 @@ def score_row(
     }
     payload["excess_3m"] = _round(level)
     payload["rs_accel"] = _round(accel)
+    payload["rs_accel_rate"] = _round(acceleration_rate(row, benchmark))
     payload["state"] = state
     p = persistence(row, benchmark)
     payload["persistence"] = p[0] if p else None

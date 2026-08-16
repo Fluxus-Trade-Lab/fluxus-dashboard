@@ -95,6 +95,48 @@ class TestLevelAndAccelAreIndependent:
         assert payload["state"] == "Weakening"
 
 
+class TestAccelIsAGateNotASlope:
+    """`rs_accel` compares one month against the two before it *in total*
+    (FOUR_STATE_DESIGN.md section 8): a group outperforming at a perfectly
+    steady pace gets a NEGATIVE rs_accel and reads Weakening. That gate is
+    validated and stays. But the page must not translate it into the word
+    "decelerating" -- so the payload also carries `rs_accel_rate`, the same
+    comparison with the prior stretch folded to a one-month rate, which is
+    zero for a steady pace. Words come from the rate; the state comes from
+    the gate."""
+
+    def test_steady_pace_is_negative_gate_but_zero_rate(self):
+        # +2% every month vs a flat benchmark: near = 2%, prior (2 months) = 4.04%.
+        row = _row(perf_1m=0.02, perf_3m=1.02 ** 3 - 1)
+        payload = rs_engine.score_row(row, FLAT)
+        assert payload["rs_accel"] < 0
+        assert payload["state"] == "Weakening"
+        assert payload["rs_accel_rate"] == pytest.approx(0.0, abs=1e-9)
+
+    def test_true_deceleration_is_negative_in_both(self):
+        # +8% then +8% over the two prior months, +1% in the last: slowing.
+        row = _row(perf_1m=0.01, perf_3m=1.01 * 1.08 * 1.08 - 1)
+        payload = rs_engine.score_row(row, FLAT)
+        assert payload["rs_accel"] < 0
+        assert payload["rs_accel_rate"] < 0
+
+    def test_true_acceleration_is_positive_in_both(self):
+        row = _row(perf_1m=0.08, perf_3m=1.08 * 1.01 * 1.01 - 1)
+        payload = rs_engine.score_row(row, FLAT)
+        assert payload["rs_accel"] > 0
+        assert payload["rs_accel_rate"] > 0
+
+    def test_rate_is_relative_to_the_benchmark(self):
+        # Row and benchmark identical => no excess anywhere => rate exactly 0.
+        row = _row(perf_1m=0.05, perf_3m=0.20)
+        payload = rs_engine.score_row(row, dict(row))
+        assert payload["rs_accel_rate"] == pytest.approx(0.0, abs=1e-9)
+
+    def test_missing_input_yields_none(self):
+        payload = rs_engine.score_row(_row(perf_3m=None), FLAT)
+        assert payload["rs_accel_rate"] is None
+
+
 class TestAggregateRows:
     def test_median_survives_a_corporate_action_artefact(self):
         """Regression: one Finviz row printing +31,192% moved an industry's

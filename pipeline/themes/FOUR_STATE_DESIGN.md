@@ -210,3 +210,14 @@ TSF 的比较表(`RS Last 2w` / `RS 2-4w ago` / `RS 4-6w ago`)是**等长相邻�
 
 回归测试:`test_rs_engine.py::TestLevelAndAccelAreIndependent`。V7 保留在 `validate_accel.py` 的
 `SCHEMES` 里,`normalise_prior=True`,以便日后换样本时重测。
+
+### 2026-08-16 补记:「改说法」这一半当时没做完
+
+上面裁的是「保留算法,让名字和文档说出它真正在做的事」,但落地只到了这个文档 ——
+`acceleration()` 的 docstring 仍写着 widening/narrowing,`DATA_CONTRACTS.md` 没提「负值 ≠ 减速」,
+于是前端六天后在页面上把 `rs_accel<0` 讲成了「四个最强的主题都在减速」,再从图上把这个偏差**重新发现**了一遍
+(76 条主题里 9 条 raw 与每场口径符号相反;High Octane 匀速却判 Weakening)。
+
+这次补齐:V7 的量作为 **`rs_accel_rate`** 随 payload 出厂(主题、行业、个股、快照末列),`classify()` 仍只吃 `rs_accel`。
+契约写死:**state 从 gate 来,词从 rate 来。** 引擎两个 docstring 重写。
+回归测试:`test_rs_engine.py::TestAccelIsAGateNotASlope`(匀速 → gate<0 且 rate==0)。
