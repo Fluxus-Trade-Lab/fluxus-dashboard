@@ -101,7 +101,7 @@ def calculate_rrs(stock_data: pd.DataFrame, spy_data: pd.DataFrame,
         return None
 
 
-def pocket_pivot_count(closes, opens, vols, lookback: int = 30) -> int:
+def pocket_pivot_count(closes, opens, vols, lookback: int = 30) -> int | None:
     """How many of the last `lookback` bars were pocket pivots.
 
     A pocket pivot here is a green bar whose volume exceeds the highest volume
@@ -115,10 +115,22 @@ def pocket_pivot_count(closes, opens, vols, lookback: int = 30) -> int:
     """
     n = len(closes)
     if n < 11:
-        return 0
+        # No bar has ten priors to compare against: nothing was examined, so
+        # this is "unmeasured", not "zero" -- like every other short-history
+        # field in the enrichment block.
+        return None
     count = 0
-    for j in range(max(11, n - lookback), n):
-        if closes[j] > opens[j] and vols[j] > max(vols[max(0, j - 10):j]):
+    # Start at 10, not 11: bar 10 is the first with ten priors (0..9), and the
+    # same-day pocket_pivot flag (vols[-11:-1]) already counts it on an 11-bar
+    # history. Starting at 11 gave two answers to one question.
+    for j in range(max(10, n - lookback), n):
+        if not closes[j] > opens[j]:
+            continue
+        # NaN-tolerant max: builtin max() over a slice whose first element is
+        # NaN returns NaN, and `x > NaN` is False -- one missing volume bar
+        # silenced pivots for the ten sessions after it.
+        prior = [v for v in vols[j - 10:j] if v == v]
+        if prior and vols[j] > max(prior):
             count += 1
     return count
 
@@ -502,8 +514,8 @@ class YfinanceAdapter(BaseAdapter):
 
                 # Pocket Pivot: green candle + vol > max(prior 10 bars vol)
                 pp = False
-                pp_count = 0
-                pp_count_10 = 0
+                pp_count = None
+                pp_count_10 = None
                 if n >= 11:
                     closes = hist['Close'].values
                     opens = hist['Open'].values

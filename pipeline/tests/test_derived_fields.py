@@ -71,13 +71,48 @@ class TestAtrFromSma50:
         out = compute_universe_scores(_frame(atr=None))
         assert pd.isna(out["atr_from_sma50"].iloc[0])
 
-    def test_zero_atr_yields_null_not_inf(self):
+    def test_zero_atr_yields_null(self):
         """A halted or one-price name has ATR 0; inf would sort to the top of
-        every 'most extended' view and NaN-poison the JSON."""
+        every 'most extended' view and NaN-poison the JSON. Null, exactly."""
         out = compute_universe_scores(_frame(atr=0.0))
+        assert pd.isna(out["atr_from_sma50"].iloc[0])
+
+    def test_near_zero_atr_yields_null_not_a_huge_number(self):
+        """A name pinned at one price for weeks has an ATR that decays toward
+        zero but never reaches it; dividing through gives ~1e5 -- finite, so
+        it passes a null filter and tops every extension sort. Anything moving
+        under 0.01% of price a day has no measurable range."""
+        out = compute_universe_scores(_frame(close=100.0, atr=1e-6, sma50_dist=0.10))
+        assert pd.isna(out["atr_from_sma50"].iloc[0])
+
+    def test_dist_of_minus_one_yields_null_not_inf(self):
+        """sma50_dist == -1 makes (1 + dist) zero; -inf would reach json.dumps
+        as the non-JSON token -Infinity and take the whole file down."""
+        out = compute_universe_scores(_frame(sma50_dist=-1.0))
         v = out["atr_from_sma50"].iloc[0]
-        assert pd.isna(v) or math.isfinite(v)
-        assert not math.isinf(v) if not pd.isna(v) else True
+        assert pd.isna(v)
+        # and nothing in the column is ever infinite
+        assert not any(math.isinf(x) for x in out["atr_from_sma50"].dropna())
+
+    def test_is_rounded_like_its_siblings(self):
+        out = compute_universe_scores(_frame(close=100.0, atr=3.0, sma50_dist=0.10))
+        v = out["atr_from_sma50"].iloc[0]
+        assert v == round(v, 4)
+
+    def test_agrees_with_the_badge_column(self):
+        """atr_enrichment.enrich_with_atr already ships atr_ext on every ticker
+        badge. Two columns for one quantity must be one number -- atr_ext used
+        to be |dist|*close/atr (unsigned, no (1+dist)) and disagreed with this
+        one on 6.2% of names above the line and painted 40.7% of names BELOW
+        the line green."""
+        from pipeline.screeners.atr_enrichment import enrich_with_atr
+        frame = _frame(close=100.0, atr=3.0, sma50_dist=0.30)
+        out = compute_universe_scores(frame)
+        badge = enrich_with_atr([{"ticker": "T"}], frame)[0]["atr_ext"]
+        assert badge == pytest.approx(out["atr_from_sma50"].iloc[0], abs=1e-2)
+        # and below the line the badge value is negative, not its mirror image
+        frame_dn = _frame(close=100.0, atr=3.0, sma50_dist=-0.30)
+        assert enrich_with_atr([{"ticker": "T"}], frame_dn)[0]["atr_ext"] < 0
 
     def test_missing_sma50_dist_yields_null(self):
         out = compute_universe_scores(_frame(sma50_dist=None))
@@ -124,9 +159,29 @@ class TestPocketPivotCount:
         assert pocket_pivot_count(c, o, v, lookback=10) == 0
         assert pocket_pivot_count(c, o, v, lookback=30) == 1
 
-    def test_short_history_returns_zero_not_an_error(self):
+    def test_short_history_returns_none_not_zero(self):
+        """Fewer than 11 bars means no bar has ten priors to compare against:
+        nothing was examined, so the answer is 'unmeasured', not 'zero'. Every
+        other short-history field in the enrichment block emits None."""
         c, o, v = self._series(n=5)
-        assert pocket_pivot_count(c, o, v, lookback=10) == 0
+        assert pocket_pivot_count(c, o, v, lookback=10) is None
+
+    def test_bar_ten_is_examined_when_history_is_exactly_eleven(self):
+        """Regression: the loop started at index 11, so on an 11-bar history
+        the last bar was never examined -- while the same-day pocket_pivot
+        flag (vols[-11:-1]) did count it. Two answers to one question."""
+        c, o, v = self._series(n=11)
+        c[-1], o[-1], v[-1] = 11.0, 10.0, 500.0
+        assert pocket_pivot_count(c, o, v, lookback=10) == 1
+
+    def test_a_nan_volume_bar_does_not_blank_the_next_ten_sessions(self):
+        """Builtin max() over a slice whose FIRST element is NaN returns NaN,
+        and `x > NaN` is False -- one missing bar silenced pivots for the ten
+        sessions after it."""
+        c, o, v = self._series()
+        v[-11] = float("nan")
+        c[-1], o[-1], v[-1] = 11.0, 10.0, 500.0
+        assert pocket_pivot_count(c, o, v, lookback=10) == 1
 
     def test_counts_multiple_pivots_in_the_window(self):
         """The second pivot's volume must EXCEED the first's, because the

@@ -305,10 +305,11 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # so SMA50 = close/(1+dist) and the gap is close*dist/(1+dist). Dropping
     # that denominator overstates a name 30% above its line by 30%, precisely
     # in the extended tail this column exists to flag.
-    _c = pd.to_numeric(df['close'], errors='coerce')
-    _a = pd.to_numeric(df['atr'], errors='coerce').replace(0, np.nan)
-    _d = pd.to_numeric(df['sma50_dist'], errors='coerce')
-    df['atr_from_sma50'] = (_c * _d / (1 + _d)) / _a
+    # One implementation with the atr_ext badge (atr_enrichment.py): the two
+    # used to be different maths for the same quantity.
+    from pipeline.screeners.atr_enrichment import atr_multiple_from_sma50
+    df['atr_from_sma50'] = atr_multiple_from_sma50(
+        df['close'], df['atr'], df['sma50_dist'])
 
     # 52W high distance
     h = pd.to_numeric(df['high_52w'], errors='coerce')
@@ -342,7 +343,7 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     df['momentum_97'] = (_w >= 0.97) & (_m >= 0.85)
 
     # Round derived columns to 4 decimals
-    for col in ['adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist']:
+    for col in ['adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist', 'atr_from_sma50']:
         df[col] = df[col].round(4)
 
     # Round new enrichment columns
