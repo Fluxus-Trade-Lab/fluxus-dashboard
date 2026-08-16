@@ -175,15 +175,32 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
   // out widened and clipped. HTML overlays position by percentage and stay
   // crisp at any width.
   const H = 190, PADY = 24
-  const LEFT = 5, RIGHT = 20            // % of width reserved either side
+  // RIGHT went 20 → 24 when this panel moved into a half-width column: the
+  // end labels are a fixed number of pixels and the reserve is a percentage,
+  // so the narrower the panel the less room a percentage buys.
+  const LEFT = 5, RIGHT = 24            // % of width reserved either side
   const SEG = QUARTER_SEGMENTS
   const n = SEG.length
   const xsPct = (i) => LEFT + (i / (n - 1)) * (100 - LEFT - RIGHT)
   const all = chosen.flatMap((c) => SEG.map((s) => ratePerSession(c.row, s)))
     .filter((v) => Number.isFinite(v))
-  // 0.001 = a tenth of a percent per session; below that the axis is noise
-  const span = Math.max(...all.map(Math.abs), 0.001)
-  const ys = (v) => H / 2 - (v / span) * (H / 2 - PADY)
+
+  // The axis was symmetric — ±max — which centred the zero and looked
+  // principled, but the picks are usually all on one side, so the other half
+  // of the chart was permanently empty: the curves used 44% of the height.
+  // It now fits the data it has AND always contains zero, so nothing is ever
+  // plotted off an axis that does not show the line it is measured against.
+  // The consequence, and it is a real one: the SPY line moves vertically as
+  // the picks change. That is the price of the height, and the line is
+  // labelled where it sits rather than assumed to be in the middle.
+  const lo = Math.min(0, ...all)
+  const hi = Math.max(0, ...all)
+  const pad = Math.max((hi - lo) * 0.12, 0.0004)
+  const top = hi + pad
+  const bot = lo - pad
+  const ys = (v) => PADY + (1 - (v - bot) / (top - bot)) * (H - PADY * 2)
+  // kept for the axis captions, which name the extent rather than a ± pair
+  const span = Math.max(Math.abs(top), Math.abs(bot))
 
   // The window buttons index into SEGMENTS, which still has four entries; this
   // chart draws three. Remapping rather than subtracting one keeps the shade on
@@ -204,7 +221,7 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
     return last != null && { c, y: ys(last), v: last }
   }).filter(Boolean).sort((a, b) => a.y - b.y)
   for (let i = 1; i < ends.length; i++) {
-    if (ends[i].y - ends[i - 1].y < 16) ends[i].y = ends[i - 1].y + 16
+    if (ends[i].y - ends[i - 1].y < 26) ends[i].y = ends[i - 1].y + 26
   }
 
   return (
@@ -221,7 +238,7 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
                   /* same shade, same reason — see DistributionStrip */
                   fill="var(--color-text)" opacity="0.07" />
           )}
-          <line x1={LEFT * 10} x2={(100 - RIGHT) * 10 + 30} y1={H / 2} y2={H / 2}
+          <line x1={LEFT * 10} x2={(100 - RIGHT) * 10 + 30} y1={ys(0)} y2={ys(0)}
                 stroke="var(--color-text-muted)" strokeWidth="1"
                 vectorEffect="non-scaling-stroke" />
           {SEG.map((s, i) => (
@@ -270,18 +287,18 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
 
         <span className="absolute text-[10px] font-mono text-[var(--color-text-muted)]
                          pointer-events-none"
-              style={{ left: `${LEFT}%`, top: H / 2, transform: 'translate(-110%, -50%)' }}>
+              style={{ left: `${LEFT}%`, top: ys(0), transform: 'translate(-110%, -50%)' }}>
           SPY
         </span>
         {/* the chart's own extent — an axis without numbers is not an axis,
             which was this page's first finding and applies to itself */}
         <span className="absolute text-[10px] font-mono text-[var(--color-text-muted)]
                          pointer-events-none" style={{ left: `${LEFT + 0.5}%`, top: 2 }}>
-          +{(span * 100).toFixed(2)}%/session
+          +{(top * 100).toFixed(2)}%/session
         </span>
         <span className="absolute text-[10px] font-mono text-[var(--color-text-muted)]
                          pointer-events-none" style={{ left: `${LEFT + 0.5}%`, bottom: 2 }}>
-          −{(span * 100).toFixed(2)}%/session
+          {bot < 0 ? '−' : '+'}{(Math.abs(bot) * 100).toFixed(2)}%/session
         </span>
         {/* Hidden below sm: at 390px these ran 51px past the right edge and
             took the whole page's width with them. The names are not lost —
@@ -292,8 +309,15 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
                 className="hidden sm:block absolute text-[11px] font-mono whitespace-nowrap
                            pointer-events-none -translate-y-1/2"
                 style={{ left: `${100 - RIGHT + 1.2}%`, top: y, color: c.colour }}>
-            {c.name.length > 18 ? `${c.name.slice(0, 17)}…` : c.name}
-            {' '}{v > 0 ? '+' : ''}{(v * 100).toFixed(2)}%
+            {/* name and number stacked, not strung together. In one column
+                the pair ran past the right edge — the panel is half as wide
+                as it was when the labels were written. */}
+            <span className="block">
+              {c.name.length > 16 ? `${c.name.slice(0, 15)}…` : c.name}
+            </span>
+            <span className="block text-[10px] text-[var(--color-text-muted)]">
+              {v > 0 ? '+' : ''}{(v * 100).toFixed(2)}%
+            </span>
           </span>
         ))}
       </div>

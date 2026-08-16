@@ -7,7 +7,6 @@ import GroupTable from './GroupTable'
 import ThemeBars, { barStyle } from './ThemeBars'
 import RsSegments from './RsSegments'
 import CompareBar from './CompareBar'
-import DistributionStrip from './DistributionStrip'
 import TrajectoryPanel from './TrajectoryPanel'
 import ThemeMembers from './ThemeMembers'
 import { useThemeCompare } from './useThemeCompare'
@@ -222,63 +221,71 @@ export default function GroupsPage() {
         </div>
       </div>
 
-      <Section label="Field">
-        <DistributionStrip rows={windowed} scale={scale}
-                           colourOf={colourOf} onToggle={onToggle}
-                           atLimit={compare.atLimit} dim={compare.picks.length > 0} />
-      </Section>
+      {/* Two columns from lg up. The ranking is a list that wants height and
+          the comparison is a chart that wants width, and stacked they made a
+          page 1.5 screens tall before a single row was expanded. Side by side
+          each one's scroll is its own.
 
-      <Section label="Compare">
-        <CompareReading picks={compare.picks} windowed={windowed} winKey={winKey} />
-        <TrajectoryPanel picks={compare.picks} byName={byName} highlight={win.hl} />
+          The split waits for xl, not lg: at 1024 each column came out about
+          400px and the comparison's end labels ran 3px past the edge. Below
+          it they stack in the original order — the ranking's mirrored rows
+          need width, and half of a tablet is not width. */}
+      <div className="xl:grid xl:grid-cols-2 xl:gap-x-8 xl:items-start">
+        <div className="min-w-0 order-2 xl:order-1">
+        <Section label="Ranked"
+                 note={`${measured} of ${rows.length} measured · scale ±${(scale * 100).toFixed(0)}%`}
+                 right={<StateCensus rows={rows} />}>
+          <ThemeBars rows={windowed} scale={scale}
+                     colourOf={colourOf} onToggle={onToggle}
+                     atLimit={compare.atLimit} dim={compare.picks.length > 0} />
+        </Section>
+        </div>
+        <div className="min-w-0 order-1 xl:order-2">
+        <Section label="Compare">
+          <CompareReading picks={compare.picks} windowed={windowed} winKey={winKey} />
+          <TrajectoryPanel picks={compare.picks} byName={byName} highlight={win.hl} />
 
-        {/* The set behind each chosen average. A theme's bar is a claim about
-            members you cannot see; one fold per pick opens them on the
-            screener's own measurements. Mounted lazily — the 5,615-row
-            universe is fetched the first time a fold opens, not on page load. */}
-        {compare.picks.map((pick) => {
-          const row = byName.get(pick.name)
-          if (!row?.tickers?.length) return null
-          const open = openMembers.has(pick.name)
-          return (
-            <div key={pick.name} className="mt-2">
-              <button type="button"
-                      onClick={() => setOpenMembers((prev) => {
-                        const next = new Set(prev)
-                        if (next.has(pick.name)) next.delete(pick.name)
-                        else next.add(pick.name)
-                        return next
-                      })}
-                      className="w-full flex items-baseline gap-2.5 bg-transparent border-0
-                                 p-0 cursor-pointer text-left group">
-                <span className="text-[10px] font-mono text-[var(--color-text-muted)]
-                                 group-hover:text-[var(--color-text)] w-3">
-                  {open ? '−' : '+'}
-                </span>
-                <span className="text-[11px] font-medium" style={{ color: pick.colour }}>
-                  {pick.name}
-                </span>
-                <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
-                  {row.members} members
-                </span>
-              </button>
-              {open && (
-                <div className="pl-[22px] pt-1.5">
-                  <ThemeMembers theme={row} colour={pick.colour} rsByTicker={stocks} />
-                </div>
-              )}
-            </div>
-          )
-        })}
-      </Section>
-
-      <Section label="Ranked"
-               note={`${measured} of ${rows.length} measured · scale ±${(scale * 100).toFixed(0)}%`}
-               right={<StateCensus rows={rows} />}>
-        <ThemeBars rows={windowed} scale={scale}
-                   colourOf={colourOf} onToggle={onToggle}
-                   atLimit={compare.atLimit} dim={compare.picks.length > 0} />
-      </Section>
+          {/* The set behind each chosen average. A theme's bar is a claim about
+              members you cannot see; one fold per pick opens them on the
+              screener's own measurements. Mounted lazily — the 5,615-row
+              universe is fetched the first time a fold opens, not on page load. */}
+          {compare.picks.map((pick) => {
+            const row = byName.get(pick.name)
+            if (!row?.tickers?.length) return null
+            const open = openMembers.has(pick.name)
+            return (
+              <div key={pick.name} className="mt-2">
+                <button type="button"
+                        onClick={() => setOpenMembers((prev) => {
+                          const next = new Set(prev)
+                          if (next.has(pick.name)) next.delete(pick.name)
+                          else next.add(pick.name)
+                          return next
+                        })}
+                        className="w-full flex items-baseline gap-2.5 bg-transparent border-0
+                                   p-0 cursor-pointer text-left group">
+                  <span className="text-[10px] font-mono text-[var(--color-text-muted)]
+                                   group-hover:text-[var(--color-text)] w-3">
+                    {open ? '−' : '+'}
+                  </span>
+                  <span className="text-[11px] font-medium" style={{ color: pick.colour }}>
+                    {pick.name}
+                  </span>
+                  <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
+                    {row.members} members
+                  </span>
+                </button>
+                {open && (
+                  <div className="pl-[22px] pt-1.5">
+                    <ThemeMembers theme={row} colour={pick.colour} rsByTicker={stocks} />
+                  </div>
+                )}
+              </div>
+            )
+          })}
+        </Section>
+        </div>
+      </div>
 
       <Reference label="Where the lead was earned" count={20}
                  note="top 20, all four stretches">

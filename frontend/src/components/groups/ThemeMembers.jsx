@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import Squares from '../Squares'
 import { barStyle } from './ThemeBars'
 import { useUniverse } from '../../hooks/useUniverse'
 
@@ -30,10 +29,16 @@ import { useUniverse } from '../../hooks/useUniverse'
 
 const pct = (v) =>
   v == null || !Number.isFinite(v) ? '—' : `${v > 0 ? '+' : ''}${(v * 100).toFixed(1)}%`
-const num = (v) => (v == null || !Number.isFinite(v) ? '—' : String(Math.round(v)))
 
 export default function ThemeMembers({ theme, colour, rsByTicker }) {
   const { universe } = useUniverse()
+
+  // Eight rows, on the theme's own ordering. A drill-down that prints 286
+  // rows is a second screener, and the question this answers is "what is
+  // actually in here" — which the head answers and the tail does not. Eight
+  // rather than ten because each row swings the right column 23px past the
+  // left, and the two are meant to read as a pair.
+  const TOP = 8
 
   const { rows, missing } = useMemo(() => {
     if (!theme?.tickers || !universe) return { rows: [], missing: 0 }
@@ -64,12 +69,14 @@ export default function ThemeMembers({ theme, colour, rsByTicker }) {
 
   return (
     <div>
-      {missing > 0 && (
-        <p className="m-0 pb-1.5 text-[10px] text-[var(--color-text-muted)]">
-          {rows.length} of {theme.members} carried by the screener universe · {missing} not in it
-        </p>
-      )}
-      <div className="max-h-[340px] overflow-auto">
+      {/* the denominator is always stated: a list that silently shows ten of
+          286 is a list that lies about what it is */}
+      <p className="m-0 pb-1.5 text-[10px] text-[var(--color-text-muted)]">
+        top {Math.min(TOP, rows.length)} of {rows.length}
+        {rows.length !== theme.members ? ` carried · ${missing} not in the universe` : ''}
+        {' · by 3M relative strength'}
+      </p>
+      <div className="overflow-x-auto">
         <table className="w-full text-[11px] border-collapse">
           <thead>
             <tr className="text-[10px] font-mono uppercase tracking-wider
@@ -77,19 +84,14 @@ export default function ThemeMembers({ theme, colour, rsByTicker }) {
                            bg-[var(--color-bg)]">
               <th className="text-left py-1 pr-3 font-medium">Ticker</th>
               <th className="text-left py-1 pr-3 font-medium">State</th>
-              <th className="text-right py-1 pr-3 font-medium">RS 1M</th>
-              <th className="text-right py-1 pr-3 font-medium">RS 3M</th>
-              <th className="text-right py-1 pr-3 font-medium"
-                  title="percentile within its own industry — a 90 here beside a soft RS says the whole industry is soft">Ind pct</th>
               <th className="text-right py-1 pr-3 font-medium">1W</th>
               <th className="text-right py-1 pr-3 font-medium">1M</th>
-              <th className="text-left py-1 pr-3 font-medium">Top quartile</th>
               <th className="text-right py-1 pr-3 font-medium">From 52wH</th>
               <th className="text-right py-1 font-medium">Rel vol</th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((r) => (
+            {rows.slice(0, TOP).map((r) => (
               <tr key={r.ticker}
                   className="border-t border-[var(--color-border-light)]
                              hover:bg-[var(--color-hover-bg)]">
@@ -104,17 +106,8 @@ export default function ThemeMembers({ theme, colour, rsByTicker }) {
                     </span>
                   ) : <span className="text-[var(--color-text-muted)]">—</span>}
                 </td>
-                <td className="py-[3px] pr-3 text-right tabular-nums">{num(r.rs_1m ?? r.rs_21d)}</td>
-                <td className="py-[3px] pr-3 text-right tabular-nums">{num(r.rs_3m ?? r.rs_63d)}</td>
-                <td className="py-[3px] pr-3 text-right tabular-nums">{num(r.rs?.group_pctile)}</td>
                 <td className="py-[3px] pr-3 text-right tabular-nums">{pct(r.perf_1w)}</td>
                 <td className="py-[3px] pr-3 text-right tabular-nums">{pct(r.perf_1m)}</td>
-                <td className="py-[3px] pr-3 whitespace-nowrap">
-                  <Squares n={r.rs?.persistence} of={r.rs?.persistence_of ?? 5}
-                    title={r.rs?.persistence_of
-                      ? `Top quartile of its cohort on ${r.rs.persistence} of ${r.rs.persistence_of} windows`
-                      : undefined} />
-                </td>
                 <td className="py-[3px] pr-3 text-right tabular-nums">
                   {/* high_52w_dist is a fraction, not a percent — ×100 or −8.4% prints as −0.1% */}
                   {r.high_52w_dist == null ? '—' : `${(r.high_52w_dist * 100).toFixed(1)}%`}

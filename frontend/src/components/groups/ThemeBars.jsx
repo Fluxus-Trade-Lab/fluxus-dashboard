@@ -17,6 +17,16 @@ import { useState } from 'react'
  * else, which is what finally made the page quiet: every object used to
  * carry its own captions, and seven captions is a textbook, not a panel.
  *
+ * 2026-08-16 — THE FIELD LAYER IS GONE. The strip above this plotted the same
+ * 76 values, on the same scale, from the same props: dots where these are
+ * bars. A sorted diverging chart already IS a distribution — reading its
+ * extents down the page gives the shape the strip gave.
+ *
+ * The strip's median rule and middle-half band were carried over here for one
+ * revision and then dropped at Andy's call. So the page no longer states the
+ * median anywhere: that reading is gone, not relocated. Written down because
+ * a thing deliberately removed and a thing forgotten look identical later.
+ *
  * Rows are selection targets (same gesture as the dots and the search). The
  * affordance is shown, not written: a + surfaces on hover at the row's end,
  * flipping to − when the row is already picked, and the not-allowed cursor
@@ -60,7 +70,13 @@ export function barStyle(state) {
     : { border: `1px solid ${tone}`, background: 'transparent' }
 }
 
-const HEAD = 8
+/* Measured, not chosen: in the two-column layout the ranking came out 357px
+   against the comparison's 446, and the row pitch is 25px — so four more
+   rows at the head close the gap. Balanced for the DEFAULT state, folds
+   closed, which is the state the page is usually looked at in. Opening a
+   members table adds about 285px to the right and no static head count can
+   answer both states at once. */
+const HEAD = 12
 const TAIL = 4
 const NEIGHBOURS = 1
 
@@ -70,6 +86,8 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
     .filter((r) => Number.isFinite(r._value))
     .sort((a, b) => b._value - a._value)
   if (!sorted.length) return null
+
+
 
   // Which ranks stay visible when folded.
   const keep = new Set()
