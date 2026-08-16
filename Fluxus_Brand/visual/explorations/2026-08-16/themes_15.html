@@ -1,0 +1,705 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Themes 改造 · 三个变体</title>
+<style>
+:root{
+  --bg:#e2e0d6; --surface:#f2f0e9; --ink:#1c1917; --sec:#4b453e; --mut:#655e55;
+  --line:#cbc6b8; --took:#194371; --refused:#b5342c; --dark:#1a1715;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:'IBM Plex Sans','Inter',system-ui,sans-serif;font-size:12.5px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 22px 90px}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--mut);font-size:11px;margin-bottom:30px}
+.variant{margin:56px 0 0;padding-top:26px;border-top:2px solid var(--ink)}
+.variant>h2{font-size:19px;margin:0 0 2px}
+.variant>.why{color:var(--sec);font-size:12.5px;margin:0 0 22px;max-width:76ch}
+.layer{margin:26px 0 0}
+.layer-h{display:flex;align-items:baseline;gap:10px;margin:0 0 10px}
+.layer-h b{font-size:10px;text-transform:uppercase;letter-spacing:.24em;color:var(--mut);font-weight:500}
+.layer-h span{font-size:11px;color:var(--sec)}
+.card{background:var(--surface);border-radius:24px;padding:20px 22px}
+.card.dark{background:var(--dark);color:#fafaf9}
+.card.dark text{fill:#e7e5e4}
+.cap{font-size:10px;color:var(--mut);letter-spacing:.18em;text-transform:uppercase;margin-top:10px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+.note{font-size:11px;color:var(--mut);margin-top:8px;max-width:74ch}
+</style></head><body><div class="wrap">
+<h1>Themes · 三个改造变体</h1>
+<div class="sub mono">DATA 2026-08-14 · 76 themes, real · field / compare / ranked 三层保留 · 参考 lieflat 的几何，不是它的代码</div>
+<p style="max-width:78ch;color:var(--sec);margin:0 0 8px">
+三张参考图全部是灰阶。它们不单调，是因为<b>每一格换一种几何</b>——胶囊、花瓣、点阵、力导向、分岔条——
+而不是因为多加了颜色。所以这三个变体的赌注是：<b>形状承担变化，颜色继续只承担含义。</b>
+</p>
+<div id="app"></div>
+</div>
+<script>const DATA = {"date": "2026-08-14", "benchmark": "SPY", "rows": [{"group": "High Octane", "state": "Weakening", "members": 61, "persistence": 5, "persistence_of": 5, "excess_3m": 0.598214, "perf_1w": 0.041985, "perf_1m": 0.218592, "perf_3m": 0.651206, "rs_0_1w": 0.037703, "rs_1w_1m": 0.129479, "rs_1m_3m": 0.346847, "rs_3m_6m": 0.167834, "rs_accel": -0.17272, "method": "rule"}, {"group": "52-Week High Leaders", "state": "Weakening", "members": 88, "persistence": 5, "persistence_of": 5, "excess_3m": 0.470125, "perf_1w": 0.042668, "perf_1m": 0.162225, "perf_3m": 0.523117, "rs_0_1w": 0.038387, "rs_1w_1m": 0.074652, "rs_1m_3m": 0.302354, "rs_3m_6m": 0.093595, "rs_accel": -0.184594, "method": "rule"}, {"group": "Growth Factor", "state": "Weakening", "members": 286, "persistence": 4, "persistence_of": 5, "excess_3m": 0.397651, "perf_1w": 0.024576, "perf_1m": 0.149536, "perf_3m": 0.450643, "rs_0_1w": 0.020294, "rs_1w_1m": 0.081952, "rs_1m_3m": 0.253774, "rs_3m_6m": 0.092297, "rs_accel": -0.148702, "method": "rule"}, {"group": "Cybersecurity", "state": "Weakening", "members": 15, "persistence": 2, "persistence_of": 5, "excess_3m": 0.393675, "perf_1w": 0.001346, "perf_1m": 0.059758, "perf_3m": 0.446667, "rs_0_1w": -0.002936, "rs_1w_1m": 0.018322, "rs_1m_3m": 0.356927, "rs_3m_6m": 0.064556, "rs_accel": -0.341634, "method": "etf"}, {"group": "Software", "state": "Weakening", "members": 186, "persistence": 3, "persistence_of": 5, "excess_3m": 0.21595, "perf_1w": 0.01086, "perf_1m": 0.112123, "perf_3m": 0.268942, "rs_0_1w": 0.006578, "rs_1w_1m": 0.060164, "rs_1m_3m": 0.132845, "rs_3m_6m": -0.083195, "rs_accel": -0.065186, "method": "industry"}, {"group": "Memory & Storage", "state": "Leading", "members": 5, "persistence": 5, "persistence_of": 5, "excess_3m": 0.17161, "perf_1w": 0.160743, "perf_1m": 0.211312, "perf_3m": 0.224602, "rs_0_1w": 0.156461, "rs_1w_1m": 0.003555, "rs_1m_3m": 0.002807, "rs_3m_6m": 0.783416, "rs_accel": 0.164041, "method": "etf"}, {"group": "Drones", "state": "Leading", "members": 5, "persistence": 3, "persistence_of": 5, "excess_3m": 0.167325, "perf_1w": 0.034604, "perf_1m": 0.416092, "perf_3m": 0.220316, "rs_0_1w": 0.030323, "rs_1w_1m": 0.328717, "rs_1m_3m": -0.146415, "rs_3m_6m": -0.285023, "rs_accel": 0.518042, "method": "etf"}, {"group": "Banks - Money Center", "state": "Weakening", "members": 19, "persistence": 2, "persistence_of": 5, "excess_3m": 0.160826, "perf_1w": 0.021439, "perf_1m": 0.04302, "perf_3m": 0.213818, "rs_0_1w": 0.017157, "rs_1w_1m": -0.018883, "rs_1m_3m": 0.155589, "rs_3m_6m": -0.043983, "rs_accel": -0.157034, "method": "industry"}, {"group": "Biotech", "state": "Weakening", "members": 1, "persistence": 2, "persistence_of": 4, "excess_3m": 0.152644, "perf_1w": -0.003923, "perf_1m": 0.02042, "perf_3m": 0.205636, "rs_0_1w": -0.008205, "rs_1w_1m": -0.015572, "rs_1m_3m": 0.173345, "rs_3m_6m": -0.023454, "rs_accel": -0.197389, "method": "proxy"}, {"group": "Medical Devices", "state": "Weakening", "members": 60, "persistence": 1, "persistence_of": 5, "excess_3m": 0.146346, "perf_1w": 0.012123, "perf_1m": 0.104787, "perf_3m": 0.199337, "rs_0_1w": 0.007841, "rs_1w_1m": 0.051543, "rs_1m_3m": 0.077418, "rs_3m_6m": -0.235117, "rs_accel": -0.017096, "method": "etf"}, {"group": "Speculative Tech", "state": "Weakening", "members": 14, "persistence": 2, "persistence_of": 5, "excess_3m": 0.132986, "perf_1w": -0.000332, "perf_1m": 0.091566, "perf_3m": 0.185978, "rs_0_1w": -0.004614, "rs_1w_1m": 0.051918, "rs_1m_3m": 0.078327, "rs_3m_6m": -0.015077, "rs_accel": -0.031225, "method": "etf"}, {"group": "Regional Banks", "state": "Weakening", "members": 155, "persistence": 1, "persistence_of": 5, "excess_3m": 0.12807, "perf_1w": 0.022142, "perf_1m": 0.021702, "perf_3m": 0.181062, "rs_0_1w": 0.017861, "rs_1w_1m": -0.040443, "rs_1m_3m": 0.147811, "rs_3m_6m": -0.129064, "rs_accel": -0.170574, "method": "industry"}, {"group": "Taiwan", "state": "Weakening", "members": 1, "persistence": 3, "persistence_of": 4, "excess_3m": 0.119992, "perf_1w": 0.047857, "perf_1m": 0.100072, "perf_3m": 0.172984, "rs_0_1w": 0.043575, "rs_1w_1m": 0.009819, "rs_1m_3m": 0.058115, "rs_3m_6m": 0.16237, "rs_accel": -0.002508, "method": "proxy"}, {"group": "Household & Personal Products", "state": "Weakening", "members": 14, "persistence": 1, "persistence_of": 5, "excess_3m": 0.117275, "perf_1w": -0.009677, "perf_1m": 0.020847, "perf_3m": 0.170267, "rs_0_1w": -0.013959, "rs_1w_1m": -0.009189, "rs_1m_3m": 0.138204, "rs_3m_6m": -0.195876, "rs_accel": -0.161821, "method": "industry"}, {"group": "Healthcare", "state": "Weakening", "members": 1, "persistence": 1, "persistence_of": 4, "excess_3m": 0.105575, "perf_1w": -0.006352, "perf_1m": 0.038984, "perf_3m": 0.158567, "rs_0_1w": -0.010634, "rs_1w_1m": 0.005615, "rs_1m_3m": 0.106932, "rs_3m_6m": -0.163126, "rs_accel": -0.112412, "method": "proxy"}, {"group": "Genomics", "state": "Weakening", "members": 41, "persistence": 2, "persistence_of": 5, "excess_3m": 0.10336, "perf_1w": -0.020524, "perf_1m": 0.052399, "perf_3m": 0.156352, "rs_0_1w": -0.024806, "rs_1w_1m": 0.034441, "rs_1m_3m": 0.090612, "rs_3m_6m": -0.085152, "rs_accel": -0.082677, "method": "etf"}, {"group": "Insurance", "state": "Weakening", "members": 85, "persistence": 1, "persistence_of": 5, "excess_3m": 0.096184, "perf_1w": 0.000568, "perf_1m": 0.014441, "perf_3m": 0.149176, "rs_0_1w": -0.003714, "rs_1w_1m": -0.026146, "rs_1m_3m": 0.124652, "rs_3m_6m": -0.090835, "rs_accel": -0.154675, "method": "industry"}, {"group": "Homebuilders", "state": "Weakening", "members": 34, "persistence": 1, "persistence_of": 5, "excess_3m": 0.095555, "perf_1w": 0.006193, "perf_1m": 0.0195, "perf_3m": 0.148547, "rs_0_1w": 0.001911, "rs_1w_1m": -0.026787, "rs_1m_3m": 0.118414, "rs_3m_6m": -0.290394, "rs_accel": -0.143379, "method": "industry"}, {"group": "Consumer Retail", "state": "Weakening", "members": 61, "persistence": 1, "persistence_of": 5, "excess_3m": 0.091644, "perf_1w": -0.021135, "perf_1m": 0.027394, "perf_3m": 0.144636, "rs_0_1w": -0.025417, "rs_1w_1m": 0.009565, "rs_1m_3m": 0.105951, "rs_3m_6m": -0.257793, "rs_accel": -0.123022, "method": "industry"}, {"group": "Travel & Leisure", "state": "Weakening", "members": 69, "persistence": 0, "persistence_of": 5, "excess_3m": 0.087091, "perf_1w": 0.012767, "perf_1m": 0.013537, "perf_3m": 0.140083, "rs_0_1w": 0.008485, "rs_1w_1m": -0.03925, "rs_1m_3m": 0.116691, "rs_3m_6m": -0.177723, "rs_accel": -0.147618, "method": "industry"}, {"group": "Fintech", "state": "Weakening", "members": 37, "persistence": 0, "persistence_of": 5, "excess_3m": 0.08668, "perf_1w": 0.025988, "perf_1m": 0.047259, "perf_3m": 0.139672, "rs_0_1w": 0.021706, "rs_1w_1m": -0.019279, "rs_1m_3m": 0.080078, "rs_3m_6m": -0.079891, "rs_accel": -0.077283, "method": "industry"}, {"group": "Mega Caps", "state": "Weakening", "members": 77, "persistence": 0, "persistence_of": 5, "excess_3m": 0.066967, "perf_1w": 0.008764, "perf_1m": 0.056045, "perf_3m": 0.119959, "rs_0_1w": 0.004482, "rs_1w_1m": 0.006858, "rs_1m_3m": 0.052358, "rs_3m_6m": -0.044587, "rs_accel": -0.040778, "method": "rule"}, {"group": "Semiconductors Large Caps", "state": "Weakening", "members": 10, "persistence": 2, "persistence_of": 5, "excess_3m": 0.056971, "perf_1w": 0.026905, "perf_1m": 0.058171, "perf_3m": 0.109963, "rs_0_1w": 0.022624, "rs_1w_1m": -0.009565, "rs_1m_3m": 0.040781, "rs_3m_6m": 0.067997, "rs_accel": -0.027075, "method": "etf"}, {"group": "Equal-Weighted S&P 500", "state": "Weakening", "members": 1, "persistence": 0, "persistence_of": 4, "excess_3m": 0.056518, "perf_1w": 0.011579, "perf_1m": 0.044055, "perf_3m": 0.10951, "rs_0_1w": 0.007297, "rs_1w_1m": -0.007907, "rs_1m_3m": 0.054528, "rs_3m_6m": -0.089389, "rs_accel": -0.054938, "method": "proxy"}, {"group": "Defense", "state": "Leading", "members": 55, "persistence": 1, "persistence_of": 5, "excess_3m": 0.051959, "perf_1w": 0.01928, "perf_1m": 0.123282, "perf_3m": 0.10495, "rs_0_1w": 0.014998, "rs_1w_1m": 0.062023, "rs_1m_3m": -0.024484, "rs_3m_6m": -0.067587, "rs_accel": 0.103301, "method": "etf"}, {"group": "Small Caps", "state": "Weakening", "members": 1583, "persistence": 0, "persistence_of": 5, "excess_3m": 0.04949, "perf_1w": 0.013436, "perf_1m": 0.030931, "perf_3m": 0.102482, "rs_0_1w": 0.009154, "rs_1w_1m": -0.022748, "rs_1m_3m": 0.06124, "rs_3m_6m": -0.08145, "rs_accel": -0.074773, "method": "rule"}, {"group": "Value Factor", "state": "Leading", "members": 196, "persistence": 2, "persistence_of": 5, "excess_3m": 0.044148, "perf_1w": 0.03286, "perf_1m": 0.07776, "perf_3m": 0.09714, "rs_0_1w": 0.028578, "rs_1w_1m": 0.003461, "rs_1m_3m": 0.009817, "rs_3m_6m": 0.088, "rs_accel": 0.023479, "method": "rule"}, {"group": "Financials", "state": "Weakening", "members": 140, "persistence": 0, "persistence_of": 5, "excess_3m": 0.043828, "perf_1w": 0.017353, "perf_1m": 0.060663, "perf_3m": 0.09682, "rs_0_1w": 0.013072, "rs_1w_1m": 0.002559, "rs_1m_3m": 0.025925, "rs_3m_6m": -0.064676, "rs_accel": -0.009727, "method": "industry"}, {"group": "Europe", "state": "Weakening", "members": 1, "persistence": 0, "persistence_of": 4, "excess_3m": 0.037428, "perf_1w": 0.001793, "perf_1m": 0.041672, "perf_3m": 0.09042, "rs_0_1w": -0.002489, "rs_1w_1m": -0.000203, "rs_1m_3m": 0.038633, "rs_3m_6m": -0.112864, "rs_accel": -0.041425, "method": "proxy"}, {"group": "Robotics & Automation", "state": "Weakening", "members": 59, "persistence": 0, "persistence_of": 5, "excess_3m": 0.035837, "perf_1w": 0.003302, "perf_1m": 0.057519, "perf_3m": 0.088829, "rs_0_1w": -0.00098, "rs_1w_1m": 0.014028, "rs_1m_3m": 0.021443, "rs_3m_6m": -0.124306, "rs_accel": -0.008388, "method": "etf"}, {"group": "Japan", "state": "Leading", "members": 1, "persistence": 0, "persistence_of": 4, "excess_3m": 0.031269, "perf_1w": 0.022488, "perf_1m": 0.085313, "perf_3m": 0.08426, "rs_0_1w": 0.018206, "rs_1w_1m": 0.021432, "rs_1m_3m": -0.009134, "rs_3m_6m": -0.116807, "rs_accel": 0.049983, "method": "proxy"}, {"group": "IT Services", "state": "Leading", "members": 42, "persistence": 0, "persistence_of": 5, "excess_3m": 0.027421, "perf_1w": 0.018603, "perf_1m": 0.096425, "perf_3m": 0.080413, "rs_0_1w": 0.014322, "rs_1w_1m": 0.036389, "rs_1m_3m": -0.022768, "rs_3m_6m": -0.239204, "rs_accel": 0.074728, "method": "industry"}, {"group": "Broad AI Theme", "state": "Leading", "members": 139, "persistence": 1, "persistence_of": 5, "excess_3m": 0.026732, "perf_1w": 0.023853, "perf_1m": 0.065071, "perf_3m": 0.079724, "rs_0_1w": 0.019572, "rs_1w_1m": 0.000246, "rs_1m_3m": 0.005593, "rs_3m_6m": 0.151402, "rs_accel": 0.015013, "method": "etf"}, {"group": "High Beta Factor", "state": "Leading", "members": 1057, "persistence": 0, "persistence_of": 5, "excess_3m": 0.020918, "perf_1w": 0.014349, "perf_1m": 0.05862, "perf_3m": 0.07391, "rs_0_1w": 0.010067, "rs_1w_1m": 0.003634, "rs_1m_3m": 0.006279, "rs_3m_6m": -0.021351, "rs_accel": 0.007877, "method": "rule"}, {"group": "Real Estate", "state": "Weakening", "members": 128, "persistence": 0, "persistence_of": 5, "excess_3m": 0.019382, "perf_1w": 0.012189, "perf_1m": -0.03891, "perf_3m": 0.072374, "rs_0_1w": 0.007908, "rs_1w_1m": -0.090495, "rs_1m_3m": 0.107624, "rs_3m_6m": -0.085974, "rs_accel": -0.190998, "method": "industry"}, {"group": "Copper Miners", "state": "Leading", "members": 7, "persistence": 2, "persistence_of": 5, "excess_3m": 0.004799, "perf_1w": -0.049948, "perf_1m": 0.231563, "perf_3m": 0.057791, "rs_0_1w": -0.05423, "rs_1w_1m": 0.2563, "rs_1m_3m": -0.149264, "rs_3m_6m": -0.119888, "rs_accel": 0.336363, "method": "etf"}, {"group": "Coal", "state": "Leading", "members": 6, "persistence": 1, "persistence_of": 5, "excess_3m": 0.004374, "perf_1w": 0.027544, "perf_1m": 0.14685, "perf_3m": 0.057366, "rs_0_1w": 0.023262, "rs_1w_1m": 0.076097, "rs_1m_3m": -0.086191, "rs_3m_6m": -0.175625, "rs_accel": 0.188577, "method": "industry"}, {"group": "Industrials", "state": "Weakening", "members": 133, "persistence": 0, "persistence_of": 5, "excess_3m": 0.003468, "perf_1w": 0.002748, "perf_1m": 0.029378, "perf_3m": 0.05646, "rs_0_1w": -0.001534, "rs_1w_1m": -0.013454, "rs_1m_3m": 0.018145, "rs_3m_6m": -0.150433, "rs_accel": -0.033232, "method": "industry"}, {"group": "Beverages", "state": "Weakening", "members": 11, "persistence": 0, "persistence_of": 5, "excess_3m": 0.002388, "perf_1w": 0.019186, "perf_1m": 0.017147, "perf_3m": 0.05538, "rs_0_1w": 0.014904, "rs_1w_1m": -0.042013, "rs_1m_3m": 0.029425, "rs_3m_6m": -0.067738, "rs_accel": -0.056742, "method": "industry"}, {"group": "Transportation & Logistics", "state": "Weakening", "members": 46, "persistence": 1, "persistence_of": 5, "excess_3m": 0.002267, "perf_1w": 0.027717, "perf_1m": -0.023448, "perf_3m": 0.055259, "rs_0_1w": 0.023436, "rs_1w_1m": -0.089797, "rs_1m_3m": 0.072433, "rs_3m_6m": 0.010739, "rs_accel": -0.140345, "method": "industry"}, {"group": "Electronic Components", "state": "Leading", "members": 25, "persistence": 3, "persistence_of": 5, "excess_3m": 2.5e-05, "perf_1w": 0.052168, "perf_1m": 0.073605, "perf_3m": 0.053017, "rs_0_1w": 0.047886, "rs_1w_1m": -0.019638, "rs_1m_3m": -0.027341, "rs_3m_6m": 0.171881, "rs_accel": 0.056481, "method": "industry"}, {"group": "AI - Datacenters", "state": "Improving", "members": 16, "persistence": 2, "persistence_of": 5, "excess_3m": -0.001656, "perf_1w": 0.065017, "perf_1m": 0.12544, "perf_3m": 0.051336, "rs_0_1w": 0.060735, "rs_1w_1m": 0.016723, "rs_1m_3m": -0.074009, "rs_3m_6m": 0.022955, "rs_accel": 0.154984, "method": "etf"}, {"group": "Steel", "state": "Improving", "members": 15, "persistence": 3, "persistence_of": 5, "excess_3m": -0.004616, "perf_1w": -0.018066, "perf_1m": 0.113794, "perf_3m": 0.048375, "rs_0_1w": -0.022348, "rs_1w_1m": 0.094274, "rs_1m_3m": -0.066899, "rs_3m_6m": 0.066006, "rs_accel": 0.136229, "method": "industry"}, {"group": "Grid & Electrification", "state": "Improving", "members": 28, "persistence": 1, "persistence_of": 5, "excess_3m": -0.013608, "perf_1w": 0.017, "perf_1m": 0.058854, "perf_3m": 0.039384, "rs_0_1w": 0.012719, "rs_1w_1m": 0.001142, "rs_1m_3m": -0.026552, "rs_3m_6m": 0.031973, "rs_accel": 0.040941, "method": "etf"}, {"group": "IPOs", "state": "Improving", "members": 56, "persistence": 1, "persistence_of": 4, "excess_3m": -0.014469, "perf_1w": 0.028801, "perf_1m": 0.109542, "perf_3m": 0.038523, "rs_0_1w": 0.02452, "rs_1w_1m": 0.038469, "rs_1m_3m": -0.072172, "rs_3m_6m": 0.039279, "rs_accel": 0.13725, "method": "rule"}, {"group": "India", "state": "Lagging", "members": 1, "persistence": 0, "persistence_of": 4, "excess_3m": -0.015693, "perf_1w": -0.00718, "perf_1m": 0.017788, "perf_3m": 0.037299, "rs_0_1w": -0.011462, "rs_1w_1m": -0.014863, "rs_1m_3m": 0.011006, "rs_3m_6m": -0.179831, "rs_accel": -0.037683, "method": "proxy"}, {"group": "Emerging Markets", "state": "Improving", "members": 1, "persistence": 0, "persistence_of": 4, "excess_3m": -0.024004, "perf_1w": 0.022096, "perf_1m": 0.052457, "perf_3m": 0.028988, "rs_0_1w": 0.017814, "rs_1w_1m": -0.010307, "rs_1m_3m": -0.030464, "rs_3m_6m": -0.022559, "rs_accel": 0.038456, "method": "proxy"}, {"group": "AI Power & Infrastructure", "state": "Lagging", "members": 44, "persistence": 0, "persistence_of": 5, "excess_3m": -0.02465, "perf_1w": 0.023575, "perf_1m": -0.029839, "perf_3m": 0.028342, "rs_0_1w": 0.019294, "rs_1w_1m": -0.092196, "rs_1m_3m": 0.051807, "rs_3m_6m": -0.132586, "rs_accel": -0.126111, "method": "etf"}, {"group": "Gold Miners", "state": "Improving", "members": 31, "persistence": 2, "persistence_of": 5, "excess_3m": -0.026539, "perf_1w": 0.004264, "perf_1m": 0.288251, "perf_3m": 0.026453, "rs_0_1w": -1.8e-05, "rs_1w_1m": 0.24277, "rs_1m_3m": -0.211384, "rs_3m_6m": -0.262942, "rs_accel": 0.455171, "method": "industry"}, {"group": "Reshoring / Industrial Renaissance", "state": "Improving", "members": 46, "persistence": 0, "persistence_of": 5, "excess_3m": -0.030075, "perf_1w": 0.006804, "perf_1m": 0.05522, "perf_3m": 0.022917, "rs_0_1w": 0.002522, "rs_1w_1m": 0.008078, "rs_1m_3m": -0.038777, "rs_3m_6m": -0.011938, "rs_accel": 0.049533, "method": "etf"}, {"group": "Utilities", "state": "Lagging", "members": 81, "persistence": 0, "persistence_of": 5, "excess_3m": -0.0312, "perf_1w": 0.024125, "perf_1m": -0.022463, "perf_3m": 0.021792, "rs_0_1w": 0.019843, "rs_1w_1m": -0.085502, "rs_1m_3m": 0.037107, "rs_3m_6m": -0.125772, "rs_accel": -0.104034, "method": "industry"}, {"group": "Silver Miners", "state": "Improving", "members": 6, "persistence": 2, "persistence_of": 5, "excess_3m": -0.037268, "perf_1w": 0.003503, "perf_1m": 0.364967, "perf_3m": 0.015724, "rs_0_1w": -0.000779, "rs_1w_1m": 0.32019, "rs_1m_3m": -0.264026, "rs_3m_6m": -0.008279, "rs_accel": 0.584529, "method": "industry"}, {"group": "Oil & Gas", "state": "Improving", "members": 152, "persistence": 0, "persistence_of": 5, "excess_3m": -0.045604, "perf_1w": 0.023191, "perf_1m": 0.063814, "perf_3m": 0.007388, "rs_0_1w": 0.018909, "rs_1w_1m": -0.000308, "rs_1m_3m": -0.061206, "rs_3m_6m": 0.084188, "rs_accel": 0.080556, "method": "industry"}, {"group": "Korea", "state": "Improving", "members": 1, "persistence": 2, "persistence_of": 4, "excess_3m": -0.048072, "perf_1w": 0.101888, "perf_1m": 0.10582, "perf_3m": 0.00492, "rs_0_1w": 0.097606, "rs_1w_1m": -0.036443, "rs_1m_3m": -0.099409, "rs_3m_6m": 0.247889, "rs_accel": 0.160765, "method": "proxy"}, {"group": "Energy", "state": "Improving", "members": 99, "persistence": 0, "persistence_of": 5, "excess_3m": -0.056733, "perf_1w": 0.015831, "perf_1m": 0.06383, "perf_3m": -0.003741, "rs_0_1w": 0.011549, "rs_1w_1m": 0.007239, "rs_1m_3m": -0.071681, "rs_3m_6m": 0.047202, "rs_accel": 0.091046, "method": "industry"}, {"group": "Chemicals & Materials", "state": "Improving", "members": 53, "persistence": 0, "persistence_of": 5, "excess_3m": -0.057741, "perf_1w": 0.008853, "perf_1m": 0.037701, "perf_3m": -0.004749, "rs_0_1w": 0.004571, "rs_1w_1m": -0.011417, "rs_1m_3m": -0.049072, "rs_3m_6m": -0.085657, "rs_accel": 0.042308, "method": "industry"}, {"group": "Bonds - Long Duration", "state": "Lagging", "members": 1, "persistence": 0, "persistence_of": 4, "excess_3m": -0.060882, "perf_1w": -0.000244, "perf_1m": -0.025432, "perf_3m": -0.00789, "rs_0_1w": -0.004526, "rs_1w_1m": -0.065206, "rs_1m_3m": 0.009835, "rs_3m_6m": -0.144421, "rs_accel": -0.079731, "method": "proxy"}, {"group": "Agribusiness", "state": "Lagging", "members": 26, "persistence": 0, "persistence_of": 5, "excess_3m": -0.069068, "perf_1w": -0.000748, "perf_1m": -0.019736, "perf_3m": -0.016076, "rs_0_1w": -0.00503, "rs_1w_1m": -0.059014, "rs_1m_3m": -0.00443, "rs_3m_6m": -0.093305, "rs_accel": -0.059771, "method": "industry"}, {"group": "Quantum Computing", "state": "Improving", "members": 6, "persistence": 2, "persistence_of": 5, "excess_3m": -0.080585, "perf_1w": 0.037624, "perf_1m": 0.242601, "perf_3m": -0.027593, "rs_0_1w": 0.033342, "rs_1w_1m": 0.157534, "rs_1m_3m": -0.225607, "rs_3m_6m": 0.061215, "rs_accel": 0.423744, "method": "etf"}, {"group": "Semiconductors Broad", "state": "Improving", "members": 75, "persistence": 3, "persistence_of": 5, "excess_3m": -0.083653, "perf_1w": 0.046047, "perf_1m": 0.045848, "perf_3m": -0.030661, "rs_0_1w": 0.041765, "rs_1w_1m": -0.040202, "rs_1m_3m": -0.081319, "rs_3m_6m": 0.347119, "rs_accel": 0.082702, "method": "industry"}, {"group": "Gold", "state": "Improving", "members": 1, "persistence": 0, "persistence_of": 4, "excess_3m": -0.090879, "perf_1w": -0.002633, "perf_1m": 0.089764, "perf_3m": -0.037887, "rs_0_1w": -0.006915, "rs_1w_1m": 0.05263, "rs_1m_3m": -0.125301, "rs_3m_6m": -0.185171, "rs_accel": 0.170601, "method": "proxy"}, {"group": "Tech Mega Caps", "state": "Lagging", "members": 9, "persistence": 1, "persistence_of": 5, "excess_3m": -0.091794, "perf_1w": -0.021065, "perf_1m": -0.002509, "perf_3m": -0.038802, "rs_0_1w": -0.025347, "rs_1w_1m": -0.021056, "rs_1m_3m": -0.044549, "rs_3m_6m": 0.159385, "rs_accel": -0.002425, "method": "etf"}, {"group": "China Tech", "state": "Improving", "members": 1, "persistence": 0, "persistence_of": 4, "excess_3m": -0.09417, "perf_1w": -0.072459, "perf_1m": 0.00746, "perf_3m": -0.041179, "rs_0_1w": -0.076741, "rs_1w_1m": 0.046151, "rs_1m_3m": -0.056443, "rs_3m_6m": -0.228082, "rs_accel": 0.019438, "method": "proxy"}, {"group": "Optics & Networking Equipment", "state": "Improving", "members": 19, "persistence": 3, "persistence_of": 5, "excess_3m": -0.098897, "perf_1w": 0.029058, "perf_1m": 0.157107, "perf_3m": -0.045905, "rs_0_1w": 0.024776, "rs_1w_1m": 0.084422, "rs_1m_3m": -0.183612, "rs_3m_6m": 0.402204, "rs_accel": 0.296255, "method": "industry"}, {"group": "Brazil", "state": "Lagging", "members": 1, "persistence": 0, "persistence_of": 4, "excess_3m": -0.10756, "perf_1w": -0.035806, "perf_1m": -0.0369, "perf_3m": -0.054568, "rs_0_1w": -0.040087, "rs_1w_1m": -0.041147, "rs_1m_3m": -0.026509, "rs_3m_6m": -0.135268, "rs_accel": -0.054856, "method": "proxy"}, {"group": "IBD 50", "state": "Improving", "members": 1, "persistence": 1, "persistence_of": 4, "excess_3m": -0.122891, "perf_1w": 0.029981, "perf_1m": -0.015373, "perf_3m": -0.069899, "rs_0_1w": 0.025699, "rs_1w_1m": -0.084045, "rs_1m_3m": -0.063542, "rs_3m_6m": -0.024408, "rs_accel": 0.003705, "method": "proxy"}, {"group": "Uranium & Nuclear Energy", "state": "Improving", "members": 8, "persistence": 1, "persistence_of": 5, "excess_3m": -0.136241, "perf_1w": 0.000928, "perf_1m": 0.194328, "perf_3m": -0.083249, "rs_0_1w": -0.003354, "rs_1w_1m": 0.153209, "rs_1m_3m": -0.240577, "rs_3m_6m": -0.14897, "rs_accel": 0.390441, "method": "etf"}, {"group": "Tobacco", "state": "Lagging", "members": 6, "persistence": 0, "persistence_of": 5, "excess_3m": -0.147751, "perf_1w": -0.011324, "perf_1m": -0.072819, "perf_3m": -0.094759, "rs_0_1w": -0.015606, "rs_1w_1m": -0.10221, "rs_1m_3m": -0.031827, "rs_3m_6m": -0.064751, "rs_accel": -0.085457, "method": "industry"}, {"group": "Silver", "state": "Improving", "members": 1, "persistence": 1, "persistence_of": 4, "excess_3m": -0.205947, "perf_1w": -0.015654, "perf_1m": 0.151635, "perf_3m": -0.152955, "rs_0_1w": -0.019936, "rs_1w_1m": 0.129937, "rs_1m_3m": -0.272649, "rs_3m_6m": -0.096939, "rs_accel": 0.379819, "method": "proxy"}, {"group": "Clean Energy", "state": "Improving", "members": 20, "persistence": 1, "persistence_of": 5, "excess_3m": -0.227356, "perf_1w": 0.032467, "perf_1m": -0.00155, "perf_3m": -0.174364, "rs_0_1w": 0.028185, "rs_1w_1m": -0.072959, "rs_1m_3m": -0.181246, "rs_3m_6m": 0.040174, "rs_accel": 0.135231, "method": "etf"}, {"group": "Crypto Equities", "state": "Improving", "members": 14, "persistence": 0, "persistence_of": 5, "excess_3m": -0.232114, "perf_1w": 0.025505, "perf_1m": -0.027688, "perf_3m": -0.179122, "rs_0_1w": 0.021224, "rs_1w_1m": -0.091882, "rs_1m_3m": -0.16391, "rs_3m_6m": 0.199523, "rs_accel": 0.091757, "method": "etf"}, {"group": "Rare Earth Metals", "state": "Improving", "members": 6, "persistence": 2, "persistence_of": 5, "excess_3m": -0.232885, "perf_1w": 0.044035, "perf_1m": 0.202606, "perf_3m": -0.179893, "rs_0_1w": 0.039753, "rs_1w_1m": 0.111871, "rs_1m_3m": -0.326222, "rs_3m_6m": 0.031456, "rs_accel": 0.484364, "method": "etf"}, {"group": "Solar", "state": "Improving", "members": 9, "persistence": 0, "persistence_of": 5, "excess_3m": -0.234986, "perf_1w": -0.010753, "perf_1m": -0.01581, "perf_3m": -0.181994, "rs_0_1w": -0.015035, "rs_1w_1m": -0.045124, "rs_1m_3m": -0.177018, "rs_3m_6m": -0.021868, "rs_accel": 0.116744, "method": "etf"}, {"group": "Bitcoin", "state": "Improving", "members": 1, "persistence": 0, "persistence_of": 4, "excess_3m": -0.258034, "perf_1w": -0.016561, "perf_1m": -0.019807, "perf_3m": -0.205042, "rs_0_1w": -0.020843, "rs_1w_1m": -0.043313, "rs_1m_3m": -0.197143, "rs_3m_6m": 0.06293, "rs_accel": 0.132871, "method": "proxy"}, {"group": "Lithium & Battery Tech", "state": "Improving", "members": 9, "persistence": 2, "persistence_of": 5, "excess_3m": -0.29627, "perf_1w": 0.038735, "perf_1m": 0.079201, "perf_3m": -0.243278, "rs_0_1w": 0.034453, "rs_1w_1m": -0.001054, "rs_1m_3m": -0.306977, "rs_3m_6m": -0.000159, "rs_accel": 0.341714, "method": "etf"}, {"group": "Space", "state": "Improving", "members": 6, "persistence": 3, "persistence_of": 5, "excess_3m": -0.332432, "perf_1w": 0.051946, "perf_1m": 0.310724, "perf_3m": -0.279441, "rs_0_1w": 0.047664, "rs_1w_1m": 0.205988, "rs_1m_3m": -0.458423, "rs_3m_6m": 0.556326, "rs_accel": 0.724682, "method": "etf"}]};</script>
+<script>
+const el=(s)=>{const d=document.createElement('div');d.innerHTML=s.trim();return d.firstChild};
+const app=document.getElementById('app');
+const SCORES=[];
+function variant(title,why,layers){
+  const v=el('<section class="variant"></section>');
+  v.appendChild(el('<h2>'+title+'</h2>'));
+  v.appendChild(el('<p class="why">'+why+'</p>'));
+  layers.forEach(([label,note,svg])=>{
+    const L=el('<div class="layer"></div>');
+    L.appendChild(el('<div class="layer-h"><b>'+label+'</b><span>'+note+'</span></div>'));
+    const c=el('<div class="card"></div>'); c.innerHTML=svg; L.appendChild(c);
+    v.appendChild(L);
+  });
+  app.appendChild(v);
+}
+</script>
+<script>
+/* ---------- shared helpers ---------- */
+const R = DATA.rows.filter(r=>r.excess_3m!=null);
+const STATES=['Leading','Improving','Weakening','Lagging'];
+const STRETCH=[['rs_3m_6m','3M–6M'],['rs_1m_3m','1M–3M'],['rs_1w_1m','1W–1M'],['rs_0_1w','0–1W']];
+const fmtPct=(v,d=0)=>v==null?'—':(v>0?'+':'')+(v*100).toFixed(d)+'%';
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const SORTED=[...R].sort((a,b)=>b.excess_3m-a.excess_3m);
+const MX=Math.max(...R.map(r=>Math.abs(r.excess_3m)));
+const MA=Math.max(...R.map(r=>Math.abs(r.rs_accel??0)));
+const TOOK='var(--took)', REF='var(--refused)', INK='var(--ink)', SEC='var(--sec)',
+      MUT='var(--mut)', LINE='var(--line)';
+const pol=v=>v>0?TOOK:REF;
+/** greyscale ramp — 0 = lightest, 1 = ink. Survives print by construction. */
+const ramp=t=>{const g=Math.round(210-Math.max(0,Math.min(1,t))*180);return `rgb(${g},${g-4},${g-10})`};
+const PICKS=(()=>{const want=['High Octane','Quantum','Uranium & Nuclear','Airlines'];
+  const got=want.map(n=>R.find(r=>r.group===n)).filter(Boolean);
+  return got.length>=3?got:SORTED.slice(0,4);})();
+
+/* ================= FIELD geometries ================= */
+// F1 beeswarm in four state lanes
+function F_swarm(){
+  const W=1080,laneH=76,PAD=70,H=laneH*4+30;
+  const X=v=>PAD+((v+MX)/(2*MX))*(W-PAD-40);
+  const rad=n=>2.6+Math.sqrt(n||1)*0.6;
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  s+=`<line x1="${X(0)}" y1="12" x2="${X(0)}" y2="${laneH*4+4}" stroke="${INK}" stroke-width="1.2"/>`;
+  s+=`<text x="${X(0)}" y="7" text-anchor="middle" class="mono" font-size="9" fill="${MUT}">SPY</text>`;
+  [-0.2,0.2,0.4].forEach(t=>{s+=`<line x1="${X(t)}" y1="12" x2="${X(t)}" y2="${laneH*4+4}" stroke="${LINE}" stroke-dasharray="2 4"/><text x="${X(t)}" y="7" text-anchor="middle" class="mono" font-size="9" fill="${MUT}">${fmtPct(t)}</text>`;});
+  STATES.forEach((st,i)=>{
+    const y0=18+i*laneH, mid=y0+laneH/2-8, set=R.filter(r=>r.state===st).sort((a,b)=>a.excess_3m-b.excess_3m), placed=[];
+    set.forEach(r=>{const cx=X(r.excess_3m),rr=rad(r.members);let k=0,cy=mid,dir=1;
+      while(placed.some(p=>Math.hypot(p.cx-cx,p.cy-cy)<p.r+rr+0.8)&&k<70){k++;dir=-dir;cy=mid+dir*Math.ceil(k/2)*3.2;}
+      placed.push({cx,cy,r:rr,d:r});});
+    s+=`<text x="0" y="${mid+3}" class="mono" font-size="9.5" fill="${MUT}" letter-spacing="1.3">${st.toUpperCase()}</text>`;
+    s+=`<text x="0" y="${mid+15}" class="mono" font-size="9" fill="${LINE}">${set.length}</text>`;
+    placed.forEach(p=>s+=`<circle cx="${p.cx}" cy="${p.cy}" r="${p.r.toFixed(2)}" fill="${pol(p.d.excess_3m)}" fill-opacity=".82"><title>${esc(p.d.group)} ${fmtPct(p.d.excess_3m)}</title></circle>`);
+    if(placed.length){const t=placed.reduce((a,b)=>b.d.excess_3m>a.d.excess_3m?b:a);
+      s+=`<text x="${t.cx+t.r+5}" y="${t.cy+3}" font-size="9.5" fill="${INK}">${esc(t.d.group)}</text>`;}
+    if(i<3)s+=`<line x1="0" y1="${y0+laneH-10}" x2="${W}" y2="${y0+laneH-10}" stroke="${LINE}" stroke-width=".6"/>`;
+  });
+  return s+'</svg>';
+}
+// F2 quadrant — lead (x) vs whether it is still accelerating (y)
+function F_quadrant(){
+  const W=1080,H=430,P=58;
+  const X=v=>P+((v+MX)/(2*MX))*(W-P*2), Y=v=>P+(1-((v+MA)/(2*MA)))*(H-P*2);
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  s+=`<rect x="${X(0)}" y="${P}" width="${W-P-X(0)}" height="${Y(0)-P}" fill="${TOOK}" opacity=".05"/>`;
+  s+=`<rect x="${P}" y="${Y(0)}" width="${X(0)-P}" height="${H-P-Y(0)}" fill="${REF}" opacity=".05"/>`;
+  s+=`<line x1="${X(0)}" y1="${P}" x2="${X(0)}" y2="${H-P}" stroke="${INK}" stroke-width="1.1"/>`;
+  s+=`<line x1="${P}" y1="${Y(0)}" x2="${W-P}" y2="${Y(0)}" stroke="${INK}" stroke-width="1.1"/>`;
+  const q=[['已领先 · 还在加速',X(0)+12,P+16,'start'],['已领先 · 正在减速',X(0)+12,H-P-8,'start'],
+           ['还落后 · 已在转强',X(0)-12,P+16,'end'],['还落后 · 继续走弱',X(0)-12,H-P-8,'end']];
+  q.forEach(([t,x,y,a])=>s+=`<text x="${x}" y="${y}" text-anchor="${a}" font-size="10.5" fill="${MUT}">${t}</text>`);
+  R.forEach(r=>{const cx=X(r.excess_3m),cy=Y(r.rs_accel??0),rr=2.4+Math.sqrt(r.members||1)*0.5;
+    const lead=r.excess_3m>0, acc=(r.rs_accel??0)>0;
+    s+=`<circle cx="${cx}" cy="${cy}" r="${rr.toFixed(2)}" fill="${lead&&acc?TOOK:(!lead&&!acc?REF:'none')}"
+        stroke="${lead&&acc?'none':(!lead&&!acc?'none':SEC)}" stroke-width="1.1" fill-opacity=".8"><title>${esc(r.group)}</title></circle>`;});
+  SORTED.slice(0,3).concat(SORTED.slice(-2)).forEach(r=>{
+    s+=`<text x="${X(r.excess_3m)+7}" y="${Y(r.rs_accel??0)-6}" font-size="10" fill="${INK}">${esc(r.group)}</text>`;});
+  s+=`<text x="${W-P}" y="${H-P+18}" text-anchor="end" class="mono" font-size="9" fill="${MUT}">3M vs SPY →</text>`;
+  s+=`<text x="${P-8}" y="${P-8}" text-anchor="start" class="mono" font-size="9" fill="${MUT}">↑ 加速度</text>`;
+  return s+'</svg>';
+}
+// F3 dot matrix — one dot per theme, sorted, grey ramp = how far from SPY
+function F_matrix(){
+  const cols=19,cell=26,W=1080,rows=Math.ceil(SORTED.length/cols),H=rows*cell+50;
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  SORTED.forEach((r,i)=>{const cx=18+(i%cols)*cell, cy=22+Math.floor(i/cols)*cell;
+    const t=(r.excess_3m+MX)/(2*MX);
+    s+=`<circle cx="${cx}" cy="${cy}" r="9.4" fill="${r.excess_3m>0?TOOK:REF}" fill-opacity="${(0.18+Math.abs(r.excess_3m)/MX*0.82).toFixed(2)}"><title>${esc(r.group)} ${fmtPct(r.excess_3m)}</title></circle>`;});
+  s+=`<text x="18" y="${H-22}" class="mono" font-size="9.5" fill="${MUT}">每个点 = 一个主题 · 由强到弱 · 不透明度 = 离 SPY 多远</text>`;
+  const w=SORTED.filter(r=>r.excess_3m>0).length;
+  s+=`<text x="18" y="${H-6}" font-size="11" fill="${INK}"><tspan font-weight="600">${w}</tspan> 跑赢 · <tspan font-weight="600">${SORTED.length-w}</tspan> 跑输</text>`;
+  return s+'</svg>';
+}
+// F4 histogram ridge
+function F_ridge(){
+  const W=1080,H=250,P=54,B=22;
+  const bins=Array.from({length:B},()=>[]);
+  R.forEach(r=>{const i=Math.min(B-1,Math.floor(((r.excess_3m+MX)/(2*MX))*B));bins[i].push(r);});
+  const mx=Math.max(...bins.map(b=>b.length)), bw=(W-P*2)/B;
+  const X=v=>P+((v+MX)/(2*MX))*(W-P*2);
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  bins.forEach((b,i)=>{const h=(b.length/mx)*(H-70); const x=P+i*bw;
+    const centre=-MX+(i+.5)*(2*MX/B);
+    s+=`<rect x="${x+1}" y="${H-40-h}" width="${bw-2}" height="${h}" rx="${Math.min(bw/2-1,10)}"
+        fill="${centre>0?TOOK:REF}" fill-opacity=".85"/>`;
+    if(b.length)s+=`<text x="${x+bw/2}" y="${H-46-h}" text-anchor="middle" class="mono" font-size="9" fill="${MUT}">${b.length}</text>`;});
+  s+=`<line x1="${X(0)}" y1="14" x2="${X(0)}" y2="${H-34}" stroke="${INK}" stroke-width="1.2"/>`;
+  s+=`<text x="${X(0)}" y="10" text-anchor="middle" class="mono" font-size="9" fill="${MUT}">SPY</text>`;
+  [-.2,.2,.4].forEach(t=>s+=`<text x="${X(t)}" y="${H-22}" text-anchor="middle" class="mono" font-size="9" fill="${MUT}">${fmtPct(t)}</text>`);
+  return s+'</svg>';
+}
+// F5 radial burst — 76 spokes, length = excess
+function F_burst(){
+  const W=1080,H=470,cx=W/2,cy=H/2+8,r0=64,rmax=182;
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  s+=`<circle cx="${cx}" cy="${cy}" r="${r0}" fill="none" stroke="${INK}" stroke-width="1.1"/>`;
+  [.5,1].forEach(f=>s+=`<circle cx="${cx}" cy="${cy}" r="${r0+f*rmax*.55}" fill="none" stroke="${LINE}" stroke-dasharray="2 4"/>`);
+  SORTED.forEach((r,i)=>{const a=(i/SORTED.length)*Math.PI*2-Math.PI/2;
+    const len=(r.excess_3m/MX)*rmax*.62, rr=r0+len;
+    const x1=cx+Math.cos(a)*r0,y1=cy+Math.sin(a)*r0,x2=cx+Math.cos(a)*rr,y2=cy+Math.sin(a)*rr;
+    s+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${pol(r.excess_3m)}" stroke-width="4.2" stroke-linecap="round" opacity=".9"><title>${esc(r.group)} ${fmtPct(r.excess_3m)}</title></line>`;});
+  SORTED.slice(0,2).forEach((r,i)=>{const a=(i/SORTED.length)*Math.PI*2-Math.PI/2;
+    const rr=r0+(r.excess_3m/MX)*rmax*.62+14;
+    s+=`<text x="${cx+Math.cos(a)*rr}" y="${cy+Math.sin(a)*rr}" font-size="10.5" fill="${INK}">${esc(r.group)}</text>`;});
+  s+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" class="mono" font-size="11" fill="${MUT}">SPY</text>`;
+  s+=`<text x="${cx}" y="${cy+12}" text-anchor="middle" class="mono" font-size="9" fill="${LINE}">向外 = 跑赢</text>`;
+  return s+'</svg>';
+}
+// F6 one axis per state row, dot size = members ("support load" shape)
+function F_rows(){
+  const W=1080,rh=52,H=rh*4+40,P=88;
+  const X=v=>P+((v+MX)/(2*MX))*(W-P-30);
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  STATES.forEach((st,i)=>{const y=26+i*rh;
+    s+=`<line x1="${P}" y1="${y}" x2="${W-30}" y2="${y}" stroke="${LINE}" stroke-width=".7"/>`;
+    s+=`<text x="0" y="${y+3.5}" class="mono" font-size="9.5" fill="${MUT}" letter-spacing="1.3">${st.toUpperCase()}</text>`;
+    R.filter(r=>r.state===st).forEach(r=>{
+      s+=`<circle cx="${X(r.excess_3m)}" cy="${y}" r="${(3+Math.sqrt(r.members||1)*0.75).toFixed(2)}"
+          fill="${pol(r.excess_3m)}" fill-opacity=".5"><title>${esc(r.group)} · ${r.members}</title></circle>`;});});
+  s+=`<line x1="${X(0)}" y1="14" x2="${X(0)}" y2="${H-24}" stroke="${INK}" stroke-width="1.2"/>`;
+  s+=`<text x="${X(0)}" y="10" text-anchor="middle" class="mono" font-size="9" fill="${MUT}">SPY</text>`;
+  s+=`<text x="${W-30}" y="${H-8}" text-anchor="end" class="mono" font-size="9" fill="${MUT}">圆面积 = 成员数</text>`;
+  return s+'</svg>';
+}
+// F7 range capsules — each theme a capsule from its 1M to its 3M excess
+function F_capsule(){
+  const top=[...SORTED.slice(0,16),...SORTED.slice(-8)];
+  const W=1080,cw=(W-40)/top.length,H=300,P=40;
+  const vals=top.flatMap(r=>[r.perf_1m,r.perf_3m]).filter(v=>v!=null);
+  const lo=Math.min(...vals),hi=Math.max(...vals);
+  const Y=v=>P+(1-(v-lo)/(hi-lo))*(H-P-52);
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  s+=`<line x1="20" y1="${Y(0)}" x2="${W-20}" y2="${Y(0)}" stroke="${INK}" stroke-width="1"/>`;
+  top.forEach((r,i)=>{const x=24+i*cw+cw/2;
+    const a=Y(r.perf_1m),b=Y(r.perf_3m),up=r.perf_3m>=r.perf_1m;
+    s+=`<line x1="${x}" y1="${Math.min(a,b)}" x2="${x}" y2="${Math.max(a,b)}" stroke="${up?TOOK:REF}"
+        stroke-width="${Math.max(6,cw*0.42)}" stroke-linecap="round" opacity=".9"><title>${esc(r.group)} 1M ${fmtPct(r.perf_1m)} → 3M ${fmtPct(r.perf_3m)}</title></line>`;});
+  s+=`<text x="20" y="${H-28}" class="mono" font-size="9.5" fill="${MUT}">每根胶囊 = 一个主题从 1M 到 3M 的区间 · 深色端在上 = 3M 更高</text>`;
+  s+=`<text x="20" y="${H-12}" class="mono" font-size="9" fill="${LINE}">前 16 强 + 后 8 弱</text>`;
+  return s+'</svg>';
+}
+// F8 treemap by members, fill = excess
+function F_treemap(){
+  const W=1080,H=380;
+  const items=[...R].sort((a,b)=>b.members-a.members);
+  const total=items.reduce((s,r)=>s+r.members,0);
+  let x=0,y=0,rowH=0,out='';
+  // simple shelf packing by area
+  let cursor=0;
+  const rowsOf=[];let row=[],acc=0;
+  items.forEach(r=>{row.push(r);acc+=r.members;
+    if(acc>total/6.2){rowsOf.push(row);row=[];acc=0;}});
+  if(row.length)rowsOf.push(row);
+  const rh=H/rowsOf.length;
+  rowsOf.forEach((rw,ri)=>{const sum=rw.reduce((s,r)=>s+r.members,0);let cx=0;
+    rw.forEach(r=>{const w=(r.members/sum)*W;
+      const t=Math.abs(r.excess_3m)/MX;
+      out+=`<rect x="${cx+1}" y="${ri*rh+1}" width="${Math.max(1,w-2)}" height="${rh-2}" rx="4"
+            fill="${pol(r.excess_3m)}" fill-opacity="${(0.15+t*0.8).toFixed(2)}"><title>${esc(r.group)} ${r.members} · ${fmtPct(r.excess_3m)}</title></rect>`;
+      if(w>72)out+=`<text x="${cx+7}" y="${ri*rh+16}" font-size="9.5" fill="${INK}">${esc(r.group).slice(0,16)}</text>`;
+      if(w>72)out+=`<text x="${cx+7}" y="${ri*rh+29}" class="mono" font-size="9" fill="${SEC}">${r.members} · ${fmtPct(r.excess_3m)}</text>`;
+      cx+=w;});});
+  return `<svg viewBox="0 0 ${W} ${H}">${out}</svg>`;
+}
+// F9 arrow field — from 1M excess to 3M excess
+function F_arrows(){
+  const W=1080,H=330,P=54;
+  const X=v=>P+((v+MX)/(2*MX))*(W-P*2);
+  const set=[...R].sort((a,b)=>b.members-a.members).slice(0,44);
+  const Y=(i)=>26+ (i%22)*13 + (i>=22? 0:0);
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  s+=`<line x1="${X(0)}" y1="14" x2="${X(0)}" y2="${H-30}" stroke="${INK}" stroke-width="1.2"/>`;
+  set.forEach((r,i)=>{const y=22+i*6.4;
+    const a=X((r.perf_1m??0)-0), b=X(r.excess_3m);
+    const fwd=b>=a;
+    s+=`<line x1="${a}" y1="${y}" x2="${b}" y2="${y}" stroke="${fwd?TOOK:REF}" stroke-width="2" opacity=".75"/>`;
+    s+=`<circle cx="${b}" cy="${y}" r="2.8" fill="${fwd?TOOK:REF}"><title>${esc(r.group)}</title></circle>`;});
+  s+=`<text x="${P}" y="${H-10}" class="mono" font-size="9.5" fill="${MUT}">箭头起点 = 1M 表现，终点 = 3M 超额 · 向右 = 还在扩大领先</text>`;
+  return s+'</svg>';
+}
+// F10 waffle by state
+function F_waffle(){
+  const W=1080,cell=17,cols=38,H=Math.ceil(R.length/cols)*cell+70;
+  const order=STATES.flatMap(st=>R.filter(r=>r.state===st).sort((a,b)=>b.excess_3m-a.excess_3m));
+  const tone={Leading:INK,Improving:SEC,Weakening:MUT,Lagging:LINE};
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  order.forEach((r,i)=>{const x=(i%cols)*cell, y=26+Math.floor(i/cols)*cell;
+    s+=`<rect x="${x}" y="${y}" width="${cell-3}" height="${cell-3}" rx="2.5" fill="${tone[r.state]}"><title>${esc(r.group)} · ${r.state}</title></rect>`;});
+  STATES.forEach((st,i)=>{const n=R.filter(r=>r.state===st).length;
+    s+=`<rect x="${i*168}" y="${H-30}" width="11" height="11" rx="2" fill="${tone[st]}"/>`;
+    s+=`<text x="${i*168+17}" y="${H-21}" font-size="10.5" fill="${SEC}">${st} <tspan class="mono" fill="${MUT}">${n}</tspan></text>`;});
+  return s+'</svg>';
+}
+
+/* ================= COMPARE geometries ================= */
+const SMAX=Math.max(...R.flatMap(r=>STRETCH.map(([k])=>Math.abs(r[k]??0))))*0.62;
+// C1 slope over the four stretches, with the other 72 as ground noise
+function C_slope(picks=PICKS){
+  const W=1080,H=300,L=92,Rp=196,T=22,B=42;
+  const X=i=>L+i*((W-L-Rp)/3), Y=v=>T+(1-(Math.max(-SMAX,Math.min(SMAX,v))+SMAX)/(2*SMAX))*(H-T-B);
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  s+=`<line x1="${L}" y1="${Y(0)}" x2="${W-Rp}" y2="${Y(0)}" stroke="${INK}" stroke-width="1"/>`;
+  STRETCH.forEach(([,lab],i)=>{s+=`<line x1="${X(i)}" y1="${T}" x2="${X(i)}" y2="${H-B}" stroke="${LINE}" stroke-width=".7"/>`
+    +`<text x="${X(i)}" y="${H-B+17}" text-anchor="middle" class="mono" font-size="9.5" fill="${MUT}" letter-spacing="1">${lab}</text>`;});
+  s+=`<text x="${L-8}" y="${Y(0)+3}" text-anchor="end" class="mono" font-size="9" fill="${MUT}">SPY</text>`;
+  R.forEach(r=>{const p=STRETCH.map(([k],i)=>`${X(i)},${Y(r[k]??0)}`).join(' ');
+    s+=`<polyline points="${p}" fill="none" stroke="${LINE}" stroke-width=".7" opacity=".6"/>`;});
+  picks.forEach(r=>{const pts=STRETCH.map(([k],i)=>[X(i),Y(r[k]??0)]), last=r[STRETCH[3][0]]??0, c=pol(last);
+    s+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${c}" stroke-width="2.4" stroke-linejoin="round"/>`;
+    pts.forEach((p,i)=>s+=`<circle cx="${p[0]}" cy="${p[1]}" r="${i===3?4.2:2.6}" fill="${c}"/>`);
+    s+=`<text x="${W-Rp+10}" y="${pts[3][1]+3}" font-size="11.5" font-weight="600" fill="${c}">${esc(r.group)}</text>`;
+    s+=`<text x="${W-Rp+10}" y="${pts[3][1]+16}" class="mono" font-size="9.5" fill="${MUT}">${fmtPct(last)} · ${r.members}n</text>`;});
+  return s+'</svg>';
+}
+// C2 bump — rank among all 76 at each stretch
+function C_bump(picks=PICKS){
+  const W=1080,H=300,L=92,Rp=196,T=24,B=42;
+  const ranks=STRETCH.map(([k])=>{const o=[...R].sort((a,b)=>(b[k]??-9)-(a[k]??-9));
+    return new Map(o.map((r,i)=>[r.group,i+1]));});
+  const N=R.length, X=i=>L+i*((W-L-Rp)/3), Y=rk=>T+((rk-1)/(N-1))*(H-T-B);
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  STRETCH.forEach(([,lab],i)=>{s+=`<line x1="${X(i)}" y1="${T}" x2="${X(i)}" y2="${H-B}" stroke="${LINE}" stroke-width=".7"/>`
+    +`<text x="${X(i)}" y="${H-B+17}" text-anchor="middle" class="mono" font-size="9.5" fill="${MUT}" letter-spacing="1">${lab}</text>`;});
+  [1,20,40,60,76].forEach(rk=>s+=`<text x="${L-10}" y="${Y(rk)+3}" text-anchor="end" class="mono" font-size="9" fill="${LINE}">#${rk}</text>`);
+  R.forEach(r=>{const p=ranks.map((m,i)=>`${X(i)},${Y(m.get(r.group)||N)}`).join(' ');
+    s+=`<polyline points="${p}" fill="none" stroke="${LINE}" stroke-width=".7" opacity=".55"/>`;});
+  picks.forEach(r=>{const pts=ranks.map((m,i)=>[X(i),Y(m.get(r.group)||N)]);
+    const rk0=ranks[0].get(r.group)||N, rk3=ranks[3].get(r.group)||N, up=rk3<rk0, c=up?TOOK:REF;
+    s+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${c}" stroke-width="2.6" stroke-linejoin="round"/>`;
+    pts.forEach(p=>s+=`<circle cx="${p[0]}" cy="${p[1]}" r="3.4" fill="${c}"/>`);
+    s+=`<text x="${W-Rp+10}" y="${pts[3][1]+3}" font-size="11.5" font-weight="600" fill="${c}">${esc(r.group)}</text>`;
+    s+=`<text x="${W-Rp+10}" y="${pts[3][1]+16}" class="mono" font-size="9.5" fill="${MUT}">#${rk0} → #${rk3}</text>`;});
+  return s+'</svg>';
+}
+// C3 petal rose — one rose per pick, four petals = four stretches
+function C_rose(picks=PICKS){
+  const W=1080,H=250,n=picks.length||1,cw=W/n;
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  picks.forEach((r,pi)=>{const cx=cw*pi+cw/2, cy=112, r0=16, rmax=74;
+    [0,1].forEach(f=>s+=`<circle cx="${cx}" cy="${cy}" r="${r0+rmax*(f?1:.5)}" fill="none" stroke="${LINE}" stroke-dasharray="2 4"/>`);
+    STRETCH.forEach(([k,lab],i)=>{const v=r[k]??0;
+      const a0=(i/4)*Math.PI*2-Math.PI/2+0.06, a1=((i+1)/4)*Math.PI*2-Math.PI/2-0.06;
+      const rr=r0+Math.min(1,Math.abs(v)/SMAX)*rmax;
+      const p=(ang,rad)=>[cx+Math.cos(ang)*rad,cy+Math.sin(ang)*rad];
+      const A=p(a0,r0),B=p(a0,rr),C=p(a1,rr),D=p(a1,r0);
+      s+=`<path d="M${A} L${B} A${rr},${rr} 0 0 1 ${C} L${D} A${r0},${r0} 0 0 0 ${A} Z"
+          fill="${pol(v)}" fill-opacity="${(0.3+Math.min(1,Math.abs(v)/SMAX)*0.65).toFixed(2)}"><title>${lab} ${fmtPct(v,1)}</title></path>`;
+      const mid=(a0+a1)/2, lp=p(mid,rr+13);
+      s+=`<text x="${lp[0]}" y="${lp[1]}" text-anchor="middle" class="mono" font-size="8.5" fill="${MUT}">${lab}</text>`;});
+    s+=`<text x="${cx}" y="${H-26}" text-anchor="middle" font-size="11.5" font-weight="600" fill="${INK}">${esc(r.group)}</text>`;
+    s+=`<text x="${cx}" y="${H-11}" text-anchor="middle" class="mono" font-size="9.5" fill="${MUT}">now ${fmtPct(r.rs_0_1w,1)}</text>`;});
+  return s+'</svg>';
+}
+// C4 relay baton — the four stretches laid end to end as one bar per pick
+function C_baton(picks=PICKS){
+  const W=1080,rh=54,H=picks.length*rh+46,L=150,AV=W-L-90;
+  const tot=r=>STRETCH.reduce((s,[k])=>s+Math.abs(r[k]??0),0);
+  const mx=Math.max(...R.map(tot));
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  picks.forEach((r,i)=>{const y=18+i*rh;let x=L;
+    STRETCH.forEach(([k,lab],j)=>{const v=r[k]??0, w=(Math.abs(v)/mx)*AV;
+      s+=`<rect x="${x}" y="${y}" width="${Math.max(1.5,w)}" height="26" rx="4"
+          fill="${pol(v)}" fill-opacity="${(0.34+j*0.22).toFixed(2)}"><title>${lab} ${fmtPct(v,1)}</title></rect>`;
+      if(w>46)s+=`<text x="${x+w/2}" y="${y+17}" text-anchor="middle" class="mono" font-size="9" fill="#f2f0e9">${lab}</text>`;
+      x+=w+2;});
+    s+=`<text x="${L-10}" y="${y+17}" text-anchor="end" font-size="11.5" font-weight="600" fill="${INK}">${esc(r.group)}</text>`;
+    s+=`<text x="${x+8}" y="${y+17}" class="mono" font-size="10" fill="${SEC}">${fmtPct(r.excess_3m)}</text>`;
+    s+=`<text x="${L-10}" y="${y+31}" text-anchor="end" class="mono" font-size="9" fill="${MUT}">${r.members} names</text>`;});
+  s+=`<text x="${L}" y="${H-10}" class="mono" font-size="9.5" fill="${MUT}">四段接力首尾相接 · 越靠右越新 · 段越深越近 · 段长 = 该段相对强度的绝对值</text>`;
+  return s+'</svg>';
+}
+// C5 dumbbell — oldest stretch vs newest
+function C_dumbbell(picks=PICKS){
+  const W=1080,rh=42,H=picks.length*rh+52,L=170,P=60;
+  const X=v=>L+((Math.max(-SMAX,Math.min(SMAX,v))+SMAX)/(2*SMAX))*(W-L-P);
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  s+=`<line x1="${X(0)}" y1="12" x2="${X(0)}" y2="${H-34}" stroke="${INK}" stroke-width="1.1"/>`;
+  s+=`<text x="${X(0)}" y="8" text-anchor="middle" class="mono" font-size="9" fill="${MUT}">SPY</text>`;
+  picks.forEach((r,i)=>{const y=28+i*rh, a=X(r.rs_3m_6m??0), b=X(r.rs_0_1w??0), fwd=b>=a, c=fwd?TOOK:REF;
+    s+=`<line x1="${a}" y1="${y}" x2="${b}" y2="${y}" stroke="${c}" stroke-width="3" opacity=".45"/>`;
+    s+=`<circle cx="${a}" cy="${y}" r="5" fill="none" stroke="${SEC}" stroke-width="1.6"/>`;
+    s+=`<circle cx="${b}" cy="${y}" r="6.4" fill="${c}"/>`;
+    s+=`<text x="${L-12}" y="${y+4}" text-anchor="end" font-size="11.5" font-weight="600" fill="${INK}">${esc(r.group)}</text>`;
+    s+=`<text x="${b+11}" y="${y+4}" class="mono" font-size="10" fill="${c}">${fmtPct(r.rs_0_1w,1)}</text>`;});
+  s+=`<text x="${L}" y="${H-10}" class="mono" font-size="9.5" fill="${MUT}">空心 = 最早那段（3M–6M） · 实心 = 最近那段（0–1W） · 线的方向就是它在往哪走</text>`;
+  return s+'</svg>';
+}
+// C6 waterfall — each stretch as a step, cumulative
+function C_waterfall(picks=PICKS){
+  const W=1080,n=picks.length||1,cw=W/n,H=250;
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  const all=R.map(r=>STRETCH.reduce((a,[k])=>a+(r[k]??0),0));
+  const m=Math.max(...all.map(Math.abs))*0.75;
+  picks.forEach((r,pi)=>{const x0=cw*pi+26,w=cw-58, bw=w/4;
+    const Y=v=>34+(1-(Math.max(-m,Math.min(m,v))+m)/(2*m))*(H-100);
+    s+=`<line x1="${x0}" y1="${Y(0)}" x2="${x0+w}" y2="${Y(0)}" stroke="${INK}" stroke-width=".9"/>`;
+    let acc=0;
+    STRETCH.forEach(([k,lab],i)=>{const v=r[k]??0, from=acc; acc+=v;
+      const y1=Y(from),y2=Y(acc);
+      s+=`<rect x="${x0+i*bw+4}" y="${Math.min(y1,y2)}" width="${bw-8}" height="${Math.max(1.5,Math.abs(y2-y1))}"
+          rx="2.5" fill="${pol(v)}" fill-opacity=".85"><title>${lab} ${fmtPct(v,1)}</title></rect>`;
+      if(i<3)s+=`<line x1="${x0+i*bw+bw-4}" y1="${y2}" x2="${x0+(i+1)*bw+4}" y2="${y2}" stroke="${LINE}" stroke-dasharray="2 2"/>`;
+      s+=`<text x="${x0+i*bw+bw/2}" y="${H-52}" text-anchor="middle" class="mono" font-size="8.5" fill="${MUT}">${lab}</text>`;});
+    s+=`<text x="${x0+w/2}" y="${H-28}" text-anchor="middle" font-size="11.5" font-weight="600" fill="${INK}">${esc(r.group)}</text>`;
+    s+=`<text x="${x0+w/2}" y="${H-13}" text-anchor="middle" class="mono" font-size="9.5" fill="${acc>0?TOOK:REF}">四段合计 ${fmtPct(acc,1)}</text>`;});
+  return s+'</svg>';
+}
+// C7 small multiples — every pick a card with its own sparkline, shared scale
+function C_cards(picks=PICKS){
+  const W=1080,n=picks.length||1,cw=W/n,H=190;
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  picks.forEach((r,pi)=>{const x0=cw*pi+14,w=cw-30;
+    const Y=v=>58+(1-(Math.max(-SMAX,Math.min(SMAX,v))+SMAX)/(2*SMAX))*78;
+    s+=`<rect x="${x0}" y="8" width="${w}" height="${H-20}" rx="16" fill="var(--bg)"/>`;
+    s+=`<text x="${x0+14}" y="30" font-size="12" font-weight="600" fill="${INK}">${esc(r.group)}</text>`;
+    s+=`<text x="${x0+14}" y="44" class="mono" font-size="9" fill="${MUT}">${r.members} names · ${r.state}</text>`;
+    const X=i=>x0+20+i*((w-40)/3);
+    s+=`<line x1="${x0+20}" y1="${Y(0)}" x2="${x0+w-20}" y2="${Y(0)}" stroke="${LINE}"/>`;
+    const pts=STRETCH.map(([k],i)=>[X(i),Y(r[k]??0)]);
+    const c=pol(r.rs_0_1w??0);
+    s+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${c}" stroke-width="2.2"/>`;
+    s+=`<circle cx="${pts[3][0]}" cy="${pts[3][1]}" r="4" fill="${c}"/>`;
+    s+=`<text x="${x0+14}" y="${H-18}" class="mono" font-size="15" fill="${c}">${fmtPct(r.rs_0_1w,1)}</text>`;
+    s+=`<text x="${x0+w-14}" y="${H-18}" text-anchor="end" class="mono" font-size="9" fill="${MUT}">本周相对</text>`;});
+  return s+'</svg>';
+}
+// C8 orbit — picks as bodies, distance from centre = current relative strength
+function C_orbit(picks=PICKS){
+  const W=1080,H=330,cx=W/2,cy=H/2;
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  [1,2,3].forEach(k=>s+=`<circle cx="${cx}" cy="${cy}" r="${k*44}" fill="none" stroke="${LINE}" stroke-dasharray="2 5"/>`);
+  s+=`<circle cx="${cx}" cy="${cy}" r="22" fill="${INK}"/>`;
+  s+=`<text x="${cx}" y="${cy+4}" text-anchor="middle" class="mono" font-size="10" fill="#f2f0e9">SPY</text>`;
+  picks.forEach((r,i)=>{const a=(i/Math.max(1,picks.length))*Math.PI*2-Math.PI/2;
+    const v=r.rs_0_1w??0, rad=44+Math.min(1,Math.abs(v)/SMAX)*94;
+    const x=cx+Math.cos(a)*rad,y=cy+Math.sin(a)*rad, c=pol(v);
+    // trail across the four stretches
+    STRETCH.forEach(([k2],j)=>{const vv=r[k2]??0, rr=44+Math.min(1,Math.abs(vv)/SMAX)*94;
+      s+=`<circle cx="${cx+Math.cos(a)*rr}" cy="${cy+Math.sin(a)*rr}" r="${2+j*1.1}" fill="${c}" fill-opacity="${0.16+j*0.24}"/>`;});
+    s+=`<circle cx="${x}" cy="${y}" r="${7+Math.sqrt(r.members)*0.5}" fill="${c}"/>`;
+    s+=`<text x="${x}" y="${y-16}" text-anchor="middle" font-size="11" font-weight="600" fill="${INK}">${esc(r.group)}</text>`;});
+  s+=`<text x="14" y="${H-8}" class="mono" font-size="9.5" fill="${MUT}">离心越远 = 越偏离 SPY · 尾迹由淡到深 = 四段时间顺序 · 圆越大 = 成员越多</text>`;
+  return s+'</svg>';
+}
+
+/* ================= RANKED geometries ================= */
+const pips=(x,y,r,fill)=>{let o='';for(let k=0;k<(r.persistence_of||5);k++)
+  o+=`<circle cx="${x+k*7}" cy="${y}" r="2.1" fill="${k<(r.persistence||0)?fill:LINE}"/>`;return o;};
+// R1 diverging bars around a centred zero
+function R_diverge(n=12){
+  const show=[...SORTED.slice(0,n),null,...SORTED.slice(-n)];
+  const W=1080,rh=18,H=show.length*rh+30,C=470,HALF=372;
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  s+=`<line x1="${C}" y1="6" x2="${C}" y2="${H-18}" stroke="${INK}" stroke-width="1.1"/>`;
+  [.2,.4].forEach(t=>[1,-1].forEach(g=>{const x=C+g*(t/MX)*HALF;
+    s+=`<line x1="${x}" y1="6" x2="${x}" y2="${H-18}" stroke="${LINE}" stroke-dasharray="2 4"/>`
+     +`<text x="${x}" y="${H-4}" text-anchor="middle" class="mono" font-size="9" fill="${MUT}">${fmtPct(g*t)}</text>`;}));
+  show.forEach((r,i)=>{const y=10+i*rh;
+    if(!r){s+=`<text x="${C}" y="${y+10}" text-anchor="middle" class="mono" font-size="10" fill="${LINE}">· · ·  ${SORTED.length-2*n} more  · · ·</text>`;return;}
+    const w=(Math.abs(r.excess_3m)/MX)*HALF, pos=r.excess_3m>0, x=pos?C:C-w;
+    s+=`<rect x="${x}" y="${y}" width="${Math.max(1.5,w)}" height="12" rx="3" fill="${pol(r.excess_3m)}"/>`;
+    s+=`<text x="${pos?C-9:C+9}" y="${y+10}" text-anchor="${pos?'end':'start'}" font-size="10.5" fill="${INK}">${esc(r.group)}</text>`;
+    s+=`<text x="${pos?x+w+8:x-8}" y="${y+10}" text-anchor="${pos?'start':'end'}" class="mono" font-size="10" fill="${SEC}">${fmtPct(r.excess_3m)}</text>`;});
+  return s+'</svg>';
+}
+// R2 chunky arch-top bars, top N only
+function R_arch(n=14){
+  const rows=SORTED.slice(0,n),W=1080,bw=(W-30)/n,H=290,base=H-52;
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  rows.forEach((r,i)=>{const h=(r.excess_3m/MX)*(base-34), x=16+i*bw, w=bw-13, y=base-h, rad=Math.min(w/2,26);
+    s+=`<path d="M${x},${base} L${x},${y+rad} A${rad},${rad} 0 0 1 ${x+w},${y+rad} L${x+w},${base} Z"
+        fill="${i===0?INK:pol(r.excess_3m)}" fill-opacity="${i===0?1:(0.35+0.6*(r.excess_3m/MX)).toFixed(2)}"/>`;
+    s+=`<text x="${x+w/2}" y="${y-8}" text-anchor="middle" class="mono" font-size="10.5" fill="${INK}">${fmtPct(r.excess_3m)}</text>`;
+    s+=`<text x="${x+w/2}" y="${base+15}" text-anchor="middle" font-size="9" fill="${SEC}">${esc(r.group).slice(0,13)}</text>`;
+    s+=pips(x+w/2-17,base+27,r,MUT);});
+  s+=`<line x1="16" y1="${base}" x2="${W-16}" y2="${base}" stroke="${INK}" stroke-width="1"/>`;
+  s+=`<text x="16" y="${H-6}" class="mono" font-size="9" fill="${MUT}">柱下五点 = 最近 5 期里有几期它在榜上 · 最强者穿黑</text>`;
+  return s+'</svg>';
+}
+// R3 lollipop comb — all 76 in one comb
+function R_comb(){
+  const W=1080,H=340,P=44,base=H-72;
+  const cw=(W-P*2)/SORTED.length;
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  s+=`<line x1="${P}" y1="${base}" x2="${W-P}" y2="${base}" stroke="${INK}" stroke-width="1"/>`;
+  SORTED.forEach((r,i)=>{const x=P+i*cw+cw/2, h=(r.excess_3m/MX)*(base-40), y=base-h;
+    s+=`<line x1="${x}" y1="${base}" x2="${x}" y2="${y}" stroke="${pol(r.excess_3m)}" stroke-width="1.5" opacity=".75"/>`;
+    s+=`<circle cx="${x}" cy="${y}" r="${2.4+Math.sqrt(r.members)*0.28}" fill="${pol(r.excess_3m)}"><title>${esc(r.group)} ${fmtPct(r.excess_3m)}</title></circle>`;});
+  SORTED.slice(0,3).forEach((r,i)=>{const x=P+SORTED.indexOf(r)*cw+cw/2, y=base-(r.excess_3m/MX)*(base-40);
+    s+=`<text x="${x+6}" y="${y-6+i*11}" font-size="10" fill="${INK}">${esc(r.group)}</text>`;});
+  const lastPos=SORTED.filter(r=>r.excess_3m>0).length;
+  s+=`<line x1="${P+lastPos*cw}" y1="24" x2="${P+lastPos*cw}" y2="${base+18}" stroke="${INK}" stroke-dasharray="3 3"/>`;
+  s+=`<text x="${P+lastPos*cw+6}" y="30" class="mono" font-size="9.5" fill="${MUT}">← ${lastPos} 跑赢 · ${SORTED.length-lastPos} 跑输 →</text>`;
+  s+=`<text x="${P}" y="${H-10}" class="mono" font-size="9.5" fill="${MUT}">全部 76 条，一把梳子 · 圆点大小 = 成员数</text>`;
+  return s+'</svg>';
+}
+// R4 heat rows — 76 rows × 4 stretches, ink density
+function R_heat(){
+  const n=26,rows=[...SORTED.slice(0,n)],W=1080,rh=17,H=n*rh+44,L=178,cw=104;
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  STRETCH.forEach(([,lab],i)=>s+=`<text x="${L+i*cw+cw/2}" y="14" text-anchor="middle" class="mono" font-size="9" fill="${MUT}" letter-spacing="1">${lab}</text>`);
+  s+=`<text x="${L+4*cw+70}" y="14" text-anchor="middle" class="mono" font-size="9" fill="${MUT}" letter-spacing="1">3M vs SPY</text>`;
+  rows.forEach((r,i)=>{const y=22+i*rh;
+    s+=`<text x="${L-12}" y="${y+11}" text-anchor="end" font-size="10.5" fill="${INK}">${esc(r.group)}</text>`;
+    STRETCH.forEach(([k],j)=>{const v=r[k]??0, t=Math.min(1,Math.abs(v)/SMAX);
+      s+=`<rect x="${L+j*cw+2}" y="${y}" width="${cw-4}" height="${rh-3}" rx="3"
+          fill="${pol(v)}" fill-opacity="${(0.08+t*0.86).toFixed(2)}"><title>${fmtPct(v,1)}</title></rect>`;});
+    const w=(Math.abs(r.excess_3m)/MX)*130;
+    s+=`<rect x="${L+4*cw+12}" y="${y+2}" width="${Math.max(1,w)}" height="${rh-7}" rx="2" fill="${pol(r.excess_3m)}"/>`;
+    s+=`<text x="${L+4*cw+18+w}" y="${y+11}" class="mono" font-size="9.5" fill="${SEC}">${fmtPct(r.excess_3m)}</text>`;});
+  s+=`<text x="0" y="${H-8}" class="mono" font-size="9.5" fill="${MUT}">前 26 名 · 一行读完四段接力，深浅 = 强度，左右 = 方向</text>`;
+  return s+'</svg>';
+}
+// R5 stagger cascade columns, all 76
+function R_cascade(){
+  const W=1080,H=270,P=26,base=H-46,cw=(W-P*2)/SORTED.length;
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  SORTED.forEach((r,i)=>{const x=P+i*cw, h=Math.max(2,(Math.abs(r.excess_3m)/MX)*(base-26)), pos=r.excess_3m>0;
+    s+=`<rect x="${x+0.6}" y="${pos?base-h:base}" width="${cw-1.6}" height="${h}" rx="1.5"
+        fill="${pos?INK:MUT}" fill-opacity="${pos?(0.42+0.58*(r.excess_3m/MX)).toFixed(2):0.5}"><title>${esc(r.group)} ${fmtPct(r.excess_3m)}</title></rect>`;});
+  s+=`<line x1="${P}" y1="${base}" x2="${W-P}" y2="${base}" stroke="${INK}" stroke-width="1"/>`;
+  s+=`<text x="${P}" y="${H-8}" class="mono" font-size="9.5" fill="${MUT}">76 条按强度排开 · 上为跑赢 · 唯一的墨色梯度就是强度本身</text>`;
+  return s+'</svg>';
+}
+// R6 typographic ranking — the name IS the bar
+function R_type(n=16){
+  const rows=SORTED.slice(0,n),W=1080,rh=25,H=n*rh+34;
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  rows.forEach((r,i)=>{const y=24+i*rh, t=r.excess_3m/MX;
+    const size=(12+t*15).toFixed(1), wt=t>0.55?700:(t>0.3?600:500);
+    s+=`<text x="34" y="${y}" font-size="${size}" font-weight="${wt}" fill="${ramp(0.25+t*0.75)}"
+         letter-spacing="-.01em">${esc(r.group)}</text>`;
+    s+=`<text x="0" y="${y}" class="mono" font-size="9.5" fill="${LINE}">${String(i+1).padStart(2,'0')}</text>`;
+    s+=`<text x="${W-92}" y="${y}" text-anchor="end" class="mono" font-size="${(10+t*5).toFixed(1)}" fill="${pol(r.excess_3m)}">${fmtPct(r.excess_3m)}</text>`;
+    s+=pips(W-78,y-4,r,SEC);});
+  s+=`<text x="0" y="${H-6}" class="mono" font-size="9.5" fill="${MUT}">字号和墨色就是柱长 · 没有一根柱子</text>`;
+  return s+'</svg>';
+}
+// R7 rank-shift slope: rank by 1M vs rank by 3M
+function R_shift(n=18){
+  const by=(k)=>{const o=[...R].sort((a,b)=>(b[k]??-9)-(a[k]??-9));return new Map(o.map((r,i)=>[r.group,i+1]));};
+  const A=by('perf_1m'),B=by('excess_3m');
+  const rows=SORTED.slice(0,n),W=1080,H=n*20+48,L=300,Rr=300;
+  const Y=rk=>26+((rk-1)/(R.length-1))*(H-70);
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  s+=`<text x="${L}" y="14" text-anchor="end" class="mono" font-size="9.5" fill="${MUT}">按 1M 排</text>`;
+  s+=`<text x="${W-Rr}" y="14" class="mono" font-size="9.5" fill="${MUT}">按 3M 超额排</text>`;
+  rows.forEach(r=>{const a=A.get(r.group)||99,b=B.get(r.group)||99, up=b<a, c=up?TOOK:REF;
+    s+=`<line x1="${L}" y1="${Y(a)}" x2="${W-Rr}" y2="${Y(b)}" stroke="${c}" stroke-width="${1+Math.abs(a-b)/14}" opacity=".8"/>`;
+    s+=`<text x="${L-8}" y="${Y(a)+3.5}" text-anchor="end" font-size="10.5" fill="${SEC}">${esc(r.group)}</text>`;
+    s+=`<text x="${W-Rr+8}" y="${Y(b)+3.5}" font-size="10.5" fill="${INK}">${esc(r.group)} <tspan class="mono" font-size="9" fill="${c}">${a>b?'▲'+(a-b):(a<b?'▼'+(b-a):'—')}</tspan></text>`;});
+  s+=`<text x="0" y="${H-6}" class="mono" font-size="9.5" fill="${MUT}">线越粗 = 名次挪得越多 · 蓝 = 短线比中线更强（正在接棒）</text>`;
+  return s+'</svg>';
+}
+// R8 pictorial pips — persistence as the primary mark
+function R_pictorial(n=16){
+  const rows=SORTED.slice(0,n),W=1080,rh=25,H=n*rh+40,L=190,U=13;
+  const mx=Math.max(...rows.map(r=>Math.abs(r.excess_3m)));
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  rows.forEach((r,i)=>{const y=22+i*rh;
+    s+=`<text x="${L-12}" y="${y+11}" text-anchor="end" font-size="11" fill="${INK}">${esc(r.group)}</text>`;
+    const units=Math.round((Math.abs(r.excess_3m)/mx)*38);
+    for(let k=0;k<38;k++){
+      s+=`<rect x="${L+k*(U+2.4)*0.62}" y="${y+2}" width="${U*0.5}" height="${U}" rx="2"
+          fill="${k<units?pol(r.excess_3m):LINE}" fill-opacity="${k<units?0.9:0.5}"/>`;}
+    s+=`<text x="${L+38*(U+2.4)*0.62+10}" y="${y+11}" class="mono" font-size="10" fill="${SEC}">${fmtPct(r.excess_3m)}</text>`;});
+  s+=`<text x="0" y="${H-8}" class="mono" font-size="9.5" fill="${MUT}">每一格 = 相同的一份超额 · 数得清，不用估</text>`;
+  return s+'</svg>';
+}
+
+/* ================= 15 完全变体 ================= */
+const V=[
+ ['V01 · 蜂群 / 斜率 / 分岔',
+  '最保守的一版。三层<b>问的问题</b>不变，只换回答的几何。Field 从一维点带变成按状态分四道的蜂群——堆叠本身就是分布，不必再画一个箱线图去解释它。Compare 把四段接力摊成斜率，其余 72 条留成灰色底噪，于是"我挑的这条在全场算什么"是看出来的。Ranked 用零线居中的分岔条。',
+  ['四道 = 四种状态 · 圆面积 = 成员数',F_swarm,'四段接力 + 全场底噪',C_slope,'零线居中 · 左右各 12',()=>R_diverge(12)]],
+ ['V02 · 象限 / 名次 / 热行',
+  '唯一一版给出<b>新信息</b>的：Field 换成"已经领先了多少"×"还在不在加速"的象限图。仓库里 rs_accel 一直有，但页面从没画过它。右上是还在扩大的领先，右下是正在褪色的领先——这两类在旧页面上长得一模一样。',
+  ['x = 3M 超额 · y = 加速度 · 四个象限各有名字',F_quadrant,'名次而不是数值：谁在往上爬',C_bump,'一行读完四段 + 3M 总账',R_heat]],
+ ['V03 · 点阵 / 花瓣 / 巨柱',
+  '最"海报"的一版，直接吃 lieflat 的三个招牌形状。Field 是点阵（每点一个主题），Compare 是四瓣玫瑰，Ranked 是拱顶巨柱、冠军穿黑。牺牲精读，换第一眼的冲击。',
+  ['76 点 · 浓度 = 离 SPY 多远',F_matrix,'四瓣 = 四段 · 花瓣长度 = 强度',C_rose,'前 14 · 冠军穿黑 · 柱下五点 = 持续性',()=>R_arch(14)]],
+ ['V04 · 山脊 / 接力棒 / 梳子',
+  '把"分布"这件事说到底。Field 是直方山脊，一眼看出全场重心偏在哪边；Compare 把四段首尾相接成一根接力棒，长度即累计；Ranked 是全部 76 条的梳子，不做截断。',
+  ['22 个桶 · 柱高 = 有几个主题落在这一档',F_ridge,'四段首尾相接 · 越右越新',C_baton,'全部 76 条，一把梳子',R_comb]],
+ ['V05 · 状态行 / 哑铃 / 字体排名',
+  '最安静的一版。Field 四行单轴、圆面积是成员数；Compare 只问一个问题——最早那段到最近那段，你往哪走；Ranked 完全没有柱子，字号和墨色就是柱长。',
+  ['四行 · 圆面积 = 成员数',F_rows,'空心 = 3M–6M，实心 = 0–1W',C_dumbbell,'字号即长度 · 一根柱子都没有',()=>R_type(16)]],
+ ['V06 · 树图 / 瀑布 / 名次迁移',
+  '以"体量"为主角。Field 用树图，格子大小是成员数——一个 3 只股票的主题再强也只是一小格，这是旧页面最容易骗人的地方。Compare 用瀑布，看四段各贡献了多少。Ranked 用名次迁移，左边按 1M 排，右边按 3M 排。',
+  ['格子大小 = 成员数 · 浓度 = 超额',F_treemap,'四段各自贡献 · 虚线是累计',C_waterfall,'左 1M 排名 → 右 3M 排名 · 线粗 = 挪了几位',()=>R_shift(18)]],
+ ['V07 · 放射 / 轨道 / 层叠',
+  '两个圆形几何叠在一起，最不像仪表盘的一版。Field 是 76 根放射线，Compare 是轨道图（尾迹就是时间），Ranked 用层叠柱把 76 条压成一条天际线。',
+  ['76 根辐条 · 向外 = 跑赢',F_burst,'离心 = 偏离 SPY · 尾迹 = 四段',C_orbit,'76 条天际线',R_cascade]],
+ ['V08 · 胶囊 / 卡片 / 象形',
+  '把 lieflat 的 range capsule 拿来当 Field：每根胶囊是一个主题从 1M 到 3M 的区间，长度本身就是"这一个月发生了多少事"。Compare 用小卡片，每个选中一张。Ranked 用等份象形块——数得清，不用估。',
+  ['胶囊 = 1M → 3M 区间',F_capsule,'每个选中一张卡片 · 共用刻度',C_cards,'每格一份等量超额',()=>R_pictorial(16)]],
+ ['V09 · 华夫 / 接力棒 / 拱顶',
+  '状态优先。Field 是华夫格，四种状态四种墨度，先回答"今天全场是什么成色"，再回答"谁强"。',
+  ['76 格 · 墨度 = 状态',F_waffle,'四段首尾相接',C_baton,'前 14 · 冠军穿黑',()=>R_arch(14)]],
+ ['V10 · 象限 / 玫瑰 / 分岔',
+  'V02 的信息量配 V03 的形状。象限给判断，玫瑰给形状，分岔条给精读。',
+  ['四象限',F_quadrant,'四瓣玫瑰',C_rose,'零线居中 · 左右各 14',()=>R_diverge(14)]],
+ ['V11 · 蜂群 / 轨道 / 热行',
+  '中庸偏视觉：蜂群保住分布的严谨，轨道给中间一块"活"的画面，热行让下半页可以逐行查。',
+  ['四道蜂群',F_swarm,'轨道 + 尾迹',C_orbit,'前 26 行 × 四段',R_heat]],
+ ['V12 · 点阵 / 名次 / 象形',
+  '全部用"可数的单位"说话：点、名次、格子。没有一个需要读刻度的元素。',
+  ['76 点',F_matrix,'名次升降',C_bump,'等份格子',()=>R_pictorial(16)]],
+ ['V13 · 树图 / 哑铃 / 梳子',
+  '体量 → 方向 → 全景。先让成员数说话，再问四段里往哪走，最后铺开全部 76 条。',
+  ['格子 = 成员数',F_treemap,'最早段 → 最近段',C_dumbbell,'全部 76 条',R_comb]],
+ ['V14 · 山脊 / 卡片 / 字体排名',
+  '最接近"编辑部版面"的一版：一个统计图、一排卡片、一份榜单，全部靠字重和留白分层。',
+  ['分布山脊',F_ridge,'选中卡片',C_cards,'字号即长度',()=>R_type(16)]],
+ ['V15 · 状态行 / 瀑布 / 层叠',
+  '最紧凑的一版，整页高度大约是现在的一半。适合把 Themes 塞进 Dashboard 当一块，而不是一个独立页面。',
+  ['四行单轴',F_rows,'四段瀑布',C_waterfall,'76 条天际线',R_cascade]],
+];
+V.forEach(([title,why,layers])=>{
+  const [fn,ff,cn,cf,rn,rf]=layers;
+  variant(title,why,[['Field',fn,ff()],['Compare',cn,cf()],['Ranked',rn,rf()]]);
+});
+
+/* ================= 打分 + 两个合成版 ================= */
+// 修掉实测发现的缺陷后重画的几何
+function F_quadrant2(){
+  const W=1080,H=430,P=64;
+  const X=v=>P+((v+MX)/(2*MX))*(W-P*2), Y=v=>P+(1-((v+MA)/(2*MA)))*(H-P*2);
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  // 极淡的象限底，只留一格：还在加速的领先者——这一格才是要找的东西
+  s+=`<rect x="${X(0)}" y="${P}" width="${W-P-X(0)}" height="${Y(0)-P}" fill="${TOOK}" opacity=".045"/>`;
+  s+=`<line x1="${X(0)}" y1="${P}" x2="${X(0)}" y2="${H-P}" stroke="${INK}" stroke-width="1.1"/>`;
+  s+=`<line x1="${P}" y1="${Y(0)}" x2="${W-P}" y2="${Y(0)}" stroke="${INK}" stroke-width="1.1"/>`;
+  [['还在扩大的领先',X(0)+14,P+18,'start'],['正在褪色的领先',X(0)+14,H-P-10,'start'],
+   ['落后但在转强',X(0)-14,P+18,'end'],['落后且继续弱',X(0)-14,H-P-10,'end']]
+   .forEach(([t,x,y,a])=>s+=`<text x="${x}" y="${y}" text-anchor="${a}" font-size="10.5" fill="${MUT}">${t}</text>`);
+  const pts=R.map(r=>({r,cx:X(r.excess_3m),cy:Y(r.rs_accel??0),rr:2.4+Math.sqrt(r.members||1)*0.5}));
+  pts.forEach(p=>{const lead=p.r.excess_3m>0, acc=(p.r.rs_accel??0)>0;
+    const solid=lead&&acc?TOOK:(!lead&&!acc?REF:null);
+    s+=`<circle cx="${p.cx}" cy="${p.cy}" r="${p.rr.toFixed(2)}" fill="${solid||'none'}"
+        stroke="${solid?'none':SEC}" stroke-width="1.1" fill-opacity=".8"><title>${esc(p.r.group)} ${fmtPct(p.r.excess_3m)} · accel ${fmtPct(p.r.rs_accel,1)}</title></circle>`;});
+  // 只给四个象限各一个代表命名，且垂直去碰撞
+  const pick=[]; const q=(lead,acc)=>pts.filter(p=>(p.r.excess_3m>0)===lead&&((p.r.rs_accel??0)>0)===acc)
+    .sort((a,b)=>Math.abs(b.r.excess_3m)+Math.abs(b.r.rs_accel??0)-(Math.abs(a.r.excess_3m)+Math.abs(a.r.rs_accel??0)))[0];
+  [[1,1],[1,0],[0,1],[0,0]].forEach(([l,a])=>{const p=q(!!l,!!a); if(p)pick.push(p);});
+  const used=[];
+  pick.forEach(p=>{let y=p.cy-9; while(used.some(u=>Math.abs(u-y)<13)) y-=13; used.push(y);
+    s+=`<line x1="${p.cx}" y1="${p.cy-p.rr}" x2="${p.cx}" y2="${y+3}" stroke="${LINE}"/>`;
+    s+=`<text x="${p.cx+6}" y="${y}" font-size="10.5" font-weight="600" fill="${INK}">${esc(p.r.group)}</text>`;});
+  const hot=pts.filter(p=>p.r.excess_3m>0&&(p.r.rs_accel??0)>0).length;
+  s+=`<text x="${W-P}" y="${P-16}" text-anchor="end" class="mono" font-size="10" fill="${SEC}">这一格 ${hot} 个 / 全场 ${R.length}</text>`;
+  s+=`<text x="${W-P}" y="${H-P+20}" text-anchor="end" class="mono" font-size="9" fill="${MUT}">3M 超额 →</text>`;
+  s+=`<text x="${P}" y="${P-16}" class="mono" font-size="9" fill="${MUT}">↑ 还在加速</text>`;
+  return s+'</svg>';
+}
+function C_cards2(picks=PICKS){
+  const W=1080,n=picks.length||1,cw=W/n,H=214;
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  picks.forEach((r,pi)=>{const x0=cw*pi+12,w=cw-26;
+    const Y=v=>72+(1-(Math.max(-SMAX,Math.min(SMAX,v))+SMAX)/(2*SMAX))*72;
+    s+=`<rect x="${x0}" y="6" width="${w}" height="${H-16}" rx="18" fill="var(--bg)"/>`;
+    s+=`<text x="${x0+16}" y="30" font-size="12.5" font-weight="600" fill="${INK}">${esc(r.group)}</text>`;
+    s+=`<text x="${x0+16}" y="45" class="mono" font-size="9" fill="${MUT}">${r.members} names · ${r.state}</text>`;
+    const X=i=>x0+22+i*((w-44)/3);
+    s+=`<line x1="${x0+22}" y1="${Y(0)}" x2="${x0+w-22}" y2="${Y(0)}" stroke="${LINE}"/>`;
+    s+=`<text x="${x0+w-22}" y="${Y(0)-4}" text-anchor="end" class="mono" font-size="8" fill="${LINE}">SPY</text>`;
+    const pts=STRETCH.map(([k],i)=>[X(i),Y(r[k]??0)]), c=pol(r.rs_0_1w??0);
+    s+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="${c}" stroke-width="2.2" stroke-linejoin="round"/>`;
+    pts.forEach((p,i)=>s+=`<circle cx="${p[0]}" cy="${p[1]}" r="${i===3?4:2.2}" fill="${c}"/>`);
+    STRETCH.forEach(([,lab],i)=>s+=`<text x="${X(i)}" y="${H-40}" text-anchor="middle" class="mono" font-size="7.5" fill="${LINE}">${lab}</text>`);
+    s+=`<text x="${x0+16}" y="${H-16}" class="mono" font-size="17" fill="${c}">${fmtPct(r.rs_0_1w,1)}</text>`;
+    s+=`<text x="${x0+w-16}" y="${H-16}" text-anchor="end" class="mono" font-size="9" fill="${MUT}">本周相对 SPY</text>`;});
+  return s+'</svg>';
+}
+function R_type2(n=16){
+  const rows=SORTED.slice(0,n),W=1080,rh=26,H=n*rh+36;
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  rows.forEach((r,i)=>{const y=25+i*rh, t=r.excess_3m/MX;
+    s+=`<text x="0" y="${y}" class="mono" font-size="9.5" fill="${LINE}">${String(i+1).padStart(2,'0')}</text>`;
+    s+=`<text x="30" y="${y}" font-size="${(12+t*15).toFixed(1)}" font-weight="${t>0.55?700:(t>0.3?600:500)}"
+         fill="${ramp(0.25+t*0.75)}" letter-spacing="-.01em">${esc(r.group)}</text>`;
+    // 画出来才发现的事：members==1 的几条不是小主题，是用一只 ETF 代理整个主题
+    // （Biotech=XBI、Taiwan=EWT、Healthcare=XLV）。榜单把一只 ETF 和一个 286 只
+    // 的篮子并排排名，页面上却没有任何东西区分它们。所以不写 "1 names"。
+    const tag = r.members===1 ? 'ETF \u4ee3\u7406'
+      : (r.members<20 ? r.members+' names \u00b7 \u7bee\u5b50\u5f88\u5c0f' : r.members+' names');
+    s+=`<text x="${W-238}" y="${y}" text-anchor="end" class="mono" font-size="9.5"
+         fill="${r.members<20?REF:MUT}">${tag}</text>`;
+    s+=`<text x="${W-96}" y="${y}" text-anchor="end" class="mono" font-size="${(10+t*5).toFixed(1)}" fill="${pol(r.excess_3m)}">${fmtPct(r.excess_3m)}</text>`;
+    s+=pips(W-80,y-4,r,SEC);});
+  s+=`<text x="0" y="${H-6}" class="mono" font-size="9.5" fill="${MUT}">字号与墨色就是柱长 · 写 ETF 代理的那几条，整个主题就是一只 ETF · 右侧五点 = 5 期里在榜几期</text>`;
+  return s+'</svg>';
+}
+variant('V16 · 象限 / 卡片 / 字体排名　【打分后的合成版】',
+ '打分的结论不是"选哪一个"，而是<b>没有一个变体三层全赢</b>。V02 的象限是唯一给出新信息的 Field；V08/V14 的卡片是读得最快、且唯一不会撞标签的 Compare；V05 的字体排名是密度最高的 Ranked。这一版把三者合起来，并修掉实测到的缺陷：象限底色从两块压到一块（只留"还在扩大的领先"），四个象限各点名一个代表并做垂直去碰撞；榜单加上成员数，少于 20 的标红——这是 V06 树图教我的，并且画出来之后多捡到一件事：榜上 members==1 的三条是<b>用一只 ETF 代理整个主题</b>（XBI / EWT / XLV），页面把它和一个 286 只的篮子并排排名。原本的说法是"一个 3 只股票的主题也能排第一"。',
+ [['Field','x = 3M 超额 · y = 加速度 · 只有一格是要找的',F_quadrant2()],
+  ['Compare','每个选中一张卡片 · 共用刻度 · 不会撞标签',C_cards2()],
+  ['Ranked','字号即长度 · 成员数 < 20 标红',R_type2(16)]]);
+
+variant('V17 · 树图 / 卡片 / 分岔　【体量优先的合成版】',
+ 'V16 的替代路线。如果认为页面最该先说的是<b>体量</b>而不是加速度，就用树图开场：Small Caps 1583 只、High Beta 1057 只，两块巨大的浅色格子只跑赢 SPY 5% 和 2%；而 +47% 的 52-Week High Leaders 只是一小格 88 只。柱状图会把这两件事画得一样长，树图不会。',
+ [['Field','格子面积 = 成员数 · 浓度 = 超额',F_treemap()],
+  ['Compare','每个选中一张卡片',C_cards2()],
+  ['Ranked','零线居中 · 左右各 14',R_diverge(14)]]);
+
+/* ---------- 打分表 ---------- */
+const SC=[
+ ['V01 蜂群/斜率/分岔',4,2,5,4,5,3,'Compare 右缘标签互相压字'],
+ ['V02 象限/名次/热行',4,5,4,4,5,4,'象限底色过重；右缘标签撞车'],
+ ['V03 点阵/花瓣/巨柱',3,2,3,4,4,5,'玫瑰四朵形状太像，比不出来；中间浅点几乎不可见'],
+ ['V04 山脊/接力棒/梳子',5,3,5,5,3,3,'接力棒用 |v| 当长度，跑输的段也画得长——长度骗人'],
+ ['V05 状态行/哑铃/字体',4,2,3,5,5,4,'哑铃的数值压在连线上'],
+ ['V06 树图/瀑布/迁移',3,5,5,4,4,4,'名次迁移右侧标签整叠塌陷，基本不可读'],
+ ['V07 放射/轨道/层叠',2,1,4,3,2,5,'轨道按角度摆放，距离无法互相比较；层叠柱丢了配对色'],
+ ['V08 胶囊/卡片/象形',5,2,2,5,5,4,'胶囊只画了 24 条，那是排名不是全场'],
+ ['V09 华夫/接力棒/拱顶',3,1,2,4,3,4,'华夫只答"成色"，不答"多强"；接力棒同 V04 的病'],
+ ['V10 象限/玫瑰/分岔',3,4,4,4,4,4,'玫瑰拖后腿'],
+ ['V11 蜂群/轨道/热行',3,3,4,3,4,4,'轨道同 V07'],
+ ['V12 点阵/名次/象形',4,3,3,5,5,3,'三层都靠"数个数"，缺一个能看趋势的'],
+ ['V13 树图/哑铃/梳子',3,4,5,4,4,3,'哑铃同 V05'],
+ ['V14 山脊/卡片/字体',5,2,4,5,5,4,'三层都好读，但没有一层给出新信息'],
+ ['V15 状态行/瀑布/层叠',3,2,4,3,3,3,'层叠柱丢配对色；整体偏平'],
+ ['V16 象限/卡片/字体 ★',5,5,4,5,5,4,'合成版：缺陷已修'],
+ ['V17 树图/卡片/分岔 ★',4,5,5,4,5,4,'合成版：树图的行高不均、小格标签溢出仍在'],
+];
+const HEAD=['变体','读数速度','信息增量','密度诚实','灰度存活','宪章符合','视觉张力','合计','实测缺陷'];
+let t='<section class="variant"><h2>打分（0–5 × 6 项）</h2>'
+ +'<p class="why">不是审美投票。六项里有四项是可验证的：能不能在 3 秒内读出主答案、有没有说出旧页面说不出的话、'
+ +'76 条会不会挤成一团或被截断、转成灰度还认不认得出、颜色有没有在不表达含义的地方出现。'
+ +'最后一项"视觉张力"是主观的，我给它和其它项一样的权重，不多不少。</p>'
+ +'<div class="card" style="overflow-x:auto"><table style="border-collapse:collapse;width:100%;font-size:11.5px">'
+ +'<tr>'+HEAD.map((h,i)=>`<th style="text-align:${i===0||i===8?'left':'center'};padding:6px 8px;border-bottom:1.5px solid var(--ink);font-weight:600;white-space:nowrap">${h}</th>`).join('')+'</tr>';
+SC.map(r=>[...r.slice(0,7),r.slice(1,7).reduce((a,b)=>a+b,0),r[7]])
+  .sort((a,b)=>b[7]-a[7])
+  .forEach(r=>{const star=r[0].includes('★');
+   t+=`<tr style="${star?'background:color-mix(in srgb,var(--took) 7%,transparent)':''}">`
+    +`<td style="padding:5px 8px;border-bottom:1px solid var(--line);white-space:nowrap;font-weight:${star?600:400}">${r[0]}</td>`
+    +r.slice(1,7).map(v=>`<td style="text-align:center;padding:5px 8px;border-bottom:1px solid var(--line);color:${v<=2?'var(--refused)':(v>=5?'var(--took)':'var(--sec)')}" class="mono">${v}</td>`).join('')
+    +`<td style="text-align:center;padding:5px 8px;border-bottom:1px solid var(--line);font-weight:600" class="mono">${r[7]}</td>`
+    +`<td style="padding:5px 8px;border-bottom:1px solid var(--line);color:var(--mut)">${r[8]}</td></tr>`;});
+t+='</table></div><p class="note">缺陷列全部是<b>渲染出来看到的</b>，不是预判的。V06 的名次迁移我原本以为是这批里最聪明的一张，'
+ +'画出来才发现 18 条线的右端全部塌在一起——因为我拿全场 76 名去定纵坐标，却只画了 18 条。</p></section>';
+app.insertAdjacentHTML('afterbegin',t);
+
+</script>
+</body></html>
