@@ -92,7 +92,10 @@ def build_trade_sizings(trades: list[Trade], ohlc_by_ticker: dict) -> list[Trade
     for t in trades:
         if not t.closed:
             continue
-        if t.R_dollars <= 0:
+        # "with valid R" in the docstring now includes "has one at all": a
+        # trade with no entry stop on record has no denominator, and the whole
+        # profile below is denominated in R.
+        if not t.has_R:
             continue
         ohlc = ohlc_by_ticker.get(t.ticker)
         atr_pct = compute_entry_atr_pct(t, ohlc)
@@ -100,9 +103,11 @@ def build_trade_sizings(trades: list[Trade], ohlc_by_ticker: dict) -> list[Trade
         pos_pct = pos_dollars / STARTING_CAPITAL * 100
         initial_R = t.R_dollars / FIXED_R_DOLLARS
         stop_mults_atr = None
-        if atr_pct and atr_pct > 0:
+        if atr_pct and atr_pct > 0 and t.initial_stop is not None:
             # Sizing analysis uses the locked-at-entry stop — trailed stops would
-            # bias the ATR-multiple distribution after the fact.
+            # bias the ATR-multiple distribution after the fact, and a trade
+            # with no entry stop on record contributes nothing rather than a
+            # distance measured from a stop that has since moved.
             stop_distance_pct = abs(t.entry_price - t.initial_stop) / t.entry_price * 100
             stop_mults_atr = stop_distance_pct / atr_pct
         out.append(TradeSizing(

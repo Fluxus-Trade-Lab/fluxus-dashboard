@@ -93,7 +93,7 @@ def prep_bars(trade: Trade, ohlc: pd.DataFrame) -> Optional[np.ndarray]:
         8 wk_close  9 wk_ema10  10 wk_ema20
         11 atr14  12 low_5d
     """
-    if trade.R_dollars <= 0:
+    if not trade.has_R:
         return None
     if ohlc is None or len(ohlc) < 5:
         return None
@@ -109,6 +109,13 @@ def prep_bars(trade: Trade, ohlc: pd.DataFrame) -> Optional[np.ndarray]:
 
 
 def simulate(trade: Trade, ohlc: pd.DataFrame, p: SimParams) -> Optional[float]:
+    # Every rule this simulator runs is expressed in R and starts from the entry
+    # stop. With no entry stop on record there is nothing to simulate, and
+    # inventing a starting stop would make the result a statement about the
+    # invention rather than about the trade. Guarded here rather than in
+    # _simulate_from_bars, whose contract is a float.
+    if trade.initial_stop is None or not trade.R_dollars:
+        return None
     bars = prep_bars(trade, ohlc)
     if bars is None:
         return None

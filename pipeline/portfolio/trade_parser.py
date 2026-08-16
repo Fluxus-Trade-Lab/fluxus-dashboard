@@ -53,7 +53,7 @@ class Trade:
     original_qty: int
     current_qty: int
     stop_price: float       # current / trailing stop
-    initial_stop: float     # locked at entry — R denominator
+    initial_stop: Optional[float]   # locked at entry — R denominator; None = unknown
     closed: bool
     trims: tuple[TrimEvent, ...] = field(default_factory=tuple)
 
@@ -82,12 +82,19 @@ class Trade:
         return whole_weeks * 5 + biz_offset
 
     @property
-    def R_dollars(self) -> float:
+    def R_dollars(self) -> Optional[float]:
         """Initial $ at risk = |entry - initial_stop| × original_qty.
 
-        Anchored to the locked-at-entry stop so trailing the live stop never
-        retroactively rewrites historical R-multiples.
+        None when the entry stop is unknown. It used to be backfilled from the
+        live stop, which is the one substitution that cannot be made here:
+        Andy trails stops in the tracker, so by the time a trade is read the
+        live stop is not the stop the position was sized against. Substituting
+        it divides every R by the wrong number and leaves no trace, because the
+        result still looks like an R. An absent R is a reading; a wrong one is
+        not.
         """
+        if self.initial_stop is None:
+            return None
         return abs(self.entry_price - self.initial_stop) * self.original_qty
 
     @property
@@ -102,12 +109,24 @@ class Trade:
         return sum(sign * (t.price - self.entry_price) * t.qty for t in self.trims)
 
     @property
-    def realized_R(self) -> Optional[float]:
-        """Realized P/L expressed in R-multiples; None if R was 0 (no stop)."""
+    def has_R(self) -> bool:
+        """True when this trade has a usable R denominator.
+
+        `R_dollars is not None and R_dollars > 0` appeared at six call sites
+        the day initial_stop became optional, and a comparison that reads
+        `R_dollars > 0` raises rather than returning False once None is
+        possible — the kind of break that only shows up on the one book that
+        has a blank stop. One definition, asked by name.
+        """
         R = self.R_dollars
-        if R <= 0:
+        return R is not None and R > 0
+
+    @property
+    def realized_R(self) -> Optional[float]:
+        """Realized P/L in R-multiples; None when R is unknown or zero."""
+        if not self.has_R:
             return None
-        return self.realized_pl / R
+        return self.realized_pl / self.R_dollars
 
 
 def _parse_date(s: str) -> Optional[date]:
@@ -235,8 +254,14 @@ def _row_to_trade(
             trims.append(TrimEvent(date=d, price=p, qty=q, type=t_type))
 
     final_stop = stop_price if stop_price is not None else entry_price * 0.95
-    # Backfill: if Initial Stop column is missing or blank, lock it to the current stop.
-    final_initial = initial_stop if initial_stop is not None else final_stop
+    # No backfill. This used to read `initial_stop or final_stop`, which is
+    # only correct while no stop has ever been trailed — and stops get trailed
+    # in the tracker, so from the first trail onward it wrote a moved
+    # denominator into that trade's R forever. Unknown stays unknown; the R
+    # properties return None and every reader is expected to say so rather
+    # than print a number it does not have. (Andy's call, 2026-08-17, agreeing
+    # with the Apps Script, which stopped doing this first.)
+    final_initial = initial_stop
 
     return Trade(
         ticker=ticker,

@@ -27,15 +27,13 @@ Agreement with the CSV reader
 `trade_parser.parse_csv` is the existing contract and this mirrors it field for
 field, sharing its date/number primitives so there is one definition of each.
 
-One rule is NOT mirrored silently, and it is the reason this docstring is long.
-When ``initialStop`` is blank, the CSV reader backfills it from the *current*
-stop. The Apps Script deliberately stopped doing exactly that, and its comment
-explains why: after the first trail, the current stop is not the stop the
-position was sized against, so the backfill writes a moved denominator into
-every R-multiple and leaves no trace — the number still looks like a number.
-Both readers cannot be right. Until that is settled, this one keeps the CSV's
-behaviour so the two agree, and COUNTS the affected trades so the choice stops
-being invisible. On the 2026-08-16 book the count is zero.
+Both readers leave a blank ``initialStop`` blank. The CSV reader used to
+backfill it from the *current* stop; the Apps Script stopped doing that first,
+and Andy settled it on 2026-08-17 in the Apps Script's favour — he trails stops
+in the tracker, so after the first trail the live stop is not the stop the
+position was sized against, and substituting it divides that trade's R by the
+wrong number while leaving no trace. Such trades now carry no R at all, which
+every reader must render as "not measured" rather than as a zero.
 """
 from __future__ import annotations
 
@@ -102,9 +100,13 @@ def _to_trade(obj: Mapping[str, Any], idx: int) -> tuple[Optional[Trade], bool]:
     # Same fallback the CSV reader uses when the stop cell itself is empty.
     final_stop = stop_price if stop_price is not None else entry_price * 0.95
 
+    # Left as None when the sheet has no entry stop. Andy trails stops in the
+    # tracker, so substituting the live one would divide that trade's R by a
+    # number it was never sized against. The Apps Script stopped doing this
+    # first; both readers now agree, and R simply goes missing where it is
+    # genuinely unknown.
     initial_stop = _num(obj.get('initialStop'))
-    backfilled = initial_stop is None
-    final_initial = initial_stop if initial_stop is not None else final_stop
+    unknown_r = initial_stop is None
 
     trims: list[TrimEvent] = []
     for t in (obj.get('trims') or []):
@@ -131,28 +133,28 @@ def _to_trade(obj: Mapping[str, Any], idx: int) -> tuple[Optional[Trade], bool]:
         original_qty=original_qty,
         current_qty=_int(obj.get('currentQty')) or 0,
         stop_price=final_stop,
-        initial_stop=final_initial,
+        initial_stop=initial_stop,
         closed=bool(obj.get('isClosed')),
         trims=tuple(trims),
-    ), backfilled
+    ), unknown_r
 
 
 def to_trades(stock_trades: Sequence[Mapping[str, Any]]) -> list[Trade]:
     """Convert a pulled ``stockTrades`` payload into Trade records."""
     out: list[Trade] = []
-    backfills = 0
+    no_r = 0
     for i, obj in enumerate(stock_trades, start=1):
-        trade, backfilled = _to_trade(obj, i)
+        trade, unknown_r = _to_trade(obj, i)
         if trade is None:
             continue
         out.append(trade)
-        backfills += int(backfilled)
-    if backfills:
+        no_r += int(unknown_r)
+    if no_r:
         logger.warning(
-            '%d of %d trades had a blank initialStop and took the current stop as '
-            'their R denominator. That denominator is a trailed stop, not the one '
-            'the position was sized against — see this module docstring.',
-            backfills, len(out),
+            '%d of %d trades have no initialStop, so they carry no R. Type the '
+            'entry stop into the initialStop column to restore it — it is not '
+            'inferred from the live stop, which has since been trailed.',
+            no_r, len(out),
         )
     logger.info('Pulled %d trades from the Sheet (%d skipped)',
                 len(out), len(stock_trades) - len(out))

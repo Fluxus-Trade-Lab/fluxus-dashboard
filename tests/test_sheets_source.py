@@ -44,14 +44,21 @@ def test_trims_come_back_oldest_first():
     assert [x.date for x in t.trims] == [date(2026, 2, 1), date(2026, 3, 1)]
 
 
-def test_blank_initial_stop_takes_the_current_stop_and_is_counted(caplog):
-    """Mirrors the CSV reader so the two agree — but says so out loud, because
-    a trailed stop is not the stop the position was sized against."""
+def test_a_blank_initial_stop_leaves_the_trade_without_an_R(caplog):
+    """Andy trails stops in the tracker, so the live stop is not the stop the
+    position was sized against. Substituting it would divide that trade's R by
+    the wrong number and still look like an R."""
     with caplog.at_level('WARNING'):
         t, = one(initialStop=None)
-    assert t.initial_stop == 95.0
+    assert t.initial_stop is None
+    assert t.R_dollars is None and t.realized_R is None
     # getMessage() applies the lazy %-args; r.message alone is the raw template.
     assert any('initialStop' in r.getMessage() for r in caplog.records)
+
+
+def test_a_known_initial_stop_still_yields_an_R():
+    t, = one()          # entry 100, initial stop 90, 300 shares
+    assert t.R_dollars == pytest.approx(10.0 * 300)
 
 
 def test_blank_stop_falls_back_the_same_way_the_csv_reader_does():

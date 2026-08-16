@@ -29,7 +29,9 @@ logger = logging.getLogger(__name__)
 def run(input_path: Path, output_md: Path) -> None:
     logger.info(f"Reading trades from {input_path}")
     trades = parse_csv(input_path)
-    closed_with_R = [t for t in trades if t.closed and t.R_dollars > 0]
+    # R_dollars is None when the trade has no entry stop on record — the
+    # name of this list already says such trades do not belong in it.
+    closed_with_R = [t for t in trades if t.closed and t.has_R]
     logger.info(f"Loaded {len(trades)} total · {len(closed_with_R)} closed-with-R")
 
     # Fetch OHLC for each unique ticker (for entry ATR)

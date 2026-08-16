@@ -98,9 +98,14 @@ def detect_campaigns(trades: list[Trade], window_business_days: int = 60) -> lis
 
 def _make_campaign(ticker: str, direction: str, layers: list[Trade]) -> Campaign:
     """Build Campaign with actual_realized_R = total $ across layers / first-layer R."""
-    first_R = layers[0].R_dollars
+    # The campaign is denominated in the FIRST layer's R, so when that layer has
+    # no entry stop on record the campaign has no R either. `first_R > 0` alone
+    # raises once R_dollars can be None, and the 0 fallback below would have
+    # reported a flat campaign rather than an unmeasured one.
+    first = layers[0]
+    first_R = first.R_dollars
     total_pl = sum(t.realized_pl for t in layers)
-    actual_R = total_pl / first_R if first_R > 0 else 0
+    actual_R = total_pl / first_R if first.has_R else 0
     return Campaign(
         ticker=ticker, direction=direction, layers=layers,
         actual_realized_R=actual_R,

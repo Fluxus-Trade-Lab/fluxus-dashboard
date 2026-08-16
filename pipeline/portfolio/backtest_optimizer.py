@@ -67,7 +67,7 @@ def run(input_path: Path, output_md: Path, output_json: Path) -> None:
     logger.info(f"Reading trades from {input_path}")
     trades = parse_csv(input_path)
     closed_all = [t for t in trades if t.closed and t.exit_date is not None]
-    multiday = [t for t in closed_all if t.has_multiday_trims and t.R_dollars > 0]
+    multiday = [t for t in closed_all if t.has_multiday_trims and t.has_R]
     logger.info(f"Loaded {len(trades)} total · {len(closed_all)} closed · "
                 f"{len(multiday)} multi-day-trim (optimizable)")
 
@@ -209,7 +209,7 @@ def run(input_path: Path, output_md: Path, output_json: Path) -> None:
     # ── Pyramid campaign analysis ──────────────────────────────────────────
     logger.info("Detecting pyramid campaigns...")
     # Detect across ALL closed-or-open trades (campaigns can include open layers)
-    campaigns = detect_campaigns([t for t in trades if t.R_dollars > 0])
+    campaigns = detect_campaigns([t for t in trades if t.has_R])
     logger.info(f"Found {len(campaigns)} pyramid campaigns")
     if campaigns:
         # Fetch OHLC for campaign tickers if not already cached

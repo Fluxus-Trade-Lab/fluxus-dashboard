@@ -220,6 +220,11 @@ def _compute_path_analytics(df: pd.DataFrame, trade: Trade) -> dict:
     sign = 1 if trade.direction == 'long' else -1
     # R-multiples are anchored to the locked-at-entry stop so trailing the live
     # stop after the fact never rewrites historical excursion math.
+    if trade.initial_stop is None:
+        # No entry stop on record, so there is no denominator. Excursions in R
+        # are the whole point of this block; returning {} keeps the trade's
+        # other sections and leaves the R fields absent rather than zero.
+        return {}
     r_per_share = abs(trade.entry_price - trade.initial_stop)
     if r_per_share <= 0:
         return {}
@@ -341,9 +346,10 @@ def _generate_narrative(trade: Trade, snap: dict, setup: str, analytics: dict, l
     entry_price = trade.entry_price
     initial_stop = trade.initial_stop
     current_stop = trade.stop_price
-    r_per_share = abs(entry_price - initial_stop)
-    R_dollars = r_per_share * trade.original_qty
-    trailed = abs(current_stop - initial_stop) > 0.01
+    has_r = initial_stop is not None
+    r_per_share = abs(entry_price - initial_stop) if has_r else None
+    R_dollars = r_per_share * trade.original_qty if has_r else None
+    trailed = has_r and abs(current_stop - initial_stop) > 0.01
 
     px = snap.get('close')
     ma20 = snap.get('ma20'); ma50 = snap.get('ma50'); ma200 = snap.get('ma200')
@@ -352,13 +358,20 @@ def _generate_narrative(trade: Trade, snap: dict, setup: str, analytics: dict, l
     atr_pct = snap.get('atr14_pct')
 
     # Sentence 1: entry context
-    stop_phrase = f"with stop ${initial_stop:.2f}"
+    # The narrative names the stop it was sized against. With none on record it
+    # says so — "with stop $0.00" would be a claim, and a wrong one.
+    stop_phrase = (f"with stop ${initial_stop:.2f}" if has_r
+                   else "with no entry stop on record")
     if trailed:
         stop_phrase += f" (currently trailed to ${current_stop:.2f})"
     sent1_parts = [
         f"Entered **{trade.ticker}** {direction} on {entry_date_str} at "
         f"${entry_price:.2f} (qty {trade.original_qty}) {stop_phrase}",
-        f"(1R = ${r_per_share:.2f}/sh = ${R_dollars:,.0f}).",
+        # The 1R clause is a fact about the entry stop. Without one it is
+        # dropped rather than printed as $0.00, which would read as a trade
+        # sized against nothing instead of one whose sizing is unrecorded.
+        (f"(1R = ${r_per_share:.2f}/sh = ${R_dollars:,.0f})." if has_r
+         else "(1R not computable — no entry stop recorded)."),
     ]
 
     # Sentence 2: technical setup
