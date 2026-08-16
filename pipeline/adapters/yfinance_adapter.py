@@ -135,6 +135,14 @@ def pocket_pivot_count(closes, opens, vols, lookback: int = 30) -> int | None:
     return count
 
 
+def pocket_pivot_today(closes, opens, vols) -> bool | None:
+    """The same-day pocket-pivot flag: `pocket_pivot_count` over the last bar
+    only, so the flag and the counts are one implementation. None on fewer
+    than 11 bars (unmeasured), like the counts."""
+    n = pocket_pivot_count(closes, opens, vols, lookback=1)
+    return None if n is None else bool(n)
+
+
 def calculate_vcs(hist: pd.DataFrame, len_short: int = 13, len_long: int = 63,
                    len_vol: int = 50, sensitivity: float = 2.0,
                    trend_penalty_weight: float = 1.0, hl_lookback: int = 63,
@@ -513,17 +521,17 @@ class YfinanceAdapter(BaseAdapter):
                 dcr_pct = (close - last_low) / hl_range if hl_range > 0 else None
 
                 # Pocket Pivot: green candle + vol > max(prior 10 bars vol)
-                pp = False
+                pp = None
                 pp_count = None
                 pp_count_10 = None
                 if n >= 11:
                     closes = hist['Close'].values
                     opens = hist['Open'].values
                     vols = hist['Volume'].values
-                    # Last bar pocket pivot
-                    if closes[-1] > opens[-1]:
-                        max_prior_vol = max(vols[-11:-1])
-                        pp = bool(vols[-1] > max_prior_vol)
+                    # Same implementation as the counts (NaN-tolerant, None
+                    # when unmeasured) -- an inline max() here once said
+                    # False while the count said 1 on the same bar.
+                    pp = pocket_pivot_today(closes, opens, vols)
                     # Two windows off one implementation: 30 is what we
                     # already shipped, 10 is the window oratnek screens on
                     # ("a day within the last 10 sessions that posted the

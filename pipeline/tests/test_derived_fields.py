@@ -78,12 +78,45 @@ class TestAtrFromSma50:
         assert pd.isna(out["atr_from_sma50"].iloc[0])
 
     def test_near_zero_atr_yields_null_not_a_huge_number(self):
-        """A name pinned at one price for weeks has an ATR that decays toward
-        zero but never reaches it; dividing through gives ~1e5 -- finite, so
-        it passes a null filter and tops every extension sort. Anything moving
-        under 0.01% of price a day has no measurable range."""
-        out = compute_universe_scores(_frame(close=100.0, atr=1e-6, sma50_dist=0.10))
-        assert pd.isna(out["atr_from_sma50"].iloc[0])
+        """A name pinned at one price has an ATR that decays toward zero but
+        never reaches it; dividing through gives a large finite number that
+        tops every extension sort. On the 2026-08-14 universe every name with
+        ATR under 0.5% of price was a $10 SPAC shell (249 of them, all
+        'Shell Companies') or a takeover target pinned to its deal price (AES,
+        BYND, OGN...); a 1e-4 floor caught none of them and put nine shells
+        in the 'most extended' top 25. The floor is 0.5%."""
+        out = compute_universe_scores(_frame(close=10.0, atr=0.002, sma50_dist=0.003))
+        assert pd.isna(out["atr_from_sma50"].iloc[0]), "a $10 shell with 0.02% ATR must not be 'extended'"
+        out = compute_universe_scores(_frame(close=100.0, atr=0.4, sma50_dist=0.10))
+        assert pd.isna(out["atr_from_sma50"].iloc[0]), "0.4% is under the floor"
+        out = compute_universe_scores(_frame(close=100.0, atr=0.6, sma50_dist=0.10))
+        assert not pd.isna(out["atr_from_sma50"].iloc[0]), "0.6% is a real, if quiet, name"
+
+    def test_vector_path_on_a_mixed_frame(self):
+        """Every other test here is one row; a regression in .where alignment
+        or the inf replace would pass them all. Five rows, one good, four bad
+        in different ways: the good one is right and no bad one is inf."""
+        from pipeline.screeners.atr_enrichment import atr_multiple_from_sma50
+        df = pd.DataFrame({
+            "close": [100.0, 0.0, 100.0, None, 100.0],
+            "atr":   [3.0,   3.0, 0.0,   3.0,  "x"],
+            "sma50_dist": [0.30, 0.10, 0.10, 0.10, -1.0],
+        }, index=[7, 3, 9, 1, 5])          # deliberately unsorted index
+        out = atr_multiple_from_sma50(df["close"], df["atr"], df["sma50_dist"])
+        assert list(out.index) == [7, 3, 9, 1, 5]
+        assert out.loc[7] == pytest.approx((100 * 0.30 / 1.30) / 3.0, abs=1e-6)
+        assert out.drop(7).isna().all()
+        assert not any(math.isinf(x) for x in out.dropna())
+
+    def test_array_like_inputs_are_not_silently_truncated(self):
+        """A list or ndarray is not a scalar; taking the scalar branch would
+        return the first element only. Either handle it as a vector or raise."""
+        import numpy as np
+        from pipeline.screeners.atr_enrichment import atr_multiple_from_sma50
+        out = atr_multiple_from_sma50(np.array([100.0, 50.0]), np.array([3.0, 1.0]),
+                                      np.array([0.30, 0.10]))
+        assert len(out) == 2
+        assert out.iloc[1] == pytest.approx((50 * 0.10 / 1.10) / 1.0, abs=1e-6)
 
     def test_dist_of_minus_one_yields_null_not_inf(self):
         """sma50_dist == -1 makes (1 + dist) zero; -inf would reach json.dumps
@@ -173,6 +206,20 @@ class TestPocketPivotCount:
         c, o, v = self._series(n=11)
         c[-1], o[-1], v[-1] = 11.0, 10.0, 500.0
         assert pocket_pivot_count(c, o, v, lookback=10) == 1
+
+    def test_same_day_flag_agrees_with_the_count_on_nan_and_short_history(self):
+        """The enrichment loop's `pocket_pivot` flag is `pocket_pivot_count`
+        over the last bar only. Its own inline max() had the NaN bug the
+        count fixed, and it said False on <11 bars where the count says
+        None -- two answers to one question, again."""
+        from pipeline.adapters.yfinance_adapter import pocket_pivot_today
+        c, o, v = self._series()
+        v[-11] = float("nan")
+        c[-1], o[-1], v[-1] = 11.0, 10.0, 500.0
+        assert pocket_pivot_today(c, o, v) is True
+        assert pocket_pivot_count(c, o, v, lookback=10) == 1
+        c, o, v = self._series(n=8)
+        assert pocket_pivot_today(c, o, v) is None
 
     def test_a_nan_volume_bar_does_not_blank_the_next_ten_sessions(self):
         """Builtin max() over a slice whose FIRST element is NaN returns NaN,

@@ -34,10 +34,15 @@ logger = logging.getLogger(__name__)
 
 # ── The ATR Matrix, one implementation ───────────────────────────────
 # A name moving under this fraction of its price per day has no measurable
-# range: dividing by its ATR gives a huge finite number that tops every
-# extension sort. Today's smallest live ATR fraction is ~4e-2; this is well
-# below anything real.
-_MIN_ATR_FRACTION = 1e-4
+# range: dividing by its ATR gives a large finite number that tops every
+# extension sort. Placed from the 2026-08-14 universe: every one of the 249
+# names with ATR under 0.5% of price was a $10 SPAC shell (industry 'Shell
+# Companies', close 9.87-11.22) or a takeover target pinned to its deal price
+# (AES, BYND, OGN, DBRG...); real quiet names (regional banks, utilities)
+# begin above 0.5%. A first attempt at 1e-4 caught none of them and put nine
+# shells in the 'most extended' top 25 -- the smallest live fraction was
+# 1.86e-4, two orders above that floor.
+_MIN_ATR_FRACTION = 5e-3
 
 
 def atr_multiple_from_sma50(close, atr, sma50_dist):
@@ -53,18 +58,37 @@ def atr_multiple_from_sma50(close, atr, sma50_dist):
     not positive (a -100% or corrupted dist), or when ATR is not a positive,
     measurable fraction of price.
     """
-    c = pd.to_numeric(pd.Series(close) if not isinstance(close, pd.Series) else close, errors="coerce").astype(float)
-    a = pd.to_numeric(pd.Series(atr) if not isinstance(atr, pd.Series) else atr, errors="coerce").astype(float)
-    d = pd.to_numeric(pd.Series(sma50_dist) if not isinstance(sma50_dist, pd.Series) else sma50_dist, errors="coerce").astype(float)
-    ok = (c > 0) & (a > 0) & ((1.0 + d) > 0) & ((a / c) >= _MIN_ATR_FRACTION)
+    vector = _is_vector(close)
+    c = _as_float_series(close)
+    a = _as_float_series(atr)
+    d = _as_float_series(sma50_dist)
+    if not (len(c) == len(a) == len(d)):
+        raise ValueError("close, atr and sma50_dist must have the same length")
     with np.errstate(divide="ignore", invalid="ignore"):
+        ok = (c > 0) & (a > 0) & ((1.0 + d) > 0) & ((a / c) >= _MIN_ATR_FRACTION)
         out = (c * d / (1.0 + d)) / a
-    out = out.where(ok)
-    out = out.replace([np.inf, -np.inf], np.nan)
-    if isinstance(close, pd.Series):
+    out = out.where(ok).replace([np.inf, -np.inf], np.nan)
+    if vector:
         return out
     v = float(out.iloc[0])
     return None if not np.isfinite(v) else v
+
+
+def _is_vector(x) -> bool:
+    return isinstance(x, pd.Series) or (hasattr(x, "__len__") and not isinstance(x, (str, bytes)))
+
+
+def _as_float_series(x) -> pd.Series:
+    """Series/list/ndarray -> float Series (index kept for a Series); scalar ->
+    one-element Series. A Series keeps its own index so the caller gets the
+    result aligned to what it passed in; array-likes get a fresh RangeIndex."""
+    if isinstance(x, pd.Series):
+        s = x
+    elif _is_vector(x):
+        s = pd.Series(list(x))
+    else:
+        s = pd.Series([x])
+    return pd.to_numeric(s, errors="coerce").astype(float)
 
 
 # ── Color thresholds ─────────────────────────────────────────────────
