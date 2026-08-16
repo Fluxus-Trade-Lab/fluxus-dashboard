@@ -46,6 +46,11 @@ FIELDS: List[str] = [
     "rs_accel_rate",
     # Appended 2026-08-16 too: the session's change (median of members).
     "perf_1d",
+    # Appended 2026-08-17 (rows before that date read blank here): the
+    # one-month excess, so the archive carries the same three windows the
+    # page offers. Without it a window study has to re-derive 1M from
+    # perf_1m and a benchmark row the archive does not store.
+    "excess_1m",
 ]
 
 

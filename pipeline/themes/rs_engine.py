@@ -11,6 +11,10 @@ Relative strength is then the excess of each disjoint bucket over the
 benchmark's same bucket.  Two "acceleration" quantities are shipped and they
 answer different questions (FOUR_STATE_DESIGN.md, section 8):
 
+Two display levels ship alongside them -- ``excess_3m`` (the state's level
+axis) and ``excess_1m`` (display only) -- so the page's three windows all read
+a precomputed excess instead of deriving one of them in the browser.
+
 * ``rs_accel``       -- last month's excess minus the *total* excess of the
                         two months before it.  Unequal windows on purpose: a
                         steady-pace outperformer scores NEGATIVE here.  This
@@ -54,6 +58,13 @@ BUCKETS: list[str] = ["0_1w", "1w_1m", "1m_3m", "3m_6m"]
 _LEVEL_COL = "perf_3m"
 _NEAR_COL = "perf_1m"       # cumulative 0..1m, used as the near bucket
 _PRIOR_BUCKET = "1m_3m"     # disjoint 1m..3m
+
+# The one-month level. Equal to _NEAR_COL today and declared separately anyway:
+# _NEAR_COL is an input to the acceleration GATE, which is a validated choice
+# that could move if the validation is redone, while this is the window a
+# reader picks on the Themes page. One constant serving two questions is how a
+# tuning change to one silently rewrites the other.
+_LEVEL_1M_COL = "perf_1m"
 
 # Finviz occasionally reports corporate-action artefacts as returns of several
 # hundred x (one aerospace name printed +31,192% for perf_1m).  Values beyond
@@ -236,6 +247,11 @@ def persistence(
     return (hits, seen) if seen else None
 
 
+def _excess(row: Mapping[str, Any], benchmark: Mapping[str, Any], col: str) -> float:
+    """Cumulative excess over the benchmark on one column. One definition."""
+    return _as_float(row.get(col)) - _as_float(benchmark.get(col))
+
+
 def excess_3m(row: Mapping[str, Any], benchmark: Mapping[str, Any]) -> float:
     """Three-month return minus the benchmark's -- "by how much is it ahead".
 
@@ -250,7 +266,23 @@ def excess_3m(row: Mapping[str, Any], benchmark: Mapping[str, Any]) -> float:
     Deliberately a *cumulative* column so it stays independent of the disjoint
     buckets that acceleration is built from.
     """
-    return _as_float(row.get(_LEVEL_COL)) - _as_float(benchmark.get(_LEVEL_COL))
+    return _excess(row, benchmark, _LEVEL_COL)
+
+
+def excess_1m(row: Mapping[str, Any], benchmark: Mapping[str, Any]) -> float:
+    """One-month return minus the benchmark's -- the same question, shorter.
+
+    Shipped because the Themes page offers 1W / 1M / 3M and only two of them
+    had an excess to read: 1W reduces to the first disjoint bucket (rs_0_1w)
+    and 3M ships as excess_3m, so the frontend was deriving the middle one
+    itself from perf_1m and a separately-fetched SPY row. Same construction,
+    computed twice, in two languages -- the arrangement that put two different
+    accelerations on one page. The window belongs here with its siblings.
+
+    NOT a state input. `classify` reads excess_3m and the acceleration gate;
+    this is a display level, and adding it changes no classification.
+    """
+    return _excess(row, benchmark, _LEVEL_1M_COL)
 
 
 def score_row(
@@ -267,6 +299,7 @@ def score_row(
         f"rs_{b}": _round(rs[b]) for b in BUCKETS
     }
     payload["excess_3m"] = _round(level)
+    payload["excess_1m"] = _round(excess_1m(row, benchmark))
     payload["rs_accel"] = _round(accel)
     payload["rs_accel_rate"] = _round(acceleration_rate(row, benchmark))
     payload["state"] = state

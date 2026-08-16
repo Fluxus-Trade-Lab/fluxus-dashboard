@@ -38,17 +38,26 @@ import HowToRead from '../HowToRead'
 
 /**
  * All three windows use the pipeline's own excess construction — theme return
- * minus benchmark return over the same window. rs_0_1w IS that for one week
- * (the first disjoint bucket reduces to perf_1w − SPY.perf_1w); 3M ships as
- * excess_3m; 1M derives the same way and needs SPY's row, so the button waits
- * for it rather than guessing a zero line.
+ * minus benchmark return over the same window — and all three now ARRIVE that
+ * way: rs_0_1w for the week (the first disjoint bucket reduces to
+ * perf_1w − SPY.perf_1w), excess_1m for the month, excess_3m for the quarter.
+ *
+ * 1M used to be derived here instead, from perf_1m and a SPY row fetched from
+ * a second file. Same construction, written twice, in two languages — the
+ * shape that put two disagreeing accelerations on this page. It belongs with
+ * its siblings, so `rs_engine.score_row` ships it (tests/test_rs_engine_excess).
+ *
+ * TRANSITIONAL: the fallback below covers the hours between this deploy and
+ * the next pipeline run, when the live groups.json still predates the field.
+ * Once a run has shipped excess_1m, delete the fallback, `needsSpy`, and
+ * useSpyRow.js — nothing else reads that hook.
  */
-const WINDOWS = [
+export const WINDOWS = [
   { key: '1W', hl: [3], value: (r) => r.rs_0_1w },
   {
     key: '1M', hl: [2, 3],
-    value: (r, spy) => (r.perf_1m != null && spy?.perf_1m != null
-      ? r.perf_1m - spy.perf_1m : null),
+    value: (r, spy) => (r.excess_1m != null ? r.excess_1m
+      : (r.perf_1m != null && spy?.perf_1m != null ? r.perf_1m - spy.perf_1m : null)),
     needsSpy: true,
   },
   { key: '3M', hl: [1, 2, 3], value: (r) => r.excess_3m },
