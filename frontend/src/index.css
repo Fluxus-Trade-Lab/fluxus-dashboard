@@ -558,3 +558,46 @@ body {
 /* Inside a scrolling table an offset ring gets clipped by the row above;
    these draw it inside their own box instead. */
 td :focus-visible, th :focus-visible { outline-offset: -2px; }
+
+/* ---- the surfaces we did not draw ----------------------------------
+   Text selection, the caret, and the scrollbar ship with browser defaults
+   that belong to no design system — on this warm paper the default
+   selection is a cold system blue. Naming them is the cheapest way a page
+   reads as built rather than assembled.
+
+   Selection uses the accent at low alpha rather than a solid fill, so the
+   ink underneath keeps its own contrast instead of being repainted. */
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 26%, transparent);
+  color: var(--color-text);
+}
+:root { caret-color: var(--color-accent); }
+
+/* Firefox takes the pair directly; WebKit needs the parts. */
+* { scrollbar-color: var(--color-border) transparent; scrollbar-width: thin; }
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); background-clip: content-box; }
+
+/* ---- reduced motion ------------------------------------------------
+   Deliberately NOT the global `* { animation: 0.01ms }` kill. Everything
+   that moves on this site is a colour transition — hover, theme, selection
+   — and those are feedback, not motion: cutting them makes the interface
+   feel broken to the person who asked for less movement, which is the
+   opposite of the request. What actually needs to stop is travel, so
+   transforms and scroll behaviour do, and colour is left alone. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-property: color, background-color, border-color, outline-color,
+                         text-decoration-color, fill, stroke, opacity;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  html { scroll-behavior: auto !important; }
+}
