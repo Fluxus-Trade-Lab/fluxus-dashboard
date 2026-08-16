@@ -66,7 +66,14 @@ export default function DistributionStrip({ rows, scale, colourOf, onToggle, atL
            aria-label={`${scored.length} themes; median ${(mid * 100).toFixed(1)}%; middle half ${(q25 * 100).toFixed(1)} to ${(q75 * 100).toFixed(1)}%`}>
         {/* the middle half — where "just the market" lives today */}
         <rect x={pct(q25) * 10} y={0} width={Math.max(4, (pct(q75) - pct(q25)) * 10)}
-              height={H - 1} fill="var(--color-hover-bg)" />
+              height={H - 1}
+              /* Ink at low alpha, not --color-hover-bg. That token is measured
+                 as a HOVER lift, and used here as a window shade the two
+                 themes disagreed about how loudly to say it: 1.10 above its
+                 ground on light, 1.29 on dark, so the same rectangle was
+                 invisible in one theme and a grey box in the other. Ink scales
+                 with the theme, so the step is the same in both. */
+              fill="var(--color-text)" opacity="0.07" />
         <line x1={0} x2={1000} y1={H - 1} y2={H - 1}
               stroke="var(--color-border)" strokeWidth="1" vectorEffect="non-scaling-stroke" />
         {ticks.map((t) => (

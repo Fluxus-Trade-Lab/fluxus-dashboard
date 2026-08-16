@@ -213,7 +213,8 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
                   width={(Math.max(...shade) - Math.min(...shade) + 1)
                          * (100 - LEFT - RIGHT) / (n - 1) * 10 * 0.999}
                   height={H - 8}
-                  fill="var(--color-hover-bg)" opacity="0.3" />
+                  /* same shade, same reason — see DistributionStrip */
+                  fill="var(--color-text)" opacity="0.07" />
           )}
           <line x1={LEFT * 10} x2={(100 - RIGHT) * 10 + 30} y1={H / 2} y2={H / 2}
                 stroke="var(--color-text-muted)" strokeWidth="1"
