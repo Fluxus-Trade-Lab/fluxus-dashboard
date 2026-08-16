@@ -157,10 +157,15 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
     .filter((p) => p.row)
 
   if (!chosen.length) {
+    // This ran to 189ch on a wide screen — one line of prose stretched across
+    // the whole card. A measure keeps it readable at any width.
     return (
-      <div className="h-[52px] rounded border border-dashed border-[var(--color-border)]
-                      flex items-center px-4 text-[11px] text-[var(--color-text-muted)]">
-        Pick up to three themes — search above, or click a dot or a row.
+      <div className="min-h-[52px] rounded-2xl border border-dashed border-[var(--color-border)]
+                      flex items-center px-4 py-3">
+        <p className="m-0 max-w-[62ch] text-[11px] leading-relaxed
+                      text-[var(--color-text-muted)]">
+          Pick up to three themes — search above, or click a dot or a row.
+        </p>
       </div>
     )
   }

@@ -107,7 +107,10 @@ export default function DistributionStrip({ rows, scale, colourOf, onToggle, atL
       </svg>
 
       {/* the axis's own numbers, crisp in HTML */}
-      <div className="relative h-[15px] text-[10px] font-mono
+      {/* tabular-nums: these sit at fixed x and would jitter against their
+          own tick as the values change width. Four of the page's 32 numeric
+          nodes were the only ones without it. */}
+      <div className="relative h-[15px] text-[10px] font-mono tabular-nums
                       text-[var(--color-text-muted)]">
         {ticks.map((t) => (
           <span key={t} className="absolute -translate-x-1/2 whitespace-nowrap"
