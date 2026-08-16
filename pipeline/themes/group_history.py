@@ -44,6 +44,8 @@ FIELDS: List[str] = [
     # length-matched slope that words like "decelerating" must come from.
     # `rs_accel` above stays the state gate. See rs_engine module docstring.
     "rs_accel_rate",
+    # Appended 2026-08-16 too: the session's change (median of members).
+    "perf_1d",
 ]
 
 

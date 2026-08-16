@@ -126,7 +126,8 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 
 顶层:`date` `benchmark` `universe_size` `industries[]` `themes[]` `themes_skipped` `audit` `stocks` `summary`
 
-行字段:`group` `members` `tickers[]` `excess_3m` `rs_accel` `rs_accel_rate` `state` `persistence` `persistence_of` `perf_1w/1m/3m/6m/1y`
+行字段:`group` `members` `tickers[]` `excess_3m` `rs_accel` `rs_accel_rate` `state` `persistence` `persistence_of` `perf_1d` `perf_1w/1m/3m/6m/1y`
+`perf_1d`(2026-08-16 加):当日涨跌幅,小数口径,与 `perf_1w` 同族。聚合主题/行业 = 成员 `change_pct` 中位数(与其他 perf 列同一口径,异常值同样剔除);proxy 主题 = 该 ETF 自身的 `change_pct`;`stocks` 行 = 个股 `change_pct`。**不进 RS 桶、不进 persistence 分母**,只供显示。
 主题另有:`method` `source` `publish` `measurable` `needs_manual` `validation` `validation_excess`
 
 ### 四条陷阱
@@ -156,7 +157,7 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 **消费方**:暂无。**这是为 10 周后的主题色带准备的**
 
 每日 195 行(121 行业 + 74 主题,随分类学变动),按日期幂等替换。
-列:`date` `kind`(`industry`/`theme`)`group` `members` `excess_3m` `rs_accel` `state` `persistence` `persistence_of` `perf_1w/1m/3m/6m` `rs_accel_rate`(末列,2026-08-14 起有值,更早的行为空)
+列:`date` `kind`(`industry`/`theme`)`group` `members` `excess_3m` `rs_accel` `state` `persistence` `persistence_of` `perf_1w/1m/3m/6m` `rs_accel_rate` `perf_1d`(末两列,2026-08-14 起有值,更早的行为空)
 
 **存的是当天发布的 `state`,不是原始 perf。** 事后重算会把今天的窗口常数套到昨天的数据上,
 等于偷改我们说过的话。UI 要画历史色带,直接读这一列。

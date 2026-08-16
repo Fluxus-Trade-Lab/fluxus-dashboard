@@ -241,3 +241,33 @@ class TestPersistence:
         agg = rs_engine.aggregate_rows(rows)
         for col in rs_engine.PERSISTENCE_COLS:
             assert col in agg, col
+
+
+class TestOneDayChange:
+    """`perf_1d` is the session's change, aggregated exactly like the other
+    perf_* columns (median, artefacts dropped) so a theme table can show 1D
+    next to 1W. It is a display column: not an RS bucket, not a persistence
+    horizon -- a one-day move says nothing about relative strength and must
+    not widen the persistence denominator."""
+
+    def test_aggregate_takes_the_median_change_pct(self):
+        rows = [_row(change_pct=0.01), _row(change_pct=0.03), _row(change_pct=-0.02)]
+        assert rs_engine.aggregate_rows(rows)["perf_1d"] == pytest.approx(0.01)
+
+    def test_missing_change_pct_is_nan_not_zero(self):
+        assert math.isnan(rs_engine.aggregate_rows([_row()])["perf_1d"])
+
+    def test_score_row_carries_it_from_change_pct_or_perf_1d(self):
+        # A universe/ETF row (change_pct) and an aggregated row (perf_1d)
+        # both land on the same output name.
+        assert rs_engine.score_row(_row(change_pct=0.02), FLAT)["perf_1d"] == pytest.approx(0.02)
+        assert rs_engine.score_row(_row(perf_1d=0.02), FLAT)["perf_1d"] == pytest.approx(0.02)
+        assert rs_engine.score_row(_row(), FLAT)["perf_1d"] is None
+
+    def test_it_is_not_a_persistence_horizon(self):
+        assert "perf_1d" not in rs_engine.PERSISTENCE_COLS
+        assert "perf_1d" not in rs_engine.CUMULATIVE_COLS
+        with_1d = rs_engine.score_row(_row(change_pct=0.5, perf_1w=0.01), _row())
+        without = rs_engine.score_row(_row(perf_1w=0.01), _row())
+        assert with_1d["persistence_of"] == without["persistence_of"]
+        assert with_1d["persistence"] == without["persistence"]

@@ -186,6 +186,13 @@ def classify(excess_3m: float, rs_accel: float) -> str | None:
 # change (accel) say nothing about how many timescales agree.
 PERSISTENCE_COLS: list[str] = ["perf_1w", "perf_1m", "perf_3m", "perf_6m", "perf_1y"]
 
+# The session's change, carried for display next to perf_1w. Deliberately in
+# neither list above: a one-day move is not an RS bucket and must not widen the
+# persistence denominator. Vendor rows spell it `change_pct`; aggregates and
+# payloads spell it `perf_1d` so it sits in the perf_* family it belongs to.
+_ONE_DAY_SRC = "change_pct"
+ONE_DAY_COL = "perf_1d"
+
 
 def persistence(
     row: Mapping[str, Any],
@@ -263,6 +270,7 @@ def score_row(
     payload["rs_accel"] = _round(accel)
     payload["rs_accel_rate"] = _round(acceleration_rate(row, benchmark))
     payload["state"] = state
+    payload[ONE_DAY_COL] = _round(_first_finite(row, (ONE_DAY_COL, _ONE_DAY_SRC)))
     p = persistence(row, benchmark)
     payload["persistence"] = p[0] if p else None
     payload["persistence_of"] = p[1] if p else None
@@ -303,10 +311,14 @@ def aggregate_rows(
     # Union, not just CUMULATIVE_COLS: persistence needs perf_1y, and a group
     # row that silently lacked it would be scored over 4 windows while a stock
     # row was scored over 5 -- two different scales printed under one name.
-    for col in [*CUMULATIVE_COLS, *(c for c in PERSISTENCE_COLS
-                                    if c not in CUMULATIVE_COLS)]:
+    cols = [*CUMULATIVE_COLS, *(c for c in PERSISTENCE_COLS
+                                if c not in CUMULATIVE_COLS)]
+    for col in [*cols, ONE_DAY_COL]:
+        # perf_1d reads the vendor spelling on the way in; a row that already
+        # carries perf_1d (a re-aggregated aggregate) is honoured too.
+        srcs = (ONE_DAY_COL, _ONE_DAY_SRC) if col == ONE_DAY_COL else (col,)
         values = [
-            v for v in (_as_float(row.get(col)) for row in rows)
+            v for v in (_first_finite(row, srcs) for row in rows)
             if np.isfinite(v) and abs(v) <= _MAX_PLAUSIBLE_RETURN
         ]
         if not values:
@@ -316,6 +328,14 @@ def aggregate_rows(
         else:
             agg[col] = float(np.median(values))
     return agg
+
+
+def _first_finite(row: Mapping[str, Any], keys: Sequence[str]) -> float:
+    for k in keys:
+        v = _as_float(row.get(k))
+        if np.isfinite(v):
+            return v
+    return np.nan
 
 
 def score_groups(
