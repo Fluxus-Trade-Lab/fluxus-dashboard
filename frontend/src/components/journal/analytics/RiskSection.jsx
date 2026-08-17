@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import Empty from '../Empty'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts'
 import StatCard from '../../portfolio/ui/StatCard'
 import { computeBeta } from '../../portfolio/lib/diagnostics'
@@ -78,7 +79,7 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
   // the same conditional-hook bug that took out the Screener page on
   // 2026-08-09.
   if (!openTrades.length) {
-    return <div className="text-center py-16 text-[var(--color-text-muted)]">No open positions to analyze.</div>
+    return <Empty k="empty.noOpen" />
   }
 
   // v3: risk heat is a constraint scale — red only where risk binds (>2R),

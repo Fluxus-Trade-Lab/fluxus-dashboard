@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from 'react'
+import Empty from '../Empty'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import StatCard from '../../portfolio/ui/StatCard'
 import { fmtPct, fmt, clr } from '../../portfolio/lib/portfolioFormat'
@@ -57,7 +58,7 @@ ${tradeLines || '  No closed trades this month.'}
 
 function MonthStats({ stats }) {
   if (!stats || stats.totalTrades === 0) {
-    return <div className="text-[12.5px] text-[var(--color-text-muted)] py-4 text-center">No closed trades this month.</div>
+    return <Empty k="empty.noMonth" />
   }
 
   return (
@@ -195,7 +196,7 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
   }, [savedReview])
 
   if (months.length === 0) {
-    return <div className="text-center py-16 text-[var(--color-text-muted)]">No monthly data yet.</div>
+    return <Empty k="empty.noMonthly" />
   }
 
   return (

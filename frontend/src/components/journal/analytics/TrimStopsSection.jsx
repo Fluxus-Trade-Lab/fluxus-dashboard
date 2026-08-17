@@ -1,4 +1,5 @@
 import { useState, useMemo, Fragment } from 'react'
+import Empty from '../Empty'
 import StatCard from '../../portfolio/ui/StatCard'
 import { fmtCur, fmtPct, fmt } from '../../portfolio/lib/portfolioFormat'
 
@@ -182,7 +183,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
           </div>
         )}
         {trimAnalysis.length === 0 && (
-          <div className="text-center py-8 text-[var(--color-text-muted)] text-[14px]">No trim data available for closed trades.</div>
+          <Empty k="empty.noTrim" />
         )}
       </div>
 
@@ -241,7 +242,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
           </div>
         )}
         {stopAnalysis.length === 0 && (
-          <div className="text-center py-8 text-[var(--color-text-muted)] text-[14px]">No stop-out trades detected (exit within 1% of stop price).</div>
+          <Empty k="empty.noStopOut" />
         )}
       </div>
     </div>

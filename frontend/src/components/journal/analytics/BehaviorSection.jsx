@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import Empty from '../Empty'
 import StatCard from '../../portfolio/ui/StatCard'
 import { fmtCur, fmtPct, fmt, clr } from '../../portfolio/lib/portfolioFormat'
 import {
@@ -32,7 +33,7 @@ export default function BehaviorSection({ enriched }) {
   const panic = useMemo(() => computePanicTrimSummary(enriched), [enriched])
 
   if (!rStats && Object.values(exitStyles).every(s => s.count === 0)) {
-    return <div className="text-center py-16 text-[var(--color-text-muted)]">No closed trades to analyze.</div>
+    return <Empty k="empty.noClosed" />
   }
 
   return (
@@ -106,7 +107,7 @@ export default function BehaviorSection({ enriched }) {
           Same ticker, ≥2 losing trades within 30 days — re-attacks on a thesis that already failed.
         </p>
         {revengeClusters.length === 0 ? (
-          <div className="text-[11px] text-[var(--color-text-muted)] py-4">No clusters detected.</div>
+          <Empty k="empty.noClusters" />
         ) : (
           <div className="overflow-x-auto bg-[var(--color-surface)] rounded-3xl">
             <table className="w-full text-[12.5px]">

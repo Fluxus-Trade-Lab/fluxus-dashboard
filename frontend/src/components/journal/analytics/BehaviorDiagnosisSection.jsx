@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import Empty from '../Empty'
 import { rMultiple, rRisk } from '../../portfolio/lib/diagnosticsR'
 import TradeCaseStudies from './TradeCaseStudies'
 
@@ -102,7 +103,7 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
     }
   }, [enriched, performanceData, startingCapital])
 
-  if (!d) return <div className="text-[14px] text-[var(--color-text-muted)] py-10 text-center">Need more closed trades for a diagnosis.</div>
+  if (!d) return <Empty k="empty.needMore" />
 
   return (
     <div>

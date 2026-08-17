@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import Empty from '../Empty'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import StatCard from '../../portfolio/ui/StatCard'
 import RRChart from '../../portfolio/RRChart'
@@ -25,7 +26,7 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
   }, [closedTrades])
 
   if (!stats) {
-    return <div className="text-center py-16 text-[var(--color-text-muted)]">No closed trades to analyze.</div>
+    return <Empty k="empty.noClosed" />
   }
 
   return (

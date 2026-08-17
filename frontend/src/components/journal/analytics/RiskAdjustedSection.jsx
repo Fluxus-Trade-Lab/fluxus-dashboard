@@ -1,4 +1,5 @@
 import StatCard from '../../portfolio/ui/StatCard'
+import Empty from '../Empty'
 import { fmtPct, fmt, clr, RISK_FREE_RATE } from '../../portfolio/lib/portfolioFormat'
 
 const METRIC_NOTES = {
@@ -43,7 +44,7 @@ const METRIC_NOTES = {
  */
 export default function RiskAdjustedSection({ riskMetrics, benchmarkTicker }) {
   if (!riskMetrics) {
-    return <div className="text-center py-16 text-[var(--color-text-muted)]">Need ~20 trading days of data. Load history on the Portfolio page.</div>
+    return <Empty k="empty.needHistory" />
   }
 
   const metrics = [

@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from 'react'
+import Empty from '../Empty'
 import { usePortfolio } from '../../portfolio/context/PortfolioContext'
 import { analyzeTrades, computeDemonStats, getActiveCircuitBreakers, computeTacticalStats, DEMONS, DEFAULT_RULES } from '../../portfolio/lib/demonFinder'
 import { fmtPct, fmt, clr } from '../../portfolio/lib/portfolioFormat'
@@ -180,7 +181,7 @@ export default function DemonFinderSection({ enriched, dailyPrices }) {
   const flaggedCount = analyzed.length - cleanCount
 
   if (enriched.length === 0) {
-    return <div className="text-center py-16 text-[var(--color-text-muted)]">No trades to analyze.</div>
+    return <Empty k="empty.noTrades" />
   }
 
   return (
