@@ -198,6 +198,8 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 
 ⚠️ **21EMA Watch 预设改为 ATR 口径 —— 需要前端改一处映射(Andy 2026-08-17 拍板)**:`frontend/src/lib/screenerFilter.js` 里 `ema21Atr → ema21_r`、`sma50Atr → sma50_r` 改成 **`ema21Atr → ema21_atr_dist`、`sma50Atr → atr_from_sma50`**。预设里的数值(−0.5..1、0..3)本来就是 ATR 语义,不用动;`ema21_r`/`sma50_r` 两个比值列原样保留不删。实测 08-14:比值口径命中 13 只(全在 SMA20 下),ATR 口径 53 只。
 
+⚠️ **三个 97 定名(Andy 2026-08-17)**:预设 `97 Club` → **`Monthly Leader 97`**、`Momentum 97` → **`Weekly Momentum 97`**(已改 `screener-presets.json`,名字无代码引用);Python 筛选器 `momentum_97` 的**显示名**改为 **`Composite 97`** —— 在 `frontend/src/lib/scanSets.js:18` 和 `frontend/src/components/ticker/TickerSignalHistory.jsx:40` 两处,**前端改**;文件名 / 键 `momentum_97` 不动。含义:月度领头(月 RS ≥97 + 综合 ≥80)/ 本周冲刺(周分位 ≥.97 且季 ≥.85)/ 四窗口等权综合前 3%。
+
 ⚠️ **adrPct 分两档 + 热度着色(Andy 2026-08-17 拍板)**:持仓型预设(21EMA Watch / Pocket Pivot / PP Count / 97 Club)`adrPct.max` 10→**6**(= 最大单笔亏损 ÷ 1.5,Steve 的算法,和 −7~−9% 止损档对齐);扫描型(4% Bullish / Vol Up / Momentum 97 / Weekly 20%+)保留 10。已改 `frontend/public/data/screener-presets.json`。**前端**:表里 `adr_pct` 列按热度着色,越高越热,>6 明显可辨(6 是"超出止损承受"的线);字段现成,不需要数据端改动。08-14 数据:$1B+ 非医疗 2,224 只里 ADR 3.5–6 有 820 只、6–10 有 253 只(半导体/软件/航空防务最多)。
 
 | `ti65` / `mdt` / `c_low52w` / `min_vol_3d` | Stockbee anticipation 三扫描的输入(2026-08-17 加):`avgc7/avgc65`(TI65 >1.05)· `c/avgc126`(MDT >1.19)· `c/minl252`(Double Trouble ≥1.8,= 1 + `low_52w`,因为 `low_52w` 存的是分数距离不是价格)· 近 3 日最低量(>100k) | 前两个需 65/126 根历史否则 null;`c_low52w` 现在就有。**方法与组合见 `screener_methods.md` 第四节**;名单工具 `python -m pipeline.tools.anticipation_scan` |

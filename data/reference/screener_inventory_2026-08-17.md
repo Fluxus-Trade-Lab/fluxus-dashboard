@@ -79,8 +79,8 @@
 | 1 | **21EMA Watch** | trend_base · 周涨 0–15% · DCR 20–100 · **ema21Atr −0.5–1 · sma50Atr 0–3(08-17 起 ATR 口径:→ `ema21_atr_dist` / `atr_from_sma50`,前端映射待改)** · PP 数 ≥1 · ADR **3–6**(08-17 上限 10→6) |
 | 2 | **4% Bullish** | 日涨 ≥4% · RelVol ≥1 · from-open ≥0 · rs_21d 60–99 · ADR 3.5–10 |
 | 3 | **Vol Up Gainers** | 日涨 ≥0 · RelVol ≥1.5 · ADR 3.5–10 |
-| 4 | **Momentum 97** | **无市值门槛** · trend_base · perf_1w 分位 ≥0.97 · perf_3m 分位 ≥0.85 · ADR 3.5–10 |
-| 5 | **97 Club** | trend_base · h_score 80–99 · rs_21d 97–99 · ADR 3.5–**6** |
+| 4 | **Weekly Momentum 97**(原 Momentum 97,08-17 改名)| **无市值门槛** · trend_base · perf_1w 分位 ≥0.97 · perf_3m 分位 ≥0.85 · ADR 3.5–10 |
+| 5 | **Monthly Leader 97**(原 97 Club,08-17 改名)| trend_base · h_score 80–99 · rs_21d 97–99 · ADR 3.5–**6** |
 | 6 | **Stockbee 9M Setup** | **vol50dMin 9M** · RelVol ≥1.5 · 日涨 ≥5% · DCR 60–100 |
 | 7 | **Sugar Babies** | bo_count_1y ≥10 · bo_count_3m ≥2 |
 | 8 | **Pocket Pivot** | pocket_pivot · trend_base · ADR 3.5–**6** |

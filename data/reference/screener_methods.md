@@ -169,14 +169,14 @@
 - **它看不到的**:RelVol 是对自己的均量,一只平时死水的票很小的钱就过 1.5x —— 要看美元成交额;也分不清吸筹和派发。
 - **Python 兄弟 `vol_up_gainers.py`**:日涨 ≥4% 且 RelVol ≥1.5(比预设严)。
 
-**4 · Momentum 97** —— *强*:1 周分位 ≥.97 **且** 3 月分位 ≥.85 · trend_base · ADR 3.5–10(**无市值门槛**,Watchlist 页会叠 $1B)
+**4 · Weekly Momentum 97**(原 Momentum 97)—— *强*:1 周分位 ≥.97 **且** 3 月分位 ≥.85 · trend_base · ADR 3.5–10(**无市值门槛**,Watchlist 页会叠 $1B)
 - **原型**:Qullamaggie 式"只看动量最强的 3%"。
 - **在找什么**:**现在正在跑的票** —— 一周和一季同时在顶部。
 - **⚠️ 同名不同物**:Python 的 `momentum_97.py` 是 perf_1w/1m/3m/6m **四窗口等权综合分位的前 3%**,一周和两季同权 —— 它的设计是"找刚开始的",一个月前平平的票只要这几周飞了就能进榜。两者共享大约一半的名单。`rs_ibd` 又是第三个问题("谁一直在赢")。**三个不是优劣,是三个不同的问题**,别混用。
 - **它看不到的**:新趋势的起点、下跌途中的反弹、第五次冲同一位置 —— 数字上一模一样。榜上的票通常已经走了一大段;当候选看,不当入场看。
 - **组合**:它是热度榜,**故意不加位置**;要变成可下单名单就叠 ATR Matrix ≤4 或 ema21_atr_dist。
 
-**5 · 97 Club** —— *强*:h_score ≥80 且 rs_21d ≥97 · trend_base · ADR 3.5–6
+**5 · Monthly Leader 97**(原 97 Club)—— *强*:h_score ≥80 且 rs_21d ≥97 · trend_base · ADR 3.5–6
 - **原型**:IBD 的 RS 97+ 俱乐部;Steve 的 Qullamaggie 筛(RS ≥97 任一窗口)。
 - **在找什么**:**近一个月最强的 3% 且综合分也高的票**。h_score 里 f_score 恒 50,所以实际是 i_score(行业)+ RS 三窗口。
 - **组合**:缺位置项;加 ATR Matrix ≤4 就是 Steve 的整套。
@@ -207,7 +207,7 @@
 ### 五个 Python 筛选器(Screeners 页,每晚跑,不进预设)
 | 筛选器 | 定义 | 在找什么 | 和预设的关系 |
 |---|---|---|---|
-| `momentum_97` | perf 1w/1m/3m/6m 等权综合分位前 3%,分 100/99/98/97 桶 | 现在正在跑的(含刚起步的) | 与预设 Momentum 97 **同名不同定义** |
+| `momentum_97`(显示名 **Composite 97**) | perf 1w/1m/3m/6m 等权综合分位前 3%,分 100/99/98/97 桶 | 现在正在跑的(含刚起步的) | 与预设 Weekly Momentum 97 定义不同(08-17 前两者同名) |
 | `vol_up_gainers` | 日涨 ≥4% 且 RelVol ≥1.5 | 有人付钱的一天 | 比预设 Vol Up 严 |
 | `episodic_pivot` | 跳空 ≥10% 且 RelVol ≥3 且市值 ≥$500M | 重新定价日 | Stockbee 9M 的另一种写法 |
 | `healthy_charts` | 在 50/200SMA 上、离 52 周高 5–25%、1 月为正、RS ≥80、RelVol ≥0.5 | 在歇的上升趋势(不是在跑的) | 无预设对应;是"名单该保存"型 |
@@ -219,7 +219,8 @@
 
 ## 七、三个补充问题(2026-08-17 Andy 追问)
 
-### 97 Club 和 Momentum 97 到底差在哪
+### Monthly Leader 97(原 97 Club)和 Weekly Momentum 97(原 Momentum 97)到底差在哪
+*2026-08-17 Andy 定名:预设 **Monthly Leader 97** / **Weekly Momentum 97**,Python 筛选器 `momentum_97` 显示名 **Composite 97**。三个都保留 97(前 3% 同一把尺),前缀说时间窗。*
 两个都是"强弱榜",但问的是**两个不同的时间问题**:
 
 | | 97 Club | Momentum 97(预设) |
