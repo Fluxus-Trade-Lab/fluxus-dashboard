@@ -36,7 +36,10 @@ class TestGate:
         """$1B cap and 1M average volume, like his 'Today's Watchlist' premise."""
         assert W.passes_gate(row()) is True
         assert W.passes_gate(row(market_cap=9e8)) is False
-        assert W.passes_gate(row(avg_volume=9e5)) is False
+        # dollar volume, not shares: 862k x $58 = $50M passes; 1.1M x $2 = $2M does not
+        assert W.passes_gate(row(avg_volume=862_000, close=58.0)) is True
+        assert W.passes_gate(row(avg_volume=1_100_000, close=2.0)) is False
+        assert W.passes_gate(row(close=None)) is False
         assert W.passes_gate(row(market_cap=None)) is False
 
 

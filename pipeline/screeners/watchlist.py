@@ -19,7 +19,8 @@ Zones (order is the reading order):
     moving        -- what is running?         Weekly Momentum 97 / 4% Bullish / Weekly 20%+
     trouble       -- what broke? (holders)    stop hit / LL break / >= 7 ATR extended
 
-Gate: $1B market cap and 1M average volume for every panel (oratnek's premise);
+Gate: $1B market cap and $20M average dollar volume for every panel (oratnek's
+premise was 1M shares; dollar volume since 2026-08-18);
 the Screener keeps its own gates. Recipes are defined HERE, once; the three
 panels that duplicate Screener presets are pinned equal to
 frontend/public/data/screener-presets.json by test_watchlist.py so the two
@@ -36,7 +37,10 @@ from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Tuple
 
 MIN_CAP = 1e9
 LEADERS_LOG = Path("data/history/leaders_log.csv")
-MIN_AVG_VOL = 1e6
+# 2026-08-18: DOLLAR volume, not shares (Andy: "改可以的"). The 1M-share gate
+# was tight on high-priced names and loose on $2 ones: CBRL ($58 x 862k =
+# $50M/day) failed it while a $2 name printing 1.1M shares ($2M/day) passed.
+MIN_DOLLAR_VOL = 2e7
 MAX_PER_PANEL = 25
 # >= 2 zones listed 177 names on 08-14 (143 of them exactly two, mostly
 # leaders x moving); three zones is where the list is short enough to read.
@@ -55,8 +59,10 @@ def _f(r: Mapping[str, Any], k: str) -> Optional[float]:
 
 
 def passes_gate(r: Mapping[str, Any]) -> bool:
-    cap, vol = _f(r, "market_cap"), _f(r, "avg_volume")
-    return cap is not None and vol is not None and cap >= MIN_CAP and vol >= MIN_AVG_VOL
+    cap, vol, px = _f(r, "market_cap"), _f(r, "avg_volume"), _f(r, "close")
+    if cap is None or vol is None or px is None:
+        return False
+    return cap >= MIN_CAP and vol * px >= MIN_DOLLAR_VOL
 
 
 @dataclass(frozen=True)
@@ -306,7 +312,7 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
 
     return {
         "date": date,
-        "gate": {"min_market_cap": MIN_CAP, "min_avg_volume": MIN_AVG_VOL},
+        "gate": {"min_market_cap": MIN_CAP, "min_dollar_volume": MIN_DOLLAR_VOL},
         "sort": "hybrid_rs desc; the number beside each ticker is rs_1m",
         "cross_zone_rule": f"count of ZONES a name appears in (not panels); >= {MIN_CROSS_ZONES} listed",
         "zones": zones_out,

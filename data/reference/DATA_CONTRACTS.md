@@ -253,7 +253,7 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 **当前消费方**:无(Watchlist 页待接)。**这份文件是 Watchlist 页与 Screener 页分工的落点**:Screener = 工作台(全池 + 30 个筛选键 + 可编辑预设);Watchlist = 晨报(每晚算好、按问题分区、只读)。方法见 `screener_methods.md`,分工讨论见 2026-08-17 对话。
 
 ```
-{ date, gate:{min_market_cap:1e9, min_avg_volume:1e6}, sort, cross_zone_rule, universe_gated,
+{ date, gate:{min_market_cap:1e9, min_dollar_volume:2e7}, sort, cross_zone_rule, universe_gated,
   zones:[ { key, label, panels:[ { key, label, recipe, measured, count, truncated, preset,
                                     tickers:[ {ticker, rs_1m, hybrid_rs, sector} ] } ] } ],
   cross_zone:[ {ticker, count, zones:[...], rs_1m, hybrid_rs, sector} ] }
@@ -269,7 +269,7 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 | `trouble` | 出问题的(持仓视角) | `stop_hit` `ll_break`(读 `sp_signal`)`extended`(ATR Matrix ≥7) |
 
 规则:
-- **门槛**固定 $1B + 1M 均量(oratnek 的前提),`universe_gated` 是过门槛的只数;Screener 页不受此约束
+- **门槛**固定 $1B 市值 + **$20M 日均成交额**(08-18 起,Andy 拍板;原 1M 股是 oratnek 的前提,对高价股偏严、对 $2 票偏松——CBRL $58×862k=$50M 被拦、$2 票 1.1M 股=$2M 却过),`universe_gated` 是过门槛的只数(08-14 数据 1,539 → 2,098);Screener 页不受此约束
 - 每格最多 25 只,`truncated` = 被截掉的数;排序 **Hybrid RS 降序**,票旁数字是 **RS 1M**(oratnek 的做法,保留)
 - ⚠️ **`measured=false` 必须渲染成"未测量"**(空框 / 灰),不能画成 0 —— 首晚 `sp_*` / `ema21_atr_dist` 未出时是 **6 格**:三个 LL-HL、`liquid_leader_pullback`、`stop_hit`、`ll_break`(前端已指出我早先说 3 格是少数了)
 - **`cross_zone` 数的是"区"不是"格"**:一只票在 moving 区三个格都出现只算 1;**≥3 区才列(08-17 收严,Andy:"改严格一点";≥2 时 08-14 有 177 只、其中 143 只恰两区,多是 leaders×moving 同义;≥3 单独收严剩 34 只,再叠加 Morales 收严后 08-14 数据剩 16 只)**;`cross_zone_rule` 字段写明当前门槛。这是对 oratnek "Tickers in 3+ watchlists" 的修正 —— 他那栏统计的多半是同义词。前端把它放顶部,替代原来的"出现在 N 张单"
