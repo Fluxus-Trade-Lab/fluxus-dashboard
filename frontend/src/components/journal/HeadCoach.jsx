@@ -69,6 +69,21 @@ export default function HeadCoach({ onGo }) {
           lesson: t(`rev.lesson.${verdict.lesson.lesson}`), lessonN: verdict.lesson.n,
         })}
       </p>
+      {/* The way out to the comprehensive view. Deliberately not a link: the
+          reviews are gitignored as "LOCAL ONLY, never publish (public repo)",
+          so a hyperlink would either 404 on the deploy or, if made to work,
+          put real performance on a public site. It points at where the
+          document lives instead. */}
+      <details className="mt-3">
+        <summary className="text-[11px] font-mono text-white/70 cursor-pointer
+                            hover:text-white list-none">{t('rev.report')} →</summary>
+        <p className="text-[11px] leading-relaxed text-white/60 m-0 mt-2 max-w-[62ch]">
+          {t('rev.report.hint')}
+        </p>
+        <code className="inline-block mt-1.5 text-[10.5px] font-mono text-white/75
+                         bg-black/25 rounded px-2 py-1">{t('rev.report.cmd')}</code>
+      </details>
+
       {/* The ranking is shown, not just its winner — a verdict you cannot check
           is an opinion. */}
       <div className="mt-3 pt-3 border-t border-white/20 flex flex-wrap gap-x-5 gap-y-1">

@@ -37,7 +37,19 @@ export const STAGES = [
  * belt and braces for an index generated before that — one SOXS trade reported
  * a best exit of +4,827R and would own any ranking it appeared in.
  */
-const MAX_PLAUSIBLE_OPTIMAL_R = 100
+export const MAX_PLAUSIBLE_OPTIMAL_R = 100
+
+/**
+ * Is this trade measurable at all? One definition, because the hold-capture
+ * view needs exactly the same answer and two spellings of "usable" is how two
+ * numbers on one page start disagreeing about how many trades they counted.
+ */
+export function usable(t) {
+  return Boolean(t?.closed)
+    && typeof t.realized_R === 'number'
+    && typeof t.optimal_R === 'number'
+    && Math.abs(t.optimal_R) <= MAX_PLAUSIBLE_OPTIMAL_R
+}
 
 /** Per-stage leak. Returns rows sorted worst-per-trade first. */
 export function stageLeaks(trades = []) {
@@ -45,11 +57,9 @@ export function stageLeaks(trades = []) {
   for (const t of trades) {
     if (!t?.closed) continue
     const stage = STAGE_OF_LESSON[t.lesson]
-    if (!stage) continue
+    if (!stage || !usable(t)) continue
     const realized = t.realized_R
     const optimal = t.optimal_R
-    if (typeof realized !== 'number' || typeof optimal !== 'number') continue
-    if (Math.abs(optimal) > MAX_PLAUSIBLE_OPTIMAL_R) continue
     const row = acc.get(stage) || { stage, n: 0, leak: 0, realized: 0, lessons: {} }
     row.n += 1
     row.leak += Math.max(0, optimal - realized)

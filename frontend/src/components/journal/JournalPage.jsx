@@ -6,6 +6,7 @@ import SizingTab from './SizingTab'
 import PageHeader from '../PageHeader'
 import { useLanguage } from '../../i18n/LanguageContext'
 import HeadCoach from './HeadCoach'
+import HoldCaptureSection from './analytics/HoldCaptureSection'
 import { STAGES } from './lib/headCoach'
 
 /**
@@ -34,6 +35,9 @@ const SECTIONS = {
     { key: 'sizing', label: 'Sizing' },
   ],
   hold: [
+    // First, because it is the question the verdict raises and the only one
+    // here that tests an assumption rather than reporting a number.
+    { key: 'hold-capture', label: 'Hold & capture' },
     { key: 'trim-stops', label: 'Trim & Stops' },
     // Was labelled "Risk Management", which named the file rather than what it
     // does: it re-runs the book against a different stop. That is a question
@@ -111,7 +115,9 @@ export default function JournalPage() {
         ))}
       </div>
 
-      {section === 'sizing' ? (
+      {section === 'hold-capture' ? (
+        <HoldCaptureSection />
+      ) : section === 'sizing' ? (
         <SizingTab />
       ) : section === 'stop-sim' ? (
         <RiskTab />
