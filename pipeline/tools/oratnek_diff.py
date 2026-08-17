@@ -52,11 +52,14 @@ SHOW = ["market_cap", "avg_volume", "close", "adr_pct", "rs_1m", "rs_3m", "rs_li
 def snapshot_commit(asof: str) -> str:
     """The nightly universe.json commit closest after `asof` (the run that
     carried that session's Finviz page)."""
+    # the cron runs 21:30 UTC after the close, so the snapshot that carries
+    # `asof`'s bars is the first commit after asof 21:00Z -- not the first
+    # commit on that calendar day (that one is the previous session's)
     out = subprocess.run(
-        ["git", "log", "--format=%h %cI", f"--since={asof}T00:00:00", "--", "data/output/universe.json"],
+        ["git", "log", "--format=%h %cI", f"--since={asof}T21:00:00Z", "--", "data/output/universe.json"],
         capture_output=True, text=True, check=True).stdout.strip().splitlines()
-    cands = [(l.split()[1], l.split()[0]) for l in out if l.strip()]
-    cands = [c for c in cands if c[0][:10] >= asof]
+    cands = [(pd.Timestamp(l.split()[1]).tz_convert("UTC").isoformat(), l.split()[0]) for l in out if l.strip()]
+    cands = [c for c in cands if c[0] >= f"{asof}T21:00:00+00:00"]
     if not cands:
         raise SystemExit(f"no universe.json commit on/after {asof}")
     return sorted(cands)[0][1]

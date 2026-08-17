@@ -1,0 +1,110 @@
+panel                 his  ours  both ours_rs_high
+ll_hl_1st               0    62     0            3
+ll_hl_2nd               4    63     3            9
+ll_hl_trend_break       1    14     1            2
+pp_today                0    20     0            8
+pp_2plus_10d           12   120     9           31
+vcs                     3    12     0            0
+weekly_momentum_97     23    14     4           12
+bullish_4pct            6    26     4           22
+weekly_20_gainers       8    52     8           40
+
+-- his RS 1M vs our rs_line_pctl_21 --
+  PBF    his   90  ours   90
+  BWIN   his   86  ours   86
+  AXON   his  100  ours  100
+  TENB   his   71  ours   76   <-- MISMATCH
+  RAL    his   67  ours   67
+  ATI    his  100  ours  100
+  RBRK   his   95  ours   95
+  PANW   his   95  ours   95
+  PBF    his   90  ours   90
+  NTSK   his   95  ours   95
+  NTAP   his  100  ours  100
+  STGW   his  100  ours  100
+  ESTC   his  100  ours  100
+  W      his   81  ours   81
+  SDGR   his   95  ours   95
+  ARHS   his  100  ours  100
+  FRPT   his  100  ours  100
+  OKTA   his   76  ours   76
+  BB     his   57  ours   62   <-- MISMATCH
+  CBRL   his   62  ours   62
+  S      his  100  ours  100
+  PATH   his  100  ours  100
+  ATI    his  100  ours  100
+  ANET   his  100  ours  100
+  MDB    his  100  ours  100
+  TWLO   his  100  ours  100
+  NTAP   his  100  ours  100
+  STGW   his  100  ours  100
+  SNOW   his  100  ours  100
+  ZETA   his  100  ours  100
+  TEAM   his  100  ours  100
+  AMPL   his  100  ours  100
+  VIA    his  100  ours  100
+  ESTC   his  100  ours  100
+  ASAN   his  100  ours  100
+  ETN    his  100  ours  100
+  LYFT   his  100  ours  100
+  GTLB   his  100  ours  100
+  CHYM   his  100  ours  100
+  P      his  100  ours  100
+  BETA   his  100  ours  100
+  NIQ    his  100  ours  100
+  CLMT   his  100  ours  100
+  MDB    his  100  ours  100
+  PBF    his   90  ours   90
+  ZETA   his  100  ours  100
+  AXON   his  100  ours  100
+  NIQ    his  100  ours  100
+  FRPT   his  100  ours  100
+  ZETA   his  100  ours  100
+  TEAM   his  100  ours  100
+  AMPL   his  100  ours  100
+  SHOP   his   95  ours   95
+  PAYC   his   86  ours   86
+  CHYM   his  100  ours  100
+  NIQ    his  100  ours  100
+  VOYG   his  100  ours  100
+
+-- his-only names, with our reading --
+  ll_hl_2nd          BWIN   market_cap=4.15e+09 avg_volume=1.23e+06 close=29.8 adr_pct=4.72 rs_1m=78 rs_3m=93 rs_line_pctl_21=85.7 perf_1w=0.0344 perf_5d=0.0312 perf_1w_pctile=0.727 perf_3m_pctile=0.939 change_pct=0.0315 rel_volume=0.453 trend_base=True sma50_dist=0.201 vcs=44.4 pp_count_10d=2 vol10_green=False vol10_green_count_10d=0 sp_signal=1st_break sp_setup=True sp_days=0 atr_from_sma50=3.54
+  pp_2plus_10d       STGW   market_cap=2.27e+09 avg_volume=1.56e+06 close=9.28 adr_pct=4.03 rs_1m=91 rs_3m=94 rs_line_pctl_21=100 perf_1w=0.0486 perf_5d=0.03 perf_1w_pctile=0.773 perf_3m_pctile=0.946 change_pct=0.0209 rel_volume=0.987 trend_base=True sma50_dist=0.239 vcs=9.6 pp_count_10d=5 vol10_green=False vol10_green_count_10d=2 sp_signal=- sp_setup=True sp_days=11 atr_from_sma50=4.79
+  pp_2plus_10d       ARHS   market_cap=1.39e+09 avg_volume=1.52e+06 close=9.84 adr_pct=5.2 rs_1m=93 rs_3m=96 rs_line_pctl_21=100 perf_1w=0.196 perf_5d=0.188 perf_1w_pctile=0.96 perf_3m_pctile=0.965 change_pct=0.0424 rel_volume=0.845 trend_base=True sma50_dist=0.277 vcs=7.9 pp_count_10d=2 vol10_green=False vol10_green_count_10d=2 sp_signal=tp2_hit sp_setup=True sp_days=5 atr_from_sma50=4.17
+  pp_2plus_10d       FRPT   market_cap=3.45e+09 avg_volume=1.42e+06 close=71.8 adr_pct=5.06 rs_1m=96 rs_3m=91 rs_line_pctl_21=100 perf_1w=0.00392 perf_5d=0.15 perf_1w_pctile=0.546 perf_3m_pctile=0.92 change_pct=0.0587 rel_volume=1.27 trend_base=False sma50_dist=0.264 vcs=9.2 pp_count_10d=3 vol10_green=False vol10_green_count_10d=2 sp_signal=tp2_hit sp_setup=True sp_days=2 atr_from_sma50=4.13
+  vcs                OKTA   market_cap=2.61e+10 avg_volume=2.56e+06 close=150 adr_pct=4.49 rs_1m=28 rs_3m=98 rs_line_pctl_21=76.2 perf_1w=0.0224 perf_5d=0.017 perf_1w_pctile=0.668 perf_3m_pctile=0.981 change_pct=-0.00292 rel_volume=0.863 trend_base=True sma50_dist=0.116 vcs=59.1 pp_count_10d=1 vol10_green=False vol10_green_count_10d=0 sp_signal=- sp_setup=True sp_days=1 atr_from_sma50=2.32
+  vcs                BB     market_cap=5.26e+09 avg_volume=1.59e+07 close=8.98 adr_pct=6.58 rs_1m=4 rs_3m=92 rs_line_pctl_21=61.9 perf_1w=0.0286 perf_5d=0.0124 perf_1w_pctile=0.694 perf_3m_pctile=0.93 change_pct=0.017 rel_volume=0.6 trend_base=False sma50_dist=-0.0682 vcs=88.3 pp_count_10d=0 vol10_green=False vol10_green_count_10d=0 sp_signal=- sp_setup=True sp_days=1 atr_from_sma50=-1.11
+  vcs                CBRL   market_cap=1.25e+09 avg_volume=8.69e+05 close=56 adr_pct=4.39 rs_1m=59 rs_3m=98 rs_line_pctl_21=61.9 perf_1w=-0.0463 perf_5d=-0.0191 perf_1w_pctile=0.192 perf_3m_pctile=0.981 change_pct=-0.00125 rel_volume=0.781 trend_base=True sma50_dist=0.139 vcs=55.3 pp_count_10d=0 vol10_green=False vol10_green_count_10d=0 sp_signal=- sp_setup=True sp_days=6 atr_from_sma50=2.78
+  weekly_momentum_97 S      market_cap=7.7e+09 avg_volume=6.54e+06 close=22.5 adr_pct=4.08 rs_1m=79 rs_3m=91 rs_line_pctl_21=100 perf_1w=0.0695 perf_5d=0.0705 perf_1w_pctile=0.831 perf_3m_pctile=0.926 change_pct=0.0103 rel_volume=1.65 trend_base=True sma50_dist=0.268 vcs=13.9 pp_count_10d=3 vol10_green=True vol10_green_count_10d=1 sp_signal=- sp_setup=True sp_days=1 atr_from_sma50=5.18
+  weekly_momentum_97 PATH   market_cap=8.14e+09 avg_volume=8.02e+07 close=15.7 adr_pct=5.06 rs_1m=96 rs_3m=95 rs_line_pctl_21=100 perf_1w=0.137 perf_5d=0.115 perf_1w_pctile=0.929 perf_3m_pctile=0.953 change_pct=0.00834 rel_volume=0.808 trend_base=True sma50_dist=0.336 vcs=0.3 pp_count_10d=0 vol10_green=False vol10_green_count_10d=0 sp_signal=- sp_setup=False sp_days=- atr_from_sma50=4.96
+  weekly_momentum_97 ATI    market_cap=3.13e+10 avg_volume=1.64e+06 close=230 adr_pct=4.41 rs_1m=91 rs_3m=91 rs_line_pctl_21=100 perf_1w=0.122 perf_5d=0.15 perf_1w_pctile=0.914 perf_3m_pctile=0.927 change_pct=0.00828 rel_volume=0.806 trend_base=True sma50_dist=0.187 vcs=4.5 pp_count_10d=2 vol10_green=False vol10_green_count_10d=2 sp_signal=- sp_setup=False sp_days=- atr_from_sma50=3.56
+  weekly_momentum_97 ANET   market_cap=2.5e+11 avg_volume=7.78e+06 close=198 adr_pct=5.43 rs_1m=68 rs_3m=90 rs_line_pctl_21=100 perf_1w=0.00274 perf_5d=0.0385 perf_1w_pctile=0.533 perf_3m_pctile=0.917 change_pct=0.0331 rel_volume=0.669 trend_base=True sma50_dist=0.15 vcs=12.6 pp_count_10d=2 vol10_green=False vol10_green_count_10d=1 sp_signal=- sp_setup=False sp_days=- atr_from_sma50=2.4
+  weekly_momentum_97 MDB    market_cap=3.53e+10 avg_volume=1.41e+06 close=439 adr_pct=4.75 rs_1m=94 rs_3m=91 rs_line_pctl_21=100 perf_1w=0.167 perf_5d=0.156 perf_1w_pctile=0.95 perf_3m_pctile=0.924 change_pct=0.054 rel_volume=1.25 trend_base=True sma50_dist=0.272 vcs=5.2 pp_count_10d=5 vol10_green=False vol10_green_count_10d=1 sp_signal=tp1_hit sp_setup=True sp_days=9 atr_from_sma50=4.49
+  weekly_momentum_97 NTAP   market_cap=3.9e+10 avg_volume=2.43e+06 close=198 adr_pct=4.03 rs_1m=81 rs_3m=97 rs_line_pctl_21=100 perf_1w=0.0636 perf_5d=0.0421 perf_1w_pctile=0.816 perf_3m_pctile=0.969 change_pct=-0.00126 rel_volume=0.829 trend_base=True sma50_dist=0.179 vcs=26.2 pp_count_10d=2 vol10_green=False vol10_green_count_10d=2 sp_signal=- sp_setup=True sp_days=1 atr_from_sma50=3.76
+  weekly_momentum_97 STGW   market_cap=2.27e+09 avg_volume=1.56e+06 close=9.28 adr_pct=4.03 rs_1m=91 rs_3m=94 rs_line_pctl_21=100 perf_1w=0.0486 perf_5d=0.03 perf_1w_pctile=0.773 perf_3m_pctile=0.946 change_pct=0.0209 rel_volume=0.987 trend_base=True sma50_dist=0.239 vcs=9.6 pp_count_10d=5 vol10_green=False vol10_green_count_10d=2 sp_signal=- sp_setup=True sp_days=11 atr_from_sma50=4.79
+  weekly_momentum_97 SNOW   market_cap=1.16e+11 avg_volume=5.03e+06 close=334 adr_pct=4.24 rs_1m=90 rs_3m=99 rs_line_pctl_21=100 perf_1w=0.0546 perf_5d=0.0548 perf_1w_pctile=0.791 perf_3m_pctile=0.989 change_pct=-0.00167 rel_volume=0.665 trend_base=True sma50_dist=0.258 vcs=26.3 pp_count_10d=3 vol10_green=False vol10_green_count_10d=1 sp_signal=- sp_setup=True sp_days=5 atr_from_sma50=4.83
+  weekly_momentum_97 ZETA   market_cap=7.32e+09 avg_volume=9.45e+06 close=29.1 adr_pct=5.6 rs_1m=95 rs_3m=97 rs_line_pctl_21=100 perf_1w=0.0768 perf_5d=0.202 perf_1w_pctile=0.846 perf_3m_pctile=0.975 change_pct=0.0585 rel_volume=0.973 trend_base=True sma50_dist=0.345 vcs=1.3 pp_count_10d=3 vol10_green=False vol10_green_count_10d=2 sp_signal=- sp_setup=False sp_days=- atr_from_sma50=4.58
+  weekly_momentum_97 VIA    market_cap=2.02e+09 avg_volume=8.63e+05 close=24.9 adr_pct=5.77 rs_1m=96 rs_3m=97 rs_line_pctl_21=100 perf_1w=0.164 perf_5d=0.135 perf_1w_pctile=0.947 perf_3m_pctile=0.973 change_pct=0.0665 rel_volume=1 trend_base=True sma50_dist=0.39 vcs=17.5 pp_count_10d=4 vol10_green=False vol10_green_count_10d=2 sp_signal=tp1_hit sp_setup=True sp_days=1 atr_from_sma50=4.86
+  weekly_momentum_97 ESTC   market_cap=7.94e+09 avg_volume=1.73e+06 close=76.3 adr_pct=4.25 rs_1m=92 rs_3m=94 rs_line_pctl_21=100 perf_1w=0.0951 perf_5d=0.0744 perf_1w_pctile=0.879 perf_3m_pctile=0.945 change_pct=0.000393 rel_volume=0.533 trend_base=True sma50_dist=0.223 vcs=2.8 pp_count_10d=4 vol10_green=False vol10_green_count_10d=2 sp_signal=- sp_setup=True sp_days=0 atr_from_sma50=4.29
+  weekly_momentum_97 ASAN   market_cap=2.13e+09 avg_volume=5.33e+06 close=9.25 adr_pct=6.22 rs_1m=92 rs_3m=94 rs_line_pctl_21=100 perf_1w=0.0417 perf_5d=0.0559 perf_1w_pctile=0.751 perf_3m_pctile=0.947 change_pct=0.00217 rel_volume=0.697 trend_base=True sma50_dist=0.206 vcs=8.9 pp_count_10d=0 vol10_green=False vol10_green_count_10d=0 sp_signal=- sp_setup=True sp_days=6 atr_from_sma50=2.75
+  weekly_momentum_97 ETN    market_cap=1.78e+11 avg_volume=2.51e+06 close=459 adr_pct=3.89 rs_1m=75 rs_3m=65 rs_line_pctl_21=100 perf_1w=0.0294 perf_5d=0.0352 perf_1w_pctile=0.698 perf_3m_pctile=0.738 change_pct=0.0322 rel_volume=0.721 trend_base=True sma50_dist=0.121 vcs=1.9 pp_count_10d=1 vol10_green=False vol10_green_count_10d=0 sp_signal=- sp_setup=False sp_days=- atr_from_sma50=2.77
+  weekly_momentum_97 LYFT   market_cap=6.64e+09 avg_volume=1.28e+07 close=17.5 adr_pct=3.87 rs_1m=78 rs_3m=82 rs_line_pctl_21=100 perf_1w=0.0643 perf_5d=0.0484 perf_1w_pctile=0.818 perf_3m_pctile=0.857 change_pct=0.0162 rel_volume=0.773 trend_base=True sma50_dist=0.165 vcs=5.4 pp_count_10d=1 vol10_green=False vol10_green_count_10d=1 sp_signal=- sp_setup=True sp_days=8 atr_from_sma50=3.67
+  weekly_momentum_97 GTLB   market_cap=7.11e+09 avg_volume=4.14e+06 close=42.1 adr_pct=5 rs_1m=94 rs_3m=98 rs_line_pctl_21=100 perf_1w=0.165 perf_5d=0.154 perf_1w_pctile=0.948 perf_3m_pctile=0.977 change_pct=0.0339 rel_volume=1.08 trend_base=True sma50_dist=0.319 vcs=16.1 pp_count_10d=3 vol10_green=False vol10_green_count_10d=1 sp_signal=- sp_setup=True sp_days=1 atr_from_sma50=4.84
+  weekly_momentum_97 CHYM   market_cap=1.2e+10 avg_volume=8.59e+06 close=31.7 adr_pct=5.3 rs_1m=98 rs_3m=97 rs_line_pctl_21=100 perf_1w=0.224 perf_5d=0.272 perf_1w_pctile=0.968 perf_3m_pctile=0.972 change_pct=0.0285 rel_volume=1.46 trend_base=True sma50_dist=0.51 vcs=1.6 pp_count_10d=3 vol10_green=False vol10_green_count_10d=2 sp_signal=- sp_setup=True sp_days=7 atr_from_sma50=6.38
+  weekly_momentum_97 BETA   market_cap=5.67e+09 avg_volume=1.47e+06 close=24.6 adr_pct=5.7 rs_1m=96 rs_3m=89 rs_line_pctl_21=100 perf_1w=0.108 perf_5d=0.12 perf_1w_pctile=0.899 perf_3m_pctile=0.906 change_pct=0.0349 rel_volume=1.67 trend_base=True sma50_dist=0.359 vcs=0.5 pp_count_10d=3 vol10_green=False vol10_green_count_10d=1 sp_signal=- sp_setup=True sp_days=4 atr_from_sma50=4.63
+  weekly_momentum_97 NIQ    market_cap=4.89e+09 avg_volume=1.82e+06 close=16.6 adr_pct=5.02 rs_1m=98 rs_3m=95 rs_line_pctl_21=100 perf_1w=0.422 perf_5d=0.417 perf_1w_pctile=0.992 perf_3m_pctile=0.958 change_pct=0.42 rel_volume=5.38 trend_base=False sma50_dist=0.652 vcs=23.6 pp_count_10d=4 vol10_green=True vol10_green_count_10d=2 sp_signal=tp2_hit sp_setup=True sp_days=11 atr_from_sma50=7.86
+  weekly_momentum_97 CLMT   market_cap=4.05e+09 avg_volume=1.35e+06 close=46 adr_pct=4.64 rs_1m=85 rs_3m=92 rs_line_pctl_21=100 perf_1w=0.144 perf_5d=0.108 perf_1w_pctile=0.933 perf_3m_pctile=0.928 change_pct=0.0125 rel_volume=1.14 trend_base=True sma50_dist=0.198 vcs=36.8 pp_count_10d=1 vol10_green=False vol10_green_count_10d=1 sp_signal=- sp_setup=False sp_days=- atr_from_sma50=3.57
+  bullish_4pct       PBF    market_cap=8.22e+09 avg_volume=3.46e+06 close=69.3 adr_pct=5.94 rs_1m=81 rs_3m=96 rs_line_pctl_21=90.5 perf_1w=0.134 perf_5d=0.0525 perf_1w_pctile=0.926 perf_3m_pctile=0.964 change_pct=0.0462 rel_volume=0.885 trend_base=True sma50_dist=0.318 vcs=38.5 pp_count_10d=2 vol10_green=False vol10_green_count_10d=2 sp_signal=2nd_break sp_setup=True sp_days=1 atr_from_sma50=4.06
+  bullish_4pct       ZETA   market_cap=7.32e+09 avg_volume=9.45e+06 close=29.1 adr_pct=5.6 rs_1m=95 rs_3m=97 rs_line_pctl_21=100 perf_1w=0.0768 perf_5d=0.202 perf_1w_pctile=0.846 perf_3m_pctile=0.975 change_pct=0.0585 rel_volume=0.973 trend_base=True sma50_dist=0.345 vcs=1.3 pp_count_10d=3 vol10_green=False vol10_green_count_10d=2 sp_signal=- sp_setup=False sp_days=- atr_from_sma50=4.58
+
+-- ours-only names (first 15 per panel) --
+  ll_hl_1st          +62: AFG AGNC ARWR ASX AWK AWR BEP BKU BSY BWIN COLB COMP CP CPNG CSIQ
+  ll_hl_2nd          +60: AEHR AM ANAB APAM ASB ASTS BNY BOKF CBRE CBRS CEG CNQ CNS CRDO CRH
+  ll_hl_trend_break  +13: AMT AQN ARMK BATRK BEPC BKV BW CBT FRMI MRP NOVT OTTR VRT
+  pp_today           +20: APO ARMK BULL BX CLBK CRBG FA FHN FRMI HEI-A KKR KYMR MSGE P S
+  pp_2plus_10d       +111: ABCL ACAD ALKT AMBA AMGN AMH AMN AMZN AN APO APPS ATKR AVGO AVT BATRK
+  vcs                +12: ABSI BBIO BHVN DFTX ERAS IDYA IMVT KMX KYMR RLAY VCEL ZBIO
+  weekly_momentum_97 +10: ABCL HZO IOVA NESR OMDA QNST TXG U VOYG ZLAB
+  bullish_4pct       +22: AA ABCL ACHR AMPL BCRX BLTE CRCL DPC HLNE KKR NN OWL P PCT PWP
+  weekly_20_gainers  +44: ABCL ACHR AEM ALNT APPN APPS ASM AUGO BTG CACI CAI CRL EGO EQX ERO
