@@ -200,6 +200,8 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 
 ⚠️ **adrPct 分两档 + 热度着色(Andy 2026-08-17 拍板)**:持仓型预设(21EMA Watch / Pocket Pivot / PP Count / 97 Club)`adrPct.max` 10→**6**(= 最大单笔亏损 ÷ 1.5,Steve 的算法,和 −7~−9% 止损档对齐);扫描型(4% Bullish / Vol Up / Momentum 97 / Weekly 20%+)保留 10。已改 `frontend/public/data/screener-presets.json`。**前端**:表里 `adr_pct` 列按热度着色,越高越热,>6 明显可辨(6 是"超出止损承受"的线);字段现成,不需要数据端改动。08-14 数据:$1B+ 非医疗 2,224 只里 ADR 3.5–6 有 820 只、6–10 有 253 只(半导体/软件/航空防务最多)。
 
+| `ti65` / `mdt` / `c_low52w` / `min_vol_3d` | Stockbee anticipation 三扫描的输入(2026-08-17 加):`avgc7/avgc65`(TI65 >1.05)· `c/avgc126`(MDT >1.19)· `c/minl252`(Double Trouble ≥1.8,= 1 + `low_52w`,因为 `low_52w` 存的是分数距离不是价格)· 近 3 日最低量(>100k) | 前两个需 65/126 根历史否则 null;`c_low52w` 现在就有。**方法与组合见 `screener_methods.md` 第四节**;名单工具 `python -m pipeline.tools.anticipation_scan` |
+
 ⚠️ **`data/history/ticker_events.csv` 的 `atr_ext` 列在 2026-08-17 前后是两个定义**:2026-08-17 之前的 62,692 个非空值是旧式 `|dist|×close/atr`(无符号、无 `(1+dist)`),之后是有符号的 ATR Matrix。归档没存 `close/atr/dist`,**旧行无法重算**。跨日期比较该列时以 `date < 2026-08-17` 为界;目前没有消费方跨日期读它(Signal History 只按日取)。
 
 ⚠️ **`atr_ext`(每个 ticker 徽章)口径变更 2026-08-17**:原来是 `|dist|×close/atr`(无符号、漏 `(1+dist)`),现在 = `atr_from_sma50`(有符号)。**低于 SMA50 的票现在是负数**,`atr_color` 多了一档 `"below"`。前端 `lib/format.js:atrBadgeColor` 目前把 `<0` 走进 `≤4` 的绿色分支 —— **需要前端加一行 `if (atrExt < 0) return <中性色>`**,否则 2,247 只线下票继续被涂成入场区绿。这是数据端修正后剩给 UI 的唯一一步。

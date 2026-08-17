@@ -326,6 +326,16 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     else:
         df['ema21_atr_dist'] = np.nan
 
+    # Double Trouble input: c / minl252. The enrichment stores low_52w as a
+    # FRACTION (close/min(low) - 1), so the ratio is 1 + low_52w. Median, not
+    # mean, decides the form: a handful of names print +800x and would drag a
+    # mean over 1 even for fractions.
+    _l = pd.to_numeric(df.get('low_52w', pd.Series(dtype=float)), errors='coerce')
+    if _l.notna().any() and _l.median() > 1:          # absolute prices
+        df['c_low52w'] = pd.to_numeric(df['close'], errors='coerce') / _l.where(_l > 0)
+    else:
+        df['c_low52w'] = 1.0 + _l
+
     # 52W high distance
     h = pd.to_numeric(df['high_52w'], errors='coerce')
     c = pd.to_numeric(df['close'], errors='coerce')
@@ -358,8 +368,9 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     df['momentum_97'] = (_w >= 0.97) & (_m >= 0.85)
 
     # Round derived columns to 4 decimals
-    for col in ['adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist', 'atr_from_sma50', 'ema21_atr_dist']:
-        df[col] = df[col].round(4)
+    for col in ['adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist', 'atr_from_sma50', 'ema21_atr_dist', 'c_low52w', 'ti65', 'mdt']:
+        if col in df.columns:            # ti65/mdt come from enrichment; absent on the fallback path
+            df[col] = pd.to_numeric(df[col], errors='coerce').round(4)
 
     # Round new enrichment columns
     for col in ['from_open_pct', 'dcr_pct', 'ema21_low_dist']:
@@ -698,6 +709,7 @@ def main():
         'adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist',
         'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d', 'pp_count_10d',
         'atr_from_sma50', 'ema21_atr_dist', 'ema21',
+        'ti65', 'mdt', 'min_vol_3d', 'c_low52w',
         'sp_setup', 'sp_len', 'sp_ll', 'sp_hl', 'sp_1st', 'sp_2nd', 'sp_tp1', 'sp_tp2',
         'sp_phase', 'sp_stop', 'sp_ma', 'sp_signal', 'sp_days', 'sp_dist_1st_pct',
         'sp_dist_2nd_pct', 'sp_counter',

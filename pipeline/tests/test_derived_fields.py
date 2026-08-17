@@ -290,3 +290,41 @@ class TestEma21AtrDist:
     def test_old_ratio_column_untouched(self):
         out = compute_universe_scores(_frame(ema21=96.0))
         assert out["ema21_r"].iloc[0] == pytest.approx(1.05)
+
+
+class TestStockbeeAnticipationInputs:
+    """Stockbee's three anticipation scans share one skeleton: a 'has been
+    strong' ratio and a 'quiet today' gate (|change| <= 1%, min 3-day volume >
+    100k). We carry the three ratios as columns and let a preset combine them
+    with VCS. Telechart syntax, verbatim:
+        TI65           avgc7/avgc65 > 1.05
+        Double Trouble c/minl252  >= 1.8
+        MDT            c/avgc126  > 1.19
+    """
+
+    def test_ratios_from_bars(self):
+        import numpy as np
+        from pipeline.adapters.yfinance_adapter import stockbee_ratios
+        n = 260
+        close = np.linspace(50.0, 100.0, n)                # steady climb
+        hist = pd.DataFrame({"Close": close, "Low": close - 1, "Volume": 200_000.0})
+        r = stockbee_ratios(hist)
+        assert r["ti65"] == pytest.approx(close[-7:].mean() / close[-65:].mean())
+        assert r["mdt"] == pytest.approx(close[-1] / close[-126:].mean())
+        assert r["min_vol_3d"] == pytest.approx(200_000.0)
+
+    def test_short_history_is_null_not_zero(self):
+        from pipeline.adapters.yfinance_adapter import stockbee_ratios
+        hist = pd.DataFrame({"Close": [1.0] * 30, "Low": [1.0] * 30, "Volume": [1.0] * 30})
+        r = stockbee_ratios(hist)
+        assert r["ti65"] is None and r["mdt"] is None       # 65 / 126 bars needed
+        assert r["min_vol_3d"] == 1.0                        # 3 bars is enough
+
+    def test_double_trouble_ratio_in_scoring(self):
+        """c/minl252 from what we already carry. NOTE the enrichment stores
+        low_52w as a FRACTION (close/min(low) - 1: 0.8 = 80% above the low),
+        not a price -- an earlier count that divided by it as a price said
+        1,675 names; the fraction reading says 303. c_low52w = 1 + low_52w."""
+        out = compute_universe_scores(_frame(low_52w=0.8))
+        assert out["c_low52w"].iloc[0] == pytest.approx(1.8)
+        assert pd.isna(compute_universe_scores(_frame(low_52w=None))["c_low52w"].iloc[0])
