@@ -23,17 +23,19 @@ const SUB_TABS = [
   { key: 'monthly-review', label: 'Monthly Review' },
 ]
 
-export default function AnalyticsTab() {
+export default function AnalyticsTab({ initialSection }) {
   return (
     <PortfolioProvider>
-      <AnalyticsTabInner />
+      <AnalyticsTabInner initialSection={initialSection} />
     </PortfolioProvider>
   )
 }
 
-function AnalyticsTabInner() {
+function AnalyticsTabInner({ initialSection }) {
   const { state } = usePortfolio()
-  const [activeTab, setActiveTab] = useState('summary')
+  // Review addresses one of these sections directly, so the opening tab is the
+  // caller's to choose. Its own tab strip still works from there.
+  const [activeTab, setActiveTab] = useState(initialSection || 'summary')
 
   const { trades, dailyPrices, benchmarkHistories, startingCapital } = state
   const spyHistory = benchmarkHistories?.SPY || []
