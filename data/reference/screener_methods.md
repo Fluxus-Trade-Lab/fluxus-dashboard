@@ -94,6 +94,7 @@
 - **`pocket_pivot` / `pp_count_10d` / `pp_count_30d` = Morales / Kacher 原定义**:上涨日(close > 昨收)且量 > 前 10 根**下跌日**的最大量 —— 买盘 vs 卖盘。审计:与 A/D 量比相关 +0.71。预设 Pocket Pivot / PP Count 读这一族。
 - **`vol10_green` / `_count_10d` / `_count_30d` = oratnek 的 "PP (Vol > 10D)"**:阳线且量 > 前 10 根**全部**的最大量 —— 量能突增。这是 08-17 前 `pocket_pivot` 的算法,换名不换数;晨报 oratnek 那两格读它。
 - 同一只票两个答案很常见(AEHR 08-14:Morales 10 日 4 次,oratnek 0 次)—— 不是细节差异,是两个量。
+- **哪个用在哪(08-17 事件研究,详见 `accumulation_audit.md` §6)**:问「有没有人在买」→ Morales;问「今天谁被注意到」→ Vol>10D;**单独当买入信号两个都不成立**(后半样本零优势);**必须带趋势上下文**(无上下文左尾比随机日深 2.7pp)。一句话:Morales 答"有没有人买",Vol>10D 答"今天忙不忙";只在趋势里读、只当确认。
 - **原用法(oratnek)**:"最近 10 个交易日里有一天出现 PP"是他的选股前提之一;"2nd Pivot 当天出现 PP 最理想"。
 - **在找什么**:**有人在安静的整理里放量买了一天** —— 机构脚印。
 - **组合**:× VCS(收缩里的一次放量)是它最好的搭档;× Structure Pivot 的 2nd Pivot 是 oratnek 的加仓信号;`pp_count_30d ≥ 3` 单独成一个预设(PP Count)。

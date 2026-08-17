@@ -122,14 +122,20 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
           ["vcs", "change_pct", "adr_pct"],
           lambda r: _strong(r) and _quiet(r) and _ge(r, "vcs", 60) and _ge(r, "adr_pct", 3)),
     # --- accumulation ---
+    # All three carry the CONTEXT gate (trend_base: above SMA50 + weekly
+    # WMA10 > WMA30). The 2026-08-17 event study (1,505 names x 293 sessions)
+    # found the definition mattered less than the context: without it the
+    # left tail of either pivot was 2.7pp DEEPER than a random day (high-
+    # volume green bars include distribution days); with it 1-2pp shallower.
     Panel("pp_today", "PP (Vol > 10D)",
-          "vol10_green today: green bar, volume above ALL prior 10 bars' max -- oratnek's own definition (our Morales pocket_pivot is a different quantity, see accumulation_audit.md)",
-          ["vol10_green"], lambda r: r.get("vol10_green") is True),
+          "vol10_green today (green bar, volume above ALL prior 10 bars' max -- oratnek's definition) and trend_base",
+          ["vol10_green", "trend_base"], lambda r: r.get("vol10_green") is True and r.get("trend_base") is True),
     Panel("pp_2plus_10d", "PP 2+ times (10D)",
-          "vol10_green_count_10d >= 2", ["vol10_green_count_10d"], lambda r: _ge(r, "vol10_green_count_10d", 2)),
+          "vol10_green_count_10d >= 2 and trend_base", ["vol10_green_count_10d", "trend_base"],
+          lambda r: _ge(r, "vol10_green_count_10d", 2) and r.get("trend_base") is True),
     Panel("morales_pp_10d", "Pocket Pivot (Morales, 10D)",
-          "pp_count_10d >= 1: up day (close > prior close) on volume above the prior 10 bars' DOWN-day max -- buying vs selling; correlates +0.71 with the A/D ratio",
-          ["pp_count_10d"], lambda r: _ge(r, "pp_count_10d", 1)),
+          "pp_count_10d >= 1 (up day on volume above the prior 10 bars' DOWN-day max; buying vs selling, +0.71 with the A/D ratio) and trend_base",
+          ["pp_count_10d", "trend_base"], lambda r: _ge(r, "pp_count_10d", 1) and r.get("trend_base") is True),
     # --- moving (same recipes as the Screener presets; pinned by test) ---
     Panel("weekly_momentum_97", "Weekly Momentum 97",
           "perf_1w_pctile >= 0.97 and perf_3m_pctile >= 0.85 and trend_base and adr_pct 3.5-10",

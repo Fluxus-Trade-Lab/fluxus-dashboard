@@ -56,6 +56,9 @@ class TestPanels:
         assert not W.PANELS["pp_2plus_10d"].test(row(vol10_green_count_10d=1))
         assert W.PANELS["morales_pp_10d"].test(row(pp_count_10d=1))
         assert not W.PANELS["morales_pp_10d"].test(row(pp_count_10d=0, vol10_green_count_10d=3))
+        # context gate: no trend_base, no panel -- the study's loudest finding
+        assert not W.PANELS["pp_today"].test(row(vol10_green=True, trend_base=False))
+        assert not W.PANELS["morales_pp_10d"].test(row(pp_count_10d=3, trend_base=False))
 
     def test_vcs_panel_needs_the_adr_floor(self):
         """Pinned takeover names score VCS 90+ with ADR under 2 -- not
