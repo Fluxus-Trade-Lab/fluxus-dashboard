@@ -248,7 +248,8 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 
 | 区 `zones[].key` | 问题 | 格 `panels[].key` |
 |---|---|---|
-| `entries` | 今天可以进的 | `ll_hl_1st` `ll_hl_2nd` `ll_hl_trend_break`(读 `sp_signal`) |
+| `leaders`(08-17 加,排第一) | 谁在领跑 | `true_market_leaders`(liquid_leader × 所属组四态 Leading × rs_1m≥80;票项多 `group` `group_state`)`liquid_leaders`(教材 M2_L09:ADV≥2M · >SMA50 · rs_3m≥80;count 是全表,tickers 取前 25) |
+| `entries` | 今天可以进的 | `ll_hl_1st` `ll_hl_2nd` `ll_hl_trend_break`(读 `sp_signal`)`liquid_leader_pullback`(教材 L09:liquid_leader · 周涨<12% · 离 21EMA 0.5–1 ATR · 离 50 0–3 ATR) |
 | `compression` | 在蓄势的 | `vcs`(vcs≥70 且 ADR≥3)`anticipation`(强弱三选一 × 安静 × VCS≥60 × ADR≥3) |
 | `accumulation` | 有人在买的 | `pp_today`(当日 PP)`pp_2plus_10d` |
 | `moving` | 在跑的 | `weekly_momentum_97` `bullish_4pct` `weekly_20_gainers` —— **与同名预设同一配方,测试锁死**;`preset` 字段给出预设名,前端可点进 Screener 载入 |
@@ -257,12 +258,14 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 规则:
 - **门槛**固定 $1B + 1M 均量(oratnek 的前提),`universe_gated` 是过门槛的只数;Screener 页不受此约束
 - 每格最多 25 只,`truncated` = 被截掉的数;排序 **Hybrid RS 降序**,票旁数字是 **RS 1M**(oratnek 的做法,保留)
-- ⚠️ **`measured=false` 必须渲染成"未测量"**(空框 / 灰),不能画成 0 —— 首晚 `sp_*` 未出时三个结构格就是这个状态
+- ⚠️ **`measured=false` 必须渲染成"未测量"**(空框 / 灰),不能画成 0 —— 首晚 `sp_*` / `ema21_atr_dist` 未出时是 **6 格**:三个 LL-HL、`liquid_leader_pullback`、`stop_hit`、`ll_break`(前端已指出我早先说 3 格是少数了)
 - **`cross_zone` 数的是"区"不是"格"**:一只票在 moving 区三个格都出现只算 1;≥2 区才列。这是对 oratnek "Tickers in 3+ watchlists" 的修正 —— 他那栏统计的多半是同义词。前端把它放顶部,替代原来的"出现在 N 张单"
 - 配方文字在 `recipe`,直接显示(和 rotation 的 `sentence` 同一原则:文案在引擎里,UI 不重拼)
 - 前端通路(待 UI):格标题 → Screener 载入 `preset`;票 → ticker 页(Signal History 里能看它昨天在哪几格);Screener 里用户自建的预设**不进**晨报
 
-首跑(08-14 数据,结构格待 cron):VCS 62 · anticipation 0(ti65/mdt 待 cron)· PP 今日 20 · PP 2+ 183 · Weekly Momentum 97 8 · 4% Bullish 23 · Weekly 20%+ 22 · Extended 16;cross_zone ≥2 共 27 只(NIQ / P / INFQ 三区)。
+另有 `data/history/leaders_log.csv`(每晚一行/每只 liquid leader:`tml` 标志、所属组与四态、close、ATR 位置)—— **True Market Leader 的前瞻验证记录**:主题四态归档 08-07 才起,历史回测做不了,只能从今天起前瞻记;`liquid_leader` 字段也已进 universe.json。
+
+首跑(08-14 数据,结构格待 cron):TML 26(DELL / RBRK / GTLB / NTNX / PATH / NTAP…)· Liquid Leaders 181 · VCS 62 · anticipation 0(ti65/mdt 待 cron)· PP 今日 20 · PP 2+ 183 · Weekly Momentum 97 8 · 4% Bullish 23 · Weekly 20%+ 22 · Extended 16;cross_zone ≥2 共 27 只(NIQ / P / INFQ 三区)。
 
 ---
 

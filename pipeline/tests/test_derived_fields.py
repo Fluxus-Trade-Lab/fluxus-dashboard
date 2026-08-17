@@ -328,3 +328,31 @@ class TestStockbeeAnticipationInputs:
         out = compute_universe_scores(_frame(low_52w=0.8))
         assert out["c_low52w"].iloc[0] == pytest.approx(1.8)
         assert pd.isna(compute_universe_scores(_frame(low_52w=None))["c_low52w"].iloc[0])
+
+
+class TestLiquidLeader:
+    """Course definition (SwingMasterclass M2_L09): ADV >= 2M shares, above the
+    50-SMA, RS rank top 20% (we read rs_3m >= 80 on the tradeable percentile).
+    A qualification list, not an entry signal."""
+
+    def test_flag(self):
+        assert compute_universe_scores(_frame(avg_volume=3e6, sma50_dist=0.05, perf_3m=0.5))["liquid_leader"].iloc[0] in (True, False)
+
+    def test_needs_all_three(self):
+        import pandas as pd
+        rows = pd.concat([_frame(ticker=f"T{i}", avg_volume=3e6, sma50_dist=0.05, perf_3m=0.01 * i) for i in range(20)], ignore_index=True)
+        out = compute_universe_scores(rows)
+        top = out.sort_values("rs_3m", ascending=False).iloc[0]
+        assert top["liquid_leader"] is True or top["liquid_leader"] == True  # noqa: E712
+        low = out.sort_values("rs_3m").iloc[0]
+        assert not bool(low["liquid_leader"])
+        # under the volume floor -> never
+        rows2 = rows.copy(); rows2["avg_volume"] = 1e6
+        assert not compute_universe_scores(rows2)["liquid_leader"].any()
+        # below the 50-SMA -> never
+        rows3 = rows.copy(); rows3["sma50_dist"] = -0.02
+        assert not compute_universe_scores(rows3)["liquid_leader"].any()
+
+    def test_missing_inputs_are_false_not_error(self):
+        out = compute_universe_scores(_frame(avg_volume=None))
+        assert bool(out["liquid_leader"].iloc[0]) is False

@@ -25,7 +25,7 @@ def row(**kw):
             "change_pct": 0.005, "perf_1w_pctile": 0.5, "perf_3m_pctile": 0.5,
             "perf_1w": 0.02, "rel_volume": 1.0, "from_open_pct": 0.0, "rs_21d": 90,
             "dcr_pct": 0.5, "min_vol_3d": 500_000, "ema21_atr_dist": 0.5,
-            "pocket_pivot": False, "pp_count_30d": 0}
+            "pocket_pivot": False, "pp_count_30d": 0, "liquid_leader": False, "close": 100.0}
     base.update(kw)
     return base
 
@@ -93,6 +93,50 @@ class TestPanels:
         assert not W.PANELS["weekly_20_gainers"].test(row(perf_1w=0.19, adr_pct=4))
 
 
+class TestLeaders:
+    def test_liquid_leader_pullback_is_the_course_recipe(self):
+        """M2_L09 'Liquid Leader Pullback RS': liquid leader, weekly return
+        < 12%, 0.5-1 ADR from the 21EMA, 0-3 ADR from the 50 (ADR ~ ATR here)."""
+        good = row(liquid_leader=True, perf_1w=0.05, ema21_atr_dist=0.7, atr_from_sma50=1.5)
+        assert W.PANELS["liquid_leader_pullback"].test(good)
+        assert not W.PANELS["liquid_leader_pullback"].test(row(**{**good, "liquid_leader": False}))
+        assert not W.PANELS["liquid_leader_pullback"].test(row(**{**good, "perf_1w": 0.15}))
+        assert not W.PANELS["liquid_leader_pullback"].test(row(**{**good, "ema21_atr_dist": 1.5}))
+        assert not W.PANELS["liquid_leader_pullback"].test(row(**{**good, "atr_from_sma50": 3.5}))
+
+    def test_true_market_leader_needs_a_leading_group(self):
+        """TML = liquid leader whose home theme/industry is Leading and rs_1m >= 80
+        -- the theme dimension none of the four benchmarks have."""
+        r = row(ticker="X", liquid_leader=True, rs_1m=90)
+        out = W.build([r], date="2026-08-14", group_states={"X": ("Software", "Leading")})
+        p = {pn["key"]: pn for z in out["zones"] for pn in z["panels"]}
+        assert [x["ticker"] for x in p["true_market_leaders"]["tickers"]] == ["X"]
+        assert p["true_market_leaders"]["tickers"][0]["group"] == "Software"
+        out2 = W.build([r], date="2026-08-14", group_states={"X": ("Software", "Weakening")})
+        p2 = {pn["key"]: pn for z in out2["zones"] for pn in z["panels"]}
+        assert p2["true_market_leaders"]["tickers"] == []
+        # no group map at all -> unmeasured, not empty-and-false
+        out3 = W.build([r], date="2026-08-14")
+        p3 = {pn["key"]: pn for z in out3["zones"] for pn in z["panels"]}
+        assert p3["true_market_leaders"]["measured"] is False
+
+    def test_leaders_zone_comes_first(self):
+        out = W.build([row()], date="2026-08-14")
+        assert out["zones"][0]["key"] == "leaders"
+
+    def test_leaders_archive_rows(self, tmp_path):
+        r = row(ticker="X", liquid_leader=True, rs_1m=90, h_score=88, close=123.4)
+        n = W.archive_leaders([r], date="2026-08-14", group_states={"X": ("Software", "Leading")},
+                              path=tmp_path / "log.csv")
+        assert n == 1
+        import csv
+        rows_ = list(csv.DictReader((tmp_path / "log.csv").open()))
+        assert rows_[0]["ticker"] == "X" and rows_[0]["tml"] == "True" and rows_[0]["group_state"] == "Leading"
+        # idempotent per date
+        assert W.archive_leaders([r], date="2026-08-14", group_states={}, path=tmp_path / "log.csv") == 1
+        assert len(list(csv.DictReader((tmp_path / "log.csv").open()))) == 1
+
+
 class TestBuild:
     def _rows(self):
         return [
@@ -127,7 +171,7 @@ class TestBuild:
 
     def test_zone_order_and_keys_are_stable(self):
         out = W.build(self._rows(), date="2026-08-14")
-        assert [z["key"] for z in out["zones"]] == ["entries", "compression", "accumulation", "moving", "trouble"]
+        assert [z["key"] for z in out["zones"]] == ["leaders", "entries", "compression", "accumulation", "moving", "trouble"]
         for z in out["zones"]:
             for pn in z["panels"]:
                 assert {"key", "label", "recipe", "count", "tickers"} <= set(pn)

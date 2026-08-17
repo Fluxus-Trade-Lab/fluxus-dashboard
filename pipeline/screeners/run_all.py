@@ -286,6 +286,15 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
         df['rs_6m'] * 2
     ) / 10
 
+    # --- Liquid Leader (course definition, SwingMasterclass M2_L09) ---
+    # ADV >= 2M shares, above the 50-SMA, RS rank top 20% (rs_3m >= 80 on the
+    # tradeable percentile). A QUALIFICATION list -- the water the entries
+    # should be fished from -- not an entry. Alex Desjardins's "Liquid
+    # Leaders" and Andy's course teach the same thing. Missing inputs -> False.
+    _av = pd.to_numeric(df.get('avg_volume', pd.Series(dtype=float)), errors='coerce')
+    _sd = pd.to_numeric(df.get('sma50_dist', pd.Series(dtype=float)), errors='coerce')
+    df['liquid_leader'] = ((_av >= 2_000_000) & (_sd > 0) & (df['rs_3m'] >= 80)).fillna(False).astype(bool)
+
     # --- Derived technical columns ---
     df['adr_pct'] = pd.to_numeric(df['atr'], errors='coerce') / pd.to_numeric(df['close'], errors='coerce') * 100
     # These two are RATIOS (close / MA), not ATR multiples, despite the `_r`.
@@ -709,7 +718,7 @@ def main():
         'adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist',
         'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d', 'pp_count_10d',
         'atr_from_sma50', 'ema21_atr_dist', 'ema21',
-        'ti65', 'mdt', 'min_vol_3d', 'c_low52w',
+        'ti65', 'mdt', 'min_vol_3d', 'c_low52w', 'liquid_leader',
         'sp_setup', 'sp_len', 'sp_ll', 'sp_hl', 'sp_1st', 'sp_2nd', 'sp_tp1', 'sp_tp2',
         'sp_phase', 'sp_stop', 'sp_ma', 'sp_signal', 'sp_days', 'sp_dist_1st_pct',
         'sp_dist_2nd_pct', 'sp_counter',
@@ -787,9 +796,20 @@ def main():
     # Nightly watchlist: zones -> panels -> tickers off the scored universe, so
     # the Watchlist page renders instead of filtering. Own failure domain.
     try:
-        from pipeline.screeners.watchlist import build as build_watchlist
+        from pipeline.screeners.watchlist import build as build_watchlist, load_group_states, archive_leaders
         wl_rows = json.loads((OUTPUT_DIR / 'universe.json').read_text())['rows']
-        wl = build_watchlist(wl_rows, date=last_completed_session().isoformat())
+        gs_map = None
+        try:
+            gs_map = load_group_states(json.loads((OUTPUT_DIR / 'groups.json').read_text()))
+        except Exception:
+            logger.exception("groups.json unreadable - True Market Leaders panel will be unmeasured")
+        wl_date = last_completed_session().isoformat()
+        wl = build_watchlist(wl_rows, date=wl_date, group_states=gs_map)
+        try:
+            n_lead = archive_leaders(wl_rows, date=wl_date, group_states=gs_map)
+            logger.info("leaders_log: +%d rows for %s", n_lead, wl_date)
+        except Exception:
+            logger.exception("leaders archive failed - watchlist.json unaffected")
         (OUTPUT_DIR / 'watchlist.json').write_text(json.dumps(wl, indent=2, default=_json_serializer))
         logger.info("Saved watchlist.json - %d gated, cross-zone %d, panels %s",
                     wl['universe_gated'], len(wl['cross_zone']),

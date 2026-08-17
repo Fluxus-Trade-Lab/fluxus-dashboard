@@ -10,7 +10,10 @@ watchlists" counts ZONES rather than panels -- his three momentum panels all
 say "moving", so 3+ there mostly meant one thing three times.
 
 Zones (order is the reading order):
-    entries       -- can I enter today?      LL-HL 1st / 2nd / trend-line break
+    leaders       -- who leads?              True Market Leaders (liquid leader x
+                                             Leading home group x rs_1m>=80); Liquid Leaders
+    entries       -- can I enter today?      LL-HL 1st / 2nd / trend-line break;
+                                             Liquid Leader Pullback (course M2_L09)
     compression   -- what is loading?         VCS; anticipation (strong x quiet x VCS)
     accumulation  -- who is being bought?     pocket pivot TODAY / 2+ in 10d
     moving        -- what is running?         Weekly Momentum 97 / 4% Bullish / Weekly 20%+
@@ -28,9 +31,11 @@ Method reference: data/reference/screener_methods.md.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence
+from pathlib import Path
+from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Tuple
 
 MIN_CAP = 1e9
+LEADERS_LOG = Path("data/history/leaders_log.csv")
 MIN_AVG_VOL = 1e6
 MAX_PER_PANEL = 25
 
@@ -84,6 +89,14 @@ def _quiet(r) -> bool:
 
 
 PANELS: Dict[str, Panel] = {p.key: p for p in [
+    # --- leaders (qualification, not entries) ---
+    Panel("true_market_leaders", "True Market Leaders",
+          "liquid_leader and home theme/industry state = Leading and rs_1m >= 80 -- the leader inside a leading water",
+          ["liquid_leader", "_group_state"],
+          lambda r: r.get("liquid_leader") is True and r.get("_group_state") == "Leading" and _ge(r, "rs_1m", 80)),
+    Panel("liquid_leaders", "Liquid Leaders",
+          "avg_volume >= 2M, above SMA50, rs_3m >= 80 (course M2_L09; Alex's list). Top 25 by Hybrid RS shown, count is the whole list",
+          ["liquid_leader"], lambda r: r.get("liquid_leader") is True),
     # --- entries ---
     Panel("ll_hl_1st", "LL-HL Structure 1st Pivot",
           "sp_signal = 1st_break (close crossed the Fib-0.618 entry today)",
@@ -94,6 +107,12 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
     Panel("ll_hl_trend_break", "LL-HL Structure Trend Line Break",
           "sp_signal = counter_break (close crossed the counter-trend line today)",
           ["sp_signal"], lambda r: _sig(r, "counter_break")),
+    Panel("liquid_leader_pullback", "Liquid Leader Pullback",
+          "liquid_leader; perf_1w < 12%; 0.5-1 ATR from the 21EMA; 0-3 ATR from the 50SMA (course M2_L09; the two clauses we cannot read -- 5d/20d range contraction, earnings 7+ days out -- are not applied)",
+          ["liquid_leader", "ema21_atr_dist", "atr_from_sma50"],
+          lambda r: r.get("liquid_leader") is True and _le(r, "perf_1w", 0.12)
+          and _ge(r, "ema21_atr_dist", 0.5) and _le(r, "ema21_atr_dist", 1.0)
+          and _ge(r, "atr_from_sma50", 0.0) and _le(r, "atr_from_sma50", 3.0)),
     # --- compression ---
     Panel("vcs", "Volatility Contraction Score",
           "vcs >= 70 and adr_pct >= 3 (the ADR floor keeps deal-pinned names out; 70 = upper half of his 'developing' band, revisit once VCS v2 has run)",
@@ -137,7 +156,8 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
 ]}
 
 ZONES: List[Dict[str, Any]] = [
-    {"key": "entries", "label": "Can I enter today?", "panels": ["ll_hl_1st", "ll_hl_2nd", "ll_hl_trend_break"]},
+    {"key": "leaders", "label": "Who leads?", "panels": ["true_market_leaders", "liquid_leaders"]},
+    {"key": "entries", "label": "Can I enter today?", "panels": ["ll_hl_1st", "ll_hl_2nd", "ll_hl_trend_break", "liquid_leader_pullback"]},
     {"key": "compression", "label": "What is loading?", "panels": ["vcs", "anticipation"]},
     {"key": "accumulation", "label": "Who is being bought?", "panels": ["pp_today", "pp_2plus_10d"]},
     {"key": "moving", "label": "What is running?", "panels": ["weekly_momentum_97", "bullish_4pct", "weekly_20_gainers"]},
@@ -151,10 +171,68 @@ PRESET_TWINS = {"weekly_momentum_97": "Weekly Momentum 97",
 
 
 def _entry(r: Mapping[str, Any]) -> Dict[str, Any]:
-    return {"ticker": r["ticker"],
-            "rs_1m": _int_or_none(_f(r, "rs_1m")),
-            "hybrid_rs": _round(_f(r, "h_score")),
-            "sector": r.get("sector")}
+    e = {"ticker": r["ticker"],
+         "rs_1m": _int_or_none(_f(r, "rs_1m")),
+         "hybrid_rs": _round(_f(r, "h_score")),
+         "sector": r.get("sector")}
+    if r.get("_group") is not None:
+        e["group"] = r.get("_group")
+        e["group_state"] = r.get("_group_state")
+    return e
+
+
+def load_group_states(groups_payload: Mapping[str, Any]) -> Dict[str, Tuple[str, Optional[str]]]:
+    """ticker -> (home group name, its four-state) from groups.json."""
+    themes = {t["group"]: t for t in groups_payload.get("themes") or []}
+    inds = {i["group"]: i for i in groups_payload.get("industries") or []}
+    out = {}
+    for t, s in (groups_payload.get("stocks") or {}).items():
+        g = s.get("primary_group")
+        gg = themes.get(g) or inds.get(g)
+        out[t] = (g, gg.get("state") if gg else None)
+    return out
+
+
+def _with_groups(rows, group_states):
+    if not group_states:
+        return list(rows)
+    out = []
+    for r in rows:
+        g = group_states.get(r.get("ticker"))
+        if g:
+            r = {**r, "_group": g[0], "_group_state": g[1]}
+        out.append(r)
+    return out
+
+
+def archive_leaders(rows, *, date: str, group_states=None, path: Path = LEADERS_LOG) -> int:
+    """One row per liquid leader per date (idempotent per date): the
+    prospective record for judging Liquid Leader / TML forward returns --
+    theme states have no history before 2026-08-07, so this is how the TML
+    dimension gets validated at all."""
+    import csv
+    fields = ["date", "ticker", "liquid_leader", "tml", "rs_1m", "rs_3m", "h_score",
+              "group", "group_state", "close", "atr_from_sma50", "ema21_atr_dist"]
+    rows = [r for r in _with_groups(rows, group_states) if r.get("liquid_leader") is True and passes_gate(r)]
+    old = []
+    if path.exists():
+        with path.open(newline="") as fh:
+            old = [r for r in csv.DictReader(fh) if r.get("date") != date]
+    new = []
+    for r in rows:
+        new.append({"date": date, "ticker": r["ticker"], "liquid_leader": True,
+                    "tml": bool(r.get("_group_state") == "Leading" and _ge(r, "rs_1m", 80)),
+                    "rs_1m": _int_or_none(_f(r, "rs_1m")), "rs_3m": _int_or_none(_f(r, "rs_3m")),
+                    "h_score": _round(_f(r, "h_score")), "group": r.get("_group"),
+                    "group_state": r.get("_group_state"), "close": _f(r, "close"),
+                    "atr_from_sma50": _f(r, "atr_from_sma50"), "ema21_atr_dist": _f(r, "ema21_atr_dist")})
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=fields)
+        w.writeheader()
+        for r in [*old, *new]:
+            w.writerow({k: r.get(k, "") for k in fields})
+    return len(new)
 
 
 def _int_or_none(v):
@@ -165,10 +243,14 @@ def _round(v, nd=1):
     return None if v is None else round(v, nd)
 
 
-def build(rows: Sequence[Mapping[str, Any]], *, date: str) -> Dict[str, Any]:
+def build(rows: Sequence[Mapping[str, Any]], *, date: str,
+          group_states: Optional[Mapping[str, Tuple[str, Optional[str]]]] = None) -> Dict[str, Any]:
     """Zones -> panels -> tickers (RS 1M beside, sorted by Hybrid RS desc), plus
     the cross-ZONE count. Panels whose fields are absent from every row are
-    emitted empty with measured=False."""
+    emitted empty with measured=False. `group_states` (from groups.json via
+    load_group_states) supplies the home group and its four-state; without it
+    the True Market Leaders panel is unmeasured."""
+    rows = _with_groups(rows, group_states)
     gated = [r for r in rows if r.get("ticker") and passes_gate(r)]
     present = set()
     for r in rows[:200]:

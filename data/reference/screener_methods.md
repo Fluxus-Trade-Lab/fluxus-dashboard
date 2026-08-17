@@ -253,6 +253,12 @@
   - "V 的右侧"(首次收盘破 10EMA)是当天状态,可以从 `ema10` 列判 —— `close < ema10` 且前一日 `close ≥ ema10`
 - **和别的工具的关系**:它是 ATR Matrix 的**上尾**、VCS 的**反面**(极度扩张)、Weekly 20%+ 榜的**极端版**;Sugar Babies 的体质股最容易走成它。**它是持仓者的减仓信号(Steve 的 7–11x 阶梯)远多于是空头的入场信号** —— 教材的结论也是如此。
 
+### Liquid Leaders / True Market Leaders(2026-08-17 追问,已入晨报)
+- **Liquid Leaders**:Alex/TradersLab 的核心名单;**我们教材 M2_L09** 定义:ADV ≥2M 股 · 站上 50SMA · RS 排名前 20% → 字段 `liquid_leader`(rs_3m ≥80)。是**资格名单**不是入场。08-14:181 只。
+- **Liquid Leader Pullback RS**(教材 L09):liquid leader · 周涨 <12% · 离 21EMA 0.5–1 ADR · 离 50 0–3 ADR(· 5 日对 20 日收缩 · 财报 7 天外 —— 后两条我们读不到,未施加)→ 晨报 entries 区一格。**这就是 21EMA Watch 预设的 ATR 语义**,教材早写对了。
+- **True Market Leaders**:教材 M2 第二阶段的名字;业界(Minervini/TraderLion 系)= 技术面 + 基本面 + **所在主题**都在领跑。我们的可测定义:`liquid_leader` × 所属主题/行业四态 = **Leading** × rs_1m ≥80 → 晨报 leaders 区第一格。08-14:26 只(DELL / RBRK / GTLB / NTNX / PATH…);181 只 Liquid Leaders 里 **116 只的所属组在 Weakening** —— 这一维是我们独有的,四家都没有。
+- **认证方式**:主题四态归档 08-07 才起,历史回测做不了;`data/history/leaders_log.csv` 每晚记一行/只(tml 标志、组态、close),几周后比 TML vs 非 TML 的 Liquid Leaders 的前瞻收益 —— 验的正是"主题那一维值不值钱"。价格口径的 Liquid Leader 本身可回测(价格面板重建中)。
+
 ## 五、四家对标的完整体系(压缩版,细节见 `screener_competitors_2026-08-17.md`)
 
 | | 强弱 | 位置 | 状态 | 出场 |
