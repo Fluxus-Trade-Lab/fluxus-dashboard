@@ -164,8 +164,10 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
           and _ge(r, "from_open_pct", 0.0) and _ge(r, "rs_21d", 60)
           and _ge(r, "adr_pct", 3.5) and _le(r, "adr_pct", 10)),
     Panel("weekly_20_gainers", "Weekly 20%+ Gainers",
-          "perf_1w >= 20% and adr_pct 3.5-10", ["perf_1w"],
-          lambda r: _ge(r, "perf_1w", 0.20) and _le(r, "perf_1w", 5.0)
+          "perf_5d >= 20% and adr_pct 3.5-10 (five SESSIONS from bars = the weekly candle oratnek reads; "
+          "the Screener preset still reads Finviz perf_1w, a calendar week that on 08-14 held four sessions)",
+          ["perf_5d"],
+          lambda r: _ge(r, "perf_5d", 0.20) and _le(r, "perf_5d", 5.0)
           and _ge(r, "adr_pct", 3.5) and _le(r, "adr_pct", 10)),
     # --- trouble ---
     Panel("stop_hit", "Stop Hit (structure)",
@@ -201,6 +203,11 @@ def _entry(r: Mapping[str, Any]) -> Dict[str, Any]:
          # the number HIS page prints beside a ticker; ours above is the
          # cross-sectional one. Both, so the page can show either.
          "rs_line_pctl_21": _int_or_none(_f(r, "rs_line_pctl_21")),
+         # detection only (Andy 2026-08-18: "只做检测,不否定现有的参数"): the RS
+         # line is at a one-month high. 26 of the 29 names on oratnek's 08-17
+         # page had this; our LL-HL 1st panel had 58 names of which 2 did.
+         # The page can offer it as a toggle; the recipes do not filter on it.
+         "rs_high": (_f(r, "rs_line_pctl_21") is not None and _f(r, "rs_line_pctl_21") >= 100.0),
          "hybrid_rs": _round(_f(r, "h_score")),
          "sector": r.get("sector")}
     if r.get("_group") is not None:
@@ -301,6 +308,7 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
             panels_out.append({
                 "key": pk, "label": p.label, "recipe": p.recipe, "measured": measured,
                 "count": len(hits),
+                "count_rs_high": sum(1 for r in hits if (_f(r, "rs_line_pctl_21") or 0) >= 100.0),
                 "tickers": [_entry(r) for r in hits[:MAX_PER_PANEL]],
                 "truncated": max(0, len(hits) - MAX_PER_PANEL),
                 "preset": PRESET_TWINS.get(pk),
@@ -319,6 +327,7 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
         "gate": {"min_market_cap": MIN_CAP, "min_dollar_volume": MIN_DOLLAR_VOL},
         "sort": "hybrid_rs desc; the number beside each ticker is rs_line_pctl_21 (oratnek's RS 1M: RS-line self-percentile, 21 sessions); rs_1m (cross-sectional) is the second reading",
         "cross_zone_rule": f"count of ZONES a name appears in (not panels); >= {MIN_CROSS_ZONES} listed",
+        "rs_high_rule": "rs_high = RS line (close/SPY) at a 21-session high (rs_line_pctl_21 == 100); detection only, no panel filters on it; count_rs_high per panel",
         "zones": zones_out,
         "cross_zone": cross,
         "universe_gated": len(gated),

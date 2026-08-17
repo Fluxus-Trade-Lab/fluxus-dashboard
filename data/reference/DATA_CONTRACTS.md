@@ -223,6 +223,8 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 
 | `rs_line_pctl_21` | **oratnek 的 "RS 1M" 破译**(2026-08-18,今晚 cron 起有值):今天的 RS 线(收盘 / SPY 收盘)在**自己**最近 21 个交易日里的百分位 = `count(RS_i ≤ RS_today)/21 × 100`。**时间序列自比**,不是横截面 —— 100 = 相对 SPY 的强度处于一个月新高。他 08-17 页面上 8 个取值全是 k/21,此定义 **29/29 逐一复现**(夹具 `pipeline/tests/fixtures/oratnek_rs1m_*`,测试 `test_rs_line_pctl.py`) | 与 `rs_1m` **不是一个量**:RELY 同日他 100 / 我们 68 都对,一个说"相对强度在自己的月内新高",一个说"月收益跑赢 68% 的可交易场"。watchlist.json 每只票项也带 `rs_line_pctl_21`,前端可选印哪个(印他的那个就跟他页面对得上)。< 21 根 → null |
 
+| `perf_5d` | 最近 **5 个交易日**收益(bar 直算,close/close[-5]−1),2026-08-18 加 | 与 Finviz 的 `perf_1w`(日历周)不同:08-14 周五那天 `perf_1w` 只含 4 根(FSLY 7.9% vs 5 根 30.4%)。oratnek 的 "Weekly 20%+" 读的是周 K = 5 根。晨报 `weekly_20_gainers` 格 08-18 起读 `perf_5d`;Screener 预设 "Weekly 20%+ Gainers" 仍读 `perf_1w`(前端若要对齐,加一个 `perf5d` 筛选键指到本列即可) |
+
 ### `sp_*` —— Structure Pivot(oratnek Advanced Structure Pivot 移植,2026-08-17 加,下次 cron 起有值)
 
 引擎 `pipeline/screeners/structure_pivot.py`,源码 `indicators/third_party/oratnek_advanced_structure_pivot.pine`;**黄金对照 5/5**(AEHR/SMCI/CRWD/NVDA/PLTR,08-14 日线,结构/长度/索引/阶段/信号全同,价位差 ≤0.013 且全部溯源到 bar 数据的 sub-penny 精度),回归夹具在 `pipeline/tests/fixtures/`。
@@ -275,6 +277,8 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 - 每格最多 25 只,`truncated` = 被截掉的数;排序 **Hybrid RS 降序**,票旁数字 **08-18 起 = `rs_line_pctl_21`**(oratnek 的 RS 1M,自百分位;Andy:"应该用他的定义"),`rs_1m`(横截面)留作第二读数,两个字段票项里都有
 - ⚠️ **`measured=false` 必须渲染成"未测量"**(空框 / 灰),不能画成 0 —— 首晚 `sp_*` / `ema21_atr_dist` 未出时是 **6 格**:三个 LL-HL、`liquid_leader_pullback`、`stop_hit`、`ll_break`(前端已指出我早先说 3 格是少数了)
 - **`cross_zone` 数的是"区"不是"格"**:一只票在 moving 区三个格都出现只算 1;**≥3 区才列(08-17 收严,Andy:"改严格一点";≥2 时 08-14 有 177 只、其中 143 只恰两区,多是 leaders×moving 同义;≥3 单独收严剩 34 只,再叠加 Morales 收严后 08-14 数据剩 16 只)**;`cross_zone_rule` 字段写明当前门槛。这是对 oratnek "Tickers in 3+ watchlists" 的修正 —— 他那栏统计的多半是同义词。前端把它放顶部,替代原来的"出现在 N 张单"
+- **`rs_high` 探测(08-18 加,Andy:"只做检测,不否定现有的参数")**:每只票项多一个布尔 `rs_high`(= `rs_line_pctl_21 == 100`,RS 线在 21 日新高),每格多一个 `count_rs_high`,顶层 `rs_high_rule` 写规则。**没有任何格用它筛选**;它是给页面做"只看 RS 新高"开关用的。依据:oratnek 08-17 页 29 只里 26 只满足;我们 LL-HL 1st 58 只里 2 只、2nd 67 只里 9 只满足——他没公开的收紧门八成是它
+- `weekly_20_gainers` 格 08-18 起读 `perf_5d`(5 根),不再读 `perf_1w`;`preset` 字段仍指向 Screener 的同名预设(阈值同、窗口不同,contract 上说明)
 - 配方文字在 `recipe`,直接显示(和 rotation 的 `sentence` 同一原则:文案在引擎里,UI 不重拼)
 - 前端通路(待 UI):格标题 → Screener 载入 `preset`;票 → ticker 页(Signal History 里能看它昨天在哪几格);Screener 里用户自建的预设**不进**晨报
 

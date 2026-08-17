@@ -685,6 +685,11 @@ class YfinanceAdapter(BaseAdapter):
 
                 # From Open %: intraday move from open
                 from_open_pct = (close - last_open) / last_open if last_open > 0 else None
+                # perf_5d: five SESSIONS, from bars. Finviz's perf_1w is a
+                # calendar week and on 2026-08-14 (a Friday) held only four
+                # sessions (FSLY 7.9% vs 30.4% over five) -- oratnek's "Weekly
+                # 20%+" reads the weekly candle, i.e. five sessions.
+                perf_5d = float(close / hist['Close'].iloc[-6] - 1) if n >= 6 and hist['Close'].iloc[-6] > 0 else None
 
                 # DCR%: Daily Closing Range (close - low) / (high - low)
                 hl_range = last_high - last_low
@@ -775,6 +780,7 @@ class YfinanceAdapter(BaseAdapter):
                     'high_52w': (close / float(hist['High'].max()) - 1),
                     'low_52w': (close / float(hist['Low'].min()) - 1),
                     'from_open_pct': from_open_pct,
+                    'perf_5d': perf_5d,
                     'dcr_pct': dcr_pct,
                     'pocket_pivot': pp,
                     'pp_count_30d': pp_count,

@@ -26,7 +26,7 @@ def row(**kw):
             "perf_1w": 0.02, "rel_volume": 1.0, "from_open_pct": 0.0, "rs_21d": 90,
             "dcr_pct": 0.5, "min_vol_3d": 500_000, "ema21_atr_dist": 0.5,
             "pocket_pivot": False, "pp_count_30d": 0, "liquid_leader": False, "close": 100.0,
-            "vol10_green": False, "vol10_green_count_10d": 0}
+            "vol10_green": False, "vol10_green_count_10d": 0, "perf_5d": 0.02, "rs_line_pctl_21": 60}
     base.update(kw)
     return base
 
@@ -105,8 +105,11 @@ class TestPanels:
                 from_open_pct=0.0, rs_21d=b4["rs21d"]["min"], adr_pct=b4["adrPct"]["min"]))
         assert not W.PANELS["bullish_4pct"].test(row(change_pct=0.03, rel_volume=2, rs_21d=90))
         w20 = presets["Weekly 20%+ Gainers"]
-        assert W.PANELS["weekly_20_gainers"].test(row(perf_1w=w20["weeklyPct"]["min"] / 100, adr_pct=4))
-        assert not W.PANELS["weekly_20_gainers"].test(row(perf_1w=0.19, adr_pct=4))
+        # same threshold as the preset; the WINDOW is five sessions (perf_5d),
+        # not Finviz's calendar week -- by design since 2026-08-18
+        assert W.PANELS["weekly_20_gainers"].test(row(perf_5d=w20["weeklyPct"]["min"] / 100, adr_pct=4))
+        assert not W.PANELS["weekly_20_gainers"].test(row(perf_5d=0.19, adr_pct=4))
+        assert not W.PANELS["weekly_20_gainers"].test(row(perf_1w=0.5, adr_pct=4))   # perf_1w no longer read
 
 
 class TestLeaders:
@@ -160,7 +163,7 @@ class TestBuild:
             row(ticker="B", sp_signal="2nd_break", vol10_green_count_10d=2, vcs=90, adr_pct=4.0,
                 rs_3m=90, sma50_dist=0.1, rs_1m=99, h_score=95),   # entries x accumulation x compression
             row(ticker="C", vcs=80, ti65=1.08, change_pct=0.002, rs_1m=70, h_score=60),
-            row(ticker="D", perf_1w=0.25, perf_1w_pctile=0.99, perf_3m_pctile=0.9,
+            row(ticker="D", perf_1w=0.25, perf_5d=0.25, perf_1w_pctile=0.99, perf_3m_pctile=0.9,
                 change_pct=0.05, rel_volume=2.0, rs_21d=95, rs_1m=100, h_score=88),
             row(ticker="E", market_cap=5e8, sp_signal="1st_break"),      # under the gate
             row(ticker="F", sp_signal="stop_hit", rs_1m=40, h_score=50),
@@ -207,3 +210,16 @@ class TestBuild:
     def test_json_safe(self):
         out = W.build(self._rows(), date="2026-08-14")
         json.dumps(out)     # no NaN, no numpy
+
+
+class TestRsHighDetection:
+    def test_rs_high_is_a_flag_and_a_count_not_a_filter(self):
+        rows = [row(ticker="A", sp_signal="1st_break", rs_line_pctl_21=100),
+                row(ticker="B", sp_signal="1st_break", rs_line_pctl_21=81),
+                row(ticker="C", sp_signal="1st_break", rs_line_pctl_21=None)]
+        out = W.build(rows, date="2026-08-14")
+        p = {pn["key"]: pn for z in out["zones"] for pn in z["panels"]}["ll_hl_1st"]
+        assert p["count"] == 3 and p["count_rs_high"] == 1          # nobody filtered out
+        flags = {t["ticker"]: t["rs_high"] for t in p["tickers"]}
+        assert flags == {"A": True, "B": False, "C": False}
+        assert "rs_high_rule" in out
