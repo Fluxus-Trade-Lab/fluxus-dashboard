@@ -784,6 +784,19 @@ def main():
     except Exception:
         logger.exception("Group layer failed - groups.json not updated")
 
+    # Nightly watchlist: zones -> panels -> tickers off the scored universe, so
+    # the Watchlist page renders instead of filtering. Own failure domain.
+    try:
+        from pipeline.screeners.watchlist import build as build_watchlist
+        wl_rows = json.loads((OUTPUT_DIR / 'universe.json').read_text())['rows']
+        wl = build_watchlist(wl_rows, date=last_completed_session().isoformat())
+        (OUTPUT_DIR / 'watchlist.json').write_text(json.dumps(wl, indent=2, default=_json_serializer))
+        logger.info("Saved watchlist.json - %d gated, cross-zone %d, panels %s",
+                    wl['universe_gated'], len(wl['cross_zone']),
+                    {p['key']: p['count'] for z in wl['zones'] for p in z['panels']})
+    except Exception:
+        logger.exception("Watchlist failed - watchlist.json not updated")
+
     # Style rotation: fetch basket closes, then score. Its own failure domain
     # and last in the run, because it is the only step that reaches the network
     # after every other output is already on disk.

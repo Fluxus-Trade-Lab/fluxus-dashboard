@@ -234,6 +234,38 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 
 ---
 
+## 四点七、`data/output/watchlist.json` —— 晨报(2026-08-17 加,首份由今晚 cron 产出)
+
+**产出**:`pipeline/screeners/watchlist.py`,run_all 里 groups 之后、rotation 之前;纯函数吃 universe.json,自己的失败域
+**当前消费方**:无(Watchlist 页待接)。**这份文件是 Watchlist 页与 Screener 页分工的落点**:Screener = 工作台(全池 + 30 个筛选键 + 可编辑预设);Watchlist = 晨报(每晚算好、按问题分区、只读)。方法见 `screener_methods.md`,分工讨论见 2026-08-17 对话。
+
+```
+{ date, gate:{min_market_cap:1e9, min_avg_volume:1e6}, sort, cross_zone_rule, universe_gated,
+  zones:[ { key, label, panels:[ { key, label, recipe, measured, count, truncated, preset,
+                                    tickers:[ {ticker, rs_1m, hybrid_rs, sector} ] } ] } ],
+  cross_zone:[ {ticker, count, zones:[...], rs_1m, hybrid_rs, sector} ] }
+```
+
+| 区 `zones[].key` | 问题 | 格 `panels[].key` |
+|---|---|---|
+| `entries` | 今天可以进的 | `ll_hl_1st` `ll_hl_2nd` `ll_hl_trend_break`(读 `sp_signal`) |
+| `compression` | 在蓄势的 | `vcs`(vcs≥70 且 ADR≥3)`anticipation`(强弱三选一 × 安静 × VCS≥60 × ADR≥3) |
+| `accumulation` | 有人在买的 | `pp_today`(当日 PP)`pp_2plus_10d` |
+| `moving` | 在跑的 | `weekly_momentum_97` `bullish_4pct` `weekly_20_gainers` —— **与同名预设同一配方,测试锁死**;`preset` 字段给出预设名,前端可点进 Screener 载入 |
+| `trouble` | 出问题的(持仓视角) | `stop_hit` `ll_break`(读 `sp_signal`)`extended`(ATR Matrix ≥7) |
+
+规则:
+- **门槛**固定 $1B + 1M 均量(oratnek 的前提),`universe_gated` 是过门槛的只数;Screener 页不受此约束
+- 每格最多 25 只,`truncated` = 被截掉的数;排序 **Hybrid RS 降序**,票旁数字是 **RS 1M**(oratnek 的做法,保留)
+- ⚠️ **`measured=false` 必须渲染成"未测量"**(空框 / 灰),不能画成 0 —— 首晚 `sp_*` 未出时三个结构格就是这个状态
+- **`cross_zone` 数的是"区"不是"格"**:一只票在 moving 区三个格都出现只算 1;≥2 区才列。这是对 oratnek "Tickers in 3+ watchlists" 的修正 —— 他那栏统计的多半是同义词。前端把它放顶部,替代原来的"出现在 N 张单"
+- 配方文字在 `recipe`,直接显示(和 rotation 的 `sentence` 同一原则:文案在引擎里,UI 不重拼)
+- 前端通路(待 UI):格标题 → Screener 载入 `preset`;票 → ticker 页(Signal History 里能看它昨天在哪几格);Screener 里用户自建的预设**不进**晨报
+
+首跑(08-14 数据,结构格待 cron):VCS 62 · anticipation 0(ti65/mdt 待 cron)· PP 今日 20 · PP 2+ 183 · Weekly Momentum 97 8 · 4% Bullish 23 · Weekly 20%+ 22 · Extended 16;cross_zone ≥2 共 27 只(NIQ / P / INFQ 三区)。
+
+---
+
 ## 五、当前未接入的东西
 
 | 文件 | 状态 |

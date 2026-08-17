@@ -118,6 +118,7 @@ jobs:
             "data/output/breadth.json"
             "data/output/groups.json"
             "data/output/rotation.json"
+            "data/output/watchlist.json"
           )
           FAIL=0
           for f in "${EXPECTED_FILES[@]}"; do

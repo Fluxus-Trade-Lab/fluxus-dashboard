@@ -1,0 +1,1315 @@
+{
+  "date": "2026-08-14",
+  "gate": {
+    "min_market_cap": 1000000000.0,
+    "min_avg_volume": 1000000.0
+  },
+  "sort": "hybrid_rs desc; the number beside each ticker is rs_1m",
+  "cross_zone_rule": "count of ZONES a name appears in (not panels); >= 2 listed",
+  "zones": [
+    {
+      "key": "entries",
+      "label": "Can I enter today?",
+      "panels": [
+        {
+          "key": "ll_hl_1st",
+          "label": "LL-HL Structure 1st Pivot",
+          "recipe": "sp_signal = 1st_break (close crossed the Fib-0.618 entry today)",
+          "measured": false,
+          "count": 0,
+          "tickers": [],
+          "truncated": 0,
+          "preset": null
+        },
+        {
+          "key": "ll_hl_2nd",
+          "label": "LL-HL Structure 2nd Pivot",
+          "recipe": "sp_signal = 2nd_break (close crossed the structure high today)",
+          "measured": false,
+          "count": 0,
+          "tickers": [],
+          "truncated": 0,
+          "preset": null
+        },
+        {
+          "key": "ll_hl_trend_break",
+          "label": "LL-HL Structure Trend Line Break",
+          "recipe": "sp_signal = counter_break (close crossed the counter-trend line today)",
+          "measured": false,
+          "count": 0,
+          "tickers": [],
+          "truncated": 0,
+          "preset": null
+        }
+      ]
+    },
+    {
+      "key": "compression",
+      "label": "What is loading?",
+      "panels": [
+        {
+          "key": "vcs",
+          "label": "Volatility Contraction Score",
+          "recipe": "vcs >= 70 and adr_pct >= 3 (the ADR floor keeps deal-pinned names out; 70 = upper half of his 'developing' band, revisit once VCS v2 has run)",
+          "measured": true,
+          "count": 62,
+          "tickers": [
+            {
+              "ticker": "BLFS",
+              "rs_1m": 87,
+              "hybrid_rs": 80.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "PSNL",
+              "rs_1m": 10,
+              "hybrid_rs": 78.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "NRIX",
+              "rs_1m": 85,
+              "hybrid_rs": 77.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "ABSI",
+              "rs_1m": 72,
+              "hybrid_rs": 77.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "BB",
+              "rs_1m": 31,
+              "hybrid_rs": 77.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "RLAY",
+              "rs_1m": 51,
+              "hybrid_rs": 74.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "KMX",
+              "rs_1m": 52,
+              "hybrid_rs": 69.0,
+              "sector": "Consumer Cyclical"
+            },
+            {
+              "ticker": "DNLI",
+              "rs_1m": 53,
+              "hybrid_rs": 68.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "BHVN",
+              "rs_1m": 17,
+              "hybrid_rs": 67.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "TNGX",
+              "rs_1m": 8,
+              "hybrid_rs": 66.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "QBTS",
+              "rs_1m": 92,
+              "hybrid_rs": 64.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "PENG",
+              "rs_1m": 56,
+              "hybrid_rs": 64.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "RXT",
+              "rs_1m": 40,
+              "hybrid_rs": 60.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "QUBT",
+              "rs_1m": 81,
+              "hybrid_rs": 57.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "CRSP",
+              "rs_1m": 75,
+              "hybrid_rs": 57.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "IRDM",
+              "rs_1m": 63,
+              "hybrid_rs": 56.0,
+              "sector": "Communication Services"
+            },
+            {
+              "ticker": "MRVL",
+              "rs_1m": 85,
+              "hybrid_rs": 55.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "INFQ",
+              "rs_1m": 97,
+              "hybrid_rs": 53.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "ARM",
+              "rs_1m": 52,
+              "hybrid_rs": 53.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "IBRX",
+              "rs_1m": 29,
+              "hybrid_rs": 53.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "RXRX",
+              "rs_1m": 62,
+              "hybrid_rs": 51.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "SNPS",
+              "rs_1m": 69,
+              "hybrid_rs": 50.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "ASST",
+              "rs_1m": 50,
+              "hybrid_rs": 49.0,
+              "sector": "Financial"
+            },
+            {
+              "ticker": "BKSY",
+              "rs_1m": 96,
+              "hybrid_rs": 48.0,
+              "sector": "Industrials"
+            },
+            {
+              "ticker": "ANNX",
+              "rs_1m": 9,
+              "hybrid_rs": 48.0,
+              "sector": "Healthcare"
+            }
+          ],
+          "truncated": 37,
+          "preset": null
+        },
+        {
+          "key": "anticipation",
+          "label": "Anticipation (strong x quiet x VCS)",
+          "recipe": "any of ti65>1.05 / c_low52w>=1.8 / mdt>1.19; |change_pct|<=1%; vcs>=60; adr_pct>=3",
+          "measured": true,
+          "count": 0,
+          "tickers": [],
+          "truncated": 0,
+          "preset": null
+        }
+      ]
+    },
+    {
+      "key": "accumulation",
+      "label": "Who is being bought?",
+      "panels": [
+        {
+          "key": "pp_today",
+          "label": "PP (Vol > 10D)",
+          "recipe": "pocket_pivot today (green bar, volume above the prior 10 bars' max) -- oratnek's panel is TODAY's PP",
+          "measured": true,
+          "count": 20,
+          "tickers": [
+            {
+              "ticker": "HTFL",
+              "rs_1m": 99,
+              "hybrid_rs": 87.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "UMAC",
+              "rs_1m": 99,
+              "hybrid_rs": 87.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "PYPL",
+              "rs_1m": 67,
+              "hybrid_rs": 76.0,
+              "sector": "Financial"
+            },
+            {
+              "ticker": "NMAX",
+              "rs_1m": 93,
+              "hybrid_rs": 68.0,
+              "sector": "Communication Services"
+            },
+            {
+              "ticker": "NUVB",
+              "rs_1m": 62,
+              "hybrid_rs": 65.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "SFNC",
+              "rs_1m": 54,
+              "hybrid_rs": 64.0,
+              "sector": "Financial"
+            },
+            {
+              "ticker": "LPTH",
+              "rs_1m": 97,
+              "hybrid_rs": 60.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "WBS",
+              "rs_1m": 52,
+              "hybrid_rs": 60.0,
+              "sector": "Financial"
+            },
+            {
+              "ticker": "ALOY",
+              "rs_1m": 98,
+              "hybrid_rs": 56.0,
+              "sector": "Basic Materials"
+            },
+            {
+              "ticker": "CDNS",
+              "rs_1m": 28,
+              "hybrid_rs": 54.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "AMAT",
+              "rs_1m": 19,
+              "hybrid_rs": 47.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "INDI",
+              "rs_1m": 90,
+              "hybrid_rs": 46.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "EPD",
+              "rs_1m": 48,
+              "hybrid_rs": 38.0,
+              "sector": "Energy"
+            },
+            {
+              "ticker": "CPRT",
+              "rs_1m": 79,
+              "hybrid_rs": 36.0,
+              "sector": "Industrials"
+            },
+            {
+              "ticker": "BGC",
+              "rs_1m": 31,
+              "hybrid_rs": 35.0,
+              "sector": "Financial"
+            },
+            {
+              "ticker": "VERA",
+              "rs_1m": 1,
+              "hybrid_rs": 34.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "YSS",
+              "rs_1m": 0,
+              "hybrid_rs": 25.0,
+              "sector": "Industrials"
+            },
+            {
+              "ticker": "SGML",
+              "rs_1m": 84,
+              "hybrid_rs": 23.0,
+              "sector": "Basic Materials"
+            },
+            {
+              "ticker": "VIV",
+              "rs_1m": 3,
+              "hybrid_rs": 20.0,
+              "sector": "Communication Services"
+            },
+            {
+              "ticker": "RLX",
+              "rs_1m": 26,
+              "hybrid_rs": 18.0,
+              "sector": "Consumer Defensive"
+            }
+          ],
+          "truncated": 0,
+          "preset": null
+        },
+        {
+          "key": "pp_2plus_10d",
+          "label": "PP 2+ times (10D)",
+          "recipe": "pp_count_10d >= 2",
+          "measured": true,
+          "count": 183,
+          "tickers": [
+            {
+              "ticker": "TXG",
+              "rs_1m": 93,
+              "hybrid_rs": 88.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "TWST",
+              "rs_1m": 92,
+              "hybrid_rs": 88.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "HTFL",
+              "rs_1m": 99,
+              "hybrid_rs": 87.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "LIFE",
+              "rs_1m": 99,
+              "hybrid_rs": 87.0,
+              "sector": "Financial"
+            },
+            {
+              "ticker": "UMAC",
+              "rs_1m": 99,
+              "hybrid_rs": 87.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "APPS",
+              "rs_1m": 98,
+              "hybrid_rs": 87.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "MGNI",
+              "rs_1m": 94,
+              "hybrid_rs": 87.0,
+              "sector": "Communication Services"
+            },
+            {
+              "ticker": "TEAM",
+              "rs_1m": 99,
+              "hybrid_rs": 86.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "U",
+              "rs_1m": 98,
+              "hybrid_rs": 86.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "CHYM",
+              "rs_1m": 97,
+              "hybrid_rs": 85.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "FSLY",
+              "rs_1m": 97,
+              "hybrid_rs": 85.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "SN",
+              "rs_1m": 90,
+              "hybrid_rs": 85.0,
+              "sector": "Consumer Cyclical"
+            },
+            {
+              "ticker": "GDRX",
+              "rs_1m": 86,
+              "hybrid_rs": 85.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "P",
+              "rs_1m": 99,
+              "hybrid_rs": 84.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "NIQ",
+              "rs_1m": 98,
+              "hybrid_rs": 84.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "ESTC",
+              "rs_1m": 97,
+              "hybrid_rs": 83.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "ZETA",
+              "rs_1m": 95,
+              "hybrid_rs": 83.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "RBRK",
+              "rs_1m": 93,
+              "hybrid_rs": 83.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "NTAP",
+              "rs_1m": 92,
+              "hybrid_rs": 83.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "SDGR",
+              "rs_1m": 80,
+              "hybrid_rs": 83.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "NTRA",
+              "rs_1m": 74,
+              "hybrid_rs": 82.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "OMDA",
+              "rs_1m": 45,
+              "hybrid_rs": 82.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "HNGE",
+              "rs_1m": 40,
+              "hybrid_rs": 82.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "NTNX",
+              "rs_1m": 88,
+              "hybrid_rs": 81.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "NET",
+              "rs_1m": 78,
+              "hybrid_rs": 81.0,
+              "sector": "Technology"
+            }
+          ],
+          "truncated": 158,
+          "preset": null
+        }
+      ]
+    },
+    {
+      "key": "moving",
+      "label": "What is running?",
+      "panels": [
+        {
+          "key": "weekly_momentum_97",
+          "label": "Weekly Momentum 97",
+          "recipe": "perf_1w_pctile >= 0.97 and perf_3m_pctile >= 0.85 and trend_base and adr_pct 3.5-10",
+          "measured": true,
+          "count": 8,
+          "tickers": [
+            {
+              "ticker": "QMCO",
+              "rs_1m": 99,
+              "hybrid_rs": 88.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "HTFL",
+              "rs_1m": 99,
+              "hybrid_rs": 87.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "UMAC",
+              "rs_1m": 99,
+              "hybrid_rs": 87.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "P",
+              "rs_1m": 99,
+              "hybrid_rs": 84.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "ABCL",
+              "rs_1m": 99,
+              "hybrid_rs": 80.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "AVAH",
+              "rs_1m": 92,
+              "hybrid_rs": 74.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "NMAX",
+              "rs_1m": 93,
+              "hybrid_rs": 68.0,
+              "sector": "Communication Services"
+            },
+            {
+              "ticker": "LPTH",
+              "rs_1m": 97,
+              "hybrid_rs": 60.0,
+              "sector": "Technology"
+            }
+          ],
+          "truncated": 0,
+          "preset": "Weekly Momentum 97"
+        },
+        {
+          "key": "bullish_4pct",
+          "label": "4% Bullish",
+          "recipe": "change_pct >= 4%, rel_volume >= 1, from_open_pct >= 0, rs_21d >= 60, adr_pct 3.5-10",
+          "measured": true,
+          "count": 23,
+          "tickers": [
+            {
+              "ticker": "QMCO",
+              "rs_1m": 99,
+              "hybrid_rs": 88.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "HTFL",
+              "rs_1m": 99,
+              "hybrid_rs": 87.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "UMAC",
+              "rs_1m": 99,
+              "hybrid_rs": 87.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "NBIS",
+              "rs_1m": 98,
+              "hybrid_rs": 81.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "AVAH",
+              "rs_1m": 92,
+              "hybrid_rs": 74.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "OSCR",
+              "rs_1m": 76,
+              "hybrid_rs": 72.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "NMAX",
+              "rs_1m": 93,
+              "hybrid_rs": 68.0,
+              "sector": "Communication Services"
+            },
+            {
+              "ticker": "OUST",
+              "rs_1m": 94,
+              "hybrid_rs": 64.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "EYPT",
+              "rs_1m": 72,
+              "hybrid_rs": 64.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "LPTH",
+              "rs_1m": 97,
+              "hybrid_rs": 60.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "KOPN",
+              "rs_1m": 97,
+              "hybrid_rs": 57.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "ALOY",
+              "rs_1m": 98,
+              "hybrid_rs": 56.0,
+              "sector": "Basic Materials"
+            },
+            {
+              "ticker": "INFQ",
+              "rs_1m": 97,
+              "hybrid_rs": 53.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "INDI",
+              "rs_1m": 90,
+              "hybrid_rs": 46.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "SM",
+              "rs_1m": 64,
+              "hybrid_rs": 45.0,
+              "sector": "Energy"
+            },
+            {
+              "ticker": "HLIT",
+              "rs_1m": 62,
+              "hybrid_rs": 43.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "POET",
+              "rs_1m": 93,
+              "hybrid_rs": 39.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "NVTS",
+              "rs_1m": 91,
+              "hybrid_rs": 39.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "EROC",
+              "rs_1m": 98,
+              "hybrid_rs": 33.0,
+              "sector": "Industrials"
+            },
+            {
+              "ticker": "MP",
+              "rs_1m": 93,
+              "hybrid_rs": 31.0,
+              "sector": "Basic Materials"
+            },
+            {
+              "ticker": "USAR",
+              "rs_1m": 92,
+              "hybrid_rs": 29.0,
+              "sector": "Basic Materials"
+            },
+            {
+              "ticker": "LUMN",
+              "rs_1m": 61,
+              "hybrid_rs": 25.0,
+              "sector": "Communication Services"
+            },
+            {
+              "ticker": "SGML",
+              "rs_1m": 84,
+              "hybrid_rs": 23.0,
+              "sector": "Basic Materials"
+            }
+          ],
+          "truncated": 0,
+          "preset": "4% Bullish"
+        },
+        {
+          "key": "weekly_20_gainers",
+          "label": "Weekly 20%+ Gainers",
+          "recipe": "perf_1w >= 20% and adr_pct 3.5-10",
+          "measured": true,
+          "count": 22,
+          "tickers": [
+            {
+              "ticker": "QMCO",
+              "rs_1m": 99,
+              "hybrid_rs": 88.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "HTFL",
+              "rs_1m": 99,
+              "hybrid_rs": 87.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "UMAC",
+              "rs_1m": 99,
+              "hybrid_rs": 87.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "P",
+              "rs_1m": 99,
+              "hybrid_rs": 84.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "NIQ",
+              "rs_1m": 98,
+              "hybrid_rs": 84.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "ARX",
+              "rs_1m": 97,
+              "hybrid_rs": 83.0,
+              "sector": "Financial"
+            },
+            {
+              "ticker": "STX",
+              "rs_1m": 90,
+              "hybrid_rs": 82.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "NBIS",
+              "rs_1m": 98,
+              "hybrid_rs": 81.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "ABCL",
+              "rs_1m": 99,
+              "hybrid_rs": 80.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "SMCI",
+              "rs_1m": 98,
+              "hybrid_rs": 80.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "OMER",
+              "rs_1m": 99,
+              "hybrid_rs": 74.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "AVAH",
+              "rs_1m": 92,
+              "hybrid_rs": 74.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "NMAX",
+              "rs_1m": 93,
+              "hybrid_rs": 68.0,
+              "sector": "Communication Services"
+            },
+            {
+              "ticker": "NN",
+              "rs_1m": 98,
+              "hybrid_rs": 63.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "LPTH",
+              "rs_1m": 97,
+              "hybrid_rs": 60.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "KOPN",
+              "rs_1m": 97,
+              "hybrid_rs": 57.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "LUNR",
+              "rs_1m": 97,
+              "hybrid_rs": 47.0,
+              "sector": "Industrials"
+            },
+            {
+              "ticker": "INDI",
+              "rs_1m": 90,
+              "hybrid_rs": 46.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "CAVA",
+              "rs_1m": 64,
+              "hybrid_rs": 44.0,
+              "sector": "Consumer Cyclical"
+            },
+            {
+              "ticker": "RUM",
+              "rs_1m": 94,
+              "hybrid_rs": 41.0,
+              "sector": "Communication Services"
+            },
+            {
+              "ticker": "EROC",
+              "rs_1m": 98,
+              "hybrid_rs": 33.0,
+              "sector": "Industrials"
+            },
+            {
+              "ticker": "SKHY",
+              "rs_1m": 64,
+              "hybrid_rs": 18.0,
+              "sector": "Technology"
+            }
+          ],
+          "truncated": 0,
+          "preset": "Weekly 20%+ Gainers"
+        }
+      ]
+    },
+    {
+      "key": "trouble",
+      "label": "What broke?",
+      "panels": [
+        {
+          "key": "stop_hit",
+          "label": "Stop Hit (structure)",
+          "recipe": "sp_signal = stop_hit (close under the current-phase stop today)",
+          "measured": false,
+          "count": 0,
+          "tickers": [],
+          "truncated": 0,
+          "preset": null
+        },
+        {
+          "key": "ll_break",
+          "label": "Lower Low Break",
+          "recipe": "sp_signal = ll_break (close under the structure's LL today)",
+          "measured": false,
+          "count": 0,
+          "tickers": [],
+          "truncated": 0,
+          "preset": null
+        },
+        {
+          "key": "extended",
+          "label": "Extended (>= 7 ATR from SMA50)",
+          "recipe": "atr_from_sma50 >= 7 (Jacobs's scale-out zone)",
+          "measured": true,
+          "count": 16,
+          "tickers": [
+            {
+              "ticker": "TEAM",
+              "rs_1m": 99,
+              "hybrid_rs": 86.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "U",
+              "rs_1m": 98,
+              "hybrid_rs": 86.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "P",
+              "rs_1m": 99,
+              "hybrid_rs": 84.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "NIQ",
+              "rs_1m": 98,
+              "hybrid_rs": 84.0,
+              "sector": "Technology"
+            },
+            {
+              "ticker": "ITGR",
+              "rs_1m": 94,
+              "hybrid_rs": 81.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "FBRX",
+              "rs_1m": 98,
+              "hybrid_rs": 80.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "UTZ",
+              "rs_1m": 99,
+              "hybrid_rs": 77.0,
+              "sector": "Consumer Defensive"
+            },
+            {
+              "ticker": "PYPL",
+              "rs_1m": 67,
+              "hybrid_rs": 76.0,
+              "sector": "Financial"
+            },
+            {
+              "ticker": "CRNX",
+              "rs_1m": 38,
+              "hybrid_rs": 73.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "APGE",
+              "rs_1m": 36,
+              "hybrid_rs": 73.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "ATAI",
+              "rs_1m": 36,
+              "hybrid_rs": 73.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "CAKE",
+              "rs_1m": 95,
+              "hybrid_rs": 68.0,
+              "sector": "Consumer Cyclical"
+            },
+            {
+              "ticker": "CBZ",
+              "rs_1m": 93,
+              "hybrid_rs": 68.0,
+              "sector": "Industrials"
+            },
+            {
+              "ticker": "ROKU",
+              "rs_1m": 68,
+              "hybrid_rs": 68.0,
+              "sector": "Communication Services"
+            },
+            {
+              "ticker": "TECH",
+              "rs_1m": 35,
+              "hybrid_rs": 67.0,
+              "sector": "Healthcare"
+            },
+            {
+              "ticker": "MKTX",
+              "rs_1m": 97,
+              "hybrid_rs": 40.0,
+              "sector": "Financial"
+            }
+          ],
+          "truncated": 0,
+          "preset": null
+        }
+      ]
+    }
+  ],
+  "cross_zone": [
+    {
+      "ticker": "NIQ",
+      "count": 3,
+      "zones": [
+        "accumulation",
+        "moving",
+        "trouble"
+      ],
+      "rs_1m": 98,
+      "hybrid_rs": 84.0,
+      "sector": "Technology"
+    },
+    {
+      "ticker": "P",
+      "count": 3,
+      "zones": [
+        "accumulation",
+        "moving",
+        "trouble"
+      ],
+      "rs_1m": 99,
+      "hybrid_rs": 84.0,
+      "sector": "Technology"
+    },
+    {
+      "ticker": "INFQ",
+      "count": 3,
+      "zones": [
+        "compression",
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 97,
+      "hybrid_rs": 53.0,
+      "sector": "Technology"
+    },
+    {
+      "ticker": "HTFL",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 99,
+      "hybrid_rs": 87.0,
+      "sector": "Healthcare"
+    },
+    {
+      "ticker": "UMAC",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 99,
+      "hybrid_rs": 87.0,
+      "sector": "Technology"
+    },
+    {
+      "ticker": "TEAM",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "trouble"
+      ],
+      "rs_1m": 99,
+      "hybrid_rs": 86.0,
+      "sector": "Technology"
+    },
+    {
+      "ticker": "U",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "trouble"
+      ],
+      "rs_1m": 98,
+      "hybrid_rs": 86.0,
+      "sector": "Technology"
+    },
+    {
+      "ticker": "ABCL",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 99,
+      "hybrid_rs": 80.0,
+      "sector": "Healthcare"
+    },
+    {
+      "ticker": "NRIX",
+      "count": 2,
+      "zones": [
+        "compression",
+        "accumulation"
+      ],
+      "rs_1m": 85,
+      "hybrid_rs": 77.0,
+      "sector": "Healthcare"
+    },
+    {
+      "ticker": "PYPL",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "trouble"
+      ],
+      "rs_1m": 67,
+      "hybrid_rs": 76.0,
+      "sector": "Financial"
+    },
+    {
+      "ticker": "AVAH",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 92,
+      "hybrid_rs": 74.0,
+      "sector": "Healthcare"
+    },
+    {
+      "ticker": "OMER",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 99,
+      "hybrid_rs": 74.0,
+      "sector": "Healthcare"
+    },
+    {
+      "ticker": "NMAX",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 93,
+      "hybrid_rs": 68.0,
+      "sector": "Communication Services"
+    },
+    {
+      "ticker": "NN",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 98,
+      "hybrid_rs": 63.0,
+      "sector": "Technology"
+    },
+    {
+      "ticker": "LPTH",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 97,
+      "hybrid_rs": 60.0,
+      "sector": "Technology"
+    },
+    {
+      "ticker": "ALOY",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 98,
+      "hybrid_rs": 56.0,
+      "sector": "Basic Materials"
+    },
+    {
+      "ticker": "LUNR",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 97,
+      "hybrid_rs": 47.0,
+      "sector": "Industrials"
+    },
+    {
+      "ticker": "INDI",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 90,
+      "hybrid_rs": 46.0,
+      "sector": "Technology"
+    },
+    {
+      "ticker": "INOD",
+      "count": 2,
+      "zones": [
+        "compression",
+        "accumulation"
+      ],
+      "rs_1m": 54,
+      "hybrid_rs": 44.0,
+      "sector": "Technology"
+    },
+    {
+      "ticker": "RUM",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 94,
+      "hybrid_rs": 41.0,
+      "sector": "Communication Services"
+    },
+    {
+      "ticker": "NVTS",
+      "count": 2,
+      "zones": [
+        "compression",
+        "moving"
+      ],
+      "rs_1m": 91,
+      "hybrid_rs": 39.0,
+      "sector": "Technology"
+    },
+    {
+      "ticker": "POET",
+      "count": 2,
+      "zones": [
+        "compression",
+        "moving"
+      ],
+      "rs_1m": 93,
+      "hybrid_rs": 39.0,
+      "sector": "Technology"
+    },
+    {
+      "ticker": "AVEX",
+      "count": 2,
+      "zones": [
+        "compression",
+        "accumulation"
+      ],
+      "rs_1m": 98,
+      "hybrid_rs": 36.0,
+      "sector": "Industrials"
+    },
+    {
+      "ticker": "EROC",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 98,
+      "hybrid_rs": 33.0,
+      "sector": "Industrials"
+    },
+    {
+      "ticker": "MP",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 93,
+      "hybrid_rs": 31.0,
+      "sector": "Basic Materials"
+    },
+    {
+      "ticker": "USAR",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 92,
+      "hybrid_rs": 29.0,
+      "sector": "Basic Materials"
+    },
+    {
+      "ticker": "SGML",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 84,
+      "hybrid_rs": 23.0,
+      "sector": "Basic Materials"
+    }
+  ],
+  "universe_gated": 1543
+}
