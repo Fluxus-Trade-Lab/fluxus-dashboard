@@ -44,6 +44,27 @@ const tr = (t, key, fallback) => {
   return out === key ? fallback : out
 }
 
+/**
+ * The gate, in the words its own keys imply.
+ *
+ * The pipeline swapped `min_avg_volume` (shares) for `min_dollar_volume` on
+ * 2026-08-17 — a name-and-unit change, not a value change — and this line was
+ * reading the old key straight into a division, so it would have printed
+ * "$1B cap, NaNM average volume" the moment the new file landed. Reading a
+ * missing key as a number is how a page starts lying quietly.
+ *
+ * So each key is named explicitly and an unknown one is dropped rather than
+ * formatted. A gate clause we cannot describe should be absent from the
+ * sentence, never present as NaN.
+ */
+const gateWords = (gate = {}) => {
+  const out = []
+  if (gate.min_market_cap) out.push(`$${(gate.min_market_cap / 1e9).toFixed(0)}B cap`)
+  if (gate.min_dollar_volume) out.push(`$${(gate.min_dollar_volume / 1e6).toFixed(0)}M/day traded`)
+  else if (gate.min_avg_volume) out.push(`${(gate.min_avg_volume / 1e6).toFixed(0)}M shares/day`)
+  return out.join(', ')
+}
+
 const go = (zone) => { window.location.hash = zone ? `#/watchlist/${zone}` : '#/watchlist' }
 
 /**
@@ -334,8 +355,7 @@ export default function WatchlistPage({ zone: routeZone }) {
         {t('wl.provenance', {
           date: data.date,
           n: nf(data.universe_gated),
-          cap: `$${(data.gate.min_market_cap / 1e9).toFixed(0)}B`,
-          vol: `${(data.gate.min_avg_volume / 1e6).toFixed(0)}M`,
+          gate: gateWords(data.gate),
         })}
       </p>
 
