@@ -27,6 +27,8 @@ describe('translations', () => {
   it('zh values are actually Chinese, or deliberately Latin', () => {
     const DELIBERATE = new Set([
       'brand.name', 'nav.briefing',
+      // A shell command. Translating it would stop it running.
+      'rev.report.cmd',
     ])
     const han = /[\u4e00-\u9fff]/
     const suspects = Object.entries(translations.zh)
