@@ -81,7 +81,7 @@ export default function JournalPage({ stage: routeStage }) {
   // ── Overview ───────────────────────────────────────────────────────────
   if (!routeStage || !ZONES[routeStage]) {
     return (
-      <div className="max-w-5xl mx-auto py-6 px-4">
+      <div className="py-6 px-1">
         <PageHeader group="book" title={t('nav.journal')} />
         <Verdict onGo={go} />
         <p className="text-[13px] text-[var(--color-text-secondary)] mt-1 mb-5 max-w-[62ch]">
@@ -125,7 +125,7 @@ export default function JournalPage({ stage: routeStage }) {
   const z = ZONES[routeStage]
 
   return (
-    <div className="max-w-5xl mx-auto py-6 px-4">
+    <div className="py-6 px-1">
       <button type="button" onClick={() => go(null)}
               className="text-[11px] font-mono text-[var(--color-text-muted)] bg-transparent
                          border-none p-0 cursor-pointer hover:text-[var(--color-text)]">
