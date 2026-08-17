@@ -548,6 +548,7 @@ class YfinanceAdapter(BaseAdapter):
                     'vcs': vcs,
                     **sp_row,
                     'ema21_low_dist': ema21_low_dist,
+                    'ema21': ema21,
                     'ema10': ema10,
                     'ema20': ema20,
                     'wk_ema10': wk_ema10,

@@ -193,6 +193,13 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 | `atr_from_sma50` | **ATR Matrix** = `(close − SMA50) / ATR`,股价高于 50 日线几个 ATR | 浮点 4 位小数,可负(低于 SMA50);ATR ≤ 0 / **ATR < 0.5% 价格**(实测该线以下全是 $10 SPAC 壳与并购锁价票)/ `1+dist ≤ 0` / 缺任一输入 → `null`,**永不 inf**。**不是** `sma50_r`(那是 close/SMA50 的比值,原样保留)。黄金样本:6 只对 Wilder-14 ATR 直算逐位吻合。**与每个 ticker 徽章上的 `atr_ext`、ETF 行的 `dist_sma50_atr` 同一实现**(`atr_enrichment.atr_multiple_from_sma50` / `_from_levels`)。`≥7` 尾巴含近期跳空后钉价的并购标的(Wilder-14 记得跳空日),读榜时配 industry/量 |
 | `pp_count_10d` | 最近 10 个交易日里的口袋支点根数 | 与 `pp_count_30d` 同一实现(`pocket_pivot_count`)、不同 lookback;阳线且量 > 前 10 根最大量(NaN 量的根跳过);**历史 < 11 根 → `null`(未测量,不是 0)**,`pp_count_30d` 与当日 `pocket_pivot` 标志同步改为此语义(三者同一实现);首次富集后才有值 |
 
+| `ema21_atr_dist` | `(close − EMA21) / ATR`,离 21 日 EMA 几个 ATR(2026-08-17 加) | 与 `atr_from_sma50` **同一 helper、同一 0.5% 地板、同一 null 规则**;EMA21 = 收盘价 span-21 EMA(富集新导出 `ema21` 列);fallback 池无 EMA21 → null |
+| `ema21` | 收盘价 EMA21 水平 | 富集导出;供上面那列和以后的图用 |
+
+⚠️ **21EMA Watch 预设改为 ATR 口径 —— 需要前端改一处映射(Andy 2026-08-17 拍板)**:`frontend/src/lib/screenerFilter.js` 里 `ema21Atr → ema21_r`、`sma50Atr → sma50_r` 改成 **`ema21Atr → ema21_atr_dist`、`sma50Atr → atr_from_sma50`**。预设里的数值(−0.5..1、0..3)本来就是 ATR 语义,不用动;`ema21_r`/`sma50_r` 两个比值列原样保留不删。实测 08-14:比值口径命中 13 只(全在 SMA20 下),ATR 口径 53 只。
+
+⚠️ **adrPct 分两档 + 热度着色(Andy 2026-08-17 拍板)**:持仓型预设(21EMA Watch / Pocket Pivot / PP Count / 97 Club)`adrPct.max` 10→**6**(= 最大单笔亏损 ÷ 1.5,Steve 的算法,和 −7~−9% 止损档对齐);扫描型(4% Bullish / Vol Up / Momentum 97 / Weekly 20%+)保留 10。已改 `frontend/public/data/screener-presets.json`。**前端**:表里 `adr_pct` 列按热度着色,越高越热,>6 明显可辨(6 是"超出止损承受"的线);字段现成,不需要数据端改动。08-14 数据:$1B+ 非医疗 2,224 只里 ADR 3.5–6 有 820 只、6–10 有 253 只(半导体/软件/航空防务最多)。
+
 ⚠️ **`data/history/ticker_events.csv` 的 `atr_ext` 列在 2026-08-17 前后是两个定义**:2026-08-17 之前的 62,692 个非空值是旧式 `|dist|×close/atr`(无符号、无 `(1+dist)`),之后是有符号的 ATR Matrix。归档没存 `close/atr/dist`,**旧行无法重算**。跨日期比较该列时以 `date < 2026-08-17` 为界;目前没有消费方跨日期读它(Signal History 只按日取)。
 
 ⚠️ **`atr_ext`(每个 ticker 徽章)口径变更 2026-08-17**:原来是 `|dist|×close/atr`(无符号、漏 `(1+dist)`),现在 = `atr_from_sma50`(有符号)。**低于 SMA50 的票现在是负数**,`atr_color` 多了一档 `"below"`。前端 `lib/format.js:atrBadgeColor` 目前把 `<0` 走进 `≤4` 的绿色分支 —— **需要前端加一行 `if (atrExt < 0) return <中性色>`**,否则 2,247 只线下票继续被涂成入场区绿。这是数据端修正后剩给 UI 的唯一一步。

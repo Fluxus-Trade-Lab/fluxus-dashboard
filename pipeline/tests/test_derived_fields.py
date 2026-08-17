@@ -260,3 +260,33 @@ class TestPocketPivotCount:
         c[-4], o[-4], v[-4] = 11.0, 10.0, 500.0
         c[-1], o[-1], v[-1] = 11.0, 10.0, 500.0
         assert pocket_pivot_count(c, o, v, lookback=10) == 1
+
+
+class TestEma21AtrDist:
+    """`ema21_atr_dist` = (close - EMA21) / ATR -- the ATR reading the 21EMA
+    Watch preset always meant. Same helper as atr_from_sma50 (same floor,
+    same null rules), so the two sides of that preset are one implementation.
+    The old `ema21_r` (close/SMA20 ratio) stays untouched."""
+
+    def test_is_close_minus_ema21_over_atr(self):
+        out = compute_universe_scores(_frame(close=100.0, atr=2.0, ema21=96.0))
+        assert out["ema21_atr_dist"].iloc[0] == pytest.approx(2.0)
+
+    def test_below_the_ema_is_negative(self):
+        out = compute_universe_scores(_frame(close=100.0, atr=2.0, ema21=101.0))
+        assert out["ema21_atr_dist"].iloc[0] == pytest.approx(-0.5)
+
+    def test_missing_ema21_or_atr_is_null(self):
+        assert pd.isna(compute_universe_scores(_frame(ema21=None))["ema21_atr_dist"].iloc[0])
+        assert pd.isna(compute_universe_scores(_frame(ema21=96.0, atr=0.0))["ema21_atr_dist"].iloc[0])
+
+    def test_frame_without_an_ema21_column_still_scores(self):
+        """The fallback universe path has no ema21: the column must come out
+        null, not KeyError the whole scoring step."""
+        df = _frame().drop(columns=[c for c in ["ema21"] if c in _frame().columns])
+        out = compute_universe_scores(df)
+        assert "ema21_atr_dist" in out and pd.isna(out["ema21_atr_dist"].iloc[0])
+
+    def test_old_ratio_column_untouched(self):
+        out = compute_universe_scores(_frame(ema21=96.0))
+        assert out["ema21_r"].iloc[0] == pytest.approx(1.05)

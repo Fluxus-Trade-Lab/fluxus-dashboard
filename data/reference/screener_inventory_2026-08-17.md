@@ -76,15 +76,15 @@
 
 | # | 名称 | 条件 |
 |---|---|---|
-| 1 | **21EMA Watch** | trend_base · 周涨 0–15% · DCR 20–100 · **ema21_r −0.5–1 · sma50_r 0–3**(⚠️ 见上) · PP 数 ≥1 · ADR **3–10**(08-12 从 3.5 降) |
+| 1 | **21EMA Watch** | trend_base · 周涨 0–15% · DCR 20–100 · **ema21Atr −0.5–1 · sma50Atr 0–3(08-17 起 ATR 口径:→ `ema21_atr_dist` / `atr_from_sma50`,前端映射待改)** · PP 数 ≥1 · ADR **3–6**(08-17 上限 10→6) |
 | 2 | **4% Bullish** | 日涨 ≥4% · RelVol ≥1 · from-open ≥0 · rs_21d 60–99 · ADR 3.5–10 |
 | 3 | **Vol Up Gainers** | 日涨 ≥0 · RelVol ≥1.5 · ADR 3.5–10 |
 | 4 | **Momentum 97** | **无市值门槛** · trend_base · perf_1w 分位 ≥0.97 · perf_3m 分位 ≥0.85 · ADR 3.5–10 |
-| 5 | **97 Club** | trend_base · h_score 80–99 · rs_21d 97–99 · ADR 3.5–10 |
+| 5 | **97 Club** | trend_base · h_score 80–99 · rs_21d 97–99 · ADR 3.5–**6** |
 | 6 | **Stockbee 9M Setup** | **vol50dMin 9M** · RelVol ≥1.5 · 日涨 ≥5% · DCR 60–100 |
 | 7 | **Sugar Babies** | bo_count_1y ≥10 · bo_count_3m ≥2 |
-| 8 | **Pocket Pivot** | pocket_pivot · trend_base · ADR 3.5–10 |
-| 9 | **PP Count** | trend_base · pp_count_30d ≥3 · ADR 3.5–10 |
+| 8 | **Pocket Pivot** | pocket_pivot · trend_base · ADR 3.5–**6** |
+| 9 | **PP Count** | trend_base · pp_count_30d ≥3 · ADR 3.5–**6** |
 | 10 | **Weekly 20%+ Gainers** | 周涨 20–500% · ADR 3.5–10 |
 
 用户自建预设存 `localStorage['fluxus-screener-presets']`,`readonly:false`,不在仓库。

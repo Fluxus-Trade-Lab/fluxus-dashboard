@@ -311,6 +311,21 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     df['atr_from_sma50'] = atr_multiple_from_sma50(
         df['close'], df['atr'], df['sma50_dist'])
 
+    # --- (close - EMA21) / ATR: the reading the 21EMA Watch preset always
+    # meant. Its filter used to point at ema21_r, which is close/SMA20 -- a
+    # ratio near 1.0 -- so "within -0.5..1 ATR of the 21EMA" silently became
+    # "price at or below the SMA20". Same helper, same floor, same null rules
+    # as atr_from_sma50; the enrichment exports the true EMA21 for this. The
+    # fallback universe has no ema21 column, so it must degrade to null.
+    if 'ema21' in df.columns:
+        _e = pd.to_numeric(df['ema21'], errors='coerce')
+        _c = pd.to_numeric(df['close'], errors='coerce')
+        # dist form: (close - ema21)/ema21, valid where ema21 > 0
+        _d21 = ((_c - _e) / _e).where(_e > 0)
+        df['ema21_atr_dist'] = atr_multiple_from_sma50(df['close'], df['atr'], _d21)
+    else:
+        df['ema21_atr_dist'] = np.nan
+
     # 52W high distance
     h = pd.to_numeric(df['high_52w'], errors='coerce')
     c = pd.to_numeric(df['close'], errors='coerce')
@@ -343,7 +358,7 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     df['momentum_97'] = (_w >= 0.97) & (_m >= 0.85)
 
     # Round derived columns to 4 decimals
-    for col in ['adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist', 'atr_from_sma50']:
+    for col in ['adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist', 'atr_from_sma50', 'ema21_atr_dist']:
         df[col] = df[col].round(4)
 
     # Round new enrichment columns
@@ -682,7 +697,7 @@ def main():
         'f_score', 'i_score', 'h_score',
         'adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist',
         'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d', 'pp_count_10d',
-        'atr_from_sma50',
+        'atr_from_sma50', 'ema21_atr_dist', 'ema21',
         'sp_setup', 'sp_len', 'sp_ll', 'sp_hl', 'sp_1st', 'sp_2nd', 'sp_tp1', 'sp_tp2',
         'sp_phase', 'sp_stop', 'sp_ma', 'sp_signal', 'sp_days', 'sp_dist_1st_pct',
         'sp_dist_2nd_pct', 'sp_counter',
