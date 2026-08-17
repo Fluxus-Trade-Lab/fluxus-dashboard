@@ -317,7 +317,7 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
     return {
         "date": date,
         "gate": {"min_market_cap": MIN_CAP, "min_dollar_volume": MIN_DOLLAR_VOL},
-        "sort": "hybrid_rs desc; the number beside each ticker is rs_1m",
+        "sort": "hybrid_rs desc; the number beside each ticker is rs_line_pctl_21 (oratnek's RS 1M: RS-line self-percentile, 21 sessions); rs_1m (cross-sectional) is the second reading",
         "cross_zone_rule": f"count of ZONES a name appears in (not panels); >= {MIN_CROSS_ZONES} listed",
         "zones": zones_out,
         "cross_zone": cross,
