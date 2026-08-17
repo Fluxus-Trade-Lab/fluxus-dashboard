@@ -137,6 +137,7 @@
 - **VCS 不带 ADR** —— 钉价票霸榜(08-14 实测)
 - **ATR Matrix 单独当"最延伸"排行** —— 尾巴是跳空后钉价的并购标的,要配行业/成交量
 - **screener 信号序列当预测** —— 42 个序列 0 个跑赢匹配随机基线(memory `project_sequence_mining`)
+- **Liquid Leader(RS 前 20%)当 20 日收益预测** —— 9 期里 3 期赢过"只要流动性",中位 +0.41% vs +0.71%(第七节);当资格名单用,别当信号
 - **主题四态的 `rs_accel` 当"减速"讲** —— 它是门槛不是斜率,匀速跑赢也读负(FOUR_STATE_DESIGN §8)
 
 ---
@@ -257,7 +258,8 @@
 - **Liquid Leaders**:Alex/TradersLab 的核心名单;**我们教材 M2_L09** 定义:ADV ≥2M 股 · 站上 50SMA · RS 排名前 20% → 字段 `liquid_leader`(rs_3m ≥80)。是**资格名单**不是入场。08-14:181 只。
 - **Liquid Leader Pullback RS**(教材 L09):liquid leader · 周涨 <12% · 离 21EMA 0.5–1 ADR · 离 50 0–3 ADR(· 5 日对 20 日收缩 · 财报 7 天外 —— 后两条我们读不到,未施加)→ 晨报 entries 区一格。**这就是 21EMA Watch 预设的 ATR 语义**,教材早写对了。
 - **True Market Leaders**:教材 M2 第二阶段的名字;业界(Minervini/TraderLion 系)= 技术面 + 基本面 + **所在主题**都在领跑。我们的可测定义:`liquid_leader` × 所属主题/行业四态 = **Leading** × rs_1m ≥80 → 晨报 leaders 区第一格。08-14:26 只(DELL / RBRK / GTLB / NTNX / PATH…);181 只 Liquid Leaders 里 **116 只的所属组在 Weakening** —— 这一维是我们独有的,四家都没有。
-- **认证方式**:主题四态归档 08-07 才起,历史回测做不了;`data/history/leaders_log.csv` 每晚记一行/只(tml 标志、组态、close),几周后比 TML vs 非 TML 的 Liquid Leaders 的前瞻收益 —— 验的正是"主题那一维值不值钱"。价格口径的 Liquid Leader 本身可回测(价格面板重建中)。
+- **回测(2026-08-17,价格面板 4,060 只 × 167 日,2026-03→07 九期,每 10 日重选,流动性用今天 ADV≥2M 名单近似)**:Liquid Leader fwd20 中位 **+0.41%** / 赢率 51%;只要 ADV≥2M · >SMA50 是 +0.46%;**只要 ADV≥2M 是 +0.71%**;SPY +2.49%。逐期比"只要流动性"9 期只赢 3 期,6 月底那期 −11.2%。**结论:RS 前 20% 这道闸在这段样本上不加 20 日前瞻收益,回撤期还放大伤害** —— 与 52WH、sequence 两次 NULL 同形状。限制:8 个月一种格局、9 期不独立、生存偏差、无成交量。**所以 Liquid Leaders 是资格名单/水域,不是入场信号,更不是 alpha** —— 教材本来也是这么写的;晨报把它放"谁在领跑"区是对的,当信号用就错。
+- **认证方式**:主题四态归档 08-07 才起,TML 那一维历史回测做不了;`data/history/leaders_log.csv` 每晚记一行/只(tml 标志、组态、close),几周后比 TML vs 非 TML 的 Liquid Leaders 的前瞻收益 —— 验的正是"主题那一维值不值钱"。价格口径的 Liquid Leader 本身可回测(价格面板重建中)。
 
 ## 五、四家对标的完整体系(压缩版,细节见 `screener_competitors_2026-08-17.md`)
 
