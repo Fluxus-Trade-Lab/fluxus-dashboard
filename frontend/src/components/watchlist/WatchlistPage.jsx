@@ -122,13 +122,21 @@ function Name({ row, showGroup }) {
   )
 }
 
-/** A field of names on a fixed column grid, hairlines between the columns. */
-function Names({ rows, cols = 4, showGroup }) {
+/**
+ * A field of names on a column grid.
+ *
+ * Ruled by ROW, not by column. Vertical rules have to know how many columns
+ * there are, and the count changes at every breakpoint — the first version
+ * pinned its nth-child rules to four and drew them in the wrong places as soon
+ * as the grid went to six. A horizontal hairline is column-count-independent
+ * and reads as a table either way.
+ */
+function Names({ rows, wide = false, showGroup }) {
   return (
-    <span className={`grid gap-y-px ${
-      cols === 4 ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-6'}
-      [&>*:not(:nth-child(2n+1))]:border-l sm:[&>*]:border-l
-      sm:[&>*:nth-child(4n+1)]:border-l-0 [&>*]:border-[var(--color-border-light)]`}>
+    <span className={`grid ${wide
+      ? 'grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 2xl:grid-cols-8'
+      : 'grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'}
+      [&>*]:border-b [&>*]:border-[var(--color-border-light)]`}>
       {rows.map((r) => <Name key={r.ticker} row={r} showGroup={showGroup} />)}
     </span>
   )
@@ -156,7 +164,9 @@ function ZoneCard({ zone, index }) {
   // A taste, not the list. Taken from the biggest panel, because that is the
   // one the question is mostly answered by.
   const lead = [...live].sort((a, b) => b.count - a.count)[0]
-  const taste = (lead?.tickers || []).slice(0, 8)
+  // Twelve, not eight: the cards are full-width now and eight names left the
+  // bottom third of each one empty.
+  const taste = (lead?.tickers || []).slice(0, 12)
 
   return (
     <button type="button" onClick={() => go(zone.key)}
@@ -193,14 +203,18 @@ function ZoneCard({ zone, index }) {
         ))}
       </span>
 
-      <span className="mt-auto block border-t border-[var(--color-border-light)]
+      {/* Names follow the panels directly. Pinning them to the bottom (mt-auto)
+          left a band of nothing across the middle of the short cards once the
+          page went full width — equal heights should push the slack to the
+          END of a card, not into the middle of it. */}
+      <span className="block border-t border-[var(--color-border-light)]
                        bg-[var(--color-bg)]">
         {taste.length > 0
-          ? <Names rows={taste} cols={4} />
+          ? <Names rows={taste} />
           : <span className="block px-3 py-2.5 text-[11px]
                              text-[var(--color-text-muted)]">{t('wl.none.short')}</span>}
       </span>
-      <span className="block px-3 py-1.5 text-[9.5px] font-mono tracking-[.12em]
+      <span className="mt-auto block px-3 py-1.5 text-[9.5px] font-mono tracking-[.12em]
                        text-[var(--color-text-muted)] group-hover:text-[var(--color-text)]
                        bg-[var(--color-bg)]">{t('wl.open')} →</span>
     </button>
@@ -260,7 +274,7 @@ function Panel({ panel, showGroup, explainPending }) {
 
       {rows.length > 0 ? (
         <div className="-mx-1">
-          <Names rows={rows} cols={6} showGroup={showGroup} />
+          <Names rows={rows} wide showGroup={showGroup} />
         </div>
       ) : panel.measured ? (
         <p className="text-[11.5px] text-[var(--color-text-muted)] m-0">{t('wl.none')}</p>
@@ -280,7 +294,7 @@ function ZoneDetail({ zone, index, total }) {
   const firstPending = zone.panels.find((p) => !p.measured)?.key
 
   return (
-    <div className="max-w-5xl mx-auto py-6 px-4">
+    <div className="py-6 px-1">
       <button type="button" onClick={() => go(null)}
               className="text-[11px] font-mono text-[var(--color-text-muted)] bg-transparent
                          border-none p-0 cursor-pointer hover:text-[var(--color-text)]">
@@ -331,7 +345,7 @@ export default function WatchlistPage({ zone: routeZone }) {
 
   if (failed) {
     return (
-      <div className="max-w-5xl mx-auto py-6 px-4">
+      <div className="py-6 px-1">
         <PageHeader group="market" title={t('nav.watchlist')} />
         <p className="text-[13px] text-[var(--color-text-muted)]">{t('wl.nofile')}</p>
       </div>
@@ -346,7 +360,7 @@ export default function WatchlistPage({ zone: routeZone }) {
   const rule = data.cross_zone_rule
 
   return (
-    <div className="max-w-5xl mx-auto py-6 px-4">
+    <div className="py-6 px-1">
       <PageHeader group="market" title={t('nav.watchlist')} />
 
       {/* Provenance first: which close this is, and how many names were even
