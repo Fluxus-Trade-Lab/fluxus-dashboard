@@ -129,6 +129,7 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 行字段:`group` `members` `tickers[]` `excess_3m` `rs_accel` `rs_accel_rate` `state` `persistence` `persistence_of` `perf_1d` `perf_1w/1m/3m/6m/1y`
 `perf_1d`(2026-08-16 加):当日涨跌幅,小数口径,与 `perf_1w` 同族。聚合主题/行业 = 成员 `change_pct` 中位数(与其他 perf 列同一口径,异常值同样剔除);proxy 主题 = 该 ETF 自身的 `change_pct`;`stocks` 行 = 个股 `change_pct`。**不进 RS 桶、不进 persistence 分母**,只供显示。
 主题另有:`method` `source` `publish` `measurable` `needs_manual` `validation` `validation_excess`
+主题与行业行另有(2026-08-17 加):**`ext_share_4` `ext_share_7` `ext_median` `ext_n`** —— 成员里 `atr_from_sma50` ≥4 / ≥7 的占比、中位数、可测成员数(缺 ATR 的成员不计)。**读法:Leading 标签的到期预警,不是收益预测** —— 48 主题 × 293 日实测,Leading 主题日里 ≥4 占比 <20% → 21 日后仍 Leading 28%,20–40% → 14%,40–60% → 6%,>60% → 0%(单调),但那 21 日的超额中位**没有**变差(+1.6% → +2.5~3.8%)。原因是 `rs_accel` 门槛在两个月大涨后机械翻负。UI 若显示,文案是"标签快到期",不是"该卖"。Steve 的 ≥7 减仓阶梯是**个股**规则,主题层面这个数说的是"这波已经涨在价格里"。
 
 ### 四条陷阱
 
@@ -157,7 +158,7 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 **消费方**:暂无。**这是为 10 周后的主题色带准备的**
 
 每日 195 行(121 行业 + 74 主题,随分类学变动),按日期幂等替换。
-列:`date` `kind`(`industry`/`theme`)`group` `members` `excess_3m` `rs_accel` `state` `persistence` `persistence_of` `perf_1w/1m/3m/6m` `rs_accel_rate` `perf_1d`(末两列,2026-08-14 起有值,更早的行为空)
+列:`date` `kind`(`industry`/`theme`)`group` `members` `excess_3m` `rs_accel` `state` `persistence` `persistence_of` `perf_1w/1m/3m/6m` `rs_accel_rate` `perf_1d` `ext_share_4` `ext_share_7` `ext_median`(末五列分别 2026-08-14 / 08-17 起有值,更早的行为空)
 
 **存的是当天发布的 `state`,不是原始 perf。** 事后重算会把今天的窗口常数套到昨天的数据上,
 等于偷改我们说过的话。UI 要画历史色带,直接读这一列。

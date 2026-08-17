@@ -363,6 +363,30 @@ def aggregate_rows(
     return agg
 
 
+def extension_stats(rows: Sequence[Mapping[str, Any]]) -> Dict[str, Any]:
+    """Share of members sitting >= 4 and >= 7 ATRs above their SMA50, and the
+    median -- read from each member's `atr_from_sma50`; members without it are
+    excluded, not counted as zero.
+
+    What it is for (2026-08-17 study, 48 themes x 293 sessions): among
+    Leading theme-days the probability of STILL being Leading 21 sessions
+    later fell monotonically with this share (>=4 share <20%: 28%; 20-40%:
+    14%; 40-60%: 6%; >60%: 0%) while the next-21-day excess return did not
+    fall (median +1.6% -> +2.5..3.8%). So it is a warning that the Leading
+    label is about to expire -- the rs_accel gate flips after a two-month run
+    -- not a call that the theme will underperform. Jacobs's scale-out is a
+    single-stock rule; at the group level this says "the move is priced".
+    """
+    vals = [v for v in (_as_float(r.get("atr_from_sma50")) for r in rows) if np.isfinite(v)]
+    if not vals:
+        return {"ext_share_4": None, "ext_share_7": None, "ext_median": None, "ext_n": 0}
+    a = np.array(vals)
+    return {"ext_share_4": round(float((a >= 4).mean()), 4),
+            "ext_share_7": round(float((a >= 7).mean()), 4),
+            "ext_median": round(float(np.median(a)), 4),
+            "ext_n": int(len(a))}
+
+
 def _first_finite(row: Mapping[str, Any], keys: Sequence[str]) -> float:
     for k in keys:
         v = _as_float(row.get(k))
@@ -410,6 +434,7 @@ def score_groups(
         # here silently shrank its denominator from 5 to 3.
         for col in synthetic:
             payload[col] = _round(synthetic.get(col, np.nan))
+        payload.update(extension_stats(members))
         results.append(payload)
 
     # Cohort mode: "leading" means top quartile of the other groups on that

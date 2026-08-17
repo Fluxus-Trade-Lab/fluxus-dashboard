@@ -336,6 +336,7 @@ def build_themes(
             })
             continue
 
+        payload.update(rs_engine.extension_stats(members))
         payload.update({
             "group": theme.name,
             "method": theme.method,

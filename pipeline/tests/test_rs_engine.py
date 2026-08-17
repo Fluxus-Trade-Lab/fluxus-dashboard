@@ -271,3 +271,27 @@ class TestOneDayChange:
         without = rs_engine.score_row(_row(perf_1w=0.01), _row())
         assert with_1d["persistence_of"] == without["persistence_of"]
         assert with_1d["persistence"] == without["persistence"]
+
+
+class TestExtensionStats:
+    """Group-level extension: share of members >= 4 / >= 7 ATR above their
+    SMA50 (Jacobs's entry cap / scale-out line) and the median. Measured
+    2026-08-17 on 48 themes x 293 sessions: among Leading theme-days the
+    chance of still being Leading 21 sessions later fell 28% -> 14% -> 6% ->
+    0% as the >=4 share rose <20% -> >60%, while forward excess did NOT fall
+    (+1.6% -> +2.5-3.8%). It forecasts the LABEL expiring (the rs_accel gate
+    flipping after a two-month run), not underperformance."""
+
+    def test_shares_and_median(self):
+        rows = [_row(atr_from_sma50=x) for x in (1.0, 5.0, 8.0, 9.0)]
+        s = rs_engine.extension_stats(rows)
+        assert s["ext_share_4"] == pytest.approx(0.75)
+        assert s["ext_share_7"] == pytest.approx(0.5)
+        assert s["ext_median"] == pytest.approx(6.5)
+        assert s["ext_n"] == 4
+
+    def test_missing_values_are_excluded_not_zero(self):
+        rows = [_row(atr_from_sma50=8.0), _row(), _row(atr_from_sma50=None)]
+        s = rs_engine.extension_stats(rows)
+        assert s["ext_share_7"] == pytest.approx(1.0) and s["ext_n"] == 1
+        assert rs_engine.extension_stats([_row()])["ext_share_4"] is None
