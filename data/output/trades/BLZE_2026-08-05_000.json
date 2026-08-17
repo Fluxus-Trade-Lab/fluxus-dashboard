@@ -1,0 +1,269 @@
+{
+  "trade_id": "BLZE_2026-08-05_000",
+  "generated_at": "2026-08-17T03:51:15+00:00",
+  "_schema": "v1",
+  "trade": {
+    "ticker": "BLZE",
+    "direction": "long",
+    "sector": "Unknown",
+    "entry_date": "2026-08-05",
+    "entry_price": 18.82,
+    "original_qty": 5211,
+    "current_qty": 0,
+    "stop_price": 18.0,
+    "initial_stop": 18.0,
+    "closed": true,
+    "exit_date": "2026-08-06",
+    "hold_business_days": 1,
+    "r_dollars": 4273.020000000001,
+    "realized_pl": -2605.5,
+    "realized_R": -0.6097560975609754,
+    "trims": [
+      {
+        "date": "2026-08-06",
+        "price": 18.32,
+        "qty": 5211,
+        "type": "sell_rest"
+      }
+    ]
+  },
+  "entry_snapshot": {
+    "close": 18.62,
+    "open": 19.79,
+    "high": 19.79,
+    "low": 17.47,
+    "volume": 5568000.0,
+    "ma20": 14.532000000000002,
+    "ma50": 12.0998,
+    "ma200": 6.899249999999999,
+    "rsi14": 67.24770453319047,
+    "atr14": 1.842857142857143,
+    "atr14_pct": 9.897191959490563,
+    "high_52w": 23.99,
+    "low_52w": 3.261,
+    "position_in_52w_range_pct": 74.09426407448503,
+    "high_20d": 23.99,
+    "low_10d": 10.98,
+    "low_5d": 11.73
+  },
+  "setup_type": "Long in mixed structure",
+  "path_analytics": {
+    "mfe_R": 1.1829268292682908,
+    "mfe_date": "2026-08-05",
+    "mae_R": 1.6463414634146354,
+    "mae_date": "2026-08-05",
+    "optimal_exit_price": 19.79,
+    "optimal_exit_date": "2026-08-05",
+    "optimal_R": 1.1829268292682908,
+    "days_to_optimal": 0,
+    "realized_R": -0.6097560975609754,
+    "capture_pct": -51.54639175257738,
+    "missed_R": 1.7926829268292663,
+    "post_exit_R": 0.2195121951219508,
+    "hold_calendar_days": 1
+  },
+  "lesson": "Failed setup",
+  "narrative": "Entered **BLZE** long on 2026-08-05 at $18.82 (qty 5211) with stop $18.00 (1R = $0.82/sh = $4,273). Setup: **Long in mixed structure** \u2014 price above MA20 ($14.53), MA20 > MA50 > MA200 (golden alignment), RSI 67, 74% through 52W range, ATR 9.9% of price. Realized **-0.61R**, peak was **+1.18R** on 2026-08-05 (day +0) \u2014 captured **-52%** of the move. **Lesson: Failed setup.**",
+  "ohlc_window": [
+    {
+      "date": "2026-07-06",
+      "open": 15.375,
+      "high": 16.31,
+      "low": 15.179,
+      "close": 15.3,
+      "volume": 2212700.0
+    },
+    {
+      "date": "2026-07-07",
+      "open": 15.09,
+      "high": 16.6,
+      "low": 14.523,
+      "close": 15.84,
+      "volume": 2972600.0
+    },
+    {
+      "date": "2026-07-08",
+      "open": 15.96,
+      "high": 16.45,
+      "low": 15.55,
+      "close": 16.42,
+      "volume": 1681400.0
+    },
+    {
+      "date": "2026-07-09",
+      "open": 16.3,
+      "high": 17.94,
+      "low": 16.24,
+      "close": 17.83,
+      "volume": 3634600.0
+    },
+    {
+      "date": "2026-07-10",
+      "open": 17.72,
+      "high": 18.249,
+      "low": 17.35,
+      "close": 17.6,
+      "volume": 2262500.0
+    },
+    {
+      "date": "2026-07-13",
+      "open": 17.7,
+      "high": 17.7,
+      "low": 15.91,
+      "close": 16.19,
+      "volume": 2298200.0
+    },
+    {
+      "date": "2026-07-14",
+      "open": 16.4,
+      "high": 17.249,
+      "low": 16.2,
+      "close": 16.55,
+      "volume": 1691800.0
+    },
+    {
+      "date": "2026-07-15",
+      "open": 16.57,
+      "high": 16.98,
+      "low": 14.89,
+      "close": 14.98,
+      "volume": 2115200.0
+    },
+    {
+      "date": "2026-07-16",
+      "open": 14.93,
+      "high": 15.33,
+      "low": 13.691,
+      "close": 13.73,
+      "volume": 2327400.0
+    },
+    {
+      "date": "2026-07-17",
+      "open": 13.145,
+      "high": 13.69,
+      "low": 12.6,
+      "close": 13.22,
+      "volume": 3137100.0
+    },
+    {
+      "date": "2026-07-20",
+      "open": 13.17,
+      "high": 13.65,
+      "low": 13.11,
+      "close": 13.16,
+      "volume": 1898200.0
+    },
+    {
+      "date": "2026-07-21",
+      "open": 13.33,
+      "high": 14.028,
+      "low": 13.14,
+      "close": 13.48,
+      "volume": 1652100.0
+    },
+    {
+      "date": "2026-07-22",
+      "open": 13.31,
+      "high": 13.47,
+      "low": 12.81,
+      "close": 13.42,
+      "volume": 1618100.0
+    },
+    {
+      "date": "2026-07-23",
+      "open": 13.27,
+      "high": 13.631,
+      "low": 12.34,
+      "close": 12.76,
+      "volume": 1308400.0
+    },
+    {
+      "date": "2026-07-24",
+      "open": 12.76,
+      "high": 12.99,
+      "low": 11.525,
+      "close": 11.61,
+      "volume": 2081700.0
+    },
+    {
+      "date": "2026-07-27",
+      "open": 11.78,
+      "high": 12.55,
+      "low": 11.69,
+      "close": 12.31,
+      "volume": 1641300.0
+    },
+    {
+      "date": "2026-07-28",
+      "open": 12.03,
+      "high": 12.12,
+      "low": 10.98,
+      "close": 12.07,
+      "volume": 2278300.0
+    },
+    {
+      "date": "2026-07-29",
+      "open": 12.22,
+      "high": 12.38,
+      "low": 11.275,
+      "close": 11.38,
+      "volume": 1011300.0
+    },
+    {
+      "date": "2026-07-30",
+      "open": 11.76,
+      "high": 12.78,
+      "low": 11.73,
+      "close": 12.63,
+      "volume": 1682100.0
+    },
+    {
+      "date": "2026-07-31",
+      "open": 13.47,
+      "high": 14.71,
+      "low": 13.4,
+      "close": 13.72,
+      "volume": 2415400.0
+    },
+    {
+      "date": "2026-08-03",
+      "open": 13.76,
+      "high": 15.69,
+      "low": 13.449,
+      "close": 15.59,
+      "volume": 4448500.0
+    },
+    {
+      "date": "2026-08-04",
+      "open": 20.16,
+      "high": 23.99,
+      "low": 19.65,
+      "close": 19.79,
+      "volume": 11823000.0
+    },
+    {
+      "date": "2026-08-05",
+      "open": 19.79,
+      "high": 19.79,
+      "low": 17.47,
+      "close": 18.62,
+      "volume": 5568000.0
+    },
+    {
+      "date": "2026-08-06",
+      "open": 18.245,
+      "high": 18.98,
+      "low": 17.6,
+      "close": 18.11,
+      "volume": 3011000.0
+    },
+    {
+      "date": "2026-08-07",
+      "open": 18.64,
+      "high": 19.0,
+      "low": 18.01,
+      "close": 18.82,
+      "volume": 2165900.0
+    }
+  ]
+}
