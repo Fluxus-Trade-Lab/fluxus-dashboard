@@ -273,7 +273,7 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 
 ---
 
-## 四点八、`data/output/correction_risk.json` —— Correction Risk 基础层(2026-08-17 加,首份由今晚 cron 产出)
+## 四点八、`data/output/correction_risk.json` —— Correction Risk 基础层(2026-08-17 加;**同日 Andy 决定暂停,前端先不接** —— 文件照常每晚生成、只当内部记录;开放问题见 memory `project_correction_risk`)
 
 **产出**:`pipeline/risk/correction_risk.py`,run_all 里 rotation 之后;两条 yfinance 序列(^GSPC、^VIX,历史到 1990)。自己的失败域。
 **当前消费方**:`CorrectionRiskPage.jsx` 的空槽 —— **这份文件就是那个槽位的标准被满足后的第一份数据**。
