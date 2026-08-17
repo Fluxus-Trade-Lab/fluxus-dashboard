@@ -276,6 +276,7 @@ export default function WatchlistPage({ zone: routeZone }) {
   if (at >= 0) return <ZoneDetail zone={zones[at]} index={at} total={zones.length} />
 
   const cross = data.cross_zone || []
+  const rule = data.cross_zone_rule
 
   return (
     <div className="max-w-5xl mx-auto py-6 px-4">
@@ -321,6 +322,14 @@ export default function WatchlistPage({ zone: routeZone }) {
             <p className="text-[11.5px] text-[var(--color-text-muted)] m-0 max-w-[70ch]">
               {t('wl.cross.legend')}
             </p>
+            {/* The threshold is the file's to state, not this page's to
+                remember: it moved from 2 zones to 3 on 2026-08-17 and a page
+                carrying its own copy of the number would now be lying. */}
+            {rule && (
+              <p className="text-[10.5px] font-mono text-[var(--color-text-muted)] mt-1.5 m-0">
+                {rule}
+              </p>
+            )}
           </div>
         </details>
       )}
