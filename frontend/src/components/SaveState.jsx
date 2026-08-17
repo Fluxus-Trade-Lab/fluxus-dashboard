@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getStatus, subscribe } from '../lib/writingStatus'
+import { useLanguage } from '../i18n/LanguageContext'
 
 const clock = (ts) => new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
@@ -17,14 +18,15 @@ const clock = (ts) => new Date(ts).toLocaleTimeString([], { hour: '2-digit', min
  * the local half alone.
  */
 export default function SaveState({ onSave, dirty }) {
+  const { t } = useLanguage()
   const [s, setS] = useState(getStatus)
   useEffect(() => subscribe(setS), [])
 
   const word =
-    s.sheet === 'syncing' ? 'saving to sheet…'
-    : s.sheet === 'error' ? 'saved here · sheet failed'
-    : s.sheet === 'saved' && s.at ? `saved ${clock(s.at)} · in sheet`
-    : s.local === 'saved' && s.at ? `saved ${clock(s.at)}`
+    s.sheet === 'syncing' ? t('rev.saving.sheet')
+    : s.sheet === 'error' ? t('rev.save.failed')
+    : s.sheet === 'saved' && s.at ? t('rev.saved.sheet', { time: clock(s.at) })
+    : s.local === 'saved' && s.at ? t('rev.saved', { time: clock(s.at) })
     : ''
 
   return (
@@ -45,7 +47,7 @@ export default function SaveState({ onSave, dirty }) {
                    text-[var(--color-text-secondary)] hover:text-[var(--color-text)]
                    hover:bg-[var(--color-hover-bg)]
                    disabled:opacity-35 disabled:cursor-default disabled:hover:bg-transparent">
-        save
+        {t('rev.save')}
       </button>
     </span>
   )

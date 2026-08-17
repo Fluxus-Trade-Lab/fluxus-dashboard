@@ -4,6 +4,7 @@ import CoachTab from './CoachTab'
 import RiskTab from './RiskTab'
 import SizingTab from './SizingTab'
 import PageHeader from '../PageHeader'
+import { useLanguage } from '../../i18n/LanguageContext'
 import HeadCoach from './HeadCoach'
 import { STAGES } from './lib/headCoach'
 
@@ -55,6 +56,7 @@ const ANALYTICS_KEYS = new Set(['trim-stops', 'volatility', 'demon-finder', 'beh
                                 'diagnosis', 'risk-adjusted'])
 
 export default function JournalPage() {
+  const { t } = useLanguage()
   const [stage, setStage] = useState('hold')
   const [section, setSection] = useState(SECTIONS.hold[0].key)
 
@@ -65,24 +67,24 @@ export default function JournalPage() {
 
   return (
     <div className="max-w-5xl mx-auto py-6 px-4">
-      <PageHeader group="book" title="Review" />
+      <PageHeader group="book" title={t('nav.journal')} />
 
       <HeadCoach onGo={pickStage} />
 
       {/* The four stages, in the order a trade lives through them. */}
       <div className="flex gap-1 mb-3 flex-wrap">
-        {STAGES.map(({ key, label, asks }) => (
+        {STAGES.map(({ key }) => (
           <button
             key={key}
             onClick={() => pickStage(key)}
-            title={asks}
+            title={t(`rev.asks.${key}`)}
             className={`px-3 py-1.5 text-[12px] font-medium rounded cursor-pointer transition-colors ${
               stage === key
                 ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                 : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-[var(--color-surface-raised)]'
             }`}
           >
-            {label}
+            {t(`rev.stage.${key}`)}
           </button>
         ))}
       </div>
@@ -90,7 +92,7 @@ export default function JournalPage() {
       {/* What that stage asks, spelled out — four one-character labels are only
           legible to whoever wrote them. */}
       <p className="text-[11.5px] text-[var(--color-text-muted)] m-0 mb-3">
-        {STAGES.find((s) => s.key === stage)?.asks}
+        {t(`rev.asks.${stage}`)}
       </p>
 
       <div className="flex gap-1 mb-5 flex-wrap">
@@ -104,7 +106,7 @@ export default function JournalPage() {
                 : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
             }`}
           >
-            {label}
+            {t(`rev.sec.${key}`)}
           </button>
         ))}
       </div>

@@ -35,15 +35,27 @@ export function LanguageProvider({ children }) {
    * look finished, which is the same lie as an unmeasured value rendering as
    * zero. Production stays quiet — a reader should get English, not a console.
    */
+  /**
+   * `t(key)`, and `t(key, vars)` to fill {placeholders}.
+   *
+   * Added when the Review page's verdict sentence needed five numbers in it.
+   * Placeholders rather than string concatenation because the two languages
+   * do not put the pieces in the same order, and a sentence assembled from
+   * fragments can only ever be assembled in one order.
+   */
   const t = useCallback(
-    (key) => {
+    (key, vars) => {
       const dict = translations[lang] || translations.en
-      if (dict[key] != null) return dict[key]
+      const fill = (str) => (vars
+        ? String(str).replace(/\{(\w+)\}/g, (m, k) =>
+            (vars[k] != null ? String(vars[k]) : m))
+        : str)
+      if (dict[key] != null) return fill(dict[key])
       if (import.meta.env?.DEV && lang !== 'en' && !warned.has(key)) {
         warned.add(key)
         console.warn(`[i18n] no ${lang} for "${key}" — falling back to English`)
       }
-      if (translations.en[key] != null) return translations.en[key]
+      if (translations.en[key] != null) return fill(translations.en[key])
       return key
     },
     [lang],
