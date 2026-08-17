@@ -126,8 +126,13 @@ const go = (zone) => { window.location.hash = zone ? `#/watchlist/${zone}` : '#/
  */
 export const RS_BANDS = {
   rs_1m: { hi: 80, lo: 40 },
-  // 21/21 and 1/21 — the two ends of the count, in the units it reports.
-  rs_line_pctl_21: { hi: 100, lo: 100 / 21 },
+  // 21/21 and 1/21 — the two ends of the count. IN THE UNITS THE FILE REPORTS,
+  // which are rounded whole numbers: 1/21 arrives as 5, not 4.76. A band set
+  // at exactly 100/21 therefore never fired, and the ten names that were at a
+  // one-month low in relative strength — every one of them in Stop Hit or
+  // Lower Low Break, which is where you would want to see them — stayed grey.
+  // The threshold sits between 1/21 and 2/21 so rounding cannot close it.
+  rs_line_pctl_21: { hi: 100, lo: 100 * 1.5 / 21 },
 }
 
 const rsInk = (v, key = 'rs_1m') => {
@@ -190,22 +195,57 @@ function Names({ rows, wide = false, showGroup, rsKey }) {
 }
 
 /** The count, or the reason there isn't one. */
-function Count({ panel }) {
+/**
+ * The count — and, when the file knows it, how many of those are at a 21-day
+ * RS high. Both numbers, always, so switching the view never hides a quantity:
+ * the panel counted what it counted whichever rows are on screen.
+ */
+function Count({ panel, highOnly }) {
   const { t } = useLanguage()
   if (!panel.measured) {
     return <span className="text-[9.5px] font-mono uppercase tracking-[.12em]
                             text-[var(--color-text-muted)]">{t('wl.unmeasured')}</span>
   }
+  const hi = panel.count_rs_high
   return (
-    <span className="text-[11px] font-mono tabular-nums text-[var(--color-text-secondary)]">
-      {nf(panel.count)}
+    <span className="text-[11px] font-mono tabular-nums whitespace-nowrap">
+      {hi != null && (
+        <span className={highOnly
+          ? 'text-[var(--color-took)] font-semibold'
+          : 'text-[var(--color-text-muted)]'}>{nf(hi)}<span className="opacity-50">/</span></span>
+      )}
+      <span className="text-[var(--color-text-secondary)]">{nf(panel.count)}</span>
     </span>
   )
 }
 
+/** The switch. Off by default; it hides rows, it does not re-screen. */
+function HighOnly({ on, set }) {
+  const { t } = useLanguage()
+  return (
+    <button type="button" onClick={() => set(!on)}
+            className={`flex items-center gap-2 bg-transparent border-none p-0 cursor-pointer
+                        text-[11px] ${on ? 'text-[var(--color-text)]'
+                                         : 'text-[var(--color-text-muted)]'}`}>
+      <i className={`w-7 h-[15px] rounded-full relative transition-colors ${on
+        ? 'bg-[var(--color-accent-solid)]' : 'bg-[var(--color-hover-bg)]'}`}>
+        <i className={`absolute top-[2px] w-[11px] h-[11px] rounded-full bg-white
+                       transition-all ${on ? 'left-[14px]' : 'left-[2px]'}`} />
+      </i>
+      {t('wl.highOnly')}
+    </button>
+  )
+}
+
+/** Rows a panel shows under the current view. Never changes what it counted. */
+const shown = (panel, highOnly) => {
+  const rows = panel.tickers || []
+  return highOnly ? rows.filter((r) => r.rs_high) : rows
+}
+
 /* ── Landing: six cards ──────────────────────────────────────────────────── */
 
-function ZoneCard({ zone, index }) {
+function ZoneCard({ zone, index, highOnly }) {
   const { t } = useLanguage()
   const live = zone.panels.filter((p) => p.measured)
   // A taste, not the list. Taken from the biggest panel, because that is the
@@ -213,7 +253,7 @@ function ZoneCard({ zone, index }) {
   const lead = [...live].sort((a, b) => b.count - a.count)[0]
   // Twelve, not eight: the cards are full-width now and eight names left the
   // bottom third of each one empty.
-  const taste = (lead?.tickers || []).slice(0, 12)
+  const taste = shown(lead || { tickers: [] }, highOnly).slice(0, 12)
   const rsKey = pickRs(taste)
 
   return (
@@ -230,9 +270,15 @@ function ZoneCard({ zone, index }) {
           {String(index + 1).padStart(2, '0')}
         </span>
         <b className="text-[14.5px] font-semibold">{tr(t, `wlz.${zone.key}`, zone.label)}</b>
-        <span className="ml-auto text-[10px] font-mono text-[var(--color-text-muted)]">
-          {live.length}/{zone.panels.length}
-        </span>
+        {/* Only when something is still waiting. Complete, this said "4/4" in
+            the same shape as the rows' "6/23" below it, and those are two
+            different ratios — panels run vs names at an RS high. Two meanings
+            in one form on one card is a misreading waiting to happen. */}
+        {live.length < zone.panels.length && (
+          <span className="ml-auto text-[10px] font-mono text-[var(--color-text-muted)]">
+            {t('wl.measured', { n: live.length, of: zone.panels.length })}
+          </span>
+        )}
       </span>
 
       {/* Panel, count. The bars are gone: the count is printed right there, so
@@ -271,10 +317,10 @@ function ZoneCard({ zone, index }) {
 
 /* ── Detail: one question, every name ────────────────────────────────────── */
 
-function Panel({ panel, showGroup, explainPending, rsKey }) {
+function Panel({ panel, showGroup, explainPending, rsKey, highOnly }) {
   const { t } = useLanguage()
   const [openRecipe, setOpenRecipe] = useState(false)
-  const rows = panel.tickers || []
+  const rows = shown(panel, highOnly)
 
   return (
     <div className="py-3 border-t border-[var(--color-border-light)] first:border-t-0">
@@ -290,7 +336,7 @@ function Panel({ panel, showGroup, explainPending, rsKey }) {
               ? t('wl.showing', { shown: rows.length, total: nf(panel.count) })
               : nf(panel.count)}
           </span>
-        ) : <Count panel={panel} />}
+        ) : <Count panel={panel} highOnly={highOnly} />}
 
         {rows.length > 0 && (
           <button type="button"
@@ -333,7 +379,7 @@ function Panel({ panel, showGroup, explainPending, rsKey }) {
   )
 }
 
-function ZoneDetail({ zone, index, total }) {
+function ZoneDetail({ zone, index, total, highOnly }) {
   const { t } = useLanguage()
   const rsKey = pickRs(zone.panels.flatMap((p) => p.tickers || []))
   const live = zone.panels.filter((p) => p.measured).length
@@ -372,6 +418,7 @@ function ZoneDetail({ zone, index, total }) {
       <div className="rounded-3xl bg-[var(--color-surface)] px-4 py-1">
         {zone.panels.map((p) => (
           <Panel key={p.key} panel={p} showGroup={zone.key === 'leaders'} rsKey={rsKey}
+                 highOnly={highOnly}
                  explainPending={!allPending && p.key === firstPending} />
         ))}
       </div>
@@ -384,6 +431,18 @@ function ZoneDetail({ zone, index, total }) {
 export default function WatchlistPage({ zone: routeZone }) {
   const { t } = useLanguage()
   const { data, failed } = useWatchlist()
+  /**
+   * "RS highs only" — a view, never a screen.
+   *
+   * Andy's ruling on rs_high was detect, do not filter: no panel's membership
+   * changes because of it. So this hides rows rather than re-running anything,
+   * every count stays the count of the full panel, and the header prints both
+   * numbers so what is hidden is always visible as a quantity.
+   *
+   * Default off. A page that opens already filtered is a page that has made a
+   * decision on your behalf before you have looked.
+   */
+  const [highOnly, setHighOnly] = useState(false)
 
   const zones = useMemo(() => {
     if (!data?.zones) return []
@@ -406,7 +465,11 @@ export default function WatchlistPage({ zone: routeZone }) {
   if (!data) return null
 
   const at = zones.findIndex((z) => z.key === routeZone)
-  if (at >= 0) return <ZoneDetail zone={zones[at]} index={at} total={zones.length} />
+  if (at >= 0) {
+    return (
+      <ZoneDetail zone={zones[at]} index={at} total={zones.length} highOnly={highOnly} />
+    )
+  }
 
   const cross = data.cross_zone || []
   const rule = data.cross_zone_rule
@@ -417,18 +480,21 @@ export default function WatchlistPage({ zone: routeZone }) {
 
       {/* Provenance first: which close this is, and how many names were even
           eligible. A list without its universe is a list you cannot size up. */}
-      <p className="text-[12px] font-mono text-[var(--color-text-muted)] mt-1 mb-5">
+      <div className="flex items-baseline gap-4 flex-wrap mt-1 mb-5">
+      <p className="text-[12px] font-mono text-[var(--color-text-muted)] m-0">
         {t('wl.provenance', {
           date: data.date,
           n: nf(data.universe_gated),
           gate: gateWords(data.gate),
         })}
       </p>
+      <HighOnly on={highOnly} set={setHighOnly} />
+      </div>
 
       {/* auto-rows-fr: every card the same height, which is most of what
           makes a grid of cards read as a grid rather than a pile. */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 auto-rows-fr">
-        {zones.map((z, i) => <ZoneCard key={z.key} zone={z} index={i} />)}
+        {zones.map((z, i) => <ZoneCard key={z.key} zone={z} index={i} highOnly={highOnly} />)}
       </div>
 
       {/* Names that answer more than one question. Described, not ranked, and

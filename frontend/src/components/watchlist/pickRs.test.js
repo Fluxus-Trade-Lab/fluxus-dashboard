@@ -46,8 +46,18 @@ describe('RS_BANDS', () => {
   it('inks the 21-day measure only at its two definitional ends', () => {
     // 21/21 is "highest relative strength of the month", 1/21 is "lowest".
     // Everything between is a matter of degree, and stays grey.
-    expect(RS_BANDS.rs_line_pctl_21.hi).toBe(100)
-    expect(RS_BANDS.rs_line_pctl_21.lo).toBeCloseTo(100 / 21, 6)
+    //
+    // Asserted on the VALUES THE FILE CARRIES, not on the constant. The first
+    // version of this test pinned lo to exactly 100/21 and passed while the
+    // band was dead: the pipeline rounds, so 1/21 arrives as 5 and 5 > 4.76.
+    // A test that checks the number I wrote instead of the behaviour I wanted
+    // will agree with me every time I am wrong.
+    const { hi, lo } = RS_BANDS.rs_line_pctl_21
+    expect(21 >= hi ? false : true).toBe(true)     // guard: hi is in 0-100 units
+    expect(100 >= hi).toBe(true)                   // 21/21 inks
+    expect(95 >= hi).toBe(false)                   // 20/21 does not
+    expect(5 <= lo).toBe(true)                     // 1/21, as rounded, inks
+    expect(10 <= lo).toBe(false)                   // 2/21 does not
   })
 
   it('does not reuse the cross-sectional cuts on the self-percentile', () => {
