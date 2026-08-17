@@ -776,7 +776,7 @@ def main():
         'rs_1m', 'rs_3m', 'rs_6m',
         'rs_21d', 'rs_63d', 'rs_126d',   # deprecated aliases, drop once the UI moves
         'rs_ibd',
-        'f_score', 'i_score', 'h_score',
+        'f_score', 'i_score', 'h_score', 'tradeable',   # tradeable: the field the scores are measured on
         'adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist',
         'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d', 'pp_count_10d',
         'vol10_green', 'vol10_green_count_10d', 'vol10_green_count_30d',
