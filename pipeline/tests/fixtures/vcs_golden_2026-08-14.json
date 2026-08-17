@@ -1,0 +1,28 @@
+{
+ "_source": "TradingView web daily, indicators/third_party/oratnek_vcs_probe.pine, Andy's screenshots 2026-08-17; Python = pipeline/tools/vcs_probe.py --end 2026-08-14",
+ "_verdict": "components agree to 4 dp (SMCI ratioATR 0.9145 vs 0.9148 traces to the 32.585 sub-penny high); final score within 0.013 (EMA3 accumulating source micro-deltas). No engine deltas.",
+ "AEHR": {
+  "ratioATR": 1.1131,
+  "ratioStd": 1.2173,
+  "volRatio": 1.185,
+  "efficiency": 0.3541,
+  "physics": 0.0,
+  "smooth": 0.722,
+  "daysTight": 0,
+  "isHigherLow": true,
+  "total": 0.6137,
+  "VCS": 0.6137
+ },
+ "SMCI": {
+  "ratioATR": 0.9145,
+  "ratioStd": 0.6843,
+  "volRatio": 1.645,
+  "efficiency": 0.3361,
+  "physics": 21.309,
+  "smooth": 31.6881,
+  "daysTight": 0,
+  "isHigherLow": true,
+  "total": 26.9349,
+  "VCS": 26.9349
+ }
+}

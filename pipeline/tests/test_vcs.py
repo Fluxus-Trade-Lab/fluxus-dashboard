@@ -135,3 +135,33 @@ class TestContract:
         v = calculate_vcs(frame(150))
         assert isinstance(v, float) and 0.0 <= v <= 100.0
         assert v == round(v, 1)
+
+
+class TestGoldenAgainstTradingView:
+    """AEHR and SMCI, daily bars to 2026-08-14, against oratnek's own VCS v2
+    on TradingView (indicators/third_party/oratnek_vcs_probe.pine, Andy's
+    screenshots). Components to 4 dp, final score within 0.02 -- the SMCI
+    ratioATR delta of 3e-4 is a sub-penny high (32.585 vs 32.59) and the score
+    delta is EMA3 carrying source micro-differences."""
+    import json as _json
+    from pathlib import Path as _Path
+    _FX = _Path(__file__).parent / "fixtures"
+    GOLD = _json.loads((_FX / "vcs_golden_2026-08-14.json").read_text())
+    BARS = _json.loads((_FX / "vcs_bars_2026-08-14.json").read_text())
+
+    @pytest.mark.parametrize("ticker", ["AEHR", "SMCI"])
+    def test_matches_the_chart(self, ticker):
+        b = self.BARS[ticker]
+        df = pd.DataFrame({k: b[k] for k in ("Open", "High", "Low", "Close", "Volume")},
+                          index=pd.to_datetime(b["date"]))
+        r = V.vcs(df)
+        g = self.GOLD[ticker]
+        h, l, c, v = df["High"], df["Low"], df["Close"], df["Volume"].astype(float)
+        tr = V.true_range(h, l, c)
+        assert (V.pine_sma(tr, 13) / V.pine_sma(tr, 63)).iloc[-1] == pytest.approx(g["ratioATR"], abs=5e-4)
+        assert (V.pine_stdev(c, 13) / V.pine_stdev(c, 63)).iloc[-1] == pytest.approx(g["ratioStd"], abs=5e-4)
+        assert (V.pine_sma(v, 5) / V.pine_sma(v, 50)).iloc[-1] == pytest.approx(g["volRatio"], abs=1e-3)
+        assert (abs(c - c.shift(13)) / V.pine_sum(tr, 13)).iloc[-1] == pytest.approx(g["efficiency"], abs=5e-4)
+        assert r.physics_last == pytest.approx(g["physics"], abs=0.02)
+        assert r.days_tight == g["daysTight"] and r.higher_low is g["isHigherLow"]
+        assert r.score == pytest.approx(g["VCS"], abs=0.02)
