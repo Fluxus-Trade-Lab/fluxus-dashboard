@@ -332,7 +332,7 @@ export const translations = {
     // ── Screener ────────────────────────────────────────────────────────────
     'scr.blurb': 'One table over the tradeable universe, read through four vocabularies the pipeline already speaks — a scan, a state, a theme, a name. Nothing here is typed in; everything is selected.',
     'scr.tab.screener': 'Screener',
-    'scr.tab.watchlist': 'Watchlist',
+    'scr.tab.watchlist': 'Watchlist (old)',
     'scr.bar.scan': 'Scan',
     'scr.bar.state': 'State',
     'scr.bar.theme': 'Theme',
@@ -691,7 +691,7 @@ export const translations = {
     // ── Screener ────────────────────────────────────────────────────────────
     'scr.blurb': '一张表覆盖全部可交易标的，用管线已经会说的四本词汇表来读——扫描、状态、主题、代码。这里没有需要填写的东西，全部是选择。',
     'scr.tab.screener': '选股器',
-    'scr.tab.watchlist': '自选',
+    'scr.tab.watchlist': '旧 Watchlist',
     'scr.bar.scan': '扫描',
     'scr.bar.state': '状态',
     'scr.bar.theme': '主题',
