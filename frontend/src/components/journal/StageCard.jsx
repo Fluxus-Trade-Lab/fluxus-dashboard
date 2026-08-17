@@ -1,5 +1,9 @@
 import { useMemo } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
+import { usePortfolio } from '../portfolio/context/PortfolioContext'
+import { enrichTrades } from '../portfolio/lib/calculations'
+import { buildEquityCurve } from '../portfolio/lib/equityCurve'
+import { positionSizeStats } from '../portfolio/lib/positionSize'
 import { sequence } from './lib/afterLoss'
 import { holdCapture } from './lib/holdCapture'
 import { setupEdge } from './lib/setupEdge'
@@ -88,26 +92,70 @@ function StopViz({ trades }) {
 }
 
 /**
- * 定量 — deliberately empty.
+ * 定量 — position size per trade, the same bars the detail page draws.
  *
- * Position size lives on the portfolio's own trades, not in this index, so the
- * honest state is "not connected" rather than a chart of whatever field is to
- * hand. An earlier draft plotted holding days here and called it sizing, which
- * answered a different question while looking like an answer to this one.
+ * This card used to render "— —" and say the data was not connected, which was
+ * true of the post-mortem index the other three cards read and false of the
+ * page behind the card: sizing lives on the portfolio's own trades, and the
+ * detail page has been charting them all along. A card that disclaims what its
+ * own page shows is worse than no card.
+ *
+ * The numbers come from the one shared helper, so the card cannot drift from
+ * the chart it opens.
  */
-function SizeViz() {
+function useSizeStats() {
+  const { state } = usePortfolio()
+  const { trades, dailyPrices, benchmarkHistories, startingCapital } = state
+
+  // Same derivation chain the detail page uses. The equity curve is not
+  // optional here: size is notional ÷ equity AT ENTRY, and without the curve
+  // every trade would be divided by the starting capital instead — which would
+  // make early trades look small and late ones large, purely from compounding.
+  return useMemo(() => {
+    const curve = buildEquityCurve(trades, startingCapital, dailyPrices, benchmarkHistories)
+    const value = curve.length ? curve[curve.length - 1].value : startingCapital
+    return positionSizeStats(enrichTrades(trades, value, dailyPrices), curve, startingCapital)
+  }, [trades, dailyPrices, benchmarkHistories, startingCapital])
+}
+
+function SizeViz({ size }) {
+  const { data, avg } = size
+  if (data.length < 3) return null
+  const max = Math.max(...data.map((d) => d.size)) || 1
+  // Thinned to fit, evenly across the book rather than the last N — a card
+  // showing only recent trades would flatter or damn whatever month it ends in.
+  const step = Math.max(1, Math.ceil(data.length / 88))
+  const shown = data.filter((_, i) => i % step === 0)
+
   return (
-    <div className="h-full flex items-center justify-center">
-      <span className="text-[10px] font-mono text-[var(--color-text-muted)]">— —</span>
+    <div className="relative h-full flex items-end gap-px">
+      <i className="absolute left-0 right-0 border-t border-dashed border-[var(--color-border)]"
+         style={{ bottom: `${(avg / max) * 100}%` }} />
+      {shown.map((d, i) => (
+        <i key={i}
+           className={`flex-1 rounded-sm ${d.pl > 0
+             ? 'bg-[var(--color-took)]' : 'bg-[var(--color-refused)]'} opacity-70`}
+           style={{ height: `${Math.max(2, (d.size / max) * 100)}%` }} />
+      ))}
     </div>
   )
 }
 
 export default function StageCard({ stageKey, trades, lead, onOpen }) {
   const { t } = useLanguage()
+  const size = useSizeStats()
 
   const reading = useMemo(() => {
-    if (stageKey === 'size') return { n: null, read: t('card.size.pending') }
+    if (stageKey === 'size') {
+      if (size.data.length < 3) return { n: null, read: t('card.size.pending') }
+      return {
+        n: t('card.trades', { n: size.data.length }),
+        read: t('card.size.read', {
+          avg: `${size.avg.toFixed(1)}%`,
+          corr: size.corr != null ? (size.corr >= 0 ? '+' : '') + size.corr.toFixed(2) : '—',
+        }),
+      }
+    }
     if (stageKey === 'hold' || stageKey === 'select') {
       const row = stageLeaks(trades).find((r) => r.stage === stageKey)
       if (!row) return { n: null, read: '' }
@@ -124,7 +172,7 @@ export default function StageCard({ stageKey, trades, lead, onOpen }) {
       read: winAfter == null ? '' : t('card.stop.read', {
         all: `${(win * 100).toFixed(0)}%`, after: `${(winAfter * 100).toFixed(0)}%` }),
     }
-  }, [stageKey, trades, t])
+  }, [stageKey, trades, size, t])
 
   const Viz = { select: SelectViz, hold: HoldViz, stop: StopViz, size: SizeViz }[stageKey]
 
@@ -135,8 +183,7 @@ export default function StageCard({ stageKey, trades, lead, onOpen }) {
       className={`text-left flex flex-col rounded-3xl px-4 py-3.5 border cursor-pointer
                   transition-colors bg-[var(--color-surface)]
                   hover:bg-[var(--color-hover-bg)] ${
-        lead ? 'border-[var(--color-accent)]' : 'border-transparent'} ${
-        stageKey === 'size' ? 'opacity-60' : ''}`}>
+        lead ? 'border-[var(--color-accent)]' : 'border-transparent'}`}>
       <span className="flex items-baseline gap-2">
         <b className="text-[19px] font-semibold">{t(`rev.stage.${stageKey}`)}</b>
         {lead && (
@@ -148,7 +195,7 @@ export default function StageCard({ stageKey, trades, lead, onOpen }) {
         {t(`rev.asks.${stageKey}`)}
       </span>
 
-      <div className="h-[92px] mb-3">{Viz && <Viz trades={trades} />}</div>
+      <div className="h-[92px] mb-3">{Viz && <Viz trades={trades} size={size} />}</div>
 
       <span className="mt-auto pt-2.5 border-t border-[var(--color-border-light)]">
         {reading.n && <b className="block text-[17px] font-semibold">{reading.n}</b>}

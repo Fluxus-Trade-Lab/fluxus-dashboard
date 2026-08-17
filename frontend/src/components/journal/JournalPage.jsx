@@ -13,6 +13,7 @@ import HoldCaptureSection from './analytics/HoldCaptureSection'
 import AfterLossSection from './analytics/AfterLossSection'
 import SetupEdgeSection from './analytics/SetupEdgeSection'
 import SetupChat from './SetupChat'
+import { PortfolioProvider } from '../portfolio/context/PortfolioContext'
 
 
 /**
@@ -86,12 +87,17 @@ export default function JournalPage({ stage: routeStage }) {
         <p className="text-[13px] text-[var(--color-text-secondary)] mt-1 mb-5 max-w-[62ch]">
           {t('rev.overview.lede')}
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
-          {STAGES.map(({ key }) => (
-            <StageCard key={key} stageKey={key} trades={trades}
-                       lead={key === lead} onOpen={go} />
-          ))}
-        </div>
+        {/* One store for the page. The sizing card reads the portfolio's own
+            trades, and the monthly-review panel below mounts a provider of its
+            own — hoisting it here means both share a single store instead of
+            two writers pushing the same Sheet. */}
+        <PortfolioProvider>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
+            {STAGES.map(({ key }) => (
+              <StageCard key={key} stageKey={key} trades={trades}
+                         lead={key === lead} onOpen={go} />
+            ))}
+          </div>
 
         {/* Andy's own words about the period. Not inside a stage — it is about
             all four — and its own entrance, per his call. */}
@@ -99,8 +105,9 @@ export default function JournalPage({ stage: routeStage }) {
           <summary className="text-[11px] font-mono uppercase tracking-[.18em]
                               text-[var(--color-text-muted)] cursor-pointer list-none
                               hover:text-[var(--color-text)]">{t('rev.monthly')} +</summary>
-          <div className="mt-3"><AnalyticsTab initialSection="monthly-review" /></div>
-        </details>
+            <div className="mt-3"><AnalyticsTab initialSection="monthly-review" /></div>
+          </details>
+        </PortfolioProvider>
 
         <p className="text-[11px] text-[var(--color-text-muted)] mt-5 max-w-[70ch]">
           {t('rev.report.hint')}

@@ -328,7 +328,28 @@ export function usePortfolio() {
   return ctx
 }
 
+/**
+ * One store per page, however many times it is asked for.
+ *
+ * Every instance of the store below pulls from Sheets on mount and runs its own
+ * debounced push. Two of them on one page is therefore not "a second copy of
+ * some state" — it is two independent writers to the same spreadsheet, racing
+ * on the same rows. The app already leans on tabs mounting their own provider
+ * (Analytics, Sizing, Risk, Ticker), so as soon as two of those appear on one
+ * screen the hazard is live.
+ *
+ * So the exported name is a no-op when a store is already above it. Nesting a
+ * provider becomes a way of saying "I need the store", not "make me a store".
+ */
 export function PortfolioProvider({ children }) {
+  const existing = useContext(PortfolioContext)
+  // Safe before any other hook: useContext always runs, and this component
+  // owns no further hooks of its own.
+  if (existing) return children
+  return <PortfolioStore>{children}</PortfolioStore>
+}
+
+function PortfolioStore({ children }) {
   const [state, dispatch] = useReducer(reducer, null, loadFromStorage)
   const isHydrating = useRef(true)
 
