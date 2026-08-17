@@ -2,6 +2,7 @@ import { useHash } from '../hooks/useHash'
 import Header from './Header'
 import Rail from './Rail'
 import PageHeader from './PageHeader'
+import WritingSlot from './WritingSlot'
 import Placeholder from './Placeholder'
 import HowToRead from './HowToRead'
 import Reference from './Reference'
@@ -144,15 +145,31 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           {/* Reserved for the founder's own words — written, never generated.
               An empty frame, because a slot that appears only once it is full
               was never reserved. */}
-          <section className="border border-dashed border-[var(--color-border)] rounded-3xl
-                              px-6 py-4">
-            <span className="text-[10px] font-mono uppercase tracking-[.24em]
-                             text-[var(--color-text-muted)]">Founders note</span>
-            <p className="text-[11px] text-[var(--color-text-muted)] m-0 mt-1">
-              Reserved. Written by hand on the days there is something to say — an
-              empty slot on the other days is the honest state.
-            </p>
-          </section>
+          {/* Two cadences, because they are two different readings and were
+              sharing one box. The daily note is what the tape did today; the
+              weekly is what the month is turning into, and a week's worth of
+              daily notes is not the same thing as having written the weekly
+              one. Both keep their back-catalogue — the second reading is the
+              point of writing them. (Andy, 2026-08-17.) */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            <WritingSlot
+              label="Founders note · daily"
+              kind="founders-daily"
+              rows={4}
+              placeholder="What the session actually did, in your words."
+              reserved="Written by hand on the days there is something to say — an
+                        empty slot on the other days is the honest state."
+            />
+            <WritingSlot
+              label="Founders note · weekly"
+              kind="founders-weekly"
+              cadence="weekly"
+              rows={4}
+              placeholder="What the week is turning into."
+              reserved="The longer read. Not a summary of the dailies — the thing
+                        that only shows up at a week's distance."
+            />
+          </div>
 
           {/* the tier word went (Andy 2026-08-16); the rule alone now marks
               the seam between the read and its evidence */}

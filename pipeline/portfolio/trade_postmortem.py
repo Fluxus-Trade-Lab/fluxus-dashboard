@@ -194,6 +194,56 @@ def _classify_setup(snap: dict, direction: str) -> str:
         return 'Short in mixed structure'
 
 
+def _price_scale_mismatch(df: pd.DataFrame, trade: Trade) -> Optional[str]:
+    """Is the logged price on the same scale as these bars?
+
+    The trade log records what was actually paid. The OHLC cache is
+    split-adjusted, so for a name that has reverse-split the historical series
+    is quoted in a currency the trade never traded in. SOXS on 2026-05-06:
+    entered at $10.34, and that day's bar reads $1,454 — a factor of 140.
+
+    Nothing errors. The excursion just measures a $0.34 risk unit against a
+    four-figure price and reports the best exit as +4,827R. Four SOXS trades
+    and one TZA were 87% of the whole book's "available R" on 2026-08-17, which
+    dragged the headline capture from 10% to 2% — a number that read as a
+    verdict on the trading and was a statement about a stock split.
+
+    The frontend fixed its own version of this (the 6,000% equity-curve spike);
+    the post-mortem never did.
+
+    Checked at BOTH ends of the hold: a split inside the window leaves the
+    entry bar matching and everything after it not.
+    """
+    for label, when in (('entry', trade.entry_date), ('exit', trade.exit_date)):
+        if when is None:
+            continue
+        near = df[df.index >= when]
+        if near.empty:
+            near = df[df.index <= when]
+            if near.empty:
+                continue
+            bar = near.iloc[-1]
+        else:
+            bar = near.iloc[0]
+        lo, hi = float(bar['low']), float(bar['high'])
+        if not (lo > 0 and hi > 0):
+            continue
+        # An entry sits inside its day's range by definition. The band is wide
+        # — half the low to twice the high — so a log dated a day out, or a gap,
+        # is not mistaken for a split. Outside it, this is not a discrepancy in
+        # price, it is a different series.
+        if lo * 0.5 <= trade.entry_price <= hi * 2.0:
+            continue
+        # Reverse splits push the adjusted bars far above the traded price,
+        # forward splits far below. Printed as whichever way round it went —
+        # `x{ratio:.0f}` on a forward split rounds to "x0", which names nothing.
+        ratio = ((lo + hi) / 2) / trade.entry_price
+        factor = (f'x{ratio:,.0f}' if ratio >= 1 else f'/{1 / ratio:,.0f}')
+        return (f'{label} price ${trade.entry_price:,.2f} against a bar of '
+                f'${lo:,.2f}-${hi:,.2f} ({factor})')
+    return None
+
+
 def _compute_path_analytics(df: pd.DataFrame, trade: Trade) -> dict:
     """Walk OHLC from entry → exit, compute MFE/MAE/optimal, and separately what
     the name did for ten days after the exit.
@@ -207,6 +257,16 @@ def _compute_path_analytics(df: pd.DataFrame, trade: Trade) -> dict:
     reporting. Holding to a peak you have already sold past is not a thing a
     trader can do, so it does not belong in a metric called capture.
     """
+    mismatch = _price_scale_mismatch(df, trade)
+    if mismatch:
+        # Returning {} rather than skipping the trade: it stays in the index,
+        # its metrics stay absent, and `_classify_lesson` calls it "Insufficient
+        # data". A trade that cannot be measured should be visible and labelled,
+        # not missing from the book.
+        logger.warning('%s %s: split-adjusted history, no excursion — %s',
+                       trade.ticker, trade.entry_date, mismatch)
+        return {}
+
     entry_d = trade.entry_date
     exit_d = trade.exit_date or market_today()
     # The capturable window: only bars you were actually holding through.

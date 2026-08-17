@@ -3,6 +3,7 @@ import { useTradeJournal } from '../../hooks/useTradeJournal'
 import { useLanguage } from '../../i18n/LanguageContext'
 import TickerLink from '../ticker/TickerLink'
 import PreMarketChecklist from '../dashboard/PreMarketChecklist'
+import WritingSlot from '../WritingSlot'
 import PageHeader from '../PageHeader'
 import DataUnavailable from '../DataUnavailable'
 
@@ -86,16 +87,19 @@ export default function TradeJournalPage() {
           answers what the market is doing, and both of these are yours. */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-5">
         <PreMarketChecklist />
-        <section className="border border-dashed border-[var(--color-border)]
-                            rounded-lg px-4 py-3">
-          <span className="text-[10px] font-mono uppercase tracking-[.24em]
-                           text-[var(--color-text-muted)]">Market recap</span>
-          <p className="text-[11px] leading-relaxed text-[var(--color-text-muted)] m-0 mt-1.5">
-            Reserved. The other half of the checklist: what the session actually
-            did, written after the close. Empty until there is something to
-            write — a card that only appears once it is full was never reserved.
-          </p>
-        </section>
+        {/* "Market recap" was the wrong name and therefore the wrong card: the
+            market's own recap belongs on the dashboard, next to the market's
+            data. This half of the checklist is about the trading — what Andy
+            did after the open, read back against what he planned before it.
+            (Andy, 2026-08-17.) */}
+        <WritingSlot
+          label="Trading recap"
+          kind="trading-recap"
+          rows={5}
+          placeholder="What did you actually do today — and was it the plan?"
+          reserved="The other half of the checklist: your own session, written after
+                    the close. Empty until there is something to write."
+        />
       </div>
 
       {/* Lesson filter chips */}

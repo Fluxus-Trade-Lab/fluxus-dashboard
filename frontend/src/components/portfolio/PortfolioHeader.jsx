@@ -22,9 +22,22 @@ export default function Header({ portfolioValue, totalPL, totalReturnPct, cashAv
               state.syncStatus === 'syncing' ? 'Syncing...' :
               state.syncStatus === 'error' ? 'Sync failed' : 'Not synced'
             }>
-              {state.syncStatus === 'success' && <span className="text-[var(--color-text-muted)]">●</span>}
+              {/* Connected / failed is a two-pole reading, which is the one case
+                  the charter licenses the pair for — and a filled grey dot on
+                  the dark ground read as "offline" (Andy, 2026-08-17), which
+                  is the opposite of what it meant.
+
+                  Colour is not carrying it alone. took and refused clear 3:1
+                  against both grounds in both themes (7.6–8.9 and 4.5–5.6) but
+                  sit only 1.58–1.68 apart FROM EACH OTHER: near-identical
+                  luminance, so in greyscale or to a red-green reader the good
+                  dot and the failed dot are the same grey dot. The glyph
+                  carries the meaning too — ● connected, ✕ failed — the way the
+                  compare ribbons took a dash when three hues at one lightness
+                  turned out to be one line. */}
+              {state.syncStatus === 'success' && <span className="text-[var(--color-took)]">●</span>}
               {state.syncStatus === 'syncing' && <span className="text-[var(--color-signal-caution)] animate-pulse">●</span>}
-              {state.syncStatus === 'error' && <span className="text-[var(--color-loss)]">●</span>}
+              {state.syncStatus === 'error' && <span className="text-[var(--color-refused)]">✕</span>}
               {state.syncStatus === 'idle' && <span className="text-[var(--color-text-muted)]">○</span>}
             </span>
           )}
