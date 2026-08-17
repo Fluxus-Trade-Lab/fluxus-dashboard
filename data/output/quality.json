@@ -6,8 +6,13 @@
       "flagged": {}
     },
     "groups_themes": {
-      "status": "ok",
-      "flagged": {}
+      "status": "degraded",
+      "flagged": {
+        "ext_median": "degraded",
+        "ext_n": "degraded",
+        "ext_share_4": "degraded",
+        "ext_share_7": "degraded"
+      }
     },
     "groups_stocks": {
       "status": "ok",
@@ -26,5 +31,5 @@
       "flagged": {}
     }
   },
-  "status": "ok"
+  "status": "degraded"
 }

@@ -165,25 +165,5 @@
     "Cells are unequal: Q1/Q2 below the 200-day are rare (n < 130); read n_cell beside prob.",
     "Quintile edges are set on the full 1990-> sample; the half-sample check shows the ordering holds in both halves.",
     "Overlapping 21-day windows: sessions are not independent -- the episode count is the sample size that matters."
-  ],
-  "appendix_logistic_oos": {
-    "full_9": {
-      "auc": 0.518,
-      "brier": 0.1332,
-      "brier_base_rate": 0.1205,
-      "n_oos": 3424
-    },
-    "vix_d200": {
-      "auc": 0.628,
-      "brier": 0.1189,
-      "brier_base_rate": 0.1205,
-      "n_oos": 3424
-    },
-    "vix_only": {
-      "auc": 0.619,
-      "brier": 0.12,
-      "brier_base_rate": 0.1205,
-      "n_oos": 3424
-    }
-  }
+  ]
 }

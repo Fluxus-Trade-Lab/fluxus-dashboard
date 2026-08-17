@@ -16,38 +16,14 @@
           "label": "True Market Leaders",
           "recipe": "liquid_leader and home theme/industry state = Leading and rs_1m >= 80 -- the leader inside a leading water",
           "measured": true,
-          "count": 26,
+          "count": 23,
           "tickers": [
             {
               "ticker": "UMAC",
               "rs_1m": 99,
-              "hybrid_rs": 87.0,
+              "hybrid_rs": 86.0,
               "sector": "Technology",
               "group": "Drones",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "DELL",
-              "rs_1m": 91,
-              "hybrid_rs": 87.0,
-              "sector": "Technology",
-              "group": "Computer Hardware",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "BFLY",
-              "rs_1m": 95,
-              "hybrid_rs": 86.0,
-              "sector": "Healthcare",
-              "group": "Medical Devices",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "CRSR",
-              "rs_1m": 95,
-              "hybrid_rs": 86.0,
-              "sector": "Technology",
-              "group": "Computer Hardware",
               "group_state": "Leading"
             },
             {
@@ -59,8 +35,16 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "P",
-              "rs_1m": 99,
+              "ticker": "DELL",
+              "rs_1m": 91,
+              "hybrid_rs": 85.0,
+              "sector": "Technology",
+              "group": "Computer Hardware",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "CRSR",
+              "rs_1m": 95,
               "hybrid_rs": 84.0,
               "sector": "Technology",
               "group": "Computer Hardware",
@@ -99,25 +83,25 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "HPQ",
-              "rs_1m": 88,
-              "hybrid_rs": 83.0,
+              "ticker": "P",
+              "rs_1m": 99,
+              "hybrid_rs": 82.0,
               "sector": "Technology",
               "group": "Computer Hardware",
               "group_state": "Leading"
             },
             {
-              "ticker": "GTLB",
-              "rs_1m": 94,
+              "ticker": "PGY",
+              "rs_1m": 92,
               "hybrid_rs": 82.0,
               "sector": "Technology",
               "group": "Broad AI Theme",
               "group_state": "Leading"
             },
             {
-              "ticker": "PGY",
-              "rs_1m": 91,
-              "hybrid_rs": 82.0,
+              "ticker": "GTLB",
+              "rs_1m": 94,
+              "hybrid_rs": 81.0,
               "sector": "Technology",
               "group": "Broad AI Theme",
               "group_state": "Leading"
@@ -131,43 +115,27 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "NTNX",
+              "ticker": "HPQ",
               "rs_1m": 88,
               "hybrid_rs": 81.0,
               "sector": "Technology",
-              "group": "Broad AI Theme",
+              "group": "Computer Hardware",
               "group_state": "Leading"
             },
             {
-              "ticker": "AVTR",
-              "rs_1m": 90,
+              "ticker": "NTNX",
+              "rs_1m": 88,
               "hybrid_rs": 80.0,
-              "sector": "Healthcare",
-              "group": "Medical Instruments & Supplies",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "TNDM",
-              "rs_1m": 95,
-              "hybrid_rs": 79.0,
-              "sector": "Healthcare",
-              "group": "Medical Devices",
+              "sector": "Technology",
+              "group": "Broad AI Theme",
               "group_state": "Leading"
             },
             {
               "ticker": "GPN",
               "rs_1m": 87,
-              "hybrid_rs": 79.0,
+              "hybrid_rs": 78.0,
               "sector": "Technology",
               "group": "Broad AI Theme",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "DXCM",
-              "rs_1m": 84,
-              "hybrid_rs": 78.0,
-              "sector": "Healthcare",
-              "group": "Medical Devices",
               "group_state": "Leading"
             },
             {
@@ -176,14 +144,6 @@
               "hybrid_rs": 78.0,
               "sector": "Technology",
               "group": "Broad AI Theme",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "BAX",
-              "rs_1m": 86,
-              "hybrid_rs": 77.0,
-              "sector": "Healthcare",
-              "group": "Medical Devices",
               "group_state": "Leading"
             },
             {
@@ -196,18 +156,26 @@
             },
             {
               "ticker": "CNK",
-              "rs_1m": 91,
-              "hybrid_rs": 70.0,
+              "rs_1m": 90,
+              "hybrid_rs": 71.0,
               "sector": "Communication Services",
               "group": "Entertainment",
               "group_state": "Leading"
             },
             {
-              "ticker": "ATEC",
-              "rs_1m": 80,
+              "ticker": "OUST",
+              "rs_1m": 94,
+              "hybrid_rs": 66.0,
+              "sector": "Technology",
+              "group": "Electronic Components",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "LPTH",
+              "rs_1m": 97,
               "hybrid_rs": 62.0,
-              "sector": "Healthcare",
-              "group": "Medical Devices",
+              "sector": "Technology",
+              "group": "Electronic Components",
               "group_state": "Leading"
             },
             {
@@ -217,9 +185,25 @@
               "sector": "Industrials",
               "group": "Defense",
               "group_state": "Leading"
+            },
+            {
+              "ticker": "MU",
+              "rs_1m": 80,
+              "hybrid_rs": 56.0,
+              "sector": "Technology",
+              "group": "Memory & Storage",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "SHAZ",
+              "rs_1m": 88,
+              "hybrid_rs": 49.0,
+              "sector": "Technology",
+              "group": "IT Services",
+              "group_state": "Leading"
             }
           ],
-          "truncated": 1,
+          "truncated": 0,
           "preset": null
         },
         {
@@ -227,16 +211,8 @@
           "label": "Liquid Leaders",
           "recipe": "avg_volume >= 2M, above SMA50, rs_3m >= 80 (course M2_L09; Alex's list). Top 25 by Hybrid RS shown, count is the whole list",
           "measured": true,
-          "count": 181,
+          "count": 174,
           "tickers": [
-            {
-              "ticker": "QMCO",
-              "rs_1m": 99,
-              "hybrid_rs": 88.0,
-              "sector": "Technology",
-              "group": "Quantum Computing",
-              "group_state": "Improving"
-            },
             {
               "ticker": "TXG",
               "rs_1m": 93,
@@ -244,14 +220,6 @@
               "sector": "Healthcare",
               "group": "Speculative Tech",
               "group_state": "Weakening"
-            },
-            {
-              "ticker": "UMAC",
-              "rs_1m": 99,
-              "hybrid_rs": 87.0,
-              "sector": "Technology",
-              "group": "Drones",
-              "group_state": "Leading"
             },
             {
               "ticker": "APPS",
@@ -270,16 +238,24 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "DELL",
-              "rs_1m": 91,
-              "hybrid_rs": 87.0,
+              "ticker": "TEAM",
+              "rs_1m": 99,
+              "hybrid_rs": 86.0,
               "sector": "Technology",
-              "group": "Computer Hardware",
+              "group": "Software",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "UMAC",
+              "rs_1m": 99,
+              "hybrid_rs": 86.0,
+              "sector": "Technology",
+              "group": "Drones",
               "group_state": "Leading"
             },
             {
-              "ticker": "TEAM",
-              "rs_1m": 99,
+              "ticker": "RNG",
+              "rs_1m": 98,
               "hybrid_rs": 86.0,
               "sector": "Technology",
               "group": "Software",
@@ -307,22 +283,6 @@
               "hybrid_rs": 86.0,
               "sector": "Healthcare",
               "group": "Medical Devices",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "CRSR",
-              "rs_1m": 95,
-              "hybrid_rs": 86.0,
-              "sector": "Technology",
-              "group": "Computer Hardware",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "RNG",
-              "rs_1m": 98,
-              "hybrid_rs": 85.0,
-              "sector": "Technology",
-              "group": "Software",
               "group_state": "Weakening"
             },
             {
@@ -350,6 +310,14 @@
               "group_state": "Weakening"
             },
             {
+              "ticker": "DELL",
+              "rs_1m": 91,
+              "hybrid_rs": 85.0,
+              "sector": "Technology",
+              "group": "Computer Hardware",
+              "group_state": "Leading"
+            },
+            {
               "ticker": "SNOW",
               "rs_1m": 89,
               "hybrid_rs": 85.0,
@@ -358,24 +326,16 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "RHI",
-              "rs_1m": 88,
-              "hybrid_rs": 85.0,
-              "sector": "Industrials",
-              "group": "Staffing & Employment Services",
-              "group_state": "Weakening"
-            },
-            {
               "ticker": "PBF",
-              "rs_1m": 80,
+              "rs_1m": 81,
               "hybrid_rs": 85.0,
               "sector": "Energy",
               "group": "Oil & Gas",
               "group_state": "Improving"
             },
             {
-              "ticker": "P",
-              "rs_1m": 99,
+              "ticker": "CRSR",
+              "rs_1m": 95,
               "hybrid_rs": 84.0,
               "sector": "Technology",
               "group": "Computer Hardware",
@@ -385,6 +345,38 @@
               "ticker": "NAVN",
               "rs_1m": 76,
               "hybrid_rs": 84.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "ABCL",
+              "rs_1m": 99,
+              "hybrid_rs": 83.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "FBRX",
+              "rs_1m": 98,
+              "hybrid_rs": 83.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "IOVA",
+              "rs_1m": 96,
+              "hybrid_rs": 83.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "WDAY",
+              "rs_1m": 96,
+              "hybrid_rs": 83.0,
               "sector": "Technology",
               "group": "Software",
               "group_state": "Weakening"
@@ -420,17 +412,9 @@
               "sector": "Technology",
               "group": "Memory & Storage",
               "group_state": "Leading"
-            },
-            {
-              "ticker": "HPQ",
-              "rs_1m": 88,
-              "hybrid_rs": 83.0,
-              "sector": "Technology",
-              "group": "Computer Hardware",
-              "group_state": "Leading"
             }
           ],
-          "truncated": 156,
+          "truncated": 149,
           "preset": null
         }
       ]
@@ -443,29 +427,576 @@
           "key": "ll_hl_1st",
           "label": "LL-HL Structure 1st Pivot",
           "recipe": "sp_signal = 1st_break (close crossed the Fib-0.618 entry today)",
-          "measured": false,
-          "count": 0,
-          "tickers": [],
-          "truncated": 0,
+          "measured": true,
+          "count": 37,
+          "tickers": [
+            {
+              "ticker": "OUST",
+              "rs_1m": 94,
+              "hybrid_rs": 66.0,
+              "sector": "Technology",
+              "group": "Electronic Components",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "SOLV",
+              "rs_1m": 68,
+              "hybrid_rs": 66.0,
+              "sector": "Healthcare",
+              "group": "Medical Devices",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "WFC",
+              "rs_1m": 43,
+              "hybrid_rs": 62.0,
+              "sector": "Financial",
+              "group": "Banks - Money Center",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "CNC",
+              "rs_1m": 41,
+              "hybrid_rs": 62.0,
+              "sector": "Healthcare",
+              "group": "Healthcare Plans",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "PNFP",
+              "rs_1m": 63,
+              "hybrid_rs": 61.0,
+              "sector": "Financial",
+              "group": "Regional Banks",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "BHC",
+              "rs_1m": 95,
+              "hybrid_rs": 59.0,
+              "sector": "Healthcare",
+              "group": "Drug Manufacturers - Specialty & Generic",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "GD",
+              "rs_1m": 63,
+              "hybrid_rs": 56.0,
+              "sector": "Industrials",
+              "group": "Defense",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "KEY",
+              "rs_1m": 31,
+              "hybrid_rs": 55.0,
+              "sector": "Financial",
+              "group": "Regional Banks",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "HWM",
+              "rs_1m": 59,
+              "hybrid_rs": 53.0,
+              "sector": "Industrials",
+              "group": "Grid & Electrification",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "IBN",
+              "rs_1m": 37,
+              "hybrid_rs": 53.0,
+              "sector": "Financial",
+              "group": "Regional Banks",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "AMD",
+              "rs_1m": 50,
+              "hybrid_rs": 50.0,
+              "sector": "Technology",
+              "group": "Semiconductors Large Caps",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "FLEX",
+              "rs_1m": 57,
+              "hybrid_rs": 47.0,
+              "sector": "Technology",
+              "group": "Electronic Components",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "AUR",
+              "rs_1m": 81,
+              "hybrid_rs": 45.0,
+              "sector": "Consumer Cyclical",
+              "group": "Auto Parts",
+              "group_state": "Lagging"
+            },
+            {
+              "ticker": "SPOT",
+              "rs_1m": 63,
+              "hybrid_rs": 45.0,
+              "sector": "Communication Services",
+              "group": "Internet Content & Information",
+              "group_state": "Lagging"
+            },
+            {
+              "ticker": "TTMI",
+              "rs_1m": 58,
+              "hybrid_rs": 45.0,
+              "sector": "Technology",
+              "group": "Electronic Components",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "TAK",
+              "rs_1m": 47,
+              "hybrid_rs": 45.0,
+              "sector": "Healthcare",
+              "group": "Drug Manufacturers - Specialty & Generic",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "PAGP",
+              "rs_1m": 45,
+              "hybrid_rs": 45.0,
+              "sector": "Energy",
+              "group": "Energy",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "PAA",
+              "rs_1m": 42,
+              "hybrid_rs": 44.0,
+              "sector": "Energy",
+              "group": "Energy",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "SMTC",
+              "rs_1m": 76,
+              "hybrid_rs": 43.0,
+              "sector": "Technology",
+              "group": "Semiconductors Broad",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "SHEL",
+              "rs_1m": 53,
+              "hybrid_rs": 42.0,
+              "sector": "Energy",
+              "group": "Oil & Gas",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "ST",
+              "rs_1m": 47,
+              "hybrid_rs": 42.0,
+              "sector": "Technology",
+              "group": "Scientific & Technical Instruments",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "SIMO",
+              "rs_1m": 43,
+              "hybrid_rs": 42.0,
+              "sector": "Technology",
+              "group": "Semiconductors Broad",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "DD",
+              "rs_1m": 66,
+              "hybrid_rs": 41.0,
+              "sector": "Basic Materials",
+              "group": "Chemicals & Materials",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "IONS",
+              "rs_1m": 56,
+              "hybrid_rs": 41.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "SUPN",
+              "rs_1m": 36,
+              "hybrid_rs": 40.0,
+              "sector": "Healthcare",
+              "group": "Drug Manufacturers - Specialty & Generic",
+              "group_state": "Weakening"
+            }
+          ],
+          "truncated": 12,
           "preset": null
         },
         {
           "key": "ll_hl_2nd",
           "label": "LL-HL Structure 2nd Pivot",
           "recipe": "sp_signal = 2nd_break (close crossed the structure high today)",
-          "measured": false,
-          "count": 0,
-          "tickers": [],
-          "truncated": 0,
+          "measured": true,
+          "count": 54,
+          "tickers": [
+            {
+              "ticker": "EXPE",
+              "rs_1m": 91,
+              "hybrid_rs": 80.0,
+              "sector": "Consumer Cyclical",
+              "group": "Travel & Leisure",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "STX",
+              "rs_1m": 91,
+              "hybrid_rs": 80.0,
+              "sector": "Technology",
+              "group": "Memory & Storage",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "APGE",
+              "rs_1m": 36,
+              "hybrid_rs": 75.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "RELY",
+              "rs_1m": 68,
+              "hybrid_rs": 74.0,
+              "sector": "Technology",
+              "group": "Broad AI Theme",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "RCUS",
+              "rs_1m": 64,
+              "hybrid_rs": 73.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "FBP",
+              "rs_1m": 66,
+              "hybrid_rs": 70.0,
+              "sector": "Financial",
+              "group": "Regional Banks",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "TECH",
+              "rs_1m": 36,
+              "hybrid_rs": 70.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "C",
+              "rs_1m": 66,
+              "hybrid_rs": 68.0,
+              "sector": "Financial",
+              "group": "Banks - Money Center",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "SLM",
+              "rs_1m": 72,
+              "hybrid_rs": 67.0,
+              "sector": "Financial",
+              "group": "Fintech",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "EYPT",
+              "rs_1m": 73,
+              "hybrid_rs": 66.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "CFG",
+              "rs_1m": 51,
+              "hybrid_rs": 63.0,
+              "sector": "Financial",
+              "group": "Regional Banks",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "CAH",
+              "rs_1m": 47,
+              "hybrid_rs": 63.0,
+              "sector": "Healthcare",
+              "group": "Medical Distribution",
+              "group_state": null
+            },
+            {
+              "ticker": "SJM",
+              "rs_1m": 69,
+              "hybrid_rs": 61.0,
+              "sector": "Consumer Defensive",
+              "group": "Packaged Foods",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "MTG",
+              "rs_1m": 59,
+              "hybrid_rs": 61.0,
+              "sector": "Financial",
+              "group": "Insurance",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "EBC",
+              "rs_1m": 46,
+              "hybrid_rs": 61.0,
+              "sector": "Financial",
+              "group": "Regional Banks",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "MTB",
+              "rs_1m": 43,
+              "hybrid_rs": 61.0,
+              "sector": "Financial",
+              "group": "Regional Banks",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "RTX",
+              "rs_1m": 82,
+              "hybrid_rs": 60.0,
+              "sector": "Industrials",
+              "group": "Defense",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "GE",
+              "rs_1m": 57,
+              "hybrid_rs": 59.0,
+              "sector": "Industrials",
+              "group": "Defense",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "NWSA",
+              "rs_1m": 45,
+              "hybrid_rs": 57.0,
+              "sector": "Communication Services",
+              "group": "Entertainment",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "BRUN",
+              "rs_1m": 15,
+              "hybrid_rs": 57.0,
+              "sector": "Technology",
+              "group": "Broad AI Theme",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "IRDM",
+              "rs_1m": 64,
+              "hybrid_rs": 55.0,
+              "sector": "Communication Services",
+              "group": "Telecom Services",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "TFC",
+              "rs_1m": 44,
+              "hybrid_rs": 55.0,
+              "sector": "Financial",
+              "group": "Regional Banks",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "STAA",
+              "rs_1m": 31,
+              "hybrid_rs": 55.0,
+              "sector": "Healthcare",
+              "group": "Medical Devices",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "HBAN",
+              "rs_1m": 28,
+              "hybrid_rs": 55.0,
+              "sector": "Financial",
+              "group": "Regional Banks",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "PINS",
+              "rs_1m": 50,
+              "hybrid_rs": 53.0,
+              "sector": "Communication Services",
+              "group": "Internet Content & Information",
+              "group_state": "Lagging"
+            }
+          ],
+          "truncated": 29,
           "preset": null
         },
         {
           "key": "ll_hl_trend_break",
           "label": "LL-HL Structure Trend Line Break",
           "recipe": "sp_signal = counter_break (close crossed the counter-trend line today)",
-          "measured": false,
-          "count": 0,
-          "tickers": [],
+          "measured": true,
+          "count": 18,
+          "tickers": [
+            {
+              "ticker": "OSCR",
+              "rs_1m": 76,
+              "hybrid_rs": 72.0,
+              "sector": "Healthcare",
+              "group": "Healthcare Plans",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "CXW",
+              "rs_1m": 62,
+              "hybrid_rs": 69.0,
+              "sector": "Industrials",
+              "group": "Security & Protection Services",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "NU",
+              "rs_1m": 75,
+              "hybrid_rs": 58.0,
+              "sector": "Financial",
+              "group": "Regional Banks",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "GNW",
+              "rs_1m": 37,
+              "hybrid_rs": 55.0,
+              "sector": "Financial",
+              "group": "Insurance",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "UNH",
+              "rs_1m": 16,
+              "hybrid_rs": 52.0,
+              "sector": "Healthcare",
+              "group": "Healthcare Plans",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "GBCI",
+              "rs_1m": 13,
+              "hybrid_rs": 49.0,
+              "sector": "Financial",
+              "group": "Regional Banks",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "APD",
+              "rs_1m": 53,
+              "hybrid_rs": 47.0,
+              "sector": "Basic Materials",
+              "group": "Chemicals & Materials",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "BTU",
+              "rs_1m": 79,
+              "hybrid_rs": 39.0,
+              "sector": "Energy",
+              "group": "Coal",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "VERA",
+              "rs_1m": 3,
+              "hybrid_rs": 37.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "FE",
+              "rs_1m": 29,
+              "hybrid_rs": 36.0,
+              "sector": "Utilities",
+              "group": "AI Power & Infrastructure",
+              "group_state": "Lagging"
+            },
+            {
+              "ticker": "HLT",
+              "rs_1m": 42,
+              "hybrid_rs": 33.0,
+              "sector": "Consumer Cyclical",
+              "group": "Travel & Leisure",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "GNTX",
+              "rs_1m": 27,
+              "hybrid_rs": 33.0,
+              "sector": "Consumer Cyclical",
+              "group": "Auto Parts",
+              "group_state": "Lagging"
+            },
+            {
+              "ticker": "SBRA",
+              "rs_1m": 46,
+              "hybrid_rs": 32.0,
+              "sector": "Real Estate",
+              "group": "Real Estate",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "DVN",
+              "rs_1m": 53,
+              "hybrid_rs": 30.0,
+              "sector": "Energy",
+              "group": "Energy",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "VNOM",
+              "rs_1m": 23,
+              "hybrid_rs": 29.0,
+              "sector": "Energy",
+              "group": "Energy",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "OHI",
+              "rs_1m": 15,
+              "hybrid_rs": 28.0,
+              "sector": "Real Estate",
+              "group": "Real Estate",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "WING",
+              "rs_1m": 7,
+              "hybrid_rs": 25.0,
+              "sector": "Consumer Cyclical",
+              "group": "Travel & Leisure",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "RUN",
+              "rs_1m": 5,
+              "hybrid_rs": 12.0,
+              "sector": "Technology",
+              "group": "Solar",
+              "group_state": "Improving"
+            }
+          ],
           "truncated": 0,
           "preset": null
         },
@@ -473,9 +1004,210 @@
           "key": "liquid_leader_pullback",
           "label": "Liquid Leader Pullback",
           "recipe": "liquid_leader; perf_1w < 12%; 0.5-1 ATR from the 21EMA; 0-3 ATR from the 50SMA (course M2_L09; the two clauses we cannot read -- 5d/20d range contraction, earnings 7+ days out -- are not applied)",
-          "measured": false,
-          "count": 0,
-          "tickers": [],
+          "measured": true,
+          "count": 25,
+          "tickers": [
+            {
+              "ticker": "BFLY",
+              "rs_1m": 95,
+              "hybrid_rs": 86.0,
+              "sector": "Healthcare",
+              "group": "Medical Devices",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "ADPT",
+              "rs_1m": 65,
+              "hybrid_rs": 83.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "NEO",
+              "rs_1m": 68,
+              "hybrid_rs": 82.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "ABSI",
+              "rs_1m": 72,
+              "hybrid_rs": 80.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "CRWD",
+              "rs_1m": 61,
+              "hybrid_rs": 79.0,
+              "sector": "Technology",
+              "group": "Cybersecurity",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "ASAN",
+              "rs_1m": 87,
+              "hybrid_rs": 78.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "PSNL",
+              "rs_1m": 10,
+              "hybrid_rs": 78.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "OKTA",
+              "rs_1m": 29,
+              "hybrid_rs": 76.0,
+              "sector": "Technology",
+              "group": "Cybersecurity",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "NOW",
+              "rs_1m": 88,
+              "hybrid_rs": 75.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "TENB",
+              "rs_1m": 21,
+              "hybrid_rs": 75.0,
+              "sector": "Technology",
+              "group": "Cybersecurity",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "PGEN",
+              "rs_1m": 90,
+              "hybrid_rs": 74.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "CMPS",
+              "rs_1m": 68,
+              "hybrid_rs": 74.0,
+              "sector": "Healthcare",
+              "group": "Medical Care Facilities",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "PK",
+              "rs_1m": 42,
+              "hybrid_rs": 74.0,
+              "sector": "Real Estate",
+              "group": "Real Estate",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "W",
+              "rs_1m": 78,
+              "hybrid_rs": 73.0,
+              "sector": "Consumer Cyclical",
+              "group": "Consumer Retail",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "MRNA",
+              "rs_1m": 45,
+              "hybrid_rs": 72.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "AVPT",
+              "rs_1m": 43,
+              "hybrid_rs": 72.0,
+              "sector": "Technology",
+              "group": "Broad AI Theme",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "AMLX",
+              "rs_1m": 89,
+              "hybrid_rs": 71.0,
+              "sector": "Healthcare",
+              "group": "Drug Manufacturers - Specialty & Generic",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "DOCS",
+              "rs_1m": 81,
+              "hybrid_rs": 71.0,
+              "sector": "Healthcare",
+              "group": "Health Information Services",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "BBY",
+              "rs_1m": 39,
+              "hybrid_rs": 67.0,
+              "sector": "Consumer Cyclical",
+              "group": "Consumer Retail",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "KVYO",
+              "rs_1m": 53,
+              "hybrid_rs": 66.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "QGEN",
+              "rs_1m": 52,
+              "hybrid_rs": 64.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "ATEC",
+              "rs_1m": 80,
+              "hybrid_rs": 62.0,
+              "sector": "Healthcare",
+              "group": "Medical Devices",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "GE",
+              "rs_1m": 57,
+              "hybrid_rs": 59.0,
+              "sector": "Industrials",
+              "group": "Defense",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "DLTR",
+              "rs_1m": 46,
+              "hybrid_rs": 58.0,
+              "sector": "Consumer Defensive",
+              "group": "Consumer Retail",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "APH",
+              "rs_1m": 72,
+              "hybrid_rs": 55.0,
+              "sector": "Technology",
+              "group": "Electronic Components",
+              "group_state": "Leading"
+            }
+          ],
           "truncated": 0,
           "preset": null
         }
@@ -490,35 +1222,230 @@
           "label": "Volatility Contraction Score",
           "recipe": "vcs >= 70 and adr_pct >= 3 (the ADR floor keeps deal-pinned names out; 70 = upper half of his 'developing' band, revisit once VCS v2 has run)",
           "measured": true,
-          "count": 62,
+          "count": 33,
           "tickers": [
             {
-              "ticker": "BLFS",
-              "rs_1m": 87,
-              "hybrid_rs": 80.0,
-              "sector": "Healthcare",
-              "group": "Medical Instruments & Supplies",
+              "ticker": "BB",
+              "rs_1m": 31,
+              "hybrid_rs": 76.0,
+              "sector": "Technology",
+              "group": "Broad AI Theme",
               "group_state": "Leading"
             },
             {
-              "ticker": "PSNL",
-              "rs_1m": 10,
-              "hybrid_rs": 78.0,
-              "sector": "Healthcare",
-              "group": "Genomics",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "NRIX",
-              "rs_1m": 85,
-              "hybrid_rs": 77.0,
+              "ticker": "RLAY",
+              "rs_1m": 33,
+              "hybrid_rs": 75.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
             },
             {
-              "ticker": "ABSI",
-              "rs_1m": 72,
+              "ticker": "ERAS",
+              "rs_1m": 20,
+              "hybrid_rs": 73.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "ARWR",
+              "rs_1m": 83,
+              "hybrid_rs": 70.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "BHVN",
+              "rs_1m": 17,
+              "hybrid_rs": 70.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "KMX",
+              "rs_1m": 53,
+              "hybrid_rs": 69.0,
+              "sector": "Consumer Cyclical",
+              "group": "Auto & Truck Dealerships",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "TNGX",
+              "rs_1m": 8,
+              "hybrid_rs": 69.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "RXT",
+              "rs_1m": 41,
+              "hybrid_rs": 60.0,
+              "sector": "Technology",
+              "group": "Broad AI Theme",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "ARM",
+              "rs_1m": 53,
+              "hybrid_rs": 53.0,
+              "sector": "Technology",
+              "group": "Semiconductors Broad",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "NTLA",
+              "rs_1m": 54,
+              "hybrid_rs": 48.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "ASST",
+              "rs_1m": 51,
+              "hybrid_rs": 48.0,
+              "sector": "Financial",
+              "group": "Financials",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "BEAM",
+              "rs_1m": 24,
+              "hybrid_rs": 46.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "INOD",
+              "rs_1m": 55,
+              "hybrid_rs": 45.0,
+              "sector": "Technology",
+              "group": "IT Services",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "NVAX",
+              "rs_1m": 27,
+              "hybrid_rs": 44.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "HOOD",
+              "rs_1m": 19,
+              "hybrid_rs": 44.0,
+              "sector": "Financial",
+              "group": "Speculative Tech",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "CELC",
+              "rs_1m": 51,
+              "hybrid_rs": 43.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "IBM",
+              "rs_1m": 73,
+              "hybrid_rs": 42.0,
+              "sector": "Technology",
+              "group": "Quantum Computing",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "PL",
+              "rs_1m": 70,
+              "hybrid_rs": 42.0,
+              "sector": "Industrials",
+              "group": "Space",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "MSTR",
+              "rs_1m": 27,
+              "hybrid_rs": 42.0,
+              "sector": "Technology",
+              "group": "Crypto Equities",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "IONS",
+              "rs_1m": 56,
+              "hybrid_rs": 41.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "POET",
+              "rs_1m": 94,
+              "hybrid_rs": 39.0,
+              "sector": "Technology",
+              "group": "Semiconductors Broad",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "NVTS",
+              "rs_1m": 92,
+              "hybrid_rs": 39.0,
+              "sector": "Technology",
+              "group": "Semiconductors Broad",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "WIT",
+              "rs_1m": 56,
+              "hybrid_rs": 37.0,
+              "sector": "Technology",
+              "group": "IT Services",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "PURR",
+              "rs_1m": 34,
+              "hybrid_rs": 37.0,
+              "sector": "Financial",
+              "group": "Financials",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "VSH",
+              "rs_1m": 12,
+              "hybrid_rs": 35.0,
+              "sector": "Technology",
+              "group": "Semiconductors Broad",
+              "group_state": "Improving"
+            }
+          ],
+          "truncated": 8,
+          "preset": null
+        },
+        {
+          "key": "anticipation",
+          "label": "Anticipation (strong x quiet x VCS)",
+          "recipe": "any of ti65>1.05 / c_low52w>=1.8 / mdt>1.19; |change_pct|<=1%; vcs>=60; adr_pct>=3",
+          "measured": true,
+          "count": 21,
+          "tickers": [
+            {
+              "ticker": "CERT",
+              "rs_1m": 82,
+              "hybrid_rs": 80.0,
+              "sector": "Healthcare",
+              "group": "Health Information Services",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "DYN",
+              "rs_1m": 66,
               "hybrid_rs": 77.0,
               "sector": "Healthcare",
               "group": "Genomics",
@@ -527,182 +1454,156 @@
             {
               "ticker": "BB",
               "rs_1m": 31,
-              "hybrid_rs": 77.0,
+              "hybrid_rs": 76.0,
               "sector": "Technology",
               "group": "Broad AI Theme",
               "group_state": "Leading"
             },
             {
               "ticker": "RLAY",
-              "rs_1m": 51,
-              "hybrid_rs": 74.0,
+              "rs_1m": 33,
+              "hybrid_rs": 75.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "ERAS",
+              "rs_1m": 20,
+              "hybrid_rs": 73.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "DNLI",
+              "rs_1m": 54,
+              "hybrid_rs": 71.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "TRVI",
+              "rs_1m": 23,
+              "hybrid_rs": 71.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "ARWR",
+              "rs_1m": 83,
+              "hybrid_rs": 70.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "BHVN",
+              "rs_1m": 17,
+              "hybrid_rs": 70.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
             },
             {
               "ticker": "KMX",
-              "rs_1m": 52,
+              "rs_1m": 53,
               "hybrid_rs": 69.0,
               "sector": "Consumer Cyclical",
               "group": "Auto & Truck Dealerships",
               "group_state": "Weakening"
             },
             {
-              "ticker": "DNLI",
-              "rs_1m": 53,
-              "hybrid_rs": 68.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
+              "ticker": "COTY",
+              "rs_1m": 68,
+              "hybrid_rs": 65.0,
+              "sector": "Consumer Defensive",
+              "group": "Household & Personal Products",
               "group_state": "Weakening"
             },
             {
-              "ticker": "BHVN",
-              "rs_1m": 17,
-              "hybrid_rs": 67.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "TNGX",
-              "rs_1m": 8,
-              "hybrid_rs": 66.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "QBTS",
-              "rs_1m": 92,
-              "hybrid_rs": 64.0,
-              "sector": "Technology",
-              "group": "Quantum Computing",
+              "ticker": "CLF",
+              "rs_1m": 93,
+              "hybrid_rs": 60.0,
+              "sector": "Basic Materials",
+              "group": "Steel",
               "group_state": "Improving"
             },
             {
-              "ticker": "PENG",
-              "rs_1m": 56,
-              "hybrid_rs": 64.0,
-              "sector": "Technology",
-              "group": "IT Services",
-              "group_state": "Leading"
-            },
-            {
               "ticker": "RXT",
-              "rs_1m": 40,
+              "rs_1m": 41,
               "hybrid_rs": 60.0,
               "sector": "Technology",
               "group": "Broad AI Theme",
               "group_state": "Leading"
             },
             {
-              "ticker": "QUBT",
-              "rs_1m": 81,
-              "hybrid_rs": 57.0,
-              "sector": "Technology",
-              "group": "Quantum Computing",
+              "ticker": "SSL",
+              "rs_1m": 40,
+              "hybrid_rs": 46.0,
+              "sector": "Basic Materials",
+              "group": "Chemicals & Materials",
               "group_state": "Improving"
             },
             {
-              "ticker": "CRSP",
-              "rs_1m": 75,
-              "hybrid_rs": 57.0,
+              "ticker": "CELC",
+              "rs_1m": 51,
+              "hybrid_rs": 43.0,
               "sector": "Healthcare",
-              "group": "Speculative Tech",
+              "group": "Biotechnology",
               "group_state": "Weakening"
             },
             {
-              "ticker": "IRDM",
-              "rs_1m": 63,
-              "hybrid_rs": 56.0,
+              "ticker": "UMC",
+              "rs_1m": 8,
+              "hybrid_rs": 43.0,
+              "sector": "Technology",
+              "group": "Semiconductors Broad",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "KOS",
+              "rs_1m": 78,
+              "hybrid_rs": 39.0,
+              "sector": "Energy",
+              "group": "Energy",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "TXN",
+              "rs_1m": 30,
+              "hybrid_rs": 32.0,
+              "sector": "Technology",
+              "group": "Semiconductors Large Caps",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "ALGM",
+              "rs_1m": 18,
+              "hybrid_rs": 28.0,
+              "sector": "Technology",
+              "group": "Semiconductors Broad",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "SBET",
+              "rs_1m": 71,
+              "hybrid_rs": 27.0,
+              "sector": "Financial",
+              "group": "Crypto Equities",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "ECHO",
+              "rs_1m": 34,
+              "hybrid_rs": 21.0,
               "sector": "Communication Services",
               "group": "Telecom Services",
               "group_state": "Improving"
-            },
-            {
-              "ticker": "MRVL",
-              "rs_1m": 85,
-              "hybrid_rs": 55.0,
-              "sector": "Technology",
-              "group": "Semiconductors Broad",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "INFQ",
-              "rs_1m": 97,
-              "hybrid_rs": 53.0,
-              "sector": "Technology",
-              "group": "Broad AI Theme",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "ARM",
-              "rs_1m": 52,
-              "hybrid_rs": 53.0,
-              "sector": "Technology",
-              "group": "Semiconductors Broad",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "IBRX",
-              "rs_1m": 29,
-              "hybrid_rs": 53.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "RXRX",
-              "rs_1m": 62,
-              "hybrid_rs": 51.0,
-              "sector": "Healthcare",
-              "group": "Genomics",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "SNPS",
-              "rs_1m": 69,
-              "hybrid_rs": 50.0,
-              "sector": "Technology",
-              "group": "Broad AI Theme",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "ASST",
-              "rs_1m": 50,
-              "hybrid_rs": 49.0,
-              "sector": "Financial",
-              "group": "Financials",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "BKSY",
-              "rs_1m": 96,
-              "hybrid_rs": 48.0,
-              "sector": "Industrials",
-              "group": "Space",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "ANNX",
-              "rs_1m": 9,
-              "hybrid_rs": 48.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
-              "group_state": "Weakening"
             }
           ],
-          "truncated": 37,
-          "preset": null
-        },
-        {
-          "key": "anticipation",
-          "label": "Anticipation (strong x quiet x VCS)",
-          "recipe": "any of ti65>1.05 / c_low52w>=1.8 / mdt>1.19; |change_pct|<=1%; vcs>=60; adr_pct>=3",
-          "measured": true,
-          "count": 0,
-          "tickers": [],
           "truncated": 0,
           "preset": null
         }
@@ -715,9 +1616,9 @@
         {
           "key": "pp_today",
           "label": "PP (Vol > 10D)",
-          "recipe": "pocket_pivot today (green bar, volume above the prior 10 bars' max) -- oratnek's panel is TODAY's PP",
+          "recipe": "vol10_green today (green bar, volume above ALL prior 10 bars' max -- oratnek's definition) and trend_base",
           "measured": true,
-          "count": 20,
+          "count": 11,
           "tickers": [
             {
               "ticker": "HTFL",
@@ -730,22 +1631,22 @@
             {
               "ticker": "UMAC",
               "rs_1m": 99,
-              "hybrid_rs": 87.0,
+              "hybrid_rs": 86.0,
               "sector": "Technology",
               "group": "Drones",
               "group_state": "Leading"
             },
             {
               "ticker": "PYPL",
-              "rs_1m": 67,
-              "hybrid_rs": 76.0,
+              "rs_1m": 68,
+              "hybrid_rs": 72.0,
               "sector": "Financial",
               "group": "Fintech",
               "group_state": "Weakening"
             },
             {
               "ticker": "NMAX",
-              "rs_1m": 93,
+              "rs_1m": 94,
               "hybrid_rs": 68.0,
               "sector": "Communication Services",
               "group": "Broadcasting",
@@ -753,59 +1654,43 @@
             },
             {
               "ticker": "NUVB",
-              "rs_1m": 62,
-              "hybrid_rs": 65.0,
+              "rs_1m": 63,
+              "hybrid_rs": 68.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
             },
             {
+              "ticker": "LPTH",
+              "rs_1m": 97,
+              "hybrid_rs": 62.0,
+              "sector": "Technology",
+              "group": "Electronic Components",
+              "group_state": "Leading"
+            },
+            {
               "ticker": "SFNC",
               "rs_1m": 54,
-              "hybrid_rs": 64.0,
+              "hybrid_rs": 62.0,
               "sector": "Financial",
               "group": "Regional Banks",
               "group_state": "Weakening"
             },
             {
-              "ticker": "LPTH",
-              "rs_1m": 97,
-              "hybrid_rs": 60.0,
-              "sector": "Technology",
-              "group": "Electronic Components",
-              "group_state": "Improving"
-            },
-            {
               "ticker": "WBS",
               "rs_1m": 52,
-              "hybrid_rs": 60.0,
+              "hybrid_rs": 58.0,
               "sector": "Financial",
               "group": "Regional Banks",
               "group_state": "Weakening"
             },
             {
               "ticker": "ALOY",
-              "rs_1m": 98,
+              "rs_1m": 99,
               "hybrid_rs": 56.0,
               "sector": "Basic Materials",
               "group": "Other Industrial Metals & Mining",
               "group_state": "Improving"
-            },
-            {
-              "ticker": "CDNS",
-              "rs_1m": 28,
-              "hybrid_rs": 54.0,
-              "sector": "Technology",
-              "group": "Software",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "AMAT",
-              "rs_1m": 19,
-              "hybrid_rs": 47.0,
-              "sector": "Technology",
-              "group": "Semiconductors Large Caps",
-              "group_state": "Weakening"
             },
             {
               "ticker": "INDI",
@@ -817,66 +1702,10 @@
             },
             {
               "ticker": "EPD",
-              "rs_1m": 48,
+              "rs_1m": 49,
               "hybrid_rs": 38.0,
               "sector": "Energy",
               "group": "Energy",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "CPRT",
-              "rs_1m": 79,
-              "hybrid_rs": 36.0,
-              "sector": "Industrials",
-              "group": "Specialty Business Services",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "BGC",
-              "rs_1m": 31,
-              "hybrid_rs": 35.0,
-              "sector": "Financial",
-              "group": "Financials",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "VERA",
-              "rs_1m": 1,
-              "hybrid_rs": 34.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "YSS",
-              "rs_1m": 0,
-              "hybrid_rs": 25.0,
-              "sector": "Industrials",
-              "group": "Defense",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "SGML",
-              "rs_1m": 84,
-              "hybrid_rs": 23.0,
-              "sector": "Basic Materials",
-              "group": "Other Industrial Metals & Mining",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "VIV",
-              "rs_1m": 3,
-              "hybrid_rs": 20.0,
-              "sector": "Communication Services",
-              "group": "Telecom Services",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "RLX",
-              "rs_1m": 26,
-              "hybrid_rs": 18.0,
-              "sector": "Consumer Defensive",
-              "group": "Tobacco",
               "group_state": "Improving"
             }
           ],
@@ -886,9 +1715,9 @@
         {
           "key": "pp_2plus_10d",
           "label": "PP 2+ times (10D)",
-          "recipe": "pp_count_10d >= 2",
+          "recipe": "vol10_green_count_10d >= 2 and trend_base",
           "measured": true,
-          "count": 183,
+          "count": 86,
           "tickers": [
             {
               "ticker": "TXG",
@@ -915,22 +1744,6 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "LIFE",
-              "rs_1m": 99,
-              "hybrid_rs": 87.0,
-              "sector": "Financial",
-              "group": "Insurance",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "UMAC",
-              "rs_1m": 99,
-              "hybrid_rs": 87.0,
-              "sector": "Technology",
-              "group": "Drones",
-              "group_state": "Leading"
-            },
-            {
               "ticker": "APPS",
               "rs_1m": 98,
               "hybrid_rs": 87.0,
@@ -953,6 +1766,14 @@
               "sector": "Technology",
               "group": "Software",
               "group_state": "Weakening"
+            },
+            {
+              "ticker": "UMAC",
+              "rs_1m": 99,
+              "hybrid_rs": 86.0,
+              "sector": "Technology",
+              "group": "Drones",
+              "group_state": "Leading"
             },
             {
               "ticker": "U",
@@ -979,14 +1800,6 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "SN",
-              "rs_1m": 90,
-              "hybrid_rs": 85.0,
-              "sector": "Consumer Cyclical",
-              "group": "Furnishings, Fixtures & Appliances",
-              "group_state": "Weakening"
-            },
-            {
               "ticker": "GDRX",
               "rs_1m": 86,
               "hybrid_rs": 85.0,
@@ -995,19 +1808,19 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "P",
-              "rs_1m": 99,
+              "ticker": "SN",
+              "rs_1m": 87,
               "hybrid_rs": 84.0,
-              "sector": "Technology",
-              "group": "Computer Hardware",
-              "group_state": "Leading"
+              "sector": "Consumer Cyclical",
+              "group": "Furnishings, Fixtures & Appliances",
+              "group_state": "Weakening"
             },
             {
-              "ticker": "NIQ",
-              "rs_1m": 98,
-              "hybrid_rs": 84.0,
-              "sector": "Technology",
-              "group": "Software",
+              "ticker": "ABCL",
+              "rs_1m": 99,
+              "hybrid_rs": 83.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
               "group_state": "Weakening"
             },
             {
@@ -1052,24 +1865,32 @@
             },
             {
               "ticker": "NTRA",
-              "rs_1m": 74,
-              "hybrid_rs": 82.0,
+              "rs_1m": 79,
+              "hybrid_rs": 83.0,
               "sector": "Healthcare",
               "group": "Genomics",
               "group_state": "Weakening"
             },
             {
-              "ticker": "OMDA",
-              "rs_1m": 45,
+              "ticker": "P",
+              "rs_1m": 99,
+              "hybrid_rs": 82.0,
+              "sector": "Technology",
+              "group": "Computer Hardware",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "HNGE",
+              "rs_1m": 41,
               "hybrid_rs": 82.0,
               "sector": "Healthcare",
               "group": "Health Information Services",
               "group_state": "Weakening"
             },
             {
-              "ticker": "HNGE",
+              "ticker": "OMDA",
               "rs_1m": 40,
-              "hybrid_rs": 82.0,
+              "hybrid_rs": 81.0,
               "sector": "Healthcare",
               "group": "Health Information Services",
               "group_state": "Weakening"
@@ -1077,21 +1898,240 @@
             {
               "ticker": "NTNX",
               "rs_1m": 88,
-              "hybrid_rs": 81.0,
+              "hybrid_rs": 80.0,
               "sector": "Technology",
               "group": "Broad AI Theme",
               "group_state": "Leading"
             },
             {
+              "ticker": "NRIX",
+              "rs_1m": 84,
+              "hybrid_rs": 80.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
               "ticker": "NET",
               "rs_1m": 78,
-              "hybrid_rs": 81.0,
+              "hybrid_rs": 80.0,
               "sector": "Technology",
               "group": "Cybersecurity",
               "group_state": "Weakening"
             }
           ],
-          "truncated": 158,
+          "truncated": 61,
+          "preset": null
+        },
+        {
+          "key": "morales_pp_10d",
+          "label": "Pocket Pivot (Morales, 10D)",
+          "recipe": "pp_count_10d >= 1 (up day on volume above the prior 10 bars' DOWN-day max; buying vs selling, +0.71 with the A/D ratio) and trend_base",
+          "measured": true,
+          "count": 372,
+          "tickers": [
+            {
+              "ticker": "TXG",
+              "rs_1m": 93,
+              "hybrid_rs": 88.0,
+              "sector": "Healthcare",
+              "group": "Speculative Tech",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "TWST",
+              "rs_1m": 92,
+              "hybrid_rs": 88.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "HTFL",
+              "rs_1m": 99,
+              "hybrid_rs": 87.0,
+              "sector": "Healthcare",
+              "group": "Health Information Services",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "APPS",
+              "rs_1m": 98,
+              "hybrid_rs": 87.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "MGNI",
+              "rs_1m": 94,
+              "hybrid_rs": 87.0,
+              "sector": "Communication Services",
+              "group": "Advertising Agencies",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "TEAM",
+              "rs_1m": 99,
+              "hybrid_rs": 86.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "UMAC",
+              "rs_1m": 99,
+              "hybrid_rs": 86.0,
+              "sector": "Technology",
+              "group": "Drones",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "RNG",
+              "rs_1m": 98,
+              "hybrid_rs": 86.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "U",
+              "rs_1m": 98,
+              "hybrid_rs": 86.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "AMPL",
+              "rs_1m": 96,
+              "hybrid_rs": 86.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "BFLY",
+              "rs_1m": 95,
+              "hybrid_rs": 86.0,
+              "sector": "Healthcare",
+              "group": "Medical Devices",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "QNST",
+              "rs_1m": 89,
+              "hybrid_rs": 86.0,
+              "sector": "Communication Services",
+              "group": "Advertising Agencies",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "CDNA",
+              "rs_1m": 79,
+              "hybrid_rs": 86.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "PAYC",
+              "rs_1m": 98,
+              "hybrid_rs": 85.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "BLZE",
+              "rs_1m": 97,
+              "hybrid_rs": 85.0,
+              "sector": "Technology",
+              "group": "Broad AI Theme",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "CHYM",
+              "rs_1m": 97,
+              "hybrid_rs": 85.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "FSLY",
+              "rs_1m": 97,
+              "hybrid_rs": 85.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "DELL",
+              "rs_1m": 91,
+              "hybrid_rs": 85.0,
+              "sector": "Technology",
+              "group": "Computer Hardware",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "SNOW",
+              "rs_1m": 89,
+              "hybrid_rs": 85.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "STGW",
+              "rs_1m": 89,
+              "hybrid_rs": 85.0,
+              "sector": "Communication Services",
+              "group": "Advertising Agencies",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "GDRX",
+              "rs_1m": 86,
+              "hybrid_rs": 85.0,
+              "sector": "Healthcare",
+              "group": "Health Information Services",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "CRSR",
+              "rs_1m": 95,
+              "hybrid_rs": 84.0,
+              "sector": "Technology",
+              "group": "Computer Hardware",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "VEEV",
+              "rs_1m": 91,
+              "hybrid_rs": 84.0,
+              "sector": "Healthcare",
+              "group": "Health Information Services",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "SN",
+              "rs_1m": 87,
+              "hybrid_rs": 84.0,
+              "sector": "Consumer Cyclical",
+              "group": "Furnishings, Fixtures & Appliances",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "NAVN",
+              "rs_1m": 76,
+              "hybrid_rs": 84.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Weakening"
+            }
+          ],
+          "truncated": 347,
           "preset": null
         }
       ]
@@ -1108,14 +2148,6 @@
           "count": 8,
           "tickers": [
             {
-              "ticker": "QMCO",
-              "rs_1m": 99,
-              "hybrid_rs": 88.0,
-              "sector": "Technology",
-              "group": "Quantum Computing",
-              "group_state": "Improving"
-            },
-            {
               "ticker": "HTFL",
               "rs_1m": 99,
               "hybrid_rs": 87.0,
@@ -1126,38 +2158,38 @@
             {
               "ticker": "UMAC",
               "rs_1m": 99,
-              "hybrid_rs": 87.0,
+              "hybrid_rs": 86.0,
               "sector": "Technology",
               "group": "Drones",
               "group_state": "Leading"
             },
             {
-              "ticker": "P",
-              "rs_1m": 99,
-              "hybrid_rs": 84.0,
-              "sector": "Technology",
-              "group": "Computer Hardware",
-              "group_state": "Leading"
-            },
-            {
               "ticker": "ABCL",
               "rs_1m": 99,
-              "hybrid_rs": 80.0,
+              "hybrid_rs": 83.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
             },
             {
+              "ticker": "P",
+              "rs_1m": 99,
+              "hybrid_rs": 82.0,
+              "sector": "Technology",
+              "group": "Computer Hardware",
+              "group_state": "Leading"
+            },
+            {
               "ticker": "AVAH",
               "rs_1m": 92,
-              "hybrid_rs": 74.0,
+              "hybrid_rs": 77.0,
               "sector": "Healthcare",
               "group": "Medical Care Facilities",
               "group_state": "Weakening"
             },
             {
               "ticker": "NMAX",
-              "rs_1m": 93,
+              "rs_1m": 94,
               "hybrid_rs": 68.0,
               "sector": "Communication Services",
               "group": "Broadcasting",
@@ -1166,9 +2198,17 @@
             {
               "ticker": "LPTH",
               "rs_1m": 97,
-              "hybrid_rs": 60.0,
+              "hybrid_rs": 62.0,
               "sector": "Technology",
               "group": "Electronic Components",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "AEHR",
+              "rs_1m": 98,
+              "hybrid_rs": 61.0,
+              "sector": "Technology",
+              "group": "Semiconductors Broad",
               "group_state": "Improving"
             }
           ],
@@ -1180,110 +2220,14 @@
           "label": "4% Bullish",
           "recipe": "change_pct >= 4%, rel_volume >= 1, from_open_pct >= 0, rs_21d >= 60, adr_pct 3.5-10",
           "measured": true,
-          "count": 23,
+          "count": 4,
           "tickers": [
             {
-              "ticker": "QMCO",
-              "rs_1m": 99,
-              "hybrid_rs": 88.0,
+              "ticker": "WDC",
+              "rs_1m": 60,
+              "hybrid_rs": 69.0,
               "sector": "Technology",
-              "group": "Quantum Computing",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "HTFL",
-              "rs_1m": 99,
-              "hybrid_rs": 87.0,
-              "sector": "Healthcare",
-              "group": "Health Information Services",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "UMAC",
-              "rs_1m": 99,
-              "hybrid_rs": 87.0,
-              "sector": "Technology",
-              "group": "Drones",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "NBIS",
-              "rs_1m": 98,
-              "hybrid_rs": 81.0,
-              "sector": "Technology",
-              "group": "AI - Datacenters",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "AVAH",
-              "rs_1m": 92,
-              "hybrid_rs": 74.0,
-              "sector": "Healthcare",
-              "group": "Medical Care Facilities",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "OSCR",
-              "rs_1m": 76,
-              "hybrid_rs": 72.0,
-              "sector": "Healthcare",
-              "group": "Healthcare Plans",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "NMAX",
-              "rs_1m": 93,
-              "hybrid_rs": 68.0,
-              "sector": "Communication Services",
-              "group": "Broadcasting",
-              "group_state": null
-            },
-            {
-              "ticker": "OUST",
-              "rs_1m": 94,
-              "hybrid_rs": 64.0,
-              "sector": "Technology",
-              "group": "Electronic Components",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "EYPT",
-              "rs_1m": 72,
-              "hybrid_rs": 64.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "LPTH",
-              "rs_1m": 97,
-              "hybrid_rs": 60.0,
-              "sector": "Technology",
-              "group": "Electronic Components",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "KOPN",
-              "rs_1m": 97,
-              "hybrid_rs": 57.0,
-              "sector": "Technology",
-              "group": "Electronic Components",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "ALOY",
-              "rs_1m": 98,
-              "hybrid_rs": 56.0,
-              "sector": "Basic Materials",
-              "group": "Other Industrial Metals & Mining",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "INFQ",
-              "rs_1m": 97,
-              "hybrid_rs": 53.0,
-              "sector": "Technology",
-              "group": "Broad AI Theme",
+              "group": "Memory & Storage",
               "group_state": "Leading"
             },
             {
@@ -1295,32 +2239,8 @@
               "group_state": "Improving"
             },
             {
-              "ticker": "SM",
-              "rs_1m": 64,
-              "hybrid_rs": 45.0,
-              "sector": "Energy",
-              "group": "Energy",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "HLIT",
-              "rs_1m": 62,
-              "hybrid_rs": 43.0,
-              "sector": "Technology",
-              "group": "Optics & Networking Equipment",
-              "group_state": "Improving"
-            },
-            {
               "ticker": "POET",
-              "rs_1m": 93,
-              "hybrid_rs": 39.0,
-              "sector": "Technology",
-              "group": "Semiconductors Broad",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "NVTS",
-              "rs_1m": 91,
+              "rs_1m": 94,
               "hybrid_rs": 39.0,
               "sector": "Technology",
               "group": "Semiconductors Broad",
@@ -1333,38 +2253,6 @@
               "sector": "Industrials",
               "group": "Robotics & Automation",
               "group_state": "Weakening"
-            },
-            {
-              "ticker": "MP",
-              "rs_1m": 93,
-              "hybrid_rs": 31.0,
-              "sector": "Basic Materials",
-              "group": "Rare Earth Metals",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "USAR",
-              "rs_1m": 92,
-              "hybrid_rs": 29.0,
-              "sector": "Basic Materials",
-              "group": "Rare Earth Metals",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "LUMN",
-              "rs_1m": 61,
-              "hybrid_rs": 25.0,
-              "sector": "Communication Services",
-              "group": "Telecom Services",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "SGML",
-              "rs_1m": 84,
-              "hybrid_rs": 23.0,
-              "sector": "Basic Materials",
-              "group": "Other Industrial Metals & Mining",
-              "group_state": "Improving"
             }
           ],
           "truncated": 0,
@@ -1375,16 +2263,8 @@
           "label": "Weekly 20%+ Gainers",
           "recipe": "perf_1w >= 20% and adr_pct 3.5-10",
           "measured": true,
-          "count": 22,
+          "count": 24,
           "tickers": [
-            {
-              "ticker": "QMCO",
-              "rs_1m": 99,
-              "hybrid_rs": 88.0,
-              "sector": "Technology",
-              "group": "Quantum Computing",
-              "group_state": "Improving"
-            },
             {
               "ticker": "HTFL",
               "rs_1m": 99,
@@ -1396,42 +2276,42 @@
             {
               "ticker": "UMAC",
               "rs_1m": 99,
-              "hybrid_rs": 87.0,
+              "hybrid_rs": 86.0,
               "sector": "Technology",
               "group": "Drones",
               "group_state": "Leading"
             },
             {
-              "ticker": "P",
-              "rs_1m": 99,
-              "hybrid_rs": 84.0,
-              "sector": "Technology",
-              "group": "Computer Hardware",
-              "group_state": "Leading"
-            },
-            {
               "ticker": "NIQ",
               "rs_1m": 98,
-              "hybrid_rs": 84.0,
+              "hybrid_rs": 85.0,
               "sector": "Technology",
               "group": "Software",
               "group_state": "Weakening"
             },
             {
-              "ticker": "ARX",
-              "rs_1m": 97,
+              "ticker": "ABCL",
+              "rs_1m": 99,
               "hybrid_rs": 83.0,
-              "sector": "Financial",
-              "group": "Insurance",
+              "sector": "Healthcare",
+              "group": "Biotechnology",
               "group_state": "Weakening"
             },
             {
-              "ticker": "STX",
-              "rs_1m": 90,
+              "ticker": "P",
+              "rs_1m": 99,
               "hybrid_rs": 82.0,
               "sector": "Technology",
-              "group": "Memory & Storage",
+              "group": "Computer Hardware",
               "group_state": "Leading"
+            },
+            {
+              "ticker": "ARX",
+              "rs_1m": 97,
+              "hybrid_rs": 82.0,
+              "sector": "Financial",
+              "group": "Insurance",
+              "group_state": "Weakening"
             },
             {
               "ticker": "NBIS",
@@ -1442,9 +2322,17 @@
               "group_state": "Improving"
             },
             {
-              "ticker": "ABCL",
-              "rs_1m": 99,
+              "ticker": "STX",
+              "rs_1m": 91,
               "hybrid_rs": 80.0,
+              "sector": "Technology",
+              "group": "Memory & Storage",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "OMER",
+              "rs_1m": 99,
+              "hybrid_rs": 79.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
@@ -1452,30 +2340,30 @@
             {
               "ticker": "SMCI",
               "rs_1m": 98,
-              "hybrid_rs": 80.0,
+              "hybrid_rs": 78.0,
               "sector": "Technology",
               "group": "AI - Datacenters",
               "group_state": "Improving"
             },
             {
-              "ticker": "OMER",
-              "rs_1m": 99,
-              "hybrid_rs": 74.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
-              "group_state": "Weakening"
+              "ticker": "SNDK",
+              "rs_1m": 88,
+              "hybrid_rs": 78.0,
+              "sector": "Technology",
+              "group": "Memory & Storage",
+              "group_state": "Leading"
             },
             {
               "ticker": "AVAH",
               "rs_1m": 92,
-              "hybrid_rs": 74.0,
+              "hybrid_rs": 77.0,
               "sector": "Healthcare",
               "group": "Medical Care Facilities",
               "group_state": "Weakening"
             },
             {
               "ticker": "NMAX",
-              "rs_1m": 93,
+              "rs_1m": 94,
               "hybrid_rs": 68.0,
               "sector": "Communication Services",
               "group": "Broadcasting",
@@ -1492,18 +2380,26 @@
             {
               "ticker": "LPTH",
               "rs_1m": 97,
-              "hybrid_rs": 60.0,
+              "hybrid_rs": 62.0,
               "sector": "Technology",
               "group": "Electronic Components",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "AEHR",
+              "rs_1m": 98,
+              "hybrid_rs": 61.0,
+              "sector": "Technology",
+              "group": "Semiconductors Broad",
               "group_state": "Improving"
             },
             {
               "ticker": "KOPN",
               "rs_1m": 97,
-              "hybrid_rs": 57.0,
+              "hybrid_rs": 59.0,
               "sector": "Technology",
               "group": "Electronic Components",
-              "group_state": "Improving"
+              "group_state": "Leading"
             },
             {
               "ticker": "LUNR",
@@ -1514,6 +2410,14 @@
               "group_state": "Improving"
             },
             {
+              "ticker": "RUM",
+              "rs_1m": 93,
+              "hybrid_rs": 46.0,
+              "sector": "Communication Services",
+              "group": "Internet Content & Information",
+              "group_state": "Lagging"
+            },
+            {
               "ticker": "INDI",
               "rs_1m": 90,
               "hybrid_rs": 46.0,
@@ -1522,20 +2426,20 @@
               "group_state": "Improving"
             },
             {
+              "ticker": "MXL",
+              "rs_1m": 86,
+              "hybrid_rs": 43.0,
+              "sector": "Technology",
+              "group": "Semiconductors Broad",
+              "group_state": "Improving"
+            },
+            {
               "ticker": "CAVA",
-              "rs_1m": 64,
-              "hybrid_rs": 44.0,
+              "rs_1m": 66,
+              "hybrid_rs": 43.0,
               "sector": "Consumer Cyclical",
               "group": "Travel & Leisure",
               "group_state": "Weakening"
-            },
-            {
-              "ticker": "RUM",
-              "rs_1m": 94,
-              "hybrid_rs": 41.0,
-              "sector": "Communication Services",
-              "group": "Internet Content & Information",
-              "group_state": "Lagging"
             },
             {
               "ticker": "EROC",
@@ -1547,7 +2451,7 @@
             },
             {
               "ticker": "SKHY",
-              "rs_1m": 64,
+              "rs_1m": 65,
               "hybrid_rs": 18.0,
               "sector": "Technology",
               "group": "Semiconductors Broad",
@@ -1567,9 +2471,146 @@
           "key": "stop_hit",
           "label": "Stop Hit (structure)",
           "recipe": "sp_signal = stop_hit (close under the current-phase stop today)",
-          "measured": false,
-          "count": 0,
-          "tickers": [],
+          "measured": true,
+          "count": 17,
+          "tickers": [
+            {
+              "ticker": "NEO",
+              "rs_1m": 68,
+              "hybrid_rs": 82.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "PLTR",
+              "rs_1m": 94,
+              "hybrid_rs": 77.0,
+              "sector": "Technology",
+              "group": "Speculative Tech",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "DUOL",
+              "rs_1m": 31,
+              "hybrid_rs": 67.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "NCLH",
+              "rs_1m": 26,
+              "hybrid_rs": 56.0,
+              "sector": "Consumer Cyclical",
+              "group": "Travel & Leisure",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "IEP",
+              "rs_1m": 31,
+              "hybrid_rs": 55.0,
+              "sector": "Energy",
+              "group": "Oil & Gas",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "EFOR",
+              "rs_1m": 99,
+              "hybrid_rs": 53.0,
+              "sector": "Technology",
+              "group": "IT Services",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "UNP",
+              "rs_1m": 24,
+              "hybrid_rs": 48.0,
+              "sector": "Industrials",
+              "group": "Grid & Electrification",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "CPNG",
+              "rs_1m": 23,
+              "hybrid_rs": 45.0,
+              "sector": "Consumer Cyclical",
+              "group": "Consumer Retail",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "BE",
+              "rs_1m": 62,
+              "hybrid_rs": 38.0,
+              "sector": "Industrials",
+              "group": "Clean Energy",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "REXR",
+              "rs_1m": 22,
+              "hybrid_rs": 38.0,
+              "sector": "Real Estate",
+              "group": "Real Estate",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "LMND",
+              "rs_1m": 1,
+              "hybrid_rs": 37.0,
+              "sector": "Financial",
+              "group": "Insurance",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "UPS",
+              "rs_1m": 7,
+              "hybrid_rs": 35.0,
+              "sector": "Industrials",
+              "group": "Transportation & Logistics",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "SCCO",
+              "rs_1m": 42,
+              "hybrid_rs": 33.0,
+              "sector": "Basic Materials",
+              "group": "Copper Miners",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "GOOGL",
+              "rs_1m": 33,
+              "hybrid_rs": 32.0,
+              "sector": "Communication Services",
+              "group": "Tech Mega Caps",
+              "group_state": "Lagging"
+            },
+            {
+              "ticker": "CBRS",
+              "rs_1m": 92,
+              "hybrid_rs": 22.0,
+              "sector": "Technology",
+              "group": "Semiconductors Broad",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "ENPH",
+              "rs_1m": 25,
+              "hybrid_rs": 18.0,
+              "sector": "Technology",
+              "group": "Solar",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "HLI",
+              "rs_1m": 11,
+              "hybrid_rs": 17.0,
+              "sector": "Financial",
+              "group": "Financials",
+              "group_state": "Weakening"
+            }
+          ],
           "truncated": 0,
           "preset": null
         },
@@ -1577,9 +2618,50 @@
           "key": "ll_break",
           "label": "Lower Low Break",
           "recipe": "sp_signal = ll_break (close under the structure's LL today)",
-          "measured": false,
-          "count": 0,
-          "tickers": [],
+          "measured": true,
+          "count": 5,
+          "tickers": [
+            {
+              "ticker": "FTRE",
+              "rs_1m": 27,
+              "hybrid_rs": 71.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "NVS",
+              "rs_1m": 28,
+              "hybrid_rs": 36.0,
+              "sector": "Healthcare",
+              "group": "Drug Manufacturers - General",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "ARCO",
+              "rs_1m": 21,
+              "hybrid_rs": 32.0,
+              "sector": "Consumer Cyclical",
+              "group": "Travel & Leisure",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "BUD",
+              "rs_1m": 31,
+              "hybrid_rs": 29.0,
+              "sector": "Consumer Defensive",
+              "group": "Beverages - Brewers",
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "UTI",
+              "rs_1m": 0,
+              "hybrid_rs": 21.0,
+              "sector": "Consumer Defensive",
+              "group": "Education & Training Services",
+              "group_state": "Lagging"
+            }
+          ],
           "truncated": 0,
           "preset": null
         },
@@ -1607,20 +2689,28 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "P",
-              "rs_1m": 99,
-              "hybrid_rs": 84.0,
-              "sector": "Technology",
-              "group": "Computer Hardware",
-              "group_state": "Leading"
-            },
-            {
               "ticker": "NIQ",
               "rs_1m": 98,
-              "hybrid_rs": 84.0,
+              "hybrid_rs": 85.0,
               "sector": "Technology",
               "group": "Software",
               "group_state": "Weakening"
+            },
+            {
+              "ticker": "FBRX",
+              "rs_1m": 98,
+              "hybrid_rs": 83.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "P",
+              "rs_1m": 99,
+              "hybrid_rs": 82.0,
+              "sector": "Technology",
+              "group": "Computer Hardware",
+              "group_state": "Leading"
             },
             {
               "ticker": "ITGR",
@@ -1628,36 +2718,28 @@
               "hybrid_rs": 81.0,
               "sector": "Healthcare",
               "group": "Medical Devices",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "FBRX",
-              "rs_1m": 98,
-              "hybrid_rs": 80.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
               "group_state": "Weakening"
             },
             {
               "ticker": "UTZ",
               "rs_1m": 99,
-              "hybrid_rs": 77.0,
+              "hybrid_rs": 76.0,
               "sector": "Consumer Defensive",
               "group": "Packaged Foods",
               "group_state": "Weakening"
             },
             {
-              "ticker": "PYPL",
-              "rs_1m": 67,
+              "ticker": "CRNX",
+              "rs_1m": 38,
               "hybrid_rs": 76.0,
-              "sector": "Financial",
-              "group": "Fintech",
+              "sector": "Healthcare",
+              "group": "Biotechnology",
               "group_state": "Weakening"
             },
             {
-              "ticker": "CRNX",
-              "rs_1m": 38,
-              "hybrid_rs": 73.0,
+              "ticker": "ATAI",
+              "rs_1m": 37,
+              "hybrid_rs": 76.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
@@ -1665,31 +2747,31 @@
             {
               "ticker": "APGE",
               "rs_1m": 36,
-              "hybrid_rs": 73.0,
+              "hybrid_rs": 75.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
             },
             {
-              "ticker": "ATAI",
+              "ticker": "PYPL",
+              "rs_1m": 68,
+              "hybrid_rs": 72.0,
+              "sector": "Financial",
+              "group": "Fintech",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "TECH",
               "rs_1m": 36,
-              "hybrid_rs": 73.0,
+              "hybrid_rs": 70.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "CAKE",
-              "rs_1m": 95,
-              "hybrid_rs": 68.0,
-              "sector": "Consumer Cyclical",
-              "group": "Travel & Leisure",
               "group_state": "Weakening"
             },
             {
               "ticker": "CBZ",
               "rs_1m": 93,
-              "hybrid_rs": 68.0,
+              "hybrid_rs": 69.0,
               "sector": "Industrials",
               "group": "Specialty Business Services",
               "group_state": "Weakening"
@@ -1703,11 +2785,11 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "TECH",
-              "rs_1m": 35,
+              "ticker": "CAKE",
+              "rs_1m": 95,
               "hybrid_rs": 67.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
+              "sector": "Consumer Cyclical",
+              "group": "Travel & Leisure",
               "group_state": "Weakening"
             },
             {
@@ -1727,6 +2809,21 @@
   ],
   "cross_zone": [
     {
+      "ticker": "NEO",
+      "count": 4,
+      "zones": [
+        "leaders",
+        "entries",
+        "accumulation",
+        "trouble"
+      ],
+      "rs_1m": 68,
+      "hybrid_rs": 82.0,
+      "sector": "Healthcare",
+      "group": "Genomics",
+      "group_state": "Weakening"
+    },
+    {
       "ticker": "P",
       "count": 4,
       "zones": [
@@ -1736,24 +2833,39 @@
         "trouble"
       ],
       "rs_1m": 99,
-      "hybrid_rs": 84.0,
+      "hybrid_rs": 82.0,
       "sector": "Technology",
       "group": "Computer Hardware",
       "group_state": "Leading"
     },
     {
-      "ticker": "UMAC",
-      "count": 3,
+      "ticker": "POET",
+      "count": 4,
       "zones": [
-        "leaders",
+        "entries",
+        "compression",
         "accumulation",
         "moving"
       ],
-      "rs_1m": 99,
-      "hybrid_rs": 87.0,
+      "rs_1m": 94,
+      "hybrid_rs": 39.0,
       "sector": "Technology",
-      "group": "Drones",
-      "group_state": "Leading"
+      "group": "Semiconductors Broad",
+      "group_state": "Improving"
+    },
+    {
+      "ticker": "BFLY",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 95,
+      "hybrid_rs": 86.0,
+      "sector": "Healthcare",
+      "group": "Medical Devices",
+      "group_state": "Weakening"
     },
     {
       "ticker": "TEAM",
@@ -1784,18 +2896,18 @@
       "group_state": "Weakening"
     },
     {
-      "ticker": "NIQ",
+      "ticker": "UMAC",
       "count": 3,
       "zones": [
+        "leaders",
         "accumulation",
-        "moving",
-        "trouble"
+        "moving"
       ],
-      "rs_1m": 98,
-      "hybrid_rs": 84.0,
+      "rs_1m": 99,
+      "hybrid_rs": 86.0,
       "sector": "Technology",
-      "group": "Software",
-      "group_state": "Weakening"
+      "group": "Drones",
+      "group_state": "Leading"
     },
     {
       "ticker": "ABCL",
@@ -1806,23 +2918,65 @@
         "moving"
       ],
       "rs_1m": 99,
-      "hybrid_rs": 80.0,
+      "hybrid_rs": 83.0,
       "sector": "Healthcare",
       "group": "Biotechnology",
       "group_state": "Weakening"
     },
     {
-      "ticker": "PYPL",
+      "ticker": "ADPT",
       "count": 3,
       "zones": [
         "leaders",
-        "accumulation",
-        "trouble"
+        "entries",
+        "accumulation"
       ],
-      "rs_1m": 67,
-      "hybrid_rs": 76.0,
-      "sector": "Financial",
-      "group": "Fintech",
+      "rs_1m": 65,
+      "hybrid_rs": 83.0,
+      "sector": "Healthcare",
+      "group": "Genomics",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "ABSI",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 72,
+      "hybrid_rs": 80.0,
+      "sector": "Healthcare",
+      "group": "Genomics",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "CRWD",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 61,
+      "hybrid_rs": 79.0,
+      "sector": "Technology",
+      "group": "Cybersecurity",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "PSNL",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 10,
+      "hybrid_rs": 78.0,
+      "sector": "Healthcare",
+      "group": "Genomics",
       "group_state": "Weakening"
     },
     {
@@ -1834,23 +2988,247 @@
         "moving"
       ],
       "rs_1m": 92,
+      "hybrid_rs": 77.0,
+      "sector": "Healthcare",
+      "group": "Medical Care Facilities",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "DYN",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "compression",
+        "accumulation"
+      ],
+      "rs_1m": 66,
+      "hybrid_rs": 77.0,
+      "sector": "Healthcare",
+      "group": "Genomics",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "ATAI",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "accumulation",
+        "trouble"
+      ],
+      "rs_1m": 37,
+      "hybrid_rs": 76.0,
+      "sector": "Healthcare",
+      "group": "Biotechnology",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "CRNX",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "accumulation",
+        "trouble"
+      ],
+      "rs_1m": 38,
+      "hybrid_rs": 76.0,
+      "sector": "Healthcare",
+      "group": "Biotechnology",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "OKTA",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 29,
+      "hybrid_rs": 76.0,
+      "sector": "Technology",
+      "group": "Cybersecurity",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "APGE",
+      "count": 3,
+      "zones": [
+        "entries",
+        "accumulation",
+        "trouble"
+      ],
+      "rs_1m": 36,
+      "hybrid_rs": 75.0,
+      "sector": "Healthcare",
+      "group": "Biotechnology",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "TENB",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 21,
+      "hybrid_rs": 75.0,
+      "sector": "Technology",
+      "group": "Cybersecurity",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "CMPS",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 68,
       "hybrid_rs": 74.0,
       "sector": "Healthcare",
       "group": "Medical Care Facilities",
       "group_state": "Weakening"
     },
     {
-      "ticker": "OMER",
+      "ticker": "PGEN",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 90,
+      "hybrid_rs": 74.0,
+      "sector": "Healthcare",
+      "group": "Biotechnology",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "PK",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 42,
+      "hybrid_rs": 74.0,
+      "sector": "Real Estate",
+      "group": "Real Estate",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "ERAS",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "compression",
+        "accumulation"
+      ],
+      "rs_1m": 20,
+      "hybrid_rs": 73.0,
+      "sector": "Healthcare",
+      "group": "Biotechnology",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "W",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 78,
+      "hybrid_rs": 73.0,
+      "sector": "Consumer Cyclical",
+      "group": "Consumer Retail",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "PYPL",
       "count": 3,
       "zones": [
         "leaders",
         "accumulation",
-        "moving"
+        "trouble"
       ],
-      "rs_1m": 99,
-      "hybrid_rs": 74.0,
+      "rs_1m": 68,
+      "hybrid_rs": 72.0,
+      "sector": "Financial",
+      "group": "Fintech",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "AMLX",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 89,
+      "hybrid_rs": 71.0,
+      "sector": "Healthcare",
+      "group": "Drug Manufacturers - Specialty & Generic",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "TECH",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "entries",
+        "trouble"
+      ],
+      "rs_1m": 36,
+      "hybrid_rs": 70.0,
       "sector": "Healthcare",
       "group": "Biotechnology",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "CAKE",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "accumulation",
+        "trouble"
+      ],
+      "rs_1m": 95,
+      "hybrid_rs": 67.0,
+      "sector": "Consumer Cyclical",
+      "group": "Travel & Leisure",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "OUST",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 94,
+      "hybrid_rs": 66.0,
+      "sector": "Technology",
+      "group": "Electronic Components",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "COTY",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "compression",
+        "accumulation"
+      ],
+      "rs_1m": 68,
+      "hybrid_rs": 65.0,
+      "sector": "Consumer Defensive",
+      "group": "Household & Personal Products",
       "group_state": "Weakening"
     },
     {
@@ -1862,13 +3240,13 @@
         "moving"
       ],
       "rs_1m": 97,
-      "hybrid_rs": 60.0,
+      "hybrid_rs": 62.0,
       "sector": "Technology",
       "group": "Electronic Components",
-      "group_state": "Improving"
+      "group_state": "Leading"
     },
     {
-      "ticker": "ALOY",
+      "ticker": "AEHR",
       "count": 3,
       "zones": [
         "leaders",
@@ -1876,37 +3254,38 @@
         "moving"
       ],
       "rs_1m": 98,
-      "hybrid_rs": 56.0,
-      "sector": "Basic Materials",
-      "group": "Other Industrial Metals & Mining",
+      "hybrid_rs": 61.0,
+      "sector": "Technology",
+      "group": "Semiconductors Broad",
       "group_state": "Improving"
     },
     {
-      "ticker": "INFQ",
+      "ticker": "GE",
       "count": 3,
       "zones": [
-        "compression",
-        "accumulation",
-        "moving"
+        "leaders",
+        "entries",
+        "accumulation"
       ],
-      "rs_1m": 97,
-      "hybrid_rs": 53.0,
-      "sector": "Technology",
-      "group": "Broad AI Theme",
+      "rs_1m": 57,
+      "hybrid_rs": 59.0,
+      "sector": "Industrials",
+      "group": "Defense",
       "group_state": "Leading"
     },
     {
-      "ticker": "QMCO",
-      "count": 2,
+      "ticker": "DLTR",
+      "count": 3,
       "zones": [
         "leaders",
-        "moving"
+        "entries",
+        "accumulation"
       ],
-      "rs_1m": 99,
-      "hybrid_rs": 88.0,
-      "sector": "Technology",
-      "group": "Quantum Computing",
-      "group_state": "Improving"
+      "rs_1m": 46,
+      "hybrid_rs": 58.0,
+      "sector": "Consumer Defensive",
+      "group": "Consumer Retail",
+      "group_state": "Weakening"
     },
     {
       "ticker": "TXG",
@@ -1961,6 +3340,45 @@
       "group_state": "Weakening"
     },
     {
+      "ticker": "AMPL",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 96,
+      "hybrid_rs": 86.0,
+      "sector": "Technology",
+      "group": "Software",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "RNG",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 98,
+      "hybrid_rs": 86.0,
+      "sector": "Technology",
+      "group": "Software",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "BLZE",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 97,
+      "hybrid_rs": 85.0,
+      "sector": "Technology",
+      "group": "Broad AI Theme",
+      "group_state": "Leading"
+    },
+    {
       "ticker": "CHYM",
       "count": 2,
       "zones": [
@@ -1974,6 +3392,19 @@
       "group_state": "Weakening"
     },
     {
+      "ticker": "DELL",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 91,
+      "hybrid_rs": 85.0,
+      "sector": "Technology",
+      "group": "Computer Hardware",
+      "group_state": "Leading"
+    },
+    {
       "ticker": "FSLY",
       "count": 2,
       "zones": [
@@ -1985,6 +3416,97 @@
       "sector": "Technology",
       "group": "Software",
       "group_state": "Weakening"
+    },
+    {
+      "ticker": "NIQ",
+      "count": 2,
+      "zones": [
+        "moving",
+        "trouble"
+      ],
+      "rs_1m": 98,
+      "hybrid_rs": 85.0,
+      "sector": "Technology",
+      "group": "Software",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "SNOW",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 89,
+      "hybrid_rs": 85.0,
+      "sector": "Technology",
+      "group": "Software",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "CRSR",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 95,
+      "hybrid_rs": 84.0,
+      "sector": "Technology",
+      "group": "Computer Hardware",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "NAVN",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 76,
+      "hybrid_rs": 84.0,
+      "sector": "Technology",
+      "group": "Software",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "FBRX",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "trouble"
+      ],
+      "rs_1m": 98,
+      "hybrid_rs": 83.0,
+      "sector": "Healthcare",
+      "group": "Biotechnology",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "IOVA",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 96,
+      "hybrid_rs": 83.0,
+      "sector": "Healthcare",
+      "group": "Biotechnology",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "MPC",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 78,
+      "hybrid_rs": 83.0,
+      "sector": "Energy",
+      "group": "Oil & Gas",
+      "group_state": "Improving"
     },
     {
       "ticker": "NTAP",
@@ -2013,6 +3535,19 @@
       "group_state": "Leading"
     },
     {
+      "ticker": "WDAY",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 96,
+      "hybrid_rs": 83.0,
+      "sector": "Technology",
+      "group": "Software",
+      "group_state": "Weakening"
+    },
+    {
       "ticker": "ZETA",
       "count": 2,
       "zones": [
@@ -2026,6 +3561,188 @@
       "group_state": "Leading"
     },
     {
+      "ticker": "ARX",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 97,
+      "hybrid_rs": 82.0,
+      "sector": "Financial",
+      "group": "Insurance",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "CCC",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 81,
+      "hybrid_rs": 82.0,
+      "sector": "Technology",
+      "group": "Software",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "DV",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 83,
+      "hybrid_rs": 82.0,
+      "sector": "Communication Services",
+      "group": "Advertising Agencies",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "FROG",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 67,
+      "hybrid_rs": 82.0,
+      "sector": "Technology",
+      "group": "Software",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "PGY",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 92,
+      "hybrid_rs": 82.0,
+      "sector": "Technology",
+      "group": "Broad AI Theme",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "SHOP",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 91,
+      "hybrid_rs": 82.0,
+      "sector": "Technology",
+      "group": "Speculative Tech",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "VLO",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 72,
+      "hybrid_rs": 82.0,
+      "sector": "Energy",
+      "group": "Oil & Gas",
+      "group_state": "Improving"
+    },
+    {
+      "ticker": "GTLB",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 94,
+      "hybrid_rs": 81.0,
+      "sector": "Technology",
+      "group": "Broad AI Theme",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "HPQ",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 88,
+      "hybrid_rs": 81.0,
+      "sector": "Technology",
+      "group": "Computer Hardware",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "ITGR",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "trouble"
+      ],
+      "rs_1m": 94,
+      "hybrid_rs": 81.0,
+      "sector": "Healthcare",
+      "group": "Medical Devices",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "NBIS",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 98,
+      "hybrid_rs": 81.0,
+      "sector": "Technology",
+      "group": "AI - Datacenters",
+      "group_state": "Improving"
+    },
+    {
+      "ticker": "PATH",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 94,
+      "hybrid_rs": 81.0,
+      "sector": "Technology",
+      "group": "Broad AI Theme",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "CERT",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "compression"
+      ],
+      "rs_1m": 82,
+      "hybrid_rs": 80.0,
+      "sector": "Healthcare",
+      "group": "Health Information Services",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "EXPE",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 91,
+      "hybrid_rs": 80.0,
+      "sector": "Consumer Cyclical",
+      "group": "Travel & Leisure",
+      "group_state": "Weakening"
+    },
+    {
       "ticker": "NET",
       "count": 2,
       "zones": [
@@ -2033,7 +3750,7 @@
         "accumulation"
       ],
       "rs_1m": 78,
-      "hybrid_rs": 81.0,
+      "hybrid_rs": 80.0,
       "sector": "Technology",
       "group": "Cybersecurity",
       "group_state": "Weakening"
@@ -2046,23 +3763,10 @@
         "accumulation"
       ],
       "rs_1m": 88,
-      "hybrid_rs": 81.0,
+      "hybrid_rs": 80.0,
       "sector": "Technology",
       "group": "Broad AI Theme",
       "group_state": "Leading"
-    },
-    {
-      "ticker": "FBRX",
-      "count": 2,
-      "zones": [
-        "leaders",
-        "trouble"
-      ],
-      "rs_1m": 98,
-      "hybrid_rs": 80.0,
-      "sector": "Healthcare",
-      "group": "Biotechnology",
-      "group_state": "Weakening"
     },
     {
       "ticker": "PANW",
@@ -2071,24 +3775,154 @@
         "leaders",
         "accumulation"
       ],
-      "rs_1m": 61,
+      "rs_1m": 62,
       "hybrid_rs": 80.0,
       "sector": "Technology",
       "group": "Cybersecurity",
       "group_state": "Weakening"
     },
     {
-      "ticker": "SMCI",
+      "ticker": "S",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 86,
+      "hybrid_rs": 80.0,
+      "sector": "Technology",
+      "group": "Cybersecurity",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "STX",
+      "count": 2,
+      "zones": [
+        "entries",
+        "moving"
+      ],
+      "rs_1m": 91,
+      "hybrid_rs": 80.0,
+      "sector": "Technology",
+      "group": "Memory & Storage",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "ABNB",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 92,
+      "hybrid_rs": 79.0,
+      "sector": "Consumer Cyclical",
+      "group": "Travel & Leisure",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "ANET",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 85,
+      "hybrid_rs": 79.0,
+      "sector": "Technology",
+      "group": "AI - Datacenters",
+      "group_state": "Improving"
+    },
+    {
+      "ticker": "DOCU",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 85,
+      "hybrid_rs": 79.0,
+      "sector": "Technology",
+      "group": "Software",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "DXCM",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 84,
+      "hybrid_rs": 79.0,
+      "sector": "Healthcare",
+      "group": "Medical Devices",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "GH",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 38,
+      "hybrid_rs": 79.0,
+      "sector": "Healthcare",
+      "group": "Genomics",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "NCNO",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 83,
+      "hybrid_rs": 79.0,
+      "sector": "Technology",
+      "group": "Software",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "OMER",
       "count": 2,
       "zones": [
         "leaders",
         "moving"
       ],
-      "rs_1m": 98,
-      "hybrid_rs": 80.0,
+      "rs_1m": 99,
+      "hybrid_rs": 79.0,
+      "sector": "Healthcare",
+      "group": "Biotechnology",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "ASAN",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "entries"
+      ],
+      "rs_1m": 87,
+      "hybrid_rs": 78.0,
       "sector": "Technology",
-      "group": "AI - Datacenters",
-      "group_state": "Improving"
+      "group": "Software",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "CXM",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 86,
+      "hybrid_rs": 78.0,
+      "sector": "Technology",
+      "group": "Software",
+      "group_state": "Weakening"
     },
     {
       "ticker": "GPN",
@@ -2098,23 +3932,36 @@
         "accumulation"
       ],
       "rs_1m": 87,
-      "hybrid_rs": 79.0,
+      "hybrid_rs": 78.0,
       "sector": "Technology",
       "group": "Broad AI Theme",
       "group_state": "Leading"
     },
     {
-      "ticker": "TNDM",
+      "ticker": "HRB",
       "count": 2,
       "zones": [
         "leaders",
         "accumulation"
       ],
-      "rs_1m": 95,
-      "hybrid_rs": 79.0,
-      "sector": "Healthcare",
-      "group": "Medical Devices",
-      "group_state": "Leading"
+      "rs_1m": 93,
+      "hybrid_rs": 78.0,
+      "sector": "Consumer Cyclical",
+      "group": "Personal Services",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "LYFT",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 76,
+      "hybrid_rs": 78.0,
+      "sector": "Technology",
+      "group": "Software",
+      "group_state": "Weakening"
     },
     {
       "ticker": "NTSK",
@@ -2130,42 +3977,133 @@
       "group_state": "Leading"
     },
     {
-      "ticker": "PSNL",
+      "ticker": "SMCI",
       "count": 2,
       "zones": [
         "leaders",
-        "compression"
+        "moving"
       ],
-      "rs_1m": 10,
+      "rs_1m": 98,
       "hybrid_rs": 78.0,
-      "sector": "Healthcare",
-      "group": "Genomics",
-      "group_state": "Weakening"
+      "sector": "Technology",
+      "group": "AI - Datacenters",
+      "group_state": "Improving"
     },
     {
-      "ticker": "ABSI",
+      "ticker": "DT",
       "count": 2,
       "zones": [
         "leaders",
-        "compression"
+        "accumulation"
       ],
       "rs_1m": 72,
       "hybrid_rs": 77.0,
-      "sector": "Healthcare",
-      "group": "Genomics",
+      "sector": "Technology",
+      "group": "Software",
       "group_state": "Weakening"
     },
     {
-      "ticker": "NRIX",
+      "ticker": "PLTR",
       "count": 2,
       "zones": [
-        "compression",
+        "leaders",
+        "trouble"
+      ],
+      "rs_1m": 94,
+      "hybrid_rs": 77.0,
+      "sector": "Technology",
+      "group": "Speculative Tech",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "SAIL",
+      "count": 2,
+      "zones": [
+        "leaders",
         "accumulation"
       ],
-      "rs_1m": 85,
+      "rs_1m": 91,
       "hybrid_rs": 77.0,
+      "sector": "Technology",
+      "group": "Cybersecurity",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "TOST",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 82,
+      "hybrid_rs": 77.0,
+      "sector": "Technology",
+      "group": "Speculative Tech",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "ADP",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 61,
+      "hybrid_rs": 76.0,
+      "sector": "Technology",
+      "group": "Software",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "BAX",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 86,
+      "hybrid_rs": 76.0,
       "sector": "Healthcare",
-      "group": "Biotechnology",
+      "group": "Medical Devices",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "BKNG",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 84,
+      "hybrid_rs": 76.0,
+      "sector": "Consumer Cyclical",
+      "group": "Travel & Leisure",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "DBX",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 76,
+      "hybrid_rs": 76.0,
+      "sector": "Technology",
+      "group": "Broad AI Theme",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "LFST",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 63,
+      "hybrid_rs": 76.0,
+      "sector": "Healthcare",
+      "group": "Medical Care Facilities",
       "group_state": "Weakening"
     },
     {
@@ -2176,59 +4114,33 @@
         "trouble"
       ],
       "rs_1m": 99,
-      "hybrid_rs": 77.0,
+      "hybrid_rs": 76.0,
       "sector": "Consumer Defensive",
       "group": "Packaged Foods",
       "group_state": "Weakening"
     },
     {
-      "ticker": "CLBK",
+      "ticker": "BOX",
       "count": 2,
       "zones": [
         "leaders",
         "accumulation"
       ],
-      "rs_1m": 73,
-      "hybrid_rs": 74.0,
-      "sector": "Financial",
-      "group": "Regional Banks",
-      "group_state": "Weakening"
+      "rs_1m": 62,
+      "hybrid_rs": 75.0,
+      "sector": "Technology",
+      "group": "Broad AI Theme",
+      "group_state": "Leading"
     },
     {
-      "ticker": "RLAY",
+      "ticker": "DFTX",
       "count": 2,
       "zones": [
         "leaders",
-        "compression"
+        "accumulation"
       ],
-      "rs_1m": 51,
-      "hybrid_rs": 74.0,
-      "sector": "Healthcare",
-      "group": "Biotechnology",
-      "group_state": "Weakening"
-    },
-    {
-      "ticker": "ATAI",
-      "count": 2,
-      "zones": [
-        "leaders",
-        "trouble"
-      ],
-      "rs_1m": 36,
-      "hybrid_rs": 73.0,
-      "sector": "Healthcare",
-      "group": "Biotechnology",
-      "group_state": "Weakening"
-    },
-    {
-      "ticker": "CRNX",
-      "count": 2,
-      "zones": [
-        "leaders",
-        "trouble"
-      ],
-      "rs_1m": 38,
-      "hybrid_rs": 73.0,
+      "rs_1m": 21,
+      "hybrid_rs": 75.0,
       "sector": "Healthcare",
       "group": "Biotechnology",
       "group_state": "Weakening"
@@ -2241,22 +4153,178 @@
         "accumulation"
       ],
       "rs_1m": 92,
+      "hybrid_rs": 75.0,
+      "sector": "Healthcare",
+      "group": "Biotechnology",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "IOT",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 51,
+      "hybrid_rs": 75.0,
+      "sector": "Technology",
+      "group": "Broad AI Theme",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "NOW",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "entries"
+      ],
+      "rs_1m": 88,
+      "hybrid_rs": 75.0,
+      "sector": "Technology",
+      "group": "Software",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "RLAY",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "compression"
+      ],
+      "rs_1m": 33,
+      "hybrid_rs": 75.0,
+      "sector": "Healthcare",
+      "group": "Biotechnology",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "SLS",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 23,
+      "hybrid_rs": 75.0,
+      "sector": "Healthcare",
+      "group": "Biotechnology",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "DASH",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 85,
+      "hybrid_rs": 74.0,
+      "sector": "Consumer Cyclical",
+      "group": "Consumer Retail",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "FTNT",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 31,
+      "hybrid_rs": 74.0,
+      "sector": "Technology",
+      "group": "Cybersecurity",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "RELY",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 68,
+      "hybrid_rs": 74.0,
+      "sector": "Technology",
+      "group": "Broad AI Theme",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "NWL",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 87,
+      "hybrid_rs": 73.0,
+      "sector": "Consumer Defensive",
+      "group": "Household & Personal Products",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "RCUS",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 64,
       "hybrid_rs": 73.0,
       "sector": "Healthcare",
       "group": "Biotechnology",
       "group_state": "Weakening"
     },
     {
-      "ticker": "LFST",
+      "ticker": "AMBP",
       "count": 2,
       "zones": [
         "leaders",
         "accumulation"
       ],
-      "rs_1m": 62,
+      "rs_1m": 74,
+      "hybrid_rs": 72.0,
+      "sector": "Consumer Cyclical",
+      "group": "Packaging & Containers",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "AVPT",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "entries"
+      ],
+      "rs_1m": 43,
+      "hybrid_rs": 72.0,
+      "sector": "Technology",
+      "group": "Broad AI Theme",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "CLBK",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 74,
+      "hybrid_rs": 72.0,
+      "sector": "Financial",
+      "group": "Regional Banks",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "MRNA",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "entries"
+      ],
+      "rs_1m": 45,
       "hybrid_rs": 72.0,
       "sector": "Healthcare",
-      "group": "Medical Care Facilities",
+      "group": "Genomics",
       "group_state": "Weakening"
     },
     {
@@ -2264,7 +4332,7 @@
       "count": 2,
       "zones": [
         "leaders",
-        "moving"
+        "entries"
       ],
       "rs_1m": 76,
       "hybrid_rs": 72.0,
@@ -2273,68 +4341,94 @@
       "group_state": "Weakening"
     },
     {
-      "ticker": "W",
+      "ticker": "CNK",
       "count": 2,
       "zones": [
         "leaders",
         "accumulation"
       ],
-      "rs_1m": 73,
+      "rs_1m": 90,
+      "hybrid_rs": 71.0,
+      "sector": "Communication Services",
+      "group": "Entertainment",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "DNLI",
+      "count": 2,
+      "zones": [
+        "compression",
+        "accumulation"
+      ],
+      "rs_1m": 54,
+      "hybrid_rs": 71.0,
+      "sector": "Healthcare",
+      "group": "Biotechnology",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "DOCS",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "entries"
+      ],
+      "rs_1m": 81,
+      "hybrid_rs": 71.0,
+      "sector": "Healthcare",
+      "group": "Health Information Services",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "TRVI",
+      "count": 2,
+      "zones": [
+        "compression",
+        "accumulation"
+      ],
+      "rs_1m": 23,
+      "hybrid_rs": 71.0,
+      "sector": "Healthcare",
+      "group": "Biotechnology",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "ETSY",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 17,
       "hybrid_rs": 70.0,
       "sector": "Consumer Cyclical",
       "group": "Consumer Retail",
       "group_state": "Weakening"
     },
     {
-      "ticker": "ELF",
+      "ticker": "SE",
       "count": 2,
       "zones": [
         "leaders",
         "accumulation"
       ],
-      "rs_1m": 91,
-      "hybrid_rs": 69.0,
-      "sector": "Consumer Defensive",
-      "group": "Household & Personal Products",
-      "group_state": "Weakening"
-    },
-    {
-      "ticker": "KMX",
-      "count": 2,
-      "zones": [
-        "leaders",
-        "compression"
-      ],
-      "rs_1m": 52,
-      "hybrid_rs": 69.0,
+      "rs_1m": 84,
+      "hybrid_rs": 70.0,
       "sector": "Consumer Cyclical",
-      "group": "Auto & Truck Dealerships",
+      "group": "Consumer Retail",
       "group_state": "Weakening"
     },
     {
-      "ticker": "CAI",
+      "ticker": "BMRN",
       "count": 2,
       "zones": [
         "leaders",
         "accumulation"
       ],
-      "rs_1m": 95,
-      "hybrid_rs": 68.0,
+      "rs_1m": 77,
+      "hybrid_rs": 69.0,
       "sector": "Healthcare",
-      "group": "Genomics",
-      "group_state": "Weakening"
-    },
-    {
-      "ticker": "CAKE",
-      "count": 2,
-      "zones": [
-        "leaders",
-        "trouble"
-      ],
-      "rs_1m": 95,
-      "hybrid_rs": 68.0,
-      "sector": "Consumer Cyclical",
-      "group": "Travel & Leisure",
+      "group": "Biotechnology",
       "group_state": "Weakening"
     },
     {
@@ -2345,9 +4439,61 @@
         "trouble"
       ],
       "rs_1m": 93,
-      "hybrid_rs": 68.0,
+      "hybrid_rs": 69.0,
       "sector": "Industrials",
       "group": "Specialty Business Services",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "CXW",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 62,
+      "hybrid_rs": 69.0,
+      "sector": "Industrials",
+      "group": "Security & Protection Services",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "KMX",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "compression"
+      ],
+      "rs_1m": 53,
+      "hybrid_rs": 69.0,
+      "sector": "Consumer Cyclical",
+      "group": "Auto & Truck Dealerships",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "C",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 66,
+      "hybrid_rs": 68.0,
+      "sector": "Financial",
+      "group": "Banks - Money Center",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "ELF",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 91,
+      "hybrid_rs": 68.0,
+      "sector": "Consumer Defensive",
+      "group": "Household & Personal Products",
       "group_state": "Weakening"
     },
     {
@@ -2357,17 +4503,43 @@
         "accumulation",
         "moving"
       ],
-      "rs_1m": 93,
+      "rs_1m": 94,
       "hybrid_rs": 68.0,
       "sector": "Communication Services",
       "group": "Broadcasting",
       "group_state": null
     },
     {
-      "ticker": "ROKU",
+      "ticker": "NUVB",
       "count": 2,
       "zones": [
         "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 63,
+      "hybrid_rs": 68.0,
+      "sector": "Healthcare",
+      "group": "Biotechnology",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "NWG",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 67,
+      "hybrid_rs": 68.0,
+      "sector": "Financial",
+      "group": "Regional Banks",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "ROKU",
+      "count": 2,
+      "zones": [
+        "accumulation",
         "trouble"
       ],
       "rs_1m": 68,
@@ -2377,16 +4549,55 @@
       "group_state": "Leading"
     },
     {
-      "ticker": "TECH",
+      "ticker": "ACVA",
       "count": 2,
       "zones": [
         "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 73,
+      "hybrid_rs": 67.0,
+      "sector": "Consumer Cyclical",
+      "group": "Auto & Truck Dealerships",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "BBY",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "entries"
+      ],
+      "rs_1m": 39,
+      "hybrid_rs": 67.0,
+      "sector": "Consumer Cyclical",
+      "group": "Consumer Retail",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "DUOL",
+      "count": 2,
+      "zones": [
+        "accumulation",
         "trouble"
       ],
-      "rs_1m": 35,
+      "rs_1m": 31,
       "hybrid_rs": 67.0,
-      "sector": "Healthcare",
-      "group": "Biotechnology",
+      "sector": "Technology",
+      "group": "Software",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "SLM",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "entries"
+      ],
+      "rs_1m": 72,
+      "hybrid_rs": 67.0,
+      "sector": "Financial",
+      "group": "Fintech",
       "group_state": "Weakening"
     },
     {
@@ -2403,16 +4614,16 @@
       "group_state": "Weakening"
     },
     {
-      "ticker": "BMRN",
+      "ticker": "KLAR",
       "count": 2,
       "zones": [
         "leaders",
         "accumulation"
       ],
-      "rs_1m": 77,
+      "rs_1m": 73,
       "hybrid_rs": 66.0,
-      "sector": "Healthcare",
-      "group": "Biotechnology",
+      "sector": "Financial",
+      "group": "Fintech",
       "group_state": "Weakening"
     },
     {
@@ -2420,103 +4631,90 @@
       "count": 2,
       "zones": [
         "leaders",
-        "accumulation"
+        "entries"
       ],
-      "rs_1m": 52,
+      "rs_1m": 53,
       "hybrid_rs": 66.0,
       "sector": "Technology",
       "group": "Software",
       "group_state": "Weakening"
     },
     {
-      "ticker": "NUVB",
+      "ticker": "SOLV",
       "count": 2,
       "zones": [
-        "leaders",
+        "entries",
         "accumulation"
       ],
-      "rs_1m": 62,
-      "hybrid_rs": 65.0,
+      "rs_1m": 68,
+      "hybrid_rs": 66.0,
       "sector": "Healthcare",
-      "group": "Biotechnology",
+      "group": "Medical Devices",
       "group_state": "Weakening"
     },
     {
-      "ticker": "OUST",
-      "count": 2,
-      "zones": [
-        "leaders",
-        "moving"
-      ],
-      "rs_1m": 94,
-      "hybrid_rs": 64.0,
-      "sector": "Technology",
-      "group": "Electronic Components",
-      "group_state": "Improving"
-    },
-    {
-      "ticker": "PENG",
-      "count": 2,
-      "zones": [
-        "leaders",
-        "compression"
-      ],
-      "rs_1m": 56,
-      "hybrid_rs": 64.0,
-      "sector": "Technology",
-      "group": "IT Services",
-      "group_state": "Leading"
-    },
-    {
-      "ticker": "EQH",
+      "ticker": "COMP",
       "count": 2,
       "zones": [
         "leaders",
         "accumulation"
       ],
-      "rs_1m": 75,
+      "rs_1m": 67,
+      "hybrid_rs": 65.0,
+      "sector": "Real Estate",
+      "group": "Real Estate",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "QGEN",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "entries"
+      ],
+      "rs_1m": 52,
+      "hybrid_rs": 64.0,
+      "sector": "Healthcare",
+      "group": "Genomics",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "CAH",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 47,
+      "hybrid_rs": 63.0,
+      "sector": "Healthcare",
+      "group": "Medical Distribution",
+      "group_state": null
+    },
+    {
+      "ticker": "CFG",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 51,
       "hybrid_rs": 63.0,
       "sector": "Financial",
-      "group": "Financials",
+      "group": "Regional Banks",
       "group_state": "Weakening"
     },
     {
-      "ticker": "NN",
-      "count": 2,
-      "zones": [
-        "accumulation",
-        "moving"
-      ],
-      "rs_1m": 98,
-      "hybrid_rs": 63.0,
-      "sector": "Technology",
-      "group": "Broad AI Theme",
-      "group_state": "Leading"
-    },
-    {
-      "ticker": "TPG",
+      "ticker": "ATEC",
       "count": 2,
       "zones": [
         "leaders",
-        "accumulation"
+        "entries"
       ],
-      "rs_1m": 89,
+      "rs_1m": 80,
       "hybrid_rs": 62.0,
-      "sector": "Financial",
-      "group": "Financials",
-      "group_state": "Weakening"
-    },
-    {
-      "ticker": "CRBG",
-      "count": 2,
-      "zones": [
-        "leaders",
-        "accumulation"
-      ],
-      "rs_1m": 76,
-      "hybrid_rs": 61.0,
-      "sector": "Financial",
-      "group": "Financials",
+      "sector": "Healthcare",
+      "group": "Medical Devices",
       "group_state": "Weakening"
     },
     {
@@ -2526,10 +4724,36 @@
         "leaders",
         "accumulation"
       ],
-      "rs_1m": 21,
-      "hybrid_rs": 60.0,
+      "rs_1m": 22,
+      "hybrid_rs": 61.0,
       "sector": "Industrials",
       "group": "Specialty Business Services",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "GENI",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 95,
+      "hybrid_rs": 61.0,
+      "sector": "Communication Services",
+      "group": "Internet Content & Information",
+      "group_state": "Lagging"
+    },
+    {
+      "ticker": "MTB",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 43,
+      "hybrid_rs": 61.0,
+      "sector": "Financial",
+      "group": "Regional Banks",
       "group_state": "Weakening"
     },
     {
@@ -2539,8 +4763,8 @@
         "leaders",
         "accumulation"
       ],
-      "rs_1m": 90,
-      "hybrid_rs": 58.0,
+      "rs_1m": 94,
+      "hybrid_rs": 61.0,
       "sector": "Energy",
       "group": "Oil & Gas",
       "group_state": "Improving"
@@ -2552,23 +4776,192 @@
         "leaders",
         "accumulation"
       ],
-      "rs_1m": 70,
-      "hybrid_rs": 58.0,
+      "rs_1m": 71,
+      "hybrid_rs": 61.0,
       "sector": "Industrials",
       "group": "Homebuilders",
       "group_state": "Weakening"
     },
     {
-      "ticker": "AMGN",
+      "ticker": "USFD",
       "count": 2,
       "zones": [
         "leaders",
         "accumulation"
       ],
-      "rs_1m": 77,
+      "rs_1m": 75,
+      "hybrid_rs": 61.0,
+      "sector": "Consumer Defensive",
+      "group": "Food Distribution",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "HPE",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 93,
+      "hybrid_rs": 60.0,
+      "sector": "Technology",
+      "group": "Optics & Networking Equipment",
+      "group_state": "Improving"
+    },
+    {
+      "ticker": "RTX",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "entries"
+      ],
+      "rs_1m": 82,
+      "hybrid_rs": 60.0,
+      "sector": "Industrials",
+      "group": "Defense",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "KOPN",
+      "count": 2,
+      "zones": [
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 97,
+      "hybrid_rs": 59.0,
+      "sector": "Technology",
+      "group": "Electronic Components",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "JHX",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 88,
       "hybrid_rs": 57.0,
-      "sector": "Healthcare",
-      "group": "Drug Manufacturers - General",
+      "sector": "Basic Materials",
+      "group": "Building Materials",
+      "group_state": "Lagging"
+    },
+    {
+      "ticker": "NWSA",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 45,
+      "hybrid_rs": 57.0,
+      "sector": "Communication Services",
+      "group": "Entertainment",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "ALOY",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 99,
+      "hybrid_rs": 56.0,
+      "sector": "Basic Materials",
+      "group": "Other Industrial Metals & Mining",
+      "group_state": "Improving"
+    },
+    {
+      "ticker": "APH",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "entries"
+      ],
+      "rs_1m": 72,
+      "hybrid_rs": 55.0,
+      "sector": "Technology",
+      "group": "Electronic Components",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "GNW",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 37,
+      "hybrid_rs": 55.0,
+      "sector": "Financial",
+      "group": "Insurance",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "IRDM",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 64,
+      "hybrid_rs": 55.0,
+      "sector": "Communication Services",
+      "group": "Telecom Services",
+      "group_state": "Improving"
+    },
+    {
+      "ticker": "TFC",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 44,
+      "hybrid_rs": 55.0,
+      "sector": "Financial",
+      "group": "Regional Banks",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "FND",
+      "count": 2,
+      "zones": [
+        "leaders",
+        "accumulation"
+      ],
+      "rs_1m": 48,
+      "hybrid_rs": 53.0,
+      "sector": "Consumer Cyclical",
+      "group": "Consumer Retail",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "PINS",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 50,
+      "hybrid_rs": 53.0,
+      "sector": "Communication Services",
+      "group": "Internet Content & Information",
+      "group_state": "Lagging"
+    },
+    {
+      "ticker": "AMD",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 50,
+      "hybrid_rs": 50.0,
+      "sector": "Technology",
+      "group": "Semiconductors Large Caps",
       "group_state": "Weakening"
     },
     {
@@ -2578,24 +4971,50 @@
         "leaders",
         "accumulation"
       ],
-      "rs_1m": 77,
-      "hybrid_rs": 49.0,
+      "rs_1m": 85,
+      "hybrid_rs": 50.0,
       "sector": "Consumer Defensive",
       "group": "Grocery Stores",
       "group_state": "Lagging"
     },
     {
-      "ticker": "LUNR",
+      "ticker": "TH",
       "count": 2,
       "zones": [
-        "accumulation",
-        "moving"
+        "entries",
+        "accumulation"
       ],
-      "rs_1m": 97,
-      "hybrid_rs": 47.0,
+      "rs_1m": 60,
+      "hybrid_rs": 50.0,
       "sector": "Industrials",
-      "group": "Space",
+      "group": "Specialty Business Services",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "KNTK",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 65,
+      "hybrid_rs": 48.0,
+      "sector": "Energy",
+      "group": "Energy",
       "group_state": "Improving"
+    },
+    {
+      "ticker": "VIRT",
+      "count": 2,
+      "zones": [
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 64,
+      "hybrid_rs": 47.0,
+      "sector": "Financial",
+      "group": "Financials",
+      "group_state": "Weakening"
     },
     {
       "ticker": "INDI",
@@ -2611,122 +5030,122 @@
       "group_state": "Improving"
     },
     {
-      "ticker": "INOD",
-      "count": 2,
-      "zones": [
-        "compression",
-        "accumulation"
-      ],
-      "rs_1m": 54,
-      "hybrid_rs": 44.0,
-      "sector": "Technology",
-      "group": "IT Services",
-      "group_state": "Leading"
-    },
-    {
       "ticker": "RUM",
       "count": 2,
       "zones": [
         "accumulation",
         "moving"
       ],
-      "rs_1m": 94,
-      "hybrid_rs": 41.0,
+      "rs_1m": 93,
+      "hybrid_rs": 46.0,
       "sector": "Communication Services",
       "group": "Internet Content & Information",
       "group_state": "Lagging"
     },
     {
-      "ticker": "NVTS",
+      "ticker": "MXL",
       "count": 2,
       "zones": [
-        "compression",
+        "accumulation",
         "moving"
       ],
-      "rs_1m": 91,
-      "hybrid_rs": 39.0,
+      "rs_1m": 86,
+      "hybrid_rs": 43.0,
       "sector": "Technology",
       "group": "Semiconductors Broad",
       "group_state": "Improving"
     },
     {
-      "ticker": "POET",
+      "ticker": "AAOI",
       "count": 2,
       "zones": [
-        "compression",
-        "moving"
-      ],
-      "rs_1m": 93,
-      "hybrid_rs": 39.0,
-      "sector": "Technology",
-      "group": "Semiconductors Broad",
-      "group_state": "Improving"
-    },
-    {
-      "ticker": "AVEX",
-      "count": 2,
-      "zones": [
-        "compression",
+        "entries",
         "accumulation"
       ],
       "rs_1m": 98,
-      "hybrid_rs": 36.0,
-      "sector": "Industrials",
-      "group": "Defense",
-      "group_state": "Leading"
+      "hybrid_rs": 42.0,
+      "sector": "Technology",
+      "group": "Optics & Networking Equipment",
+      "group_state": "Improving"
     },
     {
-      "ticker": "EROC",
+      "ticker": "HESM",
       "count": 2,
       "zones": [
-        "accumulation",
-        "moving"
+        "entries",
+        "accumulation"
       ],
-      "rs_1m": 98,
-      "hybrid_rs": 33.0,
-      "sector": "Industrials",
-      "group": "Robotics & Automation",
+      "rs_1m": 45,
+      "hybrid_rs": 41.0,
+      "sector": "Energy",
+      "group": "Energy",
+      "group_state": "Improving"
+    },
+    {
+      "ticker": "IONS",
+      "count": 2,
+      "zones": [
+        "entries",
+        "compression"
+      ],
+      "rs_1m": 56,
+      "hybrid_rs": 41.0,
+      "sector": "Healthcare",
+      "group": "Genomics",
       "group_state": "Weakening"
     },
     {
-      "ticker": "MP",
+      "ticker": "PR",
       "count": 2,
       "zones": [
-        "accumulation",
-        "moving"
+        "entries",
+        "accumulation"
       ],
-      "rs_1m": 93,
-      "hybrid_rs": 31.0,
-      "sector": "Basic Materials",
-      "group": "Rare Earth Metals",
+      "rs_1m": 59,
+      "hybrid_rs": 41.0,
+      "sector": "Energy",
+      "group": "Energy",
       "group_state": "Improving"
     },
     {
-      "ticker": "USAR",
+      "ticker": "WMB",
       "count": 2,
       "zones": [
-        "accumulation",
-        "moving"
+        "entries",
+        "accumulation"
       ],
-      "rs_1m": 92,
-      "hybrid_rs": 29.0,
-      "sector": "Basic Materials",
-      "group": "Rare Earth Metals",
+      "rs_1m": 45,
+      "hybrid_rs": 36.0,
+      "sector": "Energy",
+      "group": "Energy",
       "group_state": "Improving"
     },
     {
-      "ticker": "SGML",
+      "ticker": "CF",
       "count": 2,
       "zones": [
-        "accumulation",
-        "moving"
+        "entries",
+        "accumulation"
       ],
-      "rs_1m": 84,
-      "hybrid_rs": 23.0,
+      "rs_1m": 27,
+      "hybrid_rs": 33.0,
       "sector": "Basic Materials",
-      "group": "Other Industrial Metals & Mining",
+      "group": "Agribusiness",
+      "group_state": "Lagging"
+    },
+    {
+      "ticker": "ENPH",
+      "count": 2,
+      "zones": [
+        "compression",
+        "trouble"
+      ],
+      "rs_1m": 25,
+      "hybrid_rs": 18.0,
+      "sector": "Technology",
+      "group": "Solar",
       "group_state": "Improving"
     }
   ],
-  "universe_gated": 1543
+  "universe_gated": 1539
 }
