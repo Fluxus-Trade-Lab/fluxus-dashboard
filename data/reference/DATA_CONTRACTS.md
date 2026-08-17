@@ -278,6 +278,7 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 - ⚠️ **`measured=false` 必须渲染成"未测量"**(空框 / 灰),不能画成 0 —— 首晚 `sp_*` / `ema21_atr_dist` 未出时是 **6 格**:三个 LL-HL、`liquid_leader_pullback`、`stop_hit`、`ll_break`(前端已指出我早先说 3 格是少数了)
 - **`cross_zone` 数的是"区"不是"格"**:一只票在 moving 区三个格都出现只算 1;**≥3 区才列(08-17 收严,Andy:"改严格一点";≥2 时 08-14 有 177 只、其中 143 只恰两区,多是 leaders×moving 同义;≥3 单独收严剩 34 只,再叠加 Morales 收严后 08-14 数据剩 16 只)**;`cross_zone_rule` 字段写明当前门槛。这是对 oratnek "Tickers in 3+ watchlists" 的修正 —— 他那栏统计的多半是同义词。前端把它放顶部,替代原来的"出现在 N 张单"
 - **`rs_high` 探测(08-18 加,Andy:"只做检测,不否定现有的参数")**:每只票项多一个布尔 `rs_high`(= `rs_line_pctl_21 == 100`,RS 线在 21 日新高),每格多一个 `count_rs_high`,顶层 `rs_high_rule` 写规则。**没有任何格用它筛选**;它是给页面做"只看 RS 新高"开关用的。依据:oratnek 08-17 页 29 只里 26 只满足;我们 LL-HL 1st 58 只里 2 只、2nd 67 只里 9 只满足——他没公开的收紧门八成是它
+- **`top_3m` 探测(08-18 加,Andy:"只探不筛"):**每只票项 `top_3m` 布尔(= `perf_3m_pctile ≥ 0.85`,全池 3M 表现前 15%),每格 `count_top_3m`,顶层 `top_3m_rule`。**没有格用它筛选**。依据:三天(08-11/13/14)对 oratnek 页面拟合,他的池子是一张 3M 领先名单——开这个开关我们从他的 5.9× 收到 2.5×、他的 112 只只丢 4 只(`data/research/oratnek_diff/README.md`)。前端:与 `rs_high` 一样做成开关,建议叫「池子:全池 / 3M 领先」
 - `weekly_20_gainers` 格 08-18 起读 `perf_5d`(5 根),不再读 `perf_1w`;`preset` 字段仍指向 Screener 的同名预设(阈值同、窗口不同,contract 上说明)
 - 配方文字在 `recipe`,直接显示(和 rotation 的 `sentence` 同一原则:文案在引擎里,UI 不重拼)
 - 前端通路(待 UI):格标题 → Screener 载入 `preset`;票 → ticker 页(Signal History 里能看它昨天在哪几格);Screener 里用户自建的预设**不进**晨报

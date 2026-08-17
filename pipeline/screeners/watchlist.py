@@ -45,6 +45,7 @@ MAX_PER_PANEL = 25
 # >= 2 zones listed 177 names on 08-14 (143 of them exactly two, mostly
 # leaders x moving); three zones is where the list is short enough to read.
 MIN_CROSS_ZONES = 3
+TOP_3M_PCTILE = 0.85          # 'top_3m' flag: oratnek's pool, fitted on 08-11/13/14
 
 
 def _f(r: Mapping[str, Any], k: str) -> Optional[float]:
@@ -208,6 +209,12 @@ def _entry(r: Mapping[str, Any]) -> Dict[str, Any]:
          # page had this; our LL-HL 1st panel had 58 names of which 2 did.
          # The page can offer it as a toggle; the recipes do not filter on it.
          "rs_high": (_f(r, "rs_line_pctl_21") is not None and _f(r, "rs_line_pctl_21") >= 100.0),
+         # detection only (Andy 2026-08-18: "只探不筛"): in the top 15% of 3M
+         # performance. Three days of oratnek's page fitted (data/research/
+         # oratnek_diff): his universe is a 3M-leaders list -- this one flag
+         # takes our lists from 5.9x his to 2.5x while keeping 108/112 of his
+         # names. The page offers it as a pool toggle; recipes do not filter.
+         "top_3m": (_f(r, "perf_3m_pctile") is not None and _f(r, "perf_3m_pctile") >= TOP_3M_PCTILE),
          "hybrid_rs": _round(_f(r, "h_score")),
          "sector": r.get("sector")}
     if r.get("_group") is not None:
@@ -309,6 +316,7 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
                 "key": pk, "label": p.label, "recipe": p.recipe, "measured": measured,
                 "count": len(hits),
                 "count_rs_high": sum(1 for r in hits if (_f(r, "rs_line_pctl_21") or 0) >= 100.0),
+                "count_top_3m": sum(1 for r in hits if (_f(r, "perf_3m_pctile") or 0) >= TOP_3M_PCTILE),
                 "tickers": [_entry(r) for r in hits[:MAX_PER_PANEL]],
                 "truncated": max(0, len(hits) - MAX_PER_PANEL),
                 "preset": PRESET_TWINS.get(pk),
@@ -328,6 +336,7 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
         "sort": "hybrid_rs desc; the number beside each ticker is rs_line_pctl_21 (oratnek's RS 1M: RS-line self-percentile, 21 sessions); rs_1m (cross-sectional) is the second reading",
         "cross_zone_rule": f"count of ZONES a name appears in (not panels); >= {MIN_CROSS_ZONES} listed",
         "rs_high_rule": "rs_high = RS line (close/SPY) at a 21-session high (rs_line_pctl_21 == 100); detection only, no panel filters on it; count_rs_high per panel",
+        "top_3m_rule": f"top_3m = perf_3m_pctile >= {TOP_3M_PCTILE} (top 15% of 3M performance, whole universe); oratnek's pool as fitted on three sessions; detection only, count_top_3m per panel",
         "zones": zones_out,
         "cross_zone": cross,
         "universe_gated": len(gated),

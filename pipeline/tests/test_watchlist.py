@@ -223,3 +223,15 @@ class TestRsHighDetection:
         flags = {t["ticker"]: t["rs_high"] for t in p["tickers"]}
         assert flags == {"A": True, "B": False, "C": False}
         assert "rs_high_rule" in out
+
+
+class TestTop3mDetection:
+    def test_top_3m_is_a_flag_and_a_count_not_a_filter(self):
+        rows = [row(ticker="A", sp_signal="1st_break", perf_3m_pctile=0.9),
+                row(ticker="B", sp_signal="1st_break", perf_3m_pctile=0.5),
+                row(ticker="C", sp_signal="1st_break", perf_3m_pctile=None)]
+        out = W.build(rows, date="2026-08-14")
+        p = {pn["key"]: pn for z in out["zones"] for pn in z["panels"]}["ll_hl_1st"]
+        assert p["count"] == 3 and p["count_top_3m"] == 1
+        assert {t["ticker"]: t["top_3m"] for t in p["tickers"]} == {"A": True, "B": False, "C": False}
+        assert "top_3m_rule" in out
