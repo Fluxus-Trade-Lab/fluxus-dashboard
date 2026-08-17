@@ -20,6 +20,14 @@ export function pctColor(val) {
  *  rather than raw Tailwind, and as a tint the figure sits on. */
 export function atrBadgeColor(atrExt) {
   if (atrExt == null) return 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]'
+  // atr_ext became SIGNED on 2026-08-17 (it is atr_from_sma50 now), and every
+  // value below the SMA50 fell through to the <=4 branch — 2,247 tickers
+  // painted entry-zone green for being under the average. Below the line is
+  // not a degree of extension, so it is not on the extension scale at all:
+  // grey, which is the floor this charter starts from. Distinct from the null
+  // badge above, because "under the average" is a measurement and "no reading"
+  // is not.
+  if (atrExt < 0) return 'bg-[color-mix(in_srgb,var(--color-untested)_26%,transparent)]'
   if (atrExt <= 4) return 'bg-[color-mix(in_srgb,var(--color-took)_28%,transparent)]'
   if (atrExt <= 6) return 'bg-[color-mix(in_srgb,var(--color-signal-caution)_20%,transparent)]'
   return 'bg-[color-mix(in_srgb,var(--color-refused)_26%,transparent)]'

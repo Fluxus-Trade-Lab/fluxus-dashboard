@@ -15,7 +15,7 @@
 export const SCAN_DEFS = [
   { key: 'all',            label: 'All' },
   { key: 'confluence',     label: 'Confluence' },
-  { key: 'momentum_97',    label: 'Momentum 97',   container: 'buckets' },
+  { key: 'momentum_97',    label: 'Composite 97',   container: 'buckets' },
   { key: 'healthy_charts', label: 'Healthy charts', container: 'rs_groups' },
   { key: 'ema21_watch',    label: 'EMA21',          container: 'rs_groups' },
   { key: 'vcp',            label: 'VCP',            container: 'results' },

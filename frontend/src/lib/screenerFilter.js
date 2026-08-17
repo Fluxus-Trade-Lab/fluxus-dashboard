@@ -84,8 +84,19 @@ export function applyFilters(rows, filters, tickerSearch) {
 
   // ATR-distance ranges (data is R-multiple, user enters R value directly)
   const atrRanges = [
+    // ATR distance, not the ratio columns. The preset's numbers (-0.5..1,
+    // 0..3) were always ATR semantics; they had been reading ratios, which on
+    // 2026-08-14 matched 13 names against the ATR reading's 53.
+    //
+    // Only half of this landed. `atr_from_sma50` is in the universe (5,254
+    // values on 2026-08-17); `ema21_atr_dist` is not there at all — the file
+    // carries `ema21_low_dist` and `ema21_r`. Pointing at it would take the
+    // 21EMA Watch preset to zero matches, so this stays on the ratio until the
+    // column ships. Deliberately NOT a fallback that tries the new name and
+    // quietly uses the old one: a silent fallback is how the trade journal ran
+    // eighty-four days stale while every run reported success.
     ['ema21Atr', 'ema21_r'],
-    ['sma50Atr', 'sma50_r'],
+    ['sma50Atr', 'atr_from_sma50'],
   ]
   for (const [filterKey, dataKey] of atrRanges) {
     const f = filters[filterKey]

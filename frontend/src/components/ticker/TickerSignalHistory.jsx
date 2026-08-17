@@ -37,7 +37,7 @@ const LABELS = {
 const LONG_LABELS = {
   episodic_pivot: 'Episodic Pivot',
   vcp: 'VCP',
-  momentum_97: 'Momentum 97',
+  momentum_97: 'Composite 97',
   gainers_4pct: 'Up 4% day',
   vol_up_gainers: 'Volume-up gainer',
   ema21_watch: '21 EMA watch',
