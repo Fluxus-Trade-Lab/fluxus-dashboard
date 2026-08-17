@@ -92,34 +92,52 @@ export const pickRs = (rows = []) =>
 const go = (zone) => { window.location.hash = zone ? `#/watchlist/${zone}` : '#/watchlist' }
 
 /**
- * RS 1M, inked — colour AND weight, because colour alone could not carry it.
+ * The number beside a ticker, inked — and the bands belong to the MEASURE.
  *
- * The page was entirely grey and nothing could be read off it at a glance. RS
- * 1M is a percentile with a real midpoint, so it is a two-pole quantity and
- * takes this site's pair: took above, refused below, muted through the middle
- * where the number is not saying much. Not green/red — this book has one pair.
+ * Two measures can appear here and they are shaped differently, so one set of
+ * cuts cannot serve both.
  *
- * WHY WEIGHT AS WELL. Measured on the dark ground, the three inks are 8.92 /
- * 5.64 / 6.73 against #1a1715, so every one clears 4.5 — but the greyscale
- * separations are took–refused 14.4, took–muted 9.1, and refused–muted only
- * 5.3. Three identities on one channel with two of them 5.3 apart is the
- * failure this repo keeps re-finding: fine in colour, gone in greyscale, gone
- * for a red-blind reader. Dimming the middle to open the gap was measured too
- * and trades the fault for another — at 60% the middle falls to 3.24 contrast.
+ * rs_1m is a cross-sectional percentile, uniform by construction: >= 80 is the
+ * top fifth of the tradeable field and <= 40 the bottom two fifths. Those cuts
+ * mean what they say because the distribution is flat.
  *
- * So the second channel is weight. Both poles are semibold and the middle is
- * not, which separates each pole from the middle without touching either
- * colour, and the two poles are 14.4 apart from each other on their own.
+ * rs_line_pctl_21 is a percentile of a name against ITSELF over 21 sessions,
+ * and its distribution is nothing like flat — on the only sample of it that
+ * exists (the 29 values transcribed from oratnek's screen), the same >= 80 cut
+ * would have inked 76% of the names blue and nothing red. Three quarters of a
+ * page in one colour is decoration, not a reading. That sample is also
+ * selection-biased — they are names his scans surfaced, so they skew strong —
+ * which means it cannot be used to calibrate a replacement cut either.
  *
- * The bands are wide on purpose. A continuous ramp would put forty shades on
- * one screen and say "these are all slightly different"; the reading is
- * strong / ordinary / weak.
+ * So this measure is not given a calibrated cut at all. It is inked at its
+ * DEFINITIONAL endpoints, which need no calibration and cannot drift: 21/21 is
+ * "today is the highest relative strength of the last month" and 1/21 is "today
+ * is the lowest". Both are events. Everything between them is a matter of
+ * degree and stays grey, which is what grey is for.
+ *
+ * WHY WEIGHT AS WELL. Measured on the dark ground the three inks are 8.92 /
+ * 5.64 / 6.73 against #1a1715, so each clears 4.5 — but the greyscale
+ * separations are took-refused 14.4, took-muted 9.1, refused-muted only 5.3.
+ * Three identities on one channel with two of them 5.3 apart is fine in colour
+ * and gone in greyscale, and gone for a red-blind reader. Dimming the middle to
+ * open the gap was measured too and just trades the fault: at 60% the middle
+ * falls to 3.24 contrast. So weight is the second channel — both poles semibold,
+ * the middle not.
  */
-const rsInk = (v) => (v == null
-  ? 'text-[var(--color-text-muted)]'
-  : v >= 80 ? 'text-[var(--color-took)] font-semibold'
-    : v <= 40 ? 'text-[var(--color-refused)] font-semibold'
-      : 'text-[var(--color-text-muted)]')
+export const RS_BANDS = {
+  rs_1m: { hi: 80, lo: 40 },
+  // 21/21 and 1/21 — the two ends of the count, in the units it reports.
+  rs_line_pctl_21: { hi: 100, lo: 100 / 21 },
+}
+
+const rsInk = (v, key = 'rs_1m') => {
+  const b = RS_BANDS[key] || RS_BANDS.rs_1m
+  return v == null ? 'text-[var(--color-text-muted)]'
+    : v >= b.hi ? 'text-[var(--color-took)] font-semibold'
+      : v <= b.lo ? 'text-[var(--color-refused)] font-semibold'
+        : 'text-[var(--color-text-muted)]'
+}
+
 
 /**
  * One name as a CELL, not an inline run.
@@ -139,7 +157,7 @@ function Name({ row, showGroup, rsKey = 'rs_1m' }) {
       <TickerLink symbol={row.ticker}
                   className="text-[11.5px] font-mono font-semibold
                              text-[var(--color-text-bold)] truncate" />
-      <span className={`ml-auto text-[10.5px] font-mono tabular-nums ${rsInk(v)}`}
+      <span className={`ml-auto text-[10.5px] font-mono tabular-nums ${rsInk(v, rsKey)}`}
             title={alt || undefined}>
         {v ?? '—'}
       </span>

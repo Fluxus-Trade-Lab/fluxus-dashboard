@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { pickRs } from './WatchlistPage'
+import { pickRs, RS_BANDS } from './WatchlistPage'
 import { translations } from '../../i18n/translations'
 
 /**
@@ -39,5 +39,25 @@ describe('pickRs', () => {
         expect(translations[lang][`wl.rskey.${key}`], `${lang}/${key}`).toBeTruthy()
       }
     }
+  })
+})
+
+describe('RS_BANDS', () => {
+  it('inks the 21-day measure only at its two definitional ends', () => {
+    // 21/21 is "highest relative strength of the month", 1/21 is "lowest".
+    // Everything between is a matter of degree, and stays grey.
+    expect(RS_BANDS.rs_line_pctl_21.hi).toBe(100)
+    expect(RS_BANDS.rs_line_pctl_21.lo).toBeCloseTo(100 / 21, 6)
+  })
+
+  it('does not reuse the cross-sectional cuts on the self-percentile', () => {
+    // The 80/40 cuts are calibrated for a flat distribution. On the 29 values
+    // from oratnek's screen they would have inked 76% blue and nothing red.
+    const sample = [100, 100, 95, 81, 90, 81, 67, 67, 71, 100, 43, 95, 71, 57, 57,
+      100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 95, 100, 95, 100]
+    const blueUnderOldCuts = sample.filter((v) => v >= RS_BANDS.rs_1m.hi).length
+    const blueUnderNew = sample.filter((v) => v >= RS_BANDS.rs_line_pctl_21.hi).length
+    expect(blueUnderOldCuts / sample.length).toBeGreaterThan(0.7)
+    expect(blueUnderNew).toBeLessThan(blueUnderOldCuts)
   })
 })
