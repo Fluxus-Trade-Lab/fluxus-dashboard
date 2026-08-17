@@ -65,6 +65,30 @@ const gateWords = (gate = {}) => {
   return out.join(', ')
 }
 
+/**
+ * Which number sits beside a ticker, and what it is called.
+ *
+ * The file may carry two, and they answer different questions:
+ *
+ *   rs_1m              cross-sectional — "beats 90% of the tradeable field"
+ *   rs_line_pctl_21    time-series — the close/SPY ratio's own percentile over
+ *                      its last 21 readings, so 100 means its strength against
+ *                      SPY is at a one-month high. This is the number oratnek
+ *                      prints, decoded 2026-08-17 and reproduced 29/29 exactly.
+ *
+ * This page prefers the time-series one, because it is the one that is NOT
+ * already implied by the panel a name sits in: several recipes gate on rs_1m
+ * (True Market Leaders needs >= 80, the momentum panels are percentile cuts),
+ * so printing rs_1m beside those rows repeats the entry condition, while the
+ * 21-day reading adds something the membership did not already say.
+ *
+ * Whichever is drawn, the legend names it — the label is derived from the same
+ * pick, so the page cannot print one number under the other one's name. Until
+ * the new column ships this falls back to rs_1m and says rs_1m.
+ */
+export const pickRs = (rows = []) =>
+  (rows.some((r) => r?.rs_line_pctl_21 != null) ? 'rs_line_pctl_21' : 'rs_1m')
+
 const go = (zone) => { window.location.hash = zone ? `#/watchlist/${zone}` : '#/watchlist' }
 
 /**
@@ -105,14 +129,19 @@ const rsInk = (v) => (v == null
  * a fixed column — which is the whole reason a table of names reads faster
  * than a paragraph of them.
  */
-function Name({ row, showGroup }) {
+function Name({ row, showGroup, rsKey = 'rs_1m' }) {
+  const v = row[rsKey]
+  // The other measure stays reachable without taking a second column.
+  const alt = rsKey === 'rs_1m' ? null
+    : (row.rs_1m != null ? `RS 1M ${row.rs_1m}` : null)
   return (
     <span className="flex items-baseline gap-1.5 px-2 py-[3px] min-w-0">
       <TickerLink symbol={row.ticker}
                   className="text-[11.5px] font-mono font-semibold
                              text-[var(--color-text-bold)] truncate" />
-      <span className={`ml-auto text-[10.5px] font-mono tabular-nums ${rsInk(row.rs_1m)}`}>
-        {row.rs_1m}
+      <span className={`ml-auto text-[10.5px] font-mono tabular-nums ${rsInk(v)}`}
+            title={alt || undefined}>
+        {v ?? '—'}
       </span>
       {showGroup && row.group && (
         <span className="text-[10px] text-[var(--color-text-muted)] truncate
@@ -131,13 +160,13 @@ function Name({ row, showGroup }) {
  * as the grid went to six. A horizontal hairline is column-count-independent
  * and reads as a table either way.
  */
-function Names({ rows, wide = false, showGroup }) {
+function Names({ rows, wide = false, showGroup, rsKey }) {
   return (
     <span className={`grid ${wide
       ? 'grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 2xl:grid-cols-8'
       : 'grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'}
       [&>*]:border-b [&>*]:border-[var(--color-border-light)]`}>
-      {rows.map((r) => <Name key={r.ticker} row={r} showGroup={showGroup} />)}
+      {rows.map((r) => <Name key={r.ticker} row={r} showGroup={showGroup} rsKey={rsKey} />)}
     </span>
   )
 }
@@ -167,6 +196,7 @@ function ZoneCard({ zone, index }) {
   // Twelve, not eight: the cards are full-width now and eight names left the
   // bottom third of each one empty.
   const taste = (lead?.tickers || []).slice(0, 12)
+  const rsKey = pickRs(taste)
 
   return (
     <button type="button" onClick={() => go(zone.key)}
@@ -210,7 +240,7 @@ function ZoneCard({ zone, index }) {
       <span className="block border-t border-[var(--color-border-light)]
                        bg-[var(--color-bg)]">
         {taste.length > 0
-          ? <Names rows={taste} />
+          ? <Names rows={taste} rsKey={rsKey} />
           : <span className="block px-3 py-2.5 text-[11px]
                              text-[var(--color-text-muted)]">{t('wl.none.short')}</span>}
       </span>
@@ -223,7 +253,7 @@ function ZoneCard({ zone, index }) {
 
 /* ── Detail: one question, every name ────────────────────────────────────── */
 
-function Panel({ panel, showGroup, explainPending }) {
+function Panel({ panel, showGroup, explainPending, rsKey }) {
   const { t } = useLanguage()
   const [openRecipe, setOpenRecipe] = useState(false)
   const rows = panel.tickers || []
@@ -274,7 +304,7 @@ function Panel({ panel, showGroup, explainPending }) {
 
       {rows.length > 0 ? (
         <div className="-mx-1">
-          <Names rows={rows} wide showGroup={showGroup} />
+          <Names rows={rows} wide showGroup={showGroup} rsKey={rsKey} />
         </div>
       ) : panel.measured ? (
         <p className="text-[11.5px] text-[var(--color-text-muted)] m-0">{t('wl.none')}</p>
@@ -287,6 +317,7 @@ function Panel({ panel, showGroup, explainPending }) {
 
 function ZoneDetail({ zone, index, total }) {
   const { t } = useLanguage()
+  const rsKey = pickRs(zone.panels.flatMap((p) => p.tickers || []))
   const live = zone.panels.filter((p) => p.measured).length
   // One fact, said once: when the whole question is waiting, the question says
   // so; in a mixed question the first waiting panel carries it.
@@ -317,9 +348,12 @@ function ZoneDetail({ zone, index, total }) {
         </p>
       )}
 
+      <p className="text-[11px] text-[var(--color-text-muted)] mb-3">
+        {t(`wl.rskey.${rsKey}`)}
+      </p>
       <div className="rounded-3xl bg-[var(--color-surface)] px-4 py-1">
         {zone.panels.map((p) => (
-          <Panel key={p.key} panel={p} showGroup={zone.key === 'leaders'}
+          <Panel key={p.key} panel={p} showGroup={zone.key === 'leaders'} rsKey={rsKey}
                  explainPending={!allPending && p.key === firstPending} />
         ))}
       </div>
@@ -416,8 +450,12 @@ export default function WatchlistPage({ zone: routeZone }) {
         </details>
       )}
 
+      {/* Three hundred numbers sat beside three hundred tickers with nothing
+          on the page saying what they were. The label is derived from the same
+          pick that draws them, so the two cannot drift apart. */}
       <p className="text-[11px] text-[var(--color-text-muted)] mt-5 max-w-[72ch]">
-        {t('wl.foot')}
+        {t(`wl.rskey.${pickRs(zones.flatMap((z) => z.panels.flatMap((p) => p.tickers || [])))}`)}
+        {' '}{t('wl.foot')}
       </p>
     </div>
   )

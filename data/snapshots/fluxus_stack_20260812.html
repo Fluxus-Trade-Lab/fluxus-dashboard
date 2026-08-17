@@ -1,0 +1,187 @@
+<title>Fluxus 栈 — 2026-08-12 实测</title>
+<style>
+:root{
+  --ground:#F5F7FA; --surface:#FFFFFF; --sunk:#EDF0F5;
+  --ink:#161C26; --ink2:#3C4557; --mut:#5E6980; --dim:#8B95A8;
+  --line:#DCE2EC; --line2:#C3CCDA;
+  --accent:#2C6BB8; --accent-soft:#E3ECF8;
+  --ok:#2F7D53; --warn:#9A6E15; --neg:#B3424F;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0B0E14; --surface:#141A24; --sunk:#0F141D;
+  --ink:#D6DCE5; --ink2:#AEB8C8; --mut:#78849A; --dim:#59637A;
+  --line:#212A38; --line2:#2E3949;
+  --accent:#5B93D6; --accent-soft:#17263A;
+  --ok:#4A9E6B; --warn:#C9922F; --neg:#D0616D;
+}}
+:root[data-theme="dark"]{
+  --ground:#0B0E14; --surface:#141A24; --sunk:#0F141D;
+  --ink:#D6DCE5; --ink2:#AEB8C8; --mut:#78849A; --dim:#59637A;
+  --line:#212A38; --line2:#2E3949;
+  --accent:#5B93D6; --accent-soft:#17263A;
+  --ok:#4A9E6B; --warn:#C9922F; --neg:#D0616D;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:15px/1.6 var(--sans);
+  margin:0;padding:40px 22px 90px;font-variant-numeric:tabular-nums}
+.wrap{max-width:940px;margin:0 auto;display:flex;flex-direction:column;gap:34px}
+header{display:flex;flex-direction:column;gap:6px}
+.eyebrow{font:11.5px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+h1{font:600 27px/1.2 var(--mono);margin:0;letter-spacing:-.02em;text-wrap:balance}
+.sub{color:var(--mut);font-size:13.5px}
+.thesis{border-left:2px solid var(--warn);padding:2px 0 2px 16px;color:var(--ink2);
+  font-size:15.5px;max-width:64ch}
+h2{font:600 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--mut);margin:0 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+h2 em{font-style:normal;letter-spacing:0;text-transform:none;color:var(--dim);font-weight:400}
+section{display:flex;flex-direction:column}
+p{margin:0 0 10px;max-width:66ch} p:last-child{margin-bottom:0}
+.mut{color:var(--mut)} .dim{color:var(--dim)}
+code{font:12.5px var(--mono);background:var(--sunk);padding:1.5px 5px;border-radius:3px;color:var(--ink2)}
+
+.chip{display:inline-block;font:10.5px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  padding:2px 7px;border-radius:3px;border:1px solid currentColor;vertical-align:2px;margin-left:8px}
+.chip.measured{color:var(--ok)} .chip.unknown{color:var(--warn)}
+.chip.gap,.chip.refused{color:var(--neg)} .chip.proxy,.chip.partial{color:var(--accent)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.cell{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:3px}
+.cell .k{font:10.5px/1.3 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--mut)}
+.cell .v{font:600 19px/1.15 var(--mono);letter-spacing:-.01em}
+.cell .s{font-size:11.5px;color:var(--dim)}
+.v.pos{color:var(--ok)} .v.neg{color:var(--neg)} .v.wn{color:var(--warn)}
+
+.layer{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.layer:last-child{border-bottom:none}
+.lid{font:600 12px/1.6 var(--mono);color:var(--accent);min-width:26px;letter-spacing:.06em}
+.layer.gap .lid{color:var(--neg)} .layer.unknown .lid{color:var(--warn)}
+.lbody h4{margin:0 0 4px;font:600 14.5px/1.4 var(--sans)}
+.lbody p{margin:0;font-size:13.5px;color:var(--ink2)}
+
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:7px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font:13px/1.5 var(--mono);min-width:min(100%,520px)}
+th,td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+thead th{font:10.5px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--mut);
+  background:var(--sunk);font-weight:400}
+thead th:first-child,tbody th{text-align:left}
+tbody th{font-weight:500;color:var(--ink);font-family:var(--sans);font-size:13.5px}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:none}
+td.hl{color:var(--warn);font-weight:600} td.ci{color:var(--dim);font-size:12px}
+
+.prof{font:12.5px/1.35 var(--mono)}
+.prof table{min-width:420px}
+.prof td,.prof th{padding:2px 10px;border:none}
+.prof td.px{color:var(--mut);text-align:right;width:74px}
+.prof td.bar{width:100%;padding:2px 4px}
+.prof td.bar span{display:block;height:11px;border-radius:2px;background:var(--line2)}
+.prof tr.va td.bar span{background:var(--accent);opacity:.55}
+.prof tr.tpoc td.bar span{background:var(--accent)}
+.prof tr.ib td.px{color:var(--ink);font-weight:600}
+.prof td.n{color:var(--dim);width:32px;text-align:right}
+.prof td.mk{color:var(--warn);text-align:left;font-size:11px;letter-spacing:.04em;width:150px}
+
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.note{font-size:12.5px;color:var(--mut);margin-top:9px;max-width:70ch}
+footer{border-top:1px solid var(--line);padding-top:14px;color:var(--dim);
+  font:11.5px/1.7 var(--mono);display:flex;flex-wrap:wrap;gap:6px 20px}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Fluxus Capital · 产品栈</div>
+  <h1>2026-08-12 SPX</h1>
+  <div class="sub">收盘后全链读数 · 576 tests passing · <code>c653dad</code></div>
+</header>
+
+<p class="thesis">这套系统里最有价值的部分,是它<b>拒绝声称</b>的东西。下面每一层都带着自己的量纲和它<b>回答不了的问题</b>——那些标记不是装饰,是这个产品的论点。</p>
+
+<section>
+  <h2>今日读数 <em>2026-08-12 · CPI 08:30 已落地</em></h2>
+  <div class="grid">
+    <div class="cell"><div class="k">SPX 收盘</div><div class="v">7,748.71</div><div class="s">开 7,765.46 · 幅 30.0 pt</div></div>
+    <div class="cell"><div class="k">Gamma 状态</div><div class="v pos">+15.2B</div><div class="s">positive · flip 7,697</div></div>
+    <div class="cell"><div class="k">日类型</div><div class="v">NORMAL</div><div class="s">IB 占全幅 87%</div></div>
+    <div class="cell"><div class="k">TFF</div><div class="v wn">0%</div><div class="s">dead · 122 session 基线</div></div>
+    <div class="cell"><div class="k">闸门</div><div class="v neg">SHUT</div><div class="s">下行扩张被拒</div></div>
+    <div class="cell"><div class="k">VIX</div><div class="v">15.05</div><div class="s">3M 18.91</div></div>
+  </div>
+  <p class="note"><b>三个互不知道对方的构造给出同一个结论。</b>TFF 说这是今夏最安静的盘(TPO 0% / tick 0% / ratio 最胖),闸门说没开过,而日类型说初始平衡就定了 87% 的全幅。<b>今天没有可做的事。</b></p>
+</section>
+
+<section>
+  <h2>今日 Profile <em>SPX · 13 个 30 分钟 bracket · 2.5pt 桶</em></h2>
+  <div class="scroll prof"><table><tbody><tr class=''><td class='px'>7,767.5</td><td class='bar'><span style='width:10.0%'></span></td><td class='n'>1</td><td class='mk'></td></tr><tr class='ib'><td class='px'>7,765.0</td><td class='bar'><span style='width:10.0%'></span></td><td class='n'>1</td><td class='mk'>open</td></tr><tr class='ib'><td class='px'>7,762.5</td><td class='bar'><span style='width:10.0%'></span></td><td class='n'>1</td><td class='mk'></td></tr><tr class='ib'><td class='px'>7,760.0</td><td class='bar'><span style='width:20.0%'></span></td><td class='n'>2</td><td class='mk'></td></tr><tr class='va ib'><td class='px'>7,757.5</td><td class='bar'><span style='width:60.0%'></span></td><td class='n'>6</td><td class='mk'>VAH</td></tr><tr class='va ib'><td class='px'>7,755.0</td><td class='bar'><span style='width:100.0%'></span></td><td class='n'>10</td><td class='mk'></td></tr><tr class='tpoc ib'><td class='px'>7,752.5</td><td class='bar'><span style='width:100.0%'></span></td><td class='n'>10</td><td class='mk'>TPOC</td></tr><tr class='va ib'><td class='px'>7,750.0</td><td class='bar'><span style='width:100.0%'></span></td><td class='n'>10</td><td class='mk'></td></tr><tr class='va ib'><td class='px'>7,747.5</td><td class='bar'><span style='width:100.0%'></span></td><td class='n'>10</td><td class='mk'>close</td></tr><tr class='va ib'><td class='px'>7,745.0</td><td class='bar'><span style='width:80.0%'></span></td><td class='n'>8</td><td class='mk'></td></tr><tr class='va ib'><td class='px'>7,742.5</td><td class='bar'><span style='width:80.0%'></span></td><td class='n'>8</td><td class='mk'>VAL</td></tr><tr class=''><td class='px'>7,740.0</td><td class='bar'><span style='width:50.0%'></span></td><td class='n'>5</td><td class='mk'></td></tr><tr class=''><td class='px'>7,737.5</td><td class='bar'><span style='width:20.0%'></span></td><td class='n'>2</td><td class='mk'></td></tr></tbody></table></div>
+  <div class="two" style="margin-top:16px">
+    <div>
+      <div class="scroll"><table>
+      <tr><th>TPOC</th><td>7,752.5</td></tr>
+      <tr><th>Value (POC-70%)</th><td>7,742.5 – 7,757.5</td></tr>
+      <tr><th>Value (Jones 1σ)</th><td>7,743.4 – 7,756.2</td></tr>
+      <tr><th>两者分歧</th><td class="hl">低 +0.9 · 高 -1.3</td></tr>
+      <tr><th>偏度 / 超额峰度</th><td>+0.26 / -0.25</td></tr>
+      <tr><th>Initial balance</th><td>7,741.7 – 7,766.0</td></tr>
+      <tr><th>Poor low</th><td>是(2 TPO)</td></tr>
+      <tr><th>ES VPOC / TPOC</th><td>7,773.0 / 7,773.0 · 重合</td></tr>
+      </table></div>
+    </div>
+    <div>
+      <p class="note" style="margin-top:0"><b>两种 value 定义并存,分歧只报告不消解。</b>我们的是从 POC 长到 70%(Dalton/CQG),Jones 的是均值 ±1σ。今天只差 0.9 / −1.3 点,但在偏度大的日子差过 6.3 点——<b>足以让「收盘在价值之上还是之下」得出相反结论</b>。</p>
+      <p class="note"><b>ES 的 VPOC 与 TPOC 今天重合</b>(7,773.0)。这个问题一度无法回答,因为我们的 TPOC 是 SPX 而 VPOC 是 ES——在 ES 上也算一遍 TPOC 才答得了,<b>而不是发明一个基差</b>。</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Flow 读数 <em>69,100 笔成交 · $192M premium · 50 个 strike</em></h2>
+  <div class="scroll"><table>
+  <thead><tr><th>区间</th><th>strikes</th><th>premium</th><th>占比</th><th>block 占比</th><th>calls</th></tr></thead>
+  <tbody><tr><th>belt</th><td>31</td><td>$178.4M</td><td>92.8%</td><td class='hl'>41%</td><td>55%</td></tr><tr><th>upper wing</th><td>10</td><td>$4.5M</td><td>2.3%</td><td class='hl'>68%</td><td>28%</td></tr><tr><th>lower wing</th><td>9</td><td>$9.4M</td><td>4.9%</td><td class='hl'>63%</td><td>64%</td></tr></tbody></table></div>
+  <p class="note"><b>翼里的 block 集中度远高于 belt(63–68% vs 41%)。</b>belt 拿走 93% 的钱,但翼里的钱更集中在大单里。<b>这是不是「投机」,tape 说不了</b>——远虚值的一手单堆成的尾部对冲同样是机构行为。所以这里没有任何字段叫 hedging 或 speculating。</p>
+  <p class="note"><b>买卖方向今天是 unknown,而且这是量出来的结论不是放弃。</b>逐笔 NBBO 要 142 秒/合约(成交只要 1.9 秒),80 个合约约三小时。那个便宜的 1 分钟 bar 代理和逐笔 NBBO 在 769 笔重叠成交上只有 <b>56.7% 一致</b>——两分类的随机基线是 50%。<b>噪声穿了一件测量的外衣,拒了。</b></p>
+</section>
+
+<section>
+  <h2>八层架构 <em>他的堆栈,我们在哪</em></h2>
+  <div class='layer gap'><div class='lid'>L0</div><div class='lbody'><h4>数据选择 <span class='chip gap'>未建</span></h4><p><b>零售链 · 只有 OI · 无 size 过滤</b>。MM-informed 源和限价订单簿都没有。</p></div></div><div class='layer measured'><div class='lid'>L1</div><div class='lbody'><h4>标的 <span class='chip measured'>已测</span></h4><p>TPO 用 <b>SPX</b>,成交量用 <b>ES</b>,<b>刻意不换算</b>。8/11 收盘实测基差 <b>+22.59</b> 点(盘中 sd 0.43,但 30 个 session 漂了 27.6 点)。</p></div></div><div class='layer measured'><div class='lid'>L2</div><div class='lbody'><h4>拍卖原语 <span class='chip measured'>已测</span></h4><p>profile · 两种 value 定义 · 偏度峰度 · LVN · tails · poor extremes · TFF 三表。<b>本层最完整。</b></p></div></div><div class='layer partial'><div class='lid'>L3</div><div class='lbody'><h4>框架优先级 <span class='chip partial'>部分</span></h4><p>拍卖是根因,dealer book 在下游。dark pool <b>零</b>——需要买数据。</p></div></div><div class='layer measured'><div class='lid'>L4</div><div class='lbody'><h4>闸门 <span class='chip measured'>已测</span></h4><p>facilitation:扩张 <b>并且</b> 被接受。123 session 基础发生率已测。<b>不是过滤器</b>——78% 的日子会开。</p></div></div><div class='layer proxy'><div class='lid'>L5</div><div class='lbody'><h4>组合 <span class='chip proxy'>代理</span></h4><p><b>纸面书 + 纯 SPY 对照组</b>已建。overlay 是<b>线性降风险代理</b>,无凸性无权利金。</p></div></div><div class='layer measured'><div class='lid'>L6</div><div class='lbody'><h4>记分牌 <span class='chip measured'>已测</span></h4><p>kill test:对照组 + 时间序 OOS 分割 + <b>死亡数公开</b>。目标函数是<b>回撤</b>不是命中率。</p></div></div><div class='layer unknown'><div class='lid'>L7</div><div class='lbody'><h4>Centaur 回路 <span class='chip unknown'>未定</span></h4><p>机器 n=7 命中 28.6% · 人 n=3 命中 66.7%。<b>两边都未证实</b>,需要 153 个才够。</p></div></div>
+</section>
+
+<section>
+  <h2>记分牌 <em>496 个 SPY session · 149 天样本外</em></h2>
+  <div class="scroll"><table>
+  <thead><tr><th>候选规则</th><th>判决</th><th>回撤优势 pt</th><th>90% 区间</th><th>OOS 触发</th><th>打乱时机</th></tr></thead>
+  <tbody><tr><th>gate shut (rejected or no extension)</th><td><span class='chip unknown'>undecided</span></td><td>+1.1</td><td class='ci'>[+0.0, +2.4]</td><td>25</td><td class='mut'>undecided</td></tr><tr><th>gate shut, rejected only</th><td><span class='chip unknown'>undecided</span></td><td>+0.4</td><td class='ci'>[-0.5, +1.8]</td><td>20</td><td class='mut'>undecided</td></tr><tr><th>two-sided extension</th><td><span class='chip unknown'>undecided</span></td><td>-0.3</td><td class='ci'>[-2.2, +1.0]</td><td>34</td><td class='mut'>undecided</td></tr><tr><th>TFF non-facilitating (bottom quartile)</th><td><span class='chip unknown'>undecided</span></td><td>+0.2</td><td class='ci'>[+0.0, +2.2]</td><td>14</td><td class='mut'>undecided</td></tr><tr><th>TFF dead (bottom 5%)</th><td><span class='chip unknown'>undecided</span></td><td>+0.0</td><td class='ci'>[+0.0, +0.6]</td><td>2</td><td class='mut'>undecided</td></tr><tr><th>TFF expansive (top decile)</th><td><span class='chip unknown'>undecided</span></td><td>+0.9</td><td class='ci'>[-3.2, +1.9]</td><td>35</td><td class='mut'>undecided</td></tr></tbody></table></div>
+  <p class="note"><b>0 存活,0 击杀,12 未定。</b>区间宽约 ±2 个回撤点,效应约 1 点——<b>证据量不够,不是规则不好</b>。砍半要约 4 倍样本外天数(≈600 个 session)。基准:买入持有 SPY 最大回撤 <b>-19.0%</b>。</p>
+  <p class="note">12 runs over 6 distinct hypotheses; at alpha 0.05 a search of 6 throws at least one false survivor 26% of the time —— 搜索规模按<b>不同假设</b>计价,不是按跑的次数。<b>规则不带对照组、OOS 分割、kill log 记录,进不了日简报。</b></p>
+</section>
+
+<section>
+  <h2>基础发生率 <em>没有它,分类器只是换了个名字</em></h2>
+  <div class="two">
+    <div><div class="scroll"><table>
+      <thead><tr><th>日类型 · 496 session</th><th>n</th><th>占比</th></tr></thead>
+      <tbody><tr><th>normal variation</th><td>218</td><td>44.0%</td></tr><tr><th>neutral</th><td>121</td><td>24.4%</td></tr><tr><th>normal</th><td>50</td><td>10.1%</td></tr><tr><th>double distribution</th><td>49</td><td>9.9%</td></tr><tr><th>unclassified</th><td>33</td><td>6.7%</td></tr><tr><th>trend</th><td>25</td><td>5.0%</td></tr></tbody></table></div></div>
+    <div><div class="scroll"><table>
+      <thead><tr><th>闸门状态 · 123 session</th><th>n</th><th>占比</th></tr></thead>
+      <tbody><tr><th>facilitated</th><td>76</td><td>61.8%</td></tr><tr><th>two sided</th><td>23</td><td>18.7%</td></tr><tr><th>rejected</th><td>22</td><td>17.9%</td></tr><tr><th>no extension</th><td>2</td><td>1.6%</td></tr></tbody></table></div></div>
+  </div>
+  <p class="note">基础发生率在四天里<b>当场干掉了三个我自己的实现</b>:开盘分类在读整个 session(open_drive 496 天触发 1 次)、扫描复现不了它扫描的分类器(报 0 而实盘报 114)、flow 的第一次拉取根本没采到翼(「belt = 100%」)。<b>三个都看起来像发现。</b></p>
+</section>
+
+<section>
+  <h2>还缺什么 <em>按能改变「这个项目最终能证明什么」排序</em></h2>
+  <div class="layer gap"><div class="lid">1</div><div class="lbody"><h4>买卖方向分类 <span class='chip refused'>买不起</span></h4><p>逐笔 NBBO 三小时/天。代理已测并拒绝。他的 belt bid 问题<b>因此无法回答</b>。</p></div></div>
+  <div class="layer gap"><div class="lid">2</div><div class="lbody"><h4>开盘类型 <span class='chip gap'>太粗</span></h4><p>30 分钟 bracket 对一个讲「最初几分钟」的概念太粗。<b>下一步是 5 分钟 bar,不是调阈值。</b></p></div></div>
+  <div class="layer unknown"><div class="lid">3</div><div class="lbody"><h4>样本量 <span class='chip unknown'>时间</span></h4><p>方向命中率要 153 个 session,回撤对比要约 600 个 OOS 天。<b>唯一的解药是等,而不是再加一个指标。</b></p></div></div>
+  <div class="layer gap"><div class="lid">4</div><div class="lbody"><h4>Dark pool · 限价订单簿 · MM-informed 源 <span class='chip gap'>要买</span></h4><p>他的 L0。这些是<b>钱的问题,不是代码的问题</b>,应该先定价再承诺。</p></div></div>
+</section>
+
+<footer>
+  <span>576 tests</span><span>c653dad</span>
+  <span>data/{gex,profile,flow,book,centaur,reference}</span>
+  <span>非投资建议 · 全部数字可复算</span>
+</footer>
+</div>
