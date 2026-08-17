@@ -88,14 +88,20 @@ export function applyFilters(rows, filters, tickerSearch) {
     // 0..3) were always ATR semantics; they had been reading ratios, which on
     // 2026-08-14 matched 13 names against the ATR reading's 53.
     //
-    // Only half of this landed. `atr_from_sma50` is in the universe (5,254
-    // values on 2026-08-17); `ema21_atr_dist` is not there at all — the file
-    // carries `ema21_low_dist` and `ema21_r`. Pointing at it would take the
-    // 21EMA Watch preset to zero matches, so this stays on the ratio until the
-    // column ships. Deliberately NOT a fallback that tries the new name and
-    // quietly uses the old one: a silent fallback is how the trade journal ran
+    // Both halves have landed now. `ema21_atr_dist` shipped in the 2026-08-17
+    // run at 5,288/5,619 (94%), so the 21EMA filter finally reads the quantity
+    // its numbers were always written for.
+    //
+    // The switch is not cosmetic. `ema21_r` is a RATIO — median 1.02, p5 0.86,
+    // p95 1.20 — so the preset's -0.5..1 window was in practice "price at or
+    // below the 21EMA" and matched 1,981 names for a reason nobody intended.
+    // `ema21_atr_dist` is a distance in ATRs, median 0.36, and the same window
+    // means what it says: from half an ATR below to one ATR above. 2,384 names.
+    //
+    // Still deliberately NOT a fallback that tries the new name and quietly
+    // uses the old one — a silent fallback is how the trade journal ran
     // eighty-four days stale while every run reported success.
-    ['ema21Atr', 'ema21_r'],
+    ['ema21Atr', 'ema21_atr_dist'],
     ['sma50Atr', 'atr_from_sma50'],
   ]
   for (const [filterKey, dataKey] of atrRanges) {
