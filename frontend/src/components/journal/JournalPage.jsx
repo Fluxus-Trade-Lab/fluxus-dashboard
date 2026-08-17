@@ -8,6 +8,7 @@ import { useLanguage } from '../../i18n/LanguageContext'
 import HeadCoach from './HeadCoach'
 import HoldCaptureSection from './analytics/HoldCaptureSection'
 import AfterLossSection from './analytics/AfterLossSection'
+import SetupEdgeSection from './analytics/SetupEdgeSection'
 import { STAGES } from './lib/headCoach'
 
 /**
@@ -28,6 +29,8 @@ import { STAGES } from './lib/headCoach'
  */
 const SECTIONS = {
   select: [
+    // First, because it tests whether this stage is a lever at all.
+    { key: 'setup-edge', label: 'Setup edge' },
     { key: 'episodic-pivot', label: 'Episodic Pivot' },
     { key: 'vcp', label: 'VCP' },
     { key: 'breakout', label: 'Breakout' },
@@ -123,6 +126,8 @@ export default function JournalPage() {
         <HoldCaptureSection />
       ) : section === 'after-loss' ? (
         <AfterLossSection />
+      ) : section === 'setup-edge' ? (
+        <SetupEdgeSection />
       ) : section === 'sizing' ? (
         <SizingTab />
       ) : section === 'stop-sim' ? (
