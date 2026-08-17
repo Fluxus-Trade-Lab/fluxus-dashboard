@@ -4,6 +4,7 @@ import { useLanguage } from '../../../i18n/LanguageContext'
 import TickerLink from '../../ticker/TickerLink'
 import Empty from '../Empty'
 import { holdCapture } from '../lib/holdCapture'
+import { usable } from '../lib/headCoach'
 
 const pct = (v) => `${(v * 100).toFixed(0)}%`
 
@@ -31,6 +32,16 @@ export default function HoldCaptureSection() {
 
   const maxOpp = Math.max(...rows.map((r) => r.opportunity))
 
+  // The journey: entry to the high it reached, one line per trade, exit marked.
+  // This is the same shape the overview card shows — a thumbnail that opens
+  // into a different chart is a promise the page cannot keep.
+  const journey = trades
+    .filter((x) => usable(x) && x.optimal_R > 0.2)
+    .sort((a, b) => b.optimal_R - a.optimal_R)
+    .slice(0, 140)
+  const X = (j) => ((Math.max(-0.35, Math.min(1.15, j)) + 0.35) / 1.5) * 100
+  const ENTRY = X(0), TOP = X(1)
+
   return (
     <section>
       <h3 className="text-[15px] font-semibold m-0">{t('hold.title')}</h3>
@@ -38,6 +49,32 @@ export default function HoldCaptureSection() {
         {t('hold.lede')}
       </p>
 
+      {/* Main visual: where you got off, against how far it went. */}
+      <div className="flex flex-col gap-px mb-2">
+        {journey.map((x, i) => {
+          const xe = X(x.realized_R / x.optimal_R)
+          const [l, r] = xe >= ENTRY ? [ENTRY, xe] : [xe, ENTRY]
+          return (
+            <div key={i} className="relative h-[3px]">
+              <i className="absolute top-px h-px bg-[var(--color-border)]"
+                 style={{ left: `${ENTRY}%`, width: `${TOP - ENTRY}%` }} />
+              <i className={`absolute top-0 h-[3px] ${xe >= ENTRY
+                ? 'bg-[var(--color-took)]' : 'bg-[var(--color-refused)]'}`}
+                 style={{ left: `${l}%`, width: `${Math.max(0.4, r - l)}%`, opacity: 0.62 }} />
+              <i className="absolute -top-px w-0.5 h-[5px] bg-[var(--color-refused)]"
+                 style={{ left: `${xe}%`, transform: 'translateX(-1px)' }} />
+            </div>
+          )
+        })}
+      </div>
+      <div className="flex justify-between text-[10px] font-mono
+                      text-[var(--color-text-muted)] mb-6">
+        <span>{t('hold.ax.loss')}</span><span>{t('hold.ax.entry')}</span><span>{t('hold.ax.top')}</span>
+      </div>
+
+      {/* Supporting evidence, compact: the same trades bucketed by days held. */}
+      <p className="text-[11px] font-mono uppercase tracking-[.16em]
+                    text-[var(--color-text-muted)] mb-2">{t('hold.byDays')}</p>
       <div>
         {rows.map((r) => {
           const w = Math.max(0, Math.min(1, r.capture ?? 0))

@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useTradeJournal } from '../../../hooks/useTradeJournal'
 import { useLanguage } from '../../../i18n/LanguageContext'
 import Empty from '../Empty'
-import { orderMatters, streakRows } from '../lib/afterLoss'
+import { orderMatters, sequence, streakRows } from '../lib/afterLoss'
 
 const r1 = (v) => `${v >= 0 ? '+' : ''}${v.toFixed(2)}R`
 const p0 = (v) => `${(v * 100).toFixed(0)}%`
@@ -21,6 +21,7 @@ export default function AfterLossSection() {
   const { trades, loading } = useTradeJournal()
   const rows = useMemo(() => streakRows(trades), [trades])
   const test = useMemo(() => orderMatters(trades), [trades])
+  const seq = useMemo(() => sequence(trades), [trades])
 
   if (loading) return null
   if (rows.length < 3) return <Empty k="empty.needMore" />
@@ -37,6 +38,25 @@ export default function AfterLossSection() {
         {t('loss.lede')}
       </p>
 
+      {/* Main visual: every trade in time. The outlined ones followed two
+          losses — the reading is how much red sits inside those outlines
+          against the strip as a whole. Same shape as the overview card. */}
+      <div className="flex flex-wrap gap-[3px] mb-2">
+        {seq.map((r, i) => (
+          <i key={i}
+             className={`w-[9px] h-[18px] rounded-sm ${r > 0
+               ? 'bg-[var(--color-took)]' : 'bg-[var(--color-refused)]'} ${
+               i >= 2 && seq[i - 1] < 0 && seq[i - 2] < 0
+                 ? 'opacity-100 outline outline-1 outline-offset-1 outline-[var(--color-text)]'
+                 : 'opacity-40'}`} />
+        ))}
+      </div>
+      <p className="text-[10px] font-mono text-[var(--color-text-muted)] mb-6">
+        {t('loss.strip')}
+      </p>
+
+      <p className="text-[11px] font-mono uppercase tracking-[.16em]
+                    text-[var(--color-text-muted)] mb-2">{t('loss.byStreak')}</p>
       <div>
         {rows.map((r) => {
           const isBase = r.key === 'all'
