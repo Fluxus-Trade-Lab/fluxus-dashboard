@@ -247,7 +247,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
       ) : (
         <main className="max-w-[1800px] mx-auto px-3 py-4">
           {current === 'screener' && <ScreenerPage />}
-          {current === 'watchlist' && <WatchlistPage />}
+          {current === 'watchlist' && <WatchlistPage zone={subRoute} />}
           {current === 'portfolio' && <PortfolioPage />}
           {/* Renamed 2026-08-17 (Andy): two routes, each named for what it is.
               #/review is the review; #/journal is the trade journal. The old

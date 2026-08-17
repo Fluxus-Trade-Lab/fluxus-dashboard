@@ -5,11 +5,9 @@ import { useHeatingUp } from '../../hooks/useHeatingUp'
 import { useUniverse } from '../../hooks/useUniverse'
 import { useGroups } from '../../hooks/useGroups'
 import { useMarketData } from '../../hooks/useMarketData'
-import { usePresets } from '../../hooks/usePresets'
 import { SCAN_DEFS, scanTickers } from '../../lib/scanSets'
 import ScanBar from './ScanBar'
 import StockTable from './StockTable'
-import WatchlistTab from './WatchlistTab'
 import HowToRead from '../HowToRead'
 import { useLanguage } from '../../i18n/LanguageContext'
 
@@ -23,10 +21,14 @@ import { useLanguage } from '../../i18n/LanguageContext'
  * selector on this page only chooses between answers that already exist.
  * Its files were deleted 2026-08-12 (Andy: 确认不回头) along with HeatingUp,
  * whose ledger became the Confluence scan — the default vocabulary word, not
- * the page. WatchlistTab and its filter lib stay.
+ * the page.
+ *
+ * The Watchlist tab went the same way on 2026-08-17. It computed preset lists
+ * in the browser from the universe while the pipeline was writing a nightly
+ * watchlist.json nobody rendered; two things called Watchlist, two sources,
+ * one of them the real one. The page at #/watchlist reads the file. This page
+ * is a table you tune, and now it is only that.
  */
-
-const TAB_KEYS = ['scr.tab.screener', 'scr.tab.watchlist']
 const QUERY_KEY = 'screener-query'
 
 const STATE_WORDS = ['Leading', 'Weakening', 'Improving', 'Lagging']
@@ -51,10 +53,8 @@ export default function ScreenerPage() {
   const groups = useGroups()
   const heat = useHeatingUp()
   const { data: market } = useMarketData()
-  const { allPresets } = usePresets()
   const { t: tr } = useLanguage()
 
-  const [activeTab, setActiveTab] = useState(0)
   const initial = useMemo(loadQuery, [])
   const [scan, setScan] = useState(initial.scan)
   const [states, setStates] = useState(() => new Set(initial.states))
@@ -279,46 +279,24 @@ export default function ScreenerPage() {
           sentence says "here", and here now holds all fifty */}
       <Reading text={untouched ? readScreener(heat) : selectionReading} />
 
-      <div className="flex gap-0 border-b border-[var(--color-border)] mb-4" role="tablist">
-        {TAB_KEYS.map((key, i) => (
-          <button key={key} role="tab" aria-selected={activeTab === i}
-            onClick={() => setActiveTab(i)}
-            className={`px-5 py-2.5 font-semibold text-[14px] cursor-pointer bg-transparent border-none border-b-2 transition-colors ${
-              activeTab === i
-                ? 'border-[var(--color-text-bold)] text-[var(--color-text-bold)]'
-                : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'
-            }`}>
-            {tr(key)}
-          </button>
-        ))}
-      </div>
-
-      {activeTab === 0 && (
-        <>
-          <ScanBar
-            scans={scans} scan={scan} onScan={setScan}
-            stateCounts={stateCounts} states={states} onToggleState={toggleState}
-            themes={groups.themes} theme={theme} onTheme={setTheme}
-            search={search} onSearch={setSearch}
-            receipt={receipt}
-            hiddenNote={noState ? `${noState} rows carry no state and are not shown` : null} />
-          {viewReady ? (
-            // key: normalized search only — a trailing space changes nothing
-            // about the row set and must not remount the table
-            <StockTable key={`${scan}|${[...states].join()}|${theme}|${search.trim().toUpperCase()}`}
-                        rows={rows} defaultSort={scan === 'confluence' ? 'heat' : 'rs3'} />
-          ) : (
-            <p className="m-0 py-8 text-center text-[12.5px] text-[var(--color-text-muted)]">
-              {!activeScan.loaded
-                ? `${activeScan.label} ${tr('scr.notLoadedYet')}`
-                : tr('scr.groupLayerLoading')}
-            </p>
-          )}
-        </>
-      )}
-
-      {activeTab === 1 && (
-        <WatchlistTab universe={universe} presets={allPresets} />
+      <ScanBar
+        scans={scans} scan={scan} onScan={setScan}
+        stateCounts={stateCounts} states={states} onToggleState={toggleState}
+        themes={groups.themes} theme={theme} onTheme={setTheme}
+        search={search} onSearch={setSearch}
+        receipt={receipt}
+        hiddenNote={noState ? `${noState} rows carry no state and are not shown` : null} />
+      {viewReady ? (
+        // key: normalized search only — a trailing space changes nothing
+        // about the row set and must not remount the table
+        <StockTable key={`${scan}|${[...states].join()}|${theme}|${search.trim().toUpperCase()}`}
+                    rows={rows} defaultSort={scan === 'confluence' ? 'heat' : 'rs3'} />
+      ) : (
+        <p className="m-0 py-8 text-center text-[12.5px] text-[var(--color-text-muted)]">
+          {!activeScan.loaded
+            ? `${activeScan.label} ${tr('scr.notLoadedYet')}`
+            : tr('scr.groupLayerLoading')}
+        </p>
       )}
 
       <HowToRead>

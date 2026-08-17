@@ -327,6 +327,23 @@ export default function GroupsPage() {
       <Reference label="Full table" count={rows.length}
                  note="all columns, sortable">
         <GroupTable rows={rows} showMethod emptyNote="No groups" />
+        {/* The one column on this page whose reading is counter-intuitive
+            enough that leaving it to a tooltip would guarantee it is read
+            backwards. Numbers quoted from the measurement, not rounded up. */}
+        <p className="text-[11.5px] text-[var(--color-text-muted)] mt-3 max-w-[80ch]">
+          <b>Extended</b> is the share of a group&rsquo;s members sitting 4+ ATR above
+          their SMA50 — an expiry date on the Leading label, not a return forecast.
+          Across 48 themes × 293 days, Leading groups under 20% extended were still
+          Leading 21 days later 28% of the time; 20–40% → 14%, 40–60% → 6%, above
+          60% → 0%. The 21-day excess return did <i>not</i> fall across those buckets
+          (+1.6% → +2.5–3.8%): the label expires because acceleration turns negative
+          after a two-month run, not because the group stops paying. The damage lands
+          later — Leading → Weakening from above 40% extended ran +3.1% at 21 days and
+          −4.1% at 63 (n=31). So it reads &ldquo;don&rsquo;t add here, take some off
+          over the next month or two&rdquo;, never &ldquo;sell now&rdquo;. The notch
+          marks members past 7 ATR; <span className="font-mono">n/m</span> is a proxy
+          theme with no members to measure, which is not the same as 0%.
+        </p>
       </Reference>
 
       <HowToRead>

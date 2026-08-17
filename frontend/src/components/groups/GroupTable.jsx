@@ -10,6 +10,9 @@ const COLS = [
   { key: 'excess_3m', label: 'RS 3M', align: 'right', fmt: pct },
   { key: 'rs_accel', label: 'Accel', align: 'right', fmt: pct },
   { key: 'persistence', label: 'Persist', align: 'right' },
+  // Next to State because it modifies State, and modifies nothing else. See
+  // Extension below for what it does and does not say.
+  { key: 'ext_share_4', label: 'Extended', align: 'right' },
   { key: 'state', label: 'State', align: 'left' },
 ]
 
@@ -99,6 +102,7 @@ export default function GroupTable({ rows, showMethod = false, emptyNote }) {
                     ? `Top quartile on ${r.persistence} of ${r.persistence_of} horizons`
                     : undefined} />
               </td>
+              <td className="px-2 py-1.5"><Extension row={r} /></td>
               <td className="px-2 py-1.5"><StateBadge state={r.state} /></td>
 
             </tr>
@@ -106,6 +110,68 @@ export default function GroupTable({ rows, showMethod = false, emptyNote }) {
         </tbody>
       </table>
     </div>
+  )
+}
+
+/**
+ * How much of a group is already stretched — the Leading label's expiry date.
+ *
+ * WHAT IT MEASURED, and it is not what the number looks like. Over 48 themes ×
+ * 293 days: among Leading days, a group whose members are <20% extended (>= 4
+ * ATR above the SMA50) is still Leading 21 days later 28% of the time; 20-40%
+ * -> 14%; 40-60% -> 6%; >60% -> 0%. Monotone. But the 21-day excess return did
+ * NOT get worse across those buckets (+1.6% -> +2.5-3.8%) — the label expires
+ * because rs_accel mechanically turns negative after a two-month run, not
+ * because the group stops paying.
+ *
+ * The loss shows up later: Leading -> Weakening with prior extension above 40%
+ * ran +3.1% at 21 days and -4.1% at 63 (n=31). So this column reads "the label
+ * is about to expire, trim over the next month or two", never "sell now", and
+ * never "this will underperform next month" — the data says the opposite of
+ * that last one.
+ *
+ * Steve's >= 7 ATR ladder is a SINGLE-STOCK rule. At group level the same
+ * number says something different: the move is already in the price.
+ *
+ * Sixteen proxy themes carry no members to measure, so they read NOT MEASURED
+ * rather than 0% — an ETF proxy with nothing extended and an ETF proxy with
+ * nothing measurable are not the same row.
+ */
+function Extension({ row }) {
+  const v = row.ext_share_4
+  if (v == null) {
+    return <span className="text-[10px] font-mono uppercase tracking-[.12em]
+                            text-[var(--color-text-muted)]" title="no members to measure">n/m</span>
+  }
+  const RANGE = 0.6                       // the top measured bucket starts here
+  const frac = Math.min(1, v / RANGE)
+  const expiring = v >= 0.4 && row.state === 'Leading'
+  return (
+    <span className="flex items-center gap-2 justify-end">
+      {/* Identity in text, magnitude in the bar — the state column beside this
+          one is already a grey ladder, and a second grey ladder carrying a
+          different meaning is how two encodings become one. */}
+      {expiring && (
+        <span className="text-[9px] font-mono uppercase tracking-[.12em]
+                         text-[var(--color-signal-caution)] whitespace-nowrap">expiring</span>
+      )}
+      <span className="relative block w-[46px] h-[9px] rounded-sm
+                       bg-[var(--color-hover-bg)] shrink-0">
+        <i className="absolute inset-y-0 left-0 rounded-sm bg-[var(--color-signal-caution)]"
+           style={{ width: `${Math.max(2, frac * 100)}%` }} />
+        {/* The >= 7 ATR share is a rarer, sharper thing — a notch, not a second
+            bar, because on today's book it is zero for all but a handful. */}
+        {row.ext_share_7 > 0 && (
+          <i className="absolute top-[-2px] bottom-[-2px] w-px bg-[var(--color-text-bold)]"
+             style={{ left: `${Math.min(100, (row.ext_share_7 / RANGE) * 100)}%` }}
+             title={`${(row.ext_share_7 * 100).toFixed(0)}% at 7+ ATR`} />
+        )}
+      </span>
+      <span className="tabular-nums text-right w-[38px] shrink-0"
+            title={`median ${row.ext_median?.toFixed(2)} ATR from SMA50 · ${row.ext_n} members measured`}>
+        {(v * 100).toFixed(0)}%
+      </span>
+    </span>
   )
 }
 
