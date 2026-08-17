@@ -5,11 +5,13 @@ import RiskTab from './RiskTab'
 import SizingTab from './SizingTab'
 import PageHeader from '../PageHeader'
 import { useLanguage } from '../../i18n/LanguageContext'
-import HeadCoach from './HeadCoach'
+import StageCard from './StageCard'
+import { useTradeJournal } from '../../hooks/useTradeJournal'
+import { stageLeaks, STAGES } from './lib/headCoach'
 import HoldCaptureSection from './analytics/HoldCaptureSection'
 import AfterLossSection from './analytics/AfterLossSection'
 import SetupEdgeSection from './analytics/SetupEdgeSection'
-import { STAGES } from './lib/headCoach'
+
 
 /**
  * Four coaches and one head coach — formerly eighteen tabs.
@@ -70,95 +72,93 @@ const SECTIONS = {
 const ANALYTICS_KEYS = new Set(['trim-stops', 'volatility', 'demon-finder', 'behavior',
                                 'diagnosis', 'risk-adjusted', 'size-vs-r'])
 
-export default function JournalPage() {
+export default function JournalPage({ stage: routeStage }) {
   const { t } = useLanguage()
-  const [stage, setStage] = useState('hold')
-  const [section, setSection] = useState(SECTIONS.hold[0].key)
+  const { trades } = useTradeJournal()
+  const [section, setSection] = useState(null)
 
-  const pickStage = (key) => {
-    setStage(key)
-    setSection(SECTIONS[key][0].key)
+  const go = (key) => { window.location.hash = key ? `#/review/${key}` : '#/review' }
+
+  // The stage the ranking points at. It decides which card wears the flag —
+  // and that flag, plus the four readings beside it, is the whole verdict.
+  // The sentence that used to sit above them said the same thing again.
+  const lead = stageLeaks(trades)[0]?.stage
+
+  // ── Overview ───────────────────────────────────────────────────────────
+  if (!routeStage || !SECTIONS[routeStage]) {
+    return (
+      <div className="max-w-5xl mx-auto py-6 px-4">
+        <PageHeader group="book" title={t('nav.journal')} />
+        <p className="text-[13px] text-[var(--color-text-secondary)] mt-1 mb-5 max-w-[62ch]">
+          {t('rev.overview.lede')}
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
+          {STAGES.map(({ key }) => (
+            <StageCard key={key} stageKey={key} trades={trades}
+                       lead={key === lead} onOpen={go} />
+          ))}
+        </div>
+
+        {/* Andy's own words about the period. Not inside a stage — it is about
+            all four — and its own entrance, per his call. */}
+        <details className="mt-6">
+          <summary className="text-[11px] font-mono uppercase tracking-[.18em]
+                              text-[var(--color-text-muted)] cursor-pointer list-none
+                              hover:text-[var(--color-text)]">{t('rev.monthly')} +</summary>
+          <div className="mt-3"><AnalyticsTab initialSection="monthly-review" /></div>
+        </details>
+
+        <p className="text-[11px] text-[var(--color-text-muted)] mt-5 max-w-[70ch]">
+          {t('rev.report.hint')}
+        </p>
+        <code className="inline-block mt-1.5 text-[10.5px] font-mono
+                         text-[var(--color-text-secondary)]
+                         bg-[var(--color-hover-bg)] rounded px-2 py-1">
+          {t('rev.report.cmd')}
+        </code>
+      </div>
+    )
   }
+
+  // ── One stage ──────────────────────────────────────────────────────────
+  const list = SECTIONS[routeStage]
+  const active = section && list.some((x) => x.key === section) ? section : list[0].key
 
   return (
     <div className="max-w-5xl mx-auto py-6 px-4">
-      <PageHeader group="book" title={t('nav.journal')} />
-
-      <HeadCoach onGo={pickStage} />
-
-      {/* Andy's own words about the same period the verdict above is about.
-          Retiring the Summary layer took this with it — it holds a textarea
-          writing into monthlyReviews, so the restructure made his own writing
-          unreachable. Nothing was lost (the portfolio still persists and syncs
-          it), but an entrance that disappears is how writing gets abandoned.
-          It sits with the head coach rather than inside a stage because it is
-          about the period, not about one part of a trade. */}
-      <details className="mb-5">
-        <summary className="text-[11px] font-mono uppercase tracking-[.18em]
-                            text-[var(--color-text-muted)] cursor-pointer list-none
-                            hover:text-[var(--color-text)]">
-          {t('rev.monthly')} +
-        </summary>
-        <div className="mt-3">
-          <AnalyticsTab initialSection="monthly-review" />
-        </div>
-      </details>
-
-      {/* The four stages, in the order a trade lives through them. */}
-      <div className="flex gap-1 mb-3 flex-wrap">
-        {STAGES.map(({ key }) => (
-          <button
-            key={key}
-            onClick={() => pickStage(key)}
-            title={t(`rev.asks.${key}`)}
-            className={`px-3 py-1.5 text-[12px] font-medium rounded cursor-pointer transition-colors ${
-              stage === key
-                ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
-                : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-[var(--color-surface-raised)]'
-            }`}
-          >
-            {t(`rev.stage.${key}`)}
-          </button>
-        ))}
-      </div>
-
-      {/* What that stage asks, spelled out — four one-character labels are only
-          legible to whoever wrote them. */}
-      <p className="text-[11.5px] text-[var(--color-text-muted)] m-0 mb-3">
-        {t(`rev.asks.${stage}`)}
+      <button type="button" onClick={() => go(null)}
+              className="text-[11px] font-mono text-[var(--color-text-muted)] bg-transparent
+                         border-none p-0 cursor-pointer hover:text-[var(--color-text)]">
+        ‹ {t('nav.journal')}
+      </button>
+      <h1 className="text-[34px] font-bold leading-tight mt-1 mb-0.5">
+        {t(`rev.stage.${routeStage}`)}
+      </h1>
+      <p className="text-[12.5px] text-[var(--color-text-muted)] m-0 mb-5">
+        {t(`rev.asks.${routeStage}`)}
       </p>
 
-      <div className="flex gap-1 mb-5 flex-wrap">
-        {SECTIONS[stage].map(({ key }) => (
-          <button
-            key={key}
-            onClick={() => setSection(key)}
-            className={`px-2.5 py-1 text-[11px] rounded cursor-pointer transition-colors ${
-              section === key
-                ? 'text-[var(--color-text)] font-semibold bg-[var(--color-hover-bg)]'
-                : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
-            }`}
-          >
-            {t(`rev.sec.${key}`)}
-          </button>
-        ))}
-      </div>
-
-      {section === 'hold-capture' ? (
-        <HoldCaptureSection />
-      ) : section === 'after-loss' ? (
-        <AfterLossSection />
-      ) : section === 'setup-edge' ? (
-        <SetupEdgeSection />
-      ) : section === 'sizing' ? (
-        <SizingTab />
-      ) : section === 'stop-sim' ? (
-        <RiskTab />
-      ) : ANALYTICS_KEYS.has(section) ? (
-        <AnalyticsTab initialSection={section} key={section} />
-      ) : (
-        <CoachTab strategy={section} />
+      {list.length > 1 && (
+        <div className="flex gap-1 mb-5 flex-wrap">
+          {list.map(({ key }) => (
+            <button key={key} onClick={() => setSection(key)}
+              className={`px-2.5 py-1 text-[11px] rounded cursor-pointer transition-colors ${
+                active === key
+                  ? 'text-[var(--color-text)] font-semibold bg-[var(--color-hover-bg)]'
+                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'}`}>
+              {t(`rev.sec.${key}`)}
+            </button>
+          ))}
+        </div>
       )}
+
+      {active === 'hold-capture' ? <HoldCaptureSection />
+        : active === 'after-loss' ? <AfterLossSection />
+        : active === 'setup-edge' ? <SetupEdgeSection />
+        : active === 'sizing' ? <SizingTab />
+        : active === 'stop-sim' ? <RiskTab />
+        : ANALYTICS_KEYS.has(active) ? <AnalyticsTab initialSection={active} key={active} />
+        : <CoachTab strategy={active} />}
     </div>
   )
 }

@@ -75,8 +75,8 @@ export const NAV_GROUPS = [
     key: 'book',
     items: [
       { key: 'portfolio', short: 'PRT', hash: '#/portfolio' },
-      { key: 'trades', short: 'LOG', hash: '#/trades' },
-      { key: 'journal', short: 'COA', hash: '#/journal' },
+      { key: 'trades', short: 'LOG', hash: '#/journal' },
+      { key: 'journal', short: 'REV', hash: '#/review' },
     ],
   },
   {

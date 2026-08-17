@@ -48,9 +48,17 @@ import Footer from './Footer'
 
 const PUBLIC_PAGES = ['', 'method', 'results', 'pricing', 'brief']
 
+/**
+ * `#/review/hold` → { key: 'review', sub: 'hold' }.
+ *
+ * Sub-routes so a stage is a place: linkable, back-button-able, and reachable
+ * from outside. The whole point of the overview pointing at one stage is lost
+ * if that stage cannot be addressed.
+ */
 function pageKey(hash) {
-  const key = hash.replace('#/', '') || ''
-  return key
+  const path = hash.replace('#/', '') || ''
+  const [key, sub] = path.split('/')
+  return { key: key || '', sub: sub || null }
 }
 
 export default function Layout({ data, lastUpdated, isOffline }) {
@@ -59,7 +67,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
   // every navigation.
   useWritingSync()
   const [page, navigate] = useHash()
-  const current = pageKey(page)
+  const { key: current, sub: subRoute } = pageKey(page)
   const tickerSymbol = parseTickerHash(page)
   const tradeIdMatch = (page || '').match(/^#\/trade\/([A-Za-z0-9._\-]+)$/)
   const tradeId = tradeIdMatch ? tradeIdMatch[1] : null
@@ -239,8 +247,13 @@ export default function Layout({ data, lastUpdated, isOffline }) {
         <main className="max-w-[1800px] mx-auto px-3 py-4">
           {current === 'screener' && <ScreenerPage />}
           {current === 'portfolio' && <PortfolioPage />}
-          {current === 'journal' && <JournalPage />}
-          {current === 'trades' && <TradeJournalPage />}
+          {/* Renamed 2026-08-17 (Andy): Review lives at #/review, and #/journal
+              now means the trade journal, which is what the word says. The old
+              #/journal pointed here — the same path changes destination, which
+              is a break we accept because there is one reader and he asked for
+              it. #/trades keeps resolving so older links still land. */}
+          {current === 'review' && <JournalPage stage={subRoute} />}
+          {(current === 'trades' || current === 'journal') && <TradeJournalPage />}
           {current === 'briefing' && <BriefingPage />}
           {current === 'breadth' && <BreadthPage data={data} />}
           {current === 'correction' && <CorrectionRiskPage />}
