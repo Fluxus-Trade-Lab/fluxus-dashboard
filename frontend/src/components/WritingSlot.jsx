@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { datesWithEntries, loadEntry, saveEntry, todayKey, weekKey } from '../lib/writingStore'
+import EntryNav from './EntryNav'
 
 /**
  * A dated slot for words Andy writes himself, with its own back-catalogue.
@@ -66,20 +67,9 @@ export default function WritingSlot({
     }
   }, [kind, date])
 
-  // The walkable list is the written days plus today, so today is reachable
-  // even before it has anything on it.
-  const timeline = useMemo(() => {
-    const s = new Set(history)
-    s.add(current)
-    return [...s].sort().reverse()          // newest first
-  }, [history, current])
-
-  const ix = timeline.indexOf(date)
-  const older = ix >= 0 && ix < timeline.length - 1 ? timeline[ix + 1] : null
-  const newer = ix > 0 ? timeline[ix - 1] : null
   const isCurrent = date === current
 
-  const written = timeline.filter((d) => d !== current || text.trim()).length
+  const written = new Set([...history, ...(text.trim() ? [date] : [])]).size
 
   return (
     <section className={`rounded-3xl border px-4 py-3 ${
@@ -88,29 +78,8 @@ export default function WritingSlot({
       <div className="flex items-baseline justify-between gap-3">
         <span className="text-[10px] font-mono uppercase tracking-[.24em]
                          text-[var(--color-text-muted)]">{label}</span>
-        <div className="flex items-center gap-1.5 text-[10px] font-mono
-                        text-[var(--color-text-muted)]">
-          <button type="button" disabled={!older} onClick={() => setDate(older)}
-                  title={older ? `Back to ${older}` : 'Nothing older'}
-                  className="bg-transparent border-none p-0 px-1 cursor-pointer
-                             disabled:opacity-30 disabled:cursor-default
-                             hover:text-[var(--color-text)]">‹</button>
-          <span title={cadence === 'weekly' ? 'week beginning' : 'entry date'}>
-            {isCurrent ? (cadence === 'weekly' ? 'this week' : 'today') : date}
-          </span>
-          <button type="button" disabled={!newer} onClick={() => setDate(newer)}
-                  title={newer ? `Forward to ${newer}` : 'Nothing newer'}
-                  className="bg-transparent border-none p-0 px-1 cursor-pointer
-                             disabled:opacity-30 disabled:cursor-default
-                             hover:text-[var(--color-text)]">›</button>
-          {!isCurrent && (
-            <button type="button" onClick={() => setDate(current)}
-                    className="bg-transparent border-none p-0 ml-1 cursor-pointer
-                               underline hover:text-[var(--color-text)]">
-              {cadence === 'weekly' ? 'this week' : 'today'}
-            </button>
-          )}
-        </div>
+        <EntryNav dates={history} date={date} current={current}
+                  cadence={cadence} onPick={setDate} />
       </div>
 
       <textarea

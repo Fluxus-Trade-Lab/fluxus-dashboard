@@ -3,6 +3,7 @@ import Header from './Header'
 import Rail from './Rail'
 import PageHeader from './PageHeader'
 import WritingSlot from './WritingSlot'
+import useWritingSync from '../hooks/useWritingSync'
 import Placeholder from './Placeholder'
 import HowToRead from './HowToRead'
 import Reference from './Reference'
@@ -53,6 +54,10 @@ function pageKey(hash) {
 }
 
 export default function Layout({ data, lastUpdated, isOffline }) {
+  // Mirror the handwritten slots to the Sheet. Mounted here, once, because
+  // they live on three different pages and a per-slot sync would pull on
+  // every navigation.
+  useWritingSync()
   const [page, navigate] = useHash()
   const current = pageKey(page)
   const tickerSymbol = parseTickerHash(page)

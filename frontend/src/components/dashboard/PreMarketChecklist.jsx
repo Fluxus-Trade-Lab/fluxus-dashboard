@@ -1,4 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
+import EntryNav from '../EntryNav'
+import { datesWithEntries, loadRecord, saveRecord, todayKey } from '../../lib/writingStore'
 
 const QUESTIONS = [
   { id: 'rules', text: 'Am I following my rules?', options: ['Yes', 'No'] },
@@ -9,54 +11,91 @@ const QUESTIONS = [
   { id: 'breakouts', text: 'Breakouts working this week?', options: ['Yes', 'Mixed', 'No'] },
 ]
 
-const STORAGE_KEY = 'fluxus-checklist'
+const KIND = 'premarket-checklist'
+const LEGACY_KEY = 'fluxus-checklist'
 
-function todayKey() {
-  return new Date().toLocaleDateString('en-CA') // YYYY-MM-DD in local timezone
-}
+const EMPTY = { answers: {}, note: '' }
+const isEmpty = (r) => !r || (!Object.keys(r.answers || {}).length && !(r.note || '').trim())
 
-function loadChecklist() {
+/**
+ * The old store kept ONE slot and threw it away every morning:
+ *
+ *     if (parsed.date !== todayKey()) return { answers: {}, note: '' }
+ *
+ * Which is right about today — a new morning is a blank sheet — and wrong
+ * about yesterday, which it deleted rather than filed. This is the journal
+ * Andy calls 对内求, and a journal you cannot re-read is a habit.
+ *
+ * Entries are now keyed by date and nothing overwrites an older one. Today
+ * still opens blank; the difference is that the rest of them still exist.
+ */
+function migrateLegacy() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return { date: todayKey(), answers: {}, note: '' }
-    const parsed = JSON.parse(raw)
-    if (parsed.date !== todayKey()) return { date: todayKey(), answers: {}, note: '' }
-    return parsed
-  } catch {
-    return { date: todayKey(), answers: {}, note: '' }
-  }
-}
-
-function persistChecklist(state) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+    const raw = localStorage.getItem(LEGACY_KEY)
+    if (!raw) return
+    const old = JSON.parse(raw)
+    // Only the one day it held, and only if it is not already filed — this
+    // runs on every mount and must not overwrite a newer edit.
+    if (old?.date && !isEmpty(old) && !loadRecord(KIND, old.date)) {
+      saveRecord(KIND, old.date, { answers: old.answers || {}, note: old.note || '' }, isEmpty)
+    }
+    localStorage.removeItem(LEGACY_KEY)
+  } catch { /* a corrupt legacy blob is not worth failing a page load over */ }
 }
 
 export default function PreMarketChecklist() {
-  const [state, setState] = useState(loadChecklist)
+  const today = todayKey()
+  const [date, setDate] = useState(today)
+  const [state, setState] = useState(() => {
+    migrateLegacy()
+    return loadRecord(KIND, today, EMPTY)
+  })
+  const [history, setHistory] = useState(() => datesWithEntries(KIND))
   const noteTimerRef = useRef(null)
+  const latest = useRef(state)
+  latest.current = state
 
-  // Persist immediately for button clicks
+  // Stepping through history loads that day.
+  useEffect(() => { setState(loadRecord(KIND, date, EMPTY)) }, [date])
+
+  const persist = useCallback((next) => {
+    saveRecord(KIND, date, next, isEmpty)
+    setHistory(datesWithEntries(KIND))
+  }, [date])
+
+  // Buttons persist immediately; there is nothing to debounce about a click.
   const setAnswer = useCallback((id, value) => {
     setState(prev => {
-      const next = { ...prev, answers: { ...prev.answers, [id]: value } }
-      persistChecklist(next)
+      // Clicking the chosen option again clears it — six questions with no way
+      // back to "unanswered" made the 0/6 counter unreachable once touched.
+      const answers = { ...prev.answers }
+      if (answers[id] === value) delete answers[id]
+      else answers[id] = value
+      const next = { ...prev, answers }
+      persist(next)
       return next
     })
-  }, [])
+  }, [persist])
 
-  // Debounced persist for note typing
   const setNote = useCallback((value) => {
     setState(prev => ({ ...prev, note: value }))
     clearTimeout(noteTimerRef.current)
-    noteTimerRef.current = setTimeout(() => {
-      setState(prev => { persistChecklist(prev); return prev })
-    }, 500)
-  }, [])
+    noteTimerRef.current = setTimeout(() => persist({ ...latest.current, note: value }), 500)
+  }, [persist])
 
-  useEffect(() => () => clearTimeout(noteTimerRef.current), [])
+  // Flush a pending keystroke on unmount or on stepping away. Deps exclude the
+  // note itself — depending on it would re-run this every keystroke and its
+  // cleanup would cancel the debounce it exists to back up.
+  useEffect(() => () => {
+    if (noteTimerRef.current) {
+      clearTimeout(noteTimerRef.current)
+      saveRecord(KIND, date, latest.current, isEmpty)
+    }
+  }, [date])
 
   const answeredCount = Object.keys(state.answers).length
   const totalCount = QUESTIONS.length
+  const readOnlyDay = date !== today
 
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl px-5 py-4">
@@ -64,9 +103,12 @@ export default function PreMarketChecklist() {
         <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Pre-Market Checklist
         </h3>
-        <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
-          {answeredCount}/{totalCount}
-        </span>
+        <div className="flex items-center gap-3">
+          <EntryNav dates={history} date={date} current={today} onPick={setDate} />
+          <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
+            {answeredCount}/{totalCount}
+          </span>
+        </div>
       </div>
 
       <div className="space-y-2.5">
