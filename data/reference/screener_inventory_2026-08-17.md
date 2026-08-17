@@ -51,7 +51,7 @@
 | 键 | 字段 | 数据单位 | 输入单位 | 定义 |
 |---|---|---|---|---|
 | `adrPct` | `adr_pct` | % | % | `ATR / close × 100`(Finviz ATR) |
-| `vcs` | `vcs` | 0–100 | 同 | 波动收缩分,`calculate_vcs`(yfinance) |
+| `vcs` | `vcs` | 0–100 | 同 | 波动收缩分 —— **2026-08-17 起为 oratnek VCS v2 忠实移植**(`pipeline/screeners/vcs.py`);之前是改造过的老版,尺子不同(中位 50→35) |
 | `dcrPct` | `dcr_pct` | 0–1 | 0–100 | `(close − low)/(high − low)`,当日收盘位置 |
 | `ppCount` | `pp_count_30d` | 整数 | 同 | 近 30 根里满足口袋支点定义的根数 |
 | `relVolume` | `rel_volume` | 倍数 | 同 | Finviz Relative Volume |

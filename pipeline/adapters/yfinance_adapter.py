@@ -144,98 +144,20 @@ def pocket_pivot_today(closes, opens, vols) -> bool | None:
     return None if n is None else bool(n)
 
 
-def calculate_vcs(hist: pd.DataFrame, len_short: int = 13, len_long: int = 63,
-                   len_vol: int = 50, sensitivity: float = 2.0,
-                   trend_penalty_weight: float = 1.0, hl_lookback: int = 63,
-                   penalty_factor: float = 0.75, bonus_max: int = 15) -> float | None:
-    """Volatility Contraction Score (0-100).
-    Ported from Pine Script by @oratnek_ill, with two enhancements:
+def calculate_vcs(hist: pd.DataFrame) -> float | None:
+    """Volatility Contraction Score (0-100), one decimal.
 
-    B (Adaptive Volatility): Uses min(13-day, 3-day) stdev so the score
-       enters tight regime fast after a pole (3-day drops first) and exits
-       slowly during breakout (13-day holds longer).
-
-    D (Trend Quality): Replaces the original efficiency penalty with a
-       dual-timeframe Kaufman ER differential. Rewards "coiled springs"
-       (strong long-term trend + tight short-term) instead of penalizing
-       momentum poles.
+    Faithful port of oratnek's VCS v2 -- see pipeline/screeners/vcs.py and
+    indicators/third_party/oratnek_vcs_v2.pine. Until 2026-08-17 this was a
+    modified port of an older version (min(13,3) stdev, Kaufman-ER quality
+    term, .3/.3/.2/.2 weights, no efficiency filter) with no tests; scores
+    from before that date are on a different scale. None when history is
+    under 76 bars (unmeasured).
     """
     try:
-        n = len(hist)
-        if n < len_long + len_short:
-            return None
-
-        close = hist['Close']
-        high = hist['High']
-        low = hist['Low']
-        vol = hist['Volume']
-
-        # True Range
-        tr = pd.concat([
-            high - low,
-            (high - close.shift()).abs(),
-            (low - close.shift()).abs(),
-        ], axis=1).max(axis=1)
-
-        # A. Price Compression: short ATR / long ATR
-        tr_short = tr.rolling(len_short).mean()
-        tr_long = tr.rolling(len_long).mean()
-        ratio_atr = tr_short / tr_long.clip(lower=1e-6)
-
-        # B. Adaptive Price Stability: min(slow, fast) stdev / long stdev
-        #    Fast to enter tight regime, slow to leave during breakout
-        std_short_slow = close.rolling(len_short).std()
-        std_short_fast = close.rolling(3).std()
-        std_short = pd.concat([std_short_slow, std_short_fast], axis=1).min(axis=1)
-        std_long = close.rolling(len_long).std()
-        ratio_std = std_short / std_long.clip(lower=1e-6)
-
-        # C. Volume Contraction: 5-day vol / 50-day vol
-        vol_avg = vol.rolling(len_vol).mean()
-        vol_short_avg = vol.rolling(5).mean()
-        vol_ratio = vol_short_avg / vol_avg.clip(lower=1.0)
-
-        # D. Trend Quality: dual-timeframe Kaufman ER differential
-        #    High long-term ER (strong trend) + low short-term ER (tight) = high score
-        def _kaufman_er(series, length):
-            net = (series - series.shift(length)).abs()
-            gross = series.diff().abs().rolling(length).sum()
-            return net / gross.clip(lower=1e-6)
-
-        er_long = _kaufman_er(close, len_long)
-        er_short = _kaufman_er(close, len_short)
-        gap = er_long - er_short
-        quality_score = (0.4 + gap * trend_penalty_weight).clip(0.0, 1.0)
-
-        # Score components: ATR 30%, StdDev 30%, Volume 20%, Trend Quality 20%
-        s_atr = (1.0 - ratio_atr.fillna(1.0)).clip(lower=0.0) * sensitivity
-        s_std = (1.0 - ratio_std.fillna(1.0)).clip(lower=0.0) * sensitivity
-        s_vol = (1.0 - vol_ratio.fillna(1.0)).clip(lower=0.0)
-
-        raw_score = s_atr * 0.3 + s_std * 0.3 + s_vol * 0.2 + quality_score * 0.2
-        physics_score = (raw_score * 100).clip(upper=100)
-        smooth_physics = physics_score.ewm(span=3, adjust=False).mean()
-
-        # Consistency bonus: consecutive days >= 70
-        is_tight = smooth_physics >= 70
-        groups = (~is_tight).cumsum()
-        days_tight = is_tight.groupby(groups).cumsum()
-
-        weight_physics = (100.0 - bonus_max) / 100.0
-        weighted_physics = smooth_physics * weight_physics
-        consistency = days_tight.clip(upper=bonus_max)
-        total_score = weighted_physics + consistency
-
-        # E. Structure check: higher low
-        low_recent = low.rolling(len_short).min()
-        low_base = low.rolling(hl_lookback).min().shift(len_short)
-        is_higher_low = low_recent >= low_base
-
-        final_score = total_score.copy()
-        final_score[~is_higher_low] *= penalty_factor
-        final_score = final_score.fillna(0.0)
-
-        return round(float(final_score.iloc[-1]), 1)
+        from pipeline.screeners.vcs import vcs as _vcs
+        r = _vcs(hist)
+        return None if r.score is None else round(float(r.score), 1)
     except Exception:
         return None
 
