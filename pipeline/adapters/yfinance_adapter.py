@@ -102,6 +102,52 @@ def calculate_rrs(stock_data: pd.DataFrame, spy_data: pd.DataFrame,
         return None
 
 
+SCALE_MISMATCH_TOL = 0.20
+
+
+def _expected_session():
+    """The session this run is labelled with (last completed US session).
+    Module-level so tests can monkeypatch it; None disables the stale check."""
+    try:
+        from pipeline.marketcal import last_completed_session
+        return last_completed_session()
+    except Exception:
+        return None
+
+
+def bar_consistency(hist: pd.DataFrame, expected_session, vendor_close) -> tuple[str, str | None]:
+    """Is this ticker's bar history usable for TODAY's derived columns?
+
+    Returns (status, newest_bar_date):
+      'ok'             newest bar is on/after the session the run is labelled
+                       with, and (if a vendor close is known) agrees with it
+      'stale'          newest bar is BEFORE the session -- a batch download that
+                       dropped the last bar; every derived column would lag by a
+                       session while looking populated (FIRY/FBRX 2026-08-14)
+      'scale_mismatch' newest close differs from the vendor close by more than
+                       20% -- history on a pre-split scale (BYND 2026-08)
+
+    A guard that only counts nulls cannot see either; this is the check that
+    makes them visible, and the caller nulls the derived columns rather than
+    publish a number that is one session late or one split off.
+    """
+    try:
+        last = hist.index[-1]
+        last_date = last.date() if hasattr(last, "date") else pd.Timestamp(last).date()
+    except Exception:
+        return "stale", None
+    if expected_session is not None and last_date < expected_session:
+        return "stale", str(last_date)
+    try:
+        c = float(hist["Close"].iloc[-1])
+        v = float(vendor_close) if vendor_close is not None else None
+    except (TypeError, ValueError):
+        v = None
+    if v and v > 0 and c > 0 and abs(c / v - 1.0) > SCALE_MISMATCH_TOL:
+        return "scale_mismatch", str(last_date)
+    return "ok", str(last_date)
+
+
 def _window_ok(n: int) -> bool:
     return n >= 11
 
@@ -457,7 +503,8 @@ class YfinanceAdapter(BaseAdapter):
         return pd.DataFrame(results)
 
     def enrich_universe(self, universe: pd.DataFrame,
-                        batch_size: int = 500) -> pd.DataFrame:
+                        batch_size: int = 500,
+                        expected_session=None) -> pd.DataFrame:
         """Add performance/technical columns to a Finviz-sourced universe.
 
         Finviz free tier only provides Overview columns (ticker, sector,
@@ -529,9 +576,50 @@ class YfinanceAdapter(BaseAdapter):
                     f"({final_missing} missing, "
                     f"{final_missing / max(1, len(tickers)) * 100:.1f}%)")
 
+        # --- Bar consistency: retry the stale ones once, then tag ---------
+        # The session this run is labelled with. A premarket run labels the
+        # previous session (last_completed_session), so "newest bar before the
+        # session" is a genuine hole, not the clock.
+        if expected_session is None:
+            expected_session = _expected_session()
+        vendor_close = {}
+        if 'close' in universe.columns:
+            vendor_close = universe.set_index('ticker')['close'].to_dict()
+        verdict: dict[str, tuple[str, str | None]] = {
+            t: bar_consistency(h, expected_session, vendor_close.get(t)) for t, h in all_data.items()}
+        stale = [t for t, (st, _) in verdict.items() if st == 'stale']
+        if stale:
+            logger.info(f"  {len(stale)} tickers missing their newest bar — retrying singly")
+            for i in range(0, len(stale), 50):
+                batch = stale[i:i + 50]
+                try:
+                    data = yf.download(batch, period='1y', group_by='ticker',
+                                       auto_adjust=True, progress=False, threads=True)
+                except Exception:
+                    continue
+                for t in batch:
+                    try:
+                        h = data[t].dropna() if len(batch) > 1 else data.dropna()
+                    except KeyError:
+                        continue
+                    if len(h) and bar_consistency(h, expected_session, vendor_close.get(t))[0] == 'ok':
+                        all_data[t] = h
+                        verdict[t] = ('ok', str(h.index[-1].date()))
+        n_stale = sum(1 for st, _ in verdict.values() if st == 'stale')
+        n_scale = sum(1 for st, _ in verdict.values() if st == 'scale_mismatch')
+        logger.info(f"  bar consistency: {n_stale} stale after retry, {n_scale} scale-mismatched "
+                    f"(session {expected_session}); their derived columns are nulled")
+
         # Compute columns for each ticker
         enriched: dict[str, dict] = {}
         for ticker, hist in all_data.items():
+            status, bar_date = verdict.get(ticker, ('ok', None))
+            if status != 'ok':
+                # Publish the fact, not a number that is a session late or a
+                # split off. Finviz-sourced columns on the row are untouched.
+                enriched[ticker] = {'bar_date': bar_date, 'bars_stale': status == 'stale',
+                                    'bar_scale_mismatch': status == 'scale_mismatch'}
+                continue
             try:
                 close = float(hist['Close'].iloc[-1])
                 n = len(hist)
@@ -663,6 +751,7 @@ class YfinanceAdapter(BaseAdapter):
                     'ad_ratio_20': af['ad_ratio_20'], 'cmf21': af['cmf21'],
                     'ema21_low_dist': ema21_low_dist,
                     'ema21': ema21,
+                    'bar_date': bar_date, 'bars_stale': False, 'bar_scale_mismatch': False,
                     'ema10': ema10,
                     'ema20': ema20,
                     'wk_ema10': wk_ema10,

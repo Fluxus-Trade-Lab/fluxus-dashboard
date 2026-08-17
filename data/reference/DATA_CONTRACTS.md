@@ -212,6 +212,12 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 
 ⚠️ **`atr_ext`(每个 ticker 徽章)口径变更 2026-08-17**:原来是 `|dist|×close/atr`(无符号、漏 `(1+dist)`),现在 = `atr_from_sma50`(有符号)。**低于 SMA50 的票现在是负数**,`atr_color` 多了一档 `"below"`。前端 `lib/format.js:atrBadgeColor` 目前把 `<0` 走进 `≤4` 的绿色分支 —— **需要前端加一行 `if (atrExt < 0) return <中性色>`**,否则 2,247 只线下票继续被涂成入场区绿。这是数据端修正后剩给 UI 的唯一一步。
 
+⚠️ **RS/H 分「全部打分」2026-08-17(Andy:"全部打分";下一次 cron 起生效)**:`rs_1m/3m/6m`(及旧名 `rs_21d/63d/126d`)、`rs_ibd`、`i_score`、`h_score`、`f_score` **对每一行都有值**,不再只给 tradeable 行 —— 08-14 数据上覆盖率从 45% 升到 94–99%。**尺子没变**:场仍是 tradeable 子集(市值 ≥$1B 且日成交额 ≥$2M),tradeable 行的分数逐位不变;非 tradeable 行读的是"它的 perf 落在 tradeable 分布的第几分位"(RS 90 一律 = 会跑赢 90% 的可交易场)。`tradeable` 列照旧输出,**前端想标灰/淡化非 tradeable 行请读它**,不要再用 `rs_* == null` 当替身。perf 缺失的非 tradeable 行仍 `null`。`liquid_leader` 定义里加了 `tradeable`,名单未变(174)。测试 `test_score_all_rows.py` / `test_tradeable_scoring.py`。非 tradeable 行 rs_3m 中位 26(小票落后于场,不是 bug)。
+
+| `bar_date` / `bars_stale` / `bar_scale_mismatch` | 2026-08-17 加:富集用的 yfinance 日线**最新一根的日期** / 该日期早于本次 run 标定的交易日(`marketcal.last_completed_session`)/ yfinance 收盘价与 Finviz 收盘价相差 >20%(复权或代码错配) | stale 的票单独重抓一次;仍 stale 或 scale_mismatch 的行,**所有由 K 线派生的列都置 null**(atr_from_sma50、ema21_atr_dist、sp_*、vcs、pp/vol10、ti65/mdt、ad_ratio/cmf 等),只留这三个标记 —— 宁缺勿旧。前端可把 `bars_stale=true` 渲染成"数据滞后"。 |
+
+⚠️ **quality 守卫的"按设计稀疏"白名单 2026-08-17**:`sp_signal` `sp_counter` `sp_1st/2nd/tp1/tp2` `sp_phase` `sp_stop` `sp_days` `sp_dist_*` `sp_ll/hl` `sp_len` 这些字段本来就是大多数行为 null(无结构 = null 是语义),`quality.py` 现在只在它们**全空**(≥99.9%)且此前不是全空时才报 severe,否则 `ok`,不再因为"空值率高"把 universe 打成 degraded。名单在 `pipeline/quality.py: SPARSE_BY_DESIGN`。
+
 ### `sp_*` —— Structure Pivot(oratnek Advanced Structure Pivot 移植,2026-08-17 加,下次 cron 起有值)
 
 引擎 `pipeline/screeners/structure_pivot.py`,源码 `indicators/third_party/oratnek_advanced_structure_pivot.pine`;**黄金对照 5/5**(AEHR/SMCI/CRWD/NVDA/PLTR,08-14 日线,结构/长度/索引/阶段/信号全同,价位差 ≤0.013 且全部溯源到 bar 数据的 sub-penny 精度),回归夹具在 `pipeline/tests/fixtures/`。
@@ -255,7 +261,7 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 | `leaders`(08-17 加,排第一) | 谁在领跑 | `true_market_leaders`(liquid_leader × 所属组四态 Leading × rs_1m≥80;票项多 `group` `group_state`)`liquid_leaders`(教材 M2_L09:ADV≥2M · >SMA50 · rs_3m≥80;count 是全表,tickers 取前 25) |
 | `entries` | 今天可以进的 | `ll_hl_1st` `ll_hl_2nd` `ll_hl_trend_break`(读 `sp_signal`)`liquid_leader_pullback`(教材 L09:liquid_leader · 周涨<12% · 离 21EMA 0.5–1 ATR · 离 50 0–3 ATR) |
 | `compression` | 在蓄势的 | `vcs`(vcs≥70 且 ADR≥3)`anticipation`(强弱三选一 × 安静 × VCS≥60 × ADR≥3) |
-| `accumulation` | 有人在买的 | `pp_today`(当日 PP)`pp_2plus_10d` |
+| `accumulation` | 有人在买的 | `pp_today`(当日 oratnek PP)`pp_2plus_10d`(oratnek 10 日 ≥2)`morales_pp_10d`(**Morales 口袋支点 10 日 ≥3**;三格都带 trend_base 语境门) |
 | `moving` | 在跑的 | `weekly_momentum_97` `bullish_4pct` `weekly_20_gainers` —— **与同名预设同一配方,测试锁死**;`preset` 字段给出预设名,前端可点进 Screener 载入 |
 | `trouble` | 出问题的(持仓视角) | `stop_hit` `ll_break`(读 `sp_signal`)`extended`(ATR Matrix ≥7) |
 
@@ -263,11 +269,13 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 - **门槛**固定 $1B + 1M 均量(oratnek 的前提),`universe_gated` 是过门槛的只数;Screener 页不受此约束
 - 每格最多 25 只,`truncated` = 被截掉的数;排序 **Hybrid RS 降序**,票旁数字是 **RS 1M**(oratnek 的做法,保留)
 - ⚠️ **`measured=false` 必须渲染成"未测量"**(空框 / 灰),不能画成 0 —— 首晚 `sp_*` / `ema21_atr_dist` 未出时是 **6 格**:三个 LL-HL、`liquid_leader_pullback`、`stop_hit`、`ll_break`(前端已指出我早先说 3 格是少数了)
-- **`cross_zone` 数的是"区"不是"格"**:一只票在 moving 区三个格都出现只算 1;≥2 区才列。这是对 oratnek "Tickers in 3+ watchlists" 的修正 —— 他那栏统计的多半是同义词。前端把它放顶部,替代原来的"出现在 N 张单"
+- **`cross_zone` 数的是"区"不是"格"**:一只票在 moving 区三个格都出现只算 1;**≥3 区才列(08-17 收严,Andy:"改严格一点";≥2 时 08-14 有 177 只、其中 143 只恰两区,多是 leaders×moving 同义;≥3 单独收严剩 34 只,再叠加 Morales 收严后 08-14 数据剩 16 只)**;`cross_zone_rule` 字段写明当前门槛。这是对 oratnek "Tickers in 3+ watchlists" 的修正 —— 他那栏统计的多半是同义词。前端把它放顶部,替代原来的"出现在 N 张单"
 - 配方文字在 `recipe`,直接显示(和 rotation 的 `sentence` 同一原则:文案在引擎里,UI 不重拼)
 - 前端通路(待 UI):格标题 → Screener 载入 `preset`;票 → ticker 页(Signal History 里能看它昨天在哪几格);Screener 里用户自建的预设**不进**晨报
 
 另有 `data/history/leaders_log.csv`(每晚一行/每只 liquid leader:`tml` 标志、所属组与四态、close、ATR 位置)—— **True Market Leader 的前瞻验证记录**:主题四态归档 08-07 才起,历史回测做不了,只能从今天起前瞻记;`liquid_leader` 字段也已进 universe.json。
+
+收严 08-17:Morales PP 格由 `pp_count_10d ≥1`(372 只)改 **≥3**(111 只,Morales 的"cluster");cross_zone ≥2 → **≥3**。oratnek 两格与 VCS 未动(11 / 86 / 33)。
 
 首跑(08-14 数据,结构格待 cron):TML 26(DELL / RBRK / GTLB / NTNX / PATH / NTAP…)· Liquid Leaders 181 · VCS 62 · anticipation 0(ti65/mdt 待 cron)· PP 今日 20 · PP 2+ 183 · Weekly Momentum 97 8 · 4% Bullish 23 · Weekly 20%+ 22 · Extended 16;cross_zone ≥2 共 27 只(NIQ / P / INFQ 三区)。
 

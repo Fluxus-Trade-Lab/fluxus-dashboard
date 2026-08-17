@@ -38,6 +38,9 @@ MIN_CAP = 1e9
 LEADERS_LOG = Path("data/history/leaders_log.csv")
 MIN_AVG_VOL = 1e6
 MAX_PER_PANEL = 25
+# >= 2 zones listed 177 names on 08-14 (143 of them exactly two, mostly
+# leaders x moving); three zones is where the list is short enough to read.
+MIN_CROSS_ZONES = 3
 
 
 def _f(r: Mapping[str, Any], k: str) -> Optional[float]:
@@ -133,9 +136,10 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
     Panel("pp_2plus_10d", "PP 2+ times (10D)",
           "vol10_green_count_10d >= 2 and trend_base", ["vol10_green_count_10d", "trend_base"],
           lambda r: _ge(r, "vol10_green_count_10d", 2) and r.get("trend_base") is True),
-    Panel("morales_pp_10d", "Pocket Pivot (Morales, 10D)",
-          "pp_count_10d >= 1 (up day on volume above the prior 10 bars' DOWN-day max; buying vs selling, +0.71 with the A/D ratio) and trend_base",
-          ["pp_count_10d", "trend_base"], lambda r: _ge(r, "pp_count_10d", 1) and r.get("trend_base") is True),
+    Panel("morales_pp_10d", "Pocket Pivot (Morales, 3+ in 10D)",
+          "pp_count_10d >= 3 (up day on volume above the prior 10 bars' DOWN-day max; buying vs selling, +0.71 with the A/D ratio) and trend_base. "
+          ">= 1 listed 372 names on 08-14 -- a single Morales pivot is common; three in ten sessions is his 'cluster' (111 on 08-14)",
+          ["pp_count_10d", "trend_base"], lambda r: _ge(r, "pp_count_10d", 3) and r.get("trend_base") is True),
     # --- moving (same recipes as the Screener presets; pinned by test) ---
     Panel("weekly_momentum_97", "Weekly Momentum 97",
           "perf_1w_pctile >= 0.97 and perf_3m_pctile >= 0.85 and trend_base and adr_pct 3.5-10",
@@ -292,14 +296,14 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
     by_ticker = {r["ticker"]: r for r in gated}
     cross = [{"ticker": t, "count": len(zs), "zones": [z for z in zone_order if z in zs],
               **{k: v for k, v in _entry(by_ticker[t]).items() if k != "ticker"}}
-             for t, zs in zone_hits.items() if len(zs) >= 2]
+             for t, zs in zone_hits.items() if len(zs) >= MIN_CROSS_ZONES]
     cross.sort(key=lambda c: (-c["count"], -(c["hybrid_rs"] or -1), c["ticker"]))
 
     return {
         "date": date,
         "gate": {"min_market_cap": MIN_CAP, "min_avg_volume": MIN_AVG_VOL},
         "sort": "hybrid_rs desc; the number beside each ticker is rs_1m",
-        "cross_zone_rule": "count of ZONES a name appears in (not panels); >= 2 listed",
+        "cross_zone_rule": f"count of ZONES a name appears in (not panels); >= {MIN_CROSS_ZONES} listed",
         "zones": zones_out,
         "cross_zone": cross,
         "universe_gated": len(gated),

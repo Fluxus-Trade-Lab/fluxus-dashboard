@@ -55,6 +55,9 @@ class TestEnrichRetry:
     def _run(self, fake, tickers, monkeypatch):
         monkeypatch.setattr(YA, "yf", fake)
         monkeypatch.setattr(YA.time, "sleep", lambda s: None)
+        # These fakes are dated 2026-01; the bar-consistency stale retry is
+        # a separate concern (TestBarConsistency), so disable it here.
+        monkeypatch.setattr(YA, "_expected_session", lambda: None)
         universe = pd.DataFrame({
             "ticker": tickers,
             "sector": "Technology", "industry": "Software",
@@ -87,3 +90,51 @@ class TestEnrichRetry:
         fake = _ThrottledYahoo(throttled=())
         self._run(fake, tickers, monkeypatch)
         assert fake.calls == 2       # ceil(8/4) batches, no retry rounds
+
+
+class TestBarConsistency:
+    """A batch download sometimes returns a ticker WITHOUT its newest bar, so
+    every bar-derived column (sma*_dist, atr, ema21, vcs, sp_*...) lags the
+    Finviz close by a session while looking perfectly populated (FIRY/FBRX,
+    3% off on 2026-08-14). And a split can leave yfinance history on the old
+    scale while Finviz's close is on the new one (BYND). Neither is visible
+    to a null-rate guard. The check compares the newest bar's date with the
+    session the run is labelled with, and the newest bar's close with the
+    vendor close."""
+
+    def _hist(self, last_date, close=100.0):
+        import pandas as pd
+        idx = pd.bdate_range(end=last_date, periods=30, tz="America/New_York")
+        return pd.DataFrame({"Close": [close] * 30}, index=idx)
+
+    def test_ok_when_bar_matches_session_and_scale(self):
+        import datetime as dt
+        from pipeline.adapters.yfinance_adapter import bar_consistency
+        st, d = bar_consistency(self._hist("2026-08-14"), dt.date(2026, 8, 14), 100.5)
+        assert st == "ok" and d == "2026-08-14"
+
+    def test_stale_when_newest_bar_is_before_the_session(self):
+        import datetime as dt
+        from pipeline.adapters.yfinance_adapter import bar_consistency
+        st, d = bar_consistency(self._hist("2026-08-13"), dt.date(2026, 8, 14), 100.0)
+        assert st == "stale" and d == "2026-08-13"
+
+    def test_scale_mismatch_when_closes_disagree_by_more_than_20pct(self):
+        import datetime as dt
+        from pipeline.adapters.yfinance_adapter import bar_consistency
+        # yfinance still on pre-split scale ($0.55), Finviz on post-split ($13.47)
+        st, _ = bar_consistency(self._hist("2026-08-14", close=0.55), dt.date(2026, 8, 14), 13.47)
+        assert st == "scale_mismatch"
+
+    def test_no_vendor_close_skips_the_scale_check(self):
+        import datetime as dt
+        from pipeline.adapters.yfinance_adapter import bar_consistency
+        st, _ = bar_consistency(self._hist("2026-08-14"), dt.date(2026, 8, 14), None)
+        assert st == "ok"
+
+    def test_a_bar_dated_after_the_session_is_still_ok(self):
+        """A run during a session may see today's partial bar; that is not stale."""
+        import datetime as dt
+        from pipeline.adapters.yfinance_adapter import bar_consistency
+        st, _ = bar_consistency(self._hist("2026-08-17"), dt.date(2026, 8, 14), 100.0)
+        assert st == "ok"

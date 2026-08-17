@@ -256,3 +256,37 @@ class TestSiteWideGuard:
         assert rep["sources"]["signals"]["status"] in ("ok", "degraded")
         assert rep["sources"]["etf_data"]["status"] == "missing"
         assert rep["status"] == "severe"   # missing files are severe
+
+
+class TestSparseByDesign:
+    """Some columns are null by definition on most rows -- sp_signal is set
+    only on the day a structure crosses a level (12% populated on a normal
+    day), sp_1st/sp_2nd/... only while a structure exists. The null-rate
+    ladder read the first run as '88% missing' and warned. A sparse field is
+    graded on ONE thing only: has it gone from carrying anything to carrying
+    NOTHING (dead), which is the only failure it can have."""
+
+    def test_sparse_field_is_ok_at_high_null_rate(self):
+        from pipeline.quality import assess
+        rep = assess({"sp_signal": 0.88}, history=[])
+        assert rep["fields"]["sp_signal"]["status"] == "ok"
+        assert "sparse" in rep["fields"]["sp_signal"]["evidence"]
+        assert rep["status"] == "ok"
+
+    def test_sparse_field_dead_is_severe(self):
+        from pipeline.quality import assess
+        hist = [{"date": "2026-08-17", "sp_signal": "0.88"}, {"date": "2026-08-18", "sp_signal": "0.90"}]
+        rep = assess({"sp_signal": 1.0}, history=hist)
+        assert rep["fields"]["sp_signal"]["status"] == "severe"
+
+    def test_sparse_field_all_null_on_first_run_is_not_severe(self):
+        """No history: 100% null could be a quiet day on a brand-new column."""
+        from pipeline.quality import assess
+        rep = assess({"sp_signal": 1.0}, history=[])
+        assert rep["fields"]["sp_signal"]["status"] in ("ok", "degraded")
+        assert rep["status"] != "severe"
+
+    def test_prefix_match(self):
+        from pipeline.quality import is_sparse_by_design
+        assert is_sparse_by_design("sp_1st") and is_sparse_by_design("sp_counter")
+        assert not is_sparse_by_design("sp_setup") and not is_sparse_by_design("close")

@@ -54,7 +54,9 @@ class TestPanels:
         assert not W.PANELS["pp_today"].test(row(vol10_green=False, pocket_pivot=True))
         assert W.PANELS["pp_2plus_10d"].test(row(vol10_green_count_10d=2))
         assert not W.PANELS["pp_2plus_10d"].test(row(vol10_green_count_10d=1))
-        assert W.PANELS["morales_pp_10d"].test(row(pp_count_10d=1))
+        # Morales: three pivots in ten sessions (his cluster), not one
+        assert W.PANELS["morales_pp_10d"].test(row(pp_count_10d=3))
+        assert not W.PANELS["morales_pp_10d"].test(row(pp_count_10d=2))
         assert not W.PANELS["morales_pp_10d"].test(row(pp_count_10d=0, vol10_green_count_10d=3))
         # context gate: no trend_base, no panel -- the study's loudest finding
         assert not W.PANELS["pp_today"].test(row(vol10_green=True, trend_base=False))
@@ -149,7 +151,8 @@ class TestBuild:
     def _rows(self):
         return [
             row(ticker="A", sp_signal="1st_break", rs_1m=95, h_score=90),
-            row(ticker="B", sp_signal="2nd_break", vol10_green_count_10d=2, rs_1m=99, h_score=95),
+            row(ticker="B", sp_signal="2nd_break", vol10_green_count_10d=2, vcs=90, adr_pct=4.0,
+                rs_1m=99, h_score=95),   # entries x accumulation x compression
             row(ticker="C", vcs=80, ti65=1.08, change_pct=0.002, rs_1m=70, h_score=60),
             row(ticker="D", perf_1w=0.25, perf_1w_pctile=0.99, perf_3m_pctile=0.9,
                 change_pct=0.05, rel_volume=2.0, rs_21d=95, rs_1m=100, h_score=88),
@@ -172,9 +175,11 @@ class TestBuild:
         moving -- so a hit means different questions agree."""
         out = W.build(self._rows(), date="2026-08-14")
         cross = {c["ticker"]: c for c in out["cross_zone"]}
-        assert cross["B"]["zones"] == ["entries", "accumulation"]     # 1st/2nd pivot + PP 2+
-        assert cross["B"]["count"] == 2
+        assert cross["B"]["zones"] == ["entries", "compression", "accumulation"]   # 2nd pivot + VCS + PP 2+
+        assert cross["B"]["count"] == 3
+        assert "A" not in cross          # one zone
         assert "D" not in cross          # three panels, ONE zone -> no cross-zone credit
+        assert out["cross_zone_rule"].endswith(">= 3 listed")
         assert "E" not in cross
 
     def test_zone_order_and_keys_are_stable(self):

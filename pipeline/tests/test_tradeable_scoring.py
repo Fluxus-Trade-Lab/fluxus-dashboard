@@ -46,10 +46,29 @@ class TestTradeableGate:
         assert not scored.loc["THIN", "tradeable"]
 
     @pytest.mark.parametrize("col", SCORE_COLS)
-    def test_no_score_outside_the_tradeable_set(self, scored, col):
-        """A percentile against a field you cannot buy is not a percentile."""
-        assert pd.isna(scored.loc["TINY", col]), col
-        assert pd.isna(scored.loc["THIN", col]), col
+    def test_outsiders_are_scored_on_the_field_ruler(self, scored, col):
+        """2026-08-17: outsiders carry a score too, but it is a percentile of
+        the TRADEABLE field, not of a field they belong to. TINY and THIN
+        have the best perf_3m in the sample: on the field's ruler that reads
+        as 'above every field member' -- and, per the next test, without
+        moving a single field member's number."""
+        assert pd.notna(scored.loc["TINY", col]), col
+        assert pd.notna(scored.loc["THIN", col]), col
+        if col == "rs_63d":
+            assert scored.loc["TINY", col] >= scored.loc[scored["tradeable"], col].max()
+
+    def test_field_members_read_the_same_with_or_without_outsiders(self):
+        logging.disable(logging.CRITICAL)
+        rows = [
+            _row("LIQ1", 5e9, 100.0, 1_000_000, perf_3m=0.30),
+            _row("LIQ2", 2e9, 50.0, 500_000, perf_3m=0.20),
+            _row("LIQ3", 1e9, 40.0, 400_000, perf_3m=0.10),
+        ]
+        alone = compute_universe_scores(pd.DataFrame(rows)).set_index("ticker")
+        rows += [_row("TINY", 5e7, 2.0, 50_000, perf_3m=0.90)]
+        both = compute_universe_scores(pd.DataFrame(rows)).set_index("ticker")
+        for col in SCORE_COLS:
+            assert (alone[col].astype(float) == both.loc[alone.index, col].astype(float)).all(), col
 
     @pytest.mark.parametrize("col", SCORE_COLS)
     def test_tradeable_rows_are_scored(self, scored, col):
@@ -63,7 +82,7 @@ class TestTradeableGate:
             scored["tradeable"], "rs_63d"].max()
 
     def test_raw_performance_survives_for_untraded_rows(self, scored):
-        """The screener still shows them; only the relative scores are withheld."""
+        """The screener still shows them, raw perf untouched."""
         assert scored.loc["TINY", "perf_3m"] == pytest.approx(0.90)
 
 

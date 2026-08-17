@@ -64,6 +64,24 @@ TRACKED: List[str] = [
 # a feed regression, and grading free-text noise would drown real alarms.
 UNGRADED: frozenset = frozenset({"ticker"})
 
+# Sparse-by-design columns: null on most rows BY DEFINITION, so a high null
+# rate is not a symptom. `sp_signal` is set only on the day a structure crosses
+# a level (~12% of rows on a normal day); `sp_1st`, `sp_2nd`, `sp_phase`... only
+# while a structure exists; `sp_counter` only while one does not. The ladder
+# read the first such run as "88% missing" and warned. These are graded on the
+# one failure they can have -- going from carrying something to carrying
+# NOTHING -- and on nothing else. Names or prefixes.
+SPARSE_BY_DESIGN: frozenset = frozenset({
+    "sp_signal", "sp_counter", "sp_len", "sp_ll", "sp_hl", "sp_1st", "sp_2nd",
+    "sp_tp1", "sp_tp2", "sp_phase", "sp_stop", "sp_days", "sp_dist_1st_pct",
+    "sp_dist_2nd_pct",
+})
+SPARSE_PREFIXES: tuple = ()
+
+
+def is_sparse_by_design(field: str) -> bool:
+    return field in SPARSE_BY_DESIGN or field.startswith(SPARSE_PREFIXES)
+
 
 def discovered_fields(rows: Sequence[Mapping[str, Any]],
                       history: Sequence[Mapping[str, str]]) -> List[str]:
@@ -201,6 +219,19 @@ def assess(rates: Mapping[str, float],
     for field, rate in rates.items():
         base = baseline(history, field)
         ref = min_reference(history, field)
+        if is_sparse_by_design(field):
+            # Only "did it die": everything non-null yesterday-ish and 100%
+            # null today. A quiet day on a signal column is not a failure, and
+            # a first run with nothing to compare against is not either.
+            if rate >= 0.999 and ref is not None and ref < 0.999:
+                status, why = "severe", (
+                    f"sparse-by-design column is 100% null but has carried data "
+                    f"before (min {ref*100:.1f}% missing) — the feed behind it has died")
+            else:
+                status, why = "ok", (
+                    f"sparse by design: {(1-rate)*100:.1f}% populated, graded only on death")
+            fields[field] = {"rate": rate, "baseline": base, "status": status, "evidence": why}
+            continue
         if rate >= 0.95 and (ref is None or ref >= 0.90):
             status, why = "unpopulated", (
                 f"{rate*100:.1f}% missing and never below "

@@ -169,10 +169,19 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # measured against is part of the definition. Ranking against all 5,615
     # rows meant "RS 90" claimed to beat 90% of a universe where 2,408 names
     # cannot be traded at this account's size -- a percentile against a field
-    # you cannot buy. Scores are therefore computed on the tradeable subset
-    # only, and left null elsewhere. Raw perf_* data is untouched, so the
-    # screener still shows every name; it just does not pretend to rank the
-    # ones you could not take a position in.
+    # you cannot buy. The FIELD is therefore the tradeable subset: its members
+    # are ranked among themselves and their scores are unchanged by anything
+    # outside it.
+    #
+    # 2026-08-17 ("全部打分"): the rows outside the field used to be left null
+    # -- 30% of the Screener page had no RS at all. They now get a score too,
+    # read off the SAME ruler: where their perf value would fall in the
+    # tradeable distribution. So RS 90 always means "would beat 90% of the
+    # tradeable field", whichever row carries it; the `tradeable` column says
+    # whether the name is in that field or merely measured against it. A row
+    # with no perf value gets no score (inside the field a missing value takes
+    # the lowest rank to keep everyone else's denominator; outside it there is
+    # no denominator to protect).
     from pipeline.themes import is_tradeable  # noqa: PLC0415
     tradeable = df.apply(is_tradeable, axis=1)
     df['tradeable'] = tradeable
@@ -203,6 +212,29 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
         out.loc[tradeable] = sub.rank(pct=True, na_option='top') * 99
         return out
 
+    def score_against_tradeable(col: str) -> pd.Series:
+        """`rank_tradeable` for the field, plus every other row placed on the
+        field's ruler: its percentile among the tradeable values of `col`
+        (average of the <= and < counts, i.e. the same mid-rank convention
+        pandas' 'average' method uses for ties). Tradeable rows are returned
+        bit-for-bit as `rank_tradeable` gives them."""
+        out = rank_tradeable(col)
+        ref = np.sort(pd.to_numeric(df.loc[tradeable, col], errors='coerce').dropna().to_numpy(dtype=float))
+        if len(ref) == 0:
+            return out
+        n_field = int(tradeable.sum())          # rank_tradeable's denominator (NaNs included)
+        others = ~tradeable & df[col].notna()
+        x = pd.to_numeric(df.loc[others, col], errors='coerce').to_numpy(dtype=float)
+        lo = np.searchsorted(ref, x, side='left')
+        hi = np.searchsorted(ref, x, side='right')
+        # inside the field a value with k values below it and t ties has
+        # average rank k + (t+1)/2 ; the NaN block (n_field - len(ref)) sits
+        # below every real value under na_option='top', so it counts in k.
+        nan_block = n_field - len(ref)
+        pos = nan_block + lo + (hi - lo + 1) / 2.0
+        out.loc[others] = pos / n_field * 99
+        return out
+
     # --- Price RS percentile ranks (0-99 scale) ---
     #
     # NAMING: these say sessions and mean calendar months. The underlying
@@ -220,9 +252,9 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # The ETF side is the opposite and stays that way: etf_data has no vendor
     # perf at all, so its perf_1w/1m/3m really are 5/21/63 sessions. Dashboard's
     # "1M" and the screener's "1M" are therefore different months by a few days.
-    df['rs_1m'] = rank_tradeable('perf_1m')
-    df['rs_3m'] = rank_tradeable('perf_3m')
-    df['rs_6m'] = rank_tradeable('perf_6m')
+    df['rs_1m'] = score_against_tradeable('perf_1m')
+    df['rs_3m'] = score_against_tradeable('perf_3m')
+    df['rs_6m'] = score_against_tradeable('perf_6m')
     df['rs_21d'] = df['rs_1m']
     df['rs_63d'] = df['rs_3m']
     df['rs_126d'] = df['rs_6m']
@@ -244,7 +276,7 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     #     year's advance while going nowhere now; this measures the record,
     #     not the current state. Read it beside rs_1m to see which it is.
     df['rs_ibd'] = (0.4 * df['rs_3m'] + 0.4 * df['rs_6m']
-                    + 0.2 * rank_tradeable('perf_1y'))
+                    + 0.2 * score_against_tradeable('perf_1y'))
 
     # --- F score (fundamental) ---
     eps = pd.to_numeric(df.get('eps_growth_next_y', pd.Series(dtype=float)), errors='coerce')
@@ -257,10 +289,9 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     df['f_score'] = fundamental.rank(pct=True, na_option='top') * 99
     # Both source columns are empty in the current feed, so this is a constant
     # 50 for every row. Kept (it is a real weight in h_score and the columns
-    # may come back) but masked outside the tradeable set so a non-tradeable
-    # row does not carry a partial score.
+    # may come back). Since 2026-08-17 it is carried for every row, so h_score
+    # exists for every row (see the tradeable note above).
     df['f_score'] = df['f_score'].fillna(50)
-    df.loc[~tradeable, 'f_score'] = np.nan
 
     # --- I score (industry RS) ---
     # Median, not mean: one Finviz corporate-action artefact (an aerospace row
@@ -270,11 +301,13 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # Industry median over tradeable members only, to match the field the
     # constituent ranks were measured against. groups.json aggregates the same
     # way, so the two industry readings now describe the same member set.
+    # A non-tradeable row reads its industry's (tradeable-member) median and is
+    # placed on the tradeable ruler like the RS columns; an industry with no
+    # tradeable member has no median and its rows get no i_score.
     industry_rs = df.loc[tradeable].groupby('industry')['rs_3m'].median()
-    i_raw = df['industry'].map(industry_rs)
-    df['i_score'] = pd.Series(np.nan, index=df.index, dtype=float)
-    df.loc[tradeable, 'i_score'] = (
-        i_raw.loc[tradeable].rank(pct=True, na_option='top') * 99)
+    df['_i_raw'] = df['industry'].map(industry_rs)
+    df['i_score'] = score_against_tradeable('_i_raw')
+    df.drop(columns=['_i_raw'], inplace=True)
 
     # --- H score (hybrid composite) ---
     # Weights: F:2, I:3, 21d:1, 63d:2, 126d:2 -> total 10
@@ -293,7 +326,10 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # Leaders" and Andy's course teach the same thing. Missing inputs -> False.
     _av = pd.to_numeric(df.get('avg_volume', pd.Series(dtype=float)), errors='coerce')
     _sd = pd.to_numeric(df.get('sma50_dist', pd.Series(dtype=float)), errors='coerce')
-    df['liquid_leader'] = ((_av >= 2_000_000) & (_sd > 0) & (df['rs_3m'] >= 80)).fillna(False).astype(bool)
+    # `tradeable` is part of the definition now that rs_3m exists outside the
+    # field too: a sub-$2 name printing 2M shares is not a liquid leader.
+    df['liquid_leader'] = ((_av >= 2_000_000) & (_sd > 0) & (df['rs_3m'] >= 80)
+                           & tradeable).fillna(False).astype(bool)
 
     # --- Derived technical columns ---
     df['adr_pct'] = pd.to_numeric(df['atr'], errors='coerce') / pd.to_numeric(df['close'], errors='coerce') * 100
@@ -356,7 +392,7 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # Round score columns to integers
     for col in ['rs_1m', 'rs_3m', 'rs_6m', 'rs_21d', 'rs_63d', 'rs_126d',
                 'rs_ibd', 'f_score', 'i_score', 'h_score']:
-        df[col] = df[col].round(0).astype('Int64')  # Int64 keeps NA for non-tradeable
+        df[col] = df[col].round(0).astype('Int64')  # Int64 keeps NA where the input was missing
 
     # --- Performance percentile ranks (0-1 scale, relative to full universe) ---
     #
@@ -720,6 +756,7 @@ def main():
         'vol10_green', 'vol10_green_count_10d', 'vol10_green_count_30d',
         'atr_from_sma50', 'ema21_atr_dist', 'ema21',
         'ti65', 'mdt', 'min_vol_3d', 'c_low52w', 'liquid_leader', 'ad_ratio_20', 'cmf21',
+        'bar_date', 'bars_stale', 'bar_scale_mismatch',
         'sp_setup', 'sp_len', 'sp_ll', 'sp_hl', 'sp_1st', 'sp_2nd', 'sp_tp1', 'sp_tp2',
         'sp_phase', 'sp_stop', 'sp_ma', 'sp_signal', 'sp_days', 'sp_dist_1st_pct',
         'sp_dist_2nd_pct', 'sp_counter',
