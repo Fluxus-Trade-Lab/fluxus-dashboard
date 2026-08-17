@@ -46,19 +46,69 @@ const tr = (t, key, fallback) => {
 
 const go = (zone) => { window.location.hash = zone ? `#/watchlist/${zone}` : '#/watchlist' }
 
-/** One name, with the number the file says sits beside it. */
-function Name({ row, showGroup, size = 'sm' }) {
+/**
+ * RS 1M, inked — colour AND weight, because colour alone could not carry it.
+ *
+ * The page was entirely grey and nothing could be read off it at a glance. RS
+ * 1M is a percentile with a real midpoint, so it is a two-pole quantity and
+ * takes this site's pair: took above, refused below, muted through the middle
+ * where the number is not saying much. Not green/red — this book has one pair.
+ *
+ * WHY WEIGHT AS WELL. Measured on the dark ground, the three inks are 8.92 /
+ * 5.64 / 6.73 against #1a1715, so every one clears 4.5 — but the greyscale
+ * separations are took–refused 14.4, took–muted 9.1, and refused–muted only
+ * 5.3. Three identities on one channel with two of them 5.3 apart is the
+ * failure this repo keeps re-finding: fine in colour, gone in greyscale, gone
+ * for a red-blind reader. Dimming the middle to open the gap was measured too
+ * and trades the fault for another — at 60% the middle falls to 3.24 contrast.
+ *
+ * So the second channel is weight. Both poles are semibold and the middle is
+ * not, which separates each pole from the middle without touching either
+ * colour, and the two poles are 14.4 apart from each other on their own.
+ *
+ * The bands are wide on purpose. A continuous ramp would put forty shades on
+ * one screen and say "these are all slightly different"; the reading is
+ * strong / ordinary / weak.
+ */
+const rsInk = (v) => (v == null
+  ? 'text-[var(--color-text-muted)]'
+  : v >= 80 ? 'text-[var(--color-took)] font-semibold'
+    : v <= 40 ? 'text-[var(--color-refused)] font-semibold'
+      : 'text-[var(--color-text-muted)]')
+
+/**
+ * One name as a CELL, not an inline run.
+ *
+ * Inline-wrapped names were the page's untidiness: nothing lined up, so the
+ * eye had to re-find the left edge on every row. Ticker left, number right, in
+ * a fixed column — which is the whole reason a table of names reads faster
+ * than a paragraph of them.
+ */
+function Name({ row, showGroup }) {
   return (
-    <span className="inline-flex items-baseline gap-1 mr-2.5 mb-1">
+    <span className="flex items-baseline gap-1.5 px-2 py-[3px] min-w-0">
       <TickerLink symbol={row.ticker}
-                  className={`${size === 'sm' ? 'text-[11.5px]' : 'text-[12px]'}
-                              font-mono font-semibold text-[var(--color-text-bold)]`} />
-      <span className="text-[10px] font-mono tabular-nums text-[var(--color-text-muted)]">
+                  className="text-[11.5px] font-mono font-semibold
+                             text-[var(--color-text-bold)] truncate" />
+      <span className={`ml-auto text-[10.5px] font-mono tabular-nums ${rsInk(row.rs_1m)}`}>
         {row.rs_1m}
       </span>
       {showGroup && row.group && (
-        <span className="text-[10px] text-[var(--color-text-muted)] opacity-70">{row.group}</span>
+        <span className="text-[10px] text-[var(--color-text-muted)] truncate
+                         basis-full">{row.group}</span>
       )}
+    </span>
+  )
+}
+
+/** A field of names on a fixed column grid, hairlines between the columns. */
+function Names({ rows, cols = 4, showGroup }) {
+  return (
+    <span className={`grid gap-y-px ${
+      cols === 4 ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-6'}
+      [&>*:not(:nth-child(2n+1))]:border-l sm:[&>*]:border-l
+      sm:[&>*:nth-child(4n+1)]:border-l-0 [&>*]:border-[var(--color-border-light)]`}>
+      {rows.map((r) => <Name key={r.ticker} row={r} showGroup={showGroup} />)}
     </span>
   )
 }
@@ -82,7 +132,6 @@ function Count({ panel }) {
 function ZoneCard({ zone, index }) {
   const { t } = useLanguage()
   const live = zone.panels.filter((p) => p.measured)
-  const max = Math.max(1, ...live.map((p) => p.count))
   // A taste, not the list. Taken from the biggest panel, because that is the
   // one the question is mostly answered by.
   const lead = [...live].sort((a, b) => b.count - a.count)[0]
@@ -90,52 +139,49 @@ function ZoneCard({ zone, index }) {
 
   return (
     <button type="button" onClick={() => go(zone.key)}
-            className="text-left flex flex-col rounded-3xl px-4 py-3.5 border border-transparent
-                       cursor-pointer transition-colors bg-[var(--color-surface)]
-                       hover:bg-[var(--color-hover-bg)]">
-      <span className="flex items-baseline gap-2.5">
+            className="group text-left flex flex-col h-full rounded-2xl overflow-hidden
+                       cursor-pointer transition-colors border border-[var(--color-border-light)]
+                       bg-[var(--color-surface)] hover:border-[var(--color-border)]">
+      {/* A header BAND, not a floating line. It is what makes six cards read as
+          one grid rather than six paragraphs — the eye locks onto the repeated
+          bar and stops re-finding each card's top edge. */}
+      <span className="flex items-baseline gap-2.5 px-3 py-2
+                       bg-[var(--color-hover-bg)] border-l-2 border-[var(--color-accent)]">
         <span className="text-[10px] font-mono tabular-nums text-[var(--color-text-muted)]">
           {String(index + 1).padStart(2, '0')}
         </span>
-        <b className="text-[16px] font-bold">{tr(t, `wlz.${zone.key}`, zone.label)}</b>
-        <span className="ml-auto text-[9.5px] font-mono uppercase tracking-[.14em]
-                         text-[var(--color-text-muted)]">
+        <b className="text-[14.5px] font-semibold">{tr(t, `wlz.${zone.key}`, zone.label)}</b>
+        <span className="ml-auto text-[10px] font-mono text-[var(--color-text-muted)]">
           {live.length}/{zone.panels.length}
         </span>
       </span>
 
-      {/* Each panel a row: what it is, how many, and how many relative to the
-          others in the same question. The bar is within-card only — comparing
-          "37 entries" against "372 pocket pivots" across questions would be
-          comparing two different nets. */}
-      <span className="block mt-3 mb-3">
+      {/* Panel, count. The bars are gone: the count is printed right there, so
+          a bar beside it was a second copy of one number in more ink — and six
+          cards of them were most of what made the page look busy. */}
+      <span className="block px-3 pt-2 pb-2.5">
         {zone.panels.map((p) => (
-          <span key={p.key} className="grid grid-cols-[1fr_auto_46px] items-center gap-2 py-[3px]">
+          <span key={p.key} className="flex items-baseline gap-2 py-[2px]">
             <span className="text-[11.5px] text-[var(--color-text-secondary)] truncate">
               {tr(t, `wlp.${p.key}`, p.label)}
             </span>
+            <i className="flex-1 border-b border-dotted border-[var(--color-border-light)]
+                          translate-y-[-3px]" />
             <Count panel={p} />
-            <span className="h-1.5 rounded-sm bg-[var(--color-hover-bg)] relative">
-              {p.measured && p.count > 0 && (
-                <i className="absolute inset-y-0 left-0 rounded-sm bg-[var(--color-took)] opacity-70"
-                   style={{ width: `${Math.max(6, (p.count / max) * 100)}%` }} />
-              )}
-            </span>
           </span>
         ))}
       </span>
 
-      <span className="mt-auto pt-2.5 border-t border-[var(--color-border-light)] block">
-        {taste.length > 0 ? (
-          <span className="block leading-relaxed">
-            {taste.map((r) => <Name key={r.ticker} row={r} />)}
-          </span>
-        ) : (
-          <span className="text-[11px] text-[var(--color-text-muted)]">{t('wl.none.short')}</span>
-        )}
-        <span className="block text-[10px] font-mono tracking-[.1em] mt-1.5
-                         text-[var(--color-text-muted)]">{t('wl.open')} →</span>
+      <span className="mt-auto block border-t border-[var(--color-border-light)]
+                       bg-[var(--color-bg)]">
+        {taste.length > 0
+          ? <Names rows={taste} cols={4} />
+          : <span className="block px-3 py-2.5 text-[11px]
+                             text-[var(--color-text-muted)]">{t('wl.none.short')}</span>}
       </span>
+      <span className="block px-3 py-1.5 text-[9.5px] font-mono tracking-[.12em]
+                       text-[var(--color-text-muted)] group-hover:text-[var(--color-text)]
+                       bg-[var(--color-bg)]">{t('wl.open')} →</span>
     </button>
   )
 }
@@ -192,8 +238,8 @@ function Panel({ panel, showGroup, explainPending }) {
       )}
 
       {rows.length > 0 ? (
-        <div className="leading-relaxed">
-          {rows.map((r) => <Name key={r.ticker} row={r} showGroup={showGroup} size="md" />)}
+        <div className="-mx-1">
+          <Names rows={rows} cols={6} showGroup={showGroup} />
         </div>
       ) : panel.measured ? (
         <p className="text-[11.5px] text-[var(--color-text-muted)] m-0">{t('wl.none')}</p>
@@ -293,7 +339,9 @@ export default function WatchlistPage({ zone: routeZone }) {
         })}
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
+      {/* auto-rows-fr: every card the same height, which is most of what
+          makes a grid of cards read as a grid rather than a pile. */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 auto-rows-fr">
         {zones.map((z, i) => <ZoneCard key={z.key} zone={z} index={i} />)}
       </div>
 
