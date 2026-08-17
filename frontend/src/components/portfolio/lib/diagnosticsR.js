@@ -72,16 +72,23 @@ export function classifyExitStyle(t) {
 export function computeExitStyleStats(enrichedTrades) {
   const buckets = { strength: [], weakness: [], mixed: [], stop_only: [] }
   enrichedTrades.filter(t => t.isClosed).forEach(t => {
-    buckets[classifyExitStyle(t)].push(t.realizedPL ?? 0)
+    buckets[classifyExitStyle(t)].push(t)
   })
   const out = {}
-  Object.entries(buckets).forEach(([style, pls]) => {
+  Object.entries(buckets).forEach(([style, ts]) => {
+    const pls = ts.map(t => t.realizedPL ?? 0)
     out[style] = {
       count: pls.length,
       totalPL: pls.reduce((s, p) => s + p, 0),
       avgPL: pls.length ? pls.reduce((s, p) => s + p, 0) / pls.length : 0,
       wins: pls.filter(p => p > 0).length,
       losses: pls.filter(p => p < 0).length,
+      // The trades themselves, so a segment of the ledger bar can be opened.
+      // Derived here rather than re-bucketed at the call site — two spellings
+      // of "which style is this trade" is how two numbers on one page start
+      // disagreeing about what they counted.
+      trades: [...ts].sort((a, b) =>
+        Math.abs(b.realizedPL ?? 0) - Math.abs(a.realizedPL ?? 0)),
     }
   })
   return out
