@@ -263,7 +263,7 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 |---|---|---|
 | `leaders`(08-17 加,排第一) | 谁在领跑 | `true_market_leaders`(liquid_leader × 所属组四态 Leading × rs_1m≥80;票项多 `group` `group_state`)`liquid_leaders`(教材 M2_L09:ADV≥2M · >SMA50 · rs_3m≥80;count 是全表,tickers 取前 25) |
 | `entries` | 今天可以进的 | `ll_hl_1st` `ll_hl_2nd` `ll_hl_trend_break`(读 `sp_signal`)`liquid_leader_pullback`(教材 L09:liquid_leader · 周涨<12% · 离 21EMA 0.5–1 ATR · 离 50 0–3 ATR) |
-| `compression` | 在蓄势的 | `vcs`(vcs≥70 且 ADR≥3)`anticipation`(强弱三选一 × 安静 × VCS≥60 × ADR≥3) |
+| `compression` | 在蓄势的 | `vcs`(**08-18 改**:vcs≥60 且 rs_3m≥80 且站上 SMA50 且 ADR≥3 —— 领头里的压缩;单靠 vcs≥70 08-14 有 33 只、一半弱势,oratnek 同日只列 2 只且都 rs_3m≥88;新配方闸内 10 只、含他的 COTY;CBRL 被 1M 股闸拦在外面)`anticipation`(强弱三选一 × 安静 × VCS≥60 × ADR≥3) |
 | `accumulation` | 有人在买的 | `pp_today`(当日 oratnek PP)`pp_2plus_10d`(oratnek 10 日 ≥2)`morales_pp_10d`(**Morales 口袋支点 10 日 ≥3**;三格都带 trend_base 语境门) |
 | `moving` | 在跑的 | `weekly_momentum_97` `bullish_4pct` `weekly_20_gainers` —— **与同名预设同一配方,测试锁死**;`preset` 字段给出预设名,前端可点进 Screener 载入 |
 | `trouble` | 出问题的(持仓视角) | `stop_hit` `ll_break`(读 `sp_signal`)`extended`(ATR Matrix ≥7) |
@@ -277,6 +277,8 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 - 前端通路(待 UI):格标题 → Screener 载入 `preset`;票 → ticker 页(Signal History 里能看它昨天在哪几格);Screener 里用户自建的预设**不进**晨报
 
 另有 `data/history/leaders_log.csv`(每晚一行/每只 liquid leader:`tml` 标志、所属组与四态、close、ATR 位置)—— **True Market Leader 的前瞻验证记录**:主题四态归档 08-07 才起,历史回测做不了,只能从今天起前瞻记;`liquid_leader` 字段也已进 universe.json。
+
+收严 08-18(Andy:"70 以上有 33 个,太多了"):VCS 格加领先门,33 → 10。
 
 收严 08-17:Morales PP 格由 `pp_count_10d ≥1`(372 只)改 **≥3**(111 只,Morales 的"cluster");cross_zone ≥2 → **≥3**。oratnek 两格与 VCS 未动(11 / 86 / 33)。
 

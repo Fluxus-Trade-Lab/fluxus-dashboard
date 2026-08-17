@@ -1220,17 +1220,25 @@
         {
           "key": "vcs",
           "label": "Volatility Contraction Score",
-          "recipe": "vcs >= 70 and adr_pct >= 3 (the ADR floor keeps deal-pinned names out; 70 = upper half of his 'developing' band, revisit once VCS v2 has run)",
+          "recipe": "vcs >= 60 and rs_3m >= 80 and above SMA50 and adr_pct >= 3 -- compression INSIDE a leader. VCS alone at >= 70 listed 33 gated names on 08-14, half of them weak (rs_1m < 30); oratnek's same-day panel had 2 (COTY 64 / CBRL 62, both rs_3m >= 88). Raising the VCS bar does not fix it (>= 90 still 8, all weak); the leadership gate does (15, his two inside). 60 = his 'developing' band edge",
           "measured": true,
-          "count": 33,
+          "count": 10,
           "tickers": [
             {
-              "ticker": "BB",
-              "rs_1m": 31,
-              "hybrid_rs": 76.0,
-              "sector": "Technology",
-              "group": "Broad AI Theme",
-              "group_state": "Leading"
+              "ticker": "CERT",
+              "rs_1m": 82,
+              "hybrid_rs": 80.0,
+              "sector": "Healthcare",
+              "group": "Health Information Services",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "DYN",
+              "rs_1m": 66,
+              "hybrid_rs": 77.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Weakening"
             },
             {
               "ticker": "RLAY",
@@ -1241,6 +1249,14 @@
               "group_state": "Weakening"
             },
             {
+              "ticker": "AMC",
+              "rs_1m": 93,
+              "hybrid_rs": 74.0,
+              "sector": "Communication Services",
+              "group": "Entertainment",
+              "group_state": "Leading"
+            },
+            {
               "ticker": "ERAS",
               "rs_1m": 20,
               "hybrid_rs": 73.0,
@@ -1249,11 +1265,19 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "ARWR",
-              "rs_1m": 83,
-              "hybrid_rs": 70.0,
+              "ticker": "DNLI",
+              "rs_1m": 54,
+              "hybrid_rs": 71.0,
               "sector": "Healthcare",
-              "group": "Genomics",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "TRVI",
+              "rs_1m": 23,
+              "hybrid_rs": 71.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
               "group_state": "Weakening"
             },
             {
@@ -1273,159 +1297,15 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "TNGX",
-              "rs_1m": 8,
-              "hybrid_rs": 69.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
+              "ticker": "COTY",
+              "rs_1m": 68,
+              "hybrid_rs": 65.0,
+              "sector": "Consumer Defensive",
+              "group": "Household & Personal Products",
               "group_state": "Weakening"
-            },
-            {
-              "ticker": "RXT",
-              "rs_1m": 41,
-              "hybrid_rs": 60.0,
-              "sector": "Technology",
-              "group": "Broad AI Theme",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "ARM",
-              "rs_1m": 53,
-              "hybrid_rs": 53.0,
-              "sector": "Technology",
-              "group": "Semiconductors Broad",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "NTLA",
-              "rs_1m": 54,
-              "hybrid_rs": 48.0,
-              "sector": "Healthcare",
-              "group": "Genomics",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "ASST",
-              "rs_1m": 51,
-              "hybrid_rs": 48.0,
-              "sector": "Financial",
-              "group": "Financials",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "BEAM",
-              "rs_1m": 24,
-              "hybrid_rs": 46.0,
-              "sector": "Healthcare",
-              "group": "Genomics",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "INOD",
-              "rs_1m": 55,
-              "hybrid_rs": 45.0,
-              "sector": "Technology",
-              "group": "IT Services",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "NVAX",
-              "rs_1m": 27,
-              "hybrid_rs": 44.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "HOOD",
-              "rs_1m": 19,
-              "hybrid_rs": 44.0,
-              "sector": "Financial",
-              "group": "Speculative Tech",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "CELC",
-              "rs_1m": 51,
-              "hybrid_rs": 43.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "IBM",
-              "rs_1m": 73,
-              "hybrid_rs": 42.0,
-              "sector": "Technology",
-              "group": "Quantum Computing",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "PL",
-              "rs_1m": 70,
-              "hybrid_rs": 42.0,
-              "sector": "Industrials",
-              "group": "Space",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "MSTR",
-              "rs_1m": 27,
-              "hybrid_rs": 42.0,
-              "sector": "Technology",
-              "group": "Crypto Equities",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "IONS",
-              "rs_1m": 56,
-              "hybrid_rs": 41.0,
-              "sector": "Healthcare",
-              "group": "Genomics",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "POET",
-              "rs_1m": 94,
-              "hybrid_rs": 39.0,
-              "sector": "Technology",
-              "group": "Semiconductors Broad",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "NVTS",
-              "rs_1m": 92,
-              "hybrid_rs": 39.0,
-              "sector": "Technology",
-              "group": "Semiconductors Broad",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "WIT",
-              "rs_1m": 56,
-              "hybrid_rs": 37.0,
-              "sector": "Technology",
-              "group": "IT Services",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "PURR",
-              "rs_1m": 34,
-              "hybrid_rs": 37.0,
-              "sector": "Financial",
-              "group": "Financials",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "VSH",
-              "rs_1m": 12,
-              "hybrid_rs": 35.0,
-              "sector": "Technology",
-              "group": "Semiconductors Broad",
-              "group_state": "Improving"
             }
           ],
-          "truncated": 8,
+          "truncated": 0,
           "preset": null
         },
         {
@@ -2824,21 +2704,6 @@
       "group_state": "Leading"
     },
     {
-      "ticker": "POET",
-      "count": 4,
-      "zones": [
-        "entries",
-        "compression",
-        "accumulation",
-        "moving"
-      ],
-      "rs_1m": 94,
-      "hybrid_rs": 39.0,
-      "sector": "Technology",
-      "group": "Semiconductors Broad",
-      "group_state": "Improving"
-    },
-    {
       "ticker": "TEAM",
       "count": 3,
       "zones": [
@@ -3030,6 +2895,20 @@
       ],
       "rs_1m": 98,
       "hybrid_rs": 61.0,
+      "sector": "Technology",
+      "group": "Semiconductors Broad",
+      "group_state": "Improving"
+    },
+    {
+      "ticker": "POET",
+      "count": 3,
+      "zones": [
+        "entries",
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 94,
+      "hybrid_rs": 39.0,
       "sector": "Technology",
       "group": "Semiconductors Broad",
       "group_state": "Improving"

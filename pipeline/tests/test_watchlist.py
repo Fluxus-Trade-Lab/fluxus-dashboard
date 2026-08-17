@@ -66,9 +66,12 @@ class TestPanels:
         """Pinned takeover names score VCS 90+ with ADR under 2 -- not
         compression. The panel carries the same floor as the anticipation
         tool."""
-        assert W.PANELS["vcs"].test(row(vcs=75, adr_pct=4.0))
-        assert not W.PANELS["vcs"].test(row(vcs=95, adr_pct=1.0))
-        assert not W.PANELS["vcs"].test(row(vcs=65, adr_pct=4.0))
+        # compression inside a leader: vcs>=60, rs_3m>=80, above SMA50, ADR floor
+        assert W.PANELS["vcs"].test(row(vcs=62, adr_pct=4.0, rs_3m=88, sma50_dist=0.1))
+        assert not W.PANELS["vcs"].test(row(vcs=95, adr_pct=1.0, rs_3m=88, sma50_dist=0.1))   # ADR floor
+        assert not W.PANELS["vcs"].test(row(vcs=95, adr_pct=4.0, rs_3m=40, sma50_dist=0.1))   # not a leader
+        assert not W.PANELS["vcs"].test(row(vcs=95, adr_pct=4.0, rs_3m=88, sma50_dist=-0.05)) # below SMA50
+        assert not W.PANELS["vcs"].test(row(vcs=55, adr_pct=4.0, rs_3m=88, sma50_dist=0.1))
 
     def test_anticipation_panel(self):
         assert W.PANELS["anticipation"].test(row(vcs=65, ti65=1.06, change_pct=0.004))
@@ -152,7 +155,7 @@ class TestBuild:
         return [
             row(ticker="A", sp_signal="1st_break", rs_1m=95, h_score=90),
             row(ticker="B", sp_signal="2nd_break", vol10_green_count_10d=2, vcs=90, adr_pct=4.0,
-                rs_1m=99, h_score=95),   # entries x accumulation x compression
+                rs_3m=90, sma50_dist=0.1, rs_1m=99, h_score=95),   # entries x accumulation x compression
             row(ticker="C", vcs=80, ti65=1.08, change_pct=0.002, rs_1m=70, h_score=60),
             row(ticker="D", perf_1w=0.25, perf_1w_pctile=0.99, perf_3m_pctile=0.9,
                 change_pct=0.05, rel_volume=2.0, rs_21d=95, rs_1m=100, h_score=88),

@@ -118,8 +118,13 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
           and _ge(r, "atr_from_sma50", 0.0) and _le(r, "atr_from_sma50", 3.0)),
     # --- compression ---
     Panel("vcs", "Volatility Contraction Score",
-          "vcs >= 70 and adr_pct >= 3 (the ADR floor keeps deal-pinned names out; 70 = upper half of his 'developing' band, revisit once VCS v2 has run)",
-          ["vcs", "adr_pct"], lambda r: _ge(r, "vcs", 70) and _ge(r, "adr_pct", 3)),
+          "vcs >= 60 and rs_3m >= 80 and above SMA50 and adr_pct >= 3 -- compression INSIDE a leader. "
+          "VCS alone at >= 70 listed 33 gated names on 08-14, half of them weak (rs_1m < 30); oratnek's "
+          "same-day panel had 2 (COTY 64 / CBRL 62, both rs_3m >= 88). Raising the VCS bar does not fix it "
+          "(>= 90 still 8, all weak); the leadership gate does (15, his two inside). 60 = his 'developing' band edge",
+          ["vcs", "rs_3m", "sma50_dist", "adr_pct"],
+          lambda r: _ge(r, "vcs", 60) and _ge(r, "rs_3m", 80) and _f(r, "sma50_dist") is not None
+          and _f(r, "sma50_dist") > 0 and _ge(r, "adr_pct", 3)),
     Panel("anticipation", "Anticipation (strong x quiet x VCS)",
           "any of ti65>1.05 / c_low52w>=1.8 / mdt>1.19; |change_pct|<=1%; vcs>=60; adr_pct>=3",
           ["vcs", "change_pct", "adr_pct"],
