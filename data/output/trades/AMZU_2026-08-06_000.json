@@ -1,0 +1,267 @@
+{
+  "trade_id": "AMZU_2026-08-06_000",
+  "generated_at": "2026-08-17T03:51:15+00:00",
+  "_schema": "v1",
+  "trade": {
+    "ticker": "AMZU",
+    "direction": "long",
+    "sector": "Unknown",
+    "entry_date": "2026-08-06",
+    "entry_price": 42.48,
+    "original_qty": 6019,
+    "current_qty": 0,
+    "stop_price": 42.0,
+    "initial_stop": 42.0,
+    "closed": true,
+    "exit_date": "2026-08-11",
+    "hold_business_days": 3,
+    "r_dollars": 2889.1199999999812,
+    "realized_pl": -892.1399999999851,
+    "realized_R": -0.30879298886857964,
+    "trims": [
+      {
+        "date": "2026-08-10",
+        "price": 43.66,
+        "qty": 1203,
+        "type": "trim_1_5"
+      },
+      {
+        "date": "2026-08-11",
+        "price": 42.0,
+        "qty": 4816,
+        "type": "sell_rest"
+      }
+    ]
+  },
+  "entry_snapshot": {
+    "close": 41.77,
+    "open": 41.965,
+    "high": 42.78,
+    "low": 41.44,
+    "volume": 1572200.0,
+    "ma20": 36.179500000000004,
+    "ma50": 35.921914,
+    "ma200": 34.865183,
+    "rsi14": 61.36371437470778,
+    "atr14": 2.8021428571428584,
+    "atr14_pct": 6.708505762850988,
+    "high_52w": 46.8873,
+    "low_52w": 24.2595,
+    "position_in_52w_range_pct": 77.38489822254041,
+    "high_20d": 46.52,
+    "low_10d": 29.56,
+    "low_5d": 39.18
+  },
+  "setup_type": "Long in mixed structure",
+  "path_analytics": {
+    "mfe_R": 2.3958333333333606,
+    "mfe_date": "2026-08-07",
+    "mae_R": 2.166666666666679,
+    "mae_date": "2026-08-06",
+    "optimal_exit_price": 43.63,
+    "optimal_exit_date": "2026-08-07",
+    "optimal_R": 2.3958333333333606,
+    "days_to_optimal": 1,
+    "realized_R": -0.30879298886857964,
+    "capture_pct": -12.888750839731875,
+    "missed_R": 2.70462632220194,
+    "post_exit_R": null,
+    "hold_calendar_days": 5
+  },
+  "lesson": "Choppy / no edge",
+  "narrative": "Entered **AMZU** long on 2026-08-06 at $42.48 (qty 6019) with stop $42.00 (1R = $0.48/sh = $2,889). Setup: **Long in mixed structure** \u2014 price above MA20 ($36.18), MA20 > MA50 > MA200 (golden alignment), RSI 61, 77% through 52W range, ATR 6.7% of price. Realized **-0.31R**, peak was **+2.40R** on 2026-08-07 (day +1) \u2014 captured **-13%** of the move. **Lesson: Choppy / no edge.**",
+  "ohlc_window": [
+    {
+      "date": "2026-07-07",
+      "open": 35.69,
+      "high": 36.18,
+      "low": 34.41,
+      "close": 35.33,
+      "volume": 3779500.0
+    },
+    {
+      "date": "2026-07-08",
+      "open": 34.82,
+      "high": 35.015,
+      "low": 33.78,
+      "close": 34.63,
+      "volume": 2206900.0
+    },
+    {
+      "date": "2026-07-09",
+      "open": 33.56,
+      "high": 35.69,
+      "low": 33.13,
+      "close": 35.61,
+      "volume": 2557300.0
+    },
+    {
+      "date": "2026-07-10",
+      "open": 36.5,
+      "high": 36.75,
+      "low": 34.835,
+      "close": 35.09,
+      "volume": 2803700.0
+    },
+    {
+      "date": "2026-07-13",
+      "open": 34.915,
+      "high": 36.31,
+      "low": 34.742,
+      "close": 35.66,
+      "volume": 2555000.0
+    },
+    {
+      "date": "2026-07-14",
+      "open": 35.08,
+      "high": 35.995,
+      "low": 34.66,
+      "close": 35.7,
+      "volume": 2650300.0
+    },
+    {
+      "date": "2026-07-15",
+      "open": 36.4,
+      "high": 38.27,
+      "low": 36.4,
+      "close": 37.81,
+      "volume": 4090700.0
+    },
+    {
+      "date": "2026-07-16",
+      "open": 37.98,
+      "high": 38.75,
+      "low": 35.78,
+      "close": 36.32,
+      "volume": 3770100.0
+    },
+    {
+      "date": "2026-07-17",
+      "open": 34.72,
+      "high": 36.38,
+      "low": 34.47,
+      "close": 35.5,
+      "volume": 2644100.0
+    },
+    {
+      "date": "2026-07-20",
+      "open": 35.95,
+      "high": 37.13,
+      "low": 35.75,
+      "close": 36.32,
+      "volume": 1634800.0
+    },
+    {
+      "date": "2026-07-21",
+      "open": 36.07,
+      "high": 36.08,
+      "low": 35.36,
+      "close": 35.58,
+      "volume": 1378600.0
+    },
+    {
+      "date": "2026-07-22",
+      "open": 35.86,
+      "high": 35.86,
+      "low": 34.135,
+      "close": 34.78,
+      "volume": 1886500.0
+    },
+    {
+      "date": "2026-07-23",
+      "open": 32.355,
+      "high": 32.93,
+      "low": 31.17,
+      "close": 31.62,
+      "volume": 2888700.0
+    },
+    {
+      "date": "2026-07-24",
+      "open": 31.795,
+      "high": 31.905,
+      "low": 30.97,
+      "close": 31.17,
+      "volume": 1507100.0
+    },
+    {
+      "date": "2026-07-27",
+      "open": 32.1,
+      "high": 32.13,
+      "low": 30.86,
+      "close": 30.97,
+      "volume": 1477600.0
+    },
+    {
+      "date": "2026-07-28",
+      "open": 31.405,
+      "high": 31.405,
+      "low": 30.08,
+      "close": 30.84,
+      "volume": 1306600.0
+    },
+    {
+      "date": "2026-07-29",
+      "open": 30.42,
+      "high": 31.325,
+      "low": 29.56,
+      "close": 29.69,
+      "volume": 1674600.0
+    },
+    {
+      "date": "2026-07-30",
+      "open": 31.48,
+      "high": 33.12,
+      "low": 30.85,
+      "close": 32.16,
+      "volume": 9939900.0
+    },
+    {
+      "date": "2026-07-31",
+      "open": 39.95,
+      "high": 42.195,
+      "low": 39.18,
+      "close": 41.72,
+      "volume": 11431700.0
+    },
+    {
+      "date": "2026-08-03",
+      "open": 43.9,
+      "high": 46.52,
+      "low": 43.78,
+      "close": 45.56,
+      "volume": 6160800.0
+    },
+    {
+      "date": "2026-08-04",
+      "open": 43.04,
+      "high": 44.6,
+      "low": 42.92,
+      "close": 43.43,
+      "volume": 4207300.0
+    },
+    {
+      "date": "2026-08-05",
+      "open": 44.79,
+      "high": 45.1,
+      "low": 41.335,
+      "close": 41.9,
+      "volume": 3387200.0
+    },
+    {
+      "date": "2026-08-06",
+      "open": 41.965,
+      "high": 42.78,
+      "low": 41.44,
+      "close": 41.77,
+      "volume": 1572200.0
+    },
+    {
+      "date": "2026-08-07",
+      "open": 41.88,
+      "high": 43.63,
+      "low": 41.88,
+      "close": 42.43,
+      "volume": 1697700.0
+    }
+  ]
+}

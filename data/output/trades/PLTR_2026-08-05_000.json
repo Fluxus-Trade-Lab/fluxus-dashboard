@@ -1,0 +1,269 @@
+{
+  "trade_id": "PLTR_2026-08-05_000",
+  "generated_at": "2026-08-17T03:51:15+00:00",
+  "_schema": "v1",
+  "trade": {
+    "ticker": "PLTR",
+    "direction": "long",
+    "sector": "Unknown",
+    "entry_date": "2026-08-05",
+    "entry_price": 155.37,
+    "original_qty": 1136,
+    "current_qty": 909,
+    "stop_price": 153.0,
+    "initial_stop": 153.0,
+    "closed": false,
+    "exit_date": null,
+    "hold_business_days": null,
+    "r_dollars": 2692.320000000005,
+    "realized_pl": 4966.759999999999,
+    "realized_R": 1.8447881381113649,
+    "trims": [
+      {
+        "date": "2026-08-10",
+        "price": 177.25,
+        "qty": 227,
+        "type": "trim_1_5"
+      }
+    ]
+  },
+  "entry_snapshot": {
+    "close": 158.43,
+    "open": 162.0,
+    "high": 166.08,
+    "low": 158.25,
+    "volume": 63515900.0,
+    "ma20": 131.433,
+    "ma50": 131.4242,
+    "ma200": 152.43724999999998,
+    "rsi14": 68.73840220661299,
+    "atr14": 8.432142857142859,
+    "atr14_pct": 5.322314496713285,
+    "high_52w": 207.52,
+    "low_52w": 106.37,
+    "position_in_52w_range_pct": 51.46811665842807,
+    "high_20d": 166.08,
+    "low_10d": 117.89,
+    "low_5d": 119.62
+  },
+  "setup_type": "Long in mixed structure",
+  "path_analytics": {
+    "mfe_R": 7.189873417721502,
+    "mfe_date": "2026-08-07",
+    "mae_R": 1.126582278481017,
+    "mae_date": "2026-08-06",
+    "optimal_exit_price": 172.41,
+    "optimal_exit_date": "2026-08-07",
+    "optimal_R": 7.189873417721502,
+    "days_to_optimal": 2,
+    "realized_R": null,
+    "capture_pct": null,
+    "missed_R": null,
+    "post_exit_R": null,
+    "hold_calendar_days": 11
+  },
+  "lesson": "In progress",
+  "narrative": "Entered **PLTR** long on 2026-08-05 at $155.37 (qty 1136) with stop $153.00 (1R = $2.37/sh = $2,692). Setup: **Long in mixed structure** \u2014 price above MA20 ($131.43), MA stack mixed, RSI 69, 51% through 52W range, ATR 5.3% of price. **In progress.** Peak so far +7.19R; worst drawdown -1.13R.",
+  "ohlc_window": [
+    {
+      "date": "2026-07-06",
+      "open": 127.24,
+      "high": 134.069,
+      "low": 126.64,
+      "close": 132.54,
+      "volume": 37360100.0
+    },
+    {
+      "date": "2026-07-07",
+      "open": 133.73,
+      "high": 138.9,
+      "low": 131.46,
+      "close": 134.37,
+      "volume": 52570400.0
+    },
+    {
+      "date": "2026-07-08",
+      "open": 129.49,
+      "high": 132.39,
+      "low": 126.71,
+      "close": 132.22,
+      "volume": 40587800.0
+    },
+    {
+      "date": "2026-07-09",
+      "open": 127.72,
+      "high": 129.19,
+      "low": 124.81,
+      "close": 129.04,
+      "volume": 35286100.0
+    },
+    {
+      "date": "2026-07-10",
+      "open": 132.14,
+      "high": 132.28,
+      "low": 125.77,
+      "close": 126.79,
+      "volume": 31163000.0
+    },
+    {
+      "date": "2026-07-13",
+      "open": 127.295,
+      "high": 130.72,
+      "low": 126.195,
+      "close": 130.04,
+      "volume": 39786500.0
+    },
+    {
+      "date": "2026-07-14",
+      "open": 123.61,
+      "high": 135.79,
+      "low": 122.64,
+      "close": 133.72,
+      "volume": 49963700.0
+    },
+    {
+      "date": "2026-07-15",
+      "open": 134.34,
+      "high": 136.88,
+      "low": 132.88,
+      "close": 133.76,
+      "volume": 26064500.0
+    },
+    {
+      "date": "2026-07-16",
+      "open": 133.08,
+      "high": 136.21,
+      "low": 128.68,
+      "close": 134.44,
+      "volume": 28951300.0
+    },
+    {
+      "date": "2026-07-17",
+      "open": 131.785,
+      "high": 134.77,
+      "low": 129.05,
+      "close": 132.38,
+      "volume": 31875100.0
+    },
+    {
+      "date": "2026-07-20",
+      "open": 131.88,
+      "high": 136.62,
+      "low": 131.82,
+      "close": 134.85,
+      "volume": 30571300.0
+    },
+    {
+      "date": "2026-07-21",
+      "open": 133.83,
+      "high": 134.68,
+      "low": 131.225,
+      "close": 132.66,
+      "volume": 23161800.0
+    },
+    {
+      "date": "2026-07-22",
+      "open": 132.22,
+      "high": 132.345,
+      "low": 123.45,
+      "close": 124.57,
+      "volume": 38588300.0
+    },
+    {
+      "date": "2026-07-23",
+      "open": 125.935,
+      "high": 126.4,
+      "low": 120.73,
+      "close": 123.37,
+      "volume": 29757900.0
+    },
+    {
+      "date": "2026-07-24",
+      "open": 125.165,
+      "high": 125.31,
+      "low": 122.02,
+      "close": 122.92,
+      "volume": 21177000.0
+    },
+    {
+      "date": "2026-07-27",
+      "open": 126.155,
+      "high": 132.41,
+      "low": 125.31,
+      "close": 131.53,
+      "volume": 36708200.0
+    },
+    {
+      "date": "2026-07-28",
+      "open": 125.84,
+      "high": 127.19,
+      "low": 117.89,
+      "close": 123.53,
+      "volume": 43597300.0
+    },
+    {
+      "date": "2026-07-29",
+      "open": 124.0,
+      "high": 127.28,
+      "low": 122.45,
+      "close": 123.0,
+      "volume": 27207900.0
+    },
+    {
+      "date": "2026-07-30",
+      "open": 121.14,
+      "high": 123.67,
+      "low": 120.27,
+      "close": 122.26,
+      "volume": 27801600.0
+    },
+    {
+      "date": "2026-07-31",
+      "open": 122.29,
+      "high": 123.39,
+      "low": 119.62,
+      "close": 123.06,
+      "volume": 29085100.0
+    },
+    {
+      "date": "2026-08-03",
+      "open": 126.7,
+      "high": 126.965,
+      "low": 123.657,
+      "close": 125.65,
+      "volume": 77282900.0
+    },
+    {
+      "date": "2026-08-04",
+      "open": 145.145,
+      "high": 164.52,
+      "low": 143.28,
+      "close": 162.66,
+      "volume": 175034700.0
+    },
+    {
+      "date": "2026-08-05",
+      "open": 162.0,
+      "high": 166.08,
+      "low": 158.25,
+      "close": 158.43,
+      "volume": 63515900.0
+    },
+    {
+      "date": "2026-08-06",
+      "open": 155.87,
+      "high": 158.0,
+      "low": 152.7,
+      "close": 155.92,
+      "volume": 41751400.0
+    },
+    {
+      "date": "2026-08-07",
+      "open": 160.07,
+      "high": 172.41,
+      "low": 159.96,
+      "close": 172.01,
+      "volume": 77382900.0
+    }
+  ]
+}

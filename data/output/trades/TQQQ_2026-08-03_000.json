@@ -1,0 +1,281 @@
+{
+  "trade_id": "TQQQ_2026-08-03_000",
+  "generated_at": "2026-08-17T03:51:15+00:00",
+  "_schema": "v1",
+  "trade": {
+    "ticker": "TQQQ",
+    "direction": "long",
+    "sector": "Unknown",
+    "entry_date": "2026-08-03",
+    "entry_price": 70.39,
+    "original_qty": 3763,
+    "current_qty": 0,
+    "stop_price": 68.0,
+    "initial_stop": 68.0,
+    "closed": true,
+    "exit_date": "2026-08-05",
+    "hold_business_days": 2,
+    "r_dollars": 8993.570000000002,
+    "realized_pl": 15020.439999999991,
+    "realized_R": 1.6701309935876396,
+    "trims": [
+      {
+        "date": "2026-08-04",
+        "price": 72.55,
+        "qty": 752,
+        "type": "trim_1_5"
+      },
+      {
+        "date": "2026-08-05",
+        "price": 75.16,
+        "qty": 1254,
+        "type": "trim_1_3"
+      },
+      {
+        "date": "2026-08-05",
+        "price": 74.61,
+        "qty": 1757,
+        "type": "sell_rest"
+      }
+    ]
+  },
+  "entry_snapshot": {
+    "close": 67.96,
+    "open": 64.71,
+    "high": 68.41,
+    "low": 63.99,
+    "volume": 62223600.0,
+    "ma20": 68.844,
+    "ma50": 74.756366,
+    "ma200": 59.203111,
+    "rsi14": 48.24021071225521,
+    "atr14": 4.335,
+    "atr14_pct": 6.378752207180695,
+    "high_52w": 87.8876,
+    "low_52w": 37.2343,
+    "position_in_52w_range_pct": 60.658831704943196,
+    "high_20d": 77.32,
+    "low_10d": 57.59,
+    "low_5d": 57.59
+  },
+  "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
+  "path_analytics": {
+    "mfe_R": 2.4853556485355632,
+    "mfe_date": "2026-08-05",
+    "mae_R": 2.6778242677824253,
+    "mae_date": "2026-08-03",
+    "optimal_exit_price": 76.33,
+    "optimal_exit_date": "2026-08-05",
+    "optimal_R": 2.4853556485355632,
+    "days_to_optimal": 2,
+    "realized_R": 1.6701309935876396,
+    "capture_pct": 67.19887331101788,
+    "missed_R": 0.8152246549479236,
+    "post_exit_R": 1.790794979079498,
+    "hold_calendar_days": 2
+  },
+  "lesson": "Good execution",
+  "narrative": "Entered **TQQQ** long on 2026-08-03 at $70.39 (qty 3763) with stop $68.00 (1R = $2.39/sh = $8,994). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($68.84), MA stack mixed, RSI 48, 61% through 52W range, ATR 6.4% of price. Realized **+1.67R**, peak was **+2.49R** on 2026-08-05 (day +2) \u2014 captured **67%** of the move. **Lesson: Good execution.**",
+  "ohlc_window": [
+    {
+      "date": "2026-07-06",
+      "open": 75.54,
+      "high": 77.45,
+      "low": 75.11,
+      "close": 76.42,
+      "volume": 54545100.0
+    },
+    {
+      "date": "2026-07-07",
+      "open": 73.7,
+      "high": 74.39,
+      "low": 70.76,
+      "close": 72.23,
+      "volume": 70992900.0
+    },
+    {
+      "date": "2026-07-08",
+      "open": 70.8,
+      "high": 73.02,
+      "low": 69.57,
+      "close": 72.72,
+      "volume": 70748500.0
+    },
+    {
+      "date": "2026-07-09",
+      "open": 74.85,
+      "high": 76.69,
+      "low": 73.89,
+      "close": 76.34,
+      "volume": 51726600.0
+    },
+    {
+      "date": "2026-07-10",
+      "open": 75.53,
+      "high": 77.32,
+      "low": 74.33,
+      "close": 77.03,
+      "volume": 46034400.0
+    },
+    {
+      "date": "2026-07-13",
+      "open": 74.54,
+      "high": 74.85,
+      "low": 72.09,
+      "close": 72.64,
+      "volume": 63317500.0
+    },
+    {
+      "date": "2026-07-14",
+      "open": 75.2,
+      "high": 75.85,
+      "low": 73.41,
+      "close": 75.02,
+      "volume": 58097300.0
+    },
+    {
+      "date": "2026-07-15",
+      "open": 76.29,
+      "high": 76.47,
+      "low": 72.06,
+      "close": 74.44,
+      "volume": 68547800.0
+    },
+    {
+      "date": "2026-07-16",
+      "open": 72.61,
+      "high": 73.12,
+      "low": 69.69,
+      "close": 70.74,
+      "volume": 66953300.0
+    },
+    {
+      "date": "2026-07-17",
+      "open": 66.38,
+      "high": 69.56,
+      "low": 64.91,
+      "close": 67.53,
+      "volume": 75465200.0
+    },
+    {
+      "date": "2026-07-20",
+      "open": 69.47,
+      "high": 70.51,
+      "low": 67.5,
+      "close": 67.65,
+      "volume": 50076700.0
+    },
+    {
+      "date": "2026-07-21",
+      "open": 70.71,
+      "high": 71.72,
+      "low": 69.61,
+      "close": 71.37,
+      "volume": 37772500.0
+    },
+    {
+      "date": "2026-07-22",
+      "open": 69.77,
+      "high": 71.59,
+      "low": 69.77,
+      "close": 70.28,
+      "volume": 36062100.0
+    },
+    {
+      "date": "2026-07-23",
+      "open": 67.11,
+      "high": 68.27,
+      "low": 65.02,
+      "close": 66.3,
+      "volume": 80277500.0
+    },
+    {
+      "date": "2026-07-24",
+      "open": 65.78,
+      "high": 66.4,
+      "low": 63.49,
+      "close": 64.0,
+      "volume": 69267700.0
+    },
+    {
+      "date": "2026-07-27",
+      "open": 66.06,
+      "high": 66.23,
+      "low": 61.64,
+      "close": 63.4,
+      "volume": 70531600.0
+    },
+    {
+      "date": "2026-07-28",
+      "open": 61.77,
+      "high": 62.61,
+      "low": 59.4,
+      "close": 61.56,
+      "volume": 73235900.0
+    },
+    {
+      "date": "2026-07-29",
+      "open": 61.51,
+      "high": 62.74,
+      "low": 57.59,
+      "close": 57.75,
+      "volume": 103582900.0
+    },
+    {
+      "date": "2026-07-30",
+      "open": 61.13,
+      "high": 63.84,
+      "low": 60.74,
+      "close": 63.3,
+      "volume": 75877800.0
+    },
+    {
+      "date": "2026-07-31",
+      "open": 65.74,
+      "high": 66.77,
+      "low": 62.39,
+      "close": 64.62,
+      "volume": 86709900.0
+    },
+    {
+      "date": "2026-08-03",
+      "open": 64.71,
+      "high": 68.41,
+      "low": 63.99,
+      "close": 67.96,
+      "volume": 62223600.0
+    },
+    {
+      "date": "2026-08-04",
+      "open": 70.31,
+      "high": 75.41,
+      "low": 70.14,
+      "close": 74.82,
+      "volume": 73728500.0
+    },
+    {
+      "date": "2026-08-05",
+      "open": 75.61,
+      "high": 76.33,
+      "low": 72.74,
+      "close": 72.84,
+      "volume": 70885800.0
+    },
+    {
+      "date": "2026-08-06",
+      "open": 70.85,
+      "high": 73.45,
+      "low": 70.16,
+      "close": 72.03,
+      "volume": 60887200.0
+    },
+    {
+      "date": "2026-08-07",
+      "open": 73.66,
+      "high": 74.67,
+      "low": 72.52,
+      "close": 74.47,
+      "volume": 59134100.0
+    }
+  ]
+}
