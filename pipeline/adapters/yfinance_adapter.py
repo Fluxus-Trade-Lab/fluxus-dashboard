@@ -102,44 +102,62 @@ def calculate_rrs(stock_data: pd.DataFrame, spy_data: pd.DataFrame,
         return None
 
 
-def pocket_pivot_count(closes, opens, vols, lookback: int = 30) -> int | None:
-    """How many of the last `lookback` bars were pocket pivots.
+def _window_ok(n: int) -> bool:
+    return n >= 11
 
-    A pocket pivot here is a green bar whose volume exceeds the highest volume
-    of the ten bars before it. (Morales's original compares only the DOWN days
-    among those ten; ours compares all ten, which is a stricter bar. Audited
-    2026-08-11 and deliberately left as-is.)
 
-    Factored out of the enrichment loop so the 10-session window oratnek
-    screens on and the 30-session window we already shipped are one
-    implementation read over two lookbacks -- a second inline copy would drift.
-    """
+def vol10_green_count(closes, opens, vols, lookback: int = 30) -> int | None:
+    """oratnek's "PP (Vol > 10D)": a green bar (close > open) whose volume beats
+    the highest volume of the prior ten bars, ALL of them. A volume-surge
+    event. This is what our `pocket_pivot` computed until 2026-08-17; renamed
+    so the textbook name can carry the textbook maths (see pocket_pivot_count).
+    None on fewer than 11 bars (unmeasured)."""
     n = len(closes)
-    if n < 11:
-        # No bar has ten priors to compare against: nothing was examined, so
-        # this is "unmeasured", not "zero" -- like every other short-history
-        # field in the enrichment block.
+    if not _window_ok(n):
         return None
     count = 0
-    # Start at 10, not 11: bar 10 is the first with ten priors (0..9), and the
-    # same-day pocket_pivot flag (vols[-11:-1]) already counts it on an 11-bar
-    # history. Starting at 11 gave two answers to one question.
     for j in range(max(10, n - lookback), n):
         if not closes[j] > opens[j]:
             continue
-        # NaN-tolerant max: builtin max() over a slice whose first element is
-        # NaN returns NaN, and `x > NaN` is False -- one missing volume bar
-        # silenced pivots for the ten sessions after it.
         prior = [v for v in vols[j - 10:j] if v == v]
         if prior and vols[j] > max(prior):
             count += 1
     return count
 
 
+def vol10_green_today(closes, opens, vols) -> bool | None:
+    n = vol10_green_count(closes, opens, vols, lookback=1)
+    return None if n is None else bool(n)
+
+
+def pocket_pivot_count(closes, opens, vols, lookback: int = 30) -> int | None:
+    """Morales / Kacher pocket pivot, the textbook definition (accumulation_
+    audit.md, 2026-08-09): an UP day -- close above the PRIOR close -- whose
+    volume beats the highest volume among the DOWN days of the prior ten bars.
+    Down-day volume is the yardstick because the question is buying vs
+    selling. If the prior ten hold no down day the bar is not a pivot (no
+    vacuous truth; measured at 0/1643 up days anyway).
+
+    On 91 names this form correlated +0.71 with the A/D volume ratio against
+    +0.52 for the all-bars form, and the two Top-10 lists shared 3 names -- a
+    different quantity, not a detail. None on fewer than 11 bars.
+    """
+    n = len(closes)
+    if not _window_ok(n):
+        return None
+    count = 0
+    for j in range(max(10, n - lookback), n):
+        if not closes[j] > closes[j - 1]:
+            continue
+        down = [vols[k] for k in range(j - 10, j)
+                if k >= 1 and closes[k] < closes[k - 1] and vols[k] == vols[k]]
+        if down and vols[j] > max(down):
+            count += 1
+    return count
+
+
 def pocket_pivot_today(closes, opens, vols) -> bool | None:
-    """The same-day pocket-pivot flag: `pocket_pivot_count` over the last bar
-    only, so the flag and the counts are one implementation. None on fewer
-    than 11 bars (unmeasured), like the counts."""
+    """Same-day Morales pocket pivot: `pocket_pivot_count` over the last bar."""
     n = pocket_pivot_count(closes, opens, vols, lookback=1)
     return None if n is None else bool(n)
 
@@ -160,6 +178,68 @@ def structure_pivot_row(hist: pd.DataFrame) -> dict:
         return {k: row.get(k) for k in SP_FIELDS}
     except Exception:
         return {k: None for k in SP_FIELDS}
+
+
+def stockbee_ratios(hist: pd.DataFrame) -> dict:
+    """The 'has been strong' ratios behind Stockbee's three anticipation scans
+    (Telechart syntax verbatim in the docstring of test_derived_fields), plus
+    the liquidity floor input. Null when the window is not there yet.
+
+        ti65       = avgc7 / avgc65      (TI65:  > 1.05)
+        mdt        = c / avgc126         (MDT:   > 1.19)
+        min_vol_3d = min volume of the last 3 bars   (all: > 100k)
+
+    Double Trouble's c/minl252 comes from the low_52w column in run_all.
+    """
+    try:
+        c = pd.to_numeric(hist['Close'], errors='coerce').dropna()
+        v = pd.to_numeric(hist['Volume'], errors='coerce').dropna()
+        n = len(c)
+        ti65 = float(c.iloc[-7:].mean() / c.iloc[-65:].mean()) if n >= 65 and c.iloc[-65:].mean() > 0 else None
+        mdt = float(c.iloc[-1] / c.iloc[-126:].mean()) if n >= 126 and c.iloc[-126:].mean() > 0 else None
+        mv3 = float(v.iloc[-3:].min()) if len(v) >= 3 else None
+        return {"ti65": ti65, "mdt": mdt, "min_vol_3d": mv3}
+    except Exception:
+        return {"ti65": None, "mdt": None, "min_vol_3d": None}
+
+
+def accumulation_flow(hist: pd.DataFrame) -> dict:
+    """The accumulation factor the 2026-08-09 audit said we lacked: volume
+    weighted by price direction, accumulated across weeks. Two numbers, not
+    three -- the A/D volume ratio and OBV slope are near-duplicates (+0.93);
+    CMF is the different one.
+
+        ad_ratio_20 = sum(volume on up days) / sum(volume), last 20 sessions
+                      (up = close > prior close). 0.5 = balanced; the ratio,
+                      not the OBV level, so names of different size compare.
+        cmf21       = Chaikin Money Flow, 21 sessions:
+                      sum(((c-l)-(h-c))/(h-l) * v) / sum(v)  in [-1, 1]
+
+    None when the window is not there (20 / 21 bars + one prior close).
+    """
+    try:
+        c = pd.to_numeric(hist['Close'], errors='coerce')
+        v = pd.to_numeric(hist['Volume'], errors='coerce')
+        h = pd.to_numeric(hist['High'], errors='coerce')
+        l = pd.to_numeric(hist['Low'], errors='coerce')
+        n = len(c)
+        out = {"ad_ratio_20": None, "cmf21": None}
+        if n >= 21:
+            up = (c > c.shift(1)).iloc[-20:]
+            vv = v.iloc[-20:]
+            tot = float(vv.sum())
+            if tot > 0:
+                out["ad_ratio_20"] = round(float(vv[up].sum() / tot), 4)
+        if n >= 21:
+            rng = (h - l).iloc[-21:]
+            mfm = (((c - l) - (h - c)) / rng.replace(0, np.nan)).iloc[-21:]
+            vv = v.iloc[-21:]
+            tot = float(vv.sum())
+            if tot > 0:
+                out["cmf21"] = round(float((mfm.fillna(0) * vv).sum() / tot), 4)
+        return out
+    except Exception:
+        return {"ad_ratio_20": None, "cmf21": None}
 
 
 def stockbee_ratios(hist: pd.DataFrame) -> dict:
@@ -488,6 +568,7 @@ class YfinanceAdapter(BaseAdapter):
                 pp = None
                 pp_count = None
                 pp_count_10 = None
+                v10 = v10_count_10 = v10_count_30 = None
                 if n >= 11:
                     closes = hist['Close'].values
                     opens = hist['Open'].values
@@ -502,6 +583,9 @@ class YfinanceAdapter(BaseAdapter):
                     # highest volume in 10 days along with a green candle").
                     pp_count = pocket_pivot_count(closes, opens, vols, 30)
                     pp_count_10 = pocket_pivot_count(closes, opens, vols, 10)
+                    v10 = vol10_green_today(closes, opens, vols)
+                    v10_count_10 = vol10_green_count(closes, opens, vols, 10)
+                    v10_count_30 = vol10_green_count(closes, opens, vols, 30)
 
                 # Trend Base: price > 50SMA AND 10WMA > 30WMA
                 trend_base = False
@@ -521,6 +605,7 @@ class YfinanceAdapter(BaseAdapter):
                 # One dict of sp_* fields, or all-None on short history.
                 sp_row = structure_pivot_row(hist)
                 sb = stockbee_ratios(hist)
+                af = accumulation_flow(hist)
 
                 # 21EMA Low Dist%: how far today's low is from 21EMA
                 ema21_low_dist = (last_low - ema21) / ema21 if ema21 > 0 else None
@@ -568,10 +653,14 @@ class YfinanceAdapter(BaseAdapter):
                     'pocket_pivot': pp,
                     'pp_count_30d': pp_count,
                     'pp_count_10d': pp_count_10,
+                    'vol10_green': v10,
+                    'vol10_green_count_10d': v10_count_10,
+                    'vol10_green_count_30d': v10_count_30,
                     'trend_base': trend_base,
                     'vcs': vcs,
                     **sp_row,
                     'ti65': sb['ti65'], 'mdt': sb['mdt'], 'min_vol_3d': sb['min_vol_3d'],
+                    'ad_ratio_20': af['ad_ratio_20'], 'cmf21': af['cmf21'],
                     'ema21_low_dist': ema21_low_dist,
                     'ema21': ema21,
                     'ema10': ema10,

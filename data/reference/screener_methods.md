@@ -90,11 +90,14 @@
 - **我们(08-17 拍板)**:持仓型预设上限 **6**(21EMA Watch / Pocket Pivot / PP Count / 97 Club),扫描型保留 **10**;表里按热度着色,越高越热,6 是可辨线。08-14:$1B+ 非医疗里 3.5–6 有 820 只、6–10 有 253 只(半导体/软件/航空防务)。
 - **组合**:它是所有"状态"里最该常驻的一个 —— VCS 没它会被钉价票骗,RS 没它会选到不动的票,ATR Matrix 没它不知道 1 个 ATR 是 1% 还是 8%。
 
-### Pocket Pivot `pocket_pivot` / `pp_count_10d` / `pp_count_30d`(一个实现三个窗口)
-- **原型**:Gil Morales / Chris Kacher —— 阳线且当日量 **> 前 10 根里阴线的最大量**。**我们的定义比原版严**:比前 10 根**全部**的最大量(审计过,Andy 说先不改)。
+### Pocket Pivot —— 两个定义,两个名字(2026-08-17 起)
+- **`pocket_pivot` / `pp_count_10d` / `pp_count_30d` = Morales / Kacher 原定义**:上涨日(close > 昨收)且量 > 前 10 根**下跌日**的最大量 —— 买盘 vs 卖盘。审计:与 A/D 量比相关 +0.71。预设 Pocket Pivot / PP Count 读这一族。
+- **`vol10_green` / `_count_10d` / `_count_30d` = oratnek 的 "PP (Vol > 10D)"**:阳线且量 > 前 10 根**全部**的最大量 —— 量能突增。这是 08-17 前 `pocket_pivot` 的算法,换名不换数;晨报 oratnek 那两格读它。
+- 同一只票两个答案很常见(AEHR 08-14:Morales 10 日 4 次,oratnek 0 次)—— 不是细节差异,是两个量。
 - **原用法(oratnek)**:"最近 10 个交易日里有一天出现 PP"是他的选股前提之一;"2nd Pivot 当天出现 PP 最理想"。
 - **在找什么**:**有人在安静的整理里放量买了一天** —— 机构脚印。
 - **组合**:× VCS(收缩里的一次放量)是它最好的搭档;× Structure Pivot 的 2nd Pivot 是 oratnek 的加仓信号;`pp_count_30d ≥ 3` 单独成一个预设(PP Count)。
+- **吸筹因子 `ad_ratio_20` / `cmf21`**(08-17 加):上涨日量占比(20 日)+ Chaikin Money Flow 21 —— 审计说我们之前**没有一个字段真的在测吸筹**(rel_volume 无方向,abc_rating 无量);这两条是持续流向,PP 是离散事件,相关但不重复。**未做前瞻检验**(面板无成交量),先当描述用。
 
 ### DCR `dcr_pct`、`from_open_pct`、`rel_volume`、`change_pct`
 - 都是**当日盘面**:收在日内区间的哪一段 / 从开盘涨了多少 / 量比 50 日均量 / 涨跌幅。

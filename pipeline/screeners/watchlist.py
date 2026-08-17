@@ -15,7 +15,7 @@ Zones (order is the reading order):
     entries       -- can I enter today?      LL-HL 1st / 2nd / trend-line break;
                                              Liquid Leader Pullback (course M2_L09)
     compression   -- what is loading?         VCS; anticipation (strong x quiet x VCS)
-    accumulation  -- who is being bought?     pocket pivot TODAY / 2+ in 10d
+    accumulation  -- who is being bought?     Vol>10D today / 2+ in 10d (oratnek) ; Morales pocket pivot in 10d
     moving        -- what is running?         Weekly Momentum 97 / 4% Bullish / Weekly 20%+
     trouble       -- what broke? (holders)    stop hit / LL break / >= 7 ATR extended
 
@@ -123,10 +123,13 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
           lambda r: _strong(r) and _quiet(r) and _ge(r, "vcs", 60) and _ge(r, "adr_pct", 3)),
     # --- accumulation ---
     Panel("pp_today", "PP (Vol > 10D)",
-          "pocket_pivot today (green bar, volume above the prior 10 bars' max) -- oratnek's panel is TODAY's PP",
-          ["pocket_pivot"], lambda r: r.get("pocket_pivot") is True),
+          "vol10_green today: green bar, volume above ALL prior 10 bars' max -- oratnek's own definition (our Morales pocket_pivot is a different quantity, see accumulation_audit.md)",
+          ["vol10_green"], lambda r: r.get("vol10_green") is True),
     Panel("pp_2plus_10d", "PP 2+ times (10D)",
-          "pp_count_10d >= 2", ["pp_count_10d"], lambda r: _ge(r, "pp_count_10d", 2)),
+          "vol10_green_count_10d >= 2", ["vol10_green_count_10d"], lambda r: _ge(r, "vol10_green_count_10d", 2)),
+    Panel("morales_pp_10d", "Pocket Pivot (Morales, 10D)",
+          "pp_count_10d >= 1: up day (close > prior close) on volume above the prior 10 bars' DOWN-day max -- buying vs selling; correlates +0.71 with the A/D ratio",
+          ["pp_count_10d"], lambda r: _ge(r, "pp_count_10d", 1)),
     # --- moving (same recipes as the Screener presets; pinned by test) ---
     Panel("weekly_momentum_97", "Weekly Momentum 97",
           "perf_1w_pctile >= 0.97 and perf_3m_pctile >= 0.85 and trend_base and adr_pct 3.5-10",
@@ -159,7 +162,7 @@ ZONES: List[Dict[str, Any]] = [
     {"key": "leaders", "label": "Who leads?", "panels": ["true_market_leaders", "liquid_leaders"]},
     {"key": "entries", "label": "Can I enter today?", "panels": ["ll_hl_1st", "ll_hl_2nd", "ll_hl_trend_break", "liquid_leader_pullback"]},
     {"key": "compression", "label": "What is loading?", "panels": ["vcs", "anticipation"]},
-    {"key": "accumulation", "label": "Who is being bought?", "panels": ["pp_today", "pp_2plus_10d"]},
+    {"key": "accumulation", "label": "Who is being bought?", "panels": ["pp_today", "pp_2plus_10d", "morales_pp_10d"]},
     {"key": "moving", "label": "What is running?", "panels": ["weekly_momentum_97", "bullish_4pct", "weekly_20_gainers"]},
     {"key": "trouble", "label": "What broke?", "panels": ["stop_hit", "ll_break", "extended"]},
 ]

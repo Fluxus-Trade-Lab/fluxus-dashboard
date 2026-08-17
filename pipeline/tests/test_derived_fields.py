@@ -18,7 +18,7 @@ import math
 import pandas as pd
 import pytest
 
-from pipeline.adapters.yfinance_adapter import pocket_pivot_count
+from pipeline.adapters.yfinance_adapter import pocket_pivot_count, vol10_green_count, vol10_green_today
 from pipeline.screeners.run_all import compute_universe_scores
 
 
@@ -175,8 +175,9 @@ class TestAtrFromSma50:
         assert out["atr_from_sma50"].iloc[0] != pytest.approx(1.10)
 
 
-class TestPocketPivotCount:
-    """Green bar whose volume exceeds the highest of the prior 10 bars."""
+class TestVol10GreenCount:
+    """oratnek's Vol>10D: green bar whose volume exceeds the highest of ALL prior 10
+    bars. This was `pocket_pivot` until 2026-08-17; same maths, honest name."""
 
     def _series(self, n=40, vol=100.0):
         closes = [10.0] * n
@@ -187,33 +188,33 @@ class TestPocketPivotCount:
     def test_counts_a_green_bar_on_record_volume(self):
         c, o, v = self._series()
         c[-1], o[-1], v[-1] = 11.0, 10.0, 500.0
-        assert pocket_pivot_count(c, o, v, lookback=10) == 1
+        assert vol10_green_count(c, o, v, lookback=10) == 1
 
     def test_a_red_bar_on_record_volume_does_not_count(self):
         c, o, v = self._series()
         c[-1], o[-1], v[-1] = 9.0, 10.0, 500.0
-        assert pocket_pivot_count(c, o, v, lookback=10) == 0
+        assert vol10_green_count(c, o, v, lookback=10) == 0
 
     def test_volume_must_beat_the_prior_ten_not_merely_rise(self):
         c, o, v = self._series()
         v[-5] = 900.0                    # a bigger bar inside the window
         c[-1], o[-1], v[-1] = 11.0, 10.0, 500.0
-        assert pocket_pivot_count(c, o, v, lookback=10) == 0
+        assert vol10_green_count(c, o, v, lookback=10) == 0
 
     def test_the_lookback_bounds_which_bars_are_examined(self):
         """The whole point of the 10-window: a pivot 20 sessions ago is in the
         30-count and out of the 10-count."""
         c, o, v = self._series()
         c[-20], o[-20], v[-20] = 11.0, 10.0, 500.0
-        assert pocket_pivot_count(c, o, v, lookback=10) == 0
-        assert pocket_pivot_count(c, o, v, lookback=30) == 1
+        assert vol10_green_count(c, o, v, lookback=10) == 0
+        assert vol10_green_count(c, o, v, lookback=30) == 1
 
     def test_short_history_returns_none_not_zero(self):
         """Fewer than 11 bars means no bar has ten priors to compare against:
         nothing was examined, so the answer is 'unmeasured', not 'zero'. Every
         other short-history field in the enrichment block emits None."""
         c, o, v = self._series(n=5)
-        assert pocket_pivot_count(c, o, v, lookback=10) is None
+        assert vol10_green_count(c, o, v, lookback=10) is None
 
     def test_bar_ten_is_examined_when_history_is_exactly_eleven(self):
         """Regression: the loop started at index 11, so on an 11-bar history
@@ -221,21 +222,21 @@ class TestPocketPivotCount:
         flag (vols[-11:-1]) did count it. Two answers to one question."""
         c, o, v = self._series(n=11)
         c[-1], o[-1], v[-1] = 11.0, 10.0, 500.0
-        assert pocket_pivot_count(c, o, v, lookback=10) == 1
+        assert vol10_green_count(c, o, v, lookback=10) == 1
 
     def test_same_day_flag_agrees_with_the_count_on_nan_and_short_history(self):
-        """The enrichment loop's `pocket_pivot` flag is `pocket_pivot_count`
+        """The enrichment loop's `pocket_pivot` flag is `vol10_green_count`
         over the last bar only. Its own inline max() had the NaN bug the
         count fixed, and it said False on <11 bars where the count says
         None -- two answers to one question, again."""
-        from pipeline.adapters.yfinance_adapter import pocket_pivot_today
+        from pipeline.adapters.yfinance_adapter import vol10_green_today
         c, o, v = self._series()
         v[-11] = float("nan")
         c[-1], o[-1], v[-1] = 11.0, 10.0, 500.0
-        assert pocket_pivot_today(c, o, v) is True
-        assert pocket_pivot_count(c, o, v, lookback=10) == 1
+        assert vol10_green_today(c, o, v) is True
+        assert vol10_green_count(c, o, v, lookback=10) == 1
         c, o, v = self._series(n=8)
-        assert pocket_pivot_today(c, o, v) is None
+        assert vol10_green_today(c, o, v) is None
 
     def test_a_nan_volume_bar_does_not_blank_the_next_ten_sessions(self):
         """Builtin max() over a slice whose FIRST element is NaN returns NaN,
@@ -244,7 +245,7 @@ class TestPocketPivotCount:
         c, o, v = self._series()
         v[-11] = float("nan")
         c[-1], o[-1], v[-1] = 11.0, 10.0, 500.0
-        assert pocket_pivot_count(c, o, v, lookback=10) == 1
+        assert vol10_green_count(c, o, v, lookback=10) == 1
 
     def test_counts_multiple_pivots_in_the_window(self):
         """The second pivot's volume must EXCEED the first's, because the
@@ -253,13 +254,13 @@ class TestPocketPivotCount:
         c, o, v = self._series()
         c[-4], o[-4], v[-4] = 11.0, 10.0, 500.0
         c[-1], o[-1], v[-1] = 11.0, 10.0, 600.0
-        assert pocket_pivot_count(c, o, v, lookback=10) == 2
+        assert vol10_green_count(c, o, v, lookback=10) == 2
 
     def test_a_second_pivot_on_equal_volume_does_not_count(self):
         c, o, v = self._series()
         c[-4], o[-4], v[-4] = 11.0, 10.0, 500.0
         c[-1], o[-1], v[-1] = 11.0, 10.0, 500.0
-        assert pocket_pivot_count(c, o, v, lookback=10) == 1
+        assert vol10_green_count(c, o, v, lookback=10) == 1
 
 
 class TestEma21AtrDist:
@@ -356,3 +357,109 @@ class TestLiquidLeader:
     def test_missing_inputs_are_false_not_error(self):
         out = compute_universe_scores(_frame(avg_volume=None))
         assert bool(out["liquid_leader"].iloc[0]) is False
+
+
+class TestPocketPivotTwoDefinitions:
+    """accumulation_audit.md (2026-08-09): our `pocket_pivot` compared today's
+    volume with the max of ALL prior 10 bars -- a volume-surge event, which is
+    exactly oratnek's "PP (Vol > 10D)" -- while Morales/Kacher's pocket pivot
+    compares it with the max of the prior 10 DOWN days (buying vs selling
+    volume) and defines 'up' as close > prior close. On 91 names the Morales
+    form correlated +0.71 with the A/D ratio vs +0.52 for ours, and the two
+    top-10 lists shared 3 names. Two legitimate definitions, two names:
+
+        pocket_pivot / pp_count_*   -> Morales (the textbook name gets the textbook maths)
+        vol10_green  / vol10_green_count_* -> oratnek's Vol>10D (unchanged maths, honest name)
+    """
+
+    def _s(self, n=40):
+        return [10.0] * n, [10.0] * n, [100.0] * n     # closes, opens, vols; flat
+
+    def test_morales_compares_against_down_days_only(self):
+        from pipeline.adapters.yfinance_adapter import pocket_pivot_count
+        c, o, v = self._s()
+        # a big UP day inside the window must NOT raise the bar (Morales ignores up days)
+        c[-5], o[-5], v[-5] = 11.0, 10.0, 900.0
+        c[-4] = 11.0                                # keep price up so later bars compare vs 11
+        # today: up vs prior close on 500 volume; prior down-day max is 100 -> pivot
+        c[-1], o[-1], v[-1] = 11.5, 11.0, 500.0
+        assert pocket_pivot_count(c, o, v, lookback=1) == 1
+        # oratnek's form counts ALL prior bars, so the 900 bar blocks it
+        from pipeline.adapters.yfinance_adapter import vol10_green_count
+        assert vol10_green_count(c, o, v, lookback=1) == 0
+
+    def test_morales_up_day_is_close_over_prior_close(self):
+        from pipeline.adapters.yfinance_adapter import pocket_pivot_count
+        c, o, v = self._s()
+        # green body (close > open) but close < prior close: not an up day for Morales
+        c[-2] = 12.0
+        c[-1], o[-1], v[-1] = 11.0, 10.5, 500.0
+        assert pocket_pivot_count(c, o, v, lookback=1) == 0
+
+    def test_morales_no_down_days_in_window_is_not_a_pivot(self):
+        """Audit: 0/1643 up days had an empty down-day window, but if it happens
+        'greater than the max of nothing' must not be vacuously true."""
+        from pipeline.adapters.yfinance_adapter import pocket_pivot_count
+        c = [float(10 + i) for i in range(40)]           # every day up
+        o = [x - 0.5 for x in c]; v = [100.0] * 40; v[-1] = 500.0
+        assert pocket_pivot_count(c, o, v, lookback=1) == 0
+
+    def test_morales_edges_bar_ten_nan_and_short_history(self):
+        from pipeline.adapters.yfinance_adapter import pocket_pivot_count, pocket_pivot_today
+        # 11 bars: one down day at index 5 (vol 100), then up on the last bar with 500
+        c = [10.0] * 11; o = [10.0] * 11; v = [100.0] * 11
+        c[5] = 9.0; c[6] = 10.0                     # index 5 is a down day, 6 recovers
+        c[-1], v[-1] = 11.0, 500.0
+        assert pocket_pivot_count(c, o, v, lookback=10) == 1      # bar 10 examined
+        assert pocket_pivot_today(c, o, v) is True
+        # NaN volume on the down day: skipped, not poisoning; no other down day -> not a pivot
+        v2 = list(v); v2[5] = float("nan")
+        assert pocket_pivot_count(c, o, v2, lookback=1) == 0
+        assert pocket_pivot_count(c[:8], o[:8], v[:8], lookback=1) is None
+
+    def test_vol10_green_is_the_old_behaviour(self):
+        from pipeline.adapters.yfinance_adapter import vol10_green_count, vol10_green_today
+        c, o, v = self._s()
+        c[-1], o[-1], v[-1] = 11.0, 10.0, 500.0
+        assert vol10_green_count(c, o, v, lookback=10) == 1
+        assert vol10_green_today(c, o, v) is True
+
+
+class TestAccumulationFlow:
+    """accumulation_audit.md: the two candidates we had measured neither
+    direction-weighted volume (rel_volume) nor volume at all (abc_rating);
+    the A/D volume ratio and OBV slope are near-duplicates (+0.93), CMF is a
+    different thing. So: ONE cumulative flow (ad_ratio_20: up-day volume over
+    total volume, 20 sessions) and CMF21 (Chaikin Money Flow)."""
+
+    def _hist(self, closes, vols, highs=None, lows=None):
+        import pandas as pd
+        c = pd.Series(closes, dtype=float)
+        return pd.DataFrame({"Close": c, "Volume": pd.Series(vols, dtype=float),
+                             "High": pd.Series(highs, dtype=float) if highs else c + 1,
+                             "Low": pd.Series(lows, dtype=float) if lows else c - 1,
+                             "Open": c})
+
+    def test_ad_ratio_is_up_volume_share(self):
+        from pipeline.adapters.yfinance_adapter import accumulation_flow
+        closes = [10, 11, 10, 11, 10, 11, 10, 11, 10, 11, 10, 11, 10, 11, 10, 11, 10, 11, 10, 11, 10]  # 21 bars
+        vols = [100] * 21
+        vols[1::2] = [300] * 10           # up days (odd index) heavier
+        f = accumulation_flow(self._hist(closes, vols))
+        # last 20 bars: 10 up days x 300 + 10 down days x 100 -> 3000/4000
+        assert f["ad_ratio_20"] == pytest.approx(0.75)
+
+    def test_cmf21_sign_follows_close_location(self):
+        from pipeline.adapters.yfinance_adapter import accumulation_flow
+        n = 30
+        closes = [10.0] * n
+        # closes at the top of each bar's range -> CMF > 0; at the bottom -> < 0
+        top = self._hist(closes, [100] * n, highs=[10.0] * n, lows=[9.0] * n)
+        bot = self._hist(closes, [100] * n, highs=[11.0] * n, lows=[10.0] * n)
+        assert accumulation_flow(top)["cmf21"] == pytest.approx(1.0)
+        assert accumulation_flow(bot)["cmf21"] == pytest.approx(-1.0)
+
+    def test_short_history_is_null(self):
+        from pipeline.adapters.yfinance_adapter import accumulation_flow
+        f = accumulation_flow(self._hist([10.0] * 10, [100] * 10))
+        assert f["ad_ratio_20"] is None and f["cmf21"] is None

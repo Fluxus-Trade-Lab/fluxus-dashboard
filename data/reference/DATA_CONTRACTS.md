@@ -191,7 +191,10 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 | 字段 | 定义 | 口径 |
 |---|---|---|
 | `atr_from_sma50` | **ATR Matrix** = `(close − SMA50) / ATR`,股价高于 50 日线几个 ATR | 浮点 4 位小数,可负(低于 SMA50);ATR ≤ 0 / **ATR < 0.5% 价格**(实测该线以下全是 $10 SPAC 壳与并购锁价票)/ `1+dist ≤ 0` / 缺任一输入 → `null`,**永不 inf**。**不是** `sma50_r`(那是 close/SMA50 的比值,原样保留)。黄金样本:6 只对 Wilder-14 ATR 直算逐位吻合。**与每个 ticker 徽章上的 `atr_ext`、ETF 行的 `dist_sma50_atr` 同一实现**(`atr_enrichment.atr_multiple_from_sma50` / `_from_levels`)。`≥7` 尾巴含近期跳空后钉价的并购标的(Wilder-14 记得跳空日),读榜时配 industry/量 |
-| `pp_count_10d` | 最近 10 个交易日里的口袋支点根数 | 与 `pp_count_30d` 同一实现(`pocket_pivot_count`)、不同 lookback;阳线且量 > 前 10 根最大量(NaN 量的根跳过);**历史 < 11 根 → `null`(未测量,不是 0)**,`pp_count_30d` 与当日 `pocket_pivot` 标志同步改为此语义(三者同一实现);首次富集后才有值 |
+| `pocket_pivot` / `pp_count_10d` / `pp_count_30d` | **⚠️ 2026-08-17 起 = Morales/Kacher 原定义**:上涨日(close > 昨收)且量 > 前 10 根**下跌日**的最大量(买盘 vs 卖盘;前 10 根无下跌日 → 不算)。审计(`accumulation_audit.md`)测得它与 A/D 量比相关 +0.71,旧式 +0.52,两者 Top10 只重 3 只 —— 是不同的量 | 之前的"全部 K 线最大量"版本改名 `vol10_green`(见下);预设 Pocket Pivot / PP Count 继续读这一族(= Morales) |
+| `vol10_green` / `vol10_green_count_10d` / `vol10_green_count_30d` | oratnek 的 "PP (Vol > 10D)":阳线(close > open)且量 > 前 10 根**全部**的最大量 —— 量能突增事件。**就是 08-17 前的 `pocket_pivot` 算法**,换名不换数 | 晨报 accumulation 区两格读它;历史 `pp_count_*` 值(08-17 前)对应的是这一族 |
+| `ad_ratio_20` / `cmf21` | 审计判定真正缺的"吸筹因子":近 20 日**上涨日成交量占总量之比**(0.5 = 平衡)· Chaikin Money Flow 21(−1..1) | 需 21 根;两条不重复(A/D 量比与 OBV 斜率 +0.93 近重复,故不做 OBV) |
+| ~~`pp_count_10d`~~(旧行) | 最近 10 个交易日里的口袋支点根数 | 与 `pp_count_30d` 同一实现(`pocket_pivot_count`)、不同 lookback;阳线且量 > 前 10 根最大量(NaN 量的根跳过);**历史 < 11 根 → `null`(未测量,不是 0)**,`pp_count_30d` 与当日 `pocket_pivot` 标志同步改为此语义(三者同一实现);首次富集后才有值 |
 
 | `ema21_atr_dist` | `(close − EMA21) / ATR`,离 21 日 EMA 几个 ATR(2026-08-17 加) | 与 `atr_from_sma50` **同一 helper、同一 0.5% 地板、同一 null 规则**;EMA21 = 收盘价 span-21 EMA(富集新导出 `ema21` 列);fallback 池无 EMA21 → null |
 | `ema21` | 收盘价 EMA21 水平 | 富集导出;供上面那列和以后的图用 |

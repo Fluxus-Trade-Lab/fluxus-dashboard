@@ -25,7 +25,8 @@ def row(**kw):
             "change_pct": 0.005, "perf_1w_pctile": 0.5, "perf_3m_pctile": 0.5,
             "perf_1w": 0.02, "rel_volume": 1.0, "from_open_pct": 0.0, "rs_21d": 90,
             "dcr_pct": 0.5, "min_vol_3d": 500_000, "ema21_atr_dist": 0.5,
-            "pocket_pivot": False, "pp_count_30d": 0, "liquid_leader": False, "close": 100.0}
+            "pocket_pivot": False, "pp_count_30d": 0, "liquid_leader": False, "close": 100.0,
+            "vol10_green": False, "vol10_green_count_10d": 0}
     base.update(kw)
     return base
 
@@ -47,10 +48,14 @@ class TestPanels:
         assert W.PANELS["ll_hl_trend_break"].test(row(sp_signal="counter_break"))
 
     def test_pp_panels(self):
-        assert W.PANELS["pp_today"].test(row(pocket_pivot=True))
-        assert not W.PANELS["pp_today"].test(row(pocket_pivot=False, pp_count_10d=3))
-        assert W.PANELS["pp_2plus_10d"].test(row(pp_count_10d=2))
-        assert not W.PANELS["pp_2plus_10d"].test(row(pp_count_10d=1))
+        """oratnek's two PP panels read the vol10_green family (his definition);
+        the Morales pocket pivot is its own panel."""
+        assert W.PANELS["pp_today"].test(row(vol10_green=True))
+        assert not W.PANELS["pp_today"].test(row(vol10_green=False, pocket_pivot=True))
+        assert W.PANELS["pp_2plus_10d"].test(row(vol10_green_count_10d=2))
+        assert not W.PANELS["pp_2plus_10d"].test(row(vol10_green_count_10d=1))
+        assert W.PANELS["morales_pp_10d"].test(row(pp_count_10d=1))
+        assert not W.PANELS["morales_pp_10d"].test(row(pp_count_10d=0, vol10_green_count_10d=3))
 
     def test_vcs_panel_needs_the_adr_floor(self):
         """Pinned takeover names score VCS 90+ with ADR under 2 -- not
@@ -141,7 +146,7 @@ class TestBuild:
     def _rows(self):
         return [
             row(ticker="A", sp_signal="1st_break", rs_1m=95, h_score=90),
-            row(ticker="B", sp_signal="2nd_break", pp_count_10d=2, rs_1m=99, h_score=95),
+            row(ticker="B", sp_signal="2nd_break", vol10_green_count_10d=2, rs_1m=99, h_score=95),
             row(ticker="C", vcs=80, ti65=1.08, change_pct=0.002, rs_1m=70, h_score=60),
             row(ticker="D", perf_1w=0.25, perf_1w_pctile=0.99, perf_3m_pctile=0.9,
                 change_pct=0.05, rel_volume=2.0, rs_21d=95, rs_1m=100, h_score=88),
