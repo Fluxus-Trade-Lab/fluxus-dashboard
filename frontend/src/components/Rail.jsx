@@ -68,6 +68,9 @@ export const NAV_GROUPS = [
       // was one of its layers, the second is what the whole page became. Both
       // routes still resolve so sent links land on Themes.
       { key: 'screener', short: 'SCR', hash: '#/screener' },
+      // Its own page, not a Screener tab: the Screener is a table you tune
+      // and this is six questions already answered. Two postures, two pages.
+      { key: 'watchlist', short: 'WCH', hash: '#/watchlist' },
     ],
   },
   {

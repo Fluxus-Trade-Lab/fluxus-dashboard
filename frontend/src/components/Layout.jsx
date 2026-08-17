@@ -27,6 +27,7 @@ import LeadersLaggards from './dashboard/LeadersLaggards'
 import { VoteMarks } from './breadth/VoteGlyphs'
 import { ETF_GROUPS } from '../lib/etfGroups'
 import ScreenerPage from './screener/ScreenerPage'
+import WatchlistPage from './watchlist/WatchlistPage'
 import PortfolioPage from './portfolio/PortfolioPage'
 import JournalPage from './journal/JournalPage'
 import BriefingPage from './briefing/BriefingPage'
@@ -246,6 +247,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
       ) : (
         <main className="max-w-[1800px] mx-auto px-3 py-4">
           {current === 'screener' && <ScreenerPage />}
+          {current === 'watchlist' && <WatchlistPage />}
           {current === 'portfolio' && <PortfolioPage />}
           {/* Renamed 2026-08-17 (Andy): two routes, each named for what it is.
               #/review is the review; #/journal is the trade journal. The old
