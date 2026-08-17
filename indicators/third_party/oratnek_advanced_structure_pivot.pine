@@ -1,0 +1,730 @@
+//@version=6
+indicator('Advanced Structure Pivot', overlay = true, max_lines_count = 500, max_labels_count = 500)
+
+// ===============================================================
+//  Advanced Structure Pivot
+//
+//  Long-only. Short-side pivot states kept internally for Counter Trend.
+//
+//  3-Phase Stop:
+//    Phase 1: Stop = MA(source)
+//    Phase 2: high >= 2nd Pivot. Stop = 1st Pivot (fixed)
+//    Phase 3: high >= TP.        Stop = max(1st Pivot, MA(source))
+//
+//  TP = HL + (2nd Pivot - HL) * Fib Extension
+// ===============================================================
+
+// --- Helper: Fib string to float ---
+fib_to_float(string s) =>
+    switch s
+        "2.618" => 2.618
+        "2.272" => 2.272
+        "2.0"   => 2.0
+        "1.764" => 1.764
+        "1.618" => 1.618
+        "1.5"   => 1.5
+        "1.382" => 1.382
+        "1.272" => 1.272
+        "1.0"   => 1.0
+        "0.786" => 0.786
+        "0.618" => 0.618
+        "0.5"   => 0.5
+        "0.382" => 0.382
+        "0.236" => 0.236
+        "0.0"   => 0.0
+        => 0.618
+
+// --- Settings ---
+grp_calc = 'Calculation'
+min_len_input = input.int(2, 'Min Length', minval = 1, group = grp_calc)
+max_len_input = input.int(5, 'Max Length', minval = 2, group = grp_calc)
+priority_mode = input.string("Tightest Structure", "Priority Mode", options=["Tightest Structure", "Longest Length", "Shortest Length"], group=grp_calc)
+
+grp_fib = 'Fibonacci & Stop Settings'
+fib_first_str  = input.string("0.618", "1st Pivot Level", options=["1.0","0.786","0.618","0.5","0.382","0.236","0.0"], group=grp_fib, tooltip="Fibonacci ratio between HL and 2nd Pivot. This level becomes the 1st Pivot (entry).")
+fib_tp_str     = input.string("1.764", "TP1 Fib Extension", options=["1.272","1.382","1.5","1.618","1.764","2.0","2.272","2.618"], group=grp_fib, tooltip="Fibonacci extension from HL. TP1 = HL + (2nd Pivot - HL) x this value.")
+fib_tp2_str    = input.string("2.618", "TP2 Fib Extension", options=["1.272","1.382","1.5","1.618","1.764","2.0","2.272","2.618"], group=grp_fib, tooltip="Fibonacci extension from HL. TP2 = HL + (2nd Pivot - HL) x this value.")
+ma_type_str    = input.string("EMA", 'MA Type for Stop', options=["EMA","SMA"], group=grp_fib, tooltip="Moving average type used to trail the Stop and Fail check.")
+ma_len         = input.int(21, 'MA Length for Stop', minval=2, group=grp_fib, tooltip="Phase 1 / Phase 3 stop trails MA of selected source.")
+ma_src_str     = input.string("Low", 'MA Source for Stop', options=["Low","Close","High"], group=grp_fib, tooltip="Source used for the MA that trails the Stop and Fail check. Low = most conservative, High = tightest.")
+
+fib_first_val = fib_to_float(fib_first_str)
+fib_tp_val    = fib_to_float(fib_tp_str)
+fib_tp2_val   = fib_to_float(fib_tp2_str)
+
+// Visibility Settings
+grp_vis = 'Visibility Settings'
+show_Labels     = input.bool(true, 'Show LL/HL Labels', group = grp_vis)
+show_Trend      = input.bool(true, 'Show Structure Line', group = grp_vis)
+show_PLine      = input.bool(true, 'Show 2nd Pivot Line', group = grp_vis)
+show_FirstPivot = input.bool(true, 'Show 1st Pivot Line', group = grp_vis)
+show_StopLoss   = input.bool(true, 'Show Stop Loss (MA or 1st Pivot)', group = grp_vis)
+show_TP1        = input.bool(true, 'Show TP1', group = grp_vis)
+show_TP2        = input.bool(true, 'Show TP2', group = grp_vis)
+show_Counter    = input.bool(true, 'Show Counter Trend', group = grp_vis)
+lock_Counter    = input.bool(true, 'Lock Counter Line on Break', group = grp_vis)
+
+// History Settings
+grp_hist = 'History Settings'
+show_History       = input.bool(true, 'Show Pivot History', group = grp_hist)
+show_Price_History = input.bool(false, 'Show Price History (on History Lines)', group = grp_hist)
+show_Label_History = input.bool(false, 'Show Label History', group = grp_hist)
+limit_History      = input.bool(true, 'Limit History by Bars', group = grp_hist)
+hist_bars          = input.int(100, 'Max History Bars', minval=10, maxval=5000, group=grp_hist)
+
+grp_style = 'Style Settings'
+lblSize = input.string(size.small, 'Text Size', options = [size.tiny, size.small, size.normal, size.large], group = grp_style)
+col_Long       = input.color(#b8b8b8,       'Structure Color',   group = grp_style)
+col_FirstPivot = input.color(color.yellow,  '1st Pivot Color',   group = grp_style)
+col_StopLoss   = input.color(color.rgb(255, 80, 80), 'Stop Loss Color',  group = grp_style)
+col_Target     = input.color(#b8b8b8,       'Target Color',      group = grp_style)
+col_Counter    = input.color(#b8b8b8,       'Counter Trend Color', group = grp_style)
+width_Line     = input.int(1, 'Line Width', minval = 1, group = grp_style)
+style_Trend      = input.string(line.style_dashed, 'Structure Line Style',  options = [line.style_solid, line.style_dashed, line.style_dotted], group = grp_style)
+style_Pivot      = input.string(line.style_solid,  '2nd Pivot Line Style',  options = [line.style_solid, line.style_dashed, line.style_dotted], group = grp_style)
+style_FirstPivot = input.string(line.style_dashed, '1st Pivot Line Style',  options = [line.style_solid, line.style_dashed, line.style_dotted], group = grp_style)
+style_StopLoss   = input.string(line.style_dotted, 'Stop Loss Line Style',  options = [line.style_solid, line.style_dashed, line.style_dotted], group = grp_style)
+style_Target     = input.string(line.style_dashed, 'Target Line Style',     options = [line.style_solid, line.style_dashed, line.style_dotted], group = grp_style)
+style_Counter    = input.string(line.style_dashed, 'Counter Line Style',    options = [line.style_solid, line.style_dashed, line.style_dotted], group = grp_style)
+
+// History Styles
+col_Pivot_Hist   = input.color(color.gray, 'History Color', group = grp_style)
+width_Pivot_Hist = input.int(1, 'History Pivot Width', minval = 1, group = grp_style)
+style_Pivot_Hist = input.string(line.style_dotted, 'History Pivot Style', options = [line.style_solid, line.style_dashed, line.style_dotted], group = grp_style)
+
+// --- MA Calculation for Stop ---
+float ma_src = ma_src_str == "Low" ? low : ma_src_str == "High" ? high : close
+ma_stop = ma_type_str == "SMA" ? ta.sma(ma_src, ma_len) : ta.ema(ma_src, ma_len)
+
+// --- Structs ---
+type PivotState
+    int len
+    float prev_p
+    int prev_idx
+    float curr_p
+    int curr_idx
+    bool is_setup
+    float break_val
+    int break_idx
+    bool is_long
+
+type DrawObjects
+    line l_trend = na
+    line l_pivot = na
+    line l_first_pivot = na
+    line l_stop = na
+    line l_counter = na
+    label lbl_price = na
+    label lbl_first_price = na
+    label lbl_stop_price = na
+    label lbl_curr = na
+    label lbl_prev = na
+    int sig = 0
+    // Fibonacci State
+    float fib_1st_price = na
+    float tp1_price = na
+    float tp2_price = na
+    int phase = 1                 // 1: MA, 2: 1st Pivot, 3: max(1st Pivot, MA)
+    // Target State
+    line l_target1 = na
+    label lbl_target1 = na
+    line l_target2 = na
+    label lbl_target2 = na
+    // Locking State
+    bool cnt_locked = false
+    int cnt_x1 = na
+    float cnt_y1 = na
+    int cnt_x2 = na
+    float cnt_y2 = na
+
+type HistoryLine
+    line l
+    label p
+
+// --- Variables ---
+var PivotState[] states_long  = array.new<PivotState>()
+var PivotState[] states_short = array.new<PivotState>()   // kept for Counter Trend
+
+var HistoryLine[] history_lines  = array.new<HistoryLine>()
+var label[]       history_labels = array.new<label>()
+
+if bar_index == 0
+    for i = min_len_input to max_len_input
+        array.push(states_long,  PivotState.new(i, na, na, na, na, false, na, na, true))
+        array.push(states_short, PivotState.new(i, na, na, na, na, false, na, na, false))
+
+// Initialize Drawing Objects (long only)
+var DrawObjects d_long = DrawObjects.new()
+
+// Alert noise suppression flags
+var bool fail_this_bar = false
+var bool setup_created_this_bar = false
+
+// --- Method ---
+method update(PivotState st) =>
+    float p = st.is_long ? ta.pivotlow(low, st.len, st.len) : ta.pivothigh(high, st.len, st.len)
+    
+    if not na(p)
+        bool setup_cond = false
+        if not na(st.curr_p)
+            if st.is_long
+                if p > st.curr_p
+                    setup_cond := true
+            else
+                if p < st.curr_p
+                    setup_cond := true
+        
+        st.prev_p   := st.curr_p
+        st.prev_idx := st.curr_idx
+        st.curr_p   := p
+        st.curr_idx := bar_index - st.len
+        st.is_setup := setup_cond
+        st.break_val := na
+        st.break_idx := na
+        
+        if setup_cond and not na(st.prev_idx)
+            float best_val = st.is_long ? 0.0 : 1000000.0
+            int best_idx = -1
+            int start_s = st.prev_idx + 1
+            int end_s   = st.curr_idx - 1
+            
+            if end_s >= start_s
+                for i = start_s to end_s
+                    float v = st.is_long ? high[bar_index - i] : low[bar_index - i]
+                    if st.is_long
+                        if v > best_val
+                            best_val := v
+                            best_idx := i
+                    else
+                        if v < best_val
+                            best_val := v
+                            best_idx := i
+            
+            if best_idx != -1
+                st.break_val := best_val
+                st.break_idx := best_idx
+
+// --- Helper: Label Logic ---
+is_bottom_label(string txt) =>
+    str.contains(txt, "LL") or str.contains(txt, "HL")
+
+method push_stack(label[] arr, label lbl) =>
+    bool merged = false
+    if array.size(arr) > 0
+        int check_limit = math.min(20, array.size(arr))
+        for i = 1 to check_limit
+            int idx = array.size(arr) - i
+            label h_lbl = array.get(arr, idx)
+            
+            if label.get_x(h_lbl) == label.get_x(lbl)
+                string t_hist = label.get_text(h_lbl)
+                string t_new  = label.get_text(lbl)
+                
+                bool hist_is_bottom = is_bottom_label(t_hist)
+                bool new_is_bottom  = is_bottom_label(t_new)
+                
+                if hist_is_bottom == new_is_bottom
+                    if not str.contains(t_hist, t_new)
+                        label.set_text(h_lbl, t_hist + "-" + t_new)
+                    label.delete(lbl)
+                    merged := true
+                    break
+    if not merged
+        array.push(arr, lbl)
+
+// --- Helper: Cleanup Fib/Stop/Target ---
+method cleanup_fib(DrawObjects d) =>
+    line.delete(d.l_first_pivot)
+    label.delete(d.lbl_first_price)
+    line.delete(d.l_stop)
+    label.delete(d.lbl_stop_price)
+    line.delete(d.l_target1)
+    label.delete(d.lbl_target1)
+    line.delete(d.l_target2)
+    label.delete(d.lbl_target2)
+    d.l_first_pivot := na
+    d.lbl_first_price := na
+    d.l_stop := na
+    d.lbl_stop_price := na
+    d.l_target1 := na
+    d.lbl_target1 := na
+    d.l_target2 := na
+    d.lbl_target2 := na
+    d.fib_1st_price := na
+    d.tp1_price := na
+    d.tp2_price := na
+    d.phase := 1
+
+// --- Main Logic: Long ---
+for st in states_long
+    st.update()
+    if st.is_setup and not na(st.curr_p) and low < st.curr_p
+        st.is_setup := false
+
+// --- Main Logic: Short (internal only, used for Counter Trend) ---
+for st in states_short
+    st.update()
+    if st.is_setup and not na(st.curr_p) and high > st.curr_p
+        st.is_setup := false
+
+find_winner(PivotState[] arr, string p_mode) =>
+    PivotState w = na
+    for st in arr
+        if st.is_setup and not na(st.break_val)
+            bool upd = false
+            if na(w)
+                upd := true
+            else
+                if p_mode == "Tightest Structure"
+                    if st.is_long
+                        if st.break_val < w.break_val
+                            upd := true
+                    else
+                        if st.break_val > w.break_val
+                            upd := true
+                else if p_mode == "Longest Length"
+                    upd := true
+                else
+                    upd := false
+            if upd
+                w := st
+    w
+
+PivotState win_long = na
+
+win_long := find_winner(states_long, priority_mode)
+if na(win_long) and array.size(states_long) > 0
+    win_long := array.get(states_long, 0)
+if not win_long.is_setup and not na(win_long.curr_p) and low < win_long.curr_p
+    win_long.curr_p   := low
+    win_long.curr_idx := bar_index
+
+// --- Helper: Find Counter Line Coordinates ---
+get_counter_coordinates(PivotState[] arr, int limit_idx, bool find_highs) =>
+    float anchor_val = find_highs ? -1000000.0 : 1000000.0
+    float anchor_x = na
+    float anchor_y = na
+    
+    for st in arr
+        if not na(st.prev_idx) and not na(st.prev_p)
+            if st.prev_idx <= limit_idx
+                bool is_extreme = false
+                if find_highs
+                    if st.prev_p > anchor_val
+                        is_extreme := true
+                else
+                    if st.prev_p < anchor_val
+                        is_extreme := true
+                if is_extreme
+                    anchor_val := st.prev_p
+                    anchor_x := float(st.prev_idx)
+                    anchor_y := st.prev_p
+
+        if not na(st.curr_idx) and not na(st.curr_p)
+            if st.curr_idx <= limit_idx
+                bool is_extreme = false
+                if find_highs
+                    if st.curr_p > anchor_val
+                        is_extreme := true
+                else
+                    if st.curr_p < anchor_val
+                        is_extreme := true
+                if is_extreme
+                    anchor_val := st.curr_p
+                    anchor_x := float(st.curr_idx)
+                    anchor_y := st.curr_p
+    
+    float best_slope = na
+    float res_x2 = na
+    float res_y2 = na
+    
+    if not na(anchor_x)
+        float x1 = anchor_x
+        float y1 = anchor_y
+        for st in arr
+            if not na(st.curr_idx) and not na(st.curr_p)
+                if st.curr_idx > x1 and st.curr_idx < limit_idx
+                    float m = (st.curr_p - y1) / (st.curr_idx - x1)
+                    bool update_best = false
+                    if na(best_slope)
+                        update_best := true
+                    else
+                        if find_highs
+                            if m > best_slope
+                                update_best := true
+                        else
+                            if m < best_slope
+                                update_best := true
+                    
+                    if update_best
+                        best_slope := m
+                        res_x2 := float(st.curr_idx)
+                        res_y2 := st.curr_p
+
+        if not na(res_x2)
+            [x1, y1, res_x2, res_y2]
+        else
+            [float(na), float(na), float(na), float(na)]
+    else
+        [float(na), float(na), float(na), float(na)]
+
+// --- Drawing Function ---
+// Returns [counter_trend_value, fail_flag, created_flag]
+draw_long(PivotState w, PivotState[] opp_arr, DrawObjects d) =>
+    float current_cnt_val = na
+    bool just_created = false
+    bool local_fail = false
+    bool local_created = false
+    color c_base = col_Long
+    
+    int sig = w.curr_idx * 1000 + w.len * 10 + (w.is_setup ? 1 : 0)
+    
+    if sig != d.sig
+        line.delete(d.l_trend)
+        line.delete(d.l_counter)
+        d.cleanup_fib()
+        
+        // History for 2nd Pivot line
+        if not na(d.l_pivot)
+            if show_History
+                line.set_color(d.l_pivot, col_Pivot_Hist)
+                line.set_width(d.l_pivot, width_Pivot_Hist)
+                line.set_style(d.l_pivot, style_Pivot_Hist)
+                
+                label saved_price_lbl = na
+                if show_Price_History and not na(d.lbl_price)
+                    if array.size(history_lines) > 0
+                        float new_p = label.get_y(d.lbl_price)
+                        for i = 0 to array.size(history_lines) - 1
+                            HistoryLine hl_old = array.get(history_lines, i)
+                            if not na(hl_old.p)
+                                float old_p = label.get_y(hl_old.p)
+                                if new_p == old_p
+                                    label.delete(hl_old.p)
+                                    hl_old.p := na
+                    
+                    label.set_textcolor(d.lbl_price, col_Pivot_Hist)
+                    label.set_text(d.lbl_price, "Past Pivot = " + str.tostring(label.get_y(d.lbl_price), "#,###.##"))
+                    saved_price_lbl := d.lbl_price
+                else
+                    label.delete(d.lbl_price)
+                
+                array.push(history_lines, HistoryLine.new(d.l_pivot, saved_price_lbl))
+            else
+                line.delete(d.l_pivot)
+                label.delete(d.lbl_price)
+
+            if show_Label_History
+                if not na(d.lbl_curr)
+                    label.set_textcolor(d.lbl_curr, col_Pivot_Hist)
+                    history_labels.push_stack(d.lbl_curr)
+                if not na(d.lbl_prev)
+                    label.set_textcolor(d.lbl_prev, col_Pivot_Hist)
+                    history_labels.push_stack(d.lbl_prev)
+            else
+                label.delete(d.lbl_curr)
+                label.delete(d.lbl_prev)
+        else
+            line.delete(d.l_pivot)
+            label.delete(d.lbl_price)
+            label.delete(d.lbl_curr)
+            label.delete(d.lbl_prev)
+        
+        d.l_trend := na
+        d.l_pivot := na
+        d.l_counter := na
+        d.lbl_price := na
+        d.lbl_curr := na
+        d.lbl_prev := na
+        d.cnt_locked := false
+        d.cnt_x1 := na
+        d.cnt_y1 := na
+        d.cnt_x2 := na
+        d.cnt_y2 := na
+
+        if not na(w.curr_p)
+            string txt_c = w.is_setup ? "HL" : "LL"
+            
+            if show_Labels
+                d.lbl_curr := label.new(w.curr_idx, w.curr_p, text=txt_c, style=label.style_label_up, color=color.new(color.white, 100), textcolor=c_base, size=lblSize)
+            
+            if w.is_setup and not na(w.prev_idx)
+                if show_Labels
+                    d.lbl_prev := label.new(w.prev_idx, w.prev_p, text="LL", style=label.style_label_up, color=color.new(color.white, 100), textcolor=c_base, size=lblSize)
+                
+                if show_Trend
+                    d.l_trend := line.new(w.prev_idx, w.prev_p, w.curr_idx, w.curr_p, color=c_base, style=style_Trend, width=width_Line)
+                
+                if not na(w.break_idx)
+                    // --- Fib Levels ---
+                    float fib_range   = w.break_val - w.curr_p
+                    float fv_1st      = w.curr_p + fib_range * fib_first_val
+                    float tp1         = w.curr_p + fib_range * fib_tp_val
+                    float tp2         = w.curr_p + fib_range * fib_tp2_val
+                    
+                    d.fib_1st_price  := fv_1st
+                    d.tp1_price      := tp1
+                    d.tp2_price      := tp2
+                    d.phase          := 1
+                    
+                    // --- 2nd Pivot Line ---
+                    if show_PLine
+                        d.l_pivot := line.new(w.break_idx, w.break_val, bar_index + 5, w.break_val, color=c_base, width=width_Line, style=style_Pivot)
+                        string p_txt = "2nd = " + str.tostring(w.break_val, "#,###.##")
+                        d.lbl_price := label.new(bar_index + 5, w.break_val, text=p_txt, style=label.style_label_left, color=color.new(color.white, 100), textcolor=c_base, size=lblSize)
+                    
+                    // --- 1st Pivot Line ---
+                    if show_FirstPivot
+                        int first_anchor = w.curr_idx + w.len
+                        d.l_first_pivot := line.new(first_anchor, fv_1st, bar_index + 5, fv_1st, color=col_FirstPivot, width=width_Line, style=style_FirstPivot)
+                        string fp_txt = "1st = " + str.tostring(fv_1st, "#,###.##")
+                        d.lbl_first_price := label.new(bar_index + 5, fv_1st, text=fp_txt, style=label.style_label_left, color=color.new(color.white, 100), textcolor=col_FirstPivot, size=lblSize)
+                    
+                    // --- Stop Loss ---
+                    if show_StopLoss
+                        float stop_init = ma_stop
+                        float pct_stop_init = (stop_init - close) / close * 100.0
+                        d.l_stop := line.new(bar_index, stop_init, bar_index + 5, stop_init, color=col_StopLoss, width=width_Line, style=style_StopLoss)
+                        string sl_txt = "Stop = " + str.tostring(stop_init, "#,###.##") + " (" + str.tostring(pct_stop_init, "#.#") + "%)"
+                        d.lbl_stop_price := label.new(bar_index + 5, stop_init, text=sl_txt, style=label.style_label_left, color=color.new(color.white, 100), textcolor=col_StopLoss, size=lblSize)
+                    
+                    // --- TP ---
+                    float avg_12 = (fv_1st + w.break_val) / 2.0
+                    if show_TP1
+                        float pct_1st  = (tp1 - fv_1st) / fv_1st * 100.0
+                        float pct_2nd  = (tp1 - w.break_val) / w.break_val * 100.0
+                        float pct_avg  = (tp1 - avg_12) / avg_12 * 100.0
+                        string tp1_txt = "TP1 = " + str.tostring(tp1, "#,###.##") + " (" + str.tostring(pct_1st, "#.#") + "/" + str.tostring(pct_2nd, "#.#") + "/" + str.tostring(pct_avg, "#.#") + ")"
+                        d.l_target1   := line.new(w.break_idx, tp1, bar_index + 5, tp1, color=col_Target, width=width_Line, style=style_Target)
+                        d.lbl_target1 := label.new(bar_index + 5, tp1, text=tp1_txt, style=label.style_label_left, color=color.new(color.white, 100), textcolor=col_Target, size=lblSize)
+                    if show_TP2
+                        float pct2_1st = (tp2 - fv_1st) / fv_1st * 100.0
+                        float pct2_2nd = (tp2 - w.break_val) / w.break_val * 100.0
+                        float pct2_avg = (tp2 - avg_12) / avg_12 * 100.0
+                        string tp2_txt = "TP2 = " + str.tostring(tp2, "#,###.##") + " (" + str.tostring(pct2_1st, "#.#") + "/" + str.tostring(pct2_2nd, "#.#") + "/" + str.tostring(pct2_avg, "#.#") + ")"
+                        d.l_target2   := line.new(w.break_idx, tp2, bar_index + 5, tp2, color=col_Target, width=width_Line, style=style_Target)
+                        d.lbl_target2 := label.new(bar_index + 5, tp2, text=tp2_txt, style=label.style_label_left, color=color.new(color.white, 100), textcolor=col_Target, size=lblSize)
+        
+        if w.is_setup
+            just_created := true
+            local_created := true
+        d.sig := sig
+
+    // --- Counter Trend Logic ---
+    bool draw_cnt = false
+    if show_Counter and (not w.is_setup)
+        float c_x1 = na
+        float c_y1 = na
+        float c_x2 = na
+        float c_y2 = na
+        
+        if lock_Counter and d.cnt_locked
+            c_x1 := float(d.cnt_x1)
+            c_y1 := d.cnt_y1
+            c_x2 := float(d.cnt_x2)
+            c_y2 := d.cnt_y2
+        else
+            [tx1, ty1, tx2, ty2] = get_counter_coordinates(opp_arr, w.curr_idx, true)
+            c_x1 := tx1
+            c_y1 := ty1
+            c_x2 := tx2
+            c_y2 := ty2
+
+        if not na(c_x1) and not na(c_x2)
+            draw_cnt := true
+            float m = (c_y2 - c_y1) / (c_x2 - c_x1)
+            current_cnt_val := c_y2 + m * (bar_index - c_x2)
+            int target_x = bar_index + 5
+            float target_y = c_y2 + m * (target_x - c_x2)
+            
+            line.delete(d.l_counter)
+            d.l_counter := line.new(int(c_x1), c_y1, target_x, target_y, color=col_Counter, width=width_Line, style=style_Counter, extend=extend.none)
+            
+            if lock_Counter and not d.cnt_locked
+                if close > current_cnt_val
+                    d.cnt_locked := true
+                    d.cnt_x1 := int(c_x1)
+                    d.cnt_y1 := c_y1
+                    d.cnt_x2 := int(c_x2)
+                    d.cnt_y2 := c_y2
+
+    if not draw_cnt
+        line.delete(d.l_counter)
+        d.l_counter := na
+
+    if w.is_setup
+        // Extend fixed-price lines
+        if not na(d.l_pivot)
+            line.set_x2(d.l_pivot, bar_index + 5)
+        if not na(d.lbl_price)
+            label.set_x(d.lbl_price, bar_index + 5)
+        if not na(d.l_first_pivot)
+            line.set_x2(d.l_first_pivot, bar_index + 5)
+        if not na(d.lbl_first_price)
+            label.set_x(d.lbl_first_price, bar_index + 5)
+        if not na(d.l_target1)
+            line.set_x2(d.l_target1, bar_index + 5)
+        if not na(d.lbl_target1)
+            label.set_x(d.lbl_target1, bar_index + 5)
+        if not na(d.l_target2)
+            line.set_x2(d.l_target2, bar_index + 5)
+        if not na(d.lbl_target2)
+            label.set_x(d.lbl_target2, bar_index + 5)
+        
+        // Phase Transitions
+        if d.phase == 1 and not na(w.break_val) and high >= w.break_val
+            d.phase := 2
+        if d.phase == 2 and not na(d.tp1_price) and high >= d.tp1_price
+            d.phase := 3
+        
+        // Current stop based on phase
+        float stop_current = d.phase == 1 ? ma_stop : d.phase == 2 ? d.fib_1st_price : math.max(d.fib_1st_price, ma_stop)
+        
+        // Update Stop line
+        if not na(d.l_stop)
+            line.set_x1(d.l_stop, bar_index)
+            line.set_x2(d.l_stop, bar_index + 5)
+            line.set_y1(d.l_stop, stop_current)
+            line.set_y2(d.l_stop, stop_current)
+        if not na(d.lbl_stop_price)
+            float pct_stop = (stop_current - close) / close * 100.0
+            bool stop_eq_1st = stop_current == d.fib_1st_price
+            string stop_text = (stop_eq_1st ? "Stop / 1st = " : "Stop = ") + str.tostring(stop_current, "#,###.##") + " (" + str.tostring(pct_stop, "#.#") + "%)"
+            label.set_x(d.lbl_stop_price, bar_index + 5)
+            label.set_y(d.lbl_stop_price, stop_current)
+            label.set_text(d.lbl_stop_price, stop_text)
+        // Hide 1st Pivot label when Stop overlaps it (merged into Stop label)
+        if not na(d.lbl_first_price)
+            bool hide_first_lbl = stop_current == d.fib_1st_price and not na(d.lbl_stop_price)
+            label.set_text(d.lbl_first_price, hide_first_lbl ? "" : "1st = " + str.tostring(d.fib_1st_price, "#,###.##"))
+        // Hide 1st Pivot line when Stop line overlaps it
+        if not na(d.l_first_pivot)
+            bool hide_first_line = stop_current == d.fib_1st_price and not na(d.l_stop)
+            line.set_color(d.l_first_pivot, hide_first_line ? color.new(col_FirstPivot, 100) : col_FirstPivot)
+        
+        // Fail Check (uses MA regardless of phase)
+        if not just_created
+            bool fail = low < ma_stop
+            
+            if fail
+                w.is_setup := false
+                local_fail := true
+                line.delete(d.l_trend)
+                line.delete(d.l_pivot)
+                label.delete(d.lbl_price)
+                label.delete(d.lbl_curr)
+                label.delete(d.lbl_prev)
+                d.cleanup_fib()
+                d.l_trend := na
+                d.l_pivot := na
+                d.sig := -1
+    
+    [current_cnt_val, local_fail, local_created]
+
+// --- History Cleanup & Extension ---
+if show_History and array.size(history_lines) > 0
+    for i = array.size(history_lines) - 1 to 0
+        HistoryLine hl = array.get(history_lines, i)
+        line.set_x2(hl.l, bar_index + 5)
+        if not na(hl.p)
+            label.set_x(hl.p, bar_index + 5)
+        if limit_History
+            int l_idx = line.get_x1(hl.l)
+            int dist = bar_index - l_idx
+            if dist > hist_bars
+                line.delete(hl.l)
+                label.delete(hl.p)
+                array.remove(history_lines, i)
+
+if show_Label_History and array.size(history_labels) > 0
+    for i = array.size(history_labels) - 1 to 0
+        label lb = array.get(history_labels, i)
+        if limit_History
+            int l_idx = label.get_x(lb)
+            int dist = bar_index - l_idx
+            if dist > hist_bars
+                label.delete(lb)
+                array.remove(history_labels, i)
+
+// --- Execute Drawing ---
+fail_this_bar := false
+setup_created_this_bar := false
+
+float cnt_val_long = na
+if not na(win_long)
+    [tmp_cnt, tmp_fail, tmp_created] = draw_long(win_long, states_short, d_long)
+    cnt_val_long := tmp_cnt
+    fail_this_bar := tmp_fail
+    setup_created_this_bar := tmp_created
+
+// --- Alerts (touch-based: high/low) ---
+bool alert_2nd_break   = not na(win_long) and win_long.is_setup and not na(win_long.break_val)   and ta.crossover(high, win_long.break_val)
+bool alert_1st_break   = not na(win_long) and win_long.is_setup and not na(d_long.fib_1st_price) and ta.crossover(high, d_long.fib_1st_price)
+bool alert_tp1_hit     = not na(win_long) and win_long.is_setup and not na(d_long.tp1_price)     and ta.crossover(high, d_long.tp1_price)
+bool alert_tp2_hit     = not na(win_long) and win_long.is_setup and not na(d_long.tp2_price)     and ta.crossover(high, d_long.tp2_price)
+
+float current_stop_l = d_long.phase == 1 ? ma_stop : d_long.phase == 2 ? d_long.fib_1st_price : math.max(d_long.fib_1st_price, ma_stop)
+bool alert_stop_hit    = not na(win_long) and win_long.is_setup and ta.crossunder(low, current_stop_l) and not setup_created_this_bar
+
+bool alert_cnt_break   = not na(cnt_val_long) and ta.crossover(high, cnt_val_long) and not fail_this_bar
+
+var float last_ll_val = na
+if not na(win_long)
+    last_ll_val := win_long.prev_p
+bool alert_ll_break = not na(last_ll_val) and ta.crossunder(low, last_ll_val)
+
+// --- Alerts (touch-based, fire via alert()) ---
+// Use "Any alert() function call" in the TradingView alert dialog.
+if alert_1st_break
+    alert("1st Pivot Break | " + syminfo.ticker + " | Price: " + str.tostring(close, "#,###.##"), alert.freq_once_per_bar)
+if alert_2nd_break
+    alert("2nd Pivot Break | " + syminfo.ticker + " | Price: " + str.tostring(close, "#,###.##"), alert.freq_once_per_bar)
+if alert_tp1_hit
+    alert("TP1 Hit | " + syminfo.ticker + " | Price: " + str.tostring(close, "#,###.##"), alert.freq_once_per_bar)
+if alert_tp2_hit
+    alert("TP2 Hit | " + syminfo.ticker + " | Price: " + str.tostring(close, "#,###.##"), alert.freq_once_per_bar)
+if alert_stop_hit
+    alert("Stop Hit | " + syminfo.ticker + " | Price: " + str.tostring(close, "#,###.##"), alert.freq_once_per_bar)
+if alert_ll_break
+    alert("Lower Low Break | " + syminfo.ticker + " | Price: " + str.tostring(close, "#,###.##"), alert.freq_once_per_bar)
+if alert_cnt_break
+    alert("Counter Trend Break | " + syminfo.ticker + " | Price: " + str.tostring(close, "#,###.##"), alert.freq_once_per_bar)
+
+// --- Screener Signals ---
+bool rt_1st_break = not na(win_long) and win_long.is_setup and not na(d_long.fib_1st_price) and close[1] <= d_long.fib_1st_price and close > d_long.fib_1st_price and (na(win_long.break_val) or close <= win_long.break_val)
+bool rt_2nd_break = not na(win_long) and win_long.is_setup and not na(win_long.break_val)   and close[1] <= win_long.break_val   and close > win_long.break_val   and (na(d_long.tp1_price)     or close <= d_long.tp1_price)
+bool rt_tp1_hit   = not na(win_long) and win_long.is_setup and not na(d_long.tp1_price)     and close[1] <= d_long.tp1_price     and close > d_long.tp1_price     and (na(d_long.tp2_price)     or close <= d_long.tp2_price)
+bool rt_tp2_hit   = not na(win_long) and win_long.is_setup and not na(d_long.tp2_price)     and close[1] <= d_long.tp2_price     and close > d_long.tp2_price
+bool rt_stop_hit  = not na(win_long) and win_long.is_setup and close[1] >= current_stop_l   and close < current_stop_l
+bool rt_ll_break  = not na(last_ll_val) and close[1] >= last_ll_val and close < last_ll_val
+bool rt_cnt_break = not na(cnt_val_long) and close[1] <= cnt_val_long and close > cnt_val_long
+
+alertcondition(rt_1st_break, "1st Pivot Break",     "Today broke above 1st Pivot. Price: {{close}}")
+alertcondition(rt_2nd_break, "2nd Pivot Break",     "Today broke above 2nd Pivot. Price: {{close}}")
+alertcondition(rt_tp1_hit,   "TP1 Hit",             "Today broke above TP1. Price: {{close}}")
+alertcondition(rt_tp2_hit,   "TP2 Hit",             "Today broke above TP2. Price: {{close}}")
+alertcondition(rt_stop_hit,  "Stop Hit",            "Today broke below current-phase stop. Price: {{close}}")
+alertcondition(rt_ll_break,  "Lower Low Break",     "Today broke below LL. Price: {{close}}")
+alertcondition(rt_cnt_break, "Counter Trend Break", "Today broke above Counter Trend Line. Price: {{close}}")
+
+// --- ADR% (Pine Screener only) ---
+_adrp = 100 * (ta.sma(high / low, 20) - 1)
+plot(_adrp, title = "ADR%", display = display.none)
+
+// --- Relative Strength (Pine Screener only) ---
+grp_rs    = 'Relative Strength (Screener)'
+rs_benchmark = input.symbol('SPY', 'RS Benchmark', group = grp_rs)
+rs_length    = input.int(21, 'RS Lookback (daily bars)', minval = 5, group = grp_rs)
+
+rs_clean_ticker = syminfo.prefix + ":" + syminfo.ticker
+rs_pair         = rs_clean_ticker + ' / ' + rs_benchmark
+rs_value        = request.security(rs_pair, 'D', ta.percentrank(close, rs_length), ignore_invalid_symbol = true)
+
+plot(rs_value, title = "Relative Strength", display = display.none)
+
+// --- ATR% 50SMA (Pine Screener only) ---
+_s50  = request.security(syminfo.tickerid, 'D', ta.sma(close, 50),  barmerge.gaps_off, barmerge.lookahead_off)
+_atr  = request.security(syminfo.tickerid, 'D', ta.atr(14),         barmerge.gaps_off, barmerge.lookahead_off)
+_atrx = (na(_s50) or _s50 == 0 or na(_atr) or _atr <= 0) ? na : ((close / _s50 - 1.0) / (_atr / close))
+
+plot(_atrx, title = "ATR% 50SMA", display = display.none)
