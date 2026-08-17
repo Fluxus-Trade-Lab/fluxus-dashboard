@@ -83,21 +83,48 @@ def merge_ticker_sources(portfolio: list[str], heat: list[str]) -> list[str]:
     return out
 
 
-def relevant_tickers(csv_path: Path, closed_window_days: int = 90) -> list[str]:
+def _relevant_from_trades(trades, closed_window_days: int) -> list[str]:
     """Open positions + tickers from trades closed in the last N days."""
-    trades = parse_csv(csv_path)
     cutoff = market_today() - timedelta(days=closed_window_days)
     seen = set()
     for t in trades:
-        # Always include open positions
         if not t.closed and t.current_qty > 0:
             seen.add(t.ticker)
             continue
-        # Closed within window?
         ex = t.exit_date
         if ex and ex >= cutoff:
             seen.add(t.ticker)
     return sorted(seen)
+
+
+def _sheet_trades():
+    """Live trades from the Sheet (indirection so tests can stub it)."""
+    from pipeline.portfolio.sheets_source import fetch_trades
+    return fetch_trades()
+
+
+def relevant_tickers_from_sheet(closed_window_days: int = 90) -> list[str] | None:
+    """Same relevance rule as `relevant_tickers`, read straight off the Sheet
+    the browser writes to. Returns None (not []) when the Sheet is
+    unavailable -- no credentials, GAS cold-start timeout -- so the caller can
+    fall back rather than fetch nothing and call it done.
+
+    Why: the OHLC store was refreshed by hand from a CSV export; every name
+    opened after the last export had no OHLC and trade_postmortem skipped it
+    (7/355 on 2026-08-16, all of them current open positions).
+    """
+    from pipeline.portfolio.sheets_source import SheetsUnavailable
+    try:
+        trades = _sheet_trades()
+    except SheetsUnavailable as e:
+        logger.warning(f"Sheet unavailable ({e}); portfolio tickers not refreshed from Sheet")
+        return None
+    return _relevant_from_trades(trades, closed_window_days)
+
+
+def relevant_tickers(csv_path: Path, closed_window_days: int = 90) -> list[str]:
+    """Open positions + tickers from trades closed in the last N days (CSV)."""
+    return _relevant_from_trades(parse_csv(csv_path), closed_window_days)
 
 
 def run(tickers: list[str], output_dir: Path, sleep_between: float = 0.3) -> dict:
@@ -150,6 +177,9 @@ def main(argv: list[str] | None = None) -> None:
                    help='Portfolio CSV (defaults to latest in data/portfolio/)')
     p.add_argument('--tickers', type=str, default=None,
                    help='Comma-separated explicit ticker list (overrides --input)')
+    p.add_argument('--source', choices=['auto', 'sheet', 'csv'], default='auto',
+                   help='Portfolio tickers from the live Sheet, the CSV export, or Sheet '
+                        'with CSV fallback (default auto)')
     p.add_argument('--output', type=Path, default=OUTPUT_DIR)
     p.add_argument('--closed-days', type=int, default=90,
                    help='Include tickers closed within N days (default 90)')
@@ -166,12 +196,21 @@ def main(argv: list[str] | None = None) -> None:
         portfolio_count = len(tickers)
         heat_only_count = 0
     else:
-        csv = args.input or find_latest_csv(Path('data/portfolio'))
-        if not csv or not csv.exists():
-            print("ERROR: no portfolio CSV found and no --tickers given", file=sys.stderr)
-            sys.exit(1)
-        logger.info(f"Auto-detecting tickers from {csv}")
-        portfolio_list = relevant_tickers(csv, args.closed_days)
+        portfolio_list = None
+        if args.source in ('auto', 'sheet'):
+            portfolio_list = relevant_tickers_from_sheet(args.closed_days)
+            if portfolio_list is not None:
+                logger.info(f"Portfolio tickers from the Sheet: {len(portfolio_list)}")
+            elif args.source == 'sheet':
+                print("ERROR: Sheet unavailable and --source sheet was requested", file=sys.stderr)
+                sys.exit(1)
+        if portfolio_list is None:
+            csv = args.input or find_latest_csv(Path('data/portfolio'))
+            if not csv or not csv.exists():
+                print("ERROR: no portfolio CSV found and no --tickers given", file=sys.stderr)
+                sys.exit(1)
+            logger.info(f"Auto-detecting tickers from {csv}")
+            portfolio_list = relevant_tickers(csv, args.closed_days)
         heat_top = 0 if args.no_heat else args.heat_top
         heat_list = heat_tickers(args.heating_up, heat_top)
         tickers = merge_ticker_sources(portfolio_list, heat_list)

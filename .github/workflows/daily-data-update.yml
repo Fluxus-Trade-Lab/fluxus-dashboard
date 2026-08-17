@@ -52,6 +52,26 @@ jobs:
       # and a book that is one day stale is a smaller problem than a market
       # pipeline that does not publish. The step's own failure is visible in
       # the run; the freshness of the output is asserted below.
+      # The per-ticker OHLC store (data/output/tickers/) was refreshed by hand
+      # from a CSV export, so every name opened after the last export had no
+      # OHLC and the post-mortems skipped it -- 7/355 on 2026-08-16, all of
+      # them current open positions. Portfolio names now come straight off the
+      # Sheet (open + closed within 90 days) plus the top-25 heat list. Runs
+      # BEFORE the post-mortems so they find the bars.
+      - name: Refresh ticker OHLC store (Sheet positions + heat list)
+        continue-on-error: true
+        run: |
+          if [ -z "$FLUXUS_GAS_URL" ] || [ -z "$FLUXUS_SYNC_TOKEN" ]; then
+            echo "Sheets credentials not configured — skipping ticker refresh."
+            exit 0
+          fi
+          python -m pipeline.tickers.run_tickers --source sheet
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          TZ: UTC
+          FLUXUS_GAS_URL: ${{ secrets.FLUXUS_GAS_URL }}
+          FLUXUS_SYNC_TOKEN: ${{ secrets.FLUXUS_SYNC_TOKEN }}
+
       - name: Refresh trade post-mortems
         continue-on-error: true
         run: |
@@ -70,6 +90,16 @@ jobs:
           TZ: UTC
           FLUXUS_GAS_URL: ${{ secrets.FLUXUS_GAS_URL }}
           FLUXUS_SYNC_TOKEN: ${{ secrets.FLUXUS_SYNC_TOKEN }}
+
+      # Delayed-EP watch: append today's stage for every EP fired 3-15 sessions
+      # ago, so the classifier's thresholds can be judged on outcomes after a
+      # few days instead of on one snapshot. Optional -- never fails the run.
+      - name: Archive Delayed-EP stages
+        continue-on-error: true
+        run: python -m pipeline.tools.delayed_ep_scan --archive --quiet-print
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          TZ: UTC
 
       - name: Validate outputs
         run: |

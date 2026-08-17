@@ -61,3 +61,19 @@ class TestStages:
     def test_ep_day_must_be_in_bars_and_not_last(self):
         assert classify(bars(BASE), EP_DATE) is None
         assert classify(bars(BASE + [EP]), EP_DATE) is None
+
+
+class TestArchive:
+    def test_idempotent_per_as_of_and_appends_across_dates(self, tmp_path):
+        from pipeline.tools.delayed_ep_scan import archive, LOG_FIELDS
+        import csv
+        post = [(124, 126, 122, 124, 900_000)] * 5
+        d = classify(bars(BASE + [EP] + post), EP_DATE, ticker="T")
+        log = tmp_path / "log.csv"
+        assert archive([d], "2026-08-14", log) == 1
+        assert archive([d], "2026-08-14", log) == 1          # re-run same day: replaced, not doubled
+        assert archive([d], "2026-08-15", log) == 1
+        rows = list(csv.DictReader(log.open()))
+        assert len(rows) == 2 and {r["as_of"] for r in rows} == {"2026-08-14", "2026-08-15"}
+        assert list(rows[0].keys()) == LOG_FIELDS
+        assert rows[0]["stage"] == "basing"

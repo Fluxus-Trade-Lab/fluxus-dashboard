@@ -106,3 +106,40 @@ class TestMergeTickerSources:
     def test_empty_portfolio_returns_heat(self):
         from pipeline.tickers.run_tickers import merge_ticker_sources
         assert merge_ticker_sources([], ['APPS', 'MU']) == ['APPS', 'MU']
+
+
+class TestPortfolioTickersFromSheet:
+    """The OHLC store used to be refreshed by hand from a CSV export, so names
+    opened after the last export had no OHLC and trade_postmortem skipped them
+    (7/355 on 2026-08-16, all current open positions). The portfolio side of
+    the fetch set now comes straight from the Sheet the browser writes to."""
+
+    def _trade(self, ticker, closed, qty, exit_days_ago=None):
+        from datetime import date, timedelta
+        from pipeline.portfolio.trade_parser import Trade, TrimEvent
+        from pipeline.marketcal import market_today
+        trims = []
+        if closed:
+            d = market_today() - timedelta(days=exit_days_ago)
+            trims = [TrimEvent(date=d, price=10.0, qty=qty or 1, type="sell")]
+        return Trade(ticker=ticker, direction="long", sector="Tech", entry_date=date(2026, 1, 5),
+                     entry_price=10.0, original_qty=qty or 1, current_qty=qty,
+                     stop_price=9.0, initial_stop=9.0, closed=closed, trims=tuple(trims))
+
+    def test_open_positions_and_recent_closes_only(self, monkeypatch):
+        from pipeline.tickers import run_tickers as RT
+        trades = [self._trade("HPE", False, 100), self._trade("RBRK", False, 50),
+                  self._trade("OLD", True, 0, exit_days_ago=200),
+                  self._trade("NEW", True, 0, exit_days_ago=10)]
+        monkeypatch.setattr(RT, "_sheet_trades", lambda: trades)
+        assert RT.relevant_tickers_from_sheet(90) == ["HPE", "NEW", "RBRK"]
+
+    def test_sheet_unavailable_returns_none_not_empty(self, monkeypatch):
+        """No credentials / GAS down must not be mistaken for 'no positions':
+        the caller falls back to the CSV or skips, it never fetches nothing
+        and calls it done."""
+        from pipeline.tickers import run_tickers as RT
+        from pipeline.portfolio.sheets_source import SheetsUnavailable
+        def boom(): raise SheetsUnavailable("no env")
+        monkeypatch.setattr(RT, "_sheet_trades", boom)
+        assert RT.relevant_tickers_from_sheet(90) is None

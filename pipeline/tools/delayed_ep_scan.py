@@ -31,6 +31,18 @@ so this is cheap. Nothing here is written to universe.json yet -- this is the
 "let's see the list first" version.
 
 Run:  python -m pipeline.tools.delayed_ep_scan [--as-of 2026-08-14] [--stage breaking]
+      python -m pipeline.tools.delayed_ep_scan --archive          # append to the daily log
+      python -m pipeline.tools.delayed_ep_scan --review           # what became of past stages
+
+Monitoring (Andy, 2026-08-17: "design the watch, report back in a few days"):
+--archive appends one row per (as-of, ticker) to data/history/delayed_ep_log.csv,
+idempotent per as-of date; the cron runs it nightly. --review joins the log to
+current prices and answers the questions that decide the thresholds:
+  * of the names logged 'basing', how many later logged 'breaking' / 'failed'?
+  * forward return from the first 'breaking' day, 5 and 10 sessions on;
+  * forward return from the first 'basing' day, ditto;
+  * how often 'failed' names (EP-low undercut) went on to make new highs anyway
+    -- the AXTI/LIFE question: is 'held' too strict?
 """
 
 from __future__ import annotations
@@ -51,6 +63,10 @@ import pandas as pd  # noqa: E402
 warnings.filterwarnings("ignore")
 EVENTS = Path("data/history/ticker_events.csv")
 UNIVERSE = Path("data/output/universe.json")
+LOG = Path("data/history/delayed_ep_log.csv")
+LOG_FIELDS = ["as_of", "ticker", "ep_date", "days_since", "stage", "held", "near", "contracting",
+              "breakout", "close", "vs_ep_close_pct", "ep_range_pct", "recent_range_pct",
+              "base_high", "today_change_pct", "today_relvol", "ep_change", "ep_relvol"]
 
 
 @dataclass
@@ -131,8 +147,88 @@ def load_candidates(as_of: str, min_days: int, max_days: int) -> dict:
     return out
 
 
+def archive(rows, as_of: str, path: Path = LOG) -> int:
+    """Append today's rows; replace any existing rows for the same as-of."""
+    import csv as _csv
+    old = []
+    if path.exists():
+        with path.open(newline="") as fh:
+            old = [r for r in _csv.DictReader(fh) if r.get("as_of") != as_of]
+    new = [{"as_of": as_of, **{k: getattr(d, k) for k in LOG_FIELDS if k != "as_of"}} for d in rows]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="") as fh:
+        w = _csv.DictWriter(fh, fieldnames=LOG_FIELDS)
+        w.writeheader()
+        for r in [*old, *new]:
+            w.writerow({k: r.get(k, "") for k in LOG_FIELDS})
+    return len(new)
+
+
+def review(path: Path = LOG, horizons=(5, 10)) -> None:
+    """What became of past stages. Reads the log, pulls current bars for the
+    tickers in it, prints transition counts and forward returns."""
+    import csv as _csv
+    import yfinance as yf
+    if not path.exists():
+        print("no log yet"); return
+    with path.open(newline="") as fh:
+        log = list(_csv.DictReader(fh))
+    if not log:
+        print("empty log"); return
+    dates = sorted({r["as_of"] for r in log})
+    print(f"log: {len(log)} rows, {len(dates)} sessions ({dates[0]} .. {dates[-1]}), "
+          f"{len({r['ticker'] for r in log})} tickers")
+    # stage transitions per ticker
+    by_t = {}
+    for r in sorted(log, key=lambda r: (r["ticker"], r["as_of"])):
+        by_t.setdefault(r["ticker"], []).append(r)
+    trans = {}
+    first_stage_day = {}
+    for t, rs in by_t.items():
+        seq = [r["stage"] for r in rs]
+        for a, b in zip(seq, seq[1:]):
+            if a != b:
+                trans[(a, b)] = trans.get((a, b), 0) + 1
+        for r in rs:
+            first_stage_day.setdefault((t, r["stage"]), r)
+    print("\nstage transitions (from -> to: count):")
+    for (a, b), n in sorted(trans.items(), key=lambda x: -x[1]):
+        print(f"  {a:>9} -> {b:<9} {n}")
+    # forward returns from first 'breaking' / 'basing' / 'failed' day
+    tickers = sorted(by_t)
+    data = yf.download(tickers, period="90d", interval="1d", group_by="ticker",
+                       auto_adjust=False, progress=False, threads=True)
+    def close_on_or_after(t, d, k):
+        try:
+            s = (data[t]["Close"] if len(tickers) > 1 else data["Close"]).dropna()
+        except KeyError:
+            return None
+        s = s[s.index >= pd.Timestamp(d)]
+        return float(s.iloc[k]) if len(s) > k else None
+    print("\nforward return from the FIRST day a name was logged in a stage "
+          "(median / n; needs that many later sessions):")
+    for stage in ("breaking", "basing", "failed"):
+        for h in horizons:
+            rets = []
+            for (t, st), r in first_stage_day.items():
+                if st != stage:
+                    continue
+                c0 = float(r["close"]); ck = close_on_or_after(t, r["as_of"], h)
+                if ck:
+                    rets.append(ck / c0 - 1)
+            if rets:
+                rets.sort()
+                print(f"  {stage:>9} +{h:>2}d: median {rets[len(rets)//2]*100:+.1f}%  "
+                      f"n={len(rets)}  >0: {sum(1 for x in rets if x > 0)/len(rets)*100:.0f}%")
+            else:
+                print(f"  {stage:>9} +{h:>2}d: (not enough sessions yet)")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--archive", action="store_true", help="append today's rows to the log")
+    ap.add_argument("--review", action="store_true", help="what became of past stages")
+    ap.add_argument("--quiet-print", action="store_true", help="only the summary line")
     ap.add_argument("--as-of", default=None, help="last session (default: newest bar)")
     ap.add_argument("--min-days", type=int, default=3)
     ap.add_argument("--max-days", type=int, default=15)
@@ -140,9 +236,11 @@ def main() -> None:
     ap.add_argument("--contract", type=float, default=0.60)
     ap.add_argument("--stage", default=None, help="only print this stage")
     a = ap.parse_args()
+    if a.review:
+        review(); return
     import yfinance as yf
-
-    as_of = a.as_of or pd.Timestamp.today().strftime("%Y-%m-%d")
+    from pipeline.marketcal import last_completed_session
+    as_of = a.as_of or last_completed_session().strftime("%Y-%m-%d")
     cands = load_candidates(as_of, a.min_days, a.max_days)
     tickers = sorted(cands)
     print(f"EP firings in window: {len(tickers)} tickers (as of {as_of})")
@@ -173,6 +271,11 @@ def main() -> None:
     if a.stage:
         rows = [d for d in rows if d.stage == a.stage]
     print(f"{len(rows)} in the {a.min_days}-{a.max_days} session window\n")
+    if a.archive:
+        n = archive(rows, as_of)
+        print(f"archived {n} rows for {as_of} -> {LOG}")
+    if a.quiet_print:
+        return
     print(f"{'stage':<9}{'tk':<6}{'EP date':<11}{'d':>3}{'EPchg':>7}{'EPrv':>6}{'vsEP%':>7}"
           f"{'EPrng%':>7}{'5drng%':>7}{'held':>5}{'todaychg':>9}{'rv':>5}{'vcs':>5}{'rs21':>5}{'mcap':>6}")
     for d in rows:
