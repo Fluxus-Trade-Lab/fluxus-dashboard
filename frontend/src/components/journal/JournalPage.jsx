@@ -7,6 +7,7 @@ import PageHeader from '../PageHeader'
 import { useLanguage } from '../../i18n/LanguageContext'
 import HeadCoach from './HeadCoach'
 import HoldCaptureSection from './analytics/HoldCaptureSection'
+import AfterLossSection from './analytics/AfterLossSection'
 import { STAGES } from './lib/headCoach'
 
 /**
@@ -46,6 +47,9 @@ const SECTIONS = {
     { key: 'volatility', label: 'Volatility' },
   ],
   stop: [
+    // First, because "when do I step away" is the stage's question and this is
+    // the only section here that tests an answer to it.
+    { key: 'after-loss', label: 'After a loss' },
     // Sharpe, Sortino, max drawdown — arrived from the Portfolio page. How much
     // damage this way of trading takes before it pays.
     { key: 'risk-adjusted', label: 'Risk-adjusted' },
@@ -117,6 +121,8 @@ export default function JournalPage() {
 
       {section === 'hold-capture' ? (
         <HoldCaptureSection />
+      ) : section === 'after-loss' ? (
+        <AfterLossSection />
       ) : section === 'sizing' ? (
         <SizingTab />
       ) : section === 'stop-sim' ? (
