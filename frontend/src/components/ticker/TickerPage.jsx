@@ -41,7 +41,9 @@ export default function TickerPage({ symbol }) {
 
 function TickerPageBody({ symbol }) {
   const { state, dispatch } = usePortfolio()
-  const { universe } = useUniverse()
+  // A lookup, not a result: a name that has fallen under the tradeable
+  // floor must still open when he types it.
+  const { all: universe } = useUniverse()
   const { data: tickerData } = useTickerData(symbol)
 
   const universeRow = useMemo(() => {

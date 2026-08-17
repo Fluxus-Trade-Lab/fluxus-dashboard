@@ -31,7 +31,11 @@ const pct = (v) =>
   v == null || !Number.isFinite(v) ? '—' : `${v > 0 ? '+' : ''}${(v * 100).toFixed(1)}%`
 
 export default function ThemeMembers({ theme, colour, rsByTicker }) {
-  const { universe } = useUniverse()
+  // The full rows, not the tradeable cut. This panel counts members it
+  // cannot find as MISSING from the universe, so filtering here would
+  // report a theme's untradeable constituents as gone — a description of
+  // what a theme is made of, not a list of what to buy.
+  const { all: universe } = useUniverse()
 
   // Eight rows of height, not eight rows of data. Every member is rendered;
   // the box is sized to show eight and scrolls for the rest, so the panel's

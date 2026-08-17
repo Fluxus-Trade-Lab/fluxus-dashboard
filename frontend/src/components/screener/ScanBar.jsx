@@ -84,7 +84,7 @@ export default function ScanBar({
   gates, gateCounts, onToggleGate,
   themes, theme, onTheme,
   search, onSearch,
-  receipt, hiddenNote,
+  receipt, hiddenNote, gateNote, gateOn,
 }) {
   const { t: tr } = useLanguage()
   const [themeQuery, setThemeQuery] = useState('')
@@ -205,6 +205,13 @@ export default function ScanBar({
 
         <span className="ml-auto text-[11px] text-[var(--color-text-muted)]"
               title={hiddenNote || undefined}>{receipt}</span>
+        {/* Whether the tradeable gate is in force. Stated either way: a filter
+            the reader assumes is on, and is not, is worse than no filter. */}
+        {gateNote && (
+          <span className={`text-[10px] font-mono ${gateOn
+            ? 'text-[var(--color-text-muted)]'
+            : 'text-[var(--color-signal-caution)]'}`}>· {gateNote}</span>
+        )}
       </div>
     </div>
   )

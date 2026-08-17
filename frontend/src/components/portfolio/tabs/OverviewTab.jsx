@@ -22,7 +22,9 @@ export default function OverviewTab({
 }) {
   const { state, dispatch } = usePortfolio()
   const { fetchFullHistory } = usePrices()
-  const { universe } = useUniverse()
+  // His own positions — one dropping under the tradeable floor must not
+  // vanish from his own book.
+  const { all: universe } = useUniverse()
   const { t: tr } = useLanguage()
   const pm = state.privacyMode
   const [showMA20, setShowMA20] = useState(true)

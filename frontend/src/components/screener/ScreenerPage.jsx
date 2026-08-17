@@ -67,7 +67,7 @@ function loadQuery() {
 }
 
 export default function ScreenerPage() {
-  const { universe, loading } = useUniverse()
+  const { universe, loading, gated, dropped } = useUniverse()
   const groups = useGroups()
   const heat = useHeatingUp()
   const { data: market } = useMarketData()
@@ -321,6 +321,10 @@ export default function ScreenerPage() {
         themes={groups.themes} theme={theme} onTheme={setTheme}
         search={search} onSearch={setSearch}
         receipt={receipt}
+        gateNote={gated
+          ? `${dropped.toLocaleString()} untradeable names are not in this table`
+          : 'the tradeable column has not shipped yet — this table still includes names you cannot trade'}
+        gateOn={gated}
         hiddenNote={noState ? `${noState} rows carry no state and are not shown` : null} />
       {viewReady ? (
         // key: normalized search only — a trailing space changes nothing
