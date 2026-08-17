@@ -36,6 +36,10 @@ const SECTIONS = {
     { key: 'breakout', label: 'Breakout' },
   ],
   size: [
+    // Already built and, until now, unreachable: retiring the Summary layer
+    // took PositionSizeChart with it, and the correlation it computes is
+    // exactly this stage's question. Surfaced rather than rebuilt.
+    { key: 'size-vs-r', label: 'Size vs R' },
     { key: 'sizing', label: 'Sizing' },
   ],
   hold: [
@@ -64,7 +68,7 @@ const SECTIONS = {
 
 /** Sections that live inside AnalyticsTab and are reached by its own key. */
 const ANALYTICS_KEYS = new Set(['trim-stops', 'volatility', 'demon-finder', 'behavior',
-                                'diagnosis', 'risk-adjusted'])
+                                'diagnosis', 'risk-adjusted', 'size-vs-r'])
 
 export default function JournalPage() {
   const { t } = useLanguage()
@@ -81,6 +85,24 @@ export default function JournalPage() {
       <PageHeader group="book" title={t('nav.journal')} />
 
       <HeadCoach onGo={pickStage} />
+
+      {/* Andy's own words about the same period the verdict above is about.
+          Retiring the Summary layer took this with it — it holds a textarea
+          writing into monthlyReviews, so the restructure made his own writing
+          unreachable. Nothing was lost (the portfolio still persists and syncs
+          it), but an entrance that disappears is how writing gets abandoned.
+          It sits with the head coach rather than inside a stage because it is
+          about the period, not about one part of a trade. */}
+      <details className="mb-5">
+        <summary className="text-[11px] font-mono uppercase tracking-[.18em]
+                            text-[var(--color-text-muted)] cursor-pointer list-none
+                            hover:text-[var(--color-text)]">
+          {t('rev.monthly')} +
+        </summary>
+        <div className="mt-3">
+          <AnalyticsTab initialSection="monthly-review" />
+        </div>
+      </details>
 
       {/* The four stages, in the order a trade lives through them. */}
       <div className="flex gap-1 mb-3 flex-wrap">
@@ -107,7 +129,7 @@ export default function JournalPage() {
       </p>
 
       <div className="flex gap-1 mb-5 flex-wrap">
-        {SECTIONS[stage].map(({ key, label }) => (
+        {SECTIONS[stage].map(({ key }) => (
           <button
             key={key}
             onClick={() => setSection(key)}

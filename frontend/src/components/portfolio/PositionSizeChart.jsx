@@ -59,7 +59,7 @@ export default function PositionSizeChart({ enrichedTrades, performanceData, sta
         </span>
       </div>
       <div className="text-[11px] text-[var(--color-text-muted)] mb-2">
-        Same order as the RR chart · notional ÷ equity at entry · green = won, red = lost. Corr ≈ 0 means size doesn't predict which trades work — sizing adds no edge.
+        Same order as the RR chart · notional ÷ equity at entry · blue = won, red = lost. Corr ≈ 0 means size doesn't predict which trades work — sizing adds no edge.
       </div>
       <ResponsiveContainer width="100%" height={220}>
         <BarChart data={data} margin={{ top: 5, right: 8, left: -10, bottom: 0 }}>

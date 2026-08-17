@@ -11,9 +11,11 @@ import DemonFinderSection from './analytics/DemonFinderSection'
 import BehaviorSection from './analytics/BehaviorSection'
 import BehaviorDiagnosisSection from './analytics/BehaviorDiagnosisSection'
 import RiskAdjustedSection from './analytics/RiskAdjustedSection'
+import PositionSizeChart from '../portfolio/PositionSizeChart'
 
 const SUB_TABS = [
   { key: 'summary', label: 'Summary' },
+  { key: 'size-vs-r', label: 'Size vs R' },
   { key: 'risk-adjusted', label: 'Risk-adjusted' },
   { key: 'diagnosis', label: 'Diagnosis' },
   { key: 'demon-finder', label: 'Demon Finder' },
@@ -168,6 +170,13 @@ function AnalyticsTabInner({ initialSection }) {
           am I carrying right now", which is the Portfolio page's question, and
           it moved there. What arrived in its place is the equity curve's
           risk-adjusted statistics, which are about a long past. */}
+      {/* The sizing stage's question, and it was already answered here — this
+          chart computes the size-to-R correlation. It lived inside Summary,
+          which the restructure retired, so it was unreachable until now. */}
+      {activeTab === 'size-vs-r' && (
+        <PositionSizeChart enrichedTrades={enriched} performanceData={performanceData}
+                           startingCapital={startingCapital} />
+      )}
       {activeTab === 'risk-adjusted' && (
         <RiskAdjustedSection riskMetrics={riskMetrics} benchmarkTicker={benchmarkTicker} />
       )}
