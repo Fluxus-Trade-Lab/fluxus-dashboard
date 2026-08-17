@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { datesWithEntries, loadEntry, saveEntry, todayKey, weekKey } from '../lib/writingStore'
 import EntryNav from './EntryNav'
+import SaveState from './SaveState'
 
 /**
  * A dated slot for words Andy writes himself, with its own back-catalogue.
@@ -36,6 +37,7 @@ export default function WritingSlot({
   const [text, setText] = useState(() => loadEntry(kind, current))
   const [history, setHistory] = useState(() => datesWithEntries(kind))
   const timer = useRef(null)
+  const [dirty, setDirty] = useState(false)
   // The flush-on-leave effect must see the newest text without depending on
   // it. Depending on `text` re-ran that effect every keystroke, and its
   // cleanup cancelled the debounce it was meant to back up — every character
@@ -50,10 +52,12 @@ export default function WritingSlot({
   // source of truth while typing, so a failed write never eats a character.
   const onChange = useCallback((v) => {
     setText(v)
+    setDirty(true)
     clearTimeout(timer.current)
     timer.current = setTimeout(() => {
       saveEntry(kind, date, v)
       setHistory(datesWithEntries(kind))
+      setDirty(false)
     }, 600)
   }, [kind, date])
 
@@ -67,6 +71,16 @@ export default function WritingSlot({
     }
   }, [kind, date])
 
+  // Explicit save: the autosave is invisible and these words cannot be
+  // regenerated, so there is a way to make it happen and see that it did.
+  const saveNow = useCallback(() => {
+    clearTimeout(timer.current)
+    timer.current = null
+    saveEntry(kind, date, latest.current)
+    setHistory(datesWithEntries(kind))
+    setDirty(false)
+  }, [kind, date])
+
   const isCurrent = date === current
 
   const written = new Set([...history, ...(text.trim() ? [date] : [])]).size
@@ -78,8 +92,11 @@ export default function WritingSlot({
       <div className="flex items-baseline justify-between gap-3">
         <span className="text-[10px] font-mono uppercase tracking-[.24em]
                          text-[var(--color-text-muted)]">{label}</span>
-        <EntryNav dates={history} date={date} current={current}
-                  cadence={cadence} onPick={setDate} />
+        <div className="flex items-center gap-3">
+          <SaveState onSave={saveNow} dirty={dirty} />
+          <EntryNav dates={history} date={date} current={current}
+                    cadence={cadence} onPick={setDate} />
+        </div>
       </div>
 
       <textarea

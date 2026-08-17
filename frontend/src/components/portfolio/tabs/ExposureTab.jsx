@@ -1,3 +1,4 @@
+import RiskSection from '../../journal/analytics/RiskSection'
 import { useState, useMemo, Fragment } from 'react'
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, ReferenceLine } from 'recharts'
 import { usePortfolio } from '../context/PortfolioContext'
@@ -7,7 +8,9 @@ import TickerLink from '../../ticker/TickerLink'
 import { groupByCampaigns } from '../lib/campaign'
 import { fmtCur, fmtPct, fmt, clr, SECTOR_COLORS, MASK } from '../lib/portfolioFormat'
 
-export default function ExposureTab({ openTrades, mergedHoldingsData, performanceData, capitalEfficiency }) {
+export default function ExposureTab({ openTrades, mergedHoldingsData, performanceData,
+                                     capitalEfficiency, enriched, heatData, sectorData,
+                                     dailyPrices, spyHistory, portfolioValue }) {
   const { state } = usePortfolio()
   const pm = state.privacyMode
 
@@ -258,6 +261,14 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
           </tbody>
         </table>
       </div>
+      {/* Beta-weighted exposure, arrived from Review. Same subject as everything
+          above — how much of the book is at risk right now — seen through the
+          market's own sensitivity rather than through dollars. It was the only
+          section on that page reading open positions. */}
+      <RiskSection openTrades={openTrades} enriched={enriched} heatData={heatData}
+                   sectorData={sectorData} dailyPrices={dailyPrices}
+                   spyHistory={spyHistory} portfolioValue={portfolioValue} />
+
     </div>
   )
 }

@@ -1,5 +1,5 @@
-import StatCard from '../ui/StatCard'
-import { fmtPct, fmt, clr, RISK_FREE_RATE } from '../lib/portfolioFormat'
+import StatCard from '../../portfolio/ui/StatCard'
+import { fmtPct, fmt, clr, RISK_FREE_RATE } from '../../portfolio/lib/portfolioFormat'
 
 const METRIC_NOTES = {
   annualizedReturn: {
@@ -32,9 +32,18 @@ const METRIC_NOTES = {
   },
 }
 
-export default function RiskTab({ riskMetrics, benchmarkTicker }) {
+/**
+ * Sharpe, Sortino, max drawdown, alpha — read off the equity curve.
+ *
+ * These were on the Portfolio page, which answers "what am I carrying right
+ * now". They are not that: they are statistics about a long past, and what
+ * they tell you is how much damage this way of trading takes before it pays.
+ * That is the question the stopping stage asks, so they live here now. The
+ * beta-weighted exposure that was here went the other way, to Portfolio.
+ */
+export default function RiskAdjustedSection({ riskMetrics, benchmarkTicker }) {
   if (!riskMetrics) {
-    return <div className="text-center py-16 text-[var(--color-text-muted)]">Need ~20 trading days of data. Load history on the Performance tab.</div>
+    return <div className="text-center py-16 text-[var(--color-text-muted)]">Need ~20 trading days of data. Load history on the Portfolio page.</div>
   }
 
   const metrics = [

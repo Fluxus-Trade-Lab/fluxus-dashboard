@@ -1,5 +1,6 @@
 import { useState, useRef, useMemo, useEffect, useCallback } from 'react'
 import { usePortfolio } from './context/PortfolioContext'
+import { computePortfolioHeat } from './lib/diagnostics'
 import { computeCashUsed, enrichTrades, computeMonthlyStats, computeYtdStats, computeRiskMetrics, computeSectorData, computeHoldingsData, computeMergedHoldingsData } from './lib/calculations'
 import { buildEquityCurve } from './lib/equityCurve'
 import { computeReturnOnDeployed } from './lib/capitalEfficiency'
@@ -15,7 +16,6 @@ import TrimModal from './TrimModal'
 import SettingsPanel from './SettingsPanel'
 import OverviewTab from './tabs/OverviewTab'
 import ExposureTab from './tabs/ExposureTab'
-import RiskTab from './tabs/RiskTab'
 // OptionsTab is off the tab bar (Andy, 2026-08-17: "可以暂时下线"). The file
 // and its route back are intact — this is an unwiring, not a deletion.
 // import OptionsTab from './tabs/OptionsTab'
@@ -23,7 +23,11 @@ import InputField from './ui/InputField'
 import Button from './ui/Button'
 import PageHeader from '../PageHeader'
 
-const TAB_KEYS = ['pf.tab.overview', 'pf.tab.exposure', 'pf.tab.risk']
+// Two tabs. "Risk" held Sharpe/Sortino/max-drawdown — statistics about a long
+// past, which is Review's question, not this page's; they moved there. What
+// came back is the beta-weighted exposure of the OPEN book, and that is the
+// same subject as Exposure seen from a second angle, so they are one tab.
+const TAB_KEYS = ['pf.tab.overview', 'pf.tab.exposure']
 
 export default function Layout() {
   const { state, dispatch } = usePortfolio()
@@ -127,10 +131,13 @@ export default function Layout() {
     () => computeYtdStats(enrichedTrades, totalReturnPct),
     [enrichedTrades, totalReturnPct]
   )
-  const riskMetrics = useMemo(
-    () => computeRiskMetrics(performanceData, state.benchmarkTicker),
-    [performanceData, state.benchmarkTicker]
+  // Arrived with the beta-weighted exposure section from Review, which reads
+  // both. Computed here rather than inside ExposureTab so the tab stays a view.
+  const heatData = useMemo(
+    () => computePortfolioHeat(openTrades, state.dailyPrices, totalPortfolioValue),
+    [openTrades, state.dailyPrices, totalPortfolioValue]
   )
+
   const sectorData = useMemo(() => computeSectorData(openTrades), [openTrades])
   const holdingsData = useMemo(() => computeHoldingsData(openTrades), [openTrades])
   const mergedHoldingsData = useMemo(() => computeMergedHoldingsData(openTrades), [openTrades])
@@ -358,8 +365,7 @@ export default function Layout() {
             migrated in storage (the tab may come back, and a migration would
             forget where they were). */}
         {tabIx === 0 && <OverviewTab performanceData={performanceData} totalReturnPct={totalReturnPct} monthlyStats={monthlyStats} ytdStats={ytdStats} enrichedTrades={enrichedTrades} onTrim={setTrimModal} />}
-        {tabIx === 1 && <ExposureTab openTrades={openTrades} sectorData={sectorData} holdingsData={holdingsData} mergedHoldingsData={mergedHoldingsData} performanceData={performanceData} capitalEfficiency={capitalEfficiency} />}
-        {tabIx === 2 && <RiskTab riskMetrics={riskMetrics} benchmarkTicker={state.benchmarkTicker} />}
+        {tabIx === 1 && <ExposureTab openTrades={openTrades} enriched={enrichedTrades} sectorData={sectorData} holdingsData={holdingsData} mergedHoldingsData={mergedHoldingsData} performanceData={performanceData} capitalEfficiency={capitalEfficiency} dailyPrices={state.dailyPrices} spyHistory={state.benchmarkHistories?.SPY || []} portfolioValue={totalPortfolioValue} heatData={heatData} />}
 
         {/* Split-adjustment notices — collapsed by default at the bottom of the
             Overview to keep the visual noise down. */}

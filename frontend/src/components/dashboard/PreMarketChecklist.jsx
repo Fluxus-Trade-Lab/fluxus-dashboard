@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import EntryNav from '../EntryNav'
+import SaveState from '../SaveState'
 import { datesWithEntries, loadRecord, saveRecord, todayKey } from '../../lib/writingStore'
 
 const QUESTIONS = [
@@ -52,6 +53,7 @@ export default function PreMarketChecklist() {
   })
   const [history, setHistory] = useState(() => datesWithEntries(KIND))
   const noteTimerRef = useRef(null)
+  const [dirty, setDirty] = useState(false)
   const latest = useRef(state)
   latest.current = state
 
@@ -79,8 +81,12 @@ export default function PreMarketChecklist() {
 
   const setNote = useCallback((value) => {
     setState(prev => ({ ...prev, note: value }))
+    setDirty(true)
     clearTimeout(noteTimerRef.current)
-    noteTimerRef.current = setTimeout(() => persist({ ...latest.current, note: value }), 500)
+    noteTimerRef.current = setTimeout(() => {
+      persist({ ...latest.current, note: value })
+      setDirty(false)
+    }, 500)
   }, [persist])
 
   // Flush a pending keystroke on unmount or on stepping away. Deps exclude the
@@ -93,6 +99,13 @@ export default function PreMarketChecklist() {
     }
   }, [date])
 
+  const saveNow = useCallback(() => {
+    clearTimeout(noteTimerRef.current)
+    noteTimerRef.current = null
+    persist(latest.current)
+    setDirty(false)
+  }, [persist])
+
   const answeredCount = Object.keys(state.answers).length
   const totalCount = QUESTIONS.length
   const readOnlyDay = date !== today
@@ -104,6 +117,7 @@ export default function PreMarketChecklist() {
           Pre-Market Checklist
         </h3>
         <div className="flex items-center gap-3">
+          <SaveState onSave={saveNow} dirty={dirty} />
           <EntryNav dates={history} date={date} current={today} onPick={setDate} />
           <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
             {answeredCount}/{totalCount}

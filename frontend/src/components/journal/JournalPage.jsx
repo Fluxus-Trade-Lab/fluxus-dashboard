@@ -34,10 +34,16 @@ const SECTIONS = {
   ],
   hold: [
     { key: 'trim-stops', label: 'Trim & Stops' },
+    // Was labelled "Risk Management", which named the file rather than what it
+    // does: it re-runs the book against a different stop. That is a question
+    // about holding, not about when to stop trading.
+    { key: 'stop-sim', label: 'Stop Simulator' },
     { key: 'volatility', label: 'Volatility' },
   ],
   stop: [
-    { key: 'risk', label: 'Risk Management' },
+    // Sharpe, Sortino, max drawdown — arrived from the Portfolio page. How much
+    // damage this way of trading takes before it pays.
+    { key: 'risk-adjusted', label: 'Risk-adjusted' },
     { key: 'demon-finder', label: 'Demon Finder' },
     { key: 'behavior', label: 'Behavior' },
     { key: 'diagnosis', label: 'Diagnosis' },
@@ -45,7 +51,8 @@ const SECTIONS = {
 }
 
 /** Sections that live inside AnalyticsTab and are reached by its own key. */
-const ANALYTICS_KEYS = new Set(['trim-stops', 'volatility', 'demon-finder', 'behavior', 'diagnosis'])
+const ANALYTICS_KEYS = new Set(['trim-stops', 'volatility', 'demon-finder', 'behavior',
+                                'diagnosis', 'risk-adjusted'])
 
 export default function JournalPage() {
   const [stage, setStage] = useState('hold')
@@ -104,7 +111,7 @@ export default function JournalPage() {
 
       {section === 'sizing' ? (
         <SizingTab />
-      ) : section === 'risk' ? (
+      ) : section === 'stop-sim' ? (
         <RiskTab />
       ) : ANALYTICS_KEYS.has(section) ? (
         <AnalyticsTab initialSection={section} key={section} />

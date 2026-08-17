@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { loadEntries, mergeRemote, onWrite, todayKey, weekKey } from '../lib/writingStore'
 import { credentials, pullAll, pushMonths } from '../lib/writingSync'
+import { markSheet } from '../lib/writingStatus'
 
 const KINDS = ['trading-recap', 'founders-daily', 'founders-weekly', 'premarket-checklist']
 
@@ -20,7 +21,11 @@ export default function useWritingSync() {
   const timer = useRef(null)
 
   useEffect(() => {
-    if (!credentials()) return                   // nothing configured; stay local
+    if (!credentials()) {
+      // Never promise a sync that was never going to happen.
+      markSheet('off')
+      return
+    }
 
     let dead = false
 
@@ -51,13 +56,13 @@ export default function useWritingSync() {
       const batch = [...pending.current.entries()]
       pending.current.clear()
       if (!batch.length) return
-      setStatus('syncing')
+      setStatus('syncing'); markSheet('syncing')
       let ok = true
       for (const [kind, months] of batch) {
         const res = await pushMonths(kind, loadEntries(kind), [...months])
         if (!res.ok) ok = false
       }
-      if (!dead) setStatus(ok ? 'success' : 'error')
+      if (!dead) { setStatus(ok ? 'success' : 'error'); markSheet(ok ? 'saved' : 'error') }
     }
 
     return () => {

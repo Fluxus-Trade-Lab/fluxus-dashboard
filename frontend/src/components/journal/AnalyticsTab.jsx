@@ -1,19 +1,20 @@
 import { useState, useMemo } from 'react'
 import { usePortfolio, PortfolioProvider } from '../portfolio/context/PortfolioContext'
-import { enrichTrades, computeMonthlyStats, computeSectorData } from '../portfolio/lib/calculations'
+import { enrichTrades, computeMonthlyStats, computeSectorData, computeRiskMetrics } from '../portfolio/lib/calculations'
 import { buildEquityCurve } from '../portfolio/lib/equityCurve'
 import { computeTrimAnalysis, computeStopAnalysis, computePortfolioHeat, computeVolContribution, computePortfolioVol, computeSpyVol, computeInsights } from '../portfolio/lib/diagnostics'
 import SummarySection from './analytics/SummarySection'
-import RiskSection from './analytics/RiskSection'
 import VolatilitySection from './analytics/VolatilitySection'
 import TrimStopsSection from './analytics/TrimStopsSection'
 import MonthlyReviewSection from './analytics/MonthlyReviewSection'
 import DemonFinderSection from './analytics/DemonFinderSection'
 import BehaviorSection from './analytics/BehaviorSection'
 import BehaviorDiagnosisSection from './analytics/BehaviorDiagnosisSection'
+import RiskAdjustedSection from './analytics/RiskAdjustedSection'
 
 const SUB_TABS = [
   { key: 'summary', label: 'Summary' },
+  { key: 'risk-adjusted', label: 'Risk-adjusted' },
   { key: 'diagnosis', label: 'Diagnosis' },
   { key: 'demon-finder', label: 'Demon Finder' },
   { key: 'behavior', label: 'Behavior' },
@@ -44,6 +45,14 @@ function AnalyticsTabInner({ initialSection }) {
   const performanceData = useMemo(
     () => buildEquityCurve(trades, startingCapital, dailyPrices, benchmarkHistories),
     [trades, startingCapital, dailyPrices, benchmarkHistories]
+  )
+
+  // Arrived with RiskAdjustedSection from the Portfolio page, where it was
+  // computed off the same equity curve this page already builds.
+  const benchmarkTicker = state.benchmarkTicker
+  const riskMetrics = useMemo(
+    () => computeRiskMetrics(performanceData, benchmarkTicker),
+    [performanceData, benchmarkTicker]
   )
 
   const portfolioValue = useMemo(() => {
@@ -112,8 +121,11 @@ function AnalyticsTabInner({ initialSection }) {
 
   return (
     <div>
-      {/* Sub-tab switcher */}
-      <div className="flex gap-1 flex-wrap mb-5 border-b border-[var(--color-border)] pb-2">
+      {/* Sub-tab switcher — hidden when Review is driving, which addresses one
+          section directly and already shows its own. Two tab strips stacked is
+          the eighteen-tab problem rebuilt one level down. */}
+      <div className={`flex gap-1 flex-wrap mb-5 border-b border-[var(--color-border)] pb-2 ${
+        initialSection ? 'hidden' : ''}`}>
         {SUB_TABS.map(({ key, label }) => (
           <button
             key={key}
@@ -151,16 +163,13 @@ function AnalyticsTabInner({ initialSection }) {
           startingCapital={startingCapital}
         />
       )}
-      {activeTab === 'risk' && (
-        <RiskSection
-          openTrades={openTrades}
-          enriched={enriched}
-          heatData={heatData}
-          sectorData={sectorData}
-          dailyPrices={dailyPrices}
-          spyHistory={spyHistory}
-          portfolioValue={portfolioValue}
-        />
+      {/* The beta-weighted exposure that used to sit here reads openTrades —
+          it was the only section on this page that did. It answers "how much
+          am I carrying right now", which is the Portfolio page's question, and
+          it moved there. What arrived in its place is the equity curve's
+          risk-adjusted statistics, which are about a long past. */}
+      {activeTab === 'risk-adjusted' && (
+        <RiskAdjustedSection riskMetrics={riskMetrics} benchmarkTicker={benchmarkTicker} />
       )}
       {activeTab === 'volatility' && (
         <VolatilitySection

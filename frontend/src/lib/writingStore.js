@@ -124,6 +124,8 @@ export function exportAll() {
 
 /* ── Sheet mirror ──────────────────────────────────────────────────────── */
 
+import { markLocal } from './writingStatus'
+
 let pushHook = null
 
 /**
@@ -134,6 +136,7 @@ let pushHook = null
 export function onWrite(fn) { pushHook = fn }
 
 function notify(kind, date) {
+  markLocal()
   if (pushHook) {
     try { pushHook(kind, readAll(kind), String(date).slice(0, 7)) } catch { /* never block a save */ }
   }
