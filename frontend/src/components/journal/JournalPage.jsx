@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import AnalyticsTab from './AnalyticsTab'
 import CoachTab from './CoachTab'
 import RiskTab from './RiskTab'
@@ -6,11 +5,14 @@ import SizingTab from './SizingTab'
 import PageHeader from '../PageHeader'
 import { useLanguage } from '../../i18n/LanguageContext'
 import StageCard from './StageCard'
+import Verdict from './Verdict'
+import Zone, { Tool } from './Zone'
 import { useTradeJournal } from '../../hooks/useTradeJournal'
 import { stageLeaks, STAGES } from './lib/headCoach'
 import HoldCaptureSection from './analytics/HoldCaptureSection'
 import AfterLossSection from './analytics/AfterLossSection'
 import SetupEdgeSection from './analytics/SetupEdgeSection'
+import SetupChat from './SetupChat'
 
 
 /**
@@ -29,53 +31,44 @@ import SetupEdgeSection from './analytics/SetupEdgeSection'
  * belong to Selection. News Failure, Option Positioning and Tape Reading were
  * never built and are gone rather than promised.
  */
-const SECTIONS = {
-  select: [
-    // First, because it tests whether this stage is a lever at all.
-    { key: 'setup-edge', label: 'Setup edge' },
-    { key: 'episodic-pivot', label: 'Episodic Pivot' },
-    { key: 'vcp', label: 'VCP' },
-    { key: 'breakout', label: 'Breakout' },
-  ],
-  size: [
-    // Already built and, until now, unreachable: retiring the Summary layer
-    // took PositionSizeChart with it, and the correlation it computes is
-    // exactly this stage's question. Surfaced rather than rebuilt.
-    { key: 'size-vs-r', label: 'Size vs R' },
-    { key: 'sizing', label: 'Sizing' },
-  ],
-  hold: [
-    // First, because it is the question the verdict raises and the only one
-    // here that tests an assumption rather than reporting a number.
-    { key: 'hold-capture', label: 'Hold & capture' },
-    { key: 'trim-stops', label: 'Trim & Stops' },
-    // Was labelled "Risk Management", which named the file rather than what it
-    // does: it re-runs the book against a different stop. That is a question
-    // about holding, not about when to stop trading.
-    { key: 'stop-sim', label: 'Stop Simulator' },
-    { key: 'volatility', label: 'Volatility' },
-  ],
-  stop: [
-    // First, because "when do I step away" is the stage's question and this is
-    // the only section here that tests an answer to it.
-    { key: 'after-loss', label: 'After a loss' },
-    // Sharpe, Sortino, max drawdown — arrived from the Portfolio page. How much
-    // damage this way of trading takes before it pays.
-    { key: 'risk-adjusted', label: 'Risk-adjusted' },
-    { key: 'demon-finder', label: 'Demon Finder' },
-    { key: 'behavior', label: 'Behavior' },
-    { key: 'diagnosis', label: 'Diagnosis' },
-  ],
+/**
+ * A stage is three bands, not a strip of tabs.
+ *
+ *   test    the reading — one per stage, the reason the stage exists
+ *   ledger  where the money went, and it has to add up
+ *   tools   things you open when you want them; no numbers on the outside
+ *
+ * The eighteen tabs became four stages became this. What changed at each step
+ * was not how many things there are — it was whether the page says what KIND
+ * of thing each one is.
+ */
+const ZONES = {
+  select: { test: 'setup-edge', ledger: null, tools: ['setup-chat'] },
+  size:   { test: 'size-vs-r',  ledger: null, tools: ['sizing'] },
+  hold:   { test: 'hold-capture', ledger: null, tools: ['stop-sim', 'trim-stops'] },
+  stop:   { test: 'after-loss', ledger: 'behavior', tools: ['demon-finder', 'diagnosis'] },
 }
 
 /** Sections that live inside AnalyticsTab and are reached by its own key. */
-const ANALYTICS_KEYS = new Set(['trim-stops', 'volatility', 'demon-finder', 'behavior',
-                                'diagnosis', 'risk-adjusted', 'size-vs-r'])
+const ANALYTICS_KEYS = new Set(['trim-stops', 'demon-finder', 'behavior',
+                                'diagnosis', 'size-vs-r'])
+
+/** One place that maps a section key to its component. */
+function render(key) {
+  switch (key) {
+    case 'hold-capture': return <HoldCaptureSection />
+    case 'after-loss': return <AfterLossSection />
+    case 'setup-edge': return <SetupEdgeSection />
+    case 'sizing': return <SizingTab />
+    case 'stop-sim': return <RiskTab />
+    case 'setup-chat': return <SetupChat />
+    default: return <AnalyticsTab initialSection={key} key={key} />
+  }
+}
 
 export default function JournalPage({ stage: routeStage }) {
   const { t } = useLanguage()
   const { trades } = useTradeJournal()
-  const [section, setSection] = useState(null)
 
   const go = (key) => { window.location.hash = key ? `#/review/${key}` : '#/review' }
 
@@ -85,10 +78,11 @@ export default function JournalPage({ stage: routeStage }) {
   const lead = stageLeaks(trades)[0]?.stage
 
   // ── Overview ───────────────────────────────────────────────────────────
-  if (!routeStage || !SECTIONS[routeStage]) {
+  if (!routeStage || !ZONES[routeStage]) {
     return (
       <div className="max-w-5xl mx-auto py-6 px-4">
         <PageHeader group="book" title={t('nav.journal')} />
+        <Verdict onGo={go} />
         <p className="text-[13px] text-[var(--color-text-secondary)] mt-1 mb-5 max-w-[62ch]">
           {t('rev.overview.lede')}
         </p>
@@ -121,8 +115,7 @@ export default function JournalPage({ stage: routeStage }) {
   }
 
   // ── One stage ──────────────────────────────────────────────────────────
-  const list = SECTIONS[routeStage]
-  const active = section && list.some((x) => x.key === section) ? section : list[0].key
+  const z = ZONES[routeStage]
 
   return (
     <div className="max-w-5xl mx-auto py-6 px-4">
@@ -134,31 +127,25 @@ export default function JournalPage({ stage: routeStage }) {
       <h1 className="text-[34px] font-bold leading-tight mt-1 mb-0.5">
         {t(`rev.stage.${routeStage}`)}
       </h1>
-      <p className="text-[12.5px] text-[var(--color-text-muted)] m-0 mb-5">
+      <p className="text-[12.5px] text-[var(--color-text-muted)] m-0">
         {t(`rev.asks.${routeStage}`)}
       </p>
 
-      {list.length > 1 && (
-        <div className="flex gap-1 mb-5 flex-wrap">
-          {list.map(({ key }) => (
-            <button key={key} onClick={() => setSection(key)}
-              className={`px-2.5 py-1 text-[11px] rounded cursor-pointer transition-colors ${
-                active === key
-                  ? 'text-[var(--color-text)] font-semibold bg-[var(--color-hover-bg)]'
-                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'}`}>
-              {t(`rev.sec.${key}`)}
-            </button>
-          ))}
-        </div>
-      )}
+      <Zone kind="test">{render(z.test)}</Zone>
 
-      {active === 'hold-capture' ? <HoldCaptureSection />
-        : active === 'after-loss' ? <AfterLossSection />
-        : active === 'setup-edge' ? <SetupEdgeSection />
-        : active === 'sizing' ? <SizingTab />
-        : active === 'stop-sim' ? <RiskTab />
-        : ANALYTICS_KEYS.has(active) ? <AnalyticsTab initialSection={active} key={active} />
-        : <CoachTab strategy={active} />}
+      {z.ledger && <Zone kind="ledger">{render(z.ledger)}</Zone>}
+
+      {z.tools.length > 0 && (
+        <Zone kind="tool">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {z.tools.map((k) => (
+              <Tool key={k} title={t(`rev.sec.${k}`)} blurb={t(`tool.blurb.${k}`)}>
+                {render(k)}
+              </Tool>
+            ))}
+          </div>
+        </Zone>
+      )}
     </div>
   )
 }

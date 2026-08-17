@@ -24,8 +24,9 @@ export default function SetupEdgeSection() {
 
   // One shared scale, so an interval's width means the same on every row —
   // per-row scaling would make the smallest sample look the most precise.
-  const lo = Math.min(...res.rows.map((r) => r.lo), res.book)
-  const hi = Math.max(...res.rows.map((r) => r.hi), res.book)
+  const all = res.rows.flatMap((r) => r.trades)
+  const lo = Math.max(-3, Math.min(...all, res.book))
+  const hi = Math.min(8, Math.max(...all, res.book))
   const x = (v) => ((v - lo) / (hi - lo)) * 100
 
   return (
@@ -44,23 +45,25 @@ export default function SetupEdgeSection() {
             <span className="text-[11px] font-mono text-[var(--color-text-muted)] text-right">
               {r.n}
             </span>
-            <span className="relative h-4">
-              {/* The book average, one segment per row rather than a single
-                  absolute rule over the grid: positioning that rule needed
-                  `calc(220px + X% * 0.01 * (100% - 220px))`, which is not an
-                  expression CSS evaluates — it simply did not draw. Adjacent
-                  rows read as one continuous line. */}
+            <span className="relative h-5">
+              {/* The book average, one segment per row: adjacent rows read as
+                  one continuous line. */}
               <i className="absolute -top-2.5 bottom-[-10px] w-px
                             bg-[var(--color-text-muted)] opacity-45"
                  style={{ left: `${x(res.book)}%` }} />
-              <i className={`absolute top-1.5 h-1 rounded-sm ${
-                r.separates ? 'bg-[var(--color-took)]' : 'bg-[var(--color-untested)]'}`}
-                 style={{ left: `${x(r.lo)}%`, width: `${Math.max(1, x(r.hi) - x(r.lo))}%` }} />
-              <i className="absolute top-0.5 w-0.5 h-3 bg-[var(--color-text)]"
+              {/* Every trade as a dot, not a bootstrap interval.
+                  The interval was a statistic restating what overlapping point
+                  clouds already show, and the rule this page keeps is that a
+                  picture which can be read is not also computed. Reading: do
+                  the clouds separate, or is that one cloud drawn five times. */}
+              {r.trades.map((v, i) => (
+                <i key={i}
+                   className={`absolute top-1.5 w-[3px] h-2 rounded-sm ${v > 0
+                     ? 'bg-[var(--color-took)]' : 'bg-[var(--color-refused)]'}`}
+                   style={{ left: `${x(v)}%`, opacity: 0.75 }} />
+              ))}
+              <i className="absolute top-0.5 w-0.5 h-4 bg-[var(--color-text)]"
                  style={{ left: `${x(r.mean)}%` }} />
-              <em className="absolute -top-0.5 text-[10.5px] font-mono not-italic
-                             text-[var(--color-text-muted)]"
-                  style={{ left: `calc(${x(r.hi)}% + 6px)` }}>{r2(r.mean)}R</em>
             </span>
           </div>
         ))}

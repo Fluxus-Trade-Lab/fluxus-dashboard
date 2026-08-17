@@ -66,6 +66,7 @@ export function setupEdge(trades = [], { minTrades = 7, runs = 1500, seed = 2026
         setup,
         n: v.length,
         mean: mean(v),
+        trades: v,
         lo,
         hi,
         // "Separates" means the interval excludes the book average — the only

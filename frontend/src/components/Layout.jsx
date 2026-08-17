@@ -247,13 +247,14 @@ export default function Layout({ data, lastUpdated, isOffline }) {
         <main className="max-w-[1800px] mx-auto px-3 py-4">
           {current === 'screener' && <ScreenerPage />}
           {current === 'portfolio' && <PortfolioPage />}
-          {/* Renamed 2026-08-17 (Andy): Review lives at #/review, and #/journal
-              now means the trade journal, which is what the word says. The old
-              #/journal pointed here — the same path changes destination, which
-              is a break we accept because there is one reader and he asked for
-              it. #/trades keeps resolving so older links still land. */}
+          {/* Renamed 2026-08-17 (Andy): two routes, each named for what it is.
+              #/review is the review; #/journal is the trade journal. The old
+              #/trades fallback is gone at his call — this repo's habit is to
+              keep a retired route resolving so sent links still land, and that
+              habit is worth breaking when the reader is the only sender and
+              says so. */}
           {current === 'review' && <JournalPage stage={subRoute} />}
-          {(current === 'trades' || current === 'journal') && <TradeJournalPage />}
+          {current === 'journal' && <TradeJournalPage />}
           {current === 'briefing' && <BriefingPage />}
           {current === 'breadth' && <BreadthPage data={data} />}
           {current === 'correction' && <CorrectionRiskPage />}
