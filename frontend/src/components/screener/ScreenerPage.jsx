@@ -33,6 +33,23 @@ const QUERY_KEY = 'screener-query'
 
 const STATE_WORDS = ['Leading', 'Weakening', 'Improving', 'Lagging']
 
+/**
+ * The two gates the retired preset lists all shared.
+ *
+ * Every one of the ten browser presets carried a cap floor and excludeHealthcare
+ * on top of whatever made it that preset; those two were the gate, not the
+ * screen. The screens themselves already live in the scan bar as pipeline files
+ * (EMA21, VCP, EP, 4% gainers, Vol-up), so what was actually missing here was
+ * the gate — and a gate is two toggles, not a query builder.
+ *
+ * A row that cannot prove it passes does not pass: no market cap on file means
+ * dropped, not waved through. That is what makes it a gate.
+ */
+const GATES = {
+  liquid: { test: (r) => r.cap != null && r.cap >= 1e9 && r.vol != null && r.vol >= 1e6 },
+  exHealth: { test: (r) => r.sector !== 'Healthcare' },
+}
+
 function loadQuery() {
   try {
     const q = JSON.parse(localStorage.getItem(QUERY_KEY)) ?? {}
@@ -42,9 +59,10 @@ function loadQuery() {
       scan: SCAN_DEFS.some((d) => d.key === q.scan) ? q.scan : 'confluence',
       states: Array.isArray(q.states) ? q.states.filter((s) => STATE_WORDS.includes(s)) : [],
       theme: typeof q.theme === 'string' ? q.theme : null,
+      gates: Array.isArray(q.gates) ? q.gates.filter((g) => g in GATES) : [],
     }
   } catch {
-    return { scan: 'confluence', states: [], theme: null }
+    return { scan: 'confluence', states: [], theme: null, gates: [] }
   }
 }
 
@@ -59,13 +77,15 @@ export default function ScreenerPage() {
   const [scan, setScan] = useState(initial.scan)
   const [states, setStates] = useState(() => new Set(initial.states))
   const [theme, setTheme] = useState(initial.theme)
+  const [gates, setGates] = useState(() => new Set(initial.gates))
   const [search, setSearch] = useState('')
 
   useEffect(() => {
     try {
-      localStorage.setItem(QUERY_KEY, JSON.stringify({ scan, states: [...states], theme }))
+      localStorage.setItem(QUERY_KEY,
+        JSON.stringify({ scan, states: [...states], theme, gates: [...gates] }))
     } catch { /* storage may be unavailable; the query is still live in memory */ }
-  }, [scan, states, theme])
+  }, [scan, states, theme, gates])
 
   // A persisted theme the taxonomy no longer publishes must be cleared, not
   // kept: with the name held but the lookup failing, no rows are filtered while
@@ -178,6 +198,8 @@ export default function ScreenerPage() {
         relVol: u?.rel_volume ?? null,
         perf1w: u?.perf_1w ?? null,
         sector: u?.sector ?? null,
+        cap: u?.market_cap ?? null,
+        vol: u?.avg_volume ?? null,
       })
     }
     return out
@@ -199,8 +221,16 @@ export default function ScreenerPage() {
     return c
   }, [preState, statesLoaded])
 
+  // Facet counts: what each gate would keep from the current cut, so the number
+  // beside a toggle answers "what does turning this on cost me" before it is on.
+  const gateCounts = useMemo(() => ({
+    liquid: preState.filter(GATES.liquid.test).length,
+    exHealth: preState.filter(GATES.exHealth.test).length,
+  }), [preState])
+
   const rows = useMemo(() => {
-    const kept = states.size ? preState.filter((r) => r.state && states.has(r.state)) : preState
+    let kept = states.size ? preState.filter((r) => r.state && states.has(r.state)) : preState
+    for (const g of gates) kept = kept.filter(GATES[g].test)
     const sorted = [...kept]
     if (scan === 'confluence') {
       sorted.sort((a, b) => (b.heat?.score ?? -1) - (a.heat?.score ?? -1))
@@ -208,7 +238,7 @@ export default function ScreenerPage() {
       sorted.sort((a, b) => (b.rs3 ?? -1) - (a.rs3 ?? -1))
     }
     return sorted
-  }, [preState, states, scan])
+  }, [preState, states, scan, gates])
 
   const noState = states.size ? preState.filter((r) => !r.state).length : 0
 
@@ -251,6 +281,11 @@ export default function ScreenerPage() {
     if (next.has(st)) next.delete(st); else next.add(st)
     return next
   })
+  const toggleGate = (g) => setGates((prev) => {
+    const next = new Set(prev)
+    if (next.has(g)) next.delete(g); else next.add(g)
+    return next
+  })
 
   if (loading) {
     return (
@@ -282,6 +317,7 @@ export default function ScreenerPage() {
       <ScanBar
         scans={scans} scan={scan} onScan={setScan}
         stateCounts={stateCounts} states={states} onToggleState={toggleState}
+        gates={gates} gateCounts={gateCounts} onToggleGate={toggleGate}
         themes={groups.themes} theme={theme} onTheme={setTheme}
         search={search} onSearch={setSearch}
         receipt={receipt}

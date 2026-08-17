@@ -81,6 +81,7 @@ function Divider() {
 export default function ScanBar({
   scans, scan, onScan,
   stateCounts, states, onToggleState,
+  gates, gateCounts, onToggleGate,
   themes, theme, onTheme,
   search, onSearch,
   receipt, hiddenNote,
@@ -126,6 +127,19 @@ export default function ScanBar({
             </Seg>
           )
         })}
+
+        {/* The two gates the retired preset lists all shared. Same chip as the
+            state words because they do the same job — narrow the cut — and a
+            second control idiom for the same job is one idiom too many. The
+            count is what the gate would KEEP, shown before it is on. */}
+        <Divider />
+        <Lbl>{tr('scr.bar.gate')}</Lbl>
+        {['liquid', 'exHealth'].map((g) => (
+          <Seg key={g} on={gates?.has(g)} onClick={() => onToggleGate(g)}
+               title={tr(`scr.gate.${g}.why`)}>
+            {tr(`scr.gate.${g}`)}<Count n={gateCounts?.[g] ?? null} on={gates?.has(g)} />
+          </Seg>
+        ))}
 
         <Divider />
         <span className="text-[10px] font-mono font-medium uppercase tracking-[.14em] text-[var(--color-text-muted)]">{tr('scr.bar.theme')}</span>
