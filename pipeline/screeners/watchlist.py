@@ -197,6 +197,10 @@ PRESET_TWINS = {"weekly_momentum_97": "Weekly Momentum 97",
 def _entry(r: Mapping[str, Any]) -> Dict[str, Any]:
     e = {"ticker": r["ticker"],
          "rs_1m": _int_or_none(_f(r, "rs_1m")),
+         # oratnek's "RS 1M" (self-percentile of the RS line, 21 sessions) --
+         # the number HIS page prints beside a ticker; ours above is the
+         # cross-sectional one. Both, so the page can show either.
+         "rs_line_pctl_21": _int_or_none(_f(r, "rs_line_pctl_21")),
          "hybrid_rs": _round(_f(r, "h_score")),
          "sector": r.get("sector")}
     if r.get("_group") is not None:

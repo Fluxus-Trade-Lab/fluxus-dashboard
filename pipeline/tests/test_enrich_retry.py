@@ -58,6 +58,7 @@ class TestEnrichRetry:
         # These fakes are dated 2026-01; the bar-consistency stale retry is
         # a separate concern (TestBarConsistency), so disable it here.
         monkeypatch.setattr(YA, "_expected_session", lambda: None)
+        monkeypatch.setattr(YA.YfinanceAdapter, "_fetch_spy_close", staticmethod(lambda: None))
         universe = pd.DataFrame({
             "ticker": tickers,
             "sector": "Technology", "industry": "Software",

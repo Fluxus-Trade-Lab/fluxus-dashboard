@@ -105,6 +105,27 @@ def calculate_rrs(stock_data: pd.DataFrame, spy_data: pd.DataFrame,
 SCALE_MISMATCH_TOL = 0.20
 
 
+def rs_line_pctl(close: pd.Series, bench_close: pd.Series, n: int = 21) -> float | None:
+    """oratnek's "RS 1M": where TODAY's relative-strength line (close / SPY
+    close) sits among its own last `n` sessions -- count(RS_i <= RS_today)/n
+    x 100. A SELF (time-series) percentile, not a cross-sectional one: 100 =
+    the RS line is at a one-month high, whatever the whole market did.
+
+    Reverse-engineered 2026-08-18 from his 08-17 premarket page: all eight
+    distinct values he printed were k/21 (43, 57, 67, 71, 81, 90, 95, 100),
+    and this definition reproduces all 29 of his numbers exactly
+    (pipeline/tests/fixtures/oratnek_rs1m_*). Not to be confused with our
+    rs_1m (cross-sectional percentile of the 1M return within the tradeable
+    field): RELY was 100 on his page and 68 on ours the same day, and both
+    were right -- they answer different questions.
+    """
+    a = pd.concat([close.rename('c'), bench_close.rename('b')], axis=1, join='inner').dropna()
+    if len(a) < n or (a['b'] <= 0).any():
+        return None
+    rs = (a['c'] / a['b']).iloc[-n:]
+    return float((rs <= rs.iloc[-1]).mean() * 100.0)
+
+
 def _expected_session():
     """The session this run is labelled with (last completed US session).
     Module-level so tests can monkeypatch it; None disables the stale check."""
@@ -502,6 +523,18 @@ class YfinanceAdapter(BaseAdapter):
         logger.info(f"Processed {len(results)}/{len(tickers)} tickers successfully")
         return pd.DataFrame(results)
 
+    @staticmethod
+    def _fetch_spy_close() -> pd.Series | None:
+        """SPY closes for rs_line_pctl. Separate so tests can stub it."""
+        try:
+            _spy = yf.download('SPY', period='1y', auto_adjust=True, progress=False)
+            if isinstance(_spy.columns, pd.MultiIndex):
+                _spy.columns = _spy.columns.get_level_values(0)
+            return _spy['Close'].dropna()
+        except Exception as e:  # noqa: BLE001
+            logger.warning("SPY download for rs_line_pctl failed: %s", e)
+            return None
+
     def enrich_universe(self, universe: pd.DataFrame,
                         batch_size: int = 500,
                         expected_session=None) -> pd.DataFrame:
@@ -576,6 +609,10 @@ class YfinanceAdapter(BaseAdapter):
                     f"({final_missing} missing, "
                     f"{final_missing / max(1, len(tickers)) * 100:.1f}%)")
 
+        # SPY closes for the RS-line self-percentile (rs_line_pctl). One
+        # download; a failure leaves the column null rather than the run dead.
+        spy_close = self._fetch_spy_close()
+
         # --- Bar consistency: retry the stale ones once, then tag ---------
         # The session this run is labelled with. A premarket run labels the
         # previous session (last_completed_session), so "newest bar before the
@@ -638,6 +675,7 @@ class YfinanceAdapter(BaseAdapter):
                 last_high = float(hist['High'].iloc[-1])
                 last_low = float(hist['Low'].iloc[-1])
                 ema21 = float(hist['Close'].ewm(span=21, adjust=False).mean().iloc[-1])
+                rs_line_pctl_21 = rs_line_pctl(hist['Close'], spy_close) if spy_close is not None else None
                 # Phase 1: additional EMAs for trailing-stop UI
                 ema10 = float(hist['Close'].ewm(span=10, adjust=False).mean().iloc[-1])
                 ema20 = float(hist['Close'].ewm(span=20, adjust=False).mean().iloc[-1])
@@ -751,6 +789,7 @@ class YfinanceAdapter(BaseAdapter):
                     'ad_ratio_20': af['ad_ratio_20'], 'cmf21': af['cmf21'],
                     'ema21_low_dist': ema21_low_dist,
                     'ema21': ema21,
+                    'rs_line_pctl_21': rs_line_pctl_21,
                     'bar_date': bar_date, 'bars_stale': False, 'bar_scale_mismatch': False,
                     'ema10': ema10,
                     'ema20': ema20,

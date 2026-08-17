@@ -221,6 +221,8 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 ⚠️ **F 分换源 2026-08-17(Andy:"换源,容纳后 finviz 当 backup";今晚 cron 起生效)**:`eps_growth_next_y` / `revenue_growth` / `eps_growth_this_y` 由 **yfinance `Ticker.info` 主供**(`forwardEps/trailingEps − 1`,仅 trailing>0;`revenueGrowth` 同比季度;`earningsGrowth`),Finviz 自己的列(Elite CSV 才有)**只补 yfinance 没有的洞**。单票 0.9 s 且 Yahoo 约 1,100 次后限速,所以是**滚动刷新的本地库** `data/reference/fundamentals.json`(每晚刷最旧的 700 只 ≈ 96 s,一周一轮;撞墙提前停、受害者不记账;首次种库 08-17 本地跑)。新列 `fund_source`(`yfinance` / `finviz` / null)、`fund_asof`(读数日期)。**注意口径**:Finviz 那列叫 "Sales past 5Y"(五年 CAGR),现在的 `revenue_growth` 是**同比一季**;名字没改因为 f_score 读它。覆盖率(种满后估计):营收 ~80%、EPS ~45%(亏损股无增长率,与 Finviz 一致)。
 **`f_score` 公式同日改**:两项**各自**在 tradeable 尺子上排名后**平均名次**(原来平均原始增长率,`forward/trailing` 在 trailing 近零时爆到 19× 会压死营收项);只有一项用那一项;**两项都缺 = 50(未知,不是最差)**——原 `na_option='top'` 把未知全塞到最低名次,在覆盖率不满时会把已知票挤到 83–99 那 16 个点。`h_score` 里 F 的 2/10 权重从此是活的;H 分排名会动,是预期。测试 `test_score_all_rows.py::TestFScore`。
 
+| `rs_line_pctl_21` | **oratnek 的 "RS 1M" 破译**(2026-08-18,今晚 cron 起有值):今天的 RS 线(收盘 / SPY 收盘)在**自己**最近 21 个交易日里的百分位 = `count(RS_i ≤ RS_today)/21 × 100`。**时间序列自比**,不是横截面 —— 100 = 相对 SPY 的强度处于一个月新高。他 08-17 页面上 8 个取值全是 k/21,此定义 **29/29 逐一复现**(夹具 `pipeline/tests/fixtures/oratnek_rs1m_*`,测试 `test_rs_line_pctl.py`) | 与 `rs_1m` **不是一个量**:RELY 同日他 100 / 我们 68 都对,一个说"相对强度在自己的月内新高",一个说"月收益跑赢 68% 的可交易场"。watchlist.json 每只票项也带 `rs_line_pctl_21`,前端可选印哪个(印他的那个就跟他页面对得上)。< 21 根 → null |
+
 ### `sp_*` —— Structure Pivot(oratnek Advanced Structure Pivot 移植,2026-08-17 加,下次 cron 起有值)
 
 引擎 `pipeline/screeners/structure_pivot.py`,源码 `indicators/third_party/oratnek_advanced_structure_pivot.pine`;**黄金对照 5/5**(AEHR/SMCI/CRWD/NVDA/PLTR,08-14 日线,结构/长度/索引/阶段/信号全同,价位差 ≤0.013 且全部溯源到 bar 数据的 sub-penny 精度),回归夹具在 `pipeline/tests/fixtures/`。
@@ -338,4 +340,4 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 
 格式:`- [日期] 一句话 + 你测过什么 + 你要的字段/口径`。数据端处理完把该行改成 ✅ 并写在哪个 commit。
 
-- [08-17] oratnek 同日扫描对照:VCS 刻度 → ✅ 17a2667(领先门,33→15);CBRL 闸 → ✅ 59e3892(成交额闸);**RELY 的 RS 1M(他 100 我们 68)→ 待前端把截图里其他格旁边的 RS 数字抄来,有非 100 的点才能拟合**
+- [08-17] oratnek 同日扫描对照:VCS 刻度 → ✅ 17a2667(领先门,33→15);CBRL 闸 → ✅ 59e3892(成交额闸);RELY 的 RS 1M → ✅ 破译:RS 线 21 日自百分位,29/29 复现,新字段 `rs_line_pctl_21`(universe + watchlist 票项),今晚 cron 起有值

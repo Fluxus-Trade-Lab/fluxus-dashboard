@@ -780,7 +780,7 @@ def main():
         'adr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist',
         'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d', 'pp_count_10d',
         'vol10_green', 'vol10_green_count_10d', 'vol10_green_count_30d',
-        'atr_from_sma50', 'ema21_atr_dist', 'ema21',
+        'atr_from_sma50', 'ema21_atr_dist', 'ema21', 'rs_line_pctl_21',
         'ti65', 'mdt', 'min_vol_3d', 'c_low52w', 'liquid_leader', 'ad_ratio_20', 'cmf21',
         'bar_date', 'bars_stale', 'bar_scale_mismatch',
         'sp_setup', 'sp_len', 'sp_ll', 'sp_hl', 'sp_1st', 'sp_2nd', 'sp_tp1', 'sp_tp2',
