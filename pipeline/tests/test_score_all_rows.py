@@ -64,3 +64,36 @@ class TestScoreAllRows:
         u.loc[~(u.market_cap > 1e9), "perf_3m"] = 5.0     # outsiders would all be RS 99
         out = compute_universe_scores(u).set_index("ticker")
         assert not out.loc[~out.tradeable, "liquid_leader"].any()
+
+
+class TestFScore:
+    """2026-08-17: fundamentals from the store; ranks averaged, unknown = 50."""
+
+    def test_unknown_is_neutral_and_known_spread_the_full_scale(self):
+        u = _universe(n_field=40, n_out=0)
+        u["eps_growth_next_y"] = np.nan
+        u["revenue_growth"] = np.nan
+        u.loc[:19, "revenue_growth"] = np.linspace(-0.5, 0.5, 20)     # half known
+        out = compute_universe_scores(u).set_index("ticker")
+        known = out.iloc[:20]["f_score"].astype(float)
+        assert (out.iloc[20:]["f_score"].astype(float) == 50).all()
+        assert known.min() < 10 and known.max() > 90                    # not squeezed
+        assert known.is_monotonic_increasing
+
+    def test_an_outlier_input_cannot_drown_the_other(self):
+        u = _universe(n_field=40, n_out=0)
+        u["eps_growth_next_y"] = np.linspace(0.0, 0.4, 40)
+        u["revenue_growth"] = np.linspace(0.0, 0.4, 40)
+        u.loc[0, "eps_growth_next_y"] = 19.0                           # 19x on a near-zero base; revenue is the worst
+        out = compute_universe_scores(u).set_index("ticker")
+        f = out["f_score"].astype(float)
+        # T0: top on eps, bottom on revenue -> middling, not 99
+        assert 35 <= f["T0"] <= 65
+        assert f.nunique() > 5
+
+    def test_one_input_alone_still_scores(self):
+        u = _universe(n_field=30, n_out=0)
+        u["eps_growth_next_y"] = np.nan
+        u["revenue_growth"] = np.linspace(-0.2, 0.9, 30)
+        out = compute_universe_scores(u).set_index("ticker")
+        assert out.loc["T29", "f_score"] == 99 and out.loc["T0", "f_score"] < 5

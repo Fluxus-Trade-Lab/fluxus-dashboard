@@ -218,6 +218,9 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 
 ⚠️ **quality 守卫的"按设计稀疏"白名单 2026-08-17**:`sp_signal` `sp_counter` `sp_1st/2nd/tp1/tp2` `sp_phase` `sp_stop` `sp_days` `sp_dist_*` `sp_ll/hl` `sp_len` 这些字段本来就是大多数行为 null(无结构 = null 是语义),`quality.py` 现在只在它们**全空**(≥99.9%)且此前不是全空时才报 severe,否则 `ok`,不再因为"空值率高"把 universe 打成 degraded。名单在 `pipeline/quality.py: SPARSE_BY_DESIGN`。
 
+⚠️ **F 分换源 2026-08-17(Andy:"换源,容纳后 finviz 当 backup";今晚 cron 起生效)**:`eps_growth_next_y` / `revenue_growth` / `eps_growth_this_y` 由 **yfinance `Ticker.info` 主供**(`forwardEps/trailingEps − 1`,仅 trailing>0;`revenueGrowth` 同比季度;`earningsGrowth`),Finviz 自己的列(Elite CSV 才有)**只补 yfinance 没有的洞**。单票 0.9 s 且 Yahoo 约 1,100 次后限速,所以是**滚动刷新的本地库** `data/reference/fundamentals.json`(每晚刷最旧的 700 只 ≈ 96 s,一周一轮;撞墙提前停、受害者不记账;首次种库 08-17 本地跑)。新列 `fund_source`(`yfinance` / `finviz` / null)、`fund_asof`(读数日期)。**注意口径**:Finviz 那列叫 "Sales past 5Y"(五年 CAGR),现在的 `revenue_growth` 是**同比一季**;名字没改因为 f_score 读它。覆盖率(种满后估计):营收 ~80%、EPS ~45%(亏损股无增长率,与 Finviz 一致)。
+**`f_score` 公式同日改**:两项**各自**在 tradeable 尺子上排名后**平均名次**(原来平均原始增长率,`forward/trailing` 在 trailing 近零时爆到 19× 会压死营收项);只有一项用那一项;**两项都缺 = 50(未知,不是最差)**——原 `na_option='top'` 把未知全塞到最低名次,在覆盖率不满时会把已知票挤到 83–99 那 16 个点。`h_score` 里 F 的 2/10 权重从此是活的;H 分排名会动,是预期。测试 `test_score_all_rows.py::TestFScore`。
+
 ### `sp_*` —— Structure Pivot(oratnek Advanced Structure Pivot 移植,2026-08-17 加,下次 cron 起有值)
 
 引擎 `pipeline/screeners/structure_pivot.py`,源码 `indicators/third_party/oratnek_advanced_structure_pivot.pine`;**黄金对照 5/5**(AEHR/SMCI/CRWD/NVDA/PLTR,08-14 日线,结构/长度/索引/阶段/信号全同,价位差 ≤0.013 且全部溯源到 bar 数据的 sub-penny 精度),回归夹具在 `pipeline/tests/fixtures/`。

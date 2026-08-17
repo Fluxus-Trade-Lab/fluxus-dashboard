@@ -188,8 +188,10 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     logger.info("Scores computed on %d tradeable of %d rows",
                 int(tradeable.sum()), len(df))
 
-    def rank_tradeable(col: str) -> pd.Series:
+    def rank_tradeable(col: str, na: str = 'top') -> pd.Series:
         """Percentile rank within the tradeable set; NaN for everyone else.
+        `na='keep'` ranks among the field members that HAVE a value and leaves
+        the missing ones NaN (used by f_score, where missing means unknown).
 
         `na_option='top'`, not `'bottom'`. Pandas names these by where the NaN
         sits in the *ranking order*, not by where it lands on the score: with
@@ -209,20 +211,22 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
         """
         out = pd.Series(np.nan, index=df.index, dtype=float)
         sub = df.loc[tradeable, col]
-        out.loc[tradeable] = sub.rank(pct=True, na_option='top') * 99
+        out.loc[tradeable] = sub.rank(pct=True, na_option=na) * 99
         return out
 
-    def score_against_tradeable(col: str) -> pd.Series:
+    def score_against_tradeable(col: str, na: str = 'top') -> pd.Series:
         """`rank_tradeable` for the field, plus every other row placed on the
         field's ruler: its percentile among the tradeable values of `col`
         (average of the <= and < counts, i.e. the same mid-rank convention
         pandas' 'average' method uses for ties). Tradeable rows are returned
         bit-for-bit as `rank_tradeable` gives them."""
-        out = rank_tradeable(col)
+        out = rank_tradeable(col, na)
         ref = np.sort(pd.to_numeric(df.loc[tradeable, col], errors='coerce').dropna().to_numpy(dtype=float))
         if len(ref) == 0:
             return out
-        n_field = int(tradeable.sum())          # rank_tradeable's denominator (NaNs included)
+        # rank_tradeable's denominator: the whole field under 'top' (NaNs take
+        # the lowest ranks), only the valued members under 'keep'
+        n_field = int(tradeable.sum()) if na == 'top' else len(ref)
         others = ~tradeable & df[col].notna()
         x = pd.to_numeric(df.loc[others, col], errors='coerce').to_numpy(dtype=float)
         lo = np.searchsorted(ref, x, side='left')
@@ -279,19 +283,24 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
                     + 0.2 * score_against_tradeable('perf_1y'))
 
     # --- F score (fundamental) ---
-    eps = pd.to_numeric(df.get('eps_growth_next_y', pd.Series(dtype=float)), errors='coerce')
-    rev = pd.to_numeric(df.get('revenue_growth', pd.Series(dtype=float)), errors='coerce')
-    fundamental = eps.copy()
-    both_available = eps.notna() & rev.notna()
-    fundamental.loc[both_available] = (eps[both_available] + rev[both_available]) / 2
-    # 'top', not 'bottom' -- see rank_tradeable. A name with no fundamentals
-    # must not outscore one whose fundamentals we have and are poor.
-    df['f_score'] = fundamental.rank(pct=True, na_option='top') * 99
-    # Both source columns are empty in the current feed, so this is a constant
-    # 50 for every row. Kept (it is a real weight in h_score and the columns
-    # may come back). Since 2026-08-17 it is carried for every row, so h_score
-    # exists for every row (see the tradeable note above).
-    df['f_score'] = df['f_score'].fillna(50)
+    # Source since 2026-08-17: fundamentals_store (yfinance primary, Finviz
+    # backup) -- see pipeline/adapters/fundamentals_store.py. Before that the
+    # two columns were empty and this was a constant 50 for every row.
+    # Rank each input on the tradeable ruler, THEN average the ranks. Averaging
+    # the raw rates (the old formula) let one input drown the other: forward/
+    # trailing EPS on a near-zero trailing EPS prints 19x and no revenue figure
+    # can answer it. Ranks are bounded; a 19x and a 2x are both "top decile".
+    # A row with only one of the two uses that one; with neither it is 50 --
+    # "unknown", not "worst" (the old na_option='top' put unknowns at the
+    # bottom, which at partial coverage squeezed every known name into the
+    # top few points; the store fills over ~8 nights, and meanwhile the H
+    # score must not rank the market by whether Yahoo had been asked yet).
+    df['_eps'] = pd.to_numeric(df.get('eps_growth_next_y', pd.Series(dtype=float)), errors='coerce')
+    df['_rev'] = pd.to_numeric(df.get('revenue_growth', pd.Series(dtype=float)), errors='coerce')
+    r_eps = score_against_tradeable('_eps', na='keep')
+    r_rev = score_against_tradeable('_rev', na='keep')
+    df['f_score'] = pd.concat([r_eps, r_rev], axis=1).mean(axis=1, skipna=True).fillna(50.0)
+    df.drop(columns=['_eps', '_rev'], inplace=True)
 
     # --- I score (industry RS) ---
     # Median, not mean: one Finviz corporate-action artefact (an aerospace row
@@ -454,6 +463,22 @@ def main():
         logger.info("Using yfinance fallback universe...")
         universe = build_fallback_universe(yf_adapter)
         logger.info(f"Fallback universe: {len(universe)} stocks")
+
+    # 1b. Fundamentals for the F score: yfinance primary (rolling refresh,
+    # BUDGET tickers a night, store committed under data/reference), Finviz's
+    # own columns as backup. Own failure domain: a throttled night keeps last
+    # week's readings, never blanks the column.
+    try:
+        from pipeline.adapters import fundamentals_store as FS
+        fstore = FS.load()
+        stats = FS.refresh(fstore, universe['ticker'].tolist())
+        FS.save(fstore)
+        universe = FS.apply(universe, fstore)
+        cov = universe[['eps_growth_next_y', 'revenue_growth']].notna().any(axis=1).mean()
+        logger.info("fundamentals: %s; coverage %.1f%% of universe (source counts %s)",
+                    stats, cov * 100, universe['fund_source'].value_counts(dropna=False).to_dict())
+    except Exception:
+        logger.exception("fundamentals store failed - F score falls back to Finviz columns only")
 
     # Compute universe scores for screener page
     scored_universe = compute_universe_scores(universe)
@@ -746,7 +771,8 @@ def main():
         'sma20_dist', 'sma50_dist', 'sma40_dist', 'sma200_dist',
         'atr', 'rel_volume', 'avg_volume', 'volume', 'vol_5d_50d',
         'market_cap', 'sector', 'industry',
-        'high_52w', 'low_52w', 'eps_growth_next_y',
+        'high_52w', 'low_52w', 'eps_growth_next_y', 'revenue_growth', 'eps_growth_this_y',
+        'fund_source', 'fund_asof',
         'rs_1m', 'rs_3m', 'rs_6m',
         'rs_21d', 'rs_63d', 'rs_126d',   # deprecated aliases, drop once the UI moves
         'rs_ibd',
