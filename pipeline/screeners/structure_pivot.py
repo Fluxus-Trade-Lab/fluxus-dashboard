@@ -95,7 +95,8 @@ class Result:
 
     def to_row(self) -> Dict[str, Any]:
         """Flat, JSON-safe fields for universe.json (prefix ``sp_``)."""
-        close = float(self.df["close"].iloc[-1]) if len(self.df) else None
+        ccol = next((c for c in self.df.columns if c.lower() == "close"), None)
+        close = float(self.df[ccol].iloc[-1]) if (ccol and len(self.df)) else None
         n = len(self.df)
 
         def pct(level):

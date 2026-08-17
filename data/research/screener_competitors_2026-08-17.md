@@ -129,13 +129,13 @@ Telechart 语法,原文照抄:
 
 | # | 缺什么 | 谁在用 | 难度 | 影响(2026-08-14 实算) |
 |---|---|---|---|---|
-| **1** | **ATR Matrix** `(close−SMA50)/ATR` | 三家都用 | **极低**(现有 `close/atr/sma50_dist` 直接算) | 全池 5,251 行可算(225 只 ATR<0.5% 的壳/并购锁价票判 null):**42.4% 低于 SMA50(该忽略)· 50.0% 在 0–4x 建仓区 · 6.9% 4–7x · 0.7% ≥7x 过度延伸** |
-| 2 | **PP 10 日窗** `pp_count_10d` | oratnek | 极低(改一个 lookback) | 他的 "PP (Vol > 10D)" 栏目直接可复现 |
+| **1** | **ATR Matrix** `(close−SMA50)/ATR` ✅ 已加 | 三家都用 | **极低**(现有 `close/atr/sma50_dist` 直接算) | 全池 5,251 行可算(225 只 ATR<0.5% 的壳/并购锁价票判 null):**42.4% 低于 SMA50(该忽略)· 50.0% 在 0–4x 建仓区 · 6.9% 4–7x · 0.7% ≥7x 过度延伸** |
+| 2 | **PP 10 日窗** `pp_count_10d` ✅ 已加 | oratnek | 极低(改一个 lookback) | 他的 "PP (Vol > 10D)" 栏目直接可复现 |
 | 3 | **均线序列布尔** `ma_stack` | Steve、Alex | 低 | Price≥EMA10≥SMA20≥SMA50≥SMA100≥SMA200 |
 | 4 | **ADR 上限口径错** | Steve | 零(改预设) | 我们 8 个预设用 `adrPct max 10`;Steve 的上限是 **maxLoss÷1.5 ≈ 6**。10 会放进注定打穿止损的票 |
 | 5 | **Stockbee anticipation 三扫描** | Stockbee | 低 | TI65 / Double Trouble / MDT,全是日线可算量 + 当日 ±1% |
 | 6 | **Hybrid RS 排序退化** | oratnek | 中 | 我们的 `h_score` 里 `f_score` 恒 50(源头两列空),等于 2/10 权重是死的 |
-| 7 | **结构识别(LL-HL / reversal pivot)** | oratnek、Alex | **高** | 他们体系的核心,我们完全没有。移植 `Structure Pivot` 是唯一路径 |
+| 7 | **结构识别(LL-HL / reversal pivot)** | oratnek、Alex | **高** | ✅ **已移植**(2026-08-17,`sp_*` 字段,黄金对照 5/5);Alex 的 reversal pivot 仍无 |
 
 ### 两家完整口径套到我们池子上
 

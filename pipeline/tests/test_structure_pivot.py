@@ -281,3 +281,55 @@ class TestOutputContract:
                   "sp_phase", "sp_stop", "sp_signal", "sp_days", "sp_dist_1st_pct", "sp_dist_2nd_pct"):
             assert k in d, k
         assert d["sp_dist_1st_pct"] == pytest.approx((d["sp_1st"] / d["sp_close"] - 1) * 100, abs=0.01)
+
+
+class TestGoldenAgainstTradingView:
+    """Five tickers, daily bars to 2026-08-14, compared against oratnek's own
+    script running on TradingView (indicators/third_party/oratnek_asp_probe.pine,
+    Andy's screenshots). Bars are frozen in fixtures so this runs offline.
+
+    Tolerances: structure fields exact; price levels 0.02 (SMCI's 2nd pivot is
+    a sub-penny print, 32.585 on TV vs 32.59 in the yfinance bars, and the
+    fib levels inherit it); stop/MA 1e-3 (EMA float seed).
+    """
+    import json as _json
+    from pathlib import Path as _Path
+    _FX = _Path(__file__).parent / "fixtures"
+    GOLD = _json.loads((_FX / "structure_pivot_golden_2026-08-14.json").read_text())
+    BARS = _json.loads((_FX / "structure_pivot_bars_2026-08-14.json").read_text())
+
+    @pytest.mark.parametrize("ticker", ["AEHR", "SMCI", "CRWD", "NVDA", "PLTR"])
+    def test_matches_the_chart(self, ticker):
+        b = self.BARS[ticker]
+        df = pd.DataFrame({k: b[k] for k in ("open", "high", "low", "close")},
+                          index=pd.to_datetime(b["date"]))
+        r = SP.run(df)
+        g = self.GOLD[ticker]
+        n = len(df); w = r.winner
+        assert r.setup is g["setup"]
+        assert w.len == g["len"]
+        assert w.prev_p == pytest.approx(g["LL"], abs=0.02)
+        assert n - 1 - w.prev_idx == g["LL_idx_from_end"]
+        assert w.curr_p == pytest.approx(g["HL"], abs=0.02)
+        assert n - 1 - w.curr_idx == g["HL_idx_from_end"]
+        assert r.pivot_1st == pytest.approx(g["1st"], abs=0.02)
+        assert r.pivot_2nd == pytest.approx(g["2nd"], abs=0.02)
+        assert r.tp1 == pytest.approx(g["TP1"], abs=0.02)
+        assert r.tp2 == pytest.approx(g["TP2"], abs=0.02)
+        assert r.phase == g["phase"]
+        assert r.stop == pytest.approx(g["stop"], abs=1e-3)
+        assert r.ma == pytest.approx(g["MA21low"], abs=1e-3)
+        assert (r.signal or "none") == g["signal"]
+
+
+class TestAdapterRow:
+    def test_row_helper_never_raises_and_has_the_full_field_set(self):
+        from pipeline.adapters.yfinance_adapter import structure_pivot_row, SP_FIELDS
+        lows, highs, *_ = ll_hl_path()
+        df = bars(lows, highs).rename(columns=str.capitalize)      # adapter frames are Capitalized
+        row = structure_pivot_row(df)
+        assert set(row) == set(SP_FIELDS)
+        assert row["sp_setup"] is True and row["sp_2nd"] == pytest.approx(105.0)
+        # garbage in -> all None, no exception
+        bad = structure_pivot_row(pd.DataFrame({"x": [1, 2, 3]}))
+        assert set(bad) == set(SP_FIELDS) and all(v is None for v in bad.values())

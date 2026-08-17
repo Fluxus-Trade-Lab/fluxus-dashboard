@@ -197,6 +197,26 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 
 ⚠️ **`atr_ext`(每个 ticker 徽章)口径变更 2026-08-17**:原来是 `|dist|×close/atr`(无符号、漏 `(1+dist)`),现在 = `atr_from_sma50`(有符号)。**低于 SMA50 的票现在是负数**,`atr_color` 多了一档 `"below"`。前端 `lib/format.js:atrBadgeColor` 目前把 `<0` 走进 `≤4` 的绿色分支 —— **需要前端加一行 `if (atrExt < 0) return <中性色>`**,否则 2,247 只线下票继续被涂成入场区绿。这是数据端修正后剩给 UI 的唯一一步。
 
+### `sp_*` —— Structure Pivot(oratnek Advanced Structure Pivot 移植,2026-08-17 加,下次 cron 起有值)
+
+引擎 `pipeline/screeners/structure_pivot.py`,源码 `indicators/third_party/oratnek_advanced_structure_pivot.pine`;**黄金对照 5/5**(AEHR/SMCI/CRWD/NVDA/PLTR,08-14 日线,结构/长度/索引/阶段/信号全同,价位差 ≤0.013 且全部溯源到 bar 数据的 sub-penny 精度),回归夹具在 `pipeline/tests/fixtures/`。
+
+| 字段 | 含义 | 空值语义 |
+|---|---|---|
+| `sp_setup` | 当前是否有活的 LL-HL 结构 | `null` = 历史 <30 根未测量;`false` = 无结构 |
+| `sp_len` | 胜出的检测长度(2–5,Tightest 优先) | 无结构 → null |
+| `sp_ll` / `sp_hl` | 低低点 / 高低点价 | 无结构时 `sp_hl` 仍可能有值(最近一个 pivot 或跟踪中的最低 low)—— **只在 `sp_setup` 为 true 时把它当 HL 读** |
+| `sp_1st` / `sp_2nd` / `sp_tp1` / `sp_tp2` | Fib 0.618 / 1.0 / 1.764 / 2.618 位 | 无结构 → null |
+| `sp_phase` | 1 = 止损跟 MA · 2 = 止损固定 1st(high 触过 2nd) · 3 = max(1st, MA)(high 触过 TP1) | 无结构 → null |
+| `sp_stop` / `sp_ma` | 当前阶段的止损 / 21EMA(low) | `sp_ma` 无结构也有 |
+| `sp_signal` | 当日**收盘**信号(互斥):`1st_break` `2nd_break` `tp1_hit` `tp2_hit` `stop_hit` `ll_break` `counter_break` | 无 → null |
+| `sp_days` | 结构画出以来的交易日数(0 = 今天新出) | |
+| `sp_dist_1st_pct` / `sp_dist_2nd_pct` | 1st / 2nd 相对收盘的 % 距离(负 = 已在其上) | |
+| `sp_counter` | 无结构期的逆势趋势线在今天的价位 | 有结构 → null |
+
+**读法(oratnek 原话)**:1st 建半仓、止损 21EMA Low;5 根内须到 2nd,到了加仓、止损上移到 1st;+25% 优先落袋,否则 R:R 3 或 ATR-from-50SMA ≥7 减 33%;收盘跌破 21EMA Low 清。他的 Today's Watchlist 四栏 = `sp_signal ∈ {1st_break, 2nd_break, counter_break}` + `pp_count_10d ≥ 1`。
+**口径提醒**:①富集用复权日线,与 TV 未复权图相比价位差在分红调整量级(NVDA MA 210.3487 vs 210.3508);②描述说"收盘",代码用 high(升阶)/ low(作废),移植照代码;③他自己的 "ATR% 50SMA" 列是 `dist·close/atr`(漏 `(1+dist)`),他的 `<5` 门槛换算到我们的 `atr_from_sma50` 要除以 `(1+dist)`。
+
 ⚠️ **`vcs` 换尺 2026-08-17(下一次 cron 起生效)**:原来是改造过的老版 VCS(min(13,3) 标准差、Kaufman-ER 质量项、.3/.3/.2/.2 权重、无效率过滤,无测试无黄金对照);现在是 **oratnek VCS v2 的忠实移植**(`pipeline/screeners/vcs.py`,源码 `indicators/third_party/oratnek_vcs_v2.pine`):.4/.4/.2 权重 × 效率过滤,EMA3 平滑,连续紧缩加分 ≤15,低点跌破 ×0.75;<76 根 → `null`。**新尺明显更严**:134 只本地样本上中位 50.5 → 35.1,≥70 的占比 11.9% → 7.5%。作者的读法:80+ 临界压缩、60–80 发展中、<60 扩张。`filters.vcs` 的阈值和任何存了旧 vcs 的历史都要按这个日期分界。黄金对照:`indicators/third_party/oratnek_vcs_probe.pine` ↔ `python -m pipeline.tools.vcs_probe`。
 
 Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `≥7` 分批减;oratnek:选股 `<5`(理想 `<4`),`≥7` 减 33%。出处 `data/research/screener_competitors_2026-08-17.md`。

@@ -1,0 +1,9 @@
+{
+  "_source": "TradingView web, daily, dividend-adjust off, indicators/third_party/oratnek_asp_probe.pine, screenshots from Andy 2026-08-17; Python side = pipeline/tools/structure_pivot_probe.py --end 2026-08-14 on yfinance auto_adjust=False bars",
+  "_verdict": "5/5 structures identical (setup, len, LL/HL and their bar offsets, phase, signal). Numeric deltas: SMCI 2nd pivot 32.585 (TV, sub-penny print) vs 32.59 (yfinance) propagates <=0.013 into 1st/TP1/TP2; stop/MA within 2e-4 (EMA float seed). No engine deltas.",
+  "AEHR": {"setup": true, "len": 4, "LL": 63.32, "LL_idx_from_end": 27, "HL": 63.81, "HL_idx_from_end": 12, "1st": 92.479, "2nd": 110.2, "TP1": 145.642, "TP2": 185.259, "phase": 3, "stop": 95.2652, "MA21low": 95.2652, "signal": "none"},
+  "SMCI": {"setup": true, "len": 3, "LL": 23.38, "LL_idx_from_end": 20, "HL": 25.68, "HL_idx_from_end": 12, "1st": 29.9473, "2nd": 32.585, "TP1": 37.8604, "TP2": 43.7573, "phase": 3, "stop": 30.781, "MA21low": 30.781, "signal": "none"},
+  "CRWD": {"setup": true, "len": 2, "LL": 174.14, "LL_idx_from_end": 13, "HL": 201.75, "HL_idx_from_end": 6, "1st": 212.6268, "2nd": 219.35, "TP1": 232.7964, "TP2": 247.8268, "phase": 2, "stop": 212.6268, "MA21low": 200.8943, "signal": "none"},
+  "NVDA": {"setup": true, "len": 2, "LL": 190.01, "LL_idx_from_end": 12, "HL": 216.2, "HL_idx_from_end": 3, "1st": 221.4901, "2nd": 224.76, "TP1": 231.2998, "TP2": 238.6101, "phase": 2, "stop": 221.4901, "MA21low": 210.3508, "signal": "none"},
+  "PLTR": {"setup": true, "len": 2, "LL": 119.62, "LL_idx_from_end": 10, "HL": 168.34, "HL_idx_from_end": 2, "1st": 175.2987, "2nd": 179.6, "TP1": 188.2026, "TP2": 197.8187, "phase": 2, "stop": 175.2987, "MA21low": 147.9522, "signal": "stop_hit"}
+}

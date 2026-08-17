@@ -144,6 +144,24 @@ def pocket_pivot_today(closes, opens, vols) -> bool | None:
     return None if n is None else bool(n)
 
 
+SP_FIELDS = ("sp_setup", "sp_len", "sp_ll", "sp_hl", "sp_1st", "sp_2nd", "sp_tp1", "sp_tp2",
+             "sp_phase", "sp_stop", "sp_ma", "sp_signal", "sp_days", "sp_dist_1st_pct",
+             "sp_dist_2nd_pct", "sp_counter")
+
+
+def structure_pivot_row(hist: pd.DataFrame) -> dict:
+    """The Structure Pivot state as flat sp_* fields (see
+    pipeline/screeners/structure_pivot.py). Never raises: on any failure every
+    field is None, which the screener reads as unmeasured."""
+    try:
+        from pipeline.screeners.structure_pivot import run as _sp_run
+        row = _sp_run(hist).to_row()
+        row.pop("sp_close", None)
+        return {k: row.get(k) for k in SP_FIELDS}
+    except Exception:
+        return {k: None for k in SP_FIELDS}
+
+
 def calculate_vcs(hist: pd.DataFrame) -> float | None:
     """Volatility Contraction Score (0-100), one decimal.
 
@@ -475,6 +493,11 @@ class YfinanceAdapter(BaseAdapter):
                 # VCS
                 vcs = calculate_vcs(hist)
 
+                # Structure Pivot (oratnek's Advanced Structure Pivot, ported;
+                # golden-checked against the chart on five names 2026-08-17).
+                # One dict of sp_* fields, or all-None on short history.
+                sp_row = structure_pivot_row(hist)
+
                 # 21EMA Low Dist%: how far today's low is from 21EMA
                 ema21_low_dist = (last_low - ema21) / ema21 if ema21 > 0 else None
 
@@ -523,6 +546,7 @@ class YfinanceAdapter(BaseAdapter):
                     'pp_count_10d': pp_count_10,
                     'trend_base': trend_base,
                     'vcs': vcs,
+                    **sp_row,
                     'ema21_low_dist': ema21_low_dist,
                     'ema10': ema10,
                     'ema20': ema20,
