@@ -1,0 +1,189 @@
+{
+  "date": "2026-08-14",
+  "question": "P(S&P 500 closes >= 5% below today's close at some point in the next 21 sessions)",
+  "method": "conditional base rate: (VIX quintile, above/below 200-day SMA) -> historical frequency; no fitted parameters",
+  "prob": 0.0866,
+  "base_rate": 0.1664,
+  "today": {
+    "date": "2026-08-14",
+    "vix": 14.25,
+    "vix_quintile": 2,
+    "above_200dma": true,
+    "d200": 0.1005,
+    "prob": 0.0866,
+    "n_cell": 1720,
+    "prob_vix_only": 0.0815,
+    "n_vix_only": 1841,
+    "base_rate": 0.1664
+  },
+  "table": {
+    "sample": {
+      "from": "1990-01-02",
+      "to": "2026-08-13",
+      "sessions": 9221,
+      "episodes": 199,
+      "half_split": "2008-04-16"
+    },
+    "base_rate": 0.1664,
+    "vix_edges": [
+      8.14,
+      13.34,
+      16.15,
+      19.46,
+      24.18,
+      83.69
+    ],
+    "by_vix_quintile": {
+      "full": {
+        "1": {
+          "rate": 0.0551,
+          "n": 1852
+        },
+        "2": {
+          "rate": 0.0815,
+          "n": 1841
+        },
+        "3": {
+          "rate": 0.1381,
+          "n": 1846
+        },
+        "4": {
+          "rate": 0.2605,
+          "n": 1839
+        },
+        "5": {
+          "rate": 0.2973,
+          "n": 1843
+        }
+      },
+      "first_half": {
+        "1": {
+          "rate": 0.0215,
+          "n": 1021
+        },
+        "2": {
+          "rate": 0.0556,
+          "n": 809
+        },
+        "3": {
+          "rate": 0.1203,
+          "n": 823
+        },
+        "4": {
+          "rate": 0.2824,
+          "n": 1034
+        },
+        "5": {
+          "rate": 0.273,
+          "n": 923
+        }
+      },
+      "second_half": {
+        "1": {
+          "rate": 0.0963,
+          "n": 831
+        },
+        "2": {
+          "rate": 0.1017,
+          "n": 1032
+        },
+        "3": {
+          "rate": 0.1525,
+          "n": 1023
+        },
+        "4": {
+          "rate": 0.2323,
+          "n": 805
+        },
+        "5": {
+          "rate": 0.3217,
+          "n": 920
+        }
+      }
+    },
+    "monotone_spearman": {
+      "full": 1.0,
+      "first_half": 0.9,
+      "second_half": 1.0
+    },
+    "by_vix_quintile_x_200dma": {
+      "Q1_below200": {
+        "rate": 0.0,
+        "n": 47
+      },
+      "Q1_above200": {
+        "rate": 0.0565,
+        "n": 1805
+      },
+      "Q2_below200": {
+        "rate": 0.0083,
+        "n": 121
+      },
+      "Q2_above200": {
+        "rate": 0.0866,
+        "n": 1720
+      },
+      "Q3_below200": {
+        "rate": 0.2513,
+        "n": 195
+      },
+      "Q3_above200": {
+        "rate": 0.1248,
+        "n": 1651
+      },
+      "Q4_below200": {
+        "rate": 0.3939,
+        "n": 627
+      },
+      "Q4_above200": {
+        "rate": 0.1914,
+        "n": 1212
+      },
+      "Q5_below200": {
+        "rate": 0.3393,
+        "n": 1276
+      },
+      "Q5_above200": {
+        "rate": 0.2028,
+        "n": 567
+      }
+    }
+  },
+  "overlay": {
+    "note": "breadth/gamma layer is NOT in `prob`; regime.py's validated read is reported here with its own window and never averaged in",
+    "regime_bands_2024_2026": {
+      "damaged": 0.272,
+      "extended": 0.058,
+      "source": "pipeline/screeners/regime.py docstring, 558 sessions, ~10 independent episodes"
+    }
+  },
+  "predicts_return": false,
+  "separates_tail": true,
+  "caveats": [
+    "Tail reading, not a direction call: it answers how often a 5% drawdown followed this state, never which way to lean.",
+    "A table, not a model: VIX quintile x 200-day side. A 9-feature logistic was worse than the base rate out of sample (see appendix) -- the honest skill lives in these two variables and is modest.",
+    "Cells are unequal: Q1/Q2 below the 200-day are rare (n < 130); read n_cell beside prob.",
+    "Quintile edges are set on the full 1990-> sample; the half-sample check shows the ordering holds in both halves.",
+    "Overlapping 21-day windows: sessions are not independent -- the episode count is the sample size that matters."
+  ],
+  "appendix_logistic_oos": {
+    "full_9": {
+      "auc": 0.518,
+      "brier": 0.1332,
+      "brier_base_rate": 0.1205,
+      "n_oos": 3424
+    },
+    "vix_d200": {
+      "auc": 0.628,
+      "brier": 0.1189,
+      "brier_base_rate": 0.1205,
+      "n_oos": 3424
+    },
+    "vix_only": {
+      "auc": 0.619,
+      "brier": 0.12,
+      "brier_base_rate": 0.1205,
+      "n_oos": 3424
+    }
+  }
+}

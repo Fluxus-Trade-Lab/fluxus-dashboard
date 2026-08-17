@@ -272,6 +272,34 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 
 ---
 
+## 四点八、`data/output/correction_risk.json` —— Correction Risk 基础层(2026-08-17 加,首份由今晚 cron 产出)
+
+**产出**:`pipeline/risk/correction_risk.py`,run_all 里 rotation 之后;两条 yfinance 序列(^GSPC、^VIX,历史到 1990)。自己的失败域。
+**当前消费方**:`CorrectionRiskPage.jsx` 的空槽 —— **这份文件就是那个槽位的标准被满足后的第一份数据**。
+
+```
+{ date, question, method, prob, base_rate,
+  today:{date, vix, vix_quintile, above_200dma, d200, prob, n_cell, prob_vix_only, n_vix_only, base_rate},
+  table:{ sample:{from,to,sessions,episodes,half_split}, base_rate, vix_edges[6],
+          by_vix_quintile:{full,first_half,second_half}[q]={rate,n}, monotone_spearman:{full,first_half,second_half},
+          by_vix_quintile_x_200dma:{"Q1_above200":{rate,n}, ...} },
+  overlay:{note, regime_bands_2024_2026:{damaged,extended,source}},
+  predicts_return:false, separates_tail:true, caveats[] }
+```
+
+**是什么**:P(未来 21 个交易日内标普收盘比今天低 ≥5%)。**方法是条件基准率表,不是模型**:格子 = (VIX 五分位 × 是否在 200 日线上),值 = 1990 年以来该格的历史频率。样本 9,221 个交易日、**199 段独立回撤事件**(槽位页要求 ~115)。VIX 五分位单看:5.5% / 8.1% / 13.8% / 26.0% / 29.7%,基准 16.6%,**前后半样本各自单调**(ρ 0.9 / 1.0);200 日线下 Q3–Q5 翻倍。首份读数(08-14):VIX 14.25 → Q2、线上 → **8.7%**(n=1,720)。
+
+**为什么不是模型**:9 特征逻辑回归(VIX、期限结构、实现波动、均线距离、回撤状态、HYG/IEF 信用代理)按年走前 2013–2026,**out-of-sample 不如基准率**(Brier 0.133 vs 0.121,AUC 0.52),分位不单调;只有 VIX 与 200 日线两项有微弱 OOS 技能(AUC 0.63)。表把这点技能透明地留下,不加参数。回归留在 `logistic_appendix()` 可复现(`appendix_logistic_oos` 字段,夜间不重跑)。
+
+**渲染规则**:
+- ⚠️ `prob` **必须和 `base_rate` 并排**,再显示 `n_cell` —— 这是槽位页自己立的标准("一个数,连同它对照的基准率")
+- ⚠️ `predicts_return:false` / `separates_tail:true` 与 `caveats[]` 必须显示(同 regime 的规矩)
+- `overlay` 是**分开的一读**(regime.py 的 2.2 年广度结论),**不与 `prob` 平均**;页面上分区显示、标注各自窗口
+- 可以画整张 `by_vix_quintile.full` 当刻度(五档 + 今天所在档高亮),`first_half/second_half` 是"它站得住"的证据,建议 hover 显示
+- 不画红绿灯:它回答"这里能亏多少",不回答方向
+
+---
+
 ## 五、当前未接入的东西
 
 | 文件 | 状态 |

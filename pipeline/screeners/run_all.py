@@ -833,6 +833,18 @@ def main():
     except Exception:
         logger.exception("Rotation layer failed - rotation.json not updated")
 
+    # Correction Risk base layer: two yfinance series (^GSPC, ^VIX to 1990),
+    # a conditional base-rate table, today's cell. Network step, own failure
+    # domain; the appendix (VIX3M/HYG/IEF logistic NULL) is not re-run nightly.
+    try:
+        from pipeline.risk.correction_risk import fetch_inputs, _main_from
+        cr = _main_from(fetch_inputs(with_appendix=False), with_appendix=False)
+        logger.info("Saved correction_risk.json - P(5%% dd/21d) %.3f vs base %.3f (VIX Q%d, %s 200dma)",
+                    cr['prob'], cr['base_rate'], cr['today']['vix_quintile'],
+                    'above' if cr['today']['above_200dma'] else 'below')
+    except Exception:
+        logger.exception("Correction risk failed - correction_risk.json not updated")
+
     # Site-wide quality: grade every file the frontend reads, write the
     # consolidated report beside them. Its own failure domain — a grading
     # crash must not cost the outputs it grades.
