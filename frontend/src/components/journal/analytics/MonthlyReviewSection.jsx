@@ -86,8 +86,8 @@ function MiniEquityCurve({ data }) {
       <ResponsiveContainer width="100%" height={160}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
-          <XAxis dataKey="date" tick={{ fontSize: 9, fill: 'var(--color-text-muted)' }} tickFormatter={d => d.slice(8)} interval="preserveStartEnd" />
-          <YAxis tick={{ fontSize: 9, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${v.toFixed(1)}%`} domain={['auto', 'auto']} />
+          <XAxis dataKey="date" tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }} tickFormatter={d => d.slice(8)} interval="preserveStartEnd" />
+          <YAxis tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${v.toFixed(1)}%`} domain={['auto', 'auto']} />
           <Tooltip
             contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text)' }}
             formatter={v => [`${v.toFixed(2)}%`, 'Return']}

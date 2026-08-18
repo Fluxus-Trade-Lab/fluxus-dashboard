@@ -310,7 +310,7 @@ const shown = (panel, { highOnly, floor, pool3m, zoneKey } = {}) => {
 function Count({ panel, view = {}, zoneKey }) {
   const { t } = useLanguage()
   if (!panel.measured) {
-    return <span className="text-[9.5px] font-mono uppercase tracking-[.12em]
+    return <span className="text-[10px] font-mono uppercase tracking-[.12em]
                             text-[var(--color-text-muted)]">{t('wl.unmeasured')}</span>
   }
   const n = shown(panel, { ...view, zoneKey }).length
@@ -359,7 +359,7 @@ function QuestionChip({ zone, index, active, onPick, view }) {
                           : 'border-[var(--color-border-light)] bg-[var(--color-surface)] '
                             + 'hover:border-[var(--color-border)]'}`}>
       <span className="flex items-baseline gap-2">
-        <span className="text-[9.5px] font-mono tabular-nums text-[var(--color-text-muted)]">
+        <span className="text-[10px] font-mono tabular-nums text-[var(--color-text-muted)]">
           {String(index + 1).padStart(2, '0')}
         </span>
         <b className="text-[13px] font-semibold leading-tight">
@@ -394,7 +394,7 @@ function ScanCard({ panel, zoneKey, view, rsKey }) {
           <Count panel={panel} view={view} zoneKey={zoneKey} />
         </span>
         <button type="button" onClick={() => setOpenRecipe(!openRecipe)}
-                className="shrink-0 text-[9.5px] font-mono bg-transparent border-none p-0
+                className="shrink-0 text-[10px] font-mono bg-transparent border-none p-0
                            cursor-pointer text-[var(--color-text-muted)]
                            hover:text-[var(--color-text)]">
           {openRecipe ? '−' : t('wl.recipe')}
@@ -419,7 +419,7 @@ function ScanCard({ panel, zoneKey, view, rsKey }) {
         <button type="button"
                 onClick={() => navigator.clipboard?.writeText(
                   rows.map((r) => r.ticker).join(',')).catch(() => {})}
-                className="mt-auto text-left px-3 py-1.5 text-[9.5px] font-mono uppercase
+                className="mt-auto text-left px-3 py-1.5 text-[10px] font-mono uppercase
                            tracking-[.14em] bg-transparent border-none cursor-pointer
                            text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
           {t('wl.copy')} {rows.length}

@@ -152,7 +152,7 @@ function Extension({ row }) {
           one is already a grey ladder, and a second grey ladder carrying a
           different meaning is how two encodings become one. */}
       {expiring && (
-        <span className="text-[9px] font-mono uppercase tracking-[.12em]
+        <span className="text-[10px] font-mono uppercase tracking-[.12em]
                          text-[var(--color-signal-caution)] whitespace-nowrap">expiring</span>
       )}
       <span className="relative block w-[46px] h-[9px] rounded-sm

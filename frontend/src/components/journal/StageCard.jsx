@@ -187,7 +187,7 @@ export default function StageCard({ stageKey, trades, lead, onOpen }) {
       <span className="flex items-baseline gap-2">
         <b className="text-[19px] font-semibold">{t(`rev.stage.${stageKey}`)}</b>
         {lead && (
-          <span className="ml-auto text-[9px] font-mono tracking-[.14em] px-1.5 py-0.5 rounded
+          <span className="ml-auto text-[10px] font-mono tracking-[.14em] px-1.5 py-0.5 rounded
                            bg-[var(--color-accent-solid)] text-white">{t('card.lead')}</span>
         )}
       </span>

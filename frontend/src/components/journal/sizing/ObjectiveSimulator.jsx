@@ -159,7 +159,7 @@ export default function ObjectiveSimulator({ rs }) {
                 <XAxis
                   dataKey="x"
                   tickFormatter={v => `${Math.round(v)}%`}
-                  tick={{ fontSize: 9, fill: 'var(--color-text-muted)' }}
+                  tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }}
                   interval="preserveStartEnd"
                   tickLine={false}
                 />
