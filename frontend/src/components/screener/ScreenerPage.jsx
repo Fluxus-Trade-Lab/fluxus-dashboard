@@ -432,8 +432,17 @@ export default function ScreenerPage() {
       {viewReady ? (
         // key: normalized search only — a trailing space changes nothing
         // about the row set and must not remount the table
+        /* Andy, 2026-08-18: open on RELATIVE VOLUME, not RS 3M. RS 3M ranks a
+           name against its peers over a quarter, which is a standing property —
+           the same names sit at the top of it for weeks, so the first screen of
+           the table said the same thing every morning. Relative volume is a
+           property of TODAY, so the head of the table is now what is unusual in
+           this session rather than what has been strong all quarter.
+           Confluence keeps `heat`: counting how many screens a name stacked is
+           the entire reason that scan exists, and ordering it by anything else
+           retires it. */
         <StockTable key={`${scan}|${[...states].join()}|${[...themes].join()}|${search.trim().toUpperCase()}`}
-                    rows={rows} defaultSort={scan === 'confluence' ? 'heat' : 'rs3'}
+                    rows={rows} defaultSort={scan === 'confluence' ? 'heat' : 'relVol'}
                     onChart={(t) => { if (t !== charted) chartPick(t) }} />
       ) : (
         <p className="m-0 py-8 text-center text-[12.5px] text-[var(--color-text-muted)]">
