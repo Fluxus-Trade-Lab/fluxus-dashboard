@@ -1,6 +1,6 @@
 {
   "trade_id": "CRWD_2026-06-21_000",
-  "generated_at": "2026-08-17T03:51:15+00:00",
+  "generated_at": "2026-08-18T03:59:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "CRWD",
@@ -36,7 +36,7 @@
     "ma20": 172.318125,
     "ma50": 141.38855,
     "ma200": 122.351525,
-    "rsi14": 58.160719705998254,
+    "rsi14": 58.16071909570228,
     "atr14": 9.772049999999997,
     "atr14_pct": 5.707473060187482,
     "high_52w": 196.415,
@@ -47,23 +47,9 @@
     "low_5d": 165.23
   },
   "setup_type": "Long in mixed structure",
-  "path_analytics": {
-    "mfe_R": -27.252876569037653,
-    "mfe_date": "2026-06-22",
-    "mae_R": 27.762615062761498,
-    "mae_date": "2026-06-22",
-    "optimal_exit_price": 178.045,
-    "optimal_exit_date": "2026-06-22",
-    "optimal_R": -27.252876569037653,
-    "days_to_optimal": 1,
-    "realized_R": -1.0,
-    "capture_pct": null,
-    "missed_R": -26.252876569037653,
-    "post_exit_R": -26.129184100418406,
-    "hold_calendar_days": 1
-  },
-  "lesson": "Failed setup",
-  "narrative": "Entered **CRWD** long on 2026-06-21 at $699.12 (qty 385) with stop $680.00 (1R = $19.12/sh = $7,361). Setup: **Long in mixed structure** \u2014 price below MA20 ($172.32), MA20 > MA50 > MA200 (golden alignment), RSI 58, 77% through 52W range, ATR 5.7% of price. Realized **-1.00R**. **Lesson: Failed setup.**",
+  "path_analytics": {},
+  "lesson": "Insufficient data",
+  "narrative": "Entered **CRWD** long on 2026-06-21 at $699.12 (qty 385) with stop $680.00 (1R = $19.12/sh = $7,361). Setup: **Long in mixed structure** \u2014 price below MA20 ($172.32), MA20 > MA50 > MA200 (golden alignment), RSI 58, 77% through 52W range, ATR 5.7% of price.  **Lesson: Insufficient data.**",
   "ohlc_window": [
     {
       "date": "2026-05-22",

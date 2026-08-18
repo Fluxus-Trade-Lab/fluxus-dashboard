@@ -1,6 +1,6 @@
 {
   "trade_id": "MU_2026-08-11_000",
-  "generated_at": "2026-08-17T03:51:15+00:00",
+  "generated_at": "2026-08-18T03:59:16+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "MU",
@@ -34,28 +34,42 @@
     ]
   },
   "entry_snapshot": {
-    "close": 877.57,
-    "open": 903.6,
-    "high": 904.8,
-    "low": 847.02,
-    "volume": 34442200.0,
-    "ma20": 888.2645,
-    "ma50": 970.8658220000001,
-    "ma200": 534.8599835,
-    "rsi14": 47.63448124231254,
-    "atr14": 84.6742857142857,
-    "atr14_pct": 9.648721550905991,
+    "close": 868.52,
+    "open": 871.8,
+    "high": 879.0,
+    "low": 844.62,
+    "volume": 29438300.0,
+    "ma20": 878.7345000000001,
+    "ma50": 967.571648,
+    "ma200": 541.5057415,
+    "rsi14": 47.02460727805777,
+    "atr14": 78.31642857142856,
+    "atr14_pct": 9.017227993762788,
     "high_52w": 1254.807,
     "low_52w": 113.2782,
-    "position_in_52w_range_pct": 66.95335238147298,
+    "position_in_52w_range_pct": 66.16055591413901,
     "high_20d": 1011.77,
     "low_10d": 737.88,
-    "low_5d": 770.1
+    "low_5d": 827.0
   },
   "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
-  "path_analytics": {},
-  "lesson": "Insufficient data",
-  "narrative": "Entered **MU** long on 2026-08-11 at $921.18 (qty 175) with stop $900.00 (1R = $21.18/sh = $3,706). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($888.26), MA stack mixed, RSI 48, 67% through 52W range, ATR 9.6% of price.  **Lesson: Insufficient data.**",
+  "path_analytics": {
+    "mfe_R": 2.9660056657223888,
+    "mfe_date": "2026-08-14",
+    "mae_R": 3.614730878186975,
+    "mae_date": "2026-08-11",
+    "optimal_exit_price": 984.0,
+    "optimal_exit_date": "2026-08-14",
+    "optimal_R": 2.9660056657223888,
+    "days_to_optimal": 3,
+    "realized_R": 1.9804235801969576,
+    "capture_pct": 66.77072815754765,
+    "missed_R": 0.9855820855254311,
+    "post_exit_R": 5.4272898961284435,
+    "hold_calendar_days": 3
+  },
+  "lesson": "Good execution",
+  "narrative": "Entered **MU** long on 2026-08-11 at $921.18 (qty 175) with stop $900.00 (1R = $21.18/sh = $3,706). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($878.73), MA stack mixed, RSI 47, 66% through 52W range, ATR 9.0% of price. Realized **+1.98R**, peak was **+2.97R** on 2026-08-14 (day +3) \u2014 captured **67%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-07-13",
@@ -215,7 +229,55 @@
       "high": 904.8,
       "low": 847.02,
       "close": 877.57,
-      "volume": 34442200.0
+      "volume": 34568500.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 863.67,
+      "high": 894.99,
+      "low": 854.4,
+      "close": 861.0,
+      "volume": 27818600.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 871.8,
+      "high": 879.0,
+      "low": 844.62,
+      "close": 868.52,
+      "volume": 29438300.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 912.94,
+      "high": 935.8,
+      "low": 899.54,
+      "close": 911.29,
+      "volume": 36804900.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 912.89,
+      "high": 978.0,
+      "low": 906.5,
+      "close": 949.83,
+      "volume": 36704700.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 979.32,
+      "high": 984.0,
+      "low": 956.2,
+      "close": 971.66,
+      "volume": 27881100.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 998.67,
+      "high": 1036.13,
+      "low": 995.26,
+      "close": 1011.75,
+      "volume": 33067341.0
     }
   ]
 }

@@ -63,25 +63,27 @@ def fetch(period: str = "2y", out_dir: Path = OUT_DIR) -> Dict[str, int]:
         bars = [{"date": idx.strftime("%Y-%m-%d"), "close": round(float(row.Close), 4)}
                 for idx, row in sub.iterrows()]
 
-        # Never replace a series with a sparser one. A throttled batch can
-        # return a PARTIAL series — SPLV came back missing three mid-July
-        # sessions Yahoo actually has — and overwriting meant a good file on
-        # disk became a holey one, which align then (correctly) refused,
-        # which silently cost the volatility cut its vote. Fresh-but-holey
-        # loses to stale-but-complete; the next clean fetch still wins
-        # because it has at least as many bars plus the new session.
+        # Merge with what is on disk, by date: new bars win on the same date,
+        # old bars fill anything the response left out. Two failure modes,
+        # one rule. (1) A throttled batch can return a PARTIAL series -- SPLV
+        # once came back missing three mid-July sessions -- and overwriting
+        # made a good file holey. (2) The previous guard ("never replace with
+        # a shorter series") mis-fired on the 2y window itself: it slides by
+        # weekday, so a clean fetch is legitimately 499-501 bars, and on
+        # 2026-08-18 every basket was refused for being one bar short -- the
+        # baskets froze on 08-14 and rs_3m_6m went dark for every theme.
+        # The union is never shorter than either side and always carries the
+        # newest session.
         path = out_dir / f"{ticker}.json"
         if path.exists():
             try:
                 old_bars = json.loads(path.read_text()).get("bars") or []
             except (ValueError, OSError):
                 old_bars = []
-            if len(bars) < len(old_bars):
-                log.error("%s: fetched %d bars but the stored file has %d — "
-                          "keeping the stored file (partial response)",
-                          ticker, len(bars), len(old_bars))
-                failed.append(ticker)
-                continue
+            if old_bars:
+                merged = {b["date"]: b for b in old_bars if "date" in b}
+                merged.update({b["date"]: b for b in bars})
+                bars = [merged[d] for d in sorted(merged)]
         path.write_text(json.dumps({"ticker": ticker, "bars": bars}))
         written += 1
 

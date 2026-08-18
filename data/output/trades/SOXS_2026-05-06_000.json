@@ -1,6 +1,6 @@
 {
   "trade_id": "SOXS_2026-05-06_000",
-  "generated_at": "2026-08-17T03:51:14+00:00",
+  "generated_at": "2026-08-18T03:59:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SOXS",
@@ -48,7 +48,7 @@
     "ma20": 2521.9708650000002,
     "ma50": 4401.0646019999995,
     "ma200": null,
-    "rsi14": 22.353686785119706,
+    "rsi14": 22.353696093409326,
     "atr14": 218.1727214285715,
     "atr14_pct": 14.999272040691714,
     "high_52w": 22704.5659,
@@ -59,23 +59,9 @@
     "low_5d": 1453.0727
   },
   "setup_type": "Long in mixed structure",
-  "path_analytics": {
-    "mfe_R": 4827.70029411765,
-    "mfe_date": "2026-05-06",
-    "mae_R": -3523.7729411764726,
-    "mae_date": "2026-05-11",
-    "optimal_exit_price": 1651.7581,
-    "optimal_exit_date": "2026-05-06",
-    "optimal_R": 4827.70029411765,
-    "days_to_optimal": 0,
-    "realized_R": -1.0981727841000173,
-    "capture_pct": -0.022747327240634527,
-    "missed_R": 4828.79846690175,
-    "post_exit_R": 4797.173529411767,
-    "hold_calendar_days": 5
-  },
-  "lesson": "Stopped too tight",
-  "narrative": "Entered **SOXS** long on 2026-05-06 at $10.34 (qty 20919) with stop $10.00 (1R = $0.34/sh = $7,112). Setup: **Long in mixed structure** \u2014 price below MA20 ($2521.97), RSI 22, 0% through 52W range, ATR 15.0% of price. Realized **-1.10R**, peak was **+4827.70R** on 2026-05-06 (day +0) \u2014 captured **-0%** of the move. **Lesson: Stopped too tight.**",
+  "path_analytics": {},
+  "lesson": "Insufficient data",
+  "narrative": "Entered **SOXS** long on 2026-05-06 at $10.34 (qty 20919) with stop $10.00 (1R = $0.34/sh = $7,112). Setup: **Long in mixed structure** \u2014 price below MA20 ($2521.97), RSI 22, 0% through 52W range, ATR 15.0% of price.  **Lesson: Insufficient data.**",
   "ohlc_window": [
     {
       "date": "2026-04-06",

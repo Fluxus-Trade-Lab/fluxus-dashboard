@@ -1,6 +1,6 @@
 {
   "trade_id": "TSLL_2026-05-29_000",
-  "generated_at": "2026-08-17T03:51:14+00:00",
+  "generated_at": "2026-08-18T03:59:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "TSLL",
@@ -34,9 +34,9 @@
     "low": 15.2552,
     "volume": 67765600.0,
     "ma20": 14.945330000000002,
-    "ma50": 13.17418,
-    "ma200": 16.01023,
-    "rsi14": 58.51775013614809,
+    "ma50": 13.174180000000002,
+    "ma200": null,
+    "rsi14": 58.517749832760146,
     "atr14": 1.18285,
     "atr14_pct": 7.488335580751968,
     "high_52w": 23.2602,
@@ -46,7 +46,7 @@
     "low_10d": 12.9582,
     "low_5d": 14.764
   },
-  "setup_type": "Long below MA200 \u2014 counter-trend",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": 0.3685496183206086,
     "mfe_date": "2026-05-29",
@@ -63,7 +63,7 @@
     "hold_calendar_days": 3
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **TSLL** long on 2026-05-29 at $15.71 (qty 11842) with stop $14.40 (1R = $1.31/sh = $15,513). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($14.95), MA stack mixed, RSI 59, 44% through 52W range, ATR 7.5% of price. Realized **-0.45R**, peak was **+0.37R** on 2026-05-29 (day +0) \u2014 captured **-122%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **TSLL** long on 2026-05-29 at $15.71 (qty 11842) with stop $14.40 (1R = $1.31/sh = $15,513). Setup: **Long in mixed structure** \u2014 price above MA20 ($14.95), RSI 59, 44% through 52W range, ATR 7.5% of price. Realized **-0.45R**, peak was **+0.37R** on 2026-05-29 (day +0) \u2014 captured **-122%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-04-29",

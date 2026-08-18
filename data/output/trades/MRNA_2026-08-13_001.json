@@ -1,6 +1,6 @@
 {
   "trade_id": "MRNA_2026-08-13_001",
-  "generated_at": "2026-08-17T03:51:15+00:00",
+  "generated_at": "2026-08-18T03:59:16+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "MRNA",
@@ -21,28 +21,42 @@
     "trims": []
   },
   "entry_snapshot": {
-    "close": 59.17,
-    "open": 54.79,
-    "high": 59.415,
-    "low": 54.62,
-    "volume": 6811200.0,
-    "ma20": 58.804500000000004,
-    "ma50": 59.295500000000004,
-    "ma200": 45.591625,
-    "rsi14": 50.100414897680345,
-    "atr14": 3.5232142857142863,
-    "atr14_pct": 5.954392911465754,
+    "close": 63.65,
+    "open": 63.8,
+    "high": 65.33,
+    "low": 62.33,
+    "volume": 8159700.0,
+    "ma20": 57.89549999999999,
+    "ma50": 60.5203,
+    "ma200": 46.293475,
+    "rsi14": 57.31677492054782,
+    "atr14": 3.739285714285716,
+    "atr14_pct": 5.874761530692406,
     "high_52w": 85.6,
     "low_52w": 22.28,
-    "position_in_52w_range_pct": 58.25963360707518,
-    "high_20d": 69.55,
+    "position_in_52w_range_pct": 65.3348073278585,
+    "high_20d": 65.33,
     "low_10d": 52.66,
-    "low_5d": 52.66
+    "low_5d": 54.62
   },
-  "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
-  "path_analytics": {},
+  "setup_type": "Long in mixed structure",
+  "path_analytics": {
+    "mfe_R": 2.96753246753246,
+    "mfe_date": "2026-08-17",
+    "mae_R": 3.142857142857132,
+    "mae_date": "2026-08-14",
+    "optimal_exit_price": 65.525,
+    "optimal_exit_date": "2026-08-17",
+    "optimal_R": 2.96753246753246,
+    "days_to_optimal": 4,
+    "realized_R": null,
+    "capture_pct": null,
+    "missed_R": null,
+    "post_exit_R": null,
+    "hold_calendar_days": 4
+  },
   "lesson": "In progress",
-  "narrative": "Entered **MRNA** long on 2026-08-13 at $63.24 (qty 1623) with stop $62.47 (1R = $0.77/sh = $1,250). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($58.80), MA stack mixed, RSI 50, 58% through 52W range, ATR 6.0% of price. **In progress.**",
+  "narrative": "Entered **MRNA** long on 2026-08-13 at $63.24 (qty 1623) with stop $62.47 (1R = $0.77/sh = $1,250). Setup: **Long in mixed structure** \u2014 price above MA20 ($57.90), MA stack mixed, RSI 57, 65% through 52W range, ATR 5.9% of price. **In progress.** Peak so far +2.97R; worst drawdown -3.14R.",
   "ohlc_window": [
     {
       "date": "2026-07-14",
@@ -194,7 +208,55 @@
       "high": 59.415,
       "low": 54.62,
       "close": 59.17,
-      "volume": 6811200.0
+      "volume": 6820600.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 59.75,
+      "high": 60.77,
+      "low": 58.41,
+      "close": 59.81,
+      "volume": 6224500.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 60.21,
+      "high": 61.4,
+      "low": 58.6,
+      "close": 60.57,
+      "volume": 6556300.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 60.58,
+      "high": 64.26,
+      "low": 59.29,
+      "close": 63.67,
+      "volume": 6582000.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 63.8,
+      "high": 65.33,
+      "low": 62.33,
+      "close": 63.65,
+      "volume": 8159700.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 62.89,
+      "high": 63.782,
+      "low": 60.82,
+      "close": 63.32,
+      "volume": 4700900.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 64.25,
+      "high": 65.525,
+      "low": 62.91,
+      "close": 64.46,
+      "volume": 3977275.0
     }
   ]
 }

@@ -1,15 +1,15 @@
 {
-  "date": "2026-08-14",
+  "date": "2026-08-17",
   "question": "P(S&P 500 closes >= 5% below today's close at some point in the next 21 sessions)",
   "method": "conditional base rate: (VIX quintile, above/below 200-day SMA) -> historical frequency; no fitted parameters",
   "prob": 0.0866,
   "base_rate": 0.1664,
   "today": {
-    "date": "2026-08-14",
-    "vix": 14.25,
+    "date": "2026-08-17",
+    "vix": 15.19,
     "vix_quintile": 2,
     "above_200dma": true,
-    "d200": 0.1005,
+    "d200": 0.0956,
     "prob": 0.0866,
     "n_cell": 1720,
     "prob_vix_only": 0.0815,
@@ -19,10 +19,10 @@
   "table": {
     "sample": {
       "from": "1990-01-02",
-      "to": "2026-08-13",
-      "sessions": 9221,
+      "to": "2026-08-14",
+      "sessions": 9219,
       "episodes": 199,
-      "half_split": "2008-04-16"
+      "half_split": "2008-04-15"
     },
     "base_rate": 0.1664,
     "vix_edges": [
@@ -44,8 +44,8 @@
           "n": 1841
         },
         "3": {
-          "rate": 0.1381,
-          "n": 1846
+          "rate": 0.1383,
+          "n": 1844
         },
         "4": {
           "rate": 0.2605,
@@ -70,8 +70,8 @@
           "n": 823
         },
         "4": {
-          "rate": 0.2824,
-          "n": 1034
+          "rate": 0.2827,
+          "n": 1033
         },
         "5": {
           "rate": 0.273,
@@ -88,12 +88,12 @@
           "n": 1032
         },
         "3": {
-          "rate": 0.1525,
-          "n": 1023
+          "rate": 0.1528,
+          "n": 1021
         },
         "4": {
-          "rate": 0.2323,
-          "n": 805
+          "rate": 0.232,
+          "n": 806
         },
         "5": {
           "rate": 0.3217,
@@ -128,8 +128,8 @@
         "n": 195
       },
       "Q3_above200": {
-        "rate": 0.1248,
-        "n": 1651
+        "rate": 0.1249,
+        "n": 1649
       },
       "Q4_below200": {
         "rate": 0.3939,

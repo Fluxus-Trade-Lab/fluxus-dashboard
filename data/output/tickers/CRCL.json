@@ -1,113 +1,23 @@
 {
   "ticker": "CRCL",
-  "fetched_at": "2026-08-08T05:16:04Z",
+  "fetched_at": "2026-08-18T03:56:10Z",
   "_schema": "v2",
-  "current_price": 66.66999816894531,
-  "info": {
-    "symbol": "CRCL",
-    "longName": "Circle Internet Group",
-    "sector": "Financial Services",
-    "industry": "Capital Markets",
-    "exchange": "NYQ",
-    "country": "United States",
-    "city": "New York",
-    "website": "https://www.circle.com",
-    "fullTimeEmployees": 1100,
-    "marketCap": 18173849600,
-    "enterpriseValue": 15213122560,
-    "trailingPE": 12.674904,
-    "forwardPE": 38.410793,
-    "priceToSalesTrailing12Months": 6.255113,
-    "enterpriseToRevenue": 5.236,
-    "priceToBook": 4.802276,
-    "grossMargins": 0.21997999,
-    "operatingMargins": 0.04899,
-    "profitMargins": 0.15531999,
-    "returnOnEquity": 0.15347,
-    "totalCash": 1730125952,
-    "totalDebt": 15951000,
-    "totalRevenue": 2905438976,
-    "freeCashflow": 206229376,
-    "debtToEquity": 0.454,
-    "currentRatio": 1.035,
-    "fiftyTwoWeekHigh": 189.92,
-    "fiftyTwoWeekLow": 49.9,
-    "averageVolume": 14526000,
-    "averageVolume10days": 11964670,
-    "beta": null,
-    "sharesOutstanding": 234685190,
-    "sharesFloat": 195545359,
-    "companyOfficers": [
-      {
-        "name": "Mr. Jeremy D. Allaire",
-        "title": "Co-Founder, Chairman & CEO",
-        "age": 53,
-        "yearBorn": 1972
-      },
-      {
-        "name": "Mr. Heath P. Tarbert",
-        "title": "President & Chief Legal Officer",
-        "age": 48,
-        "yearBorn": 1977
-      },
-      {
-        "name": "Mr. Jeremy  Fox-Geen",
-        "title": "Chief Financial Officer",
-        "age": 51,
-        "yearBorn": 1974
-      },
-      {
-        "name": "Mr. Nikhil  Chandhok",
-        "title": "Chief Product & Technology Officer",
-        "age": 47,
-        "yearBorn": 1978
-      },
-      {
-        "name": "Mr. Hossein  Razzaghi",
-        "title": "Chief Commercial Officer",
-        "age": 51,
-        "yearBorn": 1974
-      },
-      {
-        "name": "Mr. Dante A. Disparte",
-        "title": "Chief Strategy Officer and Head of Global Policy & Operations",
-        "age": null,
-        "yearBorn": null
-      }
-    ]
-  },
-  "earnings_history": [
+  "current_price": 74.58999633789062,
+  "info": {},
+  "earnings_history": [],
+  "next_earnings": {},
+  "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.18,
-      "eps_estimate": 0.15844,
-      "eps_surprise_pct": 0.1361
+      "revenue": 701315000.0,
+      "gross_profit": 154846000.0,
+      "operating_income": 33661000.0,
+      "eps": 0.18,
+      "cash": 1730126000.0,
+      "operating_cashflow": 517429000.0,
+      "gross_margin_pct": 22.079379451459044,
+      "yoy_pct": 6.570193806813185
     },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.21,
-      "eps_estimate": 0.1771,
-      "eps_surprise_pct": 0.1858
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.43,
-      "eps_estimate": 0.16199,
-      "eps_surprise_pct": 1.6545
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.64,
-      "eps_estimate": 0.18338,
-      "eps_surprise_pct": 2.49
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-08-05",
-    "revenue_low": 715000000,
-    "revenue_high": 873300000
-  },
-  "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 694133000.0,
@@ -117,7 +27,7 @@
       "cash": 1517264000.0,
       "operating_cashflow": 21076000.0,
       "gross_margin_pct": 21.49804144162574,
-      "yoy_pct": 19.973279084921014
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -151,30 +61,21 @@
       "operating_cashflow": 247123000.0,
       "gross_margin_pct": -38.332234172848814,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 578573000.0,
-      "gross_profit": 155306000.0,
-      "operating_income": 99210000.0,
-      "eps": 0.0,
-      "cash": 848606000.0,
-      "operating_cashflow": 56593000.0,
-      "gross_margin_pct": 26.842939438929918,
-      "yoy_pct": null
     }
   ],
   "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 26,
-    "bullish": 13,
-    "neutral": 11,
-    "bearish": 2,
-    "avg_price_target": 107.98478,
+    "avg_price_target": 103.02826,
     "high_price_target": 243.0,
     "low_price_target": 37.0,
-    "current_price": 66.67,
+    "current_price": 74.59,
     "recent_rating_changes": [
+      {
+        "date": "2026-08-12T14:31:05",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
       {
         "date": "2026-08-06T22:42:30",
         "firm": "Canaccord Genuity",
@@ -237,92 +138,85 @@
         "to_grade": "Outperform",
         "from_grade": "Outperform",
         "action": "main"
-      },
-      {
-        "date": "2026-07-02T14:21:16",
-        "firm": "Goldman Sachs",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
       }
     ]
   },
   "news": [
     {
-      "date": "2026-08-08T04:19:23Z",
-      "title": "Circle Internet Group (CRCL) Launches Arc As Its Growth Story Moves Beyond USDC",
-      "url": "https://finance.yahoo.com/markets/crypto/articles/circle-internet-group-crcl-launches-041923139.html",
+      "date": "2026-08-17T17:00:00Z",
+      "title": "Trump-backed World Liberty Financial receives conditional US bank charter",
+      "url": "https://finance.yahoo.com/video/trump-backed-world-liberty-financial-170000549.html",
+      "source": "Yahoo Finance Video"
+    },
+    {
+      "date": "2026-08-17T16:25:50Z",
+      "title": "Saylor's Strategy is managing capital, not buying BTC",
+      "url": "https://finance.yahoo.com/video/saylors-strategy-managing-capital-not-162550616.html",
+      "source": "Yahoo Finance Video"
+    },
+    {
+      "date": "2026-08-15T13:36:03Z",
+      "title": "Tether CEO Shuts Down Blockchain Rumors",
+      "url": "https://beincrypto.com/tether-usdt-blockchain-rumors/",
+      "source": "BeInCrypto"
+    },
+    {
+      "date": "2026-08-14T15:48:21Z",
+      "title": "MSTR, BMNR, COIN, CRCL Stocks Slide After Bitcoin Falls Below $63K",
+      "url": "https://stocktwits.com/news-articles/markets/equity/mstr-bmnr-coin-crcl-stocks-slide-after-bitcoin-falls-below-63-k-works/cZotVcKRJ0S",
+      "source": "Stocktwits"
+    },
+    {
+      "date": "2026-08-14T12:50:46Z",
+      "title": "40 Days After MiCA: What Europe\u2019s Crypto Market Looks Like",
+      "url": "https://beincrypto.com/mica-europe-crypto-market-reality/",
+      "source": "BeInCrypto"
+    },
+    {
+      "date": "2026-08-14T11:29:30Z",
+      "title": "Circle Challenges WBTC and Coinbase\u2019s cbBTC With \u2018Neutral\u2019 Bitcoin Collateral",
+      "url": "https://www.ccn.com/news/crypto/wrapped-bitcoin-circle-cirbtc-neutral-infrastructure/",
+      "source": "CCN"
+    },
+    {
+      "date": "2026-08-14T07:12:03Z",
+      "title": "Circle (CRCL) Stock Looks Fairly Valued While Broader Checks Stay Weak",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/circle-crcl-stock-looks-fairly-071203384.html",
       "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-08T03:01:27Z",
-      "title": "Circle Internet Group Inc (CRCL) (Q2 2026) Earnings Call Highlights: USDC Circulation Hits ...",
-      "url": "https://finance.yahoo.com/markets/crypto/articles/circle-internet-group-inc-crcl-030127051.html",
-      "source": "GuruFocus.com"
+      "date": "2026-08-14T00:13:00Z",
+      "title": "Stablecoin Issuer Circle Now Runs a Bank (of Sorts). Does That Matter for Circle Stock?",
+      "url": "https://www.fool.com/investing/2026/08/13/stablecoin-issuer-circle-now-runs-a-bank-of-sorts/",
+      "source": "Motley Fool"
     },
     {
-      "date": "2026-08-07T22:11:00Z",
-      "title": "Weekly Wrap: Bitcoin Hit By Coldcard Hack And Clarity Act Disappointment",
-      "url": "https://www.cryptoprowl.com/releases/weekly-wrap-bitcoin-hit-by-coldcard-hack-and-clarity-act-disappointment-6364",
+      "date": "2026-08-13T21:24:11Z",
+      "title": "SEC May Advance Crypto Rules, 24/7 Trading Without Clarity Act. OCC Paves Way For Crypto Banks.",
+      "url": "https://www.investors.com/news/sec-cryptocurrency-rules-innovation-trading-clarity-act-senate-delay-occ-national-banks-bitcoin/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
+    },
+    {
+      "date": "2026-08-13T19:47:00Z",
+      "title": "Chime Financial Considers Adding Stablecoins To Its App",
+      "url": "https://www.cryptoprowl.com/releases/chime-financial-considers-adding-stablecoins-to-its-app-6419",
       "source": "CryptoProwl"
-    },
-    {
-      "date": "2026-08-07T21:45:37Z",
-      "title": "Circle Internet Group vs. Salesforce: Which Technology Stock Is a Better Buy in 2026?",
-      "url": "https://www.fool.com/coverage/better-buy/2026/08/07/circle-internet-group-vs-salesforce-which-technology-stock-is-a-better-buy-in-2026/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-07T14:26:40Z",
-      "title": "MSTR, CRCL, BMNR Stocks Rally After Bitcoin Reclaims $65K Despite CLARITY Delay",
-      "url": "https://stocktwits.com/news-articles/markets/equity/mstr-crcl-bmnr-stocks-rally-after-bitcoin-reclaims-65-k-despite-clarity-delay/cZof4wsRJBz",
-      "source": "Stocktwits"
-    },
-    {
-      "date": "2026-08-06T22:22:07Z",
-      "title": "Bernstein says Circle investors are focusing on wrong risks",
-      "url": "https://www.thestreet.com/crypto/markets/bernstein-says-circle-investors-are-focusing-on-wrong-risks",
-      "source": "TheStreet"
-    },
-    {
-      "date": "2026-08-06T15:29:24Z",
-      "title": "Corpay\u2019s Price Target Raised by Brokers After Earnings Beat",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/corpay-price-target-raised-brokers-152924028.html",
-      "source": "Exec Edge"
-    },
-    {
-      "date": "2026-08-06T14:28:00Z",
-      "title": "Cathie Wood Goes Bargain Hunting: 3 Stocks She Just Bought",
-      "url": "https://www.fool.com/investing/2026/08/06/cathie-wood-goes-bargain-hunting-3-stocks-she-just/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-06T11:04:15Z",
-      "title": "Circle Internet Group Q2 Earnings Call Highlights",
-      "url": "https://www.marketbeat.com/instant-alerts/circle-internet-group-q2-earnings-call-highlights-2026-08-06/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-06T10:28:48Z",
-      "title": "Cathie Wood\u2019s ARK Buys The Dip In NVDA, CRCL, SPCX Stocks \u2013 Dumps PLTR, SHOP, RBLX Shares",
-      "url": "https://stocktwits.com/news-articles/markets/equity/crcl-nvda-spcx-stocks-cathie-wood-top-buys-ark-invest-offloads-pltr-shop-rblx/cZoJugyRJ7d",
-      "source": "Stocktwits"
     }
   ],
-  "options_implied_move": 0.08834558514722661,
+  "options_implied_move": 0.07199356835565521,
   "technicals": {
-    "ma20": 63.76349983215332,
-    "ma50": 73.02779975891113,
-    "ma200": 88.000599899292,
-    "rsi14": 50.05250513613028,
-    "high_20d": 72.67500305175781,
-    "low_5d": 57.84000015258789,
-    "low_10d": 57.84000015258789,
-    "high_52w": 189.9199981689453,
+    "ma20": 66.39349975585938,
+    "ma50": 69.49439979553223,
+    "ma200": 86.12614986419678,
+    "rsi14": 58.69423824761712,
+    "high_20d": 75.88999938964844,
+    "low_5d": 67.69999694824219,
+    "low_10d": 59.119998931884766,
+    "high_52w": 159.47000122070312,
     "low_52w": 49.900001525878906,
-    "atr14": 4.843929290771484,
-    "atr14_pct": 7.265530859168033,
-    "position_in_52w_range_pct": 11.976858338181394
+    "atr14": 4.7252494267054965,
+    "atr14_pct": 6.334964014879753,
+    "position_in_52w_range_pct": 22.533535530508907
   },
   "ohlc_2y": [
     {
@@ -2683,58 +2577,58 @@
       "high": 68.4,
       "low": 64.782,
       "close": 66.67,
-      "volume": 12118900.0
+      "volume": 12164500.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 67.15,
+      "high": 67.48,
+      "low": 64.5,
+      "close": 67.05,
+      "volume": 7901700.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 69.01,
+      "high": 73.35,
+      "low": 67.7,
+      "close": 71.16,
+      "volume": 14290900.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 71.84,
+      "high": 72.38,
+      "low": 68.81,
+      "close": 71.28,
+      "volume": 8679200.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 70.11,
+      "high": 75.89,
+      "low": 70.01,
+      "close": 75.38,
+      "volume": 10750400.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 74.46,
+      "high": 74.62,
+      "low": 71.2,
+      "close": 71.6,
+      "volume": 8581600.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 71.205,
+      "high": 75.67,
+      "low": 70.7265,
+      "close": 74.59,
+      "volume": 9709640.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-07",
-      "open": 167.68,
-      "high": 169.92,
-      "low": 151.1,
-      "close": 152.93,
-      "volume": 10166300.0
-    },
-    {
-      "date": "2025-08-08",
-      "open": 155.015,
-      "high": 163.22,
-      "low": 154.117,
-      "close": 159.03,
-      "volume": 8921000.0
-    },
-    {
-      "date": "2025-08-11",
-      "open": 161.005,
-      "high": 169.8,
-      "low": 155.527,
-      "close": 161.17,
-      "volume": 11888900.0
-    },
-    {
-      "date": "2025-08-12",
-      "open": 186.3,
-      "high": 189.92,
-      "low": 161.51,
-      "close": 163.21,
-      "volume": 33232700.0
-    },
-    {
-      "date": "2025-08-13",
-      "open": 156.64,
-      "high": 164.64,
-      "low": 152.15,
-      "close": 153.16,
-      "volume": 17877900.0
-    },
-    {
-      "date": "2025-08-14",
-      "open": 152.0,
-      "high": 156.8,
-      "low": 136.4,
-      "close": 139.23,
-      "volume": 17905900.0
-    },
     {
       "date": "2025-08-15",
       "open": 141.155,
@@ -4701,7 +4595,55 @@
       "high": 68.4,
       "low": 64.782,
       "close": 66.67,
-      "volume": 12118900.0
+      "volume": 12164500.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 67.15,
+      "high": 67.48,
+      "low": 64.5,
+      "close": 67.05,
+      "volume": 7901700.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 69.01,
+      "high": 73.35,
+      "low": 67.7,
+      "close": 71.16,
+      "volume": 14290900.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 71.84,
+      "high": 72.38,
+      "low": 68.81,
+      "close": 71.28,
+      "volume": 8679200.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 70.11,
+      "high": 75.89,
+      "low": 70.01,
+      "close": 75.38,
+      "volume": 10750400.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 74.46,
+      "high": 74.62,
+      "low": 71.2,
+      "close": 71.6,
+      "volume": 8581600.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 71.205,
+      "high": 75.67,
+      "low": 70.7265,
+      "close": 74.59,
+      "volume": 9709640.0
     }
   ],
   "ai_synthesis": null,

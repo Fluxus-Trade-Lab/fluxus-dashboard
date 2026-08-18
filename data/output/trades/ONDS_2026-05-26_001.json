@@ -1,6 +1,6 @@
 {
   "trade_id": "ONDS_2026-05-26_001",
-  "generated_at": "2026-08-17T03:51:14+00:00",
+  "generated_at": "2026-08-18T03:59:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ONDS",
@@ -35,18 +35,18 @@
     "volume": 83107000.0,
     "ma20": 9.60125,
     "ma50": 9.8355,
-    "ma200": 8.7695,
-    "rsi14": 50.66265977881832,
+    "ma200": null,
+    "rsi14": 50.66265553950417,
     "atr14": 0.9024999999999999,
     "atr14_pct": 9.237461617195496,
     "high_52w": 15.28,
-    "low_52w": 3.085,
-    "position_in_52w_range_pct": 54.81754817548175,
+    "low_52w": 3.2,
+    "position_in_52w_range_pct": 54.38741721854304,
     "high_20d": 12.12,
     "low_10d": 8.67,
     "low_5d": 8.97
   },
-  "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": 3.203389830508473,
     "mfe_date": "2026-05-28",
@@ -63,7 +63,7 @@
     "hold_calendar_days": 3
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **ONDS** long on 2026-05-26 at $11.89 (qty 7515) with stop $11.30 (1R = $0.59/sh = $4,434). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($9.60), MA stack mixed, RSI 51, 55% through 52W range, ATR 9.2% of price. Realized **+0.00R**, peak was **+3.20R** on 2026-05-28 (day +2) \u2014 captured **0%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **ONDS** long on 2026-05-26 at $11.89 (qty 7515) with stop $11.30 (1R = $0.59/sh = $4,434). Setup: **Long in mixed structure** \u2014 price above MA20 ($9.60), RSI 51, 54% through 52W range, ATR 9.2% of price. Realized **+0.00R**, peak was **+3.20R** on 2026-05-28 (day +2) \u2014 captured **0%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-04-27",

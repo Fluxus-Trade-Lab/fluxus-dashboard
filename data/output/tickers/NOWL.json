@@ -1,8 +1,8 @@
 {
   "ticker": "NOWL",
-  "fetched_at": "2026-08-08T05:17:33Z",
+  "fetched_at": "2026-08-18T03:57:12Z",
   "_schema": "v2",
-  "current_price": 6.53000020980835,
+  "current_price": 5.78000020980835,
   "info": {
     "symbol": "NOWL",
     "longName": "GraniteShares 2x Long NOW Daily ETF",
@@ -32,8 +32,8 @@
     "currentRatio": null,
     "fiftyTwoWeekHigh": 24.6,
     "fiftyTwoWeekLow": 3.49,
-    "averageVolume": 22461048,
-    "averageVolume10days": 19300620,
+    "averageVolume": 21274116,
+    "averageVolume10days": 12973000,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -42,27 +42,22 @@
   "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [],
-  "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
-  },
+  "analyst": {},
   "news": [],
-  "options_implied_move": 0.17764164819744244,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 5.048000049591065,
-    "ma50": 5.145600023269654,
-    "ma200": 9.175820013284683,
-    "rsi14": 65.87475994778598,
-    "high_20d": 6.670000076293945,
-    "low_5d": 5.269999980926514,
-    "low_10d": 4.320000171661377,
+    "ma20": 5.547000074386597,
+    "ma50": 5.084000024795532,
+    "ma200": 8.689060009717942,
+    "rsi14": 51.62457774763505,
+    "high_20d": 7.03000020980835,
+    "low_5d": 5.75,
+    "low_10d": 5.269999980926514,
     "high_52w": 24.600000381469727,
     "low_52w": 3.490000009536743,
-    "atr14": 0.6527857099260602,
-    "atr14_pct": 9.9967180543968,
-    "position_in_52w_range_pct": 14.400758629608884
+    "atr14": 0.655428579875401,
+    "atr14_pct": 11.339594395916698,
+    "position_in_52w_range_pct": 10.847940122806913
   },
   "ohlc_2y": [
     {
@@ -2215,58 +2210,58 @@
       "high": 6.67,
       "low": 6.16,
       "close": 6.53,
-      "volume": 18269700.0
+      "volume": 18317800.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 6.445,
+      "high": 6.85,
+      "low": 6.375,
+      "close": 6.8,
+      "volume": 15828100.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 6.72,
+      "high": 6.97,
+      "low": 6.565,
+      "close": 6.81,
+      "volume": 9329200.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 6.4,
+      "high": 6.61,
+      "low": 6.205,
+      "close": 6.53,
+      "volume": 9299200.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 6.58,
+      "high": 7.03,
+      "low": 6.19,
+      "close": 6.76,
+      "volume": 13622200.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 6.81,
+      "high": 6.89,
+      "low": 6.229,
+      "close": 6.42,
+      "volume": 8919300.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 6.24,
+      "high": 6.3499,
+      "low": 5.75,
+      "close": 5.78,
+      "volume": 9544144.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-07",
-      "open": 22.369,
-      "high": 22.659,
-      "low": 19.925,
-      "close": 20.5,
-      "volume": 56000.0
-    },
-    {
-      "date": "2025-08-08",
-      "open": 20.648,
-      "high": 20.76,
-      "low": 19.77,
-      "close": 20.333,
-      "volume": 29800.0
-    },
-    {
-      "date": "2025-08-11",
-      "open": 20.43,
-      "high": 20.6,
-      "low": 19.33,
-      "close": 19.7,
-      "volume": 31700.0
-    },
-    {
-      "date": "2025-08-12",
-      "open": 19.41,
-      "high": 19.59,
-      "low": 18.87,
-      "close": 19.393,
-      "volume": 34500.0
-    },
-    {
-      "date": "2025-08-13",
-      "open": 19.61,
-      "high": 19.98,
-      "low": 19.0,
-      "close": 19.865,
-      "volume": 70000.0
-    },
-    {
-      "date": "2025-08-14",
-      "open": 19.67,
-      "high": 19.75,
-      "low": 19.08,
-      "close": 19.265,
-      "volume": 33100.0
-    },
     {
       "date": "2025-08-15",
       "open": 19.495,
@@ -4233,7 +4228,55 @@
       "high": 6.67,
       "low": 6.16,
       "close": 6.53,
-      "volume": 18269700.0
+      "volume": 18317800.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 6.445,
+      "high": 6.85,
+      "low": 6.375,
+      "close": 6.8,
+      "volume": 15828100.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 6.72,
+      "high": 6.97,
+      "low": 6.565,
+      "close": 6.81,
+      "volume": 9329200.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 6.4,
+      "high": 6.61,
+      "low": 6.205,
+      "close": 6.53,
+      "volume": 9299200.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 6.58,
+      "high": 7.03,
+      "low": 6.19,
+      "close": 6.76,
+      "volume": 13622200.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 6.81,
+      "high": 6.89,
+      "low": 6.229,
+      "close": 6.42,
+      "volume": 8919300.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 6.24,
+      "high": 6.3499,
+      "low": 5.75,
+      "close": 5.78,
+      "volume": 9544144.0
     }
   ],
   "ai_synthesis": null,

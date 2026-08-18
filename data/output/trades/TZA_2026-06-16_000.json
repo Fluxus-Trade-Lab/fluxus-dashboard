@@ -1,6 +1,6 @@
 {
   "trade_id": "TZA_2026-06-16_000",
-  "generated_at": "2026-08-17T03:51:15+00:00",
+  "generated_at": "2026-08-18T03:59:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "TZA",
@@ -42,34 +42,20 @@
     "ma20": 44.06753,
     "ma50": 48.272266,
     "ma200": 65.8209755,
-    "rsi14": 40.35191999111587,
+    "rsi14": 40.351919432029305,
     "atr14": 2.942542857142857,
     "atr14_pct": 7.125715544955787,
-    "high_52w": 110.4113,
+    "high_52w": 102.4625,
     "low_52w": 38.819,
-    "position_in_52w_range_pct": 3.458053449882175,
+    "position_in_52w_range_pct": 3.8899494842364044,
     "high_20d": 52.98,
     "low_10d": 38.819,
     "low_5d": 38.819
   },
   "setup_type": "Long below MA200 \u2014 counter-trend",
-  "path_analytics": {
-    "mfe_R": 160.17124999999984,
-    "mfe_date": "2026-06-17",
-    "mae_R": -146.14249999999987,
-    "mae_date": "2026-06-16",
-    "optimal_exit_price": 42.6811,
-    "optimal_exit_date": "2026-06-17",
-    "optimal_R": 160.17124999999984,
-    "days_to_optimal": 1,
-    "realized_R": -0.5208356973727026,
-    "capture_pct": -0.32517427276911626,
-    "missed_R": 160.69208569737253,
-    "post_exit_R": 153.5833333333332,
-    "hold_calendar_days": 2
-  },
-  "lesson": "Stopped too tight",
-  "narrative": "Entered **TZA** long on 2026-06-16 at $4.24 (qty 44063) with stop $4.00 (1R = $0.24/sh = $10,575). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price below MA20 ($44.07), MA20 < MA50 < MA200 (death alignment), RSI 40, 3% through 52W range, ATR 7.1% of price. Realized **-0.52R**, peak was **+160.17R** on 2026-06-17 (day +1) \u2014 captured **-0%** of the move. **Lesson: Stopped too tight.**",
+  "path_analytics": {},
+  "lesson": "Insufficient data",
+  "narrative": "Entered **TZA** long on 2026-06-16 at $4.24 (qty 44063) with stop $4.00 (1R = $0.24/sh = $10,575). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price below MA20 ($44.07), MA20 < MA50 < MA200 (death alignment), RSI 40, 4% through 52W range, ATR 7.1% of price.  **Lesson: Insufficient data.**",
   "ohlc_window": [
     {
       "date": "2026-05-18",

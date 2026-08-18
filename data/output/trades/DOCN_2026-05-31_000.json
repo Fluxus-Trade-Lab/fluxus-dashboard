@@ -1,6 +1,6 @@
 {
   "trade_id": "DOCN_2026-05-31_000",
-  "generated_at": "2026-08-17T03:51:14+00:00",
+  "generated_at": "2026-08-18T03:59:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "DOCN",
@@ -47,18 +47,18 @@
     "volume": 3053100.0,
     "ma20": 151.20149999999998,
     "ma50": 112.94380000000001,
-    "ma200": 63.49485,
-    "rsi14": 62.80186180246934,
+    "ma200": null,
+    "rsi14": 62.80186967876169,
     "atr14": 10.61235714285714,
     "atr14_pct": 6.804974121742316,
     "high_52w": 165.99,
-    "low_52w": 28.79,
-    "position_in_52w_range_pct": 92.68221574344022,
+    "low_52w": 29.62,
+    "position_in_52w_range_pct": 92.63767690841092,
     "high_20d": 165.99,
     "low_10d": 139.21,
     "low_5d": 147.91
   },
-  "setup_type": "Pullback in uptrend",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": 2.8111254851229037,
     "mfe_date": "2026-06-04",
@@ -75,7 +75,7 @@
     "hold_calendar_days": 5
   },
   "lesson": "Premature trim",
-  "narrative": "Entered **DOCN** long on 2026-05-31 at $162.73 (qty 928) with stop $155.00 (1R = $7.73/sh = $7,173). Setup: **Pullback in uptrend** \u2014 price above MA20 ($151.20), MA20 > MA50 > MA200 (golden alignment), RSI 63, 93% through 52W range, ATR 6.8% of price. Realized **+1.16R**, peak was **+2.81R** on 2026-06-04 (day +4) \u2014 captured **41%** of the move. **Lesson: Premature trim.**",
+  "narrative": "Entered **DOCN** long on 2026-05-31 at $162.73 (qty 928) with stop $155.00 (1R = $7.73/sh = $7,173). Setup: **Long in mixed structure** \u2014 price above MA20 ($151.20), RSI 63, 93% through 52W range, ATR 6.8% of price. Realized **+1.16R**, peak was **+2.81R** on 2026-06-04 (day +4) \u2014 captured **41%** of the move. **Lesson: Premature trim.**",
   "ohlc_window": [
     {
       "date": "2026-05-01",

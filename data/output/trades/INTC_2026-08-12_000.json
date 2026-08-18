@@ -1,6 +1,6 @@
 {
   "trade_id": "INTC_2026-08-12_000",
-  "generated_at": "2026-08-17T03:51:15+00:00",
+  "generated_at": "2026-08-18T03:59:16+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "INTC",
@@ -34,28 +34,42 @@
     ]
   },
   "entry_snapshot": {
-    "close": 101.65,
-    "open": 102.33,
-    "high": 103.66,
-    "low": 98.03,
-    "volume": 76609900.0,
-    "ma20": 96.95649999999999,
-    "ma50": 110.6474,
-    "ma200": 68.58355,
-    "rsi14": 50.13855958392343,
-    "atr14": 7.701428571428572,
-    "atr14_pct": 7.576417679713302,
+    "close": 100.95,
+    "open": 101.33,
+    "high": 103.16,
+    "low": 100.12,
+    "volume": 162446700.0,
+    "ma20": 96.072,
+    "ma50": 109.67299999999999,
+    "ma200": 69.49845,
+    "rsi14": 49.98348266295539,
+    "atr14": 7.287857142857144,
+    "atr14_pct": 7.219274039482064,
     "high_52w": 142.35,
-    "low_52w": 21.36,
-    "position_in_52w_range_pct": 66.36085626911316,
-    "high_20d": 109.61,
-    "low_10d": 81.79,
-    "low_5d": 85.62
+    "low_52w": 22.78,
+    "position_in_52w_range_pct": 65.37593041732876,
+    "high_20d": 106.85,
+    "low_10d": 85.62,
+    "low_5d": 95.35
   },
   "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
-  "path_analytics": {},
-  "lesson": "Insufficient data",
-  "narrative": "Entered **INTC** long on 2026-08-12 at $103.42 (qty 2334) with stop $100.00 (1R = $3.42/sh = $7,982). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($96.96), MA stack mixed, RSI 50, 66% through 52W range, ATR 7.6% of price.  **Lesson: Insufficient data.**",
+  "path_analytics": {
+    "mfe_R": 1.2134502923976578,
+    "mfe_date": "2026-08-13",
+    "mae_R": 0.9649122807017531,
+    "mae_date": "2026-08-12",
+    "optimal_exit_price": 107.57,
+    "optimal_exit_date": "2026-08-13",
+    "optimal_R": 1.2134502923976578,
+    "days_to_optimal": 1,
+    "realized_R": 0.004385964912280862,
+    "capture_pct": 0.3614457831325442,
+    "missed_R": 1.209064327485377,
+    "post_exit_R": 0.739766081871345,
+    "hold_calendar_days": 2
+  },
+  "lesson": "Choppy / no edge",
+  "narrative": "Entered **INTC** long on 2026-08-12 at $103.42 (qty 2334) with stop $100.00 (1R = $3.42/sh = $7,982). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($96.07), MA stack mixed, RSI 50, 65% through 52W range, ATR 7.2% of price. Realized **+0.00R**, peak was **+1.21R** on 2026-08-13 (day +1) \u2014 captured **0%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-07-13",
@@ -215,7 +229,55 @@
       "high": 103.66,
       "low": 98.03,
       "close": 101.65,
-      "volume": 76609900.0
+      "volume": 76760600.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 98.26,
+      "high": 100.03,
+      "low": 96.3,
+      "close": 97.52,
+      "volume": 101153400.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 96.78,
+      "high": 98.35,
+      "low": 95.35,
+      "close": 97.71,
+      "volume": 164063600.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 101.33,
+      "high": 103.16,
+      "low": 100.12,
+      "close": 100.95,
+      "volume": 162446700.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 101.51,
+      "high": 107.57,
+      "low": 100.33,
+      "close": 104.56,
+      "volume": 116837600.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 104.48,
+      "high": 106.87,
+      "low": 102.05,
+      "close": 102.5,
+      "volume": 95387500.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 103.7,
+      "high": 105.95,
+      "low": 101.8,
+      "close": 103.49,
+      "volume": 86440747.0
     }
   ]
 }

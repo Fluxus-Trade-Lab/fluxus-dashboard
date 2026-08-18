@@ -1,6 +1,6 @@
 {
   "trade_id": "SOXS_2026-06-04_002",
-  "generated_at": "2026-08-17T03:51:15+00:00",
+  "generated_at": "2026-08-18T03:59:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SOXS",
@@ -35,8 +35,8 @@
     "volume": 66575950.0,
     "ma20": 815.67299,
     "ma50": 2450.157432,
-    "ma200": 8420.4383085,
-    "rsi14": 17.695584786355624,
+    "ma200": 8420.4383225,
+    "rsi14": 17.69558232593846,
     "atr14": 159.7320642857143,
     "atr14_pct": 310.7555159912887,
     "high_52w": 22704.5659,
@@ -47,23 +47,9 @@
     "low_5d": 47.645
   },
   "setup_type": "Long below MA200 \u2014 counter-trend",
-  "path_analytics": {
-    "mfe_R": 143.67720930232568,
-    "mfe_date": "2026-06-05",
-    "mae_R": -101.14930232558146,
-    "mae_date": "2026-06-04",
-    "optimal_exit_price": 67.7112,
-    "optimal_exit_date": "2026-06-05",
-    "optimal_R": 143.67720930232568,
-    "days_to_optimal": 1,
-    "realized_R": 0.0,
-    "capture_pct": 0.0,
-    "missed_R": 143.67720930232568,
-    "post_exit_R": 149.65418604651174,
-    "hold_calendar_days": 4
-  },
-  "lesson": "Choppy / no edge",
-  "narrative": "Entered **SOXS** long on 2026-06-04 at $5.93 (qty 9577) with stop $5.50 (1R = $0.43/sh = $4,118). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price below MA20 ($815.67), MA20 < MA50 < MA200 (death alignment), RSI 18, 0% through 52W range, ATR 310.8% of price. Realized **+0.00R**, peak was **+143.68R** on 2026-06-05 (day +1) \u2014 captured **0%** of the move. **Lesson: Choppy / no edge.**",
+  "path_analytics": {},
+  "lesson": "Insufficient data",
+  "narrative": "Entered **SOXS** long on 2026-06-04 at $5.93 (qty 9577) with stop $5.50 (1R = $0.43/sh = $4,118). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price below MA20 ($815.67), MA20 < MA50 < MA200 (death alignment), RSI 18, 0% through 52W range, ATR 310.8% of price.  **Lesson: Insufficient data.**",
   "ohlc_window": [
     {
       "date": "2026-05-05",

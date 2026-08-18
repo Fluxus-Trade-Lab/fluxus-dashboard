@@ -1,6 +1,6 @@
 {
   "trade_id": "TZA_2026-05-17_000",
-  "generated_at": "2026-08-17T03:51:14+00:00",
+  "generated_at": "2026-08-18T03:59:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "TZA",
@@ -36,34 +36,20 @@
     "ma20": 48.44458,
     "ma50": 59.075652,
     "ma200": null,
-    "rsi14": 44.95531011044829,
+    "rsi14": 44.955309395247255,
     "atr14": 2.4049857142857154,
     "atr14_pct": 4.896342917638575,
-    "high_52w": 110.4113,
+    "high_52w": 102.4625,
     "low_52w": 44.2656,
-    "position_in_52w_range_pct": 7.335926598403226,
+    "position_in_52w_range_pct": 8.337901159683767,
     "high_20d": 53.4752,
     "low_10d": 44.2656,
     "low_5d": 44.4636
   },
   "setup_type": "Long in mixed structure",
-  "path_analytics": {
-    "mfe_R": 177.8148148148151,
-    "mfe_date": "2026-05-19",
-    "mae_R": -158.00925925925952,
-    "mae_date": "2026-05-20",
-    "optimal_exit_price": 52.98,
-    "optimal_exit_date": "2026-05-19",
-    "optimal_R": 177.8148148148151,
-    "days_to_optimal": 2,
-    "realized_R": 0.44444444444444553,
-    "capture_pct": 0.24994792751510125,
-    "missed_R": 177.37037037037064,
-    "post_exit_R": 163.87777777777805,
-    "hold_calendar_days": 3
-  },
-  "lesson": "Choppy / no edge",
-  "narrative": "Entered **TZA** long on 2026-05-17 at $4.97 (qty 24278) with stop $4.70 (1R = $0.27/sh = $6,555). Setup: **Long in mixed structure** \u2014 price above MA20 ($48.44), RSI 45, 7% through 52W range, ATR 4.9% of price. Realized **+0.44R**, peak was **+177.81R** on 2026-05-19 (day +2) \u2014 captured **0%** of the move. **Lesson: Choppy / no edge.**",
+  "path_analytics": {},
+  "lesson": "Insufficient data",
+  "narrative": "Entered **TZA** long on 2026-05-17 at $4.97 (qty 24278) with stop $4.70 (1R = $0.27/sh = $6,555). Setup: **Long in mixed structure** \u2014 price above MA20 ($48.44), RSI 45, 8% through 52W range, ATR 4.9% of price.  **Lesson: Insufficient data.**",
   "ohlc_window": [
     {
       "date": "2026-04-17",

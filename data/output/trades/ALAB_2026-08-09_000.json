@@ -1,6 +1,6 @@
 {
   "trade_id": "ALAB_2026-08-09_000",
-  "generated_at": "2026-08-17T03:51:15+00:00",
+  "generated_at": "2026-08-18T03:59:16+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ALAB",
@@ -32,11 +32,11 @@
     "open": 340.02,
     "high": 350.88,
     "low": 329.0,
-    "volume": 3544100.0,
-    "ma20": 317.31825,
-    "ma50": 357.81729999999993,
-    "ma200": 211.8987,
-    "rsi14": 50.52165411005111,
+    "volume": 3547300.0,
+    "ma20": 317.31825000000003,
+    "ma50": 357.81730000000005,
+    "ma200": 211.89870000000002,
+    "rsi14": 50.52165393779906,
     "atr14": 35.43500000000001,
     "atr14_pct": 10.603884250531168,
     "high_52w": 499.476,
@@ -47,9 +47,23 @@
     "low_5d": 285.68
   },
   "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
-  "path_analytics": {},
-  "lesson": "Insufficient data",
-  "narrative": "Entered **ALAB** long on 2026-08-09 at $332.40 (qty 300) with stop $320.00 (1R = $12.40/sh = $3,720). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($317.32), MA stack mixed, RSI 51, 59% through 52W range, ATR 10.6% of price.  **Lesson: Insufficient data.**",
+  "path_analytics": {
+    "mfe_R": 0.8548387096774227,
+    "mfe_date": "2026-08-10",
+    "mae_R": 1.2596774193548415,
+    "mae_date": "2026-08-10",
+    "optimal_exit_price": 343.0,
+    "optimal_exit_date": "2026-08-10",
+    "optimal_R": 0.8548387096774227,
+    "days_to_optimal": 1,
+    "realized_R": -1.0,
+    "capture_pct": -116.98113207547125,
+    "missed_R": 1.8548387096774226,
+    "post_exit_R": 1.7419274193548457,
+    "hold_calendar_days": 1
+  },
+  "lesson": "Failed setup",
+  "narrative": "Entered **ALAB** long on 2026-08-09 at $332.40 (qty 300) with stop $320.00 (1R = $12.40/sh = $3,720). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($317.32), MA stack mixed, RSI 51, 59% through 52W range, ATR 10.6% of price. Realized **-1.00R**, peak was **+0.85R** on 2026-08-10 (day +1) \u2014 captured **-117%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-07-10",
@@ -217,7 +231,55 @@
       "high": 350.88,
       "low": 329.0,
       "close": 334.17,
-      "volume": 3544100.0
+      "volume": 3547300.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 337.79,
+      "high": 343.0,
+      "low": 316.78,
+      "close": 317.23,
+      "volume": 3364800.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 324.32,
+      "high": 324.32,
+      "low": 306.5,
+      "close": 311.99,
+      "volume": 2707100.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 334.49,
+      "high": 337.05,
+      "low": 318.2,
+      "close": 318.8,
+      "volume": 4453700.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 313.05,
+      "high": 332.88,
+      "low": 310.0,
+      "close": 322.78,
+      "volume": 3343100.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 322.79,
+      "high": 326.3,
+      "low": 311.6,
+      "close": 321.61,
+      "volume": 2523600.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 344.95,
+      "high": 353.9999,
+      "low": 319.27,
+      "close": 320.17,
+      "volume": 5515644.0
     }
   ]
 }

@@ -1,0 +1,238 @@
+{
+  "trade_id": "INTC_2026-08-16_000",
+  "generated_at": "2026-08-18T03:59:16+00:00",
+  "_schema": "v1",
+  "trade": {
+    "ticker": "INTC",
+    "direction": "long",
+    "sector": "Unknown",
+    "entry_date": "2026-08-16",
+    "entry_price": 104.91,
+    "original_qty": 2948,
+    "current_qty": 2948,
+    "stop_price": 102.0,
+    "initial_stop": 102.0,
+    "closed": false,
+    "exit_date": null,
+    "hold_business_days": null,
+    "r_dollars": 8578.67999999999,
+    "realized_pl": 0,
+    "realized_R": 0.0,
+    "trims": []
+  },
+  "entry_snapshot": {
+    "close": 102.5,
+    "open": 104.48,
+    "high": 106.87,
+    "low": 102.05,
+    "volume": 95387500.0,
+    "ma20": 96.824,
+    "ma50": 109.4014,
+    "ma200": 70.14465,
+    "rsi14": 51.252061467217395,
+    "atr14": 6.849285714285715,
+    "atr14_pct": 6.682229965156796,
+    "high_52w": 142.35,
+    "low_52w": 22.78,
+    "position_in_52w_range_pct": 66.67224220122104,
+    "high_20d": 107.57,
+    "low_10d": 85.62,
+    "low_5d": 95.35
+  },
+  "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
+  "path_analytics": {
+    "mfe_R": 0.3573883161512053,
+    "mfe_date": "2026-08-17",
+    "mae_R": 1.0687285223367708,
+    "mae_date": "2026-08-17",
+    "optimal_exit_price": 105.95,
+    "optimal_exit_date": "2026-08-17",
+    "optimal_R": 0.3573883161512053,
+    "days_to_optimal": 1,
+    "realized_R": null,
+    "capture_pct": null,
+    "missed_R": null,
+    "post_exit_R": null,
+    "hold_calendar_days": 1
+  },
+  "lesson": "In progress",
+  "narrative": "Entered **INTC** long on 2026-08-16 at $104.91 (qty 2948) with stop $102.00 (1R = $2.91/sh = $8,579). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($96.82), MA stack mixed, RSI 51, 67% through 52W range, ATR 6.7% of price. **In progress.** Peak so far +0.36R; worst drawdown -1.07R.",
+  "ohlc_window": [
+    {
+      "date": "2026-07-17",
+      "open": 92.14,
+      "high": 98.05,
+      "low": 89.59,
+      "close": 95.04,
+      "volume": 126779300.0
+    },
+    {
+      "date": "2026-07-20",
+      "open": 97.58,
+      "high": 100.98,
+      "low": 96.92,
+      "close": 97.06,
+      "volume": 89741400.0
+    },
+    {
+      "date": "2026-07-21",
+      "open": 103.19,
+      "high": 106.34,
+      "low": 101.22,
+      "close": 105.45,
+      "volume": 105429400.0
+    },
+    {
+      "date": "2026-07-22",
+      "open": 101.55,
+      "high": 106.85,
+      "low": 101.48,
+      "close": 102.62,
+      "volume": 78431000.0
+    },
+    {
+      "date": "2026-07-23",
+      "open": 101.14,
+      "high": 104.18,
+      "low": 99.24,
+      "close": 100.23,
+      "volume": 140806900.0
+    },
+    {
+      "date": "2026-07-24",
+      "open": 100.36,
+      "high": 101.74,
+      "low": 91.58,
+      "close": 92.32,
+      "volume": 181132900.0
+    },
+    {
+      "date": "2026-07-27",
+      "open": 92.46,
+      "high": 94.98,
+      "low": 86.94,
+      "close": 91.67,
+      "volume": 133247300.0
+    },
+    {
+      "date": "2026-07-28",
+      "open": 86.62,
+      "high": 88.28,
+      "low": 83.1,
+      "close": 86.3,
+      "volume": 154346700.0
+    },
+    {
+      "date": "2026-07-29",
+      "open": 86.57,
+      "high": 88.47,
+      "low": 81.79,
+      "close": 81.88,
+      "volume": 152394600.0
+    },
+    {
+      "date": "2026-07-30",
+      "open": 86.51,
+      "high": 94.1,
+      "low": 85.97,
+      "close": 91.13,
+      "volume": 140322600.0
+    },
+    {
+      "date": "2026-07-31",
+      "open": 96.72,
+      "high": 97.9,
+      "low": 90.13,
+      "close": 90.2,
+      "volume": 109039500.0
+    },
+    {
+      "date": "2026-08-03",
+      "open": 88.4,
+      "high": 91.68,
+      "low": 85.62,
+      "close": 91.0,
+      "volume": 96633600.0
+    },
+    {
+      "date": "2026-08-04",
+      "open": 95.24,
+      "high": 101.39,
+      "low": 94.32,
+      "close": 100.86,
+      "volume": 124355100.0
+    },
+    {
+      "date": "2026-08-05",
+      "open": 99.3,
+      "high": 102.83,
+      "low": 97.9,
+      "close": 101.06,
+      "volume": 85388400.0
+    },
+    {
+      "date": "2026-08-06",
+      "open": 98.22,
+      "high": 103.38,
+      "low": 95.6,
+      "close": 99.81,
+      "volume": 78088100.0
+    },
+    {
+      "date": "2026-08-07",
+      "open": 102.33,
+      "high": 103.66,
+      "low": 98.03,
+      "close": 101.65,
+      "volume": 76760600.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 98.26,
+      "high": 100.03,
+      "low": 96.3,
+      "close": 97.52,
+      "volume": 101153400.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 96.78,
+      "high": 98.35,
+      "low": 95.35,
+      "close": 97.71,
+      "volume": 164063600.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 101.33,
+      "high": 103.16,
+      "low": 100.12,
+      "close": 100.95,
+      "volume": 162446700.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 101.51,
+      "high": 107.57,
+      "low": 100.33,
+      "close": 104.56,
+      "volume": 116837600.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 104.48,
+      "high": 106.87,
+      "low": 102.05,
+      "close": 102.5,
+      "volume": 95387500.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 103.7,
+      "high": 105.95,
+      "low": 101.8,
+      "close": 103.49,
+      "volume": 86440747.0
+    }
+  ]
+}

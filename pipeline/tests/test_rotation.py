@@ -211,8 +211,11 @@ class TestFetchNeverReplacesBetterWithWorse:
                             lambda *a, **k: FakeData())
         out = FB.fetch(out_dir=tmp_path)
         kept = J.loads(stored.read_text())["bars"]
-        assert len(kept) == 10, "a 6-bar partial response overwrote a 10-bar file"
-        assert out["failed"] == 1
+        # 2026-08-18: merged by date rather than refused -- the refusal also
+        # fired on the 2y window's weekday slide and froze every basket.
+        assert len(kept) == 10, "a 6-bar partial response must not shrink a 10-bar file"
+        assert kept[0]["close"] == 100.0 and kept[9]["close"] == 109.0
+        assert out["failed"] == 0
 
     def test_equal_or_longer_fetch_replaces(self, tmp_path, monkeypatch):
         import json as J

@@ -1,112 +1,11 @@
 {
   "ticker": "ONDS",
-  "fetched_at": "2026-08-08T05:17:47Z",
+  "fetched_at": "2026-08-18T03:57:16Z",
   "_schema": "v2",
-  "current_price": 9.109999656677246,
-  "info": {
-    "symbol": "ONDS",
-    "longName": "Ondas Inc.",
-    "sector": "Technology",
-    "industry": "Communication Equipment",
-    "exchange": "NCM",
-    "country": "United States",
-    "city": "West Palm Beach",
-    "website": "https://www.ondas.com",
-    "fullTimeEmployees": 459,
-    "marketCap": 5191413248,
-    "enterpriseValue": 3065519616,
-    "trailingPE": 101.22221,
-    "forwardPE": -303.66666,
-    "priceToSalesTrailing12Months": 53.738556,
-    "enterpriseToRevenue": 31.733,
-    "priceToBook": 3.9781659,
-    "grossMargins": 0.44849,
-    "operatingMargins": -0.85134006,
-    "profitMargins": 2.5192,
-    "returnOnEquity": 0.42948002,
-    "totalCash": 1473844992,
-    "totalDebt": 16656000,
-    "totalRevenue": 96605000,
-    "freeCashflow": -15650777,
-    "debtToEquity": 1.542,
-    "currentRatio": 10.911,
-    "fiftyTwoWeekHigh": 15.28,
-    "fiftyTwoWeekLow": 3.2,
-    "averageVolume": 87956893,
-    "averageVolume10days": 68263700,
-    "beta": 2.75,
-    "sharesOutstanding": 569858722,
-    "sharesFloat": 463473629,
-    "companyOfficers": [
-      {
-        "name": "Mr. Eric Ashley Brock CPA",
-        "title": "Chairman, CEO & President",
-        "age": null,
-        "yearBorn": null
-      },
-      {
-        "name": "Mr. Neil J. Laird",
-        "title": "CFO & Treasurer",
-        "age": 72,
-        "yearBorn": 1953
-      },
-      {
-        "name": "Brig.Gen. Patrick  Huston",
-        "title": "COO, General Counsel, Member of the OAS Advisory Board & Secretary",
-        "age": 56,
-        "yearBorn": 1969
-      },
-      {
-        "name": "Mr. Mark  Green",
-        "title": "Head of Global Corporate Development and M&A",
-        "age": 57,
-        "yearBorn": 1968
-      },
-      {
-        "name": "Preston  Grimes",
-        "title": "Marketing Manager",
-        "age": null,
-        "yearBorn": null
-      },
-      {
-        "name": "Mr. Guy R. Simpson",
-        "title": "Chief Solutions & Operations Officer of Ondas Networks",
-        "age": 66,
-        "yearBorn": 1959
-      }
-    ]
-  },
-  "earnings_history": [
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": -0.0671,
-      "eps_estimate": -0.03,
-      "eps_surprise_pct": -1.2366999
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": -0.028,
-      "eps_estimate": -0.035,
-      "eps_surprise_pct": 0.2
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": -0.0128,
-      "eps_estimate": -0.03333,
-      "eps_surprise_pct": 0.616
-    },
-    {
-      "period_end": "2025-06-30T00:00:00",
-      "eps_actual": -0.0653,
-      "eps_estimate": -0.06,
-      "eps_surprise_pct": -0.0883
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-08-13",
-    "revenue_low": 63986000,
-    "revenue_high": 73800000
-  },
+  "current_price": 9.0,
+  "info": {},
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -165,16 +64,39 @@
     }
   ],
   "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 8,
-    "bullish": 8,
-    "neutral": 0,
-    "bearish": 0,
-    "avg_price_target": 19.8125,
+    "avg_price_target": 19.27778,
     "high_price_target": 25.0,
-    "low_price_target": 16.0,
-    "current_price": 9.11,
+    "low_price_target": 13.0,
+    "current_price": 9.0,
     "recent_rating_changes": [
+      {
+        "date": "2026-08-17T17:23:56",
+        "firm": "Ladenburg Thalmann",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-14T17:16:13",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-14T12:21:27",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-11T10:14:39",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
       {
         "date": "2026-07-07T10:07:16",
         "firm": "Needham",
@@ -216,171 +138,87 @@
         "to_grade": "Buy",
         "from_grade": "Buy",
         "action": "reit"
-      },
-      {
-        "date": "2026-01-21T17:12:38",
-        "firm": "Stifel",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-01-20T19:46:37",
-        "firm": "Lake Street",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-01-20T15:39:19",
-        "firm": "Oppenheimer",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-01-20T12:34:46",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
       }
     ]
   },
   "news": [
     {
-      "date": "2026-08-07T16:01:00Z",
-      "title": "Ondas Bags Over $50M U.S. Army Order, Expands Defense Footprint",
-      "url": "https://finance.yahoo.com/technology/articles/ondas-bags-over-50m-u-160100644.html",
-      "source": "Zacks"
+      "date": "2026-08-17T10:46:00Z",
+      "title": "Earnings, Fed Hopes Leave Markets in a Zen State. What Could Break It.",
+      "url": "https://www.barrons.com/articles/stock-market-things-to-know-today-9cb7b88a?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
     },
     {
-      "date": "2026-08-06T15:08:00Z",
-      "title": "Ondas Stock Gains 21% in a Month: Is There More Upside Ahead?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ondas-stock-gains-21-month-150800590.html",
-      "source": "Zacks"
+      "date": "2026-08-15T09:35:00Z",
+      "title": "Is It Too Late to Buy Ondas Stock?",
+      "url": "https://www.fool.com/investing/2026/08/15/is-it-too-late-to-buy-ondas-stock/",
+      "source": "Motley Fool"
     },
     {
-      "date": "2026-08-06T14:00:04Z",
-      "title": "Will Ondas Holdings Inc. (ONDS) Report Negative Earnings Next Week? What You Should Know",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ondas-holdings-inc-onds-report-140004933.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-06T12:20:04Z",
-      "title": "Cogent Communications (CCOI) Reports Q2 Loss, Misses Revenue Estimates",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cogent-communications-ccoi-reports-q2-122004389.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-06T00:35:16Z",
-      "title": "ATN International (ATNI) Reports Q2 Loss, Tops Revenue Estimates",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/atn-international-atni-reports-q2-003516565.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-05T18:13:09Z",
-      "title": "SoundHound AI Leads Wall Street's Most Shorted Stocks at 42%",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/soundhound-ai-leads-wall-streets-181309255.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-08-05T16:12:54Z",
-      "title": "Ondas (ONDS) Appoints Former Mossad Chief David Barnea To Lead Defense Expansion",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ondas-onds-appoints-former-mossad-161254780.html",
+      "date": "2026-08-14T19:09:05Z",
+      "title": "Ondas (ONDS) Reports Strong Sales Growth, Is The Valuation Already Priced In?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ondas-onds-reports-strong-sales-190905099.html",
       "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-05T14:51:33Z",
-      "title": "ONDS Stock Rises After $50M Army Order Lifts Mistral Awards Above $240M",
-      "url": "https://stocktwits.com/news-articles/markets/equity/onds-stock-rises-after-50-m-army-order-lifts-mistral-awards-above-240-m/cZo4M7URJIx",
-      "source": "Stocktwits"
+      "date": "2026-08-14T17:56:00Z",
+      "title": "More Trump Tariffs Are Coming\u2014and They Could Look Different",
+      "url": "https://www.barrons.com/articles/trump-drone-tariffs-trade-china-7a4132b0?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
     },
     {
-      "date": "2026-08-01T13:30:02Z",
-      "title": "Why BlackRock Is Betting Big on Ondas Stock Now",
-      "url": "https://www.barchart.com/story/news/3594136/why-blackrock-is-betting-big-on-ondas-stock-now",
-      "source": "Barchart"
+      "date": "2026-08-14T16:59:00Z",
+      "title": "Unusual Machines, AeroVironment, and Ondas Rise as Trump Levies Tariffs on Drone Imports",
+      "url": "https://www.barrons.com/articles/aerovironment-ondas-drone-stocks-trump-tariffs-f4dbcfc8?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
     },
     {
-      "date": "2026-07-30T13:35:08Z",
-      "title": "Uniti Group (UNIT) Reports Q2 Loss, Tops Revenue Estimates",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/uniti-group-unit-reports-q2-133508976.html",
+      "date": "2026-08-14T15:35:00Z",
+      "title": "Ondas Posts Wider-Than-Expected Q2 Loss, Delivers Solid Revenue Growth",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ondas-posts-wider-expected-q2-153500106.html",
       "source": "Zacks"
+    },
+    {
+      "date": "2026-08-14T14:00:00Z",
+      "title": "Ondas Q2 Earnings Call Lifts Outlook and Profitability Timeline",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ondas-q2-earnings-call-lifts-140000342.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-14T13:55:00Z",
+      "title": "Will Ondas' New Orders Accelerate Revenue Growth in the Second Half?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ondas-orders-accelerate-revenue-growth-135500396.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-14T12:30:00Z",
+      "title": "Ondas Holdings Inc. Q2 2026 Earnings Call Summary",
+      "url": "https://app.moby.co/home/research/tools/earningsCalendar/earnings-ondas-holdings-inc-q2-2026-earnings-call-summary?utm_source=yahoo_finance&utm_medium=rss",
+      "source": "Moby"
+    },
+    {
+      "date": "2026-08-14T10:33:43Z",
+      "title": "Social Buzz: Wallstreetbets Stocks Mostly Higher Premarket Friday; Reddit, Sandisk to Advance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/social-buzz-wallstreetbets-stocks-mostly-103343466.html",
+      "source": "MT Newswires"
     }
   ],
-  "options_implied_move": 0.13830955515749915,
+  "options_implied_move": 0.07111111111111111,
   "technicals": {
-    "ma20": 7.725249981880188,
-    "ma50": 8.747000026702882,
-    "ma200": 9.315900015830994,
-    "rsi14": 60.08263426504712,
-    "high_20d": 9.199999809265137,
-    "low_5d": 7.25,
-    "low_10d": 6.769999980926514,
+    "ma20": 8.45299997329712,
+    "ma50": 8.3246000289917,
+    "ma200": 9.381900017261506,
+    "rsi14": 54.726447400343766,
+    "high_20d": 9.989999771118164,
+    "low_5d": 8.520000457763672,
+    "low_10d": 8.520000457763672,
     "high_52w": 15.279999732971191,
-    "low_52w": 3.0850000381469727,
-    "atr14": 0.7571428843906948,
-    "atr14_pct": 8.311118692916097,
-    "position_in_52w_range_pct": 49.40549216321337
+    "low_52w": 3.200000047683716,
+    "atr14": 0.7221429347991943,
+    "atr14_pct": 8.023810386657715,
+    "position_in_52w_range_pct": 48.01324588923826
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-08",
-      "open": 0.89,
-      "high": 0.938,
-      "low": 0.803,
-      "close": 0.818,
-      "volume": 157600.0
-    },
-    {
-      "date": "2024-08-09",
-      "open": 0.86,
-      "high": 0.86,
-      "low": 0.752,
-      "close": 0.79,
-      "volume": 272600.0
-    },
-    {
-      "date": "2024-08-12",
-      "open": 0.8,
-      "high": 0.82,
-      "low": 0.76,
-      "close": 0.77,
-      "volume": 112400.0
-    },
-    {
-      "date": "2024-08-13",
-      "open": 0.772,
-      "high": 0.83,
-      "low": 0.66,
-      "close": 0.691,
-      "volume": 888100.0
-    },
-    {
-      "date": "2024-08-14",
-      "open": 0.726,
-      "high": 0.729,
-      "low": 0.537,
-      "close": 0.588,
-      "volume": 1110100.0
-    },
-    {
-      "date": "2024-08-15",
-      "open": 0.61,
-      "high": 0.69,
-      "low": 0.61,
-      "close": 0.661,
-      "volume": 283500.0
-    },
-    {
-      "date": "2024-08-16",
-      "open": 0.668,
-      "high": 0.713,
-      "low": 0.65,
-      "close": 0.71,
-      "volume": 189500.0
-    },
     {
       "date": "2024-08-19",
       "open": 0.72,
@@ -4331,58 +4169,58 @@
       "high": 9.14,
       "low": 8.58,
       "close": 9.11,
-      "volume": 72567700.0
+      "volume": 72873400.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 9.48,
+      "high": 9.6,
+      "low": 9.04,
+      "close": 9.31,
+      "volume": 88050300.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 9.41,
+      "high": 9.75,
+      "low": 9.2,
+      "close": 9.74,
+      "volume": 74807400.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 9.93,
+      "high": 9.99,
+      "low": 9.65,
+      "close": 9.77,
+      "volume": 86718100.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 8.98,
+      "high": 9.55,
+      "low": 8.79,
+      "close": 8.91,
+      "volume": 125170100.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 9.43,
+      "high": 9.64,
+      "low": 9.04,
+      "close": 9.24,
+      "volume": 96853900.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 9.07,
+      "high": 9.1299,
+      "low": 8.52,
+      "close": 9.0,
+      "volume": 68795052.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-07",
-      "open": 3.4,
-      "high": 3.5,
-      "low": 3.085,
-      "close": 3.25,
-      "volume": 34876200.0
-    },
-    {
-      "date": "2025-08-08",
-      "open": 3.41,
-      "high": 3.95,
-      "low": 3.395,
-      "close": 3.55,
-      "volume": 41406300.0
-    },
-    {
-      "date": "2025-08-11",
-      "open": 3.61,
-      "high": 3.76,
-      "low": 3.31,
-      "close": 3.43,
-      "volume": 26386900.0
-    },
-    {
-      "date": "2025-08-12",
-      "open": 3.94,
-      "high": 4.39,
-      "low": 3.86,
-      "close": 4.29,
-      "volume": 71915200.0
-    },
-    {
-      "date": "2025-08-13",
-      "open": 3.48,
-      "high": 3.79,
-      "low": 3.44,
-      "close": 3.52,
-      "volume": 94894900.0
-    },
-    {
-      "date": "2025-08-14",
-      "open": 3.5,
-      "high": 3.93,
-      "low": 3.43,
-      "close": 3.93,
-      "volume": 53138400.0
-    },
     {
       "date": "2025-08-15",
       "open": 3.83,
@@ -6349,7 +6187,55 @@
       "high": 9.14,
       "low": 8.58,
       "close": 9.11,
-      "volume": 72567700.0
+      "volume": 72873400.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 9.48,
+      "high": 9.6,
+      "low": 9.04,
+      "close": 9.31,
+      "volume": 88050300.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 9.41,
+      "high": 9.75,
+      "low": 9.2,
+      "close": 9.74,
+      "volume": 74807400.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 9.93,
+      "high": 9.99,
+      "low": 9.65,
+      "close": 9.77,
+      "volume": 86718100.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 8.98,
+      "high": 9.55,
+      "low": 8.79,
+      "close": 8.91,
+      "volume": 125170100.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 9.43,
+      "high": 9.64,
+      "low": 9.04,
+      "close": 9.24,
+      "volume": 96853900.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 9.07,
+      "high": 9.1299,
+      "low": 8.52,
+      "close": 9.0,
+      "volume": 68795052.0
     }
   ],
   "ai_synthesis": null,

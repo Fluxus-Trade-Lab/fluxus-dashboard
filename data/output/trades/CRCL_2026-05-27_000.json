@@ -1,6 +1,6 @@
 {
   "trade_id": "CRCL_2026-05-27_000",
-  "generated_at": "2026-08-17T03:51:14+00:00",
+  "generated_at": "2026-08-18T03:59:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "CRCL",
@@ -41,18 +41,18 @@
     "volume": 8300700.0,
     "ma20": 112.86449999999999,
     "ma50": 106.79660000000001,
-    "ma200": 103.32495,
-    "rsi14": 44.36768555515922,
+    "ma200": null,
+    "rsi14": 44.36762472269485,
     "atr14": 10.886285714285716,
     "atr14_pct": 10.606279924284602,
-    "high_52w": 189.92,
+    "high_52w": 159.47,
     "low_52w": 49.9,
-    "position_in_52w_range_pct": 37.66604770747037,
+    "position_in_52w_range_pct": 48.13361321529616,
     "high_20d": 140.0,
     "low_10d": 102.33,
     "low_5d": 102.33
   },
-  "setup_type": "Long below MA200 \u2014 counter-trend",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": 1.4247787610619462,
     "mfe_date": "2026-05-29",
@@ -69,7 +69,7 @@
     "hold_calendar_days": 6
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **CRCL** long on 2026-05-27 at $104.78 (qty 1705) with stop $98.00 (1R = $6.78/sh = $11,560). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price below MA20 ($112.86), MA20 > MA50 > MA200 (golden alignment), RSI 44, 38% through 52W range, ATR 10.6% of price. Realized **-0.61R**, peak was **+1.42R** on 2026-05-29 (day +2) \u2014 captured **-43%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **CRCL** long on 2026-05-27 at $104.78 (qty 1705) with stop $98.00 (1R = $6.78/sh = $11,560). Setup: **Long in mixed structure** \u2014 price below MA20 ($112.86), RSI 44, 48% through 52W range, ATR 10.6% of price. Realized **-0.61R**, peak was **+1.42R** on 2026-05-29 (day +2) \u2014 captured **-43%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-04-27",
