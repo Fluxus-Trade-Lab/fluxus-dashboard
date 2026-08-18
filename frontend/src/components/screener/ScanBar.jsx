@@ -82,9 +82,9 @@ export default function ScanBar({
   scans, scan, onScan,
   stateCounts, states, onToggleState,
   gates, gateCounts, onToggleGate,
-  themes, theme, onTheme,
+  themes, chosen, onTheme, handoff,
   search, onSearch,
-  receipt, hiddenNote, gateNote, gateOn,
+  receipt, hiddenNote, gateNote, gateOn, wideNote,
 }) {
   const { t: tr } = useLanguage()
   const [themeQuery, setThemeQuery] = useState('')
@@ -97,7 +97,8 @@ export default function ScanBar({
     return list.slice(0, 12)
   }, [themes, themeQuery])
 
-  const chosen = theme ? themes.find((t) => t.group === theme) : null
+  /** the chosen themes as rows; a name with no row is dropped upstream */
+  const picked = chosen?.size ? themes.filter((t) => chosen.has(t.group)) : []
 
   return (
     <div className="sticky top-0 z-10 mb-4 border-b border-[var(--color-border)]
@@ -143,17 +144,20 @@ export default function ScanBar({
 
         <Divider />
         <span className="text-[10px] font-mono font-medium uppercase tracking-[.14em] text-[var(--color-text-muted)]">{tr('scr.bar.theme')}</span>
-        {chosen ? (
-          <span className="text-[12.5px] text-[var(--color-text-bold)]">
-            {chosen.group}
-            <ThemeRibbon theme={chosen} />
-            <button type="button" onClick={() => onTheme(null)}
+        {picked.length > 0 && picked.map((t) => (
+          <span key={t.group} className="text-[12.5px] text-[var(--color-text-bold)]">
+            {t.group}
+            {/* the ribbon belongs to ONE theme, so it is drawn only when one is
+                chosen — five fortnights of two themes side by side would read
+                as one sequence */}
+            {picked.length === 1 && <ThemeRibbon theme={t} />}
+            <button type="button" onClick={() => onTheme(t.group)}
               className="bg-transparent border-none cursor-pointer text-[var(--color-text-muted)]
                          hover:text-[var(--color-text)] ml-1.5 p-0 text-[11px]"
-              aria-label={tr('scr.bar.clearTheme')}>×</button>
+              aria-label={tr('scr.bar.clearTheme')}>&times;</button>
           </span>
-        ) : (
-          <span className="relative">
+        ))}
+        <span className="relative">
             <input value={themeQuery}
               onChange={(e) => { setThemeQuery(e.target.value); setThemeOpen(true); setThemeIdx(0) }}
               onFocus={() => setThemeOpen(true)}
@@ -173,10 +177,12 @@ export default function ScanBar({
                   onTheme(pick.group); setThemeQuery(''); setThemeOpen(false); setThemeIdx(0)
                 }
               }}
-              placeholder={`${tr('scr.bar.allThemes')} · ${themes.length}`}
+              placeholder={picked.length
+                ? tr('scr.bar.addTheme') === 'scr.bar.addTheme' ? '+ another' : tr('scr.bar.addTheme')
+                : `${tr('scr.bar.allThemes')} · ${themes.length}`}
               className="bg-transparent border-none border-b border-solid border-[var(--color-border)]
                          text-[12.5px] text-[var(--color-text)] w-[130px] px-0.5 outline-none
-                         placeholder:text-[var(--color-text-muted)]" />
+                         placeholder:text-[var(--color-text-secondary)]" />
             {themeOpen && themeMatches.length > 0 && (
               <div className="absolute left-0 top-full mt-1 z-20 min-w-[220px] max-h-[300px] overflow-auto
                               bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg shadow-lg">
@@ -186,6 +192,7 @@ export default function ScanBar({
                     onMouseDown={() => { onTheme(t.group); setThemeQuery(''); setThemeOpen(false); setThemeIdx(0) }}
                     onMouseEnter={() => setThemeIdx(i)}
                     className={`px-2.5 py-1 text-[12.5px] cursor-pointer flex items-baseline gap-2
+                                ${chosen?.has(t.group) ? 'font-semibold' : ''}
                                 ${i === themeIdx ? 'bg-[var(--color-hover-bg)]' : ''}`}>
                     <span>{t.group}</span>
                     <span className="text-[10px] text-[var(--color-text-muted)] ml-auto">{t.members}</span>
@@ -193,8 +200,7 @@ export default function ScanBar({
                 ))}
               </div>
             )}
-          </span>
-        )}
+        </span>
 
         <Divider />
         <input value={search} onChange={(e) => onSearch(e.target.value)}
@@ -213,6 +219,36 @@ export default function ScanBar({
             : 'text-[var(--color-signal-caution)]'}`}>· {gateNote}</span>
         )}
       </div>
+
+      {/* A filter this page did not set has to introduce itself. The chips
+          above are already visible and already clearable — this only answers
+          the question those chips raise on a page you have just arrived at:
+          who chose these? It appears once, for the set it carried in, and
+          never again for the same set. */}
+      {handoff?.length > 0 && (
+        <p className="m-0 mt-1.5 pl-3 text-[11px] leading-relaxed text-[var(--color-text-secondary)]
+                      border-l border-dashed border-[var(--color-text-muted)]">
+          Narrowed to the {handoff.length === 1 ? 'theme' : `${handoff.length} themes`} you were
+          comparing on <a href="#/groups" className="text-inherit">Themes</a> &mdash;{' '}
+          <b className="text-[var(--color-text-bold)]">{handoff.join(' · ')}</b>. Clear a chip above
+          to widen it; this will not come back unless the picks over there change.
+        </p>
+      )}
+
+      {/* An empty intersection is a reading, and this page will not swap the
+          scan to make it non-empty. It says what the wider view holds and
+          leaves the switch to the reader. */}
+      {wideNote && (
+        <p className="m-0 mt-1.5 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
+          These themes hold <b className="text-[var(--color-text-secondary)]">{wideNote.n}</b> tradeable
+          names in all &mdash; the scan on top is what empties it.{' '}
+          <button type="button" onClick={wideNote.onWiden}
+                  className="bg-transparent border-none p-0 cursor-pointer underline
+                             text-[var(--color-text-secondary)] hover:text-[var(--color-text)]">
+            drop the scan
+          </button>
+        </p>
+      )}
     </div>
   )
 }

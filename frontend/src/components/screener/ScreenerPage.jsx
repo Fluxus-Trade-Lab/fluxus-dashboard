@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import PageHeader from '../PageHeader'
 import PickedChart from '../ticker/PickedChart'
+import { useThemeHandoff } from '../../hooks/useThemeHandoff'
 import ShortlistTray from '../shared/ShortlistTray'
 import Reading, { readScreener } from '../Reading'
 import { useHeatingUp } from '../../hooks/useHeatingUp'
@@ -60,11 +61,16 @@ function loadQuery() {
       // restore — the bar would highlight nothing while the fallback filtered
       scan: SCAN_DEFS.some((d) => d.key === q.scan) ? q.scan : 'confluence',
       states: Array.isArray(q.states) ? q.states.filter((s) => STATE_WORDS.includes(s)) : [],
-      theme: typeof q.theme === 'string' ? q.theme : null,
+      // themes became a SET when the handoff from the Themes page landed: that
+      // page lets you compare three, and carrying only the first would be a
+      // silent narrowing of the reader's own choice. A stored single string is
+      // a query written before that and is read as a set of one.
+      themes: Array.isArray(q.themes) ? q.themes.filter((x) => typeof x === 'string')
+        : typeof q.theme === 'string' && q.theme ? [q.theme] : [],
       gates: Array.isArray(q.gates) ? q.gates.filter((g) => g in GATES) : [],
     }
   } catch {
-    return { scan: 'confluence', states: [], theme: null, gates: [] }
+    return { scan: 'confluence', states: [], themes: [], gates: [] }
   }
 }
 
@@ -78,27 +84,45 @@ export default function ScreenerPage() {
   const initial = useMemo(loadQuery, [])
   const [scan, setScan] = useState(initial.scan)
   const [states, setStates] = useState(() => new Set(initial.states))
-  const [theme, setTheme] = useState(initial.theme)
+  const [themes, setThemes] = useState(() => new Set(initial.themes))
   const [gates, setGates] = useState(() => new Set(initial.gates))
   const [search, setSearch] = useState('')
 
   useEffect(() => {
     try {
       localStorage.setItem(QUERY_KEY,
-        JSON.stringify({ scan, states: [...states], theme, gates: [...gates] }))
+        JSON.stringify({ scan, states: [...states], themes: [...themes], gates: [...gates] }))
     } catch { /* storage may be unavailable; the query is still live in memory */ }
-  }, [scan, states, theme, gates])
+  }, [scan, states, themes, gates])
+
+  /**
+   * The handoff from the Themes page — the one piece of state that crosses
+   * between the morning's three pages, and it crosses in ONE direction only.
+   *
+   * Andy's call, 2026-08-18, made against the count: narrowing this table to
+   * the themes picked next door takes it from 2,548 rows to 42, which is a
+   * shortlist. Doing the same to Today's List takes 277 names to 5 and empties
+   * twelve of its seventeen scans — a page whose whole premise is that the six
+   * questions were already asked would come up reading zero, and that zero
+   * would be the filter's, not the market's. So the handoff stops here.
+   *
+   * THE RULE IT FOLLOWS: state may only ever land in a control that is already
+   * on screen and can be switched off by hand. It lands in the theme filter,
+   * which draws a chip per theme with its own ×. It never becomes a hidden
+   * predicate.
+   */
+  const handoff = useThemeHandoff(themes, setThemes)
 
   // A persisted theme the taxonomy no longer publishes must be cleared, not
   // kept: with the name held but the lookup failing, no rows are filtered while
   // the receipt still claims the intersection — a filter that asserts itself
   // and does nothing.
   useEffect(() => {
-    if (theme && !groups.loading && groups.themes.length &&
-        !groups.themes.some((t) => t.group === theme)) {
-      setTheme(null)
-    }
-  }, [theme, groups.loading, groups.themes])
+    if (!themes.size || groups.loading || !groups.themes.length) return
+    const live = new Set(groups.themes.map((t) => t.group))
+    if ([...themes].every((n) => live.has(n))) return
+    setThemes(new Set([...themes].filter((n) => live.has(n))))
+  }, [themes, groups.loading, groups.themes])
 
   const heatByTicker = useMemo(() => {
     const m = new Map()
@@ -143,14 +167,20 @@ export default function ScreenerPage() {
   }), [universe, heat, heatByTicker, market])
 
   const activeScan = scans.find((s) => s.key === scan) ?? scans[0]
-  const themeRow = theme ? groups.themes.find((t) => t.group === theme) : null
+  const themeRows = useMemo(
+    () => (themes.size ? groups.themes.filter((t) => themes.has(t.group)) : []),
+    [themes, groups.themes])
 
   // Rows before the state filter, so state counts can be honest facet counts
   // of what each state word would keep — not of the whole world.
   const preState = useMemo(() => {
     if (!universe) return []
     const byTicker = new Map(universe.map((r) => [r.ticker, r]))
-    const themeSet = themeRow ? new Set(themeRow.tickers) : null
+    // the UNION of the chosen themes. Intersecting them would ask "which name
+    // is in all three", which is not a question anyone picking three different
+    // themes is asking.
+    const themeSet = themeRows.length
+      ? new Set(themeRows.flatMap((t) => t.tickers ?? [])) : null
     const q = search.trim().toUpperCase()
 
     const tickers = activeScan.set
@@ -205,16 +235,16 @@ export default function ScreenerPage() {
       })
     }
     return out
-  }, [universe, activeScan, themeRow, search, groups.stocks, heatByTicker, industryState, ribbonByHome])
+  }, [universe, activeScan, themeRows, search, groups.stocks, heatByTicker, industryState, ribbonByHome])
 
   // null while groups.json is absent — "Leading 0" is a reading, not a shrug
   const statesLoaded = !groups.loading && !groups.error
 
-  const untouched = scan === 'confluence' && !states.size && !theme && !search.trim()
+  const untouched = scan === 'confluence' && !states.size && !themes.size && !search.trim()
   // A state or theme filter needs the group layer; while groups.json is in
   // flight (or failed) the filter has nothing measured to act on, and a page
   // that filtered anyway would ship an empty set claiming to be a reading.
-  const needsGroups = states.size > 0 || Boolean(theme)
+  const needsGroups = states.size > 0 || themes.size > 0
   const viewReady = activeScan.loaded && (!needsGroups || statesLoaded)
   const stateCounts = useMemo(() => {
     if (!statesLoaded) return null
@@ -258,6 +288,23 @@ export default function ScreenerPage() {
    */
   const ungated = rows.filter((r) => !r.inUniverse).length
 
+  /**
+   * What the same themes would give without the scan on top.
+   *
+   * The handoff lands on whatever scan was last open, and the default is
+   * Confluence — fifty names. Three themes intersected with fifty names is
+   * routinely nothing, which is a true reading and a useless arrival. Rather
+   * than switching the scan on the reader's behalf (this page never chooses a
+   * vocabulary word for them), it counts what the wider view holds and offers
+   * the number. Only computed when the current view came up empty, and only
+   * while a theme filter is on.
+   */
+  const themeWide = useMemo(() => {
+    if (!themes.size || rows.length || !themeRows.length || !universe?.length) return null
+    const inThemes = new Set(themeRows.flatMap((t) => t.tickers ?? []))
+    return universe.filter((r) => inThemes.has(r.ticker)).length
+  }, [themes, rows.length, themeRows, universe])
+
   // Numbers only — the selections themselves are already visible as underlines,
   // and restating them here was the duplication Andy flagged.
   const receipt = useMemo(() => {
@@ -277,7 +324,7 @@ export default function ScreenerPage() {
     // and deriving words from it would couple the sentence to a display string
     const parts = [activeScan.label]
     if (states.size) parts.push([...states].join('+'))
-    if (theme) parts.push(theme)
+    if (themes.size) parts.push([...themes].join(' + '))
     if (search.trim()) parts.push(`"${search.trim().toUpperCase()}"`)
     const desc = parts.join(' ∩ ')
     if (!rows.length) {
@@ -289,7 +336,7 @@ export default function ScreenerPage() {
       .filter((st) => census[st]).map((st) => `${census[st]} ${st}`).join(' · ')
     const front = rows.slice(0, 3).map((r) => r.ticker).join(', ')
     return `${rows.length} names under ${desc}. States: ${censusStr || 'none measured'}. Front of the board: ${front}.`
-  }, [scan, states, theme, search, activeScan, rows])
+  }, [scan, states, themes, search, activeScan, rows])
 
   const conditions = market?.breadth?.conditions
   const toggleState = (st) => setStates((prev) => {
@@ -334,7 +381,15 @@ export default function ScreenerPage() {
         scans={scans} scan={scan} onScan={setScan}
         stateCounts={stateCounts} states={states} onToggleState={toggleState}
         gates={gates} gateCounts={gateCounts} onToggleGate={toggleGate}
-        themes={groups.themes} theme={theme} onTheme={setTheme}
+        themes={groups.themes} chosen={themes}
+        onTheme={(name) => setThemes((cur) => {
+          const next = new Set(cur)
+          if (name == null) next.clear()
+          else if (next.has(name)) next.delete(name)
+          else next.add(name)
+          return next
+        })}
+        handoff={handoff}
         search={search} onSearch={setSearch}
         receipt={receipt}
         gateNote={gated
@@ -344,6 +399,9 @@ export default function ScreenerPage() {
               : '')
           : 'the tradeable column has not shipped yet — this table still includes names you cannot trade'}
         gateOn={gated}
+        wideNote={themeWide != null && scan !== 'all' && themeWide > 0
+          ? { n: themeWide, onWiden: () => setScan('all') }
+          : null}
         hiddenNote={noState ? `${noState} rows carry no state and are not shown` : null} />
       {/* Page 3's two doors carry the SAME fixed chart card, opening on the
           same name — they are two routes to one job (find a name worth the
@@ -357,7 +415,7 @@ export default function ScreenerPage() {
       {viewReady ? (
         // key: normalized search only — a trailing space changes nothing
         // about the row set and must not remount the table
-        <StockTable key={`${scan}|${[...states].join()}|${theme}|${search.trim().toUpperCase()}`}
+        <StockTable key={`${scan}|${[...states].join()}|${[...themes].join()}|${search.trim().toUpperCase()}`}
                     rows={rows} defaultSort={scan === 'confluence' ? 'heat' : 'rs3'} />
       ) : (
         <p className="m-0 py-8 text-center text-[12.5px] text-[var(--color-text-muted)]">
