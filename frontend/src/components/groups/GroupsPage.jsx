@@ -347,7 +347,12 @@ export default function GroupsPage() {
                  /* the state census moved into the Field figure, which is
                     where those four words are defined */
                  >
-          <ThemeBars rows={windowed} scale={scale} sortKey={rankSort}
+          {/* grouped by `kind` (pipeline, 2026-08-18): a 6-name thesis, a
+              1,583-name size bucket and a single ETF were ranked against each
+              other in one column, and the column never said they were
+              different kinds of object. Nothing is dropped — that was
+              explicit; they are separated and each heading counts its own. */}
+          <ThemeBars rows={windowed} scale={scale} sortKey={rankSort} grouped
                      colourOf={colourOf} onToggle={onToggle}
                      atLimit={compare.atLimit} dim={compare.picks.length > 0} />
         </Section>

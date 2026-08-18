@@ -95,14 +95,43 @@ const HEAD = 12
 const TAIL = 4
 const NEIGHBOURS = 1
 
+/**
+ * The four things a "theme" turns out to be (pipeline `kind`, 2026-08-18).
+ *
+ * Andy's ruling, relayed from the data side: Small Caps and Mega Caps are a
+ * FACTOR, not a theme; Software and Regional Banks are a SECTOR driven by the
+ * macro, not a thesis; a single fund standing in for a whole market is a
+ * PROXY. Ranking all four against each other in one column asked the reader to
+ * compare a 6-name thesis with a 1,583-name size bucket and a single ETF, and
+ * the ranking never said they were different kinds of object.
+ *
+ * NOTHING IS DROPPED — that was explicit. They are grouped, and each group
+ * says how many it holds, so a kind you do not care about this morning is one
+ * heading to skip rather than an absence you have to notice.
+ */
+const KINDS = [
+  { key: 'theme',  label: 'Themes',   note: 'a thesis, with members chosen for it' },
+  { key: 'sector', label: 'Sectors',  note: 'macro-driven, not a thesis' },
+  { key: 'factor', label: 'Factors',  note: 'size, beta, growth — a slice of the whole market' },
+  { key: 'proxy',  label: 'Proxies',  note: 'one fund standing in for the whole thing' },
+]
+
 export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, dim,
-                                   sortKey = 'window' }) {
+                                   sortKey = 'window', grouped = false }) {
   const [showAll, setShowAll] = useState(false)
   const key = sortKey === 'pace' ? paceChange : (r) => r._value
   const sorted = [...rows]
     .filter((r) => Number.isFinite(r._value) && key(r) != null)
     .sort((a, b) => key(b) - key(a))
   if (!sorted.length) return null
+
+  /**
+   * RANK IS GLOBAL, THE FOLD IS PER GROUP. A theme's number is its place among
+   * every group on the page — four sections each starting at 1 would print
+   * "#1" four times meaning four different things. The fold has to be local,
+   * or a whole kind could disappear inside the head-and-tail of another.
+   */
+  const rankOf = new Map(sorted.map((r, i) => [r.group, i + 1]))
 
   // One scale for every cell on screen, so a darker cell is a bigger number
   // in any row and any column.
@@ -114,38 +143,52 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
 
 
 
-  // Which ranks stay visible when folded.
-  const keep = new Set()
-  if (showAll || sorted.length <= HEAD + TAIL + 4) {
-    sorted.forEach((_, i) => keep.add(i))
-  } else {
-    for (let i = 0; i < HEAD; i++) keep.add(i)
-    for (let i = sorted.length - TAIL; i < sorted.length; i++) keep.add(i)
-    sorted.forEach((r, i) => {
-      if (colourOf(r.group)) {
-        for (let d = -NEIGHBOURS; d <= NEIGHBOURS; d++) {
-          const j = i + d
-          if (j >= 0 && j < sorted.length) keep.add(j)
+  /** Which ranks stay visible when folded, and the gap markers between them. */
+  const fold = (list) => {
+    const keep = new Set()
+    if (showAll || list.length <= HEAD + TAIL + 4) {
+      list.forEach((_, i) => keep.add(i))
+    } else {
+      for (let i = 0; i < HEAD; i++) keep.add(i)
+      for (let i = list.length - TAIL; i < list.length; i++) keep.add(i)
+      list.forEach((r, i) => {
+        if (colourOf(r.group)) {
+          for (let d = -NEIGHBOURS; d <= NEIGHBOURS; d++) {
+            const j = i + d
+            if (j >= 0 && j < list.length) keep.add(j)
+          }
         }
-      }
+      })
+    }
+    const out = []
+    let hidden = 0
+    list.forEach((r, i) => {
+      if (keep.has(i)) {
+        if (hidden > 0) { out.push({ gap: hidden }); hidden = 0 }
+        out.push({ r, i: (rankOf.get(r.group) ?? i + 1) - 1 })
+      } else hidden += 1
     })
+    if (hidden > 0) out.push({ gap: hidden })
+    return out
   }
 
-  // Rows plus gap markers, in rank order.
-  const display = []
-  let hidden = 0
-  sorted.forEach((r, i) => {
-    if (keep.has(i)) {
-      if (hidden > 0) { display.push({ gap: hidden }); hidden = 0 }
-      display.push({ r, i })
-    } else hidden += 1
-  })
-  if (hidden > 0) display.push({ gap: hidden })
+  const sections = grouped
+    ? KINDS.map((k) => ({ ...k, rows: sorted.filter((r) => r.kind === k.key) }))
+        .filter((sec) => sec.rows.length)
+    : null
+  // anything the pipeline starts emitting that this file has not heard of
+  // appears under its own name rather than vanishing
+  if (sections) {
+    const known = new Set(KINDS.map((k) => k.key))
+    const rest = sorted.filter((r) => !known.has(r.kind))
+    if (rest.length) sections.push({ key: 'other', label: 'Unclassified', note: null, rows: rest })
+  }
+  const display = sections ? null : fold(sorted)
 
-  return (
-    <div>
-      {display.map((d) => d.gap ? (
-        <button key={`gap-after-${display.indexOf(d)}`} type="button"
+  /** one entry — a gap marker, or a row. Extracted so the grouped and the
+   *  flat renders draw exactly the same thing. */
+  const renderItem = (d, at) => d.gap ? (
+        <button key={`gap-after-${at}`} type="button"
                 onClick={() => setShowAll(true)}
                 className="w-full py-[5px] pl-1 grid grid-cols-[24px_1fr] gap-2 items-center
                            bg-transparent border-0 cursor-pointer text-left
@@ -270,17 +313,45 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
             </span>
           </div>
         )
-      })())}
-      {showAll && sorted.length > HEAD + TAIL + 4 && (
-        <button type="button" onClick={() => setShowAll(false)}
-                className="w-full py-[6px] pl-1 grid grid-cols-[24px_1fr] gap-2
-                           bg-transparent border-0 cursor-pointer text-left
-                           text-[10px] font-mono text-[var(--color-text-muted)]
-                           hover:text-[var(--color-text)]">
-          <span className="text-right">⌃</span>
-          <span>show fewer</span>
-        </button>
-      )}
+      })()
+
+  /** the un-fold, once for the whole list — the fold is per section but the
+   *  state behind it is one, so one control undoes all of them. */
+  const showFewer = showAll && sorted.length > HEAD + TAIL + 4 && (
+    <button type="button" onClick={() => setShowAll(false)}
+            className="w-full py-[6px] pl-1 grid grid-cols-[24px_1fr] gap-2
+                       bg-transparent border-0 cursor-pointer text-left
+                       text-[10px] font-mono text-[var(--color-text-muted)]
+                       hover:text-[var(--color-text)]">
+      <span className="text-right">\u2303</span>
+      <span>show fewer</span>
+    </button>
+  )
+
+  return (
+    <div>
+      {sections
+        ? sections.map((sec) => (
+            <section key={sec.key} className="mb-2">
+              {/* the kind, named, with its count. A heading that says how many
+                  it holds turns a kind you are not reading this morning into
+                  one line to skip. */}
+              <header className="flex items-baseline gap-2 pt-2 pb-1">
+                <span className="text-[10px] font-mono font-medium uppercase tracking-[.2em]
+                                 text-[var(--color-text-secondary)]">{sec.label}</span>
+                <span className="text-[10px] font-mono tabular-nums text-[var(--color-text-muted)]">
+                  {sec.rows.length}
+                </span>
+                {sec.note && (
+                  <span className="text-[10px] text-[var(--color-text-muted)] truncate">{sec.note}</span>
+                )}
+                <i className="flex-1 h-px bg-[var(--color-border-light)]" />
+              </header>
+              {fold(sec.rows).map(renderItem)}
+            </section>
+          ))
+        : display.map(renderItem)}
+      {showFewer}
     </div>
   )
 }

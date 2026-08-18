@@ -121,7 +121,12 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
     // axis padded to round numbers would be a scale nobody measured.
     const ax = Math.max(...ok.map((r) => Math.abs(r.excess_3m)))
     const ay = Math.max(...ok.map((r) => Math.abs(r.rs_accel)))
-    return { ok, ax, ay, names: labelled(ok), proxies: ok.filter((r) => r.members === 1).length }
+    // `kind` is the pipeline's own word for this (2026-08-18); it used to be
+    // inferred from members === 1, which happened to agree on all 75 rows and
+    // was still a guess standing in for a field.
+    const by = (k) => ok.filter((r) => r.kind === k).length
+    return { ok, ax, ay, names: labelled(ok),
+             mix: { theme: by('theme'), sector: by('sector'), factor: by('factor'), proxy: by('proxy') } }
   }, [rows])
 
   if (!plot) {
@@ -132,7 +137,7 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
     )
   }
 
-  const { ok, ax, ay, names, proxies } = plot
+  const { ok, ax, ay, names, mix } = plot
   const W = 1000, H = 560, PAD = { t: 26, r: 26, b: 34, l: 34 }
   const x = (v) => PAD.l + ((v / ax + 1) / 2) * (W - PAD.l - PAD.r)
   const y = (v) => PAD.t + ((1 - v / ay) / 2) * (H - PAD.t - PAD.b)
@@ -264,11 +269,11 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
         the ones leading on 3 or more horizons, plus the three fastest accelerators inside
         Improving{dropped > 0 ? `, less ${dropped} whose name had no room beside its dot` : ''};
         the rest name themselves on hover.
-        {proxies > 0 && (
-          <> {' '}<b className="text-[var(--color-text-secondary)]">{proxies} of {ok.length} are
-          a single fund</b> standing in for the theme rather than a basket &mdash; they plot
-          the same as a 60-name group and carry no members to check.</>
-        )}
+        {' '}<b className="text-[var(--color-text-secondary)]">Not everything here is a
+        theme.</b> This field holds {mix.theme} theses, {mix.sector} sectors, {mix.factor} factors
+        and {mix.proxy} single-fund proxies, and a dot does not say which &mdash; the ranking
+        below separates them. A factor is a slice of the whole market and a proxy carries no
+        members to check, so neither reads like a thesis even when it plots beside one.
       </p>
     </div>
   )
