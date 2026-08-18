@@ -1,15 +1,8 @@
 {
-  "timestamp": "2026-08-18T03:37:36.175234+00:00",
+  "timestamp": "2026-08-18T21:50:10.338475+00:00",
   "stale": false,
   "spy": {
     "candles": [
-      {
-        "date": "2026-02-10",
-        "o": 691.28,
-        "h": 692.86,
-        "l": 688.0,
-        "c": 688.46
-      },
       {
         "date": "2026-02-11",
         "o": 692.71,
@@ -912,10 +905,16 @@
         "h": 776.78,
         "l": 772.51,
         "c": 772.67
+      },
+      {
+        "date": "2026-08-18",
+        "o": 768.7,
+        "h": 769.5,
+        "l": 766.92,
+        "c": 767.45
       }
     ],
     "sma20": [
-      686.57,
       686.48,
       686.02,
       685.5,
@@ -1044,10 +1043,10 @@
       753.19,
       754.54,
       756.2,
-      757.73
+      757.73,
+      758.68
     ],
     "sma50": [
-      682.93,
       683.14,
       683.2,
       683.24,
@@ -1176,10 +1175,10 @@
       747.66,
       748.06,
       748.54,
-      748.9
+      748.9,
+      749.53
     ],
     "sma200": [
-      640.52,
       641.25,
       641.92,
       642.58,
@@ -1308,24 +1307,21 @@
       701.74,
       702.27,
       702.75,
-      703.21
+      703.21,
+      703.64
     ],
     "danger": {
       "signals": {
         "below_20sma": false,
         "stoch_cross": true,
-        "stoch_down": false,
+        "stoch_down": true,
         "lower_lows": false,
-        "close_below_lows": false
+        "close_below_lows": true
       },
-      "count": 1,
-      "date": "2026-08-17"
+      "count": 3,
+      "date": "2026-08-18"
     },
     "warn_history": [
-      {
-        "date": "2026-02-10",
-        "count": 0
-      },
       {
         "date": "2026-02-11",
         "count": 0
@@ -1841,21 +1837,14 @@
       {
         "date": "2026-08-17",
         "count": 1
+      },
+      {
+        "date": "2026-08-18",
+        "count": 3
       }
     ],
     "signals_history": [
       {
-        "date": "2026-02-10",
-        "signals": {
-          "below_20sma": false,
-          "stoch_cross": false,
-          "stoch_down": false,
-          "lower_lows": false,
-          "close_below_lows": false
-        },
-        "count": 0
-      },
-      {
         "date": "2026-02-11",
         "signals": {
           "below_20sma": false,
@@ -3273,18 +3262,22 @@
           "close_below_lows": false
         },
         "count": 1
+      },
+      {
+        "date": "2026-08-18",
+        "signals": {
+          "below_20sma": false,
+          "stoch_cross": true,
+          "stoch_down": true,
+          "lower_lows": false,
+          "close_below_lows": true
+        },
+        "count": 3
       }
     ]
   },
   "qqq": {
     "candles": [
-      {
-        "date": "2026-02-10",
-        "o": 613.86,
-        "h": 615.57,
-        "l": 609.57,
-        "c": 610.03
-      },
       {
         "date": "2026-02-11",
         "o": 614.93,
@@ -4183,14 +4176,20 @@
       },
       {
         "date": "2026-08-17",
-        "o": 732.96,
+        "o": 732.95,
         "h": 734.58,
         "l": 729.27,
         "c": 729.87
+      },
+      {
+        "date": "2026-08-18",
+        "o": 720.22,
+        "h": 722.13,
+        "l": 715.92,
+        "c": 717.51
       }
     ],
     "sma20": [
-      617.47,
       616.82,
       615.88,
       614.89,
@@ -4319,10 +4318,10 @@
       701.03,
       702.34,
       704.13,
-      705.82
+      705.82,
+      706.24
     ],
     "sma50": [
-      617.7,
       617.59,
       617.28,
       616.89,
@@ -4451,10 +4450,10 @@
       713.29,
       713.02,
       712.78,
-      712.58
+      712.58,
+      712.84
     ],
     "sma200": [
-      576.87,
       577.58,
       578.23,
       578.87,
@@ -4583,24 +4582,21 @@
       648.41,
       649.0,
       649.53,
-      650.02
+      650.02,
+      650.44
     ],
     "danger": {
       "signals": {
         "below_20sma": false,
-        "stoch_cross": false,
-        "stoch_down": false,
+        "stoch_cross": true,
+        "stoch_down": true,
         "lower_lows": false,
-        "close_below_lows": false
+        "close_below_lows": true
       },
-      "count": 0,
-      "date": "2026-08-17"
+      "count": 3,
+      "date": "2026-08-18"
     },
     "warn_history": [
-      {
-        "date": "2026-02-10",
-        "count": 1
-      },
       {
         "date": "2026-02-11",
         "count": 1
@@ -5116,21 +5112,14 @@
       {
         "date": "2026-08-17",
         "count": 0
+      },
+      {
+        "date": "2026-08-18",
+        "count": 3
       }
     ],
     "signals_history": [
       {
-        "date": "2026-02-10",
-        "signals": {
-          "below_20sma": true,
-          "stoch_cross": false,
-          "stoch_down": false,
-          "lower_lows": false,
-          "close_below_lows": false
-        },
-        "count": 1
-      },
-      {
         "date": "2026-02-11",
         "signals": {
           "below_20sma": true,
@@ -6548,6 +6537,17 @@
           "close_below_lows": false
         },
         "count": 0
+      },
+      {
+        "date": "2026-08-18",
+        "signals": {
+          "below_20sma": false,
+          "stoch_cross": true,
+          "stoch_down": true,
+          "lower_lows": false,
+          "close_below_lows": true
+        },
+        "count": 3
       }
     ]
   }

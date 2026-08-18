@@ -1,22 +1,17 @@
 {
-  "date": "2026-08-17",
+  "date": "2026-08-18",
   "sources": {
     "etf_data": {
       "status": "ok",
       "flagged": {}
     },
     "groups_themes": {
-      "status": "severe",
-      "flagged": {
-        "perf_6m": "degraded",
-        "rs_3m_6m": "severe"
-      }
+      "status": "ok",
+      "flagged": {}
     },
     "groups_stocks": {
-      "status": "severe",
-      "flagged": {
-        "rs_3m_6m": "severe"
-      }
+      "status": "ok",
+      "flagged": {}
     },
     "rotation_baskets": {
       "status": "ok",
@@ -31,5 +26,5 @@
       "flagged": {}
     }
   },
-  "status": "severe"
+  "status": "ok"
 }
