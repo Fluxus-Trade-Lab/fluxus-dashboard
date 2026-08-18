@@ -16,7 +16,10 @@ permissions:
 jobs:
   update-data:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # 45, not 15: run_all alone is ~14 min since 2026-08-17 (fundamentals
+    # 700/night, bar-consistency retry, structure pivots); the 08-17 run was
+    # killed at 15 with everything computed and nothing committed.
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
