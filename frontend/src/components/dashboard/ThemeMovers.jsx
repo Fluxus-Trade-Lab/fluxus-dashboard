@@ -71,6 +71,10 @@ export default function ThemeMovers({ limit = 3 }) {
   const cols = useMemo(() => {
     return Object.entries(WINDOWS).map(([w, changeKey]) => {
       const sorted = themes
+        /* Themes, as the card's own title says (Andy 2026-08-19, same ruling as
+           the Themes page). Ranking a 1,579-name size bucket under a heading
+           that reads "Theme Leaders and Laggards" is the defect he named. */
+        .filter((t) => t.kind === 'theme')
         .filter((t) => t.measurable && Number.isFinite(t[changeKey]))
         .sort((a, b) => b[changeKey] - a[changeKey])
       return {
@@ -89,7 +93,7 @@ export default function ThemeMovers({ limit = 3 }) {
    * "this is not here" — the exact pair this product keeps apart. Counted, and
    * named in the line under the card.
    */
-  const unmeasured = themes.filter((t) => !t.measurable).length
+  const unmeasured = themes.filter((t) => t.kind === 'theme' && !t.measurable).length
 
   return (
     <div className="flex flex-col min-w-0">
@@ -131,7 +135,8 @@ export default function ThemeMovers({ limit = 3 }) {
                   six of N, and N is stated */}
               <p className="m-0 mt-3 text-[10px] leading-snug text-[var(--color-text-muted)]">
                 Top and bottom {limit} of {ranked} published themes, ranked on each window
-                separately. Provisional themes — the ones whose members have not been shown
+                separately. Sectors and factors are in the file but not in this ranking &mdash;
+                the heading says themes. Provisional themes — the ones whose members have not been shown
                 to co-move — are not ranked here.
                 {unmeasured > 0 && ` ${unmeasured} more ${unmeasured === 1 ? 'is' : 'are'} published
                   without a measurable reading and cannot be ranked at all.`}

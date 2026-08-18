@@ -182,7 +182,27 @@ export default function GroupsPage() {
   // lives on the Dashboard's industry and sector cards — and Provisional's
   // honest home is the count in the header, not a tab. Both datasets stay in
   // groups.json untouched.
-  const rows = themes
+  /**
+   * THIS PAGE COMPARES THEMES (Andy, 2026-08-19), decided on the numbers.
+   *
+   * On the acceleration axis — the page's whole question, "what suddenly came
+   * from behind" — sectors and factors never appear: the top ten by rs_accel
+   * are ten themes, and dropping the other twenty-six changes the axis extreme
+   * not at all (+0.574 / −0.278 either way). They only occupy the top of the
+   * excess axis, and there they are tautological: High Octane, 52-Week High
+   * Leaders and Growth Factor lead a momentum tape by construction. That is a
+   * restatement of the market's own regime, which is page 1's reading, not a
+   * statement about where money is rotating between theses.
+   *
+   * The scale gap says the same thing more bluntly: a factor holds 132 names
+   * at the median and up to 1,579; a theme holds 24. Plotting them on one pair
+   * of axes invites a comparison between a size bucket and an argument.
+   *
+   * NOTHING IS DELETED. The full table below still carries all 56 with their
+   * kind, and the field says so on itself. This is a decision about what the
+   * figure compares, not about what the file holds.
+   */
+  const rows = themes.filter((t) => t.kind === 'theme')
   const win = WINDOWS.find((w) => w.key === winKey)
   const windowed = rows.map((r) => ({ ...r, _value: win.value(r, spy) }))
   const measured = windowed.filter((r) => Number.isFinite(r._value)).length
@@ -226,7 +246,7 @@ export default function GroupsPage() {
   return (
     <div className="space-y-5">
       <PageHeader group="market" title="Themes"
-        meta={[`vs ${benchmark} · ${date} · ${themes.length} themes`]} />
+        meta={[`vs ${benchmark} · ${date} · ${rows.length} themes of ${themes.length} groups`]} />
       <Reading text={readThemes(windowed, winKey)} />
 
       {/* THE CONTROL BAR — every control on the page, in one sticky line. */}
@@ -347,21 +367,25 @@ export default function GroupsPage() {
                  /* the state census moved into the Field figure, which is
                     where those four words are defined */
                  >
-          {/* grouped by `kind` (pipeline, 2026-08-18): a 6-name thesis, a
-              1,583-name size bucket and a single ETF were ranked against each
-              other in one column, and the column never said they were
-              different kinds of object. Nothing is dropped — that was
-              explicit; they are separated and each heading counts its own. */}
-          <ThemeBars rows={windowed} scale={scale} sortKey={rankSort} grouped
+          {/* One list again. The kind sections solved a problem that no longer
+              exists here — with sectors and factors off the figure there is
+              only one kind of object left to rank — and they cost the thing a
+              ranking is for: four separate lists mean the eye cannot compare
+              adjacent places, even with the global numbers kept. */}
+          <ThemeBars rows={windowed} scale={scale} sortKey={rankSort}
                      colourOf={colourOf} onToggle={onToggle}
                      atLimit={compare.atLimit} dim={compare.picks.length > 0} />
         </Section>
         </div>
       </div>
 
-      <Reference label="Full table" count={rows.length}
-                 note="all columns, sortable">
-        <GroupTable rows={rows} showMethod emptyNote="No groups" />
+      {/* ALL 56, not the 30 the figure compares. This is where the page keeps
+          its promise that sectors and factors were set aside rather than
+          dropped — pointing it at the filtered set would have made that
+          sentence false the moment it was written. */}
+      <Reference label="Full table" count={themes.length}
+                 note={`all ${themes.length} groups — themes, sectors and factors — all columns, sortable`}>
+        <GroupTable rows={themes} showMethod emptyNote="No groups" />
         {/* The one column on this page whose reading is counter-intuitive
             enough that leaving it to a tooltip would guarantee it is read
             backwards. Numbers quoted from the measurement, not rounded up. */}

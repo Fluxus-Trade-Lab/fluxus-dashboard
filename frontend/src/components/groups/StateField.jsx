@@ -281,11 +281,18 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
         the ones leading on 3 or more horizons, plus the three fastest accelerators inside
         Improving{dropped > 0 ? `, less ${dropped} whose name had no room beside its dot` : ''};
         the rest name themselves on hover.
-        {mix.size > 1 && (
+        {mix.size > 1 ? (
           <> {' '}<b className="text-[var(--color-text-secondary)]">Not everything here is a
           theme.</b> This field holds {mixPhrase}, and a dot does not say which &mdash; the
-          ranking below separates them. A factor is a slice of the whole market rather than a
-          thesis, and it plots beside one without reading like one.</>
+          ranking below separates them.</>
+        ) : (
+          /* One kind on the figure, and the reader should know what is off it
+             rather than assume the file holds only this. */
+          <> {' '}<b className="text-[var(--color-text-secondary)]">Themes only.</b> Sectors and
+          factors are in the full table, not on this figure: they never reach the top of the
+          acceleration axis, and at the top of the excess axis they only restate the tape
+          &mdash; a momentum market is led by High Octane and 52-Week High Leaders by
+          construction. That reading belongs to the market page.</>
         )}
       </p>
     </div>
