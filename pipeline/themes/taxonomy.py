@@ -302,7 +302,16 @@ _INDUSTRY_THEMES: list[Theme] = [
     # carriers out from the equipment vendors was the right call and still left
     # a group that does not trade as one.
     Theme("Optics & Networking Equipment", "industry",
-          industries=("Communication Equipment",)),
+          industries=("Communication Equipment",),
+          extra=(
+                 "CRDO", "SMTC", "LPTH", "OPTX", "SKM", "AXTI", "AEVA", "POET", "SILC", "IDCC",
+                 "LILAK", "SMCI", "FN", "MTSI", "MXL", "COHR", "BAND", "MRVL", "OCC", "GLW",
+                 "KODK", "JBL", "OUST", "KEYS", "ANET", "GLIBK", "APH", "VZ", "IDT", "TIGO",
+                 "TTMI", "TSEM", "LWLG", "AVNW", "PLAB", "ALMU", "TEL", "T", "CMCSA", "HSAI",
+                 "TDS", "ADTN", "ATEX", "NTCT", "CALX", "QUBT", "MKSI", "UNIT", "LUMN", "TMUS",
+                 "SHEN", "AD", "IPGP", "AVGO", "BKTI", "LBTYK", "NTGR", "ITG", "CLFD", "ATEN",
+                 "CCOI", "AMPG", "LASR", "GOGO",),
+          note="TSF 'Telecom, Optics & Connectivity' names added 2026-08-18 (Andy: 他的多,加进来): optics/interconnect (CRDO MRVL COHR FN AVGO ANET…) and the carriers (VZ T TMUS CMCSA…) on top of the Communication Equipment industry."),
     # "Diversified Tech" read +0.016 on 93% coverage -- the label was doing
     # all the work. Split into the three components with enough tradeable
     # names to score; Consumer Electronics (4) folds into Computer Hardware.
@@ -530,6 +539,36 @@ _ETF_THEMES: list[Theme] = [
     # combined five-name version correlated BELOW random at -0.068 on full
     # coverage. A correct business list is not automatically a group that
     # trades together, and that finding survives the themes being deleted.
+    Theme("Physical AI & Humanoid Robotics", "etf", source="tsf", etf=(),
+          extra=(
+                 "INDI", "ALNT", "CCXI", "AMBA", "AEVA", "ARBE", "LIDR", "MBLY", "RR", "AMCI",
+                 "OUST", "AUR", "HSAI", "TKR", "NOVT", "PONY", "XPEV", "INVZ", "TSLA", "WRD",
+                 "KDK", "SYM", "KSCP", "SERV", "VPG", "MVIS",),
+          note="TSF Thematic Focus list, added 2026-08-18 (Andy: 要的); data/reference/tsf_themes_2026-08-18/full.json."),
+    Theme("Cloud Software", "etf", source="tsf", etf=(),
+          extra=(
+                 "TEAM", "AMPL", "WIX", "PAYC", "FSLY", "PATH", "MDB", "ESTC", "VEEV", "RNG",
+                 "INTA", "PLTR", "SHOP", "BLZE", "TWLO", "FROG", "GTLB", "FIVN", "SNOW", "BAND",
+                 "WDAY", "SPT", "ZM", "DT", "CCC", "PCOR", "BILL", "SPSC", "BLKB", "BRZE", "NET",
+                 "ALKT", "NTNX", "PAR", "TTAN", "GTM", "PD", "IOT", "MANH", "FRSH", "TYL", "TOST",
+                 "NAVN", "QTWO", "YEXT", "BOX", "DBX", "KARO", "MNDY", "GWRE", "DOCU", "DCBO",
+                 "DOCN", "NCNO", "INTU", "LAW", "PCTY", "ASAN", "NOW", "CXM", "CRM", "APPF",
+                 "PEGA", "AGYS", "ADBE", "FIG", "AI", "LSPD", "AVPT", "DSGX", "NICE", "KVYO",
+                 "GLOO", "DDOG", "HUBS", "BL", "EVCM", "WEAV", "NABL",),
+          note="TSF Thematic Focus list, added 2026-08-18 (Andy: 要的); data/reference/tsf_themes_2026-08-18/full.json."),
+    Theme("Consumer Staples", "etf", source="tsf", etf=(),
+          extra=(
+                 "TBBB", "SENEA", "FRPT", "YSWY", "GO", "JJSF", "USFD", "OFRM", "CLX", "CAG",
+                 "DEO", "TGT", "PRMB", "CELH", "TPB", "ENR", "GIS", "MKC", "ADM", "MICC", "REYN",
+                 "EPC", "SJM", "LW", "JBSS", "BG", "ACI", "MZTI", "MGPI", "COCO", "WMT", "INGR",
+                 "HSY", "KOF", "CASY", "WEST", "DLTR", "KO", "JBS", "PPC", "TR", "FLO", "AVO",
+                 "MDLZ", "CL", "OLLI", "KMB", "BF-A", "BF-B", "PEP", "KVUE", "ANDE", "CENTA",
+                 "CHD", "AGRO", "CCEP", "MNST", "HELE", "SMPL", "NOMD", "IMKTA", "DG", "MAMA",
+                 "PSMT", "SFM", "NGVC", "BRBR", "COKE", "UNFI", "CPB", "COST", "EL", "STZ", "SPB",
+                 "PG", "FIZZ", "PM", "TSN", "KDP", "SAM", "BJ", "TAP", "BGS", "KR", "SYY", "UL",
+                 "HRL", "HLF", "KHC", "MO", "BTI", "FMX", "CALM", "BUD", "PFGC", "NUS", "DOLE",
+                 "WMK", "POST", "VITL", "SFD", "UVV",),
+          note="TSF Thematic Focus list, added 2026-08-18 (Andy: 要的); data/reference/tsf_themes_2026-08-18/full.json. Not in universe: FDP CVGW."),
     Theme("Grid & Electrification", "etf", source="fluxus", etf=("PAVE",),
           industries=("Electrical Equipment & Parts",)),
     Theme("Reshoring / Industrial Renaissance", "etf", source="fluxus", etf=("PAVE",),
@@ -578,7 +617,7 @@ SECTOR_NAMES: frozenset = frozenset({
     "Travel & Leisure", "Consumer Retail", "Chemicals & Materials",
     "Transportation & Logistics", "Banks - Money Center", "Electronic Components",
     "IT Services", "Agribusiness", "Beverages",
-    "Household & Personal Products", "Tobacco",
+    "Household & Personal Products", "Tobacco", "Consumer Staples",
     # Homebuilders, Semiconductors Broad, Gold/Silver/Copper/Steel/Coal stay
     # `theme`: single-industry groups with one price/rate driver, traded as
     # themes on the page even though they resolve by industry.

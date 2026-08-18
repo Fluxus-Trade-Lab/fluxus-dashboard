@@ -6340,6 +6340,110 @@
       "publish": true
     },
     {
+      "rs_0_1w": -0.009042,
+      "rs_1w_1m": 0.097214,
+      "rs_1m_3m": 0.181489,
+      "rs_3m_6m": null,
+      "excess_3m": 0.292639,
+      "excess_1m": 0.087212,
+      "rs_accel": -0.094277,
+      "rs_accel_rate": 0.000537,
+      "state": "Weakening",
+      "perf_1d": -0.0267,
+      "persistence": 3,
+      "persistence_of": 5,
+      "ext_share_4": 0.2464,
+      "ext_share_7": 0.0,
+      "ext_median": 3.1414,
+      "ext_n": 69,
+      "group": "Cloud Software",
+      "method": "etf",
+      "source": "tsf",
+      "kind": "theme",
+      "members": 69,
+      "measurable": true,
+      "tickers": [
+        "ADBE",
+        "AGYS",
+        "AI",
+        "ALKT",
+        "AMPL",
+        "APPF",
+        "ASAN",
+        "AVPT",
+        "BAND",
+        "BILL",
+        "BL",
+        "BLKB",
+        "BLZE",
+        "BOX",
+        "BRZE",
+        "CCC",
+        "CRM",
+        "CXM",
+        "DBX",
+        "DDOG",
+        "DOCN",
+        "DOCU",
+        "DSGX",
+        "DT",
+        "ESTC",
+        "FIG",
+        "FIVN",
+        "FROG",
+        "FRSH",
+        "FSLY",
+        "GTLB",
+        "GTM",
+        "GWRE",
+        "HUBS",
+        "INTA",
+        "INTU",
+        "IOT",
+        "KARO",
+        "KVYO",
+        "LSPD",
+        "MANH",
+        "MDB",
+        "MNDY",
+        "NAVN",
+        "NCNO",
+        "NET",
+        "NICE",
+        "NOW",
+        "NTNX",
+        "PATH",
+        "PAYC",
+        "PCOR",
+        "PCTY",
+        "PEGA",
+        "PLTR",
+        "QTWO",
+        "RNG",
+        "SHOP",
+        "SNOW",
+        "SPSC",
+        "TEAM",
+        "TOST",
+        "TTAN",
+        "TWLO",
+        "TYL",
+        "VEEV",
+        "WDAY",
+        "WIX",
+        "ZM"
+      ],
+      "needs_manual": false,
+      "perf_1w": -0.006304,
+      "perf_1m": 0.12842,
+      "perf_3m": 0.341391,
+      "perf_6m": 0.300736,
+      "perf_1y": -0.111716,
+      "validation": null,
+      "validation_excess": null,
+      "publish": false
+    },
+    {
       "rs_0_1w": 0.13842,
       "rs_1w_1m": 9.5e-05,
       "rs_1m_3m": 0.103507,
@@ -12401,7 +12505,7 @@
       "rs_accel_rate": 0.022201,
       "state": "Improving",
       "perf_1d": -0.0007,
-      "persistence": 0,
+      "persistence": 1,
       "persistence_of": 5,
       "ext_share_4": 0.0357,
       "ext_share_7": 0.0,
@@ -12452,6 +12556,132 @@
       "validation": "real",
       "validation_excess": 0.1362,
       "publish": true
+    },
+    {
+      "rs_0_1w": -0.003632,
+      "rs_1w_1m": -0.027125,
+      "rs_1m_3m": 0.013292,
+      "rs_3m_6m": null,
+      "excess_3m": -0.017666,
+      "excess_1m": -0.030872,
+      "rs_accel": -0.044164,
+      "rs_accel_rate": -0.037472,
+      "state": "Lagging",
+      "perf_1d": -0.0153,
+      "persistence": 0,
+      "persistence_of": 5,
+      "ext_share_4": 0.011,
+      "ext_share_7": 0.0,
+      "ext_median": 0.3829,
+      "ext_n": 91,
+      "group": "Consumer Staples",
+      "method": "etf",
+      "source": "tsf",
+      "kind": "sector",
+      "members": 91,
+      "measurable": true,
+      "tickers": [
+        "ACI",
+        "ADM",
+        "AGRO",
+        "ANDE",
+        "AVO",
+        "BF-A",
+        "BF-B",
+        "BG",
+        "BJ",
+        "BRBR",
+        "BTI",
+        "BUD",
+        "CAG",
+        "CALM",
+        "CASY",
+        "CCEP",
+        "CELH",
+        "CENTA",
+        "CHD",
+        "CL",
+        "CLX",
+        "COCO",
+        "COKE",
+        "COST",
+        "CPB",
+        "DEO",
+        "DG",
+        "DLTR",
+        "DOLE",
+        "EL",
+        "ENR",
+        "EPC",
+        "FIZZ",
+        "FLO",
+        "FMX",
+        "FRPT",
+        "GIS",
+        "GO",
+        "HLF",
+        "HRL",
+        "HSY",
+        "IMKTA",
+        "INGR",
+        "JBS",
+        "JJSF",
+        "KDP",
+        "KHC",
+        "KMB",
+        "KO",
+        "KOF",
+        "KR",
+        "KVUE",
+        "LW",
+        "MDLZ",
+        "MICC",
+        "MKC",
+        "MNST",
+        "MO",
+        "MZTI",
+        "NOMD",
+        "OLLI",
+        "PEP",
+        "PFGC",
+        "PG",
+        "PM",
+        "POST",
+        "PPC",
+        "PRMB",
+        "PSMT",
+        "REYN",
+        "SAM",
+        "SENEA",
+        "SFD",
+        "SFM",
+        "SJM",
+        "SPB",
+        "STZ",
+        "SYY",
+        "TAP",
+        "TBBB",
+        "TGT",
+        "TPB",
+        "TR",
+        "TSN",
+        "UL",
+        "UNFI",
+        "USFD",
+        "UVV",
+        "WMK",
+        "WMT",
+        "YSWY"
+      ],
+      "needs_manual": false,
+      "perf_1w": -0.000894,
+      "perf_1m": 0.010336,
+      "perf_3m": 0.031086,
+      "perf_6m": -0.036769,
+      "perf_1y": -0.020714,
+      "validation": null,
+      "validation_excess": null,
+      "publish": false
     },
     {
       "rs_0_1w": -0.01292,
@@ -13124,60 +13354,6 @@
       "publish": true
     },
     {
-      "rs_0_1w": 0.013161,
-      "rs_1w_1m": 0.118571,
-      "rs_1m_3m": -0.150681,
-      "rs_3m_6m": null,
-      "excess_3m": -0.042005,
-      "excess_1m": 0.134123,
-      "rs_accel": 0.284804,
-      "rs_accel_rate": 0.212231,
-      "state": "Improving",
-      "perf_1d": 0.0019,
-      "persistence": 3,
-      "persistence_of": 5,
-      "ext_share_4": 0.1053,
-      "ext_share_7": 0.0,
-      "ext_median": 0.9793,
-      "ext_n": 19,
-      "group": "Optics & Networking Equipment",
-      "method": "industry",
-      "source": "tsf",
-      "kind": "theme",
-      "members": 19,
-      "measurable": true,
-      "tickers": [
-        "AAOI",
-        "ASTS",
-        "BDC",
-        "CIEN",
-        "CSCO",
-        "DGII",
-        "ERIC",
-        "EXTR",
-        "HLIT",
-        "HPE",
-        "LITE",
-        "MSI",
-        "NOK",
-        "ONDS",
-        "UI",
-        "VIAV",
-        "VISN",
-        "VSAT",
-        "ZBRA"
-      ],
-      "needs_manual": false,
-      "perf_1w": 0.0159,
-      "perf_1m": 0.175331,
-      "perf_3m": 0.006747,
-      "perf_6m": 0.472497,
-      "perf_1y": 0.622099,
-      "validation": "real",
-      "validation_excess": 0.081,
-      "publish": true
-    },
-    {
       "rs_0_1w": 0.016439,
       "rs_1w_1m": 0.012217,
       "rs_1m_3m": -0.069273,
@@ -13561,6 +13737,108 @@
       "publish": true
     },
     {
+      "rs_0_1w": 0.019172,
+      "rs_1w_1m": 0.068731,
+      "rs_1m_3m": -0.12918,
+      "rs_3m_6m": null,
+      "excess_3m": -0.055351,
+      "excess_1m": 0.090144,
+      "rs_accel": 0.219324,
+      "rs_accel_rate": 0.156709,
+      "state": "Improving",
+      "perf_1d": 0.0004,
+      "persistence": 4,
+      "persistence_of": 5,
+      "ext_share_4": 0.0597,
+      "ext_share_7": 0.0,
+      "ext_median": 0.8665,
+      "ext_n": 67,
+      "group": "Optics & Networking Equipment",
+      "method": "industry",
+      "source": "tsf",
+      "kind": "theme",
+      "members": 67,
+      "measurable": true,
+      "tickers": [
+        "AAOI",
+        "AD",
+        "AEVA",
+        "ANET",
+        "APH",
+        "ASTS",
+        "ATEN",
+        "ATEX",
+        "AVGO",
+        "AXTI",
+        "BAND",
+        "BDC",
+        "CALX",
+        "CIEN",
+        "CMCSA",
+        "COHR",
+        "CRDO",
+        "CSCO",
+        "DGII",
+        "ERIC",
+        "EXTR",
+        "FN",
+        "GLIBK",
+        "GLW",
+        "HLIT",
+        "HPE",
+        "HSAI",
+        "IDCC",
+        "IDT",
+        "IPGP",
+        "JBL",
+        "KEYS",
+        "LASR",
+        "LBTYK",
+        "LILAK",
+        "LITE",
+        "LUMN",
+        "LWLG",
+        "MKSI",
+        "MRVL",
+        "MSI",
+        "MTSI",
+        "MXL",
+        "NOK",
+        "NTCT",
+        "ONDS",
+        "OUST",
+        "PLAB",
+        "POET",
+        "QUBT",
+        "SKM",
+        "SMCI",
+        "SMTC",
+        "T",
+        "TDS",
+        "TEL",
+        "TIGO",
+        "TMUS",
+        "TSEM",
+        "TTMI",
+        "UI",
+        "UNIT",
+        "VIAV",
+        "VISN",
+        "VSAT",
+        "VZ",
+        "ZBRA"
+      ],
+      "needs_manual": false,
+      "perf_1w": 0.02191,
+      "perf_1m": 0.131352,
+      "perf_3m": -0.006599,
+      "perf_6m": 0.331591,
+      "perf_1y": 0.596958,
+      "validation": "real",
+      "validation_excess": 0.081,
+      "publish": true
+    },
+    {
       "rs_0_1w": 0.018879,
       "rs_1w_1m": 0.16211,
       "rs_1m_3m": -0.198121,
@@ -13782,6 +14060,57 @@
       "publish": true
     },
     {
+      "rs_0_1w": 0.008278,
+      "rs_1w_1m": 0.095994,
+      "rs_1m_3m": -0.153673,
+      "rs_3m_6m": null,
+      "excess_3m": -0.069829,
+      "excess_1m": 0.105647,
+      "rs_accel": 0.25932,
+      "rs_accel_rate": 0.185373,
+      "state": "Improving",
+      "perf_1d": 0.0016,
+      "persistence": 1,
+      "persistence_of": 5,
+      "ext_share_4": 0.0,
+      "ext_share_7": 0.0,
+      "ext_median": 0.947,
+      "ext_n": 16,
+      "group": "Physical AI & Humanoid Robotics",
+      "method": "etf",
+      "source": "tsf",
+      "kind": "theme",
+      "members": 16,
+      "measurable": true,
+      "tickers": [
+        "AEVA",
+        "ALNT",
+        "AMBA",
+        "AUR",
+        "HSAI",
+        "INDI",
+        "MBLY",
+        "NOVT",
+        "OUST",
+        "PONY",
+        "SYM",
+        "TKR",
+        "TSLA",
+        "VPG",
+        "WRD",
+        "XPEV"
+      ],
+      "needs_manual": false,
+      "perf_1w": 0.011016,
+      "perf_1m": 0.146855,
+      "perf_3m": -0.021077,
+      "perf_6m": 0.191802,
+      "perf_1y": 0.07882,
+      "validation": null,
+      "validation_excess": null,
+      "publish": false
+    },
+    {
       "rs_0_1w": -0.015572,
       "rs_1w_1m": 0.279177,
       "rs_1m_3m": -0.260882,
@@ -13849,7 +14178,7 @@
       "rs_accel_rate": 0.128187,
       "state": "Improving",
       "perf_1d": 0.009988,
-      "persistence": 1,
+      "persistence": 0,
       "persistence_of": 3,
       "group": "Gold",
       "method": "proxy",
@@ -15024,6 +15353,70 @@
         "ticker": "BETR"
       },
       {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "LPTH"
+      },
+      {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "OPTX"
+      },
+      {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "SILC"
+      },
+      {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "OCC"
+      },
+      {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "KODK"
+      },
+      {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "AVNW"
+      },
+      {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "ALMU"
+      },
+      {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "ADTN"
+      },
+      {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "SHEN"
+      },
+      {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "BKTI"
+      },
+      {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "NTGR"
+      },
+      {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "ITG"
+      },
+      {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "CLFD"
+      },
+      {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "CCOI"
+      },
+      {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "AMPG"
+      },
+      {
+        "theme": "Optics & Networking Equipment",
+        "ticker": "GOGO"
+      },
+      {
         "theme": "Memory & Storage",
         "ticker": "MRAM"
       },
@@ -15562,6 +15955,130 @@
       {
         "theme": "Quantum Computing",
         "ticker": "QMCO"
+      },
+      {
+        "theme": "Physical AI & Humanoid Robotics",
+        "ticker": "CCXI"
+      },
+      {
+        "theme": "Physical AI & Humanoid Robotics",
+        "ticker": "ARBE"
+      },
+      {
+        "theme": "Physical AI & Humanoid Robotics",
+        "ticker": "LIDR"
+      },
+      {
+        "theme": "Physical AI & Humanoid Robotics",
+        "ticker": "RR"
+      },
+      {
+        "theme": "Physical AI & Humanoid Robotics",
+        "ticker": "AMCI"
+      },
+      {
+        "theme": "Physical AI & Humanoid Robotics",
+        "ticker": "INVZ"
+      },
+      {
+        "theme": "Physical AI & Humanoid Robotics",
+        "ticker": "KDK"
+      },
+      {
+        "theme": "Physical AI & Humanoid Robotics",
+        "ticker": "KSCP"
+      },
+      {
+        "theme": "Physical AI & Humanoid Robotics",
+        "ticker": "SERV"
+      },
+      {
+        "theme": "Physical AI & Humanoid Robotics",
+        "ticker": "MVIS"
+      },
+      {
+        "theme": "Cloud Software",
+        "ticker": "SPT"
+      },
+      {
+        "theme": "Cloud Software",
+        "ticker": "PAR"
+      },
+      {
+        "theme": "Cloud Software",
+        "ticker": "PD"
+      },
+      {
+        "theme": "Cloud Software",
+        "ticker": "YEXT"
+      },
+      {
+        "theme": "Cloud Software",
+        "ticker": "DCBO"
+      },
+      {
+        "theme": "Cloud Software",
+        "ticker": "LAW"
+      },
+      {
+        "theme": "Cloud Software",
+        "ticker": "GLOO"
+      },
+      {
+        "theme": "Cloud Software",
+        "ticker": "EVCM"
+      },
+      {
+        "theme": "Cloud Software",
+        "ticker": "WEAV"
+      },
+      {
+        "theme": "Cloud Software",
+        "ticker": "NABL"
+      },
+      {
+        "theme": "Consumer Staples",
+        "ticker": "OFRM"
+      },
+      {
+        "theme": "Consumer Staples",
+        "ticker": "JBSS"
+      },
+      {
+        "theme": "Consumer Staples",
+        "ticker": "MGPI"
+      },
+      {
+        "theme": "Consumer Staples",
+        "ticker": "WEST"
+      },
+      {
+        "theme": "Consumer Staples",
+        "ticker": "HELE"
+      },
+      {
+        "theme": "Consumer Staples",
+        "ticker": "SMPL"
+      },
+      {
+        "theme": "Consumer Staples",
+        "ticker": "MAMA"
+      },
+      {
+        "theme": "Consumer Staples",
+        "ticker": "NGVC"
+      },
+      {
+        "theme": "Consumer Staples",
+        "ticker": "BGS"
+      },
+      {
+        "theme": "Consumer Staples",
+        "ticker": "NUS"
+      },
+      {
+        "theme": "Consumer Staples",
+        "ticker": "VITL"
       }
     ],
     "unknown_industries": [],
@@ -16106,8 +16623,8 @@
       "group": "Grocery Stores",
       "group_pctile": 14.29,
       "top_quartile": false,
-      "primary_group": "Grocery Stores",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "ACIW": {
       "rs_0_1w": -0.004844,
@@ -16258,8 +16775,8 @@
       "group": "Telecom Services",
       "group_pctile": 21.05,
       "top_quartile": false,
-      "primary_group": "Telecom Services",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "ADBE": {
       "rs_0_1w": -0.039407,
@@ -16277,7 +16794,7 @@
       "group": "Software - Application",
       "group_pctile": 16.33,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "ADC": {
@@ -16714,7 +17231,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 46.43,
       "top_quartile": false,
-      "primary_group": "Robotics & Automation",
+      "primary_group": "Physical AI & Humanoid Robotics",
       "primary_kind": "theme"
     },
     "AFG": {
@@ -16942,8 +17459,8 @@
       "group": "Farm Products",
       "group_pctile": 14.29,
       "top_quartile": false,
-      "primary_group": "Farm Products",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "AGX": {
       "rs_0_1w": 0.015861,
@@ -16980,7 +17497,7 @@
       "group": "Software - Application",
       "group_pctile": 89.8,
       "top_quartile": true,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "AHR": {
@@ -17018,7 +17535,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 39.29,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "AIG": {
@@ -17436,7 +17953,7 @@
       "group": "Software - Application",
       "group_pctile": 46.94,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "ALL": {
@@ -17569,7 +18086,7 @@
       "group": "Electronic Components",
       "group_pctile": 100.0,
       "top_quartile": true,
-      "primary_group": "Electronic Components",
+      "primary_group": "Physical AI & Humanoid Robotics",
       "primary_kind": "theme"
     },
     "ALNY": {
@@ -17759,7 +18276,7 @@
       "group": "Semiconductor Equipment & Materials",
       "group_pctile": 37.5,
       "top_quartile": false,
-      "primary_group": "Robotics & Automation",
+      "primary_group": "Physical AI & Humanoid Robotics",
       "primary_kind": "theme"
     },
     "AMBP": {
@@ -18025,7 +18542,7 @@
       "group": "Software - Application",
       "group_pctile": 98.98,
       "top_quartile": true,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "AMPX": {
@@ -18329,8 +18846,8 @@
       "group": "Computer Hardware",
       "group_pctile": 68.75,
       "top_quartile": false,
-      "primary_group": "Computer Hardware",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "ANF": {
       "rs_0_1w": -0.111325,
@@ -18652,7 +19169,7 @@
       "group": "Software - Application",
       "group_pctile": 60.2,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "APPN": {
@@ -19184,7 +19701,7 @@
       "group": "Software - Application",
       "group_pctile": 79.59,
       "top_quartile": true,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "ASB": {
@@ -19488,8 +20005,8 @@
       "group": "Telecom Services",
       "group_pctile": 97.37,
       "top_quartile": true,
-      "primary_group": "Telecom Services",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "ATHM": {
       "rs_0_1w": -0.025762,
@@ -19773,7 +20290,7 @@
       "group": "Auto Parts",
       "group_pctile": 34.48,
       "top_quartile": false,
-      "primary_group": "Robotics & Automation",
+      "primary_group": "Physical AI & Humanoid Robotics",
       "primary_kind": "theme"
     },
     "AVA": {
@@ -19944,8 +20461,8 @@
       "group": "Food Distribution",
       "group_pctile": 42.86,
       "top_quartile": false,
-      "primary_group": "Food Distribution",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "AVPT": {
       "rs_0_1w": 0.006401,
@@ -19963,7 +20480,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 65.48,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "AVT": {
@@ -20248,7 +20765,7 @@
       "group": "Semiconductor Equipment & Materials",
       "group_pctile": 25.0,
       "top_quartile": false,
-      "primary_group": "Semiconductors Broad",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "AYA": {
@@ -20550,7 +21067,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 29.76,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "BANF": {
@@ -21253,8 +21770,8 @@
       "group": "Beverages - Wineries & Distilleries",
       "group_pctile": 33.33,
       "top_quartile": false,
-      "primary_group": "Beverages - Wineries & Distilleries",
-      "primary_kind": "industry_unscored"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "BF-B": {
       "rs_0_1w": -0.018793,
@@ -21272,8 +21789,8 @@
       "group": "Beverages - Wineries & Distilleries",
       "group_pctile": 66.67,
       "top_quartile": false,
-      "primary_group": "Beverages - Wineries & Distilleries",
-      "primary_kind": "industry_unscored"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "BFAM": {
       "rs_0_1w": -0.019936,
@@ -21633,7 +22150,7 @@
       "group": "Software - Application",
       "group_pctile": 45.92,
       "top_quartile": false,
-      "primary_group": "Fintech",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "BIO": {
@@ -21918,7 +22435,7 @@
       "group": "Software - Application",
       "group_pctile": 32.65,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "BLBD": {
@@ -22032,7 +22549,7 @@
       "group": "Software - Application",
       "group_pctile": 67.35,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "BLLN": {
@@ -22127,7 +22644,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 100.0,
       "top_quartile": true,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "BMA": {
@@ -22469,7 +22986,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 71.43,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "BP": {
@@ -22545,8 +23062,8 @@
       "group": "Packaged Foods",
       "group_pctile": 46.15,
       "top_quartile": false,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "BRC": {
       "rs_0_1w": -0.011154,
@@ -22735,7 +23252,7 @@
       "group": "Software - Application",
       "group_pctile": 64.29,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "BSAC": {
@@ -22980,8 +23497,8 @@
       "group": "Beverages - Brewers",
       "group_pctile": 50.0,
       "top_quartile": false,
-      "primary_group": "Beverages - Brewers",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "BULL": {
       "rs_0_1w": 0.075201,
@@ -23455,8 +23972,8 @@
       "group": "Packaged Foods",
       "group_pctile": 57.69,
       "top_quartile": false,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "CAH": {
       "rs_0_1w": -0.021884,
@@ -23550,7 +24067,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 21.43,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "CALY": {
@@ -24006,7 +24523,7 @@
       "group": "Software - Application",
       "group_pctile": 85.71,
       "top_quartile": true,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "CCEP": {
@@ -25412,8 +25929,8 @@
       "group": "Telecom Services",
       "group_pctile": 73.68,
       "top_quartile": false,
-      "primary_group": "Telecom Services",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "CME": {
       "rs_0_1w": 0.030271,
@@ -25963,8 +26480,8 @@
       "group": "Scientific & Technical Instruments",
       "group_pctile": 25.0,
       "top_quartile": false,
-      "primary_group": "Scientific & Technical Instruments",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "COHU": {
       "rs_0_1w": 0.182798,
@@ -26343,8 +26860,8 @@
       "group": "Packaged Foods",
       "group_pctile": 50.0,
       "top_quartile": false,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "CPK": {
       "rs_0_1w": 0.004674,
@@ -26590,7 +27107,7 @@
       "group": "Semiconductors",
       "group_pctile": 100.0,
       "top_quartile": true,
-      "primary_group": "Semiconductors Broad",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "CRGY": {
@@ -26704,7 +27221,7 @@
       "group": "Software - Application",
       "group_pctile": 28.57,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "CRNX": {
@@ -27633,7 +28150,7 @@
       "group": "Software - Application",
       "group_pctile": 62.24,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "CXT": {
@@ -27937,7 +28454,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 54.76,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "DCH": {
@@ -28203,8 +28720,8 @@
       "group": "Beverages - Wineries & Distilleries",
       "group_pctile": 100.0,
       "top_quartile": true,
-      "primary_group": "Beverages - Wineries & Distilleries",
-      "primary_kind": "industry_unscored"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "DFH": {
       "rs_0_1w": 0.06374,
@@ -28811,7 +29328,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 15.48,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "DOCS": {
@@ -28849,7 +29366,7 @@
       "group": "Software - Application",
       "group_pctile": 63.27,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "DOLE": {
@@ -28868,8 +29385,8 @@
       "group": "Farm Products",
       "group_pctile": 57.14,
       "top_quartile": false,
-      "primary_group": "Farm Products",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "DOO": {
       "rs_0_1w": -0.024887,
@@ -29151,7 +29668,7 @@
       "group": "Software - Application",
       "group_pctile": 35.71,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "DT": {
@@ -32071,7 +32588,7 @@
       "group": "Software - Application",
       "group_pctile": 21.43,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "FIGR": {
@@ -32204,7 +32721,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 82.14,
       "top_quartile": true,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "FIX": {
@@ -32337,8 +32854,8 @@
       "group": "Packaged Foods",
       "group_pctile": 23.08,
       "top_quartile": false,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "FLOC": {
       "rs_0_1w": 0.007706,
@@ -32527,8 +33044,8 @@
       "group": "Beverages - Brewers",
       "group_pctile": 66.67,
       "top_quartile": false,
-      "primary_group": "Beverages - Brewers",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "FN": {
       "rs_0_1w": 0.135506,
@@ -32888,8 +33405,8 @@
       "group": "Packaged Foods",
       "group_pctile": 96.15,
       "top_quartile": true,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "FRSH": {
       "rs_0_1w": 0.027337,
@@ -32907,7 +33424,7 @@
       "group": "Software - Application",
       "group_pctile": 75.51,
       "top_quartile": true,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "FRT": {
@@ -34142,8 +34659,8 @@
       "group": "Packaged Foods",
       "group_pctile": 61.54,
       "top_quartile": false,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "GKOS": {
       "rs_0_1w": 0.017152,
@@ -34218,8 +34735,8 @@
       "group": "Telecom Services",
       "group_pctile": 34.21,
       "top_quartile": false,
-      "primary_group": "Telecom Services",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "GLNG": {
       "rs_0_1w": 0.029323,
@@ -34541,8 +35058,8 @@
       "group": "Grocery Stores",
       "group_pctile": 100.0,
       "top_quartile": true,
-      "primary_group": "Grocery Stores",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "GOLD": {
       "rs_0_1w": 0.042151,
@@ -35092,7 +35609,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 89.29,
       "top_quartile": true,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "GTM": {
@@ -35111,7 +35628,7 @@
       "group": "Software - Application",
       "group_pctile": 13.27,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "GTX": {
@@ -35187,7 +35704,7 @@
       "group": "Software - Application",
       "group_pctile": 69.39,
       "top_quartile": false,
-      "primary_group": "Fintech",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "GWW": {
@@ -35890,8 +36407,8 @@
       "group": "Packaged Foods",
       "group_pctile": 11.54,
       "top_quartile": false,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "HLI": {
       "rs_0_1w": -0.004572,
@@ -36477,7 +36994,7 @@
       "group": "Auto Parts",
       "group_pctile": 10.34,
       "top_quartile": false,
-      "primary_group": "Robotics & Automation",
+      "primary_group": "Physical AI & Humanoid Robotics",
       "primary_kind": "theme"
     },
     "HSBC": {
@@ -36572,8 +37089,8 @@
       "group": "Confectioners",
       "group_pctile": 33.33,
       "top_quartile": false,
-      "primary_group": "Confectioners",
-      "primary_kind": "industry_unscored"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "HTFL": {
       "rs_0_1w": 0.417031,
@@ -36724,7 +37241,7 @@
       "group": "Software - Application",
       "group_pctile": 42.86,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "HUM": {
@@ -37237,7 +37754,7 @@
       "group": "Software - Application",
       "group_pctile": 58.16,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "IDT": {
@@ -37256,8 +37773,8 @@
       "group": "Telecom Services",
       "group_pctile": 92.11,
       "top_quartile": true,
-      "primary_group": "Telecom Services",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "IDXX": {
       "rs_0_1w": -0.071861,
@@ -37560,8 +38077,8 @@
       "group": "Grocery Stores",
       "group_pctile": 85.71,
       "top_quartile": true,
-      "primary_group": "Grocery Stores",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "IMNM": {
       "rs_0_1w": 0.041071,
@@ -37731,7 +38248,7 @@
       "group": "Semiconductors",
       "group_pctile": 87.76,
       "top_quartile": true,
-      "primary_group": "Semiconductors Broad",
+      "primary_group": "Physical AI & Humanoid Robotics",
       "primary_kind": "theme"
     },
     "INDV": {
@@ -37976,7 +38493,7 @@
       "group": "Software - Application",
       "group_pctile": 96.94,
       "top_quartile": true,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "INTC": {
@@ -38033,7 +38550,7 @@
       "group": "Software - Application",
       "group_pctile": 6.12,
       "top_quartile": false,
-      "primary_group": "Fintech",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "INVA": {
@@ -38812,8 +39329,8 @@
       "group": "Packaged Foods",
       "group_pctile": 19.23,
       "top_quartile": false,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "JBTM": {
       "rs_0_1w": -0.027212,
@@ -38945,8 +39462,8 @@
       "group": "Packaged Foods",
       "group_pctile": 76.92,
       "top_quartile": true,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "JKHY": {
       "rs_0_1w": -0.027213,
@@ -39171,7 +39688,7 @@
       "group": "Software - Application",
       "group_pctile": 65.31,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "KB": {
@@ -39380,8 +39897,8 @@
       "group": "Scientific & Technical Instruments",
       "group_pctile": 31.25,
       "top_quartile": false,
-      "primary_group": "Scientific & Technical Instruments",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "KFRC": {
       "rs_0_1w": -0.018096,
@@ -39475,8 +39992,8 @@
       "group": "Packaged Foods",
       "group_pctile": 34.62,
       "top_quartile": false,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "KIM": {
       "rs_0_1w": 0.013532,
@@ -39912,8 +40429,8 @@
       "group": "Grocery Stores",
       "group_pctile": 28.57,
       "top_quartile": false,
-      "primary_group": "Grocery Stores",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "KRC": {
       "rs_0_1w": -0.01399,
@@ -40159,7 +40676,7 @@
       "group": "Software - Application",
       "group_pctile": 47.96,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "KWR": {
@@ -40349,7 +40866,7 @@
       "group": "Semiconductors",
       "group_pctile": 6.12,
       "top_quartile": false,
-      "primary_group": "Semiconductors Broad",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "LAUR": {
@@ -40520,8 +41037,8 @@
       "group": "Telecom Services",
       "group_pctile": 26.32,
       "top_quartile": false,
-      "primary_group": "Telecom Services",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "LCID": {
       "rs_0_1w": -0.07438,
@@ -40991,8 +41508,8 @@
       "group": "Telecom Services",
       "group_pctile": 94.74,
       "top_quartile": true,
-      "primary_group": "Telecom Services",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "LIME": {
       "rs_0_1w": -0.077856,
@@ -41711,7 +42228,7 @@
       "group": "Software - Application",
       "group_pctile": 39.8,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "LSTR": {
@@ -41825,8 +42342,8 @@
       "group": "Telecom Services",
       "group_pctile": 2.63,
       "top_quartile": false,
-      "primary_group": "Telecom Services",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "LUNR": {
       "rs_0_1w": 0.233912,
@@ -41901,8 +42418,8 @@
       "group": "Packaged Foods",
       "group_pctile": 84.62,
       "top_quartile": true,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "LWLG": {
       "rs_0_1w": -0.021257,
@@ -42433,7 +42950,7 @@
       "group": "Auto Parts",
       "group_pctile": 51.72,
       "top_quartile": false,
-      "primary_group": "Robotics & Automation",
+      "primary_group": "Physical AI & Humanoid Robotics",
       "primary_kind": "theme"
     },
     "MBWM": {
@@ -42718,7 +43235,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 63.1,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "MDGL": {
@@ -42775,8 +43292,8 @@
       "group": "Confectioners",
       "group_pctile": 100.0,
       "top_quartile": true,
-      "primary_group": "Confectioners",
-      "primary_kind": "industry_unscored"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "MDT": {
       "rs_0_1w": -0.00362,
@@ -43210,8 +43727,8 @@
       "group": "Packaged Foods",
       "group_pctile": 88.46,
       "top_quartile": true,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "MIDD": {
       "rs_0_1w": -0.045325,
@@ -43286,8 +43803,8 @@
       "group": "Packaged Foods",
       "group_pctile": 65.38,
       "top_quartile": false,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "MKL": {
       "rs_0_1w": -0.025465,
@@ -43324,7 +43841,7 @@
       "group": "Scientific & Technical Instruments",
       "group_pctile": 37.5,
       "top_quartile": false,
-      "primary_group": "Semiconductors Broad",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "MKTX": {
@@ -43590,7 +44107,7 @@
       "group": "Software - Application",
       "group_pctile": 44.9,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "MNKD": {
@@ -44046,7 +44563,7 @@
       "group": "Semiconductors",
       "group_pctile": 93.88,
       "top_quartile": true,
-      "primary_group": "Semiconductors Broad",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "MRX": {
@@ -44464,7 +44981,7 @@
       "group": "Semiconductors",
       "group_pctile": 34.69,
       "top_quartile": false,
-      "primary_group": "Semiconductors Broad",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "MTX": {
@@ -44654,7 +45171,7 @@
       "group": "Semiconductors",
       "group_pctile": 55.1,
       "top_quartile": false,
-      "primary_group": "Semiconductors Broad",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "MYE": {
@@ -44787,7 +45304,7 @@
       "group": "Software - Application",
       "group_pctile": 82.65,
       "top_quartile": true,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "NBHC": {
@@ -44958,7 +45475,7 @@
       "group": "Software - Application",
       "group_pctile": 68.37,
       "top_quartile": false,
-      "primary_group": "Fintech",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "NDAQ": {
@@ -45414,7 +45931,7 @@
       "group": "Software - Application",
       "group_pctile": 33.67,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "NIO": {
@@ -45775,8 +46292,8 @@
       "group": "Packaged Foods",
       "group_pctile": 80.77,
       "top_quartile": true,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "NOV": {
       "rs_0_1w": 0.024855,
@@ -45813,7 +46330,7 @@
       "group": "Scientific & Technical Instruments",
       "group_pctile": 75.0,
       "top_quartile": true,
-      "primary_group": "Robotics & Automation",
+      "primary_group": "Physical AI & Humanoid Robotics",
       "primary_kind": "theme"
     },
     "NOW": {
@@ -45832,7 +46349,7 @@
       "group": "Software - Application",
       "group_pctile": 36.73,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "NP": {
@@ -46155,7 +46672,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 78.57,
       "top_quartile": true,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "NTR": {
@@ -47939,7 +48456,7 @@
       "group": "Electronic Components",
       "group_pctile": 95.65,
       "top_quartile": true,
-      "primary_group": "Electronic Components",
+      "primary_group": "Physical AI & Humanoid Robotics",
       "primary_kind": "theme"
     },
     "OUT": {
@@ -48357,7 +48874,7 @@
       "group": "Software - Application",
       "group_pctile": 86.73,
       "top_quartile": true,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "PAYO": {
@@ -48640,7 +49157,7 @@
       "group": "Software - Application",
       "group_pctile": 55.1,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "PCT": {
@@ -48678,7 +49195,7 @@
       "group": "Software - Application",
       "group_pctile": 70.41,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "PCVX": {
@@ -48868,7 +49385,7 @@
       "group": "Software - Application",
       "group_pctile": 10.2,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "PEN": {
@@ -49495,7 +50012,7 @@
       "group": "Semiconductor Equipment & Materials",
       "group_pctile": 4.17,
       "top_quartile": false,
-      "primary_group": "Semiconductors Broad",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "PLD": {
@@ -49837,7 +50354,7 @@
       "group": "Semiconductors",
       "group_pctile": 4.08,
       "top_quartile": false,
-      "primary_group": "Semiconductors Broad",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "PONY": {
@@ -49856,7 +50373,7 @@
       "group": "Information Technology Services",
       "group_pctile": 32.5,
       "top_quartile": false,
-      "primary_group": "IT Services",
+      "primary_group": "Physical AI & Humanoid Robotics",
       "primary_kind": "theme"
     },
     "POOL": {
@@ -49913,8 +50430,8 @@
       "group": "Packaged Foods",
       "group_pctile": 3.85,
       "top_quartile": false,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "POWI": {
       "rs_0_1w": -0.02123,
@@ -51070,7 +51587,7 @@
       "group": "Software - Application",
       "group_pctile": 71.43,
       "top_quartile": false,
-      "primary_group": "Fintech",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "QUBT": {
@@ -51735,8 +52252,8 @@
       "group": "Packaging & Containers",
       "group_pctile": 62.5,
       "top_quartile": false,
-      "primary_group": "Packaging & Containers",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "REZI": {
       "rs_0_1w": -0.151253,
@@ -52248,7 +52765,7 @@
       "group": "Software - Application",
       "group_pctile": 87.76,
       "top_quartile": true,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "RNR": {
@@ -53141,8 +53658,8 @@
       "group": "Beverages - Brewers",
       "group_pctile": 100.0,
       "top_quartile": true,
-      "primary_group": "Beverages - Brewers",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "SAN": {
       "rs_0_1w": -0.010896,
@@ -53711,8 +54228,8 @@
       "group": "Packaged Foods",
       "group_pctile": 92.31,
       "top_quartile": true,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "SEPN": {
       "rs_0_1w": -0.077278,
@@ -53844,8 +54361,8 @@
       "group": "Grocery Stores",
       "group_pctile": 42.86,
       "top_quartile": false,
-      "primary_group": "Grocery Stores",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "SFNC": {
       "rs_0_1w": 0.007388,
@@ -54300,8 +54817,8 @@
       "group": "Packaged Foods",
       "group_pctile": 69.23,
       "top_quartile": false,
-      "primary_group": "Packaged Foods",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "SKE": {
       "rs_0_1w": -0.037852,
@@ -54355,8 +54872,8 @@
       "group": "Telecom Services",
       "group_pctile": 81.58,
       "top_quartile": true,
-      "primary_group": "Telecom Services",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "SKT": {
       "rs_0_1w": -0.006628,
@@ -54659,8 +55176,8 @@
       "group": "Computer Hardware",
       "group_pctile": 43.75,
       "top_quartile": false,
-      "primary_group": "Computer Hardware",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "SMFG": {
       "rs_0_1w": 0.040602,
@@ -54754,7 +55271,7 @@
       "group": "Semiconductors",
       "group_pctile": 83.67,
       "top_quartile": true,
-      "primary_group": "Semiconductors Broad",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "SN": {
@@ -54944,7 +55461,7 @@
       "group": "Software - Application",
       "group_pctile": 97.96,
       "top_quartile": true,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "SNPS": {
@@ -55341,7 +55858,7 @@
       "group": "Software - Application",
       "group_pctile": 80.61,
       "top_quartile": true,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "SPTX": {
@@ -56097,8 +56614,8 @@
       "group": "Beverages - Brewers",
       "group_pctile": 33.33,
       "top_quartile": false,
-      "primary_group": "Beverages - Brewers",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "SU": {
       "rs_0_1w": 0.050675,
@@ -56496,7 +57013,7 @@
       "group": "Specialty Industrial Machinery",
       "group_pctile": 25.53,
       "top_quartile": false,
-      "primary_group": "Robotics & Automation",
+      "primary_group": "Physical AI & Humanoid Robotics",
       "primary_kind": "theme"
     },
     "SYNA": {
@@ -56572,8 +57089,8 @@
       "group": "Telecom Services",
       "group_pctile": 71.05,
       "top_quartile": false,
-      "primary_group": "Telecom Services",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "TAC": {
       "rs_0_1w": 0.015691,
@@ -56667,8 +57184,8 @@
       "group": "Beverages - Brewers",
       "group_pctile": 83.33,
       "top_quartile": true,
-      "primary_group": "Beverages - Brewers",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "TARS": {
       "rs_0_1w": 0.01389,
@@ -56933,8 +57450,8 @@
       "group": "Telecom Services",
       "group_pctile": 13.16,
       "top_quartile": false,
-      "primary_group": "Telecom Services",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "TDW": {
       "rs_0_1w": 0.027635,
@@ -57009,7 +57526,7 @@
       "group": "Software - Application",
       "group_pctile": 94.9,
       "top_quartile": true,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "TECH": {
@@ -57541,8 +58058,8 @@
       "group": "Telecom Services",
       "group_pctile": 89.47,
       "top_quartile": true,
-      "primary_group": "Telecom Services",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "TILE": {
       "rs_0_1w": -0.015712,
@@ -57674,8 +58191,8 @@
       "group": "Tools & Accessories",
       "group_pctile": 75.0,
       "top_quartile": true,
-      "primary_group": "Tools & Accessories",
-      "primary_kind": "industry"
+      "primary_group": "Physical AI & Humanoid Robotics",
+      "primary_kind": "theme"
     },
     "TLK": {
       "rs_0_1w": 0.010932,
@@ -57845,8 +58362,8 @@
       "group": "Telecom Services",
       "group_pctile": 39.47,
       "top_quartile": false,
-      "primary_group": "Telecom Services",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "TNC": {
       "rs_0_1w": 0.01611,
@@ -58149,8 +58666,8 @@
       "group": "Confectioners",
       "group_pctile": 66.67,
       "top_quartile": false,
-      "primary_group": "Confectioners",
-      "primary_kind": "industry_unscored"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "TREX": {
       "rs_0_1w": -0.022642,
@@ -58548,7 +59065,7 @@
       "group": "Semiconductors",
       "group_pctile": 71.43,
       "top_quartile": false,
-      "primary_group": "Semiconductors Broad",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "TSHA": {
@@ -58700,7 +59217,7 @@
       "group": "Software - Application",
       "group_pctile": 81.63,
       "top_quartile": true,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "TTC": {
@@ -58947,7 +59464,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 44.05,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "TWO": {
@@ -59118,7 +59635,7 @@
       "group": "Software - Application",
       "group_pctile": 30.61,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "TYRA": {
@@ -59783,7 +60300,7 @@
       "group": "REIT - Specialty",
       "group_pctile": 13.33,
       "top_quartile": false,
-      "primary_group": "Real Estate",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "UNM": {
@@ -60448,8 +60965,8 @@
       "group": "Health Information Services",
       "group_pctile": 81.25,
       "top_quartile": true,
-      "primary_group": "Health Information Services",
-      "primary_kind": "industry"
+      "primary_group": "Cloud Software",
+      "primary_kind": "theme"
     },
     "VEON": {
       "rs_0_1w": 0.01263,
@@ -61094,7 +61611,7 @@
       "group": "Scientific & Technical Instruments",
       "group_pctile": 6.25,
       "top_quartile": false,
-      "primary_group": "Robotics & Automation",
+      "primary_group": "Physical AI & Humanoid Robotics",
       "primary_kind": "theme"
     },
     "VRDN": {
@@ -61512,8 +62029,8 @@
       "group": "Telecom Services",
       "group_pctile": 76.32,
       "top_quartile": true,
-      "primary_group": "Telecom Services",
-      "primary_kind": "industry"
+      "primary_group": "Optics & Networking Equipment",
+      "primary_kind": "theme"
     },
     "VZLA": {
       "rs_0_1w": -0.049736,
@@ -61835,7 +62352,7 @@
       "group": "Software - Application",
       "group_pctile": 77.55,
       "top_quartile": true,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "WDC": {
@@ -62234,7 +62751,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 64.29,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "WK": {
@@ -62443,8 +62960,8 @@
       "group": "Grocery Stores",
       "group_pctile": 71.43,
       "top_quartile": false,
-      "primary_group": "Grocery Stores",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "WMS": {
       "rs_0_1w": 0.027404,
@@ -62633,7 +63150,7 @@
       "group": "Software - Application",
       "group_pctile": 8.16,
       "top_quartile": false,
-      "primary_group": "Robotics & Automation",
+      "primary_group": "Physical AI & Humanoid Robotics",
       "primary_kind": "theme"
     },
     "WS": {
@@ -63317,7 +63834,7 @@
       "group": "Auto Manufacturers",
       "group_pctile": 30.77,
       "top_quartile": false,
-      "primary_group": "Lithium & Battery Tech",
+      "primary_group": "Physical AI & Humanoid Robotics",
       "primary_kind": "theme"
     },
     "XPO": {
@@ -63583,8 +64100,8 @@
       "group": "Grocery Stores",
       "group_pctile": 57.14,
       "top_quartile": false,
-      "primary_group": "Grocery Stores",
-      "primary_kind": "industry"
+      "primary_group": "Consumer Staples",
+      "primary_kind": "theme"
     },
     "YUM": {
       "rs_0_1w": -4.4e-05,
@@ -63697,7 +64214,7 @@
       "group": "Communication Equipment",
       "group_pctile": 94.74,
       "top_quartile": true,
-      "primary_group": "Optics & Networking Equipment",
+      "primary_group": "Robotics & Automation",
       "primary_kind": "theme"
     },
     "ZD": {
@@ -63849,7 +64366,7 @@
       "group": "Software - Application",
       "group_pctile": 29.59,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "ZS": {
@@ -63950,7 +64467,7 @@
   },
   "summary": {
     "publishable_themes": 74,
-    "provisional_themes": 2,
+    "provisional_themes": 5,
     "industries": 120,
     "industry_states": {
       "Leading": 10,
@@ -63958,30 +64475,30 @@
       "Improving": 21,
       "Lagging": 27
     },
-    "themes": 76,
+    "themes": 79,
     "theme_states": {
       "Leading": 12,
-      "Weakening": 26,
-      "Improving": 26,
-      "Lagging": 12
+      "Weakening": 27,
+      "Improving": 27,
+      "Lagging": 13
     },
     "themes_skipped": 0,
     "taxonomy": {
-      "total": 76,
+      "total": 79,
       "by_method": {
         "industry": 24,
         "proxy": 16,
-        "etf": 28,
+        "etf": 31,
         "rule": 8
       },
       "by_kind": {
-        "theme": 32,
-        "sector": 20,
+        "theme": 34,
+        "sector": 21,
         "proxy": 16,
         "factor": 8
       },
       "by_source": {
-        "tsf": 63,
+        "tsf": 66,
         "fluxus": 13
       },
       "needs_manual": [
