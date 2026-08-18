@@ -16,3 +16,6 @@ Andy 2026-08-18:「我们 today's list 有这么多的 scanner 预设,一个个�
 - 基线:同一天、同一可交易池里等量随机抽样,重复 200 次取中位;以及 SPY 同窗口
 
 目录:`presets/<key>.md` 一把刀一份;`summary.md` 汇总表。
+
+## 文书版(2026-08-19)
+`playbook/index.html` — 12 只案例图 + 领头股记分板 + Today's List 小白五步组合法 + 给前端的页面要求;图 `playbook/charts/*.svg`,事件坐标 `playbook/charts/meta.json`。发布件:https://claude.ai/code/artifact/393203db-06f4-4845-a892-b3462889169b
