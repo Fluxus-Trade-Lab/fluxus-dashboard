@@ -36,6 +36,18 @@ import { useWatchlist } from '../../hooks/useWatchlist'
 
 const ZONE_ORDER = ['leaders', 'entries', 'compression', 'accumulation', 'moving', 'trouble']
 
+/**
+ * Questions this page does not ask.
+ *
+ * Andy, 2026-08-18: take the "What broke?" question card and its scans off,
+ * with or without answers. The whole zone goes, not the empty cards in it —
+ * Stop Hit and Lower Low Break are the two he pointed at, and Extended leaves
+ * with them because an answer whose question has been retired has no place to
+ * stand. The pipeline keeps computing all three; this is the page declining to
+ * ask, which is a display decision and reversible by deleting one line.
+ */
+const HIDDEN_ZONES = new Set(['trouble'])
+
 const nf = (n) => n.toLocaleString()
 
 /** Translate by key, fall back to whatever the file called it. */
@@ -539,7 +551,7 @@ export default function WatchlistPage({ zone: routeZone }) {
     // appear rather than vanish because this file had not heard of it.
     const known = ZONE_ORDER.map((k) => byKey.get(k)).filter(Boolean)
     const extra = data.zones.filter((z) => !ZONE_ORDER.includes(z.key))
-    return [...known, ...extra]
+    return [...known, ...extra].filter((z) => !HIDDEN_ZONES.has(z.key))
   }, [data])
 
   if (failed) {

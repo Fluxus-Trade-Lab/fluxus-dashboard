@@ -220,26 +220,26 @@ html.dark {
      Ground drops to 8.0 and the card rises to 14.5: 1.16:1, and every text
      tier gains rather than loses (text 12.3 on card, secondary 6.8, muted
      5.3, bold 14.7). */
-  --color-bg: #1a1715;
-  --color-surface: #282421;
-  --color-surface-alt: #1f1c19;
-  --color-surface-raised: #3b362f;
-  --color-border: #4d473f;
-  --color-border-light: #3a352e;
-  --color-text: #e7e5e4;
-  --color-text-secondary: #b2aca5;
+  --color-bg: #12110F;
+  --color-surface: #232120;
+  --color-surface-alt: #1b1a19;
+  --color-surface-raised: #32302f;
+  --color-border: #423f3e;
+  --color-border-light: #2b2a29;
+  --color-text: #e6e5e5;
+  --color-text-secondary: #b7b6b5;
   /* 4.52 -> 5.72 on the lifted ground: it was clearing the 4.5 bar by 0.02,
      and that bar assumes body type, not the 9px labels this token paints.
      2026-08-16: still 4.09 on surface-raised, the ground the chips use.
      bg 6.73 · surface 5.80 · raised 4.51. */
-  --color-text-muted: #a59e94;
-  --color-text-bold: #fafaf9;
+  --color-text-muted: #979594;
+  --color-text-bold: #ffffff;
 
   --color-active-tab-bg: #fafaf9;
   --color-active-tab-text: #1c1917;
-  --color-hover-bg: #3b3630;
-  --color-input-bg: #211d1a;
-  --color-input-border: #625b52;
+  --color-hover-bg: #32302f;
+  --color-input-bg: #1b1a19;
+  --color-input-border: #565353;
   --color-closed-row: #4a4540;
 
   /* Never had a dark value, so it inherited the light one and sat at 2.46:1 on
@@ -264,27 +264,26 @@ html.dark {
   --color-slot-3: #c48658;
   --color-loss-solid: #cc3c2f;
 
-  --color-profit: #8bbcec;
-  --color-loss: #e0705c;
-  --color-signal-power3: #fafaf9;
-  --color-signal-caution: #a59e94;
-  --color-signal-warning: #b2aca5;
-  --color-signal-riskoff: #e0705c;
+  --color-profit: #77b4fb;
+  --color-loss: #ef5442;
+  --color-signal-power3: #ffffff;
+  --color-signal-caution: #979594;
+  --color-signal-warning: #b7b6b5;
+  --color-signal-riskoff: #ef5442;
 
-  --color-v2-paper: #211d1a;
+  --color-v2-paper: #1b1a19;
 
   /* glass, dark — written out rather than inherited, same lesson as the fills */
-  --glass: rgba(26, 23, 21, .72);
+  --glass: rgba(18, 17, 15, .74);
   --glass-edge: rgba(255, 255, 255, .07);
   --glass-line: rgba(255, 255, 255, .05);
   --glass-blur: blur(20px) saturate(140%);
   --lift: 0 1px 2px rgba(0,0,0,.30), 0 10px 28px -14px rgba(0,0,0,.55);
-  --ground: radial-gradient(680px 420px at 12% -6%, rgba(31,95,158,.13), transparent 62%),
-            radial-gradient(560px 380px at 92% 2%, rgba(209,96,15,.07), transparent 60%);
-  --color-v2-ink: #e7e5e4;
-  --color-v2-rule: #4f4a43;
-  --color-v2-hair: #47413a;
-  --color-v2-off: #3f3a34;
+  --ground: radial-gradient(680px 420px at 12% -6%, rgba(59,130,196,.10), transparent 62%);
+  --color-v2-ink: #e6e5e5;
+  --color-v2-rule: #464343;
+  --color-v2-hair: #3d3b3a;
+  --color-v2-off: #343231;
 
   /* ── v2 encoding, dark ground (Fluxus_Brand/visual/explorations/2026-08-08/palette_dark.html) ──
      The light proof does not carry into the dark, because dark moves the two
@@ -318,9 +317,9 @@ html.dark {
      dark, darker on light). That stays acceptable under the same rule as
      before: a screenshot is one theme or the other, never both, so what has
      to hold is separation inside a single image, not a global ordering. */
-  --color-took: #8bbcec;
-  --color-refused: #e0705c;
-  --color-untested: #c8c2b8;  /* lifted with them: it is took's partner in the state grammar */
+  --color-took: #77b4fb;
+  --color-refused: #ef5442;
+  --color-untested: #c2c0bf;  /* neutral at the lightness it always had (L* 78); its partner took sat 4 L* away in the old dark too, so this relationship is unchanged, not a regression */
 }
 
 html {
