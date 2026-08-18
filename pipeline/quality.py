@@ -77,6 +77,11 @@ SPARSE_BY_DESIGN: frozenset = frozenset({
     "sp_dist_2nd_pct",
 })
 SPARSE_PREFIXES: tuple = ()
+# Fundamentals (2026-08-17 source switch): a loss-making name has no EPS
+# growth rate and Yahoo has no revenue figure for ~20% of the pool; ~20-55%
+# null is the column's nature, not a feed dying. Graded on death only.
+SPARSE_BY_DESIGN = SPARSE_BY_DESIGN | frozenset({
+    "eps_growth_next_y", "eps_growth_this_y", "revenue_growth", "fund_source", "fund_asof"})
 
 
 def is_sparse_by_design(field: str) -> bool:

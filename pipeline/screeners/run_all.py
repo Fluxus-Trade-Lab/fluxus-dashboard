@@ -836,6 +836,19 @@ def main():
             f"publish. Yesterday's outputs are unchanged."
         )
 
+    # Basket closes BEFORE the group layer. build_groups fills the benchmark's
+    # (and the proxy themes') perf_6m from data/output/baskets/*.json and
+    # refuses when the bars' perf_3m disagrees with etf_data's -- which they
+    # always did while this fetch ran last: at group time the baskets on disk
+    # were the previous session's, one bar behind etf_data, so rs_3m_6m came
+    # out null for every theme (17 "disagree" warnings a night; severe on
+    # 2026-08-17). Own failure domain; a failed fetch leaves yesterday's file.
+    try:
+        from pipeline.rotation.fetch_baskets import fetch as fetch_baskets
+        fetch_baskets()
+    except Exception:
+        logger.exception("Basket fetch failed - rotation/groups read yesterday's baskets")
+
     # Group layer: industries + curated themes, scored and state-classified.
     # Depends on universe.json and etf_data.json having just been written, so
     # it runs last. Non-fatal: a failure here must not cost the whole daily
@@ -881,13 +894,9 @@ def main():
     except Exception:
         logger.exception("Watchlist failed - watchlist.json not updated")
 
-    # Style rotation: fetch basket closes, then score. Its own failure domain
-    # and last in the run, because it is the only step that reaches the network
-    # after every other output is already on disk.
+    # Style rotation: score the baskets fetched above. Own failure domain.
     try:
-        from pipeline.rotation.fetch_baskets import fetch as fetch_baskets
         from pipeline.rotation.build_rotation import build as build_rotation
-        fetch_baskets()
         rotation_payload = build_rotation()
         (OUTPUT_DIR / 'rotation.json').write_text(
             json.dumps(rotation_payload, indent=2, default=_json_serializer))
