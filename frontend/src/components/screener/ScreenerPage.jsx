@@ -377,6 +377,26 @@ export default function ScreenerPage() {
           sentence says "here", and here now holds all fifty */}
       <Reading text={untouched ? readScreener(heat) : selectionReading} />
 
+      {/* THE BAND (Andy, 2026-08-18): the chart runs across the page, under
+          the one-line read and ABOVE the scan and state controls, with the
+          shortlist beside it on the right.
+
+          It was a tall card in a right-hand column and he rejected that. He is
+          right, and the reason is the page's own argument: the controls and the
+          table below them are one instrument, and a column parked alongside
+          them for the full height of the page reads as a second instrument
+          competing with the first. Across the top it reads as what it is — the
+          thing you look at before you start filtering, and the tray you drop
+          names into while you do.
+
+          Wide also suits the chart itself. A month of candles in a 380px
+          column is a smear; across the page it is a chart. */}
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px]
+                      xl:grid-cols-[minmax(0,1fr)_340px] gap-3 items-start mb-4">
+        <PickedChart height={400} />
+        <ShortlistTray />
+      </div>
+
       <ScanBar
         scans={scans} scan={scan} onScan={setScan}
         stateCounts={stateCounts} states={states} onToggleState={toggleState}
@@ -403,15 +423,6 @@ export default function ScreenerPage() {
           ? { n: themeWide, onWiden: () => setScan('all') }
           : null}
         hiddenNote={noState ? `${noState} rows carry no state and are not shown` : null} />
-      {/* Page 3's two doors carry the SAME fixed chart card, opening on the
-          same name — they are two routes to one job (find a name worth the
-          morning), and a chart that said something different depending on
-          which door you came through would be two instruments wearing one
-          costume. The table stays the largest thing here; the card never
-          resizes and never opens empty. */}
-      <div className="flex flex-col xl:grid xl:grid-cols-[minmax(0,1fr)_380px]
-                      2xl:grid-cols-[minmax(0,1fr)_440px] xl:gap-x-4 xl:items-start">
-        <div className="min-w-0 order-2 xl:order-none">
       {viewReady ? (
         // key: normalized search only — a trailing space changes nothing
         // about the row set and must not remount the table
@@ -424,12 +435,6 @@ export default function ScreenerPage() {
             : tr('scr.groupLayerLoading')}
         </p>
       )}
-        </div>
-        <div className="min-w-0 order-1 xl:order-none mb-4 xl:mb-0 xl:sticky xl:top-3">
-          <PickedChart />
-          <div className="mt-3"><ShortlistTray /></div>
-        </div>
-      </div>
 
       <HowToRead>
         <p>

@@ -3,7 +3,6 @@ import PageHeader from '../PageHeader'
 import TickerLink from '../ticker/TickerLink'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { useWatchlist } from '../../hooks/useWatchlist'
-import PickedChart from '../ticker/PickedChart'
 import ShortlistTray from '../shared/ShortlistTray'
 
 /**
@@ -633,20 +632,18 @@ export default function WatchlistPage({ zone: routeZone }) {
         ))}
       </div>
 
-      {/* ── the three tiers (Andy's size grading, 2026-08-18) ─────────────
-          LARGE   the scan grid — this page's job is discovery, so the field of
-                  answers is the biggest thing on it.
-          MID     the chart, in a card that never moves and is never empty.
-          SMALL   the names themselves, inside the cards.
+      {/* No chart on this page (Andy, 2026-08-18: 暂时也不一定需要). The
+          Screener is where a name gets looked at; this page is where the six
+          questions are read, and seventeen scans do not need a chart parked
+          beside them to be read.
 
-          The chart takes the right column and STAYS there. Sizing it to the
-          selection was the first proposal and Andy turned it down: a click
-          that reflows the page loses the reader's place in the very grid they
-          were reading. Below xl it sits above the grid rather than under it —
-          buried at the bottom of twelve scan cards it would not be a fixed
-          card, it would be a footnote. */}
-      <div className="flex flex-col xl:grid xl:grid-cols-[minmax(0,1fr)_380px]
-                      2xl:grid-cols-[minmax(0,1fr)_440px] xl:gap-x-4 xl:items-start">
+          The shortlist stays, and keeps the right-hand column to itself. It is
+          the page's OUTPUT and it belongs in sight while you scan — carrying
+          it to the bottom of twelve cards would make it a footnote. Names are
+          added to it from the Screener's chart card; here you can see it,
+          prune it and take it away. */}
+      <div className="flex flex-col xl:grid xl:grid-cols-[minmax(0,1fr)_320px]
+                      xl:gap-x-4 xl:items-start">
         <div className="min-w-0 order-2 xl:order-none">
 
       {/* Every scan on the table. The lens narrows which ones, never what any
@@ -675,8 +672,7 @@ export default function WatchlistPage({ zone: routeZone }) {
 
         </div>
         <div className="min-w-0 order-1 xl:order-none mb-4 xl:mb-0 xl:sticky xl:top-3">
-          <PickedChart />
-          <div className="mt-3"><ShortlistTray /></div>
+          <ShortlistTray />
         </div>
       </div>
 
