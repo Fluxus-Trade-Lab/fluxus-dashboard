@@ -162,6 +162,8 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 
 ## 四、`data/history/groups_archive.csv` —— 每日快照
 
+⚠️ **2026-08-18 分界**:这天 11 个主题整体换了名单、7 个大幅追加、3 个新建、22 个删除(proxy/Broad AI 等),归档按**主题名**存,所以 `groups_archive.csv` 里 08-18 之前的 AI - Datacenters / AI Power / Robotics / Uranium / Space / Steel / Cybersecurity / Fintech / Rare Earth / Agribusiness / Homebuilders 行描述的是**旧成员**;`persistence` 是跨这条线数的,这些主题的连续天数要到 09 月才干净。新主题(Physical AI / Cloud Software / Consumer Staples)从 08-18 起有行。
+
 **产出**:`build_groups.save()`,与 `groups.json` 同一次写入,不可分离
 **消费方**:暂无。**这是为 10 周后的主题色带准备的**
 
