@@ -208,8 +208,8 @@ _INDUSTRY_THEMES: list[Theme] = [
                  "NVR", "PATK", "LZB", "RH", "DHI", "MBC", "WSM", "FND", "BCC", "CSL", "LII",
                  "SPXC", "AOS", "WHR", "APOG", "HOV", "MTH", "PHM", "HD", "CARR", "MAS", "GRBK",
                  "KBH", "ZWS", "LPX", "SGI", "POOL", "FELE", "ETD", "BLDR", "TOL", "SITE", "UFPI",
-                 "LEG", "JBI", "ALH", "FBIN",),
-          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. TSF's list is builders + building products + home "
+                 "LEG", "JBI", "ALH", "FBIN", "LEN", "QXO", "FOR",),
+          note="candidate back-search 2026-08-18, Andy 采纳建议 (data/reference/theme_candidates_2026-08-18.md): LEN QXO FOR. TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. TSF's list is builders + building products + home "
                "furnishings (SN WTS MHK HNI POOL LEG WHR LOW HD). It also keeps "
                "TT JCI CARR LII (commercial HVAC) -- data-side reservation on "
                "record: those fail the common-driver test; kept because Andy said "
@@ -234,8 +234,8 @@ _INDUSTRY_THEMES: list[Theme] = [
           extra=(
                  "FRD", "GSM", "HCC", "ATI", "TX", "METC", "AMR", "SXC", "MT", "MTUS", "NUE",
                  "CLF", "IIIN", "RS", "PKX", "ASTL", "WS", "RYZ", "MSB", "CMC", "STLD", "CRS",
-                 "EAF", "SID", "GGB", "TS",),
-          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. Aluminum (AA CENX CSTM KALU) out -- a different price; "
+                 "EAF", "SID", "GGB", "TS", "NWPX",),
+          note="candidate back-search 2026-08-18, Andy 采纳建议 (data/reference/theme_candidates_2026-08-18.md): NWPX. TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. Aluminum (AA CENX CSTM KALU) out -- a different price; "
                "it stays visible in the industry layer. TSF adds specialty "
                "metals/met coal (ATI CRS HCC AMR METC SXC)."),
     Theme("Coal", "industry", industries=("Coking Coal", "Thermal Coal")),
@@ -296,8 +296,9 @@ _INDUSTRY_THEMES: list[Theme] = [
                  "GLXY", "CACC", "ALLY", "MA", "V", "HQY", "EVTC", "XYZ", "BKKT", "FISV", "EEFT",
                  "VERX", "NAVI", "SOFI", "UPST", "VIRT", "WRLD", "KLAR", "AFRM", "AXP", "EZPW",
                  "JKHY", "MELI", "PRG", "FIS", "NNI", "DLO", "ACIW", "PAGS", "VYX", "FINV", "MQ",
-                 "QFIN", "DAVE", "RPAY", "STNE", "FOUR", "SECZ", "ETOR", "BLND", "SEZL", "BETR",),
-          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. Was Credit Services + Financial Data (37): exchanges and "
+                 "QFIN", "DAVE", "RPAY", "STNE", "FOUR", "SECZ", "ETOR", "BLND", "SEZL", "BETR",
+                 "GRAB",),
+          note="candidate back-search 2026-08-18, Andy 采纳建议 (data/reference/theme_candidates_2026-08-18.md): GRAB. TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. Was Credit Services + Financial Data (37): exchanges and "
                "rating agencies, not fintech. TSF's list is payments/lending/"
                "brokerage software. LC not in universe."),
     Theme("Industrials", "industry",
@@ -360,8 +361,8 @@ _ETF_THEMES: list[Theme] = [
           extra=(
                  "NBIS", "SHAZ", "EROC", "CSQR", "WYFI", "DLR", "CRWV", "IREN", "VNET", "BRUN",
                  "IRM", "BXDC", "GDS", "EQIX", "APLD", "FRMI", "IOND", "DGXX", "GLXY", "AMT",
-                 "WULF", "KEEL", "CORZ", "HUT", "CIFR",),
-          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. TSF's cut: the buildings and hosts (colo/hyperscale "
+                 "WULF", "KEEL", "CORZ", "HUT", "CIFR", "PENG",),
+          note="candidate back-search 2026-08-18, Andy 采纳建议 (data/reference/theme_candidates_2026-08-18.md): PENG. TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. TSF's cut: the buildings and hosts (colo/hyperscale "
                "hosts, DC REITs, miners turned AI hosts); the power and equipment "
                "side (GEV VRT ETN PWR CEG VST TLN) moved to AI Power & Infrastructure. "
                "Overlap with our old list was 5/25."),
@@ -377,8 +378,8 @@ _ETF_THEMES: list[Theme] = [
                  "ETR", "OGE", "DTE", "DUK", "SO", "BWXT", "LII", "ENS", "OKLO", "FIX", "CAT",
                  "HUBB", "MPWR", "DY", "AMSC", "VMI", "TLN", "HLIO", "PPL", "EXC", "NEE", "POWL",
                  "AGX", "CARR", "CMI", "STRL", "LNT", "PEG", "AEP", "IDA", "SRE", "AAON", "NI",
-                 "PRIM", "VST", "ROK", "NRG", "FLNC", "INV",),
-          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. Was UTES seed + regulated/IPP utilities (44, incl. HE, "
+                 "PRIM", "VST", "ROK", "NRG", "FLNC", "INV", "FRMI", "EROC",),
+          note="candidate back-search 2026-08-18, Andy 采纳建议 (data/reference/theme_candidates_2026-08-18.md): FRMI EROC. TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. Was UTES seed + regulated/IPP utilities (44, incl. HE, "
                "CIG, ENIC -- nothing to do with AI); TSF's cut is electrical "
                "equipment + grid contractors + IPPs + nuclear. Overlap was 23/93."),
     Theme("Cybersecurity", "etf", etf=(),
@@ -431,8 +432,8 @@ _ETF_THEMES: list[Theme] = [
           note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去; second pass): CACI ISSC PLTR BKSY ATI ELMT LDOS ASTC BBAI SPIR PKE SAIC ONDS CPSH PSN BAH IRDM TATT POWW CRS RBC RGR SWBI MRLN AMTM."),
     Theme("Solar", "etf", etf=("TAN",), industries=("Solar",),
           extra=(
-                 "MWH", "RNW", "DQ", "ENLT", "ASTI", "JKS", "SPWR", "TYGO", "ARRY",),
-          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去; second pass): MWH RNW DQ ENLT ASTI JKS SPWR TYGO ARRY."),
+                 "MWH", "RNW", "DQ", "ENLT", "ASTI", "JKS", "SPWR", "TYGO", "ARRY", "TE",),
+          note="candidate back-search 2026-08-18, Andy 采纳建议 (data/reference/theme_candidates_2026-08-18.md): TE. TSF names added 2026-08-18 (Andy: 他们有我们没的加进去; second pass): MWH RNW DQ ENLT ASTI JKS SPWR TYGO ARRY."),
     Theme("Clean Energy", "etf", etf=("ICLN",),
           industries=("Solar", "Utilities - Renewable"),
           extra=(
@@ -440,15 +441,15 @@ _ETF_THEMES: list[Theme] = [
                  "SQM", "HASI", "GEV", "PWR", "ETN", "WCC", "ATKR", "ITRI", "ALB", "SLI", "GEVO",
                  "GNRC", "HUBB", "ESE", "ENS", "LAR", "LAC", "EOSE", "FCEL", "REX", "MYRG", "NEE",
                  "TE", "GPRE", "SGML", "JKS", "BW", "AMSC", "POWL", "AGX", "BLDP", "EVGO", "CLNE",
-                 "ARRY",),
-          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去; second pass): PLPC ELVR NRGV ASPN NVT ADUR NVTS AMRC LZM ATLX SQM HASI GEV PWR ETN WCC ATKR ITRI ALB SLI GEVO GNRC HUBB ESE ENS LAR LAC EOSE FCEL REX MYRG NEE TE GPRE SGML JKS BW AMSC POWL AGX BLDP EVGO CLNE ARRY."),
+                 "ARRY", "AES",),
+          note="candidate back-search 2026-08-18, Andy 采纳建议 (data/reference/theme_candidates_2026-08-18.md): AES. TSF names added 2026-08-18 (Andy: 他们有我们没的加进去; second pass): PLPC ELVR NRGV ASPN NVT ADUR NVTS AMRC LZM ATLX SQM HASI GEV PWR ETN WCC ATKR ITRI ALB SLI GEVO GNRC HUBB ESE ENS LAR LAC EOSE FCEL REX MYRG NEE TE GPRE SGML JKS BW AMSC POWL AGX BLDP EVGO CLNE ARRY."),
     Theme("Uranium & Nuclear Energy", "etf", etf=(),
           extra=(
                  "GHM", "NUCL", "UROY", "UUUU", "ISOU", "EMR", "AMRC", "XE", "NKLR", "IMSR", "UEC",
                  "NNE", "FLR", "GEV", "FLS", "HII", "MTZ", "NXE", "J", "LEU", "DNN", "CCJ", "EU",
                  "PWR", "TLN", "CEG", "URG", "OKLO", "SMR", "SOLS", "MIR", "BWXT", "ASPI", "LTBR",
-                 "VST", "CW", "NRG", "AMTM", "ACM",),
-          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. TSF's 50 minus the 11 regulated utilities (PCG XEL ETR D "
+                 "VST", "CW", "NRG", "AMTM", "ACM", "STDN",),
+          note="candidate back-search 2026-08-18, Andy 采纳建议 (data/reference/theme_candidates_2026-08-18.md): STDN. TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. TSF's 50 minus the 11 regulated utilities (PCG XEL ETR D "
                "PNW DTE DUK SO NEE PEG AEP -- they belong to Utilities and would "
                "dilute a nuclear read); IPPs with nuclear fleets (CEG VST TLN NRG) "
                "kept. Was URA seed + Uranium industry (8)."),
@@ -475,8 +476,8 @@ _ETF_THEMES: list[Theme] = [
           extra=(
                  "COIN", "MARA", "RIOT", "CLSK", "HUT", "CIFR", "WULF", "IREN", "HIVE", "CORZ",
                  "GLXY", "BMNR", "SBET", "BTDR", "MSTR", "FIGR", "CRCL", "BTBT", "PURR", "BLSH",
-                 "ABTC", "HOOD", "XYZ", "BKKT", "DGXX", "KEEL", "ETOR", "GPUS",),
-          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去): FIGR CRCL BTBT PURR BLSH ABTC HOOD XYZ BKKT DGXX KEEL ETOR GPUS. No ETF seed: BLOK is diversified fintech and pulled in AMD. "
+                 "ABTC", "HOOD", "XYZ", "BKKT", "DGXX", "KEEL", "ETOR", "GPUS", "XXI",),
+          note="candidate back-search 2026-08-18, Andy 采纳建议 (data/reference/theme_candidates_2026-08-18.md): XXI. TSF names added 2026-08-18 (Andy: 他们有我们没的加进去): FIGR CRCL BTBT PURR BLSH ABTC HOOD XYZ BKKT DGXX KEEL ETOR GPUS. No ETF seed: BLOK is diversified fintech and pulled in AMD. "
                "BITF dropped 2026-08-09: does not resolve."),
     # Was 60% the same names as Crypto Equities. Bitcoin the *asset* and
     # bitcoin *stocks* are different reads -- spot leads, equities amplify.
@@ -570,8 +571,8 @@ _ETF_THEMES: list[Theme] = [
                  "NAVN", "QTWO", "YEXT", "BOX", "DBX", "KARO", "MNDY", "GWRE", "DOCU", "DCBO",
                  "DOCN", "NCNO", "INTU", "LAW", "PCTY", "ASAN", "NOW", "CXM", "CRM", "APPF",
                  "PEGA", "AGYS", "ADBE", "FIG", "AI", "LSPD", "AVPT", "DSGX", "NICE", "KVYO",
-                 "GLOO", "DDOG", "HUBS", "BL", "EVCM", "WEAV", "NABL",),
-          note="TSF Thematic Focus list, added 2026-08-18 (Andy: 要的); data/reference/tsf_themes_2026-08-18/full.json."),
+                 "GLOO", "DDOG", "HUBS", "BL", "EVCM", "WEAV", "NABL", "ZETA",),
+          note="candidate back-search 2026-08-18, Andy 采纳建议 (data/reference/theme_candidates_2026-08-18.md): ZETA. TSF Thematic Focus list, added 2026-08-18 (Andy: 要的); data/reference/tsf_themes_2026-08-18/full.json."),
     Theme("Consumer Staples", "etf", source="tsf", etf=(),
           extra=(
                  "TBBB", "SENEA", "FRPT", "YSWY", "GO", "JJSF", "USFD", "OFRM", "CLX", "CAG",
