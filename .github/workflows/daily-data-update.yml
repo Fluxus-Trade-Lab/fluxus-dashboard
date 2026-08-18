@@ -40,6 +40,12 @@ jobs:
           pip install -r pipeline/requirements.txt
 
       - name: Run data pipeline
+        env:
+          # 400, not 700, on the runner: the same Yahoo wall the Mac hits at
+          # ~1,100 info calls -- run_all's fundamentals + the OHLC store's
+          # info calls + the Delayed-EP scan all share it (03:34Z 2026-08-18
+          # every later step was 429). ~14 nights per full pass; quarterly data.
+          FUNDAMENTALS_BUDGET: '400'
         run: python -m pipeline.screeners.run_all
         env:
           PYTHONPATH: ${{ github.workspace }}
@@ -145,7 +151,18 @@ jobs:
           # data/reference/fundamentals.json is the rolling F-score store: without
           # committing it every night re-reads the same 700 names.
           git add data/output/ data/history/ data/reference/fundamentals.json
-          git diff --staged --quiet || (git commit -m "chore: market data $(date +%Y-%m-%d)" && git push)
+          git diff --staged --quiet && exit 0
+          git commit -m "chore: market data $(date +%Y-%m-%d)"
+          # main moves while this runs (2026-08-18: five commits landed during
+          # a 20-minute run and the push was rejected). Rebase onto whatever
+          # is there now and retry; our commit only touches data files.
+          for i in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main && git push && exit 0
+            git rebase --abort || true
+            sleep 15
+          done
+          echo "push failed after 3 rebase attempts"; exit 1
 
       - name: Discord notification (success)
         if: success() && env.DISCORD_WEBHOOK_URL != ''

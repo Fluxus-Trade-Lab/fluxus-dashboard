@@ -47,7 +47,8 @@ log = logging.getLogger(__name__)
 
 STORE = Path("data/reference/fundamentals.json")
 FIELDS = ("eps_growth_next_y", "revenue_growth", "eps_growth_this_y")
-BUDGET = 700           # tickers refreshed per run
+import os
+BUDGET = int(os.environ.get('FUNDAMENTALS_BUDGET', '700'))   # tickers refreshed per run; CI sets 400
 WORKERS = 6
 MAX_CONSECUTIVE_FAILURES = 40   # a throttle wall, not a run of dead symbols
 
