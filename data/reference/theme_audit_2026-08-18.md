@@ -84,3 +84,12 @@
 2. 按第二节改 `extra/exclude`;每处在 note 记日期理由(标准 §三)。
 3. 改完跑 `verify_members` + `build_groups` audit CLEAN,再 `validate_taxonomy` 看 excess 变化;**成员改动和验证不能用同一窗口**。
 4. 第二轮:描述库齐后,对每个业务主题按关键词在全池反查候选,列表给 Andy 签。
+
+---
+
+## 五、执行记录(2026-08-18 晚)
+
+- ✅ `kind` 字段(84b9d26)
+- ✅ ① 11 个主题按 TSF 名单重定;② 7 个主题追加 TSF-only;③ 板块桶不动(Andy:"不在乎")
+- Rare Earth 只剩 3 只过流动性门 → 暂不发布
+- 未做:新增 Physical AI & Humanoid Robotics / Cloud Software / Consumer Staples 三个主题(等 Andy);validate_taxonomy 换窗口验 excess(下一步)

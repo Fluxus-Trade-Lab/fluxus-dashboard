@@ -135,6 +135,10 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 
 `kind ∈ {theme, sector, factor, proxy}`:`theme` 有共同产业驱动的业务主题(30)· `sector` Finviz 行业联合、驱动是宏观(利率/油价;20:Software / Regional Banks / Oil & Gas / Financials / Industrials / Real Estate / Energy / Insurance / Utilities / Travel & Leisure / Consumer Retail / Chemicals / Transportation / Banks-MC / Electronic Components / IT Services / Agribusiness / Beverages / Household / Tobacco)· `factor` 按属性定义的规则主题(8:Growth / Value / High Beta / Small Caps / Mega Caps / IPOs / High Octane / 52W Leaders)· `proxy` 基金即标的(16)。**Andy 08-18:Small Caps 这类不是"主题"是因子,分类没错,但别和业务主题混一栏**——前端按 `kind` 分组摆,一个都不删。名单在 `taxonomy.SECTOR_NAMES` / `kind_of()`;审计依据 `data/reference/theme_audit_2026-08-18.md`。
 
+### 成员改动 2026-08-18(Andy:"按 TSF 改";今晚 cron 起 groups.json 生效,本地已重建)
+
+依据 `data/reference/theme_audit_2026-08-18.md` + TSF 全 47 主题名单(`data/reference/tsf_themes_2026-08-18/`)。**11 个主题整体换成 TSF 名单 ∩ 我们池子**(每处 taxonomy note 记来源):AI - Datacenters(机房/托管/REIT/转型矿工,25)· AI Power & Infrastructure(设备+电网承包+IPP+核电,88;不再是公用事业)· Robotics & Automation(49,整换)· Uranium & Nuclear Energy(31,TSF 50 去掉 11 只监管公用事业)· Space(17,含 SPCX)· Steel(17,铝出去)· Cybersecurity(31,AVGO/CSCO 出去)· Fintech(72,交易所/评级出去)· Rare Earth Metals(**只剩 3 只过门,暂 publish=false**)· Agribusiness(34,CAT/PCAR 出去)· Homebuilders(61,照 TSF 含 TT/JCI/CARR;数据端保留意见记在 note)。**7 个主题追加 TSF 有我们没有的**:Lithium(+33 含 EV 车厂)· Copper(+5 含 BHP/RIO/VALE)· Drones(+16 含 eVTOL)· Crypto(+13 含 HOOD/XYZ/CRCL)· Memory & Storage(+9)· Semiconductors Broad(+31)· Silver(+20 含 HL)。板块桶不动。**前端**:成员数和四态会跳,是换名单不是坏了;`kind` 字段不变。
+
 ### 四条陷阱
 
 **`rs_accel` 是门槛,`rs_accel_rate` 才是斜率 —— 「加速/减速」这两个词只能从后者来。**(2026-08-16 加,`stocks` 行同样带)

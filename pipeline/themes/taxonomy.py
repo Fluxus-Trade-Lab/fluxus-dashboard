@@ -174,7 +174,13 @@ class Theme:
 
 _INDUSTRY_THEMES: list[Theme] = [
     Theme("Semiconductors Broad", "industry",
-          industries=("Semiconductors", "Semiconductor Equipment & Materials")),
+          industries=("Semiconductors", "Semiconductor Equipment & Materials"),
+          extra=(
+                 "SNDK", "SHMD", "KOPN", "IPWR", "STX", "AEIS", "TRT", "TDY", "NVEC", "MRAM",
+                 "ADEA", "LFUS", "LAES", "MBLY", "GSIT", "ALMU", "PENG", "PDFS", "ASYS", "CPSH",
+                 "SNPS", "MKSI", "ATOM", "WDC", "AOSL", "CEVA", "CDNS", "QUIK", "SVCO", "VPG",
+                 "BZAI",),
+          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去): SNDK SHMD KOPN IPWR STX AEIS TRT TDY NVEC MRAM ADEA LFUS LAES MBLY GSIT ALMU PENG PDFS ASYS CPSH SNPS MKSI ATOM WDC AOSL CEVA CDNS QUIK SVCO VPG BZAI."),
     Theme("Software", "industry",
           industries=("Software - Application", "Software - Infrastructure")),
     Theme("Biotech", "proxy", etf=("XBI",)),
@@ -187,18 +193,40 @@ _INDUSTRY_THEMES: list[Theme] = [
           industries=("Insurance - Diversified", "Insurance - Property & Casualty",
                       "Insurance - Life", "Insurance - Specialty",
                       "Insurance - Reinsurance", "Insurance Brokers")),
-    Theme("Homebuilders", "industry",
-          industries=("Residential Construction", "Building Products & Equipment")),
+    Theme("Homebuilders", "etf", etf=(),
+          extra=(
+                 "SKY", "SN", "WTS", "SWIM", "ARHS", "GFF", "HVT", "W", "LEGH", "JHX", "TILE",
+                 "TREX", "OC", "JCI", "MHK", "DFH", "NX", "LGIH", "HNI", "CVCO", "WFG", "CCS",
+                 "BZH", "ALLE", "AWI", "MLKN", "IBP", "TT", "ROCK", "WMS", "SSD", "MHO", "LOW",
+                 "NVR", "PATK", "LZB", "RH", "DHI", "MBC", "WSM", "FND", "BCC", "CSL", "LII",
+                 "SPXC", "AOS", "WHR", "APOG", "HOV", "MTH", "PHM", "HD", "CARR", "MAS", "GRBK",
+                 "KBH", "ZWS", "LPX", "SGI", "POOL", "FELE", "ETD", "BLDR", "TOL", "SITE", "UFPI",
+                 "LEG", "JBI", "ALH", "FBIN",),
+          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. TSF's list is builders + building products + home "
+               "furnishings (SN WTS MHK HNI POOL LEG WHR LOW HD). It also keeps "
+               "TT JCI CARR LII (commercial HVAC) -- data-side reservation on "
+               "record: those fail the common-driver test; kept because Andy said "
+               "follow TSF. LEN-B BLD BBBY not in universe."),
     Theme("Oil & Gas", "industry",
           industries=("Oil & Gas E&P", "Oil & Gas Integrated", "Oil & Gas Midstream",
                       "Oil & Gas Refining & Marketing", "Oil & Gas Equipment & Services",
                       "Oil & Gas Drilling")),
     Theme("Gold Miners", "industry", source="tsf", industries=("Gold",)),
-    Theme("Silver Miners", "industry", industries=("Silver",)),
+    Theme("Silver Miners", "industry", industries=("Silver",), extra=(
+                 "HL", "SCZM", "ITRG", "FSM", "SSRM", "ASM", "HYMC", "GORO", "SSMR", "USAS", "CDE",
+                 "SA", "WPM", "TMQ", "BVN", "CTGO", "VZLA", "PAAS", "OR", "TFPM", "MUX",),
+          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去): SCZM ITRG FSM SSRM ASM HYMC GORO SSMR USAS CDE SA WPM TMQ BVN CTGO VZLA PAAS OR TFPM MUX. HL added 2026-08-18: Hecla sits in Other Precious Metals on Finviz; TSF lists it under Silver."),
     # Umbrella split 2026-08-09. The combined theme read +0.047 on 94%
     # coverage while Copper alone read +0.357 -- merging copper, steel and
     # coal averaged away the one grouping that was working.
-    Theme("Steel", "industry", industries=("Steel", "Aluminum")),
+    Theme("Steel", "etf", etf=(),
+          extra=(
+                 "FRD", "GSM", "HCC", "ATI", "TX", "METC", "AMR", "SXC", "MT", "MTUS", "NUE",
+                 "CLF", "IIIN", "RS", "PKX", "ASTL", "WS", "RYZ", "MSB", "CMC", "STLD", "CRS",
+                 "EAF", "SID", "GGB", "TS",),
+          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. Aluminum (AA CENX CSTM KALU) out -- a different price; "
+               "it stays visible in the industry layer. TSF adds specialty "
+               "metals/met coal (ATI CRS HCC AMR METC SXC)."),
     Theme("Coal", "industry", industries=("Coking Coal", "Thermal Coal")),
     # Industrial Metals removed 2026-08-10: 20 members correlated -0.0161
     # against size-matched random baskets -- its members were less synchronised
@@ -207,8 +235,15 @@ _INDUSTRY_THEMES: list[Theme] = [
     # the industry layer; it just no longer claims to be a theme.
     Theme("Chemicals & Materials", "industry",
           industries=("Specialty Chemicals", "Chemicals", "Agricultural Inputs")),
-    Theme("Agribusiness", "industry",
-          industries=("Agricultural Inputs", "Farm Products", "Farm & Heavy Construction Machinery")),
+    Theme("Agribusiness", "etf", etf=(),
+          extra=(
+                 "DAR", "USFD", "IPI", "ICL", "ADM", "MZTI", "NTR", "TTC", "NEOG", "SYY", "BG",
+                 "PPC", "CENTA", "PAHC", "PFGC", "INGR", "LAND", "SEB", "CTVA", "CF", "DE", "ANDE",
+                 "FMC", "UAN", "ZTS", "VITL", "UNFI", "LNN", "TSN", "MOS", "AGCO", "CNH", "HRL",
+                 "CALM", "ELAN", "SFD", "SMG", "DNA", "BYND",),
+          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. Was Agricultural Inputs + Farm Products + Farm & HEAVY "
+               "Construction Machinery -- CAT (405B) PCAR OSK TEX FSS BLBD came "
+               "along. TSF: food chain + inputs + farm equipment. FDP not in universe."),
     Theme("Consumer Retail", "industry",
           industries=("Specialty Retail", "Internet Retail", "Apparel Retail",
                       "Discount Stores", "Home Improvement Retail")),
@@ -242,8 +277,19 @@ _INDUSTRY_THEMES: list[Theme] = [
     Theme("Financials", "industry",
           industries=("Asset Management", "Capital Markets", "Financial Data & Stock Exchanges",
                       "Credit Services", "Financial Conglomerates")),
-    Theme("Fintech", "industry",
-          industries=("Credit Services", "Financial Data & Stock Exchanges")),
+    Theme("Fintech", "etf", etf=(),
+          extra=(
+                 "JCAP", "CHYM", "PRAA", "RELY", "GWRE", "SHOP", "CRCL", "PAY", "FLYW", "ECPG",
+                 "KSPI", "SE", "CPAY", "NCNO", "WEX", "BULL", "BLSH", "RKT", "GPN", "QTWO", "ENVA",
+                 "BFH", "PGY", "WU", "MITK", "PURR", "HOOD", "NRDS", "INTU", "SYF", "FCFS", "OMF",
+                 "PAYO", "WSE", "PYPL", "COIN", "BILL", "FUTU", "NU", "COF", "GDOT", "SSNC",
+                 "GLXY", "CACC", "ALLY", "MA", "V", "HQY", "EVTC", "XYZ", "BKKT", "FISV", "EEFT",
+                 "VERX", "NAVI", "SOFI", "UPST", "VIRT", "WRLD", "KLAR", "AFRM", "AXP", "EZPW",
+                 "JKHY", "MELI", "PRG", "FIS", "NNI", "DLO", "ACIW", "PAGS", "VYX", "FINV", "MQ",
+                 "QFIN", "DAVE", "RPAY", "STNE", "FOUR", "SECZ", "ETOR", "BLND", "SEZL", "BETR",),
+          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. Was Credit Services + Financial Data (37): exchanges and "
+               "rating agencies, not fintech. TSF's list is payments/lending/"
+               "brokerage software. LC not in universe."),
     Theme("Industrials", "industry",
           industries=("Specialty Industrial Machinery", "Engineering & Construction",
                       "Building Products & Equipment", "Industrial Distribution",
@@ -272,8 +318,10 @@ _INDUSTRY_THEMES: list[Theme] = [
     # peripherals -- hence -0.002 excess. Finviz has no memory industry, so
     # this is the hand-built list of actual memory and storage makers.
     Theme("Memory & Storage", "etf", etf=(),
-          extra=("MU", "WDC", "STX", "SNDK", "NTAP"),
-          note="MU sits in Semiconductors and WDC/STX/SNDK in Computer "
+          extra=(
+                 "MU", "WDC", "STX", "SNDK", "NTAP", "P", "ONTO", "MRAM", "FORM", "SKHY", "PENG",
+                 "LRCX", "RMBS", "SIMO",),
+          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去): P ONTO MRAM FORM SKHY PENG LRCX RMBS SIMO. MU sits in Semiconductors and WDC/STX/SNDK in Computer "
                "Hardware, which is exactly why no industry mapping works."),
     # NOTE: no "Aerospace & Defense" theme here -- it would resolve to exactly
     # the same 50 rows as the "Defense" theme below and show up twice in every
@@ -294,33 +342,70 @@ _ETF_THEMES: list[Theme] = [
     # --- TSF's list ---
     # COMM dropped 2026-08-09: does not resolve in a 5,615-row universe.
     Theme("AI - Datacenters", "etf", etf=(),
-          extra=("VRT", "SMCI", "DLR", "EQIX", "CIEN", "ANET", "MOD",
-                 "GEV", "PWR", "ETN", "VST", "TLN", "CEG", "NBIS", "APLD", "CRWV"),
-          note="No ETF seed: AIQ is broad-AI and dragged in AAPL/AMZN, "
-               "diluting the datacenter read into a megacap read."),
+          extra=(
+                 "NBIS", "SHAZ", "EROC", "CSQR", "WYFI", "DLR", "CRWV", "IREN", "VNET", "BRUN",
+                 "IRM", "BXDC", "GDS", "EQIX", "APLD", "FRMI", "IOND", "DGXX", "GLXY", "AMT",
+                 "WULF", "KEEL", "CORZ", "HUT", "CIFR",),
+          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. TSF's cut: the buildings and hosts (colo/hyperscale "
+               "hosts, DC REITs, miners turned AI hosts); the power and equipment "
+               "side (GEV VRT ETN PWR CEG VST TLN) moved to AI Power & Infrastructure. "
+               "Overlap with our old list was 5/25."),
     # Generation side only. Equipment lives in Grid & Electrification -- they
     # shared "Electrical Equipment & Parts" and both ETFs, overlapping 64%.
-    Theme("AI Power & Infrastructure", "etf", etf=("UTES",),
-          industries=("Utilities - Regulated Electric",
-                      "Utilities - Independent Power Producers")),
+    Theme("AI Power & Infrastructure", "etf", etf=(),
+          extra=(
+                 "PLPC", "NPWR", "OKE", "WOLF", "PSIX", "IPWR", "NVTS", "AEIS", "BDC", "VGNT",
+                 "NVT", "IESC", "JCI", "EMR", "ETN", "VICR", "NNE", "BELFB", "NUAI", "GEV", "PWR",
+                 "ET", "WCC", "ITRI", "SEI", "MTZ", "INIO", "VRT", "FLEX", "MOD", "GNRC", "EME",
+                 "EOSE", "FCEL", "WMB", "AME", "AZZ", "SMR", "XEL", "D", "AEE", "FPS", "CWEN",
+                 "BE", "BW", "ON", "TT", "KMI", "POWI", "CEG", "FTAI", "EVRG", "MYRG", "PCG",
+                 "ETR", "OGE", "DTE", "DUK", "SO", "BWXT", "LII", "ENS", "OKLO", "FIX", "CAT",
+                 "HUBB", "MPWR", "DY", "AMSC", "VMI", "TLN", "HLIO", "PPL", "EXC", "NEE", "POWL",
+                 "AGX", "CARR", "CMI", "STRL", "LNT", "PEG", "AEP", "IDA", "SRE", "AAON", "NI",
+                 "PRIM", "VST", "ROK", "NRG", "FLNC", "INV",),
+          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. Was UTES seed + regulated/IPP utilities (44, incl. HE, "
+               "CIG, ENIC -- nothing to do with AI); TSF's cut is electrical "
+               "equipment + grid contractors + IPPs + nuclear. Overlap was 23/93."),
     Theme("Broad AI Theme", "etf", etf=("AIQ",),
           industries=("Semiconductors", "Software - Infrastructure")),
-    Theme("Cybersecurity", "etf", etf=("CIBR",),
-          extra=("CRWD", "PANW", "ZS", "S", "OKTA", "FTNT", "TENB",
-                 "QLYS", "RPD", "VRNS", "SAIL"),
-          note="CYBR dropped 2026-08-09: no longer resolves; PANW already listed."),
-    Theme("Robotics & Automation", "etf", etf=("ROBO", "DRIV"),
-          industries=("Specialty Industrial Machinery",)),
+    Theme("Cybersecurity", "etf", etf=(),
+          extra=(
+                 "RBRK", "ARQQ", "ZS", "CACI", "QLYS", "FSLY", "RPD", "ESTC", "LDOS", "NTSK", "S",
+                 "CVLT", "FROG", "PANW", "NET", "SAIL", "CRWD", "VRNS", "SAIC", "OKTA", "DT",
+                 "BAH", "RDWR", "AKAM", "CHKP", "BB", "TENB", "OSPN", "GEN", "FFIV", "NTCT",
+                 "FTNT", "TLS", "ATEN", "DDOG",),
+          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. CIBR seed dropped: it brought AVGO (1.9T, dilution) and "
+               "CSCO. TSF adds RBRK RPD CVLT CHKP RDWR OSPN NTCT ATEN BB and the "
+               "gov-IT names (CACI LDOS SAIC BAH) and observability (DDOG DT ESTC)."),
+    Theme("Robotics & Automation", "etf", etf=(),
+          extra=(
+                 "ZBRA", "ALNT", "PATH", "DDD", "TER", "PRLB", "CCXI", "EMR", "VELO", "AEVA",
+                 "PDYN", "PRCT", "RR", "OUST", "OII", "MANH", "ZBH", "TDY", "ARBE", "LIDR", "MBLY",
+                 "NOVT", "LECO", "PH", "HSAI", "AMBA", "MCHP", "BSX", "TSLA", "IOT", "UBER",
+                 "AMBQ", "GMED", "ISRG", "AUR", "NDSN", "IPGP", "PONY", "DE", "CGNX", "XPEV",
+                 "KITT", "CTS", "OMCL", "ROK", "INVZ", "SSYS", "CAT", "SYNA", "PTC", "WRD", "NNDM",
+                 "KDK", "TRMB", "AGCO", "CRNC", "GXO", "HON", "SYM", "KSCP", "APTV", "SERV",
+                 "MBOT", "JBTM", "VPG",),
+          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. Was ROBO/DRIV seed + Specialty Industrial Machinery (60, "
+               "incl. NVDA GOOGL MSFT ILMN and general industrials); overlap with "
+               "TSF was 9/65. Whole list replaced."),
     Theme("Space", "etf", etf=(),
-          extra=("RKLB", "LUNR", "ASTS", "RDW", "PL", "SPIR", "BKSY"),
-          note="ARKX seed removed 2026-08-09 for the same reason as Drones. "
-               "MNTS dropped -- does not resolve."),
+          extra=(
+                 "VOYG", "LUNR", "SATL", "VELO", "RDW", "SIDU", "TSAT", "BKSY", "SPCX", "IRDM",
+                 "VSAT", "GSAT", "AADX", "FLY", "MNTS", "ECHO", "RKLB", "PL", "ASTS", "SPIR",
+                 "SPCE", "MDA", "FJET", "HAWK", "GILT", "YSS",),
+          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. Adds SPCX (was only in Defense), VOYG MDA IRDM VSAT GSAT "
+               "AADX FLY SPCE HAWK GILT YSS. SPCX will trip the dilution rule; it "
+               "is the theme's price-setter, accepted."),
     # No ETF seed. ARKX is a broad space/innovation fund and dragged in AMD,
     # AMZN, GOOG, DE, LHX and SPCX -- seven of thirteen "drone" names were not
     # drones, which is what the +0.017 excess was actually measuring.
     Theme("Drones", "etf", etf=(),
-          extra=("KTOS", "AVAV", "ONDS", "UMAC", "RCAT", "EH"),
-          note="Pure-play list; no ETF seed (ARKX dragged in AMD/AMZN/GOOG). "
+          extra=(
+                 "KTOS", "AVAV", "ONDS", "UMAC", "RCAT", "EH", "BETA", "ZENA", "AIRO", "ACHR",
+                 "SWMR", "AVEX", "EMBJ", "UAVS", "PDYN", "MRCY", "ESLT", "AMPX", "DPRO", "JOBY",
+                 "SRFM", "EVTL",),
+          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去): BETA ZENA AIRO ACHR SWMR AVEX EMBJ UAVS PDYN MRCY ESLT AMPX DPRO JOBY SRFM EVTL. Pure-play list; no ETF seed (ARKX dragged in AMD/AMZN/GOOG). "
                "DPRO, UAVS and AIRO were considered and dropped 2026-08-09: "
                "all three sit below the theme-tracking liquidity floor "
                "($54-268M cap), so their prints would shape a reading they "
@@ -329,20 +414,41 @@ _ETF_THEMES: list[Theme] = [
     Theme("Solar", "etf", etf=("TAN",), industries=("Solar",)),
     Theme("Clean Energy", "etf", etf=("ICLN",),
           industries=("Solar", "Utilities - Renewable")),
-    Theme("Uranium & Nuclear Energy", "etf", etf=("URA",), industries=("Uranium",)),
+    Theme("Uranium & Nuclear Energy", "etf", etf=(),
+          extra=(
+                 "GHM", "NUCL", "UROY", "UUUU", "ISOU", "EMR", "AMRC", "XE", "NKLR", "IMSR", "UEC",
+                 "NNE", "FLR", "GEV", "FLS", "HII", "MTZ", "NXE", "J", "LEU", "DNN", "CCJ", "EU",
+                 "PWR", "TLN", "CEG", "URG", "OKLO", "SMR", "SOLS", "MIR", "BWXT", "ASPI", "LTBR",
+                 "VST", "CW", "NRG", "AMTM", "ACM",),
+          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. TSF's 50 minus the 11 regulated utilities (PCG XEL ETR D "
+               "PNW DTE DUK SO NEE PEG AEP -- they belong to Utilities and would "
+               "dilute a nuclear read); IPPs with nuclear fleets (CEG VST TLN NRG) "
+               "kept. Was URA seed + Uranium industry (8)."),
     Theme("Lithium & Battery Tech", "etf", etf=("LIT",),
-          extra=("ALB", "LAC", "SLI", "ELVR", "ENS", "EOSE", "FLNC", "AMPX"),
-          note="PLL -> ELVR 2026-08-09: PLL gone, ELVR verified in universe. "
+          extra=(
+                 "ALB", "SQM", "LAC", "SLI", "ELVR", "ENS", "EOSE", "FLNC", "AMPX", "CBAT", "WWR",
+                 "HBM", "LOT", "NRGV", "XPON", "TECK", "FCX", "STI", "FLUX", "ELBM", "QS", "BHP",
+                 "ABAT", "NMG", "DFLI", "VFS", "XPEV", "RIVN", "NIO", "LCID", "ATLX", "SLDP",
+                 "SGML", "STEM", "LAR", "MVST", "IONR", "SES", "PSNY", "LI", "ELVA", "ENVX",),
+          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去): CBAT WWR HBM LOT NRGV XPON TECK FCX STI FLUX ELBM QS BHP ABAT NMG DFLI VFS XPEV RIVN NIO LCID ATLX SLDP SGML STEM LAR MVST IONR SES PSNY LI ELVA ENVX. SQM added 2026-08-18 (was mis-filed under Rare Earth via REMX). PLL -> ELVR 2026-08-09: PLL gone, ELVR verified in universe. "
                "ENS (EnerSys) is a genuine battery maker but weighted to "
                "industrial lead-acid, not lithium -- kept because the theme is "
                "named 'Battery Tech', but it is the loosest fit in the list."),
-    Theme("Rare Earth Metals", "etf", etf=("REMX",),
-          extra=("MP", "UUUU", "TMC", "IDR", "USAR", "CRML")),
-    Theme("Copper Miners", "etf", etf=("COPX",), industries=("Copper",)),
+    Theme("Rare Earth Metals", "etf", etf=(),
+          extra=(
+                 "ALOY", "MP", "AREC", "METC", "UUUU", "IDR", "USAR", "NB", "CRML", "UAMY",),
+          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. REMX seed dropped: it brought ALB SQM (lithium) and TMC "
+               "(deep-sea nodules)."),
+    Theme("Copper Miners", "etf", etf=("COPX",), industries=("Copper",),
+          extra=(
+                 "TMQ", "WRN", "BHP", "RIO", "VALE",),
+          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去): TMQ WRN BHP RIO VALE."),
     Theme("Crypto Equities", "etf", etf=(),
-          extra=("COIN", "MARA", "RIOT", "CLSK", "HUT", "CIFR", "WULF", "IREN",
-                 "HIVE", "CORZ", "GLXY", "BMNR", "SBET", "BTDR", "MSTR"),
-          note="No ETF seed: BLOK is diversified fintech and pulled in AMD. "
+          extra=(
+                 "COIN", "MARA", "RIOT", "CLSK", "HUT", "CIFR", "WULF", "IREN", "HIVE", "CORZ",
+                 "GLXY", "BMNR", "SBET", "BTDR", "MSTR", "FIGR", "CRCL", "BTBT", "PURR", "BLSH",
+                 "ABTC", "HOOD", "XYZ", "BKKT", "DGXX", "KEEL", "ETOR", "GPUS",),
+          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去): FIGR CRCL BTBT PURR BLSH ABTC HOOD XYZ BKKT DGXX KEEL ETOR GPUS. No ETF seed: BLOK is diversified fintech and pulled in AMD. "
                "BITF dropped 2026-08-09: does not resolve."),
     # Was 60% the same names as Crypto Equities. Bitcoin the *asset* and
     # bitcoin *stocks* are different reads -- spot leads, equities amplify.
