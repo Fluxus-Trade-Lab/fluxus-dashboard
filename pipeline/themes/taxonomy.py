@@ -165,6 +165,15 @@ class Theme:
     #   factor -- a rule over attributes (size, growth, beta); no common-driver test
     #   proxy  -- the fund IS the instrument
     kind: str = ""
+    # Per-theme liquidity floor (market cap, dollar volume) for hand-written
+    # `extra` names, overriding the global $1B / $2M tradeable gate. Only for
+    # a theme whose real constituents live below the gate (Rare Earth: 7 of
+    # TSF's 10 are $0.5-1B). Members admitted this way are still real rows;
+    # the reading just admits it rests on thinner names.
+    floor: tuple[float, float] | None = None
+    # Publish even without a co-movement verdict. Only by the operator's
+    # explicit call; the theme still ships its real `validation` field.
+    publish_override: bool = False
 
 
 # --------------------------------------------------------------------------
@@ -315,14 +324,10 @@ _INDUSTRY_THEMES: list[Theme] = [
     # "Diversified Tech" read +0.016 on 93% coverage -- the label was doing
     # all the work. Split into the three components with enough tradeable
     # names to score; Consumer Electronics (4) folds into Computer Hardware.
-    Theme("Electronic Components", "industry",
-          industries=("Electronic Components",)),
     # Computer Hardware removed 2026-08-10: +0.0005 on 20 members -- effectively
     # zero. Consumer Electronics had been folded in here and now has no theme
     # home, which is the honest outcome: neither label describes a group the
     # market prices together.
-    Theme("IT Services", "industry",
-          industries=("Information Technology Services",)),
     # Was mapped to the whole Computer Hardware industry, which is servers and
     # peripherals -- hence -0.002 excess. Finviz has no memory industry, so
     # this is the hand-built list of actual memory and storage makers.
@@ -375,8 +380,6 @@ _ETF_THEMES: list[Theme] = [
           note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. Was UTES seed + regulated/IPP utilities (44, incl. HE, "
                "CIG, ENIC -- nothing to do with AI); TSF's cut is electrical "
                "equipment + grid contractors + IPPs + nuclear. Overlap was 23/93."),
-    Theme("Broad AI Theme", "etf", etf=("AIQ",),
-          industries=("Semiconductors", "Software - Infrastructure")),
     Theme("Cybersecurity", "etf", etf=(),
           extra=(
                  "RBRK", "ARQQ", "ZS", "CACI", "QLYS", "FSLY", "RPD", "ESTC", "LDOS", "NTSK", "S",
@@ -443,7 +446,7 @@ _ETF_THEMES: list[Theme] = [
                "ENS (EnerSys) is a genuine battery maker but weighted to "
                "industrial lead-acid, not lithium -- kept because the theme is "
                "named 'Battery Tech', but it is the loosest fit in the list."),
-    Theme("Rare Earth Metals", "etf", etf=(),
+    Theme("Rare Earth Metals", "etf", etf=(), floor=(2e8, 1e6), publish_override=True,
           extra=(
                  "ALOY", "MP", "AREC", "METC", "UUUU", "IDR", "USAR", "NB", "CRML", "UAMY",),
           note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. REMX seed dropped: it brought ALB SQM (lithium) and TMC "
@@ -464,7 +467,6 @@ _ETF_THEMES: list[Theme] = [
     Theme("Bitcoin", "proxy", etf=("IBIT",)),
     Theme("China Tech", "proxy", etf=("KWEB",),
           note="The fund is the instrument; its HK holdings are not US-tradeable."),
-    Theme("Speculative Tech", "etf", etf=("ARKK", "ARKF")),
     Theme("Tech Mega Caps", "etf", etf=("MGK",), exclude=("LLY",),
           note="MGK is a mega-cap GROWTH fund, not a tech fund, so its top "
                "holdings can include growth names that are not technology. "
@@ -569,10 +571,6 @@ _ETF_THEMES: list[Theme] = [
                  "HRL", "HLF", "KHC", "MO", "BTI", "FMX", "CALM", "BUD", "PFGC", "NUS", "DOLE",
                  "WMK", "POST", "VITL", "SFD", "UVV",),
           note="TSF Thematic Focus list, added 2026-08-18 (Andy: 要的); data/reference/tsf_themes_2026-08-18/full.json. Not in universe: FDP CVGW."),
-    Theme("Grid & Electrification", "etf", source="fluxus", etf=("PAVE",),
-          industries=("Electrical Equipment & Parts",)),
-    Theme("Reshoring / Industrial Renaissance", "etf", source="fluxus", etf=("PAVE",),
-          industries=("Engineering & Construction", "Metal Fabrication")),
     Theme("India", "proxy", source="fluxus", etf=("INDA",)),
     Theme("Japan", "proxy", source="fluxus", etf=("EWJ",)),
     Theme("Brazil", "proxy", source="fluxus", etf=("EWZ",)),
@@ -615,8 +613,8 @@ SECTOR_NAMES: frozenset = frozenset({
     "Software", "Regional Banks", "Oil & Gas", "Financials", "Industrials",
     "Real Estate", "Energy", "Insurance", "Utilities",
     "Travel & Leisure", "Consumer Retail", "Chemicals & Materials",
-    "Transportation & Logistics", "Banks - Money Center", "Electronic Components",
-    "IT Services", "Agribusiness", "Beverages",
+    "Transportation & Logistics", "Banks - Money Center",
+    "Agribusiness", "Beverages",
     "Household & Personal Products", "Tobacco", "Consumer Staples",
     # Homebuilders, Semiconductors Broad, Gold/Silver/Copper/Steel/Coal stay
     # `theme`: single-industry groups with one price/rate driver, traded as

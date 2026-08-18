@@ -219,9 +219,23 @@ def resolve_theme_members(
     theme: taxonomy.Theme,
     universe: Sequence[Mapping[str, Any]],
     holdings: Mapping[str, Sequence[str]],
+    full_universe: Sequence[Mapping[str, Any]] | None = None,
 ) -> List[Mapping[str, Any]]:
-    """Resolve a theme's constituent rows by its declared method."""
+    """Resolve a theme's constituent rows by its declared method.
+
+    `full_universe` (all rows, not just tradeable) is consulted only for the
+    `extra` names of a theme that declares its own `floor` -- Rare Earth's
+    real constituents sit under the $1B gate (2026-08-18)."""
     by_ticker = {str(r.get("ticker")): r for r in universe if r.get("ticker")}
+    if theme.floor and full_universe:
+        min_cap, min_dv = theme.floor
+        for r in full_universe:
+            t = str(r.get("ticker") or "")
+            if t and t not in by_ticker:
+                cap = r.get("market_cap") or 0
+                dv = (r.get("avg_volume") or 0) * (r.get("close") or 0)
+                if cap >= min_cap and dv >= min_dv:
+                    by_ticker[t] = r
 
     if theme.method == "proxy":
         # The fund itself is the instrument; there are no constituents to
@@ -268,6 +282,7 @@ def build_themes(
     benchmark: Mapping[str, Any],
     holdings: Mapping[str, Sequence[str]],
     etf_rows: Mapping[str, Mapping[str, Any]] | None = None,
+    full_universe: Sequence[Mapping[str, Any]] | None = None,
 ) -> tuple[List[Dict[str, Any]], List[Dict[str, str]]]:
     """Score every theme.  Returns (scored, skipped-with-reason)."""
     scored: List[Dict[str, Any]] = []
@@ -315,7 +330,7 @@ def build_themes(
             scored.append(payload)
             continue
 
-        members = resolve_theme_members(theme, universe, holdings)
+        members = resolve_theme_members(theme, universe, holdings, full_universe)
 
         if len(members) < MIN_THEME_MEMBERS:
             skipped.append({
@@ -613,13 +628,14 @@ def state_counts(groups: Sequence[Mapping[str, Any]]) -> Dict[str, int]:
 
 def run() -> Dict[str, Any]:
     universe = load_universe()
+    full_universe = load_universe(tradeable_only=False)     # for per-theme floors
     benchmark = load_benchmark()
     holdings = load_holdings()
     etf_rows = {r["ticker"]: r for r in json.loads(ETF_PATH.read_text())}
 
     verdicts = load_verdicts()
     industries = build_industries(universe, benchmark)
-    themes, skipped = build_themes(universe, benchmark, holdings, etf_rows)
+    themes, skipped = build_themes(universe, benchmark, holdings, etf_rows, full_universe=full_universe)
 
     for t in themes:
         v = verdicts.get(t["group"], {})
@@ -640,7 +656,8 @@ def run() -> Dict[str, Any]:
         t["publish"] = bool(
             t.get("measurable", True)
             and (t["method"] in ("proxy", "rule")
-                 or v.get("verdict") in ("real", "weak"))
+                 or v.get("verdict") in ("real", "weak")
+                 or taxonomy.by_name().get(t["group"], taxonomy.Theme("", "etf")).publish_override)
         )
     # One session label for the whole payload, computed once: the ribbon
     # excludes it from its calendar and the payload ships it as `date`.

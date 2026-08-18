@@ -5825,7 +5825,7 @@
       "perf_6m": 1.131921,
       "perf_1y": 1.951308,
       "validation": "definitional",
-      "validation_excess": -0.0519,
+      "validation_excess": -0.0438,
       "publish": true
     },
     {
@@ -5947,7 +5947,7 @@
       "perf_6m": 0.795734,
       "perf_1y": 1.348161,
       "validation": "definitional",
-      "validation_excess": -0.0264,
+      "validation_excess": -0.0277,
       "publish": true
     },
     {
@@ -6270,7 +6270,7 @@
       "perf_6m": 0.724149,
       "perf_1y": 0.989201,
       "validation": "definitional",
-      "validation_excess": -0.0216,
+      "validation_excess": -0.0183,
       "publish": true
     },
     {
@@ -6336,7 +6336,7 @@
       "perf_6m": 0.523137,
       "perf_1y": 0.25068,
       "validation": "real",
-      "validation_excess": 0.2064,
+      "validation_excess": 0.1278,
       "publish": true
     },
     {
@@ -6439,9 +6439,9 @@
       "perf_3m": 0.341391,
       "perf_6m": 0.300736,
       "perf_1y": -0.111716,
-      "validation": null,
-      "validation_excess": null,
-      "publish": false
+      "validation": "real",
+      "validation_excess": 0.2091,
+      "publish": true
     },
     {
       "rs_0_1w": 0.13842,
@@ -6488,7 +6488,7 @@
       "perf_6m": 0.986235,
       "perf_1y": 1.891756,
       "validation": "real",
-      "validation_excess": 0.3412,
+      "validation_excess": 0.2847,
       "publish": true
     },
     {
@@ -6767,7 +6767,7 @@
       "perf_6m": 0.238007,
       "perf_1y": -0.066536,
       "validation": "real",
-      "validation_excess": 0.0887,
+      "validation_excess": 0.0897,
       "publish": true
     },
     {
@@ -6822,55 +6822,6 @@
       "perf_1y": 0.541741,
       "validation": "real",
       "validation_excess": 0.3892,
-      "publish": true
-    },
-    {
-      "rs_0_1w": 0.005833,
-      "rs_1w_1m": 0.041976,
-      "rs_1m_3m": 0.079263,
-      "rs_3m_6m": null,
-      "excess_3m": 0.135109,
-      "excess_1m": 0.048393,
-      "rs_accel": -0.03087,
-      "rs_accel_rate": 0.009652,
-      "state": "Weakening",
-      "perf_1d": -0.00685,
-      "persistence": 2,
-      "persistence_of": 5,
-      "ext_share_4": 0.1538,
-      "ext_share_7": 0.0,
-      "ext_median": 1.0137,
-      "ext_n": 13,
-      "group": "Speculative Tech",
-      "method": "etf",
-      "source": "tsf",
-      "kind": "theme",
-      "members": 14,
-      "measurable": true,
-      "tickers": [
-        "AMD",
-        "AMZN",
-        "COIN",
-        "CRCL",
-        "CRSP",
-        "HOOD",
-        "PLTR",
-        "SHOP",
-        "SPCX",
-        "TEM",
-        "TOST",
-        "TSLA",
-        "TXG",
-        "XYZ"
-      ],
-      "needs_manual": false,
-      "perf_1w": 0.008571,
-      "perf_1m": 0.089601,
-      "perf_3m": 0.183861,
-      "perf_6m": 0.275848,
-      "perf_1y": -0.008504,
-      "validation": "real",
-      "validation_excess": 0.1998,
       "publish": true
     },
     {
@@ -6946,7 +6897,7 @@
       "perf_6m": 0.164218,
       "perf_1y": 0.735819,
       "validation": "real",
-      "validation_excess": 0.0524,
+      "validation_excess": 0.0516,
       "publish": true
     },
     {
@@ -6960,7 +6911,7 @@
       "rs_accel_rate": 0.037372,
       "state": "Leading",
       "perf_1d": 0.006818,
-      "persistence": 3,
+      "persistence": 2,
       "persistence_of": 3,
       "group": "Taiwan",
       "method": "proxy",
@@ -7195,7 +7146,7 @@
       "perf_6m": 0.114707,
       "perf_1y": 0.31553,
       "validation": "real",
-      "validation_excess": 0.3656,
+      "validation_excess": 0.3647,
       "publish": true
     },
     {
@@ -7469,7 +7420,7 @@
       "perf_6m": 0.114227,
       "perf_1y": 0.16758,
       "validation": "real",
-      "validation_excess": 0.1937,
+      "validation_excess": 0.1913,
       "publish": true
     },
     {
@@ -7576,7 +7527,7 @@
       "perf_6m": 0.137584,
       "perf_1y": -0.039502,
       "validation": "real",
-      "validation_excess": 0.1386,
+      "validation_excess": 0.0924,
       "publish": true
     },
     {
@@ -7717,7 +7668,7 @@
       "perf_6m": -0.034737,
       "perf_1y": -0.003197,
       "validation": "real",
-      "validation_excess": 0.0563,
+      "validation_excess": 0.0569,
       "publish": true
     },
     {
@@ -7813,7 +7764,7 @@
       "perf_6m": -0.075294,
       "perf_1y": -0.022821,
       "validation": "real",
-      "validation_excess": 0.2838,
+      "validation_excess": 0.2627,
       "publish": true
     },
     {
@@ -7909,8 +7860,8 @@
       "perf_3m": 0.121409,
       "perf_6m": 0.002914,
       "perf_1y": 0.338222,
-      "validation": "real",
-      "validation_excess": 0.0673,
+      "validation": "weak",
+      "validation_excess": 0.0287,
       "publish": true
     },
     {
@@ -7962,7 +7913,7 @@
       "perf_6m": 0.12011,
       "perf_1y": 0.533371,
       "validation": "real",
-      "validation_excess": 0.2558,
+      "validation_excess": 0.2444,
       "publish": true
     },
     {
@@ -8066,7 +8017,7 @@
       "perf_6m": 2.3e-05,
       "perf_1y": 0.095672,
       "validation": "real",
-      "validation_excess": 0.1754,
+      "validation_excess": 0.1781,
       "publish": true
     },
     {
@@ -8178,7 +8129,7 @@
       "perf_6m": 0.160131,
       "perf_1y": 0.372727,
       "validation": "definitional",
-      "validation_excess": 0.13,
+      "validation_excess": 0.1283,
       "publish": true
     },
     {
@@ -8238,178 +8189,6 @@
       "perf_1y": null,
       "validation": null,
       "validation_excess": null,
-      "publish": true
-    },
-    {
-      "rs_0_1w": 0.006558,
-      "rs_1w_1m": 0.018062,
-      "rs_1m_3m": 0.011391,
-      "rs_3m_6m": null,
-      "excess_3m": 0.037367,
-      "excess_1m": 0.02504,
-      "rs_accel": 0.013649,
-      "rs_accel_rate": 0.019381,
-      "state": "Leading",
-      "perf_1d": -0.0131,
-      "persistence": 1,
-      "persistence_of": 5,
-      "ext_share_4": 0.1259,
-      "ext_share_7": 0.0,
-      "ext_median": 0.4404,
-      "ext_n": 135,
-      "group": "Broad AI Theme",
-      "method": "etf",
-      "source": "tsf",
-      "kind": "theme",
-      "members": 137,
-      "measurable": true,
-      "tickers": [
-        "AAPL",
-        "ACIW",
-        "ADI",
-        "AEVA",
-        "AI",
-        "AIP",
-        "AKAM",
-        "ALAB",
-        "ALGM",
-        "AMBQ",
-        "AMD",
-        "AMZN",
-        "APPN",
-        "ARM",
-        "ASX",
-        "ATEN",
-        "AVGO",
-        "AVPT",
-        "BAND",
-        "BB",
-        "BLSH",
-        "BLZE",
-        "BOX",
-        "BRUN",
-        "CALX",
-        "CBRS",
-        "CHKP",
-        "CLBT",
-        "CORZ",
-        "CPAY",
-        "CRDO",
-        "CRUS",
-        "CRWD",
-        "CRWV",
-        "CSCO",
-        "DBX",
-        "DIOD",
-        "DLO",
-        "DOCN",
-        "DOX",
-        "EEFT",
-        "EVTC",
-        "FFIV",
-        "FIVN",
-        "FLYW",
-        "FOUR",
-        "FTNT",
-        "GCT",
-        "GDDY",
-        "GEN",
-        "GFS",
-        "GPN",
-        "GTLB",
-        "HIMX",
-        "IMOS",
-        "INDI",
-        "INFQ",
-        "INTC",
-        "IOT",
-        "KSPI",
-        "LASR",
-        "LSCC",
-        "MCHP",
-        "MDB",
-        "MPWR",
-        "MQ",
-        "MRVL",
-        "MSFT",
-        "MTSI",
-        "MU",
-        "MXL",
-        "NBIS",
-        "NET",
-        "NN",
-        "NTAP",
-        "NTCT",
-        "NTNX",
-        "NTSK",
-        "NVDA",
-        "NVTS",
-        "NXPI",
-        "OKTA",
-        "ON",
-        "ORCL",
-        "PAGS",
-        "PANW",
-        "PATH",
-        "PAY",
-        "PAYO",
-        "PAYP",
-        "PGY",
-        "PI",
-        "PICS",
-        "PLTR",
-        "POET",
-        "POWI",
-        "PRGS",
-        "QCOM",
-        "QLYS",
-        "QRVO",
-        "RAMP",
-        "RBRK",
-        "RDWR",
-        "RELY",
-        "RMBS",
-        "RXT",
-        "RZLV",
-        "S",
-        "SAIL",
-        "SIMO",
-        "SITM",
-        "SKHY",
-        "SLAB",
-        "SMTC",
-        "SNPS",
-        "STM",
-        "STNE",
-        "SWKS",
-        "SYNA",
-        "TDC",
-        "TENB",
-        "TOST",
-        "TSEM",
-        "TSM",
-        "TWLO",
-        "TXN",
-        "UMC",
-        "VRNS",
-        "VRSN",
-        "VSH",
-        "WEX",
-        "WIX",
-        "WOLF",
-        "XNDU",
-        "XYZ",
-        "ZETA",
-        "ZS"
-      ],
-      "needs_manual": false,
-      "perf_1w": 0.009296,
-      "perf_1m": 0.066248,
-      "perf_3m": 0.086119,
-      "perf_6m": 0.328876,
-      "perf_1y": 0.325719,
-      "validation": "real",
-      "validation_excess": 0.0895,
       "publish": true
     },
     {
@@ -10260,7 +10039,7 @@
       "perf_6m": 0.090529,
       "perf_1y": 0.030007,
       "validation": "real",
-      "validation_excess": 0.1339,
+      "validation_excess": 0.1315,
       "publish": true
     },
     {
@@ -10350,7 +10129,7 @@
       "perf_6m": 0.100955,
       "perf_1y": 0.325497,
       "validation": "real",
-      "validation_excess": 0.1129,
+      "validation_excess": 0.1173,
       "publish": true
     },
     {
@@ -10432,82 +10211,6 @@
       "perf_1y": 0.427248,
       "validation": "real",
       "validation_excess": 0.1133,
-      "publish": true
-    },
-    {
-      "rs_0_1w": -0.01445,
-      "rs_1w_1m": 0.054303,
-      "rs_1m_3m": -0.013612,
-      "rs_3m_6m": null,
-      "excess_3m": 0.024244,
-      "excess_1m": 0.038663,
-      "rs_accel": 0.052275,
-      "rs_accel_rate": 0.045468,
-      "state": "Leading",
-      "perf_1d": -0.0185,
-      "persistence": 0,
-      "persistence_of": 5,
-      "ext_share_4": 0.075,
-      "ext_share_7": 0.0,
-      "ext_median": 0.4506,
-      "ext_n": 40,
-      "group": "IT Services",
-      "method": "industry",
-      "source": "tsf",
-      "kind": "sector",
-      "members": 41,
-      "measurable": true,
-      "tickers": [
-        "ACN",
-        "APLD",
-        "BBAI",
-        "BR",
-        "CACI",
-        "CDW",
-        "CHRN",
-        "CIFR",
-        "CLVT",
-        "CNXC",
-        "CSQR",
-        "CTSH",
-        "DXC",
-        "EFOR",
-        "EPAM",
-        "EXLS",
-        "FIS",
-        "FISV",
-        "G",
-        "GDS",
-        "GIB",
-        "GLOB",
-        "IBM",
-        "INFY",
-        "INGM",
-        "INOD",
-        "IT",
-        "JKHY",
-        "KD",
-        "KEEL",
-        "LDOS",
-        "PENG",
-        "PONY",
-        "PSN",
-        "SAIC",
-        "SHAZ",
-        "VNET",
-        "VYX",
-        "WIT",
-        "WSE",
-        "WYFI"
-      ],
-      "needs_manual": false,
-      "perf_1w": -0.011712,
-      "perf_1m": 0.079871,
-      "perf_3m": 0.072995,
-      "perf_6m": -0.094509,
-      "perf_1y": -0.225664,
-      "validation": "weak",
-      "validation_excess": 0.0472,
       "publish": true
     },
     {
@@ -11626,7 +11329,7 @@
       "perf_6m": 0.132188,
       "perf_1y": 0.221445,
       "validation": "definitional",
-      "validation_excess": -0.0202,
+      "validation_excess": -0.0236,
       "publish": true
     },
     {
@@ -11939,7 +11642,7 @@
       "perf_6m": 0.316187,
       "perf_1y": 0.607261,
       "validation": "definitional",
-      "validation_excess": 0.0002,
+      "validation_excess": -0.0122,
       "publish": true
     },
     {
@@ -12167,7 +11870,7 @@
       "perf_6m": -0.013042,
       "perf_1y": 0.136258,
       "validation": "real",
-      "validation_excess": 0.1642,
+      "validation_excess": 0.1641,
       "publish": true
     },
     {
@@ -12328,7 +12031,7 @@
       "perf_6m": 0.081325,
       "perf_1y": 0.159361,
       "validation": "real",
-      "validation_excess": 0.2381,
+      "validation_excess": 0.2432,
       "publish": true
     },
     {
@@ -12433,128 +12136,7 @@
       "perf_6m": 0.036209,
       "perf_1y": -0.005517,
       "validation": "real",
-      "validation_excess": 0.0831,
-      "publish": true
-    },
-    {
-      "rs_0_1w": 0.034725,
-      "rs_1w_1m": 0.006632,
-      "rs_1m_3m": -0.053476,
-      "rs_3m_6m": null,
-      "excess_3m": -0.014726,
-      "excess_1m": 0.042939,
-      "rs_accel": 0.096415,
-      "rs_accel_rate": 0.069944,
-      "state": "Improving",
-      "perf_1d": 0.0211,
-      "persistence": 3,
-      "persistence_of": 5,
-      "ext_share_4": 0.0,
-      "ext_share_7": 0.0,
-      "ext_median": 0.4588,
-      "ext_n": 23,
-      "group": "Electronic Components",
-      "method": "industry",
-      "source": "tsf",
-      "kind": "sector",
-      "members": 23,
-      "measurable": true,
-      "tickers": [
-        "ALNT",
-        "APH",
-        "BELFA",
-        "BELFB",
-        "BHE",
-        "CLS",
-        "CTS",
-        "FLEX",
-        "FN",
-        "GLW",
-        "JBL",
-        "KN",
-        "LFUS",
-        "OLED",
-        "OSIS",
-        "OUST",
-        "PLXS",
-        "RAL",
-        "ROG",
-        "SANM",
-        "TEL",
-        "TTMI",
-        "VICR"
-      ],
-      "needs_manual": false,
-      "perf_1w": 0.037464,
-      "perf_1m": 0.084146,
-      "perf_3m": 0.034025,
-      "perf_6m": 0.331591,
-      "perf_1y": 0.887332,
-      "validation": "real",
-      "validation_excess": 0.1892,
-      "publish": true
-    },
-    {
-      "rs_0_1w": 0.008318,
-      "rs_1w_1m": 0.000951,
-      "rs_1m_3m": -0.025136,
-      "rs_3m_6m": null,
-      "excess_3m": -0.016745,
-      "excess_1m": 0.009599,
-      "rs_accel": 0.034735,
-      "rs_accel_rate": 0.022201,
-      "state": "Improving",
-      "perf_1d": -0.0007,
-      "persistence": 1,
-      "persistence_of": 5,
-      "ext_share_4": 0.0357,
-      "ext_share_7": 0.0,
-      "ext_median": 0.4259,
-      "ext_n": 28,
-      "group": "Grid & Electrification",
-      "method": "etf",
-      "source": "fluxus",
-      "kind": "theme",
-      "members": 28,
-      "measurable": true,
-      "tickers": [
-        "AEIS",
-        "AMPX",
-        "ATKR",
-        "AYI",
-        "BE",
-        "CSX",
-        "DE",
-        "ENR",
-        "ENS",
-        "EOSE",
-        "ETN",
-        "FCEL",
-        "FPS",
-        "HAYW",
-        "HUBB",
-        "HWM",
-        "NSC",
-        "NUE",
-        "NVT",
-        "PLPC",
-        "PLUG",
-        "POWL",
-        "PWR",
-        "ROK",
-        "TE",
-        "TT",
-        "UNP",
-        "VRT"
-      ],
-      "needs_manual": false,
-      "perf_1w": 0.011057,
-      "perf_1m": 0.050807,
-      "perf_3m": 0.032007,
-      "perf_6m": 0.153548,
-      "perf_1y": 0.606103,
-      "validation": "real",
-      "validation_excess": 0.1362,
+      "validation_excess": 0.0676,
       "publish": true
     },
     {
@@ -12679,9 +12261,9 @@
       "perf_3m": 0.031086,
       "perf_6m": -0.036769,
       "perf_1y": -0.020714,
-      "validation": null,
-      "validation_excess": null,
-      "publish": false
+      "validation": "weak",
+      "validation_excess": 0.022,
+      "publish": true
     },
     {
       "rs_0_1w": -0.01292,
@@ -12753,7 +12335,7 @@
       "rs_accel_rate": 0.071132,
       "state": "Improving",
       "perf_1d": 0.0103,
-      "persistence": 1,
+      "persistence": 2,
       "persistence_of": 5,
       "ext_share_4": 0.1776,
       "ext_share_7": 0.0,
@@ -12926,7 +12508,7 @@
       "perf_6m": 0.209348,
       "perf_1y": 0.518973,
       "validation": "real",
-      "validation_excess": 0.1838,
+      "validation_excess": 0.1784,
       "publish": true
     },
     {
@@ -13021,87 +12603,6 @@
       "publish": true
     },
     {
-      "rs_0_1w": 0.008462,
-      "rs_1w_1m": -0.014875,
-      "rs_1m_3m": -0.025121,
-      "rs_3m_6m": null,
-      "excess_3m": -0.032299,
-      "excess_1m": -0.006254,
-      "rs_accel": 0.018867,
-      "rs_accel_rate": 0.00634,
-      "state": "Improving",
-      "perf_1d": 0.0085,
-      "persistence": 0,
-      "persistence_of": 5,
-      "ext_share_4": 0.0435,
-      "ext_share_7": 0.0,
-      "ext_median": 1.1717,
-      "ext_n": 46,
-      "group": "Reshoring / Industrial Renaissance",
-      "method": "etf",
-      "source": "fluxus",
-      "kind": "theme",
-      "members": 46,
-      "measurable": true,
-      "tickers": [
-        "ACA",
-        "ACM",
-        "AGX",
-        "AMRC",
-        "APG",
-        "ATI",
-        "CDNL",
-        "CMC",
-        "CRS",
-        "CSX",
-        "DE",
-        "DY",
-        "ECG",
-        "EME",
-        "ESAB",
-        "ETN",
-        "EXPO",
-        "FER",
-        "FIX",
-        "FLR",
-        "GPGI",
-        "GVA",
-        "HWM",
-        "IESC",
-        "J",
-        "KBR",
-        "LGN",
-        "MLI",
-        "MTZ",
-        "MYRG",
-        "NSC",
-        "NUE",
-        "PRIM",
-        "PRLB",
-        "PWR",
-        "ROAD",
-        "ROK",
-        "RYZ",
-        "STN",
-        "STRL",
-        "TPC",
-        "TT",
-        "TTEK",
-        "UNP",
-        "WLDN",
-        "WOR"
-      ],
-      "needs_manual": false,
-      "perf_1w": 0.011201,
-      "perf_1m": 0.034954,
-      "perf_3m": 0.016453,
-      "perf_6m": 0.098538,
-      "perf_1y": 0.314239,
-      "validation": "real",
-      "validation_excess": 0.1736,
-      "publish": true
-    },
-    {
       "rs_0_1w": -0.003091,
       "rs_1w_1m": 0.03558,
       "rs_1m_3m": -0.062367,
@@ -13182,7 +12683,7 @@
       "perf_6m": 0.047919,
       "perf_1y": 0.150442,
       "validation": "real",
-      "validation_excess": 0.1992,
+      "validation_excess": 0.111,
       "publish": true
     },
     {
@@ -13227,7 +12728,7 @@
       "perf_6m": 0.067577,
       "perf_1y": 0.876369,
       "validation": "real",
-      "validation_excess": 0.3901,
+      "validation_excess": 0.3676,
       "publish": true
     },
     {
@@ -13350,7 +12851,7 @@
       "perf_6m": 0.428118,
       "perf_1y": 1.024087,
       "validation": "real",
-      "validation_excess": 0.2601,
+      "validation_excess": 0.2486,
       "publish": true
     },
     {
@@ -13484,7 +12985,7 @@
       "perf_6m": 0.144952,
       "perf_1y": 0.360834,
       "validation": "real",
-      "validation_excess": 0.1222,
+      "validation_excess": 0.1207,
       "publish": true
     },
     {
@@ -13599,7 +13100,7 @@
       "perf_6m": -0.007227,
       "perf_1y": 0.121916,
       "validation": "real",
-      "validation_excess": 0.1671,
+      "validation_excess": 0.1714,
       "publish": true
     },
     {
@@ -13613,7 +13114,7 @@
       "rs_accel_rate": 0.391471,
       "state": "Improving",
       "perf_1d": 0.01765,
-      "persistence": 2,
+      "persistence": 3,
       "persistence_of": 5,
       "ext_share_4": 0.3,
       "ext_share_7": 0.0,
@@ -13664,7 +13165,7 @@
       "perf_6m": -0.111699,
       "perf_1y": 0.638278,
       "validation": "real",
-      "validation_excess": 0.3504,
+      "validation_excess": 0.3892,
       "publish": true
     },
     {
@@ -13733,7 +13234,7 @@
       "perf_6m": -0.040672,
       "perf_1y": 0.0721,
       "validation": "real",
-      "validation_excess": 0.1177,
+      "validation_excess": 0.0657,
       "publish": true
     },
     {
@@ -13834,8 +13335,8 @@
       "perf_3m": -0.006599,
       "perf_6m": 0.331591,
       "perf_1y": 0.596958,
-      "validation": "real",
-      "validation_excess": 0.081,
+      "validation": "weak",
+      "validation_excess": 0.0474,
       "publish": true
     },
     {
@@ -13874,7 +13375,7 @@
       "perf_6m": 0.160893,
       "perf_1y": 0.051624,
       "validation": "real",
-      "validation_excess": 0.1264,
+      "validation_excess": 0.0855,
       "publish": false
     },
     {
@@ -14056,7 +13557,7 @@
       "perf_6m": 0.064507,
       "perf_1y": 0.300341,
       "validation": "real",
-      "validation_excess": 0.2334,
+      "validation_excess": 0.1077,
       "publish": true
     },
     {
@@ -14070,7 +13571,7 @@
       "rs_accel_rate": 0.185373,
       "state": "Improving",
       "perf_1d": 0.0016,
-      "persistence": 1,
+      "persistence": 2,
       "persistence_of": 5,
       "ext_share_4": 0.0,
       "ext_share_7": 0.0,
@@ -14106,9 +13607,9 @@
       "perf_3m": -0.021077,
       "perf_6m": 0.191802,
       "perf_1y": 0.07882,
-      "validation": null,
-      "validation_excess": null,
-      "publish": false
+      "validation": "real",
+      "validation_excess": 0.0615,
+      "publish": true
     },
     {
       "rs_0_1w": -0.015572,
@@ -14164,7 +13665,7 @@
       "perf_6m": -0.105711,
       "perf_1y": 0.875,
       "validation": "real",
-      "validation_excess": 0.2287,
+      "validation_excess": 0.3125,
       "publish": true
     },
     {
@@ -14311,7 +13812,7 @@
       "perf_6m": 0.003906,
       "perf_1y": 0.194485,
       "validation": "real",
-      "validation_excess": 0.1706,
+      "validation_excess": 0.1697,
       "publish": true
     },
     {
@@ -14436,7 +13937,7 @@
       "perf_6m": -0.134415,
       "perf_1y": 0.229121,
       "validation": "real",
-      "validation_excess": 0.2852,
+      "validation_excess": 0.1381,
       "publish": true
     },
     {
@@ -14553,7 +14054,7 @@
       "perf_6m": 0.159864,
       "perf_1y": 0.48034,
       "validation": "real",
-      "validation_excess": 0.1834,
+      "validation_excess": 0.0725,
       "publish": true
     },
     {
@@ -14660,44 +14161,6 @@
       "publish": true
     },
     {
-      "rs_0_1w": 0.017357,
-      "rs_1w_1m": 0.203264,
-      "rs_1m_3m": -0.291382,
-      "rs_3m_6m": null,
-      "excess_3m": -0.142054,
-      "excess_1m": 0.225371,
-      "rs_accel": 0.516753,
-      "rs_accel_rate": 0.3829,
-      "state": "Improving",
-      "perf_1d": -0.0205,
-      "persistence": 2,
-      "persistence_of": 5,
-      "ext_share_4": 0.0,
-      "ext_share_7": 0.0,
-      "ext_median": 1.3323,
-      "ext_n": 3,
-      "group": "Rare Earth Metals",
-      "method": "etf",
-      "source": "tsf",
-      "kind": "theme",
-      "members": 3,
-      "measurable": false,
-      "tickers": [
-        "MP",
-        "USAR",
-        "UUUU"
-      ],
-      "needs_manual": false,
-      "perf_1w": 0.020095,
-      "perf_1m": 0.266579,
-      "perf_3m": -0.093302,
-      "perf_6m": 0.014196,
-      "perf_1y": 0.228662,
-      "validation": "real",
-      "validation_excess": 0.0712,
-      "publish": false
-    },
-    {
       "rs_0_1w": 0.037423,
       "rs_1w_1m": -0.121249,
       "rs_1m_3m": -0.087723,
@@ -14751,7 +14214,7 @@
       "perf_6m": 0.132117,
       "perf_1y": -0.163189,
       "validation": "real",
-      "validation_excess": 0.1921,
+      "validation_excess": 0.1877,
       "publish": true
     },
     {
@@ -14846,7 +14309,7 @@
       "perf_6m": -0.127245,
       "perf_1y": 0.201945,
       "validation": "real",
-      "validation_excess": 0.0982,
+      "validation_excess": 0.1201,
       "publish": true
     },
     {
@@ -14968,6 +14431,51 @@
       "publish": true
     },
     {
+      "rs_0_1w": 0.007648,
+      "rs_1w_1m": 0.129745,
+      "rs_1m_3m": -0.299416,
+      "rs_3m_6m": null,
+      "excess_3m": -0.213342,
+      "excess_1m": 0.139033,
+      "rs_accel": 0.438449,
+      "rs_accel_rate": 0.301323,
+      "state": "Improving",
+      "perf_1d": -0.017,
+      "persistence": 1,
+      "persistence_of": 5,
+      "ext_share_4": 0.1,
+      "ext_share_7": 0.0,
+      "ext_median": 0.1322,
+      "ext_n": 10,
+      "group": "Rare Earth Metals",
+      "method": "etf",
+      "source": "tsf",
+      "kind": "theme",
+      "members": 10,
+      "measurable": true,
+      "tickers": [
+        "ALOY",
+        "AREC",
+        "CRML",
+        "IDR",
+        "METC",
+        "MP",
+        "NB",
+        "UAMY",
+        "USAR",
+        "UUUU"
+      ],
+      "needs_manual": false,
+      "perf_1w": 0.010386,
+      "perf_1m": 0.180241,
+      "perf_3m": -0.16459,
+      "perf_6m": -0.18295,
+      "perf_1y": 0.184882,
+      "validation": "too few in panel",
+      "validation_excess": null,
+      "publish": true
+    },
+    {
       "rs_0_1w": -0.060012,
       "rs_1w_1m": 0.000615,
       "rs_1m_3m": -0.162729,
@@ -15065,7 +14573,7 @@
       "perf_6m": -0.081093,
       "perf_1y": 0.620262,
       "validation": "real",
-      "validation_excess": 0.0633,
+      "validation_excess": 0.096,
       "publish": true
     },
     {
@@ -15116,8 +14624,8 @@
       "perf_3m": -0.205935,
       "perf_6m": 0.333661,
       "perf_1y": 0.954287,
-      "validation": "real",
-      "validation_excess": 0.1242,
+      "validation": "weak",
+      "validation_excess": 0.0386,
       "publish": true
     }
   ],
@@ -16528,7 +16036,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 75.0,
       "top_quartile": true,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "ACAD": {
@@ -16718,8 +16226,8 @@
       "group": "Information Technology Services",
       "group_pctile": 30.0,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "ACT": {
       "rs_0_1w": 0.010698,
@@ -17079,7 +16587,7 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 61.11,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "AEM": {
@@ -17478,7 +16986,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 25.0,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "AGYS": {
@@ -19036,7 +18544,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 71.43,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "APGE": {
@@ -19074,7 +18582,7 @@
       "group": "Electronic Components",
       "group_pctile": 91.3,
       "top_quartile": true,
-      "primary_group": "Electronic Components",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "APLD": {
@@ -19188,7 +18696,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 97.62,
       "top_quartile": true,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "APPS": {
@@ -20062,8 +19570,8 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 77.78,
       "top_quartile": true,
-      "primary_group": "Grid & Electrification",
-      "primary_kind": "theme"
+      "primary_group": "Electrical Equipment & Parts",
+      "primary_kind": "industry"
     },
     "ATLC": {
       "rs_0_1w": 0.068278,
@@ -20803,8 +20311,8 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 88.89,
       "top_quartile": true,
-      "primary_group": "Grid & Electrification",
-      "primary_kind": "theme"
+      "primary_group": "Electrical Equipment & Parts",
+      "primary_kind": "industry"
     },
     "AZN": {
       "rs_0_1w": -0.014455,
@@ -21219,8 +20727,8 @@
       "group": "Information Technology Services",
       "group_pctile": 15.0,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "BBAR": {
       "rs_0_1w": -0.075642,
@@ -21657,7 +21165,7 @@
       "group_pctile": 52.17,
       "top_quartile": false,
       "primary_group": "Electronic Components",
-      "primary_kind": "theme"
+      "primary_kind": "industry"
     },
     "BELFB": {
       "rs_0_1w": 0.024183,
@@ -21675,7 +21183,7 @@
       "group": "Electronic Components",
       "group_pctile": 82.61,
       "top_quartile": true,
-      "primary_group": "Electronic Components",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "BEN": {
@@ -21999,7 +21507,7 @@
       "group_pctile": 26.09,
       "top_quartile": false,
       "primary_group": "Electronic Components",
-      "primary_kind": "theme"
+      "primary_kind": "industry"
     },
     "BHF": {
       "rs_0_1w": -0.054779,
@@ -23043,8 +22551,8 @@
       "group": "Information Technology Services",
       "group_pctile": 70.0,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "BRBR": {
       "rs_0_1w": -0.121353,
@@ -24732,7 +24240,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 7.14,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "CDNS": {
@@ -24808,8 +24316,8 @@
       "group": "Information Technology Services",
       "group_pctile": 92.5,
       "top_quartile": true,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "CE": {
       "rs_0_1w": 0.000607,
@@ -25378,8 +24886,8 @@
       "group": "Information Technology Services",
       "group_pctile": 75.0,
       "top_quartile": true,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "CHRW": {
       "rs_0_1w": -0.004944,
@@ -25663,7 +25171,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 7.14,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "CLDX": {
@@ -25778,7 +25286,7 @@
       "group_pctile": 34.78,
       "top_quartile": false,
       "primary_group": "Electronic Components",
-      "primary_kind": "theme"
+      "primary_kind": "industry"
     },
     "CLSK": {
       "rs_0_1w": 0.073651,
@@ -25815,8 +25323,8 @@
       "group": "Information Technology Services",
       "group_pctile": 7.5,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "CLX": {
       "rs_0_1w": -0.012645,
@@ -26366,8 +25874,8 @@
       "group": "Information Technology Services",
       "group_pctile": 37.5,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "CNXN": {
       "rs_0_1w": -0.030464,
@@ -26518,7 +26026,7 @@
       "group": "Financial Data & Stock Exchanges",
       "group_pctile": 9.09,
       "top_quartile": false,
-      "primary_group": "Speculative Tech",
+      "primary_group": "Crypto Equities",
       "primary_kind": "theme"
     },
     "COKE": {
@@ -27069,7 +26577,7 @@
       "group": "Capital Markets",
       "group_pctile": 2.44,
       "top_quartile": false,
-      "primary_group": "Speculative Tech",
+      "primary_group": "Crypto Equities",
       "primary_kind": "theme"
     },
     "CRCT": {
@@ -27316,7 +26824,7 @@
       "group": "Biotechnology",
       "group_pctile": 43.03,
       "top_quartile": false,
-      "primary_group": "Speculative Tech",
+      "primary_group": "Genomics",
       "primary_kind": "theme"
     },
     "CRSR": {
@@ -27618,7 +27126,7 @@
       "group": "Railroads",
       "group_pctile": 50.0,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "Transportation & Logistics",
       "primary_kind": "theme"
     },
     "CTAS": {
@@ -27732,7 +27240,7 @@
       "group": "Electronic Components",
       "group_pctile": 78.26,
       "top_quartile": true,
-      "primary_group": "Electronic Components",
+      "primary_group": "Robotics & Automation",
       "primary_kind": "theme"
     },
     "CTSH": {
@@ -27751,8 +27259,8 @@
       "group": "Information Technology Services",
       "group_pctile": 72.5,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "CTVA": {
       "rs_0_1w": -0.005493,
@@ -28606,7 +28114,7 @@
       "group": "Farm & Heavy Construction Machinery",
       "group_pctile": 45.45,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "Agribusiness",
       "primary_kind": "theme"
     },
     "DEA": {
@@ -29480,7 +28988,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 20.24,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "DPC": {
@@ -29858,8 +29366,8 @@
       "group": "Information Technology Services",
       "group_pctile": 80.0,
       "top_quartile": true,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "DXCM": {
       "rs_0_1w": -0.011339,
@@ -29934,7 +29442,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 60.71,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "DYN": {
@@ -30067,7 +29575,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 32.14,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "ECHO": {
@@ -30276,8 +29784,8 @@
       "group": "Information Technology Services",
       "group_pctile": 100.0,
       "top_quartile": true,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "EFSC": {
       "rs_0_1w": -0.006514,
@@ -30637,7 +30145,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 46.43,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "EMN": {
@@ -30789,7 +30297,7 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 94.44,
       "top_quartile": true,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "Consumer Staples",
       "primary_kind": "theme"
     },
     "ENS": {
@@ -30941,8 +30449,8 @@
       "group": "Information Technology Services",
       "group_pctile": 55.0,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "EPC": {
       "rs_0_1w": -0.021962,
@@ -31317,7 +30825,7 @@
       "group": "Metal Fabrication",
       "group_pctile": 11.11,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "ESE": {
@@ -31507,7 +31015,7 @@
       "group": "Specialty Industrial Machinery",
       "group_pctile": 72.34,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "ETON": {
@@ -31792,8 +31300,8 @@
       "group": "Information Technology Services",
       "group_pctile": 82.5,
       "top_quartile": true,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "EXP": {
       "rs_0_1w": -0.0438,
@@ -31868,7 +31376,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 89.29,
       "top_quartile": true,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "EXR": {
@@ -32153,7 +31661,7 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 83.33,
       "top_quartile": true,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "FCF": {
@@ -32379,7 +31887,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 53.57,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "FERG": {
@@ -32645,7 +32153,7 @@
       "group": "Information Technology Services",
       "group_pctile": 35.0,
       "top_quartile": false,
-      "primary_group": "IT Services",
+      "primary_group": "Fintech",
       "primary_kind": "theme"
     },
     "FISV": {
@@ -32664,7 +32172,7 @@
       "group": "Information Technology Services",
       "group_pctile": 22.5,
       "top_quartile": false,
-      "primary_group": "IT Services",
+      "primary_group": "Fintech",
       "primary_kind": "theme"
     },
     "FITB": {
@@ -32740,7 +32248,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 42.86,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "FIZZ": {
@@ -32778,7 +32286,7 @@
       "group": "Electronic Components",
       "group_pctile": 39.13,
       "top_quartile": false,
-      "primary_group": "Electronic Components",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "FLG": {
@@ -33063,7 +32571,7 @@
       "group": "Electronic Components",
       "group_pctile": 4.35,
       "top_quartile": false,
-      "primary_group": "Electronic Components",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "FNB": {
@@ -33253,7 +32761,7 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 50.0,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "FR": {
@@ -33918,8 +33426,8 @@
       "group": "Information Technology Services",
       "group_pctile": 65.0,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "GABC": {
       "rs_0_1w": 0.009382,
@@ -34089,7 +33597,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 70.24,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "GD": {
@@ -34127,7 +33635,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 35.71,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "GDRX": {
@@ -34564,8 +34072,8 @@
       "group": "Information Technology Services",
       "group_pctile": 67.5,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "GIC": {
       "rs_0_1w": -0.014441,
@@ -34773,8 +34281,8 @@
       "group": "Information Technology Services",
       "group_pctile": 47.5,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "GLP": {
       "rs_0_1w": 0.014658,
@@ -34849,7 +34357,7 @@
       "group": "Electronic Components",
       "group_pctile": 21.74,
       "top_quartile": false,
-      "primary_group": "Electronic Components",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "GLXY": {
@@ -35191,7 +34699,7 @@
       "group": "Metal Fabrication",
       "group_pctile": 55.56,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "GPI": {
@@ -35685,7 +35193,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 35.71,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "GWRE": {
@@ -35932,8 +35440,8 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 66.67,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
-      "primary_kind": "theme"
+      "primary_group": "Electrical Equipment & Parts",
+      "primary_kind": "industry"
     },
     "HBAN": {
       "rs_0_1w": 0.007391,
@@ -36747,7 +36255,7 @@
       "group": "Capital Markets",
       "group_pctile": 95.12,
       "top_quartile": true,
-      "primary_group": "Speculative Tech",
+      "primary_group": "Crypto Equities",
       "primary_kind": "theme"
     },
     "HOPE": {
@@ -37203,7 +36711,7 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 72.22,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "HUBG": {
@@ -37374,7 +36882,7 @@
       "group": "Aerospace & Defense",
       "group_pctile": 54.9,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "Defense",
       "primary_kind": "theme"
     },
     "HXL": {
@@ -37868,7 +37376,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 78.57,
       "top_quartile": true,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "IEX": {
@@ -38286,7 +37794,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 48.81,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "INFY": {
@@ -38305,8 +37813,8 @@
       "group": "Information Technology Services",
       "group_pctile": 40.0,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "ING": {
       "rs_0_1w": 0.005183,
@@ -38343,8 +37851,8 @@
       "group": "Information Technology Services",
       "group_pctile": 52.5,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "INGR": {
       "rs_0_1w": -0.013056,
@@ -38417,8 +37925,8 @@
       "group": "Information Technology Services",
       "group_pctile": 2.5,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "INSM": {
       "rs_0_1w": -0.034797,
@@ -38987,8 +38495,8 @@
       "group": "Information Technology Services",
       "group_pctile": 77.5,
       "top_quartile": true,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "ITGR": {
       "rs_0_1w": -0.002418,
@@ -39291,7 +38799,7 @@
       "group": "Electronic Components",
       "group_pctile": 56.52,
       "top_quartile": false,
-      "primary_group": "Electronic Components",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "JBLU": {
@@ -39481,7 +38989,7 @@
       "group": "Information Technology Services",
       "group_pctile": 50.0,
       "top_quartile": false,
-      "primary_group": "IT Services",
+      "primary_group": "Fintech",
       "primary_kind": "theme"
     },
     "JLL": {
@@ -39745,7 +39253,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 92.86,
       "top_quartile": true,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "KC": {
@@ -39783,8 +39291,8 @@
       "group": "Information Technology Services",
       "group_pctile": 62.5,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "KDP": {
       "rs_0_1w": 0.034959,
@@ -40240,7 +39748,7 @@
       "group_pctile": 73.91,
       "top_quartile": false,
       "primary_group": "Electronic Components",
-      "primary_kind": "theme"
+      "primary_kind": "industry"
     },
     "KNF": {
       "rs_0_1w": -0.024749,
@@ -41299,7 +40807,7 @@
       "group": "Electronic Components",
       "group_pctile": 30.43,
       "top_quartile": false,
-      "primary_group": "Electronic Components",
+      "primary_group": "Semiconductors Broad",
       "primary_kind": "theme"
     },
     "LGIH": {
@@ -41337,7 +40845,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 21.43,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "LGND": {
@@ -43898,7 +43406,7 @@
       "group": "Metal Fabrication",
       "group_pctile": 22.22,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "MLKN": {
@@ -45209,7 +44717,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 10.71,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "MZTI": {
@@ -46159,7 +45667,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 14.29,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "NNE": {
@@ -46501,7 +46009,7 @@
       "group": "Railroads",
       "group_pctile": 37.5,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "Transportation & Logistics",
       "primary_kind": "theme"
     },
     "NSIT": {
@@ -47033,7 +46541,7 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 55.56,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "NVTS": {
@@ -47735,7 +47243,7 @@
       "group_pctile": 17.39,
       "top_quartile": false,
       "primary_group": "Electronic Components",
-      "primary_kind": "theme"
+      "primary_kind": "industry"
     },
     "OLLI": {
       "rs_0_1w": -0.050763,
@@ -48190,7 +47698,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 4.76,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "ORI": {
@@ -48324,7 +47832,7 @@
       "group_pctile": 65.22,
       "top_quartile": false,
       "primary_group": "Electronic Components",
-      "primary_kind": "theme"
+      "primary_kind": "industry"
     },
     "OSK": {
       "rs_0_1w": -0.010725,
@@ -48912,7 +48420,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 3.57,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "PAYX": {
@@ -49841,7 +49349,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 13.1,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "PII": {
@@ -50107,7 +49615,7 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 100.0,
       "top_quartile": true,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "PLSE": {
@@ -50145,7 +49653,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 55.95,
       "top_quartile": false,
-      "primary_group": "Speculative Tech",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "PLUG": {
@@ -50203,7 +49711,7 @@
       "group_pctile": 60.87,
       "top_quartile": false,
       "primary_group": "Electronic Components",
-      "primary_kind": "theme"
+      "primary_kind": "industry"
     },
     "PM": {
       "rs_0_1w": -0.011867,
@@ -50468,7 +49976,7 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 27.78,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "PPC": {
@@ -50715,7 +50223,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 90.48,
       "top_quartile": true,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "PRI": {
@@ -50753,7 +50261,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 17.86,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "PRK": {
@@ -50810,7 +50318,7 @@
       "group": "Metal Fabrication",
       "group_pctile": 88.89,
       "top_quartile": true,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Robotics & Automation",
       "primary_kind": "theme"
     },
     "PRM": {
@@ -51038,8 +50546,8 @@
       "group": "Information Technology Services",
       "group_pctile": 20.0,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "PSNL": {
       "rs_0_1w": -0.012011,
@@ -51342,7 +50850,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 67.86,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "Uranium & Nuclear Energy",
       "primary_kind": "theme"
     },
     "PYPL": {
@@ -51702,7 +51210,7 @@
       "group_pctile": 86.96,
       "top_quartile": true,
       "primary_group": "Electronic Components",
-      "primary_kind": "theme"
+      "primary_kind": "industry"
     },
     "RAMP": {
       "rs_0_1w": -0.004857,
@@ -51720,7 +51228,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 60.71,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "RAPP": {
@@ -52841,7 +52349,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 50.0,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "ROCK": {
@@ -52880,7 +52388,7 @@
       "group_pctile": 47.83,
       "top_quartile": false,
       "primary_group": "Electronic Components",
-      "primary_kind": "theme"
+      "primary_kind": "industry"
     },
     "ROIV": {
       "rs_0_1w": 0.025347,
@@ -52917,7 +52425,7 @@
       "group": "Specialty Industrial Machinery",
       "group_pctile": 38.3,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "Robotics & Automation",
       "primary_kind": "theme"
     },
     "ROKU": {
@@ -53354,7 +52862,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 8.33,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "RY": {
@@ -53487,7 +52995,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 30.95,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "S": {
@@ -53716,7 +53224,7 @@
       "group_pctile": 13.04,
       "top_quartile": false,
       "primary_group": "Electronic Components",
-      "primary_kind": "theme"
+      "primary_kind": "industry"
     },
     "SAP": {
       "rs_0_1w": -0.011514,
@@ -54627,7 +54135,7 @@
       "group": "Software - Application",
       "group_pctile": 73.47,
       "top_quartile": false,
-      "primary_group": "Speculative Tech",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "SHW": {
@@ -55725,7 +55233,7 @@
       "persistence": 2,
       "persistence_of": 2,
       "group": "Aerospace & Defense",
-      "primary_group": "Speculative Tech",
+      "primary_group": "Space",
       "primary_kind": "theme"
     },
     "SPG": {
@@ -56386,7 +55894,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 57.14,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "STNE": {
@@ -56500,7 +56008,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 3.57,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "STT": {
@@ -57393,7 +56901,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 10.71,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "TDG": {
@@ -57507,8 +57015,8 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 16.67,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
-      "primary_kind": "theme"
+      "primary_group": "Electrical Equipment & Parts",
+      "primary_kind": "industry"
     },
     "TEAM": {
       "rs_0_1w": 0.02491,
@@ -57583,7 +57091,7 @@
       "group": "Electronic Components",
       "group_pctile": 69.57,
       "top_quartile": false,
-      "primary_group": "Electronic Components",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "TEM": {
@@ -57602,7 +57110,7 @@
       "group": "Health Information Services",
       "group_pctile": 37.5,
       "top_quartile": false,
-      "primary_group": "Speculative Tech",
+      "primary_group": "Genomics",
       "primary_kind": "theme"
     },
     "TEN": {
@@ -58533,7 +58041,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 83.33,
       "top_quartile": true,
-      "primary_group": "Speculative Tech",
+      "primary_group": "Cloud Software",
       "primary_kind": "theme"
     },
     "TOWN": {
@@ -58590,7 +58098,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 82.14,
       "top_quartile": true,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "TPG": {
@@ -59179,7 +58687,7 @@
       "group": "Building Products & Equipment",
       "group_pctile": 35.0,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "Homebuilders",
       "primary_kind": "theme"
     },
     "TTAM": {
@@ -59293,7 +58801,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 96.43,
       "top_quartile": true,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "TTI": {
@@ -59331,7 +58839,7 @@
       "group": "Electronic Components",
       "group_pctile": 8.7,
       "top_quartile": false,
-      "primary_group": "Electronic Components",
+      "primary_group": "Optics & Networking Equipment",
       "primary_kind": "theme"
     },
     "TTWO": {
@@ -59540,7 +59048,7 @@
       "group": "Health Information Services",
       "group_pctile": 100.0,
       "top_quartile": true,
-      "primary_group": "Speculative Tech",
+      "primary_group": "Genomics",
       "primary_kind": "theme"
     },
     "TXN": {
@@ -60338,7 +59846,7 @@
       "group": "Railroads",
       "group_pctile": 75.0,
       "top_quartile": true,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "Transportation & Logistics",
       "primary_kind": "theme"
     },
     "UPBD": {
@@ -61174,7 +60682,7 @@
       "group": "Electronic Components",
       "group_pctile": 43.48,
       "top_quartile": false,
-      "primary_group": "Electronic Components",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "VIK": {
@@ -61687,7 +61195,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 17.86,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "VRT": {
@@ -61706,7 +61214,7 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 33.33,
       "top_quartile": false,
-      "primary_group": "Grid & Electrification",
+      "primary_group": "AI Power & Infrastructure",
       "primary_kind": "theme"
     },
     "VRTS": {
@@ -62010,7 +61518,7 @@
       "group": "Information Technology Services",
       "group_pctile": 57.5,
       "top_quartile": false,
-      "primary_group": "IT Services",
+      "primary_group": "Fintech",
       "primary_kind": "theme"
     },
     "VZ": {
@@ -62732,8 +62240,8 @@
       "group": "Information Technology Services",
       "group_pctile": 45.0,
       "top_quartile": false,
-      "primary_group": "IT Services",
-      "primary_kind": "theme"
+      "primary_group": "Information Technology Services",
+      "primary_kind": "industry"
     },
     "WIX": {
       "rs_0_1w": 0.102343,
@@ -62808,7 +62316,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 39.29,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "WLFC": {
@@ -63036,7 +62544,7 @@
       "group": "Metal Fabrication",
       "group_pctile": 44.44,
       "top_quartile": false,
-      "primary_group": "Reshoring / Industrial Renaissance",
+      "primary_group": "Industrials",
       "primary_kind": "theme"
     },
     "WPC": {
@@ -63226,7 +62734,7 @@
       "group": "Information Technology Services",
       "group_pctile": 25.0,
       "top_quartile": false,
-      "primary_group": "IT Services",
+      "primary_group": "Fintech",
       "primary_kind": "theme"
     },
     "WSFS": {
@@ -63758,7 +63266,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 16.67,
       "top_quartile": false,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "XOM": {
@@ -63948,7 +63456,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 40.48,
       "top_quartile": false,
-      "primary_group": "Speculative Tech",
+      "primary_group": "Crypto Equities",
       "primary_kind": "theme"
     },
     "XZO": {
@@ -64252,7 +63760,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 79.76,
       "top_quartile": true,
-      "primary_group": "Broad AI Theme",
+      "primary_group": "Software",
       "primary_kind": "theme"
     },
     "ZG": {
@@ -64466,8 +63974,8 @@
     }
   },
   "summary": {
-    "publishable_themes": 74,
-    "provisional_themes": 5,
+    "publishable_themes": 72,
+    "provisional_themes": 1,
     "industries": 120,
     "industry_states": {
       "Leading": 10,
@@ -64475,31 +63983,31 @@
       "Improving": 21,
       "Lagging": 27
     },
-    "themes": 79,
+    "themes": 73,
     "theme_states": {
-      "Leading": 12,
-      "Weakening": 27,
-      "Improving": 27,
+      "Leading": 10,
+      "Weakening": 26,
+      "Improving": 24,
       "Lagging": 13
     },
     "themes_skipped": 0,
     "taxonomy": {
-      "total": 79,
+      "total": 73,
       "by_method": {
-        "industry": 24,
+        "industry": 22,
         "proxy": 16,
-        "etf": 31,
+        "etf": 27,
         "rule": 8
       },
       "by_kind": {
-        "theme": 34,
-        "sector": 21,
+        "theme": 30,
+        "sector": 19,
         "proxy": 16,
         "factor": 8
       },
       "by_source": {
-        "tsf": 66,
-        "fluxus": 13
+        "tsf": 62,
+        "fluxus": 11
       },
       "needs_manual": [
         "AI - Datacenters",

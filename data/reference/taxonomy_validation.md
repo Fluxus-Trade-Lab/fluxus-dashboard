@@ -2,9 +2,9 @@
 
 A business theme claims its members share a driver, so they should co-move more than a size-matched random basket from the same pool. `excess` is that difference in mean pairwise correlation.
 
-**Business themes: 51 real · 1 weak · 0 label** (thresholds: real >= +0.05, weak >= +0.02)
+**Business themes: 44 real · 4 weak · 0 label** (thresholds: real >= +0.05, weak >= +0.02)
 
-Factor themes (7) are reported but not scored — see below. 1 themes had too few names in the panel.
+Factor themes (7) are reported but not scored — see below. 2 themes had too few names in the panel.
 
 **`cov` is the share of a theme's members present in the price panel.** A verdict computed on half a theme is a verdict on half a theme; rows below 75% are flagged and should be read as provisional.
 
@@ -13,57 +13,53 @@ Factor themes (7) are reported but not scored — see below. 1 themes had too fe
 | Theme | src | n | cov | within | random | **excess** | noise | verdict |
 |---|---|---|---|---|---|---|---|---|
 | Semiconductors Large Caps | tsf | 9/10 | 90% | 0.634 | 0.227 | **+0.407** | ±0.051 | real |
-| Copper Miners | tsf | 6/6 | 100% | 0.604 | 0.214 | **+0.390** | ±0.070 | real |
+| Gold Miners | tsf | 29/30 | 97% | 0.602 | 0.212 | **+0.389** | ±0.023 | real |
 | Banks - Money Center | tsf | 19/19 | 100% | 0.613 | 0.224 | **+0.389** | ±0.032 | real |
-| Regional Banks | tsf | 155/156 | 99% | 0.583 | 0.217 | **+0.366** | ±0.010 | real |
-| Gold Miners | tsf | 30/31 | 97% | 0.563 | 0.212 | **+0.350** | ±0.023 | real |
-| Memory & Storage | tsf | 4/5 | 80% | 0.555 | 0.214 | **+0.341** | ±0.070 | real |
+| Copper Miners | tsf | 10/10 | 100% | 0.594 | 0.227 | **+0.368** | ±0.051 | real |
+| Regional Banks | tsf | 154/155 | 99% | 0.582 | 0.217 | **+0.365** | ±0.010 | real |
+| Silver Miners | tsf | 20/22 | 91% | 0.537 | 0.224 | **+0.313** | ±0.032 | real |
 | Tech Mega Caps | tsf | 9/9 | 100% | 0.536 | 0.227 | **+0.309** | ±0.051 | real |
-| Uranium & Nuclear Energy | tsf | 7/7 | 100% | 0.512 | 0.227 | **+0.285** | ±0.051 | real |
-| Homebuilders | tsf | 34/35 | 97% | 0.496 | 0.212 | **+0.284** | ±0.023 | real |
-| Semiconductors Broad | tsf | 69/76 | 91% | 0.478 | 0.218 | **+0.260** | ±0.019 | real |
-| Steel | tsf | 14/15 | 93% | 0.475 | 0.219 | **+0.256** | ±0.049 | real |
-| Real Estate | tsf | 125/129 | 97% | 0.453 | 0.215 | **+0.238** | ±0.014 | real |
-| AI Power & Infrastructure | tsf | 44/44 | 100% | 0.446 | 0.212 | **+0.233** | ±0.023 | real |
+| Memory & Storage | tsf | 11/13 | 85% | 0.504 | 0.219 | **+0.285** | ±0.049 | real |
+| Homebuilders | tsf | 60/61 | 98% | 0.481 | 0.218 | **+0.263** | ±0.019 | real |
+| Semiconductors Broad | tsf | 80/88 | 91% | 0.467 | 0.218 | **+0.249** | ±0.019 | real |
+| Steel | tsf | 16/17 | 94% | 0.463 | 0.219 | **+0.244** | ±0.049 | real |
+| Real Estate | tsf | 122/126 | 97% | 0.458 | 0.215 | **+0.243** | ±0.014 | real |
 | Solar | tsf | 9/9 | 100% | 0.456 | 0.227 | **+0.229** | ±0.051 | real |
-| Silver Miners | tsf | 5/6 | 83% | 0.443 | 0.214 | **+0.229** | ±0.070 | real |
 | Coal | tsf | 6/6 | 100% | 0.440 | 0.214 | **+0.226** | ±0.070 | real |
-| Cybersecurity | tsf | 14/15 | 93% | 0.425 | 0.219 | **+0.206** | ±0.049 | real |
-| Speculative Tech | tsf | 12/14 | 86% | 0.419 | 0.219 | **+0.200** | ±0.049 | real |
-| Robotics & Automation | tsf | 56/59 | 95% | 0.417 | 0.218 | **+0.199** | ±0.019 | real |
-| Insurance | tsf | 79/83 | 95% | 0.412 | 0.218 | **+0.194** | ±0.019 | real |
-| Crypto Equities | tsf | 12/14 | 86% | 0.411 | 0.219 | **+0.192** | ±0.049 | real |
-| Electronic Components | tsf | 23/24 | 96% | 0.413 | 0.224 | **+0.189** | ±0.032 | real |
-| Oil & Gas | tsf | 146/149 | 98% | 0.401 | 0.217 | **+0.184** | ±0.010 | real |
-| AI - Datacenters | tsf | 15/16 | 94% | 0.402 | 0.219 | **+0.183** | ±0.049 | real |
-| Travel & Leisure | tsf | 66/68 | 97% | 0.394 | 0.218 | **+0.175** | ±0.019 | real |
-| Reshoring / Industrial Renaissance | fluxus | 43/45 | 96% | 0.386 | 0.212 | **+0.174** | ±0.023 | real |
-| Chemicals & Materials | tsf | 51/53 | 96% | 0.389 | 0.218 | **+0.171** | ±0.019 | real |
-| Utilities | tsf | 78/81 | 96% | 0.385 | 0.218 | **+0.167** | ±0.019 | real |
-| Industrials | tsf | 127/133 | 95% | 0.379 | 0.215 | **+0.164** | ±0.014 | real |
-| Fintech | tsf | 35/37 | 95% | 0.351 | 0.212 | **+0.139** | ±0.023 | real |
-| Grid & Electrification | fluxus | 28/29 | 97% | 0.349 | 0.212 | **+0.136** | ±0.023 | real |
-| Financials | tsf | 127/140 | 91% | 0.349 | 0.215 | **+0.134** | ±0.014 | real |
-| Quantum Computing | fluxus | 5/5 | 100% | 0.340 | 0.214 | **+0.126** | ±0.070 | real |
-| Space | tsf | 6/6 | 100% | 0.338 | 0.214 | **+0.124** | ±0.070 | real |
-| Energy | tsf | 96/97 | 99% | 0.337 | 0.215 | **+0.122** | ±0.014 | real |
-| Agribusiness | tsf | 27/28 | 96% | 0.342 | 0.224 | **+0.118** | ±0.032 | real |
+| Cloud Software | tsf | 67/69 | 97% | 0.427 | 0.218 | **+0.209** | ±0.019 | real |
+| Insurance | tsf | 80/85 | 94% | 0.410 | 0.218 | **+0.191** | ±0.019 | real |
+| Crypto Equities | tsf | 15/22 | 68% ⚠️ | 0.407 | 0.219 | **+0.188** | ±0.049 | real |
+| Oil & Gas | tsf | 149/152 | 98% | 0.396 | 0.217 | **+0.178** | ±0.010 | real |
+| Travel & Leisure | tsf | 66/69 | 96% | 0.396 | 0.218 | **+0.178** | ±0.019 | real |
+| Utilities | tsf | 77/80 | 96% | 0.390 | 0.218 | **+0.171** | ±0.019 | real |
+| Chemicals & Materials | tsf | 50/53 | 94% | 0.388 | 0.218 | **+0.170** | ±0.019 | real |
+| Industrials | tsf | 127/134 | 95% | 0.379 | 0.215 | **+0.164** | ±0.014 | real |
+| Uranium & Nuclear Energy | tsf | 29/31 | 94% | 0.350 | 0.212 | **+0.138** | ±0.023 | real |
+| Financials | tsf | 128/143 | 90% | 0.346 | 0.215 | **+0.131** | ±0.014 | real |
+| Cybersecurity | tsf | 29/31 | 94% | 0.340 | 0.212 | **+0.128** | ±0.023 | real |
+| Energy | tsf | 98/99 | 99% | 0.335 | 0.215 | **+0.121** | ±0.014 | real |
+| Clean Energy | tsf | 17/19 | 89% | 0.344 | 0.224 | **+0.120** | ±0.032 | real |
+| Defense | tsf | 42/55 | 76% | 0.330 | 0.212 | **+0.117** | ±0.023 | real |
 | Transportation & Logistics | tsf | 45/46 | 98% | 0.326 | 0.212 | **+0.113** | ±0.023 | real |
-| Defense | tsf | 42/55 | 76% | 0.325 | 0.212 | **+0.113** | ±0.023 | real |
-| Clean Energy | tsf | 18/20 | 90% | 0.322 | 0.224 | **+0.098** | ±0.032 | real |
+| Robotics & Automation | tsf | 48/49 | 98% | 0.329 | 0.218 | **+0.111** | ±0.019 | real |
+| AI Power & Infrastructure | tsf | 84/88 | 95% | 0.323 | 0.215 | **+0.108** | ±0.014 | real |
+| Lithium & Battery Tech | tsf | 21/22 | 95% | 0.320 | 0.224 | **+0.096** | ±0.032 | real |
 | Household & Personal Products | tsf | 14/14 | 100% | 0.314 | 0.219 | **+0.095** | ±0.049 | real |
-| Broad AI Theme | tsf | 124/139 | 89% | 0.304 | 0.215 | **+0.090** | ±0.014 | real |
-| Software | tsf | 161/182 | 88% | 0.306 | 0.217 | **+0.089** | ±0.010 | real |
-| Beverages | tsf | 10/10 | 100% | 0.310 | 0.227 | **+0.083** | ±0.051 | real |
+| Fintech | tsf | 63/72 | 88% | 0.311 | 0.218 | **+0.092** | ±0.019 | real |
+| Software | tsf | 166/185 | 90% | 0.307 | 0.217 | **+0.090** | ±0.010 | real |
+| Quantum Computing | fluxus | 4/4 | 100% | 0.299 | 0.214 | **+0.086** | ±0.070 | real |
 | Tobacco | tsf | 6/6 | 100% | 0.296 | 0.214 | **+0.083** | ±0.070 | real |
-| Optics & Networking Equipment | tsf | 19/19 | 100% | 0.305 | 0.224 | **+0.081** | ±0.032 | real |
+| AI - Datacenters | tsf | 15/23 | 65% ⚠️ | 0.291 | 0.219 | **+0.072** | ±0.049 | real |
 | Medical Devices | tsf | 57/60 | 95% | 0.290 | 0.218 | **+0.072** | ±0.019 | real |
-| Rare Earth Metals | tsf | 7/7 | 100% | 0.298 | 0.227 | **+0.071** | ±0.051 | real |
-| Drones | tsf | 5/5 | 100% | 0.281 | 0.214 | **+0.067** | ±0.070 | real |
-| Lithium & Battery Tech | tsf | 8/9 | 89% | 0.290 | 0.227 | **+0.063** | ±0.051 | real |
-| Consumer Retail | tsf | 59/60 | 98% | 0.275 | 0.218 | **+0.056** | ±0.019 | real |
-| Genomics | tsf | 35/40 | 88% | 0.265 | 0.212 | **+0.052** | ±0.023 | real |
-| IT Services | tsf | 36/39 | 92% | 0.260 | 0.212 | **+0.047** | ±0.023 | weak |
+| Beverages | tsf | 11/11 | 100% | 0.287 | 0.219 | **+0.068** | ±0.049 | real |
+| Agribusiness | tsf | 34/34 | 100% | 0.278 | 0.212 | **+0.066** | ±0.023 | real |
+| Physical AI & Humanoid Robotics | tsf | 16/16 | 100% | 0.280 | 0.219 | **+0.061** | ±0.049 | real |
+| Consumer Retail | tsf | 60/61 | 98% | 0.275 | 0.218 | **+0.057** | ±0.019 | real |
+| Genomics | tsf | 36/41 | 88% | 0.264 | 0.212 | **+0.052** | ±0.023 | real |
+| Optics & Networking Equipment | tsf | 66/67 | 99% | 0.266 | 0.218 | **+0.047** | ±0.019 | weak |
+| Space | tsf | 10/17 | 59% ⚠️ | 0.265 | 0.227 | **+0.039** | ±0.051 | weak |
+| Drones | tsf | 11/13 | 85% | 0.248 | 0.219 | **+0.029** | ±0.049 | weak |
+| Consumer Staples | tsf | 88/91 | 97% | 0.237 | 0.215 | **+0.022** | ±0.014 | weak |
 
 ## Factor themes — not scored, and why
 
@@ -71,13 +67,13 @@ These group names by a *property*, not a shared driver. A microcap biotech and a
 
 | Theme | src | n | within | random | excess |
 |---|---|---|---|---|---|
-| Mega Caps | tsf | 70 | 0.348 | 0.218 | +0.130 |
-| Small Caps | tsf | 1474 | 0.219 | 0.217 | +0.002 |
-| Value Factor | tsf | 207 | 0.217 | 0.217 | +0.000 |
-| High Beta Factor | tsf | 1050 | 0.197 | 0.217 | -0.020 |
-| Growth Factor | tsf | 261 | 0.195 | 0.216 | -0.022 |
-| 52-Week High Leaders | fluxus | 72 | 0.192 | 0.218 | -0.026 |
-| High Octane | fluxus | 64 | 0.166 | 0.218 | -0.052 |
+| Mega Caps | tsf | 73 | 0.346 | 0.218 | +0.128 |
+| Small Caps | tsf | 1463 | 0.219 | 0.217 | +0.002 |
+| Value Factor | tsf | 161 | 0.205 | 0.217 | -0.012 |
+| Growth Factor | tsf | 274 | 0.198 | 0.216 | -0.018 |
+| High Beta Factor | tsf | 960 | 0.194 | 0.217 | -0.024 |
+| 52-Week High Leaders | fluxus | 86 | 0.187 | 0.215 | -0.028 |
+| High Octane | fluxus | 64 | 0.174 | 0.218 | -0.044 |
 
 ## Method note
 
