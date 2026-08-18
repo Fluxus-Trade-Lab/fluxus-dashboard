@@ -14,6 +14,13 @@ const COLS = [
   // Extension below for what it does and does not say.
   { key: 'ext_share_4', label: 'Extended', align: 'right' },
   { key: 'state', label: 'State', align: 'left' },
+  /* Construction, printed. It rode the name's tooltip, which is fine for
+     provenance nobody disputes and wrong for a group that is on the page
+     without having cleared its own test — `weak` and `too few in panel` are
+     published exceptions and this is the reference table, which has the room
+     to say so in words. A proxy has nothing to validate and prints a dash
+     rather than a verdict it was never given. */
+  { key: 'validation', label: 'Validated', align: 'left' },
 ]
 
 export default function GroupTable({ rows, showMethod = false, emptyNote }) {
@@ -104,6 +111,30 @@ export default function GroupTable({ rows, showMethod = false, emptyNote }) {
               </td>
               <td className="px-2 py-1.5"><Extension row={r} /></td>
               <td className="px-2 py-1.5"><StateBadge state={r.state} /></td>
+              {/* The verdict, in the pipeline's own word. `real` cleared the
+                  co-movement test; `definitional` never claimed co-movement, so
+                  there was nothing to clear; a null is a single-fund proxy,
+                  exact by construction and never given a verdict — a dash, not
+                  a pass. Anything else is published without clearing, and it is
+                  the one value here that changes how a row should be read, so
+                  it is the only one that takes ink. */}
+              <td className="px-2 py-1.5 whitespace-nowrap text-[11px]">
+                {r.validation == null ? (
+                  <span className="text-[var(--color-text-muted)]"
+                        title="a single fund standing in for the whole thing — nothing to validate">
+                    &mdash;
+                  </span>
+                ) : r.validation === 'real' || r.validation === 'definitional' ? (
+                  <span className="text-[var(--color-text-muted)]">{r.validation}</span>
+                ) : (
+                  <span className="text-[var(--color-text-secondary)]"
+                        style={{ textDecoration: 'underline', textDecorationStyle: 'dashed',
+                                 textUnderlineOffset: '3px' }}
+                        title="on the page because it was asked for, not because it passed">
+                    {r.validation}
+                  </span>
+                )}
+              </td>
 
             </tr>
           ))}

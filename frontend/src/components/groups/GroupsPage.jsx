@@ -417,6 +417,15 @@ export default function GroupsPage() {
           not flat.
         </p>
         <p>
+          <b>A dashed name did not clear its own construction test.</b> Most groups are
+          either validated — the market agrees their members co-move — or definitional, a
+          factor or sector slice that never claimed co-movement in the first place; a
+          single-fund proxy is exact by construction and has nothing to validate. The few
+          that are neither are on this page because they were asked for, not because they
+          passed, and their names carry a dashed underline with the raw verdict in the
+          tooltip. The full table prints that verdict as a column.
+        </p>
+        <p>
           <b>State is descriptive, not a signal.</b> Over 10 years and 112 non-overlapping
           periods, filtering a momentum-ranked list by acceleration subtracted −0.18pp,
           and Weakening beat Leading by +0.37pp. Read where a group sits; do not trade the

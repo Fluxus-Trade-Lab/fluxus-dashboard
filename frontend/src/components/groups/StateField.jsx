@@ -147,11 +147,16 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
 
   return (
     <div>
-      {/* the figure keeps a floor width and scrolls inside its own box on
-          narrow screens. Scaled into a 375px column it would render its type
-          at about 4px, and this site holds a hard 10px floor. */}
+      {/* The floor width is 1000px, which is the viewBox's own width — so one
+          user unit is exactly one pixel and the type inside renders at the size
+          it is written. At 900 it scaled to 0.9 and the 11px cell hints came
+          out at 9.9, breaking the same 10px floor I had just raised across the
+          site three commits earlier: an SVG's declared font size is not its
+          rendered one, and only the rendered one counts.
+          Narrower than that it scrolls inside its own box; the page never
+          scrolls with it. */}
       <div className="overflow-x-auto">
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block min-w-[900px]" role="img"
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto block min-w-[1000px]" role="img"
            aria-label={`${ok.length} themes plotted by quarterly excess against acceleration; the four quadrants are the four states`}>
         {/* the two cuts. Full weight, because they are the classifier itself:
             every state label on this page is decided by which side a dot

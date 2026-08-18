@@ -109,6 +109,26 @@ const NEIGHBOURS = 1
  * says how many it holds, so a kind you do not care about this morning is one
  * heading to skip rather than an absence you have to notice.
  */
+/**
+ * Which `validation` values mean the group's construction stands up.
+ *
+ *   real         the market agrees its members co-move — the test cleared
+ *   definitional a factor or sector grouping that never claimed co-movement,
+ *                so there is nothing for the test to clear
+ *   null         a single-fund proxy: exact by construction
+ *
+ * Everything else — today `weak` and `too few in panel` — is a group that is on
+ * the page BECAUSE ANDY ASKED FOR IT, not because it passed. Rare Earth Metals
+ * is the live case (2026-08-18). A published exception that only admits itself
+ * on hover is the thing this page exists not to do, so the name wears a dashed
+ * underline and the raw word rides in its tooltip.
+ *
+ * Unknown values are marked rather than assumed clean: a new failure mode the
+ * pipeline invents should show up as a mark, not disappear into the pass set.
+ */
+const CLEARS = new Set(['real', 'definitional'])
+const unproven = (r) => r.validation != null && !CLEARS.has(r.validation)
+
 const KINDS = [
   { key: 'theme',  label: 'Themes',   note: 'a thesis, with members chosen for it' },
   { key: 'sector', label: 'Sectors',  note: 'macro-driven, not a thesis' },
@@ -240,7 +260,11 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
                 the width, because a name and a bar cannot share half a row —
                 at 390px the names truncated to 71px, which is not a ranking. */}
             <span className="sm:hidden block text-[12px] truncate pb-[1px]"
-                  style={colour ? { color: colour, fontWeight: 600 } : undefined}>
+                  title={unproven(r) ? `published without clearing validation: ${r.validation}` : undefined}
+                  style={{ ...(colour ? { color: colour, fontWeight: 600 } : {}),
+                           ...(unproven(r) ? { textDecoration: 'underline',
+                                               textDecorationStyle: 'dashed',
+                                               textUnderlineOffset: '3px' } : {}) }}>
               {r.group}
               <span className="ml-2 font-mono tabular-nums text-[11px]
                                text-[var(--color-text-secondary)]">
@@ -268,8 +292,13 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
               <span className={`hidden sm:block absolute top-1/2 -translate-y-1/2 text-[12.5px] truncate
                                 ${pos ? 'right-[calc(50%+9px)] text-right' : 'left-[calc(50%+9px)] text-left'}`}
                     style={{ maxWidth: 'calc(50% - 12px)',
-                             ...(colour ? { color: colour, fontWeight: 600 } : {}) }}
-                    title={`${r.members} member${r.members === 1 ? '' : 's'}${r.tickers?.length ? ' · ' + r.tickers.join(' · ') : ''}`}>
+                             ...(colour ? { color: colour, fontWeight: 600 } : {}),
+                             ...(unproven(r) ? { textDecoration: 'underline',
+                                                 textDecorationStyle: 'dashed',
+                                                 textUnderlineOffset: '3px' } : {}) }}
+                    title={`${r.members} member${r.members === 1 ? '' : 's'}`
+                           + (unproven(r) ? ` · published without clearing validation: ${r.validation}` : '')
+                           + (r.tickers?.length ? ' · ' + r.tickers.join(' · ') : '')}>
                 {r.group}
               </span>
 
