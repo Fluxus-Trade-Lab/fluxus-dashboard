@@ -72,14 +72,13 @@ const STEPS = [
     find: '只在 Leading / Improving 的主题里找票',
     with: '顶部池子切到「3M 领先」；哪些主题在 Leading 去 Themes 页看',
     dont: '不在这些主题里的票，后面四步都不做',
-    wants: ['主题四态', '池子开关'], panels: [], switches: ['pool3m'],
+    wants: ['主题四态', '池子开关'], panels: [],
   },
   {
     key: 'footprint', label: '脚印',
     find: '同一天 20 日新高 + RS 线新高的票 —— 起涨最早最广的确认',
     with: '开「只看 RS 新高」；三格本身只说「今天在动」，加这个开关才是「在领先地动」',
     dont: '当日涨幅 ≥15% 的 4% 日不追（−9.3%、胜率 36%）',
-    switches: ['highOnly'],
     wants: ['Weekly 20%+', '4% Bullish', 'PP 三格'],
     panels: ['weekly_20_gainers', 'bullish_4pct', 'pp_today', 'pp_2plus_10d', 'morales_pp_10d'],
   },
@@ -292,17 +291,12 @@ function Names({ rows, wide = false, rsKey }) {
  * they get one form and sit in one row. Three differently-shaped controls would
  * imply three different kinds of thing.
  */
-function Switch({ on, set, label, note, cued }) {
+function Switch({ on, set, label, note }) {
   return (
     <button type="button" onClick={() => set(!on)}
-            /* `cued` is the current step pointing at this control. Step 1 owns
-               the pool and step 2 owns the RS-high switch — without the cue
-               those steps would light nothing at all and read as broken, when
-               in fact the thing they operate is a switch rather than a card. */
-            className={`flex items-center gap-2 bg-transparent border-none cursor-pointer
-                        text-[11px] whitespace-nowrap rounded
-                        ${cued ? 'ring-1 ring-[var(--color-accent)] px-1.5 py-0.5 -mx-1.5' : 'p-0'}
-                        ${on ? 'text-[var(--color-text)]' : 'text-[var(--color-text-muted)]'}`}>
+            className={`flex items-center gap-2 bg-transparent border-none p-0 cursor-pointer
+                        text-[11px] whitespace-nowrap ${on ? 'text-[var(--color-text)]'
+                                         : 'text-[var(--color-text-muted)]'}`}>
       <i className={`w-7 h-[15px] rounded-full relative transition-colors shrink-0 ${on
         ? 'bg-[var(--color-accent-solid)]' : 'bg-[var(--color-hover-bg)]'}`}>
         <i className={`absolute top-[2px] w-[11px] h-[11px] rounded-full bg-white
@@ -753,10 +747,8 @@ export default function WatchlistPage({ zone: routeZone }) {
           gate: gateWords(data.gate),
         })}
       </p>
-      <Switch on={pool3m} set={setPool3m} label={t('wl.pool3m')}
-              cued={curStep.switches?.includes('pool3m')} />
-      <Switch on={highOnly} set={setHighOnly} label={t('wl.highOnly')}
-              cued={curStep.switches?.includes('highOnly')} />
+      <Switch on={pool3m} set={setPool3m} label={t('wl.pool3m')} />
+      <Switch on={highOnly} set={setHighOnly} label={t('wl.highOnly')} />
       <Switch on={floor} set={setFloor} label={t('wl.floor', { n: RS_FLOOR })}
               note={t('wl.floor.note')} />
       </div>
