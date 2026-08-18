@@ -38,9 +38,13 @@ import { useLanguage } from '../../i18n/LanguageContext'
  * The row click used to leave for the tear-sheet, which is the wrong trade on
  * this page: you are running down a list deciding what is worth a look, and
  * every look cost you the list. Charting in place keeps the list under your
- * hand and the chart is already at the top of the page. The tear-sheet is
- * still one click away — the ticker itself is a link to it — so the two
- * gestures are separate targets rather than one gesture doing both.
+ * hand and the chart is already at the top of the page.
+ *
+ * THE WHOLE ROW, THE NAME INCLUDED. A first pass kept the ticker as a link to
+ * the tear-sheet — two targets, and the one that looked most clickable did the
+ * very thing being taken away. The tear-sheet lives in the evidence fold now,
+ * under its own name: one more click for the rarer errand, none for the common
+ * one.
  */
 
 const HEAD = 25
@@ -165,6 +169,13 @@ function EvidenceFold({ row }) {
           )}
           {row.perf1w != null && <span>1W <b className="font-semibold text-[var(--color-text)]">{fmtPct(row.perf1w)}</b></span>}
           {row.sector && <span className="text-[var(--color-text-muted)]">{row.sector}{row.ind ? ` · ${row.ind}` : ''}</span>}
+          {/* the tear-sheet, named. It used to be what a row click did and
+              nothing on the page said so; now it is a labelled destination and
+              the row is free to do the thing you actually came for. */}
+          <a href={tickerHref(row.ticker)} onClick={(e) => e.stopPropagation()}
+             className="ml-auto text-[var(--color-accent)] no-underline hover:underline whitespace-nowrap">
+            {row.ticker} tear-sheet &rarr;
+          </a>
         </div>
       </td>
     </tr>
@@ -313,16 +324,14 @@ function RowPair({ r, i, open, onToggle, onChart }) {
                       hover:bg-[var(--color-hover-bg)] outline-none focus-visible:ring-1
                       ${r.inUniverse ? '' : 'opacity-45'}`}>
         <td className="py-[4px] pr-2.5 text-right tabular-nums text-[var(--color-text-muted)]">{i + 1}</td>
-        {/* the ticker keeps the tear-sheet. Two targets in one row, but they
-            are a row and a link — not two buttons competing for the same
-            pixels — and the link is the thing that already looked like one. */}
-        <td className="py-[4px] pr-2.5 font-mono font-semibold">
-          <a href={tickerHref(r.ticker)} onClick={(e) => e.stopPropagation()}
-             title={`${r.ticker} tear-sheet`}
-             className="text-[var(--color-text-bold)] no-underline hover:underline">
-            {r.ticker}
-          </a>
-        </td>
+        {/* THE NAME CHARTS IT, like every other cell in the row. It was left a
+            link to the tear-sheet for one revision and that was exactly
+            backwards: "clicking the name in the screener should show it in the
+            widget above rather than going to the ticker page" is the whole
+            instruction, and the name IS the thing you click. The tear-sheet
+            moved into the evidence fold, where it is a stated destination
+            rather than a second meaning attached to the same word. */}
+        <td className="py-[4px] pr-2.5 font-mono font-semibold text-[var(--color-text-bold)]">{r.ticker}</td>
         <HeatCell heat={r.heat} />
         <AlignDots rs3={r.rs3} indState={r.indState} indName={r.ind} />
         <td className="py-[4px] pr-2.5 text-[10px]">

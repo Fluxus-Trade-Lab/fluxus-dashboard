@@ -28,11 +28,51 @@
  * when no rule fires the component renders nothing at all. An empty narrator is
  * honest; a generic one is filler.
  */
-export default function Reading({ text }) {
+/**
+ * THE NAMES IN THE SENTENCE ARE CLICKABLE, where the page has somewhere to
+ * send them (Andy, 2026-08-18). The reading ends "Front of the board: QLYS,
+ * OKTA, TENB" — three names it just argued for, and until now the only way to
+ * act on them was to go and find them again in the table underneath.
+ *
+ * MATCHED AGAINST A KNOWN LIST, NEVER GUESSED. A regex for capitalised runs
+ * would light up SPY, RS, All, States and every theme name in the line. The
+ * caller passes the tickers it actually has, so a token becomes a control only
+ * when it is one — and on pages with no chart to send it to, no handler is
+ * passed and the sentence renders exactly as before.
+ */
+function linkify(text, tickers, onTicker) {
+  if (!onTicker || !tickers?.length) return text
+  // longest first, so a symbol that prefixes another cannot swallow it
+  const alts = [...new Set(tickers)].sort((a, b) => b.length - a.length)
+    .map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  const re = new RegExp(`\\b(${alts.join('|')})\\b`, 'g')
+  const out = []
+  let last = 0
+  for (const m of text.matchAll(re)) {
+    if (m.index > last) out.push(text.slice(last, m.index))
+    out.push(
+      <button key={`${m[1]}-${m.index}`} type="button" onClick={() => onTicker(m[1])}
+              title={`chart ${m[1]}`}
+              className="bg-transparent border-none p-0 font-inherit text-[length:inherit]
+                         cursor-pointer text-[var(--color-accent)] underline
+                         decoration-dotted underline-offset-[3px]
+                         hover:decoration-solid">
+        {m[1]}
+      </button>,
+    )
+    last = m.index + m[1].length
+  }
+  if (last < text.length) out.push(text.slice(last))
+  return out
+}
+
+export default function Reading({ text, tickers, onTicker }) {
   if (!text) return null
   return (
     <div className="pl-4 border-l-2 border-[var(--color-text)] max-w-[108ch] mb-4">
-      <p className="text-[17px] leading-[1.45] text-[var(--color-text)] m-0">{text}</p>
+      <p className="text-[17px] leading-[1.45] text-[var(--color-text)] m-0">
+        {linkify(text, tickers, onTicker)}
+      </p>
     </div>
   )
 }

@@ -378,7 +378,10 @@ export default function ScreenerPage() {
 
       {/* the whole confluence ledger, not the old 25-row display slice — the
           sentence says "here", and here now holds all fifty */}
-      <Reading text={untouched ? readScreener(heat) : selectionReading} />
+      {/* the names it just argued for are the names you can chart */}
+      <Reading text={untouched ? readScreener(heat) : selectionReading}
+               tickers={rows.map((r) => r.ticker)}
+               onTicker={(t) => { if (t !== charted) chartPick(t) }} />
 
       {/* THE BAND (Andy, 2026-08-18): the chart runs across the page, under
           the one-line read and ABOVE the scan and state controls, with the
