@@ -224,6 +224,44 @@ const rsInk = (v, key = 'rs_1m') => {
  * a fixed column — which is the whole reason a table of names reads faster
  * than a paragraph of them.
  */
+/**
+ * The ATR position — how many ATRs the name sits above its 50-day.
+ *
+ * The report calls this "能不能上车" and gives the bands: 0–4 is where you
+ * build, 5–7 you hold, ≥7 is the scale-out zone. Three semantic steps, drawn
+ * with the site's existing signal colours rather than a fourth palette — and
+ * ≥7 takes the trouble colour because that is what the band means.
+ *
+ * BELOW THE 50-DAY IS NOT A DEGREE OF EXTENSION. A negative reading is not
+ * "very un-extended", it is a different situation, so it leaves the scale and
+ * prints in ink. This is the same trap `atrBadgeColor` fell into in
+ * lib/format.js on 2026-08-17, when the field turned signed and 2,247 names
+ * went entry-zone green for being under their average.
+ *
+ * ABSENT IS NOT ZERO. The field ships with tonight's cron (DATA_CONTRACTS
+ * §四点七); until then every row prints a dash, and the dash is the reading.
+ */
+function AtrPos({ v }) {
+  if (v == null || !Number.isFinite(v)) {
+    return <span className="text-[10px] font-mono text-[var(--color-text-muted)]"
+                 title="ATR 位未测量 — 字段随今晚的 cron 到">—</span>
+  }
+  const tone = v < 0 ? 'var(--color-text-secondary)'
+    : v <= 4 ? 'var(--color-signal-ok, var(--color-took))'
+    : v <= 7 ? 'var(--color-signal-caution)'
+    : 'var(--color-signal-riskoff, var(--color-refused))'
+  return (
+    <span className="text-[10px] font-mono tabular-nums shrink-0"
+          style={{ color: tone }}
+          title={v < 0 ? `${v.toFixed(1)} ATR — 在 50 日线下方，不在扩张刻度上`
+               : v <= 4 ? `${v.toFixed(1)} ATR — 0–4 建仓区`
+               : v <= 7 ? `${v.toFixed(1)} ATR — 5–7 持有，不加`
+               : `${v.toFixed(1)} ATR — ≥7 只减不买`}>
+      {v.toFixed(1)}
+    </span>
+  )
+}
+
 function Name({ row, rsKey = 'rs_1m' }) {
   const v = row[rsKey]
   const alt = rsKey !== 'rs_1m' && row.rs_1m != null ? `RS 1M ${row.rs_1m}` : null
@@ -261,6 +299,9 @@ function Name({ row, rsKey = 'rs_1m' }) {
             title={alt || undefined}>
         {v ?? '—'}
       </span>
+      {/* two numbers beside a name and no more (DATA_CONTRACTS §八.3): what it
+          is worth against the field, and whether you can still get on. */}
+      <AtrPos v={row.atr_from_sma50} />
     </span>
   )
 }
@@ -470,7 +511,29 @@ function ScanCard({ panel, zoneKey, view, rsKey }) {
       )}
 
       {rows.length > 0 ? (
-        <Names rows={rows} rsKey={rsKey} />
+        /* CHASERS TO THE BOTTOM, NOT OUT (DATA_CONTRACTS §八.4). A 4% day that
+           is already up 15% on the session backtested at −9.3% over 20 days
+           with a 36% win rate — so it is a warning, and a warning you delete is
+           a warning nobody reads. The names stay, in their own greyed block
+           under a stated rule. Splitting only bites where the field exists;
+           everywhere else `chase` is undefined and this is one list, as now. */
+        (() => {
+          const chase = rows.filter((r) => r.chase)
+          const rest = rows.filter((r) => !r.chase)
+          if (!chase.length) return <Names rows={rows} rsKey={rsKey} />
+          return (
+            <>
+              <Names rows={rest} rsKey={rsKey} />
+              <p className="m-0 px-3 pt-2 pb-1 text-[10px] font-mono uppercase tracking-[.14em]
+                            text-[var(--color-text-muted)]">
+                {chase.length} 当日 ≥15% &mdash; 不追
+              </p>
+              <span className="opacity-45">
+                <Names rows={chase} rsKey={rsKey} />
+              </span>
+            </>
+          )
+        })()
       ) : (
         <p className="text-[11px] text-[var(--color-text-muted)] m-0 px-3 py-3">
           {!panel.measured ? t('wl.pending')

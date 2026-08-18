@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTickerEvents } from '../../hooks/useTickerEvents'
 
 /**
@@ -46,6 +46,59 @@ const LONG_LABELS = {
 
 const QUALITY = new Set(['episodic_pivot', 'vcp', 'momentum_97'])
 
+/**
+ * The screener presets, which arrive under a namespace rather than a name.
+ *
+ * From 2026-08-19 the nightly job logs preset hits into the same event stream
+ * as the seven screeners, keyed `preset:<slug>` — `preset:sugar_babies`,
+ * `preset:weekly_20_gainers` — with history backfilled to 03-16. Left alone
+ * this chart would print the raw key, and a lane labelled
+ * "preset:stockbee_9m_setup" is a lane nobody reads.
+ *
+ * THE SLUG IS NOT REVERSED, IT IS MATCHED. Undoing `[^a-z0-9]+ -> _` cannot
+ * recover "Weekly 20%+ Gainers" from `weekly_20_gainers` — the % and the + are
+ * gone. So the same slug function the pipeline uses (preset_hits.py:65) is
+ * applied to the preset names this app already ships, and the event is looked
+ * up in that map. A key with no match keeps its raw name minus the prefix,
+ * which is ugly and honest; inventing a title for it would not be.
+ *
+ * They are never QUALITY. The pipeline does not count them toward heat and
+ * neither does this chart — they are presets a reader saved, not a thesis the
+ * pipeline stands behind.
+ */
+const PRESET_PREFIX = 'preset:'
+const presetSlug = (name) =>
+  name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '')
+
+let presetCache = null
+function usePresetNames() {
+  const [map, setMap] = useState(presetCache)
+  useEffect(() => {
+    if (presetCache) return
+    let dead = false
+    fetch('/data/screener-presets.json')
+      .then((r) => (r.ok ? r.json() : []))
+      .then((rows) => {
+        const m = new Map((Array.isArray(rows) ? rows : [])
+          .filter((p) => p?.name).map((p) => [presetSlug(p.name), p.name]))
+        presetCache = m
+        if (!dead) setMap(m)
+      })
+      .catch(() => { presetCache = new Map(); if (!dead) setMap(presetCache) })
+    return () => { dead = true }
+  }, [])
+  return map
+}
+
+/** The name to print for an event's screener key. */
+function labelFor(key, presets, long) {
+  if (key.startsWith(PRESET_PREFIX)) {
+    const slug = key.slice(PRESET_PREFIX.length)
+    return presets?.get(slug) ?? slug
+  }
+  return (long ? LONG_LABELS : LABELS)[key] ?? key
+}
+
 /** Show the tape from a few bars before the first appearance, not from IPO. */
 const LEAD_IN = 8
 
@@ -53,6 +106,7 @@ const TAPE = { w: 1000, l: 46, r: 58, top: 30, bot: 244, h: 288 }
 
 export default function TickerSignalHistory({ symbol, trades, ohlc }) {
   const { events, loading } = useTickerEvents(symbol)
+  const presets = usePresetNames()
 
   const fills = useMemo(() => (trades ?? [])
     .filter((t) => t.ticker === symbol && t.entryDate)
@@ -136,13 +190,13 @@ export default function TickerSignalHistory({ symbol, trades, ohlc }) {
                         stroke="var(--color-text-bold)" strokeWidth=".8" opacity=".45" />
                 )}
                 <rect x={m.x - 3.5} y={m.y - 3.5} width="7" height="7" fill="var(--color-text-bold)">
-                  <title>{`${LONG_LABELS[m.screener] ?? m.screener} · ${m.date} · ${m.close.toFixed(2)}`}</title>
+                  <title>{`${labelFor(m.screener, presets, true)} · ${m.date} · ${m.close.toFixed(2)}`}</title>
                 </rect>
               </g>
             ) : (
               <rect key={`p${i}`} x={m.x - 2.5} y={m.y - 2.5} width="5" height="5" fill="none"
                     stroke="var(--color-untested)" strokeWidth="1.1">
-                <title>{`${LONG_LABELS[m.screener] ?? m.screener} · ${m.date} · ${m.close.toFixed(2)}`}</title>
+                <title>{`${labelFor(m.screener, presets, true)} · ${m.date} · ${m.close.toFixed(2)}`}</title>
               </rect>
             )))}
 
@@ -160,7 +214,7 @@ export default function TickerSignalHistory({ symbol, trades, ohlc }) {
               <text x={firstQuality.x} y={TAPE.top - 16} textAnchor="middle"
                     fill="var(--color-text-bold)"
                     style={{ font: '500 10px var(--font-mono)' }}>
-                {`first ${LABELS[firstQuality.screener] ?? firstQuality.screener} · ${firstQuality.close.toFixed(2)}`}
+                {`first ${labelFor(firstQuality.screener, presets)} · ${firstQuality.close.toFixed(2)}`}
               </text>
             )}
 
@@ -215,7 +269,7 @@ export default function TickerSignalHistory({ symbol, trades, ohlc }) {
             <span className="w-[124px] shrink-0 text-right">
               <span className="block text-[12.5px] font-semibold text-[var(--color-text)]"
                     style={{ fontFamily: 'var(--font-cond)' }}>
-                {(LABELS[c.screener] ?? c.screener).toUpperCase()}
+                {labelFor(c.screener, presets).toUpperCase()}
               </span>
               <span className="block text-[10px] text-[var(--color-text-muted)]">
                 {c.quality ? 'quality · ×3' : 'participation · ×1'}
