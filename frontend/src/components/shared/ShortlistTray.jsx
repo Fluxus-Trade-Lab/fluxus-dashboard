@@ -99,6 +99,19 @@ export default function ShortlistTray() {
             ))}
           </ul>
 
+          {/* WHAT A CLICK DOES HERE, said out loud (Andy, 2026-08-18).
+              A name in the table above charts it; a name in this tray opens
+              its tear-sheet. Two behaviours for one gesture on one screen is
+              exactly the thing a reader should not have to discover by
+              clicking — the tray is where a name goes once you have decided
+              it is worth reading properly, so the destination differs on
+              purpose, and the purpose has to be printed. */}
+          <p className="m-0 mt-2 text-[10px] leading-relaxed text-[var(--color-text-muted)]">
+            Click a name here for its <b className="text-[var(--color-text-secondary)]">full
+            tear-sheet</b> &mdash; not the chart. A name clicked in the table above charts it
+            instead.
+          </p>
+
           {/* taking it away. Two shapes because they go to two places: the
               bare symbols paste into a broker or a TradingView list, the
               table pastes into a sheet with the reasons intact. */}

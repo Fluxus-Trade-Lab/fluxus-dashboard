@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { barStyle } from '../groups/ThemeBars'
 import { useLanguage } from '../../i18n/LanguageContext'
 
@@ -21,18 +21,6 @@ import { useLanguage } from '../../i18n/LanguageContext'
 
 const STATE_ORDER = ['Leading', 'Weakening', 'Improving', 'Lagging']
 
-function Seg({ on, dim, onClick, children, title }) {
-  return (
-    <button type="button" onClick={onClick} title={title}
-      className={`bg-transparent border-none p-0 cursor-pointer text-[12.5px] font-inherit
-                  pb-[1px] outline-none focus-visible:ring-1
-                  ${on ? 'text-[var(--color-text-bold)] border-b border-solid border-[var(--color-text-bold)]'
-                       : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]'}
-                  ${dim ? 'opacity-45' : ''}`}>
-      {children}
-    </button>
-  )
-}
 
 /** A count earns ink in exactly three cases: the word is selected (the reader
  *  asked), the count is a measured zero (dimming alone cannot be told apart
@@ -65,15 +53,96 @@ function ThemeRibbon({ theme }) {
   )
 }
 
-/** One label style, one width, both rows — the bar reads as a grid, not a
- *  sentence. Groups on the second row are separated by hairlines, not labels
- *  floating mid-flow. */
-function Lbl({ children }) {
+/**
+ * A vocabulary, collapsed.
+ *
+ * Andy, 2026-08-18: 这些变成 dropdown 占的空间太多了. The bar spent two full
+ * rows printing nine scan words and six filter words that are, on any given
+ * morning, mostly not the one you want — and it sits above the chart and the
+ * table, so those two rows cost every page view. A menu spends one line on the
+ * word you HAVE chosen and none on the eight you have not.
+ *
+ * WHAT THE COLLAPSE MUST NOT COST is the counts. The number beside a word is
+ * the whole reason these are selectors and not a query builder: it answers
+ * "what does turning this on cost me" before it is on. They survive inside the
+ * panel, where there is now room to print every one of them rather than only
+ * the selected and the zeroes.
+ *
+ * The trigger states its current value, so a bar at rest still says what it is
+ * filtering by — a collapsed control that shows only its label would hide the
+ * filter, which is the failure mode this page has been careful about all round.
+ */
+function Menu({ label, summary, dim, children }) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    if (!open) return
+    const away = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
+    const esc = (e) => { if (e.key === 'Escape') setOpen(false) }
+    document.addEventListener('mousedown', away)
+    document.addEventListener('keydown', esc)
+    return () => {
+      document.removeEventListener('mousedown', away)
+      document.removeEventListener('keydown', esc)
+    }
+  }, [open])
+
   return (
-    <span className="w-11 shrink-0 text-[10px] font-mono font-medium uppercase tracking-[.14em]
-                     text-[var(--color-text-muted)]">{children}</span>
+    <span className="relative" ref={ref}>
+      <button type="button" onClick={() => setOpen((o) => !o)}
+              aria-expanded={open} aria-haspopup="true"
+              className="flex items-baseline gap-1.5 bg-transparent border-none p-0 cursor-pointer
+                         outline-none focus-visible:ring-1">
+        <span className="text-[10px] font-mono font-medium uppercase tracking-[.14em]
+                         text-[var(--color-text-muted)]">{label}</span>
+        <span className={`text-[12.5px] pb-[1px] border-b border-solid
+                          ${dim ? 'text-[var(--color-text-muted)] border-[var(--color-border)]'
+                                : 'text-[var(--color-text-bold)] border-[var(--color-text-bold)]'}`}>
+          {summary}
+        </span>
+        {/* 10px, not 9 — the type floor applies to a caret as much as to a
+            word, and this is the same glyph idiom the table's evidence toggle
+            already uses. */}
+        <span className="text-[10px] leading-none text-[var(--color-text-muted)]" aria-hidden="true">
+          {open ? '\u25b4' : '\u25be'}
+        </span>
+      </button>
+      {open && (
+        <div className="absolute left-0 top-full mt-1.5 z-30 min-w-[236px] max-h-[340px] overflow-auto
+                        rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]
+                        py-1 shadow-lg"
+             onClick={(e) => { if (e.target.closest('[data-close]')) setOpen(false) }}>
+          {children}
+        </div>
+      )}
+    </span>
   )
 }
+
+/**
+ * One row of a menu: the word, its mark, and its count — always the count,
+ * because in here there is room and the number is the point.
+ */
+function Item({ on, dim, onClick, title, mark, children, n, close }) {
+  return (
+    <button type="button" onClick={onClick} title={title} data-close={close ? '' : undefined}
+            className={`w-full flex items-baseline gap-2 px-3 py-[5px] text-left text-[12.5px]
+                        bg-transparent border-none cursor-pointer font-inherit
+                        hover:bg-[var(--color-hover-bg)]
+                        ${on ? 'text-[var(--color-text-bold)] font-semibold'
+                             : 'text-[var(--color-text-secondary)]'}
+                        ${dim ? 'opacity-45' : ''}`}>
+      <span className="w-3 shrink-0 text-[10px] text-[var(--color-text-muted)]">{on ? '\u2713' : ''}</span>
+      {mark}
+      <span className="min-w-0 flex-1 truncate">{children}</span>
+      <span className="shrink-0 text-[10px] font-mono tabular-nums text-[var(--color-text-muted)]">
+        {n == null ? '\u2014' : n}
+      </span>
+    </button>
+  )
+}
+
 function Divider() {
   return <span className="self-center h-3 w-px bg-[var(--color-border)]" />
 }
@@ -97,52 +166,62 @@ export default function ScanBar({
     return list.slice(0, 12)
   }, [themes, themeQuery])
 
+  const activeScan = scans.find((x) => x.key === scan) ?? scans[0]
+
   /** the chosen themes as rows; a name with no row is dropped upstream */
   const picked = chosen?.size ? themes.filter((t) => chosen.has(t.group)) : []
 
   return (
     <div className="sticky top-0 z-10 mb-4 border-b border-[var(--color-border)]
                     bg-[color-mix(in_srgb,var(--color-bg)_88%,transparent)] backdrop-blur-sm">
-      <div className="flex items-baseline gap-x-4 gap-y-1 flex-wrap py-2">
-        <Lbl>{tr('scr.bar.scan')}</Lbl>
-        {scans.map((s) => (
-          <Seg key={s.key} on={scan === s.key} dim={s.count === 0}
-               onClick={() => onScan(s.key)}
-               title={s.count === 0 ? `${s.label} — 0 today`
-                    : s.count == null ? `${s.label} — not loaded yet`
-                    : `${s.label} — ${s.count} names`}>
-            {s.label}<Count n={s.count} on={scan === s.key} />
-          </Seg>
-        ))}
-      </div>
-      <div className="flex items-baseline gap-x-4 gap-y-1 flex-wrap pb-2">
-        <Lbl>{tr('scr.bar.state')}</Lbl>
-        {STATE_ORDER.map((st) => {
-          const n = stateCounts ? (stateCounts[st] ?? 0) : null
-          return (
-            <Seg key={st} on={states.has(st)} onClick={() => onToggleState(st)}
-                 title={n == null ? `${st} — not loaded yet` : `${st} — ${n} in this cut`}>
-              <i className="inline-block w-[8px] h-[8px] rounded-[1px] mr-[5px] align-[-1px]"
-                 style={barStyle(st)} />
-              {tr(`state.${st}`)}<Count n={n} on={states.has(st)} />
-            </Seg>
-          )
-        })}
+      {/* ONE ROW. Scan, state and gate are menus; theme keeps its chips
+          because a chosen theme is a thing you need to see, not a value you
+          need to recall, and the ticker search stays open because it is the
+          one control with nothing to choose from. */}
+      <div className="flex items-baseline gap-x-5 gap-y-2 flex-wrap py-2">
+        <Menu label={tr('scr.bar.scan')} summary={activeScan?.label ?? '\u2014'}>
+          {scans.map((s) => (
+            <Item key={s.key} on={scan === s.key} dim={s.count === 0} close
+                  onClick={() => onScan(s.key)} n={s.count}
+                  title={s.count === 0 ? `${s.label} \u2014 0 today`
+                       : s.count == null ? `${s.label} \u2014 not loaded yet`
+                       : `${s.label} \u2014 ${s.count} names`}>
+              {s.label}
+            </Item>
+          ))}
+        </Menu>
 
-        {/* The two gates the retired preset lists all shared. Same chip as the
-            state words because they do the same job — narrow the cut — and a
-            second control idiom for the same job is one idiom too many. The
-            count is what the gate would KEEP, shown before it is on. */}
-        <Divider />
-        <Lbl>{tr('scr.bar.gate')}</Lbl>
-        {['liquid', 'exHealth'].map((g) => (
-          <Seg key={g} on={gates?.has(g)} onClick={() => onToggleGate(g)}
-               title={tr(`scr.gate.${g}.why`)}>
-            {tr(`scr.gate.${g}`)}<Count n={gateCounts?.[g] ?? null} on={gates?.has(g)} />
-          </Seg>
-        ))}
+        <Menu label={tr('scr.bar.state')} dim={!states.size}
+              summary={states.size
+                ? [...STATE_ORDER].filter((x) => states.has(x)).map((x) => tr(`state.${x}`)).join(' + ')
+                : tr('scr.bar.anyState') === 'scr.bar.anyState' ? 'any' : tr('scr.bar.anyState')}>
+          {STATE_ORDER.map((st) => {
+            const n = stateCounts ? (stateCounts[st] ?? 0) : null
+            return (
+              <Item key={st} on={states.has(st)} onClick={() => onToggleState(st)} n={n}
+                    title={n == null ? `${st} \u2014 not loaded yet` : `${st} \u2014 ${n} in this cut`}
+                    mark={<i className="inline-block w-[8px] h-[8px] rounded-[1px] shrink-0"
+                             style={barStyle(st)} />}>
+                {tr(`state.${st}`)}
+              </Item>
+            )
+          })}
+        </Menu>
 
-        <Divider />
+        {/* The two gates the retired preset lists all shared. The count is what
+            the gate would KEEP, shown before it is on. */}
+        <Menu label={tr('scr.bar.gate')} dim={!gates?.size}
+              summary={gates?.size
+                ? ['liquid', 'exHealth'].filter((g) => gates.has(g)).map((g) => tr(`scr.gate.${g}`)).join(' + ')
+                : tr('scr.bar.anyGate') === 'scr.bar.anyGate' ? 'none' : tr('scr.bar.anyGate')}>
+          {['liquid', 'exHealth'].map((g) => (
+            <Item key={g} on={gates?.has(g)} onClick={() => onToggleGate(g)}
+                  n={gateCounts?.[g] ?? null} title={tr(`scr.gate.${g}.why`)}>
+              {tr(`scr.gate.${g}`)}
+            </Item>
+          ))}
+        </Menu>
+
         <span className="text-[10px] font-mono font-medium uppercase tracking-[.14em] text-[var(--color-text-muted)]">{tr('scr.bar.theme')}</span>
         {picked.length > 0 && picked.map((t) => (
           <span key={t.group} className="text-[12.5px] text-[var(--color-text-bold)]">
