@@ -105,20 +105,37 @@ export default function TickerChart({ symbol, height = 520, interval = 'D' }) {
     container.appendChild(widgetDiv)
 
     /**
-     * The widget cannot read our tokens — it is a third-party iframe — so the
-     * two colours that decide whether it looks like part of this page or like
-     * a window cut into it are read off the document and passed in.
+     * THE CHART TAKES THE GROUND IT IS STANDING ON.
      *
-     * On the light theme it defaulted to white against our paper, which Andy
-     * called 太跳 and is: #ffffff beside #e2e0d6 is a brighter rectangle than
-     * anything else on the site. Both themes now take `--color-bg`, which is
-     * the colour of the box this chart already sits in, so the chart has no
-     * edge of its own. Read at init and re-read on every theme change, because
-     * the effect re-runs on `dark`.
+     * It cannot read our tokens — third-party iframe — so the colour is read
+     * off the DOM and passed in. It was hardcoded to `--color-bg` for one
+     * revision, which is right on the ticker page (the chart sits on the page
+     * ground there) and wrong inside the card on page 3, where the card is
+     * `--color-surface`: a darker rectangle inside a lighter one draws a frame
+     * around itself, and Andy is right that there is no reason for one. Before
+     * that it was the widget's own white, which was the same fault louder.
+     *
+     * So it walks up from its own wrapper to the first ancestor that actually
+     * paints something and uses that. Placed on the page it matches the page;
+     * placed in a card it matches the card; and nothing has to be kept in sync
+     * by hand when a caller moves it. Recomputed on every theme change, since
+     * the effect already re-runs on `dark`.
      */
-    const css = getComputedStyle(document.documentElement)
-    const bg = css.getPropertyValue('--color-bg').trim()
-    const grid = css.getPropertyValue('--color-border-light').trim()
+    const ground = (() => {
+      let n = outerRef.current?.parentElement
+      while (n && n !== document.documentElement) {
+        const c = getComputedStyle(n).backgroundColor
+        const m = c.match(/[\d.]+/g)
+        if (m && (m[3] === undefined || +m[3] > 0.95)) {
+          return `#${m.slice(0, 3).map((v) => (+v).toString(16).padStart(2, '0')).join('')}`
+        }
+        n = n.parentElement
+      }
+      return getComputedStyle(document.documentElement)
+        .getPropertyValue('--color-bg').trim()
+    })()
+    const grid = getComputedStyle(document.documentElement)
+      .getPropertyValue('--color-border-light').trim()
 
     const script = document.createElement('script')
     script.type = 'text/javascript'
@@ -144,7 +161,7 @@ export default function TickerChart({ symbol, height = 520, interval = 'D' }) {
        */
       hide_top_toolbar: true,
       hide_side_toolbar: true,
-      backgroundColor: bg,
+      backgroundColor: ground,
       gridColor: grid,
       allow_symbol_change: false,
       /**
@@ -193,7 +210,7 @@ export default function TickerChart({ symbol, height = 520, interval = 'D' }) {
   return (
     <div
       ref={outerRef}
-      className="bg-[var(--color-bg)] rounded-3xl overflow-hidden relative"
+      className="rounded-3xl overflow-hidden relative"
       style={{ height: `${height}px`, width: '100%' }}
     >
       {/* hatched, so it cannot be read as a chart that rendered nothing, and
