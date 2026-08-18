@@ -193,9 +193,12 @@ class TestSelfMaintainingLedger:
     def test_a_never_populated_column_is_unpopulated_not_severe(self):
         """eps_growth_next_y has been 100% null its whole life. Halting the
         pipeline over it would teach everyone to ignore the guard."""
-        v = Q.assess({"eps_growth_next_y": 1.0},
-                     [{"date": "d", "eps_growth_next_y": "1.0"}])
-        f = v["fields"]["eps_growth_next_y"]
+        # (eps_growth_next_y itself moved to the sparse-by-design list when
+        # the fundamentals source switched on 2026-08-17; the never-lived rule
+        # is exercised on a stand-in column)
+        v = Q.assess({"never_lived_col": 1.0},
+                     [{"date": "d", "never_lived_col": "1.0"}])
+        f = v["fields"]["never_lived_col"]
         assert f["status"] == "unpopulated"
         assert v["status"] == "ok"
 
