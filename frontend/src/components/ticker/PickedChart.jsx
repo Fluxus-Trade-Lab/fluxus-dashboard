@@ -133,15 +133,25 @@ export default function PickedChart({ height = 460 }) {
                            text-[var(--color-text-muted)]">
             {panel.label}
           </span>
-          {/* THE STRIP IS NOT THE SCREEN. The panel ships a `count` and a
-              `truncated`, and this list is the untruncated head of it — today
-              25 chips out of 27 names. Printing the chip count alone would
-              claim the screen found 25, which is the silent-truncation failure
-              this whole file is written against. */}
+          {/* THE STRIP IS NOT THE SCREEN, AND IT IS NOT THE CARD EITHER.
+              The panel ships a `count` and a `truncated`, so a bare chip count
+              would claim the screen found 25 when it found 27 — the silent
+              truncation this file is written against.
+              It then collided with something worse: on Today's List the same
+              panel's own card was reporting 16/27 at the same moment, because
+              that card obeys the page's view switches (the RS floor was on)
+              and this strip does not. One panel, one screen, two numbers.
+              Both were true and the pair was unreadable. The strip now names
+              what it counts — how many names this chart can reach — in words
+              the card does not use, and the note below says the switches do
+              not reach here. Making it obey them instead was the wrong cure:
+              this same card also sits on the Screener, which has no such
+              switches, and the strip would then mean two different things on
+              two pages. */}
           <span className="text-[10px] font-mono tabular-nums text-[var(--color-text-muted)]">
             {panel.truncated > 0
-              ? `${names.length} of ${panel.count} · ${panel.truncated} not listed here`
-              : names.length}
+              ? `${names.length} chartable of the screen's ${panel.count}`
+              : `${names.length} chartable`}
           </span>
         </div>
         <div className="flex gap-1.5 overflow-x-auto pb-1">
@@ -210,6 +220,9 @@ export default function PickedChart({ height = 460 }) {
           ? <>Nothing picked, so this is the <b className="text-[var(--color-text-secondary)]">first
               name</b> out of True Market Leaders, in the file&rsquo;s own order. </>
           : <>Your pick. </>}
+        This strip is the screen&rsquo;s own list and <b>no view switch on the page narrows
+        it</b> &mdash; a card here may well be showing a smaller count for the same screen,
+        because those cards obey the switches and this does not.
         The screen is: {panel.recipe}. It is a <b>qualification, not an entry</b> &mdash;
         nothing here says buy this, and the chart is TradingView&rsquo;s, drawn from their
         data rather than from the nightly file.
