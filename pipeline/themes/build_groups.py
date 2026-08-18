@@ -653,11 +653,16 @@ def run() -> Dict[str, Any]:
         # IPOs was briefly blocked here for failing a test it does not sit:
         # its members are recent listings, so they are thin in a 10y panel by
         # definition, which says nothing about whether the rule works.
+        override = taxonomy.by_name().get(t["group"], taxonomy.Theme("", "etf")).publish_override
+        # publish_override is the operator's explicit call and beats both
+        # bars -- the co-movement verdict AND the measurable floor (Quantum
+        # Computing has 4 tradeable names; Andy: 要发布的). The row still ships
+        # measurable=false / its real verdict, so the page can say so.
         t["publish"] = bool(
-            t.get("measurable", True)
-            and (t["method"] in ("proxy", "rule")
-                 or v.get("verdict") in ("real", "weak")
-                 or taxonomy.by_name().get(t["group"], taxonomy.Theme("", "etf")).publish_override)
+            override
+            or (t.get("measurable", True)
+                and (t["method"] in ("proxy", "rule")
+                     or v.get("verdict") in ("real", "weak")))
         )
     # One session label for the whole payload, computed once: the ribbon
     # excludes it from its calendar and the payload ships it as `date`.
