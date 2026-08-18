@@ -3,6 +3,7 @@ import PageHeader from '../PageHeader'
 import TickerLink from '../ticker/TickerLink'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { useWatchlist } from '../../hooks/useWatchlist'
+import PickedChart from '../ticker/PickedChart'
 
 /**
  * Today's list — six questions, already asked.
@@ -631,6 +632,22 @@ export default function WatchlistPage({ zone: routeZone }) {
         ))}
       </div>
 
+      {/* ── the three tiers (Andy's size grading, 2026-08-18) ─────────────
+          LARGE   the scan grid — this page's job is discovery, so the field of
+                  answers is the biggest thing on it.
+          MID     the chart, in a card that never moves and is never empty.
+          SMALL   the names themselves, inside the cards.
+
+          The chart takes the right column and STAYS there. Sizing it to the
+          selection was the first proposal and Andy turned it down: a click
+          that reflows the page loses the reader's place in the very grid they
+          were reading. Below xl it sits above the grid rather than under it —
+          buried at the bottom of twelve scan cards it would not be a fixed
+          card, it would be a footnote. */}
+      <div className="flex flex-col xl:grid xl:grid-cols-[minmax(0,1fr)_380px]
+                      2xl:grid-cols-[minmax(0,1fr)_440px] xl:gap-x-4 xl:items-start">
+        <div className="min-w-0 order-2 xl:order-none">
+
       {/* Every scan on the table. The lens narrows which ones, never what any
           of them counted.
           A scan the current view has emptied is taken off the table rather
@@ -654,6 +671,12 @@ export default function WatchlistPage({ zone: routeZone }) {
           </span>
         </p>
       )}
+
+        </div>
+        <div className="min-w-0 order-1 xl:order-none mb-4 xl:mb-0 xl:sticky xl:top-3">
+          <PickedChart />
+        </div>
+      </div>
 
       {/* Names that answer more than one question. Described, not ranked, and
           below the questions rather than above them — it is a by-product of the

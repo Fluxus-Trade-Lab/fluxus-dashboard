@@ -4,11 +4,12 @@ import DataUnavailable from '../DataUnavailable'
 import Reading, { readThemes } from '../Reading'
 import { useGroups } from '../../hooks/useGroups'
 import GroupTable from './GroupTable'
-import ThemeBars, { barStyle } from './ThemeBars'
+import StateField from './StateField'
+import ThemeBars from './ThemeBars'
 import CompareBar from './CompareBar'
 import TrajectoryPanel from './TrajectoryPanel'
 import ThemeMembers from './ThemeMembers'
-import { useThemeCompare } from './useThemeCompare'
+import { useThemeCompare, SLOT_COLOURS } from './useThemeCompare'
 import { useSpyRow } from './useSpyRow'
 import Reference from '../Reference'
 import HowToRead from '../HowToRead'
@@ -21,15 +22,21 @@ import HowToRead from '../HowToRead'
  * they explain each other, and the sticky bar doubles as the interaction's
  * receipt — a row clicked at rank 60 fills a slot that is still on screen.
  *
- * The sections, in reading order:
+ * 2026-08-18 — SIZE IS NOW THE PAGE'S FOURTH CHANNEL (Andy, across all three
+ * morning pages). The three tiers here, largest first:
  *
- *   FIELD     is picking worth anything today?
- *   COMPARE   is your pick a trend or a bounce?
- *   RANK      the full order, and the place selections are made from.
+ *   LARGE   the four-state field. It is not a view OF the four states, it is
+ *           their definition — classify(excess_3m, rs_accel) reproduced,
+ *           75 of 75, as two axes cut at zero. See StateField.
+ *   MID     the comparison: is a theme a trend or a bounce.
+ *   SMALL   the ranking, the members behind each theme, the full table —
+ *           the names tier. A single stock never takes a large card here;
+ *           this page's output is themes, and stocks are only their evidence.
  *
  * Compare sits ABOVE the 70-row ranking although it depends on it, because
- * an instrument that responds three screens below the gesture reads as
- * broken. The empty state is one quiet line, not a lecture.
+ * an instrument that responds three screens below the gesture reads as broken.
+ * It NEVER shows empty: with nothing picked it draws the three fastest
+ * accelerators and says that is what it is doing.
  *
  * All teaching lives in HowToRead at the bottom. The objects themselves are
  * silent — the page used to carry seven captions and two duplicate legends,
@@ -62,26 +69,6 @@ export const WINDOWS = [
   },
   { key: '3M', hl: [1, 2, 3], value: (r) => r.excess_3m },
 ]
-
-/** Legend and census in one object: each state's swatch wears its own count. */
-function StateCensus({ rows }) {
-  const counts = rows.reduce((acc, r) => {
-    if (r.state) acc[r.state] = (acc[r.state] ?? 0) + 1
-    return acc
-  }, {})
-  return (
-    <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px]
-                    text-[var(--color-text-muted)]">
-      {['Leading', 'Weakening', 'Improving', 'Lagging'].map((s) => (
-        <span key={s} className="flex items-center gap-1.5">
-          <i className="inline-block w-3 h-[9px]" style={barStyle(s)} />
-          {s} <span className="tabular-nums text-[var(--color-text-secondary)]">
-            {counts[s] ?? 0}</span>
-        </span>
-      ))}
-    </div>
-  )
-}
 
 /**
  * The sentence Andy read off TSF's chart, computed instead of typed:
@@ -206,6 +193,28 @@ export default function GroupsPage() {
   const colourOf = compare.colourOf
   const onToggle = compare.toggle
 
+  /**
+   * What Compare draws when nothing is picked.
+   *
+   * The mid card used to be an empty box occupying half the page on arrival —
+   * the same defect Andy rejected for page 3's chart, in a different costume.
+   * His call (2026-08-18): default to the three fastest accelerators, because
+   * "what suddenly came from behind" is half of what this page is for and
+   * should not require a click to see.
+   *
+   * It is a DEFAULT, not a selection: `picks` stays empty, the bar still shows
+   * three free slots, and the first real pick replaces the trio entirely.
+   * Seeding the selection instead would have made Clear do nothing visible and
+   * would have put a choice in the reader's mouth that they never made.
+   */
+  const fallback = rows
+    .filter((r) => Number.isFinite(r.rs_accel))
+    .sort((a, b) => b.rs_accel - a.rs_accel)
+    .slice(0, SLOT_COLOURS.length)
+    .map((r, i) => ({ name: r.group, colour: SLOT_COLOURS[i] }))
+  const shown = compare.picks.length ? compare.picks : fallback
+  const isDefault = compare.picks.length === 0
+
   // Controls are typography, not boxes: state is carried by weight and an
   // underline, never by a filled pill. Borders on this page are reserved for
   // separating data from data.
@@ -245,52 +254,45 @@ export default function GroupsPage() {
         </div>
       </div>
 
-      {/* Two columns from lg up. The ranking is a list that wants height and
-          the comparison is a chart that wants width, and stacked they made a
-          page 1.5 screens tall before a single row was expanded. Side by side
-          each one's scroll is its own.
+      {/* ── LARGE ─────────────────────────────────────────────────────────
+          The field gets the whole width and no neighbour, because it is the
+          definition of the four words the rest of the page uses. Everything
+          below it is either a closer look at one dot (Compare) or the same
+          themes as a list (Rank). */}
+      <Section label="Field"
+               note={`${rows.length} themes · quarter × acceleration`}>
+        <StateField rows={rows} colourOf={colourOf} onToggle={onToggle}
+                    atLimit={compare.atLimit} />
+      </Section>
+
+      {/* ── MID and SMALL ─────────────────────────────────────────────────
+          Compare is the middle tier and Rank the small one, so Compare leads
+          on every width — including the two-column one, where it takes the
+          left column that the eye reaches first. Below xl they stack in the
+          same order.
 
           The split waits for xl, not lg: at 1024 each column came out about
-          400px and the comparison's end labels ran 3px past the edge. Below
-          it they stack in the original order — the ranking's mirrored rows
-          need width, and half of a tablet is not width. */}
-      <div className="xl:grid xl:grid-cols-2 xl:gap-x-8 xl:items-start">
-        <div className="min-w-0 order-2 xl:order-1">
-        <Section label="Rank"
-                 note={
-                   <div className="flex gap-1" role="group" aria-label="rank by">
-                     {/* "by Time" rather than "by 1W": the label names the KIND of sort, not
-                          the window, so it stops changing under the reader every time
-                          they switch window — and it sits parallel to "by Acceleration",
-                          which is the choice actually being offered. */}
-                     {[['window', 'by Time'], ['pace', 'by Acceleration']].map(([k, label]) => (
-                       <button key={k} type="button" onClick={() => setRankSort(k)}
-                               aria-pressed={rankSort === k}
-                               className={`px-2 py-[2px] text-[10px] font-mono rounded cursor-pointer
-                                           border-none transition-colors whitespace-nowrap ${rankSort === k
-                                 ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
-                                 : 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
-                         {label}
-                       </button>
-                     ))}
-                   </div>
-                 }
-                 right={<StateCensus rows={rows} />}>
-          <ThemeBars rows={windowed} scale={scale} sortKey={rankSort}
-                     colourOf={colourOf} onToggle={onToggle}
-                     atLimit={compare.atLimit} dim={compare.picks.length > 0} />
-        </Section>
-        </div>
-        <div className="min-w-0 order-1 xl:order-2">
+          400px and the comparison's end labels ran 3px past the edge. */}
+      <div className="xl:grid xl:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] xl:gap-x-8 xl:items-start">
+        <div className="min-w-0">
         <Section label="Compare">
-          <CompareReading picks={compare.picks} windowed={windowed} winKey={winKey} />
-          <TrajectoryPanel picks={compare.picks} byName={byName} highlight={win.hl} />
+          {/* The default announces itself. A chart that quietly draws
+              something you did not choose is a chart you will misread once. */}
+          {isDefault && (
+            <p className="m-0 mb-2 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
+              Nothing picked, so this is the <b className="text-[var(--color-text-secondary)]">three
+              fastest accelerating themes</b> — the ones that came from behind. Pick any
+              theme, in the bar or on the field, and it replaces them.
+            </p>
+          )}
+          <CompareReading picks={shown} windowed={windowed} winKey={winKey} />
+          <TrajectoryPanel picks={shown} byName={byName} highlight={win.hl} />
 
           {/* The set behind each chosen average. A theme's bar is a claim about
               members you cannot see; one fold per pick opens them on the
               screener's own measurements. Mounted lazily — the 5,615-row
               universe is fetched the first time a fold opens, not on page load. */}
-          {compare.picks.map((pick) => {
+          {shown.map((pick) => {
             const row = byName.get(pick.name)
             if (!row?.tickers?.length) return null
             const open = openMember === pick.name
@@ -322,6 +324,34 @@ export default function GroupsPage() {
           })}
         </Section>
         </div>
+        <div className="min-w-0">
+        <Section label="Rank"
+                 note={
+                   <div className="flex gap-1" role="group" aria-label="rank by">
+                     {/* "by Time" rather than "by 1W": the label names the KIND of sort, not
+                          the window, so it stops changing under the reader every time
+                          they switch window — and it sits parallel to "by Acceleration",
+                          which is the choice actually being offered. */}
+                     {[['window', 'by Time'], ['pace', 'by Acceleration']].map(([k, label]) => (
+                       <button key={k} type="button" onClick={() => setRankSort(k)}
+                               aria-pressed={rankSort === k}
+                               className={`px-2 py-[2px] text-[10px] font-mono rounded cursor-pointer
+                                           border-none transition-colors whitespace-nowrap ${rankSort === k
+                                 ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
+                                 : 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
+                         {label}
+                       </button>
+                     ))}
+                   </div>
+                 }
+                 /* the state census moved into the Field figure, which is
+                    where those four words are defined */
+                 >
+          <ThemeBars rows={windowed} scale={scale} sortKey={rankSort}
+                     colourOf={colourOf} onToggle={onToggle}
+                     atLimit={compare.atLimit} dim={compare.picks.length > 0} />
+        </Section>
+        </div>
       </div>
 
       <Reference label="Full table" count={rows.length}
@@ -348,12 +378,15 @@ export default function GroupsPage() {
 
       <HowToRead>
         <p>
-          One control bar, three layers. The <b>window</b> (1W / 1M / 3M) moves the dots
-          and the ranking together — they share one axis — and shades the same stretch on
-          the compare chart. All three windows are the same construction: theme return
-          minus SPY&rsquo;s over that window. The universe is tradeable names only
-          (cap ≥ $300M, $2M daily volume), and every row prints its member count because
-          a theme of one stock is one stock.
+          Read this page by size. The <b>field</b> is largest because it is where the four
+          words come from; the <b>comparison</b> is the middle tier; the <b>ranking</b>, the
+          members and the full table are the names tier. The <b>window</b> (1W / 1M / 3M)
+          moves the ranking and shades the matching stretch on the compare chart —
+          <b>it does not move the field</b>, which is defined on the quarter and says so on
+          itself. All three windows are the same construction: theme return minus
+          SPY&rsquo;s over that window. The universe is tradeable names only (cap ≥ $300M,
+          $2M daily volume), and every row prints its member count because a theme of one
+          stock is one stock.
         </p>
         <p>
           <b>Selecting</b>: search in the bar, or click a dot in the field, or click a
@@ -364,9 +397,12 @@ export default function GroupsPage() {
           which&raquo; — it never grades a theme.
         </p>
         <p>
-          <b>Field</b>: one dot per theme, zero is SPY, the box is the middle half. A
-          narrow box says most themes ARE the market today and picking barely matters; long
-          tails say being right pays. <b>Compare</b>: straight lines between the four
+          <b>Field</b>: one dot per theme, placed on quarterly excess against
+          acceleration, both cut at zero — so the quadrant a dot lands in <i>is</i> its
+          state, which is why nothing on that figure is coloured by state. Size is how many
+          of the five horizons the theme leads on at once: the big dots are durable, the
+          high ones came from behind, and the crowd around the origin is the honest reading
+          that most themes are the market. <b>Compare</b>: straight lines between the four
           measured stretches — nothing is smoothed, a curve through four samples would
           invent readings between them. A line that climbed to its rank is a trend; one
           that fell and snapped back is a bounce. The heatstrip repeats those stretches as

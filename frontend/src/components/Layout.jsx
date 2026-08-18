@@ -24,7 +24,8 @@ function Band({ label, note }) {
 import TickerStrip from './dashboard/TickerStrip'
 import RegimeBand from './dashboard/RegimeBand'
 import LeadersLaggards from './dashboard/LeadersLaggards'
-import { VoteMarks } from './breadth/VoteGlyphs'
+import VerdictCard from './dashboard/VerdictCard'
+import ThemeMovers from './dashboard/ThemeMovers'
 import { ETF_GROUPS } from '../lib/etfGroups'
 import ScreenerPage from './screener/ScreenerPage'
 import WatchlistPage from './watchlist/WatchlistPage'
@@ -100,93 +101,76 @@ export default function Layout({ data, lastUpdated, isOffline }) {
       />
 
       {current === 'dashboard' ? (
-        /* Today, in the three tiers of 2026-08-09_WHAT_TO_SHOW.md §4.
+        /* Page 1 of the morning's three, and the three share one skeleton:
+           a matrix of cards whose inside always reads change → strength →
+           names. What differs between the pages is WHO is changing (market,
+           theme, name) and — Andy's amendment on 2026-08-18 — WHICH CARD IS
+           BIGGEST. Size is the fourth channel: it says what this page is for,
+           and each page spends it differently.
 
-           SUBJECT    the read and the twelve votes that produced it. This used
-                      to be a one-line chip and eight prices; eight prices
-                      answer "what happened", which is not the page's question.
-           EVIDENCE   regime band · best/worst industries · the five checks per
-                      benchmark · what is stacking.
-           REFERENCE  the price strip, the trend table, the full cross-section.
+           On this page it goes to the verdict, because §5.1 asks the top of
+           every page to survive as a standalone screenshot and that is how
+           this one is actually distributed.
 
-           The Founders-note slot is deliberately an empty frame: Andy writes
-           it, the layout only reserves the space. */
+             LARGE   the verdict and the condition that ends it
+             MID     market cycle · the founder's own words
+             SMALL   what moved, at four grains: benchmarks, sectors,
+                     industries, themes
+
+           The founder's notes keep a middle card, not a large one. They are
+           the only thing here that is not computed, which earns them the tier;
+           they are also empty on most days, and a large empty card reads as a
+           broken page rather than as the honest state an empty day is. */
         <main className="max-w-[1800px] mx-auto px-3 py-4 space-y-4">
           <PageHeader group="market" title="Today" meta={[]} />
 
-          {/* SUBJECT — the read on the left, its own history on the right.
-              Side by side because they answer one question in two tenses:
-              what the market is today, and whether today is unusual for it.
-              Stacked, the chart read as a second object; beside the votes it
-              reads as their denominator. */}
-          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,7fr)_minmax(0,9fr)] gap-4 items-stretch">
-            {/* v3 card chrome: 24px corners, no border — cards are separated
-                by ground, not fenced by hairlines. Source lines were tried
-                here and cut by Andy (2026-08-15): on the sketches they carried
-                provenance, on the live page they repeated what the card
-                already was. 页面文案只留交易内容. */}
-            {data?.breadth?.verdict && (
-              <section className="rounded-3xl px-6 py-5 bg-[var(--color-surface)]">
-                <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1 mb-4">
-                  {/* The verdict is a WORD, and words do not wear the encoding
-                      colour — the marks below it already say the same thing in
-                      took/refused, so colouring the word said it twice. Weight
-                      and size carry the emphasis instead (Andy 2026-08-13,
-                      reading nextSignals: colour lives in the graphic). */}
-                  <h2 className="text-[26px] leading-none font-semibold m-0
-                                 text-[var(--color-text-bold)]"
-                      style={{ fontFamily: 'var(--font-cond)' }}>
-                    {data.breadth.verdict.env}
-                  </h2>
-                  <span className="text-[17px] font-mono tabular-nums">
-                    {data.breadth.verdict.score > 0 ? '+' : ''}{data.breadth.verdict.score}
-                    <span className="text-[var(--color-text-muted)]"> / 12</span>
-                  </span>
-                  <button type="button" onClick={() => navigate('#/breadth')}
-                          className="text-[11px] bg-transparent border-0 p-0 cursor-pointer underline
-                                     text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
-                    Market State Details →
-                  </button>
-                </div>
-                <VoteMarks votes={data.breadth.verdict.votes} />
-              </section>
-            )}
+          {/* ── LARGE ─────────────────────────────────────────────────── */}
+          <VerdictCard verdict={data?.breadth?.verdict}
+                       conditions={data?.breadth?.conditions}
+                       onNavigate={navigate} />
 
-            <RegimeBand verdict={data?.breadth?.verdict} signals={data?.signals}
-                        conditions={data?.breadth?.conditions} onNavigate={navigate} />
-          </div>
+          {/* ── MID ───────────────────────────────────────────────────────
+              Where the cycle sits, and what he makes of it. Side by side
+              because they are the same reading twice — one measured, one
+              written — and stacking them would put the writing among the
+              evidence, where it is not evidence.
 
-          {/* Reserved for the founder's own words — written, never generated.
-              An empty frame, because a slot that appears only once it is full
-              was never reserved. */}
-          {/* Two cadences, because they are two different readings and were
+              Two cadences, because they are two different readings and were
               sharing one box. The daily note is what the tape did today; the
               weekly is what the month is turning into, and a week's worth of
               daily notes is not the same thing as having written the weekly
               one. Both keep their back-catalogue — the second reading is the
               point of writing them. (Andy, 2026-08-17.) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            <WritingSlot
-              label="Founders note · daily"
-              kind="founders-daily"
-              rows={4}
-              placeholder="What the session actually did, in your words."
-              reserved="Written by hand on the days there is something to say — an
-                        empty slot on the other days is the honest state."
-            />
-            <WritingSlot
-              label="Founders note · weekly"
-              kind="founders-weekly"
-              cadence="weekly"
-              rows={4}
-              placeholder="What the week is turning into."
-              reserved="The longer read. Not a summary of the dailies — the thing
-                        that only shows up at a week's distance."
-            />
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]
+                          gap-4 items-stretch">
+            <RegimeBand verdict={data?.breadth?.verdict} signals={data?.signals}
+                        conditions={data?.breadth?.conditions} onNavigate={navigate} />
+            <div className="flex flex-col gap-3">
+              <WritingSlot
+                label="Founders note · daily"
+                kind="founders-daily"
+                rows={4}
+                className="flex-1"
+                placeholder="What the session actually did, in your words."
+                reserved="Written by hand on the days there is something to say — an
+                          empty slot on the other days is the honest state."
+              />
+              <WritingSlot
+                label="Founders note · weekly"
+                kind="founders-weekly"
+                cadence="weekly"
+                rows={4}
+                className="flex-1"
+                placeholder="What the week is turning into."
+                reserved="The longer read. Not a summary of the dailies — the thing
+                          that only shows up at a week's distance."
+              />
+            </div>
           </div>
 
-          {/* the tier word went (Andy 2026-08-16); the rule alone now marks
-              the seam between the read and its evidence */}
+          {/* ── SMALL ─────────────────────────────────────────────────────
+              What moved. The tier word went (Andy 2026-08-16); the rule alone
+              now marks the seam between the read and its evidence. */}
           <div className="pt-5">
             <i className="block h-px bg-[var(--color-border)] mb-4" />
             <div className="space-y-3">
@@ -195,10 +179,12 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                   behind a click. */}
               <TickerStrip signals={data?.signals} etfData={data?.etf_data} />
 
-              {/* Equal width, equal row height, so neither card decides the
-                  other's layout. items-stretch is the default and is what makes
-                  them end level regardless of how many rows each holds. */}
-              <div className="grid grid-cols-1 xl:grid-cols-2
+              {/* Three grains of the same question, equal width and equal row
+                  height so none of them decides another's layout. Themes join
+                  the two ETF cohorts here for the first time: the brief asks
+                  this page for the one-day and one-week change in sectors AND
+                  themes, and only the sector half was ever built. */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3
                               gap-3 items-stretch">
                 {/* One component, two cohorts (Andy 2026-08-11: Sectors learns
                     the Industries grammar, not the reverse) — the symmetry is
@@ -208,34 +194,52 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                   etfs={(ETF_GROUPS.Industries || [])
                     .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                     .filter(Boolean)}
-                  windows={['1D', '1W', '1M']} limit={3} />
+                  windows={['1D', '1W']} limit={3} />
                 <LeadersLaggards title="Sector Leaders and Laggards"
                   etfs={(ETF_GROUPS['Sel Sectors'] || [])
                     .map((t) => (data?.etf_data || []).find((e) => e.ticker === t))
                     .filter(Boolean)}
-                  windows={['1D', '1W', '1M']} limit={3} />
+                  windows={['1D', '1W']} limit={3} />
+                <ThemeMovers limit={3} />
               </div>
             </div>
           </div>
 
           <HowToRead>
             <p>
-              Read this page top to bottom — the order is the argument. The read
-              and its twelve votes come first, then the regime band, then the
-              evidence — where the money went this week and this month, at two
-              grains — then reference.
+              Read this page by size. The largest card is today&rsquo;s read and the
+              condition that would end it; the middle pair is where the cycle sits and
+              what Andy makes of it; the small band underneath is what actually moved,
+              at four grains &mdash; benchmarks, industries, sectors, themes. Every card
+              is built the same way inside: what changed, then how strong, then which
+              names.
             </p>
             <p>
-              The score is a <b>count of conditions, not a confidence level</b> —
-              count the marks rather than trusting the number. The regime band is
-              the <b>weakest of three voters, never their average</b>: averaging
-              dilutes one danger into a caution, and that danger is the most
-              expensive information on the page. The line under it names exactly
-              which voter is holding the reading down, and on what condition.
+              <b>The verdict card carries two different counts on purpose.</b> The line
+              above the word counts <b>conditions</b> (15 of them, and the only daily
+              series this pipeline stores with a date on it, which is why the change
+              line can exist at all). The number beside the word counts <b>votes</b>
+              (12 of them). They are separate instruments and the pipeline has always
+              kept them apart. The score is a <b>count of votes, not a confidence
+              level</b> &mdash; count the marks rather than trusting the number.
+            </p>
+            <p>
+              The twelve marks are drawn <b>each inside its own range</b>: height is how
+              far that vote sits from its own flip line, in its own unit, and two marks
+              are never comparable to each other. A ringed mark is a vote sitting on its
+              line. That is also why the sentence under them says how many votes have to
+              turn but never which ones &mdash; ranking a ratio against a count of names
+              would be a number this data cannot carry.
+            </p>
+            <p>
+              The regime band is the <b>weakest of three voters, never their average</b>:
+              averaging dilutes one danger into a caution, and that danger is the most
+              expensive information on the page. The line under it names exactly which
+              voter is holding the reading down, and on what condition.
             </p>
             <p>
               Nothing here sizes a trade. Sizing needs an R and a ceiling, and both
-              of those are yours — the market half of this app deliberately stops at
+              of those are yours &mdash; the market half of this app deliberately stops at
               what the market is doing.
             </p>
           </HowToRead>

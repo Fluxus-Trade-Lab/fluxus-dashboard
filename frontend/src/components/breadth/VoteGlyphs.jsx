@@ -39,13 +39,20 @@ const RANGE = {
   spy_danger: 5, qqq_danger: 5, bench_trend: 1,
 }
 
-export default function VoteGlyphs({ detail }) {
+/**
+ * `stretch` lets the row spend all the width it is given instead of sitting at
+ * its natural 12 × 58px. The dashboard's verdict card is the widest card on the
+ * site since Andy's size grading (2026-08-18), and a fixed-width row inside it
+ * left the most important graphic on the page occupying half its own card.
+ * Off by default so the Market State page keeps the density it was drawn at.
+ */
+export default function VoteGlyphs({ detail, stretch = false }) {
   if (!detail?.length) return null
 
   return (
     <div>
       <div className="flex gap-2 items-end overflow-x-auto pb-1">
-        {detail.map((d) => <Glyph key={d.key} d={d} />)}
+        {detail.map((d) => <Glyph key={d.key} d={d} stretch={stretch} />)}
       </div>
       <div className="flex flex-wrap gap-x-5 gap-y-1 mt-2 text-[10px] text-[var(--color-text-muted)]">
         <span className="flex items-center gap-1.5">
@@ -72,7 +79,7 @@ export default function VoteGlyphs({ detail }) {
   )
 }
 
-function Glyph({ d }) {
+function Glyph({ d, stretch }) {
   const range = RANGE[d.key] ?? 1
   const frac = d.margin == null ? 0 : Math.max(-1, Math.min(1, d.margin / range))
   const onLine = d.measurable && Math.abs(frac) < ON_THE_LINE
@@ -84,7 +91,8 @@ function Glyph({ d }) {
   const dotBottom = 50 + frac * 42
 
   return (
-    <div className="w-[58px] shrink-0" title={`${d.label} · ${d.side}`}>
+    <div className={stretch ? 'flex-1 min-w-[52px]' : 'w-[58px] shrink-0'}
+         title={`${d.label} · ${d.side}`}>
       <div className="relative h-[62px] border-b border-[var(--color-border-light)]">
         <div className="absolute left-0 right-0 h-px bg-[var(--color-text)] opacity-50"
              style={{ bottom: '50%' }} />

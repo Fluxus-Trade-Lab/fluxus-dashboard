@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from 'react'
 import PageHeader from '../PageHeader'
+import PickedChart from '../ticker/PickedChart'
 import Reading, { readScreener } from '../Reading'
 import { useHeatingUp } from '../../hooks/useHeatingUp'
 import { useUniverse } from '../../hooks/useUniverse'
@@ -326,6 +327,15 @@ export default function ScreenerPage() {
           : 'the tradeable column has not shipped yet — this table still includes names you cannot trade'}
         gateOn={gated}
         hiddenNote={noState ? `${noState} rows carry no state and are not shown` : null} />
+      {/* Page 3's two doors carry the SAME fixed chart card, opening on the
+          same name — they are two routes to one job (find a name worth the
+          morning), and a chart that said something different depending on
+          which door you came through would be two instruments wearing one
+          costume. The table stays the largest thing here; the card never
+          resizes and never opens empty. */}
+      <div className="flex flex-col xl:grid xl:grid-cols-[minmax(0,1fr)_380px]
+                      2xl:grid-cols-[minmax(0,1fr)_440px] xl:gap-x-4 xl:items-start">
+        <div className="min-w-0 order-2 xl:order-none">
       {viewReady ? (
         // key: normalized search only — a trailing space changes nothing
         // about the row set and must not remount the table
@@ -338,6 +348,11 @@ export default function ScreenerPage() {
             : tr('scr.groupLayerLoading')}
         </p>
       )}
+        </div>
+        <div className="min-w-0 order-1 xl:order-none mb-4 xl:mb-0 xl:sticky xl:top-3">
+          <PickedChart />
+        </div>
+      </div>
 
       <HowToRead>
         <p>
