@@ -420,7 +420,29 @@ export default function GroupsPage() {
           <b>State is descriptive, not a signal.</b> Over 10 years and 112 non-overlapping
           periods, filtering a momentum-ranked list by acceleration subtracted −0.18pp,
           and Weakening beat Leading by +0.37pp. Read where a group sits; do not trade the
-          label.{summary && ` ${summary.publishable_themes} published, ${summary.provisional_themes} provisional.`}
+          label.{' '}
+          {/* COUNT WHAT IS ON THE PAGE. This printed summary.publishable_themes
+              and summary.provisional_themes straight through — trusting a
+              precomputed total to describe rows it does not itself contain. It
+              reads the rows now, so the page cannot state a count it is unable
+              to show, and the clause below fires only if the two ever diverge.
+              Written after a false alarm of my own: I read groups.json twice
+              while the data side was rebuilding it and took the two answers
+              for a contradiction inside one file. They agree (74 and 5). The
+              guard stays because the failure it watches for is real even
+              though that instance of it was not. */}
+          <b className="text-[var(--color-text-bold)]">{themes.length}</b> published,{' '}
+          <b className="text-[var(--color-text-bold)]">{provisional.length}</b> provisional
+          {' '}&mdash; withheld because the market has not shown their members co-moving.
+          {summary && (summary.publishable_themes !== themes.length
+                    || summary.provisional_themes !== provisional.length) && (
+            <> The file&rsquo;s own summary says {summary.publishable_themes} and{' '}
+            {summary.provisional_themes} against a taxonomy of {summary.taxonomy?.total ?? '—'};
+            it is counted over the taxonomy, and{' '}
+            <b>{(summary.publishable_themes + summary.provisional_themes) - (themes.length + provisional.length)} row
+            {(summary.publishable_themes + summary.provisional_themes) - (themes.length + provisional.length) === 1 ? '' : 's'} in
+            it produced nothing to rank</b>. Which ones is not in this payload.</>
+          )}
         </p>
       </HowToRead>
     </div>
