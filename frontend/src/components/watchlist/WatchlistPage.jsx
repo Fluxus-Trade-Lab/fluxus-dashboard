@@ -194,58 +194,113 @@ function Names({ rows, wide = false, rsKey }) {
   )
 }
 
+/**
+ * One switch, three uses — pool, RS highs, strength floor.
+ *
+ * They are three views of one file and none of them re-screens anything, so
+ * they get one form and sit in one row. Three differently-shaped controls would
+ * imply three different kinds of thing.
+ */
+function Switch({ on, set, label, note }) {
+  return (
+    <button type="button" onClick={() => set(!on)}
+            className={`flex items-center gap-2 bg-transparent border-none p-0 cursor-pointer
+                        text-[11px] whitespace-nowrap ${on ? 'text-[var(--color-text)]'
+                                         : 'text-[var(--color-text-muted)]'}`}>
+      <i className={`w-7 h-[15px] rounded-full relative transition-colors shrink-0 ${on
+        ? 'bg-[var(--color-accent-solid)]' : 'bg-[var(--color-hover-bg)]'}`}>
+        <i className={`absolute top-[2px] w-[11px] h-[11px] rounded-full bg-white
+                       transition-all ${on ? 'left-[14px]' : 'left-[2px]'}`} />
+      </i>
+      {label}
+      {note && <span className="text-[var(--color-text-muted)] opacity-70">{note}</span>}
+    </button>
+  )
+}
+
+/**
+ * The strength floor, and where it does not belong.
+ *
+ * Andy: hide anything under 80. On this measure 80 is 17 of 21 sessions — the
+ * name's strength against SPY is in the top fifth of its own month — so the
+ * floor reads "only names that are actually working right now".
+ *
+ * It is exempt in two zones, and the data chose which. Measured 2026-08-14 on
+ * the rows the page shows:
+ *
+ *   leaders 83% survive · moving 95% · accumulation 78% · entries 23%
+ *   compression 0% · trouble 19% (Lower Low Break 0%)
+ *
+ * COMPRESSION is exempt because the floor contradicts its question: that zone
+ * asks who is QUIET, and a name coiling on falling volatility is by
+ * construction not printing relative-strength highs, so the floor empties the
+ * card. Andy named the last card; this one is worse and he had not seen it.
+ *
+ * TROUBLE is exempt from the other side — it asks what BROKE, and demanding
+ * strength of a broken name is asking a question and refusing the answer.
+ */
+const RS_FLOOR = 80
+const FLOOR_EXEMPT = new Set(['compression', 'trouble'])
+const floorApplies = (zoneKey) => !FLOOR_EXEMPT.has(zoneKey)
+
+/**
+ * Rows a panel shows under the current view. Never changes what it counted —
+ * all three switches hide rows, none of them re-screens anything.
+ */
+const rsOf = (r) => r?.rs_line_pctl_21 ?? r?.rs_1m ?? null
+
+const shown = (panel, { highOnly, floor, pool3m, zoneKey } = {}) => {
+  let rows = panel.tickers || []
+  if (pool3m) rows = rows.filter((r) => r.top_3m)
+  if (highOnly) rows = rows.filter((r) => r.rs_high)
+  if (floor && floorApplies(zoneKey)) rows = rows.filter((r) => (rsOf(r) ?? 0) >= RS_FLOOR)
+  // Sorted by the number the reader can see, strongest first (Andy). The file
+  // arrives sorted by hybrid_rs, which is a different quantity and is not on
+  // screen — a list ordered by something invisible reads as unordered. A name
+  // with no reading sinks rather than sorting as zero, because "not measured"
+  // is not "weakest". Ties break on ticker so the order is stable across days.
+  return [...rows].sort((a, b) => {
+    const x = rsOf(a), y = rsOf(b)
+    if (x == null && y == null) return a.ticker < b.ticker ? -1 : 1
+    if (x == null) return 1
+    if (y == null) return -1
+    return y - x || (a.ticker < b.ticker ? -1 : 1)
+  })
+}
+
 /** The count, or the reason there isn't one. */
 /**
  * The count — and, when the file knows it, how many of those are at a 21-day
  * RS high. Both numbers, always, so switching the view never hides a quantity:
  * the panel counted what it counted whichever rows are on screen.
  */
-function Count({ panel, highOnly }) {
+function Count({ panel, view = {}, zoneKey }) {
   const { t } = useLanguage()
   if (!panel.measured) {
     return <span className="text-[9.5px] font-mono uppercase tracking-[.12em]
                             text-[var(--color-text-muted)]">{t('wl.unmeasured')}</span>
   }
-  const hi = panel.count_rs_high
+  const n = shown(panel, { ...view, zoneKey }).length
+  const anyView = view.highOnly || view.pool3m || (view.floor && floorApplies(zoneKey))
   return (
-    <span className="text-[11px] font-mono tabular-nums whitespace-nowrap">
-      {hi != null && (
-        <span className={highOnly
-          ? 'text-[var(--color-took)] font-semibold'
-          : 'text-[var(--color-text-muted)]'}>{nf(hi)}<span className="opacity-50">/</span></span>
+    <span className="text-[11px] font-mono tabular-nums whitespace-nowrap"
+          title={view.floor && !floorApplies(zoneKey) ? t('wl.floor.exempt') : undefined}>
+      {/* Both numbers, always. The views hide rows; the panel still counted
+          what it counted, and a page that shows only the survivors of its own
+          filters cannot tell you how much it is holding back. */}
+      {anyView && (
+        <span className="text-[var(--color-took)] font-semibold">
+          {nf(n)}<span className="opacity-50 font-normal">/</span>
+        </span>
       )}
       <span className="text-[var(--color-text-secondary)]">{nf(panel.count)}</span>
     </span>
   )
 }
 
-/** The switch. Off by default; it hides rows, it does not re-screen. */
-function HighOnly({ on, set }) {
-  const { t } = useLanguage()
-  return (
-    <button type="button" onClick={() => set(!on)}
-            className={`flex items-center gap-2 bg-transparent border-none p-0 cursor-pointer
-                        text-[11px] ${on ? 'text-[var(--color-text)]'
-                                         : 'text-[var(--color-text-muted)]'}`}>
-      <i className={`w-7 h-[15px] rounded-full relative transition-colors ${on
-        ? 'bg-[var(--color-accent-solid)]' : 'bg-[var(--color-hover-bg)]'}`}>
-        <i className={`absolute top-[2px] w-[11px] h-[11px] rounded-full bg-white
-                       transition-all ${on ? 'left-[14px]' : 'left-[2px]'}`} />
-      </i>
-      {t('wl.highOnly')}
-    </button>
-  )
-}
-
-/** Rows a panel shows under the current view. Never changes what it counted. */
-const shown = (panel, highOnly) => {
-  const rows = panel.tickers || []
-  return highOnly ? rows.filter((r) => r.rs_high) : rows
-}
-
 /* ── Landing: six cards ──────────────────────────────────────────────────── */
 
-function ZoneCard({ zone, index, highOnly }) {
+function ZoneCard({ zone, index, view }) {
   const { t } = useLanguage()
   const live = zone.panels.filter((p) => p.measured)
   // A taste, not the list. Taken from the biggest panel, because that is the
@@ -253,7 +308,7 @@ function ZoneCard({ zone, index, highOnly }) {
   const lead = [...live].sort((a, b) => b.count - a.count)[0]
   // Twelve, not eight: the cards are full-width now and eight names left the
   // bottom third of each one empty.
-  const taste = shown(lead || { tickers: [] }, highOnly).slice(0, 12)
+  const taste = shown(lead || { tickers: [] }, { ...view, zoneKey: zone.key }).slice(0, 12)
   const rsKey = pickRs(taste)
 
   return (
@@ -292,7 +347,7 @@ function ZoneCard({ zone, index, highOnly }) {
             </span>
             <i className="flex-1 border-b border-dotted border-[var(--color-border-light)]
                           translate-y-[-3px]" />
-            <Count panel={p} />
+            <Count panel={p} view={view} zoneKey={zone.key} />
           </span>
         ))}
       </span>
@@ -317,10 +372,10 @@ function ZoneCard({ zone, index, highOnly }) {
 
 /* ── Detail: one question, every name ────────────────────────────────────── */
 
-function Panel({ panel, explainPending, rsKey, highOnly }) {
+function Panel({ panel, explainPending, rsKey, view, zoneKey }) {
   const { t } = useLanguage()
   const [openRecipe, setOpenRecipe] = useState(false)
-  const rows = shown(panel, highOnly)
+  const rows = shown(panel, { ...view, zoneKey })
 
   return (
     <div className="py-3 border-t border-[var(--color-border-light)] first:border-t-0">
@@ -336,7 +391,7 @@ function Panel({ panel, explainPending, rsKey, highOnly }) {
               ? t('wl.showing', { shown: rows.length, total: nf(panel.count) })
               : nf(panel.count)}
           </span>
-        ) : <Count panel={panel} highOnly={highOnly} />}
+        ) : <Count panel={panel} view={view} zoneKey={zoneKey} />}
 
         {rows.length > 0 && (
           <button type="button"
@@ -379,7 +434,7 @@ function Panel({ panel, explainPending, rsKey, highOnly }) {
   )
 }
 
-function ZoneDetail({ zone, index, total, highOnly }) {
+function ZoneDetail({ zone, index, total, view }) {
   const { t } = useLanguage()
   const rsKey = pickRs(zone.panels.flatMap((p) => p.tickers || []))
   const live = zone.panels.filter((p) => p.measured).length
@@ -417,7 +472,7 @@ function ZoneDetail({ zone, index, total, highOnly }) {
       </p>
       <div className="rounded-3xl bg-[var(--color-surface)] px-4 py-1">
         {zone.panels.map((p) => (
-          <Panel key={p.key} panel={p} rsKey={rsKey} highOnly={highOnly}
+          <Panel key={p.key} panel={p} rsKey={rsKey} view={view} zoneKey={zone.key}
                  explainPending={!allPending && p.key === firstPending} />
         ))}
       </div>
@@ -442,6 +497,11 @@ export default function WatchlistPage({ zone: routeZone }) {
    * decision on your behalf before you have looked.
    */
   const [highOnly, setHighOnly] = useState(false)
+  const [pool3m, setPool3m] = useState(false)
+  // Andy asked for the floor as a rule, not an option, so it opens on. The
+  // switch stays because every count on the page is of the FULL panel and he
+  // must be able to see what the floor is holding back.
+  const [floor, setFloor] = useState(true)
 
   const zones = useMemo(() => {
     if (!data?.zones) return []
@@ -466,7 +526,7 @@ export default function WatchlistPage({ zone: routeZone }) {
   const at = zones.findIndex((z) => z.key === routeZone)
   if (at >= 0) {
     return (
-      <ZoneDetail zone={zones[at]} index={at} total={zones.length} highOnly={highOnly} />
+      <ZoneDetail zone={zones[at]} index={at} total={zones.length} view={{ highOnly, floor, pool3m }} />
     )
   }
 
@@ -487,13 +547,18 @@ export default function WatchlistPage({ zone: routeZone }) {
           gate: gateWords(data.gate),
         })}
       </p>
-      <HighOnly on={highOnly} set={setHighOnly} />
+      <Switch on={pool3m} set={setPool3m} label={t('wl.pool3m')} />
+      <Switch on={highOnly} set={setHighOnly} label={t('wl.highOnly')} />
+      <Switch on={floor} set={setFloor} label={t('wl.floor', { n: RS_FLOOR })}
+              note={t('wl.floor.note')} />
       </div>
 
       {/* auto-rows-fr: every card the same height, which is most of what
           makes a grid of cards read as a grid rather than a pile. */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 auto-rows-fr">
-        {zones.map((z, i) => <ZoneCard key={z.key} zone={z} index={i} highOnly={highOnly} />)}
+        {zones.map((z, i) => (
+          <ZoneCard key={z.key} zone={z} index={i} view={{ highOnly, floor, pool3m }} />
+        ))}
       </div>
 
       {/* Names that answer more than one question. Described, not ranked, and
