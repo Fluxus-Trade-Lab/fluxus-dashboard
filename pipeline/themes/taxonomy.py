@@ -428,8 +428,8 @@ _ETF_THEMES: list[Theme] = [
           extra=(
                  "CACI", "ISSC", "PLTR", "BKSY", "ATI", "ELMT", "LDOS", "ASTC", "BBAI", "SPIR",
                  "PKE", "SAIC", "ONDS", "CPSH", "PSN", "BAH", "IRDM", "TATT", "POWW", "CRS", "RBC",
-                 "RGR", "SWBI", "MRLN", "AMTM",),
-          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去; second pass): CACI ISSC PLTR BKSY ATI ELMT LDOS ASTC BBAI SPIR PKE SAIC ONDS CPSH PSN BAH IRDM TATT POWW CRS RBC RGR SWBI MRLN AMTM."),
+                 "RGR", "SWBI", "MRLN", "AMTM", "TDY", "ESE",),
+          note="second-round list 2026-08-18, Andy 采纳数据端倾向: TDY ESE. TSF names added 2026-08-18 (Andy: 他们有我们没的加进去; second pass): CACI ISSC PLTR BKSY ATI ELMT LDOS ASTC BBAI SPIR PKE SAIC ONDS CPSH PSN BAH IRDM TATT POWW CRS RBC RGR SWBI MRLN AMTM."),
     Theme("Solar", "etf", etf=("TAN",), industries=("Solar",),
           extra=(
                  "MWH", "RNW", "DQ", "ENLT", "ASTI", "JKS", "SPWR", "TYGO", "ARRY", "TE",),
@@ -465,8 +465,8 @@ _ETF_THEMES: list[Theme] = [
                "named 'Battery Tech', but it is the loosest fit in the list."),
     Theme("Rare Earth Metals", "etf", etf=(), floor=(2e8, 1e6), publish_override=True,
           extra=(
-                 "ALOY", "MP", "AREC", "METC", "UUUU", "IDR", "USAR", "NB", "CRML", "UAMY",),
-          note="TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. REMX seed dropped: it brought ALB SQM (lithium) and TMC "
+                 "ALOY", "MP", "AREC", "METC", "UUUU", "IDR", "USAR", "NB", "CRML", "UAMY", "PPTA",),
+          note="second-round list 2026-08-18, Andy 采纳数据端倾向: PPTA. TSF Thematic Focus list, 2026-08-18 (Andy: 按 TSF 改); data/reference/tsf_themes_2026-08-18/full.json. REMX seed dropped: it brought ALB SQM (lithium) and TMC "
                "(deep-sea nodules)."),
     Theme("Copper Miners", "etf", etf=("COPX",), industries=("Copper",),
           extra=(
@@ -515,14 +515,15 @@ _ETF_THEMES: list[Theme] = [
     # Publication is NOT automatic: etf-method themes need a co-movement
     # verdict of real/weak, same bar as every other curated theme.
     Theme("Genomics", "etf", etf=("ARKG",),
-          extra=("TWST", "SOPH", "CAI", "CDNA", "TXG", "NEO", "NTRA", "ABEO",
-                 "SCTX", "WGS", "SDGR", "ADPT", "DYN", "CSTL", "ARCT", "PSNL",
-                 "PRAX", "TEM", "QURE", "ABSI", "TSHA", "ALMR", "RGNX", "ARWR",
-                 "BNTC", "GH", "NTLA", "STOK", "LEGN", "IONS", "ILMN", "FLGT",
-                 "CRSP", "RCKT", "GRAL", "SANA", "RXRX", "BEAM", "SLDB", "SRPT",
-                 "GENB", "MRNA", "QGEN", "EDIT", "PRME", "LXEO", "VYGR", "CRBU",
-                 "WVE", "DNA", "LAB", "BNTX", "QSI", "RARE", "KRYS", "MRVI",
-                 "PACB", "VCYT", "ALNY", "BLLN", "MYGN")),
+          extra=(
+                 "TWST", "SOPH", "CAI", "CDNA", "TXG", "NEO", "NTRA", "ABEO", "SCTX", "WGS",
+                 "SDGR", "ADPT", "DYN", "CSTL", "ARCT", "PSNL", "PRAX", "TEM", "QURE", "ABSI",
+                 "TSHA", "ALMR", "RGNX", "ARWR", "BNTC", "GH", "NTLA", "STOK", "LEGN", "IONS",
+                 "ILMN", "FLGT", "CRSP", "RCKT", "GRAL", "SANA", "RXRX", "BEAM", "SLDB", "SRPT",
+                 "GENB", "MRNA", "QGEN", "EDIT", "PRME", "LXEO", "VYGR", "CRBU", "WVE", "DNA",
+                 "LAB", "BNTX", "QSI", "RARE", "KRYS", "MRVI", "PACB", "VCYT", "ALNY", "BLLN",
+                 "MYGN", "AZTA",),
+          note="second-round list 2026-08-18, Andy 采纳数据端倾向: AZTA."),
     # `proxy`, not `etf`: you cannot buy the list, you buy the fund that tracks
     # it, which is exactly the case this method exists for. It also settles the
     # sourcing question -- the IBD 50 is Investor's Business Daily subscription
@@ -560,8 +561,8 @@ _ETF_THEMES: list[Theme] = [
           extra=(
                  "INDI", "ALNT", "CCXI", "AMBA", "AEVA", "ARBE", "LIDR", "MBLY", "RR", "AMCI",
                  "OUST", "AUR", "HSAI", "TKR", "NOVT", "PONY", "XPEV", "INVZ", "TSLA", "WRD",
-                 "KDK", "SYM", "KSCP", "SERV", "VPG", "MVIS",),
-          note="TSF Thematic Focus list, added 2026-08-18 (Andy: 要的); data/reference/tsf_themes_2026-08-18/full.json."),
+                 "KDK", "SYM", "KSCP", "SERV", "VPG", "MVIS", "LSCC",),
+          note="second-round list 2026-08-18, Andy 采纳数据端倾向: LSCC. TSF Thematic Focus list, added 2026-08-18 (Andy: 要的); data/reference/tsf_themes_2026-08-18/full.json."),
     Theme("Cloud Software", "etf", source="tsf", etf=(),
           extra=(
                  "TEAM", "AMPL", "WIX", "PAYC", "FSLY", "PATH", "MDB", "ESTC", "VEEV", "RNG",
