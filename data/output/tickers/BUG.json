@@ -1,8 +1,8 @@
 {
   "ticker": "BUG",
-  "fetched_at": "2026-08-08T05:15:36Z",
+  "fetched_at": "2026-08-18T03:56:00Z",
   "_schema": "v2",
-  "current_price": 41.68000030517578,
+  "current_price": 41.88999938964844,
   "info": {
     "symbol": "BUG",
     "longName": "Global X Cybersecurity ETF",
@@ -15,7 +15,7 @@
     "fullTimeEmployees": null,
     "marketCap": null,
     "enterpriseValue": null,
-    "trailingPE": 36.130695,
+    "trailingPE": 36.312737,
     "forwardPE": null,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
@@ -30,10 +30,10 @@
     "freeCashflow": null,
     "debtToEquity": null,
     "currentRatio": null,
-    "fiftyTwoWeekHigh": 42.71,
+    "fiftyTwoWeekHigh": 44.55,
     "fiftyTwoWeekLow": 23.145,
-    "averageVolume": 1219301,
-    "averageVolume10days": 1049130,
+    "averageVolume": 1243809,
+    "averageVolume10days": 1122010,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -42,13 +42,14 @@
   "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [],
-  "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
-  },
+  "analyst": {},
   "news": [
+    {
+      "date": "2026-08-13T16:15:00Z",
+      "title": "A Guide to Investing in Cybersecurity ETFs",
+      "url": "https://finance.yahoo.com/technology/ai/articles/guide-investing-cybersecurity-etfs-161500087.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-07-15T14:54:00Z",
       "title": "Cybersecurity ETF (BUG) Hits New 52-Week High",
@@ -102,86 +103,24 @@
       "title": "Cyber Joins 4 Resilience Themes for 2026. The 3 ETFs Catching the Trade",
       "url": "https://247wallst.com/investing/2026/05/08/cyber-joins-4-resilience-themes-for-2026-the-3-etfs-catching-the-trade/",
       "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-03-13T14:04:00Z",
-      "title": "Beyond Defense: Why Are Cyber ETFs the Hottest War Trade Right Now?",
-      "url": "https://finance.yahoo.com/news/beyond-defense-why-cyber-etfs-140400581.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.07629558485404114,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 39.457000160217284,
-    "ma50": 37.54160003662109,
-    "ma200": 31.39866641998291,
-    "rsi14": 64.47537784806505,
-    "high_20d": 42.709999084472656,
-    "low_5d": 38.540000915527344,
-    "low_10d": 36.560001373291016,
-    "high_52w": 42.709999084472656,
+    "ma20": 40.24699993133545,
+    "ma50": 38.26480003356934,
+    "ma200": 31.61375955581665,
+    "rsi14": 57.007878640294756,
+    "high_20d": 44.54999923706055,
+    "low_5d": 41.72999954223633,
+    "low_10d": 39.380001068115234,
+    "high_52w": 44.54999923706055,
     "low_52w": 23.145000457763672,
-    "atr14": 1.2470711299351283,
-    "atr14_pct": 2.992013245691527,
-    "position_in_52w_range_pct": 94.73550293077567
+    "atr14": 1.3039278302873885,
+    "atr14_pct": 3.1127425382813585,
+    "position_in_52w_range_pct": 87.57299696748926
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-08",
-      "open": 28.3128,
-      "high": 28.9121,
-      "low": 28.2529,
-      "close": 28.8521,
-      "volume": 413800.0
-    },
-    {
-      "date": "2024-08-09",
-      "open": 28.8621,
-      "high": 29.0619,
-      "low": 28.7722,
-      "close": 29.0219,
-      "volume": 88800.0
-    },
-    {
-      "date": "2024-08-12",
-      "open": 29.0219,
-      "high": 29.2316,
-      "low": 28.7722,
-      "close": 28.8322,
-      "volume": 113500.0
-    },
-    {
-      "date": "2024-08-13",
-      "open": 29.1018,
-      "high": 29.4214,
-      "low": 28.9121,
-      "close": 29.3914,
-      "volume": 132400.0
-    },
-    {
-      "date": "2024-08-14",
-      "open": 29.4414,
-      "high": 29.711,
-      "low": 29.4114,
-      "close": 29.5812,
-      "volume": 58400.0
-    },
-    {
-      "date": "2024-08-15",
-      "open": 29.8209,
-      "high": 30.1005,
-      "low": 29.7909,
-      "close": 30.0506,
-      "volume": 209600.0
-    },
-    {
-      "date": "2024-08-16",
-      "open": 29.9107,
-      "high": 30.1804,
-      "low": 29.8848,
-      "close": 30.1305,
-      "volume": 76700.0
-    },
     {
       "date": "2024-08-19",
       "open": 30.2103,
@@ -4031,14 +3970,6 @@
       "volume": 1783900.0
     },
     {
-      "date": "2026-07-22",
-      "open": 39.22,
-      "high": 39.45,
-      "low": 38.07,
-      "close": 38.26,
-      "volume": 3431300.0
-    },
-    {
       "date": "2026-07-23",
       "open": 38.33,
       "high": 38.43,
@@ -4132,50 +4063,58 @@
       "high": 41.9,
       "low": 41.075,
       "close": 41.68,
-      "volume": 811800.0
+      "volume": 815000.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 41.66,
+      "high": 43.43,
+      "low": 41.64,
+      "close": 43.0,
+      "volume": 1328200.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 42.94,
+      "high": 43.18,
+      "low": 42.3,
+      "close": 42.92,
+      "volume": 1164300.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 42.67,
+      "high": 43.125,
+      "low": 42.36,
+      "close": 42.79,
+      "volume": 914800.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 43.06,
+      "high": 44.53,
+      "low": 42.65,
+      "close": 44.46,
+      "volume": 1180600.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 44.4,
+      "high": 44.55,
+      "low": 42.99,
+      "close": 43.09,
+      "volume": 1244900.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 42.71,
+      "high": 42.91,
+      "low": 41.73,
+      "close": 41.89,
+      "volume": 1226416.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-07",
-      "open": 33.7569,
-      "high": 33.8569,
-      "low": 32.1475,
-      "close": 32.7673,
-      "volume": 560400.0
-    },
-    {
-      "date": "2025-08-08",
-      "open": 32.7973,
-      "high": 32.9672,
-      "low": 32.2005,
-      "close": 32.2475,
-      "volume": 375300.0
-    },
-    {
-      "date": "2025-08-11",
-      "open": 32.1875,
-      "high": 32.7673,
-      "low": 32.1225,
-      "close": 32.2175,
-      "volume": 354000.0
-    },
-    {
-      "date": "2025-08-12",
-      "open": 32.3574,
-      "high": 33.2171,
-      "low": 32.3574,
-      "close": 33.1771,
-      "volume": 385400.0
-    },
-    {
-      "date": "2025-08-13",
-      "open": 33.617,
-      "high": 33.7969,
-      "low": 33.3521,
-      "close": 33.7669,
-      "volume": 327800.0
-    },
     {
       "date": "2025-08-14",
       "open": 33.457,
@@ -6049,14 +5988,6 @@
       "volume": 1783900.0
     },
     {
-      "date": "2026-07-22",
-      "open": 39.22,
-      "high": 39.45,
-      "low": 38.07,
-      "close": 38.26,
-      "volume": 3431300.0
-    },
-    {
       "date": "2026-07-23",
       "open": 38.33,
       "high": 38.43,
@@ -6150,7 +6081,55 @@
       "high": 41.9,
       "low": 41.075,
       "close": 41.68,
-      "volume": 811800.0
+      "volume": 815000.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 41.66,
+      "high": 43.43,
+      "low": 41.64,
+      "close": 43.0,
+      "volume": 1328200.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 42.94,
+      "high": 43.18,
+      "low": 42.3,
+      "close": 42.92,
+      "volume": 1164300.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 42.67,
+      "high": 43.125,
+      "low": 42.36,
+      "close": 42.79,
+      "volume": 914800.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 43.06,
+      "high": 44.53,
+      "low": 42.65,
+      "close": 44.46,
+      "volume": 1180600.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 44.4,
+      "high": 44.55,
+      "low": 42.99,
+      "close": 43.09,
+      "volume": 1244900.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 42.71,
+      "high": 42.91,
+      "low": 41.73,
+      "close": 41.89,
+      "volume": 1226416.0
     }
   ],
   "ai_synthesis": null,

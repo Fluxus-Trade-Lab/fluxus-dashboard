@@ -1,6 +1,6 @@
 {
   "trade_id": "OKLL_2026-05-31_000",
-  "generated_at": "2026-08-17T03:51:14+00:00",
+  "generated_at": "2026-08-18T03:59:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "OKLL",
@@ -35,8 +35,8 @@
     "volume": 17482800.0,
     "ma20": 9.594,
     "ma50": 8.800600000000001,
-    "ma200": 31.5467,
-    "rsi14": 47.88775557894768,
+    "ma200": null,
+    "rsi14": 47.88778341606119,
     "atr14": 1.6224285714285713,
     "atr14_pct": 18.415761310199446,
     "high_52w": 169.957,
@@ -46,7 +46,7 @@
     "low_10d": 5.85,
     "low_5d": 8.11
   },
-  "setup_type": "Long below MA200 \u2014 counter-trend",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": 1.580232558139536,
     "mfe_date": "2026-06-02",
@@ -63,7 +63,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Good execution",
-  "narrative": "Entered **OKLL** long on 2026-05-31 at $9.26 (qty 8154) with stop $8.40 (1R = $0.86/sh = $7,012). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price below MA20 ($9.59), MA stack mixed, RSI 48, 2% through 52W range, ATR 18.4% of price. Realized **+1.13R**, peak was **+1.58R** on 2026-06-02 (day +2) \u2014 captured **71%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **OKLL** long on 2026-05-31 at $9.26 (qty 8154) with stop $8.40 (1R = $0.86/sh = $7,012). Setup: **Long in mixed structure** \u2014 price below MA20 ($9.59), RSI 48, 2% through 52W range, ATR 18.4% of price. Realized **+1.13R**, peak was **+1.58R** on 2026-06-02 (day +2) \u2014 captured **71%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-05-01",

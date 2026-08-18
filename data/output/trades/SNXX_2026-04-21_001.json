@@ -1,6 +1,6 @@
 {
   "trade_id": "SNXX_2026-04-21_001",
-  "generated_at": "2026-08-17T03:51:14+00:00",
+  "generated_at": "2026-08-18T03:59:14+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SNXX",
@@ -53,23 +53,9 @@
     "low_5d": 8.25
   },
   "setup_type": "Long in mixed structure",
-  "path_analytics": {
-    "mfe_R": -26.96548245614034,
-    "mfe_date": "2026-04-22",
-    "mae_R": 27.688596491228058,
-    "mae_date": "2026-04-22",
-    "optimal_exit_price": 10.2987,
-    "optimal_exit_date": "2026-04-22",
-    "optimal_R": -26.96548245614034,
-    "days_to_optimal": 1,
-    "realized_R": 2.6837133018671886,
-    "capture_pct": null,
-    "missed_R": -29.64919575800753,
-    "post_exit_R": -25.040570175438585,
-    "hold_calendar_days": 2
-  },
-  "lesson": "Good execution",
-  "narrative": "Entered **SNXX** long on 2026-04-21 at $71.78 (qty 1773) with stop $69.50 (1R = $2.28/sh = $4,042). Setup: **Long in mixed structure** \u2014 price above MA20 ($6.86), RSI 64, 81% through 52W range, ATR 12.2% of price. Realized **+2.68R**. **Lesson: Good execution.**",
+  "path_analytics": {},
+  "lesson": "Insufficient data",
+  "narrative": "Entered **SNXX** long on 2026-04-21 at $71.78 (qty 1773) with stop $69.50 (1R = $2.28/sh = $4,042). Setup: **Long in mixed structure** \u2014 price above MA20 ($6.86), RSI 64, 81% through 52W range, ATR 12.2% of price.  **Lesson: Insufficient data.**",
   "ohlc_window": [
     {
       "date": "2026-03-23",

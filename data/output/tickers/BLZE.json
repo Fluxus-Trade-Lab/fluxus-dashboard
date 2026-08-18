@@ -1,8 +1,8 @@
 {
   "ticker": "BLZE",
-  "fetched_at": "2026-08-08T05:19:45Z",
+  "fetched_at": "2026-08-18T03:55:58Z",
   "_schema": "v2",
-  "current_price": 18.81999969482422,
+  "current_price": 19.389999389648438,
   "info": {
     "symbol": "BLZE",
     "longName": "Backblaze, Inc.",
@@ -13,13 +13,13 @@
     "city": "San Francisco",
     "website": "https://www.backblaze.com",
     "fullTimeEmployees": 320,
-    "marketCap": 1164957952,
-    "enterpriseValue": 1197512960,
+    "marketCap": 1200241024,
+    "enterpriseValue": 1232796032,
     "trailingPE": null,
-    "forwardPE": 66.73759,
-    "priceToSalesTrailing12Months": 7.4532022,
-    "enterpriseToRevenue": 7.661,
-    "priceToBook": 13.133286,
+    "forwardPE": 68.758865,
+    "priceToSalesTrailing12Months": 7.6789374,
+    "enterpriseToRevenue": 7.887,
+    "priceToBook": 13.531054,
     "grossMargins": 0.62289,
     "operatingMargins": -0.06679,
     "profitMargins": -0.13069001,
@@ -32,11 +32,11 @@
     "currentRatio": 0.999,
     "fiftyTwoWeekHigh": 23.99,
     "fiftyTwoWeekLow": 3.261,
-    "averageVolume": 3165459,
-    "averageVolume10days": 3604480,
+    "averageVolume": 3303193,
+    "averageVolume10days": 4122220,
     "beta": 1.567,
     "sharesOutstanding": 61900000,
-    "sharesFloat": 59336102,
+    "sharesFloat": 59412858,
     "companyOfficers": [
       {
         "name": "Mr. Gleb  Budman",
@@ -103,11 +103,22 @@
     }
   ],
   "next_earnings": {
-    "date": "2026-08-04",
+    "date": "2026-08-03",
     "revenue_low": 44400000,
     "revenue_high": 44712000
   },
   "quarterly_metrics": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 42713000.0,
+      "gross_profit": 26834000.0,
+      "operating_income": -4174000.0,
+      "eps": -0.08,
+      "cash": 32428000.0,
+      "operating_cashflow": 10427000.0,
+      "gross_margin_pct": 62.82396460094116,
+      "yoy_pct": 17.673150035814643
+    },
     {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 38666000.0,
@@ -117,7 +128,7 @@
       "cash": 26276000.0,
       "operating_cashflow": 3360000.0,
       "gross_margin_pct": 60.85191123984897,
-      "yoy_pct": 11.709473319273101
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -145,22 +156,11 @@
       "period_end": "2025-06-30T00:00:00",
       "revenue": 36298000.0,
       "gross_profit": 23041000.0,
-      "operating_income": -6717000.0,
+      "operating_income": -6240000.0,
       "eps": -0.13,
       "cash": 32187000.0,
       "operating_cashflow": 3545000.0,
       "gross_margin_pct": 63.47732657446691,
-      "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 34613000.0,
-      "gross_profit": 19256000.0,
-      "operating_income": -8771000.0,
-      "eps": -0.17,
-      "cash": 40606000.0,
-      "operating_cashflow": 4943000.0,
-      "gross_margin_pct": 55.63227689018577,
       "yoy_pct": null
     }
   ],
@@ -173,7 +173,7 @@
     "avg_price_target": 22.83333,
     "high_price_target": 25.0,
     "low_price_target": 21.0,
-    "current_price": 18.82,
+    "current_price": 19.39,
     "recent_rating_changes": [
       {
         "date": "2026-08-04T17:05:24",
@@ -249,6 +249,12 @@
   },
   "news": [
     {
+      "date": "2026-08-11T01:44:48Z",
+      "title": "Backblaze (BLZE) Q2 2026 Earnings Call Transcript",
+      "url": "https://www.fool.com/earnings/call-transcripts/2026/08/10/backblaze-blze-q2-2026-earnings-call-transcript/",
+      "source": "Motley Fool"
+    },
+    {
       "date": "2026-08-07T13:09:00Z",
       "title": "BLZE Q2 Earnings Call Focuses on CoreWeave and AI Storage",
       "url": "https://finance.yahoo.com/technology/ai/articles/blze-q2-earnings-call-focuses-130900227.html",
@@ -301,86 +307,24 @@
       "title": "Backblaze Tops 340,000 Drives as AI Fuels Rising Storage Demand",
       "url": "https://www.marketbeat.com/instant-alerts/backblaze-tops-340000-drives-as-ai-fuels-rising-storage-demand-2026-07-15/?utm_source=yahoofinance&utm_medium=yahoofinance",
       "source": "MarketBeat"
-    },
-    {
-      "date": "2026-07-10T15:25:02Z",
-      "title": "Backblaze Is a Little-Known Cloud Storage Stock Up More Than 200% This Year",
-      "url": "https://www.barchart.com/story/news/3226178/backblaze-is-a-little-known-cloud-storage-stock-up-more-than-200-this-year",
-      "source": "Barchart"
     }
   ],
-  "options_implied_move": 0.16471838736812236,
+  "options_implied_move": 0.10933471205428635,
   "technicals": {
-    "ma20": 14.607000064849853,
-    "ma50": 12.530200042724609,
-    "ma200": 6.992200003862381,
-    "rsi14": 66.6232759277951,
+    "ma20": 16.02350010871887,
+    "ma50": 13.848000059127807,
+    "ma200": 7.2687000095844265,
+    "rsi14": 63.1475144286002,
     "high_20d": 23.989999771118164,
-    "low_5d": 13.449000358581543,
-    "low_10d": 10.979999542236328,
+    "low_5d": 18.43000030517578,
+    "low_10d": 17.469999313354492,
     "high_52w": 23.989999771118164,
     "low_52w": 3.260999917984009,
-    "atr14": 1.8928570747375488,
-    "atr14_pct": 10.057689189326144,
-    "position_in_52w_range_pct": 75.05909540776875
+    "atr14": 2.0984999111720493,
+    "atr14_pct": 10.822588845940636,
+    "position_in_52w_range_pct": 77.80886480746334
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-08",
-      "open": 5.2,
-      "high": 5.36,
-      "low": 4.915,
-      "close": 5.19,
-      "volume": 508300.0
-    },
-    {
-      "date": "2024-08-09",
-      "open": 6.0,
-      "high": 6.9,
-      "low": 6.0,
-      "close": 6.46,
-      "volume": 736100.0
-    },
-    {
-      "date": "2024-08-12",
-      "open": 6.42,
-      "high": 6.55,
-      "low": 5.91,
-      "close": 6.15,
-      "volume": 521300.0
-    },
-    {
-      "date": "2024-08-13",
-      "open": 6.1,
-      "high": 6.37,
-      "low": 6.04,
-      "close": 6.34,
-      "volume": 274500.0
-    },
-    {
-      "date": "2024-08-14",
-      "open": 6.33,
-      "high": 6.42,
-      "low": 6.24,
-      "close": 6.31,
-      "volume": 202300.0
-    },
-    {
-      "date": "2024-08-15",
-      "open": 6.39,
-      "high": 6.59,
-      "low": 6.34,
-      "close": 6.54,
-      "volume": 318300.0
-    },
-    {
-      "date": "2024-08-16",
-      "open": 6.51,
-      "high": 6.87,
-      "low": 6.41,
-      "close": 6.75,
-      "volume": 355000.0
-    },
     {
       "date": "2024-08-19",
       "open": 6.7,
@@ -4331,58 +4275,58 @@
       "high": 19.0,
       "low": 18.01,
       "close": 18.82,
-      "volume": 2165900.0
+      "volume": 2166900.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 19.035,
+      "high": 20.49,
+      "low": 18.95,
+      "close": 19.27,
+      "volume": 4774200.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 19.27,
+      "high": 19.65,
+      "low": 18.56,
+      "close": 18.71,
+      "volume": 2666600.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 19.0,
+      "high": 20.095,
+      "low": 18.865,
+      "close": 19.34,
+      "volume": 2137700.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 19.15,
+      "high": 20.91,
+      "low": 18.76,
+      "close": 20.43,
+      "volume": 2421800.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 20.02,
+      "high": 20.42,
+      "low": 18.662,
+      "close": 19.02,
+      "volume": 2205100.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 18.57,
+      "high": 19.83,
+      "low": 18.43,
+      "close": 19.39,
+      "volume": 2237735.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-07",
-      "open": 5.665,
-      "high": 6.72,
-      "low": 5.63,
-      "close": 6.68,
-      "volume": 1925700.0
-    },
-    {
-      "date": "2025-08-08",
-      "open": 6.4,
-      "high": 7.195,
-      "low": 6.3,
-      "close": 7.14,
-      "volume": 1964000.0
-    },
-    {
-      "date": "2025-08-11",
-      "open": 7.07,
-      "high": 7.41,
-      "low": 6.91,
-      "close": 7.37,
-      "volume": 1065000.0
-    },
-    {
-      "date": "2025-08-12",
-      "open": 7.44,
-      "high": 7.875,
-      "low": 7.36,
-      "close": 7.87,
-      "volume": 1060000.0
-    },
-    {
-      "date": "2025-08-13",
-      "open": 7.92,
-      "high": 8.16,
-      "low": 7.75,
-      "close": 7.9,
-      "volume": 806400.0
-    },
-    {
-      "date": "2025-08-14",
-      "open": 7.56,
-      "high": 7.75,
-      "low": 7.49,
-      "close": 7.62,
-      "volume": 672500.0
-    },
     {
       "date": "2025-08-15",
       "open": 7.65,
@@ -6349,7 +6293,55 @@
       "high": 19.0,
       "low": 18.01,
       "close": 18.82,
-      "volume": 2165900.0
+      "volume": 2166900.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 19.035,
+      "high": 20.49,
+      "low": 18.95,
+      "close": 19.27,
+      "volume": 4774200.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 19.27,
+      "high": 19.65,
+      "low": 18.56,
+      "close": 18.71,
+      "volume": 2666600.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 19.0,
+      "high": 20.095,
+      "low": 18.865,
+      "close": 19.34,
+      "volume": 2137700.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 19.15,
+      "high": 20.91,
+      "low": 18.76,
+      "close": 20.43,
+      "volume": 2421800.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 20.02,
+      "high": 20.42,
+      "low": 18.662,
+      "close": 19.02,
+      "volume": 2205100.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 18.57,
+      "high": 19.83,
+      "low": 18.43,
+      "close": 19.39,
+      "volume": 2237735.0
     }
   ],
   "ai_synthesis": null,

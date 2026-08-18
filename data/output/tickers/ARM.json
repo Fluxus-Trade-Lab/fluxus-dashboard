@@ -1,112 +1,11 @@
 {
   "ticker": "ARM",
-  "fetched_at": "2026-08-09T17:21:28Z",
+  "fetched_at": "2026-08-18T03:55:48Z",
   "_schema": "v2",
-  "current_price": 282.57000732421875,
-  "info": {
-    "symbol": "ARM",
-    "longName": "Arm Holdings plc",
-    "sector": "Technology",
-    "industry": "Semiconductors",
-    "exchange": "NMS",
-    "country": "United Kingdom",
-    "city": "Cambridge",
-    "website": "https://www.arm.com",
-    "fullTimeEmployees": 9584,
-    "marketCap": 301784367104,
-    "enterpriseValue": 298381770752,
-    "trailingPE": 285.42426,
-    "forwardPE": 92.064545,
-    "priceToSalesTrailing12Months": 58.53072,
-    "enterpriseToRevenue": 57.871,
-    "priceToBook": 34.967205,
-    "grossMargins": 0.97537005,
-    "operatingMargins": 0.07603,
-    "profitMargins": 0.20247999,
-    "returnOnEquity": 0.13352999,
-    "totalCash": 3888000000,
-    "totalDebt": 485000000,
-    "totalRevenue": 5155999744,
-    "freeCashflow": 1334499968,
-    "debtToEquity": 5.62,
-    "currentRatio": 5.252,
-    "fiftyTwoWeekHigh": 452.7,
-    "fiftyTwoWeekLow": 100.02,
-    "averageVolume": 9580283,
-    "averageVolume10days": 6893360,
-    "beta": 3.909,
-    "sharesOutstanding": 1067998569,
-    "sharesFloat": 141531360,
-    "companyOfficers": [
-      {
-        "name": "Mr. Rene Anthony Andrada  Haas",
-        "title": "CEO & Director",
-        "age": 63,
-        "yearBorn": 1962
-      },
-      {
-        "name": "Mr. Jason E. Child",
-        "title": "Executive VP & CFO",
-        "age": 56,
-        "yearBorn": 1969
-      },
-      {
-        "name": "Mr. Eric  Hayes",
-        "title": "Executive Vice President of Operations",
-        "age": null,
-        "yearBorn": null
-      },
-      {
-        "name": "Laura  Bartels",
-        "title": "Chief Accounting Officer",
-        "age": null,
-        "yearBorn": null
-      },
-      {
-        "name": "Mr. Jeffrey Thomas Kvaal",
-        "title": "VP & Head of Investor Relations",
-        "age": null,
-        "yearBorn": null
-      },
-      {
-        "name": "Mr. Spencer  Collins",
-        "title": "Executive VP, Chief Legal Officer, Company Secretary & Head of Corporate Development",
-        "age": 43,
-        "yearBorn": 1982
-      }
-    ]
-  },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.45,
-      "eps_estimate": 0.4038,
-      "eps_surprise_pct": 0.1144
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.6,
-      "eps_estimate": 0.5793,
-      "eps_surprise_pct": 0.0357
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.43,
-      "eps_estimate": 0.40919,
-      "eps_surprise_pct": 0.0509
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.39,
-      "eps_estimate": 0.33134,
-      "eps_surprise_pct": 0.177
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-11-05",
-    "revenue_low": 1290000000,
-    "revenue_high": 1409000000
-  },
+  "current_price": 271.42999267578125,
+  "info": {},
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -164,223 +63,85 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 40,
-    "bullish": 28,
-    "neutral": 10,
-    "bearish": 2,
-    "avg_price_target": 286.78918,
-    "high_price_target": 500.0,
-    "low_price_target": 125.0,
-    "current_price": 282.57,
-    "recent_rating_changes": [
-      {
-        "date": "2026-07-31T11:42:35",
-        "firm": "Rosenblatt",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-30T19:52:06",
-        "firm": "UBS",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-30T17:23:06",
-        "firm": "Morgan Stanley",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-30T16:44:50",
-        "firm": "RBC Capital",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-30T15:37:26",
-        "firm": "TD Cowen",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-30T14:52:29",
-        "firm": "Wells Fargo",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-30T13:52:46",
-        "firm": "Guggenheim",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-07-30T11:54:02",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-07-22T18:56:43",
-        "firm": "Wells Fargo",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-21T13:35:27",
-        "firm": "Susquehanna",
-        "to_grade": "Positive",
-        "from_grade": "Positive",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
     {
-      "date": "2026-08-08T12:55:33Z",
-      "title": "This Analyst On Wall Street Thinks The CPU Trade Is Overdone, Should You Sell ARM (ARM) Stock?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/analyst-wall-street-thinks-cpu-125533234.html",
-      "source": "Insider Monkey"
+      "date": "2026-08-17T15:23:35Z",
+      "title": "ARM CFO Says \u2018Delivering Silicon Is Definitely More Complicated\u2019 As Chip Designer Eyes Deals To Go From Licensing To Making Chips: Report",
+      "url": "https://stocktwits.com/news-articles/markets/equity/arm-cfo-delivering-silicon-more-complicated-deals-licensing-making-chips/cZYG4vKRJ1m",
+      "source": "Stocktwits"
     },
     {
-      "date": "2026-08-07T23:58:47Z",
-      "title": "Arm (ARM) Q1 2027 Earnings Call Transcript",
-      "url": "https://www.fool.com/earnings/call-transcripts/2026/08/07/arm-arm-q1-2027-earnings-call-transcript/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-07T14:42:05Z",
-      "title": "SpaceX's influence ripples across markets: AlphaCheck",
-      "url": "https://finance.yahoo.com/markets/article/spacexs-influence-ripples-across-markets-alphacheck-144205821.html",
-      "source": "Yahoo Finance"
-    },
-    {
-      "date": "2026-08-06T19:55:30Z",
-      "title": "Update: US Equity Indexes Mixed as Technology, Energy Help Blunt Broad-Based Declines",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-mixed-technology-195530717.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-06T18:00:53Z",
-      "title": "Prediction: Arm Holdings Will Trade at This Price in 12 Months",
-      "url": "https://247wallst.com/investing/2026/08/06/prediction-arm-holdings-will-trade-at-this-price-in-12-months/",
+      "date": "2026-08-16T14:00:36Z",
+      "title": "Stanley Druckenmiller\u2019s Big Bet: New Broadcom, Intel and Arm Stakes in One Quarter",
+      "url": "https://247wallst.com/investing/2026/08/16/stanley-druckenmillers-big-bet-new-broadcom-intel-and-arm-stakes-in-one-quarter/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-06T17:57:35Z",
-      "title": "Update: US Equity Indexes Mixed as Chipmakers Help Lift Technology While Crude Oil Jumps With Treasury Yields",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-mixed-chipmakers-175735868.html",
-      "source": "MT Newswires"
+      "date": "2026-08-13T20:55:54Z",
+      "title": "The Bull Market Is Almost Back for Chip Stocks",
+      "url": "https://www.investopedia.com/the-bull-market-is-almost-back-for-chip-stocks-12059583",
+      "source": "Investopedia"
     },
     {
-      "date": "2026-08-06T16:48:21Z",
-      "title": "US Equity Indexes Decline, Crude Oil Rises in Midday Trading",
-      "url": "https://finance.yahoo.com/markets/articles/us-equity-indexes-decline-crude-164821357.html",
-      "source": "MT Newswires"
+      "date": "2026-08-13T17:23:21Z",
+      "title": "Why Arm Holdings Stock Popped Today",
+      "url": "https://www.fool.com/investing/2026/08/13/why-arm-holdings-stock-popped-today/",
+      "source": "Motley Fool"
     },
     {
-      "date": "2026-08-06T16:13:18Z",
-      "title": "Sandisk's Weak Guidance Sends AI Chip Stocks Tumbling",
-      "url": "https://finance.yahoo.com/technology/ai/articles/sandisks-weak-guidance-sends-ai-161318227.html",
-      "source": "GuruFocus.com"
+      "date": "2026-08-13T13:30:07Z",
+      "title": "Great Company, Full Price: What Arm\u2019s Numbers Say About the Next 1 Year",
+      "url": "https://247wallst.com/investing/2026/08/13/great-company-full-price-what-arms-numbers-say-about-the-next-1-year/",
+      "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-05T08:13:39Z",
-      "title": "US Stock Market Today: S&P 500 Futures Edge Higher As Rate Hike Risks Linger",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-stock-market-today-p-081339990.html",
+      "date": "2026-08-12T04:03:00Z",
+      "title": "Why This ETF\u2019s 1,700% Return Isn\u2019t Attracting Buy-and-Hold Investors",
+      "url": "https://www.thedailyupside.com/etf/thematics-sectors/why-this-etfs-1700-return-isnt-attracting-investors/",
+      "source": "The Daily Upside"
+    },
+    {
+      "date": "2026-08-11T13:00:03Z",
+      "title": "Astera Labs vs. Arm: Which Technology Stock Is a Better Buy in 2026?",
+      "url": "https://www.fool.com/coverage/better-buy/2026/08/11/astera-labs-vs-arm-which-technology-stock-is-a-better-buy-in-2026/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-08-11T05:25:00Z",
+      "title": "12 Nasdaq Stocks Doubled in 2026, But None Are Magnificent Seven",
+      "url": "https://beincrypto.com/nasdaq-100-stocks-doubled-2026/",
+      "source": "BeInCrypto"
+    },
+    {
+      "date": "2026-08-10T17:12:36Z",
+      "title": "Why Arm Holdings (ARM) Is Up 18.2% After Embedded AI Tools Deal And Strong Q1 2026 Results",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/why-arm-holdings-arm-18-171236537.html",
       "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-05T04:43:12Z",
-      "title": "ARM Stock Just Posted Its Best Day In Over A Year \u2014 A Week After Q1 Beat: Retail Gets More Bullish",
-      "url": "https://stocktwits.com/news-articles/markets/equity/arm-stock-just-posted-its-best-day-in-over-a-year-a-week-after-q1-beat-retail-gets-more-bullish/cZo4WGsRJ4v",
-      "source": "Stocktwits"
+      "date": "2026-08-10T15:01:03Z",
+      "title": "AI Workload Evolution Is Creating a New Growth Catalyst for Arm Holdings plc (ARM)",
+      "url": "https://finance.yahoo.com/technology/articles/ai-workload-evolution-creating-growth-150103838.html",
+      "source": "Insider Monkey"
     }
   ],
-  "options_implied_move": 0.08553632506463264,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 267.6400001525879,
-    "ma50": 322.206198425293,
-    "ma200": 192.45667491912843,
-    "rsi14": 50.33679470440448,
-    "high_20d": 311.42999267578125,
-    "low_5d": 219.38999938964844,
-    "low_10d": 219.38999938964844,
+    "ma20": 266.7494987487793,
+    "ma50": 308.8617984008789,
+    "ma200": 195.52712482452392,
+    "rsi14": 47.433912171583,
+    "high_20d": 299.2850036621094,
+    "low_5d": 265.3699951171875,
+    "low_10d": 251.10000610351562,
     "high_52w": 452.70001220703125,
     "low_52w": 100.0199966430664,
-    "atr14": 24.144861493791854,
-    "atr14_pct": 8.54473612483869,
-    "position_in_52w_range_pct": 51.76080373855025
+    "atr14": 21.79864719935826,
+    "atr14_pct": 8.031038495217583,
+    "position_in_52w_range_pct": 48.602128974792045
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-08",
-      "open": 111.8,
-      "high": 118.68,
-      "low": 107.94,
-      "close": 118.43,
-      "volume": 9931700.0
-    },
-    {
-      "date": "2024-08-09",
-      "open": 118.98,
-      "high": 120.29,
-      "low": 115.77,
-      "close": 117.0,
-      "volume": 6421300.0
-    },
-    {
-      "date": "2024-08-12",
-      "open": 117.66,
-      "high": 122.0,
-      "low": 115.32,
-      "close": 117.13,
-      "volume": 6345200.0
-    },
-    {
-      "date": "2024-08-13",
-      "open": 119.7,
-      "high": 125.7,
-      "low": 118.3,
-      "close": 123.79,
-      "volume": 8894400.0
-    },
-    {
-      "date": "2024-08-14",
-      "open": 128.82,
-      "high": 130.7,
-      "low": 123.79,
-      "close": 125.92,
-      "volume": 11101700.0
-    },
-    {
-      "date": "2024-08-15",
-      "open": 129.76,
-      "high": 132.05,
-      "low": 128.43,
-      "close": 130.44,
-      "volume": 8011300.0
-    },
-    {
-      "date": "2024-08-16",
-      "open": 131.2,
-      "high": 133.1,
-      "low": 129.8,
-      "close": 130.3,
-      "volume": 6100600.0
-    },
     {
       "date": "2024-08-19",
       "open": 130.62,
@@ -4331,58 +4092,58 @@
       "high": 299.285,
       "low": 275.0,
       "close": 282.57,
-      "volume": 3824400.0
+      "volume": 3831200.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 281.26,
+      "high": 282.8,
+      "low": 267.31,
+      "close": 267.85,
+      "volume": 3182800.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 273.1,
+      "high": 273.39,
+      "low": 265.37,
+      "close": 268.93,
+      "volume": 3176900.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 279.96,
+      "high": 280.16,
+      "low": 266.592,
+      "close": 271.87,
+      "volume": 3368900.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 266.99,
+      "high": 290.21,
+      "low": 266.241,
+      "close": 278.65,
+      "volume": 4798400.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 278.23,
+      "high": 281.67,
+      "low": 274.455,
+      "close": 279.44,
+      "volume": 2102000.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 284.625,
+      "high": 287.12,
+      "low": 271.28,
+      "close": 271.43,
+      "volume": 3533142.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-07",
-      "open": 137.77,
-      "high": 139.68,
-      "low": 134.61,
-      "close": 135.57,
-      "volume": 4269200.0
-    },
-    {
-      "date": "2025-08-08",
-      "open": 136.67,
-      "high": 139.45,
-      "low": 135.36,
-      "close": 138.5,
-      "volume": 3483700.0
-    },
-    {
-      "date": "2025-08-11",
-      "open": 139.52,
-      "high": 146.43,
-      "low": 139.25,
-      "close": 141.05,
-      "volume": 5673400.0
-    },
-    {
-      "date": "2025-08-12",
-      "open": 142.85,
-      "high": 143.0,
-      "low": 140.42,
-      "close": 142.39,
-      "volume": 3996500.0
-    },
-    {
-      "date": "2025-08-13",
-      "open": 143.45,
-      "high": 145.2,
-      "low": 141.39,
-      "close": 141.6,
-      "volume": 3335800.0
-    },
-    {
-      "date": "2025-08-14",
-      "open": 140.29,
-      "high": 140.68,
-      "low": 138.27,
-      "close": 140.55,
-      "volume": 4927800.0
-    },
     {
       "date": "2025-08-15",
       "open": 140.55,
@@ -6349,7 +6110,55 @@
       "high": 299.285,
       "low": 275.0,
       "close": 282.57,
-      "volume": 3824400.0
+      "volume": 3831200.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 281.26,
+      "high": 282.8,
+      "low": 267.31,
+      "close": 267.85,
+      "volume": 3182800.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 273.1,
+      "high": 273.39,
+      "low": 265.37,
+      "close": 268.93,
+      "volume": 3176900.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 279.96,
+      "high": 280.16,
+      "low": 266.592,
+      "close": 271.87,
+      "volume": 3368900.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 266.99,
+      "high": 290.21,
+      "low": 266.241,
+      "close": 278.65,
+      "volume": 4798400.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 278.23,
+      "high": 281.67,
+      "low": 274.455,
+      "close": 279.44,
+      "volume": 2102000.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 284.625,
+      "high": 287.12,
+      "low": 271.28,
+      "close": 271.43,
+      "volume": 3533142.0
     }
   ],
   "ai_synthesis": null,

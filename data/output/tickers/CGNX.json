@@ -1,113 +1,23 @@
 {
   "ticker": "CGNX",
-  "fetched_at": "2026-08-08T05:15:54Z",
+  "fetched_at": "2026-08-18T03:56:05Z",
   "_schema": "v2",
-  "current_price": 66.88999938964844,
-  "info": {
-    "symbol": "CGNX",
-    "longName": "Cognex Corporation",
-    "sector": "Technology",
-    "industry": "Scientific & Technical Instruments",
-    "exchange": "NMS",
-    "country": "United States",
-    "city": "Natick",
-    "website": "https://www.cognex.com",
-    "fullTimeEmployees": 2745,
-    "marketCap": 11252492288,
-    "enterpriseValue": 10920141824,
-    "trailingPE": 64.94175,
-    "forwardPE": 34.988518,
-    "priceToSalesTrailing12Months": 10.33353,
-    "enterpriseToRevenue": 10.028,
-    "priceToBook": 6.9051304,
-    "grossMargins": 0.68975997,
-    "operatingMargins": 0.29752,
-    "profitMargins": 0.16051,
-    "returnOnEquity": 0.111490004,
-    "totalCash": 404369984,
-    "totalDebt": 72477000,
-    "totalRevenue": 1088930048,
-    "freeCashflow": null,
-    "debtToEquity": 4.448,
-    "currentRatio": 3.934,
-    "fiftyTwoWeekHigh": 72.88,
-    "fiftyTwoWeekLow": 34.6,
-    "averageVolume": 2230345,
-    "averageVolume10days": 2271920,
-    "beta": 1.503,
-    "sharesOutstanding": 168223842,
-    "sharesFloat": 160433599,
-    "companyOfficers": [
-      {
-        "name": "Mr. Matthew  Moschner",
-        "title": "President, CEO & Director",
-        "age": 38,
-        "yearBorn": 1987
-      },
-      {
-        "name": "Mr. Dennis S. Fehr",
-        "title": "Senior VP of Finance & CFO",
-        "age": 44,
-        "yearBorn": 1981
-      },
-      {
-        "name": "Mr. Carl W. Gerst III",
-        "title": "Executive Vice President of Global Sales & Products",
-        "age": 57,
-        "yearBorn": 1968
-      },
-      {
-        "name": "Ms. Sheila M. DiPalma CPA",
-        "title": "Executive VP of Employee Services & Chief Culture Officer",
-        "age": 58,
-        "yearBorn": 1967
-      },
-      {
-        "name": "Dr. Robert J. Shillman Ph.D.",
-        "title": "Founder, Chairman Emeritus & Adviser",
-        "age": 78,
-        "yearBorn": 1947
-      },
-      {
-        "name": "Mr. Mike  Bowdoin",
-        "title": "Vice President of Operations",
-        "age": null,
-        "yearBorn": null
-      }
-    ]
-  },
-  "earnings_history": [
+  "current_price": 66.5999984741211,
+  "info": {},
+  "earnings_history": [],
+  "next_earnings": {},
+  "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.45,
-      "eps_estimate": 0.42482,
-      "eps_surprise_pct": 0.059299998
+      "revenue": 291263000.0,
+      "gross_profit": 205773000.0,
+      "operating_income": 85517000.0,
+      "eps": 0.43,
+      "cash": 302521000.0,
+      "operating_cashflow": 69153000.0,
+      "gross_margin_pct": 70.64852040938945,
+      "yoy_pct": 16.92941993552608
     },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.34,
-      "eps_estimate": 0.24805,
-      "eps_surprise_pct": 0.3707
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.27,
-      "eps_estimate": 0.21962,
-      "eps_surprise_pct": 0.22940001
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.33,
-      "eps_estimate": 0.29064,
-      "eps_surprise_pct": 0.1354
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-10-29",
-    "revenue_low": 262787000,
-    "revenue_high": 318664000
-  },
-  "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 268437000.0,
@@ -117,7 +27,7 @@
       "cash": 237343000.0,
       "operating_cashflow": 45093000.0,
       "gross_margin_pct": 71.12991130134817,
-      "yoy_pct": 24.255679608954072
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -151,103 +61,58 @@
       "operating_cashflow": 42625000.0,
       "gross_margin_pct": 67.39490872886833,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 216036000.0,
-      "gross_profit": 144323000.0,
-      "operating_income": 26092000.0,
-      "eps": 0.14,
-      "cash": 143744000.0,
-      "operating_cashflow": 40502000.0,
-      "gross_margin_pct": 66.80506952544947,
-      "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 21,
-    "bullish": 16,
-    "neutral": 5,
-    "bearish": 0,
-    "avg_price_target": 79.73684,
-    "high_price_target": 94.0,
-    "low_price_target": 62.0,
-    "current_price": 66.89,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-07T21:26:06",
-        "firm": "Citigroup",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T13:40:22",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T13:14:21",
-        "firm": "Truist Securities",
-        "to_grade": "Hold",
-        "from_grade": "Hold",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T12:34:25",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-13T18:05:09",
-        "firm": "Citigroup",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-02T11:44:05",
-        "firm": "Truist Securities",
-        "to_grade": "Hold",
-        "from_grade": "Hold",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-26T16:09:31",
-        "firm": "JP Morgan",
-        "to_grade": "Overweight",
-        "from_grade": "Neutral",
-        "action": "up"
-      },
-      {
-        "date": "2026-05-14T19:35:05",
-        "firm": "DA Davidson",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-11T16:49:41",
-        "firm": "Goldman Sachs",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-11T13:20:44",
-        "firm": "Barclays",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
+    {
+      "date": "2026-08-16T12:13:00Z",
+      "title": "3 Services Stocks That Concern Us",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/3-services-stocks-concern-us-121300569.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-08-14T09:41:00Z",
+      "title": "The Top 5 Analyst Questions From Cognex\u2019s Q2 Earnings Call",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/top-5-analyst-questions-cognex-094100564.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-08-13T14:29:00Z",
+      "title": "1 Growth Stock to Add to Your Roster and 2 We Turn Down",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/1-growth-stock-add-roster-142900750.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-08-13T00:30:02Z",
+      "title": "Cognex (CGNX) Q2 2026 Earnings Call Transcript",
+      "url": "https://www.fool.com/earnings/call-transcripts/2026/08/12/cognex-cgnx-q2-2026-earnings-call-transcript/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-08-12T17:33:22Z",
+      "title": "Why Cognex (CGNX) Shares Are Sliding Today",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/why-cognex-cgnx-shares-sliding-173322220.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-08-10T17:04:36Z",
+      "title": "Cognex Sees Record Revenue, Margin Gains as AI Powers Machine-Vision Growth",
+      "url": "https://www.marketbeat.com/instant-alerts/cognex-sees-record-revenue-margin-gains-as-ai-powers-machine-vision-growth-2026-08-10/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
+    },
+    {
+      "date": "2026-08-10T13:57:22Z",
+      "title": "CGNX Q2 Deep Dive: AI-Driven Growth and Product Diversification Shape Outlook",
+      "url": "https://finance.yahoo.com/technology/ai/articles/cgnx-q2-deep-dive-ai-135722473.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-08-10T10:45:22Z",
+      "title": "3 Cash-Producing Stocks We\u2019re Skeptical Of",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/3-cash-producing-stocks-skeptical-104522356.html",
+      "source": "StockStory"
+    },
     {
       "date": "2026-08-07T17:28:50Z",
       "title": "This AI Stock Offers Diversified Way To Play The Space, Eyes Entry As Profits Jump 80%",
@@ -259,128 +124,24 @@
       "title": "Cognex Q2 Earnings Call Centers on AI and Data Center Growth",
       "url": "https://finance.yahoo.com/technology/ai/articles/cognex-q2-earnings-call-centers-151100644.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-07T04:29:41Z",
-      "title": "Why Cognex (CGNX) Is Up 7.6% After Record Q2 Beat, Higher Guidance and Dividend Hike",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/why-cognex-cgnx-7-6-042941126.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-06T23:18:56Z",
-      "title": "Cognex Corp (CGNX) (Q2 2026) Earnings Call Highlights: Record Revenue and Margin Expansion Fuel ...",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cognex-corp-cgnx-q2-2026-231856767.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-08-06T15:36:00Z",
-      "title": "Cognex Q2 Earnings Beat on Margin Gains Despite Revenue Miss",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cognex-q2-earnings-beat-margin-153600019.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-06T15:04:26Z",
-      "title": "Cognex Q2 Earnings Call Highlights",
-      "url": "https://www.marketbeat.com/instant-alerts/cognex-q2-earnings-call-highlights-2026-08-06/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-06T00:35:21Z",
-      "title": "Cognex Corporation (CGNX) Tops Q2 Earnings Estimates",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cognex-corporation-cgnx-tops-q2-003521896.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-05T20:55:05Z",
-      "title": "Cognex (NASDAQ:CGNX) Misses Q2 CY2026 Revenue Estimates",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cognex-nasdaq-cgnx-misses-q2-205505097.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-04T20:13:22Z",
-      "title": "Cognex (CGNX) Q2 Earnings Report Preview: What To Look For",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cognex-cgnx-q2-earnings-report-201322149.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-03T16:52:00Z",
-      "title": "CGNX Gears Up to Report Q2 Earnings: What's in Store for the Stock?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cgnx-gears-report-q2-earnings-165200111.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.08222454851526209,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 64.2729995727539,
-    "ma50": 64.96899971008301,
-    "ma200": 51.500347728729245,
-    "rsi14": 53.64221575921235,
+    "ma20": 64.22649936676025,
+    "ma50": 64.78039962768554,
+    "ma200": 51.90627597808838,
+    "rsi14": 53.82704824559481,
     "high_20d": 72.69999694824219,
-    "low_5d": 64.25,
-    "low_10d": 57.16999816894531,
+    "low_5d": 60.45000076293945,
+    "low_10d": 60.45000076293945,
     "high_52w": 72.87999725341797,
     "low_52w": 34.502436957933476,
-    "atr14": 3.279285430908203,
-    "atr14_pct": 4.902504800165522,
-    "position_in_52w_range_pct": 84.39192638184893
+    "atr14": 3.4992858341761996,
+    "atr14_pct": 5.254183054577584,
+    "position_in_52w_range_pct": 83.636274085834
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-08",
-      "open": 37.3211,
-      "high": 38.463,
-      "low": 36.7402,
-      "close": 38.148,
-      "volume": 1198500.0
-    },
-    {
-      "date": "2024-08-09",
-      "open": 38.3646,
-      "high": 38.4532,
-      "low": 37.6853,
-      "close": 38.1382,
-      "volume": 1113700.0
-    },
-    {
-      "date": "2024-08-12",
-      "open": 38.3941,
-      "high": 38.4729,
-      "low": 37.7542,
-      "close": 37.9019,
-      "volume": 889100.0
-    },
-    {
-      "date": "2024-08-13",
-      "open": 38.3547,
-      "high": 38.8864,
-      "low": 37.9807,
-      "close": 38.5516,
-      "volume": 812700.0
-    },
-    {
-      "date": "2024-08-14",
-      "open": 38.7682,
-      "high": 38.7682,
-      "low": 37.8231,
-      "close": 37.9117,
-      "volume": 875800.0
-    },
-    {
-      "date": "2024-08-15",
-      "open": 38.7452,
-      "high": 39.3864,
-      "low": 38.2718,
-      "close": 38.8044,
-      "volume": 1184400.0
-    },
-    {
-      "date": "2024-08-16",
-      "open": 38.7847,
-      "high": 39.3962,
-      "low": 38.5184,
-      "close": 38.9228,
-      "volume": 844100.0
-    },
     {
       "date": "2024-08-19",
       "open": 39.051,
@@ -409,7 +170,7 @@
       "date": "2024-08-22",
       "open": 39.4653,
       "high": 39.5442,
-      "low": 38.114,
+      "low": 38.1139,
       "close": 38.2619,
       "volume": 1013300.0
     },
@@ -457,7 +218,7 @@
       "date": "2024-08-30",
       "open": 39.919,
       "high": 40.2445,
-      "low": 39.5343,
+      "low": 39.5344,
       "close": 39.8303,
       "volume": 2496100.0
     },
@@ -473,7 +234,7 @@
       "date": "2024-09-04",
       "open": 37.5123,
       "high": 38.4493,
-      "low": 37.4037,
+      "low": 37.4038,
       "close": 38.1238,
       "volume": 978300.0
     },
@@ -562,7 +323,7 @@
       "open": 39.1299,
       "high": 39.5639,
       "low": 38.6565,
-      "close": 39.2878,
+      "close": 39.2877,
       "volume": 1710400.0
     },
     {
@@ -785,7 +546,7 @@
       "date": "2024-10-29",
       "open": 38.5973,
       "high": 40.1459,
-      "low": 38.469,
+      "low": 38.4691,
       "close": 40.0473,
       "volume": 1102600.0
     },
@@ -817,7 +578,7 @@
       "date": "2024-11-04",
       "open": 39.7612,
       "high": 40.6588,
-      "low": 39.7514,
+      "low": 39.7513,
       "close": 40.2939,
       "volume": 962200.0
     },
@@ -1002,7 +763,7 @@
       "open": 37.4267,
       "high": 37.9208,
       "low": 37.2389,
-      "close": 37.318,
+      "close": 37.3179,
       "volume": 1220100.0
     },
     {
@@ -1050,7 +811,7 @@
       "open": 36.7744,
       "high": 37.5453,
       "low": 36.557,
-      "close": 37.0313,
+      "close": 37.0314,
       "volume": 1273800.0
     },
     {
@@ -1176,7 +937,7 @@
     {
       "date": "2025-01-10",
       "open": 36.6163,
-      "high": 36.9721,
+      "high": 36.972,
       "low": 36.2308,
       "close": 36.557,
       "volume": 1433200.0
@@ -1207,7 +968,7 @@
     },
     {
       "date": "2025-01-16",
-      "open": 38.247,
+      "open": 38.2469,
       "high": 38.9684,
       "low": 37.9406,
       "close": 38.8992,
@@ -1393,24 +1154,24 @@
       "date": "2025-02-20",
       "open": 33.3648,
       "high": 33.4735,
-      "low": 32.5149,
+      "low": 32.5148,
       "close": 33.009,
       "volume": 1930900.0
     },
     {
       "date": "2025-02-21",
-      "open": 32.8607,
-      "high": 32.8607,
+      "open": 32.8608,
+      "high": 32.8608,
       "low": 31.9713,
-      "close": 32.3962,
+      "close": 32.3963,
       "volume": 1669700.0
     },
     {
       "date": "2025-02-24",
-      "open": 32.3962,
+      "open": 32.3963,
       "high": 32.6433,
       "low": 31.7637,
-      "close": 32.4555,
+      "close": 32.4556,
       "volume": 1611100.0
     },
     {
@@ -1426,7 +1187,7 @@
       "open": 32.4951,
       "high": 33.0782,
       "low": 32.2974,
-      "close": 32.8015,
+      "close": 32.8014,
       "volume": 1162000.0
     },
     {
@@ -1545,7 +1306,7 @@
       "date": "2025-03-19",
       "open": 31.9197,
       "high": 32.207,
-      "low": 30.3247,
+      "low": 30.3248,
       "close": 30.9192,
       "volume": 5256200.0
     },
@@ -1849,7 +1610,7 @@
       "date": "2025-05-13",
       "open": 31.3947,
       "high": 31.791,
-      "low": 31.1965,
+      "low": 31.1966,
       "close": 31.3154,
       "volume": 1805200.0
     },
@@ -1874,7 +1635,7 @@
       "open": 31.354,
       "high": 31.4633,
       "low": 31.1256,
-      "close": 31.364,
+      "close": 31.3639,
       "volume": 1607100.0
     },
     {
@@ -2097,7 +1858,7 @@
       "date": "2025-06-27",
       "open": 31.4931,
       "high": 31.8705,
-      "low": 30.9865,
+      "low": 30.9866,
       "close": 31.2448,
       "volume": 2909600.0
     },
@@ -2137,7 +1898,7 @@
       "date": "2025-07-07",
       "open": 32.0393,
       "high": 32.2777,
-      "low": 31.5526,
+      "low": 31.5527,
       "close": 31.6321,
       "volume": 1397600.0
     },
@@ -2297,7 +2058,7 @@
       "date": "2025-08-04",
       "open": 40.6301,
       "high": 41.1863,
-      "low": 40.2627,
+      "low": 40.2626,
       "close": 41.1466,
       "volume": 2374700.0
     },
@@ -4230,14 +3991,6 @@
       "volume": 1790200.0
     },
     {
-      "date": "2026-07-22",
-      "open": 61.8,
-      "high": 63.5,
-      "low": 61.8,
-      "close": 62.54,
-      "volume": 1685400.0
-    },
-    {
       "date": "2026-07-23",
       "open": 61.82,
       "high": 63.51,
@@ -4331,50 +4084,58 @@
       "high": 70.14,
       "low": 66.79,
       "close": 66.89,
-      "volume": 2380100.0
+      "volume": 2382300.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 66.48,
+      "high": 66.48,
+      "low": 63.68,
+      "close": 64.36,
+      "volume": 3366000.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 65.36,
+      "high": 65.64,
+      "low": 62.8,
+      "close": 62.9,
+      "volume": 1915100.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 64.24,
+      "high": 64.24,
+      "low": 60.46,
+      "close": 60.67,
+      "volume": 5536000.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 60.61,
+      "high": 62.35,
+      "low": 60.45,
+      "close": 61.59,
+      "volume": 2799700.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 61.51,
+      "high": 65.66,
+      "low": 61.5,
+      "close": 65.63,
+      "volume": 2394700.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 65.64,
+      "high": 67.33,
+      "low": 64.88,
+      "close": 66.6,
+      "volume": 1960205.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-07",
-      "open": 41.1168,
-      "high": 41.2955,
-      "low": 40.3818,
-      "close": 41.077,
-      "volume": 1917200.0
-    },
-    {
-      "date": "2025-08-08",
-      "open": 41.2558,
-      "high": 41.4246,
-      "low": 40.6301,
-      "close": 40.6301,
-      "volume": 1457900.0
-    },
-    {
-      "date": "2025-08-11",
-      "open": 40.6301,
-      "high": 40.8387,
-      "low": 39.9548,
-      "close": 40.1931,
-      "volume": 1554900.0
-    },
-    {
-      "date": "2025-08-12",
-      "open": 40.6301,
-      "high": 41.9411,
-      "low": 40.1137,
-      "close": 41.9113,
-      "volume": 2074300.0
-    },
-    {
-      "date": "2025-08-13",
-      "open": 42.7058,
-      "high": 43.9075,
-      "low": 42.6562,
-      "close": 43.8778,
-      "volume": 2452400.0
-    },
     {
       "date": "2025-08-14",
       "open": 44.1663,
@@ -6248,14 +6009,6 @@
       "volume": 1790200.0
     },
     {
-      "date": "2026-07-22",
-      "open": 61.8,
-      "high": 63.5,
-      "low": 61.8,
-      "close": 62.54,
-      "volume": 1685400.0
-    },
-    {
       "date": "2026-07-23",
       "open": 61.82,
       "high": 63.51,
@@ -6349,7 +6102,55 @@
       "high": 70.14,
       "low": 66.79,
       "close": 66.89,
-      "volume": 2380100.0
+      "volume": 2382300.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 66.48,
+      "high": 66.48,
+      "low": 63.68,
+      "close": 64.36,
+      "volume": 3366000.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 65.36,
+      "high": 65.64,
+      "low": 62.8,
+      "close": 62.9,
+      "volume": 1915100.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 64.24,
+      "high": 64.24,
+      "low": 60.46,
+      "close": 60.67,
+      "volume": 5536000.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 60.61,
+      "high": 62.35,
+      "low": 60.45,
+      "close": 61.59,
+      "volume": 2799700.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 61.51,
+      "high": 65.66,
+      "low": 61.5,
+      "close": 65.63,
+      "volume": 2394700.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 65.64,
+      "high": 67.33,
+      "low": 64.88,
+      "close": 66.6,
+      "volume": 1960205.0
     }
   ],
   "ai_synthesis": null,

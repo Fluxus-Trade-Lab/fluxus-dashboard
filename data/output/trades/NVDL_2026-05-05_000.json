@@ -1,6 +1,6 @@
 {
   "trade_id": "NVDL_2026-05-05_000",
-  "generated_at": "2026-08-17T03:51:14+00:00",
+  "generated_at": "2026-08-18T03:59:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "NVDL",
@@ -59,23 +59,9 @@
     "low_5d": 29.5983
   },
   "setup_type": "Long in mixed structure",
-  "path_analytics": {
-    "mfe_R": -19.779630872483196,
-    "mfe_date": "2026-05-08",
-    "mae_R": 22.06822147651004,
-    "mae_date": "2026-05-05",
-    "optimal_exit_price": 36.8067,
-    "optimal_exit_date": "2026-05-08",
-    "optimal_R": -19.779630872483196,
-    "days_to_optimal": 3,
-    "realized_R": 3.1744966442952984,
-    "capture_pct": null,
-    "missed_R": -22.954127516778495,
-    "post_exit_R": -17.609630872483198,
-    "hold_calendar_days": 3
-  },
-  "lesson": "Good execution",
-  "narrative": "Entered **NVDL** long on 2026-05-05 at $95.75 (qty 3265) with stop $92.77 (1R = $2.98/sh = $9,730). Setup: **Long in mixed structure** \u2014 price below MA20 ($31.28), RSI 49, 48% through 52W range, ATR 6.7% of price. Realized **+3.17R**. **Lesson: Good execution.**",
+  "path_analytics": {},
+  "lesson": "Insufficient data",
+  "narrative": "Entered **NVDL** long on 2026-05-05 at $95.75 (qty 3265) with stop $92.77 (1R = $2.98/sh = $9,730). Setup: **Long in mixed structure** \u2014 price below MA20 ($31.28), RSI 49, 48% through 52W range, ATR 6.7% of price.  **Lesson: Insufficient data.**",
   "ohlc_window": [
     {
       "date": "2026-04-06",

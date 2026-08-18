@@ -1,113 +1,23 @@
 {
   "ticker": "CLSK",
-  "fetched_at": "2026-08-08T05:16:00Z",
+  "fetched_at": "2026-08-18T03:56:07Z",
   "_schema": "v2",
-  "current_price": 12.300000190734863,
-  "info": {
-    "symbol": "CLSK",
-    "longName": "CleanSpark, Inc.",
-    "sector": "Financial Services",
-    "industry": "Capital Markets",
-    "exchange": "NCM",
-    "country": "United States",
-    "city": "Henderson",
-    "website": "https://www.cleanspark.com",
-    "fullTimeEmployees": 309,
-    "marketCap": 3156285952,
-    "enterpriseValue": 4802194944,
-    "trailingPE": null,
-    "forwardPE": -9.413241,
-    "priceToSalesTrailing12Months": 4.2659197,
-    "enterpriseToRevenue": 6.49,
-    "priceToBook": 1.6078432,
-    "grossMargins": 0.50709,
-    "operatingMargins": -2.46283,
-    "profitMargins": -0.67657995,
-    "returnOnEquity": -0.34804,
-    "totalCash": 260287008,
-    "totalDebt": 1790720000,
-    "totalRevenue": 739884032,
-    "freeCashflow": -300704512,
-    "debtToEquity": 181.585,
-    "currentRatio": 8.259,
-    "fiftyTwoWeekHigh": 23.61,
-    "fiftyTwoWeekLow": 8.0,
-    "averageVolume": 23261830,
-    "averageVolume10days": 22160840,
-    "beta": 3.886,
-    "sharesOutstanding": 256608606,
-    "sharesFloat": 247704287,
-    "companyOfficers": [
-      {
-        "name": "Mr. S. Matthew Schultz",
-        "title": "CEO & Chairman",
-        "age": 56,
-        "yearBorn": 1969
-      },
-      {
-        "name": "Mr. Gary A. Vecchiarelli CPA",
-        "title": "President & CFO",
-        "age": 47,
-        "yearBorn": 1978
-      },
-      {
-        "name": "Mr. Taylor  Monnig",
-        "title": "CTO & COO",
-        "age": null,
-        "yearBorn": null
-      },
-      {
-        "name": "Mr. Scott E. Garrison",
-        "title": "Executive VP & Chief Development Officer",
-        "age": null,
-        "yearBorn": null
-      },
-      {
-        "name": "Mr. Brian  Carson",
-        "title": "Chief Accounting Officer",
-        "age": 50,
-        "yearBorn": 1975
-      },
-      {
-        "name": "Barbara  Domingo",
-        "title": "Senior Director of Investor Relations",
-        "age": null,
-        "yearBorn": null
-      }
-    ]
-  },
-  "earnings_history": [
+  "current_price": 12.399999618530273,
+  "info": {},
+  "earnings_history": [],
+  "next_earnings": {},
+  "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
-      "eps_actual": -0.3878,
-      "eps_estimate": -0.33333,
-      "eps_surprise_pct": -0.1634
+      "revenue": 138006000.0,
+      "gross_profit": 24719000.0,
+      "operating_income": -113224000.0,
+      "eps": -0.89,
+      "cash": 202601000.0,
+      "operating_cashflow": -112335000.0,
+      "gross_margin_pct": 17.911540077967626,
+      "yoy_pct": -30.525966049817765
     },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": -0.4943,
-      "eps_estimate": -0.23,
-      "eps_surprise_pct": -1.1491001
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": -1.3236,
-      "eps_estimate": 0.205,
-      "eps_surprise_pct": -7.4565997
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.161,
-      "eps_estimate": 0.535,
-      "eps_surprise_pct": -0.6991
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-08-07",
-    "revenue_low": 105600000,
-    "revenue_high": 209800000
-  },
-  "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 136408000.0,
@@ -117,7 +27,7 @@
       "cash": 260287000.0,
       "operating_cashflow": -135827000.0,
       "gross_margin_pct": 21.842560553633216,
-      "yoy_pct": -24.931760147926386
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -151,103 +61,46 @@
       "operating_cashflow": -109888000.0,
       "gross_margin_pct": 46.37341173153984,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 181712000.0,
-      "gross_profit": 81033000.0,
-      "operating_income": -12587000.0,
-      "eps": -0.49,
-      "cash": 96982000.0,
-      "operating_cashflow": -112283000.0,
-      "gross_margin_pct": 44.59419300871709,
-      "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 12,
-    "bullish": 12,
-    "neutral": 0,
-    "bearish": 0,
-    "avg_price_target": 23.73077,
-    "high_price_target": 27.0,
-    "low_price_target": 21.0,
-    "current_price": 12.3,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-07T12:02:38",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "reit"
-      },
-      {
-        "date": "2026-08-03T16:06:42",
-        "firm": "B. Riley Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-28T18:08:21",
-        "firm": "Keefe, Bruyette & Woods",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-28T11:00:38",
-        "firm": "Chardan Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-15T15:09:06",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-15T11:36:00",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-15T10:22:20",
-        "firm": "Chardan Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-14T14:29:54",
-        "firm": "BTIG",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-07-08T10:28:11",
-        "firm": "Chardan Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-24T13:13:34",
-        "firm": "Citizens",
-        "to_grade": "Market Outperform",
-        "from_grade": null,
-        "action": "init"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
+    {
+      "date": "2026-08-14T00:15:34Z",
+      "title": "CleanSpark (CLSK) Swung To A Third Quarter Loss, Is The Stock Still Trading At A Discount?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/cleanspark-clsk-swung-third-quarter-001534616.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-13T09:31:28Z",
+      "title": "How to close the AI skills gap in finance teams: Dear CFO",
+      "url": "https://www.cfo.com/news/how-to-close-the-ai-skills-gap-in-finance-teams/827697/",
+      "source": "CFO.com"
+    },
+    {
+      "date": "2026-08-13T05:01:35Z",
+      "title": "Big Digital Energy Inc (BGDE) (Q2 2026) Earnings Call Highlights: Strategic Pivot to AI ...",
+      "url": "https://finance.yahoo.com/technology/ai/articles/big-digital-energy-inc-bgde-050135285.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-08-11T15:30:03Z",
+      "title": "Meta backs Texas data center standards but leaves infrastructure commitment unpriced",
+      "url": "https://blockspace.media/insight/meta-texas-data-center-standards-infrastructure-costs/",
+      "source": "Blockspace"
+    },
+    {
+      "date": "2026-08-10T17:23:32Z",
+      "title": "Riot Platforms and MARA Drop 6%, CleanSpark Sinks 5% as Strategy Sells Bitcoin, Shares",
+      "url": "https://247wallst.com/investing/2026/08/10/riot-platforms-and-mara-drop-6-cleanspark-sinks-5-as-strategy-sells-bitcoin-shares/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-07T22:04:31Z",
+      "title": "CleanSpark earnings call reveals Sandersville financing strategy, CAPEX",
+      "url": "https://blockspace.media/short/cleanspark-earnings-call-reveals-sandersville-financing-strategy-capex/",
+      "source": "Blockspace"
+    },
     {
       "date": "2026-08-07T19:37:49Z",
       "title": "CleanSpark Q3 FY26 Earnings, Hut 8 CEO Interview, MARA Q2 Earnings",
@@ -271,116 +124,24 @@
       "title": "KBW says Texas approval delays obscure CleanSpark\u2019s 610 MW HPC opportunity",
       "url": "https://blockspace.media/insight/cleanspark-texas-hpc-opportunity-2026/",
       "source": "Blockspace"
-    },
-    {
-      "date": "2026-08-07T05:08:24Z",
-      "title": "MARA and CleanSpark Post $851 Million in Combined Quarterly Losses",
-      "url": "https://beincrypto.com/mara-cleanspark-ai-quarterly-losses/",
-      "source": "BeInCrypto"
-    },
-    {
-      "date": "2026-08-07T00:03:55Z",
-      "title": "Cleanspark Q3 Earnings Call Highlights",
-      "url": "https://www.marketbeat.com/instant-alerts/cleanspark-q3-earnings-call-highlights-2026-08-06/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-06T23:10:09Z",
-      "title": "CleanSpark (CLSK) Reports Q3 Loss, Lags Revenue Estimates",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cleanspark-clsk-reports-q3-loss-231009129.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-06T20:42:48Z",
-      "title": "CleanSpark advances 175 MW Sandersville project after funding equity commitment: Earnings",
-      "url": "https://blockspace.media/insight/cleanspark-reports-loss-sandersville-funding/",
-      "source": "Blockspace"
-    },
-    {
-      "date": "2026-08-06T19:11:36Z",
-      "title": "CleanSpark (CLSK) Stock Looks Above Fair Value After A 130% Return",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cleanspark-clsk-stock-looks-above-191136382.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-06T18:23:31Z",
-      "title": "Why CleanSpark (CLSK) Is Down 7.2% After US$6.6B AI Data Center Lease Announcement \u2013 And What's Next",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/why-cleanspark-clsk-down-7-182331186.html",
-      "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": 0.09105690915709537,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 13.815499925613404,
-    "ma50": 15.018600006103515,
-    "ma200": 12.943974981307983,
-    "rsi14": 41.765210484132254,
+    "ma20": 13.366000032424926,
+    "ma50": 14.300400009155274,
+    "ma200": 12.740399980545044,
+    "rsi14": 45.296985378065514,
     "high_20d": 16.100000381469727,
-    "low_5d": 12.079999923706055,
-    "low_10d": 11.829999923706055,
+    "low_5d": 11.270000457763672,
+    "low_10d": 11.270000457763672,
     "high_52w": 23.610000610351562,
     "low_52w": 8.0,
-    "atr14": 1.3582141739981515,
-    "atr14_pct": 11.042391487288302,
-    "position_in_52w_range_pct": 27.546444731612475
+    "atr14": 1.2449997493198939,
+    "atr14_pct": 10.040320867908697,
+    "position_in_52w_range_pct": 28.187056031326946
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-08",
-      "open": 11.57,
-      "high": 12.43,
-      "low": 11.27,
-      "close": 12.23,
-      "volume": 25641000.0
-    },
-    {
-      "date": "2024-08-09",
-      "open": 11.99,
-      "high": 12.2,
-      "low": 11.34,
-      "close": 11.46,
-      "volume": 23064100.0
-    },
-    {
-      "date": "2024-08-12",
-      "open": 11.11,
-      "high": 11.42,
-      "low": 10.25,
-      "close": 11.16,
-      "volume": 26424600.0
-    },
-    {
-      "date": "2024-08-13",
-      "open": 11.18,
-      "high": 11.44,
-      "low": 10.84,
-      "close": 11.08,
-      "volume": 19287700.0
-    },
-    {
-      "date": "2024-08-14",
-      "open": 11.27,
-      "high": 11.475,
-      "low": 10.87,
-      "close": 10.99,
-      "volume": 17617500.0
-    },
-    {
-      "date": "2024-08-15",
-      "open": 11.23,
-      "high": 11.89,
-      "low": 11.14,
-      "close": 11.33,
-      "volume": 21995700.0
-    },
-    {
-      "date": "2024-08-16",
-      "open": 11.3,
-      "high": 12.04,
-      "low": 11.18,
-      "close": 11.84,
-      "volume": 21831200.0
-    },
     {
       "date": "2024-08-19",
       "open": 11.91,
@@ -4331,58 +4092,58 @@
       "high": 14.01,
       "low": 12.08,
       "close": 12.3,
-      "volume": 23378700.0
+      "volume": 23422200.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 12.29,
+      "high": 12.33,
+      "low": 11.59,
+      "close": 11.59,
+      "volume": 17449200.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 12.2,
+      "high": 12.28,
+      "low": 11.48,
+      "close": 11.52,
+      "volume": 19246600.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 12.14,
+      "high": 12.36,
+      "low": 11.86,
+      "close": 12.18,
+      "volume": 17832000.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 11.9,
+      "high": 12.63,
+      "low": 11.41,
+      "close": 11.52,
+      "volume": 24967700.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 11.315,
+      "high": 12.2,
+      "low": 11.27,
+      "close": 12.09,
+      "volume": 19864400.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 12.07,
+      "high": 12.545,
+      "low": 11.93,
+      "close": 12.4,
+      "volume": 17785373.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-07",
-      "open": 11.16,
-      "high": 11.44,
-      "low": 10.44,
-      "close": 10.72,
-      "volume": 25416000.0
-    },
-    {
-      "date": "2025-08-08",
-      "open": 11.0,
-      "high": 11.35,
-      "low": 9.82,
-      "close": 10.07,
-      "volume": 33992800.0
-    },
-    {
-      "date": "2025-08-11",
-      "open": 10.135,
-      "high": 10.36,
-      "low": 9.81,
-      "close": 9.87,
-      "volume": 29678200.0
-    },
-    {
-      "date": "2025-08-12",
-      "open": 9.95,
-      "high": 10.24,
-      "low": 9.77,
-      "close": 9.92,
-      "volume": 22600900.0
-    },
-    {
-      "date": "2025-08-13",
-      "open": 10.15,
-      "high": 10.25,
-      "low": 9.83,
-      "close": 9.97,
-      "volume": 21296500.0
-    },
-    {
-      "date": "2025-08-14",
-      "open": 9.73,
-      "high": 9.96,
-      "low": 9.35,
-      "close": 9.95,
-      "volume": 25428700.0
-    },
     {
       "date": "2025-08-15",
       "open": 9.93,
@@ -6349,7 +6110,55 @@
       "high": 14.01,
       "low": 12.08,
       "close": 12.3,
-      "volume": 23378700.0
+      "volume": 23422200.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 12.29,
+      "high": 12.33,
+      "low": 11.59,
+      "close": 11.59,
+      "volume": 17449200.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 12.2,
+      "high": 12.28,
+      "low": 11.48,
+      "close": 11.52,
+      "volume": 19246600.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 12.14,
+      "high": 12.36,
+      "low": 11.86,
+      "close": 12.18,
+      "volume": 17832000.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 11.9,
+      "high": 12.63,
+      "low": 11.41,
+      "close": 11.52,
+      "volume": 24967700.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 11.315,
+      "high": 12.2,
+      "low": 11.27,
+      "close": 12.09,
+      "volume": 19864400.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 12.07,
+      "high": 12.545,
+      "low": 11.93,
+      "close": 12.4,
+      "volume": 17785373.0
     }
   ],
   "ai_synthesis": null,

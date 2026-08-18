@@ -1,6 +1,6 @@
 {
   "trade_id": "CRDO_2026-05-31_000",
-  "generated_at": "2026-08-17T03:51:14+00:00",
+  "generated_at": "2026-08-18T03:59:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "CRDO",
@@ -39,10 +39,10 @@
     "high": 240.81,
     "low": 224.5,
     "volume": 7597100.0,
-    "ma20": 195.46224999999998,
-    "ma50": 159.0545,
-    "ma200": 145.22899999999998,
-    "rsi14": 69.09038294270901,
+    "ma20": 195.46225,
+    "ma50": 159.05450000000002,
+    "ma200": null,
+    "rsi14": 69.09038688420395,
     "atr14": 19.24778571428571,
     "atr14_pct": 8.154804776632506,
     "high_52w": 240.81,
@@ -52,7 +52,7 @@
     "low_10d": 148.945,
     "low_5d": 195.47
   },
-  "setup_type": "Breakout / near 52W high",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": 16.19584569732935,
     "mfe_date": "2026-06-02",
@@ -69,7 +69,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Premature trim",
-  "narrative": "Entered **CRDO** long on 2026-05-31 at $191.37 (qty 886) with stop $188.00 (1R = $3.37/sh = $2,986). Setup: **Breakout / near 52W high** \u2014 price above MA20 ($195.46), MA20 > MA50 > MA200 (golden alignment), RSI 69, 97% through 52W range, ATR 8.2% of price. Realized **+6.16R**, peak was **+16.20R** on 2026-06-02 (day +2) \u2014 captured **38%** of the move. **Lesson: Premature trim.**",
+  "narrative": "Entered **CRDO** long on 2026-05-31 at $191.37 (qty 886) with stop $188.00 (1R = $3.37/sh = $2,986). Setup: **Long in mixed structure** \u2014 price above MA20 ($195.46), RSI 69, 97% through 52W range, ATR 8.2% of price. Realized **+6.16R**, peak was **+16.20R** on 2026-06-02 (day +2) \u2014 captured **38%** of the move. **Lesson: Premature trim.**",
   "ohlc_window": [
     {
       "date": "2026-05-01",

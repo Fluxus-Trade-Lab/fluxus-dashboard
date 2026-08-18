@@ -1,101 +1,23 @@
 {
   "ticker": "SPCX",
-  "fetched_at": "2026-08-08T05:18:28Z",
+  "fetched_at": "2026-08-18T03:57:47Z",
   "_schema": "v2",
-  "current_price": 133.11000061035156,
-  "info": {
-    "symbol": "SPCX",
-    "longName": "Space Exploration Technologies Corp.",
-    "sector": "Industrials",
-    "industry": "Aerospace & Defense",
-    "exchange": "NMS",
-    "country": "United States",
-    "city": "Starbase",
-    "website": "https://www.spacex.com",
-    "fullTimeEmployees": 21000,
-    "marketCap": 1754626785280,
-    "enterpriseValue": 3453170745344,
-    "trailingPE": null,
-    "forwardPE": 71.840294,
-    "priceToSalesTrailing12Months": 76.142456,
-    "enterpriseToRevenue": 149.851,
-    "priceToBook": 13.785212,
-    "grossMargins": 0.51875,
-    "operatingMargins": -0.01804,
-    "profitMargins": -0.35661998,
-    "returnOnEquity": null,
-    "totalCash": 100009000960,
-    "totalDebt": 39708000256,
-    "totalRevenue": 23043999744,
-    "freeCashflow": null,
-    "debtToEquity": 31.211,
-    "currentRatio": 5.115,
-    "fiftyTwoWeekHigh": 225.64,
-    "fiftyTwoWeekLow": 104.83,
-    "averageVolume": 120778720,
-    "averageVolume10days": 123401800,
-    "beta": null,
-    "sharesOutstanding": 7696293669,
-    "sharesFloat": 1278105383,
-    "companyOfficers": [
-      {
-        "name": "Mr. Elon R. Musk",
-        "title": "Founder & CEO",
-        "age": 54,
-        "yearBorn": 1971
-      },
-      {
-        "name": "Ms. Gwynne E. Shotwell",
-        "title": "President & COO",
-        "age": 61,
-        "yearBorn": 1964
-      },
-      {
-        "name": "Mr. Bret W. Johnsen",
-        "title": "CFO & Secretary",
-        "age": 56,
-        "yearBorn": 1969
-      },
-      {
-        "name": "Mr. Michael  Sagan",
-        "title": "Senior Director of Legal",
-        "age": null,
-        "yearBorn": null
-      },
-      {
-        "name": "Mr. Timothy R. Hughes",
-        "title": "Senior VP of Global Business & Government Affairs",
-        "age": null,
-        "yearBorn": null
-      },
-      {
-        "name": "Mr. Richard J. Lee",
-        "title": "Treasurer",
-        "age": null,
-        "yearBorn": null
-      }
-    ]
-  },
-  "earnings_history": [
+  "current_price": 146.22999572753906,
+  "info": {},
+  "earnings_history": [],
+  "next_earnings": {},
+  "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
-      "eps_actual": -0.09,
-      "eps_estimate": -0.28931,
-      "eps_surprise_pct": 0.6889
+      "revenue": 7814000000.0,
+      "gross_profit": 4319000000.0,
+      "operating_income": -141000000.0,
+      "eps": -0.09,
+      "cash": 93522000000.0,
+      "operating_cashflow": 2419000000.0,
+      "gross_margin_pct": 55.27258766316867,
+      "yoy_pct": null
     },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": -1.27,
-      "eps_estimate": null,
-      "eps_surprise_pct": null
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-11-04",
-    "revenue_low": 10676000000,
-    "revenue_high": 16016800000
-  },
-  "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 4694000000.0,
@@ -105,6 +27,17 @@
       "cash": 15852000000.0,
       "operating_cashflow": 1047000000.0,
       "gross_margin_pct": 49.126544524925436,
+      "yoy_pct": null
+    },
+    {
+      "period_end": "2025-06-30T00:00:00",
+      "revenue": 4071000000.0,
+      "gross_profit": 1789000000.0,
+      "operating_income": -775000000.0,
+      "eps": -0.34,
+      "cash": null,
+      "operating_cashflow": -376000000.0,
+      "gross_margin_pct": 43.944976664210266,
       "yoy_pct": null
     },
     {
@@ -119,163 +52,81 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 11,
-    "bullish": 7,
-    "neutral": 3,
-    "bearish": 1,
-    "avg_price_target": 233.0,
-    "high_price_target": 800.0,
-    "low_price_target": 62.0,
-    "current_price": 133.11,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-07T12:00:24",
-        "firm": "Argus Research",
-        "to_grade": "Buy",
-        "from_grade": "Hold",
-        "action": "up"
-      },
-      {
-        "date": "2026-08-05T16:09:41",
-        "firm": "Macquarie",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T15:36:12",
-        "firm": "Wells Fargo",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T12:40:29",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "reit"
-      },
-      {
-        "date": "2026-08-05T11:35:48",
-        "firm": "Piper Sandler",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T09:45:39",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-08-03T14:40:17",
-        "firm": "RBC Capital",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "reit"
-      },
-      {
-        "date": "2026-08-03T10:09:25",
-        "firm": "Macquarie",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-31T13:56:38",
-        "firm": "Macquarie",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-24T09:35:41",
-        "firm": "HSBC",
-        "to_grade": "Hold",
-        "from_grade": null,
-        "action": "init"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
     {
-      "date": "2026-08-07T13:18:28Z",
-      "title": "SpaceX's big week: Stock jumps despite earnings storm, lock-up expiration in crucial test for investors",
-      "url": "https://finance.yahoo.com/markets/stocks/article/spacexs-big-week-stock-jumps-despite-earnings-storm-lock-up-expiration-in-crucial-test-for-investors-131828277.html",
+      "date": "2026-08-17T15:03:48Z",
+      "title": "SpaceX shareholders include Google, Nvidia, BlackRock: Tracking the stock's volatility",
+      "url": "https://finance.yahoo.com/video/spacex-shareholders-google-nvidia-blackrock-150348057.html",
+      "source": "Yahoo Finance Video"
+    },
+    {
+      "date": "2026-08-17T13:30:18Z",
+      "title": "SpaceX bulls would be wise to remember one thing",
+      "url": "https://finance.yahoo.com/markets/stocks/article/spacex-bulls-would-be-wise-to-remember-one-thing-133018734.html",
       "source": "Yahoo Finance"
     },
     {
-      "date": "2026-08-07T14:42:05Z",
-      "title": "SpaceX's influence ripples across markets: AlphaCheck",
-      "url": "https://finance.yahoo.com/markets/article/spacexs-influence-ripples-across-markets-alphacheck-144205821.html",
-      "source": "Yahoo Finance"
-    },
-    {
-      "date": "2026-08-07T22:11:00Z",
-      "title": "Weekly Wrap: Bitcoin Hit By Coldcard Hack And Clarity Act Disappointment",
-      "url": "https://www.cryptoprowl.com/releases/weekly-wrap-bitcoin-hit-by-coldcard-hack-and-clarity-act-disappointment-6364",
-      "source": "CryptoProwl"
-    },
-    {
-      "date": "2026-08-07T20:39:00Z",
-      "title": "SpaceX, Doximity, Trade Desk, Rigetti, Coherent, and More Stocks That Explain Today\u2019s Market",
-      "url": "https://www.barrons.com/articles/stock-movers-85c510af?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-07T20:28:19Z",
-      "title": "So Much for Those End-of-Lockup SpaceX Fears",
-      "url": "https://www.wsj.com/livecoverage/july-jobs-report-stock-market-08-07-2026/card/so-much-for-those-end-of-lockup-spacex-fears-3aeqsCLMswzWhMKzMgkX?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
-    },
-    {
-      "date": "2026-08-07T20:18:45Z",
-      "title": "SpaceX Stock Lands An Upgrade, Rocket Lab Surges After Electron Mission",
-      "url": "https://www.investors.com/news/spacex-stock-upgrade-buy-ai-expenditure-repayment-rocket-lab-stock-electron-mission-rklb/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-08-07T19:57:39Z",
-      "title": "Top Analyst Drops Sharp Take on SpaceX Stock",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/top-analyst-drops-sharp-spacex-195739278.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-08-07T19:42:20Z",
-      "title": "SpaceX Soars 13% After Analyst Upgrade Says AI Spending Could Pay Back in Under a Year",
-      "url": "https://www.benzinga.com/markets/prediction-markets/26/08/61055247/spacex-stock-argus-upgrade-ai-spending?utm_source=yahooFinance&utm_campaign=partner_feed&utm_medium=referral",
+      "date": "2026-08-18T03:25:04Z",
+      "title": "Elon Musk to Merge SpaceX and Tesla? Prediction Markets Are Betting on This Date",
+      "url": "https://www.benzinga.com/markets/prediction-markets/26/08/61264378/elon-musk-spacex-tesla-merger-prediction-markets-date?utm_source=yahooFinance&utm_campaign=partner_feed&utm_medium=referral",
       "source": "Benzinga Prediction Markets"
     },
     {
-      "date": "2026-08-07T19:39:36Z",
-      "title": "SpaceX Gets Jaw-Dropping Street High Price Target with 560% Upside",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/spacex-gets-jaw-dropping-street-193936018.html",
-      "source": "GuruFocus.com"
+      "date": "2026-08-18T03:07:00Z",
+      "title": "5-star analyst sets alarming SpaceX stock price target",
+      "url": "https://www.thestreet.com/investing/5-star-analyst-sets-alarming-spacex-stock-price-target",
+      "source": "TheStreet"
     },
     {
-      "date": "2026-08-07T19:38:44Z",
-      "title": "SpaceX Stock Surges 10.5% as Argus Sees Rapid AI Payback",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/spacex-stock-surges-10-5-193844125.html",
+      "date": "2026-08-18T02:08:51Z",
+      "title": "Dow Jones Futures: Trump Comments Spark Stock Market Losses; Elon Musk-Led SpaceX Rallies",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-trump-stock-market-losses-elon-musk-spacex-spcx-stock/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
+    },
+    {
+      "date": "2026-08-17T23:31:03Z",
+      "title": "Elon Musk May Have a New AI Powerhouse on His Hands, Says Gene Munster as Grok Gets a New Update: 'This Model Is Going to Be a Monster'",
+      "url": "https://tech.yahoo.com/ai/gemini/articles/elon-musk-may-ai-powerhouse-233103804.html",
+      "source": "Benzinga"
+    },
+    {
+      "date": "2026-08-17T22:28:31Z",
+      "title": "Top Market Strategist Warns Anthropic\u2019s 40-50x Revenue Multiple for IPO Could Be \u201cDangerous\u201d",
+      "url": "https://247wallst.com/investing/2026/08/17/top-market-strategist-warns-anthropics-40-50x-revenue-multiple-for-ipo-could-be-dangerous/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-17T21:30:24Z",
+      "title": "Stock Market Today, Aug. 17: Markets Inch Lower and Treasury Yields Rise as Investors Wait for Retail Earnings",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/08/17/stock-market-today-aug-17-markets-inch-lower-and-treasury-yields-rise-as-investors-wait-for-retail-earnings/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-08-17T20:59:00Z",
+      "title": "SpaceX Matters More for Tesla Stock Than Cybercab These Days",
+      "url": "https://www.barrons.com/articles/tesla-stock-price-today-spacex-a37b62ef?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-08-17T20:53:06Z",
+      "title": "Anthropic Projects $200 Billion of Revenue by 2028",
+      "url": "https://finance.yahoo.com/technology/ai/articles/anthropic-projects-200-billion-revenue-205306475.html",
       "source": "GuruFocus.com"
     }
   ],
-  "options_implied_move": 0.10780557384269175,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 120.83700027465821,
-    "rsi14": 63.13724328280413,
-    "high_20d": 144.9199981689453,
-    "low_5d": 104.83000183105469,
-    "low_10d": 104.83000183105469,
+    "ma20": 123.84999923706054,
+    "rsi14": 64.60388941579477,
+    "high_20d": 149.8000030517578,
+    "low_5d": 130.5,
+    "low_10d": 105.11000061035156,
     "high_52w": 225.63999938964844,
     "low_52w": 104.83000183105469,
-    "atr14": 10.221427372523717,
-    "atr14_pct": 7.678932706524852,
-    "position_in_52w_range_pct": 23.40865768628202
+    "atr14": 10.816428593226842,
+    "atr14_pct": 7.396860363300835,
+    "position_in_52w_range_pct": 34.26868200738525
   },
   "ohlc_2y": [
     {
@@ -588,7 +439,55 @@
       "high": 133.48,
       "low": 114.53,
       "close": 133.11,
-      "volume": 240605000.0
+      "volume": 242130700.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 134.95,
+      "high": 139.26,
+      "low": 130.17,
+      "close": 138.74,
+      "volume": 169934300.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 138.66,
+      "high": 139.98,
+      "low": 130.5,
+      "close": 133.29,
+      "volume": 108900600.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 135.05,
+      "high": 149.6,
+      "low": 134.01,
+      "close": 146.15,
+      "volume": 167236400.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 143.75,
+      "high": 145.05,
+      "low": 139.76,
+      "close": 141.29,
+      "volume": 120282200.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 142.9,
+      "high": 144.02,
+      "low": 135.5,
+      "close": 140.0,
+      "volume": 96727800.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 139.975,
+      "high": 149.8,
+      "low": 139.58,
+      "close": 146.23,
+      "volume": 114897574.0
     }
   ],
   "ohlc_1y": [
@@ -902,7 +801,55 @@
       "high": 133.48,
       "low": 114.53,
       "close": 133.11,
-      "volume": 240605000.0
+      "volume": 242130700.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 134.95,
+      "high": 139.26,
+      "low": 130.17,
+      "close": 138.74,
+      "volume": 169934300.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 138.66,
+      "high": 139.98,
+      "low": 130.5,
+      "close": 133.29,
+      "volume": 108900600.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 135.05,
+      "high": 149.6,
+      "low": 134.01,
+      "close": 146.15,
+      "volume": 167236400.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 143.75,
+      "high": 145.05,
+      "low": 139.76,
+      "close": 141.29,
+      "volume": 120282200.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 142.9,
+      "high": 144.02,
+      "low": 135.5,
+      "close": 140.0,
+      "volume": 96727800.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 139.975,
+      "high": 149.8,
+      "low": 139.58,
+      "close": 146.23,
+      "volume": 114897574.0
     }
   ],
   "ai_synthesis": null,

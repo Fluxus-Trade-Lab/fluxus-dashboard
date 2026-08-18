@@ -1,8 +1,8 @@
 {
   "ticker": "NBIS",
-  "fetched_at": "2026-08-08T05:17:18Z",
+  "fetched_at": "2026-08-18T03:57:07Z",
   "_schema": "v2",
-  "current_price": 187.97000122070312,
+  "current_price": 268.8500061035156,
   "info": {
     "symbol": "NBIS",
     "longName": "Nebius Group N.V.",
@@ -13,30 +13,30 @@
     "city": "Schiphol",
     "website": "https://nebius.com",
     "fullTimeEmployees": 1543,
-    "marketCap": 47725244416,
-    "enterpriseValue": 48360816640,
-    "trailingPE": 73.42578,
-    "forwardPE": -86.965576,
-    "priceToSalesTrailing12Months": 54.36296,
-    "enterpriseToRevenue": 55.087,
-    "priceToBook": 6.648392,
-    "grossMargins": 0.72058,
-    "operatingMargins": -0.3208,
-    "profitMargins": 0.93086,
-    "returnOnEquity": 0.14136,
-    "totalCash": 9373200384,
-    "totalDebt": 9590400000,
-    "totalRevenue": 877900032,
-    "freeCashflow": -6147975168,
-    "debtToEquity": 132.429,
-    "currentRatio": 8.331,
+    "marketCap": 73088278528,
+    "enterpriseValue": 75845672960,
+    "trailingPE": null,
+    "forwardPE": -89.691414,
+    "priceToSalesTrailing12Months": 53.935707,
+    "enterpriseToRevenue": 55.971,
+    "priceToBook": 9.509072,
+    "grossMargins": 0.7426,
+    "operatingMargins": -0.00223,
+    "profitMargins": 0.03129,
+    "returnOnEquity": 0.00601,
+    "totalCash": 8042100224,
+    "totalDebt": 10195300352,
+    "totalRevenue": 1355100032,
+    "freeCashflow": -9614650368,
+    "debtToEquity": 98.596,
+    "currentRatio": 4.03,
     "fiftyTwoWeekHigh": 299.86,
     "fiftyTwoWeekLow": 62.01,
-    "averageVolume": 20001111,
-    "averageVolume10days": 27003080,
+    "averageVolume": 20808906,
+    "averageVolume10days": 28272090,
     "beta": 1.434,
-    "sharesOutstanding": 220406311,
-    "sharesFloat": 210620740,
+    "sharesOutstanding": 238400165,
+    "sharesFloat": 228565540,
     "companyOfficers": [
       {
         "name": "Mr. Arkady  Volozh",
@@ -78,10 +78,10 @@
   },
   "earnings_history": [
     {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 2.11,
-      "eps_estimate": -0.7125,
-      "eps_surprise_pct": 3.9614
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.68,
+      "eps_estimate": -0.86333,
+      "eps_surprise_pct": 0.2124
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -97,13 +97,13 @@
     },
     {
       "period_end": "2025-06-30T00:00:00",
-      "eps_actual": 2.4482,
-      "eps_estimate": -0.41,
-      "eps_surprise_pct": 6.9712
+      "eps_actual": -0.3833,
+      "eps_estimate": -0.42,
+      "eps_surprise_pct": 0.0874
     }
   ],
   "next_earnings": {
-    "date": "2026-08-12",
+    "date": "2026-11-10",
     "revenue_low": 427000000,
     "revenue_high": 632600000
   },
@@ -166,15 +166,36 @@
   ],
   "analyst": {
     "consensus": "Buy",
-    "total_ratings": 15,
-    "bullish": 9,
-    "neutral": 5,
+    "total_ratings": 12,
+    "bullish": 7,
+    "neutral": 4,
     "bearish": 1,
-    "avg_price_target": 255.4375,
+    "avg_price_target": 276.46155,
     "high_price_target": 410.0,
-    "low_price_target": 120.0,
-    "current_price": 187.97,
+    "low_price_target": 144.0,
+    "current_price": 268.85,
     "recent_rating_changes": [
+      {
+        "date": "2026-08-14T18:05:04",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-13T12:43:55",
+        "firm": "DA Davidson",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-13T10:48:55",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
       {
         "date": "2026-08-08T00:48:40",
         "firm": "DA Davidson",
@@ -223,106 +244,85 @@
         "to_grade": "Buy",
         "from_grade": "Buy",
         "action": "main"
-      },
-      {
-        "date": "2026-06-02T09:36:47",
-        "firm": "BNP Paribas",
-        "to_grade": "Neutral",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-05-15T18:16:42",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-14T17:18:46",
-        "firm": "Morgan Stanley",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
       }
     ]
   },
   "news": [
     {
-      "date": "2026-08-07T23:41:13Z",
-      "title": "Dow Jones Futures: What To Do As Stock Market Revs Up; Warren Buffett, Cisco, Lumentum Due",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-warren-buffett-cisco-lumentum-earnings/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-08-07T22:36:21Z",
-      "title": "Situational Awareness Bets $400 Million on Stealth Chip Startup After Crash",
-      "url": "https://www.wsj.com/livecoverage/july-jobs-report-stock-market-08-07-2026/card/situational-awareness-bets-400-million-on-stealth-chip-startup-after-crash-Gc2dffMgSDSRpRvPvOb0?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
-    },
-    {
-      "date": "2026-08-07T19:47:38Z",
-      "title": "Michael Burry Sounds Alarm on Major AI Stocks",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/michael-burry-sounds-alarm-major-194738677.html",
+      "date": "2026-08-17T20:33:10Z",
+      "title": "CoreWeave, Nebius Could Gain 10 Points of Margin",
+      "url": "https://finance.yahoo.com/technology/ai/articles/coreweave-nebius-could-gain-10-203310305.html",
       "source": "GuruFocus.com"
     },
     {
-      "date": "2026-08-07T19:37:00Z",
-      "title": "Michael Burry issues blunt warning as he bets against 2 AI favorites",
-      "url": "https://www.thestreet.com/investing/stocks/orcl-oracle-nbis-nebius-michael-burry-shorts",
-      "source": "TheStreet"
-    },
-    {
-      "date": "2026-08-07T13:59:21Z",
-      "title": "Michael Burry Says Shorting Nebius Is \u201cLike Shooting Fish in a Barrel.\u201d Earnings Could Prove Him Right.",
-      "url": "https://247wallst.com/investing/2026/08/07/michael-burry-says-shorting-nebius-is-like-shooting-fish-in-a-barrel-earnings-could-prove-him-right/",
+      "date": "2026-08-17T17:26:34Z",
+      "title": "SpaceX Rebounds 6% on Monday as Nebius and CoreWeave Look to Rebound From Morning Drops",
+      "url": "https://247wallst.com/investing/2026/08/17/spacex-rebounds-6-on-monday-as-nebius-and-coreweave-look-to-rebound-from-morning-drops/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-07T12:15:35Z",
-      "title": "Nebius Group (NBIS) Could Be 23% Undervalued Following Burry Short Disclosure",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/nebius-group-nbis-could-23-121535911.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-07T07:33:42Z",
-      "title": "CRWV vs IREN: Which Stock Does Jim Cramer Think Is The Better Neocloud Bet?",
-      "url": "https://stocktwits.com/news-articles/markets/equity/crwv-vs-iren-which-stock-does-jim-cramer-think-is-the-better-neocloud-bet/cZoODvcRJBE",
-      "source": "Stocktwits"
-    },
-    {
-      "date": "2026-08-07T04:20:00Z",
-      "title": "Nvidia Is a Massive Investor in the Genius Artificial Intelligence (AI) Stock Up 170% This Year",
-      "url": "https://www.fool.com/investing/2026/08/07/nvidia-is-a-massive-investor-in-the-genius-artific/",
+      "date": "2026-08-17T16:58:09Z",
+      "title": "Nebius's Revenue Is Forecast to Roughly Quadruple Year Over Year. Here's Why Analysts Are Still Debating Whether That's Enough to Justify the Stock.",
+      "url": "https://www.fool.com/investing/2026/08/17/nebiuss-revenue-is-expected-to-roughly-quadruple-y/",
       "source": "Motley Fool"
     },
     {
-      "date": "2026-08-07T03:20:00Z",
-      "title": "3 Overlooked Stocks Poised to Follow Nebius Higher",
-      "url": "https://www.fool.com/investing/2026/08/06/3-overlooked-stocks-poised-to-follow-nebius-higher/",
-      "source": "Motley Fool"
+      "date": "2026-08-17T16:12:05Z",
+      "title": "Two Positions Make Up 80% of Nvidia's $63.4 Billion Portfolio",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/two-positions-80-nvidias-63-161205999.html",
+      "source": "GuruFocus.com"
     },
     {
-      "date": "2026-08-06T23:28:29Z",
-      "title": "CoreWeave Stock, Nebius Highlight Data Center Earnings; Tech Stars Lumentum, AMAT Also Due",
-      "url": "https://www.investors.com/research/earnings-preview/coreweave-stock-nebius-highlight-data-center-earnings-tech-stars-lumentum-amat-earnings/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
+      "date": "2026-08-17T15:55:00Z",
+      "title": "13F Season: Where Wall Street's Smart Money is Betting",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/13f-season-where-wall-streets-155500114.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-17T13:15:06Z",
+      "title": "ChatGPT Disagrees With Michael Burry Over Nebius (NBIS)",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/chatgpt-disagrees-michael-burry-over-131506607.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-08-17T12:45:00Z",
+      "title": "Will Nebius' Asset-Light Model Drive Further Margin Expansion in 2027?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/nebius-asset-light-model-drive-124500303.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-17T12:22:21Z",
+      "title": "Nebius, CoreWeave Get Major AI Boost as Data Center Prices Keep Rising",
+      "url": "https://finance.yahoo.com/technology/ai/articles/nebius-coreweave-major-ai-boost-122221381.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-08-17T10:34:03Z",
+      "title": "Social Buzz: Wallstreetbets Stocks Mostly Higher Premarket Monday; Sandisk, Micron to Advance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/social-buzz-wallstreetbets-stocks-mostly-103403952.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-08-17T09:45:51Z",
+      "title": "Senator Has Made 700+ Trades Since March, Including Buying Nebius (NBIS Stock): Here\u2019s How Much He\u2019s Made",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/senator-made-700-trades-since-094551039.html",
+      "source": "Benzinga"
     }
   ],
-  "options_implied_move": 0.15991913499380866,
+  "options_implied_move": 0.10109726383839045,
   "technicals": {
-    "ma20": 194.9910011291504,
-    "ma50": 223.53580047607423,
-    "ma200": 143.36817554473876,
-    "rsi14": 45.78759047863993,
-    "high_20d": 230.3000030517578,
-    "low_5d": 176.25,
-    "low_10d": 145.8000030517578,
+    "ma20": 210.08600158691405,
+    "ma50": 222.4206005859375,
+    "ma200": 147.19082550048827,
+    "rsi14": 62.09764938700411,
+    "high_20d": 280.8299865722656,
+    "low_5d": 187.30999755859375,
+    "low_10d": 180.63099670410156,
     "high_52w": 299.8599853515625,
     "low_52w": 62.0099983215332,
-    "atr14": 26.315284729003906,
-    "atr14_pct": 13.999725785023575,
-    "position_in_52w_range_pct": 52.9577505855685
+    "atr14": 27.004499162946427,
+    "atr14_pct": 10.04444803789547,
+    "position_in_52w_range_pct": 86.96237925624449
   },
   "ohlc_2y": [
     {
@@ -3923,58 +3923,58 @@
       "high": 197.42,
       "low": 180.631,
       "close": 187.97,
-      "volume": 22697800.0
+      "volume": 22822900.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 186.08,
+      "high": 196.13,
+      "low": 183.11,
+      "close": 184.11,
+      "volume": 16165200.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 187.5,
+      "high": 195.6,
+      "low": 187.31,
+      "close": 193.23,
+      "volume": 22528700.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 226.0,
+      "high": 259.44,
+      "low": 216.11,
+      "close": 259.2,
+      "volume": 63538200.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 255.47,
+      "high": 275.96,
+      "low": 247.38,
+      "close": 255.04,
+      "volume": 36239100.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 258.09,
+      "high": 278.66,
+      "low": 256.905,
+      "close": 277.68,
+      "volume": 29024700.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 276.56,
+      "high": 280.83,
+      "low": 263.82,
+      "close": 268.85,
+      "volume": 19591625.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-07",
-      "open": 64.37,
-      "high": 70.54,
-      "low": 63.38,
-      "close": 65.31,
-      "volume": 44065000.0
-    },
-    {
-      "date": "2025-08-08",
-      "open": 68.175,
-      "high": 71.49,
-      "low": 66.45,
-      "close": 68.78,
-      "volume": 18451900.0
-    },
-    {
-      "date": "2025-08-11",
-      "open": 69.9,
-      "high": 75.96,
-      "low": 69.16,
-      "close": 70.24,
-      "volume": 21552700.0
-    },
-    {
-      "date": "2025-08-12",
-      "open": 73.425,
-      "high": 75.919,
-      "low": 72.0,
-      "close": 75.33,
-      "volume": 16106400.0
-    },
-    {
-      "date": "2025-08-13",
-      "open": 75.08,
-      "high": 75.21,
-      "low": 69.08,
-      "close": 70.63,
-      "volume": 18701900.0
-    },
-    {
-      "date": "2025-08-14",
-      "open": 69.75,
-      "high": 71.52,
-      "low": 67.1,
-      "close": 68.46,
-      "volume": 13114000.0
-    },
     {
       "date": "2025-08-15",
       "open": 68.3,
@@ -5941,7 +5941,55 @@
       "high": 197.42,
       "low": 180.631,
       "close": 187.97,
-      "volume": 22697800.0
+      "volume": 22822900.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 186.08,
+      "high": 196.13,
+      "low": 183.11,
+      "close": 184.11,
+      "volume": 16165200.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 187.5,
+      "high": 195.6,
+      "low": 187.31,
+      "close": 193.23,
+      "volume": 22528700.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 226.0,
+      "high": 259.44,
+      "low": 216.11,
+      "close": 259.2,
+      "volume": 63538200.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 255.47,
+      "high": 275.96,
+      "low": 247.38,
+      "close": 255.04,
+      "volume": 36239100.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 258.09,
+      "high": 278.66,
+      "low": 256.905,
+      "close": 277.68,
+      "volume": 29024700.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 276.56,
+      "high": 280.83,
+      "low": 263.82,
+      "close": 268.85,
+      "volume": 19591625.0
     }
   ],
   "ai_synthesis": null,

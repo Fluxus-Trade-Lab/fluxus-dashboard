@@ -1,6 +1,6 @@
 {
   "trade_id": "SOXS_2026-05-17_001",
-  "generated_at": "2026-08-17T03:51:14+00:00",
+  "generated_at": "2026-08-18T03:59:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SOXS",
@@ -48,7 +48,7 @@
     "ma20": 1854.743565,
     "ma50": 3827.685492,
     "ma200": null,
-    "rsi14": 28.91835149570285,
+    "rsi14": 28.918374743304696,
     "atr14": 192.43681428571426,
     "atr14_pct": 14.061290256952653,
     "high_52w": 22704.5659,
@@ -59,23 +59,9 @@
     "low_5d": 1203.9745
   },
   "setup_type": "Long in mixed structure",
-  "path_analytics": {
-    "mfe_R": 2399.2632352941123,
-    "mfe_date": "2026-05-19",
-    "mae_R": -1878.1282352941134,
-    "mae_date": "2026-05-18",
-    "optimal_exit_price": 1641.379,
-    "optimal_exit_date": "2026-05-19",
-    "optimal_R": 2399.2632352941123,
-    "days_to_optimal": 2,
-    "realized_R": 1.49753187316116,
-    "capture_pct": 0.0624163222747664,
-    "missed_R": 2397.765703420951,
-    "post_exit_R": 2024.2207352941132,
-    "hold_calendar_days": 2
-  },
-  "lesson": "Premature trim",
-  "narrative": "Entered **SOXS** long on 2026-05-17 at $9.88 (qty 15295) with stop $9.20 (1R = $0.68/sh = $10,401). Setup: **Long in mixed structure** \u2014 price below MA20 ($1854.74), RSI 29, 1% through 52W range, ATR 14.1% of price. Realized **+1.50R**, peak was **+2399.26R** on 2026-05-19 (day +2) \u2014 captured **0%** of the move. **Lesson: Premature trim.**",
+  "path_analytics": {},
+  "lesson": "Insufficient data",
+  "narrative": "Entered **SOXS** long on 2026-05-17 at $9.88 (qty 15295) with stop $9.20 (1R = $0.68/sh = $10,401). Setup: **Long in mixed structure** \u2014 price below MA20 ($1854.74), RSI 29, 1% through 52W range, ATR 14.1% of price.  **Lesson: Insufficient data.**",
   "ohlc_window": [
     {
       "date": "2026-04-17",

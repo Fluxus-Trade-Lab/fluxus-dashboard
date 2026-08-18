@@ -1,6 +1,6 @@
 {
   "trade_id": "ONDS_2026-05-29_000",
-  "generated_at": "2026-08-17T03:51:14+00:00",
+  "generated_at": "2026-08-18T03:59:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ONDS",
@@ -33,15 +33,15 @@
     "high": 13.41,
     "low": 11.6,
     "volume": 142374000.0,
-    "ma20": 9.964250000000002,
-    "ma50": 9.9281,
-    "ma200": 8.8995,
-    "rsi14": 68.56336629636672,
+    "ma20": 9.96425,
+    "ma50": 9.928099999999999,
+    "ma200": null,
+    "rsi14": 68.5633661741106,
     "atr14": 1.2403571428571425,
     "atr14_pct": 9.38242921979684,
     "high_52w": 15.28,
-    "low_52w": 3.085,
-    "position_in_52w_range_pct": 83.1078310783108,
+    "low_52w": 3.2,
+    "position_in_52w_range_pct": 82.94701986754967,
     "high_20d": 13.78,
     "low_10d": 8.97,
     "low_5d": 9.06
@@ -63,7 +63,7 @@
     "hold_calendar_days": 4
   },
   "lesson": "Premature trim",
-  "narrative": "Entered **ONDS** long on 2026-05-29 at $12.15 (qty 4593) with stop $11.80 (1R = $0.35/sh = $1,608). Setup: **Long in mixed structure** \u2014 price above MA20 ($9.96), MA20 > MA50 > MA200 (golden alignment), RSI 69, 83% through 52W range, ATR 9.4% of price. Realized **+2.80R**, peak was **+5.74R** on 2026-06-02 (day +4) \u2014 captured **49%** of the move. **Lesson: Premature trim.**",
+  "narrative": "Entered **ONDS** long on 2026-05-29 at $12.15 (qty 4593) with stop $11.80 (1R = $0.35/sh = $1,608). Setup: **Long in mixed structure** \u2014 price above MA20 ($9.96), RSI 69, 83% through 52W range, ATR 9.4% of price. Realized **+2.80R**, peak was **+5.74R** on 2026-06-02 (day +4) \u2014 captured **49%** of the move. **Lesson: Premature trim.**",
   "ohlc_window": [
     {
       "date": "2026-04-29",

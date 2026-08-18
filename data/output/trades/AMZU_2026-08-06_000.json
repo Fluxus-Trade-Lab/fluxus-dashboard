@@ -1,6 +1,6 @@
 {
   "trade_id": "AMZU_2026-08-06_000",
-  "generated_at": "2026-08-17T03:51:15+00:00",
+  "generated_at": "2026-08-18T03:59:16+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "AMZU",
@@ -40,9 +40,9 @@
     "low": 41.44,
     "volume": 1572200.0,
     "ma20": 36.179500000000004,
-    "ma50": 35.921914,
-    "ma200": 34.865183,
-    "rsi14": 61.36371437470778,
+    "ma50": 35.921913999999994,
+    "ma200": 34.8651815,
+    "rsi14": 61.363714432471575,
     "atr14": 2.8021428571428584,
     "atr14_pct": 6.708505762850988,
     "high_52w": 46.8873,
@@ -54,22 +54,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 2.3958333333333606,
-    "mfe_date": "2026-08-07",
+    "mfe_R": 3.5604166666666965,
+    "mfe_date": "2026-08-10",
     "mae_R": 2.166666666666679,
     "mae_date": "2026-08-06",
-    "optimal_exit_price": 43.63,
-    "optimal_exit_date": "2026-08-07",
-    "optimal_R": 2.3958333333333606,
-    "days_to_optimal": 1,
+    "optimal_exit_price": 44.189,
+    "optimal_exit_date": "2026-08-10",
+    "optimal_R": 3.5604166666666965,
+    "days_to_optimal": 4,
     "realized_R": -0.30879298886857964,
-    "capture_pct": -12.888750839731875,
-    "missed_R": 2.70462632220194,
-    "post_exit_R": null,
+    "capture_pct": -8.672945269567991,
+    "missed_R": 3.8692096555352764,
+    "post_exit_R": -1.0,
     "hold_calendar_days": 5
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **AMZU** long on 2026-08-06 at $42.48 (qty 6019) with stop $42.00 (1R = $0.48/sh = $2,889). Setup: **Long in mixed structure** \u2014 price above MA20 ($36.18), MA20 > MA50 > MA200 (golden alignment), RSI 61, 77% through 52W range, ATR 6.7% of price. Realized **-0.31R**, peak was **+2.40R** on 2026-08-07 (day +1) \u2014 captured **-13%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **AMZU** long on 2026-08-06 at $42.48 (qty 6019) with stop $42.00 (1R = $0.48/sh = $2,889). Setup: **Long in mixed structure** \u2014 price above MA20 ($36.18), MA20 > MA50 > MA200 (golden alignment), RSI 61, 77% through 52W range, ATR 6.7% of price. Realized **-0.31R**, peak was **+3.56R** on 2026-08-10 (day +4) \u2014 captured **-9%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-07-07",
@@ -261,7 +261,55 @@
       "high": 43.63,
       "low": 41.88,
       "close": 42.43,
-      "volume": 1697700.0
+      "volume": 1704300.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 42.47,
+      "high": 44.189,
+      "low": 42.18,
+      "close": 43.54,
+      "volume": 2045200.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 43.72,
+      "high": 43.72,
+      "low": 41.44,
+      "close": 41.7,
+      "volume": 2025700.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 42.0,
+      "high": 42.0,
+      "low": 40.13,
+      "close": 40.19,
+      "volume": 2592900.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 40.13,
+      "high": 40.85,
+      "low": 39.423,
+      "close": 39.52,
+      "volume": 2146700.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 39.43,
+      "high": 39.7,
+      "low": 38.71,
+      "close": 38.77,
+      "volume": 1669500.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 39.55,
+      "high": 39.65,
+      "low": 37.48,
+      "close": 38.35,
+      "volume": 2550881.0
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "trade_id": "FLY_2026-06-01_000",
-  "generated_at": "2026-08-17T03:51:14+00:00",
+  "generated_at": "2026-08-18T03:59:15+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "FLY",
@@ -35,18 +35,18 @@
     "volume": 16244800.0,
     "ma20": 42.5145,
     "ma50": 37.3852,
-    "ma200": 30.3821,
-    "rsi14": 52.30943422596732,
+    "ma200": null,
+    "rsi14": 52.30949827115577,
     "atr14": 5.95557142857143,
     "atr14_pct": 13.461960733660556,
-    "high_52w": 73.8,
+    "high_52w": 62.17,
     "low_52w": 16.0,
-    "position_in_52w_range_pct": 48.85813148788928,
+    "position_in_52w_range_pct": 61.16525882607754,
     "high_20d": 62.17,
     "low_10d": 39.11,
     "low_5d": 39.75
   },
-  "setup_type": "Pullback in uptrend",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": 0.41228070175438475,
     "mfe_date": "2026-06-02",
@@ -63,7 +63,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **FLY** long on 2026-06-01 at $44.56 (qty 1661) with stop $40.00 (1R = $4.56/sh = $7,574). Setup: **Pullback in uptrend** \u2014 price above MA20 ($42.51), MA20 > MA50 > MA200 (golden alignment), RSI 52, 49% through 52W range, ATR 13.5% of price. Realized **-0.54R**, peak was **+0.41R** on 2026-06-02 (day +1) \u2014 captured **-130%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **FLY** long on 2026-06-01 at $44.56 (qty 1661) with stop $40.00 (1R = $4.56/sh = $7,574). Setup: **Long in mixed structure** \u2014 price above MA20 ($42.51), RSI 52, 61% through 52W range, ATR 13.5% of price. Realized **-0.54R**, peak was **+0.41R** on 2026-06-02 (day +1) \u2014 captured **-130%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-05-04",
