@@ -376,8 +376,8 @@ export default function GroupsPage() {
           later — Leading → Weakening from above 40% extended ran +3.1% at 21 days and
           −4.1% at 63 (n=31). So it reads &ldquo;don&rsquo;t add here, take some off
           over the next month or two&rdquo;, never &ldquo;sell now&rdquo;. The notch
-          marks members past 7 ATR; <span className="font-mono">n/m</span> is a proxy
-          theme with no members to measure, which is not the same as 0%.
+          marks members past 7 ATR; <span className="font-mono">n/m</span> is a group with
+          no members to measure, which is not the same as 0%.
         </p>
       </Reference>
 
@@ -419,8 +419,7 @@ export default function GroupsPage() {
         <p>
           <b>A dashed name did not clear its own construction test.</b> Most groups are
           either validated — the market agrees their members co-move — or definitional, a
-          factor or sector slice that never claimed co-movement in the first place; a
-          single-fund proxy is exact by construction and has nothing to validate. The few
+          factor or sector slice that never claimed co-movement in the first place. The few
           that are neither are on this page because they were asked for, not because they
           passed, and their names carry a dashed underline with the raw verdict in the
           tooltip. The full table prints that verdict as a column.
@@ -442,7 +441,9 @@ export default function GroupsPage() {
               though that instance of it was not. */}
           <b className="text-[var(--color-text-bold)]">{themes.length}</b> published,{' '}
           <b className="text-[var(--color-text-bold)]">{provisional.length}</b> provisional
-          {' '}&mdash; withheld because the market has not shown their members co-moving.
+          {provisional.length > 0
+            ? <> &mdash; withheld because the market has not shown their members co-moving.</>
+            : '.'}
           {summary && (summary.publishable_themes !== themes.length
                     || summary.provisional_themes !== provisional.length) && (
             <> The file&rsquo;s own summary says {summary.publishable_themes} and{' '}

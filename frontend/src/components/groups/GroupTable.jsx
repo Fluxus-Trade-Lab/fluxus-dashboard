@@ -18,8 +18,8 @@ const COLS = [
      provenance nobody disputes and wrong for a group that is on the page
      without having cleared its own test — `weak` and `too few in panel` are
      published exceptions and this is the reference table, which has the room
-     to say so in words. A proxy has nothing to validate and prints a dash
-     rather than a verdict it was never given. */
+     to say so in words. A row with no verdict at all prints "not stated" —
+     which is what it is, and is not the same as a pass. */
   { key: 'validation', label: 'Validated', align: 'left' },
 ]
 
@@ -100,9 +100,9 @@ export default function GroupTable({ rows, showMethod = false, emptyNote }) {
               <td className="px-2 py-1.5"><Axis v={r.excess_3m} range={0.7} /></td>
               <td className="px-2 py-1.5"><Axis v={r.rs_accel} range={0.6} /></td>
               {/* Drawn, not printed. The denominator varies — a group scored
-                  against its cohort gets 5 windows, a proxy benchmarked against
-                  SPY gets 3 — so it is carried by the empty marks rather than by
-                  a slash, and two different scales cannot read as one. */}
+                  against its cohort gets 5 windows, one benchmarked against SPY
+                  gets 3 — so it is carried by the empty marks rather than by a
+                  slash, and two different scales cannot read as one. */}
               <td className="px-2 py-1.5 text-right whitespace-nowrap">
                 <Squares n={r.persistence} of={r.persistence_of ?? 5}
                   title={r.persistence_of
@@ -113,16 +113,16 @@ export default function GroupTable({ rows, showMethod = false, emptyNote }) {
               <td className="px-2 py-1.5"><StateBadge state={r.state} /></td>
               {/* The verdict, in the pipeline's own word. `real` cleared the
                   co-movement test; `definitional` never claimed co-movement, so
-                  there was nothing to clear; a null is a single-fund proxy,
-                  exact by construction and never given a verdict — a dash, not
-                  a pass. Anything else is published without clearing, and it is
+                  there was nothing to clear; a missing verdict says "not
+                  stated", which is not a pass. Anything else is published
+                  without clearing, and it is
                   the one value here that changes how a row should be read, so
                   it is the only one that takes ink. */}
               <td className="px-2 py-1.5 whitespace-nowrap text-[11px]">
                 {r.validation == null ? (
                   <span className="text-[var(--color-text-muted)]"
-                        title="a single fund standing in for the whole thing — nothing to validate">
-                    &mdash;
+                        title="the payload carried no verdict for this group">
+                    not stated
                   </span>
                 ) : r.validation === 'real' || r.validation === 'definitional' ? (
                   <span className="text-[var(--color-text-muted)]">{r.validation}</span>
@@ -164,9 +164,11 @@ export default function GroupTable({ rows, showMethod = false, emptyNote }) {
  * Steve's >= 7 ATR ladder is a SINGLE-STOCK rule. At group level the same
  * number says something different: the move is already in the price.
  *
- * Sixteen proxy themes carry no members to measure, so they read NOT MEASURED
- * rather than 0% — an ETF proxy with nothing extended and an ETF proxy with
- * nothing measurable are not the same row.
+ * A group with no members to measure reads NOT MEASURED rather than 0% — one
+ * with nothing extended and one with nothing measurable are not the same row.
+ * The sixteen single-fund proxies this was written for were deleted upstream on
+ * 2026-08-18; the distinction outlives them, because Quantum Computing is now
+ * published by override with measurable=false.
  */
 function Extension({ row }) {
   const v = row.ext_share_4

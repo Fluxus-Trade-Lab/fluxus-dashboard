@@ -121,12 +121,13 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
     // axis padded to round numbers would be a scale nobody measured.
     const ax = Math.max(...ok.map((r) => Math.abs(r.excess_3m)))
     const ay = Math.max(...ok.map((r) => Math.abs(r.rs_accel)))
-    // `kind` is the pipeline's own word for this (2026-08-18); it used to be
-    // inferred from members === 1, which happened to agree on all 75 rows and
-    // was still a guess standing in for a field.
-    const by = (k) => ok.filter((r) => r.kind === k).length
-    return { ok, ax, ay, names: labelled(ok),
-             mix: { theme: by('theme'), sector: by('sector'), factor: by('factor'), proxy: by('proxy') } }
+    // `kind` is the pipeline's own word for this. The proxy kind was deleted
+    // upstream on 2026-08-18 with the sixteen single-fund groups it described,
+    // so the mix is counted rather than enumerated — a kind that appears or
+    // disappears changes the sentence instead of breaking it.
+    const mix = new Map()
+    ok.forEach((r) => mix.set(r.kind ?? 'unclassified', (mix.get(r.kind ?? 'unclassified') ?? 0) + 1))
+    return { ok, ax, ay, names: labelled(ok), mix }
   }, [rows])
 
   if (!plot) {
@@ -138,6 +139,12 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
   }
 
   const { ok, ax, ay, names, mix } = plot
+  const KIND_WORD = { theme: 'theses', sector: 'sectors', factor: 'factors',
+                      proxy: 'single-fund proxies', unclassified: 'unclassified groups' }
+  const mixPhrase = [...mix.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .map(([k, n]) => `${n} ${KIND_WORD[k] ?? k}`)
+    .join(', ')
   const W = 1000, H = 560, PAD = { t: 26, r: 26, b: 34, l: 34 }
   const x = (v) => PAD.l + ((v / ax + 1) / 2) * (W - PAD.l - PAD.r)
   const y = (v) => PAD.t + ((1 - v / ay) / 2) * (H - PAD.t - PAD.b)
@@ -225,7 +232,7 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
                onClick={() => onToggle?.(r.group)}
                style={{ cursor: !c && atLimit ? 'not-allowed' : 'pointer' }}>
               <title>
-                {`${r.group} · ${r.state} · ${r.members === 1 ? '1 fund' : `${r.members} names`}`
+                {`${r.group} · ${r.state} · ${r.members} name${r.members === 1 ? '' : 's'}`
                  + `\nquarter vs SPY ${pct(r.excess_3m)} · acceleration ${pct(r.rs_accel)}`
                  + `\nleads on ${r.persistence ?? 0} of ${r.persistence_of ?? 5} horizons`}
               </title>
@@ -274,11 +281,12 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
         the ones leading on 3 or more horizons, plus the three fastest accelerators inside
         Improving{dropped > 0 ? `, less ${dropped} whose name had no room beside its dot` : ''};
         the rest name themselves on hover.
-        {' '}<b className="text-[var(--color-text-secondary)]">Not everything here is a
-        theme.</b> This field holds {mix.theme} theses, {mix.sector} sectors, {mix.factor} factors
-        and {mix.proxy} single-fund proxies, and a dot does not say which &mdash; the ranking
-        below separates them. A factor is a slice of the whole market and a proxy carries no
-        members to check, so neither reads like a thesis even when it plots beside one.
+        {mix.size > 1 && (
+          <> {' '}<b className="text-[var(--color-text-secondary)]">Not everything here is a
+          theme.</b> This field holds {mixPhrase}, and a dot does not say which &mdash; the
+          ranking below separates them. A factor is a slice of the whole market rather than a
+          thesis, and it plots beside one without reading like one.</>
+        )}
       </p>
     </div>
   )

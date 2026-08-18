@@ -115,7 +115,6 @@ const NEIGHBOURS = 1
  *   real         the market agrees its members co-move — the test cleared
  *   definitional a factor or sector grouping that never claimed co-movement,
  *                so there is nothing for the test to clear
- *   null         a single-fund proxy: exact by construction
  *
  * Everything else — today `weak` and `too few in panel` — is a group that is on
  * the page BECAUSE ANDY ASKED FOR IT, not because it passed. Rare Earth Metals
@@ -127,13 +126,30 @@ const NEIGHBOURS = 1
  * pipeline invents should show up as a mark, not disappear into the pass set.
  */
 const CLEARS = new Set(['real', 'definitional'])
-const unproven = (r) => r.validation != null && !CLEARS.has(r.validation)
+/**
+ * `measurable: false` belongs in here too. Quantum Computing ships with it and
+ * an override that publishes it anyway (2026-08-18) — four names, and the
+ * pipeline saying it could not measure the group — while carrying a full set of
+ * excess and acceleration numbers, so it plots and ranks exactly like the
+ * fifty-five that were measured. Both cases mean the same thing to a reader:
+ * this row is here because it was asked for, not because its construction
+ * stood up.
+ */
+const unproven = (r) => r.measurable === false
+  || (r.validation != null && !CLEARS.has(r.validation))
+const whyUnproven = (r) => r.measurable === false
+  ? `the pipeline could not measure this group${r.validation ? `; validation: ${r.validation}` : ''}`
+  : `published without clearing validation: ${r.validation}`
 
+/* The proxy kind is gone (47b4fc6): sixteen single-fund groups — Biotech=XBI,
+   China Tech=KWEB and the rest — were deleted upstream at Andy's call, so a
+   whole taxonomy of one-ETF stand-ins no longer exists to separate out. If one
+   ever returns it lands under "Unclassified" rather than vanishing, which is
+   the reason that fallback is there. */
 const KINDS = [
   { key: 'theme',  label: 'Themes',   note: 'a thesis, with members chosen for it' },
   { key: 'sector', label: 'Sectors',  note: 'macro-driven, not a thesis' },
   { key: 'factor', label: 'Factors',  note: 'size, beta, growth — a slice of the whole market' },
-  { key: 'proxy',  label: 'Proxies',  note: 'one fund standing in for the whole thing' },
 ]
 
 export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, dim,
@@ -260,7 +276,7 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
                 the width, because a name and a bar cannot share half a row —
                 at 390px the names truncated to 71px, which is not a ranking. */}
             <span className="sm:hidden block text-[12px] truncate pb-[1px]"
-                  title={unproven(r) ? `published without clearing validation: ${r.validation}` : undefined}
+                  title={unproven(r) ? whyUnproven(r) : undefined}
                   style={{ ...(colour ? { color: colour, fontWeight: 600 } : {}),
                            ...(unproven(r) ? { textDecoration: 'underline',
                                                textDecorationStyle: 'dashed',
@@ -296,8 +312,8 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
                              ...(unproven(r) ? { textDecoration: 'underline',
                                                  textDecorationStyle: 'dashed',
                                                  textUnderlineOffset: '3px' } : {}) }}
-                    title={`${r.members} member${r.members === 1 ? '' : 's'}`
-                           + (unproven(r) ? ` · published without clearing validation: ${r.validation}` : '')
+                    title={`${r.members} name${r.members === 1 ? '' : 's'}`
+                           + (unproven(r) ? ` · ${whyUnproven(r)}` : '')
                            + (r.tickers?.length ? ' · ' + r.tickers.join(' · ') : '')}>
                 {r.group}
               </span>

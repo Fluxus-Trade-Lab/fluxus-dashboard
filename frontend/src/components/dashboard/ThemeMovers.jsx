@@ -15,11 +15,13 @@ import StateBadge from '../groups/StateBadge'
  * on this page a theme and a sector answer the same question at two grains, and
  * two shapes for one question would claim a difference that is not there.
  *
- * ONE THING THE SECTOR CARD DOES NOT HAVE TO SAY. Three of the published
- * themes have `members == 1`: they are one ETF standing in for a whole theme
- * (Biotech = XBI, Taiwan = EWT, Healthcare = XLV). Ranked silently beside a
- * 286-name basket, a fund's move reads as a theme's move. The member count
- * carries that, and a single-fund row says "1 fund" rather than "1 name".
+ * THE MEMBER COUNT IS PRINTED, and it used to carry more than a count. Sixteen
+ * published themes were a single ETF standing in for a whole market — Biotech =
+ * XBI, China Tech = KWEB — and ranked silently beside a 286-name basket a
+ * fund's move read as a theme's move, so those rows said "1 fund" instead of
+ * "1 name". All sixteen were deleted upstream on 2026-08-18 and no published
+ * theme has one member any more. The count stays because basket size is worth
+ * seeing either way; the special case is gone with the rows it described.
  */
 
 const WINDOWS = { '1D': 'perf_1d', '1W': 'perf_1w' }
@@ -27,8 +29,6 @@ const WINDOWS = { '1D': 'perf_1d', '1W': 'perf_1w' }
 function Row({ theme, changeKey }) {
   const change = theme[changeKey]
   const ok = Number.isFinite(change)
-  const proxy = theme.members === 1
-
   return (
     <div className="h-[34px] flex items-center gap-2.5">
       <span className="min-w-0 flex-1">
@@ -38,11 +38,8 @@ function Row({ theme, changeKey }) {
         </span>
         <span className="flex items-center gap-2 text-[10px] leading-[13px]
                          text-[var(--color-text-muted)]">
-          {/* the second channel on the proxy problem: not a colour, a noun */}
-          <span title={proxy
-            ? 'One fund standing in for the whole theme — its reading is the fund’s, exact by construction but not a basket'
-            : `${theme.members} names in this basket`}>
-            {proxy ? '1 fund' : `${theme.members} names`}
+          <span title={`${theme.members} name${theme.members === 1 ? '' : 's'} in this basket`}>
+            {theme.members} name{theme.members === 1 ? '' : 's'}
           </span>
           <StateBadge state={theme.state} />
         </span>
@@ -85,6 +82,14 @@ export default function ThemeMovers({ limit = 3 }) {
   }, [themes, limit])
 
   const ranked = cols[0]?.ranked ?? 0
+  /**
+   * Published, and not rankable. Quantum Computing ships with measurable=false
+   * and an override that publishes it anyway (2026-08-18). The filter above
+   * dropped it without a word, which turns "we could not measure this" into
+   * "this is not here" — the exact pair this product keeps apart. Counted, and
+   * named in the line under the card.
+   */
+  const unmeasured = themes.filter((t) => !t.measurable).length
 
   return (
     <div className="flex flex-col min-w-0">
@@ -128,6 +133,8 @@ export default function ThemeMovers({ limit = 3 }) {
                 Top and bottom {limit} of {ranked} published themes, ranked on each window
                 separately. Provisional themes — the ones whose members have not been shown
                 to co-move — are not ranked here.
+                {unmeasured > 0 && ` ${unmeasured} more ${unmeasured === 1 ? 'is' : 'are'} published
+                  without a measurable reading and cannot be ranked at all.`}
               </p>
             </>
           )}
