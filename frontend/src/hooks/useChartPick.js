@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useSyncExternalStore } from 'react'
 import { useWatchlist } from './useWatchlist'
 
 const KEY = 'page3-chart-pick'
@@ -19,23 +19,48 @@ const KEY = 'page3-chart-pick'
  * first row is taken as the first row. Re-sorting here to pick a "better"
  * default would be this page inventing a ranking the pipeline did not ship.
  *
- * A STORED PICK THAT FELL OFF THE SCREEN IS NOT SILENTLY KEPT. Yesterday's
- * name may not qualify today, and quietly charting it would make a dropped
- * name look like a current one. The hook reports `stale` so the card can say
- * so, and shows the default instead.
+ * ONE STORE, NOT ONE PER CALLER. It began as a plain useState hook, which was
+ * fine while the chart card was its only reader and wrong the moment the
+ * Screener's table started charting a name on click: the table set its own
+ * copy, the card kept drawing the old symbol, and clicking a row appeared to
+ * do nothing. This is the second time that exact shape has bitten in this
+ * round — the shortlist did it first — so it is worth naming plainly. Two
+ * components holding two states over one fact is the defect this codebase
+ * chases out of its colour encodings, and localStorage is the persistence,
+ * never the channel between two live components.
+ *
+ * A PICK IS ANY SYMBOL, NOT A MEMBER OF THE SCREEN. This started life gating
+ * the pick on membership of True Market Leaders, which was harmless while the
+ * chip strip was the only way to choose and became a real bug the moment the
+ * Screener's table started charting a row on click: most names in that table
+ * are not among the 27, so the pick was accepted, stored, and then silently
+ * discarded in favour of the default. Clicking a row looked like it did
+ * nothing. The screen decides the DEFAULT; it does not decide what you are
+ * allowed to look at.
  */
+function read() {
+  try { return localStorage.getItem(KEY) || null } catch { return null }
+}
+
+let snapshot = read()
+const subs = new Set()
+
+function commit(next) {
+  snapshot = next
+  try {
+    if (next) localStorage.setItem(KEY, next)
+    else localStorage.removeItem(KEY)
+  } catch { /* private mode — the pick just does not survive the reload */ }
+  subs.forEach((fn) => fn())
+}
+
+const subscribe = (fn) => { subs.add(fn); return () => subs.delete(fn) }
+const getSnapshot = () => snapshot
+const getServerSnapshot = () => null
+
 export function useChartPick() {
   const { data } = useWatchlist()
-  const [pick, setPick] = useState(() => {
-    try { return localStorage.getItem(KEY) || null } catch { return null }
-  })
-
-  useEffect(() => {
-    try {
-      if (pick) localStorage.setItem(KEY, pick)
-      else localStorage.removeItem(KEY)
-    } catch { /* private mode — the pick just does not survive the reload */ }
-  }, [pick])
+  const pick = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 
   const panel = data?.zones
     ?.find((z) => z.key === 'leaders')
@@ -43,20 +68,17 @@ export function useChartPick() {
 
   const names = panel?.measured ? (panel.tickers ?? []) : []
   const fallback = names[0]?.ticker ?? null
-  const onScreen = pick != null && names.some((n) => n.ticker === pick)
-  const symbol = onScreen ? pick : fallback
+  const symbol = pick ?? fallback
 
   return {
-    /** the symbol the chart should draw, or null when the panel is unmeasured */
+    /** the symbol the chart should draw, or null when nothing is picked and the panel is unmeasured */
     symbol,
     /** true while nothing has been picked — the card says so rather than implying a choice */
-    isDefault: !onScreen,
-    /** a pick that no longer qualifies for the screen; the card names it */
-    stale: pick != null && !onScreen ? pick : null,
+    isDefault: !pick,
     /** today's screen, in the file's own order */
     names,
     panel,
-    pick: useCallback((t) => setPick((cur) => (cur === t ? null : t)), []),
-    clear: useCallback(() => setPick(null), []),
+    pick: useCallback((t) => commit(snapshot === t ? null : t), []),
+    clear: useCallback(() => commit(null), []),
   }
 }

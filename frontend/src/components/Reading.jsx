@@ -10,6 +10,18 @@
  * "Trade full size" is an instruction, it needs an R and a ceiling, and those
  * are personal — so it lives behind an account, not on a market page.
  *
+ * MEASURE, 2026-08-18 (Andy: 最多两行，可以向右多延伸一些). It ran at 68ch —
+ * a body measure — and the Screener's line, which names every theme in the
+ * filter, took three lines and pushed the page down. It is one sentence at
+ * display size, not a paragraph, so the 65–75ch reading-comfort rule is the
+ * wrong rule for it: nobody tracks back to a second line here more than once.
+ *
+ * It is widened rather than CLAMPED. `line-clamp-2` would have held the two
+ * lines by hiding the end of a computed sentence, and a reading whose last
+ * clause is cut is the same failure as a silently truncated list. Width is the
+ * honest lever; if a sentence is ever long enough to need a third line it gets
+ * one, whole.
+ *
  * And it is computed, never typed. A sentence written by hand is a sentence that
  * goes stale, which is exactly how the Briefing page ended up serving March in
  * August. Every clause here is produced by a rule that points at a count, and
@@ -19,7 +31,7 @@
 export default function Reading({ text }) {
   if (!text) return null
   return (
-    <div className="pl-4 border-l-2 border-[var(--color-text)] max-w-[68ch] mb-4">
+    <div className="pl-4 border-l-2 border-[var(--color-text)] max-w-[108ch] mb-4">
       <p className="text-[17px] leading-[1.45] text-[var(--color-text)] m-0">{text}</p>
     </div>
   )

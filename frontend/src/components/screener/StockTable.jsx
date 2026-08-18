@@ -32,8 +32,15 @@ import { useLanguage } from '../../i18n/LanguageContext'
  *               — a different measurement from 5d/50d and labelled as such,
  *               not a stand-in for it.
  *
- * Rows navigate to the ticker page; the caret expands evidence in place and
- * must not navigate, hence stopPropagation.
+ * Rows CHART the name in the card above (Andy, 2026-08-18); the caret expands
+ * evidence in place and must not do either, hence stopPropagation.
+ *
+ * The row click used to leave for the tear-sheet, which is the wrong trade on
+ * this page: you are running down a list deciding what is worth a look, and
+ * every look cost you the list. Charting in place keeps the list under your
+ * hand and the chart is already at the top of the page. The tear-sheet is
+ * still one click away — the ticker itself is a link to it — so the two
+ * gestures are separate targets rather than one gesture doing both.
  */
 
 const HEAD = 25
@@ -198,7 +205,7 @@ function SortTh({ k, sort, onSort, align = 'right', title, children }) {
   )
 }
 
-export default function StockTable({ rows, defaultSort = 'rs3' }) {
+export default function StockTable({ rows, defaultSort = 'rs3', onChart }) {
   const { t: tr } = useLanguage()
   const [shown, setShown] = useState(HEAD)
   const [open, setOpen] = useState(() => new Set())
@@ -273,7 +280,8 @@ export default function StockTable({ rows, defaultSort = 'rs3' }) {
         </thead>
         <tbody>
           {visible.map((r, i) => (
-            <RowPair key={r.ticker} r={r} i={i} open={open.has(r.ticker)} onToggle={toggle} />
+            <RowPair key={r.ticker} r={r} i={i} open={open.has(r.ticker)} onToggle={toggle}
+                     onChart={onChart} />
           ))}
         </tbody>
       </table>
@@ -288,25 +296,33 @@ export default function StockTable({ rows, defaultSort = 'rs3' }) {
   )
 }
 
-function RowPair({ r, i, open, onToggle }) {
+function RowPair({ r, i, open, onToggle, onChart }) {
   const { t: tr } = useLanguage()
   const hasEvidence = Boolean(r.heat) || r.indPct != null || r.perf1w != null
   return (
     <>
       <tr tabIndex={0}
-          onClick={() => { window.location.hash = tickerHref(r.ticker) }}
+          onClick={() => onChart?.(r.ticker)}
           // Enter on the row only — the caret button's keydown bubbles here,
-          // and expanding evidence must not also navigate away
+          // and expanding evidence must not also fire the row
           onKeyDown={(e) => {
-            if (e.key === 'Enter' && e.target === e.currentTarget) {
-              window.location.hash = tickerHref(r.ticker)
-            }
+            if (e.key === 'Enter' && e.target === e.currentTarget) onChart?.(r.ticker)
           }}
+          aria-label={`Chart ${r.ticker}`}
           className={`group border-t border-[var(--color-border-light)] cursor-pointer
                       hover:bg-[var(--color-hover-bg)] outline-none focus-visible:ring-1
                       ${r.inUniverse ? '' : 'opacity-45'}`}>
         <td className="py-[4px] pr-2.5 text-right tabular-nums text-[var(--color-text-muted)]">{i + 1}</td>
-        <td className="py-[4px] pr-2.5 font-mono font-semibold text-[var(--color-text-bold)]">{r.ticker}</td>
+        {/* the ticker keeps the tear-sheet. Two targets in one row, but they
+            are a row and a link — not two buttons competing for the same
+            pixels — and the link is the thing that already looked like one. */}
+        <td className="py-[4px] pr-2.5 font-mono font-semibold">
+          <a href={tickerHref(r.ticker)} onClick={(e) => e.stopPropagation()}
+             title={`${r.ticker} tear-sheet`}
+             className="text-[var(--color-text-bold)] no-underline hover:underline">
+            {r.ticker}
+          </a>
+        </td>
         <HeatCell heat={r.heat} />
         <AlignDots rs3={r.rs3} indState={r.indState} indName={r.ind} />
         <td className="py-[4px] pr-2.5 text-[10px]">

@@ -122,7 +122,28 @@ export default function TickerChart({ symbol, height = 520, interval = 'D' }) {
       hide_top_toolbar: false,
       hide_side_toolbar: true,
       allow_symbol_change: false,
-      studies: ['MASimple@tv-basicstudies', 'RSI@tv-basicstudies'],
+      /**
+       * Andy's overlay set, 2026-08-18: 10 EMA, 21 EMA, 50 SMA. RSI is gone —
+       * a second pane taking a third of the height to say something the price
+       * and the averages already position you for.
+       *
+       * OBJECT FORM, AND IT IS LOAD-BEARING. `studies_overrides` is keyed by
+       * study TYPE rather than by instance, so it cannot give two exponential
+       * averages two different lengths — both would come out the same. Each
+       * study carrying its own `inputs` is the only form that expresses 10 and
+       * 21 at once, and it is confirmed working on the live chart.
+       *
+       * Do not "fix" this into strings plus overrides. That swap was made once,
+       * on 2026-08-18, off a screenshot that predated this block — the legend
+       * in it read "MA 9 close", which was the OLD config, not evidence against
+       * this one. Verified by Andy's eye on the legend; the chart is a
+       * cross-origin iframe, so no probe on this side can read it back.
+       */
+      studies: [
+        { id: 'MAExp@tv-basicstudies', inputs: { length: 10 } },
+        { id: 'MAExp@tv-basicstudies', inputs: { length: 21 } },
+        { id: 'MASimple@tv-basicstudies', inputs: { length: 50 } },
+      ],
       support_host: 'https://www.tradingview.com',
     })
     container.appendChild(script)

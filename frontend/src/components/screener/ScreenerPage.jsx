@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react'
 import PageHeader from '../PageHeader'
 import PickedChart from '../ticker/PickedChart'
 import { useThemeHandoff } from '../../hooks/useThemeHandoff'
+import { useChartPick } from '../../hooks/useChartPick'
 import ShortlistTray from '../shared/ShortlistTray'
 import Reading, { readScreener } from '../Reading'
 import { useHeatingUp } from '../../hooks/useHeatingUp'
@@ -112,6 +113,8 @@ export default function ScreenerPage() {
    * predicate.
    */
   const handoff = useThemeHandoff(themes, setThemes)
+  /** the row click's destination: the chart card at the top of this page */
+  const { pick: chartPick, symbol: charted } = useChartPick()
 
   // A persisted theme the taxonomy no longer publishes must be cleared, not
   // kept: with the name held but the lookup failing, no rows are filtered while
@@ -427,7 +430,8 @@ export default function ScreenerPage() {
         // key: normalized search only — a trailing space changes nothing
         // about the row set and must not remount the table
         <StockTable key={`${scan}|${[...states].join()}|${[...themes].join()}|${search.trim().toUpperCase()}`}
-                    rows={rows} defaultSort={scan === 'confluence' ? 'heat' : 'rs3'} />
+                    rows={rows} defaultSort={scan === 'confluence' ? 'heat' : 'rs3'}
+                    onChart={(t) => { if (t !== charted) chartPick(t) }} />
       ) : (
         <p className="m-0 py-8 text-center text-[12.5px] text-[var(--color-text-muted)]">
           {!activeScan.loaded
@@ -457,7 +461,7 @@ export default function ScreenerPage() {
           not lived through yet — never a zero. <b>Vol 5d/50d</b> is the
           five-day average volume over the fifty-day; names younger than fifty
           sessions print a dash because their fifty-day average does not exist.
-          Click a row for the full tear-sheet.
+          <b>Click a row to chart it</b> in the card at the top of the page; click the ticker itself for the full tear-sheet.
         </p>
       </HowToRead>
     </div>
