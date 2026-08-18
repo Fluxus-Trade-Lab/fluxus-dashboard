@@ -29,14 +29,23 @@ related_targets: ["frontend/src/components/groups","frontend/src/components/scre
 3. **第 3 页必须能回答「这只票是自己在动,还是它整片在动」** —— 板块共振是加分项,
    所以它必须是第 3 页上可见的一列/一个记号,不是要跳回第 2 页才能知道的事。
 
-## 新引入的能力(此前不在产品里)
+## 图表:用 TradingView widget(Andy 2026-08-18 定)
 
-**TradingView 图表进第 3 页**,月 / 周 / 日三个级别。这是新增依赖,需要单独决定:
-嵌入 widget(免费、有品牌、离线不可用)还是用本地 OHLC 自绘(可控、无外链、要自己做多周期)。
-**未定,待 Andy 拍。**
+**不是新依赖 —— 已经在仓库里。** `frontend/src/components/ticker/TickerChart.jsx` 嵌的就是
+官方 Advanced Chart(`s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js`),
+个股页在用,已处理明暗主题切换与 symbol 变更时的重挂载。
+
+所以第 3 页的做法是**复用这个组件**,不是引入新东西。三条待办:
+
+1. **周期**:现在写死 `interval: 'D'`,签名只收 `{ symbol, height }`。要月/周/日就得把
+   `interval` 提成 prop,并在第 3 页给一个三档切换。
+2. **触发方式**:名字那么多,不可能每个都挂一张图。图应当**按需出现**(选中一个名字才挂载),
+   否则一页几十个 iframe。
+3. **离线**:widget 走外链,断网时是空框 —— 需要一个「图表不可用」的诚实空态,
+   不是白框。站点公开部署,没有 CSP,widget 的外链请求本来就已经在发生了。
 
 ## 状态
 
-- 三页分工:**已定**(上表)。
+- 三页分工:**已定**(上表)。图表方案:**已定**(复用 TickerChart)。
 - 各页内部版式:**未定** —— 下一轮在此简报的约束下做。
 - 短名单托盘、三页之间是否传状态:**未定**。
