@@ -243,6 +243,20 @@ export default function ScreenerPage() {
   }, [preState, states, scan, gates])
 
   const noState = states.size ? preState.filter((r) => !r.state).length : 0
+  /**
+   * Rows the gate did not stop.
+   *
+   * The confluence scan's ticker set comes from the heat ledger, which is not
+   * filtered by `tradeable` — so names outside the gated universe arrive in
+   * the table anyway, join against nothing, and render every measured column
+   * as a dash. The rows themselves are already honest about it (their state
+   * cell reads "not in the universe"), but the line above the table was not:
+   * it said flatly that untradeable names are not in this table while seven of
+   * twenty-five of them were. A gate that reports an exclusion it did not
+   * perform is worse than no note, because the note is what the reader trusts
+   * instead of counting.
+   */
+  const ungated = rows.filter((r) => !r.inUniverse).length
 
   // Numbers only — the selections themselves are already visible as underlines,
   // and restating them here was the duplication Andy flagged.
@@ -325,6 +339,9 @@ export default function ScreenerPage() {
         receipt={receipt}
         gateNote={gated
           ? `${dropped.toLocaleString()} untradeable names are not in this table`
+            + (ungated
+              ? ` — except ${ungated} this scan carried in from the heat ledger, which is not gated. They are marked, and carry no readings.`
+              : '')
           : 'the tradeable column has not shipped yet — this table still includes names you cannot trade'}
         gateOn={gated}
         hiddenNote={noState ? `${noState} rows carry no state and are not shown` : null} />
