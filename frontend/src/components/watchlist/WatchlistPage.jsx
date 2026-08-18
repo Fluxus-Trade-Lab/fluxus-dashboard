@@ -152,24 +152,24 @@ const rsInk = (v, key = 'rs_1m') => {
  * a fixed column — which is the whole reason a table of names reads faster
  * than a paragraph of them.
  */
-function Name({ row, showGroup, rsKey = 'rs_1m' }) {
+function Name({ row, rsKey = 'rs_1m' }) {
   const v = row[rsKey]
-  // The other measure stays reachable without taking a second column.
-  const alt = rsKey === 'rs_1m' ? null
-    : (row.rs_1m != null ? `RS 1M ${row.rs_1m}` : null)
+  // The other measure stays reachable without taking a column.
+  const alt = rsKey !== 'rs_1m' && row.rs_1m != null ? `RS 1M ${row.rs_1m}` : null
   return (
     <span className="flex items-baseline gap-1.5 px-2 py-[3px] min-w-0">
+      {/* THE TICKER NEVER SHRINKS. It carried `truncate` next to a `basis-full`
+          group label, so the label demanded the whole width and the symbol
+          collapsed to "U…" — a watchlist you cannot read the symbols off is not
+          a watchlist. The label is gone now (Andy: the theme beside each name
+          is not needed), which also removes the reason cells ever competed. */}
       <TickerLink symbol={row.ticker}
-                  className="text-[11.5px] font-mono font-semibold
-                             text-[var(--color-text-bold)] truncate" />
+                  className="shrink-0 text-[11.5px] font-mono font-semibold
+                             text-[var(--color-text-bold)]" />
       <span className={`ml-auto text-[10.5px] font-mono tabular-nums ${rsInk(v, rsKey)}`}
             title={alt || undefined}>
         {v ?? '—'}
       </span>
-      {showGroup && row.group && (
-        <span className="text-[10px] text-[var(--color-text-muted)] truncate
-                         basis-full">{row.group}</span>
-      )}
     </span>
   )
 }
@@ -183,13 +183,13 @@ function Name({ row, showGroup, rsKey = 'rs_1m' }) {
  * as the grid went to six. A horizontal hairline is column-count-independent
  * and reads as a table either way.
  */
-function Names({ rows, wide = false, showGroup, rsKey }) {
+function Names({ rows, wide = false, rsKey }) {
   return (
     <span className={`grid ${wide
       ? 'grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 2xl:grid-cols-8'
       : 'grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'}
       [&>*]:border-b [&>*]:border-[var(--color-border-light)]`}>
-      {rows.map((r) => <Name key={r.ticker} row={r} showGroup={showGroup} rsKey={rsKey} />)}
+      {rows.map((r) => <Name key={r.ticker} row={r} rsKey={rsKey} />)}
     </span>
   )
 }
@@ -317,7 +317,7 @@ function ZoneCard({ zone, index, highOnly }) {
 
 /* ── Detail: one question, every name ────────────────────────────────────── */
 
-function Panel({ panel, showGroup, explainPending, rsKey, highOnly }) {
+function Panel({ panel, explainPending, rsKey, highOnly }) {
   const { t } = useLanguage()
   const [openRecipe, setOpenRecipe] = useState(false)
   const rows = shown(panel, highOnly)
@@ -368,7 +368,7 @@ function Panel({ panel, showGroup, explainPending, rsKey, highOnly }) {
 
       {rows.length > 0 ? (
         <div className="-mx-1">
-          <Names rows={rows} wide showGroup={showGroup} rsKey={rsKey} />
+          <Names rows={rows} wide rsKey={rsKey} />
         </div>
       ) : panel.measured ? (
         <p className="text-[11.5px] text-[var(--color-text-muted)] m-0">{t('wl.none')}</p>
@@ -417,8 +417,7 @@ function ZoneDetail({ zone, index, total, highOnly }) {
       </p>
       <div className="rounded-3xl bg-[var(--color-surface)] px-4 py-1">
         {zone.panels.map((p) => (
-          <Panel key={p.key} panel={p} showGroup={zone.key === 'leaders'} rsKey={rsKey}
-                 highOnly={highOnly}
+          <Panel key={p.key} panel={p} rsKey={rsKey} highOnly={highOnly}
                  explainPending={!allPending && p.key === firstPending} />
         ))}
       </div>
