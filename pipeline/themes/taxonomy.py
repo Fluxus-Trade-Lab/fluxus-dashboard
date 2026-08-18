@@ -192,11 +192,9 @@ _INDUSTRY_THEMES: list[Theme] = [
           note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去): SNDK SHMD KOPN IPWR STX AEIS TRT TDY NVEC MRAM ADEA LFUS LAES MBLY GSIT ALMU PENG PDFS ASYS CPSH SNPS MKSI ATOM WDC AOSL CEVA CDNS QUIK SVCO VPG BZAI."),
     Theme("Software", "industry",
           industries=("Software - Application", "Software - Infrastructure")),
-    Theme("Biotech", "proxy", etf=("XBI",)),
     # Split 2026-08-09: "Banks" (344) and "Regional Banks" (324) overlapped
     # 94% -- one theme counted twice. Regionals and money-centre banks trade
     # on different things (NIM/CRE vs capital markets), so separate them.
-    Theme("Banks - Money Center", "industry", industries=("Banks - Diversified",)),
     Theme("Regional Banks", "industry", industries=("Banks - Regional",)),
     Theme("Insurance", "industry",
           industries=("Insurance - Diversified", "Insurance - Property & Casualty",
@@ -282,7 +280,6 @@ _INDUSTRY_THEMES: list[Theme] = [
     # Constituents do not co-move (excess +0.011 on 168 names) and neither
     # theme is traded name-by-name here -- the exposure is taken through the
     # funds, so the funds are what we measure.
-    Theme("Healthcare", "proxy", etf=("XLV",)),
     Theme("Financials", "industry",
           industries=("Asset Management", "Capital Markets", "Financial Data & Stock Exchanges",
                       "Credit Services", "Financial Conglomerates")),
@@ -464,9 +461,6 @@ _ETF_THEMES: list[Theme] = [
                "BITF dropped 2026-08-09: does not resolve."),
     # Was 60% the same names as Crypto Equities. Bitcoin the *asset* and
     # bitcoin *stocks* are different reads -- spot leads, equities amplify.
-    Theme("Bitcoin", "proxy", etf=("IBIT",)),
-    Theme("China Tech", "proxy", etf=("KWEB",),
-          note="The fund is the instrument; its HK holdings are not US-tradeable."),
     Theme("Tech Mega Caps", "etf", etf=("MGK",), exclude=("LLY",),
           note="MGK is a mega-cap GROWTH fund, not a tech fund, so its top "
                "holdings can include growth names that are not technology. "
@@ -518,10 +512,9 @@ _ETF_THEMES: list[Theme] = [
     # basket under a fifty-name label, and the issuer's holdings file is not at
     # any path worth guessing at. Tracking the fund needs no fetch at all, and
     # it re-weights itself whenever the list does.
-    Theme("IBD 50", "proxy", etf=("FFTY",)),
 
     # --- Fluxus additions: TSF has no slot for these ---
-    Theme("Quantum Computing", "etf", source="fluxus", etf=(),
+    Theme("Quantum Computing", "etf", publish_override=True, source="fluxus", etf=(),
           extra=("IONQ", "RGTI", "QBTS", "QUBT", "ARQQ", "QMCO", "IBM"),
           note="IBM added by hand 2026-08-10. It fails the standard's first "
                "two tests the way AMGN did for GLP-1: quantum is a rounding "
@@ -571,17 +564,6 @@ _ETF_THEMES: list[Theme] = [
                  "HRL", "HLF", "KHC", "MO", "BTI", "FMX", "CALM", "BUD", "PFGC", "NUS", "DOLE",
                  "WMK", "POST", "VITL", "SFD", "UVV",),
           note="TSF Thematic Focus list, added 2026-08-18 (Andy: 要的); data/reference/tsf_themes_2026-08-18/full.json. Not in universe: FDP CVGW."),
-    Theme("India", "proxy", source="fluxus", etf=("INDA",)),
-    Theme("Japan", "proxy", source="fluxus", etf=("EWJ",)),
-    Theme("Brazil", "proxy", source="fluxus", etf=("EWZ",)),
-    Theme("Korea", "proxy", source="fluxus", etf=("EWY",)),
-    Theme("Taiwan", "proxy", source="fluxus", etf=("EWT",)),
-    Theme("Europe", "proxy", source="fluxus", etf=("IEUR",)),
-    Theme("Emerging Markets", "proxy", source="fluxus", etf=("EEM",)),
-    Theme("Gold", "proxy", etf=("GLD",)),
-    Theme("Silver", "proxy", etf=("SLV",)),
-    Theme("Bonds - Long Duration", "proxy", source="fluxus", etf=("TLT",)),
-    Theme("Equal-Weighted S&P 500", "proxy", etf=("RSP",)),
 ]
 
 # --------------------------------------------------------------------------
@@ -613,7 +595,7 @@ SECTOR_NAMES: frozenset = frozenset({
     "Software", "Regional Banks", "Oil & Gas", "Financials", "Industrials",
     "Real Estate", "Energy", "Insurance", "Utilities",
     "Travel & Leisure", "Consumer Retail", "Chemicals & Materials",
-    "Transportation & Logistics", "Banks - Money Center",
+    "Transportation & Logistics",
     "Agribusiness", "Beverages",
     "Household & Personal Products", "Tobacco", "Consumer Staples",
     # Homebuilders, Semiconductors Broad, Gold/Silver/Copper/Steel/Coal stay
