@@ -133,7 +133,11 @@ function Item({ on, dim, onClick, title, mark, children, n, close }) {
                         ${on ? 'text-[var(--color-text-bold)] font-semibold'
                              : 'text-[var(--color-text-secondary)]'}
                         ${dim ? 'opacity-45' : ''}`}>
-      <span className="w-3 shrink-0 text-[10px] text-[var(--color-text-muted)]">{on ? '\u2713' : ''}</span>
+      {/* the tick takes the row's own colour rather than the muted grey it
+          started in: a mark fainter than the word it marks reads as
+          decoration. The width is reserved either way, so the labels stay in
+          one column whether or not anything is selected. */}
+      <span className="w-3 shrink-0 text-[10px] leading-none">{on ? '\u2713' : ''}</span>
       {mark}
       <span className="min-w-0 flex-1 truncate">{children}</span>
       <span className="shrink-0 text-[10px] font-mono tabular-nums text-[var(--color-text-muted)]">
@@ -172,7 +176,13 @@ export default function ScanBar({
   const picked = chosen?.size ? themes.filter((t) => chosen.has(t.group)) : []
 
   return (
-    <div className="sticky top-0 z-10 mb-4 border-b border-[var(--color-border)]
+    // z-30, not z-10. The table's own sticky header is z-10 inside its scroll
+    // box and comes LATER in the document, so at equal weight it painted over
+    // this bar's open menu — the first row of the state list disappeared under
+    // the column names. A control that opens over the thing it controls has to
+    // outrank it, and the bar is the outer stacking context, so the number has
+    // to live here rather than on the panel inside it.
+    <div className="sticky top-0 z-30 mb-4 border-b border-[var(--color-border)]
                     bg-[color-mix(in_srgb,var(--color-bg)_88%,transparent)] backdrop-blur-sm">
       {/* ONE ROW. Scan, state and gate are menus; theme keeps its chips
           because a chosen theme is a thing you need to see, not a value you
