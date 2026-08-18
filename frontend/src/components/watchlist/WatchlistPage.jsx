@@ -561,6 +561,15 @@ export default function WatchlistPage({ zone: routeZone }) {
 
   const cross = data.cross_zone || []
   const view = { highOnly, floor, pool3m }
+
+  // Which scans are on the table, and which the current view emptied. A panel
+  // that has not run is neither — it stays, and says so.
+  const inLens = zones.filter((z) => !lens || z.key === lens)
+  const all = inLens.flatMap((z) => z.panels.map((panel) => ({ zone: z, panel })))
+  const isEmptied = ({ zone, panel }) =>
+    panel.measured && shown(panel, { ...view, zoneKey: zone.key }).length === 0
+  const visible = all.filter((x) => !isEmptied(x))
+  const emptied = all.filter(isEmptied)
   const rule = data.cross_zone_rule
 
   return (
@@ -592,15 +601,28 @@ export default function WatchlistPage({ zone: routeZone }) {
       </div>
 
       {/* Every scan on the table. The lens narrows which ones, never what any
-          of them counted. */}
+          of them counted.
+          A scan the current view has emptied is taken off the table rather
+          than left as a card saying nothing (Andy) — but never silently: the
+          line underneath counts them, and the question chips keep reporting
+          the true totals, so an emptied scan is still on screen as a number.
+          A scan that has not RUN is a different state and stays, because
+          "not measured" is not "found none". */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3
                       items-start">
-        {zones.filter((z) => !lens || z.key === lens).flatMap((z) =>
-          z.panels.map((p) => (
-            <ScanCard key={`${z.key}/${p.key}`} panel={p} zoneKey={z.key} view={view}
-                      rsKey={pickRs(p.tickers || [])} />
-          )))}
+        {visible.map(({ zone, panel }) => (
+          <ScanCard key={`${zone.key}/${panel.key}`} panel={panel} zoneKey={zone.key}
+                    view={view} rsKey={pickRs(panel.tickers || [])} />
+        ))}
       </div>
+      {emptied.length > 0 && (
+        <p className="text-[11px] text-[var(--color-text-muted)] mt-2.5">
+          {t('wl.emptied', { n: emptied.length })}{' '}
+          <span className="font-mono opacity-80">
+            {emptied.map((e) => tr(t, `wlp.${e.panel.key}`, e.panel.label)).join(' · ')}
+          </span>
+        </p>
+      )}
 
       {/* Names that answer more than one question. Described, not ranked, and
           below the questions rather than above them — it is a by-product of the
