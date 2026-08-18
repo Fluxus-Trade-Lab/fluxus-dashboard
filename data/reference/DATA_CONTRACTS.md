@@ -356,3 +356,17 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 格式:`- [日期] 一句话 + 你测过什么 + 你要的字段/口径`。数据端处理完把该行改成 ✅ 并写在哪个 commit。
 
 - [08-17] oratnek 同日扫描对照:VCS 刻度 → ✅ 17a2667(领先门,33→15);CBRL 闸 → ✅ 59e3892(成交额闸);RELY 的 RS 1M → ✅ 破译:RS 线 21 日自百分位,29/29 复现,新字段 `rs_line_pctl_21`(universe + watchlist 票项),今晚 cron 起有值
+
+## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
+
+字段全部现成(watchlist.json 每票 `rs_line_pctl_21` / `rs_high` / `top_3m` / `atr_from_sma50` / `sp_signal`;每格 `count_rs_high` / `count_top_3m`)。要的是**把 17 格按五步重新编组、给小白一条能照着走的路**:
+
+1. 顶部一条**步骤条**:水域 → 脚印 → 位置 → 入场 → 出场;点哪一步,属于这步的格高亮,其余降灰(不隐藏),默认落"脚印"。归属:水域=(Themes 四态、池子开关);脚印=Weekly 20%+ / 4% Bullish / PP 三格 + RS 新高开关;位置=ATR Matrix ≤4 / Extended;入场=第一波(4%×ATR≤4×20d 新高×RS 新高)/ EP / Liquid Leader Pullback(注明"只在 Leading 主题");出场=Structure Pivot(stop_hit / ll_break)/ Extended。
+2. 两个全局开关做成一行芯片:`池子:全池 / 3M 领先`(`top_3m`)、`只看 RS 新高`(`rs_high`);开着时格标题旁显示 `count_rs_high/count`。
+3. 票项旁两个数字、不多:RS 1M(`rs_line_pctl_21`,现有)+ **ATR 位**(`atr_from_sma50`,一位小数),0–4 / 5–7 / ≥7 三色,≥7 用 trouble 色。
+4. 4% Bullish 格:当日 ≥15% 的票折到格底灰显(追高警告),不删。
+5. 每格标题旁 ⓘ,三行:这格找什么 · 该配谁 · 别怎么用;文案数据端给(报告第三节)。
+6. 预留一格 `均线收复`(entries 区最左),数据端加字段前不显示。
+7. 视觉沿用现网格;步骤条+芯片用现有 accent,不新增颜色;ATR 三色是语义色。页面上不加长文。
+
+数据端配套(我做):`均线收复` 字段(↑EMA21/↑SMA50 事件 + 量比)、4% Bullish 的 ≥15% 子标签、预设命中每晚落 ticker_events.csv。
