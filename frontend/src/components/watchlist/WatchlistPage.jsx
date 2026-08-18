@@ -166,18 +166,37 @@ const rsInk = (v, key = 'rs_1m') => {
  */
 function Name({ row, rsKey = 'rs_1m' }) {
   const v = row[rsKey]
-  // The other measure stays reachable without taking a column.
   const alt = rsKey !== 'rs_1m' && row.rs_1m != null ? `RS 1M ${row.rs_1m}` : null
+  /**
+   * Alone, or with the whole theme?
+   *
+   * Andy's bonus condition for a name: it is worth more when its theme is
+   * moving too. The file already answers it — every row carries its home group
+   * and that group's four-state — so the page can say it without a second
+   * lookup and without sending you back to Themes.
+   *
+   * A MARK, not a label. The theme's name was here this morning and it
+   * squeezed the ticker out of its own cell; this says the one bit that
+   * matters (is the water moving) and puts the name of the water in the
+   * tooltip. Presence is the whole encoding — one bit needs one channel, and
+   * grey keeps it out of the took/refused pair, which is about the number.
+   *
+   * Descriptive, not predictive. Nobody here has measured whether a name
+   * carried by its theme works more often; the legend says so in those words.
+   */
+  const withTheme = row.group_state === 'Leading' || row.group_state === 'Improving'
   return (
     <span className="flex items-baseline gap-1.5 px-2 py-[3px] min-w-0">
-      {/* THE TICKER NEVER SHRINKS. It carried `truncate` next to a `basis-full`
-          group label, so the label demanded the whole width and the symbol
-          collapsed to "U…" — a watchlist you cannot read the symbols off is not
-          a watchlist. The label is gone now (Andy: the theme beside each name
-          is not needed), which also removes the reason cells ever competed. */}
+      {/* THE TICKER NEVER SHRINKS — it carried `truncate` next to a label that
+          demanded the whole width, and collapsed to "U…". */}
       <TickerLink symbol={row.ticker}
                   className="shrink-0 text-[11.5px] font-mono font-semibold
                              text-[var(--color-text-bold)]" />
+      {withTheme && (
+        <i title={`${row.group} · ${row.group_state}`}
+           className="shrink-0 w-[3px] h-[3px] rounded-full translate-y-[-3px]
+                      bg-[var(--color-text-secondary)]" />
+      )}
       <span className={`ml-auto text-[10.5px] font-mono tabular-nums ${rsInk(v, rsKey)}`}
             title={alt || undefined}>
         {v ?? '—'}
@@ -678,7 +697,7 @@ export default function WatchlistPage({ zone: routeZone }) {
           pick that draws them, so the two cannot drift apart. */}
       <p className="text-[11px] text-[var(--color-text-muted)] mt-5 max-w-[72ch]">
         {t(`wl.rskey.${pickRs(zones.flatMap((z) => z.panels.flatMap((p) => p.tickers || [])))}`)}
-        {' '}{t('wl.foot')}
+        {' '}{t('wl.dot')}{' '}{t('wl.foot')}
       </p>
     </div>
   )
