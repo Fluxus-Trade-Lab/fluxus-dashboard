@@ -295,6 +295,7 @@ def build_themes(
                 continue
             payload.update({
                 "group": theme.name, "method": "proxy", "source": theme.source,
+                "kind": taxonomy.kind_of(theme),
                 "members": 1, "tickers": [theme.etf[0]], "needs_manual": False,
                 # Ten weeks of state, available now rather than in October.
                 # A fund carries its own history: one close per day, kept by
@@ -341,6 +342,7 @@ def build_themes(
             "group": theme.name,
             "method": theme.method,
             "source": theme.source,
+            "kind": taxonomy.kind_of(theme),
             "members": len(members),
             # A two-name "theme" still has a median return, but calling that a
             # group reading implies a cohesion that cannot be tested at n=2.

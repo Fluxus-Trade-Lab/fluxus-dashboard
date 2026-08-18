@@ -157,6 +157,14 @@ class Theme:
     extra: tuple[str, ...] = ()                   # manual adds (tickers)
     exclude: tuple[str, ...] = ()                 # manual removes (tickers)
     note: str = ""
+    # What kind of thing this is, for the page to group by (2026-08-18 audit,
+    # data/reference/theme_audit_2026-08-18.md). Derived unless set:
+    #   theme  -- a business theme with a common driver (uranium price, DC capex)
+    #   sector -- a Finviz-industry union whose common driver is macro (rates,
+    #             oil): useful for rotation, but not what "theme" means on the page
+    #   factor -- a rule over attributes (size, growth, beta); no common-driver test
+    #   proxy  -- the fund IS the instrument
+    kind: str = ""
 
 
 # --------------------------------------------------------------------------
@@ -455,6 +463,38 @@ _RULE_THEMES: list[Theme] = [
 
 THEMES: list[Theme] = _INDUSTRY_THEMES + _ETF_THEMES + _RULE_THEMES
 
+# Sector buckets: industry unions of 50-185 names whose members move on
+# macro, not on a product narrative. Named explicitly (not by size) so a
+# small sector and a large theme are still told apart.
+SECTOR_NAMES: frozenset = frozenset({
+    "Software", "Regional Banks", "Oil & Gas", "Financials", "Industrials",
+    "Real Estate", "Energy", "Insurance", "Utilities",
+    "Travel & Leisure", "Consumer Retail", "Chemicals & Materials",
+    "Transportation & Logistics", "Banks - Money Center", "Electronic Components",
+    "IT Services", "Agribusiness", "Beverages",
+    "Household & Personal Products", "Tobacco",
+    # Homebuilders, Semiconductors Broad, Gold/Silver/Copper/Steel/Coal stay
+    # `theme`: single-industry groups with one price/rate driver, traded as
+    # themes on the page even though they resolve by industry.
+})
+
+
+def kind_of(t: Theme) -> str:
+    if t.kind:
+        return t.kind
+    if t.method == "rule":
+        return "factor"
+    if t.method == "proxy":
+        return "proxy"
+    return "sector" if t.name in SECTOR_NAMES else "theme"
+
+
+def by_kind() -> Dict[str, List[Theme]]:
+    out: Dict[str, List[Theme]] = {}
+    for t in THEMES:
+        out.setdefault(kind_of(t), []).append(t)
+    return out
+
 # Themes still needing a hand-built member list before they mean anything.
 NEEDS_MANUAL: tuple[str, ...] = (
     "AI - Datacenters",
@@ -482,6 +522,7 @@ def summary() -> Dict[str, Any]:
     return {
         "total": len(THEMES),
         "by_method": {k: len(v) for k, v in methods.items()},
+        "by_kind": {k: len(v) for k, v in by_kind().items()},
         "by_source": {
             "tsf": sum(1 for t in THEMES if t.source == "tsf"),
             "fluxus": sum(1 for t in THEMES if t.source == "fluxus"),

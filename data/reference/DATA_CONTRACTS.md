@@ -131,6 +131,10 @@ UI 若把它画成红绿灯,就是在替它做一个它明确做不到的声明�
 主题另有:`method` `source` `publish` `measurable` `needs_manual` `validation` `validation_excess`
 主题与行业行另有(2026-08-17 加):**`ext_share_4` `ext_share_7` `ext_median` `ext_n`** —— 成员里 `atr_from_sma50` ≥4 / ≥7 的占比、中位数、可测成员数(缺 ATR 的成员不计)。**读法:Leading 标签的到期预警,不是收益预测** —— 48 主题 × 293 日实测,Leading 主题日里 ≥4 占比 <20% → 21 日后仍 Leading 28%,20–40% → 14%,40–60% → 6%,>60% → 0%(单调),但那 21 日的超额中位**没有**变差(+1.6% → +2.5~3.8%)。原因是 `rs_accel` 门槛在两个月大涨后机械翻负。UI 若显示,文案是"标签快到期 · 中期减仓预警":高延伸主题 21 日仍强、**42–63 日转负**(Leading→Weakening 且进入前 ≥4 占比 >40%:21 日 +3.1%,63 日 −4.1%,n=31)—— 不是"现在卖",是"别在延伸段加、一两个月内收一部分"。**Weakening 本身不是"歇一歇再跑"**:四态里 Weakening 的前瞻超额零到负,只有 Leading vs Lagging 这一对稳(FOUR_STATE_DESIGN §6/§9)。Steve 的 ≥7 阶梯是**个股**规则,主题层面这个数说的是"这波已经涨在价格里"。
 
+### `kind` —— 每个主题是什么(2026-08-18 加,今晚 cron 起 groups.json 每个 theme 项都带)
+
+`kind ∈ {theme, sector, factor, proxy}`:`theme` 有共同产业驱动的业务主题(30)· `sector` Finviz 行业联合、驱动是宏观(利率/油价;20:Software / Regional Banks / Oil & Gas / Financials / Industrials / Real Estate / Energy / Insurance / Utilities / Travel & Leisure / Consumer Retail / Chemicals / Transportation / Banks-MC / Electronic Components / IT Services / Agribusiness / Beverages / Household / Tobacco)· `factor` 按属性定义的规则主题(8:Growth / Value / High Beta / Small Caps / Mega Caps / IPOs / High Octane / 52W Leaders)· `proxy` 基金即标的(16)。**Andy 08-18:Small Caps 这类不是"主题"是因子,分类没错,但别和业务主题混一栏**——前端按 `kind` 分组摆,一个都不删。名单在 `taxonomy.SECTOR_NAMES` / `kind_of()`;审计依据 `data/reference/theme_audit_2026-08-18.md`。
+
 ### 四条陷阱
 
 **`rs_accel` 是门槛,`rs_accel_rate` 才是斜率 —— 「加速/减速」这两个词只能从后者来。**(2026-08-16 加,`stocks` 行同样带)
