@@ -271,6 +271,7 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
   zones:[ { key, label, panels:[ { key, label, recipe, measured, count, truncated, preset,
                                     tickers:[ {ticker, rs_1m, hybrid_rs, sector} ] } ] } ],
   cross_zone:[ {ticker, count, zones:[...], rs_1m, hybrid_rs, sector} ] }
+  # 票项 08-18/19 起还带:rs_line_pctl_21, rs_high, top_3m, chg_pct, chase, atr_from_sma50;格还带 count_rs_high, count_top_3m, count_chase
 ```
 
 | 区 `zones[].key` | 问题 | 格 `panels[].key` |
@@ -292,6 +293,12 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 - `weekly_20_gainers` 格 08-18 起读 `perf_5d`(5 根),不再读 `perf_1w`;`preset` 字段仍指向 Screener 的同名预设(阈值同、窗口不同,contract 上说明)
 - 配方文字在 `recipe`,直接显示(和 rotation 的 `sentence` 同一原则:文案在引擎里,UI 不重拼)
 - 前端通路(待 UI):格标题 → Screener 载入 `preset`;票 → ticker 页(Signal History 里能看它昨天在哪几格);Screener 里用户自建的预设**不进**晨报
+
+- **08-19 加(验刀报告三件套,Andy:"做起来")**:
+  - `entries` 区最左新格 **`ma_reclaim`**(MA Reclaim:`cross_ema21_up` 或 `cross_sma50_up`,且 `rel_volume ≥ 1`;两个新布尔字段今晚 cron 首产,进 universe.json;在此之前 `measured=false`)。它是深回撤 V 反的入口(MU/SNDK/NBIS/RBRK 8 月起涨唯一提前亮的信号),不是趋势入场——在领头股上单看是抛硬币,要配主题四态和 ATR 位读
+  - 每只票项多三个字段:**`chg_pct`**(当日涨幅 %,一位小数)、**`chase`**(布尔,= 当日 ≥15%;4% Bullish × 当日 ≥15% 是全场最差一格,20d −9.3%/胜率 36%)、**`atr_from_sma50`**(ATR 位,一位小数——页面上"能不能上车"那个数字:0–4 / 5–7 / ≥7)。每格多 **`count_chase`**,顶层 `chase_rule`。前端:`chase=true` 折到格底灰显,不删
+  - **`data/history/watchlist_hits.csv`**:每晚每格**全部**命中(不止页面 25 只),一行 = (date, panel, zone, ticker) + close/chg_pct/rel_volume/atr_from_sma50/ema21_atr_dist/rs_line_pctl_21/rs_1m/rs_3m/h_score/perf_3m_pctile/vcs/sp_signal/group/group_state;按日幂等。三个月后验面板不用再重建 as-of
+  - **`data/history/ticker_events.csv` 多了 `preset:*` 行**(`preset:sugar_babies` / `preset:monthly_leader_97` / `preset:vol_up_gainers` / `preset:stockbee_9m_setup` / `preset:4_bullish` / `preset:pp_count` / `preset:pocket_pivot` / `preset:weekly_20_gainers` / `preset:weekly_momentum_97` / `preset:21ema_watch`):Screener 预设由数据端每晚按 `screener-presets.json` 同一配方复算(`pipeline/screeners/preset_hits.py` 是 `screenerFilter.js` 的移植,测试锁死),历史已从 git 回填到 2026-03-16。**`ticker_events.json` 里因此也会出现这些 screener 名**——Signal History 若按名字查标签,请给 `preset:` 前缀一个显示规则(或先按前缀过滤);heat 分数不计它们(WEIGHTS 未列)。实证见 `data/research/scanner_validation_2026-08/presets_backfilled.md`:Sugar Babies −9.5%/31% 是最差一格,建议不上 Today's List
 
 另有 `data/history/leaders_log.csv`(每晚一行/每只 liquid leader:`tml` 标志、所属组与四态、close、ATR 位置)—— **True Market Leader 的前瞻验证记录**:主题四态归档 08-07 才起,历史回测做不了,只能从今天起前瞻记;`liquid_leader` 字段也已进 universe.json。
 

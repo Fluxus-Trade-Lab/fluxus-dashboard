@@ -45,6 +45,9 @@ MAX_PER_PANEL = 25
 # >= 2 zones listed 177 names on 08-14 (143 of them exactly two, mostly
 # leaders x moving); three zones is where the list is short enough to read.
 MIN_CROSS_ZONES = 3
+# same-day move at/above which a 4% day is a chase, not an entry (2026-08-19)
+CHASE_PCT = 0.15
+PANEL_HITS_LOG = Path("data/history/watchlist_hits.csv")
 TOP_3M_PCTILE = 0.85          # 'top_3m' flag: oratnek's pool, fitted on 08-11/13/14
 
 
@@ -117,6 +120,15 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
     Panel("ll_hl_trend_break", "LL-HL Structure Trend Line Break",
           "sp_signal = counter_break (close crossed the counter-trend line today)",
           ["sp_signal"], lambda r: _sig(r, "counter_break")),
+    Panel("ma_reclaim", "MA Reclaim (close crossed up the 21EMA / 50SMA)",
+          "cross_ema21_up or cross_sma50_up (yesterday's close under the MA, today's at/above it) and rel_volume >= 1. "
+          "2026-08-19 scanner validation: MU / SNDK / NBIS / RBRK's August starts came from 14-28% under the 50SMA, "
+          "where every trend panel is by definition dark; the reclaim was the one footprint that lit before the "
+          "20-day high. On leaders alone it is a coin flip (edge -2.9 vs +11 baseline) -- it is the deep-pullback "
+          "V-reversal entry, not a trend entry; read it with the theme state and the ATR position, not by itself",
+          ["cross_ema21_up", "cross_sma50_up", "rel_volume"],
+          lambda r: (r.get("cross_ema21_up") is True or r.get("cross_sma50_up") is True)
+          and _ge(r, "rel_volume", 1.0)),
     Panel("liquid_leader_pullback", "Liquid Leader Pullback",
           "liquid_leader; perf_1w < 12%; 0.5-1 ATR from the 21EMA; 0-3 ATR from the 50SMA (course M2_L09; the two clauses we cannot read -- 5d/20d range contraction, earnings 7+ days out -- are not applied)",
           ["liquid_leader", "ema21_atr_dist", "atr_from_sma50"],
@@ -184,7 +196,7 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
 
 ZONES: List[Dict[str, Any]] = [
     {"key": "leaders", "label": "Who leads?", "panels": ["true_market_leaders", "liquid_leaders"]},
-    {"key": "entries", "label": "Can I enter today?", "panels": ["ll_hl_1st", "ll_hl_2nd", "ll_hl_trend_break", "liquid_leader_pullback"]},
+    {"key": "entries", "label": "Can I enter today?", "panels": ["ma_reclaim", "ll_hl_1st", "ll_hl_2nd", "ll_hl_trend_break", "liquid_leader_pullback"]},
     {"key": "compression", "label": "What is loading?", "panels": ["vcs", "anticipation"]},
     {"key": "accumulation", "label": "Who is being bought?", "panels": ["pp_today", "pp_2plus_10d", "morales_pp_10d"]},
     {"key": "moving", "label": "What is running?", "panels": ["weekly_momentum_97", "bullish_4pct", "weekly_20_gainers"]},
@@ -215,6 +227,13 @@ def _entry(r: Mapping[str, Any]) -> Dict[str, Any]:
          # takes our lists from 5.9x his to 2.5x while keeping 108/112 of his
          # names. The page offers it as a pool toggle; recipes do not filter.
          "top_3m": (_f(r, "perf_3m_pctile") is not None and _f(r, "perf_3m_pctile") >= TOP_3M_PCTILE),
+         # today's move, in % (one decimal), and the chase flag: a >= 15% day.
+         # 4% Bullish x same-day >= 15% was the worst cell of the whole
+         # validation (20d -9.3%, 36% win); the page folds these to the
+         # bottom of the panel, greyed, instead of deleting them.
+         "chg_pct": _round(_f(r, "change_pct") * 100.0) if _f(r, "change_pct") is not None else None,
+         "chase": (_f(r, "change_pct") is not None and _f(r, "change_pct") >= CHASE_PCT),
+         "atr_from_sma50": _round(_f(r, "atr_from_sma50")),
          "hybrid_rs": _round(_f(r, "h_score")),
          "sector": r.get("sector")}
     if r.get("_group") is not None:
@@ -277,6 +296,53 @@ def archive_leaders(rows, *, date: str, group_states=None, path: Path = LEADERS_
     return len(new)
 
 
+def archive_panel_hits(payload: Mapping[str, Any], rows, *, path: Path = PANEL_HITS_LOG) -> int:
+    """One row per (date, panel, ticker) for EVERY hit -- not the 25 the page
+    shows -- idempotent per date. Nightly since 2026-08-19: the panels had no
+    history either, so the validation had to rebuild eleven as-of days by
+    hand (data/research/scanner_validation_2026-08/asof_all_panels). Rows
+    carry the readings the playbook keys on, so a forward study needs no
+    rebuild."""
+    import csv
+    fields = ["date", "panel", "zone", "ticker", "close", "chg_pct", "rel_volume",
+              "atr_from_sma50", "ema21_atr_dist", "rs_line_pctl_21", "rs_1m", "rs_3m",
+              "h_score", "perf_3m_pctile", "vcs", "sp_signal", "group", "group_state"]
+    date = payload["date"]
+    by_t = {r.get("ticker"): r for r in rows if r.get("ticker")}
+    old = []
+    if path.exists():
+        with path.open(newline="") as fh:
+            old = [r for r in csv.DictReader(fh) if r.get("date") != date]
+    new = []
+    for z in payload.get("zones", []):
+        for p in z.get("panels", []):
+            if not p.get("measured"):
+                continue
+            # tickers[] is truncated at MAX_PER_PANEL; re-test the recipe on
+            # the gated rows to log the whole list.
+            hits = [r for r in by_t.values() if passes_gate(r) and PANELS[p["key"]].test(r)]
+            for r in hits:
+                new.append({"date": date, "panel": p["key"], "zone": z["key"], "ticker": r["ticker"],
+                            "close": _f(r, "close"),
+                            "chg_pct": _round(_f(r, "change_pct") * 100.0) if _f(r, "change_pct") is not None else None,
+                            "rel_volume": _round(_f(r, "rel_volume"), 2),
+                            "atr_from_sma50": _round(_f(r, "atr_from_sma50"), 2),
+                            "ema21_atr_dist": _round(_f(r, "ema21_atr_dist"), 2),
+                            "rs_line_pctl_21": _int_or_none(_f(r, "rs_line_pctl_21")),
+                            "rs_1m": _int_or_none(_f(r, "rs_1m")), "rs_3m": _int_or_none(_f(r, "rs_3m")),
+                            "h_score": _round(_f(r, "h_score")),
+                            "perf_3m_pctile": _round(_f(r, "perf_3m_pctile"), 3),
+                            "vcs": _int_or_none(_f(r, "vcs")), "sp_signal": r.get("sp_signal"),
+                            "group": r.get("_group"), "group_state": r.get("_group_state")})
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=fields)
+        w.writeheader()
+        for r in [*old, *new]:
+            w.writerow({k: ("" if r.get(k) is None else r.get(k)) for k in fields})
+    return len(new)
+
+
 def _int_or_none(v):
     return None if v is None else int(round(v))
 
@@ -317,6 +383,7 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
                 "count": len(hits),
                 "count_rs_high": sum(1 for r in hits if (_f(r, "rs_line_pctl_21") or 0) >= 100.0),
                 "count_top_3m": sum(1 for r in hits if (_f(r, "perf_3m_pctile") or 0) >= TOP_3M_PCTILE),
+                "count_chase": sum(1 for r in hits if (_f(r, "change_pct") or 0) >= CHASE_PCT),
                 "tickers": [_entry(r) for r in hits[:MAX_PER_PANEL]],
                 "truncated": max(0, len(hits) - MAX_PER_PANEL),
                 "preset": PRESET_TWINS.get(pk),
@@ -337,6 +404,7 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
         "cross_zone_rule": f"count of ZONES a name appears in (not panels); >= {MIN_CROSS_ZONES} listed",
         "rs_high_rule": "rs_high = RS line (close/SPY) at a 21-session high (rs_line_pctl_21 == 100); detection only, no panel filters on it; count_rs_high per panel",
         "top_3m_rule": f"top_3m = perf_3m_pctile >= {TOP_3M_PCTILE} (top 15% of 3M performance, whole universe); oratnek's pool as fitted on three sessions; detection only, count_top_3m per panel",
+        "chase_rule": f"chase = change_pct >= {CHASE_PCT:.0%} today; count_chase per panel. 4% Bullish x same-day >= 15% was 20d -9.3% / 36% win in the 2026-08 validation -- fold these to the panel bottom, greyed",
         "zones": zones_out,
         "cross_zone": cross,
         "universe_gated": len(gated),

@@ -23,7 +23,7 @@
 | Delayed EP | 二次突破 | PLTR 0%、NBIS −3%(4 天) | ⚠️ 未证,等 08-21 起的复盘 |
 | anticipation | 明天会爆的 | −1.7% / 41%(109 条) | ⚠️ 这段负;Stockbee 原意是配"明天出 4% 才买",我们测的是安静日当天买 |
 | stop_hit / ll_break | 出场 | −0.9% / −3.8% | ✅ 出场信号亮起后确实差 |
-| Sugar Babies / Monthly Leader 97 / Vol Up 预设 / Stockbee 9M 预设 | — | **无历史命中记录**(预设在前端算,不落库) | 未测——建议数据端把预设命中也每晚落 `ticker_events.csv` |
+| Sugar Babies / Monthly Leader 97 / Vol Up 预设 / Stockbee 9M 预设 | — | **08-19 从 git 回填 94 天后已测**(`presets_backfilled.md`):Sugar Babies −9.5% / 31%;Monthly Leader +3.5% vs 基线 +2.4%;Vol Up ≈ 基线;9M −0.6% / 49% | ❌ Sugar Babies 是「热过」名册;✅ Monthly Leader 当水域;≈ 另两个无边 |
 
 ## 二、跨刀的三条规律(比单刀重要)
 
@@ -33,9 +33,9 @@
 
 ## 三、六只案例给的三个动作(建议,等 Andy)
 
-1. **加"均线收复"面板**(↑EMA21 / ↑SMA50 收盘上穿 + 量 ≥1×):MU/SNDK/NBIS/RBRK 8 月起涨时**唯一提前亮**的信号,我们有 ema21/sma50 字段但没有"上穿"事件。这是深回撤 V 反的入口,现有面板一格覆盖不了。
+1. ~~加"均线收复"面板~~ **08-19 已做**(`ma_reclaim`,entries 区最左;字段 `cross_ema21_up`/`cross_sma50_up`)——原文:**加"均线收复"面板**(↑EMA21 / ↑SMA50 收盘上穿 + 量 ≥1×):MU/SNDK/NBIS/RBRK 8 月起涨时**唯一提前亮**的信号,我们有 ema21/sma50 字段但没有"上穿"事件。这是深回撤 V 反的入口,现有面板一格覆盖不了。
 2. **4% Bullish 加两道闸**:`atr_from_sma50 ≤ 4` 和 `change_pct ≤ 8%`(≥15% 的直接进 trouble 区当"追高警告");再叠 20 日新高 + RS 线新高做成"第一波"子格。
-3. **预设命中每晚落库**:Sugar Babies / Monthly Leader / Vol Up / 9M 四个没历史,验不了;数据端把 10 个预设的命中也写进 `ticker_events.csv`,三个月后能验。
+3. ~~预设命中每晚落库~~ **08-19 已做**:10 个预设每晚落 `ticker_events.csv`(`preset:*`),17 个面板全部命中落 `data/history/watchlist_hits.csv`;历史已从 git 回填(`presets_backfilled.md`)。
 
 ## 四、这轮的边界(老实话)
 

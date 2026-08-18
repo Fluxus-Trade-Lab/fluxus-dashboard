@@ -644,6 +644,19 @@ def main():
 
         plausible, reason = is_plausible_day(
             today_rows, momentum_median=momentum_median)
+        # Screener presets (the page filters them client-side; nothing was
+        # logged, so four presets could not be validated at all -- 2026-08-19).
+        # Judged AFTER the plausibility sniff on the seven core screeners so a
+        # broken run cannot pass on preset rows alone. Own failure domain.
+        try:
+            from pipeline.screeners.preset_hits import extract_preset_events, load_presets
+            preset_rows = extract_preset_events(
+                scored_universe.to_dict('records'), load_presets(), event_date)
+            today_rows.extend(preset_rows)
+            logger.info("Ticker events: %d preset hits across %d presets",
+                        len(preset_rows), len({r['screener'] for r in preset_rows}))
+        except Exception:  # noqa: BLE001
+            logger.exception("Preset hits failed -- ticker_events gets the seven screeners only")
         stale_reason = None
         if not is_session_date(event_date, sessions):
             stale_reason = 'not a trading session'
@@ -781,6 +794,7 @@ def main():
         'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d', 'pp_count_10d',
         'vol10_green', 'vol10_green_count_10d', 'vol10_green_count_30d',
         'atr_from_sma50', 'ema21_atr_dist', 'ema21', 'rs_line_pctl_21', 'perf_5d',
+        'cross_ema21_up', 'cross_sma50_up',
         'ti65', 'mdt', 'min_vol_3d', 'c_low52w', 'liquid_leader', 'ad_ratio_20', 'cmf21',
         'bar_date', 'bars_stale', 'bar_scale_mismatch',
         'sp_setup', 'sp_len', 'sp_ll', 'sp_hl', 'sp_1st', 'sp_2nd', 'sp_tp1', 'sp_tp2',
@@ -887,6 +901,12 @@ def main():
             logger.info("leaders_log: +%d rows for %s", n_lead, wl_date)
         except Exception:
             logger.exception("leaders archive failed - watchlist.json unaffected")
+        try:
+            from pipeline.screeners.watchlist import archive_panel_hits, _with_groups
+            n_hits = archive_panel_hits(wl, _with_groups(wl_rows, gs_map))
+            logger.info("watchlist_hits: +%d rows for %s", n_hits, wl_date)
+        except Exception:
+            logger.exception("panel hits archive failed - watchlist.json unaffected")
         (OUTPUT_DIR / 'watchlist.json').write_text(json.dumps(wl, indent=2, default=_json_serializer))
         logger.info("Saved watchlist.json - %d gated, cross-zone %d, panels %s",
                     wl['universe_gated'], len(wl['cross_zone']),

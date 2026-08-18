@@ -235,3 +235,52 @@ class TestTop3mDetection:
         assert p["count"] == 3 and p["count_top_3m"] == 1
         assert {t["ticker"]: t["top_3m"] for t in p["tickers"]} == {"A": True, "B": False, "C": False}
         assert "top_3m_rule" in out
+
+
+class TestMaReclaimAndChase:
+    """2026-08-19, from the scanner validation playbook."""
+
+    def test_ma_reclaim_needs_a_cross_and_volume(self):
+        p = W.PANELS["ma_reclaim"]
+        assert p.test(row(cross_ema21_up=True, rel_volume=1.0))
+        assert p.test(row(cross_sma50_up=True, cross_ema21_up=False, rel_volume=1.4))
+        assert not p.test(row(cross_ema21_up=True, rel_volume=0.7))
+        assert not p.test(row(cross_ema21_up=False, cross_sma50_up=False, rel_volume=2.0))
+        assert not p.test(row(cross_ema21_up=None, cross_sma50_up=None, rel_volume=2.0))
+
+    def test_ma_reclaim_is_first_in_entries_and_unmeasured_without_fields(self):
+        assert [z for z in W.ZONES if z["key"] == "entries"][0]["panels"][0] == "ma_reclaim"
+        wl = W.build([row()], date="2026-08-19")   # row() has no cross_* keys
+        panel = {p["key"]: p for z in wl["zones"] for p in z["panels"]}["ma_reclaim"]
+        assert panel["measured"] is False and panel["count"] == 0
+
+    def test_entries_carry_chg_pct_and_chase(self):
+        wl = W.build([row(ticker="HOT", change_pct=0.171, rel_volume=1.2, from_open_pct=0.01),
+                      row(ticker="OK", change_pct=0.052, rel_volume=1.2, from_open_pct=0.01)],
+                     date="2026-08-19")
+        panel = {p["key"]: p for z in wl["zones"] for p in z["panels"]}["bullish_4pct"]
+        assert panel["count"] == 2 and panel["count_chase"] == 1
+        by = {t["ticker"]: t for t in panel["tickers"]}
+        assert by["HOT"]["chase"] is True and by["HOT"]["chg_pct"] == 17.1
+        assert by["OK"]["chase"] is False and by["OK"]["chg_pct"] == 5.2
+        assert by["OK"]["atr_from_sma50"] == 2.0
+        assert "chase_rule" in wl
+
+    def test_archive_panel_hits_logs_every_hit_idempotently(self, tmp_path):
+        rows = [row(ticker=f"T{i}", change_pct=0.06, rel_volume=1.2, from_open_pct=0.01) for i in range(30)]
+        wl = W.build(rows, date="2026-08-19")
+        path = tmp_path / "hits.csv"
+        n = W.archive_panel_hits(wl, rows, path=path)
+        import csv
+        got = list(csv.DictReader(path.open()))
+        b4 = [r for r in got if r["panel"] == "bullish_4pct"]
+        assert len(b4) == 30 > W.MAX_PER_PANEL          # whole list, not the page's 25
+        assert b4[0]["zone"] == "moving" and b4[0]["chg_pct"] == "6.0"
+        assert n == len(got)
+        # same date again replaces, does not duplicate
+        W.archive_panel_hits(wl, rows, path=path)
+        assert len(list(csv.DictReader(path.open()))) == n
+        # a second date appends
+        wl2 = W.build(rows[:5], date="2026-08-20")
+        W.archive_panel_hits(wl2, rows[:5], path=path)
+        assert len(list(csv.DictReader(path.open()))) > n

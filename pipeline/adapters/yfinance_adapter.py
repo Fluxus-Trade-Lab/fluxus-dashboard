@@ -126,6 +126,19 @@ def rs_line_pctl(close: pd.Series, bench_close: pd.Series, n: int = 21) -> float
     return float((rs <= rs.iloc[-1]).mean() * 100.0)
 
 
+def _crossed_up(close: pd.Series, ma: pd.Series) -> bool | None:
+    """Close crossed UP through `ma` on the last bar: yesterday's close below
+    yesterday's MA, today's close at or above today's. None when either of
+    the two MA values is missing (warm-up)."""
+    if len(close) < 2 or len(ma) < 2:
+        return None
+    c0, c1 = float(close.iloc[-2]), float(close.iloc[-1])
+    m0, m1 = ma.iloc[-2], ma.iloc[-1]
+    if pd.isna(m0) or pd.isna(m1):
+        return None
+    return bool(c0 < float(m0) and c1 >= float(m1))
+
+
 def _expected_session():
     """The session this run is labelled with (last completed US session).
     Module-level so tests can monkeypatch it; None disables the stale check."""
@@ -674,8 +687,19 @@ class YfinanceAdapter(BaseAdapter):
                 last_open = float(hist['Open'].iloc[-1])
                 last_high = float(hist['High'].iloc[-1])
                 last_low = float(hist['Low'].iloc[-1])
-                ema21 = float(hist['Close'].ewm(span=21, adjust=False).mean().iloc[-1])
-                rs_line_pctl_21 = rs_line_pctl(hist['Close'], spy_close) if spy_close is not None else None
+                ema21_series = hist['Close'].ewm(span=21, adjust=False).mean()
+                ema21 = float(ema21_series.iloc[-1])
+                # MA reclaim (2026-08-19, from the scanner validation): the
+                # close crossed UP through the 21EMA / 50SMA today (yesterday's
+                # close below yesterday's MA, today's close at or above today's).
+                # MU / SNDK / NBIS / RBRK's August starts from 14-28% under the
+                # 50 were the one thing every trend panel is defined not to see;
+                # this event was the only early footprint. Detection fields;
+                # the watchlist panel adds the volume clause.
+                sma50_series = hist['Close'].rolling(50).mean()
+                cross_ema21_up = _crossed_up(hist['Close'], ema21_series) if n >= 22 else None
+                cross_sma50_up = _crossed_up(hist['Close'], sma50_series) if n >= 51 else None
+                rs_line_pctl_21 =rs_line_pctl(hist['Close'], spy_close) if spy_close is not None else None
                 # Phase 1: additional EMAs for trailing-stop UI
                 ema10 = float(hist['Close'].ewm(span=10, adjust=False).mean().iloc[-1])
                 ema20 = float(hist['Close'].ewm(span=20, adjust=False).mean().iloc[-1])
@@ -796,6 +820,8 @@ class YfinanceAdapter(BaseAdapter):
                     'ema21_low_dist': ema21_low_dist,
                     'ema21': ema21,
                     'rs_line_pctl_21': rs_line_pctl_21,
+                    'cross_ema21_up': cross_ema21_up,
+                    'cross_sma50_up': cross_sma50_up,
                     'bar_date': bar_date, 'bars_stale': False, 'bar_scale_mismatch': False,
                     'ema10': ema10,
                     'ema20': ema20,

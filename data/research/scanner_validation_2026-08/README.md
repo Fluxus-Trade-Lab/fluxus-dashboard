@@ -19,3 +19,6 @@ Andy 2026-08-18:「我们 today's list 有这么多的 scanner 预设,一个个�
 
 ## 文书版(2026-08-19)
 `playbook/index.html` — 12 只案例图 + 领头股记分板 + Today's List 小白五步组合法 + 给前端的页面要求;图 `playbook/charts/*.svg`,事件坐标 `playbook/charts/meta.json`。发布件:https://claude.ai/code/artifact/393203db-06f4-4845-a892-b3462889169b
+
+## 预设回填(2026-08-19)
+`presets_backfilled.md` + `study_presets.csv` — 预设移植到数据端(`pipeline/screeners/preset_hits.py`),从 git 里 94 份 universe.json 回填 27,220 条 `preset:*` 进 `ticker_events.csv`(`pipeline/tools/backfill_preset_hits.py`),四个原先验不了的预设有了数字。今晚起 cron 每晚追加;面板全部命中另落 `data/history/watchlist_hits.csv`。

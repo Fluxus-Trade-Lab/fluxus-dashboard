@@ -139,3 +139,15 @@ class TestBarConsistency:
         from pipeline.adapters.yfinance_adapter import bar_consistency
         st, _ = bar_consistency(self._hist("2026-08-17"), dt.date(2026, 8, 14), 100.0)
         assert st == "ok"
+
+
+def test_crossed_up_reads_yesterday_under_today_over():
+    import pandas as pd
+    from pipeline.adapters.yfinance_adapter import _crossed_up
+    close = pd.Series([10.0, 9.0, 11.0])
+    ma = pd.Series([10.0, 10.0, 10.0])
+    assert _crossed_up(close, ma) is True
+    assert _crossed_up(pd.Series([10.0, 10.5, 11.0]), ma) is False    # already above
+    assert _crossed_up(pd.Series([10.0, 9.0, 9.5]), ma) is False      # still under
+    assert _crossed_up(pd.Series([10.0, 9.0, 10.0]), ma) is True      # touch counts
+    assert _crossed_up(close, pd.Series([float("nan"), float("nan"), 10.0])) is None
