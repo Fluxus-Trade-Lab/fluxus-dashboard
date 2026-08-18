@@ -9694,42 +9694,49 @@
       "publish": true
     },
     {
-      "rs_0_1w": 0.002922,
-      "rs_1w_1m": 0.072144,
-      "rs_1m_3m": -0.040737,
+      "rs_0_1w": 0.000984,
+      "rs_1w_1m": 0.076461,
+      "rs_1m_3m": -0.04262,
       "rs_3m_6m": null,
       "excess_3m": 0.03064,
-      "excess_1m": 0.075587,
-      "rs_accel": 0.116324,
-      "rs_accel_rate": 0.096091,
+      "excess_1m": 0.077767,
+      "rs_accel": 0.120387,
+      "rs_accel_rate": 0.09923,
       "state": "Leading",
-      "perf_1d": -0.0043,
+      "perf_1d": -0.006,
       "persistence": 0,
       "persistence_of": 5,
-      "ext_share_4": 0.0577,
+      "ext_share_4": 0.0909,
       "ext_share_7": 0.0,
-      "ext_median": 1.645,
-      "ext_n": 52,
+      "ext_median": 1.6311,
+      "ext_n": 66,
       "group": "Defense",
       "method": "etf",
       "source": "tsf",
       "kind": "theme",
-      "members": 55,
+      "members": 69,
       "measurable": true,
       "tickers": [
         "AADX",
         "ACHR",
         "AIR",
+        "AMTM",
         "ARXS",
+        "ATI",
         "ATRO",
         "AVAV",
         "AVEX",
         "AXON",
         "BA",
+        "BAH",
+        "BBAI",
         "BETA",
+        "BKSY",
         "BWXT",
+        "CACI",
         "CAE",
         "CDRE",
+        "CRS",
         "CW",
         "DCO",
         "DPC",
@@ -9747,8 +9754,10 @@
         "HONA",
         "HWM",
         "HXL",
+        "IRDM",
         "KRMN",
         "KTOS",
+        "LDOS",
         "LHX",
         "LMT",
         "LOAR",
@@ -9758,11 +9767,16 @@
         "MRCY",
         "NOC",
         "NPK",
+        "ONDS",
         "PL",
+        "PLTR",
+        "PSN",
+        "RBC",
         "RCAT",
         "RDW",
         "RKLB",
         "RTX",
+        "SAIC",
         "SARO",
         "SPCX",
         "TDG",
@@ -9774,8 +9788,8 @@
         "YSS"
       ],
       "needs_manual": false,
-      "perf_1w": 0.00566,
-      "perf_1m": 0.116795,
+      "perf_1w": 0.003722,
+      "perf_1m": 0.118975,
       "perf_3m": 0.079392,
       "perf_6m": 0.100955,
       "perf_1y": 0.325497,
@@ -12519,71 +12533,6 @@
       "publish": true
     },
     {
-      "rs_0_1w": 0.017156,
-      "rs_1w_1m": 0.240436,
-      "rs_1m_3m": -0.241306,
-      "rs_3m_6m": null,
-      "excess_3m": -0.049782,
-      "excess_1m": 0.263034,
-      "rs_accel": 0.50434,
-      "rs_accel_rate": 0.391471,
-      "state": "Improving",
-      "perf_1d": 0.01765,
-      "persistence": 2,
-      "persistence_of": 5,
-      "ext_share_4": 0.3,
-      "ext_share_7": 0.0,
-      "ext_median": 3.1674,
-      "ext_n": 30,
-      "group": "Gold Miners",
-      "method": "industry",
-      "source": "tsf",
-      "kind": "theme",
-      "members": 30,
-      "measurable": true,
-      "tickers": [
-        "AAUC",
-        "AEM",
-        "AGI",
-        "ARIS",
-        "AU",
-        "AUGO",
-        "B",
-        "BTG",
-        "CDE",
-        "CGAU",
-        "DRD",
-        "EGO",
-        "EQX",
-        "FNV",
-        "FSM",
-        "GFI",
-        "HMY",
-        "HYMC",
-        "IAG",
-        "IAUX",
-        "KGC",
-        "NEM",
-        "NG",
-        "OGC",
-        "OR",
-        "PAAS",
-        "RGLD",
-        "SA",
-        "SSRM",
-        "WPM"
-      ],
-      "needs_manual": false,
-      "perf_1w": 0.019894,
-      "perf_1m": 0.304242,
-      "perf_3m": -0.00103,
-      "perf_6m": -0.111699,
-      "perf_1y": 0.638278,
-      "validation": "real",
-      "validation_excess": 0.3892,
-      "publish": true
-    },
-    {
       "rs_0_1w": -0.006604,
       "rs_1w_1m": -0.042239,
       "rs_1m_3m": -0.00365,
@@ -12755,42 +12704,75 @@
       "publish": true
     },
     {
-      "rs_0_1w": 0.018879,
-      "rs_1w_1m": 0.16211,
-      "rs_1m_3m": -0.198121,
+      "rs_0_1w": 0.01363,
+      "rs_1w_1m": 0.23829,
+      "rs_1m_3m": -0.250095,
       "rs_3m_6m": null,
-      "excess_3m": -0.05642,
-      "excess_1m": 0.185218,
-      "rs_accel": 0.383339,
-      "rs_accel_rate": 0.289321,
+      "excess_3m": -0.06631,
+      "excess_1m": 0.256343,
+      "rs_accel": 0.506438,
+      "rs_accel_rate": 0.389815,
       "state": "Improving",
-      "perf_1d": -0.0018,
+      "perf_1d": 0.0161,
       "persistence": 2,
       "persistence_of": 5,
-      "ext_share_4": 0.0,
+      "ext_share_4": 0.2432,
       "ext_share_7": 0.0,
-      "ext_median": 0.2366,
-      "ext_n": 4,
-      "group": "Quantum Computing",
-      "method": "etf",
-      "source": "fluxus",
+      "ext_median": 2.9036,
+      "ext_n": 37,
+      "group": "Gold Miners",
+      "method": "industry",
+      "source": "tsf",
       "kind": "theme",
-      "members": 4,
-      "measurable": false,
+      "members": 37,
+      "measurable": true,
       "tickers": [
-        "IBM",
-        "IONQ",
-        "QUBT",
-        "RGTI"
+        "AAUC",
+        "AEM",
+        "AG",
+        "AGI",
+        "ARIS",
+        "AU",
+        "AUGO",
+        "B",
+        "BTG",
+        "BVN",
+        "CDE",
+        "CGAU",
+        "DRD",
+        "EGO",
+        "EQX",
+        "FNV",
+        "FSM",
+        "GFI",
+        "HL",
+        "HMY",
+        "HYMC",
+        "IAG",
+        "IAUX",
+        "KGC",
+        "MUX",
+        "NEM",
+        "NG",
+        "OGC",
+        "OR",
+        "PAAS",
+        "PPTA",
+        "RGLD",
+        "SA",
+        "SKE",
+        "SSRM",
+        "TFPM",
+        "WPM"
       ],
-      "needs_manual": true,
-      "perf_1w": 0.021618,
-      "perf_1m": 0.226426,
-      "perf_3m": -0.007668,
-      "perf_6m": 0.160893,
-      "perf_1y": 0.051624,
+      "needs_manual": false,
+      "perf_1w": 0.016368,
+      "perf_1m": 0.297551,
+      "perf_3m": -0.017558,
+      "perf_6m": -0.113632,
+      "perf_1y": 0.682653,
       "validation": "real",
-      "validation_excess": 0.0855,
+      "validation_excess": 0.3892,
       "publish": true
     },
     {
@@ -13179,6 +13161,49 @@
       "publish": true
     },
     {
+      "rs_0_1w": 0.077586,
+      "rs_1w_1m": 0.023206,
+      "rs_1m_3m": -0.178962,
+      "rs_3m_6m": null,
+      "excess_3m": -0.098843,
+      "excess_1m": 0.105632,
+      "rs_accel": 0.284594,
+      "rs_accel_rate": 0.199147,
+      "state": "Improving",
+      "perf_1d": 0.0032,
+      "persistence": 2,
+      "persistence_of": 5,
+      "ext_share_4": 0.0,
+      "ext_share_7": 0.0,
+      "ext_median": 0.2366,
+      "ext_n": 8,
+      "group": "Quantum Computing",
+      "method": "etf",
+      "source": "fluxus",
+      "kind": "theme",
+      "members": 8,
+      "measurable": true,
+      "tickers": [
+        "IBM",
+        "INFQ",
+        "IONQ",
+        "IQMX",
+        "QNT",
+        "QUBT",
+        "RGTI",
+        "XNDU"
+      ],
+      "needs_manual": true,
+      "perf_1w": 0.080324,
+      "perf_1m": 0.14684,
+      "perf_3m": -0.050091,
+      "perf_6m": 0.044133,
+      "perf_1y": -0.019422,
+      "validation": "real",
+      "validation_excess": 0.0855,
+      "publish": true
+    },
+    {
       "rs_0_1w": 0.060425,
       "rs_1w_1m": -0.052601,
       "rs_1m_3m": -0.112799,
@@ -13379,57 +13404,136 @@
       "publish": true
     },
     {
-      "rs_0_1w": -0.012883,
-      "rs_1w_1m": -0.038928,
-      "rs_1m_3m": -0.146062,
+      "rs_0_1w": 0.006172,
+      "rs_1w_1m": -0.020183,
+      "rs_1m_3m": -0.175176,
       "rs_3m_6m": null,
-      "excess_3m": -0.196785,
-      "excess_1m": -0.05191,
-      "rs_accel": 0.094152,
-      "rs_accel_rate": 0.023706,
+      "excess_3m": -0.194005,
+      "excess_1m": -0.013954,
+      "rs_accel": 0.161222,
+      "rs_accel_rate": 0.077484,
       "state": "Improving",
-      "perf_1d": -0.0222,
+      "perf_1d": -0.0052,
       "persistence": 0,
       "persistence_of": 5,
-      "ext_share_4": 0.0,
+      "ext_share_4": 0.0196,
       "ext_share_7": 0.0,
-      "ext_median": -0.8072,
-      "ext_n": 19,
+      "ext_median": -0.7556,
+      "ext_n": 51,
       "group": "Clean Energy",
       "method": "etf",
       "source": "tsf",
       "kind": "theme",
-      "members": 19,
+      "members": 51,
       "measurable": true,
       "tickers": [
+        "AGX",
+        "ALB",
+        "AMRC",
+        "AMSC",
+        "ATKR",
         "BE",
         "BEP",
         "BEPC",
+        "BW",
+        "CSIQ",
+        "CWEN",
+        "ELVR",
+        "ENLT",
+        "ENPH",
+        "ENS",
+        "EOSE",
+        "ESE",
+        "ETN",
+        "FCEL",
+        "FLNC",
+        "FRVO",
+        "FSLR",
+        "GEV",
+        "GNRC",
+        "GPRE",
+        "HASI",
+        "HUBB",
+        "ITRI",
+        "LAC",
+        "LAR",
+        "MWH",
+        "MYRG",
+        "NEE",
+        "NVT",
+        "NVTS",
+        "NXT",
+        "ORA",
+        "PLPC",
+        "PLUG",
+        "POWL",
+        "PWR",
+        "REX",
+        "RNW",
+        "RUN",
+        "SEDG",
+        "SGML",
+        "SHLS",
+        "SQM",
+        "TE",
+        "WCC",
+        "XIFR"
+      ],
+      "needs_manual": false,
+      "perf_1w": 0.008911,
+      "perf_1m": 0.027254,
+      "perf_3m": -0.145253,
+      "perf_6m": 0.031185,
+      "perf_1y": 0.58467,
+      "validation": "real",
+      "validation_excess": 0.1201,
+      "publish": true
+    },
+    {
+      "rs_0_1w": -0.040311,
+      "rs_1w_1m": -0.015549,
+      "rs_1m_3m": -0.154354,
+      "rs_3m_6m": null,
+      "excess_3m": -0.209178,
+      "excess_1m": -0.056823,
+      "rs_accel": 0.097531,
+      "rs_accel_rate": 0.023272,
+      "state": "Improving",
+      "perf_1d": -0.0233,
+      "persistence": 0,
+      "persistence_of": 5,
+      "ext_share_4": 0.0,
+      "ext_share_7": 0.0,
+      "ext_median": -1.1635,
+      "ext_n": 12,
+      "group": "Solar",
+      "method": "etf",
+      "source": "tsf",
+      "kind": "theme",
+      "members": 12,
+      "measurable": true,
+      "tickers": [
         "CSIQ",
         "CWEN",
         "ENLT",
         "ENPH",
-        "FLNC",
-        "FRVO",
         "FSLR",
+        "HASI",
         "MWH",
         "NXT",
-        "ORA",
-        "PLUG",
         "RNW",
         "RUN",
         "SEDG",
-        "SHLS",
-        "XIFR"
+        "SHLS"
       ],
       "needs_manual": false,
-      "perf_1w": -0.010145,
-      "perf_1m": -0.010702,
-      "perf_3m": -0.148033,
-      "perf_6m": -0.127245,
-      "perf_1y": 0.201945,
+      "perf_1w": -0.037573,
+      "perf_1m": -0.015615,
+      "perf_3m": -0.160426,
+      "perf_6m": -0.132616,
+      "perf_1y": 0.165485,
       "validation": "real",
-      "validation_excess": 0.1201,
+      "validation_excess": 0.2293,
       "publish": true
     },
     {
@@ -13475,50 +13579,6 @@
       "perf_1y": 0.184882,
       "validation": "too few in panel",
       "validation_excess": null,
-      "publish": true
-    },
-    {
-      "rs_0_1w": -0.060012,
-      "rs_1w_1m": 0.000615,
-      "rs_1m_3m": -0.162729,
-      "rs_3m_6m": null,
-      "excess_3m": -0.221571,
-      "excess_1m": -0.061735,
-      "rs_accel": 0.100994,
-      "rs_accel_rate": 0.022905,
-      "state": "Improving",
-      "perf_1d": -0.026,
-      "persistence": 0,
-      "persistence_of": 5,
-      "ext_share_4": 0.0,
-      "ext_share_7": 0.0,
-      "ext_median": -1.8677,
-      "ext_n": 9,
-      "group": "Solar",
-      "method": "etf",
-      "source": "tsf",
-      "kind": "theme",
-      "members": 9,
-      "measurable": true,
-      "tickers": [
-        "CSIQ",
-        "CWEN",
-        "ENPH",
-        "FSLR",
-        "HASI",
-        "NXT",
-        "RUN",
-        "SEDG",
-        "SHLS"
-      ],
-      "needs_manual": false,
-      "perf_1w": -0.057274,
-      "perf_1m": -0.020527,
-      "perf_3m": -0.172819,
-      "perf_6m": -0.133408,
-      "perf_1y": 0.165485,
-      "validation": "real",
-      "validation_excess": 0.2293,
       "publish": true
     },
     {
@@ -13737,6 +13797,58 @@
       {
         "theme": "Homebuilders",
         "ticker": "JBI"
+      },
+      {
+        "theme": "Gold Miners",
+        "ticker": "MAKO"
+      },
+      {
+        "theme": "Gold Miners",
+        "ticker": "MTA"
+      },
+      {
+        "theme": "Gold Miners",
+        "ticker": "DC"
+      },
+      {
+        "theme": "Gold Miners",
+        "ticker": "ITRG"
+      },
+      {
+        "theme": "Gold Miners",
+        "ticker": "CMCL"
+      },
+      {
+        "theme": "Gold Miners",
+        "ticker": "GROY"
+      },
+      {
+        "theme": "Gold Miners",
+        "ticker": "CTGO"
+      },
+      {
+        "theme": "Gold Miners",
+        "ticker": "GLDG"
+      },
+      {
+        "theme": "Gold Miners",
+        "ticker": "GAU"
+      },
+      {
+        "theme": "Gold Miners",
+        "ticker": "CNL"
+      },
+      {
+        "theme": "Gold Miners",
+        "ticker": "NFGC"
+      },
+      {
+        "theme": "Gold Miners",
+        "ticker": "USAU"
+      },
+      {
+        "theme": "Gold Miners",
+        "ticker": "IDR"
       },
       {
         "theme": "Silver Miners",
@@ -14111,6 +14223,122 @@
         "ticker": "EVTL"
       },
       {
+        "theme": "Defense",
+        "ticker": "ISSC"
+      },
+      {
+        "theme": "Defense",
+        "ticker": "ELMT"
+      },
+      {
+        "theme": "Defense",
+        "ticker": "ASTC"
+      },
+      {
+        "theme": "Defense",
+        "ticker": "SPIR"
+      },
+      {
+        "theme": "Defense",
+        "ticker": "PKE"
+      },
+      {
+        "theme": "Defense",
+        "ticker": "CPSH"
+      },
+      {
+        "theme": "Defense",
+        "ticker": "TATT"
+      },
+      {
+        "theme": "Defense",
+        "ticker": "POWW"
+      },
+      {
+        "theme": "Defense",
+        "ticker": "RGR"
+      },
+      {
+        "theme": "Defense",
+        "ticker": "SWBI"
+      },
+      {
+        "theme": "Defense",
+        "ticker": "MRLN"
+      },
+      {
+        "theme": "Solar",
+        "ticker": "DQ"
+      },
+      {
+        "theme": "Solar",
+        "ticker": "ASTI"
+      },
+      {
+        "theme": "Solar",
+        "ticker": "JKS"
+      },
+      {
+        "theme": "Solar",
+        "ticker": "SPWR"
+      },
+      {
+        "theme": "Solar",
+        "ticker": "TYGO"
+      },
+      {
+        "theme": "Solar",
+        "ticker": "ARRY"
+      },
+      {
+        "theme": "Clean Energy",
+        "ticker": "NRGV"
+      },
+      {
+        "theme": "Clean Energy",
+        "ticker": "ASPN"
+      },
+      {
+        "theme": "Clean Energy",
+        "ticker": "ADUR"
+      },
+      {
+        "theme": "Clean Energy",
+        "ticker": "LZM"
+      },
+      {
+        "theme": "Clean Energy",
+        "ticker": "ATLX"
+      },
+      {
+        "theme": "Clean Energy",
+        "ticker": "SLI"
+      },
+      {
+        "theme": "Clean Energy",
+        "ticker": "GEVO"
+      },
+      {
+        "theme": "Clean Energy",
+        "ticker": "JKS"
+      },
+      {
+        "theme": "Clean Energy",
+        "ticker": "BLDP"
+      },
+      {
+        "theme": "Clean Energy",
+        "ticker": "EVGO"
+      },
+      {
+        "theme": "Clean Energy",
+        "ticker": "CLNE"
+      },
+      {
+        "theme": "Clean Energy",
+        "ticker": "ARRY"
+      },
+      {
         "theme": "Uranium & Nuclear Energy",
         "ticker": "NUCL"
       },
@@ -14465,6 +14693,18 @@
       {
         "theme": "Quantum Computing",
         "ticker": "QMCO"
+      },
+      {
+        "theme": "Quantum Computing",
+        "ticker": "HQ"
+      },
+      {
+        "theme": "Quantum Computing",
+        "ticker": "ALMU"
+      },
+      {
+        "theme": "Quantum Computing",
+        "ticker": "BTQ"
       },
       {
         "theme": "Physical AI & Humanoid Robotics",
@@ -15988,7 +16228,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 25.0,
       "top_quartile": false,
-      "primary_group": "AI Power & Infrastructure",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "AGYS": {
@@ -17166,7 +17406,7 @@
       "group": "Specialty Industrial Machinery",
       "group_pctile": 6.38,
       "top_quartile": false,
-      "primary_group": "AI Power & Infrastructure",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "AMT": {
@@ -18572,8 +18812,8 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 77.78,
       "top_quartile": true,
-      "primary_group": "Electrical Equipment & Parts",
-      "primary_kind": "industry"
+      "primary_group": "Clean Energy",
+      "primary_kind": "theme"
     },
     "ATLC": {
       "rs_0_1w": 0.068278,
@@ -19729,8 +19969,8 @@
       "group": "Information Technology Services",
       "group_pctile": 15.0,
       "top_quartile": false,
-      "primary_group": "Information Technology Services",
-      "primary_kind": "industry"
+      "primary_group": "Defense",
+      "primary_kind": "theme"
     },
     "BBAR": {
       "rs_0_1w": -0.075642,
@@ -22140,7 +22380,7 @@
       "group": "Specialty Industrial Machinery",
       "group_pctile": 2.13,
       "top_quartile": false,
-      "primary_group": "AI Power & Infrastructure",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "BWA": {
@@ -29242,7 +29482,7 @@
       "group": "Utilities - Renewable",
       "group_pctile": 60.0,
       "top_quartile": false,
-      "primary_group": "Clean Energy",
+      "primary_group": "Solar",
       "primary_kind": "theme"
     },
     "ENOV": {
@@ -29846,8 +30086,8 @@
       "group": "Scientific & Technical Instruments",
       "group_pctile": 50.0,
       "top_quartile": false,
-      "primary_group": "Scientific & Technical Instruments",
-      "primary_kind": "industry"
+      "primary_group": "Clean Energy",
+      "primary_kind": "theme"
     },
     "ESI": {
       "rs_0_1w": 0.038962,
@@ -30017,7 +30257,7 @@
       "group": "Specialty Industrial Machinery",
       "group_pctile": 72.34,
       "top_quartile": false,
-      "primary_group": "AI Power & Infrastructure",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "ETON": {
@@ -30663,7 +30903,7 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 83.33,
       "top_quartile": true,
-      "primary_group": "AI Power & Infrastructure",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "FCF": {
@@ -31326,7 +31566,7 @@
       "group": "Utilities - Renewable",
       "group_pctile": 20.0,
       "top_quartile": false,
-      "primary_group": "Clean Energy",
+      "primary_group": "Lithium & Battery Tech",
       "primary_kind": "theme"
     },
     "FLNG": {
@@ -33511,7 +33751,7 @@
       "group": "Specialty Industrial Machinery",
       "group_pctile": 10.64,
       "top_quartile": false,
-      "primary_group": "AI Power & Infrastructure",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "GNTX": {
@@ -33796,7 +34036,7 @@
       "group": "Chemicals",
       "group_pctile": 100.0,
       "top_quartile": true,
-      "primary_group": "Chemicals & Materials",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "GRAB": {
@@ -35713,7 +35953,7 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 72.22,
       "top_quartile": false,
-      "primary_group": "AI Power & Infrastructure",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "HUBG": {
@@ -36796,7 +37036,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 48.81,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Quantum Computing",
       "primary_kind": "theme"
     },
     "INFY": {
@@ -37288,8 +37528,8 @@
       "group": "Computer Hardware",
       "group_pctile": 6.25,
       "top_quartile": false,
-      "primary_group": "Computer Hardware",
-      "primary_kind": "industry"
+      "primary_group": "Quantum Computing",
+      "primary_kind": "theme"
     },
     "IQV": {
       "rs_0_1w": -0.013401,
@@ -37535,7 +37775,7 @@
       "group": "Scientific & Technical Instruments",
       "group_pctile": 93.75,
       "top_quartile": true,
-      "primary_group": "AI Power & Infrastructure",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "ITRN": {
@@ -43662,7 +43902,7 @@
       "group": "Utilities - Renewable",
       "group_pctile": 30.0,
       "top_quartile": false,
-      "primary_group": "Clean Energy",
+      "primary_group": "Solar",
       "primary_kind": "theme"
     },
     "MXL": {
@@ -43719,7 +43959,7 @@
       "group": "Engineering & Construction",
       "group_pctile": 10.71,
       "top_quartile": false,
-      "primary_group": "AI Power & Infrastructure",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "MZTI": {
@@ -44061,7 +44301,7 @@
       "group": "Utilities - Regulated Electric",
       "group_pctile": 24.32,
       "top_quartile": false,
-      "primary_group": "Utilities",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "NEM": {
@@ -45543,7 +45783,7 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 55.56,
       "top_quartile": false,
-      "primary_group": "AI Power & Infrastructure",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "NVTS": {
@@ -45562,7 +45802,7 @@
       "group": "Semiconductors",
       "group_pctile": 10.2,
       "top_quartile": false,
-      "primary_group": "AI Power & Infrastructure",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "NWBI": {
@@ -48617,7 +48857,7 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 100.0,
       "top_quartile": true,
-      "primary_group": "AI Power & Infrastructure",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "PLSE": {
@@ -48978,7 +49218,7 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 27.78,
       "top_quartile": false,
-      "primary_group": "AI Power & Infrastructure",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "PPC": {
@@ -49073,8 +49313,8 @@
       "group": "Other Precious Metals & Mining",
       "group_pctile": 37.5,
       "top_quartile": false,
-      "primary_group": "Other Precious Metals & Mining",
-      "primary_kind": "industry"
+      "primary_group": "Gold Miners",
+      "primary_kind": "theme"
     },
     "PR": {
       "rs_0_1w": 0.030813,
@@ -49548,8 +49788,8 @@
       "group": "Information Technology Services",
       "group_pctile": 20.0,
       "top_quartile": false,
-      "primary_group": "Information Technology Services",
-      "primary_kind": "industry"
+      "primary_group": "Defense",
+      "primary_kind": "theme"
     },
     "PSNL": {
       "rs_0_1w": -0.012011,
@@ -50021,7 +50261,7 @@
       "persistence": 2,
       "persistence_of": 2,
       "group": "Software - Application",
-      "primary_group": "Software",
+      "primary_group": "Quantum Computing",
       "primary_kind": "theme"
     },
     "QRVO": {
@@ -50306,8 +50546,8 @@
       "group": "Tools & Accessories",
       "group_pctile": 12.5,
       "top_quartile": false,
-      "primary_group": "Tools & Accessories",
-      "primary_kind": "industry"
+      "primary_group": "Defense",
+      "primary_kind": "theme"
     },
     "RBCAA": {
       "rs_0_1w": -0.026055,
@@ -50724,7 +50964,7 @@
       "group": "Chemicals",
       "group_pctile": 85.71,
       "top_quartile": true,
-      "primary_group": "Chemicals & Materials",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "REXR": {
@@ -51332,7 +51572,7 @@
       "group": "Utilities - Renewable",
       "group_pctile": 100.0,
       "top_quartile": true,
-      "primary_group": "Clean Energy",
+      "primary_group": "Solar",
       "primary_kind": "theme"
     },
     "ROAD": {
@@ -53346,8 +53586,8 @@
       "group": "Other Industrial Metals & Mining",
       "group_pctile": 64.71,
       "top_quartile": false,
-      "primary_group": "Other Industrial Metals & Mining",
-      "primary_kind": "industry"
+      "primary_group": "Gold Miners",
+      "primary_kind": "theme"
     },
     "SKHY": {
       "rs_0_1w": 0.207145,
@@ -56017,8 +56257,8 @@
       "group": "Electrical Equipment & Parts",
       "group_pctile": 16.67,
       "top_quartile": false,
-      "primary_group": "Electrical Equipment & Parts",
-      "primary_kind": "industry"
+      "primary_group": "Clean Energy",
+      "primary_kind": "theme"
     },
     "TEAM": {
       "rs_0_1w": 0.02491,
@@ -60805,7 +61045,7 @@
       "group": "Industrial Distribution",
       "group_pctile": 35.29,
       "top_quartile": false,
-      "primary_group": "AI Power & Infrastructure",
+      "primary_group": "Clean Energy",
       "primary_kind": "theme"
     },
     "WCN": {
@@ -62268,7 +62508,7 @@
       "group": "Software - Infrastructure",
       "group_pctile": 16.67,
       "top_quartile": false,
-      "primary_group": "Software",
+      "primary_group": "Quantum Computing",
       "primary_kind": "theme"
     },
     "XOM": {

@@ -218,7 +218,11 @@ _INDUSTRY_THEMES: list[Theme] = [
           industries=("Oil & Gas E&P", "Oil & Gas Integrated", "Oil & Gas Midstream",
                       "Oil & Gas Refining & Marketing", "Oil & Gas Equipment & Services",
                       "Oil & Gas Drilling")),
-    Theme("Gold Miners", "industry", source="tsf", industries=("Gold",)),
+    Theme("Gold Miners", "industry", source="tsf", industries=("Gold",),
+          extra=(
+                 "MAKO", "MTA", "DC", "HL", "PPTA", "ITRG", "CMCL", "AG", "GROY", "SKE", "CTGO",
+                 "GLDG", "GAU", "CNL", "NFGC", "BVN", "TFPM", "USAU", "MUX", "IDR",),
+          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去; second pass): MAKO MTA DC HL PPTA ITRG CMCL AG GROY SKE CTGO GLDG GAU CNL NFGC BVN TFPM USAU MUX IDR."),
     Theme("Silver Miners", "industry", industries=("Silver",), extra=(
                  "HL", "SCZM", "ITRG", "FSM", "SSRM", "ASM", "HYMC", "GORO", "SSMR", "USAS", "CDE",
                  "SA", "WPM", "TMQ", "BVN", "CTGO", "VZLA", "PAAS", "OR", "TFPM", "MUX",),
@@ -419,10 +423,25 @@ _ETF_THEMES: list[Theme] = [
                "all three sit below the theme-tracking liquidity floor "
                "($54-268M cap), so their prints would shape a reading they "
                "could not support a position in."),
-    Theme("Defense", "etf", etf=("ITA",), industries=("Aerospace & Defense",)),
-    Theme("Solar", "etf", etf=("TAN",), industries=("Solar",)),
+    Theme("Defense", "etf", etf=("ITA",), industries=("Aerospace & Defense",),
+          extra=(
+                 "CACI", "ISSC", "PLTR", "BKSY", "ATI", "ELMT", "LDOS", "ASTC", "BBAI", "SPIR",
+                 "PKE", "SAIC", "ONDS", "CPSH", "PSN", "BAH", "IRDM", "TATT", "POWW", "CRS", "RBC",
+                 "RGR", "SWBI", "MRLN", "AMTM",),
+          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去; second pass): CACI ISSC PLTR BKSY ATI ELMT LDOS ASTC BBAI SPIR PKE SAIC ONDS CPSH PSN BAH IRDM TATT POWW CRS RBC RGR SWBI MRLN AMTM."),
+    Theme("Solar", "etf", etf=("TAN",), industries=("Solar",),
+          extra=(
+                 "MWH", "RNW", "DQ", "ENLT", "ASTI", "JKS", "SPWR", "TYGO", "ARRY",),
+          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去; second pass): MWH RNW DQ ENLT ASTI JKS SPWR TYGO ARRY."),
     Theme("Clean Energy", "etf", etf=("ICLN",),
-          industries=("Solar", "Utilities - Renewable")),
+          industries=("Solar", "Utilities - Renewable"),
+          extra=(
+                 "PLPC", "ELVR", "NRGV", "ASPN", "NVT", "ADUR", "NVTS", "AMRC", "LZM", "ATLX",
+                 "SQM", "HASI", "GEV", "PWR", "ETN", "WCC", "ATKR", "ITRI", "ALB", "SLI", "GEVO",
+                 "GNRC", "HUBB", "ESE", "ENS", "LAR", "LAC", "EOSE", "FCEL", "REX", "MYRG", "NEE",
+                 "TE", "GPRE", "SGML", "JKS", "BW", "AMSC", "POWL", "AGX", "BLDP", "EVGO", "CLNE",
+                 "ARRY",),
+          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去; second pass): PLPC ELVR NRGV ASPN NVT ADUR NVTS AMRC LZM ATLX SQM HASI GEV PWR ETN WCC ATKR ITRI ALB SLI GEVO GNRC HUBB ESE ENS LAR LAC EOSE FCEL REX MYRG NEE TE GPRE SGML JKS BW AMSC POWL AGX BLDP EVGO CLNE ARRY."),
     Theme("Uranium & Nuclear Energy", "etf", etf=(),
           extra=(
                  "GHM", "NUCL", "UROY", "UUUU", "ISOU", "EMR", "AMRC", "XE", "NKLR", "IMSR", "UEC",
@@ -515,8 +534,10 @@ _ETF_THEMES: list[Theme] = [
 
     # --- Fluxus additions: TSF has no slot for these ---
     Theme("Quantum Computing", "etf", publish_override=True, source="fluxus", etf=(),
-          extra=("IONQ", "RGTI", "QBTS", "QUBT", "ARQQ", "QMCO", "IBM"),
-          note="IBM added by hand 2026-08-10. It fails the standard's first "
+          extra=(
+                 "IONQ", "RGTI", "QBTS", "QUBT", "ARQQ", "QMCO", "IBM", "QNT", "INFQ", "HQ",
+                 "IQMX", "ALMU", "BTQ", "XNDU",),
+          note="TSF names added 2026-08-18 (Andy: 他们有我们没的加进去; second pass): QNT INFQ HQ IQMX ALMU BTQ XNDU. IBM added by hand 2026-08-10. It fails the standard's first "
                "two tests the way AMGN did for GLP-1: quantum is a rounding "
                "error against ~$62B of revenue, and the share price is set by "
                "software, consulting and mainframe. Kept because the operator "
