@@ -104,6 +104,22 @@ export default function TickerChart({ symbol, height = 520, interval = 'D' }) {
     widgetDiv.style.width = '100%'
     container.appendChild(widgetDiv)
 
+    /**
+     * The widget cannot read our tokens — it is a third-party iframe — so the
+     * two colours that decide whether it looks like part of this page or like
+     * a window cut into it are read off the document and passed in.
+     *
+     * On the light theme it defaulted to white against our paper, which Andy
+     * called 太跳 and is: #ffffff beside #e2e0d6 is a brighter rectangle than
+     * anything else on the site. Both themes now take `--color-bg`, which is
+     * the colour of the box this chart already sits in, so the chart has no
+     * edge of its own. Read at init and re-read on every theme change, because
+     * the effect re-runs on `dark`.
+     */
+    const css = getComputedStyle(document.documentElement)
+    const bg = css.getPropertyValue('--color-bg').trim()
+    const grid = css.getPropertyValue('--color-border-light').trim()
+
     const script = document.createElement('script')
     script.type = 'text/javascript'
     script.async = true
@@ -119,8 +135,17 @@ export default function TickerChart({ symbol, height = 520, interval = 'D' }) {
       style: '1',
       locale: 'en',
       enable_publishing: false,
-      hide_top_toolbar: false,
+      /**
+       * Both toolbars off (Andy, 2026-08-18). The top bar carried its own
+       * interval buttons, chart-type pickers, an indicator browser and a
+       * screenshot camera — a second set of controls for a chart whose
+       * timeframe this page already owns, in a vocabulary that is not this
+       * site's. What is left is the drawing and its legend.
+       */
+      hide_top_toolbar: true,
       hide_side_toolbar: true,
+      backgroundColor: bg,
+      gridColor: grid,
       allow_symbol_change: false,
       /**
        * Andy's overlay set, 2026-08-18: 10 EMA, 21 EMA, 50 SMA. RSI is gone —
