@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import Squares from '../Squares'
 import { barStyle } from '../groups/ThemeBars'
 import { tickerHref } from '../portfolio/lib/tickerUrl'
@@ -47,6 +47,26 @@ import { useLanguage } from '../../i18n/LanguageContext'
  * one.
  */
 
+/**
+ * TEN ROWS, THEN SCROLL (Andy, 2026-08-18).
+ *
+ * The table used to open at 25 rows and grow by a button. On page 3 that put
+ * the chart, the shortlist and the controls a screen and a half above the
+ * fold — you had to scroll the PAGE to see the table and scroll it back to use
+ * the chart the table feeds. Ten rows in a box of their own keeps the whole
+ * instrument on one screen and the rest of the list is a scroll inside it.
+ *
+ * The progressive reveal stays underneath. `All` is 2,548 rows; rendering them
+ * because the box now scrolls would trade a layout problem for a rendering
+ * one. The button lives at the bottom of the scroll area, where it is reached
+ * by the same gesture that reaches the rows.
+ *
+ * The height is MEASURED, not assumed. A guessed 26px row let nine rows into a
+ * box asked for ten — rows are 27.8px at this type scale, and they would move
+ * again the day the scale does. The header and one real row are measured after
+ * layout and the box is sized off them.
+ */
+const VISIBLE_ROWS = 10
 const HEAD = 25
 const STEP = 100
 
@@ -219,6 +239,8 @@ function SortTh({ k, sort, onSort, align = 'right', title, children }) {
 export default function StockTable({ rows, defaultSort = 'rs3', onChart }) {
   const { t: tr } = useLanguage()
   const [shown, setShown] = useState(HEAD)
+  const boxRef = useRef(null)
+  const [maxH, setMaxH] = useState(null)
   const [open, setOpen] = useState(() => new Set())
   const [sort, setSort] = useState(() => ({ key: defaultSort, dir: 'desc' }))
 
@@ -242,6 +264,21 @@ export default function StockTable({ rows, defaultSort = 'rs3', onChart }) {
       : { key, dir: SORTS[key]?.str ? 'asc' : 'desc' })
 
   const visible = sorted.slice(0, shown)
+
+  /**
+   * Size the box off a real header and a real row, once they exist. Re-measured
+   * when the row set changes, because a table that came back empty and then
+   * filled would otherwise keep the height it had while empty.
+   */
+  useLayoutEffect(() => {
+    const box = boxRef.current
+    const head = box?.querySelector('thead')
+    const row = box?.querySelector('tbody tr')
+    if (!head || !row) return
+    const h = head.getBoundingClientRect().height
+    const r = row.getBoundingClientRect().height
+    if (h && r) setMaxH(Math.round(h + VISIBLE_ROWS * r))
+  }, [visible.length])
   const hidden = sorted.length - visible.length
 
   const toggle = (t) => setOpen((prev) => {
@@ -259,11 +296,14 @@ export default function StockTable({ rows, defaultSort = 'rs3', onChart }) {
   }
 
   return (
-    // The table is wider than a phone. It scrolls inside its own box so the
-    // page does not scroll with it — every wide table on the site does this.
-    <div className="overflow-x-auto">
+    // Wider than a phone and taller than its slot: it scrolls inside its own
+    // box on both axes so the page scrolls with neither.
+    // The header is sticky within that box — a column header that leaves with
+    // the first ten rows makes every row after them unreadable.
+    <div ref={boxRef} className="overflow-auto"
+         style={maxH ? { maxHeight: `${maxH}px` } : undefined}>
       <table className="w-full min-w-[720px] text-[12.5px] border-collapse">
-        <thead>
+        <thead className="sticky top-0 z-10 bg-[var(--color-bg)]">
           <tr className="text-[10px] font-mono font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
             <th className="text-right py-1 pr-2.5 font-medium w-7">#</th>
             <SortTh k="ticker" sort={sort} onSort={clickSort} align="left">{tr('scr.col.ticker')}</SortTh>
