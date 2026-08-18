@@ -4,6 +4,7 @@ import TickerLink from '../ticker/TickerLink'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { useWatchlist } from '../../hooks/useWatchlist'
 import PickedChart from '../ticker/PickedChart'
+import ShortlistTray from '../shared/ShortlistTray'
 
 /**
  * Today's list — six questions, already asked.
@@ -675,6 +676,7 @@ export default function WatchlistPage({ zone: routeZone }) {
         </div>
         <div className="min-w-0 order-1 xl:order-none mb-4 xl:mb-0 xl:sticky xl:top-3">
           <PickedChart />
+          <div className="mt-3"><ShortlistTray /></div>
         </div>
       </div>
 

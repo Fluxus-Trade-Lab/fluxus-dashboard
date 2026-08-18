@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import TickerChart from './TickerChart'
 import { useChartPick } from '../../hooks/useChartPick'
+import { useShortlist } from '../../hooks/useShortlist'
 
 /**
  * The fixed chart card — page 3's middle tier.
@@ -33,11 +34,34 @@ const SPANS = [
 
 export default function PickedChart({ height = 460 }) {
   const { symbol, isDefault, stale, names, panel, pick } = useChartPick()
+  const shortlist = useShortlist()
   const [span, setSpan] = useState('D')
+  const [query, setQuery] = useState('')
+
+  /**
+   * ANY name on today's file, not just the ones on the default screen.
+   *
+   * The chip strip below is one door and it only opens onto True Market
+   * Leaders. This is the other: type three letters and chart anything the
+   * nightly run has readings for. It is deliberately NOT a click on the name
+   * cells in the grids — those cells are already a ticker, a theme mark and a
+   * number inside about 90px, and a third target in there would be a worse
+   * version of both gestures. Reaching a name is a keystroke; that is cheap.
+   */
+  const matches = useMemo(() => {
+    const q = query.trim().toUpperCase()
+    if (q.length < 1) return []
+    return shortlist.universe
+      .filter((r) => r.ticker.startsWith(q))
+      .slice(0, 8)
+  }, [query, shortlist.universe])
 
   if (!panel) return null
 
-  const current = names.find((n) => n.ticker === symbol) ?? null
+  const current = names.find((n) => n.ticker === symbol)
+    ?? shortlist.universe.find((r) => r.ticker === symbol)
+    ?? null
+  const onList = symbol ? shortlist.has(symbol) : false
 
   return (
     <section className="rounded-3xl bg-[var(--color-surface)] p-4 flex flex-col gap-3">
@@ -52,6 +76,21 @@ export default function PickedChart({ height = 460 }) {
             {current.group_state && <> &middot; {current.group_state}</>}
             {current.rs_1m != null && <> &middot; RS 1M <span className="font-mono tabular-nums">{current.rs_1m}</span></>}
           </span>
+        )}
+        {symbol && (
+          /* the decision point. You looked at the chart; this is where the
+             looking turns into a name you leave with. */
+          <button type="button"
+                  onClick={() => (onList ? shortlist.remove(symbol)
+                                         : shortlist.add(symbol, current ?? {},
+                                                         current?.from ?? panel.label))}
+                  aria-pressed={onList}
+                  className={`text-[10px] font-mono uppercase tracking-[.14em] px-2 py-[3px]
+                              rounded border-none cursor-pointer transition-colors ${onList
+                    ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
+                    : 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
+            {onList ? 'on shortlist \u2212' : 'add to shortlist +'}
+          </button>
         )}
         <div className="ml-auto flex gap-1" role="group" aria-label="timeframe">
           {SPANS.map((s) => (
@@ -121,6 +160,45 @@ export default function PickedChart({ height = 460 }) {
             )
           })}
         </div>
+      </div>
+
+      {/* the second door: anything on tonight's file, by name */}
+      <div className="relative">
+        <input type="search" value={query} onChange={(e) => setQuery(e.target.value)}
+               placeholder="chart any name on tonight's file…"
+               aria-label="find a name to chart"
+               className="w-full bg-[var(--color-surface-raised)] border-none rounded
+                          px-2.5 py-[5px] text-[11px] font-mono text-[var(--color-text)]
+                          placeholder:text-[var(--color-text-secondary)]" />
+        {matches.length > 0 && (
+          <ul className="list-none m-0 mt-1 p-0 max-h-[168px] overflow-y-auto
+                         rounded bg-[var(--color-surface-raised)]">
+            {matches.map((r) => (
+              <li key={r.ticker}>
+                <button type="button"
+                        onClick={() => { pick(r.ticker); setQuery('') }}
+                        className="w-full flex items-baseline gap-2 text-left px-2.5 py-[5px]
+                                   bg-transparent border-none cursor-pointer
+                                   hover:bg-[var(--color-surface)]">
+                  <span className="text-[11px] font-mono font-semibold
+                                   text-[var(--color-text-bold)]">{r.ticker}</span>
+                  <span className="min-w-0 flex-1 truncate text-[10px]
+                                   text-[var(--color-text-muted)]">{r.from}</span>
+                  {r.rs_1m != null && (
+                    <span className="text-[10px] font-mono tabular-nums
+                                     text-[var(--color-text-secondary)]">{r.rs_1m}</span>
+                  )}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        {query.trim() && matches.length === 0 && (
+          <p className="m-0 mt-1 px-2.5 text-[10px] text-[var(--color-text-muted)]">
+            No name starting with <span className="font-mono">{query.trim().toUpperCase()}</span> on
+            tonight&rsquo;s file. That means no scan found it &mdash; not that it does not exist.
+          </p>
+        )}
       </div>
 
       <p className="m-0 text-[10px] leading-relaxed text-[var(--color-text-muted)]">

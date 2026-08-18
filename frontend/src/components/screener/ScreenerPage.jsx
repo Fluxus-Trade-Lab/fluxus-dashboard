@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import PageHeader from '../PageHeader'
 import PickedChart from '../ticker/PickedChart'
+import ShortlistTray from '../shared/ShortlistTray'
 import Reading, { readScreener } from '../Reading'
 import { useHeatingUp } from '../../hooks/useHeatingUp'
 import { useUniverse } from '../../hooks/useUniverse'
@@ -351,6 +352,7 @@ export default function ScreenerPage() {
         </div>
         <div className="min-w-0 order-1 xl:order-none mb-4 xl:mb-0 xl:sticky xl:top-3">
           <PickedChart />
+          <div className="mt-3"><ShortlistTray /></div>
         </div>
       </div>
 
