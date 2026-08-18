@@ -298,75 +298,101 @@ function Count({ panel, view = {}, zoneKey }) {
   )
 }
 
-/* ── Landing: six cards ──────────────────────────────────────────────────── */
+/* ── Landing: six questions as a lens, every scan on the table ───────────── */
 
-function ZoneCard({ zone, index, view }) {
+/**
+ * The six questions are a SELECTOR, not a container.
+ *
+ * The first build made each question a card you opened, which buried
+ * seventeen scans behind six doors: to see what the LL-HL pivots found you had
+ * to know they lived under "Can I enter today?" and click. Andy wants every
+ * scan and its names in front of him, with the questions as a lens he points
+ * at them — pick one and only the scans that answer it stay on the table.
+ *
+ * So the questions are chips carrying their own totals, and the scans are the
+ * page. Nothing selected shows all seventeen, which is the honest default: the
+ * page has not decided which question matters this morning.
+ */
+function QuestionChip({ zone, index, active, onPick, view }) {
   const { t } = useLanguage()
   const live = zone.panels.filter((p) => p.measured)
-  // A taste, not the list. Taken from the biggest panel, because that is the
-  // one the question is mostly answered by.
-  const lead = [...live].sort((a, b) => b.count - a.count)[0]
-  // Twelve, not eight: the cards are full-width now and eight names left the
-  // bottom third of each one empty.
-  const taste = shown(lead || { tickers: [] }, { ...view, zoneKey: zone.key }).slice(0, 12)
-  const rsKey = pickRs(taste)
-
+  const n = live.reduce((sum, p) => sum + shown(p, { ...view, zoneKey: zone.key }).length, 0)
+  const total = live.reduce((sum, p) => sum + p.count, 0)
   return (
-    <button type="button" onClick={() => go(zone.key)}
-            className="group text-left flex flex-col h-full rounded-2xl overflow-hidden
-                       cursor-pointer transition-colors border border-[var(--color-border-light)]
-                       bg-[var(--color-surface)] hover:border-[var(--color-border)]">
-      {/* A header BAND, not a floating line. It is what makes six cards read as
-          one grid rather than six paragraphs — the eye locks onto the repeated
-          bar and stops re-finding each card's top edge. */}
-      <span className="flex items-baseline gap-2.5 px-3 py-2
-                       bg-[var(--color-hover-bg)] border-l-2 border-[var(--color-accent)]">
-        <span className="text-[10px] font-mono tabular-nums text-[var(--color-text-muted)]">
+    <button type="button" onClick={() => onPick(active ? null : zone.key)}
+            className={`text-left rounded-xl px-3 py-2.5 border cursor-pointer transition-colors
+                        ${active
+                          ? 'border-[var(--color-accent)] bg-[var(--color-hover-bg)]'
+                          : 'border-[var(--color-border-light)] bg-[var(--color-surface)] '
+                            + 'hover:border-[var(--color-border)]'}`}>
+      <span className="flex items-baseline gap-2">
+        <span className="text-[9.5px] font-mono tabular-nums text-[var(--color-text-muted)]">
           {String(index + 1).padStart(2, '0')}
         </span>
-        <b className="text-[14.5px] font-semibold">{tr(t, `wlz.${zone.key}`, zone.label)}</b>
-        {/* Only when something is still waiting. Complete, this said "4/4" in
-            the same shape as the rows' "6/23" below it, and those are two
-            different ratios — panels run vs names at an RS high. Two meanings
-            in one form on one card is a misreading waiting to happen. */}
-        {live.length < zone.panels.length && (
-          <span className="ml-auto text-[10px] font-mono text-[var(--color-text-muted)]">
-            {t('wl.measured', { n: live.length, of: zone.panels.length })}
-          </span>
-        )}
+        <b className="text-[13px] font-semibold leading-tight">
+          {tr(t, `wlz.${zone.key}`, zone.label)}
+        </b>
       </span>
-
-      {/* Panel, count. The bars are gone: the count is printed right there, so
-          a bar beside it was a second copy of one number in more ink — and six
-          cards of them were most of what made the page look busy. */}
-      <span className="block px-3 pt-2 pb-2.5">
-        {zone.panels.map((p) => (
-          <span key={p.key} className="flex items-baseline gap-2 py-[2px]">
-            <span className="text-[11.5px] text-[var(--color-text-secondary)] truncate">
-              {tr(t, `wlp.${p.key}`, p.label)}
-            </span>
-            <i className="flex-1 border-b border-dotted border-[var(--color-border-light)]
-                          translate-y-[-3px]" />
-            <Count panel={p} view={view} zoneKey={zone.key} />
-          </span>
-        ))}
+      <span className="flex items-baseline gap-1.5 mt-1">
+        <b className="text-[15px] font-semibold tabular-nums text-[var(--color-took)]">{nf(n)}</b>
+        <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
+          / {nf(total)} · {live.length} {t('wl.scans')}
+        </span>
       </span>
-
-      {/* Names follow the panels directly. Pinning them to the bottom (mt-auto)
-          left a band of nothing across the middle of the short cards once the
-          page went full width — equal heights should push the slack to the
-          END of a card, not into the middle of it. */}
-      <span className="block border-t border-[var(--color-border-light)]
-                       bg-[var(--color-bg)]">
-        {taste.length > 0
-          ? <Names rows={taste} rsKey={rsKey} />
-          : <span className="block px-3 py-2.5 text-[11px]
-                             text-[var(--color-text-muted)]">{t('wl.none.short')}</span>}
-      </span>
-      <span className="mt-auto block px-3 py-1.5 text-[9.5px] font-mono tracking-[.12em]
-                       text-[var(--color-text-muted)] group-hover:text-[var(--color-text)]
-                       bg-[var(--color-bg)]">{t('wl.open')} →</span>
     </button>
+  )
+}
+
+/** One scan, with its names on the table. */
+function ScanCard({ panel, zoneKey, view, rsKey }) {
+  const { t } = useLanguage()
+  const [openRecipe, setOpenRecipe] = useState(false)
+  const rows = shown(panel, { ...view, zoneKey })
+  const exempt = view.floor && !floorApplies(zoneKey)
+
+  return (
+    <div className="flex flex-col rounded-xl overflow-hidden border
+                    border-[var(--color-border-light)] bg-[var(--color-surface)]">
+      <div className="flex items-baseline gap-2 px-3 py-2 border-b border-[var(--color-border-light)]">
+        <b className="text-[12.5px] font-semibold leading-tight">
+          {tr(t, `wlp.${panel.key}`, panel.label)}
+        </b>
+        <span className="ml-auto shrink-0">
+          <Count panel={panel} view={view} zoneKey={zoneKey} />
+        </span>
+        <button type="button" onClick={() => setOpenRecipe(!openRecipe)}
+                className="shrink-0 text-[9.5px] font-mono bg-transparent border-none p-0
+                           cursor-pointer text-[var(--color-text-muted)]
+                           hover:text-[var(--color-text)]">
+          {openRecipe ? '−' : t('wl.recipe')}
+        </button>
+      </div>
+
+      {openRecipe && (
+        <p className="text-[10.5px] font-mono text-[var(--color-text-muted)] m-0 px-3 py-2
+                      border-b border-[var(--color-border-light)]">{panel.recipe}</p>
+      )}
+
+      {rows.length > 0 ? (
+        <Names rows={rows} rsKey={rsKey} />
+      ) : (
+        <p className="text-[11px] text-[var(--color-text-muted)] m-0 px-3 py-3">
+          {!panel.measured ? t('wl.pending')
+            : exempt ? t('wl.none') : t('wl.none.floor')}
+        </p>
+      )}
+
+      {rows.length > 0 && (
+        <button type="button"
+                onClick={() => navigator.clipboard?.writeText(
+                  rows.map((r) => r.ticker).join(',')).catch(() => {})}
+                className="mt-auto text-left px-3 py-1.5 text-[9.5px] font-mono uppercase
+                           tracking-[.14em] bg-transparent border-none cursor-pointer
+                           text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
+          {t('wl.copy')} {rows.length}
+        </button>
+      )}
+    </div>
   )
 }
 
@@ -502,6 +528,9 @@ export default function WatchlistPage({ zone: routeZone }) {
   // switch stays because every count on the page is of the FULL panel and he
   // must be able to see what the floor is holding back.
   const [floor, setFloor] = useState(true)
+  // The lens. null = all seventeen scans, which is the honest default:
+  // the page has not decided which question matters this morning.
+  const [lens, setLens] = useState(null)
 
   const zones = useMemo(() => {
     if (!data?.zones) return []
@@ -526,11 +555,12 @@ export default function WatchlistPage({ zone: routeZone }) {
   const at = zones.findIndex((z) => z.key === routeZone)
   if (at >= 0) {
     return (
-      <ZoneDetail zone={zones[at]} index={at} total={zones.length} view={{ highOnly, floor, pool3m }} />
+      <ZoneDetail zone={zones[at]} index={at} total={zones.length} view={view} />
     )
   }
 
   const cross = data.cross_zone || []
+  const view = { highOnly, floor, pool3m }
   const rule = data.cross_zone_rule
 
   return (
@@ -553,12 +583,23 @@ export default function WatchlistPage({ zone: routeZone }) {
               note={t('wl.floor.note')} />
       </div>
 
-      {/* auto-rows-fr: every card the same height, which is most of what
-          makes a grid of cards read as a grid rather than a pile. */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 auto-rows-fr">
+      {/* The six questions, as a lens over the scans below. */}
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2 mb-4">
         {zones.map((z, i) => (
-          <ZoneCard key={z.key} zone={z} index={i} view={{ highOnly, floor, pool3m }} />
+          <QuestionChip key={z.key} zone={z} index={i} view={view}
+                        active={lens === z.key} onPick={setLens} />
         ))}
+      </div>
+
+      {/* Every scan on the table. The lens narrows which ones, never what any
+          of them counted. */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3
+                      items-start">
+        {zones.filter((z) => !lens || z.key === lens).flatMap((z) =>
+          z.panels.map((p) => (
+            <ScanCard key={`${z.key}/${p.key}`} panel={p} zoneKey={z.key} view={view}
+                      rsKey={pickRs(p.tickers || [])} />
+          )))}
       </div>
 
       {/* Names that answer more than one question. Described, not ranked, and
