@@ -379,13 +379,9 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 
 数据端配套(我做):`均线收复` 字段(↑EMA21/↑SMA50 事件 + 量比)、4% Bullish 的 ≥15% 子标签、预设命中每晚落 ticker_events.csv。
 
-## 九、数据端 → 前端:Regime 显示层改带名与切点(2026-08-19,Andy:"同意。是显示层的名字以及数值")
+## 九、数据端 → 前端:Regime 显示层(2026-08-19;**Andy 两次拍板,以后一次为准**)
 
-背景:同一个 0–100 分数两套带(见 `pipeline/screeners/regime.py` 头注)。分析层 Damaged / Mixed / Healthy / Extended 切 **47 / 63 / 75**(历史四分位、对 5% 回撤率单调验证过);显示层 `frontend/src/components/dashboard/RegimeBand.jsx` Defence / Caution / Neutral / Constructive / Full 均分切 12 / 34 / 56 / 78。08-14/15 分数 78.1 在分析层已是 **Extended**("几乎所有条件同时满足"),显示层还叫 Constructive——Andy 的体感与分析层一致、与显示层不一致。
+1. 16:40 JST 第一版:改用分析层四档(Damaged/Mixed/Healthy/Extended,47/63/75)。**作废。**
+2. 17:20 JST 定稿:**"换回原来的 5 层读数。把 Full 变成 Euphoria"** —— 保留 `RegimeBand.jsx` 现有五档与切点(Defence 0–18 · Caution 18–40 · Neutral 40–62 · Constructive 62–84 · **Euphoria 84–100**),只把顶档的名字 Full → **Euphoria**;power-trend / breadth 两个投票者的绑定逻辑不动。
 
-要求:**显示层改用分析层的带名与切点**(一支数字一个故事):
-- `Damaged` 0–47 · `Mixed` 47–63 · `Healthy` 63–75 · `Extended` 75–100;切点与名字直接读 `breadth.json → regime.bands`(数据端已给:`{key,label,min,max,describes}`),不要在前端再写一份常量
-- 每带的 `describes` 一句话照 JSON 显示;`caveat` 字段("a risk-budget reading, not a direction call…")留在 ⓘ 里
-- 颜色语义:Extended 不是"好",是"满"——顶档 20 日 5% 回撤率 9%、底档 31%,色阶按回撤风险走(Damaged 最重),Extended 用中性/饱和度高而非绿
-- 不加任何拟合的"euphoria"提示;`data/research/regime_study_2026-08/README.md` 第二节:从 ≥75 一日掉到 ≤60 的 27 次之后 20 日中位 +1.8%、胜率 81%,没有预测力
-- 数据端同日修了 08-17 那种过期指数 K 线把分数推到 87.5 的事故(`breadth_store.check_quality` 拒收 spx_close 与上一交易日相同的行)
+背景:08-14/15 分数 78.1 显示 Constructive、分析层已是 Extended;08-17 坏数据(过期指数 K 线,数据端已加闸)推到 87.5 显示 Full。Andy 的体感是 euphoria,名字照体感改。`data/research/regime_study_2026-08/README.md`:从 ≥75 一日掉到 ≤60 的 27 次之后 20 日中位 +1.8%、胜率 81%,顶档名字是描述不是预警,**不加任何 euphoria 触发的提示或拟合**。
