@@ -399,7 +399,14 @@ export default function ScreenerPage() {
           column is a smear; across the page it is a chart. */}
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px]
                       xl:grid-cols-[minmax(0,1fr)_340px] gap-3 items-start mb-4">
-        <PickedChart height={400} />
+        {/* 320, not 400 (Andy 2026-08-19, off the finish review). The band and
+            the ten-row table were each right on their own and inverted the
+            page's grading together: measured, the chart card came to 322
+            against the table's 314, and this page's largest object is supposed
+            to be the field it is here to scan. At 320 the chart is still
+            1,378px wide — more than three times the column it started in — so
+            the reason for running it across the page survives the trim. */}
+        <PickedChart height={320} />
         <ShortlistTray />
       </div>
 
