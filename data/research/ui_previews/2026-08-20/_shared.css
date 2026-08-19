@@ -1,0 +1,25 @@
+:root{--color-bg:#e2e0d6;--color-surface:#f2f0e9;--color-surface-alt:#e8e6dd;--color-surface-raised:#dcd9ce;
+--color-text:#3a352f;--color-text-secondary:#4b453e;--color-text-bold:#292524;--color-line:#c9c5b8;--color-accent:#2d5f8a}
+@media (prefers-color-scheme:dark){:root{--color-bg:#12110F;--color-surface:#232120;--color-surface-alt:#1b1a19;
+--color-surface-raised:#32302f;--color-text:#d6d5d4;--color-text-secondary:#b7b6b5;--color-text-bold:#fff;
+--color-line:#3a3836;--color-accent:#6a97bd}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--color-bg);color:var(--color-text);
+font:13px/1.5 ui-sans-serif,system-ui,-apple-system,"Helvetica Neue",sans-serif}
+.wrap{max-width:920px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:15px;font-weight:600;color:var(--color-text-bold);margin:0 0 2px}
+h2{font-size:12px;font-weight:600;color:var(--color-text-bold);margin:26px 0 8px;
+letter-spacing:.02em;text-transform:uppercase}
+p.note{font-size:11.5px;color:var(--color-text-secondary);margin:0 0 18px;max-width:62ch}
+.panel{background:var(--color-surface);border:1px solid var(--color-line);border-radius:4px;overflow:hidden}
+.phead{display:flex;align-items:baseline;gap:8px;padding:7px 10px;border-bottom:1px solid var(--color-line);
+font-size:11px;color:var(--color-text-secondary)}
+.phead b{font-size:11.5px;color:var(--color-text-bold);font-weight:600}
+.rows{display:grid}
+.row{display:flex;align-items:baseline;gap:6px;padding:3px 10px;border-bottom:1px solid color-mix(in srgb,var(--color-line) 45%,transparent)}
+.row:last-child{border-bottom:0}
+.tk{font:600 11.5px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace;padding:1px 4px;border-radius:3px;flex:none}
+.rs{margin-left:auto;font:11px/1.35 ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums;color:var(--color-text-secondary)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;padding:7px 10px;border-top:1px solid var(--color-line);
+font-size:10.5px;color:var(--color-text-secondary);align-items:center}
+.legend span{display:flex;align-items:center;gap:5px}

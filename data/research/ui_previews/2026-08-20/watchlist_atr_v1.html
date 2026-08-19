@@ -1,0 +1,22 @@
+<!doctype html><meta charset=utf-8><title>watchlist · ATR 位 · v1 形状通道</title>
+<link rel=stylesheet href=_shared.css><div class=wrap>
+<h1>watchlist · ATR 位 · v1 形状通道</h1><p class=note>负值不借底色，改用 ticker 下方一条下沉短横；未测量是一个空心点。零新增颜色，第二通道是形状。</p>
+<h2>entries · liquid leader pullback</h2>
+<div class=panel><div class=phead><b>ll_pullback</b><span>25 只 · 08-18</span></div>
+<div class=rows id=r></div>
+<div class=legend id=lg></div></div>
+<script src=_rows.js></script><script>
+const d=isDark(),R=document.getElementById('r');
+for(const x of ROWS){const f=atrFill(x.a,d);const el=document.createElement('div');el.className='row';
+ let mark='';
+ if(x.a==null) mark=`<i style="width:5px;height:5px;border:1px solid var(--color-text-secondary);border-radius:50%;display:inline-block;flex:none" title="ATR 位未测量"></i>`;
+ else if(x.a<0) mark=`<i style="width:9px;height:2px;background:var(--color-text-secondary);display:inline-block;flex:none;transform:translateY(3px)" title="${x.a.toFixed(1)} ATR — 在 50 日线下方"></i>`;
+ el.innerHTML=`<span class=tk style="${f?`background:${f.bg};color:${f.fg}`:'color:var(--color-text-bold)'}">${x.t}</span>${mark}<span class=rs>${x.rs}</span>`;
+ R.append(el)}
+document.getElementById('lg').innerHTML=
+ `<span><i style="width:14px;height:9px;border-radius:2px;background:${atrFill(1,d).bg}"></i>0–4 建仓</span>`+
+ `<span><i style="width:14px;height:9px;border-radius:2px;background:${atrFill(6,d).bg}"></i>5–7 持有</span>`+
+ `<span><i style="width:14px;height:9px;border-radius:2px;background:${atrFill(9,d).bg}"></i>≥7 只减</span>`+
+ `<span><i style="width:9px;height:2px;background:var(--color-text-secondary)"></i>50 日线下方</span>`+
+ `<span><i style="width:5px;height:5px;border:1px solid var(--color-text-secondary);border-radius:50%"></i>未测量</span>`;
+</script></div>

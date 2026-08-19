@@ -1,0 +1,27 @@
+<!doctype html><meta charset=utf-8><title>watchlist · ATR 位 · v2 刻度锚</title>
+<link rel=stylesheet href=_shared.css><div class=wrap>
+<h1>watchlist · ATR 位 · v2 刻度锚</h1><p class=note>每行给 ATR 位一条 0–10 的微型刻度：方块的横向位置就是读数，0 刻线把负值挤到轴外；未测量整条轴不画。</p>
+<h2>entries · liquid leader pullback</h2>
+<div class=panel><div class=phead><b>ll_pullback</b><span>25 只 · 08-18</span></div>
+<div class=rows id=r></div>
+<div class=legend id=lg></div></div>
+<script src=_rows.js></script><script>
+const d=isDark(),R=document.getElementById('r');
+const AX=64;
+for(const x of ROWS){const f=atrFill(x.a,d);const el=document.createElement('div');el.className='row';
+ let axis;
+ if(x.a==null) axis=`<i style="width:${AX}px;flex:none" title="ATR 位未测量"></i>`;
+ else{const neg=x.a<0, p=neg?0:Math.min(x.a,10)/10*(AX-16);
+  axis=`<i style="width:${AX}px;flex:none;position:relative;height:9px;display:inline-block" title="${x.a.toFixed(1)} ATR">`
+   +`<i style="position:absolute;left:8px;right:0;top:4px;height:1px;background:var(--color-line)"></i>`
+   +`<i style="position:absolute;left:8px;top:1px;width:1px;height:7px;background:var(--color-text-secondary)"></i>`
+   +(neg?`<i style="position:absolute;left:0;top:2.5px;width:5px;height:5px;border:1px solid var(--color-text-secondary);border-radius:1px"></i>`
+        :`<i style="position:absolute;left:${8+p}px;top:2px;width:6px;height:6px;border-radius:1px;background:${f.bg}"></i>`)+`</i>`}
+ el.innerHTML=`<span class=tk style="color:var(--color-text-bold)">${x.t}</span>${axis}<span class=rs>${x.rs}</span>`;
+ R.append(el)}
+document.getElementById('lg').innerHTML=
+ `<span>刻度 0 → 10 ATR，竖线是 50 日线</span>`+
+ `<span><i style="width:6px;height:6px;border-radius:1px;background:${atrFill(2,d).bg}"></i>轴上=读数</span>`+
+ `<span><i style="width:5px;height:5px;border:1px solid var(--color-text-secondary);border-radius:1px"></i>轴外=线下方</span>`+
+ `<span>整条轴不画 = 未测量</span>`;
+</script></div>

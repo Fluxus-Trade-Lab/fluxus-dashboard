@@ -1,0 +1,26 @@
+<!doctype html><meta charset=utf-8><title>watchlist · ATR 位 · v3 折底降灰</title>
+<link rel=stylesheet href=_shared.css><div class=wrap>
+<h1>watchlist · ATR 位 · v3 折底降灰</h1><p class=note>沿用契约 §八 已定的手法：负值整行降灰折到格底；未测量留在原位、ticker 后一个空心点。不新增任何编码。</p>
+<h2>entries · liquid leader pullback</h2>
+<div class=panel><div class=phead><b>ll_pullback</b><span>25 只 · 08-18</span></div>
+<div class=rows id=r></div><div id=fold></div>
+<div class=legend id=lg></div></div>
+<script src=_rows.js></script><script>
+const d=isDark(),R=document.getElementById('r'),F=document.getElementById('fold');
+const draw=(x,dim)=>{const f=atrFill(x.a,d);const el=document.createElement('div');el.className='row';
+ if(dim)el.style.opacity='.55';
+ const dot=x.a==null?`<i style="width:5px;height:5px;border:1px solid var(--color-text-secondary);border-radius:50%;display:inline-block;flex:none" title="ATR 位未测量"></i>`:'';
+ el.innerHTML=`<span class=tk style="${f?`background:${f.bg};color:${f.fg}`:'color:var(--color-text-bold)'}">${x.t}</span>${dot}`
+  +(dim?`<span style="font:10.5px ui-monospace,Menlo,monospace;color:var(--color-text-secondary)">${x.a.toFixed(1)} ATR</span>`:'')
+  +`<span class=rs>${x.rs}</span>`;return el};
+ROWS.filter(x=>x.a==null||x.a>=0).forEach(x=>R.append(draw(x,false)));
+const neg=ROWS.filter(x=>x.a!=null&&x.a<0);
+if(neg.length){const h=document.createElement('div');
+ h.style.cssText='padding:4px 10px;border-top:1px solid var(--color-line);font-size:10.5px;color:var(--color-text-secondary)';
+ h.textContent=`在 50 日线下方 · ${neg.length} 只`;F.append(h);neg.forEach(x=>F.append(draw(x,true)))}
+document.getElementById('lg').innerHTML=
+ `<span><i style="width:14px;height:9px;border-radius:2px;background:${atrFill(1,d).bg}"></i>0–4 建仓</span>`+
+ `<span><i style="width:14px;height:9px;border-radius:2px;background:${atrFill(6,d).bg}"></i>5–7 持有</span>`+
+ `<span><i style="width:14px;height:9px;border-radius:2px;background:${atrFill(9,d).bg}"></i>≥7 只减</span>`+
+ `<span><i style="width:5px;height:5px;border:1px solid var(--color-text-secondary);border-radius:50%"></i>未测量</span>`;
+</script></div>
