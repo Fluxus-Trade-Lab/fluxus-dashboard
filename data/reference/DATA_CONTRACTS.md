@@ -378,3 +378,14 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 7. 视觉沿用现网格;步骤条+芯片用现有 accent,不新增颜色;ATR 三色是语义色。页面上不加长文。
 
 数据端配套(我做):`均线收复` 字段(↑EMA21/↑SMA50 事件 + 量比)、4% Bullish 的 ≥15% 子标签、预设命中每晚落 ticker_events.csv。
+
+## 九、数据端 → 前端:Regime 显示层改带名与切点(2026-08-19,Andy:"同意。是显示层的名字以及数值")
+
+背景:同一个 0–100 分数两套带(见 `pipeline/screeners/regime.py` 头注)。分析层 Damaged / Mixed / Healthy / Extended 切 **47 / 63 / 75**(历史四分位、对 5% 回撤率单调验证过);显示层 `frontend/src/components/dashboard/RegimeBand.jsx` Defence / Caution / Neutral / Constructive / Full 均分切 12 / 34 / 56 / 78。08-14/15 分数 78.1 在分析层已是 **Extended**("几乎所有条件同时满足"),显示层还叫 Constructive——Andy 的体感与分析层一致、与显示层不一致。
+
+要求:**显示层改用分析层的带名与切点**(一支数字一个故事):
+- `Damaged` 0–47 · `Mixed` 47–63 · `Healthy` 63–75 · `Extended` 75–100;切点与名字直接读 `breadth.json → regime.bands`(数据端已给:`{key,label,min,max,describes}`),不要在前端再写一份常量
+- 每带的 `describes` 一句话照 JSON 显示;`caveat` 字段("a risk-budget reading, not a direction call…")留在 ⓘ 里
+- 颜色语义:Extended 不是"好",是"满"——顶档 20 日 5% 回撤率 9%、底档 31%,色阶按回撤风险走(Damaged 最重),Extended 用中性/饱和度高而非绿
+- 不加任何拟合的"euphoria"提示;`data/research/regime_study_2026-08/README.md` 第二节:从 ≥75 一日掉到 ≤60 的 27 次之后 20 日中位 +1.8%、胜率 81%,没有预测力
+- 数据端同日修了 08-17 那种过期指数 K 线把分数推到 87.5 的事故(`breadth_store.check_quality` 拒收 spx_close 与上一交易日相同的行)
