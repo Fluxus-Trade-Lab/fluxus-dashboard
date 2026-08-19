@@ -603,7 +603,12 @@ class YfinanceAdapter(BaseAdapter):
         # the residue at that point is delisted symbols and unit tickers, which
         # no amount of retrying converts into price history. ~2% of the
         # universe is the healthy floor, not a failure.
-        for attempt in (1, 2):
+        # 2026-08-18: two rounds (20 s + 40 s) were not enough -- 1,047 missing
+        # after pass 1, 348 after retry 1, and retry 2's every batch came back
+        # 429 (340 left, 8.8% of the file: quality "degraded"). Yahoo's
+        # throttle window is longer than 40 s; four rounds with a growing
+        # pause cost <= 4 more minutes of a 45-minute budget.
+        for attempt in (1, 2, 3, 4):
             missing = [t for t in tickers if t not in all_data]
             if len(missing) <= max(1, int(0.03 * len(tickers))):
                 break
@@ -640,6 +645,9 @@ class YfinanceAdapter(BaseAdapter):
         stale = [t for t, (st, _) in verdict.items() if st == 'stale']
         if stale:
             logger.info(f"  {len(stale)} tickers missing their newest bar — retrying singly")
+            # the stale list is mostly the tail of the same throttle; asking
+            # again in the same second gets the same 429
+            time.sleep(30)
             for i in range(0, len(stale), 50):
                 batch = stale[i:i + 50]
                 try:
