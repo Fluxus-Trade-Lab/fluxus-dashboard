@@ -442,6 +442,20 @@ def main():
     logger = logging.getLogger(__name__)
 
     timestamp = datetime.now(timezone.utc).isoformat()
+    # 2026-08-19: a workflow_dispatch at 05:18 ET pulled Finviz's PREMARKET
+    # quotes (P 115.33 against a 117.06 close), filed a breadth row under a
+    # session that had not traded yet, and overwrote the previous session's
+    # watchlist with premarket-based panels. Finviz serves whatever tape is
+    # live: between the 04:00 premarket open and ~16:15 ET on a trading day
+    # the scrape is not a close. Refuse unless explicitly forced.
+    from pipeline.marketcal import market_now, is_trading_day
+    import os as _os
+    _now = market_now()
+    if is_trading_day(_now.date()) and (4, 0) <= (_now.hour, _now.minute) < (16, 15) \
+            and not _os.environ.get('FORCE_INTRADAY_RUN'):
+        logger.error("Refusing to run at %s ET: Finviz is serving premarket/intraday quotes, "
+                     "not a close. Set FORCE_INTRADAY_RUN=1 to override.", _now.strftime('%H:%M'))
+        return
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     HISTORY_DIR.mkdir(parents=True, exist_ok=True)
 
