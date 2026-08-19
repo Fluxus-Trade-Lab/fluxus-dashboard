@@ -1,1246 +1,375 @@
-# Fluxus Design System — v2
-
-> **这一版被重写之前的原样留在 [`DESIGN.v2.md`](DESIGN.v2.md)**(2026-08-19,
-> 逐字节副本)。里面的实测表——两套调色板的 ΔE、灰度承重列的证据、八条拒绝的触发率
-> ——是一次性的测量,重跑要花整轮;查历史读数去那份,改设计系统改这份。
-
-*v2 建于 2026-08-09。**哲学保留,执行重建。***
-*证据与推导过程:`Fluxus_Brand/visual/`(操作者模型 · 拒绝清单 · 作品形态 · 声音映射 · 探索稿与评分表)*
-
+---
+name: Fluxus Capital
+description: A market instrument that turns data into a reviewable judgement — a library, not a casino.
+colors:
+  bg: "#12110F"
+  bg-light: "#e2e0d6"
+  surface: "#232120"
+  surface-light: "#f2f0e9"
+  surface-raised: "#32302f"
+  border: "#423f3e"
+  border-light: "#2b2a29"
+  text: "#e6e5e5"
+  text-bold: "#ffffff"
+  text-secondary: "#b7b6b5"
+  text-muted: "#979594"
+  took: "#77b4fb"
+  took-light: "#194371"
+  refused: "#ef5442"
+  refused-light: "#b5342c"
+  untested: "#c2c0bf"
+  accent: "#6a97bd"
+  accent-light: "#2d5f8a"
+  profit: "#77b4fb"
+  loss: "#ef5442"
+  slot-1: "#e0e9f2"
+  slot-2: "#85cd83"
+  slot-3: "#c48658"
+typography:
+  verdict:
+    fontFamily: "PlexCond, Plex, sans-serif"
+    fontSize: "clamp(3.25rem, 9vw, 5.5rem)"
+    fontWeight: 700
+    lineHeight: 0.86
+    letterSpacing: "-0.018em"
+  title:
+    fontFamily: "Plex, sans-serif"
+    fontSize: "46px"
+    fontWeight: 600
+  display:
+    fontFamily: "Plex, sans-serif"
+    fontSize: "26px"
+    fontWeight: 600
+  lead:
+    fontFamily: "Plex, sans-serif"
+    fontSize: "17px"
+    fontWeight: 600
+  prose:
+    fontFamily: "Plex, sans-serif"
+    fontSize: "14px"
+    lineHeight: 1.45
+  body:
+    fontFamily: "Plex, sans-serif"
+    fontSize: "12.5px"
+  meta:
+    fontFamily: "Plex, sans-serif"
+    fontSize: "11px"
+  label:
+    fontFamily: "PlexMono, ui-monospace, monospace"
+    fontSize: "10px"
+    letterSpacing: "0.14em"
+rounded:
+  hair: "1px"
+  chip: "3px"
+  sm: "4px"
+  panel: "12px"
+  card: "24px"
+  pill: "9999px"
+spacing:
+  xs: "4px"
+  sm: "6px"
+  md: "8px"
+  lg: "12px"
+  xl: "16px"
+components:
+  card:
+    backgroundColor: "{colors.surface}"
+    rounded: "{rounded.card}"
+    padding: "20px 24px"
+  scan-card:
+    backgroundColor: "{colors.surface}"
+    rounded: "{rounded.panel}"
+    padding: "8px 12px"
+  scan-card-quiet:
+    backgroundColor: "transparent"
+    rounded: "{rounded.panel}"
+    padding: "7px 12px"
+  chip-menu-trigger:
+    textColor: "{colors.text-bold}"
+    typography: "{typography.body}"
+  ticker-atr-chip:
+    rounded: "{rounded.chip}"
+    padding: "1px 4px"
+    typography: "{typography.body}"
 ---
 
-## 〇、一句话
+# Fluxus Design System — v3
 
-> **让推理被看懂,不是让数字被看见。**
+*v3 written 2026-08-19 **from the running code**, not from intentions.*
+*The v2 document is preserved verbatim at [`DESIGN.v2.md`](DESIGN.v2.md) — its ΔE tables,
+greyscale evidence and refusal trigger rates are one-off measurements that cost a round
+each and cannot be re-derived from the build. Look there for the history; change the
+system here.*
 
-v1 的目标是「冷静、专注、可信」—— 那些仍然成立,而且是这一版的地基。
-v2 加的是一句更硬的:**数据太多不是问题,别人无法像操作者那样处理数据才是问题。**
-每一个界面都要为「一个陌生人能不能得出结论」负责。
+## Overview
 
-### 反多巴胺(不变)
+> **Make the reasoning legible, not the numbers visible.**
 
-不用霓虹绿、不用火箭、不用「十倍」。**图书馆,不是赌场。**
-新增一条:**反多巴胺不等于没有声音。** 声音住在解读层,永远和测量层排版分离 —— 正是那道
-分隔让「有态度」是安全的。
+Anti-dopamine. No neon green, no rockets, no "10x". **A library, not a casino.**
+Anti-dopamine does not mean voiceless — the voice lives in the interpretation layer and
+is always typographically separated from the measurement layer. That separation is what
+makes having a position safe.
 
----
+Every surface answers one question: **could a stranger reach the conclusion themselves?**
+A paying subscriber is the second reader, so provenance, recipe and threshold are
+mandatory furniture, not optional footnotes.
 
-## 一、字体(v2 更换)
+## Colors
 
-**IBM Plex**,自托管,OFL 授权,无 CDN 依赖、无授权成本。
+Two grounds, and every value is written explicitly in both. **Partial coverage is silent
+inheritance, and silent inheritance is a token that quietly fails in the other theme** —
+that is how `took` and `untested` once came out 0.8 ΔE apart in dark mode while sitting
+42 apart in light.
 
-| 用途 | 字族 | 说明 |
+| role | dark | light |
 |---|---|---|
-| 正文 · UI | **IBM Plex Sans** | `--font-sans` |
-| 大标题 · 判决 · 键名 | **IBM Plex Sans Condensed** | `--font-cond` · 压缩体只在英文成立 |
-| 数字 · 代号 · 时间戳 | **IBM Plex Mono** | `--font-mono` |
-| 中文 | **PingFang SC** | **中文永不进等宽字**(会塌,海报系统 2026 年已验证) |
+| ground | `#12110F` | `#e2e0d6` |
+| surface | `#232120` | `#f2f0e9` |
+| raised | `#32302f` | `#dcd9ce` |
+| border | `#423f3e` | `#cbc6b8` |
+| hairline | `#2b2a29` | `#dbd7cb` |
+| text | `#e6e5e5` | `#1c1917` |
+| text bold | `#ffffff` | `#292524` |
+| text secondary | `#b7b6b5` | `#4b453e` |
+| text muted | `#979594` | `#655e55` |
 
-**换掉了什么,为什么**
+### The encoding pair
 
-- Inter → Plex:Inter 是 SaaS 默认脸,没有身份。Plex 是工业出身,而且**三个字族同源**。
-- JetBrains Mono → Plex Mono:**JetBrains Mono 从来就没装在这台机器上**,
-  app 里的等宽一直在静默回退到 Menlo。换掉顺带修了这个。
-- 压缩体是新增的一档,它承担「巨大结论 + 微型规格表」那个对比 —— 语法源自 Otl Aicher,
-  当代形态见 teenage engineering。
-
----
-
-## 二、编码(v2 全新 · 有实测)
-
-**没有任何一个通道单独承担秩。**
-
-| 通道 | 承担 | 明模式 | 暗模式 |
-|---|---|---|---|
-| 填充色 | **只管符号** | `--color-took #1A5488` · `--color-refused #D1600F` | `#1D5E98` · `#D1600F` |
-| 空格 | 秩的分母 —— 没填的那一格 | `--color-v2-off #E6E2DB` | `#3A3733` |
-| 面积 | 「部分」= 半格填充 | Bertin 序列里靠前的有序变量 | 与主题无关 |
-| 纹理 | 失败挂 45° 斜纹 | 任何色彩条件下免疫 | 与主题无关 |
-| 描边 | **未测量,退出色阶** | 虚线,不填充 · `--color-untested #C2BDB4` | `#B3ADA6` |
-| 位置 | 秩 = 填了几格 | 灰度下仍可数 | 与主题无关 |
-
-那三行「与主题无关」正好是三个非颜色通道 —— 这就是为什么承重的是它们。
-颜色那三行必须两栏都写满,**一栏空着就是一个主题里没被测过**。
-
-### 实测 · 明模式(`explorations/2026-08-08/palette.html` 可复跑)
-
-| | normal | **灰度** | 红绿色盲 |
-|---|---|---|---|
-| 旧方案(4 色扛秩) | 37.4 | **3.3 ✗** | 50.7 / 46.3 |
-| **新方案** | 103.9 | **19.3 ✓** | 119.3 / 109.7 |
-
-灰度是唯一承重的那一列 —— 它是真正的线性亮度投影,**也正是这个品牌每次被截图、被打印时的真实条件**。
-(色盲两列只看方向不看数值:Vienot 矩阵不保亮度。)
-
-### 实测 · 暗模式(`explorations/2026-08-08/palette_dark.html` 可复跑)—— **明模式的证明不能外推**
-
-| | normal | **灰度** | 红绿色盲 |
-|---|---|---|---|
-| 修前(填充色静默继承明模式) | 12.3 | **0.8 ✗** | 12.4 / 12.4 |
-| **修后** | 14.3 | **14.2 ✓** | 14.2 / 14.2 |
-
-同一台机器(CIELAB ΔE + 线性光模拟)、同一条承重列,只是底色换成了 `#1C1917`。
-承重列和免责条款照旧:**灰度仍是唯一承重的那一列**,色盲两列依然只看方向。
-
-两张表的口径不同,**不可直接比大小**:明模式量的是两个填充色**之间**;
-暗模式量的是整套里**最弱的一环** —— 六对相邻 + 每个填充色对底色,取最小值。
-暗模式必须用更严的口径,因为暗模式动的正是「被对照的东西」。
-
-`took | refused` 在暗模式下也是 19.3,**一模一样,因为那是这一对本身的属性**。
-真正变的是它们被**对照的东西**:底色 L\* 95.8 → 9.0,空格 `--color-v2-off` 近白 → 近黑。
-而两个填充色当时**根本没写进 `html.dark`**,静默继承了明模式值:
-
-| 相邻对 | 修前 灰度 ΔE | 修后 灰度 ΔE |
+| | dark | light |
 |---|---|---|
-| **took \| 空格** —— 填了 vs 没填 | **11.4 ✗** | 15.5 ✓ |
-| **took \| 未测量** —— 「接住了」vs「没测」 | **0.8 ✗** | 32.2 ✓ |
-| took \| refused | 19.3 ✓ | 15.2 ✓ |
+| `took` — the market gave and it was taken | `#77b4fb` | `#194371` |
+| `refused` — it was given and refused | `#ef5442` | `#b5342c` |
+| `untested` — not measured, out of the scale | `#c2c0bf` | `#b0aaa2` |
 
-`0.8` 那一条最要命:**「我们没测这一格」和「它接住了机会」在截图里是同一个灰。**
-明模式下这两个差 42,所以永远不会有人发现。
+**No channel carries rank alone.** Fill says which side; the empty cell is the
+denominator; area says "partial"; 45° hatching marks failure; a dashed outline means
+unmeasured and leaves the colour scale; position says how many are filled. The three
+non-colour channels are the load-bearing ones — they are theme-independent, and
+**greyscale is the only column that must always pass**, because this brand's real
+condition is being screenshotted and printed.
 
-暗模式新值:`--color-took #1d5e98`(L\* 34.7 → 38.8,色相锁在 272° 不动)·
-`--color-untested #b3ada6`(L\* 35.5 → 71.0)· `--color-refused` 不变但**显式写出**,
-免得再次跨主题静默继承。
-校正后的阶梯:底 9.0 → 空格 23.2 → took 38.8 → refused 54.0(全套最小间距 ΔE 14.2)。
+### Encoding colour belongs to graphics
 
-> **教训升级为规则:一个编码集里的每一个值,都必须在每个主题里显式写出。**
-> 部分覆盖 = 静默继承 = 在另一个主题里悄悄失效。
+`took` / `refused` are **fills**. A number borrows them only when it labels its own
+graphic. Verdict words and prose never wear them — a coloured figure with no bar to
+belong to has degraded into decoration.
 
-### 三组永不混用
+`accent` is **chrome**, never data: links, focus rings, sort arrows, the "you are here"
+rule, the step bar. It answers "the interface is pointing here", never "the data says
+this".
 
-- **市场层** 蓝 `#1A5488` / 橙 `#D1600F` —— 编码**回应质量**(给了机会接住没有),不是涨跌方向
-- **钱层** 绿 `#2F6B4F` / 红 `#A33A2A` —— **只有盈亏**,永不越界到市场状态
-- **表情组**(2026-08-09 新增,**仅怪度 4–5**)—— 米黄纸 `#E9DFCB` 上的平涂:
-  深红 `#C8102E` · 金 `#F0B323` · 苔绿 `#2B6A4D` · 靛 `#3C5A8A` · 赭 `#B6895B`
+### Three sets that never mix
 
-> ### 一条原则同时解释了三组为什么可以共存
->
-> **色彩只在它不承载含义的地方可以奔放。一旦它开始表示什么,它就回到编码规矩底下。**
->
-> 编码那套约束(两色、灰度可读、秩不由色相承担)之所以存在,是因为**要从仪器上读出一个决定**。
-> 封面上没有决定要读。所以色相在那里可以自由用于**分类和表情**,并且**依然永远不承载秩** ——
-> 这正是 Bertin 的原话:色相属于类别,不属于次序。
->
-> **表情组在仪表盘上一次都不许出现。** 破一次,蓝橙就不再意味着任何东西。
+- **Market layer** — `took` / `refused`. Response quality, never price direction.
+- **Money layer** — `profit` / `loss`. P&L only, never market state. Long is not profit:
+  colouring direction as P&L implies long is good.
+- **Expression set** — poster and Substack only. **Never on the instrument.** Break it
+  once and blue/red stop meaning anything.
 
-### 奔放不只是颜色(怪度 4–5)
+### A continuous reading may take a ramp, under one law
 
-真正外放的是三样,颜色只占一样:
+The ATR position (how far a name has run from its 50-day) is painted as the ticker's own
+ground rather than printed as a figure: it is the reading that decides whether you can
+still get on, and it should land before anything has been read.
 
-| | 仪器(2) | 外放(4–5) |
-|---|---|---|
-| **尺度** | 判决最大 96px | 主字 150–250px,可切出画面 |
-| **色彩** | 两个填充色 | 表情组,一张最多三色 + 墨 |
-| **密度** | 一屏读完,极密 | 整版一个数或一句话,极疏 |
+**The ramp must be monotonic in lightness.** Hue alone dies in greyscale. Dark rises
+`L* 44.9 → 57` as the reading warms; light falls `75.1 → 61`. The directions differ
+because the grounds do — on ink the alarming end is the luminous one, on paper the heavy
+one — and a screenshot is taken inside one theme.
 
-**三条即使到 5 档也不变:** 框还在(**全出血是被毙掉的「平庸闸」,不复活**)· 表情组隔离 ·
-**测量行必须还在** —— 一张不再测量的封面就只是海报。
+Three rules the measurements forced, none of them visible by eye:
 
-**「偶尔」= 有触发。** 走海报系统那套触发器(极值 / 判断兑现 / 月度节点),一周上限 3 张。
-**天天奔放就不奔放了。**
+1. **Interpolate the ground, choose the ink.** Blending the foreground alongside the
+   background drives it through mid-grey on a mid-lightness fill — measured 1.61:1. Pick
+   whichever ink the computed ground can carry. Pure white/black, not the page's
+   near-inks: the worst point measured 4.40 with those, and a fill in the middle of a
+   lightness range is the hardest ground there is.
+2. **Correct each mix to its target lightness.** Straight RGB interpolation between a
+   blue and an orange dips on the way (44.9 at ATR 4, 44.6 at 4.5 — the greyscale
+   briefly running backwards). Pull every mix to the linearly-interpolated `L*` so
+   monotonicity is a property of the construction, not of the anchors lining up.
+3. **Off the scale means off the scale.** Below the 50-day is not "very un-extended", it
+   is a different situation: no fill, ordinary ink.
 
----
+## Typography
 
-## 三、四个语域(必须排版可见)
+**IBM Plex**, self-hosted, OFL, no CDN. Three families from one source.
 
-| 语域 | 标记 | 例 |
-|---|---|---|
-| **测量 Fact** | 素净,无标记 | `523 names −25% on the quarter` |
-| **解读 Read** | **实线左竖条** | `Megacaps repaired.` |
-| **预期 Expected** | **虚线左竖条** | `Five-day ratio needs to clear 1.0` |
-| **行动 Action** | 反白块 / 巨大压缩体 | `WAIT FOR FTD` |
-
-**只靠颜色和字重区分是不够的** —— 截图上分不出来。每一层必须有结构标记。
-
----
-
-## 四、怪度 1–5 与各界面目标
-
-每一档由**读者要付多少代价**定义,不是由多花哨定义。
-
-| 档 | | 代价 | 例 |
-|---|---|---|---|
-| 1 | 无 | 零 | 普通图表 |
-| 2 | **一处记号** | 零,但会记住 | `NOT A CALL` 图章 · 留空的格 |
-| 3 | **形态被改写** | 接受一个陌生容器 | 指令卡 · 规则证书 |
-| 4 | **拒绝成为主体** | 接受「没有内容」也是内容 | `NOTHING TO REPORT` · 空日收据 |
-| 5 | **品类违规** | 先问「这是什么」 | Du Bois 版 · 角色画 |
-
-完整定义、失败模式、现有物件评分:`Fluxus_Brand/visual/Fluxus_Refusals.md`
-
----
-
-## 五、各界面规格
-
-### 5.1 仪表盘 —— 怪度 **2**
-
-6:30 要用的仪器。形态不能陌生,只能留记号。
-
-```
-栅格      基本单位 8px,所有间距是它的倍数
-版心      1360px
-纸        #F2F1ED   墨 #12110F
-判决      Plex Cond Bold 96px / line-height .88 / letter-spacing -.018em
-读数句    19px,实线左竖条(解读语域)
-规格表    键 10.5px 大写字距 .09em · 值 Plex Mono 14px
-证据行    11.5px,#57534E
-区段头    Plex Mono 10px 大写 字距 .24em,下压 1px 实线
-怪        右上角一枚 NOT A CALL 图章 + 算不出来的格留空。**仅此两处**
-```
-
-**每一页必须有的三件**
-
-1. **顶部三分之一能独立成为一张截图** —— 他靠截图分发
-2. **判决与它的推导在同一眼里** —— 断言在顶部,推导也必须在顶部
-3. **证伪条件** —— 什么出现会改变这个判断,当前值 vs 需要值
-
-**已建成**:市场状态 91 · 筛选器 92 · 个股 93 · 持仓 95(评分表见 explorations/SCORECARD.md)
-
-### 5.2 信 `HOW MUCH` —— 内文怪度 **2** · 封面 **4**
-
-> **信 = 周报 = 发到 Substack 的那一篇。一个作品,三个投递口(app 内一页 · 邮件 · Substack)。**
-> 2026-08-09 记:我一度把「周报」当成第四个表面单独写了一节规格,那是重复。
-> 需要不同规格的是**投递口的封面和导航**(见 §5.5),不是作品本身。
-
-```
-版心      720px,单栏
-正文      Plex Sans 18px / 1.7  —— 完整段落,不用碎片列表
-六段式    刊头 → 格言标题 → 三四句冷叙 → 一次高低切换 → 成交即测量 → 教学式 P.S.
-风险台账  固定页脚条,永远同一位置:x% trade risk, y% port risk
-P.S.      **永远是暖的** —— 正文冷、P.S. 暖,这个温差是留存引擎
-封面      怪度 4:Du Bois 版 / NOTHING TO REPORT / 空日收据 三选一
-```
-
-**判断与执行分两段写**,中间那段真实的空白要标出天数 —— **空白就是产品**。
-
-**新增:覆盖度必须写在刊头。**(2026-08-09)
-`SESSIONS COUNTED 4 OF 5 · 缺 08-07`。**这句话只有这个作品能写** —— 日更写不了(它只看一天),
-海报写不了(没有位置)。它是这个周期唯一能说清「我到底看见了多少」的地方,所以它必须说。
-版式见 `explorations/2026-08-08/weekly_recap.html`。
-
-#### 新增:手绘槽位(留白,暂不延伸)(2026-08-09)
-
-**位置固定、16:9、caption 行固定。空态是斜纹盒子 ——
-会在没内容时塌掉的槽位,等于没预留。** 它在内文里,不是封面 —— 封面另有规格(见上)。
-
-| 规矩 | 内容 |
+| use | family |
 |---|---|
-| 它是什么 | **data artwork,不是图表。**没人需要从它上面读出一个值 —— 读数是条形的活。它的职责是这一期的**身份**(参照 Lupi 的 Hennessy identity、Bruises) |
-| 它必须是什么 | **由这一期的真实数字生成**,caption 点名是哪些数。**允许装饰,不允许发明** |
-| 手在哪里 | **只在这个框里。**框外(条、梯子、规格表)全部精确渲染,和仪表盘同一只手 |
-| 怎么做 | 交给图像模型,和海报图同一条链路 |
+| body · UI | IBM Plex Sans |
+| verdicts · page titles · key names | IBM Plex Sans Condensed *(condensed only works in English)* |
+| numbers · codes · timestamps | IBM Plex Mono |
+| Chinese | PingFang SC — **never in the mono face**, it collapses |
 
-#### 这个槽位该放什么 —— 借 `My 2020 in Data` 的语法(2026-08-09 读原作后改写)
+### The ladder, as built
 
-先纠正我自己前一版的说法。那三件作品的价值**不在「手绘所以暖」** ——
-`My 2020` 是一套关于**中断与恢复**的记号系统,而且它可以整套搬过来:
-
-| Lupi 的记号 | 她量的 | 我们对应的量 |
+| px | rung | what it does |
 |---|---|---|
-| 红点 | 封锁前**最后一次**做某事 | 一只票**离开前的最后一笔** |
-| 蓝点 | 重启后**第一次** | 隔了一段时间后的**第一笔** |
-| 中间的波浪线 | 那段虚拟活动的模糊期 | 空窗天数 |
-| **黑线** | 真正的最后一次,**再没恢复** | 从此再没碰过的名字 |
-| **白线** | 恢复了,但变了(保持距离) | 回去了但仓位更小 |
-| **星号** | 全新的经验 | 第一次做的新形态 |
+| 10 | label | mono, uppercase, tracked — column heads, section labels, menu carets |
+| 11 | meta | notes, footnotes, denominators, timestamps |
+| 12.5 | body | table rows, controls, the numbers you read |
+| 14 | prose | sentences — the reading line, guidance, HowToRead |
+| 17 | lead | a card's headline number, a panel's own h2 |
+| 26 | display | a page's principal figure |
+| 46 | title | page name (PageHeader only) |
+| clamp(52 → 88) | verdict | the market verdict, Plex Cond Bold, `line-height .86`, `-.018em` |
 
-**这套语法在我们的数据上直接成立,今天就能算。** 用 `data/output/trades/_index.json`
-(220 笔 / 87 只票,以 21 天为空窗阈值):
+**Nothing renders below 10px anywhere**, including SVG text and chart axis ticks. An
+SVG's declared size is not its rendered size: a figure inside a `1000`-unit viewBox at
+`900px` renders 11px type at 9.9. Give such a figure a floor width equal to its viewBox
+so one unit is one pixel.
 
-- **24 对**「最后一次 → 第一次」
-- 其中 **12 对**的上一笔是亏的 —— PLTR 连着两次隔 28 天回头,两次都亏;
-  ALAB 隔 109 天回去仍然 −0.83R
-- 但 **回去不等于错**:APLD 隔 99 天 +2.02R,FSLY 隔 59 天 +4.28R
+**Measured drift, recorded rather than hidden** (2026-08-19 sweep of the four market
+pages): `10.5` ×13, `11.5` ×17, `12` ×45, `13` ×5, `15` ×4 are in use off the ladder.
+They are legible and none breaks the floor, but they are drift and the next typography
+pass should either absorb or remove them.
 
-> **记号把这个问题摆出来,不替你回答。** 这正好是这个槽位该干的活 ——
-> 它是装饰,不是判决;而它装饰的东西是真的。
+## Layout
 
-而且它撞上了已知的那条漏:行为诊断里最大的一笔是**「重攻已破论点」**(BABA 5 次 −$54k)。
-**那在这套语法里就是「一个本该是黑线的名字,却一再产出蓝点」。**
-所以这不是随便挑的一种画法,是刚好能画出他自己那个洞的画法。
+- **Content width `1800px`**, centred, `px-3 py-4`. (v2 specified 1360; the build has
+  been 1800 since the market pages were rebuilt.)
+- Base spacing unit **4px**; the common gaps measured are 4 / 6 / 8 / 12 / 16.
+- Every wide or tall object scrolls **inside its own box** — tables on both axes, the
+  theme field horizontally, the screener's ten-row window vertically. **The document
+  scrolls on neither axis at any width**, verified at 375 / 1512 / 2000.
+- A sticky table header outranks nothing by default: an open menu in the control bar
+  must have a higher stacking context than the table's own sticky `thead`, or it paints
+  underneath it.
 
-**至于为什么槽位在信里而不在仪表盘上:仪表盘上没有「人」,只有市场。**
-中断与恢复是一个人的行为轨迹,不是市场的属性。
+### Size is the fourth channel
 
-⚠️ 数据时效:`trades/_index.json` 生成于 2026-05-25,最后一笔入场 2026-05-20。
-上面的数是历史读数,做的时候要先重跑。
+The three morning pages share one skeleton — a matrix of cards whose inside always reads
+**change → strength → names** — and **the cards are not equal. Size says what the page is
+for, and each page spends it differently.**
 
-**新增合法形态:推导即主体。** 把测量行升成整页主体、大字降成标签的那一版
-(`loud3.html` 变体 B)是**信内文和 X 长文的独立模板**。它是三个变体里唯一一个
-**让读者看着结论被产出**,而不是被递到手上的。**它不是封面,永远不许当封面用** ——
-没有图挡住拇指,在信息流尺寸上必输。
+| page | largest | middle | small |
+|---|---|---|---|
+| Dashboard | the verdict and the condition that ends it | market cycle · the founder's own words | what moved, at four grains |
+| Themes | the four-state field (leading × accelerating) | the strength curve over time | the ranking, members, full table |
+| Screener / Today's List | the scan field | the chart card and the shortlist beside it | the names |
 
-### 5.3 海报 —— 怪度 **5**
+Two rules that came out of using it:
 
-唯一允许「先问这是什么」的界面。框沿用展签系统,**但规格随 v2 更新**:
+- **A fixed card does not resize on selection.** Sizing the chart to the selection was
+  proposed and rejected: a click that reflows the page loses the reader's place in the
+  grid they were reading.
+- **The largest card must survive being cropped out on its own.** The top third of every
+  page is how this work is distributed, so a claim and its exit condition belong in one
+  card, not two.
 
-```
-画幅      1080×1350 (4:5) X 信息流  |  1600×900 (16:9) 信的封面
-底色      #F2F1ED  |  深色版 #12110F
-主句      Plex Sans SemiBold 2.15em 字距 -.01em   —— 英文(原 Inter 600)
-副句      Plex Sans Regular 1.28em #57534E        —— 中文
-展签      Plex Mono 1em 大写 字距 .1em #948F86    —— 原 JetBrains Mono
-标记      FLUXUS · Plex Cond Bold 字距 .3em · 右下角,永远同一位置
-测量行    Plex Mono **13px**(原 9px)· 字距 .06em · **上方一条满宽 1px 实线**
-          两行,每一对「标签+数值」不许拆开;标记 FLUXUS 单独一行右对齐在它下面
-          内容只写当天的测量,不许写形容词、hashtag、感叹号
-```
+## Elevation & Depth
 
-> ### 测量行的一条硬规矩(2026-08-09 对照测试得出)
->
-> **测量行永远不许是一件作品里最小的字。**
->
-> 它是「一次测量」和「一张海报」的分界。9px 压在 150px 的数字下面时,它读起来是图注 ——
-> **而图注是挂了职称的装饰**。放到 13px 加一条上线之后,眼睛在读完数字之后会落在它上面,
-> 它就从图注变成了**登记条目**。
->
-> 检查成本极低,而且失败得很响。
+Depth is nearly absent by design. Cards are separated by **ground, not by fences** —
+`24px` corners, no border, the page's radial ground showing between them.
 
-> ✅ **已迁移 2026-08-09**。`scripts/make_poster.py` 用 Chrome headless 渲染,所以 woff2 直接可用;
-> 但**这台机器上没装 IBM Plex**,在 CSS 里写字体名会静默渲染成 Helvetica —— 所以四个字面
-> 以 base64 内联进临时 HTML,字体文件缺失直接 `SystemExit`,**不许静默回退**。
-> 框、边距、三个被毙掉的版本、触发日历、输出路径全部未动。
-> `mat` 同步调到 `#EDECE7`:它是图片后面的凹槽,必须比纸暗;纸从 `#fafaf9` 降到 `#F2F1ED` 之后,
-> 原来的 `#f5f5f4` 反而比纸**亮** 1.4,凹槽关系倒了。
+- `--lift`: `0 1px 2px rgba(0,0,0,.30), 0 10px 28px -14px rgba(0,0,0,.55)` — offset and
+  soft blur, used sparingly.
+- `--glass` + `--glass-blur` for the one sticky control bar.
+- `--ground`: a single wide radial tint, `rgba(59,130,196,.10)` on dark.
 
-### 5.4 X —— 怪度 **3–4**
+## Shapes
 
-要被转发,**形态本身得是内容**。
+| radius | where |
+|---|---|
+| `1px` | encoding cells, hairline marks |
+| `3px` | the ATR chip under a ticker |
+| `4px` | small controls, menu rows |
+| `12px` | scan cards |
+| `24px` | page cards |
+| pill | theme toggle, nav affordances |
 
-```
-主力格式  一个数 + 一条可复用的判据。判据永远在数字下面一行
-          句式固定:「N 次里有 M 次…所以我的条件是…」
-图片      指令卡 / 收据 / 证书(怪度 3–4),1080×1350
-笑话      **无版式** —— 纯文字,不许配图。给它版式等于给它解释
-碎片语域  X = 碎片,信 = 完整段落。**两套字号行距必须明显不同,永不串味**
-```
+## Components
 
-内容配比 30 宣言 / 40 教学 / 30 笑话是**内容**配比,不是版面比例。
+- **Verdict card** — change line, the word at `clamp(52→88)`, twelve vote glyphs, then
+  the falsification sentence in the *expected* register. Never coloured by side.
+- **Vote glyph** — fill = which side, rule = the line it flips at, height = distance in
+  its own unit, dashed = could not be counted, ring = sitting on its line. **Heights are
+  normalised inside each vote's own range and never compared across two.**
+- **Four-state field** — `classify(excess_3m, rs_accel)` drawn as its own definition:
+  two axes cut at zero, so a dot's quadrant *is* its state. **Therefore nothing on it is
+  coloured by state** — position already said it. Dot size is `persistence`.
+- **Fixed chart card** — same place, same size, never empty; opens on the first name out
+  of a named screen and says which. The widget takes the ground it stands on, read from
+  the DOM, so it has no edge of its own.
+- **Step bar** — five ordered steps, the chosen one carrying three lines: what it looks
+  for, what it is used with, and **how it is misread**. The third line is the one worth
+  the ink.
+- **Scan card, quiet** — a scan off the current step keeps its title and count on one
+  line and gives up its names until clicked. Quiet, not hidden; and what opens by hand
+  closes by hand.
+- **Shortlist tray** — each entry freezes the readings it was taken at and remembers
+  which screen it came off, because the question worth asking about an old shortlist is
+  whether the call was good on the day it was made.
 
-### 5.5 Substack —— 怪度 **4**
+## Do's and Don'ts
 
-陌生人第一次遇见的地方。封面用怪度 4 的物件,内文沿用信的规格。
-**导航栏是销售漏斗**,不是目录(见 `Fluxus_Brand/research/` 的 James Bulltard 拆解)。
+**Do**
 
-### 5.6 课程 —— 怪度 **2**
+- Print both denominators when two instruments are on one card, and say they are different.
+- Count the rows you are showing, not a precomputed total that describes rows you do not hold.
+- Report what a filter excluded, in the same sentence as the filter.
+- Say "not measured" — never `0` — and keep *not measured*, *found none* and *blocked by a
+  threshold* looking different from each other.
+- State the selection mechanism of any list ordered by outcome.
+- Verify by driving the built page: hit-test it, measure computed styles, disable
+  transitions first, and confirm the page actually rendered — **a white screen passes
+  every colour audit.**
 
-教学不能设门槛。仪器语言,零形态实验。
+**Don't**
 
-## 六、八条拒绝(完整版见 Fluxus_Refusals.md)
-
-每一条都必须指得到一个具体数字,指不到就不许发。
-
-1. 每天都得有话说 → `NOTHING TO REPORT`(实测触发率 **2.3%**,一年五六次)
-2. 这是建议 → `NOT A CALL` 图章
-3. 把空格填上 → 利率格留空(管线没接债市)
-4. 把缺口抹平 → 归档断口画出来,不插值(13 个交易日)
-5. 只晒赢的 → 零结果照发(序列挖掘 **0/42** · 52 周高点筛选负阿尔法)
-6. 图永远证明标题 → 图推翻标题时保留推翻的过程
-7. 预测价格 → 只报「给了机会 / 接住没接住」
-8. 内容跑步机 → 编号只在有读数时 +1
-
-**升级为通用规则的三条**
-
-- **画不诚实的东西就写成数字**(权重没法诚实地画,所以分数以数字印)
-- **任何按结果排序的列表,详情页必须自曝选择机制**(热度榜上的名字全是幸存者)
-- **缺席 ≠ 空** —— 没接进来的数据画成「缺席」,画一条空泳道等于宣称「没发生」
+- Rank a 6-name thesis against a 1,579-name size bucket on one pair of axes.
+- Let a control go one way only. An expander with no collapse is not a control.
+- Put two selectors over the same set of objects.
+- Colour by a property the position already encodes.
+- Trust an SVG's declared font size, a summary's totals, or a screenshot that predates
+  the change you are testing.
 
 ---
 
-## 七、已定 / 未定
+## Weirdness 1–5, and what each surface is allowed
 
-**已定**:字体 Plex · 编码(两色 + 面积 + 纹理 + 描边)· 四语域 · 怪度分级与各界面目标 ·
-仪表盘四页的版式 · 拒绝清单
+Each level is defined by **what the reader has to pay**, not by how decorated it is.
 
-**已进产品**(2026-08-09,四页全部落地 React,不再只是规格页)
-
-| 页 | 组件 | 探索稿分 | 落地时改了什么 |
+| level | | cost | example |
 |---|---|---|---|
-| 市况 | `breadth/StateBoard.jsx` | 91 | 未测量行不再挂「已测量」语域标签 |
-| 筛选器 | `screener/HeatingUp.jsx` | 92 | **每个筛选器一列固定**——内联排会让 MOM 每行起点不同,行与行就没法比 |
-| 个股 | `ticker/TickerSignalHistory.jsx` | 93 | 竖线只留给被标注的首个信号;本地行情过期时**撤掉** NEXT 格 |
-| 持仓 | `portfolio/ui/CapitalAtRiskWidget.jsx` | 95 | 头条数字换成「占资金的百分之几」,敞口降为第二行 |
+| 1 | none | zero | an ordinary chart |
+| 2 | **one mark** | zero, but remembered | a `NOT A CALL` stamp · a deliberately empty cell |
+| 3 | **the form is rewritten** | accept an unfamiliar container | an instruction card · a rule certificate |
+| 4 | **refuses to be the subject** | accept that "no content" is content | `NOTHING TO REPORT` · an empty-day receipt |
+| 5 | **category violation** | ask "what is this" first | the Du Bois edition · the character portrait |
 
-**§5.1 第三件「证伪条件」补齐**(2026-08-09)—— 之前四页一页都没有。
-市况页:判决 = `bulls − bear`,BULLISH 门槛 +4,所以写「现在 +8,掉 5 分才破 ——
-9 张多头票里 3 张倒戈,或 5 张变中立」。**不写哪张票离倒戈最近**,payload 只有票的方向、
-没有余量,排序就是编。持仓页:账面风险 vs 3% 上限、单笔最大 vs 0.25% 目标与 0.47% 带顶
-(阈值集中在 `LIMITS`,改一处)。筛选器和个股的等价物是选择机制披露(0/42、幸存者、
-掉出胶片的 38 次),已在。
+Instrument surfaces (dashboard, themes, screener, today's list, course) sit at **2**.
+The letter's interior is 2 and its cover 4; X is 3–4; the poster is the only 5.
 
-三条落地时才暴露的规矩,已升为通则:
+## Eight refusals
 
-1. **一个数字只能由能支撑它的字段来算。** 筛选器原稿画了「落后几个交易日」,那个数来自
-   `gainers_4pct.json` 的 `timestamp`——那是**管线跑的时刻**,不是它覆盖的交易日。数改成
-   `as_of` + `stale_reason`,因为只有这两个字段能担保。
-2. **被截断的东西必须报数。** AEHR 的 `ohlc_1y` 停在 2026-05-22,筛选器一直响到 08-04 ——
-   123 次出现里有 38 次被默默甩出画布右边。现在明写出来:短的胶片不许长得像完整的。
-3. **同一个记号画三十遍就不再是记号。** 26 根竖线是栅栏,不是指示。
+Each must point at a specific number, or it may not ship.
 
-**未定**
-- 角色画未出图(简报与提示词包已就绪:`Fluxus_Character_Prompt_Pack.md`)
-- 演员记号已定义并挂上字段,但**只在模板规格页上试过**,还没进真前端
-- **First Penguin 没有记号** —— 管线里没有「第一笔建仓」字段,等成交记录接进来
-- 本地 OHLC 仓库没有新鲜度闸门(同一个坑第三次出现:PLTR 反号 → AEHR 掉 38 次 → 全量
-  payload 只有 `ohlc_1y`)。前端已把日期和缺口画出来,**根不在前端**
+1. There must be something to say every day → `NOTHING TO REPORT` (measured trigger rate 2.3%).
+2. This is advice → the `NOT A CALL` stamp.
+3. Fill the blank cell → the rates cell stays empty; the pipeline has no bond feed.
+4. Smooth the gap → archive breaks are drawn, not interpolated (13 sessions).
+5. Only show the wins → null results ship (sequence mining 0/42; the 52-week-high filter's negative alpha).
+6. The chart always proves the headline → when it refutes the headline, the refutation stays.
+7. Predict the price → report only "the market gave / it was taken or refused".
+8. The content treadmill → the number only increments when there is a reading.
 
-## 编码色的分工（2026-08-13）
+**Three promoted to general rules**
 
-Andy 读 nextSignals 的两张图后指出：那里红蓝**只出现在图形上**，文字只有白 + 自己的一套
-辅色；而我们的 dashboard 把蓝同时用在图、文字、数字上。审计证实，且范围明确。
+- If a thing cannot be drawn honestly, print it as a number.
+- Any list ordered by outcome must disclose its own selection mechanism.
+- **Absent ≠ empty.** Data that was never connected is drawn as absent; an empty lane
+  claims it did not happen.
 
-**规矩**：
+## The four registers — typographically visible
 
-> 编码色（`--color-took` / `--color-refused`）属于**图形**。
-> 数字只有在**给自己的图形做标签**时才借用它。
-> 判词与散文永不穿它。
-
-参考图的数字确实是彩色的——但每一个都长在自己那根条的末端，颜色属于条。我们那 44 个
-百分数没有条可归属，颜色就退化成了装饰。
-
-**双轨**：营销物（海报、Substack 配图）不受此限——那里没有编码要保护，`--color-poster-*`
-就是为这条轨道留的。仪器（app）走上面的规矩。
-
-**落地前后（可复验，浏览器计算样式统计）**：
-
-| 页面 | 改前 编码色当文字 | 改后 | 当填充 |
-|---|---|---|---|
-| Dashboard | 45（BULLISH + 44 个裸百分数） | **0** | 12 → 56 |
-| Screener | 20（Accel 列） | **0** | 105 |
-| Themes | 0 | 0 | 2 |
-
-**条的刻度不许发明**：按窗口取**全 cohort 极值**（不是显示的那几行，否则每天最长的那根
-都一样长），并印在卡片表头（1D ±5.7% · 1W ±10.2% · 1M ±22.9%）——没有数字的轴不是轴。
-Accel 列没有配条而是回中性：那张表已经过密，且符号本身带方向、同行还有 Align 双灯和
-State 字形在做编码。
-
-**换色的顺序**：先修分工，再谈换色。海报那对红蓝灰度 ΔL* 只有 2.5，在海报上无妨——因为
-那里圆的大小在承担数值，颜色只做身份。同理，分工修好之后颜色退回纯身份角色，对灰度分离
-的要求就松了，那时换成更艳的蓝/红才没有代价。分工不修，换什么色都还是"到处都是蓝"。
-
-### 换色落地（2026-08-13，分工修完之后）
-
-分工修好才动的色。取值不是挑出来的，是**带约束搜出来的**，约束里最关键的一条是
-我原先没想到的：**绑住手脚的不是「蓝 vs 红」，是「蓝 vs untested」**——状态语法用
-tone × fill 拼四态，蓝一提亮就会和浅灰的 untested 在灰度里合并，四态塌成两态。
-
-| | 暗底 #211d1a | 亮底 #f7f4ee |
+| register | mark | example |
 |---|---|---|
-| took | `#3b9eff` L* 63.8 · 对比 5.99 | `#0f5ea8` L* 39.5 · 对比 6.00 |
-| refused | `#e0264a` L* 49.2 · 对比 3.62 | `#e8455f` L* 54.3 · 对比 3.51 |
-| untested | `#c8c2b8` L* 78.7 · 对比 8.59 | `#b0aaa2` L* 69.9 · 对比 2.10 |
-| 两两灰度差 | 14.7 / 14.9 / 29.5 全过 14 | 14.8 / 30.4 / 15.6 全过 14 |
-
-**两套主题的约束是相反的**，所以取值也不同：暗底上两个填充都要往亮走；亮底上都想往
-暗走，会撞在一起，于是分离度靠**一深一浅**买（蓝压暗、红保持艳），而不是两个都压暗。
-亮底那个红就是参考图里的原值。
-
-副产品：新的 took 对比度 5.99（旧的 2.47），**填充和文字两个角色它都能担**了——
-Watchlist 那些 chip 当初只能做成实心底加浅字来绕过，现在不必了。
-
-### Market State 归队（2026-08-13）
-
-市场半边最后一块用着资金半边颜色的页面。原以为是 9 个组件，实际做完是 **13 处**——
-四个是搜 `profit/loss` 搜不到的，因为它们用的是**裸 Tailwind 颜色**（`text-green-600`、
-`bg-emerald-500/70`），根本不在任何一个已声明的调色板里。
-
-| 处理 | 组件 |
-|---|---|
-| 判词/整句去色 | VerdictBanner（"Bullish market environment"）· RotationPanel（整句 15px 被涂色） |
-| 裸数字去色 | MarketStateSummary tiles · ClassicBreadth McClellan · DangerPanel 计数 · RotationPanel 两列 pp · **lib/format.js `pctColor`（一个共享函数把绿红发给 6 个市场半边组件，从源头改中性）** |
-| 换成色块（格子即标记） | BreadthTable 三个着色函数 · ClassicBreadth `pctColor` · MarketMonitor（原是裸 Tailwind） · `atrBadgeColor` |
-| 标记换 token | BreadthChip 圆点 · DangerPanel 圆点 · SpreadChart 数字（给自己的图做标签，可借色） |
-| 归位到统一状态语法 | **StateBadge** 与 **StateRibbon**——同一组四态的第二、第三套编码（emerald/amber/sky/rose），且四色是「靠色相扛等级」，编码文档明令禁止 |
-| 离开编码对 | TimeMachineBar 错误信息（错误是 chrome，不是市场读数） |
-
-**验收（浏览器计算样式，所有折叠展开）**：资金绿红 **0** · 编码色当填充 **55** ·
-编码色当文字 **2**（都是给自己那根条做标签的，合规）· 裸 Tailwind 色 **0**。
-
-**过程中的教训**：删常量定义前必须全文件搜引用。`CALL_STYLE` 和 `STATE_FILL` 各漏了一次，
-第一次让整页白屏——而白屏页面的颜色审计会返回"0 残留"，是**假通过**。验收必须先确认页面
-真的渲染了。
-
-### 资金半边归一（2026-08-13）
-
-市场半边治的是「颜色跑到文字上」；资金半边的病不同——**同一个概念有六种颜色**。
-`text-red-500` 53 次、`text-green-600` 50 次，外加 red-400/600、green-400/700……
-259 处裸 Tailwind 颜色，全部表达同一件事：赚了还是亏了。
-
-**绿红在这一半是对的**，不需要换成 took/refused：钱的涨跌是全世界通行的约定，而这里的
-数字**本身就是主体**（不像市场半边，那里数字是给条做标签）。所以这一轮只做三件事：
-
-1. **归到已声明的 token**：绿系→`--color-profit`，红系→`--color-loss`，
-   琥珀/黄→`--color-signal-caution`；带透明度的底/边→`color-mix` 色块。
-2. **先修 token 本身**：亮色模式下 profit 只有 **3.00:1**（不及格），而它的暗色孪生
-   是 7.34。加深到 4.57 / 5.23 之后才敢把 259 处路由过去。暗色值不动。
-3. **多空不是盈亏**：`direction === 'long' ? 绿 : 红` 出现在 10 处——长仓不等于赚钱，
-   把方向涂成盈亏色是在暗示「做多是好的」。改中性，LONG/SHORT 这个词本身已经说明方向。
-
-顺带清掉 26 个 `dark:text-[var(--color-*)]` 冗余变体：token 本身就随主题翻，
-`dark:` 前缀是死重量。
-
-**留着没动的**：蓝/橙/紫用在**分类**语义上（持仓腿状态 POST_T1、难度级别、错误标签
-「Stopped too tight」），那不是盈亏方向，是另一套分类词汇表，需要单独设计而不是并进
-P&L。`dashboard/MarketPosture.jsx` 也留着——它是未挂载的死代码。
-
-### 一套字号阶梯（2026-08-13）
-
-盘完才知道有多散：全站在用 **28 个不同字号**——20 个显式 px 加 8 个 Tailwind 具名。
-9 / 9.5 / 10 / 10.5 / 11 / 11.5 / 12 / 12.5 / 13 / 13.5 全都出现过，而这里面**没有任何
-两个是能被眼睛分辨的**。那不是阶梯，是漂移。
-
-**六级 + 一对标题**，每一级靠"它干什么活"挣得位置：
-
-| px | 级 | 活 |
-|---|---|---|
-| 10 | label | 等宽大写带字距——列头、区块标签 |
-| 11 | meta | 说明、脚注、分母、时间戳 |
-| 12.5 | body | 表格行、控件、你要读的那些数字 |
-| 14 | prose | 句子——Reading 行、指引、HowToRead |
-| 17 | lead | 卡片的头号数字、面板自己的 h2 |
-| 26 | display | 页面的主体数字 |
-| 38/46 | title | 页名，响应式（PageHeader 独占） |
-
-508 处 / 115 个文件。两半边**同一套**——市场半边和资金半边此前各说各的（一个显式 px、
-一个 Tailwind 具名），现在是一把尺。
-
-**批量吸附解决不了的那部分**：15px 原本混着两种角色，散文和小标题/头号数字。就近吸附
-把它们一律压到 14，等于抹平刚建立的层级。五处按语义手工提回 17（StateBoard、
-Screener 的 MC 数、RsSegments h2、Leaderboard h2、TickerCard 价格）——**尺子能量长度，
-量不出角色**。
-
-`components/public/*` 是营销站，保留自己那套（.public-h1 等）：落地页和仪器不共享节奏。
-全站无任何文字渲染在 10px 以下。
-
-### 分类词汇表与页框（2026-08-13）
-
-**"分类色"里大半其实是有序的。** 逐个看语义之后，五套里只有一套是真并列：
-
-| 词汇表 | 原样 | 判定 | 现在 |
-|---|---|---|---|
-| 持仓腿状态 PRE-T1→POST-T3 | 琥珀/蓝/青/绿/灰 5 色 | **有序**：已执行的减仓次数 | 可数方块 `n of 3` + 中性词（复用全站 Squares） |
-| 邻近度 chips | 琥珀/橙/红 裸色 | **有序**：提醒→行动→立刻 | 站内已声明的 caution / warning / riskoff |
-| 难度档 beginner→professional | 蓝/紫 裸色 | **有序**：技能层级 | 中性——词本身已说明 |
-| 错误标签「Stopped too tight」 | 裸橙 | 过程告警 | signal-warning |
-| **形态标签**（12 种） | 12 色相，且**三个文件各存一份** | **真并列** | 一处共享定义；中性 chip，名字自己识别；`faulty_base` 例外保留 refused |
-
-形态标签那条是最有说服力的：每个 chip 上**已经印着形态名**，12 种色相既没人记得住（没人能回忆"青色 = pocket pivot"），又在做名字已经做完的事。唯一保留着色的是 `faulty_base`——它不是第 12 个形态，是**失败的那个**，在一墙标签里正是要被扫到的那个。
-
-顺带修了一处我自己造成的损伤：字号批量替换改到了**引用旧类名的注释**里，把历史记录改错了（"Tailwind's named type scale (text-[17px])" 这种自相矛盾的句子）。已复原。
-
-**页框统一**：Trade Journal / AI Coach / Portfolio 此前各写各的页头（17px 粗体、无面包屑），
-而市场半边统一用 PageHeader。三页接入后，十个页面里九个有面包屑；Portfolio 的引导屏
-（尚无账本时）仍是自己的居中布局，那是首次使用屏不是页面。
-
-**全站裸 Tailwind 颜色归零**（`components/public/*` 营销站除外）。
-
----
-
-## 侧栏：两级、两种 highlight（2026-08-14）
-
-**去掉七行注释。** 侧栏原来在 214px 宽的一列里带着七句散文：四个组各一句
-（"Open. No account needed." / "Needs an account and your own fills."），
-MARKET 内部三个簇又各一句（"Read the environment"）。这些句子只有第一次进站
-时被读过一次，之后每次开页都要跳过它们才能看到目的地——**侧栏解释自己的墨水
-比它命名目的地的墨水还多**。
-
-**顺序 = 操作者的日循环**：MARKET → MY BOOK → COURSE → LIBRARY。
-先看市场在做什么，再看你对它做了什么——这两个是每天要走的一圈；
-Course 和 Library 是盘间才去的地方，不该插在这一圈中间。
-
-**MARKET 内部不分簇。** 句子删掉后曾按「环境／轮动／龙头」留了三段间距顶替，
-Andy 判定这八页是一类的：它们都在读市场。间距在宣称一个操作者不做的区分——
-删掉，MARKET 和另外三组一样是平的（`sections` 那层嵌套一并从数据结构里删除）。
-
-**两级分开靠三条通道叠加，只用一条不够「看得出来」。**
-
-| 层级 | 是什么 | 结构 | 当前态 highlight |
-|---|---|---|---|
-| 一级 MARKET / MY BOOK / COURSE / LIBRARY | 一个**区域** | 词 + 一条横线拉到边缘（复用站内 `Tier.jsx` 的段标写法）；下级**缩进** 16→24px | 词与线同时 muted → bold |
-| 二级 页面 | 一个**行** | 行本身 | 左 2px 竖条 + 整行底色 + 加粗 |
-
-第一版只给一级配了「变亮」一条通道，Andy 的判词是**对比感不强**——他是对的：
-一个小灰词压在一列条目上方，视觉上仍然是这列里的又一个条目。
-**先把它变成结构上的表头（线 + 缩进），颜色才有东西可以去点亮。**
-
-区域 vs 行，两者**都不靠色相**（延续 v2 的「排序永不由色相独扛」）。
-收起态没有组名可升，那里退回发丝分隔线；首组之上不画线，上面本来就没有东西要跟它分开。
-
-实测（深色｜浅色）：当前组 词 `#fafaf9`｜`#292524`、线 `#9d968c`｜`#7d766d`；
-其余组 词 `#9d968c`｜`#7d766d`、线 `#544e46`｜`#e2dcd0`。任一时刻**恰好一个**组亮，
-且永远是持有当前行的那一组。
-
-`translations.js` 里 `rail.sec.*` 与 `rail.*.note` 九个键随之删除；en/zh 键对等测试通过。
-
-**收起态的延续（2026-08-14 追加）**
-
-Andy：收起时不舒服，一是三字母缩写不熟悉，二是**没有从展开态延伸过来的指引**。
-
-- **「你在这」的竖条改成有色**，用 `--color-accent`。它是全侧栏唯一一处颜色，
-  也正是**收起时唯一活下来的东西**：组名没了、页名没了，同一个位置同一根有色竖条
-  还在眼下。收起应该是把侧栏挪窄，不是让读者重新认一遍路。
-- **accent = chrome，不是编码色**。它答的是「界面正指着这里」（链接、焦点环、
-  排序箭头、这根竖条），绝不去答 took / refused / profit / loss / 四个 signal
-  已经在答的「数据说什么」。已知两处旧违例（AI Coach 月度权益线、Model Books 的
-  SPY 序列标签把数据序列画成 accent），写进 token 注释，另起一轮再修，不许再加第三处。
-- **顺带修一个真缺陷**：`--color-accent` 从来没有暗色值，一直继承浅色的 `#2d5f8a`，
-  在抬亮后的暗底上只有 **2.46:1**——低于 UI 构件 3:1 的下限，这就是暗色下焦点环
-  和链接难找的原因。暗色值定为 `#4d7fa8`（**3.92:1**），保持钢蓝的低饱和，
-  不去撞 took `#3b9eff`。**这一改会影响全站暗色下所有 accent 的地方**（链接、按钮、
-  焦点环），方向都是变清楚。诚实记一笔：暗色下 accent 与 took 互比只有 1.53:1，
-  它们靠的是**从不同框出现**——侧栏没有数据标记，数据视图不用 accent。
-- **缩写自己报名字**：hover 时在代码旁即时弹出全名（`RS Leaderboard`）。
-  名字本来就在 `title` 里，但原生 tooltip 要等一秒，且出现在光标下而不是它所解释的
-  代码旁边。声明式的缩写精确，代价是学不会——那就让它自己说。
-
----
-
-## 落地页 hero：海报的五格，变成一段运动（2026-08-14）
-
-Andy 要用 three.js。先划的界：**它不能进任何数据视图**——我们整套图表靠可比的位置和长度，
-透视会让远处的条子变短，读者就没法用眼睛比较了。但**营销半边**本来就走双轨
-（自有 `--color-poster-*`、不受编码纪律约束，因为那半边没有一个数是测量），
-那份豁免就是全部许可证。圆的大小在那边是隐喻；在 dashboard 那边会是一个数字，
-而透视里读到的数字是谎。
-
-### 关键修正：那些圆不是装饰
-
-第一版我做的是「缓慢飘动的气泡」——把意思扔了。Andy 指出海报里那五格
-**各是一个隐喻**，对应课程五天：
-
-| | | |
-|---|---|---|
-| 1 | 反转 | 下坠、触底、爬升，绿三角标着那个拐点 |
-| 2 | 漏斗 | 顶上一排名字，顺着连线收窄，底下剩一个龙头 |
-| 3 | 散落 | 满市场的 setup，不同策略捞到不同的球 |
-| 4 | 网格 | **同样的节点，圆的大小差得极大**——大小就是仓位就是那天的全部课程 |
-| 5 | 太极 | 多空博弈，各自含着对方的种子 |
-
-所以 hero 不是随机飘。它**停在一段、morph 到下一段**，而且**同一批圆走完全部五段**——
-这才是诚实的说法：是一笔资本穿过五个阶段，不是五张互不相干的画。
-
-**连接组织不是装饰。** 没有连线，第二格只是「三排点加一个大圆」；连线才让它成为漏斗。
-没有格线，第四格只是「几个圆在随便的位置」；格线才立起「同样的节点」这个主张。
-海报把两者都画了，画得很淡，正是为此。
-
-### 纪律
-
-- **反多巴胺**：一圈 29 秒（停 3.4s / 变 2.4s），没有脉冲，唯一的响应是重阻尼视差。
-  访客看得到两段，想看完得留下来——这正好是「课程」的意思。
-- **降级链**：原来那六个 CSS 圆点**不是被替换，是地板**。它们立刻画出来并一直留着，
-  直到 context 真的跑起来才淡出。没有 WebGL、context 被拒、chunk 加载失败、
-  context 丢失，四种情况都退回今天的样子，而不是一条黑带。
-  `prefers-reduced-motion` 画第一段然后停住。
-- **省电**：离开视口或切到后台就整个停掉。
-- **时钟防呆**：负数或 NaN 的 t 会把 `STAGES` 索引越界并在动画循环里抛异常——
-  那会让 canvas **冻在地板上面**，是降级链唯一盖不住的那种失败。所以时钟做成不可误用的。
-  （这个是我自己调试注入负时间时撞出来的。）
-- **分包**：`import('three')` 是动态的，three 落进自己的 chunk（734KB / **188KB gzip**），
-  主包只涨 7.5KB。dashboard 那半边一个字节都不付。
-
-### 工具
-
-`frontend/scripts/hero-contact-sheet.mjs` 把五段渲成一张 SVG 对照表。
-它**import 真的那个模块**，坐标没有第二份拷贝。原因很实际：
-rAF 在内嵌浏览器里根本不触发（实测 `rafFired: 0`），动画在那儿观察不到；
-而且五格并排看本来就比盯一个 29 秒的循环更适合评审。
-
-### 追记 2026-08-14 —— 太极会转，动画吃满页
-
-**太极：旋转着长成太极。** 原来是淡入。改成**一个刚体在转**——两个颜色转着转着
-落定成那个图形。淡入说不出来的那句话它说得出来：多空不是两个状态，是**一场在动的
-博弈**，形状只有停下来才成形。落定之后它也不真停，每一百秒转一圈——博弈不会结束。
-（`SPIN_IN = 3π` 随着出现解开，`SPIN_HELD` 是那圈慢转。）
-
-**顺带修了一个从来没被看见的 bug**：六个部件原来靠 z 值 4–9 排前后，而正交相机
-在 z=5、near=0——**后三个部件在近平面之外，会被裁掉**。之前只在第一段验证过，
-所以从没暴露。现在全部画在 z=0 的同一个平面上，前后只由 `renderOrder` 决定；
-反正 `depthTest` 是关的，z 本来就没在买那个排序。
-
-**尺寸：吃满文案上方那条带，再往下沉一点。** 三版才对：
-右侧三分之一的方块 → 读起来是给标题配的装饰；
-满页高的方块 → **把每一段的落点全埋了**（V 的底、漏斗的龙头、拐点的绿三角），
-而每段的点就在它的底部。现在 `DIP = 1.12`：方块吃满带宽再越过带底一点，
-沉进文字后面的黑里，但最低的那个标记始终留在黑上面。
-
-**那条带是量出来的，不是猜的。** 文案块打了 `data-hero-copy`，field 去问它有多高。
-标题折成第四行、屏幕转向、以后加一条 stat——变的都是这个数，写死一个比例
-第一次遇到就错。scrim 的高度也跟着它走。
-
-**`?stage=0..4` 可以定格任意一段。** 它同时是评审工具和验证工具：
-29 秒一圈没法评判一个布局；而 rAF 在内嵌浏览器里不触发，跑着的版本恰恰在
-最该检查的地方观察不到。五段都是这样逐个核过的（含太极的 Group 重构）。
-
-### 追记 2026-08-15 —— 满页、实墨、太极落定
-
-Andy 三连判：还要大（全屏）、太极形态不对、眼睛要垂直。
-
-- **方块吃满页**：`s = min(h·0.92, w·0.86)`，顶部悬挂。此前「护住每段落点」的
-  band 尺寸被明确否决——要冲击力。代价用两招补回：
-- **scrim 从纯黑改 94%**：文字下面允许形状以幽灵态透过——「沉入」而不是「切断」。
-  38px 粗白字下面 6% 的油墨是耳语，不伤可读性。
-- **布局上提**：漏斗四排 0.10/0.30/0.46/0.62、反转整段压缩到 0.08–0.56、
-  网格底行 0.68、太极圆心 0.32。每段的**落点**（拐点、龙头、完整的圆）回到
-  scrim 之上或渐变区；沉进纯黑区的只有尾巴。
-- **实墨**：全场 alpha 0.92 → 1。0.92 本意是克制，实际让所有交叠都半透明——
-  太极六个部件叠成一团糊（Andy 截图指认的「两只眼睛」），每一段的圆互相
-  透底。海报的圆是**实**的，遮挡干净利落。
-- **太极落定**：进场解开一圈半后**停在正位**（眼睛垂直，蓝左红右）。
-  原来落定后还每百秒慢转一圈（「博弈不会结束」），意味着静止形态是随机角度
-  ——Andy 截到 90° 时它读作「两只并排的眼睛」。海报是 spec，叙事让位。
-
-### 追记 2026-08-15 之二 —— 首屏只给图
-
-Andy 拿着两张图裁决：我们的字压在图上（绿三角戳进 "compounds."），
-而他给的参考（drcmda 风格渲染）冲击力来自一件事——**画面独占画框，没有东西跟它抢**。
-
-**首屏 = 纯 field（100svh），文案整体挪到首屏之下**，滚一屏才开始 pitch。
-这一刀解开了之前所有的补丁仗：scrim 渐变、量文案高度、五段布局压缩——
-全部删除，五段**恢复海报原始比例**（漏斗龙头回 0.78、反转回原样、
-网格底行回 0.74、太极圆心回 0.47、绿三角回 0.775）。
-
-教训归档：之前三版都在试图让字和图**共享一屏**（右侧方块 / band / 满页+scrim），
-每一版都是在两个都想赢的约束之间调停。正确答案是不调停——给图整屏，字排下一屏。
-
-### 追记 2026-08-15 之三 —— 材质路线：试了，否了
-
-参考 drcmda 渲染做过一版完整的材质+光（RoomEnvironment 摄影棚、clearcoat 瓷球、
-NeutralToneMapping 保色相、浅灰纸地面、点彩太极），commit 60966d0。
-Andy 看过实物后判：**挺糟糕的，回平面**。已 revert。
-
-留给未来的两条：
-- 技术上全部走通了（ACES 会漂白海报红→用 Neutral;平面太极在 3D 里是贴纸→点彩化）。
-  如果哪天重启，从 60966d0 checkout 就是完整工作版。
-- 更重要的判断：**材质带来的「高级感」是通用的高级感**——那个场景是全网被克隆
-  最多的 three.js demo。平面油墨才是这个品牌自己的脸。这次是拿实物确认了一遍
-  当初 DESIGN.md 里写过的这句话，代价一个下午，值。
-
-
----
-
-# 编码 v3 宪章（2026-08-15 定稿 · Andy 照四页草图整体批准，三项裁决随草图通过）
-
-来源：lieflat wire 语法 × Fluxus 判断哲学 × Andy 裁决「保蓝红配对，边界要清」。
-
-## 三条规则（全部站内数据视图）
-
-**一、灰阶是地板。** 一切数据默认由炭黑阶承载，明度=重要性。
-一个图里没有对立、没有约束，就没有颜色。好消息不需要喊——领先榜再强也是炭黑。
-
-**二、蓝红只成对。** 当且仅当一个图同时画**两极**时，蓝红才出场：
-蓝 = 有利极（多、进、took、盈、新高），红 = 不利极（空、出、refused、亏、新低）。
-两极等宽等亮，谁也不压谁。**蓝永不独行**——见到蓝，旁边必有它的红。
-
-**三、红可独行 = 约束。** 单独出现的红只有一个含义：**此刻绑住你的那个东西**
-（反对票、RISK OFF、binding voter、最深落后者、被触发的止损）。
-满盘无红 = 无约束，颜色的缺席本身是读数。
-红的两个身份不冲突：配对里的红=不利的一极，独行的红=不利到绑住你——同一个语义方向。
-
-## 色值（灰度实测定的，不是挑好看的）
-
-| token | 值 | 依据 |
-|---|---|---|
-| 数据蓝（配对用） | `#1f5288` | 海报蓝 #3b82c4 原样与红 ΔL* 仅 2.5，灰度即塌；压深到 L* 34.2 后 ΔL* = 16.1 ≥ 14 门槛。色相仍是海报家族 |
-| 数据红（配对+约束） | `#d94032` | 海报红原样，L* 50.3。营销半边与数据半边从此同一支红 |
-| 灰阶 | 现有炭黑阶 | 不动 |
-| chrome accent | `#2d5f8a` 不变 | 它答「界面指着这里」，不是编码，不参与本宪章 |
-| 暗色 ground 的对 | 待迁移时实测 | 亮底的结论不能照搬暗底（v2 教训） |
-
-## 迁移表（批准后逐页执行）
-
-| 现状 | v3 去向 |
-|---|---|
-| took `#0f5ea8` / refused `#e8455f` | 退役 → 数据蓝/数据红（配对场合）或灰阶（非两极场合） |
-| profit 绿 / loss 红 | **蓝盈红亏**——太极的语言（蓝多红空）进账本。⚠️ 违背「绿=赚」惯例，需 Andy 单独点头 |
-| signal 四色 green/yellow/orange/red | 词已印出，色只复读 → power3/caution/warning 归灰阶+词，**riskoff 独红**（约束） |
-| 四态 Leading/… barStyle | 已是 tone×fill 双通道 → 纯灰阶版 |
-| 12 色形态标签等已灰化词表 | 不动（方向一致） |
-| faulty_base 保留的 refused 红 | 改数据红——语义正是「要被扫到的失败」＝约束红 |
-
-## 待裁决
-
-1. **蓝盈红亏**是否接受？（最大胆的一条；不接受则钱半边保留绿/红，宪章加一条豁免）
-2. signal 三色归灰是否接受？（CAUTION/WARNING 只剩词+灰）
-3. 版式层（24px 圆角卡、结论式标题、来源行）是否随色彩一起进 v3，还是只换色？
-
-### v3 落地进度（2026-08-15）
-
-✅ 切片1 token 层+四态灰化（9cbdc19）  ✅ 切片2-4+6 页扫（本提交）：
-band 徽章去孤蓝（墨底，Defence/Caution 独红）、RS/百分位芯片归灰阶、
-RS-vs-SPY 与 accel 补齐红极（原「蓝 vs 灰」半对改全对）、GroupTable 溢出标记
-红→墨（溢出是事实不是不利极）、Watchlist 重合芯片蓝→墨、Squares 计数蓝→墨、
-CapitalAtRisk 风险/锁定改真配对（红险蓝锁）、sync 成功点/测试通过/达标划线
-等状态性绿蓝全部归灰、TickerSignalHistory 命中标记蓝→墨。
-computed-style 审计：Dashboard 33蓝/29红（对称）、Themes 0/0、Screener 0/0、
-Market State 58蓝/2红（数据偏斜非语法）。
-**余量**：切片5 版式层（24px 卡/结论式标题/来源行）未动；journal 深处零星
-状态色待下轮细扫。
-
-**裁决补录（2026-08-15）**：字体**留 Plex**（Andy："好留Plex"）。lieflat 的语法
-（粗标题/重数字/全大写来源行）在 Plex 上照常成立，Inter 是它的默认不是它的本质。
-v3 版式层至此三件套齐：Plex 字体 + 24px 无边框卡 + 来源行。
-图表语法同日落到旗舰图（Market Conditions 线）：网格 7 根→3 根（0/50/100）、
-竖网格删（月份刻度本来就在下方标签行）、线宽 1.6→2.4、终点加 9px 圆点——
-眼睛落在数据结束的地方。步进保留（票数分辨率 ≈11 分，平滑是画出不存在的精度）。
-
-### v3 完成（2026-08-15 · Andy：全部继续不要停）
-
-最后一轮扫清（969ec1f 之后的收官提交）：
-- **硬编码图表色清零**：journal recharts 五张（Monthly/Summary/Volatility/RiskSection/
-  Simulator）、TradeDetail 参考线（止损=loss红=约束）、Ticker RS 线、Exposure、RRChart、
-  modelbooks 两套 K线+四条均线阶梯（lightweight-charts 不吃 CSS 变量 → getThemeColors/
-  chartTokens 实时解析，主题翻转随图重建重解析）。`grep` 审计：**0 残留**（营销半边除外）。
-- **两条 accent 旧违例全部关闭**（MonthlyReview 权益线→墨 2.4、OhlcvChart SPY 标签→
-  跟自己的线同灰）；index.css 注释同步改为「已关闭，勿再开」。
-- **卡壳批量 v3 化**：46 文件 79 处 `border+rounded-lg` 卡 → `rounded-3xl` 无边框；
-  两处**浮层**（Rail 悬停名牌、ScanBar 下拉）刻意保留描边——浮在任意底上需要边。
-- **查漏**：BrowseView 负 gain 半对（蓝 vs 灰）补成全对；TradingGym 买/卖按钮脱下编码色
-  （按钮是 chrome，读者的动作不穿数据的颜色）。
-- **终审计**（computed，8 页）：dashboard 33/27、breadth 52/2、trades 325/157（全是
-  配对或数据偏斜）；groups/screener 0/0（灰地板成立）。
-**v3 状态：完成。** 余项仅：journal 空态页待有数据时复查；来源行未铺满全站（Dashboard 有，
-其余页可按需补）。
-
-## Dashboard 蓝本（2026-08-16 定稿 · 其余页照此铺开）
-
-Andy 逐条验收 Dashboard 后确认「没问题了」。以下是**其他页必须照抄的规格**。
-
-### 卡片与版式
-- 卡壳 `rounded-3xl` **无边框**，靠底色分隔；大卡 `px-6 py-5`，小卡 `px-4 py-3`。
-  唯一例外：**浮层**（悬停名牌、下拉）保留描边——浮在任意底上需要边。
-- **标题在卡外**，Title Case，17px semibold，上 `mt-4` 下 `mb-3` 留呼吸。
-  卡片里只放数据。
-- **不写来源行、不写页面 blurb、不写解释性 tooltip**。页面文案只留交易内容。
-- 列头（1D/1W/1M 这类）**每列只命名一次**；下半块靠发丝线 + 标题里的语序继承。
-
-### 字与色
-- 字族：PlexCond=display（页标题/判词/大分数）· PlexMono=数字与代号 · Plex=散文。
-- **所有 ticker 一律 `font-semibold` + `text-bold`**（选股器表格是标准，其余对齐）。
-- 类型地板 **10px**，不得再低。
-- 涨跌幅**数字直接穿配对色**；不再另画条（数字+条=同一句话说两遍）。
-- 卡片**左缘 3px 色条**表方向（配对色）；**无测量则不画**。
-
-### 主题层级（两次实测后定值）
-| | 亮 | 暗 |
-|---|---|---|
-| bg | `#e2e0d6` L* 89.1 | `#1a1715` L* 8.0 |
-| surface（卡） | `#f2f0e9` L* 95.0 | `#282421` L* 14.5 |
-| 卡/底 | 1.19 | 1.16 |
-| took / refused | `#1f5288` / `#d94032` ΔL* 16.1 | `#8bbcec` / `#e0705c` ΔL* 14.4 |
-
-**教训（两条，都写进 pitfalls）**：
-1. 「页面太亮」要压**卡片**不是压底色——卡片才是大面积。第一次只压底色 2 个 L*，
-   Andy 肉眼判定「和之前没区别」，是对的。
-2. 配对色**不能单独调一支**：暗色蓝提亮必须同时移动红，否则 ΔL* 塌破 14 的门槛。
-
----
-
-## 全站十轮自检（2026-08-16 · Andy：「再自我检查迭代个10遍，找出并解决问题」）
-
-不用眼睛看，用**实测**：写探针遍历每个路由的每个 DOM 节点，读 computed style。
-十轮各换一个镜头。以下是量出来的，不是想出来的。
-
-### 一、颜色宪章的漏网之鱼
-
-第一次审计我 grep 的是 `fill="#`，漏掉了 JSX 表达式写法 `fill={... '#...' ...}`——
-所以整整一类图表保持着旧调色板，而我报告「全站已清」。Andy 的截图找到了它们。
-
-更隐蔽的一个：`abcColor()` 返回的是 **Tailwind 类名**（`bg-blue-500` / `emerald` /
-`amber`），任何找 hex 的正则都从它旁边走过去。A/B/C 是**等级**，等级没有对立面，
-所以现在走灰阶墨色。
-
-| 漏网处 | 原来 | 现在 |
-|---|---|---|
-| R 倍数柱 / 持仓盈亏柱 | 绿/红 | 金钱配对（蓝=赢） |
-| 集中度条 | `#ef4444` 压蓝 | 过 15% 线才红，线下是灰 |
-| 贴线的那一票 | `#b8860b` 金 | refused——最接近翻转的那票就是绑住这块板的那票 |
-| 十字光标 | 两个裸灰 | `--color-border` |
-| A/B/C 徽章 | 三个 Tailwind 色 | 灰阶三级（15.3 / 6.2 / 4.9） |
-| 板块色 / 对比槽色 | 坐在蓝红上 | 移开配对色相——它们回答「哪一个」，永远不回答「哪一边」 |
-
-### 二、把每个字都量一遍（不是量我碰巧看到的那些）
-
-九个路由 × 两个主题，每个文本节点算它**实际渲染所在底色**上的 WCAG 比值。
-九十多处不达标，且不是散的——三个 token 占了几乎全部。
-
-| token | 实测 | 处置 |
-|---|---|---|
-| `--color-text-muted`（亮） | 4.22 —— **全站用得最多的墨** | 加深；但单独加深会让它和 secondary 只差 2.7 L*，等于没有层级，所以**两级一起下移**，梯距保持 20.6 / 10.6 |
-| 配对红（亮）小字 | 3.89 | 见下 |
-| `--color-accent`（暗） | 3.60 当墨用 | 两天前我为**聚焦环**（3:1）提亮过它，量是对的——但这支 token 同时是每个链接和 ticker 的墨。**一支 token 两个职责，我只量了一个。** |
-
-**那个「无解冲突」，解开了。**
-我曾把红色小字记录为无解：任何够 4.5 的红都会把配对的灰度分离度压塌。
-我从没试过的是**两边一起动**。蓝再深一档，就存在一个红同时满足 4.54 和 ΔL* 14.1。
-
-> 亮：`--color-took #194371`（bg 7.62）· `--color-refused #b5342c`（bg 4.54）· ΔL* 14.1
-> Andy 的海报红 `#d94032` **原封不动**——它在 hero 上是大图形，只需要 3:1。
-
-**两支新 token，同一个原因**：一个必须在暗底上当**墨**读的颜色，太浅了托不住白字。
-一个值干不了两件事，所以按钮底色自己拿 token：
-`--color-accent-solid`（白字 4.96）、`--color-loss-solid`（白字 4.94），配对红不动。
-
-顺带三处底色让路，全是同一个错——**已经带色的字底下再压一层深色**：
-Portfolio 的合计行、Model Books 的选中行、一个红色的 Reset 按钮
-（红在这个站上只意味着「绑住你的约束」，Reset 不是）。
-合计上面一道线、选中外面一圈环，说的是同一件事，且不吃字的可读性。
-
-### 三、字号阶梯
-
-量出来比我预期的整齐：**10 / 11 / 12.5 / 14 / 17 / 26 / 46**，三支字体各在其位，
-10px 下限零突破。只有一处走样：Portfolio 的标签栏是 14px 粗体加下划线，
-而站内另外四条标签栏都是 11px 药丸。同一个活，现在穿同一身衣服。
-
-（插曲：我一度以为 14px 是野生层级，因为渲染节点里只有 15 处。查源码才发现它是
-详情页的正文号。**「渲染到的」不等于「存在的」**。）
-
-### 四、手机
-
-375px 下 Screener 把**整页**横拖 393px——它的表是全站最宽的，也是唯一没有自己
-滚动盒的。Trade Journal 的七个分析标签跑出右边缘，把页面一起拽出去。
-现在十一个路由横向溢出全为 0。
-
-两处只是挤，同一个病因（版式假设了桌面宽度）：
-- 十二票六列排在手机上每格 62px，而 "McClellan" 比这宽，标签互相压字 → 小屏三列。
-- regime 横轴 "Dec 2026 Feb" 叠在一起：抽稀规则每 N 个月取一个，而「永远保留一月」
-  的规则把年份**插进它已经选中的两个月中间**。现在年份赢这场碰撞，月份让开。
-
-> 这个修复的第一版**完全没起作用**，是审计抓到的：我拿月份标记的**交易日序号**去比
-> 「隔几个月」。它量出来还是坏的，这是我知道自己错了的唯一原因。
-
-### 五、焦点环——这个站从来没声明过
-
-Tab 过去，环渲染成 `rgb(41,37,36)`：浏览器默认值，跟我们选的任何东西无关。
-亮色下是一根乱入的黑发丝；**暗色下是近黑的环压在近黑的卡上**，等于键盘用户
-根本看不见自己在哪。现在用 accent 声明一次（它本来就是「界面正指着这个」的 token）。
-
-### 六、灰度存活——一个我**没有去修**的发现
-
-品牌靠截图和打印传播，所以我把全站转灰度量了一遍。配对本身没问题
-（took L*28 vs refused L*42，正是设计的 14）。但是：
-
-| 撞车 | ΔL* |
-|---|---|
-| `text-muted` L*40 vs `refused` L*42 | **1.6** |
-| `text-secondary` L*30 vs `took` L*28 | **1.8** |
-| `text-muted` L*40 vs `accent` L*39 | **1.4** |
-
-也就是说：**在灰度里，一个红色的亏损数字和一个灰色的标签是同一个灰。**
-
-我没有改，因为改不动，也因为不必改：
-- **改不动**：在 L*89 的纸上，能当墨读（≥4.5）的区间大约只有 L* 0–45。
-  要塞下三级灰阶 + 两个配对色且两两相隔 ≥8，需要 45÷5≈9 的间距，
-  那样红会落到 L*49 —— 回到 3.89，正是我们刚修掉的病。
-- **不必改**：配对**成员之间**仍然隔着 14 L*，而那才是要读的东西
-  （「哪一边」，不是「这个有没有颜色」）。而且每个配对数字都已经带着
-  **正负号**——那就是现成的第二通道，灰度里照样读得出来。
-  纯色块（票的填充、卡片左缘）只跟自己的搭档比，14 L* 够。
-
-**记下来是因为它是真的**：如果以后往站里加一个**没有符号、没有文字**、
-只靠单色说话的图元，它在灰度里就会消失在灰底噪声里。那时候要加的是
-第二通道（斜纹、虚线、形状），不是再调一次色。票的图例已经这么做了。
-
-### 七、数据没来的时候，页面还是不是页面
-
-把网络切断走一遍。三个路由不及格：Themes、RS Leaderboard、Trade Journal
-用一句裸文字回答失败的请求——没有面包屑、没有标题、没有卡片。
-**页面在出事的那一刻不再是页面**，而那正是最不该让人迷路的时刻。
-
-现在它们共用 `DataUnavailable.jsx`，规则和 `Placeholder` 一样：
-**框子是真的，不管身体在不在**。pipeline 命令保留（读它的人就是跑它的人），
-但降为脚注，而不是整个页面。之前 Themes-无数据的全部内容就是那行
-`groups.json unavailable — run python -m pipeline.themes.build_groups`。
-
-### 八、Ticker 页：一直在审计范围外
-
-它不在 `<main>` 里，所以我历次探针从没扫到过它。补测后发现
-**亮色主题下 TradingView 图表是一整块黑矩形压在暖纸上**——widget 的主题写死了。
-它是第三方 iframe，读不到我们的 token，但初始化时吃 theme 参数；
-换主题时必须重新初始化，因为 iframe 自己不会重绘。
-
-### 结果
-
-| 镜头 | 结果 |
-|---|---|
-| 文字对比度 | 九路由 × 两主题：**0 处** < 4.5（大字 0 处 < 3） |
-| 横向溢出 | 十一路由 @375px：**全 0** |
-| 硬编码色 | 剩余的只有身份色板（板块/对比槽，**刻意**）和 fallback |
-| 字号 | 10px 下限零突破，阶梯七级 |
-| 焦点环 | 两主题均已声明并实测可见 |
-| 测试 / 构建 | 167 通过 / clean |
-
-### 追记 · 第十一轮：在**生产**上重审（Andy：「全部完成了？再审核」）
-
-前十轮全在 localhost 上量的。搬到 `fluxus-dashboard.vercel.app` 重跑，
-并且补了两个从没进过审计范围的东西：**四个公开页**和**平板宽度**。
-
-**探针本身有缺陷，这轮才发现。** 一个语言切换药丸在每个路由上都量出 1.46:1。
-上一轮我把它当瞬时误报放过了——因为单独复查它是 12.37。**两个判断都不对。**
-真相：浏览器面板被隐藏时 CSS 过渡会被**冻结在半路**，`getComputedStyle`
-于是返回那个冻住的插值颜色。给它加 `transition:none`，背景立刻跳回正确值。
-探针现在先关掉所有过渡再测。
-
-> 我当时"结论对了"（不是站上的 bug），但**理由是错的**——那等于不知道。
-
-**公开页从没被扫过，四处不达标：**
-
-| 处 | 实测 | 病因 |
-|---|---|---|
-| `--color-neutral` | 亮 3.62 / 暗 3.21 | **从没为 v3 校过**，而且压根没有暗色值，一直在继承亮色的。它标记「盈亏正好为零」——那不是第三个阵营，是一个没什么可说的普通数字。接到已量过的灰阶上，顺便自动跟主题。 |
-| `.public-label`（hero） | 4.13 | 硬编码 Tailwind stone-500。海报的底比 app 的更黑，所以标签必须比 app 的 muted **更亮**，不是一样。 |
-| `.public-cta` | — | 白字压 `--color-accent`：和我在 JSX 按钮里修过、却在样式表里漏掉的是同一个错。hero 上它穿海报红，白字 4.44，差一点。改用 `loss-solid`（4.94），**海报红本身不动**——它在那页其余所有地方都是大图形。 |
-| Method 的 Pillar 1/2/3 | 3.79 / 4.02 | 1、3 涂蓝、2 涂红，等于宣称「这两个一边、那个另一边」——而 Select / Read / Size 是**枚举**，枚举没有阵营（宪章第一条）。而且又是把为大图形（3:1）量的海报色拿来当 14px 墨。 |
-
-**这轮的通用教训**：`--color-neutral` 和 `.public-label` 都是**「从没被任何一次
-改版碰过」**的角落。它们不是新写坏的，是**一直没被量过**——而审计范围默认等于
-「我记得的地方」。范围本身要被质疑。
-
-**最终（生产实测，过渡已关）**
-
-| | 结果 |
-|---|---|
-| 应用页 11 路由 × 亮/暗 | 0 处 < 4.5 |
-| 公开页 5 页（含落地） | 0 处 < 4.5 |
-| 横向溢出 @375 / 768 / 1512 | 全 0 |
-| 线上包 | 与本地构建哈希一致，确认已部署 |
-
----
-
-## Themes 改造 · 15 个变体 + 打分（2026-08-16 · Andy 给的参考是 lieflat 的图表目录）
-
-实验稿：`Fluxus_Brand/visual/explorations/2026-08-16/themes_15.html`（全部用 groups.json 真实 76 条数据）
-
-**第一个判断**：三张参考图<b>全是灰阶</b>。它们不单调，不是因为多加了颜色，
-而是因为每一格换一种几何——胶囊、花瓣、点阵、力导向、分岔条。
-所以这轮的赌注是：**形状承担变化，颜色继续只承担含义**。宪章一条没改。
-
-现在的 Themes 页三层用的是<b>同一种</b>几何（横条/点带），单调是形状上的，不是色彩上的。
-
-### 几何库（26 种，全部自己实现——lieflat 是 PolyForm Noncommercial，只学它公开的样式规则）
-
-- **Field 10 种**：蜂群 / 象限 / 点阵 / 山脊 / 放射 / 状态行 / 胶囊 / 树图 / 箭头场 / 华夫
-- **Compare 8 种**：斜率 / 名次 / 玫瑰 / 接力棒 / 哑铃 / 瀑布 / 卡片 / 轨道
-- **Ranked 8 种**：分岔 / 拱顶 / 梳子 / 热行 / 层叠 / 字体 / 名次迁移 / 象形
-
-### 打分（六项 × 0–5，四项可验证）
-
-前四名：**V02 象限/名次/热行 26** · **V06 树图/瀑布/迁移 25** · **V14 山脊/卡片/字体 25** · **V04 山脊/接力棒/梳子 24**
-
-**打分的结论不是「选哪一个」，而是没有一个变体三层全赢**，所以有了两个合成版：
-
-- **V16 · 象限 / 卡片 / 字体排名（30/30）** — V02 的信息量 + V08 的可读性 + V05 的密度
-- **V17 · 树图 / 卡片 / 分岔（27/30）** — 如果认为该先说「体量」而不是「加速度」
-
-### 画出来才知道的三件事
-
-1. **V06 的名次迁移，我原本以为是这批里最聪明的一张**。画出来右端 18 条线的标签整叠塌陷——
-   因为我拿全场 76 名去定纵坐标，却只画 18 条。<b>纸上想的和渲染出来的是两回事。</b>
-2. **树图说了柱状图说不出的话**：Small Caps 1583 只、High Beta 1057 只，两块巨大的浅格子
-   只跑赢 SPY 5% 和 2%；而 +47% 的 52-Week High Leaders 只是一小格 88 只。柱状图把这两件事画得一样长。
-3. **⭐ 榜上 members==1 的三条不是「小主题」，是用一只 ETF 代理整个主题**
-   （Biotech=XBI、Taiwan=EWT、Healthcare=XLV）。现在的页面把一只 ETF 和一个 286 只的篮子
-   并排排名，不作任何区分。这是我在给榜单加成员数时<b>撞见</b>的，不是找出来的——
-   一个新画法顺手体检了旧数据。
-
-### 各变体实测缺陷（都是渲染出来看到的，不是预判）
-
-| 缺陷 | 涉及 |
-|---|---|
-| Compare 右缘标签互相压字 | V01 V02 V11 V12 |
-| 接力棒用 \|v\| 当长度，跑输的段也画得长——长度骗人 | V04 V09 |
-| 哑铃的数值压在连线上 | V05 V13 |
-| 轨道按角度摆放，距离无法互相比较 | V07 V11 |
-| 层叠柱丢了配对色，跑输读成浅灰 | V07 V15 |
-| 名次迁移标签整叠塌陷 | V06 |
-| 玫瑰四朵形状太像，比不出来 | V03 V10 |
-| 胶囊只画 24 条 → 那是排名不是全场 | V08 |
-
-### 下一步（待 Andy 裁决）
-
-V16 和 V17 只差 Field 一层：**先说「还在不在加速」还是先说「这篮子有多大」**。
-定了之后再落到 `frontend/src/components/groups/`，届时要补：交互（选中/悬停）、
-暗色主题实测、375/768 宽度、以及 ETF 代理在数据层要不要单独出一个字段。
-
-### 第二轮 · Andy 的三条裁决 + Compare 对决（2026-08-16）
-
-实验稿：`Fluxus_Brand/visual/explorations/2026-08-16/themes_round2.html`
-
-**裁决**：① Field 不比体量，用 V02 的象限（领先 × 加速）；② Compare 要一张图、x 是时间、
-y 是强弱曲线、要动；③ Ranked 用零线居中的分岔条。V06 的树图路线否掉。
-
-**做 Compare 之前先查了数据能不能撑起真时间轴**：
-- `groups.json` 只有 5 个滚动窗口的收益，没有日线；
-- `data/history/groups_archive.csv` 是主题指标的每日归档，但**只有 6 天**（8/07–8/14）；
-- 本地 OHLC 只缓存了 161 只，且**没有 SPY**。
-
-所以：**真正的日线相对强弱序列现在不存在**。可用的是四段 `rs_*` 逐段累加出的
-**累计相对强弱线**，落在真实日历间距上（−182 / −91 / −30 / −7 / 0 天）。
-五个点是测量，点之间是插值——这条必须写在图上，不能让人以为那是日线。
-> 要一根真曲线：让归档再攒几个月，或数据侧算「等权篮子 vs SPY」的日线序列。**数据侧的活。**
-
-**两条路线各三稿**（全部带动画 + 重播按钮）：
-- **A 曲线** A1 基础（全场 76 条底噪）· A2 阴影 · **A3 爆发段加粗（30/30）**
-- **B 赛道** B1 八泳道 · **B2 十二泳道（27/30）** · B3 紧凑
-
-**建议（Andy 定）**：A3 当主图——它同时答了「现在在哪」和「爆发在哪一段」，
-且**不靠动画也成立**，静态截图读得懂；B2 当第二眼，点开单个主题时展开。
-若只能留一个，留 A3：赛道更抓人，但画不下 76 条，而 Themes 这页的职责就是「全场」。
-
-**赛道里抓到的一个自己的 bug**：我把跑者位置钳在起跑线（`Math.max(L,…)`），
-柱子钳了、跑者圆点的动画没钳，两者会对不上。而且钳位正好抹掉最该看见的东西——
-**被 SPY 拖到起跑线以后**。改成不钳位、左侧留出「落后区」。Drones 前两段
-（−28%、−15%）现在真的跑在起跑线后面，第三段 +33% 冲回来，最后一段 +3% 守住。
-
-### 第三轮 · 窗口收到 3 个月，顺带修掉一处两层矛盾（2026-08-16）
-
-实验稿：`Fluxus_Brand/visual/explorations/2026-08-16/themes_round3.html`
-
-**Andy**：① Compare 为什么从 6 个月前开始，3 个月就够；② Ranked 不要成员数和 ETF 代理。
-
-改 3 个月的时候撞出一个我上一轮**没发现的矛盾**：四段 `rs_*` 逐段累加的终点，
-**和榜单印的 `excess_3m` 对不上**（领头的差 5–14%）。查下来是口径不同——
-`rs_*` 是复利口径，我做的是算术累加。
-
-反解 SPY 的滚动收益，结果对全部 76 条**精确一致**（标准差 0.00000）：
-
-| | 值 | 判定 |
-|---|---|---|
-| spy_1w | 0.00428 | `rs_0_1w` 就是滚动 1 周超额 |
-| spy_1m | 0.04446 | 需按复利口径反解：`rs_1w_1m = [(1+p1m)/(1+p1w)−1] − [(1+s1m)/(1+s1w)−1]` |
-| spy_3m | 0.05299 | `excess_3m` 就是滚动 3 月超额 |
-
-于是曲线重建为**每个点都是实测的滚动超额**：
-
-    value(−91d) = 0
-    value(−30d) = excess_3m − excess_1m
-    value(−7d)  = excess_3m − excess_1w
-    value(0)    = excess_3m        ← 精确等于榜单印的那个数
-
-**76/76 校验通过。Compare 与 Ranked 不再互相打架。**
-
-窗口收窄的额外好处：横轴不再被 182 天压扁（91/30/7 天间距均匀得多），
-且 Drones 的故事更干净——前两个月 −20.4% 一路在落后区，第二段 **+34.1% 爆发**，
-最后一周 +3.0% 守住。
-
-Ranked 去掉成员数与 ETF 代理（Andy 定）。ETF 代理那件事仍然是真的
-（Biotech=XBI、Taiwan=EWT、Healthcare=XLV），保留在这份文档里当**数据侧的观察**，不再画在页面上。
-
-### 第四轮 · 三条反馈，其中一条动摇了 Compare 的前提（2026-08-16）
-
-实验稿：`Fluxus_Brand/visual/explorations/2026-08-16/themes_round4.html`
-
-**Andy**：① 迷你条想法好但粗细不均匀不协调；② A3 可以，但「3 个月前的起始数据本来就不一样，
-不需要再计算，对吗？」——另外别用粗细表达，用灰阶；重播要同时起跑；
-③ B2 赛道要零线居中或动态平衡，现在跌的会跌出赛道压进名字栏。
-
-**第 ② 条问的其实是要不要归一化。** 现在这条曲线把所有主题强行归到 0 出发——
-那是我加的一道工序，不是数据本来的样子。所以画了三种读法，回答三个不同的问题：
-
-| | y 是什么 | 回答 | 代价 |
-|---|---|---|---|
-| **α 累计式** | 从 3 个月前起累计超额（归一化到 0） | 这三个月谁走得远 | 起点被抹平，看不出三个月前它们本来站在哪 |
-| **β 回看式** | 从那个时点持有到今天的超额（**payload 原始三个数，零加工**） | 从哪天上车、今天领先多少 | 窗口越短数值天然越小，右侧向零收拢——那是窗口长度的机械后果，容易被误读成"大家在变弱" |
-| **γ 速度式** | 每日超额 = 超额 ÷ 天数 | 它在加速还是减速 | 需要除一次，但三个窗口口径因此统一 |
-
-> β 最贴近「不需要再计算」也最诚实；γ 修掉了 β 的收拢问题，**而且它的纵轴就是 Field 象限的纵轴**，两层会互相印证。
-
-**另两条已改**：
-- 线宽恒定 2.6（实测全站只有一个值），**墨色深浅**代替粗细表示这一段跑多快；四条**同时起跑**（第一段 begin 全为 0.00s，实测确认）。
-- 赛道改成**先量出被画的这些人真正的最远/最退距离再排版**，起跑线随之左右浮动。实测：跑者与柱子范围 237–923，赛道 196–964，左右皆不越界。
-- 迷你条三种画法：原样（对照）/ **等高色阶**（三格同宽同高，只有墨浓淡变）/ **迷你折线**。
-  不协调的根因是我让高度去编码数值，于是三格高矮参差。
-
-### 第五轮 · 回到原有形状，只剩纵轴一个选择（2026-08-16）
-
-实验稿：`Fluxus_Brand/visual/explorations/2026-08-16/themes_round5.html`
-
-**Andy**：渐变条保留；原版透露的概念就是「三个月前本来就不一样，然后慢慢变化」。
-
-他是对的，而那正是我上一轮的 α（全部归零起步）**抹掉**的东西。所以退回原有构造：
-**每个点 = 那一段里的相对强弱**，线天生从不同高度出发，Fritsch–Carlson 单调三次插值
-（与线上组件同一套：曲线永不越过相邻测点的范围）。渐变条原样保留。
-窗口收到 3 个月 = 砍掉 3–6m —— `segments.js` 里早就写着它 `inQuarter:false`。
-
-**只剩一个选择：纵轴用原始分段值，还是每日速度。** 而这个选择不是审美：
-
-| High Octane | 1–3m | 1w–1m | this week | 读出来是 |
-|---|---|---|---|---|
-| 原始分段值 | +34.7% | +12.9% | +3.8% | **像崩塌** |
-| 每日速度 | 0.569% | 0.563% | 0.539% | **纹丝不动，根本没减速** |
-
-三段的长度是 **61 天 / 23 天 / 7 天**。原始口径下短的那段数值天然就小，
-于是**几乎每个主题看起来都在褪色**——包括一个实际上速度完全没变的。
-Andy 截图里三条线在右端收拢，就是这个机械后果，不是市场在变弱。
-
-另一个例子反过来：Cybersecurity 原始 +35.7% → +1.8% → −0.3% 像"放缓"，
-每日速度 0.585% → 0.080% → **−0.042%**，其实**已经转负**。
-
-> 每日速度的纵轴**就是 Field 象限的纵轴（加速度）**，上下两层会互相印证而不是各说各话。
-> 建议 γ，但这是 Andy 的判断。
-
-### 落地 · TrajectoryPanel 改为「每场超额」（2026-08-16 · Andy 定）
-
-改动两处，一处不是外观：
-
-1. **纵轴 = 每场超额**（该段总超额 ÷ 该段场次）。段长写在 `segments.js` 的 `sessions`
-   字段里，由 pipeline 的滚动列推出：perf_1w/1m/3m/6m ≈ 5/21/63/126 场，
-   逐段相减得 63 / 42 / 16 / 5。
-2. **只画三段**（砍掉 3–6m）。窗口按钮的下标是按四段算的，所以做了**重映射**而不是减一；
-   3M 不再着色——它就是整幅图。
-
-段总额没有丢，在每个点的 tooltip 里，和场次一起。场次也印在每列下方——
-**它是这张图为什么要除的理由，不该让读者凭信任接受**。渐变条构造不变，改吃同样的速率。
-
-**实测（生产构建前，dev 上量的）**
-
-| | 1–3m | 1w–1m | this week |
-|---|---|---|---|
-| High Octane 原始 | +34.7% | +12.9% | +3.8% |
-| High Octane 每场 | +0.83% | +0.81% | **+0.75%** ← 平线，从未减速 |
-| Cybersecurity 原始 | +35.7% | +1.8% | −0.3% |
-| Cybersecurity 每场 | +0.85% | +0.11% | **−0.06%** ← 已经转负 |
-
-**审计又抓到我自己一处**：三个 compare 槽位色作为**墨**不达标（2.96 / 3.15 / 3.64）。
-那三支色是我在颜色清扫时按「身份**填充**」挑的，从没按**文字**量过——
-和两天前 accent 那次是同一个错。现在是分主题实测的 token
-（亮 5.9/5.7/6.5，暗 7.1/7.2/6.5），且 localStorage 里的旧选中项**按槽位下标迁移**，
-否则旧 pick 会保留退役的 hex，而它的槽位看起来还空着。
-
-Themes 页两主题零处对比不足、零横向溢出。
-
-### design-review 审核 · Themes（2026-08-16）
-
-报告：`.gstack/design-reports/design-audit-themes-2026-08-16.md`
-
-体系层面全部通过：三支字体各在其位、字号阶梯干净（量到的 16px 是 SVG `<title>`，不渲染）、
-五支墨全是 token、两个主题零对比失败、零横向溢出。
-
-**修掉两处，都是「量过一个关系、没量另一个」：**
-
-1. **三条 compare 曲线在灰度里是同一条线**。三个槽位色彼此对比 1.04 / 1.10 / 1.15，
-   ΔL\* 只有 1.0–3.7（配对色的门槛是 14）。这是我前一天造成的——它们作为墨不达标（2.96–3.64），
-   我把三支一起压深，**一起压深正是让它们彼此不分的原因**。
-   现在是明度阶梯（14 / 27 / 40 L\*，两两 12.7–26）**加线型第二通道**（实线/虚线/点线）。
-2. **窗口阴影在两个主题下说的话不一样**。用的是 `--color-hover-bg`（按悬停量的），
-   当图表阴影用时亮色只比底重 1.097、暗色 1.287。改用「墨 7%」，随主题缩放：1.148 / 1.208，
-   步长差从 0.191 收到 0.061。
-
-**留给 Andy 定的一处**：轨迹图只用掉 190px 里的 83px（44%）——纵轴强制对称（±span），
-而选中的主题几乎全是正的，所以下半张是空的；span 又被单个离群值（Drones +2.05%/场）撑开。
-改成「不对称但永远含零」能收回高度，代价是 **SPY 线会随选中项上下移动**。
-那是对一张刚定稿的图的性格改动，不该由我悄悄做。
-
-**已知缺口**：Ranked 仍是旧的 `ThemeBars`（用柱子的填充编码四种状态），
-第二轮定的零线居中分岔条还没建。填充当第四通道也在宪章之外。
-
-### ⭐ 值得命名的模式：三次颜色缺陷是同一个形状
-
-| token | 按什么量的 | 实际当什么用 |
-|---|---|---|
-| `--color-accent` | 聚焦环（3:1） | 链接墨（4.5:1） |
-| compare 槽位色 | 身份填充 | 正文墨；然后只量了「对背景」，没量「彼此」 |
-| `--color-hover-bg` | 悬停抬升 | 图表阴影 |
-
-**「量过」是一个关于关系的断言，而一支 token 有多少种用法就有多少个关系。**
-能抓住这类问题的探针不是「对背景扫一遍对比度」，而是对每支 token 问：**它旁边还有什么**。
+| **measurement** | plain, unmarked | `523 names −25% on the quarter` |
+| **reading** | **solid left rule** | `Megacaps repaired.` |
+| **expected** | **dashed left rule** | `Five-day ratio needs to clear 1.0` |
+| **action** | reversed block / large condensed | `WAIT FOR FTD` |
+
+Weight and colour alone are not enough — they do not survive a screenshot. Every layer
+needs a structural mark.
