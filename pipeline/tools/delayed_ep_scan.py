@@ -246,14 +246,39 @@ def main() -> None:
     print(f"EP firings in window: {len(tickers)} tickers (as of {as_of})")
     if not tickers:
         return
-    data = yf.download(tickers, period="120d", interval="1d", group_by="ticker",
-                       auto_adjust=False, progress=False, threads=True)
+    # 2026-08-18: the cron step printed "77 tickers ... 0 in the window" and
+    # archived nothing -- Yahoo throttled the one batch download at 22:00 UTC
+    # and every frame came back empty. Retry with a pause, like the universe
+    # sweep does, and say loudly when the night is lost rather than filing
+    # silence as "no candidates".
+    import time
+    frames = {}
+    for attempt in range(4):
+        missing = [t for t in tickers if t not in frames]
+        if not missing:
+            break
+        if attempt:
+            time.sleep(20 * attempt)
+        data = yf.download(missing, period="120d", interval="1d", group_by="ticker",
+                           auto_adjust=False, progress=False, threads=True)
+        for t in missing:
+            try:
+                df = data[t].dropna(subset=["Close"]) if len(missing) > 1 else data.dropna(subset=["Close"])
+            except KeyError:
+                continue
+            if len(df):
+                frames[t] = df
+    got = len(frames)
+    if got < 0.5 * len(tickers):
+        print(f"ERROR delayed_ep: bars for only {got}/{len(tickers)} candidates after 4 rounds "
+              f"(Yahoo throttle?) -- not archiving a half-empty session", file=sys.stderr)
+        if a.archive:
+            return
     uni = {r["ticker"]: r for r in json.loads(UNIVERSE.read_text())["rows"]}
     rows = []
     for t in tickers:
-        try:
-            df = data[t].dropna(subset=["Close"]) if len(tickers) > 1 else data.dropna(subset=["Close"])
-        except KeyError:
+        df = frames.get(t)
+        if df is None:
             continue
         df = df[df.index <= pd.Timestamp(as_of)]
         if len(df) < 25:

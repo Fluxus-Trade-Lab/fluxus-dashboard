@@ -58,7 +58,10 @@ ARCHIVES: Dict[str, Dict[str, Any]] = {
     "groups_archive.csv":    {"date": "date",  "key": ["date", "kind", "group"],      "counts": True,  "nightly": True},
     "momentum97_shadow.csv": {"date": "date",  "key": ["date", "recipe", "ticker"],   "counts": False, "nightly": True},
     "universe_quality.csv":  {"date": "date",  "key": ["date"],                       "counts": False, "nightly": True},
-    "delayed_ep_log.csv":    {"date": "as_of", "key": ["as_of", "ticker"],            "counts": False, "nightly": False},
+    # nightly since 08-13 (cron step "Archive Delayed-EP stages"); 08-18 it
+    # silently archived 0 rows on a throttled download -- I5 is what would
+    # have said so the next morning.
+    "delayed_ep_log.csv":    {"date": "as_of", "key": ["as_of", "ticker"],            "counts": True,  "nightly": True},
 }
 COUNT_FLOOR = 0.30
 COUNT_CEIL = 3.0
