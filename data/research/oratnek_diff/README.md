@@ -56,3 +56,20 @@
 - **Momentum 97 = 0/11，终于有了线索**：他的 11 只（DINO MAN FRSH RHI CHYM BETA P NIQ CLMT ARHS DASH）**RS 线在 21 / 42 / 63 / 126 日全部 = 100**（自百分位，本地 yfinance 复算），perf_1w_pctile 却只有 0.73–0.97，大半过不了我们 ≥0.97 的门；我们的 7 只里 5 只是 Healthcare 生物科技、OMER/TBBB 的 RS 线 21 日才 95/90。假设：**他的 "97" 是长窗口 RS 线自百分位（≥97 ≈ 半年新高），不是一周涨幅百分位**。在 08-18 原件上试：`rs_line_pctl_21 = 100 ∧ trend_base ∧ ADR 3.5–10 ∧ 非 Healthcare ∧ 门` = 他的 11 + NTAP + U（13 只；CCC 在 126 日只有 94 被剔）。→ 今晚起 universe.json 多两列 `rs_line_pctl_63` / `rs_line_pctl_126`（只探不筛），攒几天截图再定。
 - **Healthcare**：三个预设双胞胎格（Momentum 97 / 4% Bullish / Weekly 20%+）在 `screener-presets.json` 里本来就 `excludeHealthcare: true`，面板没带——08-18 起对齐（我们 Momentum 97 7 → 1、4% 17 → 9、Weekly 20 8 → 2）。他的 PP 2+ 里有 SDGR（Healthcare），所以他不是全页面排除，只在动量格。
 - **其他页**：他的 Sector Leaders 1W 榜首 Energy（+4.41%）、榜尾 Industrials（−1.41%）——我们 groups.json 的 sector 层同日 1W 也是 Oil & Gas / Energy 最高、Industrials 最低，方向一致（口径不同：他 11 个 SPDR，我们 18 个行业桶）。他的 Market Conditions 里 % above SMA50 = 74%、SMA200 = 77%，我们 breadth.json 是 47.8% / 46.5%——**不是错，是池子**：他那块是 S&P 500 宽度，我们是全市场 5,600 只。
+
+### Momentum 97 假设的四轮验证（08-11 / 13 / 14 / 18，Andy："自设假设，那就去做多轮验证"）
+
+原始表 `momentum97_pool_4days.csv`（候选池 = 门 ∧ trend_base ∧ ADR 3.5–10 ∧ 非 Healthcare ∧ RS 线 3M 自百分位 ≥97，逐日 as-of，K 线 `event_bars.pkl`）。
+
+| 规则 | 08-11 (他 23) | 08-13 (29) | 08-14 (11) | 08-18 (11) | 四日 recall |
+|---|---|---|---|---|---|
+| **我们的**：perf_1w_pctile ≥.97 ∧ perf_3m_pctile ≥.85 | 4/21（我们 9） | 3/29（14） | 2/10（5） | 0/10（1） | **9/70** |
+| RS 线 **21 日** = 100 | 21/21（58） | 29/29（74） | 10/10（48） | **7/10**（23） | 67/70 |
+| RS 线 **63 日 ≥97**（= 3M 新高或差一天） | 21/21（68） | 29/29（86） | 10/10（54） | 10/10（44） | **70/70** |
+| RS 线 126 日 ≥97 | 21/21（76） | 29/29（100） | 10/10（77） | 10/10（68） | 70/70 |
+| RS 线 252 日 ≥97 | 0/21 | 0/29 | 0/10 | 6/10 | 16/70 |
+
+**结论**：
+1. 他的 Momentum 97 **不是**一周涨幅百分位（四天 9/70）。核心是 **RS 线 3M 自百分位 ≥97**（70/70，四天无一漏网；08-18 的 DINO / MAN / P 21 日只有 95 但 63 日 98.4——所以是 3M 窗不是 1M 窗，"97" 在 63 根 k/63 的尺度上刚好 = "在 3 个月新高或差一天"）。这个量今晚起每晚产出（`rs_line_pctl_63`）。
+2. 但它是**必要非充分**：候选 44–86 只对他 11–29 只，精度 28%。把他名单的下界全叠上（本周为正、当日 ≥−0.5%、ADV ≥850k、离 SMA20 ≥7%、离 21EMA ≥1.45 ATR、一周百分位 ≥0.7）精度也只到 48%，且我们 30 个字段里没有一个单独把他的名字和多出来的分开（最好的 AUC 0.77 是 rs126）。多出来的名字里大量是他**别的日子**上榜的（MAN / P / RHI / CHYM / CLMT / DASH 08-13 在我们候选里、08-18 才在他榜上）——剩下的差别是他的 universe 比我们小一半到三分之二，与 Market Conditions 宽度池对不上是同一个未知数。
+3. **建议**（等 Andy）：不动 Screener 预设（那是 TSF/Stockbee 的配方，实证里也无边）；Today's List 的 Momentum 97 格要么改读 `rs_line_pctl_63 ≥ 97 ∧ trend_base ∧ ADR ∧ 非 Healthcare`（会从 1 只变 ~40 只，比他宽 3–4 倍但全包他的），要么保持现配方、加一个 `rs_3m_high` 开关。两条都先只探，攒一周截图看精度再定。
