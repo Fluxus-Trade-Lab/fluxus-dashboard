@@ -1,6 +1,6 @@
 {
   "trade_id": "ZETA_2026-08-09_000",
-  "generated_at": "2026-08-19T09:44:36+00:00",
+  "generated_at": "2026-08-18T03:59:16+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ZETA",
@@ -33,10 +33,10 @@
     "high": 26.65,
     "low": 25.0,
     "volume": 9232200.0,
-    "ma20": 22.244000000000003,
+    "ma20": 22.244,
     "ma50": 21.4038,
     "ma200": 19.00905,
-    "rsi14": 68.29129968067153,
+    "rsi14": 68.29130069625077,
     "atr14": 1.5817142857142856,
     "atr14_pct": 5.937365937365937,
     "high_52w": 28.5,
@@ -60,7 +60,7 @@
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 10
+    "hold_calendar_days": 8
   },
   "lesson": "In progress",
   "narrative": "Entered **ZETA** long on 2026-08-09 at $27.18 (qty 5761) with stop $26.20 (1R = $0.98/sh = $5,646). Setup: **Long in mixed structure** \u2014 price above MA20 ($22.24), MA20 > MA50 > MA200 (golden alignment), RSI 68, 87% through 52W range, ATR 5.9% of price. **In progress.** Peak so far +2.77R; worst drawdown -0.90R.",
@@ -279,15 +279,7 @@
       "high": 29.24,
       "low": 28.39,
       "close": 28.83,
-      "volume": 6868300.0
-    },
-    {
-      "date": "2026-08-18",
-      "open": 28.56,
-      "high": 29.21,
-      "low": 28.15,
-      "close": 28.23,
-      "volume": 5008200.0
+      "volume": 6850541.0
     }
   ]
 }

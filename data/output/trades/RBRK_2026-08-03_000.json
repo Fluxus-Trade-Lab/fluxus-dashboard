@@ -1,6 +1,6 @@
 {
   "trade_id": "RBRK_2026-08-03_000",
-  "generated_at": "2026-08-19T09:44:36+00:00",
+  "generated_at": "2026-08-18T03:59:16+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "RBRK",
@@ -39,12 +39,12 @@
     "high": 75.02,
     "low": 73.08,
     "volume": 2360400.0,
-    "ma20": 78.3015,
-    "ma50": 75.6612,
-    "ma200": 66.5177,
-    "rsi14": 48.10783201257504,
-    "atr14": 3.8752857142857144,
-    "atr14_pct": 5.1850223632401855,
+    "ma20": 79.0515,
+    "ma50": 75.5518,
+    "ma200": 66.54675,
+    "rsi14": 47.775116791817524,
+    "atr14": 4.187142857142857,
+    "atr14_pct": 5.602278374555602,
     "high_52w": 99.75,
     "low_52w": 42.25,
     "position_in_52w_range_pct": 56.50434782608694,
@@ -66,10 +66,10 @@
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 16
+    "hold_calendar_days": 14
   },
   "lesson": "In progress",
-  "narrative": "Entered **RBRK** long on 2026-08-03 at $78.84 (qty 1920) with stop $76.00 (1R = $2.84/sh = $5,453). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($78.30), MA20 > MA50 > MA200 (golden alignment), RSI 48, 57% through 52W range, ATR 5.2% of price. **In progress.** Peak so far +9.74R; worst drawdown -2.03R.",
+  "narrative": "Entered **RBRK** long on 2026-08-03 at $78.84 (qty 1920) with stop $76.00 (1R = $2.84/sh = $5,453). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($79.05), MA20 > MA50 > MA200 (golden alignment), RSI 48, 57% through 52W range, ATR 5.6% of price. **In progress.** Peak so far +9.74R; worst drawdown -2.03R.",
   "ohlc_window": [
     {
       "date": "2026-07-06",
@@ -224,14 +224,6 @@
       "volume": 1975700.0
     },
     {
-      "date": "2026-07-31",
-      "open": 72.07,
-      "high": 73.67,
-      "low": 70.13,
-      "close": 72.36,
-      "volume": 1817800.0
-    },
-    {
       "date": "2026-08-03",
       "open": 74.47,
       "high": 75.02,
@@ -315,17 +307,9 @@
       "date": "2026-08-17",
       "open": 101.5,
       "high": 102.57,
-      "low": 98.37,
+      "low": 98.3931,
       "close": 101.02,
-      "volume": 3283300.0
-    },
-    {
-      "date": "2026-08-18",
-      "open": 99.56,
-      "high": 104.2,
-      "low": 98.5,
-      "close": 100.55,
-      "volume": 3320800.0
+      "volume": 2786961.0
     }
   ]
 }

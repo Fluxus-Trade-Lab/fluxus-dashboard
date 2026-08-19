@@ -1,6 +1,6 @@
 {
   "trade_id": "MRNA_2026-08-13_000",
-  "generated_at": "2026-08-19T09:44:36+00:00",
+  "generated_at": "2026-08-18T03:59:16+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "MRNA",
@@ -26,10 +26,10 @@
     "high": 65.33,
     "low": 62.33,
     "volume": 8159700.0,
-    "ma20": 57.895500000000006,
+    "ma20": 57.89549999999999,
     "ma50": 60.5203,
     "ma200": 46.293475,
-    "rsi14": 57.31677485077915,
+    "rsi14": 57.31677492054782,
     "atr14": 3.739285714285716,
     "atr14_pct": 5.874761530692406,
     "high_52w": 85.6,
@@ -53,7 +53,7 @@
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 6
+    "hold_calendar_days": 4
   },
   "lesson": "In progress",
   "narrative": "Entered **MRNA** long on 2026-08-13 at $62.72 (qty 1637) with stop $60.00 (1R = $2.72/sh = $4,453). Setup: **Long in mixed structure** \u2014 price above MA20 ($57.90), MA stack mixed, RSI 57, 65% through 52W range, ATR 5.9% of price. **In progress.** Peak so far +1.03R; worst drawdown -0.70R.",
@@ -252,19 +252,11 @@
     },
     {
       "date": "2026-08-17",
-      "open": 64.775,
+      "open": 64.25,
       "high": 65.525,
       "low": 62.91,
       "close": 64.46,
-      "volume": 3979600.0
-    },
-    {
-      "date": "2026-08-18",
-      "open": 63.04,
-      "high": 64.46,
-      "low": 62.129,
-      "close": 62.96,
-      "volume": 4298100.0
+      "volume": 3977275.0
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "trade_id": "HPE_2026-08-05_000",
-  "generated_at": "2026-08-19T09:44:36+00:00",
+  "generated_at": "2026-08-18T03:59:16+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "HPE",
@@ -9,15 +9,15 @@
     "entry_date": "2026-08-05",
     "entry_price": 50.9,
     "original_qty": 1926,
-    "current_qty": 0,
+    "current_qty": 642,
     "stop_price": 49.0,
     "initial_stop": 49.0,
-    "closed": true,
-    "exit_date": "2026-08-18",
-    "hold_business_days": 9,
+    "closed": false,
+    "exit_date": null,
+    "hold_business_days": null,
     "r_dollars": 3659.3999999999974,
-    "realized_pl": 17019.420000000002,
-    "realized_R": 4.65087719298246,
+    "realized_pl": 14085.480000000003,
+    "realized_R": 3.8491228070175474,
     "trims": [
       {
         "date": "2026-08-13",
@@ -30,12 +30,6 @@
         "price": 61.42,
         "qty": 642,
         "type": "trim_1_3"
-      },
-      {
-        "date": "2026-08-18",
-        "price": 55.47,
-        "qty": 642,
-        "type": "sell_rest"
       }
     ]
   },
@@ -47,8 +41,8 @@
     "volume": 17337900.0,
     "ma20": 47.832,
     "ma50": 46.92765,
-    "ma200": 29.6993265,
-    "rsi14": 64.95712630008336,
+    "ma200": 29.699326499999998,
+    "rsi14": 64.95712667140477,
     "atr14": 2.8877857142857133,
     "atr14_pct": 5.426128737853651,
     "high_52w": 64.0626,
@@ -68,14 +62,14 @@
     "optimal_exit_date": "2026-08-13",
     "optimal_R": 6.600000000000004,
     "days_to_optimal": 8,
-    "realized_R": 4.65087719298246,
-    "capture_pct": 70.46783625730995,
-    "missed_R": 1.9491228070175444,
+    "realized_R": null,
+    "capture_pct": null,
+    "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 13
+    "hold_calendar_days": 12
   },
-  "lesson": "Good execution",
-  "narrative": "Entered **HPE** long on 2026-08-05 at $50.90 (qty 1926) with stop $49.00 (1R = $1.90/sh = $3,659). Setup: **Long in mixed structure** \u2014 price above MA20 ($47.83), MA20 > MA50 > MA200 (golden alignment), RSI 65, 76% through 52W range, ATR 5.4% of price. Realized **+4.65R**, peak was **+6.60R** on 2026-08-13 (day +8) \u2014 captured **70%** of the move. **Lesson: Good execution.**",
+  "lesson": "In progress",
+  "narrative": "Entered **HPE** long on 2026-08-05 at $50.90 (qty 1926) with stop $49.00 (1R = $1.90/sh = $3,659). Setup: **Long in mixed structure** \u2014 price above MA20 ($47.83), MA20 > MA50 > MA200 (golden alignment), RSI 65, 76% through 52W range, ATR 5.4% of price. **In progress.** Peak so far +6.60R; worst drawdown -0.94R.",
   "ohlc_window": [
     {
       "date": "2026-07-06",
@@ -323,15 +317,7 @@
       "high": 59.24,
       "low": 57.09,
       "close": 57.61,
-      "volume": 10835200.0
-    },
-    {
-      "date": "2026-08-18",
-      "open": 55.86,
-      "high": 58.09,
-      "low": 54.87,
-      "close": 55.69,
-      "volume": 19284200.0
+      "volume": 10817229.0
     }
   ]
 }

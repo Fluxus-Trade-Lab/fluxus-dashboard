@@ -1,6 +1,6 @@
 {
   "trade_id": "ARM_2026-08-16_000",
-  "generated_at": "2026-08-19T09:44:36+00:00",
+  "generated_at": "2026-08-18T03:59:16+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ARM",
@@ -33,10 +33,10 @@
     "high": 281.67,
     "low": 274.455,
     "volume": 2102000.0,
-    "ma20": 266.65849999999995,
-    "ma50": 311.30199999999996,
+    "ma20": 266.6585,
+    "ma50": 311.302,
     "ma200": 195.035425,
-    "rsi14": 50.137650390927966,
+    "rsi14": 50.13765080358975,
     "atr14": 22.52078571428572,
     "atr14_pct": 8.059256267637318,
     "high_52w": 452.7,
@@ -48,18 +48,18 @@
   },
   "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
   "path_analytics": {
-    "mfe_R": 1.1948818897637818,
+    "mfe_R": 1.1889763779527636,
     "mfe_date": "2026-08-17",
     "mae_R": 1.9291338582677249,
     "mae_date": "2026-08-17",
-    "optimal_exit_price": 287.15,
+    "optimal_exit_price": 287.12,
     "optimal_exit_date": "2026-08-17",
-    "optimal_R": 1.1948818897637818,
+    "optimal_R": 1.1889763779527636,
     "days_to_optimal": 1,
     "realized_R": -1.0,
-    "capture_pct": -83.6902800658977,
-    "missed_R": 2.194881889763782,
-    "post_exit_R": -4.44488188976379,
+    "capture_pct": -84.10596026490012,
+    "missed_R": 2.1889763779527636,
+    "post_exit_R": null,
     "hold_calendar_days": 1
   },
   "lesson": "Failed setup",
@@ -235,19 +235,11 @@
     },
     {
       "date": "2026-08-17",
-      "open": 285.0,
-      "high": 287.15,
+      "open": 284.625,
+      "high": 287.12,
       "low": 271.28,
       "close": 271.43,
-      "volume": 3713800.0
-    },
-    {
-      "date": "2026-08-18",
-      "open": 257.0,
-      "high": 258.5,
-      "low": 247.6,
-      "close": 253.32,
-      "volume": 6357500.0
+      "volume": 3533142.0
     }
   ]
 }
