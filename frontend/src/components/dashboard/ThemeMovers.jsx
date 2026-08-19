@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useGroups } from '../../hooks/useGroups'
-import StateBadge from '../groups/StateBadge'
+import { barStyle } from '../groups/ThemeBars'
 
 /**
  * Themes, moved today and this week.
@@ -26,23 +26,26 @@ import StateBadge from '../groups/StateBadge'
 
 const WINDOWS = { '1D': 'perf_1d', '1W': 'perf_1w' }
 
+/**
+ * One theme: its state as a mark, its name, its move. Three things, one line.
+ *
+ * The state used to arrive as a word under the name and the member count sat
+ * beside it — three lines of furniture for a row whose job is "which theme
+ * moved and by how much". The mark carries the state on its own (Andy,
+ * 2026-08-19): tone × fill, four states, no hue involved, so it survives the
+ * greyscale this page is screenshotted into. The word moved to the legend,
+ * where it is read once instead of six times.
+ */
 function Row({ theme, changeKey }) {
   const change = theme[changeKey]
   const ok = Number.isFinite(change)
   return (
-    <div className="h-[34px] flex items-center gap-2.5">
-      <span className="min-w-0 flex-1">
-        <span className="block text-[12.5px] font-medium leading-[13px] truncate
-                         text-[var(--color-text-bold)]" title={theme.group}>
-          {theme.group}
-        </span>
-        <span className="flex items-center gap-2 text-[10px] leading-[13px]
-                         text-[var(--color-text-muted)]">
-          <span title={`${theme.members} name${theme.members === 1 ? '' : 's'} in this basket`}>
-            {theme.members} name{theme.members === 1 ? '' : 's'}
-          </span>
-          <StateBadge state={theme.state} />
-        </span>
+    <div className="h-[22px] flex items-center gap-2">
+      <i className="shrink-0 w-[8px] h-[8px] rounded-[1px]"
+         style={barStyle(theme.state)} title={theme.state ?? 'no state'} />
+      <span className="min-w-0 flex-1 truncate text-[12.5px] font-medium
+                       text-[var(--color-text-bold)]" title={theme.group}>
+        {theme.group}
       </span>
       <span className="shrink-0 text-[12.5px] font-mono tabular-nums font-medium"
             style={{ color: !ok ? 'var(--color-text-muted)'
@@ -52,6 +55,8 @@ function Row({ theme, changeKey }) {
     </div>
   )
 }
+
+const STATES = ['Leading', 'Weakening', 'Improving', 'Lagging']
 
 function Column({ label, rows, changeKey }) {
   return (
@@ -131,16 +136,28 @@ export default function ThemeMovers({ limit = 3 }) {
                           changeKey={c.changeKey} />
                 ))}
               </div>
-              {/* a list sorted by outcome discloses its own selection —
-                  six of N, and N is stated */}
-              <p className="m-0 mt-3 text-[10px] leading-snug text-[var(--color-text-muted)]">
-                Top and bottom {limit} of {ranked} published themes, ranked on each window
-                separately. Sectors and factors are in the file but not in this ranking &mdash;
-                the heading says themes. Provisional themes — the ones whose members have not been shown
-                to co-move — are not ranked here.
-                {unmeasured > 0 && ` ${unmeasured} more ${unmeasured === 1 ? 'is' : 'are'} published
-                  without a measurable reading and cannot be ranked at all.`}
-              </p>
+              {/* The paragraph is gone (Andy, 2026-08-19) and the four marks
+                  take its place — read once here instead of six times in the
+                  rows. Tone × fill, never hue, so the four stay apart in the
+                  greyscale this page is screenshotted into.
+
+                  What could not go with it is the SELECTION, because the list
+                  is ordered by outcome and this site does not ship one of those
+                  without saying how it was cut. It survives as the four words
+                  at the end rather than as four lines. */}
+              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1
+                              text-[10px] text-[var(--color-text-muted)]">
+                {STATES.map((st) => (
+                  <span key={st} className="flex items-center gap-1.5">
+                    <i className="w-[8px] h-[8px] rounded-[1px]" style={barStyle(st)} />
+                    {st}
+                  </span>
+                ))}
+                <span className="ml-auto tabular-nums">
+                  ±{limit} of {ranked}
+                  {unmeasured > 0 && ` · ${unmeasured} unmeasurable`}
+                </span>
+              </div>
             </>
           )}
         </div>
