@@ -20,11 +20,20 @@ This tool checks the invariants that hold for every archive, reports, and
       broken enrichment) -- reported, never repaired automatically
   I5  the newest session in each nightly archive is the last completed
       session (stale archive = a writer silently stopped)
+  I7  a series (screener / panel / kind) the registry calls "reliable" --
+      present on >=95% of sessions with a median of >=20 rows -- wrote zero
+      rows for the newest session. This is the invariant a whole-file row
+      count cannot express: on 2026-08-07/11/12/13 gainers_4pct and
+      vol_up_gainers each wrote nothing while the file's total stayed at
+      0.68-1.17x its median. Bands live in data/reference/i4_bands.json,
+      built by pipeline/tools/calibrate_i4.py, committed and only moved by
+      an explicit --update.
+
   I6  reconciliation: watchlist.json counts == watchlist_hits rows; the seven
       screener JSONs' rows == ticker_events rows for that date; breadth
       universe_size ~ universe.json rows (mismatch = two writers disagree)
 
-Exit code 1 when any I1/I2/I3 violation exists (CI refuses to commit the run
+Exit code 1 when any I1/I2/I3/I7 violation exists (CI refuses to commit the run
 on that), 0 otherwise; I4/I5 are warnings in the report. --repair rewrites
 the file without I1/I2/I3 rows after writing a .bak next to it.
 
@@ -50,18 +59,33 @@ from pipeline.marketcal import is_trading_day, last_completed_session
 HISTORY = Path("data/history")
 
 # archive -> (date column, primary key columns, counts-checked, nightly)
+# archive -> date column, primary key, counts-checked, nightly, series column
+# "series" is the sub-feed whose disappearance a whole-file row count cannot
+# see (see I7 and pipeline/tools/calibrate_i4.py).
 ARCHIVES: Dict[str, Dict[str, Any]] = {
-    "breadth_archive.csv":   {"date": "date",  "key": ["date"],                       "counts": False, "nightly": True},
-    "ticker_events.csv":     {"date": "date",  "key": ["date", "ticker", "screener"], "counts": True,  "nightly": True},
-    "watchlist_hits.csv":    {"date": "date",  "key": ["date", "panel", "ticker"],    "counts": True,  "nightly": True},
-    "leaders_log.csv":       {"date": "date",  "key": ["date", "ticker"],             "counts": True,  "nightly": True},
-    "groups_archive.csv":    {"date": "date",  "key": ["date", "kind", "group"],      "counts": True,  "nightly": True},
-    "momentum97_shadow.csv": {"date": "date",  "key": ["date", "recipe", "ticker"],   "counts": False, "nightly": True},
-    "universe_quality.csv":  {"date": "date",  "key": ["date"],                       "counts": False, "nightly": True},
-    "delayed_ep_log.csv":    {"date": "as_of", "key": ["as_of", "ticker"],            "counts": False, "nightly": False},
+    "breadth_archive.csv":   {"date": "date",  "key": ["date"],                       "counts": False, "nightly": True,  "series": None},
+    "ticker_events.csv":     {"date": "date",  "key": ["date", "ticker", "screener"], "counts": True,  "nightly": True,  "series": "screener"},
+    "watchlist_hits.csv":    {"date": "date",  "key": ["date", "panel", "ticker"],    "counts": True,  "nightly": True,  "series": "panel"},
+    "leaders_log.csv":       {"date": "date",  "key": ["date", "ticker"],             "counts": True,  "nightly": True,  "series": None},
+    "groups_archive.csv":    {"date": "date",  "key": ["date", "kind", "group"],      "counts": True,  "nightly": True,  "series": "kind"},
+    "momentum97_shadow.csv": {"date": "date",  "key": ["date", "recipe", "ticker"],   "counts": False, "nightly": True,  "series": "recipe"},
+    "universe_quality.csv":  {"date": "date",  "key": ["date"],                       "counts": False, "nightly": True,  "series": None},
+    "delayed_ep_log.csv":    {"date": "as_of", "key": ["as_of", "ticker"],            "counts": False, "nightly": False, "series": None},
 }
+# Fallback band, used only where the registry has no measured one. The
+# measured total band for ticker_events is [0.58, 2.45]; these numbers were
+# guessed in 2026-08-19 and have never fired on 96 sessions.
 COUNT_FLOOR = 0.30
 COUNT_CEIL = 3.0
+BANDS_PATH = Path("data/reference/i4_bands.json")
+
+
+def load_bands(path: Path = BANDS_PATH) -> Dict[str, Any]:
+    """The committed I4/I7 registry, or an empty one. Never raises."""
+    try:
+        return json.loads(path.read_text())
+    except Exception:  # noqa: BLE001
+        return {"archives": {}}
 
 
 def _sessions(dates: pd.Series, last_done: dt.date) -> pd.DataFrame:
@@ -76,7 +100,8 @@ def _sessions(dates: pd.Series, last_done: dt.date) -> pd.DataFrame:
     return pd.DataFrame(out)
 
 
-def audit_one(name: str, spec: Dict[str, Any], frame: pd.DataFrame, last_done: dt.date) -> Dict[str, Any]:
+def audit_one(name: str, spec: Dict[str, Any], frame: pd.DataFrame, last_done: dt.date,
+              bands: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     dcol = spec["date"]
     rep: Dict[str, Any] = {"archive": name, "rows": int(len(frame)), "violations": [], "warnings": [], "drop_dates": [], "drop_dupes": 0}
     if dcol not in frame.columns:
@@ -103,14 +128,44 @@ def audit_one(name: str, spec: Dict[str, Any], frame: pd.DataFrame, last_done: d
             rep["violations"].append(f"I3 {d}: spx_close identical to previous session's row")
             if d not in rep["drop_dates"]:
                 rep["drop_dates"].append(d)
-    # I4 per-session counts
+    # I4 per-session counts, against the measured band when we have one
+    band_entry = (bands or {}).get("archives", {}).get(name, {})
     if spec["counts"] and len(frame):
         per = frame.groupby(frame[dcol].astype(str)).size().sort_index()
         if len(per) >= 6:
             med = per.iloc[-21:-1].median() if len(per) > 21 else per.iloc[:-1].median()
             last_d, last_n = per.index[-1], int(per.iloc[-1])
-            if med and (last_n < COUNT_FLOOR * med or last_n > COUNT_CEIL * med):
-                rep["warnings"].append(f"I4 {last_d}: {last_n} rows vs trailing median {med:.0f}")
+            tb = band_entry.get("total") or {}
+            lo = float(tb.get("floor", COUNT_FLOOR))
+            hi = float(tb.get("ceil", COUNT_CEIL))
+            src = "measured" if tb else "default"
+            if med and (last_n < lo * med or last_n > hi * med):
+                rep["warnings"].append(
+                    f"I4 {last_d}: {last_n} rows vs trailing median {med:.0f} "
+                    f"(outside [{lo:g}, {hi:g}] {src})")
+    # I7 a series that has always been there wrote nothing
+    scol = spec.get("series")
+    series_reg = band_entry.get("series") or {}
+    if scol and scol in frame.columns and series_reg and len(frame):
+        newest = frame[dcol].astype(str).max()
+        day = frame[frame[dcol].astype(str) == newest]
+        present = day.groupby(day[scol].astype(str)).size().to_dict()
+        for series, meta in sorted(series_reg.items()):
+            n = int(present.get(series, 0))
+            if meta.get("kind") == "reliable" and n == 0:
+                rep["violations"].append(
+                    f"I7 {newest} {series}: 0 rows, but present on "
+                    f"{meta.get('presence', 0):.0%} of sessions "
+                    f"(median {meta.get('median_rows')} rows)")
+            elif n and meta.get("band"):
+                med = meta.get("median_rows") or 0
+                if med:
+                    ratio = n / med
+                    b = meta["band"]
+                    if ratio < b["floor"] or ratio > b["ceil"]:
+                        rep["warnings"].append(
+                            f"I4s {newest} {series}: {n} rows = {ratio:.2f}x its "
+                            f"median {med:g} (band [{b['floor']}, {b['ceil']}])")
     # I5 freshness
     if spec["nightly"] and len(info):
         newest = info.date.max()
@@ -184,8 +239,10 @@ def reconcile(history: Path = HISTORY, output: Path = Path("data/output")) -> Di
 
 
 def run(history: Path = HISTORY, do_repair: bool = False, last_done: Optional[dt.date] = None,
-        output: Optional[Path] = Path("data/output")) -> Dict[str, Any]:
+        output: Optional[Path] = Path("data/output"),
+        bands: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     last_done = last_done or last_completed_session()
+    bands = bands if bands is not None else load_bands()
     reports: List[Dict[str, Any]] = []
     for name, spec in ARCHIVES.items():
         p = history / name
@@ -198,7 +255,7 @@ def run(history: Path = HISTORY, do_repair: bool = False, last_done: Optional[dt
             reports.append({"archive": name, "rows": 0, "violations": [f"unreadable: {e}"], "warnings": [], "drop_dates": [], "drop_dupes": 0})
             continue
         frame = frame.replace({"": None})
-        rep = audit_one(name, spec, frame, last_done)
+        rep = audit_one(name, spec, frame, last_done, bands)
         if do_repair and (rep["drop_dates"] or rep["drop_dupes"]):
             rep["repaired_rows"] = repair(p, spec, frame, rep)
         reports.append(rep)

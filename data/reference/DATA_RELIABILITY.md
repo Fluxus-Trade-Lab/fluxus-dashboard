@@ -63,8 +63,30 @@
 - **Schema 快照** `data/reference/schema_snapshot.json`(`pipeline/tools/schema_snapshot.py`):26 个 output 文件每层的字段集;cron 里 `--check` 只报不拦,改动在 DATA_CONTRACTS 写明后 `--update` 接受。
 - **对账 I6**(在 audit_archives 里):watchlist.json 各格 count == watchlist_hits 行数;七个筛选器 JSON 的行数 == ticker_events 当日行数;breadth universe_size ≈ universe.json 行数。前两条不等 = 违规(两个写入者对不上)。
 
-## 六、还没有的(按优先级)
+## 六、I4 校准 + I7(2026-08-20 夜)
 
-1. I4 的阈值(0.3×/3×)是拍的,攒一个月 audit_last.json 再校。
+I4 的阈值量过了,结论是**拍到了错的单位**。全文 `data/research/i4_calibration_2026-08/README.md`,三个数:
+
+- `ticker_events` 96 个可检查 session,总行数对前 20 日中位的比值只在 **[0.63, 2.28]** 之间走过 —— `[0.30, 3.0]` 这道闸**一次都没响过**。量出来的带是 [0.58, 2.45]。
+- 收紧它也没用。08-07 Finviz 把 `Change` 改名成 `Change %`(`e8ac440`),`gainers_4pct` 与 `vol_up_gainers` 连着四个 session 写 **0 行**,而总行数是中位的 0.68/1.00/1.05/1.17 倍 —— 旧闸 0/4,`is_plausible_day`(≥4 个筛选器)也正好放行。同期 breadth 数出当日涨 ≥4% 的有 956/530/527/617 只。
+- 所以检查的单位从**文件**换成**系列**:`ticker_events.screener` / `watchlist_hits.panel` / `groups_archive.kind`。
+
+| 不变量 | 含义 | 违反时 |
+|---|---|---|
+| I7 | registry 里定级为 `reliable`(出现率 ≥95% 且中位 ≥20 行)的系列当天写 0 行 | **违规**(拒 commit) |
+| I4s | 某系列行数越出自己量出来的带 | 警告 |
+
+registry = `data/reference/i4_bands.json`,由 `pipeline/tools/calibrate_i4.py` 生成,**提交进仓库、只在人显式 `--update` 时才动**(跟 `schema_snapshot.json` 一个规矩)。理由和 `e8ac440` 当初把「列的并集」写进 quality ledger 一样:滚动重算会让故障把基线教成正常 —— 实测滚动窗口只报 08-07 和 08-11 两天,冻结的报全四天。
+
+    python -m pipeline.tools.calibrate_i4              # 只看不写
+    python -m pipeline.tools.calibrate_i4 --update     # 重建 registry(改动要在这份文档里写明)
+    python data/research/i4_calibration_2026-08/replay.py   # 事故回放
+
+新归档攒够 12 个 session 之后要重跑一次 `--update`,它们才有自己的带(现在 watchlist_hits / leaders_log / groups_archive 只有 1 / 3 / 8 天)。
+
+## 七、还没有的(按优先级)
+
+1. **整段缺失的 session 没人查**:`2026-08-10` 是交易日、`ticker_events` 一行都没有,`universe_quality` 却有那天的行。I5 只看最新一天,中间的洞看不见 —— 补一条 I8(最近 N 个 session 每个都得有行)。
 2. universe 行数 vs Finviz 宣称总数(adapter 现在不存那个数)。
 3. run_ledger 攒满一个月后:429 频率、各闸触发频率的月报。
+4. 两个旋钮等 Andy 拍:`vcp` 中位 19 行、差一行没进 reliable(门槛 20→15 就进);I7 违规现在**会拒 commit**,第一晚可以先降成警告观察一周。

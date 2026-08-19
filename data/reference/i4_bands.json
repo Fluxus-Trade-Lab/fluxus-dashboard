@@ -1,0 +1,241 @@
+{
+ "window": 20,
+ "margin": 0.15,
+ "reliable_presence": 0.95,
+ "reliable_median_rows": 20,
+ "built_until": "",
+ "archives": {
+  "ticker_events.csv": {
+   "sessions": 101,
+   "series": {
+    "ema21_watch": {
+     "kind": "reliable",
+     "presence": 1.0,
+     "median_rows": 96.0,
+     "sessions_seen": 101,
+     "band": {
+      "floor": 0.333,
+      "ceil": 2.675,
+      "observed_min": 0.367,
+      "observed_max": 2.53,
+      "n": 96
+     }
+    },
+    "episodic_pivot": {
+     "kind": "sparse",
+     "presence": 0.931,
+     "median_rows": 4.0,
+     "sessions_seen": 94,
+     "band": {
+      "floor": 0.189,
+      "ceil": 6.164,
+      "observed_min": 0.154,
+      "observed_max": 7.5,
+      "n": 89
+     }
+    },
+    "gainers_4pct": {
+     "kind": "reliable",
+     "presence": 0.96,
+     "median_rows": 180.0,
+     "sessions_seen": 97,
+     "band": {
+      "floor": 0.237,
+      "ceil": 5.214,
+      "observed_min": 0.133,
+      "observed_max": 7.512,
+      "n": 92
+     }
+    },
+    "healthy_charts": {
+     "kind": "reliable",
+     "presence": 1.0,
+     "median_rows": 139.0,
+     "sessions_seen": 101,
+     "band": {
+      "floor": 0.331,
+      "ceil": 3.119,
+      "observed_min": 0.361,
+      "observed_max": 2.768,
+      "n": 96
+     }
+    },
+    "momentum_97": {
+     "kind": "reliable",
+     "presence": 1.0,
+     "median_rows": 77.0,
+     "sessions_seen": 101,
+     "band": {
+      "floor": 0.6,
+      "ceil": 2.197,
+      "observed_min": 0.987,
+      "observed_max": 3.038,
+      "n": 96
+     }
+    },
+    "preset:4_bullish": {
+     "kind": "sparse",
+     "presence": 0.871,
+     "median_rows": 36.5,
+     "sessions_seen": 88,
+     "band": {
+      "floor": 0.084,
+      "ceil": 4.358,
+      "observed_min": 0.05,
+      "observed_max": 4.727,
+      "n": 83
+     }
+    },
+    "preset:monthly_leader_97": {
+     "kind": "sparse",
+     "presence": 0.713,
+     "median_rows": 9.0,
+     "sessions_seen": 72,
+     "band": {
+      "floor": 0.22,
+      "ceil": 2.049,
+      "observed_min": 0.222,
+      "observed_max": 1.81,
+      "n": 62
+     }
+    },
+    "preset:pocket_pivot": {
+     "kind": "sparse",
+     "presence": 0.861,
+     "median_rows": 12.0,
+     "sessions_seen": 87,
+     "band": {
+      "floor": 0.134,
+      "ceil": 5.202,
+      "observed_min": 0.118,
+      "observed_max": 8.909,
+      "n": 82
+     }
+    },
+    "preset:pp_count": {
+     "kind": "sparse",
+     "presence": 0.911,
+     "median_rows": 58.0,
+     "sessions_seen": 92,
+     "band": {
+      "floor": 0.489,
+      "ceil": 3.025,
+      "observed_min": 0.485,
+      "observed_max": 4.857,
+      "n": 87
+     }
+    },
+    "preset:stockbee_9m_setup": {
+     "kind": "sparse",
+     "presence": 0.723,
+     "median_rows": 3.0,
+     "sessions_seen": 73,
+     "band": {
+      "floor": 0.128,
+      "ceil": 4.659,
+      "observed_min": 0.143,
+      "observed_max": 4.571,
+      "n": 68
+     }
+    },
+    "preset:sugar_babies": {
+     "kind": "sparse",
+     "presence": 0.465,
+     "median_rows": 185.0,
+     "sessions_seen": 47,
+     "band": {
+      "floor": 0.411,
+      "ceil": 2.361,
+      "observed_min": 0.477,
+      "observed_max": 2.062,
+      "n": 42
+     }
+    },
+    "preset:vol_up_gainers": {
+     "kind": "sparse",
+     "presence": 0.901,
+     "median_rows": 42.0,
+     "sessions_seen": 91,
+     "band": {
+      "floor": 0.15,
+      "ceil": 3.554,
+      "observed_min": 0.063,
+      "observed_max": 4.444,
+      "n": 86
+     }
+    },
+    "preset:weekly_20_gainers": {
+     "kind": "sparse",
+     "presence": 0.931,
+     "median_rows": 16.0,
+     "sessions_seen": 94,
+     "band": {
+      "floor": 0.069,
+      "ceil": 5.343,
+      "observed_min": 0.067,
+      "observed_max": 9.857,
+      "n": 89
+     }
+    },
+    "preset:weekly_momentum_97": {
+     "kind": "sparse",
+     "presence": 0.861,
+     "median_rows": 21.0,
+     "sessions_seen": 87,
+     "band": {
+      "floor": 0.191,
+      "ceil": 4.462,
+      "observed_min": 0.083,
+      "observed_max": 5.333,
+      "n": 82
+     }
+    },
+    "vcp": {
+     "kind": "sparse",
+     "presence": 1.0,
+     "median_rows": 19.0,
+     "sessions_seen": 101,
+     "band": {
+      "floor": 0.268,
+      "ceil": 2.956,
+      "observed_min": 0.256,
+      "observed_max": 2.903,
+      "n": 96
+     }
+    },
+    "vol_up_gainers": {
+     "kind": "reliable",
+     "presence": 0.96,
+     "median_rows": 46.0,
+     "sessions_seen": 97,
+     "band": {
+      "floor": 0.256,
+      "ceil": 4.041,
+      "observed_min": 0.2,
+      "observed_max": 7.106,
+      "n": 92
+     }
+    }
+   },
+   "total": {
+    "floor": 0.581,
+    "ceil": 2.446,
+    "observed_min": 0.631,
+    "observed_max": 2.277,
+    "n": 96
+   }
+  },
+  "watchlist_hits.csv": {
+   "sessions": 1,
+   "series": {}
+  },
+  "leaders_log.csv": {
+   "sessions": 3,
+   "series": {}
+  },
+  "groups_archive.csv": {
+   "sessions": 8,
+   "series": {}
+  }
+ }
+}
