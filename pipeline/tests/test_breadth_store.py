@@ -197,6 +197,23 @@ class TestQualityGuard:
                                    null_rate=0.35, today_iso=self._TODAY)
         assert not ok and 'null' in reason
 
+    def test_rejects_identical_spx_close(self):
+        """2026-08-17: stale index bar filed under a new session scored 87.5."""
+        import pandas as pd
+        from pipeline.screeners.breadth_store import check_quality
+        frame = pd.DataFrame({'date': ['2026-08-14'], 'pct_above_200sma': [51.9],
+                              'spx_close': [7785.759765625]})
+        ok, reason = check_quality(frame, self._good_snapshot(), null_rate=0.02,
+                                   today_iso=self._TODAY, spx_close=7785.759765625)
+        assert not ok and 'identical' in reason
+        ok, _ = check_quality(frame, self._good_snapshot(), null_rate=0.02,
+                              today_iso=self._TODAY, spx_close=7745.06)
+        assert ok
+        # no spx_close known -> the check is skipped, not tripped
+        ok, _ = check_quality(frame, self._good_snapshot(), null_rate=0.02,
+                              today_iso=self._TODAY, spx_close=None)
+        assert ok
+
     def test_rejects_pct200_jump(self):
         """The 2026-07-26 poisoned row: 46.0 → 0.47 must be rejected."""
         from pipeline.screeners.breadth_store import check_quality

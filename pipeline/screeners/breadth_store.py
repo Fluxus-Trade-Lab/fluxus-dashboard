@@ -148,6 +148,7 @@ def check_quality(
     snapshot: dict,
     null_rate: float,
     today_iso: str,
+    spx_close: float | None = None,
 ) -> tuple[bool, str]:
     """Reject implausible snapshots before they poison the archive.
 
@@ -155,6 +156,21 @@ def check_quality(
     is only used to age the Δ-check baseline, never as a clock.
     """
     size = snapshot.get('universe_size', 0)
+    # 2026-08-17: the cron filed a row whose spx_close was Friday's to the
+    # cent and whose 4% counts were 165/102 (the session's real counts were
+    # 349/676) -- a stale index bar plus a half-scraped change column. The
+    # regime scored it 87.5 ("nearly every condition met at once"); the same
+    # session re-run six hours later scored 59.4. A new session never closes
+    # exactly where the previous one did: that is the signature to refuse.
+    # Compared against the last row of a DIFFERENT session: a same-session
+    # re-run legitimately carries the same close as the row it replaces.
+    if len(frame) > 0 and spx_close is not None and 'spx_close' in frame.columns:
+        others = frame[frame['date'].astype(str) != str(today_iso)]
+        if len(others) > 0:
+            prev_spx = pd.to_numeric(others['spx_close'], errors='coerce').iloc[-1]
+            if pd.notna(prev_spx) and float(prev_spx) == float(spx_close):
+                return False, (f"spx_close {float(spx_close):.2f} identical to the previous "
+                               f"session's row ({others['date'].iloc[-1]}) -- stale index bar")
     if size < _MIN_UNIVERSE:
         return False, f"universe_size {size} < {_MIN_UNIVERSE}"
     if null_rate > _MAX_NULL_RATE:

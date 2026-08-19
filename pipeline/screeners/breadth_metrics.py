@@ -152,7 +152,7 @@ def run(
     # file its numbers under Friday or it invents a trading day. See
     # marketcal.last_trading_day.
     today_iso = last_trading_day().isoformat()
-    ok, reason = check_quality(frame, snapshot, null_rate, today_iso)
+    ok, reason = check_quality(frame, snapshot, null_rate, today_iso, spx_close)
     if ok:
         row = {
             'date': today_iso,
