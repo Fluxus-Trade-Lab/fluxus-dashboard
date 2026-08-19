@@ -394,10 +394,14 @@ const floorApplies = (zoneKey) => !FLOOR_EXEMPT.has(zoneKey)
  */
 const rsOf = (r) => r?.rs_line_pctl_21 ?? r?.rs_1m ?? null
 
-const shown = (panel, { highOnly, floor, pool3m, zoneKey } = {}) => {
+const shown = (panel, { highOnly, floor, pool3m, exHealth, zoneKey } = {}) => {
   let rows = panel.tickers || []
   if (pool3m) rows = rows.filter((r) => r.top_3m)
   if (highOnly) rows = rows.filter((r) => r.rs_high)
+  // Same test the Screener's gate uses (ScreenerPage GATES.exHealth), so the
+  // two pages mean the same thing by the same words. 118 of today's 348 rows
+  // are Healthcare, which is why it earns a switch rather than a footnote.
+  if (exHealth) rows = rows.filter((r) => r.sector !== 'Healthcare')
   if (floor && floorApplies(zoneKey)) rows = rows.filter((r) => (rsOf(r) ?? 0) >= RS_FLOOR)
   // Sorted by the number the reader can see, strongest first (Andy). The file
   // arrives sorted by hybrid_rs, which is a different quantity and is not on
@@ -426,7 +430,8 @@ function Count({ panel, view = {}, zoneKey }) {
                             text-[var(--color-text-muted)]">{t('wl.unmeasured')}</span>
   }
   const n = shown(panel, { ...view, zoneKey }).length
-  const anyView = view.highOnly || view.pool3m || (view.floor && floorApplies(zoneKey))
+  const anyView = view.highOnly || view.pool3m || view.exHealth
+    || (view.floor && floorApplies(zoneKey))
   return (
     <span className="text-[11px] font-mono tabular-nums whitespace-nowrap"
           title={view.floor && !floorApplies(zoneKey) ? t('wl.floor.exempt') : undefined}>
@@ -746,8 +751,14 @@ export default function WatchlistPage({ zone: routeZone }) {
    * Default off. A page that opens already filtered is a page that has made a
    * decision on your behalf before you have looked.
    */
-  const [highOnly, setHighOnly] = useState(false)
-  const [pool3m, setPool3m] = useState(false)
+  /* All four views open by default (Andy 2026-08-19). The page used to arrive
+     showing everything and let you narrow; it arrives narrowed now, which is
+     the posture the five steps assume — you are walking an order, not browsing
+     a file. Every switch is still a VIEW: it hides rows, never re-screens, and
+     every count on the page stays the count of the full panel. */
+  const [highOnly, setHighOnly] = useState(true)
+  const [pool3m, setPool3m] = useState(true)
+  const [exHealth, setExHealth] = useState(true)
   // Andy asked for the floor as a rule, not an option, so it opens on. The
   // switch stays because every count on the page is of the FULL panel and he
   // must be able to see what the floor is holding back.
@@ -784,7 +795,7 @@ export default function WatchlistPage({ zone: routeZone }) {
   }
 
   const cross = data.cross_zone || []
-  const view = { highOnly, floor, pool3m }
+  const view = { highOnly, floor, pool3m, exHealth }
 
   /**
    * Which panels this step lights, and what it asked for and did not get.
@@ -843,6 +854,7 @@ export default function WatchlistPage({ zone: routeZone }) {
               cued={curStep.switches?.includes('highOnly')} />
       <Switch on={floor} set={setFloor} label={t('wl.floor', { n: RS_FLOOR })}
               note={t('wl.floor.note')} />
+      <Switch on={exHealth} set={setExHealth} label="exclude healthcare" />
       </div>
 
       {/* The five steps: the order a name is read in, not five more filters. */}
