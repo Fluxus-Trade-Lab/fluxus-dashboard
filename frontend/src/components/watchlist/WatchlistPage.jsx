@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import PageHeader from '../PageHeader'
 import TickerLink from '../ticker/TickerLink'
 import { useLanguage } from '../../i18n/LanguageContext'
@@ -233,42 +233,145 @@ const rsInk = (v, key = 'rs_1m') => {
  * than a paragraph of them.
  */
 /**
- * The ATR position — how many ATRs the name sits above its 50-day.
+ * The ATR position, as the ticker's own ground (Andy, 2026-08-19).
  *
- * The report calls this "能不能上车" and gives the bands: 0–4 is where you
- * build, 5–7 you hold, ≥7 is the scale-out zone. Three semantic steps, drawn
- * with the site's existing signal colours rather than a fourth palette — and
- * ≥7 takes the trouble colour because that is what the band means.
+ * It was a number beside the name and it is a FILL under the name now: how far
+ * a stock has run from its 50-day is the one reading that decides whether you
+ * can still get on, and it should be legible before you have read anything.
+ * Cool where you can build, hot where you cannot.
  *
- * BELOW THE 50-DAY IS NOT A DEGREE OF EXTENSION. A negative reading is not
- * "very un-extended", it is a different situation, so it leaves the scale and
- * prints in ink. This is the same trap `atrBadgeColor` fell into in
- * lib/format.js on 2026-08-17, when the field turned signed and 2,247 names
- * went entry-zone green for being under their average.
+ * THE RAMP FALLS IN LIGHTNESS AS IT WARMS, and that is the whole craft of it.
+ * A hue ramp alone dies in greyscale — and greyscale is this brand's
+ * load-bearing column, because the page travels as screenshots. Every stop
+ * below is darker than the one before it, so a black-and-white copy still
+ * reads the magnitude off the ink density even with the hue gone. Measured, not
+ * asserted: the L* values are checked in the browser after every change.
  *
- * ABSENT IS NOT ZERO. The field ships with tonight's cron (DATA_CONTRACTS
- * §四点七); until then every row prints a dash, and the dash is the reading.
+ * The anchors are the documented bands, not a smooth guess: 0–4 build, 5–7
+ * hold, ≥7 scale out. Between them it interpolates, so two names in the same
+ * band still separate.
+ *
+ * BELOW THE 50-DAY LEAVES THE SCALE. A negative reading is not "very
+ * un-extended", it is a different situation — no fill, and the name keeps its
+ * ordinary ink. Same rule the number followed, same reason.
+ *
+ * The exact figure is not lost, it moved into the tooltip. A fill answers "can
+ * I get on" at a glance; the digit answers "by how much" when you ask.
  */
-function AtrPos({ v }) {
-  if (v == null || !Number.isFinite(v)) {
-    return <span className="text-[10px] font-mono text-[var(--color-text-muted)]"
-                 title="ATR 位未测量 — 字段随今晚的 cron 到">—</span>
-  }
-  const tone = v < 0 ? 'var(--color-text-secondary)'
-    : v <= 4 ? 'var(--color-signal-ok, var(--color-took))'
-    : v <= 7 ? 'var(--color-signal-caution)'
-    : 'var(--color-signal-riskoff, var(--color-refused))'
-  return (
-    <span className="text-[10px] font-mono tabular-nums shrink-0"
-          style={{ color: tone }}
-          title={v < 0 ? `${v.toFixed(1)} ATR — 在 50 日线下方，不在扩张刻度上`
-               : v <= 4 ? `${v.toFixed(1)} ATR — 0–4 建仓区`
-               : v <= 7 ? `${v.toFixed(1)} ATR — 5–7 持有，不加`
-               : `${v.toFixed(1)} ATR — ≥7 只减不买`}>
-      {v.toFixed(1)}
-    </span>
-  )
+const ATR_STOPS = {
+  /* Dark: lightness RISES with the reading. On an ink page the alarming end
+     should be the luminous one, and rising is the only direction that keeps
+     the greyscale monotonic against a near-black ground. */
+  dark:  [[0, '#16304d'], [4, '#2b6ea8'], [7, '#c06a2a'], [10, '#f0705a']],
+  /* Light: it FALLS, for the same reason inverted — on paper the alarming end
+     is the heavy one. */
+  light: [[0, '#dbe9f6'], [4, '#8fbfe0'], [7, '#e09a72'], [10, '#c9432b']],
 }
+
+/**
+ * The foreground is CHOSEN, never interpolated: a first pass ramped the ink
+ * alongside the ground and it passed through mid-grey on a mid-lightness fill
+ * — measured 1.61:1 at ATR 8. Picking whichever ink the ground can carry is
+ * simpler and correct at every point on the ramp.
+ *
+ * Pure white and pure black, not the page's near-inks. Measured with
+ * #fbf9f5/#12110f the worst point on the ramp came to 4.40 — a fill in the
+ * middle of a lightness range is the hardest ground there is, and the last
+ * fraction of ink contrast is exactly what buys it back. This is a small
+ * coloured chip, not body copy: it can afford the strongest pair.
+ */
+const ATR_INK = ['#ffffff', '#000000']
+
+const hexToRgb = (c) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16))
+const mix = (a, b, t) => {
+  const [x, y] = [hexToRgb(a), hexToRgb(b)]
+  return '#' + x.map((v, i) => Math.round(v + (y[i] - v) * t)
+    .toString(16).padStart(2, '0')).join('')
+}
+const relLum = (rgb) => {
+  const f = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4 }
+  return 0.2126 * f(rgb[0]) + 0.7152 * f(rgb[1]) + 0.0722 * f(rgb[2])
+}
+const contrast = (a, b) => {
+  const [x, y] = [relLum(hexToRgb(a)), relLum(hexToRgb(b))]
+  return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05)
+}
+
+const lStar = (c) => {
+  const y = relLum(hexToRgb(c))
+  return y > 0.008856 ? 116 * Math.cbrt(y) - 16 : 903.3 * y
+}
+
+/**
+ * Pull a colour to a target lightness without touching its hue much.
+ *
+ * Straight RGB interpolation between a blue and an orange dips in lightness on
+ * the way — measured, the ramp went 44.9 at ATR 4 and 44.6 at 4.5, so the
+ * greyscale reading briefly ran backwards. Blending toward white or black to
+ * hit the linearly-interpolated L* makes the monotonicity a property of the
+ * construction rather than of the anchors happening to line up.
+ */
+function toLightness(c, target) {
+  const cur = lStar(c)
+  if (Math.abs(cur - target) < 0.5) return c
+  const up = cur < target
+  const towards = up ? '#ffffff' : '#000000'
+  let lo = 0, hi = 1
+  for (let i = 0; i < 14; i++) {
+    const mid = (lo + hi) / 2
+    // the predicate has to flip with the direction: blending toward white
+    // RAISES L*, toward black it lowers it, and a single comparison sent the
+    // search to the far end. It did, and two of today's fills came out pure
+    // black at exactly the stop boundaries.
+    const overshot = up ? lStar(mix(c, towards, mid)) > target
+                        : lStar(mix(c, towards, mid)) < target
+    if (overshot) hi = mid
+    else lo = mid
+  }
+  return mix(c, towards, (lo + hi) / 2)
+}
+
+/** {bg, fg} for a reading, or null when it is off the scale. */
+export function atrFill(v, dark) {
+  if (v == null || !Number.isFinite(v) || v < 0) return null
+  const stops = ATR_STOPS[dark ? 'dark' : 'light']
+  const x = Math.min(v, stops[stops.length - 1][0])
+  let bg = stops[stops.length - 1][1]
+  for (let i = 1; i < stops.length; i++) {
+    if (x <= stops[i][0]) {
+      const [x0, c0] = stops[i - 1]
+      const [x1, c1] = stops[i]
+      const t = x1 === x0 ? 0 : (x - x0) / (x1 - x0)
+      bg = toLightness(mix(c0, c1, t), lStar(c0) + (lStar(c1) - lStar(c0)) * t)
+      break
+    }
+  }
+  const fg = contrast(ATR_INK[0], bg) >= contrast(ATR_INK[1], bg) ? ATR_INK[0] : ATR_INK[1]
+  return { bg, fg }
+}
+
+/** Which theme is on, kept live — the ramp has a light set and a dark set, and
+ *  the fill is computed at render rather than handed to CSS, so it cannot be
+ *  flipped by a token. */
+function useDarkTheme() {
+  const [dark, setDark] = useState(() =>
+    document.documentElement.classList.contains('dark'))
+  useEffect(() => {
+    const el = document.documentElement
+    const obs = new MutationObserver(() => setDark(el.classList.contains('dark')))
+    obs.observe(el, { attributes: true, attributeFilter: ['class'] })
+    return () => obs.disconnect()
+  }, [])
+  return dark
+}
+
+const atrTitle = (v) => v == null || !Number.isFinite(v)
+  ? 'ATR 位未测量'
+  : v < 0 ? `${v.toFixed(1)} ATR — 在 50 日线下方，不在扩张刻度上`
+  : v <= 4 ? `${v.toFixed(1)} ATR — 0–4 建仓区`
+  : v <= 7 ? `${v.toFixed(1)} ATR — 5–7 持有，不加`
+  : `${v.toFixed(1)} ATR — ≥7 只减不买`
+
 
 function Name({ row, rsKey = 'rs_1m' }) {
   const v = row[rsKey]
@@ -291,13 +394,21 @@ function Name({ row, rsKey = 'rs_1m' }) {
    * carried by its theme works more often; the legend says so in those words.
    */
   const withTheme = row.group_state === 'Leading' || row.group_state === 'Improving'
+  const fill = atrFill(row.atr_from_sma50, useDarkTheme())
   return (
     <span className="flex items-baseline gap-1.5 px-2 py-[3px] min-w-0">
       {/* THE TICKER NEVER SHRINKS — it carried `truncate` next to a label that
-          demanded the whole width, and collapsed to "U…". */}
+          demanded the whole width, and collapsed to "U…".
+          It also carries the ATR reading as its own ground now, so its ink is
+          chosen against that ground rather than from the token: white-on-blue
+          and white-on-red are two different foregrounds and only one of them
+          is legible on each. Off the scale it falls back to the token. */}
       <TickerLink symbol={row.ticker}
-                  className="shrink-0 text-[11.5px] font-mono font-semibold
-                             text-[var(--color-text-bold)]" />
+                  title={atrTitle(row.atr_from_sma50)}
+                  style={fill ? { background: fill.bg, color: fill.fg,
+                                  padding: '1px 4px', borderRadius: '3px' } : undefined}
+                  className={`shrink-0 text-[11.5px] font-mono font-semibold
+                              ${fill ? '' : 'text-[var(--color-text-bold)]'}`} />
       {withTheme && (
         <i title={`${row.group} · ${row.group_state}`}
            className="shrink-0 w-[3px] h-[3px] rounded-full translate-y-[-3px]
@@ -307,9 +418,6 @@ function Name({ row, rsKey = 'rs_1m' }) {
             title={alt || undefined}>
         {v ?? '—'}
       </span>
-      {/* two numbers beside a name and no more (DATA_CONTRACTS §八.3): what it
-          is worth against the field, and whether you can still get on. */}
-      <AtrPos v={row.atr_from_sma50} />
     </span>
   )
 }
