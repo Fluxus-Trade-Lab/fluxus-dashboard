@@ -21,35 +21,41 @@
  */
 
 /**
- * ONE BAND SCHEME NOW (Andy 2026-08-19: 是显示层的名字以及数值).
+ * ⚠ THERE ARE TWO BAND SCHEMES OVER THE SAME 0-100 score. Deliberate, not a
+ * duplication — but not interchangeable, and mixing them up silently produces
+ * wrong numbers (it already did once, in a trade-attribution table):
  *
- * This file used to carry a second one — Defence / Caution / Neutral /
- * Constructive / Full on even cuts — deliberately, as position language for
- * display while `pipeline/screeners/regime.py` kept Damaged / Mixed / Healthy /
- * Extended for analysis. The split cost more than it bought: on 08-14 the
- * analysis layer read Extended at 78.1 while this badge said Constructive, and
- * Andy's own sense of the tape agreed with the analysis layer. So the display
- * takes the analysis names and cuts, and there is no constant to drift.
+ *   THIS FILE — Defence / Caution / Neutral / Constructive / Full, even cuts
+ *     18 / 40 / 62 / 84. Position language: what the state permits you to hold.
+ *     USE FOR DISPLAY (this band, any "how much can I carry today" reading).
  *
- * THE CUTS ARE NOT COPIED HERE. They arrive in `breadth.json → regime.bands[]`
- * with key/label/min/max/describes, and are read at render. A second copy in
- * JavaScript is the shape that produced the disagreement in the first place.
+ *   pipeline/screeners/regime.py — Damaged / Mixed / Healthy / Extended, cuts
+ *     47 / 63 / 75. Empirical quartiles of 558 archived sessions, validated
+ *     monotone against 5% drawdown frequency. USE FOR ANALYSIS (bucketing
+ *     trades by regime, risk-budget work, anything statistical).
  *
- * ⚠ AND THEY BAND A DIFFERENT NUMBER THAN THE ONE ON THE CARD'S FACE. The
- * headline figure and the two-year line are `conditions` — fifteen votes,
- * today 54. The bands are quartiles of `regime.score` — nine conditions, today
- * 50.0 — validated monotone against 5% drawdown frequency on that series. Four
- * points apart today and both in Mixed, but near a cut they part company, and
- * banding one quantity with the other's calibration is the exact mistake this
- * dashboard keeps catching itself in. So the badge carries its OWN score, next
- * to its own word, and the card's face keeps saying what it was already saying.
+ * Whichever you use, label it in the output so the two can't be confused.
  */
+/* Top band renamed Full -> Euphoria (Andy 2026-08-19). A name change only:
+   the cuts, the five-band scheme and the voter binding are untouched, and
+   nothing fires on it — no euphoria warning, no fitted rule. The research says
+   there is nothing to fire: 27 drops from >=75 to <=60 ran +1.8% median over
+   the next 20 days at an 81% win rate, which is not a warning
+   (data/research/regime_study_2026-08/README.md). The word is a description of
+   how full the tape is, and that is all it is. */
+export const BANDS = ['Defence', 'Caution', 'Neutral', 'Constructive', 'Euphoria']
 
-/** Voter levels run 0-4 (five steps); the bands are four. The map is stated
- *  rather than computed so it cannot quietly imply precision the voters do not
- *  have: a voter can only ever pull the band DOWN, and the two middle voter
- *  levels both land in the middle band. */
-const VOTER_TO_BAND = [0, 1, 1, 2, 3]
+/** Market Conditions 0-100 -> a band. Cuts are even (width 22) because the
+ *  score is an unweighted percentage; a clever curve here would be a second
+ *  model. Shifted up 6 from 12/34/56/78 on the data session's occupancy audit
+ *  (2026-08-15): the old cuts were top-heavy — Full held 35% of 558 archived
+ *  sessions — and 18/40/62/84 reads near-equal occupancy (Full 25.8%), takes
+ *  Defence from 3 days to 7 with all seven inside the April crash, and leaves
+ *  forward stratification intact. Same-day readings unchanged. */
+function bandFromScore(score) {
+  if (score == null) return null
+  return score >= 84 ? 4 : score >= 62 ? 3 : score >= 40 ? 2 : score >= 18 ? 1 : 0
+}
 
 const POWER_LEVEL = { POWER_3: 4, CAUTION: 3, WARNING: 1, RISK_OFF: 0 }
 
@@ -257,17 +263,13 @@ function ConditionsLine({ history, score, binds }) {
   )
 }
 
-export default function RegimeBand({ verdict, signals, conditions, regime, onNavigate }) {
+export default function RegimeBand({ verdict, signals, conditions, onNavigate }) {
   const voters = [breadthVoter(verdict), structureVoter(verdict), powerVoter(signals)]
     .filter(Boolean)
   if (voters.length < 3) return null // a reading off partial voters would lie by omission
 
   const score = conditions?.today ?? null
-  const bands = regime?.bands ?? []
-  // the pipeline already banded its own score; the index is looked up rather
-  // than recomputed, so the badge cannot disagree with the file it came from
-  const fromFile = bands.findIndex((b) => b.key === regime?.band)
-  const scoreBand = fromFile >= 0 ? fromFile : null
+  const scoreBand = bandFromScore(score)
   const weakest = voters.reduce((a, b) => (a.level <= b.level ? a : b))
 
   /* The score sets the band and the weakest voter can only pull it DOWN, never
@@ -275,10 +277,7 @@ export default function RegimeBand({ verdict, signals, conditions, regime, onNav
      50-day; averaging that away turns one danger into a caution, and the
      danger is the expensive half. When the two disagree the line underneath
      names which voter did the pulling and on what condition. */
-  const voterBand = VOTER_TO_BAND[weakest.level] ?? 1
-  const level = scoreBand == null ? voterBand : Math.min(scoreBand, voterBand)
-  const band = bands[level] ?? null
-  const pulled = scoreBand != null && level < scoreBand
+  const level = scoreBand == null ? weakest.level : Math.min(scoreBand, weakest.level)
 
   return (
     <section className="rounded-3xl px-6 py-5 bg-[var(--color-surface)]">
@@ -301,55 +300,17 @@ export default function RegimeBand({ verdict, signals, conditions, regime, onNav
             not (Defence/Caution) — a lone red means the band itself is what
             binds you today. Blue is gone: a band alone is one pole, and blue
             never appears without its red twin. */}
-        {band && (
-          <span className="flex items-baseline gap-2">
-            {/* Colour by drawdown risk, which is what the bands were validated
-                against — not by whether the state feels good. Damaged takes the
-                only red on this badge; the rest step up in ink. EXTENDED IS NOT
-                GREEN AND NOT THE PAIR'S BLUE: it is "every condition met at
-                once", which is a full tape, not a safe one — the top band ran a
-                9% 5-percent-drawdown rate against the bottom band's 31%, so it
-                gets the loudest neutral rather than an approving colour. */}
-            <span className="text-[12.5px] font-semibold uppercase tracking-wide px-2.5 py-[3px]"
-                  style={{ background: level === 0 ? 'var(--color-refused)'
-                             : level === 1 ? 'var(--color-text-muted)'
-                             : level === 2 ? 'var(--color-text-secondary)'
-                             : 'var(--color-text-bold)',
-                           color: 'var(--color-bg)' }}>
-              {band.label}
-            </span>
-            {/* its OWN score, because the number on the left of this card is a
-                different quantity and the two must not be read as one */}
-            {regime?.score != null && (
-              <span className="text-[11px] font-mono tabular-nums text-[var(--color-text-muted)]"
-                    title="regime score — nine conditions, the series these cuts were calibrated on. The figure on the left is the fifteen-vote conditions score.">
-                {regime.score}<span className="opacity-60">/100</span>
-              </span>
-            )}
-            {regime?.caveat && (
-              <span className="text-[11px] text-[var(--color-text-muted)] cursor-help"
-                    title={regime.caveat} aria-label="how to read this band">&#9432;</span>
-            )}
-          </span>
-        )}
+        <span
+              className="text-[12.5px] font-semibold uppercase tracking-wide px-2.5 py-[3px]"
+              style={{ background: level <= 1 ? 'var(--color-refused)' : 'var(--color-text-bold)',
+                       color: 'var(--color-bg)' }}>
+          {BANDS[level]}
+        </span>
       </div>
-
-      {/* the band's own sentence, from the file. What the state IS, not what to
-          do about it — and when a voter pulled the band below the score's own,
-          the pull is named, because that disagreement is the content. */}
-      {band && (
-        <p className="m-0 mt-1.5 text-[11px] leading-relaxed text-[var(--color-text-secondary)]">
-          {band.describes}
-          {pulled && (
-            <> &mdash; pulled down from <b>{bands[scoreBand]?.label}</b> by{' '}
-              {weakest.name}: {weakest.binding ?? weakest.word}</>
-          )}
-        </p>
-      )}
 
       {/* rule three, same as the badge: the endpoint wears red only when
           the band itself binds (Defence/Caution); an all-clear day stays ink */}
-      <ConditionsLine history={conditions?.history} score={score} binds={level === 0} />
+      <ConditionsLine history={conditions?.history} score={score} binds={level <= 1} />
     </section>
   )
 }

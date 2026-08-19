@@ -144,8 +144,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]
                           gap-4 items-stretch">
             <RegimeBand verdict={data?.breadth?.verdict} signals={data?.signals}
-                        conditions={data?.breadth?.conditions}
-                        regime={data?.breadth?.regime} onNavigate={navigate} />
+                        conditions={data?.breadth?.conditions} onNavigate={navigate} />
             <div className="flex flex-col gap-3">
               <WritingSlot
                 label="Founders note · daily"
