@@ -1,6 +1,6 @@
 {
   "trade_id": "VIAV_2026-06-02_000",
-  "generated_at": "2026-08-18T03:59:15+00:00",
+  "generated_at": "2026-08-19T09:44:36+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "VIAV",
@@ -33,10 +33,10 @@
     "high": 53.02,
     "low": 48.09,
     "volume": 7233900.0,
-    "ma20": 51.281000000000006,
+    "ma20": 51.28099999999999,
     "ma50": 45.337999999999994,
-    "ma200": 25.22995,
-    "rsi14": 57.65439228762596,
+    "ma200": null,
+    "rsi14": 57.65439203214639,
     "atr14": 3.7435714285714283,
     "atr14_pct": 7.079371082775015,
     "high_52w": 60.43,
@@ -46,7 +46,7 @@
     "low_10d": 45.32,
     "low_5d": 45.88
   },
-  "setup_type": "Pullback in uptrend",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": 0.36059479553903334,
     "mfe_date": "2026-06-03",
@@ -63,7 +63,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **VIAV** long on 2026-06-02 at $53.89 (qty 2828) with stop $51.20 (1R = $2.69/sh = $7,607). Setup: **Pullback in uptrend** \u2014 price above MA20 ($51.28), MA20 > MA50 > MA200 (golden alignment), RSI 58, 85% through 52W range, ATR 7.1% of price. Realized **-1.77R**, peak was **+0.36R** on 2026-06-03 (day +1) \u2014 captured **-492%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **VIAV** long on 2026-06-02 at $53.89 (qty 2828) with stop $51.20 (1R = $2.69/sh = $7,607). Setup: **Long in mixed structure** \u2014 price above MA20 ($51.28), RSI 58, 85% through 52W range, ATR 7.1% of price. Realized **-1.77R**, peak was **+0.36R** on 2026-06-03 (day +1) \u2014 captured **-492%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-05-04",

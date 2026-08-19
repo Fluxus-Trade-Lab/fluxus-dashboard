@@ -1,6 +1,6 @@
 {
   "trade_id": "ARM_2026-08-12_000",
-  "generated_at": "2026-08-18T03:59:16+00:00",
+  "generated_at": "2026-08-19T09:44:36+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ARM",
@@ -9,21 +9,27 @@
     "entry_date": "2026-08-12",
     "entry_price": 277.71,
     "original_qty": 579,
-    "current_qty": 290,
+    "current_qty": 0,
     "stop_price": 267.0,
     "initial_stop": 267.0,
-    "closed": false,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "exit_date": "2026-08-18",
+    "hold_business_days": 4,
     "r_dollars": 6201.089999999988,
-    "realized_pl": -260.09999999999343,
-    "realized_R": -0.04194423883542957,
+    "realized_pl": -6700.999999999987,
+    "realized_R": -1.0806164722653597,
     "trims": [
       {
         "date": "2026-08-14",
         "price": 276.81,
         "qty": 289,
         "type": "trim_1_2"
+      },
+      {
+        "date": "2026-08-18",
+        "price": 255.5,
+        "qty": 290,
+        "type": "sell_rest"
       }
     ]
   },
@@ -33,10 +39,10 @@
     "high": 280.16,
     "low": 266.592,
     "volume": 3368900.0,
-    "ma20": 265.214,
+    "ma20": 265.21400000000006,
     "ma50": 316.43100000000004,
     "ma200": 193.99147499999998,
-    "rsi14": 47.68836099659108,
+    "rsi14": 47.6883605749377,
     "atr14": 23.661214285714287,
     "atr14_pct": 8.703135427121156,
     "high_52w": 452.7,
@@ -50,20 +56,20 @@
   "path_analytics": {
     "mfe_R": 1.1671335200746988,
     "mfe_date": "2026-08-13",
-    "mae_R": 1.070868347338937,
-    "mae_date": "2026-08-13",
+    "mae_R": 2.811391223155933,
+    "mae_date": "2026-08-18",
     "optimal_exit_price": 290.21,
     "optimal_exit_date": "2026-08-13",
     "optimal_R": 1.1671335200746988,
     "days_to_optimal": 1,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": -1.0806164722653597,
+    "capture_pct": -92.58721934369584,
+    "missed_R": 2.247749992340059,
     "post_exit_R": null,
-    "hold_calendar_days": 5
+    "hold_calendar_days": 6
   },
-  "lesson": "In progress",
-  "narrative": "Entered **ARM** long on 2026-08-12 at $277.71 (qty 579) with stop $267.00 (1R = $10.71/sh = $6,201). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($265.21), MA stack mixed, RSI 48, 49% through 52W range, ATR 8.7% of price. **In progress.** Peak so far +1.17R; worst drawdown -1.07R.",
+  "lesson": "Failed setup",
+  "narrative": "Entered **ARM** long on 2026-08-12 at $277.71 (qty 579) with stop $267.00 (1R = $10.71/sh = $6,201). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price above MA20 ($265.21), MA stack mixed, RSI 48, 49% through 52W range, ATR 8.7% of price. Realized **-1.08R**, peak was **+1.17R** on 2026-08-13 (day +1) \u2014 captured **-93%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-07-13",
@@ -267,11 +273,19 @@
     },
     {
       "date": "2026-08-17",
-      "open": 284.625,
-      "high": 287.12,
+      "open": 285.0,
+      "high": 287.15,
       "low": 271.28,
       "close": 271.43,
-      "volume": 3533142.0
+      "volume": 3713800.0
+    },
+    {
+      "date": "2026-08-18",
+      "open": 257.0,
+      "high": 258.5,
+      "low": 247.6,
+      "close": 253.32,
+      "volume": 6357500.0
     }
   ]
 }

@@ -1,33 +1,47 @@
 {
-  "generated_at": "2026-08-18T22:06:47.623595+00:00",
+  "generated_at": "2026-08-19T09:44:36.890615+00:00",
   "trades": [
+    {
+      "trade_id": "NOW_2026-08-17_000",
+      "ticker": "NOW",
+      "direction": "long",
+      "entry_date": "2026-08-17",
+      "exit_date": null,
+      "closed": false,
+      "realized_R": 0.0,
+      "optimal_R": 0.9216710182767631,
+      "capture_pct": null,
+      "setup_type": "Long below MA200 \u2014 counter-trend",
+      "lesson": "In progress",
+      "hold_days": 2
+    },
     {
       "trade_id": "INTC_2026-08-16_000",
       "ticker": "INTC",
       "direction": "long",
       "entry_date": "2026-08-16",
-      "exit_date": null,
-      "closed": false,
-      "realized_R": 0.0,
-      "optimal_R": 0.3573883161512053,
-      "capture_pct": null,
+      "exit_date": "2026-08-18",
+      "closed": true,
+      "realized_R": -2.4020618556701065,
+      "optimal_R": 0.36426116838488093,
+      "capture_pct": -659.4339622641497,
       "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
-      "lesson": "In progress",
-      "hold_days": 1
+      "lesson": "Failed setup",
+      "hold_days": 2
     },
     {
       "trade_id": "AUR_2026-08-16_000",
       "ticker": "AUR",
       "direction": "long",
       "entry_date": "2026-08-16",
-      "exit_date": null,
-      "closed": false,
-      "realized_R": 0.0,
+      "exit_date": "2026-08-18",
+      "closed": true,
+      "realized_R": -1.114285714285713,
       "optimal_R": 0.599999999999999,
-      "capture_pct": null,
+      "capture_pct": -185.7142857142858,
       "setup_type": "Long in mixed structure",
-      "lesson": "In progress",
-      "hold_days": 1
+      "lesson": "Failed setup",
+      "hold_days": 2
     },
     {
       "trade_id": "ARM_2026-08-16_000",
@@ -37,8 +51,8 @@
       "exit_date": "2026-08-17",
       "closed": true,
       "realized_R": -1.0,
-      "optimal_R": 1.1889763779527636,
-      "capture_pct": -84.10596026490012,
+      "optimal_R": 1.1948818897637818,
+      "capture_pct": -83.6902800658977,
       "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
       "lesson": "Failed setup",
       "hold_days": 1
@@ -48,28 +62,28 @@
       "ticker": "STX",
       "direction": "long",
       "entry_date": "2026-08-13",
-      "exit_date": null,
-      "closed": false,
-      "realized_R": 0.13095404676633043,
+      "exit_date": "2026-08-18",
+      "closed": true,
+      "realized_R": -0.04032836524582798,
       "optimal_R": 2.3294367693942597,
-      "capture_pct": null,
+      "capture_pct": -1.7312496211826716,
       "setup_type": "Long in mixed structure",
-      "lesson": "In progress",
-      "hold_days": 4
+      "lesson": "Choppy / no edge",
+      "hold_days": 5
     },
     {
       "trade_id": "MRNA_2026-08-13_001",
       "ticker": "MRNA",
       "direction": "long",
       "entry_date": "2026-08-13",
-      "exit_date": null,
-      "closed": false,
-      "realized_R": 0.0,
+      "exit_date": "2026-08-18",
+      "closed": true,
+      "realized_R": 1.1428571428571417,
       "optimal_R": 2.96753246753246,
-      "capture_pct": null,
+      "capture_pct": 38.51203501094098,
       "setup_type": "Long in mixed structure",
-      "lesson": "In progress",
-      "hold_days": 4
+      "lesson": "Premature trim",
+      "hold_days": 5
     },
     {
       "trade_id": "MRNA_2026-08-13_000",
@@ -83,7 +97,7 @@
       "capture_pct": null,
       "setup_type": "Long in mixed structure",
       "lesson": "In progress",
-      "hold_days": 4
+      "hold_days": 6
     },
     {
       "trade_id": "MU_2026-08-12_000",
@@ -118,28 +132,28 @@
       "ticker": "ARM",
       "direction": "long",
       "entry_date": "2026-08-12",
-      "exit_date": null,
-      "closed": false,
-      "realized_R": -0.04194423883542957,
+      "exit_date": "2026-08-18",
+      "closed": true,
+      "realized_R": -1.0806164722653597,
       "optimal_R": 1.1671335200746988,
-      "capture_pct": null,
+      "capture_pct": -92.58721934369584,
       "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
-      "lesson": "In progress",
-      "hold_days": 5
+      "lesson": "Failed setup",
+      "hold_days": 6
     },
     {
       "trade_id": "OUST_2026-08-11_000",
       "ticker": "OUST",
       "direction": "long",
       "entry_date": "2026-08-11",
-      "exit_date": null,
-      "closed": false,
-      "realized_R": 0.0,
-      "optimal_R": 2.077937499999998,
-      "capture_pct": null,
+      "exit_date": "2026-08-18",
+      "closed": true,
+      "realized_R": -0.10937500000000035,
+      "optimal_R": 2.0778124999999963,
+      "capture_pct": -5.263949466085151,
       "setup_type": "Long in mixed structure",
-      "lesson": "In progress",
-      "hold_days": 6
+      "lesson": "Choppy / no edge",
+      "hold_days": 7
     },
     {
       "trade_id": "MU_2026-08-11_001",
@@ -195,7 +209,7 @@
       "capture_pct": null,
       "setup_type": "Long in mixed structure",
       "lesson": "In progress",
-      "hold_days": 8
+      "hold_days": 10
     },
     {
       "trade_id": "IOT_2026-08-09_000",
@@ -246,26 +260,26 @@
       "entry_date": "2026-08-05",
       "exit_date": null,
       "closed": false,
-      "realized_R": 1.8447881381113649,
+      "realized_R": 4.053270042194083,
       "optimal_R": 10.468354430379728,
       "capture_pct": null,
       "setup_type": "Long in mixed structure",
       "lesson": "In progress",
-      "hold_days": 12
+      "hold_days": 14
     },
     {
       "trade_id": "HPE_2026-08-05_000",
       "ticker": "HPE",
       "direction": "long",
       "entry_date": "2026-08-05",
-      "exit_date": null,
-      "closed": false,
-      "realized_R": 3.8491228070175474,
+      "exit_date": "2026-08-18",
+      "closed": true,
+      "realized_R": 4.65087719298246,
       "optimal_R": 6.600000000000004,
-      "capture_pct": null,
+      "capture_pct": 70.46783625730995,
       "setup_type": "Long in mixed structure",
-      "lesson": "In progress",
-      "hold_days": 12
+      "lesson": "Good execution",
+      "hold_days": 13
     },
     {
       "trade_id": "BLZE_2026-08-05_000",
@@ -335,7 +349,7 @@
       "capture_pct": null,
       "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
       "lesson": "In progress",
-      "hold_days": 14
+      "hold_days": 16
     },
     {
       "trade_id": "ARM_2026-08-03_000",
@@ -356,14 +370,14 @@
       "ticker": "HPE",
       "direction": "long",
       "entry_date": "2026-08-02",
-      "exit_date": null,
-      "closed": false,
-      "realized_R": 3.077795831465713,
+      "exit_date": "2026-08-18",
+      "closed": true,
+      "realized_R": 3.8510850888988517,
       "optimal_R": 5.195652173913046,
-      "capture_pct": null,
+      "capture_pct": 74.12130296625402,
       "setup_type": "Pullback in uptrend",
-      "lesson": "In progress",
-      "hold_days": 15
+      "lesson": "Good execution",
+      "hold_days": 16
     },
     {
       "trade_id": "FNGU_2026-08-02_000",
@@ -1159,7 +1173,7 @@
       "realized_R": -1.7732342007434971,
       "optimal_R": 0.36059479553903334,
       "capture_pct": -491.75257731958857,
-      "setup_type": "Pullback in uptrend",
+      "setup_type": "Long in mixed structure",
       "lesson": "Failed setup",
       "hold_days": 2
     },
