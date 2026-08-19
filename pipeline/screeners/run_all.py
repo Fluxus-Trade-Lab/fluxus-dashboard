@@ -857,7 +857,11 @@ def main():
     quality['tradeable'] = {
         s: statuses.count(s) for s in ('tradeable', 'excluded', 'unmeasurable')
     }
-    ledger.note('universe_quality', quality['status'], rows=len(rows_out),
+    claimed = getattr(finviz, 'claimed_total', None)
+    if claimed and len(rows_out) < 0.9 * claimed:
+        logger.error("Finviz claimed %d rows, universe has %d (%.0f%%) -- short scrape",
+                     claimed, len(rows_out), 100 * len(rows_out) / claimed)
+    ledger.note('universe_quality', quality['status'], rows=len(rows_out), finviz_claimed=claimed,
                 degraded=[f for f, v in quality['fields'].items() if v['status'] != 'ok'],
                 bars_missing=sum(1 for r in rows_out if r.get('bar_date') is None),
                 bars_stale=sum(1 for r in rows_out if r.get('bars_stale') is True),

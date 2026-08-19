@@ -181,6 +181,15 @@ class FinvizAdapter(BaseAdapter):
                 break
 
             soup = BeautifulSoup(resp.text, 'html.parser')
+            # Finviz prints "#1 / 5621 Total" above the table. Keep the number
+            # the vendor claims so the run can reconcile rows scraped against
+            # rows promised (DATA_RELIABILITY §六 2): a silently short scrape
+            # is otherwise invisible -- 3,000 of 5,600 looked fine for a week.
+            if page == 1 and getattr(self, 'claimed_total', None) is None:
+                m = re.search(r'/\s*([\d,]+)\s*Total', resp.text)
+                if m:
+                    self.claimed_total = int(m.group(1).replace(',', ''))
+                    logger.info("Finviz claims %d rows total for view %s", self.claimed_total, view_id)
             table = self._find_screener_table(soup)
 
             if table is None:
