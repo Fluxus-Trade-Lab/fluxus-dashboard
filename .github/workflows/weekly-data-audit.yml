@@ -30,6 +30,18 @@ jobs:
         continue-on-error: true
         run: |
           python -m pipeline.tools.audit_archives --json audit.json | tee audit.txt
+      - name: Schema drift
+        run: python -m pipeline.tools.schema_snapshot --check | tee schema.txt
+      - name: Run ledger, last 7 runs
+        run: |
+          python - <<'PY' | tee ledger.txt
+          import json
+          rows = [json.loads(l) for l in open('data/history/run_ledger.jsonl')][-7:] if __import__('os').path.exists('data/history/run_ledger.jsonl') else []
+          print("run_ledger.jsonl (last 7):")
+          for r in rows:
+              g = r.get('guards', {})
+              print(f"  {r['session']} {r['trigger']:>17s} uq={g.get('universe_quality',{}).get('status')} bars_missing={g.get('universe_quality',{}).get('bars_missing')} breadth={g.get('breadth',{}).get('status')} fund={g.get('fundamentals',{}).get('status')} errors={len(r.get('errors',[]))}")
+          PY
       - name: Universe quality, last 7 sessions
         run: |
           python - <<'PY' | tee quality.txt
@@ -52,7 +64,7 @@ jobs:
         run: |
           # guarded in the shell: a step's own env is not in scope for its if:
           if [ -z "$DISCORD_WEBHOOK_URL" ]; then echo "no webhook, skipping"; exit 0; fi
-          BODY=$(printf '**Weekly data audit — %s**\n```\n%s\n\n%s\n\ncron:\n%s\n```' "$(date -u +%F)" "$(tail -12 audit.txt)" "$(cat quality.txt)" "$(cat runs.txt)")
+          BODY=$(printf '**Weekly data audit — %s**\n```\n%s\n\n%s\n\n%s\n\n%s\n\ncron:\n%s\n```' "$(date -u +%F)" "$(tail -12 audit.txt)" "$(head -8 schema.txt)" "$(cat ledger.txt)" "$(cat quality.txt)" "$(cat runs.txt)")
           python - "$BODY" <<'PY'
           import json, os, sys, urllib.request
           payload = json.dumps({"content": sys.argv[1][:1900]}).encode()

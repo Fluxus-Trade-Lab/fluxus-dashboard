@@ -458,6 +458,8 @@ def main():
         return
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     HISTORY_DIR.mkdir(parents=True, exist_ok=True)
+    from pipeline.run_ledger import Ledger
+    ledger = Ledger(session=last_completed_session().isoformat())
 
     finviz = FinvizAdapter()
     yf_adapter = YfinanceAdapter()
@@ -489,6 +491,8 @@ def main():
         FS.save(fstore)
         universe = FS.apply(universe, fstore)
         cov = universe[['eps_growth_next_y', 'revenue_growth']].notna().any(axis=1).mean()
+        ledger.note('fundamentals', 'walled' if stats.get('walled') else 'ok',
+                    **{k: stats.get(k) for k in ('due', 'ok', 'failed', 'walled', 'store')})
         logger.info("fundamentals: %s; coverage %.1f%% of universe (source counts %s)",
                     stats, cov * 100, universe['fund_source'].value_counts(dropna=False).to_dict())
     except Exception:
@@ -543,6 +547,11 @@ def main():
             "all other outputs still written"
         )
         breadth_result = None
+        ledger.error('breadth', 'exception')
+    if breadth_result is not None:
+        ledger.note('breadth', 'stale' if (breadth_result.get('data_quality') or {}).get('stale') else 'ok',
+                    reason=(breadth_result.get('data_quality') or {}).get('reason'),
+                    regime_score=(breadth_result.get('regime') or {}).get('score'))
     else:
         # Signal/health computation is a separate failure domain: a crash here
         # (e.g. load_archive or run_signals) must not null out breadth_result,
@@ -701,6 +710,8 @@ def main():
             heating_up_payload['stale'] = True
             heating_up_payload['stale_reason'] = stale_reason
         ticker_events_payload = build_ticker_events_index(events_frame, as_of)
+        ledger.note('ticker_events', 'stale' if stale_reason else 'ok', reason=stale_reason,
+                    rows_today=len(today_rows), event_date=event_date)
     except Exception:  # noqa: BLE001 — isolate; every other output still ships
         logger.exception("Ticker event archive failed — its outputs will be skipped")
         heating_up_payload = None
@@ -838,6 +849,11 @@ def main():
     quality['tradeable'] = {
         s: statuses.count(s) for s in ('tradeable', 'excluded', 'unmeasurable')
     }
+    ledger.note('universe_quality', quality['status'], rows=len(rows_out),
+                degraded=[f for f, v in quality['fields'].items() if v['status'] != 'ok'],
+                bars_missing=sum(1 for r in rows_out if r.get('bar_date') is None),
+                bars_stale=sum(1 for r in rows_out if r.get('bars_stale') is True),
+                tradeable=quality['tradeable'])
     logger.info("Universe quality: %s — tradeable %d, excluded %d, unmeasurable %d",
                 quality['status'], quality['tradeable']['tradeable'],
                 quality['tradeable']['excluded'], quality['tradeable']['unmeasurable'])
@@ -859,6 +875,8 @@ def main():
     # Degraded only warns — one flaky vendor morning should not cost a day.
     if quality['status'] == 'severe':
         broken = [f for f, v in quality['fields'].items() if v['status'] == 'severe']
+        ledger.error('universe_quality', f"severe: {', '.join(broken)} -- run aborted, outputs unchanged")
+        ledger.write()
         raise SystemExit(
             f"Universe quality severe on {', '.join(broken)} — refusing to "
             f"publish. Yesterday's outputs are unchanged."
@@ -928,6 +946,8 @@ def main():
         except Exception:
             logger.exception("momentum97 shadow log failed - watchlist.json unaffected")
         (OUTPUT_DIR / 'watchlist.json').write_text(json.dumps(wl, indent=2, default=_json_serializer))
+        ledger.note('watchlist', 'ok', gated=wl['universe_gated'],
+                    panels={p['key']: p['count'] for z in wl['zones'] for p in z['panels']})
         logger.info("Saved watchlist.json - %d gated, cross-zone %d, panels %s",
                     wl['universe_gated'], len(wl['cross_zone']),
                     {p['key']: p['count'] for z in wl['zones'] for p in z['panels']})
@@ -975,6 +995,13 @@ def main():
         d.get('count', 0) for d in results.values() if isinstance(d, dict)
     )
     logger.info(f"Done. {len(results)} screeners completed. Universe: {len(universe)} stocks.")
+    try:
+        ledger.note('site_quality', site_report['status'],
+                    sources={k: v['status'] for k, v in site_report['sources'].items()})
+    except Exception:  # noqa: BLE001
+        pass
+    ledger.note('screeners', 'ok', counts={k: (d.get('count') if isinstance(d, dict) else None) for k, d in results.items()})
+    ledger.write()
 
 
 if __name__ == '__main__':

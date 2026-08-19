@@ -57,9 +57,14 @@
 4. 改任何归档的写入者,先跑 `python -m pipeline.tools.audit_archives`,再跑 `pytest pipeline/tests`。
 5. 新归档 = 在 `audit_archives.ARCHIVES` 登记一行(date 列、主键、是否算行数、是否每晚)。
 
-## 五、还没有的(按优先级)
+## 五、08-19 晚补齐的三件
 
-1. **运行台账** `data/history/run_ledger.jsonl`:每次 run 一行(session、开始/结束 UTC、每个闸门的判定、哪些输出 stale、commit sha)——现在这些信息散在 Actions 日志里,过 90 天就没了。
-2. **Schema 快照**:每个 output JSON 的字段集与类型存一份,夜里 diff,新列/丢列进 Discord——现在靠 DATA_CONTRACTS 手写。
-3. **对账**:universe 行数 vs Finviz 宣称的总数;ticker_events 当日各筛选器计数 vs 对应 JSON 的长度(两处应恒等)。
-4. I4 的阈值(0.3×/3×)是拍的,攒一个月 audit_last.json 再校。
+- **运行台账** `data/history/run_ledger.jsonl`(`pipeline/run_ledger.py`):每次 run 一行——session、起止 UTC、代码 sha、触发方式、每个闸门的判定(universe_quality 状态/缺 K 线数/stale 数、breadth stale 与分数、ticker_events、fundamentals、watchlist 各格计数、site_quality、各筛选器计数)、错误。同一 session 重跑 = 两行(都发生过)。周报读最近 7 行。
+- **Schema 快照** `data/reference/schema_snapshot.json`(`pipeline/tools/schema_snapshot.py`):26 个 output 文件每层的字段集;cron 里 `--check` 只报不拦,改动在 DATA_CONTRACTS 写明后 `--update` 接受。
+- **对账 I6**(在 audit_archives 里):watchlist.json 各格 count == watchlist_hits 行数;七个筛选器 JSON 的行数 == ticker_events 当日行数;breadth universe_size ≈ universe.json 行数。前两条不等 = 违规(两个写入者对不上)。
+
+## 六、还没有的(按优先级)
+
+1. I4 的阈值(0.3×/3×)是拍的,攒一个月 audit_last.json 再校。
+2. universe 行数 vs Finviz 宣称总数(adapter 现在不存那个数)。
+3. run_ledger 攒满一个月后:429 频率、各闸触发频率的月报。

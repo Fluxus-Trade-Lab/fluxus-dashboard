@@ -116,6 +116,11 @@ jobs:
       - name: Audit archives
         run: python -m pipeline.tools.audit_archives --json data/history/audit_last.json
 
+      # Schema drift is reported, not fatal: new columns land on purpose and
+      # DATA_CONTRACTS.md is where they get announced; accept with --update.
+      - name: Schema snapshot check
+        run: python -m pipeline.tools.schema_snapshot --check
+
       - name: Validate outputs
         run: |
           echo "Validating output files..."

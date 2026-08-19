@@ -20,6 +20,9 @@ This tool checks the invariants that hold for every archive, reports, and
       broken enrichment) -- reported, never repaired automatically
   I5  the newest session in each nightly archive is the last completed
       session (stale archive = a writer silently stopped)
+  I6  reconciliation: watchlist.json counts == watchlist_hits rows; the seven
+      screener JSONs' rows == ticker_events rows for that date; breadth
+      universe_size ~ universe.json rows (mismatch = two writers disagree)
 
 Exit code 1 when any I1/I2/I3 violation exists (CI refuses to commit the run
 on that), 0 otherwise; I4/I5 are warnings in the report. --repair rewrites
@@ -131,7 +134,57 @@ def repair(path: Path, spec: Dict[str, Any], frame: pd.DataFrame, rep: Dict[str,
     return removed
 
 
-def run(history: Path = HISTORY, do_repair: bool = False, last_done: Optional[dt.date] = None) -> Dict[str, Any]:
+def reconcile(history: Path = HISTORY, output: Path = Path("data/output")) -> Dict[str, Any]:
+    """I6 -- cross-file agreement for the newest session. Two writers that
+    describe the same thing must agree; a mismatch is a writer bug, not data.
+      a) watchlist.json panel counts == watchlist_hits.csv rows per panel (same date)
+      b) ticker_events.csv core screener counts (newest date) == the screener JSONs' row counts
+      c) breadth_archive.csv newest universe_size == universe.json row count
+    Reported as violations only when the dates line up (a stale file is I5's job)."""
+    rep: Dict[str, Any] = {"archive": "reconcile(I6)", "rows": 0, "violations": [], "warnings": [], "drop_dates": [], "drop_dupes": 0}
+    try:
+        wl = json.loads((output / "watchlist.json").read_text())
+        hits = pd.read_csv(history / "watchlist_hits.csv", dtype=str)
+        h = hits[hits["date"] == wl["date"]]
+        if len(h):
+            per = h.groupby("panel").size().to_dict()
+            for z in wl["zones"]:
+                for p in z["panels"]:
+                    if p.get("measured") and per.get(p["key"], 0) != p["count"]:
+                        rep["violations"].append(f"I6a {wl['date']} {p['key']}: watchlist.json count {p['count']} vs watchlist_hits {per.get(p['key'], 0)}")
+        else:
+            rep["warnings"].append(f"I6a no watchlist_hits rows for watchlist.json date {wl['date']}")
+    except Exception as e:  # noqa: BLE001
+        rep["warnings"].append(f"I6a skipped: {type(e).__name__}")
+    try:
+        from pipeline.screeners.ticker_events import SCREENER_FILES, extract_events
+        te = pd.read_csv(history / "ticker_events.csv", dtype=str)
+        newest = te["date"].max()
+        day = te[te["date"] == newest]
+        for scr in SCREENER_FILES:
+            p = output / f"{scr}.json"
+            if not p.exists():
+                continue
+            payload = json.loads(p.read_text())
+            n_json = len(extract_events(scr, payload, newest))
+            n_csv = int((day["screener"] == scr).sum())
+            if n_json != n_csv:
+                rep["violations"].append(f"I6b {newest} {scr}: {scr}.json {n_json} rows vs ticker_events {n_csv}")
+    except Exception as e:  # noqa: BLE001
+        rep["warnings"].append(f"I6b skipped: {type(e).__name__}")
+    try:
+        ba = pd.read_csv(history / "breadth_archive.csv", dtype=str)
+        u = json.loads((output / "universe.json").read_text())
+        last = ba.sort_values("date").iloc[-1]
+        if int(float(last["universe_size"])) != len(u["rows"]):
+            rep["warnings"].append(f"I6c breadth universe_size {last['universe_size']} ({last['date']}) vs universe.json rows {len(u['rows'])}")
+    except Exception as e:  # noqa: BLE001
+        rep["warnings"].append(f"I6c skipped: {type(e).__name__}")
+    return rep
+
+
+def run(history: Path = HISTORY, do_repair: bool = False, last_done: Optional[dt.date] = None,
+        output: Optional[Path] = Path("data/output")) -> Dict[str, Any]:
     last_done = last_done or last_completed_session()
     reports: List[Dict[str, Any]] = []
     for name, spec in ARCHIVES.items():
@@ -149,6 +202,8 @@ def run(history: Path = HISTORY, do_repair: bool = False, last_done: Optional[dt
         if do_repair and (rep["drop_dates"] or rep["drop_dupes"]):
             rep["repaired_rows"] = repair(p, spec, frame, rep)
         reports.append(rep)
+    if output is not None and output.exists():
+        reports.append(reconcile(history, output))
     n_viol = sum(len(r["violations"]) for r in reports)
     return {"as_of_session": last_done.isoformat(), "ok": n_viol == 0, "violations": n_viol,
             "warnings": sum(len(r["warnings"]) for r in reports), "archives": reports}

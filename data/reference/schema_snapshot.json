@@ -1,0 +1,1005 @@
+{
+ "breadth.json": {
+  "conditions.history[]": [
+   "date",
+   "of",
+   "positive",
+   "raw",
+   "score"
+  ],
+  "history{}[]": [
+   "ad_line",
+   "advances",
+   "date",
+   "declines",
+   "down_13pct_34d",
+   "down_25pct_month",
+   "down_25pct_qtr",
+   "down_4pct",
+   "down_50pct_month",
+   "mcclellan_osc",
+   "net_advances",
+   "new_highs",
+   "new_lows",
+   "pct_above_200sma",
+   "pct_above_20sma",
+   "pct_above_50sma",
+   "rana",
+   "ratio_10d",
+   "ratio_5d",
+   "source",
+   "spx_close",
+   "t2108",
+   "universe_size",
+   "up_13pct_34d",
+   "up_25pct_month",
+   "up_25pct_qtr",
+   "up_4pct",
+   "up_50pct_month",
+   "v"
+  ],
+  "regime.bands[]": [
+   "describes",
+   "key",
+   "label",
+   "max",
+   "min"
+  ],
+  "state_board.chain[]": [
+   "carrying",
+   "evidence",
+   "fed",
+   "key",
+   "label",
+   "measured",
+   "state"
+  ],
+  "state_board.rows[]": [
+   "evidence",
+   "key",
+   "layer",
+   "level",
+   "level_label"
+  ],
+  "top": [
+   "breadth",
+   "conditions",
+   "data_quality",
+   "history",
+   "mm",
+   "regime",
+   "spx_close",
+   "state_board",
+   "timestamp",
+   "universe_size",
+   "verdict"
+  ],
+  "verdict.vote_detail[]": [
+   "key",
+   "label",
+   "line",
+   "margin",
+   "measurable",
+   "side",
+   "unit",
+   "value"
+  ]
+ },
+ "breadth_replay.json": {
+  "health.qqq{}[]": [
+   "c",
+   "count",
+   "date",
+   "h",
+   "l",
+   "o",
+   "signals"
+  ],
+  "health.spy{}[]": [
+   "c",
+   "count",
+   "date",
+   "h",
+   "l",
+   "o",
+   "signals"
+  ],
+  "rows{}": [
+   "ad_line",
+   "advances",
+   "date",
+   "declines",
+   "down_13pct_34d",
+   "down_25pct_month",
+   "down_25pct_qtr",
+   "down_4pct",
+   "down_50pct_month",
+   "mcclellan_osc",
+   "net_advances",
+   "new_highs",
+   "new_lows",
+   "pct_above_200sma",
+   "pct_above_20sma",
+   "pct_above_50sma",
+   "rana",
+   "ratio_10d",
+   "ratio_5d",
+   "source",
+   "spx_close",
+   "t2108",
+   "universe_size",
+   "up_13pct_34d",
+   "up_25pct_month",
+   "up_25pct_qtr",
+   "up_4pct",
+   "up_50pct_month"
+  ],
+  "top": [
+   "dates",
+   "health",
+   "rows",
+   "timestamp",
+   "verdicts"
+  ],
+  "verdicts{}": [
+   "alignment",
+   "confirmation",
+   "context",
+   "env",
+   "exposure",
+   "guidance",
+   "notes",
+   "playbook",
+   "qqq_state",
+   "risk",
+   "score",
+   "spy_state",
+   "universe_size",
+   "universe_truncated",
+   "vote_detail",
+   "votes",
+   "warn_total"
+  ],
+  "verdicts{}.vote_detail[]": [
+   "key",
+   "label",
+   "line",
+   "margin",
+   "measurable",
+   "side",
+   "unit",
+   "value"
+  ]
+ },
+ "briefs.json": {
+  "[]": [
+   "date",
+   "summary",
+   "title",
+   "watchlist"
+  ],
+  "top": [
+   "<list>"
+  ]
+ },
+ "correction_risk.json": {
+  "table.by_vix_quintile.first_half{}": [
+   "n",
+   "rate"
+  ],
+  "table.by_vix_quintile.full{}": [
+   "n",
+   "rate"
+  ],
+  "table.by_vix_quintile.second_half{}": [
+   "n",
+   "rate"
+  ],
+  "table.by_vix_quintile_x_200dma{}": [
+   "n",
+   "rate"
+  ],
+  "top": [
+   "base_rate",
+   "caveats",
+   "date",
+   "method",
+   "overlay",
+   "predicts_return",
+   "prob",
+   "question",
+   "separates_tail",
+   "table",
+   "today"
+  ]
+ },
+ "ema21_watch.json": {
+  "rs_groups{}[]": [
+   "atr_color",
+   "atr_ext",
+   "rs",
+   "sector",
+   "sma20_dist",
+   "ticker"
+  ],
+  "top": [
+   "count",
+   "rs_groups",
+   "timestamp"
+  ]
+ },
+ "episodic_pivot.json": {
+  "tickers[]": [
+   "atr_color",
+   "atr_ext",
+   "change_pct",
+   "market_cap",
+   "rel_volume",
+   "sector",
+   "ticker"
+  ],
+  "top": [
+   "count",
+   "tickers",
+   "timestamp"
+  ]
+ },
+ "etf_data.json": {
+  "[]": [
+   "abc",
+   "atr_pct",
+   "change_pct",
+   "close",
+   "dist_sma50_atr",
+   "high_52w_dist",
+   "intraday_pct",
+   "long_etfs",
+   "perf_1m",
+   "perf_1w",
+   "perf_3m",
+   "rrs_1m",
+   "rrs_1w",
+   "rrs_3m",
+   "rrs_rank",
+   "short_etfs",
+   "sparkline",
+   "ticker"
+  ],
+  "top": [
+   "<list>"
+  ]
+ },
+ "gainers_4pct.json": {
+  "tickers[]": [
+   "atr_color",
+   "atr_ext",
+   "change_pct",
+   "sector",
+   "ticker",
+   "volume"
+  ],
+  "top": [
+   "count",
+   "tickers",
+   "timestamp"
+  ]
+ },
+ "groups.json": {
+  "audit.etf_without_cached_holdings[]": [
+   "etf",
+   "theme"
+  ],
+  "audit.unknown_extra_tickers[]": [
+   "theme",
+   "ticker"
+  ],
+  "industries[]": [
+   "excess_1m",
+   "excess_3m",
+   "ext_median",
+   "ext_n",
+   "ext_share_4",
+   "ext_share_7",
+   "group",
+   "members",
+   "perf_1d",
+   "perf_1m",
+   "perf_1w",
+   "perf_1y",
+   "perf_3m",
+   "perf_6m",
+   "persistence",
+   "persistence_of",
+   "rs_0_1w",
+   "rs_1m_3m",
+   "rs_1w_1m",
+   "rs_3m_6m",
+   "rs_accel",
+   "rs_accel_rate",
+   "state",
+   "tickers"
+  ],
+  "stocks{}": [
+   "excess_1m",
+   "excess_3m",
+   "group",
+   "group_pctile",
+   "perf_1d",
+   "persistence",
+   "persistence_of",
+   "primary_group",
+   "primary_kind",
+   "rs_0_1w",
+   "rs_1m_3m",
+   "rs_1w_1m",
+   "rs_3m_6m",
+   "rs_accel",
+   "rs_accel_rate",
+   "state",
+   "top_quartile"
+  ],
+  "themes[]": [
+   "excess_1m",
+   "excess_3m",
+   "ext_median",
+   "ext_n",
+   "ext_share_4",
+   "ext_share_7",
+   "group",
+   "kind",
+   "measurable",
+   "members",
+   "method",
+   "needs_manual",
+   "perf_1d",
+   "perf_1m",
+   "perf_1w",
+   "perf_1y",
+   "perf_3m",
+   "perf_6m",
+   "persistence",
+   "persistence_of",
+   "publish",
+   "rs_0_1w",
+   "rs_1m_3m",
+   "rs_1w_1m",
+   "rs_3m_6m",
+   "rs_accel",
+   "rs_accel_rate",
+   "source",
+   "state",
+   "tickers",
+   "validation",
+   "validation_excess"
+  ],
+  "top": [
+   "audit",
+   "benchmark",
+   "date",
+   "industries",
+   "stocks",
+   "summary",
+   "themes",
+   "themes_skipped",
+   "universe_size"
+  ]
+ },
+ "h1_2026_stats.json": {
+  "campaigns[]": [
+   "best_days",
+   "best_pnl",
+   "best_r",
+   "direction",
+   "first_entry",
+   "kind",
+   "last_exit",
+   "n_open",
+   "n_trades",
+   "open_pnl",
+   "theme",
+   "ticker",
+   "total_pnl"
+  ],
+  "exit_styles{}": [
+   "avg_pnl",
+   "count",
+   "losses",
+   "total_pnl",
+   "wins"
+  ],
+  "losers[]": [
+   "days",
+   "pnl",
+   "r",
+   "sector",
+   "ticker"
+  ],
+  "monthly[]": [
+   "avg_gain",
+   "avg_loss",
+   "max_gain",
+   "max_loss",
+   "month",
+   "ret",
+   "trades",
+   "win"
+  ],
+  "open_positions[]": [
+   "entry",
+   "mark",
+   "pct",
+   "qty",
+   "sector",
+   "ticker",
+   "unrealized"
+  ],
+  "sectors[]": [
+   "pnl",
+   "sector",
+   "trades"
+  ],
+  "top": [
+   "benchmarks",
+   "campaigns",
+   "exit_styles",
+   "headline",
+   "losers",
+   "meta",
+   "monthly",
+   "open_positions",
+   "r_distribution",
+   "sectors",
+   "top_trades",
+   "track_record",
+   "trade_stats",
+   "winners",
+   "worst_trades"
+  ],
+  "top_trades[]": [
+   "avg_exit",
+   "days",
+   "desc",
+   "entry",
+   "entry_date",
+   "exit_style",
+   "exits",
+   "n_exits",
+   "pct",
+   "pnl",
+   "position",
+   "qty",
+   "r",
+   "risk_per_share",
+   "sector",
+   "stop",
+   "ticker"
+  ],
+  "top_trades[].exits[]": [
+   "date",
+   "price",
+   "qty"
+  ],
+  "winners[]": [
+   "days",
+   "pnl",
+   "r",
+   "sector",
+   "ticker"
+  ],
+  "worst_trades[]": [
+   "avg_exit",
+   "days",
+   "desc",
+   "entry",
+   "entry_date",
+   "exit_style",
+   "exits",
+   "n_exits",
+   "pct",
+   "pnl",
+   "position",
+   "qty",
+   "r",
+   "risk_per_share",
+   "sector",
+   "stop",
+   "ticker"
+  ],
+  "worst_trades[].exits[]": [
+   "date",
+   "price",
+   "qty"
+  ]
+ },
+ "healthy_charts.json": {
+  "rs_groups{}[]": [
+   "atr_color",
+   "atr_ext",
+   "high_52w_dist",
+   "perf_1m",
+   "rs",
+   "sector",
+   "ticker"
+  ],
+  "top": [
+   "count",
+   "rs_groups",
+   "timestamp"
+  ]
+ },
+ "heating_up.json": {
+  "rows[]": [
+   "days_span",
+   "first_seen",
+   "last_seen",
+   "score",
+   "screeners",
+   "sector",
+   "ticker"
+  ],
+  "rows[].screeners[]": [
+   "hits",
+   "last_date",
+   "name"
+  ],
+  "top": [
+   "as_of",
+   "rows",
+   "timestamp"
+  ]
+ },
+ "market_health.json": {
+  "qqq.candles[]": [
+   "c",
+   "date",
+   "h",
+   "l",
+   "o"
+  ],
+  "qqq.signals_history[]": [
+   "count",
+   "date",
+   "signals"
+  ],
+  "qqq.warn_history[]": [
+   "count",
+   "date"
+  ],
+  "spy.candles[]": [
+   "c",
+   "date",
+   "h",
+   "l",
+   "o"
+  ],
+  "spy.signals_history[]": [
+   "count",
+   "date",
+   "signals"
+  ],
+  "spy.warn_history[]": [
+   "count",
+   "date"
+  ],
+  "top": [
+   "qqq",
+   "spy",
+   "stale",
+   "timestamp"
+  ]
+ },
+ "momentum_97.json": {
+  "buckets{}[]": [
+   "atr_color",
+   "atr_ext",
+   "composite_rs",
+   "sector",
+   "ticker"
+  ],
+  "top": [
+   "buckets",
+   "count",
+   "timestamp"
+  ]
+ },
+ "performance.json": {
+  "monthly[]": [
+   "month",
+   "pnl",
+   "trades"
+  ],
+  "recentTrades[]": [
+   "entry",
+   "exit",
+   "result",
+   "returnR",
+   "ticker"
+  ],
+  "top": [
+   "_note",
+   "_source",
+   "monthly",
+   "recentTrades",
+   "stats"
+  ]
+ },
+ "portfolio_backtest.json": {
+  "by_atr_bucket{}": [
+   "actual_total_R",
+   "best_idx",
+   "best_label",
+   "best_params",
+   "mean_R",
+   "sharpe_adj_R",
+   "total_R",
+   "trade_count"
+  ],
+  "missed_gains[]": [
+   "actual_R",
+   "delta_R",
+   "entry_date",
+   "optimal_R",
+   "ticker"
+  ],
+  "pyramid_campaigns[]": [
+   "actual_R",
+   "counterfactual_R",
+   "delta_R",
+   "direction",
+   "first_entry",
+   "last_entry",
+   "layer_entries",
+   "n_layers",
+   "span_days",
+   "ticker"
+  ],
+  "pyramid_campaigns[].layer_entries[]": [
+   "date",
+   "price",
+   "qty"
+  ],
+  "top": [
+   "_schema",
+   "best_overall",
+   "by_atr_bucket",
+   "by_hold",
+   "by_regime",
+   "generated_at",
+   "headline",
+   "input_csv",
+   "missed_gains",
+   "pyramid_campaigns",
+   "stop_basis_comparison",
+   "summary",
+   "top_n"
+  ],
+  "top_n[]": [
+   "label",
+   "params",
+   "rank",
+   "total_R"
+  ]
+ },
+ "quality.json": {
+  "sources{}": [
+   "flagged",
+   "status"
+  ],
+  "top": [
+   "date",
+   "sources",
+   "status"
+  ]
+ },
+ "rotation.json": {
+  "baskets[]": [
+   "accel",
+   "level",
+   "line",
+   "name",
+   "ribbon",
+   "side",
+   "state",
+   "ticker"
+  ],
+  "baskets[].ribbon[]": [
+   "accel",
+   "level",
+   "state"
+  ],
+  "cuts[]": [
+   "delta",
+   "key",
+   "label",
+   "long",
+   "month_spread",
+   "month_vote",
+   "question",
+   "short",
+   "spread",
+   "vote"
+  ],
+  "top": [
+   "baskets",
+   "benchmark",
+   "bucket_dates",
+   "bucket_labels",
+   "coverage",
+   "cuts",
+   "date",
+   "state_windows",
+   "step_sessions",
+   "verdict"
+  ]
+ },
+ "sentiment.json": {
+  "readings[]": [
+   "change_1w",
+   "name",
+   "note",
+   "pctile_1y",
+   "source",
+   "value"
+  ],
+  "top": [
+   "date",
+   "deliberately_excluded",
+   "generated_at",
+   "readings",
+   "unavailable"
+  ]
+ },
+ "signals.json": {
+  "top": [
+   "BTC-USD",
+   "IWM",
+   "QQQ",
+   "RSP",
+   "SPY",
+   "^GSPC",
+   "^VIX",
+   "timestamp"
+  ]
+ },
+ "stockbee_ratio.json": {
+  "top": [
+   "gainers_5d",
+   "gainers_today",
+   "losers_5d",
+   "losers_today",
+   "ratio_5d",
+   "signal",
+   "timestamp"
+  ]
+ },
+ "ticker_events.json": {
+  "events{}[]": [
+   "atr_ext",
+   "change_pct",
+   "date",
+   "group",
+   "num_contractions",
+   "pct_to_pivot",
+   "rel_volume",
+   "screener",
+   "volume"
+  ],
+  "top": [
+   "as_of",
+   "events",
+   "timestamp"
+  ]
+ },
+ "universe.json": {
+  "quality.fields{}": [
+   "baseline",
+   "evidence",
+   "rate",
+   "status"
+  ],
+  "rows[]": [
+   "ad_ratio_20",
+   "adr_pct",
+   "atr",
+   "atr_from_sma50",
+   "avg_volume",
+   "bar_date",
+   "bar_scale_mismatch",
+   "bars_stale",
+   "bo_count_1m",
+   "bo_count_1y",
+   "bo_count_3m",
+   "bo_count_6m",
+   "c_low52w",
+   "change_pct",
+   "close",
+   "cmf21",
+   "cross_ema21_up",
+   "cross_sma50_up",
+   "dcr_pct",
+   "ema10",
+   "ema20",
+   "ema21",
+   "ema21_atr_dist",
+   "ema21_low_dist",
+   "ema21_r",
+   "eps_growth_next_y",
+   "eps_growth_this_y",
+   "f_score",
+   "from_open_pct",
+   "fund_asof",
+   "fund_source",
+   "h_score",
+   "high_52w",
+   "high_52w_dist",
+   "i_score",
+   "industry",
+   "liquid_leader",
+   "low_52w",
+   "market_cap",
+   "mdt",
+   "min_vol_3d",
+   "momentum_97",
+   "perf_1m",
+   "perf_1w",
+   "perf_1w_pctile",
+   "perf_1y",
+   "perf_34d",
+   "perf_3m",
+   "perf_3m_pctile",
+   "perf_5d",
+   "perf_6m",
+   "perf_ytd",
+   "pocket_pivot",
+   "pp_count_10d",
+   "pp_count_30d",
+   "rel_volume",
+   "revenue_growth",
+   "rs_126d",
+   "rs_1m",
+   "rs_21d",
+   "rs_3m",
+   "rs_63d",
+   "rs_6m",
+   "rs_ibd",
+   "rs_line_pctl_21",
+   "sector",
+   "sma200_dist",
+   "sma20_dist",
+   "sma40_dist",
+   "sma50_dist",
+   "sma50_r",
+   "sp_1st",
+   "sp_2nd",
+   "sp_counter",
+   "sp_days",
+   "sp_dist_1st_pct",
+   "sp_dist_2nd_pct",
+   "sp_hl",
+   "sp_len",
+   "sp_ll",
+   "sp_ma",
+   "sp_phase",
+   "sp_setup",
+   "sp_signal",
+   "sp_stop",
+   "sp_tp1",
+   "sp_tp2",
+   "ti65",
+   "ticker",
+   "tradeable",
+   "trend_base",
+   "vcs",
+   "vol10_green",
+   "vol10_green_count_10d",
+   "vol10_green_count_30d",
+   "vol_5d_50d",
+   "volume",
+   "wk_ema10",
+   "wk_ema20"
+  ],
+  "top": [
+   "count",
+   "quality",
+   "rows",
+   "timestamp"
+  ]
+ },
+ "vcp.json": {
+  "results[]": [
+   "atr_color",
+   "atr_ext",
+   "last_depth",
+   "max_depth",
+   "num_contractions",
+   "pct_to_pivot",
+   "pivot",
+   "ratios_healthy",
+   "ticker",
+   "volume_declining"
+  ],
+  "top": [
+   "count",
+   "results",
+   "timestamp"
+  ]
+ },
+ "vol_up_gainers.json": {
+  "tickers[]": [
+   "atr_color",
+   "atr_ext",
+   "change_pct",
+   "rel_volume",
+   "sector",
+   "ticker",
+   "volume"
+  ],
+  "top": [
+   "count",
+   "tickers",
+   "timestamp"
+  ]
+ },
+ "watchlist.json": {
+  "cross_zone[]": [
+   "atr_from_sma50",
+   "chase",
+   "chg_pct",
+   "count",
+   "group",
+   "group_state",
+   "hybrid_rs",
+   "rs_1m",
+   "rs_high",
+   "rs_line_pctl_21",
+   "sector",
+   "ticker",
+   "top_3m",
+   "zones"
+  ],
+  "top": [
+   "chase_rule",
+   "cross_zone",
+   "cross_zone_rule",
+   "date",
+   "gate",
+   "rs_high_rule",
+   "sort",
+   "top_3m_rule",
+   "universe_gated",
+   "zones"
+  ],
+  "zones[]": [
+   "key",
+   "label",
+   "panels"
+  ],
+  "zones[].panels[]": [
+   "count",
+   "count_chase",
+   "count_rs_high",
+   "count_top_3m",
+   "key",
+   "label",
+   "measured",
+   "preset",
+   "recipe",
+   "tickers",
+   "truncated"
+  ],
+  "zones[].panels[].tickers[]": [
+   "atr_from_sma50",
+   "chase",
+   "chg_pct",
+   "group",
+   "group_state",
+   "hybrid_rs",
+   "rs_1m",
+   "rs_high",
+   "rs_line_pctl_21",
+   "sector",
+   "ticker",
+   "top_3m"
+  ]
+ }
+}
