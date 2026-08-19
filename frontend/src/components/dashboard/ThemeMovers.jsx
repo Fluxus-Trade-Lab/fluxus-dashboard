@@ -91,14 +91,6 @@ export default function ThemeMovers({ limit = 3 }) {
   }, [themes, limit])
 
   const ranked = cols[0]?.ranked ?? 0
-  /**
-   * Published, and not rankable. Quantum Computing ships with measurable=false
-   * and an override that publishes it anyway (2026-08-18). The filter above
-   * dropped it without a word, which turns "we could not measure this" into
-   * "this is not here" — the exact pair this product keeps apart. Counted, and
-   * named in the line under the card.
-   */
-  const unmeasured = themes.filter((t) => t.kind === 'theme' && !t.measurable).length
 
   return (
     <div className="flex flex-col min-w-0">
@@ -141,10 +133,12 @@ export default function ThemeMovers({ limit = 3 }) {
                   rows. Tone × fill, never hue, so the four stay apart in the
                   greyscale this page is screenshotted into.
 
-                  What could not go with it is the SELECTION, because the list
-                  is ordered by outcome and this site does not ship one of those
-                  without saying how it was cut. It survives as the four words
-                  at the end rather than as four lines. */}
+                  The selection count went too (Andy: 多余). The rule about
+                  outcome-ordered lists disclosing their cut still stands — it
+                  is just already satisfied here by the SHAPE: three rows, a
+                  rule, three rows is a top-and-bottom, visible without being
+                  written. The denominator lives one click away on Themes,
+                  which carries the whole ranking. */}
               <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1
                               text-[10px] text-[var(--color-text-muted)]">
                 {STATES.map((st) => (
@@ -153,10 +147,6 @@ export default function ThemeMovers({ limit = 3 }) {
                     {st}
                   </span>
                 ))}
-                <span className="ml-auto tabular-nums">
-                  ±{limit} of {ranked}
-                  {unmeasured > 0 && ` · ${unmeasured} unmeasurable`}
-                </span>
               </div>
             </>
           )}
