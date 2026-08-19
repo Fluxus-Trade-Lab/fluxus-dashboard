@@ -109,6 +109,13 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
           TZ: UTC
 
+      # Archive invariants (pipeline/tools/audit_archives.py): every history
+      # file keyed by a real, past-or-current session, no duplicate keys, no
+      # stale index bar. A violation fails the job BEFORE the commit step, so
+      # main keeps yesterday's data (plan B) and the Discord failure fires.
+      - name: Audit archives
+        run: python -m pipeline.tools.audit_archives --json data/history/audit_last.json
+
       - name: Validate outputs
         run: |
           echo "Validating output files..."

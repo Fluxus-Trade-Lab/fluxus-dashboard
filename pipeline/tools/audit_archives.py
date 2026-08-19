@@ -1,0 +1,174 @@
+"""Archive invariants -- the nightly gate and the weekly sweep.
+
+Every append-only archive under data/history is keyed by US trading session.
+The guards that exist (quality.py null-rate baselines, breadth_store
+check_quality, ticker_events.is_plausible_day, bar_consistency) each watch
+ONE writer at write time; nothing re-reads the archives as a set. 2026-08-19
+showed the gap: a premarket dispatch filed a breadth row under a session that
+had not traded and rewrote the previous session's watchlist rows, and the
+only thing that caught it was a human asking "what is today's reading".
+
+This tool checks the invariants that hold for every archive, reports, and
+(with --repair) removes rows that can never be right:
+
+  I1  date is a real trading session (marketcal), never in the future
+      (> last completed session)
+  I2  no duplicate primary keys (date[, ticker, ...])
+  I3  breadth: spx_close never identical to the previous session's row
+  I4  per-session row counts inside [floor, 3x] of the trailing-20 median
+      for the event archives (a 1/4-size day is a half scrape, a 5x day is a
+      broken enrichment) -- reported, never repaired automatically
+  I5  the newest session in each nightly archive is the last completed
+      session (stale archive = a writer silently stopped)
+
+Exit code 1 when any I1/I2/I3 violation exists (CI refuses to commit the run
+on that), 0 otherwise; I4/I5 are warnings in the report. --repair rewrites
+the file without I1/I2/I3 rows after writing a .bak next to it.
+
+    python -m pipeline.tools.audit_archives            # report
+    python -m pipeline.tools.audit_archives --repair   # also fix I1-I3
+    python -m pipeline.tools.audit_archives --json out.json
+"""
+
+from __future__ import annotations
+
+import argparse
+import datetime as dt
+import json
+import shutil
+import sys
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+import pandas as pd
+
+from pipeline.marketcal import is_trading_day, last_completed_session
+
+HISTORY = Path("data/history")
+
+# archive -> (date column, primary key columns, counts-checked, nightly)
+ARCHIVES: Dict[str, Dict[str, Any]] = {
+    "breadth_archive.csv":   {"date": "date",  "key": ["date"],                       "counts": False, "nightly": True},
+    "ticker_events.csv":     {"date": "date",  "key": ["date", "ticker", "screener"], "counts": True,  "nightly": True},
+    "watchlist_hits.csv":    {"date": "date",  "key": ["date", "panel", "ticker"],    "counts": True,  "nightly": True},
+    "leaders_log.csv":       {"date": "date",  "key": ["date", "ticker"],             "counts": True,  "nightly": True},
+    "groups_archive.csv":    {"date": "date",  "key": ["date", "kind", "group"],      "counts": True,  "nightly": True},
+    "momentum97_shadow.csv": {"date": "date",  "key": ["date", "recipe", "ticker"],   "counts": False, "nightly": True},
+    "universe_quality.csv":  {"date": "date",  "key": ["date"],                       "counts": False, "nightly": True},
+    "delayed_ep_log.csv":    {"date": "as_of", "key": ["as_of", "ticker"],            "counts": False, "nightly": False},
+}
+COUNT_FLOOR = 0.30
+COUNT_CEIL = 3.0
+
+
+def _sessions(dates: pd.Series, last_done: dt.date) -> pd.DataFrame:
+    """Per unique date: is_session, is_future."""
+    out = []
+    for d in sorted(set(dates.dropna().astype(str))):
+        try:
+            day = dt.date.fromisoformat(d[:10])
+        except ValueError:
+            out.append({"date": d, "session": False, "future": False, "unparsable": True}); continue
+        out.append({"date": d, "session": is_trading_day(day), "future": day > last_done, "unparsable": False})
+    return pd.DataFrame(out)
+
+
+def audit_one(name: str, spec: Dict[str, Any], frame: pd.DataFrame, last_done: dt.date) -> Dict[str, Any]:
+    dcol = spec["date"]
+    rep: Dict[str, Any] = {"archive": name, "rows": int(len(frame)), "violations": [], "warnings": [], "drop_dates": [], "drop_dupes": 0}
+    if dcol not in frame.columns:
+        rep["violations"].append(f"no '{dcol}' column"); return rep
+    info = _sessions(frame[dcol], last_done)
+    bad = info[(~info.session) | info.future | info.unparsable]
+    for _, r in bad.iterrows():
+        why = "unparsable" if r.unparsable else ("future" if r.future else "not a trading session")
+        rep["violations"].append(f"I1 {r.date}: {why}")
+        rep["drop_dates"].append(r.date)
+    # I2 duplicates
+    key = [k for k in spec["key"] if k in frame.columns]
+    if key:
+        dup = frame.duplicated(subset=key, keep="last")
+        if dup.any():
+            rep["violations"].append(f"I2 {int(dup.sum())} duplicate rows on {key}")
+            rep["drop_dupes"] = int(dup.sum())
+    # I3 breadth identical close
+    if name == "breadth_archive.csv" and "spx_close" in frame.columns:
+        f = frame.sort_values(dcol)
+        spx = pd.to_numeric(f["spx_close"], errors="coerce")
+        same = spx.eq(spx.shift(1)) & spx.notna()
+        for d in f.loc[same, dcol].astype(str):
+            rep["violations"].append(f"I3 {d}: spx_close identical to previous session's row")
+            if d not in rep["drop_dates"]:
+                rep["drop_dates"].append(d)
+    # I4 per-session counts
+    if spec["counts"] and len(frame):
+        per = frame.groupby(frame[dcol].astype(str)).size().sort_index()
+        if len(per) >= 6:
+            med = per.iloc[-21:-1].median() if len(per) > 21 else per.iloc[:-1].median()
+            last_d, last_n = per.index[-1], int(per.iloc[-1])
+            if med and (last_n < COUNT_FLOOR * med or last_n > COUNT_CEIL * med):
+                rep["warnings"].append(f"I4 {last_d}: {last_n} rows vs trailing median {med:.0f}")
+    # I5 freshness
+    if spec["nightly"] and len(info):
+        newest = info.date.max()
+        if newest < last_done.isoformat():
+            rep["warnings"].append(f"I5 newest session {newest} < last completed {last_done}")
+    return rep
+
+
+def repair(path: Path, spec: Dict[str, Any], frame: pd.DataFrame, rep: Dict[str, Any]) -> int:
+    dcol = spec["date"]
+    before = len(frame)
+    if rep["drop_dates"]:
+        frame = frame[~frame[dcol].astype(str).isin(set(rep["drop_dates"]))]
+    key = [k for k in spec["key"] if k in frame.columns]
+    if key and rep["drop_dupes"]:
+        frame = frame.drop_duplicates(subset=key, keep="last")
+    removed = before - len(frame)
+    if removed:
+        shutil.copy2(path, path.with_suffix(path.suffix + ".bak"))
+        frame.to_csv(path, index=False)
+    return removed
+
+
+def run(history: Path = HISTORY, do_repair: bool = False, last_done: Optional[dt.date] = None) -> Dict[str, Any]:
+    last_done = last_done or last_completed_session()
+    reports: List[Dict[str, Any]] = []
+    for name, spec in ARCHIVES.items():
+        p = history / name
+        if not p.exists():
+            reports.append({"archive": name, "rows": 0, "violations": [], "warnings": ["missing (not yet created)"], "drop_dates": [], "drop_dupes": 0})
+            continue
+        try:
+            frame = pd.read_csv(p, dtype=str, keep_default_na=False)
+        except Exception as e:  # noqa: BLE001
+            reports.append({"archive": name, "rows": 0, "violations": [f"unreadable: {e}"], "warnings": [], "drop_dates": [], "drop_dupes": 0})
+            continue
+        frame = frame.replace({"": None})
+        rep = audit_one(name, spec, frame, last_done)
+        if do_repair and (rep["drop_dates"] or rep["drop_dupes"]):
+            rep["repaired_rows"] = repair(p, spec, frame, rep)
+        reports.append(rep)
+    n_viol = sum(len(r["violations"]) for r in reports)
+    return {"as_of_session": last_done.isoformat(), "ok": n_viol == 0, "violations": n_viol,
+            "warnings": sum(len(r["warnings"]) for r in reports), "archives": reports}
+
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--repair", action="store_true")
+    ap.add_argument("--json", help="write the report here")
+    ap.add_argument("--history", default=str(HISTORY))
+    args = ap.parse_args(argv)
+    out = run(Path(args.history), args.repair)
+    for r in out["archives"]:
+        flag = "OK " if not r["violations"] else "BAD"
+        print(f"{flag} {r['archive']:24s} rows {r['rows']:>6d}  " + "; ".join(r["violations"] + r["warnings"]) + (f"  [repaired {r['repaired_rows']} rows]" if r.get("repaired_rows") else ""))
+    print(f"\n{'OK' if out['ok'] else 'VIOLATIONS'}: {out['violations']} violations, {out['warnings']} warnings (session {out['as_of_session']})")
+    if args.json:
+        Path(args.json).write_text(json.dumps(out, indent=1))
+    return 0 if out["ok"] else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

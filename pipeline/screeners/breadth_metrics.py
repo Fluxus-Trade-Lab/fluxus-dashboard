@@ -18,7 +18,7 @@ from typing import Any, Dict, Optional
 
 import pandas as pd
 
-from pipeline.marketcal import last_trading_day
+from pipeline.marketcal import last_completed_session
 from pipeline.screeners.breadth_store import (
     load_archive,
     upsert_row,
@@ -149,9 +149,11 @@ def run(
         null_rate = 1.0
 
     # The archive is keyed by SESSION, not by wall date: a Sunday cron run must
-    # file its numbers under Friday or it invents a trading day. See
-    # marketcal.last_trading_day.
-    today_iso = last_trading_day().isoformat()
+    # file its numbers under Friday or it invents a trading day -- and a
+    # premarket run must file under YESTERDAY, not today (2026-08-19: a 05:18
+    # ET dispatch filed 123/125 under a session that had not traded). Same
+    # label every other writer in run_all uses: last_completed_session.
+    today_iso = last_completed_session().isoformat()
     ok, reason = check_quality(frame, snapshot, null_rate, today_iso, spx_close)
     if ok:
         row = {

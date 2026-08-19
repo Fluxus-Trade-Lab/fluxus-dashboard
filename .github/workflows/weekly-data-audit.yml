@@ -1,0 +1,64 @@
+# Weekly sweep of the data layer: archive invariants, universe quality
+# baseline, and the week's cron record -- posted to Discord. Read-only;
+# repairs are a human decision (run audit_archives --repair locally).
+name: Weekly Data Audit
+
+on:
+  schedule:
+    - cron: '0 13 * * 6'     # Saturday 13:00 UTC = Sat 22:00 JST, after Friday's close has landed
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Audit archives
+        id: audit
+        continue-on-error: true
+        run: |
+          python -m pipeline.tools.audit_archives --json audit.json | tee audit.txt
+      - name: Universe quality, last 7 sessions
+        run: |
+          python - <<'PY' | tee quality.txt
+          import csv, itertools
+          rows = list(csv.DictReader(open('data/history/universe_quality.csv')))[-7:]
+          print("universe_quality.csv (last 7 runs):")
+          for r in rows:
+              bad = [k for k, v in r.items() if k != 'date' and v not in ('', None) and float(v) > 0.10]
+              print(f"  {r['date']}  fields >10% missing: {', '.join(bad) if bad else 'none'}")
+          PY
+      - name: Cron record, last 7 days
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run list --workflow daily-data-update.yml -L 10 --json createdAt,conclusion,event,durationMs \
+            --jq '.[] | "\(.createdAt[:10]) \(.event) \(.conclusion) \(.durationMs/60000|floor)m"' | tee runs.txt
+      - name: Discord report
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          # guarded in the shell: a step's own env is not in scope for its if:
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then echo "no webhook, skipping"; exit 0; fi
+          BODY=$(printf '**Weekly data audit — %s**\n```\n%s\n\n%s\n\ncron:\n%s\n```' "$(date -u +%F)" "$(tail -12 audit.txt)" "$(cat quality.txt)" "$(cat runs.txt)")
+          python - "$BODY" <<'PY'
+          import json, os, sys, urllib.request
+          payload = json.dumps({"content": sys.argv[1][:1900]}).encode()
+          req = urllib.request.Request(os.environ["DISCORD_WEBHOOK_URL"], data=payload, headers={"Content-Type": "application/json"})
+          urllib.request.urlopen(req, timeout=20)
+          PY
+      - name: Fail if violations
+        if: steps.audit.outcome == 'failure'
+        run: exit 1
