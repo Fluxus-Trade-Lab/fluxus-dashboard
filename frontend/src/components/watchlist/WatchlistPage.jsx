@@ -47,7 +47,15 @@ const ZONE_ORDER = ['leaders', 'entries', 'compression', 'accumulation', 'moving
  * stand. The pipeline keeps computing all three; this is the page declining to
  * ask, which is a display decision and reversible by deleting one line.
  */
-const HIDDEN_ZONES = new Set(['trouble'])
+/**
+ * 2026-08-19: nothing is hidden any more. The "What broke?" zone came off the
+ * page on 08-18 because it was a question Andy did not want asked; the 08-19
+ * step order asks it as the LAST step, and its three panels — Stop Hit, Lower
+ * Low Break, Extended — are the only ones that answer 位置 and 出场. Andy's
+ * call to put them back. The zone lens is gone with the question chips, so
+ * they arrive as panels under the steps rather than as a sixth question.
+ */
+const HIDDEN_ZONES = new Set()
 
 /**
  * The five steps (DATA_CONTRACTS §八, Andy 2026-08-19, off the scanner
@@ -435,57 +443,46 @@ function Count({ panel, view = {}, zoneKey }) {
   )
 }
 
-/* ── Landing: six questions as a lens, every scan on the table ───────────── */
+/* ── Landing: five steps, every scan on the table ────────────────────────── */
 
-/**
- * The six questions are a SELECTOR, not a container.
- *
- * The first build made each question a card you opened, which buried
- * seventeen scans behind six doors: to see what the LL-HL pivots found you had
- * to know they lived under "Can I enter today?" and click. Andy wants every
- * scan and its names in front of him, with the questions as a lens he points
- * at them — pick one and only the scans that answer it stay on the table.
- *
- * So the questions are chips carrying their own totals, and the scans are the
- * page. Nothing selected shows all seventeen, which is the honest default: the
- * page has not decided which question matters this morning.
- */
-function QuestionChip({ zone, index, active, onPick, view }) {
-  const { t } = useLanguage()
-  const live = zone.panels.filter((p) => p.measured)
-  const n = live.reduce((sum, p) => sum + shown(p, { ...view, zoneKey: zone.key }).length, 0)
-  const total = live.reduce((sum, p) => sum + p.count, 0)
-  return (
-    <button type="button" onClick={() => onPick(active ? null : zone.key)}
-            className={`text-left rounded-xl px-3 py-2.5 border cursor-pointer transition-colors
-                        ${active
-                          ? 'border-[var(--color-accent)] bg-[var(--color-hover-bg)]'
-                          : 'border-[var(--color-border-light)] bg-[var(--color-surface)] '
-                            + 'hover:border-[var(--color-border)]'}`}>
-      <span className="flex items-baseline gap-2">
-        <span className="text-[10px] font-mono tabular-nums text-[var(--color-text-muted)]">
-          {String(index + 1).padStart(2, '0')}
-        </span>
-        <b className="text-[13px] font-semibold leading-tight">
-          {tr(t, `wlz.${zone.key}`, zone.label)}
-        </b>
-      </span>
-      <span className="flex items-baseline gap-1.5 mt-1">
-        <b className="text-[15px] font-semibold tabular-nums text-[var(--color-took)]">{nf(n)}</b>
-        <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
-          / {nf(total)} · {live.length} {t('wl.scans')}
-        </span>
-      </span>
-    </button>
-  )
-}
 
 /** One scan, with its names on the table. */
-function ScanCard({ panel, zoneKey, view, rsKey }) {
+/**
+ * A scan, open or quiet.
+ *
+ * Dimming the scans a step does not use was the first answer and it was not
+ * enough: eighteen cards of names at 40% opacity is still eighteen cards of
+ * names, and Andy's word for the result was 太杂乱. A quiet scan keeps its
+ * title and its count — so nothing is hidden and every number is still on the
+ * page — and gives up its names until you ask. One click opens it without
+ * leaving the step.
+ *
+ * Quiet, not hidden, because the contract is explicit about it and because a
+ * scan that vanished when it was not this step's would make the page look like
+ * it found nothing on the questions you are not asking right now.
+ */
+function ScanCard({ panel, zoneKey, view, rsKey, quiet = false }) {
   const { t } = useLanguage()
   const [openRecipe, setOpenRecipe] = useState(false)
+  const [opened, setOpened] = useState(false)
   const rows = shown(panel, { ...view, zoneKey })
   const exempt = view.floor && !floorApplies(zoneKey)
+
+  if (quiet && !opened) {
+    return (
+      <button type="button" onClick={() => setOpened(true)}
+              className="w-full flex items-baseline gap-2 text-left px-3 py-[7px]
+                         rounded-xl border border-[var(--color-border-light)]
+                         bg-transparent cursor-pointer
+                         hover:bg-[var(--color-surface)] transition-colors">
+        <span className="text-[10px] font-mono text-[var(--color-text-muted)] shrink-0">+</span>
+        <span className="min-w-0 flex-1 truncate text-[12px] text-[var(--color-text-secondary)]">
+          {tr(t, `wlp.${panel.key}`, panel.label)}
+        </span>
+        <span className="shrink-0"><Count panel={panel} view={view} zoneKey={zoneKey} /></span>
+      </button>
+    )
+  }
 
   return (
     <div className="flex flex-col rounded-xl overflow-hidden border
@@ -676,7 +673,7 @@ function ZoneDetail({ zone, index, total, view }) {
  * wrong, and a beginner's page that prints the method without the trap is
  * teaching half of it.
  */
-function StepBar({ step, onStep, missing }) {
+function StepBar({ step, onStep, missing, counts }) {
   const cur = STEPS.find((s) => s.key === step) ?? STEPS[0]
   return (
     <div className="mb-4">
@@ -691,6 +688,14 @@ function StepBar({ step, onStep, missing }) {
                                   ? 'text-[var(--color-text-bold)] font-semibold border-[var(--color-accent)]'
                                   : 'text-[var(--color-text-muted)] border-transparent hover:text-[var(--color-text)]'}`}>
               {i + 1} {s.label}
+              {/* what the chips used to carry: how much is behind each step,
+                  before you point at it. Muted, and always both numbers —
+                  scans lit and names in them. */}
+              {counts?.[s.key] != null && (
+                <span className="ml-1 text-[10px] font-mono tabular-nums opacity-70">
+                  {counts[s.key]}
+                </span>
+              )}
             </button>
           </span>
         ))}
@@ -706,10 +711,20 @@ function StepBar({ step, onStep, missing }) {
         {/* what this step calls for and cannot point at. A step quietly
             covering less than it claims is the failure this page is built
             against. */}
+        {/* What the step calls for and cannot point at — and WHY, per item.
+            The blanket sentence that used to sit here blamed the 08-18 removal
+            of the "What broke?" zone; those panels came back on 08-19, so the
+            only thing that sentence still explained was itself. */}
         {missing.length > 0 && (
           <p className="m-0 mt-1 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
-            这一步要用的 <b className="text-[var(--color-text-secondary)]">{missing.join(' · ')}</b>{' '}
-            今天不在这一页上 &mdash; 有的管线还没出这一格，有的是 08-18 撤下「什么broke?」时一起下的。
+            {missing.map((m) => (
+              <span key={m} className="mr-3">
+                <b className="text-[var(--color-text-secondary)]">{m}</b>
+                {m === 'ATR Matrix ≤4'
+                  ? ' 不是一格 — 它是每个名字旁边那个 ATR 位数字'
+                  : ' 管线没有单独出这一格'}
+              </span>
+            ))}
           </p>
         )}
       </div>
@@ -737,9 +752,6 @@ export default function WatchlistPage({ zone: routeZone }) {
   // switch stays because every count on the page is of the FULL panel and he
   // must be able to see what the floor is holding back.
   const [floor, setFloor] = useState(true)
-  // The lens. null = all seventeen scans, which is the honest default:
-  // the page has not decided which question matters this morning.
-  const [lens, setLens] = useState(null)
   // The step (DATA_CONTRACTS §八). Opens on 脚印, which is where the report
   // says a morning actually starts once the water is chosen.
   const [step, setStep] = useState(DEFAULT_STEP)
@@ -787,6 +799,16 @@ export default function WatchlistPage({ zone: routeZone }) {
   const missingSteps = curStep.panels.filter((k) => !onPage.has(k))
   // the report's names for instruments that have no panel here at all
   const NAMED = { extended: 'Extended', stop_hit: 'Stop Hit', ll_break: 'Lower Low Break' }
+  /** names behind each step, under the current view — the chips' number, kept */
+  const stepCounts = Object.fromEntries(STEPS.map((st) => {
+    const keys = new Set(st.panels)
+    const n = zones.flatMap((z) => z.panels
+      .filter((p) => keys.has(p.key) && p.measured)
+      .map((p) => shown(p, { ...view, zoneKey: z.key }).length))
+      .reduce((a, b) => a + b, 0)
+    return [st.key, st.panels.length ? n : null]
+  }))
+
   const missing = [
     ...curStep.wants.filter((w) => ['ATR Matrix ≤4', '第一波', 'EP'].includes(w)),
     ...missingSteps.map((k) => NAMED[k] ?? k),
@@ -794,8 +816,7 @@ export default function WatchlistPage({ zone: routeZone }) {
 
   // Which scans are on the table, and which the current view emptied. A panel
   // that has not run is neither — it stays, and says so.
-  const inLens = zones.filter((z) => !lens || z.key === lens)
-  const all = inLens.flatMap((z) => z.panels.map((panel) => ({ zone: z, panel })))
+  const all = zones.flatMap((z) => z.panels.map((panel) => ({ zone: z, panel })))
   const isEmptied = ({ zone, panel }) =>
     panel.measured && shown(panel, { ...view, zoneKey: zone.key }).length === 0
   const visible = all.filter((x) => !isEmptied(x))
@@ -825,15 +846,14 @@ export default function WatchlistPage({ zone: routeZone }) {
       </div>
 
       {/* The five steps: the order a name is read in, not five more filters. */}
-      <StepBar step={step} onStep={setStep} missing={missing} />
+      <StepBar step={step} onStep={setStep} missing={missing} counts={stepCounts} />
 
-      {/* The six questions, as a lens over the scans below. */}
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2 mb-4">
-        {zones.map((z, i) => (
-          <QuestionChip key={z.key} zone={z} index={i} view={view}
-                        active={lens === z.key} onPick={setLens} />
-        ))}
-      </div>
+      {/* THE SIX QUESTION CHIPS ARE GONE (Andy 2026-08-19: 页面 UI 太杂乱).
+          They were a second lens over the same scans — unordered, and asking
+          the reader which of two rows to point at before either had done
+          anything. The five steps are the ordered model and they subsume the
+          job; what the chips carried that nothing else did was a per-question
+          count, and the step bar carries a count of what it lights instead. */}
 
       {/* No chart on this page (Andy, 2026-08-18: 暂时也不一定需要). The
           Screener is where a name gets looked at; this page is where the six
@@ -860,17 +880,9 @@ export default function WatchlistPage({ zone: routeZone }) {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3
                       items-start">
         {visible.map(({ zone, panel }) => (
-          /* Dimmed, never hidden. The other scans' answers are still true —
-             they just are not this step's, and a beginner following the order
-             should be able to see the page did not throw them away. Hover
-             brings one back to full without changing the step, for the moment
-             you want to check a neighbour. */
-          <div key={`${zone.key}/${panel.key}`}
-               className={lit.has(panel.key)
-                 ? '' : 'opacity-40 hover:opacity-100 transition-opacity'}>
-            <ScanCard panel={panel} zoneKey={zone.key}
-                      view={view} rsKey={pickRs(panel.tickers || [])} />
-          </div>
+          <ScanCard key={`${zone.key}/${panel.key}`} panel={panel} zoneKey={zone.key}
+                    view={view} rsKey={pickRs(panel.tickers || [])}
+                    quiet={!lit.has(panel.key)} />
         ))}
       </div>
       {emptied.length > 0 && (
