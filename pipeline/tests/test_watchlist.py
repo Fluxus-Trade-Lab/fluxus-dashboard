@@ -284,3 +284,15 @@ class TestMaReclaimAndChase:
         wl2 = W.build(rows[:5], date="2026-08-20")
         W.archive_panel_hits(wl2, rows[:5], path=path)
         assert len(list(csv.DictReader(path.open()))) > n
+
+
+class TestPresetTwinsExcludeHealthcare:
+    """screener-presets.json carries excludeHealthcare on all three twins;
+    08-18 vs oratnek: our Momentum 97 was five biotechs of seven, his eleven had none."""
+
+    def test_three_twins_drop_healthcare(self):
+        hot = dict(perf_1w_pctile=0.99, perf_3m_pctile=0.9, change_pct=0.05, rel_volume=1.2,
+                   from_open_pct=0.01, perf_5d=0.25)
+        for k in ("weekly_momentum_97", "bullish_4pct", "weekly_20_gainers"):
+            assert W.PANELS[k].test(row(**hot)), k
+            assert not W.PANELS[k].test(row(sector="Healthcare", **hot)), k

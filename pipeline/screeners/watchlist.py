@@ -96,6 +96,13 @@ def _strong(r) -> bool:
     return _ge(r, "ti65", 1.05) or _ge(r, "c_low52w", 1.8) or _ge(r, "mdt", 1.19)
 
 
+def _not_healthcare(r) -> bool:
+    """The three Screener-preset twins carry excludeHealthcare=true in
+    screener-presets.json; the panels did not, and on 08-18 that was the
+    whole gap on Momentum 97 (our 7: five biotechs, his 11: none)."""
+    return r.get("sector") != "Healthcare"
+
+
 def _quiet(r) -> bool:
     v = _f(r, "change_pct")
     return v is not None and abs(v) <= 0.01
@@ -166,21 +173,21 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
           ["pp_count_10d", "trend_base"], lambda r: _ge(r, "pp_count_10d", 3) and r.get("trend_base") is True),
     # --- moving (same recipes as the Screener presets; pinned by test) ---
     Panel("weekly_momentum_97", "Weekly Momentum 97",
-          "perf_1w_pctile >= 0.97 and perf_3m_pctile >= 0.85 and trend_base and adr_pct 3.5-10",
+          "perf_1w_pctile >= 0.97 and perf_3m_pctile >= 0.85 and trend_base and adr_pct 3.5-10, not Healthcare (= the preset)",
           ["perf_1w_pctile", "perf_3m_pctile"],
-          lambda r: _ge(r, "perf_1w_pctile", 0.97) and _ge(r, "perf_3m_pctile", 0.85)
+          lambda r: _not_healthcare(r) and _ge(r, "perf_1w_pctile", 0.97) and _ge(r, "perf_3m_pctile", 0.85)
           and r.get("trend_base") is True and _ge(r, "adr_pct", 3.5) and _le(r, "adr_pct", 10)),
     Panel("bullish_4pct", "4% Bullish",
-          "change_pct >= 4%, rel_volume >= 1, from_open_pct >= 0, rs_21d >= 60, adr_pct 3.5-10",
+          "change_pct >= 4%, rel_volume >= 1, from_open_pct >= 0, rs_21d >= 60, adr_pct 3.5-10, not Healthcare (= the preset)",
           ["change_pct", "rel_volume"],
-          lambda r: _ge(r, "change_pct", 0.04) and _ge(r, "rel_volume", 1.0)
+          lambda r: _not_healthcare(r) and _ge(r, "change_pct", 0.04) and _ge(r, "rel_volume", 1.0)
           and _ge(r, "from_open_pct", 0.0) and _ge(r, "rs_21d", 60)
           and _ge(r, "adr_pct", 3.5) and _le(r, "adr_pct", 10)),
     Panel("weekly_20_gainers", "Weekly 20%+ Gainers",
           "perf_5d >= 20% and adr_pct 3.5-10 (five SESSIONS from bars = the weekly candle oratnek reads; "
           "the Screener preset still reads Finviz perf_1w, a calendar week that on 08-14 held four sessions)",
           ["perf_5d"],
-          lambda r: _ge(r, "perf_5d", 0.20) and _le(r, "perf_5d", 5.0)
+          lambda r: _not_healthcare(r) and _ge(r, "perf_5d", 0.20) and _le(r, "perf_5d", 5.0)
           and _ge(r, "adr_pct", 3.5) and _le(r, "adr_pct", 10)),
     # --- trouble ---
     Panel("stop_hit", "Stop Hit (structure)",

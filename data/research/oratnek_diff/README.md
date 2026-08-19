@@ -36,3 +36,23 @@
 ## 四、建议
 1. Watchlist 加一个**池子开关**:「全池」vs「3M 领先(perf_3m_pctile ≥ 0.85)」——后者就是他的视图,数据端可以在 watchlist.json 里给每只票带 `top_3m` 布尔(同 rs_high 的做法,只探不筛)。
 2. Momentum 97 / VCS / PP 2+ 他有我们不知道的第二道门,再攒几天;新截图直接 `oratnek_diff` 跑,五分钟一天。
+
+## 2026-08-18（第四天；第一次不用重建——比的是 cron 原件 d5323d5）
+
+`his_2026-08-18.json` / `diff_2026-08-18.txt`。他的页面头写 "August 19, 2026"，= 08-18 收盘。
+
+| 格 | 他 | 我们 | 同 | 读法 |
+|---|---|---|---|---|
+| LL-HL 1st | 3 | 42 | 1 (EXPE) | PD 被我们的门拦（市值 $0.92B、$15M 成交额）；**TENB 没 K 线（429 夜的 340 只之一）** |
+| LL-HL 2nd | 1 | 38 | 1 (AXON) | |
+| PP (Vol>10D) | 2 | 13 | 2 | 全中 |
+| PP 2+ | 6 | 58 | 4 | **SDGR / SVV 没 K 线（429）** |
+| VCS | 2 | 15 | 1 (CBRL) | NAVN 我们 vcs 55.3 < 60 |
+| Momentum 97 | 11 | 7 | **0** | 见下 |
+| 4% bullish | 6 | 17 | 5 | ARHS 被 $20M 门拦（$16M）；我们多的 12 只里 8 只 Healthcare |
+| Weekly 20%+ | 0 | 8 | 0 | 我们 8 只里 6 只 Healthcare |
+
+- **RS 1M 数字**：有数据的 28/28 全对（加上前三天 = 190/190）；TENB / SDGR / SVV 三只"-"是当晚 Yahoo 429 的直接代价——他 29 个名字里我们有 3 个因为没 K 线根本测不了。
+- **Momentum 97 = 0/11，终于有了线索**：他的 11 只（DINO MAN FRSH RHI CHYM BETA P NIQ CLMT ARHS DASH）**RS 线在 21 / 42 / 63 / 126 日全部 = 100**（自百分位，本地 yfinance 复算），perf_1w_pctile 却只有 0.73–0.97，大半过不了我们 ≥0.97 的门；我们的 7 只里 5 只是 Healthcare 生物科技、OMER/TBBB 的 RS 线 21 日才 95/90。假设：**他的 "97" 是长窗口 RS 线自百分位（≥97 ≈ 半年新高），不是一周涨幅百分位**。在 08-18 原件上试：`rs_line_pctl_21 = 100 ∧ trend_base ∧ ADR 3.5–10 ∧ 非 Healthcare ∧ 门` = 他的 11 + NTAP + U（13 只；CCC 在 126 日只有 94 被剔）。→ 今晚起 universe.json 多两列 `rs_line_pctl_63` / `rs_line_pctl_126`（只探不筛），攒几天截图再定。
+- **Healthcare**：三个预设双胞胎格（Momentum 97 / 4% Bullish / Weekly 20%+）在 `screener-presets.json` 里本来就 `excludeHealthcare: true`，面板没带——08-18 起对齐（我们 Momentum 97 7 → 1、4% 17 → 9、Weekly 20 8 → 2）。他的 PP 2+ 里有 SDGR（Healthcare），所以他不是全页面排除，只在动量格。
+- **其他页**：他的 Sector Leaders 1W 榜首 Energy（+4.41%）、榜尾 Industrials（−1.41%）——我们 groups.json 的 sector 层同日 1W 也是 Oil & Gas / Energy 最高、Industrials 最低，方向一致（口径不同：他 11 个 SPDR，我们 18 个行业桶）。他的 Market Conditions 里 % above SMA50 = 74%、SMA200 = 77%，我们 breadth.json 是 47.8% / 46.5%——**不是错，是池子**：他那块是 S&P 500 宽度，我们是全市场 5,600 只。

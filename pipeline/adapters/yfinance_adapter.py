@@ -707,7 +707,14 @@ class YfinanceAdapter(BaseAdapter):
                 sma50_series = hist['Close'].rolling(50).mean()
                 cross_ema21_up = _crossed_up(hist['Close'], ema21_series) if n >= 22 else None
                 cross_sma50_up = _crossed_up(hist['Close'], sma50_series) if n >= 51 else None
-                rs_line_pctl_21 =rs_line_pctl(hist['Close'], spy_close) if spy_close is not None else None
+                rs_line_pctl_21 = rs_line_pctl(hist['Close'], spy_close) if spy_close is not None else None
+                # Longer windows of the same self-percentile (2026-08-19, from
+                # the oratnek 08-18 diff): all eleven names on his Momentum 97
+                # had the RS line at a 21/42/63/126-session high, and none of
+                # ours did at 126. Detection fields for the hypothesis that
+                # his "97" is a long-window RS-line percentile, not 1W perf.
+                rs_line_pctl_63 = rs_line_pctl(hist['Close'], spy_close, 63) if spy_close is not None else None
+                rs_line_pctl_126 = rs_line_pctl(hist['Close'], spy_close, 126) if spy_close is not None else None
                 # Phase 1: additional EMAs for trailing-stop UI
                 ema10 = float(hist['Close'].ewm(span=10, adjust=False).mean().iloc[-1])
                 ema20 = float(hist['Close'].ewm(span=20, adjust=False).mean().iloc[-1])
@@ -828,6 +835,8 @@ class YfinanceAdapter(BaseAdapter):
                     'ema21_low_dist': ema21_low_dist,
                     'ema21': ema21,
                     'rs_line_pctl_21': rs_line_pctl_21,
+                    'rs_line_pctl_63': rs_line_pctl_63,
+                    'rs_line_pctl_126': rs_line_pctl_126,
                     'cross_ema21_up': cross_ema21_up,
                     'cross_sma50_up': cross_sma50_up,
                     'bar_date': bar_date, 'bars_stale': False, 'bar_scale_mismatch': False,
