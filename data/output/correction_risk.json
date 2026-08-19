@@ -1,35 +1,35 @@
 {
-  "date": "2026-08-18",
+  "date": "2026-08-19",
   "question": "P(S&P 500 closes >= 5% below today's close at some point in the next 21 sessions)",
   "method": "conditional base rate: (VIX quintile, above/below 200-day SMA) -> historical frequency; no fitted parameters",
   "prob": 0.0865,
-  "base_rate": 0.1663,
+  "base_rate": 0.1664,
   "today": {
-    "date": "2026-08-18",
-    "vix": 15.84,
+    "date": "2026-08-19",
+    "vix": 14.89,
     "vix_quintile": 2,
     "above_200dma": true,
-    "d200": 0.0859,
+    "d200": 0.089,
     "prob": 0.0865,
     "n_cell": 1722,
     "prob_vix_only": 0.0814,
     "n_vix_only": 1843,
-    "base_rate": 0.1663
+    "base_rate": 0.1664
   },
   "table": {
     "sample": {
       "from": "1990-01-02",
-      "to": "2026-08-17",
-      "sessions": 9223,
+      "to": "2026-08-18",
+      "sessions": 9221,
       "episodes": 199,
-      "half_split": "2008-04-17"
+      "half_split": "2008-04-16"
     },
-    "base_rate": 0.1663,
+    "base_rate": 0.1664,
     "vix_edges": [
       8.14,
       13.34,
       16.15,
-      19.45,
+      19.46,
       24.18,
       83.69
     ],
@@ -44,12 +44,12 @@
           "n": 1843
         },
         "3": {
-          "rate": 0.1387,
-          "n": 1839
+          "rate": 0.1383,
+          "n": 1844
         },
         "4": {
-          "rate": 0.2595,
-          "n": 1846
+          "rate": 0.2605,
+          "n": 1839
         },
         "5": {
           "rate": 0.2973,
@@ -66,12 +66,12 @@
           "n": 809
         },
         "3": {
-          "rate": 0.1209,
-          "n": 819
+          "rate": 0.1203,
+          "n": 823
         },
         "4": {
-          "rate": 0.281,
-          "n": 1039
+          "rate": 0.2824,
+          "n": 1034
         },
         "5": {
           "rate": 0.273,
@@ -88,12 +88,12 @@
           "n": 1034
         },
         "3": {
-          "rate": 0.1529,
-          "n": 1020
+          "rate": 0.1528,
+          "n": 1021
         },
         "4": {
-          "rate": 0.2317,
-          "n": 807
+          "rate": 0.2323,
+          "n": 805
         },
         "5": {
           "rate": 0.3217,
@@ -128,16 +128,16 @@
         "n": 195
       },
       "Q3_above200": {
-        "rate": 0.1253,
-        "n": 1644
+        "rate": 0.1249,
+        "n": 1649
       },
       "Q4_below200": {
         "rate": 0.3939,
         "n": 627
       },
       "Q4_above200": {
-        "rate": 0.1903,
-        "n": 1219
+        "rate": 0.1914,
+        "n": 1212
       },
       "Q5_below200": {
         "rate": 0.3393,
