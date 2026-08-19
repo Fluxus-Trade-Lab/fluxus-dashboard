@@ -475,7 +475,7 @@ function ScanCard({ panel, zoneKey, view, rsKey, quiet = false }) {
 
   if (quiet && !opened) {
     return (
-      <button type="button" onClick={() => setOpened(true)}
+      <button type="button" onClick={() => setOpened(true)} aria-expanded="false"
               className="w-full flex items-baseline gap-2 text-left px-3 py-[7px]
                          rounded-xl border border-[var(--color-border-light)]
                          bg-transparent cursor-pointer
@@ -493,9 +493,27 @@ function ScanCard({ panel, zoneKey, view, rsKey, quiet = false }) {
     <div className="flex flex-col rounded-xl overflow-hidden border
                     border-[var(--color-border-light)] bg-[var(--color-surface)]">
       <div className="flex items-baseline gap-2 px-3 py-2 border-b border-[var(--color-border-light)]">
-        <b className="text-[12.5px] font-semibold leading-tight">
-          {tr(t, `wlp.${panel.key}`, panel.label)}
-        </b>
+        {/* A scan you opened by hand can be shut by hand. It was one-way for a
+            revision — once open it stayed open for the rest of the session,
+            and a control that only goes one direction is not a control. Only
+            the quiet ones carry it; a scan the current step lights has no
+            business being closable, it is what you asked to see. */}
+        {quiet ? (
+          <button type="button" onClick={() => setOpened(false)}
+                  aria-expanded="true"
+                  className="flex items-baseline gap-2 min-w-0 bg-transparent border-none p-0
+                             cursor-pointer text-left font-inherit">
+            <span className="text-[10px] font-mono text-[var(--color-text-muted)] shrink-0">−</span>
+            <b className="text-[12.5px] font-semibold leading-tight
+                          text-[var(--color-text-bold)]">
+              {tr(t, `wlp.${panel.key}`, panel.label)}
+            </b>
+          </button>
+        ) : (
+          <b className="text-[12.5px] font-semibold leading-tight">
+            {tr(t, `wlp.${panel.key}`, panel.label)}
+          </b>
+        )}
         <span className="ml-auto shrink-0">
           <Count panel={panel} view={view} zoneKey={zoneKey} />
         </span>
@@ -892,7 +910,11 @@ export default function WatchlistPage({ zone: routeZone }) {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-3
                       items-start">
         {visible.map(({ zone, panel }) => (
-          <ScanCard key={`${zone.key}/${panel.key}`} panel={panel} zoneKey={zone.key}
+          /* `step` in the key: changing step remounts the scans, which returns
+             anything opened by hand to the state the new step puts it in. A
+             card left open from two steps ago is clutter the reader did not
+             ask for twice. */
+          <ScanCard key={`${step}/${zone.key}/${panel.key}`} panel={panel} zoneKey={zone.key}
                     view={view} rsKey={pickRs(panel.tickers || [])}
                     quiet={!lit.has(panel.key)} />
         ))}
