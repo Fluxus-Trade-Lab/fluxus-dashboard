@@ -296,3 +296,15 @@ class TestPresetTwinsExcludeHealthcare:
         for k in ("weekly_momentum_97", "bullish_4pct", "weekly_20_gainers"):
             assert W.PANELS[k].test(row(**hot)), k
             assert not W.PANELS[k].test(row(sector="Healthcare", **hot)), k
+
+
+def test_momentum97_shadow_logs_both_recipes(tmp_path):
+    rows = [row(ticker="A", perf_1w_pctile=0.99, perf_3m_pctile=0.9, rs_line_pctl_63=80.0),
+            row(ticker="B", perf_1w_pctile=0.80, perf_3m_pctile=0.9, rs_line_pctl_63=98.4, perf_1w=0.03),
+            row(ticker="H", sector="Healthcare", perf_1w_pctile=0.99, rs_line_pctl_63=100.0)]
+    p = tmp_path / "s.csv"
+    n = W.archive_momentum97_shadow(rows, date="2026-08-19", path=p)
+    import csv
+    got = {(r["recipe"], r["ticker"]) for r in csv.DictReader(p.open())}
+    assert ("ours_1w97", "A") in got and ("rs63_97", "B") in got and ("rs63_97_green", "B") in got
+    assert not any(t == "H" for _, t in got) and n == len(got)

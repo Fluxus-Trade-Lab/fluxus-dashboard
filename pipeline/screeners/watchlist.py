@@ -350,6 +350,51 @@ def archive_panel_hits(payload: Mapping[str, Any], rows, *, path: Path = PANEL_H
     return len(new)
 
 
+SHADOW_LOG = Path("data/history/momentum97_shadow.csv")
+
+
+def momentum97_shadow_recipes():
+    """Two readings of 'Momentum 97', logged side by side from 2026-08-19 so
+    oratnek's screenshots over the next days can judge which tracks him.
+    Andy: 前端先不更改, 继续验证. Neither changes the page."""
+    base = lambda r: (passes_gate(r) and r.get("trend_base") is True and _not_healthcare(r)
+                      and _ge(r, "adr_pct", 3.5) and _le(r, "adr_pct", 10))
+    return {
+        "ours_1w97": lambda r: base(r) and _ge(r, "perf_1w_pctile", 0.97) and _ge(r, "perf_3m_pctile", 0.85),
+        "rs63_97": lambda r: base(r) and _ge(r, "rs_line_pctl_63", 97),
+        "rs63_97_green": lambda r: base(r) and _ge(r, "rs_line_pctl_63", 97) and _ge(r, "change_pct", -0.005)
+                                   and _f(r, "perf_1w") is not None and _f(r, "perf_1w") > 0,
+    }
+
+
+def archive_momentum97_shadow(rows, *, date: str, path: Path = SHADOW_LOG) -> int:
+    import csv
+    fields = ["date", "recipe", "ticker", "rs_line_pctl_21", "rs_line_pctl_63", "rs_line_pctl_126",
+              "perf_1w_pctile", "perf_3m_pctile", "change_pct", "sector"]
+    old = []
+    if path.exists():
+        with path.open(newline="") as fh:
+            old = [r for r in csv.DictReader(fh) if r.get("date") != date]
+    new = []
+    for name, test in momentum97_shadow_recipes().items():
+        for r in rows:
+            if r.get("ticker") and test(r):
+                new.append({"date": date, "recipe": name, "ticker": r["ticker"],
+                            "rs_line_pctl_21": _int_or_none(_f(r, "rs_line_pctl_21")),
+                            "rs_line_pctl_63": _round(_f(r, "rs_line_pctl_63")),
+                            "rs_line_pctl_126": _round(_f(r, "rs_line_pctl_126")),
+                            "perf_1w_pctile": _round(_f(r, "perf_1w_pctile"), 3),
+                            "perf_3m_pctile": _round(_f(r, "perf_3m_pctile"), 3),
+                            "change_pct": _round(_f(r, "change_pct"), 4), "sector": r.get("sector")})
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=fields)
+        w.writeheader()
+        for r in [*old, *new]:
+            w.writerow({k: ("" if r.get(k) is None else r.get(k)) for k in fields})
+    return len(new)
+
+
 def _int_or_none(v):
     return None if v is None else int(round(v))
 

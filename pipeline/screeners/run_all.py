@@ -907,6 +907,12 @@ def main():
             logger.info("watchlist_hits: +%d rows for %s", n_hits, wl_date)
         except Exception:
             logger.exception("panel hits archive failed - watchlist.json unaffected")
+        try:
+            from pipeline.screeners.watchlist import archive_momentum97_shadow
+            n_sh = archive_momentum97_shadow(wl_rows, date=wl_date)
+            logger.info("momentum97_shadow: +%d rows for %s", n_sh, wl_date)
+        except Exception:
+            logger.exception("momentum97 shadow log failed - watchlist.json unaffected")
         (OUTPUT_DIR / 'watchlist.json').write_text(json.dumps(wl, indent=2, default=_json_serializer))
         logger.info("Saved watchlist.json - %d gated, cross-zone %d, panels %s",
                     wl['universe_gated'], len(wl['cross_zone']),
