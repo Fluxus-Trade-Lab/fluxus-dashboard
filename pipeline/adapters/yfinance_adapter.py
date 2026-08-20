@@ -817,6 +817,10 @@ class YfinanceAdapter(BaseAdapter):
                     'rel_volume': vol / avg_vol if avg_vol > 0 else None,
                     'avg_volume': avg_vol,
                     'high_52w': (close / float(hist['High'].max()) - 1),
+                    # sessions since the 52w-high bar (2026-08-20, Andy: "特别是
+                    # 出新52wh后回撤的" -- the high-after-pullback archetype needs
+                    # to know the high is FRESH, which the distance alone cannot say)
+                    'days_since_52wh': int(n - 1 - int(hist['High'].values.argmax())),
                     'low_52w': (close / float(hist['Low'].min()) - 1),
                     'from_open_pct': from_open_pct,
                     'perf_5d': perf_5d,

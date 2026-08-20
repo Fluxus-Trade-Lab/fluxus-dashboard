@@ -245,10 +245,27 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
     ])
 
     reclaim = panel_tickers("ma_reclaim")
-    deep = [t for t in reclaim if (by.get(t, {}).get("high_52w") or 0) <= -0.25]
+    pullback = panel_tickers("liquid_leader_pullback")
     rs3 = lambda t: by.get(t, {}).get("rs_3m") or 0  # noqa: E731
+
+    def fresh_high_pullback(t):
+        """Made a 52wh recently, now pulled back and turning (Andy 2026-08-20:
+        "特别是出新52wh后回撤的"). Fresh = days_since_52wh <= 60 when the field
+        exists (ships from tonight), else within 15% of the high as a proxy;
+        pulled back = 3-20% under it; turning = it sits in a pullback/reclaim
+        panel (that is how it got into `cands` at all)."""
+        r = by.get(t, {})
+        dist = r.get("high_52w")
+        if dist is None or not (-0.20 <= dist <= -0.03):
+            return False
+        days = r.get("days_since_52wh")
+        return (days <= 60) if days is not None else (dist >= -0.15)
+
+    deep = [t for t in reclaim if (by.get(t, {}).get("high_52w") or 0) <= -0.25]
     seat("v_reversal", [
-        ("均线收复×离52周高≤−25%", deep, rs3),
+        ("新高后回踩(52wh 新鲜×回撤3-20%×在回踩/收复格)",
+         [t for t in {*pullback, *reclaim} if fresh_high_pullback(t)], rs3),
+        ("深 V:均线收复×离52周高≤−25%", deep, rs3),
         ("替补:均线收复中 rs_3m 最高", reclaim, rs3),
     ])
 

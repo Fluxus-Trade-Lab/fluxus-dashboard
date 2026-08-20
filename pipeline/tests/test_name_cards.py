@@ -42,7 +42,9 @@ def test_pick_seats_v2_atr_gate_theme_preference_substitutes():
     got = {s["seat"]: s["ticker"] for s in seats}
     # HOT extended -> WARM; EPX extended -> entry falls through its chain to None here
     assert got["burning"] == "WARM" and got["new_leader"] == "NEW"
-    assert got["entry"] is None and got["v_reversal"] == "DEEP"
+    # SHAL (-5% off its high, in the reclaim panel) is the fresh-high
+    # pullback archetype and now OUTRANKS the deep V (Andy 2026-08-20)
+    assert got["entry"] is None and got["v_reversal"] == "SHAL"
     assert got["coiling"] == "COIL" and got["asset"] == "GLD"
     # substitute: no NEW tml -> lowest-ATR existing TML
     seats2 = NC.pick_seats(wl, wl, heat, assets, by, states={})
@@ -78,3 +80,27 @@ def test_build_card_and_archive(tmp_path):
     NC.archive(payload, path=p)
     import csv
     assert len(list(csv.DictReader(p.open()))) == 1     # idempotent per date
+
+
+def test_v_reversal_prefers_fresh_high_pullback(tmp_path=None):
+    """Andy 2026-08-20: 'pullback 的 V 反也是要的！特别是出新52wh后回撤的' --
+    the fresh-high pullback outranks the deep-bottom V when both qualify."""
+    wl = _wl({
+        "ma_reclaim": {"DEEPV": {}}.items(),
+        "liquid_leader_pullback": {"FRESH": {}, "STALEHI": {}}.items(),
+    })
+    by = {"FRESH": {"high_52w": -0.08, "days_since_52wh": 12, "rs_3m": 85, "atr_from_sma50": 1.5},
+          "STALEHI": {"high_52w": -0.08, "days_since_52wh": 200, "rs_3m": 99, "atr_from_sma50": 1.5},
+          "DEEPV": {"high_52w": -0.40, "rs_3m": 80, "atr_from_sma50": 1.0}}
+    seats = NC.pick_seats(wl, None, [], [], by)
+    got = {s["seat"]: s for s in seats}
+    assert got["v_reversal"]["ticker"] == "FRESH" and "新高后回踩" in got["v_reversal"]["why"]
+    # without the fresh-high candidate, the deep V takes the seat
+    by2 = dict(by); by2["FRESH"] = {**by["FRESH"], "high_52w": -0.30}
+    seats2 = NC.pick_seats(wl, None, [], [], by2)
+    got2 = {s["seat"]: s["ticker"] for s in seats2}
+    assert got2["v_reversal"] in ("DEEPV", "FRESH")  # FRESH now deep too, rs_3m ties break
+    # proxy path when days_since_52wh is absent (tonight's field): within 15% passes
+    by3 = {"NOFLD": {"high_52w": -0.10, "rs_3m": 85, "atr_from_sma50": 1.5}}
+    seats3 = NC.pick_seats(_wl({"liquid_leader_pullback": {"NOFLD": {}}.items()}), None, [], [], by3)
+    assert {s["seat"]: s["ticker"] for s in seats3}["v_reversal"] == "NOFLD"
