@@ -102,9 +102,10 @@ const STEPS = [
     key: 'entry', label: '入场',
     find: '第一波（4% × ATR≤4 × 新高 × RS 新高）precision 48%、EP 61%，基线 41%',
     with: '回踩用 Liquid Leader Pullback —— 只在第 1 步的水域里做',
-    dont: 'EP 第一天不进：42% 会击穿 EP 日低点，等二次突破',
+    dont: 'EP 第一天不进：42% 会击穿 EP 日低点。第 3 个交易日起进 Delayed-EP 观察',
     wants: ['第一波', 'EP', 'Liquid Leader Pullback'],
-    panels: ['liquid_leader_pullback', 'll_hl_1st', 'll_hl_2nd', 'll_hl_trend_break'],
+    panels: ['episodic_pivot', 'liquid_leader_pullback',
+             'll_hl_1st', 'll_hl_2nd', 'll_hl_trend_break'],
   },
   {
     key: 'exit', label: '出场',
@@ -502,14 +503,27 @@ const floorApplies = (zoneKey) => !FLOOR_EXEMPT.has(zoneKey)
  */
 const rsOf = (r) => r?.rs_line_pctl_21 ?? r?.rs_1m ?? null
 
-const shown = (panel, { highOnly, floor, pool3m, exHealth, zoneKey } = {}) => {
+/**
+ * Panels the healthcare view does not touch.
+ *
+ * Episodic Pivot is a REPRICING — a gap on news — and biotech is where that
+ * lives; the data side built the panel without the healthcare exclusion on
+ * purpose (DATA_CONTRACTS §四点七, 08-20). A global view that quietly emptied
+ * it would be this page overriding the screen's own definition, which is the
+ * one thing a view is not allowed to do. Same shape as the RS floor's zone
+ * exemptions, and the count says so on the card.
+ */
+const EX_HEALTH_EXEMPT = new Set(['episodic_pivot'])
+const exHealthApplies = (panelKey) => !EX_HEALTH_EXEMPT.has(panelKey)
+
+export const shown = (panel, { highOnly, floor, pool3m, exHealth, zoneKey } = {}) => {
   let rows = panel.tickers || []
   if (pool3m) rows = rows.filter((r) => r.top_3m)
   if (highOnly) rows = rows.filter((r) => r.rs_high)
   // Same test the Screener's gate uses (ScreenerPage GATES.exHealth), so the
   // two pages mean the same thing by the same words. 118 of today's 348 rows
   // are Healthcare, which is why it earns a switch rather than a footnote.
-  if (exHealth) rows = rows.filter((r) => r.sector !== 'Healthcare')
+  if (exHealth && exHealthApplies(panel.key)) rows = rows.filter((r) => r.sector !== 'Healthcare')
   if (floor && floorApplies(zoneKey)) rows = rows.filter((r) => (rsOf(r) ?? 0) >= RS_FLOOR)
   // Sorted by the number the reader can see, strongest first (Andy). The file
   // arrives sorted by hybrid_rs, which is a different quantity and is not on
@@ -542,7 +556,14 @@ function Count({ panel, view = {}, zoneKey }) {
     || (view.floor && floorApplies(zoneKey))
   return (
     <span className="text-[11px] font-mono tabular-nums whitespace-nowrap"
-          title={view.floor && !floorApplies(zoneKey) ? t('wl.floor.exempt') : undefined}>
+          title={[
+            view.floor && !floorApplies(zoneKey) ? t('wl.floor.exempt') : null,
+            // a view that skips a panel has to admit it, or the count silently
+            // means something different here than on the card beside it
+            view.exHealth && !exHealthApplies(panel.key)
+              ? 'the healthcare view does not apply to this scan — an EP is a repricing and biotech is where those happen'
+              : null,
+          ].filter(Boolean).join(' · ') || undefined}>
       {/* Both numbers, always. The views hide rows; the panel still counted
           what it counted, and a page that shows only the survivors of its own
           filters cannot tell you how much it is holding back. */}
@@ -935,7 +956,8 @@ export default function WatchlistPage({ zone: routeZone }) {
   const lit = new Set(curStep.panels.filter((k) => onPage.has(k)))
   const missingSteps = curStep.panels.filter((k) => !onPage.has(k))
   // the report's names for instruments that have no panel here at all
-  const NAMED = { extended: 'Extended', stop_hit: 'Stop Hit', ll_break: 'Lower Low Break' }
+  const NAMED = { extended: 'Extended', stop_hit: 'Stop Hit', ll_break: 'Lower Low Break',
+                  episodic_pivot: 'EP' }
   /** names behind each step, under the current view — the chips' number, kept */
   const stepCounts = Object.fromEntries(STEPS.map((st) => {
     const keys = new Set(st.panels)
@@ -947,7 +969,7 @@ export default function WatchlistPage({ zone: routeZone }) {
   }))
 
   const missing = [
-    ...curStep.wants.filter((w) => ['ATR Matrix ≤4', '第一波', 'EP'].includes(w)),
+    ...curStep.wants.filter((w) => ['ATR Matrix ≤4', '第一波'].includes(w)),
     ...missingSteps.map((k) => NAMED[k] ?? k),
   ]
 

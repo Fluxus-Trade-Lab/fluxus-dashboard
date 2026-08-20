@@ -158,15 +158,44 @@ function GroupTrendCell({ home, homeKind, ribbon }) {
   )
 }
 
-function HeatCell({ heat }) {
+/**
+ * Heat, and the one thing heat cannot say on its own.
+ *
+ * The score counts appearances across the whole window; `confluence_days`
+ * counts DAYS on which four or more screeners lit at once (data side, 08-20,
+ * off the MRNA case). Those are not the same shape: a name can reach a high
+ * score by appearing on many screens over many weeks, and another can reach a
+ * lower one by lighting four screens in a single session. The second is what
+ * the case report calls a detonation, and the score alone hides it.
+ *
+ * A mark, not a number: one bit — did this ever happen — with the count in the
+ * tooltip. The field ships tonight; until it does the mark is simply absent,
+ * which is correct, because absent is not zero and this cell already prints a
+ * dash for the names carrying no ledger at all.
+ */
+export function HeatCell({ heat }) {
   if (!heat) {
     return <td className="py-[4px] pr-2.5 text-[var(--color-text-muted)]"
                title="not on the confluence ledger">—</td>
   }
   const marks = heat.screeners.map((s) => '|'.repeat(s.hits)).join(' ')
+  const days = heat.confluence_days
   return (
     <td className="py-[4px] pr-2.5 whitespace-nowrap">
       <span className="tabular-nums font-mono">{heat.score.toFixed(1)}</span>
+      {days > 0 && (
+        // Drawn, not typed. U+26A1 is a colour emoji in every system font here,
+        // and colour on this page has to come from a token or it means nothing;
+        // a path takes currentColor and survives greyscale like the rest.
+        // the tooltip has to sit on the span: `title` on an <svg> is inert,
+        // and an SVG <title> child would show up as text to the audit probes
+        <span className="inline-block ml-1 text-[var(--color-signal-caution)]"
+              title={`${days} session${days === 1 ? '' : 's'} with four or more screens lit at once \u2014 the score alone does not tell that apart from the same total spread over weeks`}>
+          <svg viewBox="0 0 8 12" width="7" height="10" aria-hidden="true" className="align-[-1px]">
+            <path d="M5 0 0 7h3l-1 5 5-7H4z" fill="currentColor" />
+          </svg>
+        </span>
+      )}
       <span className="text-[10px] tracking-[1px] text-[var(--color-text-muted)] opacity-0 group-hover:opacity-60 transition-opacity ml-1.5">{marks}</span>
     </td>
   )
