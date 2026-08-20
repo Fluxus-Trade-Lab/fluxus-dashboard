@@ -406,12 +406,14 @@ export default function RegimeBand({ verdict, signals, conditions, regime, onNav
       {scoreBand != null && (
         <p className="m-0 mt-3 text-[12.5px] leading-snug text-[var(--color-text-secondary)]">
           {score} scores <b className="font-semibold text-[var(--color-text-bold)]">{BANDS[scoreBand]}</b>
-          {share && `, where ${share.pct}% of the last ${share.of} sessions scored`}.
+          {share && `, as did ${share.pct}% of the last ${share.of} sessions`}.
+          {/* the voter's name is an identifier and stays lowercase, so the
+              clause is built to keep it out of the sentence-initial slot */}
           {pulled && (
             <>
-              {' '}{binders.map((v) => v.name).join(' and ')} pull
-              {binders.length === 1 ? 's' : ''} the reading to{' '}
+              {' '}Pulled to{' '}
               <b className="font-semibold text-[var(--color-text-bold)]">{BANDS[level]}</b>
+              {' by '}{binders.map((v) => v.name).join(' and ')}
               {binders.some((v) => v.binding) &&
                 `: ${binders.map((v) => v.binding).filter(Boolean).join('; ')}`}.
             </>

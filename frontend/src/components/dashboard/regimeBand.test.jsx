@@ -37,7 +37,7 @@ describe('the pull-down reason', () => {
     })
     const t = flat(c)
     expect(t).toContain('76 scores Constructive')
-    expect(t).toContain('structure pulls the reading to Neutral')
+    expect(t).toContain('Pulled to Neutral by structure')
     expect(t).toContain('SPY and QQQ below trend')
   })
 
@@ -48,8 +48,7 @@ describe('the pull-down reason', () => {
       signals: power('POWER_3'),
     })
     expect(flat(c)).toContain('50 scores Neutral')
-    expect(flat(c)).not.toContain('pulls the reading')
-    expect(flat(c)).not.toContain('pull the reading')
+    expect(flat(c)).not.toContain('Pulled to')
   })
 
   it('names both voters, and conjugates, when two fail together', () => {
@@ -58,7 +57,7 @@ describe('the pull-down reason', () => {
       verdict: { score: 5, spy_state: 'Uptrend', qqq_state: 'Sideways' },
       signals: power('POWER_3'),
     })
-    expect(flat(c)).toContain('breadth and structure pull the reading to Constructive')
+    expect(flat(c)).toContain('Pulled to Constructive by breadth and structure')
   })
 
   it('prints all three voters and inks only the binding one', () => {
@@ -82,7 +81,7 @@ describe("the band's base rate", () => {
       verdict: { score: 9, ...up },
       signals: power('POWER_3'),
     })
-    expect(flat(c)).toContain('where 40% of the last 10 sessions scored')
+    expect(flat(c)).toContain('as did 40% of the last 10 sessions')
   })
 
   it('omits the rate rather than inventing one when there is no history', () => {
