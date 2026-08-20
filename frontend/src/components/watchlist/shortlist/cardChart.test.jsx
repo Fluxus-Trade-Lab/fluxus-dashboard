@@ -105,6 +105,25 @@ describe('the log axis', () => {
   })
 })
 
+describe('bare, for a cover', () => {
+  const s = () => ({ d: ['2026-06-01', '2026-07-01', '2026-08-01'],
+                     c: [10, 12, 11], e21: [10, 11, 11], s50: [9, 10, 10], v: [1, 2, 3] })
+
+  it('keeps the shape and drops the numbers', () => {
+    const full = render(<CardChart series={s()} />)
+    const cover = render(<CardChart series={s()} bare />)
+    expect(full.container.textContent).toContain('11')      // last close, and month ticks
+    expect(cover.container.textContent.trim()).toBe('')
+    expect(cover.container.querySelectorAll('polyline').length)
+      .toBe(full.container.querySelectorAll('polyline').length)
+  })
+
+  it('still says the axis changed, because that is not decoration', () => {
+    expect(render(<CardChart series={s()} bare scale="log" />).container.textContent)
+      .toContain('log')
+  })
+})
+
 /* The file that exposed it. Every card on the page carries 32 s50 nulls; if the
    pipeline ever ships a series shape this cannot draw, this is where it shows. */
 const doc = (() => {

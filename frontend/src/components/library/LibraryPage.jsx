@@ -1,11 +1,22 @@
 import PageHeader from '../PageHeader'
 import { useLibrary } from '../../hooks/useLibrary'
-import { parse } from '../../lib/markdown'
 import CardChart from '../watchlist/shortlist/CardChart'
+import { toEntries } from './entry'
 
 /**
- * A Library page: whatever the data side has written for it, and an honest
- * account of what is still reserved.
+ * A Library page: a shelf of covers, and a page per piece.
+ *
+ * Andy: these read like books or journal entries, so each one gets a cover —
+ * a plain title and a picture — and you click through to read it. Two views,
+ * one route: `#/offense` is the shelf, `#/offense/ep_mrna` is the piece. The
+ * sub-route already existed for the drill-downs elsewhere, so a piece is a
+ * PLACE: linkable, back-button-able, reachable from outside.
+ *
+ * A cover is derived from the article, never authored separately — title from
+ * its H1, line from its first paragraph, art from the chart it already carries.
+ * Nothing to keep in step, and a piece written tonight has a cover tonight.
+ *
+ * An honest account of what is still reserved.
  *
  * The five Library pages have been Placeholders since they were routed, on the
  * rule this design system already holds — a slot that disappears when unfilled
@@ -135,8 +146,8 @@ function Block({ b, assets }) {
   return null
 }
 
-function Article({ name, text, assets }) {
-  if (text == null) {
+function Article({ name, blocks, assets, missing }) {
+  if (missing) {
     return (
       <section className="border border-dashed border-[var(--color-untested)] rounded-3xl p-6
                           max-w-[74ch] mb-6">
@@ -152,7 +163,7 @@ function Article({ name, text, assets }) {
   return (
     <article className="rounded-3xl bg-[var(--color-surface)] px-6 py-6 sm:px-8 sm:py-7
                         max-w-[74ch] mb-6">
-      {parse(text).map((b, i) => <Block key={i} b={b} assets={assets} />)}
+      {blocks.map((b, i) => <Block key={i} b={b} assets={assets} />)}
       <p className="mt-7 mb-0 text-[10px] font-mono text-[var(--color-text-muted)]">
         data/output/library/{name}
       </p>
@@ -160,10 +171,125 @@ function Article({ name, text, assets }) {
   )
 }
 
-export default function LibraryPage({ page, group = 'library', title, blurb, willHold = [] }) {
-  const { articles, loading, indexed } = useLibrary(page)
-  const written = (articles ?? []).filter((a) => a.text != null).length
+/**
+ * A cover.
+ *
+ * The art is the article's own chart — the actual content rather than
+ * decoration — drawn small and without its signal marks: at cover size the
+ * glyphs are noise, and the shape is the whole message. A piece with no chart
+ * gets a typographic cover instead of a grey rectangle standing in for a
+ * picture that does not exist. That is what a spine looks like anyway.
+ */
+function Cover({ entry, onOpen }) {
+  const { title, lede, cover, missing, name } = entry
+  const art = !!cover?.series?.c?.length
+  return (
+    <button type="button" onClick={onOpen}
+            className="group text-left w-full bg-[var(--color-surface)] rounded-3xl
+                       border-0 p-0 overflow-hidden cursor-pointer flex flex-col
+                       focus:outline-none focus:ring-1 focus:ring-[var(--color-text-muted)]">
+      {art ? (
+        <>
+          <div className="h-[128px] flex items-end px-5 pt-5 overflow-hidden
+                          border-b border-[var(--color-border-light)]">
+            <div className="w-full -mb-2 opacity-80 group-hover:opacity-100 transition-opacity">
+              <CardChart series={cover.series} marks={[]} height={108} bare
+                         scale={cover.scale ?? 'linear'} />
+            </div>
+          </div>
+          <h3 className="m-0 px-5 pt-4 text-[16.5px] leading-snug font-semibold
+                         tracking-tight text-[var(--color-text-bold)]">{title}</h3>
+        </>
+      ) : (
+        /* No chart: the TITLE is the art, set large in the cover's own space —
+           which is what a book cover is. The first version put the page's own
+           word up there instead, so every cover on a shelf read the same and
+           the title got said twice; a cover has to be about the piece. */
+        <div className="px-5 pt-6 pb-1 min-h-[128px] flex items-end
+                        border-b border-[var(--color-border-light)]">
+          <h3 className="m-0 pb-4 text-[25px] leading-[1.12] font-bold tracking-tight
+                         text-[var(--color-text-bold)] line-clamp-3"
+              style={{ fontFamily: 'var(--font-cond)' }}>{title}</h3>
+        </div>
+      )}
 
+      <div className="px-5 pt-3 pb-4 flex-1 flex flex-col">
+        {lede && (
+          <p className="m-0 text-[12.5px] leading-relaxed
+                        text-[var(--color-text-secondary)] line-clamp-3">{lede}</p>
+        )}
+        <p className="m-0 mt-3 pt-0 text-[10px] font-mono uppercase tracking-[.16em]
+                      text-[var(--color-text-muted)] group-hover:text-[var(--color-text)]
+                      transition-colors">
+          {missing ? `${name} 没取到` : '读全文 →'}
+        </p>
+      </div>
+    </button>
+  )
+}
+
+function Reserved({ willHold, indexed, anyWritten }) {
+  if (!willHold.length) return null
+  return (
+    /* Reserved stays reserved. One piece arriving does not make the rest of the
+       shelf exist, and a list of what is coming is more use than a page
+       pretending to be finished. */
+    <div className="border border-dashed border-[var(--color-untested)] rounded-3xl p-6
+                    max-w-[70ch] mt-6">
+      <div className="text-[10px] font-mono uppercase tracking-[.24em]
+                      text-[var(--color-text-muted)] mb-3">
+        {anyWritten ? 'Also reserved' : 'Reserved'}
+      </div>
+      <ul className="m-0 pl-4 space-y-1.5 text-[12.5px] leading-relaxed
+                     text-[var(--color-text-secondary)]">
+        {willHold.map((w) => <li key={w}>{w}</li>)}
+      </ul>
+      {!indexed && (
+        <p className="mt-4 mb-0 text-[10px] font-mono text-[var(--color-text-muted)]">
+          这一页读的是编译进来的文件名单，不是目录 —— 新增一篇现在还需要前端发一版。
+          已向数据端要 <code>library/index.json</code>（DATA_CONTRACTS §七）。
+        </p>
+      )}
+    </div>
+  )
+}
+
+export default function LibraryPage({ page, entry: slug, group = 'library',
+                                      title, blurb, willHold = [] }) {
+  const { articles, loading, indexed } = useLibrary(page)
+  const entries = toEntries(articles, page)
+  const written = entries.filter((e) => !e.missing).length
+  const go = (s) => { window.location.hash = s ? `#/${page}/${s}` : `#/${page}` }
+
+  /* ── one piece ───────────────────────────────────────────────────────── */
+  if (slug) {
+    const one = entries.find((e) => e.slug === slug)
+    return (
+      <div>
+        <button type="button" onClick={() => go(null)}
+                className="text-[11px] font-mono uppercase tracking-[.16em] mb-3
+                           bg-transparent border-0 p-0 cursor-pointer
+                           text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
+          ← {title}
+        </button>
+        {loading ? null : one ? <Article {...one} /> : (
+          /* A link that resolves to nothing says which piece and offers the
+             shelf — a 404 inside our own product is a dead end we control. */
+          <div className="border border-dashed border-[var(--color-untested)] rounded-3xl
+                          p-6 max-w-[70ch]">
+            <div className="text-[10px] font-mono uppercase tracking-[.24em]
+                            text-[var(--color-text-muted)] mb-2">No such piece</div>
+            <p className="m-0 text-[13px] text-[var(--color-text-secondary)]">
+              这一页没有叫 <span className="font-mono">{slug}</span> 的篇目。
+              {!indexed && ' 也可能它刚写好，而前端读的还是编译进来的名单。'}
+            </p>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  /* ── the shelf ───────────────────────────────────────────────────────── */
   return (
     <div>
       <PageHeader group={group} title={title} blurb={blurb}
@@ -171,30 +297,15 @@ export default function LibraryPage({ page, group = 'library', title, blurb, wil
                     ? [`${written} 篇`, indexed ? 'from the index' : 'compiled-in list']
                     : ['not built yet', 'the slot is reserved, not missing']} />
 
-      {(articles ?? []).map((a) => <Article key={a.name} {...a} />)}
-
-      {/* Reserved stays reserved. One article arriving does not make the rest
-          of the page exist, and a list of what is coming is more use than an
-          empty page pretending to be finished. */}
-      {!loading && willHold.length > 0 && (
-        <div className="border border-dashed border-[var(--color-untested)] rounded-3xl p-6
-                        max-w-[70ch]">
-          <div className="text-[10px] font-mono uppercase tracking-[.24em]
-                          text-[var(--color-text-muted)] mb-3">
-            {written ? 'Also reserved' : 'Reserved'}
-          </div>
-          <ul className="m-0 pl-4 space-y-1.5 text-[12.5px] leading-relaxed
-                         text-[var(--color-text-secondary)]">
-            {willHold.map((w) => <li key={w}>{w}</li>)}
-          </ul>
-          {!indexed && (
-            <p className="mt-4 mb-0 text-[10px] font-mono text-[var(--color-text-muted)]">
-              这一页读的是编译进来的文件名单，不是目录 —— 新增一篇现在还需要前端发一版。
-              已向数据端要 <code>library/index.json</code>（DATA_CONTRACTS §七）。
-            </p>
-          )}
+      {entries.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          {entries.map((e) => (
+            <Cover key={e.name} entry={e} onOpen={() => go(e.slug)} />
+          ))}
         </div>
       )}
+
+      {!loading && <Reserved willHold={willHold} indexed={indexed} anyWritten={written > 0} />}
     </div>
   )
 }

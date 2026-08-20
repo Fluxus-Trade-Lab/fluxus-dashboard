@@ -49,9 +49,13 @@ function withFetch(files) {
 }
 /* The page fetches on mount, so the state lands after render returns. Wrapped
    in act so the warning wall does not bury a real one. */
-const draw = async (page = 'offense') => {
+/* The chart lives inside a piece, so these open the piece. `#/offense` is the
+   shelf now; `#/offense/ep_mrna` is the article. */
+const draw = async (entry = 'ep_mrna', page = 'offense') => {
   let c
-  await act(async () => { c = render(<LibraryPage page={page} title="Offense" />) })
+  await act(async () => {
+    c = render(<LibraryPage page={page} entry={entry} title="Offense" />)
+  })
   await act(async () => { await new Promise((r) => setTimeout(r, 0)) })
   return c
 }
@@ -87,5 +91,68 @@ describe('an article that asks for a chart', () => {
     const c = await draw()
     expect(c.container.textContent).toContain('plain prose')
     expect(c.container.textContent).not.toContain('Chart not shipped')
+  })
+})
+
+/**
+ * The shelf, and the piece.
+ *
+ * Andy: these read like books — a cover with a plain title and a picture, and
+ * you click through. Two views over one route. What matters is that a cover
+ * never claims more than the article gave it, and that a link to a piece that
+ * is not there says so instead of rendering an empty page.
+ */
+describe('the shelf', () => {
+  const shelf = async () => {
+    let c
+    await act(async () => { c = render(<LibraryPage page="offense" title="Offense"
+                                                    willHold={['一条预留']} />) })
+    await act(async () => { await new Promise((r) => setTimeout(r, 0)) })
+    return c
+  }
+
+  it('makes the title the art when there is no chart, and says it once', async () => {
+    withFetch({ 'offense_ep_mrna.md': '# EP 标本\n\n开头这一句。' })
+    const c = await shelf()
+    const cover = [...c.container.querySelectorAll('button')].find((b) => /读全文/.test(b.textContent))
+    // one title, not a wordmark above a repeat of it
+    expect([...cover.querySelectorAll('h3')]).toHaveLength(1)
+    expect(cover.textContent).not.toContain('OFFENSE')
+  })
+
+  it('shows a cover per piece, not the prose', async () => {
+    withFetch({ 'offense_ep_mrna.md': '# EP 标本\n\n开头这一句。\n\n后面很长的正文段落。' })
+    const c = await shelf()
+    expect(c.container.textContent).toContain('EP 标本')
+    expect(c.container.textContent).toContain('开头这一句。')
+    expect(c.container.textContent).not.toContain('后面很长的正文段落')
+    expect(c.container.querySelectorAll('button').length).toBeGreaterThan(0)
+  })
+
+  it('draws the piece’s own chart as its cover, without the signal marks', async () => {
+    withFetch({
+      'offense_ep_mrna.md': '# T\n\nlede\n\n[[chart:runup]]',
+      'offense_ep_mrna.json': JSON.stringify({
+        charts: { runup: { series: series(), marks: [{ d: '2026-06-05', kinds: ['EP'] }] } } }),
+    })
+    const c = await shelf()
+    expect(c.container.querySelector('polyline')).not.toBeNull()
+    // marks are noise at cover size — the shape is the message
+    expect(c.container.querySelectorAll('svg[viewBox="0 0 8 8"]')).toHaveLength(0)
+  })
+
+  it('keeps the reserved list under the shelf', async () => {
+    withFetch({ 'offense_ep_mrna.md': '# T\n\nlede' })
+    expect((await shelf()).container.textContent).toContain('一条预留')
+  })
+})
+
+describe('a link to a piece that is not there', () => {
+  it('names it and does not render an empty article', async () => {
+    withFetch({ 'offense_ep_mrna.md': '# T\n\nlede' })
+    const c = await draw('nope')
+    expect(c.container.textContent).toContain('No such piece')
+    expect(c.container.textContent).toContain('nope')
+    expect(c.container.querySelector('article')).toBeNull()
   })
 })

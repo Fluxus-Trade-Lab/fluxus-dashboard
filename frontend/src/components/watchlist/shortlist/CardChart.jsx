@@ -95,7 +95,14 @@ function monthTicks(dates, maxLabels = 5) {
  * for it, and the page says so on the chart — an axis that has changed meaning
  * without saying so is worse than a squashed one.
  */
-export default function CardChart({ series, marks = [], height = 190, scale = 'linear' }) {
+/**
+ * `bare` strips everything that is not the shape: the last-close badge and the
+ * month ticks. On a Library cover those read as stray numbers — a cover is a
+ * picture of the move, and anything precise on it invites being read as a
+ * reading. Inside a card they are the point and stay.
+ */
+export default function CardChart({ series, marks = [], height = 190,
+                                    scale = 'linear', bare = false }) {
   const c = series?.c
   if (!c?.length) return null
   const n = c.length
@@ -222,14 +229,17 @@ export default function CardChart({ series, marks = [], height = 190, scale = 'l
       )}
 
       {/* one anchor on the price axis — the last close, where the line ends */}
-      <span className="absolute right-0 -translate-y-1/2 px-1 text-[10px] font-mono
-                       tabular-nums font-semibold pointer-events-none"
-            style={{ top: `${(y(last) / H) * 100}%`,
-                     background: 'var(--color-text)', color: 'var(--color-bg)' }}>
-        {last}
-      </span>
+      {!bare && (
+        <span className="absolute right-0 -translate-y-1/2 px-1 text-[10px] font-mono
+                         tabular-nums font-semibold pointer-events-none"
+              style={{ top: `${(y(last) / H) * 100}%`,
+                       background: 'var(--color-text)', color: 'var(--color-bg)' }}>
+          {last}
+        </span>
+      )}
     </div>
 
+    {!bare && (
     <div className="relative h-[13px]">
       {ticks.map((t) => {
         const frac = x(t.i) / W
@@ -245,6 +255,7 @@ export default function CardChart({ series, marks = [], height = 190, scale = 'l
         )
       })}
     </div>
+    )}
     </>
   )
 }
