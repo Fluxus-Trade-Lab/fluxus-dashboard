@@ -4,6 +4,7 @@ import TickerLink from '../ticker/TickerLink'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { useWatchlist } from '../../hooks/useWatchlist'
 import ShortlistTray from '../shared/ShortlistTray'
+import ShortListPage from './shortlist/ShortListPage'
 
 /**
  * Today's list — six questions, already asked.
@@ -884,6 +885,34 @@ function StepBar({ step, onStep, missing, counts }) {
   )
 }
 
+const MORNING = null
+const SHORTLIST = 'shortlist'
+
+/** The two tabs. Underline, not a pill: this is a place in the page, not a
+ *  state of the data, and the page's chrome does not get to look like a
+ *  reading. */
+function Tabs({ active }) {
+  const items = [[MORNING, '晨报'], [SHORTLIST, 'Short List']]
+  return (
+    <div className="flex items-baseline gap-6 mt-1 mb-4
+                    border-b border-[var(--color-border-light)]">
+      {items.map(([key, label]) => {
+        const on = active === key
+        return (
+          <button key={label} type="button" onClick={() => go(key)}
+                  className={`bg-transparent border-0 p-0 pb-2 -mb-px cursor-pointer
+                              text-[13px] font-mono uppercase tracking-[.16em]
+                              border-b-2 transition-colors ${on
+                    ? 'text-[var(--color-text-bold)] border-[var(--color-text-bold)]'
+                    : 'text-[var(--color-text-muted)] border-transparent hover:text-[var(--color-text)]'}`}>
+            {label}
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
 export default function WatchlistPage({ zone: routeZone }) {
   const { t } = useLanguage()
   const { data, failed } = useWatchlist()
@@ -933,6 +962,29 @@ export default function WatchlistPage({ zone: routeZone }) {
     )
   }
   if (!data) return null
+
+  /**
+   * Two tabs over one page, and only one of them alive at a time.
+   *
+   * Andy asked for a tab inside Today's List rather than a page of its own, so
+   * it is a tab. It rides the sub-route this page already had for its zone
+   * drill-downs (`#/watchlist/<zone>`), which means `#/watchlist/shortlist`
+   * costs nothing and still survives a reload and can be linked to.
+   *
+   * The tab swaps the WHOLE body — the five-step bar does not exist inside the
+   * Short List. Two selectors stacked over one set of objects is the thing the
+   * design charter refuses, and this is how it stays refused: they are never
+   * both on screen.
+   */
+  if (routeZone === SHORTLIST) {
+    return (
+      <div className="py-6 px-1">
+        <PageHeader group="market" title={t('nav.watchlist')} />
+        <Tabs active={SHORTLIST} />
+        <ShortListPage />
+      </div>
+    )
+  }
 
   const at = zones.findIndex((z) => z.key === routeZone)
   if (at >= 0) {
@@ -985,6 +1037,7 @@ export default function WatchlistPage({ zone: routeZone }) {
   return (
     <div className="py-6 px-1">
       <PageHeader group="market" title={t('nav.watchlist')} />
+      <Tabs active={MORNING} />
 
       {/* Provenance first: which close this is, and how many names were even
           eligible. A list without its universe is a list you cannot size up. */}
