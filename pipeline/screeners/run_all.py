@@ -1063,6 +1063,20 @@ def main():
     except Exception:
         logger.exception("Correction risk failed - correction_risk.json not updated")
 
+    # Library table of contents: a browser cannot list a directory, so without
+    # index.json the frontend reads a list compiled into its bundle and every
+    # new article needs a deploy to become visible (DATA_CONTRACTS §七). Cheap,
+    # and regenerated nightly so it cannot go stale behind an added article.
+    # Own failure domain.
+    try:
+        from pipeline.content.library_index import write as write_library_index
+        lib_idx = write_library_index()
+        logger.info("Saved library/index.json - %s",
+                    {k: len(v) for k, v in lib_idx.items()})
+    except Exception:  # noqa: BLE001
+        logger.exception("Library index failed - index.json not updated, "
+                         "the page falls back to its compiled-in list")
+
     # Site-wide quality: grade every file the frontend reads, write the
     # consolidated report beside them. Its own failure domain — a grading
     # crash must not cost the outputs it grades.
