@@ -158,9 +158,21 @@ export default function TickerSignalHistory({ symbol, trades, ohlc }) {
       {offTape > 0 && (
         <p className="text-[11px] leading-relaxed text-[var(--color-signal-caution)] mt-2 mb-0
                       border border-dashed border-[var(--color-untested)] px-3 py-2">
-          <b>{offTape} of {events.length} appearances are not on the tape.</b> The local price
-          history for {symbol} ends {tapeEnd}, but the screeners kept firing through{' '}
-          {span.last}. Anything quoted above is measured to {tapeEnd} — not to today.
+          {/* Two different sentences, and the null case had been wearing the
+              wrong one: with no bars at all `tapeEnd` is null, and "the local
+              price history ends ␣" reads as a date that failed to render
+              rather than as a history that does not exist. */}
+          <b>{offTape} of {events.length} appearances are not on the tape.</b>{' '}
+          {tapeEnd ? (
+            <>The local price history for {symbol} ends {tapeEnd}, but the screeners kept
+            firing through {span.last}. Anything quoted above is measured to {tapeEnd} —
+            not to today.</>
+          ) : (
+            <>There is no local price history for {symbol} at all — the fetch for its
+            file came back without bars — while the screeners kept firing through{' '}
+            {span.last}. Nothing here is placed against a tape, which is not the same as
+            the appearances having led nowhere.</>
+          )}
         </p>
       )}
 

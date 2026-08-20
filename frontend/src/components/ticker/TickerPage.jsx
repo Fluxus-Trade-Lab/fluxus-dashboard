@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { PortfolioProvider, usePortfolio } from '../portfolio/context/PortfolioContext'
 import { useUniverse } from '../../hooks/useUniverse'
 import { useTickerData } from '../../hooks/useTickerData'
+import TickerProvenance from './TickerProvenance'
 import { enrichTrades } from '../portfolio/lib/calculations'
 import TickerHeader from './TickerHeader'
 import TickerQuickStats from './TickerQuickStats'
@@ -85,6 +86,9 @@ function TickerPageBody({ symbol }) {
     <div className="max-w-[1800px] mx-auto px-3 py-4">
       <TickerHeader symbol={symbol} universe={universeRow} />
 
+      {/* Which file each half stands on, before anything quotes a number. */}
+      <TickerProvenance universe={universeRow} tickerData={tickerData} />
+
       <TickerQuickStats tickerData={tickerData} universe={universeRow} />
 
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4 mb-4">
@@ -100,8 +104,8 @@ function TickerPageBody({ symbol }) {
 
       {/* Technicals row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        <TickerKeyLevels tickerData={tickerData} />
-        <TickerTrendIndicators tickerData={tickerData} />
+        <TickerKeyLevels universe={universeRow} tickerData={tickerData} />
+        <TickerTrendIndicators universe={universeRow} />
       </div>
 
       <div className="mb-4">

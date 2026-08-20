@@ -1,97 +1,71 @@
-import { fmtCur } from '../portfolio/lib/portfolioFormat'
+import { indicators } from './tickerReadings'
 
 /**
- * Trend & Indicators — narrative reads of MAs, RSI, ATR-based stop sizing,
- * 52W position, volatility regime, setup type.
+ * Readings — printed, not narrated.
+ *
+ * What this replaced invented "Golden alignment", "Death cross alignment",
+ * "Trending — near 52W high", "Pullback in uptrend" and an
+ * overbought/neutral/oversold ladder: a second model living in the frontend, on
+ * a site whose pipeline already publishes `sp_setup` / `sp_signal` / `sp_phase`
+ * for that exact question and whose universe hook warns in its own comment that
+ * a frontend re-deriving a pipeline definition is how this site once ended up
+ * with two Watchlists.
+ *
+ * So the numbers are ours to show and the naming stays the pipeline's. ATR 位
+ * is the same `atr_from_sma50` every other page on the site reads, which is the
+ * point — a reading that means one thing here and another thing on Today's List
+ * is worse than no reading.
  */
-export default function TickerTrendIndicators({ tickerData }) {
-  const t = tickerData?.technicals
-  const price = tickerData?.current_price
-  if (!t) {
+export default function TickerTrendIndicators({ universe }) {
+  const rows = indicators(universe)
+  if (!rows.length) {
     return (
       <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-        <div className="font-semibold mb-3 text-[14px]">Trend & Indicators</div>
-        <div className="text-[var(--color-text-muted)] text-[14px]">No technical data available.</div>
+        <div className="font-semibold mb-3 text-[14px]">Readings</div>
+        <p className="m-0 text-[13px] text-[var(--color-text-muted)]">
+          这个代码不在 universe.json 里。
+        </p>
       </div>
     )
   }
-
-  // Derived reads
-  const maStack = (() => {
-    if (!t.ma20 || !t.ma50 || !t.ma200) return '—'
-    if (t.ma20 > t.ma50 && t.ma50 > t.ma200) return 'MA20 > MA50 > MA200 — Golden alignment'
-    if (t.ma20 < t.ma50 && t.ma50 < t.ma200) return 'MA20 < MA50 < MA200 — Death cross alignment'
-    return 'Mixed'
-  })()
-
-  const trend = (() => {
-    if (!price || !t.ma20 || !t.ma50 || !t.ma200) return '—'
-    if (price > t.ma20 && price > t.ma50 && price > t.ma200) return 'Above MA20 / MA50 / MA200 — stacked bullish'
-    if (price < t.ma20 && price < t.ma50 && price < t.ma200) return 'Below MA20 / MA50 / MA200 — stacked bearish'
-    if (price > t.ma200 && price < t.ma20) return 'Long-term up, short-term pullback'
-    return 'Mixed signals'
-  })()
-
-  const rsi = t.rsi14
-  const rsiRead = rsi == null ? '—' :
-    rsi >= 70 ? `${rsi.toFixed(1)} — overbought` :
-    rsi >= 60 ? `${rsi.toFixed(1)} — strong, not overbought` :
-    rsi >= 40 ? `${rsi.toFixed(1)} — neutral` :
-    rsi >= 30 ? `${rsi.toFixed(1)} — weak` :
-    `${rsi.toFixed(1)} — oversold`
-
-  const volRegime = (() => {
-    const pct = t.atr14_pct
-    if (pct == null) return '—'
-    if (pct >= 8) return 'High — wide stops needed'
-    if (pct >= 5) return 'Elevated — high-beta'
-    if (pct >= 3) return 'Normal'
-    return 'Low'
-  })()
-
-  const setupType = (() => {
-    if (!price || !t.ma20 || !t.ma50 || !t.high_52w) return '—'
-    const above_long_term = price > t.ma50 && price > t.ma200
-    const near_high = price >= t.high_52w * 0.92
-    const pullback_to_ma = Math.abs(price - t.ma20) / price < 0.04 && price > t.ma50
-    if (above_long_term && near_high) return 'Trending — near 52W high'
-    if (pullback_to_ma) return 'Pullback in uptrend'
-    if (price < t.ma50) return 'Trend break / downtrend'
-    return 'Consolidation'
-  })()
-
-  const stop15Atr = t.atr14 ? t.atr14 * 1.5 : null
-
-  const rows = [
-    ['Trend (price vs MAs)', trend],
-    ['MA stack', maStack],
-    ['RSI(14)', rsiRead],
-    ['ATR(14) — stop sizing', t.atr14 ? `${fmtCur(t.atr14)} (${t.atr14_pct.toFixed(1)}% of price)` : '—'],
-    ['1.5× ATR stop ref', stop15Atr ? `≈ ${fmtCur(stop15Atr)} wide` : '—'],
-    ['Position in 52W range', t.position_in_52w_range_pct != null ? `${t.position_in_52w_range_pct.toFixed(1)}% (low → high)` : '—'],
-    ['Volatility regime', volRegime],
-    ['Setup type', setupType],
-  ]
-
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-      <div className="font-semibold mb-3 text-[14px]">Trend & Indicators</div>
-      <table className="w-full text-[12.5px]">
+      <div className="font-semibold mb-3 text-[14px]">Readings</div>
+      {/* The table scrolls inside itself; the page never scrolls sideways.
+          Adding the distance column pushed Key Levels 41px past a 375px
+          viewport and took the whole document with it. */}
+      <div className="overflow-x-auto -mx-1 px-1">
+      <table className="w-full min-w-[300px] text-[12.5px]">
         <thead>
-          <tr className="text-left text-[10px] text-[var(--color-text-muted)] uppercase tracking-wide border-b border-[var(--color-border-light)]">
-            <th className="px-2 py-1.5">Indicator</th>
-            <th className="px-2 py-1.5">Read</th>
+          <tr className="text-left text-[10px] text-[var(--color-text-muted)] uppercase
+                         tracking-wide border-b border-[var(--color-border-light)]">
+            <th className="px-2 py-1.5">Reading</th>
+            <th className="px-2 py-1.5">Value</th>
           </tr>
         </thead>
         <tbody>
-          {rows.map(([label, value]) => (
-            <tr key={label} className="border-b border-[var(--color-border-light)]">
-              <td className="px-2 py-1.5 font-semibold whitespace-nowrap">{label}</td>
-              <td className="px-2 py-1.5 text-[var(--color-text-secondary)]">{value}</td>
+          {rows.map((r) => (
+            <tr key={r.label} className="border-b border-[var(--color-border-light)]">
+              <td className="px-2 py-1.5 font-semibold whitespace-nowrap">{r.label}</td>
+              <td className="px-2 py-1.5 text-[var(--color-text-secondary)]">
+                {r.value == null ? (
+                  <span className="italic text-[var(--color-text-muted)] text-[11.5px]">
+                    未测量{r.from === 'ticker_file' && ' —— 来自 tickers/ 的那半边，今天抓空'}
+                  </span>
+                ) : (
+                  <>
+                    <span className="tabular-nums text-[var(--color-text-bold)]">{r.value}</span>
+                    {r.note && (
+                      <span className="ml-2 text-[11px] text-[var(--color-text-muted)]">{r.note}</span>
+                    )}
+                  </>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   )
 }

@@ -12,7 +12,12 @@ export default function TickerQuickStats({ tickerData, universe }) {
 
   const stats = [
     ['Mkt Cap', formatMktCap(info.marketCap ?? u.market_cap)],
-    ['52W Range', format52wRange(info.fiftyTwoWeekLow, info.fiftyTwoWeekHigh)],
+    // universe carries the 52-week bounds as DISTANCES on every name, nightly;
+    // the info block carries them as prices and was empty for half the site on
+    // 2026-08-20. Prefer the live one, fall back to the file, then say absent.
+    ['52W Range', format52wRange(
+      info.fiftyTwoWeekLow ?? implied(u.close, u.low_52w),
+      info.fiftyTwoWeekHigh ?? implied(u.close, u.high_52w_dist))],
     ['Avg Vol 20D', formatVolume(info.averageVolume10days || info.averageVolume || u.avg_volume)],
     ['ATR / %PX', formatAtrPx(u.atr, u.adr_pct)],
     ['Fwd P/S', formatRatio(info.priceToSalesTrailing12Months ?? info.priceToBook)],
@@ -32,6 +37,13 @@ export default function TickerQuickStats({ tickerData, universe }) {
       </div>
     </div>
   )
+}
+
+/** close / (1 + dist) — the same recovery Key Levels uses, checked there. */
+function implied(close, dist) {
+  if (close == null || dist == null) return null
+  const p = close / (1 + dist)
+  return Number.isFinite(p) ? p : null
 }
 
 function formatMktCap(v) {
