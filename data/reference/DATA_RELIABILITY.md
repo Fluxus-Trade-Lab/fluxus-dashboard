@@ -69,7 +69,8 @@
 
 ## 六、还没有的(按优先级)
 
-0. **run_all.main() 端到端 smoke**(小夹具宇宙跑全链、断言输出块齐全)——08-19 breadth 全黑暴露的最大盲区,编排器 900 行零测试。
+0. ~~**run_all.main() 端到端 smoke**~~ ✅ 2026-08-20 夜(`pipeline/tests/test_run_all_smoke.py`)。152 行夹具宇宙跑全链、全部网络调用打桩、25 s。断言两件:(a) `REQUIRED_BLOCKS` 里每个文件都写出来**且块齐全**;(b) **没有任何一段把异常吞进 log**——各段的 try/except 是设计,所以 log 才是失败通道。两个变异都验过会红:删掉 `breadth_result['state_board']` → `{'breadth.json': ['state_board']}`(正是 08-19 的签名);让 rotation 段抛异常 → 「stage(s) failed silently」。夹具用 `python3 -m pipeline.tools.make_smoke_fixture` 重建(从 universe.json 切,**剥掉 compute_universe_scores 会算的列**,否则测试断言的是它没算过的数)。
+   - 仍没覆盖:各段自己的算法正确性(那是各自的单测)、真实 vendor 的返回形状漂移(打桩挡住了)、`quality` 基线随夜变动导致的 severe 判定。
 1. I4 的阈值(0.3×/3×)是拍的,攒一个月 audit_last.json 再校。
 2. universe 行数 vs Finviz 宣称总数(adapter 现在不存那个数)。
 3. run_ledger 攒满一个月后:429 频率、各闸触发频率的月报。
