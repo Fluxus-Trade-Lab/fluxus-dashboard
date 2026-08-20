@@ -23,20 +23,30 @@ import { MissingBlock } from './VerdictCard'
  */
 
 /**
- * ⚠ THERE ARE TWO BAND SCHEMES OVER THE SAME 0-100 score. Deliberate, not a
- * duplication — but not interchangeable, and mixing them up silently produces
- * wrong numbers (it already did once, in a trade-attribution table):
+ * ⚠ THERE ARE TWO BAND SCHEMES, AND THEY ARE NOT OVER THE SAME SCORE.
+ * Deliberate, not a duplication — but not interchangeable, and mixing them up
+ * silently produces wrong numbers (it already did once, in a trade-attribution
+ * table):
  *
- *   THIS FILE — Defence / Caution / Neutral / Constructive / Full, even cuts
- *     18 / 40 / 62 / 84. Position language: what the state permits you to hold.
+ *   THIS FILE — Defence / Caution / Neutral / Constructive / Euphoria, even
+ *     cuts 18 / 40 / 62 / 84 over `conditions.today`, which counts FIFTEEN
+ *     conditions. Position language: what the state permits you to hold.
  *     USE FOR DISPLAY (this band, any "how much can I carry today" reading).
  *
  *   pipeline/screeners/regime.py — Damaged / Mixed / Healthy / Extended, cuts
- *     47 / 63 / 75. Empirical quartiles of 558 archived sessions, validated
- *     monotone against 5% drawdown frequency. USE FOR ANALYSIS (bucketing
- *     trades by regime, risk-budget work, anything statistical).
+ *     47 / 63 / 75 over `regime.score`, which counts NINE. Empirical quartiles
+ *     of 558 archived sessions, validated monotone against 5% drawdown
+ *     frequency. USE FOR ANALYSIS (bucketing trades by regime, risk-budget
+ *     work, anything statistical).
  *
- * Whichever you use, label it in the output so the two can't be confused.
+ * The earlier version of this comment said "the same 0-100 score", which is
+ * the mistake it was written to prevent: on 2026-08-20 the two read 76 and
+ * 75.0. Different denominators, different cuts, different names.
+ *
+ * The seam is not narrow. `regime.py` calls >= 75 Extended and this file calls
+ * >= 84 Euphoria, so on 39 of 260 archived sessions — 15% — the analysis layer
+ * sits in its top band while the display does not. A comment cannot hold that
+ * open; `SchemeSeam` prints both, each with its own number and its own job.
  */
 /* Top band renamed Full -> Euphoria (Andy 2026-08-19). A name change only:
    the cuts, the five-band scheme and the voter binding are untouched, and
@@ -265,7 +275,57 @@ function ConditionsLine({ history, score, binds }) {
   )
 }
 
-export default function RegimeBand({ verdict, signals, conditions, onNavigate }) {
+/**
+ * How often the score has sat in this band, over the history the page loaded.
+ *
+ * A band name with no denominator reads as an alarm. `Euphoria` sounds rare and
+ * is not: on the 260 sessions in the file on 2026-08-20 the score sat there on
+ * 26% of them, in 21 separate runs with a MEDIAN RUN OF ONE DAY. A word that
+ * turns over that fast is a description of today, not a state you are in, and
+ * the reader cannot tell those apart from a single day's view.
+ *
+ * This counts the SCORE's band, not the badge's. The history carries the score
+ * and nothing else — no voters — so the pulled-down reading cannot be replayed,
+ * and the sentence says "scored" rather than "read" for that reason.
+ */
+function bandShare(history, level) {
+  if (!history?.length || level == null) return null
+  const n = history.filter((d) => bandFromScore(d.score) === level).length
+  return { pct: Math.round((n / history.length) * 100), of: history.length }
+}
+
+/**
+ * The other scheme's word, printed beside ours instead of behind a comment.
+ *
+ * The file has warned since 2026-08-15 that two band schemes run over "the same
+ * 0-100 score" and that mixing them silently produces wrong numbers — it already
+ * did once, in a trade-attribution table. Two things make the warning too weak
+ * to hold on its own:
+ *
+ *   1. They are not the same score. Display counts FIFTEEN conditions; the
+ *      analysis layer counts NINE. On 2026-08-20 they read 76 and 75.0.
+ *   2. The seam is wide. `regime.py` calls >= 75 Extended and this file calls
+ *      >= 84 Euphoria, so on 39 of those 260 sessions — 15% — the analysis
+ *      layer is in its top band while the display is not.
+ *
+ * So both are printed, each with its own number, its own denominator of
+ * conditions, and its own job. A reader who takes the wrong one now has to
+ * ignore a label to do it.
+ */
+function SchemeSeam({ regime, conditions }) {
+  if (!regime?.band_label || regime.score == null) return null
+  return (
+    <p className="m-0 mt-3 text-[10px] font-mono text-[var(--color-text-muted)] leading-relaxed">
+      <span className="uppercase tracking-[.18em]">analysis scheme</span>{' '}
+      {Number(regime.score).toFixed(0)} / 100 <b className="font-semibold">{regime.band_label}</b>
+      {' — '}
+      {regime.of ?? 9} conditions, empirical quartiles; the band above counts{' '}
+      {conditions?.n_votes ?? 15}. Use this one for statistics, that one for position size.
+    </p>
+  )
+}
+
+export default function RegimeBand({ verdict, signals, conditions, regime, onNavigate }) {
   const cast = { breadth: breadthVoter(verdict), structure: structureVoter(verdict),
                  power: powerVoter(signals) }
   const voters = Object.values(cast).filter(Boolean)
@@ -291,6 +351,9 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
   const score = conditions?.today ?? null
   const scoreBand = bandFromScore(score)
   const weakest = voters.reduce((a, b) => (a.level <= b.level ? a : b))
+  // every voter tied at the weakest level, not just the first one the reduce
+  // happened to land on — two voters failing together is a different sentence
+  const binders = voters.filter((v) => v.level === weakest.level)
 
   /* The score sets the band and the weakest voter can only pull it DOWN, never
      up. Breadth can be broad and still be riding a benchmark that has lost its
@@ -298,6 +361,8 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
      danger is the expensive half. When the two disagree the line underneath
      names which voter did the pulling and on what condition. */
   const level = scoreBand == null ? weakest.level : Math.min(scoreBand, weakest.level)
+  const pulled = scoreBand != null && level < scoreBand
+  const share = bandShare(conditions?.history, scoreBand)
 
   return (
     <section className="rounded-3xl px-6 py-5 bg-[var(--color-surface)]">
@@ -313,9 +378,14 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
           )}
         </div>
         {/* The regime word, top right — the one thing to read if you read
-            nothing else. The three voters and which of them is binding used to
-            be a line of prose under the chart; it is a tooltip now, so the
-            reasoning is still reachable without competing with the picture.
+            nothing else. Which is exactly why it cannot be the only thing
+            printed: on 76 of the 260 sessions in the file — 29% — this word
+            disagrees with the number two inches to its left, because a voter
+            pulled the reading below what the score alone would give. Structure
+            did 63 of those 76, and 25 of them were pulls of two or three whole
+            bands. A comment here used to claim the reasoning was "a tooltip
+            now"; there was no tooltip, and there never had been. It is a line
+            under the header now, where a line can be read.
             v3: ink when the state permits carrying risk, red only when it does
             not (Defence/Caution) — a lone red means the band itself is what
             binds you today. Blue is gone: a band alone is one pole, and blue
@@ -328,9 +398,50 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
         </span>
       </div>
 
+      {/* Why the word says what it says. Two clauses, and the second only
+          appears when there is something to explain: what band the SCORE alone
+          reads and how common that is, then which voter pulled it and on what
+          condition. Without this the card asks the reader to trust a word that
+          contradicts its own number nearly a third of the time. */}
+      {scoreBand != null && (
+        <p className="m-0 mt-3 text-[12.5px] leading-snug text-[var(--color-text-secondary)]">
+          {score} scores <b className="font-semibold text-[var(--color-text-bold)]">{BANDS[scoreBand]}</b>
+          {share && `, where ${share.pct}% of the last ${share.of} sessions scored`}.
+          {pulled && (
+            <>
+              {' '}{binders.map((v) => v.name).join(' and ')} pull
+              {binders.length === 1 ? 's' : ''} the reading to{' '}
+              <b className="font-semibold text-[var(--color-text-bold)]">{BANDS[level]}</b>
+              {binders.some((v) => v.binding) &&
+                `: ${binders.map((v) => v.binding).filter(Boolean).join('; ')}`}.
+            </>
+          )}
+        </p>
+      )}
+
+      {/* The three voters, which this file's own header has promised since
+          2026-08-10 would "print beside it so the disagreement stays visible"
+          and which nothing has printed. The binding one carries ink weight;
+          the others recede. No hue — the disagreement has to survive a
+          greyscale print, and one of these three is already a red badge. */}
+      <ul className="list-none p-0 m-0 mt-2 flex flex-wrap gap-x-5 gap-y-1">
+        {voters.map((v) => {
+          const binds = v.level === weakest.level
+          return (
+            <li key={v.name} className="text-[12px] font-mono whitespace-nowrap">
+              <span className="uppercase tracking-[.14em] text-[var(--color-text-muted)]">{v.name}</span>{' '}
+              <span className={binds ? 'font-semibold text-[var(--color-text-bold)]'
+                                     : 'text-[var(--color-text-secondary)]'}>{v.word}</span>
+            </li>
+          )
+        })}
+      </ul>
+
       {/* rule three, same as the badge: the endpoint wears red only when
           the band itself binds (Defence/Caution); an all-clear day stays ink */}
       <ConditionsLine history={conditions?.history} score={score} binds={level <= 1} />
+
+      <SchemeSeam regime={regime} conditions={conditions} />
     </section>
   )
 }

@@ -286,6 +286,15 @@ Depth is nearly absent by design. Cards are separated by **ground, not by fences
 - **Vote glyph** — fill = which side, rule = the line it flips at, height = distance in
   its own unit, dashed = could not be counted, ring = sitting on its line. **Heights are
   normalised inside each vote's own range and never compared across two.**
+- **Regime band** — the score, the word, and **everything the word overrode**. The badge
+  is the weakest of three voters, never their average, so it contradicts its own number
+  on 29% of the archived sessions; the line under it names what the score alone reads,
+  how common that band is, and which voter pulled it and on what condition. The three
+  voters print in a row with the binding one carrying ink weight — a lightness
+  difference, not a hue, because one of the three is already a red badge. Underneath, in
+  the provenance register, the *other* scheme's word with its own score and its own count
+  of conditions: 15-condition display bands and 9-condition analysis quartiles disagree
+  about the top band on 15% of sessions, and a comment could not hold that open.
 - **Four-state field** — `classify(excess_3m, rs_accel)` drawn as its own definition:
   two axes cut at zero, so a dot's quadrant *is* its state. **Therefore nothing on it is
   coloured by state** — position already said it. Dot size is `persistence`.
@@ -307,6 +316,9 @@ Depth is nearly absent by design. Cards are separated by **ground, not by fences
 **Do**
 
 - Print both denominators when two instruments are on one card, and say they are different.
+- When a word is the *weakest* of several inputs rather than their sum, print what
+  disagreed. A one-word verdict that silently overrides the number beside it is asking to
+  be trusted on the days it is least obvious why.
 - Count the rows you are showing, not a precomputed total that describes rows you do not hold.
 - Report what a filter excluded, in the same sentence as the filter.
 - Say "not measured" — never `0` — and keep *not measured*, *found none* and *blocked by a
