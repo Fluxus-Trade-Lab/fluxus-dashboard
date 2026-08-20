@@ -63,8 +63,13 @@
 - **Schema 快照** `data/reference/schema_snapshot.json`(`pipeline/tools/schema_snapshot.py`):26 个 output 文件每层的字段集;cron 里 `--check` 只报不拦,改动在 DATA_CONTRACTS 写明后 `--update` 接受。
 - **对账 I6**(在 audit_archives 里):watchlist.json 各格 count == watchlist_hits 行数;七个筛选器 JSON 的行数 == ticker_events 当日行数;breadth universe_size ≈ universe.json 行数。前两条不等 = 违规(两个写入者对不上)。
 
+## 六点五、事故复盘
+
+严重事故做成 case study 存 `data/reference/incidents/`;首篇 [2026-08-19_breadth_blackout.md](incidents/2026-08-19_breadth_blackout.md)(else 重绑、四道闸为何都没拦、五条行为规则)。新事故照它的结构写:影响/时间线/五个为什么/防线对根因/行为规则。
+
 ## 六、还没有的(按优先级)
 
+0. **run_all.main() 端到端 smoke**(小夹具宇宙跑全链、断言输出块齐全)——08-19 breadth 全黑暴露的最大盲区,编排器 900 行零测试。
 1. I4 的阈值(0.3×/3×)是拍的,攒一个月 audit_last.json 再校。
 2. universe 行数 vs Finviz 宣称总数(adapter 现在不存那个数)。
 3. run_ledger 攒满一个月后:429 频率、各闸触发频率的月报。

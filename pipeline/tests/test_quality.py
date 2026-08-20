@@ -293,3 +293,26 @@ class TestSparseByDesign:
         from pipeline.quality import is_sparse_by_design
         assert is_sparse_by_design("sp_1st") and is_sparse_by_design("sp_counter")
         assert not is_sparse_by_design("sp_setup") and not is_sparse_by_design("close")
+
+
+class TestRequiredBlocks:
+    """2026-08-19: breadth.json shipped without regime/state_board/verdict/
+    conditions and check_site said ok -- block-level presence now graded."""
+
+    def test_missing_block_grades_severe(self, tmp_path):
+        import json
+        from pipeline.quality import check_site, REQUIRED_BLOCKS
+        (tmp_path / "breadth.json").write_text(json.dumps(
+            {"breadth": {"t2108": 5}, "mm": {"up_4pct": 1}}))   # no regime etc.
+        rep = check_site(tmp_path, "2026-08-19")
+        assert set(rep["missing_blocks"]["breadth.json"]) >= {"regime", "state_board", "verdict", "conditions"}
+        assert rep["status"] == "severe"
+
+    def test_all_blocks_present_not_flagged(self, tmp_path):
+        import json
+        from pipeline.quality import check_required_blocks
+        (tmp_path / "breadth.json").write_text(json.dumps(
+            {b: {"x": 1} for b in ("regime", "state_board", "verdict", "conditions", "breadth", "mm")}))
+        missing = check_required_blocks(tmp_path)
+        assert "breadth.json" not in missing
+        assert missing.get("watchlist.json") == ["<file missing>"]

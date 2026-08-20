@@ -389,6 +389,45 @@ def site_rows(name: str, payload: Any) -> Optional[List[Mapping[str, Any]]]:
 
 
 # Which output file feeds each source name.
+# Blocks a frontend page cannot render without. 2026-08-19: breadth.json
+# shipped without all four of its blocks and check_site said "ok" -- it
+# graded row-level null rates, never block-level presence. A missing block
+# here grades the source "severe" (and the nightly Discord failure fires via
+# the schema gate); additions are free, removals are a break.
+REQUIRED_BLOCKS: Dict[str, List[str]] = {
+    "breadth.json": ["regime", "state_board", "verdict", "conditions", "breadth", "mm"],
+    "watchlist.json": ["zones", "cross_zone", "date"],
+    "groups.json": ["themes", "industries", "stocks"],
+    "rotation.json": ["verdict", "baskets", "cuts"],
+    "universe.json": ["rows", "quality"],
+    "ticker_events.json": ["events", "as_of"],
+    "market_health.json": ["spy", "qqq"],
+    "signals.json": [],
+    "etf_data.json": [],
+}
+
+
+def check_required_blocks(output_dir: Path) -> Dict[str, List[str]]:
+    """filename -> missing top-level blocks (empty dict = all present)."""
+    import json as _json
+    missing: Dict[str, List[str]] = {}
+    for filename, blocks in REQUIRED_BLOCKS.items():
+        fp = output_dir / filename
+        if not fp.exists():
+            missing[filename] = ["<file missing>"]
+            continue
+        try:
+            payload = _json.loads(fp.read_text())
+        except ValueError:
+            missing[filename] = ["<unparsable>"]
+            continue
+        lost = [b for b in blocks if not isinstance(payload, dict) or b not in payload
+                or payload.get(b) in (None, [], {})]
+        if lost:
+            missing[filename] = lost
+    return missing
+
+
 SITE_SOURCES: Dict[str, str] = {
     "etf_data": "etf_data.json",
     "groups_themes": "groups.json",
@@ -426,6 +465,11 @@ def check_site(output_dir: Path, date: str,
             "flagged": {f: x["status"] for f, x in v["fields"].items()
                         if x["status"] not in ("ok", "unpopulated")},
         }
+    lost = check_required_blocks(output_dir)
+    report["missing_blocks"] = lost
+    for filename, blocks in lost.items():
+        log.error("quality[site]: %s missing required blocks %s", filename, blocks)
+        report["sources"][filename] = {"status": "severe", "flagged": {b: "missing_block" for b in blocks}}
     worst = "ok"
     for s in report["sources"].values():
         if s["status"] in ("severe", "missing", "unparsable"):
