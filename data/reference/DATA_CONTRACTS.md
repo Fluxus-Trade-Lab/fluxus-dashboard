@@ -369,6 +369,10 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 - 归档 `data/history/shortlist_log.csv`(每晚每卡一行,含席位+读数,audit 在册)——学习语料的一半。
 - 首日六席(08-19):burning=CBZ(heat#1) · new_leader=PSNL · entry=BRZE(第一波) · v_reversal=HIMS(ma_reclaim×深回撤) · coiling=KMX · asset=GLD。
 
+## 四点十一、`data/output/library/` —— Library 页内容(2026-08-20 起)
+
+数据端产的**读者向** markdown,前端 Library 页直接渲染(fetch + markdown 渲染器)。首篇 `offense_ep_mrna.md`(Andy:"mrna study 放进 ep 的 case study 案例,让前端放入 library 页面的 offense 进攻页面")。文件名约定 `<页面>_<主题>.md`;研究原文仍在 data/research,library 版是策展节选。
+
 ## 五、当前未接入的东西
 
 | 文件 | 状态 |
