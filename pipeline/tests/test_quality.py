@@ -304,7 +304,11 @@ class TestRequiredBlocks:
         from pipeline.quality import check_site, REQUIRED_BLOCKS
         (tmp_path / "breadth.json").write_text(json.dumps(
             {"breadth": {"t2108": 5}, "mm": {"up_4pct": 1}}))   # no regime etc.
-        rep = check_site(tmp_path, "2026-08-19")
+        # history_dir is NOT optional here: check_site defaults it to the real
+        # data/history/quality, so this test was writing a 2026-08-19 row built
+        # from a two-field fake breadth.json into the committed baseline -- the
+        # same baseline that decides "severe" and aborts the nightly run.
+        rep = check_site(tmp_path, "2026-08-19", tmp_path / "hist")
         assert set(rep["missing_blocks"]["breadth.json"]) >= {"regime", "state_board", "verdict", "conditions"}
         assert rep["status"] == "severe"
 
