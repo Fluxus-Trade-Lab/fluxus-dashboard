@@ -92,9 +92,30 @@ export default function CardChart({ series, marks = [], height = 190 }) {
   const x = (i) => PAD + (i / Math.max(1, n - 1)) * (W - PAD * 2)
   const y = (v) => PAD + (1 - (v - lo) / span) * (PRICE_H - PAD * 2)
 
-  const line = (arr) => arr && arr.every((v) => v != null)
-    ? arr.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ')
-    : null
+  /**
+   * One polyline per unbroken run, not one per series.
+   *
+   * This demanded every value be present and returned null otherwise, which
+   * meant the 50-day average was ABSENT FROM EVERY CARD and nothing said so:
+   * a 130-bar window carries 32 leading nulls for a 50-day mean (it has no
+   * history yet to average), so `every` was false on all six. The chart claimed
+   * price against its 21- and 50-day and drew two lines.
+   *
+   * A line that starts partway across is the honest picture — the average does
+   * not exist before it has its window — and joining across the gap would draw
+   * a value nobody computed.
+   */
+  const segments = (arr) => {
+    if (!arr) return []
+    const runs = []
+    let cur = []
+    arr.forEach((v, i) => {
+      if (v == null) { if (cur.length > 1) runs.push(cur); cur = []; return }
+      cur.push(`${x(i).toFixed(1)},${y(v).toFixed(1)}`)
+    })
+    if (cur.length > 1) runs.push(cur)
+    return runs.map((r) => r.join(' '))
+  }
 
   const vols = series.v || []
   const vMax = Math.max(1, ...vols.filter((v) => v != null))
@@ -116,19 +137,21 @@ export default function CardChart({ series, marks = [], height = 190 }) {
            aria-label={`${n} sessions of price with the 21-day and 50-day averages`}>
         {/* the 50-day first and palest, then the 21, then price on top: the
             reading is price AGAINST them, so they are ground, not figure */}
-        {line(series.s50) && (
-          <polyline points={line(series.s50)} fill="none" strokeWidth="1.2"
+        {segments(series.s50).map((pts, i) => (
+          <polyline key={`s${i}`} points={pts} fill="none" strokeWidth="1.2"
                     stroke="var(--color-text-muted)" opacity="0.55"
                     vectorEffect="non-scaling-stroke" />
-        )}
-        {line(series.e21) && (
-          <polyline points={line(series.e21)} fill="none" strokeWidth="1.2"
+        ))}
+        {segments(series.e21).map((pts, i) => (
+          <polyline key={`e${i}`} points={pts} fill="none" strokeWidth="1.2"
                     stroke="var(--color-text-secondary)" opacity="0.8"
                     vectorEffect="non-scaling-stroke" />
-        )}
-        <polyline points={line(c)} fill="none" strokeWidth="1.9"
-                  stroke="var(--color-text)" vectorEffect="non-scaling-stroke"
-                  strokeLinejoin="round" strokeLinecap="round" />
+        ))}
+        {segments(c).map((pts, i) => (
+          <polyline key={`c${i}`} points={pts} fill="none" strokeWidth="1.9"
+                    stroke="var(--color-text)" vectorEffect="non-scaling-stroke"
+                    strokeLinejoin="round" strokeLinecap="round" />
+        ))}
 
         {/* volume, on its own baseline so it never reads as part of the price */}
         <line x1={PAD} x2={W - PAD} y1={H - PAD} y2={H - PAD} strokeWidth="1"

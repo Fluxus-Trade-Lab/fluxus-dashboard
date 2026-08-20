@@ -15,6 +15,12 @@
  *   every character of the file is text by construction and there is no path
  *   from file contents to markup.
  *
+ * One construct is ours rather than markdown's: a line holding only
+ * `[[chart:key]]` marks where a chart goes. The data cannot live in the prose —
+ * 130 bars and their signal days are a payload, not a sentence — so the article
+ * says WHERE and a sidecar JSON says WHAT. An article that asks for a chart
+ * nobody shipped says so at that spot instead of leaving a hole.
+ *
  * It parses what our files contain and no more. A construct it does not know
  * comes through as a paragraph — visible and wrong-looking, which is the right
  * failure: silence would hide that an article had stopped rendering.
@@ -62,6 +68,9 @@ export function parse(md) {
     if (h) { flush(); blocks.push({ type: 'h', level: h[1].length, spans: inline(h[2]) }); continue }
 
     if (/^(-{3,}|\*{3,})$/.test(trimmed)) { flush(); blocks.push({ type: 'hr' }); continue }
+
+    const chart = /^\[\[chart:([\w-]+)\]\]$/.exec(trimmed)
+    if (chart) { flush(); blocks.push({ type: 'chart', key: chart[1] }); continue }
 
     // a table: a header row, a divider, then rows until a non-pipe line
     if (trimmed.startsWith('|') && isDivider(lines[i + 1]?.trim() ?? '')) {

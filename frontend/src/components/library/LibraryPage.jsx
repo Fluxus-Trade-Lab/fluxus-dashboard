@@ -1,6 +1,7 @@
 import PageHeader from '../PageHeader'
 import { useLibrary } from '../../hooks/useLibrary'
 import { parse } from '../../lib/markdown'
+import CardChart from '../watchlist/shortlist/CardChart'
 
 /**
  * A Library page: whatever the data side has written for it, and an honest
@@ -35,7 +36,46 @@ const H = {
   4: 'text-[13px] leading-snug font-semibold mt-4 mb-1.5',
 }
 
-function Block({ b }) {
+/**
+ * The chart an article asked for.
+ *
+ * Drawn by the same component the Short List cards use — one price chart on
+ * this site, not two. That matters more than it sounds: the 12 case charts the
+ * validation report made were static SVGs written against that report's own
+ * `var(--grid)` / `var(--muted)`, so they carry a fixed palette, live in
+ * data/research where nothing serves them, and cannot follow a theme flip. A
+ * payload plus this component gives the article a chart that takes the page's
+ * tokens and flips for free.
+ */
+function ChartBlock({ chart, chartKey }) {
+  if (!chart?.series?.c?.length) {
+    return (
+      <div className="my-4 rounded-2xl px-5 py-5"
+           style={{ backgroundImage:
+             'repeating-linear-gradient(45deg,var(--color-border-light) 0 1px,transparent 1px 7px)' }}>
+        <div className="text-[10px] font-mono uppercase tracking-[.24em]
+                        text-[var(--color-text-muted)] mb-2">Chart not shipped</div>
+        <p className="m-0 text-[12.5px] leading-relaxed text-[var(--color-text-secondary)]">
+          这篇文章要一张图（<code className="font-mono">{chartKey}</code>），但配套的
+          <code className="font-mono"> .json</code> 里没有它的 K 线。图不是画不出来 ——
+          引擎在，缺的是这只票的日线。
+        </p>
+      </div>
+    )
+  }
+  return (
+    <figure className="my-5 mx-0">
+      <CardChart series={chart.series} marks={chart.marks ?? []} />
+      {chart.caption && (
+        <figcaption className="mt-2 text-[11.5px] leading-relaxed text-[var(--color-text-muted)]">
+          {chart.caption}
+        </figcaption>
+      )}
+    </figure>
+  )
+}
+
+function Block({ b, assets }) {
   if (b.type === 'h') {
     const Tag = `h${Math.min(b.level + 1, 6)}`
     return <Tag className={H[b.level] ?? H[4]}
@@ -46,6 +86,9 @@ function Block({ b }) {
   if (b.type === 'p') {
     return <p className="my-2.5 text-[13.5px] leading-relaxed text-[var(--color-text-secondary)]">
       <Spans spans={b.spans} /></p>
+  }
+  if (b.type === 'chart') {
+    return <ChartBlock chartKey={b.key} chart={assets?.charts?.[b.key]} />
   }
   if (b.type === 'hr') {
     return <hr className="my-6 border-0 border-t border-[var(--color-border-light)]" />
@@ -91,7 +134,7 @@ function Block({ b }) {
   return null
 }
 
-function Article({ name, text }) {
+function Article({ name, text, assets }) {
   if (text == null) {
     return (
       <section className="border border-dashed border-[var(--color-untested)] rounded-3xl p-6
@@ -108,7 +151,7 @@ function Article({ name, text }) {
   return (
     <article className="rounded-3xl bg-[var(--color-surface)] px-6 py-6 sm:px-8 sm:py-7
                         max-w-[74ch] mb-6">
-      {parse(text).map((b, i) => <Block key={i} b={b} />)}
+      {parse(text).map((b, i) => <Block key={i} b={b} assets={assets} />)}
       <p className="mt-7 mb-0 text-[10px] font-mono text-[var(--color-text-muted)]">
         data/output/library/{name}
       </p>

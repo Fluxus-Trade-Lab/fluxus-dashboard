@@ -51,11 +51,17 @@ export function useLibrary(page) {
       const idx = await loadIndex()
       const names = (idx?.[page] ?? COMPILED_IN[page] ?? [])
       const got = await Promise.all(names.map(async (name) => {
-        try {
-          const r = await fetch(`${BASE}/${name}`)
-          if (!r.ok) return { name, text: null }
-          return { name, text: await r.text() }
-        } catch { return { name, text: null } }
+        /* Two files per article: the prose, and a sidecar holding whatever the
+           prose cannot carry — 130 bars and their signal days are a payload,
+           not a sentence. The sidecar is optional; an article without one is a
+           normal article, and an article whose prose asks for a chart the
+           sidecar does not hold says so where the chart would have been. */
+        const side = name.replace(/\.md$/, '.json')
+        const [text, assets] = await Promise.all([
+          fetch(`${BASE}/${name}`).then((r) => (r.ok ? r.text() : null)).catch(() => null),
+          fetch(`${BASE}/${side}`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+        ])
+        return { name, text, assets }
       }))
       if (!dead) setState({ articles: got, loading: false, indexed: !!idx })
     })()
