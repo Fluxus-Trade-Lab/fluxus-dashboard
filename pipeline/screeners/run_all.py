@@ -548,10 +548,12 @@ def main():
         )
         breadth_result = None
         ledger.error('breadth', 'exception')
-    if breadth_result is not None:
-        ledger.note('breadth', 'stale' if (breadth_result.get('data_quality') or {}).get('stale') else 'ok',
-                    reason=(breadth_result.get('data_quality') or {}).get('reason'),
-                    regime_score=(breadth_result.get('regime') or {}).get('score'))
+    # NOTE: this `else` belongs to the TRY (runs only when run_breadth_metrics
+    # succeeded). On 2026-08-19 an inserted `if breadth_result is not None:`
+    # between the except and this else silently re-bound the else to the if --
+    # legal Python, inverted meaning: signals/state_board/regime/verdict/replay
+    # only ran when breadth_result was None. The ledger note now lives AFTER
+    # the whole block, where the regime score it records actually exists.
     else:
         # Signal/health computation is a separate failure domain: a crash here
         # (e.g. load_archive or run_signals) must not null out breadth_result,
@@ -605,6 +607,12 @@ def main():
                     "breadth.json and market_health.json are unaffected"
                 )
                 replay_payload = None
+
+    if breadth_result is not None:
+        ledger.note('breadth', 'stale' if (breadth_result.get('data_quality') or {}).get('stale') else 'ok',
+                    reason=(breadth_result.get('data_quality') or {}).get('reason'),
+                    regime_score=(breadth_result.get('regime') or {}).get('score'),
+                    enriched=sorted(k for k in ('regime', 'state_board', 'verdict', 'conditions') if k in breadth_result))
 
     # 6. VCP (two-layer — skip if universe too small)
     if len(universe) >= 50:

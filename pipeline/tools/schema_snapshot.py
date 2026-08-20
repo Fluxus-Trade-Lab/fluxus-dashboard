@@ -117,6 +117,16 @@ def main(argv=None) -> int:
         print("\n(accept with --update after DATA_CONTRACTS.md says so)")
     else:
         print(f"schema unchanged ({len(now)} files)")
+    # Removed fields and missing files are BREAKS, not drift: the 2026-08-19
+    # nightly run printed "breadth.json top: removed [conditions, regime,
+    # state_board, verdict]" right here and then committed anyway -- the whole
+    # Breadth page went dark for a day. Additions stay report-only (new
+    # columns land on purpose); a deliberate removal ships its --update in
+    # the same commit as the code that removes the field.
+    broken = [l for l in lines if ": removed " in l or "FILE MISSING" in l]
+    if broken:
+        print(f"\n{len(broken)} removal(s): failing the check", file=sys.stderr)
+        return 1
     return 0
 
 
