@@ -371,7 +371,13 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 
 ## 四点十一、`data/output/library/` —— Library 页内容(2026-08-20 起)
 
-数据端产的**读者向** markdown,前端 Library 页直接渲染(fetch + markdown 渲染器)。首篇 `offense_ep_mrna.md`(Andy:"mrna study 放进 ep 的 case study 案例,让前端放入 library 页面的 offense 进攻页面")。文件名约定 `<页面>_<主题>.md`;研究原文仍在 data/research,library 版是策展节选。
+数据端产的**读者向**内容。**前端读 `.json`(结构化,08-20 应前端要求)**,同名 `.md` 是人读源稿。首篇 `offense_ep_mrna.json`。文件名约定 `<页面>_<主题>.json`;研究原文仍在 data/research,library 版是策展节选。
+JSON schema(所有 library 文章通用):
+```
+{ slug, page(offense|defense|...), title, subtitle, updated, summary,
+  chart?: { ticker, series:{d,c,e21,s50,v}, marks:[{d,kinds[],chg,rv}], legend } ,   # 与 shortlist 卡同构,图表组件通用
+  blocks: [ {type:h2|h3|p, text} | {type:table, columns[], rows[][]} | {type:list, ordered, items[]} | {type:note, text} ] }
+```
 
 ## 五、当前未接入的东西
 
