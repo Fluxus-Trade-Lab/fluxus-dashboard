@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from 'react'
 import NameCard from './NameCard'
 import { MarkGlyph, MARK_KINDS } from './CardChart'
-import { useShortlist } from '../../../hooks/useShortlist'
+import { useShortlistFile } from '../../../hooks/useShortlistFile'
 import { buildLedger, tally } from './ledger'
 
 /**
@@ -190,7 +190,7 @@ function Legend({ legend }) {
 }
 
 export default function ShortListPage() {
-  const { data, failed } = useShortlist()
+  const { data, failed } = useShortlistFile()
   const all = useMarks()
 
   if (failed) {
