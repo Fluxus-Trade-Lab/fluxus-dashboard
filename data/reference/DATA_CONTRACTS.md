@@ -341,6 +341,15 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 
 ---
 
+## 四点九、`data/output/asset_signals.json` —— 资产层信号(2026-08-20 加,Andy:"要的!")
+
+**产出**:`pipeline/screeners/asset_signals.py`,run_all 里 etf_data 之后;自己的失败域。**背景**:IBIT/GLD 六名核实暴露 ETF 零信号层——etf_data.json 只有裸行情。
+26 只核心资产 ETF(指数 5 / 债 6 / 金银 4 / 能源农品 3 / 加密 IBIT+ETHA / 美元 UUP / 国际 4 / VNQ),**与个股同一套函数**算:`rs_line_pctl_21/63`(RS 线自百分位 vs SPY;SPY 自己为 null)、`cross_ema21_up/cross_sma50_up`(收盘上穿)、`atr_from_sma50`(ATR 位)、`hi20`(20 日收盘新高)、`ema21/sma50/sma200_dist`、perf 窗口、`rel_volume`(50 日均)、`high_52w_dist`、`bar_date`。
+```
+{ timestamp, date, count, note, rows:[ {ticker,label,category,close,change_pct,...} ] }
+```
+首日读数(08-19):GLD 与 IBIT 双双 rs_line_pctl_21=100 + hi20;TLT 上穿 21EMA。归档 `data/history/asset_signals.csv`(每晚 26 行,audit 在册)。前端:适合 Dashboard 一条"资产层"横排或 Breadth 页侧栏;category 是分组键;别把 SPY 的 RS 线渲染成 0(是 null)。
+
 ## 五、当前未接入的东西
 
 | 文件 | 状态 |

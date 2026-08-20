@@ -799,6 +799,22 @@ def main():
     )
     logger.info("Saved etf_data.json")
 
+    # Asset-layer signals: the same knives (RS line, MA reclaim, ATR
+    # position) pointed at ~26 core ETFs -- gold/BTC/bonds had no signal
+    # layer (2026-08-20, MRNA six-name check). Own failure domain.
+    try:
+        from pipeline.screeners.asset_signals import archive as archive_assets, build as build_assets, fetch as fetch_assets
+        asset_payload = build_assets(fetch_assets(), last_completed_session().isoformat())
+        (OUTPUT_DIR / 'asset_signals.json').write_text(
+            json.dumps({'timestamp': timestamp, **asset_payload}, indent=2, default=_json_serializer))
+        n_assets = archive_assets(asset_payload)
+        ledger.note('asset_signals', 'ok' if asset_payload['count'] >= 20 else 'thin',
+                    count=asset_payload['count'])
+        logger.info("Saved asset_signals.json - %d assets (+%d archived)", asset_payload['count'], n_assets)
+    except Exception:  # noqa: BLE001
+        logger.exception("Asset signals failed - asset_signals.json not updated")
+        ledger.error('asset_signals', 'exception')
+
     # vol_5d_50d -- the screener's volume column (5-day over 50-day average
     # volume, TSF's construction, from daily bars). Guarded: the universe must
     # ship even when the vendor does not.
