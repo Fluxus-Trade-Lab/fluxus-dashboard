@@ -78,7 +78,24 @@ function monthTicks(dates, maxLabels = 5) {
   return marks.filter((_, ord) => ord % step === 0)
 }
 
-export default function CardChart({ series, marks = [], height = 190 }) {
+/**
+ * Linear, or log when one day dwarfs the rest.
+ *
+ * Measured on the MRNA case the Library article is about: over its last 130
+ * sessions the month of footprints the article is ABOUT occupies 7.9% of the
+ * chart's height, and the single EP day eats 83%. A +177% bar against a
+ * 62-to-64 base flattens everything that led to it into one line — the picture
+ * would contradict the text under it. Shortening the window does not help; a
+ * 2.8x single-day gap squashes any linear scale it is drawn on.
+ *
+ * A log axis is the honest instrument for a chart read as PERCENTAGE MOVES,
+ * which is what every reading on this site already is (ATR distances, RS
+ * percentiles, 20-day highs). It is not the default: on an ordinary name a log
+ * axis is a needless distortion of a shape people read by eye. The caller asks
+ * for it, and the page says so on the chart — an axis that has changed meaning
+ * without saying so is worse than a squashed one.
+ */
+export default function CardChart({ series, marks = [], height = 190, scale = 'linear' }) {
   const c = series?.c
   if (!c?.length) return null
   const n = c.length
@@ -88,9 +105,13 @@ export default function CardChart({ series, marks = [], height = 190 }) {
   // the name the v-reversal seat exists to show.
   const all = [c, series.e21, series.s50].filter(Boolean).flat().filter((v) => v != null)
   const lo = Math.min(...all), hi = Math.max(...all)
-  const span = hi - lo || 1
+  // a log axis needs every value strictly positive; a price series that is not
+  // falls back rather than dropping points nobody was told about
+  const log = scale === 'log' && lo > 0
+  const f = log ? Math.log : (v) => v
+  const flo = f(lo), fspan = (f(hi) - flo) || 1
   const x = (i) => PAD + (i / Math.max(1, n - 1)) * (W - PAD * 2)
-  const y = (v) => PAD + (1 - (v - lo) / span) * (PRICE_H - PAD * 2)
+  const y = (v) => PAD + (1 - (f(v) - flo) / fspan) * (PRICE_H - PAD * 2)
 
   /**
    * One polyline per unbroken run, not one per series.
@@ -190,6 +211,15 @@ export default function CardChart({ series, marks = [], height = 190 }) {
           </div>
         )
       })}
+
+      {/* An axis that has changed meaning has to say so. */}
+      {log && (
+        <span className="absolute left-0 top-0 text-[10px] font-mono
+                         text-[var(--color-text-muted)] pointer-events-none"
+              title="纵轴按对数：等距离 = 等百分比。一天 +177% 会把线性轴上的其余部分压平">
+          log
+        </span>
+      )}
 
       {/* one anchor on the price axis — the last close, where the line ends */}
       <span className="absolute right-0 -translate-y-1/2 px-1 text-[10px] font-mono

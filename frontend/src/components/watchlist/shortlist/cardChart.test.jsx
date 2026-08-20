@@ -60,6 +60,51 @@ describe('a series with a warm-up gap', () => {
   })
 })
 
+describe('the log axis', () => {
+  /* MRNA's real shape: a month between 53.86 and 64.46, then one day to 174.38.
+     Measured on the actual 130 bars, the month the article is ABOUT occupies
+     7.9% of a linear chart's height and 12.2% of a log one — a 1.5x rescue, and
+     not enough on its own. The fix for that article is a window that ends the
+     day BEFORE the repricing (37.9% at 40 bars); log is what makes a chart that
+     must show both days readable at all. Both facts belong in the same test so
+     neither gets remembered without the other. */
+  const mrna = () => {
+    const base = Array.from({ length: 40 }, (_, i) => 54 + (i * 10.5) / 39)
+    return { d: base.map((_, i) => `2026-07-${String((i % 28) + 1).padStart(2, '0')}`),
+             c: [...base, 174.38], e21: [...base, 150], s50: [...base, 120],
+             v: Array.from({ length: 41 }, () => 1e6) }
+  }
+  const spread = (c) => {
+    const pts = [...c.container.querySelectorAll('polyline')]
+      .find((p) => p.getAttribute('stroke') === 'var(--color-text)')
+      .getAttribute('points').split(' ').map((p) => +p.split(',')[1])
+    const month = pts.slice(0, 40)
+    return (Math.max(...month) - Math.min(...month)) / (Math.max(...pts) - Math.min(...pts))
+  }
+
+  it('gives the month back some of its height when one day dwarfs it', () => {
+    const lin = spread(render(<CardChart series={mrna()} />))
+    const lg = spread(render(<CardChart series={mrna()} scale="log" />))
+    expect(lin).toBeLessThan(0.12)             // squashed, as the real bars are
+    expect(lg / lin).toBeGreaterThan(1.4)      // the real rescue is 1.5x
+    expect(lg / lin).toBeLessThan(2.5)         // and it is only that — not a cure
+  })
+
+  it('says the axis changed, because a silent log axis lies about proportion', () => {
+    expect(render(<CardChart series={mrna()} scale="log" />).container.textContent).toContain('log')
+    expect(render(<CardChart series={mrna()} />).container.textContent).not.toContain('log')
+  })
+
+  it('falls back rather than dropping points a log axis cannot take', () => {
+    const s = mrna(); s.c[0] = 0
+    const c = render(<CardChart series={s} scale="log" />)
+    expect(c.container.textContent).not.toContain('log')
+    expect([...c.container.querySelectorAll('polyline')]
+      .find((p) => p.getAttribute('stroke') === 'var(--color-text)')
+      .getAttribute('points').split(' ')).toHaveLength(41)
+  })
+})
+
 /* The file that exposed it. Every card on the page carries 32 s50 nulls; if the
    pipeline ever ships a series shape this cannot draw, this is where it shows. */
 const doc = (() => {

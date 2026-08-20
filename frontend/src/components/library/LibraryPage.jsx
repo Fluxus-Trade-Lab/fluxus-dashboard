@@ -65,7 +65,8 @@ function ChartBlock({ chart, chartKey }) {
   }
   return (
     <figure className="my-5 mx-0">
-      <CardChart series={chart.series} marks={chart.marks ?? []} />
+      <CardChart series={chart.series} marks={chart.marks ?? []}
+                 scale={chart.scale ?? 'linear'} />
       {chart.caption && (
         <figcaption className="mt-2 text-[11.5px] leading-relaxed text-[var(--color-text-muted)]">
           {chart.caption}
