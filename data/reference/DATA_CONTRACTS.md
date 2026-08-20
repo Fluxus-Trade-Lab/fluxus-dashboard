@@ -394,6 +394,12 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 格式:`- [日期] 一句话 + 你测过什么 + 你要的字段/口径`。数据端处理完把该行改成 ✅ 并写在哪个 commit。
 
 - [08-17] oratnek 同日扫描对照:VCS 刻度 → ✅ 17a2667(领先门,33→15);CBRL 闸 → ✅ 59e3892(成交额闸);RELY 的 RS 1M → ✅ 破译:RS 线 21 日自百分位,29/29 复现,新字段 `rs_line_pctl_21`(universe + watchlist 票项),今晚 cron 起有值
+- [08-20] **shortlist.json 的空席只有一种形状,页面分不出三种空**。`seats[]` 现在是 `{seat, ticker|null, why}`,而空着有三种含义:喂它的那格今晚**没跑**(未测量) / 跑了**一个都没有**(found none) / 有人但**被闸挡了**(blocked by threshold)。这三个在 DESIGN.md 里必须长得不一样(六·「`regime.score` 为 null 显示不可测,不要显示 0」是同一条规矩)。要 `seat.empty_reason: not_measured|none_found|all_excluded` + `all_excluded` 时的 `excluded_n`。没有它页面只能三种画成同一个灰框。今天六席全满,所以这条现在验不了 —— 第一个空席出现的那天就会露。
+- [08-20] **`shortlist_log.csv` 缺分母,「哪个席被否率高」现在算不出来**。六席曝光率天差地别(burning 每天有名字;entry 在没 EP 的日子是空的),只记 veto 的话,天天出现的席自然积累更多 ✗,跟它选得对不对无关。要**每席每天一行**:`date, seat, ticker|null, shown, outcome(vetoed|starred|ignored|empty)` + 当时的全套 readings。`ignored`(看见了没动)和 `empty`(没名字可给)是两个不同的分母,都得记。方案 §四 自己写了「选法内的排序依据是便利选择」—— 那就更需要分母才验得动。
+- [08-20] **`✗` 是三个标签挤在一个按钮里**(今天不合适 / 这只票本身不行 / 这个席选错了人)。学习端把三种当一种,30 个打岔全是噪声。前端会把 `✗` 的语义钉死成「不是这个,今天」并写在按钮的 tooltip 上;请在 schema 注释里也钉一遍,分析端不许假设按钮说了它没说的话。
+- [08-20] **`✗/★` 不能骑 `sync_all`**。`frontend/src/components/portfolio/services/sheetsSync.js:35` 发的是 `action:'sync_all'`,带 stockTrades+optionsTrades+meta **整包覆盖**,两个标签页同开会互相盖掉。要一个自己的 GAS action `shortlist_upsert`,**append-only、按 `(ticker, added_date)` 幂等**,只发这一条记录。GAS 侧归数据端;这个 action 落地之前,前端的 ✗/★ 只落本地并在页面上说明「回路的另一半还没接」。
+- [08-20] **同一个量在 shortlist.json 里有两种刻度**。已实测锁死:`readings.change_pct` 是**小数**(PSNL 0.1366);`panels[].chg_pct` 和 `marks[].chg` 是**百分数**(13.7)。前端各写了一个具名换算并用 series 复算做了回归测试,你们哪天统一了我的测试会响 —— 但统一之前请别悄悄改其中一个。
+- [08-20] `readings.hi20` **六张卡全是 null**,包括 asset 席 GLD(它的 `why` 写的正是「RS线21日=100×20日新高」)。是没接上还是故意留空?前端按「未测量」渲染,不当 false。GLD 另有 10 个 null(rs_1m/rs_3m/h_score/vcs/trend_base/sector/...)—— 资产层量得少,这个前端理解并会渲染成「未测量」。
 
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
