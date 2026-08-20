@@ -1006,7 +1006,9 @@ def main():
             pass
         by_t = {r['ticker']: r for r in wl_rows}
         manual = NC.manual_tickers()
-        seats = NC.pick_seats(wl, wl_prev, heat_list, assets_rows, by_t, exclude=manual)
+        states_map = {t: v[1] for t, v in (gs_map or {}).items() if v and v[1]}
+        seats = NC.pick_seats(wl, wl_prev, heat_list, assets_rows, by_t,
+                              states=states_map, exclude=manual)
         want = manual + [s['ticker'] for s in seats if s['ticker']]
         bars = NC.fetch_bars(want)
         spy_c = bars.get('SPY', _pd.DataFrame()).get('Close')

@@ -21,7 +21,7 @@ def _wl(panel_tickers):
         for k, v in panel_tickers.items()]}]}
 
 
-def test_pick_seats_deterministic_and_empty_seats_stay_empty():
+def test_pick_seats_v2_atr_gate_theme_preference_substitutes():
     wl = _wl({
         "true_market_leaders": {"NEW": {}, "OLD": {}}.items(),
         "episodic_pivot": {"EPX": {}}.items(),
@@ -30,17 +30,31 @@ def test_pick_seats_deterministic_and_empty_seats_stay_empty():
         "bullish_4pct": {}.items(),
     })
     prev = _wl({"true_market_leaders": {"OLD": {}}.items()})
-    by = {"NEW": {"h_score": 90}, "DEEP": {"high_52w": -0.40, "rs_3m": 80},
-          "SHAL": {"high_52w": -0.05, "rs_3m": 99}, "COIL": {"vcs": 80}}
-    heat = [{"ticker": "HOT", "score": 12.0, "confluence_days": 1}]
+    by = {"NEW": {"h_score": 90, "atr_from_sma50": 3.0}, "OLD": {"atr_from_sma50": 2.0},
+          "EPX": {"atr_from_sma50": 9.6, "rel_volume": 12.8},         # extended EP -> loses the seat
+          "DEEP": {"high_52w": -0.40, "rs_3m": 80, "atr_from_sma50": 1.0},
+          "SHAL": {"high_52w": -0.05, "rs_3m": 99, "atr_from_sma50": 1.0},
+          "COIL": {"vcs": 80, "atr_from_sma50": 2.0},
+          "HOT": {"atr_from_sma50": 11.9}, "WARM": {"atr_from_sma50": 3.0}}
+    heat = [{"ticker": "HOT", "score": 12.0}, {"ticker": "WARM", "score": 9.0}]
     assets = [{"ticker": "GLD", "rs_line_pctl_21": 100.0, "hi20": True}]
-    seats = NC.pick_seats(wl, prev, heat, assets, by)
+    seats = NC.pick_seats(wl, prev, heat, assets, by, states={"NEW": "Leading"})
     got = {s["seat"]: s["ticker"] for s in seats}
-    assert got == {"burning": "HOT", "new_leader": "NEW", "entry": "EPX",
-                   "v_reversal": "DEEP", "coiling": "COIL", "asset": "GLD"}
-    # no qualifiers -> seats empty, never invented
-    seats2 = NC.pick_seats(_wl({}), None, [], [], {})
-    assert all(s["ticker"] is None for s in seats2) and len(seats2) == 6
+    # HOT extended -> WARM; EPX extended -> entry falls through its chain to None here
+    assert got["burning"] == "WARM" and got["new_leader"] == "NEW"
+    assert got["entry"] is None and got["v_reversal"] == "DEEP"
+    assert got["coiling"] == "COIL" and got["asset"] == "GLD"
+    # substitute: no NEW tml -> lowest-ATR existing TML
+    seats2 = NC.pick_seats(wl, wl, heat, assets, by, states={})
+    got2 = {s["seat"]: s["ticker"] for s in seats2}
+    assert got2["new_leader"] == "OLD"
+    # theme preference: two heat names both fine, Improving beats no-theme
+    by3 = {"A": {"atr_from_sma50": 2}, "B": {"atr_from_sma50": 2}}
+    s3 = NC.pick_seats(_wl({}), None, [{"ticker": "A"}, {"ticker": "B"}], [], by3, states={"B": "Improving"})
+    assert {x["seat"]: x["ticker"] for x in s3}["burning"] == "B"
+    # dry day: seats stay null with the chain named
+    s4 = NC.pick_seats(_wl({}), None, [], [], {})
+    assert sum(1 for x in s4 if x["ticker"] is None) == 6
 
 
 def test_build_card_and_archive(tmp_path):

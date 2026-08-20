@@ -168,9 +168,19 @@ def build_card(ticker: str, *, row: Optional[Mapping[str, Any]], group: Optional
 
 def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
                heat: Sequence[Mapping[str, Any]], assets: Sequence[Mapping[str, Any]],
-               by: Mapping[str, Mapping[str, Any]], exclude: Sequence[str] = ()) -> List[Dict[str, str]]:
-    """One ticker per seat; a seat with no qualifier stays empty (that is a
-    reading too). `exclude` = manual list + names that would double-count."""
+               by: Mapping[str, Mapping[str, Any]], states: Optional[Mapping[str, str]] = None,
+               exclude: Sequence[str] = ()) -> List[Dict[str, str]]:
+    """Six seats, deterministic. v2 rules (Andy 2026-08-20):
+    - ATR gate everywhere: atr_from_sma50 < 7 or unmeasured -- "我不想交易任何
+      已经 extended 的股票"; an extended EP loses the seat to the substitute.
+    - Theme state matters: seats 1/2/3/5 prefer Leading, then Improving, then
+      the rest (two-pass, never a hard cut -- a great setup in a quiet theme
+      still shows, ranked behind). Seats 4 (V-reversal: the long-ignored
+      bottoming archetype lives in weak themes by construction) and 6 (assets
+      have no theme) are exempt.
+    - No empty seats: every seat has a substitute chain; only a truly dry
+      day leaves ticker=null, and the why says which chain came up empty."""
+    states = states or {}
     taken = set(exclude)
     panels = {p["key"]: p for z in wl.get("zones", []) for p in z.get("panels", [])}
     prev_tml = set()
@@ -180,49 +190,92 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
                 if p["key"] == "true_market_leaders":
                     prev_tml = {t["ticker"] for t in p.get("tickers", [])}
 
+    def atr_ok(t):
+        a = by.get(t, {}).get("atr_from_sma50")
+        return a is None or a < 7
+
+    def state_rank(t):
+        return {"Leading": 0, "Improving": 1}.get(states.get(t), 2)
+
     def hscore(t):
-        return (by.get(t, {}).get("h_score") or -1, t)
+        return by.get(t, {}).get("h_score") or -1
+
+    def prefer(cands, key):
+        """Two-pass theme preference, then `key` desc, then ticker asc."""
+        pool = [t for t in cands if t not in taken and atr_ok(t)]
+        return sorted(pool, key=lambda t: (state_rank(t), -key(t), t))
+
+    def panel_tickers(k):
+        return [t["ticker"] for t in panels.get(k, {}).get("tickers", [])]
 
     out = []
 
-    def seat(name, ticker, why):
-        if ticker and ticker not in taken:
-            taken.add(ticker)
-            out.append({"seat": name, "ticker": ticker, "why": why})
+    def seat(name, chain):
+        for why, cands, key in chain:
+            got = prefer(cands, key)
+            if got:
+                taken.add(got[0])
+                out.append({"seat": name, "ticker": got[0], "why": why})
+                return
+        out.append({"seat": name, "ticker": None,
+                    "why": "空：" + " / ".join(w for w, _, _ in chain) + " 都无合格者(ATR<7)"})
+
+    heat_names = [h["ticker"] for h in heat[:50]]
+    heat_rank = {t: i for i, t in enumerate(heat_names)}
+    seat("burning", [("heat 前 50 内最高(ATR<7,主题优先)", heat_names,
+                      lambda t: 50 - heat_rank.get(t, 50))])
+
+    tml_now = panel_tickers("true_market_leaders")
+    fresh = [t for t in tml_now if t not in prev_tml]
+    seat("new_leader", [
+        ("今日新进 TML", fresh, hscore),
+        ("替补:在册 TML 中 ATR 位最低(最贴基底)", tml_now,
+         lambda t: -(by.get(t, {}).get("atr_from_sma50") if by.get(t, {}).get("atr_from_sma50") is not None else 99)),
+    ])
+
+    b4 = panels.get("bullish_4pct", {}).get("tickers", [])
+    first_wave = [t["ticker"] for t in b4 if not t.get("chase") and t.get("rs_high")
+                  and (t.get("atr_from_sma50") or 9) <= 4]
+    seat("entry", [
+        ("今日 EP", panel_tickers("episodic_pivot"),
+         lambda t: by.get(t, {}).get("rel_volume") or 0),
+        ("第一波(4%×ATR≤4×RS新高)", first_wave, hscore),
+        ("替补:Leading 主题里的回踩", [t for t in panel_tickers("liquid_leader_pullback")
+                                        if states.get(t) == "Leading"], hscore),
+    ])
+
+    reclaim = panel_tickers("ma_reclaim")
+    deep = [t for t in reclaim if (by.get(t, {}).get("high_52w") or 0) <= -0.25]
+    rs3 = lambda t: by.get(t, {}).get("rs_3m") or 0  # noqa: E731
+    seat("v_reversal", [
+        ("均线收复×离52周高≤−25%", deep, rs3),
+        ("替补:均线收复中 rs_3m 最高", reclaim, rs3),
+    ])
+
+    vcs_p = panel_tickers("vcs")
+    vcsv = lambda t: by.get(t, {}).get("vcs") or 0  # noqa: E731
+    seat("coiling", [
+        ("VCS 格内分最高", vcs_p, vcsv),
+        ("替补:anticipation 格", panel_tickers("anticipation"), vcsv),
+    ])
+
+    lead_assets = [a["ticker"] for a in assets if (a.get("rs_line_pctl_21") or 0) >= 100 and a.get("hi20")]
+    all_assets = sorted(assets, key=lambda a: -(a.get("rs_line_pctl_21") or 0))
+    a_by = {a["ticker"]: a for a in assets}
+    if lead_assets or all_assets:
+        pick = next((t for t in lead_assets if t not in taken), None)
+        why = "RS线21日=100×20日新高"
+        if pick is None:
+            pick = next((a["ticker"] for a in all_assets
+                         if a["ticker"] not in taken and (a.get("atr_from_sma50") or 0) < 7), None)
+            why = "替补:资产层 RS 线自百分位最高(ATR<7)"
+        if pick:
+            taken.add(pick)
+            out.append({"seat": "asset", "ticker": pick, "why": why})
         else:
-            out.append({"seat": name, "ticker": None, "why": why if not ticker else "候选与他席重复"})
-
-    hot = next((h for h in heat if h["ticker"] not in taken), None)
-    seat("burning", hot["ticker"] if hot else None,
-         f"heat 第 1 名({hot['score']}分)" if hot else "heat 榜空")
-
-    tml_now = [t["ticker"] for t in panels.get("true_market_leaders", {}).get("tickers", [])]
-    fresh = sorted((t for t in tml_now if t not in prev_tml and t not in taken), key=hscore, reverse=True)
-    seat("new_leader", fresh[0] if fresh else None,
-         "今日新进 TML" if fresh else "今日无新进 TML")
-
-    ep = [t["ticker"] for t in panels.get("episodic_pivot", {}).get("tickers", []) if t["ticker"] not in taken]
-    if ep:
-        seat("entry", ep[0], "今日 EP(格内量比最高)")
+            out.append({"seat": "asset", "ticker": None, "why": "空：资产层无合格者"})
     else:
-        fw = [t["ticker"] for t in panels.get("bullish_4pct", {}).get("tickers", [])
-              if t["ticker"] not in taken and not t.get("chase")
-              and t.get("rs_high") and (t.get("atr_from_sma50") or 9) <= 4]
-        seat("entry", fw[0] if fw else None, "第一波(4%×ATR≤4×RS新高)" if fw else "今日无 EP/第一波")
-
-    vr = [t["ticker"] for t in panels.get("ma_reclaim", {}).get("tickers", [])
-          if t["ticker"] not in taken and (by.get(t["ticker"], {}).get("high_52w") or 0) <= -0.25]
-    vr = sorted(vr, key=lambda t: -(by.get(t, {}).get("rs_3m") or 0))
-    seat("v_reversal", vr[0] if vr else None,
-         "均线收复×离52周高≤−25%×rs_3m最高" if vr else "今日无深回撤收复")
-
-    co = [t["ticker"] for t in panels.get("vcs", {}).get("tickers", []) if t["ticker"] not in taken]
-    co = sorted(co, key=lambda t: -(by.get(t, {}).get("vcs") or 0))
-    seat("coiling", co[0] if co else None, "VCS 格内分最高" if co else "VCS 格空")
-
-    aa = [a for a in assets if (a.get("rs_line_pctl_21") or 0) >= 100 and a.get("hi20")]
-    seat("asset", aa[0]["ticker"] if aa else None,
-         "RS线21日=100×20日新高" if aa else "资产层无领跑")
+        out.append({"seat": "asset", "ticker": None, "why": "空：asset_signals 缺失"})
     return out
 
 
