@@ -1,3 +1,5 @@
+import { MissingBlock } from './VerdictCard'
+
 /**
  * The regime band — one word, one binding condition.
  *
@@ -264,9 +266,27 @@ function ConditionsLine({ history, score, binds }) {
 }
 
 export default function RegimeBand({ verdict, signals, conditions, onNavigate }) {
-  const voters = [breadthVoter(verdict), structureVoter(verdict), powerVoter(signals)]
-    .filter(Boolean)
-  if (voters.length < 3) return null // a reading off partial voters would lie by omission
+  const cast = { breadth: breadthVoter(verdict), structure: structureVoter(verdict),
+                 power: powerVoter(signals) }
+  const voters = Object.values(cast).filter(Boolean)
+
+  /**
+   * A reading off partial voters would lie by omission — but so did returning
+   * null, which is what this did until 2026-08-19. When the pipeline shipped
+   * breadth.json without its four enrichment blocks, this card and the verdict
+   * above it both vanished and the page just looked shorter. Refusing to
+   * compute is right; refusing to SAY SO is the thing this dashboard exists
+   * not to do. It names which voters did not report.
+   */
+  if (voters.length < 3) {
+    const missing = Object.entries(cast).filter(([, v]) => !v).map(([k]) => k)
+    return (
+      <MissingBlock
+        what="The regime reading needs three voters and did not get them."
+        keys={missing}
+        onNavigate={onNavigate} />
+    )
+  }
 
   const score = conditions?.today ?? null
   const scoreBand = bandFromScore(score)

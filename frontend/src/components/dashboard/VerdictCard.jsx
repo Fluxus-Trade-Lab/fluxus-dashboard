@@ -89,6 +89,39 @@ function conditionsChange(conditions) {
   return { now, prev, delta: now.positive - prev.positive }
 }
 
+/**
+ * The shape a card takes when its data did not arrive: the frame is real,
+ * hatched so it cannot be mistaken for a card that computed an empty answer,
+ * and it names the keys so the absence is actionable rather than mysterious.
+ */
+export function MissingBlock({ what, keys, onNavigate }) {
+  return (
+    <section className="rounded-3xl bg-[var(--color-surface)] px-6 py-6 sm:px-8 sm:py-7">
+      <div className="rounded-2xl p-6"
+           style={{ backgroundImage:
+             'repeating-linear-gradient(45deg,var(--color-border-light) 0 1px,transparent 1px 7px)' }}>
+        <div className="text-[10px] font-mono uppercase tracking-[.24em]
+                        text-[var(--color-text-muted)] mb-3">Not measured</div>
+        <p className="m-0 text-[17px] leading-snug text-[var(--color-text-bold)]">{what}</p>
+        <p className="mt-2 mb-0 text-[11px] leading-relaxed text-[var(--color-text-secondary)] max-w-[68ch]">
+          The nightly file arrived and{' '}
+          <span className="font-mono">{keys.join(' · ')}</span>{' '}
+          {keys.length === 1 ? 'is' : 'are'} missing from it. That is different from a
+          reading of zero: nothing was measured, so nothing is shown. Everything else on
+          this page comes from other blocks of the same file and is unaffected.
+        </p>
+        {onNavigate && (
+          <button type="button" onClick={() => onNavigate('#/breadth')}
+                  className="mt-4 text-[11px] bg-transparent border-0 p-0 cursor-pointer underline
+                             text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
+            Market State detail &rarr;
+          </button>
+        )}
+      </div>
+    </section>
+  )
+}
+
 /** `2026-08-14` → `Aug 14`. The year is on the header already. */
 function shortDate(iso) {
   if (!iso) return null
@@ -99,7 +132,28 @@ function shortDate(iso) {
 }
 
 export default function VerdictCard({ verdict, conditions, onNavigate }) {
-  if (!verdict) return null
+  /**
+   * A MISSING BLOCK IS SAID, NOT SKIPPED.
+   *
+   * This returned null when `verdict` was absent, and on 2026-08-19 that is
+   * exactly what happened: a one-line inversion in the pipeline (an `if`
+   * stealing a try's `else`) shipped breadth.json without verdict, conditions,
+   * regime or state_board, and the two largest objects on this page simply
+   * were not there. The page did not look broken. It looked shorter.
+   *
+   * That is the failure this whole dashboard is built against — absent must
+   * not render as nothing — and the guard was on the wrong side of it. It now
+   * names the keys the payload is missing, because the person who can act on
+   * that is usually the person looking at the screen.
+   */
+  if (!verdict) {
+    return (
+      <MissingBlock
+        what="Today's verdict is not in tonight's file."
+        keys={['verdict', 'conditions']}
+        onNavigate={onNavigate} />
+    )
+  }
 
   const change = conditionsChange(conditions)
   const broken = falsify(verdict.score, verdict.votes)
