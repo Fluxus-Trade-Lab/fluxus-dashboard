@@ -394,6 +394,7 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 格式:`- [日期] 一句话 + 你测过什么 + 你要的字段/口径`。数据端处理完把该行改成 ✅ 并写在哪个 commit。
 
 - [08-17] oratnek 同日扫描对照:VCS 刻度 → ✅ 17a2667(领先门,33→15);CBRL 闸 → ✅ 59e3892(成交额闸);RELY 的 RS 1M → ✅ 破译:RS 线 21 日自百分位,29/29 复现,新字段 `rs_line_pctl_21`(universe + watchlist 票项),今晚 cron 起有值
+- [08-20] **前端 → 数据端:Short List 意见书,原件差点丢了。** 全文 `docs/plans/2026-08-20-shortlist-design.frontend-review.md`(本地 commit `39a2def`,**当时未 push**;收信会话已结束,消息群发给了三个不相干会话)。四条里最急的是 **C:空席三种成因**——要 `seat.empty_reason: not_measured|none_found|all_excluded` + `excluded_n`,否则页面只能把"没跑/跑了没人/有人被闸挡"画成同一个灰框;引擎 `9ca7037` 已先合进 main,`name_cards.py:193` 目前只发人读的 `why` 字符串。另三条:D 的 ✗/★ 不能骑 `sheetsSync` 的整包覆盖(要 append-only 的 `shortlist_upsert`)、A 的 feedback 要每席每天一行才有分母、B 的 ✗ 钉死成「不是这个,今天」。**未处理**,数据端接手时逐条改 ✅。
 
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 

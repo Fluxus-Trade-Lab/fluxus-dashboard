@@ -67,9 +67,36 @@
 
 严重事故做成 case study 存 `data/reference/incidents/`;首篇 [2026-08-19_breadth_blackout.md](incidents/2026-08-19_breadth_blackout.md)(else 重绑、四道闸为何都没拦、五条行为规则)。新事故照它的结构写:影响/时间线/五个为什么/防线对根因/行为规则。
 
+## 五点五、跨会话交接:问被留下,答被丢掉(2026-08-20 发现)
+
+数据的闸门齐了,**交接**没有闸门。一次完整的失败链,08-20:
+
+1. 数据端某会话写了 `docs/plans/2026-08-20-shortlist-design.md`,征求前端意见,然后**会话结束**。
+2. 前端会话写了意见 `docs/plans/2026-08-20-shortlist-design.frontend-review.md`,commit `39a2def`,**没 push**。
+3. 它想把意见发回去,但收信会话已经不在了(`ListAgents` 里点不到),于是**群发给三个不相干的会话**,三个都不是这件事的主人。
+4. 与此同时 Short List 引擎 `9ca7037` **已经合进 origin/main**。
+
+**这条链的形状是不对称的:问活下来了,答没有。** 方案本体在 `origin/main` 上(87012d0),意见只存在于一台机器的本地 commit 和三份会掉的会话记录里。`DATA_CONTRACTS` §七 就是为这件事设的耐久信道("跨会话消息会丢,2026-08-17 就丢过一封"),而这次**没人往里写**——§七 至今只有 08-17 那一条,还全是 ✅。
+
+**已经付出的代价(核过,不是推测)**:
+
+- 意见里最急的一条(C:空席三种成因要 `seat.empty_reason: not_measured|none_found|all_excluded` + `excluded_n`,说"schema 定稿前塞进去")**到得比代码晚**。已上线的 `pipeline/screeners/name_cards.py:193` 空席只发 `{"seat", "ticker": None, "why": <中文一句话>}`;`why` 是给人看的字符串,页面没法可靠地按它分支,`excluded_n` 根本不存在。全仓 grep `empty_reason|excluded_n|all_excluded|none_found|not_measured` = 0 命中。
+- 顺带查出的第二件(与交接无关,但同一次核对里发现):`name_cards.py:211` 的 `entry` 席在没有 EP 时回落到**「第一波(4%×ATR≤4×RS新高)」**,而同一晚的研究 `72d79eb` / `data/research/scanner_validation_2026-08/b4_gates.md` 测出这个叠加是 **NULL**(样本砍 35–47%、中位一个都没抬)。这不等于该席坏了——挑一个名字填席位比"该组能跑赢基准"弱得多——但**选人规则和刚测完的结论对不上,值得复看**。
+
+**建议交给 data plumbing 的三条不变量**(和 I1–I6 同一风格,都是可机器判的):
+
+| | 含义 | 违反时 |
+|---|---|---|
+| H1 | `docs/plans/*.md` 若有 `*.frontend-review.md` 兄弟文件,两个都必须在 `origin/main` 上 | 违规(答没送到) |
+| H2 | 计划文档里点名"schema 定稿前要加"的字段,必须能在 `schema_snapshot.json` 里找到,或在 `DATA_CONTRACTS` §七/§八 有一行未结的记录 | 违规(要求蒸发了) |
+| H3 | 任何工作树上有**未 push** 且早于 N 小时的本地 commit | 警告(活儿卡在一个可能已经死掉的会话里) |
+
+H3 最便宜也最通用——这次的意见就是被它逮的那个形状。H1/H2 要不要做取决于 `docs/plans/` 是不是长期信道。
+
 ## 六、还没有的(按优先级)
 
 0. **run_all.main() 端到端 smoke**(小夹具宇宙跑全链、断言输出块齐全)——08-19 breadth 全黑暴露的最大盲区,编排器 900 行零测试。
 1. I4 的阈值(0.3×/3×)是拍的,攒一个月 audit_last.json 再校。
 2. universe 行数 vs Finviz 宣称总数(adapter 现在不存那个数)。
 3. run_ledger 攒满一个月后:429 频率、各闸触发频率的月报。
+4. 交接不变量 H1–H3(见 §五点五)——**新增 08-20**,目前一条都没有。
