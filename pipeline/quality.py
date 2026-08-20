@@ -403,6 +403,7 @@ REQUIRED_BLOCKS: Dict[str, List[str]] = {
     "ticker_events.json": ["events", "as_of"],
     "market_health.json": ["spy", "qqq"],
     "asset_signals.json": ["rows", "date"],
+    "shortlist.json": ["cards", "seats", "date"],
     "signals.json": [],
     "etf_data.json": [],
 }

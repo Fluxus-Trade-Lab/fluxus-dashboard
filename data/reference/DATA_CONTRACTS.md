@@ -350,6 +350,25 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 ```
 首日读数(08-19):GLD 与 IBIT 双双 rs_line_pctl_21=100 + hi20;TLT 上穿 21EMA。归档 `data/history/asset_signals.csv`(每晚 26 行,audit 在册)。前端:适合 Dashboard 一条"资产层"横排或 Breadth 页侧栏;category 是分组键;别把 SPY 的 RS 线渲染成 0(是 null)。
 
+## 四点十、`data/output/shortlist.json` —— Short List 对照页(2026-08-20 加;方案 docs/plans/2026-08-20-shortlist-design.md)
+
+**产出**:`pipeline/screeners/name_cards.py`,run_all 里 watchlist 之后;自己的失败域。**页面零计算**——每卡自带全部渲染数据。
+```
+{ timestamp, date, manual:[tickers], legend:{...},
+  seats:[ {seat, ticker|null, why} ],            # 六席: burning/new_leader/entry/v_reversal/coiling/asset;空席 ticker=null,空着是读数
+  cards:[ { ticker, source(manual|auto), seat, group, state, is_asset,
+            readings:{close,change_pct,rs_1m,rs_3m,rs_line_pctl_21/63,atr_from_sma50,high_52w,vcs,trend_base,...},
+            heat:{rank,score,confluence_days},
+            verdict,                              # 确定性模板句(五步读法),直接显示
+            series:{d[130],c,e21,s50,v},          # 图数据,自绘用(信号标记必须叠图上,别用 TV widget)
+            marks:[{d,kinds:[EP|4%|NH+RS|x21|x50],chg,rv}],
+            panels:[{date,panel,chg_pct,atr}], events:[{date,screeners[]}],   # P: 前缀=预设
+            flags:{chase,roster_streak,tml} } ] }
+```
+- 手动名单:暂读 `data/reference/shortlist_manual.json`(上限 20;GAS Shortlist tab 建好后切换)。打岔回路(✗/★→GAS→feedback.csv)等前端;**攒 ≥30 个打岔才出学习分析,不自动调席**。
+- 归档 `data/history/shortlist_log.csv`(每晚每卡一行,含席位+读数,audit 在册)——学习语料的一半。
+- 首日六席(08-19):burning=CBZ(heat#1) · new_leader=PSNL · entry=BRZE(第一波) · v_reversal=HIMS(ma_reclaim×深回撤) · coiling=KMX · asset=GLD。
+
 ## 五、当前未接入的东西
 
 | 文件 | 状态 |

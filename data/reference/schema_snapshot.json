@@ -781,6 +781,53 @@
    "unavailable"
   ]
  },
+ "shortlist.json": {
+  "cards[]": [
+   "events",
+   "flags",
+   "group",
+   "heat",
+   "is_asset",
+   "marks",
+   "panels",
+   "readings",
+   "seat",
+   "series",
+   "source",
+   "state",
+   "ticker",
+   "verdict"
+  ],
+  "cards[].events[]": [
+   "date",
+   "screeners"
+  ],
+  "cards[].marks[]": [
+   "chg",
+   "d",
+   "kinds",
+   "rv"
+  ],
+  "cards[].panels[]": [
+   "atr",
+   "chg_pct",
+   "date",
+   "panel"
+  ],
+  "seats[]": [
+   "seat",
+   "ticker",
+   "why"
+  ],
+  "top": [
+   "cards",
+   "date",
+   "legend",
+   "manual",
+   "seats",
+   "timestamp"
+  ]
+ },
  "signals.json": {
   "top": [
    "BTC-USD",

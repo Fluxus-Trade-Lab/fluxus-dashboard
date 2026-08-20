@@ -982,6 +982,61 @@ def main():
     except Exception:
         logger.exception("Watchlist failed - watchlist.json not updated")
 
+    # Short List: manual names + six deterministic seats, full card data so
+    # the page renders instead of computing (2026-08-20 design). Own domain.
+    try:
+        from pipeline.screeners import name_cards as NC
+        import pandas as _pd
+        from pipeline.screeners.ticker_heat import compute_heat
+        wl_prev = None
+        try:
+            import subprocess as _sp
+            wl_prev = json.loads(_sp.run(['git', 'show', 'HEAD:data/output/watchlist.json'],
+                                         capture_output=True, text=True, timeout=20).stdout)
+        except Exception:  # noqa: BLE001
+            pass
+        events_all = _pd.read_csv(HISTORY_DIR / 'ticker_events.csv', dtype=str)
+        hits_all = _pd.read_csv(HISTORY_DIR / 'watchlist_hits.csv') if (HISTORY_DIR / 'watchlist_hits.csv').exists() else _pd.DataFrame()
+        heat_list = compute_heat(events_all, wl_date)
+        heat_by = {h['ticker']: (i + 1, h) for i, h in enumerate(heat_list)}
+        assets_rows = []
+        try:
+            assets_rows = json.loads((OUTPUT_DIR / 'asset_signals.json').read_text()).get('rows', [])
+        except Exception:  # noqa: BLE001
+            pass
+        by_t = {r['ticker']: r for r in wl_rows}
+        manual = NC.manual_tickers()
+        seats = NC.pick_seats(wl, wl_prev, heat_list, assets_rows, by_t, exclude=manual)
+        want = manual + [s['ticker'] for s in seats if s['ticker']]
+        bars = NC.fetch_bars(want)
+        spy_c = bars.get('SPY', _pd.DataFrame()).get('Close')
+        assets_by = {a['ticker']: a for a in assets_rows}
+        cards = []
+        for t in want:
+            src = 'manual' if t in manual else 'auto'
+            seat = next((s['seat'] for s in seats if s['ticker'] == t), None)
+            hr = heat_by.get(t)
+            grp = (gs_map or {}).get(t)
+            card = NC.build_card(t, row=by_t.get(t), group=grp[0] if grp else None,
+                                 state=grp[1] if grp else None, hist=bars.get(t),
+                                 spy_close=spy_c, events=events_all, panels=hits_all,
+                                 heat=hr[1] if hr else None, heat_rank=hr[0] if hr else None,
+                                 asset_row=assets_by.get(t), source=src, seat=seat)
+            if card:
+                cards.append(card)
+        sl = {'date': wl_date, 'seats': seats, 'manual': manual, 'cards': cards,
+              'legend': {'EP': '≥10%×量≥3×', '4%': '≥4%×量≥1', 'NH+RS': '20日新高+RS线新高同日',
+                         'x21': '上穿21EMA', 'x50': '上穿50SMA'}}
+        (OUTPUT_DIR / 'shortlist.json').write_text(json.dumps({'timestamp': timestamp, **sl}, default=_json_serializer))
+        n_sl = NC.archive(sl)
+        ledger.note('shortlist', 'ok', cards=len(cards), manual=len(manual),
+                    seats={s['seat']: s['ticker'] for s in seats})
+        logger.info("Saved shortlist.json - %d cards (%d manual), seats %s",
+                    len(cards), len(manual), {s['seat']: s['ticker'] for s in seats})
+    except Exception:  # noqa: BLE001
+        logger.exception("Shortlist failed - shortlist.json not updated")
+        ledger.error('shortlist', 'exception')
+
     # Style rotation: score the baskets fetched above. Own failure domain.
     try:
         from pipeline.rotation.build_rotation import build as build_rotation
