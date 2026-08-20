@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-19T21:52:54.994796+00:00",
+  "timestamp": "2026-08-20T03:11:22.284140+00:00",
   "universe_size": 5622,
   "spx_close": 7707.97998046875,
   "mm": {
@@ -7,24 +7,24 @@
     "down_4pct": 471,
     "ratio_5d": 0.9461,
     "ratio_10d": 1.1008,
-    "up_25pct_qtr": 946,
-    "down_25pct_qtr": 763,
-    "up_25pct_month": 529,
-    "down_25pct_month": 314,
-    "up_50pct_month": 138,
-    "down_50pct_month": 64,
-    "up_13pct_34d": 1208,
-    "down_13pct_34d": 1179
+    "up_25pct_qtr": 984,
+    "down_25pct_qtr": 779,
+    "up_25pct_month": 550,
+    "down_25pct_month": 323,
+    "up_50pct_month": 148,
+    "down_50pct_month": 66,
+    "up_13pct_34d": 1253,
+    "down_13pct_34d": 1183
   },
   "breadth": {
-    "t2108": 50.82,
-    "pct_above_200sma": 49.89,
-    "pct_above_50sma": 51.58,
-    "pct_above_20sma": 51.85,
+    "t2108": 53.09,
+    "pct_above_200sma": 51.41,
+    "pct_above_50sma": 53.84,
+    "pct_above_20sma": 54.18,
     "advances": 3117,
     "declines": 2261,
-    "new_highs": 48,
-    "new_lows": 5,
+    "new_highs": 77,
+    "new_lows": 8,
     "ad_line": -14050,
     "mcclellan_osc": -4.97
   },
@@ -231,7 +231,7 @@
       51.89,
       49.69,
       46.54,
-      49.89
+      51.41
     ],
     "pct_above_50sma": [
       24.21,
@@ -333,7 +333,7 @@
       57.46,
       54.08,
       47.84,
-      51.58
+      53.84
     ],
     "pct_above_20sma": [
       23.44,
@@ -435,7 +435,7 @@
       63.29,
       56.24,
       49.49,
-      51.85
+      54.18
     ],
     "mcclellan_osc": [
       -23.23,
@@ -568,7 +568,12 @@
         "net_advances": -1465,
         "rana": -600.66,
         "ad_line": -23439,
-        "mcclellan_osc": -23.23
+        "mcclellan_osc": -23.23,
+        "v": {
+          "env": "BEARISH",
+          "risk": "High",
+          "warn": 8
+        }
       },
       {
         "date": "2026-03-30",
@@ -598,7 +603,12 @@
         "net_advances": -108,
         "rana": -44.19,
         "ad_line": -23547,
-        "mcclellan_osc": -19.64
+        "mcclellan_osc": -19.64,
+        "v": {
+          "env": "BEARISH",
+          "risk": "High",
+          "warn": 10
+        }
       },
       {
         "date": "2026-03-31",
@@ -628,7 +638,12 @@
         "net_advances": 1782,
         "rana": 723.8,
         "ad_line": -21765,
-        "mcclellan_osc": 21.93
+        "mcclellan_osc": 21.93,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-04-01",
@@ -658,7 +673,12 @@
         "net_advances": 667,
         "rana": 271.47,
         "ad_line": -21098,
-        "mcclellan_osc": 34.74
+        "mcclellan_osc": 34.74,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-04-02",
@@ -688,7 +708,12 @@
         "net_advances": 453,
         "rana": 184.07,
         "ad_line": -20645,
-        "mcclellan_osc": 41.15
+        "mcclellan_osc": 41.15,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-04-06",
@@ -718,7 +743,12 @@
         "net_advances": 636,
         "rana": 258.96,
         "ad_line": -20009,
-        "mcclellan_osc": 50.18
+        "mcclellan_osc": 50.18,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-04-07",
@@ -748,7 +778,12 @@
         "net_advances": -188,
         "rana": -75.93,
         "ad_line": -20197,
-        "mcclellan_osc": 40.89
+        "mcclellan_osc": 40.89,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-04-08",
@@ -778,7 +813,12 @@
         "net_advances": 1600,
         "rana": 642.05,
         "ad_line": -18597,
-        "mcclellan_osc": 68.65
+        "mcclellan_osc": 68.65,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-04-09",
@@ -808,7 +848,12 @@
         "net_advances": 454,
         "rana": 182.62,
         "ad_line": -18143,
-        "mcclellan_osc": 69.07
+        "mcclellan_osc": 69.07,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-04-10",
@@ -838,7 +883,12 @@
         "net_advances": -617,
         "rana": -248.09,
         "ad_line": -18760,
-        "mcclellan_osc": 47.55
+        "mcclellan_osc": 47.55,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-04-13",
@@ -868,7 +918,12 @@
         "net_advances": 1283,
         "rana": 513.41,
         "ad_line": -17477,
-        "mcclellan_osc": 66.98
+        "mcclellan_osc": 66.98,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-04-14",
@@ -898,7 +953,12 @@
         "net_advances": 613,
         "rana": 244.32,
         "ad_line": -16864,
-        "mcclellan_osc": 69.81
+        "mcclellan_osc": 69.81,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 1
+        }
       },
       {
         "date": "2026-04-15",
@@ -928,7 +988,12 @@
         "net_advances": 53,
         "rana": 21.17,
         "ad_line": -16811,
-        "mcclellan_osc": 60.72
+        "mcclellan_osc": 60.72,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-04-16",
@@ -958,7 +1023,12 @@
         "net_advances": 203,
         "rana": 80.84,
         "ad_line": -16608,
-        "mcclellan_osc": 55.63
+        "mcclellan_osc": 55.63,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-04-17",
@@ -988,7 +1058,12 @@
         "net_advances": 1532,
         "rana": 603.62,
         "ad_line": -15076,
-        "mcclellan_osc": 77.14
+        "mcclellan_osc": 77.14,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 1
+        }
       },
       {
         "date": "2026-04-20",
@@ -1018,7 +1093,12 @@
         "net_advances": 317,
         "rana": 125.25,
         "ad_line": -14759,
-        "mcclellan_osc": 71.22
+        "mcclellan_osc": 71.22,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Elevated",
+          "warn": 3
+        }
       },
       {
         "date": "2026-04-21",
@@ -1048,7 +1128,12 @@
         "net_advances": -1040,
         "rana": -411.72,
         "ad_line": -15799,
-        "mcclellan_osc": 38.96
+        "mcclellan_osc": 38.96,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Elevated",
+          "warn": 4
+        }
       },
       {
         "date": "2026-04-22",
@@ -1078,7 +1163,12 @@
         "net_advances": 68,
         "rana": 26.94,
         "ad_line": -15731,
-        "mcclellan_osc": 33.11
+        "mcclellan_osc": 33.11,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-04-23",
@@ -1108,7 +1198,12 @@
         "net_advances": -278,
         "rana": -110.06,
         "ad_line": -16009,
-        "mcclellan_osc": 21.1
+        "mcclellan_osc": 21.1,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Elevated",
+          "warn": 4
+        }
       },
       {
         "date": "2026-04-24",
@@ -1138,7 +1233,12 @@
         "net_advances": 13,
         "rana": 5.16,
         "ad_line": -15996,
-        "mcclellan_osc": 16.48
+        "mcclellan_osc": 16.48,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-04-27",
@@ -1168,7 +1268,12 @@
         "net_advances": 115,
         "rana": 45.62,
         "ad_line": -15881,
-        "mcclellan_osc": 14.48
+        "mcclellan_osc": 14.48,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-04-28",
@@ -1198,7 +1303,12 @@
         "net_advances": -323,
         "rana": -128.12,
         "ad_line": -16204,
-        "mcclellan_osc": 4.0
+        "mcclellan_osc": 4.0,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-04-29",
@@ -1228,7 +1338,12 @@
         "net_advances": -1092,
         "rana": -431.96,
         "ad_line": -17296,
-        "mcclellan_osc": -20.17
+        "mcclellan_osc": -20.17,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Elevated",
+          "warn": 4
+        }
       },
       {
         "date": "2026-04-30",
@@ -1258,7 +1373,12 @@
         "net_advances": 1436,
         "rana": 568.94,
         "ad_line": -15860,
-        "mcclellan_osc": 9.32
+        "mcclellan_osc": 9.32,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Elevated",
+          "warn": 4
+        }
       },
       {
         "date": "2026-05-01",
@@ -1288,7 +1408,12 @@
         "net_advances": -115,
         "rana": -45.4,
         "ad_line": -15975,
-        "mcclellan_osc": 3.76
+        "mcclellan_osc": 3.76,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-05-04",
@@ -1318,7 +1443,12 @@
         "net_advances": -757,
         "rana": -299.09,
         "ad_line": -16732,
-        "mcclellan_osc": -13.69
+        "mcclellan_osc": -13.69,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-05-05",
@@ -1348,7 +1478,12 @@
         "net_advances": 894,
         "rana": 351.14,
         "ad_line": -15838,
-        "mcclellan_osc": 3.96
+        "mcclellan_osc": 3.96,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Elevated",
+          "warn": 3
+        }
       },
       {
         "date": "2026-05-06",
@@ -1378,7 +1513,12 @@
         "net_advances": 799,
         "rana": 314.2,
         "ad_line": -15039,
-        "mcclellan_osc": 17.19
+        "mcclellan_osc": 17.19,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-05-07",
@@ -1408,7 +1548,12 @@
         "net_advances": -766,
         "rana": -301.57,
         "ad_line": -15805,
-        "mcclellan_osc": -2.37
+        "mcclellan_osc": -2.37,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-05-08",
@@ -1438,7 +1583,12 @@
         "net_advances": 145,
         "rana": 57.29,
         "ad_line": -15660,
-        "mcclellan_osc": -1.14
+        "mcclellan_osc": -1.14,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-05-11",
@@ -1468,7 +1618,12 @@
         "net_advances": -558,
         "rana": -219.34,
         "ad_line": -16218,
-        "mcclellan_osc": -13.92
+        "mcclellan_osc": -13.92,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-05-12",
@@ -1498,7 +1653,12 @@
         "net_advances": -521,
         "rana": -205.68,
         "ad_line": -16739,
-        "mcclellan_osc": -24.09
+        "mcclellan_osc": -24.09,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 1
+        }
       },
       {
         "date": "2026-05-13",
@@ -1528,7 +1688,12 @@
         "net_advances": -603,
         "rana": -237.68,
         "ad_line": -17342,
-        "mcclellan_osc": -34.26
+        "mcclellan_osc": -34.26,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-05-14",
@@ -1558,7 +1723,12 @@
         "net_advances": 452,
         "rana": 178.94,
         "ad_line": -16890,
-        "mcclellan_osc": -21.96
+        "mcclellan_osc": -21.96,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Elevated",
+          "warn": 3
+        }
       },
       {
         "date": "2026-05-15",
@@ -1588,7 +1758,12 @@
         "net_advances": -1307,
         "rana": -519.27,
         "ad_line": -18197,
-        "mcclellan_osc": -46.24
+        "mcclellan_osc": -46.24,
+        "v": {
+          "env": "MIXED",
+          "risk": "Elevated",
+          "warn": 4
+        }
       },
       {
         "date": "2026-05-18",
@@ -1618,7 +1793,12 @@
         "net_advances": 634,
         "rana": 251.79,
         "ad_line": -17563,
-        "mcclellan_osc": -28.22
+        "mcclellan_osc": -28.22,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Elevated",
+          "warn": 4
+        }
       },
       {
         "date": "2026-05-19",
@@ -1648,7 +1828,12 @@
         "net_advances": -969,
         "rana": -388.38,
         "ad_line": -18532,
-        "mcclellan_osc": -44.68
+        "mcclellan_osc": -44.68,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Elevated",
+          "warn": 6
+        }
       },
       {
         "date": "2026-05-20",
@@ -1678,7 +1863,12 @@
         "net_advances": 1426,
         "rana": 564.53,
         "ad_line": -17106,
-        "mcclellan_osc": -10.88
+        "mcclellan_osc": -10.88,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-05-21",
@@ -1708,7 +1898,12 @@
         "net_advances": 341,
         "rana": 134.84,
         "ad_line": -16765,
-        "mcclellan_osc": -3.41
+        "mcclellan_osc": -3.41,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-05-22",
@@ -1738,7 +1933,12 @@
         "net_advances": 378,
         "rana": 150.0,
         "ad_line": -16387,
-        "mcclellan_osc": 3.75
+        "mcclellan_osc": 3.75,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-05-26",
@@ -1768,7 +1968,12 @@
         "net_advances": 755,
         "rana": 297.13,
         "ad_line": -15632,
-        "mcclellan_osc": 17.21
+        "mcclellan_osc": 17.21,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-05-27",
@@ -1798,7 +2003,12 @@
         "net_advances": -186,
         "rana": -73.69,
         "ad_line": -15818,
-        "mcclellan_osc": 10.09
+        "mcclellan_osc": 10.09,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-05-28",
@@ -1828,7 +2038,12 @@
         "net_advances": 202,
         "rana": 79.28,
         "ad_line": -15616,
-        "mcclellan_osc": 11.6
+        "mcclellan_osc": 11.6,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-05-29",
@@ -1858,7 +2073,12 @@
         "net_advances": -435,
         "rana": -171.06,
         "ad_line": -16051,
-        "mcclellan_osc": 0.31
+        "mcclellan_osc": 0.31,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 1
+        }
       },
       {
         "date": "2026-06-01",
@@ -1888,7 +2108,12 @@
         "net_advances": -297,
         "rana": -116.15,
         "ad_line": -16348,
-        "mcclellan_osc": -6.59
+        "mcclellan_osc": -6.59,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-06-02",
@@ -1918,7 +2143,12 @@
         "net_advances": 148,
         "rana": 58.18,
         "ad_line": -16200,
-        "mcclellan_osc": -3.74
+        "mcclellan_osc": -3.74,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-06-03",
@@ -1948,7 +2178,12 @@
         "net_advances": -957,
         "rana": -377.51,
         "ad_line": -17157,
-        "mcclellan_osc": -23.07
+        "mcclellan_osc": -23.07,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Elevated",
+          "warn": 4
+        }
       },
       {
         "date": "2026-06-04",
@@ -1978,7 +2213,12 @@
         "net_advances": 1026,
         "rana": 403.62,
         "ad_line": -16131,
-        "mcclellan_osc": -0.43
+        "mcclellan_osc": -0.43,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Elevated",
+          "warn": 4
+        }
       },
       {
         "date": "2026-06-05",
@@ -2008,7 +2248,12 @@
         "net_advances": -808,
         "rana": -319.37,
         "ad_line": -16939,
-        "mcclellan_osc": -17.22
+        "mcclellan_osc": -17.22,
+        "v": {
+          "env": "MIXED",
+          "risk": "High",
+          "warn": 9
+        }
       },
       {
         "date": "2026-06-08",
@@ -2038,7 +2283,12 @@
         "net_advances": 54,
         "rana": 19.42,
         "ad_line": -16885,
-        "mcclellan_osc": -14.55
+        "mcclellan_osc": -14.55,
+        "v": {
+          "env": "MIXED",
+          "risk": "Elevated",
+          "warn": 6
+        }
       },
       {
         "date": "2026-06-09",
@@ -2068,7 +2318,12 @@
         "net_advances": 817,
         "rana": 322.8,
         "ad_line": -16068,
-        "mcclellan_osc": 2.98
+        "mcclellan_osc": 2.98,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Elevated",
+          "warn": 6
+        }
       },
       {
         "date": "2026-06-10",
@@ -2098,7 +2353,12 @@
         "net_advances": -599,
         "rana": -235.18,
         "ad_line": -16667,
-        "mcclellan_osc": -9.95
+        "mcclellan_osc": -9.95,
+        "v": {
+          "env": "MIXED",
+          "risk": "Elevated",
+          "warn": 6
+        }
       },
       {
         "date": "2026-06-11",
@@ -2128,7 +2388,12 @@
         "net_advances": 1262,
         "rana": 493.35,
         "ad_line": -15405,
-        "mcclellan_osc": 15.48
+        "mcclellan_osc": 15.48,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-06-12",
@@ -2158,7 +2423,12 @@
         "net_advances": 992,
         "rana": 389.63,
         "ad_line": -14413,
-        "mcclellan_osc": 31.95
+        "mcclellan_osc": 31.95,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-06-15",
@@ -2188,7 +2458,12 @@
         "net_advances": 81,
         "rana": 31.75,
         "ad_line": -14332,
-        "mcclellan_osc": 27.98
+        "mcclellan_osc": 27.98,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-06-16",
@@ -2218,7 +2493,12 @@
         "net_advances": -138,
         "rana": -54.2,
         "ad_line": -14470,
-        "mcclellan_osc": 20.15
+        "mcclellan_osc": 20.15,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-06-17",
@@ -2248,7 +2528,12 @@
         "net_advances": -1252,
         "rana": -490.6,
         "ad_line": -15722,
-        "mcclellan_osc": -8.47
+        "mcclellan_osc": -8.47,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-06-18",
@@ -2278,7 +2563,12 @@
         "net_advances": 695,
         "rana": 271.17,
         "ad_line": -15027,
-        "mcclellan_osc": 5.19
+        "mcclellan_osc": 5.19,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-06-22",
@@ -2308,7 +2598,12 @@
         "net_advances": -39,
         "rana": -15.36,
         "ad_line": -15066,
-        "mcclellan_osc": 2.52
+        "mcclellan_osc": 2.52,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Elevated",
+          "warn": 3
+        }
       },
       {
         "date": "2026-06-23",
@@ -2338,7 +2633,12 @@
         "net_advances": 172,
         "rana": 66.98,
         "ad_line": -14894,
-        "mcclellan_osc": 4.35
+        "mcclellan_osc": 4.35,
+        "v": {
+          "env": "MIXED",
+          "risk": "High",
+          "warn": 8
+        }
       },
       {
         "date": "2026-06-24",
@@ -2368,7 +2668,12 @@
         "net_advances": 441,
         "rana": 171.4,
         "ad_line": -14453,
-        "mcclellan_osc": 11.1
+        "mcclellan_osc": 11.1,
+        "v": {
+          "env": "MIXED",
+          "risk": "High",
+          "warn": 8
+        }
       },
       {
         "date": "2026-06-25",
@@ -2398,7 +2703,12 @@
         "net_advances": 557,
         "rana": 218.17,
         "ad_line": -13896,
-        "mcclellan_osc": 19.16
+        "mcclellan_osc": 19.16,
+        "v": {
+          "env": "BULLISH",
+          "risk": "High",
+          "warn": 7
+        }
       },
       {
         "date": "2026-06-26",
@@ -2428,7 +2738,12 @@
         "net_advances": 1070,
         "rana": 371.01,
         "ad_line": -12826,
-        "mcclellan_osc": 33.6
+        "mcclellan_osc": 33.6,
+        "v": {
+          "env": "BULLISH",
+          "risk": "High",
+          "warn": 8
+        }
       },
       {
         "date": "2026-06-29",
@@ -2458,7 +2773,12 @@
         "net_advances": 81,
         "rana": 28.1,
         "ad_line": -12745,
-        "mcclellan_osc": 28.63
+        "mcclellan_osc": 28.63,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 1
+        }
       },
       {
         "date": "2026-06-30",
@@ -2488,7 +2808,12 @@
         "net_advances": -48,
         "rana": -16.72,
         "ad_line": -12793,
-        "mcclellan_osc": 22.0
+        "mcclellan_osc": 22.0,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-07-01",
@@ -2518,7 +2843,12 @@
         "net_advances": 447,
         "rana": 153.66,
         "ad_line": -12346,
-        "mcclellan_osc": 24.73
+        "mcclellan_osc": 24.73,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-07-02",
@@ -2548,7 +2878,12 @@
         "net_advances": 75,
         "rana": 26.01,
         "ad_line": -12271,
-        "mcclellan_osc": 20.57
+        "mcclellan_osc": 20.57,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-07-06",
@@ -2578,7 +2913,12 @@
         "net_advances": 145,
         "rana": 50.26,
         "ad_line": -12126,
-        "mcclellan_osc": 18.12
+        "mcclellan_osc": 18.12,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-07-07",
@@ -2608,7 +2948,12 @@
         "net_advances": -724,
         "rana": -249.66,
         "ad_line": -12850,
-        "mcclellan_osc": 0.94
+        "mcclellan_osc": 0.94,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Elevated",
+          "warn": 3
+        }
       },
       {
         "date": "2026-07-08",
@@ -2638,7 +2983,12 @@
         "net_advances": -1066,
         "rana": -368.09,
         "ad_line": -13916,
-        "mcclellan_osc": -19.68
+        "mcclellan_osc": -19.68,
+        "v": {
+          "env": "MIXED",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-07-09",
@@ -2668,7 +3018,12 @@
         "net_advances": 767,
         "rana": 266.78,
         "ad_line": -13149,
-        "mcclellan_osc": -5.47
+        "mcclellan_osc": -5.47,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-07-10",
@@ -2698,7 +3053,12 @@
         "net_advances": 23,
         "rana": 8.03,
         "ad_line": -13126,
-        "mcclellan_osc": -6.23
+        "mcclellan_osc": -6.23,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-07-13",
@@ -2728,7 +3088,12 @@
         "net_advances": -582,
         "rana": -202.36,
         "ad_line": -13708,
-        "mcclellan_osc": -17.36
+        "mcclellan_osc": -17.36,
+        "v": {
+          "env": "MIXED",
+          "risk": "Low",
+          "warn": 1
+        }
       },
       {
         "date": "2026-07-14",
@@ -2758,7 +3123,12 @@
         "net_advances": 35,
         "rana": 12.26,
         "ad_line": -13673,
-        "mcclellan_osc": -16.07
+        "mcclellan_osc": -16.07,
+        "v": {
+          "env": "MIXED",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-07-15",
@@ -2788,7 +3158,12 @@
         "net_advances": 349,
         "rana": 123.54,
         "ad_line": -13324,
-        "mcclellan_osc": -9.31
+        "mcclellan_osc": -9.31,
+        "v": {
+          "env": "MIXED",
+          "risk": "Elevated",
+          "warn": 5
+        }
       },
       {
         "date": "2026-07-16",
@@ -2818,7 +3193,12 @@
         "net_advances": -52,
         "rana": -18.39,
         "ad_line": -13376,
-        "mcclellan_osc": -10.59
+        "mcclellan_osc": -10.59,
+        "v": {
+          "env": "MIXED",
+          "risk": "Elevated",
+          "warn": 4
+        }
       },
       {
         "date": "2026-07-17",
@@ -2848,7 +3228,12 @@
         "net_advances": -772,
         "rana": -274.93,
         "ad_line": -14148,
-        "mcclellan_osc": -24.45
+        "mcclellan_osc": -24.45,
+        "v": {
+          "env": "BEARISH",
+          "risk": "High",
+          "warn": 9
+        }
       },
       {
         "date": "2026-07-20",
@@ -2878,7 +3263,12 @@
         "net_advances": -955,
         "rana": -340.22,
         "ad_line": -15103,
-        "mcclellan_osc": -39.45
+        "mcclellan_osc": -39.45,
+        "v": {
+          "env": "MIXED",
+          "risk": "Elevated",
+          "warn": 6
+        }
       },
       {
         "date": "2026-07-21",
@@ -2908,7 +3298,12 @@
         "net_advances": 647,
         "rana": 231.32,
         "ad_line": -14456,
-        "mcclellan_osc": -23.5
+        "mcclellan_osc": -23.5,
+        "v": {
+          "env": "MIXED",
+          "risk": "Elevated",
+          "warn": 3
+        }
       },
       {
         "date": "2026-07-22",
@@ -2938,7 +3333,12 @@
         "net_advances": -538,
         "rana": -192.14,
         "ad_line": -14994,
-        "mcclellan_osc": -30.92
+        "mcclellan_osc": -30.92,
+        "v": {
+          "env": "MIXED",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-07-23",
@@ -2968,7 +3368,12 @@
         "net_advances": -971,
         "rana": -349.15,
         "ad_line": -15965,
-        "mcclellan_osc": -44.95
+        "mcclellan_osc": -44.95,
+        "v": {
+          "env": "BEARISH",
+          "risk": "Elevated",
+          "warn": 6
+        }
       },
       {
         "date": "2026-07-24",
@@ -2998,7 +3403,12 @@
         "net_advances": 12,
         "rana": 4.3,
         "ad_line": -15953,
-        "mcclellan_osc": -39.06
+        "mcclellan_osc": -39.06,
+        "v": {
+          "env": "BEARISH",
+          "risk": "High",
+          "warn": 7
+        }
       },
       {
         "date": "2026-07-27",
@@ -3028,7 +3438,12 @@
         "net_advances": 641,
         "rana": 221.88,
         "ad_line": -15312,
-        "mcclellan_osc": -22.94
+        "mcclellan_osc": -22.94,
+        "v": {
+          "env": "MIXED",
+          "risk": "High",
+          "warn": 8
+        }
       },
       {
         "date": "2026-07-28",
@@ -3058,7 +3473,12 @@
         "net_advances": 343,
         "rana": 119.39,
         "ad_line": -14969,
-        "mcclellan_osc": -14.17
+        "mcclellan_osc": -14.17,
+        "v": {
+          "env": "BEARISH",
+          "risk": "High",
+          "warn": 7
+        }
       },
       {
         "date": "2026-07-29",
@@ -3088,7 +3508,12 @@
         "net_advances": -1088,
         "rana": -379.62,
         "ad_line": -16057,
-        "mcclellan_osc": -31.56
+        "mcclellan_osc": -31.56,
+        "v": {
+          "env": "BEARISH",
+          "risk": "High",
+          "warn": 9
+        }
       },
       {
         "date": "2026-07-30",
@@ -3118,7 +3543,12 @@
         "net_advances": 415,
         "rana": 144.05,
         "ad_line": -15642,
-        "mcclellan_osc": -20.08
+        "mcclellan_osc": -20.08,
+        "v": {
+          "env": "MIXED",
+          "risk": "Low",
+          "warn": 2
+        }
       },
       {
         "date": "2026-07-31",
@@ -3148,7 +3578,12 @@
         "net_advances": -336,
         "rana": -117.24,
         "ad_line": -15978,
-        "mcclellan_osc": -23.23
+        "mcclellan_osc": -23.23,
+        "v": {
+          "env": "MIXED",
+          "risk": "Low",
+          "warn": 1
+        }
       },
       {
         "date": "2026-08-03",
@@ -3178,7 +3613,12 @@
         "net_advances": 1259,
         "rana": 437.0,
         "ad_line": -14719,
-        "mcclellan_osc": 1.91
+        "mcclellan_osc": 1.91,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-08-04",
@@ -3208,7 +3648,12 @@
         "net_advances": 1102,
         "rana": 383.44,
         "ad_line": -13617,
-        "mcclellan_osc": 20.71
+        "mcclellan_osc": 20.71,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-08-05",
@@ -3238,7 +3683,12 @@
         "net_advances": -387,
         "rana": -134.14,
         "ad_line": -14004,
-        "mcclellan_osc": 10.81
+        "mcclellan_osc": 10.81,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-08-06",
@@ -3268,7 +3718,12 @@
         "net_advances": -286,
         "rana": -99.72,
         "ad_line": -14290,
-        "mcclellan_osc": 4.0
+        "mcclellan_osc": 4.0,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 1
+        }
       },
       {
         "date": "2026-08-07",
@@ -3298,7 +3753,12 @@
         "net_advances": 1282,
         "rana": 243.63,
         "ad_line": -13008,
-        "mcclellan_osc": 15.34
+        "mcclellan_osc": 15.34,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 1
+        }
       },
       {
         "date": "2026-08-10",
@@ -3328,7 +3788,12 @@
         "net_advances": -1027,
         "rana": -194.69,
         "ad_line": -14035,
-        "mcclellan_osc": 3.03
+        "mcclellan_osc": 3.03,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-08-11",
@@ -3358,7 +3823,12 @@
         "net_advances": 619,
         "rana": 118.24,
         "ad_line": -13416,
-        "mcclellan_osc": 8.14
+        "mcclellan_osc": 8.14,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-08-12",
@@ -3388,7 +3858,12 @@
         "net_advances": 332,
         "rana": 63.29,
         "ad_line": -13084,
-        "mcclellan_osc": 9.72
+        "mcclellan_osc": 9.72,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-08-13",
@@ -3418,7 +3893,12 @@
         "net_advances": 750,
         "rana": 142.97,
         "ad_line": -12334,
-        "mcclellan_osc": 15.01
+        "mcclellan_osc": 15.01,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-08-14",
@@ -3448,7 +3928,12 @@
         "net_advances": 274,
         "rana": 51.54,
         "ad_line": -12060,
-        "mcclellan_osc": 14.89
+        "mcclellan_osc": 14.89,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 0
+        }
       },
       {
         "date": "2026-08-17",
@@ -3478,7 +3963,12 @@
         "net_advances": -1583,
         "rana": -293.2,
         "ad_line": -13643,
-        "mcclellan_osc": -2.53
+        "mcclellan_osc": -2.53,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Low",
+          "warn": 1
+        }
       },
       {
         "date": "2026-08-18",
@@ -3508,7 +3998,12 @@
         "net_advances": -1263,
         "rana": -235.41,
         "ad_line": -14906,
-        "mcclellan_osc": -14.52
+        "mcclellan_osc": -14.52,
+        "v": {
+          "env": "MIXED",
+          "risk": "Elevated",
+          "warn": 6
+        }
       },
       {
         "date": "2026-08-19",
@@ -3519,30 +4014,2199 @@
         "down_4pct": 471,
         "ratio_5d": 0.9461,
         "ratio_10d": 1.1008,
-        "up_25pct_qtr": 946,
-        "down_25pct_qtr": 763,
-        "up_25pct_month": 529,
-        "down_25pct_month": 314,
-        "up_50pct_month": 138,
-        "down_50pct_month": 64,
-        "up_13pct_34d": 1208,
-        "down_13pct_34d": 1179,
-        "t2108": 50.82,
-        "pct_above_200sma": 49.89,
-        "pct_above_50sma": 51.58,
-        "pct_above_20sma": 51.85,
+        "up_25pct_qtr": 984,
+        "down_25pct_qtr": 779,
+        "up_25pct_month": 550,
+        "down_25pct_month": 323,
+        "up_50pct_month": 148,
+        "down_50pct_month": 66,
+        "up_13pct_34d": 1253,
+        "down_13pct_34d": 1183,
+        "t2108": 53.09,
+        "pct_above_200sma": 51.41,
+        "pct_above_50sma": 53.84,
+        "pct_above_20sma": 54.18,
         "advances": 3117,
         "declines": 2261,
-        "new_highs": 48,
-        "new_lows": 5,
+        "new_highs": 77,
+        "new_lows": 8,
         "net_advances": 856,
         "rana": 159.17,
         "ad_line": -14050,
-        "mcclellan_osc": -4.97
+        "mcclellan_osc": -4.97,
+        "v": {
+          "env": "BULLISH",
+          "risk": "Elevated",
+          "warn": 4
+        }
       }
     ]
   },
   "data_quality": {
     "stale": false
+  },
+  "verdict": {
+    "env": "BULLISH",
+    "score": 6,
+    "risk": "Elevated",
+    "warn_total": 4,
+    "exposure": "Normal, tighter stops",
+    "playbook": "Trend participation \u2014 press winners, normal pyramids",
+    "guidance": "Breadth is constructive but price warnings are stacking; participate with tighter risk.",
+    "spy_state": "Mixed",
+    "qqq_state": "Mixed",
+    "alignment": "Aligned",
+    "confirmation": "Inconclusive \u2014 5D vs 10D ratios disagree",
+    "notes": [],
+    "votes": {
+      "ratio_5d": "neutral",
+      "ratio_10d": "bull",
+      "thrust": "bull",
+      "qtr_spread": "bull",
+      "spread_13_34": "bull",
+      "nh_nl": "bull",
+      "mcclellan": "bear",
+      "pct200": "bull",
+      "t2108_zone": "neutral",
+      "spy_danger": "neutral",
+      "qqq_danger": "neutral",
+      "bench_trend": "bull"
+    },
+    "universe_size": 5622.0,
+    "universe_truncated": false,
+    "vote_detail": [
+      {
+        "key": "ratio_5d",
+        "side": "neutral",
+        "label": "5-day ratio",
+        "value": 0.9461,
+        "line": 1.0,
+        "margin": -0.05389999999999995,
+        "unit": "ratio",
+        "measurable": true
+      },
+      {
+        "key": "ratio_10d",
+        "side": "bull",
+        "label": "10-day ratio",
+        "value": 1.1008,
+        "line": 1.0,
+        "margin": 0.1008,
+        "unit": "ratio",
+        "measurable": true
+      },
+      {
+        "key": "thrust",
+        "side": "bull",
+        "label": "Thrust",
+        "value": 869.0,
+        "line": 635.2860000000001,
+        "margin": 233.71399999999994,
+        "unit": "names",
+        "measurable": true
+      },
+      {
+        "key": "qtr_spread",
+        "side": "bull",
+        "label": "Quarterly spread",
+        "value": 984.0,
+        "line": 0,
+        "margin": 205.0,
+        "unit": "names",
+        "measurable": true
+      },
+      {
+        "key": "spread_13_34",
+        "side": "bull",
+        "label": "13%/34d spread",
+        "value": 1253.0,
+        "line": 0,
+        "margin": 70.0,
+        "unit": "names",
+        "measurable": true
+      },
+      {
+        "key": "nh_nl",
+        "side": "bull",
+        "label": "New highs vs lows",
+        "value": 77.0,
+        "line": 0,
+        "margin": 69.0,
+        "unit": "names",
+        "measurable": true
+      },
+      {
+        "key": "mcclellan",
+        "side": "bear",
+        "label": "McClellan",
+        "value": -4.97,
+        "line": 0,
+        "margin": -4.97,
+        "unit": "points",
+        "measurable": true
+      },
+      {
+        "key": "pct200",
+        "side": "bull",
+        "label": "% above 200-day",
+        "value": 51.41,
+        "line": 50,
+        "margin": 1.4099999999999966,
+        "unit": "points",
+        "measurable": true
+      },
+      {
+        "key": "t2108_zone",
+        "side": "neutral",
+        "label": "T2108 zone",
+        "value": 53.09,
+        "line": 60,
+        "margin": -6.909999999999997,
+        "unit": "points",
+        "measurable": true
+      },
+      {
+        "key": "spy_danger",
+        "side": "neutral",
+        "label": "SPY warnings",
+        "value": 2,
+        "line": 1,
+        "margin": -1,
+        "unit": "warnings",
+        "measurable": true
+      },
+      {
+        "key": "qqq_danger",
+        "side": "neutral",
+        "label": "QQQ warnings",
+        "value": 2,
+        "line": 1,
+        "margin": -1,
+        "unit": "warnings",
+        "measurable": true
+      },
+      {
+        "key": "bench_trend",
+        "side": "bull",
+        "label": "Benchmark trend",
+        "value": null,
+        "line": null,
+        "margin": null,
+        "unit": "",
+        "measurable": false
+      }
+    ],
+    "context": {
+      "up_4pct": 99,
+      "down_4pct": 90,
+      "ratio_5d": 46,
+      "t2108": 56,
+      "mcclellan_osc": 47,
+      "nh_nl_net": 99,
+      "qtr_spread": 74
+    }
+  },
+  "conditions": {
+    "today": 76,
+    "raw_today": 87,
+    "positive_today": 13,
+    "n_votes": 15,
+    "span": 2,
+    "history": [
+      {
+        "date": "2025-08-07",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 40
+      },
+      {
+        "date": "2025-08-08",
+        "raw": 60,
+        "positive": 9,
+        "of": 15,
+        "score": 53
+      },
+      {
+        "date": "2025-08-11",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 44
+      },
+      {
+        "date": "2025-08-12",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 68
+      },
+      {
+        "date": "2025-08-13",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 89
+      },
+      {
+        "date": "2025-08-14",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 83
+      },
+      {
+        "date": "2025-08-15",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 72
+      },
+      {
+        "date": "2025-08-18",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 77
+      },
+      {
+        "date": "2025-08-19",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 57
+      },
+      {
+        "date": "2025-08-20",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 50
+      },
+      {
+        "date": "2025-08-21",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 61
+      },
+      {
+        "date": "2025-08-22",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 87
+      },
+      {
+        "date": "2025-08-25",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 87
+      },
+      {
+        "date": "2025-08-26",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 96
+      },
+      {
+        "date": "2025-08-27",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 99
+      },
+      {
+        "date": "2025-08-28",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 95
+      },
+      {
+        "date": "2025-08-29",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 90
+      },
+      {
+        "date": "2025-09-02",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 79
+      },
+      {
+        "date": "2025-09-03",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 75
+      },
+      {
+        "date": "2025-09-04",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 78
+      },
+      {
+        "date": "2025-09-05",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 88
+      },
+      {
+        "date": "2025-09-08",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 91
+      },
+      {
+        "date": "2025-09-09",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 88
+      },
+      {
+        "date": "2025-09-10",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 83
+      },
+      {
+        "date": "2025-09-11",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 94
+      },
+      {
+        "date": "2025-09-12",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 85
+      },
+      {
+        "date": "2025-09-15",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 86
+      },
+      {
+        "date": "2025-09-16",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 87
+      },
+      {
+        "date": "2025-09-17",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 82
+      },
+      {
+        "date": "2025-09-18",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 94
+      },
+      {
+        "date": "2025-09-19",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 85
+      },
+      {
+        "date": "2025-09-22",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 95
+      },
+      {
+        "date": "2025-09-23",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 85
+      },
+      {
+        "date": "2025-09-24",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 86
+      },
+      {
+        "date": "2025-09-25",
+        "raw": 60,
+        "positive": 9,
+        "of": 15,
+        "score": 69
+      },
+      {
+        "date": "2025-09-26",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 76
+      },
+      {
+        "date": "2025-09-29",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 74
+      },
+      {
+        "date": "2025-09-30",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 69
+      },
+      {
+        "date": "2025-10-01",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 76
+      },
+      {
+        "date": "2025-10-02",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 83
+      },
+      {
+        "date": "2025-10-03",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 94
+      },
+      {
+        "date": "2025-10-06",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 98
+      },
+      {
+        "date": "2025-10-07",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 77
+      },
+      {
+        "date": "2025-10-08",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 88
+      },
+      {
+        "date": "2025-10-09",
+        "raw": 60,
+        "positive": 9,
+        "of": 15,
+        "score": 69
+      },
+      {
+        "date": "2025-10-10",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 41
+      },
+      {
+        "date": "2025-10-13",
+        "raw": 60,
+        "positive": 9,
+        "of": 15,
+        "score": 54
+      },
+      {
+        "date": "2025-10-14",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 67
+      },
+      {
+        "date": "2025-10-15",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 71
+      },
+      {
+        "date": "2025-10-16",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 55
+      },
+      {
+        "date": "2025-10-17",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 50
+      },
+      {
+        "date": "2025-10-20",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 61
+      },
+      {
+        "date": "2025-10-21",
+        "raw": 53,
+        "positive": 8,
+        "of": 15,
+        "score": 56
+      },
+      {
+        "date": "2025-10-22",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 50
+      },
+      {
+        "date": "2025-10-23",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 61
+      },
+      {
+        "date": "2025-10-24",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 82
+      },
+      {
+        "date": "2025-10-27",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 72
+      },
+      {
+        "date": "2025-10-28",
+        "raw": 53,
+        "positive": 8,
+        "of": 15,
+        "score": 59
+      },
+      {
+        "date": "2025-10-29",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 46
+      },
+      {
+        "date": "2025-10-30",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 33
+      },
+      {
+        "date": "2025-10-31",
+        "raw": 53,
+        "positive": 8,
+        "of": 15,
+        "score": 46
+      },
+      {
+        "date": "2025-11-03",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 33
+      },
+      {
+        "date": "2025-11-04",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 29
+      },
+      {
+        "date": "2025-11-05",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 36
+      },
+      {
+        "date": "2025-11-06",
+        "raw": 20,
+        "positive": 3,
+        "of": 15,
+        "score": 25
+      },
+      {
+        "date": "2025-11-07",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 35
+      },
+      {
+        "date": "2025-11-10",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 43
+      },
+      {
+        "date": "2025-11-11",
+        "raw": 60,
+        "positive": 9,
+        "of": 15,
+        "score": 54
+      },
+      {
+        "date": "2025-11-12",
+        "raw": 53,
+        "positive": 8,
+        "of": 15,
+        "score": 53
+      },
+      {
+        "date": "2025-11-13",
+        "raw": 20,
+        "positive": 3,
+        "of": 15,
+        "score": 31
+      },
+      {
+        "date": "2025-11-14",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 28
+      },
+      {
+        "date": "2025-11-17",
+        "raw": 20,
+        "positive": 3,
+        "of": 15,
+        "score": 23
+      },
+      {
+        "date": "2025-11-18",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 26
+      },
+      {
+        "date": "2025-11-19",
+        "raw": 13,
+        "positive": 2,
+        "of": 15,
+        "score": 17
+      },
+      {
+        "date": "2025-11-20",
+        "raw": 13,
+        "positive": 2,
+        "of": 15,
+        "score": 14
+      },
+      {
+        "date": "2025-11-21",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 23
+      },
+      {
+        "date": "2025-11-24",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 34
+      },
+      {
+        "date": "2025-11-25",
+        "raw": 53,
+        "positive": 8,
+        "of": 15,
+        "score": 47
+      },
+      {
+        "date": "2025-11-26",
+        "raw": 53,
+        "positive": 8,
+        "of": 15,
+        "score": 51
+      },
+      {
+        "date": "2025-11-28",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 66
+      },
+      {
+        "date": "2025-12-01",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 49
+      },
+      {
+        "date": "2025-12-02",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 43
+      },
+      {
+        "date": "2025-12-03",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 63
+      },
+      {
+        "date": "2025-12-04",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 74
+      },
+      {
+        "date": "2025-12-05",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 69
+      },
+      {
+        "date": "2025-12-08",
+        "raw": 53,
+        "positive": 8,
+        "of": 15,
+        "score": 58
+      },
+      {
+        "date": "2025-12-09",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 68
+      },
+      {
+        "date": "2025-12-10",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 81
+      },
+      {
+        "date": "2025-12-11",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 85
+      },
+      {
+        "date": "2025-12-12",
+        "raw": 60,
+        "positive": 9,
+        "of": 15,
+        "score": 68
+      },
+      {
+        "date": "2025-12-15",
+        "raw": 53,
+        "positive": 8,
+        "of": 15,
+        "score": 58
+      },
+      {
+        "date": "2025-12-16",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 51
+      },
+      {
+        "date": "2025-12-17",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 35
+      },
+      {
+        "date": "2025-12-18",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 43
+      },
+      {
+        "date": "2025-12-19",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 59
+      },
+      {
+        "date": "2025-12-22",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 73
+      },
+      {
+        "date": "2025-12-23",
+        "raw": 33,
+        "positive": 5,
+        "of": 15,
+        "score": 46
+      },
+      {
+        "date": "2025-12-24",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 69
+      },
+      {
+        "date": "2025-12-26",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 68
+      },
+      {
+        "date": "2025-12-29",
+        "raw": 33,
+        "positive": 5,
+        "of": 15,
+        "score": 45
+      },
+      {
+        "date": "2025-12-30",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 33
+      },
+      {
+        "date": "2025-12-31",
+        "raw": 20,
+        "positive": 3,
+        "of": 15,
+        "score": 24
+      },
+      {
+        "date": "2026-01-02",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 35
+      },
+      {
+        "date": "2026-01-05",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 65
+      },
+      {
+        "date": "2026-01-06",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 84
+      },
+      {
+        "date": "2026-01-07",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 86
+      },
+      {
+        "date": "2026-01-08",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 91
+      },
+      {
+        "date": "2026-01-09",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 92
+      },
+      {
+        "date": "2026-01-12",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 93
+      },
+      {
+        "date": "2026-01-13",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 84
+      },
+      {
+        "date": "2026-01-14",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 90
+      },
+      {
+        "date": "2026-01-15",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 88
+      },
+      {
+        "date": "2026-01-16",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 83
+      },
+      {
+        "date": "2026-01-20",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 72
+      },
+      {
+        "date": "2026-01-21",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 86
+      },
+      {
+        "date": "2026-01-22",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 95
+      },
+      {
+        "date": "2026-01-23",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 85
+      },
+      {
+        "date": "2026-01-26",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 73
+      },
+      {
+        "date": "2026-01-27",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 86
+      },
+      {
+        "date": "2026-01-28",
+        "raw": 53,
+        "positive": 8,
+        "of": 15,
+        "score": 64
+      },
+      {
+        "date": "2026-01-29",
+        "raw": 53,
+        "positive": 8,
+        "of": 15,
+        "score": 57
+      },
+      {
+        "date": "2026-01-30",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 46
+      },
+      {
+        "date": "2026-02-02",
+        "raw": 60,
+        "positive": 9,
+        "of": 15,
+        "score": 55
+      },
+      {
+        "date": "2026-02-03",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 50
+      },
+      {
+        "date": "2026-02-04",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 43
+      },
+      {
+        "date": "2026-02-05",
+        "raw": 13,
+        "positive": 2,
+        "of": 15,
+        "score": 23
+      },
+      {
+        "date": "2026-02-06",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 56
+      },
+      {
+        "date": "2026-02-09",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 72
+      },
+      {
+        "date": "2026-02-10",
+        "raw": 53,
+        "positive": 8,
+        "of": 15,
+        "score": 59
+      },
+      {
+        "date": "2026-02-11",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 46
+      },
+      {
+        "date": "2026-02-12",
+        "raw": 13,
+        "positive": 2,
+        "of": 15,
+        "score": 24
+      },
+      {
+        "date": "2026-02-13",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 26
+      },
+      {
+        "date": "2026-02-17",
+        "raw": 13,
+        "positive": 2,
+        "of": 15,
+        "score": 17
+      },
+      {
+        "date": "2026-02-18",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 50
+      },
+      {
+        "date": "2026-02-19",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 65
+      },
+      {
+        "date": "2026-02-20",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 75
+      },
+      {
+        "date": "2026-02-23",
+        "raw": 20,
+        "positive": 3,
+        "of": 15,
+        "score": 38
+      },
+      {
+        "date": "2026-02-24",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 44
+      },
+      {
+        "date": "2026-02-25",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 46
+      },
+      {
+        "date": "2026-02-26",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 69
+      },
+      {
+        "date": "2026-02-27",
+        "raw": 33,
+        "positive": 5,
+        "of": 15,
+        "score": 45
+      },
+      {
+        "date": "2026-03-02",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 46
+      },
+      {
+        "date": "2026-03-03",
+        "raw": 13,
+        "positive": 2,
+        "of": 15,
+        "score": 24
+      },
+      {
+        "date": "2026-03-04",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 35
+      },
+      {
+        "date": "2026-03-05",
+        "raw": 20,
+        "positive": 3,
+        "of": 15,
+        "score": 25
+      },
+      {
+        "date": "2026-03-06",
+        "raw": 7,
+        "positive": 1,
+        "of": 15,
+        "score": 13
+      },
+      {
+        "date": "2026-03-09",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 22
+      },
+      {
+        "date": "2026-03-10",
+        "raw": 20,
+        "positive": 3,
+        "of": 15,
+        "score": 21
+      },
+      {
+        "date": "2026-03-11",
+        "raw": 20,
+        "positive": 3,
+        "of": 15,
+        "score": 20
+      },
+      {
+        "date": "2026-03-12",
+        "raw": 7,
+        "positive": 1,
+        "of": 15,
+        "score": 11
+      },
+      {
+        "date": "2026-03-13",
+        "raw": 7,
+        "positive": 1,
+        "of": 15,
+        "score": 8
+      },
+      {
+        "date": "2026-03-16",
+        "raw": 33,
+        "positive": 5,
+        "of": 15,
+        "score": 25
+      },
+      {
+        "date": "2026-03-17",
+        "raw": 33,
+        "positive": 5,
+        "of": 15,
+        "score": 30
+      },
+      {
+        "date": "2026-03-18",
+        "raw": 20,
+        "positive": 3,
+        "of": 15,
+        "score": 23
+      },
+      {
+        "date": "2026-03-19",
+        "raw": 33,
+        "positive": 5,
+        "of": 15,
+        "score": 30
+      },
+      {
+        "date": "2026-03-20",
+        "raw": 13,
+        "positive": 2,
+        "of": 15,
+        "score": 19
+      },
+      {
+        "date": "2026-03-23",
+        "raw": 33,
+        "positive": 5,
+        "of": 15,
+        "score": 28
+      },
+      {
+        "date": "2026-03-24",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 27
+      },
+      {
+        "date": "2026-03-25",
+        "raw": 53,
+        "positive": 8,
+        "of": 15,
+        "score": 44
+      },
+      {
+        "date": "2026-03-26",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 33
+      },
+      {
+        "date": "2026-03-27",
+        "raw": 13,
+        "positive": 2,
+        "of": 15,
+        "score": 20
+      },
+      {
+        "date": "2026-03-30",
+        "raw": 7,
+        "positive": 1,
+        "of": 15,
+        "score": 11
+      },
+      {
+        "date": "2026-03-31",
+        "raw": 60,
+        "positive": 9,
+        "of": 15,
+        "score": 44
+      },
+      {
+        "date": "2026-04-01",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 59
+      },
+      {
+        "date": "2026-04-02",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 64
+      },
+      {
+        "date": "2026-04-06",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 66
+      },
+      {
+        "date": "2026-04-07",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 53
+      },
+      {
+        "date": "2026-04-08",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 71
+      },
+      {
+        "date": "2026-04-09",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 77
+      },
+      {
+        "date": "2026-04-10",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 74
+      },
+      {
+        "date": "2026-04-13",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 83
+      },
+      {
+        "date": "2026-04-14",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 86
+      },
+      {
+        "date": "2026-04-15",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 91
+      },
+      {
+        "date": "2026-04-16",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 92
+      },
+      {
+        "date": "2026-04-17",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 97
+      },
+      {
+        "date": "2026-04-20",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 99
+      },
+      {
+        "date": "2026-04-21",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 86
+      },
+      {
+        "date": "2026-04-22",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 95
+      },
+      {
+        "date": "2026-04-23",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 90
+      },
+      {
+        "date": "2026-04-24",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 92
+      },
+      {
+        "date": "2026-04-27",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 89
+      },
+      {
+        "date": "2026-04-28",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 83
+      },
+      {
+        "date": "2026-04-29",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 72
+      },
+      {
+        "date": "2026-04-30",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 91
+      },
+      {
+        "date": "2026-05-01",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 92
+      },
+      {
+        "date": "2026-05-04",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 79
+      },
+      {
+        "date": "2026-05-05",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 93
+      },
+      {
+        "date": "2026-05-06",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 98
+      },
+      {
+        "date": "2026-05-07",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 86
+      },
+      {
+        "date": "2026-05-08",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 91
+      },
+      {
+        "date": "2026-05-11",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 79
+      },
+      {
+        "date": "2026-05-12",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 75
+      },
+      {
+        "date": "2026-05-13",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 70
+      },
+      {
+        "date": "2026-05-14",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 77
+      },
+      {
+        "date": "2026-05-15",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 57
+      },
+      {
+        "date": "2026-05-18",
+        "raw": 67,
+        "positive": 10,
+        "of": 15,
+        "score": 64
+      },
+      {
+        "date": "2026-05-19",
+        "raw": 53,
+        "positive": 8,
+        "of": 15,
+        "score": 57
+      },
+      {
+        "date": "2026-05-20",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 68
+      },
+      {
+        "date": "2026-05-21",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 76
+      },
+      {
+        "date": "2026-05-22",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 87
+      },
+      {
+        "date": "2026-05-26",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 96
+      },
+      {
+        "date": "2026-05-27",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 94
+      },
+      {
+        "date": "2026-05-28",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 98
+      },
+      {
+        "date": "2026-05-29",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 95
+      },
+      {
+        "date": "2026-06-01",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 90
+      },
+      {
+        "date": "2026-06-02",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 88
+      },
+      {
+        "date": "2026-06-03",
+        "raw": 60,
+        "positive": 9,
+        "of": 15,
+        "score": 69
+      },
+      {
+        "date": "2026-06-04",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 81
+      },
+      {
+        "date": "2026-06-05",
+        "raw": 53,
+        "positive": 8,
+        "of": 15,
+        "score": 62
+      },
+      {
+        "date": "2026-06-08",
+        "raw": 33,
+        "positive": 5,
+        "of": 15,
+        "score": 43
+      },
+      {
+        "date": "2026-06-09",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 63
+      },
+      {
+        "date": "2026-06-10",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 48
+      },
+      {
+        "date": "2026-06-11",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 69
+      },
+      {
+        "date": "2026-06-12",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 81
+      },
+      {
+        "date": "2026-06-15",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 89
+      },
+      {
+        "date": "2026-06-16",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 78
+      },
+      {
+        "date": "2026-06-17",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 75
+      },
+      {
+        "date": "2026-06-18",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 87
+      },
+      {
+        "date": "2026-06-22",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 82
+      },
+      {
+        "date": "2026-06-23",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 76
+      },
+      {
+        "date": "2026-06-24",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 74
+      },
+      {
+        "date": "2026-06-25",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 83
+      },
+      {
+        "date": "2026-06-26",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 81
+      },
+      {
+        "date": "2026-06-29",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 80
+      },
+      {
+        "date": "2026-06-30",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 80
+      },
+      {
+        "date": "2026-07-01",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 85
+      },
+      {
+        "date": "2026-07-02",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 82
+      },
+      {
+        "date": "2026-07-06",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 89
+      },
+      {
+        "date": "2026-07-07",
+        "raw": 60,
+        "positive": 9,
+        "of": 15,
+        "score": 70
+      },
+      {
+        "date": "2026-07-08",
+        "raw": 60,
+        "positive": 9,
+        "of": 15,
+        "score": 63
+      },
+      {
+        "date": "2026-07-09",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 74
+      },
+      {
+        "date": "2026-07-10",
+        "raw": 60,
+        "positive": 9,
+        "of": 15,
+        "score": 65
+      },
+      {
+        "date": "2026-07-13",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 53
+      },
+      {
+        "date": "2026-07-14",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 49
+      },
+      {
+        "date": "2026-07-15",
+        "raw": 60,
+        "positive": 9,
+        "of": 15,
+        "score": 56
+      },
+      {
+        "date": "2026-07-16",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 45
+      },
+      {
+        "date": "2026-07-17",
+        "raw": 33,
+        "positive": 5,
+        "of": 15,
+        "score": 37
+      },
+      {
+        "date": "2026-07-20",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 30
+      },
+      {
+        "date": "2026-07-21",
+        "raw": 47,
+        "positive": 7,
+        "of": 15,
+        "score": 41
+      },
+      {
+        "date": "2026-07-22",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 32
+      },
+      {
+        "date": "2026-07-23",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 29
+      },
+      {
+        "date": "2026-07-24",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 28
+      },
+      {
+        "date": "2026-07-27",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 36
+      },
+      {
+        "date": "2026-07-28",
+        "raw": 33,
+        "positive": 5,
+        "of": 15,
+        "score": 34
+      },
+      {
+        "date": "2026-07-29",
+        "raw": 20,
+        "positive": 3,
+        "of": 15,
+        "score": 25
+      },
+      {
+        "date": "2026-07-30",
+        "raw": 33,
+        "positive": 5,
+        "of": 15,
+        "score": 30
+      },
+      {
+        "date": "2026-07-31",
+        "raw": 27,
+        "positive": 4,
+        "of": 15,
+        "score": 28
+      },
+      {
+        "date": "2026-08-03",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 63
+      },
+      {
+        "date": "2026-08-04",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 83
+      },
+      {
+        "date": "2026-08-05",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 76
+      },
+      {
+        "date": "2026-08-06",
+        "raw": 80,
+        "positive": 12,
+        "of": 15,
+        "score": 79
+      },
+      {
+        "date": "2026-08-07",
+        "raw": 93,
+        "positive": 14,
+        "of": 15,
+        "score": 88
+      },
+      {
+        "date": "2026-08-10",
+        "raw": 60,
+        "positive": 9,
+        "of": 15,
+        "score": 69
+      },
+      {
+        "date": "2026-08-11",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 90
+      },
+      {
+        "date": "2026-08-12",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 97
+      },
+      {
+        "date": "2026-08-13",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 99
+      },
+      {
+        "date": "2026-08-14",
+        "raw": 100,
+        "positive": 15,
+        "of": 15,
+        "score": 100
+      },
+      {
+        "date": "2026-08-17",
+        "raw": 73,
+        "positive": 11,
+        "of": 15,
+        "score": 82
+      },
+      {
+        "date": "2026-08-18",
+        "raw": 40,
+        "positive": 6,
+        "of": 15,
+        "score": 54
+      },
+      {
+        "date": "2026-08-19",
+        "raw": 87,
+        "positive": 13,
+        "of": 15,
+        "score": 76
+      }
+    ]
+  },
+  "state_board": {
+    "levels": [
+      "absent",
+      "very weak",
+      "early",
+      "started",
+      "good"
+    ],
+    "rows": [
+      {
+        "key": "damage",
+        "layer": "fact",
+        "level": 3,
+        "level_label": "started",
+        "evidence": "779 names \u221225% on the quarter against 984 up 25% \u2014 44% on the down side"
+      },
+      {
+        "key": "selling pressure",
+        "layer": "fact",
+        "level": 2,
+        "level_label": "early",
+        "evidence": "471 names \u22124% today against a five-day peak of 812, back to 58% of it"
+      },
+      {
+        "key": "breadth",
+        "layer": "fact",
+        "level": 3,
+        "level_label": "started",
+        "evidence": "54.2% above the 20-day, T2108 53.1, net advances +856"
+      },
+      {
+        "key": "trend",
+        "layer": "fact",
+        "level": 4,
+        "level_label": "good",
+        "evidence": "51.4% above the 200-day"
+      },
+      {
+        "key": "thrust",
+        "layer": "fact",
+        "level": 4,
+        "level_label": "good",
+        "evidence": "869 names +4% against 471 \u22124% (a thrust needs 635 of today's 5622)"
+      },
+      {
+        "key": "extremes",
+        "layer": "fact",
+        "level": 4,
+        "level_label": "good",
+        "evidence": "77 new 52-week highs against 8 new lows"
+      },
+      {
+        "key": "index repair",
+        "layer": "interpretation",
+        "level": 4,
+        "level_label": "good",
+        "evidence": "2 of 2 benchmarks above the 50-day: SPY, QQQ"
+      },
+      {
+        "key": "confirmation",
+        "layer": "anticipation",
+        "level": 0,
+        "level_label": "absent",
+        "evidence": "five-day ratio 0.9461, needs to clear 1.0"
+      },
+      {
+        "key": "rates",
+        "layer": "fact",
+        "level": null,
+        "level_label": null,
+        "evidence": "long-end yields are not wired into the pipeline \u2014 filled by hand"
+      }
+    ],
+    "chain": [
+      {
+        "key": "index repair",
+        "label": "Indexes repair",
+        "state": "lit",
+        "carrying": 1.0,
+        "measured": 1.0,
+        "fed": true,
+        "evidence": "2 of 2 benchmarks above the 50-day: SPY, QQQ"
+      },
+      {
+        "key": "thrust",
+        "label": "Buyers show up",
+        "state": "lit",
+        "carrying": 1.0,
+        "measured": 1.0,
+        "fed": true,
+        "evidence": "869 names +4% against 471 \u22124% (a thrust needs 635 of today's 5622)"
+      },
+      {
+        "key": "breadth",
+        "label": "Breadth expands",
+        "state": "lit",
+        "carrying": 0.75,
+        "measured": 0.75,
+        "fed": true,
+        "evidence": "54.2% above the 20-day, T2108 53.1, net advances +856"
+      },
+      {
+        "key": "extremes",
+        "label": "New highs take over",
+        "state": "lit",
+        "carrying": 0.75,
+        "measured": 1.0,
+        "fed": false,
+        "evidence": "77 new 52-week highs against 8 new lows"
+      },
+      {
+        "key": "confirmation",
+        "label": "Confirmation arrives",
+        "state": "unlit",
+        "carrying": 0.0,
+        "measured": 0.0,
+        "fed": true,
+        "evidence": "five-day ratio 0.9461, needs to clear 1.0"
+      }
+    ],
+    "measured": 8,
+    "total": 9
+  },
+  "regime": {
+    "bands": [
+      {
+        "key": "damaged",
+        "label": "Damaged",
+        "min": 0,
+        "max": 47,
+        "describes": "most conditions absent or very weak"
+      },
+      {
+        "key": "mixed",
+        "label": "Mixed",
+        "min": 47,
+        "max": 63,
+        "describes": "conditions split \u2014 repair started, not carried"
+      },
+      {
+        "key": "healthy",
+        "label": "Healthy",
+        "min": 63,
+        "max": 75,
+        "describes": "most conditions met"
+      },
+      {
+        "key": "extended",
+        "label": "Extended",
+        "min": 75,
+        "max": 101,
+        "describes": "nearly every condition met at once"
+      }
+    ],
+    "score": 75.0,
+    "band": "extended",
+    "band_label": "Extended",
+    "describes": "nearly every condition met at once",
+    "measured": 8,
+    "of": 9,
+    "strong": [
+      "trend",
+      "thrust",
+      "extremes",
+      "index repair"
+    ],
+    "weak": [
+      "confirmation"
+    ],
+    "evidence": "8 of 9 conditions measured, averaging 3.0 of 4; at full strength: trend, thrust, extremes, index repair; weak or absent: confirmation",
+    "predicts_return": false,
+    "separates_tail": true,
+    "caveat": "a risk-budget reading, not a direction call: over 2024-2026 it did not predict the next month's return, but 5% drawdown frequency fell monotonically from 27% in Damaged to 6% in Extended \u2014 on only ten independent episodes, in one rising regime"
   }
 }

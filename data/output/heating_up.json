@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-19T21:52:54.994796+00:00",
+  "timestamp": "2026-08-20T03:11:22.284140+00:00",
   "as_of": "2026-08-19",
   "rows": [
     {
@@ -1348,6 +1348,41 @@
       "sector": "Basic Materials"
     },
     {
+      "ticker": "TNET",
+      "score": 9.75,
+      "screeners": [
+        {
+          "name": "momentum_97",
+          "hits": 1,
+          "last_date": "2026-08-18"
+        },
+        {
+          "name": "vcp",
+          "hits": 1,
+          "last_date": "2026-08-19"
+        },
+        {
+          "name": "ema21_watch",
+          "hits": 3,
+          "last_date": "2026-08-17"
+        },
+        {
+          "name": "gainers_4pct",
+          "hits": 1,
+          "last_date": "2026-08-18"
+        },
+        {
+          "name": "healthy_charts",
+          "hits": 2,
+          "last_date": "2026-08-17"
+        }
+      ],
+      "first_seen": "2026-08-11",
+      "last_seen": "2026-08-19",
+      "days_span": 7,
+      "sector": "Industrials"
+    },
+    {
       "ticker": "ACHV",
       "score": 9.5,
       "screeners": [
@@ -1438,8 +1473,8 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 6,
-          "last_date": "2026-08-17"
+          "hits": 7,
+          "last_date": "2026-08-19"
         },
         {
           "name": "vol_up_gainers",
@@ -1448,8 +1483,8 @@
         }
       ],
       "first_seen": "2026-07-29",
-      "last_seen": "2026-08-18",
-      "days_span": 14,
+      "last_seen": "2026-08-19",
+      "days_span": 15,
       "sector": "Healthcare"
     },
     {
@@ -1755,41 +1790,6 @@
       "first_seen": "2026-07-31",
       "last_seen": "2026-08-05",
       "days_span": 4,
-      "sector": "Healthcare"
-    },
-    {
-      "ticker": "KIDS",
-      "score": 9.5,
-      "screeners": [
-        {
-          "name": "momentum_97",
-          "hits": 5,
-          "last_date": "2026-08-19"
-        },
-        {
-          "name": "ema21_watch",
-          "hits": 3,
-          "last_date": "2026-07-31"
-        },
-        {
-          "name": "gainers_4pct",
-          "hits": 1,
-          "last_date": "2026-08-05"
-        },
-        {
-          "name": "healthy_charts",
-          "hits": 5,
-          "last_date": "2026-08-04"
-        },
-        {
-          "name": "vol_up_gainers",
-          "hits": 1,
-          "last_date": "2026-08-05"
-        }
-      ],
-      "first_seen": "2026-07-29",
-      "last_seen": "2026-08-19",
-      "days_span": 15,
       "sector": "Healthcare"
     }
   ]
