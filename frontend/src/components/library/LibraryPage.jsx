@@ -1,7 +1,7 @@
 import PageHeader from '../PageHeader'
 import { useLibrary } from '../../hooks/useLibrary'
 import CardChart from '../watchlist/shortlist/CardChart'
-import { toEntries } from './entry'
+import { toEntries, axisFor } from './entry'
 
 /**
  * A Library page: a shelf of covers, and a page per piece.
@@ -24,93 +24,53 @@ import { toEntries } from './entry'
  * just means one page now has an article ABOVE its reserved block instead of
  * only the block. What is written shows; what is not still says so.
  *
- * Nothing here builds HTML. `parse` returns a block list and this turns it into
- * React elements, so every character of a fetched file is text by construction.
+ * Nothing here builds HTML. The article arrives as typed blocks and this turns
+ * them into React elements, so every character of a fetched file is text by
+ * construction — there is no path from file contents to markup.
  */
 
-function Spans({ spans }) {
-  return spans.map((s, i) =>
-    s.t === 'b' ? <b key={i} className="font-semibold text-[var(--color-text-bold)]">{s.s}</b>
-    : s.t === 'i' ? <i key={i}>{s.s}</i>
-    : s.t === 'code' ? <code key={i} className="font-mono text-[.92em]
-        bg-[var(--color-bg)] px-1 py-[1px] rounded">{s.s}</code>
-    : <span key={i}>{s.s}</span>)
-}
-
-/* The type ladder is the page's, not markdown's: an article is prose, so the
-   measure is capped near 70 characters and the headings step by weight and
-   space rather than by size alone. */
+/* The type ladder is the page's, not a document format's: an article is prose,
+   so the measure is capped near 70 characters and the headings step by weight
+   and space rather than by size alone. */
 const H = {
-  1: 'text-[27px] leading-tight font-semibold mt-0 mb-3 tracking-tight',
-  2: 'text-[17px] leading-snug font-semibold mt-7 mb-2',
-  3: 'text-[14px] leading-snug font-semibold mt-5 mb-1.5',
-  4: 'text-[13px] leading-snug font-semibold mt-4 mb-1.5',
+  h2: 'text-[17px] leading-snug font-semibold mt-7 mb-2',
+  h3: 'text-[14px] leading-snug font-semibold mt-5 mb-1.5',
 }
 
 /**
- * The chart an article asked for.
+ * One typed block.
  *
- * Drawn by the same component the Short List cards use — one price chart on
- * this site, not two. That matters more than it sounds: the 12 case charts the
- * validation report made were static SVGs written against that report's own
- * `var(--grid)` / `var(--muted)`, so they carry a fixed palette, live in
- * data/research where nothing serves them, and cannot follow a theme flip. A
- * payload plus this component gives the article a chart that takes the page's
- * tokens and flips for free.
+ * The article arrives as a list of these, so nothing is parsed out of prose and
+ * there is no path from a fetched file to markup — every string below is text
+ * by construction. A type this page has never heard of prints as a paragraph
+ * with its type named: visible and wrong-looking, which is the right failure.
+ * Silence would hide that an article had stopped rendering half of itself.
  */
-function ChartBlock({ chart, chartKey }) {
-  if (!chart?.series?.c?.length) {
-    return (
-      <div className="my-4 rounded-2xl px-5 py-5"
-           style={{ backgroundImage:
-             'repeating-linear-gradient(45deg,var(--color-border-light) 0 1px,transparent 1px 7px)' }}>
-        <div className="text-[10px] font-mono uppercase tracking-[.24em]
-                        text-[var(--color-text-muted)] mb-2">Chart not shipped</div>
-        <p className="m-0 text-[12.5px] leading-relaxed text-[var(--color-text-secondary)]">
-          这篇文章要一张图（<code className="font-mono">{chartKey}</code>），但配套的
-          <code className="font-mono"> .json</code> 里没有它的 K 线。图不是画不出来 ——
-          引擎在，缺的是这只票的日线。
-        </p>
-      </div>
-    )
-  }
-  return (
-    <figure className="my-5 mx-0">
-      <CardChart series={chart.series} marks={chart.marks ?? []}
-                 scale={chart.scale ?? 'linear'} />
-      {chart.caption && (
-        <figcaption className="mt-2 text-[11.5px] leading-relaxed text-[var(--color-text-muted)]">
-          {chart.caption}
-        </figcaption>
-      )}
-    </figure>
-  )
-}
-
-function Block({ b, assets }) {
-  if (b.type === 'h') {
-    const Tag = `h${Math.min(b.level + 1, 6)}`
-    return <Tag className={H[b.level] ?? H[4]}
-                style={b.level === 1 ? { fontFamily: 'var(--font-cond)' } : undefined}>
-      <Spans spans={b.spans} />
-    </Tag>
+function Block({ b }) {
+  if (b.type === 'h2' || b.type === 'h3') {
+    const Tag = b.type
+    return <Tag className={H[b.type]}>{b.text}</Tag>
   }
   if (b.type === 'p') {
-    return <p className="my-2.5 text-[13.5px] leading-relaxed text-[var(--color-text-secondary)]">
-      <Spans spans={b.spans} /></p>
+    return <p className="my-2.5 text-[13.5px] leading-relaxed
+                         text-[var(--color-text-secondary)]">{b.text}</p>
   }
-  if (b.type === 'chart') {
-    return <ChartBlock chartKey={b.key} chart={assets?.charts?.[b.key]} />
-  }
-  if (b.type === 'hr') {
-    return <hr className="my-6 border-0 border-t border-[var(--color-border-light)]" />
+  if (b.type === 'note') {
+    /* the provenance register: where the number came from, set apart and quiet */
+    return (
+      <p className="mt-6 mb-0 pl-3 border-l border-[var(--color-border)]
+                    text-[11.5px] leading-relaxed text-[var(--color-text-muted)]">
+        {b.text}
+      </p>
+    )
   }
   if (b.type === 'list') {
     const Tag = b.ordered ? 'ol' : 'ul'
     return (
       <Tag className={`my-2.5 pl-5 space-y-2 text-[13.5px] leading-relaxed
-                       text-[var(--color-text-secondary)] ${b.ordered ? 'list-decimal' : 'list-disc'}`}>
-        {b.items.map((spans, i) => <li key={i}><Spans spans={spans} /></li>)}
+                       text-[var(--color-text-secondary)]
+                       ${b.ordered ? 'list-decimal' : 'list-disc'}`}>
+        {(b.items ?? []).map((t, i) => <li key={i}>{t}</li>)}
       </Tag>
     )
   }
@@ -122,19 +82,17 @@ function Block({ b, assets }) {
           <thead>
             <tr className="text-left text-[10px] font-mono uppercase tracking-wide
                            text-[var(--color-text-muted)] border-b border-[var(--color-border)]">
-              {b.head.map((spans, i) => <th key={i} className="px-2 py-1.5 font-medium">
-                <Spans spans={spans} /></th>)}
+              {(b.columns ?? []).map((c, i) =>
+                <th key={i} className="px-2 py-1.5 font-medium">{c}</th>)}
             </tr>
           </thead>
           <tbody>
-            {b.rows.map((cells, r) => (
+            {(b.rows ?? []).map((cells, r) => (
               <tr key={r} className="border-b border-[var(--color-border-light)] align-top">
-                {cells.map((spans, c) => (
+                {cells.map((v, c) => (
                   <td key={c} className={`px-2 py-1.5 ${c === 0
                     ? 'font-mono tabular-nums whitespace-nowrap text-[var(--color-text-bold)]'
-                    : 'text-[var(--color-text-secondary)]'}`}>
-                    <Spans spans={spans} />
-                  </td>
+                    : 'text-[var(--color-text-secondary)]'}`}>{v}</td>
                 ))}
               </tr>
             ))}
@@ -143,10 +101,44 @@ function Block({ b, assets }) {
       </div>
     )
   }
-  return null
+  return (
+    <p className="my-2.5 text-[13.5px] leading-relaxed text-[var(--color-text-muted)] italic">
+      未知的块类型 <span className="font-mono not-italic">{String(b.type)}</span> —— 前端还不会画它。
+    </p>
+  )
 }
 
-function Article({ name, blocks, assets, missing }) {
+/**
+ * The article's chart, and its legend.
+ *
+ * Same component the Short List cards use — one price chart on this site, not
+ * two. The legend ships with the payload, so the marks are explained in the
+ * data side's own words rather than in a copy of them kept here.
+ */
+function ArticleChart({ chart }) {
+  const scale = axisFor(chart)
+  return (
+    <figure className="my-5 mx-0">
+      <CardChart series={chart.series} marks={chart.marks ?? []} scale={scale} />
+      <figcaption className="mt-2 flex flex-wrap gap-x-4 gap-y-1
+                             text-[11px] text-[var(--color-text-muted)]">
+        {chart.ticker && <span className="font-mono font-semibold
+                                          text-[var(--color-text-secondary)]">{chart.ticker}</span>}
+        {Object.entries(chart.legend ?? {}).map(([k, v]) => (
+          <span key={k}><b className="font-semibold font-mono">{k}</b> {v}</span>
+        ))}
+        {scale === 'log' && (
+          <span title="纵轴按对数：等距离 = 等百分比">
+            纵轴对数 —— 线性下，最后一天会把它之前的几个月压成一条线
+          </span>
+        )}
+      </figcaption>
+    </figure>
+  )
+}
+
+function Article({ entry }) {
+  const { name, title, subtitle, summary, chart, blocks, updated, missing } = entry
   if (missing) {
     return (
       <section className="border border-dashed border-[var(--color-untested)] rounded-3xl p-6
@@ -163,9 +155,23 @@ function Article({ name, blocks, assets, missing }) {
   return (
     <article className="rounded-3xl bg-[var(--color-surface)] px-6 py-6 sm:px-8 sm:py-7
                         max-w-[74ch] mb-6">
-      {blocks.map((b, i) => <Block key={i} b={b} assets={assets} />)}
+      <h1 className="m-0 text-[27px] leading-tight font-semibold tracking-tight"
+          style={{ fontFamily: 'var(--font-cond)' }}>{title}</h1>
+      {subtitle && (
+        <p className="m-0 mt-1 text-[15px] leading-snug
+                      text-[var(--color-text-secondary)]">{subtitle}</p>
+      )}
+      {summary && (
+        <p className="m-0 mt-3 text-[13.5px] leading-relaxed
+                      text-[var(--color-text-bold)]">{summary}</p>
+      )}
+
+      {chart && <ArticleChart chart={chart} />}
+
+      {blocks.map((b, i) => <Block key={i} b={b} />)}
+
       <p className="mt-7 mb-0 text-[10px] font-mono text-[var(--color-text-muted)]">
-        data/output/library/{name}
+        data/output/library/{name}{updated ? ` · ${updated.slice(0, 10)}` : ''}
       </p>
     </article>
   )
@@ -181,8 +187,8 @@ function Article({ name, blocks, assets, missing }) {
  * picture that does not exist. That is what a spine looks like anyway.
  */
 function Cover({ entry, onOpen }) {
-  const { title, lede, cover, missing, name } = entry
-  const art = !!cover?.series?.c?.length
+  const { title, subtitle, summary, chart, missing, name } = entry
+  const art = !!chart
   return (
     <button type="button" onClick={onOpen}
             className="group text-left w-full bg-[var(--color-surface)] rounded-3xl
@@ -193,8 +199,8 @@ function Cover({ entry, onOpen }) {
           <div className="h-[128px] flex items-end px-5 pt-5 overflow-hidden
                           border-b border-[var(--color-border-light)]">
             <div className="w-full -mb-2 opacity-80 group-hover:opacity-100 transition-opacity">
-              <CardChart series={cover.series} marks={[]} height={108} bare
-                         scale={cover.scale ?? 'linear'} />
+              <CardChart series={chart.series} marks={[]} height={108} bare
+                         scale={axisFor(chart)} />
             </div>
           </div>
           <h3 className="m-0 px-5 pt-4 text-[16.5px] leading-snug font-semibold
@@ -214,9 +220,13 @@ function Cover({ entry, onOpen }) {
       )}
 
       <div className="px-5 pt-3 pb-4 flex-1 flex flex-col">
-        {lede && (
+        {subtitle && (
+          <p className="m-0 mb-1 text-[12px] leading-snug
+                        text-[var(--color-text-muted)]">{subtitle}</p>
+        )}
+        {summary && (
           <p className="m-0 text-[12.5px] leading-relaxed
-                        text-[var(--color-text-secondary)] line-clamp-3">{lede}</p>
+                        text-[var(--color-text-secondary)] line-clamp-3">{summary}</p>
         )}
         <p className="m-0 mt-3 pt-0 text-[10px] font-mono uppercase tracking-[.16em]
                       text-[var(--color-text-muted)] group-hover:text-[var(--color-text)]
@@ -272,7 +282,7 @@ export default function LibraryPage({ page, entry: slug, group = 'library',
                            text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
           ← {title}
         </button>
-        {loading ? null : one ? <Article {...one} /> : (
+        {loading ? null : one ? <Article entry={one} /> : (
           /* A link that resolves to nothing says which piece and offers the
              shelf — a 404 inside our own product is a dead end we control. */
           <div className="border border-dashed border-[var(--color-untested)] rounded-3xl
