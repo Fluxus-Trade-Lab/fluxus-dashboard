@@ -240,11 +240,14 @@ class TestTop3mDetection:
 class TestMaReclaimAndChase:
     """2026-08-19, from the scanner validation playbook."""
 
-    def test_ma_reclaim_needs_a_cross_and_volume(self):
+    def test_ma_reclaim_needs_a_cross_only(self):
+        """Volume clause dropped 2026-08-20 (Andy OK): it blocked MU 08-04
+        (rv 0.7) and MRNA's three reclaim days (0.85-0.93) -- the exact
+        V-reversals the panel exists for."""
         p = W.PANELS["ma_reclaim"]
         assert p.test(row(cross_ema21_up=True, rel_volume=1.0))
-        assert p.test(row(cross_sma50_up=True, cross_ema21_up=False, rel_volume=1.4))
-        assert not p.test(row(cross_ema21_up=True, rel_volume=0.7))
+        assert p.test(row(cross_ema21_up=True, rel_volume=0.7))       # MU 08-04
+        assert p.test(row(cross_sma50_up=True, cross_ema21_up=False, rel_volume=None))
         assert not p.test(row(cross_ema21_up=False, cross_sma50_up=False, rel_volume=2.0))
         assert not p.test(row(cross_ema21_up=None, cross_sma50_up=None, rel_volume=2.0))
 

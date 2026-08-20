@@ -295,6 +295,7 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 - 前端通路(待 UI):格标题 → Screener 载入 `preset`;票 → ticker 页(Signal History 里能看它昨天在哪几格);Screener 里用户自建的预设**不进**晨报
 
 - **08-19 晚 cron 起**:三个预设双胞胎格(`weekly_momentum_97` / `bullish_4pct` / `weekly_20_gainers`)加 **非 Healthcare** 闸,与 `screener-presets.json` 的 `excludeHealthcare: true` 对齐(08-18 vs oratnek:我们 Momentum 97 七只里五只生物科技,他十一只里零只)。universe.json 多两列 **`rs_line_pctl_63` / `rs_line_pctl_126`**(RS 线自百分位的 3M / 6M 窗;只探不筛——他 Momentum 97 的 11 只全在 126 日新高,我们的零只;见 `data/research/oratnek_diff/README.md` 08-18 节)
+- **08-20 改(第三例量闸误拦,Andy:"OK")**:`ma_reclaim` 去掉 rel_volume ≥1 闸,只看上穿——MU 08-04(rv 0.7)和 MRNA 08-07/10/12(0.85–0.93)全被它拦,深跌反转的量比天然低(分母被崩盘天量抬高),且 Finviz 与 50 日均两把尺子同日差 0.3–0.6。**count 在普涨反弹日会大**(08-19 数据 255 只)——那本身是宽度读数;前端照常显示 top-25 + count 即可,量比在 watchlist_hits.csv 里留档
 - **08-20 加(MRNA +177% 案例,Andy:"三个都同意,尤其是EP")**:entries 区第二格 **`episodic_pivot`**(change_pct ≥10% × rel_volume ≥3,与 EP 筛选器同配方;**故意不排除 Healthcare**——EP 是重定价事件,生物科技是主产区;当日 ≥15% 的照旧带 `chase` 标)。heating_up 每行多 **`confluence_days`**(同日 ≥4 个筛选器齐亮的天数,每天 +2 分——单日核弹不再被"多日合流"设计漏掉;MRNA 案例 9.0 → 11.0 进榜)。案例全文 `data/research/case_mrna_2026-08-19/README.md`
 - **08-19 加(验刀报告三件套,Andy:"做起来")**:
   - `entries` 区最左新格 **`ma_reclaim`**(MA Reclaim:`cross_ema21_up` 或 `cross_sma50_up`,且 `rel_volume ≥ 1`;两个新布尔字段今晚 cron 首产,进 universe.json;在此之前 `measured=false`)。它是深回撤 V 反的入口(MU/SNDK/NBIS/RBRK 8 月起涨唯一提前亮的信号),不是趋势入场——在领头股上单看是抛硬币,要配主题四态和 ATR 位读

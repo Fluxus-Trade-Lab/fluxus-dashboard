@@ -128,14 +128,15 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
           "sp_signal = counter_break (close crossed the counter-trend line today)",
           ["sp_signal"], lambda r: _sig(r, "counter_break")),
     Panel("ma_reclaim", "MA Reclaim (close crossed up the 21EMA / 50SMA)",
-          "cross_ema21_up or cross_sma50_up (yesterday's close under the MA, today's at/above it) and rel_volume >= 1. "
-          "2026-08-19 scanner validation: MU / SNDK / NBIS / RBRK's August starts came from 14-28% under the 50SMA, "
-          "where every trend panel is by definition dark; the reclaim was the one footprint that lit before the "
-          "20-day high. On leaders alone it is a coin flip (edge -2.9 vs +11 baseline) -- it is the deep-pullback "
-          "V-reversal entry, not a trend entry; read it with the theme state and the ATR position, not by itself",
-          ["cross_ema21_up", "cross_sma50_up", "rel_volume"],
-          lambda r: (r.get("cross_ema21_up") is True or r.get("cross_sma50_up") is True)
-          and _ge(r, "rel_volume", 1.0)),
+          "cross_ema21_up or cross_sma50_up (yesterday's close under the MA, today's at/above it). No volume "
+          "clause (2026-08-20, Andy OK): the >=1 gate blocked MU 08-04 (rv 0.7) and all three of MRNA's "
+          "reclaim days (0.85-0.93) -- post-crash reversals run on LOW relative volume because the crash "
+          "inflated the average, and the two volume rulers (Finviz vs 50d) disagree by 0.3-0.6 on the same "
+          "day, so any floor is a line drawn inside noise. rel_volume stays visible in watchlist_hits. "
+          "It is the deep-pullback V-reversal entry, not a trend entry; read it with the theme state and "
+          "the ATR position. Counts swell on broad rebound days -- that itself is a breadth reading",
+          ["cross_ema21_up", "cross_sma50_up"],
+          lambda r: r.get("cross_ema21_up") is True or r.get("cross_sma50_up") is True),
     Panel("episodic_pivot", "Episodic Pivot (today)",
           "change_pct >= 10% and rel_volume >= 3 -- same recipe as the EP screener, inside the $1B/$20M gate. "
           "No Healthcare exclusion (deliberate, unlike the momentum twins): an EP is a repricing event and biotech "
