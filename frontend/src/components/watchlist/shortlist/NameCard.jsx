@@ -33,7 +33,7 @@ function Reading({ label, value, title }) {
 }
 
 export default function NameCard({ card, seat, seatLabel, verdictOf,
-                                   entry = {}, onMark, onNote }) {
+                                   entry = {}, onMark, onNote, onRemove }) {
   const [open, setOpen] = useState(false)
   const [noteOpen, setNoteOpen] = useState(false)
   const noteTimer = useRef(0)
@@ -82,27 +82,65 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
             )}
           </div>
           <p className="m-0 mt-1 text-[11.5px] text-[var(--color-text-muted)]">
-            {[card.group || (card.is_asset ? 'asset' : '无主题'), card.state, r.sector]
-              .filter(Boolean).join(' · ')}
+            {/* 「无主题」is a claim, and only the engine is in a position to make
+                it — it looked. A name typed into the box here was never checked
+                against the theme map, so its group is simply not printed. */}
+            {[card.group
+                || (card.is_asset ? 'asset' : card.source === 'manual' ? null : '无主题'),
+              card.state, r.sector].filter(Boolean).join(' · ')}
+            {/* where it was picked off — the one thing you cannot reconstruct
+                a week later, and the tray froze it at the moment of adding */}
+            {card.takenFrom && (
+              <span className="ml-2 text-[var(--color-text-secondary)]">
+                自「{card.takenFrom}」
+              </span>
+            )}
           </p>
         </div>
 
-        <Marks mark={mark} onMark={onMark} ticker={card.ticker}
+        <Marks mark={mark} onMark={onMark} ticker={card.ticker} onRemove={onRemove}
                note={entry.note} noteOpen={noteOpen} setNoteOpen={setNoteOpen} />
       </div>
 
       <div className="mt-4">
-        <CardChart series={card.series} marks={card.marks} />
+        {card.series ? (
+          <CardChart series={card.series} marks={card.marks} />
+        ) : (
+          /* Not a chart that failed — a chart nobody has built. The 130 bars and
+             the signal marks are made by the nightly engine off names it knows
+             about, and a ticker added in this browser has not reached the
+             pipeline at all: the GAS half of that loop is unbuilt. Saying so is
+             the difference between "no data" and "not yet asked for". */
+          <div className="rounded-2xl px-5 py-6"
+               style={{ backgroundImage:
+                 'repeating-linear-gradient(45deg,var(--color-border-light) 0 1px,transparent 1px 7px)' }}>
+            <p className="m-0 text-[13px] leading-snug text-[var(--color-text-bold)]">
+              还没有图 —— 引擎不知道这个名字。
+            </p>
+            <p className="m-0 mt-1.5 text-[12px] leading-relaxed text-[var(--color-text-secondary)]">
+              130 根 K 线和信号标记由每晚的 cron 生成，而手工加的票还没有走到管线那边去
+              （回路的另一半 GAS <code className="font-mono">shortlist_upsert</code> 还没接）。
+              下面的读数是真的，来自 <code className="font-mono">universe.json</code>，跟六席同一个口径。
+              {card.inUniverse === false && (
+                <b className="font-semibold"> 这个代码连 universe.json 里也没有 —— 读数一个都没有。</b>
+              )}
+            </p>
+          </div>
+        )}
       </div>
 
       {/* The verdict, composed by the engine from a fixed template — same input,
           same sentence, which is why it can be snapshot-tested rather than read
           and hoped over. */}
-      {verdictOf && (
+      {verdictOf ? (
         <p className="m-0 mt-3 text-[13px] leading-snug text-[var(--color-text-bold)]">
           {verdictOf}
         </p>
-      )}
+      ) : card.source === 'manual' ? (
+        <p className="m-0 mt-3 text-[12.5px] leading-snug text-[var(--color-text-muted)] italic">
+          没有判词 —— 判词是引擎按模板生成的，它还没见过这个名字。这里不替它写一句。
+        </p>
+      ) : null}
 
       {/* Where everything ✗ does NOT mean goes.
           The button says one thing — not this, today — and it can only keep
@@ -181,7 +219,7 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
  * §三.3 of the plan says a veto greys the card rather than removing it, so the
  * day's own mind can still be changed.
  */
-function Marks({ mark, onMark, ticker, note, noteOpen, setNoteOpen }) {
+function Marks({ mark, onMark, ticker, note, noteOpen, setNoteOpen, onRemove }) {
   const btn = (on) => `text-[11px] font-mono uppercase tracking-[.14em] px-2 py-[3px]
     border cursor-pointer transition-colors ${on
       ? 'bg-[var(--color-text-bold)] text-[var(--color-bg)] border-[var(--color-text-bold)]'
@@ -200,6 +238,12 @@ function Marks({ mark, onMark, ticker, note, noteOpen, setNoteOpen }) {
               aria-pressed={!!note}
               title={note ? `备注：${note}` : '写备注 —— 按钮之外的话都写这里'}
               onClick={() => setNoteOpen(!noteOpen)}>备注</button>
+      {/* A name you put on the list by hand has to come off it by hand. ✗ is a
+          judgement about today and does not remove anything; this does. */}
+      {onRemove && (
+        <button type="button" className={btn(false)} title="从我的名单里拿掉"
+                onClick={onRemove}>移出</button>
+      )}
     </div>
   )
 }

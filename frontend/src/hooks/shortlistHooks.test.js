@@ -36,15 +36,31 @@ describe('the two shortlist stores', () => {
     expect(s).toMatch(/setFailed/)
   })
 
-  it('leaves every caller pointed at the one it means', () => {
+  /**
+   * The first version of this said no file may import both, and the Short List
+   * page broke it the moment the two halves became one page — it needs the
+   * tray for Andy's names and the file for the six seats. Forbidding that was
+   * never the invariant; it was a proxy for one. The rule that would actually
+   * have caught the overwrite is this: nothing calls a hook it did not import.
+   * A file that lost an import and kept the call is the shape of the bug.
+   */
+  it('never calls a shortlist hook it did not import', () => {
     const walk = (dir) => readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
       e.isDirectory() ? walk(resolve(dir, e.name))
         : /\.jsx?$/.test(e.name) ? [resolve(dir, e.name)] : [])
+    let sawBoth = 0
     for (const f of walk(SRC)) {
+      // skip the hooks themselves and this file — a test that greps for a call
+      // pattern will always find its own regex source
+      if (/hooks\/useShortlist(File)?\.js$/.test(f) || /\.test\.jsx?$/.test(f)) continue
       const s = readFileSync(f, 'utf8')
-      // a file importing one must not call the other
-      if (/from '.*hooks\/useShortlist'/.test(s)) expect(s, f).not.toMatch(/useShortlistFile\(/)
-      if (/from '.*hooks\/useShortlistFile'/.test(s)) expect(s, f).not.toMatch(/\buseShortlist\(/)
+      const impTray = /import \{[^}]*\buseShortlist\b[^}]*\} from '.*hooks\/useShortlist'/.test(s)
+      const impFile = /\buseShortlistFile\b[^\n]*from '.*hooks\/useShortlistFile'/.test(s)
+      if (/\buseShortlist\(/.test(s)) expect(impTray, `${f} calls useShortlist()`).toBe(true)
+      if (/\buseShortlistFile\(/.test(s)) expect(impFile, `${f} calls useShortlistFile()`).toBe(true)
+      if (impTray && impFile) sawBoth += 1
     }
+    // and the page that joins the two halves is expected to hold both
+    expect(sawBoth).toBeGreaterThan(0)
   })
 })

@@ -1,7 +1,10 @@
-import { useSyncExternalStore } from 'react'
+import { useMemo, useState, useSyncExternalStore } from 'react'
 import NameCard from './NameCard'
 import { MarkGlyph, MARK_KINDS } from './CardChart'
 import { useShortlistFile } from '../../../hooks/useShortlistFile'
+import { useShortlist } from '../../../hooks/useShortlist'
+import { useUniverse } from '../../../hooks/useUniverse'
+import { manualCards } from './manualCards'
 import { buildLedger, tally } from './ledger'
 
 /**
@@ -189,9 +192,66 @@ function Legend({ legend }) {
   )
 }
 
+/**
+ * Add a name by hand, without leaving the page you compare on.
+ *
+ * Validated against universe.json — the same list the rest of the site treats
+ * as "every name we measure". A ticker outside it is still ADDED, because Andy
+ * asking to watch something is not a claim it passed our gate; it is added with
+ * the page saying it has no readings, which is the true state rather than a
+ * refusal that looks like a bug.
+ */
+function AddName({ onAdd, known }) {
+  const [v, setV] = useState('')
+  const t = v.trim().toUpperCase()
+  const inUniverse = t ? known.has(t) : null
+  return (
+    <form className="flex items-center gap-2 flex-wrap"
+          onSubmit={(e) => { e.preventDefault(); if (t) { onAdd(t); setV('') } }}>
+      <input value={v} onChange={(e) => setV(e.target.value)}
+             placeholder="加个名字" aria-label="加个名字"
+             className="w-[130px] rounded-full bg-[var(--color-bg)] px-3 py-1
+                        border border-[var(--color-border)] text-[12px] font-mono uppercase
+                        tracking-wide text-[var(--color-text-bold)]
+                        placeholder:text-[var(--color-text-muted)] placeholder:normal-case
+                        focus:outline-none focus:border-[var(--color-text-muted)]" />
+      <button type="submit" disabled={!t}
+              className="text-[11px] font-mono uppercase tracking-[.14em] px-2.5 py-[3px]
+                         border border-[var(--color-border)] bg-transparent cursor-pointer
+                         text-[var(--color-text-muted)] hover:text-[var(--color-text)]
+                         disabled:opacity-40 disabled:cursor-default">加入</button>
+      {t && inUniverse === false && (
+        <span className="text-[11px] text-[var(--color-text-secondary)]">
+          {t} 不在 universe.json 里 —— 还是能加，但它一个读数都不会有
+        </span>
+      )}
+    </form>
+  )
+}
+
 export default function ShortListPage() {
   const { data, failed } = useShortlistFile()
+  const { names: trayNames, add, remove, madeOn, fileDate, stale } = useShortlist()
+  const { all: universeRows } = useUniverse()
   const all = useMarks()
+
+  /* EVERY HOOK ABOVE THE EARLY RETURNS. These sat below `if (!data) return null`
+     for one build: the file resolves a tick after the first paint, so the second
+     render ran three more hooks than the first and React tore the page down.
+     286 tests passed while it was a white screen — nothing renders this page in
+     jsdom, and a hook-order fault is a runtime fault. `data` may be null here,
+     and every one of these is written to survive that. */
+  const uniByTicker = useMemo(() => Object.fromEntries(
+    (universeRows ?? []).map((r) => [r.ticker, r])), [universeRows])
+  const known = useMemo(() => new Set(Object.keys(uniByTicker)), [uniByTicker])
+
+  /* The two halves of this page, joined: the six the engine pushed, and the
+     names Andy took off the morning pages himself. They were separate stores
+     until he said it out loud — this page is the pushed cards plus his own. */
+  const mine = useMemo(() => manualCards(trayNames, data, uniByTicker),
+    [trayNames, data, uniByTicker])
+  const docWithMine = useMemo(() => ({ ...data, cards: [...(data?.cards ?? []), ...mine] }),
+    [data, mine])
 
   if (failed) {
     return (
@@ -205,9 +265,9 @@ export default function ShortListPage() {
   const day = all[data.date] || {}
   const entryOf = (tk) => day[tk] || {}
   const byTicker = Object.fromEntries((data.cards || []).map((c) => [c.ticker, c]))
-  const manualCards = (data.cards || []).filter((c) => c.source === 'manual')
   const seats = data.seats || []
-  const rows = buildLedger(data, Object.fromEntries(
+
+  const rows = buildLedger(docWithMine, Object.fromEntries(
     Object.entries(day).map(([tk, e]) => [tk, e.mark]).filter(([, m]) => m)))
   const t = tally(rows)
 
@@ -215,8 +275,8 @@ export default function ShortListPage() {
     <div className="mt-1">
       <div className="flex items-baseline gap-4 flex-wrap">
         <p className="text-[12px] font-mono text-[var(--color-text-muted)] m-0">
-          {data.date} 收盘 · 六席 {t.shown - (t.seats < rows.length ? manualCards.length : 0)}/{t.seats} 有名字
-          {manualCards.length > 0 && ` · 手动 ${manualCards.length}`}
+          {data.date} 收盘 · 六席 {seats.filter((s) => s.ticker).length}/{t.seats} 有名字
+          {mine.length > 0 && ` · 我的 ${mine.length}`}
         </p>
         {/* The denominator, on the page rather than in a later analysis. 未表态
             is a reading, not a gap: a seat he saw and walked past is the row a
@@ -237,19 +297,40 @@ export default function ShortListPage() {
         进学习语料</b>。接通之前它们不会消失，也不会被算进任何分析。
       </p>
 
-      {manualCards.length > 0 && (
-        <>
-          <h2 className="text-[13px] font-mono uppercase tracking-[.2em]
-                         text-[var(--color-text-muted)] mt-7 mb-3">我的名单</h2>
-          <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
-            {manualCards.map((c) => (
-              <NameCard key={c.ticker} card={c} verdictOf={c.verdict}
-                        entry={entryOf(c.ticker)}
-                        onMark={(v) => setMark(data.date, c.ticker, v)}
-                        onNote={(v) => setNote(data.date, c.ticker, v)} />
-            ))}
-          </div>
-        </>
+      <div className="flex items-baseline gap-4 flex-wrap mt-7 mb-2">
+        <h2 className="m-0 text-[13px] font-mono uppercase tracking-[.2em]
+                       text-[var(--color-text-muted)]">我的名单 {mine.length || ''}</h2>
+        <AddName known={known} onAdd={(tk) => add(tk, uniByTicker[tk] ?? {}, '手工加入')} />
+        {mine.length > 0 && (
+          <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
+            在晨报页图卡上按 add to shortlist 也进这里
+          </span>
+        )}
+      </div>
+      {stale && (
+        /* right names, wrong clock — the tray already knew to say this, and it
+           has to keep saying it now that the names render as full cards */
+        <p className="m-0 mb-3 pl-3 text-[11.5px] leading-relaxed text-[var(--color-text-secondary)]
+                      border-l border-dashed border-[var(--color-text-muted)]">
+          这份名单是照 <b className="font-semibold">{madeOn}</b> 的收盘挑的，屏幕上的文件是{' '}
+          {fileDate} 的。名字照原样留着 —— 开始今天的时候清掉它。
+        </p>
+      )}
+      {mine.length > 0 ? (
+        <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
+          {mine.map((c) => (
+            <NameCard key={c.ticker} card={c} verdictOf={c.verdict}
+                      entry={entryOf(c.ticker)}
+                      onRemove={() => remove(c.ticker)}
+                      onMark={(v) => setMark(data.date, c.ticker, v)}
+                      onNote={(v) => setNote(data.date, c.ticker, v)} />
+          ))}
+        </div>
+      ) : (
+        <p className="m-0 text-[12px] leading-relaxed text-[var(--color-text-muted)]">
+          空的。在晨报页把一个名字点出图、按 add to shortlist，或者在上面直接打代码 ——
+          两个入口进的是同一份名单。
+        </p>
       )}
 
       <h2 className="text-[13px] font-mono uppercase tracking-[.2em]
