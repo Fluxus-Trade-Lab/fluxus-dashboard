@@ -1,4 +1,4 @@
-import { useMemo, useState, useSyncExternalStore } from 'react'
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react'
 import NameCard from './NameCard'
 import { MarkGlyph, MARK_KINDS } from './CardChart'
 import { useShortlistFile } from '../../../hooks/useShortlistFile'
@@ -6,6 +6,7 @@ import { useShortlist } from '../../../hooks/useShortlist'
 import { useUniverse } from '../../../hooks/useUniverse'
 import { manualCards } from './manualCards'
 import { buildLedger, tally } from './ledger'
+import { credentials, pushOne, record, state as syncState } from './sync'
 
 /**
  * Short List — six seats, six questions, and one page for comparing them.
@@ -59,6 +60,14 @@ const snapshot = () => marks
 function write(date, ticker, patch) {
   const day = { ...(marks[date] || {}) }
   const next = { ...(day[ticker] || {}), ...patch }
+  /* A CONTENT change makes the record unsent again — an edited note is a new
+     record, and `syncedAt` means "the sheet has THIS", not "the sheet has heard
+     of this ticker". Stamping the mirror is not a content change, and clearing
+     the stamp here too was an infinite loop: a successful push wrote syncedAt,
+     this reset it to null, the effect saw an unsent record and pushed again.
+     The unit test missed it because it stubbed a FAILING endpoint; the browser
+     found it by freezing. */
+  if (!('syncedAt' in patch)) next.syncedAt = null
   if (next.mark == null && !next.note) delete day[ticker]
   else day[ticker] = next
   marks = { ...marks, [date]: day }
@@ -68,6 +77,47 @@ function write(date, ticker, patch) {
 export const setMark = (date, ticker, mark) => write(date, ticker, { mark })
 export const setNote = (date, ticker, note) => write(date, ticker, { note })
 export function useMarks() { return useSyncExternalStore(subscribe, snapshot, snapshot) }
+
+/**
+ * Mirror what has not reached the sheet.
+ *
+ * Local first, always: nothing here can lose a judgement Andy made. Records are
+ * flushed when the page opens and after each mark — never on a timer, because
+ * the GAS action does not exist yet and an endpoint that is not there should
+ * not be hammered. One record per call; this never touches `sync_all`.
+ *
+ * A push in flight is not retried under it (`inflight`), so a double-click or a
+ * second flush cannot send the same record twice while the first is still out.
+ */
+let inflight = false
+let lastError = null
+/** the pending set that last failed — a failure is not retried until the set
+ *  itself changes. Without this the effect that calls flush re-fires on every
+ *  render and a missing endpoint gets hammered, which is the exact thing this
+ *  file promises not to do. */
+let failedFor = null
+export const syncError = () => lastError
+
+export async function flush(date, seatOf, readingsOf) {
+  if (inflight) return
+  const creds = credentials()
+  if (!creds) return
+  const day = marks[date] || {}
+  const pending = Object.entries(day).filter(([, e]) => !e.syncedAt)
+  if (!pending.length) { failedFor = null; return }
+  const key = `${date}|${pending.map(([t, e]) => `${t}:${e.mark ?? ''}:${e.note ?? ''}`).join(',')}`
+  if (lastError && failedFor === key) return
+  inflight = true
+  try {
+    for (const [ticker, entry] of pending) {
+      const res = await pushOne(
+        record(date, ticker, entry, seatOf?.(ticker), readingsOf?.(ticker)), creds)
+      if (!res.ok) { lastError = res.error; failedFor = key; break }
+      lastError = null; failedFor = null
+      write(date, ticker, { syncedAt: new Date().toISOString() })
+    }
+  } finally { inflight = false; subs.forEach((f) => f()) }
+}
 
 /**
  * A seat with no name is not one state, and the file cannot yet say which.
@@ -229,29 +279,24 @@ function AddName({ onAdd, known }) {
   )
 }
 
+/**
+ * The guard, and nothing else.
+ *
+ * The page used to be one component with `if (!data) return null` in the middle
+ * and hooks on both sides of it. That crashed twice in one day — the file
+ * resolves a tick after the first paint, so the second render ran more hooks
+ * than the first and React tore the page down. Both times the whole suite
+ * passed: nothing renders this page in jsdom, and a hook-order fault is a
+ * runtime fault.
+ *
+ * A comment saying "every hook above the early returns" was already sitting
+ * here when I broke it the second time, which is the evidence that a comment is
+ * the wrong instrument. The split is the fix: this component may return early
+ * because it has one hook and nothing after it, and `Body` may use as many
+ * hooks as it likes because it has no early return to sit above.
+ */
 export default function ShortListPage() {
   const { data, failed } = useShortlistFile()
-  const { names: trayNames, add, remove, madeOn, fileDate, stale } = useShortlist()
-  const { all: universeRows } = useUniverse()
-  const all = useMarks()
-
-  /* EVERY HOOK ABOVE THE EARLY RETURNS. These sat below `if (!data) return null`
-     for one build: the file resolves a tick after the first paint, so the second
-     render ran three more hooks than the first and React tore the page down.
-     286 tests passed while it was a white screen — nothing renders this page in
-     jsdom, and a hook-order fault is a runtime fault. `data` may be null here,
-     and every one of these is written to survive that. */
-  const uniByTicker = useMemo(() => Object.fromEntries(
-    (universeRows ?? []).map((r) => [r.ticker, r])), [universeRows])
-  const known = useMemo(() => new Set(Object.keys(uniByTicker)), [uniByTicker])
-
-  /* The two halves of this page, joined: the six the engine pushed, and the
-     names Andy took off the morning pages himself. They were separate stores
-     until he said it out loud — this page is the pushed cards plus his own. */
-  const mine = useMemo(() => manualCards(trayNames, data, uniByTicker),
-    [trayNames, data, uniByTicker])
-  const docWithMine = useMemo(() => ({ ...data, cards: [...(data?.cards ?? []), ...mine] }),
-    [data, mine])
 
   if (failed) {
     return (
@@ -261,15 +306,53 @@ export default function ShortListPage() {
     )
   }
   if (!data) return null
+  return <Body data={data} />
+}
 
-  const day = all[data.date] || {}
+function Body({ data }) {
+  const { names: trayNames, add, remove, madeOn, fileDate, stale } = useShortlist()
+  const { all: universeRows } = useUniverse()
+  const all = useMarks()
+
+  const uniByTicker = useMemo(() => Object.fromEntries(
+    (universeRows ?? []).map((r) => [r.ticker, r])), [universeRows])
+  const known = useMemo(() => new Set(Object.keys(uniByTicker)), [uniByTicker])
+
+  /* The two halves of this page, joined: the six the engine pushed, and the
+     names Andy took off the morning pages himself. They were separate stores
+     until he said it out loud — this page is the pushed cards plus his own. */
+  const mine = useMemo(() => manualCards(trayNames, data, uniByTicker),
+    [trayNames, data, uniByTicker])
+  const docWithMine = useMemo(() => ({ ...data, cards: [...(data.cards ?? []), ...mine] }),
+    [data, mine])
+
+  /* `|| {}` minted a fresh object every render on a day with no marks, which
+     leaked straight through `rows` into the flush dependency. Memoised on the
+     stored value, so an untouched day is the SAME empty object each time. */
+  const day = useMemo(() => all[data.date] || {}, [all, data.date])
   const entryOf = (tk) => day[tk] || {}
   const byTicker = Object.fromEntries((data.cards || []).map((c) => [c.ticker, c]))
   const seats = data.seats || []
 
-  const rows = buildLedger(docWithMine, Object.fromEntries(
-    Object.entries(day).map(([tk, e]) => [tk, e.mark]).filter(([, m]) => m)))
+  /* Memoised because `byRow` below is a flush dependency: an array rebuilt
+     every render makes the effect fire every render, which turned a failing
+     endpoint into a retry storm the first time this shipped. */
+  const rows = useMemo(() => buildLedger(docWithMine, Object.fromEntries(
+    Object.entries(day).map(([tk, e]) => [tk, e.mark]).filter(([, m]) => m))),
+    [docWithMine, day])
   const t = tally(rows)
+
+  /* Mirror on arrival and after each change. The ledger row is what goes — the
+     seat it came from and the readings on the day, because the question worth
+     asking about an old veto is what the name looked like when it was cast. */
+  const byRow = useMemo(() => Object.fromEntries(rows.map((r) => [r.ticker, r])), [rows])
+  const sync = syncState({ hasCreds: !!credentials(),
+                           unsent: Object.values(day).filter((e) => !e.syncedAt).length,
+                           lastError: syncError() })
+  useEffect(() => {
+    if (!data?.date) return
+    flush(data.date, (tk) => byRow[tk]?.seat ?? null, (tk) => byRow[tk]?.readings ?? null)
+  }, [data?.date, byRow, sync.unsent])
 
   return (
     <div className="mt-1">
@@ -290,11 +373,26 @@ export default function ShortListPage() {
 
       {/* The loop's other half is missing, and the page has to say so — a mark
           that looks saved but feeds nothing is worse than no button at all. */}
+      {/* Three states, three sentences. A mark that looks saved and feeds
+          nothing is worse than no button, so this says which of the three is
+          true rather than one hedge covering all of them. */}
       <p className="m-0 mt-3 text-[11px] font-mono leading-relaxed
                     text-[var(--color-text-muted)]">
-        ✗/★ 现在只落在这台机器上。回路的另一半 —— GAS 的 <code>shortlist_upsert</code> 与
-        每晚拉回落 <code>shortlist_feedback</code> —— 还没接，所以这些标记<b className="font-semibold">还没有
-        进学习语料</b>。接通之前它们不会消失，也不会被算进任何分析。
+        {sync.kind === 'synced' ? (
+          <>✗/★/备注 已经写进 Sheet 的 Shortlist 页 —— 每条一行，只发这一条，不碰组合。</>
+        ) : sync.kind === 'off' ? (
+          <>✗/★/备注 只落在这台机器上 —— <b className="font-semibold">没有配 Google Sheet</b>
+            （在 Portfolio 页设 GAS 地址和 token）。它们不会丢，但也不会进学习语料。</>
+        ) : (
+          <>
+            <b className="font-semibold">{sync.unsent} 条还没送到 Sheet。</b>{' '}
+            {sync.lastError === 'action-not-implemented'
+              ? <>GAS 那边还没有 <code>shortlist_upsert</code> 这个动作 ——
+                  回路的另一半还没接，标记留在本地等着，接通那天会自动补送。</>
+              : <>上次失败：<code>{sync.lastError ?? '未知'}</code>。标记不会丢，下次打开或
+                  下次表态时会重试。</>}
+          </>
+        )}
       </p>
 
       <div className="flex items-baseline gap-4 flex-wrap mt-7 mb-2">
