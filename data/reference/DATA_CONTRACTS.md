@@ -403,6 +403,7 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 - [08-20] **`✗` 是三个标签挤在一个按钮里**(今天不合适 / 这只票本身不行 / 这个席选错了人)。学习端把三种当一种,30 个打岔全是噪声。前端会把 `✗` 的语义钉死成「不是这个,今天」并写在按钮的 tooltip 上;请在 schema 注释里也钉一遍,分析端不许假设按钮说了它没说的话。
 - [08-20] **`✗/★` 不能骑 `sync_all`**。`frontend/src/components/portfolio/services/sheetsSync.js:35` 发的是 `action:'sync_all'`,带 stockTrades+optionsTrades+meta **整包覆盖**,两个标签页同开会互相盖掉。要一个自己的 GAS action `shortlist_upsert`,**append-only、按 `(ticker, added_date)` 幂等**,只发这一条记录。GAS 侧归数据端;这个 action 落地之前,前端的 ✗/★ 只落本地并在页面上说明「回路的另一半还没接」。
 - [08-20] **同一个量在 shortlist.json 里有两种刻度**。已实测锁死:`readings.change_pct` 是**小数**(PSNL 0.1366);`panels[].chg_pct` 和 `marks[].chg` 是**百分数**(13.7)。前端各写了一个具名换算并用 series 复算做了回归测试,你们哪天统一了我的测试会响 —— 但统一之前请别悄悄改其中一个。
+- [08-20] **Library 缺一个目录**。`<页面>_<主题>.md` 是个约定,不是清单——浏览器没法从约定里知道有哪些文件。现在前端读的是**编译进来的文件名单**(`useLibrary.js` 的 `COMPILED_IN`),意味着你们每加一篇,前端就得发一版才看得见,而且那一版之前页面会说"1 篇"而实际有两篇。要 `data/output/library/index.json`,形如 `{"offense": ["offense_ep_mrna.md"], "defense": [...], ...}`。前端已经先 fetch 它、取不到才回落名单,并在页面上标明当前读的是哪一种(目录 vs 编译名单)——所以你们哪天放上去,不用通知我,自己就切过去了。
 - [08-20] `readings.hi20` **六张卡全是 null**,包括 asset 席 GLD(它的 `why` 写的正是「RS线21日=100×20日新高」)。是没接上还是故意留空?前端按「未测量」渲染,不当 false。GLD 另有 10 个 null(rs_1m/rs_3m/h_score/vcs/trend_base/sector/...)—— 资产层量得少,这个前端理解并会渲染成「未测量」。
 
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
