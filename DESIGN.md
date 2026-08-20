@@ -307,6 +307,25 @@ Depth is nearly absent by design. Cards are separated by **ground, not by fences
 - **Scan card, quiet** — a scan off the current step keeps its title and count on one
   line and gives up its names until clicked. Quiet, not hidden; and what opens by hand
   closes by hand.
+- **Name card** — the seat's QUESTION first, then the ticker. A card that leads with the
+  name invites you to judge the name; a card that leads with the question invites you to
+  judge whether the question was answered well, which is the harder and more useful read.
+  Every card states the rule that filled it.
+- **Price chart (self-drawn)** — close over EMA21 over SMA50, volume on its own baseline,
+  signal days as HTML marks positioned OVER the plot (the viewBox stretches, so a glyph
+  drawn inside it would squash). **A partly-missing series draws over the part that
+  exists** — a 130-bar window carries 32 leading nulls for a 50-day mean, and demanding a
+  complete series silently removed that line from every card on a page. Marks use two
+  channels, position and shape: what HAPPENED sits filled above the close, what was
+  CROSSED sits open below it — five identities is more than shape alone can carry.
+  **A log axis is opt-in and says `log` on itself**: one +177% day flattens the month
+  before it to 7.9% of the height, and an axis that has changed meaning without saying so
+  is worse than a squashed one.
+- **Library shelf** — a cover per piece, derived from the piece: title from its H1, line
+  from its first paragraph, art from the chart it already carries. Never authored twice,
+  so a piece written tonight has a cover tonight. **With no chart the title IS the art**,
+  set large in the cover's own space — a wordmark there would make every cover on a shelf
+  read the same and say the title twice.
 - **Shortlist tray** — each entry freezes the readings it was taken at and remembers
   which screen it came off, because the question worth asking about an old shortlist is
   whether the call was good on the day it was made.
@@ -334,6 +353,10 @@ Depth is nearly absent by design. Cards are separated by **ground, not by fences
 - Let a control go one way only. An expander with no collapse is not a control.
 - Put two selectors over the same set of objects.
 - Colour by a property the position already encodes.
+- Render a fetched file as HTML. Parse it to a data structure and build elements, so the
+  content is text by construction.
+- Verify that something rendered and stop there. Count the strokes: a chart that drew two
+  of the three lines it claims looks exactly like a chart.
 - Trust an SVG's declared font size, a summary's totals, or a screenshot that predates
   the change you are testing.
 
