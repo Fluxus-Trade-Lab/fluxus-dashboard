@@ -295,6 +295,7 @@ Steve Jacobs 的读法:`<0` 忽略 · `0–4` 建仓区 · `5–7` 持有 · `�
 - 前端通路(待 UI):格标题 → Screener 载入 `preset`;票 → ticker 页(Signal History 里能看它昨天在哪几格);Screener 里用户自建的预设**不进**晨报
 
 - **08-19 晚 cron 起**:三个预设双胞胎格(`weekly_momentum_97` / `bullish_4pct` / `weekly_20_gainers`)加 **非 Healthcare** 闸,与 `screener-presets.json` 的 `excludeHealthcare: true` 对齐(08-18 vs oratnek:我们 Momentum 97 七只里五只生物科技,他十一只里零只)。universe.json 多两列 **`rs_line_pctl_63` / `rs_line_pctl_126`**(RS 线自百分位的 3M / 6M 窗;只探不筛——他 Momentum 97 的 11 只全在 126 日新高,我们的零只;见 `data/research/oratnek_diff/README.md` 08-18 节)
+- **08-20 加(MRNA +177% 案例,Andy:"三个都同意,尤其是EP")**:entries 区第二格 **`episodic_pivot`**(change_pct ≥10% × rel_volume ≥3,与 EP 筛选器同配方;**故意不排除 Healthcare**——EP 是重定价事件,生物科技是主产区;当日 ≥15% 的照旧带 `chase` 标)。heating_up 每行多 **`confluence_days`**(同日 ≥4 个筛选器齐亮的天数,每天 +2 分——单日核弹不再被"多日合流"设计漏掉;MRNA 案例 9.0 → 11.0 进榜)。案例全文 `data/research/case_mrna_2026-08-19/README.md`
 - **08-19 加(验刀报告三件套,Andy:"做起来")**:
   - `entries` 区最左新格 **`ma_reclaim`**(MA Reclaim:`cross_ema21_up` 或 `cross_sma50_up`,且 `rel_volume ≥ 1`;两个新布尔字段今晚 cron 首产,进 universe.json;在此之前 `measured=false`)。它是深回撤 V 反的入口(MU/SNDK/NBIS/RBRK 8 月起涨唯一提前亮的信号),不是趋势入场——在领头股上单看是抛硬币,要配主题四态和 ATR 位读
   - 每只票项多三个字段:**`chg_pct`**(当日涨幅 %,一位小数)、**`chase`**(布尔,= 当日 ≥15%;4% Bullish × 当日 ≥15% 是全场最差一格,20d −9.3%/胜率 36%)、**`atr_from_sma50`**(ATR 位,一位小数——页面上"能不能上车"那个数字:0–4 / 5–7 / ≥7)。每格多 **`count_chase`**,顶层 `chase_rule`。前端:`chase=true` 折到格底灰显,不删

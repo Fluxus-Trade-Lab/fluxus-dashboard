@@ -136,6 +136,13 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
           ["cross_ema21_up", "cross_sma50_up", "rel_volume"],
           lambda r: (r.get("cross_ema21_up") is True or r.get("cross_sma50_up") is True)
           and _ge(r, "rel_volume", 1.0)),
+    Panel("episodic_pivot", "Episodic Pivot (today)",
+          "change_pct >= 10% and rel_volume >= 3 -- same recipe as the EP screener, inside the $1B/$20M gate. "
+          "No Healthcare exclusion (deliberate, unlike the momentum twins): an EP is a repricing event and biotech "
+          "is its home turf -- MRNA 2026-08-19 (+177%, rv 12.8) fired four screeners but had no panel to appear in. "
+          "Day 1 is NOT the entry (42% undercut the EP-day low); from session 3 the name enters the Delayed-EP watch",
+          ["change_pct", "rel_volume"],
+          lambda r: _ge(r, "change_pct", 0.10) and _ge(r, "rel_volume", 3.0)),
     Panel("liquid_leader_pullback", "Liquid Leader Pullback",
           "liquid_leader; perf_1w < 12%; 0.5-1 ATR from the 21EMA; 0-3 ATR from the 50SMA (course M2_L09; the two clauses we cannot read -- 5d/20d range contraction, earnings 7+ days out -- are not applied)",
           ["liquid_leader", "ema21_atr_dist", "atr_from_sma50"],
@@ -203,7 +210,7 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
 
 ZONES: List[Dict[str, Any]] = [
     {"key": "leaders", "label": "Who leads?", "panels": ["true_market_leaders", "liquid_leaders"]},
-    {"key": "entries", "label": "Can I enter today?", "panels": ["ma_reclaim", "ll_hl_1st", "ll_hl_2nd", "ll_hl_trend_break", "liquid_leader_pullback"]},
+    {"key": "entries", "label": "Can I enter today?", "panels": ["ma_reclaim", "episodic_pivot", "ll_hl_1st", "ll_hl_2nd", "ll_hl_trend_break", "liquid_leader_pullback"]},
     {"key": "compression", "label": "What is loading?", "panels": ["vcs", "anticipation"]},
     {"key": "accumulation", "label": "Who is being bought?", "panels": ["pp_today", "pp_2plus_10d", "morales_pp_10d"]},
     {"key": "moving", "label": "What is running?", "panels": ["weekly_momentum_97", "bullish_4pct", "weekly_20_gainers"]},

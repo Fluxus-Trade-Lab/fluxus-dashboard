@@ -39,7 +39,7 @@ class TestComputeHeat:
         assert len(heat) == 1
         h = heat[0]
         assert set(h) == {'ticker', 'score', 'screeners', 'first_seen',
-                          'last_seen', 'days_span', 'sector'}
+                          'last_seen', 'days_span', 'sector', 'confluence_days'}
         assert h['first_seen'] == '2026-05-01' and h['last_seen'] == '2026-05-05'
         assert h['days_span'] == 3          # 3 distinct archive dates in range
         assert h['sector'] == 'Technology'  # most recent non-null
@@ -182,3 +182,28 @@ class TestBuilders:
         assert entry['change_pct'] == 0.05
         assert 'num_contractions' not in entry
         assert 'rel_volume' not in entry
+
+
+from pipeline.screeners.ticker_heat import compute_heat
+
+
+class TestSameDayConfluence:
+    """MRNA 2026-08-19: four screeners on one day scored 9.0 vs a 9.5 cutoff."""
+
+    def test_three_plus_distinct_on_one_day_earn_the_bonus(self):
+        rows = [_ev('2026-05-05', 'BOMB', s) for s in
+                ('episodic_pivot', 'momentum_97', 'gainers_4pct', 'vol_up_gainers')]
+        rows += [_ev('2026-05-05', 'DUO', s) for s in ('episodic_pivot', 'gainers_4pct', 'vcp')]
+        heat = compute_heat(_frame(rows), '2026-05-05')
+        by = {h['ticker']: h for h in heat}
+        assert by['BOMB']['score'] == pytest.approx(3 + 3 + 1 + 1 + 2.0)   # weights + bonus
+        assert by['BOMB']['confluence_days'] == 1
+        # three distinct is a normal strong day (23.5/day on the archive), no bonus
+        assert by['DUO']['score'] == pytest.approx(7.0) and by['DUO']['confluence_days'] == 0
+
+    def test_bonus_is_per_qualifying_day(self):
+        rows = [_ev(d, 'TWICE', s) for d in ('2026-05-04', '2026-05-05')
+                for s in ('episodic_pivot', 'momentum_97', 'vcp', 'gainers_4pct')]
+        heat = compute_heat(_frame(rows), '2026-05-05')
+        h = heat[0]
+        assert h['confluence_days'] == 2

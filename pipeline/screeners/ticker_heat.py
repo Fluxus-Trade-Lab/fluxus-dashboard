@@ -47,6 +47,18 @@ WEIGHTS: Dict[str, int] = {
 HEAT_WINDOW = 15        # trailing archive dates
 REPEAT_FACTOR = 0.25    # weight multiplier per extra hit on the same screener
 REPEAT_CAP = 1.5        # per-screener repeat multiplier caps out here
+# Same-DAY confluence: >=3 distinct weighted screeners on one date is a
+# single loud event, not three quiet ones. MRNA 2026-08-19 (+177% EP) fired
+# four on the day and scored 9.0 against a 9.5 top-50 cutoff -- the additive
+# design is deaf to one-day bombs by construction (it was built for slow
+# multi-day confluence). The bonus is per qualifying DAY, so a name that
+# lights the board twice earns it twice.
+# >=3 was the first cut and it fired 23.5 times a DAY on the archive (4% /
+# Vol Up / Momentum are correlated -- any big up day lights three), inflating
+# the whole board (+286 names, cutoff 9.5 -> 12.0, MRNA still out). >=4 is
+# 4.2 a day and is the actual bomb signature (MRNA's day fired four).
+CONFLUENCE_MIN = 4      # distinct weighted screeners on one date
+CONFLUENCE_BONUS = 2.0  # added per qualifying date
 
 
 def compute_heat(events: pd.DataFrame, as_of: str,
@@ -78,12 +90,16 @@ def compute_heat(events: pd.DataFrame, as_of: str,
             score += weight * min(1 + REPEAT_FACTOR * (hits - 1), REPEAT_CAP)
             screeners.append({'name': name, 'hits': int(hits),
                               'last_date': str(sub['date'].max())})
+        by_day = grp.groupby(grp['date'].astype(str))['screener'].nunique()
+        conf_days = int((by_day >= CONFLUENCE_MIN).sum())
+        score += CONFLUENCE_BONUS * conf_days
         first_seen, last_seen = str(grp['date'].min()), str(grp['date'].max())
         span = date_index[last_seen] - date_index[first_seen] + 1
         sectors = grp.sort_values('date')['sector'].dropna()
         out.append({
             'ticker': str(ticker),
             'score': round(score, 2),
+            'confluence_days': conf_days,
             'screeners': sorted(screeners, key=lambda s: -WEIGHTS[s['name']]),
             'first_seen': first_seen,
             'last_seen': last_seen,

@@ -308,3 +308,20 @@ def test_momentum97_shadow_logs_both_recipes(tmp_path):
     got = {(r["recipe"], r["ticker"]) for r in csv.DictReader(p.open())}
     assert ("ours_1w97", "A") in got and ("rs63_97", "B") in got and ("rs63_97_green", "B") in got
     assert not any(t == "H" for _, t in got) and n == len(got)
+
+
+class TestEpisodicPivotPanel:
+    """2026-08-20 (Andy: '三个都同意，尤其是EP'): MRNA +177% fired four
+    screeners but Today's List had no EP panel. Same recipe as the screener;
+    deliberately NO Healthcare exclusion."""
+
+    def test_recipe_and_no_healthcare_gate(self):
+        p = W.PANELS["episodic_pivot"]
+        assert p.test(row(change_pct=0.177, rel_volume=12.8, sector="Healthcare"))
+        assert p.test(row(change_pct=0.10, rel_volume=3.0))
+        assert not p.test(row(change_pct=0.09, rel_volume=5.0))
+        assert not p.test(row(change_pct=0.15, rel_volume=2.9))
+
+    def test_sits_in_entries_after_ma_reclaim(self):
+        entries = [z for z in W.ZONES if z["key"] == "entries"][0]["panels"]
+        assert entries[:2] == ["ma_reclaim", "episodic_pivot"]
