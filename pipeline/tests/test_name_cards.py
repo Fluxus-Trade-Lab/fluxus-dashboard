@@ -104,3 +104,24 @@ def test_v_reversal_prefers_fresh_high_pullback(tmp_path=None):
     by3 = {"NOFLD": {"high_52w": -0.10, "rs_3m": 85, "atr_from_sma50": 1.5}}
     seats3 = NC.pick_seats(_wl({"liquid_leader_pullback": {"NOFLD": {}}.items()}), None, [], [], by3)
     assert {s["seat"]: s["ticker"] for s in seats3}["v_reversal"] == "NOFLD"
+
+
+def test_coiling_seat_prefers_3wt_then_coil_then_vcs():
+    """v3 (Andy): 3WT/COIL lead; VCS demoted to third but kept for comparison."""
+    wl = _wl({"vcs": {"VCSX": {}}.items()})
+    gate = dict(market_cap=5e9, avg_volume=5e6, close=100.0)
+    by = {"TW": {"wk_tight_3": True, "sma50_dist": 0.1, "high_52w": -0.05, "rs_3m": 90,
+                 "atr_from_sma50": 2.0, **gate},
+          "CO": {"range5_pct": 3.0, "dist_hi20_pct": -1.0, "sma50_dist": 0.1,
+                 "atr_from_sma50": 2.0, **gate},
+          "VCSX": {"vcs": 88, "atr_from_sma50": 2.0, **gate},
+          "SMALL": {"wk_tight_3": True, "sma50_dist": 0.1, "high_52w": -0.05, "rs_3m": 99,
+                    "atr_from_sma50": 1.0, "market_cap": 5e8, "avg_volume": 5e6, "close": 100.0}}
+    got = {x["seat"]: x for x in NC.pick_seats(wl, None, [], [], by)}
+    assert got["coiling"]["ticker"] == "TW" and "3周紧" in got["coiling"]["why"]   # SMALL fails the gate
+    by2 = dict(by); by2["TW"] = {**by["TW"], "wk_tight_3": False}
+    got2 = {x["seat"]: x for x in NC.pick_seats(wl, None, [], [], by2)}
+    assert got2["coiling"]["ticker"] == "CO" and "coil" in got2["coiling"]["why"]
+    by3 = dict(by2); by3["CO"] = {**by2["CO"], "range5_pct": 9.0}
+    got3 = {x["seat"]: x for x in NC.pick_seats(wl, None, [], [], by3)}
+    assert got3["coiling"]["ticker"] == "VCSX" and "对照" in got3["coiling"]["why"]

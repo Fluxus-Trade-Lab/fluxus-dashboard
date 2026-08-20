@@ -821,6 +821,11 @@ class YfinanceAdapter(BaseAdapter):
                     # 出新52wh后回撤的" -- the high-after-pullback archetype needs
                     # to know the high is FRESH, which the distance alone cannot say)
                     'days_since_52wh': int(n - 1 - int(hist['High'].values.argmax())),
+                    # tightness family (2026-08-20 study: every variant carries
+                    # positive edge; weekly tight = offense, daily coil = defense)
+                    'wk_tight_3': (lambda w: bool(len(w) >= 3 and (w.iloc[-3:].max() - w.iloc[-3:].min()) / w.iloc[-1] <= 0.015))(hist['Close'].resample('W-FRI').last().dropna()),
+                    'range5_pct': float((hist['High'].iloc[-5:].max() - hist['Low'].iloc[-5:].min()) / close * 100) if n >= 5 and close else None,
+                    'dist_hi20_pct': float((close / hist['Close'].iloc[-20:].max() - 1) * 100) if n >= 20 else None,
                     'low_52w': (close / float(hist['Low'].min()) - 1),
                     'from_open_pct': from_open_pct,
                     'perf_5d': perf_5d,

@@ -269,10 +269,31 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
         ("替补:均线收复中 rs_3m 最高", reclaim, rs3),
     ])
 
+    # Coiling seat v3 (Andy 2026-08-20): the tightness study judged VCS
+    # no-edge (无优势) while 3WT and the daily coil carry it, so they lead
+    # the chain. VCS is NOT discarded -- it stays third AND keeps logging
+    # nightly (vcs panel in watchlist_hits, vcs column in shortlist_log) so
+    # the comparison continues; if it earns its way back, it comes back.
+    from pipeline.screeners.watchlist import passes_gate
+
+    def _tight(t, mode):
+        r = by.get(t, {})
+        if not passes_gate(r):        # full-universe scan must honor the $1B/$20M gate
+            return False
+        above50 = (r.get("sma50_dist") or 0) > 0
+        if mode == "3wt":
+            return r.get("wk_tight_3") is True and above50 and (r.get("high_52w") or -1) >= -0.15
+        rng, hi20 = r.get("range5_pct"), r.get("dist_hi20_pct")
+        return (rng is not None and rng <= 5 and hi20 is not None and hi20 >= -3 and above50)
+
+    universe_names = list(by)
     vcs_p = panel_tickers("vcs")
     vcsv = lambda t: by.get(t, {}).get("vcs") or 0  # noqa: E731
+    rng_tight = lambda t: -(by.get(t, {}).get("range5_pct") or 99)  # noqa: E731 -- tighter first
     seat("coiling", [
-        ("VCS 格内分最高", vcs_p, vcsv),
+        ("3周紧(周K三连1.5%带×>50SMA×近52wh)", [t for t in universe_names if _tight(t, "3wt")], rs3),
+        ("日线coil(5日幅≤5%×近20日高×>50SMA)", [t for t in universe_names if _tight(t, "coil")], rng_tight),
+        ("替补:VCS 格(已判无优势,留作对照)", vcs_p, vcsv),
         ("替补:anticipation 格", panel_tickers("anticipation"), vcsv),
     ])
 
