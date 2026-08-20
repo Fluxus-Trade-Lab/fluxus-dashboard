@@ -1,6 +1,6 @@
 {
   "trade_id": "SOXS_2026-06-04_001",
-  "generated_at": "2026-08-18T03:59:15+00:00",
+  "generated_at": "2026-08-20T22:18:08+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SOXS",
@@ -35,8 +35,8 @@
     "volume": 66575950.0,
     "ma20": 815.67299,
     "ma50": 2450.157432,
-    "ma200": 8420.4383225,
-    "rsi14": 17.69558232593846,
+    "ma200": null,
+    "rsi14": 17.69565905916926,
     "atr14": 159.7320642857143,
     "atr14_pct": 310.7555159912887,
     "high_52w": 22704.5659,
@@ -46,10 +46,10 @@
     "low_10d": 47.645,
     "low_5d": 47.645
   },
-  "setup_type": "Long below MA200 \u2014 counter-trend",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {},
   "lesson": "Insufficient data",
-  "narrative": "Entered **SOXS** long on 2026-06-04 at $5.91 (qty 9609) with stop $5.50 (1R = $0.41/sh = $3,940). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price below MA20 ($815.67), MA20 < MA50 < MA200 (death alignment), RSI 18, 0% through 52W range, ATR 310.8% of price.  **Lesson: Insufficient data.**",
+  "narrative": "Entered **SOXS** long on 2026-06-04 at $5.91 (qty 9609) with stop $5.50 (1R = $0.41/sh = $3,940). Setup: **Long in mixed structure** \u2014 price below MA20 ($815.67), RSI 18, 0% through 52W range, ATR 310.8% of price.  **Lesson: Insufficient data.**",
   "ohlc_window": [
     {
       "date": "2026-05-05",

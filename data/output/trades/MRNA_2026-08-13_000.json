@@ -1,6 +1,6 @@
 {
   "trade_id": "MRNA_2026-08-13_000",
-  "generated_at": "2026-08-18T03:59:16+00:00",
+  "generated_at": "2026-08-20T22:18:09+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "MRNA",
@@ -9,16 +9,35 @@
     "entry_date": "2026-08-13",
     "entry_price": 62.72,
     "original_qty": 1637,
-    "current_qty": 1637,
+    "current_qty": 0,
     "stop_price": 60.0,
     "initial_stop": 60.0,
-    "closed": false,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "exit_date": "2026-08-19",
+    "hold_business_days": 4,
     "r_dollars": 4452.6399999999985,
-    "realized_pl": 0,
-    "realized_R": 0.0,
-    "trims": []
+    "realized_pl": 99110.98000000001,
+    "realized_R": 22.258925042222153,
+    "trims": [
+      {
+        "date": "2026-08-19",
+        "price": 101.03,
+        "qty": 818,
+        "type": "trim_1_2"
+      },
+      {
+        "date": "2026-08-19",
+        "price": 140.52,
+        "qty": 545,
+        "type": "trim_1_3"
+      },
+      {
+        "date": "2026-08-19",
+        "price": 155.32,
+        "qty": 274,
+        "type": "trim_1_3"
+      }
+    ]
   },
   "entry_snapshot": {
     "close": 63.65,
@@ -26,10 +45,10 @@
     "high": 65.33,
     "low": 62.33,
     "volume": 8159700.0,
-    "ma20": 57.89549999999999,
+    "ma20": 57.895500000000006,
     "ma50": 60.5203,
     "ma200": 46.293475,
-    "rsi14": 57.31677492054782,
+    "rsi14": 57.31677470088999,
     "atr14": 3.739285714285716,
     "atr14_pct": 5.874761530692406,
     "high_52w": 85.6,
@@ -41,22 +60,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 1.0312500000000029,
-    "mfe_date": "2026-08-17",
+    "mfe_R": 41.889705882352956,
+    "mfe_date": "2026-08-19",
     "mae_R": 0.6985294117647056,
     "mae_date": "2026-08-14",
-    "optimal_exit_price": 65.525,
-    "optimal_exit_date": "2026-08-17",
-    "optimal_R": 1.0312500000000029,
-    "days_to_optimal": 4,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
-    "post_exit_R": null,
-    "hold_calendar_days": 4
+    "optimal_exit_price": 176.66,
+    "optimal_exit_date": "2026-08-19",
+    "optimal_R": 41.889705882352956,
+    "days_to_optimal": 6,
+    "realized_R": 22.258925042222153,
+    "capture_pct": 53.13698096791665,
+    "missed_R": 19.630780840130804,
+    "post_exit_R": 33.92647058823531,
+    "hold_calendar_days": 6
   },
-  "lesson": "In progress",
-  "narrative": "Entered **MRNA** long on 2026-08-13 at $62.72 (qty 1637) with stop $60.00 (1R = $2.72/sh = $4,453). Setup: **Long in mixed structure** \u2014 price above MA20 ($57.90), MA stack mixed, RSI 57, 65% through 52W range, ATR 5.9% of price. **In progress.** Peak so far +1.03R; worst drawdown -0.70R.",
+  "lesson": "Good execution",
+  "narrative": "Entered **MRNA** long on 2026-08-13 at $62.72 (qty 1637) with stop $60.00 (1R = $2.72/sh = $4,453). Setup: **Long in mixed structure** \u2014 price above MA20 ($57.90), MA stack mixed, RSI 57, 65% through 52W range, ATR 5.9% of price. Realized **+22.26R**, peak was **+41.89R** on 2026-08-19 (day +6) \u2014 captured **53%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-07-14",
@@ -252,11 +271,35 @@
     },
     {
       "date": "2026-08-17",
-      "open": 64.25,
+      "open": 64.775,
       "high": 65.525,
       "low": 62.91,
       "close": 64.46,
-      "volume": 3977275.0
+      "volume": 3979600.0
+    },
+    {
+      "date": "2026-08-18",
+      "open": 63.04,
+      "high": 64.46,
+      "low": 62.129,
+      "close": 62.96,
+      "volume": 4305000.0
+    },
+    {
+      "date": "2026-08-19",
+      "open": 116.02,
+      "high": 176.66,
+      "low": 114.46,
+      "close": 174.38,
+      "volume": 199252300.0
+    },
+    {
+      "date": "2026-08-20",
+      "open": 150.1125,
+      "high": 155.0,
+      "low": 128.61,
+      "close": 133.32,
+      "volume": 99116829.0
     }
   ]
 }

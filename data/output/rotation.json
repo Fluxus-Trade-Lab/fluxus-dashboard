@@ -1,13 +1,13 @@
 {
-  "date": "2026-08-19",
+  "date": "2026-08-20",
   "benchmark": "SPY",
   "step_sessions": 10,
   "bucket_dates": [
-    "2026-06-23",
-    "2026-07-08",
-    "2026-07-22",
-    "2026-08-05",
-    "2026-08-19"
+    "2026-06-24",
+    "2026-07-09",
+    "2026-07-23",
+    "2026-08-06",
+    "2026-08-20"
   ],
   "bucket_labels": [
     "10\u20138w ago",
@@ -22,462 +22,462 @@
       "name": "Cloud Software",
       "side": "risk_on",
       "line": [
-        -0.07458139557072929,
-        0.13649905083448877,
-        -0.04742402692278824,
-        0.15455271947393756,
-        0.06168129487140328
+        -0.05098796650405801,
+        0.14537672407728452,
+        -0.06977624041519048,
+        0.14874628226807718,
+        0.0787448875862774
       ],
       "ribbon": [
         {
           "state": "Improving",
-          "level": -0.095205,
-          "accel": 0.095372
+          "level": -0.03727,
+          "accel": 0.017057
         },
         {
           "state": "Weakening",
-          "level": 0.092343,
-          "accel": -0.015313
+          "level": 0.169381,
+          "accel": -0.025296
         },
         {
           "state": "Leading",
-          "level": 0.093713,
-          "accel": 0.131229
+          "level": 0.076468,
+          "accel": 0.06393
         },
         {
           "state": "Weakening",
-          "level": 0.215986,
-          "accel": -0.040709
+          "level": 0.248537,
+          "accel": -0.072782
         },
         {
           "state": "Leading",
-          "level": 0.314838,
-          "accel": 0.06054
+          "level": 0.304432,
+          "accel": 0.161357
         }
       ],
       "state": "Leading",
-      "level": 0.314838,
-      "accel": 0.06054
+      "level": 0.304432,
+      "accel": 0.161357
     },
     {
       "ticker": "XLV",
       "name": "Healthcare",
       "side": "risk_off",
       "line": [
-        0.0063909033814572025,
-        0.05038743506403209,
-        -0.020379841297315626,
-        -0.0002752116197310972,
-        0.07112374917470088
+        -0.0009110325848095124,
+        0.03232591786543337,
+        0.01349751326917914,
+        -0.022510576060947196,
+        0.056036914782575775
       ],
       "ribbon": [
         {
           "state": "Improving",
-          "level": -0.066383,
-          "accel": 0.151412
+          "level": -0.06167,
+          "accel": 0.148023
         },
         {
           "state": "Improving",
-          "level": -0.021439,
-          "accel": 0.127029
+          "level": -0.02655,
+          "accel": 0.121128
         },
         {
           "state": "Leading",
-          "level": 0.033127,
-          "accel": 0.085453
+          "level": 0.067151,
+          "accel": 0.044481
         },
         {
           "state": "Weakening",
-          "level": 0.068459,
-          "accel": -0.132213
+          "level": 0.08598,
+          "accel": -0.120594
         },
         {
           "state": "Weakening",
-          "level": 0.146914,
-          "accel": -0.001592
+          "level": 0.145399,
+          "accel": -0.016504
         }
       ],
       "state": "Weakening",
-      "level": 0.146914,
-      "accel": -0.001592
-    },
-    {
-      "ticker": "IWC",
-      "name": "Microcaps",
-      "side": "risk_on",
-      "line": [
-        0.053290536171325065,
-        -0.003416331641134196,
-        -0.025767137887356073,
-        0.004401517338474825,
-        0.013558907547598475
-      ],
-      "ribbon": [
-        {
-          "state": "Leading",
-          "level": 0.079345,
-          "accel": 0.027487
-        },
-        {
-          "state": "Leading",
-          "level": 0.060744,
-          "accel": 0.071755
-        },
-        {
-          "state": "Weakening",
-          "level": 0.004383,
-          "accel": -0.051343
-        },
-        {
-          "state": "Lagging",
-          "level": -0.006013,
-          "accel": -0.050432
-        },
-        {
-          "state": "Weakening",
-          "level": 0.080114,
-          "accel": -0.062306
-        }
-      ],
-      "state": "Weakening",
-      "level": 0.080114,
-      "accel": -0.062306
+      "level": 0.145399,
+      "accel": -0.016504
     },
     {
       "ticker": "ARKK",
       "name": "Speculative Tech",
       "side": "risk_on",
       "line": [
-        0.015615926781800904,
-        0.029270649509654856,
-        -0.0542184948589538,
-        -0.027970499125004045,
-        0.09454242976959837
+        0.025539718562266334,
+        0.0375059465810863,
+        -0.07644480066620662,
+        -0.015420477628137252,
+        0.10731900353646051
       ],
       "ribbon": [
         {
           "state": "Improving",
-          "level": -0.040985,
-          "accel": 0.063439
+          "level": -0.013577,
+          "accel": 0.052592
         },
         {
           "state": "Leading",
-          "level": 0.032151,
-          "accel": 0.09836
+          "level": 0.04391,
+          "accel": 0.069994
         },
         {
           "state": "Improving",
-          "level": -0.081722,
-          "accel": 0.011749
+          "level": -0.109574,
+          "accel": 0.023712
         },
         {
           "state": "Lagging",
-          "level": -0.071547,
-          "accel": -0.115698
+          "level": -0.098404,
+          "accel": -0.07524
         },
         {
           "state": "Leading",
-          "level": 0.077399,
-          "accel": 0.014749
+          "level": 0.066516,
+          "accel": 0.083305
         }
       ],
       "state": "Leading",
-      "level": 0.077399,
-      "accel": 0.014749
+      "level": 0.066516,
+      "accel": 0.083305
     },
     {
-      "ticker": "SPHB",
-      "name": "High Beta Factor",
+      "ticker": "IWC",
+      "name": "Microcaps",
       "side": "risk_on",
       "line": [
-        0.03774070751526859,
-        -0.04881248292698115,
-        -0.00839943831764578,
-        -0.004305922696798303,
-        0.002026332408151865
+        0.05552287679305401,
+        0.0007249852396689072,
+        -0.025622645546950595,
+        0.0008494994882273232,
+        0.006533201609002504
       ],
       "ribbon": [
         {
           "state": "Leading",
-          "level": 0.157273,
-          "accel": 0.030007
+          "level": 0.073706,
+          "accel": 0.025188
+        },
+        {
+          "state": "Leading",
+          "level": 0.059282,
+          "accel": 0.057433
         },
         {
           "state": "Weakening",
-          "level": 0.103259,
-          "accel": -0.092813
+          "level": 0.003613,
+          "accel": -0.05536
+        },
+        {
+          "state": "Lagging",
+          "level": -0.004845,
+          "accel": -0.03852
         },
         {
           "state": "Weakening",
-          "level": 0.030627,
-          "accel": -0.207026
-        },
-        {
-          "state": "Weakening",
-          "level": 0.012777,
-          "accel": -0.036302
-        },
-        {
-          "state": "Weakening",
-          "level": 0.061397,
-          "accel": -0.066073
+          "level": 0.053132,
+          "accel": -0.028202
         }
       ],
       "state": "Weakening",
-      "level": 0.061397,
-      "accel": -0.066073
+      "level": 0.053132,
+      "accel": -0.028202
     },
     {
       "ticker": "IWM",
       "name": "Small Caps",
       "side": "risk_on",
       "line": [
-        0.04700166837135222,
-        -0.022343291665955056,
-        -0.0016402487343296634,
-        -0.009588729449000022,
-        0.007453297735030007
+        0.046026357811419505,
+        -0.02333578280076809,
+        0.000672895887539271,
+        -0.020065883525034467,
+        0.00581008486843948
       ],
       "ribbon": [
         {
           "state": "Leading",
-          "level": 0.074088,
-          "accel": 0.049327
+          "level": 0.069954,
+          "accel": 0.052631
         },
         {
           "state": "Leading",
-          "level": 0.029529,
-          "accel": 0.036419
+          "level": 0.029036,
+          "accel": 0.031933
         },
         {
           "state": "Weakening",
-          "level": 0.008503,
-          "accel": -0.047613
+          "level": 0.018377,
+          "accel": -0.05378
         },
         {
           "state": "Lagging",
-          "level": -0.002893,
-          "accel": -0.032436
+          "level": -0.007629,
+          "accel": -0.022159
         },
         {
           "state": "Weakening",
-          "level": 0.056978,
-          "accel": -0.076655
+          "level": 0.034677,
+          "accel": -0.048443
         }
       ],
       "state": "Weakening",
-      "level": 0.056978,
-      "accel": -0.076655
+      "level": 0.034677,
+      "accel": -0.048443
+    },
+    {
+      "ticker": "SPHB",
+      "name": "High Beta Factor",
+      "side": "risk_on",
+      "line": [
+        0.045845539168888116,
+        -0.03426241726370238,
+        -0.023703904706305123,
+        -0.025812502319017216,
+        0.013455703151291742
+      ],
+      "ribbon": [
+        {
+          "state": "Leading",
+          "level": 0.153285,
+          "accel": 0.019613
+        },
+        {
+          "state": "Weakening",
+          "level": 0.110331,
+          "accel": -0.09204
+        },
+        {
+          "state": "Weakening",
+          "level": 0.03184,
+          "accel": -0.144462
+        },
+        {
+          "state": "Lagging",
+          "level": -0.015171,
+          "accel": -0.046842
+        },
+        {
+          "state": "Weakening",
+          "level": 0.033417,
+          "accel": -0.050032
+        }
+      ],
+      "state": "Weakening",
+      "level": 0.033417,
+      "accel": -0.050032
     },
     {
       "ticker": "IPO",
       "name": "IPOs",
       "side": "risk_on",
       "line": [
-        0.0599506187230302,
-        -0.026795774330134026,
-        -0.053324968581715426,
-        -0.013721140898670159,
-        -0.0032718729080287723
+        0.053336879824778194,
+        0.00045145605944263423,
+        -0.06734586522040087,
+        -0.02117412392283846,
+        0.005167440030992787
       ],
       "ribbon": [
         {
-          "state": "Leading",
-          "level": 0.191482,
-          "accel": 0.009263
+          "state": "Weakening",
+          "level": 0.199329,
+          "accel": -0.020304
         },
         {
           "state": "Weakening",
-          "level": 0.198476,
-          "accel": -0.100143
+          "level": 0.208591,
+          "accel": -0.089627
         },
         {
           "state": "Weakening",
-          "level": 0.036671,
-          "accel": -0.244127
+          "level": 0.025694,
+          "accel": -0.190781
         },
         {
           "state": "Lagging",
-          "level": -0.00148,
-          "accel": -0.138231
+          "level": -0.014637,
+          "accel": -0.135747
         },
         {
           "state": "Weakening",
-          "level": 0.050581,
-          "accel": -0.110228
+          "level": 0.022009,
+          "accel": -0.049901
         }
       ],
       "state": "Weakening",
-      "level": 0.050581,
-      "accel": -0.110228
+      "level": 0.022009,
+      "accel": -0.049901
     },
     {
       "ticker": "IVE",
       "name": "Value Factor",
       "side": "risk_off",
       "line": [
-        0.00972962176400649,
-        -0.00422115692527858,
-        0.005298218764912432,
-        -0.010700133200939765,
-        0.014895667809149082
+        0.0055773137427108654,
+        -0.009192397810846353,
+        0.015345750239321942,
+        -0.017954227117703114,
+        0.01406283478067627
       ],
       "ribbon": [
         {
           "state": "Improving",
-          "level": -0.039216,
-          "accel": 0.068795
+          "level": -0.044873,
+          "accel": 0.067318
         },
         {
           "state": "Improving",
-          "level": -0.049973,
-          "accel": 0.051697
+          "level": -0.047532,
+          "accel": 0.049808
         },
         {
-          "state": "Improving",
-          "level": -0.010215,
-          "accel": 0.036868
+          "state": "Leading",
+          "level": 0.00503,
+          "accel": 0.009966
         },
         {
           "state": "Lagging",
-          "level": -0.011373,
-          "accel": -0.010027
+          "level": -0.002084,
+          "accel": -0.010091
         },
         {
           "state": "Weakening",
-          "level": 0.015668,
-          "accel": -0.002321
+          "level": 0.018521,
+          "accel": -0.012234
         }
       ],
       "state": "Weakening",
-      "level": 0.015668,
-      "accel": -0.002321
+      "level": 0.018521,
+      "accel": -0.012234
     },
     {
       "ticker": "SPLV",
       "name": "Low Volatility",
       "side": "risk_off",
       "line": [
-        0.03101894758881929,
-        0.006121970282013445,
-        0.0036386183795951155,
-        -0.02823736781166364,
-        -0.003637042493976783
+        0.01878426696097102,
+        -0.014344862831306315,
+        0.03125515588765415,
+        -0.04246485995223237,
+        -0.00011305846109310735
       ],
       "ribbon": [
         {
           "state": "Improving",
-          "level": -0.092435,
-          "accel": 0.131367
+          "level": -0.088746,
+          "accel": 0.139212
         },
         {
           "state": "Improving",
-          "level": -0.09939,
-          "accel": 0.140279
+          "level": -0.097225,
+          "accel": 0.142833
         },
         {
-          "state": "Improving",
-          "level": -0.021562,
-          "accel": 0.09789
-        },
-        {
-          "state": "Lagging",
-          "level": -0.024666,
-          "accel": -0.047409
+          "state": "Leading",
+          "level": 0.009165,
+          "accel": 0.040387
         },
         {
           "state": "Lagging",
-          "level": -0.012255,
-          "accel": -0.037191
+          "level": -0.004356,
+          "accel": -0.043828
+        },
+        {
+          "state": "Weakening",
+          "level": 0.000942,
+          "accel": -0.056266
         }
       ],
-      "state": "Lagging",
-      "level": -0.012255,
-      "accel": -0.037191
+      "state": "Weakening",
+      "level": 0.000942,
+      "accel": -0.056266
     },
     {
       "ticker": "IVW",
       "name": "Growth Factor",
       "side": "risk_on",
       "line": [
-        -0.007142293227140217,
-        0.0028835732816892,
-        -0.0047515846426892105,
-        0.008815145123006296,
-        -0.012574770701880955
+        -0.005606941123618259,
+        0.007878816741152317,
+        -0.012341460077396338,
+        0.015136364814240855,
+        -0.011662713575558481
       ],
       "ribbon": [
         {
           "state": "Weakening",
-          "level": 0.035638,
-          "accel": -0.059453
+          "level": 0.03963,
+          "accel": -0.059758
         },
         {
           "state": "Weakening",
-          "level": 0.044766,
-          "accel": -0.044273
+          "level": 0.042606,
+          "accel": -0.045467
         },
         {
-          "state": "Weakening",
-          "level": 0.008706,
-          "accel": -0.031044
+          "state": "Lagging",
+          "level": -0.004608,
+          "accel": -0.009975
         },
         {
           "state": "Leading",
-          "level": 0.009157,
-          "accel": 0.008242
+          "level": 0.001507,
+          "accel": 0.007666
         },
         {
           "state": "Improving",
-          "level": -0.013742,
-          "accel": 0.001764
+          "level": -0.015542,
+          "accel": 0.009945
         }
       ],
       "state": "Improving",
-      "level": -0.013742,
-      "accel": 0.001764
+      "level": -0.015542,
+      "accel": 0.009945
     },
     {
       "ticker": "XLP",
       "name": "Consumer Staples",
       "side": "risk_off",
       "line": [
-        0.019890364957945494,
-        -0.008109895372420795,
-        -0.002815036223434375,
-        -0.01868481247363829,
-        0.015128551993890071
+        0.013615658401387787,
+        -0.039874553001763124,
+        0.018119154673498228,
+        -0.018321479766320037,
+        0.010222157288303557
       ],
       "ribbon": [
         {
           "state": "Improving",
-          "level": -0.083759,
-          "accel": 0.095919
+          "level": -0.077183,
+          "accel": 0.11282
         },
         {
           "state": "Improving",
-          "level": -0.08792,
-          "accel": 0.097152
-        },
-        {
-          "state": "Improving",
-          "level": -0.026086,
-          "accel": 0.071568
+          "level": -0.102798,
+          "accel": 0.078999
         },
         {
           "state": "Lagging",
-          "level": -0.044173,
-          "accel": -0.004775
+          "level": -0.020167,
+          "accel": -0.004934
+        },
+        {
+          "state": "Lagging",
+          "level": -0.032687,
+          "accel": -0.012887
         },
         {
           "state": "Improving",
-          "level": -0.03865,
-          "accel": 0.040995
+          "level": -0.026869,
+          "accel": 0.008209
         }
       ],
       "state": "Improving",
-      "level": -0.03865,
-      "accel": 0.040995
+      "level": -0.026869,
+      "accel": 0.008209
     }
   ],
   "cuts": [
@@ -491,9 +491,9 @@
       "short": [
         "SPLV"
       ],
-      "spread": 0.005663,
-      "delta": -0.018268,
-      "month_spread": 0.021388,
+      "spread": 0.013569,
+      "delta": -0.003084,
+      "month_spread": 0.018903,
       "vote": "risk_on",
       "month_vote": "risk_on"
     },
@@ -507,9 +507,9 @@
       "short": [
         "IVE"
       ],
-      "spread": -0.02747,
-      "delta": -0.046986,
-      "month_spread": -0.012291,
+      "spread": -0.025726,
+      "delta": -0.058816,
+      "month_spread": -0.005623,
       "vote": "risk_off",
       "month_vote": "risk_off"
     },
@@ -526,22 +526,22 @@
         "XLV",
         "XLP"
       ],
-      "spread": -0.008183,
-      "delta": -0.005233,
-      "month_spread": -0.027572,
-      "vote": "risk_off",
+      "spread": 0.006544,
+      "delta": -0.001957,
+      "month_spread": -0.001665,
+      "vote": "risk_on",
       "month_vote": "risk_off"
     }
   ],
   "verdict": {
-    "call": "risk_off",
+    "call": "risk_on",
     "agree": 2,
     "of": 3,
     "month_call": "risk_off",
     "month_agree": 2,
     "month_of": 3,
-    "phase": "established",
-    "sentence": "2 of 3 cuts read risk off, widest on style at -2.7pp over the fortnight; the month agrees \u2014 this is the regime"
+    "phase": "turning",
+    "sentence": "2 of 3 cuts read risk on, widest on volatility appetite at +1.4pp over the fortnight; the month still reads risk off (2 of 3) \u2014 a turn, not yet a regime"
   },
   "state_windows": {
     "level_sessions": 63,

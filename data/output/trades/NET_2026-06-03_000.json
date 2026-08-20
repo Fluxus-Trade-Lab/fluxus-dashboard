@@ -1,6 +1,6 @@
 {
   "trade_id": "NET_2026-06-03_000",
-  "generated_at": "2026-08-18T03:59:15+00:00",
+  "generated_at": "2026-08-20T22:18:08+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "NET",
@@ -33,10 +33,10 @@
     "high": 270.23,
     "low": 260.74,
     "volume": 3905000.0,
-    "ma20": 221.23700000000002,
-    "ma50": 211.8734,
-    "ma200": 205.55285,
-    "rsi14": 67.46888387074023,
+    "ma20": 221.237,
+    "ma50": 211.87339999999998,
+    "ma200": null,
+    "rsi14": 67.46886746410603,
     "atr14": 12.104071428571427,
     "atr14_pct": 4.561893275759028,
     "high_52w": 274.63,
@@ -46,7 +46,7 @@
     "low_10d": 202.42,
     "low_5d": 213.3
   },
-  "setup_type": "Breakout / near 52W high",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": 0.16483979763912157,
     "mfe_date": "2026-06-04",
@@ -63,7 +63,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **NET** long on 2026-06-03 at $274.86 (qty 479) with stop $263.00 (1R = $11.86/sh = $5,681). Setup: **Breakout / near 52W high** \u2014 price above MA20 ($221.24), MA20 > MA50 > MA200 (golden alignment), RSI 67, 92% through 52W range, ATR 4.6% of price. Realized **-0.93R**, peak was **+0.16R** on 2026-06-04 (day +1). **Lesson: Failed setup.**",
+  "narrative": "Entered **NET** long on 2026-06-03 at $274.86 (qty 479) with stop $263.00 (1R = $11.86/sh = $5,681). Setup: **Long in mixed structure** \u2014 price above MA20 ($221.24), RSI 67, 92% through 52W range, ATR 4.6% of price. Realized **-0.93R**, peak was **+0.16R** on 2026-06-04 (day +1). **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-05-04",

@@ -1,6 +1,6 @@
 {
   "trade_id": "OUST_2026-08-11_000",
-  "generated_at": "2026-08-18T03:59:16+00:00",
+  "generated_at": "2026-08-20T22:18:09+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "OUST",
@@ -9,16 +9,23 @@
     "entry_date": "2026-08-11",
     "entry_price": 45.2,
     "original_qty": 2679,
-    "current_qty": 2679,
+    "current_qty": 0,
     "stop_price": 42.0,
     "initial_stop": 42.0,
-    "closed": false,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "exit_date": "2026-08-18",
+    "hold_business_days": 5,
     "r_dollars": 8572.800000000008,
-    "realized_pl": 0,
-    "realized_R": 0.0,
-    "trims": []
+    "realized_pl": -937.6500000000038,
+    "realized_R": -0.10937500000000035,
+    "trims": [
+      {
+        "date": "2026-08-18",
+        "price": 44.85,
+        "qty": 2679,
+        "type": "sell_rest"
+      }
+    ]
   },
   "entry_snapshot": {
     "close": 45.13,
@@ -28,8 +35,8 @@
     "volume": 3393200.0,
     "ma20": 39.137,
     "ma50": 42.6156,
-    "ma200": 29.056124999999998,
-    "rsi14": 55.17639290601659,
+    "ma200": 29.056125,
+    "rsi14": 55.176393706405904,
     "atr14": 4.396214285714286,
     "atr14_pct": 9.741223766262543,
     "high_52w": 63.79,
@@ -41,22 +48,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 2.077937499999998,
+    "mfe_R": 2.0778124999999963,
     "mfe_date": "2026-08-17",
     "mae_R": 0.9124999999999998,
     "mae_date": "2026-08-12",
-    "optimal_exit_price": 51.8494,
+    "optimal_exit_price": 51.849,
     "optimal_exit_date": "2026-08-17",
-    "optimal_R": 2.077937499999998,
+    "optimal_R": 2.0778124999999963,
     "days_to_optimal": 6,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
-    "post_exit_R": null,
-    "hold_calendar_days": 6
+    "realized_R": -0.10937500000000035,
+    "capture_pct": -5.263949466085151,
+    "missed_R": 2.1871874999999967,
+    "post_exit_R": -0.4940625000000005,
+    "hold_calendar_days": 7
   },
-  "lesson": "In progress",
-  "narrative": "Entered **OUST** long on 2026-08-11 at $45.20 (qty 2679) with stop $42.00 (1R = $3.20/sh = $8,573). Setup: **Long in mixed structure** \u2014 price above MA20 ($39.14), MA stack mixed, RSI 55, 61% through 52W range, ATR 9.7% of price. **In progress.** Peak so far +2.08R; worst drawdown -0.91R.",
+  "lesson": "Choppy / no edge",
+  "narrative": "Entered **OUST** long on 2026-08-11 at $45.20 (qty 2679) with stop $42.00 (1R = $3.20/sh = $8,573). Setup: **Long in mixed structure** \u2014 price above MA20 ($39.14), MA stack mixed, RSI 55, 61% through 52W range, ATR 9.7% of price. Realized **-0.11R**, peak was **+2.08R** on 2026-08-17 (day +6) \u2014 captured **-5%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-07-13",
@@ -261,10 +268,34 @@
     {
       "date": "2026-08-17",
       "open": 49.0,
-      "high": 51.8494,
+      "high": 51.849,
       "low": 47.58,
       "close": 48.13,
-      "volume": 3597067.0
+      "volume": 3658000.0
+    },
+    {
+      "date": "2026-08-18",
+      "open": 45.09,
+      "high": 47.16,
+      "low": 42.88,
+      "close": 42.99,
+      "volume": 3521700.0
+    },
+    {
+      "date": "2026-08-19",
+      "open": 43.0,
+      "high": 43.619,
+      "low": 39.43,
+      "close": 40.06,
+      "volume": 3055900.0
+    },
+    {
+      "date": "2026-08-20",
+      "open": 40.63,
+      "high": 40.7,
+      "low": 37.46,
+      "close": 37.95,
+      "volume": 2568404.0
     }
   ]
 }
