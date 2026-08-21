@@ -411,6 +411,8 @@ JSON schema(所有 library 文章通用):
 >
 > **归属定案(08-21 晚,三会话一致)**:数据端 = 本会话(风险线,b7 按「main 上有可查 commit」认定,0e 已让);`DATA_CONTRACTS.md` 整份 + `DATA_RELIABILITY.md` 正文归数据端;0e 只往 `incidents/` 加文件、往 RELIABILITY §六追行;0e 的地盘(勿动):`pipeline/tools/audit_unpushed*`、`data/research/night_reports/`、b4_gates 研究件。⚠ 分支 `auto/plumbing-handoff-b72f68` 已作废勿 merge(与 fef538b1 冲突),由 `auto/h3-unpushed-b72f68` 取代。
 >
+> **[08-21] `info_as_of` 口径(双方钉死,前端 445c3cad 已接+4 条测试)**:tickers 文件顶层 `info_as_of` 仅在**结转发生时**存在(空 info 不覆盖,保留上一份并标龄)。**结转 ≠ 缺失**——`info` 非空即为真值(只是钟旧),`info: {}` 才是没有;任何一侧都不得拿「有无 `info_as_of`」当「基本面有无」的判据。
+>
 > ✅ **两条已由数据端(风险线会话,现认领数据端)处理完,commit 8746418f(08-21)**:
 > ① `write_ticker_json` 无 ohlc_2y 整个不写(空壳失去覆盖权)+ audit 新增 **I7**(空壳率>10% 判 violation,CI 拒 commit)+ 存量 11 只已回补,**空壳现为 0/188**;
 > ② `groups_history.json` 已上线(`group_history.project()`,挂 run_all,每晚自动),⚠ 11 个跨 kind 撞名:theme 占裸名,industry 孪生在 `"<组名> (Industry)"` 键下——详见上面 [08-21] 行。
