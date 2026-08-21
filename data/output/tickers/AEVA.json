@@ -1,8 +1,8 @@
 {
   "ticker": "AEVA",
-  "fetched_at": "2026-08-20T22:17:46Z",
+  "fetched_at": "2026-08-21T22:11:19Z",
   "_schema": "v2",
-  "current_price": 18.8700008392334,
+  "current_price": 18.290000915527344,
   "info": {
     "symbol": "AEVA",
     "longName": "Aeva Technologies, Inc.",
@@ -13,13 +13,13 @@
     "city": "Mountain View",
     "website": "https://www.aeva.com",
     "fullTimeEmployees": 239,
-    "marketCap": 1315347712,
-    "enterpriseValue": 1303261952,
+    "marketCap": 1274918400,
+    "enterpriseValue": 1239829632,
     "trailingPE": null,
-    "forwardPE": -11.367471,
-    "priceToSalesTrailing12Months": 60.901367,
-    "enterpriseToRevenue": 60.342,
-    "priceToBook": 47.057358,
+    "forwardPE": -11.018073,
+    "priceToSalesTrailing12Months": 59.029465,
+    "enterpriseToRevenue": 57.405,
+    "priceToBook": 45.610977,
     "grossMargins": 0.27225,
     "operatingMargins": -5.63233,
     "profitMargins": -1.50116,
@@ -32,8 +32,8 @@
     "currentRatio": 7.846,
     "fiftyTwoWeekHigh": 31.3,
     "fiftyTwoWeekLow": 8.83,
-    "averageVolume": 2176922,
-    "averageVolume10days": 2423390,
+    "averageVolume": 2169950,
+    "averageVolume10days": 1721190,
     "beta": 2.458,
     "sharesOutstanding": 69705758,
     "sharesFloat": 41368973,
@@ -167,7 +167,7 @@
     "avg_price_target": 32.5,
     "high_price_target": 42.0,
     "low_price_target": 26.0,
-    "current_price": 18.87,
+    "current_price": 18.29,
     "recent_rating_changes": [
       {
         "date": "2026-08-07T18:20:00",
@@ -303,30 +303,22 @@
       "source": "Motley Fool"
     }
   ],
-  "options_implied_move": 0.07154212718386102,
+  "options_implied_move": 0.048660467766539706,
   "technicals": {
-    "ma20": 20.272000217437743,
-    "ma50": 21.284200057983398,
-    "ma200": 16.879525022506712,
-    "rsi14": 44.69999669102381,
+    "ma20": 20.444000244140625,
+    "ma50": 21.087800064086913,
+    "ma200": 16.895925025939942,
+    "rsi14": 43.49318740688834,
     "high_20d": 28.420000076293945,
-    "low_5d": 18.420000076293945,
-    "low_10d": 18.420000076293945,
+    "low_5d": 17.950000762939453,
+    "low_10d": 17.950000762939453,
     "high_52w": 31.299999237060547,
     "low_52w": 8.829999923706055,
-    "atr14": 2.7816431862967357,
-    "atr14_pct": 14.74108671216011,
-    "position_in_52w_range_pct": 44.681803392669956
+    "atr14": 2.8002144949776784,
+    "atr14_pct": 15.310083951939166,
+    "position_in_52w_range_pct": 42.10058424967984
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 2.99,
-      "high": 3.03,
-      "low": 2.86,
-      "close": 2.99,
-      "volume": 120000.0
-    },
     {
       "date": "2024-08-22",
       "open": 2.99,
@@ -4152,6 +4144,14 @@
       "volume": 1308200.0
     },
     {
+      "date": "2026-07-22",
+      "open": 17.27,
+      "high": 17.47,
+      "low": 16.7,
+      "close": 16.75,
+      "volume": 989900.0
+    },
+    {
       "date": "2026-07-23",
       "open": 16.5,
       "high": 17.04,
@@ -4313,30 +4313,22 @@
     },
     {
       "date": "2026-08-20",
-      "open": 19.74,
-      "high": 19.79,
+      "open": 19.75,
+      "high": 19.91,
       "low": 18.42,
       "close": 18.87,
-      "volume": 1409536.0
+      "volume": 1414200.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 19.01,
+      "high": 19.51,
+      "low": 17.95,
+      "close": 18.29,
+      "volume": 1113708.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-19",
-      "open": 13.03,
-      "high": 13.22,
-      "low": 12.52,
-      "close": 12.8,
-      "volume": 3001800.0
-    },
-    {
-      "date": "2025-08-20",
-      "open": 12.6,
-      "high": 13.44,
-      "low": 12.251,
-      "close": 13.41,
-      "volume": 2245000.0
-    },
     {
       "date": "2025-08-21",
       "open": 13.49,
@@ -6170,6 +6162,14 @@
       "volume": 1308200.0
     },
     {
+      "date": "2026-07-22",
+      "open": 17.27,
+      "high": 17.47,
+      "low": 16.7,
+      "close": 16.75,
+      "volume": 989900.0
+    },
+    {
       "date": "2026-07-23",
       "open": 16.5,
       "high": 17.04,
@@ -6331,11 +6331,19 @@
     },
     {
       "date": "2026-08-20",
-      "open": 19.74,
-      "high": 19.79,
+      "open": 19.75,
+      "high": 19.91,
       "low": 18.42,
       "close": 18.87,
-      "volume": 1409536.0
+      "volume": 1414200.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 19.01,
+      "high": 19.51,
+      "low": 17.95,
+      "close": 18.29,
+      "volume": 1113708.0
     }
   ],
   "ai_synthesis": null,

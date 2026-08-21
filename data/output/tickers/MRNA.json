@@ -1,8 +1,8 @@
 {
   "ticker": "MRNA",
-  "fetched_at": "2026-08-21T08:11:59Z",
+  "fetched_at": "2026-08-21T22:09:51Z",
   "_schema": "v2",
-  "current_price": 133.32000732421875,
+  "current_price": 145.1300048828125,
   "info": {
     "symbol": "MRNA",
     "longName": "Moderna, Inc.",
@@ -76,37 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": -1.97,
-      "eps_estimate": -2.05918,
-      "eps_surprise_pct": 0.0433
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": -3.4,
-      "eps_estimate": -3.87993,
-      "eps_surprise_pct": 0.1237
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": -2.11,
-      "eps_estimate": -2.60104,
-      "eps_surprise_pct": 0.18879999
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": -0.51,
-      "eps_estimate": -2.17919,
-      "eps_surprise_pct": 0.766
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-11-05",
-    "revenue_low": 827000000,
-    "revenue_high": 943800000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -164,175 +135,85 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Hold",
-    "total_ratings": 24,
-    "bullish": 4,
-    "neutral": 16,
-    "bearish": 4,
-    "avg_price_target": 89.33333,
-    "high_price_target": 170.0,
-    "low_price_target": 25.0,
-    "current_price": 133.32,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-20T17:57:00",
-        "firm": "Goldman Sachs",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-20T15:53:40",
-        "firm": "UBS",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-20T10:23:02",
-        "firm": "Morgan Stanley",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-19T19:34:17",
-        "firm": "William Blair",
-        "to_grade": "Outperform",
-        "from_grade": "Market Perform",
-        "action": "up"
-      },
-      {
-        "date": "2026-08-03T18:41:23",
-        "firm": "Citigroup",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-21T12:40:35",
-        "firm": "Goldman Sachs",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-08T17:11:40",
-        "firm": "Morgan Stanley",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-07T16:00:47",
-        "firm": "RBC Capital",
-        "to_grade": "Sector Perform",
-        "from_grade": "Sector Perform",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-07T14:22:04",
-        "firm": "B of A Securities",
-        "to_grade": "Underperform",
-        "from_grade": "Underperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-26T16:47:19",
-        "firm": "Piper Sandler",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
     {
-      "date": "2026-08-20T15:42:00Z",
-      "title": "Moderna pops on positive melanoma vaccine trial",
-      "url": "https://finance.yahoo.com/video/moderna-pops-positive-melanoma-vaccine-154200000.html",
-      "source": "Yahoo Finance Video"
+      "date": "2026-08-21T10:00:00Z",
+      "title": "Amid the chip bear market, healthcare is breaking out: Chart of the Day",
+      "url": "https://finance.yahoo.com/markets/stocks/article/amid-the-chip-bear-market-healthcare-is-breaking-out-chart-of-the-day-100000172.html",
+      "source": "Yahoo Finance"
     },
     {
-      "date": "2026-08-21T05:09:31Z",
-      "title": "SELLAS Life Sciences Group (SLS) Shares Just Moved, So What Is Drawing Attention?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/sellas-life-sciences-group-sls-050931079.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-21T03:09:23Z",
-      "title": "Dow Jones Futures: Market Triggers This Bearish Signal As Walmart, SpaceX, CrowdStrike Tumble",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-triggers-bearish-signal-walmart-spacex-crowdstrike/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-08-21T02:46:37Z",
-      "title": "SLS, IBRX Stocks In Focus: Analyst Says Moderna-Merck Cancer Vaccine Success \u2018Bodes Well\u2019 For Oncology",
-      "url": "https://stocktwits.com/news-articles/markets/equity/sls-ibrx-analyst-moderna-merck-cancer-vaccine-bodes-well-oncology/cZYBiezRJNG",
+      "date": "2026-08-21T21:19:31Z",
+      "title": "SLS Stock Clocks Three Straight Weeks Of Gains On Cancer Vaccine Spillover, REGAL Trial Data Anticipation",
+      "url": "https://stocktwits.com/news-articles/markets/equity/sls-stock-clocks-three-straight-weeks-of-gains-on-cancer-vaccine-spillover-regal-trial-data-anticipation/cZY9eyuRJV9",
       "source": "Stocktwits"
     },
     {
-      "date": "2026-08-21T01:11:30Z",
-      "title": "Moderna (MRNA) Clears A Phase 3 Milestone, Is The Upside Already Priced In?",
-      "url": "https://finance.yahoo.com/healthcare/articles/moderna-mrna-clears-phase-3-011130683.html",
-      "source": "Simply Wall St."
+      "date": "2026-08-21T20:55:22Z",
+      "title": "Stocks to Watch Recap: Strategy, Ross Stores, BJ\u2019s Wholesale Club",
+      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-08-21-2026/card/stocks-to-watch-strategy-ross-stores-bj-s-wholesale-club-zoDE9jJrgejXMMLRV9eA?siteid=yhoof2&yptr=yahoo",
+      "source": "The Wall Street Journal"
     },
     {
-      "date": "2026-08-20T23:55:00Z",
-      "title": "Review & Preview: The Market\u2019s Terrible, Horrible, No Good, Very Bad Day",
-      "url": "https://www.barrons.com/articles/stocks-today-bond-market-drives-stocks-lower-e03116ff?siteid=yhoof2&yptr=yahoo",
+      "date": "2026-08-21T20:45:08Z",
+      "title": "S&P 500 Posts First Weekly Loss Since July Amid US Warning to Iran",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/p-500-posts-first-weekly-204508360.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-08-21T20:18:00Z",
+      "title": "Moderna, Robinhood, Marvell, Tesla, SpaceX, and More Stocks That Explain Today\u2019s Market",
+      "url": "https://www.barrons.com/articles/stock-movers-b87ea8d7?siteid=yhoof2&yptr=yahoo",
       "source": "Barrons.com"
     },
     {
-      "date": "2026-08-20T22:05:00Z",
-      "title": "Moderna's Comeback Is Finally Taking Shape -- and There May Be More Upside Ahead",
-      "url": "https://www.fool.com/investing/2026/08/20/modernas-comeback-is-finally-taking-shape-and-ther/",
-      "source": "Motley Fool"
+      "date": "2026-08-21T18:57:36Z",
+      "title": "Thank Moderna for the Healthcare Sector\u2019s Standout Week",
+      "url": "https://www.barrons.com/livecoverage/stock-market-news-today-082126/card/thank-moderna-for-the-healthcare-sector-s-standout-week-K7SH8itZ6eDPCPM3Z08n?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
     },
     {
-      "date": "2026-08-20T21:49:03Z",
-      "title": "Stocks to Watch Thursday Recap: Strategy, Moderna, Walmart",
-      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-08-20-2026/card/stocks-to-watch-walmart-strategy-coty-XvpD0Ek1c1L2mYLRAVwB?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
+      "date": "2026-08-21T18:54:00Z",
+      "title": "Can mRNA Cure Cancer? Inside the Pipeline Risks for Biotech\u2019s Biggest Players",
+      "url": "https://www.barrons.com/articles/moderna-cancer-vaccine-success-mrna-stocks-winners-losers-a607446d?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
     },
     {
-      "date": "2026-08-20T21:08:00Z",
-      "title": "Health Care Roundup: Market Talk",
-      "url": "https://www.wsj.com/finance/investing/health-care-roundup-market-talk-b4eee231?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
+      "date": "2026-08-21T18:33:02Z",
+      "title": "US Equity Indexes Lower This Week as Trump Threatens Major Economic War on Iran",
+      "url": "https://finance.yahoo.com/economy/policy/articles/us-equity-indexes-lower-week-183302717.html",
+      "source": "MT Newswires"
     },
     {
-      "date": "2026-08-20T20:43:15Z",
-      "title": "Why Moderna (MRNA) Stock Is Trading Lower Today",
-      "url": "https://finance.yahoo.com/healthcare/articles/why-moderna-mrna-stock-trading-204315382.html",
-      "source": "StockStory"
+      "date": "2026-08-21T18:26:10Z",
+      "title": "Investing.com\u2019s stocks of the week",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/investing-com-stocks-week-182610869.html",
+      "source": "Investing.com"
+    },
+    {
+      "date": "2026-08-21T14:49:30Z",
+      "title": "Moderna Stock Is Just The Start: Why AI-Focused Money Might Flow Into Biotech",
+      "url": "https://www.investors.com/news/moderna-stock-start-of-ai-focused-money-in-biotech/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
     }
   ],
-  "options_implied_move": 0.1095859525755214,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 68.01450061798096,
-    "ma50": 65.62070022583008,
-    "ma200": 48.12562501907349,
-    "rsi14": 69.43165320467226,
+    "ma20": 72.56750087738037,
+    "ma50": 67.603500289917,
+    "ma200": 48.726725044250486,
+    "rsi14": 71.60469796465266,
     "high_20d": 176.66000366210938,
-    "low_5d": 60.81999969482422,
-    "low_10d": 54.619998931884766,
+    "low_5d": 62.12900161743164,
+    "low_10d": 58.40999984741211,
     "high_52w": 176.66000366210938,
     "low_52w": 22.280000686645508,
-    "atr14": 14.554501124790736,
-    "atr14_pct": 10.916966940600208,
-    "position_in_52w_range_pct": 71.9264182519942
+    "atr14": 16.104501724243164,
+    "atr14_pct": 11.096603860274792,
+    "position_in_52w_range_pct": 79.57637118046432
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 87.73,
-      "high": 88.59,
-      "low": 85.88,
-      "close": 86.65,
-      "volume": 3150500.0
-    },
     {
       "date": "2024-08-22",
       "open": 86.16,
@@ -4331,18 +4212,18 @@
       "high": 155.0,
       "low": 128.61,
       "close": 133.32,
-      "volume": 99113800.0
+      "volume": 99499900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 132.5,
+      "high": 159.47,
+      "low": 132.43,
+      "close": 145.13,
+      "volume": 86743104.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 27.72,
-      "high": 27.89,
-      "low": 26.56,
-      "close": 26.89,
-      "volume": 6918900.0
-    },
     {
       "date": "2025-08-21",
       "open": 26.55,
@@ -6349,9 +6230,18 @@
       "high": 155.0,
       "low": 128.61,
       "close": 133.32,
-      "volume": 99113800.0
+      "volume": 99499900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 132.5,
+      "high": 159.47,
+      "low": 132.43,
+      "close": 145.13,
+      "volume": 86743104.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:11:59Z"
 }

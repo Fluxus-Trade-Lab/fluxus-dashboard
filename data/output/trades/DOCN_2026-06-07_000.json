@@ -1,6 +1,6 @@
 {
   "trade_id": "DOCN_2026-06-07_000",
-  "generated_at": "2026-08-20T22:18:08+00:00",
+  "generated_at": "2026-08-21T22:11:36+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "DOCN",
@@ -35,8 +35,8 @@
     "volume": 3208900.0,
     "ma20": 160.93900000000002,
     "ma50": 121.8364,
-    "ma200": 67.0681,
-    "rsi14": 63.445030042636255,
+    "ma200": null,
+    "rsi14": 63.44503516034914,
     "atr14": 12.863214285714287,
     "atr14_pct": 7.572387287757866,
     "high_52w": 184.46,
@@ -63,7 +63,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **DOCN** long on 2026-06-07 at $168.12 (qty 759) with stop $160.00 (1R = $8.12/sh = $6,163). Setup: **Long in mixed structure** \u2014 price above MA20 ($160.94), MA20 > MA50 > MA200 (golden alignment), RSI 63, 91% through 52W range, ATR 7.6% of price. Realized **-1.48R**, peak was **+0.81R** on 2026-06-08 (day +1) \u2014 captured **-181%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **DOCN** long on 2026-06-07 at $168.12 (qty 759) with stop $160.00 (1R = $8.12/sh = $6,163). Setup: **Long in mixed structure** \u2014 price above MA20 ($160.94), RSI 63, 91% through 52W range, ATR 7.6% of price. Realized **-1.48R**, peak was **+0.81R** on 2026-06-08 (day +1) \u2014 captured **-181%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-05-08",

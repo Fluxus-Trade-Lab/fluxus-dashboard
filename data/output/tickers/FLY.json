@@ -1,8 +1,8 @@
 {
   "ticker": "FLY",
-  "fetched_at": "2026-08-20T22:14:51Z",
+  "fetched_at": "2026-08-21T22:09:26Z",
   "_schema": "v2",
-  "current_price": 23.6299991607666,
+  "current_price": 24.450000762939453,
   "info": {
     "symbol": "FLY",
     "longName": "Firefly Aerospace Inc.",
@@ -76,43 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": -0.42,
-      "eps_estimate": -0.528,
-      "eps_surprise_pct": 0.2045
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": -0.46,
-      "eps_estimate": -0.51981,
-      "eps_surprise_pct": 0.115100004
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": -0.3757,
-      "eps_estimate": -0.48276,
-      "eps_surprise_pct": 0.2218
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": -1.5,
-      "eps_estimate": -0.42791,
-      "eps_surprise_pct": -2.5054
-    },
-    {
-      "period_end": "2025-06-30T00:00:00",
-      "eps_actual": -5.6566,
-      "eps_estimate": -0.45667,
-      "eps_surprise_pct": -11.3866005
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-11-11",
-    "revenue_low": 82212000,
-    "revenue_high": 95000000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -170,89 +135,7 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 9,
-    "bullish": 6,
-    "neutral": 3,
-    "bearish": 0,
-    "avg_price_target": 41.6,
-    "high_price_target": 65.0,
-    "low_price_target": 25.0,
-    "current_price": 23.63,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-12T18:09:37",
-        "firm": "Roth Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-12T16:53:45",
-        "firm": "B. Riley Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-12T11:08:44",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "reit"
-      },
-      {
-        "date": "2026-07-27T16:37:19",
-        "firm": "Wells Fargo",
-        "to_grade": "Equal-Weight",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-06-15T11:52:24",
-        "firm": "Keybanc",
-        "to_grade": "Overweight",
-        "from_grade": "Sector Weight",
-        "action": "up"
-      },
-      {
-        "date": "2026-05-05T17:25:16",
-        "firm": "Morgan Stanley",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
-      },
-      {
-        "date": "2026-04-20T17:47:07",
-        "firm": "Goldman Sachs",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-04-17T17:47:56",
-        "firm": "Roth Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-04-13T19:26:19",
-        "firm": "Jefferies",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-03-26T13:21:12",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
     {
       "date": "2026-08-20T14:04:00Z",
@@ -315,20 +198,20 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.03343207905447809,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 23.526499938964843,
-    "ma50": 25.246199989318846,
-    "ma200": 27.468399982452393,
-    "rsi14": 45.811676250872125,
+    "ma20": 23.764499950408936,
+    "ma50": 25.066800041198732,
+    "ma200": 27.471749982833863,
+    "rsi14": 48.9841858261678,
     "high_20d": 28.200000762939453,
     "low_5d": 22.93000030517578,
     "low_10d": 22.93000030517578,
     "high_52w": 62.16999816894531,
     "low_52w": 16.0,
-    "atr14": 2.04226439339774,
-    "atr14_pct": 8.642676538002405,
-    "position_in_52w_range_pct": 16.525881445450572
+    "atr14": 1.9722859518868583,
+    "atr14_pct": 8.066608958460188,
+    "position_in_52w_range_pct": 18.301930036945638
   },
   "ohlc_2y": [
     {
@@ -2413,22 +2296,22 @@
     },
     {
       "date": "2026-08-20",
-      "open": 25.32,
-      "high": 25.3607,
+      "open": 25.3,
+      "high": 25.361,
       "low": 22.93,
       "close": 23.63,
-      "volume": 3357789.0
+      "volume": 3366800.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 24.1399,
+      "high": 25.17,
+      "low": 23.715,
+      "close": 24.45,
+      "volume": 2097832.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 45.43,
-      "high": 47.0,
-      "low": 45.0,
-      "close": 45.27,
-      "volume": 1433500.0
-    },
     {
       "date": "2025-08-21",
       "open": 45.37,
@@ -4431,13 +4314,22 @@
     },
     {
       "date": "2026-08-20",
-      "open": 25.32,
-      "high": 25.3607,
+      "open": 25.3,
+      "high": 25.361,
       "low": 22.93,
       "close": 23.63,
-      "volume": 3357789.0
+      "volume": 3366800.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 24.1399,
+      "high": 25.17,
+      "low": 23.715,
+      "close": 24.45,
+      "volume": 2097832.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-20T22:14:51Z"
 }

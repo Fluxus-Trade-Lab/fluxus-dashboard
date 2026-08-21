@@ -1,8 +1,8 @@
 {
   "ticker": "INTC",
-  "fetched_at": "2026-08-21T08:11:28Z",
+  "fetched_at": "2026-08-21T22:09:45Z",
   "_schema": "v2",
-  "current_price": 92.12999725341797,
+  "current_price": 90.06999969482422,
   "info": {
     "symbol": "INTC",
     "longName": "Intel Corporation",
@@ -64,37 +64,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.42,
-      "eps_estimate": 0.21584,
-      "eps_surprise_pct": 0.94589996
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.29,
-      "eps_estimate": 0.01313,
-      "eps_surprise_pct": 21.0868
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.15,
-      "eps_estimate": 0.08264,
-      "eps_surprise_pct": 0.8151
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.23,
-      "eps_estimate": 0.00705,
-      "eps_surprise_pct": 31.6241
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-10-23",
-    "revenue_low": 16281000000,
-    "revenue_high": 17027075000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -152,90 +123,56 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Hold",
-    "total_ratings": 48,
-    "bullish": 12,
-    "neutral": 31,
-    "bearish": 5,
-    "avg_price_target": 114.87805,
-    "high_price_target": 200.0,
-    "low_price_target": 75.0,
-    "current_price": 92.13,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-12T14:14:39",
-        "firm": "B of A Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-12T13:39:04",
-        "firm": "UBS",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-28T20:47:08",
-        "firm": "B of A Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-27T12:02:06",
-        "firm": "Baird",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-25T01:45:21",
-        "firm": "DA Davidson",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-24T18:49:32",
-        "firm": "Morgan Stanley",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-24T18:03:17",
-        "firm": "Truist Securities",
-        "to_grade": "Hold",
-        "from_grade": "Hold",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-24T17:51:08",
-        "firm": "JP Morgan",
-        "to_grade": "Underweight",
-        "from_grade": "Underweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-24T17:43:58",
-        "firm": "Roth Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-24T14:33:25",
-        "firm": "Stifel",
-        "to_grade": "Hold",
-        "from_grade": "Hold",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
+    {
+      "date": "2026-08-21T20:57:00Z",
+      "title": "Elon Musk's SpaceX and Tesla Are Building a $16.8 Billion Chip Factory 5 Times Bigger Than Earth's Largest Building. What Does That Mean for Both Stocks?",
+      "url": "https://www.fool.com/investing/2026/08/21/elon-musks-spacex-and-tesla-are-building-a-168-bil/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-08-21T20:38:55Z",
+      "title": "The $116 Billion That NVDA Quietly Paid Its Owners",
+      "url": "https://www.trefis.com/articles/612357/the-116-billion-that-nvda-quietly-paid-its-owners/2026-08-21",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-08-21T16:50:00Z",
+      "title": "Is Micron a Commodity or an AI Powerhouse? The Debate Driving Its Low Valuation.",
+      "url": "https://www.barrons.com/articles/micron-stock-price-valuation-commodity-ai-memory-1b905948?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-08-21T14:53:55Z",
+      "title": "Duquesne Entered a New Position in Riot Platforms During Q2. What This Means for RIOT Stock.",
+      "url": "https://www.barchart.com/story/news/3971533/duquesne-entered-a-new-position-in-riot-platforms-during-q2-what-this-means-for-riot-stock",
+      "source": "Barchart"
+    },
+    {
+      "date": "2026-08-21T14:14:00Z",
+      "title": "Should You Add NVIDIA Stock to Your Portfolio Ahead of Q2 Earnings?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/add-nvidia-stock-portfolio-ahead-141400651.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-21T12:31:11Z",
+      "title": "\u2018It\u2019s Done\u2019: Investor Warns Warren Buffett\u2019s Berkshire Can\u2019t Beat the S&P 500 \u2014 Bets on PayPal and Intel Instead",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/done-investor-warns-warren-buffett-123111231.html",
+      "source": "Benzinga"
+    },
+    {
+      "date": "2026-08-21T11:47:53Z",
+      "title": "Micron Technology Stock Has Become A Bet On Memory Prices",
+      "url": "https://www.trefis.com/articles/612378/micron-technology-stock-has-become-a-bet-on-memory-prices/2026-08-21",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-08-21T07:45:43Z",
+      "title": "Nvidia in Talks With Chip Startup Rebellions for Potential Deal",
+      "url": "https://finance.yahoo.com/technology/ai/articles/nvidia-talks-chip-startup-rebellions-074543725.html",
+      "source": "Bloomberg"
+    },
     {
       "date": "2026-08-21T07:25:00Z",
       "title": "Billionaire Investor Stanley Druckenmiller Just Sold Intel and Micron, and Piled Into 2 Artificial Intelligence (AI) Stocks That Are Betting Big on Robotics",
@@ -247,80 +184,24 @@
       "title": "Nvidia, AMD, and Intel: Wall Street Says to Buy 2 and Avoid 1. I Disagree.",
       "url": "https://www.fool.com/investing/2026/08/20/nvidia-amd-and-intel-wall-street-says-to-buy-2-and/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-20T23:24:53Z",
-      "title": "Lenovo Group Limited (LNVGY) and Intel Corporation (INTC) are Both Riding the AI Hardware Boom. One Just Posted a Loss Anyway",
-      "url": "https://finance.yahoo.com/technology/ai/articles/lenovo-group-limited-lnvgy-intel-232453667.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-20T21:47:33Z",
-      "title": "Coatue Management Opens New Position in AMD Stock. View This as a Renewed Bet on the AI Trade.",
-      "url": "https://www.barchart.com/story/news/3959404/coatue-management-opens-new-position-in-amd-stock-view-this-as-a-renewed-bet-on-the-ai-trade",
-      "source": "Barchart"
-    },
-    {
-      "date": "2026-08-20T21:41:21Z",
-      "title": "Earn 17% On AMD Stock Now, For Capping Your Upside At 24%",
-      "url": "https://www.trefis.com/articles/612208/earn-17-on-amd-stock-now-for-capping-your-upside-at-24/2026-08-20",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-08-20T21:29:00Z",
-      "title": "The Engine Behind INTC Stock Has Real Parts",
-      "url": "https://www.trefis.com/articles/612199/the-engine-behind-intc-stock-has-real-parts/2026-08-20",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-08-20T20:33:44Z",
-      "title": "AMD Just Split Two of Wall Street\u2019s Biggest Contrarian Investors",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/amd-just-split-two-wall-203344035.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-20T19:43:25Z",
-      "title": "Moderna Is Yesterday's Top Gainer and Today's Biggest Loser",
-      "url": "https://www.barrons.com/livecoverage/stock-market-news-today-082026/card/moderna-is-yesterday-s-top-gainer-and-today-s-biggest-loser-Z03gsHYcjoOI2Rm8IEom?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-20T18:45:35Z",
-      "title": "Duquesne Management Just Dumped Its Entire Stake in This Surging AI Stock",
-      "url": "https://www.barchart.com/story/news/3956536/duquesne-management-just-dumped-its-entire-stake-in-this-surging-ai-stock",
-      "source": "Barchart"
-    },
-    {
-      "date": "2026-08-20T17:46:17Z",
-      "title": "Billionaire Stanley Druckenmiller Dumped Micron, Intel, and Broadcom: Here Are the AI Infrastructure Stocks He Bought Instead",
-      "url": "https://247wallst.com/investing/2026/08/20/billionaire-stanley-druckenmiller-dumped-micron-intel-and-broadcom-here-are-the-ai-infrastructure-stocks-he-bought-instead/",
-      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": 0.026158689589134775,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 95.8114990234375,
-    "ma50": 108.52079971313476,
-    "ma200": 71.25509992599487,
-    "rsi14": 41.39963240712672,
+    "ma20": 95.6989990234375,
+    "ma50": 108.1813996887207,
+    "ma200": 71.50794992446899,
+    "rsi14": 39.60134619712162,
     "high_20d": 107.56999969482422,
-    "low_5d": 89.8499984741211,
-    "low_10d": 89.8499984741211,
+    "low_5d": 89.75,
+    "low_10d": 89.75,
     "high_52w": 142.35000610351562,
     "low_52w": 22.780000686645508,
-    "atr14": 5.923571450369699,
-    "atr14_pct": 6.429579536484723,
-    "position_in_52w_range_pct": 57.99949270303193
+    "atr14": 5.706285749162946,
+    "atr14_pct": 6.33538999500058,
+    "position_in_52w_range_pct": 56.276654645601255
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 21.07,
-      "high": 21.44,
-      "low": 21.07,
-      "close": 21.41,
-      "volume": 57028900.0
-    },
     {
       "date": "2024-08-22",
       "open": 21.39,
@@ -4319,18 +4200,18 @@
       "high": 92.68,
       "low": 89.85,
       "close": 92.13,
-      "volume": 85397600.0
+      "volume": 85654700.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 92.768,
+      "high": 92.768,
+      "low": 89.75,
+      "close": 90.07,
+      "volume": 90790387.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 24.9,
-      "high": 24.93,
-      "low": 23.33,
-      "close": 23.54,
-      "volume": 161149400.0
-    },
     {
       "date": "2025-08-21",
       "open": 23.53,
@@ -6337,9 +6218,18 @@
       "high": 92.68,
       "low": 89.85,
       "close": 92.13,
-      "volume": 85397600.0
+      "volume": 85654700.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 92.768,
+      "high": 92.768,
+      "low": 89.75,
+      "close": 90.07,
+      "volume": 90790387.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:11:28Z"
 }

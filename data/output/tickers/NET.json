@@ -1,8 +1,8 @@
 {
   "ticker": "NET",
-  "fetched_at": "2026-08-21T08:12:33Z",
+  "fetched_at": "2026-08-21T22:10:00Z",
   "_schema": "v2",
-  "current_price": 278.9100036621094,
+  "current_price": 293.1400146484375,
   "info": {
     "symbol": "NET",
     "longName": "Cloudflare, Inc.",
@@ -76,37 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.29,
-      "eps_estimate": 0.26976,
-      "eps_surprise_pct": 0.075
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.25,
-      "eps_estimate": 0.23357,
-      "eps_surprise_pct": 0.070300005
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.28,
-      "eps_estimate": 0.27129,
-      "eps_surprise_pct": 0.0321
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.27,
-      "eps_estimate": 0.23406,
-      "eps_surprise_pct": 0.15359999
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-10-30",
-    "revenue_low": 736255000,
-    "revenue_high": 768444000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -164,90 +135,14 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 34,
-    "bullish": 22,
-    "neutral": 10,
-    "bearish": 2,
-    "avg_price_target": 333.55194,
-    "high_price_target": 400.0,
-    "low_price_target": 160.0,
-    "current_price": 278.91,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-10T14:39:10",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-10T13:17:14",
-        "firm": "Susquehanna",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-08T01:09:42",
-        "firm": "Scotiabank",
-        "to_grade": "Sector Outperform",
-        "from_grade": "Sector Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T22:52:26",
-        "firm": "UBS",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T20:30:32",
-        "firm": "TD Cowen",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T18:40:26",
-        "firm": "RBC Capital",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T17:23:52",
-        "firm": "Piper Sandler",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T16:34:13",
-        "firm": "Guggenheim",
-        "to_grade": "Sell",
-        "from_grade": "Sell",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T15:10:21",
-        "firm": "Wells Fargo",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T15:02:14",
-        "firm": "Citizens",
-        "to_grade": "Market Outperform",
-        "from_grade": "Market Outperform",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
+    {
+      "date": "2026-08-21T15:47:47Z",
+      "title": "2 Software Stocks Worth Your Attention and 1 That Underwhelm",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/2-software-stocks-worth-attention-154747633.html",
+      "source": "StockStory"
+    },
     {
       "date": "2026-08-20T22:35:15Z",
       "title": "MongoDB, Cloudflare, Okta, Zscaler, and Upstart Stocks Trade Down, What You Need To Know",
@@ -301,38 +196,24 @@
       "title": "Cloudflare (NET) Stock May Look Stretched As AI Growth Lifts Outlook",
       "url": "https://finance.yahoo.com/markets/stocks/articles/cloudflare-net-stock-may-look-020933398.html",
       "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-18T00:15:41Z",
-      "title": "Cloudflare (NET) Becomes An Independent Auditor For Encrypted Messaging Keys",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cloudflare-net-becomes-independent-auditor-001541505.html",
-      "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": 0.025599655466821775,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 292.05599822998045,
-    "ma50": 266.5443991088867,
-    "ma200": 218.97089988708495,
-    "rsi14": 46.17077358880766,
+    "ma20": 293.6054992675781,
+    "ma50": 268.01379943847655,
+    "ma200": 219.1960499572754,
+    "rsi14": 52.213318580151565,
     "high_20d": 332.2200012207031,
-    "low_5d": 277.8299865722656,
-    "low_10d": 277.8299865722656,
+    "low_5d": 274.0299987792969,
+    "low_10d": 274.0299987792969,
     "high_52w": 332.2200012207031,
     "low_52w": 158.8300018310547,
-    "atr14": 17.929500034877233,
-    "atr14_pct": 6.428417697272075,
-    "position_in_52w_range_pct": 69.25428355369357
+    "atr14": 18.42378670828683,
+    "atr14_pct": 6.284978436117791,
+    "position_in_52w_range_pct": 77.46122226781739
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 82.33,
-      "high": 82.515,
-      "low": 81.09,
-      "close": 82.37,
-      "volume": 1419900.0
-    },
     {
       "date": "2024-08-22",
       "open": 82.12,
@@ -4331,18 +4212,18 @@
       "high": 292.485,
       "low": 277.83,
       "close": 278.91,
-      "volume": 3049100.0
+      "volume": 3052000.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 280.86,
+      "high": 293.57,
+      "low": 274.03,
+      "close": 293.14,
+      "volume": 2599496.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 195.0,
-      "high": 195.5,
-      "low": 184.52,
-      "close": 193.2,
-      "volume": 3190600.0
-    },
     {
       "date": "2025-08-21",
       "open": 191.0,
@@ -6349,9 +6230,18 @@
       "high": 292.485,
       "low": 277.83,
       "close": 278.91,
-      "volume": 3049100.0
+      "volume": 3052000.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 280.86,
+      "high": 293.57,
+      "low": 274.03,
+      "close": 293.14,
+      "volume": 2599496.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:12:33Z"
 }

@@ -1,8 +1,8 @@
 {
   "ticker": "IOT",
-  "fetched_at": "2026-08-21T08:11:34Z",
+  "fetched_at": "2026-08-21T22:09:47Z",
   "_schema": "v2",
-  "current_price": 38.97999954223633,
+  "current_price": 39.939998626708984,
   "info": {
     "symbol": "IOT",
     "longName": "Samsara Inc.",
@@ -76,37 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-04-30T00:00:00",
-      "eps_actual": 0.17,
-      "eps_estimate": 0.13032,
-      "eps_surprise_pct": 0.3045
-    },
-    {
-      "period_end": "2026-01-31T00:00:00",
-      "eps_actual": 0.18,
-      "eps_estimate": 0.12775,
-      "eps_surprise_pct": 0.409
-    },
-    {
-      "period_end": "2025-10-31T00:00:00",
-      "eps_actual": 0.15,
-      "eps_estimate": 0.11867,
-      "eps_surprise_pct": 0.264
-    },
-    {
-      "period_end": "2025-07-31T00:00:00",
-      "eps_actual": 0.12,
-      "eps_estimate": 0.07247,
-      "eps_surprise_pct": 0.65589994
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-09-04",
-    "revenue_low": 482500000,
-    "revenue_high": 484200000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -164,89 +135,7 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 22,
-    "bullish": 17,
-    "neutral": 5,
-    "bearish": 0,
-    "avg_price_target": 45.21905,
-    "high_price_target": 57.6,
-    "low_price_target": 38.0,
-    "current_price": 38.98,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-20T14:12:56",
-        "firm": "TD Cowen",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-19T14:39:07",
-        "firm": "Truist Securities",
-        "to_grade": "Hold",
-        "from_grade": "Hold",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-14T14:10:17",
-        "firm": "RBC Capital",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-10T10:19:17",
-        "firm": "Piper Sandler",
-        "to_grade": "Neutral",
-        "from_grade": "Overweight",
-        "action": "down"
-      },
-      {
-        "date": "2026-07-23T13:07:50",
-        "firm": "Guggenheim",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-06-26T10:58:11",
-        "firm": "BTIG",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-06-25T14:43:54",
-        "firm": "TD Cowen",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-06-05T17:00:08",
-        "firm": "Piper Sandler",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "reit"
-      },
-      {
-        "date": "2026-06-05T14:04:41",
-        "firm": "RBC Capital",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-05T14:01:48",
-        "firm": "Wells Fargo",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
     {
       "date": "2026-08-20T10:51:15Z",
@@ -309,30 +198,22 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": 0.033350436512740333,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 38.42700023651123,
-    "ma50": 35.88780014038086,
-    "ma200": 33.59609999656677,
-    "rsi14": 53.64292537308688,
+    "ma20": 38.7685001373291,
+    "ma50": 36.03380012512207,
+    "ma200": 33.59334998130798,
+    "rsi14": 56.69793945161649,
     "high_20d": 42.0,
-    "low_5d": 38.040000915527344,
-    "low_10d": 38.040000915527344,
+    "low_5d": 38.0099983215332,
+    "low_10d": 38.0099983215332,
     "high_52w": 47.470001220703125,
     "low_52w": 23.3799991607666,
-    "atr14": 1.960571016584124,
-    "atr14_pct": 5.029684555177508,
-    "position_in_52w_range_pct": 64.75715669370446
+    "atr14": 1.9690709795270647,
+    "atr14_pct": 4.93007272716903,
+    "position_in_52w_range_pct": 68.74220859234754
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 40.75,
-      "high": 41.68,
-      "low": 40.4,
-      "close": 41.27,
-      "volume": 2733900.0
-    },
     {
       "date": "2024-08-22",
       "open": 41.32,
@@ -4332,17 +4213,17 @@
       "low": 38.91,
       "close": 38.98,
       "volume": 5690700.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 39.0,
+      "high": 40.009,
+      "low": 38.01,
+      "close": 39.94,
+      "volume": 2547197.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 32.83,
-      "high": 33.11,
-      "low": 32.06,
-      "close": 33.0,
-      "volume": 3047800.0
-    },
     {
       "date": "2025-08-21",
       "open": 32.7,
@@ -6350,8 +6231,17 @@
       "low": 38.91,
       "close": 38.98,
       "volume": 5690700.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 39.0,
+      "high": 40.009,
+      "low": 38.01,
+      "close": 39.94,
+      "volume": 2547197.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:11:34Z"
 }

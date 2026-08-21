@@ -1,8 +1,8 @@
 {
   "ticker": "CLSK",
-  "fetched_at": "2026-08-21T08:11:04Z",
+  "fetched_at": "2026-08-21T22:09:12Z",
   "_schema": "v2",
-  "current_price": 12.600000381469727,
+  "current_price": 11.979999542236328,
   "info": {
     "symbol": "CLSK",
     "longName": "CleanSpark, Inc.",
@@ -76,37 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": -0.3878,
-      "eps_estimate": -0.33333,
-      "eps_surprise_pct": -0.1634
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": -0.4943,
-      "eps_estimate": -0.23,
-      "eps_surprise_pct": -1.1491001
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": -1.3236,
-      "eps_estimate": 0.205,
-      "eps_surprise_pct": -7.4565997
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.161,
-      "eps_estimate": 0.535,
-      "eps_surprise_pct": -0.6991
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-08-07",
-    "revenue_low": 105600000,
-    "revenue_high": 156500000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -164,90 +135,14 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 12,
-    "bullish": 12,
-    "neutral": 0,
-    "bearish": 0,
-    "avg_price_target": 23.80769,
-    "high_price_target": 27.0,
-    "low_price_target": 21.0,
-    "current_price": 12.6,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-10T11:40:05",
-        "firm": "Chardan Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T12:02:38",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "reit"
-      },
-      {
-        "date": "2026-08-03T16:06:42",
-        "firm": "B. Riley Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-28T18:08:21",
-        "firm": "Keefe, Bruyette & Woods",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-28T11:00:38",
-        "firm": "Chardan Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-15T15:09:06",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-15T11:36:00",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-15T10:22:20",
-        "firm": "Chardan Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-14T14:29:54",
-        "firm": "BTIG",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-07-08T10:28:11",
-        "firm": "Chardan Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
+    {
+      "date": "2026-08-21T16:14:36Z",
+      "title": "CleanSpark Sinks 6% Even as Bitcoin Jumps 7%, MARA Holds Flat as Traders Weigh Tensions Among AI Miners",
+      "url": "https://247wallst.com/investing/2026/08/21/cleanspark-sinks-6-even-as-bitcoin-jumps-7-mara-holds-flat-as-traders-weigh-tensions-among-ai-miners/",
+      "source": "24/7 Wall St."
+    },
     {
       "date": "2026-08-21T01:49:19Z",
       "title": "Riot Platforms (RIOT) & CleanSpark (CLSK): Bitcoin Miners are Becoming AI Landlords. Riot Just Signed a $9 Billion Lease to Prove It",
@@ -301,38 +196,24 @@
       "title": "CleanSpark Q3 FY26 Earnings, Hut 8 CEO Interview, MARA Q2 Earnings",
       "url": "https://blockspace.media/podcast/cleanspark-q3-fy26-earnings-hut-8-ceo-interview-mara-q2-earnings/",
       "source": "Blockspace"
-    },
-    {
-      "date": "2026-08-07T14:00:00Z",
-      "title": "CleanSpark's Q3 Earnings Call Centers on Sandersville AI Lease",
-      "url": "https://finance.yahoo.com/technology/ai/articles/cleansparks-q3-earnings-call-centers-140000734.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.043650792329249545,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 12.850250053405762,
-    "ma50": 14.058799991607666,
-    "ma200": 12.64849998474121,
-    "rsi14": 47.73508728401477,
-    "high_20d": 15.460000038146973,
+    "ma20": 12.723250007629394,
+    "ma50": 14.000399990081787,
+    "ma200": 12.621299982070923,
+    "rsi14": 44.47138355669428,
+    "high_20d": 15.109999656677246,
     "low_5d": 11.024999618530273,
     "low_10d": 11.024999618530273,
     "high_52w": 23.610000610351562,
     "low_52w": 8.0,
-    "atr14": 1.0407141276768275,
-    "atr14_pct": 8.259635683879507,
-    "position_in_52w_range_pct": 29.468290849516677
+    "atr14": 1.0478570120675224,
+    "atr14_pct": 8.746719967502745,
+    "position_in_52w_range_pct": 25.496472688137146
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 11.71,
-      "high": 12.415,
-      "low": 11.49,
-      "close": 12.41,
-      "volume": 21266700.0
-    },
     {
       "date": "2024-08-22",
       "open": 12.41,
@@ -4331,18 +4212,18 @@
       "high": 12.75,
       "low": 12.0,
       "close": 12.6,
-      "volume": 27582300.0
+      "volume": 27637900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 13.11,
+      "high": 13.34,
+      "low": 11.725,
+      "close": 11.98,
+      "volume": 28020902.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 9.31,
-      "high": 9.5,
-      "low": 8.97,
-      "close": 9.49,
-      "volume": 15416400.0
-    },
     {
       "date": "2025-08-21",
       "open": 9.131,
@@ -6349,9 +6230,18 @@
       "high": 12.75,
       "low": 12.0,
       "close": 12.6,
-      "volume": 27582300.0
+      "volume": 27637900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 13.11,
+      "high": 13.34,
+      "low": 11.725,
+      "close": 11.98,
+      "volume": 28020902.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:11:04Z"
 }

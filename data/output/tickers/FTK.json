@@ -1,8 +1,8 @@
 {
   "ticker": "FTK",
-  "fetched_at": "2026-08-20T22:17:14Z",
+  "fetched_at": "2026-08-21T22:10:55Z",
   "_schema": "v2",
-  "current_price": 25.0,
+  "current_price": 24.670000076293945,
   "info": {
     "symbol": "FTK",
     "longName": "Flotek Industries, Inc.",
@@ -76,37 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.282,
-      "eps_estimate": 0.115,
-      "eps_surprise_pct": 1.4522
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.1383,
-      "eps_estimate": 0.15,
-      "eps_surprise_pct": -0.078
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.092,
-      "eps_estimate": 0.17,
-      "eps_surprise_pct": -0.45880002
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.5725,
-      "eps_estimate": 0.15,
-      "eps_surprise_pct": 2.8167002
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-11-03",
-    "revenue_low": 85100000,
-    "revenue_high": 90000000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -164,62 +135,14 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 5,
-    "bullish": 5,
-    "neutral": 0,
-    "bearish": 0,
-    "avg_price_target": 39.25,
-    "high_price_target": 43.0,
-    "low_price_target": 32.5,
-    "current_price": 25.0,
-    "recent_rating_changes": [
-      {
-        "date": "2026-07-09T11:45:34",
-        "firm": "Jones Trading",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2025-12-31T17:29:26",
-        "firm": "Northland Capital Markets",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "reit"
-      },
-      {
-        "date": "2025-06-17T15:08:59",
-        "firm": "Northland Capital Markets",
-        "to_grade": "Market Perform",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2024-11-07T16:16:45",
-        "firm": "Roth MKM",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2024-07-25T09:35:08",
-        "firm": "Roth MKM",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2024-04-29T11:29:04",
-        "firm": "Alliance Global Partners",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
+    {
+      "date": "2026-08-21T12:01:58Z",
+      "title": "Flotek Industries Targets $20B Market as Data Analytics Drives Record Growth",
+      "url": "https://www.marketbeat.com/instant-alerts/flotek-industries-targets-20b-market-as-data-analytics-drives-record-growth-2026-08-21/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
+    },
     {
       "date": "2026-08-18T13:55:02Z",
       "title": "How Much Upside is Left in Flotek Industries (FTK)? Wall Street Analysts Think 30.25%",
@@ -273,38 +196,24 @@
       "title": "Flotek Industries (FTK) Faces A 5% Overvalued View On Puerto Rico Deal And 2026 Raise",
       "url": "https://finance.yahoo.com/markets/stocks/articles/flotek-industries-ftk-faces-5-071257680.html",
       "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-04T21:40:07Z",
-      "title": "Flotek Industries (FTK) Q2 Earnings and Revenues Top Estimates",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/flotek-industries-ftk-q2-earnings-214007883.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.07039999999999999,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 29.87949981689453,
-    "ma50": 26.279599876403807,
-    "ma200": 19.31614999294281,
-    "rsi14": 41.69302174378023,
+    "ma20": 29.70099983215332,
+    "ma50": 26.4357999420166,
+    "ma200": 19.477350001335143,
+    "rsi14": 40.91076356593359,
     "high_20d": 39.66999816894531,
     "low_5d": 23.479999542236328,
     "low_10d": 23.479999542236328,
     "high_52w": 39.66999816894531,
     "low_52w": 10.949999809265137,
-    "atr14": 3.6835715430123463,
-    "atr14_pct": 14.734286172049385,
-    "position_in_52w_range_pct": 48.92061627155094
+    "atr14": 3.5869358607700894,
+    "atr14_pct": 14.5396670031504,
+    "position_in_52w_range_pct": 47.77159140193486
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 4.18,
-      "high": 4.23,
-      "low": 4.11,
-      "close": 4.15,
-      "volume": 48600.0
-    },
     {
       "date": "2024-08-22",
       "open": 4.12,
@@ -4122,6 +4031,22 @@
       "volume": 333800.0
     },
     {
+      "date": "2026-07-21",
+      "open": 26.0,
+      "high": 27.41,
+      "low": 25.76,
+      "close": 27.28,
+      "volume": 275600.0
+    },
+    {
+      "date": "2026-07-22",
+      "open": 27.24,
+      "high": 28.02,
+      "low": 27.09,
+      "close": 27.24,
+      "volume": 318100.0
+    },
+    {
       "date": "2026-07-23",
       "open": 27.2,
       "high": 28.5,
@@ -4168,6 +4093,14 @@
       "low": 22.27,
       "close": 23.4,
       "volume": 230000.0
+    },
+    {
+      "date": "2026-07-31",
+      "open": 23.5,
+      "high": 23.74,
+      "low": 22.0,
+      "close": 23.54,
+      "volume": 226300.0
     },
     {
       "date": "2026-08-03",
@@ -4279,42 +4212,18 @@
       "high": 25.37,
       "low": 23.48,
       "close": 25.0,
-      "volume": 1310649.0
+      "volume": 1311300.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 24.62,
+      "high": 25.6171,
+      "low": 23.49,
+      "close": 24.67,
+      "volume": 628505.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-15",
-      "open": 12.01,
-      "high": 12.16,
-      "low": 11.67,
-      "close": 11.93,
-      "volume": 541600.0
-    },
-    {
-      "date": "2025-08-18",
-      "open": 11.75,
-      "high": 12.18,
-      "low": 11.34,
-      "close": 11.41,
-      "volume": 454600.0
-    },
-    {
-      "date": "2025-08-19",
-      "open": 11.35,
-      "high": 11.57,
-      "low": 11.14,
-      "close": 11.16,
-      "volume": 403000.0
-    },
-    {
-      "date": "2025-08-20",
-      "open": 11.29,
-      "high": 11.61,
-      "low": 10.96,
-      "close": 11.51,
-      "volume": 383700.0
-    },
     {
       "date": "2025-08-21",
       "open": 11.41,
@@ -6140,6 +6049,22 @@
       "volume": 333800.0
     },
     {
+      "date": "2026-07-21",
+      "open": 26.0,
+      "high": 27.41,
+      "low": 25.76,
+      "close": 27.28,
+      "volume": 275600.0
+    },
+    {
+      "date": "2026-07-22",
+      "open": 27.24,
+      "high": 28.02,
+      "low": 27.09,
+      "close": 27.24,
+      "volume": 318100.0
+    },
+    {
       "date": "2026-07-23",
       "open": 27.2,
       "high": 28.5,
@@ -6186,6 +6111,14 @@
       "low": 22.27,
       "close": 23.4,
       "volume": 230000.0
+    },
+    {
+      "date": "2026-07-31",
+      "open": 23.5,
+      "high": 23.74,
+      "low": 22.0,
+      "close": 23.54,
+      "volume": 226300.0
     },
     {
       "date": "2026-08-03",
@@ -6297,9 +6230,18 @@
       "high": 25.37,
       "low": 23.48,
       "close": 25.0,
-      "volume": 1310649.0
+      "volume": 1311300.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 24.62,
+      "high": 25.6171,
+      "low": 23.49,
+      "close": 24.67,
+      "volume": 628505.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-20T22:17:14Z"
 }

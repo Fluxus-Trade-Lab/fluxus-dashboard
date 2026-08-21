@@ -1,8 +1,8 @@
 {
   "ticker": "DCTH",
-  "fetched_at": "2026-08-20T22:17:43Z",
+  "fetched_at": "2026-08-21T22:11:17Z",
   "_schema": "v2",
-  "current_price": 16.75,
+  "current_price": 17.139999389648438,
   "info": {
     "symbol": "DCTH",
     "longName": "Delcath Systems, Inc.",
@@ -13,13 +13,13 @@
     "city": "Queensbury",
     "website": "https://www.delcath.com",
     "fullTimeEmployees": 156,
-    "marketCap": 581204864,
-    "enterpriseValue": 501645344,
-    "trailingPE": 1675.0,
-    "forwardPE": 372.2222,
-    "priceToSalesTrailing12Months": 6.091145,
-    "enterpriseToRevenue": 5.257,
-    "priceToBook": 4.7884507,
+    "marketCap": 594737344,
+    "enterpriseValue": 487765824,
+    "trailingPE": 1714.0,
+    "forwardPE": 380.88885,
+    "priceToSalesTrailing12Months": 6.232968,
+    "enterpriseToRevenue": 5.112,
+    "priceToBook": 4.899943,
     "grossMargins": 0.87052,
     "operatingMargins": 0.08221,
     "profitMargins": 0.00558,
@@ -32,8 +32,8 @@
     "currentRatio": 9.83,
     "fiftyTwoWeekHigh": 17.42,
     "fiftyTwoWeekLow": 8.12,
-    "averageVolume": 570833,
-    "averageVolume10days": 1057570,
+    "averageVolume": 571325,
+    "averageVolume10days": 797490,
     "beta": 0.523,
     "sharesOutstanding": 34698795,
     "sharesFloat": 28777793,
@@ -173,7 +173,7 @@
     "avg_price_target": 24.0,
     "high_price_target": 32.0,
     "low_price_target": 21.0,
-    "current_price": 16.75,
+    "current_price": 17.14,
     "recent_rating_changes": [
       {
         "date": "2026-08-07T11:07:59",
@@ -309,30 +309,22 @@
       "source": "Moby"
     }
   ],
-  "options_implied_move": 0.05432835820895523,
+  "options_implied_move": 0.03500583555226759,
   "technicals": {
-    "ma20": 14.692000007629394,
-    "ma50": 13.386700019836425,
-    "ma200": 10.818924984931947,
-    "rsi14": 65.97205853979676,
+    "ma20": 14.937999963760376,
+    "ma50": 13.522500019073487,
+    "ma200": 10.870524978637695,
+    "rsi14": 68.2251258342441,
     "high_20d": 17.420000076293945,
     "low_5d": 16.510000228881836,
-    "low_10d": 14.96500015258789,
+    "low_10d": 15.0,
     "high_52w": 17.420000076293945,
     "low_52w": 8.119999885559082,
-    "atr14": 0.9306426048278809,
-    "atr14_pct": 5.556075252703766,
-    "position_in_52w_range_pct": 92.7956982521201
+    "atr14": 0.9084997177124023,
+    "atr14_pct": 5.3004652862536465,
+    "position_in_52w_range_pct": 96.98923999029098
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 7.88,
-      "high": 8.1,
-      "low": 7.84,
-      "close": 7.97,
-      "volume": 159900.0
-    },
     {
       "date": "2024-08-22",
       "open": 8.01,
@@ -4158,6 +4150,14 @@
       "volume": 278100.0
     },
     {
+      "date": "2026-07-22",
+      "open": 12.75,
+      "high": 12.86,
+      "low": 12.43,
+      "close": 12.53,
+      "volume": 278000.0
+    },
+    {
       "date": "2026-07-23",
       "open": 12.29,
       "high": 12.515,
@@ -4319,30 +4319,22 @@
     },
     {
       "date": "2026-08-20",
-      "open": 17.06,
+      "open": 17.05,
       "high": 17.15,
       "low": 16.61,
       "close": 16.75,
-      "volume": 385860.0
+      "volume": 385900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 16.84,
+      "high": 17.15,
+      "low": 16.6,
+      "close": 17.14,
+      "volume": 509057.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-19",
-      "open": 10.56,
-      "high": 10.6,
-      "low": 10.21,
-      "close": 10.56,
-      "volume": 841200.0
-    },
-    {
-      "date": "2025-08-20",
-      "open": 10.56,
-      "high": 10.6,
-      "low": 10.06,
-      "close": 10.33,
-      "volume": 455700.0
-    },
     {
       "date": "2025-08-21",
       "open": 10.37,
@@ -6176,6 +6168,14 @@
       "volume": 278100.0
     },
     {
+      "date": "2026-07-22",
+      "open": 12.75,
+      "high": 12.86,
+      "low": 12.43,
+      "close": 12.53,
+      "volume": 278000.0
+    },
+    {
       "date": "2026-07-23",
       "open": 12.29,
       "high": 12.515,
@@ -6337,11 +6337,19 @@
     },
     {
       "date": "2026-08-20",
-      "open": 17.06,
+      "open": 17.05,
       "high": 17.15,
       "low": 16.61,
       "close": 16.75,
-      "volume": 385860.0
+      "volume": 385900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 16.84,
+      "high": 17.15,
+      "low": 16.6,
+      "close": 17.14,
+      "volume": 509057.0
     }
   ],
   "ai_synthesis": null,

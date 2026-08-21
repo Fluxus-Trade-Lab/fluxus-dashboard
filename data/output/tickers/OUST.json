@@ -1,8 +1,8 @@
 {
   "ticker": "OUST",
-  "fetched_at": "2026-08-21T08:13:11Z",
+  "fetched_at": "2026-08-21T22:10:10Z",
   "_schema": "v2",
-  "current_price": 37.95000076293945,
+  "current_price": 38.41999816894531,
   "info": {
     "symbol": "OUST",
     "longName": "Ouster, Inc.",
@@ -76,37 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": -0.2597,
-      "eps_estimate": -0.136,
-      "eps_surprise_pct": -0.9096
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": -0.248,
-      "eps_estimate": -0.115,
-      "eps_surprise_pct": -1.1565
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.0666,
-      "eps_estimate": -0.135,
-      "eps_surprise_pct": 1.4933
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": -0.1628,
-      "eps_estimate": -0.1825,
-      "eps_surprise_pct": 0.1079
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-11-04",
-    "revenue_low": 56000000,
-    "revenue_high": 56600000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -164,89 +135,7 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 7,
-    "bullish": 6,
-    "neutral": 1,
-    "bearish": 0,
-    "avg_price_target": 57.83333,
-    "high_price_target": 75.0,
-    "low_price_target": 50.0,
-    "current_price": 37.95,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-07T12:05:01",
-        "firm": "Rosenblatt",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-21T18:38:11",
-        "firm": "Northland Capital Markets",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-15T17:16:27",
-        "firm": "Oppenheimer",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-27T12:42:11",
-        "firm": "Rosenblatt",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-11T18:20:55",
-        "firm": "Amerx",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-05-07T19:24:46",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Neutral",
-        "from_grade": "Overweight",
-        "action": "down"
-      },
-      {
-        "date": "2026-03-03T12:17:41",
-        "firm": "Rosenblatt",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2025-11-07T16:09:04",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Overweight",
-        "from_grade": "Neutral",
-        "action": "up"
-      },
-      {
-        "date": "2025-11-06T21:25:53",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Overweight",
-        "from_grade": "Neutral",
-        "action": "up"
-      },
-      {
-        "date": "2025-11-05T16:24:03",
-        "firm": "WestPark Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
     {
       "date": "2026-08-20T09:20:00Z",
@@ -309,30 +198,22 @@
       "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": 0.05270092120665054,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 41.48500022888184,
-    "ma50": 42.77560012817383,
-    "ma200": 29.40502499580383,
-    "rsi14": 43.73135857577911,
+    "ma20": 41.704000091552736,
+    "ma50": 42.77620010375976,
+    "ma200": 29.43852499008179,
+    "rsi14": 44.48509821374374,
     "high_20d": 51.8489990234375,
     "low_5d": 37.45000076293945,
     "low_10d": 37.45000076293945,
     "high_52w": 63.790000915527344,
     "low_52w": 16.399999618530273,
-    "atr14": 4.6087139674595425,
-    "atr14_pct": 12.144173583153757,
-    "position_in_52w_range_pct": 45.473729805056415
+    "atr14": 4.3438712528773715,
+    "atr14_pct": 11.306276574444245,
+    "position_in_52w_range_pct": 46.46549471989646
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 7.92,
-      "high": 8.06,
-      "low": 7.66,
-      "close": 8.05,
-      "volume": 1048200.0
-    },
     {
       "date": "2024-08-22",
       "open": 8.05,
@@ -4331,18 +4212,18 @@
       "high": 40.7,
       "low": 37.45,
       "close": 37.95,
-      "volume": 2568400.0
+      "volume": 2592500.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 39.5,
+      "high": 39.8422,
+      "low": 38.01,
+      "close": 38.42,
+      "volume": 2372624.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 29.38,
-      "high": 29.86,
-      "low": 27.78,
-      "close": 29.56,
-      "volume": 2004400.0
-    },
     {
       "date": "2025-08-21",
       "open": 29.7,
@@ -6349,9 +6230,18 @@
       "high": 40.7,
       "low": 37.45,
       "close": 37.95,
-      "volume": 2568400.0
+      "volume": 2592500.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 39.5,
+      "high": 39.8422,
+      "low": 38.01,
+      "close": 38.42,
+      "volume": 2372624.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:13:11Z"
 }

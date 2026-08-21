@@ -1,6 +1,6 @@
 {
   "trade_id": "SOFI_2026-08-18_000",
-  "generated_at": "2026-08-20T22:18:09+00:00",
+  "generated_at": "2026-08-21T22:11:37+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SOFI",
@@ -9,16 +9,23 @@
     "entry_date": "2026-08-18",
     "entry_price": 18.5,
     "original_qty": 3247,
-    "current_qty": 3247,
+    "current_qty": 0,
     "stop_price": 17.7,
     "initial_stop": 17.7,
-    "closed": false,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "exit_date": "2026-08-21",
+    "hold_business_days": 3,
     "r_dollars": 2597.600000000002,
-    "realized_pl": 0,
-    "realized_R": 0.0,
-    "trims": []
+    "realized_pl": 1266.3300000000017,
+    "realized_R": 0.48750000000000027,
+    "trims": [
+      {
+        "date": "2026-08-21",
+        "price": 18.89,
+        "qty": 3247,
+        "type": "sell_rest"
+      }
+    ]
   },
   "entry_snapshot": {
     "close": 17.66,
@@ -26,10 +33,10 @@
     "high": 18.31,
     "low": 17.64,
     "volume": 32609400.0,
-    "ma20": 17.500999999999998,
+    "ma20": 17.501,
     "ma50": 17.545,
-    "ma200": 20.685375000000004,
-    "rsi14": 49.42843325395079,
+    "ma200": 20.685375,
+    "rsi14": 49.42843434363531,
     "atr14": 0.7424285714285711,
     "atr14_pct": 4.204012295745023,
     "high_52w": 32.73,
@@ -41,22 +48,22 @@
   },
   "setup_type": "Long below MA200 \u2014 counter-trend",
   "path_analytics": {
-    "mfe_R": 0.6249999999999994,
-    "mfe_date": "2026-08-20",
+    "mfe_R": 0.8375000000000014,
+    "mfe_date": "2026-08-21",
     "mae_R": 1.0749999999999984,
     "mae_date": "2026-08-18",
-    "optimal_exit_price": 19.0,
-    "optimal_exit_date": "2026-08-20",
-    "optimal_R": 0.6249999999999994,
-    "days_to_optimal": 2,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "optimal_exit_price": 19.17,
+    "optimal_exit_date": "2026-08-21",
+    "optimal_R": 0.8375000000000014,
+    "days_to_optimal": 3,
+    "realized_R": 0.48750000000000027,
+    "capture_pct": 58.20895522388053,
+    "missed_R": 0.3500000000000011,
     "post_exit_R": null,
-    "hold_calendar_days": 2
+    "hold_calendar_days": 3
   },
-  "lesson": "In progress",
-  "narrative": "Entered **SOFI** long on 2026-08-18 at $18.50 (qty 3247) with stop $17.70 (1R = $0.80/sh = $2,598). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($17.50), MA20 < MA50 < MA200 (death alignment), RSI 49, 16% through 52W range, ATR 4.2% of price. **In progress.** Peak so far +0.62R; worst drawdown -1.07R.",
+  "lesson": "Choppy / no edge",
+  "narrative": "Entered **SOFI** long on 2026-08-18 at $18.50 (qty 3247) with stop $17.70 (1R = $0.80/sh = $2,598). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($17.50), MA20 < MA50 < MA200 (death alignment), RSI 49, 16% through 52W range, ATR 4.2% of price. Realized **+0.49R**, peak was **+0.84R** on 2026-08-21 (day +3) \u2014 captured **58%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-07-20",
@@ -248,7 +255,15 @@
       "high": 19.0,
       "low": 17.72,
       "close": 17.92,
-      "volume": 45363250.0
+      "volume": 45494500.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 18.18,
+      "high": 19.17,
+      "low": 18.065,
+      "close": 18.91,
+      "volume": 61431249.0
     }
   ]
 }

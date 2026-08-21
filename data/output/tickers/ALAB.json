@@ -1,8 +1,8 @@
 {
   "ticker": "ALAB",
-  "fetched_at": "2026-08-20T22:13:56Z",
+  "fetched_at": "2026-08-21T22:08:47Z",
   "_schema": "v2",
-  "current_price": 290.5199890136719,
+  "current_price": 284.9700012207031,
   "info": {
     "symbol": "ALAB",
     "longName": "Astera Labs, Inc.",
@@ -76,37 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.8,
-      "eps_estimate": 0.69195,
-      "eps_surprise_pct": 0.15619999
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.61,
-      "eps_estimate": 0.53761,
-      "eps_surprise_pct": 0.1347
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.58,
-      "eps_estimate": 0.51492,
-      "eps_surprise_pct": 0.12640001
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.49,
-      "eps_estimate": 0.39014,
-      "eps_surprise_pct": 0.256
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-11-03",
-    "revenue_low": 545700000,
-    "revenue_high": 557000000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -164,89 +135,7 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 26,
-    "bullish": 18,
-    "neutral": 8,
-    "bearish": 0,
-    "avg_price_target": 389.9527,
-    "high_price_target": 500.0,
-    "low_price_target": 190.0,
-    "current_price": 290.52,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-17T10:55:59",
-        "firm": "Northland Capital Markets",
-        "to_grade": "Outperform",
-        "from_grade": "Market Perform",
-        "action": "up"
-      },
-      {
-        "date": "2026-08-05T19:53:16",
-        "firm": "TD Cowen",
-        "to_grade": "Hold",
-        "from_grade": "Hold",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T18:27:44",
-        "firm": "Morgan Stanley",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T15:41:26",
-        "firm": "RBC Capital",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T13:55:25",
-        "firm": "Evercore ISI Group",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T11:54:09",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T10:17:24",
-        "firm": "Jefferies",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-31T12:29:29",
-        "firm": "Susquehanna",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-20T18:03:45",
-        "firm": "Barclays",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-13T18:04:11",
-        "firm": "TD Cowen",
-        "to_grade": "Hold",
-        "from_grade": "Hold",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
     {
       "date": "2026-08-20T14:48:00Z",
@@ -309,30 +198,22 @@
       "source": "The Fly"
     }
   ],
-  "options_implied_move": 0.03600440725442735,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 307.8684989929199,
-    "ma50": 351.8374984741211,
-    "ma200": 218.32974979400635,
-    "rsi14": 41.894752238335165,
+    "ma20": 307.5379997253418,
+    "ma50": 350.9196987915039,
+    "ma200": 218.7967998123169,
+    "rsi14": 40.669817786753725,
     "high_20d": 367.8500061035156,
-    "low_5d": 278.17498779296875,
-    "low_10d": 278.17498779296875,
+    "low_5d": 277.29998779296875,
+    "low_10d": 277.29998779296875,
     "high_52w": 499.47601318359375,
     "low_52w": 97.88999938964844,
-    "atr14": 29.069349016462052,
-    "atr14_pct": 10.00597208995972,
-    "position_in_52w_range_pct": 47.967305386004384
+    "atr14": 27.267935616629465,
+    "atr14_pct": 9.568703898594237,
+    "position_in_52w_range_pct": 46.58528818362829
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 39.01,
-      "high": 40.721,
-      "low": 38.01,
-      "close": 40.66,
-      "volume": 2221400.0
-    },
     {
       "date": "2024-08-22",
       "open": 41.38,
@@ -4329,20 +4210,20 @@
       "date": "2026-08-20",
       "open": 289.99,
       "high": 293.0,
-      "low": 281.7192,
+      "low": 281.719,
       "close": 290.52,
-      "volume": 2588139.0
+      "volume": 2598000.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 293.75,
+      "high": 296.88,
+      "low": 277.3,
+      "close": 284.97,
+      "volume": 2936802.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 168.0,
-      "high": 172.8,
-      "low": 161.39,
-      "close": 172.45,
-      "volume": 5902600.0
-    },
     {
       "date": "2025-08-21",
       "open": 173.899,
@@ -6347,11 +6228,20 @@
       "date": "2026-08-20",
       "open": 289.99,
       "high": 293.0,
-      "low": 281.7192,
+      "low": 281.719,
       "close": 290.52,
-      "volume": 2588139.0
+      "volume": 2598000.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 293.75,
+      "high": 296.88,
+      "low": 277.3,
+      "close": 284.97,
+      "volume": 2936802.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-20T22:13:56Z"
 }

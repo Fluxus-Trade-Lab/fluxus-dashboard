@@ -1,8 +1,8 @@
 {
   "ticker": "SPCX",
-  "fetched_at": "2026-08-21T08:14:32Z",
+  "fetched_at": "2026-08-21T22:10:31Z",
   "_schema": "v2",
-  "current_price": 134.0,
+  "current_price": 136.97000122070312,
   "info": {
     "symbol": "SPCX",
     "longName": "Space Exploration Technologies Corp.",
@@ -76,25 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": -0.09,
-      "eps_estimate": -0.28931,
-      "eps_surprise_pct": 0.6889
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": -1.27,
-      "eps_estimate": null,
-      "eps_surprise_pct": null
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-11-04",
-    "revenue_low": 11111000000,
-    "revenue_high": 16022988310
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -141,163 +124,81 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 11,
-    "bullish": 7,
-    "neutral": 3,
-    "bearish": 1,
-    "avg_price_target": 213.5,
-    "high_price_target": 450.0,
-    "low_price_target": 75.0,
-    "current_price": 134.0,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-17T17:34:08",
-        "firm": "UBS",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T12:00:24",
-        "firm": "Argus Research",
-        "to_grade": "Buy",
-        "from_grade": "Hold",
-        "action": "up"
-      },
-      {
-        "date": "2026-08-05T16:09:41",
-        "firm": "Macquarie",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T15:36:12",
-        "firm": "Wells Fargo",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T12:40:29",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "reit"
-      },
-      {
-        "date": "2026-08-05T11:35:48",
-        "firm": "Piper Sandler",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T09:45:39",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-08-03T14:40:17",
-        "firm": "RBC Capital",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "reit"
-      },
-      {
-        "date": "2026-08-03T10:09:25",
-        "firm": "Macquarie",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-31T13:56:38",
-        "firm": "Macquarie",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
     {
       "date": "2026-08-21T08:05:33Z",
-      "title": "Stock market today: Dow, S&P 500, Nasdaq futures drift higher despite Treasury yield pressures persisting",
-      "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-august-21-dow-sp-500-nasdaq-080533702.html",
+      "title": "Stock market today: Dow, S&P 500, Nasdaq post weekly losses as bond volatility remains in focus, bitcoin soars",
+      "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-august-21-dow-sp-500-nasdaq-bitcoin-080533702.html",
       "source": "Yahoo Finance"
     },
     {
-      "date": "2026-08-20T19:20:26Z",
-      "title": "Anthropic could publicly file IPO paperwork as soon as this month",
-      "url": "https://finance.yahoo.com/technology/article/anthropic-could-publicly-file-ipo-paperwork-as-soon-as-this-month-192026244.html",
-      "source": "Yahoo Finance"
+      "date": "2026-08-21T12:00:00Z",
+      "title": "SpaceX shares unlock, and BJ's earnings take center stage",
+      "url": "https://finance.yahoo.com/video/spacex-shares-unlock-bjs-earnings-120000779.html",
+      "source": "Yahoo Finance Video"
     },
     {
-      "date": "2026-08-21T06:35:00Z",
-      "title": "Anthropic to file for IPO that could top SpaceX record",
-      "url": "https://www.proactiveinvestors.com/companies/news/1097390/anthropic-to-file-for-ipo-that-could-top-spacex-record-1097390.html",
-      "source": "Proactive"
+      "date": "2026-08-21T20:57:00Z",
+      "title": "Elon Musk's SpaceX and Tesla Are Building a $16.8 Billion Chip Factory 5 Times Bigger Than Earth's Largest Building. What Does That Mean for Both Stocks?",
+      "url": "https://www.fool.com/investing/2026/08/21/elon-musks-spacex-and-tesla-are-building-a-168-bil/",
+      "source": "Motley Fool"
     },
     {
-      "date": "2026-08-21T06:03:07Z",
-      "title": "Can Anthropic Beat SpaceX's Record IPO Size?",
-      "url": "https://finance.yahoo.com/video/anthropic-beat-spacexs-record-ipo-060307854.html",
-      "source": "Bloomberg"
-    },
-    {
-      "date": "2026-08-21T04:44:04Z",
-      "title": "Elon Musk Says SPCX Could Reach 10,000 Starship Launches Annually by 2030: \u2018Still Tiny\u2019 Compared With Air Travel",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/elon-musk-says-spcx-could-044404010.html",
-      "source": "Benzinga"
-    },
-    {
-      "date": "2026-08-21T04:33:06Z",
-      "title": "TSLA Stock Eyes Another Winning Week: Nevada Clears Up To 5,000 Robotaxis, Musk Sees \u2018Crazy\u2019 Tesla Growth",
-      "url": "https://stocktwits.com/news-articles/markets/equity/tsla-nevada-5000-robotaxis-musk-crazy-tesla-growth/cZYBj2cRJN5",
-      "source": "Stocktwits"
-    },
-    {
-      "date": "2026-08-21T03:42:14Z",
-      "title": "Trump Signs New National Space Transportation Policy That Aims for 1,000 Launches by 2030, Outlines Plans for 'Americans to the Moon' by 2028",
-      "url": "https://finance.yahoo.com/economy/policy/articles/trump-signs-national-space-transportation-034214722.html",
-      "source": "Benzinga"
-    },
-    {
-      "date": "2026-08-21T03:09:23Z",
-      "title": "Dow Jones Futures: Market Triggers This Bearish Signal As Walmart, SpaceX, CrowdStrike Tumble",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-triggers-bearish-signal-walmart-spacex-crowdstrike/?src=A00220&yptr=yahoo",
+      "date": "2026-08-21T20:40:11Z",
+      "title": "Stock Market Today: Dow Gains 500 Points; SpaceX Snaps A Losing Streak, Bitcoin Pops",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-stock-market-sell-off-bitcoin-surges/?src=A00220&yptr=yahoo",
       "source": "Investor's Business Daily"
     },
     {
-      "date": "2026-08-21T02:40:37Z",
-      "title": "Trump Targets Over 1,000 US Space Launches A Year \u2014 Could RKLB, ASTS, SPCX And LUNR Ride The Rocket Boom?",
-      "url": "https://stocktwits.com/news-articles/markets/equity/trump-space-launches-rklb-asts-spcx-lunr-rocket-boom/cZYBic9RJZ6",
-      "source": "Stocktwits"
+      "date": "2026-08-21T20:34:00Z",
+      "title": "Weekly Wrap: Bitcoin Breaks Out",
+      "url": "https://www.cryptoprowl.com/releases/weekly-wrap-bitcoin-breaks-out-6497",
+      "source": "CryptoProwl"
     },
     {
-      "date": "2026-08-21T02:31:32Z",
-      "title": "Gary Black Says Tesla Bulls On Social Media Are Like College Students Doing 'Tequila Shots'",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/gary-black-says-tesla-bulls-023132599.html",
+      "date": "2026-08-21T20:18:00Z",
+      "title": "Moderna, Robinhood, Marvell, Tesla, SpaceX, and More Stocks That Explain Today\u2019s Market",
+      "url": "https://www.barrons.com/articles/stock-movers-b87ea8d7?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-08-21T20:12:00Z",
+      "title": "SpaceX Stock Gets Another Sell Rating. Why It Could Fall 25%.",
+      "url": "https://www.barrons.com/articles/spacex-stock-price-sell-rating-a9df2e16?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-08-21T19:48:27Z",
+      "title": "Advanced Micro Devices (AMD) Posts Record Sales, But Musk\u2019s NVIDIA (NVDA) Pledge Sinks the Stock",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/advanced-micro-devices-amd-posts-194827905.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-08-21T19:30:39Z",
+      "title": "Elon Musk Says SPCX Could Make History in the \u2018Next Few Months\u2019 With First-Ever Starship Tower Catch",
+      "url": "https://tech.yahoo.com/science/articles/elon-musk-says-spcx-could-193039524.html",
       "source": "Benzinga"
+    },
+    {
+      "date": "2026-08-21T19:30:12Z",
+      "title": "Elon Musk: \u201cStarlink Now Has 11k Satellites in Orbit.\u201d Amazon Hasn\u2019t Even Cracked 1,000.",
+      "url": "https://247wallst.com/investing/2026/08/21/elon-musk-starlink-now-has-11k-satellites-in-orbit-amazon-hasnt-even-cracked-1000/",
+      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": 0.03007462686567164,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 126.84749870300293,
-    "rsi14": 56.89740718059252,
+    "ma20": 127.94249877929687,
+    "rsi14": 58.27360142793482,
     "high_20d": 149.8000030517578,
     "low_5d": 130.38999938964844,
-    "low_10d": 114.52999877929688,
+    "low_10d": 130.1699981689453,
     "high_52w": 225.63999938964844,
     "low_52w": 104.83000183105469,
-    "atr14": 11.08142798287528,
-    "atr14_pct": 8.26972237528006,
-    "position_in_52w_range_pct": 24.145351178239736
+    "atr14": 10.798571450369698,
+    "atr14_pct": 7.883895272052816,
+    "position_in_52w_range_pct": 26.603757999465483
   },
   "ohlc_2y": [
     {
@@ -682,7 +583,15 @@
       "high": 137.88,
       "low": 130.39,
       "close": 134.0,
-      "volume": 119516600.0
+      "volume": 119813200.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 134.315,
+      "high": 137.35,
+      "low": 131.22,
+      "close": 136.97,
+      "volume": 77453430.0
     }
   ],
   "ohlc_1y": [
@@ -1068,9 +977,18 @@
       "high": 137.88,
       "low": 130.39,
       "close": 134.0,
-      "volume": 119516600.0
+      "volume": 119813200.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 134.315,
+      "high": 137.35,
+      "low": 131.22,
+      "close": 136.97,
+      "volume": 77453430.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:14:32Z"
 }

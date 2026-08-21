@@ -1,8 +1,8 @@
 {
   "ticker": "MXL",
-  "fetched_at": "2026-08-21T08:12:11Z",
+  "fetched_at": "2026-08-21T22:09:55Z",
   "_schema": "v2",
-  "current_price": 65.27999877929688,
+  "current_price": 66.61000061035156,
   "info": {
     "symbol": "MXL",
     "longName": "MaxLinear, Inc.",
@@ -76,37 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.35,
-      "eps_estimate": 0.32952,
-      "eps_surprise_pct": 0.0622
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.22,
-      "eps_estimate": 0.17523,
-      "eps_surprise_pct": 0.2555
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.19,
-      "eps_estimate": 0.17875,
-      "eps_surprise_pct": 0.0629
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.14,
-      "eps_estimate": 0.1191,
-      "eps_surprise_pct": 0.17549999
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-10-23",
-    "revenue_low": 166900000,
-    "revenue_high": 217100000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -164,89 +135,7 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 11,
-    "bullish": 7,
-    "neutral": 4,
-    "bearish": 0,
-    "avg_price_target": 94.54545,
-    "high_price_target": 125.0,
-    "low_price_target": 40.0,
-    "current_price": 65.28,
-    "recent_rating_changes": [
-      {
-        "date": "2026-07-24T17:46:39",
-        "firm": "Roth Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-24T15:54:47",
-        "firm": "Wells Fargo",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-24T14:40:27",
-        "firm": "Stifel",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-24T14:08:14",
-        "firm": "Susquehanna",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-24T10:17:44",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-20T13:06:58",
-        "firm": "Wells Fargo",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-29T14:50:10",
-        "firm": "Stifel",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-04T14:19:16",
-        "firm": "Stifel",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-04-29T13:13:00",
-        "firm": "Loop Capital",
-        "to_grade": "Buy",
-        "from_grade": "Hold",
-        "action": "up"
-      },
-      {
-        "date": "2026-04-24T12:52:36",
-        "firm": "Stifel",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
     {
       "date": "2026-08-20T18:28:00Z",
@@ -309,30 +198,22 @@
       "source": "Barrons.com"
     }
   ],
-  "options_implied_move": 0.04932598131452787,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 70.06149959564209,
-    "ma50": 81.95659996032715,
-    "ma200": 44.83099997520447,
-    "rsi14": 42.7158554049818,
+    "ma20": 69.81249980926513,
+    "ma50": 81.84980003356934,
+    "ma200": 45.08594997882843,
+    "rsi14": 43.82538383254347,
     "high_20d": 89.0,
-    "low_5d": 64.76000213623047,
-    "low_10d": 64.76000213623047,
+    "low_5d": 63.18000030517578,
+    "low_10d": 63.18000030517578,
     "high_52w": 128.3000030517578,
     "low_52w": 12.770000457763672,
-    "atr14": 7.06714357648577,
-    "atr14_pct": 10.825894161516235,
-    "position_in_52w_range_pct": 45.45139543194553
+    "atr14": 6.792857578822544,
+    "atr14_pct": 10.197954536224545,
+    "position_in_52w_range_pct": 46.602613125351716
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 12.62,
-      "high": 12.81,
-      "low": 12.44,
-      "close": 12.79,
-      "volume": 597300.0
-    },
     {
       "date": "2024-08-22",
       "open": 12.79,
@@ -4331,18 +4212,18 @@
       "high": 68.65,
       "low": 64.76,
       "close": 65.28,
-      "volume": 1930200.0
+      "volume": 1933200.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 67.28,
+      "high": 67.6,
+      "low": 63.18,
+      "close": 66.61,
+      "volume": 1829375.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 14.33,
-      "high": 14.48,
-      "low": 13.91,
-      "close": 14.27,
-      "volume": 1745700.0
-    },
     {
       "date": "2025-08-21",
       "open": 14.13,
@@ -6349,9 +6230,18 @@
       "high": 68.65,
       "low": 64.76,
       "close": 65.28,
-      "volume": 1930200.0
+      "volume": 1933200.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 67.28,
+      "high": 67.6,
+      "low": 63.18,
+      "close": 66.61,
+      "volume": 1829375.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:12:11Z"
 }

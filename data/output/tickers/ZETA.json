@@ -1,8 +1,8 @@
 {
   "ticker": "ZETA",
-  "fetched_at": "2026-08-21T08:15:16Z",
+  "fetched_at": "2026-08-21T22:10:48Z",
   "_schema": "v2",
-  "current_price": 27.850000381469727,
+  "current_price": 29.06999969482422,
   "info": {
     "symbol": "ZETA",
     "longName": "Zeta Global Holdings Corp.",
@@ -76,37 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.26703,
-      "eps_estimate": 0.19095,
-      "eps_surprise_pct": 0.3984
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.16011,
-      "eps_estimate": 0.11504,
-      "eps_surprise_pct": 0.39180002
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.36854,
-      "eps_estimate": 0.23306,
-      "eps_surprise_pct": 0.5813
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.27066,
-      "eps_estimate": 0.18385,
-      "eps_surprise_pct": 0.4722
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-11-04",
-    "revenue_low": 470009000,
-    "revenue_high": 472000000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -164,89 +135,7 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 14,
-    "bullish": 12,
-    "neutral": 2,
-    "bearish": 0,
-    "avg_price_target": 31.35714,
-    "high_price_target": 44.0,
-    "low_price_target": 25.0,
-    "current_price": 27.85,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-19T16:45:51",
-        "firm": "B of A Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-11T19:20:11",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T22:15:08",
-        "firm": "DA Davidson",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T17:37:47",
-        "firm": "RBC Capital",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T16:51:00",
-        "firm": "B. Riley Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2026-08-05T14:47:16",
-        "firm": "Keybanc",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T12:00:56",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-30T13:08:55",
-        "firm": "Freedom Broker",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-06-24T16:45:08",
-        "firm": "B of A Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-24T15:33:16",
-        "firm": "DA Davidson",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
     {
       "date": "2026-08-17T20:30:20Z",
@@ -309,30 +198,22 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": 0.029443446634406338,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 25.52549991607666,
-    "ma50": 22.459599952697754,
-    "ma200": 19.471399984359742,
-    "rsi14": 61.410118760301,
+    "ma20": 26.02249994277954,
+    "ma50": 22.642399940490723,
+    "ma200": 19.528649978637695,
+    "rsi14": 65.29839302806742,
     "high_20d": 29.889999389648438,
-    "low_5d": 27.510000228881836,
-    "low_10d": 25.0,
+    "low_5d": 27.110000610351562,
+    "low_10d": 26.299999237060547,
     "high_52w": 29.889999389648438,
     "low_52w": 14.364999771118164,
-    "atr14": 1.677999768938337,
-    "atr14_pct": 6.025133737717328,
-    "position_in_52w_range_pct": 86.85990944731608
+    "atr14": 1.7212140219552177,
+    "atr14_pct": 5.920928930252696,
+    "position_in_52w_range_pct": 94.71819829325158
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 24.42,
-      "high": 24.44,
-      "low": 23.38,
-      "close": 23.8,
-      "volume": 2680300.0
-    },
     {
       "date": "2024-08-22",
       "open": 23.97,
@@ -4331,18 +4212,18 @@
       "high": 28.74,
       "low": 27.51,
       "close": 27.85,
-      "volume": 6361400.0
+      "volume": 6366700.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 28.11,
+      "high": 29.105,
+      "low": 27.11,
+      "close": 29.07,
+      "volume": 4290736.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 18.71,
-      "high": 18.79,
-      "low": 17.38,
-      "close": 18.17,
-      "volume": 11452400.0
-    },
     {
       "date": "2025-08-21",
       "open": 17.95,
@@ -6349,9 +6230,18 @@
       "high": 28.74,
       "low": 27.51,
       "close": 27.85,
-      "volume": 6361400.0
+      "volume": 6366700.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 28.11,
+      "high": 29.105,
+      "low": 27.11,
+      "close": 29.07,
+      "volume": 4290736.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:15:16Z"
 }

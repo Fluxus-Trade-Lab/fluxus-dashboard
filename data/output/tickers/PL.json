@@ -1,8 +1,8 @@
 {
   "ticker": "PL",
-  "fetched_at": "2026-08-21T08:13:17Z",
+  "fetched_at": "2026-08-21T22:10:12Z",
   "_schema": "v2",
-  "current_price": 22.170000076293945,
+  "current_price": 22.290000915527344,
   "info": {
     "symbol": "PL",
     "longName": "Planet Labs PBC",
@@ -76,37 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-04-30T00:00:00",
-      "eps_actual": -0.03,
-      "eps_estimate": -0.042,
-      "eps_surprise_pct": 0.2857
-    },
-    {
-      "period_end": "2026-01-31T00:00:00",
-      "eps_actual": 0.0,
-      "eps_estimate": -0.04921,
-      "eps_surprise_pct": 1.0
-    },
-    {
-      "period_end": "2025-10-31T00:00:00",
-      "eps_actual": 0.0,
-      "eps_estimate": -0.04063,
-      "eps_surprise_pct": 1.0
-    },
-    {
-      "period_end": "2025-07-31T00:00:00",
-      "eps_actual": -0.03,
-      "eps_estimate": -0.04545,
-      "eps_surprise_pct": 0.33990002
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-09-04",
-    "revenue_low": 101272680,
-    "revenue_high": 107078000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -164,90 +135,20 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 11,
-    "bullish": 7,
-    "neutral": 3,
-    "bearish": 1,
-    "avg_price_target": 40.1,
-    "high_price_target": 53.0,
-    "low_price_target": 25.0,
-    "current_price": 22.17,
-    "recent_rating_changes": [
-      {
-        "date": "2026-07-14T16:07:31",
-        "firm": "Goldman Sachs",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-01T13:56:45",
-        "firm": "Wedbush",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "reit"
-      },
-      {
-        "date": "2026-06-05T17:43:45",
-        "firm": "Craig-Hallum",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-05T13:21:45",
-        "firm": "Wedbush",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "reit"
-      },
-      {
-        "date": "2026-06-05T12:11:42",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-14T13:30:04",
-        "firm": "Wedbush",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-04-20T17:50:50",
-        "firm": "Goldman Sachs",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-04-02T16:32:05",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-03-25T17:39:58",
-        "firm": "Morgan Stanley",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
-      },
-      {
-        "date": "2026-03-20T17:20:49",
-        "firm": "Clear Street",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
+    {
+      "date": "2026-08-21T18:51:23Z",
+      "title": "Rocket Lab Stock's Twelve-Month Gain Hides A Long Slide From Its High",
+      "url": "https://www.trefis.com/articles/612408/rocket-lab-stocks-twelve-month-gain-hides-a-long-slide-from-its-high/2026-08-21",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-08-21T14:18:00Z",
+      "title": "Bet on These Space ETFs as Ukraine Dominates Russia in Orbital War",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/bet-space-etfs-ukraine-dominates-141800818.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-20T02:13:32Z",
       "title": "Is Planet Labs PBC (PL) Undervalued Following Its Rwanda Earth Observation Deal?",
@@ -279,6 +180,12 @@
       "source": "The Wall Street Journal"
     },
     {
+      "date": "2026-08-15T13:04:54Z",
+      "title": "Boeing-Archer Deal: Why Give Away a $200 Million Business \u2014 on Purpose?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/boeing-archer-deal-why-away-130454001.html",
+      "source": "InvestorPlace"
+    },
+    {
       "date": "2026-08-14T12:47:00Z",
       "title": "5 Space Stocks Ready to Rocket Higher After the SpaceX Hangover",
       "url": "https://finance.yahoo.com/markets/stocks/articles/5-space-stocks-ready-rocket-124700420.html",
@@ -289,50 +196,24 @@
       "title": "SpaceX Is Down 3.5% Thursday. Why Are Space Stocks Like AST SpaceMobile Under Pressure?",
       "url": "https://247wallst.com/investing/2026/08/13/spacex-is-down-3-5-thursday-why-are-space-stocks-like-ast-spacemobile-under-pressure/",
       "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-13T16:35:00Z",
-      "title": "Is Planet Labs The Cheapest Stock In The Space Economy?",
-      "url": "https://www.fool.com/investing/2026/08/13/is-planet-labs-the-cheapest-stock-in-the-space-eco/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-12T17:47:57Z",
-      "title": "Rocket Lab Stock Sold Off While Its Operating Margin Kept Climbing",
-      "url": "https://www.trefis.com/articles/611170/rocket-lab-stock-sold-off-while-its-operating-margin-kept-climbing/2026-08-12",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-08-12T17:30:08Z",
-      "title": "Rocket Lab Price Prediction: Record Backlog, Bigger Ambitions. Here\u2019s Our Price Target",
-      "url": "https://247wallst.com/investing/2026/08/12/rocket-lab-price-prediction-record-backlog-bigger-ambitions-heres-our-price-target/",
-      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": 0.040595399048390476,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 22.43450002670288,
-    "ma50": 25.52519992828369,
-    "ma200": 26.54489998817444,
-    "rsi14": 41.03111260446457,
+    "ma20": 22.525500106811524,
+    "ma50": 25.35659996032715,
+    "ma200": 26.59039999485016,
+    "rsi14": 41.74207514979825,
     "high_20d": 25.530000686645508,
     "low_5d": 21.56999969482422,
     "low_10d": 21.56999969482422,
     "high_52w": 51.7599983215332,
-    "low_52w": 6.099999904632568,
-    "atr14": 1.3736426489693778,
-    "atr14_pct": 6.1959523872000055,
-    "position_in_52w_range_pct": 35.19492056248782
+    "low_52w": 6.255000114440918,
+    "atr14": 1.3157781873430525,
+    "atr14_pct": 5.902997457602049,
+    "position_in_52w_range_pct": 35.23788909541645
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 2.78,
-      "high": 2.8,
-      "low": 2.66,
-      "close": 2.76,
-      "volume": 3985100.0
-    },
     {
       "date": "2024-08-22",
       "open": 2.76,
@@ -4331,18 +4212,18 @@
       "high": 22.42,
       "low": 21.57,
       "close": 22.17,
-      "volume": 4346600.0
+      "volume": 4349400.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 22.45,
+      "high": 22.96,
+      "low": 21.8601,
+      "close": 22.29,
+      "volume": 3851165.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 6.34,
-      "high": 6.44,
-      "low": 6.1,
-      "close": 6.43,
-      "volume": 4658400.0
-    },
     {
       "date": "2025-08-21",
       "open": 6.35,
@@ -6349,9 +6230,18 @@
       "high": 22.42,
       "low": 21.57,
       "close": 22.17,
-      "volume": 4346600.0
+      "volume": 4349400.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 22.45,
+      "high": 22.96,
+      "low": 21.8601,
+      "close": 22.29,
+      "volume": 3851165.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:13:17Z"
 }

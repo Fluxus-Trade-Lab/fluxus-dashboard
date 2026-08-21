@@ -1,8 +1,8 @@
 {
   "ticker": "CBRG",
-  "fetched_at": "2026-08-21T08:10:49Z",
+  "fetched_at": "2026-08-21T22:09:08Z",
   "_schema": "v2",
-  "current_price": 4.059999942779541,
+  "current_price": 3.5199999809265137,
   "info": {
     "symbol": "CBRG",
     "longName": "Leverage Shares 2X Long CBRS Daily ETF",
@@ -42,26 +42,21 @@
   "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [],
-  "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
-  },
+  "analyst": {},
   "news": [],
-  "options_implied_move": 0.11083743998575596,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 4.679500019550323,
-    "ma50": 4.955,
-    "rsi14": 46.19389543898155,
+    "ma20": 4.6420000195503235,
+    "ma50": 4.872600002288818,
+    "rsi14": 43.55570772858001,
     "high_20d": 6.920000076293945,
-    "low_5d": 3.700000047683716,
-    "low_10d": 3.700000047683716,
+    "low_5d": 3.5199999809265137,
+    "low_10d": 3.5199999809265137,
     "high_52w": 17.149999618530273,
     "low_52w": 2.930000066757202,
-    "atr14": 1.0657142741339547,
-    "atr14_pct": 26.249120422507925,
-    "position_in_52w_range_pct": 7.9465535277140065
+    "atr14": 0.9964285748345512,
+    "atr14_pct": 28.3076301202785,
+    "position_in_52w_range_pct": 4.1490853218469
   },
   "ohlc_2y": [
     {
@@ -598,7 +593,15 @@
       "high": 4.26,
       "low": 3.79,
       "close": 4.06,
-      "volume": 8932800.0
+      "volume": 8997900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 4.07,
+      "high": 4.07,
+      "low": 3.52,
+      "close": 3.52,
+      "volume": 9793416.0
     }
   ],
   "ohlc_1y": [
@@ -1136,9 +1139,18 @@
       "high": 4.26,
       "low": 3.79,
       "close": 4.06,
-      "volume": 8932800.0
+      "volume": 8997900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 4.07,
+      "high": 4.07,
+      "low": 3.52,
+      "close": 3.52,
+      "volume": 9793416.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:10:49Z"
 }

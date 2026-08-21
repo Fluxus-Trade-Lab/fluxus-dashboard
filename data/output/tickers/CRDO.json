@@ -1,8 +1,8 @@
 {
   "ticker": "CRDO",
-  "fetched_at": "2026-08-20T22:14:37Z",
+  "fetched_at": "2026-08-21T22:09:16Z",
   "_schema": "v2",
-  "current_price": 231.35000610351562,
+  "current_price": 230.57000732421875,
   "info": {
     "symbol": "CRDO",
     "longName": "Credo Technology Group Holding Ltd",
@@ -76,37 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-04-30T00:00:00",
-      "eps_actual": 1.16,
-      "eps_estimate": 1.03414,
-      "eps_surprise_pct": 0.121700004
-    },
-    {
-      "period_end": "2026-01-31T00:00:00",
-      "eps_actual": 1.07,
-      "eps_estimate": 0.94073,
-      "eps_surprise_pct": 0.1374
-    },
-    {
-      "period_end": "2025-10-31T00:00:00",
-      "eps_actual": 0.67,
-      "eps_estimate": 0.49534,
-      "eps_surprise_pct": 0.35259998
-    },
-    {
-      "period_end": "2025-07-31T00:00:00",
-      "eps_actual": 0.52,
-      "eps_estimate": 0.36055,
-      "eps_surprise_pct": 0.4422
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-09-01",
-    "revenue_low": 469855000,
-    "revenue_high": 472920000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -164,89 +135,7 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 18,
-    "bullish": 17,
-    "neutral": 1,
-    "bearish": 0,
-    "avg_price_target": 283.23447,
-    "high_price_target": 350.0,
-    "low_price_target": 184.0,
-    "current_price": 231.35,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-18T14:21:00",
-        "firm": "TD Cowen",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-21T13:36:17",
-        "firm": "Susquehanna",
-        "to_grade": "Positive",
-        "from_grade": "Positive",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-20T18:04:55",
-        "firm": "Barclays",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-23T12:40:45",
-        "firm": "B of A Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-22T11:46:41",
-        "firm": "Stifel",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-22T10:55:24",
-        "firm": "Evercore ISI Group",
-        "to_grade": "Outperform",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-06-02T17:43:05",
-        "firm": "Roth Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-02T15:14:03",
-        "firm": "Jefferies",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-02T14:50:39",
-        "firm": "TD Cowen",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-02T14:41:52",
-        "firm": "Susquehanna",
-        "to_grade": "Positive",
-        "from_grade": "Positive",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
     {
       "date": "2026-08-20T18:28:00Z",
@@ -309,30 +198,22 @@
       "source": "Investor's Business Daily"
     }
   ],
-  "options_implied_move": 0.04322455040492017,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 231.84725036621094,
-    "ma50": 241.66719940185547,
-    "ma200": 172.6221753692627,
-    "rsi14": 47.945878070478194,
+    "ma20": 232.71825103759767,
+    "ma50": 241.52499969482423,
+    "ma200": 172.87182540893554,
+    "rsi14": 47.73270562469509,
     "high_20d": 286.239990234375,
-    "low_5d": 226.5800018310547,
-    "low_10d": 226.5800018310547,
+    "low_5d": 223.0449981689453,
+    "low_10d": 223.0449981689453,
     "high_52w": 308.6700134277344,
     "low_52w": 86.48500061035156,
-    "atr14": 22.901133946010045,
-    "atr14_pct": 9.898912185791394,
-    "position_in_52w_range_pct": 65.20016973972533
+    "atr14": 22.109356471470424,
+    "atr14_pct": 9.588999336058956,
+    "position_in_52w_range_pct": 64.84911150703617
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 32.0,
-      "high": 36.11,
-      "low": 31.84,
-      "close": 36.08,
-      "volume": 3730600.0
-    },
     {
       "date": "2024-08-22",
       "open": 36.16,
@@ -4328,21 +4209,21 @@
     {
       "date": "2026-08-20",
       "open": 235.41,
-      "high": 236.4999,
+      "high": 236.5,
       "low": 226.58,
       "close": 231.35,
-      "volume": 3271858.0
+      "volume": 3278400.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 233.05,
+      "high": 236.36,
+      "low": 223.045,
+      "close": 230.57,
+      "volume": 2631625.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 104.5,
-      "high": 106.18,
-      "low": 100.06,
-      "close": 105.99,
-      "volume": 5526800.0
-    },
     {
       "date": "2025-08-21",
       "open": 105.84,
@@ -6346,12 +6227,21 @@
     {
       "date": "2026-08-20",
       "open": 235.41,
-      "high": 236.4999,
+      "high": 236.5,
       "low": 226.58,
       "close": 231.35,
-      "volume": 3271858.0
+      "volume": 3278400.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 233.05,
+      "high": 236.36,
+      "low": 223.045,
+      "close": 230.57,
+      "volume": 2631625.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-20T22:14:37Z"
 }

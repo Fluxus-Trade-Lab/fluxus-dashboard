@@ -1,8 +1,8 @@
 {
   "ticker": "DDOG",
-  "fetched_at": "2026-08-20T22:14:43Z",
+  "fetched_at": "2026-08-21T22:09:20Z",
   "_schema": "v2",
-  "current_price": 232.5500030517578,
+  "current_price": 235.6199951171875,
   "info": {
     "symbol": "DDOG",
     "longName": "Datadog, Inc.",
@@ -76,37 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.65,
-      "eps_estimate": 0.58324,
-      "eps_surprise_pct": 0.1145
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.6,
-      "eps_estimate": 0.50738,
-      "eps_surprise_pct": 0.1825
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.59,
-      "eps_estimate": 0.55486,
-      "eps_surprise_pct": 0.0633
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.55,
-      "eps_estimate": 0.45709,
-      "eps_surprise_pct": 0.2033
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-11-05",
-    "revenue_low": 1139500000,
-    "revenue_high": 1191200600
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -164,90 +135,14 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 48,
-    "bullish": 44,
-    "neutral": 2,
-    "bearish": 2,
-    "avg_price_target": 285.1802,
-    "high_price_target": 330.0,
-    "low_price_target": 158.0,
-    "current_price": 232.55,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-08T00:59:39",
-        "firm": "Scotiabank",
-        "to_grade": "Sector Outperform",
-        "from_grade": "Sector Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T23:12:23",
-        "firm": "UBS",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T19:41:33",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T16:24:23",
-        "firm": "Macquarie",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T13:30:46",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T12:35:14",
-        "firm": "DA Davidson",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-07T12:31:24",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "reit"
-      },
-      {
-        "date": "2026-08-07T11:38:26",
-        "firm": "Rosenblatt",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-04T12:07:48",
-        "firm": "Canaccord Genuity",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-04T11:26:07",
-        "firm": "Rosenblatt",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
+    {
+      "date": "2026-08-21T11:35:00Z",
+      "title": "Should You Buy Datadog Stock Right Now?",
+      "url": "https://www.fool.com/investing/2026/08/21/should-you-buy-datadog-stock-right-now/",
+      "source": "Motley Fool"
+    },
     {
       "date": "2026-08-20T21:01:58Z",
       "title": "Dynatrace Buys Arize for $915M to Expand AI Observability Reach",
@@ -301,38 +196,24 @@
       "title": "Jim Cramer Explains Datadog, Inc. (NASDAQ:DDOG)\u2019s Share Price Movement",
       "url": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-explains-datadog-inc-074112335.html",
       "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-14T00:16:21Z",
-      "title": "Does Datadog (DDOG) Still Trade Below Fair Value After The Drop?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/does-datadog-ddog-still-trade-001621220.html",
-      "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": 0.027864974908462032,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 253.7015022277832,
-    "ma50": 249.26200103759766,
-    "ma200": 173.90147537231445,
-    "rsi14": 42.373504147306214,
+    "ma20": 253.139501953125,
+    "ma50": 249.42180084228517,
+    "ma200": 174.26917533874513,
+    "rsi14": 43.89260193079686,
     "high_20d": 292.7200012207031,
     "low_5d": 227.11000061035156,
     "low_10d": 227.11000061035156,
     "high_52w": 292.7200012207031,
     "low_52w": 98.01000213623047,
-    "atr14": 17.690357753208705,
-    "atr14_pct": 7.607119983254279,
-    "position_in_52w_range_pct": 69.09763317145246
+    "atr14": 17.427501133510045,
+    "atr14_pct": 7.39644406020904,
+    "position_in_52w_range_pct": 70.67433291972671
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 116.51,
-      "high": 117.79,
-      "low": 115.97,
-      "close": 117.74,
-      "volume": 2223500.0
-    },
     {
       "date": "2024-08-22",
       "open": 117.5,
@@ -4327,22 +4208,22 @@
     },
     {
       "date": "2026-08-20",
-      "open": 233.31,
+      "open": 233.27,
       "high": 236.56,
       "low": 227.11,
       "close": 232.55,
-      "volume": 3172392.0
+      "volume": 3174600.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 235.15,
+      "high": 236.31,
+      "low": 228.81,
+      "close": 235.62,
+      "volume": 2721237.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 128.47,
-      "high": 128.729,
-      "low": 125.56,
-      "close": 128.46,
-      "volume": 3914700.0
-    },
     {
       "date": "2025-08-21",
       "open": 128.06,
@@ -6345,13 +6226,22 @@
     },
     {
       "date": "2026-08-20",
-      "open": 233.31,
+      "open": 233.27,
       "high": 236.56,
       "low": 227.11,
       "close": 232.55,
-      "volume": 3172392.0
+      "volume": 3174600.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 235.15,
+      "high": 236.31,
+      "low": 228.81,
+      "close": 235.62,
+      "volume": 2721237.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-20T22:14:43Z"
 }

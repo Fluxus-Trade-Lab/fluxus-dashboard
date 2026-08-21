@@ -1,8 +1,8 @@
 {
   "ticker": "SLV",
-  "fetched_at": "2026-08-21T08:13:42Z",
+  "fetched_at": "2026-08-21T22:10:19Z",
   "_schema": "v2",
-  "current_price": 61.65999984741211,
+  "current_price": 62.720001220703125,
   "info": {
     "symbol": "SLV",
     "longName": "iShares Silver Trust",
@@ -42,13 +42,14 @@
   "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [],
-  "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
-  },
+  "analyst": {},
   "news": [
+    {
+      "date": "2026-08-21T13:15:05Z",
+      "title": "Exchange-Traded Funds, Equity Futures Higher Pre-Bell Friday as Bitcoin Moves Past $77,000",
+      "url": "https://finance.yahoo.com/markets/articles/exchange-traded-funds-equity-futures-131505482.html",
+      "source": "MT Newswires"
+    },
     {
       "date": "2026-08-20T13:12:21Z",
       "title": "Exchange-Traded Funds Lower, Equity Futures Mixed Pre-Bell Thursday Amid Renewed Inflation Concerns",
@@ -102,38 +103,24 @@
       "title": "CDE- A Standout Silver Play that Delivered a Record Quarter",
       "url": "https://finance.yahoo.com/markets/commodities/articles/cde-standout-silver-play-delivered-050100820.html",
       "source": "MoneyShow"
-    },
-    {
-      "date": "2026-08-12T13:16:39Z",
-      "title": "Exchange-Traded Funds, Equity Futures Gain Pre-Bell Wednesday Amid In-Line Consumer Inflation Data, Tech Gains",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/exchange-traded-funds-equity-futures-131639194.html",
-      "source": "MT Newswires"
     }
   ],
-  "options_implied_move": 0.021083360415456786,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 56.145499801635744,
-    "ma50": 55.53419990539551,
-    "ma200": 64.45730001449584,
-    "rsi14": 64.67506809979398,
-    "high_20d": 62.33000183105469,
+    "ma20": 56.6519998550415,
+    "ma50": 55.635399932861326,
+    "ma200": 64.5521000289917,
+    "rsi14": 66.81008549869253,
+    "high_20d": 63.20000076293945,
     "low_5d": 57.22999954223633,
-    "low_10d": 56.9900016784668,
+    "low_10d": 57.22999954223633,
     "high_52w": 109.83000183105469,
-    "low_52w": 34.20000076293945,
-    "atr14": 1.8364293234688895,
-    "atr14_pct": 2.9783154849390825,
-    "position_in_52w_range_pct": 36.3083415267192
+    "low_52w": 34.400001525878906,
+    "atr14": 1.8392865317208427,
+    "atr14_pct": 2.9325358672246264,
+    "position_in_52w_range_pct": 37.54474291428709
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 26.92,
-      "high": 27.14,
-      "low": 26.66,
-      "close": 26.95,
-      "volume": 18449500.0
-    },
     {
       "date": "2024-08-22",
       "open": 26.92,
@@ -4132,18 +4119,18 @@
       "high": 62.33,
       "low": 60.26,
       "close": 61.66,
-      "volume": 24068800.0
+      "volume": 24147900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 62.9,
+      "high": 63.2,
+      "low": 62.26,
+      "close": 62.72,
+      "volume": 22639693.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 34.21,
-      "high": 34.45,
-      "low": 34.2,
-      "close": 34.43,
-      "volume": 10903400.0
-    },
     {
       "date": "2025-08-21",
       "open": 34.48,
@@ -6150,9 +6137,18 @@
       "high": 62.33,
       "low": 60.26,
       "close": 61.66,
-      "volume": 24068800.0
+      "volume": 24147900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 62.9,
+      "high": 63.2,
+      "low": 62.26,
+      "close": 62.72,
+      "volume": 22639693.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:13:42Z"
 }

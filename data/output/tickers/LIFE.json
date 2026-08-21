@@ -1,8 +1,8 @@
 {
   "ticker": "LIFE",
-  "fetched_at": "2026-08-21T08:11:47Z",
+  "fetched_at": "2026-08-21T22:10:50Z",
   "_schema": "v2",
-  "current_price": 33.52000045776367,
+  "current_price": 34.15999984741211,
   "info": {
     "symbol": "LIFE",
     "longName": "Ethos Technologies Inc.",
@@ -76,31 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.53,
-      "eps_estimate": 0.28145,
-      "eps_surprise_pct": 0.8831
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.38,
-      "eps_estimate": 0.46632,
-      "eps_surprise_pct": -0.1851
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.42,
-      "eps_estimate": 0.40105,
-      "eps_surprise_pct": 0.0473
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-08-04",
-    "revenue_low": 161300000,
-    "revenue_high": 164843000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -158,89 +135,7 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 9,
-    "bullish": 9,
-    "neutral": 0,
-    "bearish": 0,
-    "avg_price_target": 34.875,
-    "high_price_target": 40.0,
-    "low_price_target": 32.0,
-    "current_price": 33.52,
-    "recent_rating_changes": [
-      {
-        "date": "2024-05-14T14:51:16",
-        "firm": "HC Wainwright & Co.",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2024-05-03T19:54:01",
-        "firm": "HC Wainwright& Co.",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2024-03-15T16:47:00",
-        "firm": "RBC Capital",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2024-03-15T10:18:55",
-        "firm": "HC Wainwright & Co.",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2024-02-21T16:14:57",
-        "firm": "HC Wainwright & Co.",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2023-09-21T10:22:04",
-        "firm": "HC Wainwright & Co.",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2023-09-14T10:07:41",
-        "firm": "HC Wainwright & Co.",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2023-08-10T10:28:36",
-        "firm": "HC Wainwright & Co.",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2023-07-21T09:43:47",
-        "firm": "Piper Sandler",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2023-07-05T11:01:39",
-        "firm": "Oppenheimer",
-        "to_grade": "Perform",
-        "from_grade": "Outperform",
-        "action": "down"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
     {
       "date": "2026-08-11T01:44:48Z",
@@ -305,17 +200,17 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 28.038499736785887,
-    "ma50": 22.0889998626709,
-    "rsi14": 72.41395575240907,
+    "ma20": 28.821499729156493,
+    "ma50": 22.441999855041505,
+    "rsi14": 73.7027574283054,
     "high_20d": 35.689998626708984,
     "low_5d": 31.850000381469727,
-    "low_10d": 29.389999389648438,
+    "low_10d": 31.049999237060547,
     "high_52w": 35.689998626708984,
     "low_52w": 9.449999809265137,
-    "atr14": 3.025714465550014,
-    "atr14_pct": 9.026594344360216,
-    "position_in_52w_range_pct": 91.73018953223908
+    "atr14": 2.960714748927525,
+    "atr14_pct": 8.667197781477224,
+    "position_in_52w_range_pct": 94.16921170636729
   },
   "ohlc_2y": [
     {
@@ -1445,6 +1340,14 @@
       "low": 31.85,
       "close": 33.52,
       "volume": 1533600.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 33.9,
+      "high": 34.49,
+      "low": 32.51,
+      "close": 34.16,
+      "volume": 848490.0
     }
   ],
   "ohlc_1y": [
@@ -2575,8 +2478,17 @@
       "low": 31.85,
       "close": 33.52,
       "volume": 1533600.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 33.9,
+      "high": 34.49,
+      "low": 32.51,
+      "close": 34.16,
+      "volume": 848490.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:11:47Z"
 }

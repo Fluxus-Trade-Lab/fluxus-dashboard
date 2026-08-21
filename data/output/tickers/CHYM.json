@@ -1,8 +1,8 @@
 {
   "ticker": "CHYM",
-  "fetched_at": "2026-08-20T22:17:27Z",
+  "fetched_at": "2026-08-21T22:11:10Z",
   "_schema": "v2",
-  "current_price": 31.950000762939453,
+  "current_price": 32.779998779296875,
   "info": {
     "symbol": "CHYM",
     "longName": "Chime Financial, Inc.",
@@ -13,13 +13,13 @@
     "city": "San Francisco",
     "website": "https://www.chime.com",
     "fullTimeEmployees": 1519,
-    "marketCap": 12095795200,
-    "enterpriseValue": 11539867648,
-    "trailingPE": 5.949721,
-    "forwardPE": 19.84472,
-    "priceToSalesTrailing12Months": 4.92293,
-    "enterpriseToRevenue": 4.697,
-    "priceToBook": 8.61186,
+    "marketCap": 12410019840,
+    "enterpriseValue": 11115852800,
+    "trailingPE": 6.104283,
+    "forwardPE": 20.360247,
+    "priceToSalesTrailing12Months": 5.0508175,
+    "enterpriseToRevenue": 4.524,
+    "priceToBook": 8.835579,
     "grossMargins": 0.88707,
     "operatingMargins": 0.18605,
     "profitMargins": -0.0074,
@@ -30,13 +30,13 @@
     "freeCashflow": 437652256,
     "debtToEquity": 12.876,
     "currentRatio": 4.621,
-    "fiftyTwoWeekHigh": 33.74,
+    "fiftyTwoWeekHigh": 33.745,
     "fiftyTwoWeekLow": 15.88,
-    "averageVolume": 6652883,
-    "averageVolume10days": 13375170,
+    "averageVolume": 6701743,
+    "averageVolume10days": 10553090,
     "beta": null,
     "sharesOutstanding": 347019852,
-    "sharesFloat": 222127242,
+    "sharesFloat": 223581009,
     "companyOfficers": [
       {
         "name": "Mr. Christopher R. Britt",
@@ -173,7 +173,7 @@
     "avg_price_target": 34.2,
     "high_price_target": 45.0,
     "low_price_target": 22.0,
-    "current_price": 31.95,
+    "current_price": 32.78,
     "recent_rating_changes": [
       {
         "date": "2026-08-18T13:00:39",
@@ -309,20 +309,20 @@
       "source": "Motley Fool"
     }
   ],
-  "options_implied_move": 0.0284820024497639,
+  "options_implied_move": 0.01220256299254749,
   "technicals": {
-    "ma20": 27.75850028991699,
-    "ma50": 22.88000015258789,
-    "ma200": 21.99500008583069,
-    "rsi14": 69.832932576309,
-    "high_20d": 33.7400016784668,
+    "ma20": 28.363000202178956,
+    "ma50": 23.301800117492675,
+    "ma200": 22.092925081253053,
+    "rsi14": 71.95193996420656,
+    "high_20d": 33.744998931884766,
     "low_5d": 30.378000259399414,
-    "low_10d": 28.739999771118164,
-    "high_52w": 33.7400016784668,
+    "low_10d": 29.139999389648438,
+    "high_52w": 33.744998931884766,
     "low_52w": 15.880000114440918,
-    "atr14": 1.9035000119890486,
-    "atr14_pct": 5.957746374131615,
-    "position_in_52w_range_pct": 89.97759933496975
+    "atr14": 1.8920854840959822,
+    "atr14_pct": 5.772073076741484,
+    "position_in_52w_range_pct": 94.59837550257411
   },
   "ohlc_2y": [
     {
@@ -2542,6 +2542,14 @@
       "volume": 5573100.0
     },
     {
+      "date": "2026-07-22",
+      "open": 22.26,
+      "high": 22.46,
+      "low": 21.62,
+      "close": 21.82,
+      "volume": 3818700.0
+    },
+    {
       "date": "2026-07-23",
       "open": 21.64,
       "high": 21.73,
@@ -2704,29 +2712,21 @@
     {
       "date": "2026-08-20",
       "open": 33.25,
-      "high": 33.74,
+      "high": 33.745,
       "low": 31.92,
       "close": 31.95,
-      "volume": 6632823.0
+      "volume": 6632800.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 32.0,
+      "high": 32.91,
+      "low": 31.6748,
+      "close": 32.78,
+      "volume": 5926281.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-19",
-      "open": 30.08,
-      "high": 30.39,
-      "low": 28.0,
-      "close": 28.02,
-      "volume": 2636500.0
-    },
-    {
-      "date": "2025-08-20",
-      "open": 27.64,
-      "high": 27.8,
-      "low": 26.34,
-      "close": 26.57,
-      "volume": 3717100.0
-    },
     {
       "date": "2025-08-21",
       "open": 26.5,
@@ -4560,6 +4560,14 @@
       "volume": 5573100.0
     },
     {
+      "date": "2026-07-22",
+      "open": 22.26,
+      "high": 22.46,
+      "low": 21.62,
+      "close": 21.82,
+      "volume": 3818700.0
+    },
+    {
       "date": "2026-07-23",
       "open": 21.64,
       "high": 21.73,
@@ -4722,10 +4730,18 @@
     {
       "date": "2026-08-20",
       "open": 33.25,
-      "high": 33.74,
+      "high": 33.745,
       "low": 31.92,
       "close": 31.95,
-      "volume": 6632823.0
+      "volume": 6632800.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 32.0,
+      "high": 32.91,
+      "low": 31.6748,
+      "close": 32.78,
+      "volume": 5926281.0
     }
   ],
   "ai_synthesis": null,

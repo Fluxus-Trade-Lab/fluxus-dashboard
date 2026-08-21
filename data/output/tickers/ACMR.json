@@ -1,8 +1,8 @@
 {
   "ticker": "ACMR",
-  "fetched_at": "2026-08-20T22:13:53Z",
+  "fetched_at": "2026-08-21T22:08:45Z",
   "_schema": "v2",
-  "current_price": 78.5199966430664,
+  "current_price": 79.41000366210938,
   "info": {
     "symbol": "ACMR",
     "longName": "ACM Research, Inc. Class A Common Stock",
@@ -76,37 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.61,
-      "eps_estimate": 0.33667,
-      "eps_surprise_pct": 0.8119
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.34,
-      "eps_estimate": 0.19667,
-      "eps_surprise_pct": 0.7288
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.25,
-      "eps_estimate": 0.4,
-      "eps_surprise_pct": -0.375
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.36,
-      "eps_estimate": 0.5325,
-      "eps_surprise_pct": -0.32389998
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-11-04",
-    "revenue_low": 295000000,
-    "revenue_high": 348446000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -164,89 +135,7 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 8,
-    "bullish": 7,
-    "neutral": 1,
-    "bearish": 0,
-    "avg_price_target": 115.14286,
-    "high_price_target": 166.0,
-    "low_price_target": 75.0,
-    "current_price": 78.52,
-    "recent_rating_changes": [
-      {
-        "date": "2026-06-24T12:43:16",
-        "firm": "Morgan Stanley",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-18T17:56:44",
-        "firm": "Roth Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-05T10:04:07",
-        "firm": "Seaport Global",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2025-09-30T18:00:26",
-        "firm": "Roth Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2025-02-28T16:45:20",
-        "firm": "JP Morgan",
-        "to_grade": "Overweight",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2025-02-27T13:26:54",
-        "firm": "Needham",
-        "to_grade": "Hold",
-        "from_grade": "Hold",
-        "action": "reit"
-      },
-      {
-        "date": "2024-12-05T17:53:59",
-        "firm": "Craig-Hallum",
-        "to_grade": "Hold",
-        "from_grade": "Buy",
-        "action": "down"
-      },
-      {
-        "date": "2024-12-04T10:01:37",
-        "firm": "Needham",
-        "to_grade": "Hold",
-        "from_grade": "Buy",
-        "action": "down"
-      },
-      {
-        "date": "2024-10-01T10:26:30",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2024-08-08T16:19:39",
-        "firm": "Benchmark",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
     {
       "date": "2026-08-18T13:55:01Z",
@@ -309,30 +198,22 @@
       "source": "GuruFocus.com"
     }
   ],
-  "options_implied_move": 0.049286808016461306,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 80.04150047302247,
-    "ma50": 90.55529983520508,
-    "ma200": 60.530099849700925,
-    "rsi14": 45.1515606517193,
+    "ma20": 79.2985008239746,
+    "ma50": 90.6658999633789,
+    "ma200": 61.14679988861084,
+    "rsi14": 46.154066005553204,
     "high_20d": 92.55000305175781,
     "low_5d": 75.44999694824219,
     "low_10d": 75.44999694824219,
     "high_52w": 127.19000244140625,
-    "low_52w": 24.139999389648438,
-    "atr14": 6.1628570556640625,
-    "atr14_pct": 7.848773967323221,
-    "position_in_52w_range_pct": 52.77049552934522
+    "low_52w": 24.93000030517578,
+    "atr14": 6.045714242117746,
+    "atr14_pct": 7.613290471364717,
+    "position_in_52w_range_pct": 53.27596540077859
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 20.1,
-      "high": 20.2,
-      "low": 19.631,
-      "close": 19.94,
-      "volume": 725400.0
-    },
     {
       "date": "2024-08-22",
       "open": 19.94,
@@ -4158,6 +4039,14 @@
       "volume": 1271500.0
     },
     {
+      "date": "2026-07-22",
+      "open": 91.18,
+      "high": 94.51,
+      "low": 89.35,
+      "close": 89.51,
+      "volume": 702100.0
+    },
+    {
       "date": "2026-07-23",
       "open": 88.8,
       "high": 90.515,
@@ -4204,6 +4093,14 @@
       "low": 69.89,
       "close": 78.65,
       "volume": 1589700.0
+    },
+    {
+      "date": "2026-07-31",
+      "open": 83.67,
+      "high": 85.0,
+      "low": 76.6,
+      "close": 78.47,
+      "volume": 897000.0
     },
     {
       "date": "2026-08-03",
@@ -4311,38 +4208,22 @@
     },
     {
       "date": "2026-08-20",
-      "open": 77.74,
+      "open": 77.1,
       "high": 78.72,
       "low": 75.45,
       "close": 78.52,
-      "volume": 810883.0
+      "volume": 810900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 79.61,
+      "high": 79.99,
+      "low": 76.1,
+      "close": 79.41,
+      "volume": 529846.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-18",
-      "open": 24.92,
-      "high": 25.255,
-      "low": 24.685,
-      "close": 25.16,
-      "volume": 821100.0
-    },
-    {
-      "date": "2025-08-19",
-      "open": 25.16,
-      "high": 25.593,
-      "low": 24.595,
-      "close": 25.07,
-      "volume": 778600.0
-    },
-    {
-      "date": "2025-08-20",
-      "open": 25.0,
-      "high": 25.21,
-      "low": 24.14,
-      "close": 25.16,
-      "volume": 816000.0
-    },
     {
       "date": "2025-08-21",
       "open": 24.93,
@@ -6176,6 +6057,14 @@
       "volume": 1271500.0
     },
     {
+      "date": "2026-07-22",
+      "open": 91.18,
+      "high": 94.51,
+      "low": 89.35,
+      "close": 89.51,
+      "volume": 702100.0
+    },
+    {
       "date": "2026-07-23",
       "open": 88.8,
       "high": 90.515,
@@ -6222,6 +6111,14 @@
       "low": 69.89,
       "close": 78.65,
       "volume": 1589700.0
+    },
+    {
+      "date": "2026-07-31",
+      "open": 83.67,
+      "high": 85.0,
+      "low": 76.6,
+      "close": 78.47,
+      "volume": 897000.0
     },
     {
       "date": "2026-08-03",
@@ -6329,13 +6226,22 @@
     },
     {
       "date": "2026-08-20",
-      "open": 77.74,
+      "open": 77.1,
       "high": 78.72,
       "low": 75.45,
       "close": 78.52,
-      "volume": 810883.0
+      "volume": 810900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 79.61,
+      "high": 79.99,
+      "low": 76.1,
+      "close": 79.41,
+      "volume": 529846.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-20T22:13:53Z"
 }

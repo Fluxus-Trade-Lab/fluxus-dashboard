@@ -1,8 +1,8 @@
 {
   "ticker": "PLTR",
-  "fetched_at": "2026-08-21T08:13:23Z",
+  "fetched_at": "2026-08-21T22:10:14Z",
   "_schema": "v2",
-  "current_price": 173.9600067138672,
+  "current_price": 179.94000244140625,
   "info": {
     "symbol": "PLTR",
     "longName": "Palantir Technologies Inc.",
@@ -76,37 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.41,
-      "eps_estimate": 0.34596,
-      "eps_surprise_pct": 0.1851
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.33,
-      "eps_estimate": 0.27946,
-      "eps_surprise_pct": 0.1808
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.25,
-      "eps_estimate": 0.2302,
-      "eps_surprise_pct": 0.086
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": 0.21,
-      "eps_estimate": 0.16738,
-      "eps_surprise_pct": 0.2546
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-11-03",
-    "revenue_low": 2161000000,
-    "revenue_high": 2262971840
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -164,175 +135,85 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 31,
-    "bullish": 19,
-    "neutral": 10,
-    "bearish": 2,
-    "avg_price_target": 191.68,
-    "high_price_target": 255.0,
-    "low_price_target": 80.0,
-    "current_price": 173.96,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-04T19:03:23",
-        "firm": "UBS",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-04T18:45:18",
-        "firm": "Mizuho",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-04T14:40:09",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-04T14:13:00",
-        "firm": "DA Davidson",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-04T12:12:50",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-04T11:23:04",
-        "firm": "Rosenblatt",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-04T10:02:36",
-        "firm": "Deutsche Bank",
-        "to_grade": "Buy",
-        "from_grade": "Hold",
-        "action": "up"
-      },
-      {
-        "date": "2026-08-04T09:04:37",
-        "firm": "Piper Sandler",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "reit"
-      },
-      {
-        "date": "2026-07-30T12:39:03",
-        "firm": "Rosenblatt",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-24T18:51:09",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
     {
-      "date": "2026-08-21T03:09:23Z",
-      "title": "Dow Jones Futures: Market Triggers This Bearish Signal As Walmart, SpaceX, CrowdStrike Tumble",
+      "date": "2026-08-21T19:16:15Z",
+      "title": "Palantir Stock Clears Buy Zone But Could Offer Alternative Entry",
+      "url": "https://www.investors.com/stock-lists/ibd-big-cap-20/palantir-stock-clears-buy-zone-but-could-offer-alternative-entry/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
+    },
+    {
+      "date": "2026-08-21T18:10:47Z",
+      "title": "Michael Burry Says the AI Buildout Is Repeating 2008: \u2018The Shenanigans Are Apparent Today\u2019",
+      "url": "https://247wallst.com/investing/2026/08/21/michael-burry-says-the-ai-buildout-is-repeating-2008-the-shenanigans-are-apparent-today/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-21T17:27:17Z",
+      "title": "Even The Calm Reading On Palantir Puts Nearly Half The Position In Play",
+      "url": "https://www.trefis.com/articles/612387/even-the-calm-reading-on-palantir-puts-nearly-half-the-position-in-play/2026-08-21",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-08-21T17:10:05Z",
+      "title": "Palantir Climbs 4% Through $180, BigBear.ai Rises 4%, ServiceNow Holds Flat: How Are Traders Picking the Software Winners?",
+      "url": "https://247wallst.com/investing/2026/08/21/palantir-climbs-4-through-180-bigbear-ai-rises-4-servicenow-holds-flat-how-are-traders-picking-the-software-winners/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-21T16:25:00Z",
+      "title": "Bloom Energy vs. Palantir: Which \"Story Stock\" Actually Has More Room to Run?",
+      "url": "https://www.fool.com/investing/2026/08/21/bloom-energy-vs-palantir-which-story-stock-actuall/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-08-21T15:41:00Z",
+      "title": "Palantir Co-Founder Peter Thiel's Hedge Fund Just Made a Big Bet on This Genius AI Stock Pick",
+      "url": "https://www.fool.com/investing/2026/08/21/palantir-co-founder-peter-thiels-hedge-fund-just-m/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-08-21T14:00:21Z",
+      "title": "Could Palantir Stock Double Again? The Bull and Bear Cases.",
+      "url": "https://247wallst.com/investing/2026/08/21/could-palantir-stock-double-again-the-bull-and-bear-cases/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-21T11:57:33Z",
+      "title": "Dow Jones Futures Rise After Bearish Market Signal; Bitcoin Keeps Surging",
       "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-triggers-bearish-signal-walmart-spacex-crowdstrike/?src=A00220&yptr=yahoo",
       "source": "Investor's Business Daily"
     },
     {
-      "date": "2026-08-20T21:52:15Z",
-      "title": "Ex-FBI Officer is Watching Every Polymarket Trader, Says CEO Coplan",
-      "url": "https://beincrypto.com/polymarket-surveillance-ex-fbi-traders/",
-      "source": "BeInCrypto"
-    },
-    {
-      "date": "2026-08-20T21:50:00Z",
-      "title": "Is Palantir Still a Buy After Its 33% Rally Over the Past Month?",
-      "url": "https://www.fool.com/investing/2026/08/20/palantir-stock-buy-after-rally-month-pltr/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-20T17:21:19Z",
-      "title": "Cathie Wood's Firm Launches New ETF; Buys Broadcom, Rocket Lab, Cloudflare",
-      "url": "https://www.investors.com/news/cathie-wood-ark-invest-etf-broadcom-rocket-lab-cloudflare/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-08-20T17:13:00Z",
-      "title": "Palantir's Margin Expansion Signals a Structural Growth Advantage",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/palantirs-margin-expansion-signals-structural-171300520.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-20T17:04:00Z",
-      "title": "Is Palantir Stock About to Breakout?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/palantir-stock-breakout-170400091.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-20T15:00:29Z",
-      "title": "Palantir Is Growing Faster Than Almost Anyone Expected. Can the Stock Keep Up?",
-      "url": "https://247wallst.com/investing/2026/08/20/palantir-is-growing-faster-than-almost-anyone-expected-can-the-stock-keep-up/",
+      "date": "2026-08-21T11:45:07Z",
+      "title": "Palantir and Snowflake Provide the Backbone of Agentic AI but Which Is Better?",
+      "url": "https://247wallst.com/investing/2026/08/21/palantir-and-snowflake-provide-the-backbone-of-agentic-ai-but-which-is-better/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-20T12:03:00Z",
-      "title": "Is Mercury Systems (MRCY)\u2019s Partnership With Palantir Technologies (PLTR) the Catalyst for a Hardware Turnaround?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/mercury-systems-mrcy-partnership-palantir-120300085.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-20T10:40:00Z",
-      "title": "Prediction: This Will Be Palantir's Stock Price at the End of 2026",
-      "url": "https://www.fool.com/investing/2026/08/20/prediction-this-will-be-palantirs-stock-price-at-t/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-19T22:17:54Z",
-      "title": "The Dealmaking 3: Madden\u2019s AI Persona Engine, Boehly\u2019s $75B AI Bet & Pac-12 Free on YouTube",
-      "url": "https://finance.yahoo.com/technology/ai/articles/dealmaking-3-madden-ai-persona-221754847.html",
-      "source": "CorpGov.com"
+      "date": "2026-08-21T11:39:47Z",
+      "title": "3 Unpopular Stocks That Deserve Some Love",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/3-unpopular-stocks-deserve-love-113947623.html",
+      "source": "StockStory"
     }
   ],
-  "options_implied_move": 0.02299379078881779,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 154.42349853515626,
-    "ma50": 137.93719955444337,
-    "ma200": 151.64209980010986,
-    "rsi14": 66.29810559286429,
-    "high_20d": 180.17999267578125,
+    "ma20": 157.2744987487793,
+    "ma50": 138.93179946899414,
+    "ma200": 151.505899848938,
+    "rsi14": 69.40823921418423,
+    "high_20d": 182.44000244140625,
     "low_5d": 169.77099609375,
-    "low_10d": 159.9600067138672,
+    "low_10d": 168.33999633789062,
     "high_52w": 207.52000427246094,
     "low_52w": 106.37000274658203,
-    "atr14": 9.18557357788086,
-    "atr14_pct": 5.280278928127124,
-    "position_in_52w_range_pct": 66.82155506442822
+    "atr14": 9.6130736214774,
+    "atr14_pct": 5.342377176307807,
+    "position_in_52w_range_pct": 72.73356261492647
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 32.32,
-      "high": 32.67,
-      "low": 31.97,
-      "close": 32.54,
-      "volume": 38147600.0
-    },
     {
       "date": "2024-08-22",
       "open": 32.55,
@@ -4331,18 +4212,18 @@
       "high": 176.46,
       "low": 172.03,
       "close": 173.96,
-      "volume": 26985200.0
+      "volume": 27018400.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 173.98,
+      "high": 182.44,
+      "low": 172.55,
+      "close": 179.94,
+      "volume": 40929832.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 152.3,
-      "high": 156.46,
-      "low": 142.34,
-      "close": 156.01,
-      "volume": 220336400.0
-    },
     {
       "date": "2025-08-21",
       "open": 157.17,
@@ -6349,9 +6230,18 @@
       "high": 176.46,
       "low": 172.03,
       "close": 173.96,
-      "volume": 26985200.0
+      "volume": 27018400.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 173.98,
+      "high": 182.44,
+      "low": 172.55,
+      "close": 179.94,
+      "volume": 40929832.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:13:23Z"
 }

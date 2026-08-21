@@ -1,8 +1,8 @@
 {
   "ticker": "SNXX",
-  "fetched_at": "2026-08-21T08:13:57Z",
+  "fetched_at": "2026-08-21T22:10:23Z",
   "_schema": "v2",
-  "current_price": 15.140000343322754,
+  "current_price": 15.010000228881836,
   "info": {
     "symbol": "SNXX",
     "longName": "Tradr 2X Long Sndk Daily ETF",
@@ -42,12 +42,7 @@
   "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [],
-  "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
-  },
+  "analyst": {},
   "news": [
     {
       "date": "2026-03-17T12:00:00Z",
@@ -56,19 +51,19 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.07331571828461331,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 11.95550000667572,
-    "ma50": 21.91199984550476,
-    "rsi14": 49.76100255517474,
+    "ma20": 11.985000014305115,
+    "ma50": 21.708399839401245,
+    "rsi14": 49.53008922230127,
     "high_20d": 19.8799991607666,
     "low_5d": 14.0,
-    "low_10d": 8.635000228881836,
+    "low_10d": 8.800000190734863,
     "high_52w": 49.34000015258789,
     "low_52w": 3.1387500762939453,
-    "atr14": 2.5017856529780795,
-    "atr14_pct": 16.52434343623678,
-    "position_in_52w_range_pct": 25.97602932217347
+    "atr14": 2.348921367100307,
+    "atr14_pct": 15.649042846652167,
+    "position_in_52w_range_pct": 25.69465140658408
   },
   "ohlc_2y": [
     {
@@ -1213,7 +1208,15 @@
       "high": 15.66,
       "low": 14.24,
       "close": 15.14,
-      "volume": 92567700.0
+      "volume": 93314600.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 15.11,
+      "high": 15.3499,
+      "low": 14.51,
+      "close": 15.01,
+      "volume": 49225448.0
     }
   ],
   "ohlc_1y": [
@@ -2359,9 +2362,18 @@
       "high": 15.66,
       "low": 14.24,
       "close": 15.14,
-      "volume": 92567700.0
+      "volume": 93314600.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 15.11,
+      "high": 15.3499,
+      "low": 14.51,
+      "close": 15.01,
+      "volume": 49225448.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:13:57Z"
 }

@@ -1,8 +1,8 @@
 {
   "ticker": "NBIS",
-  "fetched_at": "2026-08-21T08:12:27Z",
+  "fetched_at": "2026-08-21T22:09:58Z",
   "_schema": "v2",
-  "current_price": 220.11000061035156,
+  "current_price": 219.1300048828125,
   "info": {
     "symbol": "NBIS",
     "longName": "Nebius Group N.V.",
@@ -76,37 +76,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": -0.68,
-      "eps_estimate": -0.86333,
-      "eps_surprise_pct": 0.2124
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": -0.9865,
-      "eps_estimate": -0.605,
-      "eps_surprise_pct": -0.63060004
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": -0.475,
-      "eps_estimate": -0.395,
-      "eps_surprise_pct": -0.2025
-    },
-    {
-      "period_end": "2025-06-30T00:00:00",
-      "eps_actual": -0.3833,
-      "eps_estimate": -0.42,
-      "eps_surprise_pct": 0.0874
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-11-10",
-    "revenue_low": 427000000,
-    "revenue_high": 632600000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -164,90 +135,50 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 12,
-    "bullish": 7,
-    "neutral": 4,
-    "bearish": 1,
-    "avg_price_target": 271.84616,
-    "high_price_target": 410.0,
-    "low_price_target": 144.0,
-    "current_price": 220.11,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-18T15:23:15",
-        "firm": "DA Davidson",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-14T18:05:04",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-13T12:43:55",
-        "firm": "DA Davidson",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-13T10:48:55",
-        "firm": "Baird",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-08T00:48:40",
-        "firm": "DA Davidson",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-05T19:24:50",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-03T20:12:17",
-        "firm": "Piper Sandler",
-        "to_grade": "Neutral",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-07-22T09:06:04",
-        "firm": "Baird",
-        "to_grade": "Outperform",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-07-20T13:08:11",
-        "firm": "Northland Capital Markets",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-20T11:09:25",
-        "firm": "Freedom Capital Markets",
-        "to_grade": "Buy",
-        "from_grade": "Hold",
-        "action": "up"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
+    {
+      "date": "2026-08-21T18:29:00Z",
+      "title": "CoreWeave vs. Nebius Group: Which Artificial Intelligence (AI) Cloud Stock Has More Upside?",
+      "url": "https://www.fool.com/investing/2026/08/21/coreweave-vs-nebius-group-which-artificial-intelli/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-08-21T18:10:47Z",
+      "title": "Michael Burry Says the AI Buildout Is Repeating 2008: \u2018The Shenanigans Are Apparent Today\u2019",
+      "url": "https://247wallst.com/investing/2026/08/21/michael-burry-says-the-ai-buildout-is-repeating-2008-the-shenanigans-are-apparent-today/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-21T17:50:54Z",
+      "title": "BCA Research Sees a Dangerous Risk in CoreWeave (CRWV) and Nebius (NBIS)",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/bca-research-sees-dangerous-risk-175054863.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-08-21T16:30:40Z",
+      "title": "Wall Street Says Nebius Group ARR Can 10X in 4 Years",
+      "url": "https://247wallst.com/investing/2026/08/21/wall-street-says-nebius-group-arr-can-10x-in-4-years/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-21T16:13:22Z",
+      "title": "Is Nebius Group (NBIS) A Bargain After Its Upsized Convertible Bond Offering?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/nebius-group-nbis-bargain-upsized-161322000.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-21T13:14:00Z",
+      "title": "HRT Taps CoreWeave for NVIDIA Vera Rubin: Could This Be a Win for CRWV?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/hrt-taps-coreweave-nvidia-vera-131400177.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-21T09:33:37Z",
+      "title": "Nebius (NBIS) Raises $5B Convertible Bond As AI Compute Demand Surges",
+      "url": "https://finance.yahoo.com/technology/ai/articles/nebius-nbis-raises-5b-convertible-093337551.html",
+      "source": "Insider Monkey"
+    },
     {
       "date": "2026-08-21T00:00:00Z",
       "title": "Nebius Group Stock Climbed 40% in Less Than 2 Weeks: Is the High-Growth Leader Still a Bargain?",
@@ -261,68 +192,26 @@
       "source": "TheStreet"
     },
     {
-      "date": "2026-08-20T17:11:49Z",
-      "title": "Nebius Drops 4%, Cloudflare Falls 3%, Snowflake Slips: Are Financing Concerns Sinking AI-Cloud Stocks?",
-      "url": "https://247wallst.com/investing/2026/08/20/nebius-drops-4-cloudflare-falls-3-snowflake-slips-are-financing-concerns-sinking-ai-cloud-stocks/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-20T15:28:35Z",
-      "title": "Nebius prices $5 billion of convertible notes for AI infrastructure expansion",
-      "url": "https://blockspace.media/insight/nebius-prices-convertible-notes-ai-infrastructure/",
-      "source": "Blockspace"
-    },
-    {
-      "date": "2026-08-20T15:08:44Z",
-      "title": "Crossroads Capital\u2019s Confidence in Nebius Group (NBIS) Reflected in Scaled Position",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/crossroads-capital-confidence-nebius-group-150844082.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-20T13:43:38Z",
-      "title": "Nebius Upsizes Convertible Offering to $5 Billion As AI Expansion Accelerates",
-      "url": "https://finance.yahoo.com/technology/ai/articles/nebius-upsizes-convertible-offering-5-134338518.html",
-      "source": "Benzinga"
-    },
-    {
-      "date": "2026-08-20T13:22:00Z",
-      "title": "Nebius vs. Super Micro: Which AI Infrastructure Stock is a Better Buy?",
-      "url": "https://finance.yahoo.com/technology/ai/articles/nebius-vs-super-micro-ai-132200785.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-20T13:00:02Z",
-      "title": "3 Next-Gen AI Stocks That 3G Capital Bought in Q2",
-      "url": "https://www.barchart.com/story/news/3949620/3-next-gen-ai-stocks-that-3g-capital-bought-in-q2",
-      "source": "Barchart"
-    },
-    {
-      "date": "2026-08-20T12:16:00Z",
-      "title": "Dow Jones Futures Fall As Oil Prices, Bitcoin Jump; Walmart Skids On Earnings",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-oil-prices-bitcoin-jump-walmart-earnings/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-08-20T08:11:57Z",
-      "title": "US Stock Market Today: S&P 500 Futures Tick Higher As Long Term Rate Questions Linger",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-stock-market-today-p-081157432.html",
-      "source": "Simply Wall St."
+      "date": "2026-08-20T18:20:00Z",
+      "title": "Neocloud stocks like CoreWeave are having a moment \u2014 and time\u2019s running out to cash in",
+      "url": "https://www.marketwatch.com/story/neocloud-stocks-like-coreweave-are-having-a-moment-and-times-running-out-to-cash-in-8aca34c8",
+      "source": "MarketWatch"
     }
   ],
-  "options_implied_move": 0.042569624160726745,
+  "options_implied_move": null,
   "technicals": {
-    "ma20": 211.90550079345704,
-    "ma50": 222.95080047607422,
-    "ma200": 148.7525254058838,
-    "rsi14": 49.896845576061175,
+    "ma20": 213.4735008239746,
+    "ma50": 223.09960052490234,
+    "ma200": 149.24582542419432,
+    "rsi14": 49.66372231569971,
     "high_20d": 280.8299865722656,
     "low_5d": 212.0399932861328,
-    "low_10d": 180.63099670410156,
+    "low_10d": 183.11000061035156,
     "high_52w": 299.8599853515625,
-    "low_52w": 62.0099983215332,
-    "atr14": 25.620641435895646,
-    "atr14_pct": 11.639926111876415,
-    "position_in_52w_range_pct": 66.47046916544828
+    "low_52w": 63.2599983215332,
+    "atr14": 23.302069527762278,
+    "atr14_pct": 10.633901797348054,
+    "position_in_52w_range_pct": 65.87912726364446
   },
   "ohlc_2y": [
     {
@@ -3995,18 +3884,18 @@
       "high": 223.0,
       "low": 212.04,
       "close": 220.11,
-      "volume": 28421500.0
+      "volume": 28477900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 226.1,
+      "high": 230.81,
+      "low": 217.85,
+      "close": 219.13,
+      "volume": 20116988.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 65.185,
-      "high": 67.5,
-      "low": 62.01,
-      "close": 67.47,
-      "volume": 14162800.0
-    },
     {
       "date": "2025-08-21",
       "open": 68.26,
@@ -6013,9 +5902,18 @@
       "high": 223.0,
       "low": 212.04,
       "close": 220.11,
-      "volume": 28421500.0
+      "volume": 28477900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 226.1,
+      "high": 230.81,
+      "low": 217.85,
+      "close": 219.13,
+      "volume": 20116988.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-21T08:12:27Z"
 }

@@ -1,6 +1,6 @@
 {
   "trade_id": "HOOD_2026-08-18_000",
-  "generated_at": "2026-08-20T22:18:09+00:00",
+  "generated_at": "2026-08-21T22:11:37+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "HOOD",
@@ -27,9 +27,9 @@
     "low": 91.44,
     "volume": 13990400.0,
     "ma20": 93.97749999999999,
-    "ma50": 99.433,
+    "ma50": 99.43299999999999,
     "ma200": 96.74627500000001,
-    "rsi14": 43.70136023384018,
+    "rsi14": 43.701360667924725,
     "atr14": 4.472714285714285,
     "atr14_pct": 4.886610166846155,
     "high_52w": 153.86,
@@ -41,22 +41,22 @@
   },
   "setup_type": "Long below MA200 \u2014 counter-trend",
   "path_analytics": {
-    "mfe_R": 1.3145161290322587,
-    "mfe_date": "2026-08-20",
+    "mfe_R": 3.4919354838709675,
+    "mfe_date": "2026-08-21",
     "mae_R": 1.4193548387096782,
     "mae_date": "2026-08-18",
-    "optimal_exit_price": 101.61,
-    "optimal_exit_date": "2026-08-20",
-    "optimal_R": 1.3145161290322587,
-    "days_to_optimal": 2,
+    "optimal_exit_price": 109.71,
+    "optimal_exit_date": "2026-08-21",
+    "optimal_R": 3.4919354838709675,
+    "days_to_optimal": 3,
     "realized_R": null,
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 2
+    "hold_calendar_days": 3
   },
   "lesson": "In progress",
-  "narrative": "Entered **HOOD** long on 2026-08-18 at $96.72 (qty 621) with stop $93.00 (currently trailed to $92.00) (1R = $3.72/sh = $2,310). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price below MA20 ($93.98), MA stack mixed, RSI 44, 31% through 52W range, ATR 4.9% of price. **In progress.** Peak so far +1.31R; worst drawdown -1.42R.",
+  "narrative": "Entered **HOOD** long on 2026-08-18 at $96.72 (qty 621) with stop $93.00 (currently trailed to $92.00) (1R = $3.72/sh = $2,310). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price below MA20 ($93.98), MA stack mixed, RSI 44, 31% through 52W range, ATR 4.9% of price. **In progress.** Peak so far +3.49R; worst drawdown -1.42R.",
   "ohlc_window": [
     {
       "date": "2026-07-20",
@@ -248,7 +248,15 @@
       "high": 101.61,
       "low": 93.65,
       "close": 95.1,
-      "volume": 25123448.0
+      "volume": 25193700.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 100.88,
+      "high": 109.71,
+      "low": 98.77,
+      "close": 108.13,
+      "volume": 49572416.0
     }
   ]
 }

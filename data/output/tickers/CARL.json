@@ -1,8 +1,8 @@
 {
   "ticker": "CARL",
-  "fetched_at": "2026-08-20T22:17:38Z",
+  "fetched_at": "2026-08-21T22:11:16Z",
   "_schema": "v2",
-  "current_price": 16.5,
+  "current_price": 16.049999237060547,
   "info": {
     "symbol": "CARL",
     "longName": "Carlsmed, Inc.",
@@ -13,13 +13,13 @@
     "city": "Carlsbad",
     "website": "https://carlsmed.com",
     "fullTimeEmployees": 127,
-    "marketCap": 450495264,
-    "enterpriseValue": 356431584,
+    "marketCap": 438209024,
+    "enterpriseValue": 383188256,
     "trailingPE": null,
-    "forwardPE": -11.956522,
-    "priceToSalesTrailing12Months": 7.117391,
-    "enterpriseToRevenue": 5.631,
-    "priceToBook": 5.3329024,
+    "forwardPE": -11.630434,
+    "priceToSalesTrailing12Months": 6.9232802,
+    "enterpriseToRevenue": 6.054,
+    "priceToBook": 5.187459,
     "grossMargins": 0.76628,
     "operatingMargins": -0.58268,
     "profitMargins": -0.57422,
@@ -30,10 +30,10 @@
     "freeCashflow": -26408376,
     "debtToEquity": 26.015,
     "currentRatio": 8.841,
-    "fiftyTwoWeekHigh": 17.19,
+    "fiftyTwoWeekHigh": 17.23,
     "fiftyTwoWeekLow": 8.5,
-    "averageVolume": 159920,
-    "averageVolume10days": 172930,
+    "averageVolume": 152614,
+    "averageVolume10days": 172270,
     "beta": null,
     "sharesOutstanding": 27302743,
     "sharesFloat": 15669044,
@@ -173,7 +173,7 @@
     "avg_price_target": 19.2,
     "high_price_target": 23.0,
     "low_price_target": 17.0,
-    "current_price": 16.5,
+    "current_price": 16.05,
     "recent_rating_changes": [
       {
         "date": "2026-08-06T15:53:07",
@@ -311,18 +311,18 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 13.430499982833862,
-    "ma50": 12.144299926757812,
-    "ma200": 11.953124976158142,
-    "rsi14": 77.30307949705417,
-    "high_20d": 16.510000228881836,
+    "ma20": 13.772499942779541,
+    "ma50": 12.27029993057251,
+    "ma200": 11.957274971008301,
+    "rsi14": 72.27672050577394,
+    "high_20d": 17.229999542236328,
     "low_5d": 13.710000038146973,
     "low_10d": 13.300000190734863,
-    "high_52w": 17.190000534057617,
+    "high_52w": 17.229999542236328,
     "low_52w": 8.5,
-    "atr14": 0.8267857687813895,
-    "atr14_pct": 5.010822841099331,
-    "position_in_52w_range_pct": 92.0598332376001
+    "atr14": 0.8607142993382045,
+    "atr14_pct": 5.36270616979692,
+    "position_in_52w_range_pct": 86.48338640263542
   },
   "ohlc_2y": [
     {
@@ -2318,6 +2318,22 @@
       "volume": 31800.0
     },
     {
+      "date": "2026-07-21",
+      "open": 11.21,
+      "high": 11.755,
+      "low": 11.16,
+      "close": 11.5,
+      "volume": 137000.0
+    },
+    {
+      "date": "2026-07-22",
+      "open": 11.47,
+      "high": 11.5,
+      "low": 10.81,
+      "close": 11.02,
+      "volume": 92000.0
+    },
+    {
       "date": "2026-07-23",
       "open": 10.83,
       "high": 11.17,
@@ -2364,6 +2380,14 @@
       "low": 12.37,
       "close": 12.66,
       "volume": 126100.0
+    },
+    {
+      "date": "2026-07-31",
+      "open": 12.66,
+      "high": 12.873,
+      "low": 12.31,
+      "close": 12.59,
+      "volume": 79700.0
     },
     {
       "date": "2026-08-03",
@@ -2475,42 +2499,18 @@
       "high": 16.51,
       "low": 15.22,
       "close": 16.5,
-      "volume": 418874.0
+      "volume": 419400.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 16.5,
+      "high": 17.23,
+      "low": 16.01,
+      "close": 16.05,
+      "volume": 263348.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-15",
-      "open": 13.6,
-      "high": 13.78,
-      "low": 13.41,
-      "close": 13.58,
-      "volume": 48400.0
-    },
-    {
-      "date": "2025-08-18",
-      "open": 13.45,
-      "high": 13.99,
-      "low": 13.16,
-      "close": 13.18,
-      "volume": 131200.0
-    },
-    {
-      "date": "2025-08-19",
-      "open": 13.3,
-      "high": 13.864,
-      "low": 12.51,
-      "close": 12.55,
-      "volume": 139300.0
-    },
-    {
-      "date": "2025-08-20",
-      "open": 12.74,
-      "high": 12.9,
-      "low": 12.02,
-      "close": 12.07,
-      "volume": 118200.0
-    },
     {
       "date": "2025-08-21",
       "open": 12.22,
@@ -4336,6 +4336,22 @@
       "volume": 31800.0
     },
     {
+      "date": "2026-07-21",
+      "open": 11.21,
+      "high": 11.755,
+      "low": 11.16,
+      "close": 11.5,
+      "volume": 137000.0
+    },
+    {
+      "date": "2026-07-22",
+      "open": 11.47,
+      "high": 11.5,
+      "low": 10.81,
+      "close": 11.02,
+      "volume": 92000.0
+    },
+    {
       "date": "2026-07-23",
       "open": 10.83,
       "high": 11.17,
@@ -4382,6 +4398,14 @@
       "low": 12.37,
       "close": 12.66,
       "volume": 126100.0
+    },
+    {
+      "date": "2026-07-31",
+      "open": 12.66,
+      "high": 12.873,
+      "low": 12.31,
+      "close": 12.59,
+      "volume": 79700.0
     },
     {
       "date": "2026-08-03",
@@ -4493,7 +4517,15 @@
       "high": 16.51,
       "low": 15.22,
       "close": 16.5,
-      "volume": 418874.0
+      "volume": 419400.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 16.5,
+      "high": 17.23,
+      "low": 16.01,
+      "close": 16.05,
+      "volume": 263348.0
     }
   ],
   "ai_synthesis": null,

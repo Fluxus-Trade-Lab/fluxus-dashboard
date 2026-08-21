@@ -1,8 +1,8 @@
 {
   "ticker": "BLMN",
-  "fetched_at": "2026-08-20T22:17:24Z",
+  "fetched_at": "2026-08-21T22:10:59Z",
   "_schema": "v2",
-  "current_price": 10.479999542236328,
+  "current_price": 11.630000114440918,
   "info": {
     "symbol": "BLMN",
     "longName": "Bloomin' Brands, Inc.",
@@ -58,37 +58,8 @@
       }
     ]
   },
-  "earnings_history": [
-    {
-      "period_end": "2026-06-30T00:00:00",
-      "eps_actual": 0.39,
-      "eps_estimate": 0.28864,
-      "eps_surprise_pct": 0.35119998
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": 0.67,
-      "eps_estimate": 0.56581,
-      "eps_surprise_pct": 0.1841
-    },
-    {
-      "period_end": "2025-12-31T00:00:00",
-      "eps_actual": 0.26,
-      "eps_estimate": 0.24422,
-      "eps_surprise_pct": 0.0646
-    },
-    {
-      "period_end": "2025-09-30T00:00:00",
-      "eps_actual": -0.03,
-      "eps_estimate": -0.12517,
-      "eps_surprise_pct": 0.7603
-    }
-  ],
-  "next_earnings": {
-    "date": "2026-11-05",
-    "revenue_low": 908211060,
-    "revenue_high": 936000000
-  },
+  "earnings_history": [],
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -146,90 +117,14 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {
-    "consensus": "Hold",
-    "total_ratings": 13,
-    "bullish": 2,
-    "neutral": 9,
-    "bearish": 2,
-    "avg_price_target": 11.32273,
-    "high_price_target": 15.0,
-    "low_price_target": 6.0,
-    "current_price": 10.48,
-    "recent_rating_changes": [
-      {
-        "date": "2026-08-10T18:26:21",
-        "firm": "Piper Sandler",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-06T17:22:29",
-        "firm": "Morgan Stanley",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-24T11:14:35",
-        "firm": "Citigroup",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-07T22:36:22",
-        "firm": "UBS",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-07T21:29:34",
-        "firm": "Citigroup",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-07T17:04:16",
-        "firm": "Goldman Sachs",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-07T16:06:33",
-        "firm": "Barclays",
-        "to_grade": "Equal-Weight",
-        "from_grade": "Equal-Weight",
-        "action": "main"
-      },
-      {
-        "date": "2026-04-24T13:34:58",
-        "firm": "JP Morgan",
-        "to_grade": "Underweight",
-        "from_grade": "Neutral",
-        "action": "down"
-      },
-      {
-        "date": "2026-02-26T20:26:04",
-        "firm": "Citigroup",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2025-12-17T09:06:30",
-        "firm": "Freedom Capital Markets",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      }
-    ]
-  },
+  "analyst": {},
   "news": [
+    {
+      "date": "2026-08-20T23:31:00Z",
+      "title": "The Cheesecake Factory, Kura Sushi, Bloomin' Brands, Cracker Barrel, and Jack in the Box Shares Plummet, What You Need To Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/cheesecake-factory-kura-sushi-bloomin-233100033.html",
+      "source": "StockStory"
+    },
     {
       "date": "2026-08-20T19:47:00Z",
       "title": "Popular restaurant company continues closing locations",
@@ -283,46 +178,24 @@
       "title": "BLMN vs. SHAK: Which Stock Is the Better Value Option?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/blmn-vs-shak-stock-better-154003188.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-08T21:16:01Z",
-      "title": "Bloomin' Brands (BLMN) Is Up 26.4% After Raising 2026 EPS Guidance Amid Turnaround Progress",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/bloomin-brands-blmn-26-4-211601122.html",
-      "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": 0.05725191089769513,
+  "options_implied_move": 0.17626826997658618,
   "technicals": {
-    "ma20": 9.994499993324279,
-    "ma50": 8.941200017929077,
-    "ma200": 7.235399994850159,
-    "rsi14": 58.1826229670036,
+    "ma20": 10.202500009536744,
+    "ma50": 9.077600011825561,
+    "ma200": 7.276449992656707,
+    "rsi14": 67.64195537988685,
     "high_20d": 12.630000114440918,
-    "low_5d": 10.135000228881836,
-    "low_10d": 10.135000228881836,
+    "low_5d": 10.140000343322754,
+    "low_10d": 10.140000343322754,
     "high_52w": 12.630000114440918,
     "low_52w": 5.190000057220459,
-    "atr14": 0.8132143020629883,
-    "atr14_pct": 7.759678793740256,
-    "position_in_52w_range_pct": 71.10214306896367
+    "atr14": 0.8553571701049805,
+    "atr14_pct": 7.354747735925534,
+    "position_in_52w_range_pct": 86.55913988831884
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-20",
-      "open": null,
-      "high": null,
-      "low": null,
-      "close": null,
-      "volume": 0.0
-    },
-    {
-      "date": "2024-08-21",
-      "open": 16.3325,
-      "high": 16.9177,
-      "low": 16.2674,
-      "close": 16.8063,
-      "volume": 1531600.0
-    },
     {
       "date": "2024-08-22",
       "open": 16.7877,
@@ -455,7 +328,7 @@
       "date": "2024-09-16",
       "open": 15.71,
       "high": 16.2303,
-      "low": 15.5613,
+      "low": 15.5614,
       "close": 15.8865,
       "volume": 1632600.0
     },
@@ -502,7 +375,7 @@
     {
       "date": "2024-09-24",
       "open": 15.5892,
-      "high": 16.0444,
+      "high": 16.0445,
       "low": 15.4406,
       "close": 15.4499,
       "volume": 897900.0
@@ -1487,7 +1360,7 @@
       "date": "2025-03-24",
       "open": 7.5684,
       "high": 8.1358,
-      "low": 7.5204,
+      "low": 7.5203,
       "close": 8.107,
       "volume": 2377300.0
     },
@@ -1637,7 +1510,7 @@
     },
     {
       "date": "2025-04-21",
-      "open": 7.5204,
+      "open": 7.5203,
       "high": 8.0974,
       "low": 7.3569,
       "close": 8.0781,
@@ -4140,6 +4013,14 @@
       "volume": 1486300.0
     },
     {
+      "date": "2026-07-21",
+      "open": 8.34,
+      "high": 8.57,
+      "low": 8.18,
+      "close": 8.44,
+      "volume": 1831200.0
+    },
+    {
       "date": "2026-07-22",
       "open": 8.4,
       "high": 8.67,
@@ -4194,6 +4075,14 @@
       "low": 8.57,
       "close": 8.86,
       "volume": 1177800.0
+    },
+    {
+      "date": "2026-07-31",
+      "open": 8.81,
+      "high": 8.86,
+      "low": 8.47,
+      "close": 8.66,
+      "volume": 1652100.0
     },
     {
       "date": "2026-08-03",
@@ -4302,37 +4191,21 @@
     {
       "date": "2026-08-20",
       "open": 10.45,
-      "high": 10.53,
-      "low": 10.135,
+      "high": 10.54,
+      "low": 10.14,
       "close": 10.48,
-      "volume": 1469942.0
+      "volume": 1469900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 10.6,
+      "high": 11.655,
+      "low": 10.56,
+      "close": 11.63,
+      "volume": 1821474.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-18",
-      "open": 6.9129,
-      "high": 7.1675,
-      "low": 6.8835,
-      "close": 7.05,
-      "volume": 3743500.0
-    },
-    {
-      "date": "2025-08-19",
-      "open": 7.07,
-      "high": 7.44,
-      "low": 7.0,
-      "close": 7.39,
-      "volume": 2681400.0
-    },
-    {
-      "date": "2025-08-20",
-      "open": 7.33,
-      "high": 7.52,
-      "low": 7.15,
-      "close": 7.18,
-      "volume": 2608800.0
-    },
     {
       "date": "2025-08-21",
       "open": 7.03,
@@ -6158,6 +6031,14 @@
       "volume": 1486300.0
     },
     {
+      "date": "2026-07-21",
+      "open": 8.34,
+      "high": 8.57,
+      "low": 8.18,
+      "close": 8.44,
+      "volume": 1831200.0
+    },
+    {
       "date": "2026-07-22",
       "open": 8.4,
       "high": 8.67,
@@ -6212,6 +6093,14 @@
       "low": 8.57,
       "close": 8.86,
       "volume": 1177800.0
+    },
+    {
+      "date": "2026-07-31",
+      "open": 8.81,
+      "high": 8.86,
+      "low": 8.47,
+      "close": 8.66,
+      "volume": 1652100.0
     },
     {
       "date": "2026-08-03",
@@ -6320,12 +6209,21 @@
     {
       "date": "2026-08-20",
       "open": 10.45,
-      "high": 10.53,
-      "low": 10.135,
+      "high": 10.54,
+      "low": 10.14,
       "close": 10.48,
-      "volume": 1469942.0
+      "volume": 1469900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 10.6,
+      "high": 11.655,
+      "low": 10.56,
+      "close": 11.63,
+      "volume": 1821474.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null
+  "ai_synthesized_at": null,
+  "info_as_of": "2026-08-20T22:17:24Z"
 }
