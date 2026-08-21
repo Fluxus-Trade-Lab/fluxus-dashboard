@@ -81,7 +81,24 @@ def main(argv=None) -> int:
             continue
         big = sorted(moves.items(), key=lambda kv: abs(kv[1]), reverse=True)[:8]
         line = "  ".join(f"{s_} {v / 1000:+,.0f}k" for s_, v in big if abs(v) > 1000)
-        print(f"  {d_}  gross ${gross / 1e6:.2f}M  day P&L ${pnl / 1000:+,.0f}k ({pnl / gross * 100:+.2f}% of gross)  | {line}")
+        # same-day entries: bought THAT day, marked entry_price -> close
+        sd = 0.0
+        sd_moves = {}
+        for t in trades:
+            if str(t.entry_date) != d_ or not t.entry_price:
+                continue
+            sym = t.ticker.upper()
+            c1 = close(sym, d_)
+            if c1 is None:
+                continue
+            sign = 1 if getattr(t, "direction", "long") == "long" else -1
+            q = t.original_qty
+            sd += sign * q * (c1 - t.entry_price)
+            sd_moves[sym] = sd_moves.get(sym, 0.0) + sign * q * (c1 - t.entry_price)
+        sd_line = "  ".join(f"{k} {v / 1000:+,.0f}k" for k, v in sorted(sd_moves.items(), key=lambda kv: abs(kv[1]), reverse=True)[:5] if abs(v) > 1000)
+        print(f"  {d_}  gross ${gross / 1e6:.2f}M  overnight P&L ${pnl / 1000:+,.0f}k ({pnl / gross * 100:+.2f}%)"
+              + (f"  +当日新开仓 ${sd / 1000:+,.0f}k [{sd_line}]" if sd_moves else "")
+              + f"  | {line}")
     return 0
 
 
