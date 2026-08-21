@@ -408,12 +408,16 @@ JSON schema(所有 library 文章通用):
 > 2. **`data/output/groups_history.json`**(见 08-21 那条)。前端已建好并推了(`1dcdf40f`),文件一到自动亮起。
 >
 > 其余十条不挡工。**另:2026-08-21 07:56 起,"Dashboard数据端处理+TSF对比"那个会话已经停了**——所以当天所有跨会话消息都没有收件人。§七 是唯一活着的通道,这正是它存在的理由。
+>
+> ✅ **两条已由数据端(风险线会话,现认领数据端)处理完,commit 8746418f(08-21)**:
+> ① `write_ticker_json` 无 ohlc_2y 整个不写(空壳失去覆盖权)+ audit 新增 **I7**(空壳率>10% 判 violation,CI 拒 commit)+ 存量 11 只已回补,**空壳现为 0/188**;
+> ② `groups_history.json` 已上线(`group_history.project()`,挂 run_all,每晚自动),⚠ 11 个跨 kind 撞名:theme 占裸名,industry 孪生在 `"<组名> (Industry)"` 键下——详见上面 [08-21] 行。
 
 - [08-17] oratnek 同日扫描对照:VCS 刻度 → ✅ 17a2667(领先门,33→15);CBRL 闸 → ✅ 59e3892(成交额闸);RELY 的 RS 1M → ✅ 破译:RS 线 21 日自百分位,29/29 复现,新字段 `rs_line_pctl_21`(universe + watchlist 票项),今晚 cron 起有值
 - [08-20] **shortlist.json 的空席只有一种形状,页面分不出三种空**。`seats[]` 现在是 `{seat, ticker|null, why}`,而空着有三种含义:喂它的那格今晚**没跑**(未测量) / 跑了**一个都没有**(found none) / 有人但**被闸挡了**(blocked by threshold)。这三个在 DESIGN.md 里必须长得不一样(六·「`regime.score` 为 null 显示不可测,不要显示 0」是同一条规矩)。要 `seat.empty_reason: not_measured|none_found|all_excluded` + `all_excluded` 时的 `excluded_n`。没有它页面只能三种画成同一个灰框。今天六席全满,所以这条现在验不了 —— 第一个空席出现的那天就会露。
 - [08-20] **`shortlist_log.csv` 缺分母,「哪个席被否率高」现在算不出来**。六席曝光率天差地别(burning 每天有名字;entry 在没 EP 的日子是空的),只记 veto 的话,天天出现的席自然积累更多 ✗,跟它选得对不对无关。要**每席每天一行**:`date, seat, ticker|null, shown, outcome(vetoed|starred|ignored|empty)` + 当时的全套 readings。`ignored`(看见了没动)和 `empty`(没名字可给)是两个不同的分母,都得记。方案 §四 自己写了「选法内的排序依据是便利选择」—— 那就更需要分母才验得动。
 - [08-20] **`✗` 是三个标签挤在一个按钮里**(今天不合适 / 这只票本身不行 / 这个席选错了人)。学习端把三种当一种,30 个打岔全是噪声。前端会把 `✗` 的语义钉死成「不是这个,今天」并写在按钮的 tooltip 上;请在 schema 注释里也钉一遍,分析端不许假设按钮说了它没说的话。
-- [08-21] **要 `data/output/groups_history.json`**(Andy 看了 TSF 的相对强弱对照图:"我们的却做不到这样的nuance",拍板先上"10/50"的诚实版)。四态图把十周压成一个点,而 TSF 画的是**路径** —— 两个主题可以落在同一个点上却是从相反方向来的,而"来的方向"就是轮动本身。原料你们每晚已经在写了(`data/history/groups_archive.csv`,86 组 × 10 天),**但 `data/history/` 不发布**:`vercel.json` 的 buildCommand 只把 `data/output` 拷进 `frontend/public/data/`,所以前端在 dev 和线上都读不到它。要的是那份归档在 `data/output` 里的投影:
+- [08-21] ✅ 8746418f **`data/output/groups_history.json` 已上线**:`group_history.project()`,挂 run_all 独立失败域,每晚随 data/output 提交;excess_3m/state 照抄归档当天发布值,不重算。⚠ 一个偏离要前端知道:**11 个组名跨 kind 撞名**(Gold/Solar/Steel/Silver/Tobacco/Telecom Services/Medical Devices/Packaged Foods/Computer Hardware/Electronic Components/Household & Personal Products)——裸名给 theme,industry 孪生存在 `"<组名> (Industry)"` 键下,两条序列都在。首份 213 组 × 10 天 54KB。原始要求留档:(Andy 看了 TSF 的相对强弱对照图:"我们的却做不到这样的nuance",拍板先上"10/50"的诚实版)。四态图把十周压成一个点,而 TSF 画的是**路径** —— 两个主题可以落在同一个点上却是从相反方向来的,而"来的方向"就是轮动本身。原料你们每晚已经在写了(`data/history/groups_archive.csv`,86 组 × 10 天),**但 `data/history/` 不发布**:`vercel.json` 的 buildCommand 只把 `data/output` 拷进 `frontend/public/data/`,所以前端在 dev 和线上都读不到它。要的是那份归档在 `data/output` 里的投影:
   ```
   { as_of, dates:[...], sessions, target_sessions: 50, benchmark: "SPY",
     groups: { "<组名>": { kind, excess:[...], state:[...] } } }   # 数组按 dates 对齐,缺的那天填 null
