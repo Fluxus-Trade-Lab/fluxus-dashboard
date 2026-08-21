@@ -126,8 +126,10 @@ def deal(asof_str: Optional[str] = None, n_cards: int = 10, seed: Optional[int] 
         cands = rng.sample(cands, n_cards)
         cands.sort(key=lambda r: r["ticker"])
     ans = {c["ticker"]: answers(bars, asof, c["ticker"]) for c in cands}
-    rounds = sorted((lab / "rounds").glob("r*.json"))
-    rid = f"r{len(rounds) + 1:03d}"
+    import re as _re
+    nums = [int(m.group(1)) for f in (lab / "rounds").glob("r*.json")
+            if (m := _re.fullmatch(r"r(\d+)\.json", f.name))]
+    rid = f"r{(max(nums) + 1 if nums else 1):03d}"
     payload = {"round": rid, "mode": "blind", "asof": str(asof.date()),
                "setup": "fresh_high_pullback", "cards": cands, "answers": ans}
     (lab / "rounds").mkdir(parents=True, exist_ok=True)
@@ -149,6 +151,85 @@ def record(rid: str, judgments: Dict[str, dict], date_practiced: str,
         a = payload["answers"].get(t) or {}
         rows.append({"round": rid, "date_practiced": date_practiced, "mode": payload["mode"],
                      "asof": payload["asof"], "setup": payload["setup"], "ticker": t,
+                     **{k: j.get(k) for k in ("andy_verdict", "andy_reason", "tags",
+                                              "claude_pred", "claude_reason")},
+                     **{k: c.get(k) for k in ("close0", "dist_52wh_pct", "days_since_52wh",
+                                              "atr_from_sma50", "ema21_atr_dist",
+                                              "rs_line_pctl_21", "range5_pct")},
+                     **a})
+    DECISIONS.parent.mkdir(parents=True, exist_ok=True)
+    exists = DECISIONS.exists()
+    with DECISIONS.open("a", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=DEC_FIELDS)
+        if not exists:
+            w.writeheader()
+        for r in rows:
+            w.writerow({k: ("" if r.get(k) is None else r.get(k)) for k in DEC_FIELDS})
+    return len(rows)
+
+
+def deal_many(n_cards: int = 50, per_day_cap: int = 8, seed: Optional[int] = None,
+              bars_path: Path = BARS, lab: Path = LAB) -> dict:
+    """Multi-day deal: sample random archived sessions until n_cards collected
+    (cap per day forces regime diversity), shuffle so day-clusters don't leak.
+    Cards carry their own asof; answers computed per card."""
+    bars = pickle.load(open(bars_path, "rb"))
+    spy = bars["SPY"]["Close"]
+    dates = spy.index
+    rng = random.Random(seed)
+    picked: List[dict] = []
+    ans: Dict[str, dict] = {}
+    seen_days = set()
+    tries = 0
+    while len(picked) < n_cards and tries < 80:
+        tries += 1
+        asof = dates[rng.randrange(130, len(dates) - 21)]
+        if asof in seen_days:
+            continue
+        seen_days.add(asof)
+        cands = candidates(bars, asof, spy[spy.index <= asof])
+        rng.shuffle(cands)
+        for c in cands[:per_day_cap]:
+            key = f"{c['ticker']}@{asof.date()}"
+            if any(x["_key"] == key for x in picked):
+                continue
+            a = answers(bars, asof, c["ticker"])
+            if a is None:
+                continue
+            c["asof"] = str(asof.date())
+            c["_key"] = key
+            picked.append(c)
+            ans[key] = a
+            if len(picked) >= n_cards:
+                break
+    rng.shuffle(picked)
+    for c in picked:
+        c.pop("_key", None)
+    import re as _re
+    nums = [int(m.group(1)) for f in (lab / "rounds").glob("r*.json")
+            if (m := _re.fullmatch(r"r(\d+)\.json", f.name))]
+    rid = f"r{(max(nums) + 1 if nums else 1):03d}"
+    payload = {"round": rid, "mode": "blind", "asof": "multi",
+               "setup": "fresh_high_pullback", "cards": picked,
+               "answers": {f"{c['ticker']}@{c['asof']}": ans[f"{c['ticker']}@{c['asof']}"] for c in picked}}
+    (lab / "rounds").mkdir(parents=True, exist_ok=True)
+    (lab / "rounds" / f"{rid}.json").write_text(json.dumps(payload, indent=1))
+    return payload
+
+
+def record_many(rid: str, judgments: Dict[int, dict], date_practiced: str,
+                lab: Path = LAB) -> int:
+    """judgments keyed by CARD NUMBER (1-based) for multi-day rounds."""
+    import csv
+    payload = json.loads((lab / "rounds" / f"{rid}.json").read_text())
+    rows = []
+    for num, j in judgments.items():
+        if not (1 <= num <= len(payload["cards"])):
+            continue
+        c = payload["cards"][num - 1]
+        a = payload["answers"].get(f"{c['ticker']}@{c['asof']}") or {}
+        rows.append({"round": rid, "date_practiced": date_practiced, "mode": payload["mode"],
+                     "asof": c["asof"], "setup": payload["setup"], "ticker": c["ticker"],
                      **{k: j.get(k) for k in ("andy_verdict", "andy_reason", "tags",
                                               "claude_pred", "claude_reason")},
                      **{k: c.get(k) for k in ("close0", "dist_52wh_pct", "days_since_52wh",
