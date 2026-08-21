@@ -116,3 +116,50 @@ describe('provenance', () => {
     expect(p.tickerFile.ageDays).toBeNull()
   })
 })
+
+/**
+ * The fundamentals' own clock.
+ *
+ * `info_as_of` appears only when the fundamentals were CARRIED FORWARD: the
+ * fetch throttled, and rather than overwrite good values with `{}` the writer
+ * keeps the last ones and stamps the day they were taken (data side,
+ * 2026-08-21, after 41 of 188 files came back bars-only). So a page can show
+ * yesterday's bars beside fundamentals from a week ago.
+ *
+ * Without this the valuation block prints carried numbers under today's date
+ * implied — right numbers, wrong clock, which is the failure this page was
+ * rebuilt to stop making. No file carries the field yet, because the backfill
+ * refetched all 41 rather than carrying any; these are the only place the
+ * behaviour can be seen until a throttle actually hits.
+ */
+describe("the fundamentals' own clock", () => {
+  it('says nothing on the ordinary day, when the fetch supplied them', () => {
+    const p = provenance({ bar_date: '2026-08-21' },
+      { fetched_at: '2026-08-21T08:00:00Z', ohlc_2y: [1], info: { marketCap: 1 } })
+    expect(p.tickerFile.infoAsOf).toBeNull()
+    expect(p.tickerFile.infoAgeDays).toBeNull()
+  })
+
+  it('carries the stamp, and measures it against the bars on screen', () => {
+    const p = provenance({ bar_date: '2026-08-21' },
+      { fetched_at: '2026-08-21T08:00:00Z', ohlc_2y: [1], info: { marketCap: 1 },
+        info_as_of: '2026-08-14T03:00:00Z' })
+    expect(p.tickerFile.infoAsOf).toBe('2026-08-14T03:00:00Z')
+    expect(p.tickerFile.infoAgeDays).toBe(7)
+  })
+
+  it('does not invent an age when there are no bars to measure against', () => {
+    const p = provenance({}, { info_as_of: '2026-08-14T03:00:00Z', ohlc_2y: [1] })
+    expect(p.tickerFile.infoAsOf).toBe('2026-08-14T03:00:00Z')
+    expect(p.tickerFile.infoAgeDays).toBeNull()
+  })
+
+  it('keeps carried apart from absent — a carried value is a real value', () => {
+    const carried = provenance({ bar_date: '2026-08-21' },
+      { ohlc_2y: [1], info: { marketCap: 1 }, info_as_of: '2026-08-14' })
+    const absent = provenance({ bar_date: '2026-08-21' }, { ohlc_2y: [1], info: {} })
+    expect(carried.tickerFile.hasInfo).toBe(true)
+    expect(absent.tickerFile.hasInfo).toBe(false)
+    expect(absent.tickerFile.infoAsOf).toBeNull()
+  })
+})

@@ -132,6 +132,20 @@ export function provenance(u, tickerData, now = null) {
     const f = Date.parse(fetched.slice(0, 10)), b = Date.parse(barDate)
     if (Number.isFinite(f) && Number.isFinite(b)) ageDays = Math.round((b - f) / 86400000)
   }
+  /* A SECOND CLOCK ON THE SAME FILE. `info_as_of` appears only when the
+     fundamentals were carried forward — the fetch throttled, and rather than
+     overwrite good values with `{}` the writer keeps the last ones and stamps
+     the day they were taken (data side, 2026-08-21). So a page can be showing
+     yesterday's bars beside fundamentals from a week ago, and without this the
+     valuation block would print carried numbers with today's date implied.
+     Right numbers, wrong clock is the failure this whole page was rebuilt to
+     stop making. */
+  const infoAsOf = tickerData?.info_as_of ?? null
+  let infoAgeDays = null
+  if (infoAsOf && barDate) {
+    const i = Date.parse(infoAsOf.slice(0, 10)), b = Date.parse(barDate)
+    if (Number.isFinite(i) && Number.isFinite(b)) infoAgeDays = Math.round((b - i) / 86400000)
+  }
   return {
     universe: { barDate, stale: u?.bars_stale ?? null, present: !!u },
     tickerFile: {
@@ -140,6 +154,9 @@ export function provenance(u, tickerData, now = null) {
       hasInfo: !!(tickerData?.info && Object.keys(tickerData.info).length),
       hasNews: !!(tickerData?.news?.length),
       ageDays,
+      // absent when the fundamentals came from this fetch, which is the
+      // ordinary case and needs no note
+      infoAsOf, infoAgeDays,
     },
   }
 }

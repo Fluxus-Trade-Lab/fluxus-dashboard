@@ -33,6 +33,17 @@ export default function TickerProvenance({ universe, tickerData }) {
           : ' · 无此文件'}
       </p>
 
+      {/* The fundamentals' own date, when it is not the fetch's. A carried
+          value is a real value with an old clock — not missing, not fresh. */}
+      {p.tickerFile.infoAsOf && (
+        <p className="m-0 mt-1 text-[11px] font-mono leading-relaxed
+                      text-[var(--color-text-secondary)]">
+          估值 / 财报 ← <b className="font-semibold">结转自 {p.tickerFile.infoAsOf.slice(0, 10)}</b>
+          {p.tickerFile.infoAgeDays > 0 && `（比 K 线旧 ${p.tickerFile.infoAgeDays} 天）`}
+          {' '}—— 那次抓取被限速，写手保留了上一份而不是用空值覆盖它。
+        </p>
+      )}
+
       {(dead || stale) && (
         <p className="m-0 mt-1.5 text-[11.5px] leading-relaxed text-[var(--color-text-secondary)]
                       border-l-2 border-[var(--color-refused)] pl-2.5">
