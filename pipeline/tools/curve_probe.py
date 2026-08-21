@@ -79,9 +79,9 @@ def main(argv=None) -> int:
             moves[sym] = moves.get(sym, 0.0) + sign * qty * (c1 - c0)
         if not gross:
             continue
-        big = sorted(moves.items(), key=lambda kv: abs(kv[1]), reverse=True)[:4]
-        line = "  ".join(f"{s_} {v / gross * 100:+.2f}pp" for s_, v in big if abs(v / gross) > 0.002)
-        print(f"  {d_}  book day P&L {pnl / gross * 100:+6.2f}%   | {line}")
+        big = sorted(moves.items(), key=lambda kv: abs(kv[1]), reverse=True)[:8]
+        line = "  ".join(f"{s_} {v / 1000:+,.0f}k" for s_, v in big if abs(v) > 1000)
+        print(f"  {d_}  gross ${gross / 1e6:.2f}M  day P&L ${pnl / 1000:+,.0f}k ({pnl / gross * 100:+.2f}% of gross)  | {line}")
     return 0
 
 
