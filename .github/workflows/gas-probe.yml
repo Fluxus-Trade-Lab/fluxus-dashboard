@@ -3,12 +3,22 @@
 # no credential ever passes through chat. Read-only actions only.
 name: GAS Probe
 on: [workflow_dispatch]
-permissions: {}
+permissions:
+  contents: read
 jobs:
   probe:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with: {python-version: '3.11'}
+      - run: pip install requests
+      - name: equity curve probe (clean data)
+        env:
+          FLUXUS_GAS_URL: ${{ secrets.FLUXUS_GAS_URL }}
+          FLUXUS_SYNC_TOKEN: ${{ secrets.FLUXUS_SYNC_TOKEN }}
+        run: python -m pipeline.tools.curve_probe 2026-08-11 2026-08-21 || echo "curve probe failed"
       - name: version + shortlist_pull
         env:
           URL: ${{ secrets.FLUXUS_GAS_URL }}
