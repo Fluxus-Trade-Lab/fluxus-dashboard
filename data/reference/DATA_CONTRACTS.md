@@ -403,6 +403,12 @@ JSON schema(所有 library 文章通用):
 
 格式:`- [日期] 一句话 + 你测过什么 + 你要的字段/口径`。数据端处理完把该行改成 ✅ 并写在哪个 commit。
 
+> **今日两条（Andy 2026-08-21 拍的顺序）** —— 下面 12 条混在一起,这两条是现在该做的:
+> 1. **`tickers/` 的 92 个空壳**(见 08-20 那条)。唯一一条**还在持续造成损失**的:抓取失败时空文件把好文件覆盖掉,MRNA 的 501 根 K 线被盖过两次。它还堵着 ticker 页、Library 配图、以及主题历史的回填。
+> 2. **`data/output/groups_history.json`**(见 08-21 那条)。前端已建好并推了(`1dcdf40f`),文件一到自动亮起。
+>
+> 其余十条不挡工。**另:2026-08-21 07:56 起,"Dashboard数据端处理+TSF对比"那个会话已经停了**——所以当天所有跨会话消息都没有收件人。§七 是唯一活着的通道,这正是它存在的理由。
+
 - [08-17] oratnek 同日扫描对照:VCS 刻度 → ✅ 17a2667(领先门,33→15);CBRL 闸 → ✅ 59e3892(成交额闸);RELY 的 RS 1M → ✅ 破译:RS 线 21 日自百分位,29/29 复现,新字段 `rs_line_pctl_21`(universe + watchlist 票项),今晚 cron 起有值
 - [08-20] **shortlist.json 的空席只有一种形状,页面分不出三种空**。`seats[]` 现在是 `{seat, ticker|null, why}`,而空着有三种含义:喂它的那格今晚**没跑**(未测量) / 跑了**一个都没有**(found none) / 有人但**被闸挡了**(blocked by threshold)。这三个在 DESIGN.md 里必须长得不一样(六·「`regime.score` 为 null 显示不可测,不要显示 0」是同一条规矩)。要 `seat.empty_reason: not_measured|none_found|all_excluded` + `all_excluded` 时的 `excluded_n`。没有它页面只能三种画成同一个灰框。今天六席全满,所以这条现在验不了 —— 第一个空席出现的那天就会露。
 - [08-20] **`shortlist_log.csv` 缺分母,「哪个席被否率高」现在算不出来**。六席曝光率天差地别(burning 每天有名字;entry 在没 EP 的日子是空的),只记 veto 的话,天天出现的席自然积累更多 ✗,跟它选得对不对无关。要**每席每天一行**:`date, seat, ticker|null, shown, outcome(vetoed|starred|ignored|empty)` + 当时的全套 readings。`ignored`(看见了没动)和 `empty`(没名字可给)是两个不同的分母,都得记。方案 §四 自己写了「选法内的排序依据是便利选择」—— 那就更需要分母才验得动。
