@@ -144,7 +144,16 @@ function ArticleChart({ chart }) {
   return (
     <figure className="my-5 mx-0">
       <CardChart series={chart.series} marks={chart.marks ?? []} scale={scale} />
-      <figcaption className="mt-2 flex flex-wrap gap-x-4 gap-y-1
+      {/* The caption the article wrote, which is not the legend and not the
+          axis note: it says what this particular chart is FOR. It was being
+          dropped — the payload carried "截到 08-18（EP 前夜）：08-07 收复 21EMA
+          → …" and the page rendered a ticker and a legend instead, which is
+          the reading vocabulary, not the point of the picture. */}
+      {chart.caption && (
+        <figcaption className="mt-2 text-[12px] leading-relaxed
+                               text-[var(--color-text-secondary)]">{chart.caption}</figcaption>
+      )}
+      <figcaption className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1
                              text-[11px] text-[var(--color-text-muted)]">
         {chart.ticker && <span className="font-mono font-semibold
                                           text-[var(--color-text-secondary)]">{chart.ticker}</span>}

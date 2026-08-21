@@ -123,3 +123,31 @@ describe('a piece', () => {
     expect(c.container.textContent).toContain('没取到')
   })
 })
+
+/**
+ * The caption is the point of the picture.
+ *
+ * It was being dropped: the payload carried "截到 08-18（EP 前夜）：08-07 收复
+ * 21EMA → 08-12 20日新高 → …" and the figure printed a ticker and a legend
+ * instead. Those are the reading vocabulary — what the marks mean — and they
+ * are not what this particular chart is FOR. An article that places two charts
+ * places them for different reasons, and the caption is where it says so.
+ */
+describe('a chart caption', () => {
+  const withCharts = (charts) => ({ ...ART, blocks: [{ type: 'chart', key: 'a' }], charts })
+
+  it('is rendered, and above the legend rather than lost in it', async () => {
+    withFetch({ 'offense_ep_mrna.json': withCharts({
+      a: { series: series(), caption: '截到 08-18（EP 前夜）', legend: { EP: '≥10%' } } }) })
+    const c = await draw({ entry: 'ep_mrna' })
+    const caps = [...c.container.querySelectorAll('figcaption')]
+    expect(caps[0].textContent).toContain('截到 08-18')
+    expect(caps[0].textContent).not.toContain('≥10%')     // the legend is its own line
+  })
+
+  it('leaves no empty caption behind when the article did not write one', async () => {
+    withFetch({ 'offense_ep_mrna.json': withCharts({ a: { series: series() } }) })
+    const c = await draw({ entry: 'ep_mrna' })
+    expect(c.container.querySelectorAll('figcaption')).toHaveLength(1)
+  })
+})
