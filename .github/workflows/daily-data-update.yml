@@ -39,6 +39,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r pipeline/requirements.txt
 
+      # tvdatafeed (anonymous TradingView websocket) feeds the regime ledger's
+      # NHNL and credit lamps (pipeline/risk/regime_ledger.py). A failed
+      # install must be VISIBLE (red step + error annotation) but must not
+      # block the market pipeline: the ledger degrades to the committed CSVs
+      # and prints its own ::warning annotations for 7-day staleness.
+      - name: Install tvdatafeed (regime ledger lamps)
+        continue-on-error: true
+        run: |
+          pip install "git+https://github.com/rongardF/tvdatafeed.git" || {
+            echo "::error title=tvdatafeed install failed::regime_ledger NHNL/credit lamps will run on committed CSVs and go absent after 7 stale days"
+            exit 1
+          }
+
       - name: Run data pipeline
         env:
           # 400, not 700, on the runner: the same Yahoo wall the Mac hits at
@@ -161,7 +174,12 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # data/reference/fundamentals.json is the rolling F-score store: without
           # committing it every night re-reads the same 700 names.
-          git add data/output/ data/history/ data/reference/fundamentals.json
+          # data/reference/breadth_tv/ + SqueezeMetrics/DIX.csv are the regime
+          # ledger's lamp inputs, refreshed in-run; committing keeps the
+          # fallback baseline fresh so a later tvdatafeed outage degrades from
+          # "yesterday", not from the last hand-run.
+          git add data/output/ data/history/ data/reference/fundamentals.json \
+                  data/reference/breadth_tv/ SqueezeMetrics/DIX.csv
           git diff --staged --quiet && exit 0
           git commit -m "chore: market data $(date +%Y-%m-%d)"
           # main moves while this runs (2026-08-18: five commits landed during

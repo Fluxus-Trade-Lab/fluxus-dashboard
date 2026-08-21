@@ -54,34 +54,64 @@ FIELDS = ["date", "spx_close", "vix", "vix_q", "above200", "ts_ema", "ts_state",
           "stale_ts_d", "stale_nhnl_d", "stale_oas_d", "stale_gex_d"]
 
 
-def _tv_refresh(symbols: list[tuple[str, str]]) -> None:
-    """Best-effort refresh of TV-sourced CSVs; silence on any failure."""
+def _tv_refresh(symbols: list[tuple[str, str]]) -> list[str]:
+    """Refresh TV-sourced CSVs. Failures are RETURNED, never swallowed
+    (Andy 2026-08-21: dependency problems must be reported); the caller
+    degrades to the committed CSVs and surfaces the errors."""
+    errors: list[str] = []
     try:
         from tvDatafeed import Interval, TvDatafeed
+    except Exception as e:
+        return [f"tvdatafeed import failed ({e!r}) -- NHNL/credit lamps running on committed CSVs"]
+    try:
         tv = TvDatafeed()
-        for sym, ex in symbols:
-            try:
-                df = tv.get_hist(symbol=sym, exchange=ex, interval=Interval.in_daily, n_bars=20000)
-                if df is None or len(df) == 0:
-                    continue
-                out = df[["close"]].copy()
-                out.index = out.index.normalize().date
-                out.index.name = "date"
-                out.to_csv(TVDIR / f"{ex}_{sym.replace('.', '_')}.csv")
-            except Exception:
+    except Exception as e:
+        return [f"tvdatafeed connect failed ({e!r})"]
+    for sym, ex in symbols:
+        try:
+            df = tv.get_hist(symbol=sym, exchange=ex, interval=Interval.in_daily, n_bars=20000)
+            if df is None or len(df) == 0:
+                errors.append(f"tv refresh {ex}:{sym}: empty response")
                 continue
-    except Exception:
-        return
+            out = df[["close"]].copy()
+            out.index = out.index.normalize().date
+            out.index.name = "date"
+            out.to_csv(TVDIR / f"{ex}_{sym.replace('.', '_')}.csv")
+        except Exception as e:
+            errors.append(f"tv refresh {ex}:{sym}: {str(e)[:80]}")
+    return errors
 
 
-def _dix_refresh() -> None:
+def _dix_refresh() -> list[str]:
     try:
         import requests
         r = requests.get("https://squeezemetrics.com/monitor/static/DIX.csv", timeout=45)
         if r.ok and r.text.startswith("date,price,dix,gex"):
             DIXCSV.write_text(r.text)
-    except Exception:
-        return
+            return []
+        return [f"DIX refresh: unexpected response (status {r.status_code})"]
+    except Exception as e:
+        return [f"DIX refresh: {str(e)[:80]}"]
+
+
+def report_problems(row: dict, refresh_errors: list[str]) -> list[str]:
+    """Everything a human should see: refresh failures + lamps lost to
+    staleness. Printed as GitHub Actions warning annotations when in CI."""
+    import os
+    problems = list(refresh_errors)
+    for dim, key in (("ts", "stale_ts_d"), ("nhnl", "stale_nhnl_d"),
+                     ("credit", "stale_oas_d"), ("gex", "stale_gex_d")):
+        v = row.get(key)
+        if v == "":
+            problems.append(f"lamp_{dim}: data source absent")
+        elif isinstance(v, int) and v > 7:
+            problems.append(f"lamp_{dim}: stale {v}d (>7) -- lamp marked absent")
+    for p in problems:
+        if os.environ.get("GITHUB_ACTIONS"):
+            print(f"::warning title=regime_ledger::{p}")
+        else:
+            print(f"regime_ledger WARNING: {p}", file=sys.stderr)
+    return problems
 
 
 def _series(path: Path, col: str = "close") -> Optional[pd.Series]:
@@ -95,15 +125,16 @@ def _staleness(dim_date, ledger_date) -> int:
     return int((pd.Timestamp(ledger_date) - pd.Timestamp(dim_date)).days)
 
 
-def build_row(refresh: bool = True) -> Optional[dict]:
+def build_row(refresh: bool = True) -> tuple[Optional[dict], list[str]]:
     cr = json.loads(CR_JSON.read_text())
     today = cr["today"]
     date = today["date"]
     ts = (cr.get("ts_dimension") or {}).get("today") or {}
 
+    refresh_errors: list[str] = []
     if refresh:
-        _tv_refresh([("HIGN", "INDEX"), ("LOWN", "INDEX"), ("BAMLH0A0HYM2", "FRED")])
-        _dix_refresh()
+        refresh_errors += _tv_refresh([("HIGN", "INDEX"), ("LOWN", "INDEX"), ("BAMLH0A0HYM2", "FRED")])
+        refresh_errors += _dix_refresh()
 
     row: dict = {
         "date": date, "spx_close": today.get("spx_close"),
@@ -155,7 +186,7 @@ def build_row(refresh: bool = True) -> Optional[dict]:
     avail = [x for x in lamps if x != ""]
     row["lamps_on"] = sum(avail)
     row["lamps_available"] = len(avail)
-    return row
+    return row, refresh_errors
 
 
 def append(row: dict) -> bool:
@@ -176,10 +207,11 @@ def append(row: dict) -> bool:
 
 def main() -> int:
     refresh = "--no-refresh" not in sys.argv
-    row = build_row(refresh=refresh)
+    row, refresh_errors = build_row(refresh=refresh)
     if row is None:
         print("regime_ledger: no correction_risk.json -- nothing to log")
         return 1
+    report_problems(row, refresh_errors)
     if append(row):
         print(f"regime_ledger: {row['date']}  lamps {row['lamps_on']}/{row['lamps_available']} "
               f"(ts={row['lamp_ts']} nhnl={row['lamp_nhnl']} credit={row['lamp_credit']} gex={row['lamp_gex']})  "

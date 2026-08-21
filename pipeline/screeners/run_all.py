@@ -1069,8 +1069,10 @@ def main():
     # domain -- a ledger crash must not cost the outputs above. Internal
     # record only (project parked; frontend not wired).
     try:
-        from pipeline.risk.regime_ledger import append as ledger_append, build_row
-        lrow = build_row(refresh=True)
+        from pipeline.risk.regime_ledger import append as ledger_append, build_row, report_problems
+        lrow, lerrs = build_row(refresh=True)
+        for problem in report_problems(lrow or {}, lerrs):
+            logger.warning("regime_ledger dependency problem: %s", problem)
         if lrow and ledger_append(lrow):
             logger.info("regime_ledger: %s lamps %s/%s prob_3d=%s", lrow['date'],
                         lrow['lamps_on'], lrow['lamps_available'], lrow['prob_3d'])
