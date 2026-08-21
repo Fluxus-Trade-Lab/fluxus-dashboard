@@ -34,10 +34,10 @@ def closes_for(sym: str) -> dict:
 
 
 def main(argv=None) -> int:
-    start, end = (argv or sys.argv[1:])[:2] if (argv or sys.argv[1:]) else ("2026-08-11", "2026-08-21")
+    args = (argv or sys.argv[1:])
+    start, end = args[:2] if len(args) >= 2 else ("2026-08-11", "2026-08-21")
     from pipeline.portfolio.sheets_source import fetch_trades
     trades = fetch_trades()
-    opts = []  # fetch_trades reads the Stock Trades tab only; options are a separate tab and excluded by construction
     days = []
     d0 = date.fromisoformat(start)
     while d0 <= date.fromisoformat(end):
@@ -45,51 +45,43 @@ def main(argv=None) -> int:
             days.append(d0.isoformat())
         d0 += timedelta(days=1)
     px = {}
-    vals = {}
-    contrib = {}
-    for ds in days:
-        total = 0.0
+
+    def close(sym, ds):
+        if sym not in px:
+            px[sym] = closes_for(sym)
+        series = px[sym]
+        return series.get(ds) or next((series[k] for k in sorted(series, reverse=True) if k <= ds), None)
+
+    print("held-overnight mark-to-market only (entries/exits/cash excluded; options tab excluded):")
+    for i in range(1, len(days)):
+        p_, d_ = days[i - 1], days[i]
+        pnl = 0.0
+        gross = 0.0
+        moves = {}
         for t in trades:
-            if str(t.entry_date) > ds:
+            if str(t.entry_date) > p_:
                 continue
-            qty = t.current_qty if not t.closed else 0
-            if t.closed and str(t.exit_date or "") > ds:
-                qty = t.original_qty
+            if t.closed and str(t.exit_date or "9999") <= d_ if False else False:
+                pass
+            ex = str(t.exit_date) if (t.closed and t.exit_date) else None
+            if ex is not None and ex <= p_:      # fully closed before the pair
+                continue
+            qty = t.current_qty if not t.closed else t.original_qty
             if not qty:
                 continue
             sym = t.ticker.upper()
-            if sym not in px:
-                px[sym] = closes_for(sym)
-            series = px[sym]
-            c = series.get(ds) or next((series[k] for k in sorted(series, reverse=True) if k <= ds), None)
-            if c is None:
+            c0, c1 = close(sym, p_), close(sym, d_)
+            if c0 is None or c1 is None:
                 continue
             sign = 1 if getattr(t, "direction", "long") == "long" else -1
-            total += sign * qty * c
-            contrib.setdefault(ds, {}).setdefault(sym, 0.0)
-            contrib[ds][sym] += sign * qty * c
-        vals[ds] = total
-    base = next((v for v in vals.values() if v), None) or 1.0
-    print(f"stocks-only book, indexed to {days[0]} (options tab EXCLUDED by construction):")
-    prev = None
-    for ds in days:
-        v = vals[ds]
-        chg = f" {((v - prev) / prev * 100):+6.2f}%" if prev else "        "
-        print(f"  {ds}  {v / base * 100:7.2f}{chg}")
-        prev = v or prev
-    for ds in days:
-        if ds not in contrib:
+            pnl += sign * qty * (c1 - c0)
+            gross += qty * c0
+            moves[sym] = moves.get(sym, 0.0) + sign * qty * (c1 - c0)
+        if not gross:
             continue
-        prev_d = days[days.index(ds) - 1] if days.index(ds) else None
-        if not prev_d or prev_d not in contrib:
-            continue
-        moves = {s: contrib[ds].get(s, 0) - contrib[prev_d].get(s, 0)
-                 for s in set(contrib[ds]) | set(contrib[prev_d])}
-        big = sorted(moves.items(), key=lambda kv: abs(kv[1]), reverse=True)[:3]
-        tot = vals[prev_d] or 1
-        line = "  ".join(f"{s} {v / tot * 100:+.2f}pp" for s, v in big if abs(v / tot) > 0.005)
-        if line:
-            print(f"  {ds} movers: {line}")
+        big = sorted(moves.items(), key=lambda kv: abs(kv[1]), reverse=True)[:4]
+        line = "  ".join(f"{s_} {v / gross * 100:+.2f}pp" for s_, v in big if abs(v / gross) > 0.002)
+        print(f"  {d_}  book day P&L {pnl / gross * 100:+6.2f}%   | {line}")
     return 0
 
 
