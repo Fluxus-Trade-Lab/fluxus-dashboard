@@ -49,9 +49,14 @@ export default function RsPath({ picks, colourOf }) {
     )
   }
 
+  /* Counted, not measured by array length. Every array here is `dates` long
+     and the days a group was not measured are null — Cloud Software is 7 of 10
+     — so `length >= 2` would pass a group with one real point and draw a line
+     through nothing. */
+  const real = (a) => (a ?? []).filter((v) => v != null).length
   const series = picks
     .map((name) => ({ name, g: data.groups[name] }))
-    .filter((s) => s.g?.excess?.length >= 2)
+    .filter((s) => real(s.g?.excess) >= 2)
 
   if (!series.length) {
     return <Empty note={picks.length
@@ -105,20 +110,42 @@ export default function RsPath({ picks, colourOf }) {
           ))}
 
           {series.map((s) => {
-            const pts = s.g.excess.map((v, i) => (v == null ? null : `${x(i)},${y(v)}`))
-              .filter(Boolean).join(' ')
+            /* One polyline per unbroken run. Joining across a null would draw a
+               value nobody computed — 4 of the 30 themes have interior holes
+               and Cloud Software is 7 of 10. The same rule the card chart
+               follows; it was written correctly there this morning and wrongly
+               here this afternoon, which is why it is now a shared sentence. */
+            const runs = []
+            let cur = []
+            s.g.excess.forEach((v, i) => {
+              if (v == null) { if (cur.length > 1) runs.push(cur); cur = []; return }
+              cur.push(`${x(i)},${y(v)}`)
+            })
+            if (cur.length > 1) runs.push(cur)
+
             const c = colourOf?.(s.name) ?? 'var(--color-text)'
-            const last = s.g.excess[s.g.excess.length - 1]
+            // the last day that was actually measured, which need not be the last day
+            const li = s.g.excess.reduce((k, v, i) => (v == null ? k : i), -1)
+            const last = li >= 0 ? s.g.excess[li] : null
+            const stale = li >= 0 && li < s.g.excess.length - 1
             return (
               <g key={s.name}>
-                <polyline points={pts} fill="none" strokeWidth="1.9" stroke={c}
-                          strokeLinejoin="round" strokeLinecap="round"
-                          vectorEffect="non-scaling-stroke" />
-                <circle cx={x(s.g.excess.length - 1)} cy={y(last)} r="3" fill={c} />
-                <text x={W - PAD.r + 6} y={y(last) + 3.5} fill={c}
-                      style={{ fontSize: 11, fontFamily: 'var(--font-mono)', fontWeight: 600 }}>
-                  {pct(last)}
-                </text>
+                {runs.map((r, i) => (
+                  <polyline key={i} points={r.join(' ')} fill="none" strokeWidth="1.9"
+                            stroke={c} strokeLinejoin="round" strokeLinecap="round"
+                            vectorEffect="non-scaling-stroke" />
+                ))}
+                {/* a lone measured day still gets its dot; a line needs two */}
+                {s.g.excess.map((v, i) => (v == null ? null : (
+                  <circle key={i} cx={x(i)} cy={y(v)} r={i === li ? 3 : 1.4} fill={c}
+                          fillOpacity={i === li ? 1 : .55} />
+                )))}
+                {last != null && (
+                  <text x={W - PAD.r + 6} y={y(last) + 3.5} fill={c}
+                        style={{ fontSize: 11, fontFamily: 'var(--font-mono)', fontWeight: 600 }}>
+                    {pct(last)}{stale && <tspan fillOpacity=".6"> ·{s.g.excess.length - 1 - li}d</tspan>}
+                  </text>
+                )}
               </g>
             )
           })}
@@ -150,8 +177,14 @@ export default function RsPath({ picks, colourOf }) {
                              w-[150px] shrink-0 truncate">{s.name}</span>
             <span className="flex gap-[2px] flex-1">
               {(s.g.state ?? []).map((st, i) => (
+                /* a day with no reading is not a fourth state — it is a gap,
+                   and it wears the dashed frame this site uses for "could not
+                   be counted" rather than a colour it never earned */
                 <span key={i} className="h-[10px] flex-1 rounded-[1px]"
-                      title={`${dates[i] ?? ''} · ${st}`} style={barStyle(st)} />
+                      title={`${dates[i] ?? ''} · ${st ?? '没测到'}`}
+                      style={st ? barStyle(st) : {
+                        border: '1px dashed var(--color-untested)',
+                        background: 'transparent' }} />
               ))}
             </span>
           </div>
