@@ -1,0 +1,38 @@
+Fluxus Regime Lamps — 风险状态机四盏灯的 TradingView 实时视图
+================================================================
+
+来源规格：data/research/risk_state_machine_plan.md §三·五（P3，2026-08-21）。
+Python 孪生：pipeline/risk/regime_ledger.py —— ledger 是记账本，这个面板是活水视图。
+判词语言永远是仓位预算档，不是方向。
+
+四盏灯（阈值 = E1 预注册的危险极；改阈值 = 新实验，不是调参）
+----------------------------------------------------------------
+lamp_ts      VIX/VIX3M 的 3EMA > 1.0（backwardation）      E1 历史频率 32.1%
+lamp_nhnl    NYSE NHNL 比率 10EMA < 0.30（washout 区）      37.2%
+lamp_credit  HY OAS 滚动 252d 分位 ≥ 80%（走阔）            34.8%
+lamp_gex     GEX/px² 滚动 252d 分位 < 20%（低 gamma）       21.2%
+（历史频率 = P(SPX ≥5% 回撤 / 21 个交易日)，全样本基准 ≈18%；
+ 明细 data/research/turin_e1_results.json）
+
+数据源
+------
+TS / NHNL / credit 三盏全自动：TVC:VIX、CBOE:VIX3M、INDEX:HIGN、INDEX:LOWN、
+FRED:BAMLH0A0HYM2 —— 全部 TV 原生 feed，symbol 做成了输入框，feed 改名在
+设置里修，不用改代码。
+GEX 灯 TV 上没有数据源（SqueezeMetrics 外源）：手动输入位，从当日
+regime_ledger.csv 抄 gexn_rank252（乘 100），-1 = 缺席（不点亮也不进分母）。
+
+与 ledger 的已知口径差（可接受，勿改齐）
+--------------------------------------
+ta.percentrank 的窗口不含当日、ledger 的含当日 → OAS/GEX 的 rank 差 ≤0.4pp。
+FRED 镜像比官方晚约 1 天 —— 与 ledger 的 staleness 容忍一致。
+
+验收（粘进 TV 后对照 ledger 最新行）
+----------------------------------
+2026-08-20 行的期望值：TS 0.822（灭）· NHNL 0.767（灭）· OAS rank ≈20.6（灭）·
+GEX 手动填 24.2（灭）→ 0/4。允许 ±0.5pp 的 percentrank 口径差。
+
+部署纪律
+--------
+仓库这份 .pine 是唯一备份。用 TV MCP 注入时先开 scratch 脚本、前后
+list_scripts 对照（set_source 会覆盖当前打开的脚本，smart_compile=保存）。

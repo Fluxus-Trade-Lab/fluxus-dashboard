@@ -1,0 +1,87 @@
+//@version=6
+// Fluxus Regime Lamps — description & acceptance checks in fluxus-regime-lamps.txt
+// Spec: data/research/risk_state_machine_plan.md §三·五 (P3, 2026-08-21) — the
+// thresholds are the pre-registered E1 danger poles; changing one is a new
+// experiment, not a tune. Python twin: pipeline/risk/regime_ledger.py (the
+// ledger is the book of record; this pane is the live view).
+// This repo copy is the only backup — TV MCP set_source overwrites open scripts.
+indicator("Fluxus Regime Lamps", "FLX Lamps", overlay = false)
+
+// ── sources (symbol inputs so a feed rename is fixable in the UI) ─────────
+symVix   = input.symbol("TVC:VIX",           "VIX",    inline = "s1", group = "Sources")
+symVix3m = input.symbol("CBOE:VIX3M",        "VIX3M",  inline = "s1", group = "Sources")
+symHign  = input.symbol("INDEX:HIGN",        "HIGN",   inline = "s2", group = "Sources")
+symLown  = input.symbol("INDEX:LOWN",        "LOWN",   inline = "s2", group = "Sources")
+symOas   = input.symbol("FRED:BAMLH0A0HYM2", "HY OAS", inline = "s3", group = "Sources")
+
+// ── thresholds (pre-registered; defaults = the spec) ──────────────────────
+thTs     = input.float(1.0,  "TS >",        step = 0.05, inline = "t1", group = "Lamps")
+thNhnl   = input.float(0.30, "NHNL <",      step = 0.05, inline = "t1", group = "Lamps")
+thCredit = input.float(80.0, "OAS rank ≥",  step = 5.0,  inline = "t2", group = "Lamps")
+thGex    = input.float(20.0, "GEX rank <",  step = 5.0,  inline = "t2", group = "Lamps")
+// GEX has no TV feed: copy today's 252d rank (0–100) from regime_ledger.csv; -1 = absent
+gexRank  = input.float(-1.0, "GEX rank today (manual, -1 = absent)", minval = -1.0, maxval = 100.0, group = "Lamps")
+
+// ── style (colors always configurable) ────────────────────────────────────
+colOff   = input.color(color.new(color.gray, 40),  "0 lamps", inline = "c", group = "Style")
+colOne   = input.color(color.orange,               "1 lamp",  inline = "c", group = "Style")
+colHot   = input.color(color.red,                  "2+ lamps", inline = "c", group = "Style")
+showTbl  = input.bool(true, "Show readout table", group = "Style")
+
+// ── readings (always daily, whatever the chart timeframe) ─────────────────
+daily(simple string sym) =>
+    request.security(sym, "D", close)
+
+vix   = daily(symVix)
+vix3m = daily(symVix3m)
+hign  = daily(symHign)
+lown  = daily(symLown)
+oas   = daily(symOas)
+
+tsEma   = ta.ema(vix / vix3m, 3)
+nhnlR   = ta.ema(hign / (hign + lown), 10)
+oasRank = ta.percentrank(oas, 252)  // vs prior 252 obs; ledger includes today (±0.4pp)
+
+lampTs     = tsEma > thTs
+lampNhnl   = nhnlR < thNhnl
+lampCredit = oasRank >= thCredit
+gexAvail   = gexRank >= 0
+lampGex    = gexAvail and gexRank < thGex
+
+lampsOn    = (lampTs ? 1 : 0) + (lampNhnl ? 1 : 0) + (lampCredit ? 1 : 0) + (lampGex ? 1 : 0)
+lampsAvail = 3 + (gexAvail ? 1 : 0)
+
+// ── pane ──────────────────────────────────────────────────────────────────
+colNow = lampsOn >= 2 ? colHot : lampsOn == 1 ? colOne : colOff
+plot(lampsOn, "Lamps on", style = plot.style_columns, color = colNow)
+hline(0)
+hline(4, color = color.new(color.gray, 70))
+bgcolor(lampsOn >= 2 ? color.new(colHot, 85) : na)
+
+// ── readout table: value · threshold · E1 historical P(≥5% dd / 21d) ──────
+// E1 rates from data/research/turin_e1_results.json (2026-08-21); base ≈ 18%.
+var table tbl = table.new(position.top_right, 4, 6, border_width = 1)
+
+lampCell(int r, string name, string val, string th, bool on, string hist) =>
+    table.cell(tbl, 0, r, name, text_size = size.small, text_halign = text.align_left)
+    table.cell(tbl, 1, r, val + " / " + th, text_size = size.small)
+    table.cell(tbl, 2, r, on ? "●" : "○", text_color = on ? colHot : colOff, text_size = size.small)
+    table.cell(tbl, 3, r, hist, text_size = size.small)
+
+if showTbl and barstate.islast
+    table.cell(tbl, 0, 0, "FLX Lamps", text_size = size.small, text_halign = text.align_left)
+    table.cell(tbl, 1, 0, str.tostring(lampsOn) + " / " + str.tostring(lampsAvail), text_size = size.small)
+    table.cell(tbl, 2, 0, "", text_size = size.small)
+    table.cell(tbl, 3, 0, "E1 rate", text_size = size.small)
+    lampCell(1, "TS 3ema",   str.tostring(tsEma,   "#.###"), ">" + str.tostring(thTs, "#.##"),  lampTs,     "32.1%")
+    lampCell(2, "NHNL 10e",  str.tostring(nhnlR,   "#.###"), "<" + str.tostring(thNhnl, "#.##"), lampNhnl,  "37.2%")
+    lampCell(3, "OAS rk252", str.tostring(oasRank, "#.#"),   "≥" + str.tostring(thCredit, "#"),  lampCredit, "34.8%")
+    lampCell(4, "GEX rk252", gexAvail ? str.tostring(gexRank, "#.#") : "absent", "<" + str.tostring(thGex, "#"), lampGex, "21.2%")
+    table.cell(tbl, 0, 5, "base ≈18% · budget language, not direction", text_size = size.tiny, text_halign = text.align_left)
+    table.cell(tbl, 1, 5, "")
+    table.cell(tbl, 2, 5, "")
+    table.cell(tbl, 3, 5, "")
+
+// ── alerts: a lamp lighting is the event; count going ≥2 is the loud one ──
+alertcondition(lampsOn > lampsOn[1], "FLX lamp lit",   "Fluxus regime lamp count increased")
+alertcondition(lampsOn >= 2 and lampsOn[1] < 2, "FLX 2+ lamps", "Fluxus regime: 2+ lamps on")
