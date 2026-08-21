@@ -66,9 +66,15 @@ describe.skipIf(!uni)('reading MRNA off the live file', () => {
     for (const k of ['52 周高', 'MA20', 'MA50', 'MA200', 'EMA21', 'Structure Pivot 止损']) {
       expect(lv[k].price, k).not.toBeNull()
     }
-    // MA50 implied from the distance lands on the pivot stop the pipeline
-    // publishes as a price — two independent numbers agreeing
-    expect(lv.MA50.price).toBeCloseTo(u.sp_stop, 0)
+    /* An earlier version asserted the implied MA50 lands on `sp_stop`. On
+       2026-08-19 they read 63.91 and 63.99 and that looked like two independent
+       numbers agreeing; on 08-20 they read 65.62 and 69.86. `sp_ma` is the
+       Structure Pivot's own level and was never the 50-day — it sat on it for a
+       day. A coincidence written down as a law is worse than no test, because
+       it fails on a true value and invites widening the tolerance until it
+       passes. The algebra is checked where it can be: against each ticker
+       file's own technicals, above. */
+    expect(lv.MA50.dist).toBeCloseTo(u.sma50_dist * 100, 4)
   })
 
   it('keeps what universe genuinely does not carry absent, and says where from', () => {

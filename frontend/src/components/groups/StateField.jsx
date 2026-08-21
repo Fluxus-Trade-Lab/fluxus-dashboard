@@ -88,14 +88,56 @@ const LINE_H = 13
  * above everything. Importance is persistence first, then distance from the
  * origin, so the durable and the extreme keep their names while the pile near
  * zero — which is most of the board, and is itself the reading — gives them up.
+ *
+ * THE CHROME IS RESERVED FIRST. Labels were only ever tested against each
+ * other, so a name near an axis end ran straight through the scale printed
+ * there — Genomics over "ahead of SPY on the quarter → +35.3%" on 2026-08-21.
+ * Reserving the two axis captions and the four cell captions costs six boxes
+ * and puts them under the same rule every name already obeys: collide and you
+ * give up your label, which hover still returns.
  */
-function place(rows, names, x, y, radius, W, PAD) {
-  const taken = []
+function chromeBoxes(W, H, PAD, x0, y0, ax, ay, cells) {
+  const MONO = 5.9      // Plex Mono at 10px
+  const SANS = 6.6      // Plex Sans at 12-15px, the cell captions
+  const out = []
+  const box = (x1, x2, cy, h = LINE_H) => ({ x1, x2, y1: cy - h / 2, y2: cy + h / 2 })
+
+  // the horizontal scale, at both ends of the cut
+  const axisY = y0 + 15 - 4                       // baseline back to a centre
+  out.push(box(W - PAD.r - `ahead of SPY on the quarter → ${pct(ax)}`.length * MONO,
+               W - PAD.r, axisY))
+  out.push(box(PAD.l, PAD.l + `${pct(-ax)} ← behind`.length * MONO, axisY))
+
+  // the vertical scale, right-aligned to the left of the cut
+  out.push(box(x0 - 7 - `accelerating ${pct(ay)}`.length * MONO, x0 - 7, PAD.t))
+  out.push(box(x0 - 7 - `${pct(-ay)}`.length * MONO, x0 - 7, H - PAD.b - 4))
+
+  // the four cell captions — a name and its hint, two lines each
+  for (const c of cells) {
+    const tx = c.x === 'right' ? W - PAD.r - 6 : PAD.l + 6
+    const ty = c.y === 'top' ? PAD.t + 15 : H - PAD.b - 20
+    const w = Math.max(c.state.length + 4, c.hint.length) * SANS
+    const x1 = c.x === 'right' ? tx - w : tx
+    out.push({ x1, x2: x1 + w, y1: ty - 12, y2: ty + 18 })
+  }
+  return out
+}
+
+function place(rows, names, x, y, radius, W, H, PAD, chrome = []) {
+  const taken = [...chrome]
   const hits = (b) => taken.some((t) => !(b.x2 < t.x1 || b.x1 > t.x2 || b.y2 < t.y1 || b.y1 > t.y2))
   const out = new Map()
   const order = rows.filter((r) => names.has(r.group)).sort((a, b) =>
     (b.persistence ?? 0) - (a.persistence ?? 0)
     || Math.hypot(b.excess_3m, b.rs_accel) - Math.hypot(a.excess_3m, a.rs_accel))
+
+  /* Nudge before giving up. A name is dropped only when there is nowhere near
+     its dot to put it — not merely because its first choice was occupied. Four
+     offsets, all under a line and a half, so the label still reads as belonging
+     to its own dot and no leader line is needed to prove it. Genomics sat at
+     the far right where its flipped-left box lands on the axis scale; one line
+     up is enough, and the alternative was losing the name on a Leading theme. */
+  const NUDGES = [0, -LINE_H, LINE_H, -LINE_H * 1.6, LINE_H * 1.6]
 
   for (const r of order) {
     const px = x(r.excess_3m), py = y(r.rs_accel), rad = radius(r.persistence)
@@ -103,10 +145,16 @@ function place(rows, names, x, y, radius, W, PAD) {
     // flip to the dot's left when the right-hand box would leave the plot
     const right = px + rad + 4 + w <= W - PAD.r
     const x1 = right ? px + rad + 4 : px - rad - 4 - w
-    const box = { x1, x2: x1 + w, y1: py - LINE_H / 2, y2: py + LINE_H / 2 }
-    if (box.x1 < PAD.l || hits(box)) continue
-    taken.push(box)
-    out.set(r.group, { anchor: right ? 'start' : 'end', dx: right ? rad + 4 : -(rad + 4) })
+    if (x1 < PAD.l) continue
+    let dy = null
+    for (const n of NUDGES) {
+      const box = { x1, x2: x1 + w, y1: py + n - LINE_H / 2, y2: py + n + LINE_H / 2 }
+      if (box.y1 < PAD.t || box.y2 > H - PAD.b || hits(box)) continue
+      taken.push(box); dy = n; break
+    }
+    if (dy == null) continue
+    out.set(r.group, { anchor: right ? 'start' : 'end',
+                       dx: right ? rad + 4 : -(rad + 4), dy })
   }
   return out
 }
@@ -149,7 +197,8 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
   const x = (v) => PAD.l + ((v / ax + 1) / 2) * (W - PAD.l - PAD.r)
   const y = (v) => PAD.t + ((1 - v / ay) / 2) * (H - PAD.t - PAD.b)
   const x0 = x(0), y0 = y(0)
-  const placed = place(ok, names, x, y, radius, W, PAD)
+  const placed = place(ok, names, x, y, radius, W, H, PAD,
+                       chromeBoxes(W, H, PAD, x0, y0, ax, ay, CELLS))
   const dropped = names.size - placed.size
 
   return (
@@ -244,7 +293,7 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
                         stroke="var(--color-accent)" strokeWidth="1.5" />
               )}
               {show && (
-                <text x={px + lay.dx} y={py + 4} textAnchor={lay.anchor}
+                <text x={px + lay.dx} y={py + 4 + (lay.dy ?? 0)} textAnchor={lay.anchor}
                       style={{ fontSize: LABEL_PX, fontWeight: c || on ? 600 : 400 }}
                       fill={c ?? (on ? 'var(--color-text)' : 'var(--color-text-secondary)')}>
                   {r.group}
