@@ -1044,6 +1044,7 @@ def main():
                          'x21': '上穿21EMA', 'x50': '上穿50SMA'}}
         (OUTPUT_DIR / 'shortlist.json').write_text(json.dumps({'timestamp': timestamp, **sl}, default=_json_serializer))
         n_sl = NC.archive(sl)
+        NC.archive_seats(sl)
         ledger.note('shortlist', 'ok', cards=len(cards), manual=len(manual),
                     seats={s['seat']: s['ticker'] for s in seats})
         logger.info("Saved shortlist.json - %d cards (%d manual), seats %s",
@@ -1051,6 +1052,30 @@ def main():
     except Exception:  # noqa: BLE001
         logger.exception("Shortlist failed - shortlist.json not updated")
         ledger.error('shortlist', 'exception')
+
+    # Shortlist feedback pull (button half of the loop): quiet no-op
+    # without the GAS env pair. Own failure domain.
+    try:
+        from pipeline.screeners.shortlist_feedback import apply as fb_apply, fetch_rows
+        fb_rows = fetch_rows()
+        if fb_rows is not None:
+            stats = fb_apply(fb_rows, last_completed_session().isoformat())
+            ledger.note('shortlist_feedback', 'ok', **stats)
+            logger.info("shortlist feedback: %s", stats)
+    except Exception:  # noqa: BLE001
+        logger.exception("shortlist feedback pull failed - loop has no button half tonight")
+        ledger.error('shortlist_feedback', 'exception')
+
+    # Library index: the browser cannot enumerate a naming convention
+    # (contracts §七 [08-20]); one JSON catalog, regenerated from the dir.
+    try:
+        from collections import defaultdict
+        lib = defaultdict(list)
+        for f in sorted((OUTPUT_DIR / 'library').glob('*.md')):
+            lib[f.name.split('_', 1)[0]].append(f.name)
+        (OUTPUT_DIR / 'library' / 'index.json').write_text(json.dumps(dict(lib), indent=1))
+    except Exception:  # noqa: BLE001
+        logger.exception("library index failed")
 
     # Style rotation: score the baskets fetched above. Own failure domain.
     try:

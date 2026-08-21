@@ -141,6 +141,10 @@ def build_card(ticker: str, *, row: Optional[Mapping[str, Any]], group: Optional
                    and p["panel"] in ("ma_reclaim", "episodic_pivot", "ll_hl_1st", "ll_hl_2nd",
                                       "ll_hl_trend_break", "liquid_leader_pullback")]
     tml = any(p["panel"] == "true_market_leaders" and p["date"] == today for p in pan_list)
+    if r.get("hi20") is None and r.get("dist_hi20_pct") is not None:
+        # stocks: universe carries the distance, not the flag (frontend saw
+        # six nulls on 08-20 -- reading is derivable, so derive it)
+        r["hi20"] = bool(r["dist_hi20_pct"] >= -0.001)
     card: Dict[str, Any] = {
         "ticker": ticker, "source": source, "seat": seat,
         "group": group, "state": state,
@@ -209,25 +213,44 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
         return [t["ticker"] for t in panels.get(k, {}).get("tickers", [])]
 
     out = []
+    panel_measured = {p["key"]: p.get("measured", True)
+                      for z in wl.get("zones", []) for p in z.get("panels", [])}
 
-    def seat(name, chain):
+    def seat(name, chain=None, feeds=()):
+        """feeds: panel keys this seat reads -- distinguishes the three empties
+        the frontend asked for (contracts §七 08-20): not_measured (the feeding
+        panel did not run tonight) / none_found (ran, zero candidates) /
+        all_excluded (candidates existed, gates removed every one)."""
+        raw = 0
         for why, cands, key in chain:
+            raw += len(cands)
             got = prefer(cands, key)
             if got:
                 taken.add(got[0])
                 out.append({"seat": name, "ticker": got[0], "why": why})
                 return
-        out.append({"seat": name, "ticker": None,
-                    "why": "空：" + " / ".join(w for w, _, _ in chain) + " 都无合格者(ATR<7)"})
+        if feeds and all(panel_measured.get(k) is False for k in feeds):
+            reason = "not_measured"
+        elif raw > 0:
+            reason = "all_excluded"
+        else:
+            reason = "none_found"
+        entry = {"seat": name, "ticker": None, "empty_reason": reason,
+                 "why": "空：" + " / ".join(w for w, _, _ in chain)
+                 + {"not_measured": "(喂席的格今晚未测量)", "none_found": "(跑了但一个都没有)",
+                    "all_excluded": f"(有 {raw} 个候选,全被闸挡)"}[reason]}
+        if reason == "all_excluded":
+            entry["excluded_n"] = raw
+        out.append(entry)
 
     heat_names = [h["ticker"] for h in heat[:50]]
     heat_rank = {t: i for i, t in enumerate(heat_names)}
-    seat("burning", [("heat 前 50 内最高(ATR<7,主题优先)", heat_names,
+    seat("burning", chain=[("heat 前 50 内最高(ATR<7,主题优先)", heat_names,
                       lambda t: 50 - heat_rank.get(t, 50))])
 
     tml_now = panel_tickers("true_market_leaders")
     fresh = [t for t in tml_now if t not in prev_tml]
-    seat("new_leader", [
+    seat("new_leader", feeds=("true_market_leaders",), chain=[
         ("今日新进 TML", fresh, hscore),
         ("替补:在册 TML 中 ATR 位最低(最贴基底)", tml_now,
          lambda t: -(by.get(t, {}).get("atr_from_sma50") if by.get(t, {}).get("atr_from_sma50") is not None else 99)),
@@ -236,7 +259,7 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
     b4 = panels.get("bullish_4pct", {}).get("tickers", [])
     first_wave = [t["ticker"] for t in b4 if not t.get("chase") and t.get("rs_high")
                   and (t.get("atr_from_sma50") or 9) <= 4]
-    seat("entry", [
+    seat("entry", feeds=("episodic_pivot", "bullish_4pct", "liquid_leader_pullback"), chain=[
         ("今日 EP", panel_tickers("episodic_pivot"),
          lambda t: by.get(t, {}).get("rel_volume") or 0),
         ("第一波(4%×ATR≤4×RS新高)", first_wave, hscore),
@@ -262,7 +285,7 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
         return (days <= 60) if days is not None else (dist >= -0.15)
 
     deep = [t for t in reclaim if (by.get(t, {}).get("high_52w") or 0) <= -0.25]
-    seat("v_reversal", [
+    seat("v_reversal", feeds=("ma_reclaim", "liquid_leader_pullback"), chain=[
         ("新高后回踩(52wh 新鲜×回撤3-20%×在回踩/收复格)",
          [t for t in {*pullback, *reclaim} if fresh_high_pullback(t)], rs3),
         ("深 V:均线收复×离52周高≤−25%", deep, rs3),
@@ -290,7 +313,7 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
     vcs_p = panel_tickers("vcs")
     vcsv = lambda t: by.get(t, {}).get("vcs") or 0  # noqa: E731
     rng_tight = lambda t: -(by.get(t, {}).get("range5_pct") or 99)  # noqa: E731 -- tighter first
-    seat("coiling", [
+    seat("coiling", feeds=("vcs", "anticipation"), chain=[
         ("3周紧(周K三连1.5%带×>50SMA×近52wh)", [t for t in universe_names if _tight(t, "3wt")], rs3),
         ("日线coil(5日幅≤5%×近20日高×>50SMA)", [t for t in universe_names if _tight(t, "coil")], rng_tight),
         ("替补:VCS 格(已判无优势,留作对照)", vcs_p, vcsv),
@@ -315,6 +338,46 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
     else:
         out.append({"seat": "asset", "ticker": None, "why": "空：asset_signals 缺失"})
     return out
+
+
+SEAT_LOG = Path("data/history/shortlist_seat_log.csv")
+
+
+def archive_seats(payload: Mapping[str, Any], path: Path = SEAT_LOG) -> int:
+    """One row per SEAT per session -- the denominator the learning loop needs
+    (contracts §七 [08-20]: seats have wildly different exposure; counting only
+    vetoes tells you which seat appears often, not which picks well).
+    outcome starts as 'shown' or 'empty'; feedback later upgrades shown ->
+    vetoed/starred, and untouched rows age into 'ignored' at analysis time."""
+    import csv
+    fields = ["date", "seat", "ticker", "outcome", "empty_reason", "excluded_n", "why",
+              "rs_1m", "rs_3m", "rs_line_pctl_21", "atr_from_sma50", "heat_rank", "state"]
+    date = payload["date"]
+    by = {c["ticker"]: c for c in payload.get("cards", [])}
+    old_rows = []
+    if path.exists():
+        with path.open(newline="") as fh:
+            old_rows = [r for r in csv.DictReader(fh) if r.get("date") != date]
+    new_rows = []
+    for s_ in payload.get("seats", []):
+        t = s_.get("ticker")
+        c = by.get(t) or {}
+        rd = c.get("readings", {})
+        new_rows.append({"date": date, "seat": s_["seat"], "ticker": t or "",
+                         "outcome": "shown" if t else "empty",
+                         "empty_reason": s_.get("empty_reason", ""),
+                         "excluded_n": s_.get("excluded_n", ""), "why": s_.get("why", ""),
+                         "rs_1m": rd.get("rs_1m"), "rs_3m": rd.get("rs_3m"),
+                         "rs_line_pctl_21": rd.get("rs_line_pctl_21"),
+                         "atr_from_sma50": rd.get("atr_from_sma50"),
+                         "heat_rank": (c.get("heat") or {}).get("rank"), "state": c.get("state")})
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=fields)
+        w.writeheader()
+        for r in [*old_rows, *new_rows]:
+            w.writerow({k: ("" if r.get(k) is None else r.get(k)) for k in fields})
+    return len(new_rows)
 
 
 def archive(payload: Mapping[str, Any], path: Path = LOG) -> int:

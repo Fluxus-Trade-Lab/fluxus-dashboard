@@ -241,8 +241,14 @@
    "prob",
    "question",
    "separates_tail",
+   "side_readings",
    "table",
-   "today"
+   "today",
+   "ts_dimension"
+  ],
+  "ts_dimension.table.by_vix_quintile_x_200dma_x_ts{}": [
+   "n",
+   "rate"
   ]
  },
  "ema21_watch.json": {
@@ -416,6 +422,21 @@
    "universe_size"
   ]
  },
+ "groups_history.json": {
+  "groups{}": [
+   "excess",
+   "kind",
+   "state"
+  ],
+  "top": [
+   "as_of",
+   "benchmark",
+   "dates",
+   "groups",
+   "sessions",
+   "target_sessions"
+  ]
+ },
  "h1_2026_stats.json": {
   "campaigns[]": [
    "best_days",
@@ -561,6 +582,7 @@
  },
  "heating_up.json": {
   "rows[]": [
+   "confluence_days",
    "days_span",
    "first_seen",
    "last_seen",
@@ -719,6 +741,7 @@
   ],
   "top": [
    "date",
+   "missing_blocks",
    "sources",
    "status"
   ]
@@ -895,7 +918,9 @@
    "cmf21",
    "cross_ema21_up",
    "cross_sma50_up",
+   "days_since_52wh",
    "dcr_pct",
+   "dist_hi20_pct",
    "ema10",
    "ema20",
    "ema21",
@@ -932,6 +957,7 @@
    "pocket_pivot",
    "pp_count_10d",
    "pp_count_30d",
+   "range5_pct",
    "rel_volume",
    "revenue_growth",
    "rs_126d",
@@ -977,7 +1003,8 @@
    "vol_5d_50d",
    "volume",
    "wk_ema10",
-   "wk_ema20"
+   "wk_ema20",
+   "wk_tight_3"
   ],
   "top": [
    "count",
