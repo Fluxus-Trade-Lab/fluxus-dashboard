@@ -1,11 +1,112 @@
 {
   "ticker": "SNDK",
-  "fetched_at": "2026-08-20T22:16:15Z",
+  "fetched_at": "2026-08-21T08:13:51Z",
   "_schema": "v2",
   "current_price": 1600.6199951171875,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "SNDK",
+    "longName": "Sandisk Corporation",
+    "sector": "Technology",
+    "industry": "Computer Hardware",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Milpitas",
+    "website": "https://www.sandisk.com",
+    "fullTimeEmployees": 11100,
+    "marketCap": 234361192448,
+    "enterpriseValue": 229800181760,
+    "trailingPE": 21.276352,
+    "forwardPE": 6.0464272,
+    "priceToSalesTrailing12Months": 11.574535,
+    "enterpriseToRevenue": 11.349,
+    "priceToBook": 17.194698,
+    "grossMargins": 0.71474,
+    "operatingMargins": 0.78472,
+    "profitMargins": 0.56465,
+    "returnOnEquity": 0.9164,
+    "totalCash": 4761999872,
+    "totalDebt": 201000000,
+    "totalRevenue": 20248000512,
+    "freeCashflow": 7720875008,
+    "debtToEquity": 1.277,
+    "currentRatio": 2.29,
+    "fiftyTwoWeekHigh": 2354.39,
+    "fiftyTwoWeekLow": 45.63,
+    "averageVolume": 13901112,
+    "averageVolume10days": 15373500,
+    "beta": null,
+    "sharesOutstanding": 146419001,
+    "sharesFloat": 144372063,
+    "companyOfficers": [
+      {
+        "name": "Mr. David V.  Goeckeler",
+        "title": "Chairman & CEO",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Mr. Luis Felipe Visoso",
+        "title": "Executive VP & CFO",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Alper  Ilkbahar",
+        "title": "Executive VP & CTO",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Bernard  Shek",
+        "title": "Senior VP, Chief Legal Officer & Secretary",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. V. Don Angspatt",
+        "title": "Executive VP & COO",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Michael R. Pokorny",
+        "title": "VP & Chief Accounting Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 39.25,
+      "eps_estimate": 34.515,
+      "eps_surprise_pct": 0.1372
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 23.41,
+      "eps_estimate": 14.66111,
+      "eps_surprise_pct": 0.59669995
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 6.2,
+      "eps_estimate": 3.54338,
+      "eps_surprise_pct": 0.7497
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 1.22,
+      "eps_estimate": 0.89122,
+      "eps_surprise_pct": 0.3689
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-07",
+    "revenue_low": 10537000000,
+    "revenue_high": 11217000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -63,7 +164,89 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 22,
+    "bullish": 18,
+    "neutral": 3,
+    "bearish": 1,
+    "avg_price_target": 2126.1738,
+    "high_price_target": 3600.0,
+    "low_price_target": 1000.0,
+    "current_price": 1600.62,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-14T15:36:02",
+        "firm": "RBC Capital",
+        "to_grade": "Sector Perform",
+        "from_grade": "Sector Perform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-14T15:08:08",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-14T13:22:28",
+        "firm": "Wedbush",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-14T11:09:11",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-10T13:31:55",
+        "firm": "Argus Research",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-06T17:48:48",
+        "firm": "RBC Capital",
+        "to_grade": "Sector Perform",
+        "from_grade": "Sector Perform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T17:24:02",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T15:47:36",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T15:39:08",
+        "firm": "Evercore ISI Group",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-23T12:41:27",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-20T19:43:18Z",
@@ -126,7 +309,7 @@
       "source": "Barchart"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03827891703646635,
   "technicals": {
     "ma20": 1373.155499267578,
     "ma50": 1655.1177954101563,
@@ -3188,7 +3371,7 @@
       "high": 1631.4,
       "low": 1554.0,
       "close": 1600.62,
-      "volume": 11382423.0
+      "volume": 11379700.0
     }
   ],
   "ohlc_1y": [
@@ -5206,7 +5389,7 @@
       "high": 1631.4,
       "low": 1554.0,
       "close": 1600.62,
-      "volume": 11382423.0
+      "volume": 11379700.0
     }
   ],
   "ai_synthesis": null,

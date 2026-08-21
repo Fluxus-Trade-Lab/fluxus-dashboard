@@ -1,11 +1,100 @@
 {
   "ticker": "SPCX",
-  "fetched_at": "2026-08-20T22:16:30Z",
+  "fetched_at": "2026-08-21T08:14:32Z",
   "_schema": "v2",
   "current_price": 134.0,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "SPCX",
+    "longName": "Space Exploration Technologies Corp.",
+    "sector": "Industrials",
+    "industry": "Aerospace & Defense",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Starbase",
+    "website": "https://www.spacex.com",
+    "fullTimeEmployees": 21000,
+    "marketCap": 1766358515712,
+    "enterpriseValue": 3472416047104,
+    "trailingPE": null,
+    "forwardPE": 80.77399,
+    "priceToSalesTrailing12Months": 76.60741,
+    "enterpriseToRevenue": 150.686,
+    "priceToBook": 13.877381,
+    "grossMargins": 0.51875,
+    "operatingMargins": -0.01804,
+    "profitMargins": -0.35661998,
+    "returnOnEquity": null,
+    "totalCash": 100009000960,
+    "totalDebt": 39708000256,
+    "totalRevenue": 23043999744,
+    "freeCashflow": null,
+    "debtToEquity": 31.211,
+    "currentRatio": 5.115,
+    "fiftyTwoWeekHigh": 225.64,
+    "fiftyTwoWeekLow": 104.83,
+    "averageVolume": 120249425,
+    "averageVolume10days": 130220730,
+    "beta": null,
+    "sharesOutstanding": 7696293669,
+    "sharesFloat": 408371543,
+    "companyOfficers": [
+      {
+        "name": "Mr. Elon R. Musk",
+        "title": "Founder & CEO",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Ms. Gwynne E. Shotwell",
+        "title": "President & COO",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Bret W. Johnsen",
+        "title": "CFO & Secretary",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Michael  Sagan",
+        "title": "Senior Director of Legal",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Timothy R. Hughes",
+        "title": "Senior VP of Global Business & Government Affairs",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Richard J. Lee",
+        "title": "Treasurer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.09,
+      "eps_estimate": -0.28931,
+      "eps_surprise_pct": 0.6889
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -1.27,
+      "eps_estimate": null,
+      "eps_surprise_pct": null
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 11111000000,
+    "revenue_high": 16022988310
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -137,64 +226,64 @@
   },
   "news": [
     {
-      "date": "2026-08-17T13:29:45Z",
-      "title": "Tech stocks today: Anthropic's IPO plans come into focus, Nvidia earnings provide next test for AI trade",
-      "url": "https://finance.yahoo.com/technology/live/tech-stocks-today-anthropics-ipo-plans-come-into-focus-nvidia-earnings-provide-next-test-for-ai-trade-132945569.html",
+      "date": "2026-08-21T08:05:33Z",
+      "title": "Stock market today: Dow, S&P 500, Nasdaq futures drift higher despite Treasury yield pressures persisting",
+      "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-august-21-dow-sp-500-nasdaq-080533702.html",
       "source": "Yahoo Finance"
     },
     {
-      "date": "2026-08-20T22:14:04Z",
+      "date": "2026-08-20T19:20:26Z",
+      "title": "Anthropic could publicly file IPO paperwork as soon as this month",
+      "url": "https://finance.yahoo.com/technology/article/anthropic-could-publicly-file-ipo-paperwork-as-soon-as-this-month-192026244.html",
+      "source": "Yahoo Finance"
+    },
+    {
+      "date": "2026-08-21T06:35:00Z",
+      "title": "Anthropic to file for IPO that could top SpaceX record",
+      "url": "https://www.proactiveinvestors.com/companies/news/1097390/anthropic-to-file-for-ipo-that-could-top-spacex-record-1097390.html",
+      "source": "Proactive"
+    },
+    {
+      "date": "2026-08-21T06:03:07Z",
+      "title": "Can Anthropic Beat SpaceX's Record IPO Size?",
+      "url": "https://finance.yahoo.com/video/anthropic-beat-spacexs-record-ipo-060307854.html",
+      "source": "Bloomberg"
+    },
+    {
+      "date": "2026-08-21T04:44:04Z",
+      "title": "Elon Musk Says SPCX Could Reach 10,000 Starship Launches Annually by 2030: \u2018Still Tiny\u2019 Compared With Air Travel",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/elon-musk-says-spcx-could-044404010.html",
+      "source": "Benzinga"
+    },
+    {
+      "date": "2026-08-21T04:33:06Z",
+      "title": "TSLA Stock Eyes Another Winning Week: Nevada Clears Up To 5,000 Robotaxis, Musk Sees \u2018Crazy\u2019 Tesla Growth",
+      "url": "https://stocktwits.com/news-articles/markets/equity/tsla-nevada-5000-robotaxis-musk-crazy-tesla-growth/cZYBj2cRJN5",
+      "source": "Stocktwits"
+    },
+    {
+      "date": "2026-08-21T03:42:14Z",
+      "title": "Trump Signs New National Space Transportation Policy That Aims for 1,000 Launches by 2030, Outlines Plans for 'Americans to the Moon' by 2028",
+      "url": "https://finance.yahoo.com/economy/policy/articles/trump-signs-national-space-transportation-034214722.html",
+      "source": "Benzinga"
+    },
+    {
+      "date": "2026-08-21T03:09:23Z",
       "title": "Dow Jones Futures: Market Triggers This Bearish Signal As Walmart, SpaceX, CrowdStrike Tumble",
       "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-triggers-bearish-signal-walmart-spacex-crowdstrike/?src=A00220&yptr=yahoo",
       "source": "Investor's Business Daily"
     },
     {
-      "date": "2026-08-20T21:05:17Z",
-      "title": "Anthropic Is Coming for SpaceX's $86 Billion IPO Record",
-      "url": "https://www.benzinga.com/markets/private-markets/26/08/61345435/anthropic-is-coming-for-spacexs-86-billion-ipo-record?utm_source=yahooFinance&utm_campaign=partner_feed&utm_medium=referral",
-      "source": "Benzinga Private Markets"
-    },
-    {
-      "date": "2026-08-20T20:55:00Z",
-      "title": "Elon Musk points to one country as AI's biggest threat",
-      "url": "https://www.thestreet.com/crypto/markets/elon-musk-points-to-one-country-as-ais-biggest-threat",
-      "source": "TheStreet"
-    },
-    {
-      "date": "2026-08-20T20:47:06Z",
-      "title": "Musk Says Next Rocket \u2018Catch\u2019 Is Months Away\u2014and SpaceX Stock Sags",
-      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-08-20-2026/card/musk-says-next-rocket-catch-is-months-away-and-spacex-stock-sags-ziB2u03acA87Pvu9AJr2?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
-    },
-    {
-      "date": "2026-08-20T20:32:00Z",
-      "title": "Moderna, Walmart, Coinbase, Deere, SpaceX, Tesla, and More Stocks That Explain Today\u2019s Market",
-      "url": "https://www.barrons.com/articles/stock-movers-dee21e98?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-20T20:30:03Z",
-      "title": "US Equity Indexes Fall After Trump Warns of Severe Economic Actions Against Iran, Driving Up Oil Prices, Bond Yields",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-fall-trump-203003295.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-20T20:17:47Z",
-      "title": "Anthropic Reportedly Expects Public Debut To Match Or Surpass SpaceX\u2019s Record IPO",
-      "url": "https://stocktwits.com/news-articles/markets/equity/anthropic-reportedly-expects-public-debut-to-match-or-surpass-space-x-s-record-ipo/cZYI63kRJZp",
+      "date": "2026-08-21T02:40:37Z",
+      "title": "Trump Targets Over 1,000 US Space Launches A Year \u2014 Could RKLB, ASTS, SPCX And LUNR Ride The Rocket Boom?",
+      "url": "https://stocktwits.com/news-articles/markets/equity/trump-space-launches-rklb-asts-spcx-lunr-rocket-boom/cZYBic9RJZ6",
       "source": "Stocktwits"
     },
     {
-      "date": "2026-08-20T20:13:00Z",
-      "title": "Grok 4.6 Matches the Frontier Models at a 60% Discount. Now SpaceX Has the Developers to Use It.",
-      "url": "https://www.fool.com/investing/2026/08/20/grok-46-matches-the-frontier-models-at-a-60-discou/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-20T19:45:05Z",
-      "title": "US Equity Indexes Fall as Oil Prices Increase After Trump Vows Economic Warfare Against Iran",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-fall-oil-194505779.html",
-      "source": "MT Newswires"
+      "date": "2026-08-21T02:31:32Z",
+      "title": "Gary Black Says Tesla Bulls On Social Media Are Like College Students Doing 'Tequila Shots'",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/gary-black-says-tesla-bulls-023132599.html",
+      "source": "Benzinga"
     }
   ],
   "options_implied_move": 0.03007462686567164,
@@ -589,11 +678,11 @@
     },
     {
       "date": "2026-08-20",
-      "open": 137.285,
+      "open": 137.29,
       "high": 137.88,
       "low": 130.39,
       "close": 134.0,
-      "volume": 119519743.0
+      "volume": 119516600.0
     }
   ],
   "ohlc_1y": [
@@ -975,11 +1064,11 @@
     },
     {
       "date": "2026-08-20",
-      "open": 137.285,
+      "open": 137.29,
       "high": 137.88,
       "low": 130.39,
       "close": 134.0,
-      "volume": 119519743.0
+      "volume": 119516600.0
     }
   ],
   "ai_synthesis": null,

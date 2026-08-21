@@ -1,11 +1,112 @@
 {
   "ticker": "APLD",
-  "fetched_at": "2026-08-18T03:55:45Z",
+  "fetched_at": "2026-08-21T08:10:37Z",
   "_schema": "v2",
-  "current_price": 31.18000030517578,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "current_price": 28.649999618530273,
+  "info": {
+    "symbol": "APLD",
+    "longName": "Applied Digital Corporation",
+    "sector": "Technology",
+    "industry": "Information Technology Services",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Dallas",
+    "website": "https://applieddigital.com",
+    "fullTimeEmployees": 256,
+    "marketCap": 8145304064,
+    "enterpriseValue": 13884618752,
+    "trailingPE": null,
+    "forwardPE": -114.6,
+    "priceToSalesTrailing12Months": 13.324322,
+    "enterpriseToRevenue": 22.713,
+    "priceToBook": 4.802212,
+    "grossMargins": 0.25879,
+    "operatingMargins": -0.48219,
+    "profitMargins": -0.39915,
+    "returnOnEquity": -0.08376,
+    "totalCash": 1591987968,
+    "totalDebt": 5099915776,
+    "totalRevenue": 611310976,
+    "freeCashflow": -4961438720,
+    "debtToEquity": 136.231,
+    "currentRatio": 4.01,
+    "fiftyTwoWeekHigh": 50.725,
+    "fiftyTwoWeekLow": 13.16,
+    "averageVolume": 19854080,
+    "averageVolume10days": 15692810,
+    "beta": 5.767,
+    "sharesOutstanding": 284303812,
+    "sharesFloat": 250325332,
+    "companyOfficers": [
+      {
+        "name": "Mr. Wesley  Cummins",
+        "title": "Chairman, CEO, Secretary & Treasurer",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Mohammad Saidal L. Mohmand",
+        "title": "Chief Financial Officer",
+        "age": 34,
+        "yearBorn": 1991
+      },
+      {
+        "name": "Ms. Laura  Laltrello",
+        "title": "Chief Operating Officer",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Jason  Zhang",
+        "title": "Co-Founder & President",
+        "age": 32,
+        "yearBorn": 1993
+      },
+      {
+        "name": "Mr. Mark  Chavez",
+        "title": "Chief Compliance Officer & General Counsel",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Nick  Phillips",
+        "title": "Executive Vice President of External Affairs",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-05-31T00:00:00",
+      "eps_actual": 0.04,
+      "eps_estimate": -0.19,
+      "eps_surprise_pct": 1.2105
+    },
+    {
+      "period_end": "2026-02-28T00:00:00",
+      "eps_actual": 0.09,
+      "eps_estimate": -0.21,
+      "eps_surprise_pct": 1.4286
+    },
+    {
+      "period_end": "2025-11-30T00:00:00",
+      "eps_actual": 0.0,
+      "eps_estimate": -0.20667,
+      "eps_surprise_pct": 1.0
+    },
+    {
+      "period_end": "2025-08-31T00:00:00",
+      "eps_actual": -0.03,
+      "eps_estimate": -0.155,
+      "eps_surprise_pct": 0.8065
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-09",
+    "revenue_low": 101600000,
+    "revenue_high": 134300000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-05-31T00:00:00",
@@ -63,101 +164,167 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 11,
+    "bullish": 11,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 74.22727,
+    "high_price_target": 109.0,
+    "low_price_target": 37.5,
+    "current_price": 28.65,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-06T17:15:05",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-03T16:05:39",
+        "firm": "B. Riley Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-28T09:46:08",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-23T10:27:34",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-06-17T17:39:54",
+        "firm": "Northland Capital Markets",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-09T14:31:54",
+        "firm": "Craig-Hallum",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-09T14:02:17",
+        "firm": "Lake Street",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-09T10:38:26",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-27T18:03:34",
+        "firm": "B. Riley Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-21T20:07:13",
+        "firm": "Lake Street",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
-      "date": "2026-08-17T14:06:00Z",
-      "title": "IREN's NVIDIA Status and Microsoft Win: Time to Buy or Hold the Stock?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/irens-nvidia-status-microsoft-win-140600247.html",
+      "date": "2026-08-20T15:57:00Z",
+      "title": "PENG vs. APLD: Which AI Infrastructure Stock Has Better Potential?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/peng-vs-apld-ai-infrastructure-155700863.html",
       "source": "Zacks"
     },
     {
-      "date": "2026-08-16T22:53:00Z",
-      "title": "Stocks making big moves this week: Applied Digital, EnerSys, Sabre, Corning, and HighPeak Energy",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-week-225300033.html",
-      "source": "StockStory"
+      "date": "2026-08-20T15:11:00Z",
+      "title": "IREN Builds AI Cloud Momentum: Can Growth Accelerate From Here?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/iren-builds-ai-cloud-momentum-151100195.html",
+      "source": "Zacks"
     },
     {
-      "date": "2026-08-14T23:25:00Z",
-      "title": "Applied Digital (APLD) Stock Trades Up, Here Is Why",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/applied-digital-apld-stock-trades-232500526.html",
-      "source": "StockStory"
+      "date": "2026-08-20T14:11:45Z",
+      "title": "Tiger Global Added to Its Position in Intel in Q2",
+      "url": "https://www.barchart.com/story/news/3951714/tiger-global-added-to-its-position-in-intel-in-q2",
+      "source": "Barchart"
     },
     {
-      "date": "2026-08-13T14:28:58Z",
-      "title": "CoreWeave\u2019s Spike Hasn\u2019t Erased 3-Month Losses: Why Trusted Wall Street Pro Expects 65% Post-Spike Gains",
-      "url": "https://247wallst.com/investing/2026/08/13/coreweaves-spike-hasnt-erased-3-month-losses-why-trusted-wall-street-pro-expects-65-post-spike-gains/",
+      "date": "2026-08-19T18:55:31Z",
+      "title": "Cipher Digital Stock Is Valued On Revenue It Is Shutting Down",
+      "url": "https://www.trefis.com/articles/612011/cipher-digital-stock-is-valued-on-revenue-it-is-shutting-down/2026-08-19",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-08-19T16:33:06Z",
+      "title": "Famous Hedge Fund Tiger Global Opened a New Position in This 1 AI Stock",
+      "url": "https://www.barchart.com/story/news/3933476/famous-hedge-fund-tiger-global-opened-a-new-position-in-this-1-ai-stock",
+      "source": "Barchart"
+    },
+    {
+      "date": "2026-08-19T14:13:32Z",
+      "title": "Nebius Group Sinks 13% on $4.5B Convertible Note Offering and Share Exchange Plan",
+      "url": "https://247wallst.com/investing/2026/08/19/nebius-group-sinks-13-on-4-5b-convertible-note-offering-and-share-exchange-plan/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-13T10:13:00Z",
-      "title": "New Strong Sell Stocks for August 13th",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/strong-sell-stocks-august-13th-101300367.html",
-      "source": "Zacks"
+      "date": "2026-08-19T03:45:01Z",
+      "title": "HUT Stock Heads For 4th Week Of Declines: Why This Analyst Thinks Hut 8 Is a Buy",
+      "url": "https://stocktwits.com/news-articles/markets/equity/hut-stock-heads-for-4th-week-of-declines-why-this-analyst-thinks-hut-8-is-a-buy/cZYd216RJkI",
+      "source": "Stocktwits"
     },
     {
-      "date": "2026-08-12T21:27:53Z",
-      "title": "Applied Digital vs. Microsoft: Which Technology Stock Is a Better Buy in 2026?",
-      "url": "https://www.fool.com/coverage/better-buy/2026/08/12/applied-digital-vs-microsoft-which-technology-stock-is-a-better-buy-in-2026/",
+      "date": "2026-08-18T21:24:29Z",
+      "title": "Stock Market Today, Aug. 18: CoreWeave Falls as Debt-Financing Concerns and Capital Spending Pressures Rise With Interest Rates",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/08/18/stock-market-today-aug-18-coreweave-falls-as-debt-financing-concerns-and-capital-spending-pressures-rise-with-interest-rates/",
       "source": "Motley Fool"
     },
     {
-      "date": "2026-08-12T20:03:44Z",
-      "title": "CoreWeave & Nebius Are Soaring. This Brand-New ETF Gives Exposure Across Top Neocloud Stocks.",
-      "url": "https://247wallst.com/investing/2026/08/12/coreweave-nebius-are-soaring-this-brand-new-etf-gives-exposure-across-top-neocloud-stocks/",
-      "source": "24/7 Wall St."
+      "date": "2026-08-18T21:10:39Z",
+      "title": "Can Applied Digital\u2019s (APLD) Debt-Funded AI Pivot Strengthen Its Story or Strain Flexibility?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/applied-digital-apld-debt-funded-211039990.html",
+      "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-12T15:39:00Z",
-      "title": "APLD Surges 101% in a Year: Should You Buy, Sell or Hold the Stock?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/apld-surges-101-buy-sell-153900531.html",
+      "date": "2026-08-18T18:18:00Z",
+      "title": "What IREN's Microsoft Delivery Means for Its $9.7 Billion AI Pivot",
+      "url": "https://finance.yahoo.com/technology/ai/articles/irens-microsoft-delivery-means-9-181800132.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-12T14:23:04Z",
-      "title": "AI infrastructure stocks surge after strong earnings from CoreWeave, Supermicro",
-      "url": "https://finance.yahoo.com/markets/article/ai-infrastructure-stocks-surge-after-strong-earnings-from-coreweave-supermicro-142304399.html",
-      "source": "Yahoo Finance"
-    },
-    {
-      "date": "2026-08-12T12:24:29Z",
-      "title": "CoreWeave Jumps 18% as AI Capacity Sells Out",
-      "url": "https://finance.yahoo.com/technology/ai/articles/coreweave-jumps-18-ai-capacity-122429424.html",
-      "source": "GuruFocus.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04328097788866956,
   "technicals": {
-    "ma20": 29.019750022888182,
-    "ma50": 33.85160011291504,
-    "ma200": 32.41712500572205,
-    "rsi14": 51.9821861878677,
+    "ma20": 28.788250064849855,
+    "ma50": 33.10990013122559,
+    "ma200": 32.3289250087738,
+    "rsi14": 44.96931272624175,
     "high_20d": 33.040000915527344,
-    "low_5d": 29.110000610351562,
-    "low_10d": 27.969999313354492,
+    "low_5d": 26.639999389648438,
+    "low_10d": 26.639999389648438,
     "high_52w": 50.724998474121094,
     "low_52w": 13.15999984741211,
-    "atr14": 2.6028571810041154,
-    "atr14_pct": 8.347842063914444,
-    "position_in_52w_range_pct": 47.97018798491669
+    "atr14": 2.185928617204939,
+    "atr14_pct": 7.629768398988465,
+    "position_in_52w_range_pct": 41.23519323145845
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-19",
-      "open": 3.99,
-      "high": 4.11,
-      "low": 3.83,
-      "close": 4.11,
-      "volume": 2675600.0
-    },
-    {
-      "date": "2024-08-20",
-      "open": 4.14,
-      "high": 4.25,
-      "low": 3.985,
-      "close": 4.03,
-      "volume": 1990500.0
-    },
     {
       "date": "2024-08-21",
       "open": 4.1,
@@ -4136,38 +4303,38 @@
     },
     {
       "date": "2026-08-17",
-      "open": 31.12,
+      "open": 31.18,
       "high": 31.85,
       "low": 30.6,
       "close": 31.18,
-      "volume": 12874481.0
+      "volume": 13582700.0
+    },
+    {
+      "date": "2026-08-18",
+      "open": 29.985,
+      "high": 30.69,
+      "low": 28.1,
+      "close": 28.51,
+      "volume": 18093200.0
+    },
+    {
+      "date": "2026-08-19",
+      "open": 28.31,
+      "high": 28.843,
+      "low": 26.64,
+      "close": 28.23,
+      "volume": 17720100.0
+    },
+    {
+      "date": "2026-08-20",
+      "open": 28.005,
+      "high": 29.21,
+      "low": 27.61,
+      "close": 28.65,
+      "volume": 13936700.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-15",
-      "open": 14.548,
-      "high": 14.56,
-      "low": 13.53,
-      "close": 14.09,
-      "volume": 17802000.0
-    },
-    {
-      "date": "2025-08-18",
-      "open": 14.875,
-      "high": 16.92,
-      "low": 14.66,
-      "close": 16.34,
-      "volume": 70625900.0
-    },
-    {
-      "date": "2025-08-19",
-      "open": 16.16,
-      "high": 16.4,
-      "low": 14.98,
-      "close": 15.34,
-      "volume": 29218000.0
-    },
     {
       "date": "2025-08-20",
       "open": 15.09,
@@ -6154,11 +6321,35 @@
     },
     {
       "date": "2026-08-17",
-      "open": 31.12,
+      "open": 31.18,
       "high": 31.85,
       "low": 30.6,
       "close": 31.18,
-      "volume": 12874481.0
+      "volume": 13582700.0
+    },
+    {
+      "date": "2026-08-18",
+      "open": 29.985,
+      "high": 30.69,
+      "low": 28.1,
+      "close": 28.51,
+      "volume": 18093200.0
+    },
+    {
+      "date": "2026-08-19",
+      "open": 28.31,
+      "high": 28.843,
+      "low": 26.64,
+      "close": 28.23,
+      "volume": 17720100.0
+    },
+    {
+      "date": "2026-08-20",
+      "open": 28.005,
+      "high": 29.21,
+      "low": 27.61,
+      "close": 28.65,
+      "volume": 13936700.0
     }
   ],
   "ai_synthesis": null,

@@ -1,11 +1,112 @@
 {
   "ticker": "NBIS",
-  "fetched_at": "2026-08-20T22:15:39Z",
+  "fetched_at": "2026-08-21T08:12:27Z",
   "_schema": "v2",
   "current_price": 220.11000061035156,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "NBIS",
+    "longName": "Nebius Group N.V.",
+    "sector": "Communication Services",
+    "industry": "Internet Content & Information",
+    "exchange": "NMS",
+    "country": "Netherlands",
+    "city": "Schiphol",
+    "website": "https://nebius.com",
+    "fullTimeEmployees": 1543,
+    "marketCap": 59838054400,
+    "enterpriseValue": 62486093824,
+    "trailingPE": null,
+    "forwardPE": -73.43119,
+    "priceToSalesTrailing12Months": 41.24089,
+    "enterpriseToRevenue": 46.112,
+    "priceToBook": 5.8350563,
+    "grossMargins": 0.7426,
+    "operatingMargins": -0.00223,
+    "profitMargins": 0.03129,
+    "returnOnEquity": 0.00601,
+    "totalCash": 8042100224,
+    "totalDebt": 10195300352,
+    "totalRevenue": 1355100032,
+    "freeCashflow": -9614650368,
+    "debtToEquity": 98.596,
+    "currentRatio": 4.03,
+    "fiftyTwoWeekHigh": 299.86,
+    "fiftyTwoWeekLow": 63.26,
+    "averageVolume": 21579080,
+    "averageVolume10days": 31172540,
+    "beta": 1.434,
+    "sharesOutstanding": 238400165,
+    "sharesFloat": 228565540,
+    "companyOfficers": [
+      {
+        "name": "Mr. Arkady  Volozh",
+        "title": "Founder, CEO & Non-Independent Executive Director",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Ms. Maria del Dado Alonso Sanchez",
+        "title": "Chief Financial Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Dr. Ophir  Nave",
+        "title": "COO & Non-Independent Executive Director",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Danila  Shtan",
+        "title": "Chief Technology Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Neil A. Doshi",
+        "title": "VP & Head of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Attorney Yael  Almog",
+        "title": "General Counsel",
+        "age": 57,
+        "yearBorn": 1968
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.68,
+      "eps_estimate": -0.86333,
+      "eps_surprise_pct": 0.2124
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.9865,
+      "eps_estimate": -0.605,
+      "eps_surprise_pct": -0.63060004
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.475,
+      "eps_estimate": -0.395,
+      "eps_surprise_pct": -0.2025
+    },
+    {
+      "period_end": "2025-06-30T00:00:00",
+      "eps_actual": -0.3833,
+      "eps_estimate": -0.42,
+      "eps_surprise_pct": 0.0874
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-10",
+    "revenue_low": 427000000,
+    "revenue_high": 632600000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -63,8 +164,96 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 12,
+    "bullish": 7,
+    "neutral": 4,
+    "bearish": 1,
+    "avg_price_target": 271.84616,
+    "high_price_target": 410.0,
+    "low_price_target": 144.0,
+    "current_price": 220.11,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-18T15:23:15",
+        "firm": "DA Davidson",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-14T18:05:04",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-13T12:43:55",
+        "firm": "DA Davidson",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-13T10:48:55",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-08T00:48:40",
+        "firm": "DA Davidson",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T19:24:50",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-03T20:12:17",
+        "firm": "Piper Sandler",
+        "to_grade": "Neutral",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-22T09:06:04",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-20T13:08:11",
+        "firm": "Northland Capital Markets",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-20T11:09:25",
+        "firm": "Freedom Capital Markets",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-21T00:00:00Z",
+      "title": "Nebius Group Stock Climbed 40% in Less Than 2 Weeks: Is the High-Growth Leader Still a Bargain?",
+      "url": "https://www.fool.com/investing/2026/08/20/nebius-group-stock-climbed-40-in-2-weeks-is-the-hi/",
+      "source": "Motley Fool"
+    },
     {
       "date": "2026-08-20T21:47:00Z",
       "title": "Michael Burry says Nvidia rival is quietly getting serious",
@@ -118,15 +307,9 @@
       "title": "US Stock Market Today: S&P 500 Futures Tick Higher As Long Term Rate Questions Linger",
       "url": "https://finance.yahoo.com/markets/stocks/articles/us-stock-market-today-p-081157432.html",
       "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-20T07:42:49Z",
-      "title": "Nebius Prices Upsized $5 Billion Convertible Notes Offering",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/nebius-prices-upsized-5-billion-074249613.html",
-      "source": "MT Newswires"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.042569624160726745,
   "technicals": {
     "ma20": 211.90550079345704,
     "ma50": 222.95080047607422,
@@ -3808,11 +3991,11 @@
     },
     {
       "date": "2026-08-20",
-      "open": 222.745,
+      "open": 223.0,
       "high": 223.0,
       "low": 212.04,
       "close": 220.11,
-      "volume": 28422524.0
+      "volume": 28421500.0
     }
   ],
   "ohlc_1y": [
@@ -5826,11 +6009,11 @@
     },
     {
       "date": "2026-08-20",
-      "open": 222.745,
+      "open": 223.0,
       "high": 223.0,
       "low": 212.04,
       "close": 220.11,
-      "volume": 28422524.0
+      "volume": 28421500.0
     }
   ],
   "ai_synthesis": null,

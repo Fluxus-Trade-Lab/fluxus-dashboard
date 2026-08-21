@@ -1,11 +1,112 @@
 {
   "ticker": "MXL",
-  "fetched_at": "2026-08-20T22:15:33Z",
+  "fetched_at": "2026-08-21T08:12:11Z",
   "_schema": "v2",
   "current_price": 65.27999877929688,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "MXL",
+    "longName": "MaxLinear, Inc.",
+    "sector": "Technology",
+    "industry": "Semiconductors",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Carlsbad",
+    "website": "https://www.maxlinear.com",
+    "fullTimeEmployees": 1115,
+    "marketCap": 5920451584,
+    "enterpriseValue": 6003834368,
+    "trailingPE": null,
+    "forwardPE": 25.27245,
+    "priceToSalesTrailing12Months": 10.406292,
+    "enterpriseToRevenue": 10.553,
+    "priceToBook": 12.210999,
+    "grossMargins": 0.57477003,
+    "operatingMargins": -0.02441,
+    "profitMargins": -0.18238,
+    "returnOnEquity": -0.21324,
+    "totalCash": 64814000,
+    "totalDebt": 148196992,
+    "totalRevenue": 568929984,
+    "freeCashflow": 14404875,
+    "debtToEquity": 30.566,
+    "currentRatio": 1.776,
+    "fiftyTwoWeekHigh": 128.3,
+    "fiftyTwoWeekLow": 12.77,
+    "averageVolume": 3919932,
+    "averageVolume10days": 2342080,
+    "beta": 3.975,
+    "sharesOutstanding": 90693191,
+    "sharesFloat": 84631258,
+    "companyOfficers": [
+      {
+        "name": "Dr. Kishore  Seendripu Ph.D.",
+        "title": "Co-Founder, Chairman, CEO & President",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Steven G. Litchfield",
+        "title": "CFO & Chief Corporate Strategy Officer",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Ms. Connie H. Kwong",
+        "title": "Corporate Controller & Principal Accounting Officer",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Dr. Curtis  Ling Ph.D.",
+        "title": "Co-Founder & Chief Technical Officer",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Mohan  Kambhammettu",
+        "title": "Senior Vice President of Global Operations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Michael  Bollesen",
+        "title": "Senior Vice President of Sales",
+        "age": 56,
+        "yearBorn": 1969
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.35,
+      "eps_estimate": 0.32952,
+      "eps_surprise_pct": 0.0622
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.22,
+      "eps_estimate": 0.17523,
+      "eps_surprise_pct": 0.2555
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.19,
+      "eps_estimate": 0.17875,
+      "eps_surprise_pct": 0.0629
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.14,
+      "eps_estimate": 0.1191,
+      "eps_surprise_pct": 0.17549999
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-23",
+    "revenue_low": 166900000,
+    "revenue_high": 217100000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -63,7 +164,89 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 11,
+    "bullish": 7,
+    "neutral": 4,
+    "bearish": 0,
+    "avg_price_target": 94.54545,
+    "high_price_target": 125.0,
+    "low_price_target": 40.0,
+    "current_price": 65.28,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-24T17:46:39",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T15:54:47",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T14:40:27",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T14:08:14",
+        "firm": "Susquehanna",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T10:17:44",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-20T13:06:58",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-29T14:50:10",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-04T14:19:16",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-04-29T13:13:00",
+        "firm": "Loop Capital",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-04-24T12:52:36",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-20T18:28:00Z",
@@ -126,19 +309,19 @@
       "source": "Barrons.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04932598131452787,
   "technicals": {
     "ma20": 70.06149959564209,
     "ma50": 81.95659996032715,
     "ma200": 44.83099997520447,
     "rsi14": 42.7158554049818,
     "high_20d": 89.0,
-    "low_5d": 64.75579833984375,
-    "low_10d": 64.75579833984375,
+    "low_5d": 64.76000213623047,
+    "low_10d": 64.76000213623047,
     "high_52w": 128.3000030517578,
     "low_52w": 12.770000457763672,
-    "atr14": 7.06744384765625,
-    "atr14_pct": 10.826354135744323,
+    "atr14": 7.06714357648577,
+    "atr14_pct": 10.825894161516235,
     "position_in_52w_range_pct": 45.45139543194553
   },
   "ohlc_2y": [
@@ -4146,9 +4329,9 @@
       "date": "2026-08-20",
       "open": 67.21,
       "high": 68.65,
-      "low": 64.7558,
+      "low": 64.76,
       "close": 65.28,
-      "volume": 1930112.0
+      "volume": 1930200.0
     }
   ],
   "ohlc_1y": [
@@ -6164,9 +6347,9 @@
       "date": "2026-08-20",
       "open": 67.21,
       "high": 68.65,
-      "low": 64.7558,
+      "low": 64.76,
       "close": 65.28,
-      "volume": 1930112.0
+      "volume": 1930200.0
     }
   ],
   "ai_synthesis": null,

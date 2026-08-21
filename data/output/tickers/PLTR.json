@@ -1,11 +1,112 @@
 {
   "ticker": "PLTR",
-  "fetched_at": "2026-08-20T22:16:04Z",
+  "fetched_at": "2026-08-21T08:13:23Z",
   "_schema": "v2",
   "current_price": 173.9600067138672,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "PLTR",
+    "longName": "Palantir Technologies Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Aventura",
+    "website": "https://www.palantir.com",
+    "fullTimeEmployees": 4401,
+    "marketCap": 418036056064,
+    "enterpriseValue": 408949030912,
+    "trailingPE": 148.68378,
+    "forwardPE": 75.16939,
+    "priceToSalesTrailing12Months": 67.907745,
+    "enterpriseToRevenue": 66.432,
+    "priceToBook": 42.76303,
+    "grossMargins": 0.84796,
+    "operatingMargins": 0.47120997,
+    "profitMargins": 0.49005002,
+    "returnOnEquity": 0.38097,
+    "totalCash": 9409098752,
+    "totalDebt": 211400000,
+    "totalRevenue": 6155940864,
+    "freeCashflow": 2159104512,
+    "debtToEquity": 2.139,
+    "currentRatio": 7.228,
+    "fiftyTwoWeekHigh": 207.52,
+    "fiftyTwoWeekLow": 106.37,
+    "averageVolume": 43224541,
+    "averageVolume10days": 38973320,
+    "beta": 1.563,
+    "sharesOutstanding": 2300713329,
+    "sharesFloat": 2110414018,
+    "companyOfficers": [
+      {
+        "name": "Dr. Alexander C. Karp J.D.",
+        "title": "Co-Founder, CEO & Director",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Stephen Andrew Cohen",
+        "title": "Co-Founder, President, Secretary & Director",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Mr. David A. Glazer J.D.",
+        "title": "CFO & Treasurer",
+        "age": 40,
+        "yearBorn": 1985
+      },
+      {
+        "name": "Mr. Shyam  Sankar",
+        "title": "CTO & Executive VP",
+        "age": 42,
+        "yearBorn": 1983
+      },
+      {
+        "name": "Mr. Ryan D. Taylor J.D.",
+        "title": "Chief Revenue Officer & Chief Legal Officer",
+        "age": 42,
+        "yearBorn": 1983
+      },
+      {
+        "name": "Mr. Peter Andreas Thiel J.D.",
+        "title": "Co-Founder & Chairman",
+        "age": 58,
+        "yearBorn": 1967
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.41,
+      "eps_estimate": 0.34596,
+      "eps_surprise_pct": 0.1851
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.33,
+      "eps_estimate": 0.27946,
+      "eps_surprise_pct": 0.1808
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.25,
+      "eps_estimate": 0.2302,
+      "eps_surprise_pct": 0.086
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.21,
+      "eps_estimate": 0.16738,
+      "eps_surprise_pct": 0.2546
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 2161000000,
+    "revenue_high": 2262971840
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -63,8 +164,96 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 31,
+    "bullish": 19,
+    "neutral": 10,
+    "bearish": 2,
+    "avg_price_target": 191.68,
+    "high_price_target": 255.0,
+    "low_price_target": 80.0,
+    "current_price": 173.96,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-04T19:03:23",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T18:45:18",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T14:40:09",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T14:13:00",
+        "firm": "DA Davidson",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T12:12:50",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T11:23:04",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T10:02:36",
+        "firm": "Deutsche Bank",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-04T09:04:37",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-30T12:39:03",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T18:51:09",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-21T03:09:23Z",
+      "title": "Dow Jones Futures: Market Triggers This Bearish Signal As Walmart, SpaceX, CrowdStrike Tumble",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-triggers-bearish-signal-walmart-spacex-crowdstrike/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
+    },
     {
       "date": "2026-08-20T21:52:15Z",
       "title": "Ex-FBI Officer is Watching Every Polymarket Trader, Says CEO Coplan",
@@ -76,12 +265,6 @@
       "title": "Is Palantir Still a Buy After Its 33% Rally Over the Past Month?",
       "url": "https://www.fool.com/investing/2026/08/20/palantir-stock-buy-after-rally-month-pltr/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-20T21:36:47Z",
-      "title": "Dow Jones Futures: Market Triggers This Bearish Signal As Walmart, SpaceX, CrowdStrike Tumble",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-triggers-bearish-signal-walmart-spacex-crowdstrike/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
     },
     {
       "date": "2026-08-20T17:21:19Z",
@@ -126,7 +309,7 @@
       "source": "CorpGov.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.02299379078881779,
   "technicals": {
     "ma20": 154.42349853515626,
     "ma50": 137.93719955444337,
@@ -4144,11 +4327,11 @@
     },
     {
       "date": "2026-08-20",
-      "open": 175.89,
+      "open": 175.88,
       "high": 176.46,
       "low": 172.03,
       "close": 173.96,
-      "volume": 26985969.0
+      "volume": 26985200.0
     }
   ],
   "ohlc_1y": [
@@ -6162,11 +6345,11 @@
     },
     {
       "date": "2026-08-20",
-      "open": 175.89,
+      "open": 175.88,
       "high": 176.46,
       "low": 172.03,
       "close": 173.96,
-      "volume": 26985969.0
+      "volume": 26985200.0
     }
   ],
   "ai_synthesis": null,

@@ -1,11 +1,96 @@
 {
   "ticker": "FPS",
-  "fetched_at": "2026-08-20T22:14:57Z",
+  "fetched_at": "2026-08-21T08:11:16Z",
   "_schema": "v2",
   "current_price": 33.36000061035156,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "FPS",
+    "longName": "Forgent Power Solutions, Inc.",
+    "sector": "Industrials",
+    "industry": "Electrical Equipment & Parts",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Dayton",
+    "website": "https://www.forgentpower.com",
+    "fullTimeEmployees": 2000,
+    "marketCap": 10155748352,
+    "enterpriseValue": 8893647872,
+    "trailingPE": 1668.0001,
+    "forwardPE": 28.53892,
+    "priceToSalesTrailing12Months": 8.491428,
+    "enterpriseToRevenue": 7.436,
+    "priceToBook": 18.239475,
+    "grossMargins": 0.34332,
+    "operatingMargins": 0.103870004,
+    "profitMargins": 0.02173,
+    "returnOnEquity": null,
+    "totalCash": 93831000,
+    "totalDebt": 707558976,
+    "totalRevenue": 1196000000,
+    "freeCashflow": null,
+    "debtToEquity": 121.449,
+    "currentRatio": 1.641,
+    "fiftyTwoWeekHigh": 66.0,
+    "fiftyTwoWeekLow": 25.95,
+    "averageVolume": 8302888,
+    "averageVolume10days": 4574580,
+    "beta": null,
+    "sharesOutstanding": 259971169,
+    "sharesFloat": 140207220,
+    "companyOfficers": [
+      {
+        "name": "Mr. Gary John Niederpruem",
+        "title": "CEO & Director",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Ryan S. Fiedler",
+        "title": "Chief Financial Officer",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. Tyson K. Hottinger",
+        "title": "Chief Legal Officer & Corporate Secretary",
+        "age": 44,
+        "yearBorn": 1981
+      },
+      {
+        "name": "Mr. Jose  Caballero",
+        "title": "Chief Operating Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Inez  Lund",
+        "title": "Chief Accounting Officer",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Mr. Wyatt  Shallbetter",
+        "title": "Chief Technology Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_estimate": 0.16643
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_estimate": 0.11502
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-09-02",
+    "revenue_low": 412800000,
+    "revenue_high": 435000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -63,7 +148,89 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 10,
+    "bullish": 9,
+    "neutral": 1,
+    "bearish": 0,
+    "avg_price_target": 59.9,
+    "high_price_target": 73.0,
+    "low_price_target": 51.0,
+    "current_price": 33.36,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-16T09:36:04",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-06-22T16:39:07",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-18T12:20:15",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-15T15:28:04",
+        "firm": "Goldman Sachs",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-15T14:01:18",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-15T13:22:53",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-15T12:04:20",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-17T16:19:40",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-02T19:01:04",
+        "firm": "Wolfe Research",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-03-02T13:37:14",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-11T14:46:35Z",
@@ -126,7 +293,7 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04826139000430411,
   "technicals": {
     "ma20": 36.22850036621094,
     "ma50": 44.69380012512207,
@@ -136,8 +303,8 @@
     "low_10d": 32.849998474121094,
     "high_52w": 66.0,
     "low_52w": 25.950000762939453,
-    "atr14": 2.4680494580950056,
-    "atr14_pct": 7.398229655095309,
+    "atr14": 2.4678568158830916,
+    "atr14_pct": 7.397652190441864,
     "position_in_52w_range_pct": 18.50187263063719
   },
   "ohlc_2y": [
@@ -1224,10 +1391,10 @@
     {
       "date": "2026-08-20",
       "open": 34.51,
-      "high": 34.5627,
+      "high": 34.56,
       "low": 32.85,
       "close": 33.36,
-      "volume": 4684169.0
+      "volume": 4684200.0
     }
   ],
   "ohlc_1y": [
@@ -2314,10 +2481,10 @@
     {
       "date": "2026-08-20",
       "open": 34.51,
-      "high": 34.5627,
+      "high": 34.56,
       "low": 32.85,
       "close": 33.36,
-      "volume": 4684169.0
+      "volume": 4684200.0
     }
   ],
   "ai_synthesis": null,

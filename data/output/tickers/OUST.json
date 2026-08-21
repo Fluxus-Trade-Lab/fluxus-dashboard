@@ -1,11 +1,112 @@
 {
   "ticker": "OUST",
-  "fetched_at": "2026-08-20T22:15:58Z",
+  "fetched_at": "2026-08-21T08:13:11Z",
   "_schema": "v2",
   "current_price": 37.95000076293945,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "OUST",
+    "longName": "Ouster, Inc.",
+    "sector": "Technology",
+    "industry": "Electronic Components",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://ouster.com",
+    "fullTimeEmployees": 320,
+    "marketCap": 2736663296,
+    "enterpriseValue": 2491979008,
+    "trailingPE": null,
+    "forwardPE": -3795.0002,
+    "priceToSalesTrailing12Months": 13.355636,
+    "enterpriseToRevenue": 12.162,
+    "priceToBook": 7.0005536,
+    "grossMargins": 0.46623,
+    "operatingMargins": -0.46580002,
+    "profitMargins": -0.26025,
+    "returnOnEquity": -0.18006,
+    "totalCash": 261080992,
+    "totalDebt": 16397000,
+    "totalRevenue": 204907008,
+    "freeCashflow": -57373000,
+    "debtToEquity": 4.416,
+    "currentRatio": 4.164,
+    "fiftyTwoWeekHigh": 63.79,
+    "fiftyTwoWeekLow": 16.4,
+    "averageVolume": 4387179,
+    "averageVolume10days": 3181130,
+    "beta": 3.275,
+    "sharesOutstanding": 72112333,
+    "sharesFloat": 69855217,
+    "companyOfficers": [
+      {
+        "name": "Mr. Charles Angus Pacala",
+        "title": "Co-Founder, CEO & Director",
+        "age": 36,
+        "yearBorn": 1989
+      },
+      {
+        "name": "Mr. Mark  Frichtl",
+        "title": "Co-Founder & CTO",
+        "age": 36,
+        "yearBorn": 1989
+      },
+      {
+        "name": "Mr. Kenneth P. Gianella",
+        "title": "Chief Financial Officer",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Darien  Spencer",
+        "title": "Chief Operating Officer",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Ms. Megan  Chung",
+        "title": "General Counsel & Corporate Secretary",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Ms. Shaluinn  Fullove",
+        "title": "Chief People Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.2597,
+      "eps_estimate": -0.136,
+      "eps_surprise_pct": -0.9096
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.248,
+      "eps_estimate": -0.115,
+      "eps_surprise_pct": -1.1565
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.0666,
+      "eps_estimate": -0.135,
+      "eps_surprise_pct": 1.4933
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.1628,
+      "eps_estimate": -0.1825,
+      "eps_surprise_pct": 0.1079
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 56000000,
+    "revenue_high": 56600000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -63,7 +164,89 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 7,
+    "bullish": 6,
+    "neutral": 1,
+    "bearish": 0,
+    "avg_price_target": 57.83333,
+    "high_price_target": 75.0,
+    "low_price_target": 50.0,
+    "current_price": 37.95,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-07T12:05:01",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-21T18:38:11",
+        "firm": "Northland Capital Markets",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-15T17:16:27",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-27T12:42:11",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-11T18:20:55",
+        "firm": "Amerx",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-05-07T19:24:46",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Neutral",
+        "from_grade": "Overweight",
+        "action": "down"
+      },
+      {
+        "date": "2026-03-03T12:17:41",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-11-07T16:09:04",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2025-11-06T21:25:53",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2025-11-05T16:24:03",
+        "firm": "WestPark Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-20T09:20:00Z",
@@ -126,19 +309,19 @@
       "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.05270092120665054,
   "technicals": {
     "ma20": 41.48500022888184,
     "ma50": 42.77560012817383,
     "ma200": 29.40502499580383,
     "rsi14": 43.73135857577911,
     "high_20d": 51.8489990234375,
-    "low_5d": 37.459999084472656,
-    "low_10d": 37.459999084472656,
+    "low_5d": 37.45000076293945,
+    "low_10d": 37.45000076293945,
     "high_52w": 63.790000915527344,
     "low_52w": 16.399999618530273,
-    "atr14": 4.607999801635742,
-    "atr14_pct": 12.142291723313328,
+    "atr14": 4.6087139674595425,
+    "atr14_pct": 12.144173583153757,
     "position_in_52w_range_pct": 45.473729805056415
   },
   "ohlc_2y": [
@@ -4146,9 +4329,9 @@
       "date": "2026-08-20",
       "open": 40.63,
       "high": 40.7,
-      "low": 37.46,
+      "low": 37.45,
       "close": 37.95,
-      "volume": 2568404.0
+      "volume": 2568400.0
     }
   ],
   "ohlc_1y": [
@@ -6164,9 +6347,9 @@
       "date": "2026-08-20",
       "open": 40.63,
       "high": 40.7,
-      "low": 37.46,
+      "low": 37.45,
       "close": 37.95,
-      "volume": 2568404.0
+      "volume": 2568400.0
     }
   ],
   "ai_synthesis": null,

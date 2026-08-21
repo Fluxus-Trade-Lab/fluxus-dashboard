@@ -1,11 +1,112 @@
 {
   "ticker": "SOFI",
-  "fetched_at": "2026-08-20T22:16:21Z",
+  "fetched_at": "2026-08-21T08:14:07Z",
   "_schema": "v2",
   "current_price": 17.920000076293945,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "SOFI",
+    "longName": "SoFi Technologies, Inc.",
+    "sector": "Financial Services",
+    "industry": "Credit Services",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://www.sofi.com",
+    "fullTimeEmployees": 6100,
+    "marketCap": 23144939520,
+    "enterpriseValue": 23193817088,
+    "trailingPE": 37.333336,
+    "forwardPE": 21.827042,
+    "priceToSalesTrailing12Months": 5.422343,
+    "enterpriseToRevenue": 5.434,
+    "priceToBook": 2.087605,
+    "grossMargins": 0.83734,
+    "operatingMargins": 0.16956,
+    "profitMargins": 0.14906,
+    "returnOnEquity": 0.07095,
+    "totalCash": 3366502912,
+    "totalDebt": 3415378944,
+    "totalRevenue": 4268439040,
+    "freeCashflow": null,
+    "debtToEquity": 30.835,
+    "currentRatio": 1.105,
+    "fiftyTwoWeekHigh": 32.73,
+    "fiftyTwoWeekLow": 14.88,
+    "averageVolume": 77176272,
+    "averageVolume10days": 45298030,
+    "beta": 2.204,
+    "sharesOutstanding": 1291570324,
+    "sharesFloat": 1271783467,
+    "companyOfficers": [
+      {
+        "name": "Mr. George Thompson Hutton",
+        "title": "Independent Non Executive Chairman",
+        "age": 69,
+        "yearBorn": 1956
+      },
+      {
+        "name": "Mr. Anthony J. Noto",
+        "title": "CEO & Director",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Christopher  Lapointe",
+        "title": "Chief Financial Officer",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Mr. Jeremy  Rishel",
+        "title": "Chief Technology Officer",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Dr. Kelli A. Keough",
+        "title": "Executive VP and Group Business Unit Leader for Spend, Invest, Protect & Save",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Arun  Pinto",
+        "title": "Chief Risk Officer",
+        "age": 46,
+        "yearBorn": 1979
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.12,
+      "eps_estimate": 0.10907,
+      "eps_surprise_pct": 0.100200005
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.115,
+      "eps_estimate": 0.12,
+      "eps_surprise_pct": -0.0417
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.1217,
+      "eps_estimate": 0.112,
+      "eps_surprise_pct": 0.0866
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.1014,
+      "eps_estimate": 0.08243,
+      "eps_surprise_pct": 0.2301
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-27",
+    "revenue_low": 1213300000,
+    "revenue_high": 1393300000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -63,7 +164,89 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Hold",
+    "total_ratings": 24,
+    "bullish": 8,
+    "neutral": 12,
+    "bearish": 4,
+    "avg_price_target": 19.975,
+    "high_price_target": 30.0,
+    "low_price_target": 12.0,
+    "current_price": 17.92,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-17T10:12:02",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "init"
+      },
+      {
+        "date": "2026-08-12T17:32:07",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T18:08:37",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T17:36:34",
+        "firm": "Morgan Stanley",
+        "to_grade": "Underweight",
+        "from_grade": "Underweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T13:43:15",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T10:22:54",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T12:14:11",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-09T18:15:22",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-12T13:48:30",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-04T16:17:33",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-20T15:09:00Z",
@@ -126,7 +309,7 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.02343749990021544,
   "technicals": {
     "ma20": 17.631999969482422,
     "ma50": 17.612399959564208,
@@ -4148,7 +4331,7 @@
       "high": 19.0,
       "low": 17.72,
       "close": 17.92,
-      "volume": 45363250.0
+      "volume": 45355300.0
     }
   ],
   "ohlc_1y": [
@@ -6166,7 +6349,7 @@
       "high": 19.0,
       "low": 17.72,
       "close": 17.92,
-      "volume": 45363250.0
+      "volume": 45355300.0
     }
   ],
   "ai_synthesis": null,

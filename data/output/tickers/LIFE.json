@@ -1,11 +1,106 @@
 {
   "ticker": "LIFE",
-  "fetched_at": "2026-08-20T22:16:59Z",
+  "fetched_at": "2026-08-21T08:11:47Z",
   "_schema": "v2",
   "current_price": 33.52000045776367,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "LIFE",
+    "longName": "Ethos Technologies Inc.",
+    "sector": "Financial Services",
+    "industry": "Insurance Brokers",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://www.ethos.com",
+    "fullTimeEmployees": 614,
+    "marketCap": 3212505088,
+    "enterpriseValue": 1970670848,
+    "trailingPE": null,
+    "forwardPE": 12.738805,
+    "priceToSalesTrailing12Months": 5.4771185,
+    "enterpriseToRevenue": 3.36,
+    "priceToBook": 4.4884844,
+    "grossMargins": 0.98126,
+    "operatingMargins": 0.09558,
+    "profitMargins": -0.18145001,
+    "returnOnEquity": -0.26112,
+    "totalCash": 168319008,
+    "totalDebt": 1773000,
+    "totalRevenue": 586531968,
+    "freeCashflow": 201887120,
+    "debtToEquity": 0.372,
+    "currentRatio": 1.517,
+    "fiftyTwoWeekHigh": 35.69,
+    "fiftyTwoWeekLow": 9.45,
+    "averageVolume": 827716,
+    "averageVolume10days": 1372760,
+    "beta": null,
+    "sharesOutstanding": 31554807,
+    "sharesFloat": 29820297,
+    "companyOfficers": [
+      {
+        "name": "Mr. Peter George Colis",
+        "title": "Co-Founder, CEO & Chair of Board of Directors",
+        "age": 35,
+        "yearBorn": 1990
+      },
+      {
+        "name": "Mr. Lingke  Wang",
+        "title": "Co-Founder, President & Director",
+        "age": 34,
+        "yearBorn": 1991
+      },
+      {
+        "name": "Mr. Vipul  Sharma",
+        "title": "Chief Technology Officer",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Mr. Kunal  Mehta",
+        "title": "Senior Vice President of Finance",
+        "age": 43,
+        "yearBorn": 1982
+      },
+      {
+        "name": "Mr. Christopher Michael Capozzi",
+        "title": "Chief Financial Officer",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Brett  Wilson",
+        "title": "Senior Vice President of Strategic Accounts & Operations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.53,
+      "eps_estimate": 0.28145,
+      "eps_surprise_pct": 0.8831
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.38,
+      "eps_estimate": 0.46632,
+      "eps_surprise_pct": -0.1851
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.42,
+      "eps_estimate": 0.40105,
+      "eps_surprise_pct": 0.0473
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-08-04",
+    "revenue_low": 161300000,
+    "revenue_high": 164843000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -63,7 +158,89 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 9,
+    "bullish": 9,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 34.875,
+    "high_price_target": 40.0,
+    "low_price_target": 32.0,
+    "current_price": 33.52,
+    "recent_rating_changes": [
+      {
+        "date": "2024-05-14T14:51:16",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2024-05-03T19:54:01",
+        "firm": "HC Wainwright& Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2024-03-15T16:47:00",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2024-03-15T10:18:55",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2024-02-21T16:14:57",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2023-09-21T10:22:04",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2023-09-14T10:07:41",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2023-08-10T10:28:36",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2023-07-21T09:43:47",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2023-07-05T11:01:39",
+        "firm": "Oppenheimer",
+        "to_grade": "Perform",
+        "from_grade": "Outperform",
+        "action": "down"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-11T01:44:48Z",
@@ -128,16 +305,16 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 27.968999767303465,
-    "ma50": 22.03439987182617,
-    "rsi14": 72.1983402004966,
+    "ma20": 28.038499736785887,
+    "ma50": 22.0889998626709,
+    "rsi14": 72.41395575240907,
     "high_20d": 35.689998626708984,
-    "low_5d": 31.844999313354492,
+    "low_5d": 31.850000381469727,
     "low_10d": 29.389999389648438,
     "high_52w": 35.689998626708984,
     "low_52w": 9.449999809265137,
-    "atr14": 3.0364287240164622,
-    "atr14_pct": 9.058558122164898,
+    "atr14": 3.025714465550014,
+    "atr14_pct": 9.026594344360216,
     "position_in_52w_range_pct": 91.73018953223908
   },
   "ohlc_2y": [
@@ -1150,6 +1327,14 @@
       "volume": 802000.0
     },
     {
+      "date": "2026-07-31",
+      "open": 19.9,
+      "high": 20.91,
+      "low": 19.18,
+      "close": 20.42,
+      "volume": 1020400.0
+    },
+    {
       "date": "2026-08-03",
       "open": 20.7,
       "high": 23.31,
@@ -1256,10 +1441,10 @@
     {
       "date": "2026-08-20",
       "open": 32.86,
-      "high": 34.225,
-      "low": 31.845,
+      "high": 34.23,
+      "low": 31.85,
       "close": 33.52,
-      "volume": 1533597.0
+      "volume": 1533600.0
     }
   ],
   "ohlc_1y": [
@@ -2272,6 +2457,14 @@
       "volume": 802000.0
     },
     {
+      "date": "2026-07-31",
+      "open": 19.9,
+      "high": 20.91,
+      "low": 19.18,
+      "close": 20.42,
+      "volume": 1020400.0
+    },
+    {
       "date": "2026-08-03",
       "open": 20.7,
       "high": 23.31,
@@ -2378,10 +2571,10 @@
     {
       "date": "2026-08-20",
       "open": 32.86,
-      "high": 34.225,
-      "low": 31.845,
+      "high": 34.23,
+      "low": 31.85,
       "close": 33.52,
-      "volume": 1533597.0
+      "volume": 1533600.0
     }
   ],
   "ai_synthesis": null,

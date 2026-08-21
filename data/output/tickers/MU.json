@@ -1,11 +1,112 @@
 {
   "ticker": "MU",
-  "fetched_at": "2026-08-20T22:15:30Z",
+  "fetched_at": "2026-08-21T08:12:05Z",
   "_schema": "v2",
   "current_price": 974.3300170898438,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "MU",
+    "longName": "Micron Technology, Inc.",
+    "sector": "Technology",
+    "industry": "Semiconductors",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Boise",
+    "website": "https://www.micron.com",
+    "fullTimeEmployees": 53000,
+    "marketCap": 1100401606656,
+    "enterpriseValue": 1080755617792,
+    "trailingPE": 21.185692,
+    "forwardPE": 6.2640066,
+    "priceToSalesTrailing12Months": 12.189574,
+    "enterpriseToRevenue": 11.972,
+    "priceToBook": 10.921146,
+    "grossMargins": 0.72569,
+    "operatingMargins": 0.80370003,
+    "profitMargins": 0.55906,
+    "returnOnEquity": 0.66638,
+    "totalCash": 26022000640,
+    "totalDebt": 6376000000,
+    "totalRevenue": 90273996800,
+    "freeCashflow": 7639499776,
+    "debtToEquity": 6.33,
+    "currentRatio": 3.425,
+    "fiftyTwoWeekHigh": 1255.0,
+    "fiftyTwoWeekLow": 114.25,
+    "averageVolume": 48573706,
+    "averageVolume10days": 31590950,
+    "beta": 2.213,
+    "sharesOutstanding": 1129393151,
+    "sharesFloat": 1125564508,
+    "companyOfficers": [
+      {
+        "name": "Mr. Sanjay  Mehrotra",
+        "title": "CEO, President & Chairman",
+        "age": 66,
+        "yearBorn": 1959
+      },
+      {
+        "name": "Mr. Mark J. Murphy",
+        "title": "Executive VP & CFO",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Manish H. Bhatia",
+        "title": "Executive Vice President of Global Operations",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Dr. Scott J. DeBoer Ph.D.",
+        "title": "Executive VP and Chief Technology & Products Officer",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Mr. Sumit  Sadana",
+        "title": "Executive VP & Chief Business Officer",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Scott R. Allen",
+        "title": "Corporate VP & Chief Accounting Officer",
+        "age": 57,
+        "yearBorn": 1968
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-05-31T00:00:00",
+      "eps_actual": 25.11,
+      "eps_estimate": 20.68603,
+      "eps_surprise_pct": 0.2139
+    },
+    {
+      "period_end": "2026-02-28T00:00:00",
+      "eps_actual": 12.2,
+      "eps_estimate": 9.15866,
+      "eps_surprise_pct": 0.3321
+    },
+    {
+      "period_end": "2025-11-30T00:00:00",
+      "eps_actual": 4.78,
+      "eps_estimate": 3.96409,
+      "eps_surprise_pct": 0.2058
+    },
+    {
+      "period_end": "2025-08-31T00:00:00",
+      "eps_actual": 3.03,
+      "eps_estimate": 2.86023,
+      "eps_surprise_pct": 0.0594
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-09-24",
+    "revenue_low": 46911000000,
+    "revenue_high": 59805000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-05-31T00:00:00",
@@ -63,7 +164,89 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 44,
+    "bullish": 39,
+    "neutral": 4,
+    "bearish": 1,
+    "avg_price_target": 1521.6232,
+    "high_price_target": 2200.0,
+    "low_price_target": 361.0,
+    "current_price": 974.33,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-14T16:27:13",
+        "firm": "New Street Research",
+        "to_grade": "Buy",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-07T19:44:44",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-14T11:13:19",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-29T14:43:21",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T20:36:38",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T19:11:54",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T17:51:26",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T17:29:15",
+        "firm": "Morgan Stanley",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T17:05:30",
+        "firm": "Raymond James",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T16:35:42",
+        "firm": "Deutsche Bank",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-20T19:43:18Z",
@@ -72,16 +255,40 @@
       "source": "Yahoo Finance Video"
     },
     {
+      "date": "2026-08-21T07:25:00Z",
+      "title": "Billionaire Investor Stanley Druckenmiller Just Sold Intel and Micron, and Piled Into 2 Artificial Intelligence (AI) Stocks That Are Betting Big on Robotics",
+      "url": "https://www.fool.com/investing/2026/08/21/billionaire-investor-stanley-druckenmiller-just-so/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-08-21T04:54:24Z",
+      "title": "Memory Is the \u201cStrategic Infrastructure of the AI Era,\u201d Micron CEO Says",
+      "url": "https://beincrypto.com/micron-memory-strategic-infrastructure-ai-era/",
+      "source": "BeInCrypto"
+    },
+    {
+      "date": "2026-08-21T03:09:23Z",
+      "title": "Dow Jones Futures: Market Triggers This Bearish Signal As Walmart, SpaceX, CrowdStrike Tumble",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-triggers-bearish-signal-walmart-spacex-crowdstrike/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
+    },
+    {
+      "date": "2026-08-21T02:01:20Z",
+      "title": "Micron CEO Says AI \u2018Can\u2019t Scale\u2019 Without Memory \u2013 MU Stock Jumps On $10B Research Lab Initiative",
+      "url": "https://stocktwits.com/news-articles/markets/equity/micron-ceo-says-ai-can-t-scale-without-memory-mu-stock-jumps-on-10-b-research-lab-initiative/cZYBLTPRJZx",
+      "source": "Stocktwits"
+    },
+    {
+      "date": "2026-08-20T22:33:00Z",
+      "title": "Jim Simons' Renaissance cuts $486 million from surging AI stock",
+      "url": "https://www.thestreet.com/investing/mu-renaissance-technologies-slashes-micron-stake-by-486-million-in-q2-2026-13f-filing",
+      "source": "TheStreet"
+    },
+    {
       "date": "2026-08-20T21:38:00Z",
       "title": "Forget Micron for a Minute: This Memory Competitor Just Crossed a Major Profitability Milestone",
       "url": "https://www.fool.com/investing/2026/08/20/forget-micron-for-a-minute-this-memory-competitor/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-20T21:36:47Z",
-      "title": "Dow Jones Futures: Market Triggers This Bearish Signal As Walmart, SpaceX, CrowdStrike Tumble",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-triggers-bearish-signal-walmart-spacex-crowdstrike/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
     },
     {
       "date": "2026-08-20T21:29:00Z",
@@ -100,46 +307,22 @@
       "title": "The Biggest Risk Facing the Roundhill Memory ETF (DRAM) Right Now",
       "url": "https://247wallst.com/investing/2026/08/20/the-biggest-risk-facing-the-roundhill-memory-etf-dram-right-now/",
       "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-20T20:33:44Z",
-      "title": "AMD Just Split Two of Wall Street\u2019s Biggest Contrarian Investors",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/amd-just-split-two-wall-203344035.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-20T18:31:39Z",
-      "title": "SK Hynix Climbs 4% on Record Buyback, Micron Ticks Up as Memory Defies the Tech Selloff",
-      "url": "https://247wallst.com/investing/2026/08/20/sk-hynix-climbs-4-on-record-buyback-micron-ticks-up-as-memory-defies-the-tech-selloff/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-20T18:29:03Z",
-      "title": "Micron Quietly Pours $10 Billion Into Next Big Move",
-      "url": "https://finance.yahoo.com/technology/ai/articles/micron-quietly-pours-10-billion-182903705.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-08-20T17:46:17Z",
-      "title": "Billionaire Stanley Druckenmiller Dumped Micron, Intel, and Broadcom: Here Are the AI Infrastructure Stocks He Bought Instead",
-      "url": "https://247wallst.com/investing/2026/08/20/billionaire-stanley-druckenmiller-dumped-micron-intel-and-broadcom-here-are-the-ai-infrastructure-stocks-he-bought-instead/",
-      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.030113000200520903,
   "technicals": {
     "ma20": 893.9510009765625,
     "ma50": 963.0405480957031,
-    "ma200": 567.2861798095703,
-    "rsi14": 55.16409937796912,
+    "ma200": 567.2861795043946,
+    "rsi14": 55.16409937797427,
     "high_20d": 1036.1300048828125,
     "low_5d": 915.1799926757812,
     "low_10d": 844.6199951171875,
     "high_52w": 1254.8069810301963,
-    "low_52w": 113.27818036480753,
+    "low_52w": 113.2781877501083,
     "atr14": 58.70499529157366,
     "atr14_pct": 6.025165422586013,
-    "position_in_52w_range_pct": 75.42970761868955
+    "position_in_52w_range_pct": 75.42970745972816
   },
   "ohlc_2y": [
     {
@@ -147,7 +330,7 @@
       "open": 107.484,
       "high": 107.7225,
       "low": 105.5462,
-      "close": 107.6529,
+      "close": 107.653,
       "volume": 13658900.0
     },
     {
@@ -161,7 +344,7 @@
     {
       "date": "2024-08-23",
       "open": 102.396,
-      "high": 103.7574,
+      "high": 103.7575,
       "low": 99.6831,
       "close": 102.2072,
       "volume": 25465100.0
@@ -170,7 +353,7 @@
       "date": "2024-08-26",
       "open": 100.0408,
       "high": 101.5513,
-      "low": 97.0,
+      "low": 96.9999,
       "close": 98.2918,
       "volume": 26752300.0
     },
@@ -193,7 +376,7 @@
     {
       "date": "2024-08-29",
       "open": 95.9565,
-      "high": 97.3676,
+      "high": 97.3677,
       "low": 94.3963,
       "close": 94.9727,
       "volume": 18984300.0
@@ -219,7 +402,7 @@
       "open": 87.8078,
       "high": 90.163,
       "low": 87.2612,
-      "close": 88.7319,
+      "close": 88.732,
       "volume": 16356500.0
     },
     {
@@ -240,7 +423,7 @@
     },
     {
       "date": "2024-09-09",
-      "open": 87.301,
+      "open": 87.3009,
       "high": 87.4103,
       "low": 84.4787,
       "close": 85.7308,
@@ -267,7 +450,7 @@
       "open": 86.5556,
       "high": 87.4798,
       "low": 83.5943,
-      "close": 86.6649,
+      "close": 86.665,
       "volume": 30900000.0
     },
     {
@@ -291,7 +474,7 @@
       "open": 87.5096,
       "high": 89.0102,
       "low": 86.9929,
-      "close": 88.1755,
+      "close": 88.1754,
       "volume": 17744800.0
     },
     {
@@ -328,7 +511,7 @@
     },
     {
       "date": "2024-09-24",
-      "open": 94.138,
+      "open": 94.1379,
       "high": 94.4063,
       "low": 92.1803,
       "close": 93.4125,
@@ -344,9 +527,9 @@
     },
     {
       "date": "2024-09-26",
-      "open": 112.3932,
+      "open": 112.3931,
       "high": 114.0825,
-      "low": 106.858,
+      "low": 106.8579,
       "close": 109.1933,
       "volume": 107965900.0
     },
@@ -370,7 +553,7 @@
       "date": "2024-10-01",
       "open": 102.7538,
       "high": 103.5488,
-      "low": 98.3216,
+      "low": 98.3217,
       "close": 99.6831,
       "volume": 34309800.0
     },
@@ -425,7 +608,7 @@
     {
       "date": "2024-10-10",
       "open": 100.8499,
-      "high": 106.0331,
+      "high": 106.0332,
       "low": 100.3325,
       "close": 105.1477,
       "volume": 27605600.0
@@ -433,7 +616,7 @@
     {
       "date": "2024-10-11",
       "open": 104.501,
-      "high": 107.0976,
+      "high": 107.0977,
       "low": 104.4513,
       "close": 106.3714,
       "volume": 19133900.0
@@ -451,7 +634,7 @@
       "open": 107.3066,
       "high": 108.9282,
       "low": 102.183,
-      "close": 103.7848,
+      "close": 103.7847,
       "volume": 23419100.0
     },
     {
@@ -593,7 +776,7 @@
     {
       "date": "2024-11-08",
       "open": 111.5646,
-      "high": 113.7136,
+      "high": 113.7135,
       "low": 110.0027,
       "close": 111.3259,
       "volume": 13045700.0
@@ -601,14 +784,14 @@
     {
       "date": "2024-11-11",
       "open": 110.3807,
-      "high": 110.9379,
+      "high": 110.9378,
       "low": 106.2222,
       "close": 108.0925,
       "volume": 14479700.0
     },
     {
       "date": "2024-11-12",
-      "open": 104.4613,
+      "open": 104.4612,
       "high": 104.5508,
       "low": 101.5463,
       "close": 103.5659,
@@ -657,7 +840,7 @@
     {
       "date": "2024-11-20",
       "open": 97.4773,
-      "high": 98.0245,
+      "high": 98.0244,
       "low": 96.0347,
       "close": 97.8653,
       "volume": 10490600.0
@@ -715,7 +898,7 @@
       "open": 97.0992,
       "high": 99.5764,
       "low": 97.0296,
-      "close": 98.0443,
+      "close": 98.0444,
       "volume": 16525600.0
     },
     {
@@ -728,7 +911,7 @@
     },
     {
       "date": "2024-12-04",
-      "open": 100.253,
+      "open": 100.2529,
       "high": 102.8794,
       "low": 99.2879,
       "close": 102.6705,
@@ -746,7 +929,7 @@
       "date": "2024-12-06",
       "open": 100.3624,
       "high": 101.6657,
-      "low": 99.5168,
+      "low": 99.5167,
       "close": 100.6509,
       "volume": 12381000.0
     },
@@ -819,7 +1002,7 @@
       "open": 89.6178,
       "high": 90.5331,
       "low": 84.1759,
-      "close": 86.6431,
+      "close": 86.6432,
       "volume": 91396800.0
     },
     {
@@ -856,7 +1039,7 @@
     },
     {
       "date": "2024-12-27",
-      "open": 88.5434,
+      "open": 88.5433,
       "high": 89.0308,
       "low": 87.1306,
       "close": 88.1752,
@@ -867,7 +1050,7 @@
       "open": 86.6561,
       "high": 86.7159,
       "low": 84.2554,
-      "close": 84.9825,
+      "close": 84.9826,
       "volume": 22022900.0
     },
     {
@@ -891,7 +1074,7 @@
       "open": 87.6124,
       "high": 89.8538,
       "low": 87.1741,
-      "close": 89.525,
+      "close": 89.5251,
       "volume": 17484600.0
     },
     {
@@ -1019,7 +1202,7 @@
       "open": 89.535,
       "high": 90.1028,
       "low": 87.4231,
-      "close": 88.6684,
+      "close": 88.6683,
       "volume": 25342800.0
     },
     {
@@ -1043,7 +1226,7 @@
       "open": 88.3097,
       "high": 91.0492,
       "low": 87.6821,
-      "close": 89.5748,
+      "close": 89.5749,
       "volume": 18607900.0
     },
     {
@@ -1056,7 +1239,7 @@
     },
     {
       "date": "2025-02-05",
-      "open": 90.043,
+      "open": 90.0431,
       "high": 93.2905,
       "low": 89.8737,
       "close": 93.2407,
@@ -1114,7 +1297,7 @@
       "date": "2025-02-14",
       "open": 98.0323,
       "high": 100.3135,
-      "low": 97.6238,
+      "low": 97.6239,
       "close": 99.138,
       "volume": 21284500.0
     },
@@ -1128,7 +1311,7 @@
     },
     {
       "date": "2025-02-19",
-      "open": 105.354,
+      "open": 105.3541,
       "high": 106.7786,
       "low": 103.2223,
       "close": 103.9594,
@@ -1171,7 +1354,7 @@
       "open": 95.6315,
       "high": 99.3372,
       "low": 95.1334,
-      "close": 97.335,
+      "close": 97.3349,
       "volume": 21335200.0
     },
     {
@@ -1219,7 +1402,7 @@
       "open": 90.581,
       "high": 92.9319,
       "low": 88.6883,
-      "close": 88.9273,
+      "close": 88.9274,
       "volume": 18708100.0
     },
     {
@@ -1299,7 +1482,7 @@
       "open": 101.1901,
       "high": 104.2882,
       "low": 100.961,
-      "close": 102.6047,
+      "close": 102.6046,
       "volume": 29204400.0
     },
     {
@@ -1352,7 +1535,7 @@
     },
     {
       "date": "2025-03-31",
-      "open": 85.7815,
+      "open": 85.7814,
       "high": 86.8687,
       "low": 83.8863,
       "close": 86.6692,
@@ -1384,7 +1567,7 @@
     },
     {
       "date": "2025-04-04",
-      "open": 70.4704,
+      "open": 70.4705,
       "high": 71.1587,
       "low": 63.6977,
       "close": 64.5555,
@@ -1393,9 +1576,9 @@
     {
       "date": "2025-04-07",
       "open": 63.7775,
-      "high": 72.2758,
+      "high": 72.2759,
       "low": 61.3836,
-      "close": 68.1962,
+      "close": 68.1963,
       "volume": 50181800.0
     },
     {
@@ -1416,7 +1599,7 @@
     },
     {
       "date": "2025-04-10",
-      "open": 72.3157,
+      "open": 72.3158,
       "high": 72.8644,
       "low": 67.3285,
       "close": 69.872,
@@ -1491,7 +1674,7 @@
       "open": 74.3805,
       "high": 77.3928,
       "low": 73.413,
-      "close": 77.2232,
+      "close": 77.2233,
       "volume": 23875600.0
     },
     {
@@ -1499,7 +1682,7 @@
       "open": 77.3529,
       "high": 80.0959,
       "low": 76.7046,
-      "close": 79.5773,
+      "close": 79.5772,
       "volume": 19746200.0
     },
     {
@@ -1507,7 +1690,7 @@
       "open": 78.5698,
       "high": 79.4077,
       "low": 76.7245,
-      "close": 78.3604,
+      "close": 78.3603,
       "volume": 16882400.0
     },
     {
@@ -1632,8 +1815,8 @@
     },
     {
       "date": "2025-05-20",
-      "open": 97.6711,
-      "high": 98.3793,
+      "open": 97.6712,
+      "high": 98.3794,
       "low": 96.7236,
       "close": 97.8507,
       "volume": 12331300.0
@@ -1680,9 +1863,9 @@
     },
     {
       "date": "2025-05-29",
-      "open": 98.3394,
+      "open": 98.3395,
       "high": 99.3768,
-      "low": 95.8657,
+      "low": 95.8658,
       "close": 96.554,
       "volume": 14628700.0
     },
@@ -1707,7 +1890,7 @@
       "open": 98.11,
       "high": 102.6684,
       "low": 96.7136,
-      "close": 101.9902,
+      "close": 101.9901,
       "volume": 22757600.0
     },
     {
@@ -1745,7 +1928,7 @@
     {
       "date": "2025-06-10",
       "open": 111.2466,
-      "high": 114.6279,
+      "high": 114.628,
       "low": 110.9473,
       "close": 113.8499,
       "volume": 22949400.0
@@ -1770,7 +1953,7 @@
       "date": "2025-06-13",
       "open": 113.5108,
       "high": 116.8024,
-      "low": 113.3712,
+      "low": 113.3711,
       "close": 115.3062,
       "volume": 17453000.0
     },
@@ -1784,7 +1967,7 @@
     },
     {
       "date": "2025-06-17",
-      "open": 119.296,
+      "open": 119.2961,
       "high": 123.1961,
       "low": 119.0467,
       "close": 120.0342,
@@ -1962,7 +2145,7 @@
       "date": "2025-07-21",
       "open": 113.408,
       "high": 115.7342,
-      "low": 112.4894,
+      "low": 112.4895,
       "close": 113.0486,
       "volume": 22189800.0
     },
@@ -1985,9 +2168,9 @@
     {
       "date": "2025-07-24",
       "open": 110.882,
-      "high": 112.5494,
+      "high": 112.5493,
       "low": 110.0733,
-      "close": 111.551,
+      "close": 111.5509,
       "volume": 20293100.0
     },
     {
@@ -2008,7 +2191,7 @@
     },
     {
       "date": "2025-07-29",
-      "open": 111.8704,
+      "open": 111.8705,
       "high": 113.3581,
       "low": 110.4927,
       "close": 111.7806,
@@ -2048,7 +2231,7 @@
     },
     {
       "date": "2025-08-05",
-      "open": 109.1249,
+      "open": 109.1248,
       "high": 110.4627,
       "low": 106.6588,
       "close": 108.8852,
@@ -2122,7 +2305,7 @@
       "date": "2025-08-18",
       "open": 121.1555,
       "high": 123.4818,
-      "low": 120.4667,
+      "low": 120.4666,
       "close": 123.352,
       "volume": 12208800.0
     },
@@ -2145,9 +2328,9 @@
     {
       "date": "2025-08-21",
       "open": 116.8125,
-      "high": 117.5413,
+      "high": 117.5414,
       "low": 115.4247,
-      "close": 115.6044,
+      "close": 115.6045,
       "volume": 13174900.0
     },
     {
@@ -2162,7 +2345,7 @@
       "date": "2025-08-25",
       "open": 117.4914,
       "high": 117.8908,
-      "low": 115.914,
+      "low": 115.9139,
       "close": 116.2334,
       "volume": 8674800.0
     },
@@ -2177,7 +2360,7 @@
     {
       "date": "2025-08-27",
       "open": 116.6628,
-      "high": 118.5398,
+      "high": 118.5397,
       "low": 116.2534,
       "close": 117.5613,
       "volume": 15349300.0
@@ -2233,15 +2416,15 @@
     {
       "date": "2025-09-08",
       "open": 130.3408,
-      "high": 132.0481,
+      "high": 132.048,
       "low": 128.1942,
-      "close": 131.2494,
+      "close": 131.2493,
       "volume": 19492600.0
     },
     {
       "date": "2025-09-09",
-      "open": 131.5489,
-      "high": 137.7789,
+      "open": 131.5488,
+      "high": 137.7788,
       "low": 131.3492,
       "close": 135.0233,
       "volume": 20705000.0
@@ -2274,7 +2457,7 @@
       "date": "2025-09-15",
       "open": 156.7085,
       "high": 160.0831,
-      "low": 156.2991,
+      "low": 156.2992,
       "close": 157.5172,
       "volume": 20101400.0
     },
@@ -2298,7 +2481,7 @@
       "date": "2025-09-18",
       "open": 162.7288,
       "high": 170.1769,
-      "low": 162.3394,
+      "low": 162.3395,
       "close": 168.6194,
       "volume": 28212800.0
     },
@@ -2354,15 +2537,15 @@
       "date": "2025-09-29",
       "open": 159.7436,
       "high": 165.5343,
-      "low": 159.7136,
-      "close": 163.6373,
+      "low": 159.7137,
+      "close": 163.6374,
       "volume": 26506500.0
     },
     {
       "date": "2025-09-30",
       "open": 163.847,
-      "high": 168.6793,
-      "low": 163.6973,
+      "high": 168.6792,
+      "low": 163.6972,
       "close": 167.0519,
       "volume": 20092500.0
     },
@@ -2458,7 +2641,7 @@
       "date": "2025-10-16",
       "open": 199.7646,
       "high": 206.1384,
-      "low": 195.0093,
+      "low": 195.0092,
       "close": 202.3321,
       "volume": 42041300.0
     },
@@ -2491,7 +2674,7 @@
       "open": 202.0524,
       "high": 205.3791,
       "low": 192.212,
-      "close": 198.276,
+      "close": 198.2761,
       "volume": 21949800.0
     },
     {
@@ -2520,10 +2703,10 @@
     },
     {
       "date": "2025-10-28",
-      "open": 218.716,
+      "open": 218.7161,
       "high": 222.6822,
       "low": 217.3474,
-      "close": 221.6931,
+      "close": 221.6932,
       "volume": 14957500.0
     },
     {
@@ -2536,7 +2719,7 @@
     },
     {
       "date": "2025-10-30",
-      "open": 225.8791,
+      "open": 225.879,
       "high": 227.1778,
       "low": 220.5243,
       "close": 223.7911,
@@ -2555,14 +2738,14 @@
       "open": 233.6515,
       "high": 237.3878,
       "low": 231.5735,
-      "close": 234.4707,
+      "close": 234.4706,
       "volume": 21199300.0
     },
     {
       "date": "2025-11-04",
       "open": 221.9229,
       "high": 228.4465,
-      "low": 217.1875,
+      "low": 217.1876,
       "close": 217.8169,
       "volume": 23696200.0
     },
@@ -2586,7 +2769,7 @@
       "date": "2025-11-07",
       "open": 233.8013,
       "high": 242.313,
-      "low": 226.1787,
+      "low": 226.1788,
       "close": 237.6875,
       "volume": 30613800.0
     },
@@ -2633,7 +2816,7 @@
     {
       "date": "2025-11-17",
       "open": 246.6787,
-      "high": 260.3253,
+      "high": 260.3254,
       "low": 239.226,
       "close": 241.7136,
       "volume": 30304400.0
@@ -2657,8 +2840,8 @@
     {
       "date": "2025-11-20",
       "open": 230.015,
-      "high": 230.3747,
-      "low": 199.405,
+      "high": 230.3746,
+      "low": 199.4049,
       "close": 201.1732,
       "volume": 47420700.0
     },
@@ -2667,7 +2850,7 @@
       "open": 204.3301,
       "high": 211.7928,
       "low": 192.4018,
-      "close": 207.1674,
+      "close": 207.1673,
       "volume": 36679700.0
     },
     {
@@ -2696,9 +2879,9 @@
     },
     {
       "date": "2025-11-28",
-      "open": 235.3898,
+      "open": 235.3897,
       "high": 237.8673,
-      "low": 233.2419,
+      "low": 233.2418,
       "close": 236.2489,
       "volume": 12914700.0
     },
@@ -2793,7 +2976,7 @@
     {
       "date": "2025-12-16",
       "open": 235.5696,
-      "high": 239.1661,
+      "high": 239.166,
       "low": 230.3547,
       "close": 232.2828,
       "volume": 22577300.0
@@ -2819,7 +3002,7 @@
       "open": 251.504,
       "high": 268.1177,
       "low": 251.504,
-      "close": 265.6601,
+      "close": 265.6602,
       "volume": 62312100.0
     },
     {
@@ -2840,10 +3023,10 @@
     },
     {
       "date": "2025-12-24",
-      "open": 277.7284,
+      "open": 277.7283,
       "high": 289.0173,
       "low": 276.9791,
-      "close": 286.3999,
+      "close": 286.3998,
       "volume": 18592600.0
     },
     {
@@ -4144,11 +4327,11 @@
     },
     {
       "date": "2026-08-20",
-      "open": 936.0,
+      "open": 935.01,
       "high": 977.28,
       "low": 929.07,
       "close": 974.33,
-      "volume": 25022451.0
+      "volume": 25055000.0
     }
   ],
   "ohlc_1y": [
@@ -4163,9 +4346,9 @@
     {
       "date": "2025-08-21",
       "open": 116.8125,
-      "high": 117.5413,
+      "high": 117.5414,
       "low": 115.4247,
-      "close": 115.6044,
+      "close": 115.6045,
       "volume": 13174900.0
     },
     {
@@ -4180,7 +4363,7 @@
       "date": "2025-08-25",
       "open": 117.4914,
       "high": 117.8908,
-      "low": 115.914,
+      "low": 115.9139,
       "close": 116.2334,
       "volume": 8674800.0
     },
@@ -4195,7 +4378,7 @@
     {
       "date": "2025-08-27",
       "open": 116.6628,
-      "high": 118.5398,
+      "high": 118.5397,
       "low": 116.2534,
       "close": 117.5613,
       "volume": 15349300.0
@@ -4251,15 +4434,15 @@
     {
       "date": "2025-09-08",
       "open": 130.3408,
-      "high": 132.0481,
+      "high": 132.048,
       "low": 128.1942,
-      "close": 131.2494,
+      "close": 131.2493,
       "volume": 19492600.0
     },
     {
       "date": "2025-09-09",
-      "open": 131.5489,
-      "high": 137.7789,
+      "open": 131.5488,
+      "high": 137.7788,
       "low": 131.3492,
       "close": 135.0233,
       "volume": 20705000.0
@@ -4292,7 +4475,7 @@
       "date": "2025-09-15",
       "open": 156.7085,
       "high": 160.0831,
-      "low": 156.2991,
+      "low": 156.2992,
       "close": 157.5172,
       "volume": 20101400.0
     },
@@ -4316,7 +4499,7 @@
       "date": "2025-09-18",
       "open": 162.7288,
       "high": 170.1769,
-      "low": 162.3394,
+      "low": 162.3395,
       "close": 168.6194,
       "volume": 28212800.0
     },
@@ -4372,15 +4555,15 @@
       "date": "2025-09-29",
       "open": 159.7436,
       "high": 165.5343,
-      "low": 159.7136,
-      "close": 163.6373,
+      "low": 159.7137,
+      "close": 163.6374,
       "volume": 26506500.0
     },
     {
       "date": "2025-09-30",
       "open": 163.847,
-      "high": 168.6793,
-      "low": 163.6973,
+      "high": 168.6792,
+      "low": 163.6972,
       "close": 167.0519,
       "volume": 20092500.0
     },
@@ -4476,7 +4659,7 @@
       "date": "2025-10-16",
       "open": 199.7646,
       "high": 206.1384,
-      "low": 195.0093,
+      "low": 195.0092,
       "close": 202.3321,
       "volume": 42041300.0
     },
@@ -4509,7 +4692,7 @@
       "open": 202.0524,
       "high": 205.3791,
       "low": 192.212,
-      "close": 198.276,
+      "close": 198.2761,
       "volume": 21949800.0
     },
     {
@@ -4538,10 +4721,10 @@
     },
     {
       "date": "2025-10-28",
-      "open": 218.716,
+      "open": 218.7161,
       "high": 222.6822,
       "low": 217.3474,
-      "close": 221.6931,
+      "close": 221.6932,
       "volume": 14957500.0
     },
     {
@@ -4554,7 +4737,7 @@
     },
     {
       "date": "2025-10-30",
-      "open": 225.8791,
+      "open": 225.879,
       "high": 227.1778,
       "low": 220.5243,
       "close": 223.7911,
@@ -4573,14 +4756,14 @@
       "open": 233.6515,
       "high": 237.3878,
       "low": 231.5735,
-      "close": 234.4707,
+      "close": 234.4706,
       "volume": 21199300.0
     },
     {
       "date": "2025-11-04",
       "open": 221.9229,
       "high": 228.4465,
-      "low": 217.1875,
+      "low": 217.1876,
       "close": 217.8169,
       "volume": 23696200.0
     },
@@ -4604,7 +4787,7 @@
       "date": "2025-11-07",
       "open": 233.8013,
       "high": 242.313,
-      "low": 226.1787,
+      "low": 226.1788,
       "close": 237.6875,
       "volume": 30613800.0
     },
@@ -4651,7 +4834,7 @@
     {
       "date": "2025-11-17",
       "open": 246.6787,
-      "high": 260.3253,
+      "high": 260.3254,
       "low": 239.226,
       "close": 241.7136,
       "volume": 30304400.0
@@ -4675,8 +4858,8 @@
     {
       "date": "2025-11-20",
       "open": 230.015,
-      "high": 230.3747,
-      "low": 199.405,
+      "high": 230.3746,
+      "low": 199.4049,
       "close": 201.1732,
       "volume": 47420700.0
     },
@@ -4685,7 +4868,7 @@
       "open": 204.3301,
       "high": 211.7928,
       "low": 192.4018,
-      "close": 207.1674,
+      "close": 207.1673,
       "volume": 36679700.0
     },
     {
@@ -4714,9 +4897,9 @@
     },
     {
       "date": "2025-11-28",
-      "open": 235.3898,
+      "open": 235.3897,
       "high": 237.8673,
-      "low": 233.2419,
+      "low": 233.2418,
       "close": 236.2489,
       "volume": 12914700.0
     },
@@ -4811,7 +4994,7 @@
     {
       "date": "2025-12-16",
       "open": 235.5696,
-      "high": 239.1661,
+      "high": 239.166,
       "low": 230.3547,
       "close": 232.2828,
       "volume": 22577300.0
@@ -4837,7 +5020,7 @@
       "open": 251.504,
       "high": 268.1177,
       "low": 251.504,
-      "close": 265.6601,
+      "close": 265.6602,
       "volume": 62312100.0
     },
     {
@@ -4858,10 +5041,10 @@
     },
     {
       "date": "2025-12-24",
-      "open": 277.7284,
+      "open": 277.7283,
       "high": 289.0173,
       "low": 276.9791,
-      "close": 286.3999,
+      "close": 286.3998,
       "volume": 18592600.0
     },
     {
@@ -6162,11 +6345,11 @@
     },
     {
       "date": "2026-08-20",
-      "open": 936.0,
+      "open": 935.01,
       "high": 977.28,
       "low": 929.07,
       "close": 974.33,
-      "volume": 25022451.0
+      "volume": 25055000.0
     }
   ],
   "ai_synthesis": null,

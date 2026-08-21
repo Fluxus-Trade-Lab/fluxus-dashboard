@@ -1,11 +1,112 @@
 {
   "ticker": "NET",
-  "fetched_at": "2026-08-20T22:15:42Z",
+  "fetched_at": "2026-08-21T08:12:33Z",
   "_schema": "v2",
   "current_price": 278.9100036621094,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "NET",
+    "longName": "Cloudflare, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://www.cloudflare.com",
+    "fullTimeEmployees": 5156,
+    "marketCap": 99314196480,
+    "enterpriseValue": 98680741888,
+    "trailingPE": null,
+    "forwardPE": 166.91403,
+    "priceToSalesTrailing12Months": 39.5304,
+    "enterpriseToRevenue": 39.278,
+    "priceToBook": 64.5625,
+    "grossMargins": 0.72577006,
+    "operatingMargins": -0.07902,
+    "profitMargins": -0.082100004,
+    "returnOnEquity": -0.14425999,
+    "totalCash": 4162798080,
+    "totalDebt": 3529349888,
+    "totalRevenue": 2512349952,
+    "freeCashflow": 691048256,
+    "debtToEquity": 217.858,
+    "currentRatio": 1.818,
+    "fiftyTwoWeekHigh": 332.22,
+    "fiftyTwoWeekLow": 158.83,
+    "averageVolume": 3738511,
+    "averageVolume10days": 4583970,
+    "beta": 1.66,
+    "sharesOutstanding": 322618775,
+    "sharesFloat": 320493108,
+    "companyOfficers": [
+      {
+        "name": "Mr. Matthew  Prince J.D.",
+        "title": "Co-Founder, Co-Chairman & CEO",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Ms. Michelle  Zatlyn",
+        "title": "Co-Founder, President & Co-Chair of the Board",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Mr. Thomas Josef Seifert",
+        "title": "Chief Financial Officer",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Ms. Janel  Riley",
+        "title": "VP of Finance & Chief Accounting Officer",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Philip Alan Winslow Jr., C.F.A., Jr.",
+        "title": "Vice President of Strategic Finance, Treasury and Investor Relations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. W.  Ling",
+        "title": "Head of Governance Risk & Compliance",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.29,
+      "eps_estimate": 0.26976,
+      "eps_surprise_pct": 0.075
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.25,
+      "eps_estimate": 0.23357,
+      "eps_surprise_pct": 0.070300005
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.28,
+      "eps_estimate": 0.27129,
+      "eps_surprise_pct": 0.0321
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.27,
+      "eps_estimate": 0.23406,
+      "eps_surprise_pct": 0.15359999
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-30",
+    "revenue_low": 736255000,
+    "revenue_high": 768444000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -63,8 +164,96 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 34,
+    "bullish": 22,
+    "neutral": 10,
+    "bearish": 2,
+    "avg_price_target": 333.55194,
+    "high_price_target": 400.0,
+    "low_price_target": 160.0,
+    "current_price": 278.91,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-10T14:39:10",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-10T13:17:14",
+        "firm": "Susquehanna",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-08T01:09:42",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Outperform",
+        "from_grade": "Sector Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T22:52:26",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T20:30:32",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T18:40:26",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T17:23:52",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T16:34:13",
+        "firm": "Guggenheim",
+        "to_grade": "Sell",
+        "from_grade": "Sell",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T15:10:21",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T15:02:14",
+        "firm": "Citizens",
+        "to_grade": "Market Outperform",
+        "from_grade": "Market Outperform",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-20T22:35:15Z",
+      "title": "MongoDB, Cloudflare, Okta, Zscaler, and Upstart Stocks Trade Down, What You Need To Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/mongodb-cloudflare-okta-zscaler-upstart-223515889.html",
+      "source": "StockStory"
+    },
     {
       "date": "2026-08-20T17:21:19Z",
       "title": "Cathie Wood's Firm Launches New ETF; Buys Broadcom, Rocket Lab, Cloudflare",
@@ -118,27 +307,21 @@
       "title": "Cloudflare (NET) Becomes An Independent Auditor For Encrypted Messaging Keys",
       "url": "https://finance.yahoo.com/markets/stocks/articles/cloudflare-net-becomes-independent-auditor-001541505.html",
       "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-17T22:28:31Z",
-      "title": "Top Market Strategist Warns Anthropic\u2019s 40-50x Revenue Multiple for IPO Could Be \u201cDangerous\u201d",
-      "url": "https://247wallst.com/investing/2026/08/17/top-market-strategist-warns-anthropics-40-50x-revenue-multiple-for-ipo-could-be-dangerous/",
-      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.025599655466821775,
   "technicals": {
     "ma20": 292.05599822998045,
-    "ma50": 265.82079925537107,
-    "ma200": 218.87584991455077,
-    "rsi14": 46.318219711916804,
+    "ma50": 266.5443991088867,
+    "ma200": 218.97089988708495,
+    "rsi14": 46.17077358880766,
     "high_20d": 332.2200012207031,
-    "low_5d": 277.8450012207031,
-    "low_10d": 277.8450012207031,
+    "low_5d": 277.8299865722656,
+    "low_10d": 277.8299865722656,
     "high_52w": 332.2200012207031,
     "low_52w": 158.8300018310547,
-    "atr14": 17.92842755998884,
-    "atr14_pct": 6.428033173635665,
+    "atr14": 17.929500034877233,
+    "atr14_pct": 6.428417697272075,
     "position_in_52w_range_pct": 69.25428355369357
   },
   "ohlc_2y": [
@@ -3967,6 +4150,14 @@
       "volume": 3113000.0
     },
     {
+      "date": "2026-07-21",
+      "open": 272.97,
+      "high": 277.25,
+      "low": 268.977,
+      "close": 272.31,
+      "volume": 3715300.0
+    },
+    {
       "date": "2026-07-22",
       "open": 271.75,
       "high": 272.5,
@@ -4138,20 +4329,12 @@
       "date": "2026-08-20",
       "open": 290.62,
       "high": 292.485,
-      "low": 277.845,
+      "low": 277.83,
       "close": 278.91,
-      "volume": 3048748.0
+      "volume": 3049100.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-19",
-      "open": 201.79,
-      "high": 203.0,
-      "low": 193.51,
-      "close": 196.51,
-      "volume": 2190800.0
-    },
     {
       "date": "2025-08-20",
       "open": 195.0,
@@ -5985,6 +6168,14 @@
       "volume": 3113000.0
     },
     {
+      "date": "2026-07-21",
+      "open": 272.97,
+      "high": 277.25,
+      "low": 268.977,
+      "close": 272.31,
+      "volume": 3715300.0
+    },
+    {
       "date": "2026-07-22",
       "open": 271.75,
       "high": 272.5,
@@ -6156,9 +6347,9 @@
       "date": "2026-08-20",
       "open": 290.62,
       "high": 292.485,
-      "low": 277.845,
+      "low": 277.83,
       "close": 278.91,
-      "volume": 3048748.0
+      "volume": 3049100.0
     }
   ],
   "ai_synthesis": null,

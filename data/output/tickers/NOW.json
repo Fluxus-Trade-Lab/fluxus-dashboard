@@ -1,11 +1,112 @@
 {
   "ticker": "NOW",
-  "fetched_at": "2026-08-20T22:15:45Z",
+  "fetched_at": "2026-08-21T08:12:39Z",
   "_schema": "v2",
   "current_price": 129.75,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "NOW",
+    "longName": "ServiceNow, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Application",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Santa Clara",
+    "website": "https://www.servicenow.com",
+    "fullTimeEmployees": 29187,
+    "marketCap": 134143598592,
+    "enterpriseValue": 137932587008,
+    "trailingPE": 79.60123,
+    "forwardPE": 25.921434,
+    "priceToSalesTrailing12Months": 9.105593,
+    "enterpriseToRevenue": 9.363,
+    "priceToBook": 10.717826,
+    "grossMargins": 0.74768996,
+    "operatingMargins": 0.04063,
+    "profitMargins": 0.11336,
+    "returnOnEquity": 0.14244,
+    "totalCash": 4664000000,
+    "totalDebt": 8453000192,
+    "totalRevenue": 14732000256,
+    "freeCashflow": 5149374976,
+    "debtToEquity": 67.538,
+    "currentRatio": 0.701,
+    "fiftyTwoWeekHigh": 194.726,
+    "fiftyTwoWeekLow": 81.24,
+    "averageVolume": 25680625,
+    "averageVolume10days": 18517750,
+    "beta": 0.93,
+    "sharesOutstanding": 1033862000,
+    "sharesFloat": 1031318699,
+    "companyOfficers": [
+      {
+        "name": "Mr. William R. McDermott",
+        "title": "Chairman & CEO",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Ms. Gina M. Mastantuono",
+        "title": "President & CFO",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Amit K. Zavery",
+        "title": "President, Chief Product Officer & COO",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Frederic B. Luddy",
+        "title": "Founder & Director",
+        "age": 70,
+        "yearBorn": 1955
+      },
+      {
+        "name": "Ms. Jacqueline P. Canney",
+        "title": "Chief People & AI Enablement Officer",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Paul  Fipps",
+        "title": "President of Global Customer Operations",
+        "age": 52,
+        "yearBorn": 1973
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.9,
+      "eps_estimate": 0.85672,
+      "eps_surprise_pct": 0.0505
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.97,
+      "eps_estimate": 0.96619,
+      "eps_surprise_pct": 0.0039
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.92,
+      "eps_estimate": 0.88508,
+      "eps_surprise_pct": 0.0395
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.964,
+      "eps_estimate": 0.85308,
+      "eps_surprise_pct": 0.13
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-29",
+    "revenue_low": 4067400000,
+    "revenue_high": 4152000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -63,8 +164,96 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 48,
+    "bullish": 43,
+    "neutral": 4,
+    "bearish": 1,
+    "avg_price_target": 142.23174,
+    "high_price_target": 248.0,
+    "low_price_target": 72.0,
+    "current_price": 129.75,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-19T17:00:58",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-17T15:27:54",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-12T12:26:26",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-23T20:12:43",
+        "firm": "Macquarie",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-23T19:16:23",
+        "firm": "Bernstein",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-23T18:23:52",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-23T17:10:24",
+        "firm": "BMO Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-23T16:58:55",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-23T16:09:04",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-23T14:00:24",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-21T00:01:02Z",
+      "title": "Why ServiceNow Stock Topped the Market on Thursday",
+      "url": "https://www.fool.com/investing/2026/08/20/why-servicenow-stock-topped-the-market-on-thursday/",
+      "source": "Motley Fool"
+    },
     {
       "date": "2026-08-20T17:06:24Z",
       "title": "Salesforce Stock Is Priced For A Wider Year Than The One It Just Had",
@@ -118,15 +307,9 @@
       "title": "\u201cThe Selling Goes Too Far\u201d: Jim Cramer Defends ServiceNow, Salesforce, and Other Software Giants Against Extinction Fears",
       "url": "https://247wallst.com/investing/2026/08/19/the-selling-goes-too-far-jim-cramer-defends-servicenow-salesforce-and-other-software-giants-against-extinction-fears/",
       "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-19T06:58:00Z",
-      "title": "Inside the $8 billion cybersecurity acquisition that helped ServiceNow\u2019s stock buck the \u2018Saaspocalypse\u2019 fears",
-      "url": "https://finance.yahoo.com/technology/articles/inside-8-billion-cybersecurity-acquisition-065800120.html",
-      "source": "Fortune"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.02466281310211946,
   "technicals": {
     "ma20": 118.45550003051758,
     "ma50": 108.47240020751953,
@@ -4144,11 +4327,11 @@
     },
     {
       "date": "2026-08-20",
-      "open": 128.145,
+      "open": 128.15,
       "high": 131.15,
       "low": 127.1,
       "close": 129.75,
-      "volume": 16929529.0
+      "volume": 16934700.0
     }
   ],
   "ohlc_1y": [
@@ -6162,11 +6345,11 @@
     },
     {
       "date": "2026-08-20",
-      "open": 128.145,
+      "open": 128.15,
       "high": 131.15,
       "low": 127.1,
       "close": 129.75,
-      "volume": 16929529.0
+      "volume": 16934700.0
     }
   ],
   "ai_synthesis": null,

@@ -1,11 +1,100 @@
 {
   "ticker": "INTC",
-  "fetched_at": "2026-08-20T22:15:18Z",
+  "fetched_at": "2026-08-21T08:11:28Z",
   "_schema": "v2",
   "current_price": 92.12999725341797,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "INTC",
+    "longName": "Intel Corporation",
+    "sector": "Technology",
+    "industry": "Semiconductors",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Santa Clara",
+    "website": "https://www.intel.com",
+    "fullTimeEmployees": 85100,
+    "marketCap": 487008862208,
+    "enterpriseValue": 501114732544,
+    "trailingPE": null,
+    "forwardPE": 45.158886,
+    "priceToSalesTrailing12Months": 8.539221,
+    "enterpriseToRevenue": 8.787,
+    "priceToBook": 5.3073335,
+    "grossMargins": 0.38873002,
+    "operatingMargins": 0.12189999,
+    "profitMargins": -0.19794,
+    "returnOnEquity": -0.10715,
+    "totalCash": 29727000576,
+    "totalDebt": 50537000960,
+    "totalRevenue": 57031999488,
+    "freeCashflow": 4866375168,
+    "debtToEquity": 48.997,
+    "currentRatio": 1.604,
+    "fiftyTwoWeekHigh": 142.35,
+    "fiftyTwoWeekLow": 23.65,
+    "averageVolume": 119281488,
+    "averageVolume10days": 112290190,
+    "beta": 2.241,
+    "sharesOutstanding": 5286105262,
+    "sharesFloat": 4618891680,
+    "companyOfficers": [
+      {
+        "name": "Mr. Lip-Bu  Tan",
+        "title": "CEO & Director",
+        "age": 66,
+        "yearBorn": 1959
+      },
+      {
+        "name": "Mr. David A. Zinsner",
+        "title": "Executive VP, CFO and Principal Financial & Accounting Officer",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Nagasubramaniyan  Chandrasekaran",
+        "title": "Executive VP, Chief Technology and Operations Officer & GM of Intel Foundry",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Gregory  Ernst",
+        "title": "Corporate VP, Chief Revenue Officer & General Manager of Sales Group",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.42,
+      "eps_estimate": 0.21584,
+      "eps_surprise_pct": 0.94589996
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.29,
+      "eps_estimate": 0.01313,
+      "eps_surprise_pct": 21.0868
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.15,
+      "eps_estimate": 0.08264,
+      "eps_surprise_pct": 0.8151
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.23,
+      "eps_estimate": 0.00705,
+      "eps_surprise_pct": 31.6241
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-23",
+    "revenue_low": 16281000000,
+    "revenue_high": 17027075000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -63,8 +152,114 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Hold",
+    "total_ratings": 48,
+    "bullish": 12,
+    "neutral": 31,
+    "bearish": 5,
+    "avg_price_target": 114.87805,
+    "high_price_target": 200.0,
+    "low_price_target": 75.0,
+    "current_price": 92.13,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-12T14:14:39",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-12T13:39:04",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-28T20:47:08",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-27T12:02:06",
+        "firm": "Baird",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-25T01:45:21",
+        "firm": "DA Davidson",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T18:49:32",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T18:03:17",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T17:51:08",
+        "firm": "JP Morgan",
+        "to_grade": "Underweight",
+        "from_grade": "Underweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T17:43:58",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T14:33:25",
+        "firm": "Stifel",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-21T07:25:00Z",
+      "title": "Billionaire Investor Stanley Druckenmiller Just Sold Intel and Micron, and Piled Into 2 Artificial Intelligence (AI) Stocks That Are Betting Big on Robotics",
+      "url": "https://www.fool.com/investing/2026/08/21/billionaire-investor-stanley-druckenmiller-just-so/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-08-21T02:20:00Z",
+      "title": "Nvidia, AMD, and Intel: Wall Street Says to Buy 2 and Avoid 1. I Disagree.",
+      "url": "https://www.fool.com/investing/2026/08/20/nvidia-amd-and-intel-wall-street-says-to-buy-2-and/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-08-20T23:24:53Z",
+      "title": "Lenovo Group Limited (LNVGY) and Intel Corporation (INTC) are Both Riding the AI Hardware Boom. One Just Posted a Loss Anyway",
+      "url": "https://finance.yahoo.com/technology/ai/articles/lenovo-group-limited-lnvgy-intel-232453667.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-08-20T21:47:33Z",
+      "title": "Coatue Management Opens New Position in AMD Stock. View This as a Renewed Bet on the AI Trade.",
+      "url": "https://www.barchart.com/story/news/3959404/coatue-management-opens-new-position-in-amd-stock-view-this-as-a-renewed-bet-on-the-ai-trade",
+      "source": "Barchart"
+    },
     {
       "date": "2026-08-20T21:41:21Z",
       "title": "Earn 17% On AMD Stock Now, For Capping Your Upside At 24%",
@@ -90,43 +285,19 @@
       "source": "Barrons.com"
     },
     {
+      "date": "2026-08-20T18:45:35Z",
+      "title": "Duquesne Management Just Dumped Its Entire Stake in This Surging AI Stock",
+      "url": "https://www.barchart.com/story/news/3956536/duquesne-management-just-dumped-its-entire-stake-in-this-surging-ai-stock",
+      "source": "Barchart"
+    },
+    {
       "date": "2026-08-20T17:46:17Z",
       "title": "Billionaire Stanley Druckenmiller Dumped Micron, Intel, and Broadcom: Here Are the AI Infrastructure Stocks He Bought Instead",
       "url": "https://247wallst.com/investing/2026/08/20/billionaire-stanley-druckenmiller-dumped-micron-intel-and-broadcom-here-are-the-ai-infrastructure-stocks-he-bought-instead/",
       "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-20T17:07:34Z",
-      "title": "Intel (INTC) Stock Became 67% Of A Major Investor\u2019s US Equity Portfolio",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/intel-intc-stock-became-67-170734414.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-20T15:46:55Z",
-      "title": "NVIDIA Looks Expensive Until You Ask What Has To Ship",
-      "url": "https://www.trefis.com/articles/612241/nvidia-looks-expensive-until-you-ask-what-has-to-ship/2026-08-20",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-08-20T15:21:12Z",
-      "title": "Micron's Biggest Risk Is Written In Its Construction Budget",
-      "url": "https://www.trefis.com/articles/612237/microns-biggest-risk-is-written-in-its-construction-budget/2026-08-20",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-08-20T14:11:45Z",
-      "title": "Tiger Global Added to Its Position in Intel in Q2",
-      "url": "https://www.barchart.com/story/news/3951714/tiger-global-added-to-its-position-in-intel-in-q2",
-      "source": "Barchart"
-    },
-    {
-      "date": "2026-08-20T13:49:34Z",
-      "title": "The Upside Case For Qualcomm Stock Now Carries Purchase Orders",
-      "url": "https://www.trefis.com/articles/612018/the-upside-case-for-qualcomm-stock-now-carries-purchase-orders/2026-08-20",
-      "source": "Trefis"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.026158689589134775,
   "technicals": {
     "ma20": 95.8114990234375,
     "ma50": 108.52079971313476,
@@ -4144,11 +4315,11 @@
     },
     {
       "date": "2026-08-20",
-      "open": 91.91,
+      "open": 91.87,
       "high": 92.68,
       "low": 89.85,
       "close": 92.13,
-      "volume": 85370362.0
+      "volume": 85397600.0
     }
   ],
   "ohlc_1y": [
@@ -6162,11 +6333,11 @@
     },
     {
       "date": "2026-08-20",
-      "open": 91.91,
+      "open": 91.87,
       "high": 92.68,
       "low": 89.85,
       "close": 92.13,
-      "volume": 85370362.0
+      "volume": 85397600.0
     }
   ],
   "ai_synthesis": null,

@@ -1,11 +1,112 @@
 {
   "ticker": "IOT",
-  "fetched_at": "2026-08-20T22:15:21Z",
+  "fetched_at": "2026-08-21T08:11:34Z",
   "_schema": "v2",
   "current_price": 38.97999954223633,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "IOT",
+    "longName": "Samsara Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://www.samsara.com",
+    "fullTimeEmployees": 4100,
+    "marketCap": 22714038272,
+    "enterpriseValue": 21978740736,
+    "trailingPE": 389.8,
+    "forwardPE": 43.314,
+    "priceToSalesTrailing12Months": 13.124989,
+    "enterpriseToRevenue": 12.7,
+    "priceToBook": 15.067646,
+    "grossMargins": 0.76298,
+    "operatingMargins": 0.01503,
+    "profitMargins": 0.03323,
+    "returnOnEquity": 0.043649998,
+    "totalCash": 804318976,
+    "totalDebt": 69020000,
+    "totalRevenue": 1730594944,
+    "freeCashflow": 242680256,
+    "debtToEquity": 4.578,
+    "currentRatio": 1.621,
+    "fiftyTwoWeekHigh": 47.47,
+    "fiftyTwoWeekLow": 23.38,
+    "averageVolume": 6090403,
+    "averageVolume10days": 5080530,
+    "beta": 1.336,
+    "sharesOutstanding": 372784485,
+    "sharesFloat": 358722154,
+    "companyOfficers": [
+      {
+        "name": "Mr. Sanjit  Biswas",
+        "title": "Co-Founder, CEO & Chairman",
+        "age": 43,
+        "yearBorn": 1982
+      },
+      {
+        "name": "Mr. John  Bicket",
+        "title": "Co-Founder, Executive VP, CTO & Director",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Mr. Dominic  Phillips",
+        "title": "Executive VP & CFO",
+        "age": 42,
+        "yearBorn": 1983
+      },
+      {
+        "name": "Mr. Adam  Eltoukhy J.D.",
+        "title": "Executive VP, CAO & Corporate Secretary",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Mr. Robert  Stobaugh",
+        "title": "Chief Operating Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Ben  Kirchhoff",
+        "title": "Chief Accounting Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-04-30T00:00:00",
+      "eps_actual": 0.17,
+      "eps_estimate": 0.13032,
+      "eps_surprise_pct": 0.3045
+    },
+    {
+      "period_end": "2026-01-31T00:00:00",
+      "eps_actual": 0.18,
+      "eps_estimate": 0.12775,
+      "eps_surprise_pct": 0.409
+    },
+    {
+      "period_end": "2025-10-31T00:00:00",
+      "eps_actual": 0.15,
+      "eps_estimate": 0.11867,
+      "eps_surprise_pct": 0.264
+    },
+    {
+      "period_end": "2025-07-31T00:00:00",
+      "eps_actual": 0.12,
+      "eps_estimate": 0.07247,
+      "eps_surprise_pct": 0.65589994
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-09-04",
+    "revenue_low": 482500000,
+    "revenue_high": 484200000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -63,7 +164,89 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 22,
+    "bullish": 17,
+    "neutral": 5,
+    "bearish": 0,
+    "avg_price_target": 45.21905,
+    "high_price_target": 57.6,
+    "low_price_target": 38.0,
+    "current_price": 38.98,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-20T14:12:56",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T14:39:07",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-14T14:10:17",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-10T10:19:17",
+        "firm": "Piper Sandler",
+        "to_grade": "Neutral",
+        "from_grade": "Overweight",
+        "action": "down"
+      },
+      {
+        "date": "2026-07-23T13:07:50",
+        "firm": "Guggenheim",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-06-26T10:58:11",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-25T14:43:54",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-05T17:00:08",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-05T14:04:41",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-05T14:01:48",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-20T10:51:15Z",
@@ -126,19 +309,19 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.033350436512740333,
   "technicals": {
-    "ma20": 38.13800020217896,
-    "ma50": 35.814800109863285,
-    "ma200": 33.61059998512268,
-    "rsi14": 53.724370409195,
+    "ma20": 38.42700023651123,
+    "ma50": 35.88780014038086,
+    "ma200": 33.59609999656677,
+    "rsi14": 53.64292537308688,
     "high_20d": 42.0,
     "low_5d": 38.040000915527344,
     "low_10d": 38.040000915527344,
     "high_52w": 47.470001220703125,
     "low_52w": 23.3799991607666,
-    "atr14": 2.0434281485421315,
-    "atr14_pct": 5.242247748946221,
+    "atr14": 1.960571016584124,
+    "atr14_pct": 5.029684555177508,
     "position_in_52w_range_pct": 64.75715669370446
   },
   "ohlc_2y": [
@@ -4031,6 +4214,14 @@
       "volume": 5273800.0
     },
     {
+      "date": "2026-07-31",
+      "open": 35.77,
+      "high": 37.67,
+      "low": 35.545,
+      "close": 37.27,
+      "volume": 4218300.0
+    },
+    {
       "date": "2026-08-03",
       "open": 37.86,
       "high": 38.84,
@@ -4140,18 +4331,10 @@
       "high": 40.17,
       "low": 38.91,
       "close": 38.98,
-      "volume": 5690679.0
+      "volume": 5690700.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-19",
-      "open": 34.0,
-      "high": 34.195,
-      "low": 33.025,
-      "close": 33.12,
-      "volume": 3330300.0
-    },
     {
       "date": "2025-08-20",
       "open": 32.83,
@@ -6049,6 +6232,14 @@
       "volume": 5273800.0
     },
     {
+      "date": "2026-07-31",
+      "open": 35.77,
+      "high": 37.67,
+      "low": 35.545,
+      "close": 37.27,
+      "volume": 4218300.0
+    },
+    {
       "date": "2026-08-03",
       "open": 37.86,
       "high": 38.84,
@@ -6158,7 +6349,7 @@
       "high": 40.17,
       "low": 38.91,
       "close": 38.98,
-      "volume": 5690679.0
+      "volume": 5690700.0
     }
   ],
   "ai_synthesis": null,

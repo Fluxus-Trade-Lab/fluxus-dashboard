@@ -1,11 +1,112 @@
 {
   "ticker": "RBRK",
-  "fetched_at": "2026-08-20T22:16:06Z",
+  "fetched_at": "2026-08-21T08:13:29Z",
   "_schema": "v2",
   "current_price": 97.5199966430664,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "RBRK",
+    "longName": "Rubrik, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Palo Alto",
+    "website": "https://www.rubrik.com",
+    "fullTimeEmployees": 3797,
+    "marketCap": 20072400896,
+    "enterpriseValue": 19469690880,
+    "trailingPE": null,
+    "forwardPE": 150.80101,
+    "priceToSalesTrailing12Months": 14.08809,
+    "enterpriseToRevenue": 13.665,
+    "priceToBook": -41.69303,
+    "grossMargins": 0.80581003,
+    "operatingMargins": -0.13598,
+    "profitMargins": -0.20254,
+    "returnOnEquity": null,
+    "totalCash": 1749113984,
+    "totalDebt": 1146402944,
+    "totalRevenue": 1424777984,
+    "freeCashflow": 440332128,
+    "debtToEquity": null,
+    "currentRatio": 1.737,
+    "fiftyTwoWeekHigh": 106.5,
+    "fiftyTwoWeekLow": 42.25,
+    "averageVolume": 3652029,
+    "averageVolume10days": 3680220,
+    "beta": 1.168,
+    "sharesOutstanding": 160956763,
+    "sharesFloat": 157409454,
+    "companyOfficers": [
+      {
+        "name": "Mr. Bipul  Sinha",
+        "title": "Co-Founder, CEO & Chairman",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Arvind  Nithrakashyap",
+        "title": "Co-Founder, CTO & Director",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Kiran Kumar Choudary",
+        "title": "Chief Financial Officer",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Arvind  Jain",
+        "title": "Co-Founder",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Ajay  Sabhlok",
+        "title": "Chief Information Officer & Chief Data Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Melissa A. Franchi",
+        "title": "Head of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-04-30T00:00:00",
+      "eps_actual": 0.16,
+      "eps_estimate": -0.02817,
+      "eps_surprise_pct": 6.6798
+    },
+    {
+      "period_end": "2026-01-31T00:00:00",
+      "eps_actual": 0.04,
+      "eps_estimate": -0.10854,
+      "eps_surprise_pct": 1.3685001
+    },
+    {
+      "period_end": "2025-10-31T00:00:00",
+      "eps_actual": 0.1,
+      "eps_estimate": -0.17244,
+      "eps_surprise_pct": 1.5799
+    },
+    {
+      "period_end": "2025-07-31T00:00:00",
+      "eps_actual": -0.03,
+      "eps_estimate": -0.34192,
+      "eps_surprise_pct": 0.91230005
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-08-28",
+    "revenue_low": 395800000,
+    "revenue_high": 397200000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -63,7 +164,89 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 29,
+    "bullish": 29,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 100.59259,
+    "high_price_target": 135.0,
+    "low_price_target": 85.0,
+    "current_price": 97.52,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-20T10:57:46",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T17:49:20",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T14:36:14",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T14:21:43",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T09:28:22",
+        "firm": "Loop Capital",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-16T12:33:38",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-10T16:42:58",
+        "firm": "BMO Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-15T13:49:30",
+        "firm": "Stephens & Co.",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-11T14:45:57",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-11T14:02:52",
+        "firm": "Wedbush",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "reit"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-19T15:38:47Z",
@@ -126,19 +309,19 @@
       "source": "Motley Fool"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.08859721387833228,
   "technicals": {
-    "ma20": 87.42999954223633,
-    "ma50": 81.309599609375,
-    "ma200": 67.74109996795654,
-    "rsi14": 63.293406032658645,
+    "ma20": 87.416499710083,
+    "ma50": 81.32199966430665,
+    "ma200": 67.72654998779296,
+    "rsi14": 63.71079297521704,
     "high_20d": 106.5,
     "low_5d": 96.38999938964844,
     "low_10d": 86.98999786376953,
     "high_52w": 106.5,
     "low_52w": 42.25,
-    "atr14": 5.232198987688337,
-    "atr14_pct": 5.3652575551645505,
+    "atr14": 5.17649895804269,
+    "atr14_pct": 5.308141033873523,
     "position_in_52w_range_pct": 86.02334107870257
   },
   "ohlc_2y": [
@@ -4031,6 +4214,14 @@
       "volume": 1975700.0
     },
     {
+      "date": "2026-07-31",
+      "open": 72.07,
+      "high": 73.67,
+      "low": 70.13,
+      "close": 72.36,
+      "volume": 1817800.0
+    },
+    {
       "date": "2026-08-03",
       "open": 74.47,
       "high": 75.02,
@@ -4137,21 +4328,13 @@
     {
       "date": "2026-08-20",
       "open": 99.72,
-      "high": 100.6278,
+      "high": 100.628,
       "low": 97.29,
       "close": 97.52,
-      "volume": 2846879.0
+      "volume": 2846900.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-19",
-      "open": 86.59,
-      "high": 87.22,
-      "low": 82.75,
-      "close": 83.97,
-      "volume": 2493300.0
-    },
     {
       "date": "2025-08-20",
       "open": 82.93,
@@ -6049,6 +6232,14 @@
       "volume": 1975700.0
     },
     {
+      "date": "2026-07-31",
+      "open": 72.07,
+      "high": 73.67,
+      "low": 70.13,
+      "close": 72.36,
+      "volume": 1817800.0
+    },
+    {
       "date": "2026-08-03",
       "open": 74.47,
       "high": 75.02,
@@ -6155,10 +6346,10 @@
     {
       "date": "2026-08-20",
       "open": 99.72,
-      "high": 100.6278,
+      "high": 100.628,
       "low": 97.29,
       "close": 97.52,
-      "volume": 2846879.0
+      "volume": 2846900.0
     }
   ],
   "ai_synthesis": null,

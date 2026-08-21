@@ -1,11 +1,112 @@
 {
   "ticker": "APPS",
-  "fetched_at": "2026-08-20T22:17:02Z",
+  "fetched_at": "2026-08-21T08:10:43Z",
   "_schema": "v2",
   "current_price": 10.710000038146973,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "APPS",
+    "longName": "Digital Turbine, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Application",
+    "exchange": "NCM",
+    "country": "United States",
+    "city": "Austin",
+    "website": "https://www.digitalturbine.com",
+    "fullTimeEmployees": 620,
+    "marketCap": 1296083968,
+    "enterpriseValue": 1609344000,
+    "trailingPE": null,
+    "forwardPE": 11.2736845,
+    "priceToSalesTrailing12Months": 2.1590319,
+    "enterpriseToRevenue": 2.681,
+    "priceToBook": 6.7999997,
+    "grossMargins": 0.49080002,
+    "operatingMargins": 0.13894,
+    "profitMargins": -0.058229998,
+    "returnOnEquity": -0.2039,
+    "totalCash": 42930000,
+    "totalDebt": 356089984,
+    "totalRevenue": 600307968,
+    "freeCashflow": 28919250,
+    "debtToEquity": 186.834,
+    "currentRatio": 1.205,
+    "fiftyTwoWeekHigh": 15.34,
+    "fiftyTwoWeekLow": 2.74,
+    "averageVolume": 6424420,
+    "averageVolume10days": 3119900,
+    "beta": 2.843,
+    "sharesOutstanding": 121016250,
+    "sharesFloat": 109474930,
+    "companyOfficers": [
+      {
+        "name": "Mr. William Gordon Stone III",
+        "title": "CEO & Director",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Joshua  Kinsell",
+        "title": "Interim CFO & Chief Accounting Officer",
+        "age": 39,
+        "yearBorn": 1986
+      },
+      {
+        "name": "Mr. Michael  Akkerman",
+        "title": "Chief Business Officer",
+        "age": 40,
+        "yearBorn": 1985
+      },
+      {
+        "name": "Mr. Benneaser  John",
+        "title": "Chief Technology Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Brian  Bartholomew",
+        "title": "Senior VP of Capital Markets & Strategy and Investor Relations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Angeline  Tucker",
+        "title": "Chief People Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.19,
+      "eps_estimate": 0.14,
+      "eps_surprise_pct": 0.35709998
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.16,
+      "eps_estimate": 0.085,
+      "eps_surprise_pct": 0.8824
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.18,
+      "eps_estimate": 0.115,
+      "eps_surprise_pct": 0.56520003
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.15,
+      "eps_estimate": 0.05,
+      "eps_surprise_pct": 2.0
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 166400000,
+    "revenue_high": 168354400
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -63,7 +164,89 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 2,
+    "bullish": 2,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 17.16667,
+    "high_price_target": 18.0,
+    "low_price_target": 16.0,
+    "current_price": 10.71,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-05T18:57:32",
+        "firm": "Benchmark",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-22T16:32:43",
+        "firm": "Benchmark",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-21T18:19:55",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "init"
+      },
+      {
+        "date": "2026-05-27T18:01:48",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2025-08-06T11:06:40",
+        "firm": "B of A Securities",
+        "to_grade": "Neutral",
+        "from_grade": "Underperform",
+        "action": "up"
+      },
+      {
+        "date": "2025-06-17T14:02:14",
+        "firm": "Craig-Hallum",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2024-11-15T17:04:00",
+        "firm": "B of A Securities",
+        "to_grade": "Underperform",
+        "from_grade": "Neutral",
+        "action": "down"
+      },
+      {
+        "date": "2024-11-07T19:17:37",
+        "firm": "Macquarie",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2024-11-07T19:10:21",
+        "firm": "Craig-Hallum",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2024-05-29T12:11:03",
+        "firm": "Roth MKM",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-18T18:26:00Z",
@@ -126,7 +309,7 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03921568613483103,
   "technicals": {
     "ma20": 11.067999982833863,
     "ma50": 10.48,
@@ -4145,10 +4328,10 @@
     {
       "date": "2026-08-20",
       "open": 11.07,
-      "high": 11.155,
+      "high": 11.16,
       "low": 10.68,
       "close": 10.71,
-      "volume": 1937141.0
+      "volume": 1937100.0
     }
   ],
   "ohlc_1y": [
@@ -6163,10 +6346,10 @@
     {
       "date": "2026-08-20",
       "open": 11.07,
-      "high": 11.155,
+      "high": 11.16,
       "low": 10.68,
       "close": 10.71,
-      "volume": 1937141.0
+      "volume": 1937100.0
     }
   ],
   "ai_synthesis": null,

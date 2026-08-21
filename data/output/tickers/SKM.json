@@ -1,11 +1,87 @@
 {
   "ticker": "SKM",
-  "fetched_at": "2026-08-20T22:16:09Z",
+  "fetched_at": "2026-08-21T08:13:35Z",
   "_schema": "v2",
   "current_price": 38.310001373291016,
-  "info": {},
+  "info": {
+    "symbol": "SKM",
+    "longName": "SK Telecom Co., Ltd.",
+    "sector": "Communication Services",
+    "industry": "Telecom Services",
+    "exchange": "NYQ",
+    "country": "South Korea",
+    "city": "Seoul",
+    "website": "https://www.sktelecom.com",
+    "fullTimeEmployees": null,
+    "marketCap": 14706754560,
+    "enterpriseValue": 8276322811904,
+    "trailingPE": 28.804512,
+    "forwardPE": 14.233012,
+    "priceToSalesTrailing12Months": 0.0008621564,
+    "enterpriseToRevenue": 0.485,
+    "priceToBook": 1.5872775,
+    "grossMargins": 0.70395,
+    "operatingMargins": 0.1303,
+    "profitMargins": 0.04381,
+    "returnOnEquity": 0.05189,
+    "totalCash": 2036531986432,
+    "totalDebt": 10239650824192,
+    "totalRevenue": 17058105393152,
+    "freeCashflow": 939747639296,
+    "debtToEquity": 66.084,
+    "currentRatio": 1.232,
+    "fiftyTwoWeekHigh": 47.18,
+    "fiftyTwoWeekLow": 19.66,
+    "averageVolume": 2743532,
+    "averageVolume10days": 1828050,
+    "beta": 0.687,
+    "sharesOutstanding": 383888128,
+    "sharesFloat": 267404359,
+    "companyOfficers": [
+      {
+        "name": "Mr. Jai Hun  Jung",
+        "title": "CEO & Representative Director",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Ki Yoon  Lee",
+        "title": "Head of CR Center",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Myung-Jin  Han",
+        "title": "President & Head of MNO Company in-Company Unit and Executive Director",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Hee Sup  Kim",
+        "title": "Head of PR Center",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Bong Ho  Lim",
+        "title": "Head of MNO Business Division",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Yong Joo  Park",
+        "title": "Vice President",
+        "age": 60,
+        "yearBorn": 1965
+      }
+    ]
+  },
   "earnings_history": [],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-10-30",
+    "revenue_low": 4430000000000,
+    "revenue_high": 4528000000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -63,7 +139,47 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Hold",
+    "total_ratings": 3,
+    "bullish": 1,
+    "neutral": 1,
+    "bearish": 1,
+    "avg_price_target": 34.57037,
+    "high_price_target": 40.0,
+    "low_price_target": 30.0,
+    "current_price": 38.31,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-16T10:26:17",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2025-05-12T18:09:59",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Overweight",
+        "action": "down"
+      },
+      {
+        "date": "2025-05-06T15:37:40",
+        "firm": "Citigroup",
+        "to_grade": "Neutral",
+        "from_grade": "Buy",
+        "action": "down"
+      },
+      {
+        "date": "2024-02-05T17:23:53",
+        "firm": "Nomura",
+        "to_grade": "Reduce",
+        "from_grade": "Neutral",
+        "action": "down"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-09T06:03:50Z",
@@ -126,7 +242,7 @@
       "source": "BeInCrypto"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.05037848944963908,
   "technicals": {
     "ma20": 34.95999975204468,
     "ma50": 34.13299980163574,
@@ -4148,7 +4264,7 @@
       "high": 38.7,
       "low": 37.97,
       "close": 38.31,
-      "volume": 1454697.0
+      "volume": 1454800.0
     }
   ],
   "ohlc_1y": [
@@ -6166,7 +6282,7 @@
       "high": 38.7,
       "low": 37.97,
       "close": 38.31,
-      "volume": 1454697.0
+      "volume": 1454800.0
     }
   ],
   "ai_synthesis": null,

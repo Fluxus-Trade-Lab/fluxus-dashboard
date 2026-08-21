@@ -1,11 +1,112 @@
 {
   "ticker": "VECO",
-  "fetched_at": "2026-08-20T22:16:48Z",
+  "fetched_at": "2026-08-21T08:14:54Z",
   "_schema": "v2",
   "current_price": 47.20000076293945,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "VECO",
+    "longName": "Veeco Instruments Inc.",
+    "sector": "Technology",
+    "industry": "Semiconductor Equipment & Materials",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Plainview",
+    "website": "https://www.veeco.com",
+    "fullTimeEmployees": 1265,
+    "marketCap": 2880780544,
+    "enterpriseValue": 2717107968,
+    "trailingPE": 124.21053,
+    "forwardPE": 16.243376,
+    "priceToSalesTrailing12Months": 4.2262115,
+    "enterpriseToRevenue": 3.98,
+    "priceToBook": 3.1960998,
+    "grossMargins": 0.37917998,
+    "operatingMargins": 0.06883,
+    "profitMargins": 0.03404,
+    "returnOnEquity": 0.02643,
+    "totalCash": 429398016,
+    "totalDebt": 261187008,
+    "totalRevenue": 682720000,
+    "freeCashflow": 72047000,
+    "debtToEquity": 28.931,
+    "currentRatio": 3.926,
+    "fiftyTwoWeekHigh": 86.63,
+    "fiftyTwoWeekLow": 23.31,
+    "averageVolume": 1302446,
+    "averageVolume10days": 729020,
+    "beta": 1.386,
+    "sharesOutstanding": 61033485,
+    "sharesFloat": 59933333,
+    "companyOfficers": [
+      {
+        "name": "Dr. William John Miller Ph.D.",
+        "title": "CEO & Director",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. John P. Kiernan CPA",
+        "title": "Senior VP & CFO",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Dr. Peter  Porshnev Ph.D.",
+        "title": "Senior VP of Digital Solutions & CTO",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Ms. Susan  Wilkerson",
+        "title": "Senior Vice President of Global Sales & Services",
+        "age": 64,
+        "yearBorn": 1961
+      },
+      {
+        "name": "Dr. Adrian  Devasahayam Ph.D.",
+        "title": "Senior VP & GM of Ion Beam Technologies",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Jean-Charles  Bossert",
+        "title": "Senior Vice President of Global Operations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.33,
+      "eps_estimate": 0.28421,
+      "eps_surprise_pct": 0.1611
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.14,
+      "eps_estimate": 0.23012,
+      "eps_surprise_pct": -0.3916
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.24,
+      "eps_estimate": 0.26095,
+      "eps_surprise_pct": -0.080299996
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.36,
+      "eps_estimate": 0.2801,
+      "eps_surprise_pct": 0.28530002
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 209980000,
+    "revenue_high": 220000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -63,7 +164,89 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Hold",
+    "total_ratings": 4,
+    "bullish": 1,
+    "neutral": 3,
+    "bearish": 0,
+    "avg_price_target": 61.33333,
+    "high_price_target": 66.0,
+    "low_price_target": 55.0,
+    "current_price": 47.2,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-10T14:29:31",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-19T12:46:58",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-06T19:04:09",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-02-26T20:10:49",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-11-12T20:31:35",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-10-03T10:57:23",
+        "firm": "Needham",
+        "to_grade": "Hold",
+        "from_grade": "Buy",
+        "action": "down"
+      },
+      {
+        "date": "2025-08-07T17:27:24",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-08-07T12:17:24",
+        "firm": "Benchmark",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-05-09T18:17:03",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2025-05-08T16:40:22",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-17T20:19:21Z",
@@ -126,12 +309,12 @@
       "source": "Trefis"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.08898304940913816,
   "technicals": {
     "ma20": 50.3995002746582,
-    "ma50": 59.354600219726564,
-    "ma200": 42.7478000164032,
-    "rsi14": 40.47205677608899,
+    "ma50": 58.98540008544922,
+    "ma200": 43.00710000038147,
+    "rsi14": 40.437368016277176,
     "high_20d": 56.040000915527344,
     "low_5d": 46.45000076293945,
     "low_10d": 46.45000076293945,
@@ -3967,6 +4150,22 @@
       "volume": 781600.0
     },
     {
+      "date": "2026-07-21",
+      "open": 52.83,
+      "high": 55.28,
+      "low": 52.25,
+      "close": 55.17,
+      "volume": 846500.0
+    },
+    {
+      "date": "2026-07-22",
+      "open": 53.01,
+      "high": 55.94,
+      "low": 52.99,
+      "close": 54.6,
+      "volume": 461900.0
+    },
+    {
       "date": "2026-07-23",
       "open": 53.44,
       "high": 55.71,
@@ -4128,30 +4327,14 @@
     },
     {
       "date": "2026-08-20",
-      "open": 47.12,
+      "open": 46.96,
       "high": 47.95,
       "low": 46.45,
       "close": 47.2,
-      "volume": 483664.0
+      "volume": 483700.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-18",
-      "open": 23.88,
-      "high": 24.21,
-      "low": 23.76,
-      "close": 24.16,
-      "volume": 537700.0
-    },
-    {
-      "date": "2025-08-19",
-      "open": 24.29,
-      "high": 24.59,
-      "low": 24.02,
-      "close": 24.29,
-      "volume": 494700.0
-    },
     {
       "date": "2025-08-20",
       "open": 24.29,
@@ -5985,6 +6168,22 @@
       "volume": 781600.0
     },
     {
+      "date": "2026-07-21",
+      "open": 52.83,
+      "high": 55.28,
+      "low": 52.25,
+      "close": 55.17,
+      "volume": 846500.0
+    },
+    {
+      "date": "2026-07-22",
+      "open": 53.01,
+      "high": 55.94,
+      "low": 52.99,
+      "close": 54.6,
+      "volume": 461900.0
+    },
+    {
       "date": "2026-07-23",
       "open": 53.44,
       "high": 55.71,
@@ -6146,11 +6345,11 @@
     },
     {
       "date": "2026-08-20",
-      "open": 47.12,
+      "open": 46.96,
       "high": 47.95,
       "low": 46.45,
       "close": 47.2,
-      "volume": 483664.0
+      "volume": 483700.0
     }
   ],
   "ai_synthesis": null,

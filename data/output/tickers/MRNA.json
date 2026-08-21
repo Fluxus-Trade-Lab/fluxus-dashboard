@@ -1,11 +1,112 @@
 {
   "ticker": "MRNA",
-  "fetched_at": "2026-08-20T22:15:27Z",
+  "fetched_at": "2026-08-21T08:11:59Z",
   "_schema": "v2",
   "current_price": 133.32000732421875,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "MRNA",
+    "longName": "Moderna, Inc.",
+    "sector": "Healthcare",
+    "industry": "Biotechnology",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Cambridge",
+    "website": "https://www.modernatx.com",
+    "fullTimeEmployees": 4700,
+    "marketCap": 53226135552,
+    "enterpriseValue": 49375129600,
+    "trailingPE": null,
+    "forwardPE": -29.093546,
+    "priceToSalesTrailing12Months": 23.889648,
+    "enterpriseToRevenue": 22.161,
+    "priceToBook": 7.8678083,
+    "grossMargins": -0.66023004,
+    "operatingMargins": -5.5793104,
+    "profitMargins": -1.41427,
+    "returnOnEquity": -0.38998002,
+    "totalCash": 5137999872,
+    "totalDebt": 1287000064,
+    "totalRevenue": 2228000000,
+    "freeCashflow": 299249984,
+    "debtToEquity": 19.036,
+    "currentRatio": 2.295,
+    "fiftyTwoWeekHigh": 176.66,
+    "fiftyTwoWeekLow": 22.28,
+    "averageVolume": 11432303,
+    "averageVolume10days": 34569470,
+    "beta": 0.899,
+    "sharesOutstanding": 399235889,
+    "sharesFloat": 372267505,
+    "companyOfficers": [
+      {
+        "name": "Mr. St\u00e9phane  Bancel M.B.A.",
+        "title": "CEO & Director",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Dr. Stephen  Hoge M.D.",
+        "title": "President",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. James M. Mock",
+        "title": "Chief Financial Officer",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Ms. Shannon Thyme Klinger J.D.",
+        "title": "Chief Legal Officer & Corporate Secretary",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Dr. Jerh  Collins Ph.D.",
+        "title": "Chief Technical Operations & Quality Officer",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Ms. Lavina  Talukdar CFA",
+        "title": "Senior VP & Head of Investor Relations",
+        "age": 51,
+        "yearBorn": 1974
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -1.97,
+      "eps_estimate": -2.05918,
+      "eps_surprise_pct": 0.0433
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -3.4,
+      "eps_estimate": -3.87993,
+      "eps_surprise_pct": 0.1237
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -2.11,
+      "eps_estimate": -2.60104,
+      "eps_surprise_pct": 0.18879999
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.51,
+      "eps_estimate": -2.17919,
+      "eps_surprise_pct": 0.766
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 827000000,
+    "revenue_high": 943800000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -63,7 +164,89 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Hold",
+    "total_ratings": 24,
+    "bullish": 4,
+    "neutral": 16,
+    "bearish": 4,
+    "avg_price_target": 89.33333,
+    "high_price_target": 170.0,
+    "low_price_target": 25.0,
+    "current_price": 133.32,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-20T17:57:00",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T15:53:40",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T10:23:02",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T19:34:17",
+        "firm": "William Blair",
+        "to_grade": "Outperform",
+        "from_grade": "Market Perform",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-03T18:41:23",
+        "firm": "Citigroup",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-21T12:40:35",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-08T17:11:40",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-07T16:00:47",
+        "firm": "RBC Capital",
+        "to_grade": "Sector Perform",
+        "from_grade": "Sector Perform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-07T14:22:04",
+        "firm": "B of A Securities",
+        "to_grade": "Underperform",
+        "from_grade": "Underperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-26T16:47:19",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-20T15:42:00Z",
@@ -72,16 +255,46 @@
       "source": "Yahoo Finance Video"
     },
     {
+      "date": "2026-08-21T05:09:31Z",
+      "title": "SELLAS Life Sciences Group (SLS) Shares Just Moved, So What Is Drawing Attention?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/sellas-life-sciences-group-sls-050931079.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-21T03:09:23Z",
+      "title": "Dow Jones Futures: Market Triggers This Bearish Signal As Walmart, SpaceX, CrowdStrike Tumble",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-triggers-bearish-signal-walmart-spacex-crowdstrike/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
+    },
+    {
+      "date": "2026-08-21T02:46:37Z",
+      "title": "SLS, IBRX Stocks In Focus: Analyst Says Moderna-Merck Cancer Vaccine Success \u2018Bodes Well\u2019 For Oncology",
+      "url": "https://stocktwits.com/news-articles/markets/equity/sls-ibrx-analyst-moderna-merck-cancer-vaccine-bodes-well-oncology/cZYBiezRJNG",
+      "source": "Stocktwits"
+    },
+    {
+      "date": "2026-08-21T01:11:30Z",
+      "title": "Moderna (MRNA) Clears A Phase 3 Milestone, Is The Upside Already Priced In?",
+      "url": "https://finance.yahoo.com/healthcare/articles/moderna-mrna-clears-phase-3-011130683.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-20T23:55:00Z",
+      "title": "Review & Preview: The Market\u2019s Terrible, Horrible, No Good, Very Bad Day",
+      "url": "https://www.barrons.com/articles/stocks-today-bond-market-drives-stocks-lower-e03116ff?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
       "date": "2026-08-20T22:05:00Z",
       "title": "Moderna's Comeback Is Finally Taking Shape -- and There May Be More Upside Ahead",
       "url": "https://www.fool.com/investing/2026/08/20/modernas-comeback-is-finally-taking-shape-and-ther/",
       "source": "Motley Fool"
     },
     {
-      "date": "2026-08-20T21:36:47Z",
-      "title": "Dow Jones Futures: Market Triggers This Bearish Signal As Walmart, SpaceX, CrowdStrike Tumble",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-triggers-bearish-signal-walmart-spacex-crowdstrike/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
+      "date": "2026-08-20T21:49:03Z",
+      "title": "Stocks to Watch Thursday Recap: Strategy, Moderna, Walmart",
+      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-08-20-2026/card/stocks-to-watch-walmart-strategy-coty-XvpD0Ek1c1L2mYLRAVwB?siteid=yhoof2&yptr=yahoo",
+      "source": "The Wall Street Journal"
     },
     {
       "date": "2026-08-20T21:08:00Z",
@@ -94,39 +307,9 @@
       "title": "Why Moderna (MRNA) Stock Is Trading Lower Today",
       "url": "https://finance.yahoo.com/healthcare/articles/why-moderna-mrna-stock-trading-204315382.html",
       "source": "StockStory"
-    },
-    {
-      "date": "2026-08-20T20:42:02Z",
-      "title": "Update: Equities Drop to Lowest in More Than 2 Weeks as Yields Rise",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/equities-drop-lowest-more-2-204202654.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-20T20:32:00Z",
-      "title": "Moderna, Walmart, Coinbase, Deere, SpaceX, Tesla, and More Stocks That Explain Today\u2019s Market",
-      "url": "https://www.barrons.com/articles/stock-movers-dee21e98?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-20T20:30:03Z",
-      "title": "US Equity Indexes Fall After Trump Warns of Severe Economic Actions Against Iran, Driving Up Oil Prices, Bond Yields",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-fall-trump-203003295.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-20T20:20:04Z",
-      "title": "Moderna Stock Flashes Warning After 177% Surge",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/moderna-stock-flashes-warning-177-202004257.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-08-20T20:20:00Z",
-      "title": "Why Merck Stock Got Downgraded After a Massive Cancer-Vaccine Win",
-      "url": "https://www.barrons.com/articles/merck-moderna-stock-cancer-vaccine-75fb1df3?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.1095859525755214,
   "technicals": {
     "ma20": 68.01450061798096,
     "ma50": 65.62070022583008,
@@ -4144,11 +4327,11 @@
     },
     {
       "date": "2026-08-20",
-      "open": 150.1125,
+      "open": 150.14,
       "high": 155.0,
       "low": 128.61,
       "close": 133.32,
-      "volume": 99116829.0
+      "volume": 99113800.0
     }
   ],
   "ohlc_1y": [
@@ -6162,11 +6345,11 @@
     },
     {
       "date": "2026-08-20",
-      "open": 150.1125,
+      "open": 150.14,
       "high": 155.0,
       "low": 128.61,
       "close": 133.32,
-      "volume": 99116829.0
+      "volume": 99113800.0
     }
   ],
   "ai_synthesis": null,

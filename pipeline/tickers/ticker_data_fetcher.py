@@ -502,6 +502,19 @@ def write_ticker_json(symbol: str, data: dict, output_dir: Path = OUTPUT_DIR) ->
     output_dir.mkdir(parents=True, exist_ok=True)
     safe = symbol.upper().replace('/', '_').replace('^', '_')
     path = output_dir / f'{safe}.json'
+    # Same disease, second organ: fetch_info returns {} on a 429 and that {}
+    # used to overwrite yesterday's good info (41/188 files were bars-only on
+    # 2026-08-21). An empty info does not overwrite either -- the previous
+    # info is carried forward with its own age stamp so the page can say
+    # "fundamentals as of <date>" instead of rendering an empty block.
+    if not data.get('info') and path.exists():
+        try:
+            old = json.load(open(path))
+            if old.get('info'):
+                data['info'] = old['info']
+                data['info_as_of'] = old.get('info_as_of') or old.get('fetched_at')
+        except Exception:
+            pass
     with open(path, 'w') as f:
         json.dump(data, f, indent=2, default=str)
     return path

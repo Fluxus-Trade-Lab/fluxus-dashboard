@@ -1,11 +1,112 @@
 {
   "ticker": "GLW",
-  "fetched_at": "2026-08-20T22:15:00Z",
+  "fetched_at": "2026-08-21T08:11:22Z",
   "_schema": "v2",
   "current_price": 151.4499969482422,
-  "info": {},
-  "earnings_history": [],
-  "next_earnings": {},
+  "info": {
+    "symbol": "GLW",
+    "longName": "Corning Incorporated",
+    "sector": "Technology",
+    "industry": "Electronic Components",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Corning",
+    "website": "https://www.corning.com",
+    "fullTimeEmployees": 67200,
+    "marketCap": 130457264128,
+    "enterpriseValue": 137899261952,
+    "trailingPE": 70.44186,
+    "forwardPE": 35.053974,
+    "priceToSalesTrailing12Months": 7.674614,
+    "enterpriseToRevenue": 8.129,
+    "priceToBook": 10.924764,
+    "grossMargins": 0.36395,
+    "operatingMargins": 0.15649,
+    "profitMargins": 0.111999996,
+    "returnOnEquity": 0.16813,
+    "totalCash": 2504000000,
+    "totalDebt": 9379000320,
+    "totalRevenue": 16963999744,
+    "freeCashflow": 734499968,
+    "debtToEquity": 71.448,
+    "currentRatio": 1.813,
+    "fiftyTwoWeekHigh": 271.78,
+    "fiftyTwoWeekLow": 64.33,
+    "averageVolume": 14194617,
+    "averageVolume10days": 9509980,
+    "beta": 1.148,
+    "sharesOutstanding": 861388331,
+    "sharesFloat": 790547755,
+    "companyOfficers": [
+      {
+        "name": "Mr. Wendell P. Weeks",
+        "title": "Chairman, President & CEO",
+        "age": 65,
+        "yearBorn": 1960
+      },
+      {
+        "name": "Mr. Edward A. Schlesinger",
+        "title": "Executive Vice President & Chief Financial Officer",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Avery H. Nelson III",
+        "title": "Executive VP & COO",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Lewis A. Steverson J.D.",
+        "title": "Vice Chairman, EVP & Chief Legal and Administrative Officer",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. John Z. Zhang",
+        "title": "EVP & Chief Corporate Development Officer",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Dr. Jaymin  Amin",
+        "title": "Senior VP & CTO",
+        "age": 56,
+        "yearBorn": 1969
+      }
+    ]
+  },
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.78,
+      "eps_estimate": 0.75378,
+      "eps_surprise_pct": 0.0348
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.7,
+      "eps_estimate": 0.6916,
+      "eps_surprise_pct": 0.0121
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.72,
+      "eps_estimate": 0.70535,
+      "eps_surprise_pct": 0.0208
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.67,
+      "eps_estimate": 0.66471,
+      "eps_surprise_pct": 0.008
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-27",
+    "revenue_low": 4950000000,
+    "revenue_high": 5108020550
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -63,7 +164,89 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 16,
+    "bullish": 10,
+    "neutral": 5,
+    "bearish": 1,
+    "avg_price_target": 191.4,
+    "high_price_target": 226.0,
+    "low_price_target": 129.0,
+    "current_price": 151.45,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-03T09:27:48",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-07-29T18:57:07",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T16:25:30",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T15:02:33",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T13:38:10",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T12:11:30",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T11:11:20",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-13T17:52:35",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-07T13:49:12",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-06T10:52:20",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-20T12:55:00Z",
@@ -130,8 +313,8 @@
   "technicals": {
     "ma20": 152.27849922180175,
     "ma50": 174.47419998168945,
-    "ma200": 140.09807174682618,
-    "rsi14": 44.887411042331784,
+    "ma200": 140.0980714035034,
+    "rsi14": 44.88741104269115,
     "high_20d": 176.94000244140625,
     "low_5d": 149.25,
     "low_10d": 149.25,
@@ -184,7 +367,7 @@
     },
     {
       "date": "2024-08-28",
-      "open": 41.0906,
+      "open": 41.0905,
       "high": 41.1388,
       "low": 40.5787,
       "close": 40.8684,
@@ -298,7 +481,7 @@
       "date": "2024-09-18",
       "open": 42.1644,
       "high": 42.6408,
-      "low": 41.9699,
+      "low": 41.97,
       "close": 42.213,
       "volume": 3846000.0
     },
@@ -306,7 +489,7 @@
       "date": "2024-09-19",
       "open": 43.6324,
       "high": 43.9921,
-      "low": 42.5436,
+      "low": 42.5435,
       "close": 43.1949,
       "volume": 7478800.0
     },
@@ -377,7 +560,7 @@
     {
       "date": "2024-10-02",
       "open": 43.3213,
-      "high": 43.9144,
+      "high": 43.9143,
       "low": 43.1366,
       "close": 43.6616,
       "volume": 2525200.0
@@ -641,7 +824,7 @@
     {
       "date": "2024-11-18",
       "open": 45.5269,
-      "high": 45.6638,
+      "high": 45.6639,
       "low": 44.9988,
       "close": 45.4193,
       "volume": 3590000.0
@@ -778,7 +961,7 @@
       "date": "2024-12-12",
       "open": 46.5147,
       "high": 47.9524,
-      "low": 46.456,
+      "low": 46.4561,
       "close": 47.5417,
       "volume": 4900700.0
     },
@@ -818,7 +1001,7 @@
       "date": "2024-12-19",
       "open": 45.8203,
       "high": 46.4658,
-      "low": 45.6639,
+      "low": 45.6638,
       "close": 46.0257,
       "volume": 4498400.0
     },
@@ -858,7 +1041,7 @@
       "date": "2024-12-27",
       "open": 46.5636,
       "high": 47.0135,
-      "low": 46.4071,
+      "low": 46.4072,
       "close": 46.7299,
       "volume": 2255000.0
     },
@@ -872,7 +1055,7 @@
     },
     {
       "date": "2024-12-31",
-      "open": 46.5539,
+      "open": 46.5538,
       "high": 46.6321,
       "low": 46.1626,
       "close": 46.4756,
@@ -897,7 +1080,7 @@
     {
       "date": "2025-01-06",
       "open": 46.7299,
-      "high": 47.395,
+      "high": 47.3949,
       "low": 46.5343,
       "close": 47.2776,
       "volume": 3713100.0
@@ -1112,7 +1295,7 @@
     },
     {
       "date": "2025-02-14",
-      "open": 51.0039,
+      "open": 51.0038,
       "high": 51.6885,
       "low": 50.6713,
       "close": 51.3853,
@@ -1216,7 +1399,7 @@
     },
     {
       "date": "2025-03-06",
-      "open": 45.4837,
+      "open": 45.4836,
       "high": 46.2214,
       "low": 44.6672,
       "close": 44.7656,
@@ -1392,7 +1575,7 @@
     },
     {
       "date": "2025-04-07",
-      "open": 37.221,
+      "open": 37.2211,
       "high": 40.8999,
       "low": 36.6997,
       "close": 38.9621,
@@ -1457,7 +1640,7 @@
     {
       "date": "2025-04-17",
       "open": 40.9589,
-      "high": 41.3523,
+      "high": 41.3524,
       "low": 40.6245,
       "close": 40.8409,
       "volume": 4979000.0
@@ -1880,7 +2063,7 @@
     },
     {
       "date": "2025-07-07",
-      "open": 52.3676,
+      "open": 52.3675,
       "high": 52.6346,
       "low": 51.7444,
       "close": 51.8136,
@@ -1899,7 +2082,7 @@
       "open": 52.5852,
       "high": 52.5852,
       "low": 51.7641,
-      "close": 52.0016,
+      "close": 52.0015,
       "volume": 3088100.0
     },
     {
@@ -1914,7 +2097,7 @@
       "date": "2025-07-11",
       "open": 51.4377,
       "high": 51.5465,
-      "low": 50.9135,
+      "low": 50.9134,
       "close": 51.042,
       "volume": 4098100.0
     },
@@ -1961,7 +2144,7 @@
     {
       "date": "2025-07-21",
       "open": 53.4161,
-      "high": 53.8315,
+      "high": 53.8316,
       "low": 53.0996,
       "close": 53.3172,
       "volume": 2993800.0
@@ -2099,7 +2282,7 @@
       "open": 65.3061,
       "high": 65.5435,
       "low": 64.2477,
-      "close": 65.0292,
+      "close": 65.0291,
       "volume": 4295300.0
     },
     {
@@ -2144,7 +2327,7 @@
     },
     {
       "date": "2025-08-21",
-      "open": 63.8125,
+      "open": 63.8124,
       "high": 64.406,
       "low": 63.6344,
       "close": 64.1883,
@@ -2187,7 +2370,7 @@
       "open": 66.6613,
       "high": 68.5408,
       "low": 66.5921,
-      "close": 68.1847,
+      "close": 68.1846,
       "volume": 7266900.0
     },
     {
@@ -2322,7 +2505,7 @@
       "date": "2025-09-23",
       "open": 78.6631,
       "high": 80.4708,
-      "low": 78.4843,
+      "low": 78.4844,
       "close": 80.4509,
       "volume": 8654200.0
     },
@@ -2410,13 +2593,13 @@
       "date": "2025-10-08",
       "open": 84.692,
       "high": 86.4798,
-      "low": 84.1854,
+      "low": 84.1855,
       "close": 86.4798,
       "volume": 6088100.0
     },
     {
       "date": "2025-10-09",
-      "open": 86.5592,
+      "open": 86.5593,
       "high": 87.1552,
       "low": 85.5462,
       "close": 86.599,
@@ -2449,7 +2632,7 @@
     {
       "date": "2025-10-15",
       "open": 85.4766,
-      "high": 86.8373,
+      "high": 86.8374,
       "low": 84.8906,
       "close": 86.0328,
       "volume": 6427600.0
@@ -2491,7 +2674,7 @@
       "open": 85.4866,
       "high": 86.748,
       "low": 82.5168,
-      "close": 83.5697,
+      "close": 83.5696,
       "volume": 8440400.0
     },
     {
@@ -2769,7 +2952,7 @@
     {
       "date": "2025-12-11",
       "open": 93.3425,
-      "high": 96.3123,
+      "high": 96.3124,
       "low": 91.6881,
       "close": 95.6446,
       "volume": 8895200.0
@@ -2842,7 +3025,7 @@
       "date": "2025-12-24",
       "open": 89.1667,
       "high": 89.665,
-      "low": 88.788,
+      "low": 88.7879,
       "close": 89.356,
       "volume": 1666600.0
     },
@@ -2922,7 +3105,7 @@
       "date": "2026-01-09",
       "open": 85.0407,
       "high": 86.3562,
-      "low": 84.7318,
+      "low": 84.7317,
       "close": 84.941,
       "volume": 6113300.0
     },
@@ -3122,7 +3305,7 @@
       "date": "2026-02-17",
       "open": 131.4229,
       "high": 133.3264,
-      "low": 127.9747,
+      "low": 127.9746,
       "close": 130.0775,
       "volume": 12102600.0
     },
@@ -3138,7 +3321,7 @@
       "date": "2026-02-19",
       "open": 131.5525,
       "high": 133.5457,
-      "low": 128.4431,
+      "low": 128.443,
       "close": 129.5493,
       "volume": 9169400.0
     },
@@ -3153,9 +3336,9 @@
     {
       "date": "2026-02-23",
       "open": 141.6182,
-      "high": 148.1958,
+      "high": 148.1959,
       "low": 140.5319,
-      "close": 144.7575,
+      "close": 144.7576,
       "volume": 18558800.0
     },
     {
@@ -4148,7 +4331,7 @@
       "high": 154.06,
       "low": 149.25,
       "close": 151.45,
-      "volume": 10573822.0
+      "volume": 10574300.0
     }
   ],
   "ohlc_1y": [
@@ -4162,7 +4345,7 @@
     },
     {
       "date": "2025-08-21",
-      "open": 63.8125,
+      "open": 63.8124,
       "high": 64.406,
       "low": 63.6344,
       "close": 64.1883,
@@ -4205,7 +4388,7 @@
       "open": 66.6613,
       "high": 68.5408,
       "low": 66.5921,
-      "close": 68.1847,
+      "close": 68.1846,
       "volume": 7266900.0
     },
     {
@@ -4340,7 +4523,7 @@
       "date": "2025-09-23",
       "open": 78.6631,
       "high": 80.4708,
-      "low": 78.4843,
+      "low": 78.4844,
       "close": 80.4509,
       "volume": 8654200.0
     },
@@ -4428,13 +4611,13 @@
       "date": "2025-10-08",
       "open": 84.692,
       "high": 86.4798,
-      "low": 84.1854,
+      "low": 84.1855,
       "close": 86.4798,
       "volume": 6088100.0
     },
     {
       "date": "2025-10-09",
-      "open": 86.5592,
+      "open": 86.5593,
       "high": 87.1552,
       "low": 85.5462,
       "close": 86.599,
@@ -4467,7 +4650,7 @@
     {
       "date": "2025-10-15",
       "open": 85.4766,
-      "high": 86.8373,
+      "high": 86.8374,
       "low": 84.8906,
       "close": 86.0328,
       "volume": 6427600.0
@@ -4509,7 +4692,7 @@
       "open": 85.4866,
       "high": 86.748,
       "low": 82.5168,
-      "close": 83.5697,
+      "close": 83.5696,
       "volume": 8440400.0
     },
     {
@@ -4787,7 +4970,7 @@
     {
       "date": "2025-12-11",
       "open": 93.3425,
-      "high": 96.3123,
+      "high": 96.3124,
       "low": 91.6881,
       "close": 95.6446,
       "volume": 8895200.0
@@ -4860,7 +5043,7 @@
       "date": "2025-12-24",
       "open": 89.1667,
       "high": 89.665,
-      "low": 88.788,
+      "low": 88.7879,
       "close": 89.356,
       "volume": 1666600.0
     },
@@ -4940,7 +5123,7 @@
       "date": "2026-01-09",
       "open": 85.0407,
       "high": 86.3562,
-      "low": 84.7318,
+      "low": 84.7317,
       "close": 84.941,
       "volume": 6113300.0
     },
@@ -5140,7 +5323,7 @@
       "date": "2026-02-17",
       "open": 131.4229,
       "high": 133.3264,
-      "low": 127.9747,
+      "low": 127.9746,
       "close": 130.0775,
       "volume": 12102600.0
     },
@@ -5156,7 +5339,7 @@
       "date": "2026-02-19",
       "open": 131.5525,
       "high": 133.5457,
-      "low": 128.4431,
+      "low": 128.443,
       "close": 129.5493,
       "volume": 9169400.0
     },
@@ -5171,9 +5354,9 @@
     {
       "date": "2026-02-23",
       "open": 141.6182,
-      "high": 148.1958,
+      "high": 148.1959,
       "low": 140.5319,
-      "close": 144.7575,
+      "close": 144.7576,
       "volume": 18558800.0
     },
     {
@@ -6166,7 +6349,7 @@
       "high": 154.06,
       "low": 149.25,
       "close": 151.45,
-      "volume": 10573822.0
+      "volume": 10574300.0
     }
   ],
   "ai_synthesis": null,
