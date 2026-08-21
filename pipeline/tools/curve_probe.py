@@ -52,6 +52,11 @@ def main(argv=None) -> int:
         series = px[sym]
         return series.get(ds) or next((series[k] for k in sorted(series, reverse=True) if k <= ds), None)
 
+    for t in trades:
+        if t.ticker.upper() == "MRNA":
+            print(f"  MRNA row: entry_date={t.entry_date} entry_price={t.entry_price} "
+                  f"orig_qty={t.original_qty} cur_qty={t.current_qty} closed={t.closed} "
+                  f"exit={t.exit_date} trims={[(str(x.date), x.qty, x.price) for x in (t.trims or [])]}")
     print("held-overnight mark-to-market only (entries/exits/cash excluded; options tab excluded):")
     for i in range(1, len(days)):
         p_, d_ = days[i - 1], days[i]
