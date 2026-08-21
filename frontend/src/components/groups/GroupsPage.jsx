@@ -4,6 +4,7 @@ import DataUnavailable from '../DataUnavailable'
 import Reading, { readThemes } from '../Reading'
 import { useGroups } from '../../hooks/useGroups'
 import GroupTable from './GroupTable'
+import RsPath from './RsPath'
 import StateField from './StateField'
 import ThemeBars from './ThemeBars'
 import CompareBar from './CompareBar'
@@ -283,6 +284,13 @@ export default function GroupsPage() {
                note={`${rows.length} themes · quarter × acceleration`}>
         <StateField rows={rows} colourOf={colourOf} onToggle={onToggle}
                     atLimit={compare.atLimit} />
+
+        {/* The field says where each theme stands; this says how it got there.
+            Two themes on the same dot can have arrived from opposite
+            directions, and the arrival is the rotation. */}
+        <div className="mt-6">
+          <RsPath picks={shown.map((p) => p.name)} colourOf={colourOf} />
+        </div>
       </Section>
 
       {/* ── MID and SMALL ─────────────────────────────────────────────────
