@@ -27,6 +27,20 @@ Turkey-1001-Day (2022-02, 初版, 描述公开)
 
 自评业绩口径：turin_LT "outperforms SPX B&H, min 14.58% DD since '07, 4 年 forward test"；TRKY 替代 DBMF 进 60/40 → "1.42 Sharpe"（自述，无审计，当广告看）。
 
+## 一·五、现行版（2026-08）的组合与使用方式 —— 从 release notes 全时间线拼出（tv_pages 快照 + 近期推文）
+
+**三层现行规格：**
+
+| 层 | 脚本 | 现行部件（含最近更新） | 输出/用法 |
+|---|---|---|---|
+| **中期资产配置** | TRKY-1001-DAY | VIX-TS（自制 1990+ 3m:1m，2023-06 从 credit 换回："stick with what's been working"）· NHNL 比率调整线（2023-08）· **R3TW 条件（2024-08-26 重新加回）**· **Kerb 的 VIX/VVIX/GLD 相关指标（2024-08-26 加回）**· credit 喂 FRED（2024-09 换源）· 底部箭头 = NYSE A/D **成交量**比（不是家数）· HMA 交叉入场（2023-08 修过 crossover bug） | **Osc 三档**：+1 = 最激进成长股/LETF、避债；0 = 减仓+现金+短债；−1 = 避股、持现金等 countertrend、买长债 |
+| **日线执行** | SPXL-V3 → 改名 **turintrend** | 2026-07-14 indicator→strategy 大改：LONG-ONLY，入场 = ADR thrust / NDQ-QQQ trend cross / filtered Williams VIX Fix；出场 = z-score divergence sell / regime 红退出 / 硬止损；**还修了一个 lookahead 未来函数泄漏**。**2026-08-16 最新：trend filter "Reverted back to the original AQR"** —— 即 R2 底图上那段动量因子代码（linregress 年化斜率 × R²），并注明 "Pair this with Turkey1001 Day Indy" | TRKY 定 regime 门，turintrend 管进出；regime 三色：红=STFR 做多 vol、深绿=low-vol grind-up（动量/趋势跑赢、便宜 vol 更便宜）、浅绿=mean-revert |
+| **周线长线（401k）** | turin_LT（vix_ts_weekly） | 单一 Nas+NYSE breadth 指标出信号 + 自定 hi/lo z-score 定 LT regime（**默认符号 BAML/VIX/DXY**，可换 SPX/NDQ/IWM 需反色）· vol 分位条件阈 45 · **2026-08-20 用 Fable 重建 entry/exit**：%>MA / Adv-Decl / 252d rvol | SPY 周线 HA；**每年 3–6 笔**；对普通人的推荐姿势 = 60/40 + 这个 trend 策略，他本人 "rip my strat raw" |
+
+**现行使用姿势（2026-08 当周）**：08-17 判 regime = **low vol grind up（2016-18 类比）→ "max long semis/tech w 2-3x lev and leave it for a year. Don't over complicate"** —— 正是他自家 regime 色标里深绿档的操作语义。标的按 Andy 情报为 SPXL/TQQQ/SOXL 配比。SPXL-V3 每日 plot 即将由 bot 发副号。
+
+**与我们检验的三处呼应（旁注）**：① 底部条件其实是 A/D **量能**口径（UVOL/DVOL 家族）——我们 N6 测的表切 NULL，但他当**事件箭头**用不当表切；② Kerb 的 VIX/VVIX 相关 = 我们 N9 家族——他 2024-08 加回，而我们测得 36 年完美单调但**方向与他的警告语义相反**；③ 执行层 08-16 起的 AQR 动量因子正是 R2 底图泄露的那段代码——复刻时可直接用。
+
 ## 二、TRKY 1001 逆向出的架构
 
 **三层：regime filter → top conditions（correction risk 侧）→ bottom conditions（washout 侧）。**
