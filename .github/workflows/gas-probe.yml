@@ -1,0 +1,19 @@
+# Manual probe of the GAS web app: which build is live, and does
+# shortlist_pull answer. Uses the same secrets the nightly sync uses, so
+# no credential ever passes through chat. Read-only actions only.
+name: GAS Probe
+on: [workflow_dispatch]
+permissions: {}
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: version + shortlist_pull
+        env:
+          URL: ${{ secrets.FLUXUS_GAS_URL }}
+          TOKEN: ${{ secrets.FLUXUS_SYNC_TOKEN }}
+        run: |
+          if [ -z "$URL" ]; then echo "FLUXUS_GAS_URL secret missing"; exit 1; fi
+          echo "== version (tokenless)"; curl -sL "$URL?action=version"; echo
+          echo "== shortlist_pull"; curl -sL "$URL?action=shortlist_pull&token=$TOKEN" | head -c 600; echo
