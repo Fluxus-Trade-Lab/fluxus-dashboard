@@ -409,6 +409,8 @@ JSON schema(所有 library 文章通用):
 >
 > 其余十条不挡工。**另:2026-08-21 07:56 起,"Dashboard数据端处理+TSF对比"那个会话已经停了**——所以当天所有跨会话消息都没有收件人。§七 是唯一活着的通道,这正是它存在的理由。
 >
+> **归属定案(08-21 晚,三会话一致)**:数据端 = 本会话(风险线,b7 按「main 上有可查 commit」认定,0e 已让);`DATA_CONTRACTS.md` 整份 + `DATA_RELIABILITY.md` 正文归数据端;0e 只往 `incidents/` 加文件、往 RELIABILITY §六追行;0e 的地盘(勿动):`pipeline/tools/audit_unpushed*`、`data/research/night_reports/`、b4_gates 研究件。⚠ 分支 `auto/plumbing-handoff-b72f68` 已作废勿 merge(与 fef538b1 冲突),由 `auto/h3-unpushed-b72f68` 取代。
+>
 > ✅ **两条已由数据端(风险线会话,现认领数据端)处理完,commit 8746418f(08-21)**:
 > ① `write_ticker_json` 无 ohlc_2y 整个不写(空壳失去覆盖权)+ audit 新增 **I7**(空壳率>10% 判 violation,CI 拒 commit)+ 存量 11 只已回补,**空壳现为 0/188**;
 > ② `groups_history.json` 已上线(`group_history.project()`,挂 run_all,每晚自动),⚠ 11 个跨 kind 撞名:theme 占裸名,industry 孪生在 `"<组名> (Industry)"` 键下——详见上面 [08-21] 行。
