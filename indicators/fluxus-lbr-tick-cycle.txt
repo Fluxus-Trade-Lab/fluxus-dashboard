@@ -1,0 +1,41 @@
+Fluxus LBR TICK Cycle — Linda Raschke 中期周期指标的复刻
+==========================================================
+
+来源：LindaRaschke X 2026-08-20（id 2090413153892946182）"I have posted this
+proprietary indicator in the past: Red areas - selling zones. Green areas =
+buying opportunities. We are at the opposite end of the intermediate cycle."
++ @ChartsLector 的 NYSE TICK 猜测（id 2090751250715521232）。
+原图与复刻尝试存于 scratchpad（linda_0.jpg / lector_0.jpg），逆向过程见
+2026-08-22 会话记录。
+
+逆向结论（高置信）
+------------------
+三条线 = NYSE TICK **日高 / 日收 / 日低** 的 n 日移动平均，n≈15（SMA）。
+她的 pane 标签 "MA#2" 就是字面意思——TradeStation 的 Moving Average study
+对 $TICK 加了三次（source 分别选 High/Close/Low）。
+
+黄金对照（她图上打印的当日读数 502 / −27 / −433，asof 2026-08-19）：
+    我们（TV USI:TICK，小时线聚合日极值，SMA15）：613 / −25.7 / −600
+    - **收盘线对到小数点**（−25.7 vs −27）→ 结构正确
+    - 高/低线差一个 feed 系数（~0.75×）：TV 的 TICK 与 TradeStation 的
+      $TICK 票池/计算不同，TV 极值更宽。这是口径差不是构造差。
+    - ChartsLector 的振幅（±260）不对，因为 TV 的 TICK **日线是退化的**
+      （high==low==close），他直接用了日线；真实日极值必须从盘中 bar 重建
+      —— Pine 里走 request.security_lower_tf，Python 里用小时 bar 聚合。
+
+用法（她的语义）
+----------------
+红区 = 卖出带：MA(high) 抬升到高位（整个复合体上移，日内买盘持续过热）
+绿区 = 买入机会：MA(low) 砸到深位（washout，卖压洗过头）
+"opposite end of the intermediate cycle" = 她 08-20 认为处在卖出带一端。
+
+阈值按 feed 校准，别抄她图上的线：TV feed 建议起点 ±650（相当于她的
+±500 乘 feed 系数）。更稳的跨 feed 做法是把 zone 定义成滚动分位（例如
+252d 的 90/10 分位）——那是我们自己的改造，不是她的原版，要用另开实验。
+
+部署
+----
+Pine 用 request.security_lower_tf（需付费档）重建日极值；参数 n/MA 类型/
+阈值/颜色全部可配。Python 孪生 scripts/research/lbr_tick_cycle.py 出同款
+读数供对照与将来入 ledger 评估。TV MCP 注入时先开 scratch 脚本（set_source
+覆盖坑）。仓库这份是唯一备份。

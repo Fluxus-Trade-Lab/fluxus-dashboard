@@ -1,0 +1,67 @@
+//@version=6
+// Fluxus LBR TICK Cycle — description & derivation in fluxus-lbr-tick-cycle.txt
+// Replication of Linda Raschke's "proprietary" intermediate-cycle indicator
+// (X 2026-08-20): three n-day MAs of NYSE TICK daily HIGH / CLOSE / LOW.
+// Her pane label "MA#2" is literal — a TradeStation Moving Average study x3.
+// Golden check vs her printed readings in the .txt (close line matches to the
+// point; high/low carry a feed-scale offset — TV's TICK range runs ~1.3x
+// TradeStation's, so zone thresholds must be calibrated per feed).
+// Python twin: scripts/research/lbr_tick_cycle.py. Repo copy = only backup.
+indicator("Fluxus LBR TICK Cycle", "LBR TICK", overlay = false)
+
+// ── sources ───────────────────────────────────────────────────────────────
+symTick = input.symbol("USI:TICK", "TICK symbol", group = "Sources")
+ltf     = input.string("60", "Intraday TF for daily extremes", options = ["15", "30", "60"], group = "Sources",
+                       tooltip = "TV's TICK daily bars are close-only; the true daily high/low must be rebuilt from intraday bars")
+
+// ── params (n=15 SMA is the golden-check best fit; see .txt) ──────────────
+n      = input.int(15, "MA length", minval = 2, group = "Params")
+maKind = input.string("SMA", "MA type", options = ["SMA", "EMA"], group = "Params")
+
+// zones: HER read — red = selling zone (complex elevated), green = buying
+// opportunity (washout). Defaults sized for the TV feed, not her chart.
+upTh = input.float(650.0,  "Sell zone: MA(high) ≥", step = 25, group = "Zones")
+dnTh = input.float(-650.0, "Buy zone: MA(low) ≤",  step = 25, group = "Zones")
+
+colHi   = input.color(color.blue,   "MA high",  inline = "c1", group = "Style")
+colCl   = input.color(color.gray,   "MA close", inline = "c1", group = "Style")
+colLo   = input.color(color.red,    "MA low",   inline = "c1", group = "Style")
+colBuy  = input.color(color.green,  "Buy zone", inline = "c2", group = "Style")
+colSell = input.color(color.red,    "Sell zone", inline = "c2", group = "Style")
+
+// ── daily H/L rebuilt from intraday; close from the daily feed ────────────
+his = request.security_lower_tf(symTick, ltf, high)
+los = request.security_lower_tf(symTick, ltf, low)
+cls = request.security(symTick, "D", close)
+dHi = his.size() > 0 ? his.max() : na
+dLo = los.size() > 0 ? los.min() : na
+
+ma(series float s) =>
+    maKind == "SMA" ? ta.sma(s, n) : ta.ema(s, n)
+
+mHi = ma(dHi)
+mCl = ma(cls)
+mLo = ma(dLo)
+
+buyZone  = mLo <= dnTh
+sellZone = mHi >= upTh
+
+plot(mHi, "MA high",  color = colHi)
+plot(mCl, "MA close", color = colCl)
+plot(mLo, "MA low",   color = colLo)
+hline(0, color = color.new(color.gray, 60))
+hline(650,  "sell ref", color = color.new(color.red, 70))
+hline(-650, "buy ref",  color = color.new(color.green, 70))
+bgcolor(buyZone ? color.new(colBuy, 82) : sellZone ? color.new(colSell, 85) : na)
+
+alertcondition(buyZone and not buyZone[1],  "LBR TICK buy zone",  "TICK cycle entered washout / buy zone")
+alertcondition(sellZone and not sellZone[1], "LBR TICK sell zone", "TICK cycle entered elevated / sell zone")
+
+var table tbl = table.new(position.top_right, 2, 3, border_width = 1)
+if barstate.islast
+    table.cell(tbl, 0, 0, "MA(high)",  text_size = size.small, text_halign = text.align_left)
+    table.cell(tbl, 1, 0, str.tostring(mHi, "#"), text_color = colHi, text_size = size.small)
+    table.cell(tbl, 0, 1, "MA(close)", text_size = size.small, text_halign = text.align_left)
+    table.cell(tbl, 1, 1, str.tostring(mCl, "#"), text_color = colCl, text_size = size.small)
+    table.cell(tbl, 0, 2, "MA(low)",   text_size = size.small, text_halign = text.align_left)
+    table.cell(tbl, 1, 2, str.tostring(mLo, "#"), text_color = colLo, text_size = size.small)
