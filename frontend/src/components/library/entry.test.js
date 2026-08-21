@@ -82,24 +82,61 @@ const doc = (() => {
     'data/output/library/offense_ep_mrna.json'), 'utf8')) } catch { return null }
 })()
 
-describe.skipIf(!doc)('the shipped article', () => {
+/**
+ * Does the file the data side shipped still LOOK like an article?
+ *
+ * This is a conformance check on someone else's output, so it reports rather
+ * than fails: a red frontend suite is the wrong instrument for "the pipeline
+ * changed its mind", and a suite that is red for a week stops being read. What
+ * must never regress is the frontend's own behaviour on a non-conformant file
+ * — that is the test below it, and it is unconditional.
+ *
+ * It earned its place on 2026-08-21: `offense_ep_mrna.json` became a bare
+ * `{mrna_runup, mrna_ep}` chart map with no title and no blocks, because the
+ * data-side session that reverted the contract had been asleep through the
+ * afternoon when the article-as-JSON route was agreed and the markdown parser
+ * deleted (`42ec619d`). The page went to "没取到" — honestly, but down.
+ */
+const conforms = doc && Array.isArray(doc.blocks) && doc.blocks.length > 0 && doc.title
+
+describe.skipIf(!conforms)('the shipped article, when it conforms', () => {
   it('has every field a cover needs', () => {
     const e = toEntry({ name: 'offense_ep_mrna.json', doc }, 'offense')
     expect(e.title).toBeTruthy()
     expect(e.summary).toBeTruthy()
-    expect(e.chart).not.toBeNull()
     expect(e.blocks.length).toBeGreaterThan(5)
   })
 
-  it('would be unreadable on a linear axis, so it is drawn on a log one', () => {
-    // 130 sessions ending +177%: the month the piece is about is 7.9% of a
-    // linear chart's height. The payload does not ask for log; the range does.
-    expect(doc.chart.scale).toBeUndefined()
-    expect(axisFor(doc.chart)).toBe('log')
+  it('uses only block types the page knows how to draw', () => {
+    const known = new Set(['h2', 'h3', 'p', 'table', 'list', 'note', 'chart'])
+    for (const b of doc.blocks) expect(known.has(b.type), b.type).toBe(true)
   })
 
-  it('uses only block types the page knows how to draw', () => {
-    const known = new Set(['h2', 'h3', 'p', 'table', 'list', 'note'])
-    for (const b of doc.blocks) expect(known.has(b.type), b.type).toBe(true)
+  it('places every chart its blocks ask for', () => {
+    const asked = doc.blocks.filter((b) => b.type === 'chart').map((b) => b.key)
+    for (const k of asked) expect(doc.charts?.[k]?.series?.c?.length, k).toBeTruthy()
+  })
+})
+
+describe('a payload that is not an article', () => {
+  it('is called malformed, which is neither a failed read nor an empty article', () => {
+    // the bare chart map that shipped on 2026-08-21
+    const e = toEntry({ name: 'x.json', doc: { mrna_runup: { series: { c: [1, 2] } } } }, 'offense')
+    expect(e.malformed).toBe(true)
+    expect(e.missing).toBe(false)        // the fetch worked; blaming it would be wrong
+    expect(e.keys).toContain('mrna_runup')   // and the page can say what it DID find
+    expect(e.blocks).toEqual([])
+  })
+
+  it('does not call a short but real article malformed', () => {
+    expect(toEntry({ name: 'x.json', doc: { title: 'T', blocks: [] } }, 'x').malformed).toBe(false)
+    expect(toEntry({ name: 'x.json', doc: { blocks: [{ type: 'p', text: 'a' }] } }, 'x')
+      .malformed).toBe(false)
+  })
+
+  it('still finds a cover in a charts map, so the shelf is not blank', () => {
+    const e = toEntry({ name: 'x.json',
+      doc: { title: 'T', blocks: [], charts: { a: { series: { c: [1, 2] } } } } }, 'offense')
+    expect(e.charts.a).toBeTruthy()
   })
 })

@@ -46,7 +46,31 @@ const H = {
  * with its type named: visible and wrong-looking, which is the right failure.
  * Silence would hide that an article had stopped rendering half of itself.
  */
-function Block({ b }) {
+function Block({ b, charts }) {
+  /* An article may place MORE THAN ONE chart, and where it places them is part
+     of the argument — the MRNA piece wants the run-up before the discipline and
+     the repricing after it. So a chart can be a block naming a key, with the
+     payloads in a `charts` map beside `blocks`. A key nobody shipped says so at
+     the spot it would have filled, rather than leaving a hole the surrounding
+     paragraphs read straight past. */
+  if (b.type === 'chart') {
+    const c = charts?.[b.key]
+    if (!c?.series?.c?.length) {
+      return (
+        <div className="my-4 rounded-2xl px-5 py-5"
+             style={{ backgroundImage:
+               'repeating-linear-gradient(45deg,var(--color-border-light) 0 1px,transparent 1px 7px)' }}>
+          <div className="text-[10px] font-mono uppercase tracking-[.24em]
+                          text-[var(--color-text-muted)] mb-2">Chart not shipped</div>
+          <p className="m-0 text-[12.5px] leading-relaxed text-[var(--color-text-secondary)]">
+            这篇文章要一张图（<code className="font-mono">{b.key}</code>），但
+            <code className="font-mono"> charts</code> 里没有它的 K 线。
+          </p>
+        </div>
+      )
+    }
+    return <ArticleChart chart={c} />
+  }
   if (b.type === 'h2' || b.type === 'h3') {
     const Tag = b.type
     return <Tag className={H[b.type]}>{b.text}</Tag>
@@ -138,7 +162,32 @@ function ArticleChart({ chart }) {
 }
 
 function Article({ entry }) {
-  const { name, title, subtitle, summary, chart, blocks, updated, missing } = entry
+  const { name, title, subtitle, summary, chart, charts, blocks, updated,
+          missing, malformed, keys } = entry
+  if (malformed) {
+    /* The file arrived and is not an article. Saying "not fetched" would blame
+       the network for a shape problem; rendering it as an empty article would
+       hide the problem entirely. */
+    return (
+      <section className="border border-dashed border-[var(--color-untested)] rounded-3xl p-6
+                          max-w-[74ch] mb-6">
+        <div className="text-[10px] font-mono uppercase tracking-[.24em]
+                        text-[var(--color-text-muted)] mb-2">Not an article</div>
+        <p className="m-0 text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
+          <span className="font-mono">{name}</span> 取到了，但里面没有文章 —— 没有
+          <code className="font-mono"> title</code>，也没有
+          <code className="font-mono"> blocks</code>。顶层只有：
+          <span className="font-mono text-[var(--color-text-bold)]">{keys.join(', ')}</span>。
+        </p>
+        <p className="m-0 mt-2 text-[12px] leading-relaxed text-[var(--color-text-muted)]">
+          文章正文走这一个 JSON（`title` / `summary` / `blocks`），图放同文件的
+          <code className="font-mono"> charts</code> 里、由
+          <code className="font-mono"> {'{type:"chart", key}'}</code> 块定位。
+          markdown 解析器 2026-08-20 已按数据端要求删除（`42ec619d`），前端不再读 `.md`。
+        </p>
+      </section>
+    )
+  }
   if (missing) {
     return (
       <section className="border border-dashed border-[var(--color-untested)] rounded-3xl p-6
@@ -168,7 +217,7 @@ function Article({ entry }) {
 
       {chart && <ArticleChart chart={chart} />}
 
-      {blocks.map((b, i) => <Block key={i} b={b} />)}
+      {blocks.map((b, i) => <Block key={i} b={b} charts={charts} />)}
 
       <p className="mt-7 mb-0 text-[10px] font-mono text-[var(--color-text-muted)]">
         data/output/library/{name}{updated ? ` · ${updated.slice(0, 10)}` : ''}
@@ -187,8 +236,10 @@ function Article({ entry }) {
  * picture that does not exist. That is what a spine looks like anyway.
  */
 function Cover({ entry, onOpen }) {
-  const { title, subtitle, summary, chart, missing, name } = entry
-  const art = !!chart
+  const { title, subtitle, summary, chart, charts, missing, name } = entry
+  // an article that places its charts still deserves a cover — the first one
+  const cover = chart ?? Object.values(charts ?? {}).find((c) => c?.series?.c?.length) ?? null
+  const art = !!cover
   return (
     <button type="button" onClick={onOpen}
             className="group text-left w-full bg-[var(--color-surface)] rounded-3xl
@@ -199,8 +250,8 @@ function Cover({ entry, onOpen }) {
           <div className="h-[128px] flex items-end px-5 pt-5 overflow-hidden
                           border-b border-[var(--color-border-light)]">
             <div className="w-full -mb-2 opacity-80 group-hover:opacity-100 transition-opacity">
-              <CardChart series={chart.series} marks={[]} height={108} bare
-                         scale={axisFor(chart)} />
+              <CardChart series={cover.series} marks={[]} height={108} bare
+                         scale={axisFor(cover)} />
             </div>
           </div>
           <h3 className="m-0 px-5 pt-4 text-[16.5px] leading-snug font-semibold

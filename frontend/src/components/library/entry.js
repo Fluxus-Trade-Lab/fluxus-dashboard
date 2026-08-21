@@ -27,17 +27,32 @@ export function toEntry({ name, doc }, page) {
   const fromName = slugOf(name, page)
   if (!doc) {
     return { slug: fromName, name, title: name, subtitle: null, summary: null,
-             chart: null, blocks: [], updated: null, missing: true }
+             chart: null, charts: null, blocks: [], updated: null,
+             missing: true, malformed: false, keys: [] }
   }
+  /* THREE STATES, NOT TWO. A fetch that failed and a file that arrived without
+     being an article are different facts, and both differ from an article that
+     is merely short. On 2026-08-21 the second one appeared — a bare
+     `{mrna_runup, mrna_ep}` chart map where the article used to be — and with
+     only `missing` to say it with, the page would have called it an article
+     with no content and titled it after its filename. Naming the shape is the
+     difference between "we could not read it" and "this is not the thing". */
+  const isArticle = Boolean(doc.title) || (Array.isArray(doc.blocks) && doc.blocks.length > 0)
+
   return {
     // the payload's slug carries the page prefix; the URL should not say it twice
     slug: doc.slug ? slugOf(`${doc.slug}.json`, doc.page ?? page) : fromName,
     name,
     missing: false,
+    malformed: !isArticle,
+    keys: Object.keys(doc).slice(0, 6),
     title: doc.title ?? name,
     subtitle: doc.subtitle ?? null,
     summary: doc.summary ?? null,
+    // one unplaced chart, or a map the blocks reference by key — an article
+    // with two of them places them itself
     chart: doc.chart?.series?.c?.length ? doc.chart : null,
+    charts: doc.charts && typeof doc.charts === 'object' ? doc.charts : null,
     blocks: Array.isArray(doc.blocks) ? doc.blocks : [],
     updated: doc.updated ?? null,
   }

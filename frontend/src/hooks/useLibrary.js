@@ -55,7 +55,14 @@ export function useLibrary(page) {
     ;(async () => {
       const idx = await loadIndex()
       const names = (idx?.[page] ?? COMPILED_IN[page] ?? [])
-      const got = await Promise.all(names.map(async (name) => {
+      const got = await Promise.all(names.map(async (raw) => {
+        /* The article is the `.json`, whatever the index calls it. The index
+           listed `offense_ep_mrna.md` on 2026-08-21 and every fetch failed —
+           the page said so honestly, which is right, but a naming slip on a
+           sibling file should not take a page down. Normalising costs one line
+           and does NOT create a second rendering path: there is still exactly
+           one article format. */
+        const name = raw.replace(/\.mdx?$/i, '.json')
         const doc = await fetch(`${BASE}/${name}`)
           .then((r) => (r.ok ? r.json() : null)).catch(() => null)
         return { name, doc }
