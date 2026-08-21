@@ -1063,6 +1063,22 @@ def main():
     except Exception:
         logger.exception("Correction risk failed - correction_risk.json not updated")
 
+    # Regime ledger: nightly forward log of the risk-state machine (3d cell +
+    # 4 confluence lamps). Reads the correction_risk.json written just above;
+    # TV/SqueezeMetrics refreshes inside degrade gracefully. Own failure
+    # domain -- a ledger crash must not cost the outputs above. Internal
+    # record only (project parked; frontend not wired).
+    try:
+        from pipeline.risk.regime_ledger import append as ledger_append, build_row
+        lrow = build_row(refresh=True)
+        if lrow and ledger_append(lrow):
+            logger.info("regime_ledger: %s lamps %s/%s prob_3d=%s", lrow['date'],
+                        lrow['lamps_on'], lrow['lamps_available'], lrow['prob_3d'])
+        elif lrow:
+            logger.info("regime_ledger: %s already logged", lrow['date'])
+    except Exception:
+        logger.exception("Regime ledger failed - regime_ledger.csv not appended")
+
     # Site-wide quality: grade every file the frontend reads, write the
     # consolidated report beside them. Its own failure domain — a grading
     # crash must not cost the outputs it grades.

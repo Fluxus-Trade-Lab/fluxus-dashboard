@@ -54,6 +54,7 @@ DD_THRESHOLD = -0.05
 QUINTILES = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
 INPUTS = Path(".cache/risk/inputs.pkl")
 OUTPUT = Path("data/output/correction_risk.json")
+ROOT = Path(__file__).resolve().parents[2]
 
 
 # ------------------------------------------------------------ features --
@@ -63,6 +64,7 @@ def build_frame(inputs: pd.DataFrame) -> pd.DataFrame:
     (^VIX3M, HYG, IEF) are optional and only feed the logistic appendix."""
     px = inputs["^GSPC"].astype(float)
     f = pd.DataFrame(index=inputs.index)
+    f["px"] = px
     f["vix"] = inputs["^VIX"].astype(float)
     f["d200"] = px / px.rolling(200).mean() - 1.0
     f["d50"] = px / px.rolling(50).mean() - 1.0
@@ -73,6 +75,10 @@ def build_frame(inputs: pd.DataFrame) -> pd.DataFrame:
     f["dd63"] = px / px.rolling(63).max() - 1.0
     if "^VIX3M" in inputs:
         f["term"] = inputs["^VIX"] / inputs["^VIX3M"] - 1.0
+        # E1 2026-08-21: 3-day EMA of VIX/VIX3M, states <0.8 / 0.8-1.0 / >1.0
+        # (turin thresholds verbatim) -- the only tested cut that beat the VIX
+        # quintile spread on its own sample. Third table dimension since 08-21.
+        f["ts_ema"] = (inputs["^VIX"] / inputs["^VIX3M"]).ewm(span=3).mean()
     if "HYG" in inputs and "IEF" in inputs:
         cr = np.log(inputs["HYG"] / inputs["IEF"])
         f["credit20"] = cr - cr.shift(20)
@@ -144,6 +150,112 @@ def conditional_table(f: pd.DataFrame) -> Dict:
     }
 
 
+def ts_state_of(v: float) -> int:
+    return 1 if v < 0.8 else (2 if v <= 1.0 else 3)
+
+
+TS_LABELS = {1: "complacency(<0.8)", 2: "neutral(0.8-1.0)", 3: "backwardation(>1.0)"}
+
+
+def ts_table(f: pd.DataFrame) -> Optional[Dict]:
+    """Third dimension (2026-08-21, Andy-approved): VIX quintile x 200-day side
+    x VIX/VIX3M-3EMA state. Sample is shorter (VIX3M history); the classic
+    two-dim table above stays the headline. House checks re-run on this sample."""
+    if "ts_ema" not in f.columns:
+        return None
+    d = f.dropna(subset=["vix", "d200", "ts_ema", "y"]).copy()
+    if len(d) < 1000:
+        return None
+    edges = vix_edges(d["vix"])
+    d["vq"] = [quintile_of(v, edges) for v in d["vix"]]
+    d["above200"] = d["d200"] > 0
+    d["ts"] = [ts_state_of(v) for v in d["ts_ema"]]
+    mid = d.index[len(d) // 2]
+    halves = {"first": d[d.index < mid], "second": d[d.index >= mid]}
+
+    def ts_rates(g):
+        t = g.groupby("ts")["y"].agg(["mean", "count"])
+        return {int(s): {"rate": round(float(t.loc[s, "mean"]), 4), "n": int(t.loc[s, "count"])}
+                for s in t.index}
+
+    def mono(g):
+        t = g.groupby("ts")["y"].mean()
+        return round(float(t.corr(pd.Series(range(len(t)), index=t.index), method="spearman")), 2)
+
+    cells = {}
+    for (q, ab, s), r in d.groupby(["vq", "above200", "ts"])["y"].agg(["mean", "count"]).iterrows():
+        cells[f"Q{q}_{'above' if ab else 'below'}200_ts{s}"] = {
+            "rate": round(float(r["mean"]), 4), "n": int(r["count"])}
+    return {
+        "sample": {"from": str(d.index[0].date()), "to": str(d.index[-1].date()),
+                   "sessions": int(len(d)), "episodes": episodes(d["y"]),
+                   "base_rate": round(float(d["y"].mean()), 4)},
+        "vix_edges_this_sample": [round(x, 2) for x in edges],
+        "ts_state_labels": TS_LABELS,
+        "by_ts_state": {"full": ts_rates(d), "first_half": ts_rates(halves["first"]),
+                        "second_half": ts_rates(halves["second"])},
+        "ts_monotone_spearman": {"full": mono(d), "first_half": mono(halves["first"]),
+                                 "second_half": mono(halves["second"])},
+        "by_vix_quintile_x_200dma_x_ts": cells,
+    }
+
+
+def ts_today(f: pd.DataFrame, t3: Dict) -> Optional[Dict]:
+    if t3 is None or "ts_ema" not in f.columns:
+        return None
+    d = f.dropna(subset=["vix", "d200", "ts_ema"])
+    if d.empty:
+        return None
+    last = d.iloc[-1]
+    stale_days = int((f.index[-1] - d.index[-1]).days)
+    q = quintile_of(float(last["vix"]), [e for e in t3["vix_edges_this_sample"]])
+    s = ts_state_of(float(last["ts_ema"]))
+    key = f"Q{q}_{'above' if last['d200'] > 0 else 'below'}200_ts{s}"
+    cell = t3["by_vix_quintile_x_200dma_x_ts"].get(key) or {"rate": None, "n": 0}
+    return {"date": str(d.index[-1].date()), "ts_ema": round(float(last["ts_ema"]), 3),
+            "ts_state": s, "ts_label": TS_LABELS[s],
+            "prob_3d": cell["rate"], "n_cell_3d": cell["n"],
+            "prob_ts_only": t3["by_ts_state"]["full"].get(s, {}).get("rate"),
+            "input_staleness_days": stale_days,
+            "stale_warning": stale_days > 7}
+
+
+# ------------------------------------------------- side readings (旁注) --
+
+def side_readings(root: Path) -> Dict:
+    """NHNL and GEX states beside the table -- never averaged into `prob`.
+    E1 2026-08-21: nhnl3 (KY thresholds) beat the VIX spread; GEX rolling-252
+    percentile passed monotone within every VIX tercile. Both read from local
+    files maintained by other jobs; absent or stale files degrade gracefully."""
+    out = {"note": "annotations only; not part of prob. Historical rates from "
+                   "scripts/research/turin_e1_cuts.py (data/research/turin_e1_results.json)"}
+    try:  # NHNL (TV export, scripts/research/fetch_tv_breadth.py)
+        hi = pd.read_csv(root / "data/reference/breadth_tv/INDEX_HIGN.csv",
+                         parse_dates=["date"]).set_index("date")["close"]
+        lo = pd.read_csv(root / "data/reference/breadth_tv/INDEX_LOWN.csv",
+                         parse_dates=["date"]).set_index("date")["close"]
+        r = (hi / (hi + lo)).dropna().ewm(span=10).mean()
+        v = float(r.iloc[-1])
+        state = "oversold(<0.30)" if v < 0.30 else ("overbought(>0.85)" if v > 0.85 else "mid")
+        hist = {"oversold(<0.30)": 0.372, "mid": 0.194, "overbought(>0.85)": 0.091}
+        out["nhnl"] = {"date": str(r.index[-1].date()), "ratio_10ema": round(v, 3),
+                       "state": state, "hist_rate_e1": hist[state]}
+    except Exception as e:
+        out["nhnl"] = {"unavailable": str(e)[:80]}
+    try:  # GEX (SqueezeMetrics DIX.csv, refresh via curl -- see reference memory)
+        sm = pd.read_csv(root / "SqueezeMetrics/DIX.csv", parse_dates=["date"]).set_index("date")
+        gexn = (sm["gex"] / (sm["price"] ** 2)).dropna()
+        w = gexn.tail(252)
+        pr = float((w <= gexn.iloc[-1]).mean())
+        quint = min(int(pr * 5) + 1, 5)
+        hist = {1: 0.212, 2: 0.158, 3: 0.114, 4: 0.105, 5: 0.089}
+        out["gex"] = {"date": str(sm.index[-1].date()), "pct_rank_252d": round(pr, 3),
+                      "quintile": quint, "hist_rate_e1": hist[quint]}
+    except Exception as e:
+        out["gex"] = {"unavailable": str(e)[:80]}
+    return out
+
+
 def today_reading(f: pd.DataFrame, table: Dict) -> Dict:
     """Today's cell and its historical frequency -- the number the page shows."""
     last = f.dropna(subset=["vix", "d200"]).iloc[-1]
@@ -154,6 +266,7 @@ def today_reading(f: pd.DataFrame, table: Dict) -> Dict:
     qcell = table["by_vix_quintile"]["full"][q]
     return {
         "date": str(f.dropna(subset=["vix", "d200"]).index[-1].date()),
+        "spx_close": round(float(f["px"].dropna().iloc[-1]), 2) if "px" in f.columns else None,
         "vix": round(float(last["vix"]), 2), "vix_quintile": q,
         "above_200dma": ab, "d200": round(float(last["d200"]), 4),
         "prob": cell["rate"], "n_cell": cell["n"],
@@ -243,6 +356,16 @@ def run(inputs: pd.DataFrame, with_appendix: bool = True) -> Dict:
             "Overlapping 21-day windows: sessions are not independent -- the episode count is the sample size that matters.",
         ],
     }
+    # 2026-08-21 expansion (Andy-approved; page still NOT wired -- parked):
+    # third dimension VIX-TS, plus NHNL/GEX side readings. Classic two-dim
+    # table and `prob` above are unchanged.
+    t3 = ts_table(f)
+    if t3 is not None:
+        rep["ts_dimension"] = {"table": t3, "today": ts_today(f, t3),
+                               "provenance": "E1 2026-08-21 (turin study): only cut that beat "
+                                             "the VIX-quintile spread on its own sample; "
+                                             "interacts with VIX level -- read the 3d cell, not ts alone"}
+    rep["side_readings"] = side_readings(ROOT)
     if with_appendix:
         rep["appendix_logistic_oos"] = logistic_appendix(f)
     return rep
@@ -258,13 +381,24 @@ def fetch_inputs(with_appendix: bool = False) -> pd.DataFrame:
             d.columns = [c[0] for c in d.columns]
         return d["Close"].dropna().rename(sym)
     parts = [yfc("^GSPC", "1985-01-01"), yfc("^VIX", "1990-01-01")]
-    if with_appendix:
+    # ^VIX3M feeds the TS dimension (2026-08-21) so it is fetched on every run:
+    # yfinance gives 2006+ but its tail has gone stale (observed stuck at
+    # 2026-07-17); the CBOE CSV is 2009+ and current. Merge, CBOE wins overlaps.
+    v3_parts = []
+    try:
+        v3_parts.append(yfc("^VIX3M", "2006-01-01"))
+    except Exception:
+        pass
+    try:
         import io, requests
-        try:
-            c = requests.get("https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX3M_History.csv", timeout=30).text
-            parts.append(pd.read_csv(io.StringIO(c), parse_dates=["DATE"], index_col="DATE")["CLOSE"].rename("^VIX3M"))
-        except Exception:
-            pass
+        c = requests.get("https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX3M_History.csv", timeout=30).text
+        v3_parts.append(pd.read_csv(io.StringIO(c), parse_dates=["DATE"], index_col="DATE")["CLOSE"].rename("^VIX3M"))
+    except Exception:
+        pass
+    if v3_parts:
+        v3 = v3_parts[-1] if len(v3_parts) == 1 else v3_parts[1].combine_first(v3_parts[0])
+        parts.append(v3.rename("^VIX3M"))
+    if with_appendix:
         for sym in ("HYG", "IEF"):
             try:
                 d = yf.download(sym, start="2007-01-01", progress=False, auto_adjust=True)

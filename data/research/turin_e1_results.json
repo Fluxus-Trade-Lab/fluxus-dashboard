@@ -1,0 +1,1532 @@
+{
+  "question": "P(SPX >=5% dd within 21 sessions)",
+  "house_method": "conditional base rate, half-sample spearman, no fitted parameters",
+  "results": [
+    {
+      "candidate": "skew5",
+      "order_note": "Q1=low SKEW .. Q5=high SKEW",
+      "sample": {
+        "from": "1990-01-02",
+        "to": "2026-08-19",
+        "sessions": 9151,
+        "episodes": 199,
+        "base_rate": 0.1654,
+        "half_split": "2008-03-12"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.1884,
+            "n": 1831
+          },
+          "2": {
+            "rate": 0.1626,
+            "n": 1833
+          },
+          "3": {
+            "rate": 0.1782,
+            "n": 1829
+          },
+          "4": {
+            "rate": 0.174,
+            "n": 1828
+          },
+          "5": {
+            "rate": 0.124,
+            "n": 1830
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.1701,
+            "n": 1628
+          },
+          "2": {
+            "rate": 0.1584,
+            "n": 1357
+          },
+          "3": {
+            "rate": 0.1373,
+            "n": 1005
+          },
+          "4": {
+            "rate": 0.1215,
+            "n": 535
+          },
+          "5": {
+            "rate": 0.14,
+            "n": 50
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.335,
+            "n": 203
+          },
+          "2": {
+            "rate": 0.1744,
+            "n": 476
+          },
+          "3": {
+            "rate": 0.2282,
+            "n": 824
+          },
+          "4": {
+            "rate": 0.1957,
+            "n": 1293
+          },
+          "5": {
+            "rate": 0.1236,
+            "n": 1780
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": -0.7,
+        "first_half": -0.7,
+        "second_half": -0.7,
+        "pass": false
+      },
+      "spread": {
+        "candidate": 0.0644,
+        "vix_quintile_same_sample": 0.2422,
+        "beats_vix": false
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.0702,
+            "low_state_rate": 0.022,
+            "high_state_rate": 0.0913,
+            "n": 3053
+          },
+          "vix_t2": {
+            "spread": 0.0531,
+            "low_state_rate": 0.1373,
+            "high_state_rate": 0.1283,
+            "n": 3056
+          },
+          "vix_t3": {
+            "spread": 0.1488,
+            "low_state_rate": 0.3228,
+            "high_state_rate": 0.1784,
+            "n": 3042
+          }
+        },
+        "direction_consistent": false
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.1818,
+          "n": 88
+        },
+        "2": {
+          "rate": 0.141,
+          "n": 78
+        },
+        "3": {
+          "rate": 0.1807,
+          "n": 83
+        },
+        "4": {
+          "rate": 0.2,
+          "n": 95
+        },
+        "5": {
+          "rate": 0.1196,
+          "n": 92
+        }
+      },
+      "verdict": "NULL"
+    },
+    {
+      "candidate": "wmtxly3",
+      "order_note": "1: z<-1 (defensive lagging) / 2: |z|<=1 / 3: z>1 (defensive rotation)",
+      "sample": {
+        "from": "1999-03-24",
+        "to": "2026-08-19",
+        "sessions": 6894,
+        "episodes": 177,
+        "base_rate": 0.1907,
+        "half_split": "2012-12-04"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.1432,
+            "n": 2067
+          },
+          "2": {
+            "rate": 0.2127,
+            "n": 3037
+          },
+          "3": {
+            "rate": 0.2084,
+            "n": 1790
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.1931,
+            "n": 1051
+          },
+          "2": {
+            "rate": 0.2572,
+            "n": 1536
+          },
+          "3": {
+            "rate": 0.2756,
+            "n": 860
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.0915,
+            "n": 1016
+          },
+          "2": {
+            "rate": 0.1672,
+            "n": 1501
+          },
+          "3": {
+            "rate": 0.1462,
+            "n": 930
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": 0.5,
+        "first_half": 1.0,
+        "second_half": 0.5,
+        "pass": false
+      },
+      "spread": {
+        "candidate": 0.0695,
+        "vix_quintile_same_sample": 0.2391,
+        "beats_vix": false
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.0559,
+            "low_state_rate": 0.0465,
+            "high_state_rate": 0.0787,
+            "n": 2300
+          },
+          "vix_t2": {
+            "spread": 0.0341,
+            "low_state_rate": 0.1884,
+            "high_state_rate": 0.1691,
+            "n": 2296
+          },
+          "vix_t3": {
+            "spread": 0.0856,
+            "low_state_rate": 0.2528,
+            "high_state_rate": 0.2925,
+            "n": 2298
+          }
+        },
+        "direction_consistent": false
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.1188,
+          "n": 101
+        },
+        "2": {
+          "rate": 0.1985,
+          "n": 136
+        },
+        "3": {
+          "rate": 0.1957,
+          "n": 92
+        }
+      },
+      "verdict": "NULL"
+    },
+    {
+      "candidate": "vixts3",
+      "order_note": "1: <0.8 complacency / 2: 0.8-1.0 / 3: >1.0 backwardation",
+      "sample": {
+        "from": "2006-07-17",
+        "to": "2026-07-17",
+        "sessions": 5032,
+        "episodes": 115,
+        "base_rate": 0.1812,
+        "half_split": "2016-07-14"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.0591,
+            "n": 220
+          },
+          "2": {
+            "rate": 0.1713,
+            "n": 4314
+          },
+          "3": {
+            "rate": 0.3213,
+            "n": 498
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.0,
+            "n": 29
+          },
+          "2": {
+            "rate": 0.1841,
+            "n": 2157
+          },
+          "3": {
+            "rate": 0.3545,
+            "n": 330
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.0681,
+            "n": 191
+          },
+          "2": {
+            "rate": 0.1586,
+            "n": 2157
+          },
+          "3": {
+            "rate": 0.256,
+            "n": 168
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": 1.0,
+        "first_half": 1.0,
+        "second_half": 1.0,
+        "pass": true
+      },
+      "spread": {
+        "candidate": 0.2622,
+        "vix_quintile_same_sample": 0.2119,
+        "beats_vix": true
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.0969,
+            "low_state_rate": 0.012,
+            "high_state_rate": 0.0,
+            "n": 1681
+          },
+          "vix_t2": {
+            "spread": 0.1787,
+            "low_state_rate": 0.2,
+            "high_state_rate": 0.0213,
+            "n": 1677
+          },
+          "vix_t3": {
+            "spread": 0.1446,
+            "low_state_rate": 0.2143,
+            "high_state_rate": 0.3589,
+            "n": 1674
+          }
+        },
+        "direction_consistent": false
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.0,
+          "n": 12
+        },
+        "2": {
+          "rate": 0.1691,
+          "n": 207
+        },
+        "3": {
+          "rate": 0.3333,
+          "n": 21
+        }
+      },
+      "verdict": "PASS"
+    },
+    {
+      "candidate": "gex5",
+      "order_note": "trailing-252d percentile quintile; Q1=low dealer gamma .. Q5=high (pre-registered)",
+      "sample": {
+        "from": "2012-04-30",
+        "to": "2026-08-19",
+        "sessions": 3597,
+        "episodes": 68,
+        "base_rate": 0.139,
+        "half_split": "2019-06-24"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.2118,
+            "n": 779
+          },
+          "2": {
+            "rate": 0.1582,
+            "n": 784
+          },
+          "3": {
+            "rate": 0.1138,
+            "n": 773
+          },
+          "4": {
+            "rate": 0.1053,
+            "n": 646
+          },
+          "5": {
+            "rate": 0.0894,
+            "n": 615
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.1411,
+            "n": 418
+          },
+          "2": {
+            "rate": 0.1515,
+            "n": 396
+          },
+          "3": {
+            "rate": 0.0882,
+            "n": 374
+          },
+          "4": {
+            "rate": 0.0459,
+            "n": 305
+          },
+          "5": {
+            "rate": 0.0754,
+            "n": 305
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.2936,
+            "n": 361
+          },
+          "2": {
+            "rate": 0.1649,
+            "n": 388
+          },
+          "3": {
+            "rate": 0.1378,
+            "n": 399
+          },
+          "4": {
+            "rate": 0.1584,
+            "n": 341
+          },
+          "5": {
+            "rate": 0.1032,
+            "n": 310
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": -1.0,
+        "first_half": -0.8,
+        "second_half": -0.9,
+        "pass": true
+      },
+      "spread": {
+        "candidate": 0.1224,
+        "vix_quintile_same_sample": 0.1471,
+        "beats_vix": false
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.0724,
+            "low_state_rate": 0.1333,
+            "high_state_rate": 0.0785,
+            "n": 1200
+          },
+          "vix_t2": {
+            "spread": 0.0884,
+            "low_state_rate": 0.1127,
+            "high_state_rate": 0.044,
+            "n": 1199
+          },
+          "vix_t3": {
+            "spread": 0.1257,
+            "low_state_rate": 0.2566,
+            "high_state_rate": 0.2432,
+            "n": 1198
+          }
+        },
+        "direction_consistent": true
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.15,
+          "n": 40
+        },
+        "2": {
+          "rate": 0.1842,
+          "n": 38
+        },
+        "3": {
+          "rate": 0.25,
+          "n": 32
+        },
+        "4": {
+          "rate": 0.1053,
+          "n": 38
+        },
+        "5": {
+          "rate": 0.0417,
+          "n": 24
+        }
+      },
+      "verdict": "PASS"
+    },
+    {
+      "candidate": "gex5_fullsample",
+      "order_note": "full-sample quantile edges (robustness variant, NOT pre-registered)",
+      "sample": {
+        "from": "2011-05-02",
+        "to": "2026-08-19",
+        "sessions": 3848,
+        "episodes": 79,
+        "base_rate": 0.1505,
+        "half_split": "2018-12-21"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.2299,
+            "n": 770
+          },
+          "2": {
+            "rate": 0.1365,
+            "n": 769
+          },
+          "3": {
+            "rate": 0.1584,
+            "n": 770
+          },
+          "4": {
+            "rate": 0.1118,
+            "n": 769
+          },
+          "5": {
+            "rate": 0.1156,
+            "n": 770
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.2098,
+            "n": 205
+          },
+          "2": {
+            "rate": 0.1739,
+            "n": 92
+          },
+          "3": {
+            "rate": 0.1662,
+            "n": 355
+          },
+          "4": {
+            "rate": 0.1193,
+            "n": 595
+          },
+          "5": {
+            "rate": 0.1078,
+            "n": 677
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.2372,
+            "n": 565
+          },
+          "2": {
+            "rate": 0.1315,
+            "n": 677
+          },
+          "3": {
+            "rate": 0.1518,
+            "n": 415
+          },
+          "4": {
+            "rate": 0.0862,
+            "n": 174
+          },
+          "5": {
+            "rate": 0.172,
+            "n": 93
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": -0.8,
+        "first_half": -1.0,
+        "second_half": -0.3,
+        "pass": false
+      },
+      "spread": {
+        "candidate": 0.118,
+        "vix_quintile_same_sample": 0.1715,
+        "beats_vix": false
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.0695,
+            "low_state_rate": 0.125,
+            "high_state_rate": 0.0659,
+            "n": 1283
+          },
+          "vix_t2": {
+            "spread": 0.0708,
+            "low_state_rate": 0.0753,
+            "high_state_rate": 0.1336,
+            "n": 1282
+          },
+          "vix_t3": {
+            "spread": 0.0798,
+            "low_state_rate": 0.2679,
+            "high_state_rate": 0.2655,
+            "n": 1283
+          }
+        },
+        "direction_consistent": false
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.2667,
+          "n": 30
+        },
+        "2": {
+          "rate": 0.1316,
+          "n": 38
+        },
+        "3": {
+          "rate": 0.2381,
+          "n": 42
+        },
+        "4": {
+          "rate": 0.0769,
+          "n": 39
+        },
+        "5": {
+          "rate": 0.0571,
+          "n": 35
+        }
+      },
+      "verdict": "NULL"
+    },
+    {
+      "candidate": "adz2",
+      "order_note": "1: z<=0 / 2: z>0 (our ~2500-name pool, NOT NYSE)",
+      "sample": {
+        "from": "2024-06-13",
+        "to": "2026-08-19",
+        "sessions": 547,
+        "episodes": 10,
+        "base_rate": 0.1353,
+        "half_split": "2025-07-18"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.1831,
+            "n": 295
+          },
+          "2": {
+            "rate": 0.0794,
+            "n": 252
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.2715,
+            "n": 151
+          },
+          "2": {
+            "rate": 0.123,
+            "n": 122
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.0903,
+            "n": 144
+          },
+          "2": {
+            "rate": 0.0385,
+            "n": 130
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": -1.0,
+        "first_half": -1.0,
+        "second_half": -1.0,
+        "pass": true
+      },
+      "spread": {
+        "candidate": 0.1037,
+        "vix_quintile_same_sample": 0.2,
+        "beats_vix": false
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.028,
+            "low_state_rate": 0.1358,
+            "high_state_rate": 0.1078,
+            "n": 183
+          },
+          "vix_t2": {
+            "spread": 0.0192,
+            "low_state_rate": 0.0769,
+            "high_state_rate": 0.0577,
+            "n": 182
+          },
+          "vix_t3": {
+            "spread": 0.2068,
+            "low_state_rate": 0.2721,
+            "high_state_rate": 0.0652,
+            "n": 182
+          }
+        },
+        "direction_consistent": true
+      },
+      "nonoverlap_21d": null,
+      "verdict": "PASS",
+      "flag": "short sample (2024+); NYSE-calibre rerun pending TV probe export"
+    },
+    {
+      "candidate": "adz2_nyse",
+      "order_note": "1: z<=0 / 2: z>0 (NYSE exchange-reported A/D, 2007+)",
+      "sample": {
+        "from": "2007-10-26",
+        "to": "2026-08-19",
+        "sessions": 4730,
+        "episodes": 110,
+        "base_rate": 0.1841,
+        "half_split": "2017-03-22"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.2297,
+            "n": 1929
+          },
+          "2": {
+            "rate": 0.1528,
+            "n": 2801
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.2525,
+            "n": 1018
+          },
+          "2": {
+            "rate": 0.1604,
+            "n": 1347
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.2042,
+            "n": 911
+          },
+          "2": {
+            "rate": 0.1458,
+            "n": 1454
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": -1.0,
+        "first_half": -1.0,
+        "second_half": -1.0,
+        "pass": true
+      },
+      "spread": {
+        "candidate": 0.0769,
+        "vix_quintile_same_sample": 0.2199,
+        "beats_vix": false
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.0811,
+            "low_state_rate": 0.1541,
+            "high_state_rate": 0.073,
+            "n": 1577
+          },
+          "vix_t2": {
+            "spread": 0.0577,
+            "low_state_rate": 0.1357,
+            "high_state_rate": 0.1934,
+            "n": 1577
+          },
+          "vix_t3": {
+            "spread": 0.0783,
+            "low_state_rate": 0.3233,
+            "high_state_rate": 0.245,
+            "n": 1576
+          }
+        },
+        "direction_consistent": false
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.2041,
+          "n": 98
+        },
+        "2": {
+          "rate": 0.1562,
+          "n": 128
+        }
+      },
+      "verdict": "NULL"
+    },
+    {
+      "candidate": "r2_nas2",
+      "order_note": "1: risk-off / 2: risk-on (turin R2 verbatim: Nas cumAD>100dSMA or 252d z>-1)",
+      "sample": {
+        "from": "2007-09-28",
+        "to": "2026-08-19",
+        "sessions": 4751,
+        "episodes": 111,
+        "base_rate": 0.1856,
+        "half_split": "2017-03-08"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.241,
+            "n": 2660
+          },
+          "2": {
+            "rate": 0.1153,
+            "n": 2091
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.3121,
+            "n": 1208
+          },
+          "2": {
+            "rate": 0.0917,
+            "n": 1167
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.1818,
+            "n": 1452
+          },
+          "2": {
+            "rate": 0.145,
+            "n": 924
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": -1.0,
+        "first_half": -1.0,
+        "second_half": -1.0,
+        "pass": true
+      },
+      "spread": {
+        "candidate": 0.1257,
+        "vix_quintile_same_sample": 0.2204,
+        "beats_vix": false
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.0546,
+            "low_state_rate": 0.1283,
+            "high_state_rate": 0.0737,
+            "n": 1590
+          },
+          "vix_t2": {
+            "spread": 0.0238,
+            "low_state_rate": 0.1834,
+            "high_state_rate": 0.1596,
+            "n": 1581
+          },
+          "vix_t3": {
+            "spread": 0.1791,
+            "low_state_rate": 0.3425,
+            "high_state_rate": 0.1633,
+            "n": 1580
+          }
+        },
+        "direction_consistent": true
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.2419,
+          "n": 124
+        },
+        "2": {
+          "rate": 0.1165,
+          "n": 103
+        }
+      },
+      "verdict": "PASS"
+    },
+    {
+      "candidate": "nhnl3",
+      "order_note": "1: <0.30 oversold / 2: mid / 3: >0.85 overbought (KY thresholds, 10d EMA)",
+      "sample": {
+        "from": "2001-06-05",
+        "to": "2026-08-19",
+        "sessions": 6314,
+        "episodes": 146,
+        "base_rate": 0.1755,
+        "half_split": "2014-01-27"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.3718,
+            "n": 503
+          },
+          "2": {
+            "rate": 0.1943,
+            "n": 3787
+          },
+          "3": {
+            "rate": 0.0914,
+            "n": 2024
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.4266,
+            "n": 218
+          },
+          "2": {
+            "rate": 0.2475,
+            "n": 1713
+          },
+          "3": {
+            "rate": 0.1003,
+            "n": 1226
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.3298,
+            "n": 285
+          },
+          "2": {
+            "rate": 0.1504,
+            "n": 2074
+          },
+          "3": {
+            "rate": 0.0777,
+            "n": 798
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": -1.0,
+        "first_half": -1.0,
+        "second_half": -1.0,
+        "pass": true
+      },
+      "spread": {
+        "candidate": 0.2804,
+        "vix_quintile_same_sample": 0.2402,
+        "beats_vix": true
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.9361,
+            "low_state_rate": 1.0,
+            "high_state_rate": 0.0639,
+            "n": 2106
+          },
+          "vix_t2": {
+            "spread": 0.2368,
+            "low_state_rate": 0.3492,
+            "high_state_rate": 0.1124,
+            "n": 2104
+          },
+          "vix_t3": {
+            "spread": 0.2512,
+            "low_state_rate": 0.3693,
+            "high_state_rate": 0.1181,
+            "n": 2104
+          }
+        },
+        "direction_consistent": true
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.2917,
+          "n": 24
+        },
+        "2": {
+          "rate": 0.1864,
+          "n": 177
+        },
+        "3": {
+          "rate": 0.09,
+          "n": 100
+        }
+      },
+      "verdict": "PASS"
+    },
+    {
+      "candidate": "credit_hma2",
+      "order_note": "1: HYG below HMA(100) risk-off / 2: above risk-on",
+      "sample": {
+        "from": "2007-04-11",
+        "to": "2026-08-19",
+        "sessions": 4871,
+        "episodes": 113,
+        "base_rate": 0.1846,
+        "half_split": "2016-12-08"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.2015,
+            "n": 2338
+          },
+          "2": {
+            "rate": 0.169,
+            "n": 2533
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.2013,
+            "n": 1202
+          },
+          "2": {
+            "rate": 0.2101,
+            "n": 1233
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.2016,
+            "n": 1136
+          },
+          "2": {
+            "rate": 0.13,
+            "n": 1300
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": -1.0,
+        "first_half": 1.0,
+        "second_half": -1.0,
+        "pass": false
+      },
+      "spread": {
+        "candidate": 0.0325,
+        "vix_quintile_same_sample": 0.217,
+        "beats_vix": false
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.0183,
+            "low_state_rate": 0.102,
+            "high_state_rate": 0.0837,
+            "n": 1627
+          },
+          "vix_t2": {
+            "spread": 0.0144,
+            "low_state_rate": 0.1693,
+            "high_state_rate": 0.1837,
+            "n": 1621
+          },
+          "vix_t3": {
+            "spread": 0.0227,
+            "low_state_rate": 0.2954,
+            "high_state_rate": 0.2727,
+            "n": 1623
+          }
+        },
+        "direction_consistent": false
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.2018,
+          "n": 109
+        },
+        "2": {
+          "rate": 0.2276,
+          "n": 123
+        }
+      },
+      "verdict": "NULL"
+    },
+    {
+      "candidate": "credit_hma2_h50",
+      "order_note": "1: HYG below HMA(50) risk-off / 2: above risk-on (robustness variant)",
+      "sample": {
+        "from": "2007-04-11",
+        "to": "2026-08-19",
+        "sessions": 4871,
+        "episodes": 113,
+        "base_rate": 0.1846,
+        "half_split": "2016-12-08"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.2068,
+            "n": 2350
+          },
+          "2": {
+            "rate": 0.1638,
+            "n": 2521
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.226,
+            "n": 1155
+          },
+          "2": {
+            "rate": 0.1875,
+            "n": 1280
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.1883,
+            "n": 1195
+          },
+          "2": {
+            "rate": 0.1394,
+            "n": 1241
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": -1.0,
+        "first_half": -1.0,
+        "second_half": -1.0,
+        "pass": true
+      },
+      "spread": {
+        "candidate": 0.043,
+        "vix_quintile_same_sample": 0.217,
+        "beats_vix": false
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.0086,
+            "low_state_rate": 0.096,
+            "high_state_rate": 0.0874,
+            "n": 1627
+          },
+          "vix_t2": {
+            "spread": 0.019,
+            "low_state_rate": 0.1673,
+            "high_state_rate": 0.1863,
+            "n": 1621
+          },
+          "vix_t3": {
+            "spread": 0.0901,
+            "low_state_rate": 0.3269,
+            "high_state_rate": 0.2368,
+            "n": 1623
+          }
+        },
+        "direction_consistent": false
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.2212,
+          "n": 104
+        },
+        "2": {
+          "rate": 0.2109,
+          "n": 128
+        }
+      },
+      "verdict": "NULL"
+    },
+    {
+      "candidate": "credit_hma2_h200",
+      "order_note": "1: HYG below HMA(200) risk-off / 2: above risk-on (robustness variant)",
+      "sample": {
+        "from": "2007-04-11",
+        "to": "2026-08-19",
+        "sessions": 4871,
+        "episodes": 113,
+        "base_rate": 0.1846,
+        "half_split": "2016-12-08"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.2218,
+            "n": 2421
+          },
+          "2": {
+            "rate": 0.1478,
+            "n": 2450
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.248,
+            "n": 1258
+          },
+          "2": {
+            "rate": 0.1606,
+            "n": 1177
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.1935,
+            "n": 1163
+          },
+          "2": {
+            "rate": 0.1359,
+            "n": 1273
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": -1.0,
+        "first_half": -1.0,
+        "second_half": -1.0,
+        "pass": true
+      },
+      "spread": {
+        "candidate": 0.0741,
+        "vix_quintile_same_sample": 0.217,
+        "beats_vix": false
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.0117,
+            "low_state_rate": 0.0982,
+            "high_state_rate": 0.0865,
+            "n": 1627
+          },
+          "vix_t2": {
+            "spread": 0.0531,
+            "low_state_rate": 0.2034,
+            "high_state_rate": 0.1503,
+            "n": 1621
+          },
+          "vix_t3": {
+            "spread": 0.074,
+            "low_state_rate": 0.315,
+            "high_state_rate": 0.241,
+            "n": 1623
+          }
+        },
+        "direction_consistent": true
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.2411,
+          "n": 112
+        },
+        "2": {
+          "rate": 0.1917,
+          "n": 120
+        }
+      },
+      "verdict": "NULL"
+    },
+    {
+      "candidate": "credit_oas5",
+      "order_note": "HY OAS full-sample quintiles; Q1=tight .. Q5=wide (1996+)",
+      "sample": {
+        "from": "1996-12-31",
+        "to": "2026-08-19",
+        "sessions": 7453,
+        "episodes": 185,
+        "base_rate": 0.1903,
+        "half_split": "2011-10-19"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.1391,
+            "n": 1495
+          },
+          "2": {
+            "rate": 0.116,
+            "n": 1500
+          },
+          "3": {
+            "rate": 0.1499,
+            "n": 1481
+          },
+          "4": {
+            "rate": 0.1956,
+            "n": 1488
+          },
+          "5": {
+            "rate": 0.3512,
+            "n": 1489
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.1232,
+            "n": 755
+          },
+          "2": {
+            "rate": 0.0825,
+            "n": 424
+          },
+          "3": {
+            "rate": 0.1773,
+            "n": 502
+          },
+          "4": {
+            "rate": 0.2586,
+            "n": 781
+          },
+          "5": {
+            "rate": 0.375,
+            "n": 1264
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.1554,
+            "n": 740
+          },
+          "2": {
+            "rate": 0.1292,
+            "n": 1076
+          },
+          "3": {
+            "rate": 0.1359,
+            "n": 979
+          },
+          "4": {
+            "rate": 0.1259,
+            "n": 707
+          },
+          "5": {
+            "rate": 0.2178,
+            "n": 225
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": 0.9,
+        "first_half": 0.9,
+        "second_half": 0.1,
+        "pass": false
+      },
+      "spread": {
+        "candidate": 0.2352,
+        "vix_quintile_same_sample": 0.2202,
+        "beats_vix": true
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.1023,
+            "low_state_rate": 0.1286,
+            "high_state_rate": 0.1,
+            "n": 2485
+          },
+          "vix_t2": {
+            "spread": 0.306,
+            "low_state_rate": 0.1388,
+            "high_state_rate": 0.4448,
+            "n": 2484
+          },
+          "vix_t3": {
+            "spread": 0.1634,
+            "low_state_rate": 0.1699,
+            "high_state_rate": 0.3333,
+            "n": 2484
+          }
+        },
+        "direction_consistent": false
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.1449,
+          "n": 69
+        },
+        "2": {
+          "rate": 0.1408,
+          "n": 71
+        },
+        "3": {
+          "rate": 0.1486,
+          "n": 74
+        },
+        "4": {
+          "rate": 0.1972,
+          "n": 71
+        },
+        "5": {
+          "rate": 0.3143,
+          "n": 70
+        }
+      },
+      "verdict": "NULL"
+    },
+    {
+      "candidate": "credit_oas5_roll",
+      "order_note": "OAS trailing-252d rank quintiles (robustness variant)",
+      "sample": {
+        "from": "1997-12-22",
+        "to": "2026-08-19",
+        "sessions": 7206,
+        "episodes": 181,
+        "base_rate": 0.1901,
+        "half_split": "2012-04-18"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.091,
+            "n": 2593
+          },
+          "2": {
+            "rate": 0.1917,
+            "n": 1017
+          },
+          "3": {
+            "rate": 0.1621,
+            "n": 1049
+          },
+          "4": {
+            "rate": 0.2056,
+            "n": 827
+          },
+          "5": {
+            "rate": 0.3483,
+            "n": 1720
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.1021,
+            "n": 1077
+          },
+          "2": {
+            "rate": 0.2398,
+            "n": 492
+          },
+          "3": {
+            "rate": 0.1944,
+            "n": 571
+          },
+          "4": {
+            "rate": 0.2895,
+            "n": 411
+          },
+          "5": {
+            "rate": 0.384,
+            "n": 1052
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.0831,
+            "n": 1516
+          },
+          "2": {
+            "rate": 0.1467,
+            "n": 525
+          },
+          "3": {
+            "rate": 0.1234,
+            "n": 478
+          },
+          "4": {
+            "rate": 0.1226,
+            "n": 416
+          },
+          "5": {
+            "rate": 0.2919,
+            "n": 668
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": 0.9,
+        "first_half": 0.9,
+        "second_half": 0.6,
+        "pass": true
+      },
+      "spread": {
+        "candidate": 0.2572,
+        "vix_quintile_same_sample": 0.23,
+        "beats_vix": true
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.1662,
+            "low_state_rate": 0.0859,
+            "high_state_rate": 0.2131,
+            "n": 2404
+          },
+          "vix_t2": {
+            "spread": 0.2313,
+            "low_state_rate": 0.1105,
+            "high_state_rate": 0.3419,
+            "n": 2402
+          },
+          "vix_t3": {
+            "spread": 0.3196,
+            "low_state_rate": 0.0451,
+            "high_state_rate": 0.3647,
+            "n": 2400
+          }
+        },
+        "direction_consistent": true
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.0569,
+          "n": 123
+        },
+        "2": {
+          "rate": 0.2292,
+          "n": 48
+        },
+        "3": {
+          "rate": 0.1136,
+          "n": 44
+        },
+        "4": {
+          "rate": 0.1778,
+          "n": 45
+        },
+        "5": {
+          "rate": 0.369,
+          "n": 84
+        }
+      },
+      "verdict": "PASS"
+    }
+  ]
+}

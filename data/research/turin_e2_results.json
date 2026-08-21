@@ -1,0 +1,195 @@
+{
+  "R1_washout_gate": {
+    "rule": "dip days (>=3% off 60d high) gated by NYSE cumAD 21d z > 0",
+    "sample": {
+      "from": "2007-10-26",
+      "to": "2026-08-20",
+      "dip_days": 1584,
+      "episodes": 77,
+      "allowed_days": 518,
+      "forbidden_days": 1066
+    },
+    "day_level_distributions": {
+      "allowed": {
+        "fwd21": {
+          "n": 517,
+          "mean": 0.0091,
+          "median": 0.0216,
+          "p10": -0.068,
+          "p90": 0.0654
+        },
+        "fwd63": {
+          "n": 512,
+          "mean": 0.0273,
+          "median": 0.0587,
+          "p10": -0.1212,
+          "p90": 0.1262
+        },
+        "fmin63": {
+          "n": 518,
+          "mean": -0.0682,
+          "median": -0.0394,
+          "p10": -0.2,
+          "p90": 0.0043
+        }
+      },
+      "forbidden": {
+        "fwd21": {
+          "n": 1066,
+          "mean": 0.0157,
+          "median": 0.0287,
+          "p10": -0.0699,
+          "p90": 0.088
+        },
+        "fwd63": {
+          "n": 1066,
+          "mean": 0.0375,
+          "median": 0.0538,
+          "p10": -0.0888,
+          "p90": 0.1427
+        },
+        "fmin63": {
+          "n": 1066,
+          "mean": -0.067,
+          "median": -0.0402,
+          "p10": -0.1673,
+          "p90": 0.0064
+        }
+      },
+      "P_further_5pct_dd_63d": {
+        "allowed": 0.4112,
+        "forbidden": 0.4371
+      }
+    },
+    "episode_level_tests": {
+      "fwd21": {
+        "p_mannwhitney_episode_level": 0.6543,
+        "direction_matches_claim": false,
+        "allowed_median": 0.0205,
+        "forbidden_median": 0.0226,
+        "n_allowed": 36,
+        "n_forbidden": 73
+      },
+      "fwd63": {
+        "p_mannwhitney_episode_level": 0.5272,
+        "direction_matches_claim": true,
+        "allowed_median": 0.0595,
+        "forbidden_median": 0.0361,
+        "n_allowed": 34,
+        "n_forbidden": 73
+      },
+      "fmin63": {
+        "p_mannwhitney_episode_level": 0.4669,
+        "direction_matches_claim": false,
+        "allowed_median": -0.0439,
+        "forbidden_median": -0.0325,
+        "n_allowed": 37,
+        "n_forbidden": 73
+      }
+    },
+    "verdict": "NULL"
+  },
+  "R3_vixts_vol_states": {
+    "rule": "VIX/VIX3M 3EMA states 0.8 / 1.0 (turin thresholds verbatim)",
+    "sample": {
+      "from": "2006-07-17",
+      "to": "2026-08-20",
+      "sessions": 5033
+    },
+    "by_state": {
+      "complacency": {
+        "n": 220,
+        "vol_expansion_ratio": {
+          "n": 220,
+          "mean": 1.2047,
+          "median": 0.9978,
+          "p10": 0.5714,
+          "p90": 2.2601
+        },
+        "fwd21_vix_change": {
+          "n": 220,
+          "mean": 0.1875,
+          "median": 0.0964,
+          "p10": -0.0539,
+          "p90": 0.3812
+        },
+        "P_vix_spikes_50pct_21d": 0.2318,
+        "fwd21_spx_return": {
+          "n": 220,
+          "mean": 0.006,
+          "median": 0.0083,
+          "p10": -0.0221,
+          "p90": 0.033
+        }
+      },
+      "neutral": {
+        "n": 4315,
+        "vol_expansion_ratio": {
+          "n": 4314,
+          "mean": 1.1193,
+          "median": 0.9937,
+          "p10": 0.5917,
+          "p90": 1.7575
+        },
+        "fwd21_vix_change": {
+          "n": 4314,
+          "mean": 0.045,
+          "median": -0.0139,
+          "p10": -0.2123,
+          "p90": 0.3398
+        },
+        "P_vix_spikes_50pct_21d": 0.1451,
+        "fwd21_spx_return": {
+          "n": 4314,
+          "mean": 0.008,
+          "median": 0.0146,
+          "p10": -0.047,
+          "p90": 0.0508
+        }
+      },
+      "backwardation": {
+        "n": 498,
+        "vol_expansion_ratio": {
+          "n": 498,
+          "mean": 1.0447,
+          "median": 0.9112,
+          "p10": 0.5265,
+          "p90": 1.5653
+        },
+        "fwd21_vix_change": {
+          "n": 498,
+          "mean": -0.1168,
+          "median": -0.1799,
+          "p10": -0.402,
+          "p90": 0.1935
+        },
+        "P_vix_spikes_50pct_21d": 0.1104,
+        "fwd21_spx_return": {
+          "n": 498,
+          "mean": 0.0158,
+          "median": 0.025,
+          "p10": -0.0831,
+          "p90": 0.1059
+        }
+      }
+    },
+    "claims": {
+      "a_complacency_vol_expands": {
+        "claim": "complacency -> vol expansion ahead (vs neutral)",
+        "direction_matches": true,
+        "p": 0.442,
+        "complacency_median": 0.998,
+        "neutral_median": 0.994
+      },
+      "b_backwardation_vix_reverts": {
+        "claim": "backwardation -> VIX falls over next 21d (mean reversion, vs neutral)",
+        "direction_matches": true,
+        "p": 0.0,
+        "backwardation_median": -0.18,
+        "neutral_median": -0.014
+      }
+    },
+    "verdict": "NULL",
+    "note": "day-level Mann-Whitney; overlapping horizons inflate precision -- treat p as descriptive, directions + effect sizes as primary"
+  }
+}

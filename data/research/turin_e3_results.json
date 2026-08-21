@@ -1,0 +1,1232 @@
+{
+  "protocol": {
+    "window_start_actual": "2008-09-26",
+    "dev_end": "2021-12-31",
+    "note_since07": "cannot match 'since 07' -- AD data starts 2007-09 + warmup",
+    "dev_bar": {
+      "maxdd_better_than": -0.2125,
+      "cagr_at_least": 0.118
+    },
+    "claimed_maxdd_since07": -0.1458,
+    "grid_size": 54
+  },
+  "buy_and_hold": {
+    "dev": {
+      "cagr": 0.128,
+      "maxdd": -0.4251,
+      "final_multiple": 4.976
+    },
+    "forward": {
+      "cagr": 0.1217,
+      "maxdd": -0.2248,
+      "final_multiple": 1.706
+    },
+    "full": {
+      "cagr": 0.1263,
+      "maxdd": -0.4251,
+      "final_multiple": 8.492
+    }
+  },
+  "pass1_spy": {
+    "n_dev_pass": 0,
+    "survivors": [],
+    "all_combos": [
+      {
+        "combo": "mmth>40 & adl>100d & rvrank<=45 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0227,
+          "maxdd": -0.1057,
+          "final_multiple": 1.349
+        },
+        "time_in_mkt_dev": 0.387,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>100d & rvrank<=45 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.066,
+          "maxdd": -0.2578,
+          "final_multiple": 2.343
+        },
+        "time_in_mkt_dev": 0.707,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>100d & rvrank<=60 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0536,
+          "maxdd": -0.0916,
+          "final_multiple": 2.005
+        },
+        "time_in_mkt_dev": 0.47,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>100d & rvrank<=60 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0834,
+          "maxdd": -0.2413,
+          "final_multiple": 2.91
+        },
+        "time_in_mkt_dev": 0.742,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>100d & rvrank<=75 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0554,
+          "maxdd": -0.155,
+          "final_multiple": 2.053
+        },
+        "time_in_mkt_dev": 0.531,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>100d & rvrank<=75 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0988,
+          "maxdd": -0.1879,
+          "final_multiple": 3.51
+        },
+        "time_in_mkt_dev": 0.784,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>200d & rvrank<=45 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0184,
+          "maxdd": -0.1238,
+          "final_multiple": 1.274
+        },
+        "time_in_mkt_dev": 0.385,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>200d & rvrank<=45 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0694,
+          "maxdd": -0.1963,
+          "final_multiple": 2.444
+        },
+        "time_in_mkt_dev": 0.719,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>200d & rvrank<=60 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0482,
+          "maxdd": -0.1291,
+          "final_multiple": 1.873
+        },
+        "time_in_mkt_dev": 0.473,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>200d & rvrank<=60 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0839,
+          "maxdd": -0.1765,
+          "final_multiple": 2.926
+        },
+        "time_in_mkt_dev": 0.746,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>200d & rvrank<=75 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0533,
+          "maxdd": -0.183,
+          "final_multiple": 1.997
+        },
+        "time_in_mkt_dev": 0.534,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>200d & rvrank<=75 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0929,
+          "maxdd": -0.1879,
+          "final_multiple": 3.268
+        },
+        "time_in_mkt_dev": 0.785,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & R2style & rvrank<=45 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.034,
+          "maxdd": -0.1238,
+          "final_multiple": 1.562
+        },
+        "time_in_mkt_dev": 0.488,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & R2style & rvrank<=45 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0992,
+          "maxdd": -0.1671,
+          "final_multiple": 3.526
+        },
+        "time_in_mkt_dev": 0.788,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & R2style & rvrank<=60 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0812,
+          "maxdd": -0.1291,
+          "final_multiple": 2.831
+        },
+        "time_in_mkt_dev": 0.597,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & R2style & rvrank<=60 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.1006,
+          "maxdd": -0.1671,
+          "final_multiple": 3.589
+        },
+        "time_in_mkt_dev": 0.797,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & R2style & rvrank<=75 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0903,
+          "maxdd": -0.1475,
+          "final_multiple": 3.164
+        },
+        "time_in_mkt_dev": 0.681,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & R2style & rvrank<=75 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.1089,
+          "maxdd": -0.1662,
+          "final_multiple": 3.967
+        },
+        "time_in_mkt_dev": 0.815,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>100d & rvrank<=45 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0213,
+          "maxdd": -0.1125,
+          "final_multiple": 1.325
+        },
+        "time_in_mkt_dev": 0.38,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>100d & rvrank<=45 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0656,
+          "maxdd": -0.2184,
+          "final_multiple": 2.333
+        },
+        "time_in_mkt_dev": 0.659,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>100d & rvrank<=60 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0514,
+          "maxdd": -0.0989,
+          "final_multiple": 1.95
+        },
+        "time_in_mkt_dev": 0.457,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>100d & rvrank<=60 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0821,
+          "maxdd": -0.1908,
+          "final_multiple": 2.862
+        },
+        "time_in_mkt_dev": 0.69,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>100d & rvrank<=75 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0494,
+          "maxdd": -0.2132,
+          "final_multiple": 1.901
+        },
+        "time_in_mkt_dev": 0.506,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>100d & rvrank<=75 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0964,
+          "maxdd": -0.1885,
+          "final_multiple": 3.408
+        },
+        "time_in_mkt_dev": 0.727,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>200d & rvrank<=45 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0232,
+          "maxdd": -0.1076,
+          "final_multiple": 1.358
+        },
+        "time_in_mkt_dev": 0.382,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>200d & rvrank<=45 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.059,
+          "maxdd": -0.2168,
+          "final_multiple": 2.147
+        },
+        "time_in_mkt_dev": 0.659,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>200d & rvrank<=60 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0547,
+          "maxdd": -0.0931,
+          "final_multiple": 2.033
+        },
+        "time_in_mkt_dev": 0.466,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>200d & rvrank<=60 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0679,
+          "maxdd": -0.2313,
+          "final_multiple": 2.402
+        },
+        "time_in_mkt_dev": 0.68,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>200d & rvrank<=75 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0541,
+          "maxdd": -0.1809,
+          "final_multiple": 2.019
+        },
+        "time_in_mkt_dev": 0.514,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>200d & rvrank<=75 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0793,
+          "maxdd": -0.2166,
+          "final_multiple": 2.766
+        },
+        "time_in_mkt_dev": 0.717,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & R2style & rvrank<=45 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0345,
+          "maxdd": -0.1084,
+          "final_multiple": 1.572
+        },
+        "time_in_mkt_dev": 0.475,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & R2style & rvrank<=45 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0774,
+          "maxdd": -0.2159,
+          "final_multiple": 2.7
+        },
+        "time_in_mkt_dev": 0.72,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & R2style & rvrank<=60 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.076,
+          "maxdd": -0.1149,
+          "final_multiple": 2.653
+        },
+        "time_in_mkt_dev": 0.573,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & R2style & rvrank<=60 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0879,
+          "maxdd": -0.1882,
+          "final_multiple": 3.073
+        },
+        "time_in_mkt_dev": 0.736,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & R2style & rvrank<=75 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0788,
+          "maxdd": -0.2012,
+          "final_multiple": 2.748
+        },
+        "time_in_mkt_dev": 0.639,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & R2style & rvrank<=75 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0995,
+          "maxdd": -0.1671,
+          "final_multiple": 3.539
+        },
+        "time_in_mkt_dev": 0.762,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>100d & rvrank<=45 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0251,
+          "maxdd": -0.0883,
+          "final_multiple": 1.391
+        },
+        "time_in_mkt_dev": 0.31,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>100d & rvrank<=45 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0584,
+          "maxdd": -0.1368,
+          "final_multiple": 2.131
+        },
+        "time_in_mkt_dev": 0.537,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>100d & rvrank<=60 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0494,
+          "maxdd": -0.0883,
+          "final_multiple": 1.901
+        },
+        "time_in_mkt_dev": 0.371,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>100d & rvrank<=60 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0732,
+          "maxdd": -0.1217,
+          "final_multiple": 2.564
+        },
+        "time_in_mkt_dev": 0.567,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>100d & rvrank<=75 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0521,
+          "maxdd": -0.132,
+          "final_multiple": 1.967
+        },
+        "time_in_mkt_dev": 0.397,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>100d & rvrank<=75 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0752,
+          "maxdd": -0.155,
+          "final_multiple": 2.63
+        },
+        "time_in_mkt_dev": 0.606,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>200d & rvrank<=45 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0225,
+          "maxdd": -0.0866,
+          "final_multiple": 1.346
+        },
+        "time_in_mkt_dev": 0.312,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>200d & rvrank<=45 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0526,
+          "maxdd": -0.1986,
+          "final_multiple": 1.981
+        },
+        "time_in_mkt_dev": 0.538,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>200d & rvrank<=60 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0457,
+          "maxdd": -0.0866,
+          "final_multiple": 1.815
+        },
+        "time_in_mkt_dev": 0.375,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>200d & rvrank<=60 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0649,
+          "maxdd": -0.1754,
+          "final_multiple": 2.311
+        },
+        "time_in_mkt_dev": 0.564,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>200d & rvrank<=75 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0484,
+          "maxdd": -0.132,
+          "final_multiple": 1.877
+        },
+        "time_in_mkt_dev": 0.401,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>200d & rvrank<=75 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0672,
+          "maxdd": -0.183,
+          "final_multiple": 2.379
+        },
+        "time_in_mkt_dev": 0.6,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & R2style & rvrank<=45 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0324,
+          "maxdd": -0.1028,
+          "final_multiple": 1.529
+        },
+        "time_in_mkt_dev": 0.354,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & R2style & rvrank<=45 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.062,
+          "maxdd": -0.1766,
+          "final_multiple": 2.23
+        },
+        "time_in_mkt_dev": 0.603,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & R2style & rvrank<=60 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0612,
+          "maxdd": -0.1028,
+          "final_multiple": 2.207
+        },
+        "time_in_mkt_dev": 0.418,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & R2style & rvrank<=60 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0842,
+          "maxdd": -0.1554,
+          "final_multiple": 2.939
+        },
+        "time_in_mkt_dev": 0.651,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & R2style & rvrank<=75 [AND]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0638,
+          "maxdd": -0.132,
+          "final_multiple": 2.28
+        },
+        "time_in_mkt_dev": 0.446,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & R2style & rvrank<=75 [2of3]",
+        "instrument": "SPY",
+        "dev": {
+          "cagr": 0.0937,
+          "maxdd": -0.2094,
+          "final_multiple": 3.297
+        },
+        "time_in_mkt_dev": 0.71,
+        "dev_pass": false
+      }
+    ]
+  },
+  "pass2_spxl": {
+    "note": "pinned thread says 'long only LETF port'; real SPXL fund data",
+    "n_dev_pass": 0,
+    "survivors": [],
+    "all_combos": [
+      {
+        "combo": "mmth>40 & adl>100d & rvrank<=45 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.0458,
+          "maxdd": -0.3598,
+          "final_multiple": 1.817
+        },
+        "time_in_mkt_dev": 0.387,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>100d & rvrank<=45 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1447,
+          "maxdd": -0.6573,
+          "final_multiple": 6.055
+        },
+        "time_in_mkt_dev": 0.707,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>100d & rvrank<=60 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.136,
+          "maxdd": -0.2948,
+          "final_multiple": 5.473
+        },
+        "time_in_mkt_dev": 0.47,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>100d & rvrank<=60 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2005,
+          "maxdd": -0.6386,
+          "final_multiple": 11.416
+        },
+        "time_in_mkt_dev": 0.742,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>100d & rvrank<=75 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1343,
+          "maxdd": -0.4226,
+          "final_multiple": 5.365
+        },
+        "time_in_mkt_dev": 0.531,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>100d & rvrank<=75 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2462,
+          "maxdd": -0.523,
+          "final_multiple": 18.78
+        },
+        "time_in_mkt_dev": 0.784,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>200d & rvrank<=45 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.0306,
+          "maxdd": -0.3529,
+          "final_multiple": 1.495
+        },
+        "time_in_mkt_dev": 0.385,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>200d & rvrank<=45 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1542,
+          "maxdd": -0.5031,
+          "final_multiple": 6.764
+        },
+        "time_in_mkt_dev": 0.719,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>200d & rvrank<=60 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1169,
+          "maxdd": -0.363,
+          "final_multiple": 4.365
+        },
+        "time_in_mkt_dev": 0.473,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>200d & rvrank<=60 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2007,
+          "maxdd": -0.4661,
+          "final_multiple": 11.449
+        },
+        "time_in_mkt_dev": 0.746,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>200d & rvrank<=75 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1259,
+          "maxdd": -0.4708,
+          "final_multiple": 4.855
+        },
+        "time_in_mkt_dev": 0.534,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & adl>200d & rvrank<=75 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2247,
+          "maxdd": -0.4916,
+          "final_multiple": 14.901
+        },
+        "time_in_mkt_dev": 0.785,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & R2style & rvrank<=45 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.073,
+          "maxdd": -0.3395,
+          "final_multiple": 2.558
+        },
+        "time_in_mkt_dev": 0.488,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & R2style & rvrank<=45 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2441,
+          "maxdd": -0.4581,
+          "final_multiple": 18.374
+        },
+        "time_in_mkt_dev": 0.788,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & R2style & rvrank<=60 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2177,
+          "maxdd": -0.363,
+          "final_multiple": 13.801
+        },
+        "time_in_mkt_dev": 0.597,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & R2style & rvrank<=60 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2489,
+          "maxdd": -0.4581,
+          "final_multiple": 19.337
+        },
+        "time_in_mkt_dev": 0.797,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & R2style & rvrank<=75 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2369,
+          "maxdd": -0.4038,
+          "final_multiple": 16.999
+        },
+        "time_in_mkt_dev": 0.681,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>40 & R2style & rvrank<=75 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2744,
+          "maxdd": -0.4362,
+          "final_multiple": 25.318
+        },
+        "time_in_mkt_dev": 0.815,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>100d & rvrank<=45 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.042,
+          "maxdd": -0.3722,
+          "final_multiple": 1.729
+        },
+        "time_in_mkt_dev": 0.38,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>100d & rvrank<=45 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1552,
+          "maxdd": -0.5841,
+          "final_multiple": 6.839
+        },
+        "time_in_mkt_dev": 0.659,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>100d & rvrank<=60 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1303,
+          "maxdd": -0.3064,
+          "final_multiple": 5.115
+        },
+        "time_in_mkt_dev": 0.457,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>100d & rvrank<=60 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2078,
+          "maxdd": -0.5436,
+          "final_multiple": 12.38
+        },
+        "time_in_mkt_dev": 0.69,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>100d & rvrank<=75 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1168,
+          "maxdd": -0.5326,
+          "final_multiple": 4.36
+        },
+        "time_in_mkt_dev": 0.506,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>100d & rvrank<=75 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2512,
+          "maxdd": -0.4929,
+          "final_multiple": 19.814
+        },
+        "time_in_mkt_dev": 0.727,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>200d & rvrank<=45 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.0462,
+          "maxdd": -0.3529,
+          "final_multiple": 1.826
+        },
+        "time_in_mkt_dev": 0.382,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>200d & rvrank<=45 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1336,
+          "maxdd": -0.5897,
+          "final_multiple": 5.319
+        },
+        "time_in_mkt_dev": 0.659,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>200d & rvrank<=60 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1398,
+          "maxdd": -0.2774,
+          "final_multiple": 5.718
+        },
+        "time_in_mkt_dev": 0.466,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>200d & rvrank<=60 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1603,
+          "maxdd": -0.6173,
+          "final_multiple": 7.256
+        },
+        "time_in_mkt_dev": 0.68,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>200d & rvrank<=75 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1317,
+          "maxdd": -0.4664,
+          "final_multiple": 5.201
+        },
+        "time_in_mkt_dev": 0.514,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & adl>200d & rvrank<=75 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1919,
+          "maxdd": -0.5686,
+          "final_multiple": 10.382
+        },
+        "time_in_mkt_dev": 0.717,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & R2style & rvrank<=45 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.0762,
+          "maxdd": -0.3351,
+          "final_multiple": 2.662
+        },
+        "time_in_mkt_dev": 0.475,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & R2style & rvrank<=45 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1859,
+          "maxdd": -0.5927,
+          "final_multiple": 9.703
+        },
+        "time_in_mkt_dev": 0.72,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & R2style & rvrank<=60 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2036,
+          "maxdd": -0.3255,
+          "final_multiple": 11.814
+        },
+        "time_in_mkt_dev": 0.573,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & R2style & rvrank<=60 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2189,
+          "maxdd": -0.5553,
+          "final_multiple": 13.986
+        },
+        "time_in_mkt_dev": 0.736,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & R2style & rvrank<=75 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2029,
+          "maxdd": -0.5082,
+          "final_multiple": 11.725
+        },
+        "time_in_mkt_dev": 0.639,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>50 & R2style & rvrank<=75 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2555,
+          "maxdd": -0.4581,
+          "final_multiple": 20.738
+        },
+        "time_in_mkt_dev": 0.762,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>100d & rvrank<=45 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.0575,
+          "maxdd": -0.2731,
+          "final_multiple": 2.107
+        },
+        "time_in_mkt_dev": 0.31,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>100d & rvrank<=45 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1442,
+          "maxdd": -0.4052,
+          "final_multiple": 6.019
+        },
+        "time_in_mkt_dev": 0.537,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>100d & rvrank<=60 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1289,
+          "maxdd": -0.2528,
+          "final_multiple": 5.032
+        },
+        "time_in_mkt_dev": 0.371,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>100d & rvrank<=60 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1915,
+          "maxdd": -0.3477,
+          "final_multiple": 10.329
+        },
+        "time_in_mkt_dev": 0.567,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>100d & rvrank<=75 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1342,
+          "maxdd": -0.3709,
+          "final_multiple": 5.356
+        },
+        "time_in_mkt_dev": 0.397,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>100d & rvrank<=75 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1933,
+          "maxdd": -0.4226,
+          "final_multiple": 10.545
+        },
+        "time_in_mkt_dev": 0.606,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>200d & rvrank<=45 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.0486,
+          "maxdd": -0.2878,
+          "final_multiple": 1.881
+        },
+        "time_in_mkt_dev": 0.312,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>200d & rvrank<=45 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1253,
+          "maxdd": -0.5276,
+          "final_multiple": 4.822
+        },
+        "time_in_mkt_dev": 0.538,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>200d & rvrank<=60 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1169,
+          "maxdd": -0.2527,
+          "final_multiple": 4.362
+        },
+        "time_in_mkt_dev": 0.375,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>200d & rvrank<=60 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1622,
+          "maxdd": -0.4972,
+          "final_multiple": 7.41
+        },
+        "time_in_mkt_dev": 0.564,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>200d & rvrank<=75 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1221,
+          "maxdd": -0.3709,
+          "final_multiple": 4.643
+        },
+        "time_in_mkt_dev": 0.401,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & adl>200d & rvrank<=75 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1656,
+          "maxdd": -0.4708,
+          "final_multiple": 7.703
+        },
+        "time_in_mkt_dev": 0.6,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & R2style & rvrank<=45 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.077,
+          "maxdd": -0.2992,
+          "final_multiple": 2.687
+        },
+        "time_in_mkt_dev": 0.354,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & R2style & rvrank<=45 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1507,
+          "maxdd": -0.4798,
+          "final_multiple": 6.491
+        },
+        "time_in_mkt_dev": 0.603,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & R2style & rvrank<=60 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1644,
+          "maxdd": -0.2992,
+          "final_multiple": 7.599
+        },
+        "time_in_mkt_dev": 0.418,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & R2style & rvrank<=60 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2204,
+          "maxdd": -0.425,
+          "final_multiple": 14.224
+        },
+        "time_in_mkt_dev": 0.651,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & R2style & rvrank<=75 [AND]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.1694,
+          "maxdd": -0.3709,
+          "final_multiple": 8.048
+        },
+        "time_in_mkt_dev": 0.446,
+        "dev_pass": false
+      },
+      {
+        "combo": "mmth>60 & R2style & rvrank<=75 [2of3]",
+        "instrument": "SPXL",
+        "dev": {
+          "cagr": 0.2444,
+          "maxdd": -0.5333,
+          "final_multiple": 18.431
+        },
+        "time_in_mkt_dev": 0.71,
+        "dev_pass": false
+      }
+    ]
+  },
+  "verdict": "NULL (claim not reproducible in this grid)"
+}
