@@ -303,6 +303,34 @@ def main() -> None:
         d2["state"] = np.minimum((d2["r"] * 5).astype(int) + 1, 5)
         results.append(evaluate("credit_oas5_roll", d2, "state", "OAS trailing-252d rank quintiles (robustness variant)"))
 
+    # 11-13. N2 CFTC TFF positioning (risk_state_machine_plan P2; run 2026-08-21).
+    # Pre-registered: series = net %OI (long-short)/OI for ES asset-mgr,
+    # ES lev-money, VIX lev-money; transform = rolling 156-report (3y)
+    # percentile rank -> quintiles (house rule: drifting series never get
+    # full-sample edges); daily join lagged to report_date + 3 business days
+    # (Tuesday data, Friday release -- no lookahead), forward-filled.
+    cftc_dir = ROOT / "data/reference/cftc"
+    if (cftc_dir / "tff_13874A_es.csv").exists():
+        def cot_states(csv_name, long_col, short_col):
+            t = pd.read_csv(cftc_dir / csv_name, parse_dates=["report_date"])
+            net = (t[long_col] - t[short_col]) / t["open_interest_all"]
+            net.index = pd.DatetimeIndex(t["report_date"])
+            rank = net.rolling(156).apply(lambda w: (w <= w.iloc[-1]).mean(), raw=False)
+            eff = rank.copy()
+            eff.index = eff.index + pd.offsets.BusinessDay(3)
+            return eff.reindex(base.index, method="ffill", tolerance=pd.Timedelta(days=14))
+
+        for tag, csvn, lc, sc in (
+                ("cot_es_am5", "tff_13874A_es.csv", "asset_mgr_positions_long", "asset_mgr_positions_short"),
+                ("cot_es_lev5", "tff_13874A_es.csv", "lev_money_positions_long", "lev_money_positions_short"),
+                ("cot_vix_lev5", "tff_1170E1_vix.csv", "lev_money_positions_long", "lev_money_positions_short")):
+            d = base.copy()
+            d["rank"] = cot_states(csvn, lc, sc)
+            d = d.dropna(subset=["rank"])
+            d["state"] = np.minimum((d["rank"] * 5).astype(int), 4) + 1
+            results.append(evaluate(tag, d, "state",
+                                    "net %OI rolling-3y rank quintile; Q1=most short/least long .. Q5=most long (report+3BD lag)"))
+
     OUT.write_text(json.dumps({"question": "P(SPX >=5% dd within 21 sessions)",
                                "house_method": "conditional base rate, half-sample spearman, no fitted parameters",
                                "results": results}, indent=2))
