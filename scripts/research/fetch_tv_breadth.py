@@ -31,6 +31,7 @@ SERIES = [
     ("ADVN.NY", "USI"), ("ADVN.NQ", "USI"),
     ("S5TH", "INDEX"), ("MMTH", "INDEX"),
     ("BAMLH0A0HYM2", "FRED"),
+    ("UVOL", "USI"), ("DVOL", "USI"), ("PCC", "USI"),
 ]
 
 

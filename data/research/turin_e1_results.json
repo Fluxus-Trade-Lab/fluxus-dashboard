@@ -1938,6 +1938,691 @@
         }
       },
       "verdict": "NULL"
+    },
+    {
+      "candidate": "n6_volosc5",
+      "order_note": "ema19-ema39 of UVOL-DVOL, rolling-252d rank quintiles (F&G Breadth component)",
+      "sample": {
+        "from": "1997-04-30",
+        "to": "2026-08-19",
+        "sessions": 7371,
+        "episodes": 184,
+        "base_rate": 0.1899,
+        "half_split": "2011-12-20"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.2104,
+            "n": 1502
+          },
+          "2": {
+            "rate": 0.1822,
+            "n": 1449
+          },
+          "3": {
+            "rate": 0.1938,
+            "n": 1481
+          },
+          "4": {
+            "rate": 0.1787,
+            "n": 1444
+          },
+          "5": {
+            "rate": 0.1839,
+            "n": 1495
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.2439,
+            "n": 783
+          },
+          "2": {
+            "rate": 0.2244,
+            "n": 704
+          },
+          "3": {
+            "rate": 0.2541,
+            "n": 736
+          },
+          "4": {
+            "rate": 0.243,
+            "n": 679
+          },
+          "5": {
+            "rate": 0.2439,
+            "n": 783
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.1739,
+            "n": 719
+          },
+          "2": {
+            "rate": 0.1423,
+            "n": 745
+          },
+          "3": {
+            "rate": 0.1342,
+            "n": 745
+          },
+          "4": {
+            "rate": 0.1216,
+            "n": 765
+          },
+          "5": {
+            "rate": 0.118,
+            "n": 712
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": -0.5,
+        "first_half": 0.1,
+        "second_half": -1.0,
+        "pass": false
+      },
+      "spread": {
+        "candidate": 0.0317,
+        "vix_quintile_same_sample": 0.222,
+        "beats_vix": false
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.0458,
+            "low_state_rate": 0.0951,
+            "high_state_rate": 0.0517,
+            "n": 2462
+          },
+          "vix_t2": {
+            "spread": 0.1252,
+            "low_state_rate": 0.135,
+            "high_state_rate": 0.2035,
+            "n": 2453
+          },
+          "vix_t3": {
+            "spread": 0.0396,
+            "low_state_rate": 0.3,
+            "high_state_rate": 0.2916,
+            "n": 2456
+          }
+        },
+        "direction_consistent": false
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.1711,
+          "n": 76
+        },
+        "2": {
+          "rate": 0.1509,
+          "n": 53
+        },
+        "3": {
+          "rate": 0.2222,
+          "n": 63
+        },
+        "4": {
+          "rate": 0.1625,
+          "n": 80
+        },
+        "5": {
+          "rate": 0.2405,
+          "n": 79
+        }
+      },
+      "verdict": "NULL"
+    },
+    {
+      "candidate": "n7_safehaven5",
+      "order_note": "SPX 20d ret - TLT 20d ret, rolling-252d rank quintiles (F&G Safe Haven component)",
+      "sample": {
+        "from": "2003-08-26",
+        "to": "2026-08-19",
+        "sessions": 5782,
+        "episodes": 120,
+        "base_rate": 0.1605,
+        "half_split": "2015-02-20"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.2033,
+            "n": 1264
+          },
+          "2": {
+            "rate": 0.1676,
+            "n": 1092
+          },
+          "3": {
+            "rate": 0.1401,
+            "n": 1178
+          },
+          "4": {
+            "rate": 0.1346,
+            "n": 1129
+          },
+          "5": {
+            "rate": 0.1528,
+            "n": 1119
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.1953,
+            "n": 635
+          },
+          "2": {
+            "rate": 0.1738,
+            "n": 587
+          },
+          "3": {
+            "rate": 0.1633,
+            "n": 594
+          },
+          "4": {
+            "rate": 0.1472,
+            "n": 530
+          },
+          "5": {
+            "rate": 0.1358,
+            "n": 545
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.2114,
+            "n": 629
+          },
+          "2": {
+            "rate": 0.1604,
+            "n": 505
+          },
+          "3": {
+            "rate": 0.1164,
+            "n": 584
+          },
+          "4": {
+            "rate": 0.1235,
+            "n": 599
+          },
+          "5": {
+            "rate": 0.169,
+            "n": 574
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": -0.7,
+        "first_half": -1.0,
+        "second_half": -0.3,
+        "pass": false
+      },
+      "spread": {
+        "candidate": 0.0687,
+        "vix_quintile_same_sample": 0.2234,
+        "beats_vix": false
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.0212,
+            "low_state_rate": 0.0698,
+            "high_state_rate": 0.0811,
+            "n": 1929
+          },
+          "vix_t2": {
+            "spread": 0.0806,
+            "low_state_rate": 0.0942,
+            "high_state_rate": 0.1118,
+            "n": 1929
+          },
+          "vix_t3": {
+            "spread": 0.0691,
+            "low_state_rate": 0.3023,
+            "high_state_rate": 0.2985,
+            "n": 1924
+          }
+        },
+        "direction_consistent": false
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.1452,
+          "n": 62
+        },
+        "2": {
+          "rate": 0.2609,
+          "n": 46
+        },
+        "3": {
+          "rate": 0.0984,
+          "n": 61
+        },
+        "4": {
+          "rate": 0.1458,
+          "n": 48
+        },
+        "5": {
+          "rate": 0.1186,
+          "n": 59
+        }
+      },
+      "verdict": "NULL"
+    },
+    {
+      "candidate": "n8_pcc5",
+      "order_note": "sma5(PCC), rolling-252d rank quintiles (F&G Put/Call component)",
+      "sample": {
+        "from": "2007-10-24",
+        "to": "2026-08-19",
+        "sessions": 4732,
+        "episodes": 110,
+        "base_rate": 0.1841,
+        "half_split": "2017-03-22"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.1803,
+            "n": 1115
+          },
+          "2": {
+            "rate": 0.127,
+            "n": 890
+          },
+          "3": {
+            "rate": 0.1722,
+            "n": 871
+          },
+          "4": {
+            "rate": 0.1929,
+            "n": 845
+          },
+          "5": {
+            "rate": 0.2413,
+            "n": 1011
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.2166,
+            "n": 531
+          },
+          "2": {
+            "rate": 0.1545,
+            "n": 440
+          },
+          "3": {
+            "rate": 0.185,
+            "n": 454
+          },
+          "4": {
+            "rate": 0.1959,
+            "n": 439
+          },
+          "5": {
+            "rate": 0.239,
+            "n": 502
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.1473,
+            "n": 584
+          },
+          "2": {
+            "rate": 0.1,
+            "n": 450
+          },
+          "3": {
+            "rate": 0.1583,
+            "n": 417
+          },
+          "4": {
+            "rate": 0.1897,
+            "n": 406
+          },
+          "5": {
+            "rate": 0.2436,
+            "n": 509
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": 0.7,
+        "first_half": 0.4,
+        "second_half": 0.9,
+        "pass": false
+      },
+      "spread": {
+        "candidate": 0.1144,
+        "vix_quintile_same_sample": 0.2196,
+        "beats_vix": false
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.1356,
+            "low_state_rate": 0.1188,
+            "high_state_rate": 0.1829,
+            "n": 1578
+          },
+          "vix_t2": {
+            "spread": 0.0872,
+            "low_state_rate": 0.2173,
+            "high_state_rate": 0.13,
+            "n": 1577
+          },
+          "vix_t3": {
+            "spread": 0.1324,
+            "low_state_rate": 0.2568,
+            "high_state_rate": 0.3314,
+            "n": 1577
+          }
+        },
+        "direction_consistent": false
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.2553,
+          "n": 47
+        },
+        "2": {
+          "rate": 0.1053,
+          "n": 38
+        },
+        "3": {
+          "rate": 0.18,
+          "n": 50
+        },
+        "4": {
+          "rate": 0.2273,
+          "n": 44
+        },
+        "5": {
+          "rate": 0.1489,
+          "n": 47
+        }
+      },
+      "verdict": "NULL"
+    },
+    {
+      "candidate": "n9_vixcorr5",
+      "order_note": "CC(price, vol, 7d) full-sample quintiles; Q5 = price and vol rising together (divergence warning)",
+      "sample": {
+        "from": "1990-01-10",
+        "to": "2026-08-19",
+        "sessions": 9213,
+        "episodes": 199,
+        "base_rate": 0.1659,
+        "half_split": "2008-04-18"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.2024,
+            "n": 1843
+          },
+          "2": {
+            "rate": 0.1889,
+            "n": 1842
+          },
+          "3": {
+            "rate": 0.1736,
+            "n": 1843
+          },
+          "4": {
+            "rate": 0.1488,
+            "n": 1842
+          },
+          "5": {
+            "rate": 0.1156,
+            "n": 1843
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.1893,
+            "n": 713
+          },
+          "2": {
+            "rate": 0.1786,
+            "n": 851
+          },
+          "3": {
+            "rate": 0.1791,
+            "n": 899
+          },
+          "4": {
+            "rate": 0.1364,
+            "n": 1012
+          },
+          "5": {
+            "rate": 0.1043,
+            "n": 1131
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.2106,
+            "n": 1130
+          },
+          "2": {
+            "rate": 0.1978,
+            "n": 991
+          },
+          "3": {
+            "rate": 0.1684,
+            "n": 944
+          },
+          "4": {
+            "rate": 0.1639,
+            "n": 830
+          },
+          "5": {
+            "rate": 0.1334,
+            "n": 712
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": -1.0,
+        "first_half": -0.9,
+        "second_half": -1.0,
+        "pass": true
+      },
+      "spread": {
+        "candidate": 0.0868,
+        "vix_quintile_same_sample": 0.242,
+        "beats_vix": false
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.0359,
+            "low_state_rate": 0.0665,
+            "high_state_rate": 0.0545,
+            "n": 3074
+          },
+          "vix_t2": {
+            "spread": 0.0738,
+            "low_state_rate": 0.145,
+            "high_state_rate": 0.1044,
+            "n": 3069
+          },
+          "vix_t3": {
+            "spread": 0.0704,
+            "low_state_rate": 0.3123,
+            "high_state_rate": 0.2419,
+            "n": 3070
+          }
+        },
+        "direction_consistent": true
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.1935,
+          "n": 93
+        },
+        "2": {
+          "rate": 0.2118,
+          "n": 85
+        },
+        "3": {
+          "rate": 0.1895,
+          "n": 95
+        },
+        "4": {
+          "rate": 0.15,
+          "n": 80
+        },
+        "5": {
+          "rate": 0.093,
+          "n": 86
+        }
+      },
+      "verdict": "NULL"
+    },
+    {
+      "candidate": "n9_vvixcorr5",
+      "order_note": "CC(price, vol, 7d) full-sample quintiles; Q5 = price and vol rising together (divergence warning)",
+      "sample": {
+        "from": "2007-01-11",
+        "to": "2026-08-19",
+        "sessions": 4876,
+        "episodes": 115,
+        "base_rate": 0.1864,
+        "half_split": "2016-09-27"
+      },
+      "table": {
+        "full": {
+          "1": {
+            "rate": 0.167,
+            "n": 976
+          },
+          "2": {
+            "rate": 0.1826,
+            "n": 975
+          },
+          "3": {
+            "rate": 0.1846,
+            "n": 975
+          },
+          "4": {
+            "rate": 0.1959,
+            "n": 975
+          },
+          "5": {
+            "rate": 0.2021,
+            "n": 975
+          }
+        },
+        "first_half": {
+          "1": {
+            "rate": 0.1633,
+            "n": 496
+          },
+          "2": {
+            "rate": 0.2012,
+            "n": 497
+          },
+          "3": {
+            "rate": 0.213,
+            "n": 493
+          },
+          "4": {
+            "rate": 0.2257,
+            "n": 483
+          },
+          "5": {
+            "rate": 0.2537,
+            "n": 469
+          }
+        },
+        "second_half": {
+          "1": {
+            "rate": 0.1708,
+            "n": 480
+          },
+          "2": {
+            "rate": 0.1632,
+            "n": 478
+          },
+          "3": {
+            "rate": 0.1556,
+            "n": 482
+          },
+          "4": {
+            "rate": 0.1667,
+            "n": 492
+          },
+          "5": {
+            "rate": 0.1542,
+            "n": 506
+          }
+        }
+      },
+      "monotone_spearman": {
+        "full": 1.0,
+        "first_half": 1.0,
+        "second_half": -0.7,
+        "pass": false
+      },
+      "spread": {
+        "candidate": 0.035,
+        "vix_quintile_same_sample": 0.2124,
+        "beats_vix": false
+      },
+      "increment_vs_vix": {
+        "within_tercile": {
+          "vix_t1": {
+            "spread": 0.0441,
+            "low_state_rate": 0.0912,
+            "high_state_rate": 0.1138,
+            "n": 1626
+          },
+          "vix_t2": {
+            "spread": 0.0463,
+            "low_state_rate": 0.1599,
+            "high_state_rate": 0.2041,
+            "n": 1627
+          },
+          "vix_t3": {
+            "spread": 0.0825,
+            "low_state_rate": 0.2476,
+            "high_state_rate": 0.3102,
+            "n": 1623
+          }
+        },
+        "direction_consistent": true
+      },
+      "nonoverlap_21d": {
+        "1": {
+          "rate": 0.186,
+          "n": 43
+        },
+        "2": {
+          "rate": 0.1702,
+          "n": 47
+        },
+        "3": {
+          "rate": 0.125,
+          "n": 40
+        },
+        "4": {
+          "rate": 0.2,
+          "n": 55
+        },
+        "5": {
+          "rate": 0.3125,
+          "n": 48
+        }
+      },
+      "verdict": "NULL"
     }
   ]
 }

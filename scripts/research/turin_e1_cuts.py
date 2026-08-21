@@ -331,6 +331,68 @@ def main() -> None:
             results.append(evaluate(tag, d, "state",
                                     "net %OI rolling-3y rank quintile; Q1=most short/least long .. Q5=most long (report+3BD lag)"))
 
+    # 14-18. N6-N9: the F&G-Remake components recovered from the TV idea image
+    # (turin_fixtures/tv_ideas/8rEuK1mg; risk_state_machine_plan §二; run 08-21).
+    # Pre-registered transforms, declared before running:
+    #   N6/N7/N8 -> rolling-252d percentile rank -> quintiles (volume growth,
+    #   rate regimes and option-volume growth all drift; the GEX/OAS lesson).
+    #   N9 (price-vol 7d correlation) -> full-sample quintiles: bounded [-1,1]
+    #   and unit-free by construction, no drift to launder.
+    def roll_rank(s: pd.Series) -> pd.Series:
+        return s.rolling(252).apply(lambda w: (w <= w.iloc[-1]).mean(), raw=False)
+
+    def rank_states(d: pd.DataFrame, col: str) -> pd.DataFrame:
+        d = d.dropna(subset=[col]).copy()
+        d["state"] = np.minimum((d[col] * 5).astype(int), 4) + 1
+        return d
+
+    # N6: his exact formula -- osci = ema19(UVOL-DVOL) - ema39(UVOL-DVOL)
+    uvol, dvol = tv_series("USI_UVOL"), tv_series("USI_DVOL")
+    spb = (uvol - dvol).dropna()
+    osci = spb.ewm(span=19).mean() - spb.ewm(span=39).mean()
+    d = base.join(roll_rank(osci).rename("r"), how="inner")
+    results.append(evaluate("n6_volosc5", rank_states(d, "r"), "state",
+                            "ema19-ema39 of UVOL-DVOL, rolling-252d rank quintiles (F&G Breadth component)"))
+
+    # N7: Safe Haven Demand -- SPX 20d return minus long-bond 20d return
+    # (TLT spot as the ZB1! stand-in, per plan 3.1b tier C reasoning)
+    tlt_cache = ROOT / ".cache/risk/e1_tlt.pkl"
+    if tlt_cache.exists():
+        tlt = pd.read_pickle(tlt_cache)
+    else:
+        h = yf.Ticker("TLT").history(period="max", interval="1d", auto_adjust=True)["Close"]
+        h.index = h.index.tz_localize(None).normalize()
+        tlt = h
+        tlt.to_pickle(tlt_cache)
+    px = base["px"] if "px" in base.columns else raw["^GSPC"]
+    shd = (px.pct_change(20) - tlt.pct_change(20)).dropna()
+    d = base.join(roll_rank(shd).rename("r"), how="inner")
+    results.append(evaluate("n7_safehaven5", rank_states(d, "r"), "state",
+                            "SPX 20d ret - TLT 20d ret, rolling-252d rank quintiles (F&G Safe Haven component)"))
+
+    # N8: put/call -- 5d SMA of USI:PCC (his exact smoothing)
+    pcc = tv_series("USI_PCC").rolling(5).mean()
+    d = base.join(roll_rank(pcc).rename("r"), how="inner")
+    results.append(evaluate("n8_pcc5", rank_states(d, "r"), "state",
+                            "sma5(PCC), rolling-252d rank quintiles (F&G Put/Call component)"))
+
+    # N9: 7d rolling correlation of SPX close with VIX / VVIX (his lower panes)
+    vvix_cache = ROOT / ".cache/risk/e1_vvix.pkl"
+    if vvix_cache.exists():
+        vvix = pd.read_pickle(vvix_cache)
+    else:
+        h = yf.Ticker("^VVIX").history(period="max", interval="1d", auto_adjust=True)["Close"]
+        h.index = h.index.tz_localize(None).normalize()
+        vvix = h
+        vvix.to_pickle(vvix_cache)
+    for tag, vol_series in (("n9_vixcorr5", raw["^VIX"]), ("n9_vvixcorr5", vvix)):
+        cc = px.rolling(7).corr(vol_series)
+        d = base.join(cc.rename("cc"), how="inner").dropna(subset=["cc"])
+        e = vix_edges(d["cc"])
+        d["state"] = [quintile_of(v, e) for v in d["cc"]]
+        results.append(evaluate(tag, d, "state",
+                                "CC(price, vol, 7d) full-sample quintiles; Q5 = price and vol rising together (divergence warning)"))
+
     OUT.write_text(json.dumps({"question": "P(SPX >=5% dd within 21 sessions)",
                                "house_method": "conditional base rate, half-sample spearman, no fitted parameters",
                                "results": results}, indent=2))
