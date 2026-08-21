@@ -491,7 +491,14 @@ def fetch_ticker_data(symbol: str) -> dict:
     return out
 
 
-def write_ticker_json(symbol: str, data: dict, output_dir: Path = OUTPUT_DIR) -> Path:
+def write_ticker_json(symbol: str, data: dict, output_dir: Path = OUTPUT_DIR) -> Optional[Path]:
+    """A file with no bars must never be written: an empty shell overwrote
+    MRNA's 501 bars twice (3a27e96 -> 71aae5a; DATA_CONTRACTS §七 [08-20]).
+    No price data -> no write, whatever else was fetched -- the previous
+    file (if any) stays, and the caller counts it as skipped."""
+    if not data.get('ohlc_2y'):
+        logger.warning(f"  {symbol}: no OHLC fetched — NOT writing (empty shells have no overwrite rights)")
+        return None
     output_dir.mkdir(parents=True, exist_ok=True)
     safe = symbol.upper().replace('/', '_').replace('^', '_')
     path = output_dir / f'{safe}.json'

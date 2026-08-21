@@ -945,6 +945,18 @@ def main():
     except Exception:
         logger.exception("Group layer failed - groups.json not updated")
 
+    # Projection of the group archive into data/output (DATA_CONTRACTS §七
+    # [08-21]): data/history/ is not published, the page needs the paths.
+    # Values copied verbatim from the archive, never recomputed. Own failure
+    # domain -- a projection crash must not read as a group-layer failure.
+    try:
+        from pipeline.themes.group_history import project as project_groups_history
+        ph = project_groups_history()
+        logger.info("Saved groups_history.json - %d groups x %d sessions",
+                    ph.get("groups", 0), ph.get("sessions", 0))
+    except Exception:
+        logger.exception("groups_history projection failed - groups_history.json not updated")
+
     # Nightly watchlist: zones -> panels -> tickers off the scored universe, so
     # the Watchlist page renders instead of filtering. Own failure domain.
     try:

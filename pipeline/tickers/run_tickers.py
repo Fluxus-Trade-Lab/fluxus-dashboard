@@ -132,19 +132,25 @@ def run(tickers: list[str], output_dir: Path, sleep_between: float = 0.3) -> dic
     output_dir.mkdir(parents=True, exist_ok=True)
     succeeded = []
     failed = []
+    skipped_no_bars = []
     for i, sym in enumerate(tickers, start=1):
         try:
             logger.info(f"[{i}/{len(tickers)}] {sym}")
             data = fetch_ticker_data(sym)
-            write_ticker_json(sym, data, output_dir)
-            succeeded.append(sym)
+            if write_ticker_json(sym, data, output_dir) is None:
+                skipped_no_bars.append(sym)
+            else:
+                succeeded.append(sym)
         except Exception as e:  # noqa: BLE001
             logger.warning(f"  {sym}: FAILED — {e}")
             failed.append(sym)
         # gentle rate limit
         if sleep_between > 0 and i < len(tickers):
             time.sleep(sleep_between)
-    return {'succeeded': succeeded, 'failed': failed, 'total': len(tickers)}
+    if skipped_no_bars:
+        logger.warning(f"no-bars skips (file untouched): {', '.join(skipped_no_bars)}")
+    return {'succeeded': succeeded, 'failed': failed,
+            'skipped_no_bars': skipped_no_bars, 'total': len(tickers)}
 
 
 def write_benchmarks(output_dir: Path) -> None:

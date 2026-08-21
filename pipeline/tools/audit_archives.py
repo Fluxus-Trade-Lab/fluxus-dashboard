@@ -209,9 +209,43 @@ def run(history: Path = HISTORY, do_repair: bool = False, last_done: Optional[dt
         reports.append(rep)
     if output is not None and output.exists():
         reports.append(reconcile(history, output))
+        reports.append(ticker_shells(output))
     n_viol = sum(len(r["violations"]) for r in reports)
     return {"as_of_session": last_done.isoformat(), "ok": n_viol == 0, "violations": n_viol,
             "warnings": sum(len(r["warnings"]) for r in reports), "archives": reports}
+
+
+def ticker_shells(output: Path = Path("data/output"), max_rate: float = 0.10) -> Dict[str, Any]:
+    """I7 -- empty-shell rate in data/output/tickers/. A shell is a ticker
+    file with no ohlc_2y bars; shells overwrote MRNA's 501 bars twice before
+    the writer learned to refuse them (DATA_CONTRACTS §七 [08-20]). Above
+    max_rate the run is severe: better to keep yesterday's tickers than to
+    commit a directory that is one-tenth holes."""
+    rep: Dict[str, Any] = {"archive": "tickers(I7)", "rows": 0, "violations": [], "warnings": [], "drop_dates": [], "drop_dupes": 0}
+    tdir = output / "tickers"
+    if not tdir.exists():
+        rep["warnings"].append("I7 skipped: no tickers dir")
+        return rep
+    shells = []
+    total = 0
+    for p in sorted(tdir.glob("*.json")):
+        if p.name.startswith("_"):
+            continue  # _benchmarks and friends are not ticker files
+        total += 1
+        try:
+            if not (json.loads(p.read_text()).get("ohlc_2y") or []):
+                shells.append(p.stem)
+        except Exception:
+            shells.append(p.stem)
+    rep["rows"] = total
+    if total:
+        rate = len(shells) / total
+        msg = f"I7 {len(shells)}/{total} empty shells ({rate:.0%}): {', '.join(shells[:12])}{'…' if len(shells) > 12 else ''}"
+        if rate > max_rate:
+            rep["violations"].append(msg)
+        elif shells:
+            rep["warnings"].append(msg)
+    return rep
 
 
 def main(argv=None) -> int:

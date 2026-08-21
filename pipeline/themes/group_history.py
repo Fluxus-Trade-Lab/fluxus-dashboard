@@ -113,3 +113,53 @@ def append(new_rows: Sequence[Mapping[str, Any]], path: Path = ARCHIVE
 def record(payload: Mapping[str, Any], path: Path = ARCHIVE) -> Dict[str, int]:
     """Snapshot one `groups.json` payload into the archive."""
     return append(rows_from(payload), path)
+
+
+# ---------------------------------------------------------------- projection --
+
+OUTPUT_JSON = Path("data/output/groups_history.json")
+
+
+def project(path: Path = ARCHIVE, out: Path = OUTPUT_JSON,
+            target_sessions: int = 50, benchmark: str = "SPY") -> Dict[str, int]:
+    """`data/history/` is not published (vercel.json copies only data/output),
+    so the page cannot read the archive it needs for the excess-vs-SPY paths.
+    This is the archive's projection into data/output: DATA_CONTRACTS §七
+    [08-21]. Values are copied verbatim from what was published each day --
+    never recomputed (see the module docstring's window-constant warning).
+
+    Keying: the contract keys groups by bare name, but 11 names exist as both
+    a theme and an industry. The theme keeps the bare name; the industry twin
+    is stored under "<name> (Industry)" so neither series is lost.
+    """
+    import json
+    from collections import defaultdict
+
+    rows = read(path)
+    if not rows:
+        return {"groups": 0, "sessions": 0}
+    dates = sorted({r["date"] for r in rows})
+    idx = {d: i for i, d in enumerate(dates)}
+
+    kinds_by_name: Dict[str, set] = defaultdict(set)
+    for r in rows:
+        kinds_by_name[r["group"]].add(r["kind"])
+
+    groups: Dict[str, Dict[str, Any]] = {}
+    for r in rows:
+        name = r["group"]
+        key = f"{name} (Industry)" if (len(kinds_by_name[name]) > 1 and r["kind"] == "industry") else name
+        g = groups.setdefault(key, {"kind": r["kind"],
+                                    "excess": [None] * len(dates),
+                                    "state": [None] * len(dates)})
+        i = idx[r["date"]]
+        g["excess"][i] = float(r["excess_3m"]) if r.get("excess_3m") not in ("", None) else None
+        g["state"][i] = r.get("state") or None
+
+    payload = {"as_of": dates[-1], "dates": dates, "sessions": len(dates),
+               "target_sessions": target_sessions, "benchmark": benchmark,
+               "groups": groups}
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(payload, separators=(",", ":")))
+    log.info("groups_history.json: %d groups x %d sessions", len(groups), len(dates))
+    return {"groups": len(groups), "sessions": len(dates)}
