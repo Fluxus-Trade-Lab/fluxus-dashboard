@@ -18,10 +18,18 @@ ltf     = input.string("60", "Intraday TF for daily extremes", options = ["15", 
 n      = input.int(15, "MA length", minval = 2, group = "Params")
 maKind = input.string("SMA", "MA type", options = ["SMA", "EMA"], group = "Params")
 
-// zones: HER read — red = selling zone (complex elevated), green = buying
-// opportunity (washout). Defaults sized for the TV feed, not her chart.
-upTh = input.float(650.0,  "Sell zone: MA(high) ≥", step = 25, group = "Zones")
-dnTh = input.float(-650.0, "Buy zone: MA(low) ≤",  step = 25, group = "Zones")
+// zones: HER read — red = selling zone, green = buying opportunity. Two
+// measures of the same cycle: LEVEL (complex elevated / washed out; feed-
+// scaled thresholds) and SPREAD (high-low band width percentile: narrow =
+// complacency = sell, wide = washout = buy; feed-agnostic). Her hand-drawn
+// boxes correspond to these periods; the background tint is the automated
+// equivalent.
+zoneMode = input.string("Spread percentile", "Zone mode", options = ["Level", "Spread percentile", "Either"], group = "Zones")
+upTh   = input.float(650.0,  "Level sell: MA(high) ≥", step = 25, group = "Zones")
+dnTh   = input.float(-650.0, "Level buy: MA(low) ≤",   step = 25, group = "Zones")
+prLen  = input.int(252, "Spread percentile lookback", minval = 60, group = "Zones")
+prBuy  = input.float(90.0, "Spread buy ≥ pct",  step = 5, group = "Zones")
+prSell = input.float(10.0, "Spread sell ≤ pct", step = 5, group = "Zones")
 
 colHi   = input.color(color.blue,   "MA high",  inline = "c1", group = "Style")
 colCl   = input.color(color.gray,   "MA close", inline = "c1", group = "Style")
@@ -43,8 +51,14 @@ mHi = ma(dHi)
 mCl = ma(cls)
 mLo = ma(dLo)
 
-buyZone  = mLo <= dnTh
-sellZone = mHi >= upTh
+spread     = mHi - mLo
+spreadRank = ta.percentrank(spread, prLen)
+lvlBuy  = mLo <= dnTh
+lvlSell = mHi >= upTh
+spdBuy  = spreadRank >= prBuy
+spdSell = spreadRank <= prSell
+buyZone  = zoneMode == "Level" ? lvlBuy  : zoneMode == "Spread percentile" ? spdBuy  : (lvlBuy or spdBuy)
+sellZone = zoneMode == "Level" ? lvlSell : zoneMode == "Spread percentile" ? spdSell : (lvlSell or spdSell)
 
 plot(mHi, "MA high",  color = colHi)
 plot(mCl, "MA close", color = colCl)

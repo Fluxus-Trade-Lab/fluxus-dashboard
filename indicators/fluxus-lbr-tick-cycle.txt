@@ -63,3 +63,23 @@ Pine 用 request.security_lower_tf（需付费档）重建日极值；参数 n/M
 阈值/颜色全部可配。Python 孪生 scripts/research/lbr_tick_cycle.py 出同款
 读数供对照与将来入 ledger 评估。TV MCP 注入时先开 scratch 脚本（set_source
 覆盖坑）。仓库这份是唯一备份。
+
+Zone 有效性回测（2026-08-22，scripts/research/lbr_tick_zone_test.py）
+--------------------------------------------------------------------
+入场日=zone 首日（episode 级不重叠）；对照=各自窗口全日基准；SPX 前瞻。
+
+TICK.NY 17 年（2009-08+，构造在长 feed 上的检验）：
+  lector 版(EMA5/126/85-15)：BUY n=152: fwd63 +5.86% vs 基准 +3.94%；
+    SELL n=211: fwd21 +0.85% vs +1.58%（近腰斩）
+  我们构造(SMA15/252/90-10)：BUY n=47: fwd21 +2.55% vs +1.58%；
+    SELL n=71: fwd21 +1.10%，P(5%dd)=9.9% vs 基准 15.4%
+我们自家 feed 只有 2.9 年（2-18 个入场），样本不足只做方向参考。
+
+结论：
+1. 红绿带方向性在两种 feed、两组参数下都成立（绿=前瞻收益增厚，红=腰斩）。
+2. ⭐ 语义修正：红带（价差收缩）不是回撤警报——SELL zone 的 P(5%dd)
+   反而低于基准（9.9-12.3% vs 15.4%）。它说的是「收益变薄的 grind 带」，
+   不是「要崩」。与压缩=自满=low-vol-grind 的机理一致，也与我们 E1 里
+   「看得见的对冲需求=更安全」家族互为镜像。
+3. lector 参数（快）入场 ~9 次/年，我们参数（慢）~3 次/年——后者更贴
+   「intermediate cycle」的节奏；两组效应同向。
