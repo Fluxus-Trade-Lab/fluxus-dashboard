@@ -1,7 +1,7 @@
 import { useState, useMemo, useCallback } from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, ResponsiveContainer } from 'recharts'
 import StatCard from '../../portfolio/ui/StatCard'
-import { fmtPct, fmt, clr } from '../../portfolio/lib/portfolioFormat'
+import { fmtPct, fmt, clr, clrVar } from '../../portfolio/lib/portfolioFormat'
 import { usePortfolio } from '../../portfolio/context/PortfolioContext'
 import MonthlyCalendar from './MonthlyCalendar'
 
@@ -77,6 +77,14 @@ function MonthStats({ stats }) {
 function MiniEquityCurve({ data }) {
   if (!data || data.length < 2) return null
 
+  // Money-half series, so it takes the profit/loss palette, not chrome. Hue is
+  // keyed to where the curve ENDS — the same rule the options equity curve uses
+  // (OptionsTab: stroke={clrHex(realizedPL)}), transposed to this curve's own
+  // terminal value. The zero line rides along so the hue has a visible referent
+  // when the month spans it; ifOverflow="discard" keeps it out of the way when
+  // the curve never comes near zero.
+  const stroke = clrVar(data[data.length - 1].returnPct)
+
   return (
     <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg p-4">
       <h4 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
@@ -92,7 +100,8 @@ function MiniEquityCurve({ data }) {
             formatter={v => [`${v.toFixed(2)}%`, 'Return']}
             labelFormatter={l => l}
           />
-          <Line type="monotone" dataKey="returnPct" stroke="var(--color-accent)" dot={false} strokeWidth={1.5} />
+          <ReferenceLine y={0} stroke="var(--color-text-muted)" ifOverflow="discard" />
+          <Line type="monotone" dataKey="returnPct" stroke={stroke} dot={false} strokeWidth={1.5} />
         </LineChart>
       </ResponsiveContainer>
     </div>

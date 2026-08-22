@@ -26,6 +26,11 @@ export const clr = (v) =>
 export const clrHex = (v) =>
   v > 0 ? '#16a34a' : v < 0 ? '#dc2626' : '#78716c'
 
+/** Same reading as clrHex, but token-sourced so it flips with the theme.
+ *  For SVG stroke/fill, where a class can't reach. */
+export const clrVar = (v) =>
+  v > 0 ? 'var(--color-profit)' : v < 0 ? 'var(--color-loss)' : 'var(--color-text-muted)'
+
 export const daysBetween = (a, b) =>
   Math.max(0, Math.round((new Date(b) - new Date(a)) / 86400000))
 
