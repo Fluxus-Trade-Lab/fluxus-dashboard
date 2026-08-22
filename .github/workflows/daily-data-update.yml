@@ -73,6 +73,16 @@ jobs:
           fi
           echo "All output files validated successfully"
 
+      # data/output/tickers/ is NOT written by this workflow — run_tickers is a
+      # manual CLI. Its universe is a rolling set, so names that leave it freeze
+      # silently (46 files sat at a 2026-05-22 last bar for 2.5 months). Warn
+      # here until a daily refresh step exists; then switch this to --fail.
+      - name: Check ticker-store freshness
+        run: python -m pipeline.tickers.staleness
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          TZ: UTC
+
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"

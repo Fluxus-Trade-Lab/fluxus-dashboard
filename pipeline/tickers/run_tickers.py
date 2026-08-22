@@ -69,18 +69,37 @@ def heat_tickers(heating_up_path: Path, top_n: int = 25) -> list[str]:
     return out
 
 
-def merge_ticker_sources(portfolio: list[str], heat: list[str]) -> list[str]:
-    """Union portfolio + heat tickers, portfolio first, de-duplicated case-insensitively,
-    order preserved (portfolio names fetch first if a run is interrupted)."""
+def merge_ticker_sources(*sources: list[str]) -> list[str]:
+    """Union the given ticker lists, de-duplicated case-insensitively, order
+    preserved across sources (earlier sources fetch first if a run is interrupted,
+    so pass portfolio names before heat and stored names)."""
     out: list[str] = []
     seen: set[str] = set()
-    for sym in list(portfolio) + list(heat):
-        key = sym.upper()
-        if key in seen:
-            continue
-        seen.add(key)
-        out.append(key)
+    for source in sources:
+        for sym in source or []:
+            key = sym.upper()
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append(key)
     return out
+
+
+def stored_tickers(output_dir: Path) -> list[str]:
+    """Every ticker that already has a file in `output_dir`.
+
+    The portfolio+heat universe is a *rolling* set: a name that leaves it is
+    never written again and its file freezes at whatever bars it last had. That
+    is silent — nothing errors, consumers just read stale closes (46 files sat
+    at a 2026-05-22 last bar for 2.5 months this way). Including the names we
+    have already stored keeps the whole store on the current session.
+    """
+    if not output_dir.is_dir():
+        return []
+    return sorted(
+        p.stem for p in output_dir.glob('*.json')
+        if not p.stem.startswith('_')
+    )
 
 
 def relevant_tickers(csv_path: Path, closed_window_days: int = 90) -> list[str]:
@@ -159,36 +178,45 @@ def main(argv: list[str] | None = None) -> None:
                    help='Disable Heating Up tickers entirely (equivalent to --heat-top 0)')
     p.add_argument('--heating-up', type=Path, default=Path('data/output/heating_up.json'),
                    help='Path to heating_up.json (default data/output/heating_up.json)')
+    p.add_argument('--refresh-existing', action='store_true',
+                   help='Also refresh every ticker that already has a file in --output. '
+                        'Without this, names that leave the rolling portfolio+heat '
+                        'universe are never written again and their bars freeze.')
     args = p.parse_args(argv)
 
     if args.tickers:
         tickers = [t.strip().upper() for t in args.tickers.split(',') if t.strip()]
-        portfolio_count = len(tickers)
-        heat_only_count = 0
+        counts = f"{len(tickers)} explicit"
     else:
         csv = args.input or find_latest_csv(Path('data/portfolio'))
-        if not csv or not csv.exists():
-            print("ERROR: no portfolio CSV found and no --tickers given", file=sys.stderr)
-            sys.exit(1)
-        logger.info(f"Auto-detecting tickers from {csv}")
-        portfolio_list = relevant_tickers(csv, args.closed_days)
+        # The portfolio CSV is gitignored (live position data), so it is absent on
+        # a CI checkout. That is only fatal if it was the sole source of tickers.
+        portfolio_list: list[str] = []
+        if csv and csv.exists():
+            logger.info(f"Auto-detecting tickers from {csv}")
+            portfolio_list = relevant_tickers(csv, args.closed_days)
+        else:
+            logger.warning("No portfolio CSV found — using heat/stored tickers only")
+
         heat_top = 0 if args.no_heat else args.heat_top
         heat_list = heat_tickers(args.heating_up, heat_top)
-        tickers = merge_ticker_sources(portfolio_list, heat_list)
-        portfolio_count = len(portfolio_list)
-        heat_only_count = len(tickers) - portfolio_count
+        stored_list = stored_tickers(args.output) if args.refresh_existing else []
+        tickers = merge_ticker_sources(portfolio_list, heat_list, stored_list)
+
+        n_pf = len(portfolio_list)
+        n_heat = len(merge_ticker_sources(portfolio_list, heat_list)) - n_pf
+        n_stored = len(tickers) - n_pf - n_heat
+        parts = [f"{n_pf} portfolio", f"{n_heat} heat-only"]
+        if args.refresh_existing:
+            parts.append(f"{n_stored} stored-only")
+        counts = ' + '.join(parts)
 
     if not tickers:
-        print("ERROR: no tickers to fetch", file=sys.stderr)
+        print("ERROR: no tickers to fetch (no CSV, no heat list, no stored files)",
+              file=sys.stderr)
         sys.exit(1)
 
-    if portfolio_count and heat_only_count:
-        logger.info(
-            f"Fetching {len(tickers)} tickers "
-            f"({portfolio_count} portfolio + {heat_only_count} heat-only) → {args.output}"
-        )
-    else:
-        logger.info(f"Fetching {len(tickers)} tickers → {args.output}")
+    logger.info(f"Fetching {len(tickers)} tickers ({counts}) → {args.output}")
     summary = run(tickers, args.output)
     print(f"\n✓ Succeeded: {len(summary['succeeded'])}/{summary['total']}")
     if summary['failed']:
