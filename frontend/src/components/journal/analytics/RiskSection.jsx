@@ -36,19 +36,6 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
     return { rows, totalBetaAdj, portfolioBeta }
   }, [openTrades, dailyPrices, spyHistory, portfolioValue])
 
-  if (!openTrades.length) {
-    return <div className="text-center py-16 text-[var(--color-text-muted)]">No open positions to analyze.</div>
-  }
-
-  // Heat bar chart data
-  const heatChartData = heatData.positions
-    .filter(p => p.hasStop)
-    .slice(0, 15)
-    .map(p => ({
-      name: p.ticker,
-      heat: Number(p.heat?.toFixed(2)) || 0,
-    }))
-
   // Concentration by ticker
   const tickerConcentration = useMemo(() => {
     const byTicker = {}
@@ -76,6 +63,21 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
       grossPct: portfolioValue > 0 ? (gross / portfolioValue) * 100 : 0,
     }
   }, [openTrades, portfolioValue])
+
+  // Early return must come AFTER every hook, or hook order changes when
+  // openTrades flips between empty and non-empty.
+  if (!openTrades.length) {
+    return <div className="text-center py-16 text-[var(--color-text-muted)]">No open positions to analyze.</div>
+  }
+
+  // Heat bar chart data
+  const heatChartData = heatData.positions
+    .filter(p => p.hasStop)
+    .slice(0, 15)
+    .map(p => ({
+      name: p.ticker,
+      heat: Number(p.heat?.toFixed(2)) || 0,
+    }))
 
   const heatColor = (v) => v > 2 ? '#ef4444' : v > 1 ? '#f59e0b' : '#22c55e'
 

@@ -22,10 +22,6 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
   )
   const ce = capitalEfficiency
 
-  if (openTrades.length === 0) {
-    return <div className="text-center py-16 text-[var(--color-text-muted)]">No open positions.</div>
-  }
-
   const [expandedTickers, setExpandedTickers] = useState({})
 
   const toggleTicker = (ticker) => {
@@ -102,6 +98,12 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
 
   // Privacy-aware currency
   const cur = (v) => pm ? MASK : fmtCur(v)
+
+  // Early return must come AFTER every hook, or hook order changes when
+  // openTrades flips between empty and non-empty.
+  if (openTrades.length === 0) {
+    return <div className="text-center py-16 text-[var(--color-text-muted)]">No open positions.</div>
+  }
 
   return (
     <div>
