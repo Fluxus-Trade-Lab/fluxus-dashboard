@@ -35,7 +35,7 @@ from pipeline.screeners.stockbee_ratio import run as run_stockbee_ratio
 from pipeline.screeners.breadth_metrics import run as run_breadth_metrics
 from pipeline.screeners.vcp_detector import run_vcp_pipeline
 from pipeline.screeners.atr_enrichment import enrich_with_atr
-from pipeline.marketcal import market_today
+from pipeline.marketcal import NOT_A_TRADING_SESSION, market_today
 
 OUTPUT_DIR = Path('data/output')
 HISTORY_DIR = Path('data/history')
@@ -425,7 +425,7 @@ def main():
             today_rows, momentum_median=momentum_median)
         stale_reason = None
         if not is_session_date(event_date, sessions):
-            stale_reason = 'not a trading session'
+            stale_reason = NOT_A_TRADING_SESSION
             logger.error(
                 "Ticker events: %s is not a trading session — skipping append",
                 event_date)

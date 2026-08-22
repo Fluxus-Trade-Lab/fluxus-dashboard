@@ -22,6 +22,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from pipeline.marketcal import NOT_A_TRADING_SESSION, is_trading_day
+
 logger = logging.getLogger(__name__)
 
 BREADTH_COLUMNS = [
@@ -151,9 +153,23 @@ def check_quality(
 ) -> tuple[bool, str]:
     """Reject implausible snapshots before they poison the archive.
 
-    ``today_iso`` is the candidate row's market date (ET, from marketcal) — it
-    is only used to age the Δ-check baseline, never as a clock.
+    ``today_iso`` is the candidate row's market date (ET, from marketcal). It is
+    read, never a clock: it gates the trading-session check and ages the Δ-check
+    baseline.
+
+    The session check comes first and is the cheapest one to get wrong. Off
+    session, Finviz serves the universe with no change data, so every count
+    lands at zero — a row that says the tape did not move when in fact nothing
+    was measured. ``market_today()`` returns the ET *calendar* date and will
+    happily hand back a Saturday, so the calendar is the only thing standing
+    between a weekend cron and a zeroed row in the archive.
     """
+    candidate = _iso_to_date(today_iso)
+    if candidate is None:
+        return False, f"unparseable date {today_iso!r}"
+    if not is_trading_day(candidate):
+        return False, NOT_A_TRADING_SESSION
+
     size = snapshot.get('universe_size', 0)
     if size < _MIN_UNIVERSE:
         return False, f"universe_size {size} < {_MIN_UNIVERSE}"
@@ -169,9 +185,8 @@ def check_quality(
                     f"implausible (< {_IMPLAUSIBLE_PREV_PCT200})")
         else:
             prev_date = _iso_to_date(frame['date'].iloc[-1])
-            today = _iso_to_date(today_iso)
-            if prev_date is not None and today is not None:
-                age = (today - prev_date).days
+            if prev_date is not None:
+                age = (candidate - prev_date).days
                 if age > _MAX_PREV_ROW_AGE_DAYS:
                     skip = (f"previous row {prev_date.isoformat()} is {age} calendar "
                             f"days stale (> {_MAX_PREV_ROW_AGE_DAYS})")

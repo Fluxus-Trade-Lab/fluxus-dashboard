@@ -13,12 +13,13 @@ Metrics computed:
 
 from __future__ import annotations
 
+import datetime as dt
 import logging
 from typing import Any, Dict, Optional
 
 import pandas as pd
 
-from pipeline.marketcal import market_today
+from pipeline.marketcal import NOT_A_TRADING_SESSION, market_today
 from pipeline.screeners.breadth_store import (
     load_archive,
     upsert_row,
@@ -131,11 +132,16 @@ def run(
     universe: pd.DataFrame,
     csv_path: str,
     spx_close: Optional[float] = None,
+    today: Optional[dt.date] = None,
 ) -> Dict[str, Any]:
     """Compute today's breadth snapshot, update the canonical archive, emit breadth.json.
 
     The archive CSV is the single source of truth (see breadth_store). On quality
-    rejection the archive is untouched and the output is served stale from its tail.
+    rejection — which includes running off session — the archive is untouched and
+    the output is served stale from its tail.
+
+    ``today`` overrides the session date (default ``market_today()``); it exists
+    so callers and tests can pin a date rather than depend on when they run.
     """
     snapshot = compute_snapshot(universe)
     frame = load_archive(csv_path)
@@ -148,7 +154,7 @@ def run(
     else:
         null_rate = 1.0
 
-    today_iso = market_today().isoformat()
+    today_iso = (today or market_today()).isoformat()
     ok, reason = check_quality(frame, snapshot, null_rate, today_iso)
     if ok:
         row = {
@@ -161,7 +167,10 @@ def run(
         write_archive(frame, csv_path)
         quality: Dict[str, Any] = {'stale': False}
     else:
-        logger.error("Breadth quality guard rejected today's row: %s", reason)
+        # Off session is routine (holidays, a manual weekend run); a quality
+        # failure on a real session means the pipeline is broken.
+        log = logger.info if reason == NOT_A_TRADING_SESSION else logger.error
+        log("Breadth: no row written for %s — %s", today_iso, reason)
         frame = derive(frame)
         quality = {'stale': True, 'reason': reason}
         if len(frame) > 0:

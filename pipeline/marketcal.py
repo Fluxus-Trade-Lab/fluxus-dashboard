@@ -28,6 +28,11 @@ from pandas.tseries.holiday import (
 
 MARKET_TZ = ZoneInfo("America/New_York")
 
+# The shared phrase for "this date was never a session". Writers stamp it as a
+# stale_reason instead of persisting a row; readers match on it to tell a
+# routine weekend apart from a broken pipeline. One literal so they agree.
+NOT_A_TRADING_SESSION = "not a trading session"
+
 
 def market_now() -> dt.datetime:
     """Current instant as a tz-aware datetime in US/Eastern."""

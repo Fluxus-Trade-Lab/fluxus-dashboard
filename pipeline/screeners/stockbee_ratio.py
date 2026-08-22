@@ -10,13 +10,17 @@ the trailing 5-day window across consecutive daily runs.
 
 from __future__ import annotations
 
+import datetime as dt
 import json
 import logging
-from datetime import date
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
-from pipeline.marketcal import market_today
+from pipeline.marketcal import (
+    NOT_A_TRADING_SESSION,
+    is_trading_day,
+    market_today,
+)
 
 import pandas as pd
 
@@ -75,8 +79,18 @@ def _save_history(
         logger.error("Failed to write history to %s: %s", history_path, exc)
 
 
-def run(universe: pd.DataFrame, history_path: str) -> Dict[str, Any]:
+def run(
+    universe: pd.DataFrame,
+    history_path: str,
+    today: Optional[dt.date] = None,
+) -> Dict[str, Any]:
     """Run the Stockbee 5-Day Ratio screener.
+
+    Off session the counts are not appended to history and the output is served
+    from the last stored session, flagged stale. Finviz returns the universe
+    without change data outside a session, so counting it yields zeros — which
+    would read as a flat tape and drag the 5-day ratio down with a day that
+    never happened.
 
     Parameters
     ----------
@@ -84,12 +98,16 @@ def run(universe: pd.DataFrame, history_path: str) -> Dict[str, Any]:
         Finviz-sourced universe with at least ``change_pct``.
     history_path : str
         Path to the JSON file storing rolling daily gainer/loser counts.
+    today : datetime.date, optional
+        Session date override (default ``market_today()``), for callers and
+        tests that need to pin a date rather than depend on when they run.
 
     Returns
     -------
     dict
         ``{'ratio_5d': float, 'gainers_today': int, 'losers_today': int,
-        'gainers_5d': int, 'losers_5d': int, 'signal': str}``
+        'gainers_5d': int, 'losers_5d': int, 'signal': str}``, plus
+        ``stale`` / ``stale_reason`` / ``as_of`` when served off session.
     """
     if universe.empty:
         logger.warning("Empty universe passed to stockbee_ratio screener")
@@ -106,8 +124,9 @@ def run(universe: pd.DataFrame, history_path: str) -> Dict[str, Any]:
     gainers_today = int((universe["change_pct"] >= _GAINER_PCT).sum())
     losers_today = int((universe["change_pct"] <= _LOSER_PCT).sum())
 
+    session = today or market_today()
     today_entry = {
-        "date": market_today().isoformat(),
+        "date": session.isoformat(),
         "gainers": gainers_today,
         "losers": losers_today,
     }
@@ -115,8 +134,21 @@ def run(universe: pd.DataFrame, history_path: str) -> Dict[str, Any]:
     # --- Load past history ---
     history = _load_history(history_path)
 
-    # --- Build the 5-day window (past history + today) ---
-    window = history + [today_entry]
+    # `market_today()` returns the ET *calendar* date, so it hands back
+    # Saturdays and holidays quite happily — the calendar is what keeps a
+    # non-session out of the window and out of the file.
+    on_session = is_trading_day(session)
+    if not on_session:
+        logger.info(
+            "stockbee_ratio: %s is not a trading session — serving the last "
+            "stored session, nothing appended", today_entry["date"],
+        )
+        last = history[-1] if history else None
+        gainers_today = int(last["gainers"]) if last else 0
+        losers_today = int(last["losers"]) if last else 0
+
+    # --- Build the 5-day window (past history, plus today when it is a session) ---
+    window = history + [today_entry] if on_session else history
     gainers_5d = sum(entry["gainers"] for entry in window)
     losers_5d = sum(entry["losers"] for entry in window)
 
@@ -144,10 +176,11 @@ def run(universe: pd.DataFrame, history_path: str) -> Dict[str, Any]:
         signal,
     )
 
-    # --- Persist today's counts ---
-    _save_history(history_path, history, today_entry)
+    # --- Persist today's counts (never off session) ---
+    if on_session:
+        _save_history(history_path, history, today_entry)
 
-    return {
+    out = {
         "ratio_5d": round(ratio_5d, 4),
         "gainers_today": gainers_today,
         "losers_today": losers_today,
@@ -155,3 +188,8 @@ def run(universe: pd.DataFrame, history_path: str) -> Dict[str, Any]:
         "losers_5d": losers_5d,
         "signal": signal,
     }
+    if not on_session:
+        out["stale"] = True
+        out["stale_reason"] = NOT_A_TRADING_SESSION
+        out["as_of"] = history[-1]["date"] if history else None
+    return out

@@ -24,6 +24,14 @@ export default function StockbeeRatio({ data }) {
         Stockbee Ratio
       </h3>
 
+      {/* Off session the counts below are the last real one's, not today's —
+          say so, or "Gainers Today" reads as a tape that did not move. */}
+      {data.stale && (
+        <p className="text-[10px] leading-snug text-[var(--color-signal-caution)] mb-2 m-0">
+          {data.stale_reason ?? 'stale'} — counts are from {data.as_of ?? 'the last session'}
+        </p>
+      )}
+
       <div className="flex items-baseline gap-3 mb-3">
         <span className={`text-3xl font-mono font-medium ${ratioColor}`}>
           {ratio != null ? ratio.toFixed(4) : '\u2014'}

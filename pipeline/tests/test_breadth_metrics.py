@@ -1,4 +1,6 @@
 """Tests for breadth_metrics screener."""
+import datetime as dt
+
 import pytest
 import pandas as pd
 import numpy as np
@@ -102,10 +104,14 @@ class Test13Pct34d:
 
 
 class TestRunOnStore:
-    def _run(self, tmp_path, universe=None):
+    # Pinned, or the suite writes no row on any weekend it happens to run.
+    _SESSION = dt.date(2026, 7, 27)                      # a Monday
+
+    def _run(self, tmp_path, universe=None, today=None):
         from pipeline.screeners.breadth_metrics import run
         universe = universe if universe is not None else _make_universe(2000)
-        return run(universe, str(tmp_path / 'archive.csv'), spx_close=7400.0)
+        return run(universe, str(tmp_path / 'archive.csv'), spx_close=7400.0,
+                   today=today or self._SESSION)
 
     def test_output_schema_backward_compatible(self, tmp_path):
         result = self._run(tmp_path)

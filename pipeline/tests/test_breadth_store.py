@@ -184,6 +184,36 @@ class TestQualityGuard:
                                    null_rate=0.02, today_iso=self._TODAY)
         assert ok and reason == ''
 
+    def test_rejects_a_weekend_date(self):
+        """2026-08-08 was a Saturday and got a full row of zeros anyway."""
+        from pipeline.screeners.breadth_store import check_quality
+        ok, reason = check_quality(self._last_frame(date='2026-08-06'),
+                                   self._good_snapshot(),
+                                   null_rate=0.02, today_iso='2026-08-08')
+        assert not ok and reason == 'not a trading session'
+
+    def test_rejects_a_market_holiday(self):
+        """Independence Day 2026 falls on a Saturday, observed Friday 7/3."""
+        from pipeline.screeners.breadth_store import check_quality
+        ok, reason = check_quality(self._last_frame(date='2026-07-02'),
+                                   self._good_snapshot(),
+                                   null_rate=0.02, today_iso='2026-07-03')
+        assert not ok and reason == 'not a trading session'
+
+    def test_session_check_precedes_the_other_guards(self):
+        """A weekend must be named as such, not blamed on the universe size."""
+        from pipeline.screeners.breadth_store import check_quality
+        snap = {**self._good_snapshot(), 'universe_size': 0}
+        ok, reason = check_quality(self._last_frame(), snap,
+                                   null_rate=1.0, today_iso='2026-08-08')
+        assert not ok and reason == 'not a trading session'
+
+    def test_rejects_an_unparseable_date(self):
+        from pipeline.screeners.breadth_store import check_quality
+        ok, reason = check_quality(self._last_frame(), self._good_snapshot(),
+                                   null_rate=0.02, today_iso='not-a-date')
+        assert not ok and 'unparseable' in reason
+
     def test_rejects_small_universe(self):
         from pipeline.screeners.breadth_store import check_quality
         snap = {**self._good_snapshot(), 'universe_size': 1400}
