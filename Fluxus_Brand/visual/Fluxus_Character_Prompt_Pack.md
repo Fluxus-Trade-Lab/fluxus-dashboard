@@ -161,7 +161,19 @@ column of tick data, a heat grid of squares at different densities.
 2. **橙线不许断色。** 全线橙,中途转黑即废
 3. **家具正常尺寸。** 「人小环境大」靠**把镜头拉远、房间画大**,绝不靠放大家具——放大显示器会变成超现实错误
 4. **人物比例接受约四分之一**(要不到 Sempé 的八分之一;极端远景另开画面)
-5. **墨线漫画,不是插画。** 笔画少而狠、粗细有变化,阴影只用粗排线或整块死黑,不做柔和调子,留白见纸
+5. **TE 式粗黑线,糙而带劲（风格宪法 2026-08-13,见 spec）。** 大块死黑当主角,线重、钝、有态度;
+   笔触外露、飞白、过头的笔画都欢迎;画面可以满,但**禁止精雕细琢的插画感**。
+   英文风格段(每次出图替换旧 STYLE 段):
+
+```
+STYLE - Heavy, blunt black ink strokes with attitude, like a bold zine
+cartoon printed with slightly too much ink. Large solid black masses
+dominate (the hat, monitor backs, deep shadows); lines are thick, confident
+and a little rough - visible dry-brush edges, overshoots and splatter are
+welcome. Dense, full compositions are fine. NOT polished illustration, NOT
+delicate linework, NOT etching, NOT soft tonal rendering. Warm off-white
+paper, black ink, and exactly one burnt orange (#D1600F) element.
+```
 
 ### 与 teenage engineering 的关系（查证后修正）
 
