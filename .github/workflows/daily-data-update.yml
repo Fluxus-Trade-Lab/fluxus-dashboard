@@ -59,6 +59,11 @@ jobs:
           # info calls + the Delayed-EP scan all share it (03:34Z 2026-08-18
           # every later step was 429). ~14 nights per full pass; quarterly data.
           FUNDAMENTALS_BUDGET: '400'
+          # shortlist feedback pull (button half of the loop) reads these in
+          # run_all; they were step-scoped to trade post-mortems only, so the
+          # first night (08-21) silently skipped the pull
+          FLUXUS_GAS_URL: ${{ secrets.FLUXUS_GAS_URL }}
+          FLUXUS_SYNC_TOKEN: ${{ secrets.FLUXUS_SYNC_TOKEN }}
           PYTHONPATH: ${{ github.workspace }}
           TZ: UTC
         run: python -m pipeline.screeners.run_all
