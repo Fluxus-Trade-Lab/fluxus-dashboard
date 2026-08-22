@@ -6,6 +6,7 @@ import WritingSlot from './WritingSlot'
 import useWritingSync from '../hooks/useWritingSync'
 import Placeholder from './Placeholder'
 import LibraryPage from './library/LibraryPage'
+import TickBand from './dashboard/TickBand'
 import HowToRead from './HowToRead'
 import Reference from './Reference'
 
@@ -142,11 +143,20 @@ export default function Layout({ data, lastUpdated, isOffline }) {
               daily notes is not the same thing as having written the weekly
               one. Both keep their back-catalogue — the second reading is the
               point of writing them. (Andy, 2026-08-17.) */}
+          {/* The TICK band sits under the regime, not beside it, because it
+              answers a DIFFERENT question and putting them side by side would
+              invite reading it as a second opinion on the same one. Regime asks
+              how much you may carry; this asks whether the tape is grinding or
+              travelling. Its own note says it outright: a timing context, not a
+              tail-risk dimension. */}
           <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]
                           gap-4 items-stretch">
-            <RegimeBand verdict={data?.breadth?.verdict} signals={data?.signals}
-                        conditions={data?.breadth?.conditions}
-                        regime={data?.breadth?.regime} onNavigate={navigate} />
+            <div className="flex flex-col gap-4">
+              <RegimeBand verdict={data?.breadth?.verdict} signals={data?.signals}
+                          conditions={data?.breadth?.conditions}
+                          regime={data?.breadth?.regime} onNavigate={navigate} />
+              <TickBand />
+            </div>
             <div className="flex flex-col gap-3">
               <WritingSlot
                 label="Founders note · daily"
