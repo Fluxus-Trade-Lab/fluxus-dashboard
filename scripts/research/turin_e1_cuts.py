@@ -393,6 +393,22 @@ def main() -> None:
         results.append(evaluate(tag, d, "state",
                                 "CC(price, vol, 7d) full-sample quintiles; Q5 = price and vol rising together (divergence warning)"))
 
+    # 19. LBR TICK spread rank as a lamp candidate (Andy 2026-08-22).
+    # Pre-registered: TICK.NY daily (longest real feed, 2009-08+), SMA15 of
+    # daily high/low, spread = MA(hi)-MA(lo), rolling-252d percentile rank ->
+    # quintiles (house rule). Zone-test context: narrow spread = complacent
+    # grind (muted returns, FEWER 5% dds); wide = turbulent. Direction left
+    # to the data -- E1 is direction-agnostic.
+    tick_ny = tvdir / "USI_TICK_NY_dhlc.csv"
+    if tick_ny.exists():
+        t = pd.read_csv(tick_ny, parse_dates=["date"]).set_index("date")
+        t = t[t.index >= "2009-08-01"]
+        sp = t["high"].rolling(15).mean() - t["low"].rolling(15).mean()
+        rank = sp.rolling(252).apply(lambda w: (w <= w.iloc[-1]).mean(), raw=False)
+        d = base.join(rank.rename("r"), how="inner")
+        results.append(evaluate("tick_spread5", rank_states(d, "r"), "state",
+                                "TICK.NY SMA15 hi-lo spread, rolling-252d rank quintiles; Q1=compressed .. Q5=wide"))
+
     OUT.write_text(json.dumps({"question": "P(SPX >=5% dd within 21 sessions)",
                                "house_method": "conditional base rate, half-sample spearman, no fitted parameters",
                                "results": results}, indent=2))
