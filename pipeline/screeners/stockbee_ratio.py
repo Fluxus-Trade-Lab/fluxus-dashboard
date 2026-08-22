@@ -14,7 +14,7 @@ import json
 import logging
 from datetime import date
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import pandas as pd
 
@@ -23,13 +23,27 @@ logger = logging.getLogger(__name__)
 # ── Thresholds ───────────────────────────────────────────────────────
 _GAINER_PCT = 0.04    # 4 %
 _LOSER_PCT = -0.04    # -4 %
-_HISTORY_DAYS = 4     # load past 4 days (+ today = 5-day window)
+_WINDOW_DAYS = 5      # trailing sessions summed into the ratio
 _THRUST_RATIO = 3.0
 _COLLAPSE_RATIO = 0.5
 
 
+def _upsert_entry(
+    entries: List[Dict[str, Any]],
+    entry: Dict[str, Any],
+) -> List[Dict[str, Any]]:
+    """Insert or replace the entry for ``entry['date']``. Returns a sorted copy.
+
+    Mirrors ``breadth_store.upsert_row``: one row per date, so re-running the
+    pipeline within a session overwrites the day rather than duplicating it.
+    """
+    kept = [e for e in entries if e.get("date") != entry.get("date")]
+    # ISO dates sort lexicographically, which is chronological.
+    return sorted(kept + [entry], key=lambda e: e.get("date") or "")
+
+
 def _load_history(history_path: str) -> List[Dict[str, Any]]:
-    """Load the most recent ``_HISTORY_DAYS`` entries from *history_path*.
+    """Load the most recent ``_WINDOW_DAYS`` entries from *history_path*.
 
     Returns an empty list when the file is missing, empty, or corrupt.
     """
@@ -43,8 +57,10 @@ def _load_history(history_path: str) -> List[Dict[str, Any]]:
         if not isinstance(data, list):
             logger.warning("History file is not a list — ignoring")
             return []
-        # Keep only the most recent entries we need
-        return data[-_HISTORY_DAYS:]
+        # Keep only the most recent entries we need. Load a full window rather
+        # than window-minus-today: on a same-day re-run the last entry *is*
+        # today, and it gets replaced instead of adding a session.
+        return data[-_WINDOW_DAYS:]
     except (json.JSONDecodeError, OSError) as exc:
         logger.warning("Failed to load history from %s: %s", history_path, exc)
         return []
@@ -55,14 +71,14 @@ def _save_history(
     history: List[Dict[str, Any]],
     today_entry: Dict[str, Any],
 ) -> None:
-    """Append *today_entry* to *history* and persist to *history_path*.
+    """Upsert *today_entry* into *history* and persist to *history_path*.
 
     Only the most recent 30 days are retained to keep the file small.
     """
     path = Path(history_path)
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    combined = history + [today_entry]
+    combined = _upsert_entry(history, today_entry)
     # Keep a rolling 30-day archive
     combined = combined[-30:]
 
@@ -73,7 +89,11 @@ def _save_history(
         logger.error("Failed to write history to %s: %s", history_path, exc)
 
 
-def run(universe: pd.DataFrame, history_path: str) -> Dict[str, Any]:
+def run(
+    universe: pd.DataFrame,
+    history_path: str,
+    today: Optional[date] = None,
+) -> Dict[str, Any]:
     """Run the Stockbee 5-Day Ratio screener.
 
     Parameters
@@ -82,6 +102,9 @@ def run(universe: pd.DataFrame, history_path: str) -> Dict[str, Any]:
         Finviz-sourced universe with at least ``change_pct``.
     history_path : str
         Path to the JSON file storing rolling daily gainer/loser counts.
+    today : datetime.date, optional
+        Session to record the counts under. Defaults to the current date;
+        pass it explicitly to pin a trading day (tests, replays, backfills).
 
     Returns
     -------
@@ -105,7 +128,7 @@ def run(universe: pd.DataFrame, history_path: str) -> Dict[str, Any]:
     losers_today = int((universe["change_pct"] <= _LOSER_PCT).sum())
 
     today_entry = {
-        "date": date.today().isoformat(),
+        "date": (today or date.today()).isoformat(),
         "gainers": gainers_today,
         "losers": losers_today,
     }
@@ -114,7 +137,8 @@ def run(universe: pd.DataFrame, history_path: str) -> Dict[str, Any]:
     history = _load_history(history_path)
 
     # --- Build the 5-day window (past history + today) ---
-    window = history + [today_entry]
+    # Upsert, so a same-day re-run replaces today rather than counting it twice.
+    window = _upsert_entry(history, today_entry)[-_WINDOW_DAYS:]
     gainers_5d = sum(entry["gainers"] for entry in window)
     losers_5d = sum(entry["losers"] for entry in window)
 
