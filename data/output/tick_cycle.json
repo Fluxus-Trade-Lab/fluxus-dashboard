@@ -1,0 +1,21 @@
+{
+ "as_of": "2026-08-21",
+ "source": "USI:TICK hourly-rebuilt daily H/L, SMA15; spec indicators/fluxus-lbr-tick-cycle.txt",
+ "ma_high": 636.1,
+ "ma_close": -29.0,
+ "ma_low": -638.1,
+ "spread_rank252": 0.024,
+ "band": "grind",
+ "band_since": "2026-08-06",
+ "reading": "红带磨市：TICK 高低带收缩到一年 2% 分位（2026-08-06 入带）。17 年账本：入带后 21 日收益中位约为基准一半（+1.1% vs +1.6%），5% 回撤概率反而低于基准（9.9% vs 15.4%）——磨，不是崩。",
+ "evidence": {
+  "window_years": 17,
+  "n_sell_entries": 71,
+  "sell_fwd21_med": 0.011,
+  "base_fwd21_med": 0.0158,
+  "sell_p_dd5": 0.099,
+  "base_p_dd5": 0.154
+ },
+ "stale_days": 0,
+ "note": "band 语义: grind=价差收缩(自满磨市, 收益变薄非回撤警报) / washout=价差张开(洗盘买入带); timing 语境读数, 不是尾部风险维度 (E1 NULL, 不设灯)"
+}

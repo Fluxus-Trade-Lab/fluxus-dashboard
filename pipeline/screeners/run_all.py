@@ -1118,6 +1118,17 @@ def main():
     except Exception:
         logger.exception("Regime ledger failed - regime_ledger.csv not appended")
 
+    # LBR TICK cycle reading for morning page 1 market layer (Andy 08-22).
+    # Reads the CSV the ledger just refreshed; own failure domain.
+    try:
+        from pipeline.risk.regime_ledger import write_tick_cycle_json
+        tc = write_tick_cycle_json(lrow["date"] if lrow else last_completed_session().isoformat())
+        if tc:
+            logger.info("Saved tick_cycle.json - band=%s rank=%.3f since %s",
+                        tc["band"], tc["spread_rank252"], tc["band_since"])
+    except Exception:
+        logger.exception("tick_cycle failed - tick_cycle.json not updated")
+
     # Site-wide quality: grade every file the frontend reads, write the
     # consolidated report beside them. Its own failure domain — a grading
     # crash must not cost the outputs it grades.
