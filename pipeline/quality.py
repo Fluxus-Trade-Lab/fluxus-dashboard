@@ -423,8 +423,12 @@ def check_required_blocks(output_dir: Path) -> Dict[str, List[str]]:
         except ValueError:
             missing[filename] = ["<unparsable>"]
             continue
+        # missing means the KEY is absent (or explicitly null) -- an empty
+        # list/dict is a quality question, not a schema break: cross_zone can
+        # legitimately be [] on a thin day, and the 08-19 blackout removed
+        # the keys outright, which this still catches
         lost = [b for b in blocks if not isinstance(payload, dict) or b not in payload
-                or payload.get(b) in (None, [], {})]
+                or payload.get(b) is None]
         if lost:
             missing[filename] = lost
     return missing

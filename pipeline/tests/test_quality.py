@@ -303,7 +303,7 @@ class TestRequiredBlocks:
         import json
         from pipeline.quality import check_site, REQUIRED_BLOCKS
         (tmp_path / "breadth.json").write_text(json.dumps(
-            {"breadth": {"t2108": 5}, "mm": {"up_4pct": 1}}))   # no regime etc.
+            {"breadth": {"t2108": 5}, "mm": {"up_4pct": 1}, "verdict": None}))   # keys absent / explicit null
         rep = check_site(tmp_path, "2026-08-19")
         assert set(rep["missing_blocks"]["breadth.json"]) >= {"regime", "state_board", "verdict", "conditions"}
         assert rep["status"] == "severe"

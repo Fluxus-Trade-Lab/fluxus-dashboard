@@ -1008,7 +1008,11 @@ def main():
                                          capture_output=True, text=True, timeout=20).stdout)
         except Exception:  # noqa: BLE001
             pass
-        events_all = _pd.read_csv(HISTORY_DIR / 'ticker_events.csv', dtype=str)
+        # a fresh tree has no archives yet -- the shortlist must degrade to
+        # "no history", not die (found by the run_all smoke test)
+        _ev_p = HISTORY_DIR / 'ticker_events.csv'
+        from pipeline.screeners.ticker_events import EVENT_COLUMNS as _EVC
+        events_all = _pd.read_csv(_ev_p, dtype=str) if _ev_p.exists() else _pd.DataFrame(columns=_EVC)
         hits_all = _pd.read_csv(HISTORY_DIR / 'watchlist_hits.csv') if (HISTORY_DIR / 'watchlist_hits.csv').exists() else _pd.DataFrame()
         heat_list = compute_heat(events_all, wl_date)
         heat_by = {h['ticker']: (i + 1, h) for i, h in enumerate(heat_list)}

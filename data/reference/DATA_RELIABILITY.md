@@ -69,7 +69,7 @@
 
 ## 六、还没有的(按优先级)
 
-0. **run_all.main() 端到端 smoke**(小夹具宇宙跑全链、断言输出块齐全)——08-19 breadth 全黑暴露的最大盲区,编排器 900 行零测试。
+0. ~~run_all.main() 端到端 smoke~~ **08-22 已建**(`pipeline/tests/test_run_all_smoke.py`):只造假网络(一个合成 yf.download+夹具 Finviz),其余全真跑进临时树,断言 breadth 四块/台账证据/必备块/审计零违规;10 秒跑完。**首跑就抓了三只真虫**:shortlist 在无归档的处女树上整块崩(已修)、审计器遇 0 行归档崩(已修)、必备块把「空集合」误判成「缺失」(语义改为键在即可)。
 1. I4 的阈值(0.3×/3×)是拍的,攒一个月 audit_last.json 再校。
 2. universe 行数 vs Finviz 宣称总数(adapter 现在不存那个数)。
 3. run_ledger 攒满一个月后:429 频率、各闸触发频率的月报。

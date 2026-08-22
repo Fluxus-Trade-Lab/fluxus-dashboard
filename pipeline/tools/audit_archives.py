@@ -82,7 +82,9 @@ def _sessions(dates: pd.Series, last_done: dt.date) -> pd.DataFrame:
         except ValueError:
             out.append({"date": d, "session": False, "future": False, "unparsable": True}); continue
         out.append({"date": d, "session": is_trading_day(day), "future": day > last_done, "unparsable": False})
-    return pd.DataFrame(out)
+    # explicit columns: an EMPTY archive (header only) otherwise yields a
+    # column-less frame and `info.session` raises (found by the run_all smoke)
+    return pd.DataFrame(out, columns=["date", "session", "future", "unparsable"])
 
 
 def audit_one(name: str, spec: Dict[str, Any], frame: pd.DataFrame, last_done: dt.date) -> Dict[str, Any]:
