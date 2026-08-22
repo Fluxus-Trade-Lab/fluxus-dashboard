@@ -51,7 +51,19 @@ FIELDS = ["date", "spx_close", "vix", "vix_q", "above200", "ts_ema", "ts_state",
           "nhnl_ratio", "nhnl_state", "oas", "oas_rank252", "gexn_rank252",
           "lamp_ts", "lamp_nhnl", "lamp_credit", "lamp_gex",
           "lamps_on", "lamps_available",
-          "stale_ts_d", "stale_nhnl_d", "stale_oas_d", "stale_gex_d"]
+          "stale_ts_d", "stale_nhnl_d", "stale_oas_d", "stale_gex_d",
+          # LBR TICK cycle readings (Andy 2026-08-22): recorded, never a lamp
+          # until it earns one -- forward-ledger discipline. SMA15 of NYSE
+          # TICK daily H/C/L (indicators/fluxus-lbr-tick-cycle.txt); the
+          # spread rank is the feed-agnostic zone measure (ChartsLector's
+          # good idea; his TICK.NY feed choice undershoots Linda's, ours is
+          # closer -- see the .txt comparison).
+          "tick_ma_hi", "tick_ma_cl", "tick_ma_lo", "tick_spread_rank252",
+          "tick_zone", "stale_tick_d"]
+
+TICK_CSV_NAME = "USI_TICK_hlc.csv"
+TICK_N = 15
+TICK_UP, TICK_DN = 650.0, -650.0  # TV-feed calibrated level zones
 
 
 def _tv_refresh(symbols: list[tuple[str, str]]) -> list[str]:
@@ -82,6 +94,33 @@ def _tv_refresh(symbols: list[tuple[str, str]]) -> list[str]:
     return errors
 
 
+def _tick_refresh() -> list[str]:
+    """Rebuild daily TICK H/L/C from hourly bars (TV's TICK daily is
+    close-only) and overwrite the CSV. Errors returned, not swallowed."""
+    try:
+        from tvDatafeed import Interval, TvDatafeed
+    except Exception as e:
+        return [f"tick refresh: tvdatafeed import failed ({e!r})"]
+    try:
+        tv = TvDatafeed()
+        h = tv.get_hist(symbol="TICK", exchange="USI", interval=Interval.in_1_hour, n_bars=5000)
+        if h is None or len(h) == 0:
+            return ["tick refresh: empty response"]
+        h = h.copy()
+        h["day"] = h.index.normalize()
+        daily = h.groupby("day").agg(high=("high", "max"), low=("low", "min"), close=("close", "last"))
+        daily.index = daily.index.date
+        daily.index.name = "date"
+        # feed-tz stubs land on weekends (Friday's last bar after midnight);
+        # a stub day would pollute the SMA, so only real sessions survive
+        from pipeline.marketcal import is_trading_day
+        daily = daily[[is_trading_day(d) for d in daily.index]]
+        daily.to_csv(TVDIR / TICK_CSV_NAME)
+        return []
+    except Exception as e:
+        return [f"tick refresh: {str(e)[:80]}"]
+
+
 def _dix_refresh() -> list[str]:
     try:
         import requests
@@ -100,7 +139,8 @@ def report_problems(row: dict, refresh_errors: list[str]) -> list[str]:
     import os
     problems = list(refresh_errors)
     for dim, key in (("ts", "stale_ts_d"), ("nhnl", "stale_nhnl_d"),
-                     ("credit", "stale_oas_d"), ("gex", "stale_gex_d")):
+                     ("credit", "stale_oas_d"), ("gex", "stale_gex_d"),
+                     ("tick", "stale_tick_d")):
         v = row.get(key)
         if v == "":
             problems.append(f"lamp_{dim}: data source absent")
@@ -122,7 +162,8 @@ def _series(path: Path, col: str = "close") -> Optional[pd.Series]:
 
 
 def _staleness(dim_date, ledger_date) -> int:
-    return int((pd.Timestamp(ledger_date) - pd.Timestamp(dim_date)).days)
+    # a dimension refreshed after the ledger date is simply fresh, never negative
+    return max(0, int((pd.Timestamp(ledger_date) - pd.Timestamp(dim_date)).days))
 
 
 def build_row(refresh: bool = True) -> tuple[Optional[dict], list[str]]:
@@ -134,6 +175,7 @@ def build_row(refresh: bool = True) -> tuple[Optional[dict], list[str]]:
     refresh_errors: list[str] = []
     if refresh:
         refresh_errors += _tv_refresh([("HIGN", "INDEX"), ("LOWN", "INDEX"), ("BAMLH0A0HYM2", "FRED")])
+        refresh_errors += _tick_refresh()
         refresh_errors += _dix_refresh()
 
     row: dict = {
@@ -182,6 +224,29 @@ def build_row(refresh: bool = True) -> tuple[Optional[dict], list[str]]:
     else:
         row.update({"gexn_rank252": "", "stale_gex_d": "", "lamp_gex": ""})
 
+    tick_path = TVDIR / TICK_CSV_NAME
+    if tick_path.exists():
+        t = pd.read_csv(tick_path, parse_dates=["date"]).set_index("date").sort_index()
+        if len(t) > 252 + TICK_N:
+            m_hi = t["high"].rolling(TICK_N).mean()
+            m_lo = t["low"].rolling(TICK_N).mean()
+            m_cl = t["close"].rolling(TICK_N).mean()
+            spread = m_hi - m_lo
+            w = spread.dropna().tail(252)
+            row["tick_ma_hi"] = round(float(m_hi.iloc[-1]), 1)
+            row["tick_ma_cl"] = round(float(m_cl.iloc[-1]), 1)
+            row["tick_ma_lo"] = round(float(m_lo.iloc[-1]), 1)
+            row["tick_spread_rank252"] = round(float((w <= spread.iloc[-1]).mean()), 3)
+            row["tick_zone"] = ("sell" if m_hi.iloc[-1] >= TICK_UP
+                                else "buy" if m_lo.iloc[-1] <= TICK_DN else "neutral")
+            row["stale_tick_d"] = _staleness(t.index[-1], date)
+        else:
+            row.update({"tick_ma_hi": "", "tick_ma_cl": "", "tick_ma_lo": "",
+                        "tick_spread_rank252": "", "tick_zone": "", "stale_tick_d": ""})
+    else:
+        row.update({"tick_ma_hi": "", "tick_ma_cl": "", "tick_ma_lo": "",
+                    "tick_spread_rank252": "", "tick_zone": "", "stale_tick_d": ""})
+
     lamps = [row[k] for k in ("lamp_ts", "lamp_nhnl", "lamp_credit", "lamp_gex")]
     avail = [x for x in lamps if x != ""]
     row["lamps_on"] = sum(avail)
@@ -193,9 +258,23 @@ def append(row: dict) -> bool:
     LEDGER.parent.mkdir(parents=True, exist_ok=True)
     if LEDGER.exists():
         with open(LEDGER) as f:
-            dates = {r["date"] for r in csv.DictReader(f)}
-        if row["date"] in dates:
+            reader = csv.DictReader(f)
+            old_fields = reader.fieldnames or []
+            existing = list(reader)
+        if row["date"] in {r["date"] for r in existing}:
             return False
+        if old_fields != FIELDS:
+            # schema grew (e.g. tick columns 2026-08-22): rewrite once, old
+            # rows keep "" in the new columns -- append-only in rows, not
+            # in columns. Never drops a column that has data.
+            missing_old = [c for c in old_fields if c not in FIELDS]
+            if missing_old:
+                raise RuntimeError(f"regime_ledger: refusing to drop columns {missing_old}")
+            with open(LEDGER, "w", newline="") as f:
+                w = csv.DictWriter(f, fieldnames=FIELDS)
+                w.writeheader()
+                for r in existing:
+                    w.writerow({k: r.get(k, "") for k in FIELDS})
     new = not LEDGER.exists()
     with open(LEDGER, "a", newline="") as f:
         w = csv.DictWriter(f, fieldnames=FIELDS)

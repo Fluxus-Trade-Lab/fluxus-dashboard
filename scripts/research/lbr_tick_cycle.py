@@ -38,6 +38,8 @@ def main() -> int:
     daily = h.groupby("day").agg(high=("high", "max"), low=("low", "min"), close=("close", "last"))
     daily.index = daily.index.date
     daily.index.name = "date"
+    from pipeline.marketcal import is_trading_day
+    daily = daily[[is_trading_day(d) for d in daily.index]]  # drop feed-tz weekend stubs
     OUT.parent.mkdir(parents=True, exist_ok=True)
     daily.to_csv(OUT)
 

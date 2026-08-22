@@ -33,6 +33,30 @@ buying opportunities. We are at the opposite end of the intermediate cycle."
 ±500 乘 feed 系数）。更稳的跨 feed 做法是把 zone 定义成滚动分位（例如
 252d 的 90/10 分位）——那是我们自己的改造，不是她的原版，要用另开实验。
 
+与 ChartsLector 开源版的对照（2026-08-22，github.com/ChartsLector/TV-Indicators）
+------------------------------------------------------------------------
+他的构造：`USI:TICK.NY` 日线 High/Low 的 **EMA(5)** 两条 + zone 用**价差**
+（MA(high)−MA(low)）的局部极值/分位——价差最宽=绿（washout 买点）、最窄=红
+（自满卖出带）。
+三点判定：
+1. **他的 feed 选错了方向**：TICK.NY 是温和化的统计口径（日高 ~240-350），
+   对 Linda 打印值的拟合误差 443 vs 我们 USI:TICK 小时重建的 279——他图上
+   ±260 的振幅就是 TICK.NY 的量程，不是 Linda 的。
+2. **他的 zone 思路是真好东西**：价差分位跨 feed 自归一，正面绕开了 feed
+   系数问题。已吸收进 regime_ledger 的 `tick_spread_rank252` 列（只记录，
+   等 forward 数据攒够再决定要不要当灯）。
+3. 两种 zone 读数会分歧且各有含义：level zone 量「绝对过热/washout」，
+   spread zone 量「区间收缩=自满」。2026-08-21 实况：level=neutral 而
+   spread rank=0.024（一年 2.4 分位的极端收缩）——后者与 Linda 08-20
+   "opposite end" 的读法一致。
+
+regime_ledger 记录（2026-08-22 起）
+----------------------------------
+每晚一行追加 6 列：tick_ma_hi/cl/lo、tick_spread_rank252、tick_zone
+（level 口径 ±650）、stale_tick_d。数据由 ledger 内置 _tick_refresh 重建
+（小时 bar 聚合 + marketcal 过滤周末残根），降级链与其他维度一致。
+**不设灯**：先记账，走 E1/forward 纪律再谈晋升。
+
 部署
 ----
 Pine 用 request.security_lower_tf（需付费档）重建日极值；参数 n/MA 类型/
