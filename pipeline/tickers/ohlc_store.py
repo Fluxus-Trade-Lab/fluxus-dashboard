@@ -9,14 +9,38 @@ avoids redundant network calls and keeps every consumer on the same adjusted sca
 Also provides point-in-time technicals (20EMA / 50SMA / 200SMA / ATR14 + a setup
 classifier) that mirror the frontend `tradeTechnicals.js`, so the H1 report and the
 dashboard Diagnosis tab tell the same story.
+
+**Staleness.** These files are only as fresh as the last pipeline run that touched
+the name, and coverage is uneven — a name that drops out of the daily universe just
+stops updating, silently. Two different questions therefore need two different calls:
+
+* *"give me history"* — `load_local_ohlc(t)`. Unguarded by default; a backtest
+  reading 2024 bars does not care that the file stops in May.
+* *"give me the current price"* — `latest_close(t)`, which refuses (returns None)
+  when the newest bar is stale, so the caller falls through to a fresh fetch exactly
+  as it does for a missing file.
+
+Never read `load_local_ohlc(t)[-1]["close"]` as a mark. That is what inverted the
+sign on a live position on 2026-08-09: PLTR's file ended 2026-05-22 at 136.88, which
+against a 155.37 entry and a 153.00 stop computes to -7.8R — while the real close of
+172.01 made it +7.02R, the best position on the book.
 """
 from __future__ import annotations
 
+import datetime as dt
 import json
 from pathlib import Path
 from typing import Optional
 
+from pipeline.marketcal import market_today
+
 TICKERS_DIR = Path("data/output/tickers")
+
+# Calendar days of slack for `latest_close`. Big enough to absorb a normal
+# weekend plus a holiday Monday (Fri bar read the following Wed = 5 days) and a
+# pipeline run that has not landed yet; small enough that a name which quietly
+# stopped updating is caught within the week.
+DEFAULT_MAX_AGE_DAYS = 5
 
 
 def _safe(sym: str) -> str:
@@ -24,12 +48,27 @@ def _safe(sym: str) -> str:
 
 
 def load_local_ohlc(ticker: str, min_start: Optional[str] = None,
-                    tickers_dir: Path = TICKERS_DIR) -> Optional[list[dict]]:
-    """Return locally-stored daily bars for `ticker`, or None if absent/too shallow.
+                    tickers_dir: Path = TICKERS_DIR,
+                    through: Optional[str] = None,
+                    max_age_days: Optional[int] = None) -> Optional[list[dict]]:
+    """Return locally-stored daily bars for `ticker`, or None if absent/too shallow/stale.
 
-    Prefers `ohlc_2y`, falls back to `ohlc_1y`. If `min_start` (ISO date) is given,
-    returns None when the stored history doesn't reach back that far — the caller
-    should then fetch fresh. Bars are dicts: {date, open, high, low, close, volume}.
+    Prefers `ohlc_2y`, falls back to `ohlc_1y`. Bars are dicts:
+    {date, open, high, low, close, volume}. Every rejection returns None so the
+    caller falls through to a fresh fetch exactly as it does for a missing file.
+
+    Freshness is **opt-in** — both guards default to off, because the established
+    callers (H1 report technicals, conviction sizing, case-study charts) read
+    point-in-time history for closed trades and a stale tail is irrelevant to them.
+    Anything computing a *current* mark must opt in, or better, call `latest_close`.
+
+    Args:
+        min_start: ISO date. Reject if the history doesn't reach back this far.
+        through: ISO date. Reject unless the newest bar is on/after it. Pure — no
+            clock — so use it when you already know the session you need (e.g. the
+            last trading day from `pipeline.marketcal`).
+        max_age_days: Reject if the newest bar is more than this many calendar days
+            before today's market date. Inclusive at the boundary.
     """
     path = tickers_dir / f"{_safe(ticker)}.json"
     if not path.exists():
@@ -43,7 +82,49 @@ def load_local_ohlc(ticker: str, min_start: Optional[str] = None,
         return None
     if min_start and bars[0]["date"] > min_start:
         return None
+    if (through or max_age_days is not None) and not _reaches(bars, through, max_age_days):
+        return None
     return bars
+
+
+def _reaches(bars: list[dict], through: Optional[str],
+             max_age_days: Optional[int]) -> bool:
+    """Is the newest bar recent enough for `through` / `max_age_days`?"""
+    last = bars[-1].get("date")
+    if not last:
+        return False
+    if through and last < through:
+        return False
+    if max_age_days is not None:
+        try:
+            last_date = dt.date.fromisoformat(last[:10])
+        except ValueError:
+            return False                       # unparseable date == unusable
+        # market_today(), never date.today(): this box runs in JST, ~13h ahead
+        # of ET, so the host clock reads "tomorrow" for most of the US session.
+        if (market_today() - last_date).days > max_age_days:
+            return False
+    return True
+
+
+def latest_close(ticker: str, max_age_days: int = DEFAULT_MAX_AGE_DAYS,
+                 tickers_dir: Path = TICKERS_DIR) -> Optional[dict]:
+    """The newest locally-stored bar for `ticker`, or None if absent or stale.
+
+    Use this — not `load_local_ohlc(t)[-1]` — for anything marking a position to
+    market or computing an R-multiple. Returns the whole bar rather than a bare
+    float so the caller can always report *as of when*:
+
+        bar = latest_close("PLTR")
+        if bar is None:
+            bar = fetch_from_network("PLTR")   # same path as a missing file
+        mark, as_of = bar["close"], bar["date"]
+
+    Widen `max_age_days` deliberately (and say so at the call site) if you really
+    do want an older mark.
+    """
+    bars = load_local_ohlc(ticker, tickers_dir=tickers_dir, max_age_days=max_age_days)
+    return bars[-1] if bars else None
 
 
 # --------------------------------------------------------------------------- #
