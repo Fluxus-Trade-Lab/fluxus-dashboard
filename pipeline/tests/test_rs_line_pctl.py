@@ -31,3 +31,49 @@ class TestRsLinePctl:
     def test_short_history_is_none(self):
         idx = pd.bdate_range("2026-01-01", periods=15)
         assert rs_line_pctl(pd.Series(1.0, index=idx), pd.Series(1.0, index=idx)) is None
+
+
+class TestAtrPctl:
+    """`atr_pctl` is the tightness reading the 2026-08-23 study picked (see its
+    docstring). Same self-percentile shape as rs_line_pctl -- these lock the
+    shape, not the edge."""
+
+    def _hist(self, ranges):
+        """Bars whose true range follows `ranges` (close flat at 100)."""
+        import pandas as pd
+        n = len(ranges)
+        return pd.DataFrame({
+            "High": [100 + r / 2 for r in ranges],
+            "Low": [100 - r / 2 for r in ranges],
+            "Close": [100.0] * n,
+        }, index=pd.bdate_range("2024-01-01", periods=n))
+
+    def test_all_time_low_volatility_reads_near_zero(self):
+        from pipeline.adapters.yfinance_adapter import atr_pctl
+        h = self._hist([5.0] * 200 + [0.05] * 40)      # long calm tail
+        v = atr_pctl(h, 252)
+        assert v is not None and v < 25, v
+
+    def test_all_time_high_volatility_reads_100(self):
+        from pipeline.adapters.yfinance_adapter import atr_pctl
+        h = self._hist([1.0] * 200 + [20.0] * 5)
+        assert atr_pctl(h, 252) == 100.0
+
+    def test_shorter_window_can_disagree_with_the_long_one(self):
+        """The whole point of carrying both: quiet vs the quarter, loud vs the
+        year is a real state, not a bug (P on 2026-08-21: 63d=8, 252d=41)."""
+        from pipeline.adapters.yfinance_adapter import atr_pctl
+        h = self._hist([1.0] * 120 + [12.0] * 60 + [6.0] * 20)
+        assert atr_pctl(h, 63) < atr_pctl(h, 252)
+
+    def test_too_little_history_returns_none(self):
+        from pipeline.adapters.yfinance_adapter import atr_pctl
+        assert atr_pctl(self._hist([2.0] * 30), 252) is None
+
+    def test_is_a_self_percentile_not_a_price_level(self):
+        """Doubling every price leaves the reading unchanged -- it is scale
+        free, which is why it travels across names and adr_pct does not."""
+        from pipeline.adapters.yfinance_adapter import atr_pctl
+        h = self._hist([3.0] * 150 + [1.0] * 30)
+        h2 = h * 2
+        assert atr_pctl(h, 252) == atr_pctl(h2, 252)

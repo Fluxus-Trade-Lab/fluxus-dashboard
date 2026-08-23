@@ -126,6 +126,46 @@ def rs_line_pctl(close: pd.Series, bench_close: pd.Series, n: int = 21) -> float
     return float((rs <= rs.iloc[-1]).mean() * 100.0)
 
 
+def atr_pctl(hist: pd.DataFrame, n: int = 252, period: int = 14) -> float | None:
+    """Where TODAY's ATR% (ATR14 / close) sits among its own last `n` sessions
+    -- count(ATR%_i <= ATR%_today)/n x 100. 0 = the most compressed this name
+    has been in a year; 100 = the loosest.
+
+    A SELF percentile, like `rs_line_pctl` and unlike `rs_1m`: it says nothing
+    about other stocks, only about this one against its own history. That is
+    the whole point -- 2% daily range is sleepy for one name and violent for
+    another, so the absolute number does not travel.
+
+    Measured 2026-08-23 over 4,107 fresh-high-pullback entries
+    (data/research/tightness_2026-08/report/index.html): tightest quintile won
+    48.3% of R-framed trades against 28.7% for the loosest (p<1e-8), and it
+    beat every other tightness reading we have -- RMV (a 15-bar min-max of bar
+    range) came in BELOW baseline at -5.7pp. Two conditions travel with it:
+    it is strongest on the day a pullback STARTS (+19.6pp vs +7.2pp for days
+    already in the zone), and it carries no edge at all outside a setup
+    (-2.4pp pool-wide) -- a ranker within a trend, never a signal by itself.
+
+    Not to be confused with `adr_pct` / ATR% itself (the absolute number, which
+    is what sizes a stop): that one is only +7.9pp and answers a different
+    question. Both are exported; do not substitute one for the other.
+    """
+    try:
+        c = hist['Close']
+        if len(c) < max(60, n // 4):
+            return None
+        hl = hist['High'] - hist['Low']
+        hc = (hist['High'] - c.shift()).abs()
+        lc = (hist['Low'] - c.shift()).abs()
+        tr = pd.concat([hl, hc, lc], axis=1).max(axis=1)
+        atrp = (tr.ewm(alpha=1 / period, adjust=False).mean() / c).dropna()
+        win = atrp.iloc[-n:]
+        if len(win) < 60 or not np.isfinite(float(win.iloc[-1])):
+            return None
+        return float((win <= win.iloc[-1]).mean() * 100.0)
+    except Exception:
+        return None
+
+
 def _crossed_up(close: pd.Series, ma: pd.Series) -> bool | None:
     """Close crossed UP through `ma` on the last bar: yesterday's close below
     yesterday's MA, today's close at or above today's. None when either of
@@ -715,6 +755,12 @@ class YfinanceAdapter(BaseAdapter):
                 # his "97" is a long-window RS-line percentile, not 1W perf.
                 rs_line_pctl_63 = rs_line_pctl(hist['Close'], spy_close, 63) if spy_close is not None else None
                 rs_line_pctl_126 = rs_line_pctl(hist['Close'], spy_close, 126) if spy_close is not None else None
+                # Volatility compression, same self-percentile shape as above
+                # (2026-08-23 tightness study: the only tightness reading that
+                # separated outcomes; see atr_pctl's docstring for the numbers
+                # and the two conditions on using it).
+                atr_pctl_252 = atr_pctl(hist, 252)
+                atr_pctl_63 = atr_pctl(hist, 63)
                 # Phase 1: additional EMAs for trailing-stop UI
                 ema10 = float(hist['Close'].ewm(span=10, adjust=False).mean().iloc[-1])
                 ema20 = float(hist['Close'].ewm(span=20, adjust=False).mean().iloc[-1])
@@ -846,6 +892,8 @@ class YfinanceAdapter(BaseAdapter):
                     'rs_line_pctl_21': rs_line_pctl_21,
                     'rs_line_pctl_63': rs_line_pctl_63,
                     'rs_line_pctl_126': rs_line_pctl_126,
+                    'atr_pctl_252': atr_pctl_252,
+                    'atr_pctl_63': atr_pctl_63,
                     'cross_ema21_up': cross_ema21_up,
                     'cross_sma50_up': cross_sma50_up,
                     'bar_date': bar_date, 'bars_stale': False, 'bar_scale_mismatch': False,

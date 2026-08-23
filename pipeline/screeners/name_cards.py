@@ -152,6 +152,10 @@ def build_card(ticker: str, *, row: Optional[Mapping[str, Any]], group: Optional
         "readings": {k: r.get(k) for k in (
             "close", "change_pct", "rel_volume", "rs_1m", "rs_3m", "h_score",
             "rs_line_pctl_21", "rs_line_pctl_63", "atr_from_sma50", "ema21_atr_dist",
+            # compression, self-percentile (2026-08-23 study): atr_pctl_252 is
+            # the tightness reading with the measured edge; adr_pct/atr is the
+            # ABSOLUTE one that sizes stops. Two jobs, two fields, never swap.
+            "atr_pctl_252", "atr_pctl_63", "adr_pct",
             "high_52w", "high_52w_dist", "vcs", "trend_base", "sector", "market_cap",
             "sp_signal", "perf_1m", "perf_3m", "label", "category", "hi20")},
         "heat": {"rank": heat_rank, "score": heat.get("score") if heat else None,
