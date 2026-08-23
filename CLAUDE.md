@@ -9,6 +9,11 @@
 
 **通信**：跨线请求/答复先写 `data/reference/DATA_CONTRACTS.md` §七 契约行（事实带日期），消息只当门铃。
 
+**通讯录（08-23 补，Zac 问了才发现没发）**：
+- 找会话**不用 `ListAgents`**——它只列挂 socket 的匿名 peer（ai-trading-system-xx 这类名对不上花名册），送达 ≠ 送对，这是 08-21 的事故原型。
+- 交互会话按门铃：`mcp ccd list_sessions` 按 title 对上 TEAM.md 的线名，再 `send_message` 指名投递。
+- **定时/无人值守会话（Zac、Joe、日推这类）发不了也收不了跨会话消息（工具被禁）**：你们的投递 = 写进耐久处（§七/INBOX/incidents）并 push main，这就算送到；真需要按门铃的，在晨报/汇报里列一节「门铃待按」，OPS 或 Andy 代按。
+
 **完成的定义**：合进 main 且 Andy 能点开看到，才算完成。
 
 **语言**：默认中文回复；代码 / token / 度量名照抄英文。提到文件给可点击链接加行号。
