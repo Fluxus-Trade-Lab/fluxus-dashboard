@@ -51,3 +51,12 @@
 **NOW.md 约束的是 Andy，不是 AI（Andy 2026-08-23 定）**：停做清单/主线管的是 **Andy 的时间**；定时任务与夜间自动运行按各自任务书跑，不受 NOW.md 限制——AI 多干的都是白捡的杠杆，且产出只积累（分支/预览稿/报告），不催 Andy 看。反过来：**深夜（01:30 JST 后）发现 Andy 本人还在会话里干活，先提醒他该停工睡觉**（呼应温水澡机制），提醒一次即可。
 
 **收藏口令（Andy 2026-08-23）**：Andy 在任何会话扔链接说「收藏」（可附一句为什么），该会话立即把它追加进 `data/research/night_reports/INBOX.md` 的 🔗 收藏夹节（append-only，commit 直推 main），不展开讨论不当场研究——整理、学习、判定是 Nighty Zac 的夜间活，判定结果在他晨报里。
+
+**直推 main 的标准动作（08-23 定，防「HEAD 不在 main」事故）**：任何会话要把 docs/契约行/收藏/素材小改直推 main 时，**永不在共享主树上 commit**（主树可能停在别的分支——在它上面 `push HEAD:main` 会把整条分支灌进 main）。统一走临时树：
+```bash
+git fetch origin && git worktree add "$CLAUDE_SCRATCHPAD/wt-docs" origin/main --force
+# 在 wt-docs 里改文件、git add <只加你改的> 、commit
+for i in 1 2 3; do git -C "$CLAUDE_SCRATCHPAD/wt-docs" push origin HEAD:main && break; git -C "$CLAUDE_SCRATCHPAD/wt-docs" pull --rebase origin main; done
+git worktree remove "$CLAUDE_SCRATCHPAD/wt-docs"
+```
+（`$CLAUDE_SCRATCHPAD` 指本会话系统提示里的 scratchpad 绝对路径。）押注失败会自动 rebase 重试三次；仍失败就把内容留在晨报/汇报里并标「未投递」。
