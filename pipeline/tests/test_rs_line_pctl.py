@@ -77,3 +77,45 @@ class TestAtrPctl:
         h = self._hist([3.0] * 150 + [1.0] * 30)
         h2 = h * 2
         assert atr_pctl(h, 252) == atr_pctl(h2, 252)
+
+
+class TestRange5Pctl:
+    """`range5_pctl` exists to separate 真压缩 from 「ATR 还没追上价格」 --
+    see its docstring. These lock the shape and the separation it enables."""
+
+    def _bars(self, ranges, closes=None):
+        import pandas as pd
+        n = len(ranges)
+        closes = closes or [100.0] * n
+        return pd.DataFrame({
+            "High": [c + r / 2 for c, r in zip(closes, ranges)],
+            "Low": [c - r / 2 for c, r in zip(closes, ranges)],
+            "Close": closes,
+        }, index=pd.bdate_range("2024-01-01", periods=n))
+
+    def test_quiet_tail_reads_low(self):
+        from pipeline.adapters.yfinance_adapter import range5_pctl
+        v = range5_pctl(self._bars([6.0] * 200 + [0.2] * 20))
+        assert v is not None and v < 20, v
+
+    def test_explosive_tail_reads_high(self):
+        from pipeline.adapters.yfinance_adapter import range5_pctl
+        assert range5_pctl(self._bars([1.0] * 200 + [25.0] * 5)) == 100.0
+
+    def test_separates_the_two_compressed_states(self):
+        """The PURR 2026-08-21 shape: a year of high volatility at a low price,
+        a long advance that walks ATR% down, then a 3-bar burst. ATR% still
+        ranks mid-pack against its own year while the 5-day range is at its
+        yearly max -- one number cannot carry both facts, which is why the
+        second field exists."""
+        from pipeline.adapters.yfinance_adapter import atr_pctl, range5_pctl
+        closes = [30.0] * 120 + [30.0 * 1.012 ** i for i in range(1, 120)] + [128.0, 150.0, 160.0]
+        ranges = [3.0] * 120 + [3.0 * 1.012 ** i for i in range(1, 120)] + [25.0, 28.0, 22.0]
+        h = self._bars(ranges, closes)
+        assert range5_pctl(h, 252) == 100.0            # the tape is violent
+        assert atr_pctl(h, 252) < 50                   # the ratio says otherwise
+        assert range5_pctl(h, 252) - atr_pctl(h, 252) > 40
+
+    def test_too_little_history_returns_none(self):
+        from pipeline.adapters.yfinance_adapter import range5_pctl
+        assert range5_pctl(self._bars([2.0] * 30)) is None

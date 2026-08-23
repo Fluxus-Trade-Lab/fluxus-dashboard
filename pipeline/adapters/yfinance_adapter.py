@@ -126,6 +126,36 @@ def rs_line_pctl(close: pd.Series, bench_close: pd.Series, n: int = 21) -> float
     return float((rs <= rs.iloc[-1]).mean() * 100.0)
 
 
+def range5_pctl(hist: pd.DataFrame, n: int = 252) -> float | None:
+    """Self-percentile of the 5-session range (as % of close), same shape as
+    `atr_pctl`. Carried BECAUSE `atr_pctl` alone cannot tell two states apart:
+
+      真压缩      atr_pctl low AND range5_pctl low  -- genuinely quiet
+      ATR没追上    atr_pctl low BUT range5_pctl high -- price ran, and ATR (a
+                 14-day EMA, and divided by a now-much-higher close) has not
+                 caught up. PURR on 2026-08-21 is the specimen: ATR rose 53%
+                 in three sessions while price rose 47%, so ATR/close barely
+                 moved and read 4 -- while its 5-day range sat at the 99th.
+
+    They are not the same trade and they do not perform the same: measured
+    2026-08-23 inside the compressed fifth, the second state won 47.0% of
+    R-framed trades against 40.5% for the first (n=1607/4129, p<1e-4). So this
+    is a LABEL, not a filter -- an early attempt to gate the "false" ones out
+    removed the better half. Show both readings; never collapse them to one.
+    """
+    try:
+        c, h, l = hist['Close'], hist['High'], hist['Low']
+        if len(c) < 60:
+            return None
+        rng = (h.rolling(5).max() - l.rolling(5).min()) / c
+        win = rng.dropna().iloc[-n:]
+        if len(win) < 60 or not np.isfinite(float(win.iloc[-1])):
+            return None
+        return float((win <= win.iloc[-1]).mean() * 100.0)
+    except Exception:
+        return None
+
+
 def atr_pctl(hist: pd.DataFrame, n: int = 252, period: int = 14) -> float | None:
     """Where TODAY's ATR% (ATR14 / close) sits among its own last `n` sessions
     -- count(ATR%_i <= ATR%_today)/n x 100. 0 = the most compressed this name
@@ -140,10 +170,26 @@ def atr_pctl(hist: pd.DataFrame, n: int = 252, period: int = 14) -> float | None
     (data/research/tightness_2026-08/report/index.html): tightest quintile won
     48.3% of R-framed trades against 28.7% for the loosest (p<1e-8), and it
     beat every other tightness reading we have -- RMV (a 15-bar min-max of bar
-    range) came in BELOW baseline at -5.7pp. Two conditions travel with it:
-    it is strongest on the day a pullback STARTS (+19.6pp vs +7.2pp for days
-    already in the zone), and it carries no edge at all outside a setup
-    (-2.4pp pool-wide) -- a ranker within a trend, never a signal by itself.
+    range) came in BELOW baseline at -5.7pp.
+
+    THREE conditions travel with it, and it is wrong to use without them:
+
+    * it is a CLOCK, not a stock-picker. Ranked within one ticker (expanding,
+      no look-ahead) the spread is +13.3pp; ranked across the names available
+      on the same day, only +4.3pp. It says when THIS name is ready, not which
+      name to take. The picker that paired with it best was distance to the
+      52-week high (+7.9pp inside the compressed half).
+    * it is strongest on the day a pullback STARTS (+19.6pp) and much weaker
+      on days already in the zone (+7.2pp).
+    * it carries no edge at all outside a setup (-2.4pp pool-wide) -- a
+      modifier within a trend, never a signal by itself. RBRK and HOOD both
+      compressed in Jan 2026 and fell 28% and 27%; both were out of trend.
+
+    Replication is honest but not flattering: on an independent sample (the
+    172-name 2-year ticker store) the first-day spread was +11.8pp (p=0.047),
+    positive but weaker, non-monotonic, and it split 2025 +15.1pp / 2026
+    +1.2pp. Every cut run so far is positive; the MAGNITUDE is unstable. Treat
+    it as a tiebreaker, not a rule, and do not build a gate on the threshold.
 
     Not to be confused with `adr_pct` / ATR% itself (the absolute number, which
     is what sizes a stop): that one is only +7.9pp and answers a different
@@ -761,6 +807,7 @@ class YfinanceAdapter(BaseAdapter):
                 # and the two conditions on using it).
                 atr_pctl_252 = atr_pctl(hist, 252)
                 atr_pctl_63 = atr_pctl(hist, 63)
+                range5_pctl_252 = range5_pctl(hist, 252)
                 # Phase 1: additional EMAs for trailing-stop UI
                 ema10 = float(hist['Close'].ewm(span=10, adjust=False).mean().iloc[-1])
                 ema20 = float(hist['Close'].ewm(span=20, adjust=False).mean().iloc[-1])
@@ -894,6 +941,7 @@ class YfinanceAdapter(BaseAdapter):
                     'rs_line_pctl_126': rs_line_pctl_126,
                     'atr_pctl_252': atr_pctl_252,
                     'atr_pctl_63': atr_pctl_63,
+                    'range5_pctl_252': range5_pctl_252,
                     'cross_ema21_up': cross_ema21_up,
                     'cross_sma50_up': cross_sma50_up,
                     'bar_date': bar_date, 'bars_stale': False, 'bar_scale_mismatch': False,
