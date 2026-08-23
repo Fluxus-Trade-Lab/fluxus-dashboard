@@ -151,6 +151,13 @@ jobs:
       - name: Audit run ledger
         run: python -m pipeline.tools.audit_ledger --json data/history/audit_ledger_last.json
 
+      # Claim registry (RESEARCH_PROTOCOL.md): a research claim that gates
+      # behaviour must have survived a holdout, or carry a waiver whose
+      # deadline has not passed. Expired waivers turn this step red by
+      # themselves -- that is the point.
+      - name: Claim registry check
+        run: python -m pipeline.tools.claim_registry --check
+
       # Schema drift is reported, not fatal: new columns land on purpose and
       # DATA_CONTRACTS.md is where they get announced; accept with --update.
       - name: Schema snapshot check
