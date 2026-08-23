@@ -4,7 +4,7 @@
 
 > 格式：`- [日期] <链接> ——（Andy 的一句话，可空）`。Zac 处理后移进 `data/research/collection.md` 并附判定。
 
-（暂无）
+- [08-23] https://www.youtube.com/watch?v=1k3KRbktibQ ——（Andy）reversal setup，我们图书馆和课程里没有详细记录和了解的
 
 ## 等 Zac 下次窗口处理
 
