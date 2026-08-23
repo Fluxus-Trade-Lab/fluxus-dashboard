@@ -45,3 +45,11 @@
 5. 边界：池子 = 亮过信号的 3,618 只（选择偏差）；一年 = 三个格局各一段；COIL/CTR 阈值是我们拍的操作化。
 
 原始表 `fires.csv` / `fires_dedup.csv`；复跑 `python -m pipeline.tools.tightness_study --bars ... --out ...`。
+
+## 2026-08-23 紧凑度横评（Andy 问「以 ATR 为基准更精准吗」）
+- 引擎 `pipeline/tools/tightness_grid.py`：MEASURE(5) × NORM(4) 网格 + 具名探测器同框打分
+- 报告 `report/index.html`（artifact 已发布）· 输入快照 `report/study.json` + `report/case_final.json`
+- 结论：ATR% 的自百分位（63/252 日）胜出；RMV −5.7 负优势；压缩**单独用无优势**，只在回踩 setup 内当排序器；
+  「刚进入回踩区第一天」+19.6pp vs「泡着的日子」+7.2pp
+- 大样本 `grid_sample.csv`（13MB，28,676 行）**不入库**，跑 `python -m pipeline.tools.tightness_grid` 重生成；
+  去重叠+VCS 版 `grid_dedup_with_vcs.csv` 入库
