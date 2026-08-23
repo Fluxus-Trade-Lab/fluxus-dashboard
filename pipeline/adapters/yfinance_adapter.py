@@ -185,11 +185,22 @@ def atr_pctl(hist: pd.DataFrame, n: int = 252, period: int = 14) -> float | None
       modifier within a trend, never a signal by itself. RBRK and HOOD both
       compressed in Jan 2026 and fell 28% and 27%; both were out of trend.
 
-    Replication is honest but not flattering: on an independent sample (the
-    172-name 2-year ticker store) the first-day spread was +11.8pp (p=0.047),
-    positive but weaker, non-monotonic, and it split 2025 +15.1pp / 2026
-    +1.2pp. Every cut run so far is positive; the MAGNITUDE is unstable. Treat
-    it as a tiebreaker, not a rule, and do not build a gate on the threshold.
+    READ THIS BEFORE QUOTING THE NUMBERS ABOVE. They are the maximum of a
+    32-way specification search (5 measures x 4 normalizations + 12 named
+    detectors), reported without correction -- textbook winner's-curse setup.
+    The out-of-sample check says so: on an independent sample (the 172-name
+    2-year ticker store) the first-day spread was +11.8pp (p=0.047, which does
+    not survive correcting for the search), non-monotonic, splitting 2025
+    +15.1pp / 2026 +1.2pp. Every cut is positive; the MAGNITUDE is unstable.
+
+    So: a tiebreaker, not a rule. No gate on the threshold, and no panel copy
+    stating it as fact until a fresh holdout says it again. The one result here
+    that does NOT depend on the search is the negative one -- compression
+    outside a setup is worth nothing (pool-wide n=71,636, -2.4pp).
+
+    Process note (2026-08-23): this field was merged before that out-of-sample
+    check existed; the check happened because Andy questioned a live reading.
+    划 holdout 在动工前, not after shipping.
 
     Not to be confused with `adr_pct` / ATR% itself (the absolute number, which
     is what sizes a stop): that one is only +7.9pp and answers a different
