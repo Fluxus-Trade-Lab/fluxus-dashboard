@@ -84,3 +84,24 @@ class TestLiveRegistry:
             line = line.strip()
             if line and not line.startswith("#"):
                 assert isinstance(json.loads(line), dict)
+
+
+class TestGateBasis:
+    """gates justified by owner decision or third-party definition are exempt
+    from R4 -- but must cite who/when, or reattribution becomes the loophole."""
+
+    def test_owner_decision_with_citation_passes(self):
+        assert check([row(gates=["some seat"], gate_basis="owner-decision",
+                          gate_basis_note="Andy 2026-08-20 拍板")]) == []
+
+    def test_owner_decision_without_citation_flagged(self):
+        errs = check([row(gates=["some seat"], gate_basis="owner-decision")])
+        assert any("R4b" in e for e in errs)
+
+    def test_unknown_basis_flagged(self):
+        errs = check([row(gate_basis="vibes")])
+        assert any("bad gate_basis" in e for e in errs)
+
+    def test_default_basis_still_binds(self):
+        errs = check([row(gates=["some seat"])])
+        assert any("R4 " in e for e in errs)

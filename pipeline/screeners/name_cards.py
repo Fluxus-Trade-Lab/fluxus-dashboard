@@ -260,13 +260,14 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
          lambda t: -(by.get(t, {}).get("atr_from_sma50") if by.get(t, {}).get("atr_from_sma50") is not None else 99)),
     ])
 
-    b4 = panels.get("bullish_4pct", {}).get("tickers", [])
-    first_wave = [t["ticker"] for t in b4 if not t.get("chase") and t.get("rs_high")
-                  and (t.get("atr_from_sma50") or 9) <= 4]
+    # "第一波" (4%×ATR≤4×RS新高) was chain 2 here until 2026-08-23: the recipe
+    # came from the validation report's spec search and FAILED its holdout
+    # (independent 2y pool: edge -1.54pp, precision 29% vs pool 25% n.s. --
+    # claims.jsonl id first-wave-recipe). Cut per RESEARCH_PROTOCOL 铁律 1;
+    # restore only with fresh evidence.
     seat("entry", feeds=("episodic_pivot", "bullish_4pct", "liquid_leader_pullback"), chain=[
         ("今日 EP", panel_tickers("episodic_pivot"),
          lambda t: by.get(t, {}).get("rel_volume") or 0),
-        ("第一波(4%×ATR≤4×RS新高)", first_wave, hscore),
         ("替补:Leading 主题里的回踩", [t for t in panel_tickers("liquid_leader_pullback")
                                         if states.get(t) == "Leading"], hscore),
     ])
@@ -296,11 +297,15 @@ def pick_seats(wl: Mapping[str, Any], wl_prev: Optional[Mapping[str, Any]],
         ("替补:均线收复中 rs_3m 最高", reclaim, rs3),
     ])
 
-    # Coiling seat v3 (Andy 2026-08-20): the tightness study judged VCS
-    # no-edge (无优势) while 3WT and the daily coil carry it, so they lead
-    # the chain. VCS is NOT discarded -- it stays third AND keeps logging
-    # nightly (vcs panel in watchlist_hits, vcs column in shortlist_log) so
-    # the comparison continues; if it earns its way back, it comes back.
+    # Coiling seat v3: chain order is Andy's call (2026-08-20, "蓄势席换成
+    # 3WT/COIL 吧,VCS 已经判无优势了"), NOT a research result -- the 08-23
+    # holdout found no edge for 3WT pattern days (precision 10% vs pool 25%)
+    # or daily COIL (edge -0.42pp) on an independent pool either
+    # (claims.jsonl ids tightness-3wt-breakout / tightness-coil-daily). The
+    # seat is a radar ("who is coiled"), not an edge claim; its verdict text
+    # must never quote edge numbers. VCS is NOT discarded -- it stays third
+    # AND keeps logging nightly (vcs panel in watchlist_hits, vcs column in
+    # shortlist_log) so the comparison continues.
     from pipeline.screeners.watchlist import passes_gate
 
     def _tight(t, mode):

@@ -18,7 +18,14 @@ Schema, one JSON object per line:
     evidence      {in_sample: {...}, holdout: {...}, forward: {...}} -- free
                   dicts; holdout REQUIRED (non-empty) for validated/live
     gates         [str] -- places where this claim CHANGES BEHAVIOUR (a
-                  threshold, a seat rule, a panel condition). Non-empty gates
+                  threshold, a seat rule, a panel condition).
+    gate_basis    what justifies the gate: "claim" (default -- the research
+                  claim itself, so R4 demands validated/live/null), or
+                  "owner-decision" / "third-party-definition" (Andy's call or
+                  a published definition -- exempt from R4 but MUST carry
+                  gate_basis_note citing 谁/何时 or whose definition; the
+                  research claim's own status stays honest separately).
+                  With basis "claim", non-empty gates
                   require status validated/live/null -- OR a `waiver`
                   {until, reason}: an acknowledged debt that turns CI red by
                   itself the day `until` passes without adjudication. A field merely being
@@ -92,7 +99,14 @@ def check(rows: list[dict], repo: Path = Path(".")) -> list[str]:
             if not ho:
                 errs.append(f"{rid}: R3 status {r['status']} without evidence.holdout")
         gates = r.get("gates") or []
-        if gates and r.get("status") not in GATE_OK:
+        basis = r.get("gate_basis", "claim")
+        if basis not in ("claim", "owner-decision", "third-party-definition"):
+            errs.append(f"{rid}: R1 bad gate_basis {basis!r}")
+        if basis != "claim" and gates and not r.get("gate_basis_note"):
+            # a gate justified by decision or definition must cite who/when or
+            # whose definition -- otherwise reattribution becomes the loophole
+            errs.append(f"{rid}: R4b gate_basis={basis} without gate_basis_note (cite 谁/何时拍板 或 谁的定义)")
+        if gates and basis == "claim" and r.get("status") not in GATE_OK:
             # a WAIVER with a deadline turns this into a ticking clock instead
             # of an instant red: existing debts get registered honestly, and
             # CI goes red BY ITSELF the day the deadline passes un-adjudicated.

@@ -68,6 +68,10 @@ preregistered → candidate → validated → live
 
 - **台账**：`data/research/claims/claims.jsonl`，一行一条结论（schema 见
   `pipeline/tools/claim_registry.py` 文件头）。新结论**当天登记**，改状态改台账。
+- **闸的依据分三类**（`gate_basis`）：`claim`（默认——研究结论自身撑闸，R4 要求 validated/live/null）、
+  `owner-decision`（Andy 拍板——决策权不需要 holdout，但必须引「谁/何时」）、
+  `third-party-definition`（公开定义的工具——EP/LL-HL 这类面板的存在不依赖 edge 主张）。
+  后两类免 R4 但**结论自身的状态照常诚实记**：决策归决策、科学归科学，台账两个都记。
 - **闸门**：`python -m pipeline.tools.claim_registry --check` 在每日 CI 里跑，违规即红：
   - schema 违规 / id 重复
   - 正向结论缺 `spec_search_n`
