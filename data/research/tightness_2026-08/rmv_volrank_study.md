@@ -1,3 +1,8 @@
+> ⚠️ **2026-08-23 晚已被修正**：本文说「窗口决定一切」。把问题拆成 measure × norm 网格后（`report/index.html`），
+> 真相是**量和窗口同等重要**——同一个 ATR 换成 15 根 min-max 归一就归零（+19.6 → −0.2）。
+> 另外本文用的 `<20` 阈值也不对：回踩候选群本身偏高波动（三分位边界在 69/89），有用的是梯度不是阈值。
+> 结论方向不变（ATR 系 + 长窗自百分位胜出，RMV 无优势），细节以新报告为准。
+
 # RMV vs Volatility Percentile Rank —— 「紧」原来是两个不同的量（2026-08-23）
 
 Andy 给的两条线索：RMV（TraderLion/Deepvue）与 Volatility Percentile Rank（LuxAlgo）。
