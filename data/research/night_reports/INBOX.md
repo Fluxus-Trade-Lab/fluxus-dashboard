@@ -8,7 +8,19 @@
 
 ## 等 Zac 下次窗口处理
 
-（暂无）
+- [08-24 Andy·本窗口首要] **Stockbee 网站学习整理**（他 00:05 在聊天里点的名，本轮优先于其他积压）。要的是三样：**他的思维方式** / **他的数据** / **他的交易细节**。点名三个题目：**EP（Episodic Pivot）**、**Momentum Burst**、**Anticipation Trade**。
+  - **别从零开始** —— 仓库里已有这三条的实现，学习成果要落在「和我们已建的对不对得上」而不是复述他：
+    - `pipeline/tools/delayed_ep_scan.py`（EP，每晚归档 `delayed_ep_log.csv`，`--review` 复盘一直没跑）
+    - `pipeline/tools/anticipation_scan.py`（Anticipation）
+    - `pipeline/screeners/stockbee_ratio.py` + `test_stockbee_ratio.py`（4% 双计；契约 08-23 记过「main 上两个 bug 都还活着，归档确被永久截在 5 行」）
+    - `pipeline/screeners/gainers_4pct.py`、`breadth_metrics.py`（他的 breadth 口径）
+    - 已证伪别重测：`project_b4_gates_null`（两道闸分得开 p=0.0022，但过闸中位仍跑输 SPY；「第一波」三种叠加没抬中位）
+  - **交付形态**：`data/research/stockbee_2026-08/` —— ①`method.md` 把他的规则写成**可执行参数**（阈值/窗口/入场退出/持仓时间/加减仓），每条标他原文出处链接；②`diff.md` 逐条对我们现有实现的**逐格对照**（照 `oratnek_diff` 那个体例：一致 / 不一致 / 我们没有 / 他没有）；③`open_questions.md` 只能前瞻验的项。
+  - **版权闸**：写成规则和参数的**综合**，不做原文搬运；引用每处 ≤15 字加出处链接。他的博客是公开站，不碰任何登录墙。
+  - **立项三件套**（CLAUDE.md 要求）：①发布物＝素材箱至少一行（他的口径 vs 我们归档的实测差异，或一个 NULL 结果）+ `diff.md` 本身可直接改成一篇 teardown；②截止日＝**2026-08-30（周日）**；③到期规则＝到期未出 `diff.md` 就降级：只留 `method.md` 参数表，其余进停车场。
+  - 体例参考：`Fluxus_Receipts/marketpulse_teardown.md`、`data/research/oratnek_diff/`
+
+- [08-23] 收藏夹那条 YouTube reversal setup 链接（见上）——摘要+判定+入 `data/research/collection.md`
 
 ## 已裁决（读过打 ✅）
 
