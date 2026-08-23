@@ -60,3 +60,9 @@ for i in 1 2 3; do git -C "$CLAUDE_SCRATCHPAD/wt-docs" push origin HEAD:main && 
 git worktree remove "$CLAUDE_SCRATCHPAD/wt-docs"
 ```
 （`$CLAUDE_SCRATCHPAD` 指本会话系统提示里的 scratchpad 绝对路径。）押注失败会自动 rebase 重试三次；仍失败就把内容留在晨报/汇报里并标「未投递」。
+
+**回执制（Andy 2026-08-23，治「办没办要追问」）**：
+- 无人值守会话（Zac/Joe/日推类）每份晨报/汇报的**第一节固定是「回执」**：上次自己提出的问题、收到的裁决/修正，逐条一句状态（已执行 / 已知悉今晚做 / 不适用+理由）。
+- 处理别人问题的一方（通常 OPS）写完裁决必须落在**提问者必读的位置**（Zac→INBOX、ALEX→§七、前端→§七），并在裁决行里写清「谁、何时、什么状态」。
+- 提问者执行完，在裁决行下追「↳ 已执行（日期）」。
+- **Andy 查「办没办」只看一处**：`data/research/night_reports/INBOX.md`（问答板，带状态）或 Joe 早报的回执/转述节——不需要跳进任何对话框追问。定时会话的对话框是一次性的，跑完即弃，别在那里找状态。
