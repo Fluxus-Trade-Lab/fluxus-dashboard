@@ -134,6 +134,13 @@ jobs:
       - name: Audit archives
         run: python -m pipeline.tools.audit_archives --json data/history/audit_last.json
 
+      # Ledger invariants (pipeline/tools/audit_ledger.py): did tonight's run
+      # actually do its job, and does each guard's evidence back up its status
+      # word. Runs AFTER the pipeline step so tonight's line exists; a
+      # violation fails the job before the commit step, same plan B as above.
+      - name: Audit run ledger
+        run: python -m pipeline.tools.audit_ledger --json data/history/audit_ledger_last.json
+
       # Schema drift is reported, not fatal: new columns land on purpose and
       # DATA_CONTRACTS.md is where they get announced; accept with --update.
       - name: Schema snapshot check
