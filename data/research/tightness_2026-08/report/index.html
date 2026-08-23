@@ -56,12 +56,13 @@ border-radius:50%;background:var(--acc);color:#fff;font-weight:700;display:grid;
 <div class="wrap">
 <div class="eyebrow">Fluxus · 数据端 · 2026-08-23</div>
 <h1>「紧」到底该怎么量：五个指标、两个轴、七只票</h1>
-<p class="lede">Andy 问「以 ATR 为基准是不是更精准」。要回答就得把问题拆成两半：<b>测什么量</b>（bar 幅 / ATR / 布林带宽 / σ）和 <b>跟谁比</b>（绝对值 / 15 根 min-max / 63 日 / 252 日自百分位）。两个轴各测一遍，再把 RMV、3WT、COIL、VCS、CTR 放进同一个交易框打分。样本：1382 只票 28,676 个回踩候选日，其中 4,107 个是「刚进入回踩区的第一天」——结论都以这批为准。计分：R = ATR14，20 日内先 +2R 记赢、先 −1.5R 记输。</p>
+<p class="lede">Andy 问「以 ATR 为基准是不是更精准」。要回答就得把问题拆成两半：<b>测什么量</b>（bar 幅 / ATR / 布林带宽 / σ）和 <b>跟谁比</b>（绝对值 / 15 根 min-max / 63 日 / 252 日自百分位）。两个轴各测一遍，再把 RMV、3WT、COIL、VCS、CTR 放进同一个交易框打分。样本：1382 只票 28,676 个回踩候选日，其中 4,107 个是「刚进入回踩区的第一天」——结论都以这批为准。计分：R = ATR14，20 日内先 +2R 记赢、先 −1.5R 记输。<b>08-23 晚追加了三节</b>：选股 vs timing 的分解、PURR 引出的「一个数字两种状态」、以及一次独立样本复制（结论被诚实降级）。</p>
 <div class="kpis">
 <div class="kpi"><b>是的</b><span>ATR 确实是更好的基准 —— 但必须<b>跟自己的历史比</b>，换成 bar 幅或 15 根 min-max 就全没了</span></div>
+<div class="kpi"><b>timing</b><span>它是<b>时钟不是选股器</b>：票内排名 +13.3pp，同日候选之间只有 +4.3pp（第五节）</span></div>
 <div class="kpi"><b>+19.6pp</b><span>ATR% 的 252 日自百分位：最紧 20% 赢率 48.3% vs 最松 20% 28.7%（p&lt;1e-8）</span></div>
 <div class="kpi"><b>−5.7pp</b><span>RMV&lt;20（TraderLion 的口径）在同一批日子上<b>低于基线</b>，不是无优势是负优势（p&lt;1e-4）</span></div>
-<div class="kpi"><b>0</b><span>压缩单独用的优势：全池任意一天 −2.4pp。它不是信号，是<b>回踩场景里的排序器</b></span></div>
+<div class="kpi"><b>+11.8pp</b><span>独立样本（172 只票两年）复制到的幅度，p=0.047 —— 方向稳、<b>幅度不稳</b>，2026 那段几乎是平的（第七节）</span></div>
 </div>
 <h2>一、两个轴：测什么 × 跟谁比</h2>
 <p class="small">每格 = 该口径下「最紧 20%」的交易框赢率减「最松 20%」的赢率（百分点）。一个<b>量</b>成立要在多种归一下同号；一个<b>归一</b>成立要在多种量下同号。表里只有一行一列同时成立。</p>
@@ -276,13 +277,76 @@ border-radius:50%;background:var(--acc);color:#fff;font-weight:700;display:grid;
 </tbody></table></div>
 <p class="verdict">8 月 3 日起压缩至今 15 个交易日，最低 1，今天 <b>4</b>——一年来第 4 百分位。4 月那次长达 32 个交易日的压缩，入区后 20 日 +28.9%。但注意它上市只有 180 根 K 线，252 日百分位其实是拿不满一年的样本算的，读数比其他六只脆。</p>
 </div></div></article>
-<h2>五、可动的三件事</h2>
+<h2>五、选股还是 timing（08-23 追问）</h2>
+<p>同一个读数可以因为两种完全不同的原因赢，用法相反：<b>选股</b> = 在今天可选的名字里排出该买谁（测法：只在同一天的候选之间排名，市况被抵消）；<b>timing</b> = 对一只票说它现在是不是时候（测法：只在这只票自己的历史里排名，票与票的差异被抵消）。分开测：</p>
+<div class="tw"><table><thead><tr><th>轴</th><th class="n">最紧 1/3 赢率</th><th class="n">最松 1/3 赢率</th><th class="n">差</th><th>读法</th></tr></thead><tbody>
+<tr><td>原始（两种混在一起）</td><td class="n">46.0%</td><td class="n">32.2%</td><td class="n good">+13.8</td><td class="small">混合值，不能直接当任何一种用</td></tr>
+<tr><td><b>选股轴</b>：同一天的候选之间排名</td><td class="n">41.4%</td><td class="n">37.1%</td><td class="n">+4.3</td><td class="small">弱。它不擅长在今天的名单里挑人</td></tr>
+<tr><td><b>timing 轴</b>：同一只票自己历史里排名</td><td class="n">57.1%</td><td class="n">43.8%</td><td class="n good">+13.3</td><td class="small">强。无前视（只用该票此前的读数做扩张排名，n=367）</td></tr>
+</tbody></table></div>
+<div class="ok"><b>答案</b>：<code>atr_pctl</code> 是 <b>timing</b>，不是选股。它回答「这只票现在是不是时候」，不回答「今天买哪只」。这也解释了第三节那两个条件——时钟只有在你已经选好了票、且票在趋势里的时候才有意义。</div>
+<h4>那选股轴是谁？</h4>
+<p class="small">把同一批日子按各信号做同日横截面排名，看谁能在「今天的候选之间」分出胜负：</p>
+<div class="tw"><table><thead><tr><th>信号</th><th class="n">同日分辨力</th><th>结论</th></tr></thead><tbody>
+<tr><td>距 52 周高的距离（越近越好）</td><td class="n good">+4.7pp</td><td class="small">最好的选股维度，且与压缩独立</td></tr>
+<tr><td>ATR% 252 日自百分位</td><td class="n good">+4.3pp</td><td class="small">同日比就弱了 —— 它本来就不是干这个的</td></tr>
+<tr><td>RS 线 63 日自百分位</td><td class="n">+2.6pp</td><td class="small">几乎无分辨力</td></tr>
+<tr><td>ATR% 绝对值</td><td class="n">+2.0pp</td><td class="small">无</td></tr>
+<tr><td>RS 线 21 日自百分位</td><td class="n bad">−2.7pp</td><td class="small">反向：短窗 RS 最强的那批反而差</td></tr>
+<tr><td>近 10 日口袋支点数</td><td class="n bad">−0.0pp</td><td class="small">无（第一版报了 +10.7，是空列造成的假象，已修）</td></tr>
+</tbody></table></div>
+<h4>两层叠起来</h4>
+<div class="tw"><table><thead><tr><th>timing（压缩）</th><th>选股（距 52 周高）</th><th class="n">n</th><th class="n">赢率</th><th class="n">fwd20 中位</th></tr></thead><tbody>
+<tr><td>紧</td><td>近高</td><td class="n">1119</td><td class="n good">48.5%</td><td class="n">+2.49%</td></tr>
+<tr><td>紧</td><td>远高</td><td class="n">935</td><td class="n">40.2%</td><td class="n">+0.43%</td></tr>
+<tr><td>松</td><td>远高</td><td class="n">1118</td><td class="n">36.0%</td><td class="n">−0.74%</td></tr>
+<tr><td>松</td><td>近高</td><td class="n">935</td><td class="n bad">31.3%</td><td class="n">−1.14%</td></tr>
+</tbody></table></div>
+<p class="small">最好格 48.5% vs 最差格 36.0%，<b>+12.5pp，p=2.6e-9</b>。第三层（口袋支点）没有加成（−1.9pp，p=0.57）；RS 线 63 日只加收益不加赢率（fwd20 +2.39 vs +1.28）。</p>
+<h2>六、一个数字里混着两种状态（PURR 引出的）</h2>
+<p>Andy：「PURR 现在还是压缩？这个有点反直觉」。查下来<b>直觉是对的，而读数没错——它们在说两件事</b>。PURR 08-19 单日 +30%，ATR14 绝对值三天涨了 53%（0.45→0.69），但价格同期涨 47%，所以 <code>ATR/收盘</code> 几乎没动，百分位还是 4；而它的 5 日幅在自己一年里排第 99。</p>
+<div class="tw"><table><thead><tr><th>状态</th><th>atr_pctl</th><th>range5_pctl</th><th class="n">n</th><th class="n">赢率</th><th class="n">fwd20</th></tr></thead><tbody>
+<tr><td><b>真压缩</b>（确实安静）</td><td>低</td><td>低</td><td class="n">4129</td><td class="n">40.5%</td><td class="n">+0.85%</td></tr>
+<tr><td><b>ATR 还没追上价格</b></td><td>低</td><td>高</td><td class="n">1607</td><td class="n good">47.0%</td><td class="n">+2.17%</td></tr>
+</tbody></table></div>
+<div class="rule"><b>我差点做错的事</b>：本来打算加一道闸把「假压缩」滤掉。实测发现<b>被我判定为假的那一半反而更好</b>（47.0% vs 40.5%，p&lt;1e-4）——「ATR 还没追上价格」在趋势里是动能，不是噪声。所以 <code>range5_pctl_252</code> 作为<b>标签</b>入库，不作为过滤器。</div>
+<h4>七只票今天在四种分母下的读数</h4>
+<p class="small">同一天同一只票，换个分母读数就变——这正是为什么口径要钉死。「ATR/20 日前收盘」是唯一能中和价格暴涨效应的变体。</p>
+<div class="tw"><table><thead><tr><th>票</th><th class="n">ATR/收盘<br><span class="small">入库口径</span></th><th class="n">ATR/50 日均线</th><th class="n">ATR/20 日前收盘</th><th class="n">ATR 绝对值</th><th class="n">5 日幅</th><th>状态</th></tr></thead><tbody>
+<tr><td><b>MRNA</b></td><td class="n">100</td><td class="n">100</td><td class="n">100</td><td class="n">100</td><td class="n">100</td><td class="small">一年高位（四个口径一致）</td></tr>
+<tr><td><b>P</b></td><td class="n">41</td><td class="n">88</td><td class="n">95</td><td class="n">94</td><td class="n">52</td><td class="small">只有入库口径显得温和 —— 涨出来的</td></tr>
+<tr><td><b>HOOD</b></td><td class="n">41</td><td class="n">66</td><td class="n">71</td><td class="n">56</td><td class="n">70</td><td class="small">上周真压缩过（08-17 读 23），已展开</td></tr>
+<tr><td><b>RBRK</b></td><td class="n">32</td><td class="n">75</td><td class="n">88</td><td class="n">95</td><td class="n">26</td><td class="small">8 月初的「压缩」大半是价格涨出来的</td></tr>
+<tr><td><b>MP</b></td><td class="n">10</td><td class="n">45</td><td class="n">87</td><td class="n">17</td><td class="n">34</td><td class="small">真压缩，第 10 个交易日</td></tr>
+<tr><td><b>IBIT</b></td><td class="n">23</td><td class="n">45</td><td class="n">45</td><td class="n">16</td><td class="n">97</td><td class="small">压缩已结束，正在展开</td></tr>
+<tr><td><b>PURR</b></td><td class="n">4</td><td class="n">26</td><td class="n">54</td><td class="n">71</td><td class="n">99</td><td class="small">ATR 还没追上价格（历史最强格）</td></tr>
+</tbody></table></div>
+<h4>Andy 点名的六个时间窗，逐日读数</h4>
 <div class="steps">
-<div class="step"><h4>名片加一个读数：<code>atr_pct252</code></h4><p>引擎现成（ATR 每晚都在算），加的是「跟自己一年比」这一步。卡上同时印 <b>百分位</b> 和 <b>ATR% 绝对值</b>——前者判紧松，后者定止损距离，两个用途不能混。</p></div>
+<div class="step"><h4>HOOD 上周 —— 信号完整跑通的那个</h4><p>08-12 读 41 → <b>08-13 读 29、08-17 读 23</b>（63 日口径只有 6，5 日幅 7.9 = 真安静），然后 <b>08-21 单日 +13.7%</b>（95.10 → 108.13），读数回到 41。压缩 → 展开，是七只里最干净的一次。</p></div>
+<div class="step"><h4>IBIT —— 你说的对，已经走出来了</h4><p>08-05 进压缩，08-17/08-18 读到 <b>0</b>（一年最静），08-19 起连续三天放大，今天读 23、5 日幅 97。入区 36.74 → 今天 43.68 = <b>+18.9%</b>。</p></div>
+<div class="step"><h4>MP —— 不是「即将走出」，是还在里面</h4><p>08-10 进压缩到今天第 10 个交易日，读数在 7–15 之间，今天 10；且 5 日幅 34、ATR 绝对值 17 —— <b>两个口径都说安静，是七只里唯一的真压缩</b>。价格已从 54.66 走到 60.05（+9.9%），压缩里在慢慢抬。</p></div>
+<div class="step"><h4>RBRK 8 月初 —— 读数会骗人的那个</h4><p>07-28 读 86（一年高位）→ 08-13 读 15（压缩）。但这段价格从 71.45 涨到 105.09（<b>+47%</b>），ATR 绝对值同期从 4.12 涨到 4.88（<b>+18%</b>）—— 波动其实在变大，是分母（价格）涨得更快才把比值压下去。<b>「ATR/20 日前收盘」这个口径读 88，说的才是实话。</b></p></div>
+<div class="step"><h4>P 7–8 月 —— 同一个陷阱的慢速版</h4><p>07-16 读 93（一年高位，当时刚跌到 68.37）→ 08-17 读 34，其间价格 68 → 117（+71%）。今天四个口径：入库 41 / 50 均线 88 / 20 日前 95 / 绝对值 94。<b>只有入库口径认为它温和</b>，其余三个都说这是一只很吵的票。</p></div>
+<div class="step"><h4>PURR 过去两周 —— 先真后假</h4><p>08-03 到 08-18 是<b>真压缩</b>（读数 1–17，5 日幅 7–15），08-19 单日 +30% 之后变成<b>「ATR 还没追上」</b>（读数 4，5 日幅 41.4 排第 99）。同一个数字，两周里换了含义 —— 所以必须配 range5 一起看。⚠️ 另外它上市只有 180 根 K 线，252 日百分位是拿不满一年的样本算的，读数比其余六只脆。</p></div>
+</div>
+<h2>七、样本外复制：诚实的降级</h2>
+<p>上面所有数字来自 event_bars 池（2026 年触发过信号的名字，252 根日线）。拿 <b>完全独立的一批</b>重跑：<code>data/output/tickers/</code> 里 172 只票的两年日线。</p>
+<div class="tw"><table><thead><tr><th>样本</th><th class="n">n（第一天）</th><th class="n">最紧 20%</th><th class="n">最松 20%</th><th class="n">差</th><th class="n">p</th></tr></thead><tbody>
+<tr><td>event_bars（原样本）</td><td class="n">4107</td><td class="n">48.3%</td><td class="n">28.7%</td><td class="n good">+19.6</td><td class="n mono">&lt;1e-8</td></tr>
+<tr><td>tickers 库（独立样本）</td><td class="n">817</td><td class="n">53.7%</td><td class="n">41.9%</td><td class="n warn">+11.8</td><td class="n mono">0.047</td></tr>
+<tr><td>└ 其中 2025</td><td class="n">443</td><td class="n">54.1%</td><td class="n">39.0%</td><td class="n good">+15.1</td><td class="n mono">—</td></tr>
+<tr><td>└ 其中 2026</td><td class="n">374</td><td class="n">48.8%</td><td class="n">47.6%</td><td class="n bad">+1.2</td><td class="n mono">—</td></tr>
+</tbody></table></div>
+<div class="rule"><b>怎么读这张表</b>：方向在我跑过的每一个切法里都是正的，从来没有反过来；但<b>幅度极不稳定</b>——独立样本弱一半、非单调，2026 年那一段几乎是平的（和第三节里 2026Q2 只有 +1.6 是同一件事）。所以字段的定位是<b>加权项 / 平手时的裁决者</b>，不是闸门，也别拿某个阈值去卡。我已经把这段写进 <code>atr_pctl</code> 的 docstring，免得三个月后有人只看到 48.3% vs 28.7%。</div>
+<p class="small">顺带排除了一个我自己提出的怀疑：涨得多的票是不是会被结构性地读成「紧」（分母被抬高一整年）。实测相关是 <b>+0.162</b>（略正，方向相反），σ 百分位这个尺度无关的对照也是 +0.132 —— <b>没有这个偏差</b>。</p>
+<h2>八、可动的三件事</h2>
+<div class="steps">
+<div class="step"><h4>名片加一个读数：<code>atr_pct252</code></h4><p><b>已落地</b>（08-23 合进 main，今晚 cron 起有值）：universe 行与名片 readings 现在带 <code>atr_pctl_252</code> / <code>atr_pctl_63</code> / <code>range5_pctl_252</code>，外加原有的 <code>adr_pct</code>。卡上同时印 <b>百分位</b>（判紧松）和 <b>ATR% 绝对值</b>（定止损距离）——同一个量两个职责，不能互相替代。前端展示形态待定。</p></div>
 <div class="step"><h4>否决语言换一个词</h4><p>「不紧」这把刀在百人小结里错杀率 67%。它量的是微观紧（bar 幅），而这个场景里付钱的是长窗压缩。卡上有了读数之后，「不紧」应该写成<b>「ATR 在自己一年的第 N 百分位」</b>——可证伪，也可复盘。</p></div>
 <div class="step"><h4>RMV 不接，3WT 留在突破场景</h4><p>RMV 在回踩场景是负优势，两个实现变体都一样，先记 NULL。3WT 在这里只有 30 个样本不足以判断，它本来就是 O'Neil 的<b>突破加仓</b>工具——之前的突破口径测出 +1.11 edge，那个结论不受本轮影响。</p></div>
 </div>
-<h2>六、这份报告不能证明什么</h2>
-<p class="small">① <b>票池自带幸存偏差</b>：event_bars 是 2026 年触发过信号的名字，整体强于全市场，各组绝对赢率都被抬高；组间相对比较不受影响。② <b>只测了一个 setup</b>（fresh-high pullback）和一个交易框（+2R/−1.5R/20 日），换止损口径结论可能变。③ <b>七只票是插图不是证据</b>：13 个压缩期的样本量什么也证明不了，证据是那 4,107 个第一天。④ <b>RMV 是开源近似</b>（Deepvue 原版公式未公开），已用原版与 SMA3 平滑两个变体交叉验证，结论一致。⑤ <b>2026Q2 几乎没有分辨力</b>，普涨市里这个读数不重要。</p>
+<h2>九、这份报告不能证明什么</h2>
+<p class="small">① <b>票池自带幸存偏差</b>：event_bars 是 2026 年触发过信号的名字，整体强于全市场，各组绝对赢率都被抬高；组间相对比较不受影响。② <b>只测了一个 setup</b>（fresh-high pullback）和一个交易框（+2R/−1.5R/20 日），换止损口径结论可能变。③ <b>七只票是插图不是证据</b>：13 个压缩期的样本量什么也证明不了，证据是那 4,107 个第一天。④ <b>RMV 是开源近似</b>（Deepvue 原版公式未公开），已用原版与 SMA3 平滑两个变体交叉验证，结论一致。⑤ <b>2026Q2 几乎没有分辨力</b>，普涨市里这个读数不重要。⑥ <b>最重要的一条</b>：独立样本只复制到一半幅度（+11.8pp，p=0.047），且 2026 段几乎是平的 —— 把它当加权项，别建阈值闸门（第七节）。</p>
 <p class="small" style="margin-top:18px">数据：<code>data/research/tightness_2026-08/grid_sample.csv</code>（28,676 行全读数）· 引擎：<code>pipeline/tools/tightness_grid.py</code> · 前情：<code>rmv_volrank_study.md</code>（本报告修正了它「窗口决定一切」的说法：量与窗口同等重要）</p>
 </div>
