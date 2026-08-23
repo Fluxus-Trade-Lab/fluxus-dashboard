@@ -361,7 +361,11 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
     # in the extended tail this column exists to flag.
     # One implementation with the atr_ext badge (atr_enrichment.py): the two
     # used to be different maths for the same quantity.
-    from pipeline.screeners.atr_enrichment import atr_multiple_from_sma50
+    # 2026-08-24: switched to Jeff Sun's source definition B/A = dist%/ATR%
+    # (see atr_multiple_from_sma50's docstring -- the old (c-sma50)/atr was a
+    # misport that under-read extended names; MRNA 5.2 vs the real 11.2).
+    from pipeline.screeners.atr_enrichment import (
+        atr_multiple_from_sma50, plain_atr_multiple_from_sma50)
     df['atr_from_sma50'] = atr_multiple_from_sma50(
         df['close'], df['atr'], df['sma50_dist'])
 
@@ -376,7 +380,9 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
         _c = pd.to_numeric(df['close'], errors='coerce')
         # dist form: (close - ema21)/ema21, valid where ema21 > 0
         _d21 = ((_c - _e) / _e).where(_e > 0)
-        df['ema21_atr_dist'] = atr_multiple_from_sma50(df['close'], df['atr'], _d21)
+        # plain ATR units ON PURPOSE (our own quantity; research measured
+        # with it) -- not Jeff Sun's B/A. Near the MA the two coincide.
+        df['ema21_atr_dist'] = plain_atr_multiple_from_sma50(df['close'], df['atr'], _d21)
     else:
         df['ema21_atr_dist'] = np.nan
 

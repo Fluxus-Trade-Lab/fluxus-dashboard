@@ -36,30 +36,37 @@ def _frame(**over) -> pd.DataFrame:
 
 
 class TestAtrFromSma50:
-    """ATR Matrix = (close - SMA50) / ATR.
+    """ATR Matrix = Jeff Sun's B/A: %-gain-from-SMA50 / ATR% = dist/(atr/close).
 
-    The input we carry is `sma50_dist = (close - SMA50) / SMA50`, verified
-    against date-aligned yfinance bars on 2026-08-14 (ANET/NVDA/CORT/PATH/MSFT
-    matched to four decimals). So SMA50 = close / (1 + sma50_dist), and the
-    numerator is close * dist / (1 + dist) -- NOT close * dist.
+    History, because this flipped once: until 2026-08-24 the field computed the
+    plain price gap in ATR units, (close-SMA50)/ATR, with a proud regression
+    test guarding the (1+dist) denominator against the "naive" close*dist/atr.
+    Then Andy caught MRNA reading 5.2 while Deepvue/Jeff Sun showed 11.2, and
+    the source formula (jfsrev's own page: A=ATR/price, B=%gain from 50-MA,
+    metric=B/A) turned out to EXPAND to exactly that "naive" form --
+    d/(a/c) == close*dist/atr. The old quantity survives as
+    plain_atr_multiple_from_sma50 (ema21_atr_dist still uses it, on purpose).
+
+    `sma50_dist = (close - SMA50) / SMA50`, verified against date-aligned
+    yfinance bars on 2026-08-14 (ANET/NVDA/CORT/PATH/MSFT to four decimals).
     """
 
     def test_matches_the_direct_computation(self):
-        # close 100, dist +10% => SMA50 = 90.909..., gap = 9.0909, ATR 3.
+        # close 100, dist +10%, ATR 3 => B/A = 0.10 / (3/100) = 3.333...
         out = compute_universe_scores(_frame())
-        assert out["atr_from_sma50"].iloc[0] == pytest.approx(9.0909 / 3.0, abs=1e-3)
+        assert out["atr_from_sma50"].iloc[0] == pytest.approx(0.10 / 0.03, abs=1e-3)
 
-    def test_the_one_plus_dist_denominator_is_not_optional(self):
-        """Regression on my own slip: `close * dist / atr` overstates the
-        extension by a factor of (1 + dist) -- 30% too high on a name 30%
-        above its 50-day line, which is exactly the extended tail the number
-        exists to flag."""
+    def test_source_definition_diverges_from_plain_gap_when_extended(self):
+        """The two conventions agree near the MA and split by close/SMA50 far
+        from it -- MRNA 08-21: plain 5.2 vs B/A 11.2. Lock the split so a
+        well-meaning 'simplification' cannot silently swap them back."""
+        from pipeline.screeners.atr_enrichment import plain_atr_multiple_from_sma50
         out = compute_universe_scores(_frame(close=100.0, sma50_dist=0.30, atr=3.0))
-        naive = 100.0 * 0.30 / 3.0                      # 10.0 -- wrong
-        correct = (100.0 * 0.30 / 1.30) / 3.0           # 7.69 -- right
         got = out["atr_from_sma50"].iloc[0]
-        assert got == pytest.approx(correct, abs=1e-3)
-        assert got != pytest.approx(naive, abs=1e-2)
+        assert got == pytest.approx(100.0 * 0.30 / 3.0, abs=1e-3)          # B/A = 10.0
+        plain = plain_atr_multiple_from_sma50(100.0, 3.0, 0.30)
+        assert plain == pytest.approx((100.0 * 0.30 / 1.30) / 3.0, abs=1e-3)  # 7.69
+        assert got / plain == pytest.approx(1.30, abs=1e-3)                # factor = close/SMA50
 
     def test_below_the_50sma_is_negative(self):
         """Jacobs ignores anything below the SMA50, so the sign has to survive
@@ -104,7 +111,7 @@ class TestAtrFromSma50:
         }, index=[7, 3, 9, 1, 5])          # deliberately unsorted index
         out = atr_multiple_from_sma50(df["close"], df["atr"], df["sma50_dist"])
         assert list(out.index) == [7, 3, 9, 1, 5]
-        assert out.loc[7] == pytest.approx((100 * 0.30 / 1.30) / 3.0, abs=1e-6)
+        assert out.loc[7] == pytest.approx(100 * 0.30 / 3.0, abs=1e-6)
         assert out.drop(7).isna().all()
         assert not any(math.isinf(x) for x in out.dropna())
 
@@ -116,7 +123,7 @@ class TestAtrFromSma50:
         out = atr_multiple_from_sma50(np.array([100.0, 50.0]), np.array([3.0, 1.0]),
                                       np.array([0.30, 0.10]))
         assert len(out) == 2
-        assert out.iloc[1] == pytest.approx((50 * 0.10 / 1.10) / 1.0, abs=1e-6)
+        assert out.iloc[1] == pytest.approx(50 * 0.10 / 1.0, abs=1e-6)
 
     def test_dist_of_minus_one_yields_null_not_inf(self):
         """sma50_dist == -1 makes (1 + dist) zero; -inf would reach json.dumps
@@ -158,7 +165,7 @@ class TestAtrFromSma50:
         by_levels = atr_multiple_from_levels(close, atr, sma50)
         by_dist = atr_multiple_from_sma50(close, atr, close / sma50 - 1.0)
         assert by_levels == pytest.approx(by_dist, abs=1e-6)
-        assert by_levels == pytest.approx((close - sma50) / atr, abs=1e-6)
+        assert by_levels == pytest.approx((close / sma50 - 1.0) / (atr / close), abs=1e-6)
         assert atr_multiple_from_levels(100.0, 3.0, 100.0) == 0.0     # on the line, not null
         assert atr_multiple_from_levels(100.0, 3.0, None) is None
         assert atr_multiple_from_levels(100.0, 3.0, 0.0) is None      # no SMA50 yet

@@ -46,17 +46,57 @@ _MIN_ATR_FRACTION = 5e-3
 
 
 def atr_multiple_from_sma50(close, atr, sma50_dist):
-    """(close - SMA50) / ATR, from the columns the universe carries.
+    """Jeff Sun's "ATR% multiple from 50-MA": %-gain-from-SMA50 / ATR%.
+
+    The source definition (jfsrev's own indicator page, fetched 2026-08-24):
+
+        A = ATR% = $ATR / last price
+        B = % gain from 50-MA
+        B / A = ATR% multiple from 50-MA
+
+    i.e. ``sma50_dist / (atr / close)``. Until 2026-08-24 this function
+    computed ``(close - SMA50) / ATR`` -- a misport that silently dropped both
+    percent signs. The two agree near the MA (factor close/SMA50 ~ 1), which
+    is why every band check passed for months, and diverge exactly on the
+    extended names the reading exists to flag: MRNA on 08-21 read 5.2 (持有区)
+    here while Deepvue/Jeff Sun showed 11.2 (深度减仓) -- Andy caught it.
+    110/5,327 universe names sat on opposite sides of the >=7 scale-out line
+    under the two conventions that day.
+
+    The Jacobs/Jeff Sun bands (0-4 entry / 5-7 hold / >=7 scale-out) were
+    defined in B/A units, so the bands stay put and this function moves.
+    ``ema21_atr_dist`` deliberately does NOT use this convention -- it is our
+    own plain-ATR-distance quantity (pipeline/screeners/run_all.py), used
+    consistently in research; near the MA the two are equivalent anyway.
 
     Works on scalars or aligned pandas Series. ``sma50_dist`` is
     ``(close - SMA50) / SMA50`` (verified against date-aligned bars on
-    2026-08-14), so ``SMA50 = close / (1 + dist)`` and the gap is
-    ``close * dist / (1 + dist)``. Dropping that denominator overstates a name
-    30% above its line by 30%.
+    2026-08-14). Returns NaN (never inf) when any input is missing, when
+    ``1 + dist`` is not positive, or when ATR is not a positive, measurable
+    fraction of price.
+    """
+    vector = _is_vector(close)
+    c = _as_float_series(close)
+    a = _as_float_series(atr)
+    d = _as_float_series(sma50_dist)
+    if not (len(c) == len(a) == len(d)):
+        raise ValueError("close, atr and sma50_dist must have the same length")
+    with np.errstate(divide="ignore", invalid="ignore"):
+        ok = (c > 0) & (a > 0) & ((1.0 + d) > 0) & ((a / c) >= _MIN_ATR_FRACTION)
+        out = d / (a / c)
+    out = out.where(ok).replace([np.inf, -np.inf], np.nan)
+    if vector:
+        return out
+    v = float(out.iloc[0])
+    return None if not np.isfinite(v) else v
 
-    Returns NaN (never inf) when any input is missing, when ``1 + dist`` is
-    not positive (a -100% or corrupted dist), or when ATR is not a positive,
-    measurable fraction of price.
+
+def plain_atr_multiple_from_sma50(close, atr, sma50_dist):
+    """The pre-2026-08-24 quantity: ``(close - SMA50) / ATR`` (price gap in
+    ATR units, ``close * dist / (1+dist) / atr``). Kept because
+    ``ema21_atr_dist`` is defined in these units and research (selection lab
+    setup, pullback bands) measured with them -- do NOT swap the two: same
+    ingredients, different quantity (see pitfall_same_quantity_three_names).
     """
     vector = _is_vector(close)
     c = _as_float_series(close)
