@@ -84,14 +84,24 @@ jobs:
       # them current open positions. Portfolio names now come straight off the
       # Sheet (open + closed within 90 days) plus the top-25 heat list. Runs
       # BEFORE the post-mortems so they find the bars.
-      - name: Refresh ticker OHLC store (Sheet positions + heat list)
+      # --refresh-existing: names that leave the rolling set otherwise freeze
+      # silently (90/191 files sat at a 2026-08-07 last bar on 08-23; 46 had
+      # sat at 05-22 for 2.5 months before that). See pipeline/tickers/staleness.py.
+      - name: Refresh ticker OHLC store (Sheet positions + heat list + stored)
         continue-on-error: true
         run: |
           if [ -z "$FLUXUS_GAS_URL" ] || [ -z "$FLUXUS_SYNC_TOKEN" ]; then
             echo "Sheets credentials not configured — skipping ticker refresh."
             exit 0
           fi
-          python -m pipeline.tickers.run_tickers --source sheet
+          python -m pipeline.tickers.run_tickers --source sheet --refresh-existing
+
+      # Freshness report for the store the step above just wrote. Report-only
+      # until the frozen backlog is confirmed recovered (flip to --fail
+      # --max-stale-share 0.10 after one green night, mirroring audit I7).
+      - name: Ticker store staleness report
+        continue-on-error: true
+        run: python -m pipeline.tickers.staleness
         env:
           PYTHONPATH: ${{ github.workspace }}
           TZ: UTC

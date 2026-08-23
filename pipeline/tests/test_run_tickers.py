@@ -107,6 +107,47 @@ class TestMergeTickerSources:
         from pipeline.tickers.run_tickers import merge_ticker_sources
         assert merge_ticker_sources([], ['APPS', 'MU']) == ['APPS', 'MU']
 
+    def test_accepts_a_third_source_after_heat(self):
+        from pipeline.tickers.run_tickers import merge_ticker_sources
+        merged = merge_ticker_sources(['AAOI'], ['MU'], ['AAOI', 'PLTR'])
+        assert merged == ['AAOI', 'MU', 'PLTR']
+
+    def test_no_sources_is_empty(self):
+        from pipeline.tickers.run_tickers import merge_ticker_sources
+        assert merge_ticker_sources() == []
+
+
+class TestStoredTickers:
+    """The rolling portfolio+heat universe never rewrites a name that leaves it,
+    so its bars freeze silently. `--refresh-existing` folds the already-stored
+    names back in; these cover the list it builds."""
+
+    def test_lists_existing_ticker_files(self, tmp_path):
+        from pipeline.tickers.run_tickers import stored_tickers
+        for sym in ('MU', 'AAOI', 'PLTR'):
+            (tmp_path / f'{sym}.json').write_text('{}')
+        assert stored_tickers(tmp_path) == ['AAOI', 'MU', 'PLTR']
+
+    def test_skips_underscore_prefixed_files(self, tmp_path):
+        from pipeline.tickers.run_tickers import stored_tickers
+        (tmp_path / 'MU.json').write_text('{}')
+        (tmp_path / '_benchmarks.json').write_text('{}')
+        assert stored_tickers(tmp_path) == ['MU']
+
+    def test_ignores_non_json(self, tmp_path):
+        from pipeline.tickers.run_tickers import stored_tickers
+        (tmp_path / 'MU.json').write_text('{}')
+        (tmp_path / 'README.md').write_text('x')
+        assert stored_tickers(tmp_path) == ['MU']
+
+    def test_missing_dir_returns_empty(self, tmp_path):
+        from pipeline.tickers.run_tickers import stored_tickers
+        assert stored_tickers(tmp_path / 'nope') == []
+
+    def test_empty_dir_returns_empty(self, tmp_path):
+        from pipeline.tickers.run_tickers import stored_tickers
+        assert stored_tickers(tmp_path) == []
+
 
 class TestPortfolioTickersFromSheet:
     """The OHLC store used to be refreshed by hand from a CSV export, so names

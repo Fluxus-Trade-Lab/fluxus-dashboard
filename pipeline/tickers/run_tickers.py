@@ -69,18 +69,38 @@ def heat_tickers(heating_up_path: Path, top_n: int = 25) -> list[str]:
     return out
 
 
-def merge_ticker_sources(portfolio: list[str], heat: list[str]) -> list[str]:
-    """Union portfolio + heat tickers, portfolio first, de-duplicated case-insensitively,
-    order preserved (portfolio names fetch first if a run is interrupted)."""
+def merge_ticker_sources(*sources: list[str]) -> list[str]:
+    """Union the given ticker lists, de-duplicated case-insensitively, order
+    preserved across sources (earlier sources fetch first if a run is
+    interrupted, so pass portfolio names before heat and stored names)."""
     out: list[str] = []
     seen: set[str] = set()
-    for sym in list(portfolio) + list(heat):
-        key = sym.upper()
-        if key in seen:
-            continue
-        seen.add(key)
-        out.append(key)
+    for source in sources:
+        for sym in source or []:
+            key = sym.upper()
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append(key)
     return out
+
+
+def stored_tickers(output_dir: Path) -> list[str]:
+    """Every ticker that already has a file in `output_dir`.
+
+    The portfolio+heat universe is a *rolling* set: a name that leaves it is
+    never written again and its file freezes at whatever bars it last had. That
+    is silent — nothing errors, consumers just read stale closes (90/191 files
+    sat at a 2026-08-07 last bar when this landed; 46 had sat at 05-22 for 2.5
+    months before that). Including the names already stored keeps the whole
+    store on the current session. See pipeline/tickers/staleness.py.
+    """
+    if not output_dir.is_dir():
+        return []
+    return sorted(
+        p.stem for p in output_dir.glob('*.json')
+        if not p.stem.startswith('_')
+    )
 
 
 def _relevant_from_trades(trades, closed_window_days: int) -> list[str]:
@@ -195,6 +215,10 @@ def main(argv: list[str] | None = None) -> None:
                    help='Disable Heating Up tickers entirely (equivalent to --heat-top 0)')
     p.add_argument('--heating-up', type=Path, default=Path('data/output/heating_up.json'),
                    help='Path to heating_up.json (default data/output/heating_up.json)')
+    p.add_argument('--refresh-existing', action='store_true',
+                   help='Also refresh every ticker that already has a file in --output. '
+                        'Without this, names that leave the rolling portfolio+heat '
+                        'universe are never written again and their bars freeze.')
     args = p.parse_args(argv)
 
     if args.tickers:
@@ -219,9 +243,10 @@ def main(argv: list[str] | None = None) -> None:
             portfolio_list = relevant_tickers(csv, args.closed_days)
         heat_top = 0 if args.no_heat else args.heat_top
         heat_list = heat_tickers(args.heating_up, heat_top)
-        tickers = merge_ticker_sources(portfolio_list, heat_list)
+        stored_list = stored_tickers(args.output) if args.refresh_existing else []
+        tickers = merge_ticker_sources(portfolio_list, heat_list, stored_list)
         portfolio_count = len(portfolio_list)
-        heat_only_count = len(tickers) - portfolio_count
+        heat_only_count = len(merge_ticker_sources(portfolio_list, heat_list)) - portfolio_count
 
     if not tickers:
         print("ERROR: no tickers to fetch", file=sys.stderr)
