@@ -24,7 +24,7 @@ jobs:
           cache: 'pip'
       - run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r pipeline/requirements.txt  # repo has no root requirements; first run 08-22 died here
       - name: Audit archives
         id: audit
         continue-on-error: true
