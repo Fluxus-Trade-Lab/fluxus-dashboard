@@ -455,6 +455,13 @@ JSON schema(所有 library 文章通用):
 
 - [08-24] **→ Studio Q(Mia):MRNA 长文整理稿已备齐,可开写**。Andy 08-23/24 口述 27 分钟已转录并按决策漏斗整理,事实口径与标题全部锁定;**成稿的笔在你**(Steve 只做调研/结构/审稿,不写成稿)。路线图 `Fluxus_Brand/ops/briefs/2026-08-23_mrna_longform_structure.md`(十四节 + 写作方针);原话 `data/research/case_mrna_2026-08-19/andy_oral_2026-08-23_transcript.md` 与 `..._organized.md`。**已锁**:标题 `How I Caught a 176% Move in $MRNA`;副标 `The exact 3 filters, the 5 scanner rules, and exactly how much: 0.25% for 23R`;正文首句 `I cut my size the day before it went up 176%.`;封面 = Andy 收益曲线截至**周五 8/21** YTD +117%。⚠️ **三处止损口径不许混**:8/14 结构位 $2.72(4.34%,组合 0.217%)· 8/14 VWAP 加仓 $0.20(0.016%)· 8/19 开盘 $4(3.8%)——**最后这个是给读者的入场,不是 Andy 的**。⚠️ **四条硬约束**:① 金额零出现,只用百分比与 R ② 23R(单笔)与当天 PNL +17%(账户)不得写成因果 ③ **不写「大盘 gap down」**(查无实据;改用 8/14→8/18 宽度三天连崩:20日线上占比 63.3%→49.5%)④ 日期链 **8/12 不是 8/20**(8/20 当天 MRNA 是 −23.5%)。审稿走 `ops/reviews/`,五道闸 + 中文语感闸;T2〔YOUR WHY〕Andy 自写,口述整理稿第二～五节即毛坯。⭐ **发布位置(Andy 08-24 定,影响写法)**:**Substack + X 长文双发,而且这是 Substack 的第一篇**——H1 复盘始终没发,站上现在是空的。所以:① **不能假设读者知道 Andy 是谁**,开头要能独立成立,不引用未发表的 H1 文章;② R 的概念必须自带解释(第 13 节已备),不能指望读者读过别的;③ 可信度由封面那条 +117% 曲线承担,正文不额外自证。**H1 复盘不再单独发**,改为 MRNA 之后紧跟一篇 **YTD 更新总结**(Andy 定)。⚠️ **发布前置**:Substack 站的刊名/简介/About/Welcome 五个字段仍是空的(`Fluxus_Substack/06_PUBLISH_CHECKLIST.md`),**不补完就发 = 从 X 导来的人落在一个空站上**。
 
+- [08-24] **→ 数据端:请给 `groups_history.json` 的每个组补一条 `rs_accel` 数组**(前端 Themes 页轨迹图要用,Andy 08-24 拍板)。现在每个组只有 `excess:[...]` + `state:[...]`,而四态场的**纵轴是 rs_accel**——只有 excess 的话历史只能画一维,画不出「它从哪个象限走到哪个象限」。要的形状就是照现有数组再加一条,按 `dates` 对齐、缺的那天填 `null`:
+  ```
+  groups: { "<组名>": { kind, excess:[...], rs_accel:[...], state:[...] } }
+  ```
+  ⚠️ 三条跟着字段走:① **照抄 `data/history/groups_archive.csv` 里当天发布的 `rs_accel` 值,别重算**——同 [08-21] 那条的理由(拿今天的窗口常数套昨天的数据,会把过去的态算错);② 缺的那天填 `null` **不要填 0**——实测这十一天里有 4 个主题(Cloud Software / Genomics / Medical Devices / Physical AI & Humanoid Robotics)是中途进池的,填 0 会让它们从原点飞出来,前端已按 null=不画点处理;③ 体积:十一天 × 202 组实测 56KB,加一条同长数组约 +40%,攒满 50 天约 400KB,前端接受。
+  **前端已建好并验通**(连续时间滑块 + 频闪彗尾 + 四态分组选择器,30 个主题 11 天全帧扫过零重叠零出框),**文件一到自动亮起,不用通知我**。预览 `frontend/public/_trial/themes_preview.html`(未提交),生成脚本在会话 scratchpad。
+
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
 字段全部现成(watchlist.json 每票 `rs_line_pctl_21` / `rs_high` / `top_3m` / `atr_from_sma50` / `sp_signal`;每格 `count_rs_high` / `count_top_3m`)。要的是**把 17 格按五步重新编组、给小白一条能照着走的路**:
