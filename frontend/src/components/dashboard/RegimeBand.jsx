@@ -197,7 +197,20 @@ function ConditionsLine({ history, score, binds }) {
   const W = 1000, H = 130, PAD = 4
   const x = (i) => PAD + (i / Math.max(1, history.length - 1)) * (W - PAD * 2)
   const y = (v) => PAD + (1 - v / 100) * (H - PAD * 2)
-  const pts = history.map((d, i) => `${x(i).toFixed(1)},${y(d.score).toFixed(1)}`)
+  /* Stem weight comes from how many sessions have to fit, not from a taste
+     call — and it is a plain stroke, NOT `non-scaling-stroke`. The rules above
+     use non-scaling because a 1px rule should stay 1px at any width; a stem
+     must stay in proportion to its own pitch or the barcode fills in. At 260
+     sessions in a 628px card the pitch is 2.4px, and a non-scaling 1.46px stem
+     is a 61% duty cycle — a grey block, not 260 readings.
+     THE HEADS ARE DENSITY-GATED. L3 puts a lollipop head on every stem, which
+     works at its stated 90-day scale. At 260 they touch — and under
+     `preserveAspectRatio="none"` they are squashed into eggs besides. So they
+     appear only when the pitch can hold one; below that the stem tip IS the
+     reading, which is what a barcode is. */
+  const gap = (W - PAD * 2) / Math.max(1, history.length - 1)
+  const stem = Math.max(0.7, Math.min(2.2, gap * 0.38))
+  const head = gap >= 6 ? Math.min(3.2, gap * 0.42) : 0
   const ticks = monthTicks(history)
   const pos = (i) => `${(x(i) / W) * 100}%`
 
@@ -218,9 +231,25 @@ function ConditionsLine({ history, score, binds }) {
                   strokeDasharray={lvl === 50 ? '3 5' : undefined}
                   vectorEffect="non-scaling-stroke" />
           ))}
-          <polyline points={pts.join(' ')} fill="none" strokeWidth="2.4"
-                    stroke="var(--color-text)" vectorEffect="non-scaling-stroke"
-                    strokeLinejoin="round" strokeLinecap="round" />
+          {/* ONE SESSION, ONE STEM — a barcode, not a curve.
+              The note above already said the line "steps rather than glides
+              because nine binary votes have a resolution of ~11 points". Right
+              observation, wrong shape: a polyline still draws a continuous path
+              through days nobody measured between. This score is a COUNT — 15
+              conditions met or not — so every session is its own reading and
+              gets its own stem.
+              Geometry after lieflat-charts L3 Barcode Lollipop, tried against
+              this exact series on 2026-08-23 and scored highest of eight. The
+              accent stays OURS: red only when the band binds, never an
+              imported orange — red already means one thing on this page. */}
+          {history.map((d, i) => (
+            <line key={d.date} x1={x(i)} x2={x(i)} y1={y(0)} y2={y(d.score)}
+                  strokeWidth={stem} stroke="var(--color-text)" opacity={0.7} />
+          ))}
+          {head > 0 && history.map((d, i) => (
+            <circle key={`h${d.date}`} cx={x(i)} cy={y(d.score)} r={head}
+                    fill="var(--color-text)" />
+          ))}
         </svg>
 
         {/* right-hand scale, outside the plot so it never sits over the line */}
