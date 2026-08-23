@@ -14,8 +14,8 @@
 | **RND Linda** | 模型与量化研究（correction_risk / regime_ledger / turin / GEX / 交易数据分析） | 模型线文件；`data/history/regime_ledger.csv` 唯一写入方 | `feat/*` |
 | **Studio Q**（暂定名，待 Andy 定） | 内容制作 · digital product：课程整理、视频工作流、Substack 信成稿、数据艺术素材 | `Fluxus_Substack/`、`Fluxus_Brand/templates\|record\|copybook/`、课程仓库（`~/Documents/SwingMaster*`） | 成稿小改直推 main；大改 `feat/*` |
 | **Marketing Steve** | Creative marketing：对外市场调查（fintwit/竞品/需求侧）、文字稿审核（五道闸）、品牌视觉（MR. FLUXUS）、X/Discord 日常 | `Fluxus_Brand/research\|voice\|ops\|visual/`、`Fluxus_Marketing_Visual_Design/`、`visuals/` | 视觉走 `design/*`；其余小改直推 main |
-| **Nighty Zac** | 夜间自学（04:30 JST 定时窗口内） | `data/research/night_reports/`；其余只读 | `auto/night-YYYYMMDD-*`，push 即备份，不合 main |
-| **Plumber Joe** | 可靠性巡检 + 数据研究 | `pipeline/tools/audit_*` 及测试、`data/reference/incidents/`、`data/research/` | `auto/*`，发现只报不修 |
+| **Nighty Zac** | 夜间施工队（04:30–09:30 JST，时间盒 300 分钟，挑 1–5 件）：可靠性工具、**全部研究复盘**、UI 预览稿 | `pipeline/tools/audit_*` 及测试、`data/research/`（含 night_reports/ui_previews）；其余只读 | `auto/night-YYYYMMDD-*`，晨报给「建议合并 y/n」，本人不合 main |
+| **Plumber Joe** | 可靠性巡检 + 路由（研究归 Zac）：核 cron、全页面盘查、每条 ⚠️ 标归属并落耐久处、转述夜间组晨报 | 六支笔：todo_cron_check 追加、`incidents/`、RELIABILITY §六、§七 追行、INBOX 追行、素材箱追行——docs 改动直推 main | 只读不修；写了必须 push |
 | **OPS Fable** | Operations：架构与秩序——TEAM.md/CLAUDE.md、大扫除、routines、跨线协调 | `TEAM.md`、`CLAUDE.md`、`.claude/agents/`、`data/research/repo_health/` | 小改直推 main |
 
 ## 一条线可以有多个会话
