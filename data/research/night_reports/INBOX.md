@@ -5,6 +5,7 @@
 > 格式：`- [日期] <链接> ——（Andy 的一句话，可空）`。Zac 处理后移进 `data/research/collection.md` 并附判定。
 
 - [08-23] https://www.youtube.com/watch?v=1k3KRbktibQ ——（Andy）reversal setup，我们图书馆和课程里没有详细记录和了解的
+  - ✅ 已处理（Zac 08-24）：Deepvue 产品 webinar，讲 Stan Weinstein Stage Analysis 的 4B- 筑底 setup。**判定 📦 存档不采纳**——方法我们已覆盖 3/5（`sp_hl`/`ma_reclaim`/`trend_base`），缺的 Stage 4 分类与 Mansfield RS 是定义问题不是发现问题。全文判词入馆 `data/research/collection.md`。
 
 ## 等 Zac 下次窗口处理
 
@@ -20,8 +21,15 @@
     保留的两条底线：① 不做整站镜像式搬运（我们要的是他的判据和口径，不是他博客的副本）；② 对外发布时他的原文永远显示是他的、带链接——**不是据为己有**。他的博客是公开站，不碰任何登录墙。
   - **立项三件套**（CLAUDE.md 要求）：①发布物＝素材箱至少一行（他的口径 vs 我们归档的实测差异，或一个 NULL 结果）+ `diff.md` 本身可直接改成一篇 teardown；②截止日＝**2026-08-30（周日）**；③到期规则＝到期未出 `diff.md` 就降级：只留 `method.md` 参数表，其余进停车场。
   - 体例参考：`Fluxus_Receipts/marketpulse_teardown.md`、`data/research/oratnek_diff/`
+  - **↳ ✅ 已交付（Zac 08-24，比 08-30 截止日早 6 天）**：`data/research/stockbee_2026-08/` 四份齐 —— `method.md` / `diff.md` / `open_questions.md` / `worth_learning.md`。**在夜间分支 `auto/night-20260824-e95358`，等 Andy 或 OPS 说「合」。**
+    - 语料：sitemap 全站 5,154 篇，按方法类筛出 **101 篇**抓取（1.96%，非镜像），原文只在会话 scratchpad，仓库里只有逐条引用+链接。
+    - 头条发现：**我们的 EP 筛子是他的真子集** —— 2026-08-21 session 上他的口径 55 只、我们 8 只，**漏 47/55（85%）**，且我们的 `market_cap>=$500M` 闸方向和他相反（他原话「500M+ float 不太热衷」「best moves happen on float below 10 million」）。
+    - **强度层已经对上，别重做**：TI65 / Double Trouble / MDT 三条公式与阈值我们是忠实移植；Market Monitor 十个计数一个不缺。
+    - **他 2018 之后的方法细节迁去了 YouTube**：`where-to-exit-4-breakout`、`where-to-put-stop`、`when-should-you-enter`、`how-to-select-best-4-breakout-setups`、`Episodic Pivots Delayed Entry`、`Three sector produce best EP` —— **正文全是空的**（纯视频帖）。这确认了 `delayed_ep_scan.py` docstring 那句「他没给数字」是准确的。
+    - 给 DATA ALEX 的六条建议列在 `open_questions.md` 末节（EP 阈值 / `prev_volume` 字段 / `float` 字段 / docstring 标注 / ER-60 / 连续 300+ 读数）——**我不动 ALEX 的文件**。
 
 - [08-23] 收藏夹那条 YouTube reversal setup 链接（见上）——摘要+判定+入 `data/research/collection.md`
+  - ↳ ✅ 已执行（08-24）
 
 ## 已裁决（读过打 ✅）
 
