@@ -46,12 +46,14 @@
 ## 资料区与单一写入方
 
 - 未列入的目录（`JeffSun_Wiki/`、`PrimeTrading_Obsidian/`、`Fluxus_References/`、`_source_material/`、`SqueezeMetrics/` 等）＝**资料区**：所有线只读；整理需 Andy 发起。
+- **公箱例外**：`material_inbox.md`、`night_reports/INBOX.md`（含收藏夹节）、`DATA_CONTRACTS §七` 是 append-only 公箱——任何线可**加行**（走直推 main 标准动作），但只有表列主人可改/勾别人的行。
 - 每个数据文件只有一条线有写入权：
   - `data/output/`、`data/history/`（除 regime_ledger）→ DATA ALEX
   - `data/history/regime_ledger.csv` → RND Linda
   - `data/reference/incidents/`、`DATA_RELIABILITY.md` §六 追加行 → Plumber Joe
   - `data/research/night_reports/` → Nighty Zac
   - `data/research/repo_health/` → OPS Fable（含云端 routine）
+  - `data/content/`（posts.csv 等）、`Fluxus_Receipts/` → Marketing Steve（08-23 补：此前无主，posts.csv 断更 17 天没人负责）
   - `Fluxus_Brand/` 按二级目录分笔：`templates|record|copybook` → Studio Q；`research|voice|ops|visual` → Marketing Steve
 
 ## 通信纪律

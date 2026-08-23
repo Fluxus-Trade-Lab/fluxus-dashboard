@@ -52,17 +52,29 @@
 
 **收藏口令（Andy 2026-08-23）**：Andy 在任何会话扔链接说「收藏」（可附一句为什么），该会话立即把它追加进 `data/research/night_reports/INBOX.md` 的 🔗 收藏夹节（append-only，commit 直推 main），不展开讨论不当场研究——整理、学习、判定是 Nighty Zac 的夜间活，判定结果在他晨报里。
 
-**直推 main 的标准动作（08-23 定，防「HEAD 不在 main」事故）**：任何会话要把 docs/契约行/收藏/素材小改直推 main 时，**永不在共享主树上 commit**（主树可能停在别的分支——在它上面 `push HEAD:main` 会把整条分支灌进 main）。统一走临时树：
+**直推 main 的标准动作（08-23 v2，审计后修订）**：任何会话要把 docs/契约行/收藏/素材小改直推 main 时，**永不在共享主树上 commit**。统一走临时树；⚠️ 本体系的三个信箱全是**同尾追加**，两个写者撞行时 rebase 解不开——冲突处理不是硬重试，是**丢弃重放**：
 ```bash
-git fetch origin && git worktree add "$CLAUDE_SCRATCHPAD/wt-docs" origin/main --force
-# 在 wt-docs 里改文件、git add <只加你改的> 、commit
-for i in 1 2 3; do git -C "$CLAUDE_SCRATCHPAD/wt-docs" push origin HEAD:main && break; git -C "$CLAUDE_SCRATCHPAD/wt-docs" pull --rebase origin main; done
-git worktree remove "$CLAUDE_SCRATCHPAD/wt-docs"
+WT=$(mktemp -d)/wt-docs
+git -C /Users/taolezhu/Documents/AI-Trading-System fetch origin
+git -C /Users/taolezhu/Documents/AI-Trading-System worktree add "$WT" origin/main
+# 在 $WT 里改文件、git add <只加你改的>、commit
+for i in 1 2 3; do
+  git -C "$WT" push origin HEAD:main && break
+  git -C "$WT" fetch origin
+  git -C "$WT" rebase origin/main || { git -C "$WT" rebase --abort; git -C "$WT" reset --hard origin/main; }
+  # reset 后必须基于最新文件内容**重放你的追加**再 commit，然后进入下一轮
+done
+git -C /Users/taolezhu/Documents/AI-Trading-System worktree remove --force "$WT"
 ```
-（`$CLAUDE_SCRATCHPAD` 指本会话系统提示里的 scratchpad 绝对路径。）押注失败会自动 rebase 重试三次；仍失败就把内容留在晨报/汇报里并标「未投递」。
+三轮仍失败：内容原文留在晨报/汇报标「未投递」，不留半途 rebase 状态。**push 成功 ≠ 投递成功——收尾必须核实自己的 commit 真在 origin/main 上**（`git log origin/main -1 --oneline` 看到自己的信息才算）。
 
 **回执制（Andy 2026-08-23，治「办没办要追问」）**：
 - 无人值守会话（Zac/Joe/日推类）每份晨报/汇报的**第一节固定是「回执」**：上次自己提出的问题、收到的裁决/修正，逐条一句状态（已执行 / 已知悉今晚做 / 不适用+理由）。
 - 处理别人问题的一方（通常 OPS）写完裁决必须落在**提问者必读的位置**（Zac→INBOX、ALEX→§七、前端→§七），并在裁决行里写清「谁、何时、什么状态」。
 - 提问者执行完，在裁决行下追「↳ 已执行（日期）」。
 - **Andy 查「办没办」只看一处**：`data/research/night_reports/INBOX.md`（问答板，带状态）或 Joe 早报的回执/转述节——不需要跳进任何对话框追问。定时会话的对话框是一次性的，跑完即弃，别在那里找状态。
+
+**主树保护三条（08-23 审计后立）**：
+1. 共享主树上**永不 `git add -A` / `git commit -a`**——主树常年堆着各线未提交改动和外科手术拉来的数据 diff，一网打尽式提交=把别人的工作和数据时间旅行卷进你的 commit。只 add 指名文件。
+2. scratchpad/临时树**永不 checkout 具名长命分支**（main/feat/*）——/private/tmp 重启即清，分支会被一棵已蒸发的树锁死；一律基于 `origin/main` 的 detached HEAD。
+3. **无人值守会话读规矩/队列/契约文件，一律读权威版** `git show origin/main:<path>`，不读主树副本——主树可能停在落后 main 一百多个 commit 的分支上。

@@ -16,5 +16,5 @@ tools: Bash, Read, Grep, Glob
    - 未 push 的 commit → 直接 push（零风险，不用等批准）
    - 脏 worktree → 先 `wip(archive)` commit 到其分支并 push（封存，零损失），再可拆树
    - 删除类动作（删分支、拆树）→ **只列清单不执行**，等 Andy 点头
-4. 永不 stash；永不动 `TEAM.md` 列名的活跃 worktree（主树、wt-main、AI-Trading-System-night、MarketingVisualDesign）里的未提交文件。
+4. 永不 stash。保护规则按**状态**不按名单：① 主树永不动；② mtime < 24h 的 worktree 一律不动（可能正被会话使用）；③ scratchpad（/private/tmp）下的树只报告不操作；④ detached HEAD 的树没有"它的分支"，不要试图替它 commit；⑤ "未 push 直接 push"只适用于快进——已分叉的分支列清单报 Andy，不强推。
 5. 报告 ≤15 行，中文，带具体数字和分支名。
