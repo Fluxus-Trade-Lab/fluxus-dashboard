@@ -86,7 +86,7 @@ git -C /Users/taolezhu/Documents/AI-Trading-System worktree remove --force "$WT"
 5. **无人值守会话跑巡检/审计工具，在基于 origin/main 的临时树里跑**——主树的代码可能落后两百个 commit，跑的是旧规则。
 
 **safe-merge：能自己合的就别找人（08-24 立，消除「等 OPS 合」这个依赖）**：一条分支若**只碰**以下路径，且全套测试通过，**产出者自己合进 main**（走直推 main 标准动作），不需要等任何人点头，晨报注明合了哪个 commit：
-- `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `data/reference/DATA_RELIABILITY.md` §六追行 · `pipeline/tools/audit_*` 及其测试 · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md`
+- `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `data/reference/DATA_RELIABILITY.md` §六追行 · `pipeline/tools/audit_*` 及其测试 · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md` · `data/growth/**`（Growth Gary 台账，08-25 补——此前任务书叫他直推而白名单没他，周一记账会变死信）
 
 碰到**任何**其他路径（`pipeline/screeners|tickers|adapters`、`data/output`、`data/history`、`frontend/`、workflow 文件）→ 留分支，在汇报里列「待合分支：<名> · <一句话> · 建议合 y/n」，等 Andy 或对应线的主人处理。
 **理由**：08-19 到 08-24 有四个晚上的研究产出搁浅在分支上（其中 Delayed EP 首次前瞻复盘搁了 54 小时无人合），根因不是谁忘了，是**产出者没有落地权、而有权的人不知道有东西等着**。
