@@ -3,6 +3,14 @@
      = DRAFT_v6_trunk_en.md + Andy 发布前的四处手改，逐段从线上正文比对回写。
      四处改动：① 图2 加 caption ② Jeff 段加 @jfsrev ③ 收口换成关注 CTA
               ④ 删「打脸税」段 ⑤ 删「The news is never in the chart」收口句
+
+     ⑤ 是 Andy 有意删的，理由「不怎么通顺」（08-24 亲口）——**Substack 版不要加回去**，
+     也别再产同一个形状（「X 不在 A 里，B 才在」这种对仗收口他不认）。
+
+     ③ 08-24 发布后 Andy 又改了两轮，终稿是
+     「If you wish to learn, follow me and I'll show you the rest.」
+     （中间有一版漏了 Follow 的 F，已修复并重新发布，线上核对无误）。
+
      Substack 版以本文件为准，不要再从 v6 出。 -->
 
 # How I Caught a 176% Move in $MRNA
@@ -151,7 +159,7 @@ $MRNA that day: **+176.97%** · What I risked: **0.25%, one R** · What came bac
 
 ---
 
-I will not promise you the next 176%. If you wish to learn, do follow me please. **What I will promise is that every idea here arrives with its size and its stop** — the half I control, and the half nobody else publishes.
+I will not promise you the next 176%. If you wish to learn, follow me and I'll show you the rest. **What I will promise is that every idea here arrives with its size and its stop** — the half I control, and the half nobody else publishes.
 
 
 ---
