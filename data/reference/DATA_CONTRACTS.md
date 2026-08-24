@@ -477,6 +477,15 @@ JSON schema(所有 library 文章通用):
   ⚠️ 三条跟着字段走:① **照抄 `data/history/groups_archive.csv` 里当天发布的 `rs_accel` 值,别重算**——同 [08-21] 那条的理由(拿今天的窗口常数套昨天的数据,会把过去的态算错);② 缺的那天填 `null` **不要填 0**——实测这十一天里有 4 个主题(Cloud Software / Genomics / Medical Devices / Physical AI & Humanoid Robotics)是中途进池的,填 0 会让它们从原点飞出来,前端已按 null=不画点处理;③ 体积:十一天 × 202 组实测 56KB,加一条同长数组约 +40%,攒满 50 天约 400KB,前端接受。
   **前端已建好并验通**(连续时间滑块 + 频闪彗尾 + 四态分组选择器,30 个主题 11 天全帧扫过零重叠零出框),**文件一到自动亮起,不用通知我**。预览 `frontend/public/_trial/themes_preview.html`(未提交),生成脚本在会话 scratchpad。
 
+- [08-24] **→ 数据端:`tick_cycle.json` 请补一条历史数组,否则这个读数画不成图**(前端已把 TICK band 从 Today 页下架,Andy 08-24:「如果无法看到实际效果,我们去掉 tick band」)。原文照录他的判断:「Tick band 的图太小了,而且不知道是否有实际变化。**和 linda 的图完全不一样**」——他说得对,而且原因在数据不在画法:现在的 payload 只发**当天一行**(`ma_high` / `ma_close` / `ma_low` / `spread_rank252`),而 Linda Raschke 的 LBR TICK cycle 图是这三条带**随时间开合的时间序列**。一张快照画不成她的图,前端原来那个字形是"宽度的抽象",把它放大只会得到更大的抽象。
+  要的形状(和 `groups_history.json` 同族,按 dates 对齐、缺的填 null):
+  ```
+  { as_of, dates:[...], history: { ma_high:[...], ma_close:[...], ma_low:[...],
+                                   spread_rank252:[...], band:[...] } }
+  ```
+  ⚠️ 三条:① **照抄当天发布的值,别用今天的 SMA 常数回算过去**(同 [08-21] groups_history 那条的理由);② 缺的天填 `null` 不填 0——前端按 null=不画点处理;③ 长度按 252 个交易日给就够(spread_rank252 本来就是一年自百分位的分母),体积估算 5 × 252 个数约 15KB。
+  **前端侧现状**:`TickBand.jsx` 与它的 6 个测试**保留未删**——组件、英文读数(从 `evidence` 结构化字段组句,不吃 payload 的中文 `reading`)和「a grind, not a break」那句结论都没错,错的不是它们。历史数组一到,重新挂上是一行代码加一张真图,**不用通知我**。
+
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
 字段全部现成(watchlist.json 每票 `rs_line_pctl_21` / `rs_high` / `top_3m` / `atr_from_sma50` / `sp_signal`;每格 `count_rs_high` / `count_top_3m`)。要的是**把 17 格按五步重新编组、给小白一条能照着走的路**:
