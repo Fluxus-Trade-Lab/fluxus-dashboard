@@ -362,11 +362,19 @@ export default function OverviewTab({
                 </Button>
               )}
             </div>
-            <div className="bg-[var(--color-bg)] rounded-3xl p-5 relative">
+            <div className="bg-[var(--color-bg)] rounded-3xl p-5">
               <div className="font-semibold mb-3 text-[14px]">
                 <span>{tr('pf.chart.vsSpy')}</span>
               </div>
-              <div className="absolute top-12 left-14 z-10 flex gap-3 text-[11px]">
+              {/* IN THE FLOW, NOT FLOATING (Andy, 2026-08-24: it overlapped the
+                  120% tick). These two readings were absolutely positioned at a
+                  fixed offset from the card, which only ever worked while the
+                  title row was exactly as tall as the buttons that used to sit
+                  in it. Taking the buttons out shortened that row, the chart
+                  moved up under a mark that did not, and the top Y label was
+                  the first thing it hit. A number placed by a magic offset is a
+                  collision waiting for the next edit. */}
+              <div className="-mt-2 mb-2 flex gap-3 text-[11px]">
                 <div><span className="text-[var(--color-text-muted)]">{tr('pf.chart.portfolio')} </span><span className={`font-bold ${clr(totalReturnPct)}`}>{fmtPct(totalReturnPct)}</span></div>
                 {spyYtd != null && <div><span className="text-[var(--color-text-muted)]">{tr('pf.chart.spyYtd')} </span><span className={`font-bold ${clr(spyYtd)}`}>{fmtPct(spyYtd)}</span></div>}
               </div>
@@ -380,7 +388,19 @@ export default function OverviewTab({
                     interval={Math.max(1, Math.floor(chartData.length / 10))}
                   />
                   <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${Number(v).toFixed(0)}%`} />
-                  <Tooltip formatter={v => `${Number(v).toFixed(2)}%`} />
+                  {/* The only unstyled Tooltip left in the app — every other
+                      chart here caps it at 10–12px. Default recharts inherits
+                      the page's body size, which on a 14px page is a card
+                      covering a fifth of the figure. */}
+                  <Tooltip
+                    formatter={v => `${Number(v).toFixed(2)}%`}
+                    contentStyle={{ fontSize: 11, lineHeight: 1.35, padding: '5px 8px',
+                                    borderRadius: 8, background: 'var(--color-surface)',
+                                    border: '1px solid var(--color-border)',
+                                    color: 'var(--color-text)', boxShadow: 'none' }}
+                    labelStyle={{ fontSize: 10, marginBottom: 2,
+                                  color: 'var(--color-text-muted)' }}
+                    itemStyle={{ fontSize: 11, padding: 0, lineHeight: 1.35 }} />
                   <Legend />
                   <Line type="monotone" dataKey="returnPct" stroke="var(--color-text-bold)" strokeWidth={2.4} dot={false} name="Portfolio" />
                   {showMA20 && (
