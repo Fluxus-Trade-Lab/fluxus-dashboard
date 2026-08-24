@@ -17,11 +17,13 @@
 
 > 为什么在这儿：`ListAgents` 只给 uds 匿名名（`ai-trading-system-xx`），**对不上 `TEAM.md` 的线名**。08-24 我因此五个会话全按了一遍。下面是**实测确认过的**（本人回话认领），不是猜的。会话名会变，所以这张表只当**当次**参考，别当花名册引用。
 
-| 会话名 | 自认线名 | 依据 |
-|---|---|---|
-| `ai-trading-system-4e` | **前端 UI 线**（Claire：Themes / Short List / 四态场） | 08-24 回话「按错门了，这里是前端 UI 线」 |
-| `ai-trading-system-01` | **Marketing Steve**（调研+审稿+视觉，MRNA 长文） | 08-24 回话「不是我，我是 Marketing Steve 线」 |
-| `ai-trading-system-71` / `8b` / `6a` | 未认领 | 08-24 两轮门铃均未回 |
+| 会话名 | 线名 | 依据 | 权威级别 |
+|---|---|---|---|
+| `ai-trading-system-01` | **Studio Q · 写作线**（MRNA 长文的笔） | 08-24 先自报「Marketing Steve」，**同日 Andy 当面纠正**为 Studio Q，该会话回来改口 | ✅ Andy 确认 |
+| `ai-trading-system-4e` | 前端 UI 线（Claire：Themes / Short List / 四态场） | 08-24 回话「按错门了，这里是前端 UI 线」 | ⚠️ 仅自述，未经 Andy 确认 |
+| `ai-trading-system-71` / `8b` / `6a` | 未认领 | 08-24 两轮门铃均未回 | — |
+
+> ⚠️ **判据（08-24 现场学到的）：会话的自述不是权威。** `01` 自报 Marketing Steve，Andy 当面改成 Studio Q。这和 08-21 那次同形（8c 自称数据端、实为模型 R&D，也是 Andy 更正的）。所以这张表**必须带权威级别**：只有 Andy 或 `TEAM.md` 确认过的才算定，会话自己说的只能标「待确认」。**别拿自述当路由依据往下传**——我上一条向 Andy 汇报时就把 `01` 报成了 Marketing Steve。
 
 ### ⬛ 给 OPS Fable 的一条请求（Andy 08-24：「需要给 OPS 的你自己问」）
 
