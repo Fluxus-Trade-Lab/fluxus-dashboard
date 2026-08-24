@@ -341,23 +341,30 @@ export default function OverviewTab({
           )}
 
           {performanceData.length > 2 ? (
+            <>
+            {/* THE CONTROLS LIVE OUTSIDE THE FRAME (Andy, 2026-08-24).
+                A toggle and a refresh button sat in the card's title row, so the
+                two loudest objects inside a figure about a +118% year were a
+                button and a button. They are chrome — they act ON the chart, they
+                are not part of it — so they sit above the frame, right-aligned,
+                where the eye passes them on the way in and does not come back. */}
+            <div className="flex items-center justify-end gap-3 mb-2">
+              <button
+                onClick={() => setShowMA20(v => !v)}
+                className={`text-[11px] font-medium px-2 py-1 rounded border transition-colors ${showMA20 ? 'border-[var(--color-text-secondary)] text-[var(--color-text-secondary)]' : 'border-[var(--color-border)] text-[var(--color-text-muted)]'}`}
+                aria-pressed={showMA20}
+              >
+                20d MA
+              </button>
+              {hasSPY && (
+                <Button variant="ghost" onClick={fetchFullHistory} disabled={state.loading}>
+                  {state.loading ? tr('pf.chart.loading') : tr('pf.chart.refreshHistory')}
+                </Button>
+              )}
+            </div>
             <div className="bg-[var(--color-bg)] rounded-3xl p-5 relative">
-              <div className="font-semibold mb-3 text-[14px] flex justify-between items-center">
+              <div className="font-semibold mb-3 text-[14px]">
                 <span>{tr('pf.chart.vsSpy')}</span>
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setShowMA20(v => !v)}
-                    className={`text-[11px] font-medium px-2 py-1 rounded border transition-colors ${showMA20 ? 'border-[var(--color-text-secondary)] text-[var(--color-text-secondary)]' : 'border-[var(--color-border)] text-[var(--color-text-muted)]'}`}
-                    aria-pressed={showMA20}
-                  >
-                    20d MA
-                  </button>
-                  {hasSPY && (
-                    <Button variant="ghost" onClick={fetchFullHistory} disabled={state.loading}>
-                      {state.loading ? tr('pf.chart.loading') : tr('pf.chart.refreshHistory')}
-                    </Button>
-                  )}
-                </div>
               </div>
               <div className="absolute top-12 left-14 z-10 flex gap-3 text-[11px]">
                 <div><span className="text-[var(--color-text-muted)]">{tr('pf.chart.portfolio')} </span><span className={`font-bold ${clr(totalReturnPct)}`}>{fmtPct(totalReturnPct)}</span></div>
@@ -385,6 +392,7 @@ export default function OverviewTab({
                 </LineChart>
               </ResponsiveContainer>
             </div>
+            </>
           ) : (
             <div className="text-center py-10 text-[var(--color-text-muted)] text-[14px] rounded-3xl">Need trades to build equity curve.</div>
           )}
