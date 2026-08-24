@@ -6,6 +6,25 @@
 
 ---
 
+## 0. 五字段进度表(开台前必须全绿)
+
+*2026-08-25 建。文案全部定稿、频率口径已统一,**剩下的只是往后台粘**。*
+
+| # | 字段 | 后台位置 | 文案在 | 状态 |
+|---|---|---|---|---|
+| 1 | **Name** | Settings → Basics → Name | §1 | ☐ 待粘 |
+| 2 | **Short description** | Settings → Basics → Description | §1 | ☐ 待粘 |
+| 3 | **Hero / The promise** | Design → Homepage → Hero | §1 | ☐ 待粘 |
+| 4 | **About 页** | Settings → Pages → About | §4 | ☐ 待粘 |
+| 5 | **Welcome 页** | Settings → Emails → Welcome | §5 | ☐ 待粘 |
+
+**顺带两件(零成本,做一次管一年)**:☐ Recommendations(§7 ①,**这是 TSF 那 400 人的真正来源,和粉丝数无关**) · ☐ X bio 改漏斗(§7 ②)
+
+> ⚠️ **频率口径已在 2026-08-25 全站统一为「一周一封,每周日」**(§1 promise / §2 free+paid / §5 welcome / §6c 页脚 / §7 bio 六处)。
+> 再改频率就要六处一起改,别只改一处 —— 承诺不一致比承诺高更伤人。
+
+---
+
 ## 1. Publication 基本信息
 
 **Name:**
@@ -29,7 +48,10 @@ Momentum, risk, and the question underneath it all. Written by a full-time swing
 **The promise(紧随简介,或作 hero 首行):**
 ```
 The promise: every idea arrives with its size and its stop. You'll never have to ask how much.
+
+One letter a week, every Sunday.
 ```
+> **频率单独成行**,不埋进长句 —— 它是承诺不是修饰,而且正是决定订不订的那句。
 
 **Hero text(主页大字块 —— ⚠️ 短版。长版留给 Squarespace,见 `../Fluxus_Brand/ops/Fluxus_Action_Plan.md`):**
 ```
@@ -51,15 +73,21 @@ I don't have opinions. I have measurements.
 Written by Fluxus — a full-time discretionary swing trader in Japan, trained under a hedge fund
 manager who had navigated every bear market since the 1980s. Math degree, Erdős number of 3,
 seven years of real returns. The free tier gets the method, the record, and the losses.
+
+One letter a week, every Sunday.
 ```
 
 **Paid subscription benefits:**
 ```
-· Size & Stop — the flagship letter, 2–3x weekly. Every idea with its entry, stop, and % risk.
-· The Weather Report — market regime, breadth, and dealer gamma, measured not predicted.
-· Fluxus Analytics — the full measurement stack: screener, breadth engine, GEX levels, signal history.
-· The Ledger — monthly performance teardown with every losing trade shown.
+· How Much — the weekly letter. One a week, every Sunday. Every idea with its entry, its stop,
+  and what I'm risking in percent.
+· The Ledger — the record kept in public, losers included.
+· Fluxus Analytics — the measurement stack I actually trade off: regime, breadth, dealer gamma.
 ```
+> 🔴 **2026-08-25 改**:旧文案写 `Size & Stop — the flagship letter, 2–3x weekly`,
+> 承诺是实际频率的 2–3 倍。**断更的代价远大于少发一封** —— 第一批订阅者是在读到频率那句话的
+> 瞬间决定订不订的,承诺高了第三周就开始欠债。同时 `Size & Stop` 退役,一个产品一个名字。
+> `The Weather Report` 并进旗舰(每周一封里本来就有市场状态那一段),不单列成权益。
 
 **Founding subscription benefits:**
 ```
@@ -134,6 +162,9 @@ You'll see the losses. My win rate is 39.9%. I lose more often than I win and th
 because the winners are 3.40x the losers. If I only showed you the good ones you'd learn the wrong
 job.
 
+One letter a week. Every Sunday. If a week gives me something worth an extra one, you'll get it —
+but the promise is one, and I'd rather keep a small promise than break a big one.
+
 Start here → [Start Here 那篇的链接]
 The record → [Track Record 那篇的链接]
 
@@ -142,16 +173,40 @@ The record → [Track Record 那篇的链接]
 
 ---
 
-## 6. Sections(Substack 分栏 —— 对应 TSF 的产品线)
+## 6. Sections(Substack 分栏)—— 🔒 方案 C:两个栏 + 主 feed
 
-| Section | 频率 | 档位 | 对标 TSF |
+*2026-08-25 改。旧版开 4 栏,和 `06_SECTIONS.md` 论证过的方案 C 冲突。**你现在有 0 篇 —— 4 个空栏比没有栏更难看。***
+
+| 位置 | 内容 | 档位 | 为什么 |
 |---|---|---|---|
-| **Size & Stop** | 2–3x/周 | 付费 | TSF Focus Stocks(48 篇旗舰) |
-| **The Weather Report** | 每周一 | 免费引流 → 后期付费 | (TSF 无对应,这是你的 GEX/breadth 优势) |
-| **The Ledger** | 每月 | 付费 | (TSF 无对应,这是你的业绩透明优势) |
-| **Method** | 不定期 | 免费/付费混合 | Ultimate Guide / 10 Core Concepts(他互动最高的类型) |
+| **主 feed** | **How Much** —— 旗舰,每周日一封 | 付费(前期免费) | 主 feed 触达最全,旗舰要吃满,不进栏 |
+| **Method** | 仓位方法库(`05_SIZING_TERRITORY` 的 20 篇) | 免费 | 会长到 20+ 篇,**天然需要被浏览和被链接**;免费层拆邮件列表的代价最小 |
+| **The Ledger** | 月度业绩 + 全部亏损 | 付费 | 月更、格式固定,**独立成栏 = 让人一口气翻完你所有业绩披露,这个动作本身就是转化** |
 
+**先不开的两个**:`Testimonials`(0 订阅者,开了是空的,等 20 条真实反馈)· `Signals`(个股就在旗舰里,单开等于把旗舰拆成两半)。
+
+> **判据**:JB 有 1,259 篇也不分栏;TSF 有 355 篇才用 4 个栏。**分栏是给已有存量的人用的。**
 > **提醒:** TSF 互动最高的三篇里两篇是**教学长文**,不是个股。Method 栏别当边角料。
+
+### 6b. 导航栏(不是栏目,零成本,当天可做)—— 这才是 0 篇时最该做的事
+
+*JB 排第 3、1,259 篇、一个分栏没有,**但导航栏钉了 6 篇**。他把说服路径放在导航,不放在分栏。*
+
+| 导航位 | 指向 | 证明什么 |
+|---|---|---|
+| Start Here | `01_start_here` | 导航 |
+| 我的方法 | `02_nobody_tells_you_how_much` | 方法透明 |
+| 完整业绩 | `03_i_lose_more_than_i_win` | 真实且敢亮亏损 |
+| 一次失败的研究 | `05_null_result` | 诚实 |
+| 我怎么定 size | 仓位公式(`02` 的锚点) | **差异化本身** |
+| 测量栈 | dashboard 截图 | 能力 |
+
+### 6c. 每篇页脚(固定块,一字不改)
+
+```
+How Much — one letter a week, every Sunday.
+Every idea arrives with its size and its stop.
+```
 
 ---
 
@@ -170,7 +225,7 @@ The record → [Track Record 那篇的链接]
 改成(保留你的味道,加上硬导流 —— 抄 TSF 的三行式):
 ```
 Full-time swing trader in Japan. I don't have opinions, I have measurements.
-• How Much — a market letter about size
+• How Much — a weekly letter about size. Sundays.
 • 7 years of real returns, losers shown
 • Fluxus Analytics 👇
 ```
