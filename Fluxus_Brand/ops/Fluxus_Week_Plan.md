@@ -5,21 +5,28 @@
 
 ## 📬 HOW MUCH 周信 — 连载排期(Andy 2026-08-24 定)
 
-**🔒 频率(Andy 2026-08-24 拍板):对外承诺「每周一封,周日发」。** 加更允许但**永不写进承诺**——断更的代价远大于少发一封。
+**🔒 频率(Andy 2026-08-24 拍板):对外承诺「每周一封,周日发」。**
+**📐 序列规则:每月最后一个周日 = The Ledger 月报,其余周日 = 标准周信。** 月报不是特刊,是序列里的固定件 —— **对外仍然只有「每周一封」一个承诺。** 加更允许但**永不写进承诺**——断更的代价远大于少发一封。
 **格式规格:** [`briefs/2026-08-24_newsletter_format_spec.md`](briefs/2026-08-24_newsletter_format_spec.md) · **#001 变体:** [`briefs/2026-08-24_howmuch_001_variants.md`](briefs/2026-08-24_howmuch_001_variants.md)
 
 | 期 | 日期 | 内容 | 状态 |
 |---|---|---|---|
 | — | **2026-08-24 周一** | **MRNA HOWTO thread 上 X + 文章上 Substack**(唯一流量入口) | ⏳ Andy 今天发 |
-| **#001** | **2026-08-30 周日** | ⚠️ **选题待裁决** —— 原定「变体 1 入场费」**已作废**:那正是已起草的 `drafts/02_nobody_tells_you_how_much.md`(97 行)。选题改从 `02_20_ARTICLE_PLAN.md` 的 22 篇表里挑 | 🔴 待 Andy 裁决冲突 1–2(见 `briefs/2026-08-24_substack_reconcile.md`) |
-| #002 | 2026-09-06 周日 | 变体 3 标准周信 —— 立格式(命名 / DIAL / FOCUS / 轮换) | 待 |
-| #003 | 2026-09-13 周日 | 变体 2「我的旋钮价目表」(331 笔摊开,最有收藏相) | 待 |
+| **#001** | **2026-08-30 周日** | ✅ **The Ledger 八月号**(= 月末 review,两件事合一)。调研:[`briefs/2026-08-24_howmuch_001_research.md`](briefs/2026-08-24_howmuch_001_research.md) | 🔴 待 Mia 执笔;Andy 需 8/31 重跑 CSV |
+| #002 | 2026-09-06 周日 | 标准周信 —— 立格式(命名 / DIAL / FOCUS / 轮换) | 待 |
+| #003 | 2026-09-13 周日 | 标准周信 | 待 |
 | #004 | 2026-09-20 周日 | 标准周信 | 待 |
-| #005 | 2026-09-27 周日 | 标准周信 | 待 |
+| #005 | **2026-09-27 周日** | **The Ledger 九月号**(每月最后一个周日) | 待 |
 
 ~~**⏰ 8/30 之前 Andy 要交的三个数**~~ —— ❌ **作废(2026-08-24 对账)**:那三个数在 `drafts/02_nobody_tells_you_how_much.md` 里已经有了(331 笔 / 46 笔纯止损 / R=0.25% / 1/75 Kelly)。**Andy 无需另外提供。**
 
-⚠️ **本排期表与 `01_LAUNCH_PLAN.md` 有四处冲突待裁决**(开台策略 / 频率 / 旗舰名 / 栏目数),见 [`briefs/2026-08-24_substack_reconcile.md`](briefs/2026-08-24_substack_reconcile.md) §二。
+### 🔲 待办(2026-08-24 Andy 加)
+
+- [ ] **8/31 月末**:重新导出累计 CSV → 跑 `performance_review.py --period monthly --month 2026-08` → 供 #001 用
+- [ ] **X 兑现回帖**:回复 2026-01-03「My 2025 Trading Review」(`x.com/Fluxus_Z/status/2007274531732570453`)—— 用 YTD 数字续上「一年前我说我拿不住」那句。骨架见 [`briefs/2026-08-24_howmuch_001_research.md`](briefs/2026-08-24_howmuch_001_research.md) §六。⚠️ 不贴收益率,原帖调性是 *"Not here to sell you a dream or flex"*
+- [ ] 填 `drafts/00_the_record.md` 三处 `TO FILL`(多年年度回报 / 最差年份 / 有无审计)—— **一次填好,#001 也要用**
+
+⚠️ **本排期表与 `01_LAUNCH_PLAN.md` 有四处冲突待裁决**(~~开台策略~~ ✅Andy 08-24 定:Day 1 六篇填货架 + 8/30 起一周一封 / 频率 / 旗舰名 / 栏目数),见 [`briefs/2026-08-24_substack_reconcile.md`](briefs/2026-08-24_substack_reconcile.md) §二。
 
 **为什么是 8/30 不是 9/6:** MRNA 今天发,订阅者这周进来 —— #001 落在一周内流量还热。
 
