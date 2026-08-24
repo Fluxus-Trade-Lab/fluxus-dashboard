@@ -46,3 +46,5 @@
 - 2026-08-24 · 前端 UI · **删掉的解释，比留下的解释更能说明这页在干嘛**：Andy 逐句划掉了 Today 页上的散文——「10 of 15 conditions met」「MIXED is the absence of a call…」「62 scores Constructive, as did 32% of the last 260 sessions」「analysis scheme 72/100」。其中第一条值得记：它和下面那张 62/100 卡片是同一个读数的两种分母，正因为印了两遍，当初才不得不再加一句「conditions 和票数不是一个计数」去解释。**一个读数印两遍，就会长出第三句话来解释它们为什么不一样。**删掉之后，随之死掉的 4 个函数（falsify / conditionsChange / bandShare / SchemeSeam）一并清掉。
 
 - 2026-08-25 · Growth Gary · **一个「无泄漏」的自检结果,是 shell 报错冒充的**：增长台账的 PII 政策写在 README 第一行,08-24 的存量摸底文档照样把姓名、Discord handle、单人金额写进了公开仓库并已合进 main。第一次自检我用带通配符的 grep,zsh 当场报错退出、`||` 分支照样打印「无泄漏」——**一条永远为真的检查等于没有检查**。改成逐 token 比对后立刻命中 9 处。第二个教训更贵:我最初判定「从未提交,没有真泄漏」,依据是本地 `git status` 显示 untracked——**而本地分支落后 main,该目录其实早在 main 上公开着**。读权威版要用 `git show origin/main:<path>`,这条规矩 CLAUDE.md 第 84 行早就写了。出处 data/growth/weekly/2026-08-24-baseline.md
+
+- 2026-08-25 · Growth Gary · **「我记得有人分期付款」——账本说没有**：PayPal 全量对账,lifetime 会员 7 人每人恰好一笔,零分期。记忆里的「两次付款」实际是:一笔同日重复支付当天已全额退款(备注 duplicated payment),一笔 Pending 四天后 Completed 的同一交易。⚠️ 含收入数字,对外发布前 Andy 过目。出处 data/growth/weekly/2026-08-25-paypal-reconcile.md
