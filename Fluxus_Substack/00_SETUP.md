@@ -153,68 +153,92 @@ One letter a week, every Sunday.
 > Andy 的话:**「我们要写产品啊!人家买的也是服务产品。」** About 页的活儿是
 > 把访客变成订阅者,而访客买的是一项服务 —— 他得先知道这服务是什么。
 
-**新结构(产品 → 你能拿到什么 → 谁在写 → 这不是什么 → 名字 → 免责):**
+### 4a-2 🔴 第二次返工(Andy:「一堆很空的话,没有实质」)
+
+**我第一稿的病根**:我读的是三家 About 的**结构摘要**,不是原文 —— 结构对完就用自己的抽象词去填格子。
+回去读原文才看见真正的模式:
+
+| | 原文里的具体物 |
+|---|---|
+| **JB** | 15,000 订阅 · Finance 前 4 · 每天 5 笔 · 每月 100+ 笔 · 每月 3,000+ 异动期权 · Discord 日活 2,500+ · 7 个直播频道 · 约 $10/天 · 7 天试用 · 2022-06 开张 · 跑赢大盘近 9 倍(截至 2026-06-02) |
+| **TSF** | Discord 400+ 交易员 · 每周 4 篇 · Deepvue 首月免费 · **五条有专名的产品线**(Focus Stocks / Model Book Stocks / Momentum Leaders Portfolio / Trading Knowledge / Analytics) |
+| **Le Shrub** | 基本是 Substack 默认模板(#10、34K 订阅仍然如此) |
+
+> **两家真写 About 的,写法完全一致:数字 + 专名。整份清单里没有一句抽象。**
+> TSF 那句总括是 `A 4x weekly swing trading publication • A private Discord community of
+> 400+ traders • The Setup Factory Analytics Platform` —— 三个交付物,每个带一个数或一个名字。
+
+**✅ 定稿(每一行不是数字就是专名,数字全部取自仓库实数,零编造):**
 
 ```
-How Much is a market letter about size.
+How Much is a weekly letter about position size.
 
 Everyone tells you what to buy. Almost nobody tells you how much — and how much is the part
-that decides your year. Every idea here arrives with its entry, its stop, and what I'm risking
-in percent, of the trade and of the account. One letter a week, every Sunday.
+that decides your year. Every idea here arrives with its entry, its stop, and what it costs me
+if I'm wrong, in percent. One letter a week, every Sunday.
 
 What you get
 
-The letter. One a week, every Sunday. What the tape is measuring, what I'm doing about it, and
-the arithmetic that set the size.
+How Much — the letter. One a week, Sunday. Every idea with an entry, a stop, a trade risk in
+percent and a portfolio risk in percent. My risk per idea is fixed at 0.25% and set before I
+click. There is no "I really like this one" line in the formula.
 
-The book, in order of size. Every position with its entry, its stop, its trade risk and its
-portfolio risk — posted before the trade resolves, which is the only version worth reading.
+The Book. My open positions in order of size, with the arithmetic that set each one. Posted
+while the trades are still open, which is the only version worth reading.
 
-The losses. My win rate is 39.9%. You'll see the ones that didn't work, because a record that
-shows you only the good half teaches the wrong job.
+The Ledger. Monthly, with every loser shown. This year so far: 331 closed trades, 39.9% of them
+winners, 3.40x average payoff, +90.5% through June against an 18% drawdown in February and
+March. Winners are held about ten days.
 
-The measurement stack. Regime, breadth, dealer gamma — the same readings I trade off, not a
-summary of them.
+Fluxus Analytics. The measurement stack I actually trade off, not a summary of it — a nightly
+leader screener, a breadth engine, dealer gamma levels and a regime read, with the history
+archived so you can check what it said before you knew the answer.
 
 Who's writing
 
-I'm a full-time discretionary swing trader based in Japan. I started as a day trader, got
-humbled, and grew into swing trading — I hunt leaders when momentum is loud and trade ES/NQ
-when it isn't. I learned under a hedge fund manager who had navigated every bear market since
-the 1980s, which is a long way of saying I learned defense first. Seven years of real returns.
+Full-time discretionary swing trader in Japan, trading US hours from Asia. Math degree, Erdos
+number 3, seven years of real returns. I learned under a hedge fund manager who had navigated
+every bear market since the 1980s — a long way of saying I learned defense first. I hunt
+leaders when momentum is loud and trade ES/NQ when it isn't.
 
 What this isn't
 
-Not alerts. Nothing here is timed for you to copy.
+Not alerts. Nothing here is timed for you to copy. I post my own trades because a method you
+can't watch me run is just a claim.
 
 Not predictions. I don't have opinions about where the market goes. I have measurements of what
-it's doing and what I'm risking while it does it. The crowd plays on feelings and shows up late.
-The big funds play on autopilot and sell whatever their risk limits tell them to. My only edge
-is being the calm one in the room who did the arithmetic before he felt anything.
+it's doing, and of what I'm risking while it does it.
 
-I won't promise to be right. Accuracy isn't mine to control. I promise the thinking always walks
-the last step.
+Not a winners-only record. Sixty percent of my trades lose. The year works because the winners
+are 3.40x the losers, and you would learn the wrong job from a record that hid that.
 
 The name
 
-Fluxus was the 1960s–70s art movement that prized the event over the object, chance over control,
-and dry wit over spectacle. A trade plan, it turns out, is just an event score. Volatility is
-just chance you've decided to befriend.
+Fluxus was the 1960s-70s art movement that prized the event over the object, chance over
+control, and dry wit over spectacle. A trade plan, it turns out, is just an event score.
 
-None of this is advice. I don't know your account, your taxes, or how well you sleep.
+Nothing here is advice. I don't know your account, your taxes, or how well you sleep.
 Measure your own water.
 ```
 
-**相对旧版的四处变化:**
+**数字出处(每一个都可核,发布前请你确认没有对外顾虑):**
 
-1. **第一句从「The market is a game. Most people play it with their feelings.」换成产品定义。**
-   那句好,但它的意思已经落在「What this isn't」段的「The crowd plays on feelings and shows up late」里 ——
-   ⚠️ 要把原句作为开头保留也可以,说一声。
-2. **新增「What you get」四条** —— 三家都有,旧版没有。
-3. **补上频率**(开头段末尾 + 清单第一条)。
-4. **补上免责** —— 旧版写了 39.9% 这个具体业绩数字却没有免责,那是风险不是风格。
+| 数 | 出处 |
+|---|---|
+| 0.25% 固定风险 | `user_trading_profile` / MRNA 长文已公开 |
+| 331 笔 · 39.9% · 3.40x | `06_h1_flagship_DOSSIER` 口径,窗口 2025-12-31 → 2026-07-22 |
+| +90.5% · −18% 回撤(1/28→3/19) | fluxus-capital.com Track Record 页(已公开) |
+| 约 10 天持仓 | Andy 08-23 口述,MRNA 长文已公开 |
+| 七年真实业绩 · Erdos 3 | `00_SETUP` §2 原有文案 |
 
-> ⏳ **状态:待 Andy 点头再粘。** 站上现在还是下方 §4b(2026-08-25 已替换掉 3 年前旧版)。
+**两件我故意没写进去,等你定:**
+
+1. **会员数**。`data/growth` 实数是**真实人头 40**(其中 Lifetime 7)。TSF 拿 400+、JB 拿 15,000
+   当卖点,我们这个数字**放上去是减分不是加分**,所以没放。将来过百再考虑。
+2. **Discord**。它现在是 Whop 的独立产品,不在 Substack 订阅里 —— **不能写进 About 当交付物**,
+   否则是承诺了不交付的东西。要把它并进订阅权益是产品决定,你定。
+
+> ⏳ **状态:待点头再粘。** 站上仍是 §4b。
 
 ### 4b. 正文(站上现行版本)
 
