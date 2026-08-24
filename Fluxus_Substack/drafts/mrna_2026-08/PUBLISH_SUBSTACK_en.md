@@ -192,7 +192,32 @@ What I risked: **0.25% — one R**
 What came back: **23R**
 The account that day: **+17%**
 
-*
+**Of course, the month after you write a number like that is usually the month you give some of it back. Call it the cost of showing off.**
+
+As for luck — **the luck was that the data landed on day five of my holding.** I didn't predict a cancer-vaccine headline. **What wasn't luck**: the sector I was standing in, the five rules that surfaced it, the line at 60, both stops, and the size I cut on the 18th.
+
+**0.25% is what I paid to be in the room when the luck showed up.**
+
+---
+
+> **If you take one thing from this: stop asking "do I like it." Ask "how close can my stop go."**
+> **The first question decides how you feel. The second one decides your size.**
+
+---
+
+The news is never in the chart.
+
+**The price of being there is.**
+
+**And that price is denominated in pain.**
+
+---
+
+*P.S. If you're early in this: don't go looking for the next $MRNA. **Update the sector map every day for a month instead.** It's dull and no single day of it will make you feel smart. But the morning a chart finally shows up in front of you, you'll already know whether to act — and the thirty seconds you save right then is what the whole month bought.*
+
+---
+
+**LEDGER｜$MRNA · in 62.72 Aug 14 · stop 60 · trade risk 0.233% · out Aug 19 · +23R**
 
 ---
 
