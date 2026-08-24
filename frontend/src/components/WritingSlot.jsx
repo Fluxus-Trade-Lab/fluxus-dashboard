@@ -104,9 +104,18 @@ export default function WritingSlot({
         onChange={(e) => onChange(e.target.value)}
         rows={rows}
         placeholder={placeholder}
+        /* 15px, not the 12.5px the rest of this page reads at (Andy,
+           2026-08-24: at least close to the NEUTRAL badge). Those two were
+           already the SAME size — the badge only looked bigger because it is
+           600-weight, uppercase and reversed out of an ink block. Matching it
+           by number would have changed nothing, so this goes past it: 15px is
+           the largest step that still lets the weekly note's six lines sit in
+           the box without scrolling. It is also the only text on this page a
+           person wrote, which is reason enough for it to be the largest. */
         className="mt-2 w-full resize-y bg-transparent border-none outline-none
-                   text-[12.5px] leading-relaxed text-[var(--color-text)]
+                   text-[15px] leading-[1.55] text-[var(--color-text)]
                    placeholder:text-[var(--color-text-muted)]
+                   placeholder:text-[13px]
                    focus-visible:ring-0"
       />
 

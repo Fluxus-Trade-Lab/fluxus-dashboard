@@ -146,15 +146,21 @@ export default function TickBand() {
         {stale ? (
           /* the site's rule: absent is not zero, and a reading nobody took
              today is not a reading of "neutral" */
-          <p className="m-0 flex-1 min-w-[260px] text-[12.5px] leading-relaxed
-                        text-[var(--color-text-muted)] italic">
+          <p className="m-0 flex-1 min-w-[260px] max-w-[104ch] text-[12.5px]
+                        leading-relaxed text-[var(--color-text-muted)] italic">
             Not measured — tick_cycle.json has not updated in {data.stale_days} days
             (last {data.as_of}). The shape above is a placeholder, not today's reading.
           </p>
         ) : (
           <>
-            <p className="m-0 flex-1 min-w-[280px] text-[12.5px] leading-relaxed
-                          text-[var(--color-text-secondary)]">
+            {/* Capped, now that this card runs the full page width: the
+                sentence would otherwise set across ~1500px, about 180
+                characters a line, and the eye loses the return. The air to the
+                right of it is deliberate — this card is a band between the
+                measured half of the page and the written half, and a band is
+                allowed to be mostly rule. */}
+            <p className="m-0 flex-1 min-w-[280px] max-w-[104ch] text-[12.5px]
+                          leading-relaxed text-[var(--color-text-secondary)]">
               {englishReading(data)}
             </p>
           </>

@@ -161,47 +161,59 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                        onNavigate={navigate} />
 
           {/* ── MID ───────────────────────────────────────────────────────
-              Where the cycle sits, and what he makes of it. Side by side
-              because they are the same reading twice — one measured, one
-              written — and stacking them would put the writing among the
-              evidence, where it is not evidence.
+              Where the cycle sits, and what he makes of it. The measured half
+              comes first and the written half after it: stacking the other way
+              would put the writing among the evidence, where it is not
+              evidence.
 
-              Two cadences, because they are two different readings and were
-              sharing one box. The daily note is what the tape did today; the
-              weekly is what the month is turning into, and a week's worth of
-              daily notes is not the same thing as having written the weekly
-              one. Both keep their back-catalogue — the second reading is the
-              point of writing them. (Andy, 2026-08-17.) */}
-          {/* The TICK band sits under the regime, not beside it, because it
+              The TICK band sits under the regime, not beside it, because it
               answers a DIFFERENT question and putting them side by side would
               invite reading it as a second opinion on the same one. Regime asks
               how much you may carry; this asks whether the tape is grinding or
               travelling. Its own note says it outright: a timing context, not a
               tail-risk dimension. */}
-          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]
-                          gap-4 items-stretch">
-            <div className="flex flex-col gap-4">
-              <RegimeBand verdict={data?.breadth?.verdict} signals={data?.signals}
-                          conditions={data?.breadth?.conditions} onNavigate={navigate} />
-              <TickBand />
-            </div>
-            <div className="flex flex-col gap-3">
-              <WritingSlot
-                label="Founders note · daily"
-                kind="founders-daily"
-                rows={9}
-                className="flex-1"
-                placeholder="What the session actually did, in your words."
-              />
-              <WritingSlot
-                label="Founders note · weekly"
-                kind="founders-weekly"
-                cadence="weekly"
-                rows={9}
-                className="flex-1"
-                placeholder="What the week is turning into."
-              />
-            </div>
+          {/* ROWS, NOT COLUMNS (Andy, 2026-08-24: "左下角就开始空了").
+              These four cards were two columns of two, and two columns only
+              stay level if their contents happen to be the same height. They
+              never were: the regime card plus the TICK band ran shorter than
+              two note boxes, so the bottom-left of the page was blank by
+              construction and got blanker every time a card was trimmed —
+              and this page has been trimmed all day.
+
+              A row cannot have that bug. The market cards take the full width
+              and stack; the notes take the full width and sit side by side.
+              Nothing here is waiting on its neighbour's height. */}
+          <RegimeBand verdict={data?.breadth?.verdict} signals={data?.signals}
+                      conditions={data?.breadth?.conditions} onNavigate={navigate} />
+          <TickBand />
+
+          {/* Two cadences, because they are two different readings and were
+              sharing one box. The daily note is what the tape did today; the
+              weekly is what the month is turning into, and a week's worth of
+              daily notes is not the same thing as having written the weekly
+              one. Both keep their back-catalogue — the second reading is the
+              point of writing them. (Andy, 2026-08-17.)
+
+              Side by side rather than stacked: at full width one above the
+              other would set 15px type across 1800px, which is about 190
+              characters a line. Two columns halve that and put both cadences
+              on screen at once, which is how they get compared. */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
+            <WritingSlot
+              label="Founders note · daily"
+              kind="founders-daily"
+              rows={10}
+              className="flex-1"
+              placeholder="What the session actually did, in your words."
+            />
+            <WritingSlot
+              label="Founders note · weekly"
+              kind="founders-weekly"
+              cadence="weekly"
+              rows={10}
+              className="flex-1"
+              placeholder="What the week is turning into."
+            />
           </div>
 
           {/* ── SMALL ─────────────────────────────────────────────────────
