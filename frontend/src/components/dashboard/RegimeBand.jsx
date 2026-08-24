@@ -304,24 +304,10 @@ function ConditionsLine({ history, score, binds }) {
   )
 }
 
-/**
- * How often the score has sat in this band, over the history the page loaded.
- *
- * A band name with no denominator reads as an alarm. `Euphoria` sounds rare and
- * is not: on the 260 sessions in the file on 2026-08-20 the score sat there on
- * 26% of them, in 21 separate runs with a MEDIAN RUN OF ONE DAY. A word that
- * turns over that fast is a description of today, not a state you are in, and
- * the reader cannot tell those apart from a single day's view.
- *
- * This counts the SCORE's band, not the badge's. The history carries the score
- * and nothing else — no voters — so the pulled-down reading cannot be replayed,
- * and the sentence says "scored" rather than "read" for that reason.
- */
-function bandShare(history, level) {
-  if (!history?.length || level == null) return null
-  const n = history.filter((d) => bandFromScore(d.score) === level).length
-  return { pct: Math.round((n / history.length) * 100), of: history.length }
-}
+/* `bandShare()` counted how often the score's own band occurred over the
+   loaded history — "as did 32% of the last 260 sessions". It fed one clause of
+   the paragraph Andy removed on 2026-08-24 and has no other reader. */
+
 
 /**
  * The other scheme's word, printed beside ours instead of behind a comment.
@@ -341,15 +327,18 @@ function bandShare(history, level) {
  * conditions, and its own job. A reader who takes the wrong one now has to
  * ignore a label to do it.
  */
-function SchemeSeam({ regime, conditions }) {
+function SchemeSeam({ regime }) {
   if (!regime?.band_label || regime.score == null) return null
   return (
-    <p className="m-0 mt-3 text-[10px] font-mono text-[var(--color-text-muted)] leading-relaxed">
+    /* The sentence after the em-dash — "9 conditions, empirical quartiles; the
+       band above counts 15; use this one for statistics, that one for position
+       size" — went on 2026-08-24. The NUMBER stays: it is the only place this
+       page shows the analysis layer's own score, and without it 62 and 72 sit
+       on one screen with nothing saying they are two instruments. Label and
+       value, like every other reading on this page. */
+    <p className="m-0 mt-3 text-[10px] font-mono text-[var(--color-text-muted)]">
       <span className="uppercase tracking-[.18em]">analysis scheme</span>{' '}
       {Number(regime.score).toFixed(0)} / 100 <b className="font-semibold">{regime.band_label}</b>
-      {' — '}
-      {regime.of ?? 9} conditions, empirical quartiles; the band above counts{' '}
-      {conditions?.n_votes ?? 15}. Use this one for statistics, that one for position size.
     </p>
   )
 }
@@ -380,9 +369,6 @@ export default function RegimeBand({ verdict, signals, conditions, regime, onNav
   const score = conditions?.today ?? null
   const scoreBand = bandFromScore(score)
   const weakest = voters.reduce((a, b) => (a.level <= b.level ? a : b))
-  // every voter tied at the weakest level, not just the first one the reduce
-  // happened to land on — two voters failing together is a different sentence
-  const binders = voters.filter((v) => v.level === weakest.level)
 
   /* The score sets the band and the weakest voter can only pull it DOWN, never
      up. Breadth can be broad and still be riding a benchmark that has lost its
@@ -390,8 +376,6 @@ export default function RegimeBand({ verdict, signals, conditions, regime, onNav
      danger is the expensive half. When the two disagree the line underneath
      names which voter did the pulling and on what condition. */
   const level = scoreBand == null ? weakest.level : Math.min(scoreBand, weakest.level)
-  const pulled = scoreBand != null && level < scoreBand
-  const share = bandShare(conditions?.history, scoreBand)
 
   return (
     <section className="rounded-3xl px-6 py-5 bg-[var(--color-surface)]">
@@ -427,28 +411,12 @@ export default function RegimeBand({ verdict, signals, conditions, regime, onNav
         </span>
       </div>
 
-      {/* Why the word says what it says. Two clauses, and the second only
-          appears when there is something to explain: what band the SCORE alone
-          reads and how common that is, then which voter pulled it and on what
-          condition. Without this the card asks the reader to trust a word that
-          contradicts its own number nearly a third of the time. */}
-      {scoreBand != null && (
-        <p className="m-0 mt-3 text-[12.5px] leading-snug text-[var(--color-text-secondary)]">
-          {score} scores <b className="font-semibold text-[var(--color-text-bold)]">{BANDS[scoreBand]}</b>
-          {share && `, as did ${share.pct}% of the last ${share.of} sessions`}.
-          {/* the voter's name is an identifier and stays lowercase, so the
-              clause is built to keep it out of the sentence-initial slot */}
-          {pulled && (
-            <>
-              {' '}Pulled to{' '}
-              <b className="font-semibold text-[var(--color-text-bold)]">{BANDS[level]}</b>
-              {' by '}{binders.map((v) => v.name).join(' and ')}
-              {binders.some((v) => v.binding) &&
-                `: ${binders.map((v) => v.binding).filter(Boolean).join('; ')}`}.
-            </>
-          )}
-        </p>
-      )}
+      {/* A paragraph stood here explaining which band the score alone reads,
+          how common that is, and which voter pulled the word away from it.
+          Andy removed it on 2026-08-24 with the rest of this page's prose. The
+          three voters below still print, and the binding one still carries the
+          ink weight — which is the same fact, said in three words instead of
+          thirty. */}
 
       {/* The three voters, which this file's own header has promised since
           2026-08-10 would "print beside it so the disagreement stays visible"
@@ -472,7 +440,7 @@ export default function RegimeBand({ verdict, signals, conditions, regime, onNav
           the band itself binds (Defence/Caution); an all-clear day stays ink */}
       <ConditionsLine history={conditions?.history} score={score} binds={level <= 1} />
 
-      <SchemeSeam regime={regime} conditions={conditions} />
+      <SchemeSeam regime={regime} />
     </section>
   )
 }

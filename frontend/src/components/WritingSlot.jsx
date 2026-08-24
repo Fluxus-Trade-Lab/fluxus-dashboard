@@ -17,17 +17,17 @@ import SaveState from './SaveState'
  * the days that actually carry text, so an empty stretch is skipped rather than
  * walked. Today is always reachable, whether or not it has been written.
  *
- * STAY EMPTY HONESTLY. A day with nothing written shows the reserved copy, not
- * a blank box pretending to be an entry. Same rule the rest of the site keeps:
- * absent is a reading, zero is a claim.
+ * STAY EMPTY HONESTLY. A day with nothing written is a placeholder and a dashed
+ * frame, never a filled-in one. The paragraph that used to say so out loud came
+ * off on 2026-08-24 — it was addressed to the only person who writes here, who
+ * knows.
  */
 export default function WritingSlot({
   label,
   kind,
   cadence = 'daily',      // 'daily' | 'weekly'
-  reserved,               // the copy shown on a day with nothing written
   placeholder,
-  rows = 3,
+  rows = 8,
   className = '',
 }) {
   const keyFor = cadence === 'weekly' ? weekKey : todayKey
@@ -110,11 +110,11 @@ export default function WritingSlot({
                    focus-visible:ring-0"
       />
 
-      {!text.trim() && reserved && (
-        <p className="text-[11px] leading-relaxed text-[var(--color-text-muted)] m-0">
-          {reserved}
-        </p>
-      )}
+      {/* The reserved copy — "written by hand on the days there is something
+          to say, an empty slot on the other days is the honest state" — stood
+          under the box until 2026-08-24. Andy: it explained the box to the one
+          person who wrote it. The box got the space instead. The empty state
+          is still honest; it is just silent about it now. */}
       {written > 1 && (
         <p className="text-[10px] font-mono text-[var(--color-text-muted)] m-0 mt-1.5">
           {written} written

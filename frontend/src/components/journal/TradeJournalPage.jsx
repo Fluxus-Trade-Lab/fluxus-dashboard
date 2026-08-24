@@ -95,10 +95,8 @@ export default function TradeJournalPage() {
         <WritingSlot
           label="Trading recap"
           kind="trading-recap"
-          rows={5}
+          rows={8}
           placeholder="What did you actually do today — and was it the plan?"
-          reserved="The other half of the checklist: your own session, written after
-                    the close. Empty until there is something to write."
         />
       </div>
 

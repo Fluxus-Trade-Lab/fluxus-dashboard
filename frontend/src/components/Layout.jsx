@@ -7,6 +7,7 @@ import useWritingSync from '../hooks/useWritingSync'
 import Placeholder from './Placeholder'
 import LibraryPage from './library/LibraryPage'
 import TickBand from './dashboard/TickBand'
+import MarketClock from './dashboard/MarketClock'
 import HowToRead from './HowToRead'
 import Reference from './Reference'
 
@@ -59,6 +60,30 @@ const PUBLIC_PAGES = ['', 'method', 'results', 'pricing', 'brief']
  * from outside. The whole point of the overview pointing at one stage is lost
  * if that stage cannot be addressed.
  */
+/**
+ * The session this page is reading, named.
+ *
+ * ET, and from the payload — never from the host clock. This machine runs on
+ * JST, thirteen hours ahead of New York, so between the close and the next
+ * midnight ET a local `new Date()` names tomorrow's session for data that is
+ * still today's. The pipeline already dates everything in ET (marketcal), so
+ * the honest title is the last date the file itself carries.
+ *
+ * Parsed as UTC on purpose: `new Date('2026-08-21')` is midnight UTC, and
+ * asking for the UTC weekday of that instant returns the weekday of the date
+ * string. Reading it in local time would slide it a day for half the planet.
+ */
+function sessionTitle(breadth) {
+  const h = breadth?.conditions?.history
+  const iso = Array.isArray(h) && h.length ? h[h.length - 1]?.date : null
+  if (!iso) return 'Today'            // absent is said, not guessed
+  const d = new Date(`${iso}T00:00:00Z`)
+  if (Number.isNaN(d.getTime())) return iso
+  return new Intl.DateTimeFormat('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC',
+  }).format(d)
+}
+
 function pageKey(hash) {
   const path = hash.replace('#/', '') || ''
   const [key, sub] = path.split('/')
@@ -124,11 +149,17 @@ export default function Layout({ data, lastUpdated, isOffline }) {
            they are also empty on most days, and a large empty card reads as a
            broken page rather than as the honest state an empty day is. */
         <main className="max-w-[1800px] mx-auto px-3 py-4 space-y-4">
-          <PageHeader group="market" title="Today" meta={[]} />
+          {/* The title is the SESSION, not the word "today" (Andy, 2026-08-24).
+              It comes from the payload, which the pipeline dates in ET — the
+              host clock is JST here and would name the wrong session for the
+              seven hours after the New York close. The four-city clock beside
+              it answers the other question, "what time is it now". */}
+          <PageHeader group="market" crumbTitle="Today"
+                      title={sessionTitle(data?.breadth)}
+                      meta={[<MarketClock key="clock" />]} />
 
           {/* ── LARGE ─────────────────────────────────────────────────── */}
           <VerdictCard verdict={data?.breadth?.verdict}
-                       conditions={data?.breadth?.conditions}
                        onNavigate={navigate} />
 
           {/* ── MID ───────────────────────────────────────────────────────
@@ -161,21 +192,17 @@ export default function Layout({ data, lastUpdated, isOffline }) {
               <WritingSlot
                 label="Founders note · daily"
                 kind="founders-daily"
-                rows={4}
+                rows={9}
                 className="flex-1"
                 placeholder="What the session actually did, in your words."
-                reserved="Written by hand on the days there is something to say — an
-                          empty slot on the other days is the honest state."
               />
               <WritingSlot
                 label="Founders note · weekly"
                 kind="founders-weekly"
                 cadence="weekly"
-                rows={4}
+                rows={9}
                 className="flex-1"
                 placeholder="What the week is turning into."
-                reserved="The longer read. Not a summary of the dailies — the thing
-                          that only shows up at a week's distance."
               />
             </div>
           </div>

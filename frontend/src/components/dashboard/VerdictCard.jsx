@@ -27,67 +27,16 @@ import VoteGlyphs, { VoteMarks } from '../breadth/VoteGlyphs'
  * breadth_signals.py, which owns them.
  */
 
-/** `score >= 4` is BULLISH and `score <= -4` is BEARISH, from
- *  pipeline/screeners/breadth_signals.py:667. Mirrored here for the sentence
- *  only — the side of every vote and the score itself both arrive decided. */
-const FLOOR = 4
+/* `falsify()` and the FLOOR constant lived here: they computed how many votes
+   had to turn before the word changed, for a paragraph this card printed under
+   the glyph row. Andy removed that paragraph on 2026-08-24 — the page states a
+   reading, it does not argue for one — and the maths went with it. The same
+   answer is on Market State detail, which is linked beside the score.
 
-/**
- * How much of the margin has to go, spelled in votes rather than in points.
- *
- * A vote turning to the other side moves the score by two (it leaves one
- * column and joins the other); a vote going undecided moves it by one. Both
- * routes are given because they are genuinely different events, and neither is
- * ranked against the other.
- *
- * Nothing here says WHICH vote is closest to turning. Distance lives in each
- * vote's own unit — a ratio 0.048 above its line, 137 names, 2.53 McClellan
- * points — and ordering those against each other would be a number this
- * payload cannot support. The glyph row draws each one inside its own range
- * instead, which is the honest version of the same question.
- */
-function falsify(score, votes) {
-  if (score == null || !votes) return null
-  const sides = Object.values(votes)
-  const bulls = sides.filter((v) => v === 'bull').length
-  const bears = sides.filter((v) => v === 'bear').length
-
-  if (score >= FLOOR) {
-    const room = score - (FLOOR - 1)          // the drop that ends BULLISH
-    return {
-      breaksAt: FLOOR - 1, word: 'BULLISH', standing: bulls, side: 'bull',
-      toOther: Math.min(bulls, Math.ceil(room / 2)),
-      toNeutral: Math.min(bulls, room),
-    }
-  }
-  if (score <= -FLOOR) {
-    const room = -FLOOR + 1 - score
-    return {
-      breaksAt: -(FLOOR - 1), word: 'BEARISH', standing: bears, side: 'bear',
-      toOther: Math.min(bears, Math.ceil(room / 2)),
-      toNeutral: Math.min(bears, room),
-    }
-  }
-  // MIXED has no falsification in this grammar: it is the absence of a claim,
-  // so there is nothing to break. Say what would make it a claim instead.
-  return {
-    breaksAt: null, word: 'MIXED',
-    toBull: Math.ceil((FLOOR - score) / 2),
-    toBear: Math.ceil((score + FLOOR) / 2),
-  }
-}
-
-/** The last two dated points of the stored conditions series. Two, not one,
- *  because a count without its predecessor is a level, and this line's job is
- *  the change. */
-function conditionsChange(conditions) {
-  const h = conditions?.history
-  if (!Array.isArray(h) || h.length < 2) return null
-  const now = h[h.length - 1]
-  const prev = h[h.length - 2]
-  if (now?.positive == null || prev?.positive == null) return null
-  return { now, prev, delta: now.positive - prev.positive }
-}
+   `conditionsChange()` went the same way and for a better reason: it fed
+   "10 of 15 conditions met, +4 since Aug 20", which is the 62/100 card below
+   said twice. Printing one reading in two denominators is what made that card
+   need a line explaining it was a different count. */
 
 /**
  * The shape a card takes when its data did not arrive: the frame is real,
@@ -122,16 +71,7 @@ export function MissingBlock({ what, keys, onNavigate }) {
   )
 }
 
-/** `2026-08-14` → `Aug 14`. The year is on the header already. */
-function shortDate(iso) {
-  if (!iso) return null
-  const [, m, d] = iso.split('-')
-  const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-  return `${MONTHS[Number(m) - 1]} ${Number(d)}`
-}
-
-export default function VerdictCard({ verdict, conditions, onNavigate }) {
+export default function VerdictCard({ verdict, onNavigate }) {
   /**
    * A MISSING BLOCK IS SAID, NOT SKIPPED.
    *
@@ -150,50 +90,21 @@ export default function VerdictCard({ verdict, conditions, onNavigate }) {
     return (
       <MissingBlock
         what="Today's verdict is not in tonight's file."
-        keys={['verdict', 'conditions']}
+        keys={['verdict']}
         onNavigate={onNavigate} />
     )
   }
 
-  const change = conditionsChange(conditions)
-  const broken = falsify(verdict.score, verdict.votes)
   const detail = verdict.vote_detail
 
   return (
     <section className="rounded-3xl bg-[var(--color-surface)] px-6 py-6 sm:px-8 sm:py-7">
-      {/* ── change ──────────────────────────────────────────────────────
-          Above the word, small, because it is the least of the three and
-          still has to come first: the page's question is what changed.
-          Absent rather than zero when the series is too short to difference —
-          a change line that prints 0 for "we have one point" is a lie the
-          rest of this card is built to avoid. */}
-      <div className="text-[11px] leading-snug text-[var(--color-text-muted)] mb-5">
-        {change ? (
-          <>
-            <span className="font-mono tabular-nums text-[var(--color-text)]">
-              {change.now.positive} of {change.now.of}
-            </span>{' '}
-            market conditions met
-            {change.delta !== 0 && (
-              <>
-                {' '}&mdash;{' '}
-                <span className="font-mono tabular-nums text-[var(--color-text)]">
-                  {change.delta > 0 ? '+' : ''}{change.delta}
-                </span>{' '}
-                since {shortDate(change.prev.date)}, when it was {change.prev.positive} of {change.prev.of}
-              </>
-            )}
-            {change.delta === 0 && <> &mdash; unchanged since {shortDate(change.prev.date)}</>}
-            {/* the denominators are different instruments; say so once, here,
-                where the two numbers are three lines apart */}
-            <span className="block mt-0.5">
-              Conditions are a different count from the votes below.
-            </span>
-          </>
-        ) : (
-          <span>Conditions series too short to difference &mdash; not measured.</span>
-        )}
-      </div>
+      {/* The conditions count used to print here — "10 of 15 market conditions
+          met, +4 since Aug 20". Andy took it out on 2026-08-24 along with the
+          rest of this page's prose. It is not lost: the same reading is the
+          62/100 card below, which carries the count, the band and the history.
+          Printing it twice was what made a denominator disclaimer necessary. */}
+
 
       {/* ── strength ────────────────────────────────────────────────────
           The word is the biggest thing on the page and wears no encoding
@@ -234,41 +145,10 @@ export default function VerdictCard({ verdict, conditions, onNavigate }) {
           Expected register: dashed rule on the left (DESIGN §3). It is a
           condition on the future, not a measurement, and the structure has to
           survive a greyscale screenshot. */}
-      {broken && (
-        <p className="mt-7 mb-0 pl-4 text-[14px] leading-relaxed max-w-[68ch]
-                      text-[var(--color-text-secondary)]
-                      border-l border-dashed border-[var(--color-text-muted)]">
-          {broken.breaksAt != null ? (
-            <>
-              Stops being <b className="text-[var(--color-text-bold)]">{broken.word}</b> at{' '}
-              <span className="font-mono tabular-nums">
-                {broken.breaksAt > 0 ? '+' : ''}{broken.breaksAt}
-              </span>{' '}
-              &mdash; the floor is{' '}
-              <span className="font-mono tabular-nums">
-                {broken.side === 'bull' ? `+${FLOOR}` : `−${FLOOR}`}
-              </span>. From{' '}
-              <span className="font-mono tabular-nums">
-                {verdict.score > 0 ? '+' : ''}{verdict.score}
-              </span>{' '}
-              that is{' '}
-              <b className="text-[var(--color-text-bold)]">
-                {broken.toOther} of the {broken.standing} standing votes turning the other way
-              </b>, or{' '}
-              <b className="text-[var(--color-text-bold)]">{broken.toNeutral} going undecided</b>.
-              Which ones is not on this card: distance lives in each vote&rsquo;s own unit, and
-              ranking a ratio against a count of names would be a number this data cannot carry.
-            </>
-          ) : (
-            <>
-              <b className="text-[var(--color-text-bold)]">MIXED</b> is the absence of a call,
-              so there is nothing here to break. It becomes a call at{' '}
-              <span className="font-mono tabular-nums">±{FLOOR}</span> &mdash;{' '}
-              {broken.toBull} more votes turning bull, or {broken.toBear} turning bear.
-            </>
-          )}
-        </p>
-      )}
+      {/* The "stops being BULL at +4 / MIXED is the absence of a call"
+          paragraph lived here until 2026-08-24. Andy: the page states a
+          reading, it does not argue for one. The threshold and the standing
+          votes are on Market State detail, one click from the score above. */}
     </section>
   )
 }

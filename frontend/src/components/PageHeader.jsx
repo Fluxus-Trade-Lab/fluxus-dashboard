@@ -17,7 +17,7 @@ import { useLanguage } from '../i18n/LanguageContext'
  * One level. It does not nest, it does not collapse, and nothing below it
  * repeats it. A frame that has its own sub-frames is not a frame.
  */
-export default function PageHeader({ group, title, blurb, meta = [] }) {
+export default function PageHeader({ group, title, crumbTitle, blurb, meta = [] }) {
   const { t } = useLanguage()
 
   return (
@@ -26,7 +26,11 @@ export default function PageHeader({ group, title, blurb, meta = [] }) {
         <div className="text-[10px] font-mono font-medium uppercase tracking-[.2em] text-[var(--color-text-muted)] pb-3">
           {t(`rail.${group}`)}
           <span className="mx-2 opacity-50">›</span>
-          {title}
+          {/* The crumb says WHICH PAGE; the title is free to say something
+              else. Today's title became the session's date on 2026-08-24 and
+              a crumb reading "MARKET › Aug 21" would have lost the only word
+              that tells you where you are standing. */}
+          {crumbTitle ?? title}
         </div>
       )}
       <div className="flex flex-col lg:flex-row lg:items-end gap-2 lg:gap-12">

@@ -28,36 +28,27 @@ const power = (sig) => ({ SPY: { signal: sig, power_trend: {} }, QQQ: { signal: 
 const draw = (p) => render(<RegimeBand conditions={{ history: HISTORY, n_votes: 15 }} {...p} />)
 const flat = (c) => c.container.textContent.replace(/\s+/g, ' ')
 
-describe('the pull-down reason', () => {
-  it('names the voter and its condition when the word disagrees with the number', () => {
+/* 2026-08-24: the prose went. Andy read this page and struck out every
+   sentence on it — "62 scores Constructive, as did 32% of the last 260
+   sessions. Pulled to Neutral by breadth and structure" among them. These
+   tests now pin the ABSENCE, because a sentence that returns by accident is
+   how a page grows its prose back. The reading itself did not go anywhere: the
+   three voters still print and the binding one still carries the ink, which is
+   the same fact in three words. */
+describe('the sentence that used to explain the word', () => {
+  it('does not print, on the day it had the most to say', () => {
     const c = draw({
       conditions: { today: 76, history: HISTORY, n_votes: 15 },
       verdict: { score: 6, spy_state: 'Sideways', qqq_state: 'Sideways' },
       signals: power('POWER_3'),
     })
     const t = flat(c)
-    expect(t).toContain('76 scores Constructive')
-    expect(t).toContain('Pulled to Neutral by structure')
-    expect(t).toContain('SPY and QQQ below trend')
-  })
-
-  it('says nothing about a pull on a day when nothing pulls', () => {
-    const c = draw({
-      conditions: { today: 50, history: HISTORY, n_votes: 15 },
-      verdict: { score: 9, ...up },
-      signals: power('POWER_3'),
-    })
-    expect(flat(c)).toContain('50 scores Neutral')
-    expect(flat(c)).not.toContain('Pulled to')
-  })
-
-  it('names both voters, and conjugates, when two fail together', () => {
-    const c = draw({
-      conditions: { today: 90, history: HISTORY, n_votes: 15 },
-      verdict: { score: 5, spy_state: 'Uptrend', qqq_state: 'Sideways' },
-      signals: power('POWER_3'),
-    })
-    expect(flat(c)).toContain('Pulled to Constructive by breadth and structure')
+    expect(t).not.toContain('scores Constructive')
+    expect(t).not.toContain('Pulled to')
+    expect(t).not.toContain('% of the last')
+    // and the band it argues about is still stated, in one word (the badge
+    // uppercases in CSS, so the text node is title case)
+    expect(t).toContain('Neutral')
   })
 
   it('prints all three voters and inks only the binding one', () => {
@@ -72,28 +63,20 @@ describe('the pull-down reason', () => {
     expect(bold).toHaveLength(1)
     expect(bold[0].textContent).toContain('structure')
   })
-})
 
-describe("the band's base rate", () => {
-  it('counts the score into its band over the loaded history', () => {
+  it('still lets the weakest voter pull the band down — only the sentence went', () => {
     const c = draw({
-      conditions: { today: 70, history: HISTORY, n_votes: 15 },
-      verdict: { score: 9, ...up },
+      conditions: { today: 90, history: HISTORY, n_votes: 15 },
+      verdict: { score: 5, spy_state: 'Uptrend', qqq_state: 'Sideways' },
       signals: power('POWER_3'),
     })
-    expect(flat(c)).toContain('as did 40% of the last 10 sessions')
-  })
-
-  it('omits the rate rather than inventing one when there is no history', () => {
-    const c = render(<RegimeBand conditions={{ today: 70 }} verdict={{ score: 9, ...up }}
-                                 signals={power('POWER_3')} />)
-    expect(flat(c)).toContain('70 scores Constructive.')
-    expect(flat(c)).not.toContain('% of the last')
+    // 90 alone reads Euphoria; two voters short of it pull the word down
+    expect(flat(c)).toContain('Constructive')
   })
 })
 
 describe('the two schemes', () => {
-  it('prints the analysis band with its own score and its own denominator', () => {
+  it('keeps the analysis layer\'s own score — and drops the sentence after it', () => {
     const c = draw({
       conditions: { today: 76, history: HISTORY, n_votes: 15 },
       verdict: { score: 6, spy_state: 'Sideways', qqq_state: 'Sideways' },
@@ -101,10 +84,11 @@ describe('the two schemes', () => {
       regime: { score: 75.0, band_label: 'Extended', of: 9 },
     })
     const t = flat(c)
-    // the seam, live: top band by one scheme, second band by the other
+    // the number stays: without it, 76 and 75 sit on one screen as one reading
     expect(t).toContain('75 / 100 Extended')
-    expect(t).toContain('9 conditions')
-    expect(t).toContain('the band above counts 15')
+    expect(t).not.toContain('empirical quartiles')
+    expect(t).not.toContain('the band above counts')
+    expect(t).not.toContain('position size')
   })
 
   it('prints nothing at all when the analysis layer did not report', () => {
