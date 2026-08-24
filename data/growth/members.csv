@@ -1,39 +1,39 @@
-member_id,source,join_date,plan,billing,price_usd,status,delivery,notes
-G001,whop+paypal,2025-11-14,lifetime,one-time,3399.00,active,discord,"Lifetime;已并入G026(双邮箱同尾号,Andy手工log载明其Discord名与本行handle一致)"
-G002,whop,2025-11-14,plan_8RfO9OFDQdVUV,one-time,999.00,active,discord,
-G003,whop,2025-11-14,lifetime,one-time,3399.00,active,discord,
-G004,whop,2025-11-14,"plan_8RfO9OFDQdVUV,plan_7TpyDYwfvaXzY",annual,1149.00,active,discord,
-G005,whop,2025-11-14,lifetime,one-time,3399.00,active,discord,
-G006,whop,2025-11-14,plan_8RfO9OFDQdVUV,one-time,999.00,active,discord,
-G007,whop,2025-11-14,lifetime,one-time,3399.00,active,discord,"Lifetime(Whop补差价$1,149+$2,250=$3,399,Andy 08-25确认);原canceling系年费订阅因升级终止,非流失"
-G008,whop+paypal,2025-11-14,lifetime,one-time,3399.00,active,discord,"已并入G027(双邮箱同handle,Andy 08-25确认);另付Masterclass $584.10"
-G009,whop,2025-11-14,none,one-time,,active,discord,
-G010,whop,2025-11-14,"plan_8RfO9OFDQdVUV,plan_7TpyDYwfvaXzY",annual,1149.00,active,discord,
-G011,whop,2025-11-16,"plan_8RfO9OFDQdVUV,plan_7TpyDYwfvaXzY",annual,1149.00,active,discord,
-G012,whop+paypal,2025-11-18,lifetime,one-time,3399.00,active,discord,Lifetime;已并入G025(Andy手工log载明其Discord名=本行handle的显示名)
-G013,whop,2025-11-19,lifetime,one-time,3399.00,active,discord,
-G014,whop,2025-11-19,plan_8RfO9OFDQdVUV,one-time,999.00,active,discord,
-G015,whop,2025-11-21,plan_a3AfskxLVcRT2,quarterly,240.00,active,discord,
-G016,whop,2025-11-22,lifetime,one-time,3399.00,active,discord,
-G018,whop+paypal,2025-12-02,"plan_8RfO9OFDQdVUV,plan_6y1CaoSkK6lNC",quarterly,300.00,active,discord,"已并入G017(同一邮箱命名法仅后缀之差,付课程费次日入群,Andy 08-25确认);Premium++旧档$300/3月"
-G019,whop,2026-01-02,plan_S7OD5E3Q4fSXi,one-time,,expired,discord,
-G020,whop,2026-01-03,plan_SUgEa6eV2hGHW,annual,900.00,active,discord,
-G021,whop,2026-01-04,plan_7TpyDYwfvaXzY,annual,1149.00,active,discord,
-G022,whop,2026-01-06,plan_SUgEa6eV2hGHW,annual,900.00,canceling,discord,挽留候选
-G023,whop,2026-01-11,none,one-time,,active,discord,
-G024,whop,2026-01-20,plan_6y1CaoSkK6lNC,quarterly,300.00,active,discord,
-G028,whop,2026-01-31,"plan_a3AfskxLVcRT2,plan_SUgEa6eV2hGHW",quarterly+annual,240.00+900.00,active,discord,"多个订阅plan并存,单价见plan映射"
-G029,whop,2026-02-05,plan_a3AfskxLVcRT2,quarterly,240.00,active,discord,
-G030,whop,2026-02-17,none,free,,active,discord,
-G031,whop,2026-02-19,none,free,,active,discord,
-G032,whop,2026-02-20,plan_a3AfskxLVcRT2,quarterly,240.00,active,discord,
-G033,whop,2026-02-21,none,free,,active,discord,
-G034,whop,2026-03-23,none,free,,active,discord,
-G035,whop,2026-03-25,none,free,,active,discord,
-G036,whop,2026-04-05,plan_a3AfskxLVcRT2,quarterly,240.00,canceling,discord,挽留候选
-G037,whop,2026-04-14,plan_pAMoMvrGL6NJu,annual,1300.00,active,discord,
-G038,whop,2026-05-05,none,free,,active,discord,
-G039,whop,2026-05-25,plan_a3AfskxLVcRT2,quarterly,240.00,active,discord,
-G040,whop,2026-06-20,plan_ySnCQI7dAC94t,monthly,99.00,canceling,discord,挽留候选
-G041,whop,2026-08-20,plan_ySnCQI7dAC94t,monthly,99.00,active,discord,
-G042,alipay-only,2025-11-16,lifetime,one-time,3399.00,active,discord,"Lifetime(支付宝人民币,Andy 08-25口述确认);金额与日期未测量——支付宝渠道无任何流水进过台账"
+person_id,joined,tier,plan,billing,price_usd,status,channels,email_count,in_discord,delivery,aliases,notes
+G001,2025-11-14,lifetime,lifetime,one-time,3399.00,active,paypal;whop,2,Y,discord,G026,"Lifetime;已并入G026(双邮箱同尾号,Andy手工log载明其Discord名与本行handle一致)"
+G002,2025-11-14,lifetime,plan_8RfO9OFDQdVUV,one-time,999.00,active,alipay;whop,1,Y,discord,,
+G003,2025-11-14,lifetime,lifetime,one-time,3399.00,active,paypal;whop,1,Y,discord,,
+G004,2025-11-14,subscription-or-free,"plan_8RfO9OFDQdVUV,plan_7TpyDYwfvaXzY",annual,1149.00,active,whop,1,Y,discord,,
+G005,2025-11-14,lifetime,lifetime,one-time,3399.00,active,paypal;whop,1,Y,discord,,
+G006,2025-11-14,subscription-or-free,plan_8RfO9OFDQdVUV,one-time,999.00,active,whop,1,Y,discord,,
+G007,2025-11-14,lifetime,lifetime,one-time,3399.00,active,whop,1,Y,discord,,"Lifetime(Whop补差价$1,149+$2,250=$3,399,Andy 08-25确认);原canceling系年费订阅因升级终止,非流失"
+G008,2025-11-14,lifetime,lifetime,one-time,3399.00,active,paypal;whop,2,Y,discord,G027,"已并入G027(双邮箱同handle,Andy 08-25确认);另付Masterclass $584.10"
+G009,2025-11-14,subscription-or-free,none,one-time,,active,whop,1,Y,discord,,
+G010,2025-11-14,subscription-or-free,"plan_8RfO9OFDQdVUV,plan_7TpyDYwfvaXzY",annual,1149.00,active,whop,1,Y,discord,,
+G011,2025-11-16,subscription-or-free,"plan_8RfO9OFDQdVUV,plan_7TpyDYwfvaXzY",annual,1149.00,active,whop,1,Y,discord,,
+G012,2025-11-18,lifetime,lifetime,one-time,3399.00,active,paypal;whop,2,Y,discord,G025,Lifetime;已并入G025(Andy手工log载明其Discord名=本行handle的显示名)
+G013,2025-11-19,lifetime,lifetime,one-time,3399.00,active,paypal;whop,1,Y,discord,,
+G014,2025-11-19,subscription-or-free,plan_8RfO9OFDQdVUV,one-time,999.00,active,whop,1,Y,discord,,
+G015,2025-11-21,subscription-or-free,plan_a3AfskxLVcRT2,quarterly,240.00,active,whop,1,Y,discord,,
+G016,2025-11-22,lifetime,lifetime,one-time,3399.00,active,paypal;whop,1,Y,discord,,
+G018,2025-12-02,subscription-or-free,"plan_8RfO9OFDQdVUV,plan_6y1CaoSkK6lNC",quarterly,300.00,active,paypal;whop,2,Y,discord,G017,"已并入G017(同一邮箱命名法仅后缀之差,付课程费次日入群,Andy 08-25确认);Premium++旧档$300/3月"
+G019,2026-01-02,subscription-or-free,plan_S7OD5E3Q4fSXi,one-time,,expired,whop,1,Y,discord,,
+G020,2026-01-03,subscription-or-free,plan_SUgEa6eV2hGHW,annual,900.00,active,whop,1,Y,discord,,
+G021,2026-01-04,subscription-or-free,plan_7TpyDYwfvaXzY,annual,1149.00,active,whop,1,Y,discord,,
+G022,2026-01-06,subscription-or-free,plan_SUgEa6eV2hGHW,annual,900.00,canceling,whop,1,Y,discord,,挽留候选
+G023,2026-01-11,subscription-or-free,none,one-time,,active,whop,1,Y,discord,,
+G024,2026-01-20,subscription-or-free,plan_6y1CaoSkK6lNC,quarterly,300.00,active,whop,1,Y,discord,,
+G028,2026-01-31,subscription-or-free,"plan_a3AfskxLVcRT2,plan_SUgEa6eV2hGHW",quarterly+annual,240.00+900.00,active,whop,1,Y,discord,,"多个订阅plan并存,单价见plan映射"
+G029,2026-02-05,subscription-or-free,plan_a3AfskxLVcRT2,quarterly,240.00,active,whop,1,Y,discord,,
+G030,2026-02-17,subscription-or-free,none,free,,active,whop,1,N,discord,,
+G031,2026-02-19,subscription-or-free,none,free,,active,whop,1,N,discord,,
+G032,2026-02-20,subscription-or-free,plan_a3AfskxLVcRT2,quarterly,240.00,active,whop,1,Y,discord,,
+G033,2026-02-21,subscription-or-free,none,free,,active,whop,1,N,discord,,
+G034,2026-03-23,subscription-or-free,none,free,,active,whop,1,N,discord,,
+G035,2026-03-25,subscription-or-free,none,free,,active,whop,1,Y,discord,,
+G036,2026-04-05,subscription-or-free,plan_a3AfskxLVcRT2,quarterly,240.00,canceling,whop,1,Y,discord,,挽留候选
+G037,2026-04-14,subscription-or-free,plan_pAMoMvrGL6NJu,annual,1300.00,active,whop,1,Y,discord,,
+G038,2026-05-05,subscription-or-free,none,free,,active,whop,1,N,discord,,
+G039,2026-05-25,subscription-or-free,plan_a3AfskxLVcRT2,quarterly,240.00,active,whop,1,Y,discord,,
+G040,2026-06-20,subscription-or-free,plan_ySnCQI7dAC94t,monthly,99.00,canceling,whop,1,Y,discord,,挽留候选
+G041,2026-08-20,subscription-or-free,plan_ySnCQI7dAC94t,monthly,99.00,active,whop,1,Y,discord,,
+G042,2025-11-16,lifetime,lifetime,one-time,3399.00,active,alipay,0,Y,discord,,"Lifetime(支付宝人民币,Andy 08-25口述确认);金额与日期未测量——支付宝渠道无任何流水进过台账"
