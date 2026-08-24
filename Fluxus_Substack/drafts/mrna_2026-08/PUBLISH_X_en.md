@@ -227,10 +227,8 @@ The news is never in the chart.
 
 ---
 
-## 配套宣传推文（发 Article 之后单独发，不带链接——链接惩罚只打 timeline 帖）
+## 配套宣传推文（Andy 08-24 亲拟定稿，Steve 仅修时态；发 Article 之后单独发，不带链接）
 
-> Two positions the same size. One cost thirteen times the other.
->
-> I wrote up the $MRNA trade — the 3 filters, the 5 scanner rules, and exactly how much: 0.25% for 23R. Including the size I cut the day before the news.
->
-> Article pinned on my profile.
+> Some members asked me for the thought process of entering $MRNA right before it exploded. I decided to write it up as one educational post and expand on my trading philosophy and methods. Step by step — pinned on my profile.
+
+*作废留档：Steve 前两版（「Two positions the same size…」对称句 = AI 味头号来源，自家规矩自家犯；台账式 = 不自然）。Andy 的裁决：诚实说来处（members asked）胜过任何设计。*
