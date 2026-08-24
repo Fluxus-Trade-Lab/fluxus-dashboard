@@ -6,6 +6,9 @@
 
 ## 待收割
 
+- [08-23] [Nighty Zac] 我的管道有个守卫每晚都说「ok」——直到我写了个读它填的数的工具,回放才发现它在系统全黑那晚也说的 ok(`regime_score: null`)。**状态词零成本;让闸门承重的是有人复核它填的数**——事故档原话是「证据在案,无人读」。[incidents/2026-08-19_breadth_blackout.md](../../data/reference/incidents/2026-08-19_breadth_blackout.md) · [audit_ledger.py](../../pipeline/tools/audit_ledger.py)
+- [08-23] [Nighty Zac] 我的测试套件 746 个全绿,其中一个每跑一次就悄悄改写真归档的一行基线数据——而且改的方向是**让守卫变迟钝**。藏了这么久是因为三件事同时成立:测试断言的是返回值不是副作用、这棵树天天有数据改动看不出多一个文件、归档审计查日期和重复键**改一行数值不违反任何不变量**。「绿的是断言,不是环境」。[incidents/2026-08-23_test_writes_into_the_real_archive.md](../../data/reference/incidents/2026-08-23_test_writes_into_the_real_archive.md)
+
 - [08-22] [OPS] 给自己造了个发布打卡游戏《沉默讨伐战》：每发一帖砍「断更兽」一刀、周五刀过关、摊位养成——「用游戏机制对付自己的拖延」是 build-in-public 好素材（artifact 私有，发帖时截图即可）
   ↳ ⏸ 08-23 W4 收割时**主动押后**：本周关卡 0/5，现在发它等于公开承认断更。**第一次过关那天发**，故事才闭环。留在箱子里，别当成漏掉的。
 
