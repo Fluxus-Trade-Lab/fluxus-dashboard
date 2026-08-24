@@ -23,6 +23,15 @@
 
 ---
 
+# ⚠️ 08-24 复核更正（Andy 要求查重后发现两处我的错）
+
+1. **「`#welcome` 零文字」不成立** —— MEE6 那 8 条消息的 **embed 里有三块内容**：通用欢迎词 + 规则全文 + **链接卡（官网 / Whop 订阅 / YouTube / X）**。我只查了 content 字段没查 embed，又一次「量错了字段」。
+   **影响**：欢迎文案从「新增」改成「**替换**」——删 MEE6 的 hype 欢迎词（*"coolest trading crew in town" 🚀🔥*，与 anti-dopamine 音区正面冲突），**保留规则 embed 和链接卡**。
+2. **「会员价格无处可见」不成立** —— Whop 订阅链接就在 welcome 链接卡里。改判为「**已有门，但埋在 embed 字段里**」，⑥ 降级为优化项。
+3. 查重结论：**Library 目录、频道 topic、starter-kit 分隔行三条均无既有内容冲突**，全服务器无任何频道导览（#on-boarding 纯入群记录）。规则文本已存在 → 只需在服务器设置把 rules_channel 指向 welcome，不用写新规则。
+
+---
+
 # 六项检查
 
 ## ① 邀请链接是否长期有效
