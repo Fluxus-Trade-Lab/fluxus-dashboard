@@ -36,7 +36,8 @@
 - **Welcome email 的主题行**仍是 Substack 默认的 `You're on the list!` —— 带感叹号,和这份刊物的干冷语气不合,但原稿没写主题行,我不替你编。
 - **paid / imported 两封 Welcome 邮件**仍是默认模板(只改了 free 那封)。
 - **定价**:后台是 月 $39 / 年 $399,本文件 §3 建议的是 $39 / $349 / founding $599(founding 档还没建)。**钱的事我不碰。**
-- **导航栏现状是** `Home · My methods · My A+ setups · Archive · About`,和 §6b 规划的六位不一样。要不要按 §6b 重排,你定。
+- 🔴 **导航栏有两个死链**:`My methods` → `/methods` 和 `My A+ setups` → `/A+setups`,**两个都 Page not found**,
+  而且第二个 URL 里带 `+` 号。站上一共五个导航位,两个是 404。详见 §6b。
 
 > ⚠️ **频率口径已在 2026-08-25 全站统一为「一周一封,每周日」**(§1 promise / §2 free+paid / §5 welcome / §6c 页脚 / §7 bio 六处)。
 > 再改频率就要六处一起改,别只改一处 —— 承诺不一致比承诺高更伤人。
@@ -107,7 +108,7 @@ One letter a week, every Sunday.
 > 瞬间决定订不订的,承诺高了第三周就开始欠债。同时 `Size & Stop` 退役,一个产品一个名字。
 > `The Weather Report` 并进旗舰(每周一封里本来就有市场状态那一段),不单列成权益。
 
-**Founding subscription benefits:**
+**Founding subscription benefits:** 🔒 **不建。Andy 2026-08-25 定。**（下方文案留档,将来要开再取）
 ```
 · Everything above, plus the book itself — my live positions in order of size, updated when they change,
   with the arithmetic that set each one.
@@ -117,19 +118,62 @@ One letter a week, every Sunday.
 
 ---
 
-## 3. 定价
+## 3. 定价 —— 🔒 已定(Andy 2026-08-25)
 
-| 档 | TSF | 建议你 | 说明 |
-|---|---|---|---|
-| 月 | $49 | **$39** | 略低于他,降低试错门槛 |
-| 年 | $399 | **$349** | 相当于 9 个月价,常规锚点 |
-| Founding | $499 | **$599** | **反向定价** —— 他 founding 只溢价 25%,你有真实业绩和持仓透明,溢价空间比他大 |
+| 档 | 后台实际 | 状态 |
+|---|---|---|
+| 月 | **$39** | ✅ 已设 |
+| 年 | **$399** | ✅ 已设 |
+| Founding | — | 🔒 **不建** |
 
-> 定价是你的决定,不是我的。上面是基于「你的可交付比他多一个平台层 + 一份 7 年真实业绩」给的锚。**唯一硬建议:别定得比他低太多。** 低价传递的是「内容更薄」,不是「更划算」。
+> 🔒 **付费目前不开启。** 先把货架和读者建起来,架墙的时机另议(墙的位置见 `_BOILERPLATE.md` 块 D)。
+> *留档:原建议年费 $349、founding $599。Andy 定 $399 / 不建 founding。定价是他的决定,不再讨论。*
 
 ---
 
 ## 4. About 页
+
+### 4a. 三家对标(2026-08-25 实读 TSF / JB / Le Shrub 的 About 页)
+
+| | **TSF** | **JB** | **Le Shrub**(#10 Finance, 34K 订阅) | **我们(现行 §4)** |
+|---|---|---|---|---|
+| 长度 | 中等 | **~1,850 词** | **~120 词** | ~280 词 |
+| 开头是 | **产品** | **产品/理念** | **产品** | **人 + 理念** |
+| 个人故事 | 无 | 无 | 无 | **有** |
+| 写频率 | ✅ 4x/周 | ✅ 日更+周末 | 隐含 | ❌ **没写** |
+| 「你能拿到什么」清单 | ✅ 三条 | ✅ 全篇 | ✅ | ❌ **没有** |
+| 免责 | ✅ 大段 | ✅ | 模板自带 | ❌ **没有** |
+| 报价 | 无 | ✅ $10/天 | 无 | 无 |
+
+**三条读出来的东西:**
+
+1. **长度不是杠杆。** 120 词的 Le Shrub 是 Finance 第 10、34K 订阅,About 基本是 Substack 默认模板;
+   1,850 词的 JB 是第 3。**两端都成立** —— 说明 About 页不是增长引擎,别照着 TSF 的样子把它做成落地页。
+2. **三家全部「产品先行」,没有一家从人开头。** 我们是唯一从人和理念开头的
+   —— 这**不改**。三家都不写这个,正是它成为我们的东西的原因;而且 Le Shrub 证明了
+   把 About 优化成 TSF 那样并不带来增长,那就等于白白交出唯一属于自己的一段。
+3. **但我们缺的三件他们都有**:频率 · 「你能拿到什么」· 一句免责。
+   尤其免责 —— 我们的 About **写了 39.9% 这个具体数字**,一个具体的业绩数字旁边不放免责,是风险不是风格。
+
+**✅ 结论:声音不动,补三件。** 在「I won't promise to be right…」之后、Fluxus 命名那段之前插入:
+
+```
+What you get: one letter a week, every Sunday. Every idea with its entry, its stop, and what
+I'm risking in percent — of the trade and of the account. The book in order of size. And the
+losses, which are most of them: my win rate is 39.9%.
+```
+
+结尾追一句(用 `_BOILERPLATE.md` 块 A 已有的自有语言,不另造):
+
+```
+None of this is advice. I don't know your account, your taxes, or how well you sleep.
+Measure your own water.
+```
+
+> ⏳ **状态:待 Andy 点头再粘。** 站上现在是下方 §4 正文(2026-08-25 已替换掉 3 年前旧版),
+> 这两块是在它之上的增补,不是重写。
+
+### 4b. 正文(站上现行版本)
 
 ```
 The market is a game. Most people play it with their feelings.
@@ -191,6 +235,75 @@ The record → [Track Record 那篇的链接]
 
 ---
 
+## 5b. Welcome email — paid subscribers(草稿,Andy 2026-08-25 指派起草)
+
+*后台位置:Settings → Emails → Welcome email to paid subscribers。目前仍是 Substack 默认模板。*
+*⚠️ **付费暂不开启**,所以这封短期内不会触发 —— 但先备好,开墙那天不用临时写。*
+
+**Subject:**
+```
+You're in.
+```
+
+**正文:**
+```
+You're in. Here's what changes.
+
+You get every letter, not just the free ones — the same letter, with no wall in the middle of
+the arithmetic.
+
+You get the book. Positions in order of size, each with its entry, its stop, the trade risk and
+the portfolio risk. It goes up before the trade resolves, which is the only version of that
+worth reading.
+
+You get the ones that didn't work. My win rate is 39.9%. The losers are in the letter for the
+same reason the winners are — a record that shows you only the good half teaches the wrong job.
+
+One letter a week, every Sunday. And if a week goes by where I have nothing measured that's
+worth your time, I'll say so instead of filling the space. That's the deal.
+
+— Fluxus
+```
+
+> **这封的活儿是消化买家后悔**,不是再推销一次。所以三段都是「你现在拿到了什么」的具体物,
+> 不是形容词;最后一段先承认「可能有没东西可写的一周」——**先说出来,比第三周被发现强**。
+
+---
+
+## 5c. Welcome email — imported subscribers(草稿,Andy 2026-08-25 指派起草)
+
+*后台位置:Settings → Emails → Welcome email to imported subscribers。目前仍是 Substack 默认模板。*
+*触发场景:从 Discord / 旧名单 / 老 Fluxus 订阅者导进来的人 —— **他们没主动订过这份刊物**。*
+
+**Subject:**
+```
+This is How Much.
+```
+
+**正文:**
+```
+You're getting this because you're already somewhere I write — the Discord, an old list, or you
+signed up for Fluxus before it had a name.
+
+This is How Much. It's a market letter about size: every idea arrives with its entry, its stop,
+and what I'm risking in percent. One letter a week, every Sunday.
+
+I measure, I don't predict. No calls, no alerts, no price targets pulled out of the air. And
+you'll see the losses — my win rate is 39.9%, and the year still works because the winners are
+3.40x the losers.
+
+If that isn't what you want in your inbox, unsubscribe in one click. I'd rather have a short
+list that reads than a long one that doesn't.
+
+— Fluxus
+```
+
+> **这封唯一的活儿是压住投诉率。** 导入名单最大的风险不是退订,是被标垃圾邮件 —— 一旦标了,
+> 后面每一封的送达率都受损。所以**第一段就解释「你为什么会收到这个」**,最后一段**主动把退订推到他面前**。
+> 「宁可名单短而有人读」这句不是客气,是这封信的全部策略。
+
+---
+
 ## 6. Sections(Substack 分栏)—— 🔒 方案 C:两个栏 + 主 feed
 
 *2026-08-25 改。旧版开 4 栏,和 `06_SECTIONS.md` 论证过的方案 C 冲突。**你现在有 0 篇 —— 4 个空栏比没有栏更难看。***
@@ -209,6 +322,23 @@ The record → [Track Record 那篇的链接]
 ### 6b. 导航栏(不是栏目,零成本,当天可做)—— 这才是 0 篇时最该做的事
 
 *JB 排第 3、1,259 篇、一个分栏没有,**但导航栏钉了 6 篇**。他把说服路径放在导航,不放在分栏。*
+
+#### 🔴 现状对账(2026-08-25 实测)
+
+**Sections 后台是 0 个栏** —— 所以 `My methods` / `My A+ setups` 不是栏目,是**自定义导航链接**。
+**两个都指向不存在的页面:**
+
+| 现在的位 | 指向 | 实测 |
+|---|---|---|
+| Home | `/` | ✅ |
+| **My methods** | `/methods` | 🔴 **Page not found** |
+| **My A+ setups** | `/A+setups` | 🔴 **Page not found**(URL 里还带 `+`) |
+| Archive | `/archive` | ✅(0 篇) |
+| About | `/about` | ✅ |
+
+> **五个导航位里两个是 404。** 这不是「和规划不一样」的问题,是站上现在就有的可见破损。
+> 五篇上架前必须处理:要么删掉这两个链接,要么把它们指到真实文章。
+> 好消息是这两个名字**正对应下表的前两位** —— 上架后直接改指向即可,名字都不用换。
 
 | 导航位 | 指向 | 证明什么 |
 |---|---|---|
