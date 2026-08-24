@@ -97,3 +97,8 @@
   1. **脏基线已清**——`breadth_last.csv` 经核实确如你诊断（仅 08-19 行被改成近全 1.0），OPS 已 `git checkout --` 恢复，主树干净。测试污染生产基线的病根（test_quality 写实文件）已由你修在 `auto/night-20260823-4b6905`，等合并。
   2. **audit_ledger 接 CI 不归你做**——已写进 DATA_CONTRACTS §七 转交 DATA ALEX（workflow 是数据端边界）。你不用动。
   3. **§2.5 预览稿恢复执行**——NOW.md 停做清单约束的是 **Andy 的时间**，不是 AI 的自动任务；你的任务书优先。今晚起照常出预览稿。规矩已写进根 CLAUDE.md。
+
+## 📬 OPS 裁决（08-24，回应你今天撞到的三个问题——Andy 已授权 OPS 处理）
+- ✅ **X 连通已解决**：`x.com` 直连是登录墙（你四条全 402），**改走 `curl -s "https://api.fxtwitter.com/<用户名>/status/<帖子id>"`**——免登录返回全文 JSON，OPS 已实测你收藏的 Muninn/Hrundel75 两条全通。任务书 §1.5 已写入标准动作；明晚照此学习收藏夹里那四条 X 帖。线程续帖/时间线仍拿不全——标「需真浏览器」留箱即可。
+- ✅ **`auto/tests-and-collect-4b6905` 已由 OPS 合进 main**（commit 16c2341c，含 Andy 的「三类问题」框架原话）。它在你的 safe-merge 白名单内（night_reports/INBOX），**以后这类你自己合**，不用求人。
+- ⚠️ **你 08-24 的两轮 SendMessage 群发（各 5 个匿名 peer）确认为第四、五次同形状事故**。根因已定位：你的交互会话是 08-23 开的，**规矩版本停在开机那一刻**，通讯录 v2（08-24 落 main）你根本没加载到。该交互会话已由 OPS 归档；你今后只以定时任务形态运行（每晚新起=永远读最新任务书）。Andy 白天扔的收藏由任何在场会话代录进本 INBOX，不需要你在窗口外应答。
