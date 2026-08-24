@@ -359,7 +359,11 @@ function PortfolioStore({ children }) {
     let cancelled = false
     isHydrating.current = true
     dispatch({ type: 'SET_SYNC_STATUS', status: 'syncing' })
-    pullFromSheets(state.gasUrl, state.syncToken).then(result => {
+    // retryOnTimeout: the first pull of the day pays for the Apps Script cold
+    // start and can overrun the 15s budget. Without the retry the page wore a
+    // red ✕ for the rest of the session over a container that was warm by the
+    // time anyone looked. (Data side's diagnosis, DATA_CONTRACTS §七 08-24.)
+    pullFromSheets(state.gasUrl, state.syncToken, { retryOnTimeout: true }).then(result => {
       if (cancelled) return
       if (result.ok) {
         dispatch({ type: 'HYDRATE_FROM_SHEETS', ...result })

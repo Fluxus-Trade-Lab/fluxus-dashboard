@@ -15,6 +15,14 @@ export default function SettingsPanel({ onClose }) {
     setTestResult(null)
     const result = await testConnection(state.gasUrl, state.syncToken)
     setTestResult(result)
+    /* A successful test IS a successful sync — it pulled the sheet. Until
+       2026-08-24 this only set local state, so the header could say "367
+       trades, connected" while the ✕ from a cold start that morning stayed
+       lit: nothing else clears that mark, because clearing it takes a push and
+       a push takes a data change. Andy reported the ✕; the data side traced it
+       and handed back two fixes (DATA_CONTRACTS §七). This is the first.
+       A failed test leaves the mark alone — it is not new information. */
+    if (result.ok) dispatch({ type: 'SET_SYNC_STATUS', status: 'success' })
     setTesting(false)
   }
 
