@@ -41,6 +41,7 @@
 - **Nighty Zac**：dashboard夜间自学 routine、Fluxus data night study
 - **Plumber Joe**：data plumbing AM routine
 - **OPS Fable**：ClaudeCode 多Agent任务管理架构
+- **Growth Gary**：增长官（Andy 08-25 定名）——会员台账/转化率/收入对账；文件边界 `data/growth/`；周一 09:40 自动记账 routine 挂本线
 - **联邦之外（个人事务，与工作无关，不写本仓库文件）**：健身日报/周报、皮质醇×2（家在 `~/Documents/Fitness-2026`）；IB panel 两个（家在 `~/ibkr_order_panel`）
 
 ## 资料区与单一写入方
@@ -53,7 +54,7 @@
   - `data/reference/incidents/`、`DATA_RELIABILITY.md` §六 追加行 → Plumber Joe
   - `data/research/night_reports/` → Nighty Zac
   - `data/research/repo_health/` → OPS Fable（含云端 routine）
-  - `data/growth/` → 增长官（growth-officer 子 agent，挂 OPS 线；周一自动记账）
+  - `data/growth/` → **Growth Gary**（08-25 升为具名线；growth-officer 子 agent 与周一 09:40 记账 routine 同属本线）
   - `data/content/`（posts.csv 等）、`Fluxus_Receipts/` → Marketing Steve（08-23 补：此前无主，posts.csv 断更 17 天没人负责）
   - `Fluxus_Brand/` 按二级目录分笔：`templates|record|copybook` → Studio Q；`research|voice|ops|visual` → Marketing Steve
 
