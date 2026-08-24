@@ -169,3 +169,38 @@ status：active 35 · canceling 4 · expired 1｜billing：subscription 13 · on
 ### 附：Masterclass 的处置思路（Andy 08-25 提出，执行不在增长线）
 
 Andy：「可以变成可见，然后改成不可购买。或者数量满了等等。」即以「已售罄 / 满员」形态陈列而非隐藏，保留社会证明与期待感，同时不接单。**Whop 店面设置属 Marketing Steve / Andy，增长官只记录不执行。**若执行，增长台账需同步：Masterclass 由 `Hidden` 改为 `Visible + 不可购买`。
+
+---
+
+## 🚨 更正：`prod_0WddY2iwoTitp` 不是 Substack 产品，是 Premium++ 旧档（2026-08-25，Andy 质疑后复查）
+
+**本文前两节把 `prod_0WddY2iwoTitp` 认成「Substack for PT Swing Traders」，是错的。**Andy 08-25 质疑「这 6 个人确定不是挂靠在 Premium 档位上？」后，逐人复查后台 Memberships 页，8 个样本 8/8 全部推翻原结论。
+
+### 正确的产品对照（后台 Memberships 页产品名 × 导出 Product IDs，逐人核对）
+
+| Product ID | 后台产品名 | 状态 | 挂靠 |
+|---|---|---|---|
+| `prod_dTRZGYQvAc0pe` | Swing Trade Masterclass | Hidden（列表可筛） | 15 |
+| `prod_JP6vlypnDQTNk` | Premium Membership | Visible + Discover | 10 |
+| `prod_lqtg4j5LTtBVh` | **Premium++ Members Access（新档）** | Visible，$149/月 | **1** |
+| `prod_0WddY2iwoTitp` | **Premium++ Members Access（旧档）** | **已归档，列表里没有** | **7** |
+| （另有） | Substack for PT Swing Traders | 死档，仅 2 条 membership 且均 Ended | 0 活跃 |
+
+**关键：两个产品同名「Premium++ Members Access」——新档在列表里，旧档已归档。**后台 Products 页显示 Premium++「Active users 1」指的只是新档；旧档的 7 人不在那个计数里。
+
+**Andy 说「Substack for PT Swing Traders 目前没有这个产品，在设计中」是对的**——那个产品确实是死的（仅一位已流失会员的两条 Ended membership）。与它同时出现在 Memberships 视图里的只是巧合，我把「列表里没见过的产品名」直接安到了「导出里没对上的 Product ID」上，**没有做逐人核对就当成了发现**。
+
+### 错在哪（方法论）
+
+两个「异常项」同时出现，就假定它们互相解释。实际验证只需一步：拿任一挂靠者，比对「导出的 Product IDs」与「后台 Memberships 页显示的产品名」——G004 的导出是 `prod_dTRZGYQvAc0pe,prod_0WddY2iwoTitp`，后台显示 Masterclass + Premium++，一步即证。
+**这一步我当时没做，因为结论「看起来能自洽」。自洽不是证据。**
+
+### 数字影响
+
+- **MRR 不变**：$1,149/年 × 4 = $383/月 的算术成立，错的只是它挂在哪个产品名下。总计仍为**已测量 $1,052 + 反解 $383 = 下限 $1,435**。
+- **前节「遗留产品与在设计产品重名」整节作废**——不存在「6 人为一个在设计中的产品付费」这回事。他们付的是 Premium++ 旧档，权益即 Premium++，交付路径清楚。**该节提出的三个「待决」中，第①条（交付问号）与第②条（新产品迁移）随之取消。**
+- **仍然成立的一条**：归档产品是否静默阻断续费，观察点 `2026-10-17`（G024）。旧档 Premium++ 已归档而 6 人仍在续费，这个风险与产品叫什么名字无关。
+
+### G007 状态更正（Andy 08-25 确认）
+
+**G007 是永久会员，仍在。** 后台显示的「Cancels in 5 months」是他 Premium++ 旧档订阅的取消，**不是会员流失**。此前把他列为「累计 $3,983 的大客流失、挽留优先」是错的口径，`08-24 baseline` 与本文前节的相关表述一并作废。
