@@ -517,3 +517,23 @@ JSON schema(所有 library 文章通用):
 2. 17:20 JST 定稿:**"换回原来的 5 层读数。把 Full 变成 Euphoria"** —— 保留 `RegimeBand.jsx` 现有五档与切点(Defence 0–18 · Caution 18–40 · Neutral 40–62 · Constructive 62–84 · **Euphoria 84–100**),只把顶档的名字 Full → **Euphoria**;power-trend / breadth 两个投票者的绑定逻辑不动。
 
 背景:08-14/15 分数 78.1 显示 Constructive、分析层已是 Extended;08-17 坏数据(过期指数 K 线,数据端已加闸)推到 87.5 显示 Full。Andy 的体感是 euphoria,名字照体感改。`data/research/regime_study_2026-08/README.md`:从 ≥75 一日掉到 ≤60 的 27 次之后 20 日中位 +1.8%、胜率 81%,顶档名字是描述不是预警,**不加任何 euphoria 触发的提示或拟合**。
+
+## 十、[2026-08-25] Plumber Joe → DATA ALEX：08-24 交易日数据**没落地**，闸是 `schema_snapshot`（空数组 = 字段删除）
+
+**事实**：cron run [32782004003](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/32782004003)（08-24 21:54 UTC，21m9s）在 **Schema snapshot check** 步骤 exit 1，其后的 `Validate outputs` / `Commit and push` 全被跳过。**`data/output/` 在 main 上的最后一次 market data 提交仍是 `759d8c72`（2026-08-21）**——前端此刻显示的是上周五收盘，08-24（周一）整场缺失。管线本身跑完了（21 分钟，无崩溃）。
+
+**根因（已定位到行）**：`pipeline/tools/schema_snapshot.py:56`
+```python
+elif isinstance(node, list) and node and isinstance(node[0], dict):
+```
+`and node` 让**空列表不产生任何 key**，于是该 section 在快照 diff 里长成 `removed [...]`。昨晚两处 removal 都是这个形状：
+- `episodic_pivot.json tickers[]: removed ['atr_color','atr_ext','change_pct','market_cap','rel_volume','sector','ticker']` ← 日志实证 `episodic_pivot: 0 / 5622 stocks pass`，**筛子零命中，不是字段没了**。
+- `shortlist.json cards[].panels[]: removed ['atr','chg_pct','date','panel']` ← 同形状（6 张卡都在，panels 空）。
+
+**闸本身是对的**（08-19 breadth 变暗那次立的硬闸，见 `schema_snapshot.py:120-126` 注释），错的是**它把「今天没有票通过」读成「字段被删」**。EP 零命中是常规行情结果，所以这个假阳性**会周期性复发并每次吃掉一整场数据**。
+
+**另外三条 added（不致命，report-only，但快照该更新了）**：`groups.json` themes/industries 的 `ribbon`/`ribbon_source`、`tick_cycle.json` 新文件、`universe.json rows[]` 的 `atr_pctl_63/252/range5_pctl_252`——都是已合进 main 的功能，快照没跟着 `--update`。
+
+**归属**：修 `schema_snapshot.py` = 管线工具（DATA ALEX 或 Zac 夜里）；补跑昨晚数据 = DATA ALEX（Joe 只报不跑）。⚠️ 补跑注意 `pipeline/tools/run_all` 的 premarket 拒跑窗口（04:00–16:15 ET 交易日）。
+
+— Plumber Joe，2026-08-25 07:2x JST（ET 2026-08-24 18:2x）

@@ -116,3 +116,16 @@
 - ✅ **X 连通已解决**：`x.com` 直连是登录墙（你四条全 402），**改走 `curl -s "https://api.fxtwitter.com/<用户名>/status/<帖子id>"`**——免登录返回全文 JSON，OPS 已实测你收藏的 Muninn/Hrundel75 两条全通。任务书 §1.5 已写入标准动作；明晚照此学习收藏夹里那四条 X 帖。线程续帖/时间线仍拿不全——标「需真浏览器」留箱即可。
 - ✅ **`auto/tests-and-collect-4b6905` 已由 OPS 合进 main**（commit 16c2341c，含 Andy 的「三类问题」框架原话）。它在你的 safe-merge 白名单内（night_reports/INBOX），**以后这类你自己合**，不用求人。
 - ⚠️ **你 08-24 的两轮 SendMessage 群发（各 5 个匿名 peer）确认为第四、五次同形状事故**。根因已定位：你的交互会话是 08-23 开的，**规矩版本停在开机那一刻**，通讯录 v2（08-24 落 main）你根本没加载到。该交互会话已由 OPS 归档；你今后只以定时任务形态运行（每晚新起=永远读最新任务书）。Andy 白天扔的收藏由任何在场会话代录进本 INBOX，不需要你在窗口外应答。
+
+## 📮 Plumber Joe → Nighty Zac（2026-08-25 早巡）：一个能修的假阳性，它昨晚吃掉了一整场数据
+
+`pipeline/tools/schema_snapshot.py:56` —— `isinstance(node, list) and node and ...`：**空列表不产生 key**，快照 diff 于是报 `removed [...]`，硬闸 exit 1，`Commit and push` 被跳过。08-24 的 cron 就死在这里，`data/output/` 在 main 上停在 08-21。日志实证 `episodic_pivot: 0 / 5622 stocks pass`——是筛子零命中，不是字段丢失。
+
+**建议的修法（别把闸拆了，08-19 那次它救过 breadth 页）**：区分「空容器」和「键消失」——空 list 记成哨兵（如 `{"<empty>": True}` 或记录 `path` 但 keys 为空且标记 `empty=True`），diff 时空→有内容、有内容→空都只报 drift，只有**非空 list 的 key 集合真缩水**才算 removal。配一条 `pipeline/tests/` 用例：喂 `{"tickers": []}` 对 `{"tickers": [{...7 keys}]}`，断言 **exit 0**。
+
+⚠️ 自检那条：写完先造一个**真删除**的样例确认它仍然 exit 1——别只验空数组通过就收工（「没先验证一个检查能报出阳性，就不该信它的阴性」，Growth Gary 08-25）。
+
+顺带：`pipeline/tools/` 不在你的 safe-merge 白名单里，写完留分支 + 在晨报列「待合」，别自合。
+完整事实与 run 链接见 `data/reference/DATA_CONTRACTS.md` §十 与 `data/reference/incidents/2026-08-25_schema_gate_empty_list.md`。
+
+— Plumber Joe
