@@ -304,7 +304,13 @@ class TestRequiredBlocks:
         from pipeline.quality import check_site, REQUIRED_BLOCKS
         (tmp_path / "breadth.json").write_text(json.dumps(
             {"breadth": {"t2108": 5}, "mm": {"up_4pct": 1}, "verdict": None}))   # keys absent / explicit null
-        rep = check_site(tmp_path, "2026-08-19")
+        # history_dir MUST be passed. Its default is the real
+        # data/history/quality/, so omitting it writes this fixture's
+        # all-null rates into the production baseline -- silently, because
+        # baseline() is a median and a single 1.0 row only RAISES the bar,
+        # making real regressions less likely to trip. Diagnosed 2026-08-23,
+        # fixed on a branch that never merged, still live on 2026-08-25.
+        rep = check_site(tmp_path, "2026-08-19", tmp_path / "hist")
         assert set(rep["missing_blocks"]["breadth.json"]) >= {"regime", "state_board", "verdict", "conditions"}
         assert rep["status"] == "severe"
 
@@ -316,3 +322,48 @@ class TestRequiredBlocks:
         missing = check_required_blocks(tmp_path)
         assert "breadth.json" not in missing
         assert missing.get("watchlist.json") == ["<file missing>"]
+
+
+class TestTheSuiteDoesNotWriteProductionBaselines:
+    """A test run must not be able to move a real quality baseline.
+
+    Twice now (2026-08-19 and again 2026-08-25) a test called check_site
+    without a history_dir and overwrote data/history/quality/breadth_last.csv
+    with its fixture's all-null rates. Nothing failed: baseline() is a median,
+    so a fabricated 1.0 row only RAISES the null-rate bar, and the gate gets
+    quieter rather than louder. The first fix was written on 2026-08-23 and
+    lost with an unmerged branch -- so this guards the shape, not that one call.
+    """
+
+    def test_check_site_defaults_to_the_real_directory(self):
+        """Documents WHY the argument matters, so a future default change is loud."""
+        import inspect
+        from pipeline.quality import check_site, QUALITY_DIR
+        default = inspect.signature(check_site).parameters["history_dir"].default
+        assert default == QUALITY_DIR
+        assert str(QUALITY_DIR).startswith("data/history")
+
+    def test_no_test_calls_check_site_without_a_history_dir(self):
+        """Reads this suite's own source. Cheap, and it is the only thing that
+        would have caught either occurrence -- both were invisible at runtime."""
+        import ast
+        from pathlib import Path
+        offenders = []
+        for f in sorted(Path("pipeline/tests").glob("test_*.py")):
+            tree = ast.parse(f.read_text())
+            for node in ast.walk(tree):
+                if not isinstance(node, ast.Call):
+                    continue
+                fn = node.func
+                name = getattr(fn, "attr", None) or getattr(fn, "id", None)
+                if name not in ("check_site", "check_source"):
+                    continue
+                # check_site(output_dir, date, history_dir);
+                # check_source(source, rows, date, history_dir)
+                need = 3 if name == "check_site" else 4
+                has_kw = any(k.arg == "history_dir" for k in node.keywords)
+                if len(node.args) < need and not has_kw:
+                    offenders.append(f"{f.name}:{node.lineno} {name}")
+        assert not offenders, (
+            "these calls fall back to the production quality directory: "
+            + ", ".join(offenders))
