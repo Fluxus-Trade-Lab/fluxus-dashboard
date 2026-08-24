@@ -51,19 +51,19 @@ describe('the sentence that used to explain the word', () => {
     expect(t).toContain('Neutral')
   })
 
-  it('prints all three voters and inks only the binding one', () => {
+  it('does not print the voter row either — only the word it produces', () => {
     const c = draw({
       conditions: { today: 76, history: HISTORY, n_votes: 15 },
       verdict: { score: 6, spy_state: 'Sideways', qqq_state: 'Sideways' },
       signals: power('POWER_3'),
     })
-    const items = [...c.container.querySelectorAll('ul li')]
-    expect(items.map((li) => li.textContent.trim().split(' ')[0])).toEqual(['breadth', 'structure', 'power'])
-    const bold = items.filter((li) => li.querySelector('.font-semibold'))
-    expect(bold).toHaveLength(1)
-    expect(bold[0].textContent).toContain('structure')
+    const t = flat(c)
+    // the row went on 2026-08-24; the votes still decide the word
+    expect(c.container.querySelectorAll('ul li')).toHaveLength(0)
+    expect(t).not.toContain('SPY+QQQ not in uptrend')
+    expect(t).not.toContain('SPY POWER 3')
+    expect(t).toContain('Neutral')
   })
-
   it('still lets the weakest voter pull the band down — only the sentence went', () => {
     const c = draw({
       conditions: { today: 90, history: HISTORY, n_votes: 15 },
@@ -76,7 +76,12 @@ describe('the sentence that used to explain the word', () => {
 })
 
 describe('the two schemes', () => {
-  it('keeps the analysis layer\'s own score — and drops the sentence after it', () => {
+  /* This card cuts five bands over `conditions.today` (fifteen conditions, for
+     position size); `regime.py` cuts four over `regime.score` (nine conditions,
+     empirical quartiles, for analysis). Both still run. Only one was ever
+     actionable from this page, and on 2026-08-24 the other stopped printing
+     here. */
+  it('says nothing about the analysis layer, even when it reported', () => {
     const c = draw({
       conditions: { today: 76, history: HISTORY, n_votes: 15 },
       verdict: { score: 6, spy_state: 'Sideways', qqq_state: 'Sideways' },
@@ -84,19 +89,10 @@ describe('the two schemes', () => {
       regime: { score: 75.0, band_label: 'Extended', of: 9 },
     })
     const t = flat(c)
-    // the number stays: without it, 76 and 75 sit on one screen as one reading
-    expect(t).toContain('75 / 100 Extended')
-    expect(t).not.toContain('empirical quartiles')
-    expect(t).not.toContain('the band above counts')
-    expect(t).not.toContain('position size')
-  })
-
-  it('prints nothing at all when the analysis layer did not report', () => {
-    const c = draw({
-      conditions: { today: 76, history: HISTORY, n_votes: 15 },
-      verdict: { score: 6, ...up }, signals: power('POWER_3'),
-    })
-    expect(flat(c)).not.toContain('analysis scheme')
+    expect(t).not.toContain('analysis scheme')
+    expect(t).not.toContain('75 / 100')
+    expect(t).not.toContain('Extended')
+    expect(t).toContain('76 / 100')   // this card's own score is untouched
   })
 })
 

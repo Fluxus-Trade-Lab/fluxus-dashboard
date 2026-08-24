@@ -46,7 +46,8 @@ import { MissingBlock } from './VerdictCard'
  * The seam is not narrow. `regime.py` calls >= 75 Extended and this file calls
  * >= 84 Euphoria, so on 39 of 260 archived sessions — 15% — the analysis layer
  * sits in its top band while the display does not. A comment cannot hold that
- * open; `SchemeSeam` prints both, each with its own number and its own job.
+ * open; the analysis layer's own score used to print beside this one until
+ * 2026-08-24 — see the note above `RegimeBand` for why it no longer does.
  */
 /* Top band renamed Full -> Euphoria (Andy 2026-08-19). A name change only:
    the cuts, the five-band scheme and the voter binding are untouched, and
@@ -309,41 +310,22 @@ function ConditionsLine({ history, score, binds }) {
    the paragraph Andy removed on 2026-08-24 and has no other reader. */
 
 
-/**
- * The other scheme's word, printed beside ours instead of behind a comment.
- *
- * The file has warned since 2026-08-15 that two band schemes run over "the same
- * 0-100 score" and that mixing them silently produces wrong numbers — it already
- * did once, in a trade-attribution table. Two things make the warning too weak
- * to hold on its own:
- *
- *   1. They are not the same score. Display counts FIFTEEN conditions; the
- *      analysis layer counts NINE. On 2026-08-20 they read 76 and 75.0.
- *   2. The seam is wide. `regime.py` calls >= 75 Extended and this file calls
- *      >= 84 Euphoria, so on 39 of those 260 sessions — 15% — the analysis
- *      layer is in its top band while the display is not.
- *
- * So both are printed, each with its own number, its own denominator of
- * conditions, and its own job. A reader who takes the wrong one now has to
- * ignore a label to do it.
- */
-function SchemeSeam({ regime }) {
-  if (!regime?.band_label || regime.score == null) return null
-  return (
-    /* The sentence after the em-dash — "9 conditions, empirical quartiles; the
-       band above counts 15; use this one for statistics, that one for position
-       size" — went on 2026-08-24. The NUMBER stays: it is the only place this
-       page shows the analysis layer's own score, and without it 62 and 72 sit
-       on one screen with nothing saying they are two instruments. Label and
-       value, like every other reading on this page. */
-    <p className="m-0 mt-3 text-[10px] font-mono text-[var(--color-text-muted)]">
-      <span className="uppercase tracking-[.18em]">analysis scheme</span>{' '}
-      {Number(regime.score).toFixed(0)} / 100 <b className="font-semibold">{regime.band_label}</b>
-    </p>
-  )
-}
+/* `SchemeSeam` printed the analysis layer's own score beside this one —
+   "analysis scheme 72 / 100 Healthy". Two schemes really do score this page:
+   this file cuts Defence/Caution/Neutral/Constructive/Euphoria over
+   `conditions.today` (fifteen conditions, fixed thresholds, for position size),
+   and `regime.py` cuts Damaged/Mixed/Healthy/Extended over `regime.score`
+   (nine conditions, empirical quartiles, for bucketing trades in analysis).
+   The seam is wide — on 39 of 260 sessions one is in its top band and the
+   other is not.
 
-export default function RegimeBand({ verdict, signals, conditions, regime, onNavigate }) {
+   Andy took the line off on 2026-08-24, and the reason it can go is that only
+   one of the two is ACTIONABLE from this page. The other is a statistics tool,
+   and a statistics tool does not need a seat on the morning dashboard to be
+   used correctly by the notebook that calls it. `regime` is still in the
+   payload; nothing on this card reads it now. */
+
+export default function RegimeBand({ verdict, signals, conditions, onNavigate }) {
   const cast = { breadth: breadthVoter(verdict), structure: structureVoter(verdict),
                  power: powerVoter(signals) }
   const voters = Object.values(cast).filter(Boolean)
@@ -418,29 +400,17 @@ export default function RegimeBand({ verdict, signals, conditions, regime, onNav
           ink weight — which is the same fact, said in three words instead of
           thirty. */}
 
-      {/* The three voters, which this file's own header has promised since
-          2026-08-10 would "print beside it so the disagreement stays visible"
-          and which nothing has printed. The binding one carries ink weight;
-          the others recede. No hue — the disagreement has to survive a
-          greyscale print, and one of these three is already a red badge. */}
-      <ul className="list-none p-0 m-0 mt-2 flex flex-wrap gap-x-5 gap-y-1">
-        {voters.map((v) => {
-          const binds = v.level === weakest.level
-          return (
-            <li key={v.name} className="text-[12px] font-mono whitespace-nowrap">
-              <span className="uppercase tracking-[.14em] text-[var(--color-text-muted)]">{v.name}</span>{' '}
-              <span className={binds ? 'font-semibold text-[var(--color-text-bold)]'
-                                     : 'text-[var(--color-text-secondary)]'}>{v.word}</span>
-            </li>
-          )
-        })}
-      </ul>
+      {/* The three voters printed here as a row — "breadth +2/12 · structure
+          SPY+QQQ not in uptrend · power SPY POWER 3". Andy removed it on
+          2026-08-24 with the last of this page's chrome. They have not stopped
+          voting: `weakest` still sets the band word above, and the guard below
+          still refuses to compute a reading off fewer than three of them. What
+          went is the printout. */}
 
       {/* rule three, same as the badge: the endpoint wears red only when
           the band itself binds (Defence/Caution); an all-clear day stays ink */}
       <ConditionsLine history={conditions?.history} score={score} binds={level <= 1} />
 
-      <SchemeSeam regime={regime} />
     </section>
   )
 }

@@ -7,7 +7,6 @@ import useWritingSync from '../hooks/useWritingSync'
 import Placeholder from './Placeholder'
 import LibraryPage from './library/LibraryPage'
 import TickBand from './dashboard/TickBand'
-import MarketClock from './dashboard/MarketClock'
 import HowToRead from './HowToRead'
 import Reference from './Reference'
 
@@ -152,11 +151,10 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           {/* The title is the SESSION, not the word "today" (Andy, 2026-08-24).
               It comes from the payload, which the pipeline dates in ET — the
               host clock is JST here and would name the wrong session for the
-              seven hours after the New York close. The four-city clock beside
-              it answers the other question, "what time is it now". */}
+              seven hours after the New York close. A four-city clock sat beside
+              it for one afternoon; Andy took it off the same day. */}
           <PageHeader group="market" crumbTitle="Today"
-                      title={sessionTitle(data?.breadth)}
-                      meta={[<MarketClock key="clock" />]} />
+                      title={sessionTitle(data?.breadth)} />
 
           {/* ── LARGE ─────────────────────────────────────────────────── */}
           <VerdictCard verdict={data?.breadth?.verdict}
@@ -184,8 +182,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                           gap-4 items-stretch">
             <div className="flex flex-col gap-4">
               <RegimeBand verdict={data?.breadth?.verdict} signals={data?.signals}
-                          conditions={data?.breadth?.conditions}
-                          regime={data?.breadth?.regime} onNavigate={navigate} />
+                          conditions={data?.breadth?.conditions} onNavigate={navigate} />
               <TickBand />
             </div>
             <div className="flex flex-col gap-3">
