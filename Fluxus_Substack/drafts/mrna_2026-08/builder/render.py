@@ -199,9 +199,13 @@ def build(src, out, title, kicker, dek, badge, note, figkeys, clean=False, figs=
     md = re.sub(r'^# .*$', '', md, flags=re.M)
     md = re.sub(r'^### \*.*\*$', '', md, flags=re.M)
     # 只删单星号的斜体元信息行；**整段加粗** 必须留下
-    md = re.sub(r'^\*(?!\*)[^\n]*(?<!\*)\*\s*$', '', md, flags=re.M)
+    # 只删文件头部的元信息斜体行（正文里的斜体段落是内容，例如 Jeff 致敬）
+    head_end = md.find('**Aug 14')
+    if head_end < 0: head_end = 400
+    md = md[:head_end].__class__(re.sub(r'^\*(?!\*)[^\n]*(?<!\*)\*\s*$', '', md[:head_end], flags=re.M)) + md[head_end:]
 
-    MARK = '以上是全部事实。下面是复盘。' if '以上是全部事实' in md else 'Those are the facts. What follows is the review.'
+    for MARK in ['以上是全部事实。下面是复盘。','Those are the facts. What follows is the review.',"Those are the facts. Here's the part I actually care about:","Those are the facts. Now the review","Those are the facts. The review has one point:","**Nothing I did right in those twelve days"]:
+        if MARK in md: break
     head, rest = md.split(MARK, 1)
     facts = []
     for m in re.finditer(r'\*\*(.+?)\*\*[，,.]?\s*(.+)', head):
@@ -213,6 +217,18 @@ def build(src, out, title, kicker, dek, badge, note, figkeys, clean=False, figs=
            '你自己': ['你自己那张图上也有一条', '你自己手上那张图也有一条'],
            '半导体整个八月一次都没转正': ['半导体整个八月一次都没转正']}
     figs = figs or FIGS
+    ENN = {1:'sectors_en',3:'rsline_en',4:'band_en',6:'zoomsvg_en',7:'sizing_en',8:'breadth3_en'}
+    PHOTO = {5:('daily','Zoomed out — a year-long base on the left, the 60 line tested over and over through 2026, and Aug 19 on the right.'),
+             9:('minute','Aug 19, one-minute. The two marks at lower left are the pre-market trades. RVOL exploded on the first minute.')}
+    def fig_for(n):
+        n=int(n)
+        if n==2:
+            return f'<figure><div class="pair"><div><div class="pairlab">XBI · Biotech</div><img src="{imgs["xbi"]}" alt="XBI daily"></div><div><div class="pairlab">SNOW · Software</div><img src="{imgs["snow"]}" alt="SNOW daily"></div></div><figcaption><b>Base → breakout → extend → pull back → extend.</b> Same shape — the right panel is the software group I had been trading since June.</figcaption></figure>'
+        if n in ENN and ENN[n]:
+            return f'<div class="chart">{imgs[ENN[n]]}</div>'
+        key,cap=PHOTO[n]
+        return f'<figure><img src="{imgs[key]}"><figcaption>{cap}</figcaption></figure>'
+    body = re.sub(r'<p>(?:<span[^>]*>)?〔📷 (\d+)[^〕]*〕(?:</span>)?</p>', lambda m: fig_for(m.group(1)), body)
     for k in figkeys:
         fig = figs[k]
         pos = -1
@@ -257,7 +273,7 @@ b = build('DRAFT_v2_trunk_zh.md', 'preview_trunk.html', 'MRNA 主干', 'How Much
           ['先板块，再探头', '三个月超额收益，每晚归档', '半导体整个八月一次都没转正',
            '那八个交易日', '怎么量', '而 60 是这张图挂着的那根钉子', '你自己', '目标价从哪来',
            '第一笔买的是结构', '市场连着三天变坏', '开盘第一分钟'], clean=True)
-c = build('DRAFT_v2_trunk_en.md', 'preview_en.html', 'How I Caught 176% in MRNA', 'How Much',
+c = build('DRAFT_v6_trunk_en.md', 'preview_en.html', 'How I Caught 176% in MRNA', 'How Much',
           'The exact 3 filters, the 5 scanner rules, and exactly how much: 0.25% for 23R', '', '',
-          list(EN_FIGS.keys()), clean=True, figs=EN_FIGS, h1='How I Caught a 176% Move in $MRNA')
+          [], clean=True, figs=EN_FIGS, h1='How I Caught a 176% Move in $MRNA')
 print('完整版', a, 'KB · 主干版', b, 'KB · EN', c, 'KB')
