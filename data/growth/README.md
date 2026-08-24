@@ -12,3 +12,9 @@
 
 ## ⚠️ PII 政策（08-24 定，本仓库是 public）
 会员**姓名/邮箱/单人消费明细一律不入库**——本仓库公开。members.csv 只允许聚合或匿名 id；全量名单看 Whop 后台（增长官被召唤时现场读），不落盘。
+
+## 名单导出 SOP（08-24 起）
+- **来源**：Whop 后台 Customers → Export → All time → CSV 落 `~/Downloads/exprt_*.csv`
+- **归位**：改名 `whop_users_YYYY-MM-DD.csv` 移入 `data/growth/private/`（已 gitignore，永不入库）
+- **频率**：召唤增长官时更新（人在场才操作后台）；周记账任务只抄聚合数
+- **CSV 亮点**：29 列，含 Discord username/ID 映射（会员↔Discord 对账硬键）、churned/renewal/canceling 日期（流失预警数据源）
