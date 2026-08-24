@@ -9,10 +9,12 @@
 
 **通信**：跨线请求/答复先写 `data/reference/DATA_CONTRACTS.md` §七 契约行（事实带日期），消息只当门铃。
 
-**通讯录（08-23 补，Zac 问了才发现没发）**：
-- 找会话**不用 `ListAgents`**——它只列挂 socket 的匿名 peer（ai-trading-system-xx 这类名对不上花名册），送达 ≠ 送对，这是 08-21 的事故原型。
-- 交互会话按门铃：`mcp ccd list_sessions` 按 title 对上 TEAM.md 的线名，再 `send_message` 指名投递。
-- **定时/无人值守会话（Zac、Joe、日推这类）发不了也收不了跨会话消息（工具被禁）**：你们的投递 = 写进耐久处（§七/INBOX/incidents）并 push main，这就算送到；真需要按门铃的，在晨报/汇报里列一节「门铃待按」，OPS 或 Andy 代按。
+**通讯录 v2（08-24 重写；三次群发事故后）**：
+- 🚫 **永不群发。** 找不到确定的收件人就**不发**——把内容写进耐久处，在汇报里列一节「门铃待按：<收件人线名> · <一句话>」，等 OPS 或 Andy 代按。宁可不送，也不广播：08-20 群发三个不相干会话、08-21 对错人发了一整天、08-24 群发五个会话，同一形状三次。
+- **寻址只用**（精确工具名，别猜）：`mcp__ccd_session_mgmt__list_sessions` 拿 title，对上 TEAM.md 线名（如「DATA ALEX · …」），再 `mcp__ccd_session_mgmt__send_message` 指名发。**只发一个人。**
+- 🚫 **`ListAgents` 不用于寻址**——它只列匿名 peer（`ai-trading-system-xx`），对不上花名册。它唯一的合法用途：干活前查「有没有活着的会话可能正在写这个共享目录」。
+- **无人值守运行时**跨会话工具通常不可用：投递 = 写耐久处 + push，这就算送到。**但 Andy 在你的会话里交互时工具会变可用**——那时也照上面两条办（指名或不发），不许因为"能发了"就广播。
+- **消息永远只是门铃**：内容必须已经在 §七/INBOX/incidents 里；消息只说「哪里有你的新行」。**转交写完 ≠ 送到，合并进 main 才算**（08-23 有条契约行因分支没合，同一个 bug 隔夜被重新发现一次）。
 
 **完成的定义**：合进 main 且 Andy 能点开看到，才算完成。
 
@@ -78,3 +80,9 @@ git -C /Users/taolezhu/Documents/AI-Trading-System worktree remove --force "$WT"
 1. 共享主树上**永不 `git add -A` / `git commit -a`**——主树常年堆着各线未提交改动和外科手术拉来的数据 diff，一网打尽式提交=把别人的工作和数据时间旅行卷进你的 commit。只 add 指名文件。
 2. scratchpad/临时树**永不 checkout 具名长命分支**（main/feat/*）——/private/tmp 重启即清，分支会被一棵已蒸发的树锁死；一律基于 `origin/main` 的 detached HEAD。
 3. **无人值守会话读规矩/队列/契约文件，一律读权威版** `git show origin/main:<path>`，不读主树副本——主树可能停在落后 main 一百多个 commit 的分支上。
+
+**safe-merge：能自己合的就别找人（08-24 立，消除「等 OPS 合」这个依赖）**：一条分支若**只碰**以下路径，且全套测试通过，**产出者自己合进 main**（走直推 main 标准动作），不需要等任何人点头，晨报注明合了哪个 commit：
+- `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `DATA_RELIABILITY.md` §六追行 · `pipeline/tools/audit_*` 及其测试 · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md`
+
+碰到**任何**其他路径（`pipeline/screeners|tickers|adapters`、`data/output`、`data/history`、`frontend/`、workflow 文件）→ 留分支，在汇报里列「待合分支：<名> · <一句话> · 建议合 y/n」，等 Andy 或对应线的主人处理。
+**理由**：08-19 到 08-24 有四个晚上的研究产出搁浅在分支上（其中 Delayed EP 首次前瞻复盘搁了 54 小时无人合），根因不是谁忘了，是**产出者没有落地权、而有权的人不知道有东西等着**。
