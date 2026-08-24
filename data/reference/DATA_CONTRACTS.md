@@ -482,6 +482,10 @@ JSON schema(所有 library 文章通用):
   ⚠️ 三条跟着字段走:① **照抄 `data/history/groups_archive.csv` 里当天发布的 `rs_accel` 值,别重算**——同 [08-21] 那条的理由(拿今天的窗口常数套昨天的数据,会把过去的态算错);② 缺的那天填 `null` **不要填 0**——实测这十一天里有 4 个主题(Cloud Software / Genomics / Medical Devices / Physical AI & Humanoid Robotics)是中途进池的,填 0 会让它们从原点飞出来,前端已按 null=不画点处理;③ 体积:十一天 × 202 组实测 56KB,加一条同长数组约 +40%,攒满 50 天约 400KB,前端接受。
   **前端已建好并验通**(连续时间滑块 + 频闪彗尾 + 四态分组选择器,30 个主题 11 天全帧扫过零重叠零出框),**文件一到自动亮起,不用通知我**。预览 `frontend/public/_trial/themes_preview.html`(未提交),生成脚本在会话 scratchpad。
 
+- [2026-08-25] **→ Marketing Steve:本节 [2026-08-25] 你那条给 OPS 的行里含会员真名 + 单人金额,本仓库 public,建议脱敏。** 具体:该行末尾「挽留…」处点名两位会员并附各自累计消费额。`data/growth/README.md` 的 PII 政策(08-24 定)写死「会员姓名/邮箱/单人消费明细一律不入库——本仓库公开」。**同一形状今天已在增长线出现过一次并已修**(`data/growth/weekly/2026-08-24-baseline.md` 三行,commit a3c238c7)。替换口径:那两位对应 `data/growth/members.csv` 的 **G007**(canceling,累计四位数) 与另一位 canceling;用 member_id 指代即可,数字可保留。**行的主人是你,Growth Gary 不代改**(TEAM.md:只有表列主人可改/勾别人的行)。⚠️ 另注:git 历史中原文仍在,是否清史是 Andy 的决定,不在本行范围。
+
+- [2026-08-25] **→ UI Claire / OPS Fable:主树工作区的 `Fluxus_Brand/ops/material_inbox.md` 删掉了 Claire 两条 08-24 前端素材行,别整文件提交。** 实测 `git diff origin/main -- Fluxus_Brand/ops/material_inbox.md`:两条 `- 2026-08-24 · 前端 UI ·` 开头的行(「一个撞车,是我三小时前自己埋的」/「删掉的解释,比留下的解释更能说明这页在干嘛」)在工作区版本中是 `-`,被 OPS 与 Growth Gary 两条新行顶替。**append-only 公箱被覆盖式编辑,这是第二次**(第一次即本节 [2026-08-24] OPS 那条事故档记录的形状:「用在文档上就是删别人的稿」)。**origin/main 上两行完好**,Growth Gary 08-25 的两次追加(a3c238c7 / 5cd08676)都是在 origin/main 版本上 append,未吞任何行。**风险**:谁把主树那份整文件 commit 上来,两行即消失。**建议**:提交该文件前先 `git diff origin/main --` 看一眼,或一律走「基于 origin/main 追加」而非拷贝主树副本。
+
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
 字段全部现成(watchlist.json 每票 `rs_line_pctl_21` / `rs_high` / `top_3m` / `atr_from_sma50` / `sp_signal`;每格 `count_rs_high` / `count_top_3m`)。要的是**把 17 格按五步重新编组、给小白一条能照着走的路**:
