@@ -7,6 +7,12 @@
 - [08-23] https://www.youtube.com/watch?v=1k3KRbktibQ ——（Andy）reversal setup，我们图书馆和课程里没有详细记录和了解的
   - ✅ 已处理（Zac 08-24）：Deepvue 产品 webinar，讲 Stan Weinstein Stage Analysis 的 4B- 筑底 setup。**判定 📦 存档不采纳**——方法我们已覆盖 3/5（`sp_hl`/`ma_reclaim`/`trend_base`），缺的 Stage 4 分类与 Mansfield RS 是定义问题不是发现问题。全文判词入馆 `data/research/collection.md`。
 
+- [08-24] https://x.com/Muninn/status/2089746393183256879 ——（Andy）收藏并学习
+- [08-24] https://x.com/Muninn/status/2088292776047751193 ——（Andy）同上，两条一起看
+
+> ⚠️ Zac 注（08-24 14:0x）：这两条**未登录读不了**（WebFetch 返回 **HTTP 402**）。按 [[reference_browser_choice_x_scraping]]，X 要 Andy 在真 Chrome 里连上才抓得到。所以本轮**只入册未学习**。下次窗口先试浏览器；连不上就在晨报里点名说「这两条卡在浏览器上」，不猜内容、不拿标题当结论。
+> 作者 `@Muninn` 我们**还没有档**——`data/research/` 里没有他的目录，`JeffSun_Wiki`/`clement`/`ohiain` 那几套都不是他。学的时候顺手判一下：是**单帖收藏**（判词入 `collection.md` 就完），还是**值得像 stockbee/oratnek 那样单独立档**。
+
 ## 等 Zac 下次窗口处理
 
 - [08-24 Andy 批准] **Stockbee 的 YouTube 转录，做**。08-24 晨报问「要不要投一晚做转录」，Andy 答三个 action 全同意。理由已在 `open_questions.md` ①：**他 2018 年之后方法细节大量迁到了 YouTube**，博客上那四篇标题最对味的（4% 突破在哪出场 / 止损放哪 / 什么时候进 / 怎么挑最好的 setup）**正文全是空的纯视频帖**，还有「哪三个板块出最好的 EP」也是空的。
@@ -17,6 +23,7 @@
   - **不碰付费会员站**（红线）。
 
 
+- ✅ **已交付（08-24 夜间轮，早截止日 6 天）** —— 四份齐 + 一轮预注册 holdout 实测，全部已落 main `data/research/stockbee_2026-08/`；晨报 `data/research/night_reports/2026-08-24.md`。下面原条目留档备查。
 - [08-24 Andy·本窗口首要] **Stockbee 网站学习整理**（他 00:05 在聊天里点的名，本轮优先于其他积压）。要的是三样：**他的思维方式** / **他的数据** / **他的交易细节**。点名三个题目：**EP（Episodic Pivot）**、**Momentum Burst**、**Anticipation Trade**——但 Andy 08-24 补了一句：**这三个是起点不是边界**。已有的题目仓库里都有实现，所以价值不在「他也有这个」，而在**里面的 nuance**：具体阈值和它的例外、时间窗怎么定、什么情况下他自己说不做、加减仓与持仓时间的细节、他怎么判失败。另外单开一节报**「他还有什么值得学的」**——他站上不属于这三题、但你看着值得学的东西，主动列出来说，别自我设限。
   - **别从零开始** —— 仓库里已有这三条的实现，学习成果要落在「和我们已建的对不对得上」而不是复述他：
     - `pipeline/tools/delayed_ep_scan.py`（EP，每晚归档 `delayed_ep_log.csv`，`--review` 复盘一直没跑）
