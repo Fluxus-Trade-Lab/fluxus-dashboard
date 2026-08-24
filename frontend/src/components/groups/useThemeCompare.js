@@ -10,17 +10,25 @@ import { useCallback, useEffect, useState } from 'react'
  * shows cursor:not-allowed — the pointer itself says "full", before a dead
  * click has to.
  *
- * IDENTITY COLOURS are not encodings. They say "which theme is which line",
- * never "good/bad" — that stays with the state grammar (tone + fill). The
- * three hues are picked to survive the common colour-vision deficiencies
- * (blue / orange / purple, Okabe-Ito adjacent) and to be nameable in speech:
- * "the blue one". A freed slot's colour is reused by the next pick, so colour
- * follows the SLOT, not the theme — two sessions comparing different themes
- * still read the same way.
+ * IDENTITY IS NO LONGER A HUE (Andy, 2026-08-24). Colour on this page grades
+ * now — blue for a theme that moved to a stronger state, red for one that fell
+ * out of one (see `stateChange.js`). Identity keeps the two channels it was
+ * always better at and which survive a greyscale screenshot: the DASH pattern
+ * and the label. What is left of the slot colour is a neutral lightness ladder
+ * used for chrome — the ring around a picked dot, the rule down a picked row,
+ * the chip in the compare bar — never for a data mark's fill.
+ *
+ * The hues did not go for taste. slot-1 measured 1.02 to one against the
+ * page's own ink while its comment promised a reader could say "the blue one";
+ * slot-2 and slot-3 were green and orange under a comment claiming Okabe-Ito.
+ * They had been measured — against each other and against the card ground —
+ * just never against the ink they shared a figure with.
+ *
+ * A freed slot is reused by the next pick, so the slot follows the POSITION,
+ * not the theme — two sessions comparing different themes still read the same.
  */
-/* v3: identity colours for the three compare slots. Deliberately NOT the
-   pair's blue or red — these say "which line is this", never "which side is
-   this" — so they sit off the pair's hues entirely. */
+/* Chrome only. These are neutral by design; the graded pair lives in
+   `stateChange.js` and never appears here. */
 export const SLOT_COLOURS = [
   'var(--color-slot-1)', 'var(--color-slot-2)', 'var(--color-slot-3)',
 ]

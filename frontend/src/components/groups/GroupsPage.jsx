@@ -11,6 +11,8 @@ import CompareBar from './CompareBar'
 import TrajectoryPanel from './TrajectoryPanel'
 import ThemeMembers from './ThemeMembers'
 import { useThemeCompare, SLOT_COLOURS } from './useThemeCompare'
+import { changeLookup } from './stateChange'
+import { useGroupsHistory } from '../../hooks/useGroupsHistory'
 import { useSpyRow } from './useSpyRow'
 import Reference from '../Reference'
 import HowToRead from '../HowToRead'
@@ -158,6 +160,19 @@ export default function GroupsPage() {
   const [rankSort, setRankSort] = useState('window')
   const spy = useSpyRow()
   const compare = useThemeCompare()
+  /* Same module-level cache RsPath reads, so this is not a second fetch. */
+  const { data: history, sessions: histSessions } = useGroupsHistory()
+  /* The graded channel (Andy, 2026-08-24: colour grades now). It comes from the
+     history file, not from groups.json — "did it change sides" is a statement
+     about two sessions, and today's row holds one. When the file is missing the
+     lookup returns null for everything and every mark falls back to ink, which
+     is the same thing the page did before this existed.
+
+     IT LIVES UP HERE WITH THE OTHER HOOKS ON PURPOSE. Written next to the code
+     that uses it, it sat below `if (loading) return` — the third time this
+     lane has shipped a hook under an early return. React counted 17 hooks then
+     18 and threw. */
+  const changeOf = useMemo(() => changeLookup(history), [history])
 
   const byName = useMemo(() => {
     const m = new Map()
@@ -283,13 +298,15 @@ export default function GroupsPage() {
       <Section label="Field"
                note={`${rows.length} themes · quarter × acceleration`}>
         <StateField rows={rows} colourOf={colourOf} onToggle={onToggle}
-                    atLimit={compare.atLimit} />
+                    atLimit={compare.atLimit} changeOf={changeOf}
+                    changeSessions={histSessions} />
 
         {/* The field says where each theme stands; this says how it got there.
             Two themes on the same dot can have arrived from opposite
             directions, and the arrival is the rotation. */}
         <div className="mt-6">
-          <RsPath picks={shown.map((p) => p.name)} colourOf={colourOf} />
+          <RsPath picks={shown.map((p) => p.name)} colourOf={colourOf}
+                  changeOf={changeOf} />
         </div>
       </Section>
 
@@ -397,7 +414,7 @@ export default function GroupsPage() {
         {/* The one column on this page whose reading is counter-intuitive
             enough that leaving it to a tooltip would guarantee it is read
             backwards. Numbers quoted from the measurement, not rounded up. */}
-        <p className="text-[11.5px] text-[var(--color-text-muted)] mt-3 max-w-[80ch]">
+        <p className="text-[11px] text-[var(--color-text-muted)] mt-3 max-w-[80ch]">
           <b>Extended</b> is the share of a group&rsquo;s members sitting 4+ ATR above
           their SMA50 — an expiry date on the Leading label, not a return forecast.
           Across 48 themes × 293 days, Leading groups under 20% extended were still

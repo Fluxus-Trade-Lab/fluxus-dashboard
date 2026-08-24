@@ -109,27 +109,30 @@
      used as a FILL left white text at 4.27:1. One token cannot satisfy both
      directions, so the button gets its own. Measured with white: 6.74. */
   --color-accent-solid: #2d5f8a;
-  /* The three compare slots. They answer "which line is this", never "which
-     side is this", so they stay off the pair's blue and red — but they are
-     used as INK (the chip label, the line's end label), and the first values
-     I picked were chosen as identity fills and never measured as text: 2.96,
-     3.15 and 3.64 on the page ground.
+  /* The three compare slots. 2026-08-24: THEY ARE NO LONGER HUES.
 
-     Fixed that by darkening all three — and thereby made a second mistake,
-     which the design review caught: measured against each OTHER they were
-     1.04, 1.10 and 1.15 to one, 1.0 to 3.7 L* apart. Three lines separated by
-     hue at one lightness are one grey line in a screenshot, and this page is
-     read in screenshots. So the three slots are a LIGHTNESS ladder now —
-     12, 26 and 40 L*, 14 to 28 apart — and their hues sit about 120° apart as
-     well, because at a dot's size a lightness ladder alone still read as three
-     near-neighbours (Andy, 2026-08-16). The trajectory lines carry a dash
-     pattern too, so neither channel is holding three identities on its own. The vote legend on the dashboard settled this same
-     question the same way years of hatching ago.
+     Colour on the Themes page now grades — blue for a theme that moved to a
+     stronger state, red for one that fell out of one (Andy's call, B over A).
+     A hue that means "you picked this" cannot sit next to a hue that means
+     "this got stronger" without the reader having to be told which is which,
+     so identity gave up the channel it was worst at and kept the two it is
+     good at: a DASH PATTERN and the label.
 
-     On #e2e0d6: 11.8 / 7.9 / 4.9. */
-  --color-slot-1: #12212e;
-  --color-slot-2: #184718;
-  --color-slot-3: #895028;
+     What the hues cost before they went: slot-1 was #e0e9f2, which is 1.02 to
+     one against the page's own ink (#e6e5e5) — the comment above it promised
+     a reader could say "the blue one" and no reader could. slot-2 and slot-3
+     were green and orange, the pair that red-green deficiency collapses,
+     under a comment claiming Okabe-Ito. Both measured 2026-08-24 on the
+     rendered page. The lesson is the older one: those hues HAD been measured
+     — against each other, and against the card ground — just never against
+     the ink they had to share a figure with.
+
+     What is left is a neutral lightness ladder, used for the ring on a picked
+     dot, the rule down a picked row, and the chip in the compare bar. On
+     #e2e0d6: 14.6 / 8.4 / 5.3. */
+  --color-slot-1: #1c1917;
+  --color-slot-2: #4b453e;
+  --color-slot-3: #6f665c;
   /* Same split as accent-solid, for the destructive button. The pair's red
      cannot move — its separation from the blue is load-bearing — so the fill
      that has to carry white text is its own token. White on it: 4.94. */
@@ -257,11 +260,11 @@ html.dark {
   --color-accent: #6a97bd;
   --color-accent-light: var(--color-bg);
   --color-accent-solid: #47749a;  /* white on it: 4.96 */
-  /* The same ladder inverted — 92 / 76 / 62 L*, 13.9 to 29.9 apart.
-     On #282421: 12.6 / 8.1 / 5.2. */
-  --color-slot-1: #e0e9f2;
-  --color-slot-2: #85cd83;
-  --color-slot-3: #c48658;
+  /* The same neutral ladder inverted — see the light block for why these
+     stopped being hues on 2026-08-24. On #282421: 12.4 / 7.9 / 5.1. */
+  --color-slot-1: #e6e5e5;
+  --color-slot-2: #b0aeac;
+  --color-slot-3: #8c8a88;
   --color-loss-solid: #cc3c2f;
 
   --color-profit: #77b4fb;

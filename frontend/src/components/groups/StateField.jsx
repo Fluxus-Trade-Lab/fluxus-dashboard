@@ -1,4 +1,6 @@
 import { useMemo, useState } from 'react'
+import { changeColour, CHANGE_WORD } from './stateChange'
+import { slotDash } from './useThemeCompare'
 
 /**
  * The four states, drawn as what they are.
@@ -159,7 +161,8 @@ function place(rows, names, x, y, radius, W, H, PAD, chrome = []) {
   return out
 }
 
-export default function StateField({ rows, colourOf, onToggle, atLimit }) {
+export default function StateField({ rows, colourOf, onToggle, atLimit,
+                                    changeOf, changeSessions = 0 }) {
   const [hover, setHover] = useState(null)
 
   const plot = useMemo(() => {
@@ -234,7 +237,7 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
                     style={{ fontSize: 15, fontWeight: 600 }}>
                 {c.state}
                 <tspan fill="var(--color-text-muted)"
-                       style={{ fontSize: 13, fontWeight: 400,
+                       style={{ fontSize: 12.5, fontWeight: 400,
                                 fontFamily: 'var(--font-mono)' }}> {n}</tspan>
               </text>
               <text x={tx} y={ty + 14} fill="var(--color-text-muted)"
@@ -261,12 +264,18 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
           {pct(-ay)}
         </text>
 
-        {/* dots. Unpicked ones are ink; a picked one wears its slot's identity
-            colour, which answers "which line is mine" and never grades. */}
+        {/* dots. A dot's FILL grades: the pair's blue if this theme moved to a
+            stronger state over the recorded window, red if it fell out of one,
+            ink if it never changed sides or there is nothing to compare against
+            (Andy, 2026-08-24 — colour grades now). A PICKED dot keeps the same
+            fill and gains a ring, and the ring's dash says which slot it is, so
+            identity and grade never contend for the same channel. */}
         {/* hovered last: its label has to be able to sit over its neighbours */}
         {[...ok].sort((a, b) => (a.group === hover ? 1 : 0) - (b.group === hover ? 1 : 0))
           .map((r) => {
           const c = colourOf?.(r.group) ?? null
+          const dir = changeOf?.(r.group) ?? null
+          const graded = changeColour(dir)
           const on = hover === r.group
           const at = placed.get(r.group)
           // hover and picks bypass the collision rule: they are drawn last, so
@@ -283,11 +292,17 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
               <title>
                 {`${r.group} · ${r.state} · ${r.members} name${r.members === 1 ? '' : 's'}`
                  + `\nquarter vs SPY ${pct(r.excess_3m)} · acceleration ${pct(r.rs_accel)}`
-                 + `\nleads on ${r.persistence ?? 0} of ${r.persistence_of ?? 5} horizons`}
+                 + `\nleads on ${r.persistence ?? 0} of ${r.persistence_of ?? 5} horizons`
+                 + (dir ? `\n${CHANGE_WORD[dir]} over the recorded window` : '')}
               </title>
               <circle cx={px} cy={py} r={rad}
-                      fill={c ?? 'var(--color-text)'}
-                      fillOpacity={c || on ? 1 : .62} />
+                      fill={graded ?? 'var(--color-text)'}
+                      fillOpacity={c || on || graded ? 1 : .62} />
+              {c && (
+                <circle cx={px} cy={py} r={rad + 3.5} fill="none"
+                        stroke={c} strokeWidth="1.5"
+                        strokeDasharray={slotDash(c) ?? undefined} />
+              )}
               {on && !c && (
                 <circle cx={px} cy={py} r={rad + 3.5} fill="none"
                         stroke="var(--color-accent)" strokeWidth="1.5" />
@@ -295,7 +310,8 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
               {show && (
                 <text x={px + lay.dx} y={py + 4 + (lay.dy ?? 0)} textAnchor={lay.anchor}
                       style={{ fontSize: LABEL_PX, fontWeight: c || on ? 600 : 400 }}
-                      fill={c ?? (on ? 'var(--color-text)' : 'var(--color-text-secondary)')}>
+                      fill={graded ?? (c || on ? 'var(--color-text)'
+                                              : 'var(--color-text-secondary)')}>
                   {r.group}
                 </text>
               )}
@@ -319,14 +335,45 @@ export default function StateField({ rows, colourOf, onToggle, atLimit }) {
           </svg>
           <span className="font-mono">0&ndash;5</span>
         </span>
-        <span>colour only says which theme you picked &mdash; it never grades one</span>
+        {/* The graded channel, named. It carries its own denominator: "moved"
+            is a claim about two sessions and the reader has to know how many
+            there were. With no history file there is nothing to grade, so the
+            legend says that instead of showing a key to colours nobody can
+            see. */}
+        {changeSessions >= 2 ? (
+          <span className="flex items-center gap-2">
+            <span>colour = state change over {changeSessions} sessions</span>
+            <span className="flex items-center gap-1.5">
+              <i className="w-2 h-2 rounded-full inline-block"
+                 style={{ background: 'var(--color-took)' }} />
+              <span>to stronger</span>
+            </span>
+            <span className="flex items-center gap-1.5">
+              <i className="w-2 h-2 rounded-full inline-block"
+                 style={{ background: 'var(--color-refused)' }} />
+              <span>to weaker</span>
+            </span>
+            <span className="flex items-center gap-1.5">
+              <i className="w-2 h-2 rounded-full inline-block"
+                 style={{ background: 'var(--color-text)', opacity: .62 }} />
+              <span>same side</span>
+            </span>
+          </span>
+        ) : (
+          <span>no session history yet &mdash; colour is not grading anything</span>
+        )}
+        <span>a ring means you picked it; its dash says which slot</span>
       </div>
       <p className="m-0 mt-2 text-[10px] leading-relaxed text-[var(--color-text-muted)] max-w-[92ch]">
         <b className="text-[var(--color-text-secondary)]">This figure reads the quarter and
         does not follow the window switch above.</b> The four states are defined on
         quarterly excess and month-scale acceleration; the switch moves the ranking
         underneath. Every dot&rsquo;s quadrant is its state, recomputed from those two
-        numbers &mdash; which is also why nothing here is coloured by state. Named dots are
+        numbers. Colour is a second reading laid over that one: a dot is blue if the
+        theme moved to a stronger state across the {changeSessions || 0} recorded
+        sessions, red if it fell out of one, ink if it never changed sides &mdash; and
+        ink is also what a theme wears when there is nothing to compare it against,
+        which is not the same as no change and is why the count is printed. Named dots are
         the ones leading on 3 or more horizons, plus the three fastest accelerators inside
         Improving{dropped > 0 ? `, less ${dropped} whose name had no room beside its dot` : ''};
         the rest name themselves on hover.

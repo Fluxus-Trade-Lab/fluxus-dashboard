@@ -323,8 +323,14 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
             <span className="block font-semibold overflow-hidden text-ellipsis">
               {c.name}
             </span>
+            {/* Two decimals here and one everywhere else on the page is not
+                sloppiness — this is a PER-SESSION rate, an order of magnitude
+                smaller than the weekly excess in the rank list, and at one
+                decimal +0.15 and -0.19 both collapse to ±0.2. What was wrong
+                was printing it bare, so it read as the same quantity as the
+                +11.9% next to it. The unit rides along now. */}
             <span className="block text-[10px] text-[var(--color-text-muted)]">
-              {v > 0 ? '+' : ''}{(v * 100).toFixed(2)}%
+              {v > 0 ? '+' : ''}{(v * 100).toFixed(2)}%<span className="opacity-60">/session</span>
             </span>
           </span>
         ))}

@@ -1,5 +1,7 @@
 import { useGroupsHistory } from '../../hooks/useGroupsHistory'
 import { barStyle } from './ThemeBars'
+import { changeColour, CHANGE_WORD } from './stateChange'
+import { slotDash } from './useThemeCompare'
 
 /**
  * The path, not the position.
@@ -35,17 +37,18 @@ function Empty({ note }) {
   )
 }
 
-export default function RsPath({ picks, colourOf }) {
+export default function RsPath({ picks, colourOf, changeOf }) {
   const { data, loading, failed, sessions, target } = useGroupsHistory()
 
   if (loading) return null
   if (failed || !data?.groups) {
     return (
       <Empty note={
-        <>还没有 <code className="font-mono">groups_history.json</code>。一个主题没有价格历史
-        —— 它是每晚被覆盖的那张横截面的聚合，所以唯一诚实的序列是从开始记录那天起攒的
-        （2026-08-07）。归档在 <code className="font-mono">data/history/groups_archive.csv</code>
-        里每晚都在长，但那个目录不发布，前端读不到。</>} />
+        <>No <code className="font-mono">groups_history.json</code> yet. A theme has no price
+        history &mdash; it is an aggregate of a cross-section overwritten every night, so the
+        only honest series is the one recorded from the day recording started (2026-08-07).
+        The archive at <code className="font-mono">data/history/groups_archive.csv</code> grows
+        every night, but that directory is not published, so the page cannot read it.</>} />
     )
   }
 
@@ -60,8 +63,8 @@ export default function RsPath({ picks, colourOf }) {
 
   if (!series.length) {
     return <Empty note={picks.length
-      ? '选中的主题在归档里还不足两个交易日 —— 画不出一条线的是天数，不是主题。'
-      : '在上面挑两三个主题，这里画它们各自相对 SPY 的走法。'} />
+      ? 'The picked themes hold fewer than two sessions in the archive — what cannot draw a line is the number of days, not the theme.'
+      : 'Pick two or three themes above and this draws each one against SPY.'} />
   }
 
   const dates = data.dates ?? []
@@ -77,14 +80,14 @@ export default function RsPath({ picks, colourOf }) {
     <div>
       <div className="flex items-baseline gap-3 flex-wrap mb-1">
         <span className="text-[10px] font-mono uppercase tracking-[.24em]
-                         text-[var(--color-text-muted)]">Path · 相对 SPY</span>
+                         text-[var(--color-text-muted)]">Path · vs SPY</span>
         {/* the denominator, always. This is the whole difference between a
             short series and a claim about a long one. */}
         <span className="text-[11px] font-mono text-[var(--color-text-secondary)]">
-          {sessions}/{target} 个交易日
+          {sessions}/{target} sessions
           {sessions < target && (
             <span className="text-[var(--color-text-muted)]">
-              {' '}· 每晚长一格，攒满约 {Math.ceil((target - sessions) / 5)} 周
+              {' '}· one cell a night, about {Math.ceil((target - sessions) / 5)} weeks to full
             </span>
           )}
         </span>
@@ -123,7 +126,13 @@ export default function RsPath({ picks, colourOf }) {
             })
             if (cur.length > 1) runs.push(cur)
 
-            const c = colourOf?.(s.name) ?? 'var(--color-text)'
+            /* Colour grades (Andy, 2026-08-24), the dash says which pick it
+               is. Two picks that both strengthened are both blue and are told
+               apart by the dash — which is the channel that survives the
+               greyscale screenshot this page travels as anyway. */
+            const slot = colourOf?.(s.name) ?? null
+            const c = changeColour(changeOf?.(s.name)) ?? 'var(--color-text)'
+            const dash = slotDash(slot) ?? undefined
             // the last day that was actually measured, which need not be the last day
             const li = s.g.excess.reduce((k, v, i) => (v == null ? k : i), -1)
             const last = li >= 0 ? s.g.excess[li] : null
@@ -133,6 +142,7 @@ export default function RsPath({ picks, colourOf }) {
                 {runs.map((r, i) => (
                   <polyline key={i} points={r.join(' ')} fill="none" strokeWidth="1.9"
                             stroke={c} strokeLinejoin="round" strokeLinecap="round"
+                            strokeDasharray={dash}
                             vectorEffect="non-scaling-stroke" />
                 ))}
                 {/* a lone measured day still gets its dot; a line needs two */}
@@ -171,17 +181,26 @@ export default function RsPath({ picks, colourOf }) {
       <div className="mt-3 space-y-2">
         {series.map((s) => (
           <div key={s.name} className="flex items-center gap-2.5">
-            <span className="w-2 h-2 rounded-full shrink-0"
-                  style={{ background: colourOf?.(s.name) ?? 'var(--color-text)' }} />
-            <span className="text-[11.5px] text-[var(--color-text-secondary)]
-                             w-[150px] shrink-0 truncate">{s.name}</span>
+            {/* the legend mark is the line itself — same colour, same dash —
+                so the eye matches on both channels instead of on a colour the
+                chart no longer uses for identity */}
+            <svg width="18" height="8" className="shrink-0" aria-hidden="true">
+              <line x1="0" y1="4" x2="18" y2="4" strokeWidth="1.9"
+                    stroke={changeColour(changeOf?.(s.name)) ?? 'var(--color-text)'}
+                    strokeDasharray={slotDash(colourOf?.(s.name)) ?? undefined} />
+            </svg>
+            <span className="text-[11px] text-[var(--color-text-secondary)]
+                             w-[150px] shrink-0 truncate"
+                  title={changeOf?.(s.name) ? CHANGE_WORD[changeOf(s.name)] : undefined}>
+              {s.name}
+            </span>
             <span className="flex gap-[2px] flex-1">
               {(s.g.state ?? []).map((st, i) => (
                 /* a day with no reading is not a fourth state — it is a gap,
                    and it wears the dashed frame this site uses for "could not
                    be counted" rather than a colour it never earned */
                 <span key={i} className="h-[10px] flex-1 rounded-[1px]"
-                      title={`${dates[i] ?? ''} · ${st ?? '没测到'}`}
+                      title={`${dates[i] ?? ''} · ${st ?? 'not measured'}`}
                       style={st ? barStyle(st) : {
                         border: '1px dashed var(--color-untested)',
                         background: 'transparent' }} />
@@ -192,8 +211,9 @@ export default function RsPath({ picks, colourOf }) {
       </div>
       {/* JSX text is literal — the asterisks printed as asterisks */}
       <p className="m-0 mt-2 text-[10px] font-mono text-[var(--color-text-muted)]">
-        一格 = 一个交易日<b className="font-semibold">当天发布</b>的态，不是事后重算的
-        —— 从存下来的 perf 列反推过去的态，会把今天的窗口常数套到昨天的数据上。
+        one cell = the state <b className="font-semibold">published that session</b>, not one
+        recomputed after the fact &mdash; deriving a past state from the stored perf columns
+        applies today&rsquo;s window constants to yesterday&rsquo;s data.
       </p>
     </div>
   )

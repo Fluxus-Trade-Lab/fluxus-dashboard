@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react'
-import { SLOT_COLOURS, MAX_COMPARE } from './useThemeCompare'
+import { SLOT_COLOURS, MAX_COMPARE, slotDash } from './useThemeCompare'
 
 /**
  * The selection, as three visible slots and a search field — the chip wall's
@@ -73,10 +73,16 @@ export default function CompareBar({ rows, picks, atLimit, onToggle }) {
         return p ? (
           <button key={colour} type="button" onClick={() => onToggle(p.name)}
                   title={`${p.name} — click to remove`}
-                  style={{ color: p.colour }}
                   className="h-[26px] max-w-[190px] px-0.5 bg-transparent border-0
-                             cursor-pointer flex items-center gap-1.5 text-[12.5px] font-medium">
-            <i className="w-2 h-2 rounded-full shrink-0" style={{ background: p.colour }} />
+                             cursor-pointer flex items-center gap-1.5 text-[12.5px]
+                             font-medium text-[var(--color-text)]">
+            {/* the chip wears the slot's DASH, not a hue: since 2026-08-24 the
+                hues on this page grade, and a chip that borrowed one would be
+                claiming this theme got stronger */}
+            <svg width="16" height="8" className="shrink-0" aria-hidden="true">
+              <line x1="0" y1="4" x2="16" y2="4" strokeWidth="2"
+                    stroke={p.colour} strokeDasharray={slotDash(p.colour) ?? undefined} />
+            </svg>
             <span className="truncate">{p.name}</span>
             <span aria-hidden className="opacity-50">×</span>
           </button>

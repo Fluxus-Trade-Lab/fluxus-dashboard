@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { SLOT_COLOURS } from './useThemeCompare'
 import { QUARTER_SEGMENTS, ratePerSession, paceChange } from './segments'
 
 /**
@@ -146,6 +147,14 @@ const whyUnproven = (r) => r.measurable === false
    whole taxonomy of one-ETF stand-ins no longer exists to separate out. If one
    ever returns it lands under "Unclassified" rather than vanishing, which is
    the reason that fallback is there. */
+/* The border equivalent of `slotDash` — same three identities, expressed in
+   the one vocabulary a 3px rule has. */
+const SLOT_BORDER = ['solid', 'dashed', 'dotted']
+export function slotBorderStyle(colour) {
+  const i = SLOT_COLOURS.indexOf(colour)
+  return i >= 0 ? SLOT_BORDER[i] : 'solid'
+}
+
 const KINDS = [
   { key: 'theme',  label: 'Themes',   note: 'a thesis, with members chosen for it' },
   { key: 'sector', label: 'Sectors',  note: 'macro-driven, not a thesis' },
@@ -246,20 +255,26 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
         // and the numbers are one hover away, not gone.
         const ghost = dim && !colour
         return (
-          <div key={r.group}
-               role="button" tabIndex={0}
+          /* A real <button>, not a div wearing role="button" (2026-08-24). It
+             was the only control on the page that reimplemented Enter/Space by
+             hand, and a page where the same affordance is built two ways is a
+             page where one of them eventually drifts. */
+          <button key={r.group} type="button"
                onClick={() => onToggle(r.group)}
-               onKeyDown={(e) => {
-                 if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(r.group) }
-               }}
                aria-pressed={!!colour}
                style={{
                  cursor: blocked ? 'not-allowed' : 'pointer',
-                 borderLeft: colour ? `3px solid ${colour}` : '3px solid transparent',
+                 /* the rule down a picked row carries the slot's LINE STYLE as
+                    well as its neutral tone — colour grades elsewhere on this
+                    page now, so identity leans on the channel that is left */
+                 borderLeft: colour
+                   ? `3px ${slotBorderStyle(colour)} ${colour}`
+                   : '3px solid transparent',
                }}
-               className={`group grid grid-cols-[24px_1fr_18px]
+               className={`group w-full text-left bg-transparent p-0 pl-1 py-[3px]
+                          grid grid-cols-[24px_1fr_18px]
                           sm:grid-cols-[24px_1fr_84px_18px]
-                          gap-2 items-center py-[3px] pl-1 transition-opacity
+                          gap-2 items-center transition-opacity
                           outline-none focus-visible:ring-1
                           focus-visible:ring-[var(--color-text-muted)]
                           hover:bg-[var(--color-hover-bg)] hover:opacity-100
@@ -356,7 +371,7 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
                                         : 'opacity-0 group-hover:opacity-100'}`}>
               {colour ? '−' : '+'}
             </span>
-          </div>
+          </button>
         )
       })()
 
