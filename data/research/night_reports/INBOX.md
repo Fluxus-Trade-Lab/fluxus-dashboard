@@ -8,10 +8,16 @@
   - ✅ 已处理（Zac 08-24）：Deepvue 产品 webinar，讲 Stan Weinstein Stage Analysis 的 4B- 筑底 setup。**判定 📦 存档不采纳**——方法我们已覆盖 3/5（`sp_hl`/`ma_reclaim`/`trend_base`），缺的 Stage 4 分类与 Mansfield RS 是定义问题不是发现问题。全文判词入馆 `data/research/collection.md`。
 
 - [08-24] https://x.com/Muninn/status/2089746393183256879 ——（Andy）收藏并学习
+  - ✅ 已处理（Zac 08-25）：**采纳为假设 H2 并当晚实测**。他复盘 Qullamaggie 900 笔入场，断言 ADR 的**下界比上界重要**。我们口径下不成立为独立结果——`adr20` 与 `pre_vol` 的 spearman **+0.981**（同一个量两个名字），且他量的是**盘中入场时已走多少 ADR**，我们只有全天收盘涨幅。**列为 ❓ 未验证，不是证伪**（要验证需分钟级数据，我们没有）。判词入 [`collection.md`](../collection.md)，实测在 [`amplitude_2026-08/`](../amplitude_2026-08/results.md)。
 - [08-24] https://x.com/Muninn/status/2088292776047751193 ——（Andy）同上，两条一起看
+  - ✅ 已处理（Zac 08-25）：**这条我们已经拆过**——[`Fluxus_Brand/research/Fluxus_Muninn_Teardown.md`](../../../Fluxus_Brand/research/Fluxus_Muninn_Teardown.md) 就是拿这条做的样本帖，**别开第二份**。我的独立读数与该档一致（views 258,506 / ♥521 / 收藏 1,353）。正文是 X Article，镜像取不到（`/i/article/` 404）→ **需真浏览器**。⚠️ 该档写「2026-08-03 发」，镜像 `created_at` 是 **2026-08-14**，差 11 天——Marketing 线的文件我不动，已列门铃。
 
 - [08-24] https://x.com/Hrundel75/status/2091187956589690972 ——（Andy）**好像很重要**
+  - ✅ 已处理（Zac 08-25）：**Andy 的直觉是对的，这条最重要。** 它逐字重复了你自己 08-24 写的第三类问题（「will the next move be large or small?」），机制给的是 GARCH / 波动聚集。**已变成一轮预注册实测，当晚跑完 holdout** → [`amplitude_2026-08/results.md`](../amplitude_2026-08/results.md)。
+    **他对了一半**：幅度确实可预测（ρ=+0.30, p=5e-157；右尾概率 3.4%→19.0%，holdout 复制），方向确实不可预测（ρ=−0.006, p=0.59）。**但他没说的那一半是期望值驼峰形——最高波动分位期望翻负**，所以「幅度可预测」≠「幅度可赚钱」，它是**除数不是信号**。
+    传播数字：791K 曝光 / 11,357 收藏，**收藏比 2.79 = 全库新高**（压过 Muninn 的 2.60）——已记进 collection.md，Steve 线若要更新对标表可取用。
 - [08-24] https://x.com/L1vsun/status/2088993353111159216 ——（Andy）同批
+  - ✅ 已处理（Zac 08-25）：**帖子本体只有一个链接、零正文**，正文在 X Article（镜像 404）→ **📦 存档待读，需真浏览器（Comet），留交互会话。** ⚠️ 它 136 万曝光里有多少是被 Hrundel75 那条引用带来的**分不开**，在分开之前别把这个数写进任何对标表。
 
 > **Andy 08-24 的原话（照抄，别改写——这是他自己的框架，不是那条推的内容）**：
 >
