@@ -56,7 +56,7 @@
 
 **直推 main 的标准动作（08-23 v2，审计后修订）**：任何会话要把 docs/契约行/收藏/素材小改直推 main 时，**永不在共享主树上 commit**。统一走临时树；⚠️ 本体系的三个信箱全是**同尾追加**，两个写者撞行时 rebase 解不开——冲突处理不是硬重试，是**丢弃重放**：
 ```bash
-WT=$(mktemp -d)/wt-docs
+export WT=$(mktemp -d)/wt-docs   # export 开头,配合权限 allowlist 的首 token 匹配
 git -C /Users/taolezhu/Documents/AI-Trading-System fetch origin
 git -C /Users/taolezhu/Documents/AI-Trading-System worktree add "$WT" origin/main
 # 在 $WT 里改文件、git add <只加你改的>、commit
@@ -79,10 +79,12 @@ git -C /Users/taolezhu/Documents/AI-Trading-System worktree remove --force "$WT"
 **主树保护三条（08-23 审计后立）**：
 1. 共享主树上**永不 `git add -A` / `git commit -a`**——主树常年堆着各线未提交改动和外科手术拉来的数据 diff，一网打尽式提交=把别人的工作和数据时间旅行卷进你的 commit。只 add 指名文件。
 2. scratchpad/临时树**永不 checkout 具名长命分支**（main/feat/*）——/private/tmp 重启即清，分支会被一棵已蒸发的树锁死；一律基于 `origin/main` 的 detached HEAD。
-3. **无人值守会话读规矩/队列/契约文件，一律读权威版** `git show origin/main:<path>`，不读主树副本——主树可能停在落后 main 一百多个 commit 的分支上。
+3. **无人值守会话读规矩/队列/契约文件，一律读权威版** `git show origin/main:<path>`，不读主树副本——主树可能停在落后 main 一百多个 commit 的分支上。**唯一例外：内容台五件套**（Week_Plan / Queue / Own_Lines / Ammo / receipts）**以主树工作区为准**——Andy 会直接手改它们且不总 commit，权威版反而旧。
+4. **safe-merge 遇到多 commit 分支不走「重放循环」**（那是给单文件小改设计的，reset --hard 会吞掉整晚工作）：在自己分支的树里 `git fetch origin && git rebase origin/main`，成功则 `push origin HEAD:main`；rebase 冲突就停手留分支，汇报列「待合」。
+5. **无人值守会话跑巡检/审计工具，在基于 origin/main 的临时树里跑**——主树的代码可能落后两百个 commit，跑的是旧规则。
 
 **safe-merge：能自己合的就别找人（08-24 立，消除「等 OPS 合」这个依赖）**：一条分支若**只碰**以下路径，且全套测试通过，**产出者自己合进 main**（走直推 main 标准动作），不需要等任何人点头，晨报注明合了哪个 commit：
-- `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `DATA_RELIABILITY.md` §六追行 · `pipeline/tools/audit_*` 及其测试 · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md`
+- `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `data/reference/DATA_RELIABILITY.md` §六追行 · `pipeline/tools/audit_*` 及其测试 · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md`
 
 碰到**任何**其他路径（`pipeline/screeners|tickers|adapters`、`data/output`、`data/history`、`frontend/`、workflow 文件）→ 留分支，在汇报里列「待合分支：<名> · <一句话> · 建议合 y/n」，等 Andy 或对应线的主人处理。
 **理由**：08-19 到 08-24 有四个晚上的研究产出搁浅在分支上（其中 Delayed EP 首次前瞻复盘搁了 54 小时无人合），根因不是谁忘了，是**产出者没有落地权、而有权的人不知道有东西等着**。
