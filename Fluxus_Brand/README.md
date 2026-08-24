@@ -1,5 +1,8 @@
 # Fluxus_Brand — 品牌与内容资料
 
+> ## 🎛 **先看 [`CONTROL.md`](CONTROL.md)** —— 现状 / 决策台账 / 「我要做 X 该开哪个」查表。
+> 本 README 是目录地图,CONTROL 是前门。
+
 *2026-08-03 从仓库根目录整理进来。根目录原本散着 41 个 .md，现在剩 4 个。*
 *旧路径 → 新路径的完整对照在 [`_MOVED.json`](_MOVED.json)。*
 
