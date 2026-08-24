@@ -12,13 +12,31 @@
 
 | # | 字段 | 后台位置 | 文案在 | 状态 |
 |---|---|---|---|---|
-| 1 | **Name** | Settings → Basics → Name | §1 | ☐ 待粘 |
-| 2 | **Short description** | Settings → Basics → Description | §1 | ☐ 待粘 |
-| 3 | **Hero / The promise** | Design → Homepage → Hero | §1 | ☐ 待粘 |
-| 4 | **About 页** | Settings → Pages → About | §4 | ☐ 待粘 |
-| 5 | **Welcome 页** | Settings → Emails → Welcome | §5 | ☐ 待粘 |
+| 1 | **Name** | Settings → Basics → Publication name | §1 | ✅ `How Much` |
+| 2 | **Short description / Hero** | Settings → Basics → Publication short description | §1 | ✅ 2026-08-25 粘 |
+| 3 | **三档权益** | Settings → Payments → Benefits | §2 | ✅ 2026-08-25 粘(1 free + 3 paid) |
+| 4 | **About 页** | 站点 `/about` → Edit page | §4 | ✅ 2026-08-25 换掉 3 年前旧版 |
+| 5 | **Welcome 邮件(free)** | Settings → Emails → Welcome email to free subscribers | §5 | ✅ 2026-08-25 粘 |
 
 **顺带两件(零成本,做一次管一年)**:☐ Recommendations(§7 ①,**这是 TSF 那 400 人的真正来源,和粉丝数无关**) · ☐ X bio 改漏斗(§7 ②)
+
+### ⚠️ 粘的时候碰到的四件事(留给下次)
+
+1. **Short description 字段有 255 字硬上限**(`maxlength=255`),而且它的 `name` 就是 `hero_text` ——
+   **简介和主页 hero 是同一个字段**,不是两个。原稿三块(简介 139 + promise 95 + 频率 33)= 271,装不下。
+   处置:promise 压成一句、去掉 "The promise:" 这个在 hero 上冗余的标签 → 220 字,三个意思都保住。
+2. **旧 About 页是 3 年前的**,里面写着「每周一份交易计划 + 一两次周中更新」——**和每周一封直接冲突**,
+   还写着「专做 ES/NQ orderflow」。已整段替换。这类三年前的旧文案还可能藏在别处,发布前值得再扫一遍。
+3. **Welcome 邮件原稿写「Three things」但加完频率那条是四条** —— 已改成 `Four things`。
+4. **`Start here →` / `The record →` 两条链接位暂时拿掉了** —— 指向的文章还没发。
+   五篇上架后要回来补进 Welcome 邮件。
+
+### ☐ 还没动的(需要你决定,我没自作主张)
+
+- **Welcome email 的主题行**仍是 Substack 默认的 `You're on the list!` —— 带感叹号,和这份刊物的干冷语气不合,但原稿没写主题行,我不替你编。
+- **paid / imported 两封 Welcome 邮件**仍是默认模板(只改了 free 那封)。
+- **定价**:后台是 月 $39 / 年 $399,本文件 §3 建议的是 $39 / $349 / founding $599(founding 档还没建)。**钱的事我不碰。**
+- **导航栏现状是** `Home · My methods · My A+ setups · Archive · About`,和 §6b 规划的六位不一样。要不要按 §6b 重排,你定。
 
 > ⚠️ **频率口径已在 2026-08-25 全站统一为「一周一封,每周日」**(§1 promise / §2 free+paid / §5 welcome / §6c 页脚 / §7 bio 六处)。
 > 再改频率就要六处一起改,别只改一处 —— 承诺不一致比承诺高更伤人。
