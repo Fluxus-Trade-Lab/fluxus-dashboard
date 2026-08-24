@@ -135,43 +135,86 @@ One letter a week, every Sunday.
 
 ### 4a. 三家对标(2026-08-25 实读 TSF / JB / Le Shrub 的 About 页)
 
-| | **TSF** | **JB** | **Le Shrub**(#10 Finance, 34K 订阅) | **我们(现行 §4)** |
+| | **TSF** | **JB** | **Le Shrub**(#10 Finance, 34K) | **旧版 §4** |
 |---|---|---|---|---|
-| 长度 | 中等 | **~1,850 词** | **~120 词** | ~280 词 |
-| 开头是 | **产品** | **产品/理念** | **产品** | **人 + 理念** |
-| 个人故事 | 无 | 无 | 无 | **有** |
-| 写频率 | ✅ 4x/周 | ✅ 日更+周末 | 隐含 | ❌ **没写** |
-| 「你能拿到什么」清单 | ✅ 三条 | ✅ 全篇 | ✅ | ❌ **没有** |
-| 免责 | ✅ 大段 | ✅ | 模板自带 | ❌ **没有** |
-| 报价 | 无 | ✅ $10/天 | 无 | 无 |
+| 长度 | 中等 | ~1,850 词 | ~120 词 | ~280 词 |
+| 开头是 | **产品** | **产品** | **产品** | 人 + 理念 |
+| 写频率 | ✅ | ✅ | 隐含 | ❌ |
+| 「你能拿到什么」清单 | ✅ | ✅ | ✅ | ❌ |
+| 免责 | ✅ | ✅ | ✅ | ❌ |
 
-**三条读出来的东西:**
+**结论(Andy 2026-08-25 裁决,推翻我第一版建议):产品先行。**
 
-1. **长度不是杠杆。** 120 词的 Le Shrub 是 Finance 第 10、34K 订阅,About 基本是 Substack 默认模板;
-   1,850 词的 JB 是第 3。**两端都成立** —— 说明 About 页不是增长引擎,别照着 TSF 的样子把它做成落地页。
-2. **三家全部「产品先行」,没有一家从人开头。** 我们是唯一从人和理念开头的
-   —— 这**不改**。三家都不写这个,正是它成为我们的东西的原因;而且 Le Shrub 证明了
-   把 About 优化成 TSF 那样并不带来增长,那就等于白白交出唯一属于自己的一段。
-3. **但我们缺的三件他们都有**:频率 · 「你能拿到什么」· 一句免责。
-   尤其免责 —— 我们的 About **写了 39.9% 这个具体数字**,一个具体的业绩数字旁边不放免责,是风险不是风格。
+> 我第一版的推理是反的:我拿「三家都产品先行」去论证**保留**人先行,
+> 说那是差异化。**三比零的一致性是支持该做法的证据,不是反对它的。**
+> 而 Le Shrub 那条(120 词也能到 34K)只说明 About 不值得做成落地页 ——
+> 那是「别花太多力气」的论据,不是「别写产品」的论据。两件事被我混成一件。
+>
+> Andy 的话:**「我们要写产品啊!人家买的也是服务产品。」** About 页的活儿是
+> 把访客变成订阅者,而访客买的是一项服务 —— 他得先知道这服务是什么。
 
-**✅ 结论:声音不动,补三件。** 在「I won't promise to be right…」之后、Fluxus 命名那段之前插入:
+**新结构(产品 → 你能拿到什么 → 谁在写 → 这不是什么 → 名字 → 免责):**
 
 ```
-What you get: one letter a week, every Sunday. Every idea with its entry, its stop, and what
-I'm risking in percent — of the trade and of the account. The book in order of size. And the
-losses, which are most of them: my win rate is 39.9%.
-```
+How Much is a market letter about size.
 
-结尾追一句(用 `_BOILERPLATE.md` 块 A 已有的自有语言,不另造):
+Everyone tells you what to buy. Almost nobody tells you how much — and how much is the part
+that decides your year. Every idea here arrives with its entry, its stop, and what I'm risking
+in percent, of the trade and of the account. One letter a week, every Sunday.
 
-```
+What you get
+
+The letter. One a week, every Sunday. What the tape is measuring, what I'm doing about it, and
+the arithmetic that set the size.
+
+The book, in order of size. Every position with its entry, its stop, its trade risk and its
+portfolio risk — posted before the trade resolves, which is the only version worth reading.
+
+The losses. My win rate is 39.9%. You'll see the ones that didn't work, because a record that
+shows you only the good half teaches the wrong job.
+
+The measurement stack. Regime, breadth, dealer gamma — the same readings I trade off, not a
+summary of them.
+
+Who's writing
+
+I'm a full-time discretionary swing trader based in Japan. I started as a day trader, got
+humbled, and grew into swing trading — I hunt leaders when momentum is loud and trade ES/NQ
+when it isn't. I learned under a hedge fund manager who had navigated every bear market since
+the 1980s, which is a long way of saying I learned defense first. Seven years of real returns.
+
+What this isn't
+
+Not alerts. Nothing here is timed for you to copy.
+
+Not predictions. I don't have opinions about where the market goes. I have measurements of what
+it's doing and what I'm risking while it does it. The crowd plays on feelings and shows up late.
+The big funds play on autopilot and sell whatever their risk limits tell them to. My only edge
+is being the calm one in the room who did the arithmetic before he felt anything.
+
+I won't promise to be right. Accuracy isn't mine to control. I promise the thinking always walks
+the last step.
+
+The name
+
+Fluxus was the 1960s–70s art movement that prized the event over the object, chance over control,
+and dry wit over spectacle. A trade plan, it turns out, is just an event score. Volatility is
+just chance you've decided to befriend.
+
 None of this is advice. I don't know your account, your taxes, or how well you sleep.
 Measure your own water.
 ```
 
-> ⏳ **状态:待 Andy 点头再粘。** 站上现在是下方 §4 正文(2026-08-25 已替换掉 3 年前旧版),
-> 这两块是在它之上的增补,不是重写。
+**相对旧版的四处变化:**
+
+1. **第一句从「The market is a game. Most people play it with their feelings.」换成产品定义。**
+   那句好,但它的意思已经落在「What this isn't」段的「The crowd plays on feelings and shows up late」里 ——
+   ⚠️ 要把原句作为开头保留也可以,说一声。
+2. **新增「What you get」四条** —— 三家都有,旧版没有。
+3. **补上频率**(开头段末尾 + 清单第一条)。
+4. **补上免责** —— 旧版写了 39.9% 这个具体业绩数字却没有免责,那是风险不是风格。
+
+> ⏳ **状态:待 Andy 点头再粘。** 站上现在还是下方 §4b(2026-08-25 已替换掉 3 年前旧版)。
 
 ### 4b. 正文(站上现行版本)
 
