@@ -6,7 +6,6 @@ import WritingSlot from './WritingSlot'
 import useWritingSync from '../hooks/useWritingSync'
 import Placeholder from './Placeholder'
 import LibraryPage from './library/LibraryPage'
-import TickBand from './dashboard/TickBand'
 import HowToRead from './HowToRead'
 import Reference from './Reference'
 
@@ -156,64 +155,74 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           <PageHeader group="market" crumbTitle="Today"
                       title={sessionTitle(data?.breadth)} />
 
-          {/* ── LARGE ─────────────────────────────────────────────────── */}
-          <VerdictCard verdict={data?.breadth?.verdict}
-                       onNavigate={navigate} />
+          {/* ── THE WHOLE PAGE IS ONE ROW OF TWO COLUMNS (Andy, 2026-08-24) ──
+              Three layouts got tried in one afternoon and the third is the one
+              that fixes both complaints at once, so both are worth recording:
 
-          {/* ── MID ───────────────────────────────────────────────────────
-              Where the cycle sits, and what he makes of it. The measured half
-              comes first and the written half after it: stacking the other way
-              would put the writing among the evidence, where it is not
-              evidence.
+                1. Two columns of two cards. The left ran shorter than the
+                   right, so the bottom-left was blank BY CONSTRUCTION, and it
+                   got blanker every time a card was trimmed — which was all
+                   day. Two columns only stay level when their contents happen
+                   to be the same height, which is not a property you can hold.
+                2. Four full-width rows. No blank column, but the notes were
+                   pushed to y=813 on a 1035px fold: 81% of the box visible,
+                   which reads as "the writing lives below the page".
+                3. This. The measured half is one column, the writing is the
+                   other, and THE WRITING IS THE ELEMENT THAT STRETCHES — each
+                   note is `flex-1` inside a column that matches the left one.
+                   Whatever height the evidence takes, the writing takes the
+                   same. There is nothing left to leave a gap.
 
-              The TICK band sits under the regime, not beside it, because it
-              answers a DIFFERENT question and putting them side by side would
-              invite reading it as a second opinion on the same one. Regime asks
-              how much you may carry; this asks whether the tape is grinding or
-              travelling. Its own note says it outright: a timing context, not a
-              tail-risk dimension. */}
-          {/* ROWS, NOT COLUMNS (Andy, 2026-08-24: "左下角就开始空了").
-              These four cards were two columns of two, and two columns only
-              stay level if their contents happen to be the same height. They
-              never were: the regime card plus the TICK band ran shorter than
-              two note boxes, so the bottom-left of the page was blank by
-              construction and got blanker every time a card was trimmed —
-              and this page has been trimmed all day.
+              The trade Andy accepted for it: the notes are ~30% of the width
+              now, about 55 characters a line instead of 110. */}
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]
+                          gap-4 items-stretch">
+            <div className="flex flex-col gap-4 min-w-0">
+              <VerdictCard verdict={data?.breadth?.verdict}
+                           onNavigate={navigate} />
 
-              A row cannot have that bug. The market cards take the full width
-              and stack; the notes take the full width and sit side by side.
-              Nothing here is waiting on its neighbour's height. */}
-          <RegimeBand verdict={data?.breadth?.verdict} signals={data?.signals}
-                      conditions={data?.breadth?.conditions} onNavigate={navigate} />
-          <TickBand />
+              <RegimeBand verdict={data?.breadth?.verdict} signals={data?.signals}
+                          conditions={data?.breadth?.conditions} onNavigate={navigate} />
 
-          {/* Two cadences, because they are two different readings and were
-              sharing one box. The daily note is what the tape did today; the
-              weekly is what the month is turning into, and a week's worth of
-              daily notes is not the same thing as having written the weekly
-              one. Both keep their back-catalogue — the second reading is the
-              point of writing them. (Andy, 2026-08-17.)
+              {/* THE TICK BAND IS OFF THIS PAGE (Andy, 2026-08-24: "如果无法
+                  看到实际效果，我们去掉 tick band"). He is right and the reason
+                  is in the payload, not in the drawing: `tick_cycle.json` ships
+                  ONE DAY — ma_high / ma_close / ma_low / spread_rank252 for the
+                  session — and Linda Raschke's cycle chart is a time series of
+                  those bands opening and closing. A single snapshot cannot be
+                  drawn as her chart, and the glyph that stood here was an
+                  abstraction of a width rather than a reading you could watch
+                  move. Making it bigger would have made a bigger abstraction.
 
-              Side by side rather than stacked: at full width one above the
-              other would set 15px type across 1800px, which is about 190
-              characters a line. Two columns halve that and put both cadences
-              on screen at once, which is how they get compared. */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
-            <WritingSlot
-              label="Founders note · daily"
-              kind="founders-daily"
-              rows={10}
-              className="flex-1"
-              placeholder="What the session actually did, in your words."
-            />
-            <WritingSlot
-              label="Founders note · weekly"
-              kind="founders-weekly"
-              cadence="weekly"
-              rows={10}
-              className="flex-1"
-              placeholder="What the week is turning into."
-            />
+                  `TickBand.jsx` and its six tests are kept, not deleted: the
+                  component, the English reading and the "a grind, not a break"
+                  conclusion are all correct and none of them is what failed.
+                  What is missing is the history, and it is requested in
+                  DATA_CONTRACTS §七 (2026-08-24). The day that array lands,
+                  this is one line and a real chart. */}
+            </div>
+
+            {/* Two cadences, because they are two different readings and were
+                sharing one box. The daily note is what the tape did today; the
+                weekly is what the month is turning into, and a week of daily
+                notes is not the same thing as having written the weekly one.
+                Both keep their back-catalogue — the second reading is the point
+                of writing them. (Andy, 2026-08-17.) */}
+            <div className="flex flex-col gap-4 min-w-0">
+              <WritingSlot
+                label="Founders note · daily"
+                kind="founders-daily"
+                className="flex-1"
+                placeholder="What the session actually did, in your words."
+              />
+              <WritingSlot
+                label="Founders note · weekly"
+                kind="founders-weekly"
+                cadence="weekly"
+                className="flex-1"
+                placeholder="What the week is turning into."
+              />
+            </div>
           </div>
 
           {/* ── SMALL ─────────────────────────────────────────────────────

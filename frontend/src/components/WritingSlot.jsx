@@ -27,7 +27,7 @@ export default function WritingSlot({
   kind,
   cadence = 'daily',      // 'daily' | 'weekly'
   placeholder,
-  rows = 8,
+  minH = 150,             // the floor; above it the box takes whatever the row gives
   className = '',
 }) {
   const keyFor = cadence === 'weekly' ? weekKey : todayKey
@@ -86,7 +86,10 @@ export default function WritingSlot({
   const written = new Set([...history, ...(text.trim() ? [date] : [])]).size
 
   return (
-    <section className={`rounded-3xl border px-4 py-3 ${
+    /* flex-col so the textarea can be the one thing that grows: this slot is
+       the page's shock absorber now (see Layout's note). Height comes from the
+       row, never from a row count. */
+    <section className={`rounded-3xl border px-4 py-3 flex flex-col ${
       text.trim() ? 'border-[var(--color-border)]' : 'border-dashed border-[var(--color-border)]'
     } ${className}`}>
       <div className="flex items-baseline justify-between gap-3">
@@ -102,7 +105,7 @@ export default function WritingSlot({
       <textarea
         value={text}
         onChange={(e) => onChange(e.target.value)}
-        rows={rows}
+        style={{ minHeight: minH }}
         placeholder={placeholder}
         /* 15px, not the 12.5px the rest of this page reads at (Andy,
            2026-08-24: at least close to the NEUTRAL badge). Those two were
@@ -112,7 +115,7 @@ export default function WritingSlot({
            the largest step that still lets the weekly note's six lines sit in
            the box without scrolling. It is also the only text on this page a
            person wrote, which is reason enough for it to be the largest. */
-        className="mt-2 w-full resize-y bg-transparent border-none outline-none
+        className="mt-2 w-full flex-1 resize-none bg-transparent border-none outline-none
                    text-[15px] leading-[1.55] text-[var(--color-text)]
                    placeholder:text-[var(--color-text-muted)]
                    placeholder:text-[13px]

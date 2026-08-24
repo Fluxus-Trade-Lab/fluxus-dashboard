@@ -95,7 +95,7 @@ export default function TradeJournalPage() {
         <WritingSlot
           label="Trading recap"
           kind="trading-recap"
-          rows={8}
+          minH={210}
           placeholder="What did you actually do today — and was it the plan?"
         />
       </div>
