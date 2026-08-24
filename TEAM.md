@@ -53,6 +53,7 @@
   - `data/reference/incidents/`、`DATA_RELIABILITY.md` §六 追加行 → Plumber Joe
   - `data/research/night_reports/` → Nighty Zac
   - `data/research/repo_health/` → OPS Fable（含云端 routine）
+  - `data/growth/` → 增长官（growth-officer 子 agent，挂 OPS 线；周一自动记账）
   - `data/content/`（posts.csv 等）、`Fluxus_Receipts/` → Marketing Steve（08-23 补：此前无主，posts.csv 断更 17 天没人负责）
   - `Fluxus_Brand/` 按二级目录分笔：`templates|record|copybook` → Studio Q；`research|voice|ops|visual` → Marketing Steve
 
