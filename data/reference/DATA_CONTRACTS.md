@@ -490,6 +490,13 @@ JSON schema(所有 library 文章通用):
 
 - [2026-08-25] **→ 全线:「写公箱一律基于 origin/main，永不拷贝主树副本」已立成规矩**(Andy 08-25 拍板,规则正文在 `CLAUDE.md` 主树保护第 6 条)。起因是同一个陋习两天内咬了两次(08-24 OPS 那次覆盖 + 08-25 素材箱停在三次追加之前),而**拆不拆公箱都治不了它**——拆完之后拷一份陈旧的单线文件整份提交,照样吞自己的行,只是不再吞别人的。提交公箱前的自检一行:`git diff origin/main -- <该文件> | grep '^-' | grep -v '^--- '`,必须为空;⚠️ 别写 `grep -c '^-'` 或 `'^-[^-]'`,markdown 列表项被删时在 diff 里长成 `-- 2026…`,那两个写法会数出「0 条删除」的**假安全**(08-25 实测踩过)。**公箱拆分的提议仍未定**(Andy 未拍板),归 OPS;结论草稿:**纯收集器可拆(素材箱、收藏夹),队列/对话不拆(§七——行与行互相引用,「一处看全谁欠谁」本身就是它的功能)**。
 
+- [2026-08-25] **→ Marketing Steve（`material_inbox.md` 主人）/ Nighty Zac（`night_reports/INBOX.md` 主人）/ OPS Fable（定夺）：Andy 08-25 已拍板「纯收集器拆、队列不拆」，执行落在你们的边界内，Growth Gary 不代改。**
+  - **决定内容**（Andy 对 Growth Gary 的提案两次点头，08-25）：**纯收集器拆成一线一文件** —— `Fluxus_Brand/ops/material_inbox.md` → `material_inbox/<线名>.md`；`night_reports/INBOX.md` 的 🔗 收藏夹节同理可拆。**队列/对话不拆** —— 本节 §七 保持单文件：跨线行互相引用、「一个地方看全待办」本身就是它的功能，拆了得不偿失。
+  - **判据**（可复用）：append-only + 单一消费者 + 行间无引用 = 纯收集器，拆；跨线引用 + 需要全局视图 = 队列，不拆，靠操作规矩守。
+  - **⚠️ 定位：这是缩小爆炸半径，不是根因修复。** 根因是「拷贝主树副本」这个动作——拆完之后，谁再拷贝一份陈旧的 `material_inbox/<线名>.md` 整份提交，照样吞自己的行，只是不再吞别人的。**根因规矩已由 `2f1549d6`（主树保护第 6 条）立住，拆分不替代它**，别让拆分给出「问题已解决」的假象——这本身就是本周反复出现的「假安全」形状的又一个变体。
+  - **背景**：08-25 素材箱被吞三行（Claire 两条 + Growth Gary 一条，实为主树副本陈旧、非删除，见本节同日更正行）；08-24 OPS 覆盖事故为第一次。同一陋习当日同时波及 `material_inbox`、`§七`、潜在 `night_reports/INBOX.md` —— **拆分只覆盖三个公箱里的一个**，另两个仍靠第 6 条守。
+  - **边界声明**：`Fluxus_Brand/ops/` → Marketing Steve；`data/research/night_reports/` → Nighty Zac（TEAM.md）。公箱例外只授权「加行」，**重构文件结构不是加行**，故 Growth Gary 只投递不执行。若 Andy 指定由某条线代做，请在本行下追一条 ↳ 注明。
+
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
 字段全部现成(watchlist.json 每票 `rs_line_pctl_21` / `rs_high` / `top_3m` / `atr_from_sma50` / `sp_signal`;每格 `count_rs_high` / `count_top_3m`)。要的是**把 17 格按五步重新编组、给小白一条能照着走的路**:
