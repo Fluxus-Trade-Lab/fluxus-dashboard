@@ -78,12 +78,18 @@ git -C /Users/taolezhu/Documents/AI-Trading-System worktree remove --force "$WT"
 - 提问者执行完，在裁决行下追「↳ 已执行（日期）」。
 - **Andy 查「办没办」只看一处**：`data/research/night_reports/INBOX.md`（问答板，带状态）或 Joe 早报的回执/转述节——不需要跳进任何对话框追问。定时会话的对话框是一次性的，跑完即弃，别在那里找状态。
 
-**主树保护三条（08-23 审计后立）**：
+**主树保护六条（08-23 立，08-25 补第 6 条）**：
 1. 共享主树上**永不 `git add -A` / `git commit -a`**——主树常年堆着各线未提交改动和外科手术拉来的数据 diff，一网打尽式提交=把别人的工作和数据时间旅行卷进你的 commit。只 add 指名文件。
 2. scratchpad/临时树**永不 checkout 具名长命分支**（main/feat/*）——/private/tmp 重启即清，分支会被一棵已蒸发的树锁死；一律基于 `origin/main` 的 detached HEAD。
 3. **无人值守会话读规矩/队列/契约文件，一律读权威版** `git show origin/main:<path>`，不读主树副本——主树可能停在落后 main 一百多个 commit 的分支上。**唯一例外：内容台五件套**（Week_Plan / Queue / Own_Lines / Ammo / receipts）**以主树工作区为准**——Andy 会直接手改它们且不总 commit，权威版反而旧。
 4. **safe-merge 遇到多 commit 分支不走「重放循环」**（那是给单文件小改设计的，reset --hard 会吞掉整晚工作）：在自己分支的树里 `git fetch origin && git rebase origin/main`，成功则 `push origin HEAD:main`；rebase 冲突就停手留分支，汇报列「待合」。
 5. **无人值守会话跑巡检/审计工具，在基于 origin/main 的临时树里跑**——主树的代码可能落后两百个 commit，跑的是旧规则。
+6. **写公箱一律基于 `origin/main`，永不拷贝主树副本**（Andy 08-25 定；同一个陋习两天内咬了两次）——第 3 条管**读**，这条管**写**。三个 append-only 公箱（`material_inbox` / `night_reports/INBOX.md` / `DATA_CONTRACTS §七`）在主树里的那份，可能停在别人几次追加之前；把它 `cp` 进临时树整份提交 = **删掉别人的行**，而你的 diff 看起来只是「我加了一行」。做法：在临时树里直接改（那棵树本来就是 origin/main），或取 `git show origin/main:<path>`，**不要拷主树那份**。提交前自检一行，必须为空：
+```bash
+git diff origin/main -- <该文件> | grep '^-' | grep -v '^--- '
+```
+⚠️ 这条自检**别写成 `grep -c '^-'` 或 `grep '^-[^-]'`**——markdown 列表项本身以 `- ` 开头，被删时在 diff 里长成 `-- 2026…`，`'^-[^-]'` 要求第二字符不是 `-`，正好把真删除全漏光，给你一个「0 条删除」的**假安全**。08-25 实测踩过：素材箱明明少了三行，这个写法数出 0。
+   一句总纲（Growth Gary 08-25）：**没有先验证一个检查能报出阳性，就不该信它的阴性。**
 
 **safe-merge：能自己合的就别找人（08-24 立，消除「等 OPS 合」这个依赖）**：一条分支若**只碰**以下路径，且全套测试通过，**产出者自己合进 main**（走直推 main 标准动作），不需要等任何人点头，晨报注明合了哪个 commit：
 - `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `data/reference/DATA_RELIABILITY.md` §六追行 · `pipeline/tools/audit_*` 及其测试 · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md` · `data/growth/**`（Growth Gary 台账，08-25 补——此前任务书叫他直推而白名单没他，周一记账会变死信）
