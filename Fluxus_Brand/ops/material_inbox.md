@@ -44,3 +44,5 @@
 
 - 2026-08-24 · 前端 UI · **一个撞车，是我三小时前自己埋的**：Portfolio 那张图上「+118.73%」压在了 Y 轴的「120%」上。原因不是巧合——那两个读数是 `absolute top-12`，一个相对卡片的固定偏移，而这个偏移只在「标题行正好和里面那两个按钮一样高」时才成立；上午我把按钮挪出图框，标题行矮了几像素，图往上走、数字没动，就撞上了。**用魔法偏移摆的元素，是在等下一次编辑来撞。**同一轮还量出：这是全 app 最后一个没设样式的 recharts tooltip，默认继承页面正文字号，在 14px 的页面上占了图面积约 15%，收到 11px 后是 3.1%。
 - 2026-08-24 · 前端 UI · **删掉的解释，比留下的解释更能说明这页在干嘛**：Andy 逐句划掉了 Today 页上的散文——「10 of 15 conditions met」「MIXED is the absence of a call…」「62 scores Constructive, as did 32% of the last 260 sessions」「analysis scheme 72/100」。其中第一条值得记：它和下面那张 62/100 卡片是同一个读数的两种分母，正因为印了两遍，当初才不得不再加一句「conditions 和票数不是一个计数」去解释。**一个读数印两遍，就会长出第三句话来解释它们为什么不一样。**删掉之后，随之死掉的 4 个函数（falsify / conditionsChange / bandShare / SchemeSeam）一并清掉。
+
+- 2026-08-25 · Growth Gary · **一个「无泄漏」的自检结果,是 shell 报错冒充的**：增长台账的 PII 政策写在 README 第一行,08-24 的存量摸底文档照样把姓名、Discord handle、单人金额写进了公开仓库并已合进 main。第一次自检我用带通配符的 grep,zsh 当场报错退出、`||` 分支照样打印「无泄漏」——**一条永远为真的检查等于没有检查**。改成逐 token 比对后立刻命中 9 处。第二个教训更贵:我最初判定「从未提交,没有真泄漏」,依据是本地 `git status` 显示 untracked——**而本地分支落后 main,该目录其实早在 main 上公开着**。读权威版要用 `git show origin/main:<path>`,这条规矩 CLAUDE.md 第 84 行早就写了。出处 data/growth/weekly/2026-08-24-baseline.md
