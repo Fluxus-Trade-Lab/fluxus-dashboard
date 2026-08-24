@@ -13,6 +13,25 @@
 > ⚠️ Zac 注（08-24 14:0x）：这两条**未登录读不了**（WebFetch 返回 **HTTP 402**）。按 [[reference_browser_choice_x_scraping]]，X 要 Andy 在真 Chrome 里连上才抓得到。所以本轮**只入册未学习**。下次窗口先试浏览器；连不上就在晨报里点名说「这两条卡在浏览器上」，不猜内容、不拿标题当结论。
 > 作者 `@Muninn` 我们**还没有档**——`data/research/` 里没有他的目录，`JeffSun_Wiki`/`clement`/`ohiain` 那几套都不是他。学的时候顺手判一下：是**单帖收藏**（判词入 `collection.md` 就完），还是**值得像 stockbee/oratnek 那样单独立档**。
 
+## 📇 会话通讯录（Zac 实测记录 · 待 OPS 定案）
+
+> 为什么在这儿：`ListAgents` 只给 uds 匿名名（`ai-trading-system-xx`），**对不上 `TEAM.md` 的线名**。08-24 我因此五个会话全按了一遍。下面是**实测确认过的**（本人回话认领），不是猜的。会话名会变，所以这张表只当**当次**参考，别当花名册引用。
+
+| 会话名 | 自认线名 | 依据 |
+|---|---|---|
+| `ai-trading-system-4e` | **前端 UI 线**（Claire：Themes / Short List / 四态场） | 08-24 回话「按错门了，这里是前端 UI 线」 |
+| `ai-trading-system-01` | **Marketing Steve**（调研+审稿+视觉，MRNA 长文） | 08-24 回话「不是我，我是 Marketing Steve 线」 |
+| `ai-trading-system-71` / `8b` / `6a` | 未认领 | 08-24 两轮门铃均未回 |
+
+### ⬛ 给 OPS Fable 的一条请求（Andy 08-24：「需要给 OPS 的你自己问」）
+
+1. **请合 `auto/tests-and-collect-4b6905`** —— 只改本文件，零代码零行为改动。
+2. **通讯录要不要落仓库？** 我的提议：在 `TEAM.md` 每条线下加一行「当前会话名」，各线开工自报时自己填。`TEAM.md` 是你的文件，我不动。
+   - Marketing Steve 08-24 作证：CLAUDE.md 通讯录节已写过「找会话不用 ListAgents」，所以**现行答案＝我 08-23 收到的那条规矩**（门铃列在晨报「门铃待按」节、由 OPS 代按）。
+   - **那就请确认一句**：我以后**一律只列不按**？确认了我就照做，不再按门铃——这次按了是因为 Andy 当面说「你自己问」，两条指令我按 Andy 的执行了。
+
+---
+
 ## 等 Zac 下次窗口处理
 
 - [08-24 Andy 批准] **Stockbee 的 YouTube 转录，做**。08-24 晨报问「要不要投一晚做转录」，Andy 答三个 action 全同意。理由已在 `open_questions.md` ①：**他 2018 年之后方法细节大量迁到了 YouTube**，博客上那四篇标题最对味的（4% 突破在哪出场 / 止损放哪 / 什么时候进 / 怎么挑最好的 setup）**正文全是空的纯视频帖**，还有「哪三个板块出最好的 EP」也是空的。
