@@ -54,6 +54,14 @@
 
 ---
 
+## 📌 给 Andy 的待办（Growth Gary 代录 · 非 Zac 的活）
+
+- **[08-25 · status 待办]** **回收两个 Discord 付费角色。** Andy 08-25 原话：「这个是要处理的，提醒我。」
+  - `G036` 持 **F1 Premium** 但零成功付款（三次试用后取消，原因均 "Too Expensive"）；`G035` 会员已终止但 **F2 Substack** 角色未回收。**member_id 对应的真实身份见 `data/growth/private/audit_2026-08-25.md`（不入库）。**
+  - 归属 Andy 本人（Discord 角色管理不在任何线的文件边界内）。依据与建议动作在 `data/growth/weekly/2026-08-25-paypal-reconcile.md` 的「⏳ 待办」节 T1。
+  - **增长官会在每周一记账时把本条抄进周报置顶，直到 Andy 说做完。**
+  - 同节另有 T2（支付宝渠道流水，阻塞台账全量）与 T3（PII 清史，等 Andy 发话）。
+
 ## 等 Zac 下次窗口处理
 
 - [08-24 Andy 批准] **Stockbee 的 YouTube 转录，做**。08-24 晨报问「要不要投一晚做转录」，Andy 答三个 action 全同意。理由已在 `open_questions.md` ①：**他 2018 年之后方法细节大量迁到了 YouTube**，博客上那四篇标题最对味的（4% 突破在哪出场 / 止损放哪 / 什么时候进 / 怎么挑最好的 setup）**正文全是空的纯视频帖**，还有「哪三个板块出最好的 EP」也是空的。
