@@ -88,3 +88,5 @@ git -C /Users/taolezhu/Documents/AI-Trading-System worktree remove --force "$WT"
 
 碰到**任何**其他路径（`pipeline/screeners|tickers|adapters`、`data/output`、`data/history`、`frontend/`、workflow 文件）→ 留分支，在汇报里列「待合分支：<名> · <一句话> · 建议合 y/n」，等 Andy 或对应线的主人处理。
 **理由**：08-19 到 08-24 有四个晚上的研究产出搁浅在分支上（其中 Delayed EP 首次前瞻复盘搁了 54 小时无人合），根因不是谁忘了，是**产出者没有落地权、而有权的人不知道有东西等着**。
+
+**通讯录 v2 补丁（08-24 第四次群发事故后）**：无人值守会话里 ccd 消息工具不可用，但内置的 `ListAgents`/`SendMessage`（socket 通道）可能可用——**那是陷阱不是许可**。近两次群发走的都是这条通道。铁律：**无人值守运行中，任何形态的消息发送一律禁止**；想通知谁，写进耐久处 + 汇报列「门铃待按」。
