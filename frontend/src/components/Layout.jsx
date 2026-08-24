@@ -173,9 +173,11 @@ export default function Layout({ data, lastUpdated, isOffline }) {
                    Whatever height the evidence takes, the writing takes the
                    same. There is nothing left to leave a gap.
 
-              The trade Andy accepted for it: the notes are ~30% of the width
-              now, about 55 characters a line instead of 110. */}
-          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]
+              The split is 65/35, widened from 70/30 on the same day: at 30%
+              the notes set about 55 characters a line, and Andy wanted them
+              wider once he saw it working. 35% is as far as it goes before the
+              MIXED card's thirteen vote columns start wrapping their labels. */}
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,65fr)_minmax(0,35fr)]
                           gap-4 items-stretch">
             <div className="flex flex-col gap-4 min-w-0">
               <VerdictCard verdict={data?.breadth?.verdict}
