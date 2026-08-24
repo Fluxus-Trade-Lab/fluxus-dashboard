@@ -42,7 +42,7 @@ status：active 35 · canceling 4 · expired 1｜billing：subscription 13 · on
 
 ### 开口（未测量的一律留空不估）
 
-- **plan_id → 价格/计费周期 映射缺失**：Whop 导出只给 Plan ID 不给价格，累计消费反解不出单价（同 plan 下不同用户累计额无公因数）。→ 需 Andy 在后台看一眼各 plan 定价，`members.csv` 的 `price_usd`/`billing` 才能补全，MRR 才从推算变实测。
+- ~~plan_id → 价格映射缺失~~ **已解，见下节。**
 - **3 位付费会员未落地 Discord**（`G025`/`G026` Lifetime 各 $3,399 + `G017` Masterclass $584.10，合计 $7,382.10）：钱收了人没进群，是**交付缺口**。（原为 4 位，其中一位随 G027→G008 合并后确认已在群内。）
 
 ### 本周落库
@@ -54,3 +54,56 @@ status：active 35 · canceling 4 · expired 1｜billing：subscription 13 · on
 ### 待决（08-25 仍开口）
 
 - **`G025` 与 canceling 的 `G007` 是否同人/家人**：两者仅同姓，PayPal 侧 `G025` 是 Lifetime $3,399、Whop 侧 `G007` 累计 $3,983 且 canceling 中。**该问题未答**——若为同一家庭，`G007` 的 canceling 是「家里已有终身席位」而非流失，挽留动作完全不同。Andy 08-25 的「同意」仅覆盖 `G027`≈`G008`，不含本条。
+
+---
+
+## 定价实读 + MRR 重算（2026-08-25，Whop 后台只读盘点）
+
+**方法**：用 Andy 已有的浏览器登录态**只读**查阅（与 08-24 OPS 同法），未输入任何凭证、未点任何同意/条款/收款控件。Products 与 Premium 产品编辑页逐档抄录。
+
+### 各档定价（后台实读，权威）
+
+| 产品 | plan_id | 定价 | 在档人数 | 试用 |
+|---|---|---|---|---|
+| Premium Membership | `plan_a3AfskxLVcRT2` | **$240 / 3 个月** | 6（主力） | 7 天 |
+| Premium Membership | `plan_SUgEa6eV2hGHW` | **$900 / 年** | 3 | — |
+| Premium Membership | `plan_ySnCQI7dAC94t` | **$99 / 月** | 2 | 7 天 |
+| Premium++ Members Access | `plan_pAMoMvrGL6NJu` | **$149 / 月** | 1 | — |
+| Free Access | — | 免费 | 1 | — |
+| Swing Trade Masterclass | `plan_8RfO9OFDQdVUV` | 一次性，**实付两档 $584.10 / $649.00** | 15 | — |
+
+「三轨并存、季付最受欢迎」经后台核实成立，且 6/3/2 的人数分布与 08-24 导出的 plan_id 反推**完全吻合**。
+
+### ⚠️ 新发现：第五个产品「Substack for PT Swing Traders」不在 Products 列表里
+
+后台 Products 列表（筛选 = Visible and Hidden）只有 4 个产品，但会员数据里有 **7 人挂在 `prod_0WddY2iwoTitp`**，产品名在 Memberships 视图中显示为 **Substack for PT Swing Traders**。直接访问该产品页会被重定向——**已归档但会员资格仍在生效**，其中 **6 个带活跃续费日期**（2026-10 至 2027-01）。
+
+价格反解（导出只给 plan_id，后台已无该产品页）：
+- `plan_7TpyDYwfvaXzY` = **$1,149 / 年** —— 单挂锚点一名实付 $1,149；三名组合用户 $1,798−1,149=$649、$1,733.10−1,149=$584.10、$1,798−1,149=$649，**全部落在 Masterclass 的两个已知实付档上，4/4 算术吻合**。
+- `plan_6y1CaoSkK6lNC`（2 人）**未解出**：单挂锚点 $900，但组合用户余额为 $931.50，与任何已知 Masterclass 档都对不上。按铁口径**留空标未测量**，不估。
+
+### MRR 重算
+
+| 组成 | 口径 | 金额/月 |
+|---|---|---|
+| Premium $240/3mo × 6 | 后台实读 | $480.00 |
+| Premium $900/年 × 3 | 后台实读 | $225.00 |
+| Premium $99/月 × 2 | 后台实读 | $198.00 |
+| Premium++ $149/月 × 1 | 后台实读 | $149.00 |
+| **小计（可见产品，已测量）** | | **$1,052.00** |
+| 归档产品 $1,149/年 × 4 | 算术反解，4/4 吻合 | +$383.00 |
+| 归档产品 `plan_6y1C` × 2 | **未测量** | — |
+| **合计（下限）** | | **≥ $1,435.00** |
+
+- **08-24 记录的 MRR $1,139 是错的**，两个方向都错：按「10×$99」高估了 Premium 的人均（实际三轨混合，11 人合计仅 $903/月），同时**完全漏掉了归档产品那 6 笔活跃订阅**。
+- `metrics.csv` 的 `mrr_usd` 列按铁口径只记**已测量的 $1,052**；反解与未测量部分记在本文与 notes，不混进读数列。
+- ⚠️ **即将到期的减项**：$99/月 那档有一人「23 小时内取消」（后台状态），落地后 MRR −$99。
+
+### 附带发现（后台 Memberships 视图）
+
+- **取消原因后台有记录**：观察到 "Too Expensive" ×3、"Technical Issues" ×2、"Other" ×1 —— 这是流失分析的现成数据源，08-24 baseline 未提及。
+- 存在**同一人多条 membership**（试用结束/重新订阅/跨产品），所以「membership 数」≠「人数」。本台账一人一行的口径不受影响，但引用后台任何「active users」数字时要注意它数的是 membership。
+
+## 本次落库补充
+
+- `members.csv` **15 行补上 `price_usd` / `billing`**；仍留空的是：`plan_6y1C`（2 人，未测量）、同时挂多个订阅 plan 的行（已在 notes 标注）、以及 Masterclass 一次性两档价（同 plan 两个实付值，不写单一值）。
