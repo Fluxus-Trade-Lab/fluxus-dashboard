@@ -207,8 +207,15 @@ jobs:
           # ledger's lamp inputs, refreshed in-run; committing keeps the
           # fallback baseline fresh so a later tvdatafeed outage degrades from
           # "yesterday", not from the last hand-run.
+          # shortlist_manual.json is REFRESHED BY THE RUN (shortlist_feedback
+          # rewrites it from the Sheet's starred/noted rows), so it belongs
+          # here with the other in-run-refreshed reference files. Leaving it
+          # out cost the 2026-08-25 backfill its first push -- and quietly
+          # discarded the refresh every night before that: the stars were
+          # pulled, the list was rebuilt, and the rebuild was thrown away.
           git add data/output/ data/history/ data/reference/fundamentals.json \
-                  data/reference/breadth_tv/ SqueezeMetrics/DIX.csv
+                  data/reference/breadth_tv/ data/reference/shortlist_manual.json \
+                  SqueezeMetrics/DIX.csv
           git diff --staged --quiet && exit 0
           git commit -m "chore: market data $(date +%Y-%m-%d)"
           # Anything the run touched OUTSIDE the staged set blocks the rebase
