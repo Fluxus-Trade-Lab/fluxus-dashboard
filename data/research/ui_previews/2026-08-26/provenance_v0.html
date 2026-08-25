@@ -1,0 +1,5 @@
+<!doctype html><meta charset="utf-8">
+<title>Watchlist provenance · v0 · 现状（对照组）</title>
+<link rel="stylesheet" href="_shared.css">
+<h1>Watchlist → 出处行 · v0 · 现状（对照组）</h1>
+<p class="sub">现在站上就是这一行。它说的是「哪一场收盘」，从不说「这是几天前的」。2026-08-22 到 08-25，schema 闸把整场 commit 拦下，data/output 在 main 上停在 08-21——这一行三天都读作「2026-08-21 收盘」，而页面照常渲染。</p><div class="case"><h2>当天数据（2026-08-24 收盘，落后 0）</h2><p class="prov">2026-08-24 收盘 · 2,078 只过闸（cap ≥ $1B · $vol ≥ $20M）</p><div class="switches"><span class="sw">3M pool</span><span class="sw">52w high only</span><span class="sw">RS ≥ 70</span><span class="sw">exclude healthcare</span></div></div><div class="case"><h2>08-24 断更那三天（单子停在 08-21，今天 08-25）</h2><p class="prov">2026-08-21 收盘 · 2,078 只过闸（cap ≥ $1B · $vol ≥ $20M）</p><div class="switches"><span class="sw">3M pool</span><span class="sw">52w high only</span><span class="sw">RS ≥ 70</span><span class="sw">exclude healthcare</span></div></div>
