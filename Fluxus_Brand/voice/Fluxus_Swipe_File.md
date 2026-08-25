@@ -869,7 +869,9 @@ ohiain 的实际操作顺序:
 ### #37 James Muninn(@Muninn)— "Everything I've Learned About Entries From a Market Wizard"(2026-08-03)· 文体 Q ⭐⭐⭐ **全库收藏比最高**
 
 - 链接:`https://x.com/Muninn/status/2088292776047751193` · **258,040 views / 521 ♥ / 1,355 收藏**
-- 🔴 **收藏/赞 = 2.60 —— 打破 ohiain 的 2.17。而他只有 14.4K 粉(曝光是粉丝数的 18 倍)。**
+- 🔴 **收藏/赞 = 2.59**,而他只有 14.4K 粉(曝光是粉丝数的 18 倍)。
+- ⚠️ **2026-08-25 更正:** 原记 2.60 且称「全库最高」——**已被 @Hrundel75 超过**(2026-03-29 的 X Article **4.11**、08-22 的 **2.79**)。**但这反而强化了本文体:收藏比前三名全部是 X Article 长文。**
+- ⚠️ **日期更正:** 原记「2026-08-03 发」是错的,真实为 **2026-08-14** —— 即 2.59 只用了 10 天攒出来,比原先以为的更硬。
 - 🔴 **载体是 X Article** —— 库里 36 个样本零个用过
 - 同系列上一篇(Taking Profits)94K 曝光 → **不是一次爆款,是可复制格式**
 - 完整拆解:[`../research/Fluxus_Muninn_Teardown.md`](../research/Fluxus_Muninn_Teardown.md)
