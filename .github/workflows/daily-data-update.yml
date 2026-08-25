@@ -211,12 +211,25 @@ jobs:
                   data/reference/breadth_tv/ SqueezeMetrics/DIX.csv
           git diff --staged --quiet && exit 0
           git commit -m "chore: market data $(date +%Y-%m-%d)"
+          # Anything the run touched OUTSIDE the staged set blocks the rebase
+          # below ("cannot rebase: You have unstaged changes") and the whole
+          # night is lost with the commit already made -- 2026-08-25, after
+          # the schema fix had finally let the run get this far. Say what it
+          # was, so the next occurrence is diagnosed rather than guessed at.
+          leftover=$(git status --porcelain)
+          if [ -n "$leftover" ]; then
+            echo "::warning title=Unstaged after commit::$(echo "$leftover" | tr '\n' ' ')"
+            echo "left unstaged after the data commit:"; echo "$leftover"
+          fi
           # main moves while this runs (2026-08-18: five commits landed during
           # a 20-minute run and the push was rejected). Rebase onto whatever
           # is there now and retry; our commit only touches data files.
+          # --autostash: a stray dirty file must not cost the night's data.
+          # (Safe here in a way it never is on the shared worktree: this
+          # runner is ephemeral and nobody else is working in it.)
           for i in 1 2 3; do
             git fetch origin main
-            git rebase origin/main && git push && exit 0
+            git rebase --autostash origin/main && git push && exit 0
             git rebase --abort || true
             sleep 15
           done
