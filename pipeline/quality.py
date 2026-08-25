@@ -330,11 +330,15 @@ def check(rows: Sequence[Mapping[str, Any]], date: str,
 # and a column dying in etf_data is caught by the same dead-feed rule that now
 # guards the universe.
 
+# Resolved at CALL time, never bound into a signature default: a default that
+# is evaluated at import cannot be redirected by a test sandbox, which is how
+# the 2026-08-23 pollution kept reaching the real baseline even after the
+# fixture monkeypatched this name (see pipeline/tests/conftest.py).
 QUALITY_DIR = Path("data/history/quality")
 
 
 def check_source(source: str, rows: Sequence[Mapping[str, Any]], date: str,
-                 history_dir: Path = QUALITY_DIR) -> Dict[str, Any]:
+                 history_dir: Optional[Path] = None) -> Dict[str, Any]:
     """Measure, grade and record one site-consumed source.
 
     Unlike the universe check, a severe verdict here does not halt anything:
@@ -342,6 +346,7 @@ def check_source(source: str, rows: Sequence[Mapping[str, Any]], date: str,
     fact protects nobody. Severe is logged at ERROR and lands in the
     consolidated quality.json where the site itself can show it.
     """
+    history_dir = QUALITY_DIR if history_dir is None else history_dir
     path = history_dir / f"{source}.csv"
     history = read_history(path)
     rates = null_rates(rows, discovered_fields(rows, history))
@@ -445,8 +450,9 @@ SITE_SOURCES: Dict[str, str] = {
 
 
 def check_site(output_dir: Path, date: str,
-               history_dir: Path = QUALITY_DIR) -> Dict[str, Any]:
+               history_dir: Optional[Path] = None) -> Dict[str, Any]:
     """Grade every site-consumed source; return the consolidated report."""
+    history_dir = QUALITY_DIR if history_dir is None else history_dir
     import json as _json
     report: Dict[str, Any] = {"date": date, "sources": {}}
     for source, filename in SITE_SOURCES.items():
