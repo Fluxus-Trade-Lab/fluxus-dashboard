@@ -41,6 +41,22 @@ LEADERS_LOG = Path("data/history/leaders_log.csv")
 # was tight on high-priced names and loose on $2 ones: CBRL ($58 x 862k =
 # $50M/day) failed it while a $2 name printing 1.1M shares ($2M/day) passed.
 MIN_DOLLAR_VOL = 2e7
+# 2026-08-25 (Andy: "接上 ADR 闸"). Half our width over oratnek's page was one
+# missing floor: he applies a volatility minimum GLOBALLY, we only had it
+# inside the Momentum 97 recipe (Stockbee's adr 3.5-10). Measured over four of
+# his archived sessions -- 08-18/19/20/24 -- ADR >= 3.5 cuts our panels by 57%
+# (472 -> 201 on 08-24) and loses ZERO of his names: 14/14, 16/16, 11/11,
+# 35/35. Everything else we tried past this point starts dropping them
+# (claims.jsonl: oratnek-width-adr-floor / oratnek-width-not-universe).
+#
+# A name below it is not "bad" -- it is untradeable on our stop framework:
+# R = ATR, so a 1% ADR name needs 3x the size for the same risk unit.
+MIN_ADR_PCT = 3.5
+# EXEMPT: the trouble zone. stop_hit / ll_break / extended answer "what broke
+# in something I ALREADY HOLD", and a position does not stop being held
+# because it went quiet. Filtering exits by tradeability would hide the exit
+# signal for exactly the name whose thesis died.
+ADR_EXEMPT_ZONES = {"trouble"}
 MAX_PER_PANEL = 25
 # >= 2 zones listed 177 names on 08-14 (143 of them exactly two, mostly
 # leaders x moving); three zones is where the list is short enough to read.
@@ -427,14 +443,22 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
     for r in rows:
         present.update(k for k, v in r.items() if v is not None)
 
+    # Fail OPEN on a missing ADR: this is a narrowing filter, not a safety
+    # gate, and a day where the column goes null must not empty every panel.
+    # (1.5% of rows had no adr_pct on 2026-08-25; the count is reported so a
+    # silent rise in that share is visible rather than inferred.)
+    adr_ok = lambda r: (_f(r, "adr_pct") is None) or (_f(r, "adr_pct") >= MIN_ADR_PCT)
+    adr_unmeasured = sum(1 for r in gated if _f(r, "adr_pct") is None)
+
     zone_hits: Dict[str, set] = {}
     zones_out = []
     for z in ZONES:
         panels_out = []
+        pool = gated if z["key"] in ADR_EXEMPT_ZONES else [r for r in gated if adr_ok(r)]
         for pk in z["panels"]:
             p = PANELS[pk]
             measured = all(n in present for n in p.needs)
-            hits = [r for r in gated if measured and p.test(r)]
+            hits = [r for r in pool if measured and p.test(r)]
             hits.sort(key=lambda r: (-(_f(r, "h_score") or -1), -(_f(r, "rs_1m") or -1), r["ticker"]))
             for r in hits:
                 zone_hits.setdefault(r["ticker"], set()).add(z["key"])
@@ -459,7 +483,14 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
 
     return {
         "date": date,
-        "gate": {"min_market_cap": MIN_CAP, "min_dollar_volume": MIN_DOLLAR_VOL},
+        "gate": {"min_market_cap": MIN_CAP, "min_dollar_volume": MIN_DOLLAR_VOL,
+                 # the floor and its own evidence, so a page can say WHY a
+                 # quiet name is absent, and so a rise in the unmeasured share
+                 # is visible rather than inferred
+                 "min_adr_pct": MIN_ADR_PCT,
+                 "adr_exempt_zones": sorted(ADR_EXEMPT_ZONES),
+                 "adr_unmeasured": adr_unmeasured,
+                 "gated_rows": len(gated)},
         "sort": "hybrid_rs desc; the number beside each ticker is rs_line_pctl_21 (oratnek's RS 1M: RS-line self-percentile, 21 sessions); rs_1m (cross-sectional) is the second reading",
         "cross_zone_rule": f"count of ZONES a name appears in (not panels); >= {MIN_CROSS_ZONES} listed",
         "rs_high_rule": "rs_high = RS line (close/SPY) at a 21-session high (rs_line_pctl_21 == 100); detection only, no panel filters on it; count_rs_high per panel",

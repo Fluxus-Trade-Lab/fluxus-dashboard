@@ -328,3 +328,61 @@ class TestEpisodicPivotPanel:
     def test_sits_in_entries_after_ma_reclaim(self):
         entries = [z for z in W.ZONES if z["key"] == "entries"][0]["panels"]
         assert entries[:2] == ["ma_reclaim", "episodic_pivot"]
+
+
+class TestAdrFloor:
+    """The volatility floor (2026-08-25, Andy: 「接上 ADR 闸」).
+
+    Half our width over oratnek's page was this one missing gate. It is a
+    NARROWING filter, so its failure modes are the opposite of a safety
+    gate's: a missing column must not empty the page, and it must not reach
+    the panels that speak about positions already held.
+    """
+
+    def _build(self, rows):
+        return W.build(rows, date="2026-08-24")
+
+    def _count(self, payload, key):
+        for z in payload["zones"]:
+            for p in z["panels"]:
+                if p["key"] == key:
+                    return p["count"]
+        raise KeyError(key)
+
+    def test_quiet_name_is_dropped_from_an_entry_panel(self):
+        loud = row(ticker="LOUD", adr_pct=5.0, vol10_green=True, trend_base=True)
+        quiet = row(ticker="QUIET", adr_pct=1.2, vol10_green=True, trend_base=True)
+        p = self._build([loud, quiet])
+        assert self._count(p, "pp_today") == 1
+        tick = [t["ticker"] for z in p["zones"] for pa in z["panels"]
+                if pa["key"] == "pp_today" for t in pa["tickers"]]
+        assert tick == ["LOUD"]
+
+    def test_missing_adr_fails_open(self):
+        """A null column must not empty every panel -- the 2026-08-19 blackout
+        taught that a narrowing rule with a strict null policy is a blackout
+        waiting for a data glitch."""
+        p = self._build([row(ticker="NOADR", adr_pct=None, vol10_green=True, trend_base=True)])
+        assert self._count(p, "pp_today") == 1
+        assert p["gate"]["adr_unmeasured"] == 1
+
+    def test_trouble_zone_is_exempt(self):
+        """A position does not stop being held because it went quiet: the
+        exit signal for a low-ADR name must still show."""
+        quiet_broken = row(ticker="QB", adr_pct=1.0, atr_from_sma50=9.0)
+        p = self._build([quiet_broken])
+        assert self._count(p, "extended") == 1, "an exit panel must not be filtered by tradeability"
+        assert self._count(p, "pp_today") == 0
+
+    def test_gate_block_reports_the_floor_and_its_evidence(self):
+        p = self._build([row(ticker="A", adr_pct=5.0)])
+        g = p["gate"]
+        assert g["min_adr_pct"] == W.MIN_ADR_PCT == 3.5
+        assert g["adr_exempt_zones"] == ["trouble"]
+        assert "adr_unmeasured" in g and "gated_rows" in g
+
+    def test_floor_is_at_the_boundary_not_above_it(self):
+        """3.5 passes; Stockbee's band is adr 3.5-10 inclusive and the
+        Momentum 97 recipe already reads it that way."""
+        p = self._build([row(ticker="EDGE", adr_pct=3.5, vol10_green=True, trend_base=True)])
+        assert self._count(p, "pp_today") == 1
