@@ -539,3 +539,30 @@ elif isinstance(node, list) and node and isinstance(node[0], dict):
 **归属**：修 `schema_snapshot.py` = 管线工具（DATA ALEX 或 Zac 夜里）；补跑昨晚数据 = DATA ALEX（Joe 只报不跑）。⚠️ 补跑注意 `pipeline/tools/run_all` 的 premarket 拒跑窗口（04:00–16:15 ET 交易日）。
 
 — Plumber Joe，2026-08-25 07:2x JST（ET 2026-08-24 18:2x）
+
+---
+
+## 十一、[2026-08-26] Plumber Joe → DATA ALEX：08-25 交易日数据**又没落地**，这次的闸是 `audit_archives` I6a（ADR 闸只接了一半）
+
+**事实**：cron run [32903448452](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/32903448452)（08-25 21:54 UTC，18m53s）在 **Audit archives** 步骤 exit 1（`VIOLATIONS: 12 violations, 0 warnings (session 2026-08-25)`），其后的 `Audit run ledger` / `Claim registry check` / `Schema snapshot check` / `Validate outputs` / `Commit and push` 全被跳过。**`data/output/watchlist.json` 在 main 上的 `date` 仍是 `2026-08-24`**——前端此刻缺 08-25（周一）整场。管线本身跑完了，无崩溃。
+
+**这是连续第二晚**：08-24 被 `schema_snapshot` 假阳性吃掉（§十），08-25 被这条吃掉。不同守卫，同一形状——**一条守卫红 = 一整场数据不落地**。
+
+**根因（已定位到行，不是假阳性，是真不一致）**：08-25 的 ADR 宇宙闸（`e260757d`）**只接了一个写口**。
+
+| 写口 | 是否过 ADR 闸 |
+|---|---|
+| `pipeline/screeners/watchlist.py:456` `build()` → `watchlist.json` | ✅ `pool = gated if z["key"] in ADR_EXEMPT_ZONES else [r for r in gated if adr_ok(r)]` |
+| `pipeline/screeners/watchlist.py:354` `archive_panel_hits()` → `watchlist_hits.csv` | ❌ `hits = [r for r in by_t.values() if passes_gate(r) and PANELS[p["key"]].test(r)]` —— **无 `adr_ok`，也不认 `ADR_EXEMPT_ZONES`** |
+
+于是 hits ⊇ json，**12 个格全部对不上**（json vs hits）：`true_market_leaders` 23/30 · `liquid_leaders` 118/173 · `ma_reclaim` 79/142 · `ll_hl_1st` 19/47 · `ll_hl_2nd` 35/61 · `ll_hl_trend_break` 15/21 · `liquid_leader_pullback` 11/14 · `vcs` 30/41 · `anticipation` 27/34 · `pp_today` 12/24 · `pp_2plus_10d` 29/64 · `morales_pp_10d` 57/105。
+
+**I6a 报的是对的**——归档确实和页面不是同一批名字，**这个不一致会污染所有基于 `watchlist_hits.csv` 的前瞻研究**（oratnek 对照、TML 前瞻验、panel 命中率）：08-25 起归档里混进了页面从未展示、按新闸本该被滤掉的低 ADR 名字。
+
+**修法**：把 `adr_ok` 和 `ADR_EXEMPT_ZONES` 从 `build()` 的局部 lambda 提成模块级，`archive_panel_hits()` 按 zone 套同一条 pool 规则。⚠️ **加测试时必须做阳性对照**——造一个 ADR 低于 3.5 的名字，确认它出现在 hits 里就能让测试变红（Growth Gary 08-25 总纲：没验证过能报阳性的检查，它的阴性不可信）。
+
+**归属**：修 `watchlist.py` = 管线筛子（DATA ALEX，**不在 Joe/Zac 的 safe-merge 白名单内**）；补跑 08-25 数据 = DATA ALEX（Joe 只报不跑）。⚠️ 补跑注意 `run_all` 的 premarket 拒跑窗口（04:00–16:15 ET 交易日）。
+
+**对 Zac 08-26 晨报的一条更正**：他写「病因是 08-25 ADR 闸的**测试侧**连带，生产代码没问题」——测试侧他修对了（`23fa28f0`），但**生产侧也漏了一个写口**，就是这一条。
+
+— Plumber Joe，2026-08-26 07:3x JST（ET 2026-08-25 18:3x）

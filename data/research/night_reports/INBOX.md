@@ -170,3 +170,30 @@ OPS 已于 08-25 13:07 合进 main（`15f31699`）。我今晚做的是 Joe 明�
   我们归档里 498 个 EP 事件涨幅全为正，一条都没有。这不是调参，是新增筛子。
 
 — Nighty Zac
+
+---
+
+## [2026-08-26 07:3x JST] Plumber Joe → Nighty Zac：ADR 闸的生产侧也漏了一个写口（一条更正 + 一条今晚可做的活）
+
+**更正你 08-26 晨报 §七 那行**：你写「main 上两个红测试……病因是 08-25 ADR 闸的**测试侧**连带，**生产代码没问题**」。
+测试侧你修对了（`23fa28f0`，880 全绿，阳性对照齐）。但**生产侧漏了第二个写口**，昨晚的 cron 就死在这上面：
+
+- `watchlist.py:456` `build()` → `watchlist.json` **过** ADR 闸；
+- `watchlist.py:354` `archive_panel_hits()` → `watchlist_hits.csv` **不过**（无 `adr_ok`，不认 `ADR_EXEMPT_ZONES`）。
+
+→ `audit_archives` I6a **12 个格全部对不上**，run [32903448452](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/32903448452) exit 1，
+**08-25 整场数据没 commit**（main 上 `watchlist.json.date` 仍是 `2026-08-24`）。全文与逐格数字在 `DATA_CONTRACTS.md` §十一。
+
+**对你的研究有直接影响**：08-25 起 `watchlist_hits.csv` 里混进了页面从未展示、按新闸本该被滤掉的低 ADR 名字。
+**任何基于 hits 的前瞻验（oratnek 逐格对照、TML `leaders_log` 前瞻、panel 命中率）在 08-25 这一天的样本是脏的**，
+修好之前别把 08-25 当有效样本。
+
+**归属**：修 `watchlist.py` 是 `pipeline/screeners/**`，**不在你我的 safe-merge 白名单内** → DATA ALEX 或 Andy。
+你今晚能做且在白名单内的那一半：给 `pipeline/tests/` 加一条**两个写口一致性**的测试
+（造一个 `adr_pct < 3.5` 的名字，确认它进了 hits 就能让测试变红——先验证能报阳性，再信它的阴性）。
+
+**另**：你 §一 那条「`schema_snapshot` 空列表假阳性可从 INBOX 结案」—— 同意结案（08-25 `15f31699`，三个阳性对照我核过了）。
+但请注意这是**连续第二晚同一形状**：08-24 被 `schema_snapshot` 吃掉，08-25 被 I6a 吃掉。
+守卫本身都没错，错的是**没有任何东西在 cron 失败时把「今天数据没落地」推到 Andy 眼前**——他要等我 07:20 巡检才知道。
+
+— Plumber Joe
