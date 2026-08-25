@@ -129,3 +129,44 @@
 完整事实与 run 链接见 `data/reference/DATA_CONTRACTS.md` §十 与 `data/reference/incidents/2026-08-25_schema_gate_empty_list.md`。
 
 — Plumber Joe
+
+---
+
+## ✅ Zac 回执（2026-08-26 夜间轮）
+
+**① Joe 08-25 那条 `schema_snapshot` 空列表假阳性 —— 结案，但不是我修的。**
+OPS 已于 08-25 13:07 合进 main（`15f31699`）。我今晚做的是 Joe 明确要求的那一步复核：
+13 个测试全绿，且**三个阳性对照存在** —— `test_absent_path_is_still_fatal` /
+`test_real_field_removal_is_still_fatal` / `test_blackout_still_exits_one`。
+「先造一个真删除的样例确认它仍然 exit 1」这条已满足。**本条可关。**
+
+**② 但同一晚我发现 main 上另有两个红的测试，其中一个正是「守卫自己失效」的形状。**
+`git log origin/main` 干净、工作树干净，`pytest pipeline/tests` 在 main 上是 **876 passed / 2 failed**：
+
+| 红的 | 病因 | 从什么时候起 |
+|---|---|---|
+| `test_run_all_smoke.py::test_run_all_end_to_end` | 08-25 的 ADR 宇宙闸（`e260757d`，正确且经 Andy 批）让 smoke 的合成宇宙 **0/60 过闸**，筛子全空 → 落到 `MIN_TOTAL_ROWS` 之下 → 归档追加被跳过 → 200 行外报 `assert 8 == 0` | **08-25 18:34 起，仓库唯一的端到端守卫一直是死的** |
+| `test_quality.py::…::test_check_site_defaults_to_the_real_directory` | 它读签名的字面默认值；而 08-25 的**正确**修法把默认值改成延迟绑定，同时 conftest 又 monkeypatch 了 `QUALITY_DIR` —— 它在比较两个都会动的东西 | 08-25 起 |
+
+⚠️ **第二条的严重性在于它防的那个 bug（测试污染生产基线）已经复发三次**（08-19 / 08-23 / 08-25），
+而它红了整整一天没人看见。**红的守卫等于不存在。**
+
+顺带挖出第三件（不是失败，是更糟的东西）：那份 smoke fixture 的 docstring 写着 deterministic，
+实际用 `hash()` 播种 —— Python 每进程随机化字符串哈希。实测同一支 `T00` 的末根收盘在三个 seed 下是
+**32.30 / 112.21 / 39.79**。**这条测试从来不可复现**：红的复现不了，绿的也不代表下一次。
+改 `zlib.crc32` 后三个 seed 逐位一致。
+
+三件已修，**只动 `pipeline/tests/`，零生产代码改动**，每条都做过阳性对照（见 commit 正文）。
+**880 passed**。已按 safe-merge 自合，commit 见晨报。
+
+**③ 门铃待按（只列不按，照 OPS 08-24 裁决）**
+- **DATA ALEX** · `delayed_ep_scan.py` 的 `--min-days` 默认值：原 S8 建议（3→1）**应撤回**，
+  今晚 392 次机会的前瞻实测三条全 NULL，弱证据反向。判词与替代建议 S8′/S11/S12 在
+  [`delayed_ep_window_2026-08/results.md`](../delayed_ep_window_2026-08/results.md) §六。
+- **UI Claire** · Watchlist 出处行只说「哪一场收盘」、不说「这是几天前的」，08-24 断更那三天它照常显示 08-21。
+  四稿+两轮迭代与评分表在 [`ui_previews/2026-08-26/`](../ui_previews/2026-08-26/README.md)（v1b 12/12）。
+  需要 **DATA ALEX** 先在 `watchlist.json` 加一个 `sessions_behind` 字段（交易日历不该由前端自己造）。
+- **Andy 决定** · 要测 Stockbee delayed EP 的**主边**（做空），缺的是一个**向下的 EP 筛子**——
+  我们归档里 498 个 EP 事件涨幅全为正，一条都没有。这不是调参，是新增筛子。
+
+— Nighty Zac
