@@ -12,6 +12,10 @@ Per file: top-level keys; for every top-level list-of-dicts (or dict whose
 values are lists of dicts, e.g. themes/industries, or the `rows` list) the
 union of keys over the first 200 entries. Types are not tracked -- null vs
 number on a field is a quality question (quality.py), not a schema one.
+
+An EMPTY collection is recorded as such rather than skipped: "no rows fired
+today" and "the rows lost their fields" are different facts, and conflating
+them made a quiet EP day look like a schema break (2026-08-24).
 """
 
 from __future__ import annotations
@@ -25,6 +29,12 @@ from typing import Any, Dict, List
 OUTPUT = Path("data/output")
 SNAPSHOT = Path("data/reference/schema_snapshot.json")
 SAMPLE = 200
+
+# A collection that was measured and held nothing. Distinct from a path that
+# is ABSENT (the parent key vanished) -- that one is a real removal. Without
+# this distinction an empty list reads as "every field was removed", which is
+# what failed the 2026-08-24 nightly run and blocked the whole commit.
+EMPTY = None
 
 
 def _walk(node: Any, path: str, out: Dict[str, Any], depth: int) -> None:
@@ -45,21 +55,28 @@ def _walk(node: Any, path: str, out: Dict[str, Any], depth: int) -> None:
         if path and vals and len(vals) > 3 and all(isinstance(x, list) for x in vals[:5]):
             # a dict keyed by ticker/date whose values are row lists
             inner = [e for x in vals[:50] for e in x[:20] if isinstance(e, dict)]
-            if inner:
-                ks = set()
-                for e in inner[:SAMPLE]:
-                    ks.update(e.keys())
-                out[path + "{}[]"] = sorted(ks)
+            ks = set()
+            for e in inner[:SAMPLE]:
+                ks.update(e.keys())
+            out[path + "{}[]"] = sorted(ks) if inner else EMPTY
             return
         for k, v in node.items():
             _walk(v, f"{path}.{k}" if path else k, out, depth + 1)
-    elif isinstance(node, list) and node and isinstance(node[0], dict):
-        ks: set = set()
-        for x in node[:SAMPLE]:
-            if isinstance(x, dict):
-                ks.update(x.keys())
-        out[path + "[]"] = sorted(ks)
-        _walk(node[0], path + "[]", out, depth + 1)
+    elif isinstance(node, list):
+        if not node:
+            # Measured, and it held nothing. Recording EMPTY (rather than
+            # nothing) is what lets `diff` tell "no rows fired today" apart
+            # from "the rows lost their fields" -- see EMPTY's comment.
+            if path:
+                out[path + "[]"] = EMPTY
+            return
+        if isinstance(node[0], dict):
+            ks: set = set()
+            for x in node[:SAMPLE]:
+                if isinstance(x, dict):
+                    ks.update(x.keys())
+            out[path + "[]"] = sorted(ks)
+            _walk(node[0], path + "[]", out, depth + 1)
 
 
 def shape(payload: Any) -> Dict[str, Any]:
@@ -78,6 +95,9 @@ def live(output: Path = OUTPUT) -> Dict[str, Dict[str, Any]]:
     return snap
 
 
+_ABSENT = object()
+
+
 def diff(old: Dict[str, Dict[str, Any]], new: Dict[str, Dict[str, Any]]) -> List[str]:
     lines: List[str] = []
     for f in sorted(set(old) | set(new)):
@@ -86,7 +106,26 @@ def diff(old: Dict[str, Dict[str, Any]], new: Dict[str, Dict[str, Any]]) -> List
         if f not in old:
             lines.append(f"{f}: new file ({len(new[f].get('top', []))} top-level keys)"); continue
         for sect in sorted(set(old[f]) | set(new[f])):
-            a, b = set(old[f].get(sect, [])), set(new[f].get(sect, []))
+            ov = old[f].get(sect, _ABSENT)
+            nv = new[f].get(sect, _ABSENT)
+            # An empty collection is "nothing fired today", not "the fields
+            # are gone" -- the 2026-08-24 cron failed on exactly this: no EP
+            # fired and no card had a panel hit, so episodic_pivot.json's
+            # tickers[] and shortlist.json's cards[].panels[] read as
+            # `removed [every field]` and the whole night's data never
+            # committed. The shape a real removal has is the PATH going
+            # missing (breadth.json's blackout), which stays fatal below.
+            if nv is EMPTY:
+                if ov not in (EMPTY, _ABSENT):
+                    lines.append(f"{f} {sect}: empty today "
+                                 f"({len(ov)} field(s) not observable -- not a removal)")
+                continue
+            if ov is EMPTY:
+                if nv is not _ABSENT:
+                    lines.append(f"{f} {sect}: populated again ({len(nv)} field(s))")
+                continue
+            a = set(ov) if ov is not _ABSENT else set()
+            b = set(nv) if nv is not _ABSENT else set()
             if a - b:
                 lines.append(f"{f} {sect}: removed {sorted(a - b)}")
             if b - a:
