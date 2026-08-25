@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-21T22:11:37.221869+00:00",
+  "generated_at": "2026-08-25T04:48:00.007271+00:00",
   "trades": [
     {
       "trade_id": "PLTR_2026-08-20_000",
@@ -13,7 +13,7 @@
       "capture_pct": null,
       "setup_type": "Long in mixed structure",
       "lesson": "In progress",
-      "hold_days": 1
+      "hold_days": 5
     },
     {
       "trade_id": "HOOD_2026-08-20_000",
@@ -27,7 +27,77 @@
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 1
+      "hold_days": 5
+    },
+    {
+      "trade_id": "SOXL_2026-08-19_000",
+      "ticker": "SOXL",
+      "direction": "long",
+      "entry_date": "2026-08-19",
+      "exit_date": "2026-08-19",
+      "closed": true,
+      "realized_R": -0.533834586466164,
+      "optimal_R": 2.146616541353389,
+      "capture_pct": -24.86865148861633,
+      "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
+      "lesson": "Stopped too tight",
+      "hold_days": 0
+    },
+    {
+      "trade_id": "SOFI_2026-08-19_000",
+      "ticker": "SOFI",
+      "direction": "long",
+      "entry_date": "2026-08-19",
+      "exit_date": "2026-08-21",
+      "closed": true,
+      "realized_R": 0.48750000000000027,
+      "optimal_R": 0.8375000000000014,
+      "capture_pct": 58.20895522388053,
+      "setup_type": "Long below MA200 \u2014 counter-trend",
+      "lesson": "Choppy / no edge",
+      "hold_days": 2
+    },
+    {
+      "trade_id": "MRNA_2026-08-19_000",
+      "ticker": "MRNA",
+      "direction": "long",
+      "entry_date": "2026-08-19",
+      "exit_date": "2026-08-19",
+      "closed": true,
+      "realized_R": 4.467567191758902,
+      "optimal_R": 11.091482649842265,
+      "capture_pct": 40.27926051728022,
+      "setup_type": "Breakout / near 52W high",
+      "lesson": "Premature trim",
+      "hold_days": 0
+    },
+    {
+      "trade_id": "HOOD_2026-08-19_001",
+      "ticker": "HOOD",
+      "direction": "long",
+      "entry_date": "2026-08-19",
+      "exit_date": "2026-08-19",
+      "closed": true,
+      "realized_R": -0.33163265306122364,
+      "optimal_R": 0.6403061224489807,
+      "capture_pct": -51.79282868525874,
+      "setup_type": "Long below MA200 \u2014 counter-trend",
+      "lesson": "Choppy / no edge",
+      "hold_days": 0
+    },
+    {
+      "trade_id": "HOOD_2026-08-19_000",
+      "ticker": "HOOD",
+      "direction": "long",
+      "entry_date": "2026-08-19",
+      "exit_date": null,
+      "closed": false,
+      "realized_R": 0.0,
+      "optimal_R": 3.4919354838709675,
+      "capture_pct": null,
+      "setup_type": "Long below MA200 \u2014 counter-trend",
+      "lesson": "In progress",
+      "hold_days": 6
     },
     {
       "trade_id": "SOXL_2026-08-18_000",
@@ -69,7 +139,7 @@
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 3
+      "hold_days": 7
     },
     {
       "trade_id": "MRNA_2026-08-18_000",
@@ -125,7 +195,7 @@
       "capture_pct": null,
       "setup_type": "Long below MA200 \u2014 counter-trend",
       "lesson": "In progress",
-      "hold_days": 4
+      "hold_days": 8
     },
     {
       "trade_id": "INTC_2026-08-16_000",
@@ -321,7 +391,7 @@
       "capture_pct": null,
       "setup_type": "Long in mixed structure",
       "lesson": "In progress",
-      "hold_days": 12
+      "hold_days": 16
     },
     {
       "trade_id": "IOT_2026-08-09_000",
@@ -377,7 +447,7 @@
       "capture_pct": null,
       "setup_type": "Long in mixed structure",
       "lesson": "In progress",
-      "hold_days": 16
+      "hold_days": 20
     },
     {
       "trade_id": "HPE_2026-08-05_000",
@@ -461,7 +531,7 @@
       "capture_pct": null,
       "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
       "lesson": "In progress",
-      "hold_days": 18
+      "hold_days": 22
     },
     {
       "trade_id": "ARM_2026-08-03_000",
