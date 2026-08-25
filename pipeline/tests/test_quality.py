@@ -335,24 +335,72 @@ class TestTheSuiteDoesNotWriteProductionBaselines:
     lost with an unmerged branch -- so this guards the shape, not that one call.
     """
 
-    def test_check_site_defaults_to_the_real_directory(self):
-        """Documents WHY the argument matters, so a future default change is loud."""
-        import inspect
-        from pipeline.quality import check_site, QUALITY_DIR
-        default = inspect.signature(check_site).parameters["history_dir"].default
-        assert default == QUALITY_DIR
-        assert str(QUALITY_DIR).startswith("data/history")
+    def test_the_omitted_argument_resolves_at_call_time(self, tmp_path, monkeypatch):
+        """The guard that this class exists for, stated as behaviour.
+
+        It used to read the literal default and assert it equalled QUALITY_DIR.
+        That went stale twice over on 2026-08-25: the signature moved to
+        `history_dir=None` resolved at call time (the RIGHT change -- a captured
+        default cannot be sandboxed), and conftest's autouse fixture now
+        repoints QUALITY_DIR itself, so the assertion compared two moving
+        things. It failed from 08-25 to 08-26 -- which means the guard against
+        baseline pollution was RED, i.e. absent, exactly like the two occasions
+        it was written for. A guard nobody can see fail is not a guard.
+
+        So: assert the behaviour instead. A forgotten argument must land on
+        whatever QUALITY_DIR is AT CALL TIME -- that late binding is the whole
+        mechanism by which the sandbox protects a test that forgot.
+        """
+        import pipeline.quality as Q
+        sentinel = tmp_path / "sentinel"
+        monkeypatch.setattr(Q, "QUALITY_DIR", sentinel)
+        Q.check_source("breadth", [{"t2108": 5.0}], "2026-08-19")   # history_dir omitted
+        assert (sentinel / "breadth.csv").exists(), (
+            "check_source captured its default instead of reading QUALITY_DIR at "
+            "call time -- the conftest sandbox cannot protect a captured default, "
+            "and a test that forgets the argument writes into the real baseline.")
+
+    def test_the_production_constant_still_points_at_the_real_archive(self):
+        """Read from SOURCE, not from the imported module.
+
+        The autouse sandbox repoints QUALITY_DIR for every test, so importing it
+        here and asserting it starts with `data/history` would assert the
+        sandbox's own tmp path -- green forever, meaning nothing. The literal in
+        the file is the only copy the fixture cannot move."""
+        import ast
+        from pathlib import Path
+        tree = ast.parse(Path("pipeline/quality.py").read_text())
+        found = [n for n in tree.body
+                 if isinstance(n, ast.Assign)
+                 and any(getattr(t, "id", None) == "QUALITY_DIR" for t in n.targets)]
+        assert len(found) == 1, "QUALITY_DIR is assigned somewhere unexpected"
+        literal = ast.unparse(found[0].value)
+        assert "data/history/quality" in literal, literal
 
     def test_no_test_calls_check_site_without_a_history_dir(self):
         """Reads this suite's own source. Cheap, and it is the only thing that
         would have caught either occurrence -- both were invisible at runtime."""
         import ast
         from pathlib import Path
+        # The one call in this suite that omits history_dir ON PURPOSE: the
+        # test directly above, which exists to prove the omitted argument
+        # resolves at call time. Exemptions live here, named, so that adding
+        # one is a visible act rather than a quiet edit inside a test body.
+        DELIBERATE = {("test_quality.py",
+                       "test_the_omitted_argument_resolves_at_call_time")}
         offenders = []
         for f in sorted(Path("pipeline/tests").glob("test_*.py")):
             tree = ast.parse(f.read_text())
+            # remember which function each call sits in, for the exemption check
+            owner = {}
+            for fn_def in ast.walk(tree):
+                if isinstance(fn_def, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    for inner in ast.walk(fn_def):
+                        owner.setdefault(id(inner), fn_def.name)
             for node in ast.walk(tree):
                 if not isinstance(node, ast.Call):
+                    continue
+                if (f.name, owner.get(id(node))) in DELIBERATE:
                     continue
                 fn = node.func
                 name = getattr(fn, "attr", None) or getattr(fn, "id", None)

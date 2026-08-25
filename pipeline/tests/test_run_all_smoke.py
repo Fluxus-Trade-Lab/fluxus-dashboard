@@ -29,6 +29,8 @@ import json
 import shutil
 from pathlib import Path
 
+import zlib
+
 import numpy as np
 import pandas as pd
 import pytest
@@ -44,8 +46,16 @@ def _tickers():
 
 
 def _path_for(symbol: str) -> pd.DataFrame:
-    """Deterministic OHLCV: mix of trends so screeners/panels have material."""
-    rng = np.random.RandomState(abs(hash(symbol)) % (2**31))
+    """Deterministic OHLCV: mix of trends so screeners/panels have material.
+
+    `zlib.crc32`, not `hash()`. Python randomises string hashing per process
+    unless PYTHONHASHSEED is pinned, so the seed -- and therefore the entire
+    synthetic tape -- used to change on every run while the docstring promised
+    it did not. Measured 2026-08-26: T00's last close came out 32.30 / 112.21 /
+    39.79 under three seeds. That made this test intermittently red for reasons
+    no one could reproduce, and a green run said nothing about the next one.
+    """
+    rng = np.random.RandomState(zlib.crc32(symbol.encode()) % (2**31))
     n = 320
     idx = pd.bdate_range(end=LAST_SESSION, periods=n)
     drift = {0: 0.0015, 1: -0.0008, 2: 0.0004, 3: 0.001}[rng.randint(4)]
@@ -53,9 +63,19 @@ def _path_for(symbol: str) -> pd.DataFrame:
     if symbol in ("SPY", "QQQ", "IWM", "RSP", "^GSPC", "DIA"):
         ret = rng.normal(0.0006, 0.009, n)
     c = 50 * np.exp(np.cumsum(ret))
-    o = c * (1 + rng.normal(0, 0.004, n))
-    h = np.maximum(o, c) * (1 + abs(rng.normal(0, 0.006, n)))
-    low = np.minimum(o, c) * (1 - abs(rng.normal(0, 0.006, n)))
+    # Intraday range wide enough to clear the production universe floor.
+    # MIN_ADR_PCT went to 3.5 at UNIVERSE level on 2026-08-25 (e260757d); the
+    # old spreads (0.004/0.006) gave the fixture an ADR20 median of 1.28% and
+    # NOTHING cleared it -- every screener emptied, ticker_events fell under
+    # run_all's <100-row plausibility guard, the append was skipped, and this
+    # test died in the archive audit 200 lines later with "8 != 0". A fixture
+    # universe has to be a universe the pipeline would actually serve.
+    # Only the intraday spreads move: `ret` and therefore `c` are untouched,
+    # so every trend / breadth / perf assertion below sees the same tape, and
+    # the rng draw COUNT is unchanged so Volume is byte-identical too.
+    o = c * (1 + rng.normal(0, 0.012, n))
+    h = np.maximum(o, c) * (1 + abs(rng.normal(0, 0.024, n)))
+    low = np.minimum(o, c) * (1 - abs(rng.normal(0, 0.024, n)))
     v = rng.randint(1_000_000, 8_000_000, n).astype(float)
     return pd.DataFrame({"Open": o, "High": h, "Low": low, "Close": c, "Volume": v}, index=idx)
 
@@ -67,6 +87,38 @@ def bars(symbol: str) -> pd.DataFrame:
     if symbol not in _BARS_CACHE:
         _BARS_CACHE[symbol] = _path_for(symbol)
     return _BARS_CACHE[symbol]
+
+
+def test_the_fixture_universe_can_clear_the_production_gates():
+    """The fixture must be a universe the pipeline would actually serve.
+
+    Written 2026-08-26 after the end-to-end test spent a day dead. The
+    universe ADR floor was raised to 3.5 on 08-25 (e260757d, Andy-approved and
+    correct); the synthetic tape's ADR20 median was 1.28, so NOTHING cleared
+    it. Every screener emptied, the day fell under `MIN_TOTAL_ROWS`, the
+    ticker_events append was skipped as a pipeline-failure signature, and the
+    only symptom -- 200 lines downstream -- was `assert 8 == 0` out of the
+    archive auditor. Nothing in that message says "your fixture is too quiet".
+
+    So this asserts the link directly, and names the gate. When a floor moves
+    again, THIS fails first and says which one, instead of the end-to-end test
+    failing last and saying nothing.
+    """
+    import numpy as np
+    from pipeline.screeners import watchlist as W
+    from pipeline.screeners.ticker_events import MIN_TOTAL_ROWS
+
+    adr = np.array([float(((b := bars(t))["High"] - b["Low"]).tail(20).mean()
+                          / b["Close"].tail(20).mean() * 100) for t in _tickers()])
+    cleared = (adr >= W.MIN_ADR_PCT).mean()
+    assert cleared >= 0.9, (
+        f"only {cleared:.0%} of the fixture clears MIN_ADR_PCT={W.MIN_ADR_PCT} "
+        f"(fixture ADR20 median {np.median(adr):.2f}). Widen the intraday spreads "
+        f"in _path_for(); a universe that cannot clear the live floor makes every "
+        f"downstream assertion in this file meaningless.")
+    # The other half of the chain: enough names to survive the plausibility gate.
+    assert N_TICKERS * 2 >= MIN_TOTAL_ROWS or N_TICKERS >= 60, (
+        f"N_TICKERS={N_TICKERS} is thin against MIN_TOTAL_ROWS={MIN_TOTAL_ROWS}")
 
 
 def fake_yf_download(tickers, *args, **kwargs):
