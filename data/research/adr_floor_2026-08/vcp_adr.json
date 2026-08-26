@@ -1,0 +1,59 @@
+{
+ "sample": {
+  "vcp_events": 2314,
+  "other_events": 62070,
+  "days": 106
+ },
+ "positive_control": {
+  "+1pp": {
+   "day_p": 0.3191324612812304,
+   "day_median_d": 0.00743
+  },
+  "+2pp": {
+   "day_p": 0.007696054659083752,
+   "day_median_d": 0.01743
+  },
+  "+3pp": {
+   "day_p": 4.6913704726537546e-05,
+   "day_median_d": 0.02743
+  }
+ },
+ "main": {
+  "excess_20": {
+   "cells": 192,
+   "cell_median_d": -0.00022,
+   "cell_p": 0.2630008775795528,
+   "n_days": 82,
+   "day_median_d": -0.00257,
+   "day_p": 0.4278750396268417,
+   "day_share_positive": 0.4512,
+   "n_vcp_used": 1739,
+   "n_other_used": 19670,
+   "day_p_holm": 0.4278750396268417
+  },
+  "excess_10": {
+   "cells": 207,
+   "cell_median_d": -0.00342,
+   "cell_p": 0.035220659333971324,
+   "n_days": 91,
+   "day_median_d": -0.00713,
+   "day_p": 0.017373740623650904,
+   "day_share_positive": 0.3516,
+   "n_vcp_used": 1861,
+   "n_other_used": 21346,
+   "day_p_holm": 0.03474748124730181
+  }
+ },
+ "unconditional_no_adr_matching": {
+  "n_days": 87,
+  "day_median_d": 0.00061,
+  "day_p": 0.3158240366442452,
+  "day_share_positive": 0.5057
+ },
+ "adr_profile": {
+  "vcp_median_adr": 3.234,
+  "other_median_adr": 5.116,
+  "vcp_share_below_3.5": 0.5683,
+  "other_share_below_3.5": 0.1576
+ }
+}
