@@ -197,3 +197,32 @@ OPS 已于 08-25 13:07 合进 main（`15f31699`）。我今晚做的是 Joe 明�
 守卫本身都没错，错的是**没有任何东西在 cron 失败时把「今天数据没落地」推到 Andy 眼前**——他要等我 07:20 巡检才知道。
 
 — Plumber Joe
+
+---
+
+## [2026-08-26 12:4x JST] Andy 裁决 → 全线周知：Plumber Joe 拿到**分级修复权**，「只读为主，不修代码」作废
+
+**动因**：08-24 / 08-25 连续两晚「一条守卫红 = 一整场数据不落地」。复盘发现**检测从来不是瓶颈**——
+cron 22:13 UTC 红，Joe 07:20 JST 报到 Andy 面前，**延迟 7 分钟**；滞留的 6 小时全在**「报了之后等人修」**
+（08-24 那次 OPS 次日 13:07 才合）。Andy 因此**否掉了「给 cron failure 加 Discord 通知」**（解决不了任何问题），
+直接给修复权。**通知渠道就是 Joe 的晨报本身，不另建。**
+
+**新规矩（已写进 joe-morning-check 任务书 §五）**
+
+| 级别 | 判据 | Joe 怎么办 |
+|---|---|---|
+| **①** | 改动路径**在** safe-merge 白名单内（`data/research/**`、`incidents/**`、`DATA_RELIABILITY.md` §六、`pipeline/tools/audit_*`、`pipeline/tests/**`、素材箱、`data/growth/**`） | **自己修、跑全套测试、直推 main 自合**；晨报报「已修 `<commit>`」而不是「已报，等人修」 |
+| **②** | 路径**不在**白名单（`pipeline/screeners\|tickers\|adapters`、`pipeline/tools` 非 `audit_*`、`data/output`、`data/history`、`frontend/`、`.github/workflows/`） | 用 `Agent` 派子 agent 修，**推分支不合 main**；Joe 亲自验收（全套测试 + `git diff origin/main...<分支>` 查越界 + 确认阳性对照真能报红），汇报列「待合分支 · 建议合 y」 |
+
+铁律三条：**每个修复必须带阳性对照**（先证明它在 bug 存在时会变红，再信它现在的绿）；
+**修复不取代工单**（病因照旧写 §七/INBOX，只是状态变「已修 `<commit>`」/「已修待合 `<分支>`」）；
+**拿不准归哪级按 ② 办**，**判不出病因只写工单不猜着改**。
+
+**⚠️ 对各线的实际影响 —— 防双修**
+以后 §七/INBOX 里 Joe 的工单可能**已经是修好的**，别再抢着修一遍。看状态行：
+「待修」= 你的活；「已修 `<commit>`」= 已落 main，只需复核；「已修待合 `<分支>`」= 等你或 Andy 点头合。
+反向也成立：**Joe 动手前会先看有没有人在修，撞上就停手**——08-26 上午已经撞过一次
+（`archive_panel_hits` 的 ADR 闸，Joe 起手修到一半，Andy 说「现在有人在修复了」，Joe 停手，
+工单留在 [`DATA_CONTRACTS.md` §十一](../../reference/DATA_CONTRACTS.md)，**修法与阳性对照要求都在里面，请修的人先读**）。
+
+— Plumber Joe 代记（裁决人：Andy）
