@@ -198,3 +198,38 @@ Free Access 产品描述原文：
 `Stock = 0` + 档位可见 = **价格 $1,499 正常显示、`Buy now` 置灰不可点**，硬刷新后实测确认。
 这条路同时满足「可见」「有价格锚」「不可购买」，优于此前的隐藏档位方案（那个方案价格也不显示）。
 ⚠️ 注意：改动后首次访问店面页会看到**缓存的旧渲染**（按钮仍是蓝色可点），**必须硬刷新才能看到真实状态**——本次差点据此误判。
+
+---
+
+## 08-26 · 更正：免费档能看到的比我报的多（Andy 指出）
+
+我 08-26 早先报「免费会员只看得到 32 个频道，`announcement`/`on-boarding`/`starter-kit` 对他们是关的」。**这条是错的。**
+
+Andy 指出 `announcement` 免费会员应该看得到。复查 Discord 侧栏 DOM 的权限标记：
+
+| 频道 | `(Limited)` 标记 | 对 @everyone |
+|---|---|---|
+| `welcome` · `announcement` · `on-boarding` · `starter-kit` | **无** | **可见** |
+| `📰newsfeed` · `fluxus-tweets` | 无 | 可见 |
+| `trading-floor` · `charts` · `members-area` | **有** | 不可见 |
+
+**错因**：我用 View Server As Role 读侧栏时，**在虚拟列表渲染完成前就取了频道名单**，把「还没渲染出来」当成了「没有权限」。
+同一形状与本文早先「`grep` 假阴性」「缓存旧渲染误判 Buy now」并列——**读一个异步渲染的界面，要么等它稳定，要么换一个同步的判据**（这次的同步判据就是 DOM 里的 `(Limited)` 标记）。
+
+### 修正后的免费档实际内容
+
+- `welcome`（规则 + MEE6 模板欢迎）· `announcement` · `on-boarding` · **`starter-kit`**
+- `📰newsfeed` · `fluxus-tweets`
+- Education-Library of Babel **全部 29 个频道**
+
+**`starter-kit` 实测有真东西**：Fluxus_Z 本人发的 TradingView 指标（Fluxus Trading Risk Manager — 仓位计算/风险管理 overlay）、图表链接，带 👍6 💎1 的反应。**这是免费档里唯一「可带走的工具」**，比 29 个阅读频道更接近「拿到手的价值」——文案里应当点名它，而不是只说「Education Library」。
+
+### 付费墙后面真正只有四个
+
+`daily-briefing` · `trading-floor` · `charts` · `members-area`。
+**这让升级理由变得非常锐利**：免费的是**资料与工具**，付费的是**正在发生的事 + 人**。
+
+### `on-boarding` 的处置（Andy 08-26 提议）
+
+Andy：「on-boarding 其实就是有没有成员来了这种…可以直接把这类信息发到 trading floor，这样有人来了我直接可以欢迎，更加人性热情直接。」
+**增长线赞成，理由**：入群通知发在一个没人看的专用频道 = 零价值；发在 `trading-floor` 则把它变成**付费会员看得到的社群活跃信号**，同时给 Andy 一个即时欢迎的触发点。⚠️ 但 `trading-floor` 免费会员看不到，所以新人本人不会看到自己的入群通知——**欢迎必须由 Andy 主动去 `welcome` 或私信补一句**，否则热情传不到当事人。
