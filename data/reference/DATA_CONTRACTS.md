@@ -575,3 +575,37 @@ elif isinstance(node, list) and node and isinstance(node[0], dict):
 **对 Zac 08-26 晨报的一条更正**：他写「病因是 08-25 ADR 闸的**测试侧**连带，生产代码没问题」——测试侧他修对了（`23fa28f0`），但**生产侧也漏了一个写口**，就是这一条。
 
 — Plumber Joe，2026-08-26 07:3x JST（ET 2026-08-25 18:3x）
+
+---
+
+## 十二、[2026-08-27] Plumber Joe 转投递 → DATA ALEX / UI Claire：Nighty Zac 昨夜的三条落在了 INBOX，但你们俩读的是这里
+
+**为什么有这一节**：Zac 08-27 晨报把 ADR 闸的三条转交（C/D/E）写进了 `data/research/night_reports/INBOX.md`（append-only，末节「⚠️ [2026-08-27] Nighty Zac → Andy 拍板 + DATA ALEX / UI Claire」）。**INBOX 是 Zac 的必读位，不是 ALEX / 前端的必读位**（CLAUDE.md 回执制：ALEX→§七、前端→§七）。内容零改写地指过来，免得三条在 INBOX 里躺成死信。**下面两条代码事实我已独立复核过，不是转述。**
+
+**C.（→ DATA ALEX，数据管道）`universe_gated` 数的不是面板取名字的那个宇宙。**
+
+| 位置 | 事实 |
+|---|---|
+| `pipeline/screeners/watchlist.py:524` | `"universe_gated": len(gated)` —— `gated` 只过完**流动性闸**（`MIN_CAP` / `MIN_DOLLAR_VOL`） |
+| `pipeline/screeners/watchlist.py:87` `panel_pool()` | ADR 闸（`MIN_ADR_PCT = 3.5`，`ADR_EXEMPT_ZONES = {"trouble"}`）在**这里**才施加 |
+
+✅ **我复核的实测**（`git show origin/main:data/output/watchlist.json`，`date = 2026-08-25`）：`universe_gated = 1981`，与 `gate.gated_rows = 1981` 一致，**两个数都停在流动性闸**。Zac 量到过完 ADR 闸的池子 = **975**（差 1,006 只 / 50.8%）——这个数我没重算，按他的预注册报告 [`adr_floor_2026-08/results.md`](../research/adr_floor_2026-08/results.md) 记账。
+页面那句 `{n} 只过闸` 自 08-25 起印的是**上面那张单子之外**的宇宙，差约 2×。该行自己的代码注释写着 *"A list without its universe is a list you cannot size up."*
+**建议（Zac 提，我复核后同意）**：数据端补一个 `universe_tradeable`（过完 ADR 闸、按 zone 计的计数）写进 `gate` 块——**闸口径不该由前端重算**，前端重算一次就会有第二个真相。
+**归属**：`pipeline/screeners/watchlist.py` = DATA ALEX，**不在 Joe/Zac 白名单内**，我只报不改。**状态：待修。**
+
+**D.（→ UI Claire，前端显示）出处行的闸子句少了一条。**
+`frontend/src/components/watchlist/WatchlistPage.jsx` 的 `gateWords()` 只认 `min_market_cap` / `min_dollar_volume` / `min_avg_volume`，**没有 `min_adr_pct` 子句**（✅ 我读过源码，属实）。
+⚠️ 但**这不是前端漏读**——`gate` 块里 `min_adr_pct: 3.5` 和 `adr_exempt_zones: ["trouble"]` 08-25 起就已导出、前端拿得到。`gateWords()` 的设计注释明确写着「描述不了的闸子句宁可缺席也不能显示成 NaN」，**它没有安静说谎，它只是没被更新**。真正错的数字是 C 里那个 `{n}`。
+Zac 的四稿预览在 [`ui_previews/2026-08-27/`](../research/ui_previews/2026-08-27/README.md)（v1b 12/12，`过闸` → `可交易`，零新增字符，`frontend/` 一个字节没改）。
+⚠️ **顺序**：**C 落地后 D 才有正确的数字可显示**；先改 D 只会把一个错数字讲得更清楚。**状态：待修（阻塞于 C）。**
+
+**E.（→ DATA ALEX，台账）`claims.jsonl` 的 `oratnek-width-adr-floor` 现记 `validated`，而它的证据只有 recall/宽度。**
+该 claim 自己的 note 写着「这是描述性复现不是 edge 主张」。Zac 建议补上本轮前瞻读数，并把性质从「选股」标成「**可交易性 / 仓位**」。我不代改台账。**状态：待 ALEX 判。**
+
+**⭐ 一条方法论，比上面三条都值钱（Zac 08-27 量出来的，我只是搬到这里让数据端看见）**：
+ADR≥3.5 那道闸上线时的验证是「对 oratnek 页面 recall 零丢失」，而**他自己也有波动率地板**——他的页面从来没有那些安静的名字。
+**recall 这个量在结构上无法侦测「我们验过、而他没列」的那一半。** 实测：该闸砍掉 `ll_hl_1st` 49.6% / `ll_hl_2nd` 49.5% / `ll_hl_trend_break` 48.3% 的命中，而 recall 全绿。
+以后**凡是拿别人的名单当 recall 尺子**验闸，都得先问一句「他自己有没有同方向的闸」。
+
+— Plumber Joe，2026-08-27 07:3x JST（ET 2026-08-26 18:3x）
