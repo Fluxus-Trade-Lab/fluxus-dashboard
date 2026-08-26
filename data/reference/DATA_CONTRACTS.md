@@ -499,6 +499,13 @@ JSON schema(所有 library 文章通用):
   - **背景**：08-25 素材箱被吞三行（Claire 两条 + Growth Gary 一条，实为主树副本陈旧、非删除，见本节同日更正行）；08-24 OPS 覆盖事故为第一次。同一陋习当日同时波及 `material_inbox`、`§七`、潜在 `night_reports/INBOX.md` —— **拆分只覆盖三个公箱里的一个**，另两个仍靠第 6 条守。
   - **边界声明**：`Fluxus_Brand/ops/` → Marketing Steve；`data/research/night_reports/` → Nighty Zac（TEAM.md）。公箱例外只授权「加行」，**重构文件结构不是加行**，故 Growth Gary 只投递不执行。若 Andy 指定由某条线代做，请在本行下追一条 ↳ 注明。
 
+- [2026-08-26] **→ 数据端:夜间 cron 连挂三晚,每晚挂在不同的闸上;Today 页因此停在 08-24**(前端在 Andy 追问「为什么还是 monday 8/24」时查的,只诊断不修——`pipeline/` 与 workflow 不是前端边界)。**数据没坏,是没发出来**——三次都停在 commit 之前,plan B 按设计生效。逐次实况:
+  - **08-24 21:54 挂在 `Schema snapshot check`**:schema 相对快照漂了,而漂的正是这几天你们自己加的东西——`tick_cycle.json`(新文件)、`groups.json` themes[]/industries[] 加 `ribbon`/`ribbon_source`(及 ribbon[] 的 accel/level/state)、`universe.json` rows[] 加 `atr_pctl_252`/`atr_pctl_63`/`range5_pctl_252`。闸自己给了做法:「accept with `--update` after DATA_CONTRACTS.md says so」——**没人重新基线化快照**。⚠️ 但**减少**的那一半更要看一眼:`episodic_pivot.json tickers[]` 掉了 `['atr_color','atr_ext','change_pct','market_cap','rel_volume','sector','ticker']`、`shortlist.json cards[].panels[]` 掉了 `['atr','chg_pct','date','panel']`。**掉 `ticker` 不是装饰性变化**;若当晚那两个数组恰好为空,探针看不到键也会报「removed」,那是假阳性——请先分清「空数组」和「真的改了形状」再 `--update`,否则会把一次真回退基线化成新常态。
+  - **08-25 04:07 挂在 `Commit and push`**:`error: cannot rebase: You have unstaged changes.` 连试三轮同样报错 → `push failed after 3 rebase attempts`。这是 workflow 的 bug 不是数据的:rebase 前 runner 工作树里有**没被 add 的生成物**。(同一形状我们今天也踩过:重放循环默认树是干净的。)
+  - **08-25 21:54 挂在 `Audit archives`** → `reconcile(I6)` **12 条 I6a 违规**,形状高度系统化:**12 个桶无一例外,`watchlist.json` 的计数都小于 `watchlist_hits.csv`**(session 2026-08-25)。true_market_leaders 23/30 · liquid_leaders 118/173 · ma_reclaim 79/142 · ll_hl_1st 19/47 · ll_hl_2nd 35/61 · ll_hl_trend_break 15/21 · liquid_leader_pullback 11/14 · vcs 30/41 · anticipation 27/34 · pp_today 12/24 · pp_2plus_10d 29/64 · morales_pp_10d 57/105。**比值 0.40–0.79 不是常数**,所以不是简单的 top-N 截断,更像 json 侧套了一层闸(流动性/价格/去重)而归档侧没套——或者归档在重复计数。
+  - **唯一一次成功是 08-25 04:31 的手动重跑**,08-24 的数据就是那次进来的。也就是说:**这条链现在只在有人手动重跑时才落数据**,自动化事实上已经停摆三晚。
+  前端不需要任何改动,文件一到自动亮起(页面标题取 `conditions.history` 最后一天,现在读到 08-24 就写 08-24——它没坏,它在如实报告)。
+
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
 字段全部现成(watchlist.json 每票 `rs_line_pctl_21` / `rs_high` / `top_3m` / `atr_from_sma50` / `sp_signal`;每格 `count_rs_high` / `count_top_3m`)。要的是**把 17 格按五步重新编组、给小白一条能照着走的路**:
