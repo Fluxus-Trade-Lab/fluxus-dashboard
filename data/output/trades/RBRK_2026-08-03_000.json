@@ -1,6 +1,6 @@
 {
   "trade_id": "RBRK_2026-08-03_000",
-  "generated_at": "2026-08-25T04:47:59+00:00",
+  "generated_at": "2026-08-26T03:53:40+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "RBRK",
@@ -9,15 +9,15 @@
     "entry_date": "2026-08-03",
     "entry_price": 78.84,
     "original_qty": 1920,
-    "current_qty": 640,
+    "current_qty": 0,
     "stop_price": 76.0,
     "initial_stop": 76.0,
-    "closed": false,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "exit_date": "2026-08-25",
+    "hold_business_days": 16,
     "r_dollars": 5452.800000000007,
-    "realized_pl": 20127.999999999993,
-    "realized_R": 3.6913145539906047,
+    "realized_pl": 28550.39999999999,
+    "realized_R": 5.235915492957738,
     "trims": [
       {
         "date": "2026-08-07",
@@ -30,6 +30,12 @@
         "price": 99.32,
         "qty": 640,
         "type": "trim_1_3"
+      },
+      {
+        "date": "2026-08-25",
+        "price": 92.0,
+        "qty": 640,
+        "type": "sell_rest"
       }
     ]
   },
@@ -62,14 +68,14 @@
     "optimal_exit_date": "2026-08-14",
     "optimal_R": 9.739436619718298,
     "days_to_optimal": 11,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": 5.235915492957738,
+    "capture_pct": 53.75994215473606,
+    "missed_R": 4.5035211267605595,
     "post_exit_R": null,
     "hold_calendar_days": 22
   },
-  "lesson": "In progress",
-  "narrative": "Entered **RBRK** long on 2026-08-03 at $78.84 (qty 1920) with stop $76.00 (1R = $2.84/sh = $5,453). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($78.30), MA20 > MA50 > MA200 (golden alignment), RSI 48, 57% through 52W range, ATR 5.2% of price. **In progress.** Peak so far +9.74R; worst drawdown -2.03R.",
+  "lesson": "Good execution",
+  "narrative": "Entered **RBRK** long on 2026-08-03 at $78.84 (qty 1920) with stop $76.00 (1R = $2.84/sh = $5,453). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($78.30), MA20 > MA50 > MA200 (golden alignment), RSI 48, 57% through 52W range, ATR 5.2% of price. Realized **+5.24R**, peak was **+9.74R** on 2026-08-14 (day +11) \u2014 captured **54%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-07-06",

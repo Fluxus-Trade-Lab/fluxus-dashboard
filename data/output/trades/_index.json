@@ -1,6 +1,20 @@
 {
-  "generated_at": "2026-08-25T04:48:00.007271+00:00",
+  "generated_at": "2026-08-26T03:53:40.764472+00:00",
   "trades": [
+    {
+      "trade_id": "MRNA_2026-08-24_000",
+      "ticker": "MRNA",
+      "direction": "long",
+      "entry_date": "2026-08-24",
+      "exit_date": null,
+      "closed": false,
+      "realized_R": 0.0,
+      "optimal_R": null,
+      "capture_pct": null,
+      "setup_type": "Extended long \u2014 RSI overbought",
+      "lesson": "In progress",
+      "hold_days": null
+    },
     {
       "trade_id": "PLTR_2026-08-20_000",
       "ticker": "PLTR",
@@ -524,13 +538,13 @@
       "ticker": "RBRK",
       "direction": "long",
       "entry_date": "2026-08-03",
-      "exit_date": null,
-      "closed": false,
-      "realized_R": 3.6913145539906047,
+      "exit_date": "2026-08-25",
+      "closed": true,
+      "realized_R": 5.235915492957738,
       "optimal_R": 9.739436619718298,
-      "capture_pct": null,
+      "capture_pct": 53.75994215473606,
       "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
-      "lesson": "In progress",
+      "lesson": "Good execution",
       "hold_days": 22
     },
     {

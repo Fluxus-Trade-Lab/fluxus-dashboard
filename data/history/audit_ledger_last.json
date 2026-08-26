@@ -1,20 +1,22 @@
 {
- "as_of_session": "2026-08-24",
+ "as_of_session": "2026-08-25",
  "ledger": "data/history/run_ledger.jsonl",
- "lines": 5,
+ "lines": 6,
  "runs": [
   {
-   "session": "2026-08-24",
-   "code_sha": "c66636e",
+   "session": "2026-08-25",
+   "code_sha": "dfa72ae",
    "trigger": "workflow_dispatch",
    "violations": [],
-   "warnings": [],
+   "warnings": [
+    "L2 universe_quality degraded"
+   ],
    "fund_fail_rate": 0.0,
-   "universe_rows": 5622
+   "universe_rows": 5624
   }
  ],
  "violations": 0,
- "warnings": 0,
+ "warnings": 1,
  "top": [],
  "ok": true
 }
