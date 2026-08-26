@@ -28,6 +28,20 @@ MONEY = re.compile(r'\$\s?[\d,]+(?:\.\d+)?|\b\d[\d,]*\s?(?:dollars|美元|万美
 
 # ── 读数据:优先工作区,缺了回落到 origin/main ──────────────────────────
 def read(relpath):
+    """机器写的数据目录一律以 origin/main 为准。
+
+    主树常年停在某条 feature 分支上,`data/history` / `data/output` 会落后好几天
+    (2026-08-26 实测 breadth_archive 落后一天,结果整节盘面读成空)。
+    这两个目录是管线写的,main 才是权威版 —— 和 CLAUDE.md 那条「读权威版」同理。
+    其余路径(模板、文案)以工作区为准,因为那是人在改的。
+    """
+    machine_written = relpath.startswith(('data/history/', 'data/output/'))
+    if machine_written:
+        try:
+            return subprocess.run(['git', '-C', str(ROOT), 'show', f'origin/main:{relpath}'],
+                                  capture_output=True, text=True, check=True).stdout
+        except subprocess.CalledProcessError:
+            pass
     p = ROOT / relpath
     if p.exists():
         return p.read_text()
@@ -286,7 +300,7 @@ def build_post(date=None):
         a, b = (num(t.get(k)) if t else None), (num(y.get(k)) if y else None)
         return '' if a is None or b is None else f"（{fmt.format(a - b)}）"
 
-    tape = '—'
+    tape = f'⚠️ {date} 没有 breadth 归档（管线还没跑到这天?）'
     if t:
         tape = (f"20日上方 {t.get('pct_above_20sma')}%{delta('pct_above_20sma')}"
                 f"　·　5日比 {t.get('ratio_5d')}{delta('ratio_5d', '{:+.2f}')}"
@@ -314,20 +328,25 @@ def build_post(date=None):
                      + " / <n>%")
 
     L = [f"# X 日更 · {date}", "",
-         "*机器填了盘面和分母。你写 `<>` 里的四处,十分钟以内。*",
-         "*规矩:`Fluxus_Substack/templates/daily_post.md`*", "", "```", "〔图〕", ""]
-    L += (specs or ["今天没动手。", "", "为什么没有：<在等什么条件>"])
+         "*盘面和分母机器填好了。你写 `<>` 里的四处,十分钟以内。*", "", "```", "〔图〕", ""]
+    if specs:
+        L += specs + ["",
+                      "为什么是它：<一到两句。今天这个凭什么排在别的前面>",
+                      "我看到什么：<一到两句。入场那一刻屏幕上的东西,不是事后的道理>"]
+    else:
+        L += ["今天没动手。", "", "为什么没有：<在等什么条件。这种日子占你全年的大多数>"]
     L += ["",
-          "为什么是它：<一到两句。今天这个凭什么排在别的前面>",
-          "我看到什么：<一到两句。入场那一刻屏幕上的东西,不是事后的道理>",
-          "",
           f"盘面：{tape}",
           "所以：<一句。上面让我把哪个数调了 —— 或者「一个数都没动」+ 为什么>",
           "",
           "明天等：<一个条件,不是一个名字>",
           "", denom, "```", "",
-          f"> 配图文件名：`{date}_TICKER_entry_<setup>.png`",
-          f"> ⚠️ `{denom}` 这一行要**烧进图里** —— 图会被人截走、脱离上下文。"]
+          "**三条不能破**", "",
+          "1.「所以」那行不能空 —— 一个数都没动,就写「一个数都没动」加为什么",
+          "2.「明天等」写条件不写名字 —— ✅`20日上方回 55% 我才加风险`　❌`我明天要买 XYZ`",
+          f"3. 分母烧进图里 —— `{denom}` 要在图上,不能只在推文里", "",
+          f"图存成：`{date}_TICKER_entry_<setup>.png`　（图上只放 ticker/日期/价位/setup/标记/分母,文字不烧进去）", "",
+          "*十分钟写不完就砍「为什么是它」。别砍分母和「明天等」。*"]
     return '\n'.join(L), date
 
 
