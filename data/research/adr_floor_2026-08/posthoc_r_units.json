@@ -1,0 +1,27 @@
+{
+ "_warning": "POST-HOC. Not in prereg_adr_floor.md. Hypothesis-generating only.",
+ "median_excess_10_in_R": {
+  "n_days": 96,
+  "median_d": -0.1572,
+  "p": 0.1039138554406053,
+  "share_positive": 0.4583
+ },
+ "median_abs_excess_10_in_R": {
+  "n_days": 96,
+  "median_d": 0.2529,
+  "p": 1.5670720322532363e-10,
+  "share_positive": 0.7604
+ },
+ "descriptive": {
+  "CUT_adr_lt_3.5": {
+   "median_excess_10_R": -0.2058,
+   "median_abs_excess_10_R": 1.5914,
+   "n": 11100
+  },
+  "KEEP_adr_ge_3.5": {
+   "median_excess_10_R": -0.1623,
+   "median_abs_excess_10_R": 1.34,
+   "n": 53284
+  }
+ }
+}
