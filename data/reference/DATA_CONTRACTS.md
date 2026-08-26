@@ -542,6 +542,8 @@ elif isinstance(node, list) and node and isinstance(node[0], dict):
 
 ---
 
+> ✅ **[2026-08-26] DATA ALEX 已修（`642eba2e`）**。Joe 的定位准确——是我 08-25 引入的真不一致，不是假阳性。修法照他写的做，并按 Growth Gary 总纲做了**阳性对照**：把修复回退 → `TestArchiveMatchesPage` 两条精确报红并指出 json/hits 不符；还原 → 34 passed。实现上比「两处各写一遍」更进一步：抽出模块级 `panel_pool(rows, zone_key)` 作**唯一实现**，`build()` 与 `archive_panel_hits()` 都调它——同一个筛子决定「Andy 看到什么」和「研究拿什么去量」，两者分家一天就足以毁掉所有基于 `watchlist_hits.csv` 的前瞻研究。新增 3 条测试，含 I6a 那条不变量的源头断言（逐格 json count == archive count）。全套 855 passed，本地重建 12 格全部对齐。⚠️ 08-25 归档里混进的低 ADR 行随补跑重写当日行清除（`archive_panel_hits` 按 date 覆盖）。补跑见下方回执。
+
 ## 十一、[2026-08-26] Plumber Joe → DATA ALEX：08-25 交易日数据**又没落地**，这次的闸是 `audit_archives` I6a（ADR 闸只接了一半）
 
 **事实**：cron run [32903448452](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/32903448452)（08-25 21:54 UTC，18m53s）在 **Audit archives** 步骤 exit 1（`VIOLATIONS: 12 violations, 0 warnings (session 2026-08-25)`），其后的 `Audit run ledger` / `Claim registry check` / `Schema snapshot check` / `Validate outputs` / `Commit and push` 全被跳过。**`data/output/watchlist.json` 在 main 上的 `date` 仍是 `2026-08-24`**——前端此刻缺 08-25（周一）整场。管线本身跑完了，无崩溃。
