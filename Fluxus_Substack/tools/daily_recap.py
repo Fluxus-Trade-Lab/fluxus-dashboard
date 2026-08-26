@@ -142,7 +142,7 @@ def sec_rotation(gr, date, n=6):
 def sec_book(trades, date):
     closed = [t for t in trades if t['trade'].get('exit_date') == date]
     opened = [t for t in trades if t['trade'].get('entry_date') == date]
-    L = ["## ③ 我做了什么", ""]
+    L = ["## ④ 我做了什么", ""]
     if not closed and not opened:
         L += ["**今天没动手。**", "",
               ">> 【这一段是内容,不是免责】今天什么都没做的理由是什么?"
@@ -206,15 +206,72 @@ def sec_running(trades, date):
             return None
         return len(v), sum(1 for x in v if x > 0) / len(v) * 100, sum(v)
 
-    L = ["## ④ 台账", "", "| 区间 | 笔数 | 胜率 | 累计 R |", "|---|---:|---:|---:|"]
+    L = ["## ⑥ 台账", "", "| 区间 | 笔数 | 胜率 | 累计 R |", "|---|---:|---:|---:|"]
     for name, since in (("本周", wk), ("今年", yr)):
         a = agg(since)
         L.append(f"| {name} | {a[0]} | {a[1]:.1f}% | {a[2]:+.1f} |" if a else f"| {name} | 0 | — | — |")
     return '\n'.join(L) + "\n\n*这一节不用改。它每期都在,而且是发出去就改不了的那部分。*\n"
 
 
+
+def sec_bridge(br, rg, date):
+    """③ 连接 —— 全文唯一不能自动生成、也唯一不可替代的一节。
+
+    ①②给环境,④给动作,但读者真正看不见的是**中间那一步**:
+    环境读数怎么改变了风险预算。这正是 05_SIZING_TERRITORY 第 14–17 条
+    (regime → 风险预算 → 仓位)——「别人连原料都有却没人走完的路径」。
+    """
+    t = next((r for r in br if r['date'] == date), None)
+    g = next((r for r in rg if r['date'] == date), None)
+    cue = []
+    if t:
+        cue.append(f"20日上方 {t.get('pct_above_20sma')}%")
+        cue.append(f"5日比 {t.get('ratio_5d')}")
+        cue.append(f"新高{t.get('new_highs')}/新低{t.get('new_lows')}")
+    if g:
+        cue.append(f"灯 {g.get('lamps_on')}/{g.get('lamps_available')}")
+    return ("## ③ 所以我怎么调整\n\n"
+            + (f"*今天的输入:{'　·　'.join(cue)}*\n\n" if cue else "")
+            + ">> 【必答,一到三句】上面这些读数**具体改变了我的哪个数字**?\n"
+              ">> R 还是 0.25% 吗?总风险上限动了吗?单主题上限动了吗?愿意开几个新仓?\n"
+              ">> **如果一个数都没动,就写「一个都没动」并说明为什么** —— 那也是完整的答案。\n\n"
+            "> ⚠️ 这一节是全篇唯一不能省的。①②任何人都能生成,④是我的日记,\n"
+            "> **只有③是「怎么从读数走到仓位」——那条路径没有别人走完过。**\n")
+
+
+def sec_tomorrow():
+    """⑤ 明天的条件 —— 让这一篇可以被明天那篇回访。"""
+    return ("## ⑤ 明天我在等什么\n\n"
+            ">> 【必答,写成条件不写成名字】我在等哪个**条件**出现?\n"
+            ">> 例:「20日上方重回 55% 以上我才加风险」「贵金属那组 persistence 到 5 天我才认」\n\n"
+            "> ⚠️ **写条件,不写「我要买 XYZ」。** 条件是教学,名字加价格是信号——\n"
+            "> 信号是 Discord 那档的东西。这条线靠这一节的写法守住。\n"
+            "> 而且条件可以被明天的自己回访,名字只能被验证对错。\n")
+
+
+def sec_callback(outdir, date):
+    """开头的回访:把昨天那篇的⑤原样贴出来,逼今天这篇跟它对账。"""
+    if not outdir:
+        return ''
+    prev = sorted(Path(outdir).glob('recap_*.md'))
+    prev = [f for f in prev if f.stem[len('recap_'):] < date]
+    if not prev:
+        return ''
+    txt = prev[-1].read_text()
+    m = re.search(r'## ⑤ 明天我在等什么\s*\n(.*?)(?=\n## |\Z)', txt, re.S)
+    if not m:
+        return ''
+    body = '\n'.join(l for l in m.group(1).strip().split('\n')
+                     if l.strip() and not l.lstrip().startswith(('>>', '>')))
+    if not body:
+        return ''
+    d = prev[-1].stem[len('recap_'):]
+    return (f"> **回访 · {d} 我说过:**\n> " + body.replace('\n', '\n> ')
+            + "\n>\n>> 【必答】发生了吗?我照做了吗?\n\n---\n")
+
+
 # ── 主 ───────────────────────────────────────────────────────────────
-def build(date=None):
+def build(date=None, outdir=None):
     br, gr, rg = rows('data/history/breadth_archive.csv'), \
         rows('data/history/groups_archive.csv'), rows('data/history/regime_ledger.csv')
     trades = load_trades()
@@ -224,8 +281,10 @@ def build(date=None):
     parts = [f"# 复盘 · {date}", "",
              "*草稿。`>>` 开头的每一行都要替换成你的话,替换完把 `>>` 删掉。*",
              "*目标 5 分钟读完 —— 机器给读数,你给判断。判断少于三句就不要发。*", "",
-             "---", "", sec_tape(br, date), sec_regime(rg, date), "---", "",
-             sec_rotation(gr, date), "", "---", "", sec_book(trades, date), "---", "",
+             "---", "", sec_callback(outdir, date),
+             sec_tape(br, date), sec_regime(rg, date), "---", "",
+             sec_rotation(gr, date), "", "---", "", sec_bridge(br, rg, date), "---", "",
+             sec_book(trades, date), "---", "", sec_tomorrow(), "---", "",
              sec_running(trades, date), "---", "",
              "*How Much — one letter a week, every Sunday.*",
              "*Every idea arrives with its size and its stop.*", ""]
@@ -237,7 +296,7 @@ def main():
     ap.add_argument('--date')
     ap.add_argument('--out')
     a = ap.parse_args()
-    text, date = build(a.date)
+    text, date = build(a.date, a.out)
 
     hits = MONEY.findall(text)
     if hits:                      # 全刊铁律:永不出现美元金额
