@@ -270,6 +270,67 @@ def sec_callback(outdir, date):
             + "\n>\n>> 【必答】发生了吗?我照做了吗?\n\n---\n")
 
 
+
+def build_post(date=None):
+    """--post:X 日更的骨架。机器填盘面和分母,他写四行。
+    规矩见 Fluxus_Substack/templates/daily_post.md。"""
+    br = rows('data/history/breadth_archive.csv')
+    trades = load_trades()
+    if not date:
+        date = br[-1]['date'] if br else dt.date.today().isoformat()
+    t = next((r for r in br if r['date'] == date), None)
+    i = next((k for k, r in enumerate(br) if r['date'] == date), None)
+    y = br[i - 1] if i else None
+
+    def delta(k, fmt='{:+.1f}'):
+        a, b = (num(t.get(k)) if t else None), (num(y.get(k)) if y else None)
+        return '' if a is None or b is None else f"（{fmt.format(a - b)}）"
+
+    tape = '—'
+    if t:
+        tape = (f"20日上方 {t.get('pct_above_20sma')}%{delta('pct_above_20sma')}"
+                f"　·　5日比 {t.get('ratio_5d')}{delta('ratio_5d', '{:+.2f}')}"
+                f"　·　新高{t.get('new_highs')}/新低{t.get('new_lows')}")
+
+    yr = dt.date.fromisoformat(date).replace(month=1, day=1).isoformat()
+    v = [num(x['trade'].get('realized_R')) for x in trades
+         if x['trade'].get('closed') and x['trade'].get('exit_date')
+         and yr <= x['trade']['exit_date'] <= date]
+    v = [x for x in v if x is not None]
+    denom = (f"今年 {len(v)} 笔 · {sum(1 for x in v if x > 0) / len(v) * 100:.1f}% · {sum(v):+.0f}R"
+             if v else '今年 — 笔')
+
+    opened = [x for x in trades if x['trade'].get('entry_date') == date]
+    seen, specs = set(), []
+    for x in opened:
+        tr, e = x['trade'], x.get('entry_snapshot') or {}
+        key = (tr['ticker'], tr.get('entry_price'), tr.get('initial_stop'))
+        if key in seen:
+            continue
+        seen.add(key)
+        ep, sp, atr = num(tr.get('entry_price')), num(tr.get('initial_stop')), num(e.get('atr14'))
+        specs.append(f"${tr['ticker']} · <setup名> · in {ep} / stop {sp}"
+                     + (f" / {(ep - sp) / atr:.2f} ATR" if ep and sp and atr else '')
+                     + " / <n>%")
+
+    L = [f"# X 日更 · {date}", "",
+         "*机器填了盘面和分母。你写 `<>` 里的四处,十分钟以内。*",
+         "*规矩:`Fluxus_Substack/templates/daily_post.md`*", "", "```", "〔图〕", ""]
+    L += (specs or ["今天没动手。", "", "为什么没有：<在等什么条件>"])
+    L += ["",
+          "为什么是它：<一到两句。今天这个凭什么排在别的前面>",
+          "我看到什么：<一到两句。入场那一刻屏幕上的东西,不是事后的道理>",
+          "",
+          f"盘面：{tape}",
+          "所以：<一句。上面让我把哪个数调了 —— 或者「一个数都没动」+ 为什么>",
+          "",
+          "明天等：<一个条件,不是一个名字>",
+          "", denom, "```", "",
+          f"> 配图文件名：`{date}_TICKER_entry_<setup>.png`",
+          f"> ⚠️ `{denom}` 这一行要**烧进图里** —— 图会被人截走、脱离上下文。"]
+    return '\n'.join(L), date
+
+
 # ── 主 ───────────────────────────────────────────────────────────────
 def build(date=None, outdir=None):
     br, gr, rg = rows('data/history/breadth_archive.csv'), \
@@ -295,8 +356,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--date')
     ap.add_argument('--out')
+    ap.add_argument('--post', action='store_true', help='出 X 日更骨架而不是完整复盘')
     a = ap.parse_args()
-    text, date = build(a.date, a.out)
+    text, date = build_post(a.date) if a.post else build(a.date, a.out)
 
     hits = MONEY.findall(text)
     if hits:                      # 全刊铁律:永不出现美元金额
