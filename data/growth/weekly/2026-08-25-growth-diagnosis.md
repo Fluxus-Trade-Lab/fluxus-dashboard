@@ -144,3 +144,57 @@ Andy 08-26：「G036 是不停地再利用免费 7 天试用在取消再订阅�
 **可选解法（未执行，需 Andy 定）**：把档位改回可见，但 `Plan settings → Stock` 设为 **0**。
 预期效果=价格照常显示、状态显示售罄、无法结账，且与 Andy 08-24 提的「数量满了」叙事一致。
 **未当场试的原因**：这是生产店面，而本次已经因为「以为只改一样、实际改了两样」出过一次事故；Stock=0 的真实前端表现我没有验证过，不在没有回滚预案的情况下第二次拿线上试。
+
+---
+
+## 08-26 · 免费漏斗实测：产品描述承诺的东西，免费会员看不到
+
+**触发**：MRNA 文章带来一名新免费会员（08-26，Whop 用户 39→40、Discord 45→46）。**这是 2026-03 以来第一个可归因到具体内容的新增。**
+
+### 方法
+
+用 Discord 的 **View Server As Role** 以 `F0 Free Learner` 身份实际查看服务器——不是读权限配置推断，是看渲染出来的频道列表。
+
+### 免费会员实际能看到的：32 个频道
+
+| 分区 | 频道 |
+|---|---|
+| Welcome | `welcome` |
+| General | `📰newsfeed` · `fluxus-tweets` |
+| **Education-Library of Babel** | **全部 29 个**：trading-basics · position-sizing · volume-profile · episodic-pivot · orderflow · volatility · swing-trading · short-selling · statistics · scripts · watch-and-learn · top-traders · top-performers · trading-psychology · regime-change · real-spits · quantmustreads · model-book-database · liquidity · history-and-documentaries · gamma-squeeze-study · execution-routine · commodity · business-rerating-playbook · breadth · books · auction-market-theory · all-in-ai · vwap-strategies |
+
+**看不到**：`daily-briefing` · `trading-floor` · `charts` · `members-area` · Market Pulse · Fluxus Central · 01–06 内部频道。
+
+### 🚨 核心发现：承诺与实际不符
+
+Free Access 产品描述原文：
+> Watch first. **Daily market briefing** and the beginner channels, free. Upgrade when you've seen enough.
+
+**但 `daily-briefing` 在 F0 视图里不可见。**
+卖的是「先免费看每日简报」，人进来看不到简报。
+
+**这不只是文案错误，是转化断点**：29 个 Education 频道是**静态图书馆**——内容再好也是「资料」，任何时候都能看。而每日简报是**正在发生的东西**，是唯一能让人产生「不进来就错过」的资产。
+现在的配置等于：**把最有说服力的证据锁在付费墙后，然后指望人靠读图书馆决定付费。**
+
+### 升级路径：目前不存在
+
+- **机制层面可行**：Whop 侧买任何付费产品后，Whop Bot 会自动同步 Discord 角色。服务器里另装了 `Upgrade.Chat` bot（有专属角色），是专做 Discord 内升级的工具，但未见使用痕迹。
+- **体验层面缺失**：免费会员能看到的 32 个频道里，**没有任何一处告诉他「怎么升级」「升级能多什么」**。
+
+### 建议（三条，均不需要新工具）
+
+1. **兑现承诺**：把 `daily-briefing` 开给 F0，或开一个延迟 24 小时的 `daily-briefing-free`。延迟版既兑现了描述、又保留了实时性的付费理由。
+2. **`welcome` 频道加升级入口**：一句话说明 F0 有什么、付费多什么、怎么升。现在 32 个频道零 CTA。
+3. **盯住这一个样本**：新会员 08-26 加入后仍在线浏览。**这是流量荒以来唯一一个实时可观察的免费用户**——他点开哪些频道、停多久，比任何漏斗假设都值钱。建议这几天看一眼 `#welcome` 和 Education 频道有没有他的痕迹。
+
+### ⚠️ 顺带发现
+
+- **`F2 Substack` 角色现在 0 人**（08-25 审计时 `G035` 还持有）。已有人回收，或状态另有变化。
+- **`ZIXUAN`（本应 08-26 取消）状态变为 `Trialing`** —— 与 `G036` 同形的试用循环迹象，第二例。
+- 角色人数：Early Birds Legacy 18 · F3 SwingClass Primer 16 · F5 Premium++ 11 · F1 Premium 10 · F0 Free Learner 4 · F2 Substack 0 · F4 MPClass 0。**F0 有 4 人但 Whop Free Access 只有 2 人**——差额应是降级来的老会员。
+
+### ✅ Masterclass 最终状态（08-26 完成）
+
+`Stock = 0` + 档位可见 = **价格 $1,499 正常显示、`Buy now` 置灰不可点**，硬刷新后实测确认。
+这条路同时满足「可见」「有价格锚」「不可购买」，优于此前的隐藏档位方案（那个方案价格也不显示）。
+⚠️ 注意：改动后首次访问店面页会看到**缓存的旧渲染**（按钮仍是蓝色可点），**必须硬刷新才能看到真实状态**——本次差点据此误判。
