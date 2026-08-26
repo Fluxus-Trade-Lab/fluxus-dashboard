@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8"><title>Watchlist gate · v1b</title><link rel="stylesheet" href="_shared.css">
+<h1>Watchlist → 过闸子句 · v1b（第 2 轮 · 最终）</h1>
+<p class="sub">第 2 轮只改一个词：<b>「过闸」→「可交易」</b>。零新增字符，但这个数字从此自己解释自己。
+依据是 <code>watchlist.py:52</code> 那条注释的原话——低 ADR 的名字<b>不是「差」，是在我们的止损框架下不可交易</b>
+（R = ATR，1% ADR 的票要 3 倍仓位才够同一个风险单位）。
+把计数叫「过闸」，读者只知道它被挡了；叫「可交易」，他知道被挡的理由，而且那个理由直接决定仓位。</p>
+<div class="case"><h2>常驻行（每天，2026-08-25）</h2>
+<p class="prov">2026-08-25 收盘 · <span class="strong">975 只可交易</span>（$1B cap · $20M/day · ADR ≥ 3.5%）</p>
+<div class="switches"><span class="sw">3M pool</span><span class="sw">52w high only</span><span class="sw">RS ≥ 70</span><span class="sw">exclude healthcare</span></div>
+</div>
+<div class="case"><h2>某一格空了的时候</h2>
+<p class="prov" style="margin-bottom:6px">Anticipation <span class="mut">· 0</span></p>
+<p class="second rule">今天没有名字同时满足这条配方与 ADR ≥ 3.5%。这道波动率地板今天从 1,981 只里滤掉了 1,006 只。</p>
+</div>
+<div class="case"><h2>trouble 区（豁免，数字本来就该更大）</h2>
+<p class="prov" style="margin-bottom:6px">Stop hit <span class="mut">· 41</span> &nbsp; LL break <span class="mut">· 63</span> &nbsp; Extended <span class="mut">· 44</span></p>
+<p class="second rule">出场信号不过 ADR 闸——持仓不会因为变安静就不用管。</p>
+</div>
+<p class="note"><b>改完读者多知道什么</b>：现在他读到「1,981 只过闸」，而下面每一格其实是从 975 只里挑的；
+改完他读到「975 只可交易」——同一个事实，第二个说法既对得上下面的单子，又把「为什么只有 975」和「我该下多大」连起来了。</p>

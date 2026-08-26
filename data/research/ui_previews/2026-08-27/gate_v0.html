@@ -1,0 +1,14 @@
+<!doctype html><meta charset="utf-8"><title>Watchlist gate · v0 现状</title><link rel="stylesheet" href="_shared.css">
+<h1>Watchlist → 出处行的「过闸」子句 · v0（现状，对照组）</h1>
+<p class="sub">现网原样：<code>translations.js:446</code> 的 <code>'{date} 收盘 · {n} 只过闸（{gate}）'</code>，
+<code>{n}</code> = <code>data.universe_gated</code>，<code>{gate}</code> = <code>gateWords()</code>（只读 cap 与 dollar volume 两个键）。</p>
+<div class="case"><h2>2026-08-25（现网真实数据）</h2>
+<p class="prov">2026-08-25 收盘 · 1,981 只过闸（$1B cap, $20M/day traded）</p>
+<div class="switches"><span class="sw">3M pool</span><span class="sw">52w high only</span><span class="sw">RS ≥ 70</span><span class="sw">exclude healthcare</span></div>
+</div>
+<p class="note"><b>问题不是「少说了一道闸」，是这个数字对不上下面的面板。</b>
+08-25 起面板（trouble 区以外）实际取名字的池子是 <b>975</b> 只，不是 1,981——
+<code>MIN_ADR_PCT=3.5</code> 又砍掉 1,006 只（50.8%）。
+而 <code>universe_gated</code> 在 <code>watchlist.py:524</code> 只数到流动性闸为止。
+页面这行自己的注释写着 <i>“A list without its universe is a list you cannot size up.”</i>——
+它印的正是**不是**下面那张单子的宇宙。</p>
