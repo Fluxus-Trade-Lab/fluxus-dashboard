@@ -386,3 +386,54 @@ class TestAdrFloor:
         Momentum 97 recipe already reads it that way."""
         p = self._build([row(ticker="EDGE", adr_pct=3.5, vol10_green=True, trend_base=True)])
         assert self._count(p, "pp_today") == 1
+
+
+class TestArchiveMatchesPage:
+    """watchlist_hits.csv and watchlist.json must be the same names.
+
+    2026-08-25: the ADR floor landed in build() only. archive_panel_hits()
+    kept its own `passes_gate(r) and test(r)` line, so the archive logged
+    低-ADR names the page never showed -- 12 panels mismatched, audit I6a
+    refused the night's data, and the frontend sat a day stale. The研究 cost
+    is worse than the outage: every forward study reading that CSV would have
+    been measured on a product that was never shipped.
+
+    Positive control (Growth Gary 08-25): with the fix reverted -- i.e.
+    archive_panel_hits filtering only on passes_gate -- the first test below
+    fails on the QUIET row. Verified before this suite was trusted.
+    """
+
+    def _payload_and_hits(self, rows, tmp_path):
+        payload = W.build(rows, date="2026-08-24")
+        path = tmp_path / "hits.csv"
+        W.archive_panel_hits(payload, rows, path=path)
+        import csv
+        with path.open() as fh:
+            hits = list(csv.DictReader(fh))
+        return payload, hits
+
+    def test_quiet_name_is_in_neither(self, tmp_path):
+        loud = row(ticker="LOUD", adr_pct=5.0, vol10_green=True, trend_base=True)
+        quiet = row(ticker="QUIET", adr_pct=1.2, vol10_green=True, trend_base=True)
+        payload, hits = self._payload_and_hits([loud, quiet], tmp_path)
+        archived = {h["ticker"] for h in hits if h["panel"] == "pp_today"}
+        assert archived == {"LOUD"}, "the archive must not log what the page filtered out"
+
+    def test_every_panel_count_matches_the_archive(self, tmp_path):
+        """The invariant audit I6a checks, asserted at the source."""
+        rows = [row(ticker=f"T{i}", adr_pct=adr, vol10_green=True, trend_base=True,
+                    atr_from_sma50=9.0 if i % 4 == 0 else 2.0)
+                for i, adr in enumerate([1.0, 3.4, 3.5, 4.0, 6.0, 0.5, 8.0, 2.0])]
+        payload, hits = self._payload_and_hits(rows, tmp_path)
+        from collections import Counter
+        archived = Counter(h["panel"] for h in hits)
+        for z in payload["zones"]:
+            for p in z["panels"]:
+                if p["measured"]:
+                    assert archived.get(p["key"], 0) == p["count"], \
+                        f"{p['key']}: page {p['count']} vs archive {archived.get(p['key'], 0)}"
+
+    def test_trouble_zone_exemption_applies_to_the_archive_too(self, tmp_path):
+        quiet_broken = row(ticker="QB", adr_pct=1.0, atr_from_sma50=9.0)
+        payload, hits = self._payload_and_hits([quiet_broken], tmp_path)
+        assert {h["ticker"] for h in hits if h["panel"] == "extended"} == {"QB"}

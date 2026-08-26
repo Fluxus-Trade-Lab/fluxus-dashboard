@@ -78,6 +78,29 @@ def _f(r: Mapping[str, Any], k: str) -> Optional[float]:
     return None if f != f else f
 
 
+def adr_ok(r: Mapping[str, Any]) -> bool:
+    """The volatility floor, fail-open on a missing reading (see MIN_ADR_PCT)."""
+    v = _f(r, "adr_pct")
+    return v is None or v >= MIN_ADR_PCT
+
+
+def panel_pool(rows: Sequence[Mapping[str, Any]], zone_key: str) -> List[Mapping[str, Any]]:
+    """The rows a panel in `zone_key` may draw from: liquidity gate for every
+    zone, plus the ADR floor everywhere except the exempt ones.
+
+    ONE implementation, called by both writers. It was two for a day
+    (2026-08-25): build() filtered, archive_panel_hits() did not, so
+    watchlist_hits.csv logged names the page never showed and audit I6a
+    correctly refused the whole night's data. A filter that decides what Andy
+    sees and a filter that decides what research is measured on must be the
+    same filter, or the research is measured on a different product.
+    """
+    base = [r for r in rows if r.get("ticker") and passes_gate(r)]
+    if zone_key in ADR_EXEMPT_ZONES:
+        return base
+    return [r for r in base if adr_ok(r)]
+
+
 def passes_gate(r: Mapping[str, Any]) -> bool:
     cap, vol, px = _f(r, "market_cap"), _f(r, "avg_volume"), _f(r, "close")
     if cap is None or vol is None or px is None:
@@ -351,7 +374,8 @@ def archive_panel_hits(payload: Mapping[str, Any], rows, *, path: Path = PANEL_H
                 continue
             # tickers[] is truncated at MAX_PER_PANEL; re-test the recipe on
             # the gated rows to log the whole list.
-            hits = [r for r in by_t.values() if passes_gate(r) and PANELS[p["key"]].test(r)]
+            hits = [r for r in panel_pool(list(by_t.values()), z.get("key", ""))
+                    if PANELS[p["key"]].test(r)]
             for r in hits:
                 new.append({"date": date, "panel": p["key"], "zone": z["key"], "ticker": r["ticker"],
                             "close": _f(r, "close"),
@@ -447,14 +471,13 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
     # gate, and a day where the column goes null must not empty every panel.
     # (1.5% of rows had no adr_pct on 2026-08-25; the count is reported so a
     # silent rise in that share is visible rather than inferred.)
-    adr_ok = lambda r: (_f(r, "adr_pct") is None) or (_f(r, "adr_pct") >= MIN_ADR_PCT)
     adr_unmeasured = sum(1 for r in gated if _f(r, "adr_pct") is None)
 
     zone_hits: Dict[str, set] = {}
     zones_out = []
     for z in ZONES:
         panels_out = []
-        pool = gated if z["key"] in ADR_EXEMPT_ZONES else [r for r in gated if adr_ok(r)]
+        pool = panel_pool(rows, z["key"])
         for pk in z["panels"]:
             p = PANELS[pk]
             measured = all(n in present for n in p.needs)
