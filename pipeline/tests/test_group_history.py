@@ -121,3 +121,46 @@ class TestSaveKeepsTheTwoWritesTogether:
         from pipeline.rotation.fetch_baskets import fetch
         from pipeline.rotation.build_rotation import build
         assert callable(fetch) and callable(build)
+
+
+class TestProjectionCarriesTheVerticalAxis:
+    """DATA_CONTRACTS §七 [08-24], Andy's call: the four-state板's vertical
+    axis is rs_accel. With `excess` alone the published history is
+    one-dimensional and the Themes page cannot draw which quadrant a group
+    came FROM -- and the direction it came from IS the rotation.
+    """
+
+    def _project(self, tmp_path, dates=("2026-08-09", "2026-08-10")):
+        import json
+        arch = tmp_path / "groups_archive.csv"
+        out = tmp_path / "groups_history.json"
+        for d in dates:
+            GH.record(payload(date=d), path=arch)
+        GH.project(path=arch, out=out)
+        return json.loads(out.read_text())
+
+    def test_every_group_carries_an_rs_accel_series(self, tmp_path):
+        d = self._project(tmp_path)
+        assert d["groups"], "no groups projected"
+        for name, g in d["groups"].items():
+            assert "rs_accel" in g, f"{name} has no rs_accel"
+            assert len(g["rs_accel"]) == len(d["dates"]), "series must align with dates"
+
+    def test_values_are_copied_verbatim_not_recomputed(self, tmp_path):
+        """Same rule as excess/state: recomputing would apply today's window
+        constants to an older session (see the module docstring)."""
+        d = self._project(tmp_path)
+        g = next(iter(d["groups"].values()))
+        assert g["rs_accel"] == [-0.02, -0.02]
+
+    def test_a_missing_reading_is_null_not_zero(self, tmp_path):
+        """A group with no rs_accel that day must read as unmeasured -- zero
+        is a position on the axis, absence is not."""
+        import json
+        arch = tmp_path / "a.csv"; out = tmp_path / "o.json"
+        p = payload(date="2026-08-09")
+        p["themes"][0]["rs_accel"] = None
+        GH.record(p, path=arch)
+        GH.project(path=arch, out=out)
+        d = json.loads(out.read_text())
+        assert d["groups"]["Thm0"]["rs_accel"] == [None]

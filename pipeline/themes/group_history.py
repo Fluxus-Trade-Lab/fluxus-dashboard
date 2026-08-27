@@ -151,9 +151,16 @@ def project(path: Path = ARCHIVE, out: Path = OUTPUT_JSON,
         key = f"{name} (Industry)" if (len(kinds_by_name[name]) > 1 and r["kind"] == "industry") else name
         g = groups.setdefault(key, {"kind": r["kind"],
                                     "excess": [None] * len(dates),
+                                    "rs_accel": [None] * len(dates),
                                     "state": [None] * len(dates)})
         i = idx[r["date"]]
         g["excess"][i] = float(r["excess_3m"]) if r.get("excess_3m") not in ("", None) else None
+        # the four-state板's VERTICAL axis (DATA_CONTRACTS §七 [08-24], Andy's
+        # call): with excess alone the history is one-dimensional and the page
+        # cannot draw which quadrant a group came FROM -- which is the
+        # rotation itself. Copied verbatim like the other two: recomputing it
+        # would apply today's window constants to an older session.
+        g["rs_accel"][i] = float(r["rs_accel"]) if r.get("rs_accel") not in ("", None) else None
         g["state"][i] = r.get("state") or None
 
     payload = {"as_of": dates[-1], "dates": dates, "sessions": len(dates),
