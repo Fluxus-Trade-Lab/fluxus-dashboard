@@ -183,10 +183,66 @@ for i, line in enumerate(contracts):
     elif "→" in txt[:60]:
         add("claim", 3, head, "契约行", lane_for(txt), date)
 
+def dedupe_blocked():
+    """同一件等 Andy 的事常在两处登记（INBOX 的指针 + 增长台账的正本）。
+    判同：去掉标点后有 >=12 字的公共片段。保留先入的那张。"""
+    def sig(t):
+        return re.sub(r"[^0-9A-Za-z\u4e00-\u9fff]", "", t)
+
+    kept, out = [], []
+    for c in cards:
+        if c["col"] != "blocked":
+            out.append(c)
+            continue
+        k = sig(c["t"])
+        dup = any(any(k[i:i + 12] in p for i in range(len(k) - 11)) for p in kept)
+        if dup:
+            continue
+        kept.append(k)
+        out.append(c)
+    cards[:] = out
+
+
 nowmd = show("NOW.md")
 for line in nowmd.splitlines():
     if "待你" in line and "- [ ]" in line:
         add("blocked", 0, re.sub(r"[*\[\]~]", "", line.replace("- [ ]", "")).strip()[:150], "NOW.md", "OPS Fable", "")
+
+# 「等你拍板」的另外两个耐久处。
+# 08-28 实测：只扫契约行 + NOW.md 时首页印「现在没有等你的事」，而 INBOX 的
+# 「📌 给 Andy 的待办」里 T1（Andy 原话「这个是要处理的，提醒我」）与 T3 都还挂着 `status: 待办`，
+# 晨报「建议 Andy 决定的事」一节也从来没被读过。**假零比空着更糟**——它让 Andy 以为清了。
+def andy_todos(md, heading_re, source):
+    """取某个标题节下未打勾的顶层条目。"""
+    m = re.search(heading_re + r"[^\n]*\n(.*?)(\n## |\Z)", md, re.S | re.M)
+    if not m:
+        return
+    for ln in m.group(1).splitlines():
+        if not ln.startswith("- ") or "✅" in ln or "~~" in ln:
+            continue
+        txt = re.sub(r"[*`\[\]]", "", ln[2:]).strip()
+        if len(txt) < 8:
+            continue
+        add("blocked", 0, txt[:150], source, "OPS Fable", "")
+
+andy_todos(show("data/research/night_reports/INBOX.md"), r"^## [^\n]*给 Andy 的待办", "INBOX 待办")
+
+# 增长台账的「⏳ 待办」节：每条自带 `status: 待办`，且有明写的核销协议
+# （「直到 Andy 明确说做完了才改 ✅」），所以可以当数据源。
+# ⚠️ **晨报的「建议 Andy 决定的事」一节不接**——晨报是 append-only 快照，没有核销协议，
+# 接进来必然把已拍板的事(如 08-27 的 ADR 闸)当成还在等，假阳性比假零更快让人不再信这一列。
+weeklies = sorted(re.findall(r"weekly/(\S+\.md)", git("ls-tree", "-r", "--name-only", "origin/main", "data/growth/weekly/")))
+if weeklies:
+    led = show("data/growth/weekly/" + weeklies[-1])
+    sec = re.search(r"^## [^\n]*⏳ 待办[^\n]*\n(.*?)(\n## |\Z)", led, re.S | re.M)
+    if sec:
+        for blk in re.split(r"\n### ", sec.group(1))[1:]:
+            title = blk.splitlines()[0]
+            if "~~" in title or "✅" in title:
+                continue
+            if re.search(r"status: *待办", blk[:400]):
+                add("blocked", 0, re.sub(r"[*`]", "", title).strip()[:150],
+                    "增长台账 " + weeklies[-1][:10], "Growth Gary", "")
 
 for h, ad, s in log14:
     hrs = (now - datetime.datetime.strptime("2026-" + ad, "%Y-%m-%d %H:%M")).total_seconds() / 3600
@@ -232,6 +288,8 @@ infra = [
     ("GAS / Google Sheets 回拉", "挂 run_all（本页不直连，状态未测量）", "na"),
     ("本机（唯一节点 MacBook）", "定时任务 App 开着才跑", "ok"),
 ]
+
+dedupe_blocked()
 
 counts = {c: sum(1 for k in cards if k["col"] == c) for c in ["claim", "doing", "blocked", "done"]}
 
