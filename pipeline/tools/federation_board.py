@@ -28,21 +28,109 @@ ROSTER = [
     ("OPS Fable", "联邦运维", "宪法/花名册/跨线协调/裁决投递/看板", "TEAM.md · PROJECTS.md · KNOWLEDGE.md · repo_health", ["ops", "rules(", "verdict(", "task(", "rescue(", "projects(", "governance", "board(", "team"]),
 ]
 
+# ---------- lane 归属（v5：路径优先） ----------
+# 路径规则**逐条抄自 TEAM.md 第 12-19 行的「文件边界」列**，不是照错误拟合出来的。
+# 顺序 = 从具体到笼统，第一条命中即算该文件的票；owner=None 的是公箱（各线都能写），不投票。
+PATH_RULES = [
+    ("data/research/repo_health/", "OPS Fable"),
+    ("data/research/night_reports/INBOX.md", None),
+    ("data/reference/DATA_CONTRACTS.md", None),
+    ("data/reference/DATA_RELIABILITY.md", None),
+    ("Fluxus_Brand/ops/material_inbox.md", None),
+    ("data/reference/incidents/", "Plumber Joe"),
+    ("pipeline/tools/audit_", "Nighty Zac"),
+    ("data/research/", "Nighty Zac"),
+    ("data/growth/", "Growth Gary"),
+    ("frontend/", "UI Claire"),
+    ("data/history/regime_ledger.csv", "RND Linda"),
+    ("pipeline/screeners/", "DATA ALEX"), ("pipeline/tickers/", "DATA ALEX"),
+    ("pipeline/adapters/", "DATA ALEX"), ("data/output/", "DATA ALEX"),
+    ("data/history/", "DATA ALEX"),
+    ("Fluxus_Substack/", "Studio Q"), ("Fluxus_Brand/templates/", "Studio Q"),
+    ("Fluxus_Brand/record/", "Studio Q"), ("Fluxus_Brand/copybook/", "Studio Q"),
+    ("Fluxus_Brand/", "Marketing Steve"), ("Fluxus_Marketing_Visual_Design/", "Marketing Steve"),
+    ("visuals/", "Marketing Steve"), ("data/content/", "Marketing Steve"),
+    ("TEAM.md", "OPS Fable"), ("CLAUDE.md", "OPS Fable"), (".claude/agents/", "OPS Fable"),
+    ("KNOWLEDGE.md", "OPS Fable"), ("PROJECTS.md", "OPS Fable"), ("NOW.md", "OPS Fable"),
+    ("pipeline/tools/federation_board.py", "OPS Fable"),
+]
+
+# 「→ 收件人」别名：契约行/门铃的 lane 是**被指派的那条线**，不是写这条行的人。
+ARROW_ALIAS = [
+    ("UI Claire", "UI Claire"), ("前端", "UI Claire"),
+    ("DATA ALEX", "DATA ALEX"), ("数据端", "DATA ALEX"),
+    ("RND Linda", "RND Linda"), ("风险线", "RND Linda"),
+    ("模型 R&D", "RND Linda"), ("模型R&D", "RND Linda"),
+    ("Studio Q", "Studio Q"), ("StudioQ", "Studio Q"),
+    ("Marketing Steve", "Marketing Steve"),
+    ("Nighty Zac", "Nighty Zac"), ("夜间组", "Nighty Zac"),
+    ("Plumber Joe", "Plumber Joe"),
+    ("OPS Fable", "OPS Fable"), ("OPS", "OPS Fable"),
+    ("Growth Gary", "Growth Gary"), ("增长官", "Growth Gary"),
+]
+
+
+def lane_of_paths(paths):
+    """按改动文件投票定线；公箱文件不投票。无票或平票 -> None（交给文本兜底）。"""
+    votes = collections.Counter()
+    for p in paths or []:
+        for pref, owner in PATH_RULES:
+            if p.startswith(pref):
+                if owner:
+                    votes[owner] += 1
+                break
+    if not votes:
+        return None
+    top = votes.most_common()
+    if len(top) > 1 and top[0][1] == top[1][1]:
+        return None
+    return top[0][0]
+
+
+def lane_of_arrow(text):
+    """解析「→ X:」「-> X:」，取箭头后的收件人。取不到返回 None。"""
+    m = re.search(r"(?:→|->)\s*([^:：\n]{0,40})", text)
+    if not m:
+        return None
+    head = m.group(1)
+    hits = [(head.find(a), lane) for a, lane in ARROW_ALIAS if a in head]
+    return min(hits)[1] if hits else None
+
+
 def lane_of(text):
+    """兜底：关键词。**按在文本里出现的位置取最早的那个**，不按花名册顺序——
+    否则「建议 Joe 认领」「Zac 卡改为…」这类顺带提到的人名会盖过真正的归属方。"""
     t = text.lower()
+    best = None
     for name, _, _, _, keys in ROSTER:
         for k in keys:
-            if k in t:
-                return name
-    return "联邦"
+            i = t.find(k)
+            if i >= 0 and (best is None or i < best[0]):
+                best = (i, name)
+    return best[1] if best else "联邦"
+
+
+def lane_for(text, paths=None):
+    """总入口：路径 > 箭头收件人 > 关键词。"""
+    return lane_of_paths(paths) or lane_of_arrow(text) or lane_of(text)
 
 # ---------- git 数据 ----------
-log14 = [l.split("|", 2) for l in git("log", "origin/main", "--since=14 days ago", "--format=%h|%ad|%s", "--date=format:%m-%d %H:%M").splitlines()]
+# 一次 git log 同时取 commit 元信息与改动路径（不为每个 commit 单独起进程）
+_raw = git("log", "origin/main", "--since=14 days ago", "--name-only",
+           "--format=%x00%h|%ad|%s", "--date=format:%m-%d %H:%M")
+log14, commit_paths, _cur = [], {}, None
+for _l in _raw.split("\n"):
+    if _l.startswith("\x00"):
+        _cur = _l[1:].split("|", 2)
+        log14.append(_cur)
+        commit_paths[_cur[0]] = []
+    elif _l.strip() and _cur:
+        commit_paths[_cur[0]].append(_l.strip())
 by_day = collections.Counter(ad.split(" ")[0] for _, ad, _ in log14)
 lane_7d = collections.Counter()
 lane_last, lane_today = {}, collections.Counter()
 for h, ad, s in log14:
-    ln = lane_of(s)
+    ln = lane_for(s, commit_paths.get(h))
     days_ago = (now - datetime.datetime.strptime("2026-" + ad, "%Y-%m-%d %H:%M")).days
     if days_ago < 7:
         lane_7d[ln] += 1
@@ -52,9 +140,10 @@ for h, ad, s in log14:
 
 cards = []
 cid = [0]
-def add(col, pri, title, src, lane=None, date=""):
+def add(col, pri, title, src, lane=None, date="", paths=None):
     cid[0] += 1
-    cards.append(dict(id="K%03d" % cid[0], col=col, pri=pri, lane=lane or lane_of(title), t=title.strip()[:170], src=src, d=date))
+    cards.append(dict(id="K%03d" % cid[0], col=col, pri=pri,
+                      lane=lane or lane_for(title, paths), t=title.strip()[:170], src=src, d=date))
 
 reports = sorted(re.findall(r"night_reports/(2026-\d\d-\d\d)\.md", git("ls-tree", "-r", "--name-only", "origin/main", "data/research/night_reports/")))
 if reports:
@@ -64,7 +153,7 @@ if reports:
         for who, what in re.findall(r"\| *\*?\*?([^|*]+?)\*?\*? *\| *([^|]+?) *\|", sec.group(1)):
             if "收件人" in who or "---" in who:
                 continue
-            add("claim", 1, what.strip(), "晨报门铃 %s" % reports[-1][5:], lane_of(who), reports[-1][5:])
+            add("claim", 1, what.strip(), "晨报门铃 %s" % reports[-1][5:], lane_for(who), reports[-1][5:])
 
 for b in git("branch", "-r", "--no-merged", "origin/main").splitlines():
     b = b.strip()
@@ -73,7 +162,9 @@ for b in git("branch", "-r", "--no-merged", "origin/main").splitlines():
     n = git("rev-list", "--count", "origin/main.." + b).strip()
     if n and n != "0":
         last = git("log", "-1", "--format=%ad|%s", "--date=format:%m-%d", b).strip().split("|", 1)
-        add("claim", 2, "%s（+%s）%s" % (b.replace("origin/", ""), n, ("· " + last[1][:60]) if len(last) > 1 else ""), "待合分支", lane_of(b + (last[1] if len(last) > 1 else "")), last[0] if last else "")
+        bpaths = git("diff", "--name-only", "origin/main..." + b).split()
+        add("claim", 2, "%s（+%s）%s" % (b.replace("origin/", ""), n, ("· " + last[1][:60]) if len(last) > 1 else ""),
+            "待合分支", lane_for(b + (last[1] if len(last) > 1 else ""), bpaths), last[0] if last else "")
 
 contracts = show("data/reference/DATA_CONTRACTS.md").splitlines()
 for i, line in enumerate(contracts):
@@ -87,9 +178,9 @@ for i, line in enumerate(contracts):
     txt = re.sub(r"[*`]", "", line)
     head = txt[txt.index("]") + 1:].strip()[:150]
     if "待 Andy" in line or ("Andy 拍板" in line and "已" not in line):
-        add("blocked", 0, head, "契约行", lane_of(line), date)
+        add("blocked", 0, head, "契约行", lane_for(line), date)
     elif "→" in txt[:60]:
-        add("claim", 3, head, "契约行", lane_of(txt[:60]), date)
+        add("claim", 3, head, "契约行", lane_for(txt), date)
 
 nowmd = show("NOW.md")
 for line in nowmd.splitlines():
@@ -99,9 +190,9 @@ for line in nowmd.splitlines():
 for h, ad, s in log14:
     hrs = (now - datetime.datetime.strptime("2026-" + ad, "%Y-%m-%d %H:%M")).total_seconds() / 3600
     if hrs < 24:
-        add("done", 9, s[:150], h, lane_of(s), ad)
+        add("done", 9, s[:150], h, lane_for(s, commit_paths.get(h)), ad)
     if ad.split(" ")[0] == TODAY:
-        add("doing", 9, s[:130], h, lane_of(s), ad.split(" ")[1])
+        add("doing", 9, s[:130], h, lane_for(s, commit_paths.get(h)), ad.split(" ")[1])
 
 gate = re.search(r"周关卡[^\n]*?(\d)\s*/\s*5", nowmd)
 gate_n = int(gate.group(1)) if gate else None
