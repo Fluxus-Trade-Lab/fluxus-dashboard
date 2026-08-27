@@ -127,3 +127,75 @@ def test_paths_outrank_text(board):
 
 def test_unattributable_falls_through_to_the_federation(board):
     assert board["lane_for"]("chore: bump something", []) == "联邦"
+
+
+# ---------- 「等你拍板」不许印假零 ----------
+# 08-28 实测：控制台首页印着「现在没有等你的事」，而增长台账里 T1（Andy 原话
+# 「这个是要处理的，提醒我」）、T5、T3 三条都还挂着 `status: 待办`。
+# 那一列的全部价值就是「⚠️ 要 Andy 决定的事置顶拉响」——印零等于把它们藏起来。
+# 这条是**跨源对照**：看板算不出台账的状态，台账也不知道看板存在，谁也骗不了谁。
+
+def _run_board(tmp_path):
+    """整脚本跑一次，返回 cards（约 5 秒，含真 git 调用）。"""
+    import runpy
+    old_argv = sys.argv
+    sys.argv = ["federation_board.py", ROOT, str(tmp_path / "board.html")]
+    try:
+        return runpy.run_path(SCRIPT)["cards"]
+    finally:
+        sys.argv = old_argv
+
+
+def _ledger_open_todos():
+    """直接读增长台账最新一份的「⏳ 待办」节，数还挂着 status: 待办 的条目。"""
+    import re
+    import subprocess
+    ls = subprocess.run(
+        ["git", "-C", ROOT, "ls-tree", "-r", "--name-only", "origin/main", "data/growth/weekly/"],
+        capture_output=True, text=True).stdout
+    files = sorted(re.findall(r"weekly/(\S+\.md)", ls))
+    if not files:
+        return 0
+    md = subprocess.run(
+        ["git", "-C", ROOT, "show", "origin/main:data/growth/weekly/" + files[-1]],
+        capture_output=True, text=True).stdout
+    sec = re.search(r"^## [^\n]*⏳ 待办[^\n]*\n(.*?)(\n## |\Z)", md, re.S | re.M)
+    if not sec:
+        return 0
+    n = 0
+    for blk in re.split(r"\n### ", sec.group(1))[1:]:
+        title = blk.splitlines()[0]
+        if "~~" in title or "✅" in title:
+            continue
+        if re.search(r"status: *待办", blk[:400]):
+            n += 1
+    return n
+
+
+@pytest.mark.slow
+def test_the_waiting_on_andy_column_is_not_a_false_zero(tmp_path):
+    """台账里还有 status: 待办 → 看板「等你拍板」必须非空。
+
+    这是条**条件不变式**，不是钉死的期望值：Andy 全清完了，前置条件自然消失，测试转为跳过。
+    阳性对照：把 `andy_todos(...)` 与增长台账那两个数据源删掉（= 08-28 之前的状态），本条报红。
+    """
+    open_todos = _ledger_open_todos()
+    if open_todos == 0:
+        pytest.skip("增长台账当前没有 status: 待办 的条目，前置条件不成立")
+    blocked = [c for c in _run_board(tmp_path) if c["col"] == "blocked"]
+    assert blocked, (
+        "增长台账有 %d 条 status: 待办，而看板「等你拍板」是空的——"
+        "这正是 08-28 查出的假零" % open_todos
+    )
+
+
+@pytest.mark.slow
+def test_the_same_todo_registered_twice_shows_once(tmp_path):
+    """同一件事在 INBOX 与增长台账各登记一次时，只出一张卡。"""
+    blocked = [c for c in _run_board(tmp_path) if c["col"] == "blocked"]
+    import re
+    sigs = [re.sub(r"[^0-9A-Za-z一-鿿]", "", c["t"]) for c in blocked]
+    for i, a in enumerate(sigs):
+        for b in sigs[i + 1:]:
+            common = any(a[k:k + 12] in b for k in range(max(0, len(a) - 11)))
+            assert not common, "两张 blocked 卡说的是同一件事：\n  %s\n  %s" % (a[:40], b[:40])
