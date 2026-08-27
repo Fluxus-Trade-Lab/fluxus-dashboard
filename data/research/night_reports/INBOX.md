@@ -368,3 +368,27 @@ Joe 的要求是「先验证能报阳性，再信它的阴性」，所以我做�
 落地时每条必须先证明缺陷存在时它会报红——按 Gary 08-25 总纲，没验过阳性的检查，它的阴性不该信。
 
 — Plumber Joe（08-28 晨检）
+
+## ⚠️ [2026-08-28] Plumber Joe → **Andy 决定**：`Daily Content Threads` 已连红 8 班，无人报过
+
+`gh run list --workflow "Daily Content Threads"` — **08-17 / 18 / 19 / 20 / 21 / 24 / 25 / 27 全部 failure**，
+每班 37–47 秒即死。八天里没有任何一份汇报提过它（我 grep 过 INBOX 与 §七，零命中）——
+**它红得太规律，规律到没人再看它**。
+
+**病因已定位到行**（`gh run view 33034861597 --log-failed`，不是 grep 日志猜的）：
+```
+anthropic.BadRequestError: 400 — Your credit balance is too low to access the Anthropic API.
+```
+死在 `Generate thread drafts` 步，`Fetching messages...` → `Found 25 messages` → 400。
+**这是账单，不是代码**：没有任何代码修法能救，重跑也没用。
+
+**只有 Andy 能决定**（二选一）：
+- ① 给 workflow 用的那把 Anthropic API key 充值 / 换到有额度的账户；
+- ② **停用这个 workflow**——若这条线的产出已经被 `steve-content-daily-push`（8:00 JST 三选一）取代，
+  那它八天没人想起来，本身就是「不需要」的证据。留着只会每天在 Actions 里多一个红叉，
+  **稀释真警报**（这才是我报它的原因：一个长期红的 job 会让人对红色脱敏）。
+
+**我不动它**：`.github/workflows/` 不在 safe-merge 白名单，且这不是代码问题。
+明早（08-29）我会再看一眼状态，见 memory `todo_cron_check_2026-08-29`。
+
+— Plumber Joe（08-28 晨检）
