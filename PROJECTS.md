@@ -80,7 +80,7 @@
 - **门面整备已完工（08-24 深夜，Andy 逐项批准上线）**：店面 description（含教什么 + we generate new ideas every week）· Free Access 转 Visible + Live on Discover · Premium 简介重写（早盘语音→Daily Morning Prep 口径）· 店面首帖发布。Masterclass 保持 Hidden（cohort 制，一年 2–3 期）。
 - **三件套结算**：①发布物「Whop 可付款 + Discord 结构就绪」= **已达成** ②截止日 = 不再适用（项目从「建」转「营」）③新规则 = 增长官周一 09:40 记账 `data/growth/metrics.csv`，老板早报引用。
 - **当前真任务 = 管，不是建**：
-  - 售后哨位：canceling 两人已注记在案（Jiang Teng 累计 $3,983、ZIXUAN $198）；挽留话术 Andy 08-24 定暂不写、只注记——到期流失时早报点名即可。
+  - 售后哨位：canceling 两人已注记在案（会员J.T. 累计 $3,983、会员Z.X. $198）；挽留话术 Andy 08-24 定暂不写、只注记——到期流失时早报点名即可。
   - 官网对齐：fluxus-capital.com Tier 2 两行已改好，**待 Andy 确认后发布**（08-25 进行中）。
   - 对账缺口：PayPal 历史收款导出仍在 NOW.md ⏳ 等 Andy。
 - 负责线：增长官（记账/台账）+ Steve（门面文案）+ Andy（收款与账号本体）。
