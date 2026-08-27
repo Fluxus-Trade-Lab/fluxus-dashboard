@@ -66,18 +66,17 @@ def num(x, default=None):
 
 def load_trades():
     """全部交易记录。工作区没有就从 origin/main 批量取。"""
-    d = ROOT / 'data/output/trades'
-    blobs = []
-    if d.exists():
-        blobs = [f.read_text() for f in sorted(d.glob('*.json'))]
-    else:
-        listing = subprocess.run(['git', '-C', str(ROOT), 'ls-tree', '-r', 'origin/main',
-                                  '--name-only', 'data/output/trades/'],
-                                 capture_output=True, text=True).stdout.split()
-        for f in listing:
-            b = read(f)
-            if b:
-                blobs.append(b)
+    # ⚠️ 一律走 origin/main。主树停在 feature 分支上会落后好几天 ——
+    # 2026-08-26 实测:主树最新交易 08-21,main 上是 08-24,工具因此少看了三天。
+    # (上一版只把 CSV 改成读 main,漏了这里,同一个 bug 修了一半。)
+    listing = subprocess.run(['git', '-C', str(ROOT), 'ls-tree', '-r', 'origin/main',
+                              '--name-only', 'data/output/trades/'],
+                             capture_output=True, text=True).stdout.split()
+    blobs = [b for b in (read(f) for f in listing) if b]
+    if not blobs:
+        d = ROOT / 'data/output/trades'
+        if d.exists():
+            blobs = [f.read_text() for f in sorted(d.glob('*.json'))]
     out = []
     for b in blobs:
         try:
@@ -87,6 +86,24 @@ def load_trades():
         if isinstance(d, dict) and isinstance(d.get('trade'), dict):
             out.append(d)      # trades/ 目录里混着索引文件,只要单笔记录
     return out
+
+
+
+def data_through(trades):
+    """交易数据覆盖到哪一天。
+
+    ⚠️ 2026-08-26 抓到的真 bug:交易记录只到 08-24,breadth 到 08-26,
+    工具对 08-26 直接印了「今天没动手」——**那是一句关于 Andy 行为的事实陈述,
+    而它并不知道**。发出去就是假话。
+    没覆盖到的日子只能说「不知道」,不能替他回答。
+    """
+    ds = []
+    for t in trades:
+        tr = t['trade']
+        for k in ('entry_date', 'exit_date'):
+            if tr.get(k):
+                ds.append(tr[k])
+    return max(ds) if ds else None
 
 
 # ── 各节 ─────────────────────────────────────────────────────────────
@@ -157,6 +174,11 @@ def sec_book(trades, date):
     closed = [t for t in trades if t['trade'].get('exit_date') == date]
     opened = [t for t in trades if t['trade'].get('entry_date') == date]
     L = ["## ④ 我做了什么", ""]
+    through = data_through(trades)
+    if not closed and not opened and through and date > through:
+        L += [f"⚠️ **交易数据只到 {through}，{date} 的还没进来。**", "",
+              ">> 这天动没动手只有你知道,工具不替你回答。动了就自己补;没动就改成「今天没动手」+ 为什么。"]
+        return '\n'.join(L) + "\n"
     if not closed and not opened:
         L += ["**今天没动手。**", "",
               ">> 【这一段是内容,不是免责】今天什么都没做的理由是什么?"
@@ -329,10 +351,17 @@ def build_post(date=None):
 
     L = [f"# X 日更 · {date}", "",
          "*盘面和分母机器填好了。你写 `<>` 里的四处,十分钟以内。*", "", "```", "〔图〕", ""]
+    through = data_through(trades)
     if specs:
         L += specs + ["",
                       "为什么是它：<一到两句。今天这个凭什么排在别的前面>",
                       "我看到什么：<一到两句。入场那一刻屏幕上的东西,不是事后的道理>"]
+    elif through and date > through:
+        L += [f"⚠️ 交易数据只到 {through}，{date} 的还没进来。",
+              "",
+              "<这天你到底动没动手,只有你知道 —— 工具不替你回答。>",
+              "<动了:自己补一行 `$TICKER · setup · in x / stop y / z ATR / n%`>",
+              "<没动:写「今天没动手」+ 在等什么条件>"]
     else:
         L += ["今天没动手。", "", "为什么没有：<在等什么条件。这种日子占你全年的大多数>"]
     L += ["",
