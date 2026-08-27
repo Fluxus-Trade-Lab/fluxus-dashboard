@@ -143,6 +143,62 @@ infra = [
 
 counts = {c: sum(1 for k in cards if k["col"] == c) for c in ["claim", "doing", "blocked", "done"]}
 
+# ---------- 生意数据 ----------
+def last_nonempty(csv_text, col):
+    lines = [l for l in csv_text.splitlines() if l.strip()]
+    hdr = lines[0].split(",")
+    if col not in hdr:
+        return None
+    i = hdr.index(col)
+    for l in reversed(lines[1:]):
+        parts = l.split(",")
+        if i < len(parts) and parts[i].strip():
+            return parts[i].strip()
+    return None
+
+met = show("data/growth/metrics.csv")
+BIZ = dict(
+    members=last_nonempty(met, "whop_members") or "—",
+    mrr=last_nonempty(met, "mrr_usd") or "—",
+    discord=last_nonempty(met, "discord_members") or "—",
+    followers=last_nonempty(met, "x_followers") or "未测量",
+    subs=last_nonempty(met, "substack_subs") or "未测量",
+)
+posts_csv = show("data/content/posts.csv").splitlines()[1:]
+week_start = (now - datetime.timedelta(days=now.weekday())).strftime("%Y-%m-%d")
+posts_week = sum(1 for l in posts_csv if len(l.split(",")) > 1 and l.split(",")[1] >= week_start)
+views7 = 0
+for l in posts_csv:
+    p = l.split(",")
+    if len(p) > 4 and p[1] >= (now - datetime.timedelta(days=7)).strftime("%Y-%m-%d"):
+        try:
+            views7 += int(p[4])
+        except Exception:
+            pass
+
+projmd = show("PROJECTS.md")
+PROJS = []
+for m in re.finditer(r"^### (P\d) · ([^（(\n]+)[（(]([^）)\n]*)[）)]?([^\n]*)\n((?:(?!^###).*\n)*?)", projmd, re.M):
+    pid, pname, prole, pstar, body = m.group(1), m.group(2).strip(), m.group(3).strip(), m.group(4), m.group(5)
+    st = (re.search(r"- 状态[：:](.+)", body) or re.search(r"- \*\*状态（?([^\n]+)", body) or [None, ""])[1]
+    st = re.sub(r"[*`]", "", st).strip()[:180]
+    light = "🟢" if "🟢" in st or "自转" in st else ("🔴" if ("空" in st[:14] or "没落地" in st) else ("⏸" if ("冻结" in st or "未定" in st) else "🟡"))
+    PROJS.append((pid, pname, prole, "⭐" in pstar, light, st or "（无状态行）"))
+
+now_main = (re.search(r"## 本周主线[^\n]*\n\n(.+)", nowmd) or [None, ""])[1]
+now_main = re.sub(r"[*`]", "", now_main).strip()[:140]
+today_one = (re.search(r"## 今天的一件事\s*\n+([^#\n][^\n]*)", nowmd) or [None, ""])[1]
+today_one = re.sub(r"[*`]", "", today_one).strip()[:140]
+
+FUNNEL = [
+    ("内容", "%d 件 / 本周" % posts_week, "posts.csv"),
+    ("流量", "%s views / 7d" % (format(views7, ",") if views7 else "—"), "X"),
+    ("引流", "Substack %s" % BIZ["subs"], "站"),
+    ("落地", "%s 会员 · MRR $%s" % (BIZ["members"], BIZ["mrr"]), "Whop"),
+    ("服务", "Discord %s 人" % BIZ["discord"], "139 频道"),
+    ("售后", "canceling 哨位在册", "Gary"),
+]
+
 # ================= HTML =================
 def kpi(v, label, color=""):
     return '<div class="kpi"><b style="%s">%s</b><span>%s</span></div>' % (("color:" + color) if color else "", v, label)
@@ -160,15 +216,27 @@ def cardh(c, showlane=True):
                E(c["t"]),
                E(c["src"]), (" · " + E(c["lane"])) if showlane else ""))
 
-# --- 页1 首页 ---
+# --- 页1 今日（生意优先） ---
 blocked_cards = [c for c in cards if c["col"] == "blocked"]
-today_stream = [c for c in cards if c["col"] == "doing"][:12]
+today_stream = [c for c in cards if c["col"] == "doing"][:8]
 p_home = (
-    '<div class="kpis">' + kpi(counts["claim"], "待认领") + kpi(counts["doing"], "今日已落地") +
-    kpi(counts["blocked"], "等你拍板", "var(--blk)") + kpi(counts["done"], "24h 完成", "var(--don)") +
-    (kpi("%d/5" % gate_n, "周关卡") if gate_n is not None else "") + "</div>" +
+    '<div class="kpis">' + kpi(BIZ["members"], "会员") + kpi("$" + str(BIZ["mrr"]), "MRR") +
+    kpi("%d/5" % posts_week, "本周发布") + kpi(format(views7, ",") if views7 else "—", "7d views") +
+    kpi(counts["blocked"], "等你拍板", "var(--blk)") + "</div>" +
+    section("本周主线", '<div>%s</div><div class="mut" style="margin-top:6px">今天的一件事：%s</div>' % (E(now_main or "（NOW.md 未写）"), E(today_one or "（未写）"))) +
     section("⚠ 等你拍板", "".join(cardh(c) for c in blocked_cards) or '<div class="empty">现在没有等你的事</div>') +
-    section("今日各线落地流", "".join(cardh(c) for c in today_stream) or '<div class="empty">今天还没有 commit</div>'))
+    section("AI 今日已落地（详见任务看板）", "".join(cardh(c) for c in today_stream) or '<div class="empty">今天还没有 commit</div>'))
+
+# --- 页1.5 项目 ---
+fun = "".join('<div class="fstage"><div class="fname">%s</div><div class="fval">%s</div><div class="fsrc">%s</div></div><div class="farrow">→</div>' % (n, E(v), E(s)) for n, v, s in FUNNEL)
+fun = fun.rsplit('<div class="farrow">', 1)[0]
+pcards = ""
+for pid, pname, prole, star, light, st in PROJS:
+    pcards += ('<div class="agent"><div class="ah">%s <b>%s · %s</b>%s<span class="mut" style="margin-left:8px">%s</span></div>'
+               '<div class="ab">%s</div></div>' % (light, pid, E(pname), " ⭐" if star else "", E(prole), E(st)))
+p_projects = (section("生意漏斗（内容 → 售后）", '<div class="funnel">%s</div>' % fun) +
+              '<div class="mut" style="margin:2px 0 10px">项目档案实时映射自 PROJECTS.md——状态行过期时该修的是档案，不是看板。</div>' +
+              '<div class="agrid">%s</div>' % pcards)
 
 # --- 页2 看板 ---
 COLS = [("claim", "待认领 · 挂单板"), ("doing", "进行中 · 今日"), ("blocked", "等 Andy 拍板"), ("done", "已完成 · 24h")]
@@ -238,17 +306,23 @@ p_infra = (section("定时任务（工作线）", '<table><thead><tr><th>任务<
            section("链路健康", '<table><thead><tr><th>链路</th><th>说明</th><th>状态</th></tr></thead><tbody>%s</tbody></table>' % inf))
 
 PAGES = [
-    ("home", "🏠", "首页", "HOME", "今天需要你眼睛的一切", p_home),
-    ("board", "🗂", "任务看板", "TASK BOARD · KANBAN", "挂单不挂人：待认领 → 进行中 → 拍板 → 完成", p_board),
-    ("lanes", "🤝", "协作泳道", "MULTI-LANE COLLABORATION", "九条线各自在手的工作与最近交付", p_lanes),
-    ("agents", "🤖", "智能体", "AGENT ROSTER", "花名册：职责 · 文件边界 · 心跳 · 排程", p_agents),
-    ("ops", "📊", "运营看板", "OPERATIONS · GLOBAL", "吞吐 · 完成排行 · 发布关卡", p_ops),
-    ("kb", "📚", "知识库", "KNOWLEDGE SOURCES", "真理地图：哪类问题去哪查", p_kb),
-    ("infra", "🛠", "基础设施", "NODES & ROUTINES", "定时任务与链路健康", p_infra),
+    ("home", "🏠", "今日", "TODAY", "生意读数 · 该你做的 · AI 交付", p_home, "生意"),
+    ("projects", "📈", "项目", "BUSINESS PORTFOLIO", "P0–P7 档案与六环漏斗——你的生意长什么样", p_projects, "生意"),
+    ("ops", "📊", "运营看板", "OPERATIONS · GLOBAL", "吞吐 · 完成排行 · 发布关卡", p_ops, "生意"),
+    ("board", "🗂", "任务看板", "TASK BOARD · KANBAN", "挂单不挂人：待认领 → 进行中 → 拍板 → 完成", p_board, "AI 引擎室"),
+    ("lanes", "🤝", "协作泳道", "MULTI-LANE COLLABORATION", "九条线各自在手的工作与最近交付", p_lanes, "AI 引擎室"),
+    ("agents", "🤖", "智能体", "AGENT ROSTER", "花名册：职责 · 文件边界 · 心跳 · 排程", p_agents, "AI 引擎室"),
+    ("kb", "📚", "知识库", "KNOWLEDGE SOURCES", "真理地图：哪类问题去哪查", p_kb, "AI 引擎室"),
+    ("infra", "🛠", "基础设施", "NODES & ROUTINES", "定时任务与链路健康", p_infra, "AI 引擎室"),
 ]
 
-nav = "".join('<div class="ni" data-p="%s"><span>%s</span>%s</div>' % (pid, ic, label) for pid, ic, label, _, _, _ in PAGES)
-pages_html = "".join('<div class="page" id="pg-%s"><div class="eyebrow">%s</div><h1>%s</h1><div class="sub">%s</div>%s</div>' % (pid, eb, label, sub, body) for pid, ic, label, eb, sub, body in PAGES)
+nav, lastgrp = "", None
+for pid, ic, label, _, _, _, grp in PAGES:
+    if grp != lastgrp:
+        nav += '<div class="navh">%s</div>' % grp
+        lastgrp = grp
+    nav += '<div class="ni" data-p="%s"><span>%s</span>%s</div>' % (pid, ic, label)
+pages_html = "".join('<div class="page" id="pg-%s"><div class="eyebrow">%s</div><h1>%s</h1><div class="sub">%s</div>%s</div>' % (pid, eb, label, sub, body) for pid, ic, label, eb, sub, body, _ in PAGES)
 
 DOC = """<!doctype html><html lang="zh"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -271,6 +345,13 @@ aside{width:216px;flex:none;background:var(--side);border-right:1px solid var(--
 .ni.on{background:var(--panel);color:var(--ink);font-weight:600;border:1px solid var(--line)}
 .ni:not(.on):hover{color:var(--ink)}
 .ni:focus-visible{outline:2px solid var(--acc)}
+.navh{font:500 9.5px "IBM Plex Mono",monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);padding:14px 10px 4px}
+.funnel{display:flex;gap:6px;align-items:stretch;flex-wrap:wrap}
+.fstage{flex:1;min-width:118px;background:var(--inset);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+.fname{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+.fval{font:600 14px/1.3 "IBM Plex Serif",serif;margin:3px 0 1px;font-variant-numeric:tabular-nums}
+.fsrc{font-size:10px;color:var(--mut)}
+.farrow{align-self:center;color:var(--mut)}
 .foot{position:absolute;bottom:14px;left:12px;right:12px;font-size:10.5px;color:var(--mut);border-top:1px solid var(--line);padding-top:8px}
 main{flex:1;padding:26px 32px 70px;min-width:0}
 .page{display:none;max-width:1080px}.page.on{display:block}

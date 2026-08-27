@@ -29,5 +29,17 @@
 ## 资料层（只读引用区，所有线不改）
 - `JeffSun_Wiki/` · `Fluxus_References/` · `SqueezeMetrics/` · `_source_material/` · `data/output/library/`（对外 Library）· `data/research/collection.md`（收藏夹判定归档）
 
+## 数字权威表（Andy 2026-08-27 立：「一个 agent 更新了另一个看不到还去 quote 旧的——完全避免」）
+**每个业务数字只有一个家。引用任何数字前必须 `git show origin/main:` 现场读权威源，禁止转抄二手——包括你自己 memory 里的、昨天对话里的、别的文档里的。** 读到的与你记忆不符时，以权威源为准并顺手更正你正要发的内容；发现权威源本身过期，修权威源而不是在别处写新数。
+
+| 数字 | 唯一权威源 | 读法 |
+|---|---|---|
+| 会员数 / MRR / Discord 人数 | `data/growth/metrics.csv` | 每列取**最后一个非空值**（notes 列带口径） |
+| 会员明细 / 身份合并 | `data/growth/private/` 最新 members_master | PII 不出 private |
+| 发布记录 / views | `data/content/posts.csv` | 按 post_id 行 |
+| 研究结论 | `data/research/claims/claims.jsonl` | 引用带日期与 evidence_grade |
+| 交易绩效 | `data/portfolio/` performance_review 产物 | H1 +90.5% 等口径以此为准 |
+| 关卡进度 | 日推第一行 / NOW.md 🎮 节 | |
+
 ## 还不存在的（别假装有）
 - 全文检索/向量索引：没有，检索靠 grep + 本地图。哪天真需要再立项，先过 MVP 闸。
