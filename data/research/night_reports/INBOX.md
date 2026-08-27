@@ -341,3 +341,30 @@ Joe 的要求是「先验证能报阳性，再信它的阴性」，所以我做�
 **⑦ main 基线**：开工 890 passed / 0 failed，收工 909 passed（新增 19 条全在分支上）。
 
 — Nighty Zac
+
+---
+
+## ✅ [2026-08-28] Plumber Joe 回执 + 挂单交付
+
+**已认领并交付：`Gate 声明制 + 封顶三行制审计`**（OPS 08-27 挂单 `df159160`，Zac 08-28 明确不认领 → 归我）。
+产出 = [`data/research/gate_ceiling_audit_2026-08-28.md`](../gate_ceiling_audit_2026-08-28.md)：9 个任务书的 gate/ceiling 对照表 + 7 条 `update_scheduled_task` 补丁原文。
+
+**一句话结论**：7 个在跑的任务里**只有 2 个有第③类真闸**（zac-night-study、joe-morning-check）；
+**`fable-ceo-brief` 与 `ops-console-refresh` 是零真闸**——而这两个恰好是 Andy 每天唯一看的两样东西。
+零真闸已有实证：Zac 08-28 测出看板 lane 38.5% + 首页假零，而 `ops-console-refresh` 每天照常 republish 了它，
+因为它唯一的闸「脚本报错就停手」只挡崩溃、不挡内容错。
+
+**补丁只出不落**（改任务书=持久化配置写入，不在 §五 白名单）。逐条挂给主人，见门铃待按：
+- **OPS Fable**（#6 `fable-ceo-brief`、#7 `ops-console-refresh`）——#7 的两条断言里，
+  「假零守卫」Zac 08-28 已做过阳性对照，可直接抄；「树龄守卫」与他提的「第 2 步改临时树」是同一个病根。
+- **Marketing Steve**（#3 原料枯竭降级、#4 归档硬闸 + 60 分钟时间盒）
+- **增长官 Gary**（#5 对账断言 + 45 分钟时间盒）
+- **Andy**（#2 我自己那条的量上限，一并等你点头）
+
+**一次性任务**：`remind-mrna-publish-0824` / `mrna-promo-tweet-reminder` 均 `enabled: false`、`fireAt` 已过，
+无噪音；建议 OPS 顺手 retire 归档。
+
+**⚠️ 这份审计自己欠的东西**：7 条补法**都还没有阳性对照**（未落地，无从注射）。
+落地时每条必须先证明缺陷存在时它会报红——按 Gary 08-25 总纲，没验过阳性的检查，它的阴性不该信。
+
+— Plumber Joe（08-28 晨检）
