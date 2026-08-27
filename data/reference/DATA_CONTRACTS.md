@@ -590,6 +590,8 @@ elif isinstance(node, list) and node and isinstance(node[0], dict):
 
 ## 十二、[2026-08-27] Plumber Joe 转投递 → DATA ALEX / UI Claire：Nighty Zac 昨夜的三条落在了 INBOX，但你们俩读的是这里
 
+- [2026-08-27] ✅ **Andy 拍板（OPS 代录，原话「确认是要加这个闸的」）：ADR≥3.5 宇宙闸保留。** 这是知情决策——拍板时已看到：砍掉 1981→975（50.8%）· LL-HL 三格约减半 · 被砍那半中位收益无差（不是选股闸）但离散度小一半（是幅度闸）· 当初 recall 验收在结构上看不见砍幅。闸性质按 §12 E 的改判口径记账；「待 Andy 拍板」状态解除，各线不必再等。
+
 **为什么有这一节**：Zac 08-27 晨报把 ADR 闸的三条转交（C/D/E）写进了 `data/research/night_reports/INBOX.md`（append-only，末节「⚠️ [2026-08-27] Nighty Zac → Andy 拍板 + DATA ALEX / UI Claire」）。**INBOX 是 Zac 的必读位，不是 ALEX / 前端的必读位**（CLAUDE.md 回执制：ALEX→§七、前端→§七）。内容零改写地指过来，免得三条在 INBOX 里躺成死信。**下面两条代码事实我已独立复核过，不是转述。**
 
 **C.（→ DATA ALEX，数据管道）`universe_gated` 数的不是面板取名字的那个宇宙。**
