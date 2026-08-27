@@ -47,6 +47,7 @@ PATH_RULES = [
     ("pipeline/adapters/", "DATA ALEX"), ("data/output/", "DATA ALEX"),
     ("data/history/", "DATA ALEX"),
     ("Fluxus_Substack/", "Studio Q"), ("Fluxus_Brand/templates/", "Studio Q"),
+    ("Fluxus_DataArt/", "Studio Q"),   # TEAM.md 第 15 行「数据艺术素材」
     ("Fluxus_Brand/record/", "Studio Q"), ("Fluxus_Brand/copybook/", "Studio Q"),
     ("Fluxus_Brand/", "Marketing Steve"), ("Fluxus_Marketing_Visual_Design/", "Marketing Steve"),
     ("visuals/", "Marketing Steve"), ("data/content/", "Marketing Steve"),
