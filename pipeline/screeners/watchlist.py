@@ -521,5 +521,14 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
         "chase_rule": f"chase = change_pct >= {CHASE_PCT:.0%} today; count_chase per panel. 4% Bullish x same-day >= 15% was 20d -9.3% / 36% win in the 2026-08 validation -- fold these to the panel bottom, greyed",
         "zones": zones_out,
         "cross_zone": cross,
+        # TWO universes, because since the ADR floor (2026-08-25) there are
+        # two. `universe_gated` is everything past the liquidity gate;
+        # `universe_tradeable` is what the panels on this page actually drew
+        # from -- half of it (1,981 vs 975 on 08-25). The page's "{n} 只过闸"
+        # was printing the first while listing from the second (Zac 08-27,
+        # via Joe §十二 C). The counts belong here rather than in the browser:
+        # a gate recomputed downstream is a second truth waiting to drift.
         "universe_gated": len(gated),
+        "universe_tradeable": len(panel_pool(rows, "entries")),
+        "universe_tradeable_exempt": len(panel_pool(rows, "trouble")),
     }

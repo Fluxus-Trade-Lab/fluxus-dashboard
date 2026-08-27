@@ -437,3 +437,42 @@ class TestArchiveMatchesPage:
         quiet_broken = row(ticker="QB", adr_pct=1.0, atr_from_sma50=9.0)
         payload, hits = self._payload_and_hits([quiet_broken], tmp_path)
         assert {h["ticker"] for h in hits if h["panel"] == "extended"} == {"QB"}
+
+
+class TestTwoUniverses:
+    """Since the ADR floor there are two universes, and the page must be able
+    to name the one it actually listed from (Zac 08-27 via Joe §十二 C: the
+    header printed 1,981 while the panels drew from 975).
+    """
+
+    def _p(self, rows):
+        return W.build(rows, date="2026-08-26")
+
+    def test_tradeable_excludes_the_quiet_names(self):
+        rows = [row(ticker="LOUD", adr_pct=5.0), row(ticker="QUIET", adr_pct=1.0)]
+        p = self._p(rows)
+        assert p["universe_gated"] == 2
+        assert p["universe_tradeable"] == 1
+
+    def test_trouble_universe_is_the_full_gated_one(self):
+        """Exits speak about what is held, so their universe is not narrowed."""
+        rows = [row(ticker="LOUD", adr_pct=5.0), row(ticker="QUIET", adr_pct=1.0)]
+        p = self._p(rows)
+        assert p["universe_tradeable_exempt"] == p["universe_gated"] == 2
+
+    def test_missing_adr_counts_as_tradeable(self):
+        """Same fail-open rule as the panels -- the two must not disagree."""
+        p = self._p([row(ticker="NOADR", adr_pct=None)])
+        assert p["universe_tradeable"] == 1
+
+    def test_panels_never_list_more_than_the_tradeable_universe(self):
+        """The invariant the header exists to support: a panel cannot show a
+        name that is not in the universe the header claims."""
+        rows = [row(ticker=f"T{i}", adr_pct=a, vol10_green=True, trend_base=True)
+                for i, a in enumerate([1.0, 2.0, 3.5, 4.0, 9.0])]
+        p = self._p(rows)
+        for z in p["zones"]:
+            cap = p["universe_tradeable_exempt"] if z["key"] in W.ADR_EXEMPT_ZONES \
+                else p["universe_tradeable"]
+            for pa in z["panels"]:
+                assert pa["count"] <= cap, f"{pa['key']} lists {pa['count']} of {cap}"
