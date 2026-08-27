@@ -1,0 +1,444 @@
+<title>Preview Field</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --ground:#0B0C0E; --panel:#131519; --panel2:#0F1114;
+    --line:#23262C; --line-soft:#191C21;
+    --ink:#E8EAED; --dim:#8A9099; --dimmer:#5C626B;
+    --accent:#4C8DF6; --red:#F0533F; --blue:#3E7BFA;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+    --sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:var(--sans); font-size:14px; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{display:grid; grid-template-columns:minmax(0,1fr) 336px; gap:0; min-height:100vh}
+  @media (max-width:1080px){ .wrap{grid-template-columns:1fr} }
+
+  /* ── stage ───────────────────────────────── */
+  .stage{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:32px; gap:16px; min-width:0;
+  }
+  .frame{position:relative; width:100%; max-width:1200px}
+  canvas{
+    display:block; width:100%; height:auto; aspect-ratio:1200/630;
+    border:1px solid var(--line); background:#000;
+  }
+  .safe{
+    position:absolute; inset:0; pointer-events:none; display:none;
+  }
+  .safe.on{display:block}
+  .safe i{
+    position:absolute; left:4.5%; right:4.5%; bottom:6%; height:46%;
+    border:1px dashed rgba(255,255,255,.34); border-radius:2px;
+  }
+  .safe b{
+    position:absolute; left:5.5%; bottom:53%; font:500 11px/1 var(--mono);
+    letter-spacing:.14em; color:rgba(255,255,255,.55); text-transform:uppercase;
+  }
+  .stagebar{
+    display:flex; align-items:center; gap:18px; width:100%; max-width:1200px;
+    font:400 12px/1 var(--mono); color:var(--dim); flex-wrap:wrap;
+  }
+  .stagebar .k{color:var(--dimmer)}
+  .stagebar .v{color:var(--ink); font-variant-numeric:tabular-nums}
+
+  /* ── rail ────────────────────────────────── */
+  .rail{
+    background:var(--panel2); border-left:1px solid var(--line);
+    padding:24px 22px 40px; display:flex; flex-direction:column; gap:26px;
+    overflow-y:auto; max-height:100vh;
+  }
+  @media (max-width:1080px){ .rail{max-height:none; border-left:0; border-top:1px solid var(--line)} }
+  .brand{display:flex; align-items:baseline; gap:10px}
+  .brand h1{margin:0; font:600 16px/1 var(--sans); letter-spacing:-.01em}
+  .brand span{font:400 10px/1 var(--mono); letter-spacing:.18em; color:var(--dimmer); text-transform:uppercase}
+  .lede{margin:-14px 0 0; font-size:12.5px; color:var(--dim); line-height:1.6}
+
+  .grp{display:flex; flex-direction:column; gap:13px}
+  .grp>h2{
+    margin:0 0 2px; font:500 10px/1 var(--mono); letter-spacing:.2em;
+    color:var(--dimmer); text-transform:uppercase;
+    padding-bottom:9px; border-bottom:1px solid var(--line-soft);
+  }
+  .row{display:grid; grid-template-columns:1fr auto; align-items:center; gap:8px}
+  .row label{font-size:12.5px; color:var(--dim)}
+  .row output{font:500 12px/1 var(--mono); color:var(--ink); font-variant-numeric:tabular-nums}
+  input[type=range]{
+    grid-column:1/-1; -webkit-appearance:none; appearance:none;
+    width:100%; height:2px; background:var(--line); border-radius:0; outline:none; margin:2px 0 0;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:13px; height:13px; border-radius:50%;
+    background:var(--ink); border:0; cursor:pointer; transition:background .12s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover{background:var(--accent)}
+  input[type=range]::-moz-range-thumb{
+    width:13px; height:13px; border-radius:50%; background:var(--ink); border:0; cursor:pointer;
+  }
+  input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px rgba(76,141,246,.4)}
+
+  .swatches{display:flex; gap:8px}
+  .swatches input[type=color]{
+    -webkit-appearance:none; appearance:none; width:100%; height:30px; padding:0;
+    border:1px solid var(--line); background:transparent; cursor:pointer;
+  }
+  .swatches input[type=color]::-webkit-color-swatch-wrapper{padding:2px}
+  .swatches input[type=color]::-webkit-color-swatch{border:0}
+
+  .btns{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+  button{
+    font:500 12.5px/1 var(--sans); color:var(--ink); background:var(--panel);
+    border:1px solid var(--line); padding:10px 12px; cursor:pointer; transition:.12s;
+  }
+  button:hover{border-color:var(--dimmer); background:#171A1F}
+  button:focus-visible{outline:2px solid var(--accent); outline-offset:1px}
+  button.wide{grid-column:1/-1}
+  button.on{border-color:var(--accent); color:var(--accent)}
+
+  .note{
+    font-size:11.5px; line-height:1.65; color:var(--dimmer);
+    border-left:1px solid var(--line); padding-left:11px;
+  }
+  .note b{color:var(--dim); font-weight:500}
+
+  body.bare .rail{display:none}
+  body.bare .wrap{grid-template-columns:1fr}
+  body.bare .stage{padding:0; min-height:100vh}
+  body.bare .stagebar{display:none}
+  body.bare canvas{border:0}
+  body.bare .safe{display:none !important}  /* 截图时永不显示参考线 */
+  .escape{
+    position:fixed; right:14px; top:14px; z-index:9; display:none;
+    font:500 11px/1 var(--mono); letter-spacing:.1em;
+    background:rgba(19,21,25,.86); border:1px solid var(--line); color:var(--dim);
+    padding:8px 11px; cursor:pointer;
+  }
+  body.bare .escape{display:block}
+  @media (prefers-reduced-motion:reduce){ *{transition:none !important} }
+</style>
+
+<button class="escape" id="escape">EXIT ↩</button>
+
+<div class="wrap">
+  <div class="stage">
+    <div class="frame">
+      <canvas id="cv" width="2400" height="1260" aria-label="Generated orb field preview"></canvas>
+      <div class="safe" id="safe"><i></i><b>Substack title sits here</b></div>
+    </div>
+    <div class="stagebar">
+      <span><span class="k">canvas</span> <span class="v">1200 × 630</span></span>
+      <span><span class="k">export</span> <span class="v">2400 × 1260</span></span>
+      <span><span class="k">seed</span> <span class="v" id="seedout">—</span></span>
+      <span><span class="k">orbs</span> <span class="v" id="cntout">—</span></span>
+    </div>
+  </div>
+
+  <aside class="rail">
+    <div class="brand"><h1>Preview Field</h1><span>1200 × 630</span></div>
+    <p class="lede">Standing generator for Substack / X social previews. Pick a hand, tune, then <b>Screenshot view</b> — the title-overlay zone is marked so nothing important lands under it.</p>
+
+    <div class="grp">
+      <h2>Dots</h2>
+      <div class="row"><label for="count">Count</label><output id="o-count"></output>
+        <input type="range" id="count" min="6" max="520" value="150"></div>
+      <div class="row"><label for="gap">Gap between dots</label><output id="o-gap"></output>
+        <input type="range" id="gap" min="0" max="60" value="10"></div>
+      <div class="row"><label for="rmin">Min radius</label><output id="o-rmin"></output>
+        <input type="range" id="rmin" min="2" max="80" value="5"></div>
+      <div class="row"><label for="rmax">Max radius</label><output id="o-rmax"></output>
+        <input type="range" id="rmax" min="10" max="260" value="74"></div>
+      <div class="row"><label for="mix">Red ← → Blue</label><output id="o-mix"></output>
+        <input type="range" id="mix" min="0" max="100" value="50"></div>
+    </div>
+
+    <div class="grp">
+      <h2>Hand</h2>
+      <div class="btns">
+        <button id="s-kusama" class="wide">Kusama &mdash; 平涂圆点</button>
+        <button id="s-haring" class="wide">Haring &mdash; 粗黑轮廓</button>
+        <button id="s-wu" class="wide on">吴冠中 &mdash; 点与线</button>
+      </div>
+      <p class="note" id="handnote"></p>
+    </div>
+
+    <div class="grp">
+      <h2>Colour</h2>
+      <div class="swatches">
+        <input type="color" id="cred" value="#F0533F" aria-label="Red orb colour">
+        <input type="color" id="cblue" value="#2E6BF5" aria-label="Blue orb colour">
+        <input type="color" id="cbg" value="#F2EDE3" aria-label="Background colour">
+      </div>
+      <div class="row"><label for="sat">Highlight strength</label><output id="o-sat"></output>
+        <input type="range" id="sat" min="0" max="100" value="62"></div>
+      <div class="row"><label for="glow">Glow</label><output id="o-glow"></output>
+        <input type="range" id="glow" min="0" max="100" value="0"></div>
+      <div class="row"><label for="vig">Vignette</label><output id="o-vig"></output>
+        <input type="range" id="vig" min="0" max="100" value="18"></div>
+    </div>
+
+    <div class="grp">
+      <h2>Layout</h2>
+      <div class="row"><label for="spread">Spread</label><output id="o-spread"></output>
+        <input type="range" id="spread" min="0" max="100" value="70"></div>
+      <div class="row"><label for="bias">Weight left ← → right</label><output id="o-bias"></output>
+        <input type="range" id="bias" min="0" max="100" value="66"></div>
+      <div class="row"><label for="lift">Lift off the title zone</label><output id="o-lift"></output>
+        <input type="range" id="lift" min="0" max="100" value="58"></div>
+      <div class="row"><label for="depth">Depth falloff</label><output id="o-depth"></output>
+        <input type="range" id="depth" min="0" max="100" value="64"></div>
+    </div>
+
+    <div class="grp">
+      <h2>Bonds</h2>
+      <div class="row"><label for="bond">Link distance</label><output id="o-bond"></output>
+        <input type="range" id="bond" min="0" max="100" value="0"></div>
+      <div class="row"><label for="bondop">Link opacity</label><output id="o-bondop"></output>
+        <input type="range" id="bondop" min="0" max="100" value="26"></div>
+    </div>
+
+    <div class="grp">
+      <h2>Do</h2>
+      <div class="btns">
+        <button id="reroll" class="wide">Reroll seed</button>
+        <button id="toggleSafe">Title zone</button>
+        <button id="bareBtn">Screenshot view</button>
+        <button id="reset" class="wide">Reset all</button>
+      </div>
+      <p class="note"><b>Screenshot view</b> hides this panel and fills the window with the canvas at exactly 1200 × 630 — grab it with ⌘⇧4, or right-click the canvas → Save image.</p>
+    </div>
+  </aside>
+</div>
+
+<script>
+(function(){
+  const cv = document.getElementById('cv');
+  const ctx = cv.getContext('2d');
+  const S = 2; // canvas is 2× the 1200×630 logical size
+  const Wl = 1200, Hl = 630;
+
+  const ids = ['count','gap','rmin','rmax','mix','sat','glow','vig','spread','bias','lift','depth','bond','bondop'];
+  let HAND = 'kusama';
+  const el = {}; ids.forEach(i => el[i] = document.getElementById(i));
+  const cred = document.getElementById('cred'), cblue = document.getElementById('cblue'), cbg = document.getElementById('cbg');
+  const defaults = {}; ids.forEach(i => defaults[i] = el[i].value);
+  const defCol = {cred:cred.value, cblue:cblue.value, cbg:cbg.value};
+
+  let seed = (Math.random()*1e9)|0;
+
+  function mulberry32(a){ return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a>>>15, 1|a);
+    t = t + Math.imul(t ^ t>>>7, 61|t) ^ t;
+    return ((t ^ t>>>14) >>> 0) / 4294967296;
+  };}
+
+  const v = k => +el[k].value;
+  const hex2rgb = h => [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
+  const mix = (a,b,t) => a.map((x,i) => Math.round(x + (b[i]-x)*t));
+  const rgba = (c,a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+  const lighten = (c,t) => mix(c,[255,255,255],t);
+  const darken = (c,t) => mix(c,[0,0,0],t);
+
+  function build(){
+    const rnd = mulberry32(seed);
+    const want = v('count');
+    const gap = v('gap');
+    const rmin = Math.min(v('rmin'), v('rmax'));
+    const rmax = Math.max(v('rmin'), v('rmax'));
+    const blueShare = v('mix')/100;
+    const spread = v('spread')/100;
+    const bias = v('bias')/100;
+    const lift = v('lift')/100;
+    const depth = v('depth')/100;
+
+    // 空间网格加速碰撞检测 —— 否则 500 个点要跑 12 万次比较
+    const cell = Math.max(24, rmax + gap);
+    const cols = Math.ceil(Wl/cell)+2, rows = Math.ceil(Hl/cell)+2;
+    const grid = Array.from({length: cols*rows}, () => []);
+    const key = (x,y) => {
+      const c = Math.min(cols-1, Math.max(0, Math.floor(x/cell)+1));
+      const r = Math.min(rows-1, Math.max(0, Math.floor(y/cell)+1));
+      return r*cols+c;
+    };
+    const fits = (x,y,r) => {
+      const c = Math.floor(x/cell)+1, rw = Math.floor(y/cell)+1;
+      for(let dr=-1; dr<=1; dr++) for(let dc=-1; dc<=1; dc++){
+        const rr = rw+dr, cc = c+dc;
+        if(rr<0||rr>=rows||cc<0||cc>=cols) continue;
+        for(const o of grid[rr*cols+cc]){
+          if(Math.hypot(o.x-x, o.y-y) < o.r + r + gap) return false;
+        }
+      }
+      return true;
+    };
+
+    const orbs = [];
+    const maxTries = want * 90 + 4000;
+    let tries = 0;
+    while(orbs.length < want && tries < maxTries){
+      tries++;
+      const z = Math.pow(rnd(), 1 + (1-depth)*1.6);        // 0 远 → 1 近
+      let r = rmin + (rmax-rmin)*Math.pow(z, 1.35);
+      // 挤不下时逐步缩小,让密排能收敛而不是卡死
+      const squeeze = tries / maxTries;
+      r *= (1 - squeeze*0.55);
+      if(r < 1.5) continue;
+      const gx = (rnd()+rnd()+rnd()-1.5)/1.5;
+      const x = bias*Wl + gx * (Wl*0.62) * (0.28 + spread*0.95);
+      const gy = (rnd()+rnd()+rnd()-1.5)/1.5;
+      const y = Hl*(0.50 - lift*0.26) + gy * (Hl*0.60) * (0.30 + spread*0.85);
+      if(x < -rmax*1.2 || x > Wl+rmax*1.2 || y < -rmax*1.2 || y > Hl+rmax*1.2) continue;
+      if(!fits(x,y,r)) continue;
+      const o = { x, y, z, r, blue: rnd() < blueShare, s: rnd() };
+      orbs.push(o);
+      grid[key(x,y)].push(o);
+    }
+    orbs.sort((a,b) => a.z - b.z);
+    return orbs;
+  }
+
+  function draw(){
+    const orbs = build();
+    const bg = hex2rgb(cbg.value), RD = hex2rgb(cred.value), BL = hex2rgb(cblue.value);
+    const sat = v('sat')/100, glow = v('glow')/100, vig = v('vig')/100;
+    const bondD = v('bond')/100 * 340, bondO = v('bondop')/100;
+
+    ctx.setTransform(S,0,0,S,0,0);
+    ctx.clearRect(0,0,Wl,Hl);
+    ctx.fillStyle = rgba(bg,1); ctx.fillRect(0,0,Wl,Hl);
+
+    // bonds behind the orbs
+    if(bondD > 4 && bondO > 0.01){
+      ctx.lineCap = 'round';
+      for(let i=0;i<orbs.length;i++){
+        for(let j=i+1;j<orbs.length;j++){
+          const a = orbs[i], b = orbs[j];
+          const d = Math.hypot(a.x-b.x, a.y-b.y);
+          if(d > bondD) continue;
+          const f = (1 - d/bondD) * bondO * (0.25 + (a.z+b.z)/2 * 0.75);
+          const c = mix(hex2rgb(cred.value), hex2rgb(cblue.value), 0.5);
+          ctx.strokeStyle = rgba(lighten(c,0.35), f);
+          ctx.lineWidth = 0.6 + 2.4*((a.z+b.z)/2);
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        }
+      }
+    }
+
+    for(const o of orbs){
+      const base = o.blue ? BL : RD;
+      const depthFade = 0.30 + o.z*0.70;
+      const core = mix(darken(base, (1-o.z)*0.45), bg, (1-o.z)*0.28);
+
+      // 每个点一个稳定的伪随机流,保证重绘不抖
+      let ss = o.s;
+      const jr = () => { ss = (ss*9301 + 49297) % 233280 / 233280; return ss; };
+
+      if(HAND === 'kusama'){
+        const flat = mix(base, bg, (1-o.z)*0.22*(1-sat));
+        ctx.fillStyle = rgba(flat, 0.55 + o.z*0.45);
+        ctx.beginPath(); ctx.arc(o.x,o.y,o.r,0,6.2832); ctx.fill();
+        continue;
+      }
+
+      if(HAND === 'haring'){
+        // 平涂 + 粗黑轮廓;大点周围放射短线(他的"动线")
+        const lw = Math.max(2.4, o.r*0.20*(0.6+sat));
+        ctx.fillStyle = rgba(base, 1);
+        ctx.beginPath(); ctx.arc(o.x,o.y,o.r,0,6.2832); ctx.fill();
+        ctx.strokeStyle = rgba([12,12,12], 1); ctx.lineWidth = lw;
+        ctx.beginPath(); ctx.arc(o.x,o.y,o.r,0,6.2832); ctx.stroke();
+        if(o.r > (v('rmax')*0.42) && glow > 0.04){
+          const k = 3 + Math.floor(jr()*4);
+          ctx.lineCap = 'round'; ctx.lineWidth = Math.max(2, lw*0.75);
+          for(let a=0;a<k;a++){
+            const ang = jr()*6.2832;
+            const i0 = o.r + lw*0.9, i1 = i0 + o.r*(0.22 + 0.42*glow);
+            ctx.beginPath();
+            ctx.moveTo(o.x+Math.cos(ang)*i0, o.y+Math.sin(ang)*i0);
+            ctx.lineTo(o.x+Math.cos(ang)*i1, o.y+Math.sin(ang)*i1);
+            ctx.stroke();
+          }
+        }
+        continue;
+      }
+
+      if(HAND === 'wu'){
+        // 吴冠中:大量留白,小墨点为主,少数彩点,细线游走
+        const isColour = o.s > 0.74;
+        const col = isColour ? base : [26,26,26];
+        const rr = o.r * (isColour ? 0.34 : 0.26);
+        ctx.fillStyle = rgba(col, isColour ? 0.88 : (0.45 + o.z*0.5));
+        ctx.beginPath(); ctx.arc(o.x, o.y, Math.max(1.2, rr), 0, 6.2832); ctx.fill();
+        if(!isColour && jr() > 0.55){
+          // 一笔细线,带一点弯
+          ctx.strokeStyle = rgba([26,26,26], 0.16 + 0.30*o.z);
+          ctx.lineWidth = 0.7 + 1.6*o.z; ctx.lineCap = 'round';
+          const a = jr()*6.2832, L = o.r*(2.2 + jr()*5.0);
+          const ex = o.x + Math.cos(a)*L, ey = o.y + Math.sin(a)*L;
+          const mx = (o.x+ex)/2 + (jr()-0.5)*L*0.8, my = (o.y+ey)/2 + (jr()-0.5)*L*0.8;
+          ctx.beginPath(); ctx.moveTo(o.x,o.y); ctx.quadraticCurveTo(mx,my,ex,ey); ctx.stroke();
+        }
+        continue;
+      }
+
+    }
+
+    if(vig > 0.02){
+      const g = ctx.createRadialGradient(Wl*0.5,Hl*0.45,Hl*0.22, Wl*0.5,Hl*0.5,Wl*0.72);
+      g.addColorStop(0, rgba(bg,0));
+      g.addColorStop(1, rgba(darken(bg,0.6), 0.92*vig));
+      ctx.fillStyle = g; ctx.fillRect(0,0,Wl,Hl);
+    }
+
+    document.getElementById('seedout').textContent = seed.toString(36).slice(0,7);
+    const want = v('count');
+    document.getElementById('cntout').textContent = orbs.length + (orbs.length < want ? ' / '+want+' (packed)' : '');
+    ids.forEach(k => { const o = document.getElementById('o-'+k); if(o) o.textContent = el[k].value; });
+  }
+
+  ids.forEach(k => el[k].addEventListener('input', draw));
+  [cred,cblue,cbg].forEach(c => c.addEventListener('input', draw));
+  document.getElementById('reroll').addEventListener('click', () => { seed = (Math.random()*1e9)|0; draw(); });
+  document.getElementById('reset').addEventListener('click', () => {
+    ids.forEach(k => el[k].value = defaults[k]);
+    cred.value = defCol.cred; cblue.value = defCol.cblue; cbg.value = defCol.cbg;
+    seed = (Math.random()*1e9)|0; draw();
+  });
+  const safe = document.getElementById('safe'), tsBtn = document.getElementById('toggleSafe');
+  tsBtn.addEventListener('click', () => { safe.classList.toggle('on'); tsBtn.classList.toggle('on'); });
+  const HANDS = {
+    kusama:   {note:'平涂圆点。没有高光、没有渐变。节奏来自<b>重复和大小</b>，不来自明暗。',
+               set:{count:180,gap:8,rmin:5,rmax:74,sat:20,glow:0,vig:14,spread:78,bond:0}, bg:'#F2EDE3'},
+    haring:   {note:'平涂 + <b>粗黑轮廓</b>，大点周围放射短线（他的“动线”）。用 Highlight 调轮廓粗细，Glow 调动线。',
+               set:{count:46,gap:26,rmin:22,rmax:96,sat:70,glow:55,vig:0,spread:66,bond:0}, bg:'#FFDD33'},
+    wu:       {note:'<b>大量留白</b>。小墨点为主、少数彩点，细线游走。密度靠 Count，线的多少靠 Depth。',
+               set:{count:260,gap:14,rmin:6,rmax:64,sat:30,glow:0,vig:0,spread:88,bond:0}, bg:'#FBF8F1'}
+  };
+  const handBtns = {};
+  Object.keys(HANDS).forEach(k => handBtns[k] = document.getElementById('s-'+k));
+  function setHand(k, applyPreset){
+    HAND = k;
+    Object.keys(handBtns).forEach(x => handBtns[x].classList.toggle('on', x===k));
+    document.getElementById('handnote').innerHTML = HANDS[k].note;
+    if(applyPreset){
+      const cfg = HANDS[k];
+      Object.entries(cfg.set).forEach(([id,val]) => { if(el[id]) el[id].value = val; });
+      if(cfg.bg) cbg.value = cfg.bg;
+    }
+    draw();
+  }
+  Object.keys(handBtns).forEach(k => handBtns[k].addEventListener('click', () => setHand(k, true)));
+
+  const bare = () => document.body.classList.toggle('bare');
+  document.getElementById('bareBtn').addEventListener('click', bare);
+  document.getElementById('escape').addEventListener('click', bare);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') document.body.classList.remove('bare'); });
+
+  setHand('wu', true);
+})();
+</script>
