@@ -1,0 +1,468 @@
+{
+ "note": "Round 2: de-confound ADR by MATCHING, not by dividing.",
+ "adr_curve": {
+  "n_quantiles": 40,
+  "median_abs_excess_first": 0.02283,
+  "median_abs_excess_last": 0.17116,
+  "median_adr_first": 1.801,
+  "median_adr_last": 18.428,
+  "loglog_slope": 0.823,
+  "verdict": "sub-linear; dividing by ADR^1 favours quiet names"
+ },
+ "screeners": {
+  "ema21_watch": {
+   "train": {
+    "A_curve_divide": {
+     "n_days": 67,
+     "delta": -0.03636039350556364,
+     "p": 0.6128718782489428,
+     "share_positive": 0.417910447761194,
+     "p_holm": 0.6128718782489428
+    },
+    "B_decile_matched": {
+     "n_days": 67,
+     "delta": 0.00417971117253688,
+     "p": 0.5321912267388772,
+     "share_positive": 0.5223880597014925,
+     "p_holm": 0.5321912267388772
+    }
+   },
+   "holdout": {
+    "A_curve_divide": {
+     "n_days": 29,
+     "delta": 0.040459868714305514,
+     "p": 0.1104210764169693,
+     "share_positive": 0.5862068965517241,
+     "p_holm": 0.7729475349187851
+    },
+    "B_decile_matched": {
+     "n_days": 29,
+     "delta": 0.12718493288872545,
+     "p": 0.0037983879446983337,
+     "share_positive": 0.6896551724137931,
+     "p_holm": 0.026588715612888336
+    }
+   }
+  },
+  "gainers_4pct": {
+   "train": {
+    "A_curve_divide": {
+     "n_days": 67,
+     "delta": -0.007809137927734522,
+     "p": 0.5954431092613486,
+     "share_positive": 0.44776119402985076,
+     "p_holm": 1.0
+    },
+    "B_decile_matched": {
+     "n_days": 66,
+     "delta": 0.018702308886483138,
+     "p": 0.5003478251082192,
+     "share_positive": 0.5303030303030303,
+     "p_holm": 1.0
+    }
+   },
+   "holdout": {
+    "A_curve_divide": {
+     "n_days": 27,
+     "delta": 0.08527189871640184,
+     "p": 0.10562613606452942,
+     "share_positive": 0.6296296296296297,
+     "p_holm": 0.8450090885162354
+    },
+    "B_decile_matched": {
+     "n_days": 27,
+     "delta": 0.0278317097386786,
+     "p": 0.324220210313797,
+     "share_positive": 0.5925925925925926,
+     "p_holm": 0.648440420627594
+    }
+   }
+  },
+  "healthy_charts": {
+   "train": {
+    "A_curve_divide": {
+     "n_days": 67,
+     "delta": 0.01912304372905127,
+     "p": 0.5078786500894735,
+     "share_positive": 0.5522388059701493,
+     "p_holm": 1.0
+    },
+    "B_decile_matched": {
+     "n_days": 67,
+     "delta": 0.02376338544636588,
+     "p": 0.11401497587279692,
+     "share_positive": 0.582089552238806,
+     "p_holm": 0.3420449276183908
+    }
+   },
+   "holdout": {
+    "A_curve_divide": {
+     "n_days": 29,
+     "delta": -0.011278745121828804,
+     "p": 0.4946499206125736,
+     "share_positive": 0.4482758620689655,
+     "p_holm": 1.0
+    },
+    "B_decile_matched": {
+     "n_days": 29,
+     "delta": 0.06186229547786087,
+     "p": 0.03080105036497116,
+     "share_positive": 0.6896551724137931,
+     "p_holm": 0.1540052518248558
+    }
+   }
+  },
+  "momentum_97": {
+   "train": {
+    "A_curve_divide": {
+     "n_days": 67,
+     "delta": 0.16745138079295263,
+     "p": 7.516656164154312e-08,
+     "share_positive": 0.8059701492537313,
+     "p_holm": 9.019987396985175e-07
+    },
+    "B_decile_matched": {
+     "n_days": 67,
+     "delta": 0.21697640768625673,
+     "p": 2.438162863691175e-09,
+     "share_positive": 0.8656716417910447,
+     "p_holm": 2.92579543642941e-08
+    }
+   },
+   "holdout": {
+    "A_curve_divide": {
+     "n_days": 29,
+     "delta": 0.03027315285390153,
+     "p": 0.1432539001107216,
+     "share_positive": 0.6206896551724138,
+     "p_holm": 0.8595234006643295
+    },
+    "B_decile_matched": {
+     "n_days": 29,
+     "delta": 0.07915473195958721,
+     "p": 0.040825653821229935,
+     "share_positive": 0.7241379310344828,
+     "p_holm": 0.16330261528491974
+    }
+   }
+  },
+  "preset:4_bullish": {
+   "train": {
+    "A_curve_divide": {
+     "n_days": 58,
+     "delta": 0.14601747653001296,
+     "p": 5.7669364593516564e-05,
+     "share_positive": 0.7931034482758621,
+     "p_holm": 0.0005766936459351657
+    },
+    "B_decile_matched": {
+     "n_days": 52,
+     "delta": 0.23733856247684443,
+     "p": 1.1565972180909918e-07,
+     "share_positive": 0.8461538461538461,
+     "p_holm": 1.272256939900091e-06
+    }
+   },
+   "holdout": {
+    "A_curve_divide": {
+     "n_days": 23,
+     "delta": 0.18335590950338188,
+     "p": 0.0011184215545654297,
+     "share_positive": 0.8260869565217391,
+     "p_holm": 0.012302637100219727
+    },
+    "B_decile_matched": {
+     "n_days": 18,
+     "delta": null,
+     "p": null
+    }
+   }
+  },
+  "preset:monthly_leader_97": {
+   "train": {
+    "A_curve_divide": {
+     "n_days": 56,
+     "delta": 0.58194819098601,
+     "p": 6.974264280530522e-08,
+     "share_positive": 0.7857142857142857,
+     "p_holm": 9.066543564689679e-07
+    },
+    "B_decile_matched": {
+     "n_days": 14,
+     "delta": null,
+     "p": null
+    }
+   },
+   "holdout": {
+    "A_curve_divide": {
+     "n_days": 4,
+     "delta": null,
+     "p": null
+    },
+    "B_decile_matched": {
+     "n_days": 1,
+     "delta": null,
+     "p": null
+    }
+   }
+  },
+  "preset:pocket_pivot": {
+   "train": {
+    "A_curve_divide": {
+     "n_days": 51,
+     "delta": 0.1566542618293627,
+     "p": 0.0010703916174461792,
+     "share_positive": 0.6666666666666666,
+     "p_holm": 0.008563132939569434
+    },
+    "B_decile_matched": {
+     "n_days": 22,
+     "delta": 0.20343219318222266,
+     "p": 0.0016727447509765625,
+     "share_positive": 0.7727272727272727,
+     "p_holm": 0.008363723754882812
+    }
+   },
+   "holdout": {
+    "A_curve_divide": {
+     "n_days": 17,
+     "delta": null,
+     "p": null
+    },
+    "B_decile_matched": {
+     "n_days": 5,
+     "delta": null,
+     "p": null
+    }
+   }
+  },
+  "preset:pp_count": {
+   "train": {
+    "A_curve_divide": {
+     "n_days": 59,
+     "delta": 0.02557743783348676,
+     "p": 0.08803739471875721,
+     "share_positive": 0.559322033898305,
+     "p_holm": 0.35214957887502885
+    },
+    "B_decile_matched": {
+     "n_days": 59,
+     "delta": 0.12936807936207675,
+     "p": 0.001337127280798511,
+     "share_positive": 0.6440677966101694,
+     "p_holm": 0.009359890965589576
+    }
+   },
+   "holdout": {
+    "A_curve_divide": {
+     "n_days": 28,
+     "delta": -0.008557653546823474,
+     "p": 0.7621389999985695,
+     "share_positive": 0.4642857142857143,
+     "p_holm": 1.0
+    },
+    "B_decile_matched": {
+     "n_days": 28,
+     "delta": 0.036642514453138916,
+     "p": 0.01563260704278946,
+     "share_positive": 0.75,
+     "p_holm": 0.09379564225673676
+    }
+   }
+  },
+  "preset:sugar_babies": {
+   "train": {
+    "A_curve_divide": {
+     "n_days": 14,
+     "delta": null,
+     "p": null
+    },
+    "B_decile_matched": {
+     "n_days": 14,
+     "delta": null,
+     "p": null
+    }
+   },
+   "holdout": {
+    "A_curve_divide": {
+     "n_days": 28,
+     "delta": 0.012772681881640324,
+     "p": 0.5670346617698669,
+     "share_positive": 0.5,
+     "p_holm": 1.0
+    },
+    "B_decile_matched": {
+     "n_days": 28,
+     "delta": 0.08292161928537846,
+     "p": 0.27407141774892807,
+     "share_positive": 0.6428571428571429,
+     "p_holm": 0.8222142532467842
+    }
+   }
+  },
+  "preset:vol_up_gainers": {
+   "train": {
+    "A_curve_divide": {
+     "n_days": 62,
+     "delta": 0.0356408790858323,
+     "p": 0.07785245359948166,
+     "share_positive": 0.5483870967741935,
+     "p_holm": 0.3892622679974083
+    },
+    "B_decile_matched": {
+     "n_days": 60,
+     "delta": 0.08806239975781034,
+     "p": 0.0015095002696703438,
+     "share_positive": 0.6666666666666666,
+     "p_holm": 0.009057001618022063
+    }
+   },
+   "holdout": {
+    "A_curve_divide": {
+     "n_days": 25,
+     "delta": 0.039587987724436835,
+     "p": 0.8948604464530945,
+     "share_positive": 0.6,
+     "p_holm": 0.8948604464530945
+    },
+    "B_decile_matched": {
+     "n_days": 20,
+     "delta": 0.03162600750172623,
+     "p": 0.5958194732666016,
+     "share_positive": 0.5,
+     "p_holm": 0.5958194732666016
+    }
+   }
+  },
+  "preset:weekly_20_gainers": {
+   "train": {
+    "A_curve_divide": {
+     "n_days": 59,
+     "delta": 0.11653395752353846,
+     "p": 0.0009721482508702278,
+     "share_positive": 0.6610169491525424,
+     "p_holm": 0.00874933425783205
+    },
+    "B_decile_matched": {
+     "n_days": 36,
+     "delta": 0.20912112105578842,
+     "p": 2.5482935598120093e-05,
+     "share_positive": 0.75,
+     "p_holm": 0.00025482935598120093
+    }
+   },
+   "holdout": {
+    "A_curve_divide": {
+     "n_days": 22,
+     "delta": 0.26534991984833683,
+     "p": 0.050072669982910156,
+     "share_positive": 0.6818181818181818,
+     "p_holm": 0.4506540298461914
+    },
+    "B_decile_matched": {
+     "n_days": 10,
+     "delta": null,
+     "p": null
+    }
+   }
+  },
+  "preset:weekly_momentum_97": {
+   "train": {
+    "A_curve_divide": {
+     "n_days": 59,
+     "delta": 0.201311720561276,
+     "p": 3.304667277227981e-05,
+     "share_positive": 0.7627118644067796,
+     "p_holm": 0.0003635134004950779
+    },
+    "B_decile_matched": {
+     "n_days": 45,
+     "delta": 0.29932301066311723,
+     "p": 3.6132389936938125e-05,
+     "share_positive": 0.7333333333333333,
+     "p_holm": 0.0003251915094324431
+    }
+   },
+   "holdout": {
+    "A_curve_divide": {
+     "n_days": 20,
+     "delta": 0.1595880414649714,
+     "p": 0.01531219482421875,
+     "share_positive": 0.7,
+     "p_holm": 0.1531219482421875
+    },
+    "B_decile_matched": {
+     "n_days": 4,
+     "delta": null,
+     "p": null
+    }
+   }
+  },
+  "vcp": {
+   "train": {
+    "A_curve_divide": {
+     "n_days": 67,
+     "delta": 0.1356519411730066,
+     "p": 0.01617429707678202,
+     "share_positive": 0.582089552238806,
+     "p_holm": 0.11322007953747414
+    },
+    "B_decile_matched": {
+     "n_days": 36,
+     "delta": 0.0870952401745708,
+     "p": 0.047779093438293785,
+     "share_positive": 0.6388888888888888,
+     "p_holm": 0.19111637375317514
+    }
+   },
+   "holdout": {
+    "A_curve_divide": {
+     "n_days": 29,
+     "delta": 0.09004871646347268,
+     "p": 0.27462591975927353,
+     "share_positive": 0.6206896551724138,
+     "p_holm": 1.0
+    },
+    "B_decile_matched": {
+     "n_days": 10,
+     "delta": null,
+     "p": null
+    }
+   }
+  },
+  "vol_up_gainers": {
+   "train": {
+    "A_curve_divide": {
+     "n_days": 67,
+     "delta": 0.04446578462265505,
+     "p": 0.01760964169883688,
+     "share_positive": 0.6268656716417911,
+     "p_holm": 0.10565785019302128
+    },
+    "B_decile_matched": {
+     "n_days": 59,
+     "delta": 0.09574886923443253,
+     "p": 0.0010820570985942948,
+     "share_positive": 0.6271186440677966,
+     "p_holm": 0.008656456788754359
+    }
+   },
+   "holdout": {
+    "A_curve_divide": {
+     "n_days": 27,
+     "delta": 0.09985411445254821,
+     "p": 0.000667765736579895,
+     "share_positive": 0.7777777777777778,
+     "p_holm": 0.00801318883895874
+    },
+    "B_decile_matched": {
+     "n_days": 27,
+     "delta": 0.14939460145041883,
+     "p": 0.00010977685451507568,
+     "share_positive": 0.8888888888888888,
+     "p_holm": 0.0008782148361206055
+    }
+   }
+  }
+ }
+}

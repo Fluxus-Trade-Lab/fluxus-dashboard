@@ -32,6 +32,10 @@
    "events": 456,
    "days": 92
   },
+  "preset:21ema_watch": {
+   "events": 0,
+   "days": 0
+  },
   "preset:stockbee_9m_setup": {
    "events": 359,
    "days": 73
@@ -419,7 +423,7 @@
     "mean_delta": 0.031006074754850486,
     "p": 0.35848437119800947,
     "share_positive": 0.5373134328358209,
-    "p_holm": 0.35848437119800947
+    "p_holm": 0.40954655670664875
    },
    "M3r_right_tail_2R": {
     "n_days": 67,
@@ -503,7 +507,7 @@
     "mean_delta": 0.18030858312535647,
     "p": 0.0003633692088458908,
     "share_positive": 0.7413793103448276,
-    "p_holm": 0.003270322879613017
+    "p_holm": 0.0033062999843433954
    },
    "M3r_right_tail_2R": {
     "n_days": 58,
@@ -537,7 +541,7 @@
     "mean_delta": 0.17741821643367098,
     "p": 1.3755629707797838e-05,
     "share_positive": 0.6785714285714286,
-    "p_holm": 0.0001100450376623827
+    "p_holm": 0.00011167956346212613
    },
    "M2r_median_abs_R": {
     "n_days": 56,
@@ -774,7 +778,7 @@
     "mean_delta": 0.08959015803256024,
     "p": 2.5337679565470606e-05,
     "share_positive": 0.711864406779661,
-    "p_holm": 0.00015202607739282363
+    "p_holm": 0.00016841291570511812
    },
    "M2r_median_abs_R": {
     "n_days": 59,
@@ -800,7 +804,7 @@
     "mean_delta": -0.007202864385351546,
     "p": 0.1387518488458668,
     "share_positive": 0.44776119402985076,
-    "p_holm": 0.9712629419210677
+    "p_holm": 1.0
    },
    "M2_median_abs": {
     "n_days": 67,
@@ -808,7 +812,7 @@
     "mean_delta": -0.014885101313190234,
     "p": 1.828782782079877e-07,
     "share_positive": 0.14925373134328357,
-    "p_holm": 1.280147947455914e-06
+    "p_holm": 1.4272632875741596e-06
    },
    "M3_right_tail_10pct": {
     "n_days": 67,
@@ -832,7 +836,7 @@
     "mean_delta": -0.005938578640550858,
     "p": 0.48807256543801614,
     "share_positive": 0.40298507462686567,
-    "p_holm": 0.9761451308760323
+    "p_holm": 1.0
    }
   },
   "vol_up_gainers": {
@@ -842,7 +846,7 @@
     "mean_delta": 0.003341435713349194,
     "p": 0.9950159301980438,
     "share_positive": 0.4925373134328358,
-    "p_holm": 0.9950159301980438
+    "p_holm": 1.0
    },
    "M2_median_abs": {
     "n_days": 67,
@@ -874,7 +878,7 @@
     "mean_delta": 0.010696519076705643,
     "p": 0.5825218451077967,
     "share_positive": 0.47761194029850745,
-    "p_holm": 0.5825218451077967
+    "p_holm": 1.0
    }
   }
  },
@@ -1498,17 +1502,11 @@
    "replicated": false
   },
   "vcp": {
-   "verdict": "position-sizing gate",
-   "negatives": [
-    "M2_median_abs",
-    "M3_right_tail_10pct"
-   ],
-   "holdout_direction_agrees": {
-    "M2_median_abs": true,
-    "M3_right_tail_10pct": true,
-    "M2r_median_abs_R": true
-   },
-   "replicated": true
+   "verdict": "M1 unmeasurable (positive control silent at +1.0pp)",
+   "negatives": [],
+   "holdout_direction_agrees": {},
+   "replicated": false,
+   "why": "cannot distinguish 'no edge' from 'not enough resolution'"
   },
   "vol_up_gainers": {
    "verdict": "shadow of ADR",

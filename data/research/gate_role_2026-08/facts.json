@@ -1,0 +1,212 @@
+{
+ "n_included": 14,
+ "excluded": {
+  "episodic_pivot": {
+   "events": 456,
+   "days": 92
+  },
+  "preset:stockbee_9m_setup": {
+   "events": 359,
+   "days": 73
+  }
+ },
+ "n_measurable_train": 13,
+ "M1_sig_pos": [
+  "preset:monthly_leader_97",
+  "preset:pp_count"
+ ],
+ "M1_sig_neg": [],
+ "M1_not_sig": [
+  "ema21_watch",
+  "gainers_4pct",
+  "healthy_charts",
+  "momentum_97",
+  "preset:4_bullish",
+  "preset:pocket_pivot",
+  "preset:vol_up_gainers",
+  "preset:weekly_20_gainers",
+  "preset:weekly_momentum_97",
+  "vcp",
+  "vol_up_gainers"
+ ],
+ "M1_unmeasurable": [
+  "preset:sugar_babies"
+ ],
+ "M1_holdout_sig_neg": [
+  "momentum_97",
+  "preset:weekly_20_gainers",
+  "preset:weekly_momentum_97"
+ ],
+ "M1_train_sig_pos_and_holdout_same_sign": [
+  "preset:pp_count"
+ ],
+ "M2_sig_pos": [
+  "gainers_4pct",
+  "healthy_charts",
+  "momentum_97",
+  "preset:4_bullish",
+  "preset:monthly_leader_97",
+  "preset:vol_up_gainers",
+  "preset:weekly_20_gainers",
+  "preset:weekly_momentum_97",
+  "vol_up_gainers"
+ ],
+ "M2_sig_neg": [
+  "ema21_watch",
+  "vcp"
+ ],
+ "M3_sig_pos": [
+  "gainers_4pct",
+  "healthy_charts",
+  "momentum_97",
+  "preset:4_bullish",
+  "preset:monthly_leader_97",
+  "preset:weekly_20_gainers",
+  "preset:weekly_momentum_97"
+ ],
+ "M2r_sig_pos_train": [
+  "momentum_97",
+  "preset:4_bullish",
+  "preset:monthly_leader_97",
+  "preset:pocket_pivot",
+  "preset:weekly_20_gainers",
+  "preset:weekly_momentum_97",
+  "vcp"
+ ],
+ "M2r_measurable_both_splits": [
+  "ema21_watch",
+  "gainers_4pct",
+  "healthy_charts",
+  "momentum_97",
+  "preset:4_bullish",
+  "preset:pp_count",
+  "preset:vol_up_gainers",
+  "preset:weekly_20_gainers",
+  "preset:weekly_momentum_97",
+  "vcp",
+  "vol_up_gainers"
+ ],
+ "M2r_same_sign_both_splits": [
+  "ema21_watch",
+  "gainers_4pct",
+  "healthy_charts",
+  "momentum_97",
+  "preset:4_bullish",
+  "preset:pp_count",
+  "preset:vol_up_gainers",
+  "preset:weekly_20_gainers",
+  "preset:weekly_momentum_97",
+  "vcp",
+  "vol_up_gainers"
+ ],
+ "M2r_holdout_raw_p_lt_05": [
+  "ema21_watch",
+  "healthy_charts",
+  "preset:4_bullish",
+  "preset:pp_count",
+  "preset:weekly_20_gainers",
+  "preset:weekly_momentum_97",
+  "vcp"
+ ],
+ "M3r_sig_pos_train": [
+  "healthy_charts",
+  "momentum_97",
+  "preset:4_bullish",
+  "preset:monthly_leader_97",
+  "preset:pp_count",
+  "preset:weekly_momentum_97"
+ ],
+ "M3r_holdout_sign_flip": [
+  "healthy_charts",
+  "momentum_97",
+  "preset:4_bullish",
+  "preset:weekly_momentum_97"
+ ],
+ "M3r_holdout_same_sign": [
+  "preset:pp_count"
+ ],
+ "pc_caught_at_1pp": [
+  "ema21_watch",
+  "gainers_4pct",
+  "healthy_charts",
+  "momentum_97",
+  "preset:4_bullish",
+  "preset:monthly_leader_97",
+  "preset:pocket_pivot",
+  "preset:pp_count",
+  "preset:vol_up_gainers",
+  "preset:weekly_20_gainers",
+  "preset:weekly_momentum_97",
+  "vol_up_gainers"
+ ],
+ "pc_not_caught_at_1pp": [
+  "preset:sugar_babies",
+  "vcp"
+ ],
+ "fpr_in_band": [
+  "ema21_watch",
+  "gainers_4pct",
+  "healthy_charts",
+  "momentum_97",
+  "preset:4_bullish",
+  "preset:monthly_leader_97",
+  "preset:pocket_pivot",
+  "preset:pp_count",
+  "preset:vol_up_gainers",
+  "preset:weekly_20_gainers",
+  "preset:weekly_momentum_97",
+  "vol_up_gainers"
+ ],
+ "fpr_out_of_band": {
+  "preset:sugar_babies": null,
+  "vcp": 0.08
+ },
+ "adr_curve": {
+  "n_quantiles": 40,
+  "median_abs_excess_first": 0.02283,
+  "median_abs_excess_last": 0.17116,
+  "median_adr_first": 1.801,
+  "median_adr_last": 18.428,
+  "loglog_slope": 0.823,
+  "verdict": "sub-linear; dividing by ADR^1 favours quiet names"
+ },
+ "A_sig_train": [
+  "momentum_97",
+  "preset:4_bullish",
+  "preset:monthly_leader_97",
+  "preset:pocket_pivot",
+  "preset:weekly_20_gainers",
+  "preset:weekly_momentum_97"
+ ],
+ "B_sig_train": [
+  "momentum_97",
+  "preset:4_bullish",
+  "preset:pocket_pivot",
+  "preset:pp_count",
+  "preset:vol_up_gainers",
+  "preset:weekly_20_gainers",
+  "preset:weekly_momentum_97",
+  "vol_up_gainers"
+ ],
+ "AB_sig_train": [
+  "momentum_97",
+  "preset:4_bullish",
+  "preset:pocket_pivot",
+  "preset:weekly_20_gainers",
+  "preset:weekly_momentum_97"
+ ],
+ "AB_sig_train_and_A_holdout_same_sign": [
+  "momentum_97",
+  "preset:4_bullish",
+  "preset:weekly_20_gainers",
+  "preset:weekly_momentum_97"
+ ],
+ "A_holdout_sig": [
+  "preset:4_bullish",
+  "vol_up_gainers"
+ ],
+ "naive_only": [
+  "preset:monthly_leader_97",
+  "vcp"
+ ]
+}

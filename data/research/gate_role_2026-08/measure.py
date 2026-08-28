@@ -20,8 +20,9 @@ MIN_ARM, MIN_PAIRED_DAYS = 5, 20
 TRAIN_FRAC = 0.70
 PERM_TRIALS = 200
 
-df = pd.read_csv(HERE / "../adr_floor_2026-08/per_event.csv.gz")
-df = df[df[f"excess_{H}"].notna() & df.adr_pct.notna() & (df.adr_pct > 0)].copy()
+raw_df = pd.read_csv(HERE / "../adr_floor_2026-08/per_event.csv.gz")
+ALL_NAMES = sorted({s for row in raw_df.screeners for s in row.split("|")})
+df = raw_df[raw_df[f"excess_{H}"].notna() & raw_df.adr_pct.notna() & (raw_df.adr_pct > 0)].copy()
 df["date"] = pd.to_datetime(df["date"])
 # R-like units: excess is a fraction, adr_pct is a percent.
 df["r10"] = df[f"excess_{H}"] * 100.0 / df.adr_pct
@@ -31,7 +32,11 @@ cut_i = int(len(days) * TRAIN_FRAC)
 TRAIN, HOLD = set(days[:cut_i]), set(days[cut_i:])
 df["split"] = np.where(df.date.isin(TRAIN), "train", "holdout")
 
-names = sorted({s for row in df.screeners for s in row.split("|")})
+# Built from the UNFILTERED panel: a screener whose every event lacks a
+# forward window (preset:21ema_watch, which only starts 2026-08-17) has to be
+# reported as excluded. Round 1 built this list after the filter and the name
+# disappeared from the report entirely -- silently dropped, not measured.
+names = ALL_NAMES
 member = {s: df.screeners.str.contains(rf"(?:^|\|){s}(?:\||$)", regex=True).values
           for s in names}
 
@@ -144,8 +149,12 @@ for key, col, stat, _lab in METRICS:
         main[s][key] = r
         if r["p"] is not None:
             raw[s] = r["p"]
+    # Holm needs the running maximum (step-down); without it the adjusted p
+    # can decrease as raw p increases, which is anti-conservative.
+    run = 0.0
     for rank, (s, p) in enumerate(sorted(raw.items(), key=lambda x: x[1])):
-        main[s][key]["p_holm"] = min(1.0, p * (len(raw) - rank))
+        run = max(run, min(1.0, p * (len(raw) - rank)))
+        main[s][key]["p_holm"] = run
 out["train"] = main
 
 # ---- holdout: same statistics, direction check only ----------------------
@@ -164,6 +173,17 @@ verdict = {}
 for s in included:
     t = main[s]
     m1 = t["M1_median_excess"]
+    # prereg §7.1: "抓不到 = 判不可测而不是无差". Round 1 wrote this rule and
+    # then never implemented it, so `vcp` -- whose control does not fire until
+    # +2.0pp -- was allowed to claim a flat M1 and be called a sizing gate.
+    pc1 = pc[s]["+1.0pp"]["p"] if s in pc else None
+    control_fires = pc1 is not None and pc1 < 0.05
+    if m1["p"] is not None and not control_fires:
+        verdict[s] = {"verdict": "M1 unmeasurable (positive control silent at +1.0pp)",
+                      "negatives": [], "holdout_direction_agrees": {},
+                      "replicated": False,
+                      "why": "cannot distinguish 'no edge' from 'not enough resolution'"}
+        continue
     if m1["p"] is None:                       # prereg §4: < 20 paired days
         verdict[s] = {"verdict": "unmeasurable", "negatives": [],
                       "holdout_direction_agrees": {}, "replicated": False,
