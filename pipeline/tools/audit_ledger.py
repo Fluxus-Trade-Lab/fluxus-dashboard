@@ -70,7 +70,27 @@ EVIDENCE: Dict[str, List[tuple]] = {
 }
 BREADTH_BLOCKS = {"conditions", "regime", "state_board", "verdict"}
 OK_WORDS = {"ok", "OK", True}
-WARN_WORDS = {"degraded", "skipped", "stale", "partial"}
+# "walled" joined on 2026-08-28, after it blocked a whole night's publish.
+# It is emitted by exactly one guard (`run_all.py` for fundamentals) and it
+# means one thing: the yfinance `info` fetch hit its rate-limit wall part way
+# through, so SOME fundamentals did not refresh. That is partial coverage of an
+# enrichment — `partial` is already on this list and `walled` is the same
+# state under the guard's own word for it. The vocabulary, not the severity,
+# was what disagreed: the two sides of this contract were written by different
+# hands and never compared their status words.
+#
+# WHY IT MATTERS THAT IT IS A WARNING AND NOT A VIOLATION: fundamentals feed
+# the ticker page's valuation snapshot and earnings. Breadth, conditions,
+# groups, watchlist — everything the morning pages are read for — do not touch
+# them. On 2026-08-27 a rate limit on an optional enrichment stopped the entire
+# night from being published, and the dashboard sat on a stale session for a
+# fourth day. A guard should be able to say "this part is thin" without
+# deciding that nothing may ship.
+#
+# It stays LOUD: a warning still prints, still lands in audit_ledger_last.json,
+# and L6 still reports the fundamentals failure rate separately. What it no
+# longer does is exit 1.
+WARN_WORDS = {"degraded", "skipped", "stale", "partial", "walled"}
 FUND_FAIL_WARN = 0.20      # >20% of the night's fundamentals fetches failing
 DRIFT_WARN = 0.10          # universe rows moving >10% vs the window median
 

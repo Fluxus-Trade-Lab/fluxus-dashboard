@@ -114,6 +114,32 @@ def test_same_session_rerun_is_reported_not_fatal(tmp_path):
     assert any(t.startswith("L6") and "2 lines" in t for t in out["top"])
 
 
+def test_a_rate_limit_wall_warns_and_does_not_block_the_night(tmp_path):
+    """2026-08-27, live: `fundamentals status='walled'` exited 1, `Commit and
+    push` was skipped, and the dashboard sat on a four-day-old session because
+    an OPTIONAL enrichment hit a rate limit. `walled` is the fundamentals
+    guard's own word for partial coverage; `partial` was already a warning.
+    Only the vocabulary disagreed."""
+    row = _row("2026-08-27", guards=_guards(
+        fundamentals={"status": "walled", "due": 400, "ok": 138, "failed": 0,
+                      "walled": True, "store": 5634}))
+    out = L.run(_write(tmp_path, [row]), window=0, last_done="2026-08-27")
+    assert out["ok"], out["runs"][0]["violations"]     # the night still ships
+    assert any("L2 fundamentals walled" in x for x in out["runs"][0]["warnings"])
+    # and it is not silent: a warning still prints and still lands in the JSON
+    assert not out["runs"][0]["violations"]
+
+
+def test_an_unknown_status_word_is_still_fatal(tmp_path):
+    """The list is a list, not a shrug. A word nobody has classified must stop
+    the publish -- that is what caught the 08-27 gap in the first place."""
+    row = _row("2026-08-21", guards=_guards(
+        fundamentals={"status": "wedged", "due": 400, "ok": 400, "failed": 0, "store": 5630}))
+    out = L.run(_write(tmp_path, [row]), window=0, last_done=LAST)
+    assert not out["ok"]
+    assert any("L2 fundamentals status='wedged'" in x for x in out["runs"][0]["violations"])
+
+
 def test_fundamentals_failure_rate_warns(tmp_path):
     row = _row("2026-08-21", guards=_guards(
         fundamentals={"status": "ok", "due": 400, "ok": 277, "failed": 123, "store": 5630}))
