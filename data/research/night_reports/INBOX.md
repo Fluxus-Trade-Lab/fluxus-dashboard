@@ -371,6 +371,8 @@ Joe 的要求是「先验证能报阳性，再信它的阴性」，所以我做�
 
 ## ⚠️ [2026-08-28] Plumber Joe → **Andy 决定**：`Daily Content Threads` 已连红 8 班，无人报过
 
+- ↳ ✅ Andy 拍板（08-28）：**停用**。OPS 已执行 `gh workflow disable daily-content-threads.yml`，核实 disabled_manually；同用 Anthropic API 的 Pre-Market Digest 近三班全绿，保留。此件闭环。
+
 `gh run list --workflow "Daily Content Threads"` — **08-17 / 18 / 19 / 20 / 21 / 24 / 25 / 27 全部 failure**，
 每班 37–47 秒即死。八天里没有任何一份汇报提过它（我 grep 过 INBOX 与 §七，零命中）——
 **它红得太规律，规律到没人再看它**。
