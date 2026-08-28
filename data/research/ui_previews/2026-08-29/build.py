@@ -111,9 +111,13 @@ for z, p in PANELS:
 page("v3_clauses.html", "v3 · 条款逐行",
      "规则拆成一行一个条款（在 <code>and</code> / <code>;</code> / 括号外的逗号处切）。"
      "读者可以逐条对照一只票过没过。",
-     "⚠️ 这一版最靠解析。<code>anticipation</code> 的 "
-     "<code>any of ti65&gt;1.05 / c_low52w&gt;=1.8 / mdt&gt;1.19</code> 是一个 OR 子句，"
-     "切开后每行看起来像必须同时满足——<b>它把一条规则读错了</b>。往下翻能看到这一格。",
+     "⚠️ 这一版最靠解析，而解析会在逗号处<b>把句子从中间切断</b>，再把碎片当成条款排出来。"
+     "实测 <b>52 条款行里 8 行（15%）</b>不含任何比较符且长度 &gt;25 字符——它们不是条款是散文："
+     "<code>pp_today</code> 的 <code>vol10_green today (green bar</code>（从括号中间断开）、"
+     "<code>liquid_leader_pullback</code> 的 <code>the two clauses we cannot read</code>（单独一行毫无意义）。"
+     "往下翻能看到这几格。<br>"
+     "（更正：这里原先写的是「它把 OR 渲染成了 AND」——拿真输出核过之后发现不对，"
+     "<code>any of A / B / C</code> 与 <code>A or B</code> 都完整留在一行。）",
      "".join(body))
 
 print("panels", len(PANELS),
