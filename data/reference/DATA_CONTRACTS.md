@@ -679,3 +679,39 @@ ADR≥3.5 那道闸上线时的验证是「对 oratnek 页面 recall 零丢失�
 以后**凡是拿别人的名单当 recall 尺子**验闸，都得先问一句「他自己有没有同方向的闸」。
 
 — Plumber Joe，2026-08-27 07:3x JST（ET 2026-08-26 18:3x）
+
+## 十三、[2026-08-29] Plumber Joe → DATA ALEX / Andy：迟到 485 分钟的主排程**把健康数据覆盖成 degraded**，且我们没有任何一道闸能看见这件事
+
+**A.（→ DATA ALEX，事实带日期）现在 `origin/main` 上 2026-08-27 的数据，是当晚三份里最差的那份。**
+同一个 session 跑了三次：`33138813133`（dispatch，08-28T03:25Z，ok）· `33141646318`（dispatch，08-28T04:23Z，ok）·
+`33145206555`（**schedule**，排期 08-27T21:30Z，**08-28T05:35Z 才触发，迟到 485 分钟**，**degraded**）。最后一条最后写，所以它赢。
+逐格：`bars_missing` 64 → **266**（×4.2）· `unmeasurable` 75 → **277** · `tradeable` 2562 → 2465 ·
+`watchlist.gated` 2069 → 1996 · degraded 字段从 `[perf_ytd]` 变成 `[bar_date, bar_scale_mismatch, bars_stale, perf_ytd, vol_5d_50d]` ·
+19 个面板里 15 个缩水约 5%（`true_market_leaders` 45→43，`liquid_leaders` 114→110，`bullish_4pct` 66→61）。
+**三条 run 全部 success，没有任何闸报警**——`bars_missing` 266 还在「>300 = 429 夜」线之下。
+✅ 我核过：数字逐条取自 `data/history/run_ledger.jsonl` 的末三行，不是估的。
+
+**B.（→ DATA ALEX / Andy，这是设计取舍不是 bug）病根是我们的闸全是「自洽性闸」，一个「回归闸」都没有。**
+主排程**故意**没有新鲜度闸——`daily-data-update.yml` 的 `gate` job 注释写着
+「a gate that can silently skip the main run would be worse than the problem it fixes」。
+这个判断在「闸只会误关」的假设下成立，但它没设想过「**这一班会把已经落地的好数据换成坏的**」。
+`universe_quality` 只记账不拦写盘；`audit_archives` I1–I7 问的全是「这份数据自己对不对」，
+**没有一条在问「它比它替换掉的那份更好吗」**。
+三个修法选项（降级不覆盖 / 迟到即让位 / 只做可见）与逐格证据写在
+[`incidents/2026-08-29_late_run_overwrote_healthy_data.md`](incidents/2026-08-29_late_run_overwrote_healthy_data.md)。
+我建议**选项 1「降级不覆盖」**——唯一既不放弃「主排程永远能跑」又能真正防损的。**我不代决，状态：待 Andy 拍板。**
+⚠️ 08-27 那份被覆盖的健康数据**没有备份**，回补需要重跑，而重跑 cron 是禁止动作。**这一天的数据就这样了。**
+
+**C.（→ DATA ALEX，已在修，只报不请）backstop 闸的日期判据只在准点触发时正确。**
+`WANT=$(TZ=America/New_York date +%F)` 取的是**执行时刻**的 ET 日期。排程 01:30 UTC 距 ET 午夜（04:00 UTC）只有 **150 分钟**，
+迟到超过就翻成下一个日历日，而那个日期永远不在 `breadth.json` 里 → 闸恒开、backstop 恒跑。
+实测四点：01:30Z→`2026-08-27` ✅ · 03:59Z→`2026-08-27` ✅ · **04:01Z→`2026-08-28` ❌** · 05:35Z→`2026-08-28` ❌。
+**至今未发作**（backstop 的 cron 是 `4f9b5262` 于 08-28T03:01Z 才提交，一次都没真正触发过），
+但昨晚主排程迟到 485 分钟说明这个量级在分布内。
+**状态：已修待合，分支 `fix/joe-backstop-gate-date-2026-08-29`**（碰 `.github/workflows/`，不在 safe-merge 白名单，我只验收不合）。
+
+**⭐ 一条方法论（这次的教训，值得钉在墙上）**：
+一份**结构完好、字段齐全、通过全部 I1–I7** 的数据，可以比它替换掉的那份差 4 倍，而整条防线一声不吭。
+**以后加任何一道闸，先问：它能不能看见「今天比昨天差了」？** 自洽性检查在结构上回答不了这个问题。
+
+— Plumber Joe，2026-08-29 07:5x JST（ET 2026-08-28 18:5x）
