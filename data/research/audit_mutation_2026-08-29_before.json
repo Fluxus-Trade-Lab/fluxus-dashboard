@@ -1,0 +1,821 @@
+{
+ "modules": [
+  {
+   "module": "audit_archives",
+   "mutants": 101,
+   "killed": 23,
+   "survived": 78,
+   "skipped": 0,
+   "kill_rate": 0.228,
+   "survivors": [
+    {
+     "line": 72,
+     "kind": "number",
+     "change": "0.3 -> 1.3",
+     "source": "COUNT_FLOOR = 0.30"
+    },
+    {
+     "line": 73,
+     "kind": "number",
+     "change": "3.0 -> 4.0",
+     "source": "COUNT_CEIL = 3.0"
+    },
+    {
+     "line": 109,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "if name == \"breadth_archive.csv\" and \"spx_close\" in frame.columns:"
+    },
+    {
+     "line": 118,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "if spec[\"counts\"] and len(frame):"
+    },
+    {
+     "line": 126,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "if spec[\"nightly\"] and len(info):"
+    },
+    {
+     "line": 139,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "if key and rep[\"drop_dupes\"]:"
+    },
+    {
+     "line": 224,
+     "kind": "number",
+     "change": "0.1 -> 1.1",
+     "source": "def ticker_shells(output: Path = Path(\"data/output\"), max_rate: float = 0.10) -> Dict[str, Any]:"
+    },
+    {
+     "line": 232,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not tdir.exists():"
+    },
+    {
+     "line": 236,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "total = 0"
+    },
+    {
+     "line": 54,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "\"breadth_archive.csv\":   {\"date\": \"date\",  \"key\": [\"date\"],                       \"counts\": False, \"nightly\": True},"
+    },
+    {
+     "line": 54,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"breadth_archive.csv\":   {\"date\": \"date\",  \"key\": [\"date\"],                       \"counts\": False, \"nightly\": True},"
+    },
+    {
+     "line": 55,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"ticker_events.csv\":     {\"date\": \"date\",  \"key\": [\"date\", \"ticker\", \"screener\"], \"counts\": True,  \"nightly\": True},"
+    },
+    {
+     "line": 55,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"ticker_events.csv\":     {\"date\": \"date\",  \"key\": [\"date\", \"ticker\", \"screener\"], \"counts\": True,  \"nightly\": True},"
+    },
+    {
+     "line": 56,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"watchlist_hits.csv\":    {\"date\": \"date\",  \"key\": [\"date\", \"panel\", \"ticker\"],    \"counts\": True,  \"nightly\": True},"
+    },
+    {
+     "line": 56,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"watchlist_hits.csv\":    {\"date\": \"date\",  \"key\": [\"date\", \"panel\", \"ticker\"],    \"counts\": True,  \"nightly\": True},"
+    },
+    {
+     "line": 58,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"groups_archive.csv\":    {\"date\": \"date\",  \"key\": [\"date\", \"kind\", \"group\"],      \"counts\": True,  \"nightly\": True},"
+    },
+    {
+     "line": 58,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"groups_archive.csv\":    {\"date\": \"date\",  \"key\": [\"date\", \"kind\", \"group\"],      \"counts\": True,  \"nightly\": True},"
+    },
+    {
+     "line": 59,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "\"momentum97_shadow.csv\": {\"date\": \"date\",  \"key\": [\"date\", \"recipe\", \"ticker\"],   \"counts\": False, \"nightly\": True},"
+    },
+    {
+     "line": 59,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"momentum97_shadow.csv\": {\"date\": \"date\",  \"key\": [\"date\", \"recipe\", \"ticker\"],   \"counts\": False, \"nightly\": True},"
+    },
+    {
+     "line": 60,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "\"universe_quality.csv\":  {\"date\": \"date\",  \"key\": [\"date\"],                       \"counts\": False, \"nightly\": True},"
+    },
+    {
+     "line": 60,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"universe_quality.csv\":  {\"date\": \"date\",  \"key\": [\"date\"],                       \"counts\": False, \"nightly\": True},"
+    },
+    {
+     "line": 61,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"asset_signals.csv\":     {\"date\": \"date\",  \"key\": [\"date\", \"ticker\"],             \"counts\": True,  \"nightly\": True},"
+    },
+    {
+     "line": 61,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"asset_signals.csv\":     {\"date\": \"date\",  \"key\": [\"date\", \"ticker\"],             \"counts\": True,  \"nightly\": True},"
+    },
+    {
+     "line": 62,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "\"shortlist_log.csv\":     {\"date\": \"date\",  \"key\": [\"date\", \"ticker\"],             \"counts\": False, \"nightly\": True},"
+    },
+    {
+     "line": 62,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"shortlist_log.csv\":     {\"date\": \"date\",  \"key\": [\"date\", \"ticker\"],             \"counts\": False, \"nightly\": True},"
+    },
+    {
+     "line": 66,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "\"regime_ledger.csv\":     {\"date\": \"date\",  \"key\": [\"date\"],                       \"counts\": False, \"nightly\": True},"
+    },
+    {
+     "line": 66,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"regime_ledger.csv\":     {\"date\": \"date\",  \"key\": [\"date\"],                       \"counts\": False, \"nightly\": True},"
+    },
+    {
+     "line": 70,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"delayed_ep_log.csv\":    {\"date\": \"as_of\", \"key\": [\"as_of\", \"ticker\"],            \"counts\": True,  \"nightly\": True},"
+    },
+    {
+     "line": 70,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"delayed_ep_log.csv\":    {\"date\": \"as_of\", \"key\": [\"as_of\", \"ticker\"],            \"counts\": True,  \"nightly\": True},"
+    },
+    {
+     "line": 92,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "rep: Dict[str, Any] = {\"archive\": name, \"rows\": int(len(frame)), \"violations\": [], \"warnings\": [], \"drop_dates\": [], \"dr"
+    },
+    {
+     "line": 120,
+     "kind": "compare",
+     "change": "GtE -> Gt",
+     "source": "if len(per) >= 6:"
+    },
+    {
+     "line": 128,
+     "kind": "compare",
+     "change": "Lt -> LtE",
+     "source": "if newest < last_done.isoformat():"
+    },
+    {
+     "line": 155,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "rep: Dict[str, Any] = {\"archive\": \"reconcile(I6)\", \"rows\": 0, \"violations\": [], \"warnings\": [], \"drop_dates\": [], \"drop_"
+    },
+    {
+     "line": 155,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "rep: Dict[str, Any] = {\"archive\": \"reconcile(I6)\", \"rows\": 0, \"violations\": [], \"warnings\": [], \"drop_dates\": [], \"drop_"
+    },
+    {
+     "line": 190,
+     "kind": "compare",
+     "change": "NotEq -> Eq",
+     "source": "if int(float(last[\"universe_size\"])) != len(u[\"rows\"]):"
+    },
+    {
+     "line": 230,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "rep: Dict[str, Any] = {\"archive\": \"tickers(I7)\", \"rows\": 0, \"violations\": [], \"warnings\": [], \"drop_dates\": [], \"drop_du"
+    },
+    {
+     "line": 230,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "rep: Dict[str, Any] = {\"archive\": \"tickers(I7)\", \"rows\": 0, \"violations\": [], \"warnings\": [], \"drop_dates\": [], \"drop_du"
+    },
+    {
+     "line": 240,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "total += 1"
+    },
+    {
+     "line": 250,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "if rate > max_rate:"
+    },
+    {
+     "line": 270,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "return 0 if out[\"ok\"] else 1"
+    },
+    {
+     "line": 270,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "return 0 if out[\"ok\"] else 1"
+    },
+    {
+     "line": 115,
+     "kind": "compare",
+     "change": "NotIn -> In",
+     "source": "if d not in rep[\"drop_dates\"]:"
+    },
+    {
+     "line": 120,
+     "kind": "number",
+     "change": "6 -> 7",
+     "source": "if len(per) >= 6:"
+    },
+    {
+     "line": 123,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "if med and (last_n < COUNT_FLOOR * med or last_n > COUNT_CEIL * med):"
+    },
+    {
+     "line": 159,
+     "kind": "compare",
+     "change": "Eq -> NotEq",
+     "source": "h = hits[hits[\"date\"] == wl[\"date\"]]"
+    },
+    {
+     "line": 174,
+     "kind": "compare",
+     "change": "Eq -> NotEq",
+     "source": "day = te[te[\"date\"] == newest]"
+    },
+    {
+     "line": 177,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not p.exists():"
+    },
+    {
+     "line": 182,
+     "kind": "compare",
+     "change": "NotEq -> Eq",
+     "source": "if n_json != n_csv:"
+    },
+    {
+     "line": 242,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not (json.loads(p.read_text()).get(\"ohlc_2y\") or []):"
+    },
+    {
+     "line": 265,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "flag = \"OK \" if not r[\"violations\"] else \"BAD\""
+    },
+    {
+     "line": 121,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "med = per.iloc[-21:-1].median() if len(per) > 21 else per.iloc[:-1].median()"
+    },
+    {
+     "line": 144,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "frame.to_csv(path, index=False)"
+    },
+    {
+     "line": 189,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "last = ba.sort_values(\"date\").iloc[-1]"
+    },
+    {
+     "line": 242,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "if not (json.loads(p.read_text()).get(\"ohlc_2y\") or []):"
+    },
+    {
+     "line": 121,
+     "kind": "number",
+     "change": "21 -> 22",
+     "source": "med = per.iloc[-21:-1].median() if len(per) > 21 else per.iloc[:-1].median()"
+    },
+    {
+     "line": 123,
+     "kind": "compare",
+     "change": "Lt -> LtE",
+     "source": "if med and (last_n < COUNT_FLOOR * med or last_n > COUNT_CEIL * med):"
+    },
+    {
+     "line": 123,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "if med and (last_n < COUNT_FLOOR * med or last_n > COUNT_CEIL * med):"
+    },
+    {
+     "line": 164,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "if p.get(\"measured\") and per.get(p[\"key\"], 0) != p[\"count\"]:"
+    },
+    {
+     "line": 204,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "reports.append({\"archive\": name, \"rows\": 0, \"violations\": [], \"warnings\": [\"missing (not yet created)\"], \"drop_dates\": ["
+    },
+    {
+     "line": 204,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "reports.append({\"archive\": name, \"rows\": 0, \"violations\": [], \"warnings\": [\"missing (not yet created)\"], \"drop_dates\": ["
+    },
+    {
+     "line": 207,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "frame = pd.read_csv(p, dtype=str, keep_default_na=False)"
+    },
+    {
+     "line": 249,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "msg = f\"I7 {len(shells)}/{total} empty shells ({rate:.0%}): {', '.join(shells[:12])}{'\u2026' if len(shells) > 12 else ''}\""
+    },
+    {
+     "line": 269,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "Path(args.json).write_text(json.dumps(out, indent=1))"
+    },
+    {
+     "line": 81,
+     "kind": "number",
+     "change": "10 -> 11",
+     "source": "day = dt.date.fromisoformat(d[:10])"
+    },
+    {
+     "line": 83,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "out.append({\"date\": d, \"session\": False, \"future\": False, \"unparsable\": True}); continue"
+    },
+    {
+     "line": 83,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "out.append({\"date\": d, \"session\": False, \"future\": False, \"unparsable\": True}); continue"
+    },
+    {
+     "line": 83,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "out.append({\"date\": d, \"session\": False, \"future\": False, \"unparsable\": True}); continue"
+    },
+    {
+     "line": 164,
+     "kind": "compare",
+     "change": "NotEq -> Eq",
+     "source": "if p.get(\"measured\") and per.get(p[\"key\"], 0) != p[\"count\"]:"
+    },
+    {
+     "line": 181,
+     "kind": "compare",
+     "change": "Eq -> NotEq",
+     "source": "n_csv = int((day[\"screener\"] == scr).sum())"
+    },
+    {
+     "line": 209,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "reports.append({\"archive\": name, \"rows\": 0, \"violations\": [f\"unreadable: {e}\"], \"warnings\": [], \"drop_dates\": [], \"drop_"
+    },
+    {
+     "line": 209,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "reports.append({\"archive\": name, \"rows\": 0, \"violations\": [f\"unreadable: {e}\"], \"warnings\": [], \"drop_dates\": [], \"drop_"
+    },
+    {
+     "line": 249,
+     "kind": "number",
+     "change": "12 -> 13",
+     "source": "msg = f\"I7 {len(shells)}/{total} empty shells ({rate:.0%}): {', '.join(shells[:12])}{'\u2026' if len(shells) > 12 else ''}\""
+    },
+    {
+     "line": 249,
+     "kind": "number",
+     "change": "12 -> 13",
+     "source": "msg = f\"I7 {len(shells)}/{total} empty shells ({rate:.0%}): {', '.join(shells[:12])}{'\u2026' if len(shells) > 12 else ''}\""
+    },
+    {
+     "line": 164,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "if p.get(\"measured\") and per.get(p[\"key\"], 0) != p[\"count\"]:"
+    },
+    {
+     "line": 121,
+     "kind": "number",
+     "change": "21 -> 22",
+     "source": "med = per.iloc[-21:-1].median() if len(per) > 21 else per.iloc[:-1].median()"
+    },
+    {
+     "line": 121,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "med = per.iloc[-21:-1].median() if len(per) > 21 else per.iloc[:-1].median()"
+    },
+    {
+     "line": 121,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "med = per.iloc[-21:-1].median() if len(per) > 21 else per.iloc[:-1].median()"
+    },
+    {
+     "line": 165,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "rep[\"violations\"].append(f\"I6a {wl['date']} {p['key']}: watchlist.json count {p['count']} vs watchlist_hits {per.get(p['"
+    }
+   ]
+  },
+  {
+   "module": "audit_ledger",
+   "mutants": 77,
+   "killed": 39,
+   "survived": 38,
+   "skipped": 0,
+   "kill_rate": 0.506,
+   "survivors": [
+    {
+     "line": 95,
+     "kind": "number",
+     "change": "0.1 -> 1.1",
+     "source": "DRIFT_WARN = 0.10          # universe rows moving >10% vs the window median"
+    },
+    {
+     "line": 72,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "OK_WORDS = {\"ok\", \"OK\", True}"
+    },
+    {
+     "line": 164,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "if isinstance(due, (int, float)) and due and isinstance(failed, (int, float)):"
+    },
+    {
+     "line": 169,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "uq = guards.get(\"universe_quality\") or {}"
+    },
+    {
+     "line": 175,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "def run(path: Path = LEDGER, window: int = 1, last_done: Optional[dt.date] = None) -> Dict[str, Any]:"
+    },
+    {
+     "line": 212,
+     "kind": "compare",
+     "change": "GtE -> Gt",
+     "source": "if len(sizes) >= 3:"
+    },
+    {
+     "line": 118,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "return isinstance(v, (int, float)) and not isinstance(v, bool) and v >= 0"
+    },
+    {
+     "line": 122,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "return isinstance(v, dict) and len(v) > 0"
+    },
+    {
+     "line": 124,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "return isinstance(v, dict) and len(v) > 0 and all(x in OK_WORDS for x in v.values())"
+    },
+    {
+     "line": 167,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "if rate > FUND_FAIL_WARN:"
+    },
+    {
+     "line": 180,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "\"lines\": len(rows), \"runs\": [], \"violations\": 0, \"warnings\": 0,"
+    },
+    {
+     "line": 185,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "out[\"violations\"] = 1"
+    },
+    {
+     "line": 193,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "out[\"violations\"] += 1"
+    },
+    {
+     "line": 195,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "wanted = sessions[-window:] if window > 0 else sessions"
+    },
+    {
+     "line": 202,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "if len(same) > 1:"
+    },
+    {
+     "line": 212,
+     "kind": "number",
+     "change": "3 -> 4",
+     "source": "if len(sizes) >= 3:"
+    },
+    {
+     "line": 243,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "return 0 if out[\"ok\"] else 1"
+    },
+    {
+     "line": 243,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "return 0 if out[\"ok\"] else 1"
+    },
+    {
+     "line": 116,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "return isinstance(v, (int, float)) and not isinstance(v, bool) and v > 0"
+    },
+    {
+     "line": 118,
+     "kind": "compare",
+     "change": "GtE -> Gt",
+     "source": "return isinstance(v, (int, float)) and not isinstance(v, bool) and v >= 0"
+    },
+    {
+     "line": 122,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "return isinstance(v, dict) and len(v) > 0"
+    },
+    {
+     "line": 124,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "return isinstance(v, dict) and len(v) > 0 and all(x in OK_WORDS for x in v.values())"
+    },
+    {
+     "line": 201,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "if idx > 0 else None)"
+    },
+    {
+     "line": 216,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "if n and med and abs(n - med) / med > DRIFT_WARN:"
+    },
+    {
+     "line": 226,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "ap.add_argument(\"--window\", type=int, default=1, help=\"how many recent sessions to audit (0 = all)\")"
+    },
+    {
+     "line": 235,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "flag = \"OK \" if not rep[\"violations\"] else \"BAD\""
+    },
+    {
+     "line": 116,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "return isinstance(v, (int, float)) and not isinstance(v, bool) and v > 0"
+    },
+    {
+     "line": 118,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "return isinstance(v, (int, float)) and not isinstance(v, bool) and v >= 0"
+    },
+    {
+     "line": 124,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "return isinstance(v, dict) and len(v) > 0 and all(x in OK_WORDS for x in v.values())"
+    },
+    {
+     "line": 216,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "if n and med and abs(n - med) / med > DRIFT_WARN:"
+    },
+    {
+     "line": 218,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "out[\"warnings\"] += 1"
+    },
+    {
+     "line": 236,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "head = f\"{flag} {rep['session']}  {rep['trigger'] or '?':16s} {rep['code_sha'] or '-':8s}\""
+    },
+    {
+     "line": 236,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "head = f\"{flag} {rep['session']}  {rep['trigger'] or '?':16s} {rep['code_sha'] or '-':8s}\""
+    },
+    {
+     "line": 242,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "Path(args.json).write_text(json.dumps(out, indent=1))"
+    },
+    {
+     "line": 147,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "rep[\"warnings\"].append(f\"L2 {name} {status}\" + (f\" ({g.get('reason')})\" if isinstance(g, dict) and g.get(\"reason\") else "
+    },
+    {
+     "line": 154,
+     "kind": "number",
+     "change": "80 -> 81",
+     "source": "rep[\"violations\"].append(f\"L4 error in {where}: {str(msg)[:80]}\")"
+    },
+    {
+     "line": 109,
+     "kind": "number",
+     "change": "120 -> 121",
+     "source": "rows.append({\"session\": None, \"_unparsable\": line[:120]})"
+    },
+    {
+     "line": 145,
+     "kind": "number",
+     "change": "60 -> 61",
+     "source": "f\"L3 {name} says ok but {field}={json.dumps(g.get(field), default=str)[:60]}\")"
+    }
+   ]
+  },
+  {
+   "module": "audit_unpushed",
+   "mutants": 30,
+   "killed": 15,
+   "survived": 15,
+   "skipped": 0,
+   "kill_rate": 0.5,
+   "survivors": [
+    {
+     "line": 70,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "rep[\"upstream\"] = upstream or None"
+    },
+    {
+     "line": 60,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "rep: Dict[str, Any] = {\"worktree\": str(wt), \"branch\": None, \"ahead\": 0,"
+    },
+    {
+     "line": 74,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "n = int(off) if off.isdigit() else 0"
+    },
+    {
+     "line": 83,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "if a and not n:"
+    },
+    {
+     "line": 101,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "out: Dict[str, Any] = {\"worktrees\": [], \"violations\": 0, \"warnings\": 0}"
+    },
+    {
+     "line": 127,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "return 0 if out[\"ok\"] else 1"
+    },
+    {
+     "line": 127,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "return 0 if out[\"ok\"] else 1"
+    },
+    {
+     "line": 81,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "a = int(ahead) if ahead.isdigit() else 0"
+    },
+    {
+     "line": 83,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if a and not n:"
+    },
+    {
+     "line": 120,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "flag = \"OK \" if not rep[\"violations\"] else \"BAD\""
+    },
+    {
+     "line": 91,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if l and not l.startswith(\"??\")]"
+    },
+    {
+     "line": 56,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "return [Path(l.split(\" \", 1)[1]) for l in out.splitlines() if l.startswith(\"worktree \")]"
+    },
+    {
+     "line": 122,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "print(f\"{flag} {rep['branch'] or '?':34s} {detail or 'clean'}   [{rep['worktree']}]\")"
+    },
+    {
+     "line": 122,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "print(f\"{flag} {rep['branch'] or '?':34s} {detail or 'clean'}   [{rep['worktree']}]\")"
+    },
+    {
+     "line": 126,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "Path(args.json).write_text(json.dumps(out, indent=1))"
+    }
+   ]
+  }
+ ],
+ "seconds": 436.0
+}
