@@ -310,6 +310,37 @@ jobs:
           done
           echo "push failed after 3 rebase attempts"; exit 1
 
+      # The ledger must survive the night it describes. Until now a run that
+      # tripped ANY gate skipped `Commit and push`, so its run_ledger line --
+      # the only record of what actually happened -- died with the runner.
+      # Checking "how often does fundamentals hit the wall?" on 2026-08-28
+      # returned `walled: true` ZERO times in the committed history, not
+      # because it never happened but because the nights it happened are the
+      # nights that never committed. A ledger blind to failures is a ledger
+      # of successes.
+      #
+      # This is NOT the plan-B exception: plan B refuses to publish bad MARKET
+      # DATA. The ledger is not market data, it is the record. Only the three
+      # bookkeeping files are staged here, never data/output.
+      - name: Commit the ledger even when a gate failed
+        if: failure()
+        continue-on-error: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -- data/history/run_ledger.jsonl \
+                     data/history/audit_last.json \
+                     data/history/audit_ledger_last.json 2>/dev/null || true
+          git diff --staged --quiet && { echo "no ledger changes to record"; exit 0; }
+          git commit -m "chore(ledger): record the run that failed $(date +%Y-%m-%d)"
+          for i in 1 2 3; do
+            git fetch origin main
+            git rebase --autostash origin/main && git push && exit 0
+            git rebase --abort || true
+            sleep 15
+          done
+          echo "::warning title=Ledger not recorded::the failed run's evidence could not be pushed"
+
       - name: Discord notification (success)
         if: success() && env.DISCORD_WEBHOOK_URL != ''
         env:

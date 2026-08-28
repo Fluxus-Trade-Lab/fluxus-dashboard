@@ -41,6 +41,34 @@
 
 首跑就逮到真货:08-19 盘前误跑写进的 `2026-08-19` 行同时触发 I1 + I3。
 
+## 二点五、闸的三档严重度（2026-08-28 立，来自连续五晚的事故）
+
+**为什么有这一节**：08-24 到 08-28 五次运行挂在**四道不同的闸**上（Schema snapshot / Audit
+archives I6a / Audit run ledger / 加上一次 GitHub 直接丢弃排期），每次都是**整晚一个字发不出去**。
+数据每次都算对了，每次都没能出门。plan B（宁可不发也不发错）是对的，但它当时只有**两档**：
+阻断，或者沉默。一周里天天触发一次不同的闸时，缺的那一档就暴露了。
+
+| 档 | 语义 | 实现 | 什么时候用 |
+|---|---|---|---|
+| `block` | 不修好就不该发 | 步骤失败 → `Commit and push` skip | 会让**前端展示错数**的（schema 丢字段、归档串日期、台账证据与状态词不符）|
+| **`loud`** | **发，但必须有人看见** | `--fail` + `continue-on-error: true` → **红步骤 + 注解，任务继续** | 副产物退化、覆盖不全、外部依赖降级——**主数据没坏** |
+| `silent` | 只记不喊 | 写 ledger/日志，不改退出码 | 例行波动、预算内的部分覆盖 |
+
+**判据一句话**：问「这个问题会让 Andy 早上**看到错的东西**，还是只会让他**少看到一点东西**？」
+错的 → `block`；少的 → `loud`。**「少的」以前被当成「没问题」，这就是 ticker 库能冻五天没人管的原因。**
+
+已按此归档的闸：
+- `block`：audit_archives · audit_ledger（L1/L3–L6）· schema_snapshot（仅 removal）· claim_registry
+- `loud`：**ticker staleness**（08-28 起，`--fail` + `continue-on-error`）· tvdatafeed 安装失败 ·
+  **ticker 刷新凭证缺失**（08-28 起发 `::error`——在此之前它 `exit 0` 静默跳过了五晚）
+- `silent`：Delayed-EP 归档 · 交易复盘（外部 GAS 冷启动）
+
+⚠️ **配套铁律：失败的夜晚也要留下记录。** 到 08-28 为止，任何触发 `block` 的运行都会跳过
+`Commit and push`，于是**它的 run_ledger 行随 runner 一起消失**。08-28 查「fundamentals 撞墙多久
+一次」时，committed 历史里 `walled: true` **零次**——不是没发生过，是**发生的那些夜晚正是没有
+commit 的夜晚**。现在有一个 `if: failure()` 的步骤只提交三个记账文件（run_ledger + 两个 audit
+json），不碰 `data/output`。**台账若只记成功，它记的就不是历史。**
+
 ## 三、谁来跑
 
 | 频率 | 什么 | 在哪 |
