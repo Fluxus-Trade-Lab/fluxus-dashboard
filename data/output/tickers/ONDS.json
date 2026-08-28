@@ -1,8 +1,8 @@
 {
   "ticker": "ONDS",
-  "fetched_at": "2026-08-21T22:10:08Z",
+  "fetched_at": "2026-08-28T04:43:54Z",
   "_schema": "v2",
-  "current_price": 8.710000038146973,
+  "current_price": 8.75,
   "info": {
     "symbol": "ONDS",
     "longName": "Ondas Inc.",
@@ -13,13 +13,13 @@
     "city": "West Palm Beach",
     "website": "https://www.ondas.com",
     "fullTimeEmployees": 459,
-    "marketCap": 4781228544,
-    "enterpriseValue": 3443416576,
+    "marketCap": 4992332800,
+    "enterpriseValue": 3352128256,
     "trailingPE": null,
-    "forwardPE": -419.0,
-    "priceToSalesTrailing12Months": 27.462067,
-    "enterpriseToRevenue": 19.778,
-    "priceToBook": 2.8282146,
+    "forwardPE": -437.5,
+    "priceToSalesTrailing12Months": 28.674593,
+    "enterpriseToRevenue": 19.254,
+    "priceToBook": 2.953088,
     "grossMargins": 0.43724,
     "operatingMargins": -1.66299,
     "profitMargins": 0.96248,
@@ -31,12 +31,12 @@
     "debtToEquity": 2.608,
     "currentRatio": 9.845,
     "fiftyTwoWeekHigh": 15.28,
-    "fiftyTwoWeekLow": 3.8,
-    "averageVolume": 88114745,
-    "averageVolume10days": 83398940,
+    "fiftyTwoWeekLow": 4.9,
+    "averageVolume": 83654473,
+    "averageVolume10days": 67746070,
     "beta": 2.75,
     "sharesOutstanding": 570552341,
-    "sharesFloat": 533409384,
+    "sharesFloat": 533415089,
     "companyOfficers": [
       {
         "name": "Mr. Eric Ashley Brock CPA",
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.1037,
+      "eps_estimate": -0.07,
+      "eps_surprise_pct": -0.48139998
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.0671,
+      "eps_estimate": -0.03,
+      "eps_surprise_pct": -1.2366999
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.028,
+      "eps_estimate": -0.035,
+      "eps_surprise_pct": 0.2
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.0128,
+      "eps_estimate": -0.03333,
+      "eps_surprise_pct": 0.616
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-12",
+    "revenue_low": 140055000,
+    "revenue_high": 151000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -135,8 +164,96 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 8,
+    "bullish": 8,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 19.41667,
+    "high_price_target": 25.0,
+    "low_price_target": 13.0,
+    "current_price": 8.75,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-17T17:23:56",
+        "firm": "Ladenburg Thalmann",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-14T17:16:13",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-14T12:21:27",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-11T10:14:39",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-07T10:07:16",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-19T10:46:40",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-03-26T17:49:23",
+        "firm": "Northland Capital Markets",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-25T09:24:41",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-03-24T10:08:57",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-10T11:30:25",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-27T15:57:12Z",
+      "title": "Unusual Machines Jumps 8%, Ondas Holdings Rises 6% as Risk Appetite Returns to Drone Stocks",
+      "url": "https://247wallst.com/investing/2026/08/27/unusual-machines-jumps-8-ondas-holdings-rises-6-as-risk-appetite-returns-to-drone-stocks/",
+      "source": "24/7 Wall St."
+    },
     {
       "date": "2026-08-21T21:35:35Z",
       "title": "High Growth, High Cash Burn: Decoding the Split Narrative on Ondas (ONDS)",
@@ -190,62 +307,24 @@
       "title": "Defense tech firm Ondas launches drone operations center in Springfield",
       "url": "https://www.daytondailynews.com/local/defense-tech-firm-ondas-launches-drone-operations-center-in-springfield/article_68da8b06-1c42-5bfa-8d63-d280a1b26c7d.html",
       "source": "Dayton Daily News, Ohio"
-    },
-    {
-      "date": "2026-08-19T03:59:00Z",
-      "title": "Thomas Gnau: Defense tech firm Ondas launches drone operations center in Springfield",
-      "url": "https://www.springfieldnewssun.com/local/defense-tech-firm-ondas-launches-drone-operations-center-in-springfield/article_99b2726b-4de6-5f0d-a993-fdce6fa0d520.html",
-      "source": "Journal-News, Hamilton, Ohio"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03771428571428571,
   "technicals": {
-    "ma20": 8.635999989509582,
-    "ma50": 8.231800022125244,
-    "ma200": 9.429000017642975,
-    "rsi14": 51.22661066021672,
+    "ma20": 8.79549994468689,
+    "ma50": 8.143200016021728,
+    "ma200": 9.481150016784667,
+    "rsi14": 52.474067454546784,
     "high_20d": 9.989999771118164,
-    "low_5d": 8.170000076293945,
-    "low_10d": 8.170000076293945,
+    "low_5d": 7.960000038146973,
+    "low_10d": 7.960000038146973,
     "high_52w": 15.279999732971191,
-    "low_52w": 3.509999990463257,
-    "atr14": 0.6178572518484933,
-    "atr14_pct": 7.0936538363086,
-    "position_in_52w_range_pct": 44.18012031813101
+    "low_52w": 4.900000095367432,
+    "atr14": 0.5646429061889648,
+    "atr14_pct": 6.45306178501674,
+    "position_in_52w_range_pct": 37.090559143038156
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 0.853,
-      "high": 0.92,
-      "low": 0.853,
-      "close": 0.89,
-      "volume": 363700.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 0.883,
-      "high": 0.883,
-      "low": 0.82,
-      "close": 0.835,
-      "volume": 103900.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 0.83,
-      "high": 0.88,
-      "low": 0.808,
-      "close": 0.864,
-      "volume": 130600.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 0.86,
-      "high": 0.89,
-      "low": 0.83,
-      "close": 0.865,
-      "volume": 143500.0
-    },
     {
       "date": "2024-08-28",
       "open": 0.874,
@@ -4216,46 +4295,46 @@
     },
     {
       "date": "2026-08-21",
-      "open": 8.4,
+      "open": 8.39,
       "high": 8.83,
       "low": 8.38,
       "close": 8.71,
-      "volume": 58490074.0
+      "volume": 58792200.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 8.525,
+      "high": 8.54,
+      "low": 8.185,
+      "close": 8.24,
+      "volume": 49325200.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 8.3,
+      "high": 8.33,
+      "low": 8.165,
+      "close": 8.24,
+      "volume": 41611100.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 8.1,
+      "high": 8.265,
+      "low": 7.96,
+      "close": 8.22,
+      "volume": 55499100.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 8.35,
+      "high": 8.84,
+      "low": 8.3,
+      "close": 8.75,
+      "volume": 85563000.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 3.64,
-      "high": 3.89,
-      "low": 3.51,
-      "close": 3.8,
-      "volume": 29854500.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 3.8,
-      "high": 4.51,
-      "low": 3.8,
-      "close": 4.49,
-      "volume": 65687100.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 4.68,
-      "high": 4.98,
-      "low": 4.53,
-      "close": 4.85,
-      "volume": 46896700.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 4.72,
-      "high": 5.267,
-      "low": 4.71,
-      "close": 4.97,
-      "volume": 45928200.0
-    },
     {
       "date": "2025-08-27",
       "open": 5.02,
@@ -6234,14 +6313,45 @@
     },
     {
       "date": "2026-08-21",
-      "open": 8.4,
+      "open": 8.39,
       "high": 8.83,
       "low": 8.38,
       "close": 8.71,
-      "volume": 58490074.0
+      "volume": 58792200.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 8.525,
+      "high": 8.54,
+      "low": 8.185,
+      "close": 8.24,
+      "volume": 49325200.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 8.3,
+      "high": 8.33,
+      "low": 8.165,
+      "close": 8.24,
+      "volume": 41611100.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 8.1,
+      "high": 8.265,
+      "low": 7.96,
+      "close": 8.22,
+      "volume": 55499100.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 8.35,
+      "high": 8.84,
+      "low": 8.3,
+      "close": 8.75,
+      "volume": 85563000.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:13:04Z"
+  "ai_synthesized_at": null
 }

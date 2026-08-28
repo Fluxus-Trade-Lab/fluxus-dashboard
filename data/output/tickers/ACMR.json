@@ -1,11 +1,11 @@
 {
   "ticker": "ACMR",
-  "fetched_at": "2026-08-21T22:08:45Z",
+  "fetched_at": "2026-08-28T04:42:22Z",
   "_schema": "v2",
-  "current_price": 79.41000366210938,
+  "current_price": 80.48999786376953,
   "info": {
     "symbol": "ACMR",
-    "longName": "ACM Research, Inc. Class A Common Stock",
+    "longName": "ACM Research, Inc.",
     "sector": "Technology",
     "industry": "Semiconductor Equipment & Materials",
     "exchange": "NGM",
@@ -13,13 +13,13 @@
     "city": "Fremont",
     "website": "https://www.acmr.com",
     "fullTimeEmployees": 2513,
-    "marketCap": 5468854784,
-    "enterpriseValue": 4858994176,
-    "trailingPE": 37.037735,
-    "forwardPE": 28.974169,
-    "priceToSalesTrailing12Months": 5.2698035,
-    "enterpriseToRevenue": 4.682,
-    "priceToBook": 2.939723,
+    "marketCap": 5606064128,
+    "enterpriseValue": 5060976640,
+    "trailingPE": 37.966984,
+    "forwardPE": 27.824734,
+    "priceToSalesTrailing12Months": 5.402019,
+    "enterpriseToRevenue": 4.877,
+    "priceToBook": 3.013478,
     "grossMargins": 0.43835,
     "operatingMargins": 0.16982001,
     "profitMargins": 0.14476,
@@ -31,9 +31,9 @@
     "debtToEquity": 14.524,
     "currentRatio": 3.656,
     "fiftyTwoWeekHigh": 127.19,
-    "fiftyTwoWeekLow": 24.93,
-    "averageVolume": 1496617,
-    "averageVolume10days": 1067320,
+    "fiftyTwoWeekLow": 26.1,
+    "averageVolume": 1359811,
+    "averageVolume10days": 902070,
     "beta": 1.973,
     "sharesOutstanding": 64657388,
     "sharesFloat": 61519742,
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.61,
+      "eps_estimate": 0.33667,
+      "eps_surprise_pct": 0.8119
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.34,
+      "eps_estimate": 0.19667,
+      "eps_surprise_pct": 0.7288
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.25,
+      "eps_estimate": 0.4,
+      "eps_surprise_pct": -0.375
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.36,
+      "eps_estimate": 0.5325,
+      "eps_surprise_pct": -0.32389998
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 295000000,
+    "revenue_high": 348446000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,8 +164,108 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 8,
+    "bullish": 7,
+    "neutral": 1,
+    "bearish": 0,
+    "avg_price_target": 117.75,
+    "high_price_target": 166.0,
+    "low_price_target": 75.0,
+    "current_price": 80.49,
+    "recent_rating_changes": [
+      {
+        "date": "2026-06-24T12:43:16",
+        "firm": "Morgan Stanley",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-18T17:56:44",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-05T10:04:07",
+        "firm": "Seaport Global",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2025-09-30T18:00:26",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-02-28T16:45:20",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2025-02-27T13:26:54",
+        "firm": "Needham",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "reit"
+      },
+      {
+        "date": "2024-12-05T17:53:59",
+        "firm": "Craig-Hallum",
+        "to_grade": "Hold",
+        "from_grade": "Buy",
+        "action": "down"
+      },
+      {
+        "date": "2024-12-04T10:01:37",
+        "firm": "Needham",
+        "to_grade": "Hold",
+        "from_grade": "Buy",
+        "action": "down"
+      },
+      {
+        "date": "2024-10-01T10:26:30",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2024-08-08T16:19:39",
+        "firm": "Benchmark",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-26T16:42:07Z",
+      "title": "Applied Materials\u2019 China Problem Is Getting Worse",
+      "url": "https://247wallst.com/investing/2026/08/26/applied-materials-china-problem-is-getting-worse/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-26T16:20:01Z",
+      "title": "Earnings Estimates Rising for ACM Research (ACMR): Will It Gain?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/earnings-estimates-rising-acm-research-162001950.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-26T13:30:04Z",
+      "title": "Wall Street Analysts See ACM Research (ACMR) as a Buy: Should You Invest?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/wall-street-analysts-see-acm-133004635.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-18T13:55:01Z",
       "title": "Wall Street Analysts See a 34.12% Upside in ACM Research (ACMR): Can the Stock Really Move This High?",
@@ -178,74 +307,24 @@
       "title": "ACMR Q2 Earnings Call Raises Revenue Floor as Orders Accelerate",
       "url": "https://finance.yahoo.com/markets/stocks/articles/acmr-q2-earnings-call-raises-140000491.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-10T13:30:04Z",
-      "title": "Should You Invest in ACM Research (ACMR) Based on Bullish Wall Street Views?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/invest-acm-research-acmr-based-133004078.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-07T20:45:40Z",
-      "title": "ACM Research, Inc. Q2 2026 Earnings Call Summary",
-      "url": "https://app.moby.co/home/research/tools/earningsCalendar/earnings-acm-research-inc-q2-2026-earnings-call-summary?utm_source=yahoo_finance&utm_medium=rss",
-      "source": "Moby"
-    },
-    {
-      "date": "2026-08-07T19:01:11Z",
-      "title": "ACM Research Inc (ACMR) (Q2 2026) Earnings Call Highlights: Revenue Surges 36% on Advanced ...",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/acm-research-inc-acmr-q2-190111212.html",
-      "source": "GuruFocus.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.044104858916861014,
   "technicals": {
-    "ma20": 79.2985008239746,
-    "ma50": 90.6658999633789,
-    "ma200": 61.14679988861084,
-    "rsi14": 46.154066005553204,
+    "ma20": 80.33725051879883,
+    "ma50": 89.55940002441406,
+    "ma200": 62.07007486343384,
+    "rsi14": 48.127040249818734,
     "high_20d": 92.55000305175781,
-    "low_5d": 75.44999694824219,
+    "low_5d": 76.0999984741211,
     "low_10d": 75.44999694824219,
     "high_52w": 127.19000244140625,
-    "low_52w": 24.93000030517578,
-    "atr14": 6.045714242117746,
-    "atr14_pct": 7.613290471364717,
-    "position_in_52w_range_pct": 53.27596540077859
+    "low_52w": 26.100000381469727,
+    "atr14": 4.967856270926339,
+    "atr14_pct": 6.172016899956324,
+    "position_in_52w_range_pct": 53.803537811832115
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 19.94,
-      "high": 19.99,
-      "low": 19.11,
-      "close": 19.22,
-      "volume": 862300.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 19.28,
-      "high": 19.84,
-      "low": 19.28,
-      "close": 19.49,
-      "volume": 799600.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 19.49,
-      "high": 19.49,
-      "low": 18.5,
-      "close": 18.6,
-      "volume": 820400.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 18.5,
-      "high": 18.6,
-      "low": 18.1,
-      "close": 18.42,
-      "volume": 755400.0
-    },
     {
       "date": "2024-08-28",
       "open": 18.22,
@@ -4217,45 +4296,45 @@
     {
       "date": "2026-08-21",
       "open": 79.61,
-      "high": 79.99,
+      "high": 80.2,
       "low": 76.1,
       "close": 79.41,
-      "volume": 529846.0
+      "volume": 546500.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 77.25,
+      "high": 79.67,
+      "low": 76.57,
+      "close": 77.345,
+      "volume": 696400.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 79.58,
+      "high": 80.475,
+      "low": 78.11,
+      "close": 79.77,
+      "volume": 564500.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 80.97,
+      "high": 83.5,
+      "low": 78.11,
+      "close": 79.11,
+      "volume": 648000.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 81.65,
+      "high": 81.72,
+      "low": 78.9,
+      "close": 80.49,
+      "volume": 540600.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 24.93,
-      "high": 25.8,
-      "low": 24.93,
-      "close": 25.61,
-      "volume": 1196600.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 28.4,
-      "high": 31.85,
-      "low": 28.4,
-      "close": 30.53,
-      "volume": 5775100.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 31.74,
-      "high": 32.29,
-      "low": 28.68,
-      "close": 28.8,
-      "volume": 2510000.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 29.55,
-      "high": 29.99,
-      "low": 29.1,
-      "close": 29.91,
-      "volume": 1261900.0
-    },
     {
       "date": "2025-08-27",
       "open": 29.19,
@@ -6235,13 +6314,44 @@
     {
       "date": "2026-08-21",
       "open": 79.61,
-      "high": 79.99,
+      "high": 80.2,
       "low": 76.1,
       "close": 79.41,
-      "volume": 529846.0
+      "volume": 546500.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 77.25,
+      "high": 79.67,
+      "low": 76.57,
+      "close": 77.345,
+      "volume": 696400.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 79.58,
+      "high": 80.475,
+      "low": 78.11,
+      "close": 79.77,
+      "volume": 564500.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 80.97,
+      "high": 83.5,
+      "low": 78.11,
+      "close": 79.11,
+      "volume": 648000.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 81.65,
+      "high": 81.72,
+      "low": 78.9,
+      "close": 80.49,
+      "volume": 540600.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-20T22:13:53Z"
+  "ai_synthesized_at": null
 }

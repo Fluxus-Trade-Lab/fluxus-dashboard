@@ -1,6 +1,6 @@
 {
   "trade_id": "FIG_2026-08-26_000",
-  "generated_at": "2026-08-28T03:44:31+00:00",
+  "generated_at": "2026-08-28T04:50:36+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "FIG",
@@ -21,28 +21,42 @@
     "trims": []
   },
   "entry_snapshot": {
-    "close": 24.99,
-    "open": 24.98,
-    "high": 25.96,
-    "low": 24.67,
-    "volume": 9399714.0,
-    "ma20": 24.145000000000003,
-    "ma50": 21.976000000000003,
-    "ma200": 27.174849999999996,
-    "rsi14": 53.391175148523764,
-    "atr14": 2.1535714285714285,
-    "atr14_pct": 8.617732807408677,
+    "close": 27.03,
+    "open": 26.03,
+    "high": 27.42,
+    "low": 25.63,
+    "volume": 10282000.0,
+    "ma20": 25.7625,
+    "ma50": 22.964599999999997,
+    "ma200": 26.452299999999994,
+    "rsi14": 57.94761091810269,
+    "atr14": 1.5578571428571435,
+    "atr14_pct": 5.763437450451881,
     "high_52w": 72.11,
     "low_52w": 16.6,
-    "position_in_52w_range_pct": 15.114393802918388,
+    "position_in_52w_range_pct": 18.78940731399748,
     "high_20d": 28.48,
-    "low_10d": 22.14,
-    "low_5d": 23.37
+    "low_10d": 23.37,
+    "low_5d": 25.63
   },
-  "setup_type": "Long below MA200 \u2014 counter-trend",
-  "path_analytics": {},
+  "setup_type": "Long in mixed structure",
+  "path_analytics": {
+    "mfe_R": 2.744680851063824,
+    "mfe_date": "2026-08-27",
+    "mae_R": 3.202127659574465,
+    "mae_date": "2026-08-26",
+    "optimal_exit_price": 31.22,
+    "optimal_exit_date": "2026-08-27",
+    "optimal_R": 2.744680851063824,
+    "days_to_optimal": 1,
+    "realized_R": null,
+    "capture_pct": null,
+    "missed_R": null,
+    "post_exit_R": null,
+    "hold_calendar_days": 2
+  },
   "lesson": "In progress",
-  "narrative": "Entered **FIG** long on 2026-08-26 at $28.64 (qty 5306) with stop $27.70 (1R = $0.94/sh = $4,988). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($24.15), MA stack mixed, RSI 53, 15% through 52W range, ATR 8.6% of price. **In progress.**",
+  "narrative": "Entered **FIG** long on 2026-08-26 at $28.64 (qty 5306) with stop $27.70 (1R = $0.94/sh = $4,988). Setup: **Long in mixed structure** \u2014 price above MA20 ($25.76), MA stack mixed, RSI 58, 19% through 52W range, ATR 5.8% of price. **In progress.** Peak so far +2.74R; worst drawdown -3.20R.",
   "ohlc_window": [
     {
       "date": "2026-07-27",
@@ -167,10 +181,74 @@
     {
       "date": "2026-08-17",
       "open": 24.98,
-      "high": 25.96,
-      "low": 24.67,
+      "high": 25.98,
+      "low": 24.66,
       "close": 24.99,
-      "volume": 9399714.0
+      "volume": 10337600.0
+    },
+    {
+      "date": "2026-08-18",
+      "open": 25.25,
+      "high": 26.47,
+      "low": 25.25,
+      "close": 26.01,
+      "volume": 13818100.0
+    },
+    {
+      "date": "2026-08-19",
+      "open": 26.35,
+      "high": 27.3,
+      "low": 26.09,
+      "close": 26.79,
+      "volume": 13560400.0
+    },
+    {
+      "date": "2026-08-20",
+      "open": 27.11,
+      "high": 28.03,
+      "low": 26.84,
+      "close": 27.31,
+      "volume": 15444900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 27.2,
+      "high": 27.78,
+      "low": 26.47,
+      "close": 27.1,
+      "volume": 10738200.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 26.97,
+      "high": 27.6,
+      "low": 26.63,
+      "close": 27.44,
+      "volume": 8372000.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 27.2,
+      "high": 27.97,
+      "low": 26.86,
+      "close": 27.27,
+      "volume": 10665000.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 26.03,
+      "high": 27.42,
+      "low": 25.63,
+      "close": 27.03,
+      "volume": 10282000.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 28.0,
+      "high": 31.22,
+      "low": 27.74,
+      "close": 30.62,
+      "volume": 27552700.0
     }
   ]
 }

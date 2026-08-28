@@ -1,8 +1,8 @@
 {
   "ticker": "OKLL",
-  "fetched_at": "2026-08-21T22:10:06Z",
+  "fetched_at": "2026-08-28T04:43:52Z",
   "_schema": "v2",
-  "current_price": 2.7300000190734863,
+  "current_price": 2.7200000286102295,
   "info": {
     "symbol": "OKLL",
     "longName": "Defiance Daily Target 2X Long OKLO ETF",
@@ -32,8 +32,8 @@
     "currentRatio": null,
     "fiftyTwoWeekHigh": 169.957,
     "fiftyTwoWeekLow": 2.235,
-    "averageVolume": 13223675,
-    "averageVolume10days": 14259290,
+    "averageVolume": 13007638,
+    "averageVolume10days": 11701720,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -42,22 +42,27 @@
   "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [],
-  "analyst": {},
+  "analyst": {
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
+  },
   "news": [],
-  "options_implied_move": null,
+  "options_implied_move": 0.31249999671297923,
   "technicals": {
-    "ma20": 2.9345000267028807,
-    "ma50": 3.949000015258789,
-    "ma200": 14.469449956417083,
-    "rsi14": 42.585322090713625,
+    "ma20": 2.939500021934509,
+    "ma50": 3.6600000143051146,
+    "ma200": 13.488449944257736,
+    "rsi14": 44.6309300679752,
     "high_20d": 3.871000051498413,
-    "low_5d": 2.5199999809265137,
-    "low_10d": 2.5199999809265137,
+    "low_5d": 2.380000114440918,
+    "low_10d": 2.380000114440918,
     "high_52w": 169.95700073242188,
     "low_52w": 2.234999895095825,
-    "atr14": 0.4224285738808768,
-    "atr14_pct": 15.473574026722591,
-    "position_in_52w_range_pct": 0.29513130150275446
+    "atr14": 0.41964285714285715,
+    "atr14_pct": 15.428046056208006,
+    "position_in_52w_range_pct": 0.2891690601668931
   },
   "ohlc_2y": [
     {
@@ -2402,42 +2407,42 @@
       "high": 2.93,
       "low": 2.64,
       "close": 2.73,
-      "volume": 8000500.0
+      "volume": 8170500.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 2.59,
+      "high": 2.615,
+      "low": 2.38,
+      "close": 2.44,
+      "volume": 7364600.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 2.54,
+      "high": 3.035,
+      "low": 2.45,
+      "close": 2.97,
+      "volume": 12914100.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 3.01,
+      "high": 3.22,
+      "low": 2.55,
+      "close": 2.61,
+      "volume": 22715700.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 2.66,
+      "high": 2.885,
+      "low": 2.56,
+      "close": 2.72,
+      "volume": 14261600.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 25.86,
-      "high": 27.07,
-      "low": 24.68,
-      "close": 25.39,
-      "volume": 1786900.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 25.48,
-      "high": 29.24,
-      "low": 23.45,
-      "close": 27.8,
-      "volume": 1784200.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 28.37,
-      "high": 28.9,
-      "low": 25.747,
-      "close": 28.32,
-      "volume": 855300.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 30.42,
-      "high": 34.3,
-      "low": 29.512,
-      "close": 30.86,
-      "volume": 2588500.0
-    },
     {
       "date": "2025-08-27",
       "open": 31.16,
@@ -4420,10 +4425,41 @@
       "high": 2.93,
       "low": 2.64,
       "close": 2.73,
-      "volume": 8000500.0
+      "volume": 8170500.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 2.59,
+      "high": 2.615,
+      "low": 2.38,
+      "close": 2.44,
+      "volume": 7364600.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 2.54,
+      "high": 3.035,
+      "low": 2.45,
+      "close": 2.97,
+      "volume": 12914100.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 3.01,
+      "high": 3.22,
+      "low": 2.55,
+      "close": 2.61,
+      "volume": 22715700.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 2.66,
+      "high": 2.885,
+      "low": 2.56,
+      "close": 2.72,
+      "volume": 14261600.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:12:56Z"
+  "ai_synthesized_at": null
 }

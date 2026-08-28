@@ -1,8 +1,8 @@
 {
   "ticker": "APPS",
-  "fetched_at": "2026-08-21T22:10:52Z",
+  "fetched_at": "2026-08-28T04:46:33Z",
   "_schema": "v2",
-  "current_price": 10.869999885559082,
+  "current_price": 11.4399995803833,
   "info": {
     "symbol": "APPS",
     "longName": "Digital Turbine, Inc.",
@@ -13,13 +13,13 @@
     "city": "Austin",
     "website": "https://www.digitalturbine.com",
     "fullTimeEmployees": 620,
-    "marketCap": 1296083968,
-    "enterpriseValue": 1609344000,
+    "marketCap": 1384425856,
+    "enterpriseValue": 1697685888,
     "trailingPE": null,
-    "forwardPE": 11.2736845,
-    "priceToSalesTrailing12Months": 2.1590319,
-    "enterpriseToRevenue": 2.681,
-    "priceToBook": 6.7999997,
+    "forwardPE": 12.042105,
+    "priceToSalesTrailing12Months": 2.3061926,
+    "enterpriseToRevenue": 2.828,
+    "priceToBook": 7.2634916,
     "grossMargins": 0.49080002,
     "operatingMargins": 0.13894,
     "profitMargins": -0.058229998,
@@ -32,8 +32,8 @@
     "currentRatio": 1.205,
     "fiftyTwoWeekHigh": 15.34,
     "fiftyTwoWeekLow": 2.74,
-    "averageVolume": 6424420,
-    "averageVolume10days": 3119900,
+    "averageVolume": 5046807,
+    "averageVolume10days": 2421800,
     "beta": 2.843,
     "sharesOutstanding": 121016250,
     "sharesFloat": 109474930,
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.19,
+      "eps_estimate": 0.14,
+      "eps_surprise_pct": 0.35709998
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.16,
+      "eps_estimate": 0.085,
+      "eps_surprise_pct": 0.8824
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.18,
+      "eps_estimate": 0.115,
+      "eps_surprise_pct": 0.56520003
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.15,
+      "eps_estimate": 0.05,
+      "eps_surprise_pct": 2.0
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 166400000,
+    "revenue_high": 168354400
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,8 +164,108 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 2,
+    "bullish": 2,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 17.16667,
+    "high_price_target": 18.0,
+    "low_price_target": 16.0,
+    "current_price": 11.44,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-05T18:57:32",
+        "firm": "Benchmark",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-22T16:32:43",
+        "firm": "Benchmark",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-21T18:19:55",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "init"
+      },
+      {
+        "date": "2026-05-27T18:01:48",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2025-08-06T11:06:40",
+        "firm": "B of A Securities",
+        "to_grade": "Neutral",
+        "from_grade": "Underperform",
+        "action": "up"
+      },
+      {
+        "date": "2025-06-17T14:02:14",
+        "firm": "Craig-Hallum",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2024-11-15T17:04:00",
+        "firm": "B of A Securities",
+        "to_grade": "Underperform",
+        "from_grade": "Neutral",
+        "action": "down"
+      },
+      {
+        "date": "2024-11-07T19:17:37",
+        "firm": "Macquarie",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2024-11-07T19:10:21",
+        "firm": "Craig-Hallum",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2024-05-29T12:11:03",
+        "firm": "Roth MKM",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-27T18:19:56Z",
+      "title": "AppLovin Stock Has Already Taken A Shock-Sized Fall Without A Shock",
+      "url": "https://www.trefis.com/articles/613343/applovin-stock-has-already-taken-a-shock-sized-fall-without-a-shock/2026-08-27",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-08-26T14:14:00Z",
+      "title": "Digital Turbine vs. AppLovin: Which Ad-Tech Stock Holds More Promise?",
+      "url": "https://finance.yahoo.com/media-advertising/articles/digital-turbine-vs-applovin-ad-141400258.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-24T15:23:00Z",
+      "title": "Digital Turbine's Alternative App Distribution Strategy Drives Growth",
+      "url": "https://finance.yahoo.com/technology/articles/digital-turbines-alternative-app-distribution-152300465.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-18T18:26:00Z",
       "title": "Digital Turbine Jumps 208% in a Year: Is the Stock Worth Buying Now?",
@@ -178,74 +307,24 @@
       "title": "APPS or SPOT: Which Is the Better Value Stock Right Now?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/apps-spot-better-value-stock-154003341.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-07T13:40:04Z",
-      "title": "Is Digital Turbine (APPS) Stock Outpacing Its Computer and Technology Peers This Year?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/digital-turbine-apps-stock-outpacing-134004736.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-07T13:15:03Z",
-      "title": "Digital Turbine, Inc. (APPS) Hit a 52 Week High, Can the Run Continue?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/digital-turbine-inc-apps-hit-131503921.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-07T03:20:40Z",
-      "title": "Why Digital Turbine (APPS) Is Up 74.2% After Hiking 2027 Revenue Outlook And Narrowing Losses",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/why-digital-turbine-apps-74-032040511.html",
-      "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.16346154445727218,
   "technicals": {
-    "ma20": 11.18899998664856,
-    "ma50": 10.492999992370606,
-    "ma200": 6.153799998760223,
-    "rsi14": 48.62246246941478,
+    "ma20": 11.713499975204467,
+    "ma50": 10.587399978637695,
+    "ma200": 6.245749995708466,
+    "rsi14": 53.38700902469617,
     "high_20d": 15.34000015258789,
-    "low_5d": 10.625,
-    "low_10d": 10.625,
+    "low_5d": 10.430000305175781,
+    "low_10d": 10.430000305175781,
     "high_52w": 15.34000015258789,
     "low_52w": 2.740000009536743,
-    "atr14": 1.2853569984436035,
-    "atr14_pct": 11.824811517718734,
-    "position_in_52w_range_pct": 64.5238078073039
+    "atr14": 0.7799998692103794,
+    "atr14_pct": 6.81818092500529,
+    "position_in_52w_range_pct": 69.04761485772343
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 3.93,
-      "high": 3.97,
-      "low": 3.52,
-      "close": 3.61,
-      "volume": 3618200.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 3.65,
-      "high": 4.24,
-      "low": 3.65,
-      "close": 3.98,
-      "volume": 4030200.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 3.98,
-      "high": 4.04,
-      "low": 3.59,
-      "close": 3.71,
-      "volume": 3520600.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 3.68,
-      "high": 3.77,
-      "low": 3.57,
-      "close": 3.65,
-      "volume": 1926200.0
-    },
     {
       "date": "2024-08-28",
       "open": 3.53,
@@ -4218,44 +4297,44 @@
       "date": "2026-08-21",
       "open": 10.71,
       "high": 11.0,
-      "low": 10.625,
+      "low": 10.63,
       "close": 10.87,
-      "volume": 1834590.0
+      "volume": 1874700.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 10.68,
+      "high": 11.08,
+      "low": 10.54,
+      "close": 10.74,
+      "volume": 1968800.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 10.72,
+      "high": 10.89,
+      "low": 10.43,
+      "close": 10.83,
+      "volume": 1776800.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 10.58,
+      "high": 11.25,
+      "low": 10.58,
+      "close": 10.84,
+      "volume": 2540000.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 11.08,
+      "high": 11.62,
+      "low": 11.0,
+      "close": 11.44,
+      "volume": 3339300.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 3.88,
-      "high": 3.96,
-      "low": 3.79,
-      "close": 3.86,
-      "volume": 1544700.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 3.86,
-      "high": 4.25,
-      "low": 3.82,
-      "close": 4.23,
-      "volume": 2427300.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 4.21,
-      "high": 4.23,
-      "low": 4.08,
-      "close": 4.1,
-      "volume": 1896000.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 4.11,
-      "high": 4.36,
-      "low": 4.06,
-      "close": 4.27,
-      "volume": 2739000.0
-    },
     {
       "date": "2025-08-27",
       "open": 4.28,
@@ -6236,12 +6315,43 @@
       "date": "2026-08-21",
       "open": 10.71,
       "high": 11.0,
-      "low": 10.625,
+      "low": 10.63,
       "close": 10.87,
-      "volume": 1834590.0
+      "volume": 1874700.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 10.68,
+      "high": 11.08,
+      "low": 10.54,
+      "close": 10.74,
+      "volume": 1968800.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 10.72,
+      "high": 10.89,
+      "low": 10.43,
+      "close": 10.83,
+      "volume": 1776800.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 10.58,
+      "high": 11.25,
+      "low": 10.58,
+      "close": 10.84,
+      "volume": 2540000.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 11.08,
+      "high": 11.62,
+      "low": 11.0,
+      "close": 11.44,
+      "volume": 3339300.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:10:43Z"
+  "ai_synthesized_at": null
 }

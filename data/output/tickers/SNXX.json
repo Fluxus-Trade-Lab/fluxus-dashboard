@@ -1,8 +1,8 @@
 {
   "ticker": "SNXX",
-  "fetched_at": "2026-08-21T22:10:23Z",
+  "fetched_at": "2026-08-28T04:44:16Z",
   "_schema": "v2",
-  "current_price": 15.010000228881836,
+  "current_price": 12.869999885559082,
   "info": {
     "symbol": "SNXX",
     "longName": "Tradr 2X Long Sndk Daily ETF",
@@ -32,8 +32,8 @@
     "currentRatio": null,
     "fiftyTwoWeekHigh": 49.34,
     "fiftyTwoWeekLow": 3.13875,
-    "averageVolume": 79326464,
-    "averageVolume10days": 110754320,
+    "averageVolume": 80276844,
+    "averageVolume10days": 97041320,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -42,7 +42,12 @@
   "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [],
-  "analyst": {},
+  "analyst": {
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
+  },
   "news": [
     {
       "date": "2026-03-17T12:00:00Z",
@@ -51,19 +56,19 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.06759906820016312,
   "technicals": {
-    "ma20": 11.985000014305115,
-    "ma50": 21.708399839401245,
-    "rsi14": 49.53008922230127,
+    "ma20": 12.749000072479248,
+    "ma50": 19.857399892807006,
+    "rsi14": 45.7923032138803,
     "high_20d": 19.8799991607666,
-    "low_5d": 14.0,
-    "low_10d": 8.800000190734863,
+    "low_5d": 11.619999885559082,
+    "low_10d": 11.619999885559082,
     "high_52w": 49.34000015258789,
     "low_52w": 3.1387500762939453,
-    "atr14": 2.348921367100307,
-    "atr14_pct": 15.649042846652167,
-    "position_in_52w_range_pct": 25.69465140658408
+    "atr14": 2.2455714089529857,
+    "atr14_pct": 17.448107450821755,
+    "position_in_52w_range_pct": 21.06274136131715
   },
   "ohlc_2y": [
     {
@@ -1213,10 +1218,42 @@
     {
       "date": "2026-08-21",
       "open": 15.11,
-      "high": 15.3499,
+      "high": 15.35,
       "low": 14.51,
       "close": 15.01,
-      "volume": 49225448.0
+      "volume": 50012400.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 13.04,
+      "high": 13.49,
+      "low": 11.62,
+      "close": 13.05,
+      "volume": 94021800.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 13.85,
+      "high": 14.3,
+      "low": 12.58,
+      "close": 12.88,
+      "volume": 67840200.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 12.38,
+      "high": 13.358,
+      "low": 12.305,
+      "close": 13.14,
+      "volume": 58405400.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 14.01,
+      "high": 14.16,
+      "low": 12.38,
+      "close": 12.87,
+      "volume": 63904100.0
     }
   ],
   "ohlc_1y": [
@@ -2367,13 +2404,44 @@
     {
       "date": "2026-08-21",
       "open": 15.11,
-      "high": 15.3499,
+      "high": 15.35,
       "low": 14.51,
       "close": 15.01,
-      "volume": 49225448.0
+      "volume": 50012400.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 13.04,
+      "high": 13.49,
+      "low": 11.62,
+      "close": 13.05,
+      "volume": 94021800.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 13.85,
+      "high": 14.3,
+      "low": 12.58,
+      "close": 12.88,
+      "volume": 67840200.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 12.38,
+      "high": 13.358,
+      "low": 12.305,
+      "close": 13.14,
+      "volume": 58405400.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 14.01,
+      "high": 14.16,
+      "low": 12.38,
+      "close": 12.87,
+      "volume": 63904100.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:13:57Z"
+  "ai_synthesized_at": null
 }

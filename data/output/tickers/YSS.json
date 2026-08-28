@@ -1,8 +1,8 @@
 {
   "ticker": "YSS",
-  "fetched_at": "2026-08-09T17:23:47Z",
+  "fetched_at": "2026-08-28T04:50:27Z",
   "_schema": "v2",
-  "current_price": 11.40999984741211,
+  "current_price": 9.1899995803833,
   "info": {
     "symbol": "YSS",
     "longName": "York Space Systems, Inc.",
@@ -13,70 +13,46 @@
     "city": "Greenwood Village",
     "website": "https://www.yorkspacesystems.com",
     "fullTimeEmployees": 710,
-    "marketCap": 1499251584,
-    "enterpriseValue": 1002496768,
+    "marketCap": 1262316288,
+    "enterpriseValue": 905632384,
     "trailingPE": null,
-    "forwardPE": 21.460278,
-    "priceToSalesTrailing12Months": 3.78318,
-    "enterpriseToRevenue": 2.53,
-    "priceToBook": 0.6574095,
-    "grossMargins": 0.18423,
-    "operatingMargins": -0.89856005,
-    "profitMargins": -0.47351003,
+    "forwardPE": -78.76917,
+    "priceToSalesTrailing12Months": 3.116815,
+    "enterpriseToRevenue": 2.236,
+    "priceToBook": 0.6806903,
+    "grossMargins": 0.21150999,
+    "operatingMargins": -0.38147,
+    "profitMargins": -0.50064,
     "returnOnEquity": null,
-    "totalCash": 655692992,
-    "totalDebt": 178376000,
-    "totalRevenue": 396294016,
+    "totalCash": 534000000,
+    "totalDebt": 177316000,
+    "totalRevenue": 405001984,
     "freeCashflow": null,
-    "debtToEquity": 10.357,
-    "currentRatio": 5.526,
+    "debtToEquity": 10.157,
+    "currentRatio": 5.335,
     "fiftyTwoWeekHigh": 44.54,
-    "fiftyTwoWeekLow": 10.48,
-    "averageVolume": 1986216,
-    "averageVolume10days": 2780950,
+    "fiftyTwoWeekLow": 8.89,
+    "averageVolume": 2226119,
+    "averageVolume10days": 3793390,
     "beta": null,
-    "sharesOutstanding": 131398035,
-    "sharesFloat": 84000507,
+    "sharesOutstanding": 137357605,
+    "sharesFloat": 56628420,
     "companyOfficers": [
       {
         "name": "Mr. Dirk  Wallinger",
         "title": "Founder, CEO, President & Director",
         "age": 45,
         "yearBorn": 1980
-      },
-      {
-        "name": "Mr. Kevin A. Messerle",
-        "title": "Chief Financial Officer",
-        "age": 50,
-        "yearBorn": 1975
-      },
-      {
-        "name": "Mr. Devjyoti  Rudra",
-        "title": "Chief Supply Chain Officer",
-        "age": 53,
-        "yearBorn": 1972
-      },
-      {
-        "name": "Mr. Brian D. Frantz",
-        "title": "Chief Accounting Officer",
-        "age": 62,
-        "yearBorn": 1963
-      },
-      {
-        "name": "Ms. Monica  Palko",
-        "title": "Chief Legal & Administrative Officer",
-        "age": 59,
-        "yearBorn": 1966
-      },
-      {
-        "name": "Mr. Christopher  Evenden",
-        "title": "Vice President of Investor Relations",
-        "age": null,
-        "yearBorn": null
       }
     ]
   },
   "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.0574,
+      "eps_estimate": -0.12078,
+      "eps_surprise_pct": 0.5248
+    },
     {
       "period_end": "2026-03-31T00:00:00",
       "eps_actual": -0.6802,
@@ -91,9 +67,9 @@
     }
   ],
   "next_earnings": {
-    "date": "2026-08-14",
-    "revenue_low": 84000000,
-    "revenue_high": 134100000
+    "date": "2026-11-12",
+    "revenue_low": 80000000,
+    "revenue_high": 102400000
   },
   "quarterly_metrics": [
     {
@@ -147,11 +123,46 @@
     "bullish": 7,
     "neutral": 2,
     "bearish": 0,
-    "avg_price_target": 33.44444,
-    "high_price_target": 40.0,
-    "low_price_target": 26.0,
-    "current_price": 11.41,
+    "avg_price_target": 18.65,
+    "high_price_target": 35.0,
+    "low_price_target": 11.0,
+    "current_price": 9.19,
     "recent_rating_changes": [
+      {
+        "date": "2026-08-20T17:10:52",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-18T15:25:16",
+        "firm": "Jefferies",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-18T13:15:22",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Hold",
+        "from_grade": "Buy",
+        "action": "down"
+      },
+      {
+        "date": "2026-08-17T12:01:07",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Overweight",
+        "action": "down"
+      },
+      {
+        "date": "2026-08-14T10:14:56",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
       {
         "date": "2026-07-29T10:58:49",
         "firm": "Raymond James",
@@ -186,119 +197,84 @@
         "to_grade": "Neutral",
         "from_grade": "Neutral",
         "action": "main"
-      },
-      {
-        "date": "2026-04-02T16:45:22",
-        "firm": "Citigroup",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-03-30T14:21:33",
-        "firm": "Truist Securities",
-        "to_grade": "Hold",
-        "from_grade": "Hold",
-        "action": "main"
-      },
-      {
-        "date": "2026-03-23T13:43:38",
-        "firm": "Canaccord Genuity",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-03-20T19:06:46",
-        "firm": "JP Morgan",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-03-20T10:48:42",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
       }
     ]
   },
   "news": [
     {
-      "date": "2026-08-08T13:07:30Z",
-      "title": "Will York Space Systems (YSS) CFO Transition Subtly Reshape Its Financial Discipline And Growth Ambitions?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/york-space-systems-yss-cfo-130730557.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-07-31T20:35:23Z",
-      "title": "Rocket Lab Lands Launch Contract, Space Force Taps Vendors For $981 Million Program",
-      "url": "https://www.investors.com/news/rocket-lab-stock-launch-contract-electron-space-force-15-awards-981m/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-07-17T20:15:47Z",
-      "title": "SpaceX Aborts Starship Test Flight 13 After Engine Failure, Completes SDA Mission",
-      "url": "https://www.investors.com/news/spacex-starship-flight-13-starlink-sda-mission-launch-satellites-falcon-9-spcx-stock/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-07-15T18:00:00Z",
-      "title": "Rocket Lab and York Space Systems: Analysts Say Buy These 2 Space Stocks Following Recent Acquisitions",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-york-space-systems-180000410.html",
-      "source": "TipRanks"
-    },
-    {
-      "date": "2026-07-09T09:00:56Z",
-      "title": "RC Fornax, Bango, Quantum Blockchain, Seraphim Space Investment Trust - Small Cap Snapshot",
-      "url": "https://finance.yahoo.com/video/rc-fornax-bango-quantum-blockchain-090056713.html",
-      "source": "Proactive"
-    },
-    {
-      "date": "2026-06-18T13:22:49Z",
-      "title": "Here\u2019s Why York Space Systems (YSS) Slid in Q1",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/why-york-space-systems-yss-132249968.html",
+      "date": "2026-08-27T19:31:31Z",
+      "title": "York Space Systems (YSS) Cuts Guidance While Backlog Keeps Climbing",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/york-space-systems-yss-cuts-193131941.html",
       "source": "Insider Monkey"
     },
     {
-      "date": "2026-06-12T11:38:02Z",
-      "title": "3 Stocks That Might Be Up To 39.8% Below Their Estimated Intrinsic Value",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/3-stocks-might-39-8-113802585.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-06-05T17:35:04Z",
-      "title": "YSS Stock In Spotlight After York Space Systems Ships Second Production Lot Of Tactical Satellites For Summer Launch",
-      "url": "https://stocktwits.com/news-articles/markets/equity/yss-stock-in-the-spotlight-satellite-launch-this-summer/cZ0FA1cReCn",
+      "date": "2026-08-25T18:03:32Z",
+      "title": "YSS Stock Is Falling Despite Space Force Win \u2014 Goldman Sachs Just Slashed Its Price Target By 50%",
+      "url": "https://stocktwits.com/news-articles/markets/equity/yss-stock-is-falling-despite-space-force-win-goldman-sachs-slashed-its-price-target-by-50-percent/cZYkwOaRJoB",
       "source": "Stocktwits"
     },
     {
-      "date": "2026-05-29T05:03:56Z",
-      "title": "York Space Systems Eyes Supply Chain Gains With Solestial And ALL.SPACE Deals",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/york-space-systems-eyes-supply-050356861.html",
+      "date": "2026-08-25T16:32:00Z",
+      "title": "York Space Systems Stock Falls After Goldman Sachs Slashes Target Price",
+      "url": "https://www.barrons.com/articles/york-space-systems-stock-goldman-sachs-dc5251cb?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-08-25T04:33:43Z",
+      "title": "York Space Systems (YSS) Stock Could Be A Bargain On Cash Flow But Rich On Sales",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/york-space-systems-yss-stock-043343845.html",
       "source": "Simply Wall St."
     },
     {
-      "date": "2026-05-28T11:51:58Z",
-      "title": "York Space Systems (YSS) Makes A Strategic Acquisition To Strengthen Its U.S. Supply Chain",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/york-space-systems-yss-makes-115158357.html",
-      "source": "Insider Monkey"
+      "date": "2026-08-24T22:10:13Z",
+      "title": "York Space Systems (YSS) Wins NITE STAR Role, Is The Upside Already Priced In?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/york-space-systems-yss-wins-221013355.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-24T19:11:15Z",
+      "title": "IonQ Makes Unexpected Move Beyond Quantum",
+      "url": "https://finance.yahoo.com/technology/articles/ionq-makes-unexpected-move-beyond-191115510.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-08-20T21:30:21Z",
+      "title": "York Space Systems (YSS) Q2 2026 Earnings Call Transcript",
+      "url": "https://www.fool.com/earnings/call-transcripts/2026/08/20/york-space-systems-yss-q2-2026-earnings-call-transcript/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-08-17T13:36:24Z",
+      "title": "Apple upgraded, Workday downgraded: Wall Street's top analyst calls",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/apple-upgraded-brinker-initiated-wall-134131346.html",
+      "source": "The Fly"
+    },
+    {
+      "date": "2026-08-17T11:54:21Z",
+      "title": "Here Are Monday\u2019s Top Wall Street Analyst Research Calls: Apple, Dave, Etsy, Federal Signal, Mobileye Global, Netskope, Okta, Shopify, Workday, and More",
+      "url": "https://247wallst.com/investing/2026/08/17/here-are-mondays-top-wall-street-analyst-research-calls-apple-dave-etsy-federal-signal-mobileye-global-netskope-okta-shopify-workday-and-more/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-14T18:10:37Z",
+      "title": "YSS, INV Stocks Hit All-Time Lows Today \u2013 What\u2019s Driving The Sell-Off?",
+      "url": "https://stocktwits.com/news-articles/markets/equity/yss-inv-stocks-hit-all-time-lows-today-what-s-driving-the-sell-off/cZotpDORJ0w",
+      "source": "Stocktwits"
     }
   ],
-  "options_implied_move": 0.2673093813135999,
+  "options_implied_move": 0.230685538280686,
   "technicals": {
-    "ma20": 16.53250002861023,
-    "ma50": 23.098000049591064,
-    "rsi14": 28.87457875431936,
-    "high_20d": 21.950000762939453,
-    "low_5d": 10.479999542236328,
-    "low_10d": 10.479999542236328,
+    "ma20": 11.075499963760375,
+    "ma50": 17.447599964141844,
+    "rsi14": 29.055678761305202,
+    "high_20d": 16.0,
+    "low_5d": 9.020000457763672,
+    "low_10d": 8.890000343322754,
     "high_52w": 44.540000915527344,
-    "low_52w": 10.479999542236328,
-    "atr14": 1.72928558077131,
-    "atr14_pct": 15.155877334770757,
-    "position_in_52w_range_pct": 2.7304764171414972
+    "low_52w": 8.890000343322754,
+    "atr14": 0.9892856734139579,
+    "atr14_pct": 10.764806513437254,
+    "position_in_52w_range_pct": 0.8415125729182982
   },
   "ohlc_2y": [
     {
@@ -1355,7 +1331,119 @@
       "high": 11.8,
       "low": 10.48,
       "close": 11.41,
-      "volume": 3928200.0
+      "volume": 3932000.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 11.27,
+      "high": 11.93,
+      "low": 10.23,
+      "close": 10.48,
+      "volume": 3075200.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 10.51,
+      "high": 10.62,
+      "low": 10.01,
+      "close": 10.6,
+      "volume": 3754400.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 10.7,
+      "high": 11.36,
+      "low": 10.5,
+      "close": 11.04,
+      "volume": 4001200.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 10.87,
+      "high": 11.89,
+      "low": 10.76,
+      "close": 11.51,
+      "volume": 4593200.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 10.06,
+      "high": 11.24,
+      "low": 9.63,
+      "close": 10.93,
+      "volume": 6604400.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 10.36,
+      "high": 11.73,
+      "low": 10.36,
+      "close": 10.66,
+      "volume": 4389800.0
+    },
+    {
+      "date": "2026-08-18",
+      "open": 10.24,
+      "high": 10.74,
+      "low": 9.4,
+      "close": 10.42,
+      "volume": 5034900.0
+    },
+    {
+      "date": "2026-08-19",
+      "open": 10.32,
+      "high": 10.44,
+      "low": 9.88,
+      "close": 10.18,
+      "volume": 3781000.0
+    },
+    {
+      "date": "2026-08-20",
+      "open": 9.99,
+      "high": 10.0,
+      "low": 8.89,
+      "close": 9.2,
+      "volume": 5467800.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 9.26,
+      "high": 9.75,
+      "low": 9.15,
+      "close": 9.32,
+      "volume": 2434000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 9.22,
+      "high": 9.83,
+      "low": 9.11,
+      "close": 9.76,
+      "volume": 3257000.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 10.0,
+      "high": 10.08,
+      "low": 9.13,
+      "close": 9.32,
+      "volume": 2948300.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 9.2,
+      "high": 9.55,
+      "low": 9.09,
+      "close": 9.13,
+      "volume": 1967800.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 9.27,
+      "high": 9.4,
+      "low": 9.02,
+      "close": 9.19,
+      "volume": 2048900.0
     }
   ],
   "ohlc_1y": [
@@ -2413,7 +2501,119 @@
       "high": 11.8,
       "low": 10.48,
       "close": 11.41,
-      "volume": 3928200.0
+      "volume": 3932000.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 11.27,
+      "high": 11.93,
+      "low": 10.23,
+      "close": 10.48,
+      "volume": 3075200.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 10.51,
+      "high": 10.62,
+      "low": 10.01,
+      "close": 10.6,
+      "volume": 3754400.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 10.7,
+      "high": 11.36,
+      "low": 10.5,
+      "close": 11.04,
+      "volume": 4001200.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 10.87,
+      "high": 11.89,
+      "low": 10.76,
+      "close": 11.51,
+      "volume": 4593200.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 10.06,
+      "high": 11.24,
+      "low": 9.63,
+      "close": 10.93,
+      "volume": 6604400.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 10.36,
+      "high": 11.73,
+      "low": 10.36,
+      "close": 10.66,
+      "volume": 4389800.0
+    },
+    {
+      "date": "2026-08-18",
+      "open": 10.24,
+      "high": 10.74,
+      "low": 9.4,
+      "close": 10.42,
+      "volume": 5034900.0
+    },
+    {
+      "date": "2026-08-19",
+      "open": 10.32,
+      "high": 10.44,
+      "low": 9.88,
+      "close": 10.18,
+      "volume": 3781000.0
+    },
+    {
+      "date": "2026-08-20",
+      "open": 9.99,
+      "high": 10.0,
+      "low": 8.89,
+      "close": 9.2,
+      "volume": 5467800.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 9.26,
+      "high": 9.75,
+      "low": 9.15,
+      "close": 9.32,
+      "volume": 2434000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 9.22,
+      "high": 9.83,
+      "low": 9.11,
+      "close": 9.76,
+      "volume": 3257000.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 10.0,
+      "high": 10.08,
+      "low": 9.13,
+      "close": 9.32,
+      "volume": 2948300.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 9.2,
+      "high": 9.55,
+      "low": 9.09,
+      "close": 9.13,
+      "volume": 1967800.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 9.27,
+      "high": 9.4,
+      "low": 9.02,
+      "close": 9.19,
+      "volume": 2048900.0
     }
   ],
   "ai_synthesis": null,

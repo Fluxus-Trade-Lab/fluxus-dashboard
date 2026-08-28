@@ -1,8 +1,8 @@
 {
   "ticker": "MU",
-  "fetched_at": "2026-08-21T22:09:53Z",
+  "fetched_at": "2026-08-28T04:43:37Z",
   "_schema": "v2",
-  "current_price": 966.780029296875,
+  "current_price": 935.3900146484375,
   "info": {
     "symbol": "MU",
     "longName": "Micron Technology, Inc.",
@@ -13,13 +13,13 @@
     "city": "Boise",
     "website": "https://www.micron.com",
     "fullTimeEmployees": 53000,
-    "marketCap": 1100401606656,
-    "enterpriseValue": 1080755617792,
-    "trailingPE": 21.185692,
-    "forwardPE": 6.2640066,
-    "priceToSalesTrailing12Months": 12.189574,
-    "enterpriseToRevenue": 11.972,
-    "priceToBook": 10.921146,
+    "marketCap": null,
+    "enterpriseValue": 1036777029632,
+    "trailingPE": 21.229914,
+    "forwardPE": 6.033792,
+    "priceToSalesTrailing12Months": null,
+    "enterpriseToRevenue": 11.485,
+    "priceToBook": 10.484673,
     "grossMargins": 0.72569,
     "operatingMargins": 0.80370003,
     "profitMargins": 0.55906,
@@ -32,11 +32,11 @@
     "currentRatio": 3.425,
     "fiftyTwoWeekHigh": 1255.0,
     "fiftyTwoWeekLow": 114.25,
-    "averageVolume": 48573706,
-    "averageVolume10days": 31590950,
+    "averageVolume": 45961679,
+    "averageVolume10days": 26914420,
     "beta": 2.213,
-    "sharesOutstanding": 1129393151,
-    "sharesFloat": 1125564508,
+    "sharesOutstanding": null,
+    "sharesFloat": 1125620978,
     "companyOfficers": [
       {
         "name": "Mr. Sanjay  Mehrotra",
@@ -45,39 +45,68 @@
         "yearBorn": 1959
       },
       {
-        "name": "Mr. Mark J. Murphy",
-        "title": "Executive VP & CFO",
-        "age": 57,
-        "yearBorn": 1968
-      },
-      {
-        "name": "Mr. Manish H. Bhatia",
-        "title": "Executive Vice President of Global Operations",
-        "age": 53,
-        "yearBorn": 1972
-      },
-      {
-        "name": "Dr. Scott J. DeBoer Ph.D.",
-        "title": "Executive VP and Chief Technology & Products Officer",
-        "age": 59,
-        "yearBorn": 1966
-      },
-      {
-        "name": "Mr. Sumit  Sadana",
-        "title": "Executive VP & Chief Business Officer",
-        "age": 56,
-        "yearBorn": 1969
-      },
-      {
         "name": "Mr. Scott R. Allen",
         "title": "Corporate VP & Chief Accounting Officer",
         "age": 57,
         "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Anand  Bahl",
+        "title": "Corp. VP & Chief Information Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Satya  Kumar",
+        "title": "Corporate VP of Investor Relations & Treasurer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Michael Charles Ray Ph.D.",
+        "title": "Senior VP, Chief Legal Officer & Corporate Secretary",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Michael D. Cordano",
+        "title": "Executive VP of Worldwide Sales",
+        "age": 61,
+        "yearBorn": 1964
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-05-31T00:00:00",
+      "eps_actual": 25.11,
+      "eps_estimate": 20.68603,
+      "eps_surprise_pct": 0.2139
+    },
+    {
+      "period_end": "2026-02-28T00:00:00",
+      "eps_actual": 12.2,
+      "eps_estimate": 9.15866,
+      "eps_surprise_pct": 0.3321
+    },
+    {
+      "period_end": "2025-11-30T00:00:00",
+      "eps_actual": 4.78,
+      "eps_estimate": 3.96409,
+      "eps_surprise_pct": 0.2058
+    },
+    {
+      "period_end": "2025-08-31T00:00:00",
+      "eps_actual": 3.03,
+      "eps_estimate": 2.86023,
+      "eps_surprise_pct": 0.0594
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-09-30",
+    "revenue_low": 46911000000,
+    "revenue_high": 59805000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-05-31T00:00:00",
@@ -135,117 +164,167 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 44,
+    "bullish": 39,
+    "neutral": 4,
+    "bearish": 1,
+    "avg_price_target": 1513.409,
+    "high_price_target": 2200.0,
+    "low_price_target": 361.0,
+    "current_price": 935.39,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-25T11:22:29",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-14T16:27:13",
+        "firm": "New Street Research",
+        "to_grade": "Buy",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-07T19:44:44",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-14T11:13:19",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-29T14:43:21",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T20:36:38",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T19:11:54",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T17:51:26",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T17:29:15",
+        "firm": "Morgan Stanley",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T17:05:30",
+        "firm": "Raymond James",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
-      "date": "2026-08-21T20:15:00Z",
-      "title": "Why higher yields aren't scaring off retail traders",
-      "url": "https://finance.yahoo.com/video/why-higher-yields-arent-scaring-201500563.html",
-      "source": "Yahoo Finance Video"
+      "date": "2026-08-27T10:36:45Z",
+      "title": "Why Nvidia probably just lit a new fire under these once-hot trades",
+      "url": "https://finance.yahoo.com/markets/stocks/article/why-nvidia-probably-just-lit-a-new-fire-under-these-once-hot-trades-103645649.html",
+      "source": "Yahoo Finance"
     },
     {
-      "date": "2026-08-21T14:47:00Z",
-      "title": "Micron\u2019s AI boom rolls on with $10 billion Iowa data center",
-      "url": "https://finance.yahoo.com/video/micron-ai-boom-rolls-10-144700739.html",
-      "source": "Yahoo Finance Video"
+      "date": "2026-08-28T04:09:07Z",
+      "title": "Amkor, FormFactor, Vishay Intertechnology, Allegro MicroSystems, and Intel Shares Skyrocket, What You Need To Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/amkor-formfactor-vishay-intertechnology-allegro-040907487.html",
+      "source": "StockStory"
     },
     {
-      "date": "2026-08-21T21:07:30Z",
-      "title": "A Bounce From Weakness: Selling Into Strength For DRAM ETF Beat A Round Trip",
-      "url": "https://www.investors.com/research/swing-trading/a-bounce-from-weakness-selling-into-strength-for-dram-etf-beat-a-round-trip/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
+      "date": "2026-08-28T03:29:07Z",
+      "title": "Impinj and Broadcom Shares Skyrocket, What You Need To Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/impinj-broadcom-shares-skyrocket-know-032907347.html",
+      "source": "StockStory"
     },
     {
-      "date": "2026-08-21T20:38:00Z",
-      "title": "Q3 Earnings Preview: High Expectations, Positive Revisions, and Broad-Based Growth",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/q3-earnings-preview-high-expectations-203800936.html",
-      "source": "Zacks"
+      "date": "2026-08-28T01:19:10Z",
+      "title": "The Peer-Group Mispricing Sitting On SNDK Stock",
+      "url": "https://www.trefis.com/articles/613261/the-peer-group-mispricing-sitting-on-sndk-stock/2026-08-27",
+      "source": "Trefis"
     },
     {
-      "date": "2026-08-21T20:17:03Z",
-      "title": "Goldman Sachs Sees Nvidia Setup Few Expect",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/goldman-sachs-sees-nvidia-setup-201703480.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-08-21T19:47:55Z",
-      "title": "Micron Falls as Wall Street Questions Its $1 Trillion Valuation",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/micron-falls-wall-street-questions-194755819.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-08-21T19:06:03Z",
-      "title": "Did Citadel\u2019s $4 Billion AI Stock Selloff Weigh On MU, SNDK, NBIS?",
-      "url": "https://www.benzinga.com/markets/prediction-markets/26/08/61365783/citadel-ai-stock-sale-4-billion?utm_source=yahooFinance&utm_campaign=partner_feed&utm_medium=referral",
-      "source": "Benzinga Prediction Markets"
-    },
-    {
-      "date": "2026-08-21T18:14:10Z",
-      "title": "MU Stock Alert: BMO Names Micron a Top AI Memory Play With $1,300 Price Target",
-      "url": "https://finance.yahoo.com/technology/ai/articles/mu-stock-alert-bmo-names-181410478.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-08-21T18:13:51Z",
-      "title": "Sandisk (SNDK) Was Hit By A Hedge Fund Liquidation After A $35 Billion Loss",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/sandisk-sndk-hit-hedge-fund-181351579.html",
+      "date": "2026-08-27T23:11:35Z",
+      "title": "How Micron\u2019s New AI Research Push And Leadership Shuffle At Micron Technology (MU) Has Changed Its Investment Story",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/micron-ai-research-push-leadership-231135875.html",
       "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-21T18:13:02Z",
-      "title": "Why Is Micron Technology (MU) Spending $10 Billion On A New AI Research Hub?",
-      "url": "https://finance.yahoo.com/technology/ai/articles/why-micron-technology-mu-spending-181302411.html",
-      "source": "Simply Wall St."
+      "date": "2026-08-27T22:01:03Z",
+      "title": "AI Bubble Could Be Ready to Pop and Jim Cramer May Be the Warning Sign",
+      "url": "https://finance.yahoo.com/technology/ai/articles/ai-bubble-could-ready-pop-220103672.html",
+      "source": "Benzinga"
+    },
+    {
+      "date": "2026-08-27T21:36:49Z",
+      "title": "Stocks to Watch Thursday Recap: Nvidia, CrowdStrike, Salesforce",
+      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-08-27-2026/card/stocks-to-watch-nvidia-crowdstrike-salesforce-WMjYUzoZiONJEvHqPpyp?siteid=yhoof2&yptr=yahoo",
+      "source": "The Wall Street Journal"
+    },
+    {
+      "date": "2026-08-27T21:15:41Z",
+      "title": "Forget SMH and Its 87% Year: Three Semiconductor Funds Did Much Better",
+      "url": "https://247wallst.com/investing/2026/08/27/forget-smh-and-its-87-year-three-semiconductor-funds-did-much-better/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-27T21:07:00Z",
+      "title": "Micron Should Profit from Nvidia\u2019s Memory Price Warning. Its Stock Hasn\u2019t Budged.",
+      "url": "https://www.barrons.com/articles/micron-stock-price-memory-chips-nvidia-warning-70515f18?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-08-27T21:02:31Z",
+      "title": "Micron Technology Doubles Capex as AI Memory Shortage Deepens",
+      "url": "https://www.marketbeat.com/instant-alerts/event-micron-technology-doubles-capex-as-ai-memory-shortage-deepens-2026-08-27/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.02881151132464146,
   "technicals": {
-    "ma20": 896.2425018310547,
-    "ma50": 964.5412915039062,
-    "ma200": 570.9477266693116,
-    "rsi14": 54.33856092990468,
+    "ma20": 915.3825012207031,
+    "ma50": 957.1730603027344,
+    "ma200": 584.8793295288086,
+    "rsi14": 50.99361140883671,
     "high_20d": 1036.1300048828125,
-    "low_5d": 915.1799926757812,
-    "low_10d": 844.6199951171875,
+    "low_5d": 887.6099853515625,
+    "low_10d": 887.6099853515625,
     "high_52w": 1254.8069810301963,
     "low_52w": 114.06692085746202,
-    "atr14": 56.21785191127232,
-    "atr14_pct": 5.814957922968138,
-    "position_in_52w_range_pct": 74.75086903762217
+    "atr14": 51.47214617047991,
+    "atr14_pct": 5.502747021500491,
+    "position_in_52w_range_pct": 71.99914533260173
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 108.2691,
-      "high": 110.3062,
-      "low": 103.3102,
-      "close": 103.6084,
-      "volume": 17967000.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 102.396,
-      "high": 103.7575,
-      "low": 99.6831,
-      "close": 102.2072,
-      "volume": 25465100.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 100.0408,
-      "high": 101.5513,
-      "low": 97.0,
-      "close": 98.2918,
-      "volume": 26752300.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 96.4832,
-      "high": 97.8745,
-      "low": 96.0658,
-      "close": 97.2484,
-      "volume": 17234600.0
-    },
     {
       "date": "2024-08-28",
       "open": 96.7515,
@@ -265,7 +344,7 @@
     {
       "date": "2024-08-30",
       "open": 96.3143,
-      "high": 97.7949,
+      "high": 97.795,
       "low": 94.3963,
       "close": 95.6385,
       "volume": 18819400.0
@@ -281,7 +360,7 @@
     {
       "date": "2024-09-04",
       "open": 87.8078,
-      "high": 90.1629,
+      "high": 90.163,
       "low": 87.2612,
       "close": 88.7319,
       "volume": 16356500.0
@@ -331,12 +410,12 @@
       "open": 86.5556,
       "high": 87.4798,
       "low": 83.5943,
-      "close": 86.6649,
+      "close": 86.665,
       "volume": 30900000.0
     },
     {
       "date": "2024-09-13",
-      "open": 87.5395,
+      "open": 87.5394,
       "high": 90.8983,
       "low": 87.3208,
       "close": 90.6499,
@@ -355,7 +434,7 @@
       "open": 87.5096,
       "high": 89.0102,
       "low": 86.9929,
-      "close": 88.1754,
+      "close": 88.1755,
       "volume": 17744800.0
     },
     {
@@ -377,8 +456,8 @@
     {
       "date": "2024-09-20",
       "open": 87.8475,
-      "high": 90.4015,
-      "low": 87.778,
+      "high": 90.4014,
+      "low": 87.7779,
       "close": 90.3319,
       "volume": 28711000.0
     },
@@ -408,9 +487,9 @@
     },
     {
       "date": "2024-09-26",
-      "open": 112.3932,
+      "open": 112.3931,
       "high": 114.0825,
-      "low": 106.858,
+      "low": 106.8579,
       "close": 109.1933,
       "volume": 107965900.0
     },
@@ -474,14 +553,14 @@
       "date": "2024-10-08",
       "open": 101.6557,
       "high": 102.4118,
-      "low": 100.7404,
+      "low": 100.7405,
       "close": 102.0139,
       "volume": 18858300.0
     },
     {
       "date": "2024-10-09",
       "open": 101.7254,
-      "high": 101.7651,
+      "high": 101.7652,
       "low": 99.8053,
       "close": 101.1782,
       "volume": 18442700.0
@@ -632,7 +711,7 @@
     },
     {
       "date": "2024-11-05",
-      "open": 101.4766,
+      "open": 101.4767,
       "high": 105.0781,
       "low": 101.2677,
       "close": 104.9487,
@@ -665,7 +744,7 @@
     {
       "date": "2024-11-11",
       "open": 110.3807,
-      "high": 110.9378,
+      "high": 110.9379,
       "low": 106.2222,
       "close": 108.0925,
       "volume": 14479700.0
@@ -744,9 +823,9 @@
     },
     {
       "date": "2024-11-25",
-      "open": 103.3172,
+      "open": 103.3171,
       "high": 105.8541,
-      "low": 103.2774,
+      "low": 103.2773,
       "close": 103.9439,
       "volume": 22837900.0
     },
@@ -792,7 +871,7 @@
     },
     {
       "date": "2024-12-04",
-      "open": 100.2529,
+      "open": 100.253,
       "high": 102.8794,
       "low": 99.2879,
       "close": 102.6705,
@@ -803,7 +882,7 @@
       "open": 103.347,
       "high": 103.7151,
       "low": 100.0938,
-      "close": 100.3525,
+      "close": 100.3524,
       "volume": 13448900.0
     },
     {
@@ -905,7 +984,7 @@
     {
       "date": "2024-12-24",
       "open": 89.1204,
-      "high": 89.2398,
+      "high": 89.2397,
       "low": 87.7773,
       "close": 88.8219,
       "volume": 13021300.0
@@ -915,7 +994,7 @@
       "open": 88.0459,
       "high": 90.165,
       "low": 87.648,
-      "close": 89.3591,
+      "close": 89.3592,
       "volume": 14468200.0
     },
     {
@@ -931,12 +1010,12 @@
       "open": 86.6561,
       "high": 86.7159,
       "low": 84.2554,
-      "close": 84.9825,
+      "close": 84.9826,
       "volume": 22022900.0
     },
     {
       "date": "2024-12-31",
-      "open": 85.1121,
+      "open": 85.112,
       "high": 86.0684,
       "low": 83.7672,
       "close": 83.837,
@@ -955,7 +1034,7 @@
       "open": 87.6124,
       "high": 89.8538,
       "low": 87.1741,
-      "close": 89.5251,
+      "close": 89.525,
       "volume": 17484600.0
     },
     {
@@ -1017,14 +1096,14 @@
     {
       "date": "2025-01-16",
       "open": 103.9196,
-      "high": 104.3977,
+      "high": 104.3978,
       "low": 101.479,
       "close": 102.2062,
       "volume": 16243800.0
     },
     {
       "date": "2025-01-17",
-      "open": 104.2384,
+      "open": 104.2383,
       "high": 105.4736,
       "low": 102.1066,
       "close": 105.3441,
@@ -1033,9 +1112,9 @@
     {
       "date": "2025-01-21",
       "open": 105.0253,
-      "high": 109.8168,
+      "high": 109.8169,
       "low": 104.8261,
-      "close": 108.9601,
+      "close": 108.9602,
       "volume": 23533600.0
     },
     {
@@ -1049,7 +1128,7 @@
     {
       "date": "2025-01-23",
       "open": 104.3878,
-      "high": 105.7725,
+      "high": 105.7724,
       "low": 102.9533,
       "close": 104.4376,
       "volume": 22677600.0
@@ -1082,7 +1161,7 @@
       "date": "2025-01-29",
       "open": 89.535,
       "high": 90.1028,
-      "low": 87.4231,
+      "low": 87.4232,
       "close": 88.6684,
       "volume": 25342800.0
     },
@@ -1091,7 +1170,7 @@
       "open": 90.312,
       "high": 92.8024,
       "low": 89.9534,
-      "close": 92.145,
+      "close": 92.1449,
       "volume": 22497100.0
     },
     {
@@ -1106,7 +1185,7 @@
       "date": "2025-02-03",
       "open": 88.3097,
       "high": 91.0492,
-      "low": 87.6821,
+      "low": 87.6822,
       "close": 89.5749,
       "volume": 18607900.0
     },
@@ -1114,7 +1193,7 @@
       "date": "2025-02-04",
       "open": 88.7082,
       "high": 91.099,
-      "low": 88.4591,
+      "low": 88.4592,
       "close": 90.312,
       "volume": 12827500.0
     },
@@ -1169,7 +1248,7 @@
     {
       "date": "2025-02-13",
       "open": 91.7066,
-      "high": 95.7013,
+      "high": 95.7012,
       "low": 91.6668,
       "close": 95.2928,
       "volume": 16579900.0
@@ -1240,7 +1319,7 @@
     },
     {
       "date": "2025-02-27",
-      "open": 97.4645,
+      "open": 97.4644,
       "high": 99.5066,
       "low": 91.1388,
       "close": 91.4676,
@@ -1256,8 +1335,8 @@
     },
     {
       "date": "2025-03-03",
-      "open": 95.4422,
-      "high": 95.8307,
+      "open": 95.4423,
+      "high": 95.8308,
       "low": 89.0469,
       "close": 90.1925,
       "volume": 20281800.0
@@ -1345,7 +1424,7 @@
     {
       "date": "2025-03-18",
       "open": 101.5089,
-      "high": 102.9135,
+      "high": 102.9134,
       "low": 99.905,
       "close": 101.3296,
       "volume": 18434100.0
@@ -4216,46 +4295,46 @@
     },
     {
       "date": "2026-08-21",
-      "open": 989.675,
+      "open": 989.68,
       "high": 989.96,
       "low": 958.26,
       "close": 966.78,
-      "volume": 20990385.0
+      "volume": 21823400.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 934.78,
+      "high": 936.45,
+      "low": 887.61,
+      "close": 910.43,
+      "volume": 30012600.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 928.98,
+      "high": 946.67,
+      "low": 916.3,
+      "close": 932.97,
+      "volume": 19163200.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 925.74,
+      "high": 945.75,
+      "low": 924.6,
+      "close": 938.4,
+      "volume": 18721700.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 967.01,
+      "high": 968.71,
+      "low": 906.89,
+      "close": 935.39,
+      "volume": 28691600.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 116.8125,
-      "high": 117.5413,
-      "low": 115.4247,
-      "close": 115.6045,
-      "volume": 13174900.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 117.4615,
-      "high": 120.5066,
-      "low": 116.3233,
-      "close": 117.4914,
-      "volume": 17038300.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 117.4914,
-      "high": 117.8908,
-      "low": 115.914,
-      "close": 116.2334,
-      "volume": 8674800.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 115.904,
-      "high": 118.1703,
-      "low": 115.6244,
-      "close": 116.3133,
-      "volume": 12584300.0
-    },
     {
       "date": "2025-08-27",
       "open": 116.6628,
@@ -6234,14 +6313,45 @@
     },
     {
       "date": "2026-08-21",
-      "open": 989.675,
+      "open": 989.68,
       "high": 989.96,
       "low": 958.26,
       "close": 966.78,
-      "volume": 20990385.0
+      "volume": 21823400.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 934.78,
+      "high": 936.45,
+      "low": 887.61,
+      "close": 910.43,
+      "volume": 30012600.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 928.98,
+      "high": 946.67,
+      "low": 916.3,
+      "close": 932.97,
+      "volume": 19163200.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 925.74,
+      "high": 945.75,
+      "low": 924.6,
+      "close": 938.4,
+      "volume": 18721700.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 967.01,
+      "high": 968.71,
+      "low": 906.89,
+      "close": 935.39,
+      "volume": 28691600.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:12:05Z"
+  "ai_synthesized_at": null
 }

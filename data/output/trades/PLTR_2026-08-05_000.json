@@ -1,6 +1,6 @@
 {
   "trade_id": "PLTR_2026-08-05_000",
-  "generated_at": "2026-08-28T03:44:31+00:00",
+  "generated_at": "2026-08-28T04:50:36+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "PLTR",
@@ -41,8 +41,8 @@
     "volume": 63515900.0,
     "ma20": 131.433,
     "ma50": 131.4242,
-    "ma200": 152.43724999999998,
-    "rsi14": 68.73840270169046,
+    "ma200": 152.43725,
+    "rsi14": 68.73840269685073,
     "atr14": 8.432142857142859,
     "atr14_pct": 5.322314496713285,
     "high_52w": 207.52,
@@ -54,22 +54,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 11.421940928270017,
-    "mfe_date": "2026-08-21",
+    "mfe_R": 13.286919831223607,
+    "mfe_date": "2026-08-27",
     "mae_R": 1.126582278481017,
     "mae_date": "2026-08-06",
-    "optimal_exit_price": 182.44,
-    "optimal_exit_date": "2026-08-21",
-    "optimal_R": 11.421940928270017,
-    "days_to_optimal": 16,
+    "optimal_exit_price": 186.86,
+    "optimal_exit_date": "2026-08-27",
+    "optimal_R": 13.286919831223607,
+    "days_to_optimal": 22,
     "realized_R": null,
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 22
+    "hold_calendar_days": 23
   },
   "lesson": "In progress",
-  "narrative": "Entered **PLTR** long on 2026-08-05 at $155.37 (qty 1136) with stop $153.00 (1R = $2.37/sh = $2,692). Setup: **Long in mixed structure** \u2014 price above MA20 ($131.43), MA stack mixed, RSI 69, 51% through 52W range, ATR 5.3% of price. **In progress.** Peak so far +11.42R; worst drawdown -1.13R.",
+  "narrative": "Entered **PLTR** long on 2026-08-05 at $155.37 (qty 1136) with stop $153.00 (1R = $2.37/sh = $2,692). Setup: **Long in mixed structure** \u2014 price above MA20 ($131.43), MA stack mixed, RSI 69, 51% through 52W range, ATR 5.3% of price. **In progress.** Peak so far +13.29R; worst drawdown -1.13R.",
   "ohlc_window": [
     {
       "date": "2026-07-06",
@@ -349,7 +349,39 @@
       "high": 182.44,
       "low": 172.55,
       "close": 179.94,
-      "volume": 40929832.0
+      "volume": 41076200.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 177.39,
+      "high": 178.75,
+      "low": 171.31,
+      "close": 175.89,
+      "volume": 35115500.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 176.63,
+      "high": 179.87,
+      "low": 172.2,
+      "close": 172.73,
+      "volume": 24558500.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 170.6,
+      "high": 178.49,
+      "low": 168.9,
+      "close": 177.5,
+      "volume": 27924200.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 178.75,
+      "high": 186.86,
+      "low": 178.01,
+      "close": 185.93,
+      "volume": 40651900.0
     }
   ]
 }

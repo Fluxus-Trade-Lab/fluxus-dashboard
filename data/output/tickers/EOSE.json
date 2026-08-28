@@ -1,8 +1,8 @@
 {
   "ticker": "EOSE",
-  "fetched_at": "2026-08-09T17:24:55Z",
+  "fetched_at": "2026-08-28T04:47:52Z",
   "_schema": "v2",
-  "current_price": 4.150000095367432,
+  "current_price": 3.4200000762939453,
   "info": {
     "symbol": "EOSE",
     "longName": "Eos Energy Enterprises, Inc.",
@@ -13,13 +13,13 @@
     "city": "Edison",
     "website": "https://www.eose.com",
     "fullTimeEmployees": 787,
-    "marketCap": 1501002496,
-    "enterpriseValue": 2559852032,
+    "marketCap": 1236970752,
+    "enterpriseValue": 2294009600,
     "trailingPE": null,
-    "forwardPE": -27.749916,
-    "priceToSalesTrailing12Months": 7.0059114,
-    "enterpriseToRevenue": 11.948,
-    "priceToBook": -1.6223612,
+    "forwardPE": -22.868605,
+    "priceToSalesTrailing12Months": 5.773546,
+    "enterpriseToRevenue": 10.707,
+    "priceToBook": -1.1302049,
     "grossMargins": -0.84749,
     "operatingMargins": -1.2185501,
     "profitMargins": -2.46757,
@@ -32,29 +32,17 @@
     "currentRatio": 3.256,
     "fiftyTwoWeekHigh": 19.86,
     "fiftyTwoWeekLow": 3.11,
-    "averageVolume": 28350837,
-    "averageVolume10days": 32305410,
+    "averageVolume": 25347512,
+    "averageVolume10days": 23691180,
     "beta": 2.797,
     "sharesOutstanding": 361687337,
-    "sharesFloat": 350198269,
+    "sharesFloat": 357328674,
     "companyOfficers": [
       {
         "name": "Mr. Joseph R. Mastrangelo Jr.",
         "title": "CEO & Director",
         "age": 56,
         "yearBorn": 1969
-      },
-      {
-        "name": "Ms. Michelle  Buczkowski",
-        "title": "Chief Administration Officer",
-        "age": 40,
-        "yearBorn": 1985
-      },
-      {
-        "name": "Mr. Nathan G. Kroeker CPA",
-        "title": "Chief Commercial Officer",
-        "age": 51,
-        "yearBorn": 1974
       },
       {
         "name": "Mr. Alessandro  Lagi",
@@ -73,6 +61,18 @@
         "title": "Chief Accounting Officer",
         "age": 51,
         "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Francis  Richey",
+        "title": "Chief Technology Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Elizabeth  Higley",
+        "title": "Director of Investor Relations",
+        "age": null,
+        "yearBorn": null
       }
     ]
   },
@@ -170,11 +170,18 @@
     "bullish": 3,
     "neutral": 7,
     "bearish": 0,
-    "avg_price_target": 7.0,
+    "avg_price_target": 6.66667,
     "high_price_target": 11.0,
     "low_price_target": 4.0,
-    "current_price": 4.15,
+    "current_price": 3.42,
     "recent_rating_changes": [
+      {
+        "date": "2026-08-14T14:26:21",
+        "firm": "B. Riley Securities",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
       {
         "date": "2026-08-06T19:35:32",
         "firm": "TD Cowen",
@@ -237,17 +244,22 @@
         "to_grade": "Neutral",
         "from_grade": "Buy",
         "action": "down"
-      },
-      {
-        "date": "2026-02-27T11:31:39",
-        "firm": "Roth Capital",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
       }
     ]
   },
   "news": [
+    {
+      "date": "2026-08-27T14:00:43Z",
+      "title": "Eos Energy to Begin Consolidating Battery Manufacturing at Thorn Hill Facility in Q4",
+      "url": "https://finance.yahoo.com/energy/articles/eos-energy-begin-consolidating-battery-140043604.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-08-13T13:10:35Z",
+      "title": "Eos Energy (EOSE) Q2 2026 Earnings Call Transcript",
+      "url": "https://www.fool.com/earnings/call-transcripts/2026/08/13/eos-energy-eose-q2-2026-earnings-call-transcript/",
+      "source": "Motley Fool"
+    },
     {
       "date": "2026-08-07T12:13:41Z",
       "title": "Eos Energy (EOSE) Stock Sees Fair Value Cut As Analysts Weigh Growth Against Dilution",
@@ -295,148 +307,24 @@
       "title": "Eos Energy Enterprises, Inc. (EOSE) Reports Q2 Loss",
       "url": "https://finance.yahoo.com/markets/stocks/articles/eos-energy-enterprises-inc-eose-121503506.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-07-29T22:25:05Z",
-      "title": "DMC Global (BOOM) Q2 Earnings and Revenues Beat Estimates",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/dmc-global-boom-q2-earnings-222505830.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-07-29T14:00:38Z",
-      "title": "Eos Energy Enterprises, Inc. (EOSE) Expected to Beat Earnings Estimates: Can the Stock Move Higher?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/eos-energy-enterprises-inc-eose-140038112.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.1301204789375287,
+  "options_implied_move": 0.046783624687337044,
   "technicals": {
-    "ma20": 3.884499979019165,
-    "ma50": 5.490500001907349,
-    "ma200": 9.560225007534028,
-    "rsi14": 47.41937565567598,
-    "high_20d": 4.710000038146973,
-    "low_5d": 3.2200000286102295,
-    "low_10d": 3.109999895095825,
+    "ma20": 3.8234999895095827,
+    "ma50": 4.479299988746643,
+    "ma200": 8.750525008440018,
+    "rsi14": 40.642909503248994,
+    "high_20d": 4.449999809265137,
+    "low_5d": 3.309999942779541,
+    "low_10d": 3.2799999713897705,
     "high_52w": 19.860000610351562,
     "low_52w": 3.109999895095825,
-    "atr14": 0.4310714176722935,
-    "atr14_pct": 10.387262837740426,
-    "position_in_52w_range_pct": 6.208956154398157
+    "atr14": 0.28321424552372526,
+    "atr14_pct": 8.281118105430805,
+    "position_in_52w_range_pct": 1.8507472714062334
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-08",
-      "open": 1.48,
-      "high": 1.48,
-      "low": 1.395,
-      "close": 1.41,
-      "volume": 6425300.0
-    },
-    {
-      "date": "2024-08-09",
-      "open": 1.41,
-      "high": 1.53,
-      "low": 1.4,
-      "close": 1.52,
-      "volume": 5131000.0
-    },
-    {
-      "date": "2024-08-12",
-      "open": 1.58,
-      "high": 1.708,
-      "low": 1.54,
-      "close": 1.68,
-      "volume": 7466800.0
-    },
-    {
-      "date": "2024-08-13",
-      "open": 1.67,
-      "high": 1.78,
-      "low": 1.62,
-      "close": 1.78,
-      "volume": 4334900.0
-    },
-    {
-      "date": "2024-08-14",
-      "open": 1.81,
-      "high": 1.83,
-      "low": 1.715,
-      "close": 1.8,
-      "volume": 4213900.0
-    },
-    {
-      "date": "2024-08-15",
-      "open": 1.8,
-      "high": 1.9,
-      "low": 1.77,
-      "close": 1.88,
-      "volume": 4780900.0
-    },
-    {
-      "date": "2024-08-16",
-      "open": 1.905,
-      "high": 2.03,
-      "low": 1.88,
-      "close": 1.93,
-      "volume": 5678600.0
-    },
-    {
-      "date": "2024-08-19",
-      "open": 1.92,
-      "high": 2.04,
-      "low": 1.9,
-      "close": 1.98,
-      "volume": 3819900.0
-    },
-    {
-      "date": "2024-08-20",
-      "open": 1.99,
-      "high": 2.02,
-      "low": 1.82,
-      "close": 1.89,
-      "volume": 4697300.0
-    },
-    {
-      "date": "2024-08-21",
-      "open": 1.98,
-      "high": 2.43,
-      "low": 1.97,
-      "close": 2.39,
-      "volume": 20088500.0
-    },
-    {
-      "date": "2024-08-22",
-      "open": 2.36,
-      "high": 2.55,
-      "low": 2.27,
-      "close": 2.42,
-      "volume": 10674900.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 2.41,
-      "high": 2.51,
-      "low": 2.34,
-      "close": 2.36,
-      "volume": 6457100.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 2.36,
-      "high": 2.415,
-      "low": 2.275,
-      "close": 2.34,
-      "volume": 4792100.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 2.28,
-      "high": 2.315,
-      "low": 2.16,
-      "close": 2.3,
-      "volume": 6241900.0
-    },
     {
       "date": "2024-08-28",
       "open": 2.29,
@@ -4331,122 +4219,122 @@
       "high": 4.19,
       "low": 3.86,
       "close": 4.15,
-      "volume": 18961600.0
+      "volume": 19085200.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 4.14,
+      "high": 4.18,
+      "low": 3.99,
+      "close": 4.05,
+      "volume": 16023700.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 4.11,
+      "high": 4.32,
+      "low": 4.09,
+      "close": 4.24,
+      "volume": 25186700.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 4.44,
+      "high": 4.45,
+      "low": 4.14,
+      "close": 4.24,
+      "volume": 20036100.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 4.22,
+      "high": 4.33,
+      "low": 4.05,
+      "close": 4.16,
+      "volume": 16571800.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 4.12,
+      "high": 4.22,
+      "low": 3.96,
+      "close": 4.02,
+      "volume": 16943300.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 4.0,
+      "high": 4.05,
+      "low": 3.87,
+      "close": 3.93,
+      "volume": 22206500.0
+    },
+    {
+      "date": "2026-08-18",
+      "open": 3.75,
+      "high": 3.87,
+      "low": 3.64,
+      "close": 3.67,
+      "volume": 20860900.0
+    },
+    {
+      "date": "2026-08-19",
+      "open": 3.66,
+      "high": 3.755,
+      "low": 3.5,
+      "close": 3.74,
+      "volume": 27179300.0
+    },
+    {
+      "date": "2026-08-20",
+      "open": 3.67,
+      "high": 3.67,
+      "low": 3.28,
+      "close": 3.46,
+      "volume": 36255600.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 3.54,
+      "high": 3.82,
+      "low": 3.48,
+      "close": 3.81,
+      "volume": 28600100.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 3.69,
+      "high": 3.695,
+      "low": 3.38,
+      "close": 3.46,
+      "volume": 27579000.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 3.56,
+      "high": 3.63,
+      "low": 3.44,
+      "close": 3.54,
+      "volume": 23061300.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 3.495,
+      "high": 3.59,
+      "low": 3.31,
+      "close": 3.34,
+      "volume": 19848100.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 3.48,
+      "high": 3.55,
+      "low": 3.39,
+      "close": 3.42,
+      "volume": 14377700.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-07",
-      "open": 6.565,
-      "high": 6.91,
-      "low": 6.51,
-      "close": 6.56,
-      "volume": 15975100.0
-    },
-    {
-      "date": "2025-08-08",
-      "open": 6.6,
-      "high": 6.69,
-      "low": 6.195,
-      "close": 6.37,
-      "volume": 11401600.0
-    },
-    {
-      "date": "2025-08-11",
-      "open": 6.37,
-      "high": 6.54,
-      "low": 6.29,
-      "close": 6.35,
-      "volume": 8545300.0
-    },
-    {
-      "date": "2025-08-12",
-      "open": 6.21,
-      "high": 6.262,
-      "low": 6.0,
-      "close": 6.11,
-      "volume": 11758200.0
-    },
-    {
-      "date": "2025-08-13",
-      "open": 6.14,
-      "high": 6.35,
-      "low": 5.84,
-      "close": 6.34,
-      "volume": 15201500.0
-    },
-    {
-      "date": "2025-08-14",
-      "open": 6.12,
-      "high": 6.605,
-      "low": 6.1,
-      "close": 6.33,
-      "volume": 9905100.0
-    },
-    {
-      "date": "2025-08-15",
-      "open": 6.35,
-      "high": 6.35,
-      "low": 5.83,
-      "close": 5.86,
-      "volume": 15502000.0
-    },
-    {
-      "date": "2025-08-18",
-      "open": 5.96,
-      "high": 6.4,
-      "low": 5.925,
-      "close": 6.33,
-      "volume": 13499800.0
-    },
-    {
-      "date": "2025-08-19",
-      "open": 6.25,
-      "high": 6.27,
-      "low": 5.95,
-      "close": 6.05,
-      "volume": 7951300.0
-    },
-    {
-      "date": "2025-08-20",
-      "open": 5.91,
-      "high": 6.01,
-      "low": 5.77,
-      "close": 5.99,
-      "volume": 7629900.0
-    },
-    {
-      "date": "2025-08-21",
-      "open": 5.94,
-      "high": 6.03,
-      "low": 5.84,
-      "close": 6.02,
-      "volume": 4582900.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 6.03,
-      "high": 6.38,
-      "low": 5.96,
-      "close": 6.32,
-      "volume": 8341800.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 6.32,
-      "high": 6.38,
-      "low": 6.145,
-      "close": 6.27,
-      "volume": 5349800.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 6.345,
-      "high": 6.94,
-      "low": 6.31,
-      "close": 6.92,
-      "volume": 15722200.0
-    },
     {
       "date": "2025-08-27",
       "open": 6.95,
@@ -6349,7 +6237,119 @@
       "high": 4.19,
       "low": 3.86,
       "close": 4.15,
-      "volume": 18961600.0
+      "volume": 19085200.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 4.14,
+      "high": 4.18,
+      "low": 3.99,
+      "close": 4.05,
+      "volume": 16023700.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 4.11,
+      "high": 4.32,
+      "low": 4.09,
+      "close": 4.24,
+      "volume": 25186700.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 4.44,
+      "high": 4.45,
+      "low": 4.14,
+      "close": 4.24,
+      "volume": 20036100.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 4.22,
+      "high": 4.33,
+      "low": 4.05,
+      "close": 4.16,
+      "volume": 16571800.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 4.12,
+      "high": 4.22,
+      "low": 3.96,
+      "close": 4.02,
+      "volume": 16943300.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 4.0,
+      "high": 4.05,
+      "low": 3.87,
+      "close": 3.93,
+      "volume": 22206500.0
+    },
+    {
+      "date": "2026-08-18",
+      "open": 3.75,
+      "high": 3.87,
+      "low": 3.64,
+      "close": 3.67,
+      "volume": 20860900.0
+    },
+    {
+      "date": "2026-08-19",
+      "open": 3.66,
+      "high": 3.755,
+      "low": 3.5,
+      "close": 3.74,
+      "volume": 27179300.0
+    },
+    {
+      "date": "2026-08-20",
+      "open": 3.67,
+      "high": 3.67,
+      "low": 3.28,
+      "close": 3.46,
+      "volume": 36255600.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 3.54,
+      "high": 3.82,
+      "low": 3.48,
+      "close": 3.81,
+      "volume": 28600100.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 3.69,
+      "high": 3.695,
+      "low": 3.38,
+      "close": 3.46,
+      "volume": 27579000.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 3.56,
+      "high": 3.63,
+      "low": 3.44,
+      "close": 3.54,
+      "volume": 23061300.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 3.495,
+      "high": 3.59,
+      "low": 3.31,
+      "close": 3.34,
+      "volume": 19848100.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 3.48,
+      "high": 3.55,
+      "low": 3.39,
+      "close": 3.42,
+      "volume": 14377700.0
     }
   ],
   "ai_synthesis": null,

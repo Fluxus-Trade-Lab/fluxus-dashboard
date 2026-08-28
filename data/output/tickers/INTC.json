@@ -1,8 +1,8 @@
 {
   "ticker": "INTC",
-  "fetched_at": "2026-08-21T22:09:45Z",
+  "fetched_at": "2026-08-28T04:43:28Z",
   "_schema": "v2",
-  "current_price": 90.06999969482422,
+  "current_price": 92.08999633789062,
   "info": {
     "symbol": "INTC",
     "longName": "Intel Corporation",
@@ -13,13 +13,13 @@
     "city": "Santa Clara",
     "website": "https://www.intel.com",
     "fullTimeEmployees": 85100,
-    "marketCap": 487008862208,
-    "enterpriseValue": 501114732544,
+    "marketCap": 486797410304,
+    "enterpriseValue": 500912947200,
     "trailingPE": null,
-    "forwardPE": 45.158886,
-    "priceToSalesTrailing12Months": 8.539221,
-    "enterpriseToRevenue": 8.787,
-    "priceToBook": 5.3073335,
+    "forwardPE": 45.139282,
+    "priceToSalesTrailing12Months": 8.535514,
+    "enterpriseToRevenue": 8.783,
+    "priceToBook": 5.305029,
     "grossMargins": 0.38873002,
     "operatingMargins": 0.12189999,
     "profitMargins": -0.19794,
@@ -31,9 +31,9 @@
     "debtToEquity": 48.997,
     "currentRatio": 1.604,
     "fiftyTwoWeekHigh": 142.35,
-    "fiftyTwoWeekLow": 23.65,
-    "averageVolume": 119281488,
-    "averageVolume10days": 112290190,
+    "fiftyTwoWeekLow": 23.68,
+    "averageVolume": 118690406,
+    "averageVolume10days": 94832890,
     "beta": 2.241,
     "sharesOutstanding": 5286105262,
     "sharesFloat": 4618891680,
@@ -64,8 +64,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.42,
+      "eps_estimate": 0.21584,
+      "eps_surprise_pct": 0.94589996
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.29,
+      "eps_estimate": 0.01313,
+      "eps_surprise_pct": 21.0868
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.15,
+      "eps_estimate": 0.08264,
+      "eps_surprise_pct": 0.8151
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.23,
+      "eps_estimate": 0.00705,
+      "eps_surprise_pct": 31.6241
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-22",
+    "revenue_low": 16281000000,
+    "revenue_high": 17027075000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -123,117 +152,167 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Hold",
+    "total_ratings": 48,
+    "bullish": 12,
+    "neutral": 31,
+    "bearish": 5,
+    "avg_price_target": 114.87805,
+    "high_price_target": 200.0,
+    "low_price_target": 75.0,
+    "current_price": 92.09,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-12T14:14:39",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-12T13:39:04",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-28T20:47:08",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-27T12:02:06",
+        "firm": "Baird",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-25T01:45:21",
+        "firm": "DA Davidson",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T18:49:32",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T18:03:17",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T17:51:08",
+        "firm": "JP Morgan",
+        "to_grade": "Underweight",
+        "from_grade": "Underweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T17:43:58",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T14:33:25",
+        "firm": "Stifel",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
-      "date": "2026-08-21T20:57:00Z",
-      "title": "Elon Musk's SpaceX and Tesla Are Building a $16.8 Billion Chip Factory 5 Times Bigger Than Earth's Largest Building. What Does That Mean for Both Stocks?",
-      "url": "https://www.fool.com/investing/2026/08/21/elon-musks-spacex-and-tesla-are-building-a-168-bil/",
-      "source": "Motley Fool"
+      "date": "2026-08-24T12:54:06Z",
+      "title": "Tech stocks today: Tech stocks gain after Nvidia tops Q2 expectations",
+      "url": "https://finance.yahoo.com/technology/live/tech-stocks-today-tech-stocks-gain-after-nvidia-tops-q2-expectations-125406169.html",
+      "source": "Yahoo Finance"
     },
     {
-      "date": "2026-08-21T20:38:55Z",
-      "title": "The $116 Billion That NVDA Quietly Paid Its Owners",
-      "url": "https://www.trefis.com/articles/612357/the-116-billion-that-nvda-quietly-paid-its-owners/2026-08-21",
-      "source": "Trefis"
+      "date": "2026-08-28T04:09:07Z",
+      "title": "Amkor, FormFactor, Vishay Intertechnology, Allegro MicroSystems, and Intel Shares Skyrocket, What You Need To Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/amkor-formfactor-vishay-intertechnology-allegro-040907487.html",
+      "source": "StockStory"
     },
     {
-      "date": "2026-08-21T16:50:00Z",
-      "title": "Is Micron a Commodity or an AI Powerhouse? The Debate Driving Its Low Valuation.",
-      "url": "https://www.barrons.com/articles/micron-stock-price-valuation-commodity-ai-memory-1b905948?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
+      "date": "2026-08-28T03:29:07Z",
+      "title": "Impinj and Broadcom Shares Skyrocket, What You Need To Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/impinj-broadcom-shares-skyrocket-know-032907347.html",
+      "source": "StockStory"
     },
     {
-      "date": "2026-08-21T14:53:55Z",
-      "title": "Duquesne Entered a New Position in Riot Platforms During Q2. What This Means for RIOT Stock.",
-      "url": "https://www.barchart.com/story/news/3971533/duquesne-entered-a-new-position-in-riot-platforms-during-q2-what-this-means-for-riot-stock",
-      "source": "Barchart"
-    },
-    {
-      "date": "2026-08-21T14:14:00Z",
-      "title": "Should You Add NVIDIA Stock to Your Portfolio Ahead of Q2 Earnings?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/add-nvidia-stock-portfolio-ahead-141400651.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-21T12:31:11Z",
-      "title": "\u2018It\u2019s Done\u2019: Investor Warns Warren Buffett\u2019s Berkshire Can\u2019t Beat the S&P 500 \u2014 Bets on PayPal and Intel Instead",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/done-investor-warns-warren-buffett-123111231.html",
+      "date": "2026-08-27T22:01:03Z",
+      "title": "AI Bubble Could Be Ready to Pop and Jim Cramer May Be the Warning Sign",
+      "url": "https://finance.yahoo.com/technology/ai/articles/ai-bubble-could-ready-pop-220103672.html",
       "source": "Benzinga"
     },
     {
-      "date": "2026-08-21T11:47:53Z",
-      "title": "Micron Technology Stock Has Become A Bet On Memory Prices",
-      "url": "https://www.trefis.com/articles/612378/micron-technology-stock-has-become-a-bet-on-memory-prices/2026-08-21",
-      "source": "Trefis"
+      "date": "2026-08-27T21:57:22Z",
+      "title": "Nancy Pelosi Buys Intel. What Comes Next and If You Should Buy INTC Stock Too.",
+      "url": "https://www.barchart.com/story/news/4250726/nancy-pelosi-buys-intel-what-comes-next-and-if-you-should-buy-intc-stock-too",
+      "source": "Barchart"
     },
     {
-      "date": "2026-08-21T07:45:43Z",
-      "title": "Nvidia in Talks With Chip Startup Rebellions for Potential Deal",
-      "url": "https://finance.yahoo.com/technology/ai/articles/nvidia-talks-chip-startup-rebellions-074543725.html",
-      "source": "Bloomberg"
+      "date": "2026-08-27T21:15:41Z",
+      "title": "Forget SMH and Its 87% Year: Three Semiconductor Funds Did Much Better",
+      "url": "https://247wallst.com/investing/2026/08/27/forget-smh-and-its-87-year-three-semiconductor-funds-did-much-better/",
+      "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-21T07:25:00Z",
-      "title": "Billionaire Investor Stanley Druckenmiller Just Sold Intel and Micron, and Piled Into 2 Artificial Intelligence (AI) Stocks That Are Betting Big on Robotics",
-      "url": "https://www.fool.com/investing/2026/08/21/billionaire-investor-stanley-druckenmiller-just-so/",
-      "source": "Motley Fool"
+      "date": "2026-08-27T20:14:36Z",
+      "title": "Chipmakers are outshining Big Tech in the AI rally",
+      "url": "https://www.cnn.com/2026/08/27/business/us-stocks-micron-ai",
+      "source": "CNN Business"
     },
     {
-      "date": "2026-08-21T02:20:00Z",
-      "title": "Nvidia, AMD, and Intel: Wall Street Says to Buy 2 and Avoid 1. I Disagree.",
-      "url": "https://www.fool.com/investing/2026/08/20/nvidia-amd-and-intel-wall-street-says-to-buy-2-and/",
-      "source": "Motley Fool"
+      "date": "2026-08-27T19:36:01Z",
+      "title": "NVIDIA Is Now Up 20% in a Month: Take Profits, or Buy More?",
+      "url": "https://247wallst.com/investing/2026/08/27/nvidia-is-now-up-20-in-a-month-take-profits-or-buy-more/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-27T19:29:56Z",
+      "title": "Chip Stocks Rise After Nvidia's Blowout Earnings Spark Tech Rally",
+      "url": "https://finance.yahoo.com/technology/articles/chip-stocks-rise-nvidias-blowout-192956754.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-08-27T19:22:02Z",
+      "title": "AMD Stock Alert: Raymond James Sees $201B Revenue Opportunity by 2030",
+      "url": "https://www.barchart.com/story/news/4237440/amd-stock-alert-raymond-james-sees-201b-revenue-opportunity-by-2030",
+      "source": "Barchart"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.029644913764392624,
   "technicals": {
-    "ma20": 95.6989990234375,
-    "ma50": 108.1813996887207,
-    "ma200": 71.50794992446899,
-    "rsi14": 39.60134619712162,
+    "ma20": 95.90349922180175,
+    "ma50": 105.55399963378906,
+    "ma200": 72.52939990997315,
+    "rsi14": 44.27592619710759,
     "high_20d": 107.56999969482422,
-    "low_5d": 89.75,
-    "low_10d": 89.75,
+    "low_5d": 85.13999938964844,
+    "low_10d": 85.13999938964844,
     "high_52w": 142.35000610351562,
-    "low_52w": 22.780000686645508,
-    "atr14": 5.706285749162946,
-    "atr14_pct": 6.33538999500058,
-    "position_in_52w_range_pct": 56.276654645601255
+    "low_52w": 23.68000030517578,
+    "atr14": 4.740713936941964,
+    "atr14_pct": 5.1479141334175385,
+    "position_in_52w_range_pct": 57.647250939691006
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 21.39,
-      "high": 21.4,
-      "low": 20.04,
-      "close": 20.1,
-      "volume": 81444700.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 20.32,
-      "high": 20.93,
-      "low": 20.26,
-      "close": 20.54,
-      "volume": 73398400.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 20.53,
-      "high": 20.56,
-      "low": 19.95,
-      "close": 20.13,
-      "volume": 58534800.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 20.13,
-      "high": 20.26,
-      "low": 19.84,
-      "close": 20.07,
-      "volume": 43862000.0
-    },
     {
       "date": "2024-08-28",
       "open": 19.98,
@@ -4204,46 +4283,46 @@
     },
     {
       "date": "2026-08-21",
-      "open": 92.768,
-      "high": 92.768,
+      "open": 92.71,
+      "high": 92.77,
       "low": 89.75,
       "close": 90.07,
-      "volume": 90790387.0
+      "volume": 91670100.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 88.86,
+      "high": 88.91,
+      "low": 85.14,
+      "close": 87.26,
+      "volume": 96903400.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 90.06,
+      "high": 90.18,
+      "low": 87.29,
+      "close": 87.48,
+      "volume": 81853800.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 86.81,
+      "high": 88.28,
+      "low": 85.63,
+      "close": 88.24,
+      "volume": 75752800.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 89.91,
+      "high": 92.95,
+      "low": 88.46,
+      "close": 92.09,
+      "volume": 100251700.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 23.53,
-      "high": 23.57,
-      "low": 22.78,
-      "close": 23.5,
-      "volume": 97718300.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 23.65,
-      "high": 25.23,
-      "low": 23.65,
-      "close": 24.8,
-      "volume": 200266800.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 25.5,
-      "high": 25.88,
-      "low": 24.44,
-      "close": 24.55,
-      "volume": 156825600.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 24.58,
-      "high": 24.74,
-      "low": 24.1,
-      "close": 24.35,
-      "volume": 78558200.0
-    },
     {
       "date": "2025-08-27",
       "open": 24.19,
@@ -6222,14 +6301,45 @@
     },
     {
       "date": "2026-08-21",
-      "open": 92.768,
-      "high": 92.768,
+      "open": 92.71,
+      "high": 92.77,
       "low": 89.75,
       "close": 90.07,
-      "volume": 90790387.0
+      "volume": 91670100.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 88.86,
+      "high": 88.91,
+      "low": 85.14,
+      "close": 87.26,
+      "volume": 96903400.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 90.06,
+      "high": 90.18,
+      "low": 87.29,
+      "close": 87.48,
+      "volume": 81853800.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 86.81,
+      "high": 88.28,
+      "low": 85.63,
+      "close": 88.24,
+      "volume": 75752800.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 89.91,
+      "high": 92.95,
+      "low": 88.46,
+      "close": 92.09,
+      "volume": 100251700.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:11:28Z"
+  "ai_synthesized_at": null
 }

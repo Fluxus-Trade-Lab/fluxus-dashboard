@@ -1,8 +1,8 @@
 {
   "ticker": "AEVA",
-  "fetched_at": "2026-08-21T22:11:19Z",
+  "fetched_at": "2026-08-28T04:45:42Z",
   "_schema": "v2",
-  "current_price": 18.290000915527344,
+  "current_price": 16.389999389648438,
   "info": {
     "symbol": "AEVA",
     "longName": "Aeva Technologies, Inc.",
@@ -13,13 +13,13 @@
     "city": "Mountain View",
     "website": "https://www.aeva.com",
     "fullTimeEmployees": 239,
-    "marketCap": 1274918400,
-    "enterpriseValue": 1239829632,
+    "marketCap": 1142477312,
+    "enterpriseValue": 1066959360,
     "trailingPE": null,
-    "forwardPE": -11.018073,
-    "priceToSalesTrailing12Months": 59.029465,
-    "enterpriseToRevenue": 57.405,
-    "priceToBook": 45.610977,
+    "forwardPE": -10.192785,
+    "priceToSalesTrailing12Months": 52.897366,
+    "enterpriseToRevenue": 49.401,
+    "priceToBook": 40.872818,
     "grossMargins": 0.27225,
     "operatingMargins": -5.63233,
     "profitMargins": -1.50116,
@@ -32,11 +32,11 @@
     "currentRatio": 7.846,
     "fiftyTwoWeekHigh": 31.3,
     "fiftyTwoWeekLow": 8.83,
-    "averageVolume": 2169950,
-    "averageVolume10days": 1721190,
+    "averageVolume": 1986941,
+    "averageVolume10days": 1501960,
     "beta": 2.458,
     "sharesOutstanding": 69705758,
-    "sharesFloat": 41368973,
+    "sharesFloat": 41438679,
     "companyOfficers": [
       {
         "name": "Mr. Mina  Rezk",
@@ -99,7 +99,7 @@
   "next_earnings": {
     "date": "2026-11-04",
     "revenue_low": 6118000,
-    "revenue_high": 6700000
+    "revenue_high": 9750000
   },
   "quarterly_metrics": [
     {
@@ -164,11 +164,18 @@
     "bullish": 4,
     "neutral": 1,
     "bearish": 0,
-    "avg_price_target": 32.5,
+    "avg_price_target": 30.0,
     "high_price_target": 42.0,
-    "low_price_target": 26.0,
-    "current_price": 18.29,
+    "low_price_target": 20.0,
+    "current_price": 16.39,
     "recent_rating_changes": [
+      {
+        "date": "2026-08-24T09:52:50",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": null,
+        "action": "init"
+      },
       {
         "date": "2026-08-07T18:20:00",
         "firm": "Morgan Stanley",
@@ -231,17 +238,16 @@
         "to_grade": "Buy",
         "from_grade": "Buy",
         "action": "main"
-      },
-      {
-        "date": "2025-05-15T12:12:49",
-        "firm": "Canaccord Genuity",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
       }
     ]
   },
   "news": [
+    {
+      "date": "2026-08-26T13:37:00Z",
+      "title": "Ouster Vs. Aeva: Which is the Better Physical AI Lidar Bet Now?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ouster-vs-aeva-better-physical-133700143.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-18T21:22:37Z",
       "title": "Robotics Stocks Punished Tuesday in AI Sell-Off: Ouster Down 10%, Aeva Technologies Down 12%, Symbotic Down 4%",
@@ -295,62 +301,24 @@
       "title": "Aeva Technologies' 'Transformational' Hyperscaler Deal Could Potentially Drive Billions in Revenue, Oppenheimer Says",
       "url": "https://finance.yahoo.com/markets/stocks/articles/aeva-technologies-apos-apos-transformational-183014133.html",
       "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-06T16:05:04Z",
-      "title": "Why Did Aeva Stock Soar After Earnings?",
-      "url": "https://www.fool.com/investing/2026/08/06/why-did-aeva-stock-soar-after-earnings/",
-      "source": "Motley Fool"
     }
   ],
-  "options_implied_move": 0.048660467766539706,
+  "options_implied_move": 0.20317267382591575,
   "technicals": {
-    "ma20": 20.444000244140625,
-    "ma50": 21.087800064086913,
-    "ma200": 16.895925025939942,
-    "rsi14": 43.49318740688834,
+    "ma20": 20.650000238418578,
+    "ma50": 20.39980001449585,
+    "ma200": 16.952050018310548,
+    "rsi14": 40.3205136670421,
     "high_20d": 28.420000076293945,
-    "low_5d": 17.950000762939453,
-    "low_10d": 17.950000762939453,
+    "low_5d": 15.619999885559082,
+    "low_10d": 15.619999885559082,
     "high_52w": 31.299999237060547,
     "low_52w": 8.829999923706055,
-    "atr14": 2.8002144949776784,
-    "atr14_pct": 15.310083951939166,
-    "position_in_52w_range_pct": 42.10058424967984
+    "atr14": 2.0027145658220564,
+    "atr14_pct": 12.219125322768022,
+    "position_in_52w_range_pct": 33.64485846445613
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 2.99,
-      "high": 3.0,
-      "low": 2.835,
-      "close": 2.89,
-      "volume": 257400.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 2.91,
-      "high": 3.08,
-      "low": 2.9,
-      "close": 3.01,
-      "volume": 181100.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 3.03,
-      "high": 3.11,
-      "low": 2.94,
-      "close": 2.95,
-      "volume": 273600.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 2.88,
-      "high": 3.07,
-      "low": 2.79,
-      "close": 3.05,
-      "volume": 284400.0
-    },
     {
       "date": "2024-08-28",
       "open": 3.01,
@@ -4321,46 +4289,46 @@
     },
     {
       "date": "2026-08-21",
-      "open": 19.01,
+      "open": 19.15,
       "high": 19.51,
       "low": 17.95,
       "close": 18.29,
-      "volume": 1113708.0
+      "volume": 1129700.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 17.72,
+      "high": 17.815,
+      "low": 16.4,
+      "close": 16.46,
+      "volume": 1746600.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 17.05,
+      "high": 17.08,
+      "low": 16.04,
+      "close": 16.16,
+      "volume": 1386000.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 16.01,
+      "high": 16.41,
+      "low": 15.62,
+      "close": 15.79,
+      "volume": 1454000.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 16.47,
+      "high": 16.81,
+      "low": 16.02,
+      "close": 16.39,
+      "volume": 1555700.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 13.49,
-      "high": 14.84,
-      "low": 13.42,
-      "close": 13.9,
-      "volume": 3584800.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 13.55,
-      "high": 14.98,
-      "low": 12.54,
-      "close": 14.82,
-      "volume": 3908600.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 14.8,
-      "high": 15.12,
-      "low": 14.04,
-      "close": 14.05,
-      "volume": 2230000.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 14.03,
-      "high": 15.308,
-      "low": 13.95,
-      "close": 14.99,
-      "volume": 2408400.0
-    },
     {
       "date": "2025-08-27",
       "open": 15.0,
@@ -6339,11 +6307,43 @@
     },
     {
       "date": "2026-08-21",
-      "open": 19.01,
+      "open": 19.15,
       "high": 19.51,
       "low": 17.95,
       "close": 18.29,
-      "volume": 1113708.0
+      "volume": 1129700.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 17.72,
+      "high": 17.815,
+      "low": 16.4,
+      "close": 16.46,
+      "volume": 1746600.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 17.05,
+      "high": 17.08,
+      "low": 16.04,
+      "close": 16.16,
+      "volume": 1386000.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 16.01,
+      "high": 16.41,
+      "low": 15.62,
+      "close": 15.79,
+      "volume": 1454000.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 16.47,
+      "high": 16.81,
+      "low": 16.02,
+      "close": 16.39,
+      "volume": 1555700.0
     }
   ],
   "ai_synthesis": null,

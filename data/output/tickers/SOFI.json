@@ -1,8 +1,8 @@
 {
   "ticker": "SOFI",
-  "fetched_at": "2026-08-21T22:10:25Z",
+  "fetched_at": "2026-08-28T04:44:19Z",
   "_schema": "v2",
-  "current_price": 18.90999984741211,
+  "current_price": 19.18000030517578,
   "info": {
     "symbol": "SOFI",
     "longName": "SoFi Technologies, Inc.",
@@ -13,13 +13,13 @@
     "city": "San Francisco",
     "website": "https://www.sofi.com",
     "fullTimeEmployees": 6100,
-    "marketCap": 23144939520,
-    "enterpriseValue": 23193817088,
-    "trailingPE": 37.333336,
-    "forwardPE": 21.827042,
-    "priceToSalesTrailing12Months": 5.422343,
-    "enterpriseToRevenue": 5.434,
-    "priceToBook": 2.087605,
+    "marketCap": 24772319232,
+    "enterpriseValue": 24821194752,
+    "trailingPE": 39.142857,
+    "forwardPE": 23.32709,
+    "priceToSalesTrailing12Months": 5.8036017,
+    "enterpriseToRevenue": 5.815,
+    "priceToBook": 2.2343898,
     "grossMargins": 0.83734,
     "operatingMargins": 0.16956,
     "profitMargins": 0.14906,
@@ -32,11 +32,11 @@
     "currentRatio": 1.105,
     "fiftyTwoWeekHigh": 32.73,
     "fiftyTwoWeekLow": 14.88,
-    "averageVolume": 77176272,
-    "averageVolume10days": 45298030,
+    "averageVolume": 74929465,
+    "averageVolume10days": 43557010,
     "beta": 2.204,
     "sharesOutstanding": 1291570324,
-    "sharesFloat": 1271783467,
+    "sharesFloat": 1271718888,
     "companyOfficers": [
       {
         "name": "Mr. George Thompson Hutton",
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.12,
+      "eps_estimate": 0.1092,
+      "eps_surprise_pct": 0.098900005
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.115,
+      "eps_estimate": 0.12,
+      "eps_surprise_pct": -0.0417
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.1217,
+      "eps_estimate": 0.112,
+      "eps_surprise_pct": 0.0866
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.1014,
+      "eps_estimate": 0.08243,
+      "eps_surprise_pct": 0.2301
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-27",
+    "revenue_low": 1213300000,
+    "revenue_high": 1393310000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,117 +164,167 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Hold",
+    "total_ratings": 24,
+    "bullish": 8,
+    "neutral": 12,
+    "bearish": 4,
+    "avg_price_target": 20.025,
+    "high_price_target": 30.0,
+    "low_price_target": 12.0,
+    "current_price": 19.18,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-17T10:12:02",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "init"
+      },
+      {
+        "date": "2026-08-12T17:32:07",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T18:08:37",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T17:36:34",
+        "firm": "Morgan Stanley",
+        "to_grade": "Underweight",
+        "from_grade": "Underweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T13:43:15",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T10:22:54",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T12:14:11",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-09T18:15:22",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-12T13:48:30",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-04T16:17:33",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
-      "date": "2026-08-21T16:30:36Z",
-      "title": "One Wall Street Analyst Thinks SoFi Stock Could Jump 20%. Here\u2019s Why.",
-      "url": "https://247wallst.com/investing/2026/08/21/one-wall-street-analyst-thinks-sofi-stock-could-jump-20-heres-why/",
-      "source": "24/7 Wall St."
+      "date": "2026-08-27T22:10:00Z",
+      "title": "Affirm Stock Jumps After Earnings. This Key Number Crushed Estimates.",
+      "url": "https://www.barrons.com/articles/affirm-earnings-stock-price-dc8f6533?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
     },
     {
-      "date": "2026-08-21T15:34:56Z",
-      "title": "SoFi Climbs 5% as Robinhood Spikes 13%, Affirm Ticks Up: Is There a Crypto Connection Here?",
-      "url": "https://247wallst.com/investing/2026/08/21/sofi-climbs-5-as-robinhood-spikes-13-affirm-ticks-up-is-there-a-crypto-connection-here/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-21T14:49:00Z",
-      "title": "Dave's Marketing Push Accelerates: Can CAC Stay Flat as Members Grow?",
-      "url": "https://finance.yahoo.com/small-business/articles/daves-marketing-push-accelerates-cac-144900362.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-20T15:09:00Z",
-      "title": "Dave's CashAI V6: Can Smarter Underwriting Lift ARPU?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/daves-cashai-v6-smarter-underwriting-150900028.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-20T00:35:34Z",
-      "title": "Figure's Take Rate Is Shrinking By Design",
-      "url": "https://www.trefis.com/articles/611912/figures-take-rate-is-shrinking-by-design/2026-08-19",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-08-19T23:59:23Z",
-      "title": "The Options Market Puts PayPal Stock Between The High Forties And The High Seventies",
-      "url": "https://www.trefis.com/articles/611907/the-options-market-puts-paypal-stock-between-the-high-forties-and-the-high-seventies/2026-08-19",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-08-19T23:02:09Z",
-      "title": "Webull Q2 Earnings Call Highlights",
-      "url": "https://www.marketbeat.com/instant-alerts/webull-q2-earnings-call-highlights-2026-08-19/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-19T19:45:11Z",
-      "title": "Cramer Warns Fintech Bulls: These Three Stocks Are Priced for Perfection",
-      "url": "https://247wallst.com/investing/2026/08/19/cramer-warns-fintech-bulls-these-three-stocks-are-priced-for-perfection/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-19T18:10:38Z",
-      "title": "SoFi (SOFI) Stock Looks Rich On Fair Value Yet Strong On Returns",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/sofi-sofi-stock-looks-rich-181038696.html",
+      "date": "2026-08-27T20:18:59Z",
+      "title": "Is SoFi Technologies (SOFI) A Bargain After Its Recent Rebound?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/sofi-technologies-sofi-bargain-recent-201859458.html",
       "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-19T16:25:33Z",
-      "title": "SoFi Climbs 6%, Upstart Jumps 8%, Affirm Rises 7% as Fintech Names Rebound With Bond Market Catalyst",
-      "url": "https://247wallst.com/investing/2026/08/19/sofi-climbs-6-upstart-jumps-8-affirm-rises-7-as-fintech-names-rebound-with-bond-market-catalyst/",
+      "date": "2026-08-27T18:48:01Z",
+      "title": "PayPal Stock's Biggest Risk Shows Up In Its Take Rate",
+      "url": "https://www.trefis.com/articles/613290/paypal-stocks-biggest-risk-shows-up-in-its-take-rate/2026-08-27",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-08-27T17:54:16Z",
+      "title": "Sofi Stock Is Failing to Break $20 This Year, but You Shouldn\u2019t Give Up Yet",
+      "url": "https://www.barchart.com/story/news/4230750/sofi-stock-is-failing-to-break-20-this-year-but-you-shouldnt-give-up-yet",
+      "source": "Barchart"
+    },
+    {
+      "date": "2026-08-27T17:02:00Z",
+      "title": "SoFi Technologies' SoFi Plus: Can Paid Membership Drive Growth?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/sofi-technologies-sofi-plus-paid-170200026.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-27T16:19:00Z",
+      "title": "Dave Raises ExtraCash Limits: Is Monetization Set to Accelerate?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/dave-raises-extracash-limits-monetization-161900252.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-27T15:51:00Z",
+      "title": "Sezzle vs. SoFi: Which High-Growth Fintech Stock Is the Better Buy Now?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/sezzle-vs-sofi-high-growth-155100046.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-27T14:04:11Z",
+      "title": "I Moved $25,000 Into SoFi\u2019s High-Yield Savings Account. Here\u2019s Exactly What I\u2019ll Earn",
+      "url": "https://247wallst.com/personal-finance/savings-accounts/2026/08/27/i-moved-25000-into-sofis-high-yield-savings-account-heres-exactly-what-ill-earn/",
       "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-25T18:27:34Z",
+      "title": "SoFi Rises 3% as the Stablecoin Trade Pulls Fintech Into the Crypto Bid, Coinbase Climbs 5%",
+      "url": "https://247wallst.com/investing/2026/08/25/sofi-rises-3-as-the-stablecoin-trade-pulls-fintech-into-the-crypto-bid-coinbase-climbs-5/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-25T17:30:00Z",
+      "title": "SoFi Technologies Stablecoin Push: Can SoFiUSD Scale Payments?",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/sofi-technologies-stablecoin-push-sofiusd-173000866.html",
+      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.024504691998006332,
   "technicals": {
-    "ma20": 17.754500007629396,
-    "ma50": 17.67319995880127,
-    "ma200": 20.514924998283387,
-    "rsi14": 58.18242297740299,
-    "high_20d": 19.170000076293945,
-    "low_5d": 17.639999389648438,
+    "ma20": 18.250500106811522,
+    "ma50": 17.81659999847412,
+    "ma200": 20.317175002098082,
+    "rsi14": 58.44216848746761,
+    "high_20d": 19.469999313354492,
+    "low_5d": 18.065000534057617,
     "low_10d": 17.639999389648438,
     "high_52w": 32.72999954223633,
     "low_52w": 14.880000114440918,
-    "atr14": 0.7367856161934989,
-    "atr14_pct": 3.8962751038537435,
-    "position_in_52w_range_pct": 22.577030040100805
+    "atr14": 0.7878570556640625,
+    "atr14_pct": 4.107700954788082,
+    "position_in_52w_range_pct": 24.08963769510855
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 7.32,
-      "high": 7.34,
-      "low": 7.18,
-      "close": 7.19,
-      "volume": 29843200.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 7.21,
-      "high": 7.56,
-      "low": 7.185,
-      "close": 7.52,
-      "volume": 52448400.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 7.61,
-      "high": 7.79,
-      "low": 7.55,
-      "close": 7.67,
-      "volume": 31511400.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 7.58,
-      "high": 7.89,
-      "low": 7.54,
-      "close": 7.77,
-      "volume": 27703700.0
-    },
     {
       "date": "2024-08-28",
       "open": 7.7,
@@ -4220,42 +4299,42 @@
       "high": 19.17,
       "low": 18.065,
       "close": 18.91,
-      "volume": 61431249.0
+      "volume": 62406100.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 18.73,
+      "high": 18.888,
+      "low": 18.215,
+      "close": 18.24,
+      "volume": 33512900.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 18.33,
+      "high": 19.02,
+      "low": 18.07,
+      "close": 19.0,
+      "volume": 40267400.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 18.97,
+      "high": 19.32,
+      "low": 18.71,
+      "close": 18.84,
+      "volume": 36525600.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 19.005,
+      "high": 19.47,
+      "low": 18.59,
+      "close": 19.18,
+      "volume": 37528000.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 22.44,
-      "high": 23.369,
-      "low": 22.31,
-      "close": 23.33,
-      "volume": 53440700.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 23.16,
-      "high": 25.25,
-      "low": 22.9,
-      "close": 25.02,
-      "volume": 101606500.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 25.18,
-      "high": 26.38,
-      "low": 24.81,
-      "close": 26.15,
-      "volume": 90233000.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 26.205,
-      "high": 26.605,
-      "low": 25.5,
-      "close": 25.62,
-      "volume": 125930100.0
-    },
     {
       "date": "2025-08-27",
       "open": 25.615,
@@ -6238,10 +6317,41 @@
       "high": 19.17,
       "low": 18.065,
       "close": 18.91,
-      "volume": 61431249.0
+      "volume": 62406100.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 18.73,
+      "high": 18.888,
+      "low": 18.215,
+      "close": 18.24,
+      "volume": 33512900.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 18.33,
+      "high": 19.02,
+      "low": 18.07,
+      "close": 19.0,
+      "volume": 40267400.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 18.97,
+      "high": 19.32,
+      "low": 18.71,
+      "close": 18.84,
+      "volume": 36525600.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 19.005,
+      "high": 19.47,
+      "low": 18.59,
+      "close": 19.18,
+      "volume": 37528000.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:14:07Z"
+  "ai_synthesized_at": null
 }

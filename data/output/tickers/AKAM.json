@@ -1,8 +1,8 @@
 {
   "ticker": "AKAM",
-  "fetched_at": "2026-08-08T05:15:03Z",
+  "fetched_at": "2026-08-28T04:46:05Z",
   "_schema": "v2",
-  "current_price": 110.54000091552734,
+  "current_price": 111.23999786376953,
   "info": {
     "symbol": "AKAM",
     "longName": "Akamai Technologies, Inc.",
@@ -12,31 +12,31 @@
     "country": "United States",
     "city": "Cambridge",
     "website": "https://www.akamai.com",
-    "fullTimeEmployees": 11419,
-    "marketCap": 15917760512,
-    "enterpriseValue": 22172704768,
-    "trailingPE": 42.844963,
-    "forwardPE": 15.416047,
-    "priceToSalesTrailing12Months": 3.7307432,
-    "enterpriseToRevenue": 5.197,
-    "priceToBook": 3.2138393,
-    "grossMargins": 0.58284,
-    "operatingMargins": 0.10611,
-    "profitMargins": 0.102,
-    "returnOnEquity": 0.091680005,
-    "totalCash": 930444992,
-    "totalDebt": 5867704832,
-    "totalRevenue": 4266646016,
-    "freeCashflow": 700723392,
-    "debtToEquity": 119.534,
-    "currentRatio": 2.057,
+    "fullTimeEmployees": 11000,
+    "marketCap": 15987035136,
+    "enterpriseValue": 21970634752,
+    "trailingPE": 40.304348,
+    "forwardPE": 15.525059,
+    "priceToSalesTrailing12Months": 3.6982765,
+    "enterpriseToRevenue": 5.082,
+    "priceToBook": 3.3637738,
+    "grossMargins": 0.57452,
+    "operatingMargins": 0.076290004,
+    "profitMargins": 0.09507,
+    "returnOnEquity": 0.08918,
+    "totalCash": 3355386880,
+    "totalDebt": 9338986496,
+    "totalRevenue": 4322833920,
+    "freeCashflow": 710060096,
+    "debtToEquity": 196.672,
+    "currentRatio": 1.637,
     "fiftyTwoWeekHigh": 165.45,
-    "fiftyTwoWeekLow": 70.42,
-    "averageVolume": 4586743,
-    "averageVolume10days": 3930870,
+    "fiftyTwoWeekLow": 70.82,
+    "averageVolume": 3771652,
+    "averageVolume10days": 2923510,
     "beta": 0.645,
-    "sharesOutstanding": 144000000,
-    "sharesFloat": 142056124,
+    "sharesOutstanding": 143716609,
+    "sharesFloat": 140422624,
     "companyOfficers": [
       {
         "name": "Dr. F. Thomson Leighton",
@@ -103,11 +103,22 @@
     }
   ],
   "next_earnings": {
-    "date": "2026-11-06",
-    "revenue_low": 1117421000,
-    "revenue_high": 1136200000
+    "date": "2026-11-05",
+    "revenue_low": 1111500000,
+    "revenue_high": 1129674690
   },
   "quarterly_metrics": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 1099682000.0,
+      "gross_profit": 613750000.0,
+      "operating_income": 83897000.0,
+      "eps": 0.52,
+      "cash": 1480257000.0,
+      "operating_cashflow": 326266000.0,
+      "gross_margin_pct": 55.81158916850508,
+      "yoy_pct": 5.384602115584758
+    },
     {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 1073610000.0,
@@ -117,7 +128,7 @@
       "cash": 622383000.0,
       "operating_cashflow": 312508000.0,
       "gross_margin_pct": 56.10147073890891,
-      "yoy_pct": 5.7599008608673286
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -151,17 +162,6 @@
       "operating_cashflow": 459149000.0,
       "gross_margin_pct": 59.12434570778557,
       "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 1015139000.0,
-      "gross_profit": 596194000.0,
-      "operating_income": 155039000.0,
-      "eps": 0.82,
-      "cash": 1097026000.0,
-      "operating_cashflow": 251200000.0,
-      "gross_margin_pct": 58.7302822569126,
-      "yoy_pct": null
     }
   ],
   "analyst": {
@@ -170,11 +170,32 @@
     "bullish": 14,
     "neutral": 8,
     "bearish": 3,
-    "avg_price_target": 157.25696,
+    "avg_price_target": 157.43086,
     "high_price_target": 195.0,
-    "low_price_target": 87.0,
-    "current_price": 110.54,
+    "low_price_target": 93.0,
+    "current_price": 111.24,
     "recent_rating_changes": [
+      {
+        "date": "2026-08-13T14:37:59",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Underweight",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-10T13:28:46",
+        "firm": "HSBC",
+        "to_grade": "Hold",
+        "from_grade": "Buy",
+        "action": "down"
+      },
+      {
+        "date": "2026-08-10T13:13:46",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      },
       {
         "date": "2026-08-07T23:31:56",
         "firm": "UBS",
@@ -223,220 +244,87 @@
         "to_grade": "Overweight",
         "from_grade": "Overweight",
         "action": "main"
-      },
-      {
-        "date": "2026-05-13T10:37:00",
-        "firm": "B of A Securities",
-        "to_grade": "Buy",
-        "from_grade": "Neutral",
-        "action": "up"
-      },
-      {
-        "date": "2026-05-11T14:11:44",
-        "firm": "Susquehanna",
-        "to_grade": "Positive",
-        "from_grade": "Positive",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-08T22:19:00",
-        "firm": "UBS",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
       }
     ]
   },
   "news": [
     {
-      "date": "2026-08-07T22:11:22Z",
-      "title": "Akamai (AKAM) Stock Looks Fully Priced Despite 57% One Year Return",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/akamai-akam-stock-looks-fully-221122283.html",
-      "source": "Simply Wall St."
+      "date": "2026-08-24T18:41:12Z",
+      "title": "33 Stocks That Could Rally 33% or More",
+      "url": "https://www.kiplinger.com/investing/stocks/stocks-that-could-rally",
+      "source": "Kiplinger"
     },
     {
-      "date": "2026-08-07T18:36:00Z",
-      "title": "Akamai Stock Falls on Earnings as Latest AI Announcement Fails to  Convince",
-      "url": "https://www.barrons.com/articles/akamai-earnings-stock-price-ai-f3267a5d?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-07T16:39:19Z",
-      "title": "Akamai Stock Reverses 5.5% Despite $2.8 Billion Contract Wins",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/akamai-stock-reverses-5-5-163919234.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-08-07T14:28:00Z",
-      "title": "Akamai Q2 Earnings Beat Estimates, Revenues Up Y/Y on Solid Demand",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/akamai-q2-earnings-beat-estimates-142800598.html",
+      "date": "2026-08-24T16:01:00Z",
+      "title": "AKAM Rides on Strength in Cloud Infrastructure Segment: Will It Last?",
+      "url": "https://finance.yahoo.com/technology/articles/akam-rides-strength-cloud-infrastructure-160100734.html",
       "source": "Zacks"
     },
     {
-      "date": "2026-08-07T11:14:52Z",
-      "title": "Jobs Report, Persian Gulf Views Lift Wall Street Pre-Bell; Asia Mixed, Europe Up",
-      "url": "https://finance.yahoo.com/markets/articles/jobs-report-persian-gulf-views-111452033.html",
-      "source": "MT Newswires"
+      "date": "2026-08-24T13:21:36Z",
+      "title": "3 of Wall Street\u2019s Favorite Stocks We Approach with Caution",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/3-wall-street-favorite-stocks-132136305.html",
+      "source": "StockStory"
     },
     {
-      "date": "2026-08-07T05:11:52Z",
-      "title": "Akamai Technologies Inc (AKAM) (Q2 2026) Earnings Call Highlights: Record Cloud Infrastructure ...",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/akamai-technologies-inc-akam-q2-051152539.html",
-      "source": "GuruFocus.com"
+      "date": "2026-08-20T15:15:15Z",
+      "title": "Q2 Earnings Roundup: Akamai (NASDAQ:AKAM) And The Rest Of The Content Delivery Segment",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/q2-earnings-roundup-akamai-nasdaq-151515604.html",
+      "source": "StockStory"
     },
     {
-      "date": "2026-08-07T04:28:54Z",
-      "title": "Akamai Technologies (AKAM) Debuts Workforce Protector For Enterprise AI Security",
-      "url": "https://finance.yahoo.com/technology/ai/articles/akamai-technologies-akam-debuts-workforce-042854752.html",
+      "date": "2026-08-17T19:19:10Z",
+      "title": "DigitalOcean Climbs 5% on Managed AI Agents Launch, Fastly Falls 4%",
+      "url": "https://247wallst.com/investing/2026/08/17/digitalocean-climbs-5-on-managed-ai-agents-launch-fastly-falls-4/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-17T13:19:12Z",
+      "title": "Is Wall Street Bullish or Bearish on Akamai Technologies Stock?",
+      "url": "https://www.barchart.com/story/news/3886210/is-wall-street-bullish-or-bearish-on-akamai-technologies-stock",
+      "source": "Barchart"
+    },
+    {
+      "date": "2026-08-16T05:10:17Z",
+      "title": "Why Akamai (AKAM) Is Up 13.1% After Mixed Q2 Results And New AI Security Launch",
+      "url": "https://finance.yahoo.com/technology/ai/articles/why-akamai-akam-13-1-051017697.html",
       "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-06T22:28:42Z",
-      "title": "Akamai beats quarterly estimates on cloud infrastructure demand",
-      "url": "https://finance.yahoo.com/technology/articles/akamai-beats-quarterly-estimates-cloud-222842769.html",
-      "source": "Reuters"
+      "date": "2026-08-15T23:08:54Z",
+      "title": "Is Akamai Technologies (AKAM) Undervalued On Its Cloud Deal And AI Security Push?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/akamai-technologies-akam-undervalued-cloud-230854133.html",
+      "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-06T22:04:07Z",
-      "title": "Akamai Technologies Q2 Earnings Call Highlights",
-      "url": "https://www.marketbeat.com/instant-alerts/akamai-technologies-q2-earnings-call-highlights-2026-08-06/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
+      "date": "2026-08-15T17:08:01Z",
+      "title": "Akamai Technologies (AKAM) Unveils Workforce Protector As AI Threat Research Flags Enterprise Risks",
+      "url": "https://finance.yahoo.com/technology/ai/articles/akamai-technologies-akam-unveils-workforce-170801552.html",
+      "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-06T22:00:01Z",
-      "title": "Akamai Technologies (AKAM) Q2 Earnings: Taking a Look at Key Metrics Versus Estimates",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/akamai-technologies-akam-q2-earnings-220001307.html",
-      "source": "Zacks"
+      "date": "2026-08-15T03:01:00Z",
+      "title": "Akamai\u2019s Q2 Earnings Call: Our Top 5 Analyst Questions",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/akamai-q2-earnings-call-top-030100490.html",
+      "source": "StockStory"
     }
   ],
-  "options_implied_move": 0.056721548290843776,
+  "options_implied_move": 0.027867674033906633,
   "technicals": {
-    "ma20": 118.44500045776367,
-    "ma50": 125.86180053710937,
-    "ma200": 106.24590011596679,
-    "rsi14": 40.363669607645626,
-    "high_20d": 127.94999694824219,
-    "low_5d": 110.0199966430664,
-    "low_10d": 107.11000061035156,
+    "ma20": 115.86849899291992,
+    "ma50": 117.69820022583008,
+    "ma200": 109.04390003204345,
+    "rsi14": 44.67371757397601,
+    "high_20d": 127.04000091552734,
+    "low_5d": 104.06999969482422,
+    "low_10d": 104.06999969482422,
     "high_52w": 165.4499969482422,
-    "low_52w": 69.77999877929688,
-    "atr14": 6.096427917480469,
-    "atr14_pct": 5.515132863206007,
-    "position_in_52w_range_pct": 42.60479033798211
+    "low_52w": 70.81999969482422,
+    "atr14": 5.197144099644253,
+    "atr14_pct": 4.672010247617007,
+    "position_in_52w_range_pct": 42.71372645261846
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-08",
-      "open": 92.62,
-      "high": 93.32,
-      "low": 91.28,
-      "close": 91.57,
-      "volume": 4538500.0
-    },
-    {
-      "date": "2024-08-09",
-      "open": 98.01,
-      "high": 102.69,
-      "low": 97.78,
-      "close": 101.51,
-      "volume": 6536600.0
-    },
-    {
-      "date": "2024-08-12",
-      "open": 101.22,
-      "high": 101.66,
-      "low": 99.49,
-      "close": 99.58,
-      "volume": 2187400.0
-    },
-    {
-      "date": "2024-08-13",
-      "open": 99.87,
-      "high": 101.37,
-      "low": 99.11,
-      "close": 101.02,
-      "volume": 2215100.0
-    },
-    {
-      "date": "2024-08-14",
-      "open": 101.31,
-      "high": 101.8,
-      "low": 99.65,
-      "close": 99.73,
-      "volume": 1583900.0
-    },
-    {
-      "date": "2024-08-15",
-      "open": 100.45,
-      "high": 101.89,
-      "low": 100.39,
-      "close": 100.86,
-      "volume": 1633000.0
-    },
-    {
-      "date": "2024-08-16",
-      "open": 100.75,
-      "high": 101.24,
-      "low": 100.06,
-      "close": 100.5,
-      "volume": 1082300.0
-    },
-    {
-      "date": "2024-08-19",
-      "open": 100.88,
-      "high": 101.94,
-      "low": 100.69,
-      "close": 101.65,
-      "volume": 1244400.0
-    },
-    {
-      "date": "2024-08-20",
-      "open": 101.59,
-      "high": 102.59,
-      "low": 101.25,
-      "close": 101.7,
-      "volume": 885300.0
-    },
-    {
-      "date": "2024-08-21",
-      "open": 101.31,
-      "high": 102.38,
-      "low": 100.45,
-      "close": 102.11,
-      "volume": 1827400.0
-    },
-    {
-      "date": "2024-08-22",
-      "open": 102.25,
-      "high": 103.15,
-      "low": 101.4,
-      "close": 101.58,
-      "volume": 1100200.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 102.48,
-      "high": 102.48,
-      "low": 100.93,
-      "close": 101.83,
-      "volume": 1028200.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 101.99,
-      "high": 102.37,
-      "low": 100.8,
-      "close": 100.99,
-      "volume": 769300.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 100.73,
-      "high": 102.2,
-      "low": 100.57,
-      "close": 101.31,
-      "volume": 843500.0
-    },
     {
       "date": "2024-08-28",
       "open": 101.19,
@@ -4331,122 +4219,122 @@
       "high": 125.55,
       "low": 110.02,
       "close": 110.54,
-      "volume": 8142100.0
+      "volume": 8147200.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 107.37,
+      "high": 120.14,
+      "low": 107.32,
+      "close": 117.65,
+      "volume": 6105700.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 118.01,
+      "high": 119.21,
+      "low": 116.28,
+      "close": 116.67,
+      "volume": 2339800.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 117.5,
+      "high": 124.91,
+      "low": 117.05,
+      "close": 122.78,
+      "volume": 3499500.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 124.92,
+      "high": 127.04,
+      "low": 123.31,
+      "close": 125.29,
+      "volume": 3085900.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 126.0,
+      "high": 126.73,
+      "low": 123.94,
+      "close": 124.99,
+      "volume": 2176600.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 124.56,
+      "high": 125.58,
+      "low": 121.57,
+      "close": 122.97,
+      "volume": 2492200.0
+    },
+    {
+      "date": "2026-08-18",
+      "open": 121.49,
+      "high": 123.79,
+      "low": 115.11,
+      "close": 115.2,
+      "volume": 3407000.0
+    },
+    {
+      "date": "2026-08-19",
+      "open": 115.8,
+      "high": 116.8,
+      "low": 110.36,
+      "close": 112.84,
+      "volume": 3874300.0
+    },
+    {
+      "date": "2026-08-20",
+      "open": 112.19,
+      "high": 112.72,
+      "low": 109.49,
+      "close": 110.09,
+      "volume": 2118900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 110.26,
+      "high": 112.51,
+      "low": 109.59,
+      "close": 110.42,
+      "volume": 3011500.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 110.0,
+      "high": 110.0,
+      "low": 105.2,
+      "close": 105.66,
+      "volume": 2759300.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 106.0,
+      "high": 107.27,
+      "low": 104.07,
+      "close": 105.74,
+      "volume": 2978100.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 105.56,
+      "high": 109.53,
+      "low": 105.42,
+      "close": 108.06,
+      "volume": 3374800.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 109.75,
+      "high": 111.85,
+      "low": 108.82,
+      "close": 111.24,
+      "volume": 3042400.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-07",
-      "open": 75.46,
-      "high": 75.73,
-      "low": 72.75,
-      "close": 74.76,
-      "volume": 4030600.0
-    },
-    {
-      "date": "2025-08-08",
-      "open": 75.62,
-      "high": 76.65,
-      "low": 69.78,
-      "close": 70.53,
-      "volume": 5403900.0
-    },
-    {
-      "date": "2025-08-11",
-      "open": 70.96,
-      "high": 72.98,
-      "low": 70.42,
-      "close": 70.61,
-      "volume": 3141800.0
-    },
-    {
-      "date": "2025-08-12",
-      "open": 70.64,
-      "high": 72.0,
-      "low": 70.42,
-      "close": 71.97,
-      "volume": 2878000.0
-    },
-    {
-      "date": "2025-08-13",
-      "open": 72.5,
-      "high": 75.55,
-      "low": 72.17,
-      "close": 75.44,
-      "volume": 3572200.0
-    },
-    {
-      "date": "2025-08-14",
-      "open": 74.41,
-      "high": 74.98,
-      "low": 74.01,
-      "close": 74.27,
-      "volume": 1643900.0
-    },
-    {
-      "date": "2025-08-15",
-      "open": 74.69,
-      "high": 75.14,
-      "low": 74.1,
-      "close": 74.42,
-      "volume": 2011500.0
-    },
-    {
-      "date": "2025-08-18",
-      "open": 74.46,
-      "high": 75.29,
-      "low": 73.99,
-      "close": 75.28,
-      "volume": 1751100.0
-    },
-    {
-      "date": "2025-08-19",
-      "open": 75.19,
-      "high": 76.65,
-      "low": 75.0,
-      "close": 76.49,
-      "volume": 1832400.0
-    },
-    {
-      "date": "2025-08-20",
-      "open": 76.37,
-      "high": 76.63,
-      "low": 75.46,
-      "close": 76.06,
-      "volume": 1355200.0
-    },
-    {
-      "date": "2025-08-21",
-      "open": 75.51,
-      "high": 76.46,
-      "low": 74.86,
-      "close": 76.32,
-      "volume": 1533000.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 76.61,
-      "high": 78.54,
-      "low": 75.95,
-      "close": 77.64,
-      "volume": 1719200.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 77.41,
-      "high": 77.58,
-      "low": 76.17,
-      "close": 76.52,
-      "volume": 1975900.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 76.58,
-      "high": 77.2,
-      "low": 76.25,
-      "close": 76.94,
-      "volume": 2365500.0
-    },
     {
       "date": "2025-08-27",
       "open": 77.12,
@@ -6349,7 +6237,119 @@
       "high": 125.55,
       "low": 110.02,
       "close": 110.54,
-      "volume": 8142100.0
+      "volume": 8147200.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 107.37,
+      "high": 120.14,
+      "low": 107.32,
+      "close": 117.65,
+      "volume": 6105700.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 118.01,
+      "high": 119.21,
+      "low": 116.28,
+      "close": 116.67,
+      "volume": 2339800.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 117.5,
+      "high": 124.91,
+      "low": 117.05,
+      "close": 122.78,
+      "volume": 3499500.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 124.92,
+      "high": 127.04,
+      "low": 123.31,
+      "close": 125.29,
+      "volume": 3085900.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 126.0,
+      "high": 126.73,
+      "low": 123.94,
+      "close": 124.99,
+      "volume": 2176600.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 124.56,
+      "high": 125.58,
+      "low": 121.57,
+      "close": 122.97,
+      "volume": 2492200.0
+    },
+    {
+      "date": "2026-08-18",
+      "open": 121.49,
+      "high": 123.79,
+      "low": 115.11,
+      "close": 115.2,
+      "volume": 3407000.0
+    },
+    {
+      "date": "2026-08-19",
+      "open": 115.8,
+      "high": 116.8,
+      "low": 110.36,
+      "close": 112.84,
+      "volume": 3874300.0
+    },
+    {
+      "date": "2026-08-20",
+      "open": 112.19,
+      "high": 112.72,
+      "low": 109.49,
+      "close": 110.09,
+      "volume": 2118900.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 110.26,
+      "high": 112.51,
+      "low": 109.59,
+      "close": 110.42,
+      "volume": 3011500.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 110.0,
+      "high": 110.0,
+      "low": 105.2,
+      "close": 105.66,
+      "volume": 2759300.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 106.0,
+      "high": 107.27,
+      "low": 104.07,
+      "close": 105.74,
+      "volume": 2978100.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 105.56,
+      "high": 109.53,
+      "low": 105.42,
+      "close": 108.06,
+      "volume": 3374800.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 109.75,
+      "high": 111.85,
+      "low": 108.82,
+      "close": 111.24,
+      "volume": 3042400.0
     }
   ],
   "ai_synthesis": null,

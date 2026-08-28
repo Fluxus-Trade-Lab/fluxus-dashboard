@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-28T03:25:47.716461+00:00",
+  "timestamp": "2026-08-28T04:23:52.384214+00:00",
   "universe_size": 5630,
   "spx_close": 7730.990234375,
   "mm": {
@@ -8,23 +8,23 @@
     "ratio_5d": 1.1555,
     "ratio_10d": 0.9274,
     "up_25pct_qtr": 791,
-    "down_25pct_qtr": 864,
-    "up_25pct_month": 654,
-    "down_25pct_month": 232,
+    "down_25pct_qtr": 862,
+    "up_25pct_month": 656,
+    "down_25pct_month": 233,
     "up_50pct_month": 198,
     "down_50pct_month": 50,
     "up_13pct_34d": 1219,
-    "down_13pct_34d": 1067
+    "down_13pct_34d": 1065
   },
   "breadth": {
-    "t2108": 51.35,
+    "t2108": 51.31,
     "pct_above_200sma": 50.94,
     "pct_above_50sma": 51.31,
-    "pct_above_20sma": 47.9,
+    "pct_above_20sma": 47.92,
     "advances": 2476,
     "declines": 2891,
-    "new_highs": 72,
-    "new_lows": 15,
+    "new_highs": 71,
+    "new_lows": 16,
     "ad_line": -15177,
     "mcclellan_osc": -11.34
   },
@@ -435,7 +435,7 @@
       50.02,
       49.48,
       46.66,
-      47.9
+      47.92
     ],
     "mcclellan_osc": [
       40.89,
@@ -4015,21 +4015,21 @@
         "ratio_5d": 1.1555,
         "ratio_10d": 0.9274,
         "up_25pct_qtr": 791,
-        "down_25pct_qtr": 864,
-        "up_25pct_month": 654,
-        "down_25pct_month": 232,
+        "down_25pct_qtr": 862,
+        "up_25pct_month": 656,
+        "down_25pct_month": 233,
         "up_50pct_month": 198,
         "down_50pct_month": 50,
         "up_13pct_34d": 1219,
-        "down_13pct_34d": 1067,
-        "t2108": 51.35,
+        "down_13pct_34d": 1065,
+        "t2108": 51.31,
         "pct_above_200sma": 50.94,
         "pct_above_50sma": 51.31,
-        "pct_above_20sma": 47.9,
+        "pct_above_20sma": 47.92,
         "advances": 2476,
         "declines": 2891,
-        "new_highs": 72,
-        "new_lows": 15,
+        "new_highs": 71,
+        "new_lows": 16,
         "net_advances": -415,
         "rana": -77.32,
         "ad_line": -15177,
@@ -4111,7 +4111,7 @@
         "label": "Quarterly spread",
         "value": 791.0,
         "line": 0,
-        "margin": -73.0,
+        "margin": -71.0,
         "unit": "names",
         "measurable": true
       },
@@ -4121,7 +4121,7 @@
         "label": "13%/34d spread",
         "value": 1219.0,
         "line": 0,
-        "margin": 152.0,
+        "margin": 154.0,
         "unit": "names",
         "measurable": true
       },
@@ -4129,9 +4129,9 @@
         "key": "nh_nl",
         "side": "bull",
         "label": "New highs vs lows",
-        "value": 72.0,
+        "value": 71.0,
         "line": 0,
-        "margin": 57.0,
+        "margin": 55.0,
         "unit": "names",
         "measurable": true
       },
@@ -4159,9 +4159,9 @@
         "key": "t2108_zone",
         "side": "neutral",
         "label": "T2108 zone",
-        "value": 51.35,
+        "value": 51.31,
         "line": 60,
-        "margin": -8.649999999999999,
+        "margin": -8.689999999999998,
         "unit": "points",
         "measurable": true
       },
@@ -6049,7 +6049,7 @@
         "layer": "fact",
         "level": 2,
         "level_label": "early",
-        "evidence": "864 names \u221225% on the quarter against 791 up 25% \u2014 52% on the down side"
+        "evidence": "862 names \u221225% on the quarter against 791 up 25% \u2014 52% on the down side"
       },
       {
         "key": "selling pressure",
@@ -6063,7 +6063,7 @@
         "layer": "fact",
         "level": 1,
         "level_label": "very weak",
-        "evidence": "47.9% above the 20-day, T2108 51.4, net advances -415"
+        "evidence": "47.9% above the 20-day, T2108 51.3, net advances -415"
       },
       {
         "key": "trend",
@@ -6084,7 +6084,7 @@
         "layer": "fact",
         "level": 4,
         "level_label": "good",
-        "evidence": "72 new 52-week highs against 15 new lows"
+        "evidence": "71 new 52-week highs against 16 new lows"
       },
       {
         "key": "index repair",
@@ -6134,7 +6134,7 @@
         "carrying": 0.25,
         "measured": 0.25,
         "fed": true,
-        "evidence": "47.9% above the 20-day, T2108 51.4, net advances -415"
+        "evidence": "47.9% above the 20-day, T2108 51.3, net advances -415"
       },
       {
         "key": "extremes",
@@ -6143,7 +6143,7 @@
         "carrying": 0.25,
         "measured": 1.0,
         "fed": false,
-        "evidence": "72 new 52-week highs against 15 new lows"
+        "evidence": "71 new 52-week highs against 16 new lows"
       },
       {
         "key": "confirmation",

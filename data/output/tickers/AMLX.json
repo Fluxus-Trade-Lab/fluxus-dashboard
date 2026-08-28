@@ -1,8 +1,8 @@
 {
   "ticker": "AMLX",
-  "fetched_at": "2026-08-21T22:10:53Z",
+  "fetched_at": "2026-08-28T04:45:07Z",
   "_schema": "v2",
-  "current_price": 38.65999984741211,
+  "current_price": 37.18000030517578,
   "info": {
     "symbol": "AMLX",
     "longName": "Amylyx Pharmaceuticals, Inc.",
@@ -13,13 +13,13 @@
     "city": "Cambridge",
     "website": "https://amylyx.com",
     "fullTimeEmployees": 136,
-    "marketCap": 4419038208,
-    "enterpriseValue": 4055424768,
+    "marketCap": 4142708992,
+    "enterpriseValue": 3886061568,
     "trailingPE": null,
-    "forwardPE": -34.34688,
+    "forwardPE": -32.19912,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": 18.463688,
+    "priceToBook": 17.309124,
     "grossMargins": 0.0,
     "operatingMargins": 0.0,
     "profitMargins": 0.0,
@@ -30,13 +30,13 @@
     "freeCashflow": -77316376,
     "debtToEquity": 2.197,
     "currentRatio": 12.12,
-    "fiftyTwoWeekHigh": 40.4388,
-    "fiftyTwoWeekLow": 7.96,
-    "averageVolume": 2150146,
-    "averageVolume10days": 4577080,
+    "fiftyTwoWeekHigh": 41.14,
+    "fiftyTwoWeekLow": 9.145,
+    "averageVolume": 2436477,
+    "averageVolume10days": 5894530,
     "beta": -0.205,
     "sharesOutstanding": 111423048,
-    "sharesFloat": 82567821,
+    "sharesFloat": 83523831,
     "companyOfficers": [
       {
         "name": "Mr. Joshua B. Cohen",
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.39,
+      "eps_estimate": -0.35768,
+      "eps_surprise_pct": -0.0904
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.37,
+      "eps_estimate": -0.34037,
+      "eps_surprise_pct": -0.0871
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.3,
+      "eps_estimate": -0.34182,
+      "eps_surprise_pct": 0.1223
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.37,
+      "eps_estimate": -0.42986,
+      "eps_surprise_pct": 0.1393
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 0,
+    "revenue_high": 416000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,8 +164,108 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 12,
+    "bullish": 11,
+    "neutral": 1,
+    "bearish": 0,
+    "avg_price_target": 42.36364,
+    "high_price_target": 57.0,
+    "low_price_target": 20.0,
+    "current_price": 37.18,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-19T17:41:32",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T13:28:11",
+        "firm": "Guggenheim",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T11:02:41",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-18T17:36:16",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-17T11:26:29",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-03T19:35:04",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-20T11:33:45",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T14:08:10",
+        "firm": "Guggenheim",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-28T11:45:17",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-25T10:34:05",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-27T16:24:44Z",
+      "title": "Oracle Stock And 2 High Growth Picks Backed By Rising Credit Demand",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/oracle-stock-2-high-growth-162444516.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-26T04:38:01Z",
+      "title": "Oracle Stock And 2 Growth Picks With Strong Earnings Potential",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/oracle-stock-2-growth-picks-043801665.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-21T22:00:54Z",
+      "title": "Why Amylyx Pharmaceuticals Blasted Nearly 79% Higher This Week",
+      "url": "https://www.fool.com/investing/2026/08/21/why-amylyx-pharmaceuticals-blasted-nearly-79-highe/",
+      "source": "Motley Fool"
+    },
     {
       "date": "2026-08-21T21:58:08Z",
       "title": "Amylyx (AMLX) Faces a Binary Phase 3 Test. Can Avexitide Rebuild the Company?",
@@ -178,74 +307,24 @@
       "title": "Why Amylyx Pharmaceuticals Stock Skyrocketed Today",
       "url": "https://www.fool.com/investing/2026/08/18/why-amylyx-pharmaceuticals-stock-skyrocketed-today/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-18T21:31:13Z",
-      "title": "AMLX Stock Clocks Best Day Ever After Positive Trial Data, Launches $350M Offering",
-      "url": "https://stocktwits.com/news-articles/markets/equity/amlx-stock-clocks-best-day-ever-after-positive-trial-data-launches-350-m-offering/cZYcnMtRJjw",
-      "source": "Stocktwits"
-    },
-    {
-      "date": "2026-08-18T20:27:00Z",
-      "title": "Micron, Coherent, SpaceX, Klarna, Amylyx, and More Stocks That Explain Today\u2019s Market",
-      "url": "https://www.barrons.com/articles/stock-movers-36984052?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-18T20:26:03Z",
-      "title": "A New Use for GLP-1s? Amylyx Pharma Catapults To 3-Year High",
-      "url": "https://www.investors.com/news/technology/amylyx-stock-amylyx-pharmaceuticals-glp-1-post-bariatric-hypoglycemia/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.14712210745298268,
   "technicals": {
-    "ma20": 24.89749984741211,
-    "ma50": 20.267000045776367,
-    "ma200": 15.735050015449524,
-    "rsi14": 82.13438754365718,
-    "high_20d": 41.130001068115234,
-    "low_5d": 21.280000686645508,
+    "ma20": 28.41500005722046,
+    "ma50": 22.089600105285644,
+    "ma200": 16.225650029182432,
+    "rsi14": 76.19588854369447,
+    "high_20d": 41.13999938964844,
+    "low_5d": 35.790000915527344,
     "low_10d": 21.280000686645508,
-    "high_52w": 41.130001068115234,
-    "low_52w": 7.960000038146973,
-    "atr14": 2.755999837602888,
-    "atr14_pct": 7.128814921056898,
-    "position_in_52w_range_pct": 92.55350876090857
+    "high_52w": 41.13999938964844,
+    "low_52w": 8.9399995803833,
+    "atr14": 2.732499667576381,
+    "atr14_pct": 7.349380433426175,
+    "position_in_52w_range_pct": 87.7018661244426
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 2.28,
-      "high": 2.28,
-      "low": 2.17,
-      "close": 2.22,
-      "volume": 508600.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 2.23,
-      "high": 2.28,
-      "low": 2.21,
-      "close": 2.23,
-      "volume": 340400.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 2.25,
-      "high": 2.295,
-      "low": 2.191,
-      "close": 2.21,
-      "volume": 364100.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 2.21,
-      "high": 2.21,
-      "low": 2.11,
-      "close": 2.13,
-      "volume": 511000.0
-    },
     {
       "date": "2024-08-28",
       "open": 2.11,
@@ -4216,46 +4295,46 @@
     },
     {
       "date": "2026-08-21",
-      "open": 39.73,
-      "high": 41.13,
-      "low": 38.5,
+      "open": 39.795,
+      "high": 41.14,
+      "low": 38.35,
       "close": 38.66,
-      "volume": 4640670.0
+      "volume": 4641200.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 38.64,
+      "high": 39.38,
+      "low": 37.45,
+      "close": 38.15,
+      "volume": 3714300.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 38.5,
+      "high": 38.88,
+      "low": 36.84,
+      "close": 37.46,
+      "volume": 2146600.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 37.13,
+      "high": 37.69,
+      "low": 35.79,
+      "close": 37.08,
+      "volume": 2815300.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 36.75,
+      "high": 38.23,
+      "low": 36.53,
+      "close": 37.18,
+      "volume": 1988700.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 7.96,
-      "high": 8.49,
-      "low": 7.96,
-      "close": 8.43,
-      "volume": 1255600.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 8.47,
-      "high": 9.378,
-      "low": 8.46,
-      "close": 9.3,
-      "volume": 2719600.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 9.245,
-      "high": 9.35,
-      "low": 8.47,
-      "close": 8.5,
-      "volume": 2061400.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 8.58,
-      "high": 9.185,
-      "low": 8.48,
-      "close": 9.16,
-      "volume": 953000.0
-    },
     {
       "date": "2025-08-27",
       "open": 9.22,
@@ -6234,14 +6313,45 @@
     },
     {
       "date": "2026-08-21",
-      "open": 39.73,
-      "high": 41.13,
-      "low": 38.5,
+      "open": 39.795,
+      "high": 41.14,
+      "low": 38.35,
       "close": 38.66,
-      "volume": 4640670.0
+      "volume": 4641200.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 38.64,
+      "high": 39.38,
+      "low": 37.45,
+      "close": 38.15,
+      "volume": 3714300.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 38.5,
+      "high": 38.88,
+      "low": 36.84,
+      "close": 37.46,
+      "volume": 2146600.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 37.13,
+      "high": 37.69,
+      "low": 35.79,
+      "close": 37.08,
+      "volume": 2815300.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 36.75,
+      "high": 38.23,
+      "low": 36.53,
+      "close": 37.18,
+      "volume": 1988700.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-20T22:17:08Z"
+  "ai_synthesized_at": null
 }

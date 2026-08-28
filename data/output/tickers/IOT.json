@@ -1,8 +1,8 @@
 {
   "ticker": "IOT",
-  "fetched_at": "2026-08-21T22:09:47Z",
+  "fetched_at": "2026-08-28T04:43:30Z",
   "_schema": "v2",
-  "current_price": 39.939998626708984,
+  "current_price": 41.869998931884766,
   "info": {
     "symbol": "IOT",
     "longName": "Samsara Inc.",
@@ -13,13 +13,13 @@
     "city": "San Francisco",
     "website": "https://www.samsara.com",
     "fullTimeEmployees": 4100,
-    "marketCap": 22714038272,
-    "enterpriseValue": 21978740736,
-    "trailingPE": 389.8,
-    "forwardPE": 43.314,
-    "priceToSalesTrailing12Months": 13.124989,
-    "enterpriseToRevenue": 12.7,
-    "priceToBook": 15.067646,
+    "marketCap": null,
+    "enterpriseValue": 23662772224,
+    "trailingPE": 418.69998,
+    "forwardPE": 46.190166,
+    "priceToSalesTrailing12Months": null,
+    "enterpriseToRevenue": 13.673,
+    "priceToBook": 16.18477,
     "grossMargins": 0.76298,
     "operatingMargins": 0.01503,
     "profitMargins": 0.03323,
@@ -32,11 +32,11 @@
     "currentRatio": 1.621,
     "fiftyTwoWeekHigh": 47.47,
     "fiftyTwoWeekLow": 23.38,
-    "averageVolume": 6090403,
-    "averageVolume10days": 5080530,
+    "averageVolume": 6074474,
+    "averageVolume10days": 4569130,
     "beta": 1.336,
-    "sharesOutstanding": 372784485,
-    "sharesFloat": 358722154,
+    "sharesOutstanding": null,
+    "sharesFloat": 359252420,
     "companyOfficers": [
       {
         "name": "Mr. Sanjit  Biswas",
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-04-30T00:00:00",
+      "eps_actual": 0.17,
+      "eps_estimate": 0.13032,
+      "eps_surprise_pct": 0.3045
+    },
+    {
+      "period_end": "2026-01-31T00:00:00",
+      "eps_actual": 0.18,
+      "eps_estimate": 0.12775,
+      "eps_surprise_pct": 0.409
+    },
+    {
+      "period_end": "2025-10-31T00:00:00",
+      "eps_actual": 0.15,
+      "eps_estimate": 0.11867,
+      "eps_surprise_pct": 0.264
+    },
+    {
+      "period_end": "2025-07-31T00:00:00",
+      "eps_actual": 0.12,
+      "eps_estimate": 0.07247,
+      "eps_surprise_pct": 0.65589994
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-09-03",
+    "revenue_low": 482500000,
+    "revenue_high": 484200000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -135,8 +164,126 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 22,
+    "bullish": 17,
+    "neutral": 5,
+    "bearish": 0,
+    "avg_price_target": 45.66364,
+    "high_price_target": 57.6,
+    "low_price_target": 38.0,
+    "current_price": 41.87,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-24T12:40:08",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T14:12:56",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T14:39:07",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-14T14:10:17",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-10T10:19:17",
+        "firm": "Piper Sandler",
+        "to_grade": "Neutral",
+        "from_grade": "Overweight",
+        "action": "down"
+      },
+      {
+        "date": "2026-07-23T13:07:50",
+        "firm": "Guggenheim",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-06-26T10:58:11",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-25T14:43:54",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-05T17:00:08",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-05T14:04:41",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-27T21:15:03Z",
+      "title": "Rubrik, Inc. (RBRK) Beats Q2 Earnings and Revenue Estimates",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/rubrik-inc-rbrk-beats-q2-211503018.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-27T06:13:04Z",
+      "title": "Is Samsara (IOT) Undervalued On Its Fuel Command Center Launch?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/samsara-iot-undervalued-fuel-command-061304757.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-26T21:10:03Z",
+      "title": "Is Samsara\u2019s New Fuel Command Center Reframing the Investment Case For Samsara (IOT)?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/samsara-fuel-command-center-reframing-211003602.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-26T17:10:51Z",
+      "title": "Samsara (IOT) Stock Looks Overvalued Even With Strong Product Momentum",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/samsara-iot-stock-looks-overvalued-171051631.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-25T22:15:02Z",
+      "title": "Samsara Inc. (IOT) Stock Falls Amid Market Uptick: What Investors Need to Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/samsara-inc-iot-stock-falls-221502610.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-25T21:15:02Z",
+      "title": "Box (BOX) Matches Q2 Earnings Estimates",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/box-box-matches-q2-earnings-211502706.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-20T10:51:15Z",
       "title": "1 Cash-Producing Stock to Own for Decades and 2 We Brush Off",
@@ -160,92 +307,24 @@
       "title": "3 Reasons Investors Love Samsara (IOT)",
       "url": "https://finance.yahoo.com/markets/stocks/articles/3-reasons-investors-love-samsara-150100983.html",
       "source": "StockStory"
-    },
-    {
-      "date": "2026-08-12T22:15:01Z",
-      "title": "Samsara Inc. (IOT) Stock Falls Amid Market Uptick: What Investors Need to Know",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/samsara-inc-iot-stock-falls-221501143.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-10T14:34:33Z",
-      "title": "Samsara (IOT) Maintains 30% Growth as Margins Improve and AI Risks Stay Low",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/samsara-iot-maintains-30-growth-143433421.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-10T14:03:27Z",
-      "title": "Piper Sandler downgrades Samsara to neutral on weakening app downloads",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/piper-sandler-downgrades-samsara-neutral-140327140.html",
-      "source": "Investing.com"
-    },
-    {
-      "date": "2026-08-06T22:15:02Z",
-      "title": "Samsara Inc. (IOT) Registers a Bigger Fall Than the Market: Important Facts to Note",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/samsara-inc-iot-registers-bigger-221502183.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-06T21:40:10Z",
-      "title": "VTEX (VTEX) Q2 Earnings Surpass Estimates",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/vtex-vtex-q2-earnings-surpass-214010969.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-05T11:10:53Z",
-      "title": "Is Samsara (IOT) Fully Valued After Crossing $2B In ARR?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/samsara-iot-fully-valued-crossing-111053406.html",
-      "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.027465966786167122,
   "technicals": {
-    "ma20": 38.7685001373291,
-    "ma50": 36.03380012512207,
-    "ma200": 33.59334998130798,
-    "rsi14": 56.69793945161649,
-    "high_20d": 42.0,
-    "low_5d": 38.0099983215332,
-    "low_10d": 38.0099983215332,
+    "ma20": 39.45800018310547,
+    "ma50": 36.61520011901855,
+    "ma200": 33.62724997520447,
+    "rsi14": 61.50614896524432,
+    "high_20d": 42.68000030517578,
+    "low_5d": 37.83599853515625,
+    "low_10d": 37.83599853515625,
     "high_52w": 47.470001220703125,
     "low_52w": 23.3799991607666,
-    "atr14": 1.9690709795270647,
-    "atr14_pct": 4.93007272716903,
-    "position_in_52w_range_pct": 68.74220859234754
+    "atr14": 2.0527142116001675,
+    "atr14_pct": 4.902589596287255,
+    "position_in_52w_range_pct": 76.75383225420481
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 41.32,
-      "high": 41.963,
-      "low": 40.56,
-      "close": 40.86,
-      "volume": 3212500.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 41.14,
-      "high": 41.8,
-      "low": 40.55,
-      "close": 41.69,
-      "volume": 2124700.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 41.7,
-      "high": 42.49,
-      "low": 41.4,
-      "close": 41.55,
-      "volume": 2128400.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 41.21,
-      "high": 42.32,
-      "low": 41.12,
-      "close": 41.98,
-      "volume": 4381600.0
-    },
     {
       "date": "2024-08-28",
       "open": 41.87,
@@ -4220,42 +4299,42 @@
       "high": 40.009,
       "low": 38.01,
       "close": 39.94,
-      "volume": 2547197.0
+      "volume": 3132000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 39.4,
+      "high": 41.24,
+      "low": 39.4,
+      "close": 40.33,
+      "volume": 5714100.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 39.82,
+      "high": 40.84,
+      "low": 38.58,
+      "close": 39.14,
+      "volume": 4054200.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 38.07,
+      "high": 40.22,
+      "low": 37.836,
+      "close": 39.84,
+      "volume": 3710500.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 40.88,
+      "high": 42.68,
+      "low": 40.57,
+      "close": 41.87,
+      "volume": 5186500.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 32.7,
-      "high": 33.045,
-      "low": 32.28,
-      "close": 32.84,
-      "volume": 2636800.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 32.74,
-      "high": 34.99,
-      "low": 32.55,
-      "close": 34.79,
-      "volume": 5980400.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 34.85,
-      "high": 35.35,
-      "low": 34.34,
-      "close": 34.4,
-      "volume": 6681400.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 34.4,
-      "high": 34.57,
-      "low": 33.44,
-      "close": 33.6,
-      "volume": 7609900.0
-    },
     {
       "date": "2025-08-27",
       "open": 33.99,
@@ -6238,10 +6317,41 @@
       "high": 40.009,
       "low": 38.01,
       "close": 39.94,
-      "volume": 2547197.0
+      "volume": 3132000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 39.4,
+      "high": 41.24,
+      "low": 39.4,
+      "close": 40.33,
+      "volume": 5714100.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 39.82,
+      "high": 40.84,
+      "low": 38.58,
+      "close": 39.14,
+      "volume": 4054200.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 38.07,
+      "high": 40.22,
+      "low": 37.836,
+      "close": 39.84,
+      "volume": 3710500.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 40.88,
+      "high": 42.68,
+      "low": 40.57,
+      "close": 41.87,
+      "volume": 5186500.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:11:34Z"
+  "ai_synthesized_at": null
 }

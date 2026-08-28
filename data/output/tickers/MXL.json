@@ -1,8 +1,8 @@
 {
   "ticker": "MXL",
-  "fetched_at": "2026-08-21T22:09:55Z",
+  "fetched_at": "2026-08-28T04:43:39Z",
   "_schema": "v2",
-  "current_price": 66.61000061035156,
+  "current_price": 63.41999816894531,
   "info": {
     "symbol": "MXL",
     "longName": "MaxLinear, Inc.",
@@ -13,13 +13,13 @@
     "city": "Carlsbad",
     "website": "https://www.maxlinear.com",
     "fullTimeEmployees": 1115,
-    "marketCap": 5920451584,
-    "enterpriseValue": 6003834368,
+    "marketCap": 5751761920,
+    "enterpriseValue": 5835145216,
     "trailingPE": null,
-    "forwardPE": 25.27245,
-    "priceToSalesTrailing12Months": 10.406292,
-    "enterpriseToRevenue": 10.553,
-    "priceToBook": 12.210999,
+    "forwardPE": 24.55237,
+    "priceToSalesTrailing12Months": 10.109789,
+    "enterpriseToRevenue": 10.256,
+    "priceToBook": 11.863074,
     "grossMargins": 0.57477003,
     "operatingMargins": -0.02441,
     "profitMargins": -0.18238,
@@ -32,11 +32,11 @@
     "currentRatio": 1.776,
     "fiftyTwoWeekHigh": 128.3,
     "fiftyTwoWeekLow": 12.77,
-    "averageVolume": 3919932,
-    "averageVolume10days": 2342080,
+    "averageVolume": 3687547,
+    "averageVolume10days": 2298720,
     "beta": 3.975,
     "sharesOutstanding": 90693191,
-    "sharesFloat": 84631258,
+    "sharesFloat": 85222578,
     "companyOfficers": [
       {
         "name": "Dr. Kishore  Seendripu Ph.D.",
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.35,
+      "eps_estimate": 0.32952,
+      "eps_surprise_pct": 0.0622
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.22,
+      "eps_estimate": 0.17523,
+      "eps_surprise_pct": 0.2555
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.19,
+      "eps_estimate": 0.17875,
+      "eps_surprise_pct": 0.0629
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.14,
+      "eps_estimate": 0.1191,
+      "eps_surprise_pct": 0.17549999
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-22",
+    "revenue_low": 166900000,
+    "revenue_high": 217100000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,8 +164,108 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 11,
+    "bullish": 7,
+    "neutral": 4,
+    "bearish": 0,
+    "avg_price_target": 94.54545,
+    "high_price_target": 125.0,
+    "low_price_target": 40.0,
+    "current_price": 63.42,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-24T17:46:39",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T15:54:47",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T14:40:27",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T14:08:14",
+        "firm": "Susquehanna",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T10:17:44",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-20T13:06:58",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-29T14:50:10",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-04T14:19:16",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-04-29T13:13:00",
+        "firm": "Loop Capital",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-04-24T12:52:36",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-27T15:30:18Z",
+      "title": "Why Is NXP (NXPI) Down 7.4% Since Last Earnings Report?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/why-nxp-nxpi-down-7-153018859.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-26T17:16:00Z",
+      "title": "MXL's AI Optical Growth Accelerates: Can It Challenge AVGO & MRVL?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/mxls-ai-optical-growth-accelerates-171600411.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-24T13:55:02Z",
+      "title": "Here's Why MaxLinear (MXL) Is a Great 'Buy the Bottom' Stock Now",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/heres-why-maxlinear-mxl-great-135502364.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-20T18:28:00Z",
       "title": "MaxLinear Stock Drops 23% in a Month: Should You Buy it on the Dip?",
@@ -178,74 +307,24 @@
       "title": "The Zacks Analyst Blog Highlights MaxLinear, Marvell Technology and Broadcom",
       "url": "https://finance.yahoo.com/markets/stocks/articles/zacks-analyst-blog-highlights-maxlinear-124600962.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-07-27T17:03:00Z",
-      "title": "MaxLinear Rides on AI Infrastructure Momentum: More Upside Ahead?",
-      "url": "https://finance.yahoo.com/technology/ai/articles/maxlinear-rides-ai-infrastructure-momentum-170300056.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-07-25T10:07:06Z",
-      "title": "MaxLinear (MXL) Returns To Profit As AI Data Center Demand Lifts Earnings",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/maxlinear-mxl-returns-profit-ai-100706918.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-07-24T18:47:00Z",
-      "title": "This Optical Networking Stock Has Soared This Year. Why It Fell After Strong Earnings.",
-      "url": "https://www.barrons.com/articles/maxlinear-earnings-stock-price-7c93f75a?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.17565437277881998,
   "technicals": {
-    "ma20": 69.81249980926513,
-    "ma50": 81.84980003356934,
-    "ma200": 45.08594997882843,
-    "rsi14": 43.82538383254347,
+    "ma20": 70.19199981689454,
+    "ma50": 80.18700004577637,
+    "ma200": 46.068399968147276,
+    "rsi14": 42.605016402052634,
     "high_20d": 89.0,
-    "low_5d": 63.18000030517578,
-    "low_10d": 63.18000030517578,
+    "low_5d": 61.119998931884766,
+    "low_10d": 61.119998931884766,
     "high_52w": 128.3000030517578,
     "low_52w": 12.770000457763672,
-    "atr14": 6.792857578822544,
-    "atr14_pct": 10.197954536224545,
-    "position_in_52w_range_pct": 46.602613125351716
+    "atr14": 6.118571417672293,
+    "atr14_pct": 9.647700401020126,
+    "position_in_52w_range_pct": 43.84142350379787
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 12.79,
-      "high": 12.81,
-      "low": 12.29,
-      "close": 12.32,
-      "volume": 567500.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 12.34,
-      "high": 12.95,
-      "low": 12.22,
-      "close": 12.76,
-      "volume": 966300.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 12.8,
-      "high": 12.8,
-      "low": 12.1,
-      "close": 12.13,
-      "volume": 766600.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 12.06,
-      "high": 12.06,
-      "low": 11.67,
-      "close": 11.83,
-      "volume": 639100.0
-    },
     {
       "date": "2024-08-28",
       "open": 11.82,
@@ -4220,42 +4299,42 @@
       "high": 67.6,
       "low": 63.18,
       "close": 66.61,
-      "volume": 1829375.0
+      "volume": 2088800.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 63.92,
+      "high": 64.13,
+      "low": 61.12,
+      "close": 62.78,
+      "volume": 1820200.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 66.62,
+      "high": 67.24,
+      "low": 64.29,
+      "close": 66.36,
+      "volume": 1497200.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 65.53,
+      "high": 66.82,
+      "low": 62.64,
+      "close": 63.0,
+      "volume": 2059800.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 66.04,
+      "high": 66.5,
+      "low": 63.11,
+      "close": 63.42,
+      "volume": 1913000.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 14.13,
-      "high": 15.17,
-      "low": 14.13,
-      "close": 15.15,
-      "volume": 1167100.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 15.27,
-      "high": 16.43,
-      "low": 15.07,
-      "close": 16.35,
-      "volume": 2273300.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 16.33,
-      "high": 17.08,
-      "low": 16.25,
-      "close": 16.63,
-      "volume": 2091000.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 16.69,
-      "high": 17.43,
-      "low": 16.58,
-      "close": 17.22,
-      "volume": 2857700.0
-    },
     {
       "date": "2025-08-27",
       "open": 17.14,
@@ -6238,10 +6317,41 @@
       "high": 67.6,
       "low": 63.18,
       "close": 66.61,
-      "volume": 1829375.0
+      "volume": 2088800.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 63.92,
+      "high": 64.13,
+      "low": 61.12,
+      "close": 62.78,
+      "volume": 1820200.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 66.62,
+      "high": 67.24,
+      "low": 64.29,
+      "close": 66.36,
+      "volume": 1497200.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 65.53,
+      "high": 66.82,
+      "low": 62.64,
+      "close": 63.0,
+      "volume": 2059800.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 66.04,
+      "high": 66.5,
+      "low": 63.11,
+      "close": 63.42,
+      "volume": 1913000.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:12:11Z"
+  "ai_synthesized_at": null
 }

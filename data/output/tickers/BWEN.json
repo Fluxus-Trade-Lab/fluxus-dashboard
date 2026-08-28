@@ -1,8 +1,8 @@
 {
   "ticker": "BWEN",
-  "fetched_at": "2026-08-20T22:17:59Z",
+  "fetched_at": "2026-08-28T04:46:54Z",
   "_schema": "v2",
-  "current_price": 4.510000228881836,
+  "current_price": 4.590000152587891,
   "info": {
     "symbol": "BWEN",
     "longName": "Broadwind, Inc.",
@@ -13,13 +13,13 @@
     "city": "Cicero",
     "website": "https://www.bwen.com",
     "fullTimeEmployees": 341,
-    "marketCap": 106694752,
-    "enterpriseValue": 115038360,
-    "trailingPE": 12.527778,
-    "forwardPE": 100.22222,
-    "priceToSalesTrailing12Months": 0.6242782,
-    "enterpriseToRevenue": 0.673,
-    "priceToBook": 1.621136,
+    "marketCap": 108587344,
+    "enterpriseValue": 113382344,
+    "trailingPE": 12.75,
+    "forwardPE": 102.0,
+    "priceToSalesTrailing12Months": 0.63535184,
+    "enterpriseToRevenue": 0.663,
+    "priceToBook": 1.6498922,
     "grossMargins": 0.118319996,
     "operatingMargins": -0.01016,
     "profitMargins": 0.03199,
@@ -32,8 +32,8 @@
     "currentRatio": 2.722,
     "fiftyTwoWeekHigh": 5.7,
     "fiftyTwoWeekLow": 1.88,
-    "averageVolume": 601819,
-    "averageVolume10days": 766080,
+    "averageVolume": 576690,
+    "averageVolume10days": 368080,
     "beta": 1.824,
     "sharesOutstanding": 23657373,
     "sharesFloat": 20573634,
@@ -68,14 +68,8 @@
     {
       "period_end": "2026-06-30T00:00:00",
       "eps_actual": -0.03,
-      "eps_estimate": -0.01,
-      "eps_surprise_pct": -2.0
-    },
-    {
-      "period_end": "2026-03-31T00:00:00",
-      "eps_actual": -0.02,
-      "eps_estimate": -0.07333,
-      "eps_surprise_pct": 0.72730005
+      "eps_estimate": -0.015,
+      "eps_surprise_pct": -1.0
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -88,12 +82,18 @@
       "eps_actual": 0.32,
       "eps_estimate": 0.05,
       "eps_surprise_pct": 5.4
+    },
+    {
+      "period_end": "2025-06-30T00:00:00",
+      "eps_actual": -0.04,
+      "eps_estimate": 0.01,
+      "eps_surprise_pct": -5.0
     }
   ],
   "next_earnings": {
     "date": "2026-11-16",
-    "revenue_low": 24000000,
-    "revenue_high": 24000000
+    "revenue_low": 34000000,
+    "revenue_high": 34400000
   },
   "quarterly_metrics": [
     {
@@ -158,10 +158,10 @@
     "bullish": 3,
     "neutral": 0,
     "bearish": 0,
-    "avg_price_target": 6.33333,
+    "avg_price_target": 6.83333,
     "high_price_target": 8.0,
-    "low_price_target": 5.0,
-    "current_price": 4.51,
+    "low_price_target": 6.0,
+    "current_price": 4.59,
     "recent_rating_changes": [
       {
         "date": "2026-08-12T17:58:54",
@@ -297,62 +297,22 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.11308203417241162,
+  "options_implied_move": 0.22004356566972036,
   "technicals": {
-    "ma20": 4.647000002861023,
-    "ma50": 4.633200025558471,
-    "ma200": 3.2732000029087067,
-    "rsi14": 46.883019719502556,
+    "ma20": 4.708000016212464,
+    "ma50": 4.657400026321411,
+    "ma200": 3.3312500047683717,
+    "rsi14": 49.08669528487252,
     "high_20d": 5.699999809265137,
-    "low_5d": 4.380000114440918,
-    "low_10d": 4.349999904632568,
+    "low_5d": 4.28000020980835,
+    "low_10d": 4.28000020980835,
     "high_52w": 5.699999809265137,
     "low_52w": 1.8799999952316284,
-    "atr14": 0.5414285319192069,
-    "atr14_pct": 12.00506661733459,
-    "position_in_52w_range_pct": 68.8481770074541
+    "atr14": 0.4021427971976144,
+    "atr14_pct": 8.761280693441416,
+    "position_in_52w_range_pct": 70.94241594987916
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 2.14,
-      "high": 2.25,
-      "low": 2.11,
-      "close": 2.22,
-      "volume": 249200.0
-    },
-    {
-      "date": "2024-08-22",
-      "open": 2.26,
-      "high": 2.35,
-      "low": 2.22,
-      "close": 2.26,
-      "volume": 251300.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 2.28,
-      "high": 2.38,
-      "low": 2.28,
-      "close": 2.33,
-      "volume": 114300.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 2.37,
-      "high": 2.37,
-      "low": 2.2,
-      "close": 2.21,
-      "volume": 137000.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 2.22,
-      "high": 2.23,
-      "low": 2.17,
-      "close": 2.17,
-      "volume": 93300.0
-    },
     {
       "date": "2024-08-28",
       "open": 2.19,
@@ -4316,53 +4276,53 @@
     {
       "date": "2026-08-20",
       "open": 4.59,
-      "high": 4.62,
+      "high": 4.63,
       "low": 4.38,
       "close": 4.51,
-      "volume": 281459.0
+      "volume": 281500.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 4.6,
+      "high": 4.66,
+      "low": 4.3,
+      "close": 4.46,
+      "volume": 398600.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 4.44,
+      "high": 4.44,
+      "low": 4.28,
+      "close": 4.4,
+      "volume": 288400.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 4.44,
+      "high": 4.52,
+      "low": 4.33,
+      "close": 4.38,
+      "volume": 252000.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 4.36,
+      "high": 4.48,
+      "low": 4.33,
+      "close": 4.39,
+      "volume": 251300.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 4.48,
+      "high": 4.77,
+      "low": 4.44,
+      "close": 4.59,
+      "volume": 316300.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 2.2,
-      "high": 2.29,
-      "low": 2.07,
-      "close": 2.13,
-      "volume": 197900.0
-    },
-    {
-      "date": "2025-08-21",
-      "open": 2.1,
-      "high": 2.17,
-      "low": 2.06,
-      "close": 2.13,
-      "volume": 58700.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 2.14,
-      "high": 2.29,
-      "low": 2.09,
-      "close": 2.21,
-      "volume": 109400.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 2.17,
-      "high": 2.3,
-      "low": 2.14,
-      "close": 2.21,
-      "volume": 130900.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 2.21,
-      "high": 2.29,
-      "low": 2.19,
-      "close": 2.21,
-      "volume": 66700.0
-    },
     {
       "date": "2025-08-27",
       "open": 2.22,
@@ -6334,10 +6294,50 @@
     {
       "date": "2026-08-20",
       "open": 4.59,
-      "high": 4.62,
+      "high": 4.63,
       "low": 4.38,
       "close": 4.51,
-      "volume": 281459.0
+      "volume": 281500.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 4.6,
+      "high": 4.66,
+      "low": 4.3,
+      "close": 4.46,
+      "volume": 398600.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 4.44,
+      "high": 4.44,
+      "low": 4.28,
+      "close": 4.4,
+      "volume": 288400.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 4.44,
+      "high": 4.52,
+      "low": 4.33,
+      "close": 4.38,
+      "volume": 252000.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 4.36,
+      "high": 4.48,
+      "low": 4.33,
+      "close": 4.39,
+      "volume": 251300.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 4.48,
+      "high": 4.77,
+      "low": 4.44,
+      "close": 4.59,
+      "volume": 316300.0
     }
   ],
   "ai_synthesis": null,

@@ -1,8 +1,8 @@
 {
   "ticker": "HOOD",
-  "fetched_at": "2026-08-21T22:09:39Z",
+  "fetched_at": "2026-08-28T04:43:20Z",
   "_schema": "v2",
-  "current_price": 108.12999725341797,
+  "current_price": 109.76000213623047,
   "info": {
     "symbol": "HOOD",
     "longName": "Robinhood Markets, Inc.",
@@ -13,13 +13,13 @@
     "city": "Menlo Park",
     "website": "https://robinhood.com",
     "fullTimeEmployees": 2900,
-    "marketCap": 85502722048,
-    "enterpriseValue": 85186109440,
-    "trailingPE": 42.079647,
-    "forwardPE": 29.279825,
-    "priceToSalesTrailing12Months": 17.336319,
-    "enterpriseToRevenue": 17.272,
-    "priceToBook": 9.018492,
+    "marketCap": 98683273216,
+    "enterpriseValue": 97764270080,
+    "trailingPE": 48.140354,
+    "forwardPE": 33.77262,
+    "priceToSalesTrailing12Months": 20.008776,
+    "enterpriseToRevenue": 19.822,
+    "priceToBook": 10.408725,
     "grossMargins": 0.9189,
     "operatingMargins": 0.43884,
     "profitMargins": 0.42011002,
@@ -32,11 +32,11 @@
     "currentRatio": 1.116,
     "fiftyTwoWeekHigh": 153.86,
     "fiftyTwoWeekLow": 63.515,
-    "averageVolume": 25850011,
-    "averageVolume10days": 14566860,
+    "averageVolume": 25806269,
+    "averageVolume10days": 21438100,
     "beta": 2.321,
     "sharesOutstanding": 790630234,
-    "sharesFloat": 783739008,
+    "sharesFloat": 783792953,
     "companyOfficers": [
       {
         "name": "Mr. Vladimir  Tenev",
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.62,
+      "eps_estimate": 0.43141,
+      "eps_surprise_pct": 0.4371
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.38,
+      "eps_estimate": 0.38768,
+      "eps_surprise_pct": -0.0198
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.66,
+      "eps_estimate": 0.63585,
+      "eps_surprise_pct": 0.038
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.61,
+      "eps_estimate": 0.5443,
+      "eps_surprise_pct": 0.120699994
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 1257900000,
+    "revenue_high": 1443100000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,117 +164,167 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 27,
+    "bullish": 20,
+    "neutral": 4,
+    "bearish": 3,
+    "avg_price_target": 120.08462,
+    "high_price_target": 163.6,
+    "low_price_target": 57.0,
+    "current_price": 109.76,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-03T12:52:27",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T18:51:26",
+        "firm": "Goldman Sachs",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T14:45:43",
+        "firm": "Citizens",
+        "to_grade": "Market Outperform",
+        "from_grade": "Market Outperform",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-30T11:34:21",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T10:35:45",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T09:55:52",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-22T12:13:26",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-21T10:34:51",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-20T15:29:37",
+        "firm": "Bernstein",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-16T17:27:10",
+        "firm": "Goldman Sachs",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
-      "date": "2026-08-21T13:57:20Z",
-      "title": "Stocks trade higher, lifted by crypto, commodities: AlphaCheck",
-      "url": "https://finance.yahoo.com/markets/article/stocks-trade-higher-lifted-by-crypto-commodities-alphacheck-135720189.html",
-      "source": "Yahoo Finance"
-    },
-    {
-      "date": "2026-08-21T21:04:00Z",
-      "title": "U.S. Stocks Rise as Bitcoin Nears $80,000",
-      "url": "https://www.wsj.com/finance/stocks/u-s-stocks-rise-as-bitcoin-nears-80-000-5de452ad?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
-    },
-    {
-      "date": "2026-08-21T20:48:30Z",
-      "title": "Dow Jones Futures: Market Rally Repairs Some Damage; Nvidia, CrowdStrike, Warsh In Focus",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-rally-nvidia-crowdstrike-warsh/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-08-21T20:43:24Z",
-      "title": "Robinhood Leads Friday\u2019s S&P 500 Gains",
-      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-08-21-2026/card/robinhood-leads-friday-s-s-p-500-gains-bfqsEvdpn8a5YLzGR4ML?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
-    },
-    {
-      "date": "2026-08-21T20:36:10Z",
-      "title": "US Equity Markets End Higher After Iran Hints at Desire to End War Soon, Crude Oil Prices Halt",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-markets-end-higher-203610880.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-21T20:30:40Z",
-      "title": "Crypto Stocks Gain as Bitcoin Logs Best Week in Over Two Years",
-      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-08-21-2026/card/crypto-stocks-gain-as-bitcoin-heads-for-best-week-in-over-two-years-7ByUM0ukiGfwtnmJ5IaL?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
-    },
-    {
-      "date": "2026-08-21T20:20:00Z",
-      "title": "Why is HOOD stock up today?",
-      "url": "https://www.thestreet.com/crypto/markets/why-is-hood-stock-up-today",
-      "source": "TheStreet"
-    },
-    {
-      "date": "2026-08-21T20:18:00Z",
-      "title": "Moderna, Robinhood, Marvell, Tesla, SpaceX, and More Stocks That Explain Today\u2019s Market",
-      "url": "https://www.barrons.com/articles/stock-movers-b87ea8d7?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-21T18:00:45Z",
-      "title": "Webull Is Having a Monster Quarter. Is BULL Stock Still a Buy?",
-      "url": "https://247wallst.com/investing/2026/08/21/webull-is-having-a-monster-quarter-is-bull-stock-still-a-buy/",
+      "date": "2026-08-27T18:37:24Z",
+      "title": "Webull Surges 8%, Robinhood Ticks Up as the Retail Trading Bid Extends",
+      "url": "https://247wallst.com/investing/2026/08/27/webull-surges-8-robinhood-ticks-up-as-the-retail-trading-bid-extends/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-21T17:41:29Z",
-      "title": "Coinbase Stock Surged On A Bill Its Own CEO Says It Can Live Without",
-      "url": "https://www.trefis.com/articles/612409/coinbase-stock-surged-on-a-bill-its-own-ceo-says-it-can-live-without/2026-08-21",
-      "source": "Trefis"
+      "date": "2026-08-27T17:47:00Z",
+      "title": "Coinbase Brings Crypto Wealth Into Mainstream Mortgages",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/coinbase-brings-crypto-wealth-mainstream-174700183.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-27T17:02:10Z",
+      "title": "Major tech companies call for defensive surge to defeat AI-driven hacks",
+      "url": "https://ca.finance.yahoo.com/news/major-tech-companies-call-defensive-170210641.html",
+      "source": "Reuters"
+    },
+    {
+      "date": "2026-08-27T17:02:00Z",
+      "title": "SoFi Technologies' SoFi Plus: Can Paid Membership Drive Growth?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/sofi-technologies-sofi-plus-paid-170200026.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-26T19:59:34Z",
+      "title": "Stocks making big moves yesterday: Fluence Energy, Paymentus, RLI, Dick's, and Robinhood",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-yesterday-195934845.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-08-26T17:45:00Z",
+      "title": "Coinbase Taps Chainlink to Power Tokenized Stocks on Base",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/coinbase-taps-chainlink-power-tokenized-174500306.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-26T12:00:11Z",
+      "title": "Dow Jones Futures Await Inflation Data, Nvidia Earnings; Robinhood In Buy Area",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-fed-inflation-data-nvidia-earning-srobinhood-oil-prices-yields/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
+    },
+    {
+      "date": "2026-08-26T11:31:13Z",
+      "title": "2 Internet Stocks with Impressive Fundamentals and 1 Facing Challenges",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/2-internet-stocks-impressive-fundamentals-113113937.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-08-26T08:16:14Z",
+      "title": "US Stock Market Today: S&P 500 Futures Rise As Growth Cools And Fed Looms",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-stock-market-today-p-081614241.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-25T22:35:00Z",
+      "title": "157-year-old Wall Street giant has a new call on Coinbase and Robinhood",
+      "url": "https://www.thestreet.com/crypto/markets/157-year-old-wall-street-giant-has-a-new-call-on-coinbase-and-robinhood",
+      "source": "TheStreet"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.029427841992851197,
   "technicals": {
-    "ma20": 93.87899932861328,
-    "ma50": 100.30960021972656,
-    "ma200": 96.08162498474121,
-    "rsi14": 62.49522033677122,
-    "high_20d": 109.70999908447266,
-    "low_5d": 91.44000244140625,
+    "ma20": 97.33699951171874,
+    "ma50": 101.38480010986328,
+    "ma200": 95.56807498931884,
+    "rsi14": 60.32083087196393,
+    "high_20d": 112.44999694824219,
+    "low_5d": 98.7699966430664,
     "low_10d": 91.44000244140625,
     "high_52w": 153.86000061035156,
     "low_52w": 63.51499938964844,
-    "atr14": 5.275570460728237,
-    "atr14_pct": 4.878914819875738,
-    "position_in_52w_range_pct": 49.382917993193544
+    "atr14": 5.8214263916015625,
+    "atr14_pct": 5.303777585915315,
+    "position_in_52w_range_pct": 51.18711840360759
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 20.14,
-      "high": 20.37,
-      "low": 19.85,
-      "close": 19.89,
-      "volume": 7417900.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 20.062,
-      "high": 21.21,
-      "low": 20.0,
-      "close": 21.12,
-      "volume": 13294500.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 21.12,
-      "high": 21.16,
-      "low": 20.79,
-      "close": 20.96,
-      "volume": 10676300.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 20.8,
-      "high": 21.54,
-      "low": 20.59,
-      "close": 21.36,
-      "volume": 8052600.0
-    },
     {
       "date": "2024-08-28",
       "open": 21.15,
@@ -4216,46 +4295,46 @@
     },
     {
       "date": "2026-08-21",
-      "open": 100.88,
+      "open": 101.1,
       "high": 109.71,
       "low": 98.77,
       "close": 108.13,
-      "volume": 49572416.0
+      "volume": 50460200.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 106.855,
+      "high": 109.125,
+      "low": 103.14,
+      "close": 103.62,
+      "volume": 22147500.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 103.2,
+      "high": 112.45,
+      "low": 102.8,
+      "close": 112.09,
+      "volume": 24663500.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 110.105,
+      "high": 111.59,
+      "low": 108.25,
+      "close": 108.54,
+      "volume": 13453300.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 110.7,
+      "high": 112.07,
+      "low": 107.51,
+      "close": 109.76,
+      "volume": 13727200.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 105.03,
-      "high": 108.21,
-      "low": 104.35,
-      "close": 106.3,
-      "volume": 34679000.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 105.53,
-      "high": 111.883,
-      "low": 103.8,
-      "close": 109.32,
-      "volume": 39922200.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 108.49,
-      "high": 109.85,
-      "low": 105.95,
-      "close": 107.94,
-      "volume": 29478100.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 106.85,
-      "high": 109.36,
-      "low": 105.12,
-      "close": 108.8,
-      "volume": 27361000.0
-    },
     {
       "date": "2025-08-27",
       "open": 108.69,
@@ -6234,14 +6313,45 @@
     },
     {
       "date": "2026-08-21",
-      "open": 100.88,
+      "open": 101.1,
       "high": 109.71,
       "low": 98.77,
       "close": 108.13,
-      "volume": 49572416.0
+      "volume": 50460200.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 106.855,
+      "high": 109.125,
+      "low": 103.14,
+      "close": 103.62,
+      "volume": 22147500.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 103.2,
+      "high": 112.45,
+      "low": 102.8,
+      "close": 112.09,
+      "volume": 24663500.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 110.105,
+      "high": 111.59,
+      "low": 108.25,
+      "close": 108.54,
+      "volume": 13453300.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 110.7,
+      "high": 112.07,
+      "low": 107.51,
+      "close": 109.76,
+      "volume": 13727200.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-20T22:15:09Z"
+  "ai_synthesized_at": null
 }

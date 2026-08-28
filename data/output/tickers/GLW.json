@@ -1,8 +1,8 @@
 {
   "ticker": "GLW",
-  "fetched_at": "2026-08-21T22:09:33Z",
+  "fetched_at": "2026-08-28T04:48:23Z",
   "_schema": "v2",
-  "current_price": 149.83999633789062,
+  "current_price": 152.8000030517578,
   "info": {
     "symbol": "GLW",
     "longName": "Corning Incorporated",
@@ -13,13 +13,13 @@
     "city": "Corning",
     "website": "https://www.corning.com",
     "fullTimeEmployees": 67200,
-    "marketCap": 130457264128,
-    "enterpriseValue": 137899261952,
-    "trailingPE": 70.44186,
-    "forwardPE": 35.053974,
-    "priceToSalesTrailing12Months": 7.674614,
-    "enterpriseToRevenue": 8.129,
-    "priceToBook": 10.924764,
+    "marketCap": 131620143104,
+    "enterpriseValue": 139062132736,
+    "trailingPE": 70.41475,
+    "forwardPE": 35.366444,
+    "priceToSalesTrailing12Months": 7.758792,
+    "enterpriseToRevenue": 8.197,
+    "priceToBook": 11.022145,
     "grossMargins": 0.36395,
     "operatingMargins": 0.15649,
     "profitMargins": 0.111999996,
@@ -31,9 +31,9 @@
     "debtToEquity": 71.448,
     "currentRatio": 1.813,
     "fiftyTwoWeekHigh": 271.78,
-    "fiftyTwoWeekLow": 64.33,
-    "averageVolume": 14194617,
-    "averageVolume10days": 9509980,
+    "fiftyTwoWeekLow": 66.14,
+    "averageVolume": 13943865,
+    "averageVolume10days": 9004680,
     "beta": 1.148,
     "sharesOutstanding": 861388331,
     "sharesFloat": 790547755,
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.78,
+      "eps_estimate": 0.75378,
+      "eps_surprise_pct": 0.0348
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.7,
+      "eps_estimate": 0.6916,
+      "eps_surprise_pct": 0.0121
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.72,
+      "eps_estimate": 0.70535,
+      "eps_surprise_pct": 0.0208
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.67,
+      "eps_estimate": 0.66471,
+      "eps_surprise_pct": 0.008
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-27",
+    "revenue_low": 4950000000,
+    "revenue_high": 5108020550
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,8 +164,138 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 16,
+    "bullish": 10,
+    "neutral": 5,
+    "bearish": 1,
+    "avg_price_target": 191.4,
+    "high_price_target": 226.0,
+    "low_price_target": 129.0,
+    "current_price": 152.8,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-03T09:27:48",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-07-29T18:57:07",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T16:25:30",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T15:02:33",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T13:38:10",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T12:11:30",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T11:11:20",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-13T17:52:35",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-07T13:49:12",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-06T10:52:20",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-27T18:10:03Z",
+      "title": "Wall Street misread the solar tariffs, says climate finance expert",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/wall-street-misread-solar-tariffs-181003769.html",
+      "source": "Investing.com"
+    },
+    {
+      "date": "2026-08-27T17:55:19Z",
+      "title": "This Optical Stock Looks Good For A Bull Put Spread",
+      "url": "https://www.investors.com/research/options/corning-glw-stock-bull-put-spread-options/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
+    },
+    {
+      "date": "2026-08-27T15:30:13Z",
+      "title": "Corning (GLW) Up 23.2% Since Last Earnings Report: Can It Continue?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/corning-glw-23-2-since-153013922.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-27T14:42:05Z",
+      "title": "Why Corning Stock Can Make a Comeback Here",
+      "url": "https://www.barchart.com/story/news/4217320/why-corning-stock-can-make-a-comeback-here",
+      "source": "Barchart"
+    },
+    {
+      "date": "2026-08-27T11:39:37Z",
+      "title": "Marvell Jumps Ahead of Key Earnings as AI Stocks Rally After Nvidia's Results",
+      "url": "https://www.barrons.com/livecoverage/stock-market-news-today-082726/card/marvell-jumps-ahead-of-key-earnings-as-ai-stocks-rally-after-nvidia-s-results-yDvHIwkW8BUWoipwnu65?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-08-25T07:50:44Z",
+      "title": "1 High-Flying Stock to Own for Decades and 2 Facing Challenges",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/1-high-flying-stock-own-075044982.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-08-24T15:53:00Z",
+      "title": "GLW Gains Momentum in Optical Communications: Can Growth Continue?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/glw-gains-momentum-optical-communications-155300316.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-24T13:22:35Z",
+      "title": "Applied Optoelectronics Sinks 12% on $600M Equity Offering, Lumentum and Coherent Drop 5%",
+      "url": "https://247wallst.com/investing/2026/08/24/applied-optoelectronics-sinks-12-on-600m-equity-offering-lumentum-and-coherent-drop-5/",
+      "source": "24/7 Wall St."
+    },
     {
       "date": "2026-08-21T17:11:13Z",
       "title": "What Do Corning (GLW) AI Fiber Deals Mean For Its Growth Story?",
@@ -148,104 +307,24 @@
       "title": "2 Large-Cap Stocks with Solid Fundamentals and 1 We Find Risky",
       "url": "https://finance.yahoo.com/markets/stocks/articles/2-large-cap-stocks-solid-150747460.html",
       "source": "StockStory"
-    },
-    {
-      "date": "2026-08-20T12:55:00Z",
-      "title": "Can ION Network's Adoption of WL6e Boost CIEN's Optical Momentum?",
-      "url": "https://finance.yahoo.com/technology/articles/ion-networks-adoption-wl6e-boost-125500425.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-18T20:27:00Z",
-      "title": "Micron, Coherent, SpaceX, Klarna, Amylyx, and More Stocks That Explain Today\u2019s Market",
-      "url": "https://www.barrons.com/articles/stock-movers-36984052?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-18T17:45:52Z",
-      "title": "Fabrinet Drops After Earnings Dragging Down Peers Like Marvell and Amphenol",
-      "url": "https://247wallst.com/investing/2026/08/18/fabrinet-drops-after-earnings-dragging-down-peers-like-marvell-and-amphenol/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-18T17:00:24Z",
-      "title": "Optics Stocks Drop on Anthropic News, WSJ Report: Lumentum Down 10%, Corning Down 8%, AXT Down 12%",
-      "url": "https://247wallst.com/investing/2026/08/18/optics-stocks-drop-on-anthropic-news-wsj-report-lumentum-down-10-corning-down-8-axt-down-12/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-18T15:18:00Z",
-      "title": "Can Corning's Next-Generation Glass Innovations Propel Its Shares?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cornings-next-generation-glass-innovations-151800641.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-18T12:09:47Z",
-      "title": "Improving Demand Strengthens Corning (GLW)",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/improving-demand-strengthens-corning-glw-120947860.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-17T20:52:00Z",
-      "title": "Sandisk, Micron, Coherent, Boeing, Apple, Amazon, and More Stocks That Explain Today\u2019s Market",
-      "url": "https://www.barrons.com/articles/stock-movers-a39cdac2?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-17T14:45:26Z",
-      "title": "Corning\u2019s Tariff Immunity Comes Down to One Strategic Choice, CEO Says",
-      "url": "https://247wallst.com/investing/2026/08/17/cornings-tariff-immunity-comes-down-to-one-strategic-choice-ceo-says/",
-      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.029188481092433407,
   "technicals": {
-    "ma20": 152.43799934387206,
-    "ma50": 174.10759994506836,
-    "ma200": 140.41273738861085,
-    "rsi14": 44.15126173479539,
+    "ma20": 155.920499420166,
+    "ma50": 171.65240005493163,
+    "ma200": 141.68765254974366,
+    "rsi14": 46.78160502832883,
     "high_20d": 176.94000244140625,
-    "low_5d": 148.0500030517578,
-    "low_10d": 148.0500030517578,
+    "low_5d": 141.6300048828125,
+    "low_10d": 141.6300048828125,
     "high_52w": 271.7799987792969,
-    "low_52w": 63.634396968041834,
-    "atr14": 10.226479666573661,
-    "atr14_pct": 6.824933206426975,
-    "position_in_52w_range_pct": 41.41600813070238
+    "low_52w": 65.69166681146916,
+    "atr14": 8.664285932268415,
+    "atr14_pct": 5.670344083261287,
+    "position_in_52w_range_pct": 42.26747599368559
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 40.4532,
-      "high": 40.6367,
-      "low": 39.7965,
-      "close": 39.8545,
-      "volume": 3736200.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 40.1731,
-      "high": 40.5787,
-      "low": 40.0669,
-      "close": 40.5015,
-      "volume": 2893100.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 40.6946,
-      "high": 40.9167,
-      "low": 40.4918,
-      "close": 40.7719,
-      "volume": 2607200.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 40.7719,
-      "high": 41.1002,
-      "low": 40.4435,
-      "close": 41.0616,
-      "volume": 4120100.0
-    },
     {
       "date": "2024-08-28",
       "open": 41.0906,
@@ -362,7 +441,7 @@
       "date": "2024-09-18",
       "open": 42.1644,
       "high": 42.6408,
-      "low": 41.97,
+      "low": 41.9699,
       "close": 42.213,
       "volume": 3846000.0
     },
@@ -403,7 +482,7 @@
       "open": 44.1671,
       "high": 44.1671,
       "low": 43.3019,
-      "close": 43.4283,
+      "close": 43.4282,
       "volume": 4262100.0
     },
     {
@@ -570,13 +649,13 @@
       "date": "2024-10-24",
       "open": 45.8879,
       "high": 45.9268,
-      "low": 45.4601,
+      "low": 45.4602,
       "close": 45.5088,
       "volume": 2304600.0
     },
     {
       "date": "2024-10-25",
-      "open": 45.7226,
+      "open": 45.7227,
       "high": 45.8393,
       "low": 44.906,
       "close": 44.9643,
@@ -936,7 +1015,7 @@
     },
     {
       "date": "2024-12-31",
-      "open": 46.5539,
+      "open": 46.5538,
       "high": 46.6321,
       "low": 46.1626,
       "close": 46.4756,
@@ -961,7 +1040,7 @@
     {
       "date": "2025-01-06",
       "open": 46.7299,
-      "high": 47.395,
+      "high": 47.3949,
       "low": 46.5343,
       "close": 47.2776,
       "volume": 3713100.0
@@ -976,7 +1055,7 @@
     },
     {
       "date": "2025-01-08",
-      "open": 46.7494,
+      "open": 46.7495,
       "high": 46.8277,
       "low": 46.0453,
       "close": 46.681,
@@ -1001,7 +1080,7 @@
     {
       "date": "2025-01-14",
       "open": 45.8692,
-      "high": 46.505,
+      "high": 46.5049,
       "low": 45.8301,
       "close": 46.3876,
       "volume": 2949000.0
@@ -1040,7 +1119,7 @@
     },
     {
       "date": "2025-01-22",
-      "open": 50.906,
+      "open": 50.9061,
       "high": 53.1359,
       "low": 50.8767,
       "close": 52.823,
@@ -1050,7 +1129,7 @@
       "date": "2025-01-23",
       "open": 52.5491,
       "high": 53.3315,
-      "low": 52.5393,
+      "low": 52.5394,
       "close": 52.7936,
       "volume": 5934900.0
     },
@@ -1280,7 +1359,7 @@
     },
     {
       "date": "2025-03-06",
-      "open": 45.4836,
+      "open": 45.4837,
       "high": 46.2214,
       "low": 44.6672,
       "close": 44.7656,
@@ -1456,7 +1535,7 @@
     },
     {
       "date": "2025-04-07",
-      "open": 37.2211,
+      "open": 37.221,
       "high": 40.8999,
       "low": 36.6997,
       "close": 38.9621,
@@ -1665,7 +1744,7 @@
     {
       "date": "2025-05-14",
       "open": 46.9493,
-      "high": 47.0772,
+      "high": 47.0771,
       "low": 46.005,
       "close": 46.2411,
       "volume": 4898600.0
@@ -1856,8 +1935,8 @@
     },
     {
       "date": "2025-06-18",
-      "open": 50.0529,
-      "high": 50.3002,
+      "open": 50.0528,
+      "high": 50.3001,
       "low": 49.6967,
       "close": 49.944,
       "volume": 3129900.0
@@ -2048,7 +2127,7 @@
     },
     {
       "date": "2025-07-24",
-      "open": 55.0482,
+      "open": 55.0483,
       "high": 55.4637,
       "low": 54.8999,
       "close": 55.1175,
@@ -2163,7 +2242,7 @@
       "open": 65.3061,
       "high": 65.5435,
       "low": 64.2477,
-      "close": 65.0292,
+      "close": 65.0291,
       "volume": 4295300.0
     },
     {
@@ -4217,45 +4296,45 @@
     {
       "date": "2026-08-21",
       "open": 153.85,
-      "high": 155.4807,
+      "high": 155.48,
       "low": 148.05,
       "close": 149.84,
-      "volume": 5124351.0
+      "volume": 6179000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 145.86,
+      "high": 146.39,
+      "low": 141.63,
+      "close": 145.55,
+      "volume": 10336800.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 150.81,
+      "high": 150.81,
+      "low": 146.25,
+      "close": 147.16,
+      "volume": 7148200.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 147.0,
+      "high": 152.93,
+      "low": 146.95,
+      "close": 152.78,
+      "volume": 6239400.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 153.97,
+      "high": 157.57,
+      "low": 149.43,
+      "close": 152.8,
+      "volume": 8190800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 63.8125,
-      "high": 64.406,
-      "low": 63.6344,
-      "close": 64.1883,
-      "volume": 3574000.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 64.5148,
-      "high": 65.4347,
-      "low": 64.3862,
-      "close": 65.0588,
-      "volume": 3436500.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 65.039,
-      "high": 66.5921,
-      "low": 65.039,
-      "close": 66.0579,
-      "volume": 5824100.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 66.0183,
-      "high": 66.9482,
-      "low": 65.9985,
-      "close": 66.6712,
-      "volume": 5421000.0
-    },
     {
       "date": "2025-08-27",
       "open": 66.6415,
@@ -6235,13 +6314,44 @@
     {
       "date": "2026-08-21",
       "open": 153.85,
-      "high": 155.4807,
+      "high": 155.48,
       "low": 148.05,
       "close": 149.84,
-      "volume": 5124351.0
+      "volume": 6179000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 145.86,
+      "high": 146.39,
+      "low": 141.63,
+      "close": 145.55,
+      "volume": 10336800.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 150.81,
+      "high": 150.81,
+      "low": 146.25,
+      "close": 147.16,
+      "volume": 7148200.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 147.0,
+      "high": 152.93,
+      "low": 146.95,
+      "close": 152.78,
+      "volume": 6239400.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 153.97,
+      "high": 157.57,
+      "low": 149.43,
+      "close": 152.8,
+      "volume": 8190800.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:11:22Z"
+  "ai_synthesized_at": null
 }

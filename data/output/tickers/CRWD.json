@@ -1,8 +1,8 @@
 {
   "ticker": "CRWD",
-  "fetched_at": "2026-08-21T22:09:18Z",
+  "fetched_at": "2026-08-28T04:42:59Z",
   "_schema": "v2",
-  "current_price": 191.9499969482422,
+  "current_price": 227.9600067138672,
   "info": {
     "symbol": "CRWD",
     "longName": "CrowdStrike Holdings, Inc.",
@@ -13,13 +13,13 @@
     "city": "Austin",
     "website": "https://www.crowdstrike.com",
     "fullTimeEmployees": 11157,
-    "marketCap": 193815461888,
-    "enterpriseValue": 201621618688,
-    "trailingPE": null,
-    "forwardPE": 121.43367,
-    "priceToSalesTrailing12Months": 38.046303,
-    "enterpriseToRevenue": 39.579,
-    "priceToBook": 41.823772,
+    "marketCap": 233416196096,
+    "enterpriseValue": 188944285696,
+    "trailingPE": 3256.5715,
+    "forwardPE": 143.16577,
+    "priceToSalesTrailing12Months": 45.819992,
+    "enterpriseToRevenue": 37.09,
+    "priceToBook": 50.09009,
     "grossMargins": 0.75136,
     "operatingMargins": -0.022079999,
     "profitMargins": -0.00598,
@@ -30,13 +30,13 @@
     "freeCashflow": 1926365056,
     "debtToEquity": 17.568,
     "currentRatio": 1.531,
-    "fiftyTwoWeekHigh": 227.5,
+    "fiftyTwoWeekHigh": 229.08,
     "fiftyTwoWeekLow": 85.68,
-    "averageVolume": 10743075,
-    "averageVolume10days": 7084830,
+    "averageVolume": 10844396,
+    "averageVolume10days": 10051520,
     "beta": 1.234,
-    "sharesOutstanding": 1018259280,
-    "sharesFloat": 1000480473,
+    "sharesOutstanding": 1023934842,
+    "sharesFloat": 1000511021,
     "companyOfficers": [
       {
         "name": "Mr. George R. Kurtz",
@@ -70,8 +70,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-07-31T00:00:00",
+      "eps_actual": 0.31,
+      "eps_estimate": 0.29141,
+      "eps_surprise_pct": 0.0638
+    },
+    {
+      "period_end": "2026-04-30T00:00:00",
+      "eps_actual": 0.275,
+      "eps_estimate": 0.26686,
+      "eps_surprise_pct": 0.0305
+    },
+    {
+      "period_end": "2026-01-31T00:00:00",
+      "eps_actual": 0.28,
+      "eps_estimate": 0.2757,
+      "eps_surprise_pct": 0.0156
+    },
+    {
+      "period_end": "2025-10-31T00:00:00",
+      "eps_actual": 0.24,
+      "eps_estimate": 0.23533,
+      "eps_surprise_pct": 0.0198
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-08-26",
+    "revenue_low": 1515500000,
+    "revenue_high": 1527500000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -129,117 +158,167 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 55,
+    "bullish": 43,
+    "neutral": 11,
+    "bearish": 1,
+    "avg_price_target": 210.535,
+    "high_price_target": 256.0,
+    "low_price_target": 103.25,
+    "current_price": 227.96,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-24T17:58:56",
+        "firm": "Jefferies",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-21T12:46:07",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Outperform",
+        "from_grade": "Sector Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-21T12:31:25",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T17:53:30",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T14:23:41",
+        "firm": "Evercore ISI Group",
+        "to_grade": "In-Line",
+        "from_grade": "In-Line",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T17:42:28",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T14:05:01",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T10:44:21",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-18T13:23:35",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-18T13:04:46",
+        "firm": "Benchmark",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
-      "date": "2026-08-21T20:48:30Z",
-      "title": "Dow Jones Futures: Market Rally Repairs Some Damage; Nvidia, CrowdStrike, Warsh In Focus",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-rally-nvidia-crowdstrike-warsh/?src=A00220&yptr=yahoo",
+      "date": "2026-08-27T19:50:00Z",
+      "title": "Tech investors are looking at AI with 'more nuance' as it fuels software demand",
+      "url": "https://finance.yahoo.com/video/tech-investors-looking-ai-more-195000481.html",
+      "source": "Yahoo Finance Video"
+    },
+    {
+      "date": "2026-08-28T04:37:08Z",
+      "title": "Dow Jones Futures Rise With Fed Chief Warsh Due; Nvidia, These 7 Stocks Are In Buy Zones",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-fed-chief-warsh-speech-nvidia-jumps-software-sector-on-fire/?src=A00220&yptr=yahoo",
       "source": "Investor's Business Daily"
     },
     {
-      "date": "2026-08-21T20:45:08Z",
-      "title": "S&P 500 Posts First Weekly Loss Since July Amid US Warning to Iran",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/p-500-posts-first-weekly-204508360.html",
-      "source": "MT Newswires"
+      "date": "2026-08-28T02:57:07Z",
+      "title": "Palo Alto Networks (PANW) Stock Trades Up, Here Is Why",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/palo-alto-networks-panw-stock-025707467.html",
+      "source": "StockStory"
     },
     {
-      "date": "2026-08-21T19:37:00Z",
-      "title": "CrowdStrike needs more than a beat to keep investors happy",
-      "url": "https://www.thestreet.com/investing/stocks/crowdstrike-q2-earnings-preview-bofa",
-      "source": "TheStreet"
+      "date": "2026-08-28T02:33:07Z",
+      "title": "CrowdStrike (CRWD) Shares Skyrocket, What You Need To Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/crowdstrike-crwd-shares-skyrocket-know-023307402.html",
+      "source": "StockStory"
     },
     {
-      "date": "2026-08-21T19:09:36Z",
-      "title": "Warsh at Jackson Hole, Nvidia Earnings: What to Watch Next Week",
-      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-08-21-2026/card/warsh-at-jackson-hole-nvidia-earnings-what-to-watch-next-week-e9WedRMUsVqY3fMQCdVf?siteid=yhoof2&yptr=yahoo",
+      "date": "2026-08-28T00:57:07Z",
+      "title": "CRWD Q2 Deep Dive: AI Security Demand Drives Growth and Platform Consolidation",
+      "url": "https://finance.yahoo.com/technology/ai/articles/crwd-q2-deep-dive-ai-005707202.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-08-27T22:18:42Z",
+      "title": "Stock Market Today, Aug. 27: Tech Strength Powers Nasdaq Higher as Nvidia Leads Rally",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/08/27/stock-market-today-aug-27-tech-strength-powers-nasdaq-higher-as-nvidia-leads-rally/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-08-27T22:03:00Z",
+      "title": "CrowdStrike vs. Okta: Which Cybersecurity Stock Is the Better Buy After Q2 Earnings?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/crowdstrike-vs-okta-cybersecurity-stock-220300354.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-27T21:36:49Z",
+      "title": "Stocks to Watch Thursday Recap: Nvidia, CrowdStrike, Salesforce",
+      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-08-27-2026/card/stocks-to-watch-nvidia-crowdstrike-salesforce-WMjYUzoZiONJEvHqPpyp?siteid=yhoof2&yptr=yahoo",
       "source": "The Wall Street Journal"
     },
     {
-      "date": "2026-08-21T14:55:36Z",
-      "title": "AI Is Now Attacking at Machine Speed, and This CEO Says That Changes the Case for Cybersecurity Stocks",
-      "url": "https://247wallst.com/investing/2026/08/21/ai-is-now-attacking-at-machine-speed-and-this-ceo-says-that-changes-the-case-for-cybersecurity-stocks/",
-      "source": "24/7 Wall St."
+      "date": "2026-08-27T20:58:17Z",
+      "title": "Update: US Equity Indexes Rise as Nvidia's Blockbuster Guidance Helps Technology Offset Declines in Remaining Sectors",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-indexes-rise-nvidia-205817099.html",
+      "source": "MT Newswires"
     },
     {
-      "date": "2026-08-21T14:15:00Z",
-      "title": "Can Rising AI Security Adoption Help CrowdStrike Challenge PANW & ZS?",
-      "url": "https://finance.yahoo.com/technology/ai/articles/rising-ai-security-adoption-help-141500529.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-21T13:15:04Z",
-      "title": "Countdown to CrowdStrike (CRWD) Q2 Earnings: A Look at Estimates Beyond Revenue and EPS",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/countdown-crowdstrike-crwd-q2-earnings-131504800.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-21T11:57:33Z",
-      "title": "Dow Jones Futures Rise After Bearish Market Signal; Bitcoin Keeps Surging",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-triggers-bearish-signal-walmart-spacex-crowdstrike/?src=A00220&yptr=yahoo",
+      "date": "2026-08-27T20:51:20Z",
+      "title": "Stock Market Today: Nasdaq Up, Nvidia Teases New Entry As Salesforce Nears Buy Point (Live Coverage)",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-nvidia-nvda-salesforce-crm-crowdstrike-crwd/?src=A00220&yptr=yahoo",
       "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-08-21T01:39:41Z",
-      "title": "CrowdStrike Holdings (CRWD) & Palo Alto Networks (PANW): Cybersecurity Stocks Hit Record Highs After a Conference Made AI\u2019s Dark Side Clear",
-      "url": "https://finance.yahoo.com/technology/ai/articles/crowdstrike-holdings-crwd-palo-alto-013941449.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-20T22:57:49Z",
-      "title": "CrowdStrike Stock Is Down, But The Business Is Looking Up. What Gives?",
-      "url": "https://www.trefis.com/articles/612194/crowdstrike-stock-is-down-but-the-business-is-looking-up-what-gives/2026-08-20",
-      "source": "Trefis"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03224249773437512,
   "technicals": {
-    "ma20": 204.2429992675781,
-    "ma50": 193.1432992553711,
-    "ma200": 138.79082492828368,
-    "rsi14": 42.79269241057195,
-    "high_20d": 227.5,
-    "low_5d": 187.00999450683594,
-    "low_10d": 187.00999450683594,
-    "high_52w": 227.5,
+    "ma20": 207.57749862670897,
+    "ma50": 195.2736492919922,
+    "ma200": 140.08133739471435,
+    "rsi14": 64.04974010425424,
+    "high_20d": 229.0800018310547,
+    "low_5d": 181.24000549316406,
+    "low_10d": 181.24000549316406,
+    "high_52w": 229.0800018310547,
     "low_52w": 85.68000030517578,
-    "atr14": 9.137143816266741,
-    "atr14_pct": 4.7601687739179805,
-    "position_in_52w_range_pct": 74.9330114735184
+    "atr14": 11.416786193847656,
+    "atr14_pct": 5.0082408569929004,
+    "position_in_52w_range_pct": 99.21897133523714
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 68.81,
-      "high": 69.625,
-      "low": 66.8075,
-      "close": 66.91,
-      "volume": 17682800.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 67.525,
-      "high": 68.4,
-      "low": 66.7025,
-      "close": 67.885,
-      "volume": 12994400.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 67.765,
-      "high": 67.935,
-      "low": 66.3175,
-      "close": 66.4675,
-      "volume": 14233600.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 65.4525,
-      "high": 67.6075,
-      "low": 65.1875,
-      "close": 67.4575,
-      "volume": 14747600.0
-    },
     {
       "date": "2024-08-28",
       "open": 67.45,
@@ -4210,46 +4289,46 @@
     },
     {
       "date": "2026-08-21",
-      "open": 190.5,
+      "open": 190.94,
       "high": 192.85,
       "low": 187.01,
       "close": 191.95,
-      "volume": 7936382.0
+      "volume": 8201000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 189.52,
+      "high": 195.4,
+      "low": 188.43,
+      "close": 190.68,
+      "volume": 7245600.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 191.62,
+      "high": 194.5,
+      "low": 182.35,
+      "close": 185.38,
+      "volume": 8346500.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 182.75,
+      "high": 191.32,
+      "low": 181.24,
+      "close": 189.18,
+      "volume": 13619900.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 208.25,
+      "high": 229.08,
+      "low": 206.1,
+      "close": 227.96,
+      "volume": 23398800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 104.4475,
-      "high": 104.4825,
-      "low": 103.415,
-      "close": 103.515,
-      "volume": 7201600.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 103.75,
-      "high": 105.9983,
-      "low": 103.1377,
-      "close": 105.1375,
-      "volume": 8809200.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 105.6525,
-      "high": 106.5,
-      "low": 104.6312,
-      "close": 104.7075,
-      "volume": 9653200.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 104.83,
-      "high": 106.25,
-      "low": 104.175,
-      "close": 104.4,
-      "volume": 12586800.0
-    },
     {
       "date": "2025-08-27",
       "open": 105.4,
@@ -6228,14 +6307,45 @@
     },
     {
       "date": "2026-08-21",
-      "open": 190.5,
+      "open": 190.94,
       "high": 192.85,
       "low": 187.01,
       "close": 191.95,
-      "volume": 7936382.0
+      "volume": 8201000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 189.52,
+      "high": 195.4,
+      "low": 188.43,
+      "close": 190.68,
+      "volume": 7245600.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 191.62,
+      "high": 194.5,
+      "low": 182.35,
+      "close": 185.38,
+      "volume": 8346500.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 182.75,
+      "high": 191.32,
+      "low": 181.24,
+      "close": 189.18,
+      "volume": 13619900.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 208.25,
+      "high": 229.08,
+      "low": 206.1,
+      "close": 227.96,
+      "volume": 23398800.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-20T22:14:40Z"
+  "ai_synthesized_at": null
 }

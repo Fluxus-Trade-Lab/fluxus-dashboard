@@ -1,8 +1,8 @@
 {
   "ticker": "IOVA",
-  "fetched_at": "2026-08-21T22:10:57Z",
+  "fetched_at": "2026-08-28T04:45:11Z",
   "_schema": "v2",
-  "current_price": 8.289999961853027,
+  "current_price": 8.260000228881836,
   "info": {
     "symbol": "IOVA",
     "longName": "Iovance Biotherapeutics, Inc.",
@@ -13,13 +13,13 @@
     "city": "San Carlos",
     "website": "https://www.iovance.com",
     "fullTimeEmployees": 975,
-    "marketCap": 4072212992,
-    "enterpriseValue": 3820544256,
+    "marketCap": 3741544192,
+    "enterpriseValue": 3489874944,
     "trailingPE": null,
-    "forwardPE": -33.81479,
-    "priceToSalesTrailing12Months": 12.531082,
-    "enterpriseToRevenue": 11.757,
-    "priceToBook": 5.5323076,
+    "forwardPE": -28.751436,
+    "priceToSalesTrailing12Months": 11.513542,
+    "enterpriseToRevenue": 10.739,
+    "priceToBook": 5.083077,
     "grossMargins": 0.48401,
     "operatingMargins": -0.52264,
     "profitMargins": -0.89091,
@@ -32,8 +32,8 @@
     "currentRatio": 4.345,
     "fiftyTwoWeekHigh": 9.36,
     "fiftyTwoWeekLow": 1.76,
-    "averageVolume": 16787920,
-    "averageVolume10days": 19857110,
+    "averageVolume": 16732814,
+    "averageVolume10days": 18385520,
     "beta": 0.701,
     "sharesOutstanding": 452971432,
     "sharesFloat": 394361458,
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.11,
+      "eps_estimate": -0.13486,
+      "eps_surprise_pct": 0.1843
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.19,
+      "eps_estimate": -0.1535,
+      "eps_surprise_pct": -0.2378
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.18,
+      "eps_estimate": -0.17638,
+      "eps_surprise_pct": -0.020499999
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.25,
+      "eps_estimate": -0.25733,
+      "eps_surprise_pct": 0.028499998
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 101460000,
+    "revenue_high": 119000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,8 +164,108 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 10,
+    "bullish": 8,
+    "neutral": 2,
+    "bearish": 0,
+    "avg_price_target": 10.0,
+    "high_price_target": 14.0,
+    "low_price_target": 6.0,
+    "current_price": 8.26,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-25T13:59:54",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T15:44:10",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-18T11:57:00",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T18:36:24",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T14:59:39",
+        "firm": "Citizens",
+        "to_grade": "Market Outperform",
+        "from_grade": "Market Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-08T00:10:22",
+        "firm": "Chardan Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-10T19:16:59",
+        "firm": "Chardan Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-05T15:03:25",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-03T13:37:18",
+        "firm": "Citizens",
+        "to_grade": "Market Outperform",
+        "from_grade": "Market Perform",
+        "action": "up"
+      },
+      {
+        "date": "2026-02-25T15:56:52",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-27T08:27:00Z",
+      "title": "Zacks Industry Outlook Halozyme, Repligen, Iovance, Arcutis and Precigen",
+      "url": "https://finance.yahoo.com/healthcare/articles/zacks-industry-outlook-halozyme-repligen-082700022.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-26T14:19:00Z",
+      "title": "5 Biotech Stocks Worth Adding to Your Portfolio Now",
+      "url": "https://finance.yahoo.com/healthcare/articles/5-biotech-stocks-worth-adding-141900184.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-26T04:38:01Z",
+      "title": "Oracle Stock And 2 Growth Picks With Strong Earnings Potential",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/oracle-stock-2-growth-picks-043801665.html",
+      "source": "Simply Wall St."
+    },
     {
       "date": "2026-08-21T03:57:42Z",
       "title": "Why Did IOVA, AMLX And COP Stocks Surge To 52-Week Highs Today?",
@@ -178,74 +307,24 @@
       "title": "Iovance (IOVA) Q2 2026 Earnings Call Transcript",
       "url": "https://www.fool.com/earnings/call-transcripts/2026/08/13/iovance-iova-q2-2026-earnings-call-transcript/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-10T19:49:09Z",
-      "title": "Iovance Biotherapeutics Stock Soars After the Company Posts Strong Q2 Earnings. Is It Heading Even Higher?",
-      "url": "https://www.fool.com/investing/2026/08/10/iovance-biotherapeutics-stock-soars-after-the-comp/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-07T19:33:00Z",
-      "title": "Replimune Wins FDA Skin Cancer Drug Approval on Third Try. Why the Stock Is Tumbling.",
-      "url": "https://www.barrons.com/articles/replimune-stock-fda-skin-cancer-drug-1b2251e4?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-07T13:55:02Z",
-      "title": "Does Iovance Biotherapeutics (IOVA) Have the Potential to Rally 28.02% as Wall Street Analysts Expect?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/does-iovance-biotherapeutics-iova-potential-135502239.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.0677966082908702,
   "technicals": {
-    "ma20": 6.050999999046326,
-    "ma50": 5.043799996376038,
-    "ma200": 3.6268500024080277,
-    "rsi14": 71.99041702856516,
+    "ma20": 6.750500011444092,
+    "ma50": 5.382799997329712,
+    "ma200": 3.7498500037193296,
+    "rsi14": 67.31422161064023,
     "high_20d": 9.359999656677246,
-    "low_5d": 6.699999809265137,
-    "low_10d": 6.159999847412109,
+    "low_5d": 7.789999961853027,
+    "low_10d": 6.360000133514404,
     "high_52w": 9.359999656677246,
     "low_52w": 1.7599999904632568,
-    "atr14": 0.7310714381081718,
-    "atr14_pct": 8.818714613657955,
-    "position_in_52w_range_pct": 85.92105602871362
+    "atr14": 0.6150000095367432,
+    "atr14_pct": 7.445520490257859,
+    "position_in_52w_range_pct": 85.52632268280894
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 11.88,
-      "high": 11.98,
-      "low": 11.6,
-      "close": 11.62,
-      "volume": 6154400.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 11.7,
-      "high": 12.5,
-      "low": 11.69,
-      "close": 11.87,
-      "volume": 8990000.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 11.92,
-      "high": 12.08,
-      "low": 11.65,
-      "close": 11.9,
-      "volume": 5243400.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 11.88,
-      "high": 12.0,
-      "low": 11.19,
-      "close": 11.4,
-      "volume": 5149900.0
-    },
     {
       "date": "2024-08-28",
       "open": 11.27,
@@ -4218,44 +4297,44 @@
       "date": "2026-08-21",
       "open": 9.08,
       "high": 9.3,
-      "low": 8.145,
+      "low": 8.15,
       "close": 8.29,
-      "volume": 27702528.0
+      "volume": 27808900.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 8.08,
+      "high": 8.36,
+      "low": 7.79,
+      "close": 8.06,
+      "volume": 15731200.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 8.16,
+      "high": 8.48,
+      "low": 8.03,
+      "close": 8.44,
+      "volume": 11898400.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 8.34,
+      "high": 8.55,
+      "low": 8.02,
+      "close": 8.08,
+      "volume": 10102300.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 8.08,
+      "high": 8.32,
+      "low": 7.95,
+      "close": 8.26,
+      "volume": 7435700.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 2.51,
-      "high": 2.73,
-      "low": 2.44,
-      "close": 2.54,
-      "volume": 12587500.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 2.54,
-      "high": 2.76,
-      "low": 2.54,
-      "close": 2.69,
-      "volume": 11240500.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 2.57,
-      "high": 2.66,
-      "low": 2.51,
-      "close": 2.53,
-      "volume": 12531700.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 2.55,
-      "high": 2.59,
-      "low": 2.43,
-      "close": 2.45,
-      "volume": 8263300.0
-    },
     {
       "date": "2025-08-27",
       "open": 2.45,
@@ -6236,12 +6315,43 @@
       "date": "2026-08-21",
       "open": 9.08,
       "high": 9.3,
-      "low": 8.145,
+      "low": 8.15,
       "close": 8.29,
-      "volume": 27702528.0
+      "volume": 27808900.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 8.08,
+      "high": 8.36,
+      "low": 7.79,
+      "close": 8.06,
+      "volume": 15731200.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 8.16,
+      "high": 8.48,
+      "low": 8.03,
+      "close": 8.44,
+      "volume": 11898400.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 8.34,
+      "high": 8.55,
+      "low": 8.02,
+      "close": 8.08,
+      "volume": 10102300.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 8.08,
+      "high": 8.32,
+      "low": 7.95,
+      "close": 8.26,
+      "volume": 7435700.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:11:40Z"
+  "ai_synthesized_at": null
 }

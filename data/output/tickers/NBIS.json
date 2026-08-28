@@ -1,8 +1,8 @@
 {
   "ticker": "NBIS",
-  "fetched_at": "2026-08-21T22:09:58Z",
+  "fetched_at": "2026-08-28T04:43:45Z",
   "_schema": "v2",
-  "current_price": 219.1300048828125,
+  "current_price": 218.47999572753906,
   "info": {
     "symbol": "NBIS",
     "longName": "Nebius Group N.V.",
@@ -13,13 +13,13 @@
     "city": "Schiphol",
     "website": "https://nebius.com",
     "fullTimeEmployees": 1543,
-    "marketCap": 59838054400,
-    "enterpriseValue": 62486093824,
+    "marketCap": 59394928640,
+    "enterpriseValue": 62039314432,
     "trailingPE": null,
-    "forwardPE": -73.43119,
-    "priceToSalesTrailing12Months": 41.24089,
-    "enterpriseToRevenue": 46.112,
-    "priceToBook": 5.8350563,
+    "forwardPE": -72.887405,
+    "priceToSalesTrailing12Months": 43.83066,
+    "enterpriseToRevenue": 45.782,
+    "priceToBook": 5.7918453,
     "grossMargins": 0.7426,
     "operatingMargins": -0.00223,
     "profitMargins": 0.03129,
@@ -32,11 +32,11 @@
     "currentRatio": 4.03,
     "fiftyTwoWeekHigh": 299.86,
     "fiftyTwoWeekLow": 63.26,
-    "averageVolume": 21579080,
-    "averageVolume10days": 31172540,
+    "averageVolume": 21480553,
+    "averageVolume10days": 22769470,
     "beta": 1.434,
     "sharesOutstanding": 238400165,
-    "sharesFloat": 228565540,
+    "sharesFloat": 228620360,
     "companyOfficers": [
       {
         "name": "Mr. Arkady  Volozh",
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.68,
+      "eps_estimate": -0.86333,
+      "eps_surprise_pct": 0.2124
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.9865,
+      "eps_estimate": -0.605,
+      "eps_surprise_pct": -0.63060004
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.475,
+      "eps_estimate": -0.395,
+      "eps_surprise_pct": -0.2025
+    },
+    {
+      "period_end": "2025-06-30T00:00:00",
+      "eps_actual": -0.3833,
+      "eps_estimate": -0.42,
+      "eps_surprise_pct": 0.0874
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-10",
+    "revenue_low": 427000000,
+    "revenue_high": 632600000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -135,83 +164,165 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 13,
+    "bullish": 8,
+    "neutral": 4,
+    "bearish": 1,
+    "avg_price_target": 286.6875,
+    "high_price_target": 415.0,
+    "low_price_target": 144.0,
+    "current_price": 218.48,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-18T15:23:15",
+        "firm": "DA Davidson",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-14T18:05:04",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-13T12:43:55",
+        "firm": "DA Davidson",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-13T10:48:55",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-08T00:48:40",
+        "firm": "DA Davidson",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T19:24:50",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-03T20:12:17",
+        "firm": "Piper Sandler",
+        "to_grade": "Neutral",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-22T09:06:04",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-20T13:08:11",
+        "firm": "Northland Capital Markets",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-20T11:09:25",
+        "firm": "Freedom Capital Markets",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      }
+    ]
+  },
   "news": [
     {
-      "date": "2026-08-21T18:29:00Z",
-      "title": "CoreWeave vs. Nebius Group: Which Artificial Intelligence (AI) Cloud Stock Has More Upside?",
-      "url": "https://www.fool.com/investing/2026/08/21/coreweave-vs-nebius-group-which-artificial-intelli/",
-      "source": "Motley Fool"
+      "date": "2026-08-27T19:40:03Z",
+      "title": "What's Going On With Nebius Stock Thursday",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/whats-going-nebius-stock-thursday-194003440.html",
+      "source": "GuruFocus.com"
     },
     {
-      "date": "2026-08-21T18:10:47Z",
-      "title": "Michael Burry Says the AI Buildout Is Repeating 2008: \u2018The Shenanigans Are Apparent Today\u2019",
-      "url": "https://247wallst.com/investing/2026/08/21/michael-burry-says-the-ai-buildout-is-repeating-2008-the-shenanigans-are-apparent-today/",
+      "date": "2026-08-27T18:47:35Z",
+      "title": "George Soros Is Betting Big on Utility Stocks as AI Power Demand Surges",
+      "url": "https://www.barchart.com/story/news/4234697/george-soros-is-betting-big-on-utility-stocks-as-ai-power-demand-surges",
+      "source": "Barchart"
+    },
+    {
+      "date": "2026-08-27T13:47:29Z",
+      "title": "Palo Alto Networks\u2019 CEO Says Nebius Is in a Different League. Is This \u2018Neoscaler\u2019 a Buy?",
+      "url": "https://247wallst.com/investing/2026/08/27/palo-alto-networks-ceo-says-nebius-is-in-a-different-league-is-this-neoscaler-a-buy/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-21T17:50:54Z",
-      "title": "BCA Research Sees a Dangerous Risk in CoreWeave (CRWV) and Nebius (NBIS)",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/bca-research-sees-dangerous-risk-175054863.html",
-      "source": "Insider Monkey"
+      "date": "2026-08-27T12:14:12Z",
+      "title": "Nebius Group stock surges as funding concerns ease",
+      "url": "https://investorshub.advfn.com/market-news/article/35190/nebius-group-stock-surges-as-funding-concerns-ease",
+      "source": "InvestorsHub"
     },
     {
-      "date": "2026-08-21T16:30:40Z",
-      "title": "Wall Street Says Nebius Group ARR Can 10X in 4 Years",
-      "url": "https://247wallst.com/investing/2026/08/21/wall-street-says-nebius-group-arr-can-10x-in-4-years/",
+      "date": "2026-08-27T10:41:06Z",
+      "title": "Social Buzz: Wallstreetbets Stocks Mostly Higher Pre-Bell Thursday; Salesforce, Nvidia to Rise",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/social-buzz-wallstreetbets-stocks-mostly-104106000.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-08-27T09:43:17Z",
+      "title": "INTC, AMD, AVGO: Chip Stocks Jump Premarket After Nvidia's Blowout Report",
+      "url": "https://stocktwits.com/news-articles/markets/equity/intc-amd-avgo-chip-stocks-jump-premarket-after-nvidia-s-blowout-report/cZY8x7bRJpD",
+      "source": "Stocktwits"
+    },
+    {
+      "date": "2026-08-27T03:01:07Z",
+      "title": "Michael Burry Shorts This AI Giant, Then Buys Calls as a Hedge: Why?",
+      "url": "https://beincrypto.com/burry-nvidia-short-hedge-calls/",
+      "source": "BeInCrypto"
+    },
+    {
+      "date": "2026-08-26T19:59:31Z",
+      "title": "Michael Burry Buys NVDA Calls As A \u2018Hedge,\u2019 Adds To ORCL, PLTR, NBIS Shorts \u2014 Why He Thinks \u2018Nvidia Will Not Distribute Enough To Shareholders\u2019",
+      "url": "https://stocktwits.com/news-articles/markets/equity/michael-burry-buys-nvda-calls-as-a-hedge-adds-to-orcl-pltr-nbis-shorts-why-he-thinks-nvidia-will-not-distribute-enough-to-shareholders/cZYVdSURJpP",
+      "source": "Stocktwits"
+    },
+    {
+      "date": "2026-08-26T17:52:25Z",
+      "title": "Nvidia Eyes Perplexity AI as Earnings Approach. How NVDA Stock Investors Should Prepare.",
+      "url": "https://www.barchart.com/story/news/4125243/nvidia-eyes-perplexity-ai-as-earnings-approach-how-nvda-stock-investors-should-prepare",
+      "source": "Barchart"
+    },
+    {
+      "date": "2026-08-25T19:34:17Z",
+      "title": "Wall Street Just Invented the \u2018Neocloud\u2019 ETF. It Owns the Companies Renting AI Compute to Everyone Else",
+      "url": "https://247wallst.com/investing/2026/08/25/wall-street-just-invented-the-neocloud-etf-it-owns-the-companies-renting-ai-compute-to-everyone-else/",
       "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-21T16:13:22Z",
-      "title": "Is Nebius Group (NBIS) A Bargain After Its Upsized Convertible Bond Offering?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/nebius-group-nbis-bargain-upsized-161322000.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-21T13:14:00Z",
-      "title": "HRT Taps CoreWeave for NVIDIA Vera Rubin: Could This Be a Win for CRWV?",
-      "url": "https://finance.yahoo.com/technology/ai/articles/hrt-taps-coreweave-nvidia-vera-131400177.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-21T09:33:37Z",
-      "title": "Nebius (NBIS) Raises $5B Convertible Bond As AI Compute Demand Surges",
-      "url": "https://finance.yahoo.com/technology/ai/articles/nebius-nbis-raises-5b-convertible-093337551.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-21T00:00:00Z",
-      "title": "Nebius Group Stock Climbed 40% in Less Than 2 Weeks: Is the High-Growth Leader Still a Bargain?",
-      "url": "https://www.fool.com/investing/2026/08/20/nebius-group-stock-climbed-40-in-2-weeks-is-the-hi/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-20T21:47:00Z",
-      "title": "Michael Burry says Nvidia rival is quietly getting serious",
-      "url": "https://www.thestreet.com/investing/stocks/michael-burry-nvidia-rival-etched",
-      "source": "TheStreet"
-    },
-    {
-      "date": "2026-08-20T18:20:00Z",
-      "title": "Neocloud stocks like CoreWeave are having a moment \u2014 and time\u2019s running out to cash in",
-      "url": "https://www.marketwatch.com/story/neocloud-stocks-like-coreweave-are-having-a-moment-and-times-running-out-to-cash-in-8aca34c8",
-      "source": "MarketWatch"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.040827536499606625,
   "technicals": {
-    "ma20": 213.4735008239746,
-    "ma50": 223.09960052490234,
-    "ma200": 149.24582542419432,
-    "rsi14": 49.66372231569971,
+    "ma20": 222.0270004272461,
+    "ma50": 220.81,
+    "ma200": 151.33097537994385,
+    "rsi14": 49.72579561478993,
     "high_20d": 280.8299865722656,
-    "low_5d": 212.0399932861328,
-    "low_10d": 183.11000061035156,
+    "low_5d": 201.89100646972656,
+    "low_10d": 201.89100646972656,
     "high_52w": 299.8599853515625,
     "low_52w": 63.2599983215332,
-    "atr14": 23.302069527762278,
-    "atr14_pct": 10.633901797348054,
-    "position_in_52w_range_pct": 65.87912726364446
+    "atr14": 21.58278329031808,
+    "atr14_pct": 9.878608436643065,
+    "position_in_52w_range_pct": 65.60439810434366
   },
   "ohlc_2y": [
     {
@@ -3888,46 +3999,46 @@
     },
     {
       "date": "2026-08-21",
-      "open": 226.1,
+      "open": 226.36,
       "high": 230.81,
       "low": 217.85,
       "close": 219.13,
-      "volume": 20116988.0
+      "volume": 20239700.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 211.202,
+      "high": 213.75,
+      "low": 201.891,
+      "close": 210.91,
+      "volume": 16882300.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 217.96,
+      "high": 223.44,
+      "low": 213.55,
+      "close": 221.97,
+      "volume": 13547900.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 215.5,
+      "high": 221.47,
+      "low": 213.6,
+      "close": 213.93,
+      "volume": 10562800.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 223.37,
+      "high": 228.5,
+      "low": 215.41,
+      "close": 218.48,
+      "volume": 15974300.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 68.26,
-      "high": 68.26,
-      "low": 65.45,
-      "close": 66.18,
-      "volume": 8019200.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 65.51,
-      "high": 69.68,
-      "low": 64.611,
-      "close": 68.98,
-      "volume": 11017200.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 69.46,
-      "high": 70.74,
-      "low": 67.25,
-      "close": 70.02,
-      "volume": 7898700.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 70.29,
-      "high": 72.8,
-      "low": 69.31,
-      "close": 70.48,
-      "volume": 7516500.0
-    },
     {
       "date": "2025-08-27",
       "open": 71.5,
@@ -5906,14 +6017,45 @@
     },
     {
       "date": "2026-08-21",
-      "open": 226.1,
+      "open": 226.36,
       "high": 230.81,
       "low": 217.85,
       "close": 219.13,
-      "volume": 20116988.0
+      "volume": 20239700.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 211.202,
+      "high": 213.75,
+      "low": 201.891,
+      "close": 210.91,
+      "volume": 16882300.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 217.96,
+      "high": 223.44,
+      "low": 213.55,
+      "close": 221.97,
+      "volume": 13547900.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 215.5,
+      "high": 221.47,
+      "low": 213.6,
+      "close": 213.93,
+      "volume": 10562800.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 223.37,
+      "high": 228.5,
+      "low": 215.41,
+      "close": 218.48,
+      "volume": 15974300.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:12:27Z"
+  "ai_synthesized_at": null
 }

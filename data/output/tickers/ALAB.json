@@ -1,8 +1,8 @@
 {
   "ticker": "ALAB",
-  "fetched_at": "2026-08-21T22:08:47Z",
+  "fetched_at": "2026-08-28T04:42:24Z",
   "_schema": "v2",
-  "current_price": 284.9700012207031,
+  "current_price": 304.0899963378906,
   "info": {
     "symbol": "ALAB",
     "longName": "Astera Labs, Inc.",
@@ -13,13 +13,13 @@
     "city": "San Jose",
     "website": "https://www.asteralabs.com",
     "fullTimeEmployees": 756,
-    "marketCap": 50400890880,
-    "enterpriseValue": 48932118528,
-    "trailingPE": 143.82178,
-    "forwardPE": 45.44004,
-    "priceToSalesTrailing12Months": 41.933685,
-    "enterpriseToRevenue": 40.712,
-    "priceToBook": 29.206797,
+    "marketCap": 52755083264,
+    "enterpriseValue": 51546542080,
+    "trailingPE": 149.79803,
+    "forwardPE": 47.56252,
+    "priceToSalesTrailing12Months": 43.89238,
+    "enterpriseToRevenue": 42.887,
+    "priceToBook": 30.571028,
     "grossMargins": 0.75128996,
     "operatingMargins": 0.22744,
     "profitMargins": 0.30742002,
@@ -32,11 +32,11 @@
     "currentRatio": 10.054,
     "fiftyTwoWeekHigh": 499.476,
     "fiftyTwoWeekLow": 97.89,
-    "averageVolume": 5474040,
-    "averageVolume10days": 3990890,
+    "averageVolume": 5123688,
+    "averageVolume10days": 3333000,
     "beta": 3.843,
     "sharesOutstanding": 173485104,
-    "sharesFloat": 155770540,
+    "sharesFloat": 155789623,
     "companyOfficers": [
       {
         "name": "Mr. Jitendra  Mohan",
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.8,
+      "eps_estimate": 0.69195,
+      "eps_surprise_pct": 0.15619999
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.61,
+      "eps_estimate": 0.53761,
+      "eps_surprise_pct": 0.1347
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.58,
+      "eps_estimate": 0.51492,
+      "eps_surprise_pct": 0.12640001
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.49,
+      "eps_estimate": 0.39014,
+      "eps_surprise_pct": 0.256
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 545700000,
+    "revenue_high": 557000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,8 +164,120 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 26,
+    "bullish": 18,
+    "neutral": 8,
+    "bearish": 0,
+    "avg_price_target": 389.9527,
+    "high_price_target": 500.0,
+    "low_price_target": 190.0,
+    "current_price": 304.09,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-17T10:55:59",
+        "firm": "Northland Capital Markets",
+        "to_grade": "Outperform",
+        "from_grade": "Market Perform",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-05T19:53:16",
+        "firm": "TD Cowen",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T18:27:44",
+        "firm": "Morgan Stanley",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T15:41:26",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T13:55:25",
+        "firm": "Evercore ISI Group",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T11:54:09",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T10:17:24",
+        "firm": "Jefferies",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T12:29:29",
+        "firm": "Susquehanna",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-20T18:03:45",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-13T18:04:11",
+        "firm": "TD Cowen",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-27T15:32:15Z",
+      "title": "This Under-the-Radar AI Stock Could Be the Next Big Semiconductor Winner",
+      "url": "https://247wallst.com/investing/2026/08/27/this-under-the-radar-ai-stock-could-be-the-next-big-semiconductor-winner/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-25T22:08:00Z",
+      "title": "Is Marvell (MRVL) Stock Poised for Another AI-Fueled Rally as Q2 Earnings Approach?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/marvell-mrvl-stock-poised-another-220800295.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-25T15:15:00Z",
+      "title": "ALAB Rides on Strong Scorpio Demand: Can It Outpace MRVL and CRDO?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/alab-rides-strong-scorpio-demand-151500340.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-24T20:27:32Z",
+      "title": "Nasdaq\u2019s Biggest Losers Today",
+      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-08-24-2026/card/the-nasdaq-s-biggest-losers-today-QgIez3jwTwA9H9qbumLC?siteid=yhoof2&yptr=yahoo",
+      "source": "The Wall Street Journal"
+    },
+    {
+      "date": "2026-08-24T15:33:00Z",
+      "title": "MRVL to Post Q2 Earnings: Time to Buy, Sell or Hold the Stock?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/mrvl-post-q2-earnings-time-153300468.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-20T14:48:00Z",
       "title": "Credo vs. Astera Labs: Which AI Connectivity Stock Is the Better Buy?",
@@ -166,86 +307,24 @@
       "title": "Which Nasdaq and Chip Stocks Are Getting Hit the Hardest Today?",
       "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-08-18-2026/card/which-nasdaq-and-chip-stocks-are-getting-hit-the-hardest-today--sumS0fDJyMoWydYv3yvt?siteid=yhoof2&yptr=yahoo",
       "source": "The Wall Street Journal"
-    },
-    {
-      "date": "2026-08-18T06:47:00Z",
-      "title": "Zacks Investment Ideas feature highlights: NVDA, GOOGL, AMZN, INTC and others",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/zacks-investment-ideas-feature-highlights-064700198.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-18T06:12:31Z",
-      "title": "Astera Labs (ALAB), What Is Behind The Fresh Attention?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/astera-labs-alab-behind-fresh-061231158.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-17T17:06:58Z",
-      "title": "AI Networking Stocks Are Rallying on Monday. Marvell Up 8%, Credo Up 8%, Ciena Joins the Move",
-      "url": "https://247wallst.com/investing/2026/08/17/ai-networking-stocks-are-rallying-on-monday-marvell-up-8-credo-up-8-ciena-joins-the-move/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-17T16:20:02Z",
-      "title": "Why Astera Labs, Inc. (ALAB) Might be Well Poised for a Surge",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/why-astera-labs-inc-alab-162002087.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-17T13:36:24Z",
-      "title": "Apple upgraded, Workday downgraded: Wall Street's top analyst calls",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/apple-upgraded-brinker-initiated-wall-134131346.html",
-      "source": "The Fly"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04232299699099426,
   "technicals": {
-    "ma20": 307.5379997253418,
-    "ma50": 350.9196987915039,
-    "ma200": 218.7967998123169,
-    "rsi14": 40.669817786753725,
+    "ma20": 310.6574981689453,
+    "ma50": 344.3004983520508,
+    "ma200": 221.121799659729,
+    "rsi14": 47.97468863834757,
     "high_20d": 367.8500061035156,
-    "low_5d": 277.29998779296875,
-    "low_10d": 277.29998779296875,
+    "low_5d": 266.30999755859375,
+    "low_10d": 266.30999755859375,
     "high_52w": 499.47601318359375,
     "low_52w": 97.88999938964844,
-    "atr14": 27.267935616629465,
-    "atr14_pct": 9.568703898594237,
-    "position_in_52w_range_pct": 46.58528818362829
+    "atr14": 20.773648943219865,
+    "atr14_pct": 6.83141477634705,
+    "position_in_52w_range_pct": 51.34640895488055
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 41.38,
-      "high": 41.38,
-      "low": 39.29,
-      "close": 39.785,
-      "volume": 1435600.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 39.49,
-      "high": 41.87,
-      "low": 38.925,
-      "close": 41.77,
-      "volume": 2538900.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 41.94,
-      "high": 43.9,
-      "low": 41.58,
-      "close": 43.0,
-      "volume": 3395700.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 43.0,
-      "high": 45.44,
-      "low": 42.86,
-      "close": 44.71,
-      "volume": 4029000.0
-    },
     {
       "date": "2024-08-28",
       "open": 44.22,
@@ -4216,46 +4295,46 @@
     },
     {
       "date": "2026-08-21",
-      "open": 293.75,
+      "open": 293.8,
       "high": 296.88,
       "low": 277.3,
       "close": 284.97,
-      "volume": 2936802.0
+      "volume": 3005300.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 271.69,
+      "high": 279.833,
+      "low": 266.31,
+      "close": 277.53,
+      "volume": 3691000.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 285.94,
+      "high": 289.6,
+      "low": 279.79,
+      "close": 282.65,
+      "volume": 1798400.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 282.62,
+      "high": 290.63,
+      "low": 280.0,
+      "close": 290.3,
+      "volume": 1933700.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 297.16,
+      "high": 310.14,
+      "low": 296.8,
+      "close": 304.09,
+      "volume": 2745100.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 173.899,
-      "high": 180.47,
-      "low": 171.849,
-      "close": 177.53,
-      "volume": 4750700.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 175.88,
-      "high": 186.18,
-      "low": 174.58,
-      "close": 179.09,
-      "volume": 4006500.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 177.97,
-      "high": 179.1,
-      "low": 172.01,
-      "close": 174.15,
-      "volume": 3580600.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 174.5,
-      "high": 180.91,
-      "low": 174.15,
-      "close": 178.56,
-      "volume": 2859200.0
-    },
     {
       "date": "2025-08-27",
       "open": 183.15,
@@ -6234,14 +6313,45 @@
     },
     {
       "date": "2026-08-21",
-      "open": 293.75,
+      "open": 293.8,
       "high": 296.88,
       "low": 277.3,
       "close": 284.97,
-      "volume": 2936802.0
+      "volume": 3005300.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 271.69,
+      "high": 279.833,
+      "low": 266.31,
+      "close": 277.53,
+      "volume": 3691000.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 285.94,
+      "high": 289.6,
+      "low": 279.79,
+      "close": 282.65,
+      "volume": 1798400.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 282.62,
+      "high": 290.63,
+      "low": 280.0,
+      "close": 290.3,
+      "volume": 1933700.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 297.16,
+      "high": 310.14,
+      "low": 296.8,
+      "close": 304.09,
+      "volume": 2745100.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-20T22:13:56Z"
+  "ai_synthesized_at": null
 }

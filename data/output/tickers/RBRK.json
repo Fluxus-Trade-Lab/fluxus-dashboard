@@ -1,8 +1,8 @@
 {
   "ticker": "RBRK",
-  "fetched_at": "2026-08-21T22:10:15Z",
+  "fetched_at": "2026-08-28T04:44:04Z",
   "_schema": "v2",
-  "current_price": 100.08999633789062,
+  "current_price": 107.0199966430664,
   "info": {
     "symbol": "RBRK",
     "longName": "Rubrik, Inc.",
@@ -13,13 +13,13 @@
     "city": "Palo Alto",
     "website": "https://www.rubrik.com",
     "fullTimeEmployees": 3797,
-    "marketCap": 20072400896,
-    "enterpriseValue": 19469690880,
+    "marketCap": 22027771904,
+    "enterpriseValue": 21425061888,
     "trailingPE": null,
-    "forwardPE": 150.80101,
-    "priceToSalesTrailing12Months": 14.08809,
-    "enterpriseToRevenue": 13.665,
-    "priceToBook": -41.69303,
+    "forwardPE": 164.48166,
+    "priceToSalesTrailing12Months": 15.460494,
+    "enterpriseToRevenue": 15.037,
+    "priceToBook": -45.754597,
     "grossMargins": 0.80581003,
     "operatingMargins": -0.13598,
     "profitMargins": -0.20254,
@@ -30,10 +30,10 @@
     "freeCashflow": 440332128,
     "debtToEquity": null,
     "currentRatio": 1.737,
-    "fiftyTwoWeekHigh": 106.5,
+    "fiftyTwoWeekHigh": 107.91,
     "fiftyTwoWeekLow": 42.25,
-    "averageVolume": 3652029,
-    "averageVolume10days": 3680220,
+    "averageVolume": 3668487,
+    "averageVolume10days": 3374010,
     "beta": 1.168,
     "sharesOutstanding": 160956763,
     "sharesFloat": 157409454,
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-04-30T00:00:00",
+      "eps_actual": 0.16,
+      "eps_estimate": -0.02817,
+      "eps_surprise_pct": 6.6798
+    },
+    {
+      "period_end": "2026-01-31T00:00:00",
+      "eps_actual": 0.04,
+      "eps_estimate": -0.10854,
+      "eps_surprise_pct": 1.3685001
+    },
+    {
+      "period_end": "2025-10-31T00:00:00",
+      "eps_actual": 0.1,
+      "eps_estimate": -0.17244,
+      "eps_surprise_pct": 1.5799
+    },
+    {
+      "period_end": "2025-07-31T00:00:00",
+      "eps_actual": -0.03,
+      "eps_estimate": -0.34192,
+      "eps_surprise_pct": 0.91230005
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-08-27",
+    "revenue_low": 395800000,
+    "revenue_high": 398000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -135,8 +164,126 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 29,
+    "bullish": 29,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 107.11111,
+    "high_price_target": 135.0,
+    "low_price_target": 85.0,
+    "current_price": 107.02,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-25T12:34:22",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-25T12:23:56",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Outperform",
+        "from_grade": "Sector Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-21T12:36:44",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T10:57:46",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T17:49:20",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T14:36:14",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T14:21:43",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T09:28:22",
+        "firm": "Loop Capital",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-16T12:33:38",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-10T16:42:58",
+        "firm": "BMO Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-28T04:37:08Z",
+      "title": "Dow Jones Futures Rise With Fed Chief Warsh Due; Nvidia, These 7 Stocks Are In Buy Zones",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-fed-chief-warsh-speech-nvidia-jumps-software-sector-on-fire/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
+    },
+    {
+      "date": "2026-08-27T22:00:02Z",
+      "title": "Rubrik, Inc. (RBRK) Q2 Earnings: How Key Metrics Compare to Wall Street Estimates",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/rubrik-inc-rbrk-q2-earnings-220002711.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-27T21:47:08Z",
+      "title": "Rubrik Earnings, Revenue Handily Beat Wall Street Targets",
+      "url": "https://www.investors.com/news/technology/rubrik-stock-rbrk-rubrik-earnings-news-q22026/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
+    },
+    {
+      "date": "2026-08-27T21:16:42Z",
+      "title": "Rubrik raises annual outlook as revenue jumps 38%",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/rubrik-raises-annual-outlook-revenue-211642111.html",
+      "source": "Investing.com"
+    },
+    {
+      "date": "2026-08-27T21:15:03Z",
+      "title": "Rubrik, Inc. (RBRK) Beats Q2 Earnings and Revenue Estimates",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/rubrik-inc-rbrk-beats-q2-211503018.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-24T13:15:03Z",
+      "title": "Exploring Analyst Estimates for Rubrik, Inc. (RBRK) Q2 Earnings, Beyond Revenue and EPS",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/exploring-analyst-estimates-rubrik-inc-131503305.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-20T14:30:00Z",
       "title": "3 Ways to Invest in Cybersecurity Through ETFs",
@@ -160,92 +307,24 @@
       "title": "Rubrik CTO Arvind Nithrakashyap Sells $3.0 Million Stock",
       "url": "https://www.fool.com/coverage/filings/2026/08/14/rubrik-cto-arvind-nithrakashyap-sells-30-million-stock/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-13T04:31:05Z",
-      "title": "Why Rubrik (RBRK) Is Back In The Spotlight",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/why-rubrik-rbrk-back-spotlight-043105951.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-13T01:11:41Z",
-      "title": "Why Rubrik (RBRK) Is Up 14.1% After New AI Resilience Offerings With Wipro",
-      "url": "https://finance.yahoo.com/technology/ai/articles/why-rubrik-rbrk-14-1-011141102.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-12T23:15:29Z",
-      "title": "Rubrik (RBRK) Stock May Be Near Fair Value Despite New AI Security Launch",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/rubrik-rbrk-stock-may-near-231529922.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-12T12:50:30Z",
-      "title": "Is Commvault Systems, Inc. (CVLT) A Good Investment Right Now?",
-      "url": "https://finance.yahoo.com/technology/articles/commvault-systems-inc-cvlt-good-200030397.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-12T12:47:58Z",
-      "title": "Rubrik (RBRK) Defies Memory Cost Concerns",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/rubrik-rbrk-defies-memory-cost-124758107.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-12T11:50:02Z",
-      "title": "Riskified (RSKD) Q2 Earnings Miss Estimates",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/riskified-rskd-q2-earnings-miss-115002639.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.13567557891472537,
   "technicals": {
-    "ma20": 88.75899963378906,
-    "ma50": 81.89739959716798,
-    "ma200": 67.84799995422364,
-    "rsi14": 66.39566994332154,
-    "high_20d": 106.5,
-    "low_5d": 94.63999938964844,
-    "low_10d": 90.0,
-    "high_52w": 106.5,
+    "ma20": 93.96299934387207,
+    "ma50": 84.20199951171875,
+    "ma200": 68.3696499633789,
+    "rsi14": 67.62825068774646,
+    "high_20d": 107.91000366210938,
+    "low_5d": 90.1500015258789,
+    "low_10d": 90.1500015258789,
+    "high_52w": 107.91000366210938,
     "low_52w": 42.25,
-    "atr14": 5.393641880580357,
-    "atr14_pct": 5.388792164975342,
-    "position_in_52w_range_pct": 90.02334060372081
+    "atr14": 6.040784563337054,
+    "atr14_pct": 5.644538173070877,
+    "position_in_52w_range_pct": 98.64452182545861
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 36.5,
-      "high": 36.96,
-      "low": 36.0,
-      "close": 36.17,
-      "volume": 737400.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 36.23,
-      "high": 37.0,
-      "low": 34.8,
-      "close": 34.95,
-      "volume": 799500.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 35.45,
-      "high": 35.86,
-      "low": 34.94,
-      "close": 35.59,
-      "volume": 603900.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 35.53,
-      "high": 35.9,
-      "low": 35.18,
-      "close": 35.42,
-      "volume": 372200.0
-    },
     {
       "date": "2024-08-28",
       "open": 35.17,
@@ -4220,42 +4299,42 @@
       "high": 100.34,
       "low": 94.64,
       "close": 100.09,
-      "volume": 2125021.0
+      "volume": 2125100.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 99.47,
+      "high": 100.44,
+      "low": 97.02,
+      "close": 98.04,
+      "volume": 1979800.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 97.98,
+      "high": 98.79,
+      "low": 90.15,
+      "close": 92.65,
+      "volume": 3738300.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 90.5,
+      "high": 96.99,
+      "low": 90.5,
+      "close": 96.13,
+      "volume": 2185700.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 101.99,
+      "high": 107.91,
+      "low": 101.5,
+      "close": 107.02,
+      "volume": 8325200.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 84.55,
-      "high": 86.37,
-      "low": 83.85,
-      "close": 85.24,
-      "volume": 1617500.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 85.24,
-      "high": 88.8,
-      "low": 84.91,
-      "close": 88.77,
-      "volume": 2208000.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 89.99,
-      "high": 90.44,
-      "low": 87.74,
-      "close": 87.83,
-      "volume": 1265300.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 87.8,
-      "high": 89.6,
-      "low": 85.12,
-      "close": 85.17,
-      "volume": 4111600.0
-    },
     {
       "date": "2025-08-27",
       "open": 86.62,
@@ -6238,10 +6317,41 @@
       "high": 100.34,
       "low": 94.64,
       "close": 100.09,
-      "volume": 2125021.0
+      "volume": 2125100.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 99.47,
+      "high": 100.44,
+      "low": 97.02,
+      "close": 98.04,
+      "volume": 1979800.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 97.98,
+      "high": 98.79,
+      "low": 90.15,
+      "close": 92.65,
+      "volume": 3738300.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 90.5,
+      "high": 96.99,
+      "low": 90.5,
+      "close": 96.13,
+      "volume": 2185700.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 101.99,
+      "high": 107.91,
+      "low": 101.5,
+      "close": 107.02,
+      "volume": 8325200.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:13:29Z"
+  "ai_synthesized_at": null
 }

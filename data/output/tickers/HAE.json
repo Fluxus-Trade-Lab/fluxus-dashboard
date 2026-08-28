@@ -1,8 +1,8 @@
 {
   "ticker": "HAE",
-  "fetched_at": "2026-08-21T08:02:04Z",
+  "fetched_at": "2026-08-28T04:48:27Z",
   "_schema": "v2",
-  "current_price": 108.22000122070312,
+  "current_price": 105.0,
   "info": {
     "symbol": "HAE",
     "longName": "Haemonetics Corporation",
@@ -13,13 +13,13 @@
     "city": "Boston",
     "website": "https://www.haemonetics.com",
     "fullTimeEmployees": 3009,
-    "marketCap": 4923691008,
-    "enterpriseValue": 5873331712,
-    "trailingPE": 52.280197,
-    "forwardPE": 18.85448,
-    "priceToSalesTrailing12Months": 3.6417482,
-    "enterpriseToRevenue": 4.344,
-    "priceToBook": 5.8786464,
+    "marketCap": 4777190400,
+    "enterpriseValue": 5726831104,
+    "trailingPE": 50.72464,
+    "forwardPE": 18.29348,
+    "priceToSalesTrailing12Months": 3.5333908,
+    "enterpriseToRevenue": 4.236,
+    "priceToBook": 5.7037315,
     "grossMargins": 0.59331,
     "operatingMargins": 0.17932,
     "profitMargins": 0.07122,
@@ -30,10 +30,10 @@
     "freeCashflow": 312840000,
     "debtToEquity": 140.265,
     "currentRatio": 3.08,
-    "fiftyTwoWeekHigh": 109.56,
+    "fiftyTwoWeekHigh": 109.57,
     "fiftyTwoWeekLow": 47.32,
-    "averageVolume": 885020,
-    "averageVolume10days": 926580,
+    "averageVolume": 851011,
+    "averageVolume10days": 863850,
     "beta": 0.518,
     "sharesOutstanding": 45497051,
     "sharesFloat": 44886936,
@@ -170,11 +170,18 @@
     "bullish": 8,
     "neutral": 3,
     "bearish": 0,
-    "avg_price_target": 104.1,
+    "avg_price_target": 106.4,
     "high_price_target": 120.0,
     "low_price_target": 86.0,
-    "current_price": 108.22,
+    "current_price": 105.0,
     "recent_rating_changes": [
+      {
+        "date": "2026-08-21T12:17:33",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
       {
         "date": "2026-08-19T17:56:51",
         "firm": "Barrington Research",
@@ -237,17 +244,22 @@
         "to_grade": "Outperform",
         "from_grade": "Outperform",
         "action": "main"
-      },
-      {
-        "date": "2026-05-28T20:00:38",
-        "firm": "Citigroup",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
       }
     ]
   },
   "news": [
+    {
+      "date": "2026-08-24T11:21:36Z",
+      "title": "2 Momentum  Stocks with Exciting Potential and 1 We Avoid",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/2-momentum-stocks-exciting-potential-112136884.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-08-21T19:55:47Z",
+      "title": "Winners And Losers Of Q2: Haemonetics (NYSE:HAE) Vs The Rest Of The Medical Devices & Supplies - Specialty Stocks",
+      "url": "https://finance.yahoo.com/healthcare/articles/winners-losers-q2-haemonetics-nyse-195547718.html",
+      "source": "StockStory"
+    },
     {
       "date": "2026-08-20T14:11:15Z",
       "title": "1 Russell 2000 Stock with Competitive Advantages and 2 We Turn Down",
@@ -295,76 +307,24 @@
       "title": "Haemonetics (HAE) Q1 2027 Earnings Call Transcript",
       "url": "https://www.fool.com/earnings/call-transcripts/2026/08/13/haemonetics-hae-q1-2027-earnings-call-transcript/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-11T13:15:03Z",
-      "title": "Haemonetics (HAE) Reliance on International Sales: What Investors Need to Know",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/haemonetics-hae-reliance-international-sales-131503457.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-10T03:49:22Z",
-      "title": "HAE Q2 Deep Dive: Plasma and Interventional Growth Drive Outperformance, Margin Outlook Steady",
-      "url": "https://finance.yahoo.com/healthcare/articles/hae-q2-deep-dive-plasma-034922859.html",
-      "source": "StockStory"
     }
   ],
-  "options_implied_move": 0.10072075288347683,
+  "options_implied_move": 0.08095238095238096,
   "technicals": {
-    "ma20": 89.17699966430663,
-    "ma50": 81.25339996337891,
-    "ma200": 70.53744995117188,
-    "rsi14": 84.33011981017913,
-    "high_20d": 109.55999755859375,
-    "low_5d": 89.05999755859375,
-    "low_10d": 84.87999725341797,
-    "high_52w": 109.55999755859375,
+    "ma20": 95.45949974060059,
+    "ma50": 84.23220001220703,
+    "ma200": 71.78884994506836,
+    "rsi14": 72.72667686849624,
+    "high_20d": 109.56999969482422,
+    "low_5d": 104.58999633789062,
+    "low_10d": 89.05999755859375,
+    "high_52w": 109.56999969482422,
     "low_52w": 47.31999969482422,
-    "atr14": 4.160714285714286,
-    "atr14_pct": 3.8446814255979853,
-    "position_in_52w_range_pct": 97.84704951175674
+    "atr14": 3.577857426234654,
+    "atr14_pct": 3.4074832630806227,
+    "position_in_52w_range_pct": 92.65863502839483
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-21",
-      "open": 74.35,
-      "high": 75.47,
-      "low": 73.34,
-      "close": 75.41,
-      "volume": 395900.0
-    },
-    {
-      "date": "2024-08-22",
-      "open": 75.5,
-      "high": 76.19,
-      "low": 75.31,
-      "close": 75.5,
-      "volume": 379300.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 75.5,
-      "high": 76.45,
-      "low": 74.95,
-      "close": 76.25,
-      "volume": 463600.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 76.73,
-      "high": 77.19,
-      "low": 76.08,
-      "close": 76.49,
-      "volume": 382600.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 76.37,
-      "high": 77.02,
-      "low": 75.68,
-      "close": 76.69,
-      "volume": 276700.0
-    },
     {
       "date": "2024-08-28",
       "open": 76.74,
@@ -4331,50 +4291,50 @@
       "high": 109.56,
       "low": 106.49,
       "close": 108.22,
-      "volume": 889600.0
+      "volume": 891200.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 109.24,
+      "high": 109.57,
+      "low": 107.0,
+      "close": 108.8,
+      "volume": 582100.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 108.02,
+      "high": 109.49,
+      "low": 107.38,
+      "close": 108.4,
+      "volume": 641100.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 108.13,
+      "high": 108.68,
+      "low": 106.84,
+      "close": 108.32,
+      "volume": 502200.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 107.75,
+      "high": 108.08,
+      "low": 106.42,
+      "close": 106.6,
+      "volume": 661300.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 105.73,
+      "high": 106.52,
+      "low": 104.59,
+      "close": 105.0,
+      "volume": 592900.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-20",
-      "open": 54.27,
-      "high": 55.0,
-      "low": 54.04,
-      "close": 54.45,
-      "volume": 1272200.0
-    },
-    {
-      "date": "2025-08-21",
-      "open": 53.64,
-      "high": 54.54,
-      "low": 53.5,
-      "close": 53.98,
-      "volume": 949800.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 54.19,
-      "high": 56.64,
-      "low": 54.12,
-      "close": 56.37,
-      "volume": 1147200.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 56.04,
-      "high": 56.27,
-      "low": 55.08,
-      "close": 55.23,
-      "volume": 736200.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 55.32,
-      "high": 55.87,
-      "low": 54.34,
-      "close": 55.23,
-      "volume": 729200.0
-    },
     {
       "date": "2025-08-27",
       "open": 55.25,
@@ -6349,7 +6309,47 @@
       "high": 109.56,
       "low": 106.49,
       "close": 108.22,
-      "volume": 889600.0
+      "volume": 891200.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 109.24,
+      "high": 109.57,
+      "low": 107.0,
+      "close": 108.8,
+      "volume": 582100.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 108.02,
+      "high": 109.49,
+      "low": 107.38,
+      "close": 108.4,
+      "volume": 641100.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 108.13,
+      "high": 108.68,
+      "low": 106.84,
+      "close": 108.32,
+      "volume": 502200.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 107.75,
+      "high": 108.08,
+      "low": 106.42,
+      "close": 106.6,
+      "volume": 661300.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 105.73,
+      "high": 106.52,
+      "low": 104.59,
+      "close": 105.0,
+      "volume": 592900.0
     }
   ],
   "ai_synthesis": null,

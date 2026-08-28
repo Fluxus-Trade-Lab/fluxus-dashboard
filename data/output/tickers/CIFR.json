@@ -1,8 +1,8 @@
 {
   "ticker": "CIFR",
-  "fetched_at": "2026-08-08T05:15:57Z",
+  "fetched_at": "2026-08-28T04:47:16Z",
   "_schema": "v2",
-  "current_price": 17.18000030517578,
+  "current_price": 16.770000457763672,
   "info": {
     "symbol": "CIFR",
     "longName": "Cipher Digital Inc.",
@@ -13,13 +13,13 @@
     "city": "New York",
     "website": "https://www.cipherdigital.com",
     "fullTimeEmployees": 66,
-    "marketCap": 7130227712,
-    "enterpriseValue": 11910878208,
+    "marketCap": 6960065536,
+    "enterpriseValue": 11740715008,
     "trailingPE": null,
-    "forwardPE": 62.47273,
-    "priceToSalesTrailing12Months": 37.31287,
-    "enterpriseToRevenue": 62.33,
-    "priceToBook": 12.66028,
+    "forwardPE": 56.84746,
+    "priceToSalesTrailing12Months": 36.4224,
+    "enterpriseToRevenue": 61.44,
+    "priceToBook": 12.358144,
     "grossMargins": -0.100360006,
     "operatingMargins": -3.01691,
     "profitMargins": 0.0,
@@ -31,12 +31,12 @@
     "debtToEquity": 950.563,
     "currentRatio": 2.996,
     "fiftyTwoWeekHigh": 30.14,
-    "fiftyTwoWeekLow": 4.67,
-    "averageVolume": 26952374,
-    "averageVolume10days": 36088390,
+    "fiftyTwoWeekLow": 6.95,
+    "averageVolume": 29538093,
+    "averageVolume10days": 37767520,
     "beta": 3.223,
     "sharesOutstanding": 415030722,
-    "sharesFloat": 340549309,
+    "sharesFloat": 341624238,
     "companyOfficers": [
       {
         "name": "Mr. Rodney Tyler Page",
@@ -109,6 +109,17 @@
   },
   "quarterly_metrics": [
     {
+      "period_end": "2026-06-30T00:00:00",
+      "revenue": 24837000.0,
+      "gross_profit": -32568000.0,
+      "operating_income": -72636000.0,
+      "eps": -0.65,
+      "cash": 831829000.0,
+      "operating_cashflow": -243538000.0,
+      "gross_margin_pct": -131.12694769899747,
+      "yoy_pct": -42.988637667852636
+    },
+    {
       "period_end": "2026-03-31T00:00:00",
       "revenue": 34838000.0,
       "gross_profit": -17870000.0,
@@ -117,7 +128,7 @@
       "cash": 715203000.0,
       "operating_cashflow": 91531000.0,
       "gross_margin_pct": -51.29456340777312,
-      "yoy_pct": -28.842500868073284
+      "yoy_pct": null
     },
     {
       "period_end": "2025-12-31T00:00:00",
@@ -145,22 +156,11 @@
       "period_end": "2025-06-30T00:00:00",
       "revenue": 43565000.0,
       "gross_profit": 12576000.0,
-      "operating_income": -41566000.0,
+      "operating_income": -28062000.0,
       "eps": -0.12,
       "cash": 62704000.0,
       "operating_cashflow": -56217000.0,
       "gross_margin_pct": 28.867209916217146,
-      "yoy_pct": null
-    },
-    {
-      "period_end": "2025-03-31T00:00:00",
-      "revenue": 48959000.0,
-      "gross_profit": 19762000.0,
-      "operating_income": -32144000.0,
-      "eps": -0.11,
-      "cash": 23173000.0,
-      "operating_cashflow": -47238000.0,
-      "gross_margin_pct": 40.3643865275026,
       "yoy_pct": null
     }
   ],
@@ -170,10 +170,10 @@
     "bullish": 15,
     "neutral": 0,
     "bearish": 0,
-    "avg_price_target": 32.64706,
+    "avg_price_target": 32.17647,
     "high_price_target": 69.0,
-    "low_price_target": 23.0,
-    "current_price": 17.18,
+    "low_price_target": 22.0,
+    "current_price": 16.77,
     "recent_rating_changes": [
       {
         "date": "2026-08-07T18:12:38",
@@ -249,194 +249,82 @@
   },
   "news": [
     {
-      "date": "2026-08-07T19:13:13Z",
-      "title": "MARA Holdings Falls 7%, Cipher Mining Drops 6%, TeraWulf Slides 4% as Q2 Losses Outweigh Bitcoin\u2019s $65K Push",
-      "url": "https://247wallst.com/investing/2026/08/07/mara-holdings-falls-7-cipher-mining-drops-6-terawulf-slides-4-as-q2-losses-outweigh-bitcoins-65k-push/",
+      "date": "2026-08-27T15:02:20Z",
+      "title": "Strategy Spikes 10% as Bitcoin\u2019s Rebound Reaches the Treasury Trade, MARA Surges 9%",
+      "url": "https://247wallst.com/investing/2026/08/27/strategy-spikes-10-as-bitcoins-rebound-reaches-the-treasury-trade-mara-surges-9/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-07T18:50:00Z",
-      "title": "Cipher Digital IFR Q2 Earnings Call Highlights Early HPC Delivery",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cipher-digital-ifr-q2-earnings-185000512.html",
+      "date": "2026-08-25T18:30:28Z",
+      "title": "Applied Digital and IREN Climb 6% as the Digital Infrastructure Bid Broadens Past Bitcoin, Core Scientific Gains 4%",
+      "url": "https://247wallst.com/investing/2026/08/25/applied-digital-and-iren-climb-6-as-the-digital-infrastructure-bid-broadens-past-bitcoin-core-scientific-gains-4/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-24T14:24:27Z",
+      "title": "Morgan Stanley expects powered-shell deal wave by October",
+      "url": "https://blockspace.media/insight/morgan-stanley-powered-shell-deal-wave-october/",
+      "source": "Blockspace"
+    },
+    {
+      "date": "2026-08-21T14:55:00Z",
+      "title": "IREN Heads Into FY2026 Results: Can Growth Momentum Continue?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/iren-heads-fy2026-results-growth-145500697.html",
       "source": "Zacks"
     },
     {
-      "date": "2026-08-07T15:27:08Z",
-      "title": "MARA, CIFR, WULF Stocks Drop As Price Target Cuts Outweigh Bitcoin\u2019s $65K Rebound",
-      "url": "https://stocktwits.com/news-articles/markets/equity/mara-cifr-wulf-stocks-slide-price-target-cuts-bitcoin-reclaims-65k/cZof7SERJ93",
-      "source": "Stocktwits"
+      "date": "2026-08-21T14:20:09Z",
+      "title": "IREN Jumps 6% but Then Gives Up Gains as Microsoft Accepts Horizon 1; TeraWulf Ticks Up, Cipher Digital Drops 5%",
+      "url": "https://247wallst.com/investing/2026/08/21/iren-jumps-6-but-then-gives-up-gains-as-microsoft-accepts-horizon-1-terawulf-ticks-up-cipher-digital-drops-5/",
+      "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-05T21:50:00Z",
-      "title": "3 Reasons Investors Should Ignore Cipher Digital's Double Miss",
-      "url": "https://www.fool.com/investing/2026/08/05/3-reasons-why-investors-should-ignore-cipher-digit/",
-      "source": "Motley Fool"
+      "date": "2026-08-19T18:55:31Z",
+      "title": "Cipher Digital Stock Is Valued On Revenue It Is Shutting Down",
+      "url": "https://www.trefis.com/articles/612011/cipher-digital-stock-is-valued-on-revenue-it-is-shutting-down/2026-08-19",
+      "source": "Trefis"
     },
     {
-      "date": "2026-08-05T15:11:50Z",
-      "title": "Cipher Digital (CIFR) Stock Fair Value Edges Higher After Analyst Views On AI And Mining",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cipher-digital-cifr-stock-fair-151150736.html",
+      "date": "2026-08-19T11:09:33Z",
+      "title": "Cipher Digital (CIFR) Stock Looks Fully Priced Despite Strong Sales Growth",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/cipher-digital-cifr-stock-looks-110933826.html",
       "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-05T14:50:51Z",
-      "title": "KBW cuts Cipher target to $28 as Texas audit stalls Batch Zero approvals",
-      "url": "https://blockspace.media/insight/kbw-cuts-cipher-target-texas-audit/",
-      "source": "Blockspace"
-    },
-    {
-      "date": "2026-08-05T14:46:14Z",
-      "title": "Rosenblatt holds Cipher Digital \u2018Buy\u2019 rating despite ERCOT Batch Zero delay",
-      "url": "https://blockspace.media/insight/rosenblatt-cipher-buy-rating-ercot-delay/",
-      "source": "Blockspace"
-    },
-    {
-      "date": "2026-08-05T14:12:35Z",
-      "title": "Cipher Digital (CIFR) Lands $810 Million For Texas Data Center Push As Reviews Loom",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cipher-digital-cifr-lands-810-141235597.html",
+      "date": "2026-08-19T06:12:56Z",
+      "title": "Could Cipher Digital (CIFR) Be 51% Undervalued After Its Latest Selloff?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/could-cipher-digital-cifr-51-061256210.html",
       "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-04T22:11:44Z",
-      "title": "Cipher Digital\u2019s Black Pearl site is earning revenue ahead of schedule: Q2 earnings",
-      "url": "https://blockspace.media/short/cipher-digitals-black-pearl-site-is-earning-revenue-ahead-of-schedule-q2-earnings/",
-      "source": "Blockspace"
+      "date": "2026-08-19T02:11:58Z",
+      "title": "Cipher Digital (CIFR) Is Down 6.5% After Q2 Loss And Rising Interest Costs \u2013 Has The Bull Case Changed?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/cipher-digital-cifr-down-6-021158952.html",
+      "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-04T20:46:06Z",
-      "title": "Cipher Mining Inc. Q2 2026 Earnings Call Summary",
-      "url": "https://app.moby.co/home/research/tools/earningsCalendar/earnings-cipher-mining-inc-q2-2026-earnings-call-summary?utm_source=yahoo_finance&utm_medium=rss",
-      "source": "Moby"
+      "date": "2026-08-18T16:44:53Z",
+      "title": "MARA Holdings Falls 5%, Riot Platforms Sinks 4% as Rates Outweigh a 35,577 Bitcoin Treasury",
+      "url": "https://247wallst.com/investing/2026/08/18/mara-holdings-falls-5-riot-platforms-sinks-4-as-rates-outweigh-a-35577-bitcoin-treasury/",
+      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": 0.11874272198850973,
+  "options_implied_move": 0.0483005353541902,
   "technicals": {
-    "ma20": 20.766999816894533,
-    "ma50": 22.93229995727539,
-    "ma200": 18.639000005722046,
-    "rsi14": 40.732838345417655,
-    "high_20d": 26.84000015258789,
-    "low_5d": 16.94499969482422,
-    "low_10d": 16.94499969482422,
+    "ma20": 17.738249826431275,
+    "ma50": 20.79849992752075,
+    "ma200": 18.39657500743866,
+    "rsi14": 45.26635071542904,
+    "high_20d": 25.219999313354492,
+    "low_5d": 14.960000038146973,
+    "low_10d": 14.890000343322754,
     "high_52w": 30.139999389648438,
-    "low_52w": 4.550000190734863,
-    "atr14": 3.1304284504481723,
-    "atr14_pct": 18.221352705710224,
-    "position_in_52w_range_pct": 49.355218873852586
+    "low_52w": 6.949999809265137,
+    "atr14": 1.600285870688302,
+    "atr14_pct": 9.542551144937207,
+    "position_in_52w_range_pct": 42.34584228628185
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-08",
-      "open": 4.13,
-      "high": 4.45,
-      "low": 4.0,
-      "close": 4.33,
-      "volume": 8071600.0
-    },
-    {
-      "date": "2024-08-09",
-      "open": 4.28,
-      "high": 4.39,
-      "low": 4.05,
-      "close": 4.07,
-      "volume": 5244700.0
-    },
-    {
-      "date": "2024-08-12",
-      "open": 4.07,
-      "high": 4.08,
-      "low": 3.85,
-      "close": 3.93,
-      "volume": 5673800.0
-    },
-    {
-      "date": "2024-08-13",
-      "open": 3.95,
-      "high": 4.145,
-      "low": 3.86,
-      "close": 3.92,
-      "volume": 6414800.0
-    },
-    {
-      "date": "2024-08-14",
-      "open": 4.0,
-      "high": 4.12,
-      "low": 3.65,
-      "close": 3.65,
-      "volume": 11609400.0
-    },
-    {
-      "date": "2024-08-15",
-      "open": 3.8,
-      "high": 4.11,
-      "low": 3.795,
-      "close": 3.86,
-      "volume": 13776600.0
-    },
-    {
-      "date": "2024-08-16",
-      "open": 3.86,
-      "high": 4.075,
-      "low": 3.79,
-      "close": 3.84,
-      "volume": 10748600.0
-    },
-    {
-      "date": "2024-08-19",
-      "open": 3.9,
-      "high": 4.05,
-      "low": 3.88,
-      "close": 3.99,
-      "volume": 7208800.0
-    },
-    {
-      "date": "2024-08-20",
-      "open": 4.13,
-      "high": 4.209,
-      "low": 3.87,
-      "close": 3.95,
-      "volume": 6027300.0
-    },
-    {
-      "date": "2024-08-21",
-      "open": 4.02,
-      "high": 4.119,
-      "low": 3.96,
-      "close": 4.05,
-      "volume": 9066200.0
-    },
-    {
-      "date": "2024-08-22",
-      "open": 4.08,
-      "high": 4.08,
-      "low": 3.76,
-      "close": 3.79,
-      "volume": 7388600.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 3.88,
-      "high": 4.0,
-      "low": 3.81,
-      "close": 4.0,
-      "volume": 10858800.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 3.96,
-      "high": 4.055,
-      "low": 3.82,
-      "close": 4.01,
-      "volume": 9774400.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 3.9,
-      "high": 3.95,
-      "low": 3.67,
-      "close": 3.74,
-      "volume": 7918100.0
-    },
     {
       "date": "2024-08-28",
       "open": 3.7,
@@ -4331,122 +4219,122 @@
       "high": 19.05,
       "low": 16.945,
       "close": 17.18,
-      "volume": 45020800.0
+      "volume": 45182300.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 17.51,
+      "high": 17.51,
+      "low": 16.2,
+      "close": 16.33,
+      "volume": 33634300.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 17.19,
+      "high": 18.245,
+      "low": 16.974,
+      "close": 17.21,
+      "volume": 32584400.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 18.575,
+      "high": 19.12,
+      "low": 17.48,
+      "close": 17.87,
+      "volume": 34008000.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 17.42,
+      "high": 18.08,
+      "low": 16.385,
+      "close": 16.62,
+      "volume": 35299900.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 16.47,
+      "high": 18.14,
+      "low": 16.23,
+      "close": 17.855,
+      "volume": 38127000.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 17.76,
+      "high": 18.735,
+      "low": 17.72,
+      "close": 18.5,
+      "volume": 26942000.0
+    },
+    {
+      "date": "2026-08-18",
+      "open": 17.53,
+      "high": 17.9,
+      "low": 15.77,
+      "close": 16.095,
+      "volume": 53429100.0
+    },
+    {
+      "date": "2026-08-19",
+      "open": 16.05,
+      "high": 16.325,
+      "low": 14.89,
+      "close": 15.89,
+      "volume": 44328000.0
+    },
+    {
+      "date": "2026-08-20",
+      "open": 16.2,
+      "high": 17.24,
+      "low": 15.58,
+      "close": 17.21,
+      "volume": 36042000.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 17.52,
+      "high": 18.23,
+      "low": 15.48,
+      "close": 15.765,
+      "volume": 55322000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 15.5,
+      "high": 15.87,
+      "low": 14.96,
+      "close": 15.36,
+      "volume": 33539000.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 15.63,
+      "high": 16.38,
+      "low": 15.4,
+      "close": 16.31,
+      "volume": 29429800.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 16.0,
+      "high": 16.42,
+      "low": 15.721,
+      "close": 16.02,
+      "volume": 24944600.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 16.52,
+      "high": 17.465,
+      "low": 16.38,
+      "close": 16.77,
+      "volume": 35571700.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-07",
-      "open": 5.18,
-      "high": 5.29,
-      "low": 4.82,
-      "close": 4.87,
-      "volume": 20704700.0
-    },
-    {
-      "date": "2025-08-08",
-      "open": 4.96,
-      "high": 4.98,
-      "low": 4.55,
-      "close": 4.75,
-      "volume": 18448400.0
-    },
-    {
-      "date": "2025-08-11",
-      "open": 4.935,
-      "high": 5.1,
-      "low": 4.74,
-      "close": 4.76,
-      "volume": 18901000.0
-    },
-    {
-      "date": "2025-08-12",
-      "open": 4.75,
-      "high": 4.84,
-      "low": 4.67,
-      "close": 4.72,
-      "volume": 16497400.0
-    },
-    {
-      "date": "2025-08-13",
-      "open": 4.84,
-      "high": 4.95,
-      "low": 4.71,
-      "close": 4.9,
-      "volume": 17296600.0
-    },
-    {
-      "date": "2025-08-14",
-      "open": 4.99,
-      "high": 5.33,
-      "low": 4.91,
-      "close": 5.32,
-      "volume": 34715100.0
-    },
-    {
-      "date": "2025-08-15",
-      "open": 5.25,
-      "high": 5.36,
-      "low": 5.0,
-      "close": 5.21,
-      "volume": 27210700.0
-    },
-    {
-      "date": "2025-08-18",
-      "open": 5.3,
-      "high": 6.3,
-      "low": 5.29,
-      "close": 6.05,
-      "volume": 36317300.0
-    },
-    {
-      "date": "2025-08-19",
-      "open": 6.07,
-      "high": 6.16,
-      "low": 5.6,
-      "close": 5.76,
-      "volume": 26049200.0
-    },
-    {
-      "date": "2025-08-20",
-      "open": 5.76,
-      "high": 5.965,
-      "low": 5.32,
-      "close": 5.95,
-      "volume": 25525100.0
-    },
-    {
-      "date": "2025-08-21",
-      "open": 5.741,
-      "high": 5.96,
-      "low": 5.68,
-      "close": 5.9,
-      "volume": 20635700.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 5.87,
-      "high": 6.41,
-      "low": 5.71,
-      "close": 6.38,
-      "volume": 23186300.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 6.314,
-      "high": 6.73,
-      "low": 6.02,
-      "close": 6.64,
-      "volume": 26545800.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 6.55,
-      "high": 7.13,
-      "low": 6.48,
-      "close": 7.12,
-      "volume": 26674000.0
-    },
     {
       "date": "2025-08-27",
       "open": 7.13,
@@ -6349,7 +6237,119 @@
       "high": 19.05,
       "low": 16.945,
       "close": 17.18,
-      "volume": 45020800.0
+      "volume": 45182300.0
+    },
+    {
+      "date": "2026-08-10",
+      "open": 17.51,
+      "high": 17.51,
+      "low": 16.2,
+      "close": 16.33,
+      "volume": 33634300.0
+    },
+    {
+      "date": "2026-08-11",
+      "open": 17.19,
+      "high": 18.245,
+      "low": 16.974,
+      "close": 17.21,
+      "volume": 32584400.0
+    },
+    {
+      "date": "2026-08-12",
+      "open": 18.575,
+      "high": 19.12,
+      "low": 17.48,
+      "close": 17.87,
+      "volume": 34008000.0
+    },
+    {
+      "date": "2026-08-13",
+      "open": 17.42,
+      "high": 18.08,
+      "low": 16.385,
+      "close": 16.62,
+      "volume": 35299900.0
+    },
+    {
+      "date": "2026-08-14",
+      "open": 16.47,
+      "high": 18.14,
+      "low": 16.23,
+      "close": 17.855,
+      "volume": 38127000.0
+    },
+    {
+      "date": "2026-08-17",
+      "open": 17.76,
+      "high": 18.735,
+      "low": 17.72,
+      "close": 18.5,
+      "volume": 26942000.0
+    },
+    {
+      "date": "2026-08-18",
+      "open": 17.53,
+      "high": 17.9,
+      "low": 15.77,
+      "close": 16.095,
+      "volume": 53429100.0
+    },
+    {
+      "date": "2026-08-19",
+      "open": 16.05,
+      "high": 16.325,
+      "low": 14.89,
+      "close": 15.89,
+      "volume": 44328000.0
+    },
+    {
+      "date": "2026-08-20",
+      "open": 16.2,
+      "high": 17.24,
+      "low": 15.58,
+      "close": 17.21,
+      "volume": 36042000.0
+    },
+    {
+      "date": "2026-08-21",
+      "open": 17.52,
+      "high": 18.23,
+      "low": 15.48,
+      "close": 15.765,
+      "volume": 55322000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 15.5,
+      "high": 15.87,
+      "low": 14.96,
+      "close": 15.36,
+      "volume": 33539000.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 15.63,
+      "high": 16.38,
+      "low": 15.4,
+      "close": 16.31,
+      "volume": 29429800.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 16.0,
+      "high": 16.42,
+      "low": 15.721,
+      "close": 16.02,
+      "volume": 24944600.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 16.52,
+      "high": 17.465,
+      "low": 16.38,
+      "close": 16.77,
+      "volume": 35571700.0
     }
   ],
   "ai_synthesis": null,

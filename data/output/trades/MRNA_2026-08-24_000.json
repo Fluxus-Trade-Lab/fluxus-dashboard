@@ -1,6 +1,6 @@
 {
   "trade_id": "MRNA_2026-08-24_000",
-  "generated_at": "2026-08-28T03:44:31+00:00",
+  "generated_at": "2026-08-28T04:50:36+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "MRNA",
@@ -28,28 +28,42 @@
     ]
   },
   "entry_snapshot": {
-    "close": 145.13,
-    "open": 132.5,
-    "high": 159.47,
-    "low": 132.43,
-    "volume": 86743104.0,
-    "ma20": 72.56750000000001,
-    "ma50": 67.6035,
-    "ma200": 48.726724999999995,
-    "rsi14": 71.60469603334141,
-    "atr14": 16.104499999999998,
-    "atr14_pct": 11.096603045545372,
+    "close": 138.89,
+    "open": 142.7,
+    "high": 145.5,
+    "low": 130.0,
+    "volume": 31587200.0,
+    "ma20": 76.73049999999999,
+    "ma50": 69.38850000000001,
+    "ma200": 49.302425,
+    "rsi14": 68.82090551169455,
+    "atr14": 16.983785714285716,
+    "atr14_pct": 12.228227888462609,
     "high_52w": 176.66,
     "low_52w": 22.28,
-    "position_in_52w_range_pct": 79.57636999611348,
+    "position_in_52w_range_pct": 75.53439564710453,
     "high_20d": 176.66,
-    "low_10d": 58.41,
+    "low_10d": 58.6,
     "low_5d": 62.129
   },
-  "setup_type": "Extended long \u2014 RSI overbought",
-  "path_analytics": {},
-  "lesson": "Insufficient data",
-  "narrative": "Entered **MRNA** long on 2026-08-24 at $151.70 (qty 575) with stop $140.00 (1R = $11.70/sh = $6,727). Setup: **Extended long \u2014 RSI overbought** \u2014 price above MA20 ($72.57), MA20 > MA50 > MA200 (golden alignment), RSI 72, 80% through 52W range, ATR 11.1% of price.  **Lesson: Insufficient data.**",
+  "setup_type": "Long in mixed structure",
+  "path_analytics": {
+    "mfe_R": 0.8264957264957287,
+    "mfe_date": "2026-08-25",
+    "mae_R": 1.8547008547008554,
+    "mae_date": "2026-08-24",
+    "optimal_exit_price": 161.37,
+    "optimal_exit_date": "2026-08-25",
+    "optimal_R": 0.8264957264957287,
+    "days_to_optimal": 1,
+    "realized_R": 0.0,
+    "capture_pct": 0.0,
+    "missed_R": 0.8264957264957287,
+    "post_exit_R": -0.2659829059829058,
+    "hold_calendar_days": 2
+  },
+  "lesson": "Choppy / no edge",
+  "narrative": "Entered **MRNA** long on 2026-08-24 at $151.70 (qty 575) with stop $140.00 (1R = $11.70/sh = $6,727). Setup: **Long in mixed structure** \u2014 price above MA20 ($76.73), MA20 > MA50 > MA200 (golden alignment), RSI 69, 76% through 52W range, ATR 12.2% of price. Realized **+0.00R**, peak was **+0.83R** on 2026-08-25 (day +1) \u2014 captured **0%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-07-27",
@@ -205,11 +219,43 @@
     },
     {
       "date": "2026-08-21",
-      "open": 132.5,
+      "open": 133.11,
       "high": 159.47,
-      "low": 132.43,
+      "low": 132.42,
       "close": 145.13,
-      "volume": 86743104.0
+      "volume": 87316100.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 142.7,
+      "high": 145.5,
+      "low": 130.0,
+      "close": 138.89,
+      "volume": 31587200.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 143.5,
+      "high": 161.37,
+      "low": 141.21,
+      "close": 158.83,
+      "volume": 49225700.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 154.2,
+      "high": 156.13,
+      "low": 145.1,
+      "close": 149.66,
+      "volume": 22009500.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 144.18,
+      "high": 148.588,
+      "low": 138.54,
+      "close": 142.77,
+      "volume": 24929100.0
     }
   ]
 }

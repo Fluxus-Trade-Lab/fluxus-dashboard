@@ -1,8 +1,8 @@
 {
   "ticker": "FTK",
-  "fetched_at": "2026-08-21T22:10:55Z",
+  "fetched_at": "2026-08-28T04:48:15Z",
   "_schema": "v2",
-  "current_price": 24.670000076293945,
+  "current_price": 24.399999618530273,
   "info": {
     "symbol": "FTK",
     "longName": "Flotek Industries, Inc.",
@@ -13,13 +13,13 @@
     "city": "Houston",
     "website": "https://www.flotekind.com",
     "fullTimeEmployees": 158,
-    "marketCap": 905510720,
-    "enterpriseValue": 963290560,
-    "trailingPE": 24.752476,
-    "forwardPE": 30.864197,
-    "priceToSalesTrailing12Months": 3.090818,
-    "enterpriseToRevenue": 3.288,
-    "priceToBook": 6.99888,
+    "marketCap": 883778432,
+    "enterpriseValue": 935436416,
+    "trailingPE": 24.158415,
+    "forwardPE": 30.123457,
+    "priceToSalesTrailing12Months": 3.016638,
+    "enterpriseToRevenue": 3.193,
+    "priceToBook": 6.830907,
     "grossMargins": 0.24679,
     "operatingMargins": 0.14981,
     "profitMargins": 0.1297,
@@ -32,8 +32,8 @@
     "currentRatio": 1.78,
     "fiftyTwoWeekHigh": 39.67,
     "fiftyTwoWeekLow": 10.95,
-    "averageVolume": 458601,
-    "averageVolume10days": 951900,
+    "averageVolume": 493495,
+    "averageVolume10days": 992740,
     "beta": 1.477,
     "sharesOutstanding": 36220429,
     "sharesFloat": 14218614,
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.282,
+      "eps_estimate": 0.115,
+      "eps_surprise_pct": 1.4522
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.1383,
+      "eps_estimate": 0.15,
+      "eps_surprise_pct": -0.078
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.092,
+      "eps_estimate": 0.17,
+      "eps_surprise_pct": -0.45880002
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.5725,
+      "eps_estimate": 0.15,
+      "eps_surprise_pct": 2.8167002
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 85100000,
+    "revenue_high": 90000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,7 +164,61 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 5,
+    "bullish": 5,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 38.25,
+    "high_price_target": 43.0,
+    "low_price_target": 32.0,
+    "current_price": 24.4,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-09T11:45:34",
+        "firm": "Jones Trading",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2025-12-31T17:29:26",
+        "firm": "Northland Capital Markets",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "reit"
+      },
+      {
+        "date": "2025-06-17T15:08:59",
+        "firm": "Northland Capital Markets",
+        "to_grade": "Market Perform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2024-11-07T16:16:45",
+        "firm": "Roth MKM",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2024-07-25T09:35:08",
+        "firm": "Roth MKM",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2024-04-29T11:29:04",
+        "firm": "Alliance Global Partners",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-21T12:01:58Z",
@@ -198,54 +281,22 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.5393442707271932,
   "technicals": {
-    "ma20": 29.70099983215332,
-    "ma50": 26.4357999420166,
-    "ma200": 19.477350001335143,
-    "rsi14": 40.91076356593359,
+    "ma20": 29.836499881744384,
+    "ma50": 26.432799949645997,
+    "ma200": 19.636149997711183,
+    "rsi14": 41.49261751533707,
     "high_20d": 39.66999816894531,
-    "low_5d": 23.479999542236328,
-    "low_10d": 23.479999542236328,
+    "low_5d": 23.31999969482422,
+    "low_10d": 23.31999969482422,
     "high_52w": 39.66999816894531,
     "low_52w": 10.949999809265137,
-    "atr14": 3.5869358607700894,
-    "atr14_pct": 14.5396670031504,
-    "position_in_52w_range_pct": 47.77159140193486
+    "atr14": 2.7178574970790317,
+    "atr14_pct": 11.138760408073896,
+    "position_in_52w_range_pct": 46.83147833374359
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 4.12,
-      "high": 4.26,
-      "low": 4.12,
-      "close": 4.16,
-      "volume": 25600.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 4.15,
-      "high": 4.3,
-      "low": 4.15,
-      "close": 4.26,
-      "volume": 92000.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 4.3,
-      "high": 4.35,
-      "low": 4.26,
-      "close": 4.31,
-      "volume": 66200.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 4.26,
-      "high": 4.34,
-      "low": 4.26,
-      "close": 4.27,
-      "volume": 75500.0
-    },
     {
       "date": "2024-08-28",
       "open": 4.26,
@@ -4217,45 +4268,45 @@
     {
       "date": "2026-08-21",
       "open": 24.62,
-      "high": 25.6171,
-      "low": 23.49,
+      "high": 25.62,
+      "low": 23.48,
       "close": 24.67,
-      "volume": 628505.0
+      "volume": 758000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 24.39,
+      "high": 24.87,
+      "low": 23.45,
+      "close": 23.92,
+      "volume": 680900.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 24.47,
+      "high": 24.66,
+      "low": 23.49,
+      "close": 24.0,
+      "volume": 518800.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 24.12,
+      "high": 24.25,
+      "low": 23.32,
+      "close": 23.61,
+      "volume": 313000.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 23.96,
+      "high": 24.92,
+      "low": 23.61,
+      "close": 24.4,
+      "volume": 384600.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 11.41,
-      "high": 11.84,
-      "low": 11.34,
-      "close": 11.66,
-      "volume": 248800.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 11.76,
-      "high": 12.32,
-      "low": 11.61,
-      "close": 11.92,
-      "volume": 389000.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 11.95,
-      "high": 12.63,
-      "low": 11.95,
-      "close": 12.45,
-      "volume": 298900.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 12.5,
-      "high": 12.7,
-      "low": 12.39,
-      "close": 12.65,
-      "volume": 280200.0
-    },
     {
       "date": "2025-08-27",
       "open": 12.65,
@@ -6235,13 +6286,44 @@
     {
       "date": "2026-08-21",
       "open": 24.62,
-      "high": 25.6171,
-      "low": 23.49,
+      "high": 25.62,
+      "low": 23.48,
       "close": 24.67,
-      "volume": 628505.0
+      "volume": 758000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 24.39,
+      "high": 24.87,
+      "low": 23.45,
+      "close": 23.92,
+      "volume": 680900.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 24.47,
+      "high": 24.66,
+      "low": 23.49,
+      "close": 24.0,
+      "volume": 518800.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 24.12,
+      "high": 24.25,
+      "low": 23.32,
+      "close": 23.61,
+      "volume": 313000.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 23.96,
+      "high": 24.92,
+      "low": 23.61,
+      "close": 24.4,
+      "volume": 384600.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-20T22:17:14Z"
+  "ai_synthesized_at": null
 }

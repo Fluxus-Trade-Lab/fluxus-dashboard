@@ -1,8 +1,8 @@
 {
   "ticker": "DDOG",
-  "fetched_at": "2026-08-21T22:09:20Z",
+  "fetched_at": "2026-08-28T04:43:01Z",
   "_schema": "v2",
-  "current_price": 235.6199951171875,
+  "current_price": 242.92999267578125,
   "info": {
     "symbol": "DDOG",
     "longName": "Datadog, Inc.",
@@ -13,13 +13,13 @@
     "city": "New York",
     "website": "https://www.datadoghq.com",
     "fullTimeEmployees": 8100,
-    "marketCap": 83502891008,
-    "enterpriseValue": 80143564800,
-    "trailingPE": 474.59183,
-    "forwardPE": 78.34002,
-    "priceToSalesTrailing12Months": 21.050838,
-    "enterpriseToRevenue": 20.204,
-    "priceToBook": 19.114746,
+    "marketCap": 87230087168,
+    "enterpriseValue": 83522461696,
+    "trailingPE": 485.86,
+    "forwardPE": 81.83677,
+    "priceToSalesTrailing12Months": 21.990454,
+    "enterpriseToRevenue": 21.056,
+    "priceToBook": 19.967943,
     "grossMargins": 0.79536,
     "operatingMargins": 0.00666,
     "profitMargins": 0.044770002,
@@ -32,8 +32,8 @@
     "currentRatio": 3.205,
     "fiftyTwoWeekHigh": 292.72,
     "fiftyTwoWeekLow": 98.01,
-    "averageVolume": 5218237,
-    "averageVolume10days": 6282510,
+    "averageVolume": 5091533,
+    "averageVolume10days": 3672340,
     "beta": 1.509,
     "sharesOutstanding": 334904614,
     "sharesFloat": 333016950,
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.65,
+      "eps_estimate": 0.58324,
+      "eps_surprise_pct": 0.1145
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.6,
+      "eps_estimate": 0.50738,
+      "eps_surprise_pct": 0.1825
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.59,
+      "eps_estimate": 0.55486,
+      "eps_surprise_pct": 0.0633
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.55,
+      "eps_estimate": 0.45709,
+      "eps_surprise_pct": 0.2033
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 1139500000,
+    "revenue_high": 1191200600
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,117 +164,167 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 48,
+    "bullish": 44,
+    "neutral": 2,
+    "bearish": 2,
+    "avg_price_target": 285.1802,
+    "high_price_target": 330.0,
+    "low_price_target": 158.0,
+    "current_price": 242.93,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-08T00:59:39",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Outperform",
+        "from_grade": "Sector Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T23:12:23",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T19:41:33",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T16:24:23",
+        "firm": "Macquarie",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T13:30:46",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T12:35:14",
+        "firm": "DA Davidson",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T12:31:24",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-07T11:38:26",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T12:07:48",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T11:26:07",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
-      "date": "2026-08-21T11:35:00Z",
-      "title": "Should You Buy Datadog Stock Right Now?",
-      "url": "https://www.fool.com/investing/2026/08/21/should-you-buy-datadog-stock-right-now/",
-      "source": "Motley Fool"
+      "date": "2026-08-27T17:23:12Z",
+      "title": "Zscaler and SentinelOne Spike 10% as Cybersecurity Re-Rating Reaches the Laggards",
+      "url": "https://247wallst.com/investing/2026/08/27/zscaler-and-sentinelone-spike-10-as-cybersecurity-re-rating-reaches-the-laggards/",
+      "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-20T21:01:58Z",
-      "title": "Dynatrace Buys Arize for $915M to Expand AI Observability Reach",
-      "url": "https://www.marketbeat.com/instant-alerts/dynatrace-buys-arize-for-915m-to-expand-ai-observability-reach-2026-08-20/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-19T23:42:02Z",
-      "title": "Rapid7, Tenable, CrowdStrike, Twilio, and Datadog Shares Plummet, What You Need To Know",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/rapid7-tenable-crowdstrike-twilio-datadog-234202526.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-19T20:34:12Z",
-      "title": "Software Companies' Second-Quarter Beat Rate Accelerates Sequentially, RBC Says",
-      "url": "https://finance.yahoo.com/technology/articles/software-companies-apos-second-quarter-203412309.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-17T22:30:20Z",
-      "title": "3 Large-Cap Stocks to Target This Week",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/3-large-cap-stocks-target-223020386.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-17T14:50:00Z",
-      "title": "Looking Beyond CrowdStrike? 3 AI Security Stocks Stand Out",
-      "url": "https://www.marketbeat.com/articles/looking-beyond-crowdstrike-3-ai-security-stocks-stand-out/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-17T10:13:15Z",
-      "title": "SaaSpocalypse Defied: Atlassian and Cloudflare Push Back Against Enterprise Tech Fears",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/saaspocalypse-defied-atlassian-cloudflare-push-101315374.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-15T01:25:00Z",
-      "title": "The Top 5 Analyst Questions From Datadog\u2019s Q2 Earnings Call",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/top-5-analyst-questions-datadog-012500839.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-14T23:30:00Z",
-      "title": "GoDaddy\u2019s AI Will Stabilize Growth, Analyst Says. Plus, Lionsgate Studios and 3 More Stocks.",
-      "url": "https://www.barrons.com/articles/godaddys-ai-will-stabilize-growth-analyst-says-plus-lionsgate-studios-and-3-more-stocks-3407af16?siteid=yhoof2&yptr=yahoo",
+      "date": "2026-08-27T15:37:00Z",
+      "title": "Software Stocks Are Surging Back\u2014And Salesforce Just Showed Why",
+      "url": "https://www.barrons.com/articles/software-stocks-igv-etf-salesforce-anthropic-7a45f70e?siteid=yhoof2&yptr=yahoo",
       "source": "Barrons.com"
     },
     {
-      "date": "2026-08-14T07:41:12Z",
-      "title": "Jim Cramer Explains Datadog, Inc. (NASDAQ:DDOG)\u2019s Share Price Movement",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-explains-datadog-inc-074112335.html",
-      "source": "Insider Monkey"
+      "date": "2026-08-27T14:42:44Z",
+      "title": "Why Palo Alto Networks Stock Just Popped",
+      "url": "https://www.fool.com/investing/2026/08/27/why-palo-alto-networks-stock-just-popped/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-08-27T14:40:00Z",
+      "title": "Veeva Systems Stock Is Having Its Best Day Ever as Software Sector Rallies",
+      "url": "https://www.barrons.com/articles/veeva-systems-earnings-stock-price-software-232082de?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-08-26T17:31:37Z",
+      "title": "Palo Alto Networks Signals More Deals Are Coming",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/palo-alto-networks-signals-more-173137547.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-08-26T14:40:00Z",
+      "title": "Palo Alto Networks CEO held acquisition talks with both Okta and Datadog",
+      "url": "https://finance.yahoo.com/technology/ai/articles/palo-alto-networks-ceo-held-144000533.html",
+      "source": "Investing.com"
+    },
+    {
+      "date": "2026-08-25T15:35:00Z",
+      "title": "DDOG vs. NOW: Which Cloud Software Stock Has an Edge Right Now?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ddog-vs-now-cloud-software-153500822.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-25T15:30:00Z",
+      "title": "Datadog's Multi-Product Adoption Grows: Can It Drive More Revenues?",
+      "url": "https://finance.yahoo.com/technology/articles/datadogs-multi-product-adoption-grows-153000747.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-24T20:20:01Z",
+      "title": "Datadog CEO Olivier Pomel Sells 47,054 Shares for $11.1 Million",
+      "url": "https://www.fool.com/coverage/filings/2026/08/24/datadog-ceo-olivier-pomel-sells-47-054-shares-for-usd11-1-million/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-08-24T17:43:08Z",
+      "title": "Nebius Group Falls 4% as $5B Convertible Settles, Datadog Drops 3%, Cloudflare Slips",
+      "url": "https://247wallst.com/investing/2026/08/24/nebius-group-falls-4-as-5b-convertible-settles-datadog-drops-3-cloudflare-slips/",
+      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.029679332389486366,
   "technicals": {
-    "ma20": 253.139501953125,
-    "ma50": 249.42180084228517,
-    "ma200": 174.26917533874513,
-    "rsi14": 43.89260193079686,
+    "ma20": 247.33250122070314,
+    "ma50": 249.2422009277344,
+    "ma200": 175.39322532653807,
+    "rsi14": 49.46176809254044,
     "high_20d": 292.7200012207031,
-    "low_5d": 227.11000061035156,
-    "low_10d": 227.11000061035156,
+    "low_5d": 219.0,
+    "low_10d": 219.0,
     "high_52w": 292.7200012207031,
     "low_52w": 98.01000213623047,
-    "atr14": 17.427501133510045,
-    "atr14_pct": 7.39644406020904,
-    "position_in_52w_range_pct": 70.67433291972671
+    "atr14": 14.073928833007812,
+    "atr14_pct": 5.793409318457903,
+    "position_in_52w_range_pct": 74.42863295206475
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 117.5,
-      "high": 118.72,
-      "low": 115.53,
-      "close": 115.62,
-      "volume": 2419000.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 117.0,
-      "high": 117.665,
-      "low": 115.48,
-      "close": 117.23,
-      "volume": 1926200.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 116.42,
-      "high": 117.59,
-      "low": 116.21,
-      "close": 116.74,
-      "volume": 1388700.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 116.25,
-      "high": 116.96,
-      "low": 115.53,
-      "close": 116.02,
-      "volume": 1284900.0
-    },
     {
       "date": "2024-08-28",
       "open": 115.5,
@@ -4218,44 +4297,44 @@
       "date": "2026-08-21",
       "open": 235.15,
       "high": 236.31,
-      "low": 228.81,
+      "low": 228.76,
       "close": 235.62,
-      "volume": 2721237.0
+      "volume": 2804100.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 234.41,
+      "high": 234.53,
+      "low": 225.67,
+      "close": 225.77,
+      "volume": 2775700.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 226.89,
+      "high": 229.08,
+      "low": 221.31,
+      "close": 222.99,
+      "volume": 3091400.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 220.46,
+      "high": 234.95,
+      "low": 219.0,
+      "close": 227.67,
+      "volume": 4044000.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 237.0,
+      "high": 251.99,
+      "low": 236.0,
+      "close": 242.93,
+      "volume": 4550400.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 128.06,
-      "high": 129.24,
-      "low": 126.674,
-      "close": 129.15,
-      "volume": 2965100.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 129.01,
-      "high": 132.38,
-      "low": 128.08,
-      "close": 131.22,
-      "volume": 3826900.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 130.51,
-      "high": 130.89,
-      "low": 128.09,
-      "close": 128.38,
-      "volume": 2621600.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 128.56,
-      "high": 129.02,
-      "low": 126.25,
-      "close": 126.31,
-      "volume": 5024400.0
-    },
     {
       "date": "2025-08-27",
       "open": 128.07,
@@ -6236,12 +6315,43 @@
       "date": "2026-08-21",
       "open": 235.15,
       "high": 236.31,
-      "low": 228.81,
+      "low": 228.76,
       "close": 235.62,
-      "volume": 2721237.0
+      "volume": 2804100.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 234.41,
+      "high": 234.53,
+      "low": 225.67,
+      "close": 225.77,
+      "volume": 2775700.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 226.89,
+      "high": 229.08,
+      "low": 221.31,
+      "close": 222.99,
+      "volume": 3091400.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 220.46,
+      "high": 234.95,
+      "low": 219.0,
+      "close": 227.67,
+      "volume": 4044000.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 237.0,
+      "high": 251.99,
+      "low": 236.0,
+      "close": 242.93,
+      "volume": 4550400.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-20T22:14:43Z"
+  "ai_synthesized_at": null
 }

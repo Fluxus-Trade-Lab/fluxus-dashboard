@@ -1,8 +1,8 @@
 {
   "ticker": "PLTR",
-  "fetched_at": "2026-08-21T22:10:14Z",
+  "fetched_at": "2026-08-28T04:44:02Z",
   "_schema": "v2",
-  "current_price": 179.94000244140625,
+  "current_price": 185.92999267578125,
   "info": {
     "symbol": "PLTR",
     "longName": "Palantir Technologies Inc.",
@@ -13,13 +13,13 @@
     "city": "Aventura",
     "website": "https://www.palantir.com",
     "fullTimeEmployees": 4401,
-    "marketCap": 418036056064,
-    "enterpriseValue": 408949030912,
-    "trailingPE": 148.68378,
-    "forwardPE": 75.16939,
-    "priceToSalesTrailing12Months": 67.907745,
-    "enterpriseToRevenue": 66.432,
-    "priceToBook": 42.76303,
+    "marketCap": 446800625664,
+    "enterpriseValue": 437713666048,
+    "trailingPE": 158.91454,
+    "forwardPE": 80.341705,
+    "priceToSalesTrailing12Months": 72.5804,
+    "enterpriseToRevenue": 71.104,
+    "priceToBook": 45.705505,
     "grossMargins": 0.84796,
     "operatingMargins": 0.47120997,
     "profitMargins": 0.49005002,
@@ -32,8 +32,8 @@
     "currentRatio": 7.228,
     "fiftyTwoWeekHigh": 207.52,
     "fiftyTwoWeekLow": 106.37,
-    "averageVolume": 43224541,
-    "averageVolume10days": 38973320,
+    "averageVolume": 42916415,
+    "averageVolume10days": 30921610,
     "beta": 1.563,
     "sharesOutstanding": 2300713329,
     "sharesFloat": 2110414018,
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.41,
+      "eps_estimate": 0.34596,
+      "eps_surprise_pct": 0.1851
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.33,
+      "eps_estimate": 0.27946,
+      "eps_surprise_pct": 0.1808
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.25,
+      "eps_estimate": 0.2302,
+      "eps_surprise_pct": 0.086
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.21,
+      "eps_estimate": 0.16738,
+      "eps_surprise_pct": 0.2546
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-02",
+    "revenue_low": 2161000000,
+    "revenue_high": 2262971840
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,117 +164,167 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 31,
+    "bullish": 19,
+    "neutral": 10,
+    "bearish": 2,
+    "avg_price_target": 191.68,
+    "high_price_target": 255.0,
+    "low_price_target": 80.0,
+    "current_price": 185.93,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-04T19:03:23",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T18:45:18",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T14:40:09",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T14:13:00",
+        "firm": "DA Davidson",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T12:12:50",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T11:23:04",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T10:02:36",
+        "firm": "Deutsche Bank",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-04T09:04:37",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-30T12:39:03",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T18:51:09",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
     {
-      "date": "2026-08-21T19:16:15Z",
-      "title": "Palantir Stock Clears Buy Zone But Could Offer Alternative Entry",
-      "url": "https://www.investors.com/stock-lists/ibd-big-cap-20/palantir-stock-clears-buy-zone-but-could-offer-alternative-entry/?src=A00220&yptr=yahoo",
+      "date": "2026-08-28T04:37:08Z",
+      "title": "Dow Jones Futures Rise With Fed Chief Warsh Due; Nvidia, These 7 Stocks Are In Buy Zones",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-fed-chief-warsh-speech-nvidia-jumps-software-sector-on-fire/?src=A00220&yptr=yahoo",
       "source": "Investor's Business Daily"
     },
     {
-      "date": "2026-08-21T18:10:47Z",
-      "title": "Michael Burry Says the AI Buildout Is Repeating 2008: \u2018The Shenanigans Are Apparent Today\u2019",
-      "url": "https://247wallst.com/investing/2026/08/21/michael-burry-says-the-ai-buildout-is-repeating-2008-the-shenanigans-are-apparent-today/",
-      "source": "24/7 Wall St."
+      "date": "2026-08-28T01:00:00Z",
+      "title": "Corporate America Cut Big Checks to Trump. Now CEOs Fear Subpoenas Are Coming.",
+      "url": "https://www.wsj.com/politics/elections/trump-corporate-donors-election-2026-572c1b28?siteid=yhoof2&yptr=yahoo",
+      "source": "The Wall Street Journal"
     },
     {
-      "date": "2026-08-21T17:27:17Z",
-      "title": "Even The Calm Reading On Palantir Puts Nearly Half The Position In Play",
-      "url": "https://www.trefis.com/articles/612387/even-the-calm-reading-on-palantir-puts-nearly-half-the-position-in-play/2026-08-21",
+      "date": "2026-08-27T23:42:00Z",
+      "title": "3 Software Stocks Recently Raising Guidance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/3-software-stocks-recently-raising-234200412.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-27T23:14:59Z",
+      "title": "How Much Track Is Left For SNOW Stock?",
+      "url": "https://www.trefis.com/articles/613264/how-much-track-is-left-for-snow-stock/2026-08-27",
       "source": "Trefis"
     },
     {
-      "date": "2026-08-21T17:10:05Z",
-      "title": "Palantir Climbs 4% Through $180, BigBear.ai Rises 4%, ServiceNow Holds Flat: How Are Traders Picking the Software Winners?",
-      "url": "https://247wallst.com/investing/2026/08/21/palantir-climbs-4-through-180-bigbear-ai-rises-4-servicenow-holds-flat-how-are-traders-picking-the-software-winners/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-21T16:25:00Z",
-      "title": "Bloom Energy vs. Palantir: Which \"Story Stock\" Actually Has More Room to Run?",
-      "url": "https://www.fool.com/investing/2026/08/21/bloom-energy-vs-palantir-which-story-stock-actuall/",
+      "date": "2026-08-27T18:32:00Z",
+      "title": "Palantir Billionaire Peter Thiel Just Bought This Magnificent Artificial Intelligence (AI) Stock Up 347,260% Since Its IPO",
+      "url": "https://www.fool.com/investing/2026/08/27/palantir-billionaire-peter-thiel-just-bought-this/",
       "source": "Motley Fool"
     },
     {
-      "date": "2026-08-21T15:41:00Z",
-      "title": "Palantir Co-Founder Peter Thiel's Hedge Fund Just Made a Big Bet on This Genius AI Stock Pick",
-      "url": "https://www.fool.com/investing/2026/08/21/palantir-co-founder-peter-thiels-hedge-fund-just-m/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-21T14:00:21Z",
-      "title": "Could Palantir Stock Double Again? The Bull and Bear Cases.",
-      "url": "https://247wallst.com/investing/2026/08/21/could-palantir-stock-double-again-the-bull-and-bear-cases/",
+      "date": "2026-08-27T16:30:09Z",
+      "title": "This 1 Number Proves Why You Should Buy Palantir on Every Dip",
+      "url": "https://247wallst.com/investing/2026/08/27/this-1-number-proves-why-you-should-buy-palantir-on-every-dip/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-21T11:57:33Z",
-      "title": "Dow Jones Futures Rise After Bearish Market Signal; Bitcoin Keeps Surging",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-market-triggers-bearish-signal-walmart-spacex-crowdstrike/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
+      "date": "2026-08-27T16:24:44Z",
+      "title": "Oracle Stock And 2 High Growth Picks Backed By Rising Credit Demand",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/oracle-stock-2-high-growth-162444516.html",
+      "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-21T11:45:07Z",
-      "title": "Palantir and Snowflake Provide the Backbone of Agentic AI but Which Is Better?",
-      "url": "https://247wallst.com/investing/2026/08/21/palantir-and-snowflake-provide-the-backbone-of-agentic-ai-but-which-is-better/",
+      "date": "2026-08-27T14:14:56Z",
+      "title": "Palantir's Pentagon AI Business Is Closing In on $1 Billion a Year",
+      "url": "https://finance.yahoo.com/technology/ai/articles/palantirs-pentagon-ai-business-closing-141456628.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-08-27T13:53:13Z",
+      "title": "Palantir Technologies Stock Surged On Evidence That Was Already Public",
+      "url": "https://www.trefis.com/articles/613346/palantir-technologies-stock-surged-on-evidence-that-was-already-public/2026-08-27",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-08-27T13:38:18Z",
+      "title": "Salesforce Soars 14% as Claudeforce and a Guidance Raise End the Slump, ServiceNow Climbs 5%, Adobe Advances 3%",
+      "url": "https://247wallst.com/investing/2026/08/27/salesforce-soars-14-as-claudeforce-and-a-guidance-raise-end-the-slump-servicenow-climbs-5-adobe-advances-3/",
       "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-21T11:39:47Z",
-      "title": "3 Unpopular Stocks That Deserve Some Love",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/3-unpopular-stocks-deserve-love-113947623.html",
-      "source": "StockStory"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.023126984184301033,
   "technicals": {
-    "ma20": 157.2744987487793,
-    "ma50": 138.93179946899414,
-    "ma200": 151.505899848938,
-    "rsi14": 69.40823921418423,
-    "high_20d": 182.44000244140625,
-    "low_5d": 169.77099609375,
-    "low_10d": 168.33999633789062,
+    "ma20": 167.86099815368652,
+    "ma50": 142.6321990966797,
+    "ma200": 151.4080498123169,
+    "rsi14": 69.09787284640626,
+    "high_20d": 186.86000061035156,
+    "low_5d": 168.89999389648438,
+    "low_10d": 168.89999389648438,
     "high_52w": 207.52000427246094,
     "low_52w": 106.37000274658203,
-    "atr14": 9.6130736214774,
-    "atr14_pct": 5.342377176307807,
-    "position_in_52w_range_pct": 72.73356261492647
+    "atr14": 7.208074297223773,
+    "atr14_pct": 3.876767913282814,
+    "position_in_52w_range_pct": 78.65545104202894
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 32.55,
-      "high": 33.125,
-      "low": 31.85,
-      "close": 31.92,
-      "volume": 43522200.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 31.99,
-      "high": 32.55,
-      "low": 31.622,
-      "close": 31.78,
-      "volume": 34121200.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 31.43,
-      "high": 31.74,
-      "low": 30.79,
-      "close": 30.85,
-      "volume": 35283600.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 30.55,
-      "high": 31.12,
-      "low": 30.38,
-      "close": 30.84,
-      "volume": 23541300.0
-    },
     {
       "date": "2024-08-28",
       "open": 30.62,
@@ -4220,42 +4299,42 @@
       "high": 182.44,
       "low": 172.55,
       "close": 179.94,
-      "volume": 40929832.0
+      "volume": 41076200.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 177.39,
+      "high": 178.75,
+      "low": 171.31,
+      "close": 175.89,
+      "volume": 35115500.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 176.63,
+      "high": 179.87,
+      "low": 172.2,
+      "close": 172.73,
+      "volume": 24558500.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 170.6,
+      "high": 178.49,
+      "low": 168.9,
+      "close": 177.5,
+      "volume": 27924200.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 178.75,
+      "high": 186.86,
+      "low": 178.01,
+      "close": 185.93,
+      "volume": 40651900.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 157.17,
-      "high": 157.97,
-      "low": 153.81,
-      "close": 156.18,
-      "volume": 94678600.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 155.315,
-      "high": 163.2,
-      "low": 151.77,
-      "close": 158.74,
-      "volume": 102099200.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 156.1,
-      "high": 158.59,
-      "low": 149.37,
-      "close": 157.17,
-      "volume": 86879800.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 155.39,
-      "high": 162.13,
-      "low": 154.57,
-      "close": 160.87,
-      "volume": 86573700.0
-    },
     {
       "date": "2025-08-27",
       "open": 162.32,
@@ -6238,10 +6317,41 @@
       "high": 182.44,
       "low": 172.55,
       "close": 179.94,
-      "volume": 40929832.0
+      "volume": 41076200.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 177.39,
+      "high": 178.75,
+      "low": 171.31,
+      "close": 175.89,
+      "volume": 35115500.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 176.63,
+      "high": 179.87,
+      "low": 172.2,
+      "close": 172.73,
+      "volume": 24558500.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 170.6,
+      "high": 178.49,
+      "low": 168.9,
+      "close": 177.5,
+      "volume": 27924200.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 178.75,
+      "high": 186.86,
+      "low": 178.01,
+      "close": 185.93,
+      "volume": 40651900.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:13:23Z"
+  "ai_synthesized_at": null
 }

@@ -1,8 +1,8 @@
 {
   "ticker": "FPS",
-  "fetched_at": "2026-08-21T22:09:31Z",
+  "fetched_at": "2026-08-28T04:43:15Z",
   "_schema": "v2",
-  "current_price": 33.18000030517578,
+  "current_price": 31.6200008392334,
   "info": {
     "symbol": "FPS",
     "longName": "Forgent Power Solutions, Inc.",
@@ -13,13 +13,13 @@
     "city": "Dayton",
     "website": "https://www.forgentpower.com",
     "fullTimeEmployees": 2000,
-    "marketCap": 10155748352,
-    "enterpriseValue": 8893647872,
-    "trailingPE": 1668.0001,
-    "forwardPE": 28.53892,
-    "priceToSalesTrailing12Months": 8.491428,
-    "enterpriseToRevenue": 7.436,
-    "priceToBook": 18.239475,
+    "marketCap": 9626042368,
+    "enterpriseValue": 8468880896,
+    "trailingPE": 1581.0001,
+    "forwardPE": 27.050379,
+    "priceToSalesTrailing12Months": 8.048531,
+    "enterpriseToRevenue": 7.081,
+    "priceToBook": 17.288136,
     "grossMargins": 0.34332,
     "operatingMargins": 0.103870004,
     "profitMargins": 0.02173,
@@ -32,8 +32,8 @@
     "currentRatio": 1.641,
     "fiftyTwoWeekHigh": 66.0,
     "fiftyTwoWeekLow": 25.95,
-    "averageVolume": 8302888,
-    "averageVolume10days": 4574580,
+    "averageVolume": 8249884,
+    "averageVolume10days": 4829930,
     "beta": null,
     "sharesOutstanding": 259971169,
     "sharesFloat": 140207220,
@@ -76,8 +76,21 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_estimate": 0.16643
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_estimate": 0.11502
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-09-15",
+    "revenue_low": 412800000,
+    "revenue_high": 435000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -135,8 +148,102 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 10,
+    "bullish": 9,
+    "neutral": 1,
+    "bearish": 0,
+    "avg_price_target": 59.9,
+    "high_price_target": 73.0,
+    "low_price_target": 51.0,
+    "current_price": 31.62,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-16T09:36:04",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-06-22T16:39:07",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-18T12:20:15",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-15T15:28:04",
+        "firm": "Goldman Sachs",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-15T14:01:18",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-15T13:22:53",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-15T12:04:20",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-17T16:19:40",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-02T19:01:04",
+        "firm": "Wolfe Research",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-03-02T13:37:14",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-27T14:37:40Z",
+      "title": "Forgent Power Solutions (FPS) Positioned for Faster Customer Outcomes",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/forgent-power-solutions-fps-positioned-143740272.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-08-26T13:39:00Z",
+      "title": "Should You Avoid Investing in AMSC Stock After a Mixed Q1?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/avoid-investing-amsc-stock-mixed-133900328.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-21T18:25:50Z",
       "title": "Why Forgent Power Stock Slumped This Week (And What You Should Do)",
@@ -184,33 +291,21 @@
       "title": "Best Momentum Stocks to Buy for July 15th",
       "url": "https://finance.yahoo.com/markets/stocks/articles/best-momentum-stocks-buy-july-140000891.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-07-15T10:36:00Z",
-      "title": "New Strong Buy Stocks for July 15th",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/strong-buy-stocks-july-15th-103600677.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-07-10T12:16:07Z",
-      "title": "Jim Cramer on Forgent: \u201cI Wouldn\u2019t Mind Owning Some Myself for the Charitable Trust\u201d",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-forgent-wouldn-t-121607438.html",
-      "source": "Insider Monkey"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.1856419938078127,
   "technicals": {
-    "ma20": 36.093000411987305,
-    "ma50": 44.2934001159668,
-    "rsi14": 36.68079890868895,
+    "ma20": 35.9455002784729,
+    "ma50": 42.115200157165525,
+    "rsi14": 33.71801439134123,
     "high_20d": 40.2599983215332,
-    "low_5d": 32.630001068115234,
-    "low_10d": 32.630001068115234,
+    "low_5d": 31.43000030517578,
+    "low_10d": 31.43000030517578,
     "high_52w": 66.0,
     "low_52w": 25.950000762939453,
-    "atr14": 2.2646424429757253,
-    "atr14_pct": 6.825323755715764,
-    "position_in_52w_range_pct": 18.052433657841366
+    "atr14": 1.9207141058785575,
+    "atr14_pct": 6.074364500001461,
+    "position_in_52w_range_pct": 14.157303830975284
   },
   "ohlc_2y": [
     {
@@ -1304,10 +1399,42 @@
     {
       "date": "2026-08-21",
       "open": 33.75,
-      "high": 34.075,
+      "high": 34.08,
       "low": 32.63,
       "close": 33.18,
-      "volume": 2500440.0
+      "volume": 2867800.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 32.92,
+      "high": 33.0,
+      "low": 31.43,
+      "close": 32.19,
+      "volume": 7809100.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 33.11,
+      "high": 33.37,
+      "low": 31.86,
+      "close": 32.19,
+      "volume": 4066100.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 32.28,
+      "high": 32.99,
+      "low": 31.92,
+      "close": 32.21,
+      "volume": 3911200.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 33.72,
+      "high": 33.98,
+      "low": 31.5,
+      "close": 31.62,
+      "volume": 5373900.0
     }
   ],
   "ohlc_1y": [
@@ -2402,13 +2529,44 @@
     {
       "date": "2026-08-21",
       "open": 33.75,
-      "high": 34.075,
+      "high": 34.08,
       "low": 32.63,
       "close": 33.18,
-      "volume": 2500440.0
+      "volume": 2867800.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 32.92,
+      "high": 33.0,
+      "low": 31.43,
+      "close": 32.19,
+      "volume": 7809100.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 33.11,
+      "high": 33.37,
+      "low": 31.86,
+      "close": 32.19,
+      "volume": 4066100.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 32.28,
+      "high": 32.99,
+      "low": 31.92,
+      "close": 32.21,
+      "volume": 3911200.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 33.72,
+      "high": 33.98,
+      "low": 31.5,
+      "close": 31.62,
+      "volume": 5373900.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:11:16Z"
+  "ai_synthesized_at": null
 }

@@ -1,6 +1,6 @@
 {
   "trade_id": "F_2026-06-08_000",
-  "generated_at": "2026-08-28T03:44:30+00:00",
+  "generated_at": "2026-08-28T04:50:35+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "F",
@@ -40,19 +40,19 @@
     "low": 14.7502,
     "volume": 33038300.0,
     "ma20": 14.45693,
-    "ma50": 12.89629,
-    "ma200": 12.496479999999998,
-    "rsi14": 55.373959611955456,
+    "ma50": 12.896289999999999,
+    "ma200": null,
+    "rsi14": 55.373929975522046,
     "atr14": 0.7299357142857144,
     "atr14_pct": 4.91893629945964,
     "high_52w": 17.5895,
-    "low_52w": 10.7011,
-    "position_in_52w_range_pct": 60.07490854189651,
+    "low_52w": 10.8062,
+    "position_in_52w_range_pct": 59.456311824628116,
     "high_20d": 17.5895,
     "low_10d": 14.5227,
     "low_5d": 14.5227
   },
-  "setup_type": "Pullback in uptrend",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": -0.07877192982456165,
     "mfe_date": "2026-06-09",
@@ -69,7 +69,7 @@
     "hold_calendar_days": 2
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **F** long on 2026-06-08 at $15.27 (qty 9385) with stop $14.70 (1R = $0.57/sh = $5,349). Setup: **Pullback in uptrend** \u2014 price above MA20 ($14.46), MA20 > MA50 > MA200 (golden alignment), RSI 55, 60% through 52W range, ATR 4.9% of price. Realized **-0.96R**. **Lesson: Failed setup.**",
+  "narrative": "Entered **F** long on 2026-06-08 at $15.27 (qty 9385) with stop $14.70 (1R = $0.57/sh = $5,349). Setup: **Long in mixed structure** \u2014 price above MA20 ($14.46), RSI 55, 59% through 52W range, ATR 4.9% of price. Realized **-0.96R**. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-05-11",

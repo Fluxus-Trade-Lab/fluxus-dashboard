@@ -1,8 +1,8 @@
 {
   "ticker": "DOCN",
-  "fetched_at": "2026-08-21T22:09:22Z",
+  "fetched_at": "2026-08-28T04:43:03Z",
   "_schema": "v2",
-  "current_price": 115.63999938964844,
+  "current_price": 121.68000030517578,
   "info": {
     "symbol": "DOCN",
     "longName": "DigitalOcean Holdings, Inc.",
@@ -13,13 +13,13 @@
     "city": "Broomfield",
     "website": "https://www.digitalocean.com",
     "fullTimeEmployees": 1462,
-    "marketCap": 13445221376,
-    "enterpriseValue": 14927664128,
-    "trailingPE": 51.977272,
-    "forwardPE": 61.752728,
-    "priceToSalesTrailing12Months": 13.297446,
-    "enterpriseToRevenue": 14.764,
-    "priceToBook": 12.900496,
+    "marketCap": 14307080192,
+    "enterpriseValue": 15517914112,
+    "trailingPE": 55.30909,
+    "forwardPE": 66.07191,
+    "priceToSalesTrailing12Months": 14.149833,
+    "enterpriseToRevenue": 15.347,
+    "priceToBook": 13.727436,
     "grossMargins": 0.57222,
     "operatingMargins": 0.104449995,
     "profitMargins": 0.23265,
@@ -31,12 +31,12 @@
     "debtToEquity": 212.506,
     "currentRatio": 1.311,
     "fiftyTwoWeekHigh": 187.5,
-    "fiftyTwoWeekLow": 29.62,
-    "averageVolume": 3363879,
-    "averageVolume10days": 2167940,
+    "fiftyTwoWeekLow": 30.889,
+    "averageVolume": 3327853,
+    "averageVolume10days": 2224830,
     "beta": 1.586,
     "sharesOutstanding": 117579550,
-    "sharesFloat": 97842647,
+    "sharesFloat": 97761517,
     "companyOfficers": [
       {
         "name": "Mr. Padmanabhan T. Srinivasan",
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.45,
+      "eps_estimate": 0.26023,
+      "eps_surprise_pct": 0.7292
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.44,
+      "eps_estimate": 0.26241,
+      "eps_surprise_pct": 0.6768
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.44,
+      "eps_estimate": 0.3809,
+      "eps_surprise_pct": 0.1552
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.54,
+      "eps_estimate": 0.49326,
+      "eps_surprise_pct": 0.094799995
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 305413000,
+    "revenue_high": 311000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,8 +164,108 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 14,
+    "bullish": 10,
+    "neutral": 4,
+    "bearish": 0,
+    "avg_price_target": 175.2143,
+    "high_price_target": 200.0,
+    "low_price_target": 140.0,
+    "current_price": 121.68,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-05T21:03:45",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T19:05:24",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T11:11:49",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-22T10:20:27",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-22T10:07:10",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-07-21T13:08:15",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-10T12:14:53",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-08T17:21:53",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-08T16:00:21",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-08T09:24:52",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-27T13:34:23Z",
+      "title": "First Solar upgraded, Celsius downgraded: Wall Street's top analyst calls",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/dicks-sporting-upgraded-trade-desk-134706727.html",
+      "source": "The Fly"
+    },
+    {
+      "date": "2026-08-27T12:01:36Z",
+      "title": "Here Are Thursday\u2019s Top Wall Street Analyst Research Calls: Abercrombie & Fitch, Choice Hotels International, DigitalOcean Holdings, First Solar, LTC Properties, Okta, Regions Financial, Synopsys, and More",
+      "url": "https://247wallst.com/investing/2026/08/27/here-are-thursdays-top-wall-street-analyst-research-calls-abercrombie-fitch-choice-hotels-international-digitalocean-holdings-first-solar-ltc-properties-okta-regions-financial-synop/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-08-25T13:18:44Z",
+      "title": "2 Growth Stocks to Add to Your Roster and 1 We Find Risky",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/2-growth-stocks-add-roster-131844379.html",
+      "source": "StockStory"
+    },
     {
       "date": "2026-08-19T23:50:02Z",
       "title": "Palo Alto Networks, SentinelOne, DigitalOcean, and Commvault Stocks Trade Down, What You Need To Know",
@@ -178,74 +307,24 @@
       "title": "Cloudways Bets That Enterprises Will Pay to Rehabilitate the Agent Every Hyperscaler Banned",
       "url": "https://finance.yahoo.com/technology/ai/articles/cloudways-bets-enterprises-pay-rehabilitate-001904217.html",
       "source": "Forkast News"
-    },
-    {
-      "date": "2026-08-17T19:19:10Z",
-      "title": "DigitalOcean Climbs 5% on Managed AI Agents Launch, Fastly Falls 4%",
-      "url": "https://247wallst.com/investing/2026/08/17/digitalocean-climbs-5-on-managed-ai-agents-launch-fastly-falls-4/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-13T13:35:01Z",
-      "title": "DigitalOcean Holdings, Inc. (DOCN) Just Overtook the 20-Day Moving Average",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/digitalocean-holdings-inc-docn-just-133501155.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-12T20:20:01Z",
-      "title": "DigitalOcean Director Adelman Sells 4,200 Shares for $521,000",
-      "url": "https://www.fool.com/coverage/filings/2026/08/12/digitalocean-director-adelman-sells-4-200-shares-for-usd521-000/",
-      "source": "Motley Fool"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.043474687596421584,
   "technicals": {
-    "ma20": 122.87249946594238,
-    "ma50": 135.71479904174805,
-    "ma200": 93.84844968795777,
-    "rsi14": 42.59640929420649,
+    "ma20": 122.92649917602539,
+    "ma50": 130.91719924926758,
+    "ma200": 95.24639966964722,
+    "rsi14": 48.52742752975264,
     "high_20d": 138.30999755859375,
-    "low_5d": 111.62000274658203,
-    "low_10d": 111.62000274658203,
+    "low_5d": 108.18800354003906,
+    "low_10d": 108.18800354003906,
     "high_52w": 187.5,
-    "low_52w": 29.6200008392334,
-    "atr14": 10.507997240339007,
-    "atr14_pct": 9.0868188306819,
-    "position_in_52w_range_pct": 54.48441791719437
+    "low_52w": 30.760000228881836,
+    "atr14": 9.004925864083427,
+    "atr14_pct": 7.40049789735281,
+    "position_in_52w_range_pct": 58.00689052511241
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 37.09,
-      "high": 37.745,
-      "low": 36.4,
-      "close": 36.58,
-      "volume": 855900.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 36.98,
-      "high": 38.828,
-      "low": 36.66,
-      "close": 38.0,
-      "volume": 1358700.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 38.06,
-      "high": 38.49,
-      "low": 37.11,
-      "close": 37.45,
-      "volume": 1263600.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 37.16,
-      "high": 37.55,
-      "low": 36.65,
-      "close": 37.32,
-      "volume": 704200.0
-    },
     {
       "date": "2024-08-28",
       "open": 37.11,
@@ -4220,42 +4299,42 @@
       "high": 116.74,
       "low": 111.62,
       "close": 115.64,
-      "volume": 2561419.0
+      "volume": 2561800.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 115.45,
+      "high": 115.45,
+      "low": 108.188,
+      "close": 111.54,
+      "volume": 2700700.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 114.0,
+      "high": 114.49,
+      "low": 109.8,
+      "close": 112.57,
+      "volume": 1376500.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 112.67,
+      "high": 115.42,
+      "low": 111.33,
+      "close": 114.99,
+      "volume": 1220700.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 120.63,
+      "high": 123.995,
+      "low": 118.88,
+      "close": 121.68,
+      "volume": 2072700.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 29.99,
-      "high": 30.36,
-      "low": 29.62,
-      "close": 29.99,
-      "volume": 1114900.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 30.11,
-      "high": 31.695,
-      "low": 30.05,
-      "close": 31.53,
-      "volume": 1788500.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 31.4,
-      "high": 31.635,
-      "low": 30.83,
-      "close": 31.08,
-      "volume": 1330400.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 31.03,
-      "high": 31.46,
-      "low": 30.36,
-      "close": 30.78,
-      "volume": 2564400.0
-    },
     {
       "date": "2025-08-27",
       "open": 30.76,
@@ -6238,10 +6317,41 @@
       "high": 116.74,
       "low": 111.62,
       "close": 115.64,
-      "volume": 2561419.0
+      "volume": 2561800.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 115.45,
+      "high": 115.45,
+      "low": 108.188,
+      "close": 111.54,
+      "volume": 2700700.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 114.0,
+      "high": 114.49,
+      "low": 109.8,
+      "close": 112.57,
+      "volume": 1376500.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 112.67,
+      "high": 115.42,
+      "low": 111.33,
+      "close": 114.99,
+      "volume": 1220700.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 120.63,
+      "high": 123.995,
+      "low": 118.88,
+      "close": 121.68,
+      "volume": 2072700.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-20T22:14:46Z"
+  "ai_synthesized_at": null
 }

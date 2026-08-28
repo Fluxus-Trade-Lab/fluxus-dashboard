@@ -1,8 +1,8 @@
 {
   "ticker": "BUG",
-  "fetched_at": "2026-08-21T22:09:06Z",
+  "fetched_at": "2026-08-28T04:42:46Z",
   "_schema": "v2",
-  "current_price": 40.650001525878906,
+  "current_price": 44.13999938964844,
   "info": {
     "symbol": "BUG",
     "longName": "Global X Cybersecurity ETF",
@@ -15,7 +15,7 @@
     "fullTimeEmployees": null,
     "marketCap": null,
     "enterpriseValue": null,
-    "trailingPE": 35.23783,
+    "trailingPE": 38.26317,
     "forwardPE": null,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
@@ -32,8 +32,8 @@
     "currentRatio": null,
     "fiftyTwoWeekHigh": 44.55,
     "fiftyTwoWeekLow": 23.145,
-    "averageVolume": 1226317,
-    "averageVolume10days": 1058040,
+    "averageVolume": 1270015,
+    "averageVolume10days": 1397260,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -42,8 +42,19 @@
   "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [],
-  "analyst": {},
+  "analyst": {
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
+  },
   "news": [
+    {
+      "date": "2026-08-27T15:29:00Z",
+      "title": "Cybersecurity Demand Fuels CrowdStrike's Earnings Beat: ETFs in Focus",
+      "url": "https://finance.yahoo.com/technology/ai/articles/cybersecurity-demand-fuels-crowdstrikes-earnings-152900203.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-20T14:30:00Z",
       "title": "3 Ways to Invest in Cybersecurity Through ETFs",
@@ -97,62 +108,24 @@
       "title": "The Asymmetric AI Winner: Cybersecurity ETFs Gaining From Cloud Buildout",
       "url": "https://finance.yahoo.com/markets/stocks/articles/asymmetric-ai-winner-cybersecurity-etfs-145800992.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-05-15T15:59:00Z",
-      "title": "Hack-Proof Your Portfolio: The Bull Case for Cybersecurity ETFs",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/hack-proof-portfolio-bull-case-155900412.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.08971454587125993,
   "technicals": {
-    "ma20": 40.71100006103516,
-    "ma50": 38.83139999389648,
-    "ma200": 31.761344680786134,
-    "rsi14": 50.77264078397255,
+    "ma20": 41.37550010681152,
+    "ma50": 39.3633999633789,
+    "ma200": 31.91085367202759,
+    "rsi14": 63.34502782794756,
     "high_20d": 44.54999923706055,
-    "low_5d": 39.349998474121094,
-    "low_10d": 39.349998474121094,
+    "low_5d": 38.52000045776367,
+    "low_10d": 38.52000045776367,
     "high_52w": 44.54999923706055,
     "low_52w": 23.145000457763672,
-    "atr14": 1.3459281921386719,
-    "atr14_pct": 3.3110163385401528,
-    "position_in_52w_range_pct": 81.77996760759567
+    "atr14": 1.5655711037772042,
+    "atr14_pct": 3.5468308233469448,
+    "position_in_52w_range_pct": 98.08456028594281
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 31.1491,
-      "high": 31.1591,
-      "low": 30.5998,
-      "close": 30.6498,
-      "volume": 131300.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 31.0193,
-      "high": 31.0492,
-      "low": 30.7197,
-      "close": 31.0393,
-      "volume": 89100.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 31.0692,
-      "high": 31.1591,
-      "low": 30.8895,
-      "close": 30.9793,
-      "volume": 161100.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 30.8195,
-      "high": 31.0592,
-      "low": 30.7996,
-      "close": 31.0093,
-      "volume": 214200.0
-    },
     {
       "date": "2024-08-28",
       "open": 30.9793,
@@ -4123,46 +4096,46 @@
     },
     {
       "date": "2026-08-21",
-      "open": 40.4,
+      "open": 40.23,
       "high": 40.71,
       "low": 39.35,
       "close": 40.65,
-      "volume": 845789.0
+      "volume": 847200.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 40.48,
+      "high": 40.56,
+      "low": 39.65,
+      "close": 39.98,
+      "volume": 4052900.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 39.91,
+      "high": 40.2,
+      "low": 38.8,
+      "close": 39.31,
+      "volume": 717900.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 38.77,
+      "high": 40.14,
+      "low": 38.52,
+      "close": 39.98,
+      "volume": 781900.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 42.09,
+      "high": 44.43,
+      "low": 42.065,
+      "close": 44.14,
+      "volume": 2395200.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 33.3071,
-      "high": 33.3471,
-      "low": 32.9472,
-      "close": 33.2271,
-      "volume": 151200.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 33.377,
-      "high": 34.1028,
-      "low": 33.1871,
-      "close": 33.9168,
-      "volume": 209000.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 34.1967,
-      "high": 34.1967,
-      "low": 33.477,
-      "close": 33.497,
-      "volume": 172400.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 33.387,
-      "high": 33.7719,
-      "low": 33.2871,
-      "close": 33.3221,
-      "volume": 244400.0
-    },
     {
       "date": "2025-08-27",
       "open": 33.507,
@@ -6141,11 +6114,43 @@
     },
     {
       "date": "2026-08-21",
-      "open": 40.4,
+      "open": 40.23,
       "high": 40.71,
       "low": 39.35,
       "close": 40.65,
-      "volume": 845789.0
+      "volume": 847200.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 40.48,
+      "high": 40.56,
+      "low": 39.65,
+      "close": 39.98,
+      "volume": 4052900.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 39.91,
+      "high": 40.2,
+      "low": 38.8,
+      "close": 39.31,
+      "volume": 717900.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 38.77,
+      "high": 40.14,
+      "low": 38.52,
+      "close": 39.98,
+      "volume": 781900.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 42.09,
+      "high": 44.43,
+      "low": 42.065,
+      "close": 44.14,
+      "volume": 2395200.0
     }
   ],
   "ai_synthesis": null,

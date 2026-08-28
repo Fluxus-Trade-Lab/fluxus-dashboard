@@ -1,6 +1,6 @@
 {
   "trade_id": "STX_2026-08-13_000",
-  "generated_at": "2026-08-28T03:44:31+00:00",
+  "generated_at": "2026-08-28T04:50:36+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "STX",
@@ -45,15 +45,15 @@
     "high": 934.77,
     "low": 861.55,
     "volume": 4590100.0,
-    "ma20": 839.6245000000001,
+    "ma20": 839.6244999999999,
     "ma50": 888.211654,
-    "ma200": 545.6730845,
-    "rsi14": 57.659338946195874,
+    "ma200": 545.6730835,
+    "rsi14": 57.659338965747466,
     "atr14": 78.52000000000001,
     "atr14_pct": 8.522092101978576,
     "high_52w": 1144.1842,
-    "low_52w": 151.7768,
-    "position_in_52w_range_pct": 77.54811179360412,
+    "low_52w": 162.5181,
+    "position_in_52w_range_pct": 77.3024453019209,
     "high_20d": 936.49,
     "low_10d": 761.8,
     "low_5d": 761.8
@@ -75,7 +75,7 @@
     "hold_calendar_days": 5
   },
   "lesson": "Choppy / no edge",
-  "narrative": "Entered **STX** long on 2026-08-13 at $948.23 (qty 281) with stop $920.00 (1R = $28.23/sh = $7,933). Setup: **Long in mixed structure** \u2014 price above MA20 ($839.62), MA stack mixed, RSI 58, 78% through 52W range, ATR 8.5% of price. Realized **-0.04R**, peak was **+2.33R** on 2026-08-17 (day +4) \u2014 captured **-2%** of the move. **Lesson: Choppy / no edge.**",
+  "narrative": "Entered **STX** long on 2026-08-13 at $948.23 (qty 281) with stop $920.00 (1R = $28.23/sh = $7,933). Setup: **Long in mixed structure** \u2014 price above MA20 ($839.62), MA stack mixed, RSI 58, 77% through 52W range, ATR 8.5% of price. Realized **-0.04R**, peak was **+2.33R** on 2026-08-17 (day +4) \u2014 captured **-2%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-07-14",
@@ -303,11 +303,43 @@
     },
     {
       "date": "2026-08-21",
-      "open": 861.73,
+      "open": 862.64,
       "high": 869.99,
-      "low": 834.5001,
+      "low": 834.5,
       "close": 850.0,
-      "volume": 2838852.0
+      "volume": 2843500.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 818.6,
+      "high": 822.74,
+      "low": 774.0,
+      "close": 794.65,
+      "volume": 3204200.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 814.5,
+      "high": 826.0,
+      "low": 800.12,
+      "close": 821.67,
+      "volume": 2560200.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 825.6,
+      "high": 851.69,
+      "low": 821.67,
+      "close": 846.37,
+      "volume": 2125500.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 875.75,
+      "high": 875.75,
+      "low": 812.94,
+      "close": 847.2,
+      "volume": 4895300.0
     }
   ]
 }

@@ -1,8 +1,8 @@
 {
   "ticker": "NOWL",
-  "fetched_at": "2026-08-21T22:10:04Z",
+  "fetched_at": "2026-08-28T04:49:22Z",
   "_schema": "v2",
-  "current_price": 6.809999942779541,
+  "current_price": 7.829999923706055,
   "info": {
     "symbol": "NOWL",
     "longName": "GraniteShares 2x Long NOW Daily ETF",
@@ -32,8 +32,8 @@
     "currentRatio": null,
     "fiftyTwoWeekHigh": 24.6,
     "fiftyTwoWeekLow": 3.49,
-    "averageVolume": 19751969,
-    "averageVolume10days": 11735590,
+    "averageVolume": 18392757,
+    "averageVolume10days": 8365830,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -42,22 +42,27 @@
   "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [],
-  "analyst": {},
+  "analyst": {
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
+  },
   "news": [],
-  "options_implied_move": null,
+  "options_implied_move": 0.22349936360812878,
   "technicals": {
-    "ma20": 6.050500059127808,
-    "ma50": 5.168400020599365,
-    "ma200": 8.38525000691414,
-    "rsi14": 60.87244638889605,
-    "high_20d": 7.105000019073486,
-    "low_5d": 5.75,
+    "ma20": 6.398000049591064,
+    "ma50": 5.339000024795532,
+    "ma200": 8.134420014619828,
+    "rsi14": 68.11347312098022,
+    "high_20d": 7.914999961853027,
+    "low_5d": 6.119999885559082,
     "low_10d": 5.75,
     "high_52w": 24.600000381469727,
     "low_52w": 3.490000009536743,
-    "atr14": 0.6018428461892265,
-    "atr14_pct": 8.837633645318075,
-    "position_in_52w_range_pct": 15.72714294054176
+    "atr14": 0.6139999798366002,
+    "atr14_pct": 7.841634557079087,
+    "position_in_52w_range_pct": 20.558976019439594
   },
   "ohlc_2y": [
     {
@@ -2288,44 +2293,44 @@
       "date": "2026-08-21",
       "open": 7.0,
       "high": 7.105,
-      "low": 6.7102,
+      "low": 6.71,
       "close": 6.81,
-      "volume": 5861750.0
+      "volume": 5934100.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 6.77,
+      "high": 6.99,
+      "low": 6.73,
+      "close": 6.76,
+      "volume": 4316800.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 6.58,
+      "high": 6.945,
+      "low": 6.49,
+      "close": 6.64,
+      "volume": 5763300.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 6.17,
+      "high": 6.605,
+      "low": 6.12,
+      "close": 6.52,
+      "volume": 5473000.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 6.99,
+      "high": 7.915,
+      "low": 6.99,
+      "close": 7.83,
+      "volume": 11171700.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 20.77,
-      "high": 20.77,
-      "low": 20.25,
-      "close": 20.495,
-      "volume": 12400.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 20.066,
-      "high": 21.369,
-      "low": 20.066,
-      "close": 20.835,
-      "volume": 44600.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 21.3,
-      "high": 21.3,
-      "low": 20.448,
-      "close": 20.547,
-      "volume": 36100.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 20.27,
-      "high": 20.418,
-      "low": 19.41,
-      "close": 19.874,
-      "volume": 69400.0
-    },
     {
       "date": "2025-08-27",
       "open": 20.25,
@@ -4306,9 +4311,41 @@
       "date": "2026-08-21",
       "open": 7.0,
       "high": 7.105,
-      "low": 6.7102,
+      "low": 6.71,
       "close": 6.81,
-      "volume": 5861750.0
+      "volume": 5934100.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 6.77,
+      "high": 6.99,
+      "low": 6.73,
+      "close": 6.76,
+      "volume": 4316800.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 6.58,
+      "high": 6.945,
+      "low": 6.49,
+      "close": 6.64,
+      "volume": 5763300.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 6.17,
+      "high": 6.605,
+      "low": 6.12,
+      "close": 6.52,
+      "volume": 5473000.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 6.99,
+      "high": 7.915,
+      "low": 6.99,
+      "close": 7.83,
+      "volume": 11171700.0
     }
   ],
   "ai_synthesis": null,

@@ -1,8 +1,8 @@
 {
   "ticker": "ZETA",
-  "fetched_at": "2026-08-21T22:10:48Z",
+  "fetched_at": "2026-08-28T04:44:55Z",
   "_schema": "v2",
-  "current_price": 29.06999969482422,
+  "current_price": 30.219999313354492,
   "info": {
     "symbol": "ZETA",
     "longName": "Zeta Global Holdings Corp.",
@@ -13,13 +13,13 @@
     "city": "New York",
     "website": "https://www.zetaglobal.com",
     "fullTimeEmployees": 3300,
-    "marketCap": 6941824512,
-    "enterpriseValue": 6901024768,
+    "marketCap": 7532564992,
+    "enterpriseValue": 7495927296,
     "trailingPE": "Infinity",
-    "forwardPE": 23.04014,
-    "priceToSalesTrailing12Months": 4.450207,
-    "enterpriseToRevenue": 4.393,
-    "priceToBook": 7.5249934,
+    "forwardPE": 25.000826,
+    "priceToSalesTrailing12Months": 4.7951336,
+    "enterpriseToRevenue": 4.772,
+    "priceToBook": 8.16536,
     "grossMargins": 0.59478,
     "operatingMargins": 0.03822,
     "profitMargins": -0.0013799999,
@@ -30,13 +30,13 @@
     "freeCashflow": 252155632,
     "debtToEquity": 23.772,
     "currentRatio": 2.382,
-    "fiftyTwoWeekHigh": 29.89,
+    "fiftyTwoWeekHigh": 30.39,
     "fiftyTwoWeekLow": 14.365,
-    "averageVolume": 9285190,
-    "averageVolume10days": 7486540,
+    "averageVolume": 9046817,
+    "averageVolume10days": 5494190,
     "beta": 1.386,
     "sharesOutstanding": 225619195,
-    "sharesFloat": 222380483,
+    "sharesFloat": 222257486,
     "companyOfficers": [
       {
         "name": "Mr. David A. Steinberg",
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.26703,
+      "eps_estimate": 0.19095,
+      "eps_surprise_pct": 0.3984
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.16011,
+      "eps_estimate": 0.11504,
+      "eps_surprise_pct": 0.39180002
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.36854,
+      "eps_estimate": 0.23306,
+      "eps_surprise_pct": 0.5813
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.27066,
+      "eps_estimate": 0.18385,
+      "eps_surprise_pct": 0.4722
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 470009000,
+    "revenue_high": 472000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,8 +164,126 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 14,
+    "bullish": 12,
+    "neutral": 2,
+    "bearish": 0,
+    "avg_price_target": 31.35714,
+    "high_price_target": 44.0,
+    "low_price_target": 25.0,
+    "current_price": 30.22,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-19T16:45:51",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-11T19:20:11",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T22:15:08",
+        "firm": "DA Davidson",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T17:37:47",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T16:51:00",
+        "firm": "B. Riley Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-05T14:47:16",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T12:00:56",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-30T13:08:55",
+        "firm": "Freedom Broker",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-06-24T16:45:08",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-24T15:33:16",
+        "firm": "DA Davidson",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-27T18:23:00Z",
+      "title": "Here's Why You Should Retain ZETA Stock in Your Portfolio Now",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/heres-why-retain-zeta-stock-182300988.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-26T03:09:19Z",
+      "title": "Zeta Global Holdings (ZETA) Conferences Put Its AI Narrative And Valuation Back In Focus",
+      "url": "https://finance.yahoo.com/technology/ai/articles/zeta-global-holdings-zeta-conferences-030919661.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-26T02:15:18Z",
+      "title": "Does Zeta (ZETA) Turning Trillion-Signal AI Into Marketing Insight Strengthen Its Competitive Moat?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/does-zeta-zeta-turning-trillion-021518224.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-25T12:54:44Z",
+      "title": "1 Small-Cap Stock to Research Further and 2 We Brush Off",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/1-small-cap-stock-research-125444510.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-08-25T01:17:00Z",
+      "title": "Bank of America raises price targets on 10 software stocks",
+      "url": "https://www.thestreet.com/investing/bank-of-america-raises-price-targets-10-software-stocks",
+      "source": "TheStreet"
+    },
+    {
+      "date": "2026-08-24T15:23:00Z",
+      "title": "Digital Turbine's Alternative App Distribution Strategy Drives Growth",
+      "url": "https://finance.yahoo.com/technology/articles/digital-turbines-alternative-app-distribution-152300465.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-17T20:30:20Z",
       "title": "1 Momentum  Stock to Consider Right Now and 2 We Question",
@@ -160,92 +307,24 @@
       "title": "1 Stock Under $50 with Solid Fundamentals and 2 We Ignore",
       "url": "https://finance.yahoo.com/markets/stocks/articles/1-stock-under-50-solid-120522643.html",
       "source": "StockStory"
-    },
-    {
-      "date": "2026-08-12T01:50:42Z",
-      "title": "Why Did ABNB, TGT, ZETA Stocks Surge To 52-Week Highs Today?",
-      "url": "https://stocktwits.com/news-articles/markets/equity/why-did-abnb-tgt-zeta-stocks-surge-to-52-week-highs-today/cZoFnhxRJXs",
-      "source": "Stocktwits"
-    },
-    {
-      "date": "2026-08-11T23:58:37Z",
-      "title": "Zeta Global (ZETA) Q2 2026 Earnings Call Transcript",
-      "url": "https://www.fool.com/earnings/call-transcripts/2026/08/11/zeta-global-zeta-q2-2026-earnings-call-transcript/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-11T14:31:00Z",
-      "title": "Digital Turbine's International Expansion Supports On-Device Growth",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/digital-turbines-international-expansion-supports-143100531.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-11T11:01:57Z",
-      "title": "Zeta Global Sees AI, Palantir Partnership Fueling Marketing Tech Growth",
-      "url": "https://www.marketbeat.com/instant-alerts/zeta-global-sees-ai-palantir-partnership-fueling-marketing-tech-growth-2026-08-11/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-10T18:57:03Z",
-      "title": "Nvidia Made Them Rich. Redditors Say These 2 Stocks Are Next",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/nvidia-made-them-rich-redditors-185703582.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-10T06:10:57Z",
-      "title": "Zeta Global Holdings (ZETA) Refreshes Its Leadership Team With Two Senior Roles",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/zeta-global-holdings-zeta-refreshes-061057260.html",
-      "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.030774322340537726,
   "technicals": {
-    "ma20": 26.02249994277954,
-    "ma50": 22.642399940490723,
-    "ma200": 19.528649978637695,
-    "rsi14": 65.29839302806742,
-    "high_20d": 29.889999389648438,
+    "ma20": 27.458499813079833,
+    "ma50": 23.34299991607666,
+    "ma200": 19.72399995803833,
+    "rsi14": 66.57795240390121,
+    "high_20d": 30.389999389648438,
     "low_5d": 27.110000610351562,
-    "low_10d": 26.299999237060547,
-    "high_52w": 29.889999389648438,
+    "low_10d": 27.110000610351562,
+    "high_52w": 30.389999389648438,
     "low_52w": 14.364999771118164,
-    "atr14": 1.7212140219552177,
-    "atr14_pct": 5.920928930252696,
-    "position_in_52w_range_pct": 94.71819829325158
+    "atr14": 1.4058569499424525,
+    "atr14_pct": 4.652074724969274,
+    "position_in_52w_range_pct": 98.93915706495639
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 23.97,
-      "high": 24.05,
-      "low": 23.63,
-      "close": 23.67,
-      "volume": 1267200.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 23.83,
-      "high": 25.08,
-      "low": 23.62,
-      "close": 24.99,
-      "volume": 2299200.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 25.19,
-      "high": 25.28,
-      "low": 24.62,
-      "close": 25.09,
-      "volume": 2357300.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 24.92,
-      "high": 25.71,
-      "low": 24.541,
-      "close": 25.48,
-      "volume": 1813500.0
-    },
     {
       "date": "2024-08-28",
       "open": 25.39,
@@ -4217,45 +4296,45 @@
     {
       "date": "2026-08-21",
       "open": 28.11,
-      "high": 29.105,
+      "high": 29.11,
       "low": 27.11,
       "close": 29.07,
-      "volume": 4290736.0
+      "volume": 5511000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 28.73,
+      "high": 29.19,
+      "low": 28.395,
+      "close": 28.47,
+      "volume": 3136500.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 28.0,
+      "high": 28.46,
+      "low": 27.605,
+      "close": 27.88,
+      "volume": 4753700.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 27.31,
+      "high": 28.55,
+      "low": 27.2,
+      "close": 28.23,
+      "volume": 3902100.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 28.8,
+      "high": 30.39,
+      "low": 28.8,
+      "close": 30.22,
+      "volume": 10008400.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 17.95,
-      "high": 18.42,
-      "low": 17.901,
-      "close": 18.29,
-      "volume": 5170900.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 18.37,
-      "high": 19.69,
-      "low": 18.28,
-      "close": 19.55,
-      "volume": 8729700.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 19.48,
-      "high": 19.79,
-      "low": 19.21,
-      "close": 19.7,
-      "volume": 5575500.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 19.41,
-      "high": 19.89,
-      "low": 19.41,
-      "close": 19.72,
-      "volume": 4203400.0
-    },
     {
       "date": "2025-08-27",
       "open": 19.97,
@@ -6235,13 +6314,44 @@
     {
       "date": "2026-08-21",
       "open": 28.11,
-      "high": 29.105,
+      "high": 29.11,
       "low": 27.11,
       "close": 29.07,
-      "volume": 4290736.0
+      "volume": 5511000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 28.73,
+      "high": 29.19,
+      "low": 28.395,
+      "close": 28.47,
+      "volume": 3136500.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 28.0,
+      "high": 28.46,
+      "low": 27.605,
+      "close": 27.88,
+      "volume": 4753700.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 27.31,
+      "high": 28.55,
+      "low": 27.2,
+      "close": 28.23,
+      "volume": 3902100.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 28.8,
+      "high": 30.39,
+      "low": 28.8,
+      "close": 30.22,
+      "volume": 10008400.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:15:16Z"
+  "ai_synthesized_at": null
 }

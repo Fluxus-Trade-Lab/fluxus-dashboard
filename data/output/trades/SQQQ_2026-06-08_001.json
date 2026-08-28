@@ -1,6 +1,6 @@
 {
   "trade_id": "SQQQ_2026-06-08_001",
-  "generated_at": "2026-08-28T03:44:30+00:00",
+  "generated_at": "2026-08-28T04:50:36+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SQQQ",
@@ -40,9 +40,9 @@
     "low": 39.3314,
     "volume": 87211700.0,
     "ma20": 40.06619,
-    "ma50": 52.295654000000006,
-    "ma200": 65.638241,
-    "rsi14": 42.72384574384567,
+    "ma50": 52.29565399999999,
+    "ma200": null,
+    "rsi14": 42.723872768850775,
     "atr14": 1.9622285714285712,
     "atr14_pct": 4.831766199868438,
     "high_52w": 89.293,
@@ -52,7 +52,7 @@
     "low_10d": 35.9751,
     "low_5d": 35.9751
   },
-  "setup_type": "Long below MA200 \u2014 counter-trend",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": 12.140697674418616,
     "mfe_date": "2026-06-09",
@@ -69,7 +69,7 @@
     "hold_calendar_days": 1
   },
   "lesson": "Good execution",
-  "narrative": "Entered **SQQQ** long on 2026-06-08 at $40.43 (qty 2215) with stop $40.00 (1R = $0.43/sh = $952). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($40.07), MA20 < MA50 < MA200 (death alignment), RSI 43, 9% through 52W range, ATR 4.8% of price. Realized **+9.11R**, peak was **+12.14R** on 2026-06-09 (day +1) \u2014 captured **75%** of the move. **Lesson: Good execution.**",
+  "narrative": "Entered **SQQQ** long on 2026-06-08 at $40.43 (qty 2215) with stop $40.00 (1R = $0.43/sh = $952). Setup: **Long in mixed structure** \u2014 price above MA20 ($40.07), RSI 43, 9% through 52W range, ATR 4.8% of price. Realized **+9.11R**, peak was **+12.14R** on 2026-06-09 (day +1) \u2014 captured **75%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-05-11",

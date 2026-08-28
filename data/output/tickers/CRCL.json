@@ -1,8 +1,8 @@
 {
   "ticker": "CRCL",
-  "fetched_at": "2026-08-21T22:09:14Z",
+  "fetched_at": "2026-08-28T04:42:54Z",
   "_schema": "v2",
-  "current_price": 87.9800033569336,
+  "current_price": 94.23999786376953,
   "info": {
     "symbol": "CRCL",
     "longName": "Circle Internet Group",
@@ -13,13 +13,13 @@
     "city": "New York",
     "website": "https://www.circle.com",
     "fullTimeEmployees": 1100,
-    "marketCap": 22805223424,
-    "enterpriseValue": 19526473728,
-    "trailingPE": 15.755179,
-    "forwardPE": 52.551903,
-    "priceToSalesTrailing12Months": 7.849149,
-    "enterpriseToRevenue": 6.721,
-    "priceToBook": 6.0260754,
+    "marketCap": 25689268224,
+    "enterpriseValue": 22212481024,
+    "trailingPE": 18.885773,
+    "forwardPE": 59.231697,
+    "priceToSalesTrailing12Months": 8.841785,
+    "enterpriseToRevenue": 7.645,
+    "priceToBook": 6.788158,
     "grossMargins": 0.21997999,
     "operatingMargins": 0.04899,
     "profitMargins": 0.15531999,
@@ -32,11 +32,11 @@
     "currentRatio": 1.035,
     "fiftyTwoWeekHigh": 159.47,
     "fiftyTwoWeekLow": 49.9,
-    "averageVolume": 13444127,
-    "averageVolume10days": 12646330,
+    "averageVolume": 13952295,
+    "averageVolume10days": 16392960,
     "beta": null,
     "sharesOutstanding": 234685190,
-    "sharesFloat": 201430202,
+    "sharesFloat": 212707368,
     "companyOfficers": [
       {
         "name": "Mr. Jeremy D. Allaire",
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.18,
+      "eps_estimate": 0.15844,
+      "eps_surprise_pct": 0.1361
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.21,
+      "eps_estimate": 0.1771,
+      "eps_surprise_pct": 0.1858
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.43,
+      "eps_estimate": 0.16199,
+      "eps_surprise_pct": 1.6545
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.64,
+      "eps_estimate": 0.18338,
+      "eps_surprise_pct": 2.49
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-11",
+    "revenue_low": 710356000,
+    "revenue_high": 889000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,83 +164,165 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 26,
+    "bullish": 13,
+    "neutral": 11,
+    "bearish": 2,
+    "avg_price_target": 103.28913,
+    "high_price_target": 243.0,
+    "low_price_target": 37.0,
+    "current_price": 94.24,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-25T14:39:27",
+        "firm": "Wolfe Research",
+        "to_grade": "Underperform",
+        "from_grade": "Underperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-24T13:25:10",
+        "firm": "Susquehanna",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-12T14:31:05",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T22:42:30",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T17:43:31",
+        "firm": "Morgan Stanley",
+        "to_grade": "Underweight",
+        "from_grade": "Underweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T10:25:51",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T10:06:19",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-03T17:35:11",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-31T10:06:12",
+        "firm": "Mizuho",
+        "to_grade": "Neutral",
+        "from_grade": "Underperform",
+        "action": "up"
+      },
+      {
+        "date": "2026-07-22T09:55:58",
+        "firm": "Raymond James",
+        "to_grade": "Market Perform",
+        "from_grade": null,
+        "action": "init"
+      }
+    ]
+  },
   "news": [
     {
-      "date": "2026-08-21T13:57:20Z",
-      "title": "Stocks trade higher, lifted by crypto, commodities: AlphaCheck",
-      "url": "https://finance.yahoo.com/markets/article/stocks-trade-higher-lifted-by-crypto-commodities-alphacheck-135720189.html",
-      "source": "Yahoo Finance"
+      "date": "2026-08-27T21:28:38Z",
+      "title": "Circle Internet (CRCL) Rallied After the White House Crypto Summit. Can Regulation Fix its Rate Sensitivity?",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/circle-internet-crcl-rallied-white-212838337.html",
+      "source": "Insider Monkey"
     },
     {
-      "date": "2026-08-21T20:51:14Z",
-      "title": "Bitcoin Rally Tops $79,000. Crypto Shorts, ETF Flows Soar. CFTC Explores Crypto Rules.",
-      "url": "https://www.investors.com/news/bitcoin-price-3-month-high-79000-treasury-bonds-short-squeeze-bitcoin-etfs-crypto-stocks/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
+      "date": "2026-08-27T15:02:20Z",
+      "title": "Strategy Spikes 10% as Bitcoin\u2019s Rebound Reaches the Treasury Trade, MARA Surges 9%",
+      "url": "https://247wallst.com/investing/2026/08/27/strategy-spikes-10-as-bitcoins-rebound-reaches-the-treasury-trade-mara-surges-9/",
+      "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-21T20:40:11Z",
-      "title": "Stock Market Today: Dow Gains 500 Points; SpaceX Snaps A Losing Streak, Bitcoin Pops",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-stock-market-sell-off-bitcoin-surges/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
+      "date": "2026-08-27T06:32:49Z",
+      "title": "Revolut Enters Euro Stablecoin Market With EURR Launch",
+      "url": "https://coingape.com/block-of-fame/pulse/revolut-enters-euro-stablecoin-market-with-eurr-launch/",
+      "source": "CoinGape"
     },
     {
-      "date": "2026-08-21T20:34:00Z",
-      "title": "Weekly Wrap: Bitcoin Breaks Out",
-      "url": "https://www.cryptoprowl.com/releases/weekly-wrap-bitcoin-breaks-out-6497",
-      "source": "CryptoProwl"
+      "date": "2026-08-26T20:21:56Z",
+      "title": "Wyoming stablecoin chief says he\u2019s not fighting Tether, he\u2019s franchising statehood",
+      "url": "https://www.thestreet.com/crypto/policy/wyoming-stablecoin-chief-says-hes-not-fighting-tether-hes-franchising-statehood",
+      "source": "TheStreet"
     },
     {
-      "date": "2026-08-21T09:58:07Z",
-      "title": "Circle Internet shares surge after acquisition of IBM blockchain patent portfolio",
-      "url": "https://investorshub.advfn.com/market-news/article/34776/circle-internet-shares-surge-after-acquisition-of-ibm-blockchain-patent-portfolio",
-      "source": "InvestorsHub"
+      "date": "2026-08-26T19:09:34Z",
+      "title": "Aptos adds Circle's CCTP V2 for seconds-fast USDC transfers",
+      "url": "https://www.thestreet.com/crypto/markets/aptos-adds-circles-cctp-v2-for-seconds-fast-usdc-transfers",
+      "source": "TheStreet"
     },
     {
-      "date": "2026-08-21T09:56:33Z",
-      "title": "Crypto stocks extend rally as Bitcoin jumps on US regulatory momentum",
-      "url": "https://investorshub.advfn.com/market-news/article/34774/crypto-stocks-extend-rally-as-bitcoin-jumps-on-us-regulatory-momentum",
-      "source": "InvestorsHub"
+      "date": "2026-08-26T17:30:00Z",
+      "title": "BankChain Alliance: Why banks are building their own blockchain for 2027",
+      "url": "https://finance.yahoo.com/video/bankchain-alliance-why-banks-building-173000760.html",
+      "source": "Yahoo Finance Video"
     },
     {
-      "date": "2026-08-21T09:37:30Z",
-      "title": "Crypto stocks continue rallying as Bitcoin extends gains on regulation push",
-      "url": "https://finance.yahoo.com/markets/crypto/articles/crypto-stocks-continue-rallying-bitcoin-093730958.html",
+      "date": "2026-08-26T17:15:03Z",
+      "title": "Cathie Wood bets on 'disrupter' stock with bullish analyst call",
+      "url": "https://www.thestreet.com/crypto/markets/cathie-wood-bets-on-disrupter-stock-with-bullish-analyst-call",
+      "source": "TheStreet"
+    },
+    {
+      "date": "2026-08-26T17:09:42Z",
+      "title": "Circle, Coinbase Stocks Slide As US Banks Step Up Stablecoin Push Ahead Of CLARITY Act",
+      "url": "https://stocktwits.com/news-articles/markets/equity/circle-coinbase-stocks-slide-us-banks-stablecoin-clarity-act/cZYVRGwRJYw",
+      "source": "Stocktwits"
+    },
+    {
+      "date": "2026-08-26T15:44:08Z",
+      "title": "Circle Internet stock falls after banks eye stablecoin launch",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/circle-internet-stock-falls-banks-154408567.html",
       "source": "Investing.com"
     },
     {
-      "date": "2026-08-20T17:26:31Z",
-      "title": "SOL Strategies Evolving Into Broader Blockchain Platform \u2013 Quarterly Update Report",
-      "url": "https://finance.yahoo.com/markets/crypto/articles/sol-strategies-evolving-broader-blockchain-172631865.html",
-      "source": "Exec Edge"
-    },
-    {
-      "date": "2026-08-20T17:15:59Z",
-      "title": "Coinbase, Strategy Jump as Trump Pushes Crypto Clarity Act",
-      "url": "https://finance.yahoo.com/markets/crypto/articles/coinbase-strategy-jump-trump-pushes-171559033.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-08-20T14:19:03Z",
-      "title": "XRP News: Ripple\u2019s Buyback Boosts Its Valuation, Not Its Holders",
-      "url": "https://99bitcoins.com/news/altcoins/xrp-news-ripple-valuation-holders/",
-      "source": "99bitcoins"
+      "date": "2026-08-26T08:41:39Z",
+      "title": "Hyperliquid Activates AQAv2 to Buy Back and Burn HYPE with USDC Reserve Yield",
+      "url": "https://coingape.com/hyperliquid-activates-aqav2-buy-back-burn-hype-usdc-reserve-yield/",
+      "source": "CoinGape"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04064091772939693,
   "technicals": {
-    "ma20": 69.40249977111816,
-    "ma50": 69.47680000305176,
-    "ma200": 85.2394998550415,
-    "rsi14": 69.4647991948323,
-    "high_20d": 92.97000122070312,
-    "low_5d": 70.72699737548828,
-    "low_10d": 64.5,
+    "ma20": 74.81749992370605,
+    "ma50": 70.28340003967286,
+    "ma200": 84.92179985046387,
+    "rsi14": 71.64403914574345,
+    "high_20d": 96.23899841308594,
+    "low_5d": 84.25,
+    "low_10d": 70.72699737548828,
     "high_52w": 159.47000122070312,
     "low_52w": 49.900001525878906,
-    "atr14": 5.4937847682407925,
-    "atr14_pct": 6.244356170290864,
-    "position_in_52w_range_pct": 34.754040282117
+    "atr14": 5.975355965750558,
+    "atr14_pct": 6.3405731124785785,
+    "position_in_52w_range_pct": 40.46727796056124
   },
   "ohlc_2y": [
     {
@@ -2652,42 +2763,42 @@
       "high": 92.97,
       "low": 86.36,
       "close": 87.98,
-      "volume": 24554257.0
+      "volume": 26018000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 89.93,
+      "high": 92.307,
+      "low": 86.64,
+      "close": 87.72,
+      "volume": 17470100.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 84.73,
+      "high": 93.45,
+      "low": 84.25,
+      "close": 92.02,
+      "volume": 18132200.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 89.71,
+      "high": 92.956,
+      "low": 87.02,
+      "close": 89.91,
+      "volume": 15275100.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 92.15,
+      "high": 96.239,
+      "low": 90.35,
+      "close": 94.24,
+      "volume": 14252200.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 135.0,
-      "high": 136.99,
-      "low": 131.59,
-      "close": 131.8,
-      "volume": 4986600.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 132.99,
-      "high": 144.7,
-      "low": 131.05,
-      "close": 135.04,
-      "volume": 13309100.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 134.36,
-      "high": 135.32,
-      "low": 124.7,
-      "close": 125.24,
-      "volume": 10419800.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 125.6,
-      "high": 130.25,
-      "low": 124.16,
-      "close": 129.05,
-      "volume": 6923300.0
-    },
     {
       "date": "2025-08-27",
       "open": 129.05,
@@ -4670,10 +4781,41 @@
       "high": 92.97,
       "low": 86.36,
       "close": 87.98,
-      "volume": 24554257.0
+      "volume": 26018000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 89.93,
+      "high": 92.307,
+      "low": 86.64,
+      "close": 87.72,
+      "volume": 17470100.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 84.73,
+      "high": 93.45,
+      "low": 84.25,
+      "close": 92.02,
+      "volume": 18132200.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 89.71,
+      "high": 92.956,
+      "low": 87.02,
+      "close": 89.91,
+      "volume": 15275100.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 92.15,
+      "high": 96.239,
+      "low": 90.35,
+      "close": 94.24,
+      "volume": 14252200.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:11:10Z"
+  "ai_synthesized_at": null
 }

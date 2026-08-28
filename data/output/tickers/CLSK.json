@@ -1,8 +1,8 @@
 {
   "ticker": "CLSK",
-  "fetched_at": "2026-08-21T22:09:12Z",
+  "fetched_at": "2026-08-28T04:47:18Z",
   "_schema": "v2",
-  "current_price": 11.979999542236328,
+  "current_price": 12.949999809265137,
   "info": {
     "symbol": "CLSK",
     "longName": "CleanSpark, Inc.",
@@ -13,13 +13,13 @@
     "city": "Henderson",
     "website": "https://www.cleanspark.com",
     "fullTimeEmployees": 309,
-    "marketCap": 3235895296,
-    "enterpriseValue": 4820190208,
+    "marketCap": 3325780992,
+    "enterpriseValue": 4910075904,
     "trailingPE": null,
-    "forwardPE": -8.894097,
-    "priceToSalesTrailing12Months": 4.763952,
-    "enterpriseToRevenue": 7.096,
-    "priceToBook": 4.2495785,
+    "forwardPE": -9.141155,
+    "priceToSalesTrailing12Months": 4.8962836,
+    "enterpriseToRevenue": 7.229,
+    "priceToBook": 4.3676224,
     "grossMargins": 0.46993,
     "operatingMargins": -1.65191,
     "profitMargins": -1.46901,
@@ -32,8 +32,8 @@
     "currentRatio": 5.912,
     "fiftyTwoWeekHigh": 23.61,
     "fiftyTwoWeekLow": 8.0,
-    "averageVolume": 22549104,
-    "averageVolume10days": 21031620,
+    "averageVolume": 22184653,
+    "averageVolume10days": 20738970,
     "beta": 3.886,
     "sharesOutstanding": 256817073,
     "sharesFloat": 247902952,
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.3878,
+      "eps_estimate": -0.33333,
+      "eps_surprise_pct": -0.1634
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.4943,
+      "eps_estimate": -0.23,
+      "eps_surprise_pct": -1.1491001
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -1.3236,
+      "eps_estimate": 0.205,
+      "eps_surprise_pct": -7.4565997
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.161,
+      "eps_estimate": 0.535,
+      "eps_surprise_pct": -0.6991
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-24",
+    "revenue_low": 105600000,
+    "revenue_high": 156500000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,8 +164,102 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 12,
+    "bullish": 12,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 23.80769,
+    "high_price_target": 27.0,
+    "low_price_target": 21.0,
+    "current_price": 12.95,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-10T11:40:05",
+        "firm": "Chardan Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T12:02:38",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-03T16:06:42",
+        "firm": "B. Riley Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-28T18:08:21",
+        "firm": "Keefe, Bruyette & Woods",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-28T11:00:38",
+        "firm": "Chardan Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-15T15:09:06",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-15T11:36:00",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-15T10:22:20",
+        "firm": "Chardan Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-14T14:29:54",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-08T10:28:11",
+        "firm": "Chardan Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-28T00:36:46Z",
+      "title": "Applied Digital Stock Is Down, But Its AI Data Center Business Is Powering Up. What Gives?",
+      "url": "https://www.trefis.com/articles/613277/applied-digital-stock-is-down-but-its-ai-data-center-business-is-powering-up-what-gives/2026-08-27",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-08-25T16:16:23Z",
+      "title": "Crypto Stocks Rally While Bitcoin Trades Near $80K: CleanSpark Jumps 7%, BitMine Climbs 4%",
+      "url": "https://247wallst.com/investing/2026/08/25/crypto-stocks-rally-while-bitcoin-trades-near-80k-cleanspark-jumps-7-bitmine-climbs-4/",
+      "source": "24/7 Wall St."
+    },
     {
       "date": "2026-08-21T16:14:36Z",
       "title": "CleanSpark Sinks 6% Even as Bitcoin Jumps 7%, MARA Holds Flat as Traders Weigh Tensions Among AI Miners",
@@ -184,68 +307,24 @@
       "title": "Riot Platforms and MARA Drop 6%, CleanSpark Sinks 5% as Strategy Sells Bitcoin, Shares",
       "url": "https://247wallst.com/investing/2026/08/10/riot-platforms-and-mara-drop-6-cleanspark-sinks-5-as-strategy-sells-bitcoin-shares/",
       "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-07T22:04:31Z",
-      "title": "CleanSpark earnings call reveals Sandersville financing strategy, CAPEX",
-      "url": "https://blockspace.media/short/cleanspark-earnings-call-reveals-sandersville-financing-strategy-capex/",
-      "source": "Blockspace"
-    },
-    {
-      "date": "2026-08-07T19:37:49Z",
-      "title": "CleanSpark Q3 FY26 Earnings, Hut 8 CEO Interview, MARA Q2 Earnings",
-      "url": "https://blockspace.media/podcast/cleanspark-q3-fy26-earnings-hut-8-ceo-interview-mara-q2-earnings/",
-      "source": "Blockspace"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04015444074585728,
   "technicals": {
-    "ma20": 12.723250007629394,
-    "ma50": 14.000399990081787,
-    "ma200": 12.621299982070923,
-    "rsi14": 44.47138355669428,
+    "ma20": 12.511000061035157,
+    "ma50": 13.65560001373291,
+    "ma200": 12.55149999141693,
+    "rsi14": 50.9231549160966,
     "high_20d": 15.109999656677246,
-    "low_5d": 11.024999618530273,
+    "low_5d": 11.699999809265137,
     "low_10d": 11.024999618530273,
     "high_52w": 23.610000610351562,
     "low_52w": 8.0,
-    "atr14": 1.0478570120675224,
-    "atr14_pct": 8.746719967502745,
-    "position_in_52w_range_pct": 25.496472688137146
+    "atr14": 0.9697141647338867,
+    "atr14_pct": 7.488140378504873,
+    "position_in_52w_range_pct": 31.710439562587915
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 12.41,
-      "high": 12.455,
-      "low": 11.82,
-      "close": 11.87,
-      "volume": 14589300.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 12.03,
-      "high": 12.75,
-      "low": 11.878,
-      "close": 12.61,
-      "volume": 29800000.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 12.63,
-      "high": 12.63,
-      "low": 12.13,
-      "close": 12.16,
-      "volume": 17290400.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 11.9,
-      "high": 12.05,
-      "low": 11.29,
-      "close": 11.47,
-      "volume": 17402400.0
-    },
     {
       "date": "2024-08-28",
       "open": 11.25,
@@ -4216,46 +4295,46 @@
     },
     {
       "date": "2026-08-21",
-      "open": 13.11,
+      "open": 13.145,
       "high": 13.34,
       "low": 11.725,
       "close": 11.98,
-      "volume": 28020902.0
+      "volume": 28225800.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 11.85,
+      "high": 12.415,
+      "low": 11.7,
+      "close": 11.93,
+      "volume": 18683500.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 11.87,
+      "high": 12.895,
+      "low": 11.8,
+      "close": 12.75,
+      "volume": 18833600.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 12.42,
+      "high": 12.665,
+      "low": 12.05,
+      "close": 12.18,
+      "volume": 15196400.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 12.5,
+      "high": 13.316,
+      "low": 12.36,
+      "close": 12.95,
+      "volume": 18996300.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 9.131,
-      "high": 9.37,
-      "low": 9.065,
-      "close": 9.33,
-      "volume": 16217100.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 9.27,
-      "high": 9.93,
-      "low": 9.09,
-      "close": 9.82,
-      "volume": 15657600.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 9.5,
-      "high": 9.675,
-      "low": 9.27,
-      "close": 9.45,
-      "volume": 17447200.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 9.401,
-      "high": 9.7,
-      "low": 9.265,
-      "close": 9.68,
-      "volume": 12713000.0
-    },
     {
       "date": "2025-08-27",
       "open": 9.65,
@@ -6234,14 +6313,45 @@
     },
     {
       "date": "2026-08-21",
-      "open": 13.11,
+      "open": 13.145,
       "high": 13.34,
       "low": 11.725,
       "close": 11.98,
-      "volume": 28020902.0
+      "volume": 28225800.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 11.85,
+      "high": 12.415,
+      "low": 11.7,
+      "close": 11.93,
+      "volume": 18683500.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 11.87,
+      "high": 12.895,
+      "low": 11.8,
+      "close": 12.75,
+      "volume": 18833600.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 12.42,
+      "high": 12.665,
+      "low": 12.05,
+      "close": 12.18,
+      "volume": 15196400.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 12.5,
+      "high": 13.316,
+      "low": 12.36,
+      "close": 12.95,
+      "volume": 18996300.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:11:04Z"
+  "ai_synthesized_at": null
 }

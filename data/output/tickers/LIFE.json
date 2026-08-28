@@ -1,8 +1,8 @@
 {
   "ticker": "LIFE",
-  "fetched_at": "2026-08-21T22:10:50Z",
+  "fetched_at": "2026-08-28T04:48:58Z",
   "_schema": "v2",
-  "current_price": 34.15999984741211,
+  "current_price": 39.439998626708984,
   "info": {
     "symbol": "LIFE",
     "longName": "Ethos Technologies Inc.",
@@ -13,13 +13,13 @@
     "city": "San Francisco",
     "website": "https://www.ethos.com",
     "fullTimeEmployees": 614,
-    "marketCap": 3212505088,
-    "enterpriseValue": 1970670848,
+    "marketCap": 3779868672,
+    "enterpriseValue": 2348126976,
     "trailingPE": null,
-    "forwardPE": 12.738805,
-    "priceToSalesTrailing12Months": 5.4771185,
-    "enterpriseToRevenue": 3.36,
-    "priceToBook": 4.4884844,
+    "forwardPE": 14.988617,
+    "priceToSalesTrailing12Months": 6.4444375,
+    "enterpriseToRevenue": 4.003,
+    "priceToBook": 5.2811995,
     "grossMargins": 0.98126,
     "operatingMargins": 0.09558,
     "profitMargins": -0.18145001,
@@ -30,13 +30,13 @@
     "freeCashflow": 201887120,
     "debtToEquity": 0.372,
     "currentRatio": 1.517,
-    "fiftyTwoWeekHigh": 35.69,
+    "fiftyTwoWeekHigh": 40.97,
     "fiftyTwoWeekLow": 9.45,
-    "averageVolume": 827716,
-    "averageVolume10days": 1372760,
+    "averageVolume": 906606,
+    "averageVolume10days": 1504950,
     "beta": null,
     "sharesOutstanding": 31554807,
-    "sharesFloat": 29820297,
+    "sharesFloat": 28246713,
     "companyOfficers": [
       {
         "name": "Mr. Peter George Colis",
@@ -76,8 +76,31 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.53,
+      "eps_estimate": 0.28145,
+      "eps_surprise_pct": 0.8831
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.38,
+      "eps_estimate": 0.46632,
+      "eps_surprise_pct": -0.1851
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.42,
+      "eps_estimate": 0.40105,
+      "eps_surprise_pct": 0.0473
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 161300000,
+    "revenue_high": 164843000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,7 +158,89 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 9,
+    "bullish": 9,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 34.875,
+    "high_price_target": 40.0,
+    "low_price_target": 32.0,
+    "current_price": 39.44,
+    "recent_rating_changes": [
+      {
+        "date": "2024-05-14T14:51:16",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2024-05-03T19:54:01",
+        "firm": "HC Wainwright& Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2024-03-15T16:47:00",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2024-03-15T10:18:55",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2024-02-21T16:14:57",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2023-09-21T10:22:04",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2023-09-14T10:07:41",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2023-08-10T10:28:36",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2023-07-21T09:43:47",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2023-07-05T11:01:39",
+        "firm": "Oppenheimer",
+        "to_grade": "Perform",
+        "from_grade": "Outperform",
+        "action": "down"
+      }
+    ]
+  },
   "news": [
     {
       "date": "2026-08-11T01:44:48Z",
@@ -168,12 +273,6 @@
       "source": "Simply Wall St."
     },
     {
-      "date": "2026-05-26T19:08:00Z",
-      "title": "Forget the SpaceX IPO. These 2 New Stocks Stand Out Right Now.",
-      "url": "https://www.barrons.com/articles/pattern-group-ethos-technologies-stock-ipo-spacex-9a5352ca?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
       "date": "2026-05-26T10:07:46Z",
       "title": "How The Lifecare (OB:LIFE) Investment Story Is Resetting After The Latest Valuation Cut",
       "url": "https://finance.yahoo.com/markets/stocks/articles/lifecare-ob-life-investment-story-100746198.html",
@@ -196,21 +295,27 @@
       "title": "SoftBank Trims Tech Portfolio",
       "url": "https://finance.yahoo.com/markets/stocks/articles/softbank-trims-tech-portfolio-195029613.html",
       "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-05-08T11:36:03Z",
+      "title": "May 2026's Top Growth Companies With Insider Influence",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/may-2026s-top-growth-companies-113603150.html",
+      "source": "Simply Wall St."
     }
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 28.821499729156493,
-    "ma50": 22.441999855041505,
-    "rsi14": 73.7027574283054,
-    "high_20d": 35.689998626708984,
-    "low_5d": 31.850000381469727,
-    "low_10d": 31.049999237060547,
-    "high_52w": 35.689998626708984,
+    "ma20": 32.59349985122681,
+    "ma50": 24.213999919891357,
+    "rsi14": 81.73266607437017,
+    "high_20d": 40.970001220703125,
+    "low_5d": 32.0,
+    "low_10d": 31.850000381469727,
+    "high_52w": 40.970001220703125,
     "low_52w": 9.449999809265137,
-    "atr14": 2.960714748927525,
-    "atr14_pct": 8.667197781477224,
-    "position_in_52w_range_pct": 94.16921170636729
+    "atr14": 2.5192861557006836,
+    "atr14_pct": 6.387642605024355,
+    "position_in_52w_range_pct": 95.14593107397853
   },
   "ohlc_2y": [
     {
@@ -1347,7 +1452,39 @@
       "high": 34.49,
       "low": 32.51,
       "close": 34.16,
-      "volume": 848490.0
+      "volume": 849500.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 33.05,
+      "high": 37.17,
+      "low": 32.0,
+      "close": 36.72,
+      "volume": 2615100.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 36.96,
+      "high": 38.94,
+      "low": 36.62,
+      "close": 38.56,
+      "volume": 2014000.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 38.24,
+      "high": 40.97,
+      "low": 38.0,
+      "close": 39.11,
+      "volume": 1614000.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 39.4,
+      "high": 40.93,
+      "low": 38.72,
+      "close": 39.44,
+      "volume": 985900.0
     }
   ],
   "ohlc_1y": [
@@ -2485,10 +2622,41 @@
       "high": 34.49,
       "low": 32.51,
       "close": 34.16,
-      "volume": 848490.0
+      "volume": 849500.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 33.05,
+      "high": 37.17,
+      "low": 32.0,
+      "close": 36.72,
+      "volume": 2615100.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 36.96,
+      "high": 38.94,
+      "low": 36.62,
+      "close": 38.56,
+      "volume": 2014000.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 38.24,
+      "high": 40.97,
+      "low": 38.0,
+      "close": 39.11,
+      "volume": 1614000.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 39.4,
+      "high": 40.93,
+      "low": 38.72,
+      "close": 39.44,
+      "volume": 985900.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:11:47Z"
+  "ai_synthesized_at": null
 }

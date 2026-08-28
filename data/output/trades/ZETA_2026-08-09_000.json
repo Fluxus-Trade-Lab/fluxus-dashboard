@@ -1,6 +1,6 @@
 {
   "trade_id": "ZETA_2026-08-09_000",
-  "generated_at": "2026-08-28T03:44:31+00:00",
+  "generated_at": "2026-08-28T04:50:36+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ZETA",
@@ -35,8 +35,8 @@
     "volume": 9232200.0,
     "ma20": 22.244,
     "ma50": 21.4038,
-    "ma200": 19.00905,
-    "rsi14": 68.29130130379002,
+    "ma200": 19.009050000000002,
+    "rsi14": 68.29129980775566,
     "atr14": 1.5817142857142856,
     "atr14_pct": 5.937365937365937,
     "high_52w": 28.5,
@@ -48,22 +48,22 @@
   },
   "setup_type": "Long in mixed structure",
   "path_analytics": {
-    "mfe_R": 2.765306122448979,
-    "mfe_date": "2026-08-12",
+    "mfe_R": 3.275510204081632,
+    "mfe_date": "2026-08-27",
     "mae_R": 0.8979591836734679,
     "mae_date": "2026-08-10",
-    "optimal_exit_price": 29.89,
-    "optimal_exit_date": "2026-08-12",
-    "optimal_R": 2.765306122448979,
-    "days_to_optimal": 3,
+    "optimal_exit_price": 30.39,
+    "optimal_exit_date": "2026-08-27",
+    "optimal_R": 3.275510204081632,
+    "days_to_optimal": 18,
     "realized_R": null,
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 18
+    "hold_calendar_days": 19
   },
   "lesson": "In progress",
-  "narrative": "Entered **ZETA** long on 2026-08-09 at $27.18 (qty 5761) with stop $26.20 (1R = $0.98/sh = $5,646). Setup: **Long in mixed structure** \u2014 price above MA20 ($22.24), MA20 > MA50 > MA200 (golden alignment), RSI 68, 87% through 52W range, ATR 5.9% of price. **In progress.** Peak so far +2.77R; worst drawdown -0.90R.",
+  "narrative": "Entered **ZETA** long on 2026-08-09 at $27.18 (qty 5761) with stop $26.20 (1R = $0.98/sh = $5,646). Setup: **Long in mixed structure** \u2014 price above MA20 ($22.24), MA20 > MA50 > MA200 (golden alignment), RSI 68, 87% through 52W range, ATR 5.9% of price. **In progress.** Peak so far +3.28R; worst drawdown -0.90R.",
   "ohlc_window": [
     {
       "date": "2026-07-10",
@@ -308,10 +308,42 @@
     {
       "date": "2026-08-21",
       "open": 28.11,
-      "high": 29.105,
+      "high": 29.11,
       "low": 27.11,
       "close": 29.07,
-      "volume": 4290736.0
+      "volume": 5511000.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 28.73,
+      "high": 29.19,
+      "low": 28.395,
+      "close": 28.47,
+      "volume": 3136500.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 28.0,
+      "high": 28.46,
+      "low": 27.605,
+      "close": 27.88,
+      "volume": 4753700.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 27.31,
+      "high": 28.55,
+      "low": 27.2,
+      "close": 28.23,
+      "volume": 3902100.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 28.8,
+      "high": 30.39,
+      "low": 28.8,
+      "close": 30.22,
+      "volume": 10008400.0
     }
   ]
 }

@@ -1,8 +1,8 @@
 {
   "ticker": "FNGU",
-  "fetched_at": "2026-08-21T22:09:28Z",
+  "fetched_at": "2026-08-28T04:43:12Z",
   "_schema": "v2",
-  "current_price": 31.420000076293945,
+  "current_price": 32.900001525878906,
   "info": {
     "symbol": "FNGU",
     "longName": "MicroSectors FANG+ 3X Leveraged",
@@ -15,7 +15,7 @@
     "fullTimeEmployees": null,
     "marketCap": null,
     "enterpriseValue": null,
-    "trailingPE": 2.288729,
+    "trailingPE": 2.4227538,
     "forwardPE": null,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
@@ -32,8 +32,8 @@
     "currentRatio": null,
     "fiftyTwoWeekHigh": 36.78,
     "fiftyTwoWeekLow": 13.485,
-    "averageVolume": 4971867,
-    "averageVolume10days": 2958150,
+    "averageVolume": 4881647,
+    "averageVolume10days": 3699420,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -42,7 +42,12 @@
   "earnings_history": [],
   "next_earnings": {},
   "quarterly_metrics": [],
-  "analyst": {},
+  "analyst": {
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
+  },
   "news": [
     {
       "date": "2026-06-06T21:15:16Z",
@@ -53,18 +58,18 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 30.35000009536743,
-    "ma50": 28.317800025939942,
-    "ma200": 25.318950014114378,
-    "rsi14": 54.67836101119319,
+    "ma20": 31.732000064849853,
+    "ma50": 28.625,
+    "ma200": 25.344950008392335,
+    "rsi14": 59.73585844384723,
     "high_20d": 34.5,
-    "low_5d": 30.31999969482422,
-    "low_10d": 30.31999969482422,
+    "low_5d": 30.1200008392334,
+    "low_10d": 30.1200008392334,
     "high_52w": 36.779998779296875,
     "low_52w": 13.484999656677246,
-    "atr14": 1.6532073702130998,
-    "atr14_pct": 5.261640248882199,
-    "position_in_52w_range_pct": 76.99077525270937
+    "atr14": 1.3425004141671317,
+    "atr14_pct": 4.080548182075708,
+    "position_in_52w_range_pct": 83.3440764131626
   },
   "ohlc_2y": [
     {
@@ -3086,45 +3091,45 @@
     {
       "date": "2026-08-21",
       "open": 31.5,
-      "high": 31.9799,
+      "high": 31.985,
       "low": 30.78,
       "close": 31.42,
-      "volume": 6262914.0
+      "volume": 6264600.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 31.0,
+      "high": 31.33,
+      "low": 30.12,
+      "close": 30.69,
+      "volume": 3158500.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 31.09,
+      "high": 31.78,
+      "low": 30.77,
+      "close": 31.21,
+      "volume": 4110400.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 31.185,
+      "high": 31.73,
+      "low": 30.84,
+      "close": 31.46,
+      "volume": 2941600.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 32.21,
+      "high": 32.985,
+      "low": 31.75,
+      "close": 32.9,
+      "volume": 6396500.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 24.15,
-      "high": 24.35,
-      "low": 23.5,
-      "close": 23.81,
-      "volume": 2993000.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 23.98,
-      "high": 25.21,
-      "low": 23.7,
-      "close": 24.9,
-      "volume": 5713300.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 24.77,
-      "high": 25.55,
-      "low": 24.64,
-      "close": 25.03,
-      "volume": 4351800.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 24.95,
-      "high": 25.19,
-      "low": 24.62,
-      "close": 25.17,
-      "volume": 2749700.0
-    },
     {
       "date": "2025-08-27",
       "open": 25.11,
@@ -5104,13 +5109,44 @@
     {
       "date": "2026-08-21",
       "open": 31.5,
-      "high": 31.9799,
+      "high": 31.985,
       "low": 30.78,
       "close": 31.42,
-      "volume": 6262914.0
+      "volume": 6264600.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 31.0,
+      "high": 31.33,
+      "low": 30.12,
+      "close": 30.69,
+      "volume": 3158500.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 31.09,
+      "high": 31.78,
+      "low": 30.77,
+      "close": 31.21,
+      "volume": 4110400.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 31.185,
+      "high": 31.73,
+      "low": 30.84,
+      "close": 31.46,
+      "volume": 2941600.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 32.21,
+      "high": 32.985,
+      "low": 31.75,
+      "close": 32.9,
+      "volume": 6396500.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-20T22:14:54Z"
+  "ai_synthesized_at": null
 }

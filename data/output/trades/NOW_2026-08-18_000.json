@@ -1,6 +1,6 @@
 {
   "trade_id": "NOW_2026-08-18_000",
-  "generated_at": "2026-08-28T03:44:31+00:00",
+  "generated_at": "2026-08-28T04:50:36+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "NOW",
@@ -28,8 +28,8 @@
     "volume": 17341500.0,
     "ma20": 114.978,
     "ma50": 107.75659999999999,
-    "ma200": 121.14633000000002,
-    "rsi14": 55.27151680877708,
+    "ma200": 121.14632999999999,
+    "rsi14": 55.27151808236632,
     "atr14": 6.315000000000003,
     "atr14_pct": 5.284961084609593,
     "high_52w": 194.726,
@@ -41,22 +41,22 @@
   },
   "setup_type": "Long below MA200 \u2014 counter-trend",
   "path_analytics": {
-    "mfe_R": 1.0561694290976018,
-    "mfe_date": "2026-08-21",
+    "mfe_R": 2.5580110497237514,
+    "mfe_date": "2026-08-27",
     "mae_R": 1.3977900552486175,
     "mae_date": "2026-08-18",
-    "optimal_exit_price": 131.165,
-    "optimal_exit_date": "2026-08-21",
-    "optimal_R": 1.0561694290976018,
-    "days_to_optimal": 3,
+    "optimal_exit_price": 139.32,
+    "optimal_exit_date": "2026-08-27",
+    "optimal_R": 2.5580110497237514,
+    "days_to_optimal": 9,
     "realized_R": null,
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 9
+    "hold_calendar_days": 10
   },
   "lesson": "In progress",
-  "narrative": "Entered **NOW** long on 2026-08-18 at $125.43 (qty 1277) with stop $120.00 (currently trailed to $125.00) (1R = $5.43/sh = $6,934). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($114.98), MA stack mixed, RSI 55, 34% through 52W range, ATR 5.3% of price. **In progress.** Peak so far +1.06R; worst drawdown -1.40R.",
+  "narrative": "Entered **NOW** long on 2026-08-18 at $125.43 (qty 1277) with stop $120.00 (currently trailed to $125.00) (1R = $5.43/sh = $6,934). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($114.98), MA stack mixed, RSI 55, 34% through 52W range, ATR 5.3% of price. **In progress.** Peak so far +2.56R; worst drawdown -1.40R.",
   "ohlc_window": [
     {
       "date": "2026-07-20",
@@ -253,10 +253,42 @@
     {
       "date": "2026-08-21",
       "open": 130.29,
-      "high": 131.165,
+      "high": 131.18,
       "low": 127.47,
       "close": 128.48,
-      "volume": 10343314.0
+      "volume": 12504600.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 128.06,
+      "high": 130.15,
+      "low": 127.59,
+      "close": 128.05,
+      "volume": 8949300.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 125.96,
+      "high": 129.81,
+      "low": 125.25,
+      "close": 127.0,
+      "volume": 12317500.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 122.33,
+      "high": 126.56,
+      "low": 121.88,
+      "close": 125.8,
+      "volume": 13384900.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 130.48,
+      "high": 139.32,
+      "low": 130.25,
+      "close": 138.43,
+      "volume": 27762900.0
     }
   ]
 }

@@ -1,8 +1,8 @@
 {
   "ticker": "OUST",
-  "fetched_at": "2026-08-21T22:10:10Z",
+  "fetched_at": "2026-08-28T04:43:57Z",
   "_schema": "v2",
-  "current_price": 38.41999816894531,
+  "current_price": 36.540000915527344,
   "info": {
     "symbol": "OUST",
     "longName": "Ouster, Inc.",
@@ -13,13 +13,13 @@
     "city": "San Francisco",
     "website": "https://ouster.com",
     "fullTimeEmployees": 320,
-    "marketCap": 2736663296,
-    "enterpriseValue": 2491979008,
+    "marketCap": 2634984704,
+    "enterpriseValue": 2390300672,
     "trailingPE": null,
-    "forwardPE": -3795.0002,
-    "priceToSalesTrailing12Months": 13.355636,
-    "enterpriseToRevenue": 12.162,
-    "priceToBook": 7.0005536,
+    "forwardPE": -3654.0002,
+    "priceToSalesTrailing12Months": 12.859417,
+    "enterpriseToRevenue": 11.665,
+    "priceToBook": 6.7404537,
     "grossMargins": 0.46623,
     "operatingMargins": -0.46580002,
     "profitMargins": -0.26025,
@@ -32,11 +32,11 @@
     "currentRatio": 4.164,
     "fiftyTwoWeekHigh": 63.79,
     "fiftyTwoWeekLow": 16.4,
-    "averageVolume": 4387179,
-    "averageVolume10days": 3181130,
+    "averageVolume": 4094517,
+    "averageVolume10days": 2743000,
     "beta": 3.275,
     "sharesOutstanding": 72112333,
-    "sharesFloat": 69855217,
+    "sharesFloat": 69899927,
     "companyOfficers": [
       {
         "name": "Mr. Charles Angus Pacala",
@@ -76,8 +76,37 @@
       }
     ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.2597,
+      "eps_estimate": -0.136,
+      "eps_surprise_pct": -0.9096
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.248,
+      "eps_estimate": -0.115,
+      "eps_surprise_pct": -1.1565
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.0666,
+      "eps_estimate": -0.135,
+      "eps_surprise_pct": 1.4933
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.1628,
+      "eps_estimate": -0.1825,
+      "eps_surprise_pct": 0.1079
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 53500000,
+    "revenue_high": 56600000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -135,8 +164,126 @@
       "yoy_pct": null
     }
   ],
-  "analyst": {},
+  "analyst": {
+    "consensus": "Buy",
+    "total_ratings": 7,
+    "bullish": 6,
+    "neutral": 1,
+    "bearish": 0,
+    "avg_price_target": 57.83333,
+    "high_price_target": 75.0,
+    "low_price_target": 50.0,
+    "current_price": 36.54,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-07T12:05:01",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-21T18:38:11",
+        "firm": "Northland Capital Markets",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-15T17:16:27",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-27T12:42:11",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-11T18:20:55",
+        "firm": "Amerx",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-05-07T19:24:46",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Neutral",
+        "from_grade": "Overweight",
+        "action": "down"
+      },
+      {
+        "date": "2026-03-03T12:17:41",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-11-07T16:09:04",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2025-11-06T21:25:53",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2025-11-05T16:24:03",
+        "firm": "WestPark Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      }
+    ]
+  },
   "news": [
+    {
+      "date": "2026-08-27T14:14:04Z",
+      "title": "Is Ouster (OUST) Quietly Repositioning Its Lidar Platform at the Center of John Deere\u2019s Autonomy Stack?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ouster-oust-quietly-repositioning-lidar-141404109.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-27T13:10:46Z",
+      "title": "Is Ouster (OUST) Stock Too Expensive After A Very Large 3 Year Run?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ouster-oust-stock-too-expensive-131046416.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-27T10:13:12Z",
+      "title": "Is Ouster (OUST) Undervalued As John Deere's GUSS Picks Its Lidar For Orchard Robots?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ouster-oust-undervalued-john-deeres-101312825.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-26T14:29:00Z",
+      "title": "How Ouster Is Helping Deere Implement Physical AI",
+      "url": "https://www.barrons.com/articles/ouster-deere-stocks-ai-lidar-52c5d5df?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-08-26T13:37:00Z",
+      "title": "Ouster Vs. Aeva: Which is the Better Physical AI Lidar Bet Now?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ouster-vs-aeva-better-physical-133700143.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-25T13:30:02Z",
+      "title": "Brokers Suggest Investing in Ouster (OUST): Read This Before Placing a Bet",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/brokers-suggest-investing-ouster-oust-133002241.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-20T09:20:00Z",
       "title": "Bull of the Day: Ceva (CEVA)",
@@ -160,92 +307,24 @@
       "title": "Will Stereolabs Help Ouster Capitalize on Robotics Growth?",
       "url": "https://finance.yahoo.com/technology/ai/articles/stereolabs-help-ouster-capitalize-robotics-160600759.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-17T16:00:00Z",
-      "title": "Ouster's LiDAR Shipments Jump 70% Y/Y in Q2: Will Demand Sustain?",
-      "url": "https://finance.yahoo.com/technology/articles/ousters-lidar-shipments-jump-70-160000872.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-16T06:01:54Z",
-      "title": "Ouster Says Rev8 Lidar Gains Early Multimillion-Dollar Orders, Targets Broader Platform Growth",
-      "url": "https://www.marketbeat.com/instant-alerts/ouster-says-rev8-lidar-gains-early-multimillion-dollar-orders-targets-broader-platform-growth-2026-08-16/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-13T22:59:36Z",
-      "title": "Ouster (OUST) Q2 2026 Earnings Call Transcript",
-      "url": "https://www.fool.com/earnings/call-transcripts/2026/08/13/ouster-oust-q2-2026-earnings-call-transcript/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-11T22:16:12Z",
-      "title": "Ouster (OUST) Is Down 5.7% After Utah Lidar Contract Win And Mixed Q3 Revenue Outlook",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ouster-oust-down-5-7-221612334.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-11T21:10:30Z",
-      "title": "Ouster (OUST) Lands Utah BlueCity Expansion Across 160 More Intersections",
-      "url": "https://finance.yahoo.com/technology/ai/articles/ouster-oust-lands-utah-bluecity-211030220.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-11T18:32:06Z",
-      "title": "Robotics Stocks Rally as Unitree\u2019s 8000X Oversubscribed IPO Draws Frenzied Demand: Ouster, Symbotic, and Teradyne in Focus",
-      "url": "https://247wallst.com/investing/2026/08/11/robotics-stocks-rally-as-unitrees-8000x-oversubscribed-ipo-draws-frenzied-demand-ouster-symbotic-and-teradyne-in-focus/",
-      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04734537374532063,
   "technicals": {
-    "ma20": 41.704000091552736,
-    "ma50": 42.77620010375976,
-    "ma200": 29.43852499008179,
-    "rsi14": 44.48509821374374,
+    "ma20": 42.129500198364255,
+    "ma50": 42.31760009765625,
+    "ma200": 29.643524990081787,
+    "rsi14": 42.805115719282874,
     "high_20d": 51.8489990234375,
-    "low_5d": 37.45000076293945,
-    "low_10d": 37.45000076293945,
+    "low_5d": 35.16999816894531,
+    "low_10d": 35.16999816894531,
     "high_52w": 63.790000915527344,
     "low_52w": 16.399999618530273,
-    "atr14": 4.3438712528773715,
-    "atr14_pct": 11.306276574444245,
-    "position_in_52w_range_pct": 46.46549471989646
+    "atr14": 3.5614280700683594,
+    "atr14_pct": 9.746655667309966,
+    "position_in_52w_range_pct": 42.49841896137122
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-22",
-      "open": 8.05,
-      "high": 8.08,
-      "low": 7.69,
-      "close": 7.69,
-      "volume": 791200.0
-    },
-    {
-      "date": "2024-08-23",
-      "open": 7.73,
-      "high": 7.99,
-      "low": 7.631,
-      "close": 7.65,
-      "volume": 909300.0
-    },
-    {
-      "date": "2024-08-26",
-      "open": 7.72,
-      "high": 7.75,
-      "low": 7.42,
-      "close": 7.59,
-      "volume": 994400.0
-    },
-    {
-      "date": "2024-08-27",
-      "open": 7.59,
-      "high": 7.7,
-      "low": 7.31,
-      "close": 7.49,
-      "volume": 850300.0
-    },
     {
       "date": "2024-08-28",
       "open": 7.38,
@@ -4216,46 +4295,46 @@
     },
     {
       "date": "2026-08-21",
-      "open": 39.5,
-      "high": 39.8422,
+      "open": 39.51,
+      "high": 39.842,
       "low": 38.01,
       "close": 38.42,
-      "volume": 2372624.0
+      "volume": 2379200.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 37.365,
+      "high": 37.365,
+      "low": 35.7,
+      "close": 35.75,
+      "volume": 2550100.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 37.18,
+      "high": 37.49,
+      "low": 35.65,
+      "close": 36.23,
+      "volume": 2091000.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 36.175,
+      "high": 36.93,
+      "low": 35.17,
+      "close": 35.87,
+      "volume": 1624800.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 37.64,
+      "high": 38.1,
+      "low": 35.979,
+      "close": 36.54,
+      "volume": 1972800.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-21",
-      "open": 29.7,
-      "high": 30.08,
-      "low": 29.01,
-      "close": 29.72,
-      "volume": 1411300.0
-    },
-    {
-      "date": "2025-08-22",
-      "open": 29.72,
-      "high": 30.93,
-      "low": 28.5,
-      "close": 30.65,
-      "volume": 2827400.0
-    },
-    {
-      "date": "2025-08-25",
-      "open": 30.705,
-      "high": 31.2,
-      "low": 29.2,
-      "close": 29.99,
-      "volume": 1484100.0
-    },
-    {
-      "date": "2025-08-26",
-      "open": 29.89,
-      "high": 31.618,
-      "low": 29.82,
-      "close": 30.9,
-      "volume": 2872600.0
-    },
     {
       "date": "2025-08-27",
       "open": 30.65,
@@ -6234,14 +6313,45 @@
     },
     {
       "date": "2026-08-21",
-      "open": 39.5,
-      "high": 39.8422,
+      "open": 39.51,
+      "high": 39.842,
       "low": 38.01,
       "close": 38.42,
-      "volume": 2372624.0
+      "volume": 2379200.0
+    },
+    {
+      "date": "2026-08-24",
+      "open": 37.365,
+      "high": 37.365,
+      "low": 35.7,
+      "close": 35.75,
+      "volume": 2550100.0
+    },
+    {
+      "date": "2026-08-25",
+      "open": 37.18,
+      "high": 37.49,
+      "low": 35.65,
+      "close": 36.23,
+      "volume": 2091000.0
+    },
+    {
+      "date": "2026-08-26",
+      "open": 36.175,
+      "high": 36.93,
+      "low": 35.17,
+      "close": 35.87,
+      "volume": 1624800.0
+    },
+    {
+      "date": "2026-08-27",
+      "open": 37.64,
+      "high": 38.1,
+      "low": 35.979,
+      "close": 36.54,
+      "volume": 1972800.0
     }
   ],
   "ai_synthesis": null,
-  "ai_synthesized_at": null,
-  "info_as_of": "2026-08-21T08:13:11Z"
+  "ai_synthesized_at": null
 }

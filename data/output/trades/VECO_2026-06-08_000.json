@@ -1,6 +1,6 @@
 {
   "trade_id": "VECO_2026-06-08_000",
-  "generated_at": "2026-08-28T03:44:31+00:00",
+  "generated_at": "2026-08-28T04:50:36+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "VECO",
@@ -45,10 +45,10 @@
     "high": 62.78,
     "low": 58.8,
     "volume": 916200.0,
-    "ma20": 59.3355,
+    "ma20": 59.33549999999999,
     "ma50": 50.5278,
-    "ma200": 35.0253,
-    "rsi14": 57.71912705329634,
+    "ma200": null,
+    "rsi14": 57.71912732699514,
     "atr14": 3.820714285714287,
     "atr14_pct": 6.259361542782253,
     "high_52w": 65.43,
@@ -58,7 +58,7 @@
     "low_10d": 55.06,
     "low_5d": 57.7
   },
-  "setup_type": "Pullback in uptrend",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": 2.0538990825688073,
     "mfe_date": "2026-06-15",
@@ -75,7 +75,7 @@
     "hold_calendar_days": 21
   },
   "lesson": "Premature trim",
-  "narrative": "Entered **VECO** long on 2026-06-08 at $68.72 (qty 1564) with stop $60.00 (1R = $8.72/sh = $13,638). Setup: **Pullback in uptrend** \u2014 price above MA20 ($59.34), MA20 > MA50 > MA200 (golden alignment), RSI 58, 90% through 52W range, ATR 6.3% of price. Realized **+0.60R**, peak was **+2.05R** on 2026-06-15 (day +7) \u2014 captured **29%** of the move. **Lesson: Premature trim.**",
+  "narrative": "Entered **VECO** long on 2026-06-08 at $68.72 (qty 1564) with stop $60.00 (1R = $8.72/sh = $13,638). Setup: **Long in mixed structure** \u2014 price above MA20 ($59.34), RSI 58, 90% through 52W range, ATR 6.3% of price. Realized **+0.60R**, peak was **+2.05R** on 2026-06-15 (day +7) \u2014 captured **29%** of the move. **Lesson: Premature trim.**",
   "ohlc_window": [
     {
       "date": "2026-05-11",
