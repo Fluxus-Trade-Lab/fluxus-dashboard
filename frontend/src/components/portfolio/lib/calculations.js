@@ -1,18 +1,32 @@
 import { daysBetween, todayStr, RISK_FREE_RATE } from './portfolioFormat'
 
 /**
- * Look up the best available price for a ticker on a date.
- * Tries exact date, then walks back up to 5 days for weekends/holidays.
- * Returns entryPrice as last resort.
+ * Look up the best available price for a ticker on a date, AND say which day
+ * it actually came from.
+ *
+ * The walk-back is why the caller needs the date. Asking for today and getting
+ * Friday's close is correct behaviour for a market value; it is a lie for a
+ * "1D" column, because the number underneath is then Friday-vs-Thursday while
+ * the header still says today. `null` when nothing was found within ten days.
  */
-export function lookupPrice(ticker, date, dailyPrices, fallback) {
+export function lookupPriceAt(ticker, date, dailyPrices) {
   for (let d = 0; d < 10; d++) {
     const checkDate = new Date(date)
     checkDate.setDate(checkDate.getDate() - d)
-    const key = `${ticker}:${checkDate.toISOString().split('T')[0]}`
-    if (dailyPrices[key] != null) return dailyPrices[key]
+    const iso = checkDate.toISOString().split('T')[0]
+    const hit = dailyPrices[`${ticker}:${iso}`]
+    if (hit != null) return { price: hit, date: iso }
   }
-  return fallback
+  return null
+}
+
+/**
+ * Look up the best available price for a ticker on a date.
+ * Tries exact date, then walks back up to 10 days for weekends/holidays.
+ * Returns `fallback` as last resort.
+ */
+export function lookupPrice(ticker, date, dailyPrices, fallback) {
+  return lookupPriceAt(ticker, date, dailyPrices)?.price ?? fallback
 }
 
 /**
@@ -108,15 +122,48 @@ export function enrichTrades(trades, totalPortfolioValue, dailyPrices) {
     }
 
     // Open: look up current price from dailyPrices
-    const lastP = lookupPrice(t.ticker, today, dailyPrices, t.entryPrice)
+    const lastHit = lookupPriceAt(t.ticker, today, dailyPrices)
+    const lastP = lastHit?.price ?? t.entryPrice
     // Previous close: look up yesterday (or most recent prior trading day)
     const yesterday = new Date()
     yesterday.setDate(yesterday.getDate() - 1)
-    const prevC = lookupPrice(t.ticker, yesterday.toISOString().split('T')[0], dailyPrices, lastP)
+    const prevHit = lookupPriceAt(t.ticker, yesterday.toISOString().split('T')[0], dailyPrices)
+    const prevC = prevHit?.price ?? lastP
 
     const marketVal = t.currentQty * lastP
-    const change1D = prevC > 0 && lastP !== prevC ? ((lastP - prevC) / prevC) * 100 : 0
-    const pl1D = t.currentQty * (lastP - prevC) * dir
+
+    /* THE 1D BASELINE IS WHERE WE STARTED HOLDING, NOT YESTERDAY'S CLOSE.
+     *
+     * Reported by Andy and reproduced by the data side against the real MRNA
+     * 2026-08-19 shape (DATA_CONTRACTS §七, 2026-08-28): prev close 62.96 →
+     * gapped → entered at 106.34 → closed 174.38, 1,000 shares. Taking the
+     * prev close as the base charged us the ENTIRE GAP we were not in:
+     * `pl1D` read +$111,420 against a true +$68,040, and `change1D` read
+     * +176.97% against +63.98% — 2.8×. It is symmetric and worse the other
+     * way: buy a gap-down and the table shows a loss you never took.
+     *
+     * `unrealizedPL` on the same trade was right all along; it anchors on the
+     * entry price. So does the equity curve. Only these two columns were wrong,
+     * and nothing cumulative was ever built on them.
+     */
+    const openedToday = String(t.entryDate ?? '').slice(0, 10) >= today
+
+    /* AND IT IS "NOT MEASURED", NEVER ZERO, WHEN TODAY HAS NO PRICE.
+     *
+     * `lookupPriceAt` walks back up to ten days, so before a refresh both ends
+     * land on the same older session and the old code printed 0 — which reads
+     * as "flat today" and is a claim we cannot make. Same rule §六 already
+     * holds for `regime.score`: null shows as not-measured, never as 0. The
+     * column renders '—' on null, and the neutral tone, without any change to
+     * the table.
+     */
+    const haveToday = lastHit?.date === today
+    const base1D = !haveToday ? null
+      : openedToday ? t.entryPrice
+      : (prevHit && prevHit.date !== lastHit.date ? prevHit.price : null)
+
+    const change1D = base1D != null && base1D > 0 ? ((lastP - base1D) / base1D) * 100 : null
+    const pl1D = base1D != null ? t.currentQty * (lastP - base1D) * dir : null
     const weight = totalPortfolioValue > 0 ? (marketVal / totalPortfolioValue) * 100 : 0
     const unrealizedPL = t.currentQty * (lastP - t.entryPrice) * dir
     const unrealizedPLPct = t.entryPrice > 0 ? ((lastP - t.entryPrice) / t.entryPrice) * 100 * dir : 0
