@@ -157,6 +157,48 @@ Support lines: *"Everyone tells you what to buy. Nobody tells you how much. That
 
 ---
 
+## 4.8 ⭐ 起草纪律 —— **要人味,不要通顺**(Andy 2026-08-28 定)
+
+**Andy 原话:** 「以后要改得更加有人味。**反问、惊叹、情绪、嘲讽、兴奋、反转、幽默,都是对的。比喻也很重要。**」
+
+### 起因:2026-08-28 那次连改六稿
+
+Steve 连出六版草稿,Andy 逐条驳回。**驳回理由本身就是这条纪律:**
+
+| 驳回 | 病 |
+|---|---|
+| 「你废话太多」 | 铺垫多于内容 |
+| **「我不知道你在跟谁讲,你得有共情能力」** | **全篇「我」开头,读的人不在场** |
+| 「还不够直接」 | 绕着说 |
+| 「你一直在套我们的方向,这种话没有特别的、刻意了」 | **把内部研究结论当文案写** —— 方法论词汇上了台面 |
+| 「软件提一句话搞定,再加两句轻轻松松的话」 | 主题占比失衡 |
+
+**而 Andy 自己补的那一句,是全篇最好的:**
+
+> *"The beaten down and the laggards get a minute at the party. The leaders are off having their chop-fest dessert."*
+
+**它用一句玩笑说完了 Steve 原稿里被砍掉的一整段宽度数据**(47.9% 在 20 日线上、推力需 636 只、五日比 1.1555)—— **落后板块上桌 = 健康宽度,一个数据字没提。**
+
+### 由此定的六条
+
+1. **先想读者在干嘛,再想自己要说什么。** 开头不许是「我」。今天在读这条的人正**盯着一只已经飞了的票犹豫要不要追** —— 从那里开口。
+2. **修辞是内容不是装饰。** 反问 / 惊叹 / 嘲讽 / 兴奋 / 反转,**每条至少要有一样**。一段平铺直叙的陈述句 = 没写完。
+3. ⭐ **比喻优先于数据。** 能用一个画面说完的,别列数字。宴会 / 香槟 / 甜点 / 飞机已经起飞 —— **画面能过审美闸,数据只能过事实闸。**
+4. **比喻要连成一条链。** 08-28 那条:`champagne → toast → celebration → dessert`,四个词一个宴会。**换喻体 = 破功。**
+5. **方法论词汇不上台面。** 「轮动」「宽度」「延伸」「收藏比」是**我们内部的量具**,不是他的话。**读者要的是画面和判断,不是我们的仪表盘读数。**
+6. **配比失衡就是废稿。** 一个主题一句话说完,剩下的给轻松。**长度不是深度。**
+
+### ⚠️ 给 Steve / Studio Q 的自查(交稿前逐条问)
+
+- [ ] 第一句的主语是**读者**还是我?
+- [ ] 全篇有没有**一个**反问/惊叹/嘲讽/反转?没有 = 重写。
+- [ ] 有没有**一个能被复述的画面**?(「他在吃 chop 甜点」这种)
+- [ ] 比喻是不是**同一条链**?
+- [ ] 有没有把内部术语搬上台面?
+- [ ] 主题句超过一句了吗?
+
+---
+
 ## 5. Why "Fluxus" already fits
 
 The actual art movement was built on **event scores** (written instructions to perform — a trade plan *is* an event score), **chance & indeterminacy** (Cage / aleatoric — you're the *ally of volatility*), and **deadpan, anti-spectacle** humor. You named the practice after the one movement whose philosophy maps onto it. Letters can *be* scores.
