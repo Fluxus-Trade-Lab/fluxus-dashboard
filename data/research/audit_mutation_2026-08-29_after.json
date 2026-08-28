@@ -3,41 +3,11 @@
   {
    "module": "audit_archives",
    "mutants": 101,
-   "killed": 41,
-   "survived": 60,
+   "killed": 54,
+   "survived": 47,
    "skipped": 0,
-   "kill_rate": 0.406,
+   "kill_rate": 0.535,
    "survivors": [
-    {
-     "line": 72,
-     "kind": "number",
-     "change": "0.3 -> 1.3",
-     "source": "COUNT_FLOOR = 0.30"
-    },
-    {
-     "line": 73,
-     "kind": "number",
-     "change": "3.0 -> 4.0",
-     "source": "COUNT_CEIL = 3.0"
-    },
-    {
-     "line": 109,
-     "kind": "boolop",
-     "change": "And -> Or",
-     "source": "if name == \"breadth_archive.csv\" and \"spx_close\" in frame.columns:"
-    },
-    {
-     "line": 118,
-     "kind": "boolop",
-     "change": "And -> Or",
-     "source": "if spec[\"counts\"] and len(frame):"
-    },
-    {
-     "line": 126,
-     "kind": "boolop",
-     "change": "And -> Or",
-     "source": "if spec[\"nightly\"] and len(info):"
-    },
     {
      "line": 139,
      "kind": "boolop",
@@ -107,12 +77,6 @@
     {
      "line": 60,
      "kind": "bool",
-     "change": "False -> True",
-     "source": "\"universe_quality.csv\":  {\"date\": \"date\",  \"key\": [\"date\"],                       \"counts\": False, \"nightly\": True},"
-    },
-    {
-     "line": 60,
-     "kind": "bool",
      "change": "True -> False",
      "source": "\"universe_quality.csv\":  {\"date\": \"date\",  \"key\": [\"date\"],                       \"counts\": False, \"nightly\": True},"
     },
@@ -171,18 +135,6 @@
      "source": "rep: Dict[str, Any] = {\"archive\": name, \"rows\": int(len(frame)), \"violations\": [], \"warnings\": [], \"drop_dates\": [], \"dr"
     },
     {
-     "line": 120,
-     "kind": "compare",
-     "change": "GtE -> Gt",
-     "source": "if len(per) >= 6:"
-    },
-    {
-     "line": 128,
-     "kind": "compare",
-     "change": "Lt -> LtE",
-     "source": "if newest < last_done.isoformat():"
-    },
-    {
      "line": 155,
      "kind": "number",
      "change": "0 -> 1",
@@ -213,24 +165,6 @@
      "source": "return 0 if out[\"ok\"] else 1"
     },
     {
-     "line": 115,
-     "kind": "compare",
-     "change": "NotIn -> In",
-     "source": "if d not in rep[\"drop_dates\"]:"
-    },
-    {
-     "line": 120,
-     "kind": "number",
-     "change": "6 -> 7",
-     "source": "if len(per) >= 6:"
-    },
-    {
-     "line": 123,
-     "kind": "boolop",
-     "change": "And -> Or",
-     "source": "if med and (last_n < COUNT_FLOOR * med or last_n > COUNT_CEIL * med):"
-    },
-    {
      "line": 121,
      "kind": "compare",
      "change": "Gt -> GtE",
@@ -247,18 +181,6 @@
      "kind": "number",
      "change": "21 -> 22",
      "source": "med = per.iloc[-21:-1].median() if len(per) > 21 else per.iloc[:-1].median()"
-    },
-    {
-     "line": 123,
-     "kind": "compare",
-     "change": "Lt -> LtE",
-     "source": "if med and (last_n < COUNT_FLOOR * med or last_n > COUNT_CEIL * med):"
-    },
-    {
-     "line": 123,
-     "kind": "compare",
-     "change": "Gt -> GtE",
-     "source": "if med and (last_n < COUNT_FLOOR * med or last_n > COUNT_CEIL * med):"
     },
     {
      "line": 204,
@@ -371,5 +293,5 @@
    ]
   }
  ],
- "seconds": 149.4
+ "seconds": 156.6
 }

@@ -240,3 +240,116 @@ def test_main_prints_bad_for_the_archives_that_have_violations(tmp_path, capsys,
     assert rc == 1
     bad = [ln for ln in printed.splitlines() if "breadth_archive.csv" in ln]
     assert bad and bad[0].startswith("BAD"), printed
+
+
+# ---------------------------------------------------------------------------
+# I4 (per-session row counts) and I5 (freshness) are the WARNING tier: they do
+# not fail CI, they decide what a human is told to look at. The mutation sweep
+# left every one of their boundaries alive -- `<` vs `<=` on the floor, `>` vs
+# `>=` on the ceiling, `>= 6` on the minimum history, `<` on staleness -- so a
+# guard could have been one comparison off in either direction and stayed
+# green. Also pinned here: I3 only applies to breadth, and the dedupe of
+# drop_dates between I1 and I3.
+#
+# SESSIONS below are real trading days; 2026-07-25/26 (weekend) are skipped so
+# I1 does not fire and drown out what these cases are about.
+# ---------------------------------------------------------------------------
+
+SESSIONS = ["2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24",
+            "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31"]
+
+
+def _counted(tmp_path, per_day, name="leaders_log.csv"):
+    """`per_day` = row count for each session, oldest first."""
+    rows = [{"date": d, "ticker": f"T{i}"} for d, n in zip(SESSIONS, per_day) for i in range(n)]
+    _write(tmp_path, name, rows)
+    out = A.run(tmp_path, last_done=LAST, output=None)
+    return [w for w in {r["archive"]: r for r in out["archives"]}[name]["warnings"]
+            if w.startswith("I4")], out
+
+
+class TestI4CountBounds:
+    """Trailing median is over every session but the newest; floor 0.30x, ceiling 3.0x."""
+
+    def test_steady_counts_raise_nothing(self, tmp_path):
+        w, _ = _counted(tmp_path, [10] * 6)
+        assert w == []
+
+    def test_exactly_at_the_floor_is_not_a_warning(self, tmp_path):
+        # median 10, floor 0.30 x 10 = 3 -- three rows is ON the floor, not under it
+        w, _ = _counted(tmp_path, [10] * 5 + [3])
+        assert w == []
+
+    def test_one_row_under_the_floor_is_a_warning(self, tmp_path):
+        w, _ = _counted(tmp_path, [10] * 5 + [2])
+        assert w and "2 rows vs trailing median 10" in w[0], w
+
+    def test_exactly_at_the_ceiling_is_not_a_warning(self, tmp_path):
+        # ceiling 3.0 x 10 = 30
+        w, _ = _counted(tmp_path, [10] * 5 + [30])
+        assert w == []
+
+    def test_one_row_over_the_ceiling_is_a_warning(self, tmp_path):
+        w, _ = _counted(tmp_path, [10] * 5 + [31])
+        assert w and "31 rows vs trailing median 10" in w[0], w
+
+    def test_six_sessions_is_enough_history_to_judge(self, tmp_path):
+        w, _ = _counted(tmp_path, [10] * 5 + [1])
+        assert w, "six sessions (five of history) must be enough to call a collapse"
+
+    def test_five_sessions_is_not_enough(self, tmp_path):
+        # with four days of history the median is guesswork; stay quiet
+        w, _ = _counted(tmp_path, [10] * 4 + [1])
+        assert w == []
+
+    def test_an_archive_that_is_not_count_checked_is_never_judged(self, tmp_path):
+        # universe_quality is one row per session by construction; running I4
+        # on it would warn on every normal day
+        _write(tmp_path, "universe_quality.csv",
+               [{"date": d, "x": i} for d, n in zip(SESSIONS, [10] * 5 + [1]) for i in range(n)])
+        out = A.run(tmp_path, last_done=LAST, output=None)
+        w = {r["archive"]: r for r in out["archives"]}["universe_quality.csv"]["warnings"]
+        assert [x for x in w if x.startswith("I4")] == [], w
+
+
+class TestI5Freshness:
+    def test_newest_equals_the_last_completed_session_is_silent(self, tmp_path):
+        _write(tmp_path, "leaders_log.csv", [{"date": LAST.isoformat(), "ticker": "A"}])
+        out = A.run(tmp_path, last_done=LAST, output=None)
+        w = {r["archive"]: r for r in out["archives"]}["leaders_log.csv"]["warnings"]
+        assert [x for x in w if x.startswith("I5")] == [], w
+
+    def test_one_session_behind_is_a_warning(self, tmp_path):
+        _write(tmp_path, "leaders_log.csv", [{"date": "2026-08-17", "ticker": "A"}])
+        out = A.run(tmp_path, last_done=LAST, output=None)
+        w = {r["archive"]: r for r in out["archives"]}["leaders_log.csv"]["warnings"]
+        assert any(x.startswith("I5 newest session 2026-08-17") for x in w), w
+
+    def test_a_header_only_archive_does_not_reach_the_freshness_check(self, tmp_path):
+        # no rows -> no dates -> nothing to compare; asking for max() of nothing
+        # is how this used to crash (the run_all smoke found the sibling case)
+        p = tmp_path / "leaders_log.csv"
+        p.write_text("date,ticker\n")
+        out = A.run(tmp_path, last_done=LAST, output=None)
+        r = {x["archive"]: x for x in out["archives"]}["leaders_log.csv"]
+        assert r["violations"] == [] and [x for x in r["warnings"] if x.startswith("I5")] == []
+
+
+class TestI3IsBreadthOnly:
+    def test_an_identical_close_on_a_valid_session_is_flagged_and_repaired(self, tmp_path):
+        # both dates are real sessions, so I1 never touches them: this pins the
+        # I3 path on its own, and the drop_dates append that I1 usually shadows
+        p = _write(tmp_path, "breadth_archive.csv", [
+            {"date": "2026-08-17", "spx_close": 7745.06},
+            {"date": "2026-08-18", "spx_close": 7745.06}])
+        out = A.run(tmp_path, last_done=LAST, output=None)
+        assert not out["ok"]
+        A.run(tmp_path, do_repair=True, last_done=LAST, output=None)
+        assert pd.read_csv(p).date.tolist() == ["2026-08-17"]
+
+    def test_another_archive_with_an_spx_close_column_is_not_breadth(self, tmp_path):
+        _write(tmp_path, "leaders_log.csv", [
+            {"date": "2026-08-17", "ticker": "A", "spx_close": 7745.06},
+            {"date": "2026-08-18", "ticker": "B", "spx_close": 7745.06}])
+        out = A.run(tmp_path, last_done=LAST, output=None)
+        assert out["ok"], [r["violations"] for r in out["archives"]]
