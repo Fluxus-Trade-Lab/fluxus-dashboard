@@ -145,17 +145,31 @@ jobs:
         continue-on-error: true
         run: |
           if [ -z "$FLUXUS_GAS_URL" ] || [ -z "$FLUXUS_SYNC_TOKEN" ]; then
-            echo "Sheets credentials not configured — skipping ticker refresh."
+            # LOUD, not quiet. This step lost its `env:` block on 2026-08-23
+            # (it was moved to the staleness step inserted right below it) and
+            # then skipped silently every night for five days: the ticker store
+            # went from 47% frozen to 100% frozen while the run stayed green.
+            # A skip that looks like a pass is how a fix becomes an outage.
+            echo "::error title=Ticker refresh skipped::FLUXUS_GAS_URL/FLUXUS_SYNC_TOKEN not visible to this step — the OHLC store is NOT being refreshed"
             exit 0
           fi
           python -m pipeline.tickers.run_tickers --source sheet --refresh-existing
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+          TZ: UTC
+          FLUXUS_GAS_URL: ${{ secrets.FLUXUS_GAS_URL }}
+          FLUXUS_SYNC_TOKEN: ${{ secrets.FLUXUS_SYNC_TOKEN }}
 
-      # Freshness report for the store the step above just wrote. Report-only
-      # until the frozen backlog is confirmed recovered (flip to --fail
-      # --max-stale-share 0.10 after one green night, mirroring audit I7).
+      # Freshness of the store the step above just wrote.
+      # `--fail` + `continue-on-error` on purpose: RED but NON-BLOCKING. The
+      # report-only version printed "100.0% stale" for five nights and nobody
+      # acted, because a green run is read as a fine run. Blocking publication
+      # over a stale side-store would be the opposite mistake -- the market
+      # data is fine. Loud-but-not-fatal is the third option this pipeline
+      # was missing (five nights, four different blocking gates, 2026-08-24..28).
       - name: Ticker store staleness report
         continue-on-error: true
-        run: python -m pipeline.tickers.staleness
+        run: python -m pipeline.tickers.staleness --fail --max-stale-share 0.10
         env:
           PYTHONPATH: ${{ github.workspace }}
           TZ: UTC
