@@ -92,6 +92,12 @@ git -C /Users/taolezhu/Documents/AI-Trading-System worktree remove --force "$WT"
 
 **主树保护六条（08-23 立，08-25 补第 6 条）**：
 1. 共享主树上**永不 `git add -A` / `git commit -a`**——主树常年堆着各线未提交改动和外科手术拉来的数据 diff，一网打尽式提交=把别人的工作和数据时间旅行卷进你的 commit。只 add 指名文件。
+   ⚠️ **只 add 指名文件还不够**（08-28 实测栽了一次）：`git commit` 提交的是**整个索引**，而索引可能在你 add 之前就已经脏了——外科手术拉数据的 `git checkout origin/main -- data/output/` 会**同时写工作区和暂存区**，别的会话也可能留下 staged 的东西。那次规规矩矩 add 了 5 个文件，commit 出来是 **436 个**（整个 data/output + Steve 的稿 + 别人的 `pipeline/tools/federation_board.py`）。
+   **所以提交前必须数一遍，只认自己那几个**：
+   ```bash
+   git diff --cached --name-only        # 多出来的先 git restore --staged <它们>
+   ```
+   已经提错了：`git reset --soft HEAD~1` → `git restore --staged .` → 重新 add 指名文件 → 重提交。**没推 main 就还来得及**，所以这一步要在 push 之前做完。
 2. scratchpad/临时树**永不 checkout 具名长命分支**（main/feat/*）——/private/tmp 重启即清，分支会被一棵已蒸发的树锁死；一律基于 `origin/main` 的 detached HEAD。
 3. **无人值守会话读规矩/队列/契约文件，一律读权威版** `git show origin/main:<path>`，不读主树副本——主树可能停在落后 main 一百多个 commit 的分支上。**唯一例外：内容台五件套**（Week_Plan / Queue / Own_Lines / Ammo / receipts）**以主树工作区为准**——Andy 会直接手改它们且不总 commit，权威版反而旧。
 4. **safe-merge 遇到多 commit 分支不走「重放循环」**（那是给单文件小改设计的，reset --hard 会吞掉整晚工作）：在自己分支的树里 `git fetch origin && git rebase origin/main`，成功则 `push origin HEAD:main`；rebase 冲突就停手留分支，汇报列「待合」。
