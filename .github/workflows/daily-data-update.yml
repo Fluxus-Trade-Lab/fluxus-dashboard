@@ -7,6 +7,15 @@ on:
   schedule:
     # 16:30 EST = 21:30 UTC Mon-Fri (after US market close)
     - cron: '30 21 * * 1-5'
+    # BACKSTOP, four hours later (21:30 ET the same session). GitHub dropped
+    # the 2026-08-27 run outright — no queued entry, nothing in the run list.
+    # That is the FIRST miss in 49 business days: over 2026-06-19 → 2026-08-26
+    # every scheduled run fired, median 63 min late, worst 213 min. At 327 min
+    # past due with no record, it was dropped rather than queued, and a dropped
+    # run never self-heals: the only reason 08-24 and 08-25 have data is that a
+    # human pressed the button. This second schedule exists so that stops being
+    # true. The `gate` job below decides whether it has anything to do.
+    - cron: '30 1 * * 2-6'
   workflow_dispatch: # Manual trigger for testing
 
 permissions:
@@ -14,7 +23,52 @@ permissions:
 
 
 jobs:
+  # Does the backstop have anything to do?
+  #
+  # It runs on the SECOND schedule only. On the main schedule and on a manual
+  # dispatch this always says yes, so the normal path is untouched — a gate
+  # that can silently skip the main run would be worse than the problem it
+  # fixes.
+  #
+  # The test is deliberately dependency-free (`date`, not marketcal): this job
+  # must not be able to fail for a reason of its own. At 01:30 UTC it is 21:30
+  # ET the same weekday whose close we want, so today's ET date IS the session
+  # to look for. On a US holiday the file will not carry that date and the
+  # backstop will run — the pipeline itself refuses a non-session, which is the
+  # right place for that decision, not here.
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.decide.outputs.run }}
+    steps:
+      - uses: actions/checkout@v6
+      - id: decide
+        run: |
+          if [ "${{ github.event.schedule }}" != '30 1 * * 2-6' ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "main schedule or manual dispatch — always run"
+            exit 0
+          fi
+          WANT=$(TZ=America/New_York date +%F)
+          # python3, not python: the runner is guaranteed the former. And it
+          # FAILS OPEN — a missing or malformed breadth.json leaves LAST empty,
+          # which is a mismatch, which fires the backstop. Under `bash -e` a
+          # bare command substitution would have failed this job instead, and a
+          # failed gate skips update-data: the file being broken is exactly
+          # when the backstop must not sit out.
+          LAST=$(python3 -c "import json;print(json.load(open('data/output/breadth.json'))['conditions']['history'][-1]['date'])" 2>/dev/null || echo "")
+          echo "backstop: newest session in breadth.json = $LAST, looking for $WANT"
+          if [ "$LAST" = "$WANT" ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Backstop skipped — $WANT already landed."
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::Backstop firing — $WANT missing (newest is $LAST). The 21:30 UTC run was dropped or failed."
+          fi
+
   update-data:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
     runs-on: ubuntu-latest
     # 45, not 15: run_all alone is ~14 min since 2026-08-17 (fundamentals
     # 700/night, bar-consistency retry, structure pivots); the 08-17 run was
