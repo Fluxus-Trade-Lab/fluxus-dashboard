@@ -139,11 +139,19 @@ for h, ad, s in log14:
     if ad.split(" ")[0] == TODAY:
         lane_today[ln] += 1
 
+import hashlib
 cards = []
-cid = [0]
+_seen_ids = set()
 def add(col, pri, title, src, lane=None, date="", paths=None):
-    cid[0] += 1
-    cards.append(dict(id="K%03d" % cid[0], col=col, pri=pri,
+    # 内容寻址卡号：同一事项跨刷新稳定（评论/对话引用不漂移）
+    base = hashlib.sha1((col + "|" + title.strip()[:80]).encode("utf-8")).hexdigest()
+    kid = "K" + base[:4].upper()
+    n = 0
+    while kid in _seen_ids:
+        n += 1
+        kid = "K" + base[:3].upper() + str(n)
+    _seen_ids.add(kid)
+    cards.append(dict(id=kid, col=col, pri=pri,
                       lane=lane or lane_for(title, paths), t=title.strip()[:170], src=src, d=date))
 
 reports = sorted(re.findall(r"night_reports/(2026-\d\d-\d\d)\.md", git("ls-tree", "-r", "--name-only", "origin/main", "data/research/night_reports/")))
@@ -630,7 +638,7 @@ td.num{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
 </style></head><body>
 <aside><div class="logo">Fluxus 联邦<span class="mut">console · 只读 · __TS__</span></div>
 <nav>__NAV__</nav>
-<div class="foot">数据源 = origin/main + 定时任务清单。批注：选中卡片文字开评论（写卡号），@claude 后 OPS 能读到。说「刷新看板」即更新本页。</div></aside>
+<div class="foot">数据源 = origin/main + 定时任务清单。批注：选中卡片文字开评论并**写上卡号**（左上角 K 码，同一事项永久同号，跨刷新不变）。@claude 后 OPS 能读到并执行。说「刷新看板」即更新本页。</div></aside>
 <main>__PAGES__</main>
 <script>
 const nis=[...document.querySelectorAll(".ni")],pgs=[...document.querySelectorAll(".page")];
