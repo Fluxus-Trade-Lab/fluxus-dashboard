@@ -203,7 +203,10 @@ def dedupe_blocked():
     cards[:] = out
 
 
-nowmd = show("NOW.md")
+try:
+    nowmd = open("/Users/taolezhu/Documents/AI-Trading-System/NOW.md", encoding="utf-8").read()
+except Exception:
+    nowmd = show("NOW.md")
 for line in nowmd.splitlines():
     if "待你" in line and "- [ ]" in line:
         add("blocked", 0, re.sub(r"[*\[\]~]", "", line.replace("- [ ]", "")).strip()[:150], "NOW.md", "OPS Fable", "")
@@ -250,6 +253,14 @@ for h, ad, s in log14:
         add("done", 9, s[:150], h, lane_for(s, commit_paths.get(h)), ad)
     if ad.split(" ")[0] == TODAY:
         add("doing", 9, s[:130], h, lane_for(s, commit_paths.get(h)), ad.split(" ")[1])
+
+andy_todo = []
+_sec = re.search(r"## 📋 等你动手[^\n]*\n(.*?)(\n## |\Z)", nowmd, re.S)
+if _sec:
+    for _l in _sec.group(1).splitlines():
+        _m = re.match(r"- \[ \] (.+)", _l.strip())
+        if _m:
+            andy_todo.append(re.sub(r"[*`]", "", _m.group(1)).strip()[:150])
 
 gate = re.search(r"周关卡[^\n]*?(\d)\s*/\s*5", nowmd)
 gate_n = int(gate.group(1)) if gate else None
@@ -408,8 +419,9 @@ today_stream = [c for c in cards if c["col"] == "doing"][:8]
 p_home = (
     '<div class="kpis">' + kpi(BIZ["members"], "会员") + kpi("$" + str(BIZ["mrr"]), "MRR") +
     kpi("%d/5" % posts_week, "本周发布") + kpi(format(views7, ",") if views7 else "—", "7d views") +
-    kpi(counts["blocked"], "等你拍板", "var(--blk)") + "</div>" +
+    kpi(len(andy_todo), "等你动手", "var(--p0)") + kpi(counts["blocked"], "等你拍板", "var(--blk)") + "</div>" +
     section("本周主线", '<div>%s</div><div class="mut" style="margin-top:6px">今天的一件事：%s</div>' % (E(now_main or "（NOW.md 未写）"), E(today_one or "（未写）"))) +
+    section("📋 等你动手（生意动作 · 做完在 NOW.md 划掉）", "".join('<div class="k" style="--pc:var(--p0)"><div class="m"><span class="pid">DO</span></div>%s</div>' % E(t) for t in andy_todo) or '<div class="empty">队列为空</div>') +
     section("⚠ 等你拍板", "".join(cardh(c) for c in blocked_cards) or '<div class="empty">现在没有等你的事</div>') +
     section("AI 今日已落地（详见任务看板）", "".join(cardh(c) for c in today_stream) or '<div class="empty">今天还没有 commit</div>'))
 
