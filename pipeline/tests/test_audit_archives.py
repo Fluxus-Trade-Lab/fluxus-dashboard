@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import datetime as dt
+import json
 
 import pandas as pd
 
@@ -81,7 +82,7 @@ def _out(tmp_path, **files):
     d = tmp_path / "output"
     d.mkdir(exist_ok=True)
     for name, payload in files.items():
-        (d / f"{name}.json").write_text(__import__("json").dumps(payload))
+        (d / f"{name}.json").write_text(json.dumps(payload))
     return d
 
 
@@ -181,15 +182,14 @@ class TestTickerShellsI7:
     """Empty-shell rate in data/output/tickers/."""
 
     def _dir(self, tmp_path, n_full, n_shell, extra_underscore=0):
-        import json as _j
         d = tmp_path / "output" / "tickers"
         d.mkdir(parents=True, exist_ok=True)
         for i in range(n_full):
-            (d / f"F{i}.json").write_text(_j.dumps({"ohlc_2y": [{"c": 1}]}))
+            (d / f"F{i}.json").write_text(json.dumps({"ohlc_2y": [{"c": 1}]}))
         for i in range(n_shell):
-            (d / f"S{i}.json").write_text(_j.dumps({"ohlc_2y": []}))
+            (d / f"S{i}.json").write_text(json.dumps({"ohlc_2y": []}))
         for i in range(extra_underscore):
-            (d / f"_bench{i}.json").write_text(_j.dumps({}))
+            (d / f"_bench{i}.json").write_text(json.dumps({}))
         return tmp_path / "output"
 
     def test_no_shells_is_silent(self, tmp_path):
@@ -207,9 +207,8 @@ class TestTickerShellsI7:
         assert r["warnings"] == []
 
     def test_a_file_with_no_ohlc_key_at_all_is_a_shell(self, tmp_path):
-        import json as _j
         d = self._dir(tmp_path, 19, 0)
-        (d / "tickers" / "X.json").write_text(_j.dumps({"info": {"name": "X"}}))
+        (d / "tickers" / "X.json").write_text(json.dumps({"info": {"name": "X"}}))
         r = A.ticker_shells(d, max_rate=0.0)
         assert any("X" in v for v in r["violations"]), r
 
