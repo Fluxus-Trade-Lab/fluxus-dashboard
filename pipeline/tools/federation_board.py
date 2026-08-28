@@ -327,13 +327,49 @@ for l in posts_csv:
             pass
 
 projmd = show("PROJECTS.md")
+PROJ_KEYS = {
+    "P0": ["portfolio", "receipts", "交易"],
+    "P1": ["post", "tool(post", "content", "material(", "日推", "thread"],
+    "P2": ["substack", "mrna", "letter", "publish"],
+    "P3": ["masterclass", "课程", "course"],
+    "P4": ["growth", "whop", "discord", "member", "product:"],
+    "P5": ["feat(", "fix(watchlist", "fix(schema", "frontend", "chore: market", "data(", "screener", "groups_history"],
+    "P6": ["night(", "prereg(", "collect(", "tests(", "amplitude", "adr", "vcp", "stockbee", "regime", "gex"],
+    "P7": ["visual", "brand", "mr_fluxus", "track record", "官网", "squarespace"],
+}
 PROJS = []
-for m in re.finditer(r"^### (P\d) · ([^（(\n]+)[（(]([^）)\n]*)[）)]?([^\n]*)\n((?:(?!^###).*\n)*?)", projmd, re.M):
-    pid, pname, prole, pstar, body = m.group(1), m.group(2).strip(), m.group(3).strip(), m.group(4), m.group(5)
-    st = (re.search(r"- 状态[：:](.+)", body) or re.search(r"- \*\*状态（?([^\n]+)", body) or [None, ""])[1]
-    st = re.sub(r"[*`]", "", st).strip()[:180]
-    light = "🟢" if "🟢" in st or "自转" in st else ("🔴" if ("空" in st[:14] or "没落地" in st) else ("⏸" if ("冻结" in st or "未定" in st) else "🟡"))
-    PROJS.append((pid, pname, prole, "⭐" in pstar, light, st or "（无状态行）"))
+_secs = re.split(r"^### ", projmd, flags=re.M)
+for sec in _secs:
+    m = re.match(r"(P\d) · ([^（(\n]+)[（(]([^）)\n]*)[）)]?([^\n]*)\n", sec)
+    if not m:
+        continue
+    pid, pname, prole, pstar = m.group(1), m.group(2).strip(), m.group(3).strip(), m.group(4)
+    body = sec[m.end():]
+
+    def grab(*pats):
+        for p in pats:
+            r = re.search(p, body)
+            if r:
+                return re.sub(r"[*`]", "", r.group(1)).strip()
+        return ""
+    st = grab(r"- 状态[：:]\s*(.+)", r"- 状态（[^）]*）[：:]\s*(.+)", r"- \*\*?状态[^：:]*[：:]\*?\*?\s*(.+)")
+    act = grab(r"- 本周动作[：:]\s*(.+)", r"- \*\*当前真任务[^：:]*[：:]\*?\*?\s*(.+)", r"- 体系义务[：:]\s*(.+)")
+    trio = grab(r"- 三件套[^：:]*[：:]\s*(.+)", r"- \*\*三件套[^：:]*[：:]\*?\*?\s*(.+)")
+    owner = grab(r"负责线[：:]\s*([^。\n]+)")
+    # 最近 7 天该项目的 commit（关键词映射，近似）
+    recent = []
+    for h, ad, s in log14:
+        days = (now - datetime.datetime.strptime("2026-" + ad, "%Y-%m-%d %H:%M")).days
+        if days >= 7:
+            continue
+        low = s.lower()
+        if any(k in low for k in PROJ_KEYS.get(pid, [])):
+            recent.append((ad, s))
+    light = "🟢" if ("🟢" in st or "自转" in st) else ("🔴" if ("空" in st[:14] or "没落地" in st) else ("⏸" if ("冻结" in st or "未定" in st) else "🟡"))
+    PROJS.append(dict(pid=pid, name=pname, role=prole, star="⭐" in pstar, light=light,
+                      st=st[:230] or "（PROJECTS.md 该节缺状态行——该修档案）",
+                      act=act[:180], trio=trio[:200], owner=owner[:60],
+                      recent=recent[:3], n7=len(recent)))
 
 now_main = (re.search(r"## 本周主线[^\n]*\n\n(.+)", nowmd) or [None, ""])[1]
 now_main = re.sub(r"[*`]", "", now_main).strip()[:140]
@@ -381,12 +417,27 @@ p_home = (
 fun = "".join('<div class="fstage"><div class="fname">%s</div><div class="fval">%s</div><div class="fsrc">%s</div></div><div class="farrow">→</div>' % (n, E(v), E(s)) for n, v, s in FUNNEL)
 fun = fun.rsplit('<div class="farrow">', 1)[0]
 pcards = ""
-for pid, pname, prole, star, light, st in PROJS:
-    pcards += ('<div class="agent"><div class="ah">%s <b>%s · %s</b>%s<span class="mut" style="margin-left:8px">%s</span></div>'
-               '<div class="ab">%s</div></div>' % (light, pid, E(pname), " ⭐" if star else "", E(prole), E(st)))
+for P in PROJS:
+    rec = "".join('<div class="prow"><span class="pt">%s</span>%s</div>' % (r[0], E(r[1][:96])) for r in P["recent"]) \
+          or '<div class="prow mut">近 7 天无落地（%s）</div>' % ("冻结中，符合预期" if P["light"] == "⏸" else "留意")
+    pcards += ('<div class="proj"><div class="pjh">%s <b>%s · %s</b>%s<span class="pjrole">%s</span>'
+               '<span class="pjn">7d 落地 %d</span></div>'
+               '<div class="pjgrid">'
+               '<div><div class="pjl">现在在哪</div><div class="pjv">%s</div></div>'
+               '<div><div class="pjl">最近做了什么</div><div class="pjv">%s</div></div>'
+               '<div><div class="pjl">下一步</div><div class="pjv">%s</div></div>'
+               '<div><div class="pjl">三件套 · 截止规则</div><div class="pjv">%s</div></div>'
+               '</div>%s</div>'
+               % (P["light"], P["pid"], E(P["name"]), " ⭐" if P["star"] else "", E(P["role"]),
+                  P["n7"],
+                  E(P["st"]),
+                  rec,
+                  E(P["act"]) or '<span class="mut">（档案未写本周动作）</span>',
+                  E(P["trio"]) or '<span class="mut">（三件套未立——按立项规矩该补）</span>',
+                  ('<div class="pjo">负责线：%s</div>' % E(P["owner"])) if P["owner"] else ""))
 p_projects = (section("生意漏斗（内容 → 售后）", '<div class="funnel">%s</div>' % fun) +
-              '<div class="mut" style="margin:2px 0 10px">项目档案实时映射自 PROJECTS.md——状态行过期时该修的是档案，不是看板。</div>' +
-              '<div class="agrid">%s</div>' % pcards)
+              '<div class="mut" style="margin:2px 0 10px">四格答案全部实时映射自 PROJECTS.md + git——档案缺哪格，卡上就露哪格；该修的是档案，不是看板。</div>' +
+              pcards)
 
 # --- 页2 看板 ---
 COLS = [("claim", "待认领 · 挂单板"), ("doing", "进行中 · 今日"), ("blocked", "等 Andy 拍板"), ("done", "已完成 · 24h")]
@@ -502,6 +553,17 @@ aside{width:216px;flex:none;background:var(--side);border-right:1px solid var(--
 .fval{font:600 14px/1.3 "IBM Plex Serif",serif;margin:3px 0 1px;font-variant-numeric:tabular-nums}
 .fsrc{font-size:10px;color:var(--mut)}
 .farrow{align-self:center;color:var(--mut)}
+.proj{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:13px}
+.pjh{display:flex;align-items:baseline;gap:8px;margin-bottom:10px;font-size:14px;flex-wrap:wrap}
+.pjrole{color:var(--mut);font-size:11.5px}
+.pjn{margin-left:auto;font:400 10.5px "IBM Plex Mono",monospace;color:var(--mut)}
+.pjgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}
+@media(max-width:900px){.pjgrid{grid-template-columns:1fr}}
+.pjl{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-bottom:3px}
+.pjv{font-size:12.5px;line-height:1.5}
+.prow{font-size:12px;margin-bottom:3px}
+.pt{font:400 10px "IBM Plex Mono",monospace;color:var(--mut);margin-right:7px}
+.pjo{margin-top:9px;border-top:1px dashed var(--line);padding-top:7px;font-size:11px;color:var(--mut)}
 .foot{position:absolute;bottom:14px;left:12px;right:12px;font-size:10.5px;color:var(--mut);border-top:1px solid var(--line);padding-top:8px}
 main{flex:1;padding:26px 32px 70px;min-width:0}
 .page{display:none;max-width:1080px}.page.on{display:block}
