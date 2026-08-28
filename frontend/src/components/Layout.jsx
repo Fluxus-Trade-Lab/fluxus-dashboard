@@ -26,6 +26,7 @@ import TickerStrip from './dashboard/TickerStrip'
 import RegimeBand from './dashboard/RegimeBand'
 import LeadersLaggards from './dashboard/LeadersLaggards'
 import VerdictCard from './dashboard/VerdictCard'
+import DataFreshnessBadge from './dashboard/DataFreshnessBadge'
 import ThemeMovers from './dashboard/ThemeMovers'
 import { ETF_GROUPS } from '../lib/etfGroups'
 import ScreenerPage from './screener/ScreenerPage'
@@ -71,9 +72,15 @@ const PUBLIC_PAGES = ['', 'method', 'results', 'pricing', 'brief']
  * asking for the UTC weekday of that instant returns the weekday of the date
  * string. Reading it in local time would slide it a day for half the planet.
  */
-function sessionTitle(breadth) {
+/** The one place this date is read. The title and the freshness badge are two
+ *  statements about the same fact and must not be able to disagree. */
+function sessionDateOf(breadth) {
   const h = breadth?.conditions?.history
-  const iso = Array.isArray(h) && h.length ? h[h.length - 1]?.date : null
+  return Array.isArray(h) && h.length ? h[h.length - 1]?.date ?? null : null
+}
+
+function sessionTitle(breadth) {
+  const iso = sessionDateOf(breadth)
   if (!iso) return 'Today'            // absent is said, not guessed
   const d = new Date(`${iso}T00:00:00Z`)
   if (Number.isNaN(d.getTime())) return iso
@@ -152,8 +159,16 @@ export default function Layout({ data, lastUpdated, isOffline }) {
               host clock is JST here and would name the wrong session for the
               seven hours after the New York close. A four-city clock sat beside
               it for one afternoon; Andy took it off the same day. */}
+          {/* The badge is normally absent, and absent is the reading. It
+              appears when the file falls two weekdays behind — the state this
+              page sat in, silently, for three days in a row on 2026-08-24..26
+              while the nightly job was failing. The title alone was honest and
+              not enough: it printed an old date without ever saying it was
+              old, and Andy found the gap before the page mentioned it. */}
           <PageHeader group="market" crumbTitle="Today"
-                      title={sessionTitle(data?.breadth)} />
+                      title={sessionTitle(data?.breadth)}
+                      meta={[<DataFreshnessBadge key="fresh"
+                               sessionDate={sessionDateOf(data?.breadth)} />]} />
 
           {/* ── THE WHOLE PAGE IS ONE ROW OF TWO COLUMNS (Andy, 2026-08-24) ──
               Three layouts got tried in one afternoon and the third is the one
