@@ -556,6 +556,12 @@ JSON schema(所有 library 文章通用):
   **配套的那条更重要**（同日，Andy 指出的 friction 本体）：**线的边界管路由，不管授权。** 发现别人线上的问题，动作是二选一——①自己修完，在 §七 通知该线；②整包交给该线。**不要把它变成一个问 Andy 的问题。** 本次触发事故：前端查清夜间 cron 被 GitHub 丢弃后，写的是「`.github/workflows/` 不是我的边界，要么你点头我做、要么交数据端」，让 Andy 多跑了一趟往返；他回「OK DO IT ALL」并指出这一轮往返本身就是浪费。根因是把「这不是我的线」（**路由信息**）当成了「这需要授权」（**授权信息**）。CLAUDE.md 决策分级本来就写着「可逆的小决策不过问」——**跨线不等于跨授权**。
   前端已按新口径执行完当次三件（补跑 / 兜底 cron `4f9b5262` / 陈旧徽章 `3e2fc1d0`），未再回头请示。措辞与落点归 OPS。
 
+- [2026-08-28] ✅ **（前端已修，进了你们的地盘，按 Andy 08-28「线的边界管路由不管授权」的口径先做后报）：`audit_ledger` 的 `WARN_WORDS` 加了 `"walled"`**，commit `fd132060`。
+  **根因是词表不一致，不是严重度判断错误**：`walled` 是 fundamentals 这一个 guard 自己的词（全仓只有 `run_all.py:500` 一处发出），含义就是「部分覆盖」，而 `partial` 早就在警告名单里；`audit_ledger.py` 的 WARN_WORDS 没有它，于是走 else 判成 L2 violation → exit 1 → `Commit and push` skip → **整晚一个字发不出去，晨读页停在四天前**。合同两侧由不同的手写成，从没对过状态词。
+  它**仍然很响**：警告照印、照落 `audit_ledger_last.json`，L6 的 fundamentals 失败率仍单独报；不再做的只有 exit 1。两个测试钉住边界——walled 只警告不阻断（用 08-27 的真实形状）；**没被分类过的状态词仍然致命**（`wedged` → violation），名单是名单不是耸肩。
+  ⚠️ **更正我今天早些时候说过的一句**：我说 `walled` 是「已知且反复出现、每晚都在发生」——**查了 ledger，不成立**。08-24 / 08-25 / 08-26 三场都是 `walled: false, ok 400/400, failed 0`。所以 08-27 那次是**真的撞了墙**，不是常态。这不改变上面这个修法（部分覆盖的富集不该阻断发布），但**该修抓取的那一半仍然是你们的**：08-27 为什么撞墙、要不要退避重试，归你们判断。
+  ⚠️ 还有一件**只有你们能决定的**：这条链上五次运行触发了四道不同的闸（Schema snapshot / Audit archives I6a / 根本没触发 / Audit run ledger）。任何一道单独失败都会让整晚产出一个字发不出去，**没有「发出好的那部分」这个选项**。这个取舍当初是有意的，但代价该重新称——前端只报现象。
+
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
 字段全部现成(watchlist.json 每票 `rs_line_pctl_21` / `rs_high` / `top_3m` / `atr_from_sma50` / `sp_signal`;每格 `count_rs_high` / `count_top_3m`)。要的是**把 17 格按五步重新编组、给小白一条能照着走的路**:
