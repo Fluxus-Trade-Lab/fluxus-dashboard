@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-28T04:23:52.384214+00:00",
+  "timestamp": "2026-08-28T05:36:00.528304+00:00",
   "as_of": "2026-08-27",
   "rows": [
     {
@@ -381,42 +381,6 @@
       "last_seen": "2026-08-27",
       "days_span": 12,
       "sector": "Healthcare"
-    },
-    {
-      "ticker": "S",
-      "score": 13.75,
-      "confluence_days": 1,
-      "screeners": [
-        {
-          "name": "momentum_97",
-          "hits": 2,
-          "last_date": "2026-08-27"
-        },
-        {
-          "name": "vcp",
-          "hits": 4,
-          "last_date": "2026-08-26"
-        },
-        {
-          "name": "gainers_4pct",
-          "hits": 1,
-          "last_date": "2026-08-27"
-        },
-        {
-          "name": "healthy_charts",
-          "hits": 3,
-          "last_date": "2026-08-27"
-        },
-        {
-          "name": "vol_up_gainers",
-          "hits": 1,
-          "last_date": "2026-08-27"
-        }
-      ],
-      "first_seen": "2026-08-13",
-      "last_seen": "2026-08-27",
-      "days_span": 11,
-      "sector": "Technology"
     },
     {
       "ticker": "FDMT",
@@ -1755,6 +1719,37 @@
       "first_seen": "2026-08-19",
       "last_seen": "2026-08-27",
       "days_span": 7,
+      "sector": "Healthcare"
+    },
+    {
+      "ticker": "HAE",
+      "score": 10.25,
+      "confluence_days": 0,
+      "screeners": [
+        {
+          "name": "momentum_97",
+          "hits": 6,
+          "last_date": "2026-08-24"
+        },
+        {
+          "name": "vcp",
+          "hits": 2,
+          "last_date": "2026-08-17"
+        },
+        {
+          "name": "gainers_4pct",
+          "hits": 1,
+          "last_date": "2026-08-18"
+        },
+        {
+          "name": "vol_up_gainers",
+          "hits": 1,
+          "last_date": "2026-08-18"
+        }
+      ],
+      "first_seen": "2026-08-12",
+      "last_seen": "2026-08-24",
+      "days_span": 9,
       "sector": "Healthcare"
     }
   ]
