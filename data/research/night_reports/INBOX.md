@@ -492,3 +492,5 @@ Joe 的两条（Daily Content Threads 停用、Gate 声明制审计）均已闭�
 — Plumber Joe
 
 - [2026-08-30 Andy 拍板·OPS 代录] **T3 PII 清史：选 (b)**——接受 git 历史中的既往存在，不重写历史；今后零新增由既有闸把守（PII 政策+核销时全仓扫描）。T3 销账。
+
+- [2026-08-30 立项挂单 · OPS 牵头设计（Andy 经 Studio Q 转达原话）] **内容原料档案库：「从每周产生的内容里提炼，而非再次创作」**。控制台配套的数据库——原数据与发布档案统一管理、周信直接调用。Andy 给的每周内容清单：**自动化**=每日交易记录、每日盘面读数（dashboard，git 历史已是档案）；**手动**=每日推文（posts.csv ✅）、每日 daily briefing pdf（**无归集管道**）、每日/周 founders notes（**无管道**）、每日交易评论（**无管道**）、每笔交易的思考文字（**无管道**）。缺口=四条手动流的归集管道+统一索引。设计明天出（先读 Fluxus_Brand/record/ 现状再动，与 Steve/Studio Q 分工边界一起定）。关联：v2 模板 `briefs/2026-08-30_letter_template_worked.md`；paywall 钩子设计 Andy 标「待商榷」挂着不催。
