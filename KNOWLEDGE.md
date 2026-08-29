@@ -38,8 +38,16 @@
 | 会员明细 / 身份合并 | `data/growth/private/` 最新 members_master | PII 不出 private |
 | 发布记录 / views | `data/content/posts.csv` | 按 post_id 行 |
 | 研究结论 | `data/research/claims/claims.jsonl` | 引用带日期与 evidence_grade |
-| 交易绩效 | `data/portfolio/` performance_review 产物 | H1 +90.5% 等口径以此为准 |
+| 交易绩效 | `data/portfolio/` performance_review 产物 | ⚠️ 本地目录（gitignored），`git show` 不适用——只能本机读；H1 +90.5% 等口径以此为准 |
 | 关卡进度 | 日推第一行 / NOW.md 🎮 节 | |
+
+## SOP 登记处（三次律①的家；成功 ≥3 次的方法固化于此，照抄不重新发明）
+| SOP | 全文在 | 登记日 |
+|---|---|---|
+| 直推 main 标准动作（临时树+丢弃重放+落地核实） | CLAUDE.md 同名节 | 08-29（存量补登） |
+| X 单帖免登录抓取（fxtwitter 镜像） | zac-night-study 任务书 §1.5 | 08-29（存量补登） |
+| substack_subs 取数 | `data/growth/README.md`（bbe9097c） | 08-29（存量补登） |
+| 临时树验收合并（越界检查→测试→rebase→push→删名） | Joe 任务书第五节 + safe-merge 节 | 08-29（存量补登） |
 
 ## 还不存在的（别假装有）
 - 全文检索/向量索引：没有，检索靠 grep + 本地图。哪天真需要再立项，先过 MVP 闸。

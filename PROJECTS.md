@@ -76,7 +76,7 @@
 
 ### P4 · 会员产品（落地+服务+售后 = 核心收入）⭐
 - **落地栈已定（Andy 08-24）**：**Whop = 收银台**（选会员方式/付款）→ 自动跳转 **Discord = 权益交付间**。
-- **状态（08-25 对账定性：它不是待建的空白，是已在运转但此前无人看管的生意）**：30 真人会员（另 9 bot 已剔）· 历史总收入 ≈$23,647 · MRR ≈$1,139 · 5.0 评分 · 4 个产品在售，Premium 三轨并存（$240/3mo 6 人主力 · $900/年 3 人 · $99/月 2 人）——所以旧的「套餐 A/B 二选一」决策已被现实作废，不再待选。Discord 139 频道已存在（实测 `Fluxus_Brand/ops/discord_landing_check_2026-08-24.md`），频道架构草案作废。摸底纪要 `data/growth/weekly/2026-08-24-baseline.md`。
+- **状态（08-25 对账定性：它不是待建的空白，是已在运转但此前无人看管的生意）**：会员数/MRR **现值一律现场读 `data/growth/metrics.csv` 最后非空行**（本档案不再抄数——08-29 深检抓到本行抄的旧数存活了 4 天）· 历史总收入 ≈$23,647（08-24 盘点，静态史实） · 5.0 评分 · 4 个产品在售，Premium 三轨并存（$240/3mo 6 人主力 · $900/年 3 人 · $99/月 2 人）——所以旧的「套餐 A/B 二选一」决策已被现实作废，不再待选。Discord 139 频道已存在（实测 `Fluxus_Brand/ops/discord_landing_check_2026-08-24.md`），频道架构草案作废。摸底纪要 `data/growth/weekly/2026-08-24-baseline.md`。
 - **门面整备已完工（08-24 深夜，Andy 逐项批准上线）**：店面 description（含教什么 + we generate new ideas every week）· Free Access 转 Visible + Live on Discover · Premium 简介重写（早盘语音→Daily Morning Prep 口径）· 店面首帖发布。Masterclass 保持 Hidden（cohort 制，一年 2–3 期）。
 - **三件套结算**：①发布物「Whop 可付款 + Discord 结构就绪」= **已达成** ②截止日 = 不再适用（项目从「建」转「营」）③新规则 = 增长官周一 09:40 记账 `data/growth/metrics.csv`，老板早报引用。
 - **当前真任务 = 管，不是建**：
