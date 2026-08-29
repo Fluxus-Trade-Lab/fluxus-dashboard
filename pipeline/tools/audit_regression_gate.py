@@ -44,16 +44,46 @@ What this gate CANNOT see (stated so nobody reads its silence as safety):
     against; those sessions are reported as `no-baseline`, not as clean.
   * a bad run that is bad in *both* copies -- this measures relative damage
     only. Absolute badness is `universe_quality`'s job.
-  * anything not in the ledger. Panel counts (`true_market_leaders`,
-    `bullish_4pct`, ...) live in `data/output/`; the 08-27 autopsy had to
-    read them out of git history by hand. Extending to those means diffing
-    two commits, not two ledger lines -- deliberately out of scope here.
+
+PANEL MODE (`--outputs`)
+------------------------
+The ledger does not carry the numbers Andy actually looks at. The 08-27
+autopsy had to read `watchlist.gated` and friends out of git history by hand.
+`--outputs A B` does that mechanically: it walks every `data/output/*.json` at
+two commits and compares every integer and every list length they share.
+
+It needs no per-metric direction table, because it only ever compares two
+commits that claim **the same session**. Same input day, same numbers -- so a
+move in either direction is worth a look, and the tool refuses outright when
+the two commits carry different session dates (that comparison would be the
+market moving, not the pipeline).
+
+Two prunings keep the key space readable, both generic rather than curated:
+a depth limit, and skipping any dict with more than MAX_FANOUT keys -- that
+shape is an entity index (`events.TCBX`, one key per ticker), not structure.
+Without them the same pair yields 26,994 keys and 114 movers, nearly all of
+them one ticker gaining an event.
+
+**Panel mode is a reporting instrument, not a gate.** It exits 0. Measured on
+the only two same-session pairs in git history, at a 2% tolerance over 261
+comparable keys:
+
+    3a4d4bc1 -> 7b9d469e   ok -> ok          7 movers (+3 by design)
+    7b9d469e -> 03761dc8   ok -> degraded   40 movers
+
+Nearly 6x apart, and the damaged pair's movers are coherent -- the universe
+shrank 3.8% and thirty downstream counts shrank with it -- where the healthy
+pair's are scattered and small. That is suggestive. It is not a calibrated
+boundary: n = 2, one of each. Turning a mover count into a threshold needs a
+baseline we do not have, the same reason `audit_mutation_sweep` still
+returns 0.
 
 Usage:
 
     python -m pipeline.tools.audit_regression_gate              # whole ledger
     python -m pipeline.tools.audit_regression_gate --session 2026-08-27
     python -m pipeline.tools.audit_regression_gate --strict     # R2 fatal too
+    python -m pipeline.tools.audit_regression_gate --outputs A B
     python -m pipeline.tools.audit_regression_gate --json out.json
 
 Read-only. It never writes into data/history, only to an explicit --json path.
@@ -280,6 +310,164 @@ def render(out: Dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+# --------------------------------------------------------------------------
+# panel mode -- two commits of data/output, same session
+# --------------------------------------------------------------------------
+
+OUTPUTS = "data/output"
+
+# Depth past which a JSON path stops being structure and starts being data.
+MAX_DEPTH = 3
+# A dict wider than this is an entity index (one key per ticker), not a shape.
+MAX_FANOUT = 30
+# Relative move a shared count has to make before it is worth printing.
+PANEL_TOL = 0.02
+
+# Keys that move between two runs of the same session *by design*. They are
+# reported in their own section rather than dropped: a benign key that fires
+# in the headline list every time is how a report teaches people to skip it,
+# but silently deleting one is how real damage hides behind a docstring.
+BY_DESIGN = {
+    "universe.json": {"quality.runs_in_baseline"},   # counts the runs, so a rerun increments it
+    "shortlist.json": {"manual[]", "cards[]"},       # Andy hand-edits these between runs
+}
+
+
+def _git(args: List[str], cwd: Optional[Path] = None) -> Optional[str]:
+    import subprocess
+    try:
+        done = subprocess.run(["git"] + args, capture_output=True, text=True,
+                              cwd=str(cwd) if cwd else None)
+    except OSError:
+        return None
+    return done.stdout if done.returncode == 0 else None
+
+
+def flatten_counts(doc: Any, max_depth: int = MAX_DEPTH,
+                   max_fanout: int = MAX_FANOUT) -> Dict[str, int]:
+    """Every integer and every list length in a document, by dotted path.
+
+    Floats are left out on purpose: a price or a ratio moving is the market,
+    a count moving is the pipeline.
+    """
+    out: Dict[str, int] = {}
+
+    def walk(node: Any, path: str, depth: int) -> None:
+        if depth > max_depth:
+            return
+        if isinstance(node, dict):
+            if len(node) > max_fanout:
+                return
+            for k, v in node.items():
+                walk(v, f"{path}.{k}" if path else str(k), depth + 1)
+        elif isinstance(node, list):
+            out[f"{path}[]"] = len(node)
+        elif isinstance(node, bool):
+            return
+        elif isinstance(node, int):
+            out[path] = node
+
+    walk(doc, "", 0)
+    return out
+
+
+def panel_counts(ref: str, repo: Optional[Path] = None) -> Dict[str, Dict[str, int]]:
+    """{filename: {path: count}} for every data/output/*.json at `ref`."""
+    listing = _git(["ls-tree", "--name-only", ref, f"{OUTPUTS}/"], repo)
+    if listing is None:
+        return {}
+    out: Dict[str, Dict[str, int]] = {}
+    for path in listing.split():
+        if not path.endswith(".json"):
+            continue
+        blob = _git(["show", f"{ref}:{path}"], repo)
+        if blob is None:
+            continue
+        try:
+            doc = json.loads(blob)
+        except json.JSONDecodeError:
+            continue
+        out[path.rsplit("/", 1)[-1]] = flatten_counts(doc)
+    return out
+
+
+def session_of(ref: str, repo: Optional[Path] = None) -> Optional[str]:
+    """The session a commit's outputs claim, read from quality.json."""
+    blob = _git(["show", f"{ref}:{OUTPUTS}/quality.json"], repo)
+    if blob is None:
+        return None
+    try:
+        return json.loads(blob).get("date")
+    except json.JSONDecodeError:
+        return None
+
+
+def compare_panels(baseline: Dict[str, Dict[str, int]],
+                   candidate: Dict[str, Dict[str, int]],
+                   tol: float = PANEL_TOL) -> Dict[str, Any]:
+    movers: List[Dict[str, Any]] = []
+    by_design: List[Dict[str, Any]] = []
+    comparable = 0
+    for filename, base in baseline.items():
+        cand = candidate.get(filename)
+        if not cand:
+            continue
+        for key in sorted(set(base) & set(cand)):
+            comparable += 1
+            a, b = base[key], cand[key]
+            if a == b or a == 0:
+                continue
+            rel = (b - a) / abs(a)
+            if abs(rel) <= tol:
+                continue
+            row = {"file": filename, "key": key, "baseline": a,
+                   "candidate": b, "rel": rel}
+            (by_design if key in BY_DESIGN.get(filename, set()) else movers).append(row)
+    movers.sort(key=lambda r: abs(r["rel"]), reverse=True)
+    by_design.sort(key=lambda r: abs(r["rel"]), reverse=True)
+    return {"comparable": comparable, "movers": movers, "by_design": by_design,
+            "tolerance": tol}
+
+
+def audit_outputs(baseline_ref: str, candidate_ref: str,
+                  repo: Optional[Path] = None,
+                  tol: float = PANEL_TOL) -> Dict[str, Any]:
+    s_a, s_b = session_of(baseline_ref, repo), session_of(candidate_ref, repo)
+    if s_a is None or s_b is None:
+        return {"error": f"no session date at {baseline_ref if s_a is None else candidate_ref} "
+                         f"(data/output/quality.json unreadable there)",
+                "baseline_ref": baseline_ref, "candidate_ref": candidate_ref}
+    if s_a != s_b:
+        return {"error": f"different sessions ({s_a} vs {s_b}) -- that comparison is "
+                         f"the market moving, not the pipeline",
+                "baseline_ref": baseline_ref, "candidate_ref": candidate_ref,
+                "baseline_session": s_a, "candidate_session": s_b}
+    out = compare_panels(panel_counts(baseline_ref, repo),
+                         panel_counts(candidate_ref, repo), tol=tol)
+    out.update({"baseline_ref": baseline_ref, "candidate_ref": candidate_ref,
+                "session": s_a})
+    return out
+
+
+def render_outputs(out: Dict[str, Any]) -> str:
+    if "error" in out:
+        return f"panel mode refused: {out['error']}"
+    L = [f"{out['session']}  {out['baseline_ref']} -> {out['candidate_ref']}  "
+         f"({out['comparable']} comparable counts, tolerance {out['tolerance']:.0%})"]
+    for r in out["movers"]:
+        L.append(f"    {r['file']:22s} {r['key'][:40]:40s} "
+                 f"{r['baseline']:>7} -> {r['candidate']:>7}  {r['rel']:+.1%}")
+    if out["by_design"]:
+        L.append("  moves between runs by design (not damage):")
+        for r in out["by_design"]:
+            L.append(f"    {r['file']:22s} {r['key'][:40]:40s} "
+                     f"{r['baseline']:>7} -> {r['candidate']:>7}  {r['rel']:+.1%}")
+    L.append(f"{len(out['movers'])} mover(s). The only two same-session pairs in "
+             f"git history scored 7 (both runs healthy) and 40 (the 08-27 "
+             f"overwrite). Reference points, not a threshold -- n=2.")
+    return "\n".join(L)
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -287,8 +475,22 @@ def main(argv=None) -> int:
     ap.add_argument("--session", help="only this session (YYYY-MM-DD)")
     ap.add_argument("--strict", action="store_true",
                     help="R2/R3 count regressions become violations too")
+    ap.add_argument("--outputs", nargs=2, metavar=("BASELINE_REF", "CANDIDATE_REF"),
+                    help="compare data/output panel counts at two commits of the "
+                         "same session (reporting only, always exits 0)")
+    ap.add_argument("--repo", type=Path, help="repository to read refs from")
+    ap.add_argument("--panel-tol", type=float, default=PANEL_TOL)
     ap.add_argument("--json", type=Path, help="write the full report here")
     args = ap.parse_args(argv)
+
+    if args.outputs:
+        out = audit_outputs(args.outputs[0], args.outputs[1], repo=args.repo,
+                            tol=args.panel_tol)
+        print(render_outputs(out))
+        if args.json:
+            args.json.parent.mkdir(parents=True, exist_ok=True)
+            args.json.write_text(json.dumps(out, indent=2))
+        return 2 if "error" in out else 0
 
     rows = load_ledger(args.ledger)
     if not rows:

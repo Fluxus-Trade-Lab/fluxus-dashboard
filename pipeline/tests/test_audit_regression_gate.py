@@ -611,3 +611,275 @@ def test_json_report_overwrites_into_an_existing_directory(tmp_path):
     arg.main(["--ledger", str(p), "--json", str(out)])
     arg.main(["--ledger", str(p), "--json", str(out)])   # dir now exists
     assert json.loads(out.read_text())["ok"] is True
+
+
+# ==========================================================================
+# Panel mode -- the numbers Andy looks at, which the ledger does not carry.
+# ==========================================================================
+
+import subprocess
+
+
+def _repo(tmp_path, commits):
+    """Build a throwaway repo; `commits` is [{filename: doc}, ...] in order."""
+    root = tmp_path / "repo"
+    (root / "data" / "output").mkdir(parents=True)
+    subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+    subprocess.run(["git", "config", "user.email", "t@t"], cwd=root, check=True)
+    subprocess.run(["git", "config", "user.name", "t"], cwd=root, check=True)
+    shas = []
+    for files in commits:
+        for name, doc in files.items():
+            (root / "data" / "output" / name).write_text(json.dumps(doc))
+        subprocess.run(["git", "add", "-A"], cwd=root, check=True)
+        subprocess.run(["git", "commit", "-q", "-m", "x"], cwd=root, check=True)
+        shas.append(subprocess.run(["git", "rev-parse", "HEAD"], cwd=root,
+                                   capture_output=True, text=True).stdout.strip())
+    return root, shas
+
+
+def q(date="2026-08-27"):
+    return {"quality.json": {"date": date, "status": "ok"}}
+
+
+# -- flatten_counts --------------------------------------------------------
+
+def test_flatten_finds_ints_and_list_lengths_by_path():
+    got = arg.flatten_counts({"count": 5, "rows": [1, 2, 3], "a": {"b": 7}})
+    assert got == {"count": 5, "rows[]": 3, "a.b": 7}
+
+
+def test_flatten_leaves_floats_alone():
+    """A price or a ratio moving is the market; a count moving is the pipeline."""
+    assert arg.flatten_counts({"px": 1.5, "n": 2}) == {"n": 2}
+
+
+def test_flatten_does_not_count_booleans_as_numbers():
+    assert arg.flatten_counts({"ok": True, "n": 1}) == {"n": 1}
+
+
+def test_flatten_stops_at_the_depth_limit():
+    doc = {"a": {"b": {"c": {"d": {"e": 1}}}}}
+    deep = arg.flatten_counts(doc, max_depth=10)
+    shallow = arg.flatten_counts(doc, max_depth=2)
+    assert "a.b.c.d.e" in deep and shallow == {}
+
+
+def test_flatten_skips_a_wide_dict_because_that_is_an_entity_index():
+    """events.TCBX, one key per ticker: 26,994 keys and 114 movers of noise."""
+    index = {f"T{i}": [1, 2] for i in range(50)}
+    assert arg.flatten_counts({"events": index}, max_fanout=30) == {}
+    assert arg.flatten_counts({"events": index}, max_fanout=100) != {}
+
+
+def test_flatten_keeps_a_narrow_dict():
+    assert arg.flatten_counts({"states": {"Leading": 4, "Lagging": 9}}) == \
+        {"states.Leading": 4, "states.Lagging": 9}
+
+
+def test_flatten_measures_a_list_without_descending_into_it():
+    got = arg.flatten_counts({"rows": [{"n": 1}, {"n": 2}]})
+    assert got == {"rows[]": 2}
+
+
+# -- compare_panels --------------------------------------------------------
+
+def test_a_count_that_did_not_move_is_not_a_mover():
+    out = arg.compare_panels({"f.json": {"n": 10}}, {"f.json": {"n": 10}})
+    assert out["movers"] == [] and out["comparable"] == 1
+
+
+def test_a_move_inside_tolerance_is_not_a_mover():
+    out = arg.compare_panels({"f.json": {"n": 1000}}, {"f.json": {"n": 1010}})
+    assert out["movers"] == []
+
+
+def test_a_move_past_tolerance_is_reported_both_ways():
+    up = arg.compare_panels({"f.json": {"n": 100}}, {"f.json": {"n": 200}})
+    down = arg.compare_panels({"f.json": {"n": 100}}, {"f.json": {"n": 50}})
+    assert up["movers"][0]["rel"] == 1.0
+    assert down["movers"][0]["rel"] == -0.5
+
+
+def test_movers_are_ranked_by_size_of_the_move():
+    out = arg.compare_panels({"f.json": {"small": 100, "big": 100}},
+                             {"f.json": {"small": 90, "big": 10}})
+    assert [m["key"] for m in out["movers"]] == ["big", "small"]
+
+
+def test_a_key_only_one_side_has_is_not_comparable():
+    out = arg.compare_panels({"f.json": {"a": 1, "b": 2}}, {"f.json": {"a": 1}})
+    assert out["comparable"] == 1 and out["movers"] == []
+
+
+def test_a_file_only_one_side_has_is_skipped():
+    out = arg.compare_panels({"gone.json": {"n": 1}}, {})
+    assert out["comparable"] == 0
+
+
+def test_a_zero_baseline_is_skipped_rather_than_dividing():
+    out = arg.compare_panels({"f.json": {"n": 0}}, {"f.json": {"n": 500}})
+    assert out["movers"] == []
+
+
+def test_by_design_keys_are_split_out_not_dropped():
+    base = {"universe.json": {"quality.runs_in_baseline": 13, "n": 100}}
+    cand = {"universe.json": {"quality.runs_in_baseline": 14, "n": 50}}
+    out = arg.compare_panels(base, cand)
+    assert [m["key"] for m in out["movers"]] == ["n"]
+    assert [m["key"] for m in out["by_design"]] == ["quality.runs_in_baseline"]
+
+
+def test_a_by_design_key_is_scoped_to_its_own_file():
+    """`cards[]` is hand-edited in shortlist.json; elsewhere it is data."""
+    out = arg.compare_panels({"other.json": {"cards[]": 10}},
+                             {"other.json": {"cards[]": 2}})
+    assert [m["key"] for m in out["movers"]] == ["cards[]"]
+    assert out["by_design"] == []
+
+
+def test_tolerance_is_adjustable():
+    tight = arg.compare_panels({"f.json": {"n": 100}}, {"f.json": {"n": 103}}, tol=0.01)
+    loose = arg.compare_panels({"f.json": {"n": 100}}, {"f.json": {"n": 103}}, tol=0.10)
+    assert tight["movers"] and not loose["movers"]
+
+
+# -- reading git -----------------------------------------------------------
+
+def test_panel_counts_reads_every_output_json_at_a_ref(tmp_path):
+    root, shas = _repo(tmp_path, [{**q(), "a.json": {"n": 1}, "b.json": {"rows": [1, 2]}}])
+    got = arg.panel_counts(shas[0], repo=root)
+    assert got["a.json"] == {"n": 1}
+    assert got["b.json"] == {"rows[]": 2}
+    assert "quality.json" in got
+
+
+def test_panel_counts_on_an_unknown_ref_is_empty_not_an_exception(tmp_path):
+    root, _ = _repo(tmp_path, [q()])
+    assert arg.panel_counts("deadbeef", repo=root) == {}
+
+
+def test_unparseable_json_is_skipped_not_fatal(tmp_path):
+    root, shas = _repo(tmp_path, [{**q(), "good.json": {"n": 1}}])
+    (root / "data" / "output" / "bad.json").write_text("{not json")
+    subprocess.run(["git", "add", "-A"], cwd=root, check=True)
+    subprocess.run(["git", "commit", "-q", "-m", "y"], cwd=root, check=True)
+    got = arg.panel_counts("HEAD", repo=root)
+    assert "good.json" in got and "bad.json" not in got
+
+
+def test_session_of_reads_quality_json(tmp_path):
+    root, shas = _repo(tmp_path, [q("2026-08-27")])
+    assert arg.session_of(shas[0], repo=root) == "2026-08-27"
+
+
+def test_session_of_is_none_when_quality_json_is_absent(tmp_path):
+    root, shas = _repo(tmp_path, [{"a.json": {"n": 1}}])
+    assert arg.session_of(shas[0], repo=root) is None
+
+
+# -- audit_outputs: the same-session discipline ----------------------------
+
+def test_two_commits_of_the_same_session_are_compared(tmp_path):
+    root, shas = _repo(tmp_path, [{**q(), "a.json": {"n": 100}},
+                                  {**q(), "a.json": {"n": 40}}])
+    out = arg.audit_outputs(shas[0], shas[1], repo=root)
+    assert "error" not in out
+    assert out["session"] == "2026-08-27"
+    assert out["movers"][0]["baseline"] == 100 and out["movers"][0]["candidate"] == 40
+
+
+def test_two_different_sessions_are_refused_rather_than_compared(tmp_path):
+    """Across sessions the counts move because the market moved. Comparing
+    them would produce a confident number about the wrong thing."""
+    root, shas = _repo(tmp_path, [{**q("2026-08-27"), "a.json": {"n": 100}},
+                                  {**q("2026-08-28"), "a.json": {"n": 40}}])
+    out = arg.audit_outputs(shas[0], shas[1], repo=root)
+    assert "different sessions" in out["error"]
+    assert "movers" not in out
+
+
+def test_a_missing_quality_json_refuses_instead_of_guessing(tmp_path):
+    root, shas = _repo(tmp_path, [{"a.json": {"n": 1}}, {"a.json": {"n": 2}}])
+    assert "no session date" in arg.audit_outputs(shas[0], shas[1], repo=root)["error"]
+
+
+def test_main_outputs_mode_prints_and_exits_zero(tmp_path, capsys):
+    root, shas = _repo(tmp_path, [{**q(), "a.json": {"n": 100}},
+                                  {**q(), "a.json": {"n": 40}}])
+    assert arg.main(["--outputs", shas[0], shas[1], "--repo", str(root)]) == 0
+    out = capsys.readouterr().out
+    assert "1 mover(s)" in out and "not a threshold" in out
+
+
+def test_main_outputs_mode_exits_2_when_it_refuses(tmp_path, capsys):
+    root, shas = _repo(tmp_path, [q("2026-08-27"), q("2026-08-28")])
+    assert arg.main(["--outputs", shas[0], shas[1], "--repo", str(root)]) == 2
+    assert "refused" in capsys.readouterr().out
+
+
+def test_main_outputs_mode_honours_panel_tol(tmp_path, capsys):
+    root, shas = _repo(tmp_path, [{**q(), "a.json": {"n": 100}},
+                                  {**q(), "a.json": {"n": 103}}])
+    arg.main(["--outputs", shas[0], shas[1], "--repo", str(root), "--panel-tol", "0.5"])
+    assert "0 mover(s)" in capsys.readouterr().out
+    arg.main(["--outputs", shas[0], shas[1], "--repo", str(root), "--panel-tol", "0.01"])
+    assert "1 mover(s)" in capsys.readouterr().out
+
+
+def test_main_outputs_mode_writes_json(tmp_path):
+    root, shas = _repo(tmp_path, [{**q(), "a.json": {"n": 100}},
+                                  {**q(), "a.json": {"n": 40}}])
+    dest = tmp_path / "r" / "out.json"
+    arg.main(["--outputs", shas[0], shas[1], "--repo", str(root), "--json", str(dest)])
+    assert json.loads(dest.read_text())["session"] == "2026-08-27"
+
+
+def test_render_outputs_shows_the_refusal_reason():
+    assert "refused" in arg.render_outputs({"error": "different sessions (a vs b)"})
+
+
+# -- the real pair, out of this repository's own history -------------------
+
+REAL_HEALTHY = ("3a4d4bc1", "7b9d469e")     # session 08-27, both runs ok
+REAL_DAMAGED = ("7b9d469e", "03761dc8")     # session 08-27, the overwrite
+
+
+def _has(ref) -> bool:
+    return subprocess.run(["git", "cat-file", "-e", f"{ref}^{{commit}}"],
+                          capture_output=True).returncode == 0
+
+
+@pytest.mark.skipif(not _has(REAL_DAMAGED[1]), reason="shallow checkout")
+def test_the_real_overwrite_reproduces_the_autopsy_numbers():
+    out = arg.audit_outputs(*REAL_DAMAGED)
+    by_key = {(m["file"], m["key"]): m for m in out["movers"]}
+    # the three the incident note measured by hand
+    assert by_key[("watchlist.json", "gate.gated_rows")]["baseline"] == 2069
+    assert by_key[("watchlist.json", "gate.gated_rows")]["candidate"] == 1996
+    assert by_key[("universe.json", "quality.tradeable.unmeasurable")]["candidate"] == 277
+    assert by_key[("universe.json", "quality.tradeable.tradeable")]["candidate"] == 2465
+
+
+@pytest.mark.skipif(not _has(REAL_DAMAGED[1]), reason="shallow checkout")
+def test_the_real_overwrite_also_moved_the_headline_verdict_the_autopsy_missed():
+    out = arg.audit_outputs(*REAL_DAMAGED)
+    by_key = {(m["file"], m["key"]): m for m in out["movers"]}
+    v = by_key[("breadth.json", "verdict.score")]
+    assert (v["baseline"], v["candidate"]) == (5, 4)
+
+
+@pytest.mark.skipif(not _has(REAL_HEALTHY[1]), reason="shallow checkout")
+def test_the_healthy_pair_scores_far_lower_than_the_damaged_one():
+    healthy = arg.audit_outputs(*REAL_HEALTHY)
+    damaged = arg.audit_outputs(*REAL_DAMAGED)
+    assert len(healthy["movers"]) < len(damaged["movers"]) / 3
+    # and the by-design split is doing work on the healthy pair
+    assert healthy["by_design"]
+
+
+@pytest.mark.skipif(not _has(REAL_HEALTHY[1]), reason="shallow checkout")
+def test_both_real_pairs_compare_the_same_number_of_keys():
+    """If the key space itself moved, the mover counts are not comparable."""
+    assert arg.audit_outputs(*REAL_HEALTHY)["comparable"] == \
+        arg.audit_outputs(*REAL_DAMAGED)["comparable"]
