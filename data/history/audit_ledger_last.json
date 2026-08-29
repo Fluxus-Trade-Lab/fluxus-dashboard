@@ -1,42 +1,20 @@
 {
- "as_of_session": "2026-08-27",
+ "as_of_session": "2026-08-28",
  "ledger": "data/history/run_ledger.jsonl",
- "lines": 10,
+ "lines": 11,
  "runs": [
   {
-   "session": "2026-08-27",
-   "code_sha": "a975b6d",
-   "trigger": "workflow_dispatch",
-   "violations": [],
-   "warnings": [],
-   "fund_fail_rate": 0.0,
-   "universe_rows": 5630
-  },
-  {
-   "session": "2026-08-27",
-   "code_sha": "951e2e5",
-   "trigger": "workflow_dispatch",
-   "violations": [],
-   "warnings": [],
-   "fund_fail_rate": 0.0,
-   "universe_rows": 5630
-  },
-  {
-   "session": "2026-08-27",
-   "code_sha": "abc18a5",
+   "session": "2026-08-28",
+   "code_sha": "3d604b7",
    "trigger": "schedule",
    "violations": [],
-   "warnings": [
-    "L2 universe_quality degraded"
-   ],
+   "warnings": [],
    "fund_fail_rate": 0.0,
-   "universe_rows": 5630
+   "universe_rows": 5634
   }
  ],
  "violations": 0,
- "warnings": 1,
- "top": [
-  "L6 2026-08-27: 3 lines (re-run; both happened, not a violation)"
- ],
+ "warnings": 0,
+ "top": [],
  "ok": true
 }

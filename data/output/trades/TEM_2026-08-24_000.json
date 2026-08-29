@@ -1,6 +1,6 @@
 {
   "trade_id": "TEM_2026-08-24_000",
-  "generated_at": "2026-08-28T06:01:16+00:00",
+  "generated_at": "2026-08-29T03:41:55+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "TEM",
@@ -9,16 +9,23 @@
     "entry_date": "2026-08-24",
     "entry_price": 67.25,
     "original_qty": 2595,
-    "current_qty": 2595,
+    "current_qty": 0,
     "stop_price": 65.2,
     "initial_stop": 65.2,
-    "closed": false,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "exit_date": "2026-08-28",
+    "hold_business_days": 4,
     "r_dollars": 5319.749999999993,
-    "realized_pl": 0,
-    "realized_R": 0.0,
-    "trims": []
+    "realized_pl": -129.7499999999926,
+    "realized_R": -0.02439024390243767,
+    "trims": [
+      {
+        "date": "2026-08-28",
+        "price": 67.2,
+        "qty": 2595,
+        "type": "sell_rest"
+      }
+    ]
   },
   "entry_snapshot": {
     "close": 66.17,
@@ -29,7 +36,7 @@
     "ma20": 52.50449999999999,
     "ma50": 52.992,
     "ma200": 56.684200000000004,
-    "rsi14": 63.96599870125825,
+    "rsi14": 63.965998929026696,
     "atr14": 4.690357142857141,
     "atr14_pct": 7.088343876163126,
     "high_52w": 104.32,
@@ -49,14 +56,14 @@
     "optimal_exit_date": "2026-08-24",
     "optimal_R": 2.326829268292684,
     "days_to_optimal": 0,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": -0.02439024390243767,
+    "capture_pct": -1.048218029350046,
+    "missed_R": 2.351219512195122,
     "post_exit_R": null,
     "hold_calendar_days": 4
   },
-  "lesson": "In progress",
-  "narrative": "Entered **TEM** long on 2026-08-24 at $67.25 (qty 2595) with stop $65.20 (1R = $2.05/sh = $5,320). Setup: **Long in mixed structure** \u2014 price above MA20 ($52.50), MA20 < MA50 < MA200 (death alignment), RSI 64, 40% through 52W range, ATR 7.1% of price. **In progress.** Peak so far +2.33R; worst drawdown -1.78R.",
+  "lesson": "Choppy / no edge",
+  "narrative": "Entered **TEM** long on 2026-08-24 at $67.25 (qty 2595) with stop $65.20 (1R = $2.05/sh = $5,320). Setup: **Long in mixed structure** \u2014 price above MA20 ($52.50), MA20 < MA50 < MA200 (death alignment), RSI 64, 40% through 52W range, ATR 7.1% of price. Realized **-0.02R**, peak was **+2.33R** on 2026-08-24 (day +0) \u2014 captured **-1%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-07-27",
@@ -248,7 +255,15 @@
       "high": 71.89,
       "low": 67.8,
       "close": 70.69,
-      "volume": 6575700.0
+      "volume": 6588600.0
+    },
+    {
+      "date": "2026-08-28",
+      "open": 68.9975,
+      "high": 70.8999,
+      "low": 63.77,
+      "close": 64.04,
+      "volume": 8708914.0
     }
   ]
 }

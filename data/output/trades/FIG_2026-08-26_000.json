@@ -1,6 +1,6 @@
 {
   "trade_id": "FIG_2026-08-26_000",
-  "generated_at": "2026-08-28T06:01:16+00:00",
+  "generated_at": "2026-08-29T03:41:55+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "FIG",
@@ -9,16 +9,23 @@
     "entry_date": "2026-08-26",
     "entry_price": 28.64,
     "original_qty": 5306,
-    "current_qty": 5306,
+    "current_qty": 3538,
     "stop_price": 27.7,
     "initial_stop": 27.7,
     "closed": false,
     "exit_date": null,
     "hold_business_days": null,
     "r_dollars": 4987.640000000007,
-    "realized_pl": 0,
-    "realized_R": 0.0,
-    "trims": []
+    "realized_pl": 2333.7600000000007,
+    "realized_R": 0.467908670232815,
+    "trims": [
+      {
+        "date": "2026-08-28",
+        "price": 29.96,
+        "qty": 1768,
+        "type": "trim_1_3"
+      }
+    ]
   },
   "entry_snapshot": {
     "close": 27.03,
@@ -28,8 +35,8 @@
     "volume": 10282000.0,
     "ma20": 25.7625,
     "ma50": 22.964599999999997,
-    "ma200": 26.452299999999994,
-    "rsi14": 57.94761091810269,
+    "ma200": 26.4523,
+    "rsi14": 57.94760967466823,
     "atr14": 1.5578571428571435,
     "atr14_pct": 5.763437450451881,
     "high_52w": 72.11,
@@ -248,7 +255,15 @@
       "high": 31.22,
       "low": 27.74,
       "close": 30.62,
-      "volume": 27552700.0
+      "volume": 27594600.0
+    },
+    {
+      "date": "2026-08-28",
+      "open": 30.18,
+      "high": 30.9199,
+      "low": 28.765,
+      "close": 28.82,
+      "volume": 19067109.0
     }
   ]
 }
