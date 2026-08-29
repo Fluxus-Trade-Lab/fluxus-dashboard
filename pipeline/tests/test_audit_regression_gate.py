@@ -395,3 +395,219 @@ def test_render_survives_an_empty_ledger():
 ])
 def test_dig(obj, path, expect):
     assert arg._dig(obj, path) is expect or arg._dig(obj, path) == expect
+
+
+# ==========================================================================
+# Second batch. Written against the mutation sweep, not against the code:
+# the first 53 tests left 25 mutants alive (68% kill), and every test below
+# exists because one specific surviving mutant proved the suite was not
+# pinning a line it appeared to cover. Method and survivor list:
+# `data/research/audit_mutation_2026-08-29.md`.
+# ==========================================================================
+
+# -- the status ladder's *spacing*, not just its ends -----------------------
+# Survivors: STATUS_RANK values ok:0->1, skipped:1->2, severe:3->4, fail:4->5.
+# Each collapses two rungs into one, and the original tests all jumped far
+# enough up the ladder to survive the collapse.
+
+@pytest.mark.parametrize("worse,better", [
+    ("skipped", "ok"),
+    ("degraded", "skipped"),
+    ("severe", "degraded"),
+    ("fail", "severe"),
+    ("error", "severe"),
+])
+def test_every_adjacent_rung_is_a_real_step(worse, better):
+    down = arg.compare(row(universe_quality={"status": better}),
+                       row(universe_quality={"status": worse}))
+    assert down["violations"], f"{better} -> {worse} was not seen as a downgrade"
+    up = arg.compare(row(universe_quality={"status": worse}),
+                     row(universe_quality={"status": better}))
+    assert not up["violations"], f"{worse} -> {better} was called a downgrade"
+
+
+def test_the_ladder_is_strictly_ordered():
+    order = ["ok", "skipped", "degraded", "severe", "fail"]
+    ranks = [arg.STATUS_RANK[s] for s in order]
+    assert ranks == sorted(ranks)
+    assert len(set(ranks)) == len(order), "two rungs collapsed onto one rank"
+    assert arg.STATUS_RANK["stale"] == arg.STATUS_RANK["degraded"]
+    assert arg.STATUS_RANK["error"] == arg.STATUS_RANK["fail"]
+
+
+# -- every tolerance in COUNTS, at its own boundary -------------------------
+# Survivors: 0.05 -> 1.05 on universe rows / bars_stale / unmeasurable /
+# fundamentals ok / fundamentals store, and 0.25 -> 1.25 on ticker_events
+# rows. Only bars_missing had a boundary test, so only bars_missing's
+# tolerance was pinned. This drives the whole table instead of one row of it.
+
+def _row_with(guard: str, path: str, value):
+    """Build a ledger row carrying exactly one number at a dotted path."""
+    node: dict = {"status": "ok"}
+    parts = path.split(".")
+    cur = node
+    for part in parts[:-1]:
+        cur = cur.setdefault(part, {})
+    cur[parts[-1]] = value
+    return row(**{guard: node})
+
+
+@pytest.mark.parametrize("label,guard,path,direction,tol", arg.COUNTS,
+                         ids=[c[0] for c in arg.COUNTS])
+def test_each_metric_is_silent_exactly_at_its_tolerance(label, guard, path, direction, tol):
+    base = 10000
+    bad_way = -1 if direction == "up" else 1
+    at = base * (1 + bad_way * tol)
+    rep = arg.compare(_row_with(guard, path, base),
+                      _row_with(guard, path, round(at)))
+    assert not [w for w in rep["warnings"] if label in w], \
+        f"{label} fired at exactly its {tol:.0%} tolerance"
+
+
+@pytest.mark.parametrize("label,guard,path,direction,tol", arg.COUNTS,
+                         ids=[c[0] for c in arg.COUNTS])
+def test_each_metric_fires_just_past_its_tolerance(label, guard, path, direction, tol):
+    base = 10000
+    bad_way = -1 if direction == "up" else 1
+    past = base * (1 + bad_way * tol * 1.02)
+    rep = arg.compare(_row_with(guard, path, base),
+                      _row_with(guard, path, round(past)))
+    assert [w for w in rep["warnings"] if label in w], \
+        f"{label} stayed silent {tol * 1.02:.1%} past its tolerance"
+
+
+@pytest.mark.parametrize("label,guard,path,direction,tol", arg.COUNTS,
+                         ids=[c[0] for c in arg.COUNTS])
+def test_no_metric_is_so_tolerant_it_would_have_missed_the_incident(label, guard, path, direction, tol):
+    """A tolerance above 1.0 cannot fire at all on a count that halves."""
+    assert 0 < tol < 1.0, f"{label} tolerance {tol} cannot report real damage"
+
+
+# -- the zero-baseline branch ----------------------------------------------
+# Survivors: `c > 0` -> `c >= 0`, and the literal 0 in that comparison.
+
+def test_zero_to_zero_is_not_a_finding():
+    rep = arg.compare(row(universe_quality=uq(bars_missing=0)),
+                      row(universe_quality=uq(bars_missing=0)))
+    assert not rep["warnings"], rep["warnings"]
+
+
+def test_zero_to_one_is_a_finding():
+    """The smallest possible rise off a zero baseline still gets said out loud."""
+    rep = arg.compare(row(universe_quality=uq(bars_missing=0)),
+                      row(universe_quality=uq(bars_missing=1)))
+    assert any("bars_missing: 0 -> 1" in w for w in rep["warnings"])
+
+
+def test_zero_baseline_finding_carries_no_fake_ratio():
+    rep = arg.compare(row(universe_quality=uq(bars_missing=0)),
+                      row(universe_quality=uq(bars_missing=300)))
+    f = [x for x in rep["findings"] if x["metric"] == "bars_missing"][0]
+    assert f["rel"] is None
+
+
+# -- the exact tolerance boundary ------------------------------------------
+# Survivors: `rel < -tol` -> `<=`, `rel > tol` -> `>=` (twice). A move of
+# exactly the tolerance is inside it, not outside.
+
+def test_exactly_at_tolerance_is_inside_it_down():
+    rep = arg.compare(row(universe_quality=uq(bars_missing=100)),
+                      row(universe_quality=uq(bars_missing=105)))   # exactly +5%
+    assert not rep["warnings"], rep["warnings"]
+
+
+def test_exactly_at_tolerance_is_inside_it_up():
+    rep = arg.compare(row(universe_quality=uq(tradeable=1000)),
+                      row(universe_quality=uq(tradeable=950)))      # exactly -5%
+    assert not rep["warnings"], rep["warnings"]
+
+
+def test_exactly_at_tolerance_is_inside_it_both():
+    rep = arg.compare(row(ticker_events={"status": "ok", "rows_today": 2000}),
+                      row(ticker_events={"status": "ok", "rows_today": 2500}))  # +25%
+    assert not rep["warnings"], rep["warnings"]
+
+
+# -- bool guard ------------------------------------------------------------
+# Survivor: `isinstance(b, bool) or isinstance(c, bool)` -> `and`. The
+# original test had bools on both sides, so `and` was just as effective.
+
+def test_a_bool_on_one_side_only_is_still_not_arithmetic():
+    rep = arg.compare(row(fundamentals={"status": "ok", "ok": True}),
+                      row(fundamentals={"status": "ok", "ok": 400}))
+    assert not rep["warnings"]
+    rep = arg.compare(row(fundamentals={"status": "ok", "ok": 400}),
+                      row(fundamentals={"status": "ok", "ok": False}))
+    assert not rep["warnings"]
+
+
+# -- R3 truncation ---------------------------------------------------------
+# Survivors: `len(new) > 8` -> `>=`, and both literal 8s.
+
+def test_exactly_eight_new_fields_are_all_shown_with_no_suffix():
+    new = [f"f{i}" for i in range(8)]
+    rep = arg.compare(row(universe_quality=uq(degraded=[])),
+                      row(universe_quality=uq(degraded=new)))
+    msg = [w for w in rep["warnings"] if w.startswith("R3")][0]
+    assert "more" not in msg
+    for f in new:
+        assert f in msg
+
+
+def test_nine_new_fields_show_eight_and_count_the_ninth():
+    new = [f"f{i}" for i in range(9)]
+    rep = arg.compare(row(universe_quality=uq(degraded=[])),
+                      row(universe_quality=uq(degraded=new)))
+    msg = [w for w in rep["warnings"] if w.startswith("R3")][0]
+    assert "+1 more" in msg
+    assert "f7" in msg and "f8" not in msg.split("+1 more")[0]
+
+
+def test_r3_finding_keeps_every_field_even_when_the_message_truncates():
+    new = [f"f{i}" for i in range(20)]
+    rep = arg.compare(row(universe_quality=uq(degraded=[])),
+                      row(universe_quality=uq(degraded=new)))
+    f = [x for x in rep["findings"] if x["rule"] == "R3"][0]
+    assert f["new_fields"] == new
+
+
+# -- audit()'s own defaults and counters -----------------------------------
+# Survivors: audit(strict=False) default flipped, and the zeroed counters.
+
+def test_audit_is_not_strict_unless_asked():
+    a = row(run_id="a", finished="...1", universe_quality=uq(bars_missing=64))
+    b = row(run_id="b", finished="...2", universe_quality=uq(bars_missing=266))
+    out = arg.audit([a, b])
+    assert out["ok"] and out["strict"] is False
+    assert out["violations"] == 0 and out["warnings"] > 0
+
+
+def test_a_clean_audit_counts_zero_of_both():
+    out = arg.audit([REPAIR_BASELINE, REPAIR_CANDIDATE])
+    assert out["violations"] == 0 and out["warnings"] == 0
+
+
+def test_audit_counters_sum_the_pairs():
+    out = arg.audit([INCIDENT_BASELINE, INCIDENT_CANDIDATE])
+    assert out["violations"] == sum(len(p["violations"]) for p in out["pairs"])
+    assert out["warnings"] == sum(len(p["warnings"]) for p in out["pairs"])
+    assert out["violations"] > 0 and out["warnings"] > 0
+
+
+# -- --json path creation --------------------------------------------------
+# Survivor: mkdir(parents=True) -> False survived because the original test
+# only needed one level of new directory.
+
+def test_json_report_creates_a_nested_path(tmp_path):
+    p = _write(tmp_path, [INCIDENT_BASELINE, INCIDENT_CANDIDATE])
+    out = tmp_path / "a" / "b" / "c" / "report.json"
+    arg.main(["--ledger", str(p), "--json", str(out)])
+    assert json.loads(out.read_text())["ok"] is False
+
+
+def test_json_report_overwrites_into_an_existing_directory(tmp_path):
+    p = _write(tmp_path, [REPAIR_BASELINE, REPAIR_CANDIDATE])
+    out = tmp_path / "d" / "report.json"
+    arg.main(["--ledger", str(p), "--json", str(out)])
+    arg.main(["--ledger", str(p), "--json", str(out)])   # dir now exists
+    assert json.loads(out.read_text())["ok"] is True
