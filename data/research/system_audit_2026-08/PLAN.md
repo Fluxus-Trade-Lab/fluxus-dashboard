@@ -17,3 +17,8 @@
 
 ## 执行序
 首件验收通过 → ①②③ 一轮 Workflow fan-out（每维 2-3 审计员+独立 verifier）→ 修复用 ralph loop 逐个清 → ④⑤⑥ 第二轮 → ⑦⑧⑨⑩ 第三轮。每轮产出落本目录，修复走各自白名单/留分支规矩。审计员全部在基于 origin/main 的临时树跑（宪法主树保护第 5 条）。
+
+## Andy 输入（2026-08-28 问答定案）
+- **④ 扩容为立项**：Obsidian = 交易资料 + 系统的 second brain（含散乱课程内容的归宿）；Notion = 常用数据库。方案参考 github.com/AgriciDaniel/claude-obsidian（文件级 skills：ingest/query/lint，PARA/Zettelkasten，带 provenance——与我们「结论带出处」同族）。**边界先划死：git 仓库 = 运营真理（体系/契约/数据），Obsidian = 领域知识（交易资料/课程），不许搅混。** 待 Andy：vault 路径；Notion 需在 claude.ai 连接器授权后才盘得动。
+- **Discord 三项全做**：会员商业数据（Gary 已大半，验完整性）+ 频道内容结构索引（29 教育频道→KNOWLEDGE 资料层）+ **Andy 历史发言→voice/raw 矿**（接进流水线原料）。
+- **淘汰授权**：可逆的直接停并报备清单；不可逆删除与改动 Andy 日常动线（早报/日推）的等周日批。
