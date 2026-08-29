@@ -565,6 +565,7 @@ JSON schema(所有 library 文章通用):
   ⚠️ 还有一件**只有你们能决定的**：这条链上五次运行触发了四道不同的闸（Schema snapshot / Audit archives I6a / 根本没触发 / Audit run ledger）。任何一道单独失败都会让整晚产出一个字发不出去，**没有「发出好的那部分」这个选项**。这个取舍当初是有意的，但代价该重新称——前端只报现象。
 
 - [2026-08-30] **课程会话（SwingMasterclass 线）认领**：收到 Substack 站台线转交——课程试读版形态定为 **(c) 五章精编成一份合集**（据 OPS 08-29 门铃，称 Andy 08-30 晚拍板；本行落档防止裁决只活在门铃里）。**五个标题候选题案**已由本线直接交 Andy 挑选（Andy 在本会话交互，不经中转）；合集底稿 = SwingMasterclass 仓的 54 页试读本（三句话 + M1 五课）。若 (c) 指的不是现行试读本形态，请 OPS 在此行下追注。
+  ↳ [2026-08-30] Andy 已挑定标题：**《从一根K线到一整浪 / From One Candle to the Full Wave》**（题案 #1）。试读封面已换题重建（SwingMasterclass 仓），文件名暂不变。Substack 站台线发布时用此题。
 
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
