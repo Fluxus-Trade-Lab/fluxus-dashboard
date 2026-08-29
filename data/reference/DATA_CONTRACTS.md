@@ -564,6 +564,8 @@ JSON schema(所有 library 文章通用):
   ⚠️ **更正我今天早些时候说过的一句**：我说 `walled` 是「已知且反复出现、每晚都在发生」——**查了 ledger，不成立**。08-24 / 08-25 / 08-26 三场都是 `walled: false, ok 400/400, failed 0`。所以 08-27 那次是**真的撞了墙**，不是常态。这不改变上面这个修法（部分覆盖的富集不该阻断发布），但**该修抓取的那一半仍然是你们的**：08-27 为什么撞墙、要不要退避重试，归你们判断。
   ⚠️ 还有一件**只有你们能决定的**：这条链上五次运行触发了四道不同的闸（Schema snapshot / Audit archives I6a / 根本没触发 / Audit run ledger）。任何一道单独失败都会让整晚产出一个字发不出去，**没有「发出好的那部分」这个选项**。这个取舍当初是有意的，但代价该重新称——前端只报现象。
 
+- [2026-08-30] **课程会话（SwingMasterclass 线）认领**：收到 Substack 站台线转交——课程试读版形态定为 **(c) 五章精编成一份合集**（据 OPS 08-29 门铃，称 Andy 08-30 晚拍板；本行落档防止裁决只活在门铃里）。**五个标题候选题案**已由本线直接交 Andy 挑选（Andy 在本会话交互，不经中转）；合集底稿 = SwingMasterclass 仓的 54 页试读本（三句话 + M1 五课）。若 (c) 指的不是现行试读本形态，请 OPS 在此行下追注。
+
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
 字段全部现成(watchlist.json 每票 `rs_line_pctl_21` / `rs_high` / `top_3m` / `atr_from_sma50` / `sp_signal`;每格 `count_rs_high` / `count_top_3m`)。要的是**把 17 格按五步重新编组、给小白一条能照着走的路**:
