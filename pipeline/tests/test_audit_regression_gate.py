@@ -1013,3 +1013,24 @@ def test_outputs_json_can_be_rewritten_into_an_existing_directory(tmp_path):
     for _ in range(2):
         arg.main(["--outputs", shas[0], shas[1], "--repo", str(root), "--json", str(dest)])
     assert json.loads(dest.read_text())["session"] == "2026-08-27"
+
+
+# -- the constants by value, not by symbol ---------------------------------
+# Second sweep: MAX_DEPTH 3->4 and MAX_FANOUT 30->31 SURVIVED, while
+# PANEL_TOL 0.02 -> died. Same batch, same shape, opposite outcome, and the
+# difference is one line: the tolerance test compares against a literal, the
+# depth and fanout tests wrote `arg.MAX_DEPTH`. A test that reads the
+# constant it is checking moves with the mutant and can never fail.
+# The tests above still earn their keep -- they pin the *behaviour* at
+# whatever the limits are. These two pin the limits.
+
+def test_max_depth_is_the_value_the_pruning_was_measured_at():
+    """261 comparable keys and the 7-vs-40 reference points were measured at
+    MAX_DEPTH=3. Move it and those numbers stop describing this tool."""
+    assert arg.MAX_DEPTH == 3
+
+
+def test_max_fanout_is_the_value_the_pruning_was_measured_at():
+    """Without this prune the same pair yields 26,994 keys and 114 movers,
+    nearly all of them one ticker gaining one event."""
+    assert arg.MAX_FANOUT == 30
