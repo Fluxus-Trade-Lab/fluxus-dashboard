@@ -883,3 +883,133 @@ def test_both_real_pairs_compare_the_same_number_of_keys():
     """If the key space itself moved, the mover counts are not comparable."""
     assert arg.audit_outputs(*REAL_HEALTHY)["comparable"] == \
         arg.audit_outputs(*REAL_DAMAGED)["comparable"]
+
+
+# ==========================================================================
+# Third batch. Panel mode's first sweep left 15 of 123 mutants alive (88%);
+# all 15 were in the new code, and most of them were boundaries the batch
+# above exercised only through explicit arguments, never through the
+# module's own defaults.
+# ==========================================================================
+
+# -- the module-level constants, exercised through the defaults ------------
+# Survivors: MAX_DEPTH 3->4, MAX_FANOUT 30->31, and the `0` that walk() starts
+# at. Every earlier depth/fanout test passed the limit in by hand, so the
+# defaults themselves were never on the hook.
+
+def _nest(depth: int):
+    """A document whose only integer sits exactly `depth` levels down."""
+    doc: Any = 1
+    for i in reversed(range(depth)):
+        doc = {f"k{i}": doc}
+    return doc
+
+
+def test_default_depth_keeps_the_deepest_level_it_promises():
+    assert arg.flatten_counts(_nest(arg.MAX_DEPTH)) != {}
+
+
+def test_default_depth_drops_one_level_further_down():
+    assert arg.flatten_counts(_nest(arg.MAX_DEPTH + 1)) == {}
+
+
+def test_default_fanout_keeps_a_dict_of_exactly_that_width():
+    wide = {f"k{i}": i + 1 for i in range(arg.MAX_FANOUT)}
+    assert len(arg.flatten_counts({"d": wide})) == arg.MAX_FANOUT
+
+
+def test_default_fanout_drops_a_dict_one_key_wider():
+    wide = {f"k{i}": i + 1 for i in range(arg.MAX_FANOUT + 1)}
+    assert arg.flatten_counts({"d": wide}) == {}
+
+
+def test_a_dict_exactly_at_the_fanout_limit_is_structure_not_an_index():
+    at = {f"k{i}": 1 for i in range(7)}
+    assert arg.flatten_counts({"d": at}, max_fanout=7) != {}
+    assert arg.flatten_counts({"d": at}, max_fanout=6) == {}
+
+
+def test_a_top_level_integer_is_reachable_at_depth_one():
+    """Pins where the walk starts counting from."""
+    assert arg.flatten_counts({"n": 1}, max_depth=1) == {"n": 1}
+    assert arg.flatten_counts({"n": 1}, max_depth=0) == {}
+
+
+# -- the panel tolerance boundary ------------------------------------------
+# Survivor: `abs(rel) <= tol` -> `<`.
+
+def test_a_move_of_exactly_the_panel_tolerance_is_inside_it():
+    out = arg.compare_panels({"f.json": {"n": 100}}, {"f.json": {"n": 102}}, tol=0.02)
+    assert out["movers"] == []
+
+
+def test_a_move_a_hair_past_the_panel_tolerance_is_outside_it():
+    out = arg.compare_panels({"f.json": {"n": 1000}}, {"f.json": {"n": 1021}}, tol=0.02)
+    assert len(out["movers"]) == 1
+
+
+def test_the_default_panel_tolerance_is_the_one_the_reference_points_were_measured_at():
+    """7-vs-40 was measured at PANEL_TOL. Change the constant and those two
+    numbers in the docstring stop describing this tool."""
+    assert arg.PANEL_TOL == 0.02
+
+
+# -- by_design ordering ----------------------------------------------------
+# Survivor: by_design.sort(reverse=True) -> False.
+
+def test_by_design_rows_are_ranked_largest_first_too():
+    base = {"shortlist.json": {"manual[]": 100, "cards[]": 100}}
+    cand = {"shortlist.json": {"manual[]": 90, "cards[]": 10}}
+    out = arg.compare_panels(base, cand)
+    assert [r["key"] for r in out["by_design"]] == ["cards[]", "manual[]"]
+
+
+# -- which side is missing its session date --------------------------------
+# Survivors: `s_a is None or s_b is None` -> `and`, and `s_a is None` in the
+# message. The earlier test had quality.json missing from BOTH commits.
+
+def test_a_session_date_missing_on_only_the_baseline_side_still_refuses(tmp_path):
+    root, shas = _repo(tmp_path, [{"a.json": {"n": 1}},
+                                  {**q("2026-08-27"), "a.json": {"n": 2}}])
+    out = arg.audit_outputs(shas[0], shas[1], repo=root)
+    assert "no session date" in out["error"] and shas[0] in out["error"]
+
+
+def test_a_session_date_missing_on_only_the_candidate_side_still_refuses(tmp_path):
+    root, shas = _repo(tmp_path, [{**q("2026-08-27"), "a.json": {"n": 1}}])
+    (root / "data" / "output" / "quality.json").unlink()
+    subprocess.run(["git", "add", "-A"], cwd=root, check=True)
+    subprocess.run(["git", "commit", "-q", "-m", "drop"], cwd=root, check=True)
+    head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=root,
+                          capture_output=True, text=True).stdout.strip()
+    out = arg.audit_outputs(shas[0], head, repo=root)
+    assert "no session date" in out["error"] and head in out["error"]
+
+
+# -- render truncation and --json path -------------------------------------
+# Survivors: key[:40] -> [:41], and mkdir(parents/exist_ok) in outputs mode.
+
+def test_render_outputs_truncates_a_long_key_to_a_fixed_width():
+    out = {"session": "s", "baseline_ref": "a", "candidate_ref": "b",
+           "comparable": 1, "tolerance": 0.02, "by_design": [],
+           "movers": [{"file": "f.json", "key": "k" * 60,
+                       "baseline": 1, "candidate": 2, "rel": 1.0}]}
+    line = [l for l in arg.render_outputs(out).splitlines() if "kkk" in l][0]
+    assert "k" * 40 in line and "k" * 41 not in line
+
+
+def test_outputs_json_creates_a_nested_path(tmp_path):
+    root, shas = _repo(tmp_path, [{**q(), "a.json": {"n": 100}},
+                                  {**q(), "a.json": {"n": 40}}])
+    dest = tmp_path / "x" / "y" / "z" / "out.json"
+    arg.main(["--outputs", shas[0], shas[1], "--repo", str(root), "--json", str(dest)])
+    assert json.loads(dest.read_text())["movers"]
+
+
+def test_outputs_json_can_be_rewritten_into_an_existing_directory(tmp_path):
+    root, shas = _repo(tmp_path, [{**q(), "a.json": {"n": 100}},
+                                  {**q(), "a.json": {"n": 40}}])
+    dest = tmp_path / "w" / "out.json"
+    for _ in range(2):
+        arg.main(["--outputs", shas[0], shas[1], "--repo", str(root), "--json", str(dest)])
+    assert json.loads(dest.read_text())["session"] == "2026-08-27"
