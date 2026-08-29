@@ -494,3 +494,5 @@ Joe 的两条（Daily Content Threads 停用、Gate 声明制审计）均已闭�
 - [2026-08-30 Andy 拍板·OPS 代录] **T3 PII 清史：选 (b)**——接受 git 历史中的既往存在，不重写历史；今后零新增由既有闸把守（PII 政策+核销时全仓扫描）。T3 销账。
 
 - [2026-08-30 立项挂单 · OPS 牵头设计（Andy 经 Studio Q 转达原话）] **内容原料档案库：「从每周产生的内容里提炼，而非再次创作」**。控制台配套的数据库——原数据与发布档案统一管理、周信直接调用。Andy 给的每周内容清单：**自动化**=每日交易记录、每日盘面读数（dashboard，git 历史已是档案）；**手动**=每日推文（posts.csv ✅）、每日 daily briefing pdf（**无归集管道**）、每日/周 founders notes（**无管道**）、每日交易评论（**无管道**）、每笔交易的思考文字（**无管道**）。缺口=四条手动流的归集管道+统一索引。设计明天出（先读 Fluxus_Brand/record/ 现状再动，与 Steve/Studio Q 分工边界一起定）。关联：v2 模板 `briefs/2026-08-30_letter_template_worked.md`；paywall 钩子设计 Andy 标「待商榷」挂着不催。
+
+- [2026-08-30 OPS 挂单 ×3 · CONTENT_FLOW v1 配套管道（设计全文 `Fluxus_Brand/ops/CONTENT_FLOW.md`）] ① **GAS writing 拉取** → 建议数据端认领：照 shortlist_pull 模式每晚拉 writingStore 的 Sheet（checklist/recap/founders note 三 kind），镜像落 `Fluxus_Brand/record/writing/<kind>/<date>.md`（append-only，Sheet 仍是权威）。② **Discord briefing 归集器** → 建议 Gary 认领：只读抓 briefing 频道消息+附件落 `record/briefings/`，与深检④「Andy 历史发言」同一工程一次做。③ **WHAT CHANGED 检测器** → 建议夜班/数据端认领：周 diff 关键读数（regime/band、宽度、atr_ext 分布、主题 excess 轮动）输出候选清单文件，供周日备信勾选——v2 周信段 2 的自动化底座。
