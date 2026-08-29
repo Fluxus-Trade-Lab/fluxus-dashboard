@@ -38,6 +38,7 @@
 
 > ⚠️ Zac 注（08-24 14:0x）：这两条**未登录读不了**（WebFetch 返回 **HTTP 402**）。按 [[reference_browser_choice_x_scraping]]，X 要 Andy 在真 Chrome 里连上才抓得到。所以本轮**只入册未学习**。下次窗口先试浏览器；连不上就在晨报里点名说「这两条卡在浏览器上」，不猜内容、不拿标题当结论。
 > 作者 `@Muninn` 我们**还没有档**——`data/research/` 里没有他的目录，`JeffSun_Wiki`/`clement`/`ohiain` 那几套都不是他。学的时候顺手判一下：是**单帖收藏**（判词入 `collection.md` 就完），还是**值得像 stockbee/oratnek 那样单独立档**。
+- [08-30] https://x.com/huangruiteng/status/2083904257494024425 ——（Andy）改善控制台+loop 功能方向，先收藏再研究学习；他要看到「AI 自动干活提效，一人公司提效」。（OPS 配注：开源项目 LoopX——超长程 Agent 自主跑 200+ 小时状态不漂移；核心主张=LLM 上下文有限→**状态外置**+完备状态管理/监督/规划；domain state 由领域系统定、LoopX 把状态投影成下一步可执行工作；干活中能力自进化。与我们「git=外置状态机」同构但更系统，Zac 判定时重点看：状态投影/writeback-resume/能力自进化三件对我们控制台与 campaign 断点续跑有无可抄件）
 
 ## 📇 会话通讯录（Zac 实测记录 · 待 OPS 定案）
 
