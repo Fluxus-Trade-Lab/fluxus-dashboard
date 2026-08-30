@@ -1,0 +1,17 @@
+# ① 信号站 · Signal Scout
+
+**owns**：「这个想法**现在**值得做吗」——整条产线唯一的选题决策。
+
+**reads**：
+- `Fluxus_Brand/BRAIN.md`（先读）
+- `Fluxus_Brand/ops/material_inbox.md`（素材箱）
+- `Fluxus_Brand/voice/raw/`（Andy 口述）
+- `data/content/posts.csv`（近期表现——什么形状的帖在涨）
+- `data/research/night_reports/INBOX.md` 🔗 收藏夹（Andy 扔的链接）
+- receipts ⏳ 待兑现项（判断到期=天然选题）
+
+**returns**：≤3 个候选，每个带六件：发生了什么 / 受众为何在意 / 出处 / 衰减速度（这周不做就死吗）/ 成品能回答的问题 / 弃选理由清单。**弃的必须多于取的**——这站的价值是保护下游不给没人要的题抛光。
+
+**must not**：定 thesis、起草任何内容、把「Andy 没说过的观点」当信号。
+
+**done when**：候选写进当日 campaign 目录 `RECORD.md` 的 signal 节，且弃选理由≥取用数。
