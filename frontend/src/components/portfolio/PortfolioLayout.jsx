@@ -8,7 +8,7 @@ import { adjustTradesForSplits } from './lib/splits'
 import { suggestSplits, buildFrozenSnapshot } from './lib/snapshot'
 import { SPLIT_TABLE } from './lib/splitTable'
 import { parseCSV, generateCSV, downloadFile } from './lib/csv'
-import { TABS } from './lib/portfolioFormat'
+import { TABS, todayStr } from './lib/portfolioFormat'
 import { useLanguage } from '../../i18n/LanguageContext'
 import PortfolioHeader from './PortfolioHeader'
 import TradeForm from './TradeForm'
@@ -87,7 +87,7 @@ export default function Layout() {
     adjTrades.filter(t => !t.isClosed).reduce((s, t) => {
       const dir = t.direction === 'long' ? 1 : -1
       // Look up current price
-      const today = new Date().toISOString().split('T')[0]
+      const today = todayStr()
       let price = t.entryPrice
       for (let d = 0; d < 5; d++) {
         const checkDate = new Date(today)

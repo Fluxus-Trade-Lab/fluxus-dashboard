@@ -1,3 +1,5 @@
+import { todayET } from '../../lib/tradingDate'
+
 /**
  * How far behind is what you are looking at?
  *
@@ -38,12 +40,11 @@ export function weekdaysBetween(from, to) {
   return n
 }
 
-/** Today in New York, as an ISO date. The market's day, not the reader's. */
-export function todayET(now = new Date()) {
-  return new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit',
-  }).format(now)
-}
+/* `todayET` used to be defined here. It now lives in `src/lib/tradingDate.js`
+   because the portfolio needs the same answer, and the same quantity under two
+   definitions is how this repo has broken itself before. Re-exported so this
+   module's callers and tests keep their import. */
+export { todayET }
 
 export const WARN_AT = 2   // badge appears
 export const ALARM_AT = 4  // badge turns red

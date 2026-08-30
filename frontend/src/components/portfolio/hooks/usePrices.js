@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 import { usePortfolio } from '../context/PortfolioContext'
 import { fetchQuotes, fetchBatchHistory, fetchHistory } from '../services/priceService'
 import { todayStr } from '../lib/portfolioFormat'
+import { prevWeekday } from '../../../lib/tradingDate'
 
 export function usePrices() {
   const { state, dispatch } = usePortfolio()
@@ -27,14 +28,10 @@ export function usePrices() {
         if (q.error) return
         if (q.price != null) newPrices[`${ticker}:${today}`] = q.price
         if (q.prevClose != null) {
-          // Store prev close for 1D change calculation
-          const yesterday = new Date()
-          yesterday.setDate(yesterday.getDate() - 1)
-          // Walk back to find a weekday
-          while (yesterday.getDay() === 0 || yesterday.getDay() === 6) {
-            yesterday.setDate(yesterday.getDate() - 1)
-          }
-          newPrices[`${ticker}:${yesterday.toISOString().split('T')[0]}`] = q.prevClose
+          // Store prev close for 1D change calculation. Keyed off the ET
+          // session, because `calculations.js` reads this key off the ET
+          // session — writer and reader must share one calendar.
+          newPrices[`${ticker}:${prevWeekday(today)}`] = q.prevClose
         }
       })
 

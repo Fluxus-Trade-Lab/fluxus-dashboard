@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from 'react'
 import PageHeader from '../PageHeader'
+import DataFreshnessBadge from '../shared/DataFreshnessBadge'
 import PickedChart from '../ticker/PickedChart'
 import { useThemeHandoff } from '../../hooks/useThemeHandoff'
 import { useChartPick } from '../../hooks/useChartPick'
@@ -374,6 +375,7 @@ export default function ScreenerPage() {
             </a>
           ) : 'Market conditions — not loaded',
           heat?.as_of ?? '',
+          <DataFreshnessBadge key="fresh" sessionDate={heat?.as_of?.slice(0, 10)} />,
         ]} />
 
       {/* the whole confluence ledger, not the old 25-row display slice — the

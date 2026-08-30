@@ -87,8 +87,8 @@ export const translations = {
     'wl.rskey.rs_line_pctl_21': "The number beside each ticker is its strength against SPY over its OWN last 21 sessions: 100 means the close/SPY ratio is at a one-month high. Not a rank against other names — hover for RS 1M, which is that.",
     'wl.foot': 'Written nightly by the pipeline, one file. The panels are the pipeline\u2019s; the three switches above are this page\u2019s, and they only hide rows — every count stays the count of the full panel, so what is held back is always on screen as a number. Each panel will tell you the rule that produced it.',
     'nav.portfolio': 'Portfolio',
-    'nav.trades': 'Trade Journal',
-    'nav.journal': 'Review',
+    'nav.journal': 'Trade Journal',
+    'nav.review': 'Review',
     // Review — the four stages of a trade's life, and the head coach's verdict.
     // {worst} is a placeholder the component splits on to insert a link, so it
     // may sit anywhere the sentence needs it in either language.
@@ -224,12 +224,12 @@ export const translations = {
     'nav.groups': 'Themes',
     'nav.modelbooks': 'Model Books',
     'rail.market': 'Market',
-    'nav.rslive': 'RS Live Tracker',
+    'nav.rs-live': 'RS Live Tracker',
     'nav.rsrotation': 'RS Rotation',
     'nav.defense': 'Defense',
     'nav.offense': 'Offense',
     'nav.psychology': 'Psychology',
-    'nav.pfmgmt': 'Portfolio Management',
+    'nav.portfolio-management': 'Portfolio Management',
     'nav.news': 'News',
     'nav.masterclass': 'Swing Trading Masterclass',
 
@@ -469,8 +469,8 @@ export const translations = {
     'wl.rskey.rs_line_pctl_21': '每个代码旁边的数字是它对 SPY 的强度在「自己」最近 21 个交易日里的百分位：100 表示 close/SPY 比值创一个月新高。不是和别的票比的排名——悬停可看 RS 1M，那个才是。',
     'wl.foot': '每晚由管线写一次，一个文件。格子是管线的，上面那三个开关是这一页的——它们只隐藏行，每一格的计数仍是整格的计数，所以被挡住的部分始终以数字留在屏幕上。每一格都会告诉你它是怎么筛出来的。',
     'nav.portfolio': '投资组合',
-    'nav.trades': '交易日志',
-    'nav.journal': '复盘',
+    'nav.journal': '交易日志',
+    'nav.review': '复盘',
     'empty.noClosed': '还没有已平仓的交易可分析。',
     'empty.noTrades': '还没有交易可分析。',
     'empty.noOpen': '当前没有持仓可分析。',
@@ -604,12 +604,12 @@ export const translations = {
     'nav.modelbooks': '标杆案例',
 
     'rail.market': '市场',
-    'nav.rslive': 'RS 实时追踪',
+    'nav.rs-live': 'RS 实时追踪',
     'nav.rsrotation': 'RS 轮动',
     'nav.defense': '防守',
     'nav.offense': '进攻',
     'nav.psychology': '交易心理',
-    'nav.pfmgmt': '组合管理',
+    'nav.portfolio-management': '组合管理',
     'nav.news': '新闻',
     'nav.masterclass': '波段交易大师课',
 

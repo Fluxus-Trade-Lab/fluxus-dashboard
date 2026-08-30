@@ -1,4 +1,5 @@
 import { daysBetween, todayStr, RISK_FREE_RATE } from './portfolioFormat'
+import { isoDaysAgo } from '../../../lib/tradingDate'
 
 /**
  * Look up the best available price for a ticker on a date, AND say which day
@@ -125,9 +126,7 @@ export function enrichTrades(trades, totalPortfolioValue, dailyPrices) {
     const lastHit = lookupPriceAt(t.ticker, today, dailyPrices)
     const lastP = lastHit?.price ?? t.entryPrice
     // Previous close: look up yesterday (or most recent prior trading day)
-    const yesterday = new Date()
-    yesterday.setDate(yesterday.getDate() - 1)
-    const prevHit = lookupPriceAt(t.ticker, yesterday.toISOString().split('T')[0], dailyPrices)
+    const prevHit = lookupPriceAt(t.ticker, isoDaysAgo(today, 1), dailyPrices)
     const prevC = prevHit?.price ?? lastP
 
     const marketVal = t.currentQty * lastP

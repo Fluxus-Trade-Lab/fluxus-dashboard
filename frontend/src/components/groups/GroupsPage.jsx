@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import PageHeader from '../PageHeader'
+import DataFreshnessBadge from '../shared/DataFreshnessBadge'
 import DataUnavailable from '../DataUnavailable'
 import Reading, { readThemes } from '../Reading'
 import { useGroups } from '../../hooks/useGroups'
@@ -262,7 +263,8 @@ export default function GroupsPage() {
   return (
     <div className="space-y-5">
       <PageHeader group="market" title="Themes"
-        meta={[`vs ${benchmark} · ${date} · ${rows.length} themes of ${themes.length} groups`]} />
+        meta={[`vs ${benchmark} · ${date} · ${rows.length} themes of ${themes.length} groups`,
+               <DataFreshnessBadge key="fresh" sessionDate={date} />]} />
       <Reading text={readThemes(windowed, winKey)} />
 
       {/* THE CONTROL BAR — every control on the page, in one sticky line. */}

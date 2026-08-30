@@ -1,3 +1,5 @@
+import { todayET } from '../../../lib/tradingDate'
+
 export const RISK_FREE_RATE = 0.043
 export const MASK = '****'
 
@@ -29,7 +31,11 @@ export const clrHex = (v) =>
 export const daysBetween = (a, b) =>
   Math.max(0, Math.round((new Date(b) - new Date(a)) / 86400000))
 
-export const todayStr = () => new Date().toISOString().split('T')[0]
+/* The market's day, not the browser's. This was `toISOString()` — today in
+   UTC — until 2026-08-31; on a JST clock that names tomorrow's session for the
+   whole of Andy's morning, which is when he reads the page. See
+   `src/lib/tradingDate.js` for what that broke. */
+export const todayStr = () => todayET()
 
 /* Sector identity — eleven muted hues that say WHICH sector, never which
    side. Kept off the pair's blue and red so a sector chip can never be read

@@ -10,10 +10,23 @@ export default function ModelBooksPage() {
   const [cards, setCards] = useState([])
   const [loading, setLoading] = useState(true)
 
+  /* `suspect.json` is the shape gate's verdict — see
+     `scripts/flag-modelbook-outliers.mjs` for what it measures and why. It is
+     merged onto the cards HERE, once, so every mode below reads the same
+     judgement; only Browse acts on it today. A missing or unreadable file is
+     not an error: the library renders exactly as it did before the gate. */
   useEffect(() => {
-    fetch('/data/modelbooks/index.json')
-      .then(res => res.json())
-      .then(data => { setCards(data); setLoading(false) })
+    Promise.all([
+      fetch('/data/modelbooks/index.json').then(res => res.json()),
+      fetch('/data/modelbooks/suspect.json').then(res => res.json()).catch(() => null),
+    ])
+      .then(([data, gate]) => {
+        const flags = gate?.entries ?? {}
+        setCards(data.map(c => (
+          flags[c.id] ? { ...c, suspect: true, suspect_reason: flags[c.id] } : c
+        )))
+        setLoading(false)
+      })
       .catch(() => setLoading(false))
   }, [])
 

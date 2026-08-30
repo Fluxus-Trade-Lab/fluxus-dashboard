@@ -98,6 +98,16 @@ function NotesPanel({ entry, onTickerClick }) {
       {/* Source */}
       <p className="text-[11px] text-[var(--color-text-muted)]">{entry.source}</p>
 
+      {/* Shown only when the reader has asked to see the flagged rows, and
+          then it says WHICH measurement failed, not just that one did. */}
+      {entry.suspect && (
+        <p className="text-[11px] m-0 px-2 py-1 rounded-lg"
+           style={{ color: 'var(--color-refused)',
+                    border: '1px solid var(--color-refused)' }}>
+          Bars not trusted — {entry.suspect_reason}
+        </p>
+      )}
+
       {/* Pattern badges */}
       {entry.patterns.length > 0 && (
         <div className="flex flex-wrap gap-1">
@@ -160,6 +170,7 @@ export default function BrowseView({ cards }) {
   const [patternFilter, setPatternFilter] = useState('all')
   const [sourceFilter, setSourceFilter] = useState('all')
   const [search, setSearch] = useState('')
+  const [showSuspect, setShowSuspect] = useState(false)
   const [sortKey, setSortKey] = useState('gain_pct')
   const [sortDir, setSortDir] = useState('desc')
   const [selectedId, setSelectedId] = useState(null)
@@ -199,16 +210,25 @@ export default function BrowseView({ cards }) {
     return [...set].sort()
   }, [cards])
 
-  // Filter + sort
+  const nSuspect = useMemo(() => cards.filter(c => c.suspect).length, [cards])
+
+  /* The page opens sorted by GAIN, so whatever is broken in this library is
+     what the reader meets first — and it was: SAF 2016 at +465,308.8%, CHK
+     2020 at +64,429.6% for a company that went bankrupt that June. Those bars
+     are split-unadjusted, not miraculous. They are hidden, never deleted:
+     `scripts/flag-modelbook-outliers.mjs` measures each entry's own shape and
+     the switch below puts them back for anyone who wants to look at the
+     damage. */
   const filtered = useMemo(() => {
     let result = cards.filter(card => {
+      if (card.suspect && !showSuspect) return false
       if (patternFilter !== 'all' && !card.patterns.includes(patternFilter)) return false
       if (sourceFilter !== 'all' && card.source !== sourceFilter) return false
       if (search && !matchesSearch(card, search)) return false
       return true
     })
     return result.sort((a, b) => compareEntries(a, b, sortKey, sortDir))
-  }, [cards, patternFilter, sourceFilter, search, sortKey, sortDir])
+  }, [cards, showSuspect, patternFilter, sourceFilter, search, sortKey, sortDir])
 
   // Selected entry
   const selectedEntry = useMemo(() => {
@@ -400,6 +420,15 @@ export default function BrowseView({ cards }) {
             <option key={s} value={s}>{s}</option>
           ))}
         </select>
+        {nSuspect > 0 && (
+          <label className="flex items-center gap-1.5 text-[10px] text-[var(--color-text-muted)] cursor-pointer select-none"
+                 title="Entries whose own bars cannot support their number — split-unadjusted history, mostly. Hidden by default, never deleted.">
+            <input type="checkbox" checked={showSuspect}
+                   onChange={e => setShowSuspect(e.target.checked)}
+                   className="cursor-pointer" />
+            {nSuspect} suspect
+          </label>
+        )}
         <span className="text-[10px] text-[var(--color-text-muted)] ml-auto">
           {filtered.length}
         </span>

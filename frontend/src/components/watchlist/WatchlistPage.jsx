@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import PageHeader from '../PageHeader'
+import DataFreshnessBadge from '../shared/DataFreshnessBadge'
 import TickerLink from '../ticker/TickerLink'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { useWatchlist } from '../../hooks/useWatchlist'
@@ -1036,7 +1037,8 @@ export default function WatchlistPage({ zone: routeZone }) {
 
   return (
     <div className="py-6 px-1">
-      <PageHeader group="market" title={t('nav.watchlist')} />
+      <PageHeader group="market" title={t('nav.watchlist')}
+                  meta={[<DataFreshnessBadge key="fresh" sessionDate={data.date} />]} />
       <Tabs active={MORNING} />
 
       {/* Provenance first: which close this is, and how many names were even

@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { usePortfolio } from '../context/PortfolioContext'
+import { todayET, isoDaysAgo } from '../../../lib/tradingDate'
 import { usePrices } from '../hooks/usePrices'
 import StatCard from '../ui/StatCard'
 import Button from '../ui/Button'
@@ -156,13 +157,11 @@ export default function OverviewTab({
 
   // Last 10D / 20D rolling window stats
   const recentWindowStats = useMemo(() => {
-    const today = new Date()
+    const today = todayET()
     const closedTrades = enrichedTrades.filter(t => t.isClosed)
 
     return [10, 20].map(days => {
-      const cutoff = new Date(today)
-      cutoff.setDate(cutoff.getDate() - days)
-      const cutoffStr = cutoff.toISOString().split('T')[0]
+      const cutoffStr = isoDaysAgo(today, days)
 
       const tds = closedTrades.filter(t => {
         const trims = t.trims || []

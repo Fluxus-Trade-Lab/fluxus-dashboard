@@ -63,7 +63,7 @@ export const NAV_GROUPS = [
       // routes still resolve — #/breadth and #/correction — so links that
       // were sent keep working.
       { key: 'groups', short: 'THM', hash: '#/groups' },         // shown as "Themes"
-      { key: 'rslive', short: 'LIV', hash: '#/rs-live' },
+      { key: 'rs-live', short: 'LIV', hash: '#/rs-live' },
       // RS Rotation and RS Leaderboard both merged into Themes — the first
       // was one of its layers, the second is what the whole page became. Both
       // routes still resolve so sent links land on Themes.
@@ -78,8 +78,13 @@ export const NAV_GROUPS = [
     key: 'book',
     items: [
       { key: 'portfolio', short: 'PRT', hash: '#/portfolio' },
-      { key: 'trades', short: 'LOG', hash: '#/journal' },
-      { key: 'journal', short: 'REV', hash: '#/review' },
+      // `key` IS the route's first segment — Layout derives `currentPage`
+      // from the hash and the rail lights the row whose key equals it. Until
+      // 2026-08-31 four entries carried a label-shaped key instead, and two of
+      // them were each other's route: clicking Trade Journal went to #/journal
+      // and lit Review. A key here is an identifier, never a name.
+      { key: 'journal', short: 'LOG', hash: '#/journal' },
+      { key: 'review', short: 'REV', hash: '#/review' },
     ],
   },
   {
@@ -94,7 +99,7 @@ export const NAV_GROUPS = [
       { key: 'defense', short: 'DEF', hash: '#/defense' },
       { key: 'offense', short: 'OFF', hash: '#/offense' },
       { key: 'psychology', short: 'PSY', hash: '#/psychology' },
-      { key: 'pfmgmt', short: 'PMG', hash: '#/portfolio-management' },
+      { key: 'portfolio-management', short: 'PMG', hash: '#/portfolio-management' },
       { key: 'news', short: 'NWS', hash: '#/news' },
     ],
   },

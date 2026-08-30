@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import PageHeader from '../PageHeader'
+import DataFreshnessBadge from '../shared/DataFreshnessBadge'
 import Reading, { readMarketState } from '../Reading'
 import VerdictBanner from './VerdictBanner'
 import StateBoard from './StateBoard'
@@ -57,7 +58,9 @@ export default function BreadthPage({ data }) {
       <PageHeader group="market" title="Market State"
         meta={['rank is how many cells are filled, never hue alone',
                'an unmeasured condition renders outside the scale',
-               'every condition prints the numbers that produced it']} />
+               'every condition prints the numbers that produced it',
+               <DataFreshnessBadge key="fresh"
+                 sessionDate={rows[rows.length - 1]?.date} />]} />
       <Reading text={readMarketState(verdict)} />
       <TimeMachineBar tm={tm} />
 

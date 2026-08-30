@@ -2,6 +2,7 @@ import { useState } from 'react'
 import DateNav from './DateNav'
 import RecapViewer from './RecapViewer'
 import DailyNotes from './DailyNotes'
+import { todayET } from '../../lib/tradingDate'
 
 export default function BriefingPage() {
   const [selectedDate, setSelectedDate] = useState(todayStr())
@@ -20,6 +21,9 @@ export default function BriefingPage() {
   )
 }
 
+// The briefing is a SESSION's, so the default is the session's day in New
+// York. On a UTC default the JST morning asked for tomorrow's briefing, which
+// does not exist yet, and the page opened empty.
 function todayStr() {
-  return new Date().toISOString().split('T')[0]
+  return todayET()
 }
