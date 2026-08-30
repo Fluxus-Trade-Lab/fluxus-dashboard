@@ -9,6 +9,8 @@
 - `data/content/posts.csv`（近期表现——什么形状的帖在涨）
 - `data/research/night_reports/INBOX.md` 🔗 收藏夹（Andy 扔的链接）
 - receipts ⏳ 待兑现项（判断到期=天然选题）
+- `Fluxus_Brand/brain/signals.md`（好信号四问＋弃选案例库——判据在此）
+- `Fluxus_Brand/brain/authority-clips.md`（借势型信号弹药）
 
 **returns**：≤3 个候选，每个带六件：发生了什么 / 受众为何在意 / 出处 / 衰减速度（这周不做就死吗）/ 成品能回答的问题 / 弃选理由清单。**弃的必须多于取的**——这站的价值是保护下游不给没人要的题抛光。
 

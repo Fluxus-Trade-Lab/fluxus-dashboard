@@ -7,6 +7,7 @@
 - 上一站的 RECORD.md signal 节
 - 根 `KNOWLEDGE.md` 数字权威表（每个数字**现场读 `git show origin/main:` 权威源**，永不转抄二手数——含自己的 memory）
 - 信号指向的原始出处（交易记录/data/output 历史/外部 URL）
+- `Fluxus_Brand/brain/proof.md`（在册证据对象登记处——先查有没有现成票根）
 
 **returns**：证据包写进 RECORD.md research 节——3–7 条已核实主张（逐条带 URL 或权威源路径）/ 相关引文或票根 / 矛盾与缺失证据 / **出处证明不了什么**（单列）/ 2–3 个值得展开的机制。
 

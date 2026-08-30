@@ -9,7 +9,7 @@ status: signal|research|angle|flagship|distribution|review|approved|published|me
 ## flagship
 （毛坯正文或路径；每个数字带出处）
 ## distribution
-（X 变体 ×N，各标 hook 类型与独立存在理由）
+（X 变体 ×N，各标：七入口号（brain/x.md 菜单）· hook 类型（brain/hooks.md）· 独立存在理由；长文必配三行骨架入口推）
 ## review
 （审查站判定：过/退/毙 + 逐条理由）
 ## decision

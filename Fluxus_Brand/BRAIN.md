@@ -43,6 +43,19 @@
 | 表现台账 | [`../data/content/posts.csv`](../data/content/posts.csv)（发布+读数回填） | Steve/日推 |
 | 素材箱 | [`ops/material_inbox.md`](ops/material_inbox.md)（各线糖改道流入） | 全线可写 |
 
+### store · playbook 域（`brain/`——各站的操作知识，每站 reads 指定读哪几份）
+| 文件 | 是什么 | 主要读者 | 谁写 |
+|---|---|---|---|
+| [`brain/signals.md`](brain/signals.md) | 好信号四问＋弃选案例库 | 信号站 | 周检回填 |
+| [`brain/authority-clips.md`](brain/authority-clips.md) | 借势片段库（带机制+差异句才入库） | 信号/分发站 | 收藏流入 |
+| [`brain/proof.md`](brain/proof.md) | 证据对象清单（票根登记处，指针不抄数） | 查证/旗舰站 | 各线登记 |
+| [`brain/angles.md`](brain/angles.md) | 已验证 angle 模式＋反模式 | 角度站 | 周检经 Andy 批 |
+| [`brain/hooks.md`](brain/hooks.md) | hook 类型×实测＋三行骨架规范 | 分发站/Gate | 周检回填 |
+| [`brain/x.md`](brain/x.md) | X playbook＋**七入口周序列** | 分发站/日推 | 周检经 Andy 批 |
+| [`brain/newsletter.md`](brain/newsletter.md) | Substack「How Much」playbook | 分发/角度站 | Steve |
+| [`brain/offers.md`](brain/offers.md) | 产品阶梯＋漏斗＋CTA 冻结线 | 角度站/Gate | Gary 记账 |
+| [`brain/performance.md`](brain/performance.md) | keep/test/stop 台账（⑦→⑧ 回写唯一的家） | 全站 | **周检唯一写入口** |
+
 ### isolate（草稿与实验，可退可毙不污染长期脑）
 [`ops/campaigns/`](ops/campaigns/) 每个 campaign 一个目录——Record 走全程，毙了就留在原地当案例，
 **永不**把未过 Gate 的内容写进 store。
@@ -52,7 +65,7 @@
 ```
 素材箱/receipts/raw/收藏夹 ─→ ① 信号站 ─→ ② 查证站 ─→ ③ 角度站 ─→ ④ 旗舰站 ─→ ⑤ 分发站 ─→ ⑥ Gate ─→ Andy 批 ─→ 发布
                                                                                             │退回↩（缺字段/质量不过=退回上一站，不脑补）
-发布后读数 ─→ posts.csv ─→ ⑦ 周检（Steve 周报）keep/test/stop 三清单 ─→ Andy 批 ─→ ⑧ 写回本页/Voice Bible/角色契约
+发布后读数 ─→ posts.csv ─→ ⑦ 周检（Steve 周报）keep/test/stop 三清单写 brain/performance.md ─→ Andy 批 ─→ ⑧ 升级进 brain/ 各 playbook
 ```
 
 - 状态与断点记在该 campaign 的 `RECORD.md`（模板 [`ops/campaigns/RECORD_TEMPLATE.md`](ops/campaigns/RECORD_TEMPLATE.md)）
