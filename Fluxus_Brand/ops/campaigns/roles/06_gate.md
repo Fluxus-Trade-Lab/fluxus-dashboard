@@ -9,13 +9,16 @@
 - RECORD.md research 节（**独立复算每个数字对不对得上出处**——08-29 首件即拦下 2 处真问题）
 - `Fluxus_Brand/brain/offers.md`（CTA 冻结线：任何指向付费的 CTA 直接毙）
 - `Fluxus_Brand/brain/hooks.md`（hook 查重的类型表）
-- distribution 节逐变体核：**入口号（1–7）与 hook 类型都互不重复**、各自独立成立；缺入口号＝顺手补标（不算重开轮）
+- **RECORD 的 writing 节（Mia 成稿）与 visual 节（Vera 配图）**——Gate 审的是将要发出去的东西，不是毛坯
+- ⛔ **硬闸（先于逐句审）**：distribution 节**缺入口号、或入口号重复 → 直接退回分发站**，不进逐句审。
+  （08-29 首件实证：四个变体文体与 hook 各不相同，但三个撞在入口 2 上——「文体+hook 都不同」不能替代入口检查）
+- 视觉资产缺失且未写「不配图＋理由」→ 退回 Visual Vera
 
 **returns**：写进 RECORD.md review 节——判定（过/退回某站/毙）+ 逐条理由；过=打包进 Andy 审批队列（终稿+出处+平台+所需决策，Andy 不该需要重建过程才能批）。
 
 **must not**：发布；改稿（发现问题=退回，不代笔）；缺字段时脑补（=退回上一站）。
 
-**done when**：review 节判定+理由落盘；退回时 RECORD.md status 改回对应站（明晚断点续跑从这里接）。
+**done when**：review 节判定+理由落盘；**过闸＝status 写 `queued` 并往 `APPROVAL_QUEUE.md` 追一行**（永不写 approved——那是 Andy 签字才有的状态）；退回时 status 改回对应站（明晚断点续跑从这里接）；本卡 `rounds` +1，若已 ≥3 轮则本轮只能放行或 killed。
 
 ---
 

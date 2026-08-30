@@ -66,13 +66,13 @@
 - 三件套：发布物=每周 5 件 · 截止=每周日 · 到期规则=关卡结算。
 
 ### P2 · Substack「How Much」（内容+引流+未来落地）
-- 状态：**站是空的**（刊名/简介/About/Welcome 五字段未填，`Fluxus_Substack/06_PUBLISH_CHECKLIST.md`）；第一篇定 MRNA 长文（标题/副标/首句/封面已锁，毛坯在 Studio Q 手里）；随后一篇 YTD 更新。
+- 状态（08-31 实测 archive API 更正）：**站已开、有 2 篇**——MRNA 长文 08-27 正式上线 + 08-28 一篇 coming soon 占位。**没做的是创刊号 #001**（毛坯已到 v8，在 **Writer Mia** 手里）。五字段是否补完需现场核 `Fluxus_Substack/06_PUBLISH_CHECKLIST.md`。
 - 本周动作：Q 出 MRNA 成稿 → Steve 审（五道闸+中文语感闸）→ 补五字段 → 双发。
 - 三件套：发布物=MRNA 长文上线 · 截止=❓待 Andy 定 · 到期规则=降级为先发 X 长文版。
 
 ### P3 · 课程 Swing Trading Masterclass（落地+服务）
 - 状态：内容在独立仓库；Squarespace 部署曾推进；**当前能不能买、卖多少钱 = ❓待 Andy 确认**。
-- 三件套：❓未立（确认现状后补）。负责线：Studio Q（内容）+ Steve（宣传页）。
+- 三件套：❓未立（确认现状后补）。负责线（08-31 拆四线后）：**Studio Q（课程本体）+ Writer Mia（对外文案）+ Visual Vera（视觉）+ Marketing Steve（选题/审稿/宣传页）**。
 
 ### P4 · 会员产品（落地+服务+售后 = 核心收入）⭐
 - **落地栈已定（Andy 08-24）**：**Whop = 收银台**（选会员方式/付款）→ 自动跳转 **Discord = 权益交付间**。

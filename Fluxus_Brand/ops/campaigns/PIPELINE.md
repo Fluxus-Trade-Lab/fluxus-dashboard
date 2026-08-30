@@ -1,7 +1,8 @@
 # 夜间内容流水线（Andy 2026-08-28 立项：「我睡觉时你可以 ship」）
 
 > 本质：我们是媒体公司。媒体公司是一个 loop，不是一堆草稿：
-> **信号 → 查证 → 角度 → 旗舰毛坯 → 分发变体 → 审查 → 发布 → 表现回写 playbook**。断任何一环质量就掉。
+> **信号 → 查证 → 角度 → 旗舰毛坯 → 分发变体 →〔Mia 成稿 → Vera 配图〕→ 审查 Gate → Andy 批 → 发布 → 表现回写 playbook**。断任何一环质量就掉。
+> ⚠️ **闸在成稿与配图之后**（TEAM.md 08-31 接力链为准）：Gate 审的是**将要发出去的东西**，不是毛坯。
 > 参考拆解：VibeMarketer 六角色模型 / Codila 状态-审批模型（收藏对账 2026-08-28，OPS）。
 
 ## 六站合约（每站：owns / reads / returns / must-not / done-when）
@@ -23,7 +24,12 @@
 ## Performance 回写（周日，Steve 周报新增第一节）
 对照 posts.csv+verdicts 出三清单：**keep / test / stop**，写进 `Fluxus_Brand/brain/performance.md`（唯一写入口，append-only；每条提案点名支持它的帖子；一次好结果=假设≠规则）。Andy 批了才从那里升级进 brain/ 各 playbook。
 
+## ⑥ 视觉站 · Visual Vera（08-31 拆线后补入产线）
+契约 [`roles/07_visual.md`](roles/07_visual.md)。成稿齐备后配图；**缺视觉或缺「不配图＋理由」＝ Gate 退回**。
+
 ## 断点续跑（退回≠新卡）
 - 昨日 RECORD 的 `status ∉ {approved, published, measured, killed}` → 今晚**续跑同一目录**，不开新日期目录、不重选信号。
 - 工头按 `status` 路由：值=某站名→只 spawn 该站及其后必要环节；`review`→只 spawn Gate（按上轮「只审这几处」清单办，不重开轮）。已过闸的站不重做。
-- 量上限不变：一晚=一个新 campaign **或** 一次断点续修。
+- 量上限：一晚=一个新 campaign **或** 一次断点续修。
+- ⛔ **轮数上限（08-31 补；此前无上限，一张卡可以永久占用每一晚）**：同一张卡累计 **≥3 轮**仍未过闸 → 第 4 轮 Gate **只做二选一**：放行进 APPROVAL_QUEUE，或标 `killed` 留原地当案例。**不产生第 5 轮。**
+- RECORD 顶部记 `rounds:` 计数，工头路由时先读它。

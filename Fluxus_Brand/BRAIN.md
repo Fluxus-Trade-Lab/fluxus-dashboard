@@ -34,9 +34,9 @@
 ### store（被验证的知识，只增不腐；改动走人批）
 | 域 | 文件 | 谁写 |
 |---|---|---|
-| 声音 | [`voice/Fluxus_Voice_Bible.md`](voice/Fluxus_Voice_Bible.md)（含 §4.8 起草纪律+负面清单） | Andy 批准后 Steve |
+| 声音 | [`voice/Fluxus_Voice_Bible.md`](voice/Fluxus_Voice_Bible.md)（含 §4.8 起草纪律+负面清单） | Andy 亲笔或亲批（Mia 提案） |
 | 自己的句子 | [`voice/Fluxus_Own_Lines.md`](voice/Fluxus_Own_Lines.md) · [`voice/Fluxus_Ammo_150.md`](voice/Fluxus_Ammo_150.md) | Andy 亲笔为源 |
-| 文体模板 | [`voice/Fluxus_Swipe_File.md`](voice/Fluxus_Swipe_File.md)（17 文体 A–Q） | Steve |
+| 文体模板 | [`voice/Fluxus_Swipe_File.md`](voice/Fluxus_Swipe_File.md)（17 文体 A–Q） | Writer Mia |
 | 受众 | [`research/Fluxus_Demand_Side_Findings.md`](research/Fluxus_Demand_Side_Findings.md) | 冻结（调研已停） |
 | 证据/战绩 | [`record/`](record/)（H1 timeline、NULL 帖档案）· 交易数字权威源见 KNOWLEDGE.md | 各源头 |
 | 否决训练集 | [`voice/verdicts.jsonl`](voice/verdicts.jsonl)（Andy 每个否决+一字理由） | 日推收，只追加 |
@@ -77,6 +77,8 @@
 | **UI Claire** | 前端上线的功能与改版 | 素材箱 | 信号站（BUILD 帖） |
 | **OPS Fable** | 架构/机制建设、事故复盘 | 素材箱 · INBOX 裁决 | 信号站（BUILD 帖） |
 | **Studio Q** | 课程进展、试读本、视频工作流 | 素材箱 | 角度站（引流资产） |
+| **Writer Mia** | 写作过程本身：被 Andy 改掉的地方、成稿前后的 diff | 素材箱 · `voice/verdicts.jsonl` | 信号站（写作 build-in-public）· 旗舰站负面清单 |
+| **Visual Vera** | 视觉实验、被否的稿、图像语料新矿 | 素材箱 · `visual/Fluxus_Visual_Library.md` | 分发站（入口 7 压缩图）· 角度站 |
 
 **唯一消费者是 Marketing Steve**：素材箱每周日收割（判据是行下面有没有 `↳ ✅`，**不是它在哪一节**）。
 供料方**只投不催**——投完就算送到，选不选是信号站的决策（弃比取多是常态）。
@@ -84,8 +86,11 @@
 ## 六、路由（一张卡怎么走）
 
 ```
-素材箱/receipts/raw/收藏夹 ─→ ① 信号站 ─→ ② 查证站 ─→ ③ 角度站 ─→ ④ 旗舰站 ─→ ⑤ 分发站 ─→ ⑥ Gate ─→ Andy 批 ─→ 发布
-                                                                                            │退回↩（缺字段/质量不过=退回上一站，不脑补）
+素材箱/receipts/raw/收藏夹 ─→ ① 信号站 ─→ ② 查证站 ─→ ③ 角度站 ─→ ④ 旗舰站（毛坯）─→ ⑤ 分发站
+                                                                              │
+   ⑦ Gate ←── ⑥ Visual Vera 配图 ←── Writer Mia 成稿 ←──┘
+     │  过闸 → status=queued → 📤 APPROVAL_QUEUE.md ─→ Andy 批（签字才 approved）─→ 发布
+     └─ 退回↩（缺字段/质量不过=退回对应站，不脑补；可退回到 Mia/Vera）
 发布后读数 ─→ posts.csv ─→ ⑦ 周检（Steve 周报）keep/test/stop 三清单写 brain/performance.md ─→ Andy 批 ─→ ⑧ 升级进 brain/ 各 playbook
 ```
 
@@ -99,7 +104,8 @@
 | 文件 / 区域 | 谁写 | 何时写 | 批准 |
 |---|---|---|---|
 | `Fluxus_Brand/ops/campaigns/<日期>/` 各站自己的节+资产 | 对应站（只写自己 owns 的节） | 夜跑当晚 | 无需——isolate 区 |
-| RECORD.md `status` 行 | 各站推进 / Gate 退回 | 交接时 | — |
+| RECORD.md `status` 行 | 各站推进 / Gate 退回（**Gate 过闸只写 `queued`**） | 交接时 | `approved` **只有 Andy** |
+| `Fluxus_Brand/ops/campaigns/APPROVAL_QUEUE.md` | **Gate 唯一写入口**（过闸追一行）；Andy 批完自己追 ↳ | 过闸当晚 | append-only |
 | `Fluxus_Brand/brain/performance.md` | **周检唯一写入口**（Steve 周报第一节） | 每周日 | 追加无需批；**升级进 playbook 需 Andy** |
 | hooks/angles/x.md **实测读数回填** | Steve 周报 | 每周日 | append 无需批 |
 | hooks/angles/x.md **规则与判定（✅/⛔）变更** | Steve 执行升级写入 | Andy 批了 performance 提案后 | **Andy** |
