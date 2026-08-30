@@ -201,7 +201,25 @@ def run(path: Path = LEDGER, window: int = 1, last_done: Optional[dt.date] = Non
                 if idx > 0 else None)
         if len(same) > 1:
             out["top"].append(f"L6 {s}: {len(same)} lines (re-run; both happened, not a violation)")
-        for r in same:
+        # Only the LAST attempt of a session is judged. Since 2026-08-29 the
+        # workflow records the ledger line of runs that a gate stopped
+        # (`if: failure()`), which is what finally made failures visible --
+        # and immediately made this auditor fail every session that contained
+        # a caught-and-recovered failure. A recorded failure is HISTORY, not a
+        # current defect: the gate did its job, a later attempt succeeded, and
+        # the published data is the good one. Earlier attempts are still
+        # printed, as warnings, so the record is not silently swallowed.
+        for r in same[:-1]:
+            rep = audit_run(r, prev_guards=prev)
+            rep["superseded"] = True
+            # demote, do not delete: the key must survive for every consumer
+            # (the printer reads rep["violations"] and a pop() here crashed it)
+            for v in rep["violations"]:
+                rep["warnings"].append(f"(superseded attempt) {v}")
+            rep["violations"] = []
+            out["runs"].append(rep)
+            out["warnings"] += len(rep["warnings"])
+        for r in same[-1:]:
             rep = audit_run(r, prev_guards=prev)
             out["runs"].append(rep)
             out["violations"] += len(rep["violations"])

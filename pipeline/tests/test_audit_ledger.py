@@ -154,3 +154,74 @@ def test_window_limits_what_is_audited(tmp_path):
     p = _write(tmp_path, [bad, _row("2026-08-20"), _row("2026-08-21")])
     assert L.run(p, window=0, last_done=LAST)["violations"] == 2      # sees the old bad line
     assert L.run(p, window=1, last_done=LAST)["ok"]                   # newest session only
+
+
+class TestSupersededAttempts:
+    """A recorded failure is history, not a current defect.
+
+    2026-08-29 the workflow started committing the ledger line of runs a gate
+    had stopped (`if: failure()`) -- the change that finally made failed
+    nights visible. It immediately made THIS auditor fail every session that
+    contained a caught-and-recovered failure, blocking the very publish the
+    recovery had earned. The gate worked, a later attempt succeeded, and the
+    data on main is the good one; judging the session by its worst attempt
+    turns a working plan B into an outage.
+    """
+
+    def _ledger(self, tmp_path, rows):
+        import json
+        p = tmp_path / "led.jsonl"
+        p.write_text("\n".join(json.dumps(r) for r in rows) + "\n")
+        return p
+
+    def _run(self, session, *, ok, sha="abc1234"):
+        """A ledger line that either passes or trips an L2 guard."""
+        return {"session": session, "code_sha": sha, "trigger": "schedule",
+                "universe_rows": 5600,
+                "guards": {"universe_quality": {"status": "ok" if ok else "severe",
+                                                "rows": 5600},
+                           "breadth": {"status": "ok", "regime_score": 50,
+                                       "enriched": ["regime", "state_board",
+                                                    "verdict", "conditions"]}}}
+
+    def test_a_failed_attempt_followed_by_a_good_one_is_not_a_violation(self, tmp_path):
+        import datetime as dt
+        from pipeline.tools.audit_ledger import run
+        s = "2026-08-28"
+        led = self._ledger(tmp_path, [self._run(s, ok=False), self._run(s, ok=True)])
+        rep = run(led, last_done=dt.date(2026, 8, 28))
+        assert rep["violations"] == 0, rep
+        assert rep["ok"] is True
+
+    def test_the_failure_is_still_reported_as_a_warning(self, tmp_path):
+        """Demoted, never swallowed -- the record is the whole point."""
+        import datetime as dt
+        from pipeline.tools.audit_ledger import run
+        s = "2026-08-28"
+        led = self._ledger(tmp_path, [self._run(s, ok=False), self._run(s, ok=True)])
+        rep = run(led, last_done=dt.date(2026, 8, 28))
+        assert rep["warnings"] >= 1
+        text = " ".join(w for r in rep["runs"] for w in r["warnings"])
+        assert "superseded attempt" in text
+        assert any(r.get("superseded") for r in rep["runs"])
+
+    def test_the_LAST_attempt_failing_is_still_a_violation(self, tmp_path):
+        """The positive control: if the newest attempt of the session is the
+        broken one, nothing was recovered and the gate must still bite."""
+        import datetime as dt
+        from pipeline.tools.audit_ledger import run
+        s = "2026-08-28"
+        led = self._ledger(tmp_path, [self._run(s, ok=True), self._run(s, ok=False)])
+        rep = run(led, last_done=dt.date(2026, 8, 28))
+        assert rep["violations"] >= 1, "a session whose last run failed must fail"
+        assert rep["ok"] is False
+
+    def test_every_run_report_keeps_its_violations_key(self, tmp_path):
+        """Demotion emptied the list; an earlier version popped the key and
+        crashed the printer (KeyError: 'violations')."""
+        import datetime as dt
+        from pipeline.tools.audit_ledger import run
+        s = "2026-08-28"
+        led = self._ledger(tmp_path, [self._run(s, ok=False), self._run(s, ok=True)])
+        rep = run(led, last_done=dt.date(2026, 8, 28))
+        assert all("violations" in r for r in rep["runs"])
