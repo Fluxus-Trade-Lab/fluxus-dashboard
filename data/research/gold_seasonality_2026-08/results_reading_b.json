@@ -1,0 +1,667 @@
+{
+  "reading": "B \u2014 \u65fa\u5b63\u8bfb\u6cd5\uff1a9 \u6708/10 \u6708\u662f\u4e0d\u662f\u5f3a\u6708",
+  "series": {
+    "spx": {
+      "ticker": "^GSPC",
+      "n_months": 1183,
+      "first": "1928-01-31",
+      "last": "2026-07-31"
+    },
+    "csi300": {
+      "ticker": "000300.SS",
+      "n_months": 63,
+      "first": "2021-04-30",
+      "last": "2026-06-30"
+    },
+    "sse_comp": {
+      "ticker": "000001.SS",
+      "n_months": 348,
+      "first": "1997-08-31",
+      "last": "2026-07-31"
+    }
+  },
+  "cells": [
+    {
+      "spec": "reading_B",
+      "metal": "spx",
+      "month": "Jan",
+      "month_num": 1,
+      "n": 99,
+      "mean_diff_pct": 0.6088,
+      "p_raw": 0.27439,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "spx",
+      "month": "Feb",
+      "month_num": 2,
+      "n": 99,
+      "mean_diff_pct": -0.8324,
+      "p_raw": 0.13359,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "spx",
+      "month": "Mar",
+      "month_num": 3,
+      "n": 99,
+      "mean_diff_pct": -0.254,
+      "p_raw": 0.64502,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "spx",
+      "month": "Apr",
+      "month_num": 4,
+      "n": 99,
+      "mean_diff_pct": 0.7661,
+      "p_raw": 0.17139,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "spx",
+      "month": "May",
+      "month_num": 5,
+      "n": 99,
+      "mean_diff_pct": -0.5759,
+      "p_raw": 0.30063,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "spx",
+      "month": "Jun",
+      "month_num": 6,
+      "n": 99,
+      "mean_diff_pct": 0.1425,
+      "p_raw": 0.79516,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "spx",
+      "month": "Jul",
+      "month_num": 7,
+      "n": 99,
+      "mean_diff_pct": 1.112,
+      "p_raw": 0.04795,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "spx",
+      "month": "Aug",
+      "month_num": 8,
+      "n": 98,
+      "mean_diff_pct": 0.0248,
+      "p_raw": 0.96695,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "spx",
+      "month": "Sep",
+      "month_num": 9,
+      "n": 98,
+      "mean_diff_pct": -1.9325,
+      "p_raw": 0.0006,
+      "p_holm": 0.0216
+    },
+    {
+      "spec": "reading_B",
+      "metal": "spx",
+      "month": "Oct",
+      "month_num": 10,
+      "n": 98,
+      "mean_diff_pct": -0.1178,
+      "p_raw": 0.82926,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "spx",
+      "month": "Nov",
+      "month_num": 11,
+      "n": 98,
+      "mean_diff_pct": 0.3839,
+      "p_raw": 0.49603,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "spx",
+      "month": "Dec",
+      "month_num": 12,
+      "n": 98,
+      "mean_diff_pct": 0.6655,
+      "p_raw": 0.23709,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "csi300",
+      "month": "Jan",
+      "month_num": 1,
+      "n": 5,
+      "mean_diff_pct": -1.8269,
+      "p_raw": 0.44028,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "csi300",
+      "month": "Feb",
+      "month_num": 2,
+      "n": 5,
+      "mean_diff_pct": 1.9821,
+      "p_raw": 0.39633,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "csi300",
+      "month": "Mar",
+      "month_num": 3,
+      "n": 5,
+      "mean_diff_pct": -2.9995,
+      "p_raw": 0.19964,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "csi300",
+      "month": "Apr",
+      "month_num": 4,
+      "n": 6,
+      "mean_diff_pct": 0.4335,
+      "p_raw": 0.84386,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "csi300",
+      "month": "May",
+      "month_num": 5,
+      "n": 6,
+      "mean_diff_pct": 0.4644,
+      "p_raw": 0.82936,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "csi300",
+      "month": "Jun",
+      "month_num": 6,
+      "n": 6,
+      "mean_diff_pct": 1.6778,
+      "p_raw": 0.44713,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "csi300",
+      "month": "Jul",
+      "month_num": 7,
+      "n": 5,
+      "mean_diff_pct": -1.7349,
+      "p_raw": 0.45488,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "csi300",
+      "month": "Aug",
+      "month_num": 8,
+      "n": 5,
+      "mean_diff_pct": -0.4796,
+      "p_raw": 0.83556,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "csi300",
+      "month": "Sep",
+      "month_num": 9,
+      "n": 5,
+      "mean_diff_pct": 3.5157,
+      "p_raw": 0.13869,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "csi300",
+      "month": "Oct",
+      "month_num": 10,
+      "n": 5,
+      "mean_diff_pct": -2.9898,
+      "p_raw": 0.20754,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "csi300",
+      "month": "Nov",
+      "month_num": 11,
+      "n": 5,
+      "mean_diff_pct": 0.824,
+      "p_raw": 0.72991,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "csi300",
+      "month": "Dec",
+      "month_num": 12,
+      "n": 5,
+      "mean_diff_pct": 0.6715,
+      "p_raw": 0.77911,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "sse_comp",
+      "month": "Jan",
+      "month_num": 1,
+      "n": 29,
+      "mean_diff_pct": -0.8866,
+      "p_raw": 0.51472,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "sse_comp",
+      "month": "Feb",
+      "month_num": 2,
+      "n": 29,
+      "mean_diff_pct": 1.8509,
+      "p_raw": 0.16944,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "sse_comp",
+      "month": "Mar",
+      "month_num": 3,
+      "n": 29,
+      "mean_diff_pct": 0.2658,
+      "p_raw": 0.84616,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "sse_comp",
+      "month": "Apr",
+      "month_num": 4,
+      "n": 29,
+      "mean_diff_pct": 1.4495,
+      "p_raw": 0.29284,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "sse_comp",
+      "month": "May",
+      "month_num": 5,
+      "n": 29,
+      "mean_diff_pct": 0.2169,
+      "p_raw": 0.86966,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "sse_comp",
+      "month": "Jun",
+      "month_num": 6,
+      "n": 29,
+      "mean_diff_pct": -0.9989,
+      "p_raw": 0.45578,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "sse_comp",
+      "month": "Jul",
+      "month_num": 7,
+      "n": 29,
+      "mean_diff_pct": -0.2936,
+      "p_raw": 0.82521,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "sse_comp",
+      "month": "Aug",
+      "month_num": 8,
+      "n": 29,
+      "mean_diff_pct": -2.0426,
+      "p_raw": 0.13469,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "sse_comp",
+      "month": "Sep",
+      "month_num": 9,
+      "n": 29,
+      "mean_diff_pct": -0.6222,
+      "p_raw": 0.64232,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "sse_comp",
+      "month": "Oct",
+      "month_num": 10,
+      "n": 29,
+      "mean_diff_pct": -0.7955,
+      "p_raw": 0.55902,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "sse_comp",
+      "month": "Nov",
+      "month_num": 11,
+      "n": 29,
+      "mean_diff_pct": 0.5434,
+      "p_raw": 0.68477,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "sse_comp",
+      "month": "Dec",
+      "month_num": 12,
+      "n": 29,
+      "mean_diff_pct": 1.313,
+      "p_raw": 0.33703,
+      "p_holm": 1.0
+    }
+  ],
+  "sep_oct": [
+    {
+      "spec": "reading_B",
+      "metal": "spx",
+      "month": "Sep",
+      "month_num": 9,
+      "n": 98,
+      "mean_diff_pct": -1.9325,
+      "p_raw": 0.0006,
+      "p_holm": 0.0216
+    },
+    {
+      "spec": "reading_B",
+      "metal": "spx",
+      "month": "Oct",
+      "month_num": 10,
+      "n": 98,
+      "mean_diff_pct": -0.1178,
+      "p_raw": 0.82926,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "csi300",
+      "month": "Sep",
+      "month_num": 9,
+      "n": 5,
+      "mean_diff_pct": 3.5157,
+      "p_raw": 0.13869,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "csi300",
+      "month": "Oct",
+      "month_num": 10,
+      "n": 5,
+      "mean_diff_pct": -2.9898,
+      "p_raw": 0.20754,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "sse_comp",
+      "month": "Sep",
+      "month_num": 9,
+      "n": 29,
+      "mean_diff_pct": -0.6222,
+      "p_raw": 0.64232,
+      "p_holm": 1.0
+    },
+    {
+      "spec": "reading_B",
+      "metal": "sse_comp",
+      "month": "Oct",
+      "month_num": 10,
+      "n": 29,
+      "mean_diff_pct": -0.7955,
+      "p_raw": 0.55902,
+      "p_holm": 1.0
+    }
+  ],
+  "mde": {
+    "spx_Sep": {
+      "n": 98,
+      "sd_monthly_pct": 5.331,
+      "mde_pct_at_alpha_holm": 2.271
+    },
+    "spx_Oct": {
+      "n": 98,
+      "sd_monthly_pct": 5.331,
+      "mde_pct_at_alpha_holm": 2.271
+    },
+    "csi300_Sep": {
+      "n": 5,
+      "sd_monthly_pct": 5.152,
+      "mde_pct_at_alpha_holm": 9.698
+    },
+    "csi300_Oct": {
+      "n": 5,
+      "sd_monthly_pct": 5.152,
+      "mde_pct_at_alpha_holm": 9.698
+    },
+    "sse_comp_Sep": {
+      "n": 29,
+      "sd_monthly_pct": 7.024,
+      "mde_pct_at_alpha_holm": 5.502
+    },
+    "sse_comp_Oct": {
+      "n": 29,
+      "sd_monthly_pct": 7.024,
+      "mde_pct_at_alpha_holm": 5.502
+    }
+  },
+  "gradient": {
+    "spx": [
+      [
+        "Jul",
+        1.674,
+        99
+      ],
+      [
+        "Apr",
+        1.357,
+        99
+      ],
+      [
+        "Dec",
+        1.266,
+        98
+      ],
+      [
+        "Jan",
+        1.213,
+        99
+      ],
+      [
+        "Nov",
+        1.007,
+        98
+      ],
+      [
+        "Jun",
+        0.786,
+        99
+      ],
+      [
+        "Aug",
+        0.678,
+        98
+      ],
+      [
+        "Oct",
+        0.547,
+        98
+      ],
+      [
+        "Mar",
+        0.422,
+        99
+      ],
+      [
+        "May",
+        0.128,
+        99
+      ],
+      [
+        "Feb",
+        -0.108,
+        99
+      ],
+      [
+        "Sep",
+        -1.117,
+        98
+      ]
+    ],
+    "csi300": [
+      [
+        "Sep",
+        3.341,
+        5
+      ],
+      [
+        "Feb",
+        1.929,
+        5
+      ],
+      [
+        "Jun",
+        1.622,
+        6
+      ],
+      [
+        "Nov",
+        0.863,
+        5
+      ],
+      [
+        "Dec",
+        0.722,
+        5
+      ],
+      [
+        "May",
+        0.524,
+        6
+      ],
+      [
+        "Apr",
+        0.496,
+        6
+      ],
+      [
+        "Aug",
+        -0.337,
+        5
+      ],
+      [
+        "Jul",
+        -1.493,
+        5
+      ],
+      [
+        "Jan",
+        -1.578,
+        5
+      ],
+      [
+        "Oct",
+        -2.648,
+        5
+      ],
+      [
+        "Mar",
+        -2.657,
+        5
+      ]
+    ],
+    "sse_comp": [
+      [
+        "Feb",
+        2.279,
+        29
+      ],
+      [
+        "Apr",
+        1.911,
+        29
+      ],
+      [
+        "Dec",
+        1.786,
+        29
+      ],
+      [
+        "Nov",
+        1.08,
+        29
+      ],
+      [
+        "Mar",
+        0.826,
+        29
+      ],
+      [
+        "May",
+        0.781,
+        29
+      ],
+      [
+        "Jul",
+        0.313,
+        29
+      ],
+      [
+        "Sep",
+        0.012,
+        29
+      ],
+      [
+        "Oct",
+        -0.147,
+        29
+      ],
+      [
+        "Jan",
+        -0.231,
+        29
+      ],
+      [
+        "Jun",
+        -0.334,
+        29
+      ],
+      [
+        "Aug",
+        -1.29,
+        29
+      ]
+    ]
+  }
+}
