@@ -1,0 +1,107 @@
+{
+  "note": "A/B 语料。A/B 是盲选：渲染时 A/B 顺序由 pair_id 的哈希决定，README 里不写哪版是哪版。source 全部来自 2026-08-24 已发布的 X 长文 PUBLISHED_X_2026-08-24_en.md。class=expository 预测改写胜；class=tight 是对照组，预测原句胜。",
+  "pairs": [
+    {
+      "id": "C1",
+      "class": "expository",
+      "devices": [
+        "cut-the-connective",
+        "deflation",
+        "specific-noun"
+      ],
+      "original": "Through the first half of August the answer to who is being bought was not semis, which I owned and kept owning while they went nowhere. $MU ran 4% on the 17th and I felt smart for exactly one day; on the 18th it took every cent of it back. The group hadn't printed a green number all month while software had the best excess in the market — and my book was already there in $PLTR, $NOW, $ZETA and $RBRK, because that rotation happened weeks earlier.",
+      "rewrite": "Who was being bought? Not semis. I owned semis. $MU ran 4% on the 17th and I felt smart for exactly one day; the 18th took it back to the penny. That group went a whole month without a green number. Software ate. My book was already sitting there, weeks early, and I still felt smart about the wrong half."
+    },
+    {
+      "id": "C2",
+      "class": "expository",
+      "devices": [
+        "specific-noun",
+        "cut-the-connective",
+        "stress-final"
+      ],
+      "original": "RS isn't \"went up a lot,\" it's \"beat the market\" — a stock that falls less on a red day has rising RS, which is why it turns green while the chart still looks bad. The self-percentile compares it to nobody but itself: sort its last twenty readings, see where today lands. A name crawling off the floor might sit at 60, nowhere near anybody's leaderboard, but self-percentile 100 means its character just changed and the rankings haven't noticed. That gap is where I get paid.",
+      "rewrite": "RS isn't \"went up a lot,\" it's \"beat the market.\" Self-percentile asks a smaller question: out of its own last twenty days, where does today rank? A kid who goes from F to C is still near the bottom of the class. Something still happened. Nobody's leaderboard has noticed yet. That gap is where I get paid."
+    },
+    {
+      "id": "C3",
+      "class": "expository",
+      "devices": [
+        "act-out",
+        "self-implication",
+        "stress-final"
+      ],
+      "original": "R turns dollars into method — the money never enters the division, so every decision happens inside the process instead of inside the money. And R turns method into a pain unit: 0.25% is how much this one trade is allowed to hurt. I set it while calm, so when the frightened version of me sits down there's nothing left for him to press.",
+      "rewrite": "R is a pain unit. 0.25% is how much this trade is allowed to hurt. I set it while calm — so when the frightened version of me sits down at the desk, there is nothing left for him to press."
+    },
+    {
+      "id": "C4",
+      "class": "expository",
+      "devices": [
+        "compound-image",
+        "deflation"
+      ],
+      "original": "Once the pain is bounded you stop needing more signal. People hunt confirmation because they never drew a line around the uncertainty, so the only thing left to buy is the feeling of being sure. That feeling costs a fortune and is worth nothing.",
+      "rewrite": "Bound the pain and you stop shopping for signal. Confirmation is what you buy when you never drew the line. Most expensive thing on the menu, and it isn't food."
+    },
+    {
+      "id": "C5",
+      "class": "expository",
+      "devices": [
+        "compound-image",
+        "cut-the-connective"
+      ],
+      "original": "Every average compressed into one band under price — two-week money, two-month money, ten-month money all at the same cost. Once price is above them, everyone underneath is carrying you.",
+      "rewrite": "Two-week money and ten-month money, all in at the same price. Nobody down there is unhappy. They are carrying you."
+    },
+    {
+      "id": "C6",
+      "class": "expository",
+      "devices": [
+        "picture-replaces-number",
+        "act-out"
+      ],
+      "original": "Aug 18. Three sessions of decay — 63% of the market above its 20-day when I bought, under half by then — and the position had done nothing for three days. My losers get three days. The rule came due and I paid it, selling the add at entry.",
+      "rewrite": "Aug 18. When I bought, most of the market was still standing. By the 18th half the room had sat down. My position had done nothing for three days, and my losers get three days. The rule came due and I paid it."
+    },
+    {
+      "id": "T1",
+      "class": "tight",
+      "devices": [
+        "specific-noun",
+        "caesura"
+      ],
+      "original": "When you don't know what happened, take risk off. When you know, put it back on. You decide in size, not in opinions.",
+      "rewrite": "Confused? Take risk off. Sure? Put it back on. The answer is a number, not an opinion."
+    },
+    {
+      "id": "T2",
+      "class": "tight",
+      "devices": [
+        "cut-the-connective",
+        "stress-final"
+      ],
+      "original": "The chart has no memory. The people who bought at that price do.",
+      "rewrite": "The chart forgets. The people who bought there don't."
+    },
+    {
+      "id": "T3",
+      "class": "tight",
+      "devices": [
+        "number-as-percussion"
+      ],
+      "original": "Position size is not risk. Stop distance is risk.",
+      "rewrite": "Risk isn't how much you bought. It's how far to the stop."
+    },
+    {
+      "id": "T4",
+      "class": "tight",
+      "devices": [
+        "compound-image",
+        "mirrored-closing-FLAGGED"
+      ],
+      "original": "0.25% is what I paid to be in the room when the luck walked in.",
+      "rewrite": "0.25% was the ticket price. The luck was the show."
+    }
+  ]
+}
