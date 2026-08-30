@@ -137,7 +137,13 @@ def shares(board_df: pd.DataFrame) -> pd.DataFrame:
     """
     rows = []
     for date, row in board_df.iterrows():
-        vals = [v for v in row.tolist() if v]
+        # `if v` on a pandas cell keeps strings and drops None -- but NaN is
+        # truthy in Python, so a column that simply has no bar that day used
+        # to be counted as measurable while contributing to no state. On a
+        # mid-session fetch only 9 of 56 themes had the day's close and the
+        # last row read 56 measurable / 0+0+0+0 (2026-08-28). Count only real
+        # state strings, so a partial day is honestly a partial day.
+        vals = [v for v in row.tolist() if isinstance(v, str)]
         n = len(vals)
         rec = {"date": date, "measurable": n}
         for s in STATES:
@@ -200,7 +206,12 @@ def build(themes: Mapping[str, Sequence[str]], bars: Mapping[str, pd.DataFrame],
         if b.empty:
             continue
         sh = shares(b).dropna(subset=["Lagging_share"])
-        sh = sh[sh["measurable"] >= 1]
+        # A day where most themes have no bar yet is not a reading of the
+        # market, it is a reading of the fetch. Require 80% coverage of the
+        # best day we have; otherwise the page would show a cliff every time
+        # the pipeline runs before every constituent has printed.
+        if not sh.empty:
+            sh = sh[sh["measurable"] >= 0.8 * sh["measurable"].max()]
         if sh.empty:
             continue
         tail = sh.tail(TREND_DAYS)

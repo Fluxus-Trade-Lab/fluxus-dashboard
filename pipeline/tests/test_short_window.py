@@ -120,6 +120,20 @@ class TestLadder:
         assert "measurable" in sh.columns
         assert sh["measurable"].iloc[-1] == 1
 
+    def test_a_day_without_bars_is_not_measurable(self):
+        """NaN is TRUTHY in Python, so `if v` counted a theme with no bar that
+        day as measurable while it contributed to no state. A mid-session run
+        on 2026-08-28 had 9 of 56 themes printed and the last row read
+        `measurable 56 / 0+0+0+0` -- a fetch artefact wearing the costume of a
+        market reading."""
+        import pandas as _pd
+        b = _pd.DataFrame({"A": ["Leading", None], "B": ["Lagging", float("nan")]},
+                          index=_pd.to_datetime(["2026-08-27", "2026-08-28"]))
+        sh = SW.shares(b)
+        assert sh["measurable"].iloc[0] == 2
+        assert sh["measurable"].iloc[1] == 0, "a day nobody printed is not 2 measurable"
+        assert sh.iloc[1][["Leading", "Weakening", "Improving", "Lagging"]].sum() == 0
+
     def test_payload_says_counts_are_not_cross_dashboard_comparable(self):
         """The one sentence that stops the next reader comparing our 20% to
         someone else's 48% as if they measured the same thing."""
