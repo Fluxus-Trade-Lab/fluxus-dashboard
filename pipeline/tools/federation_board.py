@@ -20,23 +20,29 @@ ROSTER = [
     ("DATA ALEX", "数据端", "每晚数据管线与 26 个 output；契约 §七 的主要收件人", "data/output · data/history · pipeline/screeners|tickers|adapters", ["feat(", "fix(watchlist", "fix(schema", "data(", "chore: market", "screener", "数据端", "alex", "groups_history"]),
     ("UI Claire", "前端", "Dashboard React 前端；按文件分工不按话题", "frontend/", ["frontend", "claire", "前端", "ui("]),
     ("RND Linda", "模型 R&D", "四盏灯 regime、GEX、量化模型与交易数据分析", "data/history/regime_ledger.csv · 模型研究目录", ["regime", "gex", "lamp", "linda", "风险线"]),
-    ("Studio Q", "内容成稿", "课程/视频/Substack 成稿与数据艺术——笔在这条线", "Fluxus_Substack · Fluxus_Brand/templates|record|copybook", ["studio", "draft", "substack", "mrna", "成稿", "letter"]),
-    ("Marketing Steve", "创意营销", "调研/五道闸审稿/品牌视觉/X 日常；不写成稿", "Fluxus_Brand/research|voice|ops|visual · data/content", ["steve", "material(", "fix(posts", "brief", "post:", "调研", "research("]),
+    ("Studio Q", "课程线", "课程整理与设计、视频生成工作流、试读本（08-31 拆分后瘦身，不碰对外 marketing）", "~/Documents/SwingMasterclass · vault 20_Course/", ["studio", "masterclass", "course", "课程", "试读", "讲义"]),
+    ("Writer Mia", "写作线", "X / Substack / newsletter 一切对外成稿、声音库维护——笔在这条线", "Fluxus_Substack · Fluxus_Brand/voice|templates|copybook|record|site", ["mia", "content(#", "draft", "substack", "mrna", "成稿", "letter", "voice(", "写作线"]),
+    ("Visual Vera", "视觉线", "品牌视觉 MR. FLUXUS、海报系统、图像语料、数据艺术可视化", "Fluxus_Brand/visual · Fluxus_Marketing_Visual_Design · visuals/", ["vera", "visual", "poster", "海报", "mr_fluxus", "mr. fluxus", "视觉线", "配图"]),
+    ("Marketing Steve", "编辑部/运营", "对外调研、选题与 brief、五道闸审稿（不改原稿）、发布运营与记账、夜间六站产线工头", "Fluxus_Brand/research|ops|brain · BRAIN.md · data/content · Fluxus_Receipts", ["steve", "material(", "fix(posts", "brief", "post:", "调研", "research(", "brain", "campaign", "gate("]),
     ("Nighty Zac", "夜间自学", "04:32 JST 唯一动手窗口：测试/研究/收藏夹/UI 预览稿", "data/research（night_reports/collection/ui_previews）", ["night(", "prereg(", "collect(", "preview(", "tests(", "adr", "vcp", "amplitude", "stockbee", "zac"]),
     ("Plumber Joe", "可靠性巡检", "07:20 JST 数据晨检；全联邦天然的 Gate", "incidents · DATA_RELIABILITY §六 · audit 工具", ["joe", "audit", "contracts(§", "巡检", "plumb"]),
     ("Growth Gary", "增长官", "会员台账/转化率/收入对账/canceling 哨位", "data/growth/", ["growth", "product:", "tool(post", "gary", "增长"]),
     ("OPS Fable", "联邦运维", "宪法/花名册/跨线协调/裁决投递/看板", "TEAM.md · PROJECTS.md · KNOWLEDGE.md · repo_health", ["ops", "rules(", "verdict(", "task(", "rescue(", "projects(", "governance", "board(", "team"]),
 ]
 
-# ---------- lane 归属（v5：路径优先） ----------
-# 路径规则**逐条抄自 TEAM.md 第 12-19 行的「文件边界」列**，不是照错误拟合出来的。
+# ---------- lane 归属（v6：路径优先；08-31 内容侧拆四线后重抄） ----------
+# 路径规则**逐条抄自 TEAM.md 花名册的「文件边界」列与「资料区与单一写入方」节**，不是照错误拟合出来的。
 # 顺序 = 从具体到笼统，第一条命中即算该文件的票；owner=None 的是公箱（各线都能写），不投票。
+# ⚠️ 08-31 之前本表把 `Fluxus_Substack/` 与 `Fluxus_Brand/*` 大半判给 Studio Q，
+#    而 TEAM.md 当天已把内容侧拆成 Steve(选题/审稿) → Mia(执笔) → Vera(视觉)，Studio Q 收窄为课程线。
+#    后果实测：08-31 当天 9 个 `content(#001)` commit 全部误记到 Studio Q 名下。
 PATH_RULES = [
     ("data/research/repo_health/", "OPS Fable"),
     ("data/research/night_reports/INBOX.md", None),
     ("data/reference/DATA_CONTRACTS.md", None),
     ("data/reference/DATA_RELIABILITY.md", None),
     ("Fluxus_Brand/ops/material_inbox.md", None),
+    ("Fluxus_Brand/voice/verdicts.jsonl", None),
     ("data/reference/incidents/", "Plumber Joe"),
     ("pipeline/tools/audit_", "Nighty Zac"),
     ("data/research/", "Nighty Zac"),
@@ -46,11 +52,22 @@ PATH_RULES = [
     ("pipeline/screeners/", "DATA ALEX"), ("pipeline/tickers/", "DATA ALEX"),
     ("pipeline/adapters/", "DATA ALEX"), ("data/output/", "DATA ALEX"),
     ("data/history/", "DATA ALEX"),
-    ("Fluxus_Substack/", "Studio Q"), ("Fluxus_Brand/templates/", "Studio Q"),
-    ("Fluxus_DataArt/", "Studio Q"),   # TEAM.md 第 15 行「数据艺术素材」
-    ("Fluxus_Brand/record/", "Studio Q"), ("Fluxus_Brand/copybook/", "Studio Q"),
-    ("Fluxus_Brand/", "Marketing Steve"), ("Fluxus_Marketing_Visual_Design/", "Marketing Steve"),
-    ("visuals/", "Marketing Steve"), ("data/content/", "Marketing Steve"),
+    # --- 写作线 Writer Mia（08-31 新设）---
+    ("Fluxus_Substack/", "Writer Mia"),
+    ("Fluxus_Brand/voice/", "Writer Mia"), ("Fluxus_Brand/templates/", "Writer Mia"),
+    ("Fluxus_Brand/copybook/", "Writer Mia"), ("Fluxus_Brand/record/", "Writer Mia"),
+    ("Fluxus_Brand/site/", "Writer Mia"),
+    # --- 视觉线 Visual Vera（08-31 新设）---
+    ("Fluxus_Brand/visual/", "Visual Vera"),
+    ("Fluxus_Marketing_Visual_Design/", "Visual Vera"),
+    ("visuals/", "Visual Vera"), ("Fluxus_DataArt/", "Visual Vera"),
+    # --- 编辑部/运营 Marketing Steve ---
+    ("Fluxus_Brand/research/", "Marketing Steve"), ("Fluxus_Brand/ops/", "Marketing Steve"),
+    ("Fluxus_Brand/brain/", "Marketing Steve"), ("Fluxus_Brand/BRAIN.md", "Marketing Steve"),
+    ("Fluxus_Brand/", "Marketing Steve"),   # Fluxus_Brand 兜底（未列二级目录）
+    ("data/content/", "Marketing Steve"), ("Fluxus_Receipts/", "Marketing Steve"),
+    # --- 课程线 Studio Q（仓外为主，留规则以防 vault 入库）---
+    ("FluxusTrading_Obsidian/20_Course/", "Studio Q"), ("SwingMasterclass/", "Studio Q"),
     ("TEAM.md", "OPS Fable"), ("CLAUDE.md", "OPS Fable"), (".claude/agents/", "OPS Fable"),
     ("KNOWLEDGE.md", "OPS Fable"), ("PROJECTS.md", "OPS Fable"), ("NOW.md", "OPS Fable"),
     ("pipeline/tools/federation_board.py", "OPS Fable"),
@@ -62,8 +79,10 @@ ARROW_ALIAS = [
     ("DATA ALEX", "DATA ALEX"), ("数据端", "DATA ALEX"),
     ("RND Linda", "RND Linda"), ("风险线", "RND Linda"),
     ("模型 R&D", "RND Linda"), ("模型R&D", "RND Linda"),
-    ("Studio Q", "Studio Q"), ("StudioQ", "Studio Q"),
-    ("Marketing Steve", "Marketing Steve"),
+    ("Studio Q", "Studio Q"), ("StudioQ", "Studio Q"), ("课程线", "Studio Q"),
+    ("Writer Mia", "Writer Mia"), ("Mia", "Writer Mia"), ("写作线", "Writer Mia"),
+    ("Visual Vera", "Visual Vera"), ("Vera", "Visual Vera"), ("视觉线", "Visual Vera"),
+    ("Marketing Steve", "Marketing Steve"), ("Steve", "Marketing Steve"), ("编辑部", "Marketing Steve"),
     ("Nighty Zac", "Nighty Zac"), ("夜间组", "Nighty Zac"),
     ("Plumber Joe", "Plumber Joe"),
     ("OPS Fable", "OPS Fable"), ("OPS", "OPS Fable"),
@@ -154,15 +173,120 @@ def add(col, pri, title, src, lane=None, date="", paths=None):
     cards.append(dict(id=kid, col=col, pri=pri,
                       lane=lane or lane_for(title, paths), t=title.strip()[:170], src=src, d=date))
 
+# --- PARSERS BEGIN（纯函数区：不碰 git / 文件系统，pipeline/tests/test_federation_board.py 靠标记切片测它们）---
+def bell_section(md):
+    """取晨报「门铃待按」节的正文。
+
+    **标题锚定**：只认标题行里的「门铃待按」。旧写法 `门铃待按[^\\n]*\\n(...)` 会命中正文里
+    顺带提到这四个字的段落（08-26 报告的回执表格就被这样误抓过）。
+    编号形式 `## 七、门铃待按` / `## 四、门铃待按` / `## ⑤ 门铃待按` 全部覆盖。"""
+    m = re.search(r"^#+ *[^\n]*门铃待按[^\n]*\n(.*?)(\n#{1,3} |\Z)", md, re.S | re.M)
+    return m.group(1) if m else None
+
+
+def parse_bell(body):
+    """节正文 -> [(收件人, 事项)]。表格与 bullet **两种格式都收**。
+
+    08-27～08-30 四晚的晨报门铃节都是 bullet 列表，而解析器只认表格，
+    于是 claim 列连续四晚 0 张来自晨报——**假零**。"""
+    out = []
+    # 格式 ①：markdown 表格 | 收件人 | 事项 |
+    for who, what in re.findall(r"^\| *\*?\*?([^|*]+?)\*?\*? *\| *([^|]+?) *\|", body, re.M):
+        if "收件人" in who or "---" in who:
+            continue
+        out.append((who.strip(), what.strip()))
+    # 格式 ②：bullet `- **收件人** · 事项`；允许 `- ⚠️ **X** · …` 前缀，事项可跨续行
+    for blk in re.split(r"\n(?=- )", body):
+        m = re.match(r"- +[^*\n]{0,8}\*\*(.+?)\*\* *[·:：] *(.+)", blk.strip(), re.S)
+        if not m:
+            continue
+        out.append((m.group(1).strip(),
+                    re.sub(r"\s+", " ", re.sub(r"[*`]", "", m.group(2))).strip()))
+    return out
+
+
+def parse_gate(md):
+    """NOW.md -> (本周关卡读数, 说明)。读数取不到时**面板不消失**，改印说明。
+
+    旧写法 `周关卡[^\\n]*?(\\d)\\s*/\\s*5` 不跨行，而读数从来不在标题那一行，
+    于是 gate_n 恒为 None、整个 🎮 面板**静默消失**——「没有读数」被显示成「没有关卡」。"""
+    sec = re.search(r"^#+ *[^\n]*本周关卡[^\n]*\n(.*?)(\n#{1,3} |\Z)", md, re.S | re.M)
+    if sec:
+        m = re.search(r"(\d+)\s*/\s*5", sec.group(1))
+        if m:
+            return int(m.group(1)), ""
+    m2 = re.search(r"关卡\s*(\d+)\s*/\s*5", md)
+    if m2:
+        return None, "本周进度 NOW.md 尚未写（周一刚翻周）· 上周结算 %s/5" % m2.group(1)
+    if sec:
+        return None, "⚠️ 本周关卡节里找不到 N/5 读数——NOW.md 格式变了，修解析器"
+    return None, "⚠️ NOW.md 里找不到「本周关卡」节——格式变了，修解析器"
+
+
+def sessions_behind(data_day, last_sess, is_td):
+    """数据落到 `data_day`（session 标签）时，到 `last_sess` 之间隔了几个**交易日**。
+
+    旧写法「14 天窗口内有过任意一条 chore: market data 就 🟢」= cron 连挂 13 天照样满绿。"""
+    d = datetime.date.fromisoformat(data_day)
+    n, cur = 0, last_sess
+    while cur > d and n < 40:
+        if is_td(cur):
+            n += 1
+        cur -= datetime.timedelta(days=1)
+    return n
+
+
+def cron_state(behind):
+    """落后 0–1 个 session 算正常（cron 收盘后才跑）；2 个 warn；3 个及以上 red。"""
+    return "ok" if behind <= 1 else ("warn" if behind == 2 else "red")
+
+
+def sig(t):
+    """去掉标点/空白，只留字母数字与汉字——用于跨文件比对同一件事。"""
+    return re.sub(r"[^0-9A-Za-z一-鿿]", "", t)
+
+
+# 核销标记：待办项在权威源里出现带这些标记的后续行 = 已办结，不该再上「等你拍板」。
+SETTLED_MARKS = ("已拍板", "已执行", "已否决", "已作废", "已撤销", "已销账", "已完成",
+                 "✅", "作废", "裁决：", "裁决:", "status: deferred", "status: 作废", "status: 已完成")
+
+
+def settled_sigs(texts):
+    """从权威源正文里抽出「已办结」的行指纹。划掉的标题（`~~…~~`）本身就是核销标记。"""
+    idx = []
+    for md in texts:
+        for ln in md.splitlines():
+            if any(k in ln for k in SETTLED_MARKS) or re.search(r"~~[^~]{6,}~~", ln):
+                s = sig(ln)
+                if len(s) >= 12:
+                    idx.append(s)
+    return idx
+
+
+def is_settled(title, idx):
+    """标题与任一核销行有 >=12 字的公共片段 = 同一件事已办结。"""
+    k = sig(title)
+    if len(k) < 12:
+        return False
+    return any(any(k[i:i + 12] in p for i in range(len(k) - 11)) for p in idx)
+# --- PARSERS END ---
+
+
 reports = sorted(re.findall(r"night_reports/(2026-\d\d-\d\d)\.md", git("ls-tree", "-r", "--name-only", "origin/main", "data/research/night_reports/")))
 if reports:
-    latest = show("data/research/night_reports/%s.md" % reports[-1])
-    sec = re.search(r"门铃待按[^\n]*\n(.*?)(\n## |\Z)", latest, re.S)
-    if sec:
-        for who, what in re.findall(r"\| *\*?\*?([^|*]+?)\*?\*? *\| *([^|]+?) *\|", sec.group(1)):
-            if "收件人" in who or "---" in who:
-                continue
-            add("claim", 1, what.strip(), "晨报门铃 %s" % reports[-1][5:], lane_for(who), reports[-1][5:])
+    _d = reports[-1][5:]
+    _body = bell_section(show("data/research/night_reports/%s.md" % reports[-1]))
+    if _body is not None:
+        _items = parse_bell(_body)
+        for _who, _what in _items:
+            add("claim", 1, _what, "晨报门铃 %s" % _d, lane_for(_who), _d)
+        # 显式失败告警：节里有内容却一条都没解析出来 = 格式又变了。
+        # 本文件下面自己写过「假零比空着更糟」——那条规矩这里也算数。
+        _lines = [l for l in _body.splitlines() if l.strip()]
+        if _lines and not _items:
+            add("claim", 1,
+                "晨报门铃节 %d 行未能解析（格式变了）—— 修 pipeline/tools/federation_board.py 的门铃解析器" % len(_lines),
+                "晨报门铃 %s · 解析失败" % _d, "OPS Fable", _d)
 
 for b in git("branch", "-r", "--no-merged", "origin/main").splitlines():
     b = b.strip()
@@ -191,6 +315,27 @@ for i, line in enumerate(contracts):
     elif "→" in txt[:60]:
         add("claim", 3, head, "契约行", lane_for(txt), date)
 
+# ---------- 核销（08-31 修）----------
+# 「等你拍板」曾端出 KB388「回收两个 Discord 付费角色」，源标「INBOX 待办」；
+# 而权威源 `data/growth/weekly/2026-08-25-paypal-reconcile.md` 的 T1 早已被 Andy 08-28 拍板
+# （「否定。还不做这件事。」），标题也已划掉。**信箱里的指针不会自己跟着权威源变**，
+# 所以待办项进板前必须回权威源核一次销——这是通用检查，不是给这一条写的补丁。
+def settle_blocked():
+    """把已在权威源核销的「等 Andy 拍板」卡摘掉；摘了多少打在 stdout 上，别静默。"""
+    srcs = [show("data/reference/DATA_CONTRACTS.md"), nowmd,
+            show("data/research/night_reports/INBOX.md")]
+    srcs += [show("data/growth/weekly/" + w) for w in weeklies]
+    idx = settled_sigs(srcs)
+    dropped, out = 0, []
+    for c in cards:
+        if c["col"] == "blocked" and is_settled(c["t"], idx):
+            dropped += 1
+            continue
+        out.append(c)
+    cards[:] = out
+    return dropped
+
+
 def dedupe_blocked():
     """同一件等 Andy 的事常在两处登记（INBOX 的指针 + 增长台账的正本）。
     判同：去掉标点后有 >=12 字的公共片段。保留先入的那张。"""
@@ -211,10 +356,19 @@ def dedupe_blocked():
     cards[:] = out
 
 
-try:
-    nowmd = open("/Users/taolezhu/Documents/AI-Trading-System/NOW.md", encoding="utf-8").read()
-except Exception:
-    nowmd = show("NOW.md")
+# NOW.md：**权威版优先**（`git show origin/main:`）。旧写法硬编码主树绝对路径先读工作区副本，
+# 于是看板端出的是「某个分支上未提交的 NOW.md」——只有在读文件抛异常时才回落 main，
+# 而主树上 NOW.md 总是存在，所以那条回落分支实际从没走过。
+# 仅当权威版里根本没有「📋 等你动手」这一节时才回落工作区，且回落要在面板上说出来。
+nowmd = show("NOW.md")
+nowmd_src = "origin/main"
+if "📋 等你动手" not in nowmd:
+    try:
+        _wt = open(os.path.join(REPO, "NOW.md"), encoding="utf-8").read()
+        if "📋 等你动手" in _wt:
+            nowmd, nowmd_src = _wt, "worktree"
+    except Exception:
+        pass
 for line in nowmd.splitlines():
     if "待你" in line and "- [ ]" in line:
         add("blocked", 0, re.sub(r"[*\[\]~]", "", line.replace("- [ ]", "")).strip()[:150], "NOW.md", "OPS Fable", "")
@@ -270,8 +424,10 @@ if _sec:
         if _m:
             andy_todo.append(re.sub(r"[*`]", "", _m.group(1)).strip()[:150])
 
-gate = re.search(r"周关卡[^\n]*?(\d)\s*/\s*5", nowmd)
-gate_n = int(gate.group(1)) if gate else None
+gate_n, gate_note = parse_gate(nowmd)
+if gate_n is None and gate_note.startswith("⚠️"):
+    add("claim", 1, "NOW.md 关卡读数解析失败：%s" % gate_note.lstrip("⚠️ "),
+        "NOW.md · 解析失败", "OPS Fable", "")
 
 # ---------- 定时任务 ----------
 tasks = []
@@ -300,38 +456,78 @@ KB = [
 ]
 
 # ---------- infra ----------
-last_data = next(((ad, s) for _, ad, s in [(h, a, s) for h, a, s in log14] if "chore: market data" in s), None)
+# 数据 cron 的绿灯：旧写法是「14 天窗口内有过任意一条 `chore: market data` 就 🟢」——
+# cron 连挂 13 天照样满绿。改成按**最近完成交易日**判：落后 0–1 个 session 才算 ok。
+# 判据用 commit **标题里的 session 标签**（`chore: market data 2026-08-30`），不用 commit 时间戳
+# ——后者是 JST 本机时间，跟 ET session 差半天，比较会系统性差一天。
+try:
+    sys.path.insert(0, REPO)
+    from pipeline.marketcal import is_trading_day as _is_td, last_completed_session as _lcs
+    _last_sess = _lcs()
+except Exception:      # marketcal 依赖 pandas；取不到就退成「周一到周五」的粗算，并在说明里讲清楚
+    def _is_td(d):
+        return d.weekday() < 5
+    _t = datetime.date.today()
+    while not _is_td(_t):
+        _t -= datetime.timedelta(days=1)
+    _last_sess = _t
+
+_datalog = git("log", "origin/main", "--since=90 days ago", "--format=%s", "--grep=chore: market data")
+_dates = sorted(re.findall(r"chore: market data (\d{4}-\d\d-\d\d)", _datalog))
+if _dates:
+    _behind = sessions_behind(_dates[-1], _last_sess, _is_td)
+    _cron_state = cron_state(_behind)
+    _cron_note = "最近落数据 %s · 最近完成 session %s · 落后 %d 个交易日" % (_dates[-1], _last_sess, _behind)
+else:
+    _cron_state, _cron_note = "red", "90 天内没有一条 `chore: market data` —— cron 死了"
 infra = [
-    ("数据 cron（GitHub Actions 21:30 UTC）", "最近落数据 %s" % (last_data[0] if last_data else "未见"), "ok" if last_data else "warn"),
+    ("数据 cron（GitHub Actions 21:30 UTC）", _cron_note, _cron_state),
     ("Vercel 自动部署", "跟随 main push（本页不直连，状态未测量）", "na"),
     ("GAS / Google Sheets 回拉", "挂 run_all（本页不直连，状态未测量）", "na"),
     ("本机（唯一节点 MacBook）", "定时任务 App 开着才跑", "ok"),
 ]
 
+_settled_n = settle_blocked()
 dedupe_blocked()
 
 counts = {c: sum(1 for k in cards if k["col"] == c) for c in ["claim", "doing", "blocked", "done"]}
 
 # ---------- 生意数据 ----------
 def last_nonempty(csv_text, col):
+    """返回 (读数, 该读数所在行的 date)。**读数必须带日期**——首页两个生意 KPI 此前
+    直接印 metrics.csv 最后一个非空值、不说它是哪天量的，于是一个 6 天前的数字长得和实时读数一模一样。
+    （`pitfall_a_measurement_expires`：我量的数也会过期。）"""
     lines = [l for l in csv_text.splitlines() if l.strip()]
+    if not lines:
+        return None, None
     hdr = lines[0].split(",")
     if col not in hdr:
-        return None
+        return None, None
     i = hdr.index(col)
     for l in reversed(lines[1:]):
         parts = l.split(",")
         if i < len(parts) and parts[i].strip():
-            return parts[i].strip()
-    return None
+            return parts[i].strip(), parts[0].strip()
+    return None, None
+
+
+def stale_days(d):
+    """读数距今几天；解析不了返回 None。"""
+    try:
+        return (datetime.date.today() - datetime.date.fromisoformat(d)).days
+    except Exception:
+        return None
+
 
 met = show("data/growth/metrics.csv")
+_members, _members_d = last_nonempty(met, "whop_members")
+_mrr, _mrr_d = last_nonempty(met, "mrr_usd")
 BIZ = dict(
-    members=last_nonempty(met, "whop_members") or "—",
-    mrr=last_nonempty(met, "mrr_usd") or "—",
-    discord=last_nonempty(met, "discord_members") or "—",
-    followers=last_nonempty(met, "x_followers") or "未测量",
-    subs=last_nonempty(met, "substack_subs") or "未测量",
+    members=_members or "—",
+    mrr=_mrr or "—",
+    discord=last_nonempty(met, "discord_members")[0] or "—",
+    followers=last_nonempty(met, "x_followers")[0] or "未测量",
+    subs=last_nonempty(met, "substack_subs")[0] or "未测量",
 )
 posts_csv = show("data/content/posts.csv").splitlines()[1:]
 week_start = (now - datetime.timedelta(days=now.weekday())).strftime("%Y-%m-%d")
@@ -405,8 +601,16 @@ FUNNEL = [
 ]
 
 # ================= HTML =================
-def kpi(v, label, color=""):
-    return '<div class="kpi"><b style="%s">%s</b><span>%s</span></div>' % (("color:" + color) if color else "", v, label)
+def kpi(v, label, color="", asof=None):
+    """asof = 该读数的日期（YYYY-MM-DD）。有日期就印出来；超过 7 天加陈旧徽章。"""
+    tail = ""
+    if asof:
+        n = stale_days(asof)
+        tail = '<i class="asof%s">读数 %s%s</i>' % (
+            " old" if (n is not None and n > 7) else "", E(asof[5:]),
+            (" · %d 天前" % n) if n is not None else "")
+    return '<div class="kpi"><b style="%s">%s</b><span>%s</span>%s</div>' % (
+        ("color:" + color) if color else "", v, label, tail)
 
 def section(title, body, extra=""):
     return '<div class="panel"><div class="ph">%s %s</div>%s</div>' % (title, extra, body)
@@ -425,11 +629,13 @@ def cardh(c, showlane=True):
 blocked_cards = [c for c in cards if c["col"] == "blocked"]
 today_stream = [c for c in cards if c["col"] == "doing"][:8]
 p_home = (
-    '<div class="kpis">' + kpi(BIZ["members"], "会员") + kpi("$" + str(BIZ["mrr"]), "MRR") +
+    '<div class="kpis">' + kpi(BIZ["members"], "会员", asof=_members_d) + kpi("$" + str(BIZ["mrr"]), "MRR", asof=_mrr_d) +
     kpi("%d/5" % posts_week, "本周发布") + kpi(format(views7, ",") if views7 else "—", "7d views") +
     kpi(len(andy_todo), "等你动手", "var(--p0)") + kpi(counts["blocked"], "等你拍板", "var(--blk)") + "</div>" +
     section("本周主线", '<div>%s</div><div class="mut" style="margin-top:6px">今天的一件事：%s</div>' % (E(now_main or "（NOW.md 未写）"), E(today_one or "（未写）"))) +
-    section("📋 等你动手（生意动作 · 做完在 NOW.md 划掉）", "".join('<div class="k" style="--pc:var(--p0)"><div class="m"><span class="pid">DO</span></div>%s</div>' % E(t) for t in andy_todo) or '<div class="empty">队列为空</div>') +
+    section("📋 等你动手（生意动作 · 做完在 NOW.md 划掉）",
+            ('<div class="mut" style="margin-bottom:8px">⚠️ 本节读自**未提交的工作区副本**（origin/main 上的 NOW.md 没有这一节）</div>' if nowmd_src == "worktree" else "") +
+            ("".join('<div class="k" style="--pc:var(--p0)"><div class="m"><span class="pid">DO</span></div>%s</div>' % E(t) for t in andy_todo) or '<div class="empty">队列为空</div>')) +
     section("⚠ 等你拍板", "".join(cardh(c) for c in blocked_cards) or '<div class="empty">现在没有等你的事</div>') +
     section("AI 今日已落地（详见任务看板）", "".join(cardh(c) for c in today_stream) or '<div class="empty">今天还没有 commit</div>'))
 
@@ -487,7 +693,7 @@ for name, role, _, _, _ in ROSTER:
                 "".join('<span class="tag">%s</span>' % E(c["t"][:46]) for c in claims[:4]) or '<span class="mut">—</span>',
                 lane_today.get(name, 0) or "—",
                 "".join('<span class="tag don">%s</span>' % E(c["t"][:46]) for c in dones) or '<span class="mut">—</span>'))
-p_lanes = section("九线泳道", '<table><thead><tr><th>线</th><th>在手挂单</th><th>今日</th><th>近期完成</th></tr></thead><tbody>%s</tbody></table>' % rows)
+p_lanes = section("%d 线泳道" % len(ROSTER),'<table><thead><tr><th>线</th><th>在手挂单</th><th>今日</th><th>近期完成</th></tr></thead><tbody>%s</tbody></table>' % rows)
 
 # --- 页4 智能体 ---
 ag = ""
@@ -511,7 +717,10 @@ rank = sorted(lane_7d.items(), key=lambda kv: -kv[1])
 rank_h = "".join('<tr><td class="num">%d</td><td>%s</td><td class="num">%d</td></tr>' % (i + 1, n, v) for i, (n, v) in enumerate(rank[:9]))
 p_ops = (section("14 天吞吐（commit 到 main）", '<div class="chart">%s</div>' % bars) +
          section("7 天完成排行", '<table><thead><tr><th>#</th><th>线</th><th>commit</th></tr></thead><tbody>%s</tbody></table>' % rank_h) +
-         (section("🎮 发布关卡", '<div class="gatebar"><div style="width:%d%%"></div></div><div class="mut">本周 %d / 5</div>' % (gate_n * 20, gate_n)) if gate_n is not None else ""))
+         section("🎮 发布关卡",
+                 ('<div class="gatebar"><div style="width:%d%%"></div></div><div class="mut">本周 %d / 5</div>'
+                  % (min(gate_n, 5) * 20, gate_n)) if gate_n is not None
+                 else '<div class="gatebar"><div style="width:0%%"></div></div><div class="mut">本周 — / 5 · %s</div>' % E(gate_note)))
 
 # --- 页6 知识库 ---
 kbh = ""
@@ -522,7 +731,7 @@ p_kb = '<div class="mut" style="margin-bottom:12px">地图版真理索引 · 全
 
 # --- 页7 基础设施 ---
 ti = "".join('<tr><td><b>%s</b><div class="mut">%s</div></td><td>%s</td></tr>' % (t["name"], E(t["desc"][:90]), E(t["sched"] or "—")) for t in tasks if not t["personal"])
-inf = "".join('<tr><td>%s</td><td>%s</td><td>%s</td></tr>' % (n, E(d), {"ok": "🟢", "warn": "🟠", "na": "◻︎ 未测量"}[s]) for n, d, s in infra)
+inf = "".join('<tr><td>%s</td><td>%s</td><td>%s</td></tr>' % (n, E(d), {"ok": "🟢", "warn": "🟠", "red": "🔴", "na": "◻︎ 未测量"}[s]) for n, d, s in infra)
 p_infra = (section("定时任务（工作线）", '<table><thead><tr><th>任务</th><th>排程</th></tr></thead><tbody>%s</tbody></table>' % ti) +
            section("链路健康", '<table><thead><tr><th>链路</th><th>说明</th><th>状态</th></tr></thead><tbody>%s</tbody></table>' % inf))
 
@@ -531,7 +740,7 @@ PAGES = [
     ("projects", "📈", "项目", "BUSINESS PORTFOLIO", "P0–P7 档案与六环漏斗——你的生意长什么样", p_projects, "生意"),
     ("ops", "📊", "运营看板", "OPERATIONS · GLOBAL", "吞吐 · 完成排行 · 发布关卡", p_ops, "生意"),
     ("board", "🗂", "任务看板", "TASK BOARD · KANBAN", "挂单不挂人：待认领 → 进行中 → 拍板 → 完成", p_board, "AI 引擎室"),
-    ("lanes", "🤝", "协作泳道", "MULTI-LANE COLLABORATION", "九条线各自在手的工作与最近交付", p_lanes, "AI 引擎室"),
+    ("lanes", "🤝", "协作泳道", "MULTI-LANE COLLABORATION", "%d 条线各自在手的工作与最近交付" % len(ROSTER), p_lanes, "AI 引擎室"),
     ("agents", "🤖", "智能体", "AGENT ROSTER", "花名册：职责 · 文件边界 · 心跳 · 排程", p_agents, "AI 引擎室"),
     ("kb", "📚", "知识库", "KNOWLEDGE SOURCES", "真理地图：哪类问题去哪查", p_kb, "AI 引擎室"),
     ("infra", "🛠", "基础设施", "NODES & ROUTINES", "定时任务与链路健康", p_infra, "AI 引擎室"),
@@ -594,6 +803,8 @@ h1{font:600 24px/1.2 "IBM Plex Serif",serif;margin:4px 0 2px}
 .kpi{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:12px 18px;min-width:110px}
 .kpi b{font:600 26px/1.1 "IBM Plex Serif",serif;display:block;font-variant-numeric:tabular-nums}
 .kpi span{font-size:10.5px;color:var(--mut);letter-spacing:.1em;text-transform:uppercase}
+.asof{display:block;margin-top:4px;font:400 10px "IBM Plex Mono",monospace;font-style:normal;color:var(--mut)}
+.asof.old{color:var(--p0);border:1px solid var(--p0);border-radius:3px;padding:0 4px;display:inline-block}
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px}
 .ph{font:600 13px "IBM Plex Sans";margin-bottom:10px;letter-spacing:.02em}
 .empty{color:var(--mut);font-size:12.5px}
@@ -655,4 +866,5 @@ if(q){q.oninput=filt;document.querySelectorAll(".pf").forEach(c=>{c.onclick=()=>
 
 out = DOC.replace("__TS__", now.strftime("%m-%d %H:%M")).replace("__NAV__", nav).replace("__PAGES__", pages_html)
 open(OUT, "w", encoding="utf-8").write(out)
-print("console -> %s | cards=%d tasks=%d" % (OUT, len(cards), len(tasks)))
+print("console -> %s | cards=%d tasks=%d | NOW.md=%s 已核销拍板项=%d cron=%s" % (
+    OUT, len(cards), len(tasks), nowmd_src, _settled_n, _cron_state))
