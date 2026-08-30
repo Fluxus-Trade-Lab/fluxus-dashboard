@@ -34,6 +34,8 @@ BREADTH_COLUMNS = [
     't2108', 'pct_above_200sma', 'pct_above_50sma', 'pct_above_20sma',
     'advances', 'declines', 'new_highs', 'new_lows',
     'new_highs_4w', 'new_lows_4w',
+    'new_highs_liq', 'new_lows_liq', 'new_highs_4w_liq', 'new_lows_4w_liq',
+    'liquid_universe',
     'net_advances', 'rana', 'ad_line', 'mcclellan_osc',
 ]
 

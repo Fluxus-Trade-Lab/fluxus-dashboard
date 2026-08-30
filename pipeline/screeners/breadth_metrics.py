@@ -32,6 +32,12 @@ logger = logging.getLogger(__name__)
 # ── Thresholds ────────────────────────────────────────────────────────
 _NEW_HIGH_THRESHOLD = -0.001  # true 52w high (0.1% float/quote tolerance)
 _NEW_LOW_THRESHOLD = 0.001    # true 52w low
+# Liquidity gate for the *_liq new-high/new-low counts. $5M/day and $5 a share
+# is where the SPAC trust band ($9.50-11 on ~16k shares) and the sub-$2 shells
+# both fall out; it is a floor for "a name a human could actually trade", not
+# a tuned parameter, and it was never searched over alternatives.
+_MIN_PRICE = 5.0
+_MIN_DOLLAR_VOL = 5_000_000.0
 
 
 def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
@@ -117,6 +123,46 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
     new_highs_4w = int((high_20d >= _NEW_HIGH_THRESHOLD).sum()) if have_20d[0] else None
     new_lows_4w = int((low_20d <= _NEW_LOW_THRESHOLD).sum()) if have_20d[1] else None
 
+    # --- Liquidity gate (2026-08-31) -------------------------------------
+    # On 2026-08-28, 88% of the 66 names counted as 52-week new highs sat in
+    # the $9.50-11 SPAC trust band, 89% traded under 100k shares/day, and the
+    # median dollar volume was $166k against $8.0M for the universe. A SPAC
+    # trust accretes with interest, so it prints a "new 52-week high" almost
+    # every session regardless of the market -- which is why this reading sat
+    # still on 08-28 while three other breadth readings fell. Names newly
+    # listed inside the window make it worse: several had 20-48 bars of
+    # history in total, so their entire life IS the lookback.
+    #
+    # The gate is emitted ALONGSIDE the ungated counts, never instead of
+    # them, for two reasons. (1) Continuity: `new_highs`/`new_lows` have 574
+    # rows of archive behind them and silently redefining them would put a
+    # second level break into a series that already has one (universe went
+    # 3000 -> 5614 on 2026-08-14). (2) Identification: with 4 counts on a
+    # 2x2 of {20d, 252d} x {gated, ungated}, the window effect and the
+    # pollution effect can be read separately. Collapsing to one gated
+    # number would confound them -- any change could be either cause.
+    #
+    # NULL, not 0, when the inputs to the gate are missing: a count of zero
+    # reads as "nothing made a new low today", the most reassuring possible
+    # rendering of a data outage.
+    px = pd.to_numeric(universe.get('close', pd.Series(dtype=float)), errors='coerce')
+    avol = pd.to_numeric(universe.get('avg_volume', pd.Series(dtype=float)), errors='coerce')
+    liquid = (px >= _MIN_PRICE) & (px * avol >= _MIN_DOLLAR_VOL)
+    n_liquid = int(liquid.sum())
+    gate_usable = int((px.notna() & avol.notna()).sum()) > 0
+
+    def _gated(series, cmp_ok, have):
+        if not (gate_usable and have):
+            return None
+        return int((cmp_ok(series) & liquid).sum())
+
+    hi_ok = lambda x: x >= _NEW_HIGH_THRESHOLD
+    lo_ok = lambda x: x <= _NEW_LOW_THRESHOLD
+    new_highs_liq = _gated(high_52w, hi_ok, int(high_52w.notna().sum()))
+    new_lows_liq = _gated(low_52w, lo_ok, int(low_52w.notna().sum()))
+    new_highs_4w_liq = _gated(high_20d, hi_ok, have_20d[0])
+    new_lows_4w_liq = _gated(low_20d, lo_ok, have_20d[1])
+
     return {
         'universe_size': n,
         'up_4pct': up_4pct,
@@ -139,6 +185,11 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
         'new_lows': new_lows,
         'new_highs_4w': new_highs_4w,
         'new_lows_4w': new_lows_4w,
+        'new_highs_liq': new_highs_liq,
+        'new_lows_liq': new_lows_liq,
+        'new_highs_4w_liq': new_highs_4w_liq,
+        'new_lows_4w_liq': new_lows_4w_liq,
+        'liquid_universe': n_liquid if gate_usable else None,
         'net_advances': advances - declines,
     }
 

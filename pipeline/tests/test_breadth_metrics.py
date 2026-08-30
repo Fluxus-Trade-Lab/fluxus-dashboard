@@ -223,3 +223,85 @@ class TestFourWeekNewHighsLows:
         r = compute_snapshot(u)
         assert r['new_lows'] == 0
         assert r['new_lows_4w'] == 4
+
+
+class TestLiquidityGate:
+    """The *_liq counts must exclude what polluted the ungated ones.
+
+    2026-08-28: 88% of the 66 names counted as 52-week new highs sat in the
+    $9.50-11 SPAC trust band on a median $166k of dollar volume. A SPAC trust
+    accretes with interest, so it prints a new high nearly every session no
+    matter what the market does -- the reading could not deteriorate, which
+    is why it was the lone dissenter that day.
+    """
+
+    def _uni(self, **over):
+        import pandas as pd
+        base = {
+            # SPAC1/SPAC2: at their highs, $10.20 on 16k shares = $166k/day
+            # REAL1: at its high, $80 on 2M shares = $160M/day
+            # PENNY: at its low, $1.40 on 50k shares
+            'ticker': ['SPAC1', 'SPAC2', 'REAL1', 'PENNY'],
+            'close': [10.20, 10.20, 80.0, 1.40],
+            'avg_volume': [16_000, 16_000, 2_000_000, 50_000],
+            'change_pct': [0.0, 0.0, 0.01, -0.05],
+            'perf_1m': [0.0] * 4, 'perf_3m': [0.0] * 4,
+            'sma20_dist': [0.0] * 4, 'sma40_dist': [0.0] * 4,
+            'sma50_dist': [0.0] * 4, 'sma200_dist': [0.0] * 4,
+            'high_52w': [0.0, 0.0, 0.0, -0.90],
+            'low_52w': [0.50, 0.50, 0.60, 0.0],
+            'high_20d': [0.0, 0.0, 0.0, -0.30],
+            'low_20d': [0.20, 0.20, 0.25, 0.0],
+        }
+        base.update(over)
+        return pd.DataFrame(base)
+
+    def test_the_gate_removes_the_illiquid_new_highs(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni())
+        assert r['new_highs'] == 3          # two SPACs + the real name
+        assert r['new_highs_liq'] == 1      # only the real one survives
+        assert r['new_highs_4w'] == 3
+        assert r['new_highs_4w_liq'] == 1
+        assert r['liquid_universe'] == 1
+
+    def test_the_gate_removes_the_penny_new_low(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni())
+        assert r['new_lows'] == 1
+        assert r['new_lows_liq'] == 0       # $1.40 is below the price floor
+        assert r['new_lows_4w_liq'] == 0
+
+    def test_ungated_counts_are_untouched_by_the_gate(self):
+        """Continuity: 574 rows of archive stand behind new_highs/new_lows.
+
+        Redefining them in place would put a SECOND level break into a
+        series that already has one (universe 3000 -> 5614 on 2026-08-14).
+        """
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        gated = compute_snapshot(self._uni())
+        # same rows, but with the gate's inputs stripped out entirely
+        u = self._uni().drop(columns=['close', 'avg_volume'])
+        ungated = compute_snapshot(u)
+        assert gated['new_highs'] == ungated['new_highs'] == 3
+        assert gated['new_lows'] == ungated['new_lows'] == 1
+
+    def test_missing_gate_inputs_are_null_not_zero(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        u = self._uni().drop(columns=['close', 'avg_volume'])
+        r = compute_snapshot(u)
+        for k in ('new_highs_liq', 'new_lows_liq',
+                  'new_highs_4w_liq', 'new_lows_4w_liq', 'liquid_universe'):
+            assert r[k] is None, f"{k} should be NULL when the gate cannot run"
+
+    def test_the_2x2_is_complete(self):
+        """Window effect and pollution effect must be separately readable.
+
+        One gated number would confound them: any move could be either
+        cause. Four counts on {20d, 252d} x {gated, ungated} cannot.
+        """
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni())
+        for k in ('new_highs', 'new_highs_4w', 'new_highs_liq', 'new_highs_4w_liq',
+                  'new_lows', 'new_lows_4w', 'new_lows_liq', 'new_lows_4w_liq'):
+            assert k in r
