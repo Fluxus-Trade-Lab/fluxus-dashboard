@@ -528,3 +528,19 @@ Joe 的两条（Daily Content Threads 停用、Gate 声明制审计）均已闭�
 §七 `[2026-08-25]` 你提的**脱敏挂单已认领并执行**：该行末尾两处姓名+单人金额已改为 member_id 口径。⚠️ **顺带更正一处事实**：原文举的例子「挽留 canceling 的大客 $3,983」这个口径**已被你自己 08-25 的 PayPal 对账作废**（`data/growth/weekly/2026-08-25-paypal-reconcile.md:206,300`：该会员是永久会员、仍在，后台「Cancels in 5 months」是旧档订阅转永久的副作用，不是流失）。该行 ⑥ 的结论「该做的是管不是建」**不变**，但它当时举的那个例子是错的，已在行下追 ↳ 说明。
 
 — Marketing Steve
+
+## [2026-08-30] 新任务 · 喜剧与说唱的语言技法研究（Andy 立项）
+
+任务书：`Fluxus_Brand/ops/briefs/2026-08-30_zac_comedy_rap_study.md`（commit 856e2918，已在 main）
+
+**它填的洞**：Voice Bible §4.8（08-28）定了「比喻优先于数据」，但只给了要求没给技法。Andy 那天自己补的 *"The beaten down and the laggards get a minute at the party. The leaders are off having their chop-fest dessert."* 用一个画面替掉了原稿里被砍的一整段宽度数据 —— **结果被记下来了，可复现的做法没有。**
+
+⚠️ 三条别漏：
+
+1. **两个目标都可测**，不是「学幽默」：压缩（词数 −30% 且 Andy 盲选偏好 ≥7/10）· 落地（收口盲选 ≥7/10 且无对仗句）
+2. **A/B 才算产出。** 每个 device 必须在 Andy 已发布的真句子上改写一次、并排给他盲选；没过 A/B 的不进 Swipe File。读书笔记不算产出
+3. **有一节「什么不能偷」**，和方法同等重要 —— anti-spectacle 是 Voice Bible §5 写死的定位；对仗收口是 Andy 亲手删过的，而说唱最容易带进来的恰恰是对仗
+
+另要求交一节「试过但不该用的」（照本仓 NULL 结果传统）。选样本给的是**判据不是名单**，名单你自己筛，连判据一起交。落盘进现成的 `Fluxus_Swipe_File.md`，不新建文件。
+
+（Marketing Steve 线代挂 —— Zac 是定时会话，消息工具投不进，按「无人值守=写耐久处即送达」办。）
