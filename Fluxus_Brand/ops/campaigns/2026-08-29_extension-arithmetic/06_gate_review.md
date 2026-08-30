@@ -1,127 +1,331 @@
-## 判定：**退回旗舰站**（V3 同时退回分发站）· 不毙
+# 审查站 · 第 2 轮（重过闸）· 2026-08-30
 
-角度、算术、出处体系都是干净的——**四条变体里三条可以直接进 Studio Q**。但旗舰稿有一句把一个我们自己编的止损约定写成了 Andy 的既定规则，V3 向公众发出了一个**在真实股票池里约十分之一会被证伪**的可证伪声明。两处都是一句话能修好，但都不能带着发。
+> 本轮审查站是**全新上下文**，没参与任何一稿的写作，所有数字**从 `data/output/universe.json` 原始字段独立复算**，未读稿子的自述表来验稿子。
+> 口径源：`universe.json` timestamp `2026-08-29T03:18:17.230043+00:00`（count 5634）· `quality.json` date `2026-08-28` status `ok` · 每行 `bar_date=2026-08-28`。
+
+## 判定：**退回 —— 旗舰站 1 句 · 分发站 V2 1 句 · V3 1 句 · 不毙**
+
+上一轮两处拦路**都真修好了**。本轮的三处是**新的**，全部是一句话（合计约三行文本）能改完的。
+V1、V4 直接过闸，V4 仍是四条里最强的一条。
 
 ---
 
-## 1. 无出处主张 —— **通过（两处越界除外）**
+# 〇、上一轮两处拦路是否已修好（逐条对账）
 
-我用 Bash 从 `data/output/universe.json` 原始字段独立复算，**没读稿子的自述表**：
+| 上一轮的拦路 | 当时的判词 | 本轮实测 | 结论 |
+|---|---|---|---|
+| 🔴 **① 旗舰 `my convention`** | 把「止损放 50 日线」这个我们自己的假设，用第一人称写成 Andy 的既定规则；与 `PUBLISHED_X:115` 的 0.73 ATR 结构止损冲突 | `grep -n "my convention" 04_flagship.md` → **仅命中 §三 的引述与禁令行（180、192），正文块零命中**。正文改为 `Call it the 50-day`（一个被点名的选择）。全篇零处宣称 Andy 用 50 日线做止损 | ✅ **已修好** |
+| 🔴 **② V3 `any name, any volatility` → 44–55** | 真实池 11.2% 的可交易票落带外，是一条会被读者正确证伪的公开声明 | 我独立复算：`tradeable=true` n=**2,556**，全池 ext=10 真实带 **40.5993–67.8583**，落 44–55 之外 **285 只（11.15%）**；收进 ATR% 2–8 后 n=**2,091（81.81%）**，实测带 **44.4497–54.5416**，落带外 **0**。新版正文写的正是这个限定 | ✅ **已修好（限定范围正确）**，但**换来一个新问题，见 §6(d)** |
+| 🟡 V1 `60 to 67` 内缩 | 真值上界 67.5325 | 已改 **`60 to 68`**（外扩，安全） | ✅ 已修好 |
+| 🟡 V2 `You only ever ask it` 教训感 | 对读者习惯的断言，零数据支撑 | 已改 **`It only ever gets asked after the move.`** | ✅ 已修好 |
+| 🟡 旗舰 `This was never a rule about being careful.` | 与 08-24 被亲手删掉的 `The news is never in the chart` 同形 | 已删，换成 `Same arithmetic, opposite sign. All it ever reads is…` | ✅ 已修好 |
+| 🟡 旗舰散文里裸写 `186%` | ext=2 全带 175.76–192.59 | 已改 `about 186%`，并在 §二 注明理由 | ✅ 已修好 |
+| 🟡 排期倒过来（说破恒等式的先行） | V4 被排到下周 | 已改 **V4（或含新止损因果的旗舰）→ V1 → V3 → V2** | ✅ 已采纳 |
+| 🔴 数据陈旧两场 | 08-27 收盘 + 08-28 全天缺 | `quality.json` date=**2026-08-28**，是仓库里最新一场收盘；周日无新数据；周一盘前发 = 口径成立 | ✅ **已推进，口径日说对了** |
 
-| | ATR% | ext 复算 | 文件存储 `atr_from_sma50` | 止损% | 仓位@R.25 | 稿子写的 |
+**并且**：v1 的支柱句「49.8 / 50.4 — Half, both times」被本轮自己作废了，作废理由（恒等式的产物，两票 ext 本来就几乎相等）与上一轮审查站的判词一致。这是本轮最好的一件事——**它自己把自己的支柱推翻了，而不是等我来推。**
+
+---
+
+# 一、无出处主张 —— **通过（一处数字须外扩）**
+
+我用 Bash 从原始字段独立复算，**没有读稿子的自述表**。逐个核对稿里每一个数字：
+
+## 1.1 CRM / VEEV 主读数（08-28 收盘）
+
+| | ATR%（`atr/close`） | ext 复算（`sma50_dist ÷ ATR%`） | 文件 `atr_from_sma50` | 止损%（`d/(1+d)`） | 比值 vs ext=4 | 稿子写的 |
 |---|---|---|---|---|---|---|
-| CRM | 4.2254 | **9.6822** | 9.6822 ✅ | 29.0334 | 0.8611 | 9.68 / 29.03% ✅ |
-| VEEV | 3.9877 | **9.4053** | 9.4053 ✅ | 27.2756 | 0.9166 | 9.41 ✅ |
+| **CRM** | 4.2685% | **9.7275** | 9.7275 | **29.3395%** | **49.7073%** | 9.73 / 29.34% / 49.7% ✅ |
+| **VEEV** | 3.9865% | **8.3460** | 8.346 | **24.9651%** | **55.0888%** | 8.35 / 55.1% ✅ |
+| OKTA | 5.5121% | 3.2668 | 3.2668 | 15.2591% | 118.3898% | 正文未用 ✅ |
+| OOMA | 5.8721% | 2.0815 | 2.0815 | 10.8913% | 174.6414% | `tradeable=false`，正文未用 ✅ |
 
-比值：CRM **49.80%**、VEEV **50.44%** → 稿写 49.8 / 50.4 ✅。21EMA 替换：**+42.93% / +71.36%** → V4 写 43 / 71 ✅。减半点 **8.7–11.76** → V2 写 8.7–11.8 ✅。ext=2 带宽 **175.8–192.6** → V2 写 176–193 ✅。读数表 20 格逐格复算 ✅。天真算法 41.31% 全篇不存在 ✅。`grep -nE '\$[0-9]|million|万美元'` 全文 **空** ✅（cashtag 不触发）。Andy 三句原话在 `PUBLISHED_X_2026-08-24_en.md:104,111-113,115` 逐字核对 ✅，副标「0.25% for 23R」在 `:19` ✅。
+`change_pct`：CRM **+1.57%**、VEEV **−1.93%**、OKTA −3.86%。close：CRM 256.00、VEEV 276.69。
+→ V3 的 *"Then Friday happened to one of them. Not a crash."* 与 *"The other barely moved"* 都成立 ✅。
 
-**两处不通过：**
+> 🟡 **§二 那句「逐位吻合（非自证）」是假的，改掉。** `atr_from_sma50` 不是独立第二实现——`pipeline/screeners/atr_enrichment.py:52` 的 `atr_multiple_from_sma50(close, atr, sma50_dist)` **就是** `sma50_dist / (atr/close)`，同一个函数、同一批输入。docstring:22 自己写着「so the badge and the screener column are **one number**」。这是**一致性检查**，不是独立验证。数字我另行复算过，全对；但这句方法学表述会让下一个人跳过真正的复算，删掉或改成「与存储列一致（同一实现，非独立验证）」。
 
-- 🔴 **V3「44 to 55」是在 ATR% 2–8 上算的，但正文写的是「any name, any volatility」。** 实测：ATR%=1 → **42.31%**，ATR%=12 → **59.46%**，都在带外。放到真实股票池：5,555 只里 **1,790 只（32.2%）** 的 ATR% 落在 2–8 之外；只算 `tradeable=true` 的 2,561 只，仍有 **16.6%** 在外。全池 ext=10 的真实带是 **40.6–68.0**，44–55 只覆盖 **90.5%**。
-  > 最难看的是失败模式：真实下界 40.6% 紧贴我们全程警告的「天真算法 41.3%」。读者拿 KO 那类低波票算出 41%，我们会回他「你用错公式了」——而他是对的。
-- 🟡 **V1「ext=7 → 60 to 67」的上界实为 67.53**（ATR%=8）。散文里手工把 max 向内取整＝把带宽说窄了，正是角度稿自己禁的那条「散文不许手打数字」。
+## 1.2 08-27 快照（V3 的「周四那两个数」）
 
-「没有人写这个角度」的依据 = `2026-08-28_today_x_options.md:21-30`，**n=5、单日、`grep -rln "firesidealpha"` 只命中 brief 自身＝无留存原始数据**。四条成稿正文里都没有搬这个断言，✅ 边界守住了。
+`git show 03761dc8:data/output/universe.json`（ts `2026-08-28T05:36:00Z`，bar_date 2026-08-27）：
+CRM ext **9.6822** 比值 **49.7979** · VEEV ext **9.4029** 比值 **50.4463** · OKTA 4.4012 / 92.4994 · OOMA 2.4059 / 154.1307
+→ V3 写 **49.80 / 50.45** ✅（注：上一轮我方写的 50.44 是截断，50.45 才是四舍五入正确值，本轮分发站是对的）
+→ 分发站 §出处表的 OKTA `92.50→118.39`、OOMA `2.406→2.081` ✅
+
+## 1.3 21EMA 换参照（V4 的 +49.8 / +92.5）
+
+CRM：stop50 **29.3395%** → stop21 **19.5846%**，size 0.85209 → 1.27651，**+49.8088%**
+VEEV：stop50 **24.9651%** → stop21 **12.9672%**，size 1.00140 → 1.92794，**+92.5243%**
+→ V4 写 **49.8 / 92.5** ✅（上一版的 43/71 是 08-27 读数，已正确作废）
+
+## 1.4 纯函数带宽（`f(4a)/f(ma)`，`f(x)=x/(1+x)`，ATR% 扫 2→8）
+
+| | 我的复算 | 稿子写的 | |
+|---|---|---|---|
+| ext=2 | **175.7576 – 192.5926** | V2 `176 to 193` | 🟡 **下界内缩**（175.76 < 176） |
+| ext=7 | **60.3175 – 67.5325** | V1 `60 to 68` | ✅ 外扩，安全 |
+| ext=10 | **44.4444 – 54.5455** | V1/V3 `44 to 55` | ✅ 外扩，安全 |
+| 减半点 | **8.6957 – 11.7647** | V2 `8.7 and 11.8` | ✅（下界内缩 0.004，可忽略） |
+
+> 🟡 **V2 的 `176` 是上一轮 `60 to 67` 的同一个病，只是换了个地方**：向内取整＝把带说窄了。同一份稿子里 V1 已经改成外扩的 68，V2 这处没跟上。改 **`175 to 193`**。
+
+## 1.5 读数表 20 格（配图）—— **逐格复算，20/20 吻合** ✅
+
+| ext ＼ ATR% | 3 | 4 | 5 | 6 |
+|---|---|---|---|---|
+| 2 | 189.2857→**189** | 186.2069→**186** | 183.3333→**183** | 180.6452→**181** |
+| 4 | 100→**100** | 100→**100** | 100→**100** | 100→**100** |
+| 6 | 70.2381→**70** | 71.2644→**71** | 72.2222→**72** | 73.1183→**73** |
+| 8 | 55.3571→**55** | 56.8966→**57** | 58.3333→**58** | 59.6774→**60** |
+| 10 | 46.4286→**46** | 48.2759→**48** | 50.0000→**50** | 51.6129→**52** |
+
+「纯函数、与盘面无关、不用重做图」——**属实** ✅。散文的 `about 186%` 对应 ATR%=4 那格 ✅。
+
+## 1.6 真实池 ext=10 带宽与落带外比例
+
+`tradeable=true` **n=2,556**（全库 5,634）· 全池带 **40.5993–67.8583** · 落 44–55 外 **285 只 = 11.15%**
+ATR% ∈[2,8] 子集 **n=2,091 = 81.81%** · 实测带 **44.4497–54.5416** · 落 44–55 外 **0**
+→ 分发站写的 2,091 / 81.8% / 44.45–54.54 / 0 例外 / 全池 40.60–67.86 / 11.2%（285）**全部吻合** ✅
+→ `tradeable` = 市值 ≥ 门槛 且 成交额 ≥ 门槛（`pipeline/quality.py:142-158`），叫 "liquid tickers" **成立** ✅
+
+## 1.7 posts.csv 三个判据基线
+
+n=**14** 帖 · 总收藏 **1**（唯一一条：2026-08-24 LONGFORM，1 收藏 / 5 赞 → 收藏赞比 **0.20**）
+ARC n=**8**，views 中位 **180**，最高 **421**（也是全库最高）· REPLY 唯一一条 2026-07-30，**81** 曝光
+→ 分发站三个判据基线**全部吻合** ✅。「收藏/赞 >0.5 从没达到过」**属实**，两级判据的建议是对的，请采纳。
+
+## 1.8 其余
+
+`date(2026,8,27)`=**Thursday**、`date(2026,8,28)`=**Friday**、`2026-08-30`=Sunday、`2026-08-31`=Monday ✅
+CRM `high_52w_dist` **−4.39%**、`days_since_52wh` **167** → 全篇零处写「新高」「龙头突破」✅
+天真算法 `4.00/9.7275` = 41.12% → **两稿正文均不存在 41%** ✅
+`grep -nE '\$[0-9]|million|billion|万美元'` 对两份文件的**正文块** = 空（cashtag 不触发）✅
+0.25% 的出处 `PUBLISHED_X:19`「0.25% for 23R」+ `:115`「0.25% ÷ 4.34% ≈ 5%」**逐字核对属实**，且确实是**规则值**而非 MRNA 那笔的 0.217%（`:104`）✅
+4/7/10 归属：`pipeline/screeners/atr_enrichment.py:66`「The Jacobs/Jeff Sun bands (0-4 entry / 5-7 hold / >=7 scale-out)」**真实存在**；`JeffSun_Wiki/wiki/entry-rules.md:30`「No entry if ATR% from 50-MA exceeds 4x」✅；`atr-extension-signals.md:63`「At the individual stock level, he uses 10x ATR% for profit-taking」✅。**三条引用全对，V1 的 Entry/Trim/Take profit 映射准确。** ✅
 
 ---
 
-## 2. 重复 hook —— **通过**
+# 二、重复 hook —— **通过**（一处跨站撞车，不拦路）
 
-不是同一句式换词，四条第一拍的**动作**都不同：
+四条变体的**第一拍动作**确实各不相同：
 
-| | 第一拍 | 落点 |
+| | 第一拍**做的动作** | 落点 |
 |---|---|---|
-| 旗舰 | 替读者说出人群会说什么，然后要求他把它换成可下单的数 | 订单框 |
-| V1 | 拿起读者已有的那把尺，说他只读了一半 | 尺的背面 |
-| V2 | 先替读者说出最狠的反驳（「懦夫规则」） | 反向那一半 |
-| V3 | 两个不相干输入撞出同一个数 | 可证伪带 |
-| V4 | 先拆自家可信度 | 整个品类 |
+| V1 | 拿起读者手里已有的那把尺，说他只读了一半（翻译） | 尺的背面 |
+| V2 | 先替读者说出最狠的反驳，再邀请他反向跑一遍（预先反驳） | 反向那一半 |
+| V3 | 给两个数，然后让其中一个当着读者的面动掉（时间序列） | 可证伪带 |
+| V4 | 先拆自家可信度（自伤） | 整个品类 |
 
-`Fluxus_Swipe_File.md` 里 #6 Ariel(:199)、#18 TSF(:文体 I「先自己说反面」)、#37 Muninn(:869) 三个骨架引用**真实存在且对得上**。V2 的骨架描述与 #18 的实录（「主动先说反面 → 条件句」）一致。
-
----
-
-## 3. 变体是否只是缩写 —— **通过（V3 有条件）**
-
-- **V1 独立成立** ✅ 论证对象换成 4/7/10 分档尺，零 ticker、零日期，是真常青弹药。
-- **V2 独立成立** ✅ 回答的是相反的问题（这会不会让我变胆小鬼），情绪极性是进攻。
-- **V3 半独立** ⚠️ 去掉旗舰它仍读得通，但它和旗舰共用 CRM/VEEV + 49.8/50.4，是四条里最接近「旗舰的另一种切法」的。
-- **V4 独立成立且最强** ✅ 靶子是整个「晒仓位百分比」的品类，没见过 CRM 也中枪。
+🟡 **但旗舰和 V1 现在是同一个动作**：旗舰 *"you already know what everyone is going to tell you. It's extended."* 与 V1 *"Everyone reads it as a temperature."* 都是「立人群共识 → 一句推倒」。上一轮旗舰的第一拍是「把一个词换成可下单的数」，本轮重写后向 V1 靠了一步。
+**不拦路**（六项审的是四条变体之间），但**排期上别让旗舰和 V1 挨着发**——分发站建议的 V4 → V1 → V3 → V2 里，若旗舰当周发，把 V1 放在离旗舰最远的位置。
 
 ---
 
-## 4. AI 腔 —— **不是零条，六条**（按风险排序）
+# 三、变体是否只是缩写 —— **不通过（V2 一处）**
 
-1. 🔴 **V2**：*"Below that you're being paid to be early. Above it you're paying to be late."* —— 教科书级对仗格言（paid/paying × early/late 双轴对称）。记忆里那条「他删了我评分第一的收口句；要一读就懂的重话，不要要回味的巧话」，形状完全一致。**最可能被 Andy 划掉的一句。**
-2. 🟡 **V4 收口**：*"That part isn't a convention. / That part is division."* —— 排比 + 对仗双段收口。
-3. 🟡 **V1 收口**：*"The trim line isn't where the stock turns dangerous. It's where the division already had you at two thirds."* —— 「不是 A，是 B」镜像句。
-4. 🟡 **旗舰**：*"This was never a rule about being careful."* —— 「X was never Y」正是 Andy 08-24 亲手删掉的 *"The news is never in the chart"* 的同一形状（文件头注明「别再产同一个形状」）。
-5. 🟢 **旗舰收口**：*"Conviction doesn't change the division."* —— 抽象名词 × 抽象名词 + 头韵，属于「要回味的巧话」家族。稿子已备了替代版，让 Andy 选。
-6. 🟢 **V2**：*"Nobody ever feels the first half. Nobody runs the number when they're early."* —— anaphora，轻度。
-
-**豁免不算 AI 腔的一处**：旗舰 *"Your stop isn't a line on a chart. It's rent."* —— 这与 `PUBLISHED_X:111` 的 *"Position size is not risk. Stop distance is risk."* 是**同一个已公开的句法**，是他的声音不是机器的。
-
-标准 AI 连接词全清：`moreover / furthermore / delve / crucial / it's worth noting / ultimately / not only` **零命中**。
+- **V1 独立成立 ✅ 且是四条里最干净的一条**：零 ticker、零日期、零盘面，而且**它自己交代了基准**（`4 — call this one full position.`）——这一点旗舰反而没做到，见 §6(e)。
+- **V2 ❌ 它现在站不住**：正文第二段写 `Same risk budget, same stop convention **as before**` —— **as before 在这条帖子内部没有先行词**，帖子从头到尾没提过任何 stop convention。同理第一句的 `Before you decide **this** is a rule for cowards`，`this` 也没有对象。稿子声称它「不含 ticker，同样常青、能独立存在」，**但它实际上是在向旗舰稿借上下文**——正是本项要防的那件事。**三个词能修好。**
+- **V3 独立成立 ✅**（重写后靠自己的时间序列站住了，不再依赖旗舰的 49.8/50.4）
+- **V4 独立成立且最强 ✅**（靶子是整个「晒仓位百分比」的品类，没见过 CRM 也中枪）
 
 ---
 
-## 5. 语气漂移 —— **一处**
+# 四、AI 腔 —— **逐条点名，共五条；标准连接词零命中**
 
-Voice Bible §1：**Calm Monk / 天气预报员 —— 报概率、不下命令、对预报无自我**。四条全部零方向、零买卖、零「我预测对了」——变体 B 的收据开场没有任何一条偷偷复活 ✅。V3 的 *"one of us did the arithmetic wrong, and I'd want to know which"* 和 V4 的 *"Including mine"* 是这一轮最好的两句，完全是天气预报员。
+`grep -nEi 'moreover|furthermore|delve|crucial|ultimately|not only|it's worth noting|in conclusion|dive into|landscape|realm|tapestry|underscore|pivotal|robust|leverage|navigate|testament|game.chang|unlock|seamless|meticulous|nuanced|multifaceted|it is important|serves as|plays a (vital|key|crucial)'` → **对两份文件的正文块全部零命中**，仅命中稿子自己的自查行与 grep 命令行。✅
 
-🟡 **唯一漂移 —— V2 最后两段**：*"They run it after they've already missed it… conclude the rule is timid. / The rule isn't timid. **You only ever ask it after the move.**"* 主语从「他们」滑到「你」，最后一句是**对读者习惯的断言，我们零数据支撑**，读起来是教训不是测量。改法：把 "You only ever ask it" 换成 "It only ever gets asked after the move."——同样的意思，把手指从读者身上移开。
+按风险排序的五条（全部**不拦路**，但要让 Andy 拍）：
 
----
+1. 🟡 **V2 中段**：*"Below that you're being paid to be early. Above it you're paying to be late."* —— 教科书级对仗（paid/paying × early/late 双轴）。上一轮已点名，本轮**未换，只备了替代版**。记忆里那条「他删了我评分第一的收口句」形状完全一致，**这仍是最可能被划掉的一句**。备选 `Under that number the same risk buys more shares than your normal size. Over it, fewer.` 是对的方向。
+2. 🟡 **V4 收口**：*"That part isn't a convention. / That part is division."* —— 排比＋对仗双段收口。已备非对仗版 ✅。
+3. 🟡 **V1 收口**：*"The trim line isn't where the stock turns dangerous. It's where the division already had you at two thirds."* —— 「不是 A，是 B」镜像句。已备非镜像版 ✅。
+4. 🟡 **旗舰收口**：*"Conviction doesn't change the division."* —— 抽象名词 × 抽象名词 + 头韵，「要回味的巧话」家族。已备两个重话版 ✅。
+5. 🟢 **旗舰段 4**：*"Same arithmetic, opposite sign."* —— 不是 AI 腔，是**数学上不对**：186% 与 49.7% 不是「相反的符号」，它们是同一个乘数落在 1 的两侧（互为倒数量级）。这稿全部的卖点是「算术精确」，一个懂数的读者会在这里绊一下。改 **`Same arithmetic, the other side of one.`** 或 **`Same division, the other direction.`**
 
-## 6. 诚实边界 —— 🔴 **不通过，这是退回的主因**
+> **豁免（不算 AI 腔）**：旗舰 *"Your stop isn't a line on a chart. It's rent."* —— 与 `PUBLISHED_X:111` 的 *"Position size is not risk. Stop distance is risk."* 是同一个**他已经公开用过**的句法。这是他的声音。上一轮的豁免继续有效。
 
-**(a) 口径日：基本通过。** 旗舰两次写 "At Thursday's close"、V3 结尾 "(Thursday's close.)"，`date(2026,8,27).strftime('%A')` = Thursday ✅，没有一处说成「今天」。V1/V2 无日期无 ticker，免疫。
-🟡 两个小口：① 旗舰 "You've had that chart open **since Thursday**" 若周一发，中间隔了一整个 08-28 交易日，这句读起来像没发生过周五；② V4 "Same day" 未指明哪天。
-
-**(b) 50 日线止损 —— 这里翻车了。**
-
-> 🔴 旗舰第二段：*"Put the stop at that average — **my convention**, use your own and every number here moves"*
-
-「my convention」＝**宣称把止损放 50 日线是 Andy 自己的惯例**。他公开记录里不是：`PUBLISHED_X:115` 写的是 *"The stop sits **0.73 ATR** from entry — close because the structure is tight."* CRM 那个 50 日线止损是 **29.03%，是他那笔的 6.7 倍宽**。更糟的是它和他同一段里的原话直接打架——*"a sloppy chart with **nowhere to put a stop** gets a tiny position automatically"*：按他自己的话，一个要放 29% 止损的图，就是「nowhere to put a stop」。
-
-稿子把一个**我们自己引进的假设**，用第一人称写成了**他的既定方法承诺**。这条撞的是本轮铁律「不代写 Andy 的观点、立场、承诺」，也正是研究包 反面事实 §1 标红的那一条——它被披露了敏感性（"every number here moves"），但**归属搞反了**：应该说这是一个假设，结果说成了他的习惯。
-
-> 🔴 **附带的更深一层（不是拦路，但框架必须调）**：把止损定在 50 日线之后，「延伸度」和「止损距离」变成**同一个量**——ext = 距50线 ÷ ATR%，而止损距离就是距50线。于是「越延伸→仓位越小」是一个**恒等式**，不是一次市场测量。CRM 与 VEEV 的 49.8/50.4「撞在一起」也不是发现：它们 ext 本来就几乎相等（9.68 vs 9.41）。
-> V3 恰好把这层包装成了实证发现——*"Two charts with nothing to do with each other… different sector, different price, different volatility"* 列了四个**不相干**的差异，却没说唯一相干的那个变量**几乎相同**。（它下一句 "the answer stops depending on the stock" 部分救回来了，但顺序是先制造惊讶再解释。）
-> **V4 是四条里唯一把这件事说明白的**（*"any position size quoted without its stop is decoration. Including mine" / "What survives the swap is the direction"*）——而分发站把它排到了**下周**，排在四条依赖该假设的稿子后面。这个顺序应该倒过来。
+🟡 **顺带：`rent` 链在该收账的地方断了。** 段 2 建了 `rent → same square footage → you don't set the rent → the rent is 29.34%`，链是干净的（租金/坪＝止损距离，预算固定 ⇒ 面积＝仓位），但段 3 该兑现的时候写的是 `buys 49.7% of the position` —— 喻体消失，换回了内部词。§4.8 第 4 条「比喻要连成一条链」，把 `position` 换成 `square footage` 就闭合了，且顺手解掉 §6(e) 的一半。
 
 ---
 
-# 回退清单（改完可直接过闸，不必重开轮）
+# 五、语气漂移 —— **通过**
 
-### 🔴 退回旗舰站 —— 一句话
+对照 Voice Bible §1 **Calm Monk / 天气预报员（报概率、不下命令、对预报无自我）**：
 
-**原句**：`Put the stop at that average — my convention, use your own and every number here moves —`
-**问题**：把我们引入的假设写成 Andy 的既定止损规则，与 `PUBLISHED_X:115` 的 0.73 ATR 结构止损直接冲突。
-**改法（二选一，都不需要改动其他任何一句）**：
-- A（保守）：`Put the stop at that average — one convention, not the only one; use yours and every number here moves —`
-- B（更强，把假设变成他的真规则）：`Put the stop where the chart lets you. On a bar this far from the base, the chart doesn't let you put it close — call it the 50-day and the rent is 29.03% of the price.` ← 这一版把 extension → size 接到他自己公开的因果上（结构不给你近止损 → 止损远 → 仓位小），恒等式问题也一并解决。
+- **零方向、零买卖、零持仓、零预测**：`grep -nEi '\b(buy|sell|long|short|target|forecast|predict|expect)\b'` 对四条变体代码块 = **空**；旗舰里 `buy` 只出现在 *"You can still buy it. You just can't buy as much of it."*——那是**许可**不是**指令**，反而是 anti-dopamine 的正面表达 ✅
+- V3 *"one of us did the arithmetic wrong, and I'd want to know which"* 与 V4 *"Including mine"* 仍是本轮最好的两句天气预报员 ✅
+- 上一轮点名的 V2 教训感**已修好** ✅
 
-同时建议顺手处理：`This was never a rule about being careful.`（08-24 被亲手删掉的同形句），以及 prose 里那个单独的 `186%`（ext=2 全带 175.8–192.6，写「about 186%」或「180 to 190%」）。
+🟢 **一处要主动澄清，免得下一轮误伤**：旗舰开头 *"You've had that chart open all weekend"* 是**断言读者做了什么**，形状上像上一轮被判漂移的 V2。**但它不是同一件事**：V2 那句是把「读者只在事后才算」当成**论证前提**（零数据支撑）；旗舰这句是 Voice Bible §4.8 第 1 条**明确要求**的开场（「开头不许是我……今天在读这条的人正盯着一只已经飞了的票犹豫要不要追——从那里开口」）。**判通过，并记进案，别下一轮又拿它当漂移。**
 
-### 🔴 退回分发站 —— V3 一句话
+🟢 V4 *"Including mine, which is why the stop convention is written into every one of these."* —— 我查了：这是一条**对外的方法承诺**，但它有据 —— Voice Bible §3「**the risk ledger** — 'x% trade risk, y% port risk' as the fixed footer of **every public trade**」是已登记的自有 tic。**不算代写立场** ✅。
 
-**原句**：`same stop convention, any name, any volatility, ten ATRs out. If you get a number outside 44 to 55, one of us did the arithmetic wrong`
-**问题**：真实股票池 16.6% 的可交易票（全池 32.2%）落在带外；带的真实范围是 40.6–68.0。这是一个公开发出去、会被读者正确证伪的声明。
-**改法（二选一）**：
-- A：把邀请收进已测范围 —— `any name that moves between 2 and 8 percent on an average day, ten ATRs out. Outside 44 to 55 and one of us did the arithmetic wrong.`
-- B：换成实测全池带 —— `any name in a liquid universe, ten ATRs out: 41 to 68. If you land outside that, one of us did the arithmetic wrong.`（复算命令：`ratio(a,10)` 扫 `tradeable=true` 的 2,561 只）
+---
 
-顺带 V1 的 `60 to 67` → **`60 to 68`**（真值 60.32–67.53）。
+# 六、诚实边界 —— 🔴 **不通过（两处，都是新的）**
 
-### 🟡 不拦路，但建议在同一轮改掉
-- V2 结尾 `You only ever ask it after the move.` → `It only ever gets asked after the move.`（去教训感）
-- V2 `Below that you're being paid to be early. Above it you're paying to be late.` —— 备一个非对仗版给 Andy 选，这句大概率被划。
-- 发布顺序建议倒过来：**V4 或含改法 B 的旗舰先行**，让「止损约定决定一切」这句话先落地，后面三条才站得住。
+## (a) 口径日 —— **通过，而且这轮说对了** ✅
 
-### 若改完，Andy 发布前必须知道的 3 条
-1. **数据陈旧两场**（08-27 收盘 + 08-28 全天缺）。周一发之前跑 `python3` 复算 ①，比对 CRM 那行；跌出 ≥7 就换票不换角度。
-2. **50 日线止损是我们的假设，不是你的规则**——你公开的是 0.73 ATR 结构止损。定稿用哪个措辞由你拍，但正文不能出现「my convention」指 50 日线。
-3. **「收藏/赞 >0.5」这个判据我们从没达到过**：全库 14 帖总收藏 **1**，历史最佳收藏赞比 **0.20**。分发站建议的两级判据（一级＝出现任何收藏，基础率 1/14）是对的，采纳它，否则每条都会被判失败。
+- `quality.json` date=**2026-08-28**，全部 5,634 行 `bar_date=2026-08-28`，是仓库里最新一场收盘。今天 08-30（周日）无新数据。**周一 08-31 盘前发，08-28 仍是最新一场，口径成立。**
+- `date(2026,8,28)` = **Friday** ✅。旗舰段 2/3 两处 `Friday's close`、V3/V4 的 Thursday/Friday 全部对得上。
+- 上一轮点名的「`since Thursday` 在周一发会漏掉整个周五」**已修好**：改成 `all weekend` ✅。上一轮点名的 V4「Same day 没说哪天」**已修好**：改成 `Friday's close` ✅。
+- 失效表（§四「口径日与失效条件」）写得**准确且可执行**，`about 186%`/读数表/0.25% 标为不失效 ✅ —— 我复算证实这三项确实与盘面无关。
 
-**本轮我未写任何仓库文件、未 commit、未 push、未发任何消息。** 复算用的临时草稿在 `/private/tmp/claude-501/-Users-taolezhu-Documents-AI-Trading-System/9343d385-11b6-46a9-926d-90a89d572241/scratchpad/drafts.txt`。
+> 🟡 **一处例外：选择 4 的备选 A 自带一个口径错误。** *"How much of it stopped being your call on **Thursday morning**."* —— 全篇口径日是**周五**，正文从头到尾没建立过「Thursday」这个时间点（它指的是 CRM 08-27 那根 +22.58%，但读者看不到）。周一发时这是四天前。**若 Andy 选备选 A，必须同时把它改成 `on Friday's close` 或把段 2 里补一句 Thursday 的跳空**——否则收口指向一个正文没提过的日子。请把这条一起递给他，别让他挑到一个带故障的选项。
+
+## (b) 有没有把我们的假设写成 Andy 的立场或方法承诺 —— **通过（上一轮的翻车点已修好）** ✅
+
+- `my convention` 在**正文块零命中**；50 日线以 `Call it the 50-day` 出现——一个被点名的选择，不是他的惯例 ✅
+- V1/V2/V3/V4 一律用 `one stop convention` / `same stop convention` / `the 50-day, say` ✅
+- 唯一引用他的是 0.25%，是**已公开的规则值**（`:19`、`:115`），不是 MRNA 那笔的 0.217% ✅
+- V3 的 §纪律③ 明文写死「不许滑成 `my convention`」，V4 的注也写了 —— 这条纪律在稿内被制度化了 ✅
+
+> 🟡 **但替换句自己带了一条无出处的因果法则，请降调。** 旗舰段 2：*"you put the stop where the chart lets you, and **a bar this far from its base doesn't let you put it close**."* —— 这是一条**关于图表的普遍规律**，我们没有任何数据支持它，而且仓库自己的字段就在旁边打脸：CRM 的 `sp_stop` = **200.10（距收盘 21.84%）**、VEEV 的 `sp_stop` = **236.19（距收盘 14.64%）**，都比我们用的 50 日线止损（29.34% / 24.97%）**近得多**；而 Andy 公开那笔用的是 **0.73 ATR ≈ 3.12%**（按 CRM 的 ATR% 折算）。
+> 这不是上一轮那种归属错误（那个真修好了），**是把一个假设从「他的习惯」改写成了「图表的法则」——归属对了，举证还是零。** 而且句子里有个逻辑折返：先说「止损由图决定」，下一句又「Call it the 50-day」（一个我们自己挑的线）。读者会看见这个切换。
+> **不拦路**（措辞含糊，`close` 未定义，严格说不可证伪），但**建议改**，见回退清单 🟡-1。
+
+## (c) 有没有发出会被读者正确证伪的公开声明 —— **通过** ✅
+
+上一轮的 44–55 已收进 ATR% 2–8，我实测该子集 **0 例外**。这条声明现在**是真的**。上一轮那个最难看的失败模式（读者拿低波票算出 41%，紧贴我们全程警告的天真算法 41.1%）**已经消失**。
+
+## (d) 🔴 **有没有把恒等式包装成实证发现 —— 这是本轮的头号拦路，在 V3**
+
+> **原句**：`Here's the part you can break. Any name that moves between 2 and 8 percent on an average day — four out of every five liquid tickers — ten ATRs out, same stop convention: 44 to 55. **I ran all 2,091 of them that qualify and not one landed outside.**`
+
+**这句话在数学上不可能有反例，所以「2,091 只无一例外」不是证据，是同义反复。**
+
+比值只是 ATR% 的一元函数：
+```
+ratio(a) = f(4a)/f(10a),  f(x)=x/(1+x)
+         = 0.4 · (1+10a)/(1+4a)
+d/da = 0.4 · 6/(1+4a)² > 0   ← 在 a>0 上严格单调递增
+ratio(0.02) = 44.4444%   ratio(0.08) = 54.5455%
+```
+**一个严格单调函数在闭区间上的值域，就是两个端点。** 只要一只票的 ATR% 落在 [2%, 8%]，它的比值**必然**落在 [44.44, 54.55]——这与它是哪只票、什么行业、什么价格、有没有财报**完全无关**。筛选条件（ATR% 2–8）和被检验的结论（44–55）是**同一件事的两种说法**。
+
+- 「我跑了 2,091 只」提供的信息量 = **0**（超出「它们的 ATR% 在 2–8 之间」之外，一个 bit 都没有）
+- `Here's the part you can break.` 是**假的证伪邀请**：这一段没有任何东西可以 break
+- 这**恰好是上一轮我方标红的那条更深一层**（止损定在 50 日线后，ext 与止损距离是同一个量）在新版里的**复发**，只是从 CRM/VEEV 的「巧合」换成了 2,091 只的「普查」。**同一个形状，第二次。**
+- 后果不是被证伪，是**被看穿**：这稿的全部信用来自「我们把算术做对了」。一个懂数的读者两分钟就能看出这是循环论证，而他正是我们最想要的那个读者。
+
+> 相比之下，**V3 同段里那个 `four out of every five liquid tickers`（81.81%）是真的实证结果** —— 那是关于**我们股票池的经验事实**（2,091/2,556），跟函数值域无关。它才是这一段值得报的数。
+
+**必改。**见回退清单 🔴-2。
+
+🟡 **同族的轻症（不拦路）**：V1 *"Those ranges are the entire contribution of volatility, **measured across** names that move 2 to 8 percent on an average day."* —— `measured across` 同样暗示实测，实为函数值域。但 V1 的句子重心在「这就是波动率贡献的全部」（**这句是对的且有价值**），且没发出证伪邀请。**建议**把 `measured across` 换成 `across`，一个词。
+
+🟡 **另一处轻度过度归因（不拦路）**：旗舰段 3 *"**Neither company did anything to those two numbers.** The distance did."* 我做了反事实分解：49.71 → 55.09 的 5.382pp 缺口里，**距离贡献 +5.814pp，波动率贡献 −0.433pp（约 8%，方向相反）**。ATR% 是公司自己的价格属性，它确实动了那个数。改成 **`Almost none of that gap is the companies. It's the distance.`** 就从「几乎对」变成「精确对」，而且更像天气预报员。
+
+## (e) 🔴 **额外拦路：旗舰的核心数字，分母在正文里从未出现，而且 "the base" 在相邻两段是两个意思**
+
+旗舰段 2：*"a bar this far from **its base**"* —— 这里 `its base` = **50 日线本身**（距离为 0）。
+旗舰段 3：*"it buys 49.7% of the position it would have bought **at the base**"* —— 这里 `the base` = **ext = 4**。
+旗舰段 4：*"the same rule buys about 186% of what it buys **at the base**"* —— 同样是 ext = 4。
+
+**同一个词，相邻两段两个所指，而且其中一个所指会把算术变成不可能。** 若读者照段 2 的用法把「the base」读成 50 日线本身，那里的止损距离是 0，仓位无穷大，49.7% 无从谈起。
+
+**更要紧的是：`4` 这个数在整篇正文里一次都没出现。** 全文提到的 ATR 倍数只有 9.73、8.35、two。基准只写在配图的表里（`4 ATRs — the base`）和图注（`at 4 ATRs from the 50-day`）。X 长推的正文必须自己站得住——**这稿最重要的一个数字（49.7%）在正文里是一个没有分母的分数。**
+
+对照之下 **V1 做对了**：`4 — call this one full position.` 一句话把基准立了。旗舰反而漏了。
+
+**必改。**见回退清单 🔴-3。两个词。
+
+---
+
+# 回退清单（逐句可执行；原句 → 问题 → 改法文本）
+
+## 🔴-1 · 退回分发站 · V3 —— 把伪证伪邀请换成真实证结果
+
+**原句**（05_distribution.md:107-111）：
+> `Here's the part you can break. Any name that moves between 2 and 8 percent on an average day — four out of every five liquid tickers — ten ATRs out, same stop convention: 44 to 55. I ran all 2,091 of them that qualify and not one landed outside. If yours does, one of us did the arithmetic wrong, and I'd want to know which.`
+
+**问题**：44–55 是「ATR% 落在 2–8」这个筛选条件的**代数后果**（`ratio(a)=0.4(1+10a)/(1+4a)` 严格单调，端点即 44.44 / 54.55）。「2,091 只无一例外」在数学上不可能有别的结果，它是同义反复不是证据；`the part you can break` 是一个没有东西可 break 的证伪邀请。**它是上一轮标红的恒等式问题的第二次复发。**
+
+**改法（A，推荐——把真正的实证部分留下，把算术部分说成算术）**：
+> `Here's the part that isn't an opinion. Ten ATRs out, same stop convention, the answer lands between 44 and 55 percent — and the only thing that moves it inside that range is how volatile the name is. That's not a survey, it's a division you can do on the back of a receipt. What is a survey: four out of every five liquid tickers move between 2 and 8 percent on an average day, so for four out of five, that's the whole range. Run yours. If you land outside it with a name in that band, one of us did the arithmetic wrong, and I'd want to know which.`
+
+**改法（B，短版——只删掉那半句）**：
+> 把 `I ran all 2,091 of them that qualify and not one landed outside.` **整句删掉**，把 `Here's the part you can break.` 换成 `Here's the part that isn't an opinion.`，其余不动。
+> （删掉那句后，2,091 这个数消失，但 `four out of every five liquid tickers` 保留——那个 81.81% 才是真实证结果。）
+
+⚠️ **两种改法都不要保留 `I ran all 2,091 of them`**。若 Andy 想留一个大数字撑场面，唯一诚实的写法是把它绑到它真正证明的那件事上：*"Four out of five liquid names — 2,091 of the 2,556 I can trade — move between 2 and 8 percent on an average day."*（这句我复算过，**属实**。）
+
+---
+
+## 🔴-2 · 退回旗舰站 —— 给 49.7% 一个分母，并解掉 "the base" 的一词两义
+
+**原句 A**（04_flagship.md:17）：
+> `Same 0.25% of risk. Out there it buys 49.7% of the position it would have bought at the base.`
+
+**原句 B**（04_flagship.md:19）：
+> `two ATRs off the 50-day, the same rule buys about 186% of what it buys at the base.`
+
+**问题**：`the base` 在段 2 指 50 日线本身、在段 3/4 指 ext=4；而 `4` 这个基准在整篇正文里一次都没出现，只活在配图里。X 长推的正文必须独立可读——现在最重要的那个数是一个没有分母的分数，而且照段 2 的用法读会得到一个无穷大。
+
+**改法（两处替换，共四个词）**：
+> A → `Same 0.25% of risk. Out there it buys 49.7% of the square footage it would have bought four ATRs out — the top of the entry zone.`
+> B → `two ATRs off the 50-day, the same rule buys about 186% of what it buys four ATRs out.`
+
+（A 顺手把 `position` 换回 `square footage`，把段 2 建起来的 rent 链在该兑现的地方闭合——§4.8 第 4 条。若不想用比喻，写 `49.7% of the position it would have bought four ATRs out` 即可，分母问题一样解掉。）
+
+⚠️ 段 2 的 `its base` **不用改**——它在那里指 50 日线是自然的；只要段 3/4 不再用「the base」当 ext=4 的代称，一词两义就消失了。
+
+---
+
+## 🔴-3 · 退回分发站 · V2 —— 三个词，让它真的能独立站住
+
+**原句**（05_distribution.md:62）：
+> `Same risk budget, same stop convention as before, two ATRs above the 50-day instead of ten`
+
+**问题**：`as before` 在这条帖子里**没有先行词**——V2 全篇从没提过任何 stop convention。稿子声称它「零 ticker、零日期，常青、能独立存在」，实际是在向旗舰稿借上下文，正是本项（变体≠缩写）要防的那件事。
+
+**改法**：
+> `Same risk budget, one stop convention — the 50-day, say — two ATRs above it instead of ten`
+
+**顺带同一条**：第一句 `Before you decide **this** is a rule for cowards` 的 `this` 也悬空。若上面那处改了，`this` 由下一段的内容回指，勉强能读；想彻底干净就写 `Before you decide that sizing by stop distance is a rule for cowards, run it the other way.`
+
+---
+
+## 🟡 不拦路，但建议同一轮改掉（六条，全是一句话）
+
+| # | 位置 | 原文 | 改法 |
+|---|---|---|---|
+| 🟡-1 | 旗舰段 2 | `you put the stop where the chart lets you, and a bar this far from its base doesn't let you put it close.` | 无出处的图表法则，且仓库自己的 `sp_stop` 给 CRM 21.84% / VEEV 14.64%，都比我们用的 29.34% / 24.97% 近。改成把它当**公开的选择**：`And you don't get to pick it for free — pick one line and hold it, or the number means nothing. Call it the 50-day:` |
+| 🟡-2 | V2 | `176 to 193 percent` | 真值 **175.7576–192.5926**，下界向内取整＝把带说窄了（与上一轮 `60 to 67` 同病）。改 **`175 to 193 percent`** |
+| 🟡-3 | 旗舰段 4 | `Same arithmetic, opposite sign.` | 186% 与 49.7% 不是相反符号。改 **`Same arithmetic, the other side of one.`** |
+| 🟡-4 | 旗舰段 3 | `Neither company did anything to those two numbers. The distance did.` | 反事实分解：5.382pp 缺口里距离 +5.814、波动率 −0.433（≈8%）。改 **`Almost none of that gap is the companies. It's the distance.`** |
+| 🟡-5 | V1 | `Those ranges are the entire contribution of volatility, measured across names that move 2 to 8 percent…` | `measured across` 暗示实测，实为函数值域。删一个词：**`…the entire contribution of volatility, across names that move 2 to 8 percent…`** |
+| 🟡-6 | 04 §二 出处表 | 「文件独立存储的 `atr_from_sma50` … **逐位吻合（非自证）**」 | `atr_from_sma50` 就是 `sma50_dist/(atr/close)` 的同一实现同一输入（`atr_enrichment.py:52`，docstring:22 明写「one number」）。改成 **「与存储列一致（同一实现，非独立验证）；独立复算见审查站 06 §1.1」** |
+
+## 🟡 选项本身有故障，请连同修法一起递给 Andy
+
+- **选择 4 备选 A**：`How much of it stopped being your call on Thursday morning.` —— 正文口径是**周五**，全篇从未建立 Thursday。若他选这条，同步改成 `on Friday's close`，或在段 2 补一句 CRM 周四那根跳空。
+- **选择 2 备选**（`$VEEV printed the same 50% on Thursday…`）—— 稿子自己已标明代价，判断正确，**默认版更好**，我同意不用它。
+- **上一轮点名、本轮只备选未改的两句**（V2 `paid to be early / paying to be late`、V4 `That part isn't a convention / That part is division`）：备选都写得对，**但它们已经被点名两轮了**。若 Andy 这次也不表态，建议默认走非对仗版，别让同一句第三次进闸。
+
+---
+
+# 流程项（不影响发布，但下一站要补）
+
+- 🟡 **`RECORD.md` 停在第 1 轮**：`status:` 仍写「退回旗舰站」，flagship 节仍写「~150 词」（实为 **219 词**，我实测），distribution 表仍标 V3 🔴 退回、hook 仍写「独立复现钩」（已作废）。PIPELINE §Campaign Record 要求「一张卡走全程」。**我不写它**（本轮只许写 06），请旗舰站/分发站回填。
+- 🟡 **`verdicts.jsonl` 仍是零判决**（`wc -l` = 1，只有 `_header`）。两稿都如实登记了缺件 ✅，做得对。**Andy 对本轮的取舍应成为第一条真记录**——尤其是上面那两句「被点名两轮仍未定」的对仗句，它们正是这本账要防的形状。
+
+---
+
+# Andy 发布前必须知道的 6 条
+
+1. 🔴 **V3 里「我跑了 2,091 只，一只都没落在带外」是一句同义反复，不是证据。** 44–55 是「ATR% 在 2–8 之间」这个条件的代数后果，不可能有反例。留着它，最懂数的那批读者会两分钟看穿——而他们正是我们要的人。删那半句（回退清单 🔴-1），保留 `four out of every five liquid tickers`（81.81%，那个是真实证）。
+
+2. 🔴 **旗舰最重要的那个数「49.7%」，在正文里没有分母。** 基准是「4 个 ATR」，但 `4` 只出现在配图里，正文一次没写；而且 "the base" 在相邻两段一个指 50 日线、一个指 ext=4。加四个词就好（🔴-2）。
+
+3. 🔴 **V2 不能独立发**：`same stop convention as before` 的 "before" 在那条帖子里不存在。它现在只有跟旗舰一起读才通。三个词能修（🔴-3）。
+
+4. ✅ **上一轮的两处拦路真修好了，数据也真推进了。** `my convention` 正文零命中，50 日线现在是被点名的选择；44–55 收进了实测范围（我复算：ATR% 2–8 子集 2,091 只 0 例外，全池 2,556 只 11.15% 落带外）；口径日 08-28 = **Friday** 说对了，`quality.json` status=ok。**周一（08-31）盘前发，口径成立。**
+
+5. ⚠️ **这稿的保质期是周一盘前，而且比想象的短。** VEEV 一根 −1.93% 的 K 就把 ext 从 9.403 打到 8.346、比值从 50.45 推到 55.09 —— **这类读数的半衰期就是一个交易日**。周一收盘后（cron ≈ 09-01 03:1x UTC）旗舰段 1/2/3、V3、V4 全部作废；V1/V2 与配图那 20 格是纯函数，**永远有效**。发前跑 04 §二 的命令 ① 和 05 的命令 ①⑤。
+
+6. ⚠️ **「收藏/赞 > 0.5」这个判据我们从没达到过**——我现场复核 `posts.csv`：全库 **14** 帖，**总收藏 1**（08-24 LONGFORM，1 收藏 / 5 赞 = **0.20**），ARC 中位 180 / 最高 421，REPLY 基线 81。分发站建议的两级判据（一级 = 出现任何收藏，基础率 1/14）**是对的，请采纳**，否则四条会被全判失败。
+
+---
+
+**本轮审查站未 commit、未 push、未发布、未发任何消息，未替任何人执行替换，除本文件 `06_gate_review.md` 外未写仓库任何文件。** 复算全部在 `data/output/universe.json`、`data/output/quality.json`、`data/content/posts.csv` 原始字段与 `git show 03761dc8:` 快照上现场跑出。
