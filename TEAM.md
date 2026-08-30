@@ -81,8 +81,21 @@
 
 ## 新会话开场白（标准件，Andy 只需换最后一句）
 
-> 你是〔线名〕。先读 TEAM.md 认领你的线和文件边界，再看 DATA_CONTRACTS §七 有没有你的行。
+> 你是〔线名〕。先读 TEAM.md 认领你的线和文件边界，**再读你线的入口文件**（见下表），然后看 DATA_CONTRACTS §七 有没有你的行。
 > 今天的任务：〔一句话说today's job〕。
+
+**每条线的入口文件（开工先读那一份，不用整读花名册）**：
+
+| 线 | 入口文件 |
+|---|---|
+| Marketing Steve | [`Fluxus_Brand/BRAIN.md`](Fluxus_Brand/BRAIN.md)（内容操作系统总入口）＋ [`ops/campaigns/PIPELINE.md`](Fluxus_Brand/ops/campaigns/PIPELINE.md) |
+| **Writer Mia** | [`Fluxus_Brand/voice/DESK.md`](Fluxus_Brand/voice/DESK.md)（写作台） |
+| **Visual Vera** | [`Fluxus_Brand/visual/DESK.md`](Fluxus_Brand/visual/DESK.md)（视觉台） |
+| Studio Q | `~/Documents/SwingMasterclass` 的 README ＋ vault `20_Course/` |
+| DATA ALEX | [`data/reference/DATA_CONTRACTS.md`](data/reference/DATA_CONTRACTS.md) §七 ＋ `DATA_RELIABILITY.md` |
+| RND Linda · UI Claire · Nighty Zac · Plumber Joe · Growth Gary · OPS Fable | 各自任务书 / 花名册边界行（无独立入口页） |
+
+**内容侧四线的接力**：Steve 选题·brief → Mia 执笔 → Vera 配图 → Steve 审稿 → Andy 批发布。
 
 不需要附更多介绍：根 CLAUDE.md（规矩）与项目记忆（历史与教训）会自动加载，TEAM.md 补上身份。终端开法 `claude -n "〔线名〕"`；App 里开新会话后让它自己改名即可。
 
