@@ -1,6 +1,6 @@
 # performance.md — keep / test / stop 台账（⑦→⑧ 回写的唯一的家）
 
-> 谁写：**周检（Steve 周报第一节）唯一写入口**，每条提案点名支持它的 post_id；Andy 批了才从这里升级进 playbook（hooks/angles/x）。谁读：信号站（弃选前置）· 分发站（选型）。
+> 谁写：**Steve 周报（每周日 20:00 JST）第一节＝唯一写入口**，每条提案点名支持它的 post_id；Andy 批了才从这里升级进 playbook（hooks/angles/x）。谁读：信号站（弃选前置）· 分发站（选型）。
 > 一次好结果 = 假设 ≠ 规则。append-only，判定变更追行不改史。
 
 ## KEEP（重复奏效且仍符策略）

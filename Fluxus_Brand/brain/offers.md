@@ -1,6 +1,6 @@
 # offers.md — 产品与漏斗（campaign 的 CTA 只许指向这里的东西）
 
-> 谁读：角度站（CTA 与读者阶段匹配）· Gate（查 CTA 不越冻结线）。谁写：Growth Gary 记账，Andy 批档位变更。
+> 谁读：角度站（CTA 与读者阶段匹配）· Gate（查 CTA 不越冻结线）。谁写：结构变更由 Gary 挂单、Steve 执笔（Gary 只写 `data/growth/`）；档位/价格/承诺变更 Andy 批。
 > 数字权威源：`data/growth/metrics.csv`（每列最后非空值）——**引用前现场读，本页只写结构不抄流水**。
 
 ## 阶梯（2026-08 现状）

@@ -1,7 +1,7 @@
 # angles.md — angle 模式库（角度站的已验证套路；17 文体是「怎么写」，这里是「写什么故事」）
 
-> 谁读：角度站（选模式）· 分发站（七入口映射）。谁写：周检把验证过的模式升级入册，Andy 批。
-> 文体（A–Q 怎么写）在 `voice/Fluxus_Swipe_File.md`；本页是 angle 层（一个故事为什么值得存在）。
+> 谁读：角度站（选模式）· 分发站（七入口映射）。谁写：Steve 周报提案验证过的模式，Andy 批后入册。
+> 文体（A–Q 怎么写）在 `Fluxus_Brand/voice/Fluxus_Swipe_File.md`；本页是 angle 层（一个故事为什么值得存在）。
 
 ## 已验证的 angle 模式
 

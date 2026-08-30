@@ -1,7 +1,8 @@
 # newsletter.md — Substack「How Much」playbook
 
 > 谁读：分发站（newsletter 变体）· 角度站（周信选题）。谁写：Steve，Andy 批。
-> 站：`fluxuscapital.substack.com` · 声音圣经 `voice/Fluxus_Voice_Bible.md` · 格式规格 `ops/briefs/2026-08-24_newsletter_format_spec.md`。
+> **开站状态：未开**（开站日 Steve 把本行改为「已开 YYYY-MM-DD」；roles/05 的 newsletter 变体条件读本行）。
+> 站：`fluxuscapital.substack.com` · 声音圣经 `Fluxus_Brand/voice/Fluxus_Voice_Bible.md` · 格式规格 `Fluxus_Brand/ops/briefs/2026-08-24_newsletter_format_spec.md`。
 
 ## 定位
 

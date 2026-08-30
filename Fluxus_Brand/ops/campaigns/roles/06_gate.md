@@ -9,6 +9,7 @@
 - RECORD.md research 节（**独立复算每个数字对不对得上出处**——08-29 首件即拦下 2 处真问题）
 - `Fluxus_Brand/brain/offers.md`（CTA 冻结线：任何指向付费的 CTA 直接毙）
 - `Fluxus_Brand/brain/hooks.md`（hook 查重的类型表）
+- distribution 节逐变体核：**入口号（1–7）与 hook 类型都互不重复**、各自独立成立；缺入口号＝顺手补标（不算重开轮）
 
 **returns**：写进 RECORD.md review 节——判定（过/退回某站/毙）+ 逐条理由；过=打包进 Andy 审批队列（终稿+出处+平台+所需决策，Andy 不该需要重建过程才能批）。
 
@@ -20,4 +21,4 @@
 
 ## 每周附加任务（⑦⑧ 闭环，Steve 周报第一节）
 
-对照 posts.csv + verdicts.jsonl 出三清单：**keep / test / stop**，**写进 `brain/performance.md`（唯一写入口，append-only）**。每条提案**点名支持它的帖子**。Andy 批了才从 performance.md 升级进 brain/ 各 playbook（hooks/angles/x）——一次好结果是假设，不是规则。
+对照 posts.csv + verdicts.jsonl 出三清单：**keep / test / stop**，**写进 `Fluxus_Brand/brain/performance.md`（唯一写入口，append-only）**。每条提案**点名支持它的帖子**。Andy 批了才从 performance.md 升级进 brain/ 各 playbook（hooks/angles/x）——一次好结果是假设，不是规则。

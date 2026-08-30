@@ -46,15 +46,15 @@
 ### store · playbook 域（`brain/`——各站的操作知识，每站 reads 指定读哪几份）
 | 文件 | 是什么 | 主要读者 | 谁写 |
 |---|---|---|---|
-| [`brain/signals.md`](brain/signals.md) | 好信号四问＋弃选案例库 | 信号站 | 周检回填 |
-| [`brain/authority-clips.md`](brain/authority-clips.md) | 借势片段库（带机制+差异句才入库） | 信号/分发站 | 收藏流入 |
+| [`brain/signals.md`](brain/signals.md) | 好信号四问＋弃选案例库 | 信号站 | Steve 周报回填 |
+| [`brain/authority-clips.md`](brain/authority-clips.md) | 借势片段库（带机制+差异句才入库） | 信号/分发站 | Steve 周报搬运 |
 | [`brain/proof.md`](brain/proof.md) | 证据对象清单（票根登记处，指针不抄数） | 查证/旗舰站 | 各线登记 |
-| [`brain/angles.md`](brain/angles.md) | 已验证 angle 模式＋反模式 | 角度站 | 周检经 Andy 批 |
-| [`brain/hooks.md`](brain/hooks.md) | hook 类型×实测＋三行骨架规范 | 分发站/Gate | 周检回填 |
-| [`brain/x.md`](brain/x.md) | X playbook＋**七入口周序列** | 分发站/日推 | 周检经 Andy 批 |
+| [`brain/angles.md`](brain/angles.md) | 已验证 angle 模式＋反模式 | 角度站 | Steve 周报提案，Andy 批 |
+| [`brain/hooks.md`](brain/hooks.md) | hook 类型×实测＋三行骨架规范 | 分发站/Gate | Steve 周报回填 |
+| [`brain/x.md`](brain/x.md) | X playbook＋**七入口周序列** | 分发站/日推 | Steve 周报提案，Andy 批 |
 | [`brain/newsletter.md`](brain/newsletter.md) | Substack「How Much」playbook | 分发/角度站 | Steve |
 | [`brain/offers.md`](brain/offers.md) | 产品阶梯＋漏斗＋CTA 冻结线 | 角度站/Gate | Gary 记账 |
-| [`brain/performance.md`](brain/performance.md) | keep/test/stop 台账（⑦→⑧ 回写唯一的家） | 全站 | **周检唯一写入口** |
+| [`brain/performance.md`](brain/performance.md) | keep/test/stop 台账（⑦→⑧ 回写唯一的家） | 全站 | **Steve 周报（周日）唯一写入口** |
 
 ### isolate（草稿与实验，可退可毙不污染长期脑）
 [`ops/campaigns/`](ops/campaigns/) 每个 campaign 一个目录——Record 走全程，毙了就留在原地当案例，
@@ -77,20 +77,21 @@
 
 | 文件 / 区域 | 谁写 | 何时写 | 批准 |
 |---|---|---|---|
-| `campaigns/<日期>/` 各站自己的节+资产 | 对应站（只写自己 owns 的节） | 夜跑当晚 | 无需——isolate 区 |
+| `Fluxus_Brand/ops/campaigns/<日期>/` 各站自己的节+资产 | 对应站（只写自己 owns 的节） | 夜跑当晚 | 无需——isolate 区 |
 | RECORD.md `status` 行 | 各站推进 / Gate 退回 | 交接时 | — |
-| `brain/performance.md` | **周检唯一写入口**（Steve 周报第一节） | 每周日 | 追加无需批；**升级进 playbook 需 Andy** |
-| `brain/hooks.md` `angles.md` `x.md` | Steve 执行升级写入 | Andy 批了 performance 提案后 | **Andy** |
-| `brain/signals.md` 弃选案例库 | Gate / 周检回填 | 弃选被后验证实/证伪时 | — |
-| `brain/authority-clips.md` | 收藏流入（Zac 夜判后入库） | 判定夜 | append-only |
-| `brain/offers.md` | Gary 记账；**档位/价格/承诺变更** | 变更时 | **Andy（人批边界）** |
-| `brain/proof.md` | 各线登记新证据对象（一行入表） | 产出时 | — |
-| `brain/newsletter.md` | Steve | 规则变更 | **Andy** |
-| **本页 BRAIN.md ＋ `roles/` 六契约** | OPS / Steve 提案 | 机制变更 | **Andy（人批边界）** |
-| `voice/Voice_Bible.md` `Own_Lines.md` `Ammo_150.md` | **只有 Andy 亲笔或亲批** | — | Andy |
-| `voice/verdicts.jsonl` | 日推收录 Andy 否决 | 否决当天 | append-only |
+| `Fluxus_Brand/brain/performance.md` | **周检唯一写入口**（Steve 周报第一节） | 每周日 | 追加无需批；**升级进 playbook 需 Andy** |
+| hooks/angles/x.md **实测读数回填** | Steve 周报 | 每周日 | append 无需批 |
+| hooks/angles/x.md **规则与判定（✅/⛔）变更** | Steve 执行升级写入 | Andy 批了 performance 提案后 | **Andy** |
+| `Fluxus_Brand/brain/signals.md` 弃选案例库 | Steve 周报回填（Gate 只在当晚 RECORD 记验证线索） | 每周日 | — |
+| `Fluxus_Brand/brain/authority-clips.md` | Steve 周报搬运入库（Zac 夜判照旧写 `data/research/collection.md`，不直接写本目录） | 每周日 | append-only |
+| `Fluxus_Brand/brain/offers.md` | Gary 挂单、Steve 执笔（Gary 不直接写 Fluxus_Brand/）；**档位/价格/承诺变更** | 变更时 | **Andy（人批边界）** |
+| `Fluxus_Brand/brain/proof.md` | 各线登记新证据对象（一行入表） | 产出时 | — |
+| `Fluxus_Brand/brain/newsletter.md` | Steve | 规则变更 | **Andy** |
+| **本页 BRAIN.md ＋ `roles/` 六契约** | 提案：任何线挂单；执笔：Steve | 机制变更 | **Andy（人批边界）** |
+| `Fluxus_Brand/voice/Fluxus_Voice_Bible.md` `Fluxus_Own_Lines.md` `Fluxus_Ammo_150.md` | **只有 Andy 亲笔或亲批** | — | Andy |
+| `Fluxus_Brand/voice/verdicts.jsonl` | 日推收录 Andy 否决 | 否决当天 | append-only |
 | `data/content/posts.csv` | Steve / 日推 | 发布登记+读数回填 | — |
-| 素材箱 `ops/material_inbox.md` | 全线（糖改道） | 完成建设时 | append-only |
+| 素材箱 `Fluxus_Brand/ops/material_inbox.md` | 全线（糖改道） | 完成建设时 | append-only |
 
 **三条仲裁规则**：
 1. 不在表里的文件＝内容线 agent **不写**（跨线边界以根 `TEAM.md` 为权威；想改＝挂单给对的线）。

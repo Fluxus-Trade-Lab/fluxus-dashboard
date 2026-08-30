@@ -1,5 +1,6 @@
 # CAMPAIGN: <slug> · <日期>
-status: signal|research|angle|flagship|distribution|review|approved|published|measured
+status: signal|research|angle|flagship|distribution|review|approved|published|measured|killed
+> 退回＝status 写回对应站名＋一句退回原因。断点续跑判据＝status ∉ {approved, published, measured, killed}（工头按 status 路由，只 spawn 对应站）。毙件标 killed 留原地当案例。
 ## signal
 （发生了什么 · 受众为何在意 · 出处 · 衰减 · 弃选理由列表）
 ## research
