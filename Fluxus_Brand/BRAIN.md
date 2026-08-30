@@ -107,4 +107,4 @@
 
 ---
 
-*维护：Steve（内容线）。本页变更走 Andy 批准。产线总纲见 [`ops/campaigns/PIPELINE.md`](ops/campaigns/PIPELINE.md)。*
+*维护：Marketing Steve（编辑部线）。**内容侧四线分工见根 `TEAM.md`：Steve 选题/审稿 → Writer Mia 执笔成稿 → Visual Vera 配图 → Andy 批发布。** 本页变更走 Andy 批准。产线总纲见 [`ops/campaigns/PIPELINE.md`](ops/campaigns/PIPELINE.md)。*

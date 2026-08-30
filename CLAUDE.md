@@ -101,7 +101,7 @@ git -C /Users/taolezhu/Documents/AI-Trading-System worktree remove --force "$WT"
    ```
    已经提错了：`git reset --soft HEAD~1` → `git restore --staged .` → 重新 add 指名文件 → 重提交。**没推 main 就还来得及**，所以这一步要在 push 之前做完。
 2. scratchpad/临时树**永不 checkout 具名长命分支**（main/feat/*）——/private/tmp 重启即清，分支会被一棵已蒸发的树锁死；一律基于 `origin/main` 的 detached HEAD。
-3. **无人值守会话读规矩/队列/契约文件，一律读权威版** `git show origin/main:<path>`，不读主树副本——主树可能停在落后 main 一百多个 commit 的分支上。**唯一例外：内容台五件套**（Week_Plan / Queue / Own_Lines / Ammo / receipts）**以主树工作区为准**——Andy 会直接手改它们且不总 commit，权威版反而旧。
+3. **无人值守会话读规矩/队列/契约文件，一律读权威版** `git show origin/main:<path>`，不读主树副本——主树可能停在落后 main 一百多个 commit 的分支上。**唯一例外：内容台五件套**（Week_Plan / Queue / Own_Lines / Ammo / receipts）**与 `Fluxus_Brand/voice/raw/`（Andy 口述原料，08-31 补）以主树工作区为准**——Andy 会直接手改/直接录进去且不总 commit，权威版反而旧。
 4. **safe-merge 遇到多 commit 分支不走「重放循环」**（那是给单文件小改设计的，reset --hard 会吞掉整晚工作）：在自己分支的树里 `git fetch origin && git rebase origin/main`，成功则 `push origin HEAD:main`；rebase 冲突就停手留分支，汇报列「待合」。
 5. **无人值守会话跑巡检/审计工具，在基于 origin/main 的临时树里跑**——主树的代码可能落后两百个 commit，跑的是旧规则。
 6. **写公箱一律基于 `origin/main`，永不拷贝主树副本**（Andy 08-25 定；同一个陋习两天内咬了两次）——第 3 条管**读**，这条管**写**。三个 append-only 公箱（`material_inbox` / `night_reports/INBOX.md` / `DATA_CONTRACTS §七`）在主树里的那份，可能停在别人几次追加之前；把它 `cp` 进临时树整份提交 = **删掉别人的行**，而你的 diff 看起来只是「我加了一行」。做法：在临时树里直接改（那棵树本来就是 origin/main），或取 `git show origin/main:<path>`，**不要拷主树那份**。提交前自检一行，必须为空：
@@ -112,7 +112,7 @@ git diff origin/main -- <该文件> | grep '^-' | grep -v '^--- '
    一句总纲（Growth Gary 08-25）：**没有先验证一个检查能报出阳性，就不该信它的阴性。**
 
 **safe-merge：能自己合的就别找人（08-24 立，消除「等 OPS 合」这个依赖）**：一条分支若**只碰**以下路径，且全套测试通过，**产出者自己合进 main**（走直推 main 标准动作），不需要等任何人点头，晨报注明合了哪个 commit：
-- `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `data/reference/DATA_RELIABILITY.md` §六追行 · `pipeline/tools/audit_*` 及其测试 · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md` · `data/growth/**`（Growth Gary 台账，08-25 补——此前任务书叫他直推而白名单没他，周一记账会变死信）
+- `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `data/reference/DATA_RELIABILITY.md` §六追行 · `pipeline/tools/audit_*` 及其测试 · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md` · `data/growth/**`（Growth Gary 台账，08-25 补——此前任务书叫他直推而白名单没他，周一记账会变死信）· `Fluxus_Brand/ops/campaigns/**`（夜间六站产线的 isolate 区，08-31 补——此前每晚落 main 靠惯性不靠规矩）
 
 碰到**任何**其他路径（`pipeline/screeners|tickers|adapters`、`data/output`、`data/history`、`frontend/`、workflow 文件）→ 留分支，在汇报里列「待合分支：<名> · <一句话> · 建议合 y/n」，等 Andy 或对应线的主人处理。
 **理由**：08-19 到 08-24 有四个晚上的研究产出搁浅在分支上（其中 Delayed EP 首次前瞻复盘搁了 54 小时无人合），根因不是谁忘了，是**产出者没有落地权、而有权的人不知道有东西等着**。

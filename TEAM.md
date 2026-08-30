@@ -12,8 +12,10 @@
 | **UI Claire** | Dashboard 前端 UI | `frontend/` | `feat/*` 短分支，合并即删 |
 | **DATA ALEX** | 数据管道 + 数据契约 | `pipeline/screeners\|tickers\|adapters/`、`data/output/`、`data/history/`、`data/reference/DATA_CONTRACTS.md`（含 §七）、`DATA_RELIABILITY.md` 正文 | 数据直推 main；代码走 `feat/*` |
 | **RND Linda** | 模型与量化研究（correction_risk / regime_ledger / turin / GEX / 交易数据分析） | 模型线文件；`data/history/regime_ledger.csv` 唯一写入方 | `feat/*` |
-| **Studio Q**（暂定名，待 Andy 定） | 内容制作 · digital product：课程整理、视频工作流、Substack 信成稿、数据艺术素材 | `Fluxus_Substack/`、`Fluxus_Brand/templates\|record\|copybook/`、课程仓库（`~/Documents/SwingMaster*`） | 成稿小改直推 main；大改 `feat/*` |
-| **Marketing Steve** | Creative marketing：对外市场调查（fintwit/竞品/需求侧）、文字稿审核（五道闸）、品牌视觉（MR. FLUXUS）、X/Discord 日常 | `Fluxus_Brand/research\|voice\|ops\|visual/`、`Fluxus_Marketing_Visual_Design/`、`visuals/` | 视觉走 `design/*`；其余小改直推 main |
+| **Studio Q** | **课程线**（08-31 拆分后瘦身）：课程整理与设计、视频生成工作流、试读本 | 课程仓库（`~/Documents/SwingMasterclass`）、vault `FluxusTrading_Obsidian/20_Course/` | 成稿小改直推 main；大改 `feat/*` |
+| **Writer Mia** | **写作线**（08-31 新设）：X / Substack / newsletter 一切**对外成稿**、声音库维护 | `Fluxus_Substack/`、`Fluxus_Brand/voice\|templates\|copybook\|record/`、`Fluxus_Brand/site/`（文案） | 成稿小改直推 main；大改 `feat/*` |
+| **Visual Vera** | **视觉线**（08-31 新设）：品牌视觉 MR. FLUXUS、海报系统、图像语料、数据艺术可视化 | `Fluxus_Brand/visual/`、`Fluxus_Marketing_Visual_Design/`、`visuals/` | 视觉走 `design/*` |
+| **Marketing Steve** | **编辑部/运营**：对外市场调查（fintwit/竞品/需求侧）、选题与 brief、**审稿闸（五道闸/Gate，不改原稿）**、发布运营与记账、夜间六站内容产线工头 | `Fluxus_Brand/research\|ops/`、`Fluxus_Brand/brain/` 与 `Fluxus_Brand/BRAIN.md`、`data/content/`、`Fluxus_Receipts/` | 小改直推 main |
 | **Nighty Zac** | 夜间施工队（04:30–09:30 JST，时间盒 300 分钟，挑 1–5 件）：可靠性工具、**全部研究复盘**、UI 预览稿、**收藏夹整理**（Andy 扔的链接：摘要+判定+入馆 `data/research/collection.md`） | `pipeline/tools/audit_*` 及测试、`data/research/`（含 night_reports/ui_previews）；其余只读 | `auto/night-YYYYMMDD-*`，晨报给「建议合并 y/n」，本人不合 main |
 | **Plumber Joe** | 可靠性巡检 + 路由（研究归 Zac）：核 cron、全页面盘查、每条 ⚠️ 标归属并落耐久处、转述夜间组晨报 | 六支笔：todo_cron_check 追加、`incidents/`、RELIABILITY §六、§七 追行、INBOX 追行、素材箱追行——docs 改动直推 main | 只读不修；写了必须 push |
 | **OPS Fable** | Operations：架构与秩序——TEAM.md/CLAUDE.md、大扫除、routines、跨线协调 | `TEAM.md`、`CLAUDE.md`、`.claude/agents/`、`data/research/repo_health/` | 小改直推 main |
@@ -25,19 +27,27 @@
 > **同一条线、同一时刻，只有一个会话在「执笔」（写文件）；其余会话只读。**
 > 两个会话同时写同一条线的文件 = 已知事故形状（08 月两会话各往同一 CSV 追加了不同的最后一行）。
 
-## Studio Q ↔ Marketing Steve 的审稿流程（拆线的原因就是防抢笔）
+## 内容侧四线的接力（Andy 2026-08-31 定：专人专事）
 
-1. Mia 写稿（`Fluxus_Substack/drafts/` 等自己的地盘）；
-2. Steve 审稿**不改原稿**——审核意见写自己的地盘 `Fluxus_Brand/ops/reviews/`（或按惯例出批注版 PDF + md），要点走契约行；
-3. 改稿的笔始终在 Mia 手里。
+**Steve（选题/brief/调研）→ Mia（执笔成稿）→ Vera（配图/视觉）→ Steve（审稿闸）→ Andy（批准发布）**
+
+1. **Steve 出 brief**（选题、角度、证据包、可复用物），写自己的地盘；**一个字的成稿都不写**。
+2. **Mia 执笔**（`Fluxus_Substack/drafts/` 等自己的地盘）；夜间六站产线的**旗舰站毛坯交给 Mia 成稿**，笔始终在 Mia 手里。
+3. **Vera 配视觉**（封面/图表/海报/角色），只做图不改文案。
+4. **Steve 审稿不改原稿**——意见写 `Fluxus_Brand/ops/reviews/`（或批注版 PDF + md），要点走契约行；退回由 Mia/Vera 自己改。
+5. **Andy 批准发布**——唯一发布者（人批边界）。
+
+⚠️ **同一件对外资产，四条线各只碰自己那一段**；越段＝抢笔事故（08 月已出过三次）。课程线 Studio Q 不参与对外 marketing 链条。
 
 ## 会话归属对照（2026-08-22 盘点）
 
 - **UI Claire**：Fluxus Dashboard前端UI
 - **DATA ALEX**：Dashboard数据端处理+TSF对比
 - **RND Linda**：Turkey/Turin correction risk、SPX Gex和模型、交易数据分析
-- **Studio Q**：课程整理和设计、课程自动视频生成工作流、Digital writing (memo/Substack/X 成稿)、2026H1交易数据艺术可视化
-- **Marketing Steve**：营销每日/周报 routine、Top 100 fintwit 研究调查、市场视觉设计、X bookmark pipeline（挂起）
+- **Studio Q**（课程线）：课程整理和设计、课程自动视频生成工作流、试读本
+- **Writer Mia**（写作线，08-31 新设）：Substack/X/newsletter 成稿、How Much 周信、声音库维护
+- **Visual Vera**（视觉线，08-31 新设）：MR. FLUXUS 角色、海报系统、图像语料、2026H1 交易数据艺术可视化、X bookmark pipeline（挂起）
+- **Marketing Steve**（编辑部/运营）：营销每日/周报 routine、**夜间六站内容流水线（含 Gate 子 agent，均属本线边界）**、Top 100 fintwit 研究调查、选题与审稿
 - **Nighty Zac**：dashboard夜间自学 routine、Fluxus data night study
 - **Plumber Joe**：data plumbing AM routine
 - **OPS Fable**：ClaudeCode 多Agent任务管理架构
@@ -56,7 +66,12 @@
   - `data/research/repo_health/` → OPS Fable（含云端 routine）
   - `data/growth/` → **Growth Gary**（08-25 升为具名线；growth-officer 子 agent 与周一 09:40 记账 routine 同属本线）
   - `data/content/`（posts.csv 等）、`Fluxus_Receipts/` → Marketing Steve（08-23 补：此前无主，posts.csv 断更 17 天没人负责）
-  - `Fluxus_Brand/` 按二级目录分笔：`templates|record|copybook` → Studio Q；`research|voice|ops|visual` → Marketing Steve
+  - `Fluxus_Brand/` 按二级目录分笔（08-31 拆线后）：
+    - `voice|templates|copybook|record|site` → **Writer Mia**（Voice_Bible / Own_Lines / Ammo 仍是 Andy 亲笔或亲批；`voice/verdicts.jsonl` 是 append-only 公箱，日推可追加）
+    - `visual` → **Visual Vera**
+    - `research|ops` + **`brain/` 与顶层 `BRAIN.md`** → **Marketing Steve**（brain/ 线内细分以 BRAIN.md §六写权限矩阵仲裁）
+    - `ops/campaigns/**` → Marketing Steve 的夜间产线 isolate 区（在 safe-merge 白名单内，产出者自合）
+  - 课程仓库 `~/Documents/SwingMasterclass`、vault `FluxusTrading_Obsidian/20_Course/` → **Studio Q**
 
 ## 通信纪律
 
