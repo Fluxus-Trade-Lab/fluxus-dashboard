@@ -11,6 +11,23 @@ SAMPLE_THREAD_OUTPUT = """1/ NVDA broke above 248 with volume today. When the bi
 3/ Watching tomorrow: can NVDA hold 248 on a pullback? If yes, adding back. If no, stop does its job."""
 
 
+
+@pytest.fixture(autouse=True)
+def _force_api_branch(monkeypatch):
+    """Pin `_claude` to its API branch.
+
+    `_claude()` picks CLI-vs-API from the environment, so without this a local
+    run takes the CLI branch and these tests really shell out to the `claude`
+    binary -- a unit test invoking a live subprocess, passing or failing on
+    whether that binary happens to be logged in. Every test in this file mocks
+    `anthropic.Anthropic`, i.e. they are all written against the API branch;
+    this makes the environment agree with them instead of leaving it to
+    whatever machine runs pytest.
+    """
+    monkeypatch.setenv("CI", "1")
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key-not-a-real-one")
+
+
 class TestSplitThread:
     def test_splits_numbered_tweets(self):
         tweets = split_thread(SAMPLE_THREAD_OUTPUT)
@@ -31,7 +48,7 @@ class TestSplitThread:
 
 
 class TestProcessToThread:
-    @patch("pipeline.content.processor.anthropic.Anthropic")
+    @patch("anthropic.Anthropic")
     def test_returns_list_of_tweets(self, mock_cls):
         mock_client = MagicMock()
         mock_msg = MagicMock()
@@ -42,7 +59,7 @@ class TestProcessToThread:
         assert isinstance(tweets, list)
         assert len(tweets) > 0
 
-    @patch("pipeline.content.processor.anthropic.Anthropic")
+    @patch("anthropic.Anthropic")
     def test_calls_claude_with_system_prompt(self, mock_cls):
         mock_client = MagicMock()
         mock_msg = MagicMock()
@@ -56,7 +73,7 @@ class TestProcessToThread:
 
 
 class TestProcessToBrief:
-    @patch("pipeline.content.processor.anthropic.Anthropic")
+    @patch("anthropic.Anthropic")
     def test_returns_valid_brief_dict(self, mock_cls):
         mock_client = MagicMock()
         brief_json = json.dumps({"date": "2026-03-21", "title": "Semis leading", "summary": "NVDA broke above 248.", "watchlist": ["NVDA", "SMH"]})
@@ -70,7 +87,7 @@ class TestProcessToBrief:
         assert "summary" in brief
         assert isinstance(brief["watchlist"], list)
 
-    @patch("pipeline.content.processor.anthropic.Anthropic")
+    @patch("anthropic.Anthropic")
     def test_handles_json_in_code_fence(self, mock_cls):
         mock_client = MagicMock()
         brief_json = '```json\n{"date":"2026-03-21","title":"Test","summary":"Test summary","watchlist":["SPY"]}\n```'
