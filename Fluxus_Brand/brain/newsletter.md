@@ -1,7 +1,10 @@
 # newsletter.md — Substack「How Much」playbook
 
 > 谁读：分发站（newsletter 变体）· 角度站（周信选题）。谁写：Steve，Andy 批。
-> **开站状态：未开**（开站日 Steve 把本行改为「已开 YYYY-MM-DD」；roles/05 的 newsletter 变体条件读本行）。
+> **开站状态：已开（2026-08-27 首篇上线）** —— 08-31 04:11 JST 经 Substack archive API 实测：站上 2 篇
+> （`How I Caught a 176% Move in $MRNA` 08-27 正式 · `Position Sizing — coming soon` 08-28 占位），audience=everyone。
+> **⚠️ 未完成的不是开站，是创刊号 #001**——本行 08-30 曾被写成「未开」（没核实就填的默认值，08-31 修正）。
+> roles/05 的 newsletter 变体条件读本行：**已开 → newsletter 变体照产**。
 > 站：`fluxuscapital.substack.com` · 声音圣经 `Fluxus_Brand/voice/Fluxus_Voice_Bible.md` · 格式规格 `Fluxus_Brand/ops/briefs/2026-08-24_newsletter_format_spec.md`。
 
 ## 定位
