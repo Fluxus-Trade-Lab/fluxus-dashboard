@@ -60,7 +60,28 @@
 [`ops/campaigns/`](ops/campaigns/) 每个 campaign 一个目录——Record 走全程，毙了就留在原地当案例，
 **永不**把未过 Gate 的内容写进 store。
 
-## 五、路由（一张卡怎么走）
+## 五、供料层：内容不是四条线自己生的（**联邦全线都是供料方**）
+
+> **糖改道（宪法）**：任何线完成一件像样的建设/研究后，**必须往素材箱追加一行可发布素材**，否则不算完成——
+> 这是「完成=合进 main」之外的第二个完成条件。**建完没投一行 = 没建完。**
+> 格式（照抄，别自创）：`- [MM-DD] [线名] 一句话 + 出处链接`，追加到文件最末尾的「📥 追加到这里」节。
+
+| 供料方 | 投什么 | 投到哪 | 内容侧谁消费 |
+|---|---|---|---|
+| **Andy 本人** | 口述、每笔交易的思考、收藏的链接、判断兑现 | `voice/raw/`（工作区）· `Fluxus_Receipts/receipts.md` · INBOX 🔗 收藏夹 | 信号站（**最高优先级**——他的原料是唯一能长成立场的东西） |
+| **DATA ALEX** | 盘面读数、数据腐烂/修复故事、口径 NULL | 素材箱 · `data/output/` git 历史（按日 `git show`） | 信号站选题 · 查证站取快照 |
+| **RND Linda** | 研究结论与 NULL 结果 | `data/research/claims/claims.jsonl`（带 evidence_grade）· 素材箱 | 查证站（引用带日期与等级） |
+| **Nighty Zac** | 事故档、踩坑故事、**收藏夹判定** | 素材箱 · `data/research/collection.md` · INBOX | 信号站 · 借势库（Steve 周报搬运入 `brain/authority-clips.md`） |
+| **Plumber Joe** | 巡检发现、闸审计、静默失败案例 | 素材箱 · `data/reference/incidents/` · INBOX | 信号站（BUILD 帖矿脉） |
+| **Growth Gary** | 漏斗读数、会员数、转化 | `data/growth/metrics.csv`（**offers.md 的数字权威源**） | 角度站（CASH 帖）· offers.md |
+| **UI Claire** | 前端上线的功能与改版 | 素材箱 | 信号站（BUILD 帖） |
+| **OPS Fable** | 架构/机制建设、事故复盘 | 素材箱 · INBOX 裁决 | 信号站（BUILD 帖） |
+| **Studio Q** | 课程进展、试读本、视频工作流 | 素材箱 | 角度站（引流资产） |
+
+**唯一消费者是 Marketing Steve**：素材箱每周日收割（判据是行下面有没有 `↳ ✅`，**不是它在哪一节**）。
+供料方**只投不催**——投完就算送到，选不选是信号站的决策（弃比取多是常态）。
+
+## 六、路由（一张卡怎么走）
 
 ```
 素材箱/receipts/raw/收藏夹 ─→ ① 信号站 ─→ ② 查证站 ─→ ③ 角度站 ─→ ④ 旗舰站 ─→ ⑤ 分发站 ─→ ⑥ Gate ─→ Andy 批 ─→ 发布
@@ -71,7 +92,7 @@
 - 状态与断点记在该 campaign 的 `RECORD.md`（模板 [`ops/campaigns/RECORD_TEMPLATE.md`](ops/campaigns/RECORD_TEMPLATE.md)）
 - **缺字段 = 退回上一站重做，永不用合理假设补位**（首件 08-29 已实战：Gate 退回旗舰站）
 
-## 六、基准与写权限矩阵（谁写什么、何时写、谁批——冲突时以本表仲裁）
+## 七、基准与写权限矩阵（谁写什么、何时写、谁批——冲突时以本表仲裁）
 
 **读的基准**：规矩/契约/playbook 一律读 `git show origin/main:<path>` 权威版；**唯一例外**＝内容台五件套（Week_Plan / Queue / Own_Lines / Ammo / receipts）与 `voice/raw/`、NOW.md 读主树工作区（Andy 手改不总 commit）。数字引用前现场读 KNOWLEDGE.md 权威表指定的源。
 
@@ -98,7 +119,7 @@
 2. append-only 文件两写者撞行＝**丢弃重放**（CLAUDE.md 直推 main 标准动作），永不 rebase 硬解。
 3. 谁写谁核实落地（`git log origin/main` 看到自己的 commit 才算写完）；**写完≠送到，合进 main 才算**。
 
-## 七、人的边界（永不自动化；Andy 批准是训练信号不是流程税）
+## 八、人的边界（永不自动化；Andy 批准是训练信号不是流程税）
 
 - 发布（一切对外）
 - 立场与观点的源头（AI 只重组 Andy 的原料，不发明他的观点）

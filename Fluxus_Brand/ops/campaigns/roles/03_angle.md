@@ -3,7 +3,7 @@
 **owns**：「哪个故事**配存在**」——一个编辑决策，不是十个备选。
 
 **reads**：
-- `Fluxus_Brand/BRAIN.md`（先读；§一定位 §三必含清单）
+- `Fluxus_Brand/BRAIN.md`（先读；《我们发布什么》定位 +《每个 campaign 必须包含》清单）
 - 上一站的 RECORD.md research 节（**只许用证据包里的事实**）
 - `Fluxus_Brand/research/Fluxus_Demand_Side_Findings.md`（读者缺留白不缺信息）
 - `Fluxus_Brand/voice/Fluxus_Swipe_File.md`（17 文体挑格式）

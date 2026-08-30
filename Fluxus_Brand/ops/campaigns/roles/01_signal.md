@@ -5,10 +5,13 @@
 **reads**：
 - `Fluxus_Brand/BRAIN.md`（先读）
 - `Fluxus_Brand/ops/material_inbox.md`（素材箱）
-- `Fluxus_Brand/voice/raw/`（Andy 口述）⚠️ 读主树工作区，不读 origin/main（BRAIN §六例外）
+- `Fluxus_Brand/voice/raw/`（Andy 口述）⚠️ 读主树工作区，不读 origin/main（BRAIN《基准与写权限矩阵》节的读基准例外）
 - `data/content/posts.csv`（近期表现——什么形状的帖在涨）
 - `data/research/night_reports/INBOX.md` 🔗 收藏夹（Andy 扔的链接）
 - `Fluxus_Receipts/receipts.md` ⏳ 待兑现项（判断到期=天然选题）⚠️ 读主树工作区（五件套例外）
+- `data/research/claims/claims.jsonl`（Linda 的研究结论与 NULL，带 evidence_grade）
+- `data/reference/incidents/`（Joe/Zac 的事故档——踩坑故事是 BUILD 帖矿脉）
+- `data/growth/metrics.csv`（Gary 的漏斗读数——CASH 帖素材）
 - `Fluxus_Brand/brain/signals.md`（好信号四问＋弃选案例库——判据在此）
 - `Fluxus_Brand/brain/authority-clips.md`（借势型信号弹药）
 

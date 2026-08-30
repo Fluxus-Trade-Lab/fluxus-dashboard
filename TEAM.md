@@ -69,7 +69,7 @@
   - `Fluxus_Brand/` 按二级目录分笔（08-31 拆线后）：
     - `voice|templates|copybook|record|site` → **Writer Mia**（Voice_Bible / Own_Lines / Ammo 仍是 Andy 亲笔或亲批；`voice/verdicts.jsonl` 是 append-only 公箱，日推可追加）
     - `visual` → **Visual Vera**
-    - `research|ops` + **`brain/` 与顶层 `BRAIN.md`** → **Marketing Steve**（brain/ 线内细分以 BRAIN.md §六写权限矩阵仲裁）
+    - `research|ops` + **`brain/` 与顶层 `BRAIN.md`** → **Marketing Steve**（brain/ 线内细分以 BRAIN.md《基准与写权限矩阵》节仲裁）
     - `ops/campaigns/**` → Marketing Steve 的夜间产线 isolate 区（在 safe-merge 白名单内，产出者自合）
   - 课程仓库 `~/Documents/SwingMasterclass`、vault `FluxusTrading_Obsidian/20_Course/` → **Studio Q**
 

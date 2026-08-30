@@ -3,7 +3,7 @@
 **owns**：「这个完整 campaign **可以进 Andy 的审批队列**吗」——可批可退可毙，**永不可发布**。
 
 **reads**：
-- `Fluxus_Brand/BRAIN.md`（先读；§三必含清单逐条对）
+- `Fluxus_Brand/BRAIN.md`（先读；《每个 campaign 必须包含》清单逐条对）
 - 该 campaign 的**全部**资产一起收（逐个审会漏跨资产病：五个 hook 同一主张、同一开头故事到处用、语气漂移）
 - `Fluxus_Brand/voice/Fluxus_Voice_Bible.md` 负面清单（AI 腔逐条）
 - RECORD.md research 节（**独立复算每个数字对不对得上出处**——08-29 首件即拦下 2 处真问题）
