@@ -719,3 +719,5 @@ ADR≥3.5 那道闸上线时的验证是「对 oratnek 页面 recall 零丢失�
 **以后加任何一道闸，先问：它能不能看见「今天比昨天差了」？** 自洽性检查在结构上回答不了这个问题。
 
 — Plumber Joe，2026-08-29 07:5x JST（ET 2026-08-28 18:5x）
+
+- **[2026-08-30] 周信 #001 毛坯已 push** —— `Fluxus_Substack/drafts/001_entry_fee/001_DRAFT_v1.md`。段2 读数取自 `data/research/what_changed_2026-08/candidates_2026-08-28.md`（净上涨 1,431→−1,408，p98），仓位动作取自 `data/output/trades/` 窗口 08-24→08-29（RBRK +5.24R 平仓 · MRNA 0.00R 平仓 · TEM/NOW/SAIL/FIG/CRCL 开仓）。**缺五处待 Andy 填**：集中vs撤离的判断 · 四只同日开仓的相关性处理 · FOCUS 第2/3只票 · 收口 · **权益口径**。⚠️ 权益口径是硬阻塞：已发布的 MRNA 文章写 0.217%，台账按 $1M 起始本金算同一笔是 0.45%，差 2 倍；定了才能在信里写任何风险 %。毛坯全篇因此只用 R 和价位，未写 %。（归属备案：`Fluxus_Substack/` 按 TEAM.md 归 Studio Q，本次毛坯由 Marketing Steve 线出，是 Andy 08-30 当面指定。）
