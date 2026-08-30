@@ -71,7 +71,33 @@
 - 状态与断点记在该 campaign 的 `RECORD.md`（模板 [`ops/campaigns/RECORD_TEMPLATE.md`](ops/campaigns/RECORD_TEMPLATE.md)）
 - **缺字段 = 退回上一站重做，永不用合理假设补位**（首件 08-29 已实战：Gate 退回旗舰站）
 
-## 六、人的边界（永不自动化；Andy 批准是训练信号不是流程税）
+## 六、基准与写权限矩阵（谁写什么、何时写、谁批——冲突时以本表仲裁）
+
+**读的基准**：规矩/契约/playbook 一律读 `git show origin/main:<path>` 权威版；**唯一例外**＝内容台五件套（Week_Plan / Queue / Own_Lines / Ammo / receipts）与 `voice/raw/`、NOW.md 读主树工作区（Andy 手改不总 commit）。数字引用前现场读 KNOWLEDGE.md 权威表指定的源。
+
+| 文件 / 区域 | 谁写 | 何时写 | 批准 |
+|---|---|---|---|
+| `campaigns/<日期>/` 各站自己的节+资产 | 对应站（只写自己 owns 的节） | 夜跑当晚 | 无需——isolate 区 |
+| RECORD.md `status` 行 | 各站推进 / Gate 退回 | 交接时 | — |
+| `brain/performance.md` | **周检唯一写入口**（Steve 周报第一节） | 每周日 | 追加无需批；**升级进 playbook 需 Andy** |
+| `brain/hooks.md` `angles.md` `x.md` | Steve 执行升级写入 | Andy 批了 performance 提案后 | **Andy** |
+| `brain/signals.md` 弃选案例库 | Gate / 周检回填 | 弃选被后验证实/证伪时 | — |
+| `brain/authority-clips.md` | 收藏流入（Zac 夜判后入库） | 判定夜 | append-only |
+| `brain/offers.md` | Gary 记账；**档位/价格/承诺变更** | 变更时 | **Andy（人批边界）** |
+| `brain/proof.md` | 各线登记新证据对象（一行入表） | 产出时 | — |
+| `brain/newsletter.md` | Steve | 规则变更 | **Andy** |
+| **本页 BRAIN.md ＋ `roles/` 六契约** | OPS / Steve 提案 | 机制变更 | **Andy（人批边界）** |
+| `voice/Voice_Bible.md` `Own_Lines.md` `Ammo_150.md` | **只有 Andy 亲笔或亲批** | — | Andy |
+| `voice/verdicts.jsonl` | 日推收录 Andy 否决 | 否决当天 | append-only |
+| `data/content/posts.csv` | Steve / 日推 | 发布登记+读数回填 | — |
+| 素材箱 `ops/material_inbox.md` | 全线（糖改道） | 完成建设时 | append-only |
+
+**三条仲裁规则**：
+1. 不在表里的文件＝内容线 agent **不写**（跨线边界以根 `TEAM.md` 为权威；想改＝挂单给对的线）。
+2. append-only 文件两写者撞行＝**丢弃重放**（CLAUDE.md 直推 main 标准动作），永不 rebase 硬解。
+3. 谁写谁核实落地（`git log origin/main` 看到自己的 commit 才算写完）；**写完≠送到，合进 main 才算**。
+
+## 七、人的边界（永不自动化；Andy 批准是训练信号不是流程税）
 
 - 发布（一切对外）
 - 立场与观点的源头（AI 只重组 Andy 的原料，不发明他的观点）
