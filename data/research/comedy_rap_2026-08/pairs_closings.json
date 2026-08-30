@@ -1,0 +1,375 @@
+{
+  "note": "目标 B 盲选。每个收口位 4 个候选：1 个是已发布/已存在的原句（origin=published 或 deleted），3 个是本研究产出（origin=study）。渲染时顺序由 zlib.crc32(slot_id) 打乱，README 里不标来源。S10 是校准位——它的选项里放着 Andy 08-24 亲手删掉的那句；若他这次选中它，说明本研究对他偏好的读法是错的。",
+  "slots": [
+    {
+      "id": "S1",
+      "context": "全篇最后一句（MRNA 长文收口）",
+      "candidates": [
+        {
+          "text": "What I will promise is that every idea here arrives with its size and its stop — the half I control, and the half nobody else publishes.",
+          "origin": "published",
+          "devices": []
+        },
+        {
+          "text": "Every idea here comes with its size and its stop. That is the half nobody else publishes.",
+          "origin": "study",
+          "devices": [
+            "cut-the-connective",
+            "stress-final"
+          ]
+        },
+        {
+          "text": "I can't sell you the next 176%. I can show you what I risked to be there for this one.",
+          "origin": "study",
+          "devices": [
+            "self-implication",
+            "deflation"
+          ]
+        },
+        {
+          "text": "You will get the number I risked before you get the trade. Nobody else hands you that half.",
+          "origin": "study",
+          "devices": [
+            "reader-first",
+            "stress-final"
+          ]
+        }
+      ],
+      "context_blind": "全篇最后一句（MRNA 长文收口）"
+    },
+    {
+      "id": "S2",
+      "context": "① 板块节收口（对读者的动作要求）",
+      "candidates": [
+        {
+          "text": "Put your sector next to the index tonight and ask why you still hold the one that's behind.",
+          "origin": "published",
+          "devices": []
+        },
+        {
+          "text": "Tonight, put your sector next to the index. Then explain the one you're still holding.",
+          "origin": "study",
+          "devices": [
+            "reader-first",
+            "caesura"
+          ]
+        },
+        {
+          "text": "Pull up your sector against the index tonight. You already know which name you're going to defend.",
+          "origin": "study",
+          "devices": [
+            "reader-first",
+            "act-out"
+          ]
+        },
+        {
+          "text": "Your sector against the index, tonight. If you need a paragraph to justify the laggard, that's the answer.",
+          "origin": "study",
+          "devices": [
+            "rule-of-three-collapse",
+            "deflation"
+          ]
+        }
+      ],
+      "context_blind": "① 板块节收口（对读者的动作要求）"
+    },
+    {
+      "id": "S3",
+      "context": "② 筛子节收口（人 vs 机器的次序）",
+      "candidates": [
+        {
+          "text": "The machine confirmed me, it didn't tell me.",
+          "origin": "published",
+          "devices": [
+            "mirrored-FLAGGED"
+          ]
+        },
+        {
+          "text": "The scanner agreed with me the same night. It has never once gone first.",
+          "origin": "study",
+          "devices": [
+            "cut-the-connective",
+            "stress-final"
+          ]
+        },
+        {
+          "text": "I was already in when the machine spoke up. It votes; it doesn't nominate.",
+          "origin": "study",
+          "devices": [
+            "compound-image",
+            "mirrored-FLAGGED"
+          ]
+        },
+        {
+          "text": "I bought at noon. The machine caught up at midnight.",
+          "origin": "study",
+          "devices": [
+            "number-as-percussion",
+            "deflation"
+          ]
+        }
+      ],
+      "context_blind": "② 筛子节收口（人 vs 机器的次序）"
+    },
+    {
+      "id": "S4",
+      "context": "「How much」节收口（算术替代纪律）",
+      "candidates": [
+        {
+          "text": "I never need discipline to pass on garbage. The arithmetic passes for me.",
+          "origin": "published",
+          "devices": [
+            "mirrored-FLAGGED"
+          ]
+        },
+        {
+          "text": "I don't have the discipline to pass on garbage. The arithmetic has it for me.",
+          "origin": "study",
+          "devices": [
+            "self-implication",
+            "stress-final"
+          ]
+        },
+        {
+          "text": "A sloppy chart gets a tiny position before I have an opinion about it.",
+          "origin": "study",
+          "devices": [
+            "cut-the-connective",
+            "act-out"
+          ]
+        },
+        {
+          "text": "I never say no to a bad chart. The formula says it while I'm still admiring it.",
+          "origin": "study",
+          "devices": [
+            "self-implication",
+            "deflation",
+            "tag"
+          ]
+        }
+      ],
+      "context_blind": "「How much」节收口（算术替代纪律）"
+    },
+    {
+      "id": "S5",
+      "context": "「我砍了什么」节收口（事后看每一刀都错，但还是要砍）",
+      "candidates": [
+        {
+          "text": "Gaps don't check which direction you were hoping for.",
+          "origin": "published",
+          "devices": []
+        },
+        {
+          "text": "The gap doesn't ask what you were hoping for.",
+          "origin": "study",
+          "devices": [
+            "stress-final"
+          ]
+        },
+        {
+          "text": "Every cut looks stupid on the 19th. It looks like rent on the other 19th.",
+          "origin": "study",
+          "devices": [
+            "callback",
+            "mirrored-FLAGGED"
+          ]
+        },
+        {
+          "text": "I paid for the version of the 19th that didn't happen. That bill comes every time.",
+          "origin": "study",
+          "devices": [
+            "compound-image",
+            "self-implication"
+          ]
+        }
+      ],
+      "context_blind": "「我砍了什么」节收口（事后看每一刀都错，但还是要砍）"
+    },
+    {
+      "id": "S6",
+      "context": "「账户」节收口（确定感的价格）",
+      "candidates": [
+        {
+          "text": "That feeling costs a fortune and is worth nothing.",
+          "origin": "published",
+          "devices": []
+        },
+        {
+          "text": "Being sure is the most expensive thing on the menu, and it isn't food.",
+          "origin": "study",
+          "devices": [
+            "compound-image",
+            "deflation"
+          ]
+        },
+        {
+          "text": "You can buy the feeling of being sure. You cannot eat it.",
+          "origin": "study",
+          "devices": [
+            "mirrored-FLAGGED",
+            "deflation"
+          ]
+        },
+        {
+          "text": "Certainty has a price and no calories.",
+          "origin": "study",
+          "devices": [
+            "compound-image",
+            "stress-final"
+          ]
+        }
+      ],
+      "context_blind": "「账户」节收口（确定感的价格）"
+    },
+    {
+      "id": "S7",
+      "context": "90 分钟离场那一段的收口（它当天摸到 200，我在睡觉）",
+      "candidates": [
+        {
+          "text": "It touched nearly 200 that afternoon. I was asleep.",
+          "origin": "published",
+          "devices": [
+            "deflation"
+          ]
+        },
+        {
+          "text": "It ran to 200 that afternoon. I found out the next morning, in bed.",
+          "origin": "study",
+          "devices": [
+            "act-out",
+            "tag"
+          ]
+        },
+        {
+          "text": "It touched 200 while I was asleep, and I'd take the same nap again.",
+          "origin": "study",
+          "devices": [
+            "self-implication",
+            "tag"
+          ]
+        },
+        {
+          "text": "Nearly 200 that afternoon. Time zones are the cheapest discipline I own.",
+          "origin": "study",
+          "devices": [
+            "deflation",
+            "compound-image"
+          ]
+        }
+      ],
+      "context_blind": "90 分钟离场那一段的收口（它当天摸到 200，我在睡觉）"
+    },
+    {
+      "id": "S8",
+      "context": "③ 图形节收口（为什么是 19 号，没人知道）",
+      "candidates": [
+        {
+          "text": "Why the 19th? Nobody knows. What I knew was that 60 was the line, and I'd watched this shape resolve the same way too many times to ignore.",
+          "origin": "published",
+          "devices": []
+        },
+        {
+          "text": "Why the 19th? No idea. I knew where the line was, and I'd seen this shape end the same way too many times to stand somewhere else.",
+          "origin": "study",
+          "devices": [
+            "cut-the-connective",
+            "stress-final"
+          ]
+        },
+        {
+          "text": "Nobody knows why it was the 19th. I only knew where to stand while it wasn't.",
+          "origin": "study",
+          "devices": [
+            "compound-image",
+            "mirrored-FLAGGED"
+          ]
+        },
+        {
+          "text": "I never knew the date. I knew the level, and I knew this shape has a habit.",
+          "origin": "study",
+          "devices": [
+            "rule-of-three-collapse",
+            "stress-final"
+          ]
+        }
+      ],
+      "context_blind": "③ 图形节收口（为什么是 19 号，没人知道）"
+    },
+    {
+      "id": "S9",
+      "context": "目标从哪来那一段的收口（空上去，空回来）",
+      "candidates": [
+        {
+          "text": "Empty up, empty back. Target 120, and quickly, or I'm wrong.",
+          "origin": "published",
+          "devices": [
+            "mirrored-FLAGGED"
+          ]
+        },
+        {
+          "text": "Nobody traded it on the way up, so nobody argues on the way back. 120, fast, or I'm wrong.",
+          "origin": "study",
+          "devices": [
+            "cut-the-connective",
+            "number-as-percussion"
+          ]
+        },
+        {
+          "text": "There is nobody in there to talk price out of going back. 120, and soon, or I'm wrong.",
+          "origin": "study",
+          "devices": [
+            "act-out",
+            "stress-final"
+          ]
+        },
+        {
+          "text": "COVID emptied that whole shelf. Price walks back through an empty room. 120, quickly, or I'm wrong.",
+          "origin": "study",
+          "devices": [
+            "compound-image",
+            "rule-of-three-collapse"
+          ]
+        }
+      ],
+      "context_blind": "目标从哪来那一段的收口（空上去，空回来）"
+    },
+    {
+      "id": "S10",
+      "context": "⚠️ 校准位（答案卷用）：③ 图形节里那句 Andy 08-24 亲手删掉的收口也在选项里，理由「不怎么通顺」。盲选卷上不写这句。",
+      "candidates": [
+        {
+          "text": "The news is never in the chart.",
+          "origin": "deleted-by-andy-2026-08-24",
+          "devices": [
+            "mirrored-FLAGGED"
+          ]
+        },
+        {
+          "text": "The chart never had the news in it. It had the people.",
+          "origin": "study",
+          "devices": [
+            "mirrored-FLAGGED",
+            "stress-final"
+          ]
+        },
+        {
+          "text": "No chart contains a phase III readout. It contains everyone who will react to one.",
+          "origin": "study",
+          "devices": [
+            "cut-the-connective",
+            "compound-image"
+          ]
+        },
+        {
+          "text": "The chart didn't know. It knew who would be selling when it found out.",
+          "origin": "study",
+          "devices": [
+            "act-out",
+            "stress-final"
+          ]
+        }
+      ],
+      "context_blind": "③ 图形节末尾的一个收口位（承接「同一个水平位为什么两次都管用」）"
+    }
+  ]
+}
