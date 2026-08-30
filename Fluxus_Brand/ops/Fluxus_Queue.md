@@ -10,21 +10,33 @@
 
 ---
 
-## 本周队列（2026-08-10 → 08-16）· 状态：待灌
+## 本周队列（2026-08-31 → 09-06）· 状态：待灌
+
+> ⚠️ **灌之前先读 [W5 周报](weekly/2026-08-30_W5.md) 的「下周主线」。** Typefully 被要求灌 5 次、0 次发生；
+> 同一周 Andy 手动发了 6 条。**瓶颈不是「不想发」，是「要先打开一个他从没登录过的工具」。**
+> 建议改走每早 08:06 日推第一行直接递可复制原文（挂单已开，见周报「门铃待按」）。**下面 7 条两种走法通用。**
+
+编排：主张 → 幽默 → 疼 → 教学 → 自嘲 → 重话 → 温。
+中英轮换 ✓ · 好笑的没排一起 ✓ · 一条只有中文圈能懂（#139）✓ · 一条承认自己毛病（#29）✓ · 一条让人疼（#127）✓
+**7 条全部未在任何历史队列出现过**（已核对 08-04→08-10、08-10→08-16 两批共 13 条）。
 
 | # | 日期 | 语言 | 文案（直接粘） | 出处 |
 |---|---|---|---|---|
-| 1 | 08-10 一 | EN | Go players review every game they finish. Most traders live through three full cycles and stay exactly where they started — they turn the page, but never read it back. | [#129](../voice/Fluxus_Own_Lines.md) |
-| 2 | 08-11 二 | 中 | 手里捧着尚方宝剑，偏当破铜烂铁，反倒捡根树枝当剑耍。要耍到什么时候。 | [#53](../voice/Fluxus_Own_Lines.md:315) |
-| 3 | 08-12 三 | EN | I don't care much about being right. I care that being wrong stays small. | [#30](../voice/Fluxus_Own_Lines.md:179) |
-| 4 | 08-13 四 | 中 | 股市不是薛定谔的猫。你不看，它也已经决定了。 | [#34](../voice/Fluxus_Own_Lines.md:203) |
-| 5 | 08-14 五 | EN | You'll notice I get stopped out a lot. Part of that is discipline. Part of it is that I trade too much. | [#28](../voice/Fluxus_Own_Lines.md:169) |
-| 6 | 08-15 六 | 中 | 资金净流入创了新高。可那是净额——菜贩子收摊前清仓甩卖，一堆人来抢，花出去的钱当然变多了。可菜价还在跌。 | [#51](../voice/Fluxus_Own_Lines.md:305) |
-| 7 | 08-16 日 | EN | You're driving home and you're not there yet. You're allowed to slow down on the way. | [#52](../voice/Fluxus_Own_Lines.md:310) |
+| 1 | 08-31 一 | EN | Discipline is not a personality trait. It's a design problem. | [#77](../voice/Fluxus_Own_Lines.md:451) |
+| 2 | 09-01 二 | 中 | 大赚的日子，我妈说：低调点，晚饭多加一盘肉。亏了买菜钱，唠叨两句。这是我见过最好的风控。 | [#139](../voice/Fluxus_Own_Lines.md:789) |
+| 3 | 09-02 三 | EN | Borrowed conviction was never conviction. | [#76](../voice/Fluxus_Own_Lines.md:446) |
+| 4 | 09-03 四 | 中 | 底部的仓位永远比消息先到。 | [#97](../voice/Fluxus_Own_Lines.md:559) |
+| 5 | 09-04 五 | EN | I still micromanage positions. That isn't a technique problem, it's a temperament problem, and most of the time it costs me. | [#29](../voice/Fluxus_Own_Lines.md:174) |
+| 6 | 09-05 六 | 中 | 普通人不是不敏感，是什么都想要——只想要刺激的那一半，不认账的那一半。 | [#127](../voice/Fluxus_Own_Lines.md:721) |
+| 7 | 09-06 日 | EN | It stays a mess. Then one day you do the exact same thing with the exact same system, and it just works. | [#24](../voice/Fluxus_Own_Lines.md:145) |
 
-**这七条的编排逻辑**（下次自己挑的时候照这个来）：
-教学 → 疼 → 主张 → 幽默 → 自嘲 → 教学 → 温。
-**别把好笑的排在一起**，也别连着三天说教。一周里要有一条只有中文圈能懂的（#53 尚方宝剑），有一条承认自己毛病的（#28 —— 自嘲是最难仿的部分，也是最少人敢发的）。
+> 第 7 条排在 09-06 是故意的 —— 那天是 **#002 周信发布日**，温的那条给读者做落点。
+
+**冷嘲备选 3 条**（[`../voice/Fluxus_Ammo_Library.md`](../voice/Fluxus_Ammo_Library.md)，全是单句版，可独立成帖）：
+
+- **C2**：最贵的一句话不是「这次不一样」，是「反正它一直会回来」。
+- **D3**：「长期投资者」这个身份，通常是在浮亏百分之二十那天获得的。
+- **A2**：市场不认识你。这既是坏消息，也是你唯一的好消息。
 
 ---
 
@@ -60,6 +72,28 @@ H1 复盘发布后有 **12 条拆帖**（见 `../../Fluxus_Substack/drafts/H1_fl
 ---
 
 ## 历史队列（发完归档，避免重复）
+
+### 2026-08-10 → 08-16 · ❌ **从未灌进 Typefully，7 条全部未发**
+
+连续第二周「保险买了没生效」。**这七条没发过，仍可复用**，别当成已用过的弹药：
+
+| 日期 | 语言 | 文案 | 出处 | 状态 |
+|---|---|---|---|---|
+| 08-10 一 | EN | Go players review every game they finish. Most traders live through three full cycles and stay exactly where they started — they turn the page, but never read it back. | #129 | 未发，可复用 |
+| 08-11 二 | 中 | 手里捧着尚方宝剑，偏当破铜烂铁，反倒捡根树枝当剑耍。要耍到什么时候。 | #53 | 未发，可复用 |
+| 08-12 三 | EN | I don't care much about being right. I care that being wrong stays small. | #30 | 未发，可复用 |
+| 08-13 四 | 中 | 股市不是薛定谔的猫。你不看，它也已经决定了。 | #34 | 未发，可复用 |
+| 08-14 五 | EN | You'll notice I get stopped out a lot. Part of that is discipline. Part of it is that I trade too much. | #28 | 未发，可复用 |
+| 08-15 六 | 中 | 资金净流入创了新高。可那是净额——菜贩子收摊前清仓甩卖，一堆人来抢，花出去的钱当然变多了。可菜价还在跌。 | #51 | 未发，可复用 |
+| 08-16 日 | EN | You're driving home and you're not there yet. You're allowed to slow down on the way. | #52 | 未发，可复用 |
+
+**这七条的编排逻辑**（下次自己挑的时候照这个来）：
+教学 → 疼 → 主张 → 幽默 → 自嘲 → 教学 → 温。
+**别把好笑的排在一起**，也别连着三天说教。一周里要有一条只有中文圈能懂的（#53 尚方宝剑），有一条承认自己毛病的（#28 —— 自嘲是最难仿的部分，也是最少人敢发的）。
+
+📌 **连续三周同一形状**（08-04 批、08-10 批、以及 08-17→08-30 根本没排队列）。按三次律，
+这已经不是「记一次教训」的事，是**机制要换**——见 [W5 周报](weekly/2026-08-30_W5.md)「下周主线」。
+
 
 ### 2026-08-04 → 08-10 · ❌ **从未灌进 Typefully，5 条全部作废**
 
