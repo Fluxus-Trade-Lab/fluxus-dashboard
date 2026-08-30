@@ -225,86 +225,97 @@ class TestFourWeekNewHighsLows:
         assert r['new_lows_4w'] == 4
 
 
-class TestLiquidityGate:
-    """The *_liq counts must exclude what polluted the ungated ones.
+class TestCommonStockUniverse:
+    """The standard new-high/new-low universe is COMMON STOCKS ONLY.
 
-    2026-08-28: 88% of the 66 names counted as 52-week new highs sat in the
-    $9.50-11 SPAC trust band on a median $166k of dollar volume. A SPAC trust
-    accretes with interest, so it prints a new high nearly every session no
-    matter what the market does -- the reading could not deteriorate, which
-    is why it was the lone dissenter that day.
+    NYSE, Nasdaq and NYSE Arca publish their counts with UITs, closed-end
+    funds, warrants, preferreds, ETFs, SPACs and non-SIC issues removed --
+    by SECURITY TYPE, not by size. On 2026-08-28, 58 of the 66 names counted
+    as 52-week new highs were Finviz `industry == "Shell Companies"`, i.e.
+    SPACs, which accrete toward trust value and so print new highs almost
+    every session regardless of the market. That is why the reading could
+    not deteriorate on a day 3,386 names fell.
+
+    These tests replaced a set written against a $5/share + $5M-volume gate,
+    which was my own invention before I checked whether a professional
+    definition existed. It did.
     """
 
     def _uni(self, **over):
         import pandas as pd
         base = {
-            # SPAC1/SPAC2: at their highs, $10.20 on 16k shares = $166k/day
-            # REAL1: at its high, $80 on 2M shares = $160M/day
-            # PENNY: at its low, $1.40 on 50k shares
-            'ticker': ['SPAC1', 'SPAC2', 'REAL1', 'PENNY'],
-            'close': [10.20, 10.20, 80.0, 1.40],
-            'avg_volume': [16_000, 16_000, 2_000_000, 50_000],
-            'bars_n': [250, 250, 250, 250],   # history is not the variable here
-            'change_pct': [0.0, 0.0, 0.01, -0.05],
+            'ticker': ['SPAC1', 'SPAC2', 'BIGCO', 'SMALLCO'],
+            # SMALLCO is a genuinely small common stock: the size gate would
+            # have thrown it out, the standard keeps it, and breadth exists
+            # precisely to hear from names like it.
+            'industry': ['Shell Companies', 'Shell Companies',
+                         'Software - Application', 'Banks - Regional'],
+            'close': [10.20, 10.20, 80.0, 6.0],
+            'avg_volume': [16_000, 16_000, 2_000_000, 20_000],
+            'bars_n': [250, 250, 250, 250],
+            'change_pct': [0.0, 0.0, 0.01, 0.01],
             'perf_1m': [0.0] * 4, 'perf_3m': [0.0] * 4,
             'sma20_dist': [0.0] * 4, 'sma40_dist': [0.0] * 4,
             'sma50_dist': [0.0] * 4, 'sma200_dist': [0.0] * 4,
-            'high_52w': [0.0, 0.0, 0.0, -0.90],
-            'low_52w': [0.50, 0.50, 0.60, 0.0],
-            'high_20d': [0.0, 0.0, 0.0, -0.30],
-            'low_20d': [0.20, 0.20, 0.25, 0.0],
+            'high_52w': [0.0, 0.0, 0.0, 0.0],
+            'low_52w': [0.50, 0.50, 0.60, 0.60],
+            'high_20d': [0.0, 0.0, 0.0, 0.0],
+            'low_20d': [0.20, 0.20, 0.25, 0.25],
         }
         base.update(over)
         return pd.DataFrame(base)
 
-    def test_the_gate_removes_the_illiquid_new_highs(self):
+    def test_shells_are_excluded_and_small_common_stocks_are_not(self):
         from pipeline.screeners.breadth_metrics import compute_snapshot
         r = compute_snapshot(self._uni())
-        assert r['new_highs'] == 3          # two SPACs + the real name
-        assert r['new_highs_liq'] == 1      # only the real one survives
-        assert r['new_highs_4w'] == 3
-        assert r['new_highs_4w_liq'] == 1
-        assert r['liquid_universe'] == 1
+        assert r['new_highs'] == 4            # raw: everything
+        assert r['new_highs_common'] == 2     # BIGCO and SMALLCO
+        assert r['new_highs_4w_common'] == 2
+        assert r['common_universe'] == 2
 
-    def test_the_gate_removes_the_penny_new_low(self):
-        from pipeline.screeners.breadth_metrics import compute_snapshot
-        r = compute_snapshot(self._uni())
-        assert r['new_lows'] == 1
-        assert r['new_lows_liq'] == 0       # $1.40 is below the price floor
-        assert r['new_lows_4w_liq'] == 0
+    def test_a_size_gate_would_have_dropped_the_small_common_stock(self):
+        """Positive control for choosing type over size.
 
-    def test_ungated_counts_are_untouched_by_the_gate(self):
-        """Continuity: 574 rows of archive stand behind new_highs/new_lows.
-
-        Redefining them in place would put a SECOND level break into a
-        series that already has one (universe 3000 -> 5614 on 2026-08-14).
+        SMALLCO trades $120k a day. The $5M gate I wrote first would have
+        removed it along with the SPACs -- silencing a real common stock,
+        which is the opposite of what a breadth reading is for. If this ever
+        starts failing, the type filter has quietly become a size filter.
         """
         from pipeline.screeners.breadth_metrics import compute_snapshot
-        gated = compute_snapshot(self._uni())
-        # same rows, but with the gate's inputs stripped out entirely
-        u = self._uni().drop(columns=['close', 'avg_volume'])
-        ungated = compute_snapshot(u)
-        assert gated['new_highs'] == ungated['new_highs'] == 3
-        assert gated['new_lows'] == ungated['new_lows'] == 1
-
-    def test_missing_gate_inputs_are_null_not_zero(self):
-        from pipeline.screeners.breadth_metrics import compute_snapshot
-        u = self._uni().drop(columns=['close', 'avg_volume'])
+        u = self._uni()
+        small = u[u['ticker'] == 'SMALLCO']
+        assert float(small['close'].iloc[0] * small['avg_volume'].iloc[0]) < 5_000_000
         r = compute_snapshot(u)
-        for k in ('new_highs_liq', 'new_lows_liq',
-                  'new_highs_4w_liq', 'new_lows_4w_liq', 'liquid_universe'):
-            assert r[k] is None, f"{k} should be NULL when the gate cannot run"
+        assert r['new_highs_common'] == 2     # SMALLCO still counted
+
+    def test_raw_counts_are_untouched_by_the_filter(self):
+        """Continuity: 574 archive rows stand behind new_highs/new_lows.
+
+        Redefining them in place would put a SECOND level break into a series
+        that already has one (universe 3000 -> 5614 on 2026-08-14).
+        """
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        filtered = compute_snapshot(self._uni())
+        plain = compute_snapshot(self._uni().drop(columns=['industry']))
+        assert filtered['new_highs'] == plain['new_highs'] == 4
+
+    def test_missing_industry_is_null_not_zero(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni().drop(columns=['industry']))
+        for k in ('new_highs_common', 'new_lows_common',
+                  'new_highs_4w_common', 'new_lows_4w_common', 'common_universe'):
+            assert r[k] is None, f"{k} should be NULL when industry is absent"
 
     def test_the_2x2_is_complete(self):
-        """Window effect and pollution effect must be separately readable.
+        """Window effect and contamination effect must be separately readable.
 
-        One gated number would confound them: any move could be either
-        cause. Four counts on {20d, 252d} x {gated, ungated} cannot.
+        One filtered number would confound them: any move could be either
+        cause. Four counts on {20d, 252d} x {raw, common} cannot.
         """
         from pipeline.screeners.breadth_metrics import compute_snapshot
         r = compute_snapshot(self._uni())
-        for k in ('new_highs', 'new_highs_4w', 'new_highs_liq', 'new_highs_4w_liq',
-                  'new_lows', 'new_lows_4w', 'new_lows_liq', 'new_lows_4w_liq'):
+        for k in ('new_highs', 'new_highs_4w', 'new_highs_common', 'new_highs_4w_common',
+                  'new_lows', 'new_lows_4w', 'new_lows_common', 'new_lows_4w_common'):
             assert k in r
 
 
@@ -327,6 +338,7 @@ class TestMinimumHistory:
             #      52w, but IS eligible for the 20-day one
             # BABY: 12 bars -> eligible for neither
             'ticker': ['OLD', 'IPO', 'BABY'],
+            'industry': ['Software - Application'] * 3,
             'close': [80.0, 40.0, 30.0],
             'avg_volume': [2_000_000, 2_000_000, 2_000_000],
             'bars_n': [250, 60, 12],
@@ -340,18 +352,19 @@ class TestMinimumHistory:
         base.update(over)
         return pd.DataFrame(base)
 
-    def test_a_liquid_recent_ipo_is_not_a_52_week_high(self):
-        """The case the liquidity gate cannot catch."""
+    def test_a_recent_ipo_is_not_a_52_week_high(self):
+        """The case the security-type filter cannot catch: a real common
+        stock that simply has not existed long enough."""
         from pipeline.screeners.breadth_metrics import compute_snapshot
         r = compute_snapshot(self._uni())
         assert r['new_highs'] == 3          # ungated: all three, unchanged
-        assert r['new_highs_liq'] == 1      # only OLD has 52 weeks behind it
+        assert r['new_highs_common'] == 1      # only OLD has 52 weeks behind it
 
     def test_the_same_ipo_is_eligible_for_the_4_week_high(self):
         """Per-window floors: 60 bars is plenty for a 20-session extreme."""
         from pipeline.screeners.breadth_metrics import compute_snapshot
         r = compute_snapshot(self._uni())
-        assert r['new_highs_4w_liq'] == 2   # OLD and IPO; BABY has 12 bars
+        assert r['new_highs_4w_common'] == 2   # OLD and IPO; BABY has 12 bars
 
     def test_short_history_count_is_reported_not_hidden(self):
         from pipeline.screeners.breadth_metrics import compute_snapshot
@@ -362,6 +375,6 @@ class TestMinimumHistory:
         from pipeline.screeners.breadth_metrics import compute_snapshot
         u = self._uni().drop(columns=['bars_n'])
         r = compute_snapshot(u)
-        for k in ('new_highs_liq', 'new_lows_liq',
-                  'new_highs_4w_liq', 'new_lows_4w_liq', 'short_history_n'):
+        for k in ('new_highs_common', 'new_lows_common',
+                  'new_highs_4w_common', 'new_lows_4w_common', 'short_history_n'):
             assert r[k] is None, f"{k} must be NULL when bar counts are absent"

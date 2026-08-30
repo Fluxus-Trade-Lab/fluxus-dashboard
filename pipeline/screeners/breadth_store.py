@@ -34,8 +34,10 @@ BREADTH_COLUMNS = [
     't2108', 'pct_above_200sma', 'pct_above_50sma', 'pct_above_20sma',
     'advances', 'declines', 'new_highs', 'new_lows',
     'new_highs_4w', 'new_lows_4w',
-    'new_highs_liq', 'new_lows_liq', 'new_highs_4w_liq', 'new_lows_4w_liq',
-    'liquid_universe', 'short_history_n',
+    'new_highs_common', 'new_lows_common',
+    'new_highs_4w_common', 'new_lows_4w_common',
+    'common_universe', 'short_history_n',
+    'record_high_pct', 'high_low_index',
     'net_advances', 'rana', 'ad_line', 'mcclellan_osc',
 ]
 
@@ -91,6 +93,42 @@ def derive(frame: pd.DataFrame) -> pd.DataFrame:
     out['mcclellan_osc'] = (ema19 - ema39).round(2)
 
     out['ad_line'] = net.cumsum().astype(int)
+
+    # Record High Percent and the High-Low Index (StockCharts ChartSchool).
+    # Record High Percent = new highs / (new highs + new lows). The High-Low
+    # Index is its 10-day simple average.
+    #
+    # These are RATIOS, which is the whole reason to prefer them here: the raw
+    # counts are not comparable across time in this archive, because the
+    # universe stepped from 3000 to 5614 names on 2026-08-14. Every level
+    # comparison spanning that date measures the universe growing, not the
+    # market changing -- a mistake this file's own consumer made on 2026-08-30.
+    # A ratio is immune to it.
+    #
+    # Computed on the COMMON-STOCK counts, not the raw ones, because a ratio
+    # built from a SPAC-contaminated numerator is still contaminated. NULL for
+    # every row predating those columns rather than silently falling back to
+    # the raw counts, which would put a definition change inside one series.
+    def _numeric_col(name):
+        # out.get(name) returns a SCALAR nan when the column is absent, not an
+        # empty Series, so every downstream .notna() blows up on archives that
+        # predate the column. Build an index-aligned all-NA Series instead.
+        if name in out.columns:
+            return pd.to_numeric(out[name], errors='coerce')
+        return pd.Series(pd.NA, index=out.index, dtype='Float64')
+
+    nh_c = _numeric_col('new_highs_common')
+    nl_c = _numeric_col('new_lows_common')
+    denom = nh_c + nl_c
+    rhp = pd.Series(pd.NA, index=out.index, dtype='Float64')
+    ok = denom.notna() & (denom > 0)
+    rhp[ok] = (nh_c[ok] / denom[ok] * 100).round(2)
+    # A day with zero new highs AND zero new lows is a real, flat reading, not
+    # missing data; 50 is the neutral value the ratio takes by construction.
+    flat = denom.notna() & (denom == 0)
+    rhp[flat] = 50.0
+    out['record_high_pct'] = rhp
+    out['high_low_index'] = rhp.rolling(10, min_periods=10).mean().round(2)
 
     for n, col in ((5, 'ratio_5d'), (10, 'ratio_10d')):
         up_sum = up4.rolling(n, min_periods=1).sum()

@@ -32,12 +32,23 @@ logger = logging.getLogger(__name__)
 # ── Thresholds ────────────────────────────────────────────────────────
 _NEW_HIGH_THRESHOLD = -0.001  # true 52w high (0.1% float/quote tolerance)
 _NEW_LOW_THRESHOLD = 0.001    # true 52w low
-# Liquidity gate for the *_liq new-high/new-low counts. $5M/day and $5 a share
-# is where the SPAC trust band ($9.50-11 on ~16k shares) and the sub-$2 shells
-# both fall out; it is a floor for "a name a human could actually trade", not
-# a tuned parameter, and it was never searched over alternatives.
-_MIN_PRICE = 5.0
-_MIN_DOLLAR_VOL = 5_000_000.0
+# The standard new-high/new-low universe is COMMON STOCKS ONLY. NYSE, Nasdaq
+# and NYSE Arca publish their counts with unit investment trusts, closed-end
+# funds, warrants, preferred securities, ETFs, SPACs and non-SIC (OTC) issues
+# removed -- the exclusion is by SECURITY TYPE, not by size or liquidity.
+#
+# Finviz's stock screener already keeps ETFs, closed-end funds, preferreds and
+# warrants out of our universe (no such industry appears in it), so the one
+# standard exclusion still missing is the SPAC/shell bucket, which Finviz
+# labels `industry == "Shell Companies"` -- 331 names on 2026-08-28, and 58 of
+# the 66 that were being counted as 52-week new highs that day.
+#
+# This REPLACED a $5/share + $5M-dollar-volume gate I had written on 2026-08-31
+# before checking whether a professional definition existed (it did). A size
+# gate is a crude proxy for a type filter: it lets in nothing a real breadth
+# reading needs, and it throws out legitimately small common stocks, which are
+# exactly the names a breadth reading is supposed to hear from.
+_EXCLUDED_INDUSTRIES = frozenset({'Shell Companies'})
 # Minimum bars before a name may be counted at an N-session extreme. This is a
 # CORRECTNESS floor, not a tuned parameter: a "52-week high" computed on 19
 # bars is not a weak signal, it is a category error -- the name has not
@@ -132,7 +143,7 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
     new_highs_4w = int((high_20d >= _NEW_HIGH_THRESHOLD).sum()) if have_20d[0] else None
     new_lows_4w = int((low_20d <= _NEW_LOW_THRESHOLD).sum()) if have_20d[1] else None
 
-    # --- Liquidity gate (2026-08-31) -------------------------------------
+    # --- Standard common-stock universe (2026-08-31) -------------------------------------
     # On 2026-08-28, 88% of the 66 names counted as 52-week new highs sat in
     # the $9.50-11 SPAC trust band, 89% traded under 100k shares/day, and the
     # median dollar volume was $166k against $8.0M for the universe. A SPAC
@@ -142,7 +153,7 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
     # listed inside the window make it worse: several had 20-48 bars of
     # history in total, so their entire life IS the lookback.
     #
-    # The gate is emitted ALONGSIDE the ungated counts, never instead of
+    # The filtered counts are emitted ALONGSIDE the raw ones, never instead of
     # them, for two reasons. (1) Continuity: `new_highs`/`new_lows` have 574
     # rows of archive behind them and silently redefining them would put a
     # second level break into a series that already has one (universe went
@@ -154,11 +165,10 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
     # NULL, not 0, when the inputs to the gate are missing: a count of zero
     # reads as "nothing made a new low today", the most reassuring possible
     # rendering of a data outage.
-    px = pd.to_numeric(universe.get('close', pd.Series(dtype=float)), errors='coerce')
-    avol = pd.to_numeric(universe.get('avg_volume', pd.Series(dtype=float)), errors='coerce')
-    liquid = (px >= _MIN_PRICE) & (px * avol >= _MIN_DOLLAR_VOL)
-    n_liquid = int(liquid.sum())
-    gate_usable = int((px.notna() & avol.notna()).sum()) > 0
+    industry = universe.get('industry', pd.Series(dtype=object))
+    common = ~industry.isin(_EXCLUDED_INDUSTRIES)
+    n_common = int(common.sum())
+    gate_usable = int(industry.notna().sum()) > 0
 
     bars = pd.to_numeric(universe.get('bars_n', pd.Series(dtype=float)), errors='coerce')
     have_bars = int(bars.notna().sum()) > 0
@@ -171,14 +181,14 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
         # possible rendering of a data outage.
         if not (gate_usable and have and enough is not None):
             return None
-        return int((cmp_ok(series) & liquid & enough).sum())
+        return int((cmp_ok(series) & common & enough).sum())
 
     hi_ok = lambda x: x >= _NEW_HIGH_THRESHOLD
     lo_ok = lambda x: x <= _NEW_LOW_THRESHOLD
-    new_highs_liq = _gated(high_52w, hi_ok, int(high_52w.notna().sum()), long_enough_52w)
-    new_lows_liq = _gated(low_52w, lo_ok, int(low_52w.notna().sum()), long_enough_52w)
-    new_highs_4w_liq = _gated(high_20d, hi_ok, have_20d[0], long_enough_4w)
-    new_lows_4w_liq = _gated(low_20d, lo_ok, have_20d[1], long_enough_4w)
+    new_highs_common = _gated(high_52w, hi_ok, int(high_52w.notna().sum()), long_enough_52w)
+    new_lows_common = _gated(low_52w, lo_ok, int(low_52w.notna().sum()), long_enough_52w)
+    new_highs_4w_common = _gated(high_20d, hi_ok, have_20d[0], long_enough_4w)
+    new_lows_4w_common = _gated(low_20d, lo_ok, have_20d[1], long_enough_4w)
     # Made visible so the defect stays measurable instead of being silently
     # filtered away: how many names are too young to have a 52-week extreme.
     short_history_n = int((~(bars >= _MIN_BARS_52W)).sum()) if have_bars else None
@@ -205,11 +215,11 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
         'new_lows': new_lows,
         'new_highs_4w': new_highs_4w,
         'new_lows_4w': new_lows_4w,
-        'new_highs_liq': new_highs_liq,
-        'new_lows_liq': new_lows_liq,
-        'new_highs_4w_liq': new_highs_4w_liq,
-        'new_lows_4w_liq': new_lows_4w_liq,
-        'liquid_universe': n_liquid if gate_usable else None,
+        'new_highs_common': new_highs_common,
+        'new_lows_common': new_lows_common,
+        'new_highs_4w_common': new_highs_4w_common,
+        'new_lows_4w_common': new_lows_4w_common,
+        'common_universe': n_common if gate_usable else None,
         'short_history_n': short_history_n,
         'net_advances': advances - declines,
     }

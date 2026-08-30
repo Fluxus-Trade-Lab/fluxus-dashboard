@@ -251,3 +251,69 @@ class TestQualityGuard:
         ok, reason = check_quality(self._last_frame(46.0, date='2026-07-26'), snap,
                                    null_rate=0.02, today_iso=self._TODAY)
         assert not ok and 'pct_above_200sma' in reason
+
+
+class TestRecordHighPercent:
+    """Record High Percent and the High-Low Index (StockCharts ChartSchool).
+
+    RHP = new highs / (new highs + new lows). High-Low Index = its 10-day SMA.
+    Adopted 2026-08-31 for one reason above all: they are RATIOS. The raw
+    counts in this archive are not comparable across time, because the
+    universe stepped from 3000 to 5614 names on 2026-08-14 -- a break that
+    silently corrupted a 21-day comparison reported to Andy on 08-30.
+    """
+
+    def _frame(self, nh, nl, **over):
+        import pandas as pd
+        n = len(nh)
+        base = {
+            'date': pd.date_range('2026-01-01', periods=n, freq='B').strftime('%Y-%m-%d'),
+            'advances': [100] * n, 'declines': [100] * n,
+            'up_4pct': [1] * n, 'down_4pct': [1] * n,
+            'new_highs_common': nh, 'new_lows_common': nl,
+        }
+        base.update(over)
+        return pd.DataFrame(base)
+
+    def test_exact_ratio(self):
+        from pipeline.screeners.breadth_store import derive
+        out = derive(self._frame([30], [10]))
+        assert float(out['record_high_pct'].iloc[0]) == 75.0
+
+    def test_immune_to_the_universe_doubling(self):
+        """The reason this indicator exists here.
+
+        Double every count -- as happened on 2026-08-14 when the universe went
+        3000 -> 5614 -- and the ratio must not move. If this fails, the ratio
+        has picked up a level dependence and the 08-14 break is back.
+        """
+        from pipeline.screeners.breadth_store import derive
+        small = derive(self._frame([30], [10]))
+        big = derive(self._frame([60], [20]))
+        assert float(small['record_high_pct'].iloc[0]) == float(big['record_high_pct'].iloc[0])
+        # ... while the raw difference the old readings used DOES move
+        assert (60 - 20) != (30 - 10)
+
+    def test_a_flat_day_is_fifty_not_missing(self):
+        """Zero highs and zero lows is a real reading, not absent data."""
+        from pipeline.screeners.breadth_store import derive
+        out = derive(self._frame([0], [0]))
+        assert float(out['record_high_pct'].iloc[0]) == 50.0
+
+    def test_high_low_index_is_the_10_day_average(self):
+        from pipeline.screeners.breadth_store import derive
+        out = derive(self._frame([50] * 12, [50] * 12))   # RHP == 50 every day
+        assert out['high_low_index'].iloc[:9].isna().all()   # not enough history
+        assert float(out['high_low_index'].iloc[9]) == 50.0
+
+    def test_null_when_the_common_counts_are_absent(self):
+        """Archive rows predating the columns must not fall back to raw counts.
+
+        Falling back would put a definition change INSIDE one series -- the
+        exact failure mode this indicator was adopted to avoid.
+        """
+        from pipeline.screeners.breadth_store import derive
+        f = self._frame([30], [10]).drop(columns=['new_highs_common', 'new_lows_common'])
+        out = derive(f)
+        assert out['record_high_pct'].isna().all()
+        assert out['high_low_index'].isna().all()
