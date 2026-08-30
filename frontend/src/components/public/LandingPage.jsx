@@ -1,6 +1,20 @@
+import { useState, useEffect } from 'react'
 import HeroField from './HeroField'
+import { PUBLIC_STATS } from './publicStats'
 
 export default function LandingPage({ onNavigate }) {
+  // Same source and same numbers as ResultsPage — one click away, so they must
+  // agree. Until 2026-08-31 this page showed 72% / 2.1R / 340+, invented
+  // placeholders that survived the 2026-08-16 cleanup of ResultsPage. The real
+  // book is 39.9% / 0.88R / 331. A visitor who clicked "See the results" watched
+  // the win rate drop 32 points.
+  const [stats, setStats] = useState(PUBLIC_STATS)
+  useEffect(() => {
+    fetch(`${import.meta.env.BASE_URL}data/output/performance.json`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { if (d?.stats) setStats(d.stats) })
+      .catch(() => {})
+  }, [])
   return (
     <div>
       {/*
@@ -41,15 +55,15 @@ export default function LandingPage({ onNavigate }) {
 
           <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-[540px] mt-12">
             <div>
-              <div className="public-stat-number" style={{ color: 'var(--color-poster-blue)' }}>72%</div>
+              <div className="public-stat-number" style={{ color: 'var(--color-poster-blue)' }}>{stats.profitFactor}</div>
+              <div className="public-label mt-1">Profit Factor</div>
+            </div>
+            <div>
+              <div className="public-stat-number" style={{ color: 'var(--color-poster-blue)' }}>{stats.winRate}%</div>
               <div className="public-label mt-1">Win Rate</div>
             </div>
             <div>
-              <div className="public-stat-number" style={{ color: 'var(--color-poster-blue)' }}>2.1R</div>
-              <div className="public-label mt-1">Avg Return</div>
-            </div>
-            <div>
-              <div className="public-stat-number" style={{ color: 'var(--color-poster-blue)' }}>340+</div>
+              <div className="public-stat-number" style={{ color: 'var(--color-poster-blue)' }}>{stats.totalTrades}</div>
               <div className="public-label mt-1">Trades</div>
             </div>
           </div>
