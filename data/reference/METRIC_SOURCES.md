@@ -38,11 +38,11 @@ Andy：**「很多数据是有专业的衡量的，不需要你去计算去创�
 | `ad_line` | Advance-Decline Line | 净涨跌家数累加 | ✅ 一致 |
 | `t2108` | Worden T2108 | 40 日均线上方占比 | ✅ 一致 |
 | `pct_above_20/50/200sma` | Percent Above Moving Average | 同名 | ✅ 一致 |
-| `new_highs` / `new_lows` | 52-week New Highs/Lows | 52 周极值，**池子只含普通股**：排除 UIT / CEF / warrant / preferred / ETF / **SPAC** / 非 SIC OTC | ❌ **偏离**——我们用整个 Finviz 池子。这就是 08-28 那 66 支里 88% 是 SPAC 的原因 |
-| `new_highs_liq` / `new_lows_liq` | *(无对应标准)* | — | ⚠️ **自造**。用成交额+股价+历史长度近似标准的证券类型过滤。**待替换**为真正的类型过滤 |
+| `new_highs` / `new_lows` | 52-week New Highs/Lows | 52 周极值，**池子只含普通股** | ⚠️ **原始计数保留不动**（574 行档案的连续性），标准口径另发下一行 |
+| `new_highs_common` / `new_lows_common` | 同上 | 排除 UIT / CEF / warrant / preferred / ETF / **SPAC** / 非 SIC OTC | ✅ **一致**（2026-08-31 落地）。Finviz 已挡住 ETF/CEF/preferred/warrant，我们补上 `industry == "Shell Companies"` |
+| `record_high_pct` | Record High Percent | NH/(NH+NL) | ✅ **一致**（2026-08-31 落地），用 common 计数做分子 |
+| `high_low_index` | High-Low Index | Record High Percent 的 10 日均 | ✅ **一致**（2026-08-31 落地） |
 | `new_highs_4w` / `new_lows_4w` | *(查过，无标准)* | 52 周是机构惯例；该时间尺度的标准量是 %above-20MA / T2108 / McClellan | ⚠️ **自造**。仅供研究，不得当标准读数上页 |
-| — | **Record High Percent** = NH/(NH+NL) | 比值，对池子大小免疫 | 🔲 **我们没有，该建**——它治 08-14 断层 |
-| — | **High-Low Index** = Record High Percent 的 10 日均 | 同上 | 🔲 我们没有 |
 | — | McClellan Summation Index | McClellan 振荡器累加 | 🔲 我们没有 |
 | — | Arms Index (TRIN) | (adv/dec)÷(上涨量/下跌量) | 🔲 我们没有 |
 | — | Bullish Percent Index | P&F 买入信号占比 | 🔲 我们没有 |
