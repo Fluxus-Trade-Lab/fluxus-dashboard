@@ -964,6 +964,27 @@ def main():
     except Exception:
         logger.exception("groups_history projection failed - groups_history.json not updated")
 
+    # Five-rung theme ladder (2W/4W/6W/8W/10W), the short-window sensitivity
+    # Andy asked for on 2026-08-28 ("canary in the mines"). READINGS ONLY --
+    # the canary claim is registered as underpowered, not proven
+    # (claims.jsonl: canary-lagging-share). The nightly row feeds the forward
+    # ledger that will eventually have the power to judge it. Own failure
+    # domain: a ladder crash must not read as a group-layer failure.
+    try:
+        import pickle as _pk
+        from pipeline.themes import short_window as _SW
+        _g = json.loads((OUTPUT_DIR / 'groups.json').read_text())
+        _themes = {t['group']: t['tickers'] for t in _g.get('themes', []) if t.get('tickers')}
+        _names = sorted({x for v in _themes.values() for x in v} | {'SPY'})
+        _bars = _SW.fetch_bars(_names)
+        _payload = _SW.build(_themes, _bars)
+        (OUTPUT_DIR / 'theme_ladder.json').write_text(json.dumps(_payload, separators=(',', ':')))
+        _n = _SW.archive_ladder(_payload)
+        logger.info("Saved theme_ladder.json - %d rungs, %d themes; ledger %d rows",
+                    len(_payload.get('rungs', {})), len(_payload.get('themes', {})), _n)
+    except Exception:
+        logger.exception("theme ladder failed - theme_ladder.json not updated")
+
     # Nightly watchlist: zones -> panels -> tickers off the scored universe, so
     # the Watchlist page renders instead of filtering. Own failure domain.
     try:
