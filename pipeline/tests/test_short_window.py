@@ -70,9 +70,9 @@ class TestLadder:
         lens = [SW.WINDOWS[w][0] for w in SW.LADDER]
         assert lens == sorted(lens), "the ladder must go near -> far"
 
-    def test_an_accelerating_outperformer_reads_leading_on_every_rung(self):
-        """The momentum axis means ACCELERATION, not level. A theme pulling
-        away faster and faster must read Leading at every lookback."""
+    def test_a_recent_outperformer_reads_leading_on_every_rung(self):
+        """The momentum axis is the RS line's SLOPE (first order): a theme
+        that is both ahead cumulatively and still gaining reads Leading."""
         bars = _bars({"SPY": 0.001})
         n = len(bars["SPY"])
         idx = bars["SPY"].index
@@ -84,7 +84,7 @@ class TestLadder:
         traj = SW.build({"Hot": ["A", "B", "C"]}, bars)["themes"]["Hot"]
         assert set(traj.values()) == {"Leading"}, traj
 
-    def test_a_decelerating_outperformer_reads_weakening(self):
+    def test_giving_back_ground_never_reads_leading(self):
         bars = _bars({"SPY": 0.001})
         n = len(bars["SPY"]); idx = bars["SPY"].index
         ramp = np.cumprod(1 + np.linspace(0.008, 0.0005, n))   # slowing down
@@ -93,12 +93,9 @@ class TestLadder:
             bars[t] = pd.DataFrame({"Close": c, "High": c, "Low": c, "Open": c,
                                     "Volume": np.ones(n)}, index=idx)
         traj = SW.build({"Cooling": ["A", "B", "C"]}, bars)["themes"]["Cooling"]
-        # Both deceleration states are correct here and which one appears is
-        # the LEVEL axis talking: by the short rungs the ramp has slowed below
-        # the benchmark (level < 0 -> Lagging), at the long ones it is still
-        # ahead on the cumulative (level > 0 -> Weakening). The invariant this
-        # test owns is the MOMENTUM axis: nothing decelerating may read as
-        # Leading or Improving on any rung.
+        # Which of the two weak states appears is the LEVEL axis talking; the
+        # invariant this test owns is the MOMENTUM axis: a theme losing ground
+        # against the benchmark right now may never read Leading or Improving.
         assert set(traj.values()) <= {"Weakening", "Lagging"}, traj
         assert not {"Leading", "Improving"} & set(traj.values()), traj
 
@@ -106,6 +103,14 @@ class TestLadder:
         """Exactly-flat momentum is float noise, not improvement."""
         assert SW.classify(0.01, 0.0) == "Weakening"
         assert SW.classify(-0.01, 0.0) == "Lagging"
+
+    def test_equal_lookbacks_would_collapse_the_board(self):
+        """Level and momentum must read different lookbacks. With L == M they
+        are the same number, every theme lands on a diagonal, and the two
+        transition quadrants go empty -- measured 31/0/0/25 on real data
+        before this was understood. Guard the WINDOWS table itself."""
+        for w, (L, M) in SW.WINDOWS.items():
+            assert M < L, f"{w}: momentum lookback {M} must be shorter than level {L}"
 
     def test_shares_carry_their_denominator(self):
         """A count without `measurable` lies the day the theme list changes."""

@@ -14,7 +14,7 @@ count them. The two live side by side and answer different questions; the
 
 Axes (identical shape at all three lengths, only the constants move):
     level    = cumulative excess vs the benchmark over L sessions
-    momentum = (excess over the last M) - (excess over the M before that)
+    momentum = excess over M sessions (the RS line's slope; RRG RS-Momentum)
     state    = Leading / Weakening / Improving / Lagging by the two signs
 
 Theme aggregates are EQUAL-WEIGHTED constituent baskets, so a cap-weighted
@@ -30,7 +30,8 @@ from typing import Dict, List, Mapping, Optional, Sequence
 import numpy as np
 import pandas as pd
 
-# (level lookback, momentum half) in trading sessions.
+# (level lookback, momentum lookback) in trading sessions -- BOTH are plain
+# lookbacks now; momentum is the recent excess, not a difference of two.
 # 2W..10W is the ladder Clement_Ang17's board plots as an x-axis -- his chart
 # is a TRAJECTORY across these five, not a point, which is why a single state
 # never reproduced it. Andy 2026-08-28: "他有 2W 4W 6W 8W 10W... 以后我们都需要".
@@ -86,19 +87,31 @@ def _excess(nav: pd.Series, bench: pd.Series, i: int, n: int) -> float:
 
 
 def state_series(nav: pd.Series, bench: pd.Series, window: str) -> pd.Series:
-    """The four-state at every session, for one theme and one window."""
+    """The four-state at every session, for one theme and one window.
+
+    MOMENTUM IS FIRST ORDER -- the recent excess itself, i.e. the slope of the
+    RS line, which is what an RRG's RS-Momentum axis measures. The first
+    version of this module used `near excess - prior excess` (an
+    ACCELERATION, second order), copied out of habit from rs_engine, whose
+    month-scale gate deliberately uses unequal windows for a different job.
+    That was simply the wrong axis: on 2026-08-28 it produced 10/21/14/11
+    against Clement_Ang17's 17/10/6/31, while first order gives 21/10/8/17 --
+    Weakening matches exactly, Improving within 2, Leading within 4. Andy
+    caught the wrong attribution ("我们的成分基本一样。所以是计算的内容不同?").
+
+    The two axes MUST use different lookbacks: with L == M both are the same
+    number and the board collapses to Leading/Lagging with nothing in the
+    transition quadrants (measured: 31/0/0/25).
+    """
     L, M = WINDOWS[window]
     idx = nav.index.intersection(bench.index)
     nav, bench = nav.reindex(idx), bench.reindex(idx)
     out: List[Optional[str]] = []
     for i in range(len(idx)):
-        if i < L + 2 * M:
+        if i < L + M:
             out.append(None)
             continue
-        lvl = _excess(nav, bench, i, L)
-        near = _excess(nav, bench, i, M)
-        prev = _excess(nav, bench, i - M, M)
-        out.append(classify(lvl, near - prev))
+        out.append(classify(_excess(nav, bench, i, L), _excess(nav, bench, i, M)))
     return pd.Series(out, index=idx, name=window)
 
 
@@ -135,6 +148,7 @@ def shares(board_df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows).set_index("date")
 
 
+TREND_DAYS = 90            # sessions of state history shipped for the page
 LADDER_JSON = "data/output/theme_ladder.json"
 LADDER_LOG = "data/history/theme_ladder.csv"
 
@@ -151,11 +165,14 @@ def build(themes: Mapping[str, Sequence[str]], bars: Mapping[str, pd.DataFrame],
     not of the market (claims.jsonl: canary-lagging-share). Forward evidence
     accumulates in LADDER_LOG; revisit when the ledger has ~60 triggers.
 
-    ⚠️ The absolute Lagging count is NOT comparable to another dashboard's:
-    ours are equal-weighted baskets of momentum-screened constituents, which
-    beat a cap-weighted benchmark more often than ETF-based themes do (2026-08-28:
-    ours 12-21% Lagging across the ladder, Clement_Ang17's board 48% the same
-    day). The comparable quantity is the CHANGE in the share.
+    On comparability: after the momentum axis was corrected to first order
+    (see `state_series`), our 2w board reads 21/10/8/17 against
+    Clement_Ang17's 17/10/6/31 the same day -- Weakening exact, Improving
+    within 2, Leading within 4. The one residual is Lagging (17 vs 31), and a
+    15-cell (L, M) grid could not close it: no window combination reaches 31.
+    That residual is composition -- our theme constituents come from a
+    momentum-screened universe, so the baskets are genuinely stronger against
+    SPY. Counts still travel poorly across dashboards; the CHANGE travels.
     """
     bench = bars[benchmark]["Close"]
     rungs, per_theme = {}, {}
@@ -173,8 +190,32 @@ def build(themes: Mapping[str, Sequence[str]], bars: Mapping[str, pd.DataFrame],
         rungs[w]["lagging_share_d5"] = None if pd.isna(d5) else round(float(d5), 4)
         for name, st in b.iloc[-1].items():
             per_theme.setdefault(name, {})[w] = st
+    # The counts OVER TIME, not just today's snapshot -- Andy 2026-08-28:
+    # "我不需要你给我金丝雀这样的结论，但是我要能看到 4 态的数量变化 aka
+    # leading theme 减少，lagging 开始变多". A single day's board cannot show
+    # that; the deltas and the series can.
+    hist = {}
+    for w in LADDER:
+        b = board(themes, bars, benchmark=benchmark, window=w)
+        if b.empty:
+            continue
+        sh = shares(b).dropna(subset=["Lagging_share"])
+        sh = sh[sh["measurable"] >= 1]
+        if sh.empty:
+            continue
+        tail = sh.tail(TREND_DAYS)
+        hist[w] = {
+            "dates": [str(d.date()) for d in tail.index],
+            **{s: [int(v) for v in tail[s]] for s in STATES},
+            "measurable": [int(v) for v in tail["measurable"]],
+            "delta": {s: {f"d{n}": (int(sh[s].iloc[-1] - sh[s].iloc[-1 - n])
+                                    if len(sh) > n else None)
+                          for n in (5, 10, 21)} for s in STATES},
+        }
+
     return {
         "as_of": str(bench.index[-1].date()),
+        "history": hist,
         "benchmark": benchmark,
         "ladder": list(LADDER),
         "rungs": rungs,
