@@ -1,6 +1,6 @@
 {
   "trade_id": "SAIL_2026-08-26_000",
-  "generated_at": "2026-08-28T06:01:16+00:00",
+  "generated_at": "2026-08-30T16:43:23+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SAIL",
@@ -10,7 +10,7 @@
     "entry_price": 20.11,
     "original_qty": 6477,
     "current_qty": 6477,
-    "stop_price": 19.4,
+    "stop_price": 21.11,
     "initial_stop": 19.4,
     "closed": false,
     "exit_date": null,
@@ -29,7 +29,7 @@
     "ma20": 18.339499999999997,
     "ma50": 16.0589,
     "ma200": 16.020274999999998,
-    "rsi14": 54.361764491069344,
+    "rsi14": 54.361763969014106,
     "atr14": 0.9106428571428573,
     "atr14_pct": 4.9980398306413685,
     "high_52w": 24.0,
@@ -53,10 +53,10 @@
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 2
+    "hold_calendar_days": 4
   },
   "lesson": "In progress",
-  "narrative": "Entered **SAIL** long on 2026-08-26 at $20.11 (qty 6477) with stop $19.40 (1R = $0.71/sh = $4,599). Setup: **Long in mixed structure** \u2014 price below MA20 ($18.34), MA20 > MA50 > MA200 (golden alignment), RSI 54, 58% through 52W range, ATR 5.0% of price. **In progress.** Peak so far +1.77R; worst drawdown -3.96R.",
+  "narrative": "Entered **SAIL** long on 2026-08-26 at $20.11 (qty 6477) with stop $19.40 (currently trailed to $21.11) (1R = $0.71/sh = $4,599). Setup: **Long in mixed structure** \u2014 price below MA20 ($18.34), MA20 > MA50 > MA200 (golden alignment), RSI 54, 58% through 52W range, ATR 5.0% of price. **In progress.** Peak so far +1.77R; worst drawdown -3.96R.",
   "ohlc_window": [
     {
       "date": "2026-07-27",
@@ -249,6 +249,14 @@
       "low": 19.39,
       "close": 20.45,
       "volume": 8440200.0
+    },
+    {
+      "date": "2026-08-28",
+      "open": 20.25,
+      "high": 20.7342,
+      "low": 19.76,
+      "close": 19.83,
+      "volume": 3665104.0
     }
   ]
 }

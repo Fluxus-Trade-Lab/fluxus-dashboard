@@ -1,7 +1,7 @@
 {
  "as_of_session": "2026-08-28",
  "ledger": "data/history/run_ledger.jsonl",
- "lines": 13,
+ "lines": 14,
  "runs": [
   {
    "session": "2026-08-28",
@@ -10,23 +10,24 @@
    "violations": [],
    "warnings": [],
    "fund_fail_rate": 0.0,
-   "universe_rows": 5634
+   "universe_rows": 5634,
+   "superseded": true
   },
   {
    "session": "2026-08-28",
    "code_sha": "807ccce",
    "trigger": "schedule",
-   "violations": [
-    "L2 universe_quality status='severe'",
-    "L4 error in universe_quality: severe: ad_ratio_20, adr_pct, atr, atr_from_sma50, atr_pctl_252, atr_pctl_63, av"
-   ],
+   "violations": [],
    "warnings": [
     "L2 breadth stale (sma200_dist null rate 100% > 20%)",
     "L2 ticker_events stale (momentum_97 5634 > 5x recent median 169)",
-    "L5 guard(s) present last session, missing now: screeners, shortlist, shortlist_feedback, site_quality, watchlist"
+    "L5 guard(s) present last session, missing now: screeners, shortlist, shortlist_feedback, site_quality, watchlist",
+    "(superseded attempt) L2 universe_quality status='severe'",
+    "(superseded attempt) L4 error in universe_quality: severe: ad_ratio_20, adr_pct, atr, atr_from_sma50, atr_pctl_252, atr_pctl_63, av"
    ],
    "fund_fail_rate": 0.117,
-   "universe_rows": 5634
+   "universe_rows": 5634,
+   "superseded": true
   },
   {
    "session": "2026-08-28",
@@ -35,13 +36,23 @@
    "violations": [],
    "warnings": [],
    "fund_fail_rate": 0.0,
+   "universe_rows": 5623,
+   "superseded": true
+  },
+  {
+   "session": "2026-08-28",
+   "code_sha": "b0ce016",
+   "trigger": "workflow_dispatch",
+   "violations": [],
+   "warnings": [],
+   "fund_fail_rate": 0.12,
    "universe_rows": 5623
   }
  ],
- "violations": 2,
- "warnings": 3,
+ "violations": 0,
+ "warnings": 5,
  "top": [
-  "L6 2026-08-28: 3 lines (re-run; both happened, not a violation)"
+  "L6 2026-08-28: 4 lines (re-run; both happened, not a violation)"
  ],
- "ok": false
+ "ok": true
 }

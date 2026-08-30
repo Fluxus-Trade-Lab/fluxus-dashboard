@@ -1,29 +1,29 @@
 {
-  "timestamp": "2026-08-29T03:18:17.230043+00:00",
-  "universe_size": 5634,
+  "timestamp": "2026-08-30T16:21:10.654509+00:00",
+  "universe_size": 5623,
   "spx_close": 7711.759765625,
   "mm": {
     "up_4pct": 172,
     "down_4pct": 852,
     "ratio_5d": 0.71,
     "ratio_10d": 0.7957,
-    "up_25pct_qtr": 719,
-    "down_25pct_qtr": 941,
-    "up_25pct_month": 567,
-    "down_25pct_month": 251,
-    "up_50pct_month": 164,
-    "down_50pct_month": 56,
-    "up_13pct_34d": 1160,
-    "down_13pct_34d": 1052
+    "up_25pct_qtr": 688,
+    "down_25pct_qtr": 904,
+    "up_25pct_month": 536,
+    "down_25pct_month": 245,
+    "up_50pct_month": 158,
+    "down_50pct_month": 55,
+    "up_13pct_34d": 1101,
+    "down_13pct_34d": 1006
   },
   "breadth": {
-    "t2108": 47.44,
-    "pct_above_200sma": 48.97,
-    "pct_above_50sma": 47.27,
-    "pct_above_20sma": 41.94,
-    "advances": 1979,
-    "declines": 3387,
-    "new_highs": 48,
+    "t2108": 46.84,
+    "pct_above_200sma": 47.36,
+    "pct_above_50sma": 46.58,
+    "pct_above_20sma": 41.56,
+    "advances": 1978,
+    "declines": 3386,
+    "new_highs": 66,
     "new_lows": 16,
     "ad_line": -16585,
     "mcclellan_osc": -23.06
@@ -231,7 +231,7 @@
       49.06,
       48.93,
       49.02,
-      48.97
+      47.36
     ],
     "pct_above_50sma": [
       54.64,
@@ -333,7 +333,7 @@
       50.62,
       49.31,
       49.5,
-      47.27
+      46.58
     ],
     "pct_above_20sma": [
       79.39,
@@ -435,7 +435,7 @@
       49.48,
       46.66,
       46.13,
-      41.94
+      41.56
     ],
     "mcclellan_osc": [
       68.65,
@@ -4008,30 +4008,30 @@
       {
         "date": "2026-08-28",
         "source": "live",
-        "universe_size": 5634,
+        "universe_size": 5623,
         "spx_close": 7711.759765625,
         "up_4pct": 172,
         "down_4pct": 852,
         "ratio_5d": 0.71,
         "ratio_10d": 0.7957,
-        "up_25pct_qtr": 719,
-        "down_25pct_qtr": 941,
-        "up_25pct_month": 567,
-        "down_25pct_month": 251,
-        "up_50pct_month": 164,
-        "down_50pct_month": 56,
-        "up_13pct_34d": 1160,
-        "down_13pct_34d": 1052,
-        "t2108": 47.44,
-        "pct_above_200sma": 48.97,
-        "pct_above_50sma": 47.27,
-        "pct_above_20sma": 41.94,
-        "advances": 1979,
-        "declines": 3387,
-        "new_highs": 48,
+        "up_25pct_qtr": 688,
+        "down_25pct_qtr": 904,
+        "up_25pct_month": 536,
+        "down_25pct_month": 245,
+        "up_50pct_month": 158,
+        "down_50pct_month": 55,
+        "up_13pct_34d": 1101,
+        "down_13pct_34d": 1006,
+        "t2108": 46.84,
+        "pct_above_200sma": 47.36,
+        "pct_above_50sma": 46.58,
+        "pct_above_20sma": 41.56,
+        "advances": 1978,
+        "declines": 3386,
+        "new_highs": 66,
         "new_lows": 16,
         "net_advances": -1408,
-        "rana": -262.39,
+        "rana": -262.49,
         "ad_line": -16585,
         "mcclellan_osc": -23.06,
         "v": {
@@ -4072,7 +4072,7 @@
       "qqq_danger": "bull",
       "bench_trend": "bull"
     },
-    "universe_size": 5634.0,
+    "universe_size": 5623.0,
     "universe_truncated": false,
     "vote_detail": [
       {
@@ -4100,8 +4100,8 @@
         "side": "bear",
         "label": "Thrust",
         "value": 172.0,
-        "line": 636.642,
-        "margin": -464.64200000000005,
+        "line": 635.399,
+        "margin": -463.399,
         "unit": "names",
         "measurable": true
       },
@@ -4109,9 +4109,9 @@
         "key": "qtr_spread",
         "side": "bear",
         "label": "Quarterly spread",
-        "value": 719.0,
+        "value": 688.0,
         "line": 0,
-        "margin": -222.0,
+        "margin": -216.0,
         "unit": "names",
         "measurable": true
       },
@@ -4119,9 +4119,9 @@
         "key": "spread_13_34",
         "side": "bull",
         "label": "13%/34d spread",
-        "value": 1160.0,
+        "value": 1101.0,
         "line": 0,
-        "margin": 108.0,
+        "margin": 95.0,
         "unit": "names",
         "measurable": true
       },
@@ -4129,9 +4129,9 @@
         "key": "nh_nl",
         "side": "bull",
         "label": "New highs vs lows",
-        "value": 48.0,
+        "value": 66.0,
         "line": 0,
-        "margin": 32.0,
+        "margin": 50.0,
         "unit": "names",
         "measurable": true
       },
@@ -4149,9 +4149,9 @@
         "key": "pct200",
         "side": "neutral",
         "label": "% above 200-day",
-        "value": 48.97,
+        "value": 47.36,
         "line": 50,
-        "margin": -1.0300000000000011,
+        "margin": -2.6400000000000006,
         "unit": "points",
         "measurable": true
       },
@@ -4159,9 +4159,9 @@
         "key": "t2108_zone",
         "side": "neutral",
         "label": "T2108 zone",
-        "value": 47.44,
+        "value": 46.84,
         "line": 60,
-        "margin": -12.560000000000002,
+        "margin": -13.159999999999997,
         "unit": "points",
         "measurable": true
       },
@@ -4200,9 +4200,9 @@
       "up_4pct": 37,
       "down_4pct": 98,
       "ratio_5d": 25,
-      "t2108": 37,
+      "t2108": 35,
       "mcclellan_osc": 26,
-      "nh_nl_net": 97,
+      "nh_nl_net": 98,
       "qtr_spread": 18
     }
   },
@@ -6049,7 +6049,7 @@
         "layer": "fact",
         "level": 1,
         "level_label": "very weak",
-        "evidence": "941 names \u221225% on the quarter against 719 up 25% \u2014 57% on the down side"
+        "evidence": "904 names \u221225% on the quarter against 688 up 25% \u2014 57% on the down side"
       },
       {
         "key": "selling pressure",
@@ -6063,28 +6063,28 @@
         "layer": "fact",
         "level": 1,
         "level_label": "very weak",
-        "evidence": "41.9% above the 20-day, T2108 47.4, net advances -1408"
+        "evidence": "41.6% above the 20-day, T2108 46.8, net advances -1408"
       },
       {
         "key": "trend",
         "layer": "fact",
         "level": 3,
         "level_label": "started",
-        "evidence": "49.0% above the 200-day"
+        "evidence": "47.4% above the 200-day"
       },
       {
         "key": "thrust",
         "layer": "fact",
         "level": 0,
         "level_label": "absent",
-        "evidence": "172 names +4% against 852 \u22124% (a thrust needs 637 of today's 5634)"
+        "evidence": "172 names +4% against 852 \u22124% (a thrust needs 635 of today's 5623)"
       },
       {
         "key": "extremes",
         "layer": "fact",
         "level": 4,
         "level_label": "good",
-        "evidence": "48 new 52-week highs against 16 new lows"
+        "evidence": "66 new 52-week highs against 16 new lows"
       },
       {
         "key": "index repair",
@@ -6125,7 +6125,7 @@
         "carrying": 0.0,
         "measured": 0.0,
         "fed": true,
-        "evidence": "172 names +4% against 852 \u22124% (a thrust needs 637 of today's 5634)"
+        "evidence": "172 names +4% against 852 \u22124% (a thrust needs 635 of today's 5623)"
       },
       {
         "key": "breadth",
@@ -6134,7 +6134,7 @@
         "carrying": 0.0,
         "measured": 0.25,
         "fed": false,
-        "evidence": "41.9% above the 20-day, T2108 47.4, net advances -1408"
+        "evidence": "41.6% above the 20-day, T2108 46.8, net advances -1408"
       },
       {
         "key": "extremes",
@@ -6143,7 +6143,7 @@
         "carrying": 0.0,
         "measured": 1.0,
         "fed": false,
-        "evidence": "48 new 52-week highs against 16 new lows"
+        "evidence": "66 new 52-week highs against 16 new lows"
       },
       {
         "key": "confirmation",

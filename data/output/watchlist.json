@@ -8,7 +8,7 @@
       "trouble"
     ],
     "adr_unmeasured": 0,
-    "gated_rows": 2055
+    "gated_rows": 1961
   },
   "sort": "hybrid_rs desc; the number beside each ticker is rs_line_pctl_21 (oratnek's RS 1M: RS-line self-percentile, 21 sessions); rs_1m (cross-sectional) is the second reading",
   "cross_zone_rule": "count of ZONES a name appears in (not panels); >= 3 listed",
@@ -25,7 +25,7 @@
           "label": "True Market Leaders",
           "recipe": "liquid_leader and home theme/industry state = Leading and rs_1m >= 80 -- the leader inside a leading water",
           "measured": true,
-          "count": 33,
+          "count": 31,
           "count_rs_high": 9,
           "count_top_3m": 27,
           "count_chase": 1,
@@ -42,20 +42,6 @@
               "hybrid_rs": 94.0,
               "sector": "Healthcare",
               "group": "Health Information Services",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "PSNL",
-              "rs_1m": 95,
-              "rs_line_pctl_21": 81,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": 1.6,
-              "chase": false,
-              "atr_from_sma50": 4.0,
-              "hybrid_rs": 92.0,
-              "sector": "Healthcare",
-              "group": "Genomics",
               "group_state": "Leading"
             },
             {
@@ -95,7 +81,7 @@
               "chg_pct": 2.6,
               "chase": false,
               "atr_from_sma50": 13.5,
-              "hybrid_rs": 86.0,
+              "hybrid_rs": 87.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
@@ -109,7 +95,7 @@
               "chg_pct": 0.1,
               "chase": false,
               "atr_from_sma50": 9.4,
-              "hybrid_rs": 84.0,
+              "hybrid_rs": 85.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
@@ -123,9 +109,23 @@
               "chg_pct": -0.4,
               "chase": false,
               "atr_from_sma50": 5.6,
-              "hybrid_rs": 84.0,
+              "hybrid_rs": 85.0,
               "sector": "Technology",
               "group": "Software",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "BRZE",
+              "rs_1m": 96,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": true,
+              "chg_pct": 1.3,
+              "chase": false,
+              "atr_from_sma50": 7.3,
+              "hybrid_rs": 84.0,
+              "sector": "Technology",
+              "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
@@ -143,6 +143,20 @@
               "group_state": "Leading"
             },
             {
+              "ticker": "WDAY",
+              "rs_1m": 93,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": true,
+              "chg_pct": 5.8,
+              "chase": false,
+              "atr_from_sma50": 5.9,
+              "hybrid_rs": 83.0,
+              "sector": "Technology",
+              "group": "Cloud Software",
+              "group_state": "Leading"
+            },
+            {
               "ticker": "MRVI",
               "rs_1m": 87,
               "rs_line_pctl_21": 71,
@@ -157,26 +171,26 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "BRZE",
-              "rs_1m": 96,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": false,
-              "chg_pct": 1.3,
+              "ticker": "CCC",
+              "rs_1m": 92,
+              "rs_line_pctl_21": 76,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -1.4,
               "chase": false,
-              "atr_from_sma50": 7.3,
+              "atr_from_sma50": 5.0,
               "hybrid_rs": 82.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
-              "ticker": "WDAY",
-              "rs_1m": 93,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
+              "ticker": "NCNO",
+              "rs_1m": 92,
+              "rs_line_pctl_21": 95,
+              "rs_high": false,
               "top_3m": true,
-              "chg_pct": 5.8,
+              "chg_pct": -1.4,
               "chase": false,
               "atr_from_sma50": 5.9,
               "hybrid_rs": 82.0,
@@ -199,20 +213,6 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "CCC",
-              "rs_1m": 92,
-              "rs_line_pctl_21": 76,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -1.4,
-              "chase": false,
-              "atr_from_sma50": 5.0,
-              "hybrid_rs": 81.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
-            },
-            {
               "ticker": "CAI",
               "rs_1m": 98,
               "rs_line_pctl_21": 76,
@@ -227,20 +227,6 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "NCNO",
-              "rs_1m": 92,
-              "rs_line_pctl_21": 95,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -1.4,
-              "chase": false,
-              "atr_from_sma50": 5.9,
-              "hybrid_rs": 80.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
-            },
-            {
               "ticker": "ESTC",
               "rs_1m": 98,
               "rs_line_pctl_21": 100,
@@ -249,9 +235,23 @@
               "chg_pct": 19.3,
               "chase": true,
               "atr_from_sma50": 9.0,
-              "hybrid_rs": 78.0,
+              "hybrid_rs": 80.0,
               "sector": "Technology",
               "group": "Cybersecurity",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "FRSH",
+              "rs_1m": 91,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": true,
+              "chg_pct": 1.2,
+              "chase": false,
+              "atr_from_sma50": 6.2,
+              "hybrid_rs": 80.0,
+              "sector": "Technology",
+              "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
@@ -269,14 +269,14 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "SHOP",
-              "rs_1m": 95,
-              "rs_line_pctl_21": 76,
-              "rs_high": false,
+              "ticker": "CRM",
+              "rs_1m": 96,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
               "top_3m": true,
-              "chg_pct": -0.9,
+              "chg_pct": 1.6,
               "chase": false,
-              "atr_from_sma50": 4.4,
+              "atr_from_sma50": 9.7,
               "hybrid_rs": 78.0,
               "sector": "Technology",
               "group": "Cloud Software",
@@ -284,7 +284,7 @@
             },
             {
               "ticker": "TXG",
-              "rs_1m": 95,
+              "rs_1m": 94,
               "rs_line_pctl_21": 67,
               "rs_high": false,
               "top_3m": true,
@@ -294,34 +294,6 @@
               "hybrid_rs": 78.0,
               "sector": "Healthcare",
               "group": "Genomics",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "FRSH",
-              "rs_1m": 91,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": true,
-              "chg_pct": 1.2,
-              "chase": false,
-              "atr_from_sma50": 6.2,
-              "hybrid_rs": 78.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "CRM",
-              "rs_1m": 96,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": true,
-              "chg_pct": 1.6,
-              "chase": false,
-              "atr_from_sma50": 9.7,
-              "hybrid_rs": 77.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
@@ -354,7 +326,7 @@
             },
             {
               "ticker": "PANW",
-              "rs_1m": 80,
+              "rs_1m": 81,
               "rs_line_pctl_21": 62,
               "rs_high": false,
               "top_3m": true,
@@ -368,7 +340,7 @@
             },
             {
               "ticker": "SSRM",
-              "rs_1m": 98,
+              "rs_1m": 97,
               "rs_line_pctl_21": 76,
               "rs_high": false,
               "top_3m": true,
@@ -379,9 +351,37 @@
               "sector": "Basic Materials",
               "group": "Silver Miners",
               "group_state": "Leading"
+            },
+            {
+              "ticker": "TENB",
+              "rs_1m": 86,
+              "rs_line_pctl_21": 86,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": 0.1,
+              "chase": false,
+              "atr_from_sma50": 1.1,
+              "hybrid_rs": 76.0,
+              "sector": "Technology",
+              "group": "Cybersecurity",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "S",
+              "rs_1m": 83,
+              "rs_line_pctl_21": 62,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": -5.2,
+              "chase": false,
+              "atr_from_sma50": 2.2,
+              "hybrid_rs": 73.0,
+              "sector": "Technology",
+              "group": "Cybersecurity",
+              "group_state": "Leading"
             }
           ],
-          "truncated": 8,
+          "truncated": 6,
           "preset": null
         },
         {
@@ -389,11 +389,25 @@
           "label": "Liquid Leaders",
           "recipe": "avg_volume >= 2M, above SMA50, rs_3m >= 80 (course M2_L09; Alex's list). Top 25 by Hybrid RS shown, count is the whole list",
           "measured": true,
-          "count": 84,
+          "count": 79,
           "count_rs_high": 12,
-          "count_top_3m": 76,
+          "count_top_3m": 74,
           "count_chase": 1,
           "tickers": [
+            {
+              "ticker": "IOVA",
+              "rs_1m": 99,
+              "rs_line_pctl_21": 71,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -3.0,
+              "chase": false,
+              "atr_from_sma50": 6.5,
+              "hybrid_rs": 95.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
             {
               "ticker": "HTFL",
               "rs_1m": 99,
@@ -409,50 +423,8 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "IOVA",
-              "rs_1m": 99,
-              "rs_line_pctl_21": 71,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -3.0,
-              "chase": false,
-              "atr_from_sma50": 6.5,
-              "hybrid_rs": 94.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "PGEN",
-              "rs_1m": 78,
-              "rs_line_pctl_21": 57,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -3.3,
-              "chase": false,
-              "atr_from_sma50": 2.7,
-              "hybrid_rs": 93.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "PSNL",
-              "rs_1m": 95,
-              "rs_line_pctl_21": 81,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": 1.6,
-              "chase": false,
-              "atr_from_sma50": 4.0,
-              "hybrid_rs": 92.0,
-              "sector": "Healthcare",
-              "group": "Genomics",
-              "group_state": "Leading"
-            },
-            {
               "ticker": "KURA",
-              "rs_1m": 97,
+              "rs_1m": 96,
               "rs_line_pctl_21": 86,
               "rs_high": false,
               "top_3m": true,
@@ -466,30 +438,16 @@
             },
             {
               "ticker": "BFLY",
-              "rs_1m": 88,
+              "rs_1m": 89,
               "rs_line_pctl_21": 24,
               "rs_high": false,
               "top_3m": true,
               "chg_pct": -3.3,
               "chase": false,
               "atr_from_sma50": 0.5,
-              "hybrid_rs": 89.0,
+              "hybrid_rs": 90.0,
               "sector": "Healthcare",
               "group": "Medical Devices",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "LFST",
-              "rs_1m": 88,
-              "rs_line_pctl_21": 71,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": 0.1,
-              "chase": false,
-              "atr_from_sma50": 2.7,
-              "hybrid_rs": 89.0,
-              "sector": "Healthcare",
-              "group": "Medical Care Facilities",
               "group_state": "Weakening"
             },
             {
@@ -521,17 +479,17 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "ELF",
-              "rs_1m": 93,
-              "rs_line_pctl_21": 81,
+              "ticker": "LFST",
+              "rs_1m": 88,
+              "rs_line_pctl_21": 71,
               "rs_high": false,
               "top_3m": true,
-              "chg_pct": -1.9,
+              "chg_pct": 0.1,
               "chase": false,
-              "atr_from_sma50": 6.1,
-              "hybrid_rs": 87.0,
-              "sector": "Consumer Defensive",
-              "group": "Household & Personal Products",
+              "atr_from_sma50": 2.7,
+              "hybrid_rs": 88.0,
+              "sector": "Healthcare",
+              "group": "Medical Care Facilities",
               "group_state": "Weakening"
             },
             {
@@ -543,7 +501,7 @@
               "chg_pct": 2.6,
               "chase": false,
               "atr_from_sma50": 13.5,
-              "hybrid_rs": 86.0,
+              "hybrid_rs": 87.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
@@ -563,6 +521,48 @@
               "group_state": "Weakening"
             },
             {
+              "ticker": "BULL",
+              "rs_1m": 95,
+              "rs_line_pctl_21": 95,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -2.1,
+              "chase": false,
+              "atr_from_sma50": 4.3,
+              "hybrid_rs": 86.0,
+              "sector": "Technology",
+              "group": "Fintech",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "SLS",
+              "rs_1m": 95,
+              "rs_line_pctl_21": 67,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -13.2,
+              "chase": false,
+              "atr_from_sma50": 0.7,
+              "hybrid_rs": 86.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "ELF",
+              "rs_1m": 93,
+              "rs_line_pctl_21": 81,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -1.9,
+              "chase": false,
+              "atr_from_sma50": 6.1,
+              "hybrid_rs": 86.0,
+              "sector": "Consumer Defensive",
+              "group": "Household & Personal Products",
+              "group_state": "Weakening"
+            },
+            {
               "ticker": "GH",
               "rs_1m": 43,
               "rs_line_pctl_21": 38,
@@ -577,32 +577,32 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "BULL",
-              "rs_1m": 95,
-              "rs_line_pctl_21": 95,
-              "rs_high": false,
+              "ticker": "AMPL",
+              "rs_1m": 98,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
               "top_3m": true,
-              "chg_pct": -2.1,
+              "chg_pct": 0.1,
               "chase": false,
-              "atr_from_sma50": 4.3,
+              "atr_from_sma50": 9.4,
               "hybrid_rs": 85.0,
               "sector": "Technology",
-              "group": "Fintech",
-              "group_state": "Weakening"
+              "group": "Cloud Software",
+              "group_state": "Leading"
             },
             {
-              "ticker": "SLS",
-              "rs_1m": 95,
-              "rs_line_pctl_21": 67,
+              "ticker": "U",
+              "rs_1m": 96,
+              "rs_line_pctl_21": 38,
               "rs_high": false,
               "top_3m": true,
-              "chg_pct": -13.2,
+              "chg_pct": -0.4,
               "chase": false,
-              "atr_from_sma50": 0.7,
+              "atr_from_sma50": 5.6,
               "hybrid_rs": 85.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
-              "group_state": "Weakening"
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Leading"
             },
             {
               "ticker": "DINO",
@@ -619,31 +619,31 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "AMPL",
-              "rs_1m": 98,
+              "ticker": "BRZE",
+              "rs_1m": 96,
               "rs_line_pctl_21": 100,
               "rs_high": true,
               "top_3m": true,
-              "chg_pct": 0.1,
+              "chg_pct": 1.3,
               "chase": false,
-              "atr_from_sma50": 9.4,
+              "atr_from_sma50": 7.3,
               "hybrid_rs": 84.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
-              "ticker": "U",
-              "rs_1m": 96,
-              "rs_line_pctl_21": 38,
+              "ticker": "NAVN",
+              "rs_1m": 71,
+              "rs_line_pctl_21": 29,
               "rs_high": false,
               "top_3m": true,
-              "chg_pct": -0.4,
+              "chg_pct": -6.8,
               "chase": false,
-              "atr_from_sma50": 5.6,
+              "atr_from_sma50": 1.7,
               "hybrid_rs": 84.0,
               "sector": "Technology",
-              "group": "Software",
+              "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
@@ -661,20 +661,6 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "AMLX",
-              "rs_1m": 99,
-              "rs_line_pctl_21": 62,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -6.6,
-              "chase": false,
-              "atr_from_sma50": 8.1,
-              "hybrid_rs": 83.0,
-              "sector": "Healthcare",
-              "group": "Drug Manufacturers - Specialty & Generic",
-              "group_state": "Weakening"
-            },
-            {
               "ticker": "TEM",
               "rs_1m": 98,
               "rs_line_pctl_21": 71,
@@ -686,6 +672,20 @@
               "hybrid_rs": 83.0,
               "sector": "Healthcare",
               "group": "Genomics",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "WDAY",
+              "rs_1m": 93,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": true,
+              "chg_pct": 5.8,
+              "chase": false,
+              "atr_from_sma50": 5.9,
+              "hybrid_rs": 83.0,
+              "sector": "Technology",
+              "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
@@ -703,49 +703,49 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "BRZE",
-              "rs_1m": 96,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": false,
-              "chg_pct": 1.3,
+              "ticker": "CCC",
+              "rs_1m": 92,
+              "rs_line_pctl_21": 76,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -1.4,
               "chase": false,
-              "atr_from_sma50": 7.3,
+              "atr_from_sma50": 5.0,
               "hybrid_rs": 82.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
-              "ticker": "WDAY",
-              "rs_1m": 93,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
+              "ticker": "MGNI",
+              "rs_1m": 92,
+              "rs_line_pctl_21": 43,
+              "rs_high": false,
               "top_3m": true,
-              "chg_pct": 5.8,
+              "chg_pct": 1.5,
+              "chase": false,
+              "atr_from_sma50": 3.4,
+              "hybrid_rs": 82.0,
+              "sector": "Communication Services",
+              "group": "Advertising Agencies",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "NCNO",
+              "rs_1m": 92,
+              "rs_line_pctl_21": 95,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -1.4,
               "chase": false,
               "atr_from_sma50": 5.9,
               "hybrid_rs": 82.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
-            },
-            {
-              "ticker": "NAVN",
-              "rs_1m": 71,
-              "rs_line_pctl_21": 29,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -6.8,
-              "chase": false,
-              "atr_from_sma50": 1.7,
-              "hybrid_rs": 82.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
             }
           ],
-          "truncated": 59,
+          "truncated": 54,
           "preset": null
         }
       ]
@@ -766,7 +766,7 @@
           "tickers": [
             {
               "ticker": "NWL",
-              "rs_1m": 77,
+              "rs_1m": 78,
               "rs_line_pctl_21": 90,
               "rs_high": false,
               "top_3m": true,
@@ -787,7 +787,7 @@
               "chg_pct": 4.3,
               "chase": false,
               "atr_from_sma50": 3.1,
-              "hybrid_rs": 72.0,
+              "hybrid_rs": 73.0,
               "sector": "Basic Materials",
               "group": "Chemicals & Materials",
               "group_state": "Improving"
@@ -801,7 +801,7 @@
               "chg_pct": 0.5,
               "chase": false,
               "atr_from_sma50": 0.8,
-              "hybrid_rs": 72.0,
+              "hybrid_rs": 73.0,
               "sector": "Industrials",
               "group": "Specialty Business Services",
               "group_state": "Weakening"
@@ -821,22 +821,8 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "DAR",
-              "rs_1m": 68,
-              "rs_line_pctl_21": 67,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": 4.8,
-              "chase": false,
-              "atr_from_sma50": 1.4,
-              "hybrid_rs": 66.0,
-              "sector": "Consumer Defensive",
-              "group": "Agribusiness",
-              "group_state": "Weakening"
-            },
-            {
               "ticker": "BJRI",
-              "rs_1m": 26,
+              "rs_1m": 27,
               "rs_line_pctl_21": 19,
               "rs_high": false,
               "top_3m": true,
@@ -849,6 +835,20 @@
               "group_state": "Lagging"
             },
             {
+              "ticker": "DAR",
+              "rs_1m": 68,
+              "rs_line_pctl_21": 67,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": 4.8,
+              "chase": false,
+              "atr_from_sma50": 1.4,
+              "hybrid_rs": 63.0,
+              "sector": "Consumer Defensive",
+              "group": "Agribusiness",
+              "group_state": "Weakening"
+            },
+            {
               "ticker": "IRTC",
               "rs_1m": 55,
               "rs_line_pctl_21": 24,
@@ -857,7 +857,7 @@
               "chg_pct": 3.4,
               "chase": false,
               "atr_from_sma50": 0.3,
-              "hybrid_rs": 61.0,
+              "hybrid_rs": 62.0,
               "sector": "Healthcare",
               "group": "Medical Devices",
               "group_state": "Weakening"
@@ -871,7 +871,7 @@
               "chg_pct": 0.6,
               "chase": false,
               "atr_from_sma50": 1.1,
-              "hybrid_rs": 60.0,
+              "hybrid_rs": 62.0,
               "sector": "Consumer Cyclical",
               "group": "Auto & Truck Dealerships",
               "group_state": "Weakening"
@@ -885,7 +885,7 @@
               "chg_pct": 2.0,
               "chase": false,
               "atr_from_sma50": 1.2,
-              "hybrid_rs": 58.0,
+              "hybrid_rs": 59.0,
               "sector": "Consumer Cyclical",
               "group": "Packaging & Containers",
               "group_state": "Weakening"
@@ -899,7 +899,7 @@
               "chg_pct": 2.0,
               "chase": false,
               "atr_from_sma50": 1.8,
-              "hybrid_rs": 51.0,
+              "hybrid_rs": 52.0,
               "sector": "Consumer Cyclical",
               "group": "Consumer Retail",
               "group_state": "Weakening"
@@ -913,24 +913,10 @@
               "chg_pct": 1.1,
               "chase": false,
               "atr_from_sma50": 0.5,
-              "hybrid_rs": 50.0,
+              "hybrid_rs": 51.0,
               "sector": "Healthcare",
               "group": "Robotics & Automation",
               "group_state": "Improving"
-            },
-            {
-              "ticker": "CSGP",
-              "rs_1m": 81,
-              "rs_line_pctl_21": 67,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": 2.8,
-              "chase": false,
-              "atr_from_sma50": 1.6,
-              "hybrid_rs": 48.0,
-              "sector": "Real Estate",
-              "group": "Real Estate",
-              "group_state": "Weakening"
             },
             {
               "ticker": "WEN",
@@ -941,23 +927,37 @@
               "chg_pct": 5.8,
               "chase": false,
               "atr_from_sma50": 0.9,
-              "hybrid_rs": 48.0,
+              "hybrid_rs": 49.0,
               "sector": "Consumer Cyclical",
               "group": "Travel & Leisure",
               "group_state": "Lagging"
             },
             {
-              "ticker": "POST",
-              "rs_1m": 16,
-              "rs_line_pctl_21": 76,
+              "ticker": "WHR",
+              "rs_1m": 77,
+              "rs_line_pctl_21": 62,
               "rs_high": false,
               "top_3m": false,
-              "chg_pct": 4.7,
+              "chg_pct": 3.5,
               "chase": false,
-              "atr_from_sma50": -0.4,
-              "hybrid_rs": 42.0,
-              "sector": "Consumer Defensive",
-              "group": "Consumer Staples",
+              "atr_from_sma50": 1.0,
+              "hybrid_rs": 48.0,
+              "sector": "Consumer Cyclical",
+              "group": "Homebuilders",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "CSGP",
+              "rs_1m": 81,
+              "rs_line_pctl_21": 67,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": 2.8,
+              "chase": false,
+              "atr_from_sma50": 1.6,
+              "hybrid_rs": 47.0,
+              "sector": "Real Estate",
+              "group": "Real Estate",
               "group_state": "Weakening"
             },
             {
@@ -973,6 +973,20 @@
               "sector": "Communication Services",
               "group": "Broadcasting",
               "group_state": null
+            },
+            {
+              "ticker": "POST",
+              "rs_1m": 16,
+              "rs_line_pctl_21": 76,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": 4.7,
+              "chase": false,
+              "atr_from_sma50": -0.4,
+              "hybrid_rs": 40.0,
+              "sector": "Consumer Defensive",
+              "group": "Consumer Staples",
+              "group_state": "Weakening"
             },
             {
               "ticker": "OI",
@@ -1003,20 +1017,6 @@
               "group_state": "Improving"
             },
             {
-              "ticker": "WHR",
-              "rs_1m": 77,
-              "rs_line_pctl_21": 62,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": 3.5,
-              "chase": false,
-              "atr_from_sma50": 1.0,
-              "hybrid_rs": 36.0,
-              "sector": "Consumer Cyclical",
-              "group": "Homebuilders",
-              "group_state": "Weakening"
-            },
-            {
               "ticker": "SOLS",
               "rs_1m": 67,
               "rs_line_pctl_21": 100,
@@ -1025,7 +1025,7 @@
               "chg_pct": 12.8,
               "chase": false,
               "atr_from_sma50": -0.5,
-              "hybrid_rs": 35.0,
+              "hybrid_rs": 36.0,
               "sector": "Basic Materials",
               "group": "Uranium & Nuclear Energy",
               "group_state": "Improving"
@@ -1045,8 +1045,22 @@
               "group_state": "Improving"
             },
             {
+              "ticker": "DKNG",
+              "rs_1m": 72,
+              "rs_line_pctl_21": 67,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": 4.3,
+              "chase": false,
+              "atr_from_sma50": 0.3,
+              "hybrid_rs": 34.0,
+              "sector": "Consumer Cyclical",
+              "group": "Gambling",
+              "group_state": "Improving"
+            },
+            {
               "ticker": "LAZ",
-              "rs_1m": 61,
+              "rs_1m": 62,
               "rs_line_pctl_21": 52,
               "rs_high": false,
               "top_3m": false,
@@ -1059,36 +1073,8 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "DKNG",
-              "rs_1m": 72,
-              "rs_line_pctl_21": 67,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": 4.3,
-              "chase": false,
-              "atr_from_sma50": 0.3,
-              "hybrid_rs": 33.0,
-              "sector": "Consumer Cyclical",
-              "group": "Gambling",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "OLLI",
-              "rs_1m": 38,
-              "rs_line_pctl_21": 10,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": 1.3,
-              "chase": false,
-              "atr_from_sma50": 0.1,
-              "hybrid_rs": 30.0,
-              "sector": "Consumer Defensive",
-              "group": "Consumer Retail",
-              "group_state": "Weakening"
-            },
-            {
               "ticker": "CHTR",
-              "rs_1m": 67,
+              "rs_1m": 68,
               "rs_line_pctl_21": 76,
               "rs_high": false,
               "top_3m": false,
@@ -1101,18 +1087,32 @@
               "group_state": "Improving"
             },
             {
-              "ticker": "CENX",
-              "rs_1m": 61,
-              "rs_line_pctl_21": 67,
+              "ticker": "OLLI",
+              "rs_1m": 38,
+              "rs_line_pctl_21": 10,
               "rs_high": false,
               "top_3m": false,
-              "chg_pct": 1.5,
+              "chg_pct": 1.3,
+              "chase": false,
+              "atr_from_sma50": 0.1,
+              "hybrid_rs": 29.0,
+              "sector": "Consumer Defensive",
+              "group": "Consumer Retail",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "PLNT",
+              "rs_1m": 22,
+              "rs_line_pctl_21": 52,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": 3.1,
               "chase": false,
               "atr_from_sma50": 0.3,
-              "hybrid_rs": 27.0,
-              "sector": "Basic Materials",
-              "group": "Aluminum",
-              "group_state": null
+              "hybrid_rs": 28.0,
+              "sector": "Consumer Cyclical",
+              "group": "Leisure",
+              "group_state": "Weakening"
             }
           ],
           "truncated": 6,
@@ -1137,7 +1137,7 @@
               "chg_pct": 19.3,
               "chase": true,
               "atr_from_sma50": 9.0,
-              "hybrid_rs": 78.0,
+              "hybrid_rs": 80.0,
               "sector": "Technology",
               "group": "Cybersecurity",
               "group_state": "Leading"
@@ -1151,7 +1151,7 @@
               "chg_pct": 12.9,
               "chase": false,
               "atr_from_sma50": 4.1,
-              "hybrid_rs": 38.0,
+              "hybrid_rs": 39.0,
               "sector": "Consumer Cyclical",
               "group": "Consumer Retail",
               "group_state": "Weakening"
@@ -1165,7 +1165,7 @@
               "chg_pct": 12.8,
               "chase": false,
               "atr_from_sma50": -0.5,
-              "hybrid_rs": 35.0,
+              "hybrid_rs": 36.0,
               "sector": "Basic Materials",
               "group": "Uranium & Nuclear Energy",
               "group_state": "Improving"
@@ -1181,7 +1181,7 @@
           "measured": true,
           "count": 9,
           "count_rs_high": 0,
-          "count_top_3m": 4,
+          "count_top_3m": 5,
           "count_chase": 0,
           "tickers": [
             {
@@ -1221,7 +1221,7 @@
               "chg_pct": 2.9,
               "chase": false,
               "atr_from_sma50": 2.1,
-              "hybrid_rs": 72.0,
+              "hybrid_rs": 73.0,
               "sector": "Technology",
               "group": "Software",
               "group_state": "Leading"
@@ -1235,7 +1235,7 @@
               "chg_pct": 2.0,
               "chase": false,
               "atr_from_sma50": 2.3,
-              "hybrid_rs": 68.0,
+              "hybrid_rs": 69.0,
               "sector": "Financial",
               "group": "Financials",
               "group_state": "Weakening"
@@ -1249,7 +1249,7 @@
               "chg_pct": 0.8,
               "chase": false,
               "atr_from_sma50": -2.1,
-              "hybrid_rs": 55.0,
+              "hybrid_rs": 56.0,
               "sector": "Consumer Cyclical",
               "group": "Gambling",
               "group_state": "Improving"
@@ -1259,7 +1259,7 @@
               "rs_1m": 77,
               "rs_line_pctl_21": 67,
               "rs_high": false,
-              "top_3m": false,
+              "top_3m": true,
               "chg_pct": 1.9,
               "chase": false,
               "atr_from_sma50": 1.5,
@@ -1284,7 +1284,7 @@
             },
             {
               "ticker": "CHTR",
-              "rs_1m": 67,
+              "rs_1m": 68,
               "rs_line_pctl_21": 76,
               "rs_high": false,
               "top_3m": false,
@@ -1353,6 +1353,20 @@
               "group_state": "Leading"
             },
             {
+              "ticker": "KVYO",
+              "rs_1m": 83,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": false,
+              "chg_pct": 2.8,
+              "chase": false,
+              "atr_from_sma50": 2.9,
+              "hybrid_rs": 72.0,
+              "sector": "Technology",
+              "group": "Cloud Software",
+              "group_state": "Leading"
+            },
+            {
               "ticker": "ETSY",
               "rs_1m": 54,
               "rs_line_pctl_21": 67,
@@ -1361,7 +1375,7 @@
               "chg_pct": 0.8,
               "chase": false,
               "atr_from_sma50": 0.9,
-              "hybrid_rs": 71.0,
+              "hybrid_rs": 72.0,
               "sector": "Consumer Cyclical",
               "group": "Consumer Retail",
               "group_state": "Weakening"
@@ -1378,20 +1392,6 @@
               "hybrid_rs": 70.0,
               "sector": "Technology",
               "group": "Software",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "KVYO",
-              "rs_1m": 83,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": false,
-              "chg_pct": 2.8,
-              "chase": false,
-              "atr_from_sma50": 2.9,
-              "hybrid_rs": 70.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
@@ -1417,7 +1417,7 @@
               "chg_pct": 2.9,
               "chase": false,
               "atr_from_sma50": 2.3,
-              "hybrid_rs": 55.0,
+              "hybrid_rs": 53.0,
               "sector": "Consumer Cyclical",
               "group": "Consumer Retail",
               "group_state": "Weakening"
@@ -1431,7 +1431,7 @@
               "chg_pct": 5.8,
               "chase": false,
               "atr_from_sma50": 0.9,
-              "hybrid_rs": 48.0,
+              "hybrid_rs": 49.0,
               "sector": "Consumer Cyclical",
               "group": "Travel & Leisure",
               "group_state": "Lagging"
@@ -1459,7 +1459,7 @@
               "chg_pct": 2.0,
               "chase": false,
               "atr_from_sma50": 2.7,
-              "hybrid_rs": 42.0,
+              "hybrid_rs": 43.0,
               "sector": "Technology",
               "group": "Software",
               "group_state": "Leading"
@@ -1473,7 +1473,7 @@
               "chg_pct": 4.7,
               "chase": false,
               "atr_from_sma50": -0.4,
-              "hybrid_rs": 42.0,
+              "hybrid_rs": 40.0,
               "sector": "Consumer Defensive",
               "group": "Consumer Staples",
               "group_state": "Weakening"
@@ -1490,7 +1490,7 @@
               "hybrid_rs": 24.0,
               "sector": "Communication Services",
               "group": "Internet Content & Information",
-              "group_state": "Lagging"
+              "group_state": "Improving"
             }
           ],
           "truncated": 0,
@@ -1501,7 +1501,7 @@
           "label": "LL-HL Structure Trend Line Break",
           "recipe": "sp_signal = counter_break (close crossed the counter-trend line today)",
           "measured": true,
-          "count": 5,
+          "count": 4,
           "count_rs_high": 2,
           "count_top_3m": 1,
           "count_chase": 0,
@@ -1529,7 +1529,7 @@
               "chg_pct": 4.3,
               "chase": false,
               "atr_from_sma50": 3.1,
-              "hybrid_rs": 72.0,
+              "hybrid_rs": 73.0,
               "sector": "Basic Materials",
               "group": "Chemicals & Materials",
               "group_state": "Improving"
@@ -1543,7 +1543,7 @@
               "chg_pct": 0.4,
               "chase": false,
               "atr_from_sma50": -1.9,
-              "hybrid_rs": 39.0,
+              "hybrid_rs": 40.0,
               "sector": "Financial",
               "group": "Financials",
               "group_state": "Weakening"
@@ -1557,24 +1557,10 @@
               "chg_pct": 12.8,
               "chase": false,
               "atr_from_sma50": -0.5,
-              "hybrid_rs": 35.0,
+              "hybrid_rs": 36.0,
               "sector": "Basic Materials",
               "group": "Uranium & Nuclear Energy",
               "group_state": "Improving"
-            },
-            {
-              "ticker": "SGI",
-              "rs_1m": 39,
-              "rs_line_pctl_21": 29,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": 3.0,
-              "chase": false,
-              "atr_from_sma50": -2.1,
-              "hybrid_rs": 34.0,
-              "sector": "Consumer Cyclical",
-              "group": "Homebuilders",
-              "group_state": "Weakening"
             }
           ],
           "truncated": 0,
@@ -1585,9 +1571,9 @@
           "label": "Liquid Leader Pullback",
           "recipe": "liquid_leader; perf_1w < 12%; 0.5-1 ATR from the 21EMA; 0-3 ATR from the 50SMA (course M2_L09; the two clauses we cannot read -- 5d/20d range contraction, earnings 7+ days out -- are not applied)",
           "measured": true,
-          "count": 12,
+          "count": 11,
           "count_rs_high": 0,
-          "count_top_3m": 11,
+          "count_top_3m": 10,
           "count_chase": 0,
           "tickers": [
             {
@@ -1599,7 +1585,7 @@
               "chg_pct": 0.1,
               "chase": false,
               "atr_from_sma50": 2.7,
-              "hybrid_rs": 89.0,
+              "hybrid_rs": 88.0,
               "sector": "Healthcare",
               "group": "Medical Care Facilities",
               "group_state": "Weakening"
@@ -1633,20 +1619,6 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "TGTX",
-              "rs_1m": 59,
-              "rs_line_pctl_21": 76,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -3.2,
-              "chase": false,
-              "atr_from_sma50": 0.2,
-              "hybrid_rs": 82.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
-              "group_state": "Weakening"
-            },
-            {
               "ticker": "PGY",
               "rs_1m": 84,
               "rs_line_pctl_21": 76,
@@ -1662,7 +1634,7 @@
             },
             {
               "ticker": "PANW",
-              "rs_1m": 80,
+              "rs_1m": 81,
               "rs_line_pctl_21": 62,
               "rs_high": false,
               "top_3m": true,
@@ -1676,7 +1648,7 @@
             },
             {
               "ticker": "TENB",
-              "rs_1m": 85,
+              "rs_1m": 86,
               "rs_line_pctl_21": 86,
               "rs_high": false,
               "top_3m": true,
@@ -1704,7 +1676,7 @@
             },
             {
               "ticker": "NWL",
-              "rs_1m": 77,
+              "rs_1m": 78,
               "rs_line_pctl_21": 90,
               "rs_high": false,
               "top_3m": true,
@@ -1742,7 +1714,7 @@
               "hybrid_rs": 66.0,
               "sector": "Communication Services",
               "group": "Internet Content & Information",
-              "group_state": "Lagging"
+              "group_state": "Improving"
             },
             {
               "ticker": "COTY",
@@ -1753,7 +1725,7 @@
               "chg_pct": 3.3,
               "chase": false,
               "atr_from_sma50": 2.3,
-              "hybrid_rs": 65.0,
+              "hybrid_rs": 64.0,
               "sector": "Consumer Defensive",
               "group": "Household & Personal Products",
               "group_state": "Weakening"
@@ -1773,21 +1745,21 @@
           "label": "Volatility Contraction Score",
           "recipe": "vcs >= 60 and rs_3m >= 80 and above SMA50 and adr_pct >= 3 -- compression INSIDE a leader. VCS alone at >= 70 listed 33 gated names on 08-14, half of them weak (rs_1m < 30); oratnek's same-day panel had 2 (COTY 64 / CBRL 62, both rs_3m >= 88). Raising the VCS bar does not fix it (>= 90 still 8, all weak); the leadership gate does (15, his two inside). 60 = his 'developing' band edge",
           "measured": true,
-          "count": 41,
+          "count": 38,
           "count_rs_high": 1,
           "count_top_3m": 38,
           "count_chase": 0,
           "tickers": [
             {
               "ticker": "BFLY",
-              "rs_1m": 88,
+              "rs_1m": 89,
               "rs_line_pctl_21": 24,
               "rs_high": false,
               "top_3m": true,
               "chg_pct": -3.3,
               "chase": false,
               "atr_from_sma50": 0.5,
-              "hybrid_rs": 89.0,
+              "hybrid_rs": 90.0,
               "sector": "Healthcare",
               "group": "Medical Devices",
               "group_state": "Weakening"
@@ -1821,29 +1793,15 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "PRCH",
-              "rs_1m": 90,
-              "rs_line_pctl_21": 90,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -0.2,
-              "chase": false,
-              "atr_from_sma50": 3.9,
-              "hybrid_rs": 87.0,
-              "sector": "Financial",
-              "group": "Insurance",
-              "group_state": "Weakening"
-            },
-            {
               "ticker": "GKOS",
-              "rs_1m": 72,
+              "rs_1m": 73,
               "rs_line_pctl_21": 33,
               "rs_high": false,
               "top_3m": true,
               "chg_pct": -1.1,
               "chase": false,
               "atr_from_sma50": 3.0,
-              "hybrid_rs": 86.0,
+              "hybrid_rs": 88.0,
               "sector": "Healthcare",
               "group": "Medical Devices",
               "group_state": "Weakening"
@@ -1885,7 +1843,7 @@
               "chg_pct": -6.8,
               "chase": false,
               "atr_from_sma50": 1.7,
-              "hybrid_rs": 82.0,
+              "hybrid_rs": 84.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
@@ -1899,7 +1857,7 @@
               "chg_pct": -4.4,
               "chase": false,
               "atr_from_sma50": 1.5,
-              "hybrid_rs": 82.0,
+              "hybrid_rs": 83.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
@@ -1913,37 +1871,23 @@
               "chg_pct": 1.5,
               "chase": false,
               "atr_from_sma50": 3.4,
-              "hybrid_rs": 81.0,
+              "hybrid_rs": 82.0,
               "sector": "Communication Services",
               "group": "Advertising Agencies",
               "group_state": "Weakening"
             },
             {
               "ticker": "ICLR",
-              "rs_1m": 60,
+              "rs_1m": 61,
               "rs_line_pctl_21": 81,
               "rs_high": false,
               "top_3m": true,
               "chg_pct": 0.2,
               "chase": false,
               "atr_from_sma50": 0.5,
-              "hybrid_rs": 81.0,
+              "hybrid_rs": 82.0,
               "sector": "Healthcare",
               "group": "Diagnostics & Research",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "TNET",
-              "rs_1m": 70,
-              "rs_line_pctl_21": 86,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": 1.1,
-              "chase": false,
-              "atr_from_sma50": 3.9,
-              "hybrid_rs": 80.0,
-              "sector": "Industrials",
-              "group": "Staffing & Employment Services",
               "group_state": "Weakening"
             },
             {
@@ -1975,18 +1919,18 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "SHOP",
-              "rs_1m": 95,
-              "rs_line_pctl_21": 76,
+              "ticker": "MBX",
+              "rs_1m": 23,
+              "rs_line_pctl_21": 5,
               "rs_high": false,
               "top_3m": true,
-              "chg_pct": -0.9,
+              "chg_pct": -5.1,
               "chase": false,
-              "atr_from_sma50": 4.4,
-              "hybrid_rs": 78.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
+              "atr_from_sma50": 0.4,
+              "hybrid_rs": 79.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
             },
             {
               "ticker": "DYN",
@@ -2003,32 +1947,32 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "MBX",
-              "rs_1m": 23,
-              "rs_line_pctl_21": 5,
+              "ticker": "TARS",
+              "rs_1m": 91,
+              "rs_line_pctl_21": 76,
               "rs_high": false,
               "top_3m": true,
-              "chg_pct": -5.1,
+              "chg_pct": -0.2,
               "chase": false,
-              "atr_from_sma50": 0.4,
-              "hybrid_rs": 78.0,
+              "atr_from_sma50": 3.1,
+              "hybrid_rs": 77.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
             },
             {
-              "ticker": "TARS",
-              "rs_1m": 91,
-              "rs_line_pctl_21": 76,
+              "ticker": "QTWO",
+              "rs_1m": 71,
+              "rs_line_pctl_21": 86,
               "rs_high": false,
-              "top_3m": false,
-              "chg_pct": -0.2,
+              "top_3m": true,
+              "chg_pct": -0.8,
               "chase": false,
-              "atr_from_sma50": 3.1,
-              "hybrid_rs": 76.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
-              "group_state": "Weakening"
+              "atr_from_sma50": 3.9,
+              "hybrid_rs": 77.0,
+              "sector": "Technology",
+              "group": "Cloud Software",
+              "group_state": "Leading"
             },
             {
               "ticker": "CGON",
@@ -2039,7 +1983,7 @@
               "chg_pct": -5.9,
               "chase": false,
               "atr_from_sma50": 0.5,
-              "hybrid_rs": 76.0,
+              "hybrid_rs": 77.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
@@ -2059,22 +2003,22 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "QTWO",
-              "rs_1m": 70,
-              "rs_line_pctl_21": 86,
+              "ticker": "W",
+              "rs_1m": 91,
+              "rs_line_pctl_21": 52,
               "rs_high": false,
               "top_3m": true,
-              "chg_pct": -0.8,
+              "chg_pct": -1.2,
               "chase": false,
-              "atr_from_sma50": 3.9,
-              "hybrid_rs": 75.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
+              "atr_from_sma50": 1.8,
+              "hybrid_rs": 74.0,
+              "sector": "Consumer Cyclical",
+              "group": "Consumer Retail",
+              "group_state": "Weakening"
             },
             {
               "ticker": "NWL",
-              "rs_1m": 77,
+              "rs_1m": 78,
               "rs_line_pctl_21": 90,
               "rs_high": false,
               "top_3m": true,
@@ -2087,22 +2031,8 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "W",
-              "rs_1m": 91,
-              "rs_line_pctl_21": 52,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -1.2,
-              "chase": false,
-              "atr_from_sma50": 1.8,
-              "hybrid_rs": 73.0,
-              "sector": "Consumer Cyclical",
-              "group": "Consumer Retail",
-              "group_state": "Weakening"
-            },
-            {
               "ticker": "NRIX",
-              "rs_1m": 82,
+              "rs_1m": 83,
               "rs_line_pctl_21": 43,
               "rs_high": false,
               "top_3m": true,
@@ -2127,9 +2057,51 @@
               "sector": "Technology",
               "group": "Software",
               "group_state": "Leading"
+            },
+            {
+              "ticker": "CERT",
+              "rs_1m": 57,
+              "rs_line_pctl_21": 81,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -0.7,
+              "chase": false,
+              "atr_from_sma50": 3.2,
+              "hybrid_rs": 70.0,
+              "sector": "Healthcare",
+              "group": "Health Information Services",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "HURN",
+              "rs_1m": 65,
+              "rs_line_pctl_21": 81,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": 0.0,
+              "chase": false,
+              "atr_from_sma50": 6.5,
+              "hybrid_rs": 69.0,
+              "sector": "Industrials",
+              "group": "Consulting Services",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "BLKB",
+              "rs_1m": 84,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": true,
+              "chg_pct": 0.1,
+              "chase": false,
+              "atr_from_sma50": 7.2,
+              "hybrid_rs": 68.0,
+              "sector": "Technology",
+              "group": "Cloud Software",
+              "group_state": "Leading"
             }
           ],
-          "truncated": 16,
+          "truncated": 13,
           "preset": null
         },
         {
@@ -2137,35 +2109,21 @@
           "label": "Anticipation (strong x quiet x VCS)",
           "recipe": "any of ti65>1.05 / c_low52w>=1.8 / mdt>1.19; |change_pct|<=1%; vcs>=60; adr_pct>=3",
           "measured": true,
-          "count": 21,
+          "count": 18,
           "count_rs_high": 1,
-          "count_top_3m": 13,
+          "count_top_3m": 12,
           "count_chase": 0,
           "tickers": [
             {
-              "ticker": "PRCH",
-              "rs_1m": 90,
-              "rs_line_pctl_21": 90,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -0.2,
-              "chase": false,
-              "atr_from_sma50": 3.9,
-              "hybrid_rs": 87.0,
-              "sector": "Financial",
-              "group": "Insurance",
-              "group_state": "Weakening"
-            },
-            {
               "ticker": "ICLR",
-              "rs_1m": 60,
+              "rs_1m": 61,
               "rs_line_pctl_21": 81,
               "rs_high": false,
               "top_3m": true,
               "chg_pct": 0.2,
               "chase": false,
               "atr_from_sma50": 0.5,
-              "hybrid_rs": 81.0,
+              "hybrid_rs": 82.0,
               "sector": "Healthcare",
               "group": "Diagnostics & Research",
               "group_state": "Weakening"
@@ -2179,7 +2137,7 @@
               "chg_pct": -0.3,
               "chase": false,
               "atr_from_sma50": 3.5,
-              "hybrid_rs": 80.0,
+              "hybrid_rs": 81.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
@@ -2199,32 +2157,32 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "SHOP",
-              "rs_1m": 95,
-              "rs_line_pctl_21": 76,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -0.9,
-              "chase": false,
-              "atr_from_sma50": 4.4,
-              "hybrid_rs": 78.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
-            },
-            {
               "ticker": "TARS",
               "rs_1m": 91,
               "rs_line_pctl_21": 76,
               "rs_high": false,
-              "top_3m": false,
+              "top_3m": true,
               "chg_pct": -0.2,
               "chase": false,
               "atr_from_sma50": 3.1,
-              "hybrid_rs": 76.0,
+              "hybrid_rs": 77.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
+            },
+            {
+              "ticker": "QTWO",
+              "rs_1m": 71,
+              "rs_line_pctl_21": 86,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -0.8,
+              "chase": false,
+              "atr_from_sma50": 3.9,
+              "hybrid_rs": 77.0,
+              "sector": "Technology",
+              "group": "Cloud Software",
+              "group_state": "Leading"
             },
             {
               "ticker": "QLYS",
@@ -2241,29 +2199,15 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "QTWO",
-              "rs_1m": 70,
-              "rs_line_pctl_21": 86,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -0.8,
-              "chase": false,
-              "atr_from_sma50": 3.9,
-              "hybrid_rs": 75.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
-            },
-            {
               "ticker": "NVCR",
-              "rs_1m": 89,
+              "rs_1m": 90,
               "rs_line_pctl_21": 81,
               "rs_high": false,
               "top_3m": false,
               "chg_pct": -0.9,
               "chase": false,
               "atr_from_sma50": 1.6,
-              "hybrid_rs": 73.0,
+              "hybrid_rs": 74.0,
               "sector": "Healthcare",
               "group": "Medical Devices",
               "group_state": "Weakening"
@@ -2298,14 +2242,14 @@
             },
             {
               "ticker": "BLKB",
-              "rs_1m": 83,
+              "rs_1m": 84,
               "rs_line_pctl_21": 100,
               "rs_high": true,
               "top_3m": true,
               "chg_pct": 0.1,
               "chase": false,
               "atr_from_sma50": 7.2,
-              "hybrid_rs": 66.0,
+              "hybrid_rs": 68.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
@@ -2319,7 +2263,7 @@
               "chg_pct": 0.6,
               "chase": false,
               "atr_from_sma50": 1.1,
-              "hybrid_rs": 60.0,
+              "hybrid_rs": 62.0,
               "sector": "Consumer Cyclical",
               "group": "Auto & Truck Dealerships",
               "group_state": "Weakening"
@@ -2333,7 +2277,7 @@
               "chg_pct": -0.7,
               "chase": false,
               "atr_from_sma50": 3.0,
-              "hybrid_rs": 57.0,
+              "hybrid_rs": 59.0,
               "sector": "Healthcare",
               "group": "Agribusiness",
               "group_state": "Weakening"
@@ -2367,20 +2311,6 @@
               "group_state": "Improving"
             },
             {
-              "ticker": "SHAK",
-              "rs_1m": 79,
-              "rs_line_pctl_21": 19,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": -0.9,
-              "chase": false,
-              "atr_from_sma50": 2.7,
-              "hybrid_rs": 51.0,
-              "sector": "Consumer Cyclical",
-              "group": "Travel & Leisure",
-              "group_state": "Lagging"
-            },
-            {
               "ticker": "EFOR",
               "rs_1m": 81,
               "rs_line_pctl_21": 57,
@@ -2388,8 +2318,8 @@
               "top_3m": true,
               "chg_pct": 1.0,
               "chase": false,
-              "atr_from_sma50": 6.2,
-              "hybrid_rs": 45.0,
+              "atr_from_sma50": 6.1,
+              "hybrid_rs": 44.0,
               "sector": "Technology",
               "group": "Information Technology Services",
               "group_state": "Improving"
@@ -2403,7 +2333,7 @@
               "chg_pct": 0.4,
               "chase": false,
               "atr_from_sma50": -1.9,
-              "hybrid_rs": 39.0,
+              "hybrid_rs": 40.0,
               "sector": "Financial",
               "group": "Financials",
               "group_state": "Weakening"
@@ -2451,9 +2381,9 @@
           "label": "PP (Vol > 10D)",
           "recipe": "vol10_green today (green bar, volume above ALL prior 10 bars' max -- oratnek's definition) and trend_base",
           "measured": true,
-          "count": 8,
-          "count_rs_high": 4,
-          "count_top_3m": 5,
+          "count": 9,
+          "count_rs_high": 3,
+          "count_top_3m": 6,
           "count_chase": 0,
           "tickers": [
             {
@@ -2464,8 +2394,8 @@
               "top_3m": true,
               "chg_pct": 2.0,
               "chase": false,
-              "atr_from_sma50": 8.4,
-              "hybrid_rs": 82.0,
+              "atr_from_sma50": 8.3,
+              "hybrid_rs": 84.0,
               "sector": "Technology",
               "group": "Software",
               "group_state": "Leading"
@@ -2479,7 +2409,7 @@
               "chg_pct": 5.8,
               "chase": false,
               "atr_from_sma50": 5.9,
-              "hybrid_rs": 82.0,
+              "hybrid_rs": 83.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
@@ -2493,14 +2423,14 @@
               "chg_pct": 2.4,
               "chase": false,
               "atr_from_sma50": 8.8,
-              "hybrid_rs": 80.0,
+              "hybrid_rs": 81.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
               "ticker": "TENB",
-              "rs_1m": 85,
+              "rs_1m": 86,
               "rs_line_pctl_21": 86,
               "rs_high": false,
               "top_3m": true,
@@ -2513,18 +2443,18 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "NOW",
-              "rs_1m": 94,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": false,
-              "chg_pct": 4.5,
+              "ticker": "SE",
+              "rs_1m": 80,
+              "rs_line_pctl_21": 71,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": 0.9,
               "chase": false,
-              "atr_from_sma50": 6.5,
+              "atr_from_sma50": 2.6,
               "hybrid_rs": 74.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
+              "sector": "Consumer Cyclical",
+              "group": "Consumer Retail",
+              "group_state": "Weakening"
             },
             {
               "ticker": "GCT",
@@ -2552,7 +2482,21 @@
               "hybrid_rs": 66.0,
               "sector": "Communication Services",
               "group": "Internet Content & Information",
-              "group_state": "Lagging"
+              "group_state": "Improving"
+            },
+            {
+              "ticker": "KWR",
+              "rs_1m": 58,
+              "rs_line_pctl_21": 38,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": 1.0,
+              "chase": false,
+              "atr_from_sma50": 1.3,
+              "hybrid_rs": 56.0,
+              "sector": "Basic Materials",
+              "group": "Chemicals & Materials",
+              "group_state": "Improving"
             },
             {
               "ticker": "DKNG",
@@ -2563,7 +2507,7 @@
               "chg_pct": 4.3,
               "chase": false,
               "atr_from_sma50": 0.3,
-              "hybrid_rs": 33.0,
+              "hybrid_rs": 34.0,
               "sector": "Consumer Cyclical",
               "group": "Gambling",
               "group_state": "Improving"
@@ -2577,24 +2521,24 @@
           "label": "PP 2+ times (10D)",
           "recipe": "vol10_green_count_10d >= 2 and trend_base",
           "measured": true,
-          "count": 34,
-          "count_rs_high": 9,
+          "count": 32,
+          "count_rs_high": 8,
           "count_top_3m": 15,
           "count_chase": 0,
           "tickers": [
             {
-              "ticker": "PSNL",
+              "ticker": "SLS",
               "rs_1m": 95,
-              "rs_line_pctl_21": 81,
+              "rs_line_pctl_21": 67,
               "rs_high": false,
               "top_3m": true,
-              "chg_pct": 1.6,
+              "chg_pct": -13.2,
               "chase": false,
-              "atr_from_sma50": 4.0,
-              "hybrid_rs": 92.0,
+              "atr_from_sma50": 0.7,
+              "hybrid_rs": 86.0,
               "sector": "Healthcare",
-              "group": "Genomics",
-              "group_state": "Leading"
+              "group": "Biotechnology",
+              "group_state": "Weakening"
             },
             {
               "ticker": "DK",
@@ -2608,20 +2552,6 @@
               "hybrid_rs": 86.0,
               "sector": "Energy",
               "group": "Oil & Gas",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "SLS",
-              "rs_1m": 95,
-              "rs_line_pctl_21": 67,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -13.2,
-              "chase": false,
-              "atr_from_sma50": 0.7,
-              "hybrid_rs": 85.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
               "group_state": "Weakening"
             },
             {
@@ -2643,11 +2573,11 @@
               "rs_1m": 96,
               "rs_line_pctl_21": 100,
               "rs_high": true,
-              "top_3m": false,
+              "top_3m": true,
               "chg_pct": 1.3,
               "chase": false,
               "atr_from_sma50": 7.3,
-              "hybrid_rs": 82.0,
+              "hybrid_rs": 84.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
@@ -2660,10 +2590,24 @@
               "top_3m": true,
               "chg_pct": 2.0,
               "chase": false,
-              "atr_from_sma50": 8.4,
-              "hybrid_rs": 82.0,
+              "atr_from_sma50": 8.3,
+              "hybrid_rs": 84.0,
               "sector": "Technology",
               "group": "Software",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "NCNO",
+              "rs_1m": 92,
+              "rs_line_pctl_21": 95,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -1.4,
+              "chase": false,
+              "atr_from_sma50": 5.9,
+              "hybrid_rs": 82.0,
+              "sector": "Technology",
+              "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
@@ -2689,21 +2633,7 @@
               "chg_pct": 2.4,
               "chase": false,
               "atr_from_sma50": 8.8,
-              "hybrid_rs": 80.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "NCNO",
-              "rs_1m": 92,
-              "rs_line_pctl_21": 95,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -1.4,
-              "chase": false,
-              "atr_from_sma50": 5.9,
-              "hybrid_rs": 80.0,
+              "hybrid_rs": 81.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
@@ -2723,6 +2653,20 @@
               "group_state": "Weakening"
             },
             {
+              "ticker": "CRM",
+              "rs_1m": 96,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": true,
+              "chg_pct": 1.6,
+              "chase": false,
+              "atr_from_sma50": 9.7,
+              "hybrid_rs": 78.0,
+              "sector": "Technology",
+              "group": "Cloud Software",
+              "group_state": "Leading"
+            },
+            {
               "ticker": "APPN",
               "rs_1m": 98,
               "rs_line_pctl_21": 100,
@@ -2737,22 +2681,8 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "CRM",
-              "rs_1m": 96,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": true,
-              "chg_pct": 1.6,
-              "chase": false,
-              "atr_from_sma50": 9.7,
-              "hybrid_rs": 77.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
-            },
-            {
               "ticker": "TENB",
-              "rs_1m": 85,
+              "rs_1m": 86,
               "rs_line_pctl_21": 86,
               "rs_high": false,
               "top_3m": true,
@@ -2762,20 +2692,6 @@
               "hybrid_rs": 76.0,
               "sector": "Technology",
               "group": "Cybersecurity",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "NOW",
-              "rs_1m": 94,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": false,
-              "chg_pct": 4.5,
-              "chase": false,
-              "atr_from_sma50": 6.5,
-              "hybrid_rs": 74.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
@@ -2793,20 +2709,6 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "FRHC",
-              "rs_1m": 86,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": false,
-              "chg_pct": 2.5,
-              "chase": false,
-              "atr_from_sma50": 3.0,
-              "hybrid_rs": 72.0,
-              "sector": "Financial",
-              "group": "Financials",
-              "group_state": "Weakening"
-            },
-            {
               "ticker": "CRWD",
               "rs_1m": 85,
               "rs_line_pctl_21": 76,
@@ -2819,6 +2721,20 @@
               "sector": "Technology",
               "group": "Cybersecurity",
               "group_state": "Leading"
+            },
+            {
+              "ticker": "FRHC",
+              "rs_1m": 86,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": false,
+              "chg_pct": 2.5,
+              "chase": false,
+              "atr_from_sma50": 3.0,
+              "hybrid_rs": 71.0,
+              "sector": "Financial",
+              "group": "Financials",
+              "group_state": "Weakening"
             },
             {
               "ticker": "FRO",
@@ -2835,8 +2751,22 @@
               "group_state": "Weakening"
             },
             {
+              "ticker": "AFRM",
+              "rs_1m": 75,
+              "rs_line_pctl_21": 86,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": 0.3,
+              "chase": false,
+              "atr_from_sma50": 0.1,
+              "hybrid_rs": 70.0,
+              "sector": "Financial",
+              "group": "Fintech",
+              "group_state": "Weakening"
+            },
+            {
               "ticker": "IRON",
-              "rs_1m": 60,
+              "rs_1m": 61,
               "rs_line_pctl_21": 57,
               "rs_high": false,
               "top_3m": false,
@@ -2849,29 +2779,15 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "AFRM",
-              "rs_1m": 74,
-              "rs_line_pctl_21": 86,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": 0.3,
-              "chase": false,
-              "atr_from_sma50": 0.1,
-              "hybrid_rs": 69.0,
-              "sector": "Financial",
-              "group": "Fintech",
-              "group_state": "Weakening"
-            },
-            {
               "ticker": "PRGO",
-              "rs_1m": 97,
-              "rs_line_pctl_21": 90,
+              "rs_1m": 98,
+              "rs_line_pctl_21": 95,
               "rs_high": false,
               "top_3m": true,
               "chg_pct": 0.8,
               "chase": false,
-              "atr_from_sma50": 6.5,
-              "hybrid_rs": 68.0,
+              "atr_from_sma50": 7.2,
+              "hybrid_rs": 67.0,
               "sector": "Healthcare",
               "group": "Drug Manufacturers - Specialty & Generic",
               "group_state": "Weakening"
@@ -2885,7 +2801,7 @@
               "chg_pct": -1.0,
               "chase": false,
               "atr_from_sma50": 2.1,
-              "hybrid_rs": 65.0,
+              "hybrid_rs": 66.0,
               "sector": "Financial",
               "group": "Fintech",
               "group_state": "Weakening"
@@ -2899,7 +2815,7 @@
               "chg_pct": -5.0,
               "chase": false,
               "atr_from_sma50": 0.5,
-              "hybrid_rs": 64.0,
+              "hybrid_rs": 65.0,
               "sector": "Financial",
               "group": "Crypto Equities",
               "group_state": "Improving"
@@ -2913,10 +2829,38 @@
               "chg_pct": -9.5,
               "chase": false,
               "atr_from_sma50": 5.5,
-              "hybrid_rs": 60.0,
+              "hybrid_rs": 61.0,
               "sector": "Financial",
               "group": "Crypto Equities",
               "group_state": "Improving"
+            },
+            {
+              "ticker": "ATI",
+              "rs_1m": 82,
+              "rs_line_pctl_21": 29,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": -1.8,
+              "chase": false,
+              "atr_from_sma50": 1.1,
+              "hybrid_rs": 60.0,
+              "sector": "Industrials",
+              "group": "Steel",
+              "group_state": "Lagging"
+            },
+            {
+              "ticker": "EZPW",
+              "rs_1m": 79,
+              "rs_line_pctl_21": 81,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": -4.1,
+              "chase": false,
+              "atr_from_sma50": 0.9,
+              "hybrid_rs": 60.0,
+              "sector": "Financial",
+              "group": "Fintech",
+              "group_state": "Weakening"
             },
             {
               "ticker": "FCX",
@@ -2927,13 +2871,13 @@
               "chg_pct": -2.5,
               "chase": false,
               "atr_from_sma50": 4.5,
-              "hybrid_rs": 60.0,
+              "hybrid_rs": 59.0,
               "sector": "Basic Materials",
               "group": "Copper Miners",
               "group_state": "Leading"
             }
           ],
-          "truncated": 9,
+          "truncated": 7,
           "preset": null
         },
         {
@@ -2941,8 +2885,8 @@
           "label": "Pocket Pivot (Morales, 3+ in 10D)",
           "recipe": "pp_count_10d >= 3 (up day on volume above the prior 10 bars' DOWN-day max; buying vs selling, +0.71 with the A/D ratio) and trend_base. >= 1 listed 372 names on 08-14 -- a single Morales pivot is common; three in ten sessions is his 'cluster' (111 on 08-14)",
           "measured": true,
-          "count": 55,
-          "count_rs_high": 10,
+          "count": 52,
+          "count_rs_high": 9,
           "count_top_3m": 38,
           "count_chase": 1,
           "tickers": [
@@ -2961,22 +2905,8 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "PSNL",
-              "rs_1m": 95,
-              "rs_line_pctl_21": 81,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": 1.6,
-              "chase": false,
-              "atr_from_sma50": 4.0,
-              "hybrid_rs": 92.0,
-              "sector": "Healthcare",
-              "group": "Genomics",
-              "group_state": "Leading"
-            },
-            {
               "ticker": "KYMR",
-              "rs_1m": 84,
+              "rs_1m": 85,
               "rs_line_pctl_21": 57,
               "rs_high": false,
               "top_3m": true,
@@ -2990,7 +2920,7 @@
             },
             {
               "ticker": "KURA",
-              "rs_1m": 97,
+              "rs_1m": 96,
               "rs_line_pctl_21": 86,
               "rs_high": false,
               "top_3m": true,
@@ -3045,8 +2975,50 @@
               "group_state": "Leading"
             },
             {
+              "ticker": "VIA",
+              "rs_1m": 96,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": true,
+              "chg_pct": 1.1,
+              "chase": false,
+              "atr_from_sma50": 8.3,
+              "hybrid_rs": 86.0,
+              "sector": "Technology",
+              "group": "Software",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "BULL",
+              "rs_1m": 95,
+              "rs_line_pctl_21": 95,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -2.1,
+              "chase": false,
+              "atr_from_sma50": 4.3,
+              "hybrid_rs": 86.0,
+              "sector": "Technology",
+              "group": "Fintech",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "SLS",
+              "rs_1m": 95,
+              "rs_line_pctl_21": 67,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -13.2,
+              "chase": false,
+              "atr_from_sma50": 0.7,
+              "hybrid_rs": 86.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
               "ticker": "RGEN",
-              "rs_1m": 92,
+              "rs_1m": 93,
               "rs_line_pctl_21": 67,
               "rs_high": false,
               "top_3m": true,
@@ -3087,34 +3059,6 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "BULL",
-              "rs_1m": 95,
-              "rs_line_pctl_21": 95,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -2.1,
-              "chase": false,
-              "atr_from_sma50": 4.3,
-              "hybrid_rs": 85.0,
-              "sector": "Technology",
-              "group": "Fintech",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "SLS",
-              "rs_1m": 95,
-              "rs_line_pctl_21": 67,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -13.2,
-              "chase": false,
-              "atr_from_sma50": 0.7,
-              "hybrid_rs": 85.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
-              "group_state": "Weakening"
-            },
-            {
               "ticker": "RHI",
               "rs_1m": 91,
               "rs_line_pctl_21": 100,
@@ -3143,32 +3087,32 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "VIA",
-              "rs_1m": 97,
+              "ticker": "BRZE",
+              "rs_1m": 96,
               "rs_line_pctl_21": 100,
               "rs_high": true,
               "top_3m": true,
-              "chg_pct": 1.1,
+              "chg_pct": 1.3,
+              "chase": false,
+              "atr_from_sma50": 7.3,
+              "hybrid_rs": 84.0,
+              "sector": "Technology",
+              "group": "Cloud Software",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "WK",
+              "rs_1m": 95,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": true,
+              "chg_pct": 2.0,
               "chase": false,
               "atr_from_sma50": 8.3,
               "hybrid_rs": 84.0,
               "sector": "Technology",
               "group": "Software",
               "group_state": "Leading"
-            },
-            {
-              "ticker": "AMLX",
-              "rs_1m": 99,
-              "rs_line_pctl_21": 62,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -6.6,
-              "chase": false,
-              "atr_from_sma50": 8.1,
-              "hybrid_rs": 83.0,
-              "sector": "Healthcare",
-              "group": "Drug Manufacturers - Specialty & Generic",
-              "group_state": "Weakening"
             },
             {
               "ticker": "TEM",
@@ -3227,46 +3171,32 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "BRZE",
-              "rs_1m": 96,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": false,
-              "chg_pct": 1.3,
+              "ticker": "CCC",
+              "rs_1m": 92,
+              "rs_line_pctl_21": 76,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -1.4,
               "chase": false,
-              "atr_from_sma50": 7.3,
+              "atr_from_sma50": 5.0,
               "hybrid_rs": 82.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
-              "ticker": "WK",
-              "rs_1m": 95,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": true,
-              "chg_pct": 2.0,
-              "chase": false,
-              "atr_from_sma50": 8.4,
-              "hybrid_rs": 82.0,
-              "sector": "Technology",
-              "group": "Software",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "ETON",
-              "rs_1m": 94,
-              "rs_line_pctl_21": 57,
+              "ticker": "NCNO",
+              "rs_1m": 92,
+              "rs_line_pctl_21": 95,
               "rs_high": false,
               "top_3m": true,
-              "chg_pct": -4.6,
+              "chg_pct": -1.4,
               "chase": false,
-              "atr_from_sma50": 5.5,
+              "atr_from_sma50": 5.9,
               "hybrid_rs": 82.0,
-              "sector": "Healthcare",
-              "group": "Drug Manufacturers - Specialty & Generic",
-              "group_state": "Weakening"
+              "sector": "Technology",
+              "group": "Cloud Software",
+              "group_state": "Leading"
             },
             {
               "ticker": "RVMD",
@@ -3283,21 +3213,35 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "CCC",
-              "rs_1m": 92,
-              "rs_line_pctl_21": 76,
+              "ticker": "AMLX",
+              "rs_1m": 99,
+              "rs_line_pctl_21": 62,
               "rs_high": false,
               "top_3m": true,
-              "chg_pct": -1.4,
+              "chg_pct": -6.6,
               "chase": false,
-              "atr_from_sma50": 5.0,
+              "atr_from_sma50": 8.1,
+              "hybrid_rs": 81.0,
+              "sector": "Healthcare",
+              "group": "Drug Manufacturers - Specialty & Generic",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "GWRE",
+              "rs_1m": 95,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": false,
+              "chg_pct": 2.4,
+              "chase": false,
+              "atr_from_sma50": 8.8,
               "hybrid_rs": 81.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
             }
           ],
-          "truncated": 30,
+          "truncated": 27,
           "preset": null
         }
       ]
@@ -3311,9 +3255,9 @@
           "label": "Weekly Momentum 97",
           "recipe": "perf_1w_pctile >= 0.97 and perf_3m_pctile >= 0.85 and trend_base and adr_pct 3.5-10, not Healthcare (= the preset)",
           "measured": true,
-          "count": 6,
+          "count": 7,
           "count_rs_high": 4,
-          "count_top_3m": 6,
+          "count_top_3m": 7,
           "count_chase": 1,
           "tickers": [
             {
@@ -3325,7 +3269,7 @@
               "chg_pct": -1.5,
               "chase": false,
               "atr_from_sma50": 5.4,
-              "hybrid_rs": 93.0,
+              "hybrid_rs": 92.0,
               "sector": "Consumer Cyclical",
               "group": "Personal Services",
               "group_state": "Weakening"
@@ -3339,7 +3283,7 @@
               "chg_pct": 2.6,
               "chase": false,
               "atr_from_sma50": 13.5,
-              "hybrid_rs": 86.0,
+              "hybrid_rs": 87.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
@@ -3353,7 +3297,7 @@
               "chg_pct": 19.3,
               "chase": true,
               "atr_from_sma50": 9.0,
-              "hybrid_rs": 78.0,
+              "hybrid_rs": 80.0,
               "sector": "Technology",
               "group": "Cybersecurity",
               "group_state": "Leading"
@@ -3367,9 +3311,23 @@
               "chg_pct": 1.6,
               "chase": false,
               "atr_from_sma50": 9.7,
-              "hybrid_rs": 77.0,
+              "hybrid_rs": 78.0,
               "sector": "Technology",
               "group": "Cloud Software",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "TENB",
+              "rs_1m": 86,
+              "rs_line_pctl_21": 86,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": 0.1,
+              "chase": false,
+              "atr_from_sma50": 1.1,
+              "hybrid_rs": 76.0,
+              "sector": "Technology",
+              "group": "Cybersecurity",
               "group_state": "Leading"
             },
             {
@@ -3398,7 +3356,7 @@
               "hybrid_rs": 51.0,
               "sector": "Communication Services",
               "group": "Internet Content & Information",
-              "group_state": "Lagging"
+              "group_state": "Improving"
             }
           ],
           "truncated": 0,
@@ -3409,8 +3367,8 @@
           "label": "4% Bullish",
           "recipe": "change_pct >= 4%, rel_volume >= 1, from_open_pct >= 0, rs_21d >= 60, adr_pct 3.5-10, not Healthcare (= the preset)",
           "measured": true,
-          "count": 8,
-          "count_rs_high": 4,
+          "count": 7,
+          "count_rs_high": 3,
           "count_top_3m": 3,
           "count_chase": 0,
           "tickers": [
@@ -3437,21 +3395,7 @@
               "chg_pct": 5.8,
               "chase": false,
               "atr_from_sma50": 5.9,
-              "hybrid_rs": 82.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "NOW",
-              "rs_1m": 94,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": false,
-              "chg_pct": 4.5,
-              "chase": false,
-              "atr_from_sma50": 6.5,
-              "hybrid_rs": 74.0,
+              "hybrid_rs": 83.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
@@ -3465,7 +3409,7 @@
               "chg_pct": 4.3,
               "chase": false,
               "atr_from_sma50": 3.1,
-              "hybrid_rs": 72.0,
+              "hybrid_rs": 73.0,
               "sector": "Basic Materials",
               "group": "Chemicals & Materials",
               "group_state": "Improving"
@@ -3479,7 +3423,7 @@
               "chg_pct": 4.8,
               "chase": false,
               "atr_from_sma50": 1.4,
-              "hybrid_rs": 66.0,
+              "hybrid_rs": 63.0,
               "sector": "Consumer Defensive",
               "group": "Agribusiness",
               "group_state": "Weakening"
@@ -3499,6 +3443,20 @@
               "group_state": "Weakening"
             },
             {
+              "ticker": "DKNG",
+              "rs_1m": 72,
+              "rs_line_pctl_21": 67,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": 4.3,
+              "chase": false,
+              "atr_from_sma50": 0.3,
+              "hybrid_rs": 34.0,
+              "sector": "Consumer Cyclical",
+              "group": "Gambling",
+              "group_state": "Improving"
+            },
+            {
               "ticker": "CNXC",
               "rs_1m": 89,
               "rs_line_pctl_21": 100,
@@ -3510,20 +3468,6 @@
               "hybrid_rs": 33.0,
               "sector": "Technology",
               "group": "Information Technology Services",
-              "group_state": "Improving"
-            },
-            {
-              "ticker": "DKNG",
-              "rs_1m": 72,
-              "rs_line_pctl_21": 67,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": 4.3,
-              "chase": false,
-              "atr_from_sma50": 0.3,
-              "hybrid_rs": 33.0,
-              "sector": "Consumer Cyclical",
-              "group": "Gambling",
               "group_state": "Improving"
             }
           ],
@@ -3549,7 +3493,7 @@
               "chg_pct": 1.6,
               "chase": false,
               "atr_from_sma50": 9.7,
-              "hybrid_rs": 77.0,
+              "hybrid_rs": 78.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
@@ -3611,7 +3555,7 @@
           "label": "Stop Hit (structure)",
           "recipe": "sp_signal = stop_hit (close under the current-phase stop today)",
           "measured": true,
-          "count": 70,
+          "count": 66,
           "count_rs_high": 0,
           "count_top_3m": 10,
           "count_chase": 0,
@@ -3639,7 +3583,7 @@
               "chg_pct": -6.8,
               "chase": false,
               "atr_from_sma50": 1.7,
-              "hybrid_rs": 82.0,
+              "hybrid_rs": 84.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
@@ -3653,7 +3597,7 @@
               "chg_pct": -4.4,
               "chase": false,
               "atr_from_sma50": 1.5,
-              "hybrid_rs": 82.0,
+              "hybrid_rs": 83.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
@@ -3723,14 +3667,14 @@
               "chg_pct": -3.2,
               "chase": false,
               "atr_from_sma50": -1.9,
-              "hybrid_rs": 71.0,
+              "hybrid_rs": 72.0,
               "sector": "Technology",
               "group": "Software",
               "group_state": "Leading"
             },
             {
               "ticker": "IRON",
-              "rs_1m": 60,
+              "rs_1m": 61,
               "rs_line_pctl_21": 57,
               "rs_high": false,
               "top_3m": false,
@@ -3765,7 +3709,7 @@
               "chg_pct": -2.6,
               "chase": false,
               "atr_from_sma50": -0.3,
-              "hybrid_rs": 68.0,
+              "hybrid_rs": 69.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
@@ -3835,7 +3779,7 @@
               "chg_pct": -2.1,
               "chase": false,
               "atr_from_sma50": 0.5,
-              "hybrid_rs": 64.0,
+              "hybrid_rs": 65.0,
               "sector": "Consumer Cyclical",
               "group": "Consumer Retail",
               "group_state": "Weakening"
@@ -3855,17 +3799,31 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "TEVA",
-              "rs_1m": 61,
-              "rs_line_pctl_21": 57,
+              "ticker": "TMDX",
+              "rs_1m": 86,
+              "rs_line_pctl_21": 52,
               "rs_high": false,
-              "top_3m": false,
-              "chg_pct": -3.1,
+              "top_3m": true,
+              "chg_pct": -3.6,
               "chase": false,
-              "atr_from_sma50": 2.3,
+              "atr_from_sma50": 2.6,
               "hybrid_rs": 60.0,
               "sector": "Healthcare",
-              "group": "Drug Manufacturers - Specialty & Generic",
+              "group": "Medical Devices",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "LAD",
+              "rs_1m": 26,
+              "rs_line_pctl_21": 29,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -0.2,
+              "chase": false,
+              "atr_from_sma50": 2.4,
+              "hybrid_rs": 60.0,
+              "sector": "Consumer Cyclical",
+              "group": "Auto & Truck Dealerships",
               "group_state": "Weakening"
             },
             {
@@ -3883,17 +3841,45 @@
               "group_state": "Improving"
             },
             {
-              "ticker": "TMDX",
-              "rs_1m": 86,
-              "rs_line_pctl_21": 52,
+              "ticker": "CVSA",
+              "rs_1m": 72,
+              "rs_line_pctl_21": 81,
               "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -3.6,
+              "top_3m": false,
+              "chg_pct": -4.4,
               "chase": false,
-              "atr_from_sma50": 2.6,
+              "atr_from_sma50": 1.3,
               "hybrid_rs": 59.0,
-              "sector": "Healthcare",
-              "group": "Medical Devices",
+              "sector": "Consumer Defensive",
+              "group": "Education & Training Services",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "TROW",
+              "rs_1m": 43,
+              "rs_line_pctl_21": 29,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": -1.0,
+              "chase": false,
+              "atr_from_sma50": -1.2,
+              "hybrid_rs": 58.0,
+              "sector": "Financial",
+              "group": "Financials",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "BFH",
+              "rs_1m": 34,
+              "rs_line_pctl_21": 10,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": -2.1,
+              "chase": false,
+              "atr_from_sma50": 0.1,
+              "hybrid_rs": 58.0,
+              "sector": "Financial",
+              "group": "Fintech",
               "group_state": "Weakening"
             },
             {
@@ -3905,7 +3891,7 @@
               "chg_pct": -1.7,
               "chase": false,
               "atr_from_sma50": -1.4,
-              "hybrid_rs": 59.0,
+              "hybrid_rs": 58.0,
               "sector": "Financial",
               "group": "Insurance",
               "group_state": "Weakening"
@@ -3919,55 +3905,13 @@
               "chg_pct": -1.2,
               "chase": false,
               "atr_from_sma50": -2.5,
-              "hybrid_rs": 59.0,
+              "hybrid_rs": 58.0,
               "sector": "Healthcare",
               "group": "Drug Manufacturers - Specialty & Generic",
               "group_state": "Weakening"
-            },
-            {
-              "ticker": "CVSA",
-              "rs_1m": 72,
-              "rs_line_pctl_21": 81,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": -4.4,
-              "chase": false,
-              "atr_from_sma50": 1.3,
-              "hybrid_rs": 58.0,
-              "sector": "Consumer Defensive",
-              "group": "Education & Training Services",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "LAD",
-              "rs_1m": 26,
-              "rs_line_pctl_21": 29,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -0.2,
-              "chase": false,
-              "atr_from_sma50": 2.4,
-              "hybrid_rs": 58.0,
-              "sector": "Consumer Cyclical",
-              "group": "Auto & Truck Dealerships",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "TROW",
-              "rs_1m": 43,
-              "rs_line_pctl_21": 29,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": -1.0,
-              "chase": false,
-              "atr_from_sma50": -1.2,
-              "hybrid_rs": 57.0,
-              "sector": "Financial",
-              "group": "Financials",
-              "group_state": "Weakening"
             }
           ],
-          "truncated": 45,
+          "truncated": 41,
           "preset": null
         },
         {
@@ -3975,7 +3919,7 @@
           "label": "Lower Low Break",
           "recipe": "sp_signal = ll_break (close under the structure's LL today)",
           "measured": true,
-          "count": 129,
+          "count": 123,
           "count_rs_high": 0,
           "count_top_3m": 3,
           "count_chase": 0,
@@ -4003,7 +3947,7 @@
               "chg_pct": -5.1,
               "chase": false,
               "atr_from_sma50": 0.4,
-              "hybrid_rs": 78.0,
+              "hybrid_rs": 79.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
@@ -4031,7 +3975,7 @@
               "chg_pct": -3.5,
               "chase": false,
               "atr_from_sma50": -1.3,
-              "hybrid_rs": 75.0,
+              "hybrid_rs": 76.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
@@ -4059,24 +4003,10 @@
               "chg_pct": -1.9,
               "chase": false,
               "atr_from_sma50": -0.8,
-              "hybrid_rs": 68.0,
+              "hybrid_rs": 69.0,
               "sector": "Financial",
               "group": "Fintech",
               "group_state": "Weakening"
-            },
-            {
-              "ticker": "PRAX",
-              "rs_1m": 80,
-              "rs_line_pctl_21": 24,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": -6.3,
-              "chase": false,
-              "atr_from_sma50": 0.5,
-              "hybrid_rs": 63.0,
-              "sector": "Healthcare",
-              "group": "Genomics",
-              "group_state": "Leading"
             },
             {
               "ticker": "ROIV",
@@ -4087,10 +4017,24 @@
               "chg_pct": -7.6,
               "chase": false,
               "atr_from_sma50": -0.3,
-              "hybrid_rs": 63.0,
+              "hybrid_rs": 64.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
+            },
+            {
+              "ticker": "PRAX",
+              "rs_1m": 81,
+              "rs_line_pctl_21": 24,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": -6.3,
+              "chase": false,
+              "atr_from_sma50": 0.5,
+              "hybrid_rs": 63.0,
+              "sector": "Healthcare",
+              "group": "Genomics",
+              "group_state": "Leading"
             },
             {
               "ticker": "AXSM",
@@ -4135,6 +4079,48 @@
               "group_state": "Weakening"
             },
             {
+              "ticker": "SON",
+              "rs_1m": 50,
+              "rs_line_pctl_21": 5,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": -0.4,
+              "chase": false,
+              "atr_from_sma50": 0.3,
+              "hybrid_rs": 58.0,
+              "sector": "Consumer Cyclical",
+              "group": "Packaging & Containers",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "VKTX",
+              "rs_1m": 50,
+              "rs_line_pctl_21": 5,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": -5.0,
+              "chase": false,
+              "atr_from_sma50": -2.0,
+              "hybrid_rs": 58.0,
+              "sector": "Healthcare",
+              "group": "Biotechnology",
+              "group_state": "Weakening"
+            },
+            {
+              "ticker": "CNK",
+              "rs_1m": 38,
+              "rs_line_pctl_21": 5,
+              "rs_high": false,
+              "top_3m": false,
+              "chg_pct": -1.6,
+              "chase": false,
+              "atr_from_sma50": 1.7,
+              "hybrid_rs": 58.0,
+              "sector": "Communication Services",
+              "group": "Entertainment",
+              "group_state": "Leading"
+            },
+            {
               "ticker": "TEX",
               "rs_1m": 52,
               "rs_line_pctl_21": 5,
@@ -4149,46 +4135,32 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "SON",
-              "rs_1m": 50,
+              "ticker": "ARQT",
+              "rs_1m": 8,
               "rs_line_pctl_21": 5,
               "rs_high": false,
               "top_3m": false,
-              "chg_pct": -0.4,
+              "chg_pct": -4.4,
               "chase": false,
-              "atr_from_sma50": 0.3,
-              "hybrid_rs": 57.0,
-              "sector": "Consumer Cyclical",
-              "group": "Packaging & Containers",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "VKTX",
-              "rs_1m": 50,
-              "rs_line_pctl_21": 5,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": -5.0,
-              "chase": false,
-              "atr_from_sma50": -2.0,
+              "atr_from_sma50": -2.4,
               "hybrid_rs": 57.0,
               "sector": "Healthcare",
               "group": "Biotechnology",
               "group_state": "Weakening"
             },
             {
-              "ticker": "CNK",
-              "rs_1m": 38,
+              "ticker": "ESTA",
+              "rs_1m": 1,
               "rs_line_pctl_21": 5,
               "rs_high": false,
               "top_3m": false,
               "chg_pct": -1.6,
               "chase": false,
-              "atr_from_sma50": 1.7,
-              "hybrid_rs": 57.0,
-              "sector": "Communication Services",
-              "group": "Entertainment",
-              "group_state": "Leading"
+              "atr_from_sma50": -3.5,
+              "hybrid_rs": 56.0,
+              "sector": "Healthcare",
+              "group": "Medical Devices",
+              "group_state": "Weakening"
             },
             {
               "ticker": "CLX",
@@ -4199,23 +4171,9 @@
               "chg_pct": -1.1,
               "chase": false,
               "atr_from_sma50": 1.3,
-              "hybrid_rs": 56.0,
+              "hybrid_rs": 55.0,
               "sector": "Consumer Defensive",
               "group": "Household & Personal Products",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "ARQT",
-              "rs_1m": 8,
-              "rs_line_pctl_21": 5,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": -4.4,
-              "chase": false,
-              "atr_from_sma50": -2.4,
-              "hybrid_rs": 56.0,
-              "sector": "Healthcare",
-              "group": "Biotechnology",
               "group_state": "Weakening"
             },
             {
@@ -4233,20 +4191,6 @@
               "group_state": "Improving"
             },
             {
-              "ticker": "ESTA",
-              "rs_1m": 1,
-              "rs_line_pctl_21": 5,
-              "rs_high": false,
-              "top_3m": false,
-              "chg_pct": -1.6,
-              "chase": false,
-              "atr_from_sma50": -3.5,
-              "hybrid_rs": 55.0,
-              "sector": "Healthcare",
-              "group": "Medical Devices",
-              "group_state": "Weakening"
-            },
-            {
               "ticker": "GFF",
               "rs_1m": 85,
               "rs_line_pctl_21": 24,
@@ -4255,7 +4199,7 @@
               "chg_pct": -0.2,
               "chase": false,
               "atr_from_sma50": 1.1,
-              "hybrid_rs": 53.0,
+              "hybrid_rs": 54.0,
               "sector": "Industrials",
               "group": "Homebuilders",
               "group_state": "Weakening"
@@ -4303,35 +4247,35 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "PYPL",
-              "rs_1m": 17,
-              "rs_line_pctl_21": 5,
+              "ticker": "PHG",
+              "rs_1m": 51,
+              "rs_line_pctl_21": 38,
               "rs_high": false,
               "top_3m": false,
-              "chg_pct": -12.7,
+              "chg_pct": -0.7,
               "chase": false,
-              "atr_from_sma50": -0.1,
-              "hybrid_rs": 52.0,
-              "sector": "Financial",
-              "group": "Fintech",
+              "atr_from_sma50": -0.4,
+              "hybrid_rs": 51.0,
+              "sector": "Healthcare",
+              "group": "Medical Devices",
               "group_state": "Weakening"
             },
             {
-              "ticker": "ANIP",
-              "rs_1m": 13,
+              "ticker": "MTB",
+              "rs_1m": 27,
               "rs_line_pctl_21": 5,
               "rs_high": false,
               "top_3m": false,
-              "chg_pct": -0.9,
+              "chg_pct": -0.6,
               "chase": false,
-              "atr_from_sma50": -2.6,
-              "hybrid_rs": 52.0,
-              "sector": "Healthcare",
-              "group": "Drug Manufacturers - Specialty & Generic",
+              "atr_from_sma50": -1.6,
+              "hybrid_rs": 51.0,
+              "sector": "Financial",
+              "group": "Regional Banks",
               "group_state": "Weakening"
             }
           ],
-          "truncated": 104,
+          "truncated": 98,
           "preset": null
         },
         {
@@ -4339,9 +4283,9 @@
           "label": "Extended (>= 7 ATR from SMA50)",
           "recipe": "atr_from_sma50 >= 7 (Jacobs's scale-out zone)",
           "measured": true,
-          "count": 51,
-          "count_rs_high": 24,
-          "count_top_3m": 41,
+          "count": 50,
+          "count_rs_high": 22,
+          "count_top_3m": 43,
           "count_chase": 1,
           "tickers": [
             {
@@ -4437,9 +4381,23 @@
               "chg_pct": 2.6,
               "chase": false,
               "atr_from_sma50": 13.5,
-              "hybrid_rs": 86.0,
+              "hybrid_rs": 87.0,
               "sector": "Technology",
               "group": "Cloud Software",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "VIA",
+              "rs_1m": 96,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": true,
+              "chg_pct": 1.1,
+              "chase": false,
+              "atr_from_sma50": 8.3,
+              "hybrid_rs": 86.0,
+              "sector": "Technology",
+              "group": "Software",
               "group_state": "Leading"
             },
             {
@@ -4465,18 +4423,32 @@
               "chg_pct": 0.1,
               "chase": false,
               "atr_from_sma50": 9.4,
+              "hybrid_rs": 85.0,
+              "sector": "Technology",
+              "group": "Cloud Software",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "BRZE",
+              "rs_1m": 96,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": true,
+              "chg_pct": 1.3,
+              "chase": false,
+              "atr_from_sma50": 7.3,
               "hybrid_rs": 84.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
-              "ticker": "VIA",
-              "rs_1m": 97,
+              "ticker": "WK",
+              "rs_1m": 95,
               "rs_line_pctl_21": 100,
               "rs_high": true,
               "top_3m": true,
-              "chg_pct": 1.1,
+              "chg_pct": 2.0,
               "chase": false,
               "atr_from_sma50": 8.3,
               "hybrid_rs": 84.0,
@@ -4485,17 +4457,17 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "AMLX",
-              "rs_1m": 99,
+              "ticker": "HAE",
+              "rs_1m": 91,
               "rs_line_pctl_21": 62,
               "rs_high": false,
               "top_3m": true,
-              "chg_pct": -6.6,
+              "chg_pct": -1.0,
               "chase": false,
-              "atr_from_sma50": 8.1,
-              "hybrid_rs": 83.0,
+              "atr_from_sma50": 7.4,
+              "hybrid_rs": 84.0,
               "sector": "Healthcare",
-              "group": "Drug Manufacturers - Specialty & Generic",
+              "group": "Medical Devices",
               "group_state": "Weakening"
             },
             {
@@ -4513,46 +4485,60 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "HAE",
-              "rs_1m": 91,
-              "rs_line_pctl_21": 62,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -1.0,
-              "chase": false,
-              "atr_from_sma50": 7.4,
-              "hybrid_rs": 83.0,
-              "sector": "Healthcare",
-              "group": "Medical Devices",
-              "group_state": "Weakening"
-            },
-            {
-              "ticker": "BRZE",
-              "rs_1m": 96,
+              "ticker": "RNG",
+              "rs_1m": 92,
               "rs_line_pctl_21": 100,
               "rs_high": true,
-              "top_3m": false,
-              "chg_pct": 1.3,
+              "top_3m": true,
+              "chg_pct": 1.2,
               "chase": false,
-              "atr_from_sma50": 7.3,
+              "atr_from_sma50": 8.3,
+              "hybrid_rs": 83.0,
+              "sector": "Technology",
+              "group": "Cloud Software",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "PAYC",
+              "rs_1m": 97,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": true,
+              "chg_pct": 0.6,
+              "chase": false,
+              "atr_from_sma50": 11.2,
               "hybrid_rs": 82.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
-              "ticker": "WK",
+              "ticker": "INTA",
               "rs_1m": 95,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
+              "rs_line_pctl_21": 95,
+              "rs_high": false,
               "top_3m": true,
-              "chg_pct": 2.0,
+              "chg_pct": -0.5,
               "chase": false,
-              "atr_from_sma50": 8.4,
+              "atr_from_sma50": 8.5,
               "hybrid_rs": 82.0,
               "sector": "Technology",
-              "group": "Software",
+              "group": "Cloud Software",
               "group_state": "Leading"
+            },
+            {
+              "ticker": "AMLX",
+              "rs_1m": 99,
+              "rs_line_pctl_21": 62,
+              "rs_high": false,
+              "top_3m": true,
+              "chg_pct": -6.6,
+              "chase": false,
+              "atr_from_sma50": 8.1,
+              "hybrid_rs": 81.0,
+              "sector": "Healthcare",
+              "group": "Drug Manufacturers - Specialty & Generic",
+              "group_state": "Weakening"
             },
             {
               "ticker": "MRNA",
@@ -4569,28 +4555,42 @@
               "group_state": "Leading"
             },
             {
-              "ticker": "INTA",
+              "ticker": "GWRE",
               "rs_1m": 95,
-              "rs_line_pctl_21": 95,
-              "rs_high": false,
-              "top_3m": true,
-              "chg_pct": -0.5,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": false,
+              "chg_pct": 2.4,
               "chase": false,
-              "atr_from_sma50": 8.5,
+              "atr_from_sma50": 8.8,
               "hybrid_rs": 81.0,
               "sector": "Technology",
               "group": "Cloud Software",
               "group_state": "Leading"
             },
             {
-              "ticker": "RNG",
-              "rs_1m": 92,
+              "ticker": "APPF",
+              "rs_1m": 94,
               "rs_line_pctl_21": 100,
               "rs_high": true,
               "top_3m": true,
-              "chg_pct": 1.2,
+              "chg_pct": 1.1,
               "chase": false,
-              "atr_from_sma50": 8.3,
+              "atr_from_sma50": 7.5,
+              "hybrid_rs": 81.0,
+              "sector": "Technology",
+              "group": "Cloud Software",
+              "group_state": "Leading"
+            },
+            {
+              "ticker": "CXM",
+              "rs_1m": 94,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
+              "top_3m": true,
+              "chg_pct": 2.8,
+              "chase": false,
+              "atr_from_sma50": 9.5,
               "hybrid_rs": 81.0,
               "sector": "Technology",
               "group": "Cloud Software",
@@ -4611,62 +4611,6 @@
               "group_state": "Weakening"
             },
             {
-              "ticker": "PAYC",
-              "rs_1m": 98,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": true,
-              "chg_pct": 0.6,
-              "chase": false,
-              "atr_from_sma50": 11.2,
-              "hybrid_rs": 80.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "GWRE",
-              "rs_1m": 95,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": false,
-              "chg_pct": 2.4,
-              "chase": false,
-              "atr_from_sma50": 8.8,
-              "hybrid_rs": 80.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "APPF",
-              "rs_1m": 94,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": true,
-              "chg_pct": 1.1,
-              "chase": false,
-              "atr_from_sma50": 7.5,
-              "hybrid_rs": 80.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
-            },
-            {
-              "ticker": "CXM",
-              "rs_1m": 94,
-              "rs_line_pctl_21": 100,
-              "rs_high": true,
-              "top_3m": true,
-              "chg_pct": 2.8,
-              "chase": false,
-              "atr_from_sma50": 9.5,
-              "hybrid_rs": 80.0,
-              "sector": "Technology",
-              "group": "Cloud Software",
-              "group_state": "Leading"
-            },
-            {
               "ticker": "NIQ",
               "rs_1m": 99,
               "rs_line_pctl_21": 90,
@@ -4674,28 +4618,28 @@
               "top_3m": true,
               "chg_pct": 0.7,
               "chase": false,
-              "atr_from_sma50": 13.7,
-              "hybrid_rs": 79.0,
+              "atr_from_sma50": 13.6,
+              "hybrid_rs": 80.0,
               "sector": "Technology",
               "group": "Software",
               "group_state": "Leading"
             },
             {
-              "ticker": "DV",
-              "rs_1m": 89,
-              "rs_line_pctl_21": 90,
-              "rs_high": false,
+              "ticker": "ESTC",
+              "rs_1m": 98,
+              "rs_line_pctl_21": 100,
+              "rs_high": true,
               "top_3m": true,
-              "chg_pct": 0.3,
-              "chase": false,
-              "atr_from_sma50": 7.8,
-              "hybrid_rs": 79.0,
-              "sector": "Communication Services",
-              "group": "Advertising Agencies",
-              "group_state": "Weakening"
+              "chg_pct": 19.3,
+              "chase": true,
+              "atr_from_sma50": 9.0,
+              "hybrid_rs": 80.0,
+              "sector": "Technology",
+              "group": "Cybersecurity",
+              "group_state": "Leading"
             }
           ],
-          "truncated": 26,
+          "truncated": 25,
           "preset": null
         }
       ]
@@ -4719,7 +4663,7 @@
       "chg_pct": 19.3,
       "chase": true,
       "atr_from_sma50": 9.0,
-      "hybrid_rs": 78.0,
+      "hybrid_rs": 80.0,
       "sector": "Technology",
       "group": "Cybersecurity",
       "group_state": "Leading"
@@ -4740,9 +4684,30 @@
       "chg_pct": 1.6,
       "chase": false,
       "atr_from_sma50": 9.7,
-      "hybrid_rs": 77.0,
+      "hybrid_rs": 78.0,
       "sector": "Technology",
       "group": "Cloud Software",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "TENB",
+      "count": 4,
+      "zones": [
+        "leaders",
+        "entries",
+        "accumulation",
+        "moving"
+      ],
+      "rs_1m": 86,
+      "rs_line_pctl_21": 86,
+      "rs_high": false,
+      "top_3m": true,
+      "chg_pct": 0.1,
+      "chase": false,
+      "atr_from_sma50": 1.1,
+      "hybrid_rs": 76.0,
+      "sector": "Technology",
+      "group": "Cybersecurity",
       "group_state": "Leading"
     },
     {
@@ -4800,30 +4765,50 @@
       "chg_pct": 2.6,
       "chase": false,
       "atr_from_sma50": 13.5,
-      "hybrid_rs": 86.0,
+      "hybrid_rs": 87.0,
       "sector": "Technology",
       "group": "Cloud Software",
       "group_state": "Leading"
     },
     {
-      "ticker": "AMLX",
+      "ticker": "BRZE",
       "count": 3,
       "zones": [
         "leaders",
         "accumulation",
         "trouble"
       ],
-      "rs_1m": 99,
-      "rs_line_pctl_21": 62,
+      "rs_1m": 96,
+      "rs_line_pctl_21": 100,
+      "rs_high": true,
+      "top_3m": true,
+      "chg_pct": 1.3,
+      "chase": false,
+      "atr_from_sma50": 7.3,
+      "hybrid_rs": 84.0,
+      "sector": "Technology",
+      "group": "Cloud Software",
+      "group_state": "Leading"
+    },
+    {
+      "ticker": "NAVN",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "compression",
+        "trouble"
+      ],
+      "rs_1m": 71,
+      "rs_line_pctl_21": 29,
       "rs_high": false,
       "top_3m": true,
-      "chg_pct": -6.6,
+      "chg_pct": -6.8,
       "chase": false,
-      "atr_from_sma50": 8.1,
-      "hybrid_rs": 83.0,
-      "sector": "Healthcare",
-      "group": "Drug Manufacturers - Specialty & Generic",
-      "group_state": "Weakening"
+      "atr_from_sma50": 1.7,
+      "hybrid_rs": 84.0,
+      "sector": "Technology",
+      "group": "Cloud Software",
+      "group_state": "Leading"
     },
     {
       "ticker": "MRVI",
@@ -4866,46 +4851,6 @@
       "group_state": "Leading"
     },
     {
-      "ticker": "BRZE",
-      "count": 3,
-      "zones": [
-        "leaders",
-        "accumulation",
-        "trouble"
-      ],
-      "rs_1m": 96,
-      "rs_line_pctl_21": 100,
-      "rs_high": true,
-      "top_3m": false,
-      "chg_pct": 1.3,
-      "chase": false,
-      "atr_from_sma50": 7.3,
-      "hybrid_rs": 82.0,
-      "sector": "Technology",
-      "group": "Cloud Software",
-      "group_state": "Leading"
-    },
-    {
-      "ticker": "NAVN",
-      "count": 3,
-      "zones": [
-        "leaders",
-        "compression",
-        "trouble"
-      ],
-      "rs_1m": 71,
-      "rs_line_pctl_21": 29,
-      "rs_high": false,
-      "top_3m": true,
-      "chg_pct": -6.8,
-      "chase": false,
-      "atr_from_sma50": 1.7,
-      "hybrid_rs": 82.0,
-      "sector": "Technology",
-      "group": "Cloud Software",
-      "group_state": "Leading"
-    },
-    {
       "ticker": "WDAY",
       "count": 3,
       "zones": [
@@ -4920,10 +4865,30 @@
       "chg_pct": 5.8,
       "chase": false,
       "atr_from_sma50": 5.9,
-      "hybrid_rs": 82.0,
+      "hybrid_rs": 83.0,
       "sector": "Technology",
       "group": "Cloud Software",
       "group_state": "Leading"
+    },
+    {
+      "ticker": "AMLX",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "accumulation",
+        "trouble"
+      ],
+      "rs_1m": 99,
+      "rs_line_pctl_21": 62,
+      "rs_high": false,
+      "top_3m": true,
+      "chg_pct": -6.6,
+      "chase": false,
+      "atr_from_sma50": 8.1,
+      "hybrid_rs": 81.0,
+      "sector": "Healthcare",
+      "group": "Drug Manufacturers - Specialty & Generic",
+      "group_state": "Weakening"
     },
     {
       "ticker": "ASST",
@@ -4946,26 +4911,6 @@
       "group_state": "Weakening"
     },
     {
-      "ticker": "TENB",
-      "count": 3,
-      "zones": [
-        "leaders",
-        "entries",
-        "accumulation"
-      ],
-      "rs_1m": 85,
-      "rs_line_pctl_21": 86,
-      "rs_high": false,
-      "top_3m": true,
-      "chg_pct": 0.1,
-      "chase": false,
-      "atr_from_sma50": 1.1,
-      "hybrid_rs": 76.0,
-      "sector": "Technology",
-      "group": "Cybersecurity",
-      "group_state": "Leading"
-    },
-    {
       "ticker": "NWL",
       "count": 3,
       "zones": [
@@ -4973,7 +4918,7 @@
         "entries",
         "compression"
       ],
-      "rs_1m": 77,
+      "rs_1m": 78,
       "rs_line_pctl_21": 90,
       "rs_high": false,
       "top_3m": true,
@@ -4983,6 +4928,26 @@
       "hybrid_rs": 74.0,
       "sector": "Consumer Defensive",
       "group": "Household & Personal Products",
+      "group_state": "Weakening"
+    },
+    {
+      "ticker": "SE",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "entries",
+        "accumulation"
+      ],
+      "rs_1m": 80,
+      "rs_line_pctl_21": 71,
+      "rs_high": false,
+      "top_3m": true,
+      "chg_pct": 0.9,
+      "chase": false,
+      "atr_from_sma50": 2.6,
+      "hybrid_rs": 74.0,
+      "sector": "Consumer Cyclical",
+      "group": "Consumer Retail",
       "group_state": "Weakening"
     },
     {
@@ -5006,6 +4971,26 @@
       "group_state": "Leading"
     },
     {
+      "ticker": "PRGO",
+      "count": 3,
+      "zones": [
+        "leaders",
+        "accumulation",
+        "trouble"
+      ],
+      "rs_1m": 98,
+      "rs_line_pctl_21": 95,
+      "rs_high": false,
+      "top_3m": true,
+      "chg_pct": 0.8,
+      "chase": false,
+      "atr_from_sma50": 7.2,
+      "hybrid_rs": 67.0,
+      "sector": "Healthcare",
+      "group": "Drug Manufacturers - Specialty & Generic",
+      "group_state": "Weakening"
+    },
+    {
       "ticker": "GENI",
       "count": 3,
       "zones": [
@@ -5023,7 +5008,7 @@
       "hybrid_rs": 66.0,
       "sector": "Communication Services",
       "group": "Internet Content & Information",
-      "group_state": "Lagging"
+      "group_state": "Improving"
     },
     {
       "ticker": "ANF",
@@ -5063,7 +5048,7 @@
       "hybrid_rs": 51.0,
       "sector": "Communication Services",
       "group": "Internet Content & Information",
-      "group_state": "Lagging"
+      "group_state": "Improving"
     },
     {
       "ticker": "DKNG",
@@ -5080,13 +5065,13 @@
       "chg_pct": 4.3,
       "chase": false,
       "atr_from_sma50": 0.3,
-      "hybrid_rs": 33.0,
+      "hybrid_rs": 34.0,
       "sector": "Consumer Cyclical",
       "group": "Gambling",
       "group_state": "Improving"
     }
   ],
-  "universe_gated": 2055,
-  "universe_tradeable": 971,
-  "universe_tradeable_exempt": 2055
+  "universe_gated": 1961,
+  "universe_tradeable": 920,
+  "universe_tradeable_exempt": 1961
 }

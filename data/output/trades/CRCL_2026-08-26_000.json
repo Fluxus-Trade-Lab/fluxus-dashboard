@@ -1,6 +1,6 @@
 {
   "trade_id": "CRCL_2026-08-26_000",
-  "generated_at": "2026-08-28T06:01:16+00:00",
+  "generated_at": "2026-08-30T16:43:23+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "CRCL",
@@ -35,8 +35,8 @@
     "volume": 15275100.0,
     "ma20": 73.3175,
     "ma50": 69.993,
-    "ma200": 84.9663,
-    "rsi14": 68.51211851777755,
+    "ma200": 84.96629999999999,
+    "rsi14": 68.51211826501199,
     "atr14": 5.889,
     "atr14_pct": 6.549883216549884,
     "high_52w": 159.47,
@@ -50,20 +50,20 @@
   "path_analytics": {
     "mfe_R": 0.5762214983713385,
     "mfe_date": "2026-08-27",
-    "mae_R": 2.426710097719876,
-    "mae_date": "2026-08-26",
+    "mae_R": 2.4625407166123843,
+    "mae_date": "2026-08-28",
     "optimal_exit_price": 96.239,
     "optimal_exit_date": "2026-08-27",
     "optimal_R": 0.5762214983713385,
     "days_to_optimal": 1,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": -0.5863192182410427,
+    "capture_pct": -101.75240248728048,
+    "missed_R": 1.1625407166123813,
     "post_exit_R": null,
     "hold_calendar_days": 2
   },
-  "lesson": "In progress",
-  "narrative": "Entered **CRCL** long on 2026-08-26 at $94.47 (qty 2527) with stop $91.40 (1R = $3.07/sh = $7,758). Setup: **Long in mixed structure** \u2014 price above MA20 ($73.32), MA stack mixed, RSI 69, 37% through 52W range, ATR 6.5% of price. **In progress.** Peak so far +0.58R; worst drawdown -2.43R.",
+  "lesson": "Failed setup",
+  "narrative": "Entered **CRCL** long on 2026-08-26 at $94.47 (qty 2527) with stop $91.40 (1R = $3.07/sh = $7,758). Setup: **Long in mixed structure** \u2014 price above MA20 ($73.32), MA stack mixed, RSI 69, 37% through 52W range, ATR 6.5% of price. Realized **-0.59R**, peak was **+0.58R** on 2026-08-27 (day +1) \u2014 captured **-102%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-07-27",
@@ -255,7 +255,15 @@
       "high": 96.239,
       "low": 90.35,
       "close": 94.24,
-      "volume": 14252200.0
+      "volume": 14319000.0
+    },
+    {
+      "date": "2026-08-28",
+      "open": 92.61,
+      "high": 93.958,
+      "low": 86.91,
+      "close": 87.14,
+      "volume": 14589870.0
     }
   ]
 }

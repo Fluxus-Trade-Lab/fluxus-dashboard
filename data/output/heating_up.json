@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-08-29T03:18:17.230043+00:00",
+  "timestamp": "2026-08-30T16:21:10.654509+00:00",
   "as_of": "2026-08-28",
   "rows": [
     {
@@ -36,6 +36,47 @@
       "first_seen": "2026-08-17",
       "last_seen": "2026-08-28",
       "days_span": 10,
+      "sector": "Healthcare"
+    },
+    {
+      "ticker": "BHVN",
+      "score": 15.25,
+      "confluence_days": 1,
+      "screeners": [
+        {
+          "name": "episodic_pivot",
+          "hits": 1,
+          "last_date": "2026-08-26"
+        },
+        {
+          "name": "momentum_97",
+          "hits": 3,
+          "last_date": "2026-08-28"
+        },
+        {
+          "name": "ema21_watch",
+          "hits": 5,
+          "last_date": "2026-08-17"
+        },
+        {
+          "name": "gainers_4pct",
+          "hits": 3,
+          "last_date": "2026-08-26"
+        },
+        {
+          "name": "healthy_charts",
+          "hits": 4,
+          "last_date": "2026-08-28"
+        },
+        {
+          "name": "vol_up_gainers",
+          "hits": 2,
+          "last_date": "2026-08-26"
+        }
+      ],
+      "first_seen": "2026-08-07",
+      "last_seen": "2026-08-28",
+      "days_span": 15,
       "sector": "Healthcare"
     },
     {
@@ -114,47 +155,6 @@
       "last_seen": "2026-08-28",
       "days_span": 15,
       "sector": "Consumer Cyclical"
-    },
-    {
-      "ticker": "BHVN",
-      "score": 14.5,
-      "confluence_days": 1,
-      "screeners": [
-        {
-          "name": "episodic_pivot",
-          "hits": 1,
-          "last_date": "2026-08-26"
-        },
-        {
-          "name": "momentum_97",
-          "hits": 2,
-          "last_date": "2026-08-27"
-        },
-        {
-          "name": "ema21_watch",
-          "hits": 5,
-          "last_date": "2026-08-17"
-        },
-        {
-          "name": "gainers_4pct",
-          "hits": 3,
-          "last_date": "2026-08-26"
-        },
-        {
-          "name": "healthy_charts",
-          "hits": 4,
-          "last_date": "2026-08-28"
-        },
-        {
-          "name": "vol_up_gainers",
-          "hits": 2,
-          "last_date": "2026-08-26"
-        }
-      ],
-      "first_seen": "2026-08-07",
-      "last_seen": "2026-08-28",
-      "days_span": 15,
-      "sector": "Healthcare"
     },
     {
       "ticker": "ESTC",
@@ -723,8 +723,8 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 8,
-          "last_date": "2026-08-28"
+          "hits": 7,
+          "last_date": "2026-08-27"
         },
         {
           "name": "vol_up_gainers",
@@ -733,8 +733,8 @@
         }
       ],
       "first_seen": "2026-08-11",
-      "last_seen": "2026-08-28",
-      "days_span": 14,
+      "last_seen": "2026-08-27",
+      "days_span": 13,
       "sector": "Healthcare"
     },
     {
@@ -893,13 +893,13 @@
         },
         {
           "name": "vcp",
-          "hits": 6,
-          "last_date": "2026-08-28"
+          "hits": 5,
+          "last_date": "2026-08-25"
         },
         {
           "name": "ema21_watch",
-          "hits": 10,
-          "last_date": "2026-08-28"
+          "hits": 9,
+          "last_date": "2026-08-27"
         },
         {
           "name": "gainers_4pct",
@@ -913,8 +913,8 @@
         }
       ],
       "first_seen": "2026-08-11",
-      "last_seen": "2026-08-28",
-      "days_span": 14,
+      "last_seen": "2026-08-27",
+      "days_span": 13,
       "sector": "Industrials"
     },
     {
@@ -1440,8 +1440,8 @@
       "screeners": [
         {
           "name": "momentum_97",
-          "hits": 6,
-          "last_date": "2026-08-28"
+          "hits": 5,
+          "last_date": "2026-08-27"
         },
         {
           "name": "gainers_4pct",
@@ -1450,8 +1450,8 @@
         },
         {
           "name": "healthy_charts",
-          "hits": 12,
-          "last_date": "2026-08-28"
+          "hits": 11,
+          "last_date": "2026-08-27"
         },
         {
           "name": "vol_up_gainers",
@@ -1460,8 +1460,8 @@
         }
       ],
       "first_seen": "2026-08-11",
-      "last_seen": "2026-08-28",
-      "days_span": 14,
+      "last_seen": "2026-08-27",
+      "days_span": 13,
       "sector": "Healthcare"
     },
     {

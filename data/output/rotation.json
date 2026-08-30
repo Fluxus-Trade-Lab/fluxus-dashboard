@@ -102,6 +102,48 @@
       "accel": -0.10642
     },
     {
+      "ticker": "SPLV",
+      "name": "Low Volatility",
+      "side": "risk_off",
+      "line": [
+        0.04088658649917387,
+        -8.458758013707435e-05,
+        -0.0076350820369704975,
+        -0.03753072879334596,
+        -0.005901219822173287
+      ],
+      "ribbon": [
+        {
+          "state": "Improving",
+          "level": -0.08733,
+          "accel": 0.268652
+        },
+        {
+          "state": "Improving",
+          "level": -0.025155,
+          "accel": 0.098955
+        },
+        {
+          "state": "Improving",
+          "level": -0.013033,
+          "accel": 0.039823
+        },
+        {
+          "state": "Weakening",
+          "level": 0.012458,
+          "accel": -0.092667
+        },
+        {
+          "state": "Weakening",
+          "level": 0.025972,
+          "accel": -0.131186
+        }
+      ],
+      "state": "Weakening",
+      "level": 0.025972,
+      "accel": -0.131186
+    },
+    {
       "ticker": "IVE",
       "name": "Value Factor",
       "side": "risk_off",
@@ -142,48 +184,6 @@
       "state": "Weakening",
       "level": 0.025586,
       "accel": -0.054844
-    },
-    {
-      "ticker": "SPLV",
-      "name": "Low Volatility",
-      "side": "risk_off",
-      "line": [
-        0.040886633440406106,
-        -8.45732209040495e-05,
-        -0.007635407178804843,
-        -0.03753000673168194,
-        -0.007758915985315418
-      ],
-      "ribbon": [
-        {
-          "state": "Improving",
-          "level": -0.087331,
-          "accel": 0.268652
-        },
-        {
-          "state": "Improving",
-          "level": -0.025154,
-          "accel": 0.098955
-        },
-        {
-          "state": "Improving",
-          "level": -0.013033,
-          "accel": 0.039822
-        },
-        {
-          "state": "Weakening",
-          "level": 0.012457,
-          "accel": -0.092666
-        },
-        {
-          "state": "Weakening",
-          "level": 0.024001,
-          "accel": -0.133043
-        }
-      ],
-      "state": "Weakening",
-      "level": 0.024001,
-      "accel": -0.133043
     },
     {
       "ticker": "XLP",
@@ -446,7 +446,7 @@
         -0.08008636574325423,
         -0.035914593654622795,
         0.0751341293928649,
-        -0.05692954633279235
+        -0.05696112528016062
       ],
       "ribbon": [
         {
@@ -471,13 +471,13 @@
         },
         {
           "state": "Improving",
-          "level": -0.078435,
-          "accel": 0.040998
+          "level": -0.078467,
+          "accel": 0.040964
         }
       ],
       "state": "Improving",
-      "level": -0.078435,
-      "accel": 0.040998
+      "level": -0.078467,
+      "accel": 0.040964
     }
   ],
   "cuts": [
@@ -491,9 +491,9 @@
       "short": [
         "SPLV"
       ],
-      "spread": -0.018662,
-      "delta": -0.100904,
-      "month_spread": 0.063093,
+      "spread": -0.020519,
+      "delta": -0.102762,
+      "month_spread": 0.061236,
       "vote": "risk_off",
       "month_vote": "risk_on"
     },
@@ -526,9 +526,9 @@
         "XLV",
         "XLP"
       ],
-      "spread": -0.024962,
-      "delta": -0.111799,
-      "month_spread": 0.047207,
+      "spread": -0.024972,
+      "delta": -0.111809,
+      "month_spread": 0.047195,
       "vote": "risk_off",
       "month_vote": "risk_on"
     }
