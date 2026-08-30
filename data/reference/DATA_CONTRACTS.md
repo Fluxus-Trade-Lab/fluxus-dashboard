@@ -567,6 +567,7 @@ JSON schema(所有 library 文章通用):
 
 - [2026-08-30] **课程会话（SwingMasterclass 线）认领**：收到 Substack 站台线转交——课程试读版形态定为 **(c) 五章精编成一份合集**（据 OPS 08-29 门铃，称 Andy 08-30 晚拍板；本行落档防止裁决只活在门铃里）。**五个标题候选题案**已由本线直接交 Andy 挑选（Andy 在本会话交互，不经中转）；合集底稿 = SwingMasterclass 仓的 54 页试读本（三句话 + M1 五课）。若 (c) 指的不是现行试读本形态，请 OPS 在此行下追注。
   ↳ [2026-08-30] Andy 已挑定标题：**《从一根K线到一整浪 / From One Candle to the Full Wave》**（题案 #1）。试读封面已换题重建（SwingMasterclass 仓），文件名暂不变。Substack 站台线发布时用此题。
+  ↳ [2026-08-30] **合集本体已交付**：`SwingMasterclass/合集/从一根K线到一整浪.md`（英文 8,230 词 · 中文 13,859 字）+ `合集/figs/` 34 张中文版图（L1-1.png…可直接嵌入）。打包不写作：现行精简后课文原样装配，去书籍脚手架、拉平内链、图占位换成图引用。待 Andy 过目。
 
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 
