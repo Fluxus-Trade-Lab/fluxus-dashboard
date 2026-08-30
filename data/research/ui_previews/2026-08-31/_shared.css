@@ -1,0 +1,25 @@
+/* 现网 token 原样抄自 frontend/src/index.css（零新增颜色） */
+:root{
+  --color-bg:#e2e0d6; --color-surface:#f2f0e9; --color-surface-alt:#e8e6dd;
+  --color-border:#cbc6b8; --color-border-light:#dbd7cb;
+  --color-text:#1c1917; --color-text-secondary:#4b453e; --color-text-muted:#655e55;
+  --color-text-bold:#292524; --color-loss:#b5342c; --color-profit:#194371;
+}
+body{background:var(--color-bg);color:var(--color-text);margin:0;padding:28px;
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;}
+.panel{background:var(--color-surface);border-radius:24px;padding:20px;max-width:960px;}
+h3{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--color-text-secondary);margin:0 0 12px;}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr);}}
+.tile{background:var(--color-bg);border-radius:6px;padding:12px;}
+.tl{font-size:10px;color:var(--color-text-secondary);font-weight:500;
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+.tv{font-size:17px;font-variant-numeric:tabular-nums;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--color-text);}
+.tn{font-size:11px;color:var(--color-text-secondary);}
+.tp{font-size:10px;color:var(--color-text-muted);}
+.guid{font-size:12.5px;color:var(--color-text);margin:0;}
+.cap{max-width:960px;font-size:12px;color:var(--color-text-muted);margin:14px 0 24px;line-height:1.55;}
+.tag{font-size:16px;font-weight:600;margin:26px 0 6px;}
+strong{color:var(--color-text-bold);}
