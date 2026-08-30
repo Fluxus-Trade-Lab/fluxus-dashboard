@@ -38,6 +38,15 @@ _NEW_LOW_THRESHOLD = 0.001    # true 52w low
 # a tuned parameter, and it was never searched over alternatives.
 _MIN_PRICE = 5.0
 _MIN_DOLLAR_VOL = 5_000_000.0
+# Minimum bars before a name may be counted at an N-session extreme. This is a
+# CORRECTNESS floor, not a tuned parameter: a "52-week high" computed on 19
+# bars is not a weak signal, it is a category error -- the name has not
+# existed for 52 weeks. On 2026-08-28, 32% of the 66 names counted as 52w new
+# highs had under 126 bars; the shortest, OCAC, had 19. 200 rather than 252
+# because a `period='1y'` download returns ~250 sessions, so 252 is
+# unreachable and would empty the count.
+_MIN_BARS_52W = 200
+_MIN_BARS_4W = 20
 
 
 def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
@@ -151,17 +160,28 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
     n_liquid = int(liquid.sum())
     gate_usable = int((px.notna() & avol.notna()).sum()) > 0
 
-    def _gated(series, cmp_ok, have):
-        if not (gate_usable and have):
+    bars = pd.to_numeric(universe.get('bars_n', pd.Series(dtype=float)), errors='coerce')
+    have_bars = int(bars.notna().sum()) > 0
+    long_enough_52w = (bars >= _MIN_BARS_52W) if have_bars else None
+    long_enough_4w = (bars >= _MIN_BARS_4W) if have_bars else None
+
+    def _gated(series, cmp_ok, have, enough):
+        # NULL, never 0, if any input to the gate is missing. A zero here
+        # reads as "nothing made a new low today" -- the most reassuring
+        # possible rendering of a data outage.
+        if not (gate_usable and have and enough is not None):
             return None
-        return int((cmp_ok(series) & liquid).sum())
+        return int((cmp_ok(series) & liquid & enough).sum())
 
     hi_ok = lambda x: x >= _NEW_HIGH_THRESHOLD
     lo_ok = lambda x: x <= _NEW_LOW_THRESHOLD
-    new_highs_liq = _gated(high_52w, hi_ok, int(high_52w.notna().sum()))
-    new_lows_liq = _gated(low_52w, lo_ok, int(low_52w.notna().sum()))
-    new_highs_4w_liq = _gated(high_20d, hi_ok, have_20d[0])
-    new_lows_4w_liq = _gated(low_20d, lo_ok, have_20d[1])
+    new_highs_liq = _gated(high_52w, hi_ok, int(high_52w.notna().sum()), long_enough_52w)
+    new_lows_liq = _gated(low_52w, lo_ok, int(low_52w.notna().sum()), long_enough_52w)
+    new_highs_4w_liq = _gated(high_20d, hi_ok, have_20d[0], long_enough_4w)
+    new_lows_4w_liq = _gated(low_20d, lo_ok, have_20d[1], long_enough_4w)
+    # Made visible so the defect stays measurable instead of being silently
+    # filtered away: how many names are too young to have a 52-week extreme.
+    short_history_n = int((~(bars >= _MIN_BARS_52W)).sum()) if have_bars else None
 
     return {
         'universe_size': n,
@@ -190,6 +210,7 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
         'new_highs_4w_liq': new_highs_4w_liq,
         'new_lows_4w_liq': new_lows_4w_liq,
         'liquid_universe': n_liquid if gate_usable else None,
+        'short_history_n': short_history_n,
         'net_advances': advances - declines,
     }
 

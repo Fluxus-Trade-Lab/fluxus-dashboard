@@ -941,6 +941,15 @@ class YfinanceAdapter(BaseAdapter):
                     # same construction can see a four-week deterioration.
                     # Distinct from `dist_hi20_pct`, which measures against the
                     # rolling CLOSE high; these use High/Low like the 52w pair.
+                    # How many bars this name actually has. Without it a
+                    # "52-week high" is computed for names whose entire life
+                    # is shorter than the window: on 2026-08-28, 32% of the 66
+                    # names counted as 52w new highs had under 126 bars and
+                    # the shortest (OCAC) had 19. Breadth cannot ask "is this
+                    # a real 52-week high" without knowing there were 52
+                    # weeks. Emitted, not enforced here -- the consumer picks
+                    # its own floor per window.
+                    'bars_n': int(n),
                     'high_20d': (close / float(hist['High'].iloc[-20:].max()) - 1) if n >= 20 else None,
                     'low_20d': (close / float(hist['Low'].iloc[-20:].min()) - 1) if n >= 20 else None,
                     'from_open_pct': from_open_pct,

@@ -35,7 +35,7 @@ BREADTH_COLUMNS = [
     'advances', 'declines', 'new_highs', 'new_lows',
     'new_highs_4w', 'new_lows_4w',
     'new_highs_liq', 'new_lows_liq', 'new_highs_4w_liq', 'new_lows_4w_liq',
-    'liquid_universe',
+    'liquid_universe', 'short_history_n',
     'net_advances', 'rana', 'ad_line', 'mcclellan_osc',
 ]
 

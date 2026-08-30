@@ -244,6 +244,7 @@ class TestLiquidityGate:
             'ticker': ['SPAC1', 'SPAC2', 'REAL1', 'PENNY'],
             'close': [10.20, 10.20, 80.0, 1.40],
             'avg_volume': [16_000, 16_000, 2_000_000, 50_000],
+            'bars_n': [250, 250, 250, 250],   # history is not the variable here
             'change_pct': [0.0, 0.0, 0.01, -0.05],
             'perf_1m': [0.0] * 4, 'perf_3m': [0.0] * 4,
             'sma20_dist': [0.0] * 4, 'sma40_dist': [0.0] * 4,
@@ -305,3 +306,62 @@ class TestLiquidityGate:
         for k in ('new_highs', 'new_highs_4w', 'new_highs_liq', 'new_highs_4w_liq',
                   'new_lows', 'new_lows_4w', 'new_lows_liq', 'new_lows_4w_liq'):
             assert k in r
+
+
+class TestMinimumHistory:
+    """A 52-week high requires 52 weeks of existence.
+
+    2026-08-28: of the 66 names counted as 52w new highs, 32% had under 126
+    bars and the shortest (OCAC) had 19. Nineteen sessions cannot produce a
+    252-session extreme -- the name's entire life is the lookback window.
+    The liquidity gate happened to remove most of them, but for the wrong
+    reason: a liquid recent IPO ($50M/day, 60 bars) passes liquidity and is
+    still not eligible for a 52-week high.
+    """
+
+    def _uni(self, **over):
+        import pandas as pd
+        base = {
+            # OLD: liquid, full history, at its high -> counts
+            # IPO: liquid, 60 bars, at its "52w high" -> must NOT count for
+            #      52w, but IS eligible for the 20-day one
+            # BABY: 12 bars -> eligible for neither
+            'ticker': ['OLD', 'IPO', 'BABY'],
+            'close': [80.0, 40.0, 30.0],
+            'avg_volume': [2_000_000, 2_000_000, 2_000_000],
+            'bars_n': [250, 60, 12],
+            'change_pct': [0.01, 0.01, 0.01],
+            'perf_1m': [0.0] * 3, 'perf_3m': [0.0] * 3,
+            'sma20_dist': [0.0] * 3, 'sma40_dist': [0.0] * 3,
+            'sma50_dist': [0.0] * 3, 'sma200_dist': [0.0] * 3,
+            'high_52w': [0.0, 0.0, 0.0], 'low_52w': [0.5, 0.5, 0.5],
+            'high_20d': [0.0, 0.0, 0.0], 'low_20d': [0.2, 0.2, 0.2],
+        }
+        base.update(over)
+        return pd.DataFrame(base)
+
+    def test_a_liquid_recent_ipo_is_not_a_52_week_high(self):
+        """The case the liquidity gate cannot catch."""
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni())
+        assert r['new_highs'] == 3          # ungated: all three, unchanged
+        assert r['new_highs_liq'] == 1      # only OLD has 52 weeks behind it
+
+    def test_the_same_ipo_is_eligible_for_the_4_week_high(self):
+        """Per-window floors: 60 bars is plenty for a 20-session extreme."""
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni())
+        assert r['new_highs_4w_liq'] == 2   # OLD and IPO; BABY has 12 bars
+
+    def test_short_history_count_is_reported_not_hidden(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni())
+        assert r['short_history_n'] == 2    # IPO and BABY
+
+    def test_missing_bar_count_is_null_not_zero(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        u = self._uni().drop(columns=['bars_n'])
+        r = compute_snapshot(u)
+        for k in ('new_highs_liq', 'new_lows_liq',
+                  'new_highs_4w_liq', 'new_lows_4w_liq', 'short_history_n'):
+            assert r[k] is None, f"{k} must be NULL when bar counts are absent"
