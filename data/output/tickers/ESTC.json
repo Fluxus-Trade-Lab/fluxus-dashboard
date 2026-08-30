@@ -1,6 +1,6 @@
 {
   "ticker": "ESTC",
-  "fetched_at": "2026-08-29T03:37:08Z",
+  "fetched_at": "2026-08-30T18:03:09Z",
   "_schema": "v2",
   "current_price": 99.91000366210938,
   "info": {
@@ -13,29 +13,29 @@
     "city": "Amsterdam",
     "website": "https://www.elastic.co",
     "fullTimeEmployees": 4019,
-    "marketCap": 10385808384,
-    "enterpriseValue": 7937530368,
-    "trailingPE": 28.545715,
+    "marketCap": 10502597632,
+    "enterpriseValue": 9637330944,
+    "trailingPE": 23.901917,
     "forwardPE": 25.375582,
-    "priceToSalesTrailing12Months": 5.7629905,
-    "enterpriseToRevenue": 4.404,
+    "priceToSalesTrailing12Months": 5.827796,
+    "enterpriseToRevenue": 5.348,
     "priceToBook": 8.198753,
     "grossMargins": 0.75588995,
-    "operatingMargins": -0.00764,
+    "operatingMargins": -0.00606,
     "profitMargins": 0.20844,
     "returnOnEquity": 0.33122003,
     "totalCash": 1461042048,
     "totalDebt": 595774976,
     "totalRevenue": 1802156032,
-    "freeCashflow": 499077376,
+    "freeCashflow": 504316864,
     "debtToEquity": 45.94,
     "currentRatio": 1.81,
-    "fiftyTwoWeekHigh": 107.995,
+    "fiftyTwoWeekHigh": 108.0,
     "fiftyTwoWeekLow": 42.05,
-    "averageVolume": 2081601,
-    "averageVolume10days": 2751600,
-    "beta": null,
-    "sharesOutstanding": 103951633,
+    "averageVolume": 2209003,
+    "averageVolume10days": 3427450,
+    "beta": 0.974,
+    "sharesOutstanding": 105120583,
     "sharesFloat": 85700606,
     "companyOfficers": [
       {
@@ -78,6 +78,12 @@
   },
   "earnings_history": [
     {
+      "period_end": "2026-07-31T00:00:00",
+      "eps_actual": 0.7,
+      "eps_estimate": 0.58406,
+      "eps_surprise_pct": 0.1985
+    },
+    {
       "period_end": "2026-04-30T00:00:00",
       "eps_actual": 0.61,
       "eps_estimate": 0.56252,
@@ -94,18 +100,12 @@
       "eps_actual": 0.64,
       "eps_estimate": 0.57614,
       "eps_surprise_pct": 0.1108
-    },
-    {
-      "period_end": "2025-07-31T00:00:00",
-      "eps_actual": 0.6,
-      "eps_estimate": 0.41837,
-      "eps_surprise_pct": 0.4341
     }
   ],
   "next_earnings": {
     "date": "2026-11-19",
-    "revenue_low": 469282000,
-    "revenue_high": 470522550
+    "revenue_low": 485900000,
+    "revenue_high": 489351530
   },
   "quarterly_metrics": [
     {
@@ -170,8 +170,8 @@
     "bullish": 18,
     "neutral": 11,
     "bearish": 1,
-    "avg_price_target": 84.40741,
-    "high_price_target": 120.0,
+    "avg_price_target": 102.81481,
+    "high_price_target": 130.0,
     "low_price_target": 53.0,
     "current_price": 99.91,
     "recent_rating_changes": [
@@ -249,6 +249,18 @@
   },
   "news": [
     {
+      "date": "2026-08-30T02:03:00Z",
+      "title": "Morgan Stanley delivers candid verdict after Elastic\u2019s stunning earnings",
+      "url": "https://www.thestreet.com/investing/stocks/estc-elastic-n-v-stock-price-target-after-first-quarter-fiscal-2027-earnings-morgan-stanley-august-2026",
+      "source": "TheStreet"
+    },
+    {
+      "date": "2026-08-29T16:14:52Z",
+      "title": "Elastic (ESTC) Is Up 16.3% After AI-Fueled Q1 Beat And Higher 2027 Revenue Guidance \u2013 Has The Bull Case Changed?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/elastic-estc-16-3-ai-161452465.html",
+      "source": "Simply Wall St."
+    },
+    {
       "date": "2026-08-29T01:15:33Z",
       "title": "Why Elastic Stock Snapped Back Today",
       "url": "https://www.fool.com/investing/2026/08/28/why-elastic-stock-is-up-today/",
@@ -295,18 +307,6 @@
       "title": "Another Day, Another Software Stock Is Surging After Earnings",
       "url": "https://www.barrons.com/articles/elastic-stock-price-earnings-software-surging-0457271e?siteid=yhoof2&yptr=yahoo",
       "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-28T15:32:28Z",
-      "title": "Elastic Poised for Further Fiscal 2027 Upside After Fiscal Q1 Beat, Oppenheimer Says",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/elastic-poised-further-fiscal-2027-153228857.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-28T14:00:02Z",
-      "title": "Why Software Stock Elastic Is Rocketing 20% Higher",
-      "url": "https://www.investors.com/news/technology/elastic-stock-earnings-july-2026-estc-news/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
     }
   ],
   "options_implied_move": 0.07316584658251093,
@@ -315,14 +315,14 @@
     "ma50": 68.26960037231446,
     "ma200": 63.7889500617981,
     "rsi14": 77.48039582845948,
-    "high_20d": 107.99500274658203,
+    "high_20d": 108.0,
     "low_5d": 78.79000091552734,
     "low_10d": 78.79000091552734,
-    "high_52w": 107.99500274658203,
+    "high_52w": 108.0,
     "low_52w": 42.04999923706055,
-    "atr14": 5.347499847412109,
-    "atr14_pct": 5.3523167364672375,
-    "position_in_52w_range_pct": 87.73978519342211
+    "atr14": 5.347856794084821,
+    "atr14_pct": 5.352674004668246,
+    "position_in_52w_range_pct": 87.73313685473558
   },
   "ohlc_2y": [
     {
@@ -4328,10 +4328,10 @@
     {
       "date": "2026-08-28",
       "open": 103.89,
-      "high": 107.995,
+      "high": 108.0,
       "low": 96.82,
       "close": 99.91,
-      "volume": 10104560.0
+      "volume": 10107900.0
     }
   ],
   "ohlc_1y": [
@@ -6346,10 +6346,10 @@
     {
       "date": "2026-08-28",
       "open": 103.89,
-      "high": 107.995,
+      "high": 108.0,
       "low": 96.82,
       "close": 99.91,
-      "volume": 10104560.0
+      "volume": 10107900.0
     }
   ],
   "ai_synthesis": null,

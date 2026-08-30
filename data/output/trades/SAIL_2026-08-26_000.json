@@ -1,6 +1,6 @@
 {
   "trade_id": "SAIL_2026-08-26_000",
-  "generated_at": "2026-08-30T16:43:23+00:00",
+  "generated_at": "2026-08-30T18:05:50+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "SAIL",
@@ -9,16 +9,23 @@
     "entry_date": "2026-08-26",
     "entry_price": 20.11,
     "original_qty": 6477,
-    "current_qty": 6477,
+    "current_qty": 0,
     "stop_price": 21.11,
     "initial_stop": 19.4,
-    "closed": false,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "exit_date": "2026-08-30",
+    "hold_business_days": 2,
     "r_dollars": 4598.6700000000055,
-    "realized_pl": 0,
+    "realized_pl": 0.0,
     "realized_R": 0.0,
-    "trims": []
+    "trims": [
+      {
+        "date": "2026-08-30",
+        "price": 20.11,
+        "qty": 6477,
+        "type": "sell_rest"
+      }
+    ]
   },
   "entry_snapshot": {
     "close": 18.22,
@@ -49,14 +56,14 @@
     "optimal_exit_date": "2026-08-27",
     "optimal_R": 1.7676056338028134,
     "days_to_optimal": 1,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": 0.0,
+    "capture_pct": 0.0,
+    "missed_R": 1.7676056338028134,
     "post_exit_R": null,
     "hold_calendar_days": 4
   },
-  "lesson": "In progress",
-  "narrative": "Entered **SAIL** long on 2026-08-26 at $20.11 (qty 6477) with stop $19.40 (currently trailed to $21.11) (1R = $0.71/sh = $4,599). Setup: **Long in mixed structure** \u2014 price below MA20 ($18.34), MA20 > MA50 > MA200 (golden alignment), RSI 54, 58% through 52W range, ATR 5.0% of price. **In progress.** Peak so far +1.77R; worst drawdown -3.96R.",
+  "lesson": "Choppy / no edge",
+  "narrative": "Entered **SAIL** long on 2026-08-26 at $20.11 (qty 6477) with stop $19.40 (currently trailed to $21.11) (1R = $0.71/sh = $4,599). Setup: **Long in mixed structure** \u2014 price below MA20 ($18.34), MA20 > MA50 > MA200 (golden alignment), RSI 54, 58% through 52W range, ATR 5.0% of price. Realized **+0.00R**, peak was **+1.77R** on 2026-08-27 (day +1) \u2014 captured **0%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-07-27",
@@ -252,11 +259,11 @@
     },
     {
       "date": "2026-08-28",
-      "open": 20.25,
-      "high": 20.7342,
-      "low": 19.76,
+      "open": 20.21,
+      "high": 20.734,
+      "low": 19.75,
       "close": 19.83,
-      "volume": 3665104.0
+      "volume": 3665300.0
     }
   ]
 }

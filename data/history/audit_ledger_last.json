@@ -1,7 +1,7 @@
 {
  "as_of_session": "2026-08-28",
  "ledger": "data/history/run_ledger.jsonl",
- "lines": 14,
+ "lines": 15,
  "runs": [
   {
    "session": "2026-08-28",
@@ -46,13 +46,23 @@
    "violations": [],
    "warnings": [],
    "fund_fail_rate": 0.12,
+   "universe_rows": 5623,
+   "superseded": true
+  },
+  {
+   "session": "2026-08-28",
+   "code_sha": "fd8f07d",
+   "trigger": "workflow_dispatch",
+   "violations": [],
+   "warnings": [],
+   "fund_fail_rate": 0.0,
    "universe_rows": 5623
   }
  ],
  "violations": 0,
  "warnings": 5,
  "top": [
-  "L6 2026-08-28: 4 lines (re-run; both happened, not a violation)"
+  "L6 2026-08-28: 5 lines (re-run; both happened, not a violation)"
  ],
  "ok": true
 }

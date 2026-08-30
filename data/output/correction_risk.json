@@ -170,18 +170,18 @@
   "ts_dimension": {
     "table": {
       "sample": {
-        "from": "2009-09-18",
+        "from": "2006-07-17",
         "to": "2026-08-27",
-        "sessions": 4261,
-        "episodes": 92,
-        "base_rate": 0.1542
+        "sessions": 5061,
+        "episodes": 115,
+        "base_rate": 0.1802
       },
       "vix_edges_this_sample": [
         8.14,
-        13.39,
-        15.76,
-        18.22,
-        22.51,
+        13.37,
+        15.96,
+        18.91,
+        24.12,
         83.69
       ],
       "ts_state_labels": {
@@ -192,127 +192,139 @@
       "by_ts_state": {
         "full": {
           "1": {
-            "rate": 0.0588,
-            "n": 221
+            "rate": 0.058,
+            "n": 224
           },
           "2": {
-            "rate": 0.15,
-            "n": 3766
+            "rate": 0.1703,
+            "n": 4339
           },
           "3": {
-            "rate": 0.2883,
-            "n": 274
+            "rate": 0.3213,
+            "n": 498
           }
         },
         "first_half": {
           "1": {
-            "rate": 0.0128,
-            "n": 156
+            "rate": 0.0,
+            "n": 40
           },
           "2": {
-            "rate": 0.132,
-            "n": 1849
+            "rate": 0.1838,
+            "n": 2160
           },
           "3": {
-            "rate": 0.288,
-            "n": 125
+            "rate": 0.3545,
+            "n": 330
           }
         },
         "second_half": {
           "1": {
-            "rate": 0.1692,
-            "n": 65
+            "rate": 0.0707,
+            "n": 184
           },
           "2": {
-            "rate": 0.1674,
-            "n": 1917
+            "rate": 0.157,
+            "n": 2179
           },
           "3": {
-            "rate": 0.2886,
-            "n": 149
+            "rate": 0.256,
+            "n": 168
           }
         }
       },
       "ts_monotone_spearman": {
         "full": 1.0,
         "first_half": 1.0,
-        "second_half": 0.5
+        "second_half": 1.0
       },
       "by_vix_quintile_x_200dma_x_ts": {
         "Q1_above200_ts1": {
-          "rate": 0.0142,
-          "n": 141
+          "rate": 0.0139,
+          "n": 144
         },
         "Q1_above200_ts2": {
-          "rate": 0.111,
-          "n": 712
+          "rate": 0.1047,
+          "n": 869
+        },
+        "Q1_above200_ts3": {
+          "rate": 0.0,
+          "n": 2
         },
         "Q2_below200_ts2": {
-          "rate": 0.1111,
-          "n": 9
+          "rate": 0.0714,
+          "n": 14
+        },
+        "Q2_below200_ts3": {
+          "rate": 0.0,
+          "n": 1
         },
         "Q2_above200_ts1": {
           "rate": 0.0,
-          "n": 41
+          "n": 42
         },
         "Q2_above200_ts2": {
-          "rate": 0.0985,
-          "n": 802
+          "rate": 0.1089,
+          "n": 946
+        },
+        "Q2_above200_ts3": {
+          "rate": 0.0,
+          "n": 11
         },
         "Q3_below200_ts2": {
-          "rate": 0.15,
-          "n": 40
+          "rate": 0.3117,
+          "n": 77
+        },
+        "Q3_below200_ts3": {
+          "rate": 0.0,
+          "n": 5
         },
         "Q3_above200_ts1": {
-          "rate": 0.3333,
-          "n": 24
+          "rate": 0.3478,
+          "n": 23
         },
         "Q3_above200_ts2": {
-          "rate": 0.1245,
-          "n": 787
+          "rate": 0.1379,
+          "n": 892
         },
         "Q3_above200_ts3": {
-          "rate": 0.5,
-          "n": 2
+          "rate": 0.0833,
+          "n": 12
         },
         "Q4_below200_ts2": {
-          "rate": 0.4118,
-          "n": 153
+          "rate": 0.4415,
+          "n": 299
         },
         "Q4_below200_ts3": {
           "rate": 0.25,
-          "n": 12
+          "n": 28
         },
         "Q4_above200_ts1": {
-          "rate": 0.1538,
-          "n": 13
+          "rate": 0.2,
+          "n": 15
         },
         "Q4_above200_ts2": {
-          "rate": 0.1509,
-          "n": 636
+          "rate": 0.1705,
+          "n": 604
         },
         "Q4_above200_ts3": {
-          "rate": 0.0256,
-          "n": 39
+          "rate": 0.1212,
+          "n": 66
         },
         "Q5_below200_ts2": {
-          "rate": 0.2615,
-          "n": 348
+          "rate": 0.2897,
+          "n": 397
         },
         "Q5_below200_ts3": {
-          "rate": 0.3155,
-          "n": 168
-        },
-        "Q5_above200_ts1": {
-          "rate": 0.5,
-          "n": 2
+          "rate": 0.3969,
+          "n": 320
         },
         "Q5_above200_ts2": {
-          "rate": 0.1864,
-          "n": 279
+          "rate": 0.195,
+          "n": 241
         },
         "Q5_above200_ts3": {
-          "rate": 0.3962,
+          "rate": 0.3208,
           "n": 53
         }
       }
@@ -322,9 +334,9 @@
       "ts_ema": 0.83,
       "ts_state": 2,
       "ts_label": "neutral(0.8-1.0)",
-      "prob_3d": 0.0985,
-      "n_cell_3d": 802,
-      "prob_ts_only": 0.15,
+      "prob_3d": 0.1089,
+      "n_cell_3d": 946,
+      "prob_ts_only": 0.1703,
       "input_staleness_days": 0,
       "stale_warning": false
     },

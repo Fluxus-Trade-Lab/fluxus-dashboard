@@ -1,6 +1,6 @@
 {
   "ticker": "ACMR",
-  "fetched_at": "2026-08-29T03:34:56Z",
+  "fetched_at": "2026-08-30T18:01:25Z",
   "_schema": "v2",
   "current_price": 74.41999816894531,
   "info": {
@@ -40,11 +40,7 @@
     "companyOfficers": []
   },
   "earnings_history": [],
-  "next_earnings": {
-    "date": "2026-11-04",
-    "revenue_low": 295000000,
-    "revenue_high": 348446000
-  },
+  "next_earnings": {},
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -103,87 +99,10 @@
     }
   ],
   "analyst": {
-    "consensus": "Buy",
-    "total_ratings": 8,
-    "bullish": 7,
-    "neutral": 1,
-    "bearish": 0,
-    "avg_price_target": 117.75,
-    "high_price_target": 166.0,
-    "low_price_target": 75.0,
-    "current_price": 74.42,
-    "recent_rating_changes": [
-      {
-        "date": "2026-06-24T12:43:16",
-        "firm": "Morgan Stanley",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-18T17:56:44",
-        "firm": "Roth Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-05T10:04:07",
-        "firm": "Seaport Global",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2025-09-30T18:00:26",
-        "firm": "Roth Capital",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2025-02-28T16:45:20",
-        "firm": "JP Morgan",
-        "to_grade": "Overweight",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2025-02-27T13:26:54",
-        "firm": "Needham",
-        "to_grade": "Hold",
-        "from_grade": "Hold",
-        "action": "reit"
-      },
-      {
-        "date": "2024-12-05T17:53:59",
-        "firm": "Craig-Hallum",
-        "to_grade": "Hold",
-        "from_grade": "Buy",
-        "action": "down"
-      },
-      {
-        "date": "2024-12-04T10:01:37",
-        "firm": "Needham",
-        "to_grade": "Hold",
-        "from_grade": "Buy",
-        "action": "down"
-      },
-      {
-        "date": "2024-10-01T10:26:30",
-        "firm": "Needham",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      },
-      {
-        "date": "2024-08-08T16:19:39",
-        "firm": "Benchmark",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
-      }
-    ]
+    "avg_price_target": null,
+    "high_price_target": null,
+    "low_price_target": null,
+    "current_price": null
   },
   "news": [
     {
@@ -247,19 +166,19 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.06194571504200472,
+  "options_implied_move": null,
   "technicals": {
     "ma20": 80.13475036621094,
     "ma50": 89.12399993896484,
     "ma200": 62.277424850463866,
     "rsi14": 41.606926684748885,
     "high_20d": 92.55000305175781,
-    "low_5d": 73.9800033569336,
-    "low_10d": 73.9800033569336,
+    "low_5d": 73.81900024414062,
+    "low_10d": 73.81900024414062,
     "high_52w": 127.19000244140625,
     "low_52w": 26.100000381469727,
-    "atr14": 4.755713326590402,
-    "atr14_pct": 6.390370120399858,
+    "atr14": 4.767213548932757,
+    "atr14_pct": 6.405823254806347,
     "position_in_52w_range_pct": 47.79898783544048
   },
   "ohlc_2y": [
@@ -4267,9 +4186,9 @@
       "date": "2026-08-28",
       "open": 79.27,
       "high": 80.2,
-      "low": 73.98,
+      "low": 73.819,
       "close": 74.42,
-      "volume": 888127.0
+      "volume": 888400.0
     }
   ],
   "ohlc_1y": [
@@ -6285,9 +6204,9 @@
       "date": "2026-08-28",
       "open": 79.27,
       "high": 80.2,
-      "low": 73.98,
+      "low": 73.819,
       "close": 74.42,
-      "volume": 888127.0
+      "volume": 888400.0
     }
   ],
   "ai_synthesis": null,
