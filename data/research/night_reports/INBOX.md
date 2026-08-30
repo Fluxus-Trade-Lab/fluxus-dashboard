@@ -5,7 +5,8 @@
 > 格式：`- [日期] <链接> ——（Andy 的一句话，可空）`。Zac 处理后移进 `data/research/collection.md` 并附判定。
 
 - [08-30] https://threeui.com ——（Andy）「以后我们要往 3d 特效网站推进，threeui.com 是学习资料」
-  - ⏳ 待 Zac 学习判定。前端 UI 代录，**并留三个先问清楚的点**，免得学完才发现不能用：①**许可证** —— 抄一个 Three.js 组件库进对外站点，许可证决定能不能用、要不要署名（我抓页面只拿到标题，正文没读到，判定前必须自己确认）；②**它是组件库还是教程站** —— 是前者的话真正的问题是"抄哪几个"而不是"学什么"；③**代价** —— three.js 打包体量不小，而我们线上首屏已经是 1.5MB JS + 734KB three.module（构建输出实测：three 已经在依赖里了），要用它得先说清楚放在哪个页面、加载策略是什么。
+  - ✅ 已处理（Zac 08-31）：**✅ 采纳，但只能用 Community 那一半。** 前端代录留的三个点全部查实——①**许可证是两套**：Community = **MIT**（须保留 item-specific attribution），Pro = 付费非独占许可（$99/年 或 $199 终身，禁止把 Pro 源码当独立资产再分发）；②**是组件库不是教程站**（copy-ready 组件+模板+Pro MCP），所以问题确实是「抄哪几个」；③**代价比估的小**——`three` 已是 `HeroField.jsx:110` 的 `await import('three')` **懒加载独立 chunk**（实测 734,334 字节），不在首屏关键路径上；真正该问的是「新组件会不会把 three 拉进第二个页面」。⚠️ 查的过程踩了两次同一个坑：首页 `grep -i mit` 的 4 次命中**全是 `Yosemite` 的子串**，而第一遍 `grep "from 'three'"` 零命中差点写成「three 是死依赖」。全文判词入 [`collection.md`](../collection.md)。**买不买 Pro 归 Andy**（先过 MVP 闸）。原代录三点保留在下：
+  - （原代录）前端 UI 代录，**并留三个先问清楚的点**，免得学完才发现不能用：①**许可证** —— 抄一个 Three.js 组件库进对外站点，许可证决定能不能用、要不要署名（我抓页面只拿到标题，正文没读到，判定前必须自己确认）；②**它是组件库还是教程站** —— 是前者的话真正的问题是"抄哪几个"而不是"学什么"；③**代价** —— three.js 打包体量不小，而我们线上首屏已经是 1.5MB JS + 734KB three.module（构建输出实测：three 已经在依赖里了），要用它得先说清楚放在哪个页面、加载策略是什么。
 
 - [08-23] https://www.youtube.com/watch?v=1k3KRbktibQ ——（Andy）reversal setup，我们图书馆和课程里没有详细记录和了解的
   - ✅ 已处理（Zac 08-24）：Deepvue 产品 webinar，讲 Stan Weinstein Stage Analysis 的 4B- 筑底 setup。**判定 📦 存档不采纳**——方法我们已覆盖 3/5（`sp_hl`/`ma_reclaim`/`trend_base`），缺的 Stage 4 分类与 Mansfield RS 是定义问题不是发现问题。全文判词入馆 `data/research/collection.md`。

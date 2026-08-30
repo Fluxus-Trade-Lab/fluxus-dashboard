@@ -168,3 +168,57 @@ Zac 08-28 实测的分线准确率 38.5%、「待认领」91% 是坟头、首页
 
 **⚠️ 数字上的保留**：「200+ 小时不漂移」是作者自己的 showcase，**n=2 条 trajectory，无第三方复现**。
 可以当方向读，**不可以当证据引用**（[[pitfall_borrowed_list_as_a_ruler]]）。仓库我没跑过，只读了帖。
+
+---
+
+## [08-30 收藏 · Zac 08-31 判定] threeui.com —— ✅ **采纳，但只能用 Community 那一半**
+
+**Andy 的话**：「以后我们要往 3d 特效网站推进，threeui.com 是学习资料。」
+前端 UI 线代录时留了三个「学完才发现不能用」的问题，我一条一条查了，**三条都有确定答案**。
+
+### ① 许可证 —— **两套，别当成一套**（读的是 8 月 22 日更新的 Terms of Use 正文）
+
+| | 许可 | 能不能进对外站点 |
+|---|---|---|
+| **Community** | **MIT**（站方原文：Community 包的代码按随代码附带的许可发布，目前是 MIT；**item-specific attribution / 第三方 notice 仍须保留**） | ✅ **能**，保留 notice 即可 |
+| **Pro** | 付费期内的非独占许可，可商用、可交付给客户；但**不得**把 Pro 源码作为独立资产/组件库/源码集再分发，**不得**去掉署名 | 💰 要先买 |
+
+**价格**：Pro $99/年（原价 $199）· Lifetime $199 一次性（原价 $399），Stripe 收款。
+支持邮箱是 `support@designcode.io`（即 DesignCode 那一摊）。
+
+⚠️ **一处我差点报错**：首页 `grep -i mit` 命中 4 次，看着像「有 MIT 声明」——
+**四次全部是 `Yosemite` 里的子串**（组件名 "Temple Night — Yosemite Sunset"）。
+首页正文零许可证声明，MIT 只在 Terms 正文里。[[pitfall_audit_greps_miss_the_other_spelling]] 又一次。
+
+### ② 组件库还是教程站 —— **组件库**（所以问题确实是「抄哪几个」）
+
+站方自述「copy-ready Three.js components / 完整网站模板 / WebGL 背景 / hero sections / UI effects」，
+分类有 Landing Pages · Hero · Three.js · Backgrounds · Buttons · Text Animation · UI Elements · CSS · Motion Design。
+**不是教程站**，没有讲解层。Pro 还附一个 MCP（能让 agent 直接取组件与源码）——
+这一条对我们有额外价值，但它在**付费墙内**。
+
+### ③ 代价 —— **比代录时估的小，因为 three 已经是懒加载的独立 chunk**
+
+代录里写「首屏 1.5MB JS + 734KB three.module，three 已经在依赖里了」。查下来要改两个字：
+
+- `three@^0.185.1` 确实在 `frontend/package.json` 里；
+- **但它是动态引入**：`frontend/src/components/public/HeroField.jsx:110` 是
+  `try { THREE = await import('three') } catch { return }`，用在 `LandingPage`（对外落地页）；
+- 因此 `three.module-*.js`（主树 dist 实测 **734,334 字节**）是**独立 chunk，不在首屏关键路径上**，
+  且外面还包着 try/catch —— 取不到就静默降级。
+
+**所以「代价」的正确问法不是「要不要引入 three」（已经引了），而是「新组件是继续挂在 LandingPage 这一个懒加载点上，还是会把 three 拉进第二个页面」。** 前者边际成本≈组件自身；后者才是新增一整个 chunk 的入口。
+
+⚠️ 我自己第一遍 `grep "from 'three'"` 是**零命中**，差点写成「three 是死依赖」——
+是第二遍换写法才抓到 `await import('three')`。**同一个坑，同一晚踩了两次**（另一次是上面的 Yosemite）。
+
+### 判定
+
+**✅ 采纳（有条件）**：作为**学习资料 + Community 组件的取用源**。
+**不采纳**的是「买 Pro 然后抄」——那是一笔钱和一次决策，归 Andy，不归我；且我们连
+「3d 特效放在哪个页面」都还没定，先买等于先付款后立项（MVP 闸）。
+
+**给前端 UI 线的三句可执行的话（已列门铃）**：
+1. 只取 Community 组件，**保留每个组件自带的 attribution/notice**；Pro 的源码一行都别抄进仓库。
+2. 新的 three 内容优先挂在 `LandingPage` 已有的那个懒加载点上，别在第二个页面新开 `import('three')`。
+3. 要买 Pro 之前先回答「它两周内对外发布什么」（宪法 MVP 闸）——答不出就进 NOW.md 停车场。
