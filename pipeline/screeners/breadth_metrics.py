@@ -103,6 +103,20 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
     new_highs = int((high_52w >= _NEW_HIGH_THRESHOLD).sum())
     new_lows = int((low_52w <= _NEW_LOW_THRESHOLD).sum())
 
+    # New 4-week (20-session) highs / lows -- the matched-horizon version.
+    # Added 2026-08-31. The 252d pair above needs a name to undercut a whole
+    # year before it counts, so it is structurally blind to a four-week
+    # deterioration: on 2026-08-28 it was the ONE reading in the breadth panel
+    # that stayed benign while %above-50sma, 10d net advances and McClellan
+    # all fell. Same threshold and tolerance as the 52w pair, so the two are
+    # directly comparable; NULL (not 0) when the column is absent, because a
+    # missing input must not read as "no new lows today".
+    high_20d = pd.to_numeric(universe.get('high_20d', pd.Series(dtype=float)), errors='coerce')
+    low_20d = pd.to_numeric(universe.get('low_20d', pd.Series(dtype=float)), errors='coerce')
+    have_20d = int(high_20d.notna().sum()), int(low_20d.notna().sum())
+    new_highs_4w = int((high_20d >= _NEW_HIGH_THRESHOLD).sum()) if have_20d[0] else None
+    new_lows_4w = int((low_20d <= _NEW_LOW_THRESHOLD).sum()) if have_20d[1] else None
+
     return {
         'universe_size': n,
         'up_4pct': up_4pct,
@@ -123,6 +137,8 @@ def compute_snapshot(universe: pd.DataFrame) -> Dict[str, Any]:
         'declines': declines,
         'new_highs': new_highs,
         'new_lows': new_lows,
+        'new_highs_4w': new_highs_4w,
+        'new_lows_4w': new_lows_4w,
         'net_advances': advances - declines,
     }
 

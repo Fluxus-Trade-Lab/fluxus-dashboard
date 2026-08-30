@@ -154,3 +154,72 @@ class TestTrueNhNl:
         result = compute_snapshot(universe)
         assert result['new_highs'] == 2
         assert result['new_lows'] == 2
+
+
+class TestFourWeekNewHighsLows:
+    """4w new highs/lows -- the matched-horizon companion to the 52w pair.
+
+    Added 2026-08-31. The 252-session reading is structurally blind to a
+    four-week deterioration (a name has to undercut a whole year of lows to
+    count), which is why on 2026-08-28 it was the lone dissenter while three
+    other breadth readings fell. These tests pin the two properties that
+    make the new pair trustworthy: it counts on the SAME rule as the 52w
+    pair, and a missing input reads as NULL rather than as "none today".
+    """
+
+    def _uni(self, **over):
+        import pandas as pd
+        base = {
+            'ticker': ['A', 'B', 'C', 'D'],
+            'close': [100.0, 100.0, 100.0, 100.0],
+            'change_pct': [0.01, -0.01, 0.01, -0.01],
+            'perf_1m': [0.0] * 4, 'perf_3m': [0.0] * 4,
+            'sma20_dist': [0.0] * 4, 'sma40_dist': [0.0] * 4,
+            'sma50_dist': [0.0] * 4, 'sma200_dist': [0.0] * 4,
+            'high_52w': [-0.20] * 4, 'low_52w': [0.20] * 4,
+            # A at its 20d high, B at its 20d low, C and D in the middle
+            'high_20d': [0.0, -0.15, -0.08, -0.09],
+            'low_20d': [0.30, 0.0, 0.11, 0.12],
+        }
+        base.update(over)
+        return pd.DataFrame(base)
+
+    def test_counts_names_at_their_4w_extreme(self):
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni())
+        assert r['new_highs_4w'] == 1     # A only
+        assert r['new_lows_4w'] == 1      # B only
+
+    def test_uses_the_same_tolerance_as_the_52w_pair(self):
+        """Within 0.1% of the extreme still counts -- quotes are not exact."""
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        r = compute_snapshot(self._uni(high_20d=[-0.0005, -0.15, -0.08, -0.09]))
+        assert r['new_highs_4w'] == 1
+        r2 = compute_snapshot(self._uni(high_20d=[-0.02, -0.15, -0.08, -0.09]))
+        assert r2['new_highs_4w'] == 0    # 2% off the high is NOT a new high
+
+    def test_missing_column_is_null_not_zero(self):
+        """The failure that would matter: an absent input reading as calm.
+
+        If the adapter stops emitting high_20d/low_20d, the count must go
+        NULL so a guard can see it. Zero would render as "no new lows today"
+        -- the most bullish possible reading of a data outage.
+        """
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        u = self._uni().drop(columns=['high_20d', 'low_20d'])
+        r = compute_snapshot(u)
+        assert r['new_highs_4w'] is None
+        assert r['new_lows_4w'] is None
+
+    def test_4w_is_more_sensitive_than_52w_on_the_same_rows(self):
+        """The whole point: names can be at 4w lows without being at 52w lows.
+
+        Positive control for the premise -- if this ever fails, the two
+        windows are returning the same thing and the new pair is pointless.
+        """
+        from pipeline.screeners.breadth_metrics import compute_snapshot
+        # every name is far from its 52w low but sitting on its 20d low
+        u = self._uni(low_52w=[0.40] * 4, low_20d=[0.0] * 4)
+        r = compute_snapshot(u)
+        assert r['new_lows'] == 0
+        assert r['new_lows_4w'] == 4

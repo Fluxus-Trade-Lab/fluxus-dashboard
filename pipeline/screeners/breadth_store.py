@@ -33,6 +33,7 @@ BREADTH_COLUMNS = [
     'up_13pct_34d', 'down_13pct_34d',
     't2108', 'pct_above_200sma', 'pct_above_50sma', 'pct_above_20sma',
     'advances', 'declines', 'new_highs', 'new_lows',
+    'new_highs_4w', 'new_lows_4w',
     'net_advances', 'rana', 'ad_line', 'mcclellan_osc',
 ]
 

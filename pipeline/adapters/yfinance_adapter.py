@@ -931,6 +931,18 @@ class YfinanceAdapter(BaseAdapter):
                     'range5_pct': float((hist['High'].iloc[-5:].max() - hist['Low'].iloc[-5:].min()) / close * 100) if n >= 5 and close else None,
                     'dist_hi20_pct': float((close / hist['Close'].iloc[-20:].max() - 1) * 100) if n >= 20 else None,
                     'low_52w': (close / float(hist['Low'].min()) - 1),
+                    # 4-week (20-session) high/low, SAME convention as the 52w
+                    # pair above so breadth can count new highs/lows at a
+                    # matched horizon. Added 2026-08-31: on 08-28 the 252d
+                    # new-high/new-low reading was the lone dissenter in the
+                    # breadth panel -- it stayed benign while three other
+                    # readings deteriorated, because a name must undercut a
+                    # WHOLE YEAR of lows before it counts. At 20 sessions the
+                    # same construction can see a four-week deterioration.
+                    # Distinct from `dist_hi20_pct`, which measures against the
+                    # rolling CLOSE high; these use High/Low like the 52w pair.
+                    'high_20d': (close / float(hist['High'].iloc[-20:].max()) - 1) if n >= 20 else None,
+                    'low_20d': (close / float(hist['Low'].iloc[-20:].min()) - 1) if n >= 20 else None,
                     'from_open_pct': from_open_pct,
                     'perf_5d': perf_5d,
                     'dcr_pct': dcr_pct,
