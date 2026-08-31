@@ -130,9 +130,35 @@ def lane_of(text):
     return best[1] if best else "联邦"
 
 
-def lane_for(text, paths=None):
-    """总入口：路径 > 箭头收件人 > 关键词。"""
-    return lane_of_paths(paths) or lane_of_arrow(text) or lane_of(text)
+# ---------- 两种语义，两个函数（Andy 08-31 裁决）----------
+# 裁决原文：看板上「线」的意思是**「谁欠这件事、谁该动手」**（收件人语义），
+# **不是**「谁做了这件事」（作者语义）。
+#
+# 此前只有一个 `lane_for(text, paths)` 两边共用：`done`/`doing` 列问的是「谁提交的」，
+# 而 `claim`/`blocked` 列问的是「谁该动手」——**同一个函数回答了两个不同的问题**。
+# 两名独立盲判 agent 的 7 处分歧全落在这里；Zac 08-28 原话：「没定义之前这部分准确率量不出来，
+# 不是量不出，是题目没答案。」现在有答案了，所以拆开——**不加注释了事，让调用点必须显式选一个**。
+#
+# 两者的实质分歧就是那个箭头：
+#   commit `contracts(§7): → 前端 P/L 1D 把跳空算成盈亏` 是 **Joe 写的**（作者），
+#   要动手修的是 **UI Claire**（收件人）。旧的 `lane_for` 把这条 commit 记在 Claire 名下，
+#   于是「7 天完成排行」给 Claire 记了一笔她没干的活，而 Joe 少了一笔。
+
+
+def lane_authored_by(text, paths=None):
+    """**谁做了这件事**（作者语义）。只用于确实要问作者的地方：done / doing 列的「谁提交的」。
+
+    路径 > 关键词。**故意不看「→ 收件人」箭头**——箭头指的是谁该动手，
+    把它算进作者会把「Joe 转投递给前端」的 commit 记到前端头上。"""
+    return lane_of_paths(paths) or lane_of(text)
+
+
+def lane_owed_to(text, paths=None):
+    """**谁欠这件事、谁该动手**（收件人语义 —— 这是看板的默认语义，Andy 08-31 裁决）。
+
+    箭头 > 路径 > 关键词：`→ X` 是明写的收件人，比任何推断都硬。
+    路径次之（文件边界＝谁的地盘谁动手），关键词垫底。"""
+    return lane_of_arrow(text) or lane_of_paths(paths) or lane_of(text)
 
 # ---------- git 数据 ----------
 # 一次 git log 同时取 commit 元信息与改动路径（不为每个 commit 单独起进程）
@@ -150,7 +176,8 @@ by_day = collections.Counter(ad.split(" ")[0] for _, ad, _ in log14)
 lane_7d = collections.Counter()
 lane_last, lane_today = {}, collections.Counter()
 for h, ad, s in log14:
-    ln = lane_for(s, commit_paths.get(h))
+    # 吞吐统计（7 天完成排行 / 泳道「今日」/ 智能体心跳）问的是**谁做的**。
+    ln = lane_authored_by(s, commit_paths.get(h))
     days_ago = (now - datetime.datetime.strptime("2026-" + ad, "%Y-%m-%d %H:%M")).days
     if days_ago < 7:
         lane_7d[ln] += 1
@@ -161,7 +188,10 @@ for h, ad, s in log14:
 import hashlib
 cards = []
 _seen_ids = set()
-def add(col, pri, title, src, lane=None, date="", paths=None):
+def add(col, pri, title, src, lane, date=""):
+    # ⚠️ `lane` 没有默认值是**故意的**（Andy 08-31 裁决）：调用点必须自己说清这张卡的线
+    # 是「谁欠的」（lane_owed_to，面向行动的列）还是「谁做的」（lane_authored_by，done/doing）。
+    # 留一个默认兜底 = 把两种语义又混回一个函数里，正是这次要拆掉的东西。
     # 内容寻址卡号：同一事项跨刷新稳定（评论/对话引用不漂移）
     base = hashlib.sha1((col + "|" + title.strip()[:80]).encode("utf-8")).hexdigest()
     kid = "K" + base[:4].upper()
@@ -171,7 +201,7 @@ def add(col, pri, title, src, lane=None, date="", paths=None):
         kid = "K" + base[:3].upper() + str(n)
     _seen_ids.add(kid)
     cards.append(dict(id=kid, col=col, pri=pri,
-                      lane=lane or lane_for(title, paths), t=title.strip()[:170], src=src, d=date))
+                      lane=lane, t=title.strip()[:170], src=src, d=date))
 
 # --- PARSERS BEGIN（纯函数区：不碰 git / 文件系统，pipeline/tests/test_federation_board.py 靠标记切片测它们）---
 def bell_section(md):
@@ -279,7 +309,8 @@ if reports:
     if _body is not None:
         _items = parse_bell(_body)
         for _who, _what in _items:
-            add("claim", 1, _what, "晨报门铃 %s" % _d, lane_for(_who), _d)
+            # 门铃的 `_who` 就是收件人本人——这一列问的永远是「谁该去按这个铃」。
+            add("claim", 1, _what, "晨报门铃 %s" % _d, lane_owed_to(_who), _d)
         # 显式失败告警：节里有内容却一条都没解析出来 = 格式又变了。
         # 本文件下面自己写过「假零比空着更糟」——那条规矩这里也算数。
         _lines = [l for l in _body.splitlines() if l.strip()]
@@ -297,7 +328,8 @@ for b in git("branch", "-r", "--no-merged", "origin/main").splitlines():
         last = git("log", "-1", "--format=%ad|%s", "--date=format:%m-%d", b).strip().split("|", 1)
         bpaths = git("diff", "--name-only", "origin/main..." + b).split()
         add("claim", 2, "%s（+%s）%s" % (b.replace("origin/", ""), n, ("· " + last[1][:60]) if len(last) > 1 else ""),
-            "待合分支", lane_for(b + (last[1] if len(last) > 1 else ""), bpaths), last[0] if last else "")
+            # 待合分支挂在**该去合它的那条线**名下（谁的文件边界谁合），不是「谁提交的」。
+            "待合分支", lane_owed_to(b + (last[1] if len(last) > 1 else ""), bpaths), last[0] if last else "")
 
 contracts = show("data/reference/DATA_CONTRACTS.md").splitlines()
 for i, line in enumerate(contracts):
@@ -311,9 +343,10 @@ for i, line in enumerate(contracts):
     txt = re.sub(r"[*`]", "", line)
     head = txt[txt.index("]") + 1:].strip()[:150]
     if "待 Andy" in line or ("Andy 拍板" in line and "已" not in line):
-        add("blocked", 0, head, "契约行", lane_for(line), date)
+        # 契约行两列都是面向行动的：等谁拍板 / 谁该认领——一律收件人语义。
+        add("blocked", 0, head, "契约行", lane_owed_to(line), date)
     elif "→" in txt[:60]:
-        add("claim", 3, head, "契约行", lane_for(txt), date)
+        add("claim", 3, head, "契约行", lane_owed_to(txt), date)
 
 # ---------- 核销（08-31 修）----------
 # 「等你拍板」曾端出 KB388「回收两个 Discord 付费角色」，源标「INBOX 待办」；
@@ -412,9 +445,10 @@ if weeklies:
 for h, ad, s in log14:
     hrs = (now - datetime.datetime.strptime("2026-" + ad, "%Y-%m-%d %H:%M")).total_seconds() / 3600
     if hrs < 24:
-        add("done", 9, s[:150], h, lane_for(s, commit_paths.get(h)), ad)
+        # done / doing 是**已经发生的 commit**——这两列的线名是「谁提交的」，唯二的作者语义。
+        add("done", 9, s[:150], h, lane_authored_by(s, commit_paths.get(h)), ad)
     if ad.split(" ")[0] == TODAY:
-        add("doing", 9, s[:130], h, lane_for(s, commit_paths.get(h)), ad.split(" ")[1])
+        add("doing", 9, s[:130], h, lane_authored_by(s, commit_paths.get(h)), ad.split(" ")[1])
 
 andy_todo = []
 _sec = re.search(r"## 📋 等你动手[^\n]*\n(.*?)(\n## |\Z)", nowmd, re.S)
@@ -666,7 +700,12 @@ p_projects = (section("生意漏斗（内容 → 售后）", '<div class="funnel
               pcards)
 
 # --- 页2 看板 ---
-COLS = [("claim", "待认领 · 挂单板"), ("doing", "进行中 · 今日"), ("blocked", "等 Andy 拍板"), ("done", "已完成 · 24h")]
+# 列头必须自己说清线名是哪种语义（Andy 08-31 裁决）：前三列「谁欠」，done 列「谁做的」。
+# 两种语义不加区分地混在一张页面上，正是此前 7 处盲判分歧的来源。
+COLS = [("claim", "待认领 · 挂单板<span class=\"sem\">线 = 谁该动手</span>"),
+        ("doing", "进行中 · 今日<span class=\"sem\">线 = 谁提交的</span>"),
+        ("blocked", "等 Andy 拍板<span class=\"sem\">线 = 谁该动手</span>"),
+        ("done", "已完成 · 24h<span class=\"sem\">线 = 谁提交的</span>")]
 kb_cols = ""
 for key, label in COLS:
     items = sorted([c for c in cards if c["col"] == key], key=lambda c: c["pri"])
@@ -679,7 +718,7 @@ for key, label in COLS:
             inner += '<div class="lgroup">%s · %d</div>' % (E(ln), len(bylane[ln])) + "".join(cardh(c, False) for c in bylane[ln])
     else:
         inner = "".join(cardh(c, False) for c in items)
-    kb_cols += '<div class="col"><div class="colh">%s<span class="n">%d</span></div>%s</div>' % (label, len(items), inner or '<div class="empty">（空）</div>')
+    kb_cols += '<div class="col"><div class="colh"><span class="cl">%s</span><span class="n">%d</span></div>%s</div>' % (label, len(items), inner or '<div class="empty">（空）</div>')
 p_board = ('<div class="ctrl"><input id="q" placeholder="搜索卡片…"><span class="chip pf" data-p="0">P0</span><span class="chip pf" data-p="1">P1</span><span class="chip pf" data-p="2">P2</span><span class="chip pf" data-p="3">P3</span></div>'
            '<div class="board">' + kb_cols + "</div>")
 
@@ -693,7 +732,11 @@ for name, role, _, _, _ in ROSTER:
                 "".join('<span class="tag">%s</span>' % E(c["t"][:46]) for c in claims[:4]) or '<span class="mut">—</span>',
                 lane_today.get(name, 0) or "—",
                 "".join('<span class="tag don">%s</span>' % E(c["t"][:46]) for c in dones) or '<span class="mut">—</span>'))
-p_lanes = section("%d 线泳道" % len(ROSTER),'<table><thead><tr><th>线</th><th>在手挂单</th><th>今日</th><th>近期完成</th></tr></thead><tbody>%s</tbody></table>' % rows)
+p_lanes = (section("%d 线泳道" % len(ROSTER),
+                   '<div class="mut" style="margin-bottom:8px">「在手挂单」= 这条线<b>欠</b>的事（收件人语义）；'
+                   '「今日提交 / 近期完成」= 这条线<b>做</b>的事（作者语义）。同一条 commit 可能欠在一边、做在另一边——'
+                   '例：<code>contracts(§7): → 前端 …</code> 由 Joe 提交、由 UI Claire 动手。</div>'
+                   '<table><thead><tr><th>线</th><th>在手挂单 · 谁欠</th><th>今日提交 · 谁做</th><th>近期完成 · 谁做</th></tr></thead><tbody>%s</tbody></table>' % rows))
 
 # --- 页4 智能体 ---
 ag = ""
@@ -716,7 +759,7 @@ bars = "".join('<div class="bar" title="%s · %d"><i style="height:%d%%"></i><s>
 rank = sorted(lane_7d.items(), key=lambda kv: -kv[1])
 rank_h = "".join('<tr><td class="num">%d</td><td>%s</td><td class="num">%d</td></tr>' % (i + 1, n, v) for i, (n, v) in enumerate(rank[:9]))
 p_ops = (section("14 天吞吐（commit 到 main）", '<div class="chart">%s</div>' % bars) +
-         section("7 天完成排行", '<table><thead><tr><th>#</th><th>线</th><th>commit</th></tr></thead><tbody>%s</tbody></table>' % rank_h) +
+         section("7 天完成排行（按提交者，不是按收件人）", '<table><thead><tr><th>#</th><th>线 · 谁做的</th><th>commit</th></tr></thead><tbody>%s</tbody></table>' % rank_h) +
          section("🎮 发布关卡",
                  ('<div class="gatebar"><div style="width:%d%%"></div></div><div class="mut">本周 %d / 5</div>'
                   % (min(gate_n, 5) * 20, gate_n)) if gate_n is not None
@@ -739,8 +782,8 @@ PAGES = [
     ("home", "🏠", "今日", "TODAY", "生意读数 · 该你做的 · AI 交付", p_home, "生意"),
     ("projects", "📈", "项目", "BUSINESS PORTFOLIO", "P0–P7 档案与六环漏斗——你的生意长什么样", p_projects, "生意"),
     ("ops", "📊", "运营看板", "OPERATIONS · GLOBAL", "吞吐 · 完成排行 · 发布关卡", p_ops, "生意"),
-    ("board", "🗂", "任务看板", "TASK BOARD · KANBAN", "挂单不挂人：待认领 → 进行中 → 拍板 → 完成", p_board, "AI 引擎室"),
-    ("lanes", "🤝", "协作泳道", "MULTI-LANE COLLABORATION", "%d 条线各自在手的工作与最近交付" % len(ROSTER), p_lanes, "AI 引擎室"),
+    ("board", "🗂", "任务看板", "TASK BOARD · KANBAN", "挂单不挂人：待认领 → 进行中 → 拍板 → 完成（前三列的线 = 谁该动手，已完成列的线 = 谁提交的）", p_board, "AI 引擎室"),
+    ("lanes", "🤝", "协作泳道", "MULTI-LANE COLLABORATION", "%d 条线各自<b>欠</b>的工作与各自<b>做</b>的交付" % len(ROSTER), p_lanes, "AI 引擎室"),
     ("agents", "🤖", "智能体", "AGENT ROSTER", "花名册：职责 · 文件边界 · 心跳 · 排程", p_agents, "AI 引擎室"),
     ("kb", "📚", "知识库", "KNOWLEDGE SOURCES", "真理地图：哪类问题去哪查", p_kb, "AI 引擎室"),
     ("infra", "🛠", "基础设施", "NODES & ROUTINES", "定时任务与链路健康", p_infra, "AI 引擎室"),
@@ -817,8 +860,10 @@ h1{font:600 24px/1.2 "IBM Plex Serif",serif;margin:4px 0 2px}
 .board{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;align-items:start}
 @media(max-width:1100px){.board{grid-template-columns:1fr 1fr}}
 .col{background:var(--inset);border:1px solid var(--line);border-radius:10px;padding:11px}
-.colh{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:9px}
+.colh{display:flex;justify-content:space-between;align-items:baseline;gap:6px;font-size:12.5px;font-weight:600;margin-bottom:9px}
 .colh .n{color:var(--mut);font-family:"IBM Plex Mono",monospace;font-weight:400}
+.colh .cl{display:block}
+.sem{display:block;font:400 10px "IBM Plex Mono",monospace;color:var(--mut);letter-spacing:.04em;margin-top:2px}
 .col .k{background:var(--panel)}
 .lgroup{font-size:10px;color:var(--mut);letter-spacing:.12em;text-transform:uppercase;margin:9px 2px 5px}
 .ctrl{display:flex;gap:8px;margin-bottom:12px;align-items:center;flex-wrap:wrap}

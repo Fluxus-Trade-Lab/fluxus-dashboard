@@ -121,12 +121,19 @@ def test_keyword_fallback_takes_the_earliest_mention_not_the_roster_order(board)
 
 
 def test_paths_outrank_text(board):
-    """`verdict(adr)` 里有 Zac 的关键词 adr，但它动的是宪法与公箱——路径说了算。"""
-    assert board["lane_for"]("verdict(adr): Andy 拍板 ADR>=3.5 闸保留", ["CLAUDE.md"]) == "OPS Fable"
+    """`verdict(adr)` 里有 Zac 的关键词 adr，但它动的是宪法与公箱——路径说了算。
+
+    行里没有箭头时两种语义应当同答：欠这件事的和做这件事的都是 OPS。
+    （08-31 拆分前这条用的是两用的 `lane_for`。）"""
+    s, p = "verdict(adr): Andy 拍板 ADR>=3.5 闸保留", ["CLAUDE.md"]
+    assert board["lane_owed_to"](s, p) == "OPS Fable"
+    assert board["lane_authored_by"](s, p) == "OPS Fable"
 
 
 def test_unattributable_falls_through_to_the_federation(board):
-    assert board["lane_for"]("chore: bump something", []) == "联邦"
+    """路径、箭头、关键词全落空 -> 「联邦」，两种语义都一样。"""
+    assert board["lane_owed_to"]("chore: bump something", []) == "联邦"
+    assert board["lane_authored_by"]("chore: bump something", []) == "联邦"
 
 
 # ---------- 「等你拍板」不许印假零 ----------
@@ -199,3 +206,131 @@ def test_the_same_todo_registered_twice_shows_once(tmp_path):
         for b in sigs[i + 1:]:
             common = any(a[k:k + 12] in b for k in range(max(0, len(a) - 11)))
             assert not common, "两张 blocked 卡说的是同一件事：\n  %s\n  %s" % (a[:40], b[:40])
+
+
+# ---------- 「线」的两种语义（Andy 08-31 裁决）----------
+# 裁决原文：看板上「线」的意思是**「谁欠这件事、谁该动手」**（收件人语义），
+# **不是**「谁做了这件事」（作者语义）。
+#
+# 此前一个 `lane_for(text, paths)` 被两边共用——`done`/`doing` 列问「谁提交的」，
+# `claim`/`blocked` 列问「谁该动手」。两名独立盲判 agent 的 7 处分歧全落在这里；
+# Zac 08-28 原话：「没定义之前这部分准确率量不出来，不是量不出，是题目没答案。」
+#
+# ⚠️ 阳性对照（逐条注射实测过，别删这段）：
+#
+# | 注射 | 报红的用例 |
+# |---|---|
+# | ① `lane_authored_by` 改回「路径 > 箭头 > 关键词」（= 旧 lane_for） | 2 红：`…author_ignores_the_arrow`、`…two_functions_disagree…` |
+# | ② `lane_owed_to` 把箭头降到路径之后 | 1 红：`…arrow_outranks_the_file_boundary` |
+# | ③ 任一 `add()` 调用点把两个函数对调 | 1 红：`…every_add_call_site_declares_its_semantics` |
+# | ④ 恢复 `add(..., lane=None)` 默认值 | 1 红：`…add_forces_the_call_site_to_choose` |
+
+# 真例 58fd7ecf（origin/main，08-28）：Joe 提交的契约行 commit，箭头指向前端。
+# 改动路径只有 DATA_CONTRACTS.md —— 公箱，弃权，于是全靠文本定线。
+REAL_COMMIT = ("contracts(§7): -> 前端 P/L 1D 在当天建仓的票上把建仓前跳空算成盈亏"
+               "(实测虚增 43,380/千股);YTD 与权益曲线不受影响,别过度修")
+REAL_PATHS = ["data/reference/DATA_CONTRACTS.md"]
+
+
+def test_owed_to_takes_the_recipient_not_the_author(board):
+    """① 一条挂给某线的契约行：欠这件事的是箭头后面的收件人，不是写这条行的人。"""
+    assert board["lane_owed_to"](REAL_COMMIT, REAL_PATHS) == "UI Claire"
+
+
+def test_owed_to_arrow_outranks_the_file_boundary(board):
+    """收件人语义里箭头是**最硬**的证据，压过文件边界。
+
+    真形状：Joe 在自己的 `incidents/` 目录里写事故档，行里写明「→ DATA ALEX」。
+    文件边界说这是 Joe 的地盘（前一条断言自证），但欠着动手的是 ALEX。"""
+    line = "[08-27] Plumber Joe 转投递 → DATA ALEX: universe_gated 只数到流动性闸"
+    assert board["lane_of_paths"](["data/reference/incidents/x.md"]) == "Plumber Joe"
+    assert board["lane_owed_to"](line, ["data/reference/incidents/x.md"]) == "DATA ALEX"
+
+
+def test_author_ignores_the_arrow_recipient(board):
+    """② 同一条 commit 问「谁做的」：答案是 Joe。
+
+    旧 `lane_for` 在这里把箭头当成了归属，于是「7 天完成排行」给 UI Claire
+    记了一笔她没干的活、Joe 少了一笔（实测 14 天窗口内 3 条 commit 是这个形状）。"""
+    assert board["lane_authored_by"](REAL_COMMIT, REAL_PATHS) == "Plumber Joe"
+
+
+def test_author_still_respects_the_file_boundary(board):
+    """作者语义没有放弃路径——只是不看箭头。"""
+    assert board["lane_authored_by"]("fix: 收盘后 P/L 列", ["frontend/src/a.jsx"]) == "UI Claire"
+
+
+def test_the_two_functions_disagree_on_the_same_input(board):
+    """③ 前半：同一条输入，两个函数必须给出**不同**的答案。
+
+    这条是整次拆分的存在理由——若两者永远一致，拆开就只是改名。"""
+    owed = board["lane_owed_to"](REAL_COMMIT, REAL_PATHS)
+    author = board["lane_authored_by"](REAL_COMMIT, REAL_PATHS)
+    assert owed != author, "两个函数答案相同，语义没真的分开：%s" % owed
+    assert (owed, author) == ("UI Claire", "Plumber Joe")
+
+
+# ---------- ③ 后半：看板各列取的是对的那个 ----------
+# 这里用 AST 查**调用点**而不是跑整个脚本：那 3 条形状特殊的 commit 不一定落在
+# done 列的 24h 窗口里（08-31 实跑就没落进来），拿真数据断言会得到一个
+# 「今天恰好没有反例」的假绿。查调用点则永远有效，且新增 add() 也自动受管。
+
+EXPECTED_SEMANTICS = {
+    "claim": "lane_owed_to",       # 待认领 · 挂单板 —— 谁该动手
+    "blocked": "lane_owed_to",     # 等 Andy 拍板 —— 谁该动手
+    "done": "lane_authored_by",    # 已完成 24h —— 谁提交的
+    "doing": "lane_authored_by",   # 进行中 · 今日 —— 谁提交的
+}
+
+
+def _add_call_sites():
+    """[(行号, 列名, 传给 lane 的函数名 or None)]；线名写死成字面量的调用点 fn=None。"""
+    import ast
+    tree = ast.parse(open(SCRIPT, encoding="utf-8").read(), SCRIPT)
+    out = []
+    for node in ast.walk(tree):
+        if not (isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+                and node.func.id == "add"):
+            continue
+        col = node.args[0].value
+        lane = node.args[4] if len(node.args) > 4 else None
+        fn = (lane.func.id if isinstance(lane, ast.Call)
+              and isinstance(lane.func, ast.Name) else None)
+        out.append((node.lineno, col, fn))
+    return out
+
+
+def test_every_add_call_site_declares_its_semantics():
+    sites = _add_call_sites()
+    assert sites, "一个 add() 调用点都没找到——脚本结构变了，测试需要同步更新"
+    for lineno, col, fn in sites:
+        if fn is None:
+            continue           # lane 写死成字面量（如 "OPS Fable"），无歧义
+        assert fn == EXPECTED_SEMANTICS[col], (
+            "federation_board.py:%d 的 `%s` 列用了 %s()——面向行动的列一律 lane_owed_to，"
+            "只有 done/doing 才用 lane_authored_by（Andy 08-31 裁决）" % (lineno, col, fn))
+
+
+def test_both_semantics_are_actually_used():
+    """两个函数都得有调用点。全用一个 = 又塌回一种语义，这次拆分白做。"""
+    fns = {fn for _, _, fn in _add_call_sites() if fn}
+    assert fns == {"lane_owed_to", "lane_authored_by"}, fns
+
+
+def test_the_ambiguous_lane_for_is_gone():
+    """`lane_for` 就是被拆掉的那个两用函数。它一复活，调用点又能不选语义了。"""
+    src = open(SCRIPT, encoding="utf-8").read()
+    assert "def lane_for(" not in src, "两用的 lane_for 回来了——语义又混在一起了"
+
+
+def test_add_forces_the_call_site_to_choose():
+    """④ `add()` 的 `lane` 不许有默认值：留个兜底 = 允许调用点不表态。"""
+    import ast
+    tree = ast.parse(open(SCRIPT, encoding="utf-8").read(), SCRIPT)
+    fn = next(n for n in ast.walk(tree)
+              if isinstance(n, ast.FunctionDef) and n.name == "add")
+    names = [a.arg for a in fn.args.args]
+    assert "lane" in names, names
+    # 默认值从右往左对齐；lane 落在有默认值的尾段里就说明它可以省略
+    first_defaulted = len(names) - len(fn.args.defaults)
+    assert names.index("lane") < first_defaulted, "add() 的 lane 有默认值，调用点可以不选语义"
