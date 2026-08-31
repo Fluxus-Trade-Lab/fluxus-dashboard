@@ -23,6 +23,21 @@
 > **放在每篇正文最上方,加粗小标题,一字不改。**
 
 ```markdown
+**What this is**
+
+I'm a full-time swing trader in Japan. Seven years in, what decided my results was never which
+names I picked. It was how much I put on each one, and where I got out. That is why this letter
+is called How Much.
+
+Every Sunday: the number that changed, what I did about it, and what it cost me. The losers stay in.
+```
+
+*⚠️ 2026-08-31 Andy 定：块 A 换成上面这个短版（原长版存档见下）。理由是他要「简短的、有人味的自我介绍」，
+原版是产品说明书不是人在说话。免责声明不再放这里——`templates/post_footer.html` 每篇都带，放两处等于同一封邮件里重复。*
+
+<details><summary>原长版（2026-08-25，已停用）</summary>
+
+```markdown
 **What this letter is**
 
 A letter about how much. Every idea here arrives with its entry, its stop, and what I'm risking
@@ -44,6 +59,8 @@ it's doing and what I'm risking while it does it.
 Not advice, and not a recommendation to buy or sell anything. I don't know your account, your
 taxes, or how well you sleep. Measure your own water.
 ```
+
+</details>
 
 **为什么这段比 TSF 那段强:**
 - 他的版本是防御性的(「我不是荐股服务」),你的版本**每一条否定后面都跟一个正向承诺**
