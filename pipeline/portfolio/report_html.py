@@ -162,6 +162,18 @@ def build_month_doc(trades, meta, month, full_mtm, out_dir, handle):
     by_tk = pr.by_key(closed, lambda t: t.ticker)[:10]
     cs = an.trade_case_studies(closed)
     opens = _mtm.open_positions(trades, prices, m_end, m_end_eq) if prices else []
+    sq = an.system_quality(closed) if len(closed) >= 10 else None
+    regime = an.regime_attribution(closed)
+
+    # previous month's MTM return, for the vs-last-month card
+    import datetime as _dt
+    pm_key = (_dt.date.fromisoformat(m_days[0]).replace(day=1) - _dt.timedelta(days=1)).isoformat()[:7]
+    pm_days = sorted(d for d in eqbd if d[:7] == pm_key)
+    prev_ret = None
+    if pm_days:
+        before = sorted(d for d in eqbd if d < pm_days[0])
+        pm_base = eqbd[before[-1]] if before else cap
+        prev_ret = (prev_eq / pm_base - 1) * 100 if pm_base else None
 
     ps_light, ps_stats = rc.position_sizes(closed, eqbd, cap, dark=False)
     ps_dark, _ = rc.position_sizes(closed, eqbd, cap, dark=True)
@@ -175,6 +187,7 @@ def build_month_doc(trades, meta, month, full_mtm, out_dir, handle):
         "rdist": _both(lambda d: rc.r_distribution(rdist, dark=d)),
         "deployment": _both(lambda d: rc.deployment_curve(closed, month_eqbd, prev_eq, dark=d)),
         "cases": _both(lambda d: rc.case_studies_grid(cs, load_local_ohlc, dark=d)) if cs else None,
+        "regime": _both(lambda d: rc.regime_attribution_chart(regime, dark=d)) if regime else None,
     }
 
     doc = {
@@ -192,10 +205,10 @@ def build_month_doc(trades, meta, month, full_mtm, out_dir, handle):
             "sum_R": s["sum_R"] if s else None,
             "avg_hold": s["avg_hold_days"] if s else None,
             "dd_pct": m_dd["pct"], "dd_peak": m_dd["peak_date"], "dd_trough": m_dd["trough_date"],
-            "open_n": len(opens), "end_equity": m_end_eq,
+            "open_n": len(opens), "end_equity": m_end_eq, "prev_ret": prev_ret,
         },
         "opens": opens, "rdist": rdist, "by_dir": by_dir, "by_tk": by_tk, "cs": cs,
-        "size_stats": ps_stats, "charts": charts,
+        "size_stats": ps_stats, "sq": sq, "regime": regime, "charts": charts,
     }
     return doc, stem
 
