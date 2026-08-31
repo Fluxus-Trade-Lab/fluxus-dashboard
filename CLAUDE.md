@@ -126,6 +126,12 @@ git diff origin/main -- <该文件> | grep '^-' | grep -v '^--- '
 - `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `data/reference/DATA_RELIABILITY.md` §六追行 · `pipeline/tools/audit_*` 及其测试 · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md` · `data/growth/**`（Growth Gary 台账，08-25 补——此前任务书叫他直推而白名单没他，周一记账会变死信）· `Fluxus_Brand/ops/campaigns/**`（夜间六站产线的 isolate 区，08-31 补——此前每晚落 main 靠惯性不靠规矩）
 
 碰到**任何**其他路径（`pipeline/screeners|tickers|adapters`、`data/output`、`data/history`、`frontend/`、workflow 文件）→ 留分支，在汇报里列「待合分支：<名> · <一句话> · 建议合 y/n」，等 Andy 或对应线的主人处理。
+
+⚠️ **本条与〈外部动作与跨线授权〉的边界（08-31 实测撞了一次，Andy 裁前按此办）**：白名单管的是**「谁来合」**，外部动作那条管的是**「要不要问 Andy」**——两者都成立时的解法是：
+- **修一个不改口径的 bug / 加一条不改行为的兜底守卫**，即使路径在白名单外：**可以做、可以合，但必须①全套测试全绿 ②带阳性对照 ③汇报里单列一行「越白名单已合：<路径> · <commit> · 理由」**，让路径的主人和 Andy 一眼看见。
+- **改口径、改行为、动 `data/output`/`data/history` 的内容、对外发布**：仍然留分支等主人，白名单说了算。
+- 判据一句话：**「这个改动会让别人的东西表现得不一样吗？」** 会 → 留分支；只是让本来就该成立的事成立 → 可合并且必须报。
+- 先例：08-28 前端修 cron backstop（`.github/workflows/`，`4f9b5262`）Andy 回「OK DO IT ALL」并指出请示往返本身是浪费；08-31 合 `0271daa0`（同一个文件的日期判据修复，14 测试+1231 全套绿）照此办理。
 **理由**：08-19 到 08-24 有四个晚上的研究产出搁浅在分支上（其中 Delayed EP 首次前瞻复盘搁了 54 小时无人合），根因不是谁忘了，是**产出者没有落地权、而有权的人不知道有东西等着**。
 
 **通讯录 v2 补丁（08-24 第四次群发事故后）**：无人值守会话里 ccd 消息工具不可用，但内置的 `ListAgents`/`SendMessage`（socket 通道）可能可用——**那是陷阱不是许可**。近两次群发走的都是这条通道。铁律：**无人值守运行中，任何形态的消息发送一律禁止**；想通知谁，写进耐久处 + 汇报列「门铃待按」。

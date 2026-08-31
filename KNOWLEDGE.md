@@ -34,10 +34,10 @@
 
 | 数字 | 唯一权威源 | 读法 |
 |---|---|---|
-| 会员数 / MRR / Discord 人数 | `data/growth/metrics.csv` | 每列取**最后一个非空值**（notes 列带口径） |
+| 会员数 / MRR / Discord 人数 | `data/growth/metrics.csv` | 每列取**最后一个非空值并连它所在行的日期一起报**——稀疏表会静默混龄（实测 whop 38 来自 08-25、discord 39 来自 08-24、mrr 1052 来自 08-25，三个数两个日期）；跨列日期不一致时**禁止合并成一句话**。**`discord_members` 一律真人口径（不含 bot 与 owner）**——08-24 行的 39 是含 bot 的旧口径，已作废。列口径见 `data/growth/README.md`「metrics.csv 列口径」 |
 | 会员明细 / 身份合并 | `data/growth/private/` 最新 members_master | PII 不出 private |
 | 发布记录 / views | `data/content/posts.csv` | 按 post_id 行 |
-| 研究结论 | `data/research/claims/claims.jsonl` | 引用带日期与 evidence_grade |
+| 研究结论 | `data/research/claims/claims.jsonl` | 引用带日期与 evidence_grade；**文件含 `#` 注释行，逐行解析前先 `grep -v '^#'`**，或直接用 `pipeline/tools/claim_registry` |
 | 交易绩效 | `data/portfolio/` performance_review 产物 | ⚠️ 本地目录（gitignored），`git show` 不适用——只能本机读；H1 +90.5% 等口径以此为准 |
 | 关卡进度 | 日推第一行 / NOW.md 🎮 节 | |
 
