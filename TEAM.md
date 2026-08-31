@@ -73,7 +73,7 @@
     - `voice|templates|copybook|record|site` → **Writer Mia**（Voice_Bible / Own_Lines / Ammo 仍是 Andy 亲笔或亲批；`voice/verdicts.jsonl` 是 append-only 公箱，日推可追加）
     - `visual` → **Visual Vera**
     - `research|ops` + **`brain/` 与顶层 `BRAIN.md`** → **Marketing Steve**（brain/ 线内细分以 BRAIN.md《基准与写权限矩阵》节仲裁）
-    - `ops/campaigns/**` → Marketing Steve 的夜间产线 isolate 区。⏳ **它在不在 safe-merge 白名单待 Andy 裁**（08-31 的追加已回滚，见 NOW.md「等你动手」）——**在他裁定前维持 08-29 以来的现状**：仍落 main，但每次必须在汇报与 INBOX 里单列一行「越白名单已落：<路径> · <commit> · 理由」，让它可见而不是靠惯性。
+    - `ops/campaigns/**` → Marketing Steve 的夜间产线 isolate 区。⏳ **它不在 safe-merge 白名单**（08-31 有人把它加进去，Andy 已裁「不可以越权改宪法」，追加已回滚；提案存档 `data/reference/proposals/2026-08-31_safe_merge_boundary.md`，采纳与否等报告）。**在他采纳之前维持 08-29 以来的现状**：仍落 main，但每次必须在汇报与 INBOX 里单列一行「越白名单已落：<路径> · <commit> · 理由」，让它可见而不是靠惯性。
   - 课程仓库 `~/Documents/SwingMasterclass`、vault `FluxusTrading_Obsidian/20_Course/` → **Studio Q**
 
 ## 通信纪律
