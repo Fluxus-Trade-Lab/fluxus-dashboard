@@ -49,7 +49,17 @@ jobs:
             echo "main schedule or manual dispatch — always run"
             exit 0
           fi
-          WANT=$(TZ=America/New_York date +%F)
+          # 触发时刻不可信：scheduled run 中位迟到 63 分钟、最差 213 分钟（本仓库
+          # 08-27 主排程那班更是迟了 485 分钟），而 01:30 UTC 距 ET 午夜只有 150
+          # 分钟。用执行时刻的 ET 日期，一旦迟到超过 150 分钟 WANT 就翻成下一个
+          # 日历日,那个日期永远不在 breadth.json 里,闸于是恒开——backstop 会把
+          # 一个已经落地的夜晚重算一遍。回退 6 小时把容差从 150 分钟拉到 8h30m:
+          # 准点触发时 now-6h = 19:30 ET 同日,仍然是我们要找的那个 session;迟到
+          # 到 10:00 UTC 才会再次翻日,而那时这一晚本来也已经报废了。GitHub 的
+          # cron 只会迟不会早,所以下界不用管。GATE_NOW_EPOCH 是测试用的注入口
+          # (pipeline/tests/test_backstop_gate.py),正常运行时未设置。
+          NOW_EPOCH="${GATE_NOW_EPOCH:-$(date -u +%s)}"
+          WANT=$(TZ=America/New_York date -d "@$((NOW_EPOCH - 21600))" +%F)
           # python3, not python: the runner is guaranteed the former. And it
           # FAILS OPEN — a missing or malformed breadth.json leaves LAST empty,
           # which is a mismatch, which fires the backstop. Under `bash -e` a
