@@ -1,5 +1,25 @@
 """Delayed Reaction EP -- Stockbee's second entry, from our own EP archive.
 
+来源:视频,未文字核实  (source: video, never verified in text)
+----------------------------------------------------------------------------
+The named source, "Episodic Pivots Delayed Entry" (2023-05-03,
+https://stockbee.blogspot.com/2023/05/episodic-pivots-delayed-entry.html), has
+an EMPTY body: it is a video-only post. The 2026-08-24 sweep of all 101 method
+posts on that site (data/research/stockbee_2026-08/) found the behaviour
+described below stated nowhere in writing.
+
+Two different things here are unsourced, in two different ways. The THRESHOLDS
+have always said they are ours. The BEHAVIOURAL CLAIM they encode -- day 1
+reverses, day 3-4 is priced in, the second breakout is the better trade, the
+short side mirrors it -- is paraphrased from video and we have never found it
+in text. Do not cite any of it as "Stockbee writes", and do not treat the
+claim as independent confirmation of a result this scan produces.
+
+The consequence is not that the file is wrong; it is that nothing in it is
+externally validated, which makes `--review` against our own ledger the only
+evidence this scan will ever have.
+----------------------------------------------------------------------------
+
 Pradeep's idea: the day a stock gaps on a real catalyst is not the entry --
 day 1 tends to reverse, and by day 3-4 the market assumes the news is priced
 in and the stock often drifts a little more. If it then holds inside the
