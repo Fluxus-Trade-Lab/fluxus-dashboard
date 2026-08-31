@@ -91,7 +91,7 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
   <div class="card"><p class="k">Month P&amp;L (MTM)</p><p class="v {{ 'pos' if d.m.pnl>=0 else 'neg' }}">{{ d.m.pnl | money }}</p></div>
   <div class="card"><p class="k">Realized (closed)</p><p class="v {{ 'pos' if d.m.realized>=0 else 'neg' }}">{{ d.m.realized | money }}</p></div>
   <div class="card"><p class="k">Cumulative return</p><p class="v {{ 'pos' if d.m.cum>=0 else 'neg' }}">{{ d.m.cum | pct(1) }}</p></div>
-  <div class="card"><p class="k">Closed trades</p><p class="v">{{ d.m.closed_n }}</p></div>
+  <div class="card"><p class="k">Closed trades</p><p class="v">{{ d.m.closed_n - d.m.partial_n if d.m.partial_n else d.m.closed_n }}{% if d.m.partial_n %} <span class="muted" style="font-size:12px">+{{ d.m.partial_n }} 部分减仓</span>{% endif %}</p></div>
   <div class="card"><p class="k">Win rate</p><p class="v">{{ d.m.win_rate | pct0(1) if d.m.win_rate is not none else '—' }}</p></div>
   <div class="card"><p class="k">Sum R / Payoff</p><p class="v {{ 'pos' if (d.m.sum_R or 0)>=0 else 'neg' }}">{{ d.m.sum_R | signR }} <span class="muted" style="font-size:13px">· {{ d.m.payoff | num(2) if d.m.payoff is not none else '—' }}×</span></p></div>
   <div class="card"><p class="k">Max DD (month)</p><p class="v neg">{{ d.m.dd_pct | pct0(1) }}</p></div>

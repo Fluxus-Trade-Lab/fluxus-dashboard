@@ -151,6 +151,10 @@ def build_month_doc(trades, meta, month, full_mtm, out_dir, handle):
     closed = [t for t in trades if t.exit_date[:7] == month]
     s = pr.overall_stats(closed, cap) if closed else None
     realized = sum(t.pnl for t in closed)
+    # The bucket is by LAST-LEG month, so it includes still-open trades whose
+    # latest trim fell in this month. The dashboard counts only fully-closed —
+    # label both so the two surfaces can't look contradictory (42 vs 34, Aug'26).
+    n_partial = sum(1 for t in closed if (t.orig_qty - sum(l.qty for l in t.legs)) > 0.5)
 
     # intra-month equity slice + its drawdown (base = prev month-end equity)
     month_curve = [(d, eqbd[d]) for d in m_days]
@@ -199,7 +203,7 @@ def build_month_doc(trades, meta, month, full_mtm, out_dir, handle):
         "cap": cap,
         "m": {
             "ret": month_ret, "pnl": month_pnl, "realized": realized, "cum": cum_ret,
-            "closed_n": len(closed),
+            "closed_n": len(closed), "partial_n": n_partial,
             "win_rate": s["win_rate"] if s else None,
             "payoff": s["payoff"] if s else None,
             "sum_R": s["sum_R"] if s else None,
