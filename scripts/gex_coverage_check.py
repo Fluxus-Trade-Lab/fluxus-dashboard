@@ -73,6 +73,44 @@ REFERENCE_NOTE = ("digitised by eye from a chart for the 2026-08-14 session, "
                   "+/-0.5bn; good enough for shape, not for magnitude")
 
 
+# A fixed 0.35s sleep after reqMktData was the whole reason this script had
+# never returned a single contract. Measured 2026-08-19 08:59 ET, SPX 20260819
+# 7700C, one trial per wait:
+#
+#     0.35s   OI nan   modelGreeks None    dropped
+#     0.50s   OI nan   modelGreeks None    dropped
+#     1.00s   OI 2637  IV 0.1628           usable
+#     2.00s   OI 2637  IV 0.1628           usable
+#
+# So the old loop asked for every contract, threw all of them away because the
+# tick had not arrived yet, and then reported "0.70s each, 4 min projected" --
+# a precise estimate of the cost of collecting nothing.
+#
+# One trial per wait is not enough to pick a safe constant, so nothing here
+# picks one. We poll until the data arrives and give up at a deadline, which
+# costs the slow contracts their real time and the fast ones nothing.
+TICK_DEADLINE = 4.0
+TICK_POLL = 0.2
+
+
+def await_tick(ib, tk, right: str, deadline: float = TICK_DEADLINE):
+    """Poll until OI and IV both arrive, or the deadline passes.
+
+    Returns (oi, iv), or (None, None) if the contract never reported. A None
+    here means "this contract did not answer in time" and is counted as such --
+    it is never silently folded into the same bucket as a contract that does
+    not exist.
+    """
+    t0 = time.time()
+    while time.time() - t0 < deadline:
+        ib.sleep(TICK_POLL)
+        oi = tk.callOpenInterest if right == "C" else tk.putOpenInterest
+        iv = tk.modelGreeks.impliedVol if tk.modelGreeks else None
+        if oi and oi == oi and iv and iv > 0:
+            return oi, iv
+    return None, None
+
+
 def corr(a: list[float], b: list[float]) -> float:
     n = len(a)
     ma, mb = sum(a) / n, sum(b) / n
@@ -137,9 +175,14 @@ def main():
         todo = [(e, k, r) for e in expiries for k in strikes for r in ("C", "P")]
         print(f"SPX {spot:,.2f}  {len(expiries)} expiries x {len(strikes)} "
               f"strikes x 2 = {len(todo):,} contracts")
+        full = len(todo)
         if args.sample:
+            # Expiry-major, so a sample walks whole expiries rather than a
+            # cross-section. Fine for timing; NOT a representative yield if the
+            # near expiries differ from the far ones in strike coverage.
             todo = todo[:args.sample]
-            print(f"  SAMPLE: pricing {len(todo)} of them")
+            print(f"  SAMPLE: pricing {len(todo)} of them (first "
+                  f"{args.sample / max(1, len(strikes) * 2):.1f} expiries)")
 
         opts, t0, got = [], time.time(), 0
         for i, (e, k, r) in enumerate(todo, 1):
@@ -151,11 +194,9 @@ def main():
             if not o.conId:
                 continue
             tk = ib.reqMktData(o, "101", False, False)
-            ib.sleep(0.35)
-            oi = tk.callOpenInterest if r == "C" else tk.putOpenInterest
-            iv = tk.modelGreeks.impliedVol if tk.modelGreeks else None
+            oi, iv = await_tick(ib, tk, r)
             ib.cancelMktData(o)
-            if oi and oi == oi and iv and iv > 0:
+            if oi and iv:
                 d = dt.datetime.strptime(e, "%Y%m%d").replace(
                     hour=16, tzinfo=now.tzinfo)
                 T = max((d - now).total_seconds() / (365 * 24 * 3600), MIN_T_YEARS)
@@ -175,8 +216,22 @@ def main():
     print(f"\n{got:,} usable contracts in {elapsed:.0f}s "
           f"({elapsed / max(1, len(todo)):.2f}s each)")
     if args.sample:
-        print("SAMPLE ONLY — no profile computed. Re-run without --sample "
-              "once the projected time above is acceptable.")
+        # A yield of zero must never read as "fast". The first version of this
+        # script printed a four-minute projection off a sample that collected
+        # nothing, which is the most confident way there is to be wrong.
+        if not got:
+            sys.exit(
+                f"ZERO of {len(todo):,} sampled contracts returned both OI and "
+                f"IV, so the {elapsed / max(1, len(todo)):.2f}s each above is "
+                f"the cost of collecting nothing, not a projection.\n"
+                f"Check first: is the tick deadline ({TICK_DEADLINE}s) long "
+                f"enough, and is the market disseminating?")
+        rate = got / len(todo)
+        print(f"SAMPLE ONLY — no profile computed. {got:,}/{len(todo):,} "
+              f"({rate:.0%}) usable; the rest are strikes not listed for that "
+              f"expiry or contracts that did not answer.\n"
+              f"Full universe would be ~{full * elapsed / len(todo) / 60:.0f} "
+              f"min for ~{full * rate:,.0f} usable contracts.")
         return
     if not opts:
         sys.exit("no contract returned both OI and IV — is the market open?")

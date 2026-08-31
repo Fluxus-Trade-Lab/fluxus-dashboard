@@ -90,6 +90,9 @@ def main():
     ap.add_argument("--symbol", default="SPX")
     ap.add_argument("--date", help="YYYYMMDD (ET). Default: today's snapshot.")
     ap.add_argument("--window", default="", help="premarket | post-close")
+    ap.add_argument("--suffix", default="",
+                    help="Push snapshot_<SYM>_<DATE>_<SUFFIX>.* instead of the "
+                         "plain name. Must match what build_snapshot wrote.")
     ap.add_argument("--dry-run", action="store_true",
                     help="render the card and print the caption; send nothing")
     ap.add_argument("--prompt", action="store_true",
@@ -99,7 +102,8 @@ def main():
 
     load_env()
     day = args.date or market_today().strftime("%Y%m%d")
-    snap = SNAP_DIR / f"snapshot_{args.symbol}_{day}.json"
+    stem = f"snapshot_{args.symbol}_{day}" + (f"_{args.suffix}" if args.suffix else "")
+    snap = SNAP_DIR / f"{stem}.json"
     if not snap.exists():
         # Silence here would look like a successful push of nothing.
         sys.exit(f"no snapshot at {snap} — run build_snapshot.py first")
@@ -134,7 +138,7 @@ def main():
                  "(checked the environment and .env)")
 
     # The prompt card ships alone: attaching the HTML would defeat its purpose.
-    html = None if args.prompt else SNAP_DIR / f"snapshot_{args.symbol}_{day}.html"
+    html = None if args.prompt else SNAP_DIR / f"{stem}.html"
     ok = send(card, text, channel, token, extra=html)
     if ok:
         # Recorded whether or not anyone reads it: the classification of every

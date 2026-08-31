@@ -132,6 +132,52 @@ run_step gex_levels .venv/bin/python scripts/gex_levels.py --symbol SPX \
 run_step pine .venv/bin/python scripts/gex_to_pine.py --symbol SPX || say "warn: pine overlay failed"
 
 if [ "$postclose" = true ]; then
+    # FIRST of the post-close work, and the ordering is the whole point.
+    #
+    # A 0DTE expiry leaves the chain the same evening. Measured 2026-08-18 at
+    # 23:10 ET: that day's own expiry was already unlisted, and so was 08-17's.
+    # Four 0DTE reads are permanently gone -- two to chain hangs, two to a gap
+    # check that guessed the deadline instead of looking it up.
+    #
+    # Every other step here can be rebuilt tomorrow from bars or from stored
+    # files. This one cannot be rebuilt at all. It used to run last, behind five
+    # steps that could each delay it past the window, which put the only
+    # irreplaceable artifact at the end of the queue.
+    #
+    # Quote ticks are NOT pulled: measured at 142s per contract against 1.9s
+    # for trades, and the cheap 1-minute-bar substitute agreed with tick NBBO
+    # on only 56.7% of prints against a 50% coin. See scripts/flow_session.py.
+    #
+    # The two tenors are NOT the same size and must not share a budget.
+    # Measured from the artifacts:
+    #
+    #     1DTE 2026-08-19   79,642 prints   314s        (254 prints/s)
+    #     0DTE 2026-08-14  792,338 prints   ~3,100s     extrapolated at that rate
+    #
+    # So a 0DTE read needs roughly FIFTY MINUTES and STEP_TIMEOUT is 900s. It
+    # was never going to fit, and on 2026-08-19 it did not: the reorder put it
+    # first, it ran, and it was killed at 908s. Running first was necessary and
+    # is not sufficient -- it now fails first instead of failing last.
+    #
+    # Nothing downstream reads data/flow/ (checked: only gaps.py, and only for
+    # existence), so the 0DTE has no business blocking anything. It goes to the
+    # background at the very top, which starts its clock as early as possible
+    # AND keeps it off the critical path. The wait for it is at the end, before
+    # the gap check -- a gap check that runs while the pull is still in flight
+    # would report a gap that is actively being filled.
+    _flow0_log=$(mktemp); _flow0_t0=$(date +%s)
+    .venv/bin/python scripts/flow_session.py --symbol SPX --tenor 0 \
+        >"$_flow0_log" 2>&1 &
+    _flow0_pid=$!
+    say "flow tenor 0 started in background (pid $_flow0_pid, budget ${FLOW_0DTE_BUDGET:-4200}s)"
+
+    # The 1DTE fits in STEP_TIMEOUT with room (314s measured against 900s), so
+    # it stays inline and keeps its own failure isolated from the 0DTE.
+    run_step flow_1dte .venv/bin/python scripts/flow_session.py \
+        --symbol SPX --tenor 1 \
+        && say "flow read stored (tenor 1)" \
+        || say "warn: flow_session tenor 1 failed or timed out"
+
     # The session just closed: its Market Profile is now computable, the brief
     # can join it, and the scorecard has one more finished bar to grade against.
     run_step build_profile .venv/bin/python scripts/build_profile.py \
@@ -150,7 +196,14 @@ fi
 run_step build_tff .venv/bin/python scripts/build_tff.py --months 6 \
     || say "warn: TFF tables failed — brief will show no reading"
 
+# The post-close brief is a NEW brief for the same date, not a correction of the
+# morning one. The morning file is the state_ref of the morning machine view, and
+# build_snapshot refuses to rewrite it -- correctly. That refusal killed the
+# whole chain on 2026-08-18 because both windows were writing the same name.
+# Each window now owns its own file.
+SNAP_SUFFIX=$([ "$postclose" = true ] && echo "postclose" || echo "")
 run_step build_snapshot .venv/bin/python scripts/build_snapshot.py --symbol SPX \
+    ${SNAP_SUFFIX:+--suffix "$SNAP_SUFFIX"} \
     || { say "FAILED or TIMED OUT at build_snapshot"; exit 1; }
 say "brief built (data/snapshots/snapshot_SPX_${DATE}.html)"
 
@@ -160,22 +213,34 @@ say "brief built (data/snapshots/snapshot_SPX_${DATE}.html)"
 .venv/bin/python scripts/log_view.py --machine >>"$LOG" 2>&1 \
     && say "machine view logged" || say "warn: machine view not logged"
 
-# The flow read goes LAST of the data steps and is never fatal. It is the only
-# step with a real data cost -- ~100 contracts of trade ticks, about five
-# minutes -- and it must never be able to delay the levels pull or the brief.
-# Quote ticks are NOT pulled: measured at 142s per contract against 1.9s for
-# trades, and the cheap 1-minute-bar substitute agreed with tick NBBO on only
-# 56.7% of prints against a 50% coin. See scripts/flow_session.py.
-if [ "$postclose" = true ]; then
-    # Both tenors, each in its own step so one failing cannot cost the other.
-    # ~5 minutes per tenor at 100 contracts; the 0DTE is the heavier of the two
-    # (792k prints on 2026-08-14 against ~110k for a 1DTE).
-    for _t in 0 1; do
-        run_step "flow_${_t}dte" .venv/bin/python scripts/flow_session.py \
-            --symbol SPX --tenor "$_t" \
-            && say "flow read stored (tenor $_t)" \
-            || say "warn: flow_session tenor $_t failed or timed out"
+# Collect the background 0DTE before anything asks whether it exists.
+#
+# The budget is bounded by TWS, not by patience: it auto-logs-out somewhere
+# around 17:00-18:00 ET, so a pull started at 16:30 has roughly seventy-five
+# minutes of live session no matter what number we put here. 4200s leaves the
+# extrapolated ~3,100s a real margin and still lands before the logout.
+#
+# The extrapolation rests on ONE measured 1DTE rate, so the elapsed time is
+# logged on every outcome. The next successful 0DTE replaces the estimate with
+# a measurement; until then this comment is the only honest source for it.
+if [ "$postclose" = true ] && [ -n "${_flow0_pid:-}" ]; then
+    _budget="${FLOW_0DTE_BUDGET:-4200}"
+    while kill -0 "$_flow0_pid" 2>/dev/null \
+          && [ "$(( $(date +%s) - _flow0_t0 ))" -lt "$_budget" ]; do
+        sleep 15
     done
+    _el=$(( $(date +%s) - _flow0_t0 ))
+    if kill -0 "$_flow0_pid" 2>/dev/null; then
+        kill -TERM "$_flow0_pid" 2>/dev/null; sleep 5
+        kill -KILL "$_flow0_pid" 2>/dev/null
+        say "TIMEOUT after ${_el}s wall clock: flow_0dte — killed (budget ${_budget}s)"
+    elif wait "$_flow0_pid"; then
+        say "flow read stored (tenor 0) in ${_el}s  <-- the real number; the 900s"\
+            " budget it used to run under was never enough"
+    else
+        say "warn: flow_session tenor 0 failed after ${_el}s"
+    fi
+    cat "$_flow0_log" >>"$LOG" 2>/dev/null; rm -f "$_flow0_log"
 fi
 
 # The last word: what did NOT get produced. This runs after everything else
@@ -201,10 +266,12 @@ fi
 # rather than an echo. The full brief follows; every push is recorded so the
 # anchoring of each view is MEASURED rather than assumed.
 if [ "$premarket" = true ]; then
-    .venv/bin/python scripts/push_brief.py --symbol SPX --window "$win" --prompt >>"$LOG" 2>&1 \
+    .venv/bin/python scripts/push_brief.py --symbol SPX --window "$win" \
+        ${SNAP_SUFFIX:+--suffix "$SNAP_SUFFIX"} --prompt >>"$LOG" 2>&1 \
         && say "pushed commit-first prompt" || say "warn: prompt push failed"
     sleep "${BRIEF_DELAY_S:-2700}"          # ~45 min to commit before the answer
 fi
-.venv/bin/python scripts/push_brief.py --symbol SPX --window "$win" >>"$LOG" 2>&1 \
+.venv/bin/python scripts/push_brief.py --symbol SPX --window "$win" \
+    ${SNAP_SUFFIX:+--suffix "$SNAP_SUFFIX"} >>"$LOG" 2>&1 \
     && say "pushed full brief to Discord" \
     || say "warn: Discord push failed — card still at data/snapshots/card_SPX_${DATE}.png"
