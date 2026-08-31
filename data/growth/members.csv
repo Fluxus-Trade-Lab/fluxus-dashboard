@@ -1,6 +1,6 @@
 person_id,joined,tier,plan,billing,price_usd,status,channels,email_count,in_discord,delivery,aliases,notes
 G001,2025-11-14,lifetime,lifetime,one-time,3399.00,active,paypal;whop,2,Y,discord,G026,"Lifetime;已并入G026(双邮箱同尾号,Andy手工log载明其Discord名与本行handle一致)"
-G002,2025-11-14,lifetime,plan_8RfO9OFDQdVUV,one-time,999.00,active,alipay;whop,1,Y,discord,,
+G002,2025-11-14,subscription-or-free,plan_8RfO9OFDQdVUV,one-time,999.00,active,alipay;whop,1,Y,discord,,"08-31更正:tier由lifetime改回subscription-or-free。理由三条——①本行plan=plan_8RfO9OFDQdVUV(Masterclass)且price=999/one-time;与Lifetime定价$3399不符;②paypal-reconcile.md终态表『只交课程费从未缴会员费=3人(G002 G006 G014)』;同plan同价的G006/G014 tier均为subscription-or-free;③lifetime是08-25『线索B:G026≈G002』留下的残迹;该线索已被Andy手工log推翻(最终定案G026→G001;G001升Lifetime)。更正后tier=lifetime且status=active=9行;与metrics.csv 08-25行/offers.md/paypal-reconcile.md三处一致。⚠️channels里的alipay在weekly/任一文档中无出处(支付宝渠道无系统流水);待Andy口述核实;本次不动"
 G003,2025-11-14,lifetime,lifetime,one-time,3399.00,active,paypal;whop,1,Y,discord,,
 G004,2025-11-14,subscription-or-free,"plan_8RfO9OFDQdVUV,plan_7TpyDYwfvaXzY",annual,1149.00,active,whop,1,Y,discord,,
 G005,2025-11-14,lifetime,lifetime,one-time,3399.00,active,paypal;whop,1,Y,discord,,
