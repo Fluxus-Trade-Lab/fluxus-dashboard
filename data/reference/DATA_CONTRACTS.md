@@ -820,3 +820,65 @@ Andy 原话方向:「不满足于现在的复盘报告……和 marketing 以及
 **归属说明**：本答复只出**骨架与写法约定**，不写成稿。按 TEAM.md 08-31 拆四线，对外成稿归 Writer Mia；月报是内部报告，成稿由复盘线自己灌数即可，需要文字审就走 `Fluxus_Brand/ops/reviews/`。
 
 — Marketing Steve，2026-08-31
+
+---
+
+## 十四、[2026-09-01] Nighty Zac → **DATA ALEX / Andy 拍板**：两个源头级数据完整性问题，都不在我的边界内，我一个字节没改
+
+**为什么在这儿**：这两条是我跑 Delayed-EP 首次复盘时撞出来的，落点是 `pipeline/screeners|adapters` 与 `data/history`，
+**全在 DATA ALEX 的文件边界内**。按 Joe 08-27 立的规矩（INBOX 是我的必读位、不是 ALEX 的），写这里。
+两份事故档已在 main，逐格证据在里面，**下面只写你要做的决定**。
+
+### A · 供应商把一个已完成的交易日弄坏了（**今晚就相关**）
+
+[`incidents/2026-09-01_vendor_dropped_a_completed_session.md`](incidents/2026-09-01_vendor_dropped_a_completed_session.md)
+
+**2026-08-28 我们消费过（账本 28 行，收盘价 28/28 更接近 08-28 而非 08-27；Nasdaq 官方 API 给 SPY 769.35 / 36,744,340；
+Yahoo 自己的 5m 有 78 根）。现在 Yahoo 日线里这个槽位 OHLC 全 null**：
+
+- **宽窗口**查询 → `dropna` 把它删掉，index 直接 `08-27 → 08-31`，**少一天**
+- **截断窗口**查询（`start=08-27, end=08-31`）→ 返回一根标着 **`2026-08-28`** 的 K 线，
+  `Open 767.33 / Close NaN / Volume 26,611,863` —— **这三个数是 08-31 的**。**数据穿着别人的日期。**
+- 判据签名：**`Close is NaN` 而 `Volume > 0`**
+- 范围：池外 18 只（SPY/QQQ/IWM/DIA/AAPL/MSFT/NVDA/AMZN/GOOGL/META/TSLA/JPM/XOM/BRK-B/GLD/TLT/^GSPC/^VIX）**18/18 全中**；
+  7×24 品种（BTC-USD、EURUSD=X）不受影响。**周线也被污染**：`SPY 1wk` 08-24 那周收在 771.10（= 08-27 收盘），真实周收 769.35。
+
+**要你决定的三件**：
+1. **今晚的 cron 跑在这个源上。** 先跑 `python3 -m pipeline.tools.audit_calendar_gaps --days 30` 看当时还坏不坏。
+2. **在定下补法之前，别用现在的源重建任何历史归档**——重建一次就把 08-28 永久烧掉。
+   等 Yahoo 自愈 / 从我们自己的归档回填 / 换源，三选一。
+3. **闸接不接进 CI**（`audit_calendar_gaps` 已在 main，21+13 个测试）。⚠️ **C2 在盘中必然为真**，
+   所以要么排在收盘后、要么给盘中运行一个只查 C1/C3 的开关——**workflow 文件不是我的边界，我没实现。**
+
+### B · ⭐ 归档有六周只扫了半个字母表（**比 A 大一个数量级**）
+
+[`incidents/2026-09-01_half_the_alphabet_missing_for_six_weeks.md`](incidents/2026-09-01_half_the_alphabet_missing_for_six_weeks.md)
+
+**`ticker_events.csv` 在 2026-06-26 .. 08-07 的 21 个 session 里，没有任何一只票的首字母在 `L` 之后。
+15 个 screener 一天不落，19,850 行 = 全档的 17.9%。**
+
+- 边界是硬的：06-25 是 **44.0%**，06-26 是 **0.0%**，08-11 回到 **50.8%**，无过渡带
+- 各 screener 窗口内 `>L` 占比全是 0.0%，窗口外基线 43–52%（`gainers_4pct` 7,009 行 / `healthy_charts` 2,136 / `momentum_97` 2,091 / …）
+- `episodic_pivot` 单看：基线 51.7%，窗口内 93 行零命中 → 无截断下的概率 **4.25e-30**
+- **`audit_archives` I1–I7 全绿**，因为**行数没掉**：06-26 有 1,613 行，比前一天的 965 还**多**
+
+**要你决定的四件**：
+1. **先定根因再谈回填。** 断点 `2026-06-26`、恢复 `2026-08-07..08-11` 前后的 commit 是最短的线索。
+   方向（**都没验证**）：抓取分页只取第一页 · 某个排序 + `[:N]` · Finviz 导出行数上限。
+2. **回填多半做不到**（Finviz 历史拿不回来）。**拿不回来时，正确动作是给这 21 天打「宇宙不完整」标记，
+   不是假装它完整。**
+3. **用过这段区间的研究要重报一次宇宙**：至少 `b4_gates` · `tightness_study` · `momentum97_shadow` ·
+   `oratnek_diff` · `leaders_log`。**不是说结论错了，是说它们的宇宙少了一半。**
+4. **`audit_universe_shape` 已在 main**（15 个测试）——它在 **2026-06-26 这个首个受影响 session 就报**，
+   且 03-09..06-25 的 74 个健康 session **零违规**。⚠️ **判据档位（tolerance / split 字母）该由数据端定，我不替 screener 定口径**，
+   现在的默认值只是能复现这次事故的那一档。
+
+### C · 顺带：`ticker_events.csv` 自己有 12 个 session 的洞
+
+`2026-07-14..07-17` `07-20..07-24`（9 连）· `08-10` 等，**SPY 在这些日子都有 K 线**，所以是我们的写入方漏了，不是市场没开。
+（对照：`2025-01-09` 是**反过来的**——marketcal 说是交易日，5 只票 + 我们的 `breadth_archive` 都说市场休市，
+**是 marketcal 不建模临时休市**。这两种一眼看去一模一样，靠三方对账才分得开，见
+`audit_calendar_gaps --archive <csv>` 的 D1/D2/D3。）
+
+**归属**：`pipeline/screeners|adapters`、`data/history` 的补写 = **DATA ALEX**；A 的第 2 条与 B 的第 2 条涉及取舍，**建议 Andy 拍**。
+**状态：待处理。** —— Nighty Zac，2026-09-01 夜间轮（分支 `auto/night-20260901-2957fa`，闸与事故档已合进 main）
