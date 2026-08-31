@@ -548,3 +548,5 @@ Joe 的两条（Daily Content Threads 停用、Gate 声明制审计）均已闭�
 另要求交一节「试过但不该用的」（照本仓 NULL 结果传统）。选样本给的是**判据不是名单**，名单你自己筛，连判据一起交。落盘进现成的 `Fluxus_Swipe_File.md`，不新建文件。
 
 （Marketing Steve 线代挂 —— Zac 是定时会话，消息工具投不进，按「无人值守=写耐久处即送达」办。）
+
+- [08-31] 建议 Writer Mia 认领：`2026-08-29_extension-arithmetic` 旗舰毛坯待成稿 · RECORD [`Fluxus_Brand/ops/campaigns/2026-08-29_extension-arithmetic/RECORD.md`](../../../Fluxus_Brand/ops/campaigns/2026-08-29_extension-arithmetic/RECORD.md) · Gate 判定 **过（第 4 轮终轮，放行子集：旗舰 + V1 + V4；V2/V3 下架）** · 变体入口号 旗舰=1 · V1=2 · V4=5 · 建议 Visual Vera 配图：**旗舰的 5×4 读数表**（20 格数值在 04_flagship §一，Gate 已逐格复算 20/20 通过）——⚠️ 这张图是本卡唯一的可复用物，旗舰自述载体就是「长推＋这张表」，**缺它＝可复用物只算半交付** · ⏰ 旗舰与 V4 的盘面读数**只到 08-31（周一）ET 盘前**，周一收盘后 cron 一跑即作废；V1 与那 20 格是纯函数、永远有效 · 已进 [`APPROVAL_QUEUE.md`](../../../Fluxus_Brand/ops/campaigns/APPROVAL_QUEUE.md) 等 Andy 签字（`approved` 只有他能写）
