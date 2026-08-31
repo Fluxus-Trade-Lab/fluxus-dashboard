@@ -11,6 +11,10 @@ export const PUBLIC_STATS = {
   totalTrades: 331,
   profitFactor: 2.48,
   avgHoldDays: 7.5,
+  // H1 2026 account return and payoff ratio (avg win / avg loss). Same review
+  // artifact as the rest: data/portfolio/reviews/h1_2026.json.
+  h1Return: 90.5,
+  payoff: 3.40,
   // Deepest MTM decline BY PERCENT. See ResultsPage for why percent, not dollar.
   maxDrawdown: -17.9,
 }

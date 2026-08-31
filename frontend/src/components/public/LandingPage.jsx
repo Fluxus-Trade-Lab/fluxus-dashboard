@@ -3,16 +3,24 @@ import HeroField from './HeroField'
 import { PUBLIC_STATS } from './publicStats'
 
 export default function LandingPage({ onNavigate }) {
-  // Same source and same numbers as ResultsPage — one click away, so they must
-  // agree. Until 2026-08-31 this page showed 72% / 2.1R / 340+, invented
-  // placeholders that survived the 2026-08-16 cleanup of ResultsPage. The real
-  // book is 39.9% / 0.88R / 331. A visitor who clicked "See the results" watched
-  // the win rate drop 32 points.
+  // Same source as ResultsPage, so the two can never disagree again. Until
+  // 2026-08-31 this page showed 72% / 2.1R / 340+ — invented placeholders that
+  // survived the 2026-08-16 cleanup of ResultsPage; a visitor who clicked "See
+  // the results" watched the win rate drop 32 points.
+  //
+  // Which three to headline is an editorial call, and Andy made it on 08-31:
+  // H1 return, payoff, profit factor. All three are true and all three describe
+  // this system better than its win rate does — a 39.9% win rate with a 3.40x
+  // payoff is the system working as designed, but the number alone reads as
+  // failure to anyone who has not read the method.
   const [stats, setStats] = useState(PUBLIC_STATS)
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}data/output/performance.json`)
       .then((r) => (r.ok ? r.json() : null))
-      .then((d) => { if (d?.stats) setStats(d.stats) })
+      .then((d) => { if (d?.stats) setStats({ ...PUBLIC_STATS, ...d.stats }) })
+    // Merge, do not replace: performance.json carries winRate/avgReturn/
+    // totalTrades/profitFactor but not h1Return/payoff, and a bare replace
+    // renders "+undefined%" on the headline the moment the fetch succeeds.
       .catch(() => {})
   }, [])
   return (
@@ -55,16 +63,16 @@ export default function LandingPage({ onNavigate }) {
 
           <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-[540px] mt-12">
             <div>
+              <div className="public-stat-number" style={{ color: 'var(--color-poster-blue)' }}>+{stats.h1Return}%</div>
+              <div className="public-label mt-1">H1 2026 Return</div>
+            </div>
+            <div>
+              <div className="public-stat-number" style={{ color: 'var(--color-poster-blue)' }}>{stats.payoff}&times;</div>
+              <div className="public-label mt-1">Payoff Ratio</div>
+            </div>
+            <div>
               <div className="public-stat-number" style={{ color: 'var(--color-poster-blue)' }}>{stats.profitFactor}</div>
               <div className="public-label mt-1">Profit Factor</div>
-            </div>
-            <div>
-              <div className="public-stat-number" style={{ color: 'var(--color-poster-blue)' }}>{stats.winRate}%</div>
-              <div className="public-label mt-1">Win Rate</div>
-            </div>
-            <div>
-              <div className="public-stat-number" style={{ color: 'var(--color-poster-blue)' }}>{stats.totalTrades}</div>
-              <div className="public-label mt-1">Trades</div>
             </div>
           </div>
         </div>
