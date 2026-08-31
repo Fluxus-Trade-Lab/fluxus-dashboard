@@ -140,13 +140,40 @@ const tr = (t, key, fallback) => {
  * formatted. A gate clause we cannot describe should be absent from the
  * sentence, never present as NaN.
  */
-const gateWords = (gate = {}) => {
+export const gateWords = (gate = {}) => {
   const out = []
   if (gate.min_market_cap) out.push(`$${(gate.min_market_cap / 1e9).toFixed(0)}B cap`)
   if (gate.min_dollar_volume) out.push(`$${(gate.min_dollar_volume / 1e6).toFixed(0)}M/day traded`)
   else if (gate.min_avg_volume) out.push(`${(gate.min_avg_volume / 1e6).toFixed(0)}M shares/day`)
-  return out.join(', ')
+  if (gate.min_adr_pct) {
+    /* The exemption is named because the overview shows the exempt zone's
+       panels on the same screen. An unqualified "ADR >= 3.5%" would claim a
+       floor that visibly does not hold for the trouble rows two inches below:
+       an exit signal does not stop mattering because the name went quiet. */
+    const exempt = gate.adr_exempt_zones || []
+    const skip = exempt.length ? ` except ${exempt.join('/')}` : ''
+    out.push(`ADR ≥ ${gate.min_adr_pct}%${skip}`)
+  }
+  return out.join(' · ')
 }
+
+/**
+ * How many names the panels below could actually have drawn from.
+ *
+ * `universe_gated` counts everything past the liquidity gate. Since 2026-08-25
+ * a third, universe-wide gate runs after it — `MIN_ADR_PCT = 3.5` — and the
+ * panels draw from what survives THAT. On the 08-29 file the two numbers are
+ * 2,055 and 975: printing the first beside a list built from the second
+ * overstates the reader's universe by 2.1x.
+ *
+ * The fallback is deliberate and one-directional. A file written before
+ * 2026-08-27 has no `universe_tradeable`, and `nf(undefined)` would print NaN
+ * — the exact failure the gate-clause comment above was written about. Falling
+ * back to the older, looser count keeps the sentence readable on an old file;
+ * every current file carries the right one and never reaches the fallback.
+ */
+export const tradeableCount = (data = {}) =>
+  (data.universe_tradeable ?? data.universe_gated)
 
 /**
  * Which number sits beside a ticker, and what it is called.
@@ -1047,7 +1074,7 @@ export default function WatchlistPage({ zone: routeZone }) {
       <p className="text-[12px] font-mono text-[var(--color-text-muted)] m-0">
         {t('wl.provenance', {
           date: data.date,
-          n: nf(data.universe_gated),
+          n: nf(tradeableCount(data)),
           gate: gateWords(data.gate),
         })}
       </p>
