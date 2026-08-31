@@ -27,8 +27,19 @@
 ## ⑥ 视觉站 · Visual Vera（08-31 拆线后补入产线）
 契约 [`roles/07_visual.md`](roles/07_visual.md)。成稿齐备后配图；**缺视觉或缺「不配图＋理由」＝ Gate 退回**。
 
+## ⚠️ 过渡条款（08-31 立；Mia/Vera 线还没有夜跑 routine）
+
+**问题**：08-31 把闸移到成稿/配图之后，但 `~/.claude/scheduled-tasks/` 里**没有 mia / vera 任务**——这两站没有执行者。
+叠加轮数上限后，每张卡的确定归宿变成被 `killed`（Gate 永远收不到 writing/visual 节 → 必退回 → 退给一条不会醒的线）。三处改动单独都不致命，叠起来是死锁。
+
+**在 Mia/Vera 有 routine 之前，按此办**：
+- 工头在 RECORD 的 `writing` / `visual` 两节各写一行「**暂缺执行者（本线无 routine），本卡按毛坯审**」。
+- **Gate 不因缺这两节退回**（`roles/06_gate.md` 的相关退回规则在过渡期不生效）；仍按毛坯的标准审其余各项。
+- 过闸后在 `APPROVAL_QUEUE.md` 那行注明「**未经 Mia 成稿 / Vera 配图**」——让 Andy 知道他看到的是毛坯不是成稿。
+- **解除条件**：mia / vera 的 routine 建起来，或 Andy 明确说这两站由人工承担。解除时删掉本节。
+
 ## 断点续跑（退回≠新卡）
-- 昨日 RECORD 的 `status ∉ {approved, published, measured, killed}` → 今晚**续跑同一目录**，不开新日期目录、不重选信号。
+- 昨日 RECORD 的 `status ∉ {queued, approved, published, measured, killed}` → 今晚**续跑同一目录**，不开新日期目录、不重选信号。
 - 工头按 `status` 路由：值=某站名→只 spawn 该站及其后必要环节；`review`→只 spawn Gate（按上轮「只审这几处」清单办，不重开轮）。已过闸的站不重做。
 - 量上限：一晚=一个新 campaign **或** 一次断点续修。
 - ⛔ **轮数上限（08-31 补；此前无上限，一张卡可以永久占用每一晚）**：同一张卡累计 **≥3 轮**仍未过闸 → 第 4 轮 Gate **只做二选一**：放行进 APPROVAL_QUEUE，或标 `killed` 留原地当案例。**不产生第 5 轮。**

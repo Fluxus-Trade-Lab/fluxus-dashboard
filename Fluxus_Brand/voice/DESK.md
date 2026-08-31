@@ -17,7 +17,7 @@
 
 | 来源 | 长什么样 | 你做什么 |
 |---|---|---|
-| **夜跑六站产线** | `../ops/campaigns/<日期>/` 的旗舰**毛坯**（过 Gate 后） | 把毛坯写成成稿——重组，不是润色 |
+| **夜跑六站产线** | `../ops/campaigns/<日期>/` 的旗舰**毛坯**（分发站拆完变体后、**Gate 之前**） | 把毛坯写成成稿——重组，不是润色 |
 | **Steve 的 brief** | `../ops/briefs/` 里的角度简报 | 按 brief 起草 |
 | **Andy 直接点题** | 口述在 `raw/`、或他在任何会话说的一句 | 优先级最高 |
 
@@ -53,4 +53,4 @@
 
 ## 六、交付去哪
 
-成稿落自己地盘（`Fluxus_Substack/drafts/` 等），**在 campaign 的 `RECORD.md` flagship 节标上成稿路径与状态**；发布后由 Steve 登记 `data/content/posts.csv`。走[直推 main 标准动作](../../CLAUDE.md)，push 后核实 commit 真在 origin/main——**写完≠送到，合进 main 才算**。
+成稿落自己地盘（`Fluxus_Substack/drafts/` 等），**在 campaign 的 `RECORD.md` `## writing` 节**写：成稿路径 · 与毛坯相比改了什么 · 七道闸自查结果（⚠️ 不是 flagship 节——那是旗舰站 owns 的，Gate 只读 writing 节）；发布后由 Steve 登记 `data/content/posts.csv`。走[直推 main 标准动作](../../CLAUDE.md)，push 后核实 commit 真在 origin/main——**写完≠送到，合进 main 才算**。

@@ -1,6 +1,7 @@
 # CAMPAIGN: <slug> · <日期>
 status: signal|research|angle|flagship|distribution|writing|visual|review|queued|approved|published|measured|killed
 rounds: <本卡累计跑过几轮；≥3 轮未过闸时第 4 轮 Gate 只能放行或 killed>
+> ⚠️ **`rounds:` 行缺失时按 0 处理是错的**（08-31 之前建的卡都没有这一行，而它们恰恰是跑得最久的）——工头读不到就**按 3 处理**并在汇报里标「rounds 缺失，按 3 计」，同时把真实值补进 RECORD。
 > **状态机（08-31 定，此前 approved 谁写没定义，两种相反的失败都可能发生）**：
 > 退回＝status 写回对应站名＋一句退回原因。**Gate 过闸 → 写 `queued`**（含义＝在 Andy 队列里等，**不再占用当晚槽位**）→ 同时往 `APPROVAL_QUEUE.md` 追一行。
 > **只有 Andy 本人在 decision 节签字后才写 `approved`**——Gate 永远不写 approved（那是绕过人批边界）。

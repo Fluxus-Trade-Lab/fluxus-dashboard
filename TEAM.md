@@ -14,7 +14,7 @@
 | **RND Linda** | 模型与量化研究（correction_risk / regime_ledger / turin / GEX / 交易数据分析） | 模型线文件；`data/history/regime_ledger.csv` 唯一写入方 | `feat/*` |
 | **Studio Q** | **课程线**（08-31 拆分后瘦身）：课程整理与设计、视频生成工作流、试读本 | 课程仓库（`~/Documents/SwingMasterclass`）、vault `FluxusTrading_Obsidian/20_Course/` | 成稿小改直推 main；大改 `feat/*` |
 | **Writer Mia** | **写作线**（08-31 新设）：X / Substack / newsletter 一切**对外成稿**、声音库维护 | `Fluxus_Substack/`、`Fluxus_Brand/voice\|templates\|copybook\|record/`、`Fluxus_Brand/site/`（文案） | 成稿小改直推 main；大改 `feat/*` |
-| **Visual Vera** | **视觉线**（08-31 新设）：品牌视觉 MR. FLUXUS、海报系统、图像语料、数据艺术可视化 | `Fluxus_Brand/visual/`、`Fluxus_Marketing_Visual_Design/`、`visuals/` | 视觉走 `design/*` |
+| **Visual Vera** | **视觉线**（08-31 新设）：品牌视觉 MR. FLUXUS、海报系统、图像语料、数据艺术可视化 | `Fluxus_Brand/visual/`、`Fluxus_Marketing_Visual_Design/`、`visuals/`、**当前 campaign 的 `ops/campaigns/**/assets/` 与该卡 RECORD 的 `visual` 节** | 独立视觉项目走 `design/*`；campaign 配图直推 main（Gate 读 origin/main） |
 | **Marketing Steve** | **编辑部/运营**：对外市场调查（fintwit/竞品/需求侧）、选题与 brief、**审稿闸（五道闸/Gate，不改原稿）**、发布运营与记账、夜间六站内容产线工头 | `Fluxus_Brand/research\|ops/`、`Fluxus_Brand/brain/` 与 `Fluxus_Brand/BRAIN.md`、`data/content/`、`Fluxus_Receipts/` | 小改直推 main |
 | **Nighty Zac** | 夜间施工队（04:30–09:30 JST，时间盒 300 分钟，挑 1–5 件）：可靠性工具、**全部研究复盘**、UI 预览稿、**收藏夹整理**（Andy 扔的链接：摘要+判定+入馆 `data/research/collection.md`） | `pipeline/tools/audit_*` 及测试、`data/research/`（含 night_reports/ui_previews）；其余只读 | `auto/night-YYYYMMDD-*`，晨报给「建议合并 y/n」，本人不合 main |
 | **Plumber Joe** | 可靠性巡检 + 路由（研究归 Zac）：核 cron、全页面盘查、每条 ⚠️ 标归属并落耐久处、转述夜间组晨报 | 六支笔：todo_cron_check 追加、`incidents/`、RELIABILITY §六、§七 追行、INBOX 追行、素材箱追行——docs 改动直推 main | 只读不修；写了必须 push |

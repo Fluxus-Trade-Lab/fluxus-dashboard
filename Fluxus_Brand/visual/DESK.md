@@ -36,15 +36,15 @@
 ## 四、你的地盘
 
 [`../visual/`](.)（本目录）· `Fluxus_Marketing_Visual_Design/` · `visuals/`（筛选台）
-**分支习惯：`design/*`**（视觉走分支，不直推）
+**分支习惯：`design/*`**（独立视觉项目走分支）——⚠️ **campaign 内的配图例外**：Gate 当晚读 `origin/main`，图落在 `design/*` 上它看不见，所以 campaign 配图**直推 main**
 
 ## 五、你不做的
 
 - ❌ **不写文案**——Mia 的笔
 - ❌ **不定选题 / 不审稿**——Steve 的决策
 - ❌ **不发布**——Andy 是唯一发布者
-- ❌ 不碰 `../voice/` `../ops/` `../brain/`（别的线的地盘）
+- ❌ 不碰 `../voice/` `../ops/` `../brain/`（别的线的地盘）——**唯一例外**：当前 campaign 目录下的 `assets/` 与该卡 RECORD 的 `visual` 节
 
 ## 六、交付
 
-图落自己地盘，在对应 campaign 的 `RECORD.md` distribution 节注明「配图：<路径>」；成品给 Andy 看走**预览稿挑选**（他是视觉型，**给变体让他挑**，不问「要不要改」）。走[直推 main 标准动作](../../CLAUDE.md)，push 后核实 commit 真在 origin/main。
+图落该 campaign 目录的 `assets/`，在 `RECORD.md` 的 `## visual` 节**逐个变体**记资产路径，或明确写「不配图 ＋ 一句理由」——两者都没有＝Gate 退回（⚠️ 不是 distribution 节，那是分发站 owns 的）；成品给 Andy 看走**预览稿挑选**（他是视觉型，**给变体让他挑**，不问「要不要改」）。走[直推 main 标准动作](../../CLAUDE.md)，push 后核实 commit 真在 origin/main。

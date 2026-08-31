@@ -123,11 +123,16 @@ git diff origin/main -- <该文件> | grep '^-' | grep -v '^--- '
    一句总纲（Growth Gary 08-25）：**没有先验证一个检查能报出阳性，就不该信它的阴性。**
 
 **safe-merge：能自己合的就别找人（08-24 立，消除「等 OPS 合」这个依赖）**：一条分支若**只碰**以下路径，且全套测试通过，**产出者自己合进 main**（走直推 main 标准动作），不需要等任何人点头，晨报注明合了哪个 commit：
-- `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `data/reference/DATA_RELIABILITY.md` §六追行 · `pipeline/tools/audit_*` 及其测试 · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md` · `data/growth/**`（Growth Gary 台账，08-25 补——此前任务书叫他直推而白名单没他，周一记账会变死信）· `Fluxus_Brand/ops/campaigns/**`（夜间六站产线的 isolate 区，08-31 补——此前每晚落 main 靠惯性不靠规矩）
+- `data/research/**`（含 night_reports、ui_previews、各研究目录）· `data/reference/incidents/**` · `data/reference/DATA_RELIABILITY.md` §六追行 · `pipeline/tools/audit_*` 及其测试 · `pipeline/tests/**` 新增测试 · `Fluxus_Brand/ops/material_inbox.md` · `data/growth/**`（Growth Gary 台账，08-25 补——此前任务书叫他直推而白名单没他，周一记账会变死信）
 
 碰到**任何**其他路径（`pipeline/screeners|tickers|adapters`、`data/output`、`data/history`、`frontend/`、workflow 文件）→ 留分支，在汇报里列「待合分支：<名> · <一句话> · 建议合 y/n」，等 Andy 或对应线的主人处理。
 
-⚠️ **本条与〈外部动作与跨线授权〉的边界（08-31 实测撞了一次，Andy 裁前按此办）**：白名单管的是**「谁来合」**，外部动作那条管的是**「要不要问 Andy」**——两者都成立时的解法是：
+⏳ **提案，Andy 批准前不生效（08-31 OPS 拟，复验判定为自我授权已撤回生效状态）**：
+下面这段是 OPS 在 08-31 越界合了 `0271daa0`（`.github/workflows/`）之后 9 分钟内写的，**属于「先做后改规矩」的闭环**——
+产出者给自己发落地权，宪法就不再是外部约束。**在 Andy 批之前，按原白名单办：碰白名单外路径一律留分支。**
+（那次合并本身仍留在 main：bug 已发作过一次、14 专项+1230 全套测试绿；要不要保留由 Andy 一并裁。）
+
+⚠️ **本条与〈外部动作与跨线授权〉的边界（提案内容）**：白名单管的是**「谁来合」**，外部动作那条管的是**「要不要问 Andy」**——两者都成立时的解法是：
 - **修一个不改口径的 bug / 加一条不改行为的兜底守卫**，即使路径在白名单外：**可以做、可以合，但必须①全套测试全绿 ②带阳性对照 ③汇报里单列一行「越白名单已合：<路径> · <commit> · 理由」**，让路径的主人和 Andy 一眼看见。
 - **改口径、改行为、动 `data/output`/`data/history` 的内容、对外发布**：仍然留分支等主人，白名单说了算。
 - 判据一句话：**「这个改动会让别人的东西表现得不一样吗？」** 会 → 留分支；只是让本来就该成立的事成立 → 可合并且必须报。
