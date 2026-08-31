@@ -103,7 +103,7 @@
 
 | 文件 / 区域 | 谁写 | 何时写 | 批准 |
 |---|---|---|---|
-| `Fluxus_Brand/ops/campaigns/<日期>/` 各站自己的节+资产 | 对应站（只写自己 owns 的节） | 夜跑当晚 | 无需——isolate 区 |
+| `Fluxus_Brand/ops/campaigns/<日期>/` 各站自己的节+资产 | 对应站（只写自己 owns 的节）；**例外：Gate 可往 distribution 节补标入口号**——登记不是改稿（改了读者会看到的字才叫改稿） | 夜跑当晚 | 无需——isolate 区 |
 | RECORD.md `status` 行 | 各站推进 / Gate 退回（**Gate 过闸只写 `queued`**） | 交接时 | `approved` **只有 Andy** |
 | `Fluxus_Brand/ops/campaigns/APPROVAL_QUEUE.md` | **Gate 唯一写入口**（过闸追一行）；Andy 批完自己追 ↳ | 过闸当晚 | append-only |
 | `Fluxus_Brand/brain/performance.md` | **周检唯一写入口**（Steve 周报第一节） | 每周日 | 追加无需批；**升级进 playbook 需 Andy** |

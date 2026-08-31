@@ -5,7 +5,7 @@
 > ⚠️ **闸在成稿与配图之后**（TEAM.md 08-31 接力链为准）：Gate 审的是**将要发出去的东西**，不是毛坯。
 > 参考拆解：VibeMarketer 六角色模型 / Codila 状态-审批模型（收藏对账 2026-08-28，OPS）。
 
-## 六站合约（每站：owns / reads / returns / must-not / done-when）
+## 七站合约（每站：owns / reads / returns / must-not / done-when）
 
 > **v2（08-31）：每站一份独立角色契约在 [`roles/`](roles/)，含精确的 reads 文件清单与 done-when 可观察条件——夜跑加载自己那份即可，不用整读本页。共享脑 index（路由+标准+人批边界）：[`../../BRAIN.md`](../../BRAIN.md)，每站开工先读。下面六行只是一览，与 roles/ 契约冲突时以 roles/ 为准：**
 1. **信号站**：扫素材箱、receipts ⏳、raw/、posts 表现、收藏夹判定——返回 ≤3 个「现在值得做」的候选（各带：发生了什么/受众为何在意/衰减速度/否决理由）。**弃的必须多于取的。**
@@ -13,10 +13,10 @@
 3. **角度站**：一个编辑决策——读者/结果/张力/thesis/旗舰格式/**读者带走的可复用物**/分发入口清单。产出 angle brief 不是草稿，且要说明放弃的方向为何更弱。
 4. **旗舰站**：按 brief+证据包+Voice Bible+**verdicts.jsonl 负面清单**产出毛坯。红线：只重组 Andy 的原料与立场，不发明他的观点；数字不许手打（从证据包带出处复制）；亲缘句闸必过。
 5. **分发站**：**重建不是缩写**——每个变体独立成立。产出 ≥3 个 X 变体，各标**七入口号**（`brain/x.md` 菜单）与 hook 类型，互不重复。
-6. **审查站（Gate）**：独立新上下文收全部资产一起审：重复 hook、无出处主张、AI 腔（负面清单逐条）、语气漂移、变体是否只是缩写。可批可退可毙，**不可发布**。
+7. **审查站（Gate）**（⑥ 是视觉站，见下节）：独立新上下文收全部资产一起审：重复 hook、无出处主张、AI 腔（负面清单逐条）、语气漂移、变体是否只是缩写。可批可退可毙，**不可发布**。
 
 ## Campaign Record（一张卡走全程，缺字段退回上一站，不许脑补）
-`campaigns/YYYY-MM-DD_<slug>/RECORD.md`：signal / research / angle / flagship / distribution / review / decision / performance 八节。
+`campaigns/YYYY-MM-DD_<slug>/RECORD.md`：signal / research / angle / flagship / distribution / **writing** / **visual** / review / decision / performance **十节**（writing=Mia 成稿、visual=Vera 配图，08-31 新增；两线尚无 routine 时由工头写「暂缺执行者」占位——见〈过渡条款〉）。
 
 ## 人的边界（永不自动化）
 发布、立场与观点的源头、对外承诺、否决理由（每个否决进 verdicts.jsonl 喂第二天）。

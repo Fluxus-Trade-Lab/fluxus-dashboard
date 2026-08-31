@@ -81,6 +81,12 @@ thesis：**同一个风险预算，在不同延伸度上买到的仓位不一样
 
 ---
 
+## writing
+**暂缺执行者（Writer Mia 线无夜跑 routine）——本卡按毛坯审。**（08-31 OPS 补占位：过渡条款要求工头写这一行，此前只补了 rounds 没补节；Gate 一读就是「缺字段」，正是它要防的那个死锁。）
+
+## visual
+**暂缺执行者（Visual Vera 线无夜跑 routine）——本卡不配图，按毛坯审。**
+
 ## review
 → [06_gate_review.md](06_gate_review.md)
 
