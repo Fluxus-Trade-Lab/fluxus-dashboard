@@ -77,6 +77,29 @@
    与 `audit_archives` 同级。⚠️ 但 **C2 在盘中必然为真**，所以接的时候要么排在收盘后，
    要么给盘中运行传一个只查 C1/C3 的开关——**这一点我没实现，因为 workflow 文件不在我的边界内**。
 
+## 爆炸半径（我量到的是**模式命中**，不是「已确认受影响」）
+
+想知道有多少代码会被「少一行」咬到，量的是「位置式回看」这个写法。
+⚠️ 按 `pitfall_audit_greps_miss_the_other_spelling`，**用了两种写法**并分别报数：
+
+| 写法 | 命中 |
+|---|---|
+| A `iloc[-N]` | 260 处 |
+| B `.tail(` / `.shift(` / `[-N:]` / `iloc[N]` | 212 处 |
+
+单看这个数没用——大部分不是「yfinance 日线」。所以取交集：**既用位置式回看、又碰 yfinance 的文件 = 25 个**，
+其中 4 个是测试、1 个是本次新增的闸本身，**余 20 个生产文件**值得分诊。核心几个：
+
+`adapters/yfinance_adapter.py` · `screeners/breadth_metrics.py` · `screeners/asset_signals.py` ·
+`screeners/vcp_detector.py` · `screeners/volume_enrichment.py` · `risk/correction_risk.py` ·
+`tickers/ticker_data_fetcher.py` · `macro/calc_signals.py`
+
+⚠️ **我没有验证这 20 个里任何一个真的算错了。** 这是一份**分诊清单**，不是一份缺陷清单——
+「命中这个模式」和「会被这个缺口咬到」是两件事（取决于它回看的是不是日线、缺口日在不在它的窗口里）。
+把它当成后者会重演 `pitfall_measured_is_a_claim_about_one_relationship`。分诊归 DATA ALEX。
+
+---
+
 ## 可复用的判据
 
 **「源返回的行数正常、格式正常、无重复」不能证明源没有少给你一天。**
