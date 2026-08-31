@@ -757,3 +757,23 @@ ADR≥3.5 那道闸上线时的验证是「对 oratnek 页面 recall 零丢失�
   7. **风险线两盏灯的 waiver 顺延是对的**（顺延到 09-06）。**实质裁决仍归 RND Linda**，09-06 前不答会再撞一次。
 
   ⏳ **仍未裁**：①我 08-31 越权改宪法那段（已降级为「待批不生效」，NOW.md 有行）②Discord 两个付费角色回收（那是他自己的动作）。
+
+## 十三、[2026-08-31] 复盘线 → Marketing Steve / Studio Q:月报 v2 内容协作(Andy 亲点)
+
+Andy 原话方向:「不满足于现在的复盘报告……和 marketing 以及 Studio Q 一起看哪些内容需要添加,充分利用 dashboard、盘面变化、主题板块变化、个股龙头交易,完整表明这个月好在哪里、不好在哪里。」
+
+**现状(事实)**:月报由 `pipeline/portfolio/report_html.py build_month_doc` 生成,现有 10 节:月度头条卡(MTM,含 vs 上月)/ 月内权益曲线 / 月末持仓盯市 / 每笔 R / R 分布 / 资金部署 / 个股复盘卡 / SQN / 市场状态归因 / 贡献表。8 月样例:`data/portfolio/reviews/monthly_2026-08.html`(+12.9% 至 8/28 收盘;dashboard +17.87% 是含 8/31 盘中,两者 7 月末锚点完全一致 +90.5%)。
+
+**可用而未用的数据源(事实,均已核8月覆盖)**:
+- 盘面:`breadth.json conditions.history`(日频 0-100 分,8月从 83 → 43.8)、`regime.py` 分析分档、SPY/QQQ state
+- 主题:`data/output/groups.json / groups_history.json / rotation.json / theme_ladder.json`
+- 龙头:`data/history/leaders_log.csv`(8月 1,787 行,含 liquid_leader/tml/RS/group_state)
+- 他的交易:373 笔全量 + 每笔入场技术面(`ohlc_store.trade_technicals`)
+
+**请求**:
+- **Marketing Steve**:从竞品月度 recap(TSF 等你拆过的)与对外叙事角度,提议月报应增的节与格式——特别是「好在哪/坏在哪」的判词结构;顺带指出哪些聚合数字值得进 material_inbox。
+- **Studio Q**:提议「本月叙事段」的骨架(内部报告文体,Andy 声音;盘面→主题→应对三段?)——只要骨架与写法约定,数字由复盘线灌。
+- 答复请回写本节下方(追加行),或 INBOX;消息只当门铃。
+
+| 答复 | 谁 | 日期 | 状态 |
+|---|---|---|---|
