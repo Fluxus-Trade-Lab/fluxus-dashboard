@@ -1,0 +1,183 @@
+{
+ "modules": [
+  {
+   "module": "audit_universe_shape",
+   "mutants": 49,
+   "killed": 21,
+   "survived": 28,
+   "skipped": 0,
+   "kill_rate": 0.429,
+   "survivors": [
+    {
+     "line": 56,
+     "kind": "number",
+     "change": "20 -> 21",
+     "source": "WINDOW = 20"
+    },
+    {
+     "line": 57,
+     "kind": "number",
+     "change": "50 -> 51",
+     "source": "MIN_ROWS = 50        # below this, a 0.0 share is ordinary small-sample noise"
+    },
+    {
+     "line": 111,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "dc = date_col or next((c for c in (\"date\", \"as_of\", \"session\", \"Date\")"
+    },
+    {
+     "line": 113,
+     "kind": "compare",
+     "change": "Is -> IsNot",
+     "source": "if dc is None:"
+    },
+    {
+     "line": 143,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not a.quiet:"
+    },
+    {
+     "line": 148,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not a.quiet:"
+    },
+    {
+     "line": 118,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "t = r.get(ticker_col) or \"\""
+    },
+    {
+     "line": 119,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "if d and t:"
+    },
+    {
+     "line": 155,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "return 0 if out[\"ok\"] else 1"
+    },
+    {
+     "line": 83,
+     "kind": "compare",
+     "change": "GtE -> Gt",
+     "source": "if sh is not None and n >= min_rows and sh in (0.0, 1.0):"
+    },
+    {
+     "line": 80,
+     "kind": "compare",
+     "change": "Is -> IsNot",
+     "source": "rec = {\"session\": d, \"rows\": n, \"share\": None if sh is None else round(sh, 4),"
+    },
+    {
+     "line": 81,
+     "kind": "compare",
+     "change": "Is -> IsNot",
+     "source": "\"baseline\": None if base is None else round(base, 4), \"kind\": None}"
+    },
+    {
+     "line": 89,
+     "kind": "compare",
+     "change": "Lt -> LtE",
+     "source": "elif base is None or len(prior) < 3:"
+    },
+    {
+     "line": 117,
+     "kind": "number",
+     "change": "10 -> 11",
+     "source": "d = (r.get(dc) or \"\")[:10]"
+    },
+    {
+     "line": 64,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "return sum(1 for t in ts if t[0].upper() > split.upper()) / len(ts)"
+    },
+    {
+     "line": 80,
+     "kind": "number",
+     "change": "4 -> 5",
+     "source": "rec = {\"session\": d, \"rows\": n, \"share\": None if sh is None else round(sh, 4),"
+    },
+    {
+     "line": 81,
+     "kind": "number",
+     "change": "4 -> 5",
+     "source": "\"baseline\": None if base is None else round(base, 4), \"kind\": None}"
+    },
+    {
+     "line": 83,
+     "kind": "number",
+     "change": "0.0 -> 1.0",
+     "source": "if sh is not None and n >= min_rows and sh in (0.0, 1.0):"
+    },
+    {
+     "line": 89,
+     "kind": "number",
+     "change": "3 -> 4",
+     "source": "elif base is None or len(prior) < 3:"
+    },
+    {
+     "line": 92,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "elif sh is not None and abs(sh - base) > tolerance:"
+    },
+    {
+     "line": 112,
+     "kind": "compare",
+     "change": "In -> NotIn",
+     "source": "if c in rows[0]), None)"
+    },
+    {
+     "line": 154,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "Path(a.json).write_text(json.dumps(out, indent=1))"
+    },
+    {
+     "line": 145,
+     "kind": "number",
+     "change": "100 -> 101",
+     "source": "f\"tolerance {a.tolerance*100:.0f}pp\")"
+    },
+    {
+     "line": 77,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "prior = [share_after(by_session[p], split) for p in sessions[max(0, i - window):i]]"
+    },
+    {
+     "line": 112,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "if c in rows[0]), None)"
+    },
+    {
+     "line": 64,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "return sum(1 for t in ts if t[0].upper() > split.upper()) / len(ts)"
+    },
+    {
+     "line": 96,
+     "kind": "number",
+     "change": "100 -> 101",
+     "source": "f\"{base:.2f} (moved {abs(sh-base)*100:.0f}pp, tolerance \""
+    },
+    {
+     "line": 97,
+     "kind": "number",
+     "change": "100 -> 101",
+     "source": "f\"{tolerance*100:.0f}pp) over {n} rows\")"
+    }
+   ]
+  }
+ ],
+ "seconds": 26.6
+}
