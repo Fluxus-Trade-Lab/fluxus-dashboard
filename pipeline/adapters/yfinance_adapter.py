@@ -419,29 +419,6 @@ def accumulation_flow(hist: pd.DataFrame) -> dict:
         return {"ad_ratio_20": None, "cmf21": None}
 
 
-def stockbee_ratios(hist: pd.DataFrame) -> dict:
-    """The 'has been strong' ratios behind Stockbee's three anticipation scans
-    (Telechart syntax verbatim in the docstring of test_derived_fields), plus
-    the liquidity floor input. Null when the window is not there yet.
-
-        ti65       = avgc7 / avgc65      (TI65:  > 1.05)
-        mdt        = c / avgc126         (MDT:   > 1.19)
-        min_vol_3d = min volume of the last 3 bars   (all: > 100k)
-
-    Double Trouble's c/minl252 comes from the low_52w column in run_all.
-    """
-    try:
-        c = pd.to_numeric(hist['Close'], errors='coerce').dropna()
-        v = pd.to_numeric(hist['Volume'], errors='coerce').dropna()
-        n = len(c)
-        ti65 = float(c.iloc[-7:].mean() / c.iloc[-65:].mean()) if n >= 65 and c.iloc[-65:].mean() > 0 else None
-        mdt = float(c.iloc[-1] / c.iloc[-126:].mean()) if n >= 126 and c.iloc[-126:].mean() > 0 else None
-        mv3 = float(v.iloc[-3:].min()) if len(v) >= 3 else None
-        return {"ti65": ti65, "mdt": mdt, "min_vol_3d": mv3}
-    except Exception:
-        return {"ti65": None, "mdt": None, "min_vol_3d": None}
-
-
 def calculate_vcs(hist: pd.DataFrame) -> float | None:
     """Volatility Contraction Score (0-100), one decimal.
 
