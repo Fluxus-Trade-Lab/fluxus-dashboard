@@ -1,11 +1,19 @@
 import { useState } from 'react'
 import { useTheme } from '../../hooks/useTheme'
 
+// 'brief' is intentionally absent, 2026-08-31. The page advertises "recent
+// briefs" and renders five entries dated 2026-03-17..03-21 — invented samples
+// ("SPX 5,820 support", "post-FOMC IV crush") from when the page was built.
+// data/output/briefs.json on main carries the same five, so the fetch does not
+// save it: the fallback and the file are the same fabrication. The route still
+// resolves for anyone holding the link; it is only off the public nav.
+// To bring it back: have the nightly pipeline write the last five real briefs
+// (data/output/threads/ has the raw material) into data/output/briefs.json,
+// verify the dates are current, then restore the entry below.
 const NAV_ITEMS = [
   { key: 'method', label: 'Method', hash: '#/method' },
   { key: 'results', label: 'Results', hash: '#/results' },
   { key: 'pricing', label: 'Pricing', hash: '#/pricing' },
-  { key: 'brief', label: 'Brief', hash: '#/brief' },
 ]
 
 export default function PublicHeader({ currentPage, onNavigate }) {
