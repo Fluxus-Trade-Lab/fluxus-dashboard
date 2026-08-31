@@ -10,7 +10,7 @@
 - `Fluxus_Brand/brain/angles.md`（已验证 angle 模式＋反模式——先对表再原创）
 - `Fluxus_Brand/brain/offers.md`（CTA 与读者阶段匹配；冻结线）
 
-**returns**：angle brief 写进 RECORD.md angle 节——读者 / 读者结果 / 中心张力 / thesis / 旗舰格式（文体代号）/ **读者带走的可复用物** / 所需证据对照 / 分发入口清单（证据・机制・工作流・风险・结果，各能独立成帖）。**一个推荐 + 被放弃方向为何更弱**。
+**returns**：angle brief 写进 RECORD.md angle 节——读者 / 读者结果 / 中心张力 / thesis / 旗舰格式（文体代号）/ **读者带走的可复用物** / 所需证据对照 / 分发入口清单（证据・机制・工作流・风险・结果，各能独立成帖）——**每项后面顺手标上对应的七入口号**（映射表在 `Fluxus_Brand/brain/x.md`〈五分类→七入口〉节），别让分发站重新发明一遍。**一个推荐 + 被放弃方向为何更弱**。
 
 **must not**：起草正文；发明证据包外的主张；一次交两个 thesis；RECORD `status` 不指向本站时不产内容。
 
