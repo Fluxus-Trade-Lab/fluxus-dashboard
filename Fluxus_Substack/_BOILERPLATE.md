@@ -25,22 +25,26 @@
 ```markdown
 **What this is**
 
-I'm a full-time swing trader in Japan. Seven years in, what decided my results was never which
-names I picked. It was how much I put on each one, and where I got out. That is why this letter
-is called How Much.
+**How Much — the letter.** Every idea arrives with its entry, its stop, a portfolio risk in percent. My risk per idea is fixed under 0.3% of total capital and set before I click. There is no "I really like this one" line in the formula.
 
-Every Sunday: the number that changed, what I did about it, and what it cost me. The losers stay in.
+**The system it runs on.** This is a system, not a watchlist. It exists to do one thing: find true market leadership early, and hunt the elephant trades — the few a year that carry everything.
 
-**What this letter is not**
+**Rotation, measured.** A quantitative read on where themes and sectors are handing off — not which group is strongest today, but which one is changing. That's what lets me be positioned just early enough.
 
-Not alerts. Nothing here is timed for you to copy. I post my own trades because a method you can't see me actually run is just a claim.
+**Selection, narrowed.** A screener that separates the two kinds of momentum worth owning — the sustained and the explosive — from everything that merely went up.
 
-Not predictions. I don't have opinions about where the market goes. I have measurements of what it's doing and what I'm risking while it does it.
+**Risk, before the click.** A tool that sets the risk on each trade and the open heat on the whole book before I enter, not after.
 
-Not advice, and not a recommendation to buy or sell anything. I don't know your account, your taxes, or how well you sleep. Measure your own water.
+**What this is not**
+
+**No alerts.** Everything here is written after the fact, with the arithmetic attached — not so you can copy it in four minutes.
+
+**No predictions.** I don't have opinions about where the market goes, only measurements of what it's doing.
+
+*Nothing here is advice or a recommendation to buy or sell anything. I don't know your account, your taxes, or how well you sleep. Measure your own water.*
 ```
 
-*⚠️ 2026-08-31 Andy 两步定案：① 前半段「What this is」换成短的人话版（原版是产品说明书，不是人在说话）；
+*⚠️ 2026-08-31 Andy 三步定案（最终以本节代码块为准）：③ **块 A 全文由 Andy 亲自撰写并交付**，本文件逐字收录，我只加了 `What this is` / `What this is not` 两个小标题与加粗项目名（对齐他指定的 TSF 结构参照）。前两步过程：① 前半段「What this is」换成短的人话版（原版是产品说明书，不是人在说话）；
 ② 免责段**加回来，且不许自造语言**——下半段「What this letter is not」逐字沿用 08-25 定稿，一个词没改。
 页脚 `templates/post_footer.html` 的免责照旧保留：**头尾同段是刻意的**（本文件开头已写明「重复不是懒——重复是让读者知道这是一份刊物」）。*
 
