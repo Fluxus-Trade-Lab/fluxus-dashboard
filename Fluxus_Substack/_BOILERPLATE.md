@@ -30,10 +30,19 @@ names I picked. It was how much I put on each one, and where I got out. That is 
 is called How Much.
 
 Every Sunday: the number that changed, what I did about it, and what it cost me. The losers stay in.
+
+**What this letter is not**
+
+Not alerts. Nothing here is timed for you to copy. I post my own trades because a method you can't see me actually run is just a claim.
+
+Not predictions. I don't have opinions about where the market goes. I have measurements of what it's doing and what I'm risking while it does it.
+
+Not advice, and not a recommendation to buy or sell anything. I don't know your account, your taxes, or how well you sleep. Measure your own water.
 ```
 
-*⚠️ 2026-08-31 Andy 定：块 A 换成上面这个短版（原长版存档见下）。理由是他要「简短的、有人味的自我介绍」，
-原版是产品说明书不是人在说话。免责声明不再放这里——`templates/post_footer.html` 每篇都带，放两处等于同一封邮件里重复。*
+*⚠️ 2026-08-31 Andy 两步定案：① 前半段「What this is」换成短的人话版（原版是产品说明书，不是人在说话）；
+② 免责段**加回来，且不许自造语言**——下半段「What this letter is not」逐字沿用 08-25 定稿，一个词没改。
+页脚 `templates/post_footer.html` 的免责照旧保留：**头尾同段是刻意的**（本文件开头已写明「重复不是懒——重复是让读者知道这是一份刊物」）。*
 
 <details><summary>原长版（2026-08-25，已停用）</summary>
 
