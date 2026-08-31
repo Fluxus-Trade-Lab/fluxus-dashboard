@@ -362,11 +362,19 @@ def stockbee_ratios(hist: pd.DataFrame) -> dict:
     (Telechart syntax verbatim in the docstring of test_derived_fields), plus
     the liquidity floor input. Null when the window is not there yet.
 
-        ti65       = avgc7 / avgc65      (TI65:  > 1.05)
-        mdt        = c / avgc126         (MDT:   > 1.19)
-        min_vol_3d = min volume of the last 3 bars   (all: > 100k)
+        ti65        = avgc7 / avgc65      (TI65:  > 1.05)
+        mdt         = c / avgc126         (MDT:   > 1.19)
+        min_vol_3d  = min volume of the last 3 bars   (all: > 100k)
+        prev_volume = volume of the PREVIOUS bar      (4% scan: v > v1)
 
     Double Trouble's c/minl252 comes from the low_52w column in run_all.
+
+    `prev_volume` is here because `v > v1` is a hard condition inside
+    Stockbee's 4% breakout scan -- written into the scan, not one of the nine
+    soft reads around it -- and the universe row carried no yesterday-volume
+    at all until 2026-08-31, so the condition could not be evaluated
+    (DATA_CONTRACTS S2, filed 08-24). Null on a one-bar history: there is no
+    yesterday, and a 0 would make `v > v1` true for every such name.
     """
     try:
         c = pd.to_numeric(hist['Close'], errors='coerce').dropna()
@@ -375,9 +383,10 @@ def stockbee_ratios(hist: pd.DataFrame) -> dict:
         ti65 = float(c.iloc[-7:].mean() / c.iloc[-65:].mean()) if n >= 65 and c.iloc[-65:].mean() > 0 else None
         mdt = float(c.iloc[-1] / c.iloc[-126:].mean()) if n >= 126 and c.iloc[-126:].mean() > 0 else None
         mv3 = float(v.iloc[-3:].min()) if len(v) >= 3 else None
-        return {"ti65": ti65, "mdt": mdt, "min_vol_3d": mv3}
+        pv = float(v.iloc[-2]) if len(v) >= 2 else None
+        return {"ti65": ti65, "mdt": mdt, "min_vol_3d": mv3, "prev_volume": pv}
     except Exception:
-        return {"ti65": None, "mdt": None, "min_vol_3d": None}
+        return {"ti65": None, "mdt": None, "min_vol_3d": None, "prev_volume": None}
 
 
 def accumulation_flow(hist: pd.DataFrame) -> dict:

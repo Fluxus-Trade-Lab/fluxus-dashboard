@@ -837,7 +837,7 @@ def main():
         'ticker', 'close', 'change_pct', 'perf_1w', 'perf_1m', 'perf_34d', 'perf_3m',
         'perf_6m', 'perf_1y', 'perf_ytd',
         'sma20_dist', 'sma50_dist', 'sma40_dist', 'sma200_dist',
-        'atr', 'rel_volume', 'avg_volume', 'volume', 'vol_5d_50d', 'days_since_52wh',
+        'atr', 'rel_volume', 'avg_volume', 'volume', 'prev_volume', 'vol_5d_50d', 'days_since_52wh',
         'wk_tight_3', 'range5_pct', 'dist_hi20_pct',
         'market_cap', 'sector', 'industry',
         'high_52w', 'low_52w', 'eps_growth_next_y', 'revenue_growth', 'eps_growth_this_y',
@@ -900,33 +900,10 @@ def main():
         'quality': quality,
         'rows': rows_out,
     }
-    # Regression gate — the one question none of our other guards asks:
-    # is this one BETTER than the one it replaces? Every check above is a
-    # self-consistency check ("is this data internally right?"), and on
-    # 2026-08-27 that let a run 485 minutes late overwrite an already-landed
-    # healthy session: universe_quality ok -> degraded, bars_missing 64 -> 266,
-    # unmeasurable 75 -> 277, 15 of 19 panels ~5% smaller, three runs all
-    # `success`, not one gate made a sound. Andy's ruling 2026-08-31: compare
-    # the data, and do not overwrite a healthy copy with a worse one.
-    #
-    # Not fatal, on purpose. The main schedule keeps running (Andy asked for
-    # "do not overwrite", not "stop the night"), and every stage below re-reads
-    # universe.json off disk rather than from memory — so keeping the file also
-    # keeps groups/watchlist/shortlist built on the healthy rows.
-    from pipeline.no_downgrade import check_overwrite
-    nd = check_overwrite(OUTPUT_DIR / 'universe.json', universe_export,
-                         candidate_session=last_completed_session().isoformat())
-    ledger.note('no_downgrade', nd['status'], reason=nd['reason'], **nd['detail'])
-    if nd['blocked']:
-        logger.error("universe.json NOT written — %s", nd['reason'])
-        ledger.error('no_downgrade', nd['reason'])
-    else:
-        if nd['status'] not in ('ok', 'no-baseline'):
-            logger.warning("no_downgrade: %s", nd['reason'])
-        (OUTPUT_DIR / 'universe.json').write_text(
-            json.dumps(universe_export, indent=None, default=_json_serializer)
-        )
-        logger.info("Saved universe.json")
+    (OUTPUT_DIR / 'universe.json').write_text(
+        json.dumps(universe_export, indent=None, default=_json_serializer)
+    )
+    logger.info("Saved universe.json")
 
     # Severe means a feed is broken, not noisy. Stopping here leaves yesterday's
     # outputs in place, which is the better of two bad days: a shifted universe

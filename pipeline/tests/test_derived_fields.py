@@ -337,6 +337,45 @@ class TestStockbeeAnticipationInputs:
         assert out["c_low52w"].iloc[0] == pytest.approx(1.8)
         assert pd.isna(compute_universe_scores(_frame(low_52w=None))["c_low52w"].iloc[0])
 
+    def test_prev_volume_is_yesterdays_bar(self):
+        """`v > v1` is a HARD condition in Stockbee's 4% scan, not one of the
+        nine soft reads -- and until 2026-08-31 the universe row carried no v1
+        at all, so we could not evaluate the scan's own gate (DATA_CONTRACTS
+        S2, 08-24).
+
+        Every volume here is distinct, so reading the wrong bar cannot land on
+        the right answer by luck: -1 is 500k, -2 is 400k, the 3-day min is
+        300k. The second assertion is the point -- the failure this guards
+        against is off-by-one, not absence.
+        """
+        from pipeline.adapters.yfinance_adapter import stockbee_ratios
+        hist = pd.DataFrame({
+            "Close": [10.0, 11.0, 12.0, 13.0],
+            "Low": [9.0] * 4,
+            "Volume": [100_000.0, 300_000.0, 400_000.0, 500_000.0],
+        })
+        r = stockbee_ratios(hist)
+        assert r["prev_volume"] == pytest.approx(400_000.0)     # the -2 bar
+        assert r["prev_volume"] != pytest.approx(500_000.0)     # not today
+        assert r["min_vol_3d"] == pytest.approx(300_000.0)      # unchanged
+
+    def test_prev_volume_null_on_a_single_bar(self):
+        """One bar means there is no yesterday. Null, never 0 -- a 0 would make
+        `v > v1` true for every name on its first day of history."""
+        from pipeline.adapters.yfinance_adapter import stockbee_ratios
+        hist = pd.DataFrame({"Close": [10.0], "Low": [9.0], "Volume": [100_000.0]})
+        assert stockbee_ratios(hist)["prev_volume"] is None
+
+    def test_prev_volume_reaches_the_universe_row(self):
+        """The helper carrying the field is a different claim from the field
+        reaching the file the scan reads. Both halves of the 08-17 unit swap
+        went wrong in exactly that gap, so the export list is asserted too."""
+        from pathlib import Path as _P
+        from pipeline.screeners import run_all
+        src = _P(run_all.__file__).read_text()
+        cols = src.split("universe_cols = [", 1)[1].split("]", 1)[0]
+        assert "'prev_volume'" in cols
+
 
 class TestLiquidLeader:
     """Course definition (SwingMasterclass M2_L09): ADV >= 2M shares, above the
