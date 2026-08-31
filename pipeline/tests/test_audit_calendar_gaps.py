@@ -15,7 +15,7 @@ import datetime as dt
 
 import pytest
 
-from pipeline.tools.audit_calendar_gaps import check, trading_grid
+from pipeline.tools.audit_calendar_gaps import check, reconcile, trading_grid
 
 # 2026-08-24..08-28 is a plain Mon-Fri week with no holiday in it.
 START = dt.date(2026, 8, 24)
@@ -84,8 +84,10 @@ def test_c4_threshold_is_where_it_says_it_is():
 
 
 def test_c1_names_the_survivors_so_the_gap_can_be_diagnosed():
-    # The 2026-08-28 outage survived for exactly one ticker. Being told WHICH
-    # is what separates "the vendor dropped a day" from "we asked wrong".
+    # On 2026-08-28 exactly one of 90 names still carried anything. Naming it
+    # is what let the claim "FBRX is the survivor" be checked -- and refuted:
+    # FBRX had been halted since 07-20 and its bar was a zero-volume stale
+    # quote (see C5). The list is here to be doubted, not to be trusted.
     present = feed([d for d in WEEK if d != "2026-08-28"])
     present["T7"] = set(WEEK)
     out = check(present, START, END, END)
@@ -199,3 +201,117 @@ def test_empty_ticker_set_does_not_pretend_the_feed_is_healthy():
     assert out["tickers"] == 0
     assert not out["ok"]
     assert any(v.startswith("C0") for v in out["violations"])
+
+
+# ------------------------------------------------------------------------ C5
+
+def test_c5_a_bar_that_is_not_a_session_is_a_violation():
+    # Both real shapes: a null close beside a real-looking volume (a truncated
+    # window handing back the live day under the missing day's date), and a
+    # zero-volume O=H=L=C quote on a halted name.
+    out = check(feed(WEEK), START, END, END,
+                degenerate={"T0": {"2026-08-28"}, "T1": {"2026-08-28"}})
+    assert not out["ok"]
+    assert any(v.startswith("C5 2026-08-28: 2/10") for v in out["violations"])
+
+
+def test_c5_is_silent_when_no_bar_quality_is_supplied():
+    # Callers that cannot judge bar quality must not get a fabricated pass or
+    # a fabricated failure -- C5 simply does not run.
+    assert check(feed(WEEK), START, END, END, degenerate=None)["ok"]
+    assert check(feed(WEEK), START, END, END, degenerate={})["ok"]
+
+
+def test_c5_ignores_degenerate_bars_outside_the_window():
+    out = check(feed(WEEK), START, END, END,
+                degenerate={"T0": {"2026-07-01", "2026-09-15"}})
+    assert out["ok"], out["violations"]
+
+
+def test_c5_and_c1_are_different_failures_and_both_can_fire():
+    # A day everyone lost AND a day one name fakes: the report must say both.
+    present = feed([d for d in WEEK if d != "2026-08-27"])
+    out = check(present, START, END, END, degenerate={"T4": {"2026-08-26"}})
+    kinds = {v.split()[0] for v in out["violations"]}
+    assert kinds == {"C1", "C5"}
+
+
+# ------------------------------------------------------- three-way reconcile
+
+def test_reconcile_is_quiet_when_all_three_agree():
+    out = reconcile(feed(WEEK), set(WEEK), START, END, END)
+    assert out["ok"] and out["findings"] == [] and out["warnings"] == []
+
+
+def test_d1_archive_hole_the_market_traded_and_we_did_not_write_it():
+    # `ticker_events.csv` shape: SPY has bars for 2026-04-07 / 06-08 / 07-14 /
+    # 07-15 and our archive has no row for any of them.
+    out = reconcile(feed(WEEK), set(WEEK) - {"2026-08-26"}, START, END, END)
+    assert not out["ok"]
+    assert any(v.startswith("D1 2026-08-26") and "ARCHIVE HOLE" in v
+               for v in out["violations"])
+
+
+def test_d2_calendar_wrong_is_a_warning_not_a_violation():
+    # 2025-01-09 shape: marketcal says trading, no ticker has a bar, our
+    # archive has no row. The calendar is the thing that is wrong, and an
+    # ad-hoc closure must not fail anyone's build.
+    out = reconcile(feed([d for d in WEEK if d != "2026-08-26"]),
+                    set(WEEK) - {"2026-08-26"}, START, END, END)
+    assert out["ok"], out["violations"]
+    assert any(w.startswith("D2 2026-08-26") and "CALENDAR WRONG" in w
+               for w in out["warnings"])
+
+
+def test_d3_feed_regression_is_the_one_that_must_fail_loudly():
+    # 2026-08-28 shape: our archive holds the session, the feed no longer
+    # returns it. This is the only one of the three where data we already
+    # consumed has gone missing underneath us.
+    out = reconcile(feed([d for d in WEEK if d != "2026-08-28"]),
+                    set(WEEK), START, END, END)
+    assert not out["ok"]
+    assert any(v.startswith("D3 2026-08-28") and "FEED REGRESSION" in v
+               for v in out["violations"])
+
+
+def test_d2_and_d3_are_indistinguishable_without_the_archive():
+    """The point of the whole three-way. Feed and calendar see the same thing
+    in both cases; only the archive tells them apart."""
+    absent = feed([d for d in WEEK if d != "2026-08-26"])
+    as_d2 = reconcile(absent, set(WEEK) - {"2026-08-26"}, START, END, END)
+    as_d3 = reconcile(absent, set(WEEK), START, END, END)
+    assert [f["kind"] for f in as_d2["findings"]] == ["D2"]
+    assert [f["kind"] for f in as_d3["findings"]] == ["D3"]
+    assert as_d2["ok"] and not as_d3["ok"]
+
+
+def test_reconcile_refuses_an_empty_sample_too():
+    out = reconcile({}, set(WEEK), START, END, END)
+    assert not out["ok"] and any(v.startswith("C0") for v in out["violations"])
+
+
+def test_d1_exempts_the_newest_session_because_the_writer_runs_after_the_close():
+    # Found the moment the market closed on 2026-08-31: last_completed_session
+    # flipped to today, tonight's cron had not run, and the reconcile reported
+    # today's legitimate absence as an ARCHIVE HOLE. A gate that is red every
+    # evening by design is a gate nobody reads.
+    out = reconcile(feed(WEEK), set(WEEK) - {"2026-08-28"}, START, END, END)
+    assert out["ok"], out["violations"]
+
+    # ...but only the newest one. Yesterday's absence is still a hole.
+    out = reconcile(feed(WEEK), set(WEEK) - {"2026-08-27"}, START, END, END)
+    assert any(v.startswith("D1 2026-08-27") for v in out["violations"])
+
+
+def test_grace_never_covers_d3():
+    # A session the archive already holds cannot un-happen, so the vendor
+    # deleting today's bar must fail even inside the grace window.
+    out = reconcile(feed([d for d in WEEK if d != "2026-08-28"]),
+                    set(WEEK), START, END, END)
+    assert any(v.startswith("D3 2026-08-28") for v in out["violations"])
+
+
+def test_grace_of_zero_reports_everything():
+    out = reconcile(feed(WEEK), set(WEEK) - {"2026-08-28"}, START, END, END,
+                    grace_sessions=0)
+    assert any(v.startswith("D1 2026-08-28") for v in out["violations"])
