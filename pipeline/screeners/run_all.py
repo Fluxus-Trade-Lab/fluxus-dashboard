@@ -837,7 +837,7 @@ def main():
         'ticker', 'close', 'change_pct', 'perf_1w', 'perf_1m', 'perf_34d', 'perf_3m',
         'perf_6m', 'perf_1y', 'perf_ytd',
         'sma20_dist', 'sma50_dist', 'sma40_dist', 'sma200_dist',
-        'atr', 'rel_volume', 'avg_volume', 'volume', 'vol_5d_50d', 'days_since_52wh',
+        'atr', 'rel_volume', 'avg_volume', 'volume', 'prev_volume', 'vol_5d_50d', 'days_since_52wh',
         'wk_tight_3', 'range5_pct', 'dist_hi20_pct',
         'market_cap', 'sector', 'industry',
         'high_52w', 'low_52w', 'eps_growth_next_y', 'revenue_growth', 'eps_growth_this_y',
