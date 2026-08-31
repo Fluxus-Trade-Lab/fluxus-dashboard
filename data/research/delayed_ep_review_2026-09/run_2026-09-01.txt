@@ -1,0 +1,65 @@
+log: 648 rows | 12 sessions 2026-08-13..2026-08-28 | 90 tickers
+marketcal grid 2026-08-13..2026-08-28 = 12 sessions | last completed session = 2026-08-28
+
+=== FEED GAPS: sessions marketcal says exist that the feed omits ===
+  benchmark SPY is missing: ['2026-08-28']
+    2026-08-28: absent for 89/90 logged tickers; ledger holds 28 rows stamped that day
+
+=== JOIN CHECK: ledger's stored close vs the bar we pull today ===
+  resolvable 617 rows | UNRESOLVABLE 31 (ticker delisted, or its as-of session vanished from the feed)
+  within 0.5%: 100.0%   within 2%: 100.0%   max gap 0.1%
+
+=== ALL ROWS ===
+
+  --- +3 sessions   (185 observations dropped: endpoint missing or beyond 2026-08-28) ---
+             POOLED excess  med  -0.3%  CI     [-0.7,+0.3]  n=463  dates=8   >0: 48%
+           breaking excess  med  -0.5%  CI     [-2.4,+2.0]  n=14   dates=5   >0: 43%
+             basing excess  med  +0.6%  CI     [-0.4,+1.3]  n=202  dates=8   >0: 55%
+           drifting excess  med  -0.3%  CI     [-1.7,+0.4]  n=24   dates=8   >0: 42%
+             failed excess  med  -0.7%  CI     [-1.1,-0.5]  n=223  dates=8   >0: 43%
+
+  --- +5 sessions   (293 observations dropped: endpoint missing or beyond 2026-08-28) ---
+             POOLED excess  med  +0.4%  CI     [-0.8,+1.0]  n=355  dates=6   >0: 55%
+           breaking excess  med  +1.1%  CI    [-4.8,+20.1]  n=8    dates=3   >0: 62%  <-- dates<4, no resolution
+             basing excess  med  +1.2%  CI     [-0.1,+2.2]  n=164  dates=6   >0: 61%
+           drifting excess  med  +0.7%  CI     [-0.9,+1.0]  n=14   dates=6   >0: 64%
+             failed excess  med  -0.9%  CI     [-1.7,-0.4]  n=169  dates=6   >0: 47%
+
+  --- +10 sessions   (587 observations dropped: endpoint missing or beyond 2026-08-28) ---
+             POOLED excess  med  -0.7%  CI     [-0.7,-0.7]  n=61   dates=1   >0: 49%  <-- dates<4, no resolution
+           breaking excess  (n=0)
+             basing excess  med  +0.6%  CI     [+0.6,+0.6]  n=30   dates=1   >0: 60%  <-- dates<4, no resolution
+           drifting excess  med  -4.7%  CI     [-4.7,-4.7]  n=5    dates=1   >0: 40%  <-- dates<4, no resolution
+             failed excess  med  -2.5%  CI     [-2.5,-2.5]  n=26   dates=1   >0: 38%  <-- dates<4, no resolution
+
+=== FIRST DAY IN STAGE (what --review prints) ===
+
+  --- +3 sessions   (28 observations dropped: endpoint missing or beyond 2026-08-28) ---
+             POOLED excess  med  -0.5%  CI     [-0.8,+2.7]  n=96   dates=8   >0: 48%
+           breaking excess  med  -0.4%  CI     [-1.6,+7.9]  n=11   dates=5   >0: 45%
+             basing excess  med  -0.6%  CI     [-2.8,+8.4]  n=38   dates=7   >0: 47%
+           drifting excess  med  -0.0%  CI     [-2.5,+5.8]  n=10   dates=4   >0: 50%
+             failed excess  med  -0.7%  CI     [-3.9,+2.7]  n=37   dates=7   >0: 49%
+
+  --- +5 sessions   (44 observations dropped: endpoint missing or beyond 2026-08-28) ---
+             POOLED excess  med  +0.2%  CI     [-3.4,+3.9]  n=80   dates=6   >0: 50%
+           breaking excess  med  +1.2%  CI    [+0.6,+20.1]  n=6    dates=3   >0: 67%  <-- dates<4, no resolution
+             basing excess  med  +0.9%  CI    [-8.5,+14.7]  n=34   dates=5   >0: 53%
+           drifting excess  med  -0.4%  CI     [-1.5,+0.8]  n=6    dates=2   >0: 50%  <-- dates<4, no resolution
+             failed excess  med  -1.0%  CI     [-6.2,+4.1]  n=34   dates=6   >0: 44%
+
+  --- +10 sessions   (63 observations dropped: endpoint missing or beyond 2026-08-28) ---
+             POOLED excess  med  -0.7%  CI     [-0.7,-0.7]  n=61   dates=1   >0: 49%  <-- dates<4, no resolution
+           breaking excess  (n=0)
+             basing excess  med  +0.6%  CI     [+0.6,+0.6]  n=30   dates=1   >0: 60%  <-- dates<4, no resolution
+           drifting excess  med  -4.7%  CI     [-4.7,-4.7]  n=5    dates=1   >0: 40%  <-- dates<4, no resolution
+             failed excess  med  -2.5%  CI     [-2.5,-2.5]  n=26   dates=1   >0: 38%  <-- dates<4, no resolution
+
+=== WHEN CAN THIS LEDGER ANSWER ITS OWN QUESTION? ===
+  'breaking' -- the second entry, the whole premise of the scan --
+    rows in ledger: 29 over 12 sessions
+    distinct names first seen breaking: 18 (1.5/session)
+    to reach 30 distinct names: ~8 more sessions
+    to reach 50 distinct names: ~21 more sessions
+  NOTE: distinct names is the easy bar. The binding constraint is
+  distinct AS-OF DATES -- see dates= above; +10d currently has 1-2.
