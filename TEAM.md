@@ -58,6 +58,9 @@
 
 - 未列入的目录（`JeffSun_Wiki/`、`PrimeTrading_Obsidian/`、`Fluxus_References/`、`_source_material/`、`SqueezeMetrics/` 等）＝**资料区**：所有线只读；整理需 Andy 发起。
 - **公箱例外**：`material_inbox.md`、`night_reports/INBOX.md`（含收藏夹节）、`DATA_CONTRACTS §七` 是 append-only 公箱——任何线可**加行**（走直推 main 标准动作），但只有表列主人可改/勾别人的行。
+  - **`Fluxus_Brand/voice/raw/`**（08-31 补）：目录归 Writer Mia，但它是 **Andy 的原料入口**——日推与任何会话都可**代录他的原话**（只追加、原样、不改写，commit message 注明「代录 Andy 原料」）。⚠️ 读它一律**读主树工作区**（他直接录进去不总 commit，权威版反而旧）。
+  - **`Fluxus_Brand/ops/campaigns/APPROVAL_QUEUE.md`**：Gate 唯一写入口（过闸追一行），Andy 批完自己追 ↳。
+  - **`Fluxus_Brand/brain/hooks.md`「类型登记」节**：分发站首用新 hook 当晚可 append 一行 ⏳。
 - 每个数据文件只有一条线有写入权：
   - `data/output/`、`data/history/`（除 regime_ledger）→ DATA ALEX
   - `data/history/regime_ledger.csv` → RND Linda

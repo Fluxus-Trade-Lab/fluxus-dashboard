@@ -14,6 +14,17 @@
 | 盘面读数 | regime / 宽度 / atr_ext 分布 | `data/output/` git 历史（按日期 `git show`） | 查证站按日取快照，不引「记忆中的读数」 |
 | 研究结论 | 各研究 NULL/阳性 | `data/research/claims/claims.jsonl`（带 evidence_grade） | 引用带日期与等级 |
 
+### 待补的在册对象（08-31 盘点：四问 #2「能用 proof.md 在册对象支撑吗」现在撑不住多数选题）
+
+| 缺什么 | 谁能补 | 补了之后能撑什么选题 |
+|---|---|---|
+| **单笔交易票根库** | `data/output/trades/<TICKER>_*.json` 已有每笔的 `trade_id`/`realized_R`/`setup_type`/`path_analytics.mfe_R`——**只是没人去取** | 一切「我这样做过、结果如此」的判据帖（入口 3/4） |
+| **NULL 结果清单** | `data/research/claims/claims.jsonl` 里 direction=null 的行 | 「测了没用」体裁——别人不敢发的差异化 |
+| **踩坑故事** | `data/reference/incidents/` 已有一批（Joe/Zac 投的） | BUILD 帖矿脉（入口 6 反馈环） |
+| **判断→兑现链** | `Fluxus_Receipts/receipts.md` 的 ⏳ 到期项 | 最高级证据：先说后验，无法事后编造 |
+
+**这四类都已经在仓库里了**，缺的不是数据是**登记动作**——谁用到就在上表登一行，别每次重新去找。
+
 ## 收录规则
 
 - 新证据对象=一行入表（对象/是什么/权威源/用法），谁产出谁登记。
