@@ -862,14 +862,21 @@ Yahoo 自己的 5m 有 78 根）。现在 Yahoo 日线里这个槽位 OHLC 全 n
 - `episodic_pivot` 单看：基线 51.7%，窗口内 93 行零命中 → 无截断下的概率 **4.25e-30**
 - **`audit_archives` I1–I7 全绿**，因为**行数没掉**：06-26 有 1,613 行，比前一天的 965 还**多**
 
-**要你决定的四件**：
-1. **先定根因再谈回填。** 断点 `2026-06-26`、恢复 `2026-08-07..08-11` 前后的 commit 是最短的线索。
-   方向（**都没验证**）：抓取分页只取第一页 · 某个排序 + `[:N]` · Finviz 导出行数上限。
-2. **回填多半做不到**（Finviz 历史拿不回来）。**拿不回来时，正确动作是给这 21 天打「宇宙不完整」标记，
-   不是假装它完整。**
-3. **用过这段区间的研究要重报一次宇宙**：至少 `b4_gates` · `tightness_study` · `momentum97_shadow` ·
-   `oratnek_diff` · `leaders_log`。**不是说结论错了，是说它们的宇宙少了一半。**
-4. **`audit_universe_shape` 已在 main**（15 个测试）——它在 **2026-06-26 这个首个受影响 session 就报**，
+**⭐ 根因已定位，而且修复早就在 main 里**：`finviz_adapter.py` 的 `max_pages = 150`（= 3,000 只，
+`3fa5287d` 2026-03-01 就有），**Finviz 按字母序返回行**，所以帽子一咬就是从字母中间切断。
+06-26 没有任何代码改动（06-20..07-02 `pipeline/` 零 commit）——**是宇宙涨过了 3,000**。
+`2f782b53`（**2026-08-09**）已抬到 600，注释原话：*"At 150 pages the universe stopped at LNTH:
+every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归档 08-11 恢复，时间线吻合。
+**代码侧不用修。**
+
+**要你决定的三件，全是关于历史数据的**：
+1. **这 21 天要不要 / 能不能回填。** Finviz 不提供历史 screener 结果，多半拿不回来。
+   **拿不回来时正确动作是打「宇宙不完整（A–L only）」标记，不是假装它完整**——
+   静默的半宇宙比标注过的缺口危险得多。
+2. **⭐ 用过这段区间的研究要重报一次宇宙**：至少 `b4_gates` · `tightness_study` · `momentum97_shadow` ·
+   `oratnek_diff` · `leaders_log`。**不是说结论错了，是说它们那段的宇宙是 A–L**，
+   而 M–Z 里有 NVDA / MSFT / TSLA / PLTR。**一个只含 A–L 的「市场宽度」读数，和它自称的东西不是一回事。**
+3. **`audit_universe_shape` 已在 main**（15 个测试）——它在 **2026-06-26 这个首个受影响 session 就报**，
    且 03-09..06-25 的 74 个健康 session **零违规**。⚠️ **判据档位（tolerance / split 字母）该由数据端定，我不替 screener 定口径**，
    现在的默认值只是能复现这次事故的那一档。
 
@@ -880,5 +887,9 @@ Yahoo 自己的 5m 有 78 根）。现在 Yahoo 日线里这个槽位 OHLC 全 n
 **是 marketcal 不建模临时休市**。这两种一眼看去一模一样，靠三方对账才分得开，见
 `audit_calendar_gaps --archive <csv>` 的 D1/D2/D3。）
 
-**归属**：`pipeline/screeners|adapters`、`data/history` 的补写 = **DATA ALEX**；A 的第 2 条与 B 的第 2 条涉及取舍，**建议 Andy 拍**。
+⚠️ **给全线的一条**：`2f782b53` 08-09 修好了代码，**却没有人回头问「那之前那些天呢」**。
+缺的不是修复，是**修复之后的回溯**——一个「从今天起不再发生」的补丁，不会自己告诉你「已经发生了 21 天」。
+**修完一个静默失效，下一步永远是量它已经吃掉了多少历史。**
+
+**归属**：`data/history` 的标记/回填 = **DATA ALEX**；A 的第 2 条与 B 的第 1 条涉及取舍，**建议 Andy 拍**。
 **状态：待处理。** —— Nighty Zac，2026-09-01 夜间轮（分支 `auto/night-20260901-2957fa`，闸与事故档已合进 main）
