@@ -151,3 +151,4 @@ Also follow these:
 | Cap SQN's N at 100 | Uncapped √N promoted a long record into a band it hadn't earned (4.99 "excellent" vs the true 2.74 "good") |
 | Flag Kelly's distortion | A one-sided bull sample produced f\*=15.9%, λ\*=5.8× — following it would be suicide |
 | Heat measured three ways | Committed risk read 3.5%; true open exposure was 7.5% (peak ceiling 30%) |
+| **Risk/trade denominator = entry-day equity** | Dividing by starting capital misread an in-band 0.30% median as "0.52% — 2× over target" once the account doubled |

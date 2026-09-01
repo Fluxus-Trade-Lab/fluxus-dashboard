@@ -28,12 +28,13 @@ from pipeline.portfolio.rr_chart import generate_rr_chart
 from pipeline.tickers.ohlc_store import load_local_ohlc
 
 
-def _rr_pair(sub, cap, out_dir, stem, label, handle):
+def _rr_pair(sub, cap, out_dir, stem, label, handle, eqbd=None):
     """Base64 the RR chart in light + dark."""
     def one(dark):
         path = os.path.join(out_dir, f"{stem}_rr{'_dark' if dark else ''}.png")
         generate_rr_chart(sub, cap, path, period_label=label, handle=handle,
-                          title="Every trade by R-multiple", dark=dark)
+                          title="Every trade by R-multiple", dark=dark,
+                          equity_by_date=eqbd)
         return rc.png_from_file(path)
     return {"light": one(False), "dark": one(True)}
 
@@ -93,13 +94,19 @@ def build_doc(trades, meta, period, month, quarter, out_dir, handle):
     import datetime as _dt
     from pipeline.portfolio import sizing as _sz
     _Rs = [t.R for t in sub if t.R is not None]
-    _risks = [t.risk for t in sub if t.risk]
-    actual_1r = (sum(_risks) / len(_risks) / cap * 100) if _risks else None
+    # HOUSE RULE (2026-09-01): risk% is ÷ entry-day equity, never ÷ starting capital.
+    def _eq_at(ds):
+        if not eqbd:
+            return cap
+        prior = [d for d in eqbd if d <= ds]
+        return eqbd[max(prior)] if prior else cap
+    _rp = sorted(t.risk / _eq_at(t.entry_date) * 100 for t in sub if t.risk)
+    actual_1r = _rp[len(_rp) // 2] if _rp else None  # median
     _yrs = max(0.1, (_dt.date.fromisoformat(dmax) - _dt.date.fromisoformat(dmin)).days / 365)
     sz = _sz.sizing_objective_curves(_Rs, _yrs) if len(_Rs) >= 20 else None
 
     charts = {
-        "rr": _rr_pair(sub, cap, out_dir, stem, rr_title, handle),
+        "rr": _rr_pair(sub, cap, out_dir, stem, rr_title, handle, eqbd),
         "risk_ruin": _both(lambda d: rc.risk_of_ruin_chart(sz["ruin"], actual_1r, dark=d)) if sz else None,
         "sizing_frontier": _both(lambda d: rc.sizing_frontier_chart(sz["curve"], actual_1r, dark=d)) if sz else None,
         "sizes": {"light": ps_light, "dark": ps_dark} if ps_light else None,
@@ -184,7 +191,7 @@ def build_month_doc(trades, meta, month, full_mtm, out_dir, handle):
 
     stem = f"monthly_{month}"
     charts = {
-        "rr": _rr_pair(closed, cap, out_dir, stem, f"{month} — every trade by R", handle) if len(closed) >= 3 else None,
+        "rr": _rr_pair(closed, cap, out_dir, stem, f"{month} — every trade by R", handle, eqbd) if len(closed) >= 3 else None,
         "sizes": {"light": ps_light, "dark": ps_dark} if ps_light else None,
         "equity": _both(lambda d: rc.equity_curve(month_eqbd, m_dd, prev_eq, dark=d,
                                                   ylabel="Return (month)")),

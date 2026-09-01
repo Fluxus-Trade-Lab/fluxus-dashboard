@@ -72,9 +72,20 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
     const ddFlag = {}
     for (const p of eq) { peak = Math.max(peak, p.value); ddFlag[p.date] = (p.value - peak) / peak < -0.03 }
     const inDD = ds => { const prior = eq.filter(p => p.date <= ds); return prior.length ? ddFlag[prior[prior.length - 1].date] : false }
-    const riskOf = t => rRisk(t)
-    const rDD = closed.filter(t => riskOf(t) && inDD(t.entryDate.slice(0, 10))).map(riskOf)
-    const rOK = closed.filter(t => riskOf(t) && !inDD(t.entryDate.slice(0, 10))).map(riskOf)
+    // HOUSE RULE (2026-09-01): risk-per-trade % is ÷ equity on the ENTRY DAY,
+    // never ÷ starting capital — that denominator halves as the account doubles
+    // and once mislabeled a mid-band 0.30% median as "2× over target".
+    const equityAt = (ds) => {
+      let v = startingCapital
+      for (const p of eq) { if (p.date <= ds) v = p.value; else break }
+      return v || startingCapital
+    }
+    const riskPctOf = t => {
+      const r = rRisk(t)
+      return r ? (r / equityAt(t.entryDate.slice(0, 10))) * 100 : null
+    }
+    const rDD = closed.map(t => inDD(t.entryDate.slice(0, 10)) ? riskPctOf(t) : null).filter(Boolean)
+    const rOK = closed.map(t => !inDD(t.entryDate.slice(0, 10)) ? riskPctOf(t) : null).filter(Boolean)
 
     // trims / stops
     const scaled = closed.filter(t => (t.trims?.length || 0) >= 2)
@@ -83,7 +94,8 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
       const fp = t.trims[0].price
       return t.direction === 'long' ? fp > t.entryPrice : fp < t.entryPrice
     }).length
-    const risks = closed.map(riskOf).filter(Boolean)
+    const risks = closed.map(riskPctOf).filter(Boolean)
+    const risksSorted = [...risks].sort((a, b) => a - b)
 
     return {
       avgWinHold: mean(wins.map(x => holdDays(x.t))),
@@ -97,9 +109,11 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
       scalePct: (scaled.length / closed.length) * 100,
       respectPct: (losses.filter(x => x.r >= -1.2).length / losses.length) * 100,
       blewPct: (losses.filter(x => x.r < -1).length / losses.length) * 100,
-      riskDDpct: rDD.length ? (mean(rDD) / startingCapital) * 100 : null,
-      riskOKpct: rOK.length ? (mean(rOK) / startingCapital) * 100 : null,
-      avgRiskPct: risks.length ? (mean(risks) / startingCapital) * 100 : null,
+      riskDDpct: rDD.length ? mean(rDD) : null,
+      riskOKpct: rOK.length ? mean(rOK) : null,
+      avgRiskPct: risks.length ? mean(risks) : null,
+      medRiskPct: risks.length ? risksSorted[Math.floor(risks.length / 2)] : null,
+      over1n: risks.filter(r => r > 1).length,
     }
   }, [enriched, performanceData, startingCapital])
 
@@ -142,7 +156,7 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
       </Card>
 
       <Card n="4" title="Trims & stops"
-        verdict={`Sizing runs ~2× intended: avg 1R ${d.avgRiskPct ? d.avgRiskPct.toFixed(2) + '%' : '—'} vs 0.25% target.`}>
+        verdict={`1R median ${d.medRiskPct ? d.medRiskPct.toFixed(2) + '%' : '—'} of entry-day equity — in the 0.2–0.5% band; the leak is the ${d.over1n} trades >1%.`}>
         {d.scalePct.toFixed(0)}% of trades scaled out; <b>{d.intoPct.toFixed(0)}%</b> of scaled winners trimmed into strength — strong exit craft. Stops: <b>{d.respectPct.toFixed(0)}%</b> of losses respected (≤1.2R), but <b>{d.blewPct.toFixed(0)}%</b> blew through −1R (the re-attack tail).
       </Card>
 
@@ -163,7 +177,7 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
         <ol className="list-decimal ml-4 space-y-1.5">
           <li><b>One-and-done per name per thesis.</b> If a name is red after the first entry, no add #2/#3/#4. Re-entry only after a <i>new</i> setup prints (fresh base/breakout) — never as an average-down. Recovers ~{money(d.cfOnedonePL)}.</li>
           <li><b>Pre-commit full size at entry #1, scale only into green.</b> Decide the total intended position before the first fill and pyramid up into strength, never average down into red. Fixes both Mode A (BABA) and Mode B (CRCL).</li>
-          <li><b>Halve the base 1R back to target.</b> Real 1R ≈ {d.avgRiskPct ? d.avgRiskPct.toFixed(2) + '%' : '0.52%'} vs the 0.25% you intend. Cutting initial size in half shrinks every hole and makes a wrong first entry a −0.25% event, not −1R+ of real capital.</li>
+          <li><b>Cap the outlier risk, not the base.</b> Median 1R ≈ {d.medRiskPct ? d.medRiskPct.toFixed(2) : '—'}% of entry-day equity — already in the 0.2–0.5% band the best practitioners run. The leak is the {d.over1n} trades that risked &gt;1%; a hard 0.5% per-trade cap removes the tail without shrinking the base.</li>
         </ol>
       </Card>
     </div>

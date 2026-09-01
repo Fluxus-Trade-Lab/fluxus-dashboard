@@ -237,7 +237,7 @@ font-family:var(--mono);font-size:11px;color:var(--dim);display:flex;justify-con
 <ol class="act">
 <li><b>One-and-done per name per thesis.</b> Red after entry #1 → no add #2/#3/#4; re-enter only on a new setup. Recovers ~{{ d.bd.cf_onedone_pnl | money }}.</li>
 <li><b>Pre-commit full size at entry #1, scale only into green</b> — pyramid up, never average down. Fixes Mode A &amp; B.</li>
-<li><b>Halve base 1R</b> — real 1R ≈ {{ d.bd.avg_risk_pct | num(2) }}% vs the 0.25% target (~2× size).</li>
+<li><b>Cap the outlier risk, not the base.</b> Median 1R ≈ {{ d.bd.med_risk_pct | num(2) }}% of entry-day equity — inside the 0.2–0.5% band; the leak is the {{ d.bd.over_1_n }} trades that risked &gt;1%. Hard cap 0.5% per trade.</li>
 </ol>
 </section>{% endif %}
 

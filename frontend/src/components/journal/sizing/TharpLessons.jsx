@@ -38,9 +38,9 @@ const LESSONS = [
     subtitle: 'Risk the same % of equity on every trade',
     principle: 'Tharp’s workhorse model: pick a risk fraction (e.g. 0.25% of equity), divide by stop distance, get shares. Every trade then loses the same fraction when the stop hits, and R becomes comparable across all trades. The discipline is keeping the fraction FIXED — the model fails the moment "conviction" starts inflating it.',
     ourNumber: {
-      stat: 'Real 1R vs target',
-      value: '0.52% vs 0.25%',
-      read: 'Average initial risk ran 2× the stated target (median 0.39%). The account was running a bigger percent-risk model than the trader believed.',
+      stat: 'Real 1R (÷ entry-day equity) vs target',
+      value: '0.30% median vs 0.25%',
+      read: 'Measured the way the model means it — against equity on the entry day — the median 1R is 0.30%, inside the 0.2–0.5% band the best practitioners run (mean 0.37%; ÷ starting capital it misreads as 0.52% once the account doubles). The real leak is the tail: 7 trades risked >1%, the largest 8.1%.',
     },
     source: 'Tharp, DGPS · audit: sizing section of H1 review',
   },

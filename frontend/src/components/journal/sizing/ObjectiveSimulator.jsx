@@ -4,7 +4,7 @@ import { bootstrapObjective } from '../lib/sizingStats'
 
 const RISK_CHIPS = [
   { value: 0.25, label: '0.25% target' },
-  { value: 0.52, label: '0.52% his actual' },
+  { value: 0.37, label: '0.37% his actual (÷entry-day eq)' },
   { value: 1.0, label: '1.0%' },
   { value: 2.0, label: '2.0%' },
 ]

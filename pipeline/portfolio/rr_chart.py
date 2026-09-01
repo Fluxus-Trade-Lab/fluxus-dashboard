@@ -18,7 +18,7 @@ def generate_rr_chart(trades, capital, out_path,
                       period_label="Jan 2026 to Jul 2026",
                       handle="@Fluxus_Z",
                       title="Every trade by R-multiple",
-                      headline=None, dark=False):
+                      headline=None, dark=False, equity_by_date=None):
     """Render the RR bar chart to `out_path` (PNG). Returns out_path or None."""
     try:
         import matplotlib
@@ -52,9 +52,16 @@ def generate_rr_chart(trades, capital, out_path,
     avg_loss = mean(losses) if losses else 0
     win_rate = len(wins) / len(Rs) * 100
     sum_r = sum(Rs)
-    # 1R as % of capital = average initial risk / capital
-    risks = [t.risk for t in rr if t.risk]
-    avg_risk_pct = (mean(risks) / capital * 100) if (risks and capital) else None
+    # 1R %: HOUSE RULE (2026-09-01) — ÷ equity on the ENTRY DAY when the curve is
+    # available; ÷ starting capital only as a labeled fallback.
+    def _eq_at(ds):
+        if not equity_by_date:
+            return capital
+        prior = [d for d in equity_by_date if d <= ds]
+        return equity_by_date[max(prior)] if prior else capital
+    risks = [t.risk / _eq_at(t.entry_date) * 100 for t in rr if t.risk]
+    avg_risk_pct = median(risks) if risks else None
+    risk_denom = "entry-day equity (median)" if equity_by_date else "starting capital (median)" 
     total_pnl = sum(t.pnl for t in rr)
     ret_pct = total_pnl / capital * 100 if capital else 0
 
@@ -98,7 +105,7 @@ def generate_rr_chart(trades, capital, out_path,
                         f"+{sum_r:.0f}R total  ·  avg win {avg_win:.1f}R / avg loss {avg_loss:.1f}R")
     ax.set_title(f"{title}", fontsize=16, fontweight="bold", color=C["title"], loc="left", pad=30)
     fig.text(0.125, 0.905, head, fontsize=11, color=C["head"])
-    risk_note = (f"1R ≈ {avg_risk_pct:.2f}% of capital"
+    risk_note = (f"1R ≈ {avg_risk_pct:.2f}% of {risk_denom}"
                  if avg_risk_pct is not None else "")
     if risk_note:
         fig.text(0.125, 0.876, risk_note, fontsize=9.5, color=C["sub"])

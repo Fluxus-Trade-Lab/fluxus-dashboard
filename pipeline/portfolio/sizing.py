@@ -220,8 +220,14 @@ def progressive_backtest(equity_by_date, low_exposure=0.5):
 # --------------------------------------------------------------------------- #
 def summarize(trades, equity_by_date, capital):
     Rs = [t.R for t in trades if t.R is not None]
-    risks = [t.risk for t in trades if t.risk]
-    actual_1R_pct = (st.mean(risks) / capital * 100) if risks else None
+    # HOUSE RULE (2026-09-01): risk% ÷ entry-day equity, never ÷ starting capital.
+    def _eq_at(ds):
+        if not equity_by_date:
+            return capital
+        prior = [d for d in equity_by_date if d <= ds]
+        return equity_by_date[max(prior)] if prior else capital
+    risks = [t.risk / _eq_at(t.entry_date) * 100 for t in trades if t.risk]
+    actual_1R_pct = st.mean(risks) if risks else None
     return {
         "actual_1R_pct": actual_1R_pct,
         "kelly_trade": kelly_per_trade(Rs),

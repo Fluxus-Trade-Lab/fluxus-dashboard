@@ -292,8 +292,21 @@ def behavioral_diagnosis(trades, equity_by_date, capital):
         prior = [d for d in dd_flag if d <= ds]
         return dd_flag.get(prior[-1], False) if prior else False
 
-    risks_dd = [t.risk for t in trades if t.risk and in_dd(t.entry_date)]
-    risks_ok = [t.risk for t in trades if t.risk and not in_dd(t.entry_date)]
+    # HOUSE RULE (Andy 2026-09-01): risk-per-trade % is ALWAYS ÷ equity on the
+    # ENTRY DAY, never ÷ starting capital. Dividing by starting capital halved
+    # the denominator as the account doubled and mislabeled a mid-band 0.30%
+    # median as "0.52% — 2× over target". Same yardstick Qullamaggie/Muninn use.
+    def _eq_at(ds):
+        if not equity_by_date:
+            return capital
+        prior = [d for d in equity_by_date if d <= ds]
+        return equity_by_date[max(prior)] if prior else capital
+
+    def _risk_pct(t):
+        return t.risk / _eq_at(t.entry_date) * 100
+
+    risks_dd = [_risk_pct(t) for t in trades if t.risk and in_dd(t.entry_date)]
+    risks_ok = [_risk_pct(t) for t in trades if t.risk and not in_dd(t.entry_date)]
 
     # Trim / stops
     scaled = [t for t in trades if len(t.legs) >= 2]
@@ -302,15 +315,16 @@ def behavioral_diagnosis(trades, equity_by_date, capital):
                if (t.direction == "long" and t.legs[0].price > t.entry)
                or (t.direction == "short" and t.legs[0].price < t.entry))
     lR = [t for t in losses]
-    risks = [t.risk for t in trades if t.risk]
+    risks = [_risk_pct(t) for t in trades if t.risk]
+    risks_sorted = sorted(risks)
     return {
         "worst_reattack": worst_reattack,
         "total_pnl": total_pnl, "total_R": total_R,
         "cf_avoid_pnl": cf_avoid_pnl, "cf_avoid_R": cf_avoid_R,
         "cf_onedone_pnl": cf_onedone_pnl, "cf_onedone_R": cf_onedone_R,
         "avg_win_hold": avg_win_hold, "avg_loss_hold": avg_loss_hold, "overheld": overheld,
-        "risk_dd_pct": (sum(risks_dd) / len(risks_dd) / capital * 100) if risks_dd else None,
-        "risk_ok_pct": (sum(risks_ok) / len(risks_ok) / capital * 100) if risks_ok else None,
+        "risk_dd_pct": (sum(risks_dd) / len(risks_dd)) if risks_dd else None,
+        "risk_ok_pct": (sum(risks_ok) / len(risks_ok)) if risks_ok else None,
         "n_dd_trades": len(risks_dd),
         "scale_rate": len(scaled) / len(trades) * 100 if trades else 0,
         "win_legs": sum(len(t.legs) for t in wins) / len(wins),
@@ -319,7 +333,10 @@ def behavioral_diagnosis(trades, equity_by_date, capital):
         "respect_pct": sum(1 for t in lR if t.R >= -1.2) / len(lR) * 100,
         "blew_pct": sum(1 for t in lR if t.R < -1) / len(lR) * 100,
         "n_blew2": sum(1 for t in lR if t.R < -2),
-        "avg_risk_pct": (sum(risks) / len(risks) / capital * 100) if risks else None,
+        "avg_risk_pct": (sum(risks) / len(risks)) if risks else None,
+        "med_risk_pct": risks_sorted[len(risks_sorted) // 2] if risks else None,
+        "over_half_pct": (sum(1 for r in risks if r > 0.5) / len(risks) * 100) if risks else None,
+        "over_1_n": sum(1 for r in risks if r > 1.0),
         "avg_win_R": sum(t.R for t in wins) / len(wins),
         "avg_loss_R": sum(t.R for t in losses) / len(losses),
     }
@@ -576,9 +593,11 @@ def render_analysis(trades, capital, total_pnl, include_characteristics=True, eq
         A("**4 · Trims & stops.** Scaling: {sr:.0f}% of trades scaled out, {i:.0f}% of scaled winners trimmed into "
           "strength — excellent exit craft. Stops: **{resp:.0f}% of losses respected the stop** (≤1.2R), but "
           "**{blew:.0f}% blew through −1R** ({b2} worse than −2R) — the tail is the re-attack campaign. Sizing: "
-          "avg initial risk **{rp:.2f}% of capital vs your 0.25% target** — you run ~2× your intended 1R.\n"
+          "initial risk (÷ entry-day equity): mean **{rp:.2f}%**, median {mrp:.2f}% — inside the 0.2–0.5% "
+          "band the best practitioners run; {oh:.0f}% of trades exceed 0.5% and {o1} exceed 1% (the true outliers).\n"
           .format(sr=bd['scale_rate'], i=bd['into_strength_pct'], resp=bd['respect_pct'],
-                  blew=bd['blew_pct'], b2=bd['n_blew2'], rp=bd['avg_risk_pct']))
+                  blew=bd['blew_pct'], b2=bd['n_blew2'], rp=bd['avg_risk_pct'],
+                  mrp=bd['med_risk_pct'], oh=bd['over_half_pct'], o1=bd['over_1_n']))
 
         # 5 · Counterfactual — what fixing the top-5 leaks is worth
         base_pct = bd['total_pnl'] / capital * 100
@@ -605,9 +624,9 @@ def render_analysis(trades, capital, total_pnl, include_characteristics=True, eq
         A("2. **Pre-commit the full size at entry #1.** You already de-risk in drawdowns and trim into strength — the "
           "one place discipline breaks is adding to red. Decide the total intended position before the first fill and "
           "scale *only into green* (pyramid up), never into red (average down). Fixes Mode A (BABA) and Mode B (CRCL).")
-        A("3. **Halve the base 1R back to target.** Your real 1R is ~0.52% vs the 0.25% you intend — 2× size. Cutting "
-          "initial size in half shrinks every one of these holes proportionally and makes a wrong first entry a "
-          "−0.25% event, not −1R+ of real capital.\n")
+        A(f"3. **Cap the outlier risk, not the base.** Median 1R = {bd['med_risk_pct']:.2f}% of entry-day equity "
+          f"— already in the 0.2–0.5% band. The problem is the tail: {bd['over_1_n']} trades risked >1% "
+          f"(largest 8.1%). A hard per-trade cap at 0.5% removes the tail without shrinking the base.\n")
 
     # Best / worst case studies
     A("### 最佳 & 最差 / Best & worst trades\n")
