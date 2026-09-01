@@ -2,6 +2,13 @@
 
 *取代 `00_SETUP.md` §2/§3。*
 
+> ## ⚠️ Substack 目前不收费 —— 本节 §〇 里的 `$39–40/月 · $379/年` **未启用**
+> Andy 2026-09-01 定案：Substack **系统免费 · 档案以后可以收费**，「以后可以变成」不是现在。
+> 打开这份文件的人会把 §〇 那一行当成生效价——**它不是**。
+> 定案全文：[`../Fluxus_Brand/ops/briefs/2026-08-29_business_model_brainstorm.md`](../Fluxus_Brand/ops/briefs/2026-08-29_business_model_brainstorm.md) §「2026-09-01 定案」
+> 生效的只有：Discord 订阅 **$99/月**（$999/年）· 课程 **$1,499** · Fluxus Analytics 标价 **$29/月（会员已含，不拆卖）**。
+> *（OPS 代标事实，2026-09-01；`Fluxus_Substack/` 08-31 拆线后归 **Writer Mia**，非 Studio Q。已在 §七 通知该线。）*
+
 ---
 
 ## 〇、现状
