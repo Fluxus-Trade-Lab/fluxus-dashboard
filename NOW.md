@@ -105,6 +105,14 @@
 
 ## 📋 等你动手（生意动作队列——各线经 OPS 追加，你做完即删行；看板「等你动手」读这里）
 
+- [ ] 🔴 **签字队列里有一张卡等你，而它的窗口已经过了** —— [`Fluxus_Brand/ops/campaigns/APPROVAL_QUEUE.md`](Fluxus_Brand/ops/campaigns/APPROVAL_QUEUE.md)
+  `2026-08-29_extension-arithmetic` 包 08-31 过闸挂上去，**至今零签字**。Gate 自己写死的窗口是「旗舰与 V4 只在 08-31 周一 ET 盘前成立，周一收盘后作废」——**今天 09-02，那扇窗关了**。
+  **还能救的只有 V1（常青，随时可发）。** 需你定的第 2 件（V4 那句方法承诺）就是每日页顶上那条。
+  ⚠️ 这张卡是「六站全跑通、最后一米没人走」的实证：队列 08-31 才建，建完没人告诉你它存在。
+- [ ] 🟠 **Substack About 页两个决定** —— [`Fluxus_Substack/00_SETUP.md`](Fluxus_Substack/00_SETUP.md) §4a，状态「待点头再粘」，**站上现在还是旧版**。
+  ① **会员数放不放**：实数 40 真人（7 Lifetime）；TSF 拿 400+、JB 拿 15,000 当卖点，所以 Steve 判定放上去是减分、没放。② **Discord 算不算订阅权益**：它现在是 Whop 的独立产品，写进 About 就是承诺了不交付的东西——并不并是产品决定。
+- [ ] 🟡 **官网 fluxus-capital.com Tier 2 两行** —— 文案早改好，**卡在你登录 Squarespace**（08-25 就挂在「待你解锁」节）。
+- [ ] 🟡 **W5 周报里有一条素材含真实收入数字** —— 投稿人自己标了「对外发布前 Andy 过目」，所以没自动收割。见 [`Fluxus_Brand/ops/weekly/2026-08-30_W5.md`](Fluxus_Brand/ops/weekly/2026-08-30_W5.md) 第 207 行。
 - [ ] 🟠 **给 363 笔已平仓交易填 setup 名字** —— `data/research/setup_labeling/worksheet.csv`，**0/363 已填**。
   机器已把每笔的 R / MFE / MAE / 距均线 / ATR / 止损距离等 24 个字段算好并给了 `machine_guess`，**只等你填第一列**。
   ⚠️ **它建于 08-26，七天没人碰，而且从来没进过 NOW.md 或 INBOX**——你 09-02 问「这个跑哪里去了」，答案是：真的掉出去了，这次登记住。
