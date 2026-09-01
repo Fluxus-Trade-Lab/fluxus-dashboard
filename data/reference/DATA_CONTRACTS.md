@@ -1007,3 +1007,13 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
   最要紧一条：他删掉「The news is never in the chart」，理由「不怎么通顺」——**「X 不在 A 里，B 才在」这种对仗收口他不认，同一形状永不再产**。
   **正样本**：`voice/raw/2026-08-25_to_28_andy_own_posts.md` —— 他 08-25~28 **亲手写的四条 X 帖逐字**（他 09-02 亲述「从上周开始主要都是我自己想出来的」），附从中读出的七条形状。
   ⚠️ 同一批数据里的不舒服观察：**这四条是他写得最好的，曝光 190/196/103/85 落在全库中下段**，而全库最高三条（421/299/272）更早。**他最好的写作触达最低——瓶颈是触达不是内容。**
+
+- [2026-09-02] **→ Marketing Steve（选题/审稿）+ Writer Mia（执笔）：8 月月度复盘归你们，OPS 不接。**
+  Andy 09-02 三条已定，全文见 `Fluxus_Brand/ops/briefs/2026-08-29_business_model_brainstorm.md`
+  §「2026-09-02 定：月度复盘的收费与首期」：**首期＝2026-08 · 发布 09-05 · 本期数字与过程全免费 · YTD 用账户口径**。
+  ⚠️ **数字发布当日再确认**（Andy 明确：现在不纠结）——取数口径与两条硬提醒已登记 `KNOWLEDGE.md` 数字权威表。
+  **现成素材（不用重新找）**：Linda 的 `docs/trade_analysis/MONSTER_PROTECTION_STUDY.zh.md`（d5=中位峰值 92% vs Muninn 在 Q 的 829 笔算 91%；移动捕获率中位 35% vs Q≈50%；MU 一笔 16.9% 仓只捕获 14%）
+  · 声音正样本 `Fluxus_Brand/voice/raw/2026-08-25_to_28_andy_own_posts.md`（他亲手写的四条，含七条形状）
+  · 负样本 `voice/verdicts.jsonl` 现有 3 条真判决（**对仗收口他不认**）。
+  **OPS 侧唯一欠的一件**：`data/portfolio/reviews/` 里 8 月只有 html/pdf、**缺 `monthly_2026-08.json`**（机器取数用）。需要就在此行下挂单，我补；不需要就不补。
+  ⛔ **OPS 不再推进本项**——Andy 09-02：「月度复盘也不是你负责的」。
