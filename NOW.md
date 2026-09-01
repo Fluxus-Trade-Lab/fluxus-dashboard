@@ -96,7 +96,7 @@
 - [ ] X bio 改漏斗 + 链接位指 `fluxuscapital.substack.com/welcome`（文案已备，5 分钟｜上周未做，顺延）
 - [ ] Recommendations 互推第一批（名单 Steve 在备，你只点按钮，~15 分钟｜上周未做，顺延）
 - [ ] 拍板批 15 分钟：T1 付费角色回收 / T5 welcome 升级入口 / 坟头分支清理方案（T3 PII 已于 08-30 拍板选 b，销账）
-- [ ] MRNA 长文 **Pin to top** 核一下（X 来的人第一眼要看到它｜上周留的小尾巴）
+- [x] ~~MRNA 长文 **Pin to top**~~ ✅ **早就已经完成**（Andy 2026-09-02 在每日页上批注销账；这条在牌上挂着是清单陈旧，不是他没做）
 - [ ] 课程试读合集**过目**（54 页合集 + 34 图已交付，等你点头才能当引流资产用）
 - [ ] 蒸馏厂 **8 道判断题**（`FluxusTrading_Obsidian/90_Inbox/candidates/_TO_REVIEW.md`，一行一个批/改/毙，≈8 分钟）
 - [ ] Discord 两个付费角色回收（T1，你 08-25 说「提醒我」；2 分钟：进服务器设置移除两个 member 的角色）
