@@ -1,14 +1,14 @@
 {
   "ticker": "SLV",
-  "fetched_at": "2026-08-30T18:02:38Z",
+  "fetched_at": "2026-09-01T01:13:05Z",
   "_schema": "v2",
-  "current_price": 60.02000045776367,
+  "current_price": 60.130001068115234,
   "info": {
-    "symbol": null,
-    "longName": null,
+    "symbol": "SLV",
+    "longName": "iShares Silver Trust",
     "sector": null,
     "industry": null,
-    "exchange": null,
+    "exchange": "PCX",
     "country": null,
     "city": null,
     "website": null,
@@ -30,10 +30,10 @@
     "freeCashflow": null,
     "debtToEquity": null,
     "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "fiftyTwoWeekHigh": 109.83,
+    "fiftyTwoWeekLow": 36.43,
+    "averageVolume": 18389452,
+    "averageVolume10days": 19157050,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -49,6 +49,12 @@
     "current_price": null
   },
   "news": [
+    {
+      "date": "2026-08-31T13:28:01Z",
+      "title": "Exchange-Traded Funds, Equity Futures Lower Pre-Bell Monday as US, Iran Exchange Attacks",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/exchange-traded-funds-equity-futures-132801663.html",
+      "source": "MT Newswires"
+    },
     {
       "date": "2026-08-28T12:43:48Z",
       "title": "Exchange-Traded Funds, Equity Futures Mixed Pre-Bell Friday Ahead of Warsh Speech",
@@ -102,46 +108,24 @@
       "title": "Exchange-Traded Funds Higher, Equity Futures Mixed Pre-Bell Wednesday Ahead of Fed Meeting Minutes' Release",
       "url": "https://finance.yahoo.com/markets/stocks/articles/exchange-traded-funds-higher-equity-131807943.html",
       "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-18T13:02:33Z",
-      "title": "Exchange-Traded Funds Lower, Equity Futures Mixed Pre-Bell Tuesday Amid Rising Oil Prices",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/exchange-traded-funds-lower-equity-130233447.html",
-      "source": "MT Newswires"
     }
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 58.98399982452393,
-    "ma50": 55.62179992675781,
-    "ma200": 64.9983500289917,
-    "rsi14": 54.384245324842006,
+    "ma20": 59.367499923706056,
+    "ma50": 55.634199981689456,
+    "ma200": 65.06675003051758,
+    "rsi14": 54.698708431761276,
     "high_20d": 64.30999755859375,
-    "low_5d": 59.72999954223633,
+    "low_5d": 59.65999984741211,
     "low_10d": 57.22999954223633,
     "high_52w": 109.83000183105469,
-    "low_52w": 35.22999954223633,
-    "atr14": 1.8685716901506697,
-    "atr14_pct": 3.113248377039903,
-    "position_in_52w_range_pct": 33.230563210375486
+    "low_52w": 35.31999969482422,
+    "atr14": 1.8335715702601842,
+    "atr14_pct": 3.049345647247063,
+    "position_in_52w_range_pct": 33.29754484227448
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-29",
-      "open": 26.71,
-      "high": 27.05,
-      "low": 26.63,
-      "close": 26.81,
-      "volume": 11793800.0
-    },
-    {
-      "date": "2024-08-30",
-      "open": 26.68,
-      "high": 26.8,
-      "low": 26.19,
-      "close": 26.35,
-      "volume": 15762100.0
-    },
     {
       "date": "2024-09-03",
       "open": 25.83,
@@ -4133,17 +4117,17 @@
       "low": 59.73,
       "close": 60.02,
       "volume": 36121100.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 60.39,
+      "high": 60.42,
+      "low": 59.66,
+      "close": 60.13,
+      "volume": 14675820.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-28",
-      "open": 35.41,
-      "high": 35.52,
-      "low": 35.23,
-      "close": 35.52,
-      "volume": 21079100.0
-    },
     {
       "date": "2025-08-29",
       "open": 35.35,
@@ -6151,6 +6135,14 @@
       "low": 59.73,
       "close": 60.02,
       "volume": 36121100.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 60.39,
+      "high": 60.42,
+      "low": 59.66,
+      "close": 60.13,
+      "volume": 14675820.0
     }
   ],
   "ai_synthesis": null,

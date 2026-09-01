@@ -1,8 +1,8 @@
 {
   "ticker": "SKM",
-  "fetched_at": "2026-08-30T18:02:36Z",
+  "fetched_at": "2026-09-01T01:13:03Z",
   "_schema": "v2",
-  "current_price": 39.34000015258789,
+  "current_price": 38.38999938964844,
   "info": {
     "symbol": null,
     "longName": null,
@@ -40,7 +40,11 @@
     "companyOfficers": []
   },
   "earnings_history": [],
-  "next_earnings": {},
+  "next_earnings": {
+    "date": "2026-10-29",
+    "revenue_low": 4430000000000,
+    "revenue_high": 4528000000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -99,10 +103,45 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 3,
+    "bullish": 1,
+    "neutral": 1,
+    "bearish": 1,
+    "avg_price_target": 35.0,
+    "high_price_target": 40.0,
+    "low_price_target": 30.0,
+    "current_price": 38.39,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-16T10:26:17",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2025-05-12T18:09:59",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Overweight",
+        "action": "down"
+      },
+      {
+        "date": "2025-05-06T15:37:40",
+        "firm": "Citigroup",
+        "to_grade": "Neutral",
+        "from_grade": "Buy",
+        "action": "down"
+      },
+      {
+        "date": "2024-02-05T17:23:53",
+        "firm": "Nomura",
+        "to_grade": "Reduce",
+        "from_grade": "Neutral",
+        "action": "down"
+      }
+    ]
   },
   "news": [
     {
@@ -166,38 +205,22 @@
       "source": "Motley Fool"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.10341234860947873,
   "technicals": {
-    "ma20": 37.15299987792969,
-    "ma50": 34.39339981079102,
-    "ma200": 30.670949869155884,
-    "rsi14": 60.62465867438644,
+    "ma20": 37.46049976348877,
+    "ma50": 34.436999816894534,
+    "ma200": 30.76109986305237,
+    "rsi14": 55.95921527052541,
     "high_20d": 41.0099983215332,
-    "low_5d": 39.040000915527344,
+    "low_5d": 37.970001220703125,
     "low_10d": 37.970001220703125,
     "high_52w": 47.18000030517578,
     "low_52w": 19.65999984741211,
-    "atr14": 1.3550000871930803,
-    "atr14_pct": 3.4443316775227433,
-    "position_in_52w_range_pct": 71.51162782638637
+    "atr14": 1.398571559361049,
+    "atr14_pct": 3.6430622078576094,
+    "position_in_52w_range_pct": 68.05959022777706
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-29",
-      "open": 21.9783,
-      "high": 22.0069,
-      "low": 21.9021,
-      "close": 21.9116,
-      "volume": 137300.0
-    },
-    {
-      "date": "2024-08-30",
-      "open": 21.8925,
-      "high": 21.9593,
-      "low": 21.8735,
-      "close": 21.9497,
-      "volume": 212100.0
-    },
     {
       "date": "2024-09-03",
       "open": 22.0832,
@@ -4189,17 +4212,17 @@
       "low": 39.04,
       "close": 39.34,
       "volume": 1218200.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 38.5,
+      "high": 38.575,
+      "low": 37.97,
+      "close": 38.39,
+      "volume": 2137923.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-28",
-      "open": 21.9,
-      "high": 22.18,
-      "low": 21.9,
-      "close": 22.15,
-      "volume": 365300.0
-    },
     {
       "date": "2025-08-29",
       "open": 21.66,
@@ -6207,6 +6230,14 @@
       "low": 39.04,
       "close": 39.34,
       "volume": 1218200.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 38.5,
+      "high": 38.575,
+      "low": 37.97,
+      "close": 38.39,
+      "volume": 2137923.0
     }
   ],
   "ai_synthesis": null,

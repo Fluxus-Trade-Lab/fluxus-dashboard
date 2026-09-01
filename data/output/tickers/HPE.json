@@ -1,46 +1,112 @@
 {
   "ticker": "HPE",
-  "fetched_at": "2026-08-30T18:02:04Z",
+  "fetched_at": "2026-09-01T01:12:17Z",
   "_schema": "v2",
-  "current_price": 52.310001373291016,
+  "current_price": 52.2400016784668,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "HPE",
+    "longName": "Hewlett Packard Enterprise Company",
+    "sector": "Technology",
+    "industry": "Communication Equipment",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Spring",
+    "website": "https://www.hpe.com",
+    "fullTimeEmployees": 67000,
+    "marketCap": 69176393728,
+    "enterpriseValue": 85249392640,
+    "trailingPE": 48.82243,
+    "forwardPE": 12.789691,
+    "priceToSalesTrailing12Months": 1.7831726,
+    "enterpriseToRevenue": 2.197,
+    "priceToBook": 2.7332182,
+    "grossMargins": 0.33776,
+    "operatingMargins": 0.087,
+    "profitMargins": 0.040110003,
+    "returnOnEquity": 0.06315,
+    "totalCash": 5292000256,
+    "totalDebt": 21304000512,
+    "totalRevenue": 38793998336,
+    "freeCashflow": 3836000000,
+    "debtToEquity": 84.03,
+    "currentRatio": 1.088,
+    "fiftyTwoWeekHigh": 64.25,
+    "fiftyTwoWeekLow": 19.84,
+    "averageVolume": 24326631,
+    "averageVolume10days": 12787470,
+    "beta": 1.436,
+    "sharesOutstanding": 1324203521,
+    "sharesFloat": 1317807618,
+    "companyOfficers": [
+      {
+        "name": "Mr. Antonio Fabio Neri",
+        "title": "CEO, President & Director",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Ms. Marie E. Myers",
+        "title": "Executive VP & CFO",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. John F. Schultz J.D.",
+        "title": "Executive VP and Chief Operating & Legal Officer",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Ms. Fidelma M. Russo",
+        "title": "Executive VP, President, GM of Hybrid Cloud & CTO",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Mr. Rami  Rahim",
+        "title": "Executive VP, President & GM of Networking",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Jeremy K. Cox",
+        "title": "Senior VP, Corporate Controller, Chief Tax Officer & Principal Accounting Officer",
+        "age": 47,
+        "yearBorn": 1978
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-04-30T00:00:00",
+      "eps_actual": 0.79,
+      "eps_estimate": 0.53369,
+      "eps_surprise_pct": 0.48029998
+    },
+    {
+      "period_end": "2026-01-31T00:00:00",
+      "eps_actual": 0.65,
+      "eps_estimate": 0.58689,
+      "eps_surprise_pct": 0.1075
+    },
+    {
+      "period_end": "2025-10-31T00:00:00",
+      "eps_actual": 0.62,
+      "eps_estimate": 0.5819,
+      "eps_surprise_pct": 0.0655
+    },
+    {
+      "period_end": "2025-07-31T00:00:00",
+      "eps_actual": 0.44,
+      "eps_estimate": 0.41743,
+      "eps_surprise_pct": 0.0541
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-09-02",
+    "revenue_low": 11626800000,
+    "revenue_high": 12210000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -99,105 +165,166 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 23,
+    "bullish": 11,
+    "neutral": 11,
+    "bearish": 1,
+    "avg_price_target": 65.34684,
+    "high_price_target": 80.0,
+    "low_price_target": 28.0,
+    "current_price": 52.24,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-10T11:43:03",
+        "firm": "Morgan Stanley",
+        "to_grade": "Overweight",
+        "from_grade": "Equal-Weight",
+        "action": "up"
+      },
+      {
+        "date": "2026-07-24T11:00:13",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-03T17:09:02",
+        "firm": "Goldman Sachs",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-03T16:17:11",
+        "firm": "Argus Research",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-02T17:36:57",
+        "firm": "Evercore ISI Group",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-02T17:25:50",
+        "firm": "Piper Sandler",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-02T16:36:45",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-02T16:05:33",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-02T15:29:00",
+        "firm": "Loop Capital",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-06-02T15:25:30",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
-      "date": "2026-08-30T16:55:00Z",
-      "title": "Futures Set to Trade Ahead of Jobs Data, Tech Earnings",
-      "url": "https://www.barrons.com/articles/futures-stock-sunday-trading-52f040e8?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-28T21:25:41Z",
-      "title": "Arista's Price Assumes The Parts Arrive On Time",
-      "url": "https://www.trefis.com/articles/613543/aristas-price-assumes-the-parts-arrive-on-time/2026-08-28",
+      "date": "2026-08-31T23:35:10Z",
+      "title": "The Ceiling SanDisk Wrote Into Its Own Contracts",
+      "url": "https://www.trefis.com/articles/613722/the-ceiling-sandisk-wrote-into-its-own-contracts/2026-08-31",
       "source": "Trefis"
     },
     {
-      "date": "2026-08-28T21:05:59Z",
-      "title": "Dell Stock Widens Your Portfolio Instead Of Steadying It",
-      "url": "https://www.trefis.com/articles/613542/dell-stock-widens-your-portfolio-instead-of-steadying-it/2026-08-28",
+      "date": "2026-08-31T22:48:13Z",
+      "title": "Dell Stock Could Halve Or Double Within Thirteen Months",
+      "url": "https://www.trefis.com/articles/613720/dell-stock-could-halve-or-double-within-thirteen-months/2026-08-31",
       "source": "Trefis"
     },
     {
-      "date": "2026-08-28T15:51:00Z",
-      "title": "GitLab Set to Report Q2 Earnings: What's in Store for the Stock?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/gitlab-set-report-q2-earnings-155100809.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-28T15:27:00Z",
-      "title": "HPE to Report Q3 Earnings: What's in the Cards for the Stock?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/hpe-report-q3-earnings-whats-152700745.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-28T14:16:00Z",
-      "title": "MongoDB's Q2 Earnings Ahead: What's in Store for the Stock?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/mongodbs-q2-earnings-ahead-whats-141600397.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-28T14:05:14Z",
-      "title": "Dell Holds Strong Before Earnings; Snowflake, Palo Alto Networks Headline Software Reports",
-      "url": "https://www.investors.com/research/earnings-preview/dell-stock-earnings-snowflake-palo-alto-networks-software-earnings/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-08-28T13:55:02Z",
-      "title": "Does Hewlett Packard Enterprise (HPE) Have the Potential to Rally 25.49% as Wall Street Analysts Expect?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/does-hewlett-packard-enterprise-hpe-135502647.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-28T13:15:03Z",
-      "title": "Seeking Clues to Hewlett Packard Enterprise (HPE) Q3 Earnings? A Peek Into Wall Street Projections for Key Metrics",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/seeking-clues-hewlett-packard-enterprise-131503323.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-28T01:19:10Z",
-      "title": "The Peer-Group Mispricing Sitting On SNDK Stock",
-      "url": "https://www.trefis.com/articles/613261/the-peer-group-mispricing-sitting-on-sndk-stock/2026-08-27",
+      "date": "2026-08-31T21:58:56Z",
+      "title": "Cisco Systems Stock Has A Second Engine The AI Story Hides",
+      "url": "https://www.trefis.com/articles/613717/cisco-systems-stock-has-a-second-engine-the-ai-story-hides/2026-08-31",
       "source": "Trefis"
+    },
+    {
+      "date": "2026-08-31T17:47:00Z",
+      "title": "Buy Dell Technologies Stock Before Q2 Earnings as AI Server Demand Soars?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/buy-dell-technologies-stock-q2-174700353.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-31T15:09:28Z",
+      "title": "Hewlett Packard Enterprise to Report 'Strong' Q3 With Upside in Demand, BofA Says",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/hewlett-packard-enterprise-report-apos-150928597.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-08-31T12:42:42Z",
+      "title": "Update: US Equity Futures Slightly Lower Pre-Bell as US, Iran Resume Hostilities in Middle East",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-futures-slightly-lower-124242480.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-08-31T12:41:00Z",
+      "title": "Samsara Set to Report Q2 Earnings: What's in Store for the Stock?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/samsara-set-report-q2-earnings-124100303.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-31T11:55:57Z",
+      "title": "US Equity Futures Slightly Lower Pre-Bell as US, Iran Resume Hostilities in Middle East",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-futures-slightly-lower-115557709.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-08-31T11:11:27Z",
+      "title": "Oil Outlook Weighs on Wall Street Pre-Bell; Asia Mixed, Europe Off",
+      "url": "https://finance.yahoo.com/markets/articles/oil-outlook-weighs-wall-street-111127924.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-08-31T10:45:24Z",
+      "title": "US Equity Investors to Focus on Corporate Earnings, Labor Market Health, Renewed Hostilities Against Iran This Week",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-investors-focus-corporate-104524918.html",
+      "source": "MT Newswires"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.11236599945247705,
   "technicals": {
-    "ma20": 54.42350025177002,
-    "ma50": 49.583200225830076,
-    "ma200": 32.37855541229248,
-    "rsi14": 49.42839744318109,
+    "ma20": 54.52350025177002,
+    "ma50": 49.679800262451174,
+    "ma200": 32.5270482635498,
+    "rsi14": 49.239107890397165,
     "high_20d": 63.439998626708984,
-    "low_5d": 51.29999923706055,
+    "low_5d": 52.0099983215332,
     "low_10d": 51.29999923706055,
     "high_52w": 64.06257161473991,
     "low_52w": 19.621582932025888,
-    "atr14": 2.6974996839250838,
-    "atr14_pct": 5.156757050483277,
-    "position_in_52w_range_pct": 73.5546607089319
+    "atr14": 2.643214089529855,
+    "atr14_pct": 5.059751157357603,
+    "position_in_52w_range_pct": 73.3971491483229
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-29",
-      "open": 18.0476,
-      "high": 18.1238,
-      "low": 17.762,
-      "close": 17.7811,
-      "volume": 9558700.0
-    },
-    {
-      "date": "2024-08-30",
-      "open": 18.2285,
-      "high": 18.6282,
-      "low": 18.1904,
-      "close": 18.4379,
-      "volume": 18330200.0
-    },
     {
       "date": "2024-09-03",
       "open": 18.3522,
@@ -376,7 +503,7 @@
     },
     {
       "date": "2024-10-03",
-      "open": 19.5476,
+      "open": 19.5477,
       "high": 19.9695,
       "low": 19.3943,
       "close": 19.5093,
@@ -393,7 +520,7 @@
     {
       "date": "2024-10-07",
       "open": 19.6627,
-      "high": 20.0605,
+      "high": 20.0606,
       "low": 19.6531,
       "close": 19.9982,
       "volume": 10961300.0
@@ -416,7 +543,7 @@
     },
     {
       "date": "2024-10-10",
-      "open": 19.8448,
+      "open": 19.8449,
       "high": 20.0749,
       "low": 19.5477,
       "close": 19.6915,
@@ -499,7 +626,7 @@
       "open": 18.6177,
       "high": 18.6657,
       "low": 18.4404,
-      "close": 18.5985,
+      "close": 18.5986,
       "volume": 9434600.0
     },
     {
@@ -553,9 +680,9 @@
     {
       "date": "2024-11-04",
       "open": 19.3176,
-      "high": 19.5476,
-      "low": 19.1833,
-      "close": 19.1833,
+      "high": 19.5477,
+      "low": 19.1834,
+      "close": 19.1834,
       "volume": 8093400.0
     },
     {
@@ -1064,7 +1191,7 @@
     },
     {
       "date": "2025-02-07",
-      "open": 20.7988,
+      "open": 20.7987,
       "high": 20.9338,
       "low": 20.3936,
       "close": 20.519,
@@ -1147,7 +1274,7 @@
       "open": 20.4515,
       "high": 20.5055,
       "low": 19.9305,
-      "close": 20.0173,
+      "close": 20.0174,
       "volume": 13306200.0
     },
     {
@@ -1946,7 +2073,7 @@
       "date": "2025-07-18",
       "open": 20.5421,
       "high": 20.7527,
-      "low": 20.454,
+      "low": 20.4539,
       "close": 20.6793,
       "volume": 14176300.0
     },
@@ -4189,17 +4316,17 @@
       "low": 52.01,
       "close": 52.31,
       "volume": 13882800.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 53.09,
+      "high": 53.77,
+      "low": 52.22,
+      "close": 52.24,
+      "volume": 30250613.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-28",
-      "open": 22.3544,
-      "high": 22.8344,
-      "low": 22.2368,
-      "close": 22.6874,
-      "volume": 24964900.0
-    },
     {
       "date": "2025-08-29",
       "open": 22.374,
@@ -6207,6 +6334,14 @@
       "low": 52.01,
       "close": 52.31,
       "volume": 13882800.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 53.09,
+      "high": 53.77,
+      "low": 52.22,
+      "close": 52.24,
+      "volume": 30250613.0
     }
   ],
   "ai_synthesis": null,

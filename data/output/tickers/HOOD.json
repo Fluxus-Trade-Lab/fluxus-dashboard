@@ -1,46 +1,112 @@
 {
   "ticker": "HOOD",
-  "fetched_at": "2026-08-30T18:02:03Z",
+  "fetched_at": "2026-09-01T01:12:15Z",
   "_schema": "v2",
-  "current_price": 104.26000213623047,
+  "current_price": 104.80999755859375,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
+    "symbol": "HOOD",
+    "longName": "Robinhood Markets, Inc.",
+    "sector": "Financial Services",
+    "industry": "Capital Markets",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Menlo Park",
+    "website": "https://robinhood.com",
+    "fullTimeEmployees": 2900,
+    "marketCap": 94232813568,
+    "enterpriseValue": 93313810432,
+    "trailingPE": 46.171806,
+    "forwardPE": 31.954659,
+    "priceToSalesTrailing12Months": 19.106411,
+    "enterpriseToRevenue": 18.92,
+    "priceToBook": 9.939307,
+    "grossMargins": 0.9189,
+    "operatingMargins": 0.43884,
+    "profitMargins": 0.42011002,
+    "returnOnEquity": 0.23618999,
+    "totalCash": 23904999424,
+    "totalDebt": 22925000704,
+    "totalRevenue": 4931999744,
     "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "debtToEquity": 240.279,
+    "currentRatio": 1.116,
+    "fiftyTwoWeekHigh": 153.86,
+    "fiftyTwoWeekLow": 63.515,
+    "averageVolume": 25042080,
+    "averageVolume10days": 21660350,
+    "beta": 2.321,
+    "sharesOutstanding": 790630234,
+    "sharesFloat": 783792953,
+    "companyOfficers": [
+      {
+        "name": "Mr. Vladimir  Tenev",
+        "title": "Co-Founder, President, CEO & Chairman of the Board",
+        "age": 38,
+        "yearBorn": 1987
+      },
+      {
+        "name": "Mr. Baiju Prafulkumar Bhatt",
+        "title": "Co-Founder & Director",
+        "age": 40,
+        "yearBorn": 1985
+      },
+      {
+        "name": "Mr. Daniel M. Gallagher Jr., J.D.",
+        "title": "Chief Legal, Compliance & Corporate Affairs Officer",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Jason  Warnick CPA",
+        "title": "Advisor",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Steven M. Quirk",
+        "title": "Chief Brokerage Officer",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Shiv Kumar Verma",
+        "title": "Chief Financial Officer",
+        "age": 40,
+        "yearBorn": 1985
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.62,
+      "eps_estimate": 0.43141,
+      "eps_surprise_pct": 0.4371
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.38,
+      "eps_estimate": 0.38768,
+      "eps_surprise_pct": -0.0198
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.66,
+      "eps_estimate": 0.63585,
+      "eps_surprise_pct": 0.038
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.61,
+      "eps_estimate": 0.5443,
+      "eps_surprise_pct": 0.120699994
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 1257900000,
+    "revenue_high": 1443100000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,107 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 27,
+    "bullish": 20,
+    "neutral": 4,
+    "bearish": 3,
+    "avg_price_target": 121.50538,
+    "high_price_target": 163.6,
+    "low_price_target": 57.0,
+    "current_price": 104.81,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-03T12:52:27",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T18:51:26",
+        "firm": "Goldman Sachs",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T14:45:43",
+        "firm": "Citizens",
+        "to_grade": "Market Outperform",
+        "from_grade": "Market Outperform",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-30T11:34:21",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T10:35:45",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T09:55:52",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-22T12:13:26",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-21T10:34:51",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-20T15:29:37",
+        "firm": "Bernstein",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-16T17:27:10",
+        "firm": "Goldman Sachs",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-08-31T19:02:03Z",
+      "title": "Robinhood Chain Just Out-Earned Base Over the Weekend",
+      "url": "https://app.moby.co/home/news/news-robinhood-chain-just-out-earned-base-over-the-weekend?utm_source=yahoo_finance&utm_medium=rss",
+      "source": "Moby"
+    },
+    {
+      "date": "2026-08-31T15:15:00Z",
+      "title": "Zacks Investment Ideas feature highlights: Salesforce, Cisco, Dell, Uber and Robinhood",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/zacks-investment-ideas-feature-highlights-151500562.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-31T10:07:25Z",
+      "title": "Robinhood Chain Hits Record $874.8 Million Volume \u2014 Are Meme Coins Back?",
+      "url": "https://beincrypto.com/robinhood-chain-record-dex-volume-pons/",
+      "source": "BeInCrypto"
+    },
     {
       "date": "2026-08-30T02:35:00Z",
       "title": "Robinhood and Interactive Brokers Both Ride Retail Volume. Only One Earns on Idle Cash.",
@@ -146,58 +307,24 @@
       "title": "Update: Market Chatter: Robinhood, Kalshi, Crypto.com Lose Appeals for Injunctive Relief Against Nevada Gaming Control Board",
       "url": "https://finance.yahoo.com/markets/crypto/articles/market-chatter-robinhood-kalshi-crypto-200708490.html",
       "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-28T19:54:23Z",
-      "title": "Market Chatter: Robinhood, Kalshi, Crypto.com Lose Appeals for Injunctive Relief Against Nevada Gaming Control Board",
-      "url": "https://finance.yahoo.com/markets/options/articles/market-chatter-robinhood-kalshi-crypto-195423946.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-28T15:30:26Z",
-      "title": "Robinhood Markets (HOOD) Up 26.7% Since Last Earnings Report: Can It Continue?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/robinhood-markets-hood-26-7-153026905.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-28T14:55:00Z",
-      "title": "Strong Growth, Steep Price: Is Robinhood Stock Still Attractive?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/strong-growth-steep-price-robinhood-145500888.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.05562446461026539,
   "technicals": {
-    "ma20": 98.22199974060058,
-    "ma50": 101.36600021362305,
-    "ma200": 95.40997497558594,
-    "rsi14": 54.10064811926544,
+    "ma20": 98.94549980163575,
+    "ma50": 101.29920013427734,
+    "ma200": 95.274375,
+    "rsi14": 54.60475987827273,
     "high_20d": 112.44999694824219,
-    "low_5d": 102.80000305175781,
+    "low_5d": 100.69000244140625,
     "low_10d": 91.44000244140625,
     "high_52w": 153.86000061035156,
     "low_52w": 63.51499938964844,
-    "atr14": 6.021426609584263,
-    "atr14_pct": 5.7753946731330545,
-    "position_in_52w_range_pct": 45.09934384421156
+    "atr14": 6.192855290004185,
+    "atr14_pct": 5.908649398204676,
+    "position_in_52w_range_pct": 45.708116233311095
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-29",
-      "open": 20.4,
-      "high": 20.655,
-      "low": 20.09,
-      "close": 20.17,
-      "volume": 7621500.0
-    },
-    {
-      "date": "2024-08-30",
-      "open": 20.38,
-      "high": 20.4,
-      "low": 19.835,
-      "close": 20.12,
-      "volume": 11026200.0
-    },
     {
       "date": "2024-09-03",
       "open": 19.755,
@@ -4189,17 +4316,17 @@
       "low": 104.15,
       "close": 104.26,
       "volume": 16236400.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 103.325,
+      "high": 105.47,
+      "low": 100.69,
+      "close": 104.81,
+      "volume": 16232073.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-28",
-      "open": 104.0,
-      "high": 105.4,
-      "low": 102.76,
-      "close": 103.69,
-      "volume": 26059100.0
-    },
     {
       "date": "2025-08-29",
       "open": 102.84,
@@ -6207,6 +6334,14 @@
       "low": 104.15,
       "close": 104.26,
       "volume": 16236400.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 103.325,
+      "high": 105.47,
+      "low": 100.69,
+      "close": 104.81,
+      "volume": 16232073.0
     }
   ],
   "ai_synthesis": null,

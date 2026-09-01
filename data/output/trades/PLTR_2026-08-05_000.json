@@ -1,6 +1,6 @@
 {
   "trade_id": "PLTR_2026-08-05_000",
-  "generated_at": "2026-08-30T18:05:50+00:00",
+  "generated_at": "2026-09-01T01:19:29+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "PLTR",
@@ -39,10 +39,10 @@
     "high": 166.08,
     "low": 158.25,
     "volume": 63515900.0,
-    "ma20": 131.43300000000002,
+    "ma20": 131.433,
     "ma50": 131.4242,
-    "ma200": 152.43724999999998,
-    "rsi14": 68.73840193240085,
+    "ma200": 152.43725,
+    "rsi14": 68.73840256906392,
     "atr14": 8.432142857142859,
     "atr14_pct": 5.322314496713285,
     "high_52w": 207.52,
@@ -66,7 +66,7 @@
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 25
+    "hold_calendar_days": 26
   },
   "lesson": "In progress",
   "narrative": "Entered **PLTR** long on 2026-08-05 at $155.37 (qty 1136) with stop $153.00 (1R = $2.37/sh = $2,692). Setup: **Long in mixed structure** \u2014 price above MA20 ($131.43), MA stack mixed, RSI 69, 51% through 52W range, ATR 5.3% of price. **In progress.** Peak so far +13.92R; worst drawdown -1.13R.",
@@ -390,6 +390,14 @@
       "low": 184.38,
       "close": 186.29,
       "volume": 24995400.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 184.495,
+      "high": 187.94,
+      "low": 183.79,
+      "close": 186.38,
+      "volume": 25633590.0
     }
   ]
 }

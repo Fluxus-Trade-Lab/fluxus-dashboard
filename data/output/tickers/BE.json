@@ -1,8 +1,8 @@
 {
   "ticker": "BE",
-  "fetched_at": "2026-08-30T18:01:38Z",
+  "fetched_at": "2026-09-01T01:11:36Z",
   "_schema": "v2",
-  "current_price": 210.77000427246094,
+  "current_price": 206.3000030517578,
   "info": {
     "symbol": null,
     "longName": null,
@@ -99,12 +99,102 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "avg_price_target": 275.08463,
+    "high_price_target": 390.0,
+    "low_price_target": 97.0,
+    "current_price": 206.3,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-14T12:42:26",
+        "firm": "Jefferies",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T13:39:06",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T10:17:13",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2026-07-30T10:03:46",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T18:43:04",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T15:02:08",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T14:36:17",
+        "firm": "BMO Capital",
+        "to_grade": "Market Perform",
+        "from_grade": "Market Perform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T10:14:11",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-29T09:54:44",
+        "firm": "Bernstein",
+        "to_grade": "Market Perform",
+        "from_grade": "Market Perform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-21T18:52:37",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-08-31T19:05:12Z",
+      "title": "Is Bloom Energy (BE) Priced For Perfection After AI Demand?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/bloom-energy-priced-perfection-ai-190512221.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-08-31T17:56:00Z",
+      "title": "Will Faster Installations Drive Bloom Energy's AI Expansion?",
+      "url": "https://finance.yahoo.com/energy/articles/faster-installations-drive-bloom-energys-175600335.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-08-31T13:17:00Z",
+      "title": "Should You Invest in FCEL Stock Before Q3 Earnings Release?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/invest-fcel-stock-q3-earnings-131700560.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-30T15:13:17Z",
       "title": "Elon Musk\u2019s 15-Gigawatt Warning Points to a Very Different Set of AI Winners in 2027",
@@ -146,58 +236,24 @@
       "title": "Bloom Energy vs. Eos Energy Enterprises: Which Energy Storage Stock Is a Better Buy in 2026?",
       "url": "https://www.fool.com/coverage/better-buy/2026/08/28/bloom-energy-vs-eos-energy-enterprises-which-energy-storage-stock-is-a-better-buy-in-2026/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-28T15:03:01Z",
-      "title": "Bloom Energy vs. NuScale Power: Which Energy Innovator Stock Is a Better Buy in 2026?",
-      "url": "https://www.fool.com/coverage/better-buy/2026/08/28/bloom-energy-vs-nuscale-power-which-energy-innovator-stock-is-a-better-buy-in-2026/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-28T14:16:35Z",
-      "title": "Nvidia Warns Of AI Power Bottleneck \u2014 And Bloom Energy Could Benefit",
-      "url": "https://www.benzinga.com/markets/prediction-markets/26/08/61493971/nvidia-ai-power-bloom-energy?utm_source=yahooFinance&utm_campaign=partner_feed&utm_medium=referral",
-      "source": "Benzinga Prediction Markets"
-    },
-    {
-      "date": "2026-08-28T13:50:00Z",
-      "title": "GE Vernova vs. Bloom Energy: Which AI-Power Bet Has More Upside Ahead?",
-      "url": "https://www.fool.com/investing/2026/08/28/ge-vernova-vs-bloom-energy-which-ai-power-bet-has/",
-      "source": "Motley Fool"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.08095007151216668,
   "technicals": {
-    "ma20": 218.7115020751953,
-    "ma50": 236.60780120849608,
-    "ma200": 188.5071007156372,
-    "rsi14": 46.33976793401161,
+    "ma20": 218.11050186157226,
+    "ma50": 234.15560119628907,
+    "ma200": 188.90325073242187,
+    "rsi14": 44.55420533200229,
     "high_20d": 253.30999755859375,
-    "low_5d": 185.92999267578125,
+    "low_5d": 202.8800048828125,
     "low_10d": 185.92999267578125,
     "high_52w": 351.2799987792969,
     "low_52w": 48.869998931884766,
-    "atr14": 17.52428654261998,
-    "atr14_pct": 8.314412007112006,
-    "position_in_52w_range_pct": 53.53659119151699
+    "atr14": 17.406429835728236,
+    "atr14_pct": 8.437435568704865,
+    "position_in_52w_range_pct": 52.05846506375714
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-29",
-      "open": 11.53,
-      "high": 12.22,
-      "low": 11.33,
-      "close": 11.9,
-      "volume": 3143700.0
-    },
-    {
-      "date": "2024-08-30",
-      "open": 12.06,
-      "high": 12.24,
-      "low": 11.7,
-      "close": 11.91,
-      "volume": 2418000.0
-    },
     {
       "date": "2024-09-03",
       "open": 11.57,
@@ -4189,17 +4245,17 @@
       "low": 209.12,
       "close": 210.77,
       "volume": 11376800.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 208.88,
+      "high": 210.0,
+      "low": 202.88,
+      "close": 206.3,
+      "volume": 9863454.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-28",
-      "open": 51.95,
-      "high": 55.07,
-      "low": 51.02,
-      "close": 54.8,
-      "volume": 13062600.0
-    },
     {
       "date": "2025-08-29",
       "open": 53.88,
@@ -6207,6 +6263,14 @@
       "low": 209.12,
       "close": 210.77,
       "volume": 11376800.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 208.88,
+      "high": 210.0,
+      "low": 202.88,
+      "close": 206.3,
+      "volume": 9863454.0
     }
   ],
   "ai_synthesis": null,

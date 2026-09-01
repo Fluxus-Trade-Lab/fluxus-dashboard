@@ -1,46 +1,112 @@
 {
   "ticker": "AKAM",
-  "fetched_at": "2026-08-30T18:03:50Z",
+  "fetched_at": "2026-09-01T01:14:54Z",
   "_schema": "v2",
-  "current_price": 107.47000122070312,
+  "current_price": 108.62000274658203,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "AKAM",
+    "longName": "Akamai Technologies, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Cambridge",
+    "website": "https://www.akamai.com",
+    "fullTimeEmployees": 11000,
+    "marketCap": 15610498048,
+    "enterpriseValue": 21594097664,
+    "trailingPE": 38.9319,
+    "forwardPE": 15.091163,
+    "priceToSalesTrailing12Months": 3.6111722,
+    "enterpriseToRevenue": 4.995,
+    "priceToBook": 3.284548,
+    "grossMargins": 0.57452,
+    "operatingMargins": 0.076290004,
+    "profitMargins": 0.09507,
+    "returnOnEquity": 0.08918,
+    "totalCash": 3355386880,
+    "totalDebt": 9338986496,
+    "totalRevenue": 4322833920,
+    "freeCashflow": 710060096,
+    "debtToEquity": 196.672,
+    "currentRatio": 1.637,
+    "fiftyTwoWeekHigh": 165.45,
+    "fiftyTwoWeekLow": 70.82,
+    "averageVolume": 3722907,
+    "averageVolume10days": 2964160,
+    "beta": 0.645,
+    "sharesOutstanding": 143716609,
+    "sharesFloat": 140438433,
+    "companyOfficers": [
+      {
+        "name": "Dr. F. Thomson Leighton",
+        "title": "Co-Founder, CEO, President & Director",
+        "age": 68,
+        "yearBorn": 1957
+      },
+      {
+        "name": "Mr. Adam  Karon",
+        "title": "COO & GM of Cloud Technology Group",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Paul  Joseph",
+        "title": "Executive Vice President of Global Sales & Services",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Mani  Sundaram",
+        "title": "Executive VP & GM of Security Technology Group",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Ms. Laura  Howell",
+        "title": "Senior VP & Chief Accounting Officer",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Dr. Robert  Blumofe Ph.D.",
+        "title": "Executive VP & CTO",
+        "age": 60,
+        "yearBorn": 1965
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 1.59,
+      "eps_estimate": 1.57684,
+      "eps_surprise_pct": 0.0083
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 1.61,
+      "eps_estimate": 1.60435,
+      "eps_surprise_pct": 0.0034999999
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 1.84,
+      "eps_estimate": 1.75044,
+      "eps_surprise_pct": 0.0512
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 1.86,
+      "eps_estimate": 1.63574,
+      "eps_surprise_pct": 0.1371
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 1111500000,
+    "revenue_high": 1129674690
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 25,
+    "bullish": 14,
+    "neutral": 8,
+    "bearish": 3,
+    "avg_price_target": 157.43086,
+    "high_price_target": 195.0,
+    "low_price_target": 93.0,
+    "current_price": 108.62,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-13T14:37:59",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Underweight",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-10T13:28:46",
+        "firm": "HSBC",
+        "to_grade": "Hold",
+        "from_grade": "Buy",
+        "action": "down"
+      },
+      {
+        "date": "2026-08-10T13:13:46",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T23:31:56",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T20:39:12",
+        "firm": "TD Cowen",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T18:28:49",
+        "firm": "RBC Capital",
+        "to_grade": "Sector Perform",
+        "from_grade": "Sector Perform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T17:22:46",
+        "firm": "Piper Sandler",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T16:18:02",
+        "firm": "Guggenheim",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-27T14:34:22",
+        "firm": "Evercore ISI Group",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-14T11:41:36",
+        "firm": "Morgan Stanley",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
@@ -166,38 +309,22 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.051095561219497786,
   "technicals": {
-    "ma20": 115.48299903869629,
-    "ma50": 117.29040023803711,
-    "ma200": 109.14565002441407,
-    "rsi14": 40.822922225419234,
+    "ma20": 115.01999931335449,
+    "ma50": 116.96460021972656,
+    "ma200": 109.23570003509522,
+    "rsi14": 42.45246992300193,
     "high_20d": 127.04000091552734,
     "low_5d": 104.06999969482422,
     "low_10d": 104.06999969482422,
     "high_52w": 165.4499969482422,
     "low_52w": 70.81999969482422,
-    "atr14": 4.675715855189732,
-    "atr14_pct": 4.350717225346972,
-    "position_in_52w_range_pct": 38.72979244385969
+    "atr14": 4.656429835728237,
+    "atr14_pct": 4.286899022265732,
+    "position_in_52w_range_pct": 39.94505352307035
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-29",
-      "open": 100.61,
-      "high": 102.41,
-      "low": 100.45,
-      "close": 101.6,
-      "volume": 756700.0
-    },
-    {
-      "date": "2024-08-30",
-      "open": 102.16,
-      "high": 102.21,
-      "low": 100.62,
-      "close": 101.84,
-      "volume": 2305500.0
-    },
     {
       "date": "2024-09-03",
       "open": 101.32,
@@ -4189,17 +4316,17 @@
       "low": 106.88,
       "close": 107.47,
       "volume": 2583100.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 107.06,
+      "high": 109.685,
+      "low": 107.025,
+      "close": 108.62,
+      "volume": 2399924.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-28",
-      "open": 78.5,
-      "high": 78.71,
-      "low": 77.71,
-      "close": 78.39,
-      "volume": 1292600.0
-    },
     {
       "date": "2025-08-29",
       "open": 78.38,
@@ -6207,6 +6334,14 @@
       "low": 106.88,
       "close": 107.47,
       "volume": 2583100.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 107.06,
+      "high": 109.685,
+      "low": 107.025,
+      "close": 108.62,
+      "volume": 2399924.0
     }
   ],
   "ai_synthesis": null,

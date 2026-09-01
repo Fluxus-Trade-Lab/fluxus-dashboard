@@ -1,8 +1,8 @@
 {
   "ticker": "CPIX",
-  "fetched_at": "2026-08-29T03:39:05Z",
+  "fetched_at": "2026-09-01T01:16:09Z",
   "_schema": "v2",
-  "current_price": 8.460000038146973,
+  "current_price": 6.690000057220459,
   "info": {
     "symbol": "CPIX",
     "longName": "Cumberland Pharmaceuticals Inc.",
@@ -13,13 +13,13 @@
     "city": "Nashville",
     "website": "https://www.cumberlandpharma.com",
     "fullTimeEmployees": 88,
-    "marketCap": 126757088,
-    "enterpriseValue": 130124096,
+    "marketCap": 100236984,
+    "enterpriseValue": 100757200,
     "trailingPE": null,
-    "forwardPE": 60.42857,
-    "priceToSalesTrailing12Months": 2.8610554,
-    "enterpriseToRevenue": 2.937,
-    "priceToBook": 7.268041,
+    "forwardPE": 47.785713,
+    "priceToSalesTrailing12Months": 2.2624657,
+    "enterpriseToRevenue": 2.274,
+    "priceToBook": 5.7474227,
     "grossMargins": 0.84950995,
     "operatingMargins": -18.98654,
     "profitMargins": -0.24644,
@@ -32,8 +32,8 @@
     "currentRatio": 0.956,
     "fiftyTwoWeekHigh": 9.28,
     "fiftyTwoWeekLow": 1.85,
-    "averageVolume": 91585,
-    "averageVolume10days": 83250,
+    "averageVolume": 91584,
+    "averageVolume10days": 82250,
     "beta": 0.11,
     "sharesOutstanding": 14983107,
     "sharesFloat": 8750134,
@@ -156,7 +156,7 @@
     "avg_price_target": null,
     "high_price_target": null,
     "low_price_target": null,
-    "current_price": 8.46,
+    "current_price": 6.69,
     "recent_rating_changes": [
       {
         "date": "2019-12-03T14:13:26",
@@ -271,38 +271,22 @@
       "source": "Moby"
     }
   ],
-  "options_implied_move": 0.23404255213616845,
+  "options_implied_move": 0.2840059766441028,
   "technicals": {
-    "ma20": 7.902999997138977,
-    "ma50": 6.247177209854126,
-    "ma200": 3.814977967143059,
-    "rsi14": 66.46034798223465,
+    "ma20": 7.878500008583069,
+    "ma50": 6.29226583480835,
+    "ma200": 3.840673476457596,
+    "rsi14": 43.1618326780938,
     "high_20d": 9.279999732971191,
-    "low_5d": 7.510000228881836,
-    "low_10d": 7.340000152587891,
+    "low_5d": 6.599999904632568,
+    "low_10d": 6.599999904632568,
     "high_52w": 9.279999732971191,
     "low_52w": 1.4345808447452695,
-    "atr14": 0.5428571019853864,
-    "atr14_pct": 6.416750585550712,
-    "position_in_52w_range_pct": 89.54804445107654
+    "atr14": 0.6314285823277065,
+    "atr14_pct": 9.438394273946397,
+    "position_in_52w_range_pct": 66.98710785681953
   },
   "ohlc_2y": [
-    {
-      "date": "2024-08-29",
-      "open": 1.0624,
-      "high": 1.1166,
-      "low": 1.0546,
-      "close": 1.0546,
-      "volume": 8000.0
-    },
-    {
-      "date": "2024-08-30",
-      "open": 1.0469,
-      "high": 1.0856,
-      "low": 1.0469,
-      "close": 1.0469,
-      "volume": 3600.0
-    },
     {
       "date": "2024-09-03",
       "open": 1.0701,
@@ -4291,20 +4275,20 @@
       "date": "2026-08-28",
       "open": 8.7,
       "high": 9.16,
-      "low": 8.45,
+      "low": 8.44,
       "close": 8.46,
-      "volume": 45180.0
+      "volume": 47800.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 8.21,
+      "high": 8.5,
+      "low": 6.6,
+      "close": 6.69,
+      "volume": 190347.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-28",
-      "open": 2.6675,
-      "high": 2.6908,
-      "low": 2.5978,
-      "close": 2.6908,
-      "volume": 12500.0
-    },
     {
       "date": "2025-08-29",
       "open": 2.6831,
@@ -6309,9 +6293,17 @@
       "date": "2026-08-28",
       "open": 8.7,
       "high": 9.16,
-      "low": 8.45,
+      "low": 8.44,
       "close": 8.46,
-      "volume": 45180.0
+      "volume": 47800.0
+    },
+    {
+      "date": "2026-08-31",
+      "open": 8.21,
+      "high": 8.5,
+      "low": 6.6,
+      "close": 6.69,
+      "volume": 190347.0
     }
   ],
   "ai_synthesis": null,
