@@ -38,6 +38,8 @@
 | 会员明细 / 身份合并 | `data/growth/private/` 最新 members_master | PII 不出 private |
 | 发布记录 / views | `data/content/posts.csv` | 按 post_id 行 |
 | 研究结论 | `data/research/claims/claims.jsonl` | 引用带日期与 evidence_grade；**文件含 `#` 注释行，逐行解析前先 `grep -v '^#'`**，或直接用 `pipeline/tools/claim_registry` |
+| **对外 YTD（账户口径，含在场浮盈）** | **Portfolio Tracker（前端/Sheet）当日读数** —— ⚠️ **仓库里复算不出来**：`portfolio_YYYY-MM-DD.csv` 只有 trim 腿，能算已实现（08-31 = **+114.36%**），差额是在场持仓浮盈需现价。**取数＝发布当日从 tracker 读并截图存证**，不许转抄上个月的。Andy 2026-09-02 选定此口径。⚠️ **它含浮盈，会往下走**——月度间下降是正常，不是记错 |
+| 对外已实现口径（备用） | `data/portfolio/reviews/monthly_*.json` 的 `overall.return_pct`（H1=90.53%）· 或从 `portfolio_*.csv` 的 trim 腿累加 |
 | 交易绩效 | `data/portfolio/` performance_review 产物 | ⚠️ 本地目录（gitignored），`git show` 不适用——只能本机读；H1 +90.5% 等口径以此为准 |
 | 关卡进度 | 日推第一行 / NOW.md 🎮 节 | |
 
