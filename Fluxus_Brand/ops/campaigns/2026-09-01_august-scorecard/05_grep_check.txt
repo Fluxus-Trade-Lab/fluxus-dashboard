@@ -1,0 +1,36 @@
+== 05 分发站 · 禁项 grep 留痕 ==
+被检文本 = 五个变体的 EN 正文（从 05_distribution.md §一 的 '> ' 行抽出）
+词数：V1 98 / V2 165 / V3 297 / V4 193 / V5 266
+
+--- A. 五项判死数（U4/U6/U1/U2/U10/U7）---
+  /43\.8/  变体=0   阳性对照=1
+  /0\.91R|4\.17R/  变体=0   阳性对照=1
+  /124\.56|17\.87/  变体=0   阳性对照=1
+  /SAIL/  变体=0   阳性对照=1
+  /reconcile/  变体=0   阳性对照=1
+
+--- B. 回报百分比（本卡零回报数）---
+  /12\.9%|115\.2|cumulative/  变体=0   阳性对照=2
+  /(month|total|cumulative) return/  变体=0   阳性对照=1   ⚠️ 首轮我写的是 /% return|total return/，注入样本里
+     写的是 'month return'，两侧都得 0 —— 那是一个**没验过能报阳的阴性**，等于没查。已改成上面这条并重跑。
+
+--- C. 未来承诺（BRAIN §八 人的边界）---
+  /I will|I'll|from now on|going forward|next month I|promise|commit to/  变体=0   阳性对照=1
+
+--- D. CTA 冻结线（offers.md）---
+  /membership|Whop|Lifetime|Discord|\$99|\$149|3,399|subscribe|join/  变体=0   阳性对照=1
+
+--- E. 分母误写（角度站硬约束 2）---
+  /42 closed|42 trades closed|two thirds of my (position|size)|closed trades/  变体=0
+  （注：'42 trades is under 100' 是 SQN 的样本量陈述，非分母声明；全包无一处把 42 说成'平仓笔数'）
+
+--- F. 不带 n 的 100%/0% 胜率（角度站 §六 第二处）---
+  27:66.7% (n=6) · 0.0% (n=5) · 100.0% (n=3) · 35.7% (n=28)
+  33:And before anyone runs off with that 100%: it's three trades. The 0% is five. Under ten trades I write the n and no verdict, and so should you.
+  → 两处均在 V4 同一行，行内即带 (n=3) (n=5) ✅
+
+--- G. 以环境开头的因果句（角度站 §六 第一处）---
+  → 无输出 = 零命中 ✅
+
+== 结论 ==
+A–D 四组：变体侧全 0，阳性对照侧全 >0 —— **这批 grep 已验能报阳，所以这些 0 是可信的阴性**（Growth Gary 08-25 总纲）。

@@ -1,0 +1,42 @@
+== 0. 源文件指纹（发布当天必须复看；变了则本文件全部作废）==
+  path : /Users/taolezhu/Documents/AI-Trading-System/data/portfolio/reviews/monthly_2026-08.html
+  mtime: 2026-08-31 15:25:00
+  bytes: 1645532
+
+== 1. 四档表（HTML 逐格解析，未手打）==
+  bracket              n     win%    avgR     totR    realized
+  Damaged 0–47         6    66.7%   +1.6R    +9.4R     $46,161
+  Mixed 47–63          5     0.0%   -0.0R    -0.0R       -$130
+  Healthy 63–75        3   100.0%   +3.4R   +10.1R     $54,499
+  Extended 75–100     28    35.7%   +1.0R   +28.7R    $137,857
+  闭合四路：n=42 · ΣR=+48.2R · Σ$=238,387 · 反推胜数=17 → 17/42=40.5%
+
+== 2. 份额差（笔数占比 − R占比）· V1/V3 用 ==
+  Damaged 0–47       笔数  6/42 = 14.29%   R  +9.4/48.2 =  19.50%   差  -5.22pp   均R +1.57R
+  Mixed 47–63        笔数  5/42 = 11.90%   R  -0.0/48.2 =  -0.00%   差 +11.90pp   均R -0.00R
+  Healthy 63–75      笔数  3/42 =  7.14%   R +10.1/48.2 =  20.95%   差 -13.81pp   均R +3.37R
+  Extended 75–100    笔数 28/42 = 66.67%   R +28.7/48.2 =  59.54%   差  +7.12pp   均R +1.02R
+
+== 3. 总胜率＝四个胜率按笔数加权的平均 · V4 用 ==
+  Damaged 0–47       n= 6  权重 14.29%  该档胜率  66.7%  贡献  9.53pp
+  Mixed 47–63        n= 5  权重 11.90%  该档胜率   0.0%  贡献  0.00pp
+  Healthy 63–75      n= 3  权重  7.14%  该档胜率 100.0%  贡献  7.14pp
+  Extended 75–100    n=28  权重 66.67%  该档胜率  35.7%  贡献 23.80pp
+  加权和 = 40.5%   ← 与头条 Win rate 的一致性检查（反推胜数路径同样给 40.5%）
+
+== 4. SQN · V5 用（⚠️ cap 本月不 binding）==
+  报告印出：SQN 1.94 · Tharp band 'Below average' · Expectancy +1.1R · Stdev R 3.83
+  报告自印公式（原文）：SQN = √min(N,100) × (mean R ÷ stdev R) — N is capped at 100; an uncapped √N inflates a long record into a band it hasn't earned.
+  分档（原文）：Bands: <1.6 poor · 1.6–2.0 below avg · 2.0–2.5 average · 2.5–3.0 good · 3.0–5.0 excellent · 5.0–7.0 superb · ≥7.0
+  复算：√min(42,100) × (1.1476 / 3.83) = 1.9419  → 印出 1.94 ✅
+  ⚠️ N=42 < 100 → min(N,100)=N。**这道 cap 本月不 binding，它没有把 1.94 压下去。**
+  cap 咬的是公式里的 √N 这一项，与 mean/stdev 无关。纯比值（可上台面）：
+    √365 / √100 = 1.91×   ← 同样的每笔一致性，365 笔的记录不设 cap 会比 100 笔的记录高出这么多倍
+    （365 = 累计已平仓笔数，第一手读 /Users/taolezhu/Documents/AI-Trading-System/data/portfolio/portfolio_2026-08-31.csv 的 Closed 列）
+  ⛔ 不许把上面这个倍数乘上 8 月的 mean/stdev 冒充「我的累计 SQN」——那不是我的累计口径。
+  → V5 只许写成「装在前面、现在还没开始收费的闸」，⛔ 不许写成「它让我这个月降了分」。
+
+== 5. 保质期敏感度（U8：报告重生成后笔数 42→43，SAIL 0.0R/$0，落哪一档未知）==
+  若 SAIL 落在「Extended 档」：Extended 笔数占比 29/43 = 67.44%  R占比不变 59.54%  → 差 +7.90pp
+  若 SAIL 落在「其它任一档」：Extended 笔数占比 28/43 = 65.12%  R占比不变 59.54%  → 差 +5.57pp
+  → R 列与美元列不动（SAIL 是 0.0R / $0），动的只有份额与差。**重生成后本文件全部重跑。**
