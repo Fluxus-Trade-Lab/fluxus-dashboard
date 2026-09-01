@@ -102,3 +102,23 @@ json），不碰 `data/output`。**台账若只记成功，它记的就不是历
 2. universe 行数 vs Finviz 宣称总数(adapter 现在不存那个数)。
 4. **测试跑完仓库必须还是干净的**——CI 在 pytest 之后加一句 `git diff --exit-code data/history data/output`。08-23 夜间组发现 `test_quality.py::TestRequiredBlocks::test_missing_block_grades_severe` 每跑一次就把 `data/history/quality/breadth_last.csv` 的 08-19 基线行改写成近乎全 1.0(=空值率 100%,方向是让守卫**变迟钝**);根因是 `check_site(output_dir, date, history_dir=QUALITY_DIR)` 的第三个参数默认指向真仓库,测试只沙箱了第一个。origin/main 干净,但主工作树此刻就带着这个改动。事故档 `data/reference/incidents/2026-08-23_test_writes_into_the_real_archive.md`;**修法归数据端**(一行传参只堵这一个洞,建议同时上 conftest autouse fixture 或上面这句 CI 断言)。
 3. ~~run_ledger 没人读~~ **08-23 已建**(`pipeline/tools/audit_ledger.py` + `pipeline/tests/test_audit_ledger.py`,10 例):台账的读者。L1 上个交易日没有行(=当晚根本没跑,任何归档检查都看不见,因为没跑的 run 哪儿都不写)、L2 闸门状态非 ok、**L3 说 ok 的闸门拿不出自己的证据**、L4 errors 非空、L5 上一场在这场消失的闸门(警告)、L6 同 session 重跑与数值漂移(只报)。**L3 就是 08-19 blackout 的形状**——拿真台账回放,当晚那行 `breadth: ok / regime_score: null / 无 enriched` 被判违规,四小时后修好的重跑行放行。月报=`--window 30`(现在只有 3 个交易日,攒够再看 429 频率)。**未接进 CI**:`weekly-data-audit.yml` 现在仍只原样打印最近 7 行,把那步换成本工具需要动 workflow(不属夜间组文件边界),等 Andy 点头。
+
+5. **⚠️ 上面第 4 条的诉求没有落点：CI 从来不跑 pytest。**（Nighty Zac 实测，2026-09-02）
+   第 4 条写的是「**CI 在 pytest 之后**加一句 `git diff --exit-code data/history data/output`」——
+   而现场核对 `.github/workflows/` 全部 **6 个** workflow
+   （`content-reminder` / `daily-content-threads` / `daily-data-update` / `gas-probe` /
+   `premarket-digest` / `weekly-data-audit`）：**没有任何一个执行测试**，
+   也没有 `.pre-commit-config.yaml`、`Makefile`、`.husky`。
+   ```bash
+   grep -rniE "pytest|unittest|make test|tox" .github/workflows/     # 唯一命中是 "diag(nose)d" 这个词
+   ```
+   **也就是说：这 1,302 条测试没有任何自动触发点，全靠会话自己想起来跑。**
+   §五.4 那句「改任何归档的写入者，先跑 …，再跑 pytest」是**人的纪律，不是闸**。
+   → 第 4 条要真正落地，需要的不是「加一句断言」，是**先有一个跑测试的 workflow**。
+   `.github/workflows/` 不属夜间组边界，**本行只记事实不动文件**；归属见门铃（晨报 2026-09-02）。
+
+   **本行同时销掉第 4 条的代码那半**：`test_quality.py::test_missing_block_grades_severe`
+   现在显式传 `history_dir`（`test_quality.py:313`），且有一条元测试
+   `test_no_test_calls_check_site_without_a_history_dir` 用 AST 扫全套测试、带具名豁免清单钉住它。
+   实测：本夜在干净树上跑完 1,302 条测试后 `git status --short` 为空；
+   该检查的**阳性对照已做**（往 `data/history/quality/breadth_last.csv` 注射一行，`git status` 立即报出）。
