@@ -1,6 +1,6 @@
 {
   "trade_id": "PLTR_2026-08-20_000",
-  "generated_at": "2026-09-01T01:19:29+00:00",
+  "generated_at": "2026-09-01T23:55:30+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "PLTR",
@@ -9,16 +9,23 @@
     "entry_date": "2026-08-20",
     "entry_price": 180.43,
     "original_qty": 1440,
-    "current_qty": 1440,
+    "current_qty": 960,
     "stop_price": 172.0,
     "initial_stop": 172.0,
     "closed": false,
     "exit_date": null,
     "hold_business_days": null,
     "r_dollars": 12139.20000000001,
-    "realized_pl": 0,
-    "realized_R": 0.0,
-    "trims": []
+    "realized_pl": 1468.800000000001,
+    "realized_R": 0.12099644128113878,
+    "trims": [
+      {
+        "date": "2026-09-01",
+        "price": 183.49,
+        "qty": 480,
+        "type": "trim_1_3"
+      }
+    ]
   },
   "entry_snapshot": {
     "close": 173.96,
@@ -53,7 +60,7 @@
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 11
+    "hold_calendar_days": 12
   },
   "lesson": "In progress",
   "narrative": "Entered **PLTR** long on 2026-08-20 at $180.43 (qty 1440) with stop $172.00 (1R = $8.43/sh = $12,139). Setup: **Long in mixed structure** \u2014 price above MA20 ($154.42), MA stack mixed, RSI 66, 67% through 52W range, ATR 5.3% of price. **In progress.** Peak so far +0.94R; worst drawdown -1.37R.",

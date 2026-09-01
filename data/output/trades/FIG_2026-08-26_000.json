@@ -1,6 +1,6 @@
 {
   "trade_id": "FIG_2026-08-26_000",
-  "generated_at": "2026-09-01T01:19:29+00:00",
+  "generated_at": "2026-09-01T23:55:30+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "FIG",
@@ -9,15 +9,15 @@
     "entry_date": "2026-08-26",
     "entry_price": 28.64,
     "original_qty": 5306,
-    "current_qty": 885,
+    "current_qty": 0,
     "stop_price": 27.7,
     "initial_stop": 27.7,
-    "closed": false,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "exit_date": "2026-09-01",
+    "hold_business_days": 4,
     "r_dollars": 4987.640000000007,
-    "realized_pl": -1009.0200000000036,
-    "realized_R": -0.20230409572463173,
+    "realized_pl": -2557.7700000000036,
+    "realized_R": -0.51282169523061,
     "trims": [
       {
         "date": "2026-08-28",
@@ -30,6 +30,12 @@
         "price": 27.38,
         "qty": 2653,
         "type": "trim_1_2"
+      },
+      {
+        "date": "2026-09-01",
+        "price": 26.89,
+        "qty": 885,
+        "type": "sell_rest"
       }
     ]
   },
@@ -62,14 +68,14 @@
     "optimal_exit_date": "2026-08-27",
     "optimal_R": 2.744680851063824,
     "days_to_optimal": 1,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": -0.51282169523061,
+    "capture_pct": -18.684201299099783,
+    "missed_R": 3.2575025462944343,
     "post_exit_R": null,
-    "hold_calendar_days": 5
+    "hold_calendar_days": 6
   },
-  "lesson": "In progress",
-  "narrative": "Entered **FIG** long on 2026-08-26 at $28.64 (qty 5306) with stop $27.70 (1R = $0.94/sh = $4,988). Setup: **Long in mixed structure** \u2014 price above MA20 ($25.76), MA stack mixed, RSI 58, 19% through 52W range, ATR 5.8% of price. **In progress.** Peak so far +2.74R; worst drawdown -3.20R.",
+  "lesson": "Stopped too tight",
+  "narrative": "Entered **FIG** long on 2026-08-26 at $28.64 (qty 5306) with stop $27.70 (1R = $0.94/sh = $4,988). Setup: **Long in mixed structure** \u2014 price above MA20 ($25.76), MA stack mixed, RSI 58, 19% through 52W range, ATR 5.8% of price. Realized **-0.51R**, peak was **+2.74R** on 2026-08-27 (day +1) \u2014 captured **-19%** of the move. **Lesson: Stopped too tight.**",
   "ohlc_window": [
     {
       "date": "2026-07-27",

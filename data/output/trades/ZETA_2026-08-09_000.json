@@ -1,6 +1,6 @@
 {
   "trade_id": "ZETA_2026-08-09_000",
-  "generated_at": "2026-09-01T01:19:29+00:00",
+  "generated_at": "2026-09-01T23:55:30+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "ZETA",
@@ -9,21 +9,27 @@
     "entry_date": "2026-08-09",
     "entry_price": 27.18,
     "original_qty": 5761,
-    "current_qty": 3841,
+    "current_qty": 961,
     "stop_price": 26.2,
     "initial_stop": 26.2,
     "closed": false,
     "exit_date": null,
     "hold_business_days": null,
     "r_dollars": 5645.7800000000025,
-    "realized_pl": 3705.5999999999995,
-    "realized_R": 0.6563486356181073,
+    "realized_pl": 15945.599999999999,
+    "realized_R": 2.8243395952375034,
     "trims": [
       {
         "date": "2026-08-14",
         "price": 29.11,
         "qty": 1920,
         "type": "trim_1_3"
+      },
+      {
+        "date": "2026-09-01",
+        "price": 31.43,
+        "qty": 2880,
+        "type": "trim_1_2"
       }
     ]
   },
@@ -60,7 +66,7 @@
     "capture_pct": null,
     "missed_R": null,
     "post_exit_R": null,
-    "hold_calendar_days": 22
+    "hold_calendar_days": 23
   },
   "lesson": "In progress",
   "narrative": "Entered **ZETA** long on 2026-08-09 at $27.18 (qty 5761) with stop $26.20 (1R = $0.98/sh = $5,646). Setup: **Long in mixed structure** \u2014 price above MA20 ($22.24), MA20 > MA50 > MA200 (golden alignment), RSI 68, 87% through 52W range, ATR 5.9% of price. **In progress.** Peak so far +3.95R; worst drawdown -0.90R.",
