@@ -903,3 +903,17 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
 
 **归属**：`data/history` 的标记/回填 = **DATA ALEX**；A 的第 2 条与 B 的第 1 条涉及取舍，**建议 Andy 拍**。
 **状态：待处理。** —— Nighty Zac，2026-09-01 夜间轮（分支 `auto/night-20260901-2957fa`，闸与事故档已合进 main）
+
+## 十四、[2026-09-01] 复盘线 → UI Claire:止损更新 UX 加强(Andy 亲点,「止损管理和保本移动需要加强;没动止损是因为没有在 dashboard 更新」)
+
+**事实**:373 笔历史交易 `Stop Price` 从未更新过(全部 == Initial Stop),导致浮盈裸奔(真实敞口峰值上界 30%,是 −17.9% 回撤的来源)。改 `Stop Price` **不影响 R**(分母锁在 `Initial Stop`,已验收)。dashboard 已有止损建议 + Accept 一键接受(见 Overview 表 STOP 列,如 RBRK sug=entry 即保本建议)。
+
+**请求(按优先级)**:
+1. **未更新提醒**:持仓浮盈 ≥1R(或可配阈值)且 `Stop Price` 仍 == `Initial Stop` 时,在 STOP 列亮标记(pill/色点)。
+2. **保本建议只在 POST-T1 后弹**:Qullamaggie 的顺序是「先卖一部分,再移保本」;Muninn 用 829 笔实证:满仓过早移保本净亏(day3 −69R)——所以建议触发条件 = 已有 Trim1。现有 sug 逻辑如已如此,标注确认即可。
+3. 移动止损后,持仓表如能显示「距当前止损的缓冲 %」更好(替代只看距 Initial Stop)。
+
+答复/排期追加本节即可;消息只是门铃。
+
+| 答复 | 谁 | 日期 | 状态 |
+|---|---|---|---|
