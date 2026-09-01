@@ -1,0 +1,389 @@
+{
+ "modules": [
+  {
+   "module": "audit_calendar_gaps",
+   "mutants": 94,
+   "killed": 57,
+   "survived": 37,
+   "skipped": 0,
+   "unstable": 0,
+   "no_verdict": 0,
+   "repeat": 1,
+   "kill_rate": 0.606,
+   "survivors": [
+    {
+     "line": 325,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not rows:",
+     "index": 11,
+     "seconds": [
+      1.2
+     ]
+    },
+    {
+     "line": 327,
+     "kind": "boolop",
+     "change": "Or -> And",
+     "source": "col = column or next((c for c in (\"as_of\", \"date\", \"session\", \"Date\")",
+     "index": 12,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 329,
+     "kind": "compare",
+     "change": "Is -> IsNot",
+     "source": "if col is None:",
+     "index": 13,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 362,
+     "kind": "drop_not",
+     "change": "drop `not`",
+     "source": "if not present:",
+     "index": 14,
+     "seconds": [
+      1.2
+     ]
+    },
+    {
+     "line": 227,
+     "kind": "compare",
+     "change": "GtE -> Gt",
+     "source": "feed_has = have_feed >= (1.0 - universal_frac)",
+     "index": 19,
+     "seconds": [
+      1.2
+     ]
+    },
+    {
+     "line": 364,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "return 1",
+     "index": 30,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 384,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "if g[\"universal\"] and g[\"still_present\"]:",
+     "index": 31,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 392,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "return 0 if out[\"ok\"] else 1",
+     "index": 32,
+     "seconds": [
+      1.2
+     ]
+    },
+    {
+     "line": 392,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "return 0 if out[\"ok\"] else 1",
+     "index": 33,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 132,
+     "kind": "number",
+     "change": "0.0 -> 1.0",
+     "source": "frac = len(missing) / n if n else 0.0",
+     "index": 35,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 219,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "return {\"window\": [str(start), str(end)], \"tickers\": 0, \"findings\": [],",
+     "index": 38,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 299,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "group_by=\"ticker\", auto_adjust=False, progress=False,",
+     "index": 48,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 299,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "group_by=\"ticker\", auto_adjust=False, progress=False,",
+     "index": 49,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 300,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "threads=True)",
+     "index": 50,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 312,
+     "kind": "compare",
+     "change": "Eq -> NotEq",
+     "source": "if verdict == \"good\":",
+     "index": 51,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 337,
+     "kind": "number",
+     "change": "30 -> 31",
+     "source": "ap.add_argument(\"--days\", type=int, default=30,",
+     "index": 52,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 350,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "ap.add_argument(\"--grace-sessions\", type=int, default=1,",
+     "index": 53,
+     "seconds": [
+      1.2
+     ]
+    },
+    {
+     "line": 172,
+     "kind": "compare",
+     "change": "LtE -> Lt",
+     "source": "if str(start) <= d <= str(end):",
+     "index": 60,
+     "seconds": [
+      1.2
+     ]
+    },
+    {
+     "line": 305,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "df = raw[t] if len(tickers) > 1 else raw",
+     "index": 66,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 314,
+     "kind": "compare",
+     "change": "Eq -> NotEq",
+     "source": "elif verdict == \"bad\":",
+     "index": 67,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 331,
+     "kind": "number",
+     "change": "10 -> 11",
+     "source": "return {r[col][:10] for r in rows if r.get(col)}",
+     "index": 68,
+     "seconds": [
+      1.2
+     ]
+    },
+    {
+     "line": 135,
+     "kind": "number",
+     "change": "4 -> 5",
+     "source": "\"frac\": round(frac, 4), \"universal\": universal,",
+     "index": 69,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 138,
+     "kind": "number",
+     "change": "100 -> 101",
+     "source": "f\"({frac*100:.0f}%)\")",
+     "index": 70,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 226,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "have_feed = sum(1 for t in tickers if d in feed[t]) / n",
+     "index": 76,
+     "seconds": [
+      1.2
+     ]
+    },
+    {
+     "line": 250,
+     "kind": "number",
+     "change": "4 -> 5",
+     "source": "\"feed_frac\": round(have_feed, 4), \"in_archive\": arch_has})",
+     "index": 77,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 305,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "df = raw[t] if len(tickers) > 1 else raw",
+     "index": 78,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 328,
+     "kind": "compare",
+     "change": "In -> NotIn",
+     "source": "if c in rows[0]), None)",
+     "index": 79,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 361,
+     "kind": "number",
+     "change": "3 -> 4",
+     "source": "present, degenerate = fetch(tickers, start, end + dt.timedelta(days=3))",
+     "index": 80,
+     "seconds": [
+      1.2
+     ]
+    },
+    {
+     "line": 391,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "Path(args.json).write_text(json.dumps(out, indent=1))",
+     "index": 81,
+     "seconds": [
+      1.2
+     ]
+    },
+    {
+     "line": 370,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "print(f\"window {out['window'][0]}..{out['window'][1]}  \"",
+     "index": 85,
+     "seconds": [
+      1.2
+     ]
+    },
+    {
+     "line": 370,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "print(f\"window {out['window'][0]}..{out['window'][1]}  \"",
+     "index": 86,
+     "seconds": [
+      1.2
+     ]
+    },
+    {
+     "line": 376,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "print(f\"window {out['window'][0]}..{out['window'][1]}  \"",
+     "index": 87,
+     "seconds": [
+      1.2
+     ]
+    },
+    {
+     "line": 376,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "print(f\"window {out['window'][0]}..{out['window'][1]}  \"",
+     "index": 88,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 234,
+     "kind": "number",
+     "change": "100 -> 101",
+     "source": "kind, msg = \"D1\", (f\"D1 {d}: the market traded ({have_feed*100:.0f}% \"",
+     "index": 90,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 298,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "end=str(end + dt.timedelta(days=1)), interval=\"1d\",",
+     "index": 91,
+     "seconds": [
+      1.3
+     ]
+    },
+    {
+     "line": 328,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "if c in rows[0]), None)",
+     "index": 92,
+     "seconds": [
+      1.4
+     ]
+    },
+    {
+     "line": 245,
+     "kind": "number",
+     "change": "100 -> 101",
+     "source": "f\"longer returns the bar ({have_feed*100:.0f}% of \"",
+     "index": 93,
+     "seconds": [
+      1.3
+     ]
+    }
+   ],
+   "unstable_mutants": []
+  }
+ ],
+ "seconds": 126.3
+}

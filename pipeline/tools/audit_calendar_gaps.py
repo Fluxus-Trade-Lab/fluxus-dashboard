@@ -254,6 +254,36 @@ def reconcile(feed: dict[str, set[str]], archive: set[str], start: dt.date,
             "violations": violations, "warnings": warnings, "ok": not violations}
 
 
+def classify_bar(row) -> str:
+    """One row of daily OHLCV -> "good" (a real session), "bad" (a row that
+    pretends a session happened), or "padding" (an empty row, uninteresting).
+
+    Lifted out of fetch() on 2026-09-02, unchanged. It had lived inside a
+    function whose first statement is `import yfinance`, so no test could reach
+    it without the network -- and the mutation sweep said so plainly: 17 of the
+    52 survivors in this module sat on these four lines, every boolean in the
+    check unpinned. This is the check that tells a halted-but-still-quoted name
+    from a live one; getting it backwards is how 2026-09-01 read FBRX's
+    O=H=L=C, Volume=0 placeholder as "the one ticker that still had data".
+
+    `row` only needs `.get`, so tests pass plain dicts.
+    """
+    close = row.get("Close")
+    vol = row.get("Volume")
+    null_close = close is None or (isinstance(close, float) and close != close)
+    if null_close:
+        # A null close is only interesting if something else pretends a
+        # session happened; an entirely empty row is just padding.
+        if vol is not None and vol == vol and float(vol) > 0:
+            return "bad"
+        return "padding"
+    o, h, lo = row.get("Open"), row.get("High"), row.get("Low")
+    flat = (o == h == lo == close)
+    if flat and vol is not None and vol == vol and float(vol) == 0:
+        return "bad"              # halted name, still quoted (the FBRX shape)
+    return "good"
+
+
 def fetch(tickers: list[str], start: dt.date,
           end: dt.date) -> tuple[dict[str, set[str]], dict[str, set[str]]]:
     """(dates with a usable bar, dates with a bar that is not a session).
@@ -278,21 +308,11 @@ def fetch(tickers: list[str], start: dt.date,
         g, b = set(), set()
         for i, row in df.iterrows():
             d = str(i.date())
-            close = row.get("Close")
-            vol = row.get("Volume")
-            null_close = close is None or (isinstance(close, float) and close != close)
-            if null_close:
-                # A null close is only interesting if something else pretends
-                # a session happened; an entirely empty row is just padding.
-                if vol is not None and vol == vol and float(vol) > 0:
-                    b.add(d)
-                continue
-            o, h, lo = row.get("Open"), row.get("High"), row.get("Low")
-            flat = (o == h == lo == close)
-            if flat and vol is not None and vol == vol and float(vol) == 0:
-                b.add(d)          # halted name, still quoted (the FBRX shape)
-            else:
+            verdict = classify_bar(row)
+            if verdict == "good":
                 g.add(d)
+            elif verdict == "bad":
+                b.add(d)
         good[t], bad[t] = g, b
     return good, bad
 

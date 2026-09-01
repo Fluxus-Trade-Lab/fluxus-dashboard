@@ -315,3 +315,98 @@ def test_grace_of_zero_reports_everything():
     out = reconcile(feed(WEEK), set(WEEK) - {"2026-08-28"}, START, END, END,
                     grace_sessions=0)
     assert any(v.startswith("D1 2026-08-28") for v in out["violations"])
+
+
+# ----------------------------------------------------------- 2026-09-02
+# classify_bar was lifted out of fetch() so it could be reached at all. The
+# mutation sweep had 17 of this module's 52 survivors sitting on its four
+# lines: every boolean in the check was unpinned, including the one that tells
+# a halted-but-still-quoted name from a live one. Each test below names the
+# mutant it kills.
+
+NAN = float("nan")
+
+
+def _bar(o=None, h=None, lo=None, c=None, v=None):
+    return {"Open": o, "High": h, "Low": lo, "Close": c, "Volume": v}
+
+
+class TestClassifyBar:
+    """The FBRX shape and its neighbours.
+
+    2026-09-01 read FBRX's O=H=L=C=76.99 / Volume=0 row as "the one ticker that
+    still had data" -- it was a stale-price placeholder for a name halted since
+    07-20. `having a row is not having data`, and this is the function that
+    knows the difference."""
+
+    def test_an_ordinary_session_is_good(self):
+        from pipeline.tools.audit_calendar_gaps import classify_bar
+        assert classify_bar(_bar(10.0, 11.0, 9.5, 10.5, 1_000_000)) == "good"
+
+    def test_the_fbrx_shape_is_bad(self):
+        """Flat OHLC and zero volume: quoted, not traded."""
+        from pipeline.tools.audit_calendar_gaps import classify_bar
+        assert classify_bar(_bar(76.99, 76.99, 76.99, 76.99, 0)) == "bad"
+
+    def test_flat_but_traded_is_good_not_bad(self):
+        """A real session can print flat OHLC on a thin name. Volume is what
+        separates it from the placeholder -- kills L292 `== 0` -> `!= 0`."""
+        from pipeline.tools.audit_calendar_gaps import classify_bar
+        assert classify_bar(_bar(5.0, 5.0, 5.0, 5.0, 4_200)) == "good"
+
+    def test_moving_but_zero_volume_is_good(self):
+        """Zero volume alone is not the signal; flatness AND zero volume is.
+        Kills L292 `and` -> `or`."""
+        from pipeline.tools.audit_calendar_gaps import classify_bar
+        assert classify_bar(_bar(10.0, 11.0, 9.5, 10.5, 0)) == "good"
+
+    def test_a_null_close_with_volume_is_bad(self):
+        """Something claims a session happened while the price is missing."""
+        from pipeline.tools.audit_calendar_gaps import classify_bar
+        assert classify_bar(_bar(None, None, None, None, 900)) == "bad"
+        assert classify_bar(_bar(c=NAN, v=900)) == "bad"
+
+    def test_one_share_still_counts_as_volume(self):
+        """`float(vol) > 0`, not `> 1`. A single share printed against a null
+        close is still something claiming a session happened, and the boundary
+        is where a guard is worth pinning -- 900 and 5 pass either way."""
+        from pipeline.tools.audit_calendar_gaps import classify_bar
+        assert classify_bar(_bar(c=None, v=1)) == "bad"
+
+    def test_a_wholly_empty_row_is_padding_not_a_finding(self):
+        """The calendar pads non-sessions. Padding must not be reported --
+        kills L287 `> 0` -> `>= 0` and `0` -> `1`."""
+        from pipeline.tools.audit_calendar_gaps import classify_bar
+        assert classify_bar(_bar()) == "padding"
+        assert classify_bar(_bar(c=NAN, v=0)) == "padding"
+        assert classify_bar(_bar(c=NAN, v=NAN)) == "padding"
+
+    def test_nan_volume_is_not_a_number_it_is_an_absence(self):
+        """`vol == vol` is the NaN test. Flip it and every NaN volume is
+        treated as a value -- kills L287/L292 `==` -> `!=`."""
+        from pipeline.tools.audit_calendar_gaps import classify_bar
+        # flat bar, NaN volume: we cannot say it was quoted-but-not-traded
+        assert classify_bar(_bar(5.0, 5.0, 5.0, 5.0, NAN)) == "good"
+        # null close, NaN volume: nothing claims a session -- padding
+        assert classify_bar(_bar(c=None, v=NAN)) == "padding"
+
+    def test_a_null_close_is_none_or_nan_and_nothing_else(self):
+        """`close is None or close != close`. Kills L283's `or` -> `and`,
+        `is` -> `is not`, and `!=` -> `==`."""
+        from pipeline.tools.audit_calendar_gaps import classify_bar
+        # None close, volume present -> the null branch fires
+        assert classify_bar(_bar(c=None, v=5)) == "bad"
+        # NaN close, volume present -> the null branch fires too
+        assert classify_bar(_bar(c=NAN, v=5)) == "bad"
+        # a real close never takes the null branch, even at zero
+        assert classify_bar(_bar(0.0, 1.0, 0.0, 0.0, 5)) == "good"
+
+    def test_flatness_compares_all_four_legs(self):
+        """`o == h == lo == close`. Each `==` is load-bearing: break any one
+        and a bar that moved on that leg gets called a placeholder."""
+        from pipeline.tools.audit_calendar_gaps import classify_bar
+        for bar in (_bar(9.0, 10.0, 10.0, 10.0, 0),     # open differs
+                    _bar(10.0, 11.0, 10.0, 10.0, 0),    # high differs
+                    _bar(10.0, 10.0, 9.0, 10.0, 0),     # low differs
+                    _bar(10.0, 10.0, 10.0, 9.0, 0)):    # close differs
+            assert classify_bar(bar) == "good", bar
