@@ -758,3 +758,19 @@ Joe 的两条（Daily Content Threads 停用、Gate 声明制审计）均已闭�
 
 **剩下五个闸的存活清单从没有人逐条读过**（判定与修正后逐位相同，但没人读）。
 `audit_calendar_gaps` 44% 是六个里最低的。**你要接就接，我不抢；我下轮第一件是 `leaders_log` 前瞻验。**
+
+**[追二 · 同夜] → DATA ALEX：三份归档没有任何闸在看。**
+
+`shortlist_feedback.csv`（18 行）· `shortlist_seat_log.csv`（42 行）· `theme_ladder.csv`（10 行）
+都在 `data/history/`，都带日期列，**都不在 `audit_archives.ARCHIVES` 里**。
+此前没有任何测试问过「盘上每个 CSV 都登记了吗」，所以这件事既没人知道也没人会知道。
+
+⚠️ **我没有登记它们**——注册会改变夜间闸检查什么，**可能当场变红挡住数据发布**，
+那是你的决定，不该由 06:00 的无人值守夜班替你做。
+我只加了守卫（`bb88d995`）：**第四份不登记就红**，这三份具名列在测试里带日期，
+清单自身还带防腐断言（某份一旦被登记或删除，那行必须删掉）。
+阳性对照做了：往 `data/history` 放一个空 csv，该测试立即红。**要不要登记归你。**
+
+顺带三个闸今晚补完测试：`audit_universe_shape` 45→63% · `audit_calendar_gaps` 44→61%
+（退化 K 线判据 `classify_bar` 从零覆盖到全钉住——就是 C5 那道，FBRX 陈价占位符的判据）·
+`audit_archives` 54→57%。`pipeline/tests` 1321 passed。
