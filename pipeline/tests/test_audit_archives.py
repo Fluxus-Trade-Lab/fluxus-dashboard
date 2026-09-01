@@ -353,3 +353,88 @@ class TestI3IsBreadthOnly:
             {"date": "2026-08-18", "ticker": "B", "spx_close": 7745.06}])
         out = A.run(tmp_path, last_done=LAST, output=None)
         assert out["ok"], [r["violations"] for r in out["archives"]]
+
+
+# ----------------------------------------------------------- 2026-09-02
+def test_every_archive_on_disk_is_registered_or_named_as_an_exception():
+    """An archive missing from ARCHIVES is not audited by anything.
+
+    This guard passes such a file the way it passes a file it read and liked --
+    silently, and for the opposite reason. Nothing in this suite was asking the
+    question, so the answer had never been written down.
+
+    Three files are unregistered today. They are listed here rather than
+    registered, because registering one changes what the nightly gate checks
+    and can turn it red on main; that is the data side's call, not a test's.
+    The point of the list is that adding a FOURTH now fails here instead of
+    joining them unnoticed. All three carry a date column, so none of them is
+    obviously out of scope.
+
+    → routed to DATA ALEX / OPS, night report 2026-09-02.
+    """
+    from pathlib import Path
+
+    from pipeline.tools.audit_archives import ARCHIVES
+
+    UNREGISTERED_ON_2026_09_02 = {
+        "shortlist_feedback.csv",   # pulled_at, ticker, ... 18 rows
+        "shortlist_seat_log.csv",   # date, seat, ticker, ... 42 rows
+        "theme_ladder.csv",         # date, rung, measurable, ... 10 rows
+    }
+
+    history = Path("data/history")
+    if not history.is_dir():                     # not a full checkout
+        import pytest
+        pytest.skip("data/history not present")
+
+    on_disk = {p.name for p in history.glob("*.csv")}
+    unregistered = on_disk - set(ARCHIVES) - UNREGISTERED_ON_2026_09_02
+    assert not unregistered, (
+        f"archives that nothing audits: {sorted(unregistered)}. "
+        "Register them in ARCHIVES, or add them to the dated list in this test "
+        "with a reason.")
+
+    # and the exemption list must not rot: a file that got registered, or
+    # deleted, should leave the list rather than sit there looking like a debt.
+    stale = {n for n in UNREGISTERED_ON_2026_09_02
+             if n in ARCHIVES or n not in on_disk}
+    assert not stale, f"exemptions no longer needed, delete them: {sorted(stale)}"
+
+
+class TestSessionClassification:
+    """_sessions() decides, per date string, whether a row is a real session,
+    a future date, or a date it could not read. Four of its mutants survived
+    the corrected sweep on 2026-09-02: the whole unparsable branch, and the
+    slice that turns a timestamp into a date."""
+
+    def test_a_date_it_cannot_read_is_reported_as_unparsable(self):
+        """Kills the three booleans on the unparsable record. Calling it a
+        session, or a future date, both hide it behind a different message --
+        and 'not a trading session' is a sentence someone would shrug at."""
+        info = A._sessions(pd.Series(["not-a-date"]), LAST)
+        row = info.iloc[0]
+        assert bool(row.unparsable) is True
+        assert bool(row.session) is False
+        assert bool(row.future) is False
+
+    def test_an_unparsable_date_is_flagged_with_that_reason(self, tmp_path):
+        _write(tmp_path, "leaders_log.csv",
+               [{"date": "2026-08-18", "ticker": "A"}, {"date": "garbage", "ticker": "B"}])
+        out = A.run(tmp_path, last_done=LAST, output=None)
+        text = " ".join(v for r in out["archives"] for v in r["violations"])
+        assert "unparsable" in text, text
+
+    def test_a_timestamp_is_read_as_its_date(self):
+        """`d[:10]`. One character more and 2026-08-18T09:30 stops parsing, so
+        a perfectly good session gets reported as an unreadable date."""
+        info = A._sessions(pd.Series(["2026-08-18T09:30:00"]), LAST)
+        row = info.iloc[0]
+        assert bool(row.unparsable) is False
+        assert bool(row.session) is True, "2026-08-18 is a Tuesday"
+        assert bool(row.future) is False
+
+    def test_the_day_after_the_last_completed_session_is_future(self):
+        info = A._sessions(pd.Series(["2026-08-18", "2026-08-19"]), LAST)
+        by = {r.date: r for r in info.itertuples()}
+        assert bool(by["2026-08-18"].future) is False
+        assert bool(by["2026-08-19"].future) is True

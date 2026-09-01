@@ -1,0 +1,449 @@
+{
+ "modules": [
+  {
+   "module": "audit_archives",
+   "mutants": 101,
+   "killed": 58,
+   "survived": 43,
+   "skipped": 0,
+   "unstable": 0,
+   "no_verdict": 0,
+   "repeat": 1,
+   "kill_rate": 0.574,
+   "survivors": [
+    {
+     "line": 139,
+     "kind": "boolop",
+     "change": "And -> Or",
+     "source": "if key and rep[\"drop_dupes\"]:",
+     "index": 7,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 54,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "\"breadth_archive.csv\":   {\"date\": \"date\",  \"key\": [\"date\"],                       \"counts\": False, \"nightly\": True},",
+     "index": 14,
+     "seconds": [
+      1.4
+     ]
+    },
+    {
+     "line": 54,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"breadth_archive.csv\":   {\"date\": \"date\",  \"key\": [\"date\"],                       \"counts\": False, \"nightly\": True},",
+     "index": 15,
+     "seconds": [
+      1.4
+     ]
+    },
+    {
+     "line": 55,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"ticker_events.csv\":     {\"date\": \"date\",  \"key\": [\"date\", \"ticker\", \"screener\"], \"counts\": True,  \"nightly\": True},",
+     "index": 16,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 55,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"ticker_events.csv\":     {\"date\": \"date\",  \"key\": [\"date\", \"ticker\", \"screener\"], \"counts\": True,  \"nightly\": True},",
+     "index": 17,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 56,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"watchlist_hits.csv\":    {\"date\": \"date\",  \"key\": [\"date\", \"panel\", \"ticker\"],    \"counts\": True,  \"nightly\": True},",
+     "index": 18,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 56,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"watchlist_hits.csv\":    {\"date\": \"date\",  \"key\": [\"date\", \"panel\", \"ticker\"],    \"counts\": True,  \"nightly\": True},",
+     "index": 19,
+     "seconds": [
+      1.4
+     ]
+    },
+    {
+     "line": 58,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"groups_archive.csv\":    {\"date\": \"date\",  \"key\": [\"date\", \"kind\", \"group\"],      \"counts\": True,  \"nightly\": True},",
+     "index": 22,
+     "seconds": [
+      1.4
+     ]
+    },
+    {
+     "line": 58,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"groups_archive.csv\":    {\"date\": \"date\",  \"key\": [\"date\", \"kind\", \"group\"],      \"counts\": True,  \"nightly\": True},",
+     "index": 23,
+     "seconds": [
+      1.4
+     ]
+    },
+    {
+     "line": 59,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "\"momentum97_shadow.csv\": {\"date\": \"date\",  \"key\": [\"date\", \"recipe\", \"ticker\"],   \"counts\": False, \"nightly\": True},",
+     "index": 24,
+     "seconds": [
+      1.7
+     ]
+    },
+    {
+     "line": 59,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"momentum97_shadow.csv\": {\"date\": \"date\",  \"key\": [\"date\", \"recipe\", \"ticker\"],   \"counts\": False, \"nightly\": True},",
+     "index": 25,
+     "seconds": [
+      1.6
+     ]
+    },
+    {
+     "line": 60,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"universe_quality.csv\":  {\"date\": \"date\",  \"key\": [\"date\"],                       \"counts\": False, \"nightly\": True},",
+     "index": 27,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 61,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"asset_signals.csv\":     {\"date\": \"date\",  \"key\": [\"date\", \"ticker\"],             \"counts\": True,  \"nightly\": True},",
+     "index": 28,
+     "seconds": [
+      1.9
+     ]
+    },
+    {
+     "line": 61,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"asset_signals.csv\":     {\"date\": \"date\",  \"key\": [\"date\", \"ticker\"],             \"counts\": True,  \"nightly\": True},",
+     "index": 29,
+     "seconds": [
+      1.6
+     ]
+    },
+    {
+     "line": 62,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "\"shortlist_log.csv\":     {\"date\": \"date\",  \"key\": [\"date\", \"ticker\"],             \"counts\": False, \"nightly\": True},",
+     "index": 30,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 62,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"shortlist_log.csv\":     {\"date\": \"date\",  \"key\": [\"date\", \"ticker\"],             \"counts\": False, \"nightly\": True},",
+     "index": 31,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 66,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "\"regime_ledger.csv\":     {\"date\": \"date\",  \"key\": [\"date\"],                       \"counts\": False, \"nightly\": True},",
+     "index": 32,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 66,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"regime_ledger.csv\":     {\"date\": \"date\",  \"key\": [\"date\"],                       \"counts\": False, \"nightly\": True},",
+     "index": 33,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 70,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"delayed_ep_log.csv\":    {\"date\": \"as_of\", \"key\": [\"as_of\", \"ticker\"],            \"counts\": True,  \"nightly\": True},",
+     "index": 34,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 70,
+     "kind": "bool",
+     "change": "True -> False",
+     "source": "\"delayed_ep_log.csv\":    {\"date\": \"as_of\", \"key\": [\"as_of\", \"ticker\"],            \"counts\": True,  \"nightly\": True},",
+     "index": 35,
+     "seconds": [
+      1.7
+     ]
+    },
+    {
+     "line": 92,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "rep: Dict[str, Any] = {\"archive\": name, \"rows\": int(len(frame)), \"violations\": [], \"warnings\": [], \"drop_dates\": [], \"dr",
+     "index": 36,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 155,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "rep: Dict[str, Any] = {\"archive\": \"reconcile(I6)\", \"rows\": 0, \"violations\": [], \"warnings\": [], \"drop_dates\": [], \"drop_",
+     "index": 41,
+     "seconds": [
+      1.4
+     ]
+    },
+    {
+     "line": 155,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "rep: Dict[str, Any] = {\"archive\": \"reconcile(I6)\", \"rows\": 0, \"violations\": [], \"warnings\": [], \"drop_dates\": [], \"drop_",
+     "index": 42,
+     "seconds": [
+      1.4
+     ]
+    },
+    {
+     "line": 230,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "rep: Dict[str, Any] = {\"archive\": \"tickers(I7)\", \"rows\": 0, \"violations\": [], \"warnings\": [], \"drop_dates\": [], \"drop_du",
+     "index": 48,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 230,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "rep: Dict[str, Any] = {\"archive\": \"tickers(I7)\", \"rows\": 0, \"violations\": [], \"warnings\": [], \"drop_dates\": [], \"drop_du",
+     "index": 49,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 270,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "return 0 if out[\"ok\"] else 1",
+     "index": 52,
+     "seconds": [
+      1.4
+     ]
+    },
+    {
+     "line": 121,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "med = per.iloc[-21:-1].median() if len(per) > 21 else per.iloc[:-1].median()",
+     "index": 69,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 144,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "frame.to_csv(path, index=False)",
+     "index": 71,
+     "seconds": [
+      1.4
+     ]
+    },
+    {
+     "line": 121,
+     "kind": "number",
+     "change": "21 -> 22",
+     "source": "med = per.iloc[-21:-1].median() if len(per) > 21 else per.iloc[:-1].median()",
+     "index": 75,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 204,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "reports.append({\"archive\": name, \"rows\": 0, \"violations\": [], \"warnings\": [\"missing (not yet created)\"], \"drop_dates\": [",
+     "index": 79,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 204,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "reports.append({\"archive\": name, \"rows\": 0, \"violations\": [], \"warnings\": [\"missing (not yet created)\"], \"drop_dates\": [",
+     "index": 80,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 207,
+     "kind": "bool",
+     "change": "False -> True",
+     "source": "frame = pd.read_csv(p, dtype=str, keep_default_na=False)",
+     "index": 81,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 249,
+     "kind": "compare",
+     "change": "Gt -> GtE",
+     "source": "msg = f\"I7 {len(shells)}/{total} empty shells ({rate:.0%}): {', '.join(shells[:12])}{'\u2026' if len(shells) > 12 else ''}\"",
+     "index": 82,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 269,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "Path(args.json).write_text(json.dumps(out, indent=1))",
+     "index": 83,
+     "seconds": [
+      1.4
+     ]
+    },
+    {
+     "line": 209,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "reports.append({\"archive\": name, \"rows\": 0, \"violations\": [f\"unreadable: {e}\"], \"warnings\": [], \"drop_dates\": [], \"drop_",
+     "index": 91,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 209,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "reports.append({\"archive\": name, \"rows\": 0, \"violations\": [f\"unreadable: {e}\"], \"warnings\": [], \"drop_dates\": [], \"drop_",
+     "index": 92,
+     "seconds": [
+      1.4
+     ]
+    },
+    {
+     "line": 249,
+     "kind": "number",
+     "change": "12 -> 13",
+     "source": "msg = f\"I7 {len(shells)}/{total} empty shells ({rate:.0%}): {', '.join(shells[:12])}{'\u2026' if len(shells) > 12 else ''}\"",
+     "index": 93,
+     "seconds": [
+      1.4
+     ]
+    },
+    {
+     "line": 249,
+     "kind": "number",
+     "change": "12 -> 13",
+     "source": "msg = f\"I7 {len(shells)}/{total} empty shells ({rate:.0%}): {', '.join(shells[:12])}{'\u2026' if len(shells) > 12 else ''}\"",
+     "index": 95,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 164,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "if p.get(\"measured\") and per.get(p[\"key\"], 0) != p[\"count\"]:",
+     "index": 96,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 121,
+     "kind": "number",
+     "change": "21 -> 22",
+     "source": "med = per.iloc[-21:-1].median() if len(per) > 21 else per.iloc[:-1].median()",
+     "index": 97,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 121,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "med = per.iloc[-21:-1].median() if len(per) > 21 else per.iloc[:-1].median()",
+     "index": 98,
+     "seconds": [
+      1.4
+     ]
+    },
+    {
+     "line": 121,
+     "kind": "number",
+     "change": "1 -> 2",
+     "source": "med = per.iloc[-21:-1].median() if len(per) > 21 else per.iloc[:-1].median()",
+     "index": 99,
+     "seconds": [
+      1.5
+     ]
+    },
+    {
+     "line": 165,
+     "kind": "number",
+     "change": "0 -> 1",
+     "source": "rep[\"violations\"].append(f\"I6a {wl['date']} {p['key']}: watchlist.json count {p['count']} vs watchlist_hits {per.get(p['",
+     "index": 100,
+     "seconds": [
+      1.5
+     ]
+    }
+   ],
+   "unstable_mutants": []
+  }
+ ],
+ "seconds": 149.8
+}
