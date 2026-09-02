@@ -225,3 +225,150 @@ class TestSupersededAttempts:
         led = self._ledger(tmp_path, [self._run(s, ok=False), self._run(s, ok=True)])
         rep = run(led, last_done=dt.date(2026, 8, 28))
         assert all("violations" in r for r in rep["runs"])
+
+
+# ============================================================================
+# 2026-09-03（Nighty Zac）· 存活清单驱动的补测
+#
+# 普查读数 42/80 = 52%。按 `data/research/sop/read_a_survivor_list.md` 第 2 步
+# 先看簇：38 个存活里 **10 个挤在 `_holds` 一个函数里**（L116–L124 的每一个
+# 比较符和布尔连接词全部裸着）——第一种簇「一整个函数的判据没被测过」。
+#
+# 为什么它是最贵的那一簇：`_holds` 就是 L3。EVIDENCE 表的注释亲手区分了
+# `num+`（"> 0"）和 `num0+`（">= 0"，注释原话「0 is a real answer, None is not」），
+# 而 `Gt -> GtE` / `GtE -> Gt` 两个变异体**双双存活** —— 这条被写进注释的语义差别，
+# 此前没有任何测试钉着。一个把 rows_today=0 读成 ok 的 L3，正是 08-19 那晚的形状。
+#
+# 下面每条都在真代码上绿、在对应变异体上红（逐条实测，见 09-03 晨报）。
+# ============================================================================
+
+class TestHoldsPredicateBoundaries:
+    """`_holds` 的每个谓词，钉在它自己的边界上。"""
+
+    def test_num_plus_rejects_zero_but_num0_plus_accepts_it(self):
+        """`num+` 与 `num0+` 的全部区别就是 0 —— 这是 EVIDENCE 表注释声明的语义。"""
+        assert L._holds({"v": 1}, "v", "num+") is True
+        assert L._holds({"v": 0}, "v", "num+") is False      # Gt -> GtE 会翻这条
+        assert L._holds({"v": 0}, "v", "num0+") is True      # GtE -> Gt 会翻这条
+        assert L._holds({"v": -1}, "v", "num0+") is False
+
+    def test_none_is_never_a_number(self):
+        """08-19 的形状：字段在、值是 null。两个数值谓词都必须拒。"""
+        for pred in ("num+", "num0+"):
+            assert L._holds({"v": None}, "v", pred) is False
+            assert L._holds({}, "v", pred) is False
+
+    def test_bool_is_not_a_number(self):
+        """True 会通过 `> 0`，所以 isinstance-bool 那半个 and 必须在。
+
+        L116/L118 的 `and not isinstance(v, bool)` 是 And -> Or 变异体的家。
+        """
+        for pred in ("num+", "num0+"):
+            assert L._holds({"v": True}, "v", pred) is False
+            assert L._holds({"v": False}, "v", pred) is False
+
+    def test_a_string_that_looks_like_a_number_is_still_not_one(self):
+        assert L._holds({"v": "5"}, "v", "num+") is False
+
+    def test_list4_needs_all_four_blocks_not_just_some(self):
+        four = ["conditions", "regime", "state_board", "verdict"]
+        assert L._holds({"v": four}, "v", "list4") is True
+        assert L._holds({"v": four + ["extra"]}, "v", "list4") is True
+        for drop in range(4):
+            partial = [b for i, b in enumerate(four) if i != drop]
+            assert L._holds({"v": partial}, "v", "list4") is False, partial
+        assert L._holds({"v": []}, "v", "list4") is False
+        assert L._holds({"v": None}, "v", "list4") is False
+
+    def test_dict_plus_rejects_the_empty_mapping(self):
+        """空 dict 是「这一格什么都没有」，不是「检查过了」。L122 的 And -> Or 之家。"""
+        assert L._holds({"v": {"a": 1}}, "v", "dict+") is True
+        assert L._holds({"v": {}}, "v", "dict+") is False
+        assert L._holds({"v": []}, "v", "dict+") is False
+
+    def test_allok_rejects_empty_and_any_non_ok_value(self):
+        """L124 有三个存活（And->Or / Gt->GtE / 0->1），全部在这条上。"""
+        assert L._holds({"v": {"a": "ok", "b": True}}, "v", "allok") is True
+        # ⚠️ 单个 key 的那条不是凑数：上面那个正例有两个 key，`len(v) > 0 -> > 1`
+        # 的变异体在它身上照样绿。09-03 首轮普查里这一个存活，就是被这条补掉的。
+        assert L._holds({"v": {"only": "ok"}}, "v", "allok") is True
+        assert L._holds({"v": {}}, "v", "allok") is False           # 空 = 没检查过
+        assert L._holds({"v": {"a": "ok", "b": "stale"}}, "v", "allok") is False
+        assert L._holds({"v": {"a": "degraded"}}, "v", "allok") is False
+
+    def test_an_unknown_predicate_raises_instead_of_passing(self):
+        """谓词名打错时必须炸，不能默默返回 falsy 让整张表失效。"""
+        import pytest
+        with pytest.raises(ValueError):
+            L._holds({"v": 1}, "v", "num++")
+
+
+# ---------------------------------------------------------------------------
+# SOP 第 4 步：不追那张常量表，改问「这张表本身对不对」
+#
+# 问题：**ledger 里真实出现过的每个 guard，都登记在 EVIDENCE 里了吗？**
+# 没登记的 guard 说 "ok" 时，L3 一个字段都不看 —— 它有一格状态，但那格背后没有证据。
+#
+# 实测（2026-09-03，`data/history/run_ledger.jsonl` 17 行 / 10 个 session）：
+#   **`shortlist_feedback` 出现 12 次，12 次都说 ok，12 次都零证据检查。**
+#
+# ⚠️ 我没有把它登记进 EVIDENCE。登记会改变夜间闸检查什么、可能当场变红挡住数据发布，
+# 那是数据端的决定，不该由 05:00 的无人值守夜班替他做（同 09-02 那三份未登记归档的处理）。
+# 这里只加守卫：**第二个不登记的 guard 就红**，已知的那个具名豁免并带防腐断言。
+# ---------------------------------------------------------------------------
+
+# 已知未登记、已投递给数据端待判的 guard。登记或退役之后，本行必须删掉。
+KNOWN_UNCOVERED_GUARDS = {"shortlist_feedback"}
+
+
+class TestEveryLedgerGuardIsCovered:
+
+    def _guards_in_real_ledger(self):
+        from pathlib import Path
+        p = Path("data/history/run_ledger.jsonl")
+        if not p.exists():
+            return None
+        seen = set()
+        for line in p.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            seen |= set((row.get("guards") or {}))
+        return seen
+
+    def test_no_new_guard_slips_in_without_evidence(self):
+        """第 N+1 个不登记的 guard 就红 —— 从「看不见」变成「写在那儿」。"""
+        seen = self._guards_in_real_ledger()
+        if seen is None:
+            import pytest
+            pytest.skip("no real ledger in this tree")
+        uncovered = seen - set(L.EVIDENCE) - KNOWN_UNCOVERED_GUARDS
+        assert not uncovered, (
+            f"这些 guard 会写进 ledger 但 EVIDENCE 表里没有，说 ok 时零证据检查：{sorted(uncovered)}。"
+            f"要么登记进 EVIDENCE，要么写进 KNOWN_UNCOVERED_GUARDS 并投递给数据端。")
+
+    def test_the_exemption_list_does_not_rot(self):
+        """豁免清单的防腐断言：某个已被登记或已退役的名字，必须从清单里删掉。"""
+        seen = self._guards_in_real_ledger()
+        if seen is None:
+            import pytest
+            pytest.skip("no real ledger in this tree")
+        stale = {g for g in KNOWN_UNCOVERED_GUARDS if g in L.EVIDENCE or g not in seen}
+        assert not stale, (
+            f"KNOWN_UNCOVERED_GUARDS 里这些名字已经不需要豁免了（已登记或已不再出现），"
+            f"请删掉该行：{sorted(stale)}")
+
+    def test_an_uncovered_guard_saying_ok_really_does_pass_unchecked(self):
+        """阳性对照：证明「不在 EVIDENCE 里」这件事真的让 L3 失明，不是我推理出来的。"""
+        row = _row("2026-08-21", guards=_guards(
+            shortlist_feedback={"status": "ok"}))          # 零证据字段
+        rep = L.audit_run(row)
+        assert not [v for v in rep["violations"] if "shortlist_feedback" in v], rep["violations"]
+        # 对照：同样零证据，但名字在 EVIDENCE 里 -> 必须报 L3
+        row2 = _row("2026-08-21", guards=_guards(shortlist={"status": "ok"}))
+        rep2 = L.audit_run(row2)
+        assert [v for v in rep2["violations"] if v.startswith("L3 shortlist")], rep2["violations"]
