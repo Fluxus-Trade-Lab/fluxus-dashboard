@@ -900,10 +900,33 @@ def main():
         'quality': quality,
         'rows': rows_out,
     }
-    (OUTPUT_DIR / 'universe.json').write_text(
-        json.dumps(universe_export, indent=None, default=_json_serializer)
-    )
-    logger.info("Saved universe.json")
+    # Regression gate — the one question none of our other guards asks:
+    # is this one BETTER than the one it replaces? Every check above is a
+    # self-consistency check ("is this data internally right?"), and on
+    # 2026-08-27 that let a run 485 minutes late overwrite an already-landed
+    # healthy session: universe_quality ok -> degraded, bars_missing 64 -> 266,
+    # unmeasurable 75 -> 277, 15 of 19 panels ~5% smaller, three runs all
+    # `success`, not one gate made a sound. Andy's ruling 2026-08-31: compare
+    # the data, and do not overwrite a healthy copy with a worse one.
+    #
+    # Not fatal, on purpose. The main schedule keeps running (Andy asked for
+    # "do not overwrite", not "stop the night"), and every stage below re-reads
+    # universe.json off disk rather than from memory — so keeping the file also
+    # keeps groups/watchlist/shortlist built on the healthy rows.
+    from pipeline.no_downgrade import check_overwrite
+    nd = check_overwrite(OUTPUT_DIR / 'universe.json', universe_export,
+                         candidate_session=last_completed_session().isoformat())
+    ledger.note('no_downgrade', nd['status'], reason=nd['reason'], **nd['detail'])
+    if nd['blocked']:
+        logger.error("universe.json NOT written — %s", nd['reason'])
+        ledger.error('no_downgrade', nd['reason'])
+    else:
+        if nd['status'] not in ('ok', 'no-baseline'):
+            logger.warning("no_downgrade: %s", nd['reason'])
+        (OUTPUT_DIR / 'universe.json').write_text(
+            json.dumps(universe_export, indent=None, default=_json_serializer)
+        )
+        logger.info("Saved universe.json")
 
     # Severe means a feed is broken, not noisy. Stopping here leaves yesterday's
     # outputs in place, which is the better of two bad days: a shifted universe
