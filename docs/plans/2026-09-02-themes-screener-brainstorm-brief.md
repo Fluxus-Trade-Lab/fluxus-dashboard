@@ -234,3 +234,25 @@ Andy 09-02：「保持我们现有的这个页面设计别丢了，然后根据�
 **给 Andy 挑的**：A. TODAY 放 Field 之前（现在这样）还是之后；B. 固定六个还是每问最多两个、没有就空着（30 个主题的口径下 ③ 只有 3 个）；C. Compare 是否默认吃 TODAY 的六个（现在是）；D. 一句话用英文（页面语言）还是中文。
 
 注意：漏斗在 56 个群（含 sector / factor）上跑出的六个（§11–12）和在 30 个主题上跑出的不同——页面有 tab，漏斗应跟 tab 走。
+
+## 14 · 09-02 追加：Rotation——不用现有设计语言的图优先版本（09-01 数据）
+
+Andy 09-02：「再做一个版本不用现有的设计语言，你自由发挥。用最新的数据（9 月），不用 8/28。现在你做的很糟糕——我要强调视觉化、可交互，原来（TSF）都是图，我们做的是数据可视化。」
+
+**Rotation**（独立视觉身份：深蓝黑「观测台」，Bricolage Grotesque / Instrument Sans / JetBrains Mono；单一深色主题）：https://claude.ai/code/artifact/ef54a51a-8d41-468a-b854-47b85c7984b5
+
+数据：origin/main 上 2026-09-01 收盘的 groups.json（56 群，30 themes / 18 sectors / 8 factors）、groups_history.json 18 个交易日（08-07 → 09-01）、档案的日收益（08-14 起 13 个交易日，用于对 SPX 的日线相对路径）。
+
+五件乐器，一份共享的选中（点任何点 / 行 / 芯片，最多三个，esc 清空）：
+1. **Field**：季度超额 × 加速度的四象限场，56 群（按 tab 切 30 / 18 / 8 / 56），点大小 = 成分数，尾巴 = 最近 8 个交易日；**时间滑块 + 播放**逐日回放；悬停读数。
+2. **Leadership over time**：四态计数逐日堆叠面积（18 天），悬停看计数和当周 SPX，点击跳到该日。
+3. **Three questions**：①②③ 三列，每行一条对 SPX 的日线迷你图；**两个阈值滑块实时重算**名单（①「之前没强过」上限、②「前三周安静」上限）。
+4. **Compare**：选中的（默认每问第一名）对 SPX 的日线相对路径 + 每条线下面 18 天的四态色带；十字线悬停。
+5. **Acceleration swarm**：全部群按周加速度的蜂群，三问成员带环。
+顶部一句话由规则拼成（今天：「3 leading, 4 lagging of 30. Igniting this week: Tech Mega Caps, Steel. Fading: Homebuilders, Fintech, Medical Devices.」）。
+
+配色：四态用**两色相 × 两亮度**——蓝 = 季度领先（Leading 亮 / Weakening 暗），橙 = 落后（Improving 亮 / Lagging 暗），亮 = 加速。经 dataviz 校验器全对通过（色盲 ΔE ≥ 15.3，亮度带内）；Weakening 对底色 2.85:1 靠象限名和悬停做补偿。
+
+已知边界：日线相对路径只有 13 个交易日（档案 08-14 才开始存 perf_1d）；四段区间的历史仍缺（§七挂单）；页面是静态快照，每天要重发或进代码。
+
+Andy 反馈待收：视觉方向对不对、五件里留哪几件、要不要把「每天六个」的核实勾并进 Compare。
