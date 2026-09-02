@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { fmtCur } from '../lib/portfolioFormat'
 
-export default function EditablePrice({ value, onChange }) {
+export default function EditablePrice({ value, onChange, title }) {
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState('')
 
@@ -35,7 +35,7 @@ export default function EditablePrice({ value, onChange }) {
     <span
       onClick={() => { setDraft(String(value || '')); setEditing(true) }}
       className="cursor-pointer border-b border-dashed border-[var(--color-input-border)] hover:border-[var(--color-text-secondary)]"
-      title="Click to edit"
+      title={title ? `${title}\nClick to edit` : 'Click to edit'}
     >
       {fmtCur(value)}
     </span>

@@ -9,7 +9,8 @@ export default function StopCell({ stopPrice, initialStop, suggestion, onChange,
   const buffer = stopBufferPct(trade)
   return (
     <div className="flex flex-col gap-0.5">
-      <EditablePrice value={stopPrice} onChange={onChange} />
+      <EditablePrice value={stopPrice} onChange={onChange}
+                     title={suggestion?.basis === 'no-data' ? suggestion.rationale : undefined} />
 
       {/* THE ONE THING THIS TABLE NEVER SAID (DATA_CONTRACTS §十四, 2026-09-01).
           All 373 historical trades still carry their entry stop; Andy's reason
@@ -57,11 +58,12 @@ export default function StopCell({ stopPrice, initialStop, suggestion, onChange,
           </button>
         </div>
       )}
-      {suggestion?.basis === 'no-data' && (
-        <div className="text-[10px] text-[var(--color-text-muted)]" title={suggestion.rationale}>
-          no wk-20EMA data
-        </div>
-      )}
+      {/* "no wk-20EMA data" used to print here as a fourth line. Andy took it
+          off on 2026-09-01: it is an explanation for an ABSENT suggestion, not
+          a reading, and it was costing a line in a 96px cell on every row that
+          had no weekly EMA. It is not lost — the same sentence is the price
+          field's tooltip, where a reader who wonders "why is there no sug
+          here" will look. */}
     </div>
   )
 }
