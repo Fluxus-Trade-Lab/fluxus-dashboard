@@ -289,6 +289,9 @@ class TestHoldsPredicateBoundaries:
     def test_allok_rejects_empty_and_any_non_ok_value(self):
         """L124 有三个存活（And->Or / Gt->GtE / 0->1），全部在这条上。"""
         assert L._holds({"v": {"a": "ok", "b": True}}, "v", "allok") is True
+        # ⚠️ 单个 key 的那条不是凑数：上面那个正例有两个 key，`len(v) > 0 -> > 1`
+        # 的变异体在它身上照样绿。09-03 首轮普查里这一个存活，就是被这条补掉的。
+        assert L._holds({"v": {"only": "ok"}}, "v", "allok") is True
         assert L._holds({"v": {}}, "v", "allok") is False           # 空 = 没检查过
         assert L._holds({"v": {"a": "ok", "b": "stale"}}, "v", "allok") is False
         assert L._holds({"v": {"a": "degraded"}}, "v", "allok") is False
