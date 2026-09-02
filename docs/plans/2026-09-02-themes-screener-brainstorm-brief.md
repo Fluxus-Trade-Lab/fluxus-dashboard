@@ -216,3 +216,21 @@ Andy 09-02 原话（整理）：「F3 落库，先做核实勾，然后按新规
 6. **爆发前**：新表「底部止跌、还没动的」= 季度负 + 前三周周速快过 1–3 月那段（跌势减速）+ 本周 |超额| < 2% + 不在三榜。08-28：Crypto Equities · Uranium & Nuclear Energy · Solar · Optics & Networking · Memory & Storage。这是今天数据里能算的唯一前兆；标准前兆是**群内广度**（成员站上 50 日线的比例先于价格回升）——管线有每只票的 50 日线距离，没有主题级广度的历史，**挂给数据端**（见 §七）。
 
 脑暴要定：**F3′** 命中率的定义；**T5** 看着新规则多收的名字定②的背景；**B1** 主题级广度历史（成员 >50 日线比例）要不要进管线——有了它「爆发前」才有标准口径。
+
+## 13 · 09-02 追加：Themes 页新预览（保留现有设计语言）
+
+Andy 09-02：「保持我们现有的这个页面设计别丢了，然后根据我们头脑风暴的想法设计新的预览给我出来看看。」
+
+预览（08-28 数据，页面默认的 30 个 curated themes，深浅两主题）：https://claude.ai/code/artifact/8de686d6-9a41-43b1-a572-3141a6176f07
+
+**保留**：侧栏与页头（MARKET › THEMES · 46px 标题 · 右侧 meta + 新鲜度徽章）· 17px 一句话 Reading 行 · 粘性控制条（1W/1M/3M + Add theme…）· Section 标签（11px mono .24em）· Field（1000×560 四象限，象限名 15/600 + 计数 13 mono + 11px 提示）· Compare（档案路径 1000×210）· Rank 行（24px_1fr_84px_18px，居中发散条，三段条改四段，四态徽章）· Members / All groups / How to read 原位。
+
+**新增**（都标了 NEW）：
+1. Reading 行改由漏斗生成（今天：「3 themes are fading, folded into 3 stories. Turning up this week: Steel, Tech Mega Caps, Semiconductors Large Caps. Still building: Cybersecurity, Cloud Software. Bottoming, not moved yet: Crypto Equities, Uranium & Nuclear Energy, Solar.」），后面跟「Ask Claude ›」和当天勾数。
+2. **TODAY** 段放在 Field 之前（骨架顺序：变化 → 强度 → 名字）：六行 = 序号 · ①②③ + 动能标签（persistent / burst / starting / fading）· 名字 + 成分数/四态/pers · 四段形状 · 为什么在这 + 折叠的同一变化 · verified / watch 两勾。30 个主题的六个：① Cybersecurity · Cloud Software；② Steel · Tech Mega Caps；③ Medical Devices · Homebuilders。
+3. TODAY 下两张小表：**Before ignition**（Crypto Equities · Uranium & Nuclear · Solar · Optics · Memory & Storage）和 **Quiet climbers**（Crypto 30→18 · Fintech 22→11 · Uranium 19→13）。
+4. Field 只给今天的六个标名字（①蓝 / ③红 / ②墨），其余点淡；Compare 默认画这六个在档案里的季度超额路径（08-07 → 08-28）；Rank 行选中的六个左侧一道竖线，中段折叠照旧。
+
+**给 Andy 挑的**：A. TODAY 放 Field 之前（现在这样）还是之后；B. 固定六个还是每问最多两个、没有就空着（30 个主题的口径下 ③ 只有 3 个）；C. Compare 是否默认吃 TODAY 的六个（现在是）；D. 一句话用英文（页面语言）还是中文。
+
+注意：漏斗在 56 个群（含 sector / factor）上跑出的六个（§11–12）和在 30 个主题上跑出的不同——页面有 tab，漏斗应跟 tab 走。
