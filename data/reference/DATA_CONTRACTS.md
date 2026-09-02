@@ -1028,3 +1028,56 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
   ⛔ **OPS 不再推进本项**——Andy 09-02：「月度复盘也不是你负责的」。
 - [2026-09-03] 前端（Rotation 预览线）→ 数据端：**温度卡改读 `theme_ladder.json` 两周板**（口径与 TSF Current Leadership 一致：逐名 60% / 强弱 89%，对照样本 `data/research/themes/tsf_leadership_2026-09-02.json`）。请求两项：① `theme_ladder.json` 增加**每组的两周态历史**（`themes[<group>].history_2w`: 90 个交易日的 state 序列，或等价的 board 表），用于「2–4w ago」等档的展开名单；② 之前挂的「`groups_history.json` state 回填到 ≥10 周」可撤——两周板的计数历史已经覆盖 90 日，月口径的态历史只剩细看图色带在用。状态：待认领。
 - [2026-09-03] 前端（Rotation 预览线）→ 数据端 **知悉**：上一行的 ① 我自己做了——`short_window.build()` 现在输出 `series_dates` + `series[<group>].rel / .states_2w`（分支 `feat/rotation-v3`，测试 16 过）；夜间产线不用改调用，合并后第一晚 `theme_ladder.json` 自动带上。也顺手覆盖了更早挂的「十周窗口」（Flux 线读 rel，60 个交易日）。数据端只需在合并后核一眼产线日志里 `Saved theme_ladder.json` 那行仍在。状态：待合分支。
+
+---
+
+## 十五、[2026-09-03] Nighty Zac → **DATA ALEX / Andy 拍板**：一道 Andy 亲裁的闸，三天没执行过；外加两条
+
+### ⚠️ A（最要紧，且我已经在分支上修好了）：`no_downgrade` 的接线在 08-31 被一次冲突化解整段删掉
+
+`4f2fe309`（08-31）把「比数据、不覆盖」闸接进 `run_all.py`（+31/−4）；
+**同日 14:03 的 `8e4a64ef`（message `merge(B2 手工化解): universe 补 prev_volume …`）把那 27 行删了。**
+两个 commit 都在 `origin/main` 上。模块 294 行 + 它的 **269 行测试全都还在、全绿** ——
+**它们测的是模块，不是接线，从没问过一句「有人调用它吗」。**
+
+四种拼法（`no_downgrade` / `check_overwrite` / `FLUXUS_ALLOW_DOWNGRADE` / `NoDowngrade`）
+在 `pipeline` `.github` `frontend` `scripts` 下、排除自身与测试后**全部零命中**（复现命令在事故档里）。
+
+**所以 08-31 → 09-03 这三天，08-27 那个形状（迟到 485 分钟的班把健康数据覆盖成 degraded）
+没有任何东西拦着。** 事故档 [`incidents/2026-09-03_gate_removed_by_a_conflict_resolution.md`](incidents/2026-09-03_gate_removed_by_a_conflict_resolution.md)。
+
+**我做了什么**：`run_all.py` **逐字取回** `4f2fe309` 的那 27 行（`diff` 已核 verbatim，不是重写），
+外加 `pipeline/tests/test_no_downgrade_is_wired.py` 三条接线断言，
+**阳性对照实测：挂在 `origin/main` 那版上 3/3 红，恢复后 3/3 绿。**
+⚠️ `pipeline/screeners/` 不在夜间组白名单 → **留在 `auto/night-20260903-5cea87`，建议合 y。**
+这是个包不是请求：拉分支即可，不需要我在场。
+
+### B：`shortlist_feedback` 说了 12 次 "ok"，`audit_ledger` 的 L3 一个字段都没看
+
+`audit_ledger.EVIDENCE` 登记 9 个 guard；`run_ledger.jsonl`（17 行 / 10 session）里真实出现 10 个。
+差的那个是 `shortlist_feedback` —— **出现 12 次、12 次都 ok、12 次零证据检查。**
+
+⚠️ **我没有把它登记进 EVIDENCE**：登记会改变夜间闸检查什么、可能当场变红挡住数据发布，
+那是你的决定，不该由 05:00 的无人值守夜班替你做（同 09-02 那三份未登记归档的处理方式）。
+我只加了守卫（`pipeline/tests/test_audit_ledger.py`）：**第二个不登记的 guard 就红**，
+`shortlist_feedback` 具名豁免且带防腐断言（一旦被登记或退役，那行必须删）。
+外加一条阳性对照，证明「不在 EVIDENCE 里」真的让 L3 失明，不是我推理出来的。**登记与否归你。**
+
+### C：五道闸里三道没有任何自动触发点（只报，不是我的边界）
+
+全部 6 个 workflow 里出现过的 `audit_*` 只有 **`audit_archives`（daily + weekly）**
+与 **`audit_ledger`（daily）**。没有触发点的：**`audit_calendar_gaps` · `audit_universe_shape` ·
+`audit_regression_gate`**（`audit_unpushed` / `audit_mutation_sweep` 是手动仪器，不算）。
+
+⚠️ **`audit_calendar_gaps` 尤其值得看一眼**：它的 docstring 就是为 08-28 那件事写的，
+而我今晚独立量到 —— **08-28 的日线，yfinance 对 283 只票里只有 38 只还给**（13.4%），
+而我们自己 09-01 抓的 `data/output/tickers/*.json` 抽查 **80/80 全都有**。
+对比该 docstring 记的「09-01 时 90 只里只有 1 只」，**源头在回填，比例从 1.1% 升到 13.4%**。
+这不是新问题，是**那道为它而建的闸从来没被自动跑过**。
+
+### D（小）：`leaders_log.csv` 的种子日 08-14，close 与 yfinance 差 >2% 的行占 8.7%（15/172）
+
+其余 12 个 as_of 全部 ≤0.7%，每天的中位相对差都是 0.000%。不影响我的研究（两端同源），
+但种子日那批 close 值得你看一眼。
+
+**状态：A 待你拉分支 · B 待你判 · C/D 只报。** —— Nighty Zac，2026-09-03 夜班
