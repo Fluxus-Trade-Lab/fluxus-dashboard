@@ -4,7 +4,7 @@
 **载体**：X Article 长文 · 发布后 Pin（入口推由 ⑤ 分发站产，本站不写变体）
 **语言**：正文 EN（`brain/x.md`「对外一律 EN」）
 **口径日**：**as-of 2026-08-28 收盘**（月报 mtime **2026-08-31 15:25**，本站开工时**已复核未重生成**，四档 20 格逐格重读一致——见 §二末「重读留痕」）
-**正文长度**：**散文 673 词 / 连三张表 1078 词**（§二末实测，脚本数未手打）
+**正文长度**：**散文 704 词 / 连三张表 1160 词**（§二末实测，脚本数未手打；第 2 轮 G1 修完后重跑，修前 673 / 1078）
 **thesis（唯一，承角度站原文）**：一类交易赚了多少总额，说明不了它值不值得做；要看它占了你多少笔、又拿回多少 R——那个差就是它收你的税。
 
 > **⚠️ 收口是空槽。** 本稿最后一段**故意不写**，留给 Andy 亲笔（`feedback_no_mirrored_aphorism_closings`：①对仗格言 ②复述正文，连栽两次）。空槽的边界条件写在 §四末。
@@ -20,7 +20,7 @@
 >
 > Run that on my August and you'd cut the wrong thing. The habit that most needed looking at came out at the **top** of that ranking.
 >
-> Here is the account. Forty-two trades closed their last leg in August — thirty-four all the way out, eight of them partial trims still holding a piece. Every one got filed by a single 0–100 read of the market taken on **the day I entered**, and those reads were sorted and cut into four equal-count groups, worst tape to best: Damaged, Mixed, Healthy, Extended. Twenty-eight of the forty-two landed in the top one.
+> Here is the account. Forty-two trades closed their last leg in August — thirty-four all the way out, eight of them partial trims still holding a piece. Every one got filed by a single 0–100 read of the market taken on **the day I entered**. The four brackets aren't cut from these forty-two — they're fixed score ranges my own tooling drew off a year and change of daily readings, worst tape to best: Damaged, Mixed, Healthy, Extended. Each trade drops into whichever range its entry-day read falls in, so the groups come out uneven. Twenty-eight of the forty-two landed in the top one.
 >
 > Twenty-eight trades, winning 35.7% of the time. They also brought back **+28.7R and $137,857 — the most of the four.** That's the sentence that lets a low win rate off the hook, and I've used it on myself before. Then you divide. Per trade, that bracket returned **+1.02R**. The two other brackets that made money returned **+1.57R** and **+3.37R**. My biggest earner is my worst earner. Both sentences are true, and they point in opposite directions.
 >
@@ -64,7 +64,7 @@
 >
 > #### Do it to your own book — two steps
 >
-> **1. Label every row by the day you entered.** It does not have to be clever. Any 0–100 read works — a breadth number, your own morning score, honestly even "how good did this tape look to me, 0 to 10" — as long as the same ruler runs down every row and you never re-score a trade after you know how it ended. Sort the labels, cut into four equal-count groups. The names don't matter; the cut does.
+> **1. Label every row by the day you entered.** It does not have to be clever. Any 0–100 read works — a breadth number, your own morning score, honestly even "how good did this tape look to me, 0 to 10" — as long as the same ruler runs down every row and you never re-score a trade after you know how it ended. Set the cut points off your own history, not off this month: run the same ruler back as far as you have it, split that range at the quarter marks, and file each trade under whichever bracket its entry-day read falls in. Leave the groups where they land — they will not come out even. The names don't matter; where the cut points come from does.
 >
 > **2. Do one subtraction per group.** Share of your trades, minus share of your total R.
 >
@@ -95,9 +95,10 @@
 **取数唯一通道**：② 查证站证据包 [`02_research.md`](02_research.md) + [`02_research_derived.txt`](02_research_derived.txt)，份额差一列由本站脚本打印 [`04_flagship_derived.txt`](04_flagship_derived.txt)。
 **权威源**：`/Users/taolezhu/Documents/AI-Trading-System/data/portfolio/reviews/monthly_2026-08.html`（本机 gitignored，`git show` 不适用；`KNOWLEDGE.md` 数字权威表「交易绩效」行）。
 
-| 数字 | 出现在 | 出处 | 复核 |
+| 数字 / 方法论断言 | 出现在 | 出处 | 复核 |
 |---|---|---|---|
 | **42 / 34 / 8** | 正文段3 | 主张 6 · commit `05aa44d7`（`git show origin/main`）。作者原话 `engine said 42, dashboard said 34 — both right, neither labeled`，新标签 `34 +8 部分减仓` | ✅ 只写「closed their last leg in August — 34 all the way out, 8 partial trims still holding a piece」；⛔ 全篇零处「42 笔平仓」 |
+| **四档切点 0–47 / 47–63 / 63–75 / 75–100 的来处**（本表唯一的非数字断言，G1 补登） | 段3、可复用物步骤1 | 月报四档归因表下方的方法论说明原文：「每笔按 **入场当天** 的 Market Conditions 分数归档（42/42 匹配，**可用区间 2025-08-18 → 2026-08-28**）。分档用 **regime.py 的经验四分位**——它验证过对回撤频率单调」——本站第一手剥标签重读，非转抄 | ✅ 切点＝工具在**参照窗口一年多的日频读数**上定的分位，8 月每笔只是落进已存在的桶 → **四档笔数天然不等**（6/5/3/28 即为反证）。文件指纹与首轮一致：1,645,532 bytes · Aug 31 15:25 · md5 `ababe3efeebfd83bacca22d298859a71`，未重生成。正文用 `my own tooling` 承接，`regime.py` 不上台面；`empirical quartiles` 仍只在「Four things」第 3 条小字块内 |
 | **28 · 35.7% · +28.7R · $137,857** | 段5、表1 | 主张 1（本站第一手重读 HTML 行 303） | ✅ |
 | **+1.02R / +1.57R / +3.37R** | 段5 | `02_research_derived.txt` §B（`28.7/28` · `9.4/6` · `10.1/3`） | ✅ |
 | **66.67% / 59.54% / +7.12** | 段8 | `04_flagship_derived.txt` §3（`28/42` · `28.7/48.2` · 全精度相减） | ✅ ⚠️ 用脚本打印的 **+7.12**，不是把 66.67−59.54 手算成 7.13 |
@@ -133,11 +134,11 @@ Closed trades -> 42 · Win rate -> 40.5% · SQN -> 1.94 · Expectancy -> +1.1R �
 
 ```bash
 sed -n '/^## 一、正文/,/^## 二、/p' 04_flagship.md | grep '^> ' | sed 's/^> //' > /tmp/body.txt
-wc -w < /tmp/body.txt                                   # 1078（含三张表与脚注）
-grep -v '^|' /tmp/body.txt | grep -v '^\*' | wc -w      # 673（纯散文）
+wc -w < /tmp/body.txt                                   # 1160（含三张表与脚注）
+grep -v '^|' /tmp/body.txt | grep -v '^\*' | wc -w      # 704（纯散文）
 ```
-→ **散文 673 词 / 连表 1078 词。** 上一件旗舰（`2026-08-29_extension-arithmetic`）是 221 词的**长推**，本卡是 **Article**，量级不同物、不可比。
-⚠️ 但 673 仍是本稿最大的风险面（Andy 08-28 首个驳回理由就是「你废话太多」）——可砍点已在 §四.2 指名。
+→ **散文 704 词 / 连表 1160 词。**（第 2 轮 G1 修完后重跑；修前 673 / 1078，切法句改对后 +31 词——旧数已作废，不留在页上冒充实测） 上一件旗舰（`2026-08-29_extension-arithmetic`）是 221 词的**长推**，本卡是 **Article**，量级不同物、不可比。
+⚠️ 但 704 仍是本稿最大的风险面（Andy 08-28 首个驳回理由就是「你废话太多」）——可砍点已在 §四.2 指名。
 
 ### 禁项 grep 留痕（阳性对照已验，不信未验过的阴性）
 
@@ -148,6 +149,20 @@ grep -nE  "\+[0-9]+\.[0-9]%|cumulative|% return" /tmp/body.txt                  
 grep -niE "I will|I'll|from now on|going forward|next month I|promise" /tmp/body.txt  # 空（零承诺）
 ```
 **⭐ 阳性对照（这道检查确实能报阳）**：首轮我漏了 `-w`，`rent` 在 `diffe**rent**` 上命中两行、grep 正常返回 0 —— **它会报阳，所以现在这几个空结果是可信的阴性**，不是检查瞎了。
+
+#### 第 2 轮（G1 修完）追加的三道检查
+
+```bash
+# ① 错的切法句必须消失（正文 body.txt）
+grep -nE "equal-count|equal count|sorted and cut|cut into four" /tmp/body.txt   # 空（exit 1）
+# ② 同一 pattern 的阳性对照 —— Gate 的判词里逐字引了那句原文
+grep -cE "equal-count|equal count|sorted and cut|cut into four" 06_gate_review.md  # 4
+# ③ 用词纪律：regime.py 不上台面；empirical quartiles 仍只 1 处且在小字块
+grep -c "regime.py" /tmp/body.txt          # 0
+grep -n "empirical quartiles" /tmp/body.txt # 1 处,「Four things」第 3 条
+```
+**⭐ 阳性对照说明**：②与①是**同一条 pattern 跑在两个文件上**——它在 Gate 判词里报出 4 行命中，所以①的空结果是被验过的阴性，不是 pattern 写错了自己返回空。
+禁项四条（`rent|rake|toll|champagne|…` / `43.8|0.91R|…` / 回报百分比 / 承诺句）修后**逐条重跑，仍全空**。
 
 ---
 

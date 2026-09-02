@@ -1,0 +1,24 @@
+reference = 04_flagship.md, 2197 normalised tokens
+n-gram size = 8
+
+variant                                               words   8gram%   token%  longest
+----------------------------------------------------------------------------------------
+NEW V3 (rebuilt from 03_angle.md brief)                 294     0.0%     0.0%       0
+POSITIVE CONTROL: round-1 V3 (origin/main 05_distribution.md)    277    23.3%    48.0%      29
+NEGATIVE-SIDE REFERENCE: V2 (gate measured 0.0%)        166     0.0%     0.0%       0
+NEGATIVE-SIDE REFERENCE: V4 (gate measured 0.0%)        202     0.0%     0.0%       0
+
+--- positive-control check ---
+round-1 V3 reports 23.3% 8-gram / 48.0% token coverage / longest 29 words
+PASS - the check demonstrably reports a positive.
+
+--- new V3 verdict (target < 5% 8-gram) ---
+8-gram overlap 0.0%  |  token coverage 0.0%  |  longest shared run 0 words
+PASS
+
+--- new V3 vs its sibling variants (independence, same metric) ---
+  new V3 vs V1: 8-gram 0.0%  token 0.0%  longest 0
+  new V3 vs V2: 8-gram 0.0%  token 0.0%  longest 0
+  new V3 vs V4: 8-gram 0.0%  token 0.0%  longest 0
+
+flagship fingerprint at measurement time: 2026-09-02 12:21:22 / 25527 bytes  (re-run this script if the flagship changes again)
