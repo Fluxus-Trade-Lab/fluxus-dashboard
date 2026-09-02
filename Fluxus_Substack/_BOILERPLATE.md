@@ -23,27 +23,21 @@
 > **放在每篇正文最上方,加粗小标题,一字不改。**
 
 ```markdown
-**What this is**
+**What How Much is:**
 
-**How Much — the letter.** Every idea arrives with its entry, its stop, a portfolio risk in percent. My risk per idea is fixed under 0.3% of total capital and set before I click. There is no "I really like this one" line in the formula.
+A market letter by Fluxus. Every idea arrives with its entry, its stop, a portfolio risk in percent.
 
-**The system it runs on.** This is a system, not a watchlist. It exists to do one thing: find true market leadership early, and hunt the elephant trades — the few a year that carry everything.
+A trading system existing to do only one thing: find true market leadership early, and hunt the elephant trades with tight risks — the few a year that carry everything.
 
-**The Ledger.** The record kept in public, losers included.
+A quantitative resource to measure market dynamics in thematic/sectoral rotations, and to track two kinds of momentum worth owning — the sustained and the explosive — from everything that merely went up.
 
-**Fluxus Analytics — the measurement stack I actually trade off.** Three tools:
-
-- **Rotation, measured.** A quantitative read on where themes and sectors are handing off — not which group is strongest today, but which one is changing. That's what lets me be positioned just early enough.
-- **Selection, narrowed.** A screener that separates the two kinds of momentum worth owning — the sustained and the explosive — from everything that merely went up.
-- **Risk, before the click.** A tool that sets the risk on each trade and the open heat on the whole book before I enter, not after.
-
-**The Discord.** A competitive community of traders doing the same. Radical transparency, no BS — the full record, every trade, winners and losers, is shown there.
+A deep dive case study into top opportunities each month with processes, nuances and calculated risks.
 
 **What this is not**
 
-**Not a trade-alert service.** Everything here is written after the fact, with the arithmetic attached — not so you can copy it in four minutes.
+A trade-alert service. Everything here is written after facts, with the arithmetic attached — not so you can copy it in four minutes. For live learning, please consider the Discord membership.
 
-**Not signals.** I don't have opinions about where the market goes, only measurements of what it's doing.
+Prediction or opinion. I don't have opinions about where the market goes, only measurements and patience for the next big trade.
 
 *Nothing here is advice or a recommendation to buy or sell anything. I don't know your account, your taxes, or how well you sleep. Measure your own water.*
 ```
