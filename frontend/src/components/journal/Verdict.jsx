@@ -32,8 +32,8 @@ export default function Verdict({ onGo }) {
       {/* The page fills the screen now (Andy, 2026-08-17), but a sentence still
           has a reading width — past about 75 characters the eye loses the line
           on the way back. So the page is wide and this stays a column. */}
-      <p className="text-[13.5px] leading-relaxed m-0 max-w-[78ch]">
-        <span className="text-[10px] font-mono uppercase tracking-[.2em]
+      <p className="text-[13px] leading-relaxed m-0 max-w-[78ch]">
+        <span className="text-[11px] font-mono uppercase tracking-[.2em]
                          text-[var(--color-text-muted)] mr-2.5">{t('rev.period')}</span>
         {t('verdict.state', { bestR: `${best.perTrade.toFixed(1)}R` })}
         <button type="button" onClick={() => onGo?.(worst.stage)}
@@ -52,7 +52,7 @@ export default function Verdict({ onGo }) {
         })}
       </p>
       {lesson && (
-        <p className="text-[12.5px] text-[var(--color-text-secondary)] m-0 mt-1.5
+        <p className="text-[13px] text-[var(--color-text-secondary)] m-0 mt-1.5
                       border-l-2 border-[var(--color-accent)] pl-3">
           {t(`verdict.act.${lesson[0]}`)}
         </p>

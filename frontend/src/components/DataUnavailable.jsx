@@ -22,15 +22,15 @@ export default function DataUnavailable({ group, title, what, why, command }) {
                   meta={['no data', 'the page is here, the reading is not']} />
 
       <div className="bg-[var(--color-surface)] rounded-3xl p-6 max-w-[70ch]">
-        <div className="text-[10px] font-mono uppercase tracking-[.24em]
+        <div className="text-[11px] font-mono uppercase tracking-[.24em]
                         text-[var(--color-text-muted)] mb-3">
           Not loaded
         </div>
-        <p className="m-0 text-[14px] leading-relaxed text-[var(--color-text)]">
+        <p className="m-0 text-[13px] leading-relaxed text-[var(--color-text)]">
           {what}
         </p>
         {why && (
-          <p className="mt-2 mb-0 text-[12.5px] leading-relaxed text-[var(--color-text-secondary)]">
+          <p className="mt-2 mb-0 text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
             {why}
           </p>
         )}

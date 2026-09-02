@@ -10,7 +10,7 @@ export default function BriefingPage() {
   return (
     <div className="max-w-4xl mx-auto py-6 px-4 space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
+        <h2 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Market Briefing
         </h2>
         <DateNav date={selectedDate} onChange={setSelectedDate} />

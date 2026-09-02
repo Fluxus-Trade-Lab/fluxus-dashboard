@@ -24,7 +24,7 @@ export default function DataFreshnessBadge({ sessionDate }) {
 
   return (
     <span
-      className="inline-flex items-baseline gap-1.5 font-mono text-[10px]
+      className="inline-flex items-baseline gap-1.5 font-mono text-[11px]
                  px-2 py-[3px] rounded-full"
       style={{
         color: alarm ? 'var(--color-refused)' : 'var(--color-text-secondary)',

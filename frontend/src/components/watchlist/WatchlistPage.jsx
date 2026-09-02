@@ -437,14 +437,14 @@ function Name({ row, rsKey = 'rs_1m' }) {
                   title={atrTitle(row.atr_from_sma50)}
                   style={fill ? { background: fill.bg, color: fill.fg,
                                   padding: '1px 4px', borderRadius: '3px' } : undefined}
-                  className={`shrink-0 text-[11.5px] font-mono font-semibold
+                  className={`shrink-0 text-[11px] font-mono font-semibold
                               ${fill ? '' : 'text-[var(--color-text-bold)]'}`} />
       {withTheme && (
         <i title={`${row.group} · ${row.group_state}`}
            className="shrink-0 w-[3px] h-[3px] rounded-full translate-y-[-3px]
                       bg-[var(--color-text-secondary)]" />
       )}
-      <span className={`ml-auto text-[10.5px] font-mono tabular-nums ${rsInk(v, rsKey)}`}
+      <span className={`ml-auto text-[11px] font-mono tabular-nums ${rsInk(v, rsKey)}`}
             title={alt || undefined}>
         {v ?? '—'}
       </span>
@@ -577,7 +577,7 @@ export const shown = (panel, { highOnly, floor, pool3m, exHealth, zoneKey } = {}
 function Count({ panel, view = {}, zoneKey }) {
   const { t } = useLanguage()
   if (!panel.measured) {
-    return <span className="text-[10px] font-mono uppercase tracking-[.12em]
+    return <span className="text-[11px] font-mono uppercase tracking-[.12em]
                             text-[var(--color-text-muted)]">{t('wl.unmeasured')}</span>
   }
   const n = shown(panel, { ...view, zoneKey }).length
@@ -638,8 +638,8 @@ function ScanCard({ panel, zoneKey, view, rsKey, quiet = false }) {
                          rounded-xl border border-[var(--color-border-light)]
                          bg-transparent cursor-pointer
                          hover:bg-[var(--color-surface)] transition-colors">
-        <span className="text-[10px] font-mono text-[var(--color-text-muted)] shrink-0">+</span>
-        <span className="min-w-0 flex-1 truncate text-[12px] text-[var(--color-text-secondary)]">
+        <span className="text-[11px] font-mono text-[var(--color-text-muted)] shrink-0">+</span>
+        <span className="min-w-0 flex-1 truncate text-[13px] text-[var(--color-text-secondary)]">
           {tr(t, `wlp.${panel.key}`, panel.label)}
         </span>
         <span className="shrink-0"><Count panel={panel} view={view} zoneKey={zoneKey} /></span>
@@ -661,14 +661,14 @@ function ScanCard({ panel, zoneKey, view, rsKey, quiet = false }) {
                   aria-expanded="true"
                   className="flex items-baseline gap-2 min-w-0 bg-transparent border-none p-0
                              cursor-pointer text-left font-inherit">
-            <span className="text-[10px] font-mono text-[var(--color-text-muted)] shrink-0">−</span>
-            <b className="text-[12.5px] font-semibold leading-tight
+            <span className="text-[11px] font-mono text-[var(--color-text-muted)] shrink-0">−</span>
+            <b className="text-[13px] font-semibold leading-tight
                           text-[var(--color-text-bold)]">
               {tr(t, `wlp.${panel.key}`, panel.label)}
             </b>
           </button>
         ) : (
-          <b className="text-[12.5px] font-semibold leading-tight">
+          <b className="text-[13px] font-semibold leading-tight">
             {tr(t, `wlp.${panel.key}`, panel.label)}
           </b>
         )}
@@ -676,7 +676,7 @@ function ScanCard({ panel, zoneKey, view, rsKey, quiet = false }) {
           <Count panel={panel} view={view} zoneKey={zoneKey} />
         </span>
         <button type="button" onClick={() => setOpenRecipe(!openRecipe)}
-                className="shrink-0 text-[10px] font-mono bg-transparent border-none p-0
+                className="shrink-0 text-[11px] font-mono bg-transparent border-none p-0
                            cursor-pointer text-[var(--color-text-muted)]
                            hover:text-[var(--color-text)]">
           {openRecipe ? '−' : t('wl.recipe')}
@@ -684,7 +684,7 @@ function ScanCard({ panel, zoneKey, view, rsKey, quiet = false }) {
       </div>
 
       {openRecipe && (
-        <p className="text-[10.5px] font-mono text-[var(--color-text-muted)] m-0 px-3 py-2
+        <p className="text-[11px] font-mono text-[var(--color-text-muted)] m-0 px-3 py-2
                       border-b border-[var(--color-border-light)]">{panel.recipe}</p>
       )}
 
@@ -702,7 +702,7 @@ function ScanCard({ panel, zoneKey, view, rsKey, quiet = false }) {
           return (
             <>
               <Names rows={rest} rsKey={rsKey} />
-              <p className="m-0 px-3 pt-2 pb-1 text-[10px] font-mono uppercase tracking-[.14em]
+              <p className="m-0 px-3 pt-2 pb-1 text-[11px] font-mono uppercase tracking-[.14em]
                             text-[var(--color-text-muted)]">
                 {chase.length} 当日 ≥15% &mdash; 不追
               </p>
@@ -723,7 +723,7 @@ function ScanCard({ panel, zoneKey, view, rsKey, quiet = false }) {
         <button type="button"
                 onClick={() => navigator.clipboard?.writeText(
                   rows.map((r) => r.ticker).join(',')).catch(() => {})}
-                className="mt-auto text-left px-3 py-1.5 text-[10px] font-mono uppercase
+                className="mt-auto text-left px-3 py-1.5 text-[11px] font-mono uppercase
                            tracking-[.14em] bg-transparent border-none cursor-pointer
                            text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
           {t('wl.copy')} {rows.length}
@@ -760,7 +760,7 @@ function Panel({ panel, explainPending, rsKey, view, zoneKey }) {
           <button type="button"
                   onClick={() => navigator.clipboard?.writeText(
                     rows.map((r) => r.ticker).join(',')).catch(() => {})}
-                  className="text-[10px] font-mono uppercase tracking-[.14em] bg-transparent
+                  className="text-[11px] font-mono uppercase tracking-[.14em] bg-transparent
                              border-none p-0 cursor-pointer text-[var(--color-text-muted)]
                              hover:text-[var(--color-text)]">
             {t('wl.copy')}
@@ -768,7 +768,7 @@ function Panel({ panel, explainPending, rsKey, view, zoneKey }) {
         )}
 
         <button type="button" onClick={() => setOpenRecipe(!openRecipe)}
-                className="ml-auto text-[10px] font-mono bg-transparent border-none p-0
+                className="ml-auto text-[11px] font-mono bg-transparent border-none p-0
                            cursor-pointer text-[var(--color-text-muted)]
                            hover:text-[var(--color-text)]">
           {t('wl.recipe')} {openRecipe ? '−' : '+'}
@@ -789,9 +789,9 @@ function Panel({ panel, explainPending, rsKey, view, zoneKey }) {
           <Names rows={rows} wide rsKey={rsKey} />
         </div>
       ) : panel.measured ? (
-        <p className="text-[11.5px] text-[var(--color-text-muted)] m-0">{t('wl.none')}</p>
+        <p className="text-[11px] text-[var(--color-text-muted)] m-0">{t('wl.none')}</p>
       ) : explainPending ? (
-        <p className="text-[11.5px] text-[var(--color-text-muted)] m-0">{t('wl.pending')}</p>
+        <p className="text-[11px] text-[var(--color-text-muted)] m-0">{t('wl.pending')}</p>
       ) : null}
     </div>
   )
@@ -817,15 +817,15 @@ function ZoneDetail({ zone, index, total, view }) {
         <span className="text-[13px] font-mono tabular-nums text-[var(--color-text-muted)]">
           {String(index + 1).padStart(2, '0')}
         </span>
-        <h1 className="text-[30px] font-bold leading-tight m-0">
+        <h1 className="text-[38px] font-bold leading-tight m-0">
           {tr(t, `wlz.${zone.key}`, zone.label)}
         </h1>
-        <span className="ml-auto text-[10px] font-mono uppercase tracking-[.16em]
+        <span className="ml-auto text-[11px] font-mono uppercase tracking-[.16em]
                          text-[var(--color-text-muted)]">{index + 1} / {total}</span>
       </div>
 
       {allPending && (
-        <p className="text-[11.5px] text-[var(--color-text-muted)] mb-3 max-w-[70ch]">
+        <p className="text-[11px] text-[var(--color-text-muted)] mb-3 max-w-[70ch]">
           {t('wl.pending')}
         </p>
       )}
@@ -861,9 +861,9 @@ function StepBar({ step, onStep, missing, counts }) {
       <div className="flex flex-wrap items-center gap-x-1 gap-y-1">
         {STEPS.map((s, i) => (
           <span key={s.key} className="flex items-center gap-1">
-            {i > 0 && <i aria-hidden className="text-[10px] text-[var(--color-text-muted)]">&rarr;</i>}
+            {i > 0 && <i aria-hidden className="text-[11px] text-[var(--color-text-muted)]">&rarr;</i>}
             <button type="button" onClick={() => onStep(s.key)} aria-pressed={s.key === step}
-                    className={`px-2 py-[3px] text-[12.5px] bg-transparent border-none cursor-pointer
+                    className={`px-2 py-[3px] text-[13px] bg-transparent border-none cursor-pointer
                                 border-b-2 border-solid transition-colors
                                 ${s.key === step
                                   ? 'text-[var(--color-text-bold)] font-semibold border-[var(--color-accent)]'
@@ -873,7 +873,7 @@ function StepBar({ step, onStep, missing, counts }) {
                   before you point at it. Muted, and always both numbers —
                   scans lit and names in them. */}
               {counts?.[s.key] != null && (
-                <span className="ml-1 text-[10px] font-mono tabular-nums opacity-70">
+                <span className="ml-1 text-[11px] font-mono tabular-nums opacity-70">
                   {counts[s.key]}
                 </span>
               )}
@@ -884,7 +884,7 @@ function StepBar({ step, onStep, missing, counts }) {
 
       {/* three lines, and only for the step you are on */}
       <div className="mt-2 pl-3 border-l-2 border-[var(--color-accent)] max-w-[104ch]">
-        <p className="m-0 text-[14px] leading-snug text-[var(--color-text)]">{cur.find}</p>
+        <p className="m-0 text-[13px] leading-snug text-[var(--color-text)]">{cur.find}</p>
         <p className="m-0 text-[11px] leading-relaxed text-[var(--color-text-secondary)]">{cur.with}</p>
         <p className="m-0 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
           <b className="text-[var(--color-text-secondary)]">别这么用：</b>{cur.dont}
@@ -1071,7 +1071,7 @@ export default function WatchlistPage({ zone: routeZone }) {
       {/* Provenance first: which close this is, and how many names were even
           eligible. A list without its universe is a list you cannot size up. */}
       <div className="flex items-baseline gap-4 flex-wrap mt-1 mb-5">
-      <p className="text-[12px] font-mono text-[var(--color-text-muted)] m-0">
+      <p className="text-[13px] font-mono text-[var(--color-text-muted)] m-0">
         {t('wl.provenance', {
           date: data.date,
           n: nf(tradeableCount(data)),
@@ -1161,21 +1161,21 @@ export default function WatchlistPage({ zone: routeZone }) {
               {cross.map((c) => (
                 <span key={c.ticker} className="inline-flex items-baseline gap-1 mr-3 mb-1">
                   <TickerLink symbol={c.ticker}
-                              className="text-[12px] font-mono font-semibold
+                              className="text-[13px] font-mono font-semibold
                                          text-[var(--color-text-bold)]" />
-                  <span className="text-[10px] font-mono tabular-nums
+                  <span className="text-[11px] font-mono tabular-nums
                                    text-[var(--color-text-muted)]">×{c.count}</span>
                 </span>
               ))}
             </div>
-            <p className="text-[11.5px] text-[var(--color-text-muted)] m-0 max-w-[70ch]">
+            <p className="text-[11px] text-[var(--color-text-muted)] m-0 max-w-[70ch]">
               {t('wl.cross.legend')}
             </p>
             {/* The threshold is the file's to state, not this page's to
                 remember: it moved from 2 zones to 3 on 2026-08-17 and a page
                 carrying its own copy of the number would now be lying. */}
             {rule && (
-              <p className="text-[10.5px] font-mono text-[var(--color-text-muted)] mt-1.5 m-0">
+              <p className="text-[11px] font-mono text-[var(--color-text-muted)] mt-1.5 m-0">
                 {rule}
               </p>
             )}

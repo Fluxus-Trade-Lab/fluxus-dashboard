@@ -6,7 +6,7 @@ export default function TrimTargetsLine({ trade }) {
   const hit4 = isHit(trade.trims, targets.targetR4, trade.direction)
   const hit8 = isHit(trade.trims, targets.targetR8, trade.direction)
   return (
-    <div className="text-[10px] text-[var(--color-text-muted)] mt-0.5">
+    <div className="text-[11px] text-[var(--color-text-muted)] mt-0.5">
       <span className={hit4 ? 'line-through text-[var(--color-text-muted)]' : ''}>
         +4R ${targets.targetR4.toFixed(2)}
       </span>

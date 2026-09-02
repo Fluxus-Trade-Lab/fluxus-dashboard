@@ -33,10 +33,10 @@ export default function SpreadChart({ rows }) {
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl px-3 py-3">
       <div className="flex items-baseline justify-between mb-2">
-        <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
+        <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Quarterly Breadth (stocks moving 25%+ over the quarter)
         </h3>
-        <span className={`text-[10px] font-mono ${spread > 0 ? 'text-[var(--color-took)]' : 'text-[var(--color-refused)]'}`}>
+        <span className={`text-[11px] font-mono ${spread > 0 ? 'text-[var(--color-took)]' : 'text-[var(--color-refused)]'}`}>
           {spread > 0 ? '+' : ''}{spread} spread
         </span>
       </div>

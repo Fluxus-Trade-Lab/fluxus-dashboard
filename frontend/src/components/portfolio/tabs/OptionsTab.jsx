@@ -17,7 +17,7 @@ function weightBadge(w) {
     w >= 2 ? 'bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] text-[var(--color-signal-caution)]' :
     w >= 1 ? 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)]' :
     'bg-[var(--color-bg)] text-[var(--color-text-muted)]'
-  return <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold ${col}`}>{w} — {label}</span>
+  return <span className={`px-1.5 py-0.5 rounded text-[11px] font-semibold ${col}`}>{w} — {label}</span>
 }
 
 /* ── P/L helpers ── */
@@ -229,8 +229,8 @@ export default function OptionsTab() {
     e.target.value = ''
   }
 
-  const thStyle = 'text-left px-2.5 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[10px] uppercase tracking-wide whitespace-nowrap'
-  const tdStyle = 'px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-[12.5px]'
+  const thStyle = 'text-left px-2.5 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide whitespace-nowrap'
+  const tdStyle = 'px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums text-[13px]'
 
   return (
     <div>
@@ -244,13 +244,13 @@ export default function OptionsTab() {
             setCapitalInput(state.optionsCapital.toString())
           }}
         >
-          <div className="text-[10px] uppercase tracking-wide text-[var(--color-text-secondary)] font-semibold mb-0.5">
+          <div className="text-[11px] uppercase tracking-wide text-[var(--color-text-secondary)] font-semibold mb-0.5">
             Options Capital
             <span className="ml-1 opacity-0 group-hover:opacity-100 transition-opacity text-[var(--color-text-muted)]">edit</span>
           </div>
           {editingCapital ? (
             <div className="flex gap-1 items-center mt-1">
-              <span className="text-[var(--color-text-muted)] text-[14px]">$</span>
+              <span className="text-[var(--color-text-muted)] text-[13px]">$</span>
               <input
                 type="number"
                 value={capitalInput}
@@ -259,7 +259,7 @@ export default function OptionsTab() {
                 autoFocus
                 className="w-[100px] text-[17px] font-bold bg-[var(--color-input-bg)] border border-[var(--color-input-border)] rounded px-1.5 py-0.5 font-mono tabular-nums outline-none focus:border-[var(--color-text-secondary)]"
               />
-              <button onClick={handleCapitalSave} className="text-[var(--color-profit)] font-bold text-[14px] cursor-pointer bg-transparent border-none">OK</button>
+              <button onClick={handleCapitalSave} className="text-[var(--color-profit)] font-bold text-[13px] cursor-pointer bg-transparent border-none">OK</button>
             </div>
           ) : (
             <div className="text-[17px] font-bold font-mono tabular-nums">{pm ? MASK : fmtCur(state.optionsCapital)}</div>
@@ -334,7 +334,7 @@ export default function OptionsTab() {
                       <td className={`${tdStyle} font-mono text-[11px]`}>{t.strike}</td>
                       <td className={`${tdStyle} text-[11px] text-[var(--color-text-secondary)]`}>{shortDate(t.expiry)}</td>
                       <td className={tdStyle}>
-                        <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold ${isOpen ? 'bg-[color-mix(in_srgb,var(--color-profit)_10%,transparent)] text-[var(--color-profit)]' : 'bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] text-[var(--color-loss)]'}`}>
+                        <span className={`px-1.5 py-0.5 rounded text-[11px] font-semibold ${isOpen ? 'bg-[color-mix(in_srgb,var(--color-profit)_10%,transparent)] text-[var(--color-profit)]' : 'bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] text-[var(--color-loss)]'}`}>
                           {isOpen ? 'OPEN' : 'CLOSED'}
                         </span>
                       </td>
@@ -451,12 +451,12 @@ export default function OptionsTab() {
               <LineChart data={equityCurve}>
                 <XAxis
                   dataKey="date"
-                  tick={{ fontSize: 10, fill: 'var(--color-text-secondary)' }}
+                  tick={{ fontSize: 11, fill: 'var(--color-text-secondary)' }}
                   tickLine={false}
                   axisLine={{ stroke: 'var(--color-border)' }}
                 />
                 <YAxis
-                  tick={{ fontSize: 10, fill: 'var(--color-text-secondary)' }}
+                  tick={{ fontSize: 11, fill: 'var(--color-text-secondary)' }}
                   tickLine={false}
                   axisLine={{ stroke: 'var(--color-border)' }}
                   tickFormatter={v => `${v}%`}

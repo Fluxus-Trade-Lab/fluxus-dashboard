@@ -34,8 +34,8 @@ export default function RRChart({ enrichedTrades }) {
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5">
       <div className="flex items-center justify-between mb-1">
-        <span className="font-semibold text-[14px]">Every trade by R-multiple</span>
-        <span className="text-[12.5px] text-[var(--color-text-muted)]">
+        <span className="font-semibold text-[13px]">Every trade by R-multiple</span>
+        <span className="text-[13px] text-[var(--color-text-muted)]">
           {data.length} trades · {wr.toFixed(0)}% win · +{sumR.toFixed(0)}R · avg win +{avgWin.toFixed(1)}R / loss {avgLoss.toFixed(1)}R
         </span>
       </div>
@@ -43,11 +43,11 @@ export default function RRChart({ enrichedTrades }) {
       <ResponsiveContainer width="100%" height={260}>
         <BarChart data={data} margin={{ top: 5, right: 8, left: -10, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" vertical={false} />
-          <XAxis dataKey="i" tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }} tickFormatter={() => ''} />
+          <XAxis dataKey="i" tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={() => ''} />
           <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${v}R`} width={44} />
           <Tooltip
             cursor={{ fill: 'var(--color-border-light)' }}
-            contentStyle={{ background: 'var(--color-bg)', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
+            contentStyle={{ background: 'var(--color-bg)', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 13 }}
             formatter={(v) => [`${v}R`, 'R-multiple']}
             labelFormatter={(i) => data[i]?.ticker + ' · ' + data[i]?.exit}
           />

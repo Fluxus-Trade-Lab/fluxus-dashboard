@@ -128,7 +128,7 @@ export default function TickerSignalHistory({ symbol, trades, ohlc }) {
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl p-4">
       <div className="flex items-baseline justify-between pb-2 border-b border-[var(--color-v2-ink)]">
-        <h3 className="text-[10px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
+        <h3 className="text-[11px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
           Signal history
         </h3>
         <span className="text-[11px] text-[var(--color-text-secondary)]">
@@ -137,8 +137,8 @@ export default function TickerSignalHistory({ symbol, trades, ohlc }) {
       </div>
 
       {/* the selection disclosure sits next to the number it qualifies */}
-      <p className="text-[12.5px] leading-relaxed text-[var(--color-text-secondary)] mt-3 mb-0">
-        <span className="text-[10px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mr-2">
+      <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)] mt-3 mb-0">
+        <span className="text-[11px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mr-2">
           Read
         </span>
         {events.length} appearance{events.length === 1 ? '' : 's'} since{' '}
@@ -252,7 +252,7 @@ export default function TickerSignalHistory({ symbol, trades, ohlc }) {
           </svg>
 
           <p className="text-[11px] leading-relaxed text-[var(--color-text-secondary)] mt-1 mb-0">
-            <span className="text-[10px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mr-2">
+            <span className="text-[11px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mr-2">
               Method
             </span>
             Solid squares are the quality tier (EP · VCP · MOM); outlined squares are
@@ -279,11 +279,11 @@ export default function TickerSignalHistory({ symbol, trades, ohlc }) {
         {counts.map((c) => (
           <div key={c.screener} className="flex items-baseline gap-3">
             <span className="w-[124px] shrink-0 text-right">
-              <span className="block text-[12.5px] font-semibold text-[var(--color-text)]"
+              <span className="block text-[13px] font-semibold text-[var(--color-text)]"
                     style={{ fontFamily: 'var(--font-cond)' }}>
                 {labelFor(c.screener, presets).toUpperCase()}
               </span>
-              <span className="block text-[10px] text-[var(--color-text-muted)]">
+              <span className="block text-[11px] text-[var(--color-text-muted)]">
                 {c.quality ? 'quality · ×3' : 'participation · ×1'}
               </span>
             </span>
@@ -294,7 +294,7 @@ export default function TickerSignalHistory({ symbol, trades, ohlc }) {
                   boxShadow: c.quality ? undefined : 'inset 0 0 0 1.1px var(--color-untested)',
                 }} />
               ))}
-              <span className="text-[12.5px] font-semibold ml-1"
+              <span className="text-[13px] font-semibold ml-1"
                     style={{ fontFamily: 'var(--font-cond)',
                              color: c.quality ? 'var(--color-text-bold)' : 'var(--color-text-muted)' }}>
                 {c.dates.length}
@@ -302,7 +302,7 @@ export default function TickerSignalHistory({ symbol, trades, ohlc }) {
             </span>
           </div>
         ))}
-        <p className="text-[12.5px] text-[var(--color-text)] pt-1 mb-0">
+        <p className="text-[13px] text-[var(--color-text)] pt-1 mb-0">
           <b>{qualityHits} of {events.length}</b> appearances were the quality tier. The rest is
           participation — a 4% day is not a setup.
         </p>

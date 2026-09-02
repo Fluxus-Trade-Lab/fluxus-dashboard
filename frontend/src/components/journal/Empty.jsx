@@ -16,7 +16,7 @@ import { useLanguage } from '../../i18n/LanguageContext'
 export default function Empty({ k, children }) {
   const { t } = useLanguage()
   return (
-    <div className="text-center py-16 text-[12.5px] text-[var(--color-text-muted)]">
+    <div className="text-center py-16 text-[13px] text-[var(--color-text-muted)]">
       {k ? t(k) : children}
     </div>
   )

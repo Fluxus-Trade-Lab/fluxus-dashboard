@@ -30,9 +30,9 @@ function Empty({ note }) {
     <div className="rounded-2xl px-5 py-5"
          style={{ backgroundImage:
            'repeating-linear-gradient(45deg,var(--color-border-light) 0 1px,transparent 1px 7px)' }}>
-      <div className="text-[10px] font-mono uppercase tracking-[.24em]
+      <div className="text-[11px] font-mono uppercase tracking-[.24em]
                       text-[var(--color-text-muted)] mb-2">Not enough sessions</div>
-      <p className="m-0 text-[12.5px] leading-relaxed text-[var(--color-text-secondary)]">{note}</p>
+      <p className="m-0 text-[13px] leading-relaxed text-[var(--color-text-secondary)]">{note}</p>
     </div>
   )
 }
@@ -79,7 +79,7 @@ export default function RsPath({ picks, colourOf, changeOf }) {
   return (
     <div>
       <div className="flex items-baseline gap-3 flex-wrap mb-1">
-        <span className="text-[10px] font-mono uppercase tracking-[.24em]
+        <span className="text-[11px] font-mono uppercase tracking-[.24em]
                          text-[var(--color-text-muted)]">Path · vs SPY</span>
         {/* the denominator, always. This is the whole difference between a
             short series and a claim about a long one. */}
@@ -108,7 +108,7 @@ export default function RsPath({ picks, colourOf, changeOf }) {
                     vectorEffect="non-scaling-stroke" />
               <text x={PAD.l - 6} y={y(t) + 3.5} textAnchor="end"
                     fill="var(--color-text-muted)"
-                    style={{ fontSize: 10, fontFamily: 'var(--font-mono)' }}>{pct(t)}</text>
+                    style={{ fontSize: 11, fontFamily: 'var(--font-mono)' }}>{pct(t)}</text>
             </g>
           ))}
 
@@ -164,9 +164,9 @@ export default function RsPath({ picks, colourOf, changeOf }) {
           {dates.length > 1 && (
             <>
               <text x={PAD.l} y={H - 6} fill="var(--color-text-muted)"
-                    style={{ fontSize: 10, fontFamily: 'var(--font-mono)' }}>{dates[0]}</text>
+                    style={{ fontSize: 11, fontFamily: 'var(--font-mono)' }}>{dates[0]}</text>
               <text x={W - PAD.r} y={H - 6} textAnchor="end" fill="var(--color-text-muted)"
-                    style={{ fontSize: 10, fontFamily: 'var(--font-mono)' }}>
+                    style={{ fontSize: 11, fontFamily: 'var(--font-mono)' }}>
                 {dates[dates.length - 1]}
               </text>
             </>
@@ -210,7 +210,7 @@ export default function RsPath({ picks, colourOf, changeOf }) {
         ))}
       </div>
       {/* JSX text is literal — the asterisks printed as asterisks */}
-      <p className="m-0 mt-2 text-[10px] font-mono text-[var(--color-text-muted)]">
+      <p className="m-0 mt-2 text-[11px] font-mono text-[var(--color-text-muted)]">
         one cell = the state <b className="font-semibold">published that session</b>, not one
         recomputed after the fact &mdash; deriving a past state from the stored perf columns
         applies today&rsquo;s window constants to yesterday&rsquo;s data.

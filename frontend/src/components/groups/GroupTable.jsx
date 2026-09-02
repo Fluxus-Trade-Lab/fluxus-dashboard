@@ -42,7 +42,7 @@ export default function GroupTable({ rows, showMethod = false, emptyNote }) {
 
   if (!rows.length) {
     return (
-      <div className="text-[var(--color-text-muted)] text-[14px] py-6 text-center">
+      <div className="text-[var(--color-text-muted)] text-[13px] py-6 text-center">
         {emptyNote ?? 'Nothing to show'}
       </div>
     )
@@ -55,7 +55,7 @@ export default function GroupTable({ rows, showMethod = false, emptyNote }) {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-[14px] border-collapse">
+      <table className="w-full text-[13px] border-collapse">
         <thead>
           <tr className="text-[var(--color-text-muted)] text-[11px] uppercase tracking-wide">
             {COLS.map((c) => (
@@ -173,7 +173,7 @@ export default function GroupTable({ rows, showMethod = false, emptyNote }) {
 function Extension({ row }) {
   const v = row.ext_share_4
   if (v == null) {
-    return <span className="text-[10px] font-mono uppercase tracking-[.12em]
+    return <span className="text-[11px] font-mono uppercase tracking-[.12em]
                             text-[var(--color-text-muted)]" title="no members to measure">n/m</span>
   }
   const RANGE = 0.6                       // the top measured bucket starts here
@@ -185,7 +185,7 @@ function Extension({ row }) {
           one is already a grey ladder, and a second grey ladder carrying a
           different meaning is how two encodings become one. */}
       {expiring && (
-        <span className="text-[10px] font-mono uppercase tracking-[.12em]
+        <span className="text-[11px] font-mono uppercase tracking-[.12em]
                          text-[var(--color-signal-caution)] whitespace-nowrap">expiring</span>
       )}
       <span className="relative block w-[46px] h-[9px] rounded-sm

@@ -31,8 +31,8 @@ export default function SetupEdgeSection() {
 
   return (
     <section>
-      <h3 className="text-[15px] font-semibold m-0">{t('setup.title')}</h3>
-      <p className="text-[12.5px] text-[var(--color-text-muted)] mt-1 mb-5 max-w-[64ch]">
+      <h3 className="text-[17px] font-semibold m-0">{t('setup.title')}</h3>
+      <p className="text-[13px] text-[var(--color-text-muted)] mt-1 mb-5 max-w-[64ch]">
         {t('setup.lede')}
       </p>
 
@@ -41,7 +41,7 @@ export default function SetupEdgeSection() {
           <div key={r.setup}
                className="grid grid-cols-[168px_44px_1fr] items-center gap-2 py-2.5
                           border-b border-[var(--color-border-light)]">
-            <span className="text-[12px] leading-tight">{r.setup}</span>
+            <span className="text-[13px] leading-tight">{r.setup}</span>
             <span className="text-[11px] font-mono text-[var(--color-text-muted)] text-right">
               {r.n}
             </span>
@@ -69,11 +69,11 @@ export default function SetupEdgeSection() {
         ))}
       </div>
 
-      <p className="text-[11.5px] text-[var(--color-text-muted)] mt-3.5 max-w-[64ch]">
+      <p className="text-[11px] text-[var(--color-text-muted)] mt-3.5 max-w-[64ch]">
         {t('setup.legend', { book: r2(res.book) })}
       </p>
 
-      <p className="text-[11.5px] mt-2 max-w-[64ch] border-l-2 pl-3
+      <p className="text-[11px] mt-2 max-w-[64ch] border-l-2 pl-3
                     border-[var(--color-border)] text-[var(--color-text-secondary)]">
         {t(res.signal ? 'setup.signal' : 'setup.nosignal', {
           hits: res.hits,

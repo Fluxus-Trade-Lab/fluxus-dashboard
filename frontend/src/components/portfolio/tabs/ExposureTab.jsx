@@ -125,8 +125,8 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
       {deployData.length > 0 && (
         <div className="bg-[var(--color-bg)] rounded-3xl p-5 mb-5">
           <div className="flex items-center justify-between mb-3">
-            <span className="font-semibold text-[14px]">Capital Deployment</span>
-            <span className="text-[12.5px] text-[var(--color-text-muted)]">How hard the capital worked over time</span>
+            <span className="font-semibold text-[13px]">Capital Deployment</span>
+            <span className="text-[13px] text-[var(--color-text-muted)]">How hard the capital worked over time</span>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
             {[
@@ -136,9 +136,9 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
               ['Peak leverage', lev ? (lev.peak / 100).toFixed(2) + '×' : '—', 'gross ÷ equity'],
             ].map(([l, v, sub]) => (
               <div key={l} className="bg-[var(--color-surface-raised)] rounded p-3">
-                <div className="text-[12.5px] text-[var(--color-text-muted)]">{l}</div>
+                <div className="text-[13px] text-[var(--color-text-muted)]">{l}</div>
                 <div className="text-[17px] font-bold">{v}</div>
-                <div className="text-[10px] text-[var(--color-text-muted)]">{sub}</div>
+                <div className="text-[11px] text-[var(--color-text-muted)]">{sub}</div>
               </div>
             ))}
           </div>
@@ -148,7 +148,7 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
               <XAxis dataKey="date" tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} minTickGap={44} tickFormatter={d => d.slice(5)} />
               <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={v => v + '%'} width={44} />
               <Tooltip
-                contentStyle={{ background: 'var(--color-bg)', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 12 }}
+                contentStyle={{ background: 'var(--color-bg)', border: '1px solid var(--color-border)', borderRadius: 8, fontSize: 13 }}
                 formatter={(val, name) => [val + '%', name]}
               />
               <ReferenceLine y={0} stroke="var(--color-text-muted)" />
@@ -157,7 +157,7 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
               <Line type="monotone" dataKey="returnPct" name="Cumulative return %" stroke="var(--color-text-bold)" strokeWidth={2.4} dot={false} />
             </LineChart>
           </ResponsiveContainer>
-          <div className="flex gap-4 mt-2 text-[12.5px] text-[var(--color-text-muted)]">
+          <div className="flex gap-4 mt-2 text-[13px] text-[var(--color-text-muted)]">
             <span><span style={{ color: 'var(--color-text-muted)' }}>■</span> Cash % of equity</span>
             <span><span style={{ color: 'var(--color-text-bold)' }}>■</span> Cumulative return %</span>
             <span className="ml-auto">100% = fully in cash · below 0 = on margin</span>
@@ -166,7 +166,7 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
         <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-          <div className="font-semibold mb-3 text-[14px]">Holdings</div>
+          <div className="font-semibold mb-3 text-[13px]">Holdings</div>
           <ResponsiveContainer width="100%" height={260}>
             <PieChart>
               <Pie
@@ -195,8 +195,8 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
       </div>
 
       <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-        <div className="font-semibold mb-3 text-[14px]">Detail</div>
-        <table className="w-full border-collapse text-[12.5px]">
+        <div className="font-semibold mb-3 text-[13px]">Detail</div>
+        <table className="w-full border-collapse text-[13px]">
           <thead>
             <tr>
               {DETAIL_HEADERS.map(h => (
@@ -218,10 +218,10 @@ export default function ExposureTab({ openTrades, mergedHoldingsData, performanc
                 <Fragment key={g.ticker}>{/* Group header row */}
                   <tr key={g.ticker} className={`${rowBg} ${g.isGroup ? 'cursor-pointer hover:bg-[var(--color-surface-raised)]' : ''}`} onClick={() => g.isGroup && toggleTicker(g.ticker)}>
                     <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] font-bold">
-                      {g.isGroup && <span className="inline-block w-3.5 text-[var(--color-text-muted)] text-[10px]">{expanded ? '▼' : '▶'}</span>}
+                      {g.isGroup && <span className="inline-block w-3.5 text-[var(--color-text-muted)] text-[11px]">{expanded ? '▼' : '▶'}</span>}
                       <TickerLink symbol={g.ticker} />
                       {g.isGroup && (
-                        <span className="ml-1 text-[10px] text-[var(--color-text-muted)]">
+                        <span className="ml-1 text-[11px] text-[var(--color-text-muted)]">
                           campaign · {g.trades.length} layers
                         </span>
                       )}

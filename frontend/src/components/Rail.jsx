@@ -135,7 +135,7 @@ export default function Rail({ currentPage, onNavigate }) {
                        ${collapsed ? 'w-[62px]' : 'w-[214px]'}`}>
         <div className="flex items-center px-4 pb-4 h-[36px]">
           {!collapsed && (
-            <span className="text-[14px] font-semibold tracking-[.16em] flex-1"
+            <span className="text-[13px] font-semibold tracking-[.16em] flex-1"
                   style={{ fontFamily: 'var(--font-cond)' }}>FLUXUS</span>
           )}
         </div>
@@ -155,7 +155,7 @@ export default function Rail({ currentPage, onNavigate }) {
                   // reads as another item in the list. The rule makes it a
                   // header, structurally, before any colour is applied.
                   <div className="flex items-center gap-2.5 px-4 pb-2">
-                    <span className={`text-[10px] font-mono font-medium uppercase tracking-[.24em]
+                    <span className={`text-[11px] font-mono font-medium uppercase tracking-[.24em]
                                       ${here ? 'text-[var(--color-text-bold)]'
                                              : 'text-[var(--color-text-muted)]'}`}>
                       {t(`rail.${g.key}`)}
@@ -174,10 +174,10 @@ export default function Rail({ currentPage, onNavigate }) {
                           className={`group relative w-full border-l-2 py-[7px]
                                       focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]
                                       ${collapsed
-                                        ? 'text-[10px] font-mono font-medium text-center px-0'
+                                        ? 'text-[11px] font-mono font-medium text-center px-0'
                                         // indented past the header's word: the
                                         // second level sits under the first
-                                        : 'text-[12.5px] text-left pl-6 pr-3'}
+                                        : 'text-[13px] text-left pl-6 pr-3'}
                                       ${on
                                         ? 'border-[var(--color-accent)] text-[var(--color-text-bold)] font-semibold bg-[var(--color-hover-bg)]'
                                         : 'border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
@@ -216,7 +216,7 @@ export default function Rail({ currentPage, onNavigate }) {
                          w-[22px] h-11 items-center justify-center rounded-full
                          border border-[var(--color-border)] bg-[var(--color-surface)]
                          text-[var(--color-text-muted)] hover:text-[var(--color-text)]
-                         cursor-pointer text-[12.5px] transition-[left] duration-200"
+                         cursor-pointer text-[13px] transition-[left] duration-200"
               >
         {collapsed ? '»' : '«'}
       </button>
@@ -228,7 +228,7 @@ export default function Rail({ currentPage, onNavigate }) {
                       border-b border-[var(--glass-edge)]">
         {NAV_GROUPS.map((g) => (
           <div key={g.key} className="flex items-center gap-1 shrink-0">
-            <span className={`px-1.5 text-[10px] font-mono font-medium uppercase tracking-[.2em]
+            <span className={`px-1.5 text-[11px] font-mono font-medium uppercase tracking-[.2em]
                               shrink-0 ${GROUP_OF[currentPage] === g.key
                                 ? 'text-[var(--color-text-bold)]'
                                 : 'text-[var(--color-text-muted)]'}`}>
@@ -237,7 +237,7 @@ export default function Rail({ currentPage, onNavigate }) {
             {g.items.map(({ key, hash }) => (
               <button key={key} onClick={() => onNavigate(hash)}
                       aria-current={currentPage === key ? 'page' : undefined}
-                      className={`px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide
+                      className={`px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide
                                   rounded shrink-0 ${
                         currentPage === key
                           ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'

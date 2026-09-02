@@ -215,7 +215,7 @@ export default function OverviewTab({
             </button>
           </div>
 
-          <table className="w-full border-collapse text-[12.5px]">
+          <table className="w-full border-collapse text-[13px]">
             <thead>
               <tr>
                 {TRADE_HEADERS.map((h, i) => (
@@ -284,7 +284,7 @@ export default function OverviewTab({
                     {pm ? MASK : (
                       <>
                         {t.currentQty}
-                        {t.currentQty !== t.originalQty && <span className="text-[var(--color-text-muted)] text-[10px]">/{t.originalQty}</span>}
+                        {t.currentQty !== t.originalQty && <span className="text-[var(--color-text-muted)] text-[11px]">/{t.originalQty}</span>}
                       </>
                     )}
                   </td>
@@ -296,11 +296,11 @@ export default function OverviewTab({
                     <EditablePrice value={t.lastPrice || t.entryPrice} onChange={v => updatePrice(t.id, v)} />
                   </td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] opacity-78 group-hover:opacity-100 transition-opacity tabular-nums">{t.trims?.[0] ? fmtCur(t.trims[0].price) : '—'}</td>
-                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] opacity-78 group-hover:opacity-100 transition-opacity text-[10px] text-[var(--color-text-muted)]">{t.trims?.[0]?.date || ''}</td>
+                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] opacity-78 group-hover:opacity-100 transition-opacity text-[11px] text-[var(--color-text-muted)]">{t.trims?.[0]?.date || ''}</td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] opacity-78 group-hover:opacity-100 transition-opacity tabular-nums">{t.trims?.[1] ? fmtCur(t.trims[1].price) : '—'}</td>
-                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] opacity-78 group-hover:opacity-100 transition-opacity text-[10px] text-[var(--color-text-muted)]">{t.trims?.[1]?.date || ''}</td>
+                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] opacity-78 group-hover:opacity-100 transition-opacity text-[11px] text-[var(--color-text-muted)]">{t.trims?.[1]?.date || ''}</td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">{t.trims?.[2] ? fmtCur(t.trims[2].price) : '—'}</td>
-                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] text-[10px] text-[var(--color-text-muted)]">{t.trims?.[2]?.date || ''}</td>
+                  <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] text-[11px] text-[var(--color-text-muted)]">{t.trims?.[2]?.date || ''}</td>
                   <td className="px-2.5 py-1.5 border-b border-[var(--color-border-light)] tabular-nums">
                     <StopCell stopPrice={t.stopPrice} initialStop={t.initialStop} suggestion={stopSugg} trade={t} onChange={v => updateStop(t.id, v)} />
                   </td>
@@ -331,7 +331,7 @@ export default function OverviewTab({
         {/* Left: Equity Curve */}
         <div className="min-w-0">
           {!hasSPY && (
-            <div className="p-3 bg-[var(--color-bg)] rounded-3xl mb-4 text-[12.5px] text-[var(--color-text-secondary)] flex items-center justify-between">
+            <div className="p-3 bg-[var(--color-bg)] rounded-3xl mb-4 text-[13px] text-[var(--color-text-secondary)] flex items-center justify-between">
               <span>{tr('pf.chart.loadHistoryHint')}</span>
               <Button onClick={fetchFullHistory} disabled={state.loading}>
                 {state.loading ? tr('pf.chart.loading') : tr('pf.chart.loadHistory')}
@@ -362,7 +362,7 @@ export default function OverviewTab({
               )}
             </div>
             <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-              <div className="font-semibold mb-3 text-[14px]">
+              <div className="font-semibold mb-3 text-[13px]">
                 <span>{tr('pf.chart.vsSpy')}</span>
               </div>
               {/* IN THE FLOW, NOT FLOATING (Andy, 2026-08-24: it overlapped the
@@ -382,7 +382,7 @@ export default function OverviewTab({
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
                   <XAxis
                     dataKey="date"
-                    tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }}
+                    tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }}
                     tickFormatter={d => d.slice(5)}
                     interval={Math.max(1, Math.floor(chartData.length / 10))}
                   />
@@ -397,7 +397,7 @@ export default function OverviewTab({
                                     borderRadius: 8, background: 'var(--color-surface)',
                                     border: '1px solid var(--color-border)',
                                     color: 'var(--color-text)', boxShadow: 'none' }}
-                    labelStyle={{ fontSize: 10, marginBottom: 2,
+                    labelStyle={{ fontSize: 11, marginBottom: 2,
                                   color: 'var(--color-text-muted)' }}
                     itemStyle={{ fontSize: 11, padding: 0, lineHeight: 1.35 }} />
                   <Legend />
@@ -413,7 +413,7 @@ export default function OverviewTab({
             </div>
             </>
           ) : (
-            <div className="text-center py-10 text-[var(--color-text-muted)] text-[14px] rounded-3xl">Need trades to build equity curve.</div>
+            <div className="text-center py-10 text-[var(--color-text-muted)] text-[13px] rounded-3xl">Need trades to build equity curve.</div>
           )}
         </div>
 
@@ -421,12 +421,12 @@ export default function OverviewTab({
         <div className="min-w-0">
           {monthlyStats.length > 0 && (
             <div className="overflow-x-auto bg-[var(--color-bg)] rounded-3xl p-5">
-              <div className="font-semibold mb-3 text-[14px]">{tr('pf.monthly.title')}</div>
-              <table className="w-full border-collapse text-[12.5px]">
+              <div className="font-semibold mb-3 text-[13px]">{tr('pf.monthly.title')}</div>
+              <table className="w-full border-collapse text-[13px]">
                 <thead>
                   <tr>
                     {MONTHLY_HEADERS.map(h => (
-                      <th key={h} className="text-left px-2.5 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[10px] uppercase tracking-wide whitespace-nowrap">{h}</th>
+                      <th key={h} className="text-left px-2.5 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide whitespace-nowrap">{h}</th>
                     ))}
                   </tr>
                 </thead>

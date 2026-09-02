@@ -237,10 +237,15 @@ export default function StateField({ rows, colourOf, onToggle, atLimit,
                     style={{ fontSize: 15, fontWeight: 600 }}>
                 {c.state}
                 <tspan fill="var(--color-text-muted)"
-                       style={{ fontSize: 12.5, fontWeight: 400,
+                       style={{ fontSize: 13, fontWeight: 400,
                                 fontFamily: 'var(--font-mono)' }}> {n}</tspan>
               </text>
-              <text x={tx} y={ty + 14} fill="var(--color-text-muted)"
+              {/* +17, not +14. The hint went 10px → 11px in the 2026-09-02
+                  type-scale sweep and a 14px baseline gap stopped clearing the
+                  15px name above it — all four quadrant captions began
+                  overlapping their own titles. Caught by an A/B against
+                  origin/main, not by eye. */}
+              <text x={tx} y={ty + 17} fill="var(--color-text-muted)"
                     style={{ fontSize: 11 }}>{c.hint}</text>
             </g>
           )
@@ -248,19 +253,19 @@ export default function StateField({ rows, colourOf, onToggle, atLimit,
 
         {/* the extents, printed. A scale nobody can read is not a scale. */}
         <text x={W - PAD.r} y={y0 + 15} textAnchor="end" fill="var(--color-text-muted)"
-              style={{ fontSize: 10, fontFamily: 'var(--font-mono)' }}>
+              style={{ fontSize: 11, fontFamily: 'var(--font-mono)' }}>
           ahead of SPY on the quarter &rarr; {pct(ax)}
         </text>
         <text x={PAD.l} y={y0 + 15} textAnchor="start" fill="var(--color-text-muted)"
-              style={{ fontSize: 10, fontFamily: 'var(--font-mono)' }}>
+              style={{ fontSize: 11, fontFamily: 'var(--font-mono)' }}>
           {pct(-ax)} &larr; behind
         </text>
         <text x={x0 - 7} y={PAD.t + 4} textAnchor="end" fill="var(--color-text-muted)"
-              style={{ fontSize: 10, fontFamily: 'var(--font-mono)' }}>
+              style={{ fontSize: 11, fontFamily: 'var(--font-mono)' }}>
           accelerating {pct(ay)}
         </text>
         <text x={x0 - 7} y={H - PAD.b} textAnchor="end" fill="var(--color-text-muted)"
-              style={{ fontSize: 10, fontFamily: 'var(--font-mono)' }}>
+              style={{ fontSize: 11, fontFamily: 'var(--font-mono)' }}>
           {pct(-ay)}
         </text>
 
@@ -324,7 +329,7 @@ export default function StateField({ rows, colourOf, onToggle, atLimit,
       {/* the size ramp, and the two things the figure has to admit about
           itself: what it ignores, and who got named */}
       <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-2
-                      text-[10px] text-[var(--color-text-muted)]">
+                      text-[11px] text-[var(--color-text-muted)]">
         <span className="flex items-center gap-2">
           <span>size = horizons led</span>
           <svg width="90" height="16" aria-hidden="true">
@@ -364,7 +369,7 @@ export default function StateField({ rows, colourOf, onToggle, atLimit,
         )}
         <span>a ring means you picked it; its dash says which slot</span>
       </div>
-      <p className="m-0 mt-2 text-[10px] leading-relaxed text-[var(--color-text-muted)] max-w-[92ch]">
+      <p className="m-0 mt-2 text-[11px] leading-relaxed text-[var(--color-text-muted)] max-w-[92ch]">
         <b className="text-[var(--color-text-secondary)]">This figure reads the quarter and
         does not follow the window switch above.</b> The four states are defined on
         quarterly excess and month-scale acceleration; the switch moves the ranking

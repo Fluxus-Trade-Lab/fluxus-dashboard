@@ -43,7 +43,7 @@ export default function BreadthPage({ data }) {
     return (
       <div className="space-y-3">
         <TimeMachineBar tm={tm} />
-        <div className="text-[var(--color-text-muted)] text-[14px] font-medium uppercase tracking-wide py-8 text-center">
+        <div className="text-[var(--color-text-muted)] text-[13px] font-medium uppercase tracking-wide py-8 text-center">
           No breadth data available
         </div>
       </div>
@@ -122,7 +122,7 @@ export default function BreadthPage({ data }) {
       <Reference label="Correction risk" count={1}
                  note="not built yet — the slot is reserved, not missing">
         <div className="border border-dashed border-[var(--color-untested)]
-                        px-4 py-4 text-[12.5px] leading-relaxed
+                        px-4 py-4 text-[13px] leading-relaxed
                         text-[var(--color-text-muted)]">
           <p className="m-0 mb-2">Will hold:</p>
           <ul className="m-0 pl-4 space-y-1">

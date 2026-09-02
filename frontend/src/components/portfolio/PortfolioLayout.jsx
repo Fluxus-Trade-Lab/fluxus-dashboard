@@ -228,7 +228,7 @@ export default function Layout() {
         {fileInput}
         <div className="text-center max-w-md">
           <div className="text-[26px] font-bold mb-2">{tr('pf.title')}</div>
-          <div className="text-[var(--color-text-muted)] mb-6 text-[14px]">{tr('pf.intro.subtitle')}</div>
+          <div className="text-[var(--color-text-muted)] mb-6 text-[13px]">{tr('pf.intro.subtitle')}</div>
           <InputField
             label={tr('pf.intro.capitalLabel')}
             type="number"
@@ -257,7 +257,7 @@ export default function Layout() {
             </Button>
           </div>
           {state.fetchStatus && (
-            <div className="mt-3 text-[12.5px] text-[var(--color-accent)]">{state.fetchStatus}</div>
+            <div className="mt-3 text-[13px] text-[var(--color-accent)]">{state.fetchStatus}</div>
           )}
         </div>
       </div>
@@ -291,7 +291,7 @@ export default function Layout() {
 
       {/* Status bar — PortfolioHeader end */}
       {state.fetchStatus && (
-        <div className="px-6 py-1.5 bg-[var(--color-bg)] text-[12.5px] text-[var(--color-text-secondary)] border-b border-[var(--color-border)]">
+        <div className="px-6 py-1.5 bg-[var(--color-bg)] text-[13px] text-[var(--color-text-secondary)] border-b border-[var(--color-border)]">
           {state.fetchStatus}
         </div>
       )}
@@ -305,7 +305,7 @@ export default function Layout() {
           <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
             <div className="bg-[var(--color-surface)] rounded-lg p-6 w-80 shadow-xl">
               <div className="font-bold mb-2">Reset All Data?</div>
-              <div className="text-[14px] text-[var(--color-text-secondary)] mb-4">This deletes everything. Export first if needed.</div>
+              <div className="text-[13px] text-[var(--color-text-secondary)] mb-4">This deletes everything. Export first if needed.</div>
               <div className="flex gap-2">
                 <Button variant="danger" onClick={() => { dispatch({ type: 'RESET_ALL' }); setShowResetConfirm(false) }}>Yes, Reset</Button>
                 <Button variant="ghost" onClick={() => setShowResetConfirm(false)}>Cancel</Button>
@@ -322,7 +322,7 @@ export default function Layout() {
                 <span>Export Data</span>
                 <button onClick={() => setExportData(null)} className="text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] cursor-pointer text-[17px]">&times;</button>
               </div>
-              <div className="text-[12.5px] text-[var(--color-text-secondary)] mb-2">Copy the CSV below, or save as .csv to open in Excel.</div>
+              <div className="text-[13px] text-[var(--color-text-secondary)] mb-2">Copy the CSV below, or save as .csv to open in Excel.</div>
               <div className="flex gap-2 mb-2">
                 <Button onClick={() => {
                   navigator.clipboard.writeText(exportData)
@@ -376,7 +376,7 @@ export default function Layout() {
           const straddles = uniq.filter(s => s.straddle).length
           const adjusts = uniq.length - straddles
           return (
-            <div className="mt-4 text-[12.5px] text-[var(--color-text-muted)]">
+            <div className="mt-4 text-[13px] text-[var(--color-text-muted)]">
               <button
                 onClick={() => setShowSplitNotices(v => !v)}
                 className="inline-flex items-center gap-1.5 hover:text-[var(--color-text-secondary)]"

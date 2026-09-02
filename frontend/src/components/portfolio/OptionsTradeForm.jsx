@@ -50,7 +50,7 @@ export default function OptionsTradeForm({ onClose }) {
 
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5 mt-4">
-      <div className="font-semibold mb-3 text-[14px]">Log Options Trade</div>
+      <div className="font-semibold mb-3 text-[13px]">Log Options Trade</div>
       <div className="flex gap-3 flex-wrap items-end">
         <InputField label="Entry Date" type="date" value={form.entryDate} onChange={set('entryDate')} />
         <InputField

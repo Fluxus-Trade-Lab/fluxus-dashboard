@@ -221,7 +221,7 @@ export default function CardChart({ series, marks = [], height = 190,
 
       {/* An axis that has changed meaning has to say so. */}
       {log && (
-        <span className="absolute left-0 top-0 text-[10px] font-mono
+        <span className="absolute left-0 top-0 text-[11px] font-mono
                          text-[var(--color-text-muted)] pointer-events-none"
               title="纵轴按对数：等距离 = 等百分比。一天 +177% 会把线性轴上的其余部分压平">
           log
@@ -230,7 +230,7 @@ export default function CardChart({ series, marks = [], height = 190,
 
       {/* one anchor on the price axis — the last close, where the line ends */}
       {!bare && (
-        <span className="absolute right-0 -translate-y-1/2 px-1 text-[10px] font-mono
+        <span className="absolute right-0 -translate-y-1/2 px-1 text-[11px] font-mono
                          tabular-nums font-semibold pointer-events-none"
               style={{ top: `${(y(last) / H) * 100}%`,
                        background: 'var(--color-text)', color: 'var(--color-bg)' }}>
@@ -246,7 +246,7 @@ export default function CardChart({ series, marks = [], height = 190,
         const edge = frac < 0.04 ? 'left' : frac > 0.96 ? 'right' : null
         return (
           <span key={t.i}
-                className={`absolute text-[10px] font-mono text-[var(--color-text-muted)]
+                className={`absolute text-[11px] font-mono text-[var(--color-text-muted)]
                             whitespace-nowrap ${edge ? '' : '-translate-x-1/2'}`}
                 style={edge === 'left' ? { left: 0 } : edge === 'right' ? { right: 0 }
                      : { left: `${frac * 100}%` }}>

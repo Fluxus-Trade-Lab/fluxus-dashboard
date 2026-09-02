@@ -7,8 +7,8 @@ export default function TickerAnalystSentiment({ tickerData }) {
   if (!a || Object.keys(a).length === 0) {
     return (
       <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-        <div className="font-semibold mb-3 text-[14px]">Analyst Sentiment</div>
-        <div className="text-[var(--color-text-muted)] text-[14px]">No analyst data available.</div>
+        <div className="font-semibold mb-3 text-[13px]">Analyst Sentiment</div>
+        <div className="text-[var(--color-text-muted)] text-[13px]">No analyst data available.</div>
       </div>
     )
   }
@@ -30,8 +30,8 @@ export default function TickerAnalystSentiment({ tickerData }) {
 
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-      <div className="font-semibold mb-3 text-[14px]">Analyst Sentiment</div>
-      <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-[12.5px] mb-3">
+      <div className="font-semibold mb-3 text-[13px]">Analyst Sentiment</div>
+      <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-[13px] mb-3">
         <div className="flex justify-between border-b border-[var(--color-border-light)] pb-1">
           <span className="text-[var(--color-text-muted)]">Consensus</span>
           <span className={consensusColor}>{consensus}</span>
@@ -72,7 +72,7 @@ export default function TickerAnalystSentiment({ tickerData }) {
 
       {recent.length > 0 && (
         <>
-          <div className="text-[10px] uppercase text-[var(--color-text-muted)] tracking-wide mb-1">Recent rating changes</div>
+          <div className="text-[11px] uppercase text-[var(--color-text-muted)] tracking-wide mb-1">Recent rating changes</div>
           <div className="text-[11px] flex flex-col gap-0.5 max-h-40 overflow-y-auto">
             {recent.slice(0, 5).map((r, i) => (
               <div key={i} className="flex justify-between gap-3">

@@ -26,9 +26,9 @@ export default function HeadCoach({ onGo }) {
     return (
       <section className="rounded-3xl border border-dashed border-[var(--color-border)]
                           px-5 py-4 mb-4">
-        <span className="text-[10px] font-mono uppercase tracking-[.24em]
+        <span className="text-[11px] font-mono uppercase tracking-[.24em]
                          text-[var(--color-text-muted)]">{t('rev.period')}</span>
-        <p className="text-[12.5px] text-[var(--color-text-muted)] m-0 mt-1.5">
+        <p className="text-[13px] text-[var(--color-text-muted)] m-0 mt-1.5">
           {t('rev.verdict.none')}
         </p>
       </section>
@@ -40,12 +40,12 @@ export default function HeadCoach({ onGo }) {
 
   return (
     <section className="rounded-3xl px-5 py-4 mb-4 bg-[var(--color-accent-solid)]">
-      <span className="text-[10px] font-mono uppercase tracking-[.24em]
+      <span className="text-[11px] font-mono uppercase tracking-[.24em]
                        text-white/70">{t('rev.period')}</span>
       {/* The sentence is one translated string with a {worst} placeholder, split
           here to put the link in. Assembling it from fragments instead would fix
           the word order to whichever language was written first. */}
-      <p className="text-[15px] leading-relaxed text-white m-0 mt-1.5">
+      <p className="text-[17px] leading-relaxed text-white m-0 mt-1.5">
         {(() => {
           const sentence = t('rev.verdict', {
             best: t(`rev.stage.${best.stage}`), bestN: p.bestN, bestR: pct1(p.bestPerTrade),
@@ -80,7 +80,7 @@ export default function HeadCoach({ onGo }) {
         <p className="text-[11px] leading-relaxed text-white/60 m-0 mt-2 max-w-[62ch]">
           {t('rev.report.hint')}
         </p>
-        <code className="inline-block mt-1.5 text-[10.5px] font-mono text-white/75
+        <code className="inline-block mt-1.5 text-[11px] font-mono text-white/75
                          bg-black/25 rounded px-2 py-1">{t('rev.report.cmd')}</code>
       </details>
 
@@ -94,7 +94,7 @@ export default function HeadCoach({ onGo }) {
               {t(`rev.stage.${r.stage}`)} {pct1(r.perTrade)}<span className="text-white/45"> ·{r.n}</span>
             </span>
         ))}
-        <span className="text-[10px] font-mono text-white/45">
+        <span className="text-[11px] font-mono text-white/45">
           {t('rev.verdict.method')}
         </span>
       </div>

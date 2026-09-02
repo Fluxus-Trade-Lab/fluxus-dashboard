@@ -40,7 +40,7 @@ function Rows({ items, render, cap = 6, moreLabel }) {
       {shown.map(render)}
       {items.length > cap && (
         <button type="button" onClick={() => setAll(!all)}
-                className="mt-1.5 text-[10.5px] font-mono bg-transparent border-none p-0
+                className="mt-1.5 text-[11px] font-mono bg-transparent border-none p-0
                            cursor-pointer text-[var(--color-text-muted)]
                            hover:text-[var(--color-text)]">
           {all ? '−' : `+${items.length - cap}`} {moreLabel}
@@ -73,7 +73,7 @@ export default function BehaviorSection({ enriched }) {
       <div className="flex items-baseline gap-3 mb-2.5">
         <b className="text-[11px] font-mono uppercase tracking-[.16em]
                       text-[var(--color-text-muted)]">{t('led.bar')}</b>
-        <span className={`ml-auto text-[15px] font-semibold tabular-nums ${clr(net)}`}>
+        <span className={`ml-auto text-[17px] font-semibold tabular-nums ${clr(net)}`}>
           {fmtCur(net)}
         </span>
       </div>
@@ -131,7 +131,7 @@ export default function BehaviorSection({ enriched }) {
 
       {open && styles[open] && (
         <div className="rounded-2xl bg-[var(--color-surface)] px-4 py-3 mb-2">
-          <p className="text-[11.5px] text-[var(--color-text-secondary)] m-0 mb-2 max-w-[62ch]">
+          <p className="text-[11px] text-[var(--color-text-secondary)] m-0 mb-2 max-w-[62ch]">
             {t(`led.hint.${open}`)}
             {' · '}
             <span className="font-mono">{t('led.avg', { v: fmtCur(styles[open].avgPL) })}</span>
@@ -147,14 +147,14 @@ export default function BehaviorSection({ enriched }) {
         </div>
       )}
 
-      <p className="text-[11.5px] text-[var(--color-text-muted)] max-w-[64ch]">
+      <p className="text-[11px] text-[var(--color-text-muted)] max-w-[64ch]">
         {t('led.legend')}
       </p>
 
       {/* The same book in R, as one line. It was five stat cards; five cards is
           a dashboard, and a dashboard is what this page is not. */}
       {rStats && (
-        <p className="text-[11.5px] mt-3 max-w-[68ch] border-l-2 pl-3
+        <p className="text-[11px] mt-3 max-w-[68ch] border-l-2 pl-3
                       border-[var(--color-border)] text-[var(--color-text-secondary)]">
           {t('led.rline', {
             n: rStats.n,
@@ -173,9 +173,9 @@ export default function BehaviorSection({ enriched }) {
         <div>
           <b className="text-[11px] font-mono uppercase tracking-[.16em]
                         text-[var(--color-text-muted)] block">{t('led.revenge')}</b>
-          <span className="block text-[19px] font-semibold tabular-nums mt-1
+          <span className="block text-[17px] font-semibold tabular-nums mt-1
                            text-[var(--color-loss)]">{fmtCur(revengeTotal)}</span>
-          <span className="block text-[11.5px] text-[var(--color-text-muted)] mb-2.5
+          <span className="block text-[11px] text-[var(--color-text-muted)] mb-2.5
                            max-w-[40ch]">{t('led.revenge.lede')}</span>
           {revenge.length === 0 ? <Empty k="empty.noClusters" /> : (
             <Rows items={revenge} moreLabel={t('led.more')}
@@ -185,10 +185,10 @@ export default function BehaviorSection({ enriched }) {
                       <div key={`${c.ticker}-${i}`}
                            className="grid grid-cols-[52px_26px_1fr_86px] items-center gap-2
                                       py-1.5 border-b border-[var(--color-border-light)]">
-                        <span className="text-[12px] font-semibold">
+                        <span className="text-[13px] font-semibold">
                           <TickerLink symbol={c.ticker} />
                         </span>
-                        <span className="text-[10.5px] font-mono text-[var(--color-text-muted)]
+                        <span className="text-[11px] font-mono text-[var(--color-text-muted)]
                                          text-right">×{c.trades.length}</span>
                         <span className="h-1.5 rounded-sm bg-[var(--color-loss)] opacity-70"
                               style={{ width: `${Math.max(3, w)}%` }} />
@@ -203,11 +203,11 @@ export default function BehaviorSection({ enriched }) {
         <div>
           <b className="text-[11px] font-mono uppercase tracking-[.16em]
                         text-[var(--color-text-muted)] block">{t('led.panic')}</b>
-          <span className="block text-[19px] font-semibold tabular-nums mt-1
+          <span className="block text-[17px] font-semibold tabular-nums mt-1
                            text-[var(--color-signal-caution)]">
             {fmtCur(panic.totalLeak)}
           </span>
-          <span className="block text-[11.5px] text-[var(--color-text-muted)] mb-2.5
+          <span className="block text-[11px] text-[var(--color-text-muted)] mb-2.5
                            max-w-[40ch]">
             {t('led.panic.lede', { n: panic.count })}
           </span>
@@ -219,10 +219,10 @@ export default function BehaviorSection({ enriched }) {
                       <div key={`${x.ticker}-${i}`}
                            className="grid grid-cols-[52px_58px_1fr_86px] items-center gap-2
                                       py-1.5 border-b border-[var(--color-border-light)]">
-                        <span className="text-[12px] font-semibold">
+                        <span className="text-[13px] font-semibold">
                           <TickerLink symbol={x.ticker} />
                         </span>
-                        <span className="text-[10.5px] font-mono text-[var(--color-text-muted)]">
+                        <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
                           {x.entryDate?.slice(5, 10)}
                         </span>
                         <span className="h-1.5 rounded-sm bg-[var(--color-signal-caution)]

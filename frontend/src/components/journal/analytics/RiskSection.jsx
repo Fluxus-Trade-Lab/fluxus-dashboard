@@ -91,7 +91,7 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
     <div className="space-y-5">
       {/* Portfolio Heat */}
       <div className="bg-[var(--color-surface)] rounded-3xl p-5">
-        <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+        <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
           Portfolio Heat
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
@@ -110,12 +110,12 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
         </div>
 
         {heatData.totalHeat > 8 && (
-          <div className="bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-loss)_30%,transparent)] rounded-md px-3 py-2 text-[12.5px] text-[var(--color-loss)] mb-4">
+          <div className="bg-[color-mix(in_srgb,var(--color-loss)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-loss)_30%,transparent)] rounded-md px-3 py-2 text-[13px] text-[var(--color-loss)] mb-4">
             Total heat is {fmt(heatData.totalHeat, 1)}% — above 8% threshold. Consider reducing position sizes or tightening stops.
           </div>
         )}
         {heatData.noStopCount > 0 && (
-          <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-[12.5px] text-[var(--color-signal-caution)] mb-4">
+          <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-[13px] text-[var(--color-signal-caution)] mb-4">
             {heatData.noStopCount} position{heatData.noStopCount > 1 ? 's have' : ' has'} no stop set — untracked risk.
           </div>
         )}
@@ -124,7 +124,7 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
           <ResponsiveContainer width="100%" height={Math.max(200, heatChartData.length * 28)}>
             <BarChart data={heatChartData} layout="vertical" margin={{ left: 10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
-              <XAxis type="number" tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${v}%`} />
+              <XAxis type="number" tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${v}%`} />
               <YAxis type="category" dataKey="name" tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} width={60} />
               <Tooltip formatter={v => `${v}%`} contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text)' }} />
               <Bar dataKey="heat" radius={[0, 4, 4, 0]}>
@@ -139,12 +139,12 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {/* Ticker concentration */}
         <div className="bg-[var(--color-surface)] rounded-3xl p-5">
-          <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+          <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Concentration by Ticker
           </h3>
           <div className="space-y-1.5">
             {tickerConcentration.slice(0, 10).map(t => (
-              <div key={t.name} className="flex items-center gap-2 text-[12.5px]">
+              <div key={t.name} className="flex items-center gap-2 text-[13px]">
                 <span className="w-12 font-medium">{t.name}</span>
                 <div className="flex-1 bg-[var(--color-bg)] rounded-full h-3 overflow-hidden">
                   <div
@@ -161,7 +161,7 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
             ))}
           </div>
           {tickerConcentration.some(t => t.weight > 15) && (
-            <div className="mt-3 bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-[12.5px] text-[var(--color-signal-caution)]">
+            <div className="mt-3 bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-[13px] text-[var(--color-signal-caution)]">
               Single-name concentration above 15% detected.
             </div>
           )}
@@ -169,24 +169,24 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
 
         {/* Direction exposure */}
         <div className="bg-[var(--color-surface)] rounded-3xl p-5">
-          <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+          <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Exposure
           </h3>
           <div className="grid grid-cols-2 gap-3 mb-4">
             <div>
-              <div className="text-[10px] text-[var(--color-text-muted)] uppercase mb-1">Long</div>
+              <div className="text-[11px] text-[var(--color-text-muted)] uppercase mb-1">Long</div>
               <div className="text-[17px] font-bold tabular-nums text-[var(--color-profit)]">{fmt(exposure.longPct, 1)}%</div>
             </div>
             <div>
-              <div className="text-[10px] text-[var(--color-text-muted)] uppercase mb-1">Short</div>
+              <div className="text-[11px] text-[var(--color-text-muted)] uppercase mb-1">Short</div>
               <div className="text-[17px] font-bold tabular-nums text-[var(--color-loss)]">{fmt(exposure.shortPct, 1)}%</div>
             </div>
             <div>
-              <div className="text-[10px] text-[var(--color-text-muted)] uppercase mb-1">Net</div>
+              <div className="text-[11px] text-[var(--color-text-muted)] uppercase mb-1">Net</div>
               <div className={`text-[17px] font-bold tabular-nums ${clr(exposure.netPct)}`}>{fmt(exposure.netPct, 1)}%</div>
             </div>
             <div>
-              <div className="text-[10px] text-[var(--color-text-muted)] uppercase mb-1">Gross</div>
+              <div className="text-[11px] text-[var(--color-text-muted)] uppercase mb-1">Gross</div>
               <div className="text-[17px] font-bold tabular-nums">{fmt(exposure.grossPct, 1)}%</div>
             </div>
           </div>
@@ -194,12 +194,12 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
           {/* Sector breakdown */}
           {sectorData.length > 0 && (
             <>
-              <h4 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2 mt-4">By Sector</h4>
+              <h4 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2 mt-4">By Sector</h4>
               <div className="space-y-1.5">
                 {sectorData.map(s => {
                   const pct = portfolioValue > 0 ? (s.value / portfolioValue) * 100 : 0
                   return (
-                    <div key={s.name} className="flex items-center gap-2 text-[12.5px]">
+                    <div key={s.name} className="flex items-center gap-2 text-[13px]">
                       <span className="w-24 truncate">{s.name}</span>
                       <div className="flex-1 bg-[var(--color-bg)] rounded-full h-3 overflow-hidden">
                         <div className="h-full rounded-full"
@@ -219,7 +219,7 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
       {/* Beta-weighted exposure */}
       {betaData && (
         <div className="bg-[var(--color-surface)] rounded-3xl p-5">
-          <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+          <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Beta-Weighted Exposure
           </h3>
 
@@ -234,11 +234,11 @@ export default function RiskSection({ openTrades, enriched, heatData, sectorData
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-[12.5px]">
+            <table className="w-full border-collapse text-[13px]">
               <thead>
                 <tr>
                   {['Ticker', 'Dir', 'Qty', 'Mkt Val', 'Wt%', 'Beta', 'Beta-Adj Exp'].map(h => (
-                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[10px] uppercase tracking-wide">{h}</th>
+                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{h}</th>
                   ))}
                 </tr>
               </thead>

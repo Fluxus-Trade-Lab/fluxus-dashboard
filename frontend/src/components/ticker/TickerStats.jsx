@@ -9,8 +9,8 @@ export default function TickerStats({ universe }) {
   if (!u) {
     return (
       <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-        <div className="font-semibold mb-3 text-[14px]">Stats</div>
-        <div className="text-[var(--color-text-muted)] text-[14px]">
+        <div className="font-semibold mb-3 text-[13px]">Stats</div>
+        <div className="text-[var(--color-text-muted)] text-[13px]">
           Not in current screener universe (delisted or under filter floor).
         </div>
       </div>
@@ -40,16 +40,16 @@ export default function TickerStats({ universe }) {
 
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-      <div className="font-semibold mb-3 text-[14px]">Stats</div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-4 gap-y-2 text-[12.5px]">
+      <div className="font-semibold mb-3 text-[13px]">Stats</div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-4 gap-y-2 text-[13px]">
         {cells.map(([label, value]) => (
           <div key={label} className="flex flex-col">
-            <span className="text-[10px] text-[var(--color-text-muted)] uppercase tracking-wide">{label}</span>
+            <span className="text-[11px] text-[var(--color-text-muted)] uppercase tracking-wide">{label}</span>
             <span className="tabular-nums">{value}</span>
           </div>
         ))}
       </div>
-      <div className="text-[10px] text-[var(--color-text-muted)] mt-4">
+      <div className="text-[11px] text-[var(--color-text-muted)] mt-4">
         Fundamentals (P/S, P/E, margins, EPS history, analyst sentiment, catalysts, trade plan)
         ship in Phase 3b–3d. The <code>/tearsheet {u.ticker}</code> slash command will refresh AI-synthesized narrative.
       </div>

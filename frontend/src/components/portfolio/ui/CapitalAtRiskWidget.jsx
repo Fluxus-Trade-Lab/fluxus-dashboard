@@ -42,10 +42,10 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
   if (!data.perTrade.length) {
     return (
       <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-        <div className="text-[10px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
+        <div className="text-[11px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
           Open risk
         </div>
-        <div className="text-center py-8 text-[var(--color-text-muted)] text-[14px]">
+        <div className="text-center py-8 text-[var(--color-text-muted)] text-[13px]">
           No open positions — nothing is at risk.
         </div>
       </div>
@@ -67,7 +67,7 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5">
       <div className="flex items-baseline justify-between pb-2 border-b border-[var(--color-v2-ink)]">
-        <span className="text-[10px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
+        <span className="text-[11px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
           Open risk · what can be lost
         </span>
         <span className="text-[11px] text-[var(--color-text-secondary)]">
@@ -80,7 +80,7 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
           grid — 594px at desktop — and side by side the sentence was crushed into
           three lines against a 38px number. */}
       <div className="mt-3">
-        <div className="text-[42px] leading-none font-bold tabular-nums text-[var(--color-text)]"
+        <div className="text-[46px] leading-none font-bold tabular-nums text-[var(--color-text)]"
              style={{ fontFamily: 'var(--font-cond)' }}>
           {pm ? MASK : riskPct != null ? `${riskPct.toFixed(2)}%` : fmtCur(data.totalRiskDollars)}
           <span className="text-[11px] font-normal tracking-[.16em] uppercase
@@ -141,7 +141,7 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
 
       <p className="text-[11px] leading-relaxed text-[var(--color-text-secondary)] mt-3 pt-3
                     border-t border-[var(--color-border-light)] mb-0">
-        <span className="text-[10px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mr-2">
+        <span className="text-[11px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mr-2">
           Method
         </span>
         Bars are scaled to the largest single risk on the book, so the widest one is the trade that
@@ -157,7 +157,7 @@ export default function CapitalAtRiskWidget({ openTrades, equity, markDate, pm =
 
       {riskPct != null && (
         <p className="text-[11px] leading-relaxed text-[var(--color-text-secondary)] mt-2 mb-0">
-          <span className="text-[10px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mr-2">
+          <span className="text-[11px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mr-2">
             Against the rule
           </span>
           Book risk <b className={riskPct > LIMITS.bookMax ? 'text-[var(--color-signal-caution)]'
@@ -196,7 +196,7 @@ function Hidden({ rows, pm }) {
   const risk = risky.reduce((s, r) => s + r.riskDollars, 0)
   const n = rows.length
   return (
-    <div className="text-[10px] text-[var(--color-text-muted)] mt-1">
+    <div className="text-[11px] text-[var(--color-text-muted)] mt-1">
       {n} more position{n === 1 ? '' : 's'} below the tenth, not drawn —{' '}
       {risky.length === 0
         ? <>none of {n === 1 ? 'it' : 'them'} has any open risk left.</>

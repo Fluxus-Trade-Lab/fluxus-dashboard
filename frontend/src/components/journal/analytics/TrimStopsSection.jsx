@@ -82,7 +82,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
       {callouts.length > 0 && (
         <div className="space-y-2">
           {callouts.map((c, i) => (
-            <div key={i} className={`flex gap-2 text-[14px] px-3 py-2 rounded-md border ${
+            <div key={i} className={`flex gap-2 text-[13px] px-3 py-2 rounded-md border ${
               c.type === 'warning' ? 'bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] text-[var(--color-signal-caution)]'
               : c.type === 'positive' ? 'bg-[color-mix(in_srgb,var(--color-profit)_10%,transparent)] border-[color-mix(in_srgb,var(--color-profit)_30%,transparent)] text-[var(--color-profit)]'
               : 'bg-[var(--color-surface)] border-[var(--color-border)] text-[var(--color-text-secondary)]'
@@ -96,7 +96,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
 
       {/* Trim Analysis */}
       <div className="bg-[var(--color-surface)] rounded-3xl p-5">
-        <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+        <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
           Trim Analysis
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
@@ -111,11 +111,11 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
 
         {trimGroups.length > 0 && (
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-[12.5px]">
+            <table className="w-full border-collapse text-[13px]">
               <thead>
                 <tr>
                   {['Ticker', 'Dir', 'Trims', 'Early', 'Avg Left%', 'Worst Left%', 'Avg Captured%'].map(h => (
-                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[10px] uppercase tracking-wide">{h}</th>
+                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -130,7 +130,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
                         onClick={() => toggleTicker(`trim-${key}`)}
                       >
                         <td className="px-2 py-1.5 border-b border-[var(--color-border-light)] font-medium">
-                          <span className="inline-block w-3.5 text-[var(--color-text-muted)] text-[10px]">{expanded ? '▼' : '▶'}</span>
+                          <span className="inline-block w-3.5 text-[var(--color-text-muted)] text-[11px]">{expanded ? '▼' : '▶'}</span>
                           {g.ticker}
                         </td>
                         <td className="px-2 py-1.5 border-b border-[var(--color-border-light)]">
@@ -189,7 +189,7 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
 
       {/* Stop Analysis */}
       <div className="bg-[var(--color-surface)] rounded-3xl p-5">
-        <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+        <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
           Stop Analysis
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
@@ -201,11 +201,11 @@ export default function TrimStopsSection({ trimAnalysis, stopAnalysis }) {
 
         {stopAnalysis.length > 0 && (
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-[12.5px]">
+            <table className="w-full border-collapse text-[13px]">
               <thead>
                 <tr>
                   {['Ticker', 'Dir', 'Entry', 'Stop', 'Exit', 'Recovery Peak', 'Recovery%', 'Stop Dist%'].map(h => (
-                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[10px] uppercase tracking-wide">{h}</th>
+                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{h}</th>
                   ))}
                 </tr>
               </thead>

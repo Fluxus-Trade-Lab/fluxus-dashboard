@@ -38,7 +38,7 @@ export default function SettingsPanel({ onClose }) {
 
   return (
     <div className="bg-[var(--color-bg)] rounded-lg border border-[var(--color-accent)]/20 p-5 mt-4">
-      <div className="font-semibold mb-3 text-[14px] flex justify-between">
+      <div className="font-semibold mb-3 text-[13px] flex justify-between">
         <span>Settings</span>
         <button onClick={onClose} className="text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] cursor-pointer text-[17px] leading-none">&times;</button>
       </div>
@@ -85,7 +85,7 @@ export default function SettingsPanel({ onClose }) {
       )}
 
       {testResult && (
-        <div className={`mt-2 text-[12.5px] ${testResult.ok ? 'text-[var(--color-text-secondary)]' : 'text-[var(--color-loss)]'}`}>
+        <div className={`mt-2 text-[13px] ${testResult.ok ? 'text-[var(--color-text-secondary)]' : 'text-[var(--color-loss)]'}`}>
           {testResult.ok
             ? `Connected — ${testResult.stockTradeCount} stock trades, ${testResult.optionsTradeCount} options trades`
             : `Failed: ${testResult.error}`}

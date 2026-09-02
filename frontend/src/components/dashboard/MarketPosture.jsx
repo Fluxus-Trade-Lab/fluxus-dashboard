@@ -46,7 +46,7 @@ export default function MarketPosture({ signals }) {
 
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl px-5 py-4">
-      <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+      <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
         Market Posture
       </h3>
 
@@ -68,7 +68,7 @@ export default function MarketPosture({ signals }) {
           <div className="text-[17px] font-bold text-[var(--color-text-bold)]">
             {posture.label}
           </div>
-          <div className="text-[12.5px] text-[var(--color-text-secondary)] mt-0.5">
+          <div className="text-[13px] text-[var(--color-text-secondary)] mt-0.5">
             {posture.desc}
           </div>
         </div>
@@ -82,7 +82,7 @@ export default function MarketPosture({ signals }) {
           return (
             <div key={t} className="flex items-center gap-1.5">
               <span className="font-mono text-[11px] text-[var(--color-text-secondary)]">{t}</span>
-              <span className={`text-[10px] font-medium uppercase ${signalTextColor(s.color)}`}>
+              <span className={`text-[11px] font-medium uppercase ${signalTextColor(s.color)}`}>
                 {signalLabel(s.signal)}
               </span>
             </div>

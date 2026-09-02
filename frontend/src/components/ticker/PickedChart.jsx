@@ -82,7 +82,7 @@ export default function PickedChart({ height = 460 }) {
                                          : shortlist.add(symbol, current ?? {},
                                                          current?.from ?? panel.label))}
                   aria-pressed={onList}
-                  className={`text-[10px] font-mono uppercase tracking-[.14em] px-2 py-[3px]
+                  className={`text-[11px] font-mono uppercase tracking-[.14em] px-2 py-[3px]
                               rounded border-none cursor-pointer transition-colors ${onList
                     ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                     : 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>
@@ -93,7 +93,7 @@ export default function PickedChart({ height = 460 }) {
           {SPANS.map((s) => (
             <button key={s.key} type="button" onClick={() => setSpan(s.key)}
                     aria-pressed={span === s.key}
-                    className={`px-2 py-[2px] text-[10px] font-mono rounded cursor-pointer
+                    className={`px-2 py-[2px] text-[11px] font-mono rounded cursor-pointer
                                 border-none transition-colors ${span === s.key
                       ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                       : 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>

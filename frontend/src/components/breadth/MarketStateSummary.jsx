@@ -16,7 +16,7 @@ export default function MarketStateSummary({ mm, breadth, verdict }) {
 
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl p-5">
-      <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+      <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
         Market State Summary
       </h3>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
@@ -49,7 +49,7 @@ export default function MarketStateSummary({ mm, breadth, verdict }) {
           tone={t2108Zone === 'strong' ? 'up' : t2108Zone === 'weak' ? 'down' : ''}
         />
       </div>
-      <p className="text-[12.5px] text-[var(--color-text)]">{verdict.guidance}</p>
+      <p className="text-[13px] text-[var(--color-text)]">{verdict.guidance}</p>
     </div>
   )
 }
@@ -59,12 +59,12 @@ function Tile({ label, value, note, pct }) {
   // the note under it says which way, in words.
   return (
     <div className="bg-[var(--color-bg)] rounded p-3">
-      <div className="text-[10px] text-[var(--color-text-secondary)] font-medium uppercase tracking-wide mb-1">
+      <div className="text-[11px] text-[var(--color-text-secondary)] font-medium uppercase tracking-wide mb-1">
         {label}
       </div>
       <div className="text-[17px] font-mono tabular-nums text-[var(--color-text)]">{value}</div>
       <div className="text-[11px] text-[var(--color-text-secondary)]">{note}</div>
-      {pct && <div className="text-[10px] text-[var(--color-text-muted)]">{pct}</div>}
+      {pct && <div className="text-[11px] text-[var(--color-text-muted)]">{pct}</div>}
     </div>
   )
 }

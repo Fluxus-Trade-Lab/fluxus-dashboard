@@ -22,7 +22,7 @@ export default function RatioChart({ rows }) {
   if (!rows?.length) return null
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl px-3 py-3">
-      <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
+      <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
         Breadth Ratios (dashed reference = 1, up days equal down days)
       </h3>
       <div ref={containerRef} />

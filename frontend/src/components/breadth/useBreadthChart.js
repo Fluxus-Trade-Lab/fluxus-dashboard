@@ -54,7 +54,7 @@ export function useBreadthChart(containerRef, chartRef, deps, setupFn, height) {
       layout: {
         background: { type: ColorType.Solid, color: bgColor },
         textColor: txtColor,
-        fontSize: 10,
+        fontSize: 11,
       },
       grid: {
         vertLines: { color: gridColor },

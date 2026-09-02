@@ -12,10 +12,10 @@ export default function TickerPeers({ tickerData }) {
 
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-      <div className="font-semibold mb-3 text-[14px]">Competitors / Peers</div>
-      <table className="w-full text-[12.5px]">
+      <div className="font-semibold mb-3 text-[13px]">Competitors / Peers</div>
+      <table className="w-full text-[13px]">
         <thead>
-          <tr className="text-left text-[10px] text-[var(--color-text-muted)] uppercase tracking-wide border-b border-[var(--color-border-light)]">
+          <tr className="text-left text-[11px] text-[var(--color-text-muted)] uppercase tracking-wide border-b border-[var(--color-border-light)]">
             <th className="px-2 py-1.5">Symbol</th>
             <th className="px-2 py-1.5">Name</th>
             <th className="px-2 py-1.5">Focus</th>

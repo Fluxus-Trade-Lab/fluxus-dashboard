@@ -6,7 +6,7 @@
 function CarriedNote({ asOf }) {
   if (!asOf) return null
   return (
-    <span className="ml-2 text-[10px] font-mono font-normal text-[var(--color-text-muted)]"
+    <span className="ml-2 text-[11px] font-mono font-normal text-[var(--color-text-muted)]"
           title="那次抓取被限速，写手保留了上一份基本面而不是用空值覆盖它">
       结转自 {String(asOf).slice(0, 10)}
     </span>
@@ -18,8 +18,8 @@ export default function TickerValuation({ tickerData }) {
   if (!info) {
     return (
       <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-        <div className="font-semibold mb-3 text-[14px]">Valuation Snapshot<CarriedNote asOf={tickerData?.info_as_of} /></div>
-        <div className="text-[var(--color-text-muted)] text-[14px]">No valuation data available.</div>
+        <div className="font-semibold mb-3 text-[13px]">Valuation Snapshot<CarriedNote asOf={tickerData?.info_as_of} /></div>
+        <div className="text-[var(--color-text-muted)] text-[13px]">No valuation data available.</div>
       </div>
     )
   }
@@ -45,8 +45,8 @@ export default function TickerValuation({ tickerData }) {
 
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-      <div className="font-semibold mb-3 text-[14px]">Valuation Snapshot<CarriedNote asOf={tickerData?.info_as_of} /></div>
-      <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-[12.5px]">
+      <div className="font-semibold mb-3 text-[13px]">Valuation Snapshot<CarriedNote asOf={tickerData?.info_as_of} /></div>
+      <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-[13px]">
         {rows.map(([label, value]) => (
           <div key={label} className="flex justify-between border-b border-[var(--color-border-light)] pb-1">
             <span className="text-[var(--color-text-muted)]">{label}</span>

@@ -15,10 +15,10 @@ export default function TradeDetailPage({ tradeId }) {
     }))
   }, [data])
 
-  if (loading) return <div className="text-[var(--color-text-muted)] py-10 text-center text-[14px]">Loading…</div>
+  if (loading) return <div className="text-[var(--color-text-muted)] py-10 text-center text-[13px]">Loading…</div>
   if (error || !data) {
     return (
-      <div className="py-10 text-center text-[14px] text-[var(--color-text-muted)]">
+      <div className="py-10 text-center text-[13px] text-[var(--color-text-muted)]">
         <button onClick={() => window.history.back()} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] mb-3 block mx-auto">← Back</button>
         No post-mortem found for <code>{tradeId}</code>.
       </div>
@@ -41,7 +41,7 @@ export default function TradeDetailPage({ tradeId }) {
           <div>
             <h1 className="text-[26px] font-bold tracking-tight flex items-center gap-3">
               <TickerLink symbol={t.ticker} className="text-[var(--color-accent)]" />
-              <span className={`text-[14px] font-normal text-[var(--color-text-secondary)]`}>
+              <span className={`text-[13px] font-normal text-[var(--color-text-secondary)]`}>
                 {t.direction.toUpperCase()}
               </span>
               <span className={`px-2 py-0.5 rounded text-[11px] uppercase tracking-wide ${t.closed ? 'bg-[var(--color-surface-raised)] text-[var(--color-text-muted)]' : 'bg-[color-mix(in_srgb,var(--color-accent)_15%,transparent)] text-[var(--color-accent)]'}`}>
@@ -66,25 +66,25 @@ export default function TradeDetailPage({ tradeId }) {
 
       {/* Narrative */}
       <div className="bg-[var(--color-bg)] rounded-3xl p-5 mb-4">
-        <div className="text-[14px] leading-relaxed" dangerouslySetInnerHTML={{ __html: markdownish(data.narrative) }} />
+        <div className="text-[13px] leading-relaxed" dangerouslySetInnerHTML={{ __html: markdownish(data.narrative) }} />
         <div className="mt-3 pt-3 border-t border-[var(--color-border-light)]">
-          <span className="text-[10px] uppercase tracking-wide text-[var(--color-text-muted)]">Lesson</span>
+          <span className="text-[11px] uppercase tracking-wide text-[var(--color-text-muted)]">Lesson</span>
           <div className={`text-[17px] font-bold ${lessonColor(data.lesson)}`}>{data.lesson}</div>
         </div>
       </div>
 
       {/* Annotated chart */}
       <div className="bg-[var(--color-bg)] rounded-3xl p-5 mb-4">
-        <div className="font-semibold mb-3 text-[14px]">Price path · entry → exit + buffer</div>
+        <div className="font-semibold mb-3 text-[13px]">Price path · entry → exit + buffer</div>
         {chartData.length === 0 ? (
-          <div className="text-[var(--color-text-muted)] text-[14px]">No OHLC data available for this window.</div>
+          <div className="text-[var(--color-text-muted)] text-[13px]">No OHLC data available for this window.</div>
         ) : (
           <ResponsiveContainer width="100%" height={320}>
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
               <XAxis
                 dataKey="date"
-                tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }}
+                tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }}
                 tickFormatter={d => d?.slice(5)}
                 interval={Math.max(1, Math.floor(chartData.length / 10))}
               />
@@ -96,12 +96,12 @@ export default function TradeDetailPage({ tradeId }) {
               <Line type="monotone" dataKey="close" stroke="var(--color-text-muted)" strokeWidth={2} dot={false} name="Close" />
 
               {/* Entry */}
-              <ReferenceLine y={t.entry_price} stroke="var(--color-text-muted)" strokeDasharray="3 3" label={{ value: `Entry $${t.entry_price.toFixed(2)}`, fill: 'var(--color-text-muted)', fontSize: 10, position: 'left' }} />
+              <ReferenceLine y={t.entry_price} stroke="var(--color-text-muted)" strokeDasharray="3 3" label={{ value: `Entry $${t.entry_price.toFixed(2)}`, fill: 'var(--color-text-muted)', fontSize: 11, position: 'left' }} />
               <ReferenceLine x={String(t.entry_date).slice(0, 10)} stroke="var(--color-text-muted)" strokeDasharray="2 2" />
               <ReferenceDot x={String(t.entry_date).slice(0, 10)} y={t.entry_price} r={5} fill="var(--color-text)" stroke="var(--color-surface)" strokeWidth={1.5} />
 
               {/* Stop */}
-              <ReferenceLine y={t.stop_price} stroke="var(--color-loss)" strokeDasharray="3 3" label={{ value: `Stop $${t.stop_price.toFixed(2)}`, fill: 'var(--color-loss)', fontSize: 10, position: 'left' }} />
+              <ReferenceLine y={t.stop_price} stroke="var(--color-loss)" strokeDasharray="3 3" label={{ value: `Stop $${t.stop_price.toFixed(2)}`, fill: 'var(--color-loss)', fontSize: 11, position: 'left' }} />
 
               {/* Trims */}
               {t.trims.map((tr, i) => (
@@ -130,7 +130,7 @@ export default function TradeDetailPage({ tradeId }) {
             </LineChart>
           </ResponsiveContainer>
         )}
-        <div className="text-[10px] text-[var(--color-text-muted)] mt-2 flex flex-wrap gap-3">
+        <div className="text-[11px] text-[var(--color-text-muted)] mt-2 flex flex-wrap gap-3">
           <span><span className="inline-block w-2 h-2 rounded-full bg-[var(--color-text)] mr-1"/>Entry</span>
           <span><span className="inline-block w-2 h-2 rounded-full bg-[var(--color-text-secondary)] mr-1"/>Trim</span>
           <span><span className="inline-block w-2 h-2 rounded-full bg-[var(--color-loss)] mr-1"/>Exit / Stop</span>
@@ -142,8 +142,8 @@ export default function TradeDetailPage({ tradeId }) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         {/* Entry snapshot */}
         <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-          <div className="font-semibold mb-3 text-[14px]">Entry snapshot</div>
-          <div className="text-[12.5px] flex flex-col gap-1.5">
+          <div className="font-semibold mb-3 text-[13px]">Entry snapshot</div>
+          <div className="text-[13px] flex flex-col gap-1.5">
             <Row label="Entry price" value={fmtCur(t.entry_price)} />
             <Row label="Stop" value={fmtCur(t.stop_price)} />
             <Row label="Original qty" value={String(t.original_qty)} />
@@ -160,15 +160,15 @@ export default function TradeDetailPage({ tradeId }) {
 
         {/* Execution */}
         <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-          <div className="font-semibold mb-3 text-[14px]">Execution</div>
-          <div className="text-[12.5px] flex flex-col gap-1.5">
+          <div className="font-semibold mb-3 text-[13px]">Execution</div>
+          <div className="text-[13px] flex flex-col gap-1.5">
             <Row label="Status" value={t.closed ? 'Closed' : 'Open'} />
             <Row label="Exit date" value={t.exit_date ? String(t.exit_date).slice(0, 10) : '—'} />
             <Row label="Hold (cal days)" value={analytics.hold_calendar_days ?? '—'} />
             <Row label="Realized P/L" value={fmtCur(t.realized_pl)} />
             <Row label="Realized R" value={fmtR(t.realized_R)} valueColor={rColor(t.realized_R)} />
             <hr className="border-[var(--color-border-light)] my-1" />
-            <div className="text-[10px] uppercase text-[var(--color-text-muted)] mt-1">Trims</div>
+            <div className="text-[11px] uppercase text-[var(--color-text-muted)] mt-1">Trims</div>
             {t.trims.length === 0 ? (
               <div className="text-[var(--color-text-muted)] text-[11px]">No trims recorded.</div>
             ) : (
@@ -184,8 +184,8 @@ export default function TradeDetailPage({ tradeId }) {
 
         {/* Path analytics */}
         <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-          <div className="font-semibold mb-3 text-[14px]">Path analytics</div>
-          <div className="text-[12.5px] flex flex-col gap-1.5">
+          <div className="font-semibold mb-3 text-[13px]">Path analytics</div>
+          <div className="text-[13px] flex flex-col gap-1.5">
             <Row label="Optimal exit" value={analytics.optimal_exit_price != null ? fmtCur(analytics.optimal_exit_price) : '—'} />
             <Row label="Optimal date" value={analytics.optimal_exit_date ? String(analytics.optimal_exit_date).slice(0, 10) : '—'} />
             <Row label="Days to optimal" value={analytics.days_to_optimal ?? '—'} />

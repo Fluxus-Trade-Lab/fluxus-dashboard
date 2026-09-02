@@ -66,12 +66,12 @@ export default function TickerCard({ ticker, signal, etf }) {
       <div className="flex items-baseline justify-between gap-2 mb-1">
         {/* Every ticker on the site is bold ink (Andy 2026-08-16). It is the
             card's identity, not a caption for it. */}
-        <span className="text-[10px] font-mono font-semibold uppercase tracking-[.24em]
+        <span className="text-[11px] font-mono font-semibold uppercase tracking-[.24em]
                          text-[var(--color-text-bold)] truncate">
           {displayName}
         </span>
         {riskOff && (
-          <span className="text-[10px] font-mono font-semibold uppercase tracking-[.12em]
+          <span className="text-[11px] font-mono font-semibold uppercase tracking-[.12em]
                            text-[var(--color-signal-riskoff)] shrink-0">
             RISK OFF
           </span>
@@ -83,7 +83,7 @@ export default function TickerCard({ ticker, signal, etf }) {
                          text-[var(--color-text-bold)]">
           {formatPrice(price)}
         </span>
-        <span className="font-mono text-[12.5px] tabular-nums font-medium"
+        <span className="font-mono text-[13px] tabular-nums font-medium"
               style={{ color: changeColour(change) }}
               title={change == null ? 'no move measured for this instrument' : undefined}>
           {formatChange(change)}

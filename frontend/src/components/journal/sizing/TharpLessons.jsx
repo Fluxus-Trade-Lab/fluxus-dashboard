@@ -99,10 +99,10 @@ export default function TharpLessons() {
 
   return (
     <div>
-      <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-1">
+      <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-1">
         Van Tharp — The Study of Position Sizing
       </h3>
-      <p className="text-[10px] text-[var(--color-text-muted)] mb-3">
+      <p className="text-[11px] text-[var(--color-text-muted)] mb-3">
         His framework, lesson by lesson — each checked against this account's audited H1 2026 numbers. A living module: new lessons get appended over time.
       </p>
       <div className="space-y-2">
@@ -115,35 +115,35 @@ export default function TharpLessons() {
                 className="w-full flex items-center justify-between px-4 py-3 text-left cursor-pointer hover:bg-[var(--color-hover-bg)] transition-colors"
               >
                 <div>
-                  <span className="text-[12.5px] font-semibold text-[var(--color-text)]">{lesson.title}</span>
-                  <span className="text-[10px] text-[var(--color-text-muted)] ml-2 hidden sm:inline">{lesson.subtitle}</span>
+                  <span className="text-[13px] font-semibold text-[var(--color-text)]">{lesson.title}</span>
+                  <span className="text-[11px] text-[var(--color-text-muted)] ml-2 hidden sm:inline">{lesson.subtitle}</span>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
-                  <span className="text-[10px] font-mono font-semibold text-[var(--color-text-secondary)]">{lesson.ourNumber.value}</span>
-                  <span className="text-[var(--color-text-muted)] text-[12.5px]">{isExpanded ? '−' : '+'}</span>
+                  <span className="text-[11px] font-mono font-semibold text-[var(--color-text-secondary)]">{lesson.ourNumber.value}</span>
+                  <span className="text-[var(--color-text-muted)] text-[13px]">{isExpanded ? '−' : '+'}</span>
                 </div>
               </button>
 
               {isExpanded && (
                 <div className="px-4 pb-4 space-y-3 border-t border-[var(--color-border-light)]">
-                  <p className="text-[12.5px] text-[var(--color-text-secondary)] leading-relaxed pt-3">
+                  <p className="text-[13px] text-[var(--color-text-secondary)] leading-relaxed pt-3">
                     {lesson.principle}
                   </p>
                   <div className="bg-[var(--color-bg)] rounded px-3 py-2">
                     <div className="flex items-center justify-between gap-2 mb-1">
-                      <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
+                      <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
                         {lesson.ourNumber.stat}
                       </span>
-                      <span className="text-[10px] font-mono uppercase tracking-wide px-1.5 py-0.5 rounded border border-[var(--color-border-light)] text-[var(--color-text-muted)] shrink-0">
+                      <span className="text-[11px] font-mono uppercase tracking-wide px-1.5 py-0.5 rounded border border-[var(--color-border-light)] text-[var(--color-text-muted)] shrink-0">
                         H1 audit ref · 331 tr
                       </span>
                     </div>
-                    <span className="text-[14px] font-semibold font-mono text-[var(--color-text)]">{lesson.ourNumber.value}</span>
-                    <p className="text-[10px] text-[var(--color-text-secondary)] leading-relaxed mt-1">
+                    <span className="text-[13px] font-semibold font-mono text-[var(--color-text)]">{lesson.ourNumber.value}</span>
+                    <p className="text-[11px] text-[var(--color-text-secondary)] leading-relaxed mt-1">
                       {lesson.ourNumber.read}
                     </p>
                   </div>
-                  <p className="text-[10px] text-[var(--color-text-muted)]">{lesson.source}</p>
+                  <p className="text-[11px] text-[var(--color-text-muted)]">{lesson.source}</p>
                 </div>
               )}
             </div>

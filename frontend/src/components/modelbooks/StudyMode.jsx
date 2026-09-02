@@ -7,7 +7,7 @@ import { patternTag, formatPattern } from './patternTag'
 function PatternBadge({ pattern }) {
   const colors = patternTag(pattern)
   return (
-    <span className={`inline-block px-2 py-0.5 text-[10px] font-medium rounded-full ${colors}`}>
+    <span className={`inline-block px-2 py-0.5 text-[11px] font-medium rounded-full ${colors}`}>
       {formatPattern(pattern)}
     </span>
   )
@@ -103,7 +103,7 @@ export default function StudyMode({ cards }) {
   if (!card) {
     return (
       <div className="flex items-center justify-center h-64">
-        <span className="text-[12.5px] text-[var(--color-text-muted)]">No cards available</span>
+        <span className="text-[13px] text-[var(--color-text-muted)]">No cards available</span>
       </div>
     )
   }
@@ -113,16 +113,16 @@ export default function StudyMode({ cards }) {
       {/* Progress */}
       <div className="w-full max-w-xl mb-4 space-y-2">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
+          <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
             Card {currentIndex + 1} of {deck.length}
           </span>
           <div className="flex items-center gap-3">
             {reviewCount > 0 && (
-              <span className="text-[10px] text-[var(--color-signal-caution)] dark:text-[var(--color-signal-caution)]">
+              <span className="text-[11px] text-[var(--color-signal-caution)] dark:text-[var(--color-signal-caution)]">
                 {reviewCount} flagged
               </span>
             )}
-            <span className="text-[10px] text-[var(--color-text-muted)] font-mono">
+            <span className="text-[11px] text-[var(--color-text-muted)] font-mono">
               Space=reveal  N=next  M=flag
             </span>
           </div>
@@ -147,7 +147,7 @@ export default function StudyMode({ cards }) {
               {!revealed ? (
                 <div className="text-center">
                   <div className="text-[38px] font-bold text-[var(--color-border)] tracking-wide mb-2">?</div>
-                  <div className="text-[12.5px] text-[var(--color-text-muted)]">Can you identify the pattern?</div>
+                  <div className="text-[13px] text-[var(--color-text-muted)]">Can you identify the pattern?</div>
                 </div>
               ) : (
                 <span className="text-[26px] font-bold text-[var(--color-text-muted)] tracking-wide">
@@ -157,7 +157,7 @@ export default function StudyMode({ cards }) {
             </div>
           )}
           {isMarked && (
-            <span className="absolute top-3 right-3 text-[10px] font-medium text-[var(--color-signal-caution)] bg-[color-mix(in_srgb,var(--color-signal-caution)_100%,transparent)] px-2 py-0.5 rounded-full">
+            <span className="absolute top-3 right-3 text-[11px] font-medium text-[var(--color-signal-caution)] bg-[color-mix(in_srgb,var(--color-signal-caution)_100%,transparent)] px-2 py-0.5 rounded-full">
               Flagged
             </span>
           )}
@@ -179,34 +179,34 @@ export default function StudyMode({ cards }) {
               {/* Metadata row */}
               <div className="flex items-center gap-4">
                 <div>
-                  <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
+                  <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
                     Ticker
                   </span>
-                  <span className="text-[14px] font-semibold text-[var(--color-text-bold)]">{card.ticker}</span>
+                  <span className="text-[13px] font-semibold text-[var(--color-text-bold)]">{card.ticker}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
+                  <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
                     Year
                   </span>
-                  <span className="text-[14px] text-[var(--color-text)]">{card.year}</span>
+                  <span className="text-[13px] text-[var(--color-text)]">{card.year}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
+                  <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
                     Source
                   </span>
-                  <span className="text-[14px] text-[var(--color-text)]">{card.source}</span>
+                  <span className="text-[13px] text-[var(--color-text)]">{card.source}</span>
                 </div>
                 <div className="ml-auto">
-                  <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
+                  <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
                     Outcome
                   </span>
-                  <span className="text-[12.5px] font-medium text-[var(--color-text)]">{card.outcome}</span>
+                  <span className="text-[13px] font-medium text-[var(--color-text)]">{card.outcome}</span>
                 </div>
               </div>
 
               {/* Patterns */}
               <div>
-                <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1.5">
+                <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1.5">
                   Patterns
                 </span>
                 <div className="flex flex-wrap gap-1.5">
@@ -218,12 +218,12 @@ export default function StudyMode({ cards }) {
 
               {/* Key Lessons */}
               <div>
-                <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1.5">
+                <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1.5">
                   Key Lessons
                 </span>
                 <ul className="space-y-1">
                   {card.key_lessons.map((lesson, i) => (
-                    <li key={i} className="text-[12.5px] text-[var(--color-text-secondary)] flex gap-2">
+                    <li key={i} className="text-[13px] text-[var(--color-text-secondary)] flex gap-2">
                       <span className="text-[var(--color-text-muted)] select-none shrink-0">&bull;</span>
                       {lesson}
                     </li>

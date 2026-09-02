@@ -80,14 +80,14 @@ function MiniEquityCurve({ data }) {
 
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl p-4">
-      <h4 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
+      <h4 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
         Equity Curve (Month)
       </h4>
       <ResponsiveContainer width="100%" height={160}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
-          <XAxis dataKey="date" tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }} tickFormatter={d => d.slice(8)} interval="preserveStartEnd" />
-          <YAxis tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${v.toFixed(1)}%`} domain={['auto', 'auto']} />
+          <XAxis dataKey="date" tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={d => d.slice(8)} interval="preserveStartEnd" />
+          <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${v.toFixed(1)}%`} domain={['auto', 'auto']} />
           <Tooltip
             contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text)' }}
             formatter={v => [`${v.toFixed(2)}%`, 'Return']}
@@ -111,7 +111,7 @@ function VsPrevMonth({ current, prev }) {
 
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl px-4 py-3">
-      <h4 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
+      <h4 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
         vs {prev.month}
       </h4>
       <div className="flex gap-6">
@@ -121,8 +121,8 @@ function VsPrevMonth({ current, prev }) {
           const color = delta > 0 ? 'text-[var(--color-profit)]' : delta < 0 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text-muted)]'
           return (
             <div key={label} className="flex items-center gap-1.5">
-              <span className="text-[10px] text-[var(--color-text-secondary)]">{label}</span>
-              <span className={`text-[12.5px] font-mono font-medium ${color}`}>{arrow} {f(curr)}</span>
+              <span className="text-[11px] text-[var(--color-text-secondary)]">{label}</span>
+              <span className={`text-[13px] font-mono font-medium ${color}`}>{arrow} {f(curr)}</span>
             </div>
           )
         })}
@@ -214,7 +214,7 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
             }`}
           >
             {m}
-            {reviews[m] && <span className="ml-1 text-[10px] opacity-60">*</span>}
+            {reviews[m] && <span className="ml-1 text-[11px] opacity-60">*</span>}
           </button>
         ))}
       </div>
@@ -235,7 +235,7 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
       {/* Review section */}
       <div className="bg-[var(--color-surface)] rounded-3xl px-5 py-4">
         <div className="flex items-center justify-between mb-3">
-          <h4 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
+          <h4 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
             Monthly Review
           </h4>
           <div className="flex gap-2">
@@ -256,7 +256,7 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
               onChange={e => setDraftReview(e.target.value)}
               placeholder="Paste Claude's review here..."
               rows={12}
-              className="w-full px-3 py-2 text-[12.5px] bg-[var(--color-bg)] rounded-3xl resize-y outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] leading-relaxed"
+              className="w-full px-3 py-2 text-[13px] bg-[var(--color-bg)] rounded-3xl resize-y outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] leading-relaxed"
             />
             <div className="flex gap-2">
               <button
@@ -276,11 +276,11 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
           </div>
         ) : savedReview ? (
           <div>
-            <div className="text-[12.5px] text-[var(--color-text)] whitespace-pre-wrap leading-relaxed">
+            <div className="text-[13px] text-[var(--color-text)] whitespace-pre-wrap leading-relaxed">
               {savedReview.text}
             </div>
             <div className="flex items-center justify-between mt-3 pt-2 border-t border-[var(--color-border-light)]">
-              <span className="text-[10px] text-[var(--color-text-muted)]">
+              <span className="text-[11px] text-[var(--color-text-muted)]">
                 Saved {new Date(savedReview.savedAt).toLocaleDateString()}
               </span>
               <button
@@ -293,7 +293,7 @@ export default function MonthlyReviewSection({ enriched, monthlyStats, performan
           </div>
         ) : (
           <div className="text-center py-6">
-            <p className="text-[12.5px] text-[var(--color-text-muted)] mb-3">
+            <p className="text-[13px] text-[var(--color-text-muted)] mb-3">
               Click "Review with Claude" to copy a prompt with your {selectedMonth} data.
               <br />
               Paste it in claude.ai, then save the response here.

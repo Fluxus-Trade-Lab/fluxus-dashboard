@@ -237,7 +237,7 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
                 onClick={() => setShowAll(true)}
                 className="w-full py-[5px] pl-1 grid grid-cols-[24px_1fr] gap-2 items-center
                            bg-transparent border-0 cursor-pointer text-left
-                           text-[10px] font-mono text-[var(--color-text-muted)]
+                           text-[11px] font-mono text-[var(--color-text-muted)]
                            hover:text-[var(--color-text)]">
           <span className="text-right">⋮</span>
           <span>{d.gap} more — show</span>
@@ -279,7 +279,7 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
                           focus-visible:ring-[var(--color-text-muted)]
                           hover:bg-[var(--color-hover-bg)] hover:opacity-100
                           ${ghost ? 'opacity-30' : ''}`}>
-            <span className={`text-[10px] font-mono tabular-nums text-right
+            <span className={`text-[11px] font-mono tabular-nums text-right
                              text-[var(--color-text-muted)]
                              ${ghost ? 'opacity-0 group-hover:opacity-100' : ''}`}>{i + 1}</span>
 
@@ -290,7 +290,7 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
             {/* Below sm the name rides above its bar: mirroring needs twice
                 the width, because a name and a bar cannot share half a row —
                 at 390px the names truncated to 71px, which is not a ranking. */}
-            <span className="sm:hidden block text-[12px] truncate pb-[1px]"
+            <span className="sm:hidden block text-[13px] truncate pb-[1px]"
                   title={unproven(r) ? whyUnproven(r) : undefined}
                   style={{ ...(colour ? { color: colour, fontWeight: 600 } : {}),
                            ...(unproven(r) ? { textDecoration: 'underline',
@@ -320,7 +320,7 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
               }} />
 
               {/* the name takes the half the bar left empty */}
-              <span className={`hidden sm:block absolute top-1/2 -translate-y-1/2 text-[12.5px] truncate
+              <span className={`hidden sm:block absolute top-1/2 -translate-y-1/2 text-[13px] truncate
                                 ${pos ? 'right-[calc(50%+9px)] text-right' : 'left-[calc(50%+9px)] text-left'}`}
                     style={{ maxWidth: 'calc(50% - 12px)',
                              ...(colour ? { color: colour, fontWeight: 600 } : {}),
@@ -334,7 +334,7 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
               </span>
 
               {/* the number rides the bar's far end, outside it */}
-              <span className={`hidden sm:block absolute top-1/2 -translate-y-1/2 text-[12px] font-mono
+              <span className={`hidden sm:block absolute top-1/2 -translate-y-1/2 text-[13px] font-mono
                                 tabular-nums whitespace-nowrap
                                 ${ghost ? 'opacity-0 group-hover:opacity-100' : ''}`}
                     style={pos
@@ -366,7 +366,7 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
             </span>
 
             <span aria-hidden
-                  className={`text-[12.5px] text-center text-[var(--color-text-muted)]
+                  className={`text-[13px] text-center text-[var(--color-text-muted)]
                               ${blocked ? 'invisible'
                                         : 'opacity-0 group-hover:opacity-100'}`}>
               {colour ? '−' : '+'}
@@ -381,7 +381,7 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
     <button type="button" onClick={() => setShowAll(false)}
             className="w-full py-[6px] pl-1 grid grid-cols-[24px_1fr] gap-2
                        bg-transparent border-0 cursor-pointer text-left
-                       text-[10px] font-mono text-[var(--color-text-muted)]
+                       text-[11px] font-mono text-[var(--color-text-muted)]
                        hover:text-[var(--color-text)]">
       <span className="text-right">\u2303</span>
       <span>show fewer</span>
@@ -397,13 +397,13 @@ export default function ThemeBars({ rows, scale, colourOf, onToggle, atLimit, di
                   it holds turns a kind you are not reading this morning into
                   one line to skip. */}
               <header className="flex items-baseline gap-2 pt-2 pb-1">
-                <span className="text-[10px] font-mono font-medium uppercase tracking-[.2em]
+                <span className="text-[11px] font-mono font-medium uppercase tracking-[.2em]
                                  text-[var(--color-text-secondary)]">{sec.label}</span>
-                <span className="text-[10px] font-mono tabular-nums text-[var(--color-text-muted)]">
+                <span className="text-[11px] font-mono tabular-nums text-[var(--color-text-muted)]">
                   {sec.rows.length}
                 </span>
                 {sec.note && (
-                  <span className="text-[10px] text-[var(--color-text-muted)] truncate">{sec.note}</span>
+                  <span className="text-[11px] text-[var(--color-text-muted)] truncate">{sec.note}</span>
                 )}
                 <i className="flex-1 h-px bg-[var(--color-border-light)]" />
               </header>

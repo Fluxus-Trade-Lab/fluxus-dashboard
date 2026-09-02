@@ -43,11 +43,11 @@ function Row({ theme, changeKey }) {
     <div className="h-[22px] flex items-center gap-2">
       <i className="shrink-0 w-[8px] h-[8px] rounded-[1px]"
          style={barStyle(theme.state)} title={theme.state ?? 'no state'} />
-      <span className="min-w-0 flex-1 truncate text-[12.5px] font-medium
+      <span className="min-w-0 flex-1 truncate text-[13px] font-medium
                        text-[var(--color-text-bold)]" title={theme.group}>
         {theme.group}
       </span>
-      <span className="shrink-0 text-[12.5px] font-mono tabular-nums font-medium"
+      <span className="shrink-0 text-[13px] font-mono tabular-nums font-medium"
             style={{ color: !ok ? 'var(--color-text-muted)'
                           : change > 0 ? 'var(--color-took)' : 'var(--color-refused)' }}>
         {ok ? `${change > 0 ? '+' : ''}${(change * 100).toFixed(2)}%` : '—'}
@@ -62,7 +62,7 @@ function Column({ label, rows, changeKey }) {
   return (
     <div>
       {label && (
-        <h4 className="text-[10px] font-mono font-medium uppercase tracking-[.2em]
+        <h4 className="text-[11px] font-mono font-medium uppercase tracking-[.2em]
                        text-[var(--color-text-muted)] mb-1.5">{label}</h4>
       )}
       {rows.map((t) => <Row key={t.group} theme={t} changeKey={changeKey} />)}
@@ -140,7 +140,7 @@ export default function ThemeMovers({ limit = 3 }) {
                   written. The denominator lives one click away on Themes,
                   which carries the whole ranking. */}
               <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1
-                              text-[10px] text-[var(--color-text-muted)]">
+                              text-[11px] text-[var(--color-text-muted)]">
                 {STATES.map((st) => (
                   <span key={st} className="flex items-center gap-1.5">
                     <i className="w-[8px] h-[8px] rounded-[1px]" style={barStyle(st)} />

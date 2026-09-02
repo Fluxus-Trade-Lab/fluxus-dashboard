@@ -12,17 +12,17 @@ export default function DangerPanel({ title, danger }) {
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl px-4 py-3">
       <div className="flex items-baseline justify-between mb-2">
-        <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
+        <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           {title}
         </h3>
         <span className="flex items-baseline gap-1.5">
           {/* the dots below are this count's marks; the number does not need
               to say in colour what they already say in fills */}
-          <span className="text-[10px] font-mono text-[var(--color-text-secondary)]">
+          <span className="text-[11px] font-mono text-[var(--color-text-secondary)]">
             {count} / 5 active
           </span>
           {danger.date && (
-            <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
+            <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
               {danger.date}
             </span>
           )}

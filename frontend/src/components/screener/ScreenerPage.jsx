@@ -356,7 +356,7 @@ export default function ScreenerPage() {
 
   if (loading) {
     return (
-      <div className="text-[var(--color-text-muted)] text-[14px] font-medium uppercase tracking-wide text-center py-20">
+      <div className="text-[var(--color-text-muted)] text-[13px] font-medium uppercase tracking-wide text-center py-20">
         Loading universe...
       </div>
     )
@@ -454,7 +454,7 @@ export default function ScreenerPage() {
                     rows={rows} defaultSort={scan === 'confluence' ? 'heat' : 'relVol'}
                     onChart={(t) => { if (t !== charted) chartPick(t) }} />
       ) : (
-        <p className="m-0 py-8 text-center text-[12.5px] text-[var(--color-text-muted)]">
+        <p className="m-0 py-8 text-center text-[13px] text-[var(--color-text-muted)]">
           {!activeScan.loaded
             ? `${activeScan.label} ${tr('scr.notLoadedYet')}`
             : tr('scr.groupLayerLoading')}

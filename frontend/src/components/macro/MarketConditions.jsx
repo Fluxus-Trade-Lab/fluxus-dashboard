@@ -7,7 +7,7 @@ export default function MarketConditions({ signals }) {
 
   return (
     <div>
-      <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
+      <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-2">
         Market Conditions
       </h3>
       <div className="flex flex-col gap-1.5">
@@ -19,14 +19,14 @@ export default function MarketConditions({ signals }) {
               key={ticker}
               className="grid grid-cols-[48px_1fr_auto] items-center gap-2"
             >
-              <span className="font-mono text-[14px] text-[var(--color-text-bold)]">
+              <span className="font-mono text-[13px] text-[var(--color-text-bold)]">
                 {ticker}
               </span>
-              <span className="font-mono text-[12.5px] text-[var(--color-text)]">
+              <span className="font-mono text-[13px] text-[var(--color-text)]">
                 {s.close != null ? s.close.toFixed(2) : '--'}
               </span>
               <span
-                className={`text-[10px] font-medium uppercase tracking-wide ${signalTextColor(s.color)}`}
+                className={`text-[11px] font-medium uppercase tracking-wide ${signalTextColor(s.color)}`}
               >
                 {signalLabel(s.signal)}
               </span>

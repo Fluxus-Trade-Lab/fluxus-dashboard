@@ -20,7 +20,7 @@ export default function Zone({ kind, children }) {
   return (
     <section className="mt-8 first:mt-5">
       <div className="flex items-center gap-3 mb-3.5">
-        <b className={`text-[10px] font-mono uppercase tracking-[.2em] ${ink}`}>
+        <b className={`text-[11px] font-mono uppercase tracking-[.2em] ${ink}`}>
           {t(`zone.${kind}`)}
         </b>
         <i className="flex-1 h-px bg-[var(--color-border)]" />
@@ -37,9 +37,9 @@ export function Tool({ title, blurb, children }) {
     <details className="rounded-3xl border border-dashed border-[var(--color-border)]
                         px-4 py-3 group">
       <summary className="list-none cursor-pointer">
-        <b className="text-[13.5px] block">{title}</b>
-        <span className="text-[11.5px] text-[var(--color-text-muted)] block mt-0.5">{blurb}</span>
-        <span className="text-[10px] font-mono tracking-[.1em] text-[var(--color-text-secondary)]
+        <b className="text-[13px] block">{title}</b>
+        <span className="text-[11px] text-[var(--color-text-muted)] block mt-0.5">{blurb}</span>
+        <span className="text-[11px] font-mono tracking-[.1em] text-[var(--color-text-secondary)]
                          block mt-2 group-open:hidden">{t('zone.open')} →</span>
       </summary>
       <div className="mt-4">{children}</div>

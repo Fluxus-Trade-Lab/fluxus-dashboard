@@ -28,7 +28,7 @@ function Row({ etf, ranks, changeKey, windowLabel, cohort }) {
   // one reading twice.
   return (
     <div className="h-[32px] flex items-center gap-2.5">
-      <span className="w-7 shrink-0 text-center text-[10px] font-mono tabular-nums
+      <span className="w-7 shrink-0 text-center text-[11px] font-mono tabular-nums
                        leading-[17px] rounded-sm"
             style={rsTone(rs)}
             title={rs == null ? 'no reading for this window'
@@ -36,15 +36,15 @@ function Row({ etf, ranks, changeKey, windowLabel, cohort }) {
         {fmtRs(rs)}
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block text-[12.5px] font-mono font-semibold leading-[12px]
+        <span className="block text-[13px] font-mono font-semibold leading-[12px]
                          text-[var(--color-text-bold)]">{etf.ticker}</span>
         {/* absent rather than guessed when the vendor had no name */}
-        <span className="block text-[10px] leading-[12px] truncate
+        <span className="block text-[11px] leading-[12px] truncate
                          text-[var(--color-text-muted)]" title={name ?? undefined}>
           {name ?? '\u00a0'}
         </span>
       </span>
-      <span className="shrink-0 text-[12.5px] font-mono tabular-nums font-medium"
+      <span className="shrink-0 text-[13px] font-mono tabular-nums font-medium"
             style={{ color: !ok ? 'var(--color-text-muted)'
                           : change > 0 ? 'var(--color-took)' : 'var(--color-refused)' }}>
         {ok ? `${change > 0 ? '+' : ''}${(change * 100).toFixed(2)}%` : '—'}
@@ -61,7 +61,7 @@ function Column({ label, rows, ranks, changeKey, windowLabel, cohort }) {
   return (
     <div>
       {label && (
-        <h4 className="text-[10px] font-mono font-medium uppercase tracking-[.2em]
+        <h4 className="text-[11px] font-mono font-medium uppercase tracking-[.2em]
                        text-[var(--color-text-muted)] mb-1.5">{label}</h4>
       )}
       {rows.map((e) => (

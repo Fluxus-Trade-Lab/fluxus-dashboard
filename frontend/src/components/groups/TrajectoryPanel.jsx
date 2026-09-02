@@ -296,7 +296,7 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
           })}
         </svg>
 
-        <span className="absolute text-[10px] font-mono text-[var(--color-text-muted)]
+        <span className="absolute text-[11px] font-mono text-[var(--color-text-muted)]
                          pointer-events-none"
               style={{ left: `${LEFT}%`, top: ys(0), transform: 'translate(-110%, -50%)' }}>
           SPY
@@ -329,14 +329,14 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
                 decimal +0.15 and -0.19 both collapse to ±0.2. What was wrong
                 was printing it bare, so it read as the same quantity as the
                 +11.9% next to it. The unit rides along now. */}
-            <span className="block text-[10px] text-[var(--color-text-muted)]">
+            <span className="block text-[11px] text-[var(--color-text-muted)]">
               {v > 0 ? '+' : ''}{(v * 100).toFixed(2)}%<span className="opacity-60">/session</span>
             </span>
           </span>
         ))}
       </div>
 
-      <div className="flex justify-between text-[10px] font-mono
+      <div className="flex justify-between text-[11px] font-mono
                       text-[var(--color-text-muted)]"
            style={{ paddingLeft: `${LEFT - 1}%`, paddingRight: `${RIGHT - 1}%` }}>
         {SEG.map((s, i) => (
@@ -376,7 +376,7 @@ export default function TrajectoryPanel({ picks, byName, highlight }) {
               </div>
             ))}
             {real && (
-              <p className="m-0 text-[10px] font-mono text-[var(--color-text-muted)]"
+              <p className="m-0 text-[11px] font-mono text-[var(--color-text-muted)]"
                  style={{ paddingLeft: `${LEFT}%` }}>
                 fortnights, oldest first — 10w ago → last 2w
               </p>

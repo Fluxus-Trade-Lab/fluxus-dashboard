@@ -24,7 +24,7 @@ export default function ProximityChips({ chips }) {
       {chips.map((c, i) => (
         <span
           key={i}
-          className="px-1 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider"
+          className="px-1 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider"
           style={tone(c.tone)}
         >
           {c.label}

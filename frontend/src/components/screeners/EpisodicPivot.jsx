@@ -4,9 +4,9 @@ export default function EpisodicPivot({ data }) {
   if (!data?.results || data.results.length === 0) return null
 
   return (
-    <table className="w-full text-[12.5px]">
+    <table className="w-full text-[13px]">
       <thead>
-        <tr className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
+        <tr className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           <th className="text-left py-1 pr-2">Ticker</th>
           <th className="text-right py-1 px-2">Contractions</th>
           <th className="text-right py-1 px-2">Depth</th>
@@ -17,7 +17,7 @@ export default function EpisodicPivot({ data }) {
       <tbody>
         {data.results.map((r, i) => (
           <tr key={`${r.ticker}-${i}`} className={`border-b border-[var(--color-border-light)] ${i % 2 === 1 ? 'bg-[var(--color-surface-alt)]/50' : ''}`}>
-            <td className="font-mono text-[12.5px] font-medium text-[var(--color-text-bold)] py-1 pr-2">
+            <td className="font-mono text-[13px] font-medium text-[var(--color-text-bold)] py-1 pr-2">
               {r.ticker}
             </td>
             <td className="font-mono text-right py-1 px-2 text-[var(--color-text-secondary)]">

@@ -1,32 +1,29 @@
 import EditablePrice from './EditablePrice'
 import { stopNotMoved, stopBufferPct } from '../lib/stopDiscipline'
 
-/** The bar is full at 20%. A fixed ceiling, not the row set's own max: the
- *  point of the bar is that today's row is comparable to yesterday's, and a
- *  scale that re-fits itself every render is not. Past 20% it simply saturates
- *  — the difference between "far" and "very far" is not a decision anyone
- *  makes from this column. */
-const BAR_FULL_AT = 20
-
 /**
  * One column, four things, and only one of them shouting.
  *
- * Andy, 2026-09-01, on the first version: 「四个内容都挤在了一个 CELL 里面」.
- * He picked this layout out of four. The rule it follows: what you must not
- * miss is always solid; what you look up when you are already interested fades
- * back until the row is under the cursor.
+ * Andy, 2026-09-01: 「四个内容都挤在了一个 CELL 里面」. He tried V3 (buffer drawn
+ * as a bar, every number faded) and came back to **V2 with init on hover** —
+ * the version below. The difference is worth naming: V3 spent a line on a bar
+ * so it would not have to print a number; V2 prints the number and puts it
+ * where it belongs.
  *
- *   ALWAYS SOLID   the stop itself, and the red "you are up N R and this has
- *                  not moved" mark — that one is the whole reason this column
- *                  was touched (DATA_CONTRACTS §十四), so it never fades.
- *   ALWAYS DRAWN   the buffer, as a bar. A length is read without being read;
- *                  it is the one thing here you can scan a whole table for.
- *   FADED AT REST  the numbers behind the bar, the initial stop, the
- *                  suggestion. Still legible at 45% — Andy reads this page by
- *                  screenshotting it, and a screenshot has no hover.
+ *   LINE 1        the stop, and the buffer beside it — `$100.00 · 3.4%`.
+ *                 The buffer is a PROPERTY of this price ("how far away is
+ *                 it"), not a second fact, so it reads as one line.
+ *   LINE 2        the suggestion, always legible — it is the only thing here
+ *                 you can act on. `init` shares the line but stays hidden
+ *                 until the row is under the cursor: it is reference, wanted
+ *                 maybe once a week, and it was costing a permanent line.
+ *   NEVER FADES   the red "up N R and the stop has not moved" mark. That is
+ *                 the whole reason this column was rebuilt: all 373 historical
+ *                 trades still sit on their entry stop, and that is where the
+ *                 −17.9% drawdown came from (DATA_CONTRACTS §十四).
  *
- * `group` on the <tr> is what makes the hover work; `group-focus-within` is
- * what makes it work for a keyboard, which has no hover at all.
+ * `group` on the <tr> drives the hover; `group-focus-within` covers the
+ * keyboard, which has no hover at all.
  */
 export default function StopCell({ stopPrice, initialStop, suggestion, onChange, trade }) {
   const sug = suggestion?.suggestedStop
@@ -35,19 +32,25 @@ export default function StopCell({ stopPrice, initialStop, suggestion, onChange,
   const nudge = stopNotMoved(trade)
   const buffer = stopBufferPct(trade)
   const crossed = buffer != null && buffer < 0
-  const fill = buffer == null ? 0 : Math.max(0, Math.min(1, buffer / BAR_FULL_AT)) * 100
 
   return (
     <div className="flex flex-col gap-0.5">
-      <EditablePrice value={stopPrice} onChange={onChange}
-                     title={suggestion?.basis === 'no-data' ? suggestion.rationale : undefined} />
+      {/* LINE 1 — the price, and how far it is. Absent rather than 0 when
+          unmeasured: `stopBufferPct` returns null, and 0% would say "the stop
+          is exactly here", which is a different sentence. */}
+      <div className="flex items-baseline gap-1 flex-wrap">
+        <EditablePrice value={stopPrice} onChange={onChange}
+                       title={suggestion?.basis === 'no-data' ? suggestion.rationale : undefined} />
+        {buffer != null && (
+          <span className="text-[11px] tabular-nums text-[var(--color-text-muted)] whitespace-nowrap"
+                title="How far price can move against you before the current stop is hit.">
+            · {crossed ? `crossed ${Math.abs(buffer).toFixed(1)}%` : `${buffer.toFixed(1)}%`}
+          </span>
+        )}
+      </div>
 
-      {/* Never fades. All 373 historical trades still sit on their entry stop
-          and that is where the −17.9% drawdown came from; this mark is the
-          only reason the column was rebuilt. Red with no blue near it is this
-          site's mark for a binding constraint. */}
       {nudge && (
-        <div className="text-[10px] font-medium tabular-nums"
+        <div className="text-[11px] font-medium tabular-nums"
              style={{ color: 'var(--color-refused)' }}
              title={`Up ${trade.rr.toFixed(1)}R and the stop is still at entry risk. `
                     + `Moving it does NOT change this trade's R — the denominator is `
@@ -56,50 +59,27 @@ export default function StopCell({ stopPrice, initialStop, suggestion, onChange,
         </div>
       )}
 
-      {/* Absent when unmeasured, rather than a zero-length bar — an empty
-          track would read as "no room left", which is a different sentence
-          from "we do not have today's price". */}
-      {buffer != null && (
-        <div className="relative h-[4px] rounded-sm mt-[3px]"
-             style={{ background: 'var(--color-border-light)' }}
-             title={`Room to the current stop: ${buffer.toFixed(1)}%. Bar is full at ${BAR_FULL_AT}%.`}>
-          {!crossed && (
-            <i className="absolute left-0 top-0 bottom-0 rounded-sm"
-               style={{ width: `${fill}%`, background: 'var(--color-text-secondary)' }} />
-          )}
-          {crossed && (
-            <i className="absolute left-0 top-[-2px] bottom-[-2px] w-[2px] rounded-sm"
-               style={{ background: 'var(--color-refused)' }} />
-          )}
-        </div>
-      )}
-
-      {(buffer != null || trailed || showSuggestion) && (
-        <div className="text-[10px] tabular-nums leading-[1.5] opacity-45 transition-opacity
-                        group-hover:opacity-100 group-focus-within:opacity-100
-                        text-[var(--color-text-muted)]">
-          {buffer != null && (
-            <span>{crossed ? `stop crossed ${Math.abs(buffer).toFixed(1)}%` : `buffer ${buffer.toFixed(1)}%`}</span>
-          )}
-          {trailed && (
-            <>
-              {buffer != null && <span className="opacity-40"> · </span>}
-              <span title={`Locked at entry — 1R anchored here. Current stop is trailed ${
-                stopPrice > initialStop ? 'up' : 'down'
-              } by $${Math.abs(stopPrice - initialStop).toFixed(2)}.`}>
-                init ${initialStop.toFixed(2)}
-              </span>
-            </>
-          )}
+      {/* LINE 2 — what you can act on, and what you might look up. */}
+      {(showSuggestion || trailed) && (
+        <div className="text-[11px] tabular-nums leading-[1.5] text-[var(--color-text-muted)]">
           {showSuggestion && (
             <>
-              {(buffer != null || trailed) && <span className="opacity-40"> · </span>}
               <span title={suggestion.rationale}>sug ${sug.toFixed(2)} </span>
               <button onClick={() => onChange(sug)}
                       className="text-[var(--color-accent)] hover:underline cursor-pointer">
                 Accept
               </button>
             </>
+          )}
+          {trailed && (
+            <span className="opacity-0 transition-opacity group-hover:opacity-100
+                             group-focus-within:opacity-100 whitespace-nowrap"
+                  title={`Locked at entry — 1R anchored here. Current stop is trailed ${
+                    stopPrice > initialStop ? 'up' : 'down'
+                  } by $${Math.abs(stopPrice - initialStop).toFixed(2)}.`}>
+              {showSuggestion && <span className="opacity-40"> · </span>}
+              init ${initialStop.toFixed(2)}
+            </span>
           )}
         </div>
       )}

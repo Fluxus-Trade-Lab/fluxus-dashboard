@@ -14,7 +14,7 @@ import Reference from './Reference'
 function Band({ label, note }) {
   return (
     <div className="flex items-baseline gap-3 pt-4">
-      <span className="text-[10px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
+      <span className="text-[11px] font-mono uppercase tracking-[.24em] text-[var(--color-text-muted)]">
         {label}
       </span>
       {note && <span className="text-[11px] text-[var(--color-text-muted)]">{note}</span>}

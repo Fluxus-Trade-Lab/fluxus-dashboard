@@ -10,8 +10,8 @@ export default function TickerTradePlan({ tickerData }) {
   if (!longSetup && !shortSetup) {
     return (
       <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-        <div className="font-semibold mb-3 text-[14px]">Trade Plan</div>
-        <div className="text-[var(--color-text-muted)] text-[12.5px]">
+        <div className="font-semibold mb-3 text-[13px]">Trade Plan</div>
+        <div className="text-[var(--color-text-muted)] text-[13px]">
           Awaiting AI synthesis. Run <code className="bg-[var(--color-surface)] px-1 rounded">/tearsheet {tickerData?.ticker}</code> to generate.
         </div>
       </div>
@@ -20,11 +20,11 @@ export default function TickerTradePlan({ tickerData }) {
 
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-      <div className="font-semibold mb-3 text-[14px] flex items-center justify-between">
+      <div className="font-semibold mb-3 text-[13px] flex items-center justify-between">
         <span>Trade Plan</span>
-        <span className="text-[10px] text-[var(--color-text-muted)] font-normal">for swing trading; not investment advice</span>
+        <span className="text-[11px] text-[var(--color-text-muted)] font-normal">for swing trading; not investment advice</span>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[12.5px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[13px]">
         {longSetup && <SetupCard tone="long" setup={longSetup} />}
         {shortSetup && <SetupCard tone="short" setup={shortSetup} />}
       </div>
@@ -48,7 +48,7 @@ function SetupCard({ tone, setup }) {
 
   return (
     <div className={`rounded p-3 border ${wrapClass} flex flex-col gap-2.5`}>
-      <div className={`text-[10px] uppercase tracking-wide font-bold ${headerClass}`}>
+      <div className={`text-[11px] uppercase tracking-wide font-bold ${headerClass}`}>
         {heading}{setup.name ? ` — ${setup.name}` : ''}
       </div>
       <Row label="Trigger" value={setup.trigger} />
@@ -73,7 +73,7 @@ function SetupCard({ tone, setup }) {
 function Row({ label, value }) {
   return (
     <div className="flex flex-col">
-      <span className="text-[10px] uppercase tracking-wide text-[var(--color-text-muted)]">{label}</span>
+      <span className="text-[11px] uppercase tracking-wide text-[var(--color-text-muted)]">{label}</span>
       <span className="text-[var(--color-text)]">{value}</span>
     </div>
   )

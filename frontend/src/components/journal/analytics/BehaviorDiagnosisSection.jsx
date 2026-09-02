@@ -10,12 +10,12 @@ function Card({ n, title, verdict, children }) {
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-4 mb-4">
       <div className="flex items-baseline gap-2 mb-1">
-        <span className="text-[12.5px] font-bold text-[var(--color-accent)]">{n}</span>
-        <span className="font-semibold text-[14px]">{title}</span>
+        <span className="text-[13px] font-bold text-[var(--color-accent)]">{n}</span>
+        <span className="font-semibold text-[13px]">{title}</span>
       </div>
-      <div className="text-[12.5px] text-[var(--color-text-secondary)] leading-6">{children}</div>
+      <div className="text-[13px] text-[var(--color-text-secondary)] leading-6">{children}</div>
       {verdict && (
-        <div className="mt-2 text-[12.5px] font-medium text-[var(--color-text)] border-l-2 border-[var(--color-accent)] pl-2">
+        <div className="mt-2 text-[13px] font-medium text-[var(--color-text)] border-l-2 border-[var(--color-accent)] pl-2">
           {verdict}
         </div>
       )}
@@ -126,7 +126,7 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
       <Card n="1" title="Largest losses — where the holes come from"
         verdict="The leak isn't bottom-fishing or bag-holding — the first entry is small; the hole is dug by everything added after it goes red. Two modes: averaging into a rolling name (A) and chasing an extended one (B).">
         Losers are cut <b>fast</b> (avg {d.avgLossHold.toFixed(1)}d vs winners {d.avgWinHold.toFixed(1)}d). The damage is in the <b>re-adds</b>, not the first entry:
-        <table className="w-full text-[12.5px] mt-2 mb-2">
+        <table className="w-full text-[13px] mt-2 mb-2">
           <thead><tr className="text-[var(--color-text-muted)]"><td>Name</td><td>Entries</td><td className="text-right">1st entry</td><td className="text-right">Re-adds after #1</td><td className="text-right">Net</td></tr></thead>
           <tbody>{d.reattack.map(r => (
             <tr key={r.tk}>
@@ -163,7 +163,7 @@ export default function BehaviorDiagnosisSection({ enriched, performanceData, st
       <Card n="5" title="What fixing the top-5 leaks is worth"
         verdict={`Realistic prize — one-and-done: +${money(d.cfOnedonePL)} / +${d.cfOnedoneR.toFixed(0)}R / +${(d.cfOnedonePL / d.capital * 100).toFixed(1)} pts of return. Highest-ROI change in the book.`}>
         The five re-attack names are the whole story. Holding everything else equal:
-        <table className="w-full text-[12.5px] mt-2 mb-1">
+        <table className="w-full text-[13px] mt-2 mb-1">
           <thead><tr className="text-[var(--color-text-muted)]"><td>Scenario</td><td className="text-right">P&L</td><td className="text-right">Total R</td><td className="text-right">Return</td></tr></thead>
           <tbody>
             <tr><td>Actual</td><td className="text-right">{money(d.totalPL)}</td><td className="text-right">+{d.totalR.toFixed(0)}R</td><td className="text-right">+{(d.totalPL / d.capital * 100).toFixed(1)}%</td></tr>

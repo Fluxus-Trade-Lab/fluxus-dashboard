@@ -112,7 +112,7 @@ export default function JournalPage({ stage: routeStage }) {
         <p className="text-[11px] text-[var(--color-text-muted)] mt-5 max-w-[70ch]">
           {t('rev.report.hint')}
         </p>
-        <code className="inline-block mt-1.5 text-[10.5px] font-mono
+        <code className="inline-block mt-1.5 text-[11px] font-mono
                          text-[var(--color-text-secondary)]
                          bg-[var(--color-hover-bg)] rounded px-2 py-1">
           {t('rev.report.cmd')}
@@ -131,10 +131,10 @@ export default function JournalPage({ stage: routeStage }) {
                          border-none p-0 cursor-pointer hover:text-[var(--color-text)]">
         ‹ {t('nav.review')}
       </button>
-      <h1 className="text-[34px] font-bold leading-tight mt-1 mb-0.5">
+      <h1 className="text-[38px] font-bold leading-tight mt-1 mb-0.5">
         {t(`rev.stage.${routeStage}`)}
       </h1>
-      <p className="text-[12.5px] text-[var(--color-text-muted)] m-0">
+      <p className="text-[13px] text-[var(--color-text-muted)] m-0">
         {t(`rev.asks.${routeStage}`)}
       </p>
 

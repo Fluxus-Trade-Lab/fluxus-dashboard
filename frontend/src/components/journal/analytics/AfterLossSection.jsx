@@ -33,8 +33,8 @@ export default function AfterLossSection() {
 
   return (
     <section>
-      <h3 className="text-[15px] font-semibold m-0">{t('loss.title')}</h3>
-      <p className="text-[12.5px] text-[var(--color-text-muted)] mt-1 mb-5 max-w-[64ch]">
+      <h3 className="text-[17px] font-semibold m-0">{t('loss.title')}</h3>
+      <p className="text-[13px] text-[var(--color-text-muted)] mt-1 mb-5 max-w-[64ch]">
         {t('loss.lede')}
       </p>
 
@@ -51,7 +51,7 @@ export default function AfterLossSection() {
                  : 'opacity-40'}`} />
         ))}
       </div>
-      <p className="text-[10px] font-mono text-[var(--color-text-muted)] mb-6">
+      <p className="text-[11px] font-mono text-[var(--color-text-muted)] mb-6">
         {t('loss.strip')}
       </p>
 
@@ -66,7 +66,7 @@ export default function AfterLossSection() {
                  className={`grid grid-cols-[130px_46px_1fr_74px] items-center gap-3.5 py-2.5
                              border-b border-[var(--color-border-light)]
                              ${isBase ? 'text-[var(--color-text-muted)]' : ''}`}>
-              <span className="text-[12.5px]">{t(`loss.row.${r.key}`)}</span>
+              <span className="text-[13px]">{t(`loss.row.${r.key}`)}</span>
               <span className="text-[11px] font-mono text-[var(--color-text-muted)] text-right">
                 {r.n}
               </span>
@@ -94,13 +94,13 @@ export default function AfterLossSection() {
         })}
       </div>
 
-      <p className="text-[11.5px] text-[var(--color-text-muted)] mt-3.5 max-w-[64ch]">
+      <p className="text-[11px] text-[var(--color-text-muted)] mt-3.5 max-w-[64ch]">
         {t('loss.legend')}
       </p>
 
       {/* The line that decides. Without it the table above is a hot-hand story. */}
       {test && (
-        <p className="text-[11.5px] mt-2 max-w-[64ch] border-l-2 pl-3
+        <p className="text-[11px] mt-2 max-w-[64ch] border-l-2 pl-3
                       border-[var(--color-border)] text-[var(--color-text-secondary)]">
           {t(test.p < 0.05 ? 'loss.real' : 'loss.noise', {
             p: test.p < 0.001 ? '<0.001' : test.p.toFixed(3),

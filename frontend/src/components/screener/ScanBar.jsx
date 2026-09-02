@@ -30,7 +30,7 @@ const STATE_ORDER = ['Leading', 'Weakening', 'Improving', 'Lagging']
 function Count({ n, on }) {
   if (n != null && n > 0 && !on) return null
   return (
-    <span className="text-[10px] ml-[3px] text-[var(--color-text-muted)]">
+    <span className="text-[11px] ml-[3px] text-[var(--color-text-muted)]">
       {n == null ? '—' : n === 0 ? '0' : n}
     </span>
   )
@@ -94,9 +94,9 @@ function Menu({ label, summary, dim, children }) {
               aria-expanded={open} aria-haspopup="true"
               className="flex items-baseline gap-1.5 bg-transparent border-none p-0 cursor-pointer
                          outline-none focus-visible:ring-1">
-        <span className="text-[10px] font-mono font-medium uppercase tracking-[.14em]
+        <span className="text-[11px] font-mono font-medium uppercase tracking-[.14em]
                          text-[var(--color-text-muted)]">{label}</span>
-        <span className={`text-[12.5px] pb-[1px] border-b border-solid
+        <span className={`text-[13px] pb-[1px] border-b border-solid
                           ${dim ? 'text-[var(--color-text-muted)] border-[var(--color-border)]'
                                 : 'text-[var(--color-text-bold)] border-[var(--color-text-bold)]'}`}>
           {summary}
@@ -104,7 +104,7 @@ function Menu({ label, summary, dim, children }) {
         {/* 10px, not 9 — the type floor applies to a caret as much as to a
             word, and this is the same glyph idiom the table's evidence toggle
             already uses. */}
-        <span className="text-[10px] leading-none text-[var(--color-text-muted)]" aria-hidden="true">
+        <span className="text-[11px] leading-none text-[var(--color-text-muted)]" aria-hidden="true">
           {open ? '\u25b4' : '\u25be'}
         </span>
       </button>
@@ -127,7 +127,7 @@ function Menu({ label, summary, dim, children }) {
 function Item({ on, dim, onClick, title, mark, children, n, close }) {
   return (
     <button type="button" onClick={onClick} title={title} data-close={close ? '' : undefined}
-            className={`w-full flex items-baseline gap-2 px-3 py-[5px] text-left text-[12.5px]
+            className={`w-full flex items-baseline gap-2 px-3 py-[5px] text-left text-[13px]
                         bg-transparent border-none cursor-pointer font-inherit
                         hover:bg-[var(--color-hover-bg)]
                         ${on ? 'text-[var(--color-text-bold)] font-semibold'
@@ -137,10 +137,10 @@ function Item({ on, dim, onClick, title, mark, children, n, close }) {
           started in: a mark fainter than the word it marks reads as
           decoration. The width is reserved either way, so the labels stay in
           one column whether or not anything is selected. */}
-      <span className="w-3 shrink-0 text-[10px] leading-none">{on ? '\u2713' : ''}</span>
+      <span className="w-3 shrink-0 text-[11px] leading-none">{on ? '\u2713' : ''}</span>
       {mark}
       <span className="min-w-0 flex-1 truncate">{children}</span>
-      <span className="shrink-0 text-[10px] font-mono tabular-nums text-[var(--color-text-muted)]">
+      <span className="shrink-0 text-[11px] font-mono tabular-nums text-[var(--color-text-muted)]">
         {n == null ? '\u2014' : n}
       </span>
     </button>
@@ -232,9 +232,9 @@ export default function ScanBar({
           ))}
         </Menu>
 
-        <span className="text-[10px] font-mono font-medium uppercase tracking-[.14em] text-[var(--color-text-muted)]">{tr('scr.bar.theme')}</span>
+        <span className="text-[11px] font-mono font-medium uppercase tracking-[.14em] text-[var(--color-text-muted)]">{tr('scr.bar.theme')}</span>
         {picked.length > 0 && picked.map((t) => (
-          <span key={t.group} className="text-[12.5px] text-[var(--color-text-bold)]">
+          <span key={t.group} className="text-[13px] text-[var(--color-text-bold)]">
             {t.group}
             {/* the ribbon belongs to ONE theme, so it is drawn only when one is
                 chosen — five fortnights of two themes side by side would read
@@ -270,7 +270,7 @@ export default function ScanBar({
                 ? tr('scr.bar.addTheme') === 'scr.bar.addTheme' ? '+ another' : tr('scr.bar.addTheme')
                 : `${tr('scr.bar.allThemes')} · ${themes.length}`}
               className="bg-transparent border-none border-b border-solid border-[var(--color-border)]
-                         text-[12.5px] text-[var(--color-text)] w-[130px] px-0.5 outline-none
+                         text-[13px] text-[var(--color-text)] w-[130px] px-0.5 outline-none
                          placeholder:text-[var(--color-text-secondary)]" />
             {themeOpen && themeMatches.length > 0 && (
               <div className="absolute left-0 top-full mt-1 z-20 min-w-[220px] max-h-[300px] overflow-auto
@@ -280,11 +280,11 @@ export default function ScanBar({
                   <div key={t.group}
                     onMouseDown={() => { onTheme(t.group); setThemeQuery(''); setThemeOpen(false); setThemeIdx(0) }}
                     onMouseEnter={() => setThemeIdx(i)}
-                    className={`px-2.5 py-1 text-[12.5px] cursor-pointer flex items-baseline gap-2
+                    className={`px-2.5 py-1 text-[13px] cursor-pointer flex items-baseline gap-2
                                 ${chosen?.has(t.group) ? 'font-semibold' : ''}
                                 ${i === themeIdx ? 'bg-[var(--color-hover-bg)]' : ''}`}>
                     <span>{t.group}</span>
-                    <span className="text-[10px] text-[var(--color-text-muted)] ml-auto">{t.members}</span>
+                    <span className="text-[11px] text-[var(--color-text-muted)] ml-auto">{t.members}</span>
                   </div>
                 ))}
               </div>
@@ -295,7 +295,7 @@ export default function ScanBar({
         <input value={search} onChange={(e) => onSearch(e.target.value)}
           placeholder="find ticker…"
           className="bg-transparent border-none border-b border-solid border-[var(--color-border)]
-                     text-[12.5px] font-mono text-[var(--color-text)] w-[104px] px-0.5 outline-none
+                     text-[13px] font-mono text-[var(--color-text)] w-[104px] px-0.5 outline-none
                      placeholder:text-[var(--color-text-muted)]" />
 
         <span className="ml-auto text-[11px] text-[var(--color-text-muted)]"
@@ -303,7 +303,7 @@ export default function ScanBar({
         {/* Whether the tradeable gate is in force. Stated either way: a filter
             the reader assumes is on, and is not, is worse than no filter. */}
         {gateNote && (
-          <span className={`text-[10px] font-mono ${gateOn
+          <span className={`text-[11px] font-mono ${gateOn
             ? 'text-[var(--color-text-muted)]'
             : 'text-[var(--color-signal-caution)]'}`}>· {gateNote}</span>
         )}

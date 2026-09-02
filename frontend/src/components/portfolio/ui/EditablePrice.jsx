@@ -26,7 +26,7 @@ export default function EditablePrice({ value, onChange, title }) {
           }
           if (e.key === 'Escape') setEditing(false)
         }}
-        className="w-[70px] px-1 py-0.5 border border-[var(--color-accent)] rounded text-[12.5px] font-sans outline-none"
+        className="w-[70px] px-1 py-0.5 border border-[var(--color-accent)] rounded text-[13px] font-sans outline-none"
       />
     )
   }

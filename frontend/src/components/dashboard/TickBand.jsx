@@ -120,14 +120,14 @@ export default function TickBand() {
         <div className="flex items-center gap-4">
           <Spread rank={stale ? null : data.spread_rank252} />
           <div>
-            <div className="text-[10px] font-mono uppercase tracking-[.24em]
+            <div className="text-[11px] font-mono uppercase tracking-[.24em]
                             text-[var(--color-text-muted)]">TICK band</div>
-            <div className="text-[19px] font-semibold leading-tight tracking-tight
+            <div className="text-[17px] font-semibold leading-tight tracking-tight
                             text-[var(--color-text-bold)]"
                  style={{ fontFamily: 'var(--font-cond)' }}>
               {LABEL[data.band] ?? data.band}
               {rankPct != null && !stale && (
-                <span className="ml-2 text-[12.5px] font-mono font-normal tabular-nums
+                <span className="ml-2 text-[13px] font-mono font-normal tabular-nums
                                  text-[var(--color-text-muted)]">
                   {/* a percentile of its own year, not a rank out of anything —
                       "2nd percentile" would read as second-place */}
@@ -146,7 +146,7 @@ export default function TickBand() {
         {stale ? (
           /* the site's rule: absent is not zero, and a reading nobody took
              today is not a reading of "neutral" */
-          <p className="m-0 flex-1 min-w-[260px] max-w-[104ch] text-[12.5px]
+          <p className="m-0 flex-1 min-w-[260px] max-w-[104ch] text-[13px]
                         leading-relaxed text-[var(--color-text-muted)] italic">
             Not measured — tick_cycle.json has not updated in {data.stale_days} days
             (last {data.as_of}). The shape above is a placeholder, not today's reading.
@@ -159,7 +159,7 @@ export default function TickBand() {
                 right of it is deliberate — this card is a band between the
                 measured half of the page and the written half, and a band is
                 allowed to be mostly rule. */}
-            <p className="m-0 flex-1 min-w-[280px] max-w-[104ch] text-[12.5px]
+            <p className="m-0 flex-1 min-w-[280px] max-w-[104ch] text-[13px]
                           leading-relaxed text-[var(--color-text-secondary)]">
               {englishReading(data)}
             </p>

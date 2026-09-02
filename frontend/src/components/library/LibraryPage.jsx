@@ -34,7 +34,7 @@ import { toEntries, axisFor } from './entry'
    and space rather than by size alone. */
 const H = {
   h2: 'text-[17px] leading-snug font-semibold mt-7 mb-2',
-  h3: 'text-[14px] leading-snug font-semibold mt-5 mb-1.5',
+  h3: 'text-[13px] leading-snug font-semibold mt-5 mb-1.5',
 }
 
 /**
@@ -60,9 +60,9 @@ function Block({ b, charts }) {
         <div className="my-4 rounded-2xl px-5 py-5"
              style={{ backgroundImage:
                'repeating-linear-gradient(45deg,var(--color-border-light) 0 1px,transparent 1px 7px)' }}>
-          <div className="text-[10px] font-mono uppercase tracking-[.24em]
+          <div className="text-[11px] font-mono uppercase tracking-[.24em]
                           text-[var(--color-text-muted)] mb-2">Chart not shipped</div>
-          <p className="m-0 text-[12.5px] leading-relaxed text-[var(--color-text-secondary)]">
+          <p className="m-0 text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
             这篇文章要一张图（<code className="font-mono">{b.key}</code>），但
             <code className="font-mono"> charts</code> 里没有它的 K 线。
           </p>
@@ -76,14 +76,14 @@ function Block({ b, charts }) {
     return <Tag className={H[b.type]}>{b.text}</Tag>
   }
   if (b.type === 'p') {
-    return <p className="my-2.5 text-[13.5px] leading-relaxed
+    return <p className="my-2.5 text-[13px] leading-relaxed
                          text-[var(--color-text-secondary)]">{b.text}</p>
   }
   if (b.type === 'note') {
     /* the provenance register: where the number came from, set apart and quiet */
     return (
       <p className="mt-6 mb-0 pl-3 border-l border-[var(--color-border)]
-                    text-[11.5px] leading-relaxed text-[var(--color-text-muted)]">
+                    text-[11px] leading-relaxed text-[var(--color-text-muted)]">
         {b.text}
       </p>
     )
@@ -91,7 +91,7 @@ function Block({ b, charts }) {
   if (b.type === 'list') {
     const Tag = b.ordered ? 'ol' : 'ul'
     return (
-      <Tag className={`my-2.5 pl-5 space-y-2 text-[13.5px] leading-relaxed
+      <Tag className={`my-2.5 pl-5 space-y-2 text-[13px] leading-relaxed
                        text-[var(--color-text-secondary)]
                        ${b.ordered ? 'list-decimal' : 'list-disc'}`}>
         {(b.items ?? []).map((t, i) => <li key={i}>{t}</li>)}
@@ -102,9 +102,9 @@ function Block({ b, charts }) {
     return (
       /* wide content scrolls inside its own box; the page never scrolls sideways */
       <div className="overflow-x-auto my-4 -mx-1 px-1">
-        <table className="w-full min-w-[420px] text-[12.5px] border-collapse">
+        <table className="w-full min-w-[420px] text-[13px] border-collapse">
           <thead>
-            <tr className="text-left text-[10px] font-mono uppercase tracking-wide
+            <tr className="text-left text-[11px] font-mono uppercase tracking-wide
                            text-[var(--color-text-muted)] border-b border-[var(--color-border)]">
               {(b.columns ?? []).map((c, i) =>
                 <th key={i} className="px-2 py-1.5 font-medium">{c}</th>)}
@@ -126,7 +126,7 @@ function Block({ b, charts }) {
     )
   }
   return (
-    <p className="my-2.5 text-[13.5px] leading-relaxed text-[var(--color-text-muted)] italic">
+    <p className="my-2.5 text-[13px] leading-relaxed text-[var(--color-text-muted)] italic">
       未知的块类型 <span className="font-mono not-italic">{String(b.type)}</span> —— 前端还不会画它。
     </p>
   )
@@ -150,7 +150,7 @@ function ArticleChart({ chart }) {
           → …" and the page rendered a ticker and a legend instead, which is
           the reading vocabulary, not the point of the picture. */}
       {chart.caption && (
-        <figcaption className="mt-2 text-[12px] leading-relaxed
+        <figcaption className="mt-2 text-[13px] leading-relaxed
                                text-[var(--color-text-secondary)]">{chart.caption}</figcaption>
       )}
       <figcaption className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1
@@ -180,7 +180,7 @@ function Article({ entry }) {
     return (
       <section className="border border-dashed border-[var(--color-untested)] rounded-3xl p-6
                           max-w-[74ch] mb-6">
-        <div className="text-[10px] font-mono uppercase tracking-[.24em]
+        <div className="text-[11px] font-mono uppercase tracking-[.24em]
                         text-[var(--color-text-muted)] mb-2">Not an article</div>
         <p className="m-0 text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
           <span className="font-mono">{name}</span> 取到了，但里面没有文章 —— 没有
@@ -188,7 +188,7 @@ function Article({ entry }) {
           <code className="font-mono"> blocks</code>。顶层只有：
           <span className="font-mono text-[var(--color-text-bold)]">{keys.join(', ')}</span>。
         </p>
-        <p className="m-0 mt-2 text-[12px] leading-relaxed text-[var(--color-text-muted)]">
+        <p className="m-0 mt-2 text-[13px] leading-relaxed text-[var(--color-text-muted)]">
           文章正文走这一个 JSON（`title` / `summary` / `blocks`），图放同文件的
           <code className="font-mono"> charts</code> 里、由
           <code className="font-mono"> {'{type:"chart", key}'}</code> 块定位。
@@ -201,7 +201,7 @@ function Article({ entry }) {
     return (
       <section className="border border-dashed border-[var(--color-untested)] rounded-3xl p-6
                           max-w-[74ch] mb-6">
-        <div className="text-[10px] font-mono uppercase tracking-[.24em]
+        <div className="text-[11px] font-mono uppercase tracking-[.24em]
                         text-[var(--color-text-muted)] mb-2">Not fetched</div>
         <p className="m-0 text-[13px] text-[var(--color-text-secondary)]">
           <span className="font-mono">{name}</span> 没取到 —— 名单里有它，文件没到。
@@ -213,14 +213,14 @@ function Article({ entry }) {
   return (
     <article className="rounded-3xl bg-[var(--color-surface)] px-6 py-6 sm:px-8 sm:py-7
                         max-w-[74ch] mb-6">
-      <h1 className="m-0 text-[27px] leading-tight font-semibold tracking-tight"
+      <h1 className="m-0 text-[26px] leading-tight font-semibold tracking-tight"
           style={{ fontFamily: 'var(--font-cond)' }}>{title}</h1>
       {subtitle && (
-        <p className="m-0 mt-1 text-[15px] leading-snug
+        <p className="m-0 mt-1 text-[17px] leading-snug
                       text-[var(--color-text-secondary)]">{subtitle}</p>
       )}
       {summary && (
-        <p className="m-0 mt-3 text-[13.5px] leading-relaxed
+        <p className="m-0 mt-3 text-[13px] leading-relaxed
                       text-[var(--color-text-bold)]">{summary}</p>
       )}
 
@@ -228,7 +228,7 @@ function Article({ entry }) {
 
       {blocks.map((b, i) => <Block key={i} b={b} charts={charts} />)}
 
-      <p className="mt-7 mb-0 text-[10px] font-mono text-[var(--color-text-muted)]">
+      <p className="mt-7 mb-0 text-[11px] font-mono text-[var(--color-text-muted)]">
         data/output/library/{name}{updated ? ` · ${updated.slice(0, 10)}` : ''}
       </p>
     </article>
@@ -263,7 +263,7 @@ function Cover({ entry, onOpen }) {
                          scale={axisFor(cover)} />
             </div>
           </div>
-          <h3 className="m-0 px-5 pt-4 text-[16.5px] leading-snug font-semibold
+          <h3 className="m-0 px-5 pt-4 text-[17px] leading-snug font-semibold
                          tracking-tight text-[var(--color-text-bold)]">{title}</h3>
         </>
       ) : (
@@ -273,7 +273,7 @@ function Cover({ entry, onOpen }) {
            the title got said twice; a cover has to be about the piece. */
         <div className="px-5 pt-6 pb-1 min-h-[128px] flex items-end
                         border-b border-[var(--color-border-light)]">
-          <h3 className="m-0 pb-4 text-[25px] leading-[1.12] font-bold tracking-tight
+          <h3 className="m-0 pb-4 text-[26px] leading-[1.12] font-bold tracking-tight
                          text-[var(--color-text-bold)] line-clamp-3"
               style={{ fontFamily: 'var(--font-cond)' }}>{title}</h3>
         </div>
@@ -281,14 +281,14 @@ function Cover({ entry, onOpen }) {
 
       <div className="px-5 pt-3 pb-4 flex-1 flex flex-col">
         {subtitle && (
-          <p className="m-0 mb-1 text-[12px] leading-snug
+          <p className="m-0 mb-1 text-[13px] leading-snug
                         text-[var(--color-text-muted)]">{subtitle}</p>
         )}
         {summary && (
-          <p className="m-0 text-[12.5px] leading-relaxed
+          <p className="m-0 text-[13px] leading-relaxed
                         text-[var(--color-text-secondary)] line-clamp-3">{summary}</p>
         )}
-        <p className="m-0 mt-3 pt-0 text-[10px] font-mono uppercase tracking-[.16em]
+        <p className="m-0 mt-3 pt-0 text-[11px] font-mono uppercase tracking-[.16em]
                       text-[var(--color-text-muted)] group-hover:text-[var(--color-text)]
                       transition-colors">
           {missing ? `${name} 没取到` : '读全文 →'}
@@ -306,16 +306,16 @@ function Reserved({ willHold, indexed, anyWritten }) {
        pretending to be finished. */
     <div className="border border-dashed border-[var(--color-untested)] rounded-3xl p-6
                     max-w-[70ch] mt-6">
-      <div className="text-[10px] font-mono uppercase tracking-[.24em]
+      <div className="text-[11px] font-mono uppercase tracking-[.24em]
                       text-[var(--color-text-muted)] mb-3">
         {anyWritten ? 'Also reserved' : 'Reserved'}
       </div>
-      <ul className="m-0 pl-4 space-y-1.5 text-[12.5px] leading-relaxed
+      <ul className="m-0 pl-4 space-y-1.5 text-[13px] leading-relaxed
                      text-[var(--color-text-secondary)]">
         {willHold.map((w) => <li key={w}>{w}</li>)}
       </ul>
       {!indexed && (
-        <p className="mt-4 mb-0 text-[10px] font-mono text-[var(--color-text-muted)]">
+        <p className="mt-4 mb-0 text-[11px] font-mono text-[var(--color-text-muted)]">
           这一页读的是编译进来的文件名单，不是目录 —— 新增一篇现在还需要前端发一版。
           已向数据端要 <code>library/index.json</code>（DATA_CONTRACTS §七）。
         </p>
@@ -347,7 +347,7 @@ export default function LibraryPage({ page, entry: slug, group = 'library',
              shelf — a 404 inside our own product is a dead end we control. */
           <div className="border border-dashed border-[var(--color-untested)] rounded-3xl
                           p-6 max-w-[70ch]">
-            <div className="text-[10px] font-mono uppercase tracking-[.24em]
+            <div className="text-[11px] font-mono uppercase tracking-[.24em]
                             text-[var(--color-text-muted)] mb-2">No such piece</div>
             <p className="m-0 text-[13px] text-[var(--color-text-secondary)]">
               这一页没有叫 <span className="font-mono">{slug}</span> 的篇目。

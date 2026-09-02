@@ -16,7 +16,7 @@ export default function BreadthTable({ data }) {
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="w-full text-[12.5px]">
+        <table className="w-full text-[13px]">
           <thead>
             <tr className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
               <Th>Date</Th>
@@ -94,7 +94,7 @@ export default function BreadthTable({ data }) {
 
 function Th({ children }) {
   return (
-    <th className="px-2 py-1.5 text-right text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] whitespace-nowrap">
+    <th className="px-2 py-1.5 text-right text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] whitespace-nowrap">
       {children}
     </th>
   )

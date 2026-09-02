@@ -32,7 +32,7 @@ export default function SaveState({ onSave, dirty }) {
   return (
     <span className="flex items-center gap-2">
       {word && (
-        <span className={`text-[10px] font-mono ${
+        <span className={`text-[11px] font-mono ${
           s.sheet === 'error'
             ? 'text-[var(--color-refused)]'
             : 'text-[var(--color-text-muted)]'}`}>{word}</span>
@@ -42,7 +42,7 @@ export default function SaveState({ onSave, dirty }) {
         onClick={onSave}
         disabled={!dirty}
         title={dirty ? 'Save now' : 'Nothing unsaved'}
-        className="text-[10px] font-mono uppercase tracking-[.14em] px-2 py-0.5 rounded
+        className="text-[11px] font-mono uppercase tracking-[.14em] px-2 py-0.5 rounded
                    border border-[var(--color-border)] bg-transparent cursor-pointer
                    text-[var(--color-text-secondary)] hover:text-[var(--color-text)]
                    hover:bg-[var(--color-hover-bg)]

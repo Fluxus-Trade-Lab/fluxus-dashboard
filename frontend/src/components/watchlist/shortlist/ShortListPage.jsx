@@ -179,10 +179,10 @@ export function EmptySeat({ seat, label }) {
   return (
     <section className="rounded-3xl bg-[var(--color-surface)] px-5 py-5">
       <div className="flex items-baseline gap-2 flex-wrap">
-        <span className="text-[10px] font-mono uppercase tracking-[.24em]
+        <span className="text-[11px] font-mono uppercase tracking-[.24em]
                          text-[var(--color-text-muted)]">{label}</span>
         {seat.why && (
-          <span className="text-[11.5px] text-[var(--color-text-secondary)]">{seat.why}</span>
+          <span className="text-[11px] text-[var(--color-text-secondary)]">{seat.why}</span>
         )}
       </div>
       <div className="mt-3 rounded-2xl p-5 flex gap-4 items-start"
@@ -191,10 +191,10 @@ export function EmptySeat({ seat, label }) {
         <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"
              className="shrink-0 mt-[3px] text-[var(--color-text-muted)]">{state.glyph}</svg>
         <div className="min-w-0">
-          <p className="m-0 text-[15px] leading-snug text-[var(--color-text-bold)]">
+          <p className="m-0 text-[17px] leading-snug text-[var(--color-text-bold)]">
             这一席今天没有名字 —— {state.label}。
           </p>
-          <p className="m-0 mt-1.5 text-[12px] leading-relaxed text-[var(--color-text-secondary)]">
+          <p className="m-0 mt-1.5 text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
             {state.body}
             {seat.excluded_n != null && ` 被挡下 ${seat.excluded_n} 个。`}
             {!known && (
@@ -261,7 +261,7 @@ function AddName({ onAdd, known }) {
       <input value={v} onChange={(e) => setV(e.target.value)}
              placeholder="加个名字" aria-label="加个名字"
              className="w-[130px] rounded-full bg-[var(--color-bg)] px-3 py-1
-                        border border-[var(--color-border)] text-[12px] font-mono uppercase
+                        border border-[var(--color-border)] text-[13px] font-mono uppercase
                         tracking-wide text-[var(--color-text-bold)]
                         placeholder:text-[var(--color-text-muted)] placeholder:normal-case
                         focus:outline-none focus:border-[var(--color-text-muted)]" />
@@ -357,7 +357,7 @@ function Body({ data }) {
   return (
     <div className="mt-1">
       <div className="flex items-baseline gap-4 flex-wrap">
-        <p className="text-[12px] font-mono text-[var(--color-text-muted)] m-0">
+        <p className="text-[13px] font-mono text-[var(--color-text-muted)] m-0">
           {data.date} 收盘 · 六席 {seats.filter((s) => s.ticker).length}/{t.seats} 有名字
           {mine.length > 0 && ` · 我的 ${mine.length}`}
         </p>
@@ -365,7 +365,7 @@ function Body({ data }) {
             is a reading, not a gap: a seat he saw and walked past is the row a
             veto-only log throws away, and 空席 sits outside the ratio entirely
             because nobody judged anything. */}
-        <p className="text-[12px] font-mono text-[var(--color-text-muted)] m-0">
+        <p className="text-[13px] font-mono text-[var(--color-text-muted)] m-0">
           今天 ✗{t.vetoed} ★{t.starred} · 未表态 {t.ignored} · 空席 {t.empty}
         </p>
       </div>
@@ -408,7 +408,7 @@ function Body({ data }) {
       {stale && (
         /* right names, wrong clock — the tray already knew to say this, and it
            has to keep saying it now that the names render as full cards */
-        <p className="m-0 mb-3 pl-3 text-[11.5px] leading-relaxed text-[var(--color-text-secondary)]
+        <p className="m-0 mb-3 pl-3 text-[11px] leading-relaxed text-[var(--color-text-secondary)]
                       border-l border-dashed border-[var(--color-text-muted)]">
           这份名单是照 <b className="font-semibold">{madeOn}</b> 的收盘挑的，屏幕上的文件是{' '}
           {fileDate} 的。名字照原样留着 —— 开始今天的时候清掉它。
@@ -425,7 +425,7 @@ function Body({ data }) {
           ))}
         </div>
       ) : (
-        <p className="m-0 text-[12px] leading-relaxed text-[var(--color-text-muted)]">
+        <p className="m-0 text-[13px] leading-relaxed text-[var(--color-text-muted)]">
           空的。在晨报页把一个名字点出图、按 add to shortlist，或者在上面直接打代码 ——
           两个入口进的是同一份名单。
         </p>
@@ -433,7 +433,7 @@ function Body({ data }) {
 
       <h2 className="text-[13px] font-mono uppercase tracking-[.2em]
                      text-[var(--color-text-muted)] mt-7 mb-1">今日六席</h2>
-      <p className="m-0 mb-3 text-[11.5px] text-[var(--color-text-secondary)]">
+      <p className="m-0 mb-3 text-[11px] text-[var(--color-text-secondary)]">
         六个座位是六个问题，不是一张排行榜 —— 席与席之间不比较大小。
         每席下面那行是它今天为什么选中这个名字，
         <b className="font-semibold">选法本身还没有验过</b>（方案 §四），你的 ✗ 就是用来验它的。

@@ -165,11 +165,11 @@ export default function CoachTab({ strategy }) {
       <div className="bg-[var(--color-surface)] rounded-3xl p-5">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-[14px] font-semibold text-[var(--color-text-bold)] mb-1">{config.name}</h3>
-            <p className="text-[12.5px] text-[var(--color-text-secondary)]">{config.description}</p>
+            <h3 className="text-[13px] font-semibold text-[var(--color-text-bold)] mb-1">{config.name}</h3>
+            <p className="text-[13px] text-[var(--color-text-secondary)]">{config.description}</p>
           </div>
           {apiDisabled && (
-            <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded bg-[var(--color-surface-raised)] text-[var(--color-text-muted)]">
+            <span className="text-[11px] font-medium uppercase tracking-wider px-2 py-0.5 rounded bg-[var(--color-surface-raised)] text-[var(--color-text-muted)]">
               Copy-paste mode
             </span>
           )}
@@ -181,7 +181,7 @@ export default function CoachTab({ strategy }) {
         <div className="min-h-[200px] max-h-[60vh] overflow-y-auto p-4 space-y-3">
           {messages.length === 0 && !loading && (
             <div className="text-center py-12">
-              <div className="text-[12.5px] text-[var(--color-text-muted)] uppercase tracking-wide mb-4">
+              <div className="text-[13px] text-[var(--color-text-muted)] uppercase tracking-wide mb-4">
                 Ask the {config.name} coach anything
               </div>
               <div className="flex flex-wrap gap-2 justify-center">
@@ -200,7 +200,7 @@ export default function CoachTab({ strategy }) {
 
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[80%] px-3 py-2 rounded-3xl text-[14px] ${
+              <div className={`max-w-[80%] px-3 py-2 rounded-3xl text-[13px] ${
                 msg.role === 'user'
                   ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                   : 'bg-[var(--color-bg)] text-[var(--color-text)] '
@@ -212,7 +212,7 @@ export default function CoachTab({ strategy }) {
 
           {loading && (
             <div className="flex justify-start">
-              <div className="px-3 py-2 rounded-3xl text-[14px] bg-[var(--color-bg)] text-[var(--color-text-muted)]">
+              <div className="px-3 py-2 rounded-3xl text-[13px] bg-[var(--color-bg)] text-[var(--color-text-muted)]">
                 Thinking...
               </div>
             </div>
@@ -222,7 +222,7 @@ export default function CoachTab({ strategy }) {
           {pendingMessage && !loading && (
             <div className="flex justify-start">
               <div className="max-w-[85%] px-4 py-3 rounded-lg bg-[var(--color-bg)] border border-dashed border-[var(--color-border)] space-y-2">
-                <p className="text-[12.5px] text-[var(--color-text-secondary)]">
+                <p className="text-[13px] text-[var(--color-text-secondary)]">
                   Copy the prompt to claude.ai, then paste the response back.
                 </p>
                 <div className="flex gap-2">
@@ -247,7 +247,7 @@ export default function CoachTab({ strategy }) {
                       placeholder="Paste Claude's response here..."
                       aria-label="Paste coach response"
                       rows={6}
-                      className="w-full px-3 py-2 text-[12.5px] bg-[var(--color-surface)] rounded-3xl resize-y outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)]"
+                      className="w-full px-3 py-2 text-[13px] bg-[var(--color-surface)] rounded-3xl resize-y outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)]"
                     />
                     <button
                       onClick={handleSubmitPaste}
@@ -275,13 +275,13 @@ export default function CoachTab({ strategy }) {
             placeholder={`Ask about ${config.name?.toLowerCase() || 'trading'}...`}
             aria-label={`Ask the ${config.name} coach`}
             disabled={loading}
-            className="flex-1 px-3 py-2 rounded-3xl text-[14px] bg-[var(--color-surface)] outline-none focus:border-[var(--color-text-muted)] font-sans disabled:opacity-50"
+            className="flex-1 px-3 py-2 rounded-3xl text-[13px] bg-[var(--color-surface)] outline-none focus:border-[var(--color-text-muted)] font-sans disabled:opacity-50"
           />
           <button
             onClick={handleSend}
             disabled={!input.trim() || loading}
             aria-label="Send message"
-            className="px-4 py-2 bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)] rounded text-[12.5px] font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity"
+            className="px-4 py-2 bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)] rounded text-[13px] font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity"
           >
             Send
           </button>

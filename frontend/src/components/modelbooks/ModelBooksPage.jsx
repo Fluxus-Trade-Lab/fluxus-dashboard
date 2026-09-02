@@ -33,7 +33,7 @@ export default function ModelBooksPage() {
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto py-6 px-4">
-        <div className="text-[12.5px] text-[var(--color-text-muted)] animate-pulse">Loading model books...</div>
+        <div className="text-[13px] text-[var(--color-text-muted)] animate-pulse">Loading model books...</div>
       </div>
     )
   }
@@ -45,7 +45,7 @@ export default function ModelBooksPage() {
                '50 carry pattern tags and lessons',
                'every entry is here because it went up — a survivor set']} />
       <div className="flex items-center justify-between mb-5">
-        <h2 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
+        <h2 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Model Books
         </h2>
         <div className="flex gap-1">

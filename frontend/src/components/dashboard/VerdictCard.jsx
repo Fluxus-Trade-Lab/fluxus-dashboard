@@ -49,7 +49,7 @@ export function MissingBlock({ what, keys, onNavigate }) {
       <div className="rounded-2xl p-6"
            style={{ backgroundImage:
              'repeating-linear-gradient(45deg,var(--color-border-light) 0 1px,transparent 1px 7px)' }}>
-        <div className="text-[10px] font-mono uppercase tracking-[.24em]
+        <div className="text-[11px] font-mono uppercase tracking-[.24em]
                         text-[var(--color-text-muted)] mb-3">Not measured</div>
         <p className="m-0 text-[17px] leading-snug text-[var(--color-text-bold)]">{what}</p>
         <p className="mt-2 mb-0 text-[11px] leading-relaxed text-[var(--color-text-secondary)] max-w-[68ch]">

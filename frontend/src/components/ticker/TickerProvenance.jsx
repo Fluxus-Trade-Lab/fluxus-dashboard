@@ -45,7 +45,7 @@ export default function TickerProvenance({ universe, tickerData }) {
       )}
 
       {(dead || stale) && (
-        <p className="m-0 mt-1.5 text-[11.5px] leading-relaxed text-[var(--color-text-secondary)]
+        <p className="m-0 mt-1.5 text-[11px] leading-relaxed text-[var(--color-text-secondary)]
                       border-l-2 border-[var(--color-refused)] pl-2.5">
           {dead ? (
             <>

@@ -17,7 +17,7 @@ export default function Header({ portfolioValue, totalPL, totalReturnPct, cashAv
         <div className="text-[17px] font-bold flex items-center gap-1.5">
           {t('pf.title')}
           {state.gasUrl && state.syncToken && (
-            <span className="text-[12.5px]" title={
+            <span className="text-[13px]" title={
               state.syncStatus === 'success' ? `Synced ${state.lastSyncTime ? new Date(state.lastSyncTime).toLocaleTimeString() : ''}` :
               state.syncStatus === 'syncing' ? 'Syncing...' :
               state.syncStatus === 'error' ? 'Sync failed' : 'Not synced'
@@ -42,7 +42,7 @@ export default function Header({ portfolioValue, totalPL, totalReturnPct, cashAv
             </span>
           )}
         </div>
-        <div className="text-[12.5px] text-[var(--color-text-muted)]">{t('pf.starting')}: {pm ? MASK : fmtCur(state.startingCapital)}</div>
+        <div className="text-[13px] text-[var(--color-text-muted)]">{t('pf.starting')}: {pm ? MASK : fmtCur(state.startingCapital)}</div>
       </div>
 
       <div className="flex gap-3 items-center flex-wrap">
@@ -68,7 +68,7 @@ export default function Header({ portfolioValue, totalPL, totalReturnPct, cashAv
         <Button variant="ghost" onClick={onShowSettings}>{t('pf.btn.settings')}</Button>
         <button
           onClick={() => dispatch({ type: 'TOGGLE_PRIVACY' })}
-          className="px-2.5 py-1.5 rounded text-[12.5px] font-medium cursor-pointer border transition-colors bg-transparent border-[var(--color-input-border)] text-[var(--color-text-secondary)] hover:bg-[var(--color-hover-bg)]"
+          className="px-2.5 py-1.5 rounded text-[13px] font-medium cursor-pointer border transition-colors bg-transparent border-[var(--color-input-border)] text-[var(--color-text-secondary)] hover:bg-[var(--color-hover-bg)]"
           title={pm ? t('pf.sync.showValues') : t('pf.sync.hideValues')}
         >
           {pm ? `◉ ${t('pf.btn.private')}` : `○ ${t('pf.btn.private')}`}

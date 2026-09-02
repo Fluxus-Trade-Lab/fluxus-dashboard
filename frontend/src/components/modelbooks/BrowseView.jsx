@@ -39,7 +39,7 @@ function abbreviateSource(source) {
 function PatternBadge({ pattern }) {
   const colors = patternTag(pattern)
   return (
-    <span className={`inline-block px-1.5 py-0.5 text-[10px] font-medium rounded-full ${colors} leading-tight`}>
+    <span className={`inline-block px-1.5 py-0.5 text-[11px] font-medium rounded-full ${colors} leading-tight`}>
       {formatPattern(pattern)}
     </span>
   )
@@ -77,7 +77,7 @@ function NotesPanel({ entry, onTickerClick }) {
   if (!entry) {
     return (
       <div className="flex items-center justify-center h-48 rounded-lg border border-dashed border-[var(--color-border)] bg-[var(--color-surface-alt)]">
-        <span className="text-[12.5px] text-[var(--color-text-muted)]">Select an entry to view details</span>
+        <span className="text-[13px] text-[var(--color-text-muted)]">Select an entry to view details</span>
       </div>
     )
   }
@@ -92,7 +92,7 @@ function NotesPanel({ entry, onTickerClick }) {
         >
           {entry.ticker}
         </button>
-        <span className="ml-2 text-[12.5px] text-[var(--color-text-muted)]">{entry.year}</span>
+        <span className="ml-2 text-[13px] text-[var(--color-text-muted)]">{entry.year}</span>
       </div>
 
       {/* Source */}
@@ -118,7 +118,7 @@ function NotesPanel({ entry, onTickerClick }) {
       )}
 
       {/* Gain + Duration stat row */}
-      <div className="flex items-center gap-4 text-[12.5px]">
+      <div className="flex items-center gap-4 text-[13px]">
         {entry.gain_pct != null && (
           <span>
             <span className="text-[var(--color-text-muted)]">Gain </span>
@@ -138,13 +138,13 @@ function NotesPanel({ entry, onTickerClick }) {
       {/* Key lessons as margin notes */}
       {entry.key_lessons?.length > 0 ? (
         <div className="space-y-2 pt-1">
-          <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
+          <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">
             Key Lessons
           </span>
           {entry.key_lessons.map((lesson, i) => (
             <blockquote
               key={i}
-              className="border-l-2 border-[var(--color-border)] pl-3 text-[12.5px] italic text-[var(--color-text-secondary)] leading-relaxed"
+              className="border-l-2 border-[var(--color-border)] pl-3 text-[13px] italic text-[var(--color-text-secondary)] leading-relaxed"
             >
               {lesson}
             </blockquote>
@@ -350,13 +350,13 @@ export default function BrowseView({ cards }) {
     <div className="flex flex-col min-h-0">
       {/* Chart header (SPY toggle only -- ticker info moved to notes panel) */}
       <div className="flex items-center gap-2 mb-2">
-        <h3 className="text-[14px] font-semibold text-[var(--color-text-bold)]">
+        <h3 className="text-[13px] font-semibold text-[var(--color-text-bold)]">
           {selectedEntry.ticker}
         </h3>
-        <span className="text-[12.5px] text-[var(--color-text-muted)]">{selectedEntry.year}</span>
+        <span className="text-[13px] text-[var(--color-text-muted)]">{selectedEntry.year}</span>
         <button
           onClick={() => setShowSpy(s => !s)}
-          className={`ml-auto text-[10px] font-medium px-2 py-1 rounded border transition-colors ${
+          className={`ml-auto text-[11px] font-medium px-2 py-1 rounded border transition-colors ${
             showSpy
               ? 'bg-[color-mix(in_srgb,var(--color-accent)_100%,transparent)] text-[var(--color-accent)] border-[color-mix(in_srgb,var(--color-accent)_100%,transparent)] dark:bg-[color-mix(in_srgb,var(--color-accent)_100%,transparent)] dark:text-[var(--color-accent)] dark:border-[color-mix(in_srgb,var(--color-accent)_100%,transparent)]'
               : 'bg-[var(--color-surface)] text-[var(--color-text-muted)] border-[var(--color-border)] hover:text-[var(--color-text-secondary)]'
@@ -368,11 +368,11 @@ export default function BrowseView({ cards }) {
 
       <div className="rounded-3xl overflow-hidden bg-[var(--color-surface)]">
         {ohlcvLoading ? (
-          <div className="flex items-center justify-center text-[12.5px] text-[var(--color-text-muted)]" style={{ height: chartHeight }}>
+          <div className="flex items-center justify-center text-[13px] text-[var(--color-text-muted)]" style={{ height: chartHeight }}>
             Loading chart data...
           </div>
         ) : !selectedEntry.ohlcv_file ? (
-          <div className="flex items-center justify-center text-[12.5px] text-[var(--color-text-muted)]" style={{ height: chartHeight }}>
+          <div className="flex items-center justify-center text-[13px] text-[var(--color-text-muted)]" style={{ height: chartHeight }}>
             No chart data available for this entry
           </div>
         ) : (
@@ -382,7 +382,7 @@ export default function BrowseView({ cards }) {
     </div>
   ) : (
     <div className="flex items-center justify-center h-64 rounded-lg border border-dashed border-[var(--color-border)] bg-[var(--color-surface-alt)]">
-      <span className="text-[12.5px] text-[var(--color-text-muted)]">Select an entry to view its chart</span>
+      <span className="text-[13px] text-[var(--color-text-muted)]">Select an entry to view its chart</span>
     </div>
   )
 
@@ -421,7 +421,7 @@ export default function BrowseView({ cards }) {
           ))}
         </select>
         {nSuspect > 0 && (
-          <label className="flex items-center gap-1.5 text-[10px] text-[var(--color-text-muted)] cursor-pointer select-none"
+          <label className="flex items-center gap-1.5 text-[11px] text-[var(--color-text-muted)] cursor-pointer select-none"
                  title="Entries whose own bars cannot support their number — split-unadjusted history, mostly. Hidden by default, never deleted.">
             <input type="checkbox" checked={showSuspect}
                    onChange={e => setShowSuspect(e.target.checked)}
@@ -429,21 +429,21 @@ export default function BrowseView({ cards }) {
             {nSuspect} suspect
           </label>
         )}
-        <span className="text-[10px] text-[var(--color-text-muted)] ml-auto">
+        <span className="text-[11px] text-[var(--color-text-muted)] ml-auto">
           {filtered.length}
         </span>
       </div>
 
       {/* Table */}
       <div className="overflow-y-auto rounded-3xl bg-[var(--color-surface)] flex-1 max-h-[40vh] lg:max-h-[calc(100vh-180px)]">
-        <table className="w-full text-[12.5px]">
+        <table className="w-full text-[13px]">
           <thead className="sticky top-0 z-10">
             <tr className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
               {TABLE_COLUMNS.map(col => (
                 <th
                   key={col.key}
                   onClick={() => toggleSort(col.key)}
-                  className={`px-1.5 py-1.5 text-left cursor-pointer hover:bg-[var(--color-hover-bg)] font-medium text-[10px] text-[var(--color-text-secondary)] uppercase tracking-wide ${col.width}`}
+                  className={`px-1.5 py-1.5 text-left cursor-pointer hover:bg-[var(--color-hover-bg)] font-medium text-[11px] text-[var(--color-text-secondary)] uppercase tracking-wide ${col.width}`}
                 >
                   {col.label}
                   {sortKey === col.key && (sortDir === 'asc' ? ' \u2191' : ' \u2193')}
@@ -454,7 +454,7 @@ export default function BrowseView({ cards }) {
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={TABLE_COLUMNS.length} className="px-4 py-8 text-center text-[12.5px] text-[var(--color-text-muted)]">
+                <td colSpan={TABLE_COLUMNS.length} className="px-4 py-8 text-center text-[13px] text-[var(--color-text-muted)]">
                   No entries match the current filters
                 </td>
               </tr>
@@ -473,14 +473,14 @@ export default function BrowseView({ cards }) {
                     }`}
                   >
                     <td className="px-1.5 py-1.5 text-[11px] font-semibold text-[var(--color-accent)] dark:text-[var(--color-accent)]">{card.ticker}</td>
-                    <td className="px-1.5 py-1.5 text-[10px] text-[var(--color-text-secondary)] font-mono">{card.year}</td>
+                    <td className="px-1.5 py-1.5 text-[11px] text-[var(--color-text-secondary)] font-mono">{card.year}</td>
                     <td className="px-1.5 py-1.5">
                       <div className="flex flex-wrap gap-0.5">
                         {card.patterns.slice(0, 2).map(p => (
                           <PatternBadge key={p} pattern={p} />
                         ))}
                         {card.patterns.length > 2 && (
-                          <span className="text-[10px] text-[var(--color-text-muted)]">+{card.patterns.length - 2}</span>
+                          <span className="text-[11px] text-[var(--color-text-muted)]">+{card.patterns.length - 2}</span>
                         )}
                       </div>
                     </td>
@@ -489,7 +489,7 @@ export default function BrowseView({ cards }) {
                     }`}>
                       {card.gain_pct != null ? `${card.gain_pct.toFixed(0)}%` : '\u2014'}
                     </td>
-                    <td className="px-1.5 py-1.5 text-[10px] text-[var(--color-text-muted)] truncate max-w-[60px]" title={card.source}>
+                    <td className="px-1.5 py-1.5 text-[11px] text-[var(--color-text-muted)] truncate max-w-[60px]" title={card.source}>
                       {abbreviateSource(card.source)}
                     </td>
                   </tr>

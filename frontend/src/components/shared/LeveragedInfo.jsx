@@ -14,14 +14,14 @@ export default function LeveragedInfo({ longEtfs, shortEtfs }) {
       onMouseEnter={() => setShow(true)}
       onMouseLeave={() => setShow(false)}
     >
-      <span className="cursor-default text-[10px] font-mono text-[var(--color-text-muted)] leading-none">
+      <span className="cursor-default text-[11px] font-mono text-[var(--color-text-muted)] leading-none">
         {hasLong && <span>L:{longEtfs.join(',')}</span>}
         {hasLong && hasShort && <span> </span>}
         {hasShort && <span>S:{shortEtfs.join(',')}</span>}
       </span>
 
       {show && (
-        <span className="absolute bottom-full left-0 mb-1 z-10 whitespace-nowrap bg-[var(--color-surface)] rounded-3xl px-2 py-1 text-[10px] font-mono text-[var(--color-text-secondary)]">
+        <span className="absolute bottom-full left-0 mb-1 z-10 whitespace-nowrap bg-[var(--color-surface)] rounded-3xl px-2 py-1 text-[11px] font-mono text-[var(--color-text-secondary)]">
           {hasLong && <span className="block">Long: {longEtfs.join(', ')}</span>}
           {hasShort && <span className="block">Short: {shortEtfs.join(', ')}</span>}
         </span>

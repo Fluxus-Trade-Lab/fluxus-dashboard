@@ -44,14 +44,14 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
       {/* Equity curve */}
       {performanceData.length > 1 && (
         <div className="bg-[var(--color-surface)] rounded-3xl p-5">
-          <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+          <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Equity Curve
           </h3>
           <ResponsiveContainer width="100%" height={280}>
             <LineChart data={performanceData}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
-              <XAxis dataKey="date" tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }} tickFormatter={d => d.slice(5)} interval="preserveStartEnd" />
-              <YAxis tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${v.toFixed(0)}%`} />
+              <XAxis dataKey="date" tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={d => d.slice(5)} interval="preserveStartEnd" />
+              <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${v.toFixed(0)}%`} />
               <Tooltip
                 contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text)' }}
                 formatter={(v, name) => [`${Number(v).toFixed(2)}%`, name === 'returnPct' ? 'Portfolio' : name]}
@@ -74,15 +74,15 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
       {/* Monthly performance table */}
       {monthlyStats.length > 0 && (
         <div className="bg-[var(--color-surface)] rounded-3xl p-5">
-          <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+          <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Monthly Performance
           </h3>
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-[12.5px]">
+            <table className="w-full border-collapse text-[13px]">
               <thead>
                 <tr>
                   {['Month', 'Return%', '# Trades', 'Win%', 'Avg R', 'Max Gain%', 'Max Loss%', 'Days(W)', 'Days(L)'].map(h => (
-                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[10px] uppercase tracking-wide">{h}</th>
+                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -109,12 +109,12 @@ export default function SummarySection({ enriched, closedTrades, monthlyStats, p
       {/* Insights */}
       {insights.length > 0 && (
         <div className="bg-[var(--color-surface)] rounded-3xl p-5">
-          <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+          <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Insights
           </h3>
           <div className="space-y-2">
             {insights.map((ins, i) => (
-              <div key={i} className="flex gap-2 text-[14px]">
+              <div key={i} className="flex gap-2 text-[13px]">
                 <span className={`flex-shrink-0 ${ins.type === 'positive' ? 'text-[var(--color-profit)]' : ins.type === 'warning' ? 'text-[var(--color-signal-caution)]' : 'text-[var(--color-text-muted)]'}`}>
                   {ins.type === 'positive' ? '+' : ins.type === 'warning' ? '!' : '-'}
                 </span>

@@ -98,7 +98,7 @@ export default function TradeForm({ onClose }) {
 
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5 mt-4">
-      <div className="font-semibold mb-3 text-[14px]">Log New Trade</div>
+      <div className="font-semibold mb-3 text-[13px]">Log New Trade</div>
       <div className="flex gap-3 flex-wrap items-end">
         <InputField label="Ticker" value={form.ticker} onChange={e => setForm({ ...form, ticker: e.target.value.toUpperCase() })} placeholder="AAPL" className="w-[70px]" />
         <SelectField label="Direction" value={form.direction} onChange={e => setForm({ ...form, direction: e.target.value })}>

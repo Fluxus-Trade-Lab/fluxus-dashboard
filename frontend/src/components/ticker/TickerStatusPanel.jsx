@@ -17,16 +17,16 @@ export default function TickerStatusPanel({ symbol, openTrade, lastClosed, unive
   if (!openTrade && !lastClosed) {
     return (
       <div className="bg-[var(--color-bg)] rounded-3xl p-5 h-full">
-        <div className="font-semibold mb-3 text-[14px]">Status</div>
-        <div className="text-[var(--color-text-muted)] text-[14px]">No record of trading {symbol}.</div>
+        <div className="font-semibold mb-3 text-[13px]">Status</div>
+        <div className="text-[var(--color-text-muted)] text-[13px]">No record of trading {symbol}.</div>
       </div>
     )
   }
   if (!openTrade) {
     return (
       <div className="bg-[var(--color-bg)] rounded-3xl p-5 h-full">
-        <div className="font-semibold mb-3 text-[14px]">Status</div>
-        <div className="text-[14px]">No open position.</div>
+        <div className="font-semibold mb-3 text-[13px]">Status</div>
+        <div className="text-[13px]">No open position.</div>
         <div className="text-[11px] text-[var(--color-text-muted)] mt-1">
           Last trade: {lastClosed.entryDate?.slice(0, 10)} @ {fmtCur(lastClosed.entryPrice)}
         </div>
@@ -57,13 +57,13 @@ export default function TickerStatusPanel({ symbol, openTrade, lastClosed, unive
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5 h-full flex flex-col gap-3">
       <div className="flex items-center justify-between">
-        <div className="font-semibold text-[14px]">Status</div>
+        <div className="font-semibold text-[13px]">Status</div>
         <LegStateBadge state={legState} />
       </div>
       <ProximityChips chips={chipsList} />
 
       <div className="border-t border-[var(--color-border-light)] pt-3">
-        <div className="text-[10px] uppercase text-[var(--color-text-muted)] tracking-wide mb-1">Stop</div>
+        <div className="text-[11px] uppercase text-[var(--color-text-muted)] tracking-wide mb-1">Stop</div>
         <div className="flex items-baseline justify-between gap-2">
           <span className="tabular-nums text-[17px] font-semibold">{fmtCur(t.stopPrice)}</span>
           {stopSugg?.suggestedStop != null && Math.abs(stopSugg.suggestedStop - t.stopPrice) > 0.01 && (
@@ -77,14 +77,14 @@ export default function TickerStatusPanel({ symbol, openTrade, lastClosed, unive
           )}
         </div>
         {stopSugg?.rationale && (
-          <div className="text-[10px] text-[var(--color-text-muted)] mt-1">{stopSugg.rationale}</div>
+          <div className="text-[11px] text-[var(--color-text-muted)] mt-1">{stopSugg.rationale}</div>
         )}
       </div>
 
       {targets && (
         <div className="border-t border-[var(--color-border-light)] pt-3">
-          <div className="text-[10px] uppercase text-[var(--color-text-muted)] tracking-wide mb-1">Trim targets</div>
-          <div className="text-[14px] flex flex-col gap-0.5">
+          <div className="text-[11px] uppercase text-[var(--color-text-muted)] tracking-wide mb-1">Trim targets</div>
+          <div className="text-[13px] flex flex-col gap-0.5">
             <div className={hit4 ? 'line-through text-[var(--color-profit)]' : ''}>
               +4R · {fmtCur(targets.targetR4)}
             </div>
@@ -96,7 +96,7 @@ export default function TickerStatusPanel({ symbol, openTrade, lastClosed, unive
       )}
 
       <div className="border-t border-[var(--color-border-light)] pt-3">
-        <div className="text-[10px] uppercase text-[var(--color-text-muted)] tracking-wide mb-1">EMA references</div>
+        <div className="text-[11px] uppercase text-[var(--color-text-muted)] tracking-wide mb-1">EMA references</div>
         <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 text-[11px] tabular-nums">
           {u.ema10 != null && <><span className="text-[var(--color-text-muted)]">10EMA</span><span>{fmtCur(u.ema10)}</span></>}
           {u.ema20 != null && <><span className="text-[var(--color-text-muted)]">20EMA</span><span>{fmtCur(u.ema20)}</span></>}

@@ -7,7 +7,7 @@ export default function TickerSources({ tickerData }) {
 
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-      <div className="font-semibold mb-3 text-[14px]">Sources</div>
+      <div className="font-semibold mb-3 text-[13px]">Sources</div>
       <ol className="text-[11px] flex flex-col gap-1.5 list-decimal pl-5">
         {sources.map(s => (
           <li key={s.id}>
@@ -28,7 +28,7 @@ export default function TickerSources({ tickerData }) {
           </li>
         ))}
       </ol>
-      <div className="text-[10px] text-[var(--color-text-muted)] mt-3 pt-3 border-t border-[var(--color-border-light)]">
+      <div className="text-[11px] text-[var(--color-text-muted)] mt-3 pt-3 border-t border-[var(--color-border-light)]">
         Quotes, financials, ratios, estimates, peers, analyst data: yfinance (numeric) + Claude Code with WebSearch/WebFetch (narrative synthesis),
         {tickerData?.ai_synthesis?.synthesized_at && ` ${String(tickerData.ai_synthesis.synthesized_at).slice(0, 10)}`} snapshot. Technical indicators
         computed from daily OHLCV. For informational purposes only — not investment advice.

@@ -22,7 +22,7 @@ function Reading({ label, value, title }) {
   const missing = value == null
   return (
     <div className="flex flex-col gap-[1px] min-w-0" title={title}>
-      <span className="text-[10px] font-mono uppercase tracking-[.12em]
+      <span className="text-[11px] font-mono uppercase tracking-[.12em]
                        text-[var(--color-text-muted)] truncate">{label}</span>
       <span className={`text-[13px] font-mono tabular-nums ${missing
         ? 'text-[var(--color-text-muted)] italic' : 'text-[var(--color-text-bold)]'}`}>
@@ -52,36 +52,36 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
         <div className="min-w-0">
           {seat && (
             <div className="flex items-baseline gap-2 flex-wrap">
-              <span className="text-[10px] font-mono uppercase tracking-[.24em]
+              <span className="text-[11px] font-mono uppercase tracking-[.24em]
                                text-[var(--color-text-muted)]">{seatLabel}</span>
-              <span className="text-[11.5px] text-[var(--color-text-secondary)]">{seat.why}</span>
+              <span className="text-[11px] text-[var(--color-text-secondary)]">{seat.why}</span>
             </div>
           )}
           <div className="flex items-baseline gap-2.5 mt-1 flex-wrap">
-            <h3 className="m-0 text-[24px] font-semibold leading-none tracking-tight"
+            <h3 className="m-0 text-[26px] font-semibold leading-none tracking-tight"
                 style={{ fontFamily: 'var(--font-cond)' }}>{card.ticker}</h3>
             {chg != null && (
-              <span className="text-[14px] font-mono tabular-nums text-[var(--color-text-bold)]">
+              <span className="text-[13px] font-mono tabular-nums text-[var(--color-text-bold)]">
                 {fmtPct(chg)}
               </span>
             )}
             {r.close != null && (
-              <span className="text-[12.5px] font-mono tabular-nums
+              <span className="text-[13px] font-mono tabular-nums
                                text-[var(--color-text-muted)]">{r.close}</span>
             )}
             {card.flags?.tml && (
-              <span className="text-[10px] font-mono uppercase tracking-[.16em]
+              <span className="text-[11px] font-mono uppercase tracking-[.16em]
                                px-1.5 py-[1px] bg-[var(--color-text-bold)]
                                text-[var(--color-bg)]">TML</span>
             )}
             {card.flags?.chase && (
-              <span className="text-[10px] font-mono uppercase tracking-[.16em]
+              <span className="text-[11px] font-mono uppercase tracking-[.16em]
                                px-1.5 py-[1px] bg-[var(--color-refused)]
                                text-[var(--color-bg)]"
                     title="当日 ≥15% —— 追高警告，不是买点">chase</span>
             )}
           </div>
-          <p className="m-0 mt-1 text-[11.5px] text-[var(--color-text-muted)]">
+          <p className="m-0 mt-1 text-[11px] text-[var(--color-text-muted)]">
             {/* 「无主题」is a claim, and only the engine is in a position to make
                 it — it looked. A name typed into the box here was never checked
                 against the theme map, so its group is simply not printed. */}
@@ -117,7 +117,7 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
             <p className="m-0 text-[13px] leading-snug text-[var(--color-text-bold)]">
               还没有图 —— 引擎不知道这个名字。
             </p>
-            <p className="m-0 mt-1.5 text-[12px] leading-relaxed text-[var(--color-text-secondary)]">
+            <p className="m-0 mt-1.5 text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
               130 根 K 线和信号标记由每晚的 cron 生成，而手工加的票还没有走到管线那边去
               （回路的另一半 GAS <code className="font-mono">shortlist_upsert</code> 还没接）。
               下面的读数是真的，来自 <code className="font-mono">universe.json</code>，跟六席同一个口径。
@@ -137,7 +137,7 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
           {verdictOf}
         </p>
       ) : card.source === 'manual' ? (
-        <p className="m-0 mt-3 text-[12.5px] leading-snug text-[var(--color-text-muted)] italic">
+        <p className="m-0 mt-3 text-[13px] leading-snug text-[var(--color-text-muted)] italic">
           没有判词 —— 判词是引擎按模板生成的，它还没见过这个名字。这里不替它写一句。
         </p>
       ) : null}
@@ -164,7 +164,7 @@ export default function NameCard({ card, seat, seatLabel, verdictOf,
           rows={2}
           className="mt-3 w-full resize-y rounded-2xl bg-[var(--color-bg)]
                      border border-[var(--color-border)] px-3 py-2
-                     text-[12.5px] leading-relaxed text-[var(--color-text-bold)]
+                     text-[13px] leading-relaxed text-[var(--color-text-bold)]
                      placeholder:text-[var(--color-text-muted)]
                      focus:outline-none focus:border-[var(--color-text-muted)]" />
       )}
@@ -251,10 +251,10 @@ function Marks({ mark, onMark, ticker, note, noteOpen, setNoteOpen, onRemove }) 
 function History({ card }) {
   return (
     <div className="mt-2.5 rounded-2xl bg-[var(--color-bg)] px-3.5 py-3
-                    text-[11.5px] text-[var(--color-text-secondary)] max-h-[220px] overflow-y-auto">
+                    text-[11px] text-[var(--color-text-secondary)] max-h-[220px] overflow-y-auto">
       {card.panels?.length > 0 && (
         <div className="mb-2">
-          <div className="text-[10px] font-mono uppercase tracking-[.18em]
+          <div className="text-[11px] font-mono uppercase tracking-[.18em]
                           text-[var(--color-text-muted)] mb-1">上过哪些格</div>
           {card.panels.map((p, i) => (
             <div key={i} className="font-mono tabular-nums">
@@ -268,7 +268,7 @@ function History({ card }) {
       {card.events?.length > 0 && (
         <div>
           {/* P: 前缀是预设命中，不是原始筛选器 —— 数据端的口径，原样透出 */}
-          <div className="text-[10px] font-mono uppercase tracking-[.18em]
+          <div className="text-[11px] font-mono uppercase tracking-[.18em]
                           text-[var(--color-text-muted)] mb-1">
             近三月筛选器命中（P: = 预设）
           </div>

@@ -8,7 +8,7 @@ export default function TickerGrid({ tickers }) {
       {tickers.map((t, i) => (
         <span
           key={`${t.ticker}-${i}`}
-          className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-medium ${atrBadgeColor(t.atr_ext)}`}
+          className={`px-1.5 py-0.5 rounded text-[11px] font-mono font-medium ${atrBadgeColor(t.atr_ext)}`}
         >
           {t.ticker}
         </span>

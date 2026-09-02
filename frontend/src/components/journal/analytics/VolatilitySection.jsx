@@ -57,14 +57,14 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
       {/* Rolling vol chart */}
       {rollingData.length > 0 && (
         <div className="bg-[var(--color-surface)] rounded-3xl p-5">
-          <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+          <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Rolling 20-Day Volatility
           </h3>
           <ResponsiveContainer width="100%" height={280}>
             <LineChart data={rollingData}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
-              <XAxis dataKey="date" tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }} tickFormatter={d => d.slice(5)} interval="preserveStartEnd" />
-              <YAxis tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${v}%`} />
+              <XAxis dataKey="date" tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={d => d.slice(5)} interval="preserveStartEnd" />
+              <YAxis tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }} tickFormatter={v => `${v}%`} />
               <Tooltip
                 contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: 'var(--color-text)' }}
                 formatter={(v, name) => [`${v}%`, name]}
@@ -81,20 +81,20 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
       {/* Per-position vol contribution */}
       {volContrib.length > 0 && (
         <div className="bg-[var(--color-surface)] rounded-3xl p-5">
-          <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+          <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             Per-Position Volatility Contribution
           </h3>
           {volContrib.slice(0, 3).some(v => v.volContribution != null) && (
-            <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-[12.5px] text-[var(--color-signal-caution)] mb-4">
+            <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-[13px] text-[var(--color-signal-caution)] mb-4">
               Top 3 vol contributors: {volContrib.slice(0, 3).filter(v => v.volContribution != null).map(v => `${v.ticker} (${fmt(v.volContribution, 2)}%)`).join(', ')}
             </div>
           )}
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-[12.5px]">
+            <table className="w-full border-collapse text-[13px]">
               <thead>
                 <tr>
                   {['Ticker', 'Weight%', 'Daily Vol', 'Ann. Vol', 'Beta', 'Vol Contrib%'].map(h => (
-                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[10px] uppercase tracking-wide">{h}</th>
+                    <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -120,17 +120,17 @@ export default function VolatilitySection({ volContrib, portfolioVol, spyVol, da
       {/* High-beta watchlist */}
       {highBeta.length > 0 && (
         <div className="bg-[var(--color-surface)] rounded-3xl p-5">
-          <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+          <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
             High-Beta Watchlist (Beta &gt; 1.5)
           </h3>
-          <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-[12.5px] text-[var(--color-signal-caution)] mb-4">
+          <div className="bg-[color-mix(in_srgb,var(--color-signal-caution)_10%,transparent)] border border-[color-mix(in_srgb,var(--color-signal-caution)_30%,transparent)] rounded-md px-3 py-2 text-[13px] text-[var(--color-signal-caution)] mb-4">
             {highBeta.length} position{highBeta.length > 1 ? 's' : ''} with beta above 1.5. Consider sizing these smaller or widening stops.
           </div>
-          <table className="w-full border-collapse text-[12.5px]">
+          <table className="w-full border-collapse text-[13px]">
             <thead>
               <tr>
                 {['Ticker', 'Beta', 'Weight%', 'Mkt Val', 'SPY Equiv'].map(h => (
-                  <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[10px] uppercase tracking-wide">{h}</th>
+                  <th key={h} className="text-left px-2 py-2 border-b-2 border-[var(--color-border)] text-[var(--color-text-secondary)] font-semibold text-[11px] uppercase tracking-wide">{h}</th>
                 ))}
               </tr>
             </thead>

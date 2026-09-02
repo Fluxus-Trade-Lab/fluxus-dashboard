@@ -76,7 +76,7 @@ export default function ThemeMembers({ theme, colour, rsByTicker }) {
     <div>
       {/* the denominator is always stated: a list that silently shows ten of
           286 is a list that lies about what it is */}
-      <p className="m-0 pb-1.5 text-[10px] text-[var(--color-text-muted)]">
+      <p className="m-0 pb-1.5 text-[11px] text-[var(--color-text-muted)]">
         {rows.length} member{rows.length === 1 ? '' : 's'}
         {rows.length !== theme.members ? ` carried · ${missing} not in the universe` : ''}
         {' · by 3M relative strength'}
@@ -87,7 +87,7 @@ export default function ThemeMembers({ theme, colour, rsByTicker }) {
              ? `${HEAD_H + VISIBLE * ROW}px` : undefined }}>
         <table className="w-full text-[11px] border-collapse">
           <thead>
-            <tr className="text-[10px] font-mono uppercase tracking-wider
+            <tr className="text-[11px] font-mono uppercase tracking-wider
                            text-[var(--color-text-muted)] sticky top-0
                            bg-[var(--color-bg)]">
               <th className="text-left py-1 pr-3 font-medium">Ticker</th>
@@ -105,7 +105,7 @@ export default function ThemeMembers({ theme, colour, rsByTicker }) {
                              hover:bg-[var(--color-hover-bg)]">
                 <td className="py-[3px] pr-3 font-mono font-semibold"
                     style={colour ? { color: colour } : undefined}>{r.ticker}</td>
-                <td className="py-[3px] pr-3 text-[10px]">
+                <td className="py-[3px] pr-3 text-[11px]">
                   {r.rs?.state ? (
                     <span className="text-[var(--color-text-secondary)] whitespace-nowrap">
                       <i className="inline-block w-[7px] h-[7px] rounded-[1px] mr-[5px] align-[-0.5px]"

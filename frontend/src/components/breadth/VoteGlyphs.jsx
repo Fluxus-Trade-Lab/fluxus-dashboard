@@ -54,7 +54,7 @@ export default function VoteGlyphs({ detail, stretch = false }) {
       <div className="flex gap-2 items-end overflow-x-auto pb-1">
         {detail.map((d) => <Glyph key={d.key} d={d} stretch={stretch} />)}
       </div>
-      <div className="flex flex-wrap gap-x-5 gap-y-1 mt-2 text-[10px] text-[var(--color-text-muted)]">
+      <div className="flex flex-wrap gap-x-5 gap-y-1 mt-2 text-[11px] text-[var(--color-text-muted)]">
         <span className="flex items-center gap-1.5">
           <i className="block w-4 h-px bg-[var(--color-text)]" />the line it flips at
         </span>
@@ -112,11 +112,11 @@ function Glyph({ d, stretch }) {
                boxShadow: onLine ? '0 0 0 2.5px rgba(184,134,11,.4)' : undefined,
              }} />
       </div>
-      <div className="text-[10px] font-mono leading-[1.25] text-center mt-1.5
+      <div className="text-[11px] font-mono leading-[1.25] text-center mt-1.5
                       text-[var(--color-text-muted)] break-words">
         {d.label}
       </div>
-      <div className="text-[12.5px] font-bold text-center leading-none mt-0.5"
+      <div className="text-[13px] font-bold text-center leading-none mt-0.5"
            style={{ fontFamily: 'var(--font-cond)',
                     // v3: sitting exactly on the line is the vote nearest to
                     // turning — the binding one on this board, so it is red,
@@ -125,7 +125,7 @@ function Glyph({ d, stretch }) {
                       : d.measurable ? 'var(--color-text)' : 'var(--color-text-muted)' }}>
         {d.margin == null ? '—' : fmt(d.margin)}
       </div>
-      <div className="text-[10px] font-mono text-center text-[var(--color-text-muted)] leading-tight">
+      <div className="text-[11px] font-mono text-center text-[var(--color-text-muted)] leading-tight">
         {d.margin == null ? 'not counted' : d.unit}
       </div>
     </div>
@@ -184,12 +184,12 @@ export function VoteMarks({ votes }) {
         {entries.map(([key, v]) => (
           <span key={key} className="flex flex-col gap-1.5" title={`${VOTE_LABEL[key] ?? key}: ${v}`}>
             <i className="block w-full h-[32px]" style={style(v)} />
-            <span className="text-[10px] font-mono leading-tight
+            <span className="text-[11px] font-mono leading-tight
                              text-[var(--color-text-muted)]">{VOTE_LABEL[key] ?? key}</span>
           </span>
         ))}
       </div>
-      <div className="flex flex-wrap gap-x-5 gap-y-1 mt-4 text-[10px] text-[var(--color-text-muted)]">
+      <div className="flex flex-wrap gap-x-5 gap-y-1 mt-4 text-[11px] text-[var(--color-text-muted)]">
         <span className="flex items-center gap-1.5">
           <i className="block w-3.5 h-[10px]" style={style('bull')} />for {tally.bull ?? 0}
         </span>

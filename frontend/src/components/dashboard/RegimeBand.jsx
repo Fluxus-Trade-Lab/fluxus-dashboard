@@ -259,7 +259,7 @@ function ConditionsLine({ history, score, binds }) {
           // the same place is worse than one missing tick
           score != null && Math.abs(score - lvl) < 6 ? null : (
             <span key={lvl} className="absolute left-full ml-1.5 -translate-y-1/2
-                                       text-[10px] font-mono text-[var(--color-text-muted)]"
+                                       text-[11px] font-mono text-[var(--color-text-muted)]"
                   style={{ top: `${(y(lvl) / H) * 100}%` }}>{lvl}</span>
           )
         ))}
@@ -271,7 +271,7 @@ function ConditionsLine({ history, score, binds }) {
         )}
         {/* today's value, pinned to where the line ends */}
         {score != null && (
-          <span className="absolute -translate-y-1/2 px-1.5 py-[1px] text-[10px] font-mono
+          <span className="absolute -translate-y-1/2 px-1.5 py-[1px] text-[11px] font-mono
                            font-semibold tabular-nums whitespace-nowrap"
                 style={{ top: `${(y(score) / H) * 100}%`, left: '100%',
                          background: binds ? 'var(--color-refused)' : 'var(--color-text)',
@@ -289,7 +289,7 @@ function ConditionsLine({ history, score, binds }) {
           const edge = frac < 0.03 ? 'left' : frac > 0.97 ? 'right' : null
           return (
             <span key={t.i}
-                  className={`absolute text-[10px] font-mono whitespace-nowrap
+                  className={`absolute text-[11px] font-mono whitespace-nowrap
                               ${edge ? '' : '-translate-x-1/2'}
                               ${t.isYear ? 'text-[var(--color-text-secondary)] font-semibold'
                                          : 'text-[var(--color-text-muted)]'}`}
@@ -363,12 +363,12 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
     <section className="rounded-3xl px-6 py-5 bg-[var(--color-surface)]">
       <div className="flex items-baseline justify-between gap-4 flex-wrap">
         <div className="flex items-baseline gap-3">
-          <span className="text-[10px] font-mono uppercase tracking-[.24em]
+          <span className="text-[11px] font-mono uppercase tracking-[.24em]
                            text-[var(--color-text-muted)]">Market conditions</span>
           {score != null && (
             <span className="text-[26px] font-semibold tabular-nums leading-none"
                   style={{ fontFamily: 'var(--font-cond)' }}>
-              {score}<span className="text-[12.5px] text-[var(--color-text-muted)]"> / 100</span>
+              {score}<span className="text-[13px] text-[var(--color-text-muted)]"> / 100</span>
             </span>
           )}
         </div>
@@ -386,7 +386,7 @@ export default function RegimeBand({ verdict, signals, conditions, onNavigate })
             binds you today. Blue is gone: a band alone is one pole, and blue
             never appears without its red twin. */}
         <span
-              className="text-[12.5px] font-semibold uppercase tracking-wide px-2.5 py-[3px]"
+              className="text-[13px] font-semibold uppercase tracking-wide px-2.5 py-[3px]"
               style={{ background: level <= 1 ? 'var(--color-refused)' : 'var(--color-text-bold)',
                        color: 'var(--color-bg)' }}>
           {BANDS[level]}

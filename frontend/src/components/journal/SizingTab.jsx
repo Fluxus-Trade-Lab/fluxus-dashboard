@@ -90,39 +90,39 @@ function SizingCalculator({ startingCapital }) {
 
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl p-4 space-y-4">
-      <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
+      <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
         Position Size Calculator
       </h3>
 
       <div className="grid grid-cols-3 gap-3">
         <div>
-          <label className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">Entry Price</label>
+          <label className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">Entry Price</label>
           <input
             type="number"
             value={entry}
             onChange={e => setEntry(e.target.value)}
             placeholder="150.00"
-            className="w-full text-[12.5px] bg-[var(--color-bg)] rounded-3xl px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
+            className="w-full text-[13px] bg-[var(--color-bg)] rounded-3xl px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
           />
         </div>
         <div>
-          <label className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">Stop Price</label>
+          <label className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">Stop Price</label>
           <input
             type="number"
             value={stop}
             onChange={e => setStop(e.target.value)}
             placeholder="145.00"
-            className="w-full text-[12.5px] bg-[var(--color-bg)] rounded-3xl px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
+            className="w-full text-[13px] bg-[var(--color-bg)] rounded-3xl px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
           />
         </div>
         <div>
-          <label className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">Risk %</label>
+          <label className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">Risk %</label>
           <input
             type="number"
             value={riskPct}
             onChange={e => setRiskPct(parseFloat(e.target.value) || 0)}
             step="0.05"
-            className="w-full text-[12.5px] bg-[var(--color-bg)] rounded-3xl px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
+            className="w-full text-[13px] bg-[var(--color-bg)] rounded-3xl px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
           />
         </div>
       </div>
@@ -130,22 +130,22 @@ function SizingCalculator({ startingCapital }) {
       {calc && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2 border-t border-[var(--color-border-light)]">
           <div>
-            <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Shares</span>
-            <span className="text-[14px] font-semibold text-[var(--color-text)]">{calc.shares.toLocaleString()}</span>
+            <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Shares</span>
+            <span className="text-[13px] font-semibold text-[var(--color-text)]">{calc.shares.toLocaleString()}</span>
           </div>
           <div>
-            <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Position Value</span>
-            <span className="text-[14px] font-medium text-[var(--color-text)]">${calc.positionValue.toLocaleString()}</span>
-            <span className="text-[10px] text-[var(--color-text-muted)] ml-1">({calc.positionPct.toFixed(1)}%)</span>
+            <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Position Value</span>
+            <span className="text-[13px] font-medium text-[var(--color-text)]">${calc.positionValue.toLocaleString()}</span>
+            <span className="text-[11px] text-[var(--color-text-muted)] ml-1">({calc.positionPct.toFixed(1)}%)</span>
           </div>
           <div>
-            <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">$ at Risk</span>
-            <span className="text-[14px] font-medium text-[var(--color-loss)]">${calc.riskDollar.toLocaleString()}</span>
-            <span className="text-[10px] text-[var(--color-text-muted)] ml-1">({calc.stopPct.toFixed(1)}% stop)</span>
+            <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">$ at Risk</span>
+            <span className="text-[13px] font-medium text-[var(--color-loss)]">${calc.riskDollar.toLocaleString()}</span>
+            <span className="text-[11px] text-[var(--color-text-muted)] ml-1">({calc.stopPct.toFixed(1)}% stop)</span>
           </div>
           <div>
-            <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">R Targets</span>
-            <span className="text-[12.5px] font-mono text-[var(--color-text)]">
+            <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">R Targets</span>
+            <span className="text-[13px] font-mono text-[var(--color-text)]">
               3R: ${calc.rTarget1.toFixed(2)} · 5R: ${calc.rTarget2.toFixed(2)}
             </span>
           </div>
@@ -215,7 +215,7 @@ function PortfolioAudit({ trades, dailyPrices, startingCapital }) {
 
   if (!audit) {
     return (
-      <div className="text-[12.5px] text-[var(--color-text-muted)] py-4 text-center">
+      <div className="text-[13px] text-[var(--color-text-muted)] py-4 text-center">
         No open positions to audit.
       </div>
     )
@@ -230,19 +230,19 @@ function PortfolioAudit({ trades, dailyPrices, startingCapital }) {
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl p-4 space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
+        <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Current Positions — Sizing Audit
         </h3>
-        <span className={`text-[12.5px] font-mono font-semibold ${audit.totalHeat > 3 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text)]'}`}>
+        <span className={`text-[13px] font-mono font-semibold ${audit.totalHeat > 3 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text)]'}`}>
           Total Heat: {audit.totalHeat.toFixed(2)}%
           {audit.totalHeat > 3 && ' ⚠'}
         </span>
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-[12.5px]">
+        <table className="w-full text-[13px]">
           <thead>
-            <tr className="border-b border-[var(--color-border)] text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
+            <tr className="border-b border-[var(--color-border)] text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">
               <th className="text-left px-2 py-1.5">Ticker</th>
               <th className="text-right px-2 py-1.5">Qty</th>
               <th className="text-right px-2 py-1.5">Entry</th>
@@ -304,7 +304,7 @@ function SizingTabInner() {
     <div className="space-y-6">
       {/* Section 1: Framework Education */}
       <div>
-        <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+        <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
           Position Sizing Methods
         </h3>
         <div className="space-y-2">
@@ -322,53 +322,53 @@ function SizingTabInner() {
                   className="w-full flex items-center justify-between px-4 py-3 text-left cursor-pointer hover:bg-[var(--color-hover-bg)] transition-colors"
                 >
                   <div>
-                    <span className="text-[12.5px] font-semibold text-[var(--color-text)]">{method.title}</span>
-                    <span className="text-[10px] text-[var(--color-text-muted)] ml-2">{method.subtitle}</span>
+                    <span className="text-[13px] font-semibold text-[var(--color-text)]">{method.title}</span>
+                    <span className="text-[11px] text-[var(--color-text-muted)] ml-2">{method.subtitle}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className={`text-[10px] font-medium uppercase tracking-wide ${verdict.color}`}>
+                    <span className={`text-[11px] font-medium uppercase tracking-wide ${verdict.color}`}>
                       {verdict.label}
                     </span>
-                    <span className="text-[var(--color-text-muted)] text-[12.5px]">{isExpanded ? '−' : '+'}</span>
+                    <span className="text-[var(--color-text-muted)] text-[13px]">{isExpanded ? '−' : '+'}</span>
                   </div>
                 </button>
 
                 {/* Expanded content */}
                 {isExpanded && (
                   <div className="px-4 pb-4 space-y-3 border-t border-[var(--color-border-light)]">
-                    <p className="text-[12.5px] text-[var(--color-text-secondary)] leading-relaxed pt-3">
+                    <p className="text-[13px] text-[var(--color-text-secondary)] leading-relaxed pt-3">
                       {method.description}
                     </p>
 
                     {/* Formula */}
                     <div className="bg-[var(--color-bg)] rounded px-3 py-2">
-                      <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">Formula</span>
-                      <code className="text-[12.5px] font-mono text-[var(--color-text)]">{method.formula}</code>
+                      <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">Formula</span>
+                      <code className="text-[13px] font-mono text-[var(--color-text)]">{method.formula}</code>
                     </div>
 
                     {/* Example */}
                     <div className="bg-[var(--color-bg)] rounded px-3 py-2">
-                      <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">Example</span>
-                      <span className="text-[12.5px] text-[var(--color-text-secondary)]">{method.example.result}</span>
+                      <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">Example</span>
+                      <span className="text-[13px] text-[var(--color-text-secondary)]">{method.example.result}</span>
                     </div>
 
                     {/* Pros / Cons */}
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-profit)] block mb-1">Pros</span>
+                        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-profit)] block mb-1">Pros</span>
                         <ul className="space-y-0.5">
                           {method.pros.map((p, i) => (
-                            <li key={i} className="text-[10px] text-[var(--color-text-secondary)] flex gap-1.5">
+                            <li key={i} className="text-[11px] text-[var(--color-text-secondary)] flex gap-1.5">
                               <span className="text-[var(--color-profit)] shrink-0">+</span>{p}
                             </li>
                           ))}
                         </ul>
                       </div>
                       <div>
-                        <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-loss)] block mb-1">Cons</span>
+                        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-loss)] block mb-1">Cons</span>
                         <ul className="space-y-0.5">
                           {method.cons.map((c, i) => (
-                            <li key={i} className="text-[10px] text-[var(--color-text-secondary)] flex gap-1.5">
+                            <li key={i} className="text-[11px] text-[var(--color-text-secondary)] flex gap-1.5">
                               <span className="text-[var(--color-loss)] shrink-0">−</span>{c}
                             </li>
                           ))}

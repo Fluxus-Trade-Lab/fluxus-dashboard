@@ -23,7 +23,7 @@ export default function PageHeader({ group, title, crumbTitle, blurb, meta = [] 
   return (
     <header className="pb-3 mb-4 border-b border-[var(--color-v2-ink)]">
       {group && (
-        <div className="text-[10px] font-mono font-medium uppercase tracking-[.2em] text-[var(--color-text-muted)] pb-3">
+        <div className="text-[11px] font-mono font-medium uppercase tracking-[.2em] text-[var(--color-text-muted)] pb-3">
           {t(`rail.${group}`)}
           <span className="mx-2 opacity-50">›</span>
           {/* The crumb says WHICH PAGE; the title is free to say something
@@ -40,7 +40,7 @@ export default function PageHeader({ group, title, crumbTitle, blurb, meta = [] 
             {title}
           </h1>
           {blurb && (
-            <p className="text-[14px] leading-relaxed text-[var(--color-text-secondary)] mt-2 mb-0
+            <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)] mt-2 mb-0
                           max-w-[62ch]">
               {blurb}
             </p>

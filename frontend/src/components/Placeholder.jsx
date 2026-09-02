@@ -20,12 +20,12 @@ export default function Placeholder({ group, title, blurb, willHold = [], source
           the untested grey says "reserved" without inventing a hue. */}
       <div className="border border-dashed border-[var(--color-untested)] rounded-3xl p-6
                       max-w-[70ch]">
-        <div className="text-[10px] font-mono uppercase tracking-[.24em]
+        <div className="text-[11px] font-mono uppercase tracking-[.24em]
                         text-[var(--color-text-muted)] mb-3">
           Reserved
         </div>
         {willHold.length > 0 && (
-          <ul className="m-0 pl-4 space-y-1.5 text-[12.5px] leading-relaxed
+          <ul className="m-0 pl-4 space-y-1.5 text-[13px] leading-relaxed
                          text-[var(--color-text-secondary)]">
             {willHold.map((w) => <li key={w}>{w}</li>)}
           </ul>

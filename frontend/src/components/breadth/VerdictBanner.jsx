@@ -20,16 +20,16 @@ export default function VerdictBanner({ verdict, dataQuality, session }) {
     <div className="bg-[var(--color-surface)] rounded-3xl p-5">
       <div className="flex items-baseline justify-between mb-3">
         <div className="flex items-baseline gap-3">
-          <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
+          <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
             Market Environment · Decision First
           </h3>
           {dataQuality?.stale && (
-            <span className="text-[10px] px-1.5 py-0.5 rounded bg-[color-mix(in_srgb,var(--color-signal-caution)_18%,transparent)] text-[var(--color-signal-caution)] uppercase tracking-wide">
+            <span className="text-[11px] px-1.5 py-0.5 rounded bg-[color-mix(in_srgb,var(--color-signal-caution)_18%,transparent)] text-[var(--color-signal-caution)] uppercase tracking-wide">
               Stale data · as of {dataQuality.as_of ?? '—'}
             </span>
           )}
         </div>
-        <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
+        <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
           score {v.score >= 0 ? `+${v.score}` : v.score} / 12
         </span>
       </div>
@@ -70,7 +70,7 @@ export default function VerdictBanner({ verdict, dataQuality, session }) {
 
       <Falsification votes={v.votes} score={v.score} env={v.env} />
 
-      <p className="text-[12.5px] text-[var(--color-text)] border-t border-[var(--color-border-light)] pt-3">
+      <p className="text-[13px] text-[var(--color-text)] border-t border-[var(--color-border-light)] pt-3">
         <span className="font-medium">Guidance:</span> {v.guidance}
       </p>
       {v.notes?.length > 0 && (
@@ -127,10 +127,10 @@ function Falsification({ votes, score, env }) {
 
   return (
     <div className="border-t border-[var(--color-border-light)] pt-3 mt-1">
-      <div className="text-[10px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mb-1.5">
+      <div className="text-[11px] font-mono uppercase tracking-[.2em] text-[var(--color-text-muted)] mb-1.5">
         What would change this
       </div>
-      <p className="text-[12.5px] leading-relaxed text-[var(--color-text-secondary)] m-0">
+      <p className="text-[13px] leading-relaxed text-[var(--color-text-secondary)] m-0">
         {env === 'MIXED' ? (
           <>Score is <b className="text-[var(--color-text)]">{score >= 0 ? `+${score}` : score}</b>.
             It becomes {target > 0 ? 'BULLISH' : 'BEARISH'} at{' '}
@@ -158,11 +158,11 @@ function Falsification({ votes, score, env }) {
 function Col({ label, value, sub }) {
   return (
     <div>
-      <div className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)] mb-1">
+      <div className="text-[11px] font-medium uppercase tracking-wider text-[var(--color-text-muted)] mb-1">
         {label}
       </div>
-      <div className="text-[12.5px] text-[var(--color-text)] leading-snug">{value}</div>
-      {sub && <div className="text-[10px] text-[var(--color-text-secondary)]">{sub}</div>}
+      <div className="text-[13px] text-[var(--color-text)] leading-snug">{value}</div>
+      {sub && <div className="text-[11px] text-[var(--color-text-secondary)]">{sub}</div>}
     </div>
   )
 }

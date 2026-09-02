@@ -28,7 +28,7 @@ export default function EntryNav({ dates, date, current, onPick, cadence = 'dail
      a slot reading "today" was the only thing on screen not saying WHICH. */
 
   return (
-    <div className="flex items-center gap-1.5 text-[10px] font-mono
+    <div className="flex items-center gap-1.5 text-[11px] font-mono
                     text-[var(--color-text-muted)]">
       <button type="button" disabled={!older} onClick={() => onPick(older)}
               title={older ? `Back to ${older}` : 'Nothing older'}

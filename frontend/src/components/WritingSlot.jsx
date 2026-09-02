@@ -93,7 +93,7 @@ export default function WritingSlot({
       text.trim() ? 'border-[var(--color-border)]' : 'border-dashed border-[var(--color-border)]'
     } ${className}`}>
       <div className="flex items-baseline justify-between gap-3">
-        <span className="text-[10px] font-mono uppercase tracking-[.24em]
+        <span className="text-[11px] font-mono uppercase tracking-[.24em]
                          text-[var(--color-text-muted)]">{label}</span>
         <div className="flex items-center gap-3">
           <SaveState onSave={saveNow} dirty={dirty} />
@@ -116,7 +116,7 @@ export default function WritingSlot({
            the box without scrolling. It is also the only text on this page a
            person wrote, which is reason enough for it to be the largest. */
         className="mt-2 w-full flex-1 resize-none bg-transparent border-none outline-none
-                   text-[15px] leading-[1.55] text-[var(--color-text)]
+                   text-[17px] leading-[1.55] text-[var(--color-text)]
                    placeholder:text-[var(--color-text-muted)]
                    placeholder:text-[13px]
                    focus-visible:ring-0"
@@ -128,7 +128,7 @@ export default function WritingSlot({
           person who wrote it. The box got the space instead. The empty state
           is still honest; it is just silent about it now. */}
       {written > 1 && (
-        <p className="text-[10px] font-mono text-[var(--color-text-muted)] m-0 mt-1.5">
+        <p className="text-[11px] font-mono text-[var(--color-text-muted)] m-0 mt-1.5">
           {written} written
         </p>
       )}

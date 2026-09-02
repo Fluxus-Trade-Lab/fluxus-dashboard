@@ -19,7 +19,7 @@ export default function DemonRulesConfig({ rules, onUpdate }) {
       <button
         onClick={() => setOpen(!open)}
         aria-expanded={open}
-        className="w-full flex items-center justify-between px-4 py-2.5 text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] hover:bg-[var(--color-hover-bg)] cursor-pointer bg-transparent border-none text-left"
+        className="w-full flex items-center justify-between px-4 py-2.5 text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] hover:bg-[var(--color-hover-bg)] cursor-pointer bg-transparent border-none text-left"
       >
         <span>Trading Rules</span>
         <span className="text-[var(--color-text-muted)]">{open ? '\u25B2' : '\u25BC'}</span>
@@ -30,11 +30,11 @@ export default function DemonRulesConfig({ rules, onUpdate }) {
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-3">
             {FIELDS.map(({ key, label, prefix, suffix, format, parse }) => (
               <div key={key}>
-                <label className="text-[10px] text-[var(--color-text-muted)] uppercase tracking-wide block mb-1">
+                <label className="text-[11px] text-[var(--color-text-muted)] uppercase tracking-wide block mb-1">
                   {label}
                 </label>
                 <div className="flex items-center gap-1">
-                  {prefix && <span className="text-[12.5px] text-[var(--color-text-muted)]">{prefix}</span>}
+                  {prefix && <span className="text-[13px] text-[var(--color-text-muted)]">{prefix}</span>}
                   <input
                     type="text"
                     value={format(rules[key])}
@@ -42,16 +42,16 @@ export default function DemonRulesConfig({ rules, onUpdate }) {
                       const val = parse(e.target.value)
                       if (!isNaN(val) && val > 0) onUpdate({ ...rules, [key]: val })
                     }}
-                    className="w-full px-2 py-1 text-[12.5px] font-mono bg-[var(--color-bg)] rounded-3xl outline-none focus:border-[var(--color-text-muted)] text-[var(--color-text)]"
+                    className="w-full px-2 py-1 text-[13px] font-mono bg-[var(--color-bg)] rounded-3xl outline-none focus:border-[var(--color-text-muted)] text-[var(--color-text)]"
                   />
-                  {suffix && <span className="text-[12.5px] text-[var(--color-text-muted)]">{suffix}</span>}
+                  {suffix && <span className="text-[13px] text-[var(--color-text-muted)]">{suffix}</span>}
                 </div>
               </div>
             ))}
           </div>
           <button
             onClick={() => onUpdate(DEFAULT_RULES)}
-            className="mt-2 text-[10px] text-[var(--color-accent)] hover:underline cursor-pointer bg-transparent border-none"
+            className="mt-2 text-[11px] text-[var(--color-accent)] hover:underline cursor-pointer bg-transparent border-none"
           >
             Reset to defaults
           </button>

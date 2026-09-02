@@ -61,7 +61,7 @@ export default function TradeJournalPage() {
   }, [trades])
 
   if (loading) {
-    return <div className="text-[var(--color-text-muted)] text-[14px] py-10 text-center">Loading trade journal…</div>
+    return <div className="text-[var(--color-text-muted)] text-[13px] py-10 text-center">Loading trade journal…</div>
   }
   if (!trades.length) {
     return <DataUnavailable
@@ -117,7 +117,7 @@ export default function TradeJournalPage() {
       </div>
 
       <div className="overflow-x-auto rounded-3xl bg-[var(--color-surface)]">
-        <table className="w-full text-[12.5px]">
+        <table className="w-full text-[13px]">
           <thead>
             <tr className="border-b border-[var(--color-border)] bg-[var(--color-bg)]">
               <Th onClick={() => handleSort('entry_date')} active={sortKey === 'entry_date'} dir={sortDir}>Entry</Th>
@@ -170,7 +170,7 @@ function Th({ children, onClick, active, dir }) {
   return (
     <th
       onClick={onClick}
-      className="px-2 py-1.5 text-left cursor-pointer hover:bg-[var(--color-hover-bg)] font-medium text-[var(--color-text-secondary)] uppercase tracking-wide text-[10px] whitespace-nowrap"
+      className="px-2 py-1.5 text-left cursor-pointer hover:bg-[var(--color-hover-bg)] font-medium text-[var(--color-text-secondary)] uppercase tracking-wide text-[11px] whitespace-nowrap"
     >
       {children}{active && (dir === 'asc' ? ' ↑' : ' ↓')}
     </th>

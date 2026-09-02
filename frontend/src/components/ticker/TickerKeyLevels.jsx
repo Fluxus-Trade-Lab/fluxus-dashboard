@@ -22,7 +22,7 @@ export default function TickerKeyLevels({ universe, tickerData }) {
   if (!rows.length) {
     return (
       <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-        <div className="font-semibold mb-3 text-[14px]">Key Levels</div>
+        <div className="font-semibold mb-3 text-[13px]">Key Levels</div>
         <p className="m-0 text-[13px] text-[var(--color-text-muted)]">
           这个代码不在 universe.json 里 —— 不是没有水平位，是这个名字没被扫到。
         </p>
@@ -33,14 +33,14 @@ export default function TickerKeyLevels({ universe, tickerData }) {
 
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-      <div className="font-semibold mb-3 text-[14px]">Key Levels</div>
+      <div className="font-semibold mb-3 text-[13px]">Key Levels</div>
       {/* The table scrolls inside itself; the page never scrolls sideways.
           Adding the distance column pushed Key Levels 41px past a 375px
           viewport and took the whole document with it. */}
       <div className="overflow-x-auto -mx-1 px-1">
-      <table className="w-full min-w-[420px] text-[12.5px]">
+      <table className="w-full min-w-[420px] text-[13px]">
         <thead>
-          <tr className="text-left text-[10px] text-[var(--color-text-muted)] uppercase
+          <tr className="text-left text-[11px] text-[var(--color-text-muted)] uppercase
                          tracking-wide border-b border-[var(--color-border-light)]">
             <th className="px-2 py-1.5">Level</th>
             <th className="px-2 py-1.5 text-right">Price</th>
@@ -56,7 +56,7 @@ export default function TickerKeyLevels({ universe, tickerData }) {
                 {r.price == null
                   ? <span className="text-[var(--color-text-muted)] italic text-[11px]">未测量</span>
                   : <>{fmtCur(r.price)}{r.derived && (
-                      <span className="ml-1 text-[10px] text-[var(--color-text-muted)]"
+                      <span className="ml-1 text-[11px] text-[var(--color-text-muted)]"
                             title="由管线发布的距离反推：close / (1 + dist)。200 日线对得上 0.01%，算法本身核过">
                         ↩
                       </span>)}</>}
@@ -74,7 +74,7 @@ export default function TickerKeyLevels({ universe, tickerData }) {
         </tbody>
       </table>
       </div>
-      <p className="m-0 mt-2.5 text-[10px] font-mono text-[var(--color-text-muted)]">
+      <p className="m-0 mt-2.5 text-[11px] font-mono text-[var(--color-text-muted)]">
         ↩ = 由管线发布的距离反推的价，不是管线直接给的价
       </p>
     </div>

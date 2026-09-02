@@ -68,21 +68,21 @@ export default function TickerRelativeStrength({ tickerData }) {
   if (!ohlc.length) {
     return (
       <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-        <div className="font-semibold mb-3 text-[14px]">Relative Strength vs SPY & QQQ</div>
-        <div className="text-[var(--color-text-muted)] text-[14px]">No price history available.</div>
+        <div className="font-semibold mb-3 text-[13px]">Relative Strength vs SPY & QQQ</div>
+        <div className="text-[var(--color-text-muted)] text-[13px]">No price history available.</div>
       </div>
     )
   }
 
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-      <div className="font-semibold mb-3 text-[14px]">Relative Strength vs SPY & QQQ</div>
+      <div className="font-semibold mb-3 text-[13px]">Relative Strength vs SPY & QQQ</div>
       <ResponsiveContainer width="100%" height={240}>
         <LineChart data={chartData}>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-light)" />
           <XAxis
             dataKey="date"
-            tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }}
+            tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }}
             tickFormatter={d => d?.slice(5)}
             interval={Math.max(1, Math.floor(chartData.length / 8))}
           />
@@ -95,9 +95,9 @@ export default function TickerRelativeStrength({ tickerData }) {
         </LineChart>
       </ResponsiveContainer>
 
-      <table className="w-full text-[12.5px] mt-4">
+      <table className="w-full text-[13px] mt-4">
         <thead>
-          <tr className="text-left text-[10px] text-[var(--color-text-muted)] uppercase tracking-wide border-b border-[var(--color-border-light)]">
+          <tr className="text-left text-[11px] text-[var(--color-text-muted)] uppercase tracking-wide border-b border-[var(--color-border-light)]">
             <th className="px-2 py-1.5">Period</th>
             <th className="px-2 py-1.5 text-right">{tickerData.ticker}</th>
             <th className="px-2 py-1.5 text-right">SPY</th>

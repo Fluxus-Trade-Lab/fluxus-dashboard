@@ -113,13 +113,13 @@ export default function PreMarketChecklist() {
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl px-5 py-4">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
+        <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Pre-Market Checklist
         </h3>
         <div className="flex items-center gap-3">
           <SaveState onSave={saveNow} dirty={dirty} />
           <EntryNav dates={history} date={date} current={today} onPick={setDate} />
-          <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
+          <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
             {answeredCount}/{totalCount}
           </span>
         </div>
@@ -128,7 +128,7 @@ export default function PreMarketChecklist() {
       <div className="space-y-2.5">
         {QUESTIONS.map(({ id, text, options }) => (
           <div key={id}>
-            <div className="text-[12.5px] text-[var(--color-text)] mb-1">{text}</div>
+            <div className="text-[13px] text-[var(--color-text)] mb-1">{text}</div>
             <div className="flex gap-1 flex-wrap">
               {options.map((opt) => (
                 <button
@@ -157,7 +157,7 @@ export default function PreMarketChecklist() {
           placeholder="Situational notes — what's on your mind today?"
           aria-label="Situational notes"
           rows={2}
-          className="w-full px-3 py-2 text-[12.5px] bg-[var(--color-bg)] rounded-3xl resize-none outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)]"
+          className="w-full px-3 py-2 text-[13px] bg-[var(--color-bg)] rounded-3xl resize-none outline-none focus:border-[var(--color-text-muted)] font-sans text-[var(--color-text)] placeholder:text-[var(--color-text-muted)]"
         />
       </div>
     </div>

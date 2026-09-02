@@ -8,18 +8,18 @@ export default function TickerEarnings({ tickerData }) {
   if (!next.date && history.length === 0) {
     return (
       <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-        <div className="font-semibold mb-3 text-[14px]">Earnings</div>
-        <div className="text-[var(--color-text-muted)] text-[14px]">No earnings data available.</div>
+        <div className="font-semibold mb-3 text-[13px]">Earnings</div>
+        <div className="text-[var(--color-text-muted)] text-[13px]">No earnings data available.</div>
       </div>
     )
   }
 
   return (
     <div className="bg-[var(--color-bg)] rounded-3xl p-5">
-      <div className="font-semibold mb-3 text-[14px]">Earnings — Next + Last 4Q</div>
-      <table className="w-full text-[12.5px]">
+      <div className="font-semibold mb-3 text-[13px]">Earnings — Next + Last 4Q</div>
+      <table className="w-full text-[13px]">
         <thead>
-          <tr className="text-left text-[10px] text-[var(--color-text-muted)] uppercase tracking-wide border-b border-[var(--color-border-light)]">
+          <tr className="text-left text-[11px] text-[var(--color-text-muted)] uppercase tracking-wide border-b border-[var(--color-border-light)]">
             <th className="px-2 py-1.5">Period</th>
             <th className="px-2 py-1.5">Date</th>
             <th className="px-2 py-1.5 text-right">EPS Act / Est</th>
@@ -34,7 +34,7 @@ export default function TickerEarnings({ tickerData }) {
               <td className="px-2 py-1.5 text-right tabular-nums">
                 {next.eps_estimate != null ? `est ${Number(next.eps_estimate).toFixed(2)}` : '—'}
               </td>
-              <td className="px-2 py-1.5 text-right text-[10px] text-[var(--color-text-muted)]">
+              <td className="px-2 py-1.5 text-right text-[11px] text-[var(--color-text-muted)]">
                 {next.revenue_estimate != null
                   ? `Rev est $${(next.revenue_estimate / 1e6).toFixed(0)}M`
                   : ''}
@@ -47,7 +47,7 @@ export default function TickerEarnings({ tickerData }) {
             return (
               <tr key={i} className="border-b border-[var(--color-border-light)]">
                 <td className="px-2 py-1.5 text-[var(--color-text-secondary)]">{String(row.period_end).slice(0, 10)}</td>
-                <td className="px-2 py-1.5 text-[10px] text-[var(--color-text-muted)]">—</td>
+                <td className="px-2 py-1.5 text-[11px] text-[var(--color-text-muted)]">—</td>
                 <td className="px-2 py-1.5 text-right tabular-nums">
                   {fmtEps(row.eps_actual)} / {fmtEps(row.eps_estimate)}
                 </td>

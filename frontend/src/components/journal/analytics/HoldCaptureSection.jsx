@@ -44,8 +44,8 @@ export default function HoldCaptureSection() {
 
   return (
     <section>
-      <h3 className="text-[15px] font-semibold m-0">{t('hold.title')}</h3>
-      <p className="text-[12.5px] text-[var(--color-text-muted)] mt-1 mb-5 max-w-[64ch]">
+      <h3 className="text-[17px] font-semibold m-0">{t('hold.title')}</h3>
+      <p className="text-[13px] text-[var(--color-text-muted)] mt-1 mb-5 max-w-[64ch]">
         {t('hold.lede')}
       </p>
 
@@ -67,7 +67,7 @@ export default function HoldCaptureSection() {
           )
         })}
       </div>
-      <div className="flex justify-between text-[10px] font-mono
+      <div className="flex justify-between text-[11px] font-mono
                       text-[var(--color-text-muted)] mb-6">
         <span>{t('hold.ax.loss')}</span><span>{t('hold.ax.entry')}</span><span>{t('hold.ax.top')}</span>
       </div>
@@ -88,7 +88,7 @@ export default function HoldCaptureSection() {
                 className="w-full grid grid-cols-[62px_44px_1fr_auto] items-center gap-3.5
                            py-2.5 bg-transparent border-none cursor-pointer text-left
                            hover:bg-[var(--color-hover-bg)]">
-                <span className="text-[13.5px] font-semibold">{r.label}{t('hold.days')}</span>
+                <span className="text-[13px] font-semibold">{r.label}{t('hold.days')}</span>
                 <span className="text-[11px] font-mono text-[var(--color-text-muted)] text-right">
                   {r.n}
                 </span>
@@ -136,11 +136,11 @@ export default function HoldCaptureSection() {
         })}
       </div>
 
-      <p className="text-[11.5px] text-[var(--color-text-muted)] mt-3.5 max-w-[64ch]">
+      <p className="text-[11px] text-[var(--color-text-muted)] mt-3.5 max-w-[64ch]">
         {t('hold.legend')}
       </p>
       {confounded && (
-        <p className="text-[11.5px] text-[var(--color-text-secondary)] mt-2 max-w-[64ch]
+        <p className="text-[11px] text-[var(--color-text-secondary)] mt-2 max-w-[64ch]
                       border-l-2 border-[var(--color-border)] pl-3">
           {t('hold.confound')}
         </p>

@@ -99,7 +99,7 @@ function CompareReading({ picks, windowed, winKey }) {
   const windowName = { '1W': 'the past week', '1M': 'the past month', '3M': 'the past quarter' }[winKey]
 
   return (
-    <p className="m-0 mb-2.5 text-[12.5px] leading-relaxed border-l-2
+    <p className="m-0 mb-2.5 text-[13px] leading-relaxed border-l-2
                   border-[var(--color-border)] pl-3 text-[var(--color-text-secondary)]">
       Over {windowName}:{' '}
       {read.map(({ pick, row }, i) => (
@@ -124,7 +124,7 @@ function Section({ label, note, right, children }) {
   return (
     <section className="pt-2">
       <div className="flex items-baseline gap-3 pb-2.5">
-        <span className="text-[10px] font-mono font-medium uppercase tracking-[.24em]
+        <span className="text-[11px] font-mono font-medium uppercase tracking-[.24em]
                          text-[var(--color-text-muted)]">{label}</span>
         {/* the slot beside the label: a control belongs here, next to the
             thing it controls. The state legend is an annotation of the marks
@@ -182,7 +182,7 @@ export default function GroupsPage() {
   }, [themes, provisional, industries])
 
   if (loading) {
-    return <div className="text-[var(--color-text-muted)] text-[14px] py-8 text-center">
+    return <div className="text-[var(--color-text-muted)] text-[13px] py-8 text-center">
       Loading groups…
     </div>
   }
@@ -255,7 +255,7 @@ export default function GroupsPage() {
   // Controls are typography, not boxes: state is carried by weight and an
   // underline, never by a filled pill. Borders on this page are reserved for
   // separating data from data.
-  const seg = (active) => `px-0.5 pb-[3px] text-[12.5px] bg-transparent border-0
+  const seg = (active) => `px-0.5 pb-[3px] text-[13px] bg-transparent border-0
     border-b-2 cursor-pointer transition-colors
     ${active ? 'text-[var(--color-text)] font-semibold border-[var(--color-text)]'
              : 'text-[var(--color-text-muted)] border-transparent hover:text-[var(--color-text)]'}`
@@ -350,14 +350,14 @@ export default function GroupsPage() {
                           cur === pick.name ? null : pick.name)}
                         className="w-full flex items-baseline gap-2.5 bg-transparent border-0
                                    p-0 cursor-pointer text-left group">
-                  <span className="text-[10px] font-mono text-[var(--color-text-muted)]
+                  <span className="text-[11px] font-mono text-[var(--color-text-muted)]
                                    group-hover:text-[var(--color-text)] w-3">
                     {open ? '−' : '+'}
                   </span>
                   <span className="text-[11px] font-medium" style={{ color: pick.colour }}>
                     {pick.name}
                   </span>
-                  <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
+                  <span className="text-[11px] font-mono text-[var(--color-text-muted)]">
                     {row.members} members
                   </span>
                 </button>
@@ -382,7 +382,7 @@ export default function GroupsPage() {
                      {[['window', 'by Time'], ['pace', 'by Acceleration']].map(([k, label]) => (
                        <button key={k} type="button" onClick={() => setRankSort(k)}
                                aria-pressed={rankSort === k}
-                               className={`px-2 py-[2px] text-[10px] font-mono rounded cursor-pointer
+                               className={`px-2 py-[2px] text-[11px] font-mono rounded cursor-pointer
                                            border-none transition-colors whitespace-nowrap ${rankSort === k
                                  ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                                  : 'bg-[var(--color-surface-raised)] text-[var(--color-text-secondary)] hover:text-[var(--color-text)]'}`}>

@@ -25,7 +25,7 @@ export default function Reference({ label, note, count, children }) {
               aria-expanded={open}
               className="w-full flex items-baseline gap-3 text-left bg-transparent
                          border-0 p-0 cursor-pointer group">
-        <span className="text-[10px] font-mono text-[var(--color-text-muted)]
+        <span className="text-[11px] font-mono text-[var(--color-text-muted)]
                          group-hover:text-[var(--color-text)] w-3">
           {open ? '−' : '+'}
         </span>

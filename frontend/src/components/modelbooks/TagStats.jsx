@@ -81,7 +81,7 @@ export default function TagStats({ cards }) {
             <button
               key={f.value}
               onClick={() => setEra(f.value)}
-              className={`px-2.5 py-1 text-[10px] font-medium rounded cursor-pointer transition-colors ${
+              className={`px-2.5 py-1 text-[11px] font-medium rounded cursor-pointer transition-colors ${
                 era === f.value
                   ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                   : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-[var(--color-surface-raised)]'
@@ -105,7 +105,7 @@ export default function TagStats({ cards }) {
         </select>
 
         {/* Summary */}
-        <span className="text-[10px] text-[var(--color-text-muted)] ml-auto">
+        <span className="text-[11px] text-[var(--color-text-muted)] ml-auto">
           {filtered.length} setups
           {untaggedCount > 0 && (
             <span className="ml-2 text-[var(--color-signal-caution)] dark:text-[var(--color-signal-caution)]">
@@ -118,9 +118,9 @@ export default function TagStats({ cards }) {
       {/* Stats grid */}
       {stats.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-48 rounded-lg border border-dashed border-[var(--color-border)] bg-[var(--color-surface-alt)] gap-2">
-          <span className="text-[12.5px] text-[var(--color-text-muted)]">No tagged patterns in this selection</span>
+          <span className="text-[13px] text-[var(--color-text-muted)]">No tagged patterns in this selection</span>
           {untaggedCount > 0 && (
-            <span className="text-[10px] text-[var(--color-signal-caution)] dark:text-[var(--color-signal-caution)]">
+            <span className="text-[11px] text-[var(--color-signal-caution)] dark:text-[var(--color-signal-caution)]">
               {untaggedCount} setups need pattern tags
             </span>
           )}
@@ -137,7 +137,7 @@ export default function TagStats({ cards }) {
                 className="bg-[var(--color-surface)] rounded-3xl p-3 space-y-2.5"
               >
                 {/* Pattern badge */}
-                <span className={`inline-block px-2 py-0.5 text-[10px] font-medium rounded-full ${badgeColors}`}>
+                <span className={`inline-block px-2 py-0.5 text-[11px] font-medium rounded-full ${badgeColors}`}>
                   {formatPattern(pattern)}
                 </span>
 
@@ -145,7 +145,7 @@ export default function TagStats({ cards }) {
                 <div className="space-y-2">
                   <div>
                     <div className="flex items-baseline justify-between mb-0.5">
-                      <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Count</span>
+                      <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Count</span>
                       <span className="text-[11px] font-semibold text-[var(--color-text)]">{count}</span>
                     </div>
                     <div className="w-full h-1 bg-[var(--color-border)] rounded-full overflow-hidden">
@@ -154,7 +154,7 @@ export default function TagStats({ cards }) {
                   </div>
                   <div>
                     <div className="flex items-baseline justify-between mb-0.5">
-                      <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Avg Gain</span>
+                      <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Avg Gain</span>
                       <span className="text-[11px] font-medium text-[var(--color-profit)] dark:text-[var(--color-profit)]">
                         {avgGain != null ? `${avgGain.toFixed(0)}%` : '—'}
                       </span>
@@ -164,7 +164,7 @@ export default function TagStats({ cards }) {
                     </div>
                   </div>
                   <div className="flex items-baseline justify-between">
-                    <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Avg Duration</span>
+                    <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)]">Avg Duration</span>
                     <span className="text-[11px] font-medium text-[var(--color-text-secondary)]">
                       {avgDuration != null ? `${Math.round(avgDuration)}d` : '—'}
                     </span>

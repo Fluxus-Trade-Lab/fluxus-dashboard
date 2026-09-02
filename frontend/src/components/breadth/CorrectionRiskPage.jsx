@@ -88,12 +88,12 @@ export default function CorrectionRiskPage() {
           <h1 className="text-[17px] font-semibold m-0">
             {zh ? '回撤风险' : 'Correction Risk'}
           </h1>
-          <span className="px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-[.18em]
+          <span className="px-1.5 py-0.5 text-[11px] font-mono uppercase tracking-[.18em]
                            rounded-3xl text-[var(--color-text-muted)]">
             {zh ? '未上线' : 'Not shipped'}
           </span>
         </div>
-        <p className="mt-2 mb-0 text-[14px] text-[var(--color-text-secondary)]">
+        <p className="mt-2 mb-0 text-[13px] text-[var(--color-text-secondary)]">
           {zh
             ? '这一格是空的,而且是故意空着的。下面写的是它要回答什么、卡在哪里、以及凭什么才算做完 —— 先立标准,再动手。'
             : 'This slot is empty, deliberately. Below is what it has to answer, what is ' +
@@ -109,10 +109,10 @@ export default function CorrectionRiskPage() {
               {String(i + 1).padStart(2, '0')}
             </span>
             <div>
-              <h2 className="text-[12.5px] font-semibold m-0 mb-1">
+              <h2 className="text-[13px] font-semibold m-0 mb-1">
                 {zh ? g.zh : g.en}
               </h2>
-              <p className="m-0 text-[12.5px] leading-relaxed text-[var(--color-text-secondary)]">
+              <p className="m-0 text-[13px] leading-relaxed text-[var(--color-text-secondary)]">
                 {zh ? g.zh_body : g.en_body}
               </p>
             </div>

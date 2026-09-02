@@ -69,11 +69,11 @@ function Row({ row, levels }) {
              style={{ fontFamily: 'var(--font-cond)' }}>{key}</div>
       <Level level={level} count={levels.length} />
       <div>
-        <div className="text-[10px] font-semibold uppercase tracking-wider mb-[3px]"
+        <div className="text-[11px] font-semibold uppercase tracking-wider mb-[3px]"
              style={{ color: colour }}>
           {label ?? 'not wired'}
           {level != null && (
-            <span className="ml-2 font-normal tracking-[.16em] normal-case text-[10px]
+            <span className="ml-2 font-normal tracking-[.16em] normal-case text-[11px]
                              text-[var(--color-text-muted)]">{REG[layer] ?? layer}</span>
           )}
         </div>
@@ -115,18 +115,18 @@ function Chain({ chain }) {
                        backgroundImage: l.state === 'unlit' ? HATCH : undefined,
                      }} />
               </div>
-              <div className="text-[12.5px] font-semibold leading-tight">{l.label}</div>
-              <div className="text-[10px] font-mono tracking-widest mt-1"
+              <div className="text-[13px] font-semibold leading-tight">{l.label}</div>
+              <div className="text-[11px] font-mono tracking-widest mt-1"
                    style={{ color: colour }}>
                 {l.state === 'unmeasured' ? 'NOT MEASURED' : `${pct}% CARRYING`}
               </div>
               {l.fed === false && (
-                <div className="text-[10px] font-mono tracking-wider mt-1
+                <div className="text-[11px] font-mono tracking-wider mt-1
                                 text-[var(--color-text-muted)]">
                   MEASURED, NOT FED
                 </div>
               )}
-              <div className="text-[10px] leading-snug mt-2
+              <div className="text-[11px] leading-snug mt-2
                               text-[var(--color-text-secondary)]">{l.evidence}</div>
             </div>
           )
@@ -146,7 +146,7 @@ export default function StateBoard({ board, session }) {
     <section className="space-y-1">
       <div className="flex items-baseline justify-between pb-2
                       border-b border-[var(--color-v2-ink)]">
-        <h2 className="text-[10px] font-mono uppercase tracking-[.24em]
+        <h2 className="text-[11px] font-mono uppercase tracking-[.24em]
                        text-[var(--color-text-muted)]">State board</h2>
         <span className="text-[11px] text-[var(--color-text-secondary)]">
           {session && <span className="font-mono mr-3">{session}</span>}
@@ -159,7 +159,7 @@ export default function StateBoard({ board, session }) {
           kind of fact — and the board would otherwise render an all-clear off it. */}
       {offSession && (
         <div className="border border-dashed border-[var(--color-untested)] px-3 py-2 mt-2">
-          <div className="text-[10px] font-mono uppercase tracking-[.2em]
+          <div className="text-[11px] font-mono uppercase tracking-[.2em]
                           text-[var(--color-signal-caution)] mb-1">
             This row is not a trading session
           </div>
@@ -195,7 +195,7 @@ export default function StateBoard({ board, session }) {
         <>
           <div className="flex items-baseline justify-between pt-8 pb-2
                           border-b border-[var(--color-v2-ink)]">
-            <h2 className="text-[10px] font-mono uppercase tracking-[.24em]
+            <h2 className="text-[11px] font-mono uppercase tracking-[.24em]
                            text-[var(--color-text-muted)]">Propagation</h2>
             <span className="text-[11px] text-[var(--color-text-secondary)]">
               The width is the count — a current that stops does not resume

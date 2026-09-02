@@ -34,16 +34,16 @@ export default function ShortlistTray() {
   return (
     <section className="rounded-3xl bg-[var(--color-surface)] p-4">
       <div className="flex items-baseline gap-2.5 mb-3">
-        <h2 className="m-0 text-[10px] font-mono uppercase tracking-[.24em]
+        <h2 className="m-0 text-[11px] font-mono uppercase tracking-[.24em]
                        text-[var(--color-text-muted)]">
           Today&rsquo;s shortlist
         </h2>
-        <span className="text-[10px] font-mono tabular-nums text-[var(--color-text-muted)]">
+        <span className="text-[11px] font-mono tabular-nums text-[var(--color-text-muted)]">
           {names.length}
         </span>
         {names.length > 0 && (
           <button type="button" onClick={clear}
-                  className="ml-auto text-[10px] font-mono uppercase tracking-[.14em]
+                  className="ml-auto text-[11px] font-mono uppercase tracking-[.14em]
                              bg-transparent border-none p-0 cursor-pointer
                              text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
             clear
@@ -75,14 +75,14 @@ export default function ShortlistTray() {
                   className="flex items-baseline gap-2 py-[5px]
                              border-b border-[var(--color-border-light)] last:border-b-0">
                 <TickerLink symbol={n.ticker}
-                            className="shrink-0 text-[11.5px] font-mono font-semibold
+                            className="shrink-0 text-[11px] font-mono font-semibold
                                        text-[var(--color-text-bold)]" />
-                <span className="min-w-0 flex-1 truncate text-[10px] text-[var(--color-text-muted)]"
+                <span className="min-w-0 flex-1 truncate text-[11px] text-[var(--color-text-muted)]"
                       title={[n.from, n.group, n.group_state].filter(Boolean).join(' · ')}>
                   {n.from ?? 'added by hand'}
                 </span>
                 {n.rs_1m != null && (
-                  <span className="shrink-0 text-[10px] font-mono tabular-nums
+                  <span className="shrink-0 text-[11px] font-mono tabular-nums
                                    text-[var(--color-text-secondary)]"
                         title="RS 1M when this name was taken — not refreshed since">
                     {n.rs_1m}
@@ -106,7 +106,7 @@ export default function ShortlistTray() {
               clicking — the tray is where a name goes once you have decided
               it is worth reading properly, so the destination differs on
               purpose, and the purpose has to be printed. */}
-          <p className="m-0 mt-2 text-[10px] leading-relaxed text-[var(--color-text-muted)]">
+          <p className="m-0 mt-2 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
             Click a name here for its <b className="text-[var(--color-text-secondary)]">full
             tear-sheet</b> &mdash; not the chart. A name clicked in the table above charts it
             instead.
@@ -118,7 +118,7 @@ export default function ShortlistTray() {
           <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3">
             <button type="button"
                     onClick={() => flash('symbols', names.map((n) => n.ticker).join(','))}
-                    className="text-[10px] font-mono uppercase tracking-[.14em] bg-transparent
+                    className="text-[11px] font-mono uppercase tracking-[.14em] bg-transparent
                                border-none p-0 cursor-pointer text-[var(--color-text-muted)]
                                hover:text-[var(--color-text)]">
               {copied === 'symbols' ? 'copied' : 'copy symbols'}
@@ -129,7 +129,7 @@ export default function ShortlistTray() {
                       ...names.map((n) => [n.ticker, n.from ?? '', n.group ?? '',
                                            n.group_state ?? '', n.rs_1m ?? ''].join('\t')),
                     ].join('\n'))}
-                    className="text-[10px] font-mono uppercase tracking-[.14em] bg-transparent
+                    className="text-[11px] font-mono uppercase tracking-[.14em] bg-transparent
                                border-none p-0 cursor-pointer text-[var(--color-text-muted)]
                                hover:text-[var(--color-text)]">
               {copied === 'table' ? 'copied' : 'copy with reasons'}
@@ -138,7 +138,7 @@ export default function ShortlistTray() {
         </>
       )}
 
-      <p className="m-0 mt-3 text-[10px] leading-relaxed text-[var(--color-text-muted)]">
+      <p className="m-0 mt-3 text-[11px] leading-relaxed text-[var(--color-text-muted)]">
         Kept in this browser only &mdash; it does not follow you to another machine, and
         clearing site data clears it. Where a shortlist should really live is still open
         in PRODUCT.md.

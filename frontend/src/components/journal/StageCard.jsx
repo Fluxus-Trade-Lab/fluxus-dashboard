@@ -185,13 +185,13 @@ export default function StageCard({ stageKey, trades, lead, onOpen }) {
                   hover:bg-[var(--color-hover-bg)] ${
         lead ? 'border-[var(--color-accent)]' : 'border-transparent'}`}>
       <span className="flex items-baseline gap-2">
-        <b className="text-[19px] font-semibold">{t(`rev.stage.${stageKey}`)}</b>
+        <b className="text-[17px] font-semibold">{t(`rev.stage.${stageKey}`)}</b>
         {lead && (
-          <span className="ml-auto text-[10px] font-mono tracking-[.14em] px-1.5 py-0.5 rounded
+          <span className="ml-auto text-[11px] font-mono tracking-[.14em] px-1.5 py-0.5 rounded
                            bg-[var(--color-accent-solid)] text-white">{t('card.lead')}</span>
         )}
       </span>
-      <span className="text-[11.5px] text-[var(--color-text-muted)] mt-0.5 mb-3">
+      <span className="text-[11px] text-[var(--color-text-muted)] mt-0.5 mb-3">
         {t(`rev.asks.${stageKey}`)}
       </span>
 
@@ -199,7 +199,7 @@ export default function StageCard({ stageKey, trades, lead, onOpen }) {
 
       <span className="mt-auto pt-2.5 border-t border-[var(--color-border-light)]">
         {reading.n && <b className="block text-[17px] font-semibold">{reading.n}</b>}
-        <span className="block text-[11.5px] text-[var(--color-text-secondary)] mt-0.5">
+        <span className="block text-[11px] text-[var(--color-text-secondary)] mt-0.5">
           {reading.read}
         </span>
       </span>

@@ -26,7 +26,7 @@ const MAX_HORIZON = 5000
 function NumField({ label, value, onChange, step = 1, suffix, min, max }) {
   return (
     <div>
-      <label className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">
+      <label className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block mb-1">
         {label}{suffix ? ` (${suffix})` : ''}
       </label>
       <input
@@ -42,7 +42,7 @@ function NumField({ label, value, onChange, step = 1, suffix, min, max }) {
           const next = parseFloat(e.target.value) || 0
           onChange(max != null ? Math.min(next, max) : next)
         }}
-        className="w-full text-[12.5px] bg-[var(--color-bg)] rounded-3xl px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
+        className="w-full text-[13px] bg-[var(--color-bg)] rounded-3xl px-2 py-1.5 text-[var(--color-text)] focus:outline-none focus:ring-1 focus:ring-[var(--color-input-border)]"
       />
     </div>
   )
@@ -77,10 +77,10 @@ export default function ObjectiveSimulator({ rs }) {
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl p-4 space-y-4">
       <div>
-        <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
+        <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)]">
           Size to Objectives — Monte-Carlo
         </h3>
-        <p className="text-[10px] text-[var(--color-text-muted)] mt-1">
+        <p className="text-[11px] text-[var(--color-text-muted)] mt-1">
           Tharp&rsquo;s key move: don&rsquo;t size to maximize — size to hit YOUR objective with an acceptable chance of YOUR worst drawdown.
           This resamples this account&rsquo;s own {rs?.length ?? 0} closed-trade R-distribution over {PATHS.toLocaleString()} paths.
         </p>
@@ -92,7 +92,7 @@ export default function ObjectiveSimulator({ rs }) {
           <button
             key={chip.value}
             onClick={() => setRiskPct(chip.value)}
-            className={`px-2 py-1 text-[10px] font-medium rounded cursor-pointer transition-colors ${
+            className={`px-2 py-1 text-[11px] font-medium rounded cursor-pointer transition-colors ${
               riskPct === chip.value
                 ? 'bg-[var(--color-active-tab-bg)] text-[var(--color-active-tab-text)]'
                 : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text)] bg-[var(--color-surface-raised)]'
@@ -111,7 +111,7 @@ export default function ObjectiveSimulator({ rs }) {
       </div>
 
       {!sim ? (
-        <p className="text-[12.5px] text-[var(--color-text-muted)]">
+        <p className="text-[13px] text-[var(--color-text-muted)]">
           {!hasSample
             ? 'Not enough closed trades with stops to simulate.'
             : !inputsValid
@@ -121,7 +121,7 @@ export default function ObjectiveSimulator({ rs }) {
       ) : (
         <>
           {/* Verdict */}
-          <p className="text-[12.5px] text-[var(--color-text)] leading-relaxed bg-[var(--color-bg)] rounded px-3 py-2">
+          <p className="text-[13px] text-[var(--color-text)] leading-relaxed bg-[var(--color-bg)] rounded px-3 py-2">
             At <span className="font-semibold font-mono">{riskPct}%</span> risk over <span className="font-mono">{horizon}</span> trades:
             median <span className={`font-semibold font-mono ${sim.medianReturn >= 0 ? 'text-[var(--color-profit)]' : 'text-[var(--color-loss)]'}`}>{sim.medianReturn >= 0 ? '+' : ''}{sim.medianReturn.toFixed(0)}%</span>,
             reaches ≥ {targetSign}{targetReturnPct}% in <span className="font-semibold font-mono">{sim.pReachTarget.toFixed(0)}%</span> of paths,
@@ -131,24 +131,24 @@ export default function ObjectiveSimulator({ rs }) {
           {/* Stat tiles */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             <div>
-              <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Median Return</span>
-              <span className="text-[14px] font-semibold font-mono text-[var(--color-text)]">{sim.medianReturn >= 0 ? '+' : ''}{sim.medianReturn.toFixed(0)}%</span>
+              <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Median Return</span>
+              <span className="text-[13px] font-semibold font-mono text-[var(--color-text)]">{sim.medianReturn >= 0 ? '+' : ''}{sim.medianReturn.toFixed(0)}%</span>
             </div>
             <div>
-              <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">5th – 95th pctile</span>
-              <span className="text-[12.5px] font-mono text-[var(--color-text)]">{sim.p5.toFixed(0)}% … {sim.p95.toFixed(0)}%</span>
+              <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">5th – 95th pctile</span>
+              <span className="text-[13px] font-mono text-[var(--color-text)]">{sim.p5.toFixed(0)}% … {sim.p95.toFixed(0)}%</span>
             </div>
             <div>
-              <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Median Max DD</span>
-              <span className="text-[14px] font-medium font-mono text-[var(--color-text)]">−{sim.medianMaxDD.toFixed(1)}%</span>
+              <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">Median Max DD</span>
+              <span className="text-[13px] font-medium font-mono text-[var(--color-text)]">−{sim.medianMaxDD.toFixed(1)}%</span>
             </div>
             <div>
-              <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">P(≥ Target)</span>
-              <span className="text-[14px] font-semibold font-mono text-[var(--color-profit)]">{sim.pReachTarget.toFixed(0)}%</span>
+              <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">P(≥ Target)</span>
+              <span className="text-[13px] font-semibold font-mono text-[var(--color-profit)]">{sim.pReachTarget.toFixed(0)}%</span>
             </div>
             <div>
-              <span className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">P(DD &gt; {maxDDPct}%)</span>
-              <span className={`text-[14px] font-semibold font-mono ${sim.pBreachDD > 25 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text)]'}`}>{sim.pBreachDD.toFixed(0)}%</span>
+              <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-muted)] block">P(DD &gt; {maxDDPct}%)</span>
+              <span className={`text-[13px] font-semibold font-mono ${sim.pBreachDD > 25 ? 'text-[var(--color-loss)]' : 'text-[var(--color-text)]'}`}>{sim.pBreachDD.toFixed(0)}%</span>
             </div>
           </div>
 
@@ -159,7 +159,7 @@ export default function ObjectiveSimulator({ rs }) {
                 <XAxis
                   dataKey="x"
                   tickFormatter={v => `${Math.round(v)}%`}
-                  tick={{ fontSize: 10, fill: 'var(--color-text-muted)' }}
+                  tick={{ fontSize: 11, fill: 'var(--color-text-muted)' }}
                   interval="preserveStartEnd"
                   tickLine={false}
                 />
@@ -167,7 +167,7 @@ export default function ObjectiveSimulator({ rs }) {
                 <Tooltip
                   formatter={(v) => [`${v} paths`, 'Count']}
                   labelFormatter={v => `~${Math.round(v)}% ending return`}
-                  contentStyle={{ fontSize: 10, background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
+                  contentStyle={{ fontSize: 11, background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
                 />
                 <Bar dataKey="count" isAnimationActive={false}>
                   {sim.histogram.map((b, i) => (
@@ -178,7 +178,7 @@ export default function ObjectiveSimulator({ rs }) {
             </ResponsiveContainer>
           </div>
 
-          <p className="text-[10px] text-[var(--color-text-muted)] leading-relaxed">
+          <p className="text-[11px] text-[var(--color-text-muted)] leading-relaxed">
             Model note: i.i.d. bootstrap of realized R — ignores serial correlation, regime shifts, and that this R-sample comes from a bull half-year (it overstates the forward edge). Median and percentiles are order statistics of the {PATHS.toLocaleString()} simulated paths, not interpolated quantiles. That limitation is Tharp&rsquo;s point too: size to objectives, and respect what the sample can&rsquo;t tell you.
           </p>
         </>

@@ -4,7 +4,7 @@ export default function ClassicBreadth({ data }) {
 
   return (
     <div className="bg-[var(--color-surface)] rounded-3xl p-5">
-      <h3 className="text-[10px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
+      <h3 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-text-secondary)] mb-3">
         Classic Breadth
       </h3>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -26,7 +26,7 @@ export default function ClassicBreadth({ data }) {
 function Stat({ label, value, color = '' }) {
   return (
     <div className="bg-[var(--color-bg)] rounded p-3">
-      <div className="text-[10px] text-[var(--color-text-secondary)] font-medium uppercase tracking-wide mb-1">
+      <div className="text-[11px] text-[var(--color-text-secondary)] font-medium uppercase tracking-wide mb-1">
         {label}
       </div>
       <div className={`text-[17px] font-mono tabular-nums text-[var(--color-text)] ${color}`}>
