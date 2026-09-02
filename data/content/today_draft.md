@@ -1,31 +1,9 @@
-date: 2026-09-01
-tier: A
-source: 2026-08-29_extension-arithmetic
+date: 2026-09-02
+tier: B
+source: queue（08-29 包 V1 待批 + W5 收割毛坯 + 定时队列）
 gate: 🎮 0/5 · streak 1 周
 ---
 ## C1
-bucket: ARC | entry: 5
-Here's the part sizing threads never print: the number moves when you move the
-stop, and they never tell you where they put it.
-
-Friday's close, two charts, one risk budget. Move the stop from the 50-day to
-the 21-day and the position the arithmetic hands back grows by 49.8 percent on
-one of them and 92.5 on the other. Nothing about either company changed.
-Nothing about the market changed. A line moved.
-
-So any position size quoted without its stop is decoration. Including mine,
-which is why the stop convention is written into every one of these.
-
-Further from your stop, smaller position — every convention, every time.
-
-Direction is the only part that survives, and it survives under anyone's stop
-convention. Nobody had to agree to it.
-why: campaign 排期硬结论——「止损约定决定一切」不先落地，包里另外两条都站不住，V4 必须打头阵。
-
-⚠️ 读数已过期（口径日落后一场）：复算命令 ⑤ 今晨实跑，49.81 / 92.52 与稿面 49.8 / 92.5 **逐位对得上**；但口径日仍是 **2026-08-28（周五收盘）**，而 ET 最近完成交易日是 **08-31（周一）**——`universe.json` timestamp `2026-08-30T17:45:49Z`、`quality.json` date `2026-08-28`，**08-31 盘后 cron 未进 main**。RECORD 的窗口写死「周一收盘后即作废」，那个窗口现在已经关了。
-⛔ 另有一句待你拍（Gate 第 4 轮点名，AI 不代拍）：`Including mine, which is why the stop convention is written into every one of these.` 是一条**新的对外方法承诺**（承诺此后每条仓位帖都带止损约定）。Gate 核过 Voice Bible §3 的风险台账 tic，判定同族不同条，不豁免。**你不点头这句就得删。**
----
-## C2
 bucket: ARC | entry: 2
 The extension scale draws its lines at 4, 7 and 10. Entry. Trim. Take profit.
 Everyone reads it as a temperature.
@@ -45,28 +23,35 @@ number shifts a few points. The distance does the rest.
 
 The trim line isn't where the stock turns dangerous. It's where the division
 already had you at two thirds.
-why: 包里**唯一零盘面依赖**的一条——纯函数，零 ticker 零日期，今天原样发不会错；四轮 Gate 零拦路。
-🟡 收口那句 `The trim line isn't … It's …` 是负面清单上的镜像句，非镜像备选在 05 §V1：`By the time a chart reaches the trim line, the division has already cut you to two thirds. Nobody had to decide the stock got dangerous.`
+why: 08-29 包里唯一还活着的一条。V4（昨天的 C1）窗口写死「周一收盘后作废」，ET 最近完成场就是 08-31 周一——那扇门今天关了；V1 是包里标了「⭐ 常青弹药：零 ticker、零日期、零盘面状态」的那条，Gate 三轮零拦路，任何一天都能原样发。
+---
+## C2
+bucket: BUILD | entry: 6
+We ran 10,913 breakouts to ask one question: what part of a move is predictable?
+
+Rank the stock's 20-day volatility BEFORE the event. Then measure what happened AFTER.
+
+Size of the move: rho = +0.296.
+Direction of the move: rho = -0.006.
+
+Same variable. One column is nearly certain. The other is literally zero.
+
+Probability of a big right-tail move goes from 3.4% in the quietest fifth to 19.0% in the noisiest. Holdout replicated it: 3.4% to 17.5%.
+
+Here's the part nobody wants: it is not a buy signal. The left tail grew with the right tail. Expectancy is negative at both ends.
+
+It's not a signal. It's a divisor. Same dollars into the noisiest bucket = 2.4x the five-day volatility — and that difference was chosen by the screener, not by you.
+why: W5 收割的六条毛坯里最贴交易的一条，且是刊名「How Much」的论据本身——可预测的是「多大」不是「往哪」。数字全部来自 `data/research/amplitude_2026-08/results.md`，有 holdout 复现，不依赖今天的盘面。
 ---
 ## C3
-bucket: LONGFORM | entry: 2
-You've had that chart open all weekend, and you already know what everyone is going to tell you. It's extended. Great. Now type that into the order box.
-
-Your stop isn't a line on a chart. It's rent. The further it sits from your entry, the more you pay for the same square footage. And you don't get to pick it for free — pick one line and hold it, or the number means nothing. Call it the 50-day: at Friday's close $CRM sat 9.73 ATRs above that average, and the rent is 29.34% of the price.
-
-Same 0.25% of risk. Out there it buys 49.7% of the square footage it would have bought four ATRs out — the top of the entry zone. $VEEV gave some back on Friday and sits 8.35 ATRs out — same rule, same risk, 55.1%. Almost none of that gap is the companies. It's the distance.
-
-It runs the other way too, and that half matters more: two ATRs off the 50-day, the same rule buys about 186% of what it buys four ATRs out. Same arithmetic, the other side of one. All it ever reads is how far the exit has to sit from your entry.
-
-You can still buy it. You just can't buy as much of it. Conviction doesn't change the division.
-why: 包里的旗舰（221 词长推）；排在 V1 之后是因为它和 V1 第一拍相同（立共识→一句推倒），Gate 要求两条别挨着发。
-
-⚠️ **今天不能原样发，三处**：① 首句 `all weekend` 是写给周一发布的口径，今天周二读起来漏掉整个周一；② `8.35` 已漂到 **8.34**（VEEV ext 8.346→8.341，比值 55.09→55.12），`9.73 / 29.34% / 49.7%` 未变；③ 载体自相矛盾——04 自述「长推 + 一张读数表图」，visual 节写「本卡不配图」，而那张 20 格表**正是本卡唯一的可复用物**（纯函数，逐格未变，永远有效）。裸发＝读者拿不走表；等图＝错过窗口。**这条要你拍。**
+bucket: VOICE | entry: -
+Borrowed conviction was never conviction.
+why: 定时队列本周排的就是 09-02 这一条（`Fluxus_Queue.md` 本周队列 #3），你自己的原句 `Fluxus_Own_Lines.md:446`。队列的存在意义是断更保险——C1/C2 都要你拍板，这条不用，粘上就走。
 ---
 ## notes
-⛔ 置顶两件必须你拍（Gate 第 4 轮列明，AI 不代拍）：C1 那句对外方法承诺 · C3 的裸发 or 等图。
-⚠️ 排期与陈旧撞车：Gate 定 V4（C1）必须打头阵，但 C1 依赖盘面且窗口已关；**今天唯一零风险可发的是 C2**。先发 C2 会违反「V4 先行」的排期结论——这个取舍归你，我不替你翻 Gate 的排期。
-数据源实况：`universe.json` ts `2026-08-30T17:45:49Z` · `quality.json` date `2026-08-28` status ok · **08-31（周一）盘后 cron 未进 main**。今夜 cron 跑通后重跑 05 §复算 ① 与 ⑤，C1 即可刷新复活。
-campaign status = `queued`（不是 approved）——`approved` 只有你能写，包在 `Fluxus_Brand/ops/campaigns/APPROVAL_QUEUE.md` 等签字。
-下架的 V2 / V3 未进本单：V2 两处实错（减半点那段在新基座下为假 · 全篇缺 ATR% 2–8 前提），V3 无错但入口撞车下架。
-`voice/verdicts.jsonl` 仍只有表头、零条判决；`voice/raw/` 最新是 08-30。你对本单的第一个否决就是这本账的第一条真记录。
+⚠️ 昨天的 C1（V4）今天下架：RECORD 写死它「只在 08-31 周一 ET 盘前成立，周一收盘后作废」，ET 最近完成交易日 = 2026-09-01（周一），窗口已过。数字本身没错，是它的时间标签（"Friday's close"）现在指向三场之前。
+⚠️ 09-01 的新 campaign `2026-09-01_august-scorecard` status = **flagship**（在旗舰站，没过闸），所以本班不是 A 档——按任务书只有 queued/approved 才当主菜。
+⏰ `APPROVAL_QUEUE.md` 里 `2026-08-29_extension-arithmetic` 连续第 2 天挂在「待批」，`verdicts.jsonl` 至今 0 条真判决。C1 一旦你点头就能发；否了也请给一个字，那是判决账的第一条真记录。
+🟡 C1 待你拍的一处（Gate 三轮点名，AI 不代拍）：收口 `The trim line isn't where … It's where …` 是负面清单上的「不是 A，是 B」镜像句。非镜像备选：`By the time a chart reaches the trim line, the division has already cut you to two thirds. Nobody had to decide the stock got dangerous.`
+📌 补位弹药（今天没排上，随时可取）：W5 毛坯 ①「我给自己造了个游戏逼自己发帖」——押后条件（第一次过关）08-30 已达成，只差你把最后一段换成自己的话；毛坯 ⑥「我们把他的脚注实现了七个月」。均在 `Fluxus_Brand/ops/weekly/2026-08-30_W5.md`。
+📉 输入现状：`voice/raw/` 最新一份是 08-30，近 7 天只有 1 份你的原料；`posts.csv` 最后一条是 08-28。本周关卡 0/5。
