@@ -63,6 +63,9 @@ export const NAV_GROUPS = [
       // routes still resolve — #/breadth and #/correction — so links that
       // were sent keep working.
       { key: 'groups', short: 'THM', hash: '#/groups' },         // shown as "Themes"
+      // Rotation: the chart-first funnel over the same groups (Andy 2026-09-03,
+      // "五件都留…进代码"). Beside Themes, not instead of it — that page stays.
+      { key: 'rotation', short: 'ROT', hash: '#/rotation' },
       { key: 'rs-live', short: 'LIV', hash: '#/rs-live' },
       // RS Rotation and RS Leaderboard both merged into Themes — the first
       // was one of its layers, the second is what the whole page became. Both

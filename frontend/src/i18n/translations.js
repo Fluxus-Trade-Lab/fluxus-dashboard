@@ -222,6 +222,7 @@ export const translations = {
     'nav.breadth': 'Market State',
     'nav.correction': 'Correction Risk',
     'nav.groups': 'Themes',
+    'nav.rotation': 'Rotation',
     'nav.modelbooks': 'Model Books',
     'rail.market': 'Market',
     'nav.rs-live': 'RS Live Tracker',
@@ -601,6 +602,7 @@ export const translations = {
     'nav.breadth': '市场状态',
     'nav.correction': '回撤风险',
     'nav.groups': '主题',
+    'nav.rotation': '轮动',
     'nav.modelbooks': '标杆案例',
 
     'rail.market': '市场',

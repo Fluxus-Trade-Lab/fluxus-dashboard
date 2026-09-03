@@ -37,6 +37,7 @@ import BriefingPage from './briefing/BriefingPage'
 import BreadthPage from './breadth/BreadthPage'
 import CorrectionRiskPage from './breadth/CorrectionRiskPage'
 import GroupsPage from './groups/GroupsPage'
+import RotationPage from './rotation/RotationPage'
 import ModelBooksPage from './modelbooks/ModelBooksPage'
 import PublicLayout from './public/PublicLayout'
 import LandingPage from './public/LandingPage'
@@ -339,6 +340,7 @@ export default function Layout({ data, lastUpdated, isOffline }) {
           {current === 'breadth' && <BreadthPage data={data} />}
           {current === 'correction' && <CorrectionRiskPage />}
           {current === 'groups' && <GroupsPage />}
+          {current === 'rotation' && <RotationPage />}
           {current === 'modelbooks' && <ModelBooksPage />}
 
           {/* Reserved. The rail entry, the title and the frame are real from day

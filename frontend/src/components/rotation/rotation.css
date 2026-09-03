@@ -1,0 +1,36 @@
+/* Rotation — Lieflat's card grammar on the page: dark cards, no borders,
+   hairlines, quarticOut entrances that play once, reduced-motion respected.
+   The four-state colours are a two-hue × two-lightness system (blue = ahead
+   of SPY on the quarter, orange = behind; lighter = accelerating), validated
+   for colour-vision deficiency on the card surface. */
+.rot {
+  --rot-card: #1C1C1A; --rot-paper: #F0EFEB; --rot-muted: #8F8E88; --rot-faint: #55554F; --rot-grid: #2E2D29; --rot-well: #141412;
+  --rot-lead: #628ce6; --rot-weak: #3159ad; --rot-impr: #cb803a; --rot-lag: #9c4f14;
+}
+.rot-card { background: var(--rot-card); color: var(--rot-paper); border-radius: 24px; padding: 28px 28px 20px; }
+.rot-card svg text { fill: var(--rot-muted); font-size: 11px; font-weight: 600; }
+.rot-card svg text.rot-ink { fill: var(--rot-paper); }
+.rot-src { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--rot-faint); margin-top: 10px; }
+.rot-seg button { all: unset; cursor: pointer; padding: 5px 11px; border-radius: 9px; font-size: 11px; font-weight: 600; color: var(--rot-muted); }
+.rot-seg button[aria-pressed="true"] { background: var(--rot-paper); color: var(--rot-card); }
+.rot-seg button:focus-visible { outline: 2px solid var(--rot-paper); }
+.rot-range { -webkit-appearance: none; appearance: none; height: 3px; background: var(--rot-grid); border-radius: 2px; outline: none; flex: 1; min-width: 140px; }
+.rot-range::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--rot-paper); cursor: pointer; }
+.rot-range:focus-visible { box-shadow: 0 0 0 2px var(--rot-paper); }
+.rot-btn { all: unset; cursor: pointer; font-size: 11px; font-weight: 600; padding: 5px 11px; border-radius: 99px; background: var(--rot-well); color: var(--rot-paper); }
+.rot-btn:focus-visible { outline: 2px solid var(--rot-paper); }
+.rot-chip { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 99px; background: var(--rot-well); color: var(--rot-paper); cursor: pointer; user-select: none; display: inline-flex; align-items: center; gap: 7px; }
+.rot-row { border-top: 1px solid var(--rot-grid); cursor: pointer; border-radius: 6px; }
+.rot-row:hover, .rot-row[aria-pressed="true"] { background: var(--rot-well); }
+.rot-check { accent-color: var(--rot-paper); width: 13px; height: 13px; margin: 0; }
+.rot-tip { position: fixed; pointer-events: none; z-index: 50; background: var(--rot-paper); color: #1C1C1A; border-radius: 12px; padding: 10px 14px; font-size: 13px; line-height: 1.45; max-width: 280px; }
+.rot-pop { transform-box: fill-box; transform-origin: center; animation: rot-pop .5s cubic-bezier(.2,.7,.3,1.3) both; }
+@keyframes rot-pop { from { transform: scale(0); } to { transform: none; } }
+.rot-fade { animation: rot-fade .9s ease both; }
+@keyframes rot-fade { from { opacity: 0; } }
+.rot-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: rot-draw 1s cubic-bezier(.4,0,.2,1) both; }
+@keyframes rot-draw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .rot-pop, .rot-fade { animation: none; }
+  .rot-draw { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; }
+}
