@@ -155,6 +155,11 @@ def shares(board_df: pd.DataFrame) -> pd.DataFrame:
 
 
 TREND_DAYS = 90            # sessions of state history shipped for the page
+# The Flux line on the Rotation page (brief §18.22): ten weeks of each theme's
+# equal-weight basket over the benchmark, plus the ten sessions before the
+# window so the two-week rolling strength is whole from the first drawn day.
+FLUX_DAYS = 50
+R2W_LAG = 10
 LADDER_JSON = "data/output/theme_ladder.json"
 LADDER_LOG = "data/history/theme_ladder.csv"
 
@@ -201,10 +206,13 @@ def build(themes: Mapping[str, Sequence[str]], bars: Mapping[str, pd.DataFrame],
     # leading theme 减少，lagging 开始变多". A single day's board cannot show
     # that; the deltas and the series can.
     hist = {}
+    board_2w = None
     for w in LADDER:
         b = board(themes, bars, benchmark=benchmark, window=w)
         if b.empty:
             continue
+        if w == "2w":
+            board_2w = b
         sh = shares(b).dropna(subset=["Lagging_share"])
         # A day where most themes have no bar yet is not a reading of the
         # market, it is a reading of the fetch. Require 80% coverage of the
@@ -224,8 +232,40 @@ def build(themes: Mapping[str, Sequence[str]], bars: Mapping[str, pd.DataFrame],
                           for n in (5, 10, 21)} for s in STATES},
         }
 
+    # Per-theme two-week state history, on the same dates as history["2w"] --
+    # the Rotation page's Terrain card lists who sat in each state on a past
+    # window, which the aggregate counts alone cannot say (brief §18.15/§18.20).
+    # Kept apart from `themes` (whose values are the five rungs and nothing
+    # else -- consumers set() them) under `series`.
+    series: Dict[str, Dict[str, list]] = {}
+    if board_2w is not None and "2w" in hist:
+        idx = pd.to_datetime(hist["2w"]["dates"])
+        for name in board_2w.columns:
+            col = board_2w[name].reindex(idx)
+            series.setdefault(name, {})["states_2w"] = [v if isinstance(v, str) else None for v in col.tolist()]
+    # Relative index for the Flux line: basket NAV over the benchmark, the last
+    # FLUX_DAYS + R2W_LAG sessions of the benchmark's calendar, normalised to
+    # 1 at the first session. Equal-weighted like the board, so the line and
+    # the counts are the same object at two resolutions.
+    tail_idx = bench.index[-(FLUX_DAYS + R2W_LAG):]
+    series_dates = [str(d.date()) for d in tail_idx]
+    for name, tickers in themes.items():
+        nav = basket_nav(bars, tickers)
+        if nav is None:
+            continue
+        rel = (nav / bench).reindex(tail_idx)
+        first = rel.dropna()
+        if first.empty:
+            continue
+        rel = rel / first.iloc[0]
+        series.setdefault(name, {})["rel"] = [None if pd.isna(v) else round(float(v), 5) for v in rel.tolist()]
+
     return {
         "as_of": str(bench.index[-1].date()),
+        "series_dates": series_dates,
+        "flux_days": FLUX_DAYS,
+        "r2w_lag": R2W_LAG,
+        "series": series,
         "history": hist,
         "benchmark": benchmark,
         "ladder": list(LADDER),

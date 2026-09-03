@@ -1,92 +1,99 @@
 import { describe, it, expect } from 'vitest'
 import {
-  questionOf, questionLists, wkAccel, stateCounts, summaryParts, defaultPicks, sideChanges, fastest,
-  positionAt, spreadLabels, swarmLevels, measurable, DEFAULT_THRESHOLDS,
+  wkAccel, r2wSeries, lastOf, boardsOf, defaultPicks, radius, pack, spreadLabels, smoothPath, windowBounds, countsAt, namesByState,
+  R2W_LAG, PRIOR_WEEKS,
 } from './rotationLogic'
-import { changeOf } from '../groups/stateChange'
 
-const base = { group: 'X', state: 'Improving', excess_3m: -0.1, rs_3m_6m: -0.2, rs_1m_3m: -0.05, rs_1w_1m: 0.0, rs_0_1w: 0.03, rs_accel: 0.1, rs_accel_rate: 0.05, persistence: 1 }
+const row = (group, o = {}) => ({ group, kind: 'theme', rs_0_1w: 0.02, rs_1w_1m: 0.03, excess_3m: 0.1, ...o })
 
-describe('questionOf — the three shapes', () => {
-  it('② igniting: weak for months, quiet 3w, this week up and faster', () => {
-    expect(questionOf(base)).toBe('q2')
+describe('two-week strength from the relative index', () => {
+  it('is rel[t] / rel[t − 10] − 1 and null inside the lag', () => {
+    const rel = Array.from({ length: 15 }, (_, i) => 1 + i * 0.01)
+    const s = r2wSeries(rel)
+    expect(s.slice(0, R2W_LAG).every((v) => v === null)).toBe(true)
+    expect(s[14]).toBeCloseTo(1.14 / 1.04 - 1, 10)
   })
-  it('① building: prior 3w up, this week up and not slower, not strong 1–3m ago', () => {
-    expect(questionOf({ ...base, rs_1w_1m: 0.03, rs_0_1w: 0.02, rs_1m_3m: 0.01 })).toBe('q1')
+  it('a hole in the index is a hole in the strength, not a zero', () => {
+    const rel = Array.from({ length: 12 }, (_, i) => (i === 1 ? null : 1))
+    expect(r2wSeries(rel)[11]).toBeNull()
+    expect(r2wSeries(rel)[10]).toBe(0)
   })
-  it('① is refused when the theme was already strong 1–3m ago (the cap)', () => {
-    const r = { ...base, rs_1w_1m: 0.03, rs_0_1w: 0.02, rs_1m_3m: 0.2 }
-    expect(questionOf(r)).not.toBe('q1')
-    expect(questionOf(r, { ...DEFAULT_THRESHOLDS, q1PriorCap: 0.3 })).toBe('q1')
-  })
-  it('③ fading: ahead for months, slope negative, still slowing', () => {
-    expect(questionOf({ ...base, excess_3m: 0.2, rs_1m_3m: 0.1, rs_accel_rate: -0.04, rs_0_1w: -0.01, rs_1w_1m: 0.02 })).toBe('q3')
-  })
-  it('a steady traveller is in no list', () => {
-    expect(questionOf({ ...base, excess_3m: 0.2, rs_1m_3m: 0.1, rs_accel_rate: 0.02, rs_0_1w: 0.01, rs_1w_1m: 0.03 })).toBeNull()
-  })
-  it('an unmeasured group is never classified — absence is not a shape', () => {
-    expect(questionOf({ ...base, rs_3m_6m: null })).toBeNull()
-    expect(measurable({ ...base, excess_3m: undefined })).toBe(false)
+  it('lastOf skips trailing nulls', () => {
+    expect(lastOf([1, 2, null])).toBe(2)
+    expect(lastOf([null])).toBeNull()
   })
 })
 
-describe('lists, defaults and the headline', () => {
-  const rows = [
-    { ...base, group: 'Ign A', rs_0_1w: 0.04 },
-    { ...base, group: 'Ign B', rs_0_1w: 0.01 },
-    { ...base, group: 'Fade', state: 'Weakening', excess_3m: 0.2, rs_1m_3m: 0.1, rs_accel_rate: -0.04, rs_0_1w: -0.01, rs_1w_1m: 0.02 },
-    { ...base, group: 'Still', state: 'Leading', excess_3m: 0.2, rs_1m_3m: 0.1, rs_accel_rate: 0.02, rs_0_1w: 0.01, rs_1w_1m: 0.03 },
-  ]
-  it('orders each list by the strength of its own turn', () => {
-    const l = questionLists(rows)
-    expect(l.q2.map((r) => r.group)).toEqual(['Ign A', 'Ign B'])
-    expect(l.q3.map((r) => r.group)).toEqual(['Fade'])
-    expect(l.q1).toEqual([])
+describe('the three boards', () => {
+  const rel = Array.from({ length: 12 }, (_, i) => 1 + i * 0.005)
+  const seriesOf = (n) => (n === 'A' ? { rel } : null)
+  it('rs2w reads the ladder when the group has a series, falls back and flags otherwise', () => {
+    const b = boardsOf([row('A'), row('B', { rs_0_1w: 0.01, rs_1w_1m: 0.032 })], seriesOf)
+    const a = b.rs2w.find((it) => it.r.group === 'A'), bb = b.rs2w.find((it) => it.r.group === 'B')
+    expect(a.approx).toBe(false)
+    expect(a.rs2w).toBeCloseTo(rel[11] / rel[1] - 1, 10)
+    expect(bb.approx).toBe(true)
+    expect(bb.rs2w).toBeCloseTo(0.01 + 0.032 / PRIOR_WEEKS, 10)
+    expect(b.approx).toBe(true)
   })
-  it('defaults are the top of each question, in question order', () => {
-    expect(defaultPicks(questionLists(rows)).map((r) => r.group)).toEqual(['Ign A', 'Fade'])
+  it('sorts each board descending and drops the unmeasurable', () => {
+    const b = boardsOf([row('A', { excess_3m: 0.1 }), row('B', { excess_3m: 0.3 }), row('C', { excess_3m: null })], () => null)
+    expect(b.long.map((it) => it.r.group)).toEqual(['B', 'A'])
   })
-  it('the headline is names, never counts', () => {
-    const parts = summaryParts(questionLists(rows))
-    expect(parts[0]).toEqual({ text: 'Igniting: ', strong: 'Ign A, Ign B.' })
-    expect(parts.some((p) => /\d/.test(p.text))).toBe(false)
-    expect(summaryParts({ q1: [], q2: [], q3: [] })[0].text).toBe('Nothing is turning today.')
+  it('acceleration is this week minus the prior three weeks per week', () => {
+    expect(wkAccel({ rs_0_1w: 0.02, rs_1w_1m: 0.032 })).toBeCloseTo(0.01, 10)
   })
-  it('wkAccel is this week minus the prior three weeks per week', () => {
-    expect(wkAccel({ rs_0_1w: 0.05, rs_1w_1m: 0.032 })).toBeCloseTo(0.04, 6)
-  })
-  it('fastest names the movers on both ends and never a zero mover', () => {
-    const f = fastest(rows, 2, 1)
-    expect(f.up.map((r) => r.group)).toEqual(['Ign A', 'Ign B'])
-    expect(f.down.map((r) => r.group)).toEqual(['Fade'])
+  it('default picks take the top of each board without repeating a name', () => {
+    const b = boardsOf([row('A', { rs_0_1w: 0.05, excess_3m: 0.5 }), row('B', { rs_0_1w: 0.04, excess_3m: 0.4 }), row('C', { rs_0_1w: 0.001, rs_1w_1m: -0.05, excess_3m: 0.3 })], () => null)
+    const picks = defaultPicks(b)
+    expect(new Set(picks).size).toBe(picks.length)
+    expect(picks.length).toBe(3)
   })
 })
 
-describe('history', () => {
-  const hist = { A: { state: ['Lagging', 'Improving', 'Leading'], excess: [-0.1, 0, 0.1], rs_accel: [0, 0.1, 0.2] }, B: { state: ['Leading', 'Leading', 'Weakening'], excess: [0.2, 0.2, 0.2], rs_accel: [0.1, 0.1, -0.1] } }
-  const historyOf = (n) => hist[n] ?? null
-  const rows = [{ group: 'A' }, { group: 'B' }, { group: 'C' }]
-  it('counts states at a session, skipping groups with no row that day', () => {
-    expect(stateCounts(rows, historyOf, 0)).toEqual({ Leading: 1, Improving: 0, Weakening: 0, Lagging: 1 })
+describe('dots on a strip', () => {
+  it('radius runs 3.5 → 10 across the range', () => {
+    expect(radius(-1, -1, 1)).toBe(3.5)
+    expect(radius(1, -1, 1)).toBe(10)
+    expect(radius(0, 0, 0)).toBe(3.5)
   })
-  it('names who changed sides over the window ending at a session', () => {
-    expect(sideChanges(rows, historyOf, 2, changeOf, 5)).toEqual({ up: ['A'], down: ['B'] })
-    expect(sideChanges(rows, historyOf, 0, changeOf, 5)).toEqual({ up: [], down: [] })
+  it('packing leaves no two circles overlapping, even in a dense cluster', () => {
+    const items = Array.from({ length: 30 }, (_, i) => ({ y: 200 + (i % 7) * 2, r: 3.5 + (i % 5) }))
+    const pos = pack(items, 70)
+    for (let i = 0; i < pos.length; i += 1) {
+      for (let j = i + 1; j < pos.length; j += 1) {
+        expect(Math.hypot(pos[i].x - pos[j].x, pos[i].y - pos[j].y)).toBeGreaterThanOrEqual(items[i].r + items[j].r + 1.5 - 1e-9)
+      }
+    }
   })
-  it('positionAt interpolates between sessions and holds at the ends', () => {
-    expect(positionAt(hist.A, 0.5)).toEqual({ x: -0.05, y: 0.05, state: 'Lagging' })
-    expect(positionAt(hist.A, 2)).toEqual({ x: 0.1, y: 0.2, state: 'Leading' })
-    expect(positionAt(hist.A, 9)).toEqual({ x: 0.1, y: 0.2, state: 'Leading' })
-    expect(positionAt(null, 1)).toBeNull()
+  it('the biggest dot keeps the axis', () => {
+    const pos = pack([{ y: 100, r: 4 }, { y: 100, r: 10 }], 70)
+    expect(pos[1]).toEqual({ x: 70, y: 100 })
+  })
+  it('labels are pushed apart by the gap', () => {
+    const out = spreadLabels([{ y: 10 }, { y: 12 }, { y: 40 }], (it) => it.y, 14)
+    expect(out.map((e) => e.y)).toEqual([10, 24, 40])
   })
 })
 
-describe('layout helpers', () => {
-  it('spreadLabels keeps a gap and preserves order', () => {
-    expect(spreadLabels([10, 12, 40], (v) => v, 14).map((e) => e.y)).toEqual([10, 24, 40])
+describe('the Flux line and its windows', () => {
+  it('a smooth path starts at the first point and has one cubic per interval', () => {
+    const d = smoothPath([[0, 0], [10, 5], [20, 0], [30, 5]])
+    expect(d.startsWith('M0.0 0.0')).toBe(true)
+    expect((d.match(/ C/g) || []).length).toBe(3)
   })
-  it('swarmLevels steps neighbours outward deterministically', () => {
-    expect(swarmLevels([0, 3, 6, 50], 10)).toEqual([0, 1, 2, 0])
+  it('calendar windows count back fourteen days from the latest session', () => {
+    const dates = ['2026-08-03', '2026-08-10', '2026-08-17', '2026-08-24', '2026-08-31', '2026-09-02']
+    expect(windowBounds(dates, 0)).toEqual({ start: 3, end: 5 })     // (08-19, 09-02]
+    expect(windowBounds(dates, 1)).toEqual({ start: 1, end: 2 })     // (08-05, 08-19]
+    expect(windowBounds(dates, 3)).toBeNull()
+  })
+  it('counts and names on a session', () => {
+    const h = { Leading: [1, 2], Weakening: [0, 0], Improving: [3, 1], Lagging: [0, 1] }
+    expect(countsAt(h, 1)).toEqual({ Leading: 2, Weakening: 0, Improving: 1, Lagging: 1 })
+    const seriesOf = (n) => (n === 'A' ? { states_2w: ['Lagging', 'Leading'] } : null)
+    const todayOf = (n) => (n === 'B' ? 'Improving' : null)
+    expect(namesByState(['A', 'B'], seriesOf, todayOf, 1, 1)).toEqual({ byState: { Leading: ['A'], Weakening: [], Improving: ['B'], Lagging: [] }, known: true })
+    expect(namesByState(['B'], seriesOf, todayOf, 0, 1).known).toBe(false)
   })
 })

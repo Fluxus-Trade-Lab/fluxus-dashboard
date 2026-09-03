@@ -1,35 +1,44 @@
-/* Rotation — cards in the app's own paper and ink; colour is the charter's
-   pair only (blue = moved to a stronger state, red = weaker), everything else
-   greyscale. Entrances play once; reduced-motion respected. */
-.rot-card { background: var(--color-surface); border-radius: 24px; padding: 24px 24px 18px; }
+/* Rotation — three cards in the app's own paper and ink; colour is the
+   charter's pair only (the Flux lines: blue, red, ink), everything else
+   greyscale. No sentences on the cards. No global `svg` width rule here: an
+   inline icon once inherited one and became a column-wide white bar (brief
+   §18.21) — only `.rot-chart` stretches. */
+.rot-card { background: var(--color-surface); border-radius: 24px; padding: 20px 24px 16px; }
+.rot-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.rot-title { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: -.01em; line-height: 1.3; }
+.rot-title .rot-cn { font-weight: 500; color: var(--color-text-muted); margin-left: 8px; }
+.rot-chart { display: block; width: 100%; height: auto; }
 .rot-card svg text { fill: var(--color-text-muted); font-size: 11px; font-weight: 500; font-family: var(--font-sans); }
 .rot-card svg text.rot-ink { fill: var(--color-text); font-weight: 600; }
-.rot-title { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: -.01em; line-height: 1.3; }
-.rot-title b { font-weight: 700; }
-.rot-word { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--color-text-muted); font-weight: 500; }
-.rot-seg button { all: unset; cursor: pointer; padding: 4px 10px; border-radius: 9px; font-size: 11px; font-weight: 500; color: var(--color-text-muted); }
-.rot-seg button[aria-pressed="true"] { background: var(--color-active-tab-bg); color: var(--color-active-tab-text); }
-.rot-seg button:focus-visible { outline: 2px solid var(--color-accent); }
-.rot-range { -webkit-appearance: none; appearance: none; height: 2px; background: var(--color-border); border-radius: 2px; outline: none; flex: 1; min-width: 140px; }
-.rot-range::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--color-text); cursor: pointer; }
-.rot-range:focus-visible { box-shadow: 0 0 0 2px var(--color-accent); }
-.rot-btn { all: unset; cursor: pointer; font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 99px; border: 1px solid var(--color-border); color: var(--color-text); }
-.rot-btn:focus-visible { outline: 2px solid var(--color-accent); }
-.rot-chip { font-size: 13px; font-weight: 500; padding: 3px 10px 3px 8px; border-radius: 99px; border: 1px solid var(--color-border); color: var(--color-text); cursor: pointer; user-select: none; display: inline-flex; align-items: center; gap: 7px; background: transparent; }
+.rot-card svg text.rot-mono { font-family: var(--font-mono); }
+.rot-meta { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-muted); }
+.rot-tools { display: inline-flex; align-items: center; gap: 10px; }
+.rot-sel { font: 500 11px var(--font-sans); color: var(--color-text); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 99px; padding: 3px 26px 3px 10px; cursor: pointer; appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23888' stroke-width='1.4'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 9px center; }
+.rot-sel option:disabled { color: var(--color-text-muted); }
+.rot-btn { all: unset; cursor: pointer; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; border: 1px solid var(--color-border); color: var(--color-text); }
+.rot-btn[aria-expanded="true"] { background: var(--color-text); color: var(--color-bg); border-color: var(--color-text); }
+.rot-btn:focus-visible, .rot-sel:focus-visible { outline: 2px solid var(--color-accent); }
+.rot-band { display: flex; flex-direction: column; gap: 3px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--color-border-light); }
+.rot-band-row { display: grid; grid-template-columns: 110px 1fr; gap: 8px; align-items: baseline; font-size: 12px; line-height: 1.6; }
+.rot-band-row .rot-st { display: flex; gap: 6px; align-items: center; font-weight: 600; }
+.rot-band-row .rot-st i { width: 9px; height: 9px; border-radius: 99px; display: inline-block; }
+.rot-band-row .rot-st .rot-meta { font-weight: 400; }
+.rot-names { display: flex; flex-wrap: wrap; gap: 0 4px; }
+.rot-nmx { all: unset; cursor: pointer; color: var(--color-text-secondary); border-radius: 4px; padding: 0 4px; }
+.rot-nmx:hover { background: var(--color-hover-bg); }
+.rot-nmx[aria-pressed="true"] { background: var(--color-text); color: var(--color-bg); }
+.rot-nmx + .rot-nmx::before { content: "·"; color: var(--color-text-muted); margin-right: 6px; }
+.rot-nmx small { color: var(--color-text-muted); font-size: 10px; margin-left: 3px; }
+.rot-nmx:focus-visible { outline: 2px solid var(--color-accent); }
+.rot-three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+@media (max-width: 900px) { .rot-three { grid-template-columns: 1fr; } }
+.rot-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.rot-chip { all: unset; font-size: 12px; font-weight: 500; padding: 2px 9px; border-radius: 99px; border: 1px solid var(--color-border); color: var(--color-text); cursor: pointer; user-select: none; display: inline-flex; gap: 6px; align-items: center; }
+.rot-chip i { width: 14px; height: 3px; display: inline-block; border-radius: 2px; }
 .rot-chip:focus-visible { outline: 2px solid var(--color-accent); }
-.rot-tick { all: unset; cursor: pointer; width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--color-border); display: inline-flex; align-items: center; justify-content: center; font-size: 11px; line-height: 1; color: var(--color-text-muted); }
-.rot-tick[aria-pressed="true"] { background: var(--color-text); color: var(--color-bg); border-color: var(--color-text); }
-.rot-row { all: unset; display: grid; cursor: pointer; border-radius: 6px; width: 100%; box-sizing: border-box; }
-.rot-row:hover, .rot-row[aria-pressed="true"] { background: var(--color-hover-bg); }
-.rot-row:focus-visible { outline: 2px solid var(--color-accent); }
-.rot-tip { position: fixed; pointer-events: none; z-index: 50; background: var(--color-text); color: var(--color-bg); border-radius: 10px; padding: 8px 12px; font-size: 13px; line-height: 1.45; max-width: 280px; }
-.rot-pop { transform-box: fill-box; transform-origin: center; animation: rot-pop .5s cubic-bezier(.2,.7,.3,1.3) both; }
-@keyframes rot-pop { from { transform: scale(0); } to { transform: none; } }
-.rot-fade { animation: rot-fade .9s ease both; }
-@keyframes rot-fade { from { opacity: 0; } }
-.rot-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: rot-draw 1s cubic-bezier(.4,0,.2,1) both; }
-@keyframes rot-draw { to { stroke-dashoffset: 0; } }
-@media (prefers-reduced-motion: reduce) {
-  .rot-pop, .rot-fade { animation: none; }
-  .rot-draw { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; }
-}
+.rot-rib { display: grid; grid-template-columns: 140px 1fr; gap: 10px; align-items: center; margin-top: 6px; font-size: 12px; font-weight: 500; }
+.rot-rib .rot-rib-bar { display: flex; gap: 1px; height: 7px; border-radius: 99px; overflow: hidden; }
+.rot-rib .rot-rib-bar i { flex: 1; display: block; }
+.rot-note { font-size: 11px; color: var(--color-text-muted); margin-top: 8px; }
+.rot-empty { font-size: 13px; color: var(--color-text-muted); padding: 18px 0; }

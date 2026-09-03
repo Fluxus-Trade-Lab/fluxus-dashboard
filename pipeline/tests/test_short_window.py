@@ -143,6 +143,47 @@ class TestLadder:
         assert p["rungs"]["2w"]["lagging_share"] is not None
 
 
+class TestFluxSeries:
+    """The Rotation page's Flux line and the Terrain card's per-theme history
+    ride on the ladder payload (brief §18.22): a relative index per theme on
+    one shared calendar, and the two-week state on the same dates as the
+    aggregate counts."""
+
+    def _payload(self):
+        bars = _bars({"A": 0.002, "B": 0.002, "C": 0.002, "SPY": 0.001})
+        return SW.build({"T": ["A", "B", "C"]}, bars), bars
+
+    def test_rel_is_on_the_shared_calendar_and_starts_at_one(self):
+        p, bars = self._payload()
+        assert len(p["series_dates"]) == SW.FLUX_DAYS + SW.R2W_LAG
+        rel = p["series"]["T"]["rel"]
+        assert len(rel) == len(p["series_dates"])
+        assert rel[0] == 1.0
+        # the basket drifts 0.1%/day faster than the benchmark: the index rises
+        assert rel[-1] > rel[0]
+        assert p["series_dates"][-1] == p["as_of"]
+
+    def test_two_week_strength_from_rel_matches_the_board_axis(self):
+        """rel[t]/rel[t-10]-1 is the level axis of the 2w board -- same
+        arithmetic, so the line and the counts cannot disagree."""
+        p, bars = self._payload()
+        rel = p["series"]["T"]["rel"]
+        r2w = rel[-1] / rel[-1 - SW.R2W_LAG] - 1
+        nav = SW.basket_nav(bars, ["A", "B", "C"]); bench = bars["SPY"]["Close"]
+        level = SW._excess(nav, bench, len(nav) - 1, 10)
+        # excess of returns vs ratio of indices differ at second order only
+        assert abs(r2w - level) < 1e-3
+
+    def test_states_2w_align_with_the_aggregate_history(self):
+        p, _ = self._payload()
+        h = p["history"]["2w"]
+        st = p["series"]["T"]["states_2w"]
+        assert len(st) == len(h["dates"])
+        assert st[-1] == p["themes"]["T"]["2w"]
+        # the counts on the last day are the per-theme states on the last day
+        assert sum(1 for s in st[-1:] if s == "Leading") == h["Leading"][-1]
+
+
 class TestArchive:
     def test_rewrites_todays_rows_and_keeps_history(self, tmp_path):
         path = tmp_path / "ladder.csv"
