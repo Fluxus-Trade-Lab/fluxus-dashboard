@@ -26,6 +26,7 @@
     2. **V4 里这句留不留**：`Including mine, which is why the stop convention is written into every one of these.` —— 这是一条**新的对外方法承诺**（今后每条仓位帖都写明止损约定）。Voice Bible §3 的风险台账 tic 是邻居，不是同一条。对外承诺是你的边界，AI 不替你立。
   · 顺带（不用回，但你的否决会成为 `verdicts.jsonl` 的第一条真记录）：旗舰收口 `Conviction doesn't change the division.` 是被点名三轮仍未定的最后一句巧话，重话备选见 04 §三选择 4。
   · 判定全文：[`06_gate_review.md`](2026-08-29_extension-arithmetic/06_gate_review.md) §第 4 轮（终轮）
+  ↳ ❌ **V1 否（Andy 2026-09-04 每日页批注，原话「太ai slop了，也不行」）**——旗舰与 V4 已于 08-31 窗口作废，V1 是最后活着的一条。**本包就此全灭，零发布。** 判例已入 `voice/verdicts.jsonl`（首条 rejected）。
 
 - **[09-02] `2026-09-01_august-scorecard`** · 终稿 [`Fluxus_Brand/ops/campaigns/2026-09-01_august-scorecard/`](2026-09-01_august-scorecard/)
   （旗舰＝[`04_flagship.md`](2026-09-01_august-scorecard/04_flagship.md) §一 · 四条变体见 [`05_distribution.md`](2026-09-01_august-scorecard/05_distribution.md) §一）
