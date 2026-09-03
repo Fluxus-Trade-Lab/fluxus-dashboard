@@ -1020,3 +1020,4 @@ every ticker from M to Z was missing, including NVDA, MSFT, TSLA and PLTR."* 归
   · 负样本 `voice/verdicts.jsonl` 现有 3 条真判决（**对仗收口他不认**）。
   **OPS 侧唯一欠的一件**：`data/portfolio/reviews/` 里 8 月只有 html/pdf、**缺 `monthly_2026-08.json`**（机器取数用）。需要就在此行下挂单，我补；不需要就不补。
   ⛔ **OPS 不再推进本项**——Andy 09-02：「月度复盘也不是你负责的」。
+- [2026-09-03] 前端（Rotation 预览线）→ 数据端：**温度卡改读 `theme_ladder.json` 两周板**（口径与 TSF Current Leadership 一致：逐名 60% / 强弱 89%，对照样本 `data/research/themes/tsf_leadership_2026-09-02.json`）。请求两项：① `theme_ladder.json` 增加**每组的两周态历史**（`themes[<group>].history_2w`: 90 个交易日的 state 序列，或等价的 board 表），用于「2–4w ago」等档的展开名单；② 之前挂的「`groups_history.json` state 回填到 ≥10 周」可撤——两周板的计数历史已经覆盖 90 日，月口径的态历史只剩细看图色带在用。状态：待认领。
