@@ -1,46 +1,112 @@
 {
   "ticker": "RMBS",
-  "fetched_at": "2026-09-01T01:18:43Z",
+  "fetched_at": "2026-09-03T00:02:30Z",
   "_schema": "v2",
-  "current_price": 86.69000244140625,
+  "current_price": 84.72,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "RMBS",
+    "longName": "Rambus Inc.",
+    "sector": "Technology",
+    "industry": "Semiconductors",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "San Jose",
+    "website": "https://www.rambus.com",
+    "fullTimeEmployees": 791,
+    "marketCap": 9188867072,
+    "enterpriseValue": 8385721856,
+    "trailingPE": 38.862385,
+    "forwardPE": 22.917923,
+    "priceToSalesTrailing12Months": 12.149266,
+    "enterpriseToRevenue": 11.087,
+    "priceToBook": 6.265345,
+    "grossMargins": 0.80357003,
+    "operatingMargins": 0.36671,
+    "profitMargins": 0.3169,
+    "returnOnEquity": 0.17789,
+    "totalCash": 824947968,
+    "totalDebt": 21803000,
+    "totalRevenue": 756331008,
+    "freeCashflow": 202302368,
+    "debtToEquity": 1.487,
+    "currentRatio": 9.754,
+    "fiftyTwoWeekHigh": 174.1,
+    "fiftyTwoWeekLow": 72.45,
+    "averageVolume": 2907107,
+    "averageVolume10days": 1894200,
+    "beta": 1.887,
+    "sharesOutstanding": 108461603,
+    "sharesFloat": 107614518,
+    "companyOfficers": [
+      {
+        "name": "Mr. Luc  Seraphin",
+        "title": "CEO, President & Director",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Xianzhi  Fan",
+        "title": "EVP & COO",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Mr. John P. Shinn J.D.",
+        "title": "Senior VP, General Counsel, Chief Compliance Officer & Secretary",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Sumeet  Gagneja",
+        "title": "Senior VP & CFO",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. John K. Allen",
+        "title": "VP of Accounting & Chief Accounting Officer",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Shyam  Ramachandran",
+        "title": "Senior VP & Chief Information Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.77,
+      "eps_estimate": 0.715,
+      "eps_surprise_pct": 0.0769
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.63,
+      "eps_estimate": 0.63625,
+      "eps_surprise_pct": -0.0098
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.68,
+      "eps_estimate": 0.6775,
+      "eps_surprise_pct": 0.0037
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.5846,
+      "eps_estimate": 0.63,
+      "eps_surprise_pct": -0.0721
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-26",
+    "revenue_low": 213000000,
+    "revenue_high": 215000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 8,
+    "bullish": 6,
+    "neutral": 2,
+    "bearish": 0,
+    "avg_price_target": 147.5,
+    "high_price_target": 180.0,
+    "low_price_target": 100.0,
+    "current_price": 84.72,
+    "recent_rating_changes": [
+      {
+        "date": "2025-04-29T11:03:34",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-02-04T15:49:44",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      },
+      {
+        "date": "2025-02-04T14:52:20",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2025-02-04T12:22:29",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2024-11-25T21:22:31",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2024-11-11T23:04:46",
+        "firm": "Loop Capital",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2024-11-06T13:03:27",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2024-10-29T14:04:13",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2024-09-10T13:04:02",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2024-07-26T12:38:54",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +309,18 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.10151085930122757,
   "technicals": {
-    "ma20": 94.48150024414062,
-    "ma50": 102.66560043334961,
-    "ma200": 108.18184997558593,
-    "rsi14": 38.57735319507057,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 36.40173953454589,
     "high_20d": 104.11000061035156,
-    "low_5d": 84.73999786376953,
-    "low_10d": 84.73999786376953,
+    "low_5d": 82.97000122070312,
+    "low_10d": 82.97000122070312,
     "high_52w": 174.10000610351562,
-    "low_52w": 70.9000015258789,
-    "atr14": 4.346427917480469,
-    "atr14_pct": 5.013759136087484,
-    "position_in_52w_range_pct": 15.300387805359664
+    "low_52w": 72.44999694824219,
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4172,34 +4313,34 @@
       "high": 89.99,
       "low": 84.74,
       "close": 85.76,
-      "volume": 2439000.0
+      "volume": 2450300.0
     },
     {
       "date": "2026-08-31",
-      "open": 86.39,
+      "open": 86.25,
       "high": 87.7,
       "low": 85.8,
       "close": 86.69,
-      "volume": 2455956.0
+      "volume": 2484300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 84.96,
+      "high": 85.3,
+      "low": 82.97,
+      "close": 84.4,
+      "volume": 1859000.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 2181925.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 80.21,
-      "high": 80.79,
-      "low": 73.07,
-      "close": 73.77,
-      "volume": 2313800.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 71.72,
-      "high": 73.9,
-      "low": 70.9,
-      "close": 73.49,
-      "volume": 1387300.0
-    },
     {
       "date": "2025-09-03",
       "open": 73.52,
@@ -6190,15 +6331,31 @@
       "high": 89.99,
       "low": 84.74,
       "close": 85.76,
-      "volume": 2439000.0
+      "volume": 2450300.0
     },
     {
       "date": "2026-08-31",
-      "open": 86.39,
+      "open": 86.25,
       "high": 87.7,
       "low": 85.8,
       "close": 86.69,
-      "volume": 2455956.0
+      "volume": 2484300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 84.96,
+      "high": 85.3,
+      "low": 82.97,
+      "close": 84.4,
+      "volume": 1859000.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 2181925.0
     }
   ],
   "ai_synthesis": null,

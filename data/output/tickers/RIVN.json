@@ -1,46 +1,112 @@
 {
   "ticker": "RIVN",
-  "fetched_at": "2026-09-01T01:18:37Z",
+  "fetched_at": "2026-09-03T00:02:26Z",
   "_schema": "v2",
-  "current_price": 16.059999465942383,
+  "current_price": 15.61,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "RIVN",
+    "longName": "Rivian Automotive, Inc.",
+    "sector": "Consumer Cyclical",
+    "industry": "Auto Manufacturers",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Irvine",
+    "website": "https://www.rivian.com",
+    "fullTimeEmployees": 15232,
+    "marketCap": 22601103360,
+    "enterpriseValue": 22556514304,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -8.742062,
+    "priceToSalesTrailing12Months": 3.8417652,
+    "enterpriseToRevenue": 3.834,
+    "priceToBook": 4.163777,
+    "grossMargins": 0.07513,
+    "operatingMargins": -0.50422,
+    "profitMargins": -0.54955,
+    "returnOnEquity": -0.57523,
+    "totalCash": 5310000128,
+    "totalDebt": 5352999936,
+    "totalRevenue": 5882999808,
+    "freeCashflow": -1539374976,
+    "debtToEquity": 104.408,
+    "currentRatio": 2.104,
+    "fiftyTwoWeekHigh": 22.69,
+    "fiftyTwoWeekLow": 12.39,
+    "averageVolume": 31167123,
+    "averageVolume10days": 22737930,
+    "beta": 1.612,
+    "sharesOutstanding": 1443948130,
+    "sharesFloat": 945380598,
+    "companyOfficers": [
+      {
+        "name": "Dr. Robert Joseph Scaringe Ph.D.",
+        "title": "Founder, CEO & Chairman of the Board",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Mr. Michael J. Callahan",
+        "title": "Chief Administrative Officer & Secretary",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Javier  Varela",
+        "title": "Chief Operations Officer",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Ms. Sreela  Venkataratnam",
+        "title": "Chief Accounting Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Marina  Hoffmann",
+        "title": "Chief Communications Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Robert Scott Griffin",
+        "title": "Chief People Officer",
+        "age": 60,
+        "yearBorn": 1965
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.63,
+      "eps_estimate": -0.77637,
+      "eps_surprise_pct": 0.1885
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.33,
+      "eps_estimate": -0.71619,
+      "eps_surprise_pct": 0.5392
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.66,
+      "eps_estimate": -0.79186,
+      "eps_surprise_pct": 0.1665
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.96,
+      "eps_estimate": -0.86375,
+      "eps_surprise_pct": -0.1114
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 1527000000,
+    "revenue_high": 2200900000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,131 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 26,
+    "bullish": 11,
+    "neutral": 10,
+    "bearish": 5,
+    "avg_price_target": 19.23077,
+    "high_price_target": 25.0,
+    "low_price_target": 13.0,
+    "current_price": 15.61,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-31T19:40:10",
+        "firm": "RBC Capital",
+        "to_grade": "Sector Perform",
+        "from_grade": "Sector Perform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T17:09:12",
+        "firm": "Morgan Stanley",
+        "to_grade": "Underweight",
+        "from_grade": "Underweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T16:07:30",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T14:39:10",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T09:52:10",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-28T12:17:53",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-27T10:38:16",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2026-07-14T11:59:16",
+        "firm": "Morgan Stanley",
+        "to_grade": "Underweight",
+        "from_grade": "Underweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-09T19:17:05",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-08T15:16:31",
+        "firm": "BNP Paribas",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T19:50:00Z",
+      "title": "Is Rivian (RIVN) a Millionaire Maker Stock?",
+      "url": "https://www.fool.com/investing/2026/09/02/is-rivn-a-millionaire-maker/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-02T18:30:00Z",
+      "title": "2 Reasons Uber Is Slashing 3,300 Jobs",
+      "url": "https://www.barrons.com/articles/uber-job-cuts-robotaxi-investment-f2d0c72c?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-09-02T18:12:46Z",
+      "title": "Lucid\u2019s CEO Promised a $1.4 Billion Turnaround, Then This Happened",
+      "url": "https://247wallst.com/investing/2026/09/02/lucids-ceo-promised-a-1-4-billion-turnaround-then-this-happened/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-01T21:05:18Z",
+      "title": "Stock Market Today, Sept. 1: Nio Falls on Q2 Revenue Miss Despite August Delivery Strength",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/09/01/stock-market-today-sept-1-nio-falls-on-q2-revenue-miss-despite-august-delivery-strength/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-01T14:06:22Z",
+      "title": "Tesla Falls 3% as Mixed European Registrations Land Ahead of Cybercab Launch",
+      "url": "https://247wallst.com/investing/2026/09/01/tesla-falls-3-as-mixed-european-registrations-land-ahead-of-cybercab-launch/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-01T12:35:47Z",
+      "title": "CFO Turnover at AT&T, Caterpillar, and Pfizer Sparked Rallies. Here\u2019s Why Rivian\u2019s Didn\u2019t.",
+      "url": "https://247wallst.com/investing/2026/09/01/cfo-turnover-at-att-caterpillar-and-pfizer-sparked-rallies-heres-why-rivians-didnt/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-01T05:34:24Z",
+      "title": "Tesla Stock Crushes Rivian, Chinese EV Rivals In August \u2014 Wall Street Sees More Upside Before Cybercab Event",
+      "url": "https://stocktwits.com/news-articles/markets/equity/tesla-rivian-chinese-ev-rivals-wall-street-upside-cybercab-event/cZso7XHRJti",
+      "source": "Stocktwits"
+    },
     {
       "date": "2026-08-31T21:07:47Z",
       "title": "Stock Market Today, Aug. 31: Tesla Stock Surges on Cybercab Event Anticipation",
@@ -122,64 +307,20 @@
       "title": "Tesla Jumps 4% as Oil Climbs to $86: Is the Gas-Price Trade Back?",
       "url": "https://247wallst.com/investing/2026/08/31/tesla-jumps-4-as-oil-climbs-to-86-is-the-gas-price-trade-back/",
       "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-31T13:48:17Z",
-      "title": "GE Vernova Slides 3%, Vertiv Holdings and Eaton Sit Out the Selloff: Is the Rivian CFO Handoff Still Driving the Drawdown?",
-      "url": "https://247wallst.com/investing/2026/08/31/ge-vernova-slides-3-vertiv-holdings-and-eaton-sit-out-the-selloff-is-the-rivian-cfo-handoff-still-driving-the-drawdown/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-29T22:33:00Z",
-      "title": "Top EV executive joins the AI boom. Now what?",
-      "url": "https://www.thestreet.com/automotive/rivian-cfo-resigns-ge-vernova-ai",
-      "source": "TheStreet"
-    },
-    {
-      "date": "2026-08-29T11:00:00Z",
-      "title": "MarketBeat Week in Review \u2013 08/24 - 08/28",
-      "url": "https://www.marketbeat.com/articles/marketbeat-week-in-review-08-24-08-28/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-29T04:23:01Z",
-      "title": "General Electric (GE) Names Claire McDonough As GE Vernova CFO",
-      "url": "https://finance.yahoo.com/energy/articles/general-electric-ge-names-claire-042301638.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-28T20:56:52Z",
-      "title": "Why Rivian (RIVN) Shares Are Sliding Today",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/why-rivian-rivn-shares-sliding-205652244.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-28T19:03:03Z",
-      "title": "Rivian Automotive CFO Departure Not Seen as a Concern, UBS Says",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/rivian-automotive-cfo-departure-not-190303499.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-28T17:21:26Z",
-      "title": "Rivian Shares Tumble After CFO Departure",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/rivian-shares-tumble-cfo-departure-172126443.html",
-      "source": "GuruFocus.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03010890454836643,
   "technicals": {
-    "ma20": 15.975999879837037,
-    "ma50": 16.440799903869628,
-    "ma200": 16.296349964141847,
-    "rsi14": 48.85779881116499,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 44.860004197642354,
     "high_20d": 17.155000686645508,
-    "low_5d": 15.604999542236328,
-    "low_10d": 14.399999618530273,
+    "low_5d": 15.369999885559082,
+    "low_10d": 15.369999885559082,
     "high_52w": 22.690000534057617,
     "low_52w": 12.390000343322754,
-    "atr14": 0.6986428669520787,
-    "atr14_pct": 4.350204795670478,
-    "position_in_52w_range_pct": 35.63105878309493
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4172,34 +4313,34 @@
       "high": 16.73,
       "low": 15.605,
       "close": 16.07,
-      "volume": 40883900.0
+      "volume": 40916300.0
     },
     {
       "date": "2026-08-31",
-      "open": 15.96,
-      "high": 16.43,
+      "open": 15.9,
+      "high": 16.44,
       "low": 15.89,
       "close": 16.06,
-      "volume": 23175408.0
+      "volume": 23317900.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 15.68,
+      "high": 15.853,
+      "low": 15.37,
+      "close": 15.535,
+      "volume": 16199400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 15291220.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 13.65,
-      "high": 13.885,
-      "low": 13.31,
-      "close": 13.57,
-      "volume": 39634100.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 13.3,
-      "high": 13.95,
-      "low": 12.98,
-      "close": 13.87,
-      "volume": 51257800.0
-    },
     {
       "date": "2025-09-03",
       "open": 13.9,
@@ -6190,15 +6331,31 @@
       "high": 16.73,
       "low": 15.605,
       "close": 16.07,
-      "volume": 40883900.0
+      "volume": 40916300.0
     },
     {
       "date": "2026-08-31",
-      "open": 15.96,
-      "high": 16.43,
+      "open": 15.9,
+      "high": 16.44,
       "low": 15.89,
       "close": 16.06,
-      "volume": 23175408.0
+      "volume": 23317900.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 15.68,
+      "high": 15.853,
+      "low": 15.37,
+      "close": 15.535,
+      "volume": 16199400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 15291220.0
     }
   ],
   "ai_synthesis": null,

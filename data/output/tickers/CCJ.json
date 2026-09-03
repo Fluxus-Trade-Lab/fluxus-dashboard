@@ -1,8 +1,8 @@
 {
   "ticker": "CCJ",
-  "fetched_at": "2026-09-01T01:15:52Z",
+  "fetched_at": "2026-09-02T23:59:39Z",
   "_schema": "v2",
-  "current_price": 98.76000213623047,
+  "current_price": 96.37999725341797,
   "info": {
     "symbol": "CCJ",
     "longName": "Cameco Corporation",
@@ -13,13 +13,13 @@
     "city": "Saskatoon",
     "website": "https://www.cameco.com",
     "fullTimeEmployees": null,
-    "marketCap": 43013238784,
-    "enterpriseValue": 43122683904,
-    "trailingPE": 170.27586,
-    "forwardPE": 52.717915,
-    "priceToSalesTrailing12Months": 12.379257,
-    "enterpriseToRevenue": 12.411,
-    "priceToBook": 8.389681,
+    "marketCap": 41976668160,
+    "enterpriseValue": 42033852416,
+    "trailingPE": 163.35594,
+    "forwardPE": 51.29047,
+    "priceToSalesTrailing12Months": 12.080931,
+    "enterpriseToRevenue": 12.097,
+    "priceToBook": 8.152234,
     "grossMargins": 0.35112998,
     "operatingMargins": 0.09111,
     "profitMargins": 0.102139995,
@@ -31,9 +31,9 @@
     "debtToEquity": 17.131,
     "currentRatio": 3.061,
     "fiftyTwoWeekHigh": 135.24,
-    "fiftyTwoWeekLow": 73.2,
-    "averageVolume": 3380433,
-    "averageVolume10days": 2937370,
+    "fiftyTwoWeekLow": 74.63,
+    "averageVolume": 3346476,
+    "averageVolume10days": 2960880,
     "beta": 0.992,
     "sharesOutstanding": 435532978,
     "sharesFloat": 434478989,
@@ -170,10 +170,10 @@
     "bullish": 19,
     "neutral": 5,
     "bearish": 0,
-    "avg_price_target": 130.01459,
-    "high_price_target": 173.86212,
-    "low_price_target": 85.463806,
-    "current_price": 98.76,
+    "avg_price_target": 130.17615,
+    "high_price_target": 174.07817,
+    "low_price_target": 85.57001,
+    "current_price": 96.38,
     "recent_rating_changes": [
       {
         "date": "2026-08-12T17:21:06",
@@ -249,6 +249,12 @@
   },
   "news": [
     {
+      "date": "2026-09-02T18:00:00Z",
+      "title": "Energy Fuels' Q2 Revenues Surge 496% Y/Y: Is This Growth Sustainable?",
+      "url": "https://finance.yahoo.com/energy/articles/energy-fuels-q2-revenues-surge-180000222.html",
+      "source": "Zacks"
+    },
+    {
       "date": "2026-08-31T20:16:00Z",
       "title": "Are Options Traders Betting on a Big Move in Cameco Stock?",
       "url": "https://finance.yahoo.com/markets/options/articles/options-traders-betting-big-move-201600518.html",
@@ -301,28 +307,22 @@
       "title": "Uranium Energy Stock Is Priced On Pounds It Has Not Sold Yet",
       "url": "https://www.trefis.com/articles/612595/uranium-energy-stock-is-priced-on-pounds-it-has-not-sold-yet/2026-08-24",
       "source": "Trefis"
-    },
-    {
-      "date": "2026-08-24T16:04:00Z",
-      "title": "Cameco vs. Denison: Which Uranium Stock Has an Edge Right Now?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cameco-vs-denison-uranium-stock-160400641.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.04029971561270271,
+  "options_implied_move": 0.030192986957123007,
   "technicals": {
-    "ma20": 99.06549987792968,
-    "ma50": 96.03800003051758,
-    "ma200": 105.12063743591308,
-    "rsi14": 50.50174816635703,
+    "ma20": 99.32950019836426,
+    "ma50": 95.57160003662109,
+    "ma200": 105.19282230377198,
+    "rsi14": 46.73504087793397,
     "high_20d": 111.54000091552734,
-    "low_5d": 97.52999877929688,
-    "low_10d": 93.91000366210938,
+    "low_5d": 94.69000244140625,
+    "low_10d": 94.0999984741211,
     "high_52w": 135.24000549316406,
-    "low_52w": 73.05775031896626,
-    "atr14": 4.014286041259766,
-    "atr14_pct": 4.064688086703788,
-    "position_in_52w_range_pct": 41.333740221003154
+    "low_52w": 74.48496818910202,
+    "atr14": 4.187858036586216,
+    "atr14_pct": 4.345152683056027,
+    "position_in_52w_range_pct": 36.03821186832201
   },
   "ohlc_2y": [
     {
@@ -4320,29 +4320,29 @@
     {
       "date": "2026-08-31",
       "open": 99.6,
-      "high": 99.7,
+      "high": 99.9,
       "low": 97.53,
       "close": 98.76,
-      "volume": 3031817.0
+      "volume": 3128400.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 96.0,
+      "high": 97.42,
+      "low": 94.69,
+      "close": 96.26,
+      "volume": 2210500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 96.0,
+      "high": 98.37,
+      "low": 95.13,
+      "close": 96.38,
+      "volume": 2386914.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 80.8326,
-      "high": 82.8587,
-      "low": 76.1218,
-      "close": 77.2396,
-      "volume": 6985300.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 74.2654,
-      "high": 75.5429,
-      "low": 73.0578,
-      "close": 75.2734,
-      "volume": 4950700.0
-    },
     {
       "date": "2025-09-03",
       "open": 75.8523,
@@ -6338,10 +6338,26 @@
     {
       "date": "2026-08-31",
       "open": 99.6,
-      "high": 99.7,
+      "high": 99.9,
       "low": 97.53,
       "close": 98.76,
-      "volume": 3031817.0
+      "volume": 3128400.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 96.0,
+      "high": 97.42,
+      "low": 94.69,
+      "close": 96.26,
+      "volume": 2210500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 96.0,
+      "high": 98.37,
+      "low": 95.13,
+      "close": 96.38,
+      "volume": 2386914.0
     }
   ],
   "ai_synthesis": null,

@@ -1,8 +1,8 @@
 {
   "ticker": "FTK",
-  "fetched_at": "2026-09-01T01:17:03Z",
+  "fetched_at": "2026-09-03T00:00:45Z",
   "_schema": "v2",
-  "current_price": 23.719999313354492,
+  "current_price": 23.37,
   "info": {
     "symbol": "FTK",
     "longName": "Flotek Industries, Inc.",
@@ -13,13 +13,13 @@
     "city": "Houston",
     "website": "https://www.flotekind.com",
     "fullTimeEmployees": 158,
-    "marketCap": 859148544,
-    "enterpriseValue": 910838016,
-    "trailingPE": 23.72,
-    "forwardPE": 29.283949,
-    "priceToSalesTrailing12Months": 2.9325678,
-    "enterpriseToRevenue": 3.109,
-    "priceToBook": 6.6405373,
+    "marketCap": 846471424,
+    "enterpriseValue": 898177024,
+    "trailingPE": 23.138615,
+    "forwardPE": 28.851852,
+    "priceToSalesTrailing12Months": 2.8892965,
+    "enterpriseToRevenue": 3.066,
+    "priceToBook": 6.5425534,
     "grossMargins": 0.24679,
     "operatingMargins": 0.14981,
     "profitMargins": 0.1297,
@@ -32,8 +32,8 @@
     "currentRatio": 1.78,
     "fiftyTwoWeekHigh": 39.67,
     "fiftyTwoWeekLow": 10.95,
-    "averageVolume": 494976,
-    "averageVolume10days": 950700,
+    "averageVolume": 486238,
+    "averageVolume10days": 620910,
     "beta": 1.477,
     "sharesOutstanding": 36220429,
     "sharesFloat": 14218614,
@@ -173,7 +173,7 @@
     "avg_price_target": 38.25,
     "high_price_target": 43.0,
     "low_price_target": 32.0,
-    "current_price": 23.72,
+    "current_price": 23.37,
     "recent_rating_changes": [
       {
         "date": "2026-07-09T11:45:34",
@@ -281,20 +281,18 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": 0.5548060868868089,
+  "options_implied_move": 0.13093709884467264,
   "technicals": {
-    "ma20": 29.70399980545044,
-    "ma50": 26.482999954223633,
-    "ma200": 19.72114999771118,
-    "rsi14": 39.96009554013271,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 37.79717168349449,
     "high_20d": 39.66999816894531,
-    "low_5d": 23.31999969482422,
-    "low_10d": 23.31999969482422,
+    "low_5d": 22.790000915527344,
+    "low_10d": 22.790000915527344,
     "high_52w": 39.66999816894531,
     "low_52w": 10.949999809265137,
-    "atr14": 2.5167858941214427,
-    "atr14_pct": 10.610396150831582,
-    "position_in_52w_range_pct": 44.46378911364103
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4292,29 +4290,29 @@
     {
       "date": "2026-08-31",
       "open": 24.48,
-      "high": 24.725,
-      "low": 23.41,
+      "high": 24.73,
+      "low": 23.39,
       "close": 23.72,
-      "volume": 297551.0
+      "volume": 297800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 23.51,
+      "high": 23.76,
+      "low": 22.79,
+      "close": 22.79,
+      "volume": 465300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 465899.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 12.27,
-      "high": 12.27,
-      "low": 12.0,
-      "close": 12.09,
-      "volume": 226100.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 11.83,
-      "high": 12.17,
-      "low": 11.75,
-      "close": 12.03,
-      "volume": 255900.0
-    },
     {
       "date": "2025-09-03",
       "open": 11.99,
@@ -6310,10 +6308,26 @@
     {
       "date": "2026-08-31",
       "open": 24.48,
-      "high": 24.725,
-      "low": 23.41,
+      "high": 24.73,
+      "low": 23.39,
       "close": 23.72,
-      "volume": 297551.0
+      "volume": 297800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 23.51,
+      "high": 23.76,
+      "low": 22.79,
+      "close": 22.79,
+      "volume": 465300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 465899.0
     }
   ],
   "ai_synthesis": null,

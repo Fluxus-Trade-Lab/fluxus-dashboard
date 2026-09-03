@@ -1,46 +1,112 @@
 {
   "ticker": "CRCL",
-  "fetched_at": "2026-09-01T01:11:48Z",
+  "fetched_at": "2026-09-02T23:55:54Z",
   "_schema": "v2",
-  "current_price": 95.55000305175781,
+  "current_price": 88.63999938964844,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "symbol": "CRCL",
+    "longName": "Circle Internet Group",
+    "sector": "Financial Services",
+    "industry": "Capital Markets",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "New York",
+    "website": "https://www.circle.com",
+    "fullTimeEmployees": 1100,
+    "marketCap": 24162742272,
+    "enterpriseValue": 21004032000,
+    "trailingPE": 17.763527,
+    "forwardPE": 55.711987,
+    "priceToSalesTrailing12Months": 8.316382,
+    "enterpriseToRevenue": 7.229,
+    "priceToBook": 6.384787,
+    "grossMargins": 0.21997999,
+    "operatingMargins": 0.04899,
+    "profitMargins": 0.15531999,
+    "returnOnEquity": 0.15347,
+    "totalCash": 1730125952,
+    "totalDebt": 15951000,
+    "totalRevenue": 2905438976,
+    "freeCashflow": 206229376,
+    "debtToEquity": 0.454,
+    "currentRatio": 1.035,
+    "fiftyTwoWeekHigh": 159.47,
+    "fiftyTwoWeekLow": 49.9,
+    "averageVolume": 13867566,
+    "averageVolume10days": 18488460,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 234685190,
+    "sharesFloat": 205421130,
+    "companyOfficers": [
+      {
+        "name": "Mr. Jeremy D. Allaire",
+        "title": "Co-Founder, Chairman & CEO",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Heath P. Tarbert",
+        "title": "President & Chief Legal Officer",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Mr. Jeremy  Fox-Geen",
+        "title": "Chief Financial Officer",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Nikhil  Chandhok",
+        "title": "Chief Product & Technology Officer",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Hossein  Razzaghi",
+        "title": "Chief Commercial Officer",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Dante A. Disparte",
+        "title": "Chief Strategy Officer and Head of Global Policy & Operations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.18,
+      "eps_estimate": 0.15844,
+      "eps_surprise_pct": 0.1361
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.21,
+      "eps_estimate": 0.1771,
+      "eps_surprise_pct": 0.1858
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.43,
+      "eps_estimate": 0.16199,
+      "eps_surprise_pct": 1.6545
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.64,
+      "eps_estimate": 0.18338,
+      "eps_surprise_pct": 2.49
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-11",
+    "revenue_low": 710356000,
+    "revenue_high": 889000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,87 +165,164 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 26,
+    "bullish": 13,
+    "neutral": 12,
+    "bearish": 1,
+    "avg_price_target": 103.55,
+    "high_price_target": 243.0,
+    "low_price_target": 37.0,
+    "current_price": 88.64,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-25T14:39:27",
+        "firm": "Wolfe Research",
+        "to_grade": "Underperform",
+        "from_grade": "Underperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-24T13:25:10",
+        "firm": "Susquehanna",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-12T14:31:05",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T22:42:30",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T17:43:31",
+        "firm": "Morgan Stanley",
+        "to_grade": "Underweight",
+        "from_grade": "Underweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T10:25:51",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T10:06:19",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-03T17:35:11",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-31T10:06:12",
+        "firm": "Mizuho",
+        "to_grade": "Neutral",
+        "from_grade": "Underperform",
+        "action": "up"
+      },
+      {
+        "date": "2026-07-22T09:55:58",
+        "firm": "Raymond James",
+        "to_grade": "Market Perform",
+        "from_grade": null,
+        "action": "init"
+      }
+    ]
   },
   "news": [
     {
-      "date": "2026-08-31T21:27:40Z",
-      "title": "Stock Market Today, Aug. 31: Stocks Edge Lower as Oil Prices Surge Again",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/08/31/stock-market-today-aug-31-stocks-edge-lower-as-oil-prices-surge-again/",
-      "source": "Motley Fool"
+      "date": "2026-09-02T17:30:00Z",
+      "title": "Wall Street firms are all in on a stablecoin launch",
+      "url": "https://finance.yahoo.com/video/wall-street-firms-stablecoin-launch-173000092.html",
+      "source": "Yahoo Finance Video"
     },
     {
-      "date": "2026-08-31T20:15:00Z",
-      "title": "Cathie Wood of ARK Invest Continues to Scoop up Bargain-Priced Crypto Stocks. Here Are 2 Stocks You Should Be Buying Now.",
-      "url": "https://www.fool.com/investing/2026/08/31/cathie-wood-of-ark-invest-continues-to-scoop-up-ba/",
-      "source": "Motley Fool"
+      "date": "2026-09-02T17:57:52Z",
+      "title": "Cathie Wood buys millions in popular crypto stock on Chelsea FC deal",
+      "url": "https://www.thestreet.com/crypto/markets/cathie-wood-buys-millions-in-popular-crypto-stock-on-chelsea-fc-deal",
+      "source": "TheStreet"
     },
     {
-      "date": "2026-08-31T19:15:00Z",
-      "title": "Visa, Mastercard, and Fiserv Just Joined a Group Writing the Rules for AI Agent Payments",
-      "url": "https://www.fool.com/investing/2026/08/31/visa-mastercard-and-fiserv-just-joined-a-group-wri/",
-      "source": "Motley Fool"
+      "date": "2026-09-02T17:15:00Z",
+      "title": "Circle President Urges U.S. to Lead Digital Finance With Stablecoins",
+      "url": "https://www.cryptoprowl.com/releases/circle-ceo-urges-us-to-lead-digital-finance-with-stablecoins-6613",
+      "source": "CryptoProwl"
     },
     {
-      "date": "2026-08-31T18:06:01Z",
-      "title": "Bitmine Rises 4% as ETH Holdings Near 5% of Supply, Circle Internet Group Surges 8%, Coinbase Climbs 5%",
-      "url": "https://247wallst.com/investing/2026/08/31/bitmine-rises-4-as-eth-holdings-near-5-of-supply-circle-internet-group-surges-8-coinbase-climbs-5/",
+      "date": "2026-09-02T14:59:56Z",
+      "title": "Banks Just Hijacked Crypto\u2019s Original Promise: The Revolution Against Wall Street Is Now Owned by Wall Street",
+      "url": "https://247wallst.com/investing/2026/09/02/banks-just-hijacked-cryptos-original-promise-the-revolution-against-wall-street-is-now-owned-by-wall-street/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-31T03:04:29Z",
-      "title": "BlackRock's BUIDL Reclaims Top Spot for Tokenized Treasuries, Bolstering RWA Market",
-      "url": "https://beincrypto.com/blackrock-buidl-reclaims-top-tokenized-treasury/",
-      "source": "BeInCrypto"
+      "date": "2026-09-02T14:14:00Z",
+      "title": "Major Banks Make a Move Into Stablecoins: What Should Investors Watch?",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/major-banks-move-stablecoins-investors-141400253.html",
+      "source": "Zacks"
     },
     {
-      "date": "2026-08-29T15:05:49Z",
-      "title": "Circle Internet Group (CRCL) Lands Chelsea Shirt Sponsorship For 2026 27 Season",
-      "url": "https://finance.yahoo.com/markets/crypto/articles/circle-internet-group-crcl-lands-150549434.html",
-      "source": "Simply Wall St."
+      "date": "2026-09-02T12:33:57Z",
+      "title": "Goldman, Citi and BofA Are Building Their Own Stablecoin",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/goldman-citi-bofa-building-own-123357057.html",
+      "source": "GuruFocus.com"
     },
     {
-      "date": "2026-08-28T21:58:00Z",
-      "title": "Weekly Wrap: Bitcoin Holds Onto Gains",
-      "url": "https://www.cryptoprowl.com/releases/weekly-wrap-bitcoin-holds-onto-gains-6579",
-      "source": "CryptoProwl"
+      "date": "2026-09-02T06:05:34Z",
+      "title": "Goldman Sachs, Citi, BofA Among 21 Global Firms to Launch USD Stablecoin in H1 2027",
+      "url": "https://coingape.com/goldman-sachs-citi-bofa-among-global-firms-to-launch-usd-stablecoin/",
+      "source": "CoinGape"
     },
     {
-      "date": "2026-08-28T20:11:56Z",
-      "title": "Twelve Major Banks Are Building a Stablecoin on Public Chains. That Changes the Competitive Calculus.",
-      "url": "https://finance.yahoo.com/markets/crypto/articles/twelve-major-banks-building-stablecoin-201156000.html",
-      "source": "Forkast News"
+      "date": "2026-09-01T18:46:16Z",
+      "title": "Big Banks, Financial Giants Eye Crypto Market With Planned Stablecoin",
+      "url": "https://www.investopedia.com/major-financial-firms-want-a-piece-of-crypto-bac-cof-c-gs-wfc-12075799",
+      "source": "Investopedia"
     },
     {
-      "date": "2026-08-28T17:08:48Z",
-      "title": "Circle (CRCL) Stock Trades Near Fair Value After A 47% Jump",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/circle-crcl-stock-trades-near-170848954.html",
-      "source": "Simply Wall St."
+      "date": "2026-09-01T17:43:00Z",
+      "title": "Coinbase Powers Webull's Crypto Trading Expansion in Canada",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/coinbase-powers-webulls-crypto-trading-174300179.html",
+      "source": "Zacks"
     },
     {
-      "date": "2026-08-28T14:25:00Z",
-      "title": "Circle Strikes Sponsorship Deal With Chelsea FC",
-      "url": "https://www.cryptoprowl.com/releases/circle-strikes-sponsorship-deal-with-chelsea-fc-6573",
+      "date": "2026-09-01T13:59:00Z",
+      "title": "Singapore Moves To Ban Stablecoin Yield",
+      "url": "https://www.cryptoprowl.com/releases/singapore-moves-to-ban-stablecoin-yield-6602",
       "source": "CryptoProwl"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04591606529811532,
   "technicals": {
-    "ma20": 77.80400009155274,
-    "ma50": 70.7208000946045,
-    "ma200": 84.82324985504151,
-    "rsi14": 67.19278905638436,
+    "ma20": 80.383500289917,
+    "ma50": 71.17060020446777,
+    "ma200": 84.87064987182617,
+    "rsi14": 58.7882811527122,
     "high_20d": 96.4000015258789,
-    "low_5d": 84.25,
-    "low_10d": 71.41000366210938,
+    "low_5d": 85.87000274658203,
+    "low_10d": 79.5,
     "high_52w": 159.47000122070312,
     "low_52w": 49.900001525878906,
-    "atr14": 6.548927307128906,
-    "atr14_pct": 6.853926842452808,
-    "position_in_52w_range_pct": 41.66286543125297
+    "atr14": 6.677498953683036,
+    "atr14_pct": 7.533279557381007,
+    "position_in_52w_range_pct": 35.356391322139885
   },
   "ohlc_2y": [
     {
@@ -2660,7 +2803,7 @@
       "high": 93.958,
       "low": 86.91,
       "close": 87.14,
-      "volume": 14633900.0
+      "volume": 14725900.0
     },
     {
       "date": "2026-08-31",
@@ -2668,26 +2811,26 @@
       "high": 96.4,
       "low": 86.42,
       "close": 95.55,
-      "volume": 19713591.0
+      "volume": 19885800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 92.125,
+      "high": 93.3,
+      "low": 88.11,
+      "close": 89.48,
+      "volume": 13697600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 87.755,
+      "high": 89.68,
+      "low": 85.87,
+      "close": 88.64,
+      "volume": 8328423.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 131.07,
-      "high": 135.97,
-      "low": 129.0,
-      "close": 131.98,
-      "volume": 8140600.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 128.56,
-      "high": 131.69,
-      "low": 119.6,
-      "close": 120.14,
-      "volume": 10272400.0
-    },
     {
       "date": "2025-09-03",
       "open": 122.09,
@@ -4678,7 +4821,7 @@
       "high": 93.958,
       "low": 86.91,
       "close": 87.14,
-      "volume": 14633900.0
+      "volume": 14725900.0
     },
     {
       "date": "2026-08-31",
@@ -4686,7 +4829,23 @@
       "high": 96.4,
       "low": 86.42,
       "close": 95.55,
-      "volume": 19713591.0
+      "volume": 19885800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 92.125,
+      "high": 93.3,
+      "low": 88.11,
+      "close": 89.48,
+      "volume": 13697600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 87.755,
+      "high": 89.68,
+      "low": 85.87,
+      "close": 88.64,
+      "volume": 8328423.0
     }
   ],
   "ai_synthesis": null,

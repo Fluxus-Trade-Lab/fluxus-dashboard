@@ -1,46 +1,112 @@
 {
   "ticker": "DOCN",
-  "fetched_at": "2026-09-01T01:11:57Z",
+  "fetched_at": "2026-09-02T23:56:03Z",
   "_schema": "v2",
-  "current_price": 110.69000244140625,
+  "current_price": 104.87000274658203,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "DOCN",
+    "longName": "DigitalOcean Holdings, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Broomfield",
+    "website": "https://www.digitalocean.com",
+    "fullTimeEmployees": 1462,
+    "marketCap": 12330567680,
+    "enterpriseValue": 13541401600,
+    "trailingPE": 47.668182,
+    "forwardPE": 56.944122,
+    "priceToSalesTrailing12Months": 12.195044,
+    "enterpriseToRevenue": 13.393,
+    "priceToBook": 11.831001,
+    "grossMargins": 0.57222,
+    "operatingMargins": 0.104449995,
+    "profitMargins": 0.23265,
+    "returnOnEquity": 0.62273,
+    "totalCash": 767025984,
+    "totalDebt": 1977859968,
+    "totalRevenue": 1011113024,
+    "freeCashflow": -23832624,
+    "debtToEquity": 212.506,
+    "currentRatio": 1.311,
+    "fiftyTwoWeekHigh": 187.5,
+    "fiftyTwoWeekLow": 30.889,
+    "averageVolume": 3250826,
+    "averageVolume10days": 2158450,
+    "beta": 1.586,
+    "sharesOutstanding": 117579550,
+    "sharesFloat": 97761517,
+    "companyOfficers": [
+      {
+        "name": "Mr. Padmanabhan T. Srinivasan",
+        "title": "CEO & Director",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. W. Matthew Steinfort",
+        "title": "Chief Financial Officer",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Ms. Cherie  Barrett",
+        "title": "Senior VP & Chief Accounting Officer",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Vinay S. Kumar",
+        "title": "Chief Product and Technology Officer",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. Brady  Mickelsen J.D.",
+        "title": "Chief Legal & Administrative Officer",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Leo  Leung",
+        "title": "Chief Marketing Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.45,
+      "eps_estimate": 0.26023,
+      "eps_surprise_pct": 0.7292
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.44,
+      "eps_estimate": 0.26241,
+      "eps_surprise_pct": 0.6768
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.44,
+      "eps_estimate": 0.3809,
+      "eps_surprise_pct": 0.1552
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.54,
+      "eps_estimate": 0.49326,
+      "eps_surprise_pct": 0.094799995
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 305413000,
+    "revenue_high": 311000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,101 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 15,
+    "bullish": 11,
+    "neutral": 4,
+    "bearish": 0,
+    "avg_price_target": 175.2,
+    "high_price_target": 200.0,
+    "low_price_target": 140.0,
+    "current_price": 104.87,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-27T12:51:35",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-08-05T21:03:45",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T19:05:24",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T11:11:49",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-22T10:20:27",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-22T10:07:10",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-07-21T13:08:15",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-10T12:14:53",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-08T17:21:53",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-08T16:00:21",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T18:00:35Z",
+      "title": "Looking Beyond the Cloud Giants? Analysts Say Buy These 2 Overlooked Stocks",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/looking-beyond-cloud-giants-analysts-180035487.html",
+      "source": "TipRanks"
+    },
+    {
+      "date": "2026-09-01T20:58:20Z",
+      "title": "Tenable, Upstart, SentinelOne, monday.com, and DigitalOcean Stocks Trade Down, What You Need To Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/tenable-upstart-sentinelone-monday-com-205820303.html",
+      "source": "StockStory"
+    },
     {
       "date": "2026-08-29T01:15:32Z",
       "title": "Is DigitalOcean (DOCN)\u2019s AI Push Enough to Justify its Premium Valuation?",
@@ -152,34 +307,22 @@
       "title": "How DigitalOcean\u2019s New Managed AI Agents and Upgraded Outlook At DigitalOcean Holdings (DOCN) Has Changed Its Investment Story",
       "url": "https://finance.yahoo.com/technology/ai/articles/digitalocean-managed-ai-agents-upgraded-081506555.html",
       "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-18T21:09:27Z",
-      "title": "DigitalOcean (DOCN) Stock May Be Overvalued Despite Its 327% Run",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/digitalocean-docn-stock-may-overvalued-210927950.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-18T20:08:16Z",
-      "title": "DigitalOcean Holdings (DOCN) Brings Managed AI Agents To Its Cloud Platform",
-      "url": "https://finance.yahoo.com/technology/ai/articles/digitalocean-holdings-docn-brings-managed-200816530.html",
-      "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.048536281745886534,
   "technicals": {
-    "ma20": 121.78799934387207,
-    "ma50": 128.33359924316406,
-    "ma200": 95.84754968643189,
-    "rsi14": 41.615485065886546,
+    "ma20": 119.80999946594238,
+    "ma50": 126.1409992980957,
+    "ma200": 96.44869970321655,
+    "rsi14": 38.11541424438576,
     "high_20d": 138.30999755859375,
-    "low_5d": 108.54000091552734,
-    "low_10d": 108.18800354003906,
+    "low_5d": 103.19000244140625,
+    "low_10d": 103.19000244140625,
     "high_52w": 187.5,
     "low_52w": 30.888999938964844,
-    "atr14": 8.356997898646764,
-    "atr14_pct": 7.549912109786555,
-    "position_in_52w_range_pct": 50.95491534524458
+    "atr14": 7.6305694580078125,
+    "atr14_pct": 7.276217467493592,
+    "position_in_52w_range_pct": 47.23870148251718
   },
   "ohlc_2y": [
     {
@@ -4180,26 +4323,26 @@
       "high": 112.03,
       "low": 108.54,
       "close": 110.69,
-      "volume": 1817147.0
+      "volume": 1817400.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 108.71,
+      "high": 109.985,
+      "low": 105.19,
+      "close": 108.92,
+      "volume": 2120400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 108.01,
+      "high": 109.28,
+      "low": 103.19,
+      "close": 104.87,
+      "volume": 2059036.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 33.1,
-      "high": 33.499,
-      "low": 32.41,
-      "close": 32.62,
-      "volume": 1595700.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 31.62,
-      "high": 32.27,
-      "low": 31.25,
-      "close": 31.87,
-      "volume": 1547700.0
-    },
     {
       "date": "2025-09-03",
       "open": 31.87,
@@ -6198,7 +6341,23 @@
       "high": 112.03,
       "low": 108.54,
       "close": 110.69,
-      "volume": 1817147.0
+      "volume": 1817400.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 108.71,
+      "high": 109.985,
+      "low": 105.19,
+      "close": 108.92,
+      "volume": 2120400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 108.01,
+      "high": 109.28,
+      "low": 103.19,
+      "close": 104.87,
+      "volume": 2059036.0
     }
   ],
   "ai_synthesis": null,

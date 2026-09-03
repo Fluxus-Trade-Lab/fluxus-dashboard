@@ -1,46 +1,112 @@
 {
   "ticker": "CGNX",
-  "fetched_at": "2026-09-01T01:11:45Z",
+  "fetched_at": "2026-09-02T23:55:52Z",
   "_schema": "v2",
-  "current_price": 60.959999084472656,
+  "current_price": 59.939998626708984,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "CGNX",
+    "longName": "Cognex Corporation",
+    "sector": "Technology",
+    "industry": "Scientific & Technical Instruments",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Natick",
+    "website": "https://www.cognex.com",
+    "fullTimeEmployees": 2745,
+    "marketCap": 10083337216,
+    "enterpriseValue": 9774995456,
+    "trailingPE": 57.634617,
+    "forwardPE": 29.611698,
+    "priceToSalesTrailing12Months": 9.259857,
+    "enterpriseToRevenue": 8.977,
+    "priceToBook": 6.187674,
+    "grossMargins": 0.68865997,
+    "operatingMargins": 0.29361,
+    "profitMargins": 0.16051,
+    "returnOnEquity": 0.111490004,
+    "totalCash": 404369984,
+    "totalDebt": 72477000,
+    "totalRevenue": 1088930048,
+    "freeCashflow": 195671376,
+    "debtToEquity": 4.448,
+    "currentRatio": 3.934,
+    "fiftyTwoWeekHigh": 72.88,
+    "fiftyTwoWeekLow": 34.6,
+    "averageVolume": 2205438,
+    "averageVolume10days": 1581410,
+    "beta": 1.503,
+    "sharesOutstanding": 168223842,
+    "sharesFloat": 160524237,
+    "companyOfficers": [
+      {
+        "name": "Mr. Matthew  Moschner",
+        "title": "President, CEO & Director",
+        "age": 38,
+        "yearBorn": 1987
+      },
+      {
+        "name": "Mr. Dennis S. Fehr",
+        "title": "Senior VP of Finance & CFO",
+        "age": 44,
+        "yearBorn": 1981
+      },
+      {
+        "name": "Mr. Carl W. Gerst III",
+        "title": "Executive Vice President of Global Sales & Products",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Ms. Sheila M. DiPalma CPA",
+        "title": "Executive VP of Employee Services & Chief Culture Officer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Dr. Robert J. Shillman Ph.D.",
+        "title": "Founder, Chairman Emeritus & Adviser",
+        "age": 78,
+        "yearBorn": 1947
+      },
+      {
+        "name": "Mr. Mike  Bowdoin",
+        "title": "Vice President of Operations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.45,
+      "eps_estimate": 0.42482,
+      "eps_surprise_pct": 0.059299998
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.34,
+      "eps_estimate": 0.24805,
+      "eps_surprise_pct": 0.3707
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.27,
+      "eps_estimate": 0.21962,
+      "eps_surprise_pct": 0.22940001
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.33,
+      "eps_estimate": 0.29064,
+      "eps_surprise_pct": 0.1354
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-28",
+    "revenue_low": 307580000,
+    "revenue_high": 320348100
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 21,
+    "bullish": 16,
+    "neutral": 5,
+    "bearish": 0,
+    "avg_price_target": 80.05263,
+    "high_price_target": 92.0,
+    "low_price_target": 65.0,
+    "current_price": 59.94,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-10T19:23:50",
+        "firm": "DA Davidson",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-10T13:13:54",
+        "firm": "HSBC",
+        "to_grade": "Hold",
+        "from_grade": "Buy",
+        "action": "down"
+      },
+      {
+        "date": "2026-08-10T10:31:42",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T21:26:06",
+        "firm": "Citigroup",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T13:40:22",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T13:14:21",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T12:34:25",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-13T18:05:09",
+        "firm": "Citigroup",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-02T11:44:05",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-26T16:09:31",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "up"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +309,20 @@
       "source": "StockStory"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.07757757935496484,
   "technicals": {
-    "ma20": 63.29717178344727,
-    "ma50": 64.21467079162598,
-    "ma200": 52.926411647796634,
-    "rsi14": 46.352277684677155,
-    "high_20d": 72.59809412474527,
-    "low_5d": 59.18000030517578,
+    "ma20": 62.196640205383304,
+    "ma50": 63.98755905151367,
+    "ma200": 53.15237121582031,
+    "rsi14": 44.352932361707765,
+    "high_20d": 72.24858791574165,
+    "low_5d": 59.0099983215332,
     "low_10d": 58.220001220703125,
     "high_52w": 72.77784339127585,
     "low_52w": 34.45407530132623,
-    "atr14": 2.421993281242173,
-    "atr14_pct": 3.9730861509462976,
-    "position_in_52w_range_pct": 69.16314627761665
+    "atr14": 2.2825693918765393,
+    "atr14_pct": 3.8080904974519587,
+    "position_in_52w_range_pct": 66.5016113905209
   },
   "ohlc_2y": [
     {
@@ -619,7 +762,7 @@
       "open": 39.2296,
       "high": 39.4467,
       "low": 38.0552,
-      "close": 38.0947,
+      "close": 38.0946,
       "volume": 917200.0
     },
     {
@@ -649,7 +792,7 @@
     {
       "date": "2024-11-22",
       "open": 38.9631,
-      "high": 40.1672,
+      "high": 40.1671,
       "low": 38.9631,
       "close": 40.1375,
       "volume": 1102700.0
@@ -891,7 +1034,7 @@
       "open": 36.8906,
       "high": 37.0584,
       "low": 35.8642,
-      "close": 37.0091,
+      "close": 37.009,
       "volume": 956700.0
     },
     {
@@ -1242,7 +1385,7 @@
       "date": "2025-03-14",
       "open": 30.4306,
       "high": 31.1924,
-      "low": 30.2723,
+      "low": 30.2724,
       "close": 31.1726,
       "volume": 3943200.0
     },
@@ -1755,7 +1898,7 @@
       "open": 30.1695,
       "high": 30.4076,
       "low": 29.9811,
-      "close": 30.2885,
+      "close": 30.2886,
       "volume": 1317400.0
     },
     {
@@ -2041,7 +2184,7 @@
     {
       "date": "2025-08-07",
       "open": 41.0591,
-      "high": 41.2377,
+      "high": 41.2376,
       "low": 40.3252,
       "close": 41.0195,
       "volume": 1917200.0
@@ -2179,7 +2322,7 @@
       "open": 42.7333,
       "high": 44.0646,
       "low": 42.4749,
-      "close": 43.9851,
+      "close": 43.9852,
       "volume": 2610800.0
     },
     {
@@ -2195,7 +2338,7 @@
       "open": 43.7169,
       "high": 44.015,
       "low": 43.24,
-      "close": 43.9851,
+      "close": 43.9852,
       "volume": 1582900.0
     },
     {
@@ -2299,7 +2442,7 @@
       "open": 46.638,
       "high": 47.2142,
       "low": 45.8829,
-      "close": 46.1313,
+      "close": 46.1312,
       "volume": 1742200.0
     },
     {
@@ -2619,7 +2762,7 @@
       "open": 35.42,
       "high": 36.3162,
       "low": 35.2706,
-      "close": 35.7586,
+      "close": 35.7585,
       "volume": 1704500.0
     },
     {
@@ -2859,7 +3002,7 @@
       "open": 36.2764,
       "high": 36.844,
       "low": 36.0473,
-      "close": 36.7743,
+      "close": 36.7742,
       "volume": 1201500.0
     },
     {
@@ -4178,29 +4321,29 @@
       "date": "2026-08-31",
       "open": 60.46,
       "high": 61.03,
-      "low": 60.1101,
+      "low": 60.11,
       "close": 60.96,
-      "volume": 1631689.0
+      "volume": 1632300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 59.72,
+      "high": 60.2,
+      "low": 59.01,
+      "close": 60.08,
+      "volume": 1543200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 60.37,
+      "high": 61.355,
+      "low": 59.585,
+      "close": 59.94,
+      "volume": 1532227.0
     }
   ],
   "ohlc_1y": [
     {
-      "date": "2025-08-29",
-      "open": 43.7169,
-      "high": 43.9057,
-      "low": 43.3791,
-      "close": 43.6573,
-      "volume": 1338200.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 42.7333,
-      "high": 44.0646,
-      "low": 42.4749,
-      "close": 43.9851,
-      "volume": 2610800.0
-    },
-    {
       "date": "2025-09-03",
       "open": 43.9852,
       "high": 44.2534,
@@ -4213,7 +4356,7 @@
       "open": 43.7169,
       "high": 44.015,
       "low": 43.24,
-      "close": 43.9851,
+      "close": 43.9852,
       "volume": 1582900.0
     },
     {
@@ -4317,7 +4460,7 @@
       "open": 46.638,
       "high": 47.2142,
       "low": 45.8829,
-      "close": 46.1313,
+      "close": 46.1312,
       "volume": 1742200.0
     },
     {
@@ -4637,7 +4780,7 @@
       "open": 35.42,
       "high": 36.3162,
       "low": 35.2706,
-      "close": 35.7586,
+      "close": 35.7585,
       "volume": 1704500.0
     },
     {
@@ -4877,7 +5020,7 @@
       "open": 36.2764,
       "high": 36.844,
       "low": 36.0473,
-      "close": 36.7743,
+      "close": 36.7742,
       "volume": 1201500.0
     },
     {
@@ -6196,9 +6339,25 @@
       "date": "2026-08-31",
       "open": 60.46,
       "high": 61.03,
-      "low": 60.1101,
+      "low": 60.11,
       "close": 60.96,
-      "volume": 1631689.0
+      "volume": 1632300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 59.72,
+      "high": 60.2,
+      "low": 59.01,
+      "close": 60.08,
+      "volume": 1543200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 60.37,
+      "high": 61.355,
+      "low": 59.585,
+      "close": 59.94,
+      "volume": 1532227.0
     }
   ],
   "ai_synthesis": null,

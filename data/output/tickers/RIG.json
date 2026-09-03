@@ -1,46 +1,112 @@
 {
   "ticker": "RIG",
-  "fetched_at": "2026-09-01T01:18:35Z",
+  "fetched_at": "2026-09-03T00:02:24Z",
   "_schema": "v2",
-  "current_price": 5.809999942779541,
+  "current_price": 6.22,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "RIG",
+    "longName": "Transocean Ltd.",
+    "sector": "Energy",
+    "industry": "Oil & Gas Drilling",
+    "exchange": "NYQ",
+    "country": "Switzerland",
+    "city": "Zug",
+    "website": "https://www.deepwater.com",
+    "fullTimeEmployees": 5220,
+    "marketCap": 6946994176,
+    "enterpriseValue": 11221929984,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 21.859074,
+    "priceToSalesTrailing12Months": 1.6869825,
+    "enterpriseToRevenue": 2.725,
+    "priceToBook": 0.83010805,
+    "grossMargins": 0.41646,
+    "operatingMargins": 0.17391,
+    "profitMargins": -0.40238,
+    "returnOnEquity": -0.18698,
+    "totalCash": 509000000,
+    "totalDebt": 5119000064,
+    "totalRevenue": 4118000128,
+    "freeCashflow": 872625024,
+    "debtToEquity": 61.159,
+    "currentRatio": 1.589,
+    "fiftyTwoWeekHigh": 7.66,
+    "fiftyTwoWeekLow": 2.93,
+    "averageVolume": 38513044,
+    "averageVolume10days": 34242310,
+    "beta": 1.333,
+    "sharesOutstanding": 1116880085,
+    "sharesFloat": 917148419,
+    "companyOfficers": [
+      {
+        "name": "Mr. Jeremy D. Thigpen",
+        "title": "Executive Chair",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Keelan I. Adamson",
+        "title": "President, CEO & Director",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Robert Thaddeus Vayda",
+        "title": "Executive VP & CFO",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Mr. Jason B. Pack B. Mgt., B. Sc., B.Sc., C.A., CPA",
+        "title": "Senior VP & Chief Accounting Officer",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. Brady K. Long J.D.",
+        "title": "Executive VP & Chief Legal Officer",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Roderick James Mackenzie",
+        "title": "Executive VP & Chief Commercial Officer",
+        "age": 49,
+        "yearBorn": 1976
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.03,
+      "eps_estimate": 0.01315,
+      "eps_surprise_pct": 1.2814
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.03,
+      "eps_estimate": 0.08316,
+      "eps_surprise_pct": -1.3608
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.02,
+      "eps_estimate": 0.07388,
+      "eps_surprise_pct": -0.7293
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.06,
+      "eps_estimate": 0.03146,
+      "eps_surprise_pct": 0.90720004
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-28",
+    "revenue_low": 858000000,
+    "revenue_high": 955000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,95 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 13,
+    "bullish": 4,
+    "neutral": 6,
+    "bearish": 3,
+    "avg_price_target": 6.55417,
+    "high_price_target": 10.0,
+    "low_price_target": 4.5,
+    "current_price": 6.22,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-12T12:40:32",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-08T12:32:49",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-07T12:41:38",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Equal-Weight",
+        "action": "up"
+      },
+      {
+        "date": "2026-05-06T19:48:21",
+        "firm": "TD Cowen",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-15T18:03:34",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-07T14:22:21",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      },
+      {
+        "date": "2026-02-23T16:30:36",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-02-23T14:04:41",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      },
+      {
+        "date": "2026-02-18T13:27:03",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Overweight",
+        "action": "down"
+      },
+      {
+        "date": "2026-02-09T16:45:18",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-01T13:03:00Z",
+      "title": "Transocean Stock: Why Current Trends Support a Hold Strategy",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/transocean-stock-why-current-trends-130300036.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-28T15:32:00Z",
       "title": "Is RIG Worth Buying as Cash Flow Improves but Leverage Stays High?",
@@ -158,28 +307,20 @@
       "title": "RIG Stock Edges Higher Overnight: Transocean Announces $300M Contract For Ultra-Deepwater Drillship",
       "url": "https://stocktwits.com/news-articles/markets/equity/rig-stock-edges-higher-overnight-transocean-announces-300-m-contract-for-ultra-deepwater-drillship/cZYBNAtRJNa",
       "source": "Stocktwits"
-    },
-    {
-      "date": "2026-08-20T21:07:15Z",
-      "title": "Talos Energy, Transocean, HighPeak Energy, and Murphy Oil Shares Are Soaring, What You Need To Know",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/talos-energy-transocean-highpeak-energy-210715028.html",
-      "source": "StockStory"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.045016077170418015,
   "technicals": {
-    "ma20": 5.670999979972839,
-    "ma50": 5.359999961853028,
-    "ma200": 5.518749996423721,
-    "rsi14": 57.12133841446709,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 60.225473985092364,
     "high_20d": 6.139999866485596,
     "low_5d": 5.570000171661377,
     "low_10d": 5.570000171661377,
     "high_52w": 7.659999847412109,
     "low_52w": 2.930000066757202,
-    "atr14": 0.2000000136239188,
-    "atr14_pct": 3.4423410601315347,
-    "position_in_52w_range_pct": 60.8879494625173
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4167,31 +4308,31 @@
       "volume": 44262600.0
     },
     {
-      "date": "2026-08-28",
-      "open": 5.74,
-      "high": 5.86,
-      "low": 5.68,
-      "close": 5.8,
-      "volume": 34881300.0
-    },
-    {
       "date": "2026-08-31",
       "open": 5.95,
       "high": 5.98,
       "low": 5.75,
       "close": 5.81,
-      "volume": 27498015.0
+      "volume": 27522300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 5.9,
+      "high": 5.99,
+      "low": 5.8,
+      "close": 5.92,
+      "volume": 37119500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 53342643.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 3.09,
-      "high": 3.12,
-      "low": 3.02,
-      "close": 3.03,
-      "volume": 24473200.0
-    },
     {
       "date": "2025-09-02",
       "open": 3.01,
@@ -6185,20 +6326,28 @@
       "volume": 44262600.0
     },
     {
-      "date": "2026-08-28",
-      "open": 5.74,
-      "high": 5.86,
-      "low": 5.68,
-      "close": 5.8,
-      "volume": 34881300.0
-    },
-    {
       "date": "2026-08-31",
       "open": 5.95,
       "high": 5.98,
       "low": 5.75,
       "close": 5.81,
-      "volume": 27498015.0
+      "volume": 27522300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 5.9,
+      "high": 5.99,
+      "low": 5.8,
+      "close": 5.92,
+      "volume": 37119500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 53342643.0
     }
   ],
   "ai_synthesis": null,

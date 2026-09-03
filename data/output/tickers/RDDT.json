@@ -1,46 +1,112 @@
 {
   "ticker": "RDDT",
-  "fetched_at": "2026-09-01T01:18:32Z",
+  "fetched_at": "2026-09-03T00:02:22Z",
   "_schema": "v2",
-  "current_price": 147.80999755859375,
+  "current_price": 158.1,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "RDDT",
+    "longName": "Reddit, Inc.",
+    "sector": "Communication Services",
+    "industry": "Internet Content & Information",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://redditinc.com",
+    "fullTimeEmployees": 2555,
+    "marketCap": 30417889280,
+    "enterpriseValue": 27652399104,
+    "trailingPE": 36.76744,
+    "forwardPE": 16.320017,
+    "priceToSalesTrailing12Months": 10.946279,
+    "enterpriseToRevenue": 9.951,
+    "priceToBook": 9.254273,
+    "grossMargins": 0.91442,
+    "operatingMargins": 0.28788,
+    "profitMargins": 0.31348,
+    "returnOnEquity": 0.30712,
+    "totalCash": 2786356992,
+    "totalDebt": 20867000,
+    "totalRevenue": 2778833920,
+    "freeCashflow": 678068736,
+    "debtToEquity": 0.635,
+    "currentRatio": 10.486,
+    "fiftyTwoWeekHigh": 282.95,
+    "fiftyTwoWeekLow": 119.27,
+    "averageVolume": 5754806,
+    "averageVolume10days": 4507320,
+    "beta": 2.034,
+    "sharesOutstanding": 146103200,
+    "sharesFloat": 143843327,
+    "companyOfficers": [
+      {
+        "name": "Mr. Steven Ladd Huffman",
+        "title": "Co-Founder, CEO, President & Director",
+        "age": 40,
+        "yearBorn": 1985
+      },
+      {
+        "name": "Mr. Andrew  Vollero",
+        "title": "Chief Financial Officer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Ms. Jennifer L. Wong",
+        "title": "Chief Operating Officer",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. Benjamin  Lee J.D.",
+        "title": "Chief Legal Officer & Corporate Secretary",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Ms. Michelle  Reynolds",
+        "title": "Chief Accounting Officer",
+        "age": 42,
+        "yearBorn": 1983
+      },
+      {
+        "name": "Mr. Amit  Puntambekar",
+        "title": "Chief Technology Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 1.25,
+      "eps_estimate": 0.96481,
+      "eps_surprise_pct": 0.2956
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 1.01,
+      "eps_estimate": 0.56388,
+      "eps_surprise_pct": 0.79120004
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 1.24,
+      "eps_estimate": 0.93136,
+      "eps_surprise_pct": 0.3314
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.8,
+      "eps_estimate": 0.52015,
+      "eps_surprise_pct": 0.538
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-29",
+    "revenue_low": 858000000,
+    "revenue_high": 924000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,125 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 32,
+    "bullish": 21,
+    "neutral": 10,
+    "bearish": 1,
+    "avg_price_target": 213.10303,
+    "high_price_target": 300.0,
+    "low_price_target": 130.0,
+    "current_price": 158.1,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-21T16:55:27",
+        "firm": "Morgan Stanley",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T18:31:02",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T16:18:08",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T15:37:20",
+        "firm": "B. Riley Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T14:57:29",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T14:31:56",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T14:18:40",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-31T13:22:56",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T13:22:50",
+        "firm": "Wedbush",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T11:26:42",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": null,
+        "action": "init"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T20:38:00Z",
+      "title": "Reddit Is One of Today\u2019s Top S&P 500 Stocks. It Has a Lot to Do With Its Google Data Deal.",
+      "url": "https://www.barrons.com/articles/reddit-google-stock-ai-data-fa4c40ff?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-09-02T17:29:00Z",
+      "title": "Should You Hold on to RDDT Stock Despite Its 15% Dip in Three Months?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/hold-rddt-stock-despite-15-172900315.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-02T14:55:52Z",
+      "title": "Reddit Rallies 7% as Baird Says Renewal Risk Is Already Priced In, Pinterest Holds Flat",
+      "url": "https://247wallst.com/investing/2026/09/02/reddit-rallies-7-as-baird-says-renewal-risk-is-already-priced-in-pinterest-holds-flat/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-02T12:44:23Z",
+      "title": "1 Surging  Stock with Exciting Potential and 2 We Brush Off",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/1-surging-stock-exciting-potential-124423926.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-09-02T12:14:29Z",
+      "title": "Reddit\u2019s Next AI Catalyst Isn\u2019t User Growth \u2014 It\u2019s What Alphabet\u2019s Google and OpenAI Do Next",
+      "url": "https://finance.yahoo.com/technology/ai/articles/reddit-next-ai-catalyst-isn-121429089.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-09-01T18:10:46Z",
+      "title": "Retail Investors\u2019 2 Favorite AI Stocks for the Long Term: Alphabet, IBM",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/retail-investors-2-favorite-ai-181046723.html",
+      "source": "Insider Monkey"
+    },
     {
       "date": "2026-08-31T20:15:35Z",
       "title": "ChatGPT, Reddit, Roblox to adhere to EU's \"very large platform\" rules",
@@ -128,58 +307,20 @@
       "title": "Maxing out a Roth IRA at the Beginning of the Year Feels Impossible on a Regular Paycheck. These 5 Strategies Help You Actually Pull It Off",
       "url": "https://finance.yahoo.com/markets/articles/maxing-roth-ira-beginning-feels-154525290.html",
       "source": "Benzinga"
-    },
-    {
-      "date": "2026-08-31T14:01:03Z",
-      "title": "Everyday People Are Turning Their Investments Into an Additional Income Stream. One Says Dividends Feel Like Having Someone Working for You",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/everyday-people-turning-investments-additional-140103244.html",
-      "source": "Benzinga"
-    },
-    {
-      "date": "2026-08-31T12:01:11Z",
-      "title": "'We Know Inflation Is Being Underreported,' Millennial Couple Says. They're Both College Educated and Living on Beans and Rice",
-      "url": "https://finance.yahoo.com/economy/articles/know-inflation-being-underreported-millennial-120111343.html",
-      "source": "Benzinga"
-    },
-    {
-      "date": "2026-08-30T19:01:08Z",
-      "title": "Will Having Roommates in Your 60s and Beyond Become the New Normal? Some Already 'Highly Recommend the Golden Girl Lifestyle'",
-      "url": "https://finance.yahoo.com/real-estate/articles/having-roommates-60s-beyond-become-190108465.html",
-      "source": "Benzinga"
-    },
-    {
-      "date": "2026-08-30T16:01:11Z",
-      "title": "She Was Thrilled About Her New Car Until Friends Started Looking at the Numbers. 'My Dad Did Most of the Talking and Negotiating'",
-      "url": "https://finance.yahoo.com/markets/articles/she-thrilled-her-car-until-160111747.html",
-      "source": "Benzinga"
-    },
-    {
-      "date": "2026-08-30T14:31:09Z",
-      "title": "We Offered to Buy My Parents an Apartment so They Wouldn't Have to Live in a Basement. Now They Want $300K in Cash Instead",
-      "url": "https://finance.yahoo.com/real-estate/articles/offered-buy-parents-apartment-wouldnt-143109030.html",
-      "source": "Benzinga"
-    },
-    {
-      "date": "2026-08-30T00:00:15Z",
-      "title": "Why Are So Many Jobs Still Paying Like It's 2011? Salaries Seem Stuck at $65K to $85K While Groceries, Insurance and Bills Keep Going Up",
-      "url": "https://finance.yahoo.com/economy/articles/why-many-jobs-still-paying-000015487.html",
-      "source": "Benzinga"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03693864642631246,
   "technicals": {
-    "ma20": 156.7849983215332,
-    "ma50": 170.84459899902345,
-    "ma200": 175.34414978027343,
-    "rsi14": 41.73207927534411,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 40.06299035285691,
     "high_20d": 184.28399658203125,
-    "low_5d": 146.6199951171875,
-    "low_10d": 144.0500030517578,
+    "low_5d": 143.8000030517578,
+    "low_10d": 143.8000030517578,
     "high_52w": 282.95001220703125,
     "low_52w": 119.2699966430664,
-    "atr14": 9.090500967843193,
-    "atr14_pct": 6.150125917050776,
-    "position_in_52w_range_pct": 17.436460289420083
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4177,29 +4318,29 @@
     {
       "date": "2026-08-31",
       "open": 151.32,
-      "high": 151.9418,
+      "high": 151.942,
       "low": 146.62,
       "close": 147.81,
-      "volume": 3841138.0
+      "volume": 3857600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 144.79,
+      "high": 147.863,
+      "low": 143.8,
+      "close": 144.64,
+      "volume": 3790100.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 6221847.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 225.54,
-      "high": 227.9,
-      "low": 219.62,
-      "close": 225.08,
-      "volume": 3922300.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 219.98,
-      "high": 223.44,
-      "low": 213.15,
-      "close": 220.06,
-      "volume": 4640000.0
-    },
     {
       "date": "2025-09-03",
       "open": 226.28,
@@ -6195,10 +6336,26 @@
     {
       "date": "2026-08-31",
       "open": 151.32,
-      "high": 151.9418,
+      "high": 151.942,
       "low": 146.62,
       "close": 147.81,
-      "volume": 3841138.0
+      "volume": 3857600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 144.79,
+      "high": 147.863,
+      "low": 143.8,
+      "close": 144.64,
+      "volume": 3790100.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 6221847.0
     }
   ],
   "ai_synthesis": null,

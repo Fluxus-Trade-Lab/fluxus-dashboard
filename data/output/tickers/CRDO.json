@@ -1,46 +1,112 @@
 {
   "ticker": "CRDO",
-  "fetched_at": "2026-09-01T01:11:50Z",
+  "fetched_at": "2026-09-02T23:55:57Z",
   "_schema": "v2",
-  "current_price": 226.19000244140625,
+  "current_price": 165.22000122070312,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "CRDO",
+    "longName": "Credo Technology Group Holding Ltd",
+    "sector": "Technology",
+    "industry": "Semiconductors",
+    "exchange": "NMS",
+    "country": "Cayman Islands",
+    "city": "Grand Cayman",
+    "website": "https://credosemi.com",
+    "fullTimeEmployees": 807,
+    "marketCap": 31050567680,
+    "enterpriseValue": 37114089472,
+    "trailingPE": 66.088,
+    "forwardPE": 17.16525,
+    "priceToSalesTrailing12Months": 23.25683,
+    "enterpriseToRevenue": 27.798,
+    "priceToBook": 14.845899,
+    "grossMargins": 0.68035007,
+    "operatingMargins": 0.35661998,
+    "profitMargins": 0.35374,
+    "returnOnEquity": 0.34408,
+    "totalCash": 1443286016,
+    "totalDebt": 25448000,
+    "totalRevenue": 1335116032,
+    "freeCashflow": 250810128,
+    "debtToEquity": 1.233,
+    "currentRatio": 10.153,
+    "fiftyTwoWeekHigh": 308.67,
+    "fiftyTwoWeekLow": 86.485,
+    "averageVolume": 7206714,
+    "averageVolume10days": 4127300,
+    "beta": 3.233,
+    "sharesOutstanding": 187934666,
+    "sharesFloat": 169411441,
+    "companyOfficers": [
+      {
+        "name": "Mr. William J. Brennan",
+        "title": "President, CEO & Chairman",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Chi Fung  Cheng",
+        "title": "Co-founder, CTO & Director",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Yat Tung  Lam",
+        "title": "Co-founder, COO & Director",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Daniel  Fleming",
+        "title": "Chief Financial Officer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. James L. Laufman",
+        "title": "Chief Legal Officer & Secretary",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Daniel J. O'Neil",
+        "title": "VP of Investor Relations & Treasurer",
+        "age": 54,
+        "yearBorn": 1971
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-07-31T00:00:00",
+      "eps_actual": 1.2,
+      "eps_estimate": 1.16862,
+      "eps_surprise_pct": 0.0269
+    },
+    {
+      "period_end": "2026-04-30T00:00:00",
+      "eps_actual": 1.16,
+      "eps_estimate": 1.03414,
+      "eps_surprise_pct": 0.121700004
+    },
+    {
+      "period_end": "2026-01-31T00:00:00",
+      "eps_actual": 1.07,
+      "eps_estimate": 0.94073,
+      "eps_surprise_pct": 0.1374
+    },
+    {
+      "period_end": "2025-10-31T00:00:00",
+      "eps_actual": 0.67,
+      "eps_estimate": 0.49534,
+      "eps_surprise_pct": 0.35259998
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-30",
+    "revenue_low": 529800000,
+    "revenue_high": 534475000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -99,87 +165,164 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 19,
+    "bullish": 18,
+    "neutral": 1,
+    "bearish": 0,
+    "avg_price_target": 277.81342,
+    "high_price_target": 350.0,
+    "low_price_target": 184.0,
+    "current_price": 165.22,
+    "recent_rating_changes": [
+      {
+        "date": "2026-09-02T18:13:08",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-02T15:08:23",
+        "firm": "Evercore ISI Group",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-02T11:52:47",
+        "firm": "Rosenblatt",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-02T11:38:55",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-24T13:00:08",
+        "firm": "Rosenblatt",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-18T14:21:00",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-21T13:36:17",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-20T18:04:55",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-23T12:40:45",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-22T11:46:41",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
-      "date": "2026-08-31T12:30:12Z",
-      "title": "Prediction: Marvell Stock Could Be on the Verge of Another Big Move",
-      "url": "https://247wallst.com/investing/2026/08/31/prediction-marvell-stock-could-be-on-the-verge-of-another-big-move/",
-      "source": "24/7 Wall St."
+      "date": "2026-09-02T20:41:17Z",
+      "title": "Stock Market Today: Dow Rises Nearly 300 Points; Dell Retakes A Breakout Point (Live Coverage)",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-jobs-data-ai-stock-credo-earnings/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
     },
     {
-      "date": "2026-08-28T15:34:00Z",
-      "title": "Credo to Report Q1 Earnings: Should You Buy, Hold or Sell the Stock?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/credo-report-q1-earnings-buy-153400463.html",
+      "date": "2026-09-02T20:39:12Z",
+      "title": "Why Credo Technology Stock Plunged 20% Today",
+      "url": "https://www.fool.com/investing/2026/09/02/why-credo-technology-stock-plunged-20-today/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-02T20:21:00Z",
+      "title": "Credo, Dell, Palo Alto, PG&E, Uber, MongoDB, and More Stocks That Explain Today\u2019s Market",
+      "url": "https://www.barrons.com/articles/stock-movers-4fed2750?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-09-02T17:49:00Z",
+      "title": "Credo Stock Craters Despite Earnings Beat as Analysts Find Weak Spots",
+      "url": "https://www.barrons.com/articles/credo-earnings-stock-price-9f8c1d24?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-09-02T16:19:16Z",
+      "title": "Credo Technology Stock Tanks Despite Sales More Than Double",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/credo-technology-stock-tanks-despite-161916449.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-02T15:52:39Z",
+      "title": "Most Active Options Report: DELL, CRDO, GTLB, RUN, ALLY",
+      "url": "https://finance.yahoo.com/markets/options/articles/most-active-options-report-dell-155239571.html",
+      "source": "Schaeffer's Investment Research"
+    },
+    {
+      "date": "2026-09-02T15:07:00Z",
+      "title": "Credo Technology Reports Q1 Results: Should Investors Hold or Fold?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/credo-technology-reports-q1-results-150700193.html",
       "source": "Zacks"
     },
     {
-      "date": "2026-08-28T11:01:03Z",
-      "title": "3 Under-the-Radar AI Stocks Wall Street Is Missing",
-      "url": "https://247wallst.com/investing/2026/08/28/3-under-the-radar-ai-stocks-wall-street-is-missing/",
-      "source": "24/7 Wall St."
+      "date": "2026-09-02T14:54:02Z",
+      "title": "Credo Stock Drops 11% Despite Beating on Revenue and EPS",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/credo-stock-drops-11-despite-145402530.html",
+      "source": "GuruFocus.com"
     },
     {
-      "date": "2026-08-27T21:15:02Z",
-      "title": "Marvell Technology (MRVL) Q2 Earnings and Revenues Beat Estimates",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/marvell-technology-mrvl-q2-earnings-211502034.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-27T15:32:15Z",
-      "title": "This Under-the-Radar AI Stock Could Be the Next Big Semiconductor Winner",
-      "url": "https://247wallst.com/investing/2026/08/27/this-under-the-radar-ai-stock-could-be-the-next-big-semiconductor-winner/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-25T23:07:59Z",
-      "title": "Credo Technology Group Holding (CRDO), Why Is It Getting Fresh Attention Now?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/credo-technology-group-holding-crdo-230759202.html",
+      "date": "2026-09-02T14:09:49Z",
+      "title": "Credo Technology Group Holding (CRDO) Achieved PCIe 6.x Compliance For Its Toucan Retimer",
+      "url": "https://finance.yahoo.com/technology/articles/credo-technology-group-holding-crdo-140949592.html",
       "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-25T21:15:02Z",
-      "title": "Semtech (SMTC) Q2 Earnings and Revenues Top Estimates",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/semtech-smtc-q2-earnings-revenues-211502936.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-25T15:15:00Z",
-      "title": "ALAB Rides on Strong Scorpio Demand: Can It Outpace MRVL and CRDO?",
-      "url": "https://finance.yahoo.com/technology/ai/articles/alab-rides-strong-scorpio-demand-151500340.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-20T18:28:00Z",
-      "title": "MaxLinear Stock Drops 23% in a Month: Should You Buy it on the Dip?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/maxlinear-stock-drops-23-month-182800588.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-20T14:48:00Z",
-      "title": "Credo vs. Astera Labs: Which AI Connectivity Stock Is the Better Buy?",
-      "url": "https://finance.yahoo.com/technology/ai/articles/credo-vs-astera-labs-ai-144800511.html",
+      "date": "2026-09-02T14:00:00Z",
+      "title": "Credo Q1 Earnings Call Highlights Optics as the Next Growth Engine",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/credo-q1-earnings-call-highlights-140000598.html",
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.05483597586891147,
   "technicals": {
-    "ma20": 241.24325103759764,
-    "ma50": 238.31440002441406,
-    "ma200": 174.7837754058838,
-    "rsi14": 46.79623882983627,
+    "ma20": 236.30225143432617,
+    "ma50": 235.04600036621093,
+    "ma200": 174.67757545471193,
+    "rsi14": 32.59962454545847,
     "high_20d": 286.239990234375,
-    "low_5d": 219.73899841308594,
-    "low_10d": 211.5,
+    "low_5d": 161.9499969482422,
+    "low_10d": 161.9499969482422,
     "high_52w": 308.6700134277344,
     "low_52w": 86.48500061035156,
-    "atr14": 18.585272652762278,
-    "atr14_pct": 8.216664066563565,
-    "position_in_52w_range_pct": 62.8777792253163
+    "atr14": 20.384571620396205,
+    "atr14_pct": 12.337835292209093,
+    "position_in_52w_range_pct": 35.43668387528237
   },
   "ohlc_2y": [
     {
@@ -4167,31 +4310,31 @@
       "volume": 4227700.0
     },
     {
-      "date": "2026-08-28",
-      "open": 238.57,
-      "high": 240.49,
-      "low": 228.6,
-      "close": 232.75,
-      "volume": 3518200.0
-    },
-    {
       "date": "2026-08-31",
       "open": 232.0,
-      "high": 238.3948,
-      "low": 222.93,
+      "high": 238.395,
+      "low": 222.91,
       "close": 226.19,
-      "volume": 4242265.0
+      "volume": 4270300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 220.0,
+      "high": 221.74,
+      "low": 206.115,
+      "close": 206.63,
+      "volume": 9513700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 188.635,
+      "high": 190.57,
+      "low": 161.95,
+      "close": 165.22,
+      "volume": 29701428.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 130.87,
-      "high": 131.2,
-      "low": 121.0,
-      "close": 123.055,
-      "volume": 4965900.0
-    },
     {
       "date": "2025-09-02",
       "open": 121.91,
@@ -6185,20 +6328,28 @@
       "volume": 4227700.0
     },
     {
-      "date": "2026-08-28",
-      "open": 238.57,
-      "high": 240.49,
-      "low": 228.6,
-      "close": 232.75,
-      "volume": 3518200.0
-    },
-    {
       "date": "2026-08-31",
       "open": 232.0,
-      "high": 238.3948,
-      "low": 222.93,
+      "high": 238.395,
+      "low": 222.91,
       "close": 226.19,
-      "volume": 4242265.0
+      "volume": 4270300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 220.0,
+      "high": 221.74,
+      "low": 206.115,
+      "close": 206.63,
+      "volume": 9513700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 188.635,
+      "high": 190.57,
+      "low": 161.95,
+      "close": 165.22,
+      "volume": 29701428.0
     }
   ],
   "ai_synthesis": null,

@@ -1,46 +1,112 @@
 {
   "ticker": "ALAB",
-  "fetched_at": "2026-09-01T01:11:19Z",
+  "fetched_at": "2026-09-02T23:55:27Z",
   "_schema": "v2",
-  "current_price": 296.9800109863281,
+  "current_price": 274.1300048828125,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "ALAB",
+    "longName": "Astera Labs, Inc.",
+    "sector": "Technology",
+    "industry": "Semiconductors",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "San Jose",
+    "website": "https://www.asteralabs.com",
+    "fullTimeEmployees": 756,
+    "marketCap": 47557472256,
+    "enterpriseValue": 47351668736,
+    "trailingPE": 134.37746,
+    "forwardPE": 42.876495,
+    "priceToSalesTrailing12Months": 39.56795,
+    "enterpriseToRevenue": 39.397,
+    "priceToBook": 27.559065,
+    "grossMargins": 0.75128996,
+    "operatingMargins": 0.22744,
+    "profitMargins": 0.30742002,
+    "returnOnEquity": 0.25826,
+    "totalCash": 1252957952,
+    "totalDebt": 44413000,
+    "totalRevenue": 1201918976,
+    "freeCashflow": 91913128,
+    "debtToEquity": 2.574,
+    "currentRatio": 10.054,
+    "fiftyTwoWeekHigh": 499.476,
+    "fiftyTwoWeekLow": 97.89,
+    "averageVolume": 4985738,
+    "averageVolume10days": 2841960,
+    "beta": 3.843,
+    "sharesOutstanding": 173485104,
+    "sharesFloat": 155789623,
+    "companyOfficers": [
+      {
+        "name": "Mr. Jitendra  Mohan",
+        "title": "Co-Founder, CEO & Executive Director",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Sanjay  Gajendra",
+        "title": "Co-Founder, President, COO & Director",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Philip  Mazzara",
+        "title": "General Counsel & Secretary",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. Michael T. Tate CPA",
+        "title": "Strategic Advisor",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Mr. Casey  Morrison",
+        "title": "Co-Founder & Chief Product Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Desmond  Lynch",
+        "title": "Chief Financial Officer",
+        "age": 45,
+        "yearBorn": 1980
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.8,
+      "eps_estimate": 0.69195,
+      "eps_surprise_pct": 0.15619999
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.61,
+      "eps_estimate": 0.53761,
+      "eps_surprise_pct": 0.1347
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.58,
+      "eps_estimate": 0.51492,
+      "eps_surprise_pct": 0.12640001
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.49,
+      "eps_estimate": 0.39014,
+      "eps_surprise_pct": 0.256
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 545700000,
+    "revenue_high": 557000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,113 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 26,
+    "bullish": 18,
+    "neutral": 8,
+    "bearish": 0,
+    "avg_price_target": 389.9527,
+    "high_price_target": 500.0,
+    "low_price_target": 190.0,
+    "current_price": 274.13,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-17T10:55:59",
+        "firm": "Northland Capital Markets",
+        "to_grade": "Outperform",
+        "from_grade": "Market Perform",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-05T19:53:16",
+        "firm": "TD Cowen",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T18:27:44",
+        "firm": "Morgan Stanley",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T15:41:26",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T13:55:25",
+        "firm": "Evercore ISI Group",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T11:54:09",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T10:17:24",
+        "firm": "Jefferies",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T12:29:29",
+        "firm": "Susquehanna",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-20T18:03:45",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-13T18:04:11",
+        "firm": "TD Cowen",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T18:17:16Z",
+      "title": "Better Artificial Intelligence Stock: Astera Labs vs. NVIDIA",
+      "url": "https://www.fool.com/coverage/better-buy/2026/09/02/better-artificial-intelligence-stock-astera-labs-vs-nvidia/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-02T15:07:00Z",
+      "title": "Credo Technology Reports Q1 Results: Should Investors Hold or Fold?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/credo-technology-reports-q1-results-150700193.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-02T14:56:00Z",
+      "title": "Bloom Energy and 7 More Stocks That Could Join the S&P 500 This Month",
+      "url": "https://www.barrons.com/articles/bloom-energy-s-p-500-stock-index-9e4bf0dc?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-09-02T12:40:00Z",
+      "title": "Credo's Optical Bet: Is a $600M+ Revenue Opportunity Taking Shape?",
+      "url": "https://finance.yahoo.com/technology/articles/credos-optical-bet-600m-revenue-124000281.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-31T04:31:27Z",
       "title": "Astera Labs Stock And 2 AI Data Center Picks From Founder Led Companies",
@@ -140,46 +307,22 @@
       "title": "Is Astera Labs, Inc. (ALAB) Stock Outpacing Its Computer and Technology Peers This Year?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/astera-labs-inc-alab-stock-134003470.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-28T11:01:03Z",
-      "title": "3 Under-the-Radar AI Stocks Wall Street Is Missing",
-      "url": "https://247wallst.com/investing/2026/08/28/3-under-the-radar-ai-stocks-wall-street-is-missing/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-27T15:32:15Z",
-      "title": "This Under-the-Radar AI Stock Could Be the Next Big Semiconductor Winner",
-      "url": "https://247wallst.com/investing/2026/08/27/this-under-the-radar-ai-stock-could-be-the-next-big-semiconductor-winner/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-25T22:08:00Z",
-      "title": "Is Marvell (MRVL) Stock Poised for Another AI-Fueled Rally as Q2 Earnings Approach?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/marvell-mrvl-stock-poised-another-220800295.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-25T15:15:00Z",
-      "title": "ALAB Rides on Strong Scorpio Demand: Can It Outpace MRVL and CRDO?",
-      "url": "https://finance.yahoo.com/technology/ai/articles/alab-rides-strong-scorpio-demand-151500340.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.054900958420927716,
   "technicals": {
-    "ma20": 308.36599884033205,
-    "ma50": 340.1944985961914,
-    "ma200": 222.34759967803956,
-    "rsi14": 46.43940143569455,
-    "high_20d": 367.8500061035156,
-    "low_5d": 279.7900085449219,
+    "ma20": 302.06299896240233,
+    "ma50": 334.54169891357424,
+    "ma200": 223.60649974823,
+    "rsi14": 40.4593152220764,
+    "high_20d": 354.0,
+    "low_5d": 267.010009765625,
     "low_10d": 266.30999755859375,
     "high_52w": 499.47601318359375,
     "low_52w": 97.88999938964844,
-    "atr14": 19.453648158482142,
-    "atr14_pct": 6.550490753190025,
-    "position_in_52w_range_pct": 49.575932616725346
+    "atr14": 18.400791713169642,
+    "atr14_pct": 6.712432563168623,
+    "position_in_52w_range_pct": 43.885991901997166
   },
   "ohlc_2y": [
     {
@@ -4172,7 +4315,7 @@
       "high": 301.04,
       "low": 287.01,
       "close": 289.47,
-      "volume": 2628600.0
+      "volume": 2640000.0
     },
     {
       "date": "2026-08-31",
@@ -4180,26 +4323,26 @@
       "high": 297.95,
       "low": 290.38,
       "close": 296.98,
-      "volume": 2314986.0
+      "volume": 2353300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 287.35,
+      "high": 288.99,
+      "low": 276.68,
+      "close": 279.91,
+      "volume": 3442700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 274.88,
+      "high": 278.63,
+      "low": 267.01,
+      "close": 274.13,
+      "volume": 2844787.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 189.15,
-      "high": 189.31,
-      "low": 178.56,
-      "close": 182.2,
-      "volume": 3750400.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 177.13,
-      "high": 180.7,
-      "low": 167.5,
-      "close": 174.24,
-      "volume": 5872300.0
-    },
     {
       "date": "2025-09-03",
       "open": 174.765,
@@ -6190,7 +6333,7 @@
       "high": 301.04,
       "low": 287.01,
       "close": 289.47,
-      "volume": 2628600.0
+      "volume": 2640000.0
     },
     {
       "date": "2026-08-31",
@@ -6198,7 +6341,23 @@
       "high": 297.95,
       "low": 290.38,
       "close": 296.98,
-      "volume": 2314986.0
+      "volume": 2353300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 287.35,
+      "high": 288.99,
+      "low": 276.68,
+      "close": 279.91,
+      "volume": 3442700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 274.88,
+      "high": 278.63,
+      "low": 267.01,
+      "close": 274.13,
+      "volume": 2844787.0
     }
   ],
   "ai_synthesis": null,

@@ -1,46 +1,112 @@
 {
   "ticker": "HAE",
-  "fetched_at": "2026-09-01T01:14:30Z",
+  "fetched_at": "2026-09-02T23:58:22Z",
   "_schema": "v2",
-  "current_price": 103.06999969482422,
+  "current_price": 102.91999816894531,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "HAE",
+    "longName": "Haemonetics Corporation",
+    "sector": "Healthcare",
+    "industry": "Medical Devices",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Boston",
+    "website": "https://www.haemonetics.com",
+    "fullTimeEmployees": 3009,
+    "marketCap": 4682556416,
+    "enterpriseValue": 5588065280,
+    "trailingPE": 49.719807,
+    "forwardPE": 17.931095,
+    "priceToSalesTrailing12Months": 3.4633958,
+    "enterpriseToRevenue": 4.133,
+    "priceToBook": 5.5907435,
+    "grossMargins": 0.59331,
+    "operatingMargins": 0.17932,
+    "profitMargins": 0.07122,
+    "returnOnEquity": 0.111999996,
+    "totalCash": 224516992,
+    "totalDebt": 1174157952,
+    "totalRevenue": 1352013056,
+    "freeCashflow": 312840000,
+    "debtToEquity": 140.265,
+    "currentRatio": 3.08,
+    "fiftyTwoWeekHigh": 109.57,
+    "fiftyTwoWeekLow": 47.32,
+    "averageVolume": 838111,
+    "averageVolume10days": 711860,
+    "beta": 0.518,
+    "sharesOutstanding": 45497051,
+    "sharesFloat": 44886936,
+    "companyOfficers": [
+      {
+        "name": "Mr. Christopher A. Simon",
+        "title": "CEO, President & Director",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. James C. D'Arecca C.P.A.",
+        "title": "CFO, Executive VP  & Financial Officer",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Frank W. Chan Ph.D.",
+        "title": "Executive VP & COO",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Ms. Michelle L. Basil Esq., J.D.",
+        "title": "Executive VP, General Counsel & Secretary",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Roy  Galvin",
+        "title": "Executive VP & Chief Commercial Officer",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Ms. Farris Maryanne E. Maunsell",
+        "title": "VP, Chief Accounting Officer & Principal Accounting Officer",
+        "age": 49,
+        "yearBorn": 1976
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 1.14,
+      "eps_estimate": 1.07703,
+      "eps_surprise_pct": 0.0585
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 1.29,
+      "eps_estimate": 1.2724,
+      "eps_surprise_pct": 0.0138
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 1.31,
+      "eps_estimate": 1.25033,
+      "eps_surprise_pct": 0.0477
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 1.27,
+      "eps_estimate": 1.11065,
+      "eps_surprise_pct": 0.1435
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 338000000,
+    "revenue_high": 354731000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 11,
+    "bullish": 8,
+    "neutral": 3,
+    "bearish": 0,
+    "avg_price_target": 106.4,
+    "high_price_target": 120.0,
+    "low_price_target": 86.0,
+    "current_price": 102.92,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-21T12:17:33",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T17:56:51",
+        "firm": "Barrington Research",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-18T13:47:40",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T20:52:58",
+        "firm": "Citigroup",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T15:58:11",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T18:24:25",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-15T18:27:47",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-26T11:31:44",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-17T09:58:42",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-15T17:25:03",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +309,20 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.07384376345911357,
   "technicals": {
-    "ma20": 97.19449958801269,
-    "ma50": 85.43479995727539,
-    "ma200": 72.11294990539551,
-    "rsi14": 67.06270014294938,
+    "ma20": 97.97099952697754,
+    "ma50": 86.00239990234375,
+    "ma200": 72.25189987182617,
+    "rsi14": 65.65730344349944,
     "high_20d": 109.56999969482422,
-    "low_5d": 101.38999938964844,
-    "low_10d": 101.38999938964844,
+    "low_5d": 101.08000183105469,
+    "low_10d": 101.08000183105469,
     "high_52w": 109.56999969482422,
     "low_52w": 47.31999969482422,
-    "atr14": 3.5657146998814175,
-    "atr14_pct": 3.4595078203541263,
-    "position_in_52w_range_pct": 89.5582329317269
+    "atr14": 3.512143816266741,
+    "atr14_pct": 3.412498910563022,
+    "position_in_52w_range_pct": 89.31726662509412
   },
   "ohlc_2y": [
     {
@@ -4167,31 +4310,31 @@
       "volume": 592900.0
     },
     {
-      "date": "2026-08-28",
-      "open": 104.59,
-      "high": 105.61,
-      "low": 103.57,
-      "close": 103.96,
-      "volume": 659200.0
-    },
-    {
       "date": "2026-08-31",
       "open": 103.06,
       "high": 103.95,
       "low": 101.39,
       "close": 103.07,
-      "volume": 494690.0
+      "volume": 494700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 103.6,
+      "high": 104.16,
+      "low": 101.08,
+      "close": 101.95,
+      "volume": 633600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 102.24,
+      "high": 104.37,
+      "low": 102.365,
+      "close": 102.92,
+      "volume": 777669.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 54.29,
-      "high": 55.12,
-      "low": 54.02,
-      "close": 54.54,
-      "volume": 826400.0
-    },
     {
       "date": "2025-09-02",
       "open": 54.5,
@@ -6185,20 +6328,28 @@
       "volume": 592900.0
     },
     {
-      "date": "2026-08-28",
-      "open": 104.59,
-      "high": 105.61,
-      "low": 103.57,
-      "close": 103.96,
-      "volume": 659200.0
-    },
-    {
       "date": "2026-08-31",
       "open": 103.06,
       "high": 103.95,
       "low": 101.39,
       "close": 103.07,
-      "volume": 494690.0
+      "volume": 494700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 103.6,
+      "high": 104.16,
+      "low": 101.08,
+      "close": 101.95,
+      "volume": 633600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 102.24,
+      "high": 104.37,
+      "low": 102.365,
+      "close": 102.92,
+      "volume": 777669.0
     }
   ],
   "ai_synthesis": null,

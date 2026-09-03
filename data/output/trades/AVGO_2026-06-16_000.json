@@ -1,6 +1,6 @@
 {
   "trade_id": "AVGO_2026-06-16_000",
-  "generated_at": "2026-09-01T23:55:29+00:00",
+  "generated_at": "2026-09-03T00:03:14+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "AVGO",
@@ -40,19 +40,19 @@
     "low": 375.8651,
     "volume": 31573700.0,
     "ma20": 414.31028000000003,
-    "ma50": 408.6342660000001,
-    "ma200": 357.531264,
-    "rsi14": 41.03572621398837,
+    "ma50": 408.63426599999997,
+    "ma200": null,
+    "rsi14": 41.035731726927814,
     "atr14": 25.483928571428567,
     "atr14_pct": 6.775573667136266,
     "high_52w": 494.2178,
-    "low_52w": 285.0812,
-    "position_in_52w_range_pct": 43.528249000892245,
+    "low_52w": 289.5018,
+    "position_in_52w_range_pct": 42.30880830027942,
     "high_20d": 494.2178,
     "low_10d": 369.7448,
     "low_5d": 369.9644
   },
-  "setup_type": "Pullback below MA50 \u2014 risk-on but stretched",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {
     "mfe_R": 1.1287553648068636,
     "mfe_date": "2026-06-22",
@@ -69,7 +69,7 @@
     "hold_calendar_days": 7
   },
   "lesson": "Failed setup",
-  "narrative": "Entered **AVGO** long on 2026-06-16 at $390.97 (qty 716) with stop $370.00 (1R = $20.97/sh = $15,015). Setup: **Pullback below MA50 \u2014 risk-on but stretched** \u2014 price below MA20 ($414.31), MA20 > MA50 > MA200 (golden alignment), RSI 41, 44% through 52W range, ATR 6.8% of price. Realized **-0.52R**, peak was **+1.13R** on 2026-06-22 (day +6) \u2014 captured **-46%** of the move. **Lesson: Failed setup.**",
+  "narrative": "Entered **AVGO** long on 2026-06-16 at $390.97 (qty 716) with stop $370.00 (1R = $20.97/sh = $15,015). Setup: **Long in mixed structure** \u2014 price below MA20 ($414.31), RSI 41, 42% through 52W range, ATR 6.8% of price. Realized **-0.52R**, peak was **+1.13R** on 2026-06-22 (day +6) \u2014 captured **-46%** of the move. **Lesson: Failed setup.**",
   "ohlc_window": [
     {
       "date": "2026-05-18",

@@ -1,46 +1,112 @@
 {
   "ticker": "VIAV",
-  "fetched_at": "2026-09-01T01:13:39Z",
+  "fetched_at": "2026-09-02T23:57:30Z",
   "_schema": "v2",
-  "current_price": 36.290000915527344,
+  "current_price": 34.5,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "VIAV",
+    "longName": "Viavi Solutions Inc.",
+    "sector": "Technology",
+    "industry": "Communication Equipment",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Chandler",
+    "website": "https://www.viavisolutions.com",
+    "fullTimeEmployees": 4100,
+    "marketCap": 8512868864,
+    "enterpriseValue": 8638361600,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 17.685867,
+    "priceToSalesTrailing12Months": 5.6068425,
+    "enterpriseToRevenue": 5.689,
+    "priceToBook": 5.883356,
+    "grossMargins": 0.6089,
+    "operatingMargins": 0.14308,
+    "profitMargins": -0.02002,
+    "returnOnEquity": -0.02728,
+    "totalCash": 649800000,
+    "totalDebt": 698800000,
+    "totalRevenue": 1518300032,
+    "freeCashflow": 158712496,
+    "debtToEquity": 48.243,
+    "currentRatio": 1.846,
+    "fiftyTwoWeekHigh": 60.43,
+    "fiftyTwoWeekLow": 11.43,
+    "averageVolume": 6203923,
+    "averageVolume10days": 3448340,
+    "beta": 1.234,
+    "sharesOutstanding": 246749828,
+    "sharesFloat": 244348952,
+    "companyOfficers": [
+      {
+        "name": "Mr. Oleg  Khaykin",
+        "title": "President, CEO & Director",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Ilan  Daskal",
+        "title": "Executive VP & CFO",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Mr. Paul  McNab",
+        "title": "EVP, Chief Marketing & Strategy Officer",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Mr. Luke M. Scrivanich",
+        "title": "Senior VP and GM of Optical Security & Performance Products",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Mr. Gary W. Staley",
+        "title": "Senior Vice President of Global Sales, Network and Service Enablement",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Mike  Petrucci",
+        "title": "Senior VP & Chief Operations Officer",
+        "age": 67,
+        "yearBorn": 1958
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.34,
+      "eps_estimate": 0.29847,
+      "eps_surprise_pct": 0.1391
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.27,
+      "eps_estimate": 0.23074,
+      "eps_surprise_pct": 0.1701
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.22,
+      "eps_estimate": 0.1877,
+      "eps_surprise_pct": 0.1721
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.15,
+      "eps_estimate": 0.13134,
+      "eps_surprise_pct": 0.1421
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-28",
+    "revenue_low": 454036500,
+    "revenue_high": 455900000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 8,
+    "bullish": 7,
+    "neutral": 1,
+    "bearish": 0,
+    "avg_price_target": 61.42857,
+    "high_price_target": 70.0,
+    "low_price_target": 44.0,
+    "current_price": 34.5,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-19T12:56:58",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T18:39:21",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T14:24:27",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T14:06:51",
+        "firm": "B. Riley Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T12:15:06",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T11:32:40",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-01T13:23:45",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-10T12:42:23",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-30T20:59:40",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-30T19:04:03",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +309,20 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.10782608695652174,
   "technicals": {
-    "ma20": 39.637000465393065,
-    "ma50": 41.111200103759764,
-    "ma200": 34.46604999065399,
-    "rsi14": 42.076305541070525,
+    "ma20": 39.14150047302246,
+    "ma50": 40.43920013427734,
+    "ma200": 34.638899998664854,
+    "rsi14": 38.60439222800361,
     "high_20d": 46.65999984741211,
-    "low_5d": 35.54999923706055,
-    "low_10d": 35.54999923706055,
+    "low_5d": 33.709999084472656,
+    "low_10d": 33.709999084472656,
     "high_52w": 60.43000030517578,
-    "low_52w": 11.09000015258789,
-    "atr14": 2.6230931963239397,
-    "atr14_pct": 7.228143097680665,
-    "position_in_52w_range_pct": 51.07418055331666
+    "low_52w": 11.430000305175781,
+    "atr14": 2.374286106654576,
+    "atr14_pct": 6.8819887149408,
+    "position_in_52w_range_pct": 47.08163203025351
   },
   "ohlc_2y": [
     {
@@ -4177,29 +4320,29 @@
     {
       "date": "2026-08-31",
       "open": 36.92,
-      "high": 37.2233,
+      "high": 37.22,
       "low": 35.55,
       "close": 36.29,
-      "volume": 3679818.0
+      "volume": 3680900.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 35.65,
+      "high": 36.09,
+      "low": 34.36,
+      "close": 34.81,
+      "volume": 2986600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 34.75,
+      "high": 34.99,
+      "low": 33.71,
+      "close": 34.5,
+      "volume": 3326684.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 11.27,
-      "high": 11.29,
-      "low": 11.09,
-      "close": 11.28,
-      "volume": 3361000.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 11.22,
-      "high": 11.62,
-      "low": 11.16,
-      "close": 11.49,
-      "volume": 3752300.0
-    },
     {
       "date": "2025-09-03",
       "open": 11.49,
@@ -6195,10 +6338,26 @@
     {
       "date": "2026-08-31",
       "open": 36.92,
-      "high": 37.2233,
+      "high": 37.22,
       "low": 35.55,
       "close": 36.29,
-      "volume": 3679818.0
+      "volume": 3680900.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 35.65,
+      "high": 36.09,
+      "low": 34.36,
+      "close": 34.81,
+      "volume": 2986600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 34.75,
+      "high": 34.99,
+      "low": 33.71,
+      "close": 34.5,
+      "volume": 3326684.0
     }
   ],
   "ai_synthesis": null,

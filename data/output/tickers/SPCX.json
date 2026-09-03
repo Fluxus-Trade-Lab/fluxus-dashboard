@@ -1,46 +1,100 @@
 {
   "ticker": "SPCX",
-  "fetched_at": "2026-09-01T01:13:19Z",
+  "fetched_at": "2026-09-02T23:57:11Z",
   "_schema": "v2",
-  "current_price": 143.69000244140625,
+  "current_price": 140.7100067138672,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "SPCX",
+    "longName": "Space Exploration Technologies Corp.",
+    "sector": "Industrials",
+    "industry": "Aerospace & Defense",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Starbase",
+    "website": "https://www.spacex.com",
+    "fullTimeEmployees": 21000,
+    "marketCap": 1854808391680,
+    "enterpriseValue": 3689388179456,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
+    "forwardPE": 87.68017,
+    "priceToSalesTrailing12Months": 80.48986,
+    "enterpriseToRevenue": 160.102,
+    "priceToBook": 14.572288,
+    "grossMargins": 0.51875,
+    "operatingMargins": -0.01804,
+    "profitMargins": -0.35661998,
     "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
+    "totalCash": 100009000960,
+    "totalDebt": 39708000256,
+    "totalRevenue": 23043999744,
     "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "debtToEquity": 31.211,
+    "currentRatio": 5.115,
+    "fiftyTwoWeekHigh": 225.64,
+    "fiftyTwoWeekLow": 104.83,
+    "averageVolume": 111658698,
+    "averageVolume10days": 67704360,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 7696293669,
+    "sharesFloat": 1156569372,
+    "companyOfficers": [
+      {
+        "name": "Mr. Elon R. Musk",
+        "title": "Founder & CEO",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Ms. Gwynne E. Shotwell",
+        "title": "President & COO",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Bret W. Johnsen",
+        "title": "CFO & Secretary",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Michael  Sagan",
+        "title": "Senior Director of Legal",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Timothy R. Hughes",
+        "title": "Senior VP of Global Business & Government Affairs",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Richard J. Lee",
+        "title": "Treasurer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.09,
+      "eps_estimate": -0.28931,
+      "eps_surprise_pct": 0.6889
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -1.27,
+      "eps_estimate": null,
+      "eps_surprise_pct": null
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 11111000000,
+    "revenue_high": 16022988310
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -88,86 +142,163 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 11,
+    "bullish": 7,
+    "neutral": 3,
+    "bearish": 1,
+    "avg_price_target": 222.3158,
+    "high_price_target": 450.0,
+    "low_price_target": 117.0,
+    "current_price": 140.71,
+    "recent_rating_changes": [
+      {
+        "date": "2026-09-02T16:59:14",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-26T11:51:19",
+        "firm": "Wolfe Research",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-17T17:34:08",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T12:00:24",
+        "firm": "Argus Research",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-05T16:09:41",
+        "firm": "Macquarie",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T15:36:12",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T12:40:29",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-05T11:35:48",
+        "firm": "Piper Sandler",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T09:45:39",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-03T14:40:17",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "reit"
+      }
+    ]
   },
   "news": [
     {
-      "date": "2026-08-31T19:42:00Z",
-      "title": "OpenAI takes aim at Cursor as Musk-Altman feud continues",
-      "url": "https://finance.yahoo.com/video/openai-takes-aim-cursor-musk-194200477.html",
-      "source": "Yahoo Finance Video"
+      "date": "2026-09-02T22:07:46Z",
+      "title": "Wall Street Just Put a $280 Target on SpaceX's AI Bet",
+      "url": "https://finance.yahoo.com/technology/ai/articles/wall-street-just-put-280-220746044.html",
+      "source": "GuruFocus.com"
     },
     {
-      "date": "2026-08-31T14:46:00Z",
-      "title": "The biggest questions ahead of Anthropic's potential IPO",
-      "url": "https://finance.yahoo.com/video/biggest-questions-ahead-anthropics-potential-144600757.html",
-      "source": "Yahoo Finance Video"
+      "date": "2026-09-02T22:03:51Z",
+      "title": "Rocket Lab Gets Bullish Call From Top Bank as Space Market Could Double",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-gets-bullish-call-220351892.html",
+      "source": "GuruFocus.com"
     },
     {
-      "date": "2026-09-01T00:12:52Z",
-      "title": "Dow Jones Futures: Trump's Iran Warning Sparks Stock Market Losses; Elon Musk-Led SpaceX, Tesla Rally",
-      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-sp500-nasdaq-trump-iran-warning-elon-musk-spacex-tesla/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
+      "date": "2026-09-02T21:31:43Z",
+      "title": "US charges two former Linqto CEOs over $450 million 'pre-IPO' fraud scheme, one pleads guilty",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-charges-two-former-linqto-212649667.html",
+      "source": "Reuters"
     },
     {
-      "date": "2026-09-01T00:00:00Z",
-      "title": "SEC Presses Investment Firms to Prove They Have Access to Shares in Hot Startups",
-      "url": "https://www.wsj.com/finance/regulation/sec-presses-investment-firms-to-prove-they-have-access-to-shares-in-hot-startups-c39ac56f?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
-    },
-    {
-      "date": "2026-08-31T22:40:14Z",
-      "title": "Elon Musk Is Spending $119 Billion on A Single Building Outside Houston. Here\u2019s Who Actually Profits.",
-      "url": "https://247wallst.com/investing/2026/08/31/elon-musk-is-spending-119-billion-on-a-single-building-outside-houston-heres-who-actually-profits/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-31T21:48:40Z",
-      "title": "Why Tesla (TSLA) Stock Is Up Today",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/why-tesla-tsla-stock-today-214840004.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-31T21:16:04Z",
-      "title": "Elon Musk\u2019s SpaceX Blade Plan Knocks Howmet As HWM Suffers Steepest Slide In 16 Months",
-      "url": "https://stocktwits.com/news-articles/markets/equity/elon-musk-s-space-x-blade-plan-knocks-howmet-as-hwm-suffers-steepest-slide-in-16-months/cZYz4OwRJsz",
-      "source": "Stocktwits"
-    },
-    {
-      "date": "2026-08-31T20:43:00Z",
-      "title": "SpaceX\u2019s Weekend: One Big Launch and One Crew-13 Hiccup",
-      "url": "https://www.barrons.com/articles/spacex-stock-telescope-launch-nasa-e1f8c17f?siteid=yhoof2&yptr=yahoo",
+      "date": "2026-09-02T20:23:00Z",
+      "title": "AST SpaceMobile Stock Soars on New Buy Call",
+      "url": "https://www.barrons.com/articles/ast-spacemobile-stock-buy-rating-price-146b0862?siteid=yhoof2&yptr=yahoo",
       "source": "Barrons.com"
     },
     {
-      "date": "2026-08-31T20:35:30Z",
-      "title": "SpaceX Logs NASA Launch Success, Jumps Into Gas Turbine Business",
-      "url": "https://www.investors.com/news/spacex-stock-tesla-gas-turbine-production-elon-musk-nasa-nancy-grace-roman-space-telescope-launch/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
+      "date": "2026-09-02T19:05:01Z",
+      "title": "I Called SpaceX's IPO Pullback Correctly. I Still Missed It. Here's the Lesson.",
+      "url": "https://www.fool.com/investing/2026/09/02/i-called-spacex-s-ipo-pullback-correctly-i-still-missed-it-here-s-the-lesson/",
+      "source": "Motley Fool"
     },
     {
-      "date": "2026-08-31T20:34:22Z",
-      "title": "Tesla Tops S&P 500. Was It Cybercab Buzz, Or Elon Musk's New FSD Tease?",
-      "url": "https://www.investors.com/news/tesla-sp-500-cybercab-robotaxi-self-driving-cars-elon-musk/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
+      "date": "2026-09-02T18:48:38Z",
+      "title": "SpaceX AI Buildout Shows Cracks as Musk Shakes Up Data Center Team",
+      "url": "https://www.benzinga.com/markets/prediction-markets/26/09/61586563/spacex-ai-buildout-google-deadline?utm_source=yahooFinance&utm_campaign=partner_feed&utm_medium=referral",
+      "source": "Benzinga Prediction Markets"
+    },
+    {
+      "date": "2026-09-02T18:25:42Z",
+      "title": "Anthropic Just Added a Powerful New Voice for AI Policy Around the World",
+      "url": "https://www.benzinga.com/markets/private-markets/26/09/61586016/anthropic-just-added-a-powerful-new-voice-for-ai-policy-around-the-world?utm_source=yahooFinance&utm_campaign=partner_feed&utm_medium=referral",
+      "source": "Benzinga Private Markets"
+    },
+    {
+      "date": "2026-09-02T18:17:00Z",
+      "title": "GitLab Stock Rises After Earnings. It\u2019s Still Not a Buy, Analyst Says.",
+      "url": "https://www.barrons.com/articles/gitlab-earnings-stock-price-analyst-buy-39e523b4?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-09-02T18:00:49Z",
+      "title": "ASTS Stock Pops 10% To Best Day In A Month After Berenberg\u2019s Bullish Ratings, Early Investor Cisnero\u2019s Stock Buy-In",
+      "url": "https://stocktwits.com/news-articles/markets/equity/asts-stock-pops-10-to-best-day-in-a-month/cZsAz0eRJH5",
+      "source": "Stocktwits"
+    },
+    {
+      "date": "2026-09-02T18:00:09Z",
+      "title": "Elon Musk Says AI Could Add $20-$30 Trillion a Year to the Global Economy",
+      "url": "https://247wallst.com/investing/2026/09/02/elon-musk-says-ai-could-add-20-30-trillion-a-year-to-the-global-economy/",
+      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.02991969155797857,
   "technicals": {
-    "ma20": 135.9964984893799,
-    "ma50": 136.73519958496092,
-    "rsi14": 61.61982069559036,
+    "ma20": 138.46349868774413,
+    "ma50": 136.17979949951172,
+    "rsi14": 58.75390722596383,
     "high_20d": 149.8000030517578,
-    "low_5d": 135.10000610351562,
+    "low_5d": 137.89999389648438,
     "low_10d": 130.38999938964844,
     "high_52w": 225.63999938964844,
     "low_52w": 104.83000183105469,
-    "atr14": 7.166784014020648,
-    "atr14_pct": 4.987670604949089,
-    "position_in_52w_range_pct": 32.166212561592154
+    "atr14": 6.187855311802456,
+    "atr14_pct": 4.397594354739401,
+    "position_in_52w_range_pct": 29.699532826668946
   },
   "ohlc_2y": [
     {
@@ -600,15 +731,31 @@
       "high": 143.29,
       "low": 137.9,
       "close": 141.5,
-      "volume": 54984600.0
+      "volume": 55111200.0
     },
     {
       "date": "2026-08-31",
-      "open": 140.03,
-      "high": 144.135,
+      "open": 140.08,
+      "high": 144.14,
       "low": 139.88,
       "close": 143.69,
-      "volume": 62883865.0
+      "volume": 63145000.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 141.87,
+      "high": 145.23,
+      "low": 141.17,
+      "close": 142.23,
+      "volume": 53808100.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 142.665,
+      "high": 143.1,
+      "low": 138.17,
+      "close": 140.71,
+      "volume": 49670366.0
     }
   ],
   "ohlc_1y": [
@@ -1042,15 +1189,31 @@
       "high": 143.29,
       "low": 137.9,
       "close": 141.5,
-      "volume": 54984600.0
+      "volume": 55111200.0
     },
     {
       "date": "2026-08-31",
-      "open": 140.03,
-      "high": 144.135,
+      "open": 140.08,
+      "high": 144.14,
       "low": 139.88,
       "close": 143.69,
-      "volume": 62883865.0
+      "volume": 63145000.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 141.87,
+      "high": 145.23,
+      "low": 141.17,
+      "close": 142.23,
+      "volume": 53808100.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 142.665,
+      "high": 143.1,
+      "low": 138.17,
+      "close": 140.71,
+      "volume": 49670366.0
     }
   ],
   "ai_synthesis": null,

@@ -1,46 +1,112 @@
 {
   "ticker": "KFRC",
-  "fetched_at": "2026-09-01T01:17:33Z",
+  "fetched_at": "2026-09-03T00:01:19Z",
   "_schema": "v2",
-  "current_price": 57.58000183105469,
+  "current_price": 54.04,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "KFRC",
+    "longName": "Kforce Inc.",
+    "sector": "Industrials",
+    "industry": "Staffing & Employment Services",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Tampa",
+    "website": "https://www.kforce.com",
+    "fullTimeEmployees": 1600,
+    "marketCap": 967802368,
+    "enterpriseValue": 1027716608,
+    "trailingPE": 25.490568,
+    "forwardPE": 17.50204,
+    "priceToSalesTrailing12Months": 0.7198993,
+    "enterpriseToRevenue": 0.764,
+    "priceToBook": 7.3294454,
+    "grossMargins": 0.2767,
+    "operatingMargins": 0.05368,
+    "profitMargins": 0.02713,
+    "returnOnEquity": 0.28273,
+    "totalCash": 330000,
+    "totalDebt": 122066000,
+    "totalRevenue": 1344358016,
+    "freeCashflow": 36656624,
+    "debtToEquity": 98.737,
+    "currentRatio": 1.931,
+    "fiftyTwoWeekHigh": 61.68,
+    "fiftyTwoWeekLow": 24.49,
+    "averageVolume": 233944,
+    "averageVolume10days": 237680,
+    "beta": 0.881,
+    "sharesOutstanding": 17909000,
+    "sharesFloat": 15414579,
+    "companyOfficers": [
+      {
+        "name": "Mr. Joseph J. Liberatore",
+        "title": "CEO, President & Director",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Mr. Jeffrey B. Hackman",
+        "title": "CFO & Principal Financial Officer",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. David M. Kelly",
+        "title": "COO, Chief Administrative Officer & Corporate Secretary",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Mr. Andrew G. Thomas",
+        "title": "Chief Experience Officer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Ms. Jennifer  Smayda J.D.",
+        "title": "General Counsel",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Michael R. Blackman",
+        "title": "Chief Corporate Development Officer",
+        "age": 70,
+        "yearBorn": 1955
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.73,
+      "eps_estimate": 0.7014,
+      "eps_surprise_pct": 0.040799998
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.46,
+      "eps_estimate": 0.39474,
+      "eps_surprise_pct": 0.16530001
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.3,
+      "eps_estimate": 0.47066,
+      "eps_surprise_pct": -0.36259997
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.63,
+      "eps_estimate": 0.5643,
+      "eps_surprise_pct": 0.1164
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-02",
+    "revenue_low": 353500000,
+    "revenue_high": 355165000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 5,
+    "bullish": 2,
+    "neutral": 3,
+    "bearish": 0,
+    "avg_price_target": 60.66667,
+    "high_price_target": 63.0,
+    "low_price_target": 59.0,
+    "current_price": 54.04,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-28T11:31:31",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-22T16:19:22",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-28T12:19:45",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-21T18:40:37",
+        "firm": "William Blair",
+        "to_grade": "Outperform",
+        "from_grade": "Market Perform",
+        "action": "up"
+      },
+      {
+        "date": "2026-02-03T14:19:36",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-01-27T15:29:57",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2025-11-05T23:40:18",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2025-10-13T14:01:28",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2025-07-30T15:10:10",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2025-07-29T15:58:26",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +309,18 @@
       "source": "StockStory"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.20910436713545524,
   "technicals": {
-    "ma20": 58.141500091552736,
-    "ma50": 55.50760009765625,
-    "ma200": 38.90464588165283,
-    "rsi14": 51.53883990378316,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 41.375404375942466,
     "high_20d": 61.0,
-    "low_5d": 56.209999084472656,
-    "low_10d": 56.209999084472656,
+    "low_5d": 54.43000030517578,
+    "low_10d": 54.43000030517578,
     "high_52w": 61.68000030517578,
     "low_52w": 23.63040759887679,
-    "atr14": 2.0100005013602122,
-    "atr14_pct": 3.4907961747860807,
-    "position_in_52w_range_pct": 89.2245930047962
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -232,7 +373,7 @@
     },
     {
       "date": "2024-09-11",
-      "open": 58.2117,
+      "open": 58.2118,
       "high": 58.7113,
       "low": 56.8242,
       "close": 57.4532,
@@ -259,7 +400,7 @@
       "open": 58.4875,
       "high": 58.6736,
       "low": 56.8866,
-      "close": 57.5474,
+      "close": 57.5475,
       "volume": 162600.0
     },
     {
@@ -298,7 +439,7 @@
       "date": "2024-09-23",
       "open": 58.2827,
       "high": 58.4689,
-      "low": 57.3055,
+      "low": 57.3054,
       "close": 57.352,
       "volume": 129200.0
     },
@@ -353,7 +494,7 @@
     {
       "date": "2024-10-02",
       "open": 55.8256,
-      "high": 55.9094,
+      "high": 55.9093,
       "low": 54.1782,
       "close": 54.2433,
       "volume": 116800.0
@@ -490,7 +631,7 @@
       "date": "2024-10-25",
       "open": 51.5349,
       "high": 51.9165,
-      "low": 50.7344,
+      "low": 50.7345,
       "close": 50.7717,
       "volume": 275600.0
     },
@@ -522,7 +663,7 @@
       "date": "2024-10-31",
       "open": 54.2992,
       "high": 54.2992,
-      "low": 53.3871,
+      "low": 53.387,
       "close": 53.7873,
       "volume": 187200.0
     },
@@ -689,8 +830,8 @@
     {
       "date": "2024-12-02",
       "open": 55.9559,
-      "high": 57.5568,
-      "low": 55.1555,
+      "high": 57.5567,
+      "low": 55.1554,
       "close": 57.2682,
       "volume": 172100.0
     },
@@ -715,7 +856,7 @@
       "open": 57.2589,
       "high": 57.2589,
       "low": 56.384,
-      "close": 56.533,
+      "close": 56.5329,
       "volume": 113900.0
     },
     {
@@ -800,9 +941,9 @@
     },
     {
       "date": "2024-12-20",
-      "open": 52.0466,
+      "open": 52.0467,
       "high": 53.5077,
-      "low": 52.0466,
+      "low": 52.0467,
       "close": 52.6461,
       "volume": 212900.0
     },
@@ -1211,7 +1352,7 @@
       "open": 48.3841,
       "high": 49.5545,
       "low": 47.9499,
-      "close": 48.5917,
+      "close": 48.5918,
       "volume": 214000.0
     },
     {
@@ -1249,7 +1390,7 @@
     {
       "date": "2025-03-17",
       "open": 47.7328,
-      "high": 48.252,
+      "high": 48.2519,
       "low": 47.0438,
       "close": 47.544,
       "volume": 106700.0
@@ -1402,7 +1543,7 @@
       "date": "2025-04-11",
       "open": 43.2682,
       "high": 43.4758,
-      "low": 41.1539,
+      "low": 41.1538,
       "close": 43.0133,
       "volume": 221000.0
     },
@@ -1907,7 +2048,7 @@
       "open": 40.9461,
       "high": 41.394,
       "low": 39.4882,
-      "close": 39.5358,
+      "close": 39.5359,
       "volume": 178200.0
     },
     {
@@ -2131,7 +2272,7 @@
       "open": 30.1688,
       "high": 32.37,
       "low": 29.8448,
-      "close": 31.8173,
+      "close": 31.8174,
       "volume": 499800.0
     },
     {
@@ -2177,7 +2318,7 @@
     {
       "date": "2025-09-02",
       "open": 30.7406,
-      "high": 31.1598,
+      "high": 31.1599,
       "low": 30.2355,
       "close": 30.5881,
       "volume": 180900.0
@@ -4167,35 +4308,35 @@
       "volume": 198200.0
     },
     {
-      "date": "2026-08-28",
-      "open": 58.33,
-      "high": 59.29,
-      "low": 56.21,
-      "close": 58.1,
-      "volume": 203600.0
-    },
-    {
       "date": "2026-08-31",
       "open": 57.67,
-      "high": 58.075,
+      "high": 58.08,
       "low": 56.68,
       "close": 57.58,
-      "volume": 305941.0
+      "volume": 305900.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 57.5,
+      "high": 58.31,
+      "low": 54.43,
+      "close": 54.89,
+      "volume": 343700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 239539.0
     }
   ],
   "ohlc_1y": [
     {
-      "date": "2025-08-29",
-      "open": 31.2837,
-      "high": 31.4743,
-      "low": 30.893,
-      "close": 31.0646,
-      "volume": 246300.0
-    },
-    {
       "date": "2025-09-02",
       "open": 30.7406,
-      "high": 31.1598,
+      "high": 31.1599,
       "low": 30.2355,
       "close": 30.5881,
       "volume": 180900.0
@@ -6185,20 +6326,28 @@
       "volume": 198200.0
     },
     {
-      "date": "2026-08-28",
-      "open": 58.33,
-      "high": 59.29,
-      "low": 56.21,
-      "close": 58.1,
-      "volume": 203600.0
-    },
-    {
       "date": "2026-08-31",
       "open": 57.67,
-      "high": 58.075,
+      "high": 58.08,
       "low": 56.68,
       "close": 57.58,
-      "volume": 305941.0
+      "volume": 305900.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 57.5,
+      "high": 58.31,
+      "low": 54.43,
+      "close": 54.89,
+      "volume": 343700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 239539.0
     }
   ],
   "ai_synthesis": null,

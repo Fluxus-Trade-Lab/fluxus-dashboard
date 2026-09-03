@@ -1,46 +1,112 @@
 {
   "ticker": "FIG",
-  "fetched_at": "2026-09-01T01:12:02Z",
+  "fetched_at": "2026-09-02T23:56:07Z",
   "_schema": "v2",
-  "current_price": 27.489999771118164,
+  "current_price": 25.729999542236328,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "FIG",
+    "longName": "Figma, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Application",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://www.figma.com",
+    "fullTimeEmployees": 1886,
+    "marketCap": 13714342912,
+    "enterpriseValue": 12114957312,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "forwardPE": 72.30981,
+    "priceToSalesTrailing12Months": 10.702032,
+    "enterpriseToRevenue": 9.454,
+    "priceToBook": 9.238779,
+    "grossMargins": 0.79139,
+    "operatingMargins": -0.31693,
+    "profitMargins": -1.23149,
+    "returnOnEquity": -1.08644,
+    "totalCash": 1667138048,
+    "totalDebt": 67751000,
+    "totalRevenue": 1281470976,
+    "freeCashflow": 866974272,
+    "debtToEquity": 4.584,
+    "currentRatio": 2.451,
+    "fiftyTwoWeekHigh": 71.48,
+    "fiftyTwoWeekLow": 16.6,
+    "averageVolume": 20497717,
+    "averageVolume10days": 14632920,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 455113611,
+    "sharesFloat": 266163807,
+    "companyOfficers": [
+      {
+        "name": "Mr. Dylan  Field",
+        "title": "CEO, President & Chairman",
+        "age": 32,
+        "yearBorn": 1993
+      },
+      {
+        "name": "Mr. Kris  Rasmussen",
+        "title": "Chief Technology Officer",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Mr. Shaunt  Voskanian",
+        "title": "Chief Revenue Officer",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Mr. Praveer  Melwani",
+        "title": "CFO & Treasurer",
+        "age": 34,
+        "yearBorn": 1991
+      },
+      {
+        "name": "Mr. Tyler  Herb",
+        "title": "Chief Accounting Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Kate  DeLeo",
+        "title": "VP of Business Operations & Investor Relations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.08,
+      "eps_estimate": 0.04083,
+      "eps_surprise_pct": 0.9593
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.1,
+      "eps_estimate": 0.06212,
+      "eps_surprise_pct": 0.6098
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.08,
+      "eps_estimate": 0.06469,
+      "eps_surprise_pct": 0.2367
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.132,
+      "eps_estimate": 0.04676,
+      "eps_surprise_pct": 1.8228999
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 372875000,
+    "revenue_high": 394804640
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,95 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 13,
+    "bullish": 4,
+    "neutral": 9,
+    "bearish": 0,
+    "avg_price_target": 30.8,
+    "high_price_target": 37.0,
+    "low_price_target": 25.0,
+    "current_price": 25.73,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-19T16:59:29",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T21:48:46",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T19:32:33",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-26T19:07:09",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T15:11:25",
+        "firm": "RBC Capital",
+        "to_grade": "Sector Perform",
+        "from_grade": "Sector Perform",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T09:09:41",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-17T14:13:46",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-05-15T16:07:41",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-15T13:27:49",
+        "firm": "RBC Capital",
+        "to_grade": "Sector Perform",
+        "from_grade": "Sector Perform",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-15T11:02:25",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T18:20:01Z",
+      "title": "Figma General Counsel Sells 211,599 Shares for $6.3 Million",
+      "url": "https://www.fool.com/coverage/filings/2026/09/02/figma-general-counsel-sells-211-599-shares-for-usd6-3-million/",
+      "source": "Motley Fool"
+    },
     {
       "date": "2026-08-28T21:31:02Z",
       "title": "Figma Stock Rose With Its Peers, Not On Its Own News",
@@ -158,28 +307,22 @@
       "title": "3 Contrarian Trades for a Market That Looks Too Hot",
       "url": "https://www.marketbeat.com/articles/3-contrarian-trades-for-a-market-that-looks-too-hot/?utm_source=yahoofinance&utm_medium=yahoofinance",
       "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-25T01:17:00Z",
-      "title": "Bank of America raises price targets on 10 software stocks",
-      "url": "https://www.thestreet.com/investing/bank-of-america-raises-price-targets-10-software-stocks",
-      "source": "TheStreet"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04897007471499111,
   "technicals": {
-    "ma20": 26.459000205993654,
-    "ma50": 23.593000144958495,
-    "ma200": 26.221200122833253,
-    "rsi14": 55.23326519575141,
+    "ma20": 26.342000198364257,
+    "ma50": 23.890200157165527,
+    "ma200": 26.063050117492676,
+    "rsi14": 49.090255972351365,
     "high_20d": 31.219999313354492,
-    "low_5d": 25.6299991607666,
-    "low_10d": 25.25,
+    "low_5d": 25.690000534057617,
+    "low_10d": 25.6299991607666,
     "high_52w": 71.4800033569336,
     "low_52w": 16.600000381469727,
-    "atr14": 1.7582141331263952,
-    "atr14_pct": 6.3958317488733805,
-    "position_in_52w_range_pct": 19.843292272628364
+    "atr14": 1.6435713086809431,
+    "atr14_pct": 6.387762681390595,
+    "position_in_52w_range_pct": 16.636294944897333
   },
   "ohlc_2y": [
     {
@@ -2356,7 +2499,7 @@
       "high": 30.92,
       "low": 28.765,
       "close": 28.82,
-      "volume": 19075200.0
+      "volume": 19101100.0
     },
     {
       "date": "2026-08-31",
@@ -2364,26 +2507,26 @@
       "high": 28.0,
       "low": 27.31,
       "close": 27.49,
-      "volume": 19915296.0
+      "volume": 19939600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 27.06,
+      "high": 28.39,
+      "low": 26.57,
+      "close": 27.2,
+      "volume": 10645300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 26.78,
+      "high": 27.24,
+      "low": 25.69,
+      "close": 25.73,
+      "volume": 9595856.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 70.51,
-      "high": 71.44,
-      "low": 68.9,
-      "close": 70.28,
-      "volume": 3420000.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 68.96,
-      "high": 68.96,
-      "low": 64.55,
-      "close": 65.57,
-      "volume": 8027800.0
-    },
     {
       "date": "2025-09-03",
       "open": 66.7,
@@ -4374,7 +4517,7 @@
       "high": 30.92,
       "low": 28.765,
       "close": 28.82,
-      "volume": 19075200.0
+      "volume": 19101100.0
     },
     {
       "date": "2026-08-31",
@@ -4382,7 +4525,23 @@
       "high": 28.0,
       "low": 27.31,
       "close": 27.49,
-      "volume": 19915296.0
+      "volume": 19939600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 27.06,
+      "high": 28.39,
+      "low": 26.57,
+      "close": 27.2,
+      "volume": 10645300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 26.78,
+      "high": 27.24,
+      "low": 25.69,
+      "close": 25.73,
+      "volume": 9595856.0
     }
   ],
   "ai_synthesis": null,

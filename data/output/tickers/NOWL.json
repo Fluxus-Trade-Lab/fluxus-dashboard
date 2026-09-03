@@ -1,14 +1,14 @@
 {
   "ticker": "NOWL",
-  "fetched_at": "2026-09-01T01:18:10Z",
+  "fetched_at": "2026-09-03T00:01:58Z",
   "_schema": "v2",
-  "current_price": 8.90999984741211,
+  "current_price": 7.58,
   "info": {
-    "symbol": null,
-    "longName": null,
+    "symbol": "NOWL",
+    "longName": "GraniteShares 2x Long NOW Daily ETF",
     "sector": null,
     "industry": null,
-    "exchange": null,
+    "exchange": "NGM",
     "country": null,
     "city": null,
     "website": null,
@@ -30,10 +30,10 @@
     "freeCashflow": null,
     "debtToEquity": null,
     "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "fiftyTwoWeekHigh": 24.6,
+    "fiftyTwoWeekLow": 3.49,
+    "averageVolume": 16830812,
+    "averageVolume10days": 8343990,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -49,20 +49,18 @@
     "current_price": null
   },
   "news": [],
-  "options_implied_move": null,
+  "options_implied_move": 0.17810026385224276,
   "technicals": {
-    "ma20": 6.732000064849854,
-    "ma50": 5.523400030136108,
-    "ma200": 8.031305018663407,
-    "rsi14": 74.33052117550545,
-    "high_20d": 9.09000015258789,
-    "low_5d": 6.119999885559082,
-    "low_10d": 5.784999847412109,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 65.99511068050863,
+    "high_20d": 9.090999603271484,
+    "low_5d": 6.989999771118164,
+    "low_10d": 6.119999885559082,
     "high_52w": 24.600000381469727,
     "low_52w": 3.490000009536743,
-    "atr14": 0.6796428476061139,
-    "atr14_pct": 7.627865984795889,
-    "position_in_52w_range_pct": 25.675034307823047
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -2335,34 +2333,34 @@
       "high": 8.639,
       "low": 7.75,
       "close": 8.52,
-      "volume": 10404800.0
+      "volume": 10432100.0
     },
     {
       "date": "2026-08-31",
       "open": 8.18,
-      "high": 9.09,
+      "high": 9.091,
       "low": 8.18,
       "close": 8.91,
-      "volume": 8256205.0
+      "volume": 8292200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 8.57,
+      "high": 8.78,
+      "low": 8.2,
+      "close": 8.29,
+      "volume": 6544500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 7411009.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 22.753,
-      "high": 22.923,
-      "low": 21.88,
-      "close": 22.151,
-      "volume": 51600.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 21.66,
-      "high": 21.95,
-      "low": 21.202,
-      "close": 21.904,
-      "volume": 28500.0
-    },
     {
       "date": "2025-09-03",
       "open": 21.9,
@@ -4353,15 +4351,31 @@
       "high": 8.639,
       "low": 7.75,
       "close": 8.52,
-      "volume": 10404800.0
+      "volume": 10432100.0
     },
     {
       "date": "2026-08-31",
       "open": 8.18,
-      "high": 9.09,
+      "high": 9.091,
       "low": 8.18,
       "close": 8.91,
-      "volume": 8256205.0
+      "volume": 8292200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 8.57,
+      "high": 8.78,
+      "low": 8.2,
+      "close": 8.29,
+      "volume": 6544500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 7411009.0
     }
   ],
   "ai_synthesis": null,

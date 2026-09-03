@@ -1,46 +1,76 @@
 {
   "ticker": "YSS",
-  "fetched_at": "2026-09-01T01:19:20Z",
+  "fetched_at": "2026-09-03T00:03:06Z",
   "_schema": "v2",
-  "current_price": 9.09000015258789,
+  "current_price": 8.67,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "YSS",
+    "longName": "York Space Systems, Inc.",
+    "sector": "Industrials",
+    "industry": "Aerospace & Defense",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Greenwood Village",
+    "website": "https://www.yorkspacesystems.com",
+    "fullTimeEmployees": 710,
+    "marketCap": 1190890368,
+    "enterpriseValue": 834206464,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
+    "forwardPE": -21.675,
+    "priceToSalesTrailing12Months": 2.9404557,
+    "enterpriseToRevenue": 2.06,
+    "priceToBook": 0.64217466,
+    "grossMargins": 0.21150999,
+    "operatingMargins": -0.38147,
+    "profitMargins": -0.50064,
     "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
+    "totalCash": 534000000,
+    "totalDebt": 177316000,
+    "totalRevenue": 405001984,
     "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "debtToEquity": 10.157,
+    "currentRatio": 5.335,
+    "fiftyTwoWeekHigh": 44.54,
+    "fiftyTwoWeekLow": 8.38,
+    "averageVolume": 2225917,
+    "averageVolume10days": 2848630,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 137357605,
+    "sharesFloat": 56628420,
+    "companyOfficers": [
+      {
+        "name": "Mr. Dirk  Wallinger",
+        "title": "Founder, CEO, President & Director",
+        "age": 45,
+        "yearBorn": 1980
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.0574,
+      "eps_estimate": -0.12078,
+      "eps_surprise_pct": 0.5248
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.6802,
+      "eps_estimate": -0.11377,
+      "eps_surprise_pct": -4.9787
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.254,
+      "eps_estimate": -0.17534,
+      "eps_surprise_pct": -0.4486
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-12",
+    "revenue_low": 80000000,
+    "revenue_high": 102400000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -88,10 +118,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 10,
+    "bullish": 7,
+    "neutral": 3,
+    "bearish": 0,
+    "avg_price_target": 16.85,
+    "high_price_target": 33.0,
+    "low_price_target": 11.0,
+    "current_price": 8.67,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-31T16:08:17",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T17:10:52",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-18T15:25:16",
+        "firm": "Jefferies",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-18T13:15:22",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Hold",
+        "from_grade": "Buy",
+        "action": "down"
+      },
+      {
+        "date": "2026-08-17T12:01:07",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Overweight",
+        "action": "down"
+      },
+      {
+        "date": "2026-08-14T10:14:56",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T10:58:49",
+        "firm": "Raymond James",
+        "to_grade": "Market Perform",
+        "from_grade": "Outperform",
+        "action": "down"
+      },
+      {
+        "date": "2026-07-01T15:44:54",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-18T17:43:11",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-18T10:35:14",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      }
+    ]
   },
   "news": [
     {
@@ -155,19 +262,17 @@
       "source": "Stocktwits"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.17301038062283738,
   "technicals": {
-    "ma20": 10.528000020980835,
-    "ma50": 16.586800003051756,
-    "rsi14": 29.369772037523504,
-    "high_20d": 16.0,
-    "low_5d": 8.930000305175781,
-    "low_10d": 8.890000343322754,
+    "ma20": NaN,
+    "ma50": NaN,
+    "rsi14": 28.36478559607663,
+    "high_20d": 13.100000381469727,
+    "low_5d": 8.609999656677246,
+    "low_10d": 8.609999656677246,
     "high_52w": 44.540000915527344,
-    "low_52w": 8.890000343322754,
-    "atr14": 0.8792856761387416,
-    "atr14_pct": 9.673109586124838,
-    "position_in_52w_range_pct": 0.5610092736466084
+    "low_52w": 8.609999656677246,
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -1349,10 +1454,26 @@
     {
       "date": "2026-08-31",
       "open": 8.95,
-      "high": 9.26,
+      "high": 9.29,
       "low": 8.93,
       "close": 9.09,
-      "volume": 1908683.0
+      "volume": 1909300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 8.85,
+      "high": 8.99,
+      "low": 8.61,
+      "close": 8.82,
+      "volume": 2508400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 2981838.0
     }
   ],
   "ohlc_1y": [
@@ -2535,10 +2656,26 @@
     {
       "date": "2026-08-31",
       "open": 8.95,
-      "high": 9.26,
+      "high": 9.29,
       "low": 8.93,
       "close": 9.09,
-      "volume": 1908683.0
+      "volume": 1909300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 8.85,
+      "high": 8.99,
+      "low": 8.61,
+      "close": 8.82,
+      "volume": 2508400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 2981838.0
     }
   ],
   "ai_synthesis": null,

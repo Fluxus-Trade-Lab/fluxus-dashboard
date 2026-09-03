@@ -1,46 +1,100 @@
 {
   "ticker": "FBRX",
-  "fetched_at": "2026-09-01T01:16:47Z",
+  "fetched_at": "2026-09-03T00:00:27Z",
   "_schema": "v2",
   "current_price": 76.99,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "FBRX",
+    "longName": "Forte Biosciences, Inc.",
+    "sector": "Healthcare",
+    "industry": "Biotechnology",
+    "exchange": "NCM",
+    "country": "United States",
+    "city": "Dallas",
+    "website": "https://www.fortebiorx.com",
+    "fullTimeEmployees": 23,
+    "marketCap": 1634427392,
+    "enterpriseValue": 1740604672,
     "trailingPE": null,
-    "forwardPE": null,
+    "forwardPE": -18.893251,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
+    "priceToBook": 10.238031,
+    "grossMargins": 0.0,
+    "operatingMargins": 0.0,
+    "profitMargins": 0.0,
+    "returnOnEquity": -0.62277,
+    "totalCash": 198460000,
+    "totalDebt": 0,
     "totalRevenue": null,
-    "freeCashflow": null,
+    "freeCashflow": -41293500,
     "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "currentRatio": 10.01,
+    "fiftyTwoWeekHigh": 77.2,
+    "fiftyTwoWeekLow": 10.11,
+    "averageVolume": 1373052,
+    "averageVolume10days": 1690927,
+    "beta": 2.645,
+    "sharesOutstanding": 21229087,
+    "sharesFloat": 18667811,
+    "companyOfficers": [
+      {
+        "name": "Dr. Paul A.  Wagner Ph.D.",
+        "title": "CEO, President & Chairman",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Antony A. Riley CPA",
+        "title": "Chief Financial Officer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Dr. Barbara K. Finck M.D.",
+        "title": "Senior Medical Clinician & Director",
+        "age": 78,
+        "yearBorn": 1947
+      },
+      {
+        "name": "Mr. Christopher  Roenfeldt",
+        "title": "Chief Operating Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.97,
+      "eps_estimate": -0.8785,
+      "eps_surprise_pct": -0.1042
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -1.24,
+      "eps_estimate": -1.16,
+      "eps_surprise_pct": -0.069
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -1.45,
+      "eps_estimate": -1.1475,
+      "eps_surprise_pct": -0.2636
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.99,
+      "eps_estimate": -1.0675,
+      "eps_surprise_pct": 0.0726
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-09",
+    "revenue_low": 0,
+    "revenue_high": 0
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",

@@ -1,46 +1,112 @@
 {
   "ticker": "RBRK",
-  "fetched_at": "2026-09-01T01:12:58Z",
+  "fetched_at": "2026-09-02T23:56:53Z",
   "_schema": "v2",
-  "current_price": 93.04000091552734,
+  "current_price": 87.18000030517578,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "RBRK",
+    "longName": "Rubrik, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Palo Alto",
+    "website": "https://www.rubrik.com",
+    "fullTimeEmployees": 3797,
+    "marketCap": 17944133632,
+    "enterpriseValue": 17727649792,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
+    "forwardPE": 113.95184,
+    "priceToSalesTrailing12Months": 11.635578,
+    "enterpriseToRevenue": 11.495,
+    "priceToBook": -37.27234,
+    "grossMargins": 0.80206,
+    "operatingMargins": -0.16829,
+    "profitMargins": -0.16498,
     "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
+    "totalCash": 1747649024,
+    "totalDebt": 1149586048,
+    "totalRevenue": 1542178048,
+    "freeCashflow": 479817376,
     "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "currentRatio": 1.642,
+    "fiftyTwoWeekHigh": 107.91,
+    "fiftyTwoWeekLow": 42.25,
+    "averageVolume": 3676714,
+    "averageVolume10days": 4289220,
+    "beta": 1.168,
+    "sharesOutstanding": 160956763,
+    "sharesFloat": 158548503,
+    "companyOfficers": [
+      {
+        "name": "Mr. Bipul  Sinha",
+        "title": "Co-Founder, CEO & Chairman",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Arvind  Nithrakashyap",
+        "title": "Co-Founder, CTO & Director",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Kiran Kumar Choudary",
+        "title": "Chief Financial Officer",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Arvind  Jain",
+        "title": "Co-Founder",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Ajay  Sabhlok",
+        "title": "Chief Information Officer & Chief Data Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Peter  McGoff Esq.",
+        "title": "Chief Legal Officer & Secretary",
+        "age": 60,
+        "yearBorn": 1965
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-07-31T00:00:00",
+      "eps_actual": 0.2,
+      "eps_estimate": 0.03925,
+      "eps_surprise_pct": 4.0955
+    },
+    {
+      "period_end": "2026-04-30T00:00:00",
+      "eps_actual": 0.16,
+      "eps_estimate": -0.02817,
+      "eps_surprise_pct": 6.6798
+    },
+    {
+      "period_end": "2026-01-31T00:00:00",
+      "eps_actual": 0.04,
+      "eps_estimate": -0.10854,
+      "eps_surprise_pct": 1.3685001
+    },
+    {
+      "period_end": "2025-10-31T00:00:00",
+      "eps_actual": 0.1,
+      "eps_estimate": -0.17244,
+      "eps_surprise_pct": 1.5799
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-08-27",
+    "revenue_low": 428862190,
+    "revenue_high": 430942410
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 27,
+    "bullish": 27,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 118.7037,
+    "high_price_target": 135.0,
+    "low_price_target": 90.0,
+    "current_price": 87.18,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-31T17:19:45",
+        "firm": "CIBC",
+        "to_grade": "Outperformer",
+        "from_grade": "Outperformer",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T19:06:19",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Outperform",
+        "from_grade": "Sector Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T18:59:37",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T15:18:00",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T15:02:38",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T14:07:43",
+        "firm": "DA Davidson",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T13:15:08",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T13:04:40",
+        "firm": "Guggenheim",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T12:44:57",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T12:42:20",
+        "firm": "BMO Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +309,20 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04255563187672691,
   "technicals": {
-    "ma20": 95.91249961853028,
-    "ma50": 85.134599609375,
-    "ma200": 68.54159999847413,
-    "rsi14": 51.01553185634872,
+    "ma20": 96.40149993896485,
+    "ma50": 85.75079971313477,
+    "ma200": 68.69720001220703,
+    "rsi14": 45.49577782201887,
     "high_20d": 107.91000366210938,
-    "low_5d": 88.69000244140625,
-    "low_10d": 88.69000244140625,
+    "low_5d": 86.02010345458984,
+    "low_10d": 86.02010345458984,
     "high_52w": 107.91000366210938,
     "low_52w": 42.25,
-    "atr14": 6.4426422119140625,
-    "atr14_pct": 6.92459388275743,
-    "position_in_52w_range_pct": 77.353027844616
+    "atr14": 6.340206691196987,
+    "atr14_pct": 7.272547222990289,
+    "position_in_52w_range_pct": 68.42826347739557
   },
   "ohlc_2y": [
     {
@@ -4172,7 +4315,7 @@
       "high": 107.37,
       "low": 93.001,
       "close": 93.05,
-      "volume": 9414400.0
+      "volume": 9439400.0
     },
     {
       "date": "2026-08-31",
@@ -4180,26 +4323,26 @@
       "high": 93.51,
       "low": 88.69,
       "close": 93.04,
-      "volume": 5376476.0
+      "volume": 5415300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 91.7,
+      "high": 94.0,
+      "low": 87.6,
+      "close": 88.4,
+      "volume": 3259600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 89.0,
+      "high": 89.576,
+      "low": 86.0201,
+      "close": 87.18,
+      "volume": 3203297.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 92.7,
-      "high": 93.455,
-      "low": 88.539,
-      "close": 89.4,
-      "volume": 2120000.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 87.0,
-      "high": 88.76,
-      "low": 85.78,
-      "close": 87.9,
-      "volume": 1734500.0
-    },
     {
       "date": "2025-09-03",
       "open": 88.82,
@@ -6190,7 +6333,7 @@
       "high": 107.37,
       "low": 93.001,
       "close": 93.05,
-      "volume": 9414400.0
+      "volume": 9439400.0
     },
     {
       "date": "2026-08-31",
@@ -6198,7 +6341,23 @@
       "high": 93.51,
       "low": 88.69,
       "close": 93.04,
-      "volume": 5376476.0
+      "volume": 5415300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 91.7,
+      "high": 94.0,
+      "low": 87.6,
+      "close": 88.4,
+      "volume": 3259600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 89.0,
+      "high": 89.576,
+      "low": 86.0201,
+      "close": 87.18,
+      "volume": 3203297.0
     }
   ],
   "ai_synthesis": null,

@@ -1,8 +1,8 @@
 {
   "ticker": "AIRJ",
-  "fetched_at": "2026-09-01T01:14:52Z",
+  "fetched_at": "2026-09-02T23:58:39Z",
   "_schema": "v2",
-  "current_price": 4.53000020980835,
+  "current_price": 4.429999828338623,
   "info": {
     "symbol": "AIRJ",
     "longName": "AirJoule Technologies Corporation",
@@ -13,13 +13,13 @@
     "city": "Ronan",
     "website": "https://airjouletech.com",
     "fullTimeEmployees": 16,
-    "marketCap": 332263712,
-    "enterpriseValue": 290984704,
+    "marketCap": 324928928,
+    "enterpriseValue": 278515648,
     "trailingPE": null,
-    "forwardPE": -16.178572,
+    "forwardPE": -15.821428,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": 1.3191614,
+    "priceToBook": 1.2900407,
     "grossMargins": 0.0,
     "operatingMargins": 0.0,
     "profitMargins": 0.0,
@@ -32,8 +32,8 @@
     "currentRatio": 19.703,
     "fiftyTwoWeekHigh": 6.75,
     "fiftyTwoWeekLow": 2.22,
-    "averageVolume": 1774363,
-    "averageVolume10days": 1342890,
+    "averageVolume": 1692377,
+    "averageVolume10days": 1226020,
     "beta": 0.861,
     "sharesOutstanding": 73347394,
     "sharesFloat": 37625013,
@@ -173,8 +173,15 @@
     "avg_price_target": 9.55,
     "high_price_target": 12.0,
     "low_price_target": 8.0,
-    "current_price": 4.53,
+    "current_price": 4.43,
     "recent_rating_changes": [
+      {
+        "date": "2026-08-31T09:52:24",
+        "firm": "Needham",
+        "to_grade": "Hold",
+        "from_grade": null,
+        "action": "init"
+      },
       {
         "date": "2026-08-17T16:34:41",
         "firm": "B. Riley Securities",
@@ -288,20 +295,20 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": 0.17660043332180014,
+  "options_implied_move": 0.5349887340489623,
   "technicals": {
-    "ma20": 5.466000056266784,
-    "ma50": 4.8595000267028805,
-    "ma200": 3.876175000667572,
-    "rsi14": 39.31610923288031,
+    "ma20": 5.316000056266785,
+    "ma50": 4.837100019454956,
+    "ma200": 3.8757750010490417,
+    "rsi14": 38.51532531229632,
     "high_20d": 6.650000095367432,
-    "low_5d": 4.360000133514404,
-    "low_10d": 4.360000133514404,
+    "low_5d": 4.329999923706055,
+    "low_10d": 4.329999923706055,
     "high_52w": 6.75,
     "low_52w": 2.2200000286102295,
-    "atr14": 0.3795642852783203,
-    "atr14_pct": 8.378902156703841,
-    "position_in_52w_range_pct": 50.993381805462334
+    "atr14": 0.35457141058785574,
+    "atr14_pct": 8.003869623643533,
+    "position_in_52w_range_pct": 48.785867851791224
   },
   "ohlc_2y": [
     {
@@ -4298,30 +4305,30 @@
     },
     {
       "date": "2026-08-31",
-      "open": 4.5,
-      "high": 4.6499,
+      "open": 4.49,
+      "high": 4.65,
       "low": 4.36,
       "close": 4.53,
-      "volume": 1025143.0
+      "volume": 1025400.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 4.46,
+      "high": 4.5,
+      "low": 4.36,
+      "close": 4.36,
+      "volume": 1251900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 4.36,
+      "high": 4.52,
+      "low": 4.33,
+      "close": 4.43,
+      "volume": 824667.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 4.75,
-      "high": 4.83,
-      "low": 4.535,
-      "close": 4.6,
-      "volume": 59400.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 4.61,
-      "high": 4.918,
-      "low": 4.5,
-      "close": 4.55,
-      "volume": 55400.0
-    },
     {
       "date": "2025-09-03",
       "open": 4.58,
@@ -6316,11 +6323,27 @@
     },
     {
       "date": "2026-08-31",
-      "open": 4.5,
-      "high": 4.6499,
+      "open": 4.49,
+      "high": 4.65,
       "low": 4.36,
       "close": 4.53,
-      "volume": 1025143.0
+      "volume": 1025400.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 4.46,
+      "high": 4.5,
+      "low": 4.36,
+      "close": 4.36,
+      "volume": 1251900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 4.36,
+      "high": 4.52,
+      "low": 4.33,
+      "close": 4.43,
+      "volume": 824667.0
     }
   ],
   "ai_synthesis": null,

@@ -1,46 +1,112 @@
 {
   "ticker": "ANET",
-  "fetched_at": "2026-09-01T01:11:26Z",
+  "fetched_at": "2026-09-02T23:55:34Z",
   "_schema": "v2",
-  "current_price": 195.69000244140625,
+  "current_price": 186.10000610351562,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
+    "symbol": "ANET",
+    "longName": "Arista Networks, Inc.",
+    "sector": "Technology",
+    "industry": "Computer Hardware",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Santa Clara",
+    "website": "https://www.arista.com",
+    "fullTimeEmployees": 5115,
+    "marketCap": 234713923584,
+    "enterpriseValue": 225356070912,
+    "trailingPE": 58.892406,
+    "forwardPE": 36.063934,
+    "priceToSalesTrailing12Months": 22.267183,
+    "enterpriseToRevenue": 21.379,
+    "priceToBook": 15.861247,
+    "grossMargins": 0.63004,
+    "operatingMargins": 0.45393002,
+    "profitMargins": 0.38371,
+    "returnOnEquity": 0.31476,
+    "totalCash": 13343299584,
+    "totalDebt": 0,
+    "totalRevenue": 10540800000,
+    "freeCashflow": 3891512576,
     "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "currentRatio": 2.957,
+    "fiftyTwoWeekHigh": 214.89,
+    "fiftyTwoWeekLow": 114.52,
+    "averageVolume": 7638523,
+    "averageVolume10days": 5257410,
+    "beta": 1.615,
+    "sharesOutstanding": 1261224648,
+    "sharesFloat": 1049162336,
+    "companyOfficers": [
+      {
+        "name": "Ms. Jayshree V. Ullal",
+        "title": "CEO & Chairperson",
+        "age": 64,
+        "yearBorn": 1961
+      },
+      {
+        "name": "Mr. Kenneth  Duda Ph.D.",
+        "title": "Co-Founder, President, CTO & Director",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Todd  Nightingale",
+        "title": "President & COO",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Ms. Chantelle Y. Breithaupt",
+        "title": "Senior VP & CFO",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Dr. Andreas B. Bechtolsheim Ph.D.",
+        "title": "Co-Founder &  Chief Architect",
+        "age": 70,
+        "yearBorn": 1955
+      },
+      {
+        "name": "Mr. Sean  Christofferson",
+        "title": "VP & General Counsel",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 1.02,
+      "eps_estimate": 0.88559,
+      "eps_surprise_pct": 0.1518
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.87,
+      "eps_estimate": 0.80761,
+      "eps_surprise_pct": 0.0773
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.82,
+      "eps_estimate": 0.75804,
+      "eps_surprise_pct": 0.0817
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.75,
+      "eps_estimate": 0.71442,
+      "eps_surprise_pct": 0.0498
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 3300000000,
+    "revenue_high": 3482751000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,125 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 30,
+    "bullish": 29,
+    "neutral": 1,
+    "bearish": 0,
+    "avg_price_target": 241.03607,
+    "high_price_target": 289.0,
+    "low_price_target": 185.0,
+    "current_price": 186.1,
+    "recent_rating_changes": [
+      {
+        "date": "2026-09-01T17:43:37",
+        "firm": "Deutsche Bank",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "init"
+      },
+      {
+        "date": "2026-08-06T13:03:18",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T21:09:59",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T19:47:12",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T18:36:07",
+        "firm": "Morgan Stanley",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T17:54:53",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T16:02:34",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-05T15:39:11",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T14:34:24",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T13:59:44",
+        "firm": "Evercore ISI Group",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T21:20:36Z",
+      "title": "The Real Risk Inside Cisco Stock",
+      "url": "https://www.trefis.com/articles/613959/the-real-risk-inside-cisco-stock-2/2026-09-02",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-09-02T21:12:21Z",
+      "title": "ANET Has Left Its Peers Behind. Or Has It?",
+      "url": "https://www.trefis.com/articles/613958/anet-has-left-its-peers-behind-or-has-it/2026-09-02",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-09-02T17:00:57Z",
+      "title": "The AI Infrastructure Stock Nobody Talks About Enough",
+      "url": "https://247wallst.com/investing/2026/09/02/the-ai-infrastructure-stock-nobody-talks-about-enough/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-01T18:00:35Z",
+      "title": "Deutsche Bank Names Lumentum and Coherent Top AI Picks as Spending Surges",
+      "url": "https://finance.yahoo.com/technology/ai/articles/deutsche-bank-names-lumentum-coherent-180035804.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-01T17:35:00Z",
+      "title": "Nokia Stock Increases 135.8% in a Year: Should You Invest?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/nokia-stock-increases-135-8-173500980.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-01T11:57:32Z",
+      "title": "Here Are Tuesday\u2019s Top Wall Street Analyst Research Calls: Akamai Technologies, Arista Networks, Booking Holdings, Cisco Systems, Dell Technologies, Duolingo, Robinhood Markets, PG&E, and More",
+      "url": "https://247wallst.com/investing/2026/09/01/here-are-tuesdays-top-wall-street-analyst-research-calls-akamai-technologies-arista-networks-booking-holdings-cisco-systems-dell-technologies-duolingo-robinhood-markets-pge-and-more/",
+      "source": "24/7 Wall St."
+    },
     {
       "date": "2026-08-31T21:58:56Z",
       "title": "Cisco Systems Stock Has A Second Engine The AI Story Hides",
@@ -128,58 +307,22 @@
       "title": "3 AI Infrastructure Stocks to Watch Beyond NVIDIA",
       "url": "https://www.marketbeat.com/articles/3-ai-infrastructure-stocks-to-watch-beyond-nvidia/?utm_source=yahoofinance&utm_medium=yahoofinance",
       "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-29T12:00:21Z",
-      "title": "These 7 Stocks Are Analyst Favorites For Magnificent Earnings Growth; Amazon Holds Key Level",
-      "url": "https://www.investors.com/research/best-stocks-seven-magnificent-stocks-earnings-growth/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-08-29T07:16:54Z",
-      "title": "How networking became the critical layer of AI",
-      "url": "https://finance.yahoo.com/technology/ai/articles/networking-became-critical-layer-ai-071654651.html",
-      "source": "Investing.com"
-    },
-    {
-      "date": "2026-08-28T21:25:41Z",
-      "title": "Arista's Price Assumes The Parts Arrive On Time",
-      "url": "https://www.trefis.com/articles/613543/aristas-price-assumes-the-parts-arrive-on-time/2026-08-28",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-08-28T14:44:00Z",
-      "title": "Nokia Rides on Portfolio Diversification: Can it Boost Growth?",
-      "url": "https://finance.yahoo.com/technology/articles/nokia-rides-portfolio-diversification-boost-144400441.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-28T14:03:00Z",
-      "title": "4 Cloud Computing Stocks to Profit Amid Intense Market Volatility",
-      "url": "https://finance.yahoo.com/technology/articles/4-cloud-computing-stocks-profit-140300611.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-28T13:44:00Z",
-      "title": "Ciena Stock Ahead of Q3 Earnings: Buy, Sell, or Wait for the Results?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ciena-stock-ahead-q3-earnings-134400541.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03396023531823306,
   "technicals": {
-    "ma20": 194.9224998474121,
-    "ma50": 180.99880096435547,
-    "ma200": 150.75719982147217,
-    "rsi14": 54.78489174383962,
-    "high_20d": 214.88999938964844,
-    "low_5d": 188.05999755859375,
+    "ma20": 194.29950027465821,
+    "ma50": 181.7708010864258,
+    "ma200": 151.30759983062745,
+    "rsi14": 47.4285205166968,
+    "high_20d": 211.4499969482422,
+    "low_5d": 184.0800018310547,
     "low_10d": 182.8300018310547,
     "high_52w": 214.88999938964844,
     "low_52w": 114.5199966430664,
-    "atr14": 7.512143816266741,
-    "atr14_pct": 3.838797957251821,
-    "position_in_52w_range_pct": 80.87078168492326
+    "atr14": 7.027859279087612,
+    "atr14_pct": 3.7763885269184034,
+    "position_in_52w_range_pct": 71.3161377918631
   },
   "ohlc_2y": [
     {
@@ -4177,29 +4320,29 @@
     {
       "date": "2026-08-31",
       "open": 195.5,
-      "high": 197.97,
+      "high": 197.99,
       "low": 193.91,
       "close": 195.69,
-      "volume": 5019680.0
+      "volume": 5021700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 195.77,
+      "high": 196.5,
+      "low": 188.56,
+      "close": 189.26,
+      "volume": 4369200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 188.0,
+      "high": 189.89,
+      "low": 184.08,
+      "close": 186.1,
+      "volume": 4357203.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 135.51,
-      "high": 137.671,
-      "low": 134.48,
-      "close": 136.55,
-      "volume": 7959600.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 132.41,
-      "high": 136.605,
-      "low": 131.0,
-      "close": 135.87,
-      "volume": 7415200.0
-    },
     {
       "date": "2025-09-03",
       "open": 135.68,
@@ -6195,10 +6338,26 @@
     {
       "date": "2026-08-31",
       "open": 195.5,
-      "high": 197.97,
+      "high": 197.99,
       "low": 193.91,
       "close": 195.69,
-      "volume": 5019680.0
+      "volume": 5021700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 195.77,
+      "high": 196.5,
+      "low": 188.56,
+      "close": 189.26,
+      "volume": 4369200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 188.0,
+      "high": 189.89,
+      "low": 184.08,
+      "close": 186.1,
+      "volume": 4357203.0
     }
   ],
   "ai_synthesis": null,

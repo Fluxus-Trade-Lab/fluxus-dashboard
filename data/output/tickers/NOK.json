@@ -1,46 +1,112 @@
 {
   "ticker": "NOK",
-  "fetched_at": "2026-09-01T01:18:07Z",
+  "fetched_at": "2026-09-03T00:01:56Z",
   "_schema": "v2",
-  "current_price": 10.140000343322754,
+  "current_price": 9.84,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "NOK",
+    "longName": "Nokia Oyj",
+    "sector": "Technology",
+    "industry": "Communication Equipment",
+    "exchange": "NYQ",
+    "country": "Finland",
+    "city": "Espoo",
+    "website": "https://www.nokia.com",
+    "fullTimeEmployees": 78005,
+    "marketCap": 55090663424,
+    "enterpriseValue": 53920542720,
+    "trailingPE": 70.28571,
+    "forwardPE": 19.801981,
+    "priceToSalesTrailing12Months": 2.701317,
+    "enterpriseToRevenue": 2.644,
+    "priceToBook": 2.227521,
+    "grossMargins": 0.45504,
+    "operatingMargins": 0.07934,
+    "profitMargins": 0.03472,
+    "returnOnEquity": 0.03455,
+    "totalCash": 5129999872,
+    "totalDebt": 3359000064,
+    "totalRevenue": 20394000384,
+    "freeCashflow": 1182875008,
+    "debtToEquity": 15.776,
+    "currentRatio": 1.505,
+    "fiftyTwoWeekHigh": 17.45,
+    "fiftyTwoWeekLow": 4.35,
+    "averageVolume": 92496471,
+    "averageVolume10days": 57948020,
+    "beta": 0.76,
+    "sharesOutstanding": 5598644598,
+    "sharesFloat": 4445435784,
+    "companyOfficers": [
+      {
+        "name": "Mr. Justin  Hotard",
+        "title": "President, CEO & Interim President of Mobile Infrastructure",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Marco  Wiren M.Sc. (Econ.)",
+        "title": "Chief Financial Officer",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Mr. Stephan  Prosi",
+        "title": "Vice President of Corporate Controlling & Accounting",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Pallavi  Mahajan",
+        "title": "Chief Technology & AI Officer",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Mr. Esa  Niinimaki",
+        "title": "Chief Legal & Admin. Officer, Corporate and Secretary",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. David Terence Mulholland C.F.A.",
+        "title": "Head of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.07989,
+      "eps_estimate": 0.06821,
+      "eps_surprise_pct": 0.1712
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.05857,
+      "eps_estimate": 0.05473,
+      "eps_surprise_pct": 0.070199996
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.19093,
+      "eps_estimate": 0.16555,
+      "eps_surprise_pct": 0.1533
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.06967,
+      "eps_estimate": 0.05528,
+      "eps_surprise_pct": 0.2603
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-22",
+    "revenue_low": 4893000000,
+    "revenue_high": 5116931000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,131 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 11,
+    "bullish": 8,
+    "neutral": 2,
+    "bearish": 1,
+    "avg_price_target": 15.02222,
+    "high_price_target": 21.0,
+    "low_price_target": 8.5,
+    "current_price": 9.84,
+    "recent_rating_changes": [
+      {
+        "date": "2026-06-12T14:42:59",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-27T12:53:02",
+        "firm": "Argus Research",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-02-09T09:34:12",
+        "firm": "Morgan Stanley",
+        "to_grade": "Overweight",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2025-12-01T15:37:12",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2025-10-28T11:18:18",
+        "firm": "Jefferies",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2025-10-24T13:09:25",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2025-07-29T16:13:33",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2025-02-21T17:26:37",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2025-01-06T17:24:37",
+        "firm": "Craig-Hallum",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2024-12-09T11:59:03",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "up"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T21:56:06Z",
+      "title": "Nvidia\u2019s $1 Billion Nokia Bet Was Worth About $2.2 Billion by June. Is 6G the Hidden AI Trade?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/nvidia-1-billion-nokia-bet-215606198.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-09-02T15:53:00Z",
+      "title": "Can Nokia's Saudi AI Network Automation Expansion Drive Growth?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/nokias-saudi-ai-network-automation-155300075.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-02T15:13:42Z",
+      "title": "European Equities Traded in the US as American Depositary Receipts Track Higher in Wednesday Trading",
+      "url": "https://finance.yahoo.com/markets/world-indices/articles/european-equities-traded-us-american-151342865.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-09-02T14:45:41Z",
+      "title": "Nokia Gets Back Into Europe\u2019s VIP Room",
+      "url": "https://app.moby.co/home/news/news-nokia-gets-back-into-europes-vip-room?utm_source=yahoo_finance&utm_medium=rss",
+      "source": "Moby"
+    },
+    {
+      "date": "2026-09-01T23:17:34Z",
+      "title": "NOK Stock Gains After-Hours \u2014 Nokia Oyj Rejoins Europe's Benchmark Stoxx 50 Index",
+      "url": "https://stocktwits.com/news-articles/markets/equity/nokia-oyj-rejoins-europe-s-benchmark-stoxx-50-index/cZsoCAMRJMv",
+      "source": "Stocktwits"
+    },
+    {
+      "date": "2026-09-01T17:35:00Z",
+      "title": "Nokia Stock Increases 135.8% in a Year: Should You Invest?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/nokia-stock-increases-135-8-173500980.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-01T15:10:14Z",
+      "title": "European Equities Traded in the US as American Depositary Receipts Edge Higher in Tuesday Trading",
+      "url": "https://finance.yahoo.com/markets/world-indices/articles/european-equities-traded-us-american-151014832.html",
+      "source": "MT Newswires"
+    },
     {
       "date": "2026-08-31T17:06:16Z",
       "title": "Nokia Oyj (HLSE:NOKIA) Following Strong Q2 And AI Demand Is It A Bargain",
@@ -122,64 +307,20 @@
       "title": "European Equities Traded in the US as American Depositary Receipts Edge Lower in Monday Trading",
       "url": "https://finance.yahoo.com/markets/world-indices/articles/european-equities-traded-us-american-151232378.html",
       "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-28T14:44:00Z",
-      "title": "Nokia Rides on Portfolio Diversification: Can it Boost Growth?",
-      "url": "https://finance.yahoo.com/technology/articles/nokia-rides-portfolio-diversification-boost-144400441.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-28T13:44:00Z",
-      "title": "Ciena Stock Ahead of Q3 Earnings: Buy, Sell, or Wait for the Results?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ciena-stock-ahead-q3-earnings-134400541.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-27T09:33:00Z",
-      "title": "Aker Shares Climb After Nscale Gets $45 Billion Contract",
-      "url": "https://www.wsj.com/tech/ai/aker-shares-climb-after-nscale-gets-45-billion-contract-ae6b89b2?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
-    },
-    {
-      "date": "2026-08-26T21:31:56Z",
-      "title": "Nvidia is looking more like the central bank of AI: Chart of the Day",
-      "url": "https://finance.yahoo.com/markets/article/nvidia-is-looking-more-like-the-central-bank-of-ai-chart-of-the-day-213156835.html",
-      "source": "Yahoo Finance"
-    },
-    {
-      "date": "2026-08-24T15:15:28Z",
-      "title": "European Equities Traded in the US as American Depositary Receipts Track Slightly Lower in Monday Trading",
-      "url": "https://finance.yahoo.com/markets/world-indices/articles/european-equities-traded-us-american-151528588.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-21T23:01:56Z",
-      "title": "Baylin Technologies Backlog Hits Record C$61M After Kaelus Acquisition",
-      "url": "https://www.marketbeat.com/instant-alerts/baylin-technologies-backlog-hits-record-c61m-after-kaelus-acquisition-2026-08-21/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-20T12:55:00Z",
-      "title": "Can ION Network's Adoption of WL6e Boost CIEN's Optical Momentum?",
-      "url": "https://finance.yahoo.com/technology/articles/ion-networks-adoption-wl6e-boost-125500425.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04065040650406505,
   "technicals": {
-    "ma20": 10.091000032424926,
-    "ma50": 10.857199974060059,
-    "ma200": 9.544149994850159,
-    "rsi14": 47.498372041131965,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 44.866118207123,
     "high_20d": 11.130000114440918,
-    "low_5d": 10.020000457763672,
-    "low_10d": 9.770000457763672,
+    "low_5d": 9.75,
+    "low_10d": 9.75,
     "high_52w": 17.450000762939453,
-    "low_52w": 4.230000019073486,
-    "atr14": 0.46784993580409456,
-    "atr14_pct": 4.6139045361292945,
-    "position_in_52w_range_pct": 44.70499237295041
+    "low_52w": 4.349999904632568,
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -641,7 +782,7 @@
     {
       "date": "2024-11-21",
       "open": 4.0007,
-      "high": 4.0785,
+      "high": 4.0786,
       "low": 3.9617,
       "close": 4.0201,
       "volume": 27974000.0
@@ -680,9 +821,9 @@
     },
     {
       "date": "2024-11-29",
-      "open": 4.0785,
+      "open": 4.0786,
       "high": 4.1078,
-      "low": 4.0785,
+      "low": 4.0786,
       "close": 4.0883,
       "volume": 4568300.0
     },
@@ -4172,34 +4313,34 @@
       "high": 10.57,
       "low": 10.16,
       "close": 10.21,
-      "volume": 59820000.0
+      "volume": 59866300.0
     },
     {
       "date": "2026-08-31",
       "open": 10.22,
-      "high": 10.2799,
+      "high": 10.28,
       "low": 10.02,
       "close": 10.14,
-      "volume": 44394733.0
+      "volume": 45549200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 10.06,
+      "high": 10.07,
+      "low": 9.75,
+      "close": 9.93,
+      "volume": 61577900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 48017229.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 4.27,
-      "high": 4.31,
-      "low": 4.26,
-      "close": 4.3,
-      "volume": 14765300.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 4.28,
-      "high": 4.3,
-      "low": 4.23,
-      "close": 4.23,
-      "volume": 16231500.0
-    },
     {
       "date": "2025-09-03",
       "open": 4.39,
@@ -6190,15 +6331,31 @@
       "high": 10.57,
       "low": 10.16,
       "close": 10.21,
-      "volume": 59820000.0
+      "volume": 59866300.0
     },
     {
       "date": "2026-08-31",
       "open": 10.22,
-      "high": 10.2799,
+      "high": 10.28,
       "low": 10.02,
       "close": 10.14,
-      "volume": 44394733.0
+      "volume": 45549200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 10.06,
+      "high": 10.07,
+      "low": 9.75,
+      "close": 9.93,
+      "volume": 61577900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 48017229.0
     }
   ],
   "ai_synthesis": null,

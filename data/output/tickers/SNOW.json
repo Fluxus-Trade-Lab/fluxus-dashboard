@@ -1,46 +1,112 @@
 {
   "ticker": "SNOW",
-  "fetched_at": "2026-09-01T01:18:50Z",
+  "fetched_at": "2026-09-03T00:02:40Z",
   "_schema": "v2",
-  "current_price": 331.42999267578125,
+  "current_price": 305.84,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "SNOW",
+    "longName": "Snowflake Inc.",
+    "sector": "Technology",
+    "industry": "Software - Application",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Menlo Park",
+    "website": "https://www.snowflake.com",
+    "fullTimeEmployees": 9250,
+    "marketCap": 106004144128,
+    "enterpriseValue": 110659780608,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 113.08183,
+    "priceToSalesTrailing12Months": 21.062563,
+    "enterpriseToRevenue": 21.988,
+    "priceToBook": 54.65332,
+    "grossMargins": 0.67144996,
+    "operatingMargins": -0.22173999,
+    "profitMargins": -0.23786,
+    "returnOnEquity": -0.54869,
+    "totalCash": 2954998016,
+    "totalDebt": 2772094976,
+    "totalRevenue": 5032822784,
+    "freeCashflow": 1739497728,
+    "debtToEquity": 142.912,
+    "currentRatio": 1.053,
+    "fiftyTwoWeekHigh": 341.95,
+    "fiftyTwoWeekLow": 118.3,
+    "averageVolume": 5471955,
+    "averageVolume10days": 3727260,
+    "beta": 1.315,
+    "sharesOutstanding": 346600000,
+    "sharesFloat": 337113558,
+    "companyOfficers": [
+      {
+        "name": "Mr. Sridhar  Ramaswamy Ph.D.",
+        "title": "CEO & Director",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Brian G. Robins",
+        "title": "Chief Financial Officer",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Christian  Kleinerman",
+        "title": "Executive Vice President of Product Management",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. Vivek  Raghunathan",
+        "title": "Senior Vice President of Engineering",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. Thierry  Cruanes",
+        "title": "Co-Founder",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Emily  Ho",
+        "title": "Chief Accounting Officer",
+        "age": 45,
+        "yearBorn": 1980
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-07-31T00:00:00",
+      "eps_actual": 0.62,
+      "eps_estimate": 0.44698,
+      "eps_surprise_pct": 0.38709998
+    },
+    {
+      "period_end": "2026-04-30T00:00:00",
+      "eps_actual": 0.39,
+      "eps_estimate": 0.31981,
+      "eps_surprise_pct": 0.2195
+    },
+    {
+      "period_end": "2026-01-31T00:00:00",
+      "eps_actual": 0.32,
+      "eps_estimate": 0.27169,
+      "eps_surprise_pct": 0.1778
+    },
+    {
+      "period_end": "2025-10-31T00:00:00",
+      "eps_actual": 0.35,
+      "eps_estimate": 0.31114,
+      "eps_surprise_pct": 0.1249
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-09-02",
+    "revenue_low": 1505200000,
+    "revenue_high": 1624581260
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -99,87 +165,162 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 51,
+    "bullish": 44,
+    "neutral": 6,
+    "bearish": 1,
+    "avg_price_target": 331.6625,
+    "high_price_target": 500.0,
+    "low_price_target": 110.0,
+    "current_price": 305.84,
+    "recent_rating_changes": [
+      {
+        "date": "2026-09-01T12:15:09",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-31T11:05:25",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-27T15:34:08",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-26T15:46:31",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-25T14:18:48",
+        "firm": "Benchmark",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-25T10:41:26",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T17:07:11",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T14:10:13",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T17:51:12",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T16:51:45",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
-      "date": "2026-08-31T21:12:18Z",
-      "title": "Here\u2019s How Much Snowflake Stock Is Expected to Move After Earnings",
-      "url": "https://www.investopedia.com/here-is-how-much-snowflake-stock-is-expected-to-move-after-earnings-snow-q2-fy2027-12073636",
+      "date": "2026-09-02T21:02:00Z",
+      "title": "Snowflake (SNOW) price skyrockets after posting strong quarterly results",
+      "url": "https://finance.yahoo.com/video/snowflake-snow-price-skyrockets-posting-210200107.html",
+      "source": "Yahoo Finance Video"
+    },
+    {
+      "date": "2026-09-02T12:00:00Z",
+      "title": "What to watch: Broadcom, Snowflake earnings and ADP jobs data",
+      "url": "https://finance.yahoo.com/video/watch-broadcom-snowflake-earnings-adp-120000424.html",
+      "source": "Yahoo Finance Video"
+    },
+    {
+      "date": "2026-09-02T23:39:07Z",
+      "title": "Dow Jones Futures: Snowflake, Broadcom, HPE Are Big Earnings Movers; Tesla Cybercab Event Due",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-snowflake-broadcom-hpe-earnings-tesla-cybercab-event/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
+    },
+    {
+      "date": "2026-09-02T23:03:19Z",
+      "title": "Snowflake Q2 Earnings Call Highlights",
+      "url": "https://www.marketbeat.com/instant-alerts/transcript-snowflake-q2-earnings-call-highlights-2026-09-02/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
+    },
+    {
+      "date": "2026-09-02T22:30:59Z",
+      "title": "Snowflake Inc. Q2 2027 Earnings: Live Updates of $SNOW Earnings Call, Forecast",
+      "url": "https://www.thestreet.com/latest-news/snowflake-inc-snow-q2-2027-earnings-updates",
+      "source": "TheStreet"
+    },
+    {
+      "date": "2026-09-02T22:06:05Z",
+      "title": "Snowflake Stock Soars as Surging AI Demand Boosts Earnings",
+      "url": "https://www.investopedia.com/snowflake-stock-soars-as-surging-ai-demand-boosts-earnings-snow-12080303",
       "source": "Investopedia"
     },
     {
-      "date": "2026-08-31T20:36:40Z",
-      "title": "Update: Equities Fall as US-Iran Conflict Flares Up; Wall Street Logs Gains for August",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/equities-fall-us-iran-conflict-203640906.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-31T17:39:57Z",
-      "title": "Update: Equities Fall Intraday as Oil Prices Rise on Renewed US-Iran Hostilities",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/equities-fall-intraday-oil-prices-173957180.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-31T17:20:00Z",
-      "title": "Should You Buy, Sell, or Hold SNOW Stock Before Q2 Earnings Release?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/buy-sell-hold-snow-stock-172000428.html",
+      "date": "2026-09-02T22:00:02Z",
+      "title": "Snowflake (SNOW) Reports Q2 Earnings: What Key Metrics Have to Say",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/snowflake-snow-reports-q2-earnings-220002331.html",
       "source": "Zacks"
     },
     {
-      "date": "2026-08-31T15:04:32Z",
-      "title": "Snowflake Stock Ran On A Plan The Company Had Already Spelled Out",
-      "url": "https://www.trefis.com/articles/613734/snowflake-stock-ran-on-a-plan-the-company-had-already-spelled-out/2026-08-31",
-      "source": "Trefis"
+      "date": "2026-09-02T21:57:17Z",
+      "title": "Snowflake Earnings, Revenue, Guidance Top Estimates. AI Software Stock Jumps.",
+      "url": "https://www.investors.com/news/technology/snowflake-stock-snow-snowflake-earnings-news-july26/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
     },
     {
-      "date": "2026-08-31T14:59:50Z",
-      "title": "Snowflake Q2 Earnings: Watch These 3 Numbers Before Buying SNOW Stock",
-      "url": "https://www.barchart.com/story/news/4356637/snowflake-q2-earnings-watch-these-3-numbers-before-buying-snow-stock",
-      "source": "Barchart"
+      "date": "2026-09-02T21:55:24Z",
+      "title": "Snowflake Loss Narrows, Stock Jumps Afterhours",
+      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-09-02-2026/card/snowflake-loss-narrows-stock-jumps-afterhours-AzUQY0skLYY1nyweCQLJ?siteid=yhoof2&yptr=yahoo",
+      "source": "The Wall Street Journal"
     },
     {
-      "date": "2026-08-31T12:42:42Z",
-      "title": "Update: US Equity Futures Slightly Lower Pre-Bell as US, Iran Resume Hostilities in Middle East",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-futures-slightly-lower-124242480.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-31T12:12:41Z",
-      "title": "Stocks Down Pre-Bell as US, Iran Exchange Strikes; Investors Await Fresh Labor Market Data",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/stocks-down-pre-bell-us-121241859.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-31T11:55:57Z",
-      "title": "US Equity Futures Slightly Lower Pre-Bell as US, Iran Resume Hostilities in Middle East",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/us-equity-futures-slightly-lower-115557709.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-31T11:11:27Z",
-      "title": "Oil Outlook Weighs on Wall Street Pre-Bell; Asia Mixed, Europe Off",
-      "url": "https://finance.yahoo.com/markets/articles/oil-outlook-weighs-wall-street-111127924.html",
-      "source": "MT Newswires"
+      "date": "2026-09-02T21:31:13Z",
+      "title": "Stock Market Today, Sept. 2: Dell Helps Stocks Edge Higher Despite Geopolitical Tensions",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/09/02/stock-market-today-sept-2-dell-helps-stocks-edge-higher-despite-geopolitical-tensions/",
+      "source": "Motley Fool"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.13621501438660738,
   "technicals": {
-    "ma20": 326.3864990234375,
-    "ma50": 289.13599853515626,
-    "ma200": 217.53329986572265,
-    "rsi14": 63.02842025832152,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 54.646265432830084,
     "high_20d": 341.95001220703125,
     "low_5d": 307.2699890136719,
     "low_10d": 307.2699890136719,
     "high_52w": 341.95001220703125,
     "low_52w": 118.30000305175781,
-    "atr14": 12.137786865234375,
-    "atr14_pct": 3.662247573685363,
-    "position_in_52w_range_pct": 95.29621323469463
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4167,31 +4308,31 @@
       "volume": 4067800.0
     },
     {
-      "date": "2026-08-28",
-      "open": 330.37,
-      "high": 334.8,
-      "low": 325.4,
-      "close": 328.0,
-      "volume": 3084000.0
-    },
-    {
       "date": "2026-08-31",
       "open": 326.5,
       "high": 332.65,
       "low": 323.04,
       "close": 331.43,
-      "volume": 4335122.0
+      "volume": 4391800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 325.875,
+      "high": 328.76,
+      "low": 317.82,
+      "close": 319.8,
+      "volume": 4000800.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 10770913.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 236.93,
-      "high": 241.5,
-      "low": 233.29,
-      "close": 238.66,
-      "volume": 11742100.0
-    },
     {
       "date": "2025-09-02",
       "open": 234.0,
@@ -6185,20 +6326,28 @@
       "volume": 4067800.0
     },
     {
-      "date": "2026-08-28",
-      "open": 330.37,
-      "high": 334.8,
-      "low": 325.4,
-      "close": 328.0,
-      "volume": 3084000.0
-    },
-    {
       "date": "2026-08-31",
       "open": 326.5,
       "high": 332.65,
       "low": 323.04,
       "close": 331.43,
-      "volume": 4335122.0
+      "volume": 4391800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 325.875,
+      "high": 328.76,
+      "low": 317.82,
+      "close": 319.8,
+      "volume": 4000800.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 10770913.0
     }
   ],
   "ai_synthesis": null,

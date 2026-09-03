@@ -1,46 +1,112 @@
 {
   "ticker": "MRNA",
-  "fetched_at": "2026-09-01T01:12:29Z",
+  "fetched_at": "2026-09-02T23:56:29Z",
   "_schema": "v2",
-  "current_price": 140.33999633789062,
+  "current_price": 150.80999755859375,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "MRNA",
+    "longName": "Moderna, Inc.",
+    "sector": "Healthcare",
+    "industry": "Biotechnology",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Cambridge",
+    "website": "https://www.modernatx.com",
+    "fullTimeEmployees": 4700,
+    "marketCap": 60208766976,
+    "enterpriseValue": 56357765120,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -32.98636,
+    "priceToSalesTrailing12Months": 27.023684,
+    "enterpriseToRevenue": 25.295,
+    "priceToBook": 8.89997,
+    "grossMargins": -0.66023004,
+    "operatingMargins": -5.5793104,
+    "profitMargins": -1.41427,
+    "returnOnEquity": -0.38998002,
+    "totalCash": 5137999872,
+    "totalDebt": 1287000064,
+    "totalRevenue": 2228000000,
+    "freeCashflow": 299249984,
+    "debtToEquity": 19.036,
+    "currentRatio": 2.295,
+    "fiftyTwoWeekHigh": 176.66,
+    "fiftyTwoWeekLow": 22.28,
+    "averageVolume": 15339760,
+    "averageVolume10days": 58403980,
+    "beta": 0.899,
+    "sharesOutstanding": 399235889,
+    "sharesFloat": 372267505,
+    "companyOfficers": [
+      {
+        "name": "Mr. St\u00e9phane  Bancel M.B.A.",
+        "title": "CEO & Director",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Dr. Stephen  Hoge M.D.",
+        "title": "President",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. James M. Mock",
+        "title": "Chief Financial Officer",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Ms. Shannon Thyme Klinger J.D.",
+        "title": "Chief Legal Officer & Corporate Secretary",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Dr. Jerh  Collins Ph.D.",
+        "title": "Chief Technical Operations & Quality Officer",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Ms. Lavina  Talukdar CFA",
+        "title": "Senior VP & Head of Investor Relations",
+        "age": 51,
+        "yearBorn": 1974
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -1.97,
+      "eps_estimate": -2.05918,
+      "eps_surprise_pct": 0.0433
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -3.4,
+      "eps_estimate": -3.87993,
+      "eps_surprise_pct": 0.1237
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -2.11,
+      "eps_estimate": -2.60104,
+      "eps_surprise_pct": 0.18879999
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.51,
+      "eps_estimate": -2.17919,
+      "eps_surprise_pct": 0.766
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 827000000,
+    "revenue_high": 943800000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,87 +165,164 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 24,
+    "bullish": 3,
+    "neutral": 17,
+    "bearish": 4,
+    "avg_price_target": 112.55556,
+    "high_price_target": 170.0,
+    "low_price_target": 40.0,
+    "current_price": 150.81,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-28T11:49:28",
+        "firm": "Argus Research",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-25T14:28:41",
+        "firm": "Wolfe Research",
+        "to_grade": "Peer Perform",
+        "from_grade": "Underperform",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-24T18:41:07",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-21T16:06:57",
+        "firm": "JP Morgan",
+        "to_grade": "Underweight",
+        "from_grade": "Underweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T17:57:00",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T15:53:40",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T10:23:02",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T19:34:17",
+        "firm": "William Blair",
+        "to_grade": "Outperform",
+        "from_grade": "Market Perform",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-03T18:41:23",
+        "firm": "Citigroup",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-21T12:40:35",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
-      "date": "2026-08-31T21:42:50Z",
-      "title": "Stock Market Enjoys August Gains\u2014Thanks to Unusual Winners",
-      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-08-31-2026/card/stock-market-heads-for-august-gains-thanks-to-unusual-winners-rVCkVtDS7vtvduzWWa9g?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
-    },
-    {
-      "date": "2026-08-31T21:05:00Z",
-      "title": "There Was No Beating Moderna in August. These Are the Best and Worst S&P 500 Stocks for the Month.",
-      "url": "https://www.barrons.com/articles/moderna-stock-sp500-best-worst-august-f24aa440?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-31T12:00:03Z",
-      "title": "8 Stocks Turn $100,000 Into $12.7 Million In 8 Months",
-      "url": "https://www.investors.com/etfs-and-funds/sectors/sp500-stocks-turn-100000-into-12-7-million-in-8-months/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-08-31T05:35:54Z",
-      "title": "Jim Cramer Called Moderna Inc. (NASDAQ:MRNA) & Merck\u2019s Trial Results Encouraging",
-      "url": "https://finance.yahoo.com/healthcare/articles/jim-cramer-called-moderna-inc-053554240.html",
+      "date": "2026-09-02T21:43:27Z",
+      "title": "Jim Cramer Explains Why Heavily Shorted Moderna (MRNA) Has Room to Run",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-explains-why-heavily-214327605.html",
       "source": "Insider Monkey"
     },
     {
-      "date": "2026-08-31T00:31:06Z",
-      "title": "Dolly Parton Life of Philanthropy May Have Kept Singer From Billionaire Status: \u2018I Don\u2019t Work for Money, Never Did\u2019",
-      "url": "https://www.yahoo.com/entertainment/celebrity/articles/dolly-parton-life-philanthropy-may-003106962.html",
-      "source": "Benzinga"
+      "date": "2026-09-02T13:15:58Z",
+      "title": "Billionaire Portfolios: 2 Under-$20 Healthcare Stock Picks",
+      "url": "https://finance.yahoo.com/healthcare/articles/billionaire-portfolios-2-under-20-131558963.html",
+      "source": "Insider Monkey"
     },
     {
-      "date": "2026-08-30T17:05:00Z",
-      "title": "Is It Too Late to Buy Moderna Stock After Its 127% Surge?",
-      "url": "https://www.fool.com/investing/2026/08/30/is-it-too-late-to-buy-moderna-stock-after-its-127/",
+      "date": "2026-09-02T08:10:55Z",
+      "title": "US Stock Market Today: S&P 500 Futures Slip As Rising Yields Pressure Equities",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-stock-market-today-p-081055905.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-02T00:19:02Z",
+      "title": "Did Merck\u2019s (MRK) First Positive Phase 3 Individualized mRNA Cancer Trial Just Redefine Its Moat?",
+      "url": "https://finance.yahoo.com/healthcare/articles/did-merck-mrk-first-positive-001902637.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-01T20:38:51Z",
+      "title": "Down More Than 30% From Its Peak, Is Now the Perfect Time to Buy Sandisk Stock?",
+      "url": "https://www.fool.com/investing/2026/09/01/down-more-than-30-from-its-peak-is-now-the-perfect/",
       "source": "Motley Fool"
     },
     {
-      "date": "2026-08-30T12:15:22Z",
-      "title": "Merck (MRK) Posts First Positive Phase 3 Result For Personalized mRNA Melanoma Therapy",
-      "url": "https://finance.yahoo.com/healthcare/articles/merck-mrk-posts-first-positive-121522145.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-30T10:03:00Z",
-      "title": "Healthcare\u2019s Best Week Since June Traces Back to a Single Moderna and Merck Cancer Trial",
-      "url": "https://finance.yahoo.com/healthcare/articles/healthcare-best-week-since-june-100300319.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-30T03:09:33Z",
-      "title": "What Do Moderna (MRNA) FDA Vaccine Approvals Mean For Its Respiratory Push?",
-      "url": "https://finance.yahoo.com/healthcare/articles/moderna-mrna-fda-vaccine-approvals-030933789.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-29T23:02:51Z",
-      "title": "\u2018This Breakup Saved You Far More Than Moderna Ever Could\u2019: Orman to Woman Dumped After 180% Spike",
-      "url": "https://247wallst.com/personal-finance/2026/08/29/this-breakup-saved-you-far-more-than-moderna-ever-could-orman-to-woman-dumped-after-180-spike/",
+      "date": "2026-09-01T18:00:17Z",
+      "title": "Moderna Rises 6% Despite GSK Moving Rival mRNA Flu Vaccine to Phase III",
+      "url": "https://247wallst.com/investing/2026/09/01/moderna-rises-6-despite-gsk-moving-rival-mrna-flu-vaccine-to-phase-iii/",
       "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-01T17:12:13Z",
+      "title": "Novavax Jumps 6% on Matrix-M Oncology Speculation: Is the Royalty Model the Real Story?",
+      "url": "https://247wallst.com/investing/2026/09/01/novavax-jumps-6-on-matrix-m-oncology-speculation-is-the-royalty-model-the-real-story/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-01T15:12:13Z",
+      "title": "GSK hopes to take on Moderna as it moves mRNA flu vaccine to Phase III trial",
+      "url": "https://www.clinicaltrialsarena.com/news/gsk-mrna-flu-vaccine-moves-to-phase-iii/",
+      "source": "Clinical Trials Arena"
+    },
+    {
+      "date": "2026-09-01T14:27:00Z",
+      "title": "Healthcare ETFs to Watch Post Merck-Moderna Cancer Vaccine Breakthrough",
+      "url": "https://finance.yahoo.com/healthcare/articles/healthcare-etfs-watch-post-merck-142700952.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-01T12:37:53Z",
+      "title": "S&P 500 biggest August 2026 winners: Moderna, software stocks",
+      "url": "https://qz.com/sp500-august-winners-moderna-cancer-vaccine-situational-awareness-090126",
+      "source": "Quartz"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.05357734984950651,
   "technicals": {
-    "ma20": 99.30125141143799,
-    "ma50": 78.3163005065918,
-    "ma200": 52.33237509727478,
-    "rsi14": 64.12563518416488,
+    "ma20": 108.89300136566162,
+    "ma50": 82.01100051879882,
+    "ma200": 53.599425115585326,
+    "rsi14": 65.83066837191177,
     "high_20d": 176.66000366210938,
     "low_5d": 133.3300018310547,
-    "low_10d": 62.12900161743164,
+    "low_10d": 128.61000061035156,
     "high_52w": 176.66000366210938,
     "low_52w": 22.280000686645508,
-    "atr14": 20.35807282584054,
-    "atr14_pct": 14.506251501407535,
-    "position_in_52w_range_pct": 76.47363219056861
+    "atr14": 21.680580411638534,
+    "atr14_pct": 14.376089624439551,
+    "position_in_52w_range_pct": 83.25559942655005
   },
   "ohlc_2y": [
     {
@@ -4172,7 +4315,7 @@
       "high": 138.8,
       "low": 133.33,
       "close": 137.99,
-      "volume": 25766100.0
+      "volume": 25820600.0
     },
     {
       "date": "2026-08-31",
@@ -4180,26 +4323,26 @@
       "high": 144.2,
       "low": 133.855,
       "close": 140.34,
-      "volume": 18498650.0
+      "volume": 18570700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 140.25,
+      "high": 154.7,
+      "low": 138.09,
+      "close": 154.27,
+      "volume": 25831700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 151.48,
+      "high": 156.4151,
+      "low": 146.54,
+      "close": 150.81,
+      "volume": 16532173.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 24.25,
-      "high": 24.38,
-      "low": 23.84,
-      "close": 24.09,
-      "volume": 8288600.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 23.93,
-      "high": 24.25,
-      "low": 23.4,
-      "close": 24.19,
-      "volume": 14228500.0
-    },
     {
       "date": "2025-09-03",
       "open": 24.16,
@@ -6190,7 +6333,7 @@
       "high": 138.8,
       "low": 133.33,
       "close": 137.99,
-      "volume": 25766100.0
+      "volume": 25820600.0
     },
     {
       "date": "2026-08-31",
@@ -6198,7 +6341,23 @@
       "high": 144.2,
       "low": 133.855,
       "close": 140.34,
-      "volume": 18498650.0
+      "volume": 18570700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 140.25,
+      "high": 154.7,
+      "low": 138.09,
+      "close": 154.27,
+      "volume": 25831700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 151.48,
+      "high": 156.4151,
+      "low": 146.54,
+      "close": 150.81,
+      "volume": 16532173.0
     }
   ],
   "ai_synthesis": null,

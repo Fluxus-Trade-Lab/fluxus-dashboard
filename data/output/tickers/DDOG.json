@@ -1,46 +1,112 @@
 {
   "ticker": "DDOG",
-  "fetched_at": "2026-09-01T01:11:55Z",
+  "fetched_at": "2026-09-02T23:56:01Z",
   "_schema": "v2",
-  "current_price": 237.0399932861328,
+  "current_price": 209.22999572753906,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "DDOG",
+    "longName": "Datadog, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Application",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "New York",
+    "website": "https://www.datadoghq.com",
+    "fullTimeEmployees": 8100,
+    "marketCap": 75129266176,
+    "enterpriseValue": 76667715584,
+    "trailingPE": 426.99997,
+    "forwardPE": 70.484116,
+    "priceToSalesTrailing12Months": 18.939873,
+    "enterpriseToRevenue": 19.328,
+    "priceToBook": 17.197927,
+    "grossMargins": 0.79536,
+    "operatingMargins": 0.00666,
+    "profitMargins": 0.044770002,
+    "returnOnEquity": 0.04696,
+    "totalCash": 4985438208,
+    "totalDebt": 1277800960,
+    "totalRevenue": 3966725120,
+    "freeCashflow": 1051412352,
+    "debtToEquity": 29.259,
+    "currentRatio": 3.205,
+    "fiftyTwoWeekHigh": 292.72,
+    "fiftyTwoWeekLow": 98.01,
+    "averageVolume": 4783101,
+    "averageVolume10days": 3507290,
+    "beta": 1.509,
+    "sharesOutstanding": 334904614,
+    "sharesFloat": 333016950,
+    "companyOfficers": [
+      {
+        "name": "Mr. Olivier  Pomel",
+        "title": "Co-Founder, CEO & Director",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Mr. Alexis  Le-Quoc",
+        "title": "Co-Founder, CTO & Director",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. David M. Obstler",
+        "title": "Chief Financial Officer",
+        "age": 65,
+        "yearBorn": 1960
+      },
+      {
+        "name": "Mr. Adam  Blitzer",
+        "title": "Chief Operating Officer",
+        "age": 44,
+        "yearBorn": 1981
+      },
+      {
+        "name": "Mr. Sean Michael Walters",
+        "title": "Chief Revenue Officer",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Ms. Kerry S. Acocella J.D.",
+        "title": "General Counsel & Secretary",
+        "age": 44,
+        "yearBorn": 1981
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.65,
+      "eps_estimate": 0.58324,
+      "eps_surprise_pct": 0.1145
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.6,
+      "eps_estimate": 0.50738,
+      "eps_surprise_pct": 0.1825
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.59,
+      "eps_estimate": 0.55486,
+      "eps_surprise_pct": 0.0633
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.55,
+      "eps_estimate": 0.45709,
+      "eps_surprise_pct": 0.2033
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 1139500000,
+    "revenue_high": 1191200600
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,125 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 46,
+    "bullish": 43,
+    "neutral": 1,
+    "bearish": 2,
+    "avg_price_target": 285.1802,
+    "high_price_target": 330.0,
+    "low_price_target": 158.0,
+    "current_price": 209.23,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-08T00:59:39",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Outperform",
+        "from_grade": "Sector Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T23:12:23",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T19:41:33",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T16:24:23",
+        "firm": "Macquarie",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T13:30:46",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T12:35:14",
+        "firm": "DA Davidson",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T12:31:24",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-07T11:38:26",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T12:07:48",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T11:26:07",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T19:10:10Z",
+      "title": "Datadog Just Dropped 22% in a Month: Sell Now, or Buy More?",
+      "url": "https://247wallst.com/investing/2026/09/02/datadog-just-dropped-22-in-a-month-sell-now-or-buy-more/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-02T17:45:00Z",
+      "title": "Palantir Heads for Worst Day in 7 Months. It Isn\u2019t the Only Software Stock Sinking.",
+      "url": "https://www.barrons.com/articles/palantir-stock-technology-software-a0c98d84?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-09-02T16:41:11Z",
+      "title": "Snowflake Drops 4% Before Its Earnings Report, Datadog Falls 6%: Is the Software Selloff the Real Story?",
+      "url": "https://247wallst.com/investing/2026/09/02/snowflake-drops-4-before-its-earnings-report-datadog-falls-6-is-the-software-selloff-the-real-story/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-02T15:30:00Z",
+      "title": "3 Reasons to Hold Datadog Stock Despite a 64.6% Year-to-Date Surge",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/3-reasons-hold-datadog-stock-153000304.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-01T20:50:20Z",
+      "title": "Okta, Datadog, JFrog, Zscaler, and Elastic Shares Are Falling, What You Need To Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/okta-datadog-jfrog-zscaler-elastic-205020337.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-08-31T17:55:00Z",
+      "title": "Securing AI: 5 Most-Upgraded Stocks From the Q2 Reporting Season",
+      "url": "https://www.marketbeat.com/articles/securing-ai-5-most-upgraded-stocks-from-the-q2-reporting-season/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
+    },
     {
       "date": "2026-08-28T22:12:49Z",
       "title": "Datadog (DDOG) Stock Could Be 25% Undervalued After Product Adoption Growth",
@@ -128,58 +307,22 @@
       "title": "Palo Alto Networks Stock Soars on Okta Takeover Talks Report",
       "url": "https://finance.yahoo.com/markets/stocks/articles/palo-alto-networks-stock-soars-193257487.html",
       "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-08-27T17:23:12Z",
-      "title": "Zscaler and SentinelOne Spike 10% as Cybersecurity Re-Rating Reaches the Laggards",
-      "url": "https://247wallst.com/investing/2026/08/27/zscaler-and-sentinelone-spike-10-as-cybersecurity-re-rating-reaches-the-laggards/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-27T15:37:00Z",
-      "title": "Software Stocks Are Surging Back\u2014And Salesforce Just Showed Why",
-      "url": "https://www.barrons.com/articles/software-stocks-igv-etf-salesforce-anthropic-7a45f70e?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-27T14:42:44Z",
-      "title": "Why Palo Alto Networks Stock Just Popped",
-      "url": "https://www.fool.com/investing/2026/08/27/why-palo-alto-networks-stock-just-popped/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-27T14:40:00Z",
-      "title": "Veeva Systems Stock Is Having Its Best Day Ever as Software Sector Rallies",
-      "url": "https://www.barrons.com/articles/veeva-systems-earnings-stock-price-software-232082de?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-26T17:31:37Z",
-      "title": "Palo Alto Networks Signals More Deals Are Coming",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/palo-alto-networks-signals-more-173137547.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-08-26T14:40:00Z",
-      "title": "Palo Alto Networks CEO held acquisition talks with both Okta and Datadog",
-      "url": "https://finance.yahoo.com/technology/ai/articles/palo-alto-networks-ceo-held-144000533.html",
-      "source": "Investing.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04516560814877549,
   "technicals": {
-    "ma20": 243.9550003051758,
-    "ma50": 249.73000061035157,
-    "ma200": 175.77542526245117,
-    "rsi14": 46.912607959857766,
+    "ma20": 239.35200042724608,
+    "ma50": 249.22440063476563,
+    "ma200": 175.80142524719238,
+    "rsi14": 36.84124002273223,
     "high_20d": 292.7200012207031,
-    "low_5d": 219.0,
-    "low_10d": 219.0,
+    "low_5d": 208.22000122070312,
+    "low_10d": 208.22000122070312,
     "high_52w": 292.7200012207031,
     "low_52w": 98.01000213623047,
-    "atr14": 12.061071123395648,
-    "atr14_pct": 5.088200921789866,
-    "position_in_52w_range_pct": 71.40362169566126
+    "atr14": 12.416071210588727,
+    "atr14_pct": 5.93417361952109,
+    "position_in_52w_range_pct": 57.12084336411357
   },
   "ohlc_2y": [
     {
@@ -4167,31 +4310,31 @@
       "volume": 4550400.0
     },
     {
-      "date": "2026-08-28",
-      "open": 240.22,
-      "high": 247.875,
-      "low": 235.725,
-      "close": 236.98,
-      "volume": 2519300.0
+      "date": "2026-08-31",
+      "open": 233.965,
+      "high": 239.7,
+      "low": 232.3,
+      "close": 237.04,
+      "volume": 4240800.0
     },
     {
-      "date": "2026-08-31",
-      "open": 233.32,
-      "high": 239.7,
-      "low": 232.35,
-      "close": 237.04,
-      "volume": 4226397.0
+      "date": "2026-09-01",
+      "open": 232.88,
+      "high": 237.38,
+      "low": 223.02,
+      "close": 223.84,
+      "volume": 3427100.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 219.46,
+      "high": 219.79,
+      "low": 208.22,
+      "close": 209.23,
+      "volume": 6108678.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 139.96,
-      "high": 142.5,
-      "low": 136.04,
-      "close": 136.68,
-      "volume": 5105200.0
-    },
     {
       "date": "2025-09-02",
       "open": 134.48,
@@ -6185,20 +6328,28 @@
       "volume": 4550400.0
     },
     {
-      "date": "2026-08-28",
-      "open": 240.22,
-      "high": 247.875,
-      "low": 235.725,
-      "close": 236.98,
-      "volume": 2519300.0
+      "date": "2026-08-31",
+      "open": 233.965,
+      "high": 239.7,
+      "low": 232.3,
+      "close": 237.04,
+      "volume": 4240800.0
     },
     {
-      "date": "2026-08-31",
-      "open": 233.32,
-      "high": 239.7,
-      "low": 232.35,
-      "close": 237.04,
-      "volume": 4226397.0
+      "date": "2026-09-01",
+      "open": 232.88,
+      "high": 237.38,
+      "low": 223.02,
+      "close": 223.84,
+      "volume": 3427100.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 219.46,
+      "high": 219.79,
+      "low": 208.22,
+      "close": 209.23,
+      "volume": 6108678.0
     }
   ],
   "ai_synthesis": null,

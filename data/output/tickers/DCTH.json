@@ -1,46 +1,112 @@
 {
   "ticker": "DCTH",
-  "fetched_at": "2026-09-01T01:16:27Z",
+  "fetched_at": "2026-09-03T00:00:11Z",
   "_schema": "v2",
-  "current_price": 16.459999084472656,
+  "current_price": 16.58,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "DCTH",
+    "longName": "Delcath Systems, Inc.",
+    "sector": "Healthcare",
+    "industry": "Medical Devices",
+    "exchange": "NCM",
+    "country": "United States",
+    "city": "Queensbury",
+    "website": "https://www.delcath.com",
+    "fullTimeEmployees": 156,
+    "marketCap": 575306048,
+    "enterpriseValue": 475621248,
+    "trailingPE": 1658.0,
+    "forwardPE": 368.44443,
+    "priceToSalesTrailing12Months": 6.029324,
+    "enterpriseToRevenue": 4.985,
+    "priceToBook": 4.7398515,
+    "grossMargins": 0.87052,
+    "operatingMargins": 0.08221,
+    "profitMargins": 0.00558,
+    "returnOnEquity": 0.00471,
+    "totalCash": 95902000,
+    "totalDebt": 2463000,
+    "totalRevenue": 95418000,
+    "freeCashflow": 18117250,
+    "debtToEquity": 2.033,
+    "currentRatio": 9.83,
+    "fiftyTwoWeekHigh": 17.42,
+    "fiftyTwoWeekLow": 8.12,
+    "averageVolume": 562319,
+    "averageVolume10days": 437060,
+    "beta": 0.523,
+    "sharesOutstanding": 34698795,
+    "sharesFloat": 28777793,
+    "companyOfficers": [
+      {
+        "name": "Mr. Gerard J. Michel MBA, MS",
+        "title": "CEO & Director",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Dr. Martha S. Rook Ph.D.",
+        "title": "Chief Operating Officer",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Dr. Vojislav  Vukovic M.D., M.Sc., Ph.D.",
+        "title": "Chief Medical Officer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Ms. Sandra  Pennell CPA",
+        "title": "Chief Financial Officer",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. David  Hoffman J.D.",
+        "title": "General Counsel, Corporate Secretary & Chief Compliance Officer",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Dr. Johnny  John M.D.",
+        "title": "Senior Vice President of Clinical Operations & Medical Affairs",
+        "age": 60,
+        "yearBorn": 1965
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.07,
+      "eps_estimate": -0.0875,
+      "eps_surprise_pct": 1.8
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.03,
+      "eps_estimate": -0.094,
+      "eps_surprise_pct": 0.6809
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.05,
+      "eps_estimate": -0.032,
+      "eps_surprise_pct": -0.5625
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.02,
+      "eps_estimate": -0.09,
+      "eps_surprise_pct": 1.2222
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 24627000,
+    "revenue_high": 27000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 5,
+    "bullish": 5,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 24.0,
+    "high_price_target": 32.0,
+    "low_price_target": 21.0,
+    "current_price": 16.58,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-07T11:07:59",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T18:38:58",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-02-26T18:49:56",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-01-09T17:29:31",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2025-11-05T14:57:03",
+        "firm": "Stephens & Co.",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2025-11-04T17:08:26",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2025-10-21T16:26:59",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-10-20T15:44:08",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-08-07T11:15:02",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-06-23T15:00:23",
+        "firm": "Stephens & Co.",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +309,18 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.05126658624849217,
   "technicals": {
-    "ma20": 16.282499885559083,
-    "ma50": 14.098999977111816,
-    "ma200": 11.105624966621399,
-    "rsi14": 59.70190453985153,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 58.94171412341273,
     "high_20d": 17.420000076293945,
     "low_5d": 16.100000381469727,
     "low_10d": 16.100000381469727,
     "high_52w": 17.420000076293945,
     "low_52w": 8.119999885559082,
-    "atr14": 0.502856935773577,
-    "atr14_pct": 3.0550240810641425,
-    "position_in_52w_range_pct": 89.67740890180099
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4180,26 +4321,26 @@
       "high": 16.48,
       "low": 16.1,
       "close": 16.46,
-      "volume": 402597.0
+      "volume": 402700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 16.48,
+      "high": 16.55,
+      "low": 16.235,
+      "close": 16.4,
+      "volume": 360400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 448646.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 10.91,
-      "high": 11.03,
-      "low": 10.65,
-      "close": 11.02,
-      "volume": 332200.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 10.78,
-      "high": 11.32,
-      "low": 10.74,
-      "close": 10.9,
-      "volume": 445600.0
-    },
     {
       "date": "2025-09-03",
       "open": 10.86,
@@ -6198,7 +6339,23 @@
       "high": 16.48,
       "low": 16.1,
       "close": 16.46,
-      "volume": 402597.0
+      "volume": 402700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 16.48,
+      "high": 16.55,
+      "low": 16.235,
+      "close": 16.4,
+      "volume": 360400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 448646.0
     }
   ],
   "ai_synthesis": null,

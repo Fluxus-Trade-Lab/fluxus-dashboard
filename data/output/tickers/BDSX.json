@@ -1,46 +1,112 @@
 {
   "ticker": "BDSX",
-  "fetched_at": "2026-09-01T01:14:20Z",
+  "fetched_at": "2026-09-02T23:58:14Z",
   "_schema": "v2",
-  "current_price": 26.344999313354492,
+  "current_price": 27.15999984741211,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "BDSX",
+    "longName": "Biodesix, Inc.",
+    "sector": "Healthcare",
+    "industry": "Diagnostics & Research",
+    "exchange": "NGM",
+    "country": "United States",
+    "city": "Louisville",
+    "website": "https://www.biodesix.com",
+    "fullTimeEmployees": 334,
+    "marketCap": 286568352,
+    "enterpriseValue": 306316544,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -123.454544,
+    "priceToSalesTrailing12Months": 2.7838657,
+    "enterpriseToRevenue": 2.976,
+    "priceToBook": 31.326414,
+    "grossMargins": 0.82504,
+    "operatingMargins": -0.20014,
+    "profitMargins": -0.26969,
+    "returnOnEquity": -5.4001203,
+    "totalCash": 29996000,
+    "totalDebt": 71796000,
+    "totalRevenue": 102939000,
+    "freeCashflow": -10889250,
+    "debtToEquity": 785.171,
+    "currentRatio": 2.849,
+    "fiftyTwoWeekHigh": 31.31,
+    "fiftyTwoWeekLow": 5.26,
+    "averageVolume": 95514,
+    "averageVolume10days": 175390,
+    "beta": 0.563,
+    "sharesOutstanding": 10551118,
+    "sharesFloat": 4976751,
+    "companyOfficers": [
+      {
+        "name": "Mr. Scott  Hutton",
+        "title": "President, CEO & Director",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Ms. Robin Harper Cowie",
+        "title": "CFO, Secretary & Treasurer",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Mr. Kieran  O'Kane",
+        "title": "Chief Commercial Officer",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Dr. Heinrich  Roder D.Phil",
+        "title": "Founder & CTO",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Dr. Gary Anthony Pestano Ph.D.",
+        "title": "Chief Scientific Officer",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Ms. Jessica  Olbricht",
+        "title": "Senior Director of Human Resources",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.71,
+      "eps_estimate": -0.90286,
+      "eps_surprise_pct": 0.21360001
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.81,
+      "eps_estimate": -1.096,
+      "eps_surprise_pct": 0.2609
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.49,
+      "eps_estimate": -0.866,
+      "eps_surprise_pct": 0.4342
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -1.16,
+      "eps_estimate": -1.506,
+      "eps_surprise_pct": 0.2297
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 27000000,
+    "revenue_high": 27900000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 7,
+    "bullish": 7,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 34.0,
+    "high_price_target": 40.0,
+    "low_price_target": 27.0,
+    "current_price": 27.16,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-10T12:15:57",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T18:33:09",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-25T10:56:02",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-06-18T13:15:48",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-15T10:16:04",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-05-05T18:38:19",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-02-27T21:42:09",
+        "firm": "William Blair",
+        "to_grade": "Outperform",
+        "from_grade": "Market Perform",
+        "action": "up"
+      },
+      {
+        "date": "2026-02-17T15:50:28",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-09-19T16:47:58",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-05-21T15:44:25",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Outperform",
+        "from_grade": "Sector Outperform",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
@@ -168,18 +311,18 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 24.991250038146973,
-    "ma50": 22.713999938964843,
-    "ma200": 14.603524997234345,
-    "rsi14": 55.37545346805677,
+    "ma20": 25.123500061035156,
+    "ma50": 22.874999923706056,
+    "ma200": 14.69077499628067,
+    "rsi14": 56.8578831371865,
     "high_20d": 31.309999465942383,
-    "low_5d": 25.40999984741211,
+    "low_5d": 24.06999969482422,
     "low_10d": 21.90999984741211,
     "high_52w": 31.309999465942383,
     "low_52w": 5.260000228881836,
-    "atr14": 2.4634287697928294,
-    "atr14_pct": 9.350650347309356,
-    "position_in_52w_range_pct": 80.94049789635181
+    "atr14": 2.6521643229893277,
+    "atr14_pct": 9.764964425219,
+    "position_in_52w_range_pct": 84.06909888647446
   },
   "ohlc_2y": [
     {
@@ -4167,31 +4310,31 @@
       "volume": 162300.0
     },
     {
-      "date": "2026-08-28",
-      "open": 28.29,
-      "high": 28.624,
-      "low": 26.65,
-      "close": 26.83,
-      "volume": 108500.0
-    },
-    {
       "date": "2026-08-31",
       "open": 26.71,
       "high": 27.1,
       "low": 25.76,
       "close": 26.345,
-      "volume": 58037.0
+      "volume": 58000.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 25.83,
+      "high": 26.525,
+      "low": 25.02,
+      "close": 25.07,
+      "volume": 67500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 25.21,
+      "high": 27.4013,
+      "low": 24.07,
+      "close": 27.16,
+      "volume": 141224.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 8.96,
-      "high": 9.2,
-      "low": 8.32,
-      "close": 8.54,
-      "volume": 265060.0
-    },
     {
       "date": "2025-09-02",
       "open": 8.46,
@@ -6185,20 +6328,28 @@
       "volume": 162300.0
     },
     {
-      "date": "2026-08-28",
-      "open": 28.29,
-      "high": 28.624,
-      "low": 26.65,
-      "close": 26.83,
-      "volume": 108500.0
-    },
-    {
       "date": "2026-08-31",
       "open": 26.71,
       "high": 27.1,
       "low": 25.76,
       "close": 26.345,
-      "volume": 58037.0
+      "volume": 58000.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 25.83,
+      "high": 26.525,
+      "low": 25.02,
+      "close": 25.07,
+      "volume": 67500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 25.21,
+      "high": 27.4013,
+      "low": 24.07,
+      "close": 27.16,
+      "volume": 141224.0
     }
   ],
   "ai_synthesis": null,

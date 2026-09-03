@@ -1,6 +1,6 @@
 {
   "trade_id": "PLTR_2026-08-05_000",
-  "generated_at": "2026-09-01T23:55:30+00:00",
+  "generated_at": "2026-09-03T00:03:14+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "PLTR",
@@ -9,15 +9,15 @@
     "entry_date": "2026-08-05",
     "entry_price": 155.37,
     "original_qty": 1136,
-    "current_qty": 531,
-    "stop_price": 153.0,
+    "current_qty": 0,
+    "stop_price": 170.0,
     "initial_stop": 153.0,
-    "closed": false,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "exit_date": "2026-09-02",
+    "hold_business_days": 20,
     "r_dollars": 2692.320000000005,
-    "realized_pl": 10912.699999999995,
-    "realized_R": 4.053270042194083,
+    "realized_pl": 20746.819999999985,
+    "realized_R": 7.705926487193181,
     "trims": [
       {
         "date": "2026-08-10",
@@ -30,6 +30,12 @@
         "price": 171.1,
         "qty": 378,
         "type": "trim_1_3"
+      },
+      {
+        "date": "2026-09-02",
+        "price": 173.89,
+        "qty": 531,
+        "type": "sell_rest"
       }
     ]
   },
@@ -42,7 +48,7 @@
     "ma20": 131.433,
     "ma50": 131.4242,
     "ma200": 152.43725,
-    "rsi14": 68.73840256906392,
+    "rsi14": 68.73840283025143,
     "atr14": 8.432142857142859,
     "atr14_pct": 5.322314496713285,
     "high_52w": 207.52,
@@ -62,14 +68,14 @@
     "optimal_exit_date": "2026-08-28",
     "optimal_R": 13.924050632911365,
     "days_to_optimal": 23,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": 7.705926487193181,
+    "capture_pct": 55.3425629534784,
+    "missed_R": 6.218124145718185,
     "post_exit_R": null,
-    "hold_calendar_days": 27
+    "hold_calendar_days": 28
   },
-  "lesson": "In progress",
-  "narrative": "Entered **PLTR** long on 2026-08-05 at $155.37 (qty 1136) with stop $153.00 (1R = $2.37/sh = $2,692). Setup: **Long in mixed structure** \u2014 price above MA20 ($131.43), MA stack mixed, RSI 69, 51% through 52W range, ATR 5.3% of price. **In progress.** Peak so far +13.92R; worst drawdown -1.13R.",
+  "lesson": "Good execution",
+  "narrative": "Entered **PLTR** long on 2026-08-05 at $155.37 (qty 1136) with stop $153.00 (currently trailed to $170.00) (1R = $2.37/sh = $2,692). Setup: **Long in mixed structure** \u2014 price above MA20 ($131.43), MA stack mixed, RSI 69, 51% through 52W range, ATR 5.3% of price. Realized **+7.71R**, peak was **+13.92R** on 2026-08-28 (day +23) \u2014 captured **55%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-07-06",
@@ -389,7 +395,7 @@
       "high": 188.37,
       "low": 184.38,
       "close": 186.29,
-      "volume": 24995400.0
+      "volume": 25060200.0
     },
     {
       "date": "2026-08-31",
@@ -397,7 +403,23 @@
       "high": 187.94,
       "low": 183.79,
       "close": 186.38,
-      "volume": 25633590.0
+      "volume": 25941200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 182.98,
+      "high": 186.55,
+      "low": 179.75,
+      "close": 179.92,
+      "volume": 24567200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 176.995,
+      "high": 177.55,
+      "low": 165.71,
+      "close": 169.46,
+      "volume": 39578542.0
     }
   ]
 }

@@ -1,8 +1,8 @@
 {
   "ticker": "CSIQ",
-  "fetched_at": "2026-09-01T01:16:16Z",
+  "fetched_at": "2026-09-03T00:00:03Z",
   "_schema": "v2",
-  "current_price": 12.329999923706055,
+  "current_price": 13.36,
   "info": {
     "symbol": "CSIQ",
     "longName": "Canadian Solar Inc.",
@@ -13,13 +13,13 @@
     "city": "Kitchener",
     "website": "https://www.canadiansolar.com",
     "fullTimeEmployees": 12587,
-    "marketCap": 837166976,
-    "enterpriseValue": 8166791168,
+    "marketCap": 907100608,
+    "enterpriseValue": 8190219264,
     "trailingPE": null,
-    "forwardPE": -19.750753,
-    "priceToSalesTrailing12Months": 0.16776212,
-    "enterpriseToRevenue": 1.637,
-    "priceToBook": 0.3038817,
+    "forwardPE": -4.3477554,
+    "priceToSalesTrailing12Months": 0.1817763,
+    "enterpriseToRevenue": 1.641,
+    "priceToBook": 0.3292668,
     "grossMargins": 0.17638999,
     "operatingMargins": -0.05884,
     "profitMargins": -0.03733,
@@ -31,9 +31,9 @@
     "debtToEquity": 172.312,
     "currentRatio": 1.025,
     "fiftyTwoWeekHigh": 34.59,
-    "fiftyTwoWeekLow": 9.41,
-    "averageVolume": 2290430,
-    "averageVolume10days": 1939330,
+    "fiftyTwoWeekLow": 9.69,
+    "averageVolume": 2264741,
+    "averageVolume10days": 2240460,
     "beta": 1.541,
     "sharesOutstanding": 67896749,
     "sharesFloat": 43620387,
@@ -166,15 +166,36 @@
   ],
   "analyst": {
     "consensus": "Hold",
-    "total_ratings": 11,
-    "bullish": 3,
+    "total_ratings": 12,
+    "bullish": 4,
     "neutral": 5,
     "bearish": 3,
-    "avg_price_target": 18.22083,
+    "avg_price_target": 17.97083,
     "high_price_target": 30.0,
     "low_price_target": 9.0,
-    "current_price": 12.33,
+    "current_price": 13.36,
     "recent_rating_changes": [
+      {
+        "date": "2026-08-31T15:23:02",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T12:12:57",
+        "firm": "Mizuho",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-27T12:27:16",
+        "firm": "GLJ Research",
+        "to_grade": "Sell",
+        "from_grade": "Sell",
+        "action": "reit"
+      },
       {
         "date": "2026-07-22T18:21:44",
         "firm": "Citigroup",
@@ -223,31 +244,16 @@
         "to_grade": "Outperform",
         "from_grade": "Outperform",
         "action": "main"
-      },
-      {
-        "date": "2026-03-17T09:42:04",
-        "firm": "Mizuho",
-        "to_grade": "Neutral",
-        "from_grade": "Underperform",
-        "action": "up"
-      },
-      {
-        "date": "2025-11-24T12:41:12",
-        "firm": "Freedom Broker",
-        "to_grade": "Hold",
-        "from_grade": "Hold",
-        "action": "main"
-      },
-      {
-        "date": "2025-11-19T14:55:55",
-        "firm": "UBS",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
       }
     ]
   },
   "news": [
+    {
+      "date": "2026-09-01T08:49:04Z",
+      "title": "Canadian Solar\u2019s (CSIQ) Backlog Balloons While The Bottom Line Bleeds",
+      "url": "https://finance.yahoo.com/energy/articles/canadian-solar-csiq-backlog-balloons-084904843.html",
+      "source": "Insider Monkey"
+    },
     {
       "date": "2026-08-31T13:23:39Z",
       "title": "Canadian Solar (CSIQ) Q2 2026 Earnings Call Transcript",
@@ -301,28 +307,20 @@
       "title": "CSIQ Stock Heads For 6th Session Of Losses: Canadian Solar CEO Warns Of More Profit Pressure From US Factory Ramp-Up",
       "url": "https://stocktwits.com/news-articles/markets/equity/csiq-stock-heads-for-6th-session-of-losses-canadian-solar-ceo-warns-of-more-profit-pressure-from-us-factory-ramp-up/cZYobiQRJqR",
       "source": "Stocktwits"
-    },
-    {
-      "date": "2026-08-27T12:11:34Z",
-      "title": "Canadian Solar shares slip after Q2 earnings miss and cautious outlook",
-      "url": "https://investorshub.advfn.com/market-news/article/35186/canadian-solar-shares-slip-after-q2-earnings-miss-and-cautious-outlook",
-      "source": "InvestorsHub"
     }
   ],
-  "options_implied_move": 0.0681265211028095,
+  "options_implied_move": 0.056886227544910184,
   "technicals": {
-    "ma20": 14.866499948501588,
-    "ma50": 14.90819995880127,
-    "ma200": 18.231599969863893,
-    "rsi14": 31.187944072265097,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 34.74708041138929,
     "high_20d": 16.479999542236328,
-    "low_5d": 12.239999771118164,
-    "low_10d": 12.239999771118164,
+    "low_5d": 12.130000114440918,
+    "low_10d": 12.130000114440918,
     "high_52w": 34.59000015258789,
-    "low_52w": 9.40999984741211,
-    "atr14": 0.8814288548060826,
-    "atr14_pct": 7.148652556853785,
-    "position_in_52w_range_pct": 11.596505325274899
+    "low_52w": 9.6899995803833,
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4315,34 +4313,34 @@
       "high": 13.78,
       "low": 12.91,
       "close": 13.14,
-      "volume": 3083000.0
+      "volume": 3093300.0
     },
     {
       "date": "2026-08-31",
-      "open": 12.99,
+      "open": 13.1,
       "high": 13.12,
       "low": 12.24,
       "close": 12.33,
-      "volume": 3384492.0
+      "volume": 3386100.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 12.18,
+      "high": 12.82,
+      "low": 12.13,
+      "close": 12.66,
+      "volume": 2291600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 2544966.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 9.52,
-      "high": 10.03,
-      "low": 9.52,
-      "close": 9.78,
-      "volume": 2126500.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 9.63,
-      "high": 10.07,
-      "low": 9.41,
-      "close": 9.99,
-      "volume": 2095000.0
-    },
     {
       "date": "2025-09-03",
       "open": 9.98,
@@ -6333,15 +6331,31 @@
       "high": 13.78,
       "low": 12.91,
       "close": 13.14,
-      "volume": 3083000.0
+      "volume": 3093300.0
     },
     {
       "date": "2026-08-31",
-      "open": 12.99,
+      "open": 13.1,
       "high": 13.12,
       "low": 12.24,
       "close": 12.33,
-      "volume": 3384492.0
+      "volume": 3386100.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 12.18,
+      "high": 12.82,
+      "low": 12.13,
+      "close": 12.66,
+      "volume": 2291600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 2544966.0
     }
   ],
   "ai_synthesis": null,

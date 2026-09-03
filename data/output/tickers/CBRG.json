@@ -1,14 +1,14 @@
 {
   "ticker": "CBRG",
-  "fetched_at": "2026-09-01T01:11:43Z",
+  "fetched_at": "2026-09-02T23:55:50Z",
   "_schema": "v2",
-  "current_price": 3.065000057220459,
+  "current_price": 3.049999952316284,
   "info": {
-    "symbol": null,
-    "longName": null,
+    "symbol": "CBRG",
+    "longName": "Leverage Shares 2X Long CBRS Daily ETF",
     "sector": null,
     "industry": null,
-    "exchange": null,
+    "exchange": "BTS",
     "country": null,
     "city": null,
     "website": null,
@@ -30,10 +30,10 @@
     "freeCashflow": null,
     "debtToEquity": null,
     "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "fiftyTwoWeekHigh": 17.15,
+    "fiftyTwoWeekLow": 2.56,
+    "averageVolume": 9971133,
+    "averageVolume10days": 10680990,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -49,19 +49,19 @@
     "current_price": null
   },
   "news": [],
-  "options_implied_move": null,
+  "options_implied_move": 0.22950820030944385,
   "technicals": {
-    "ma20": 4.3662500262260435,
-    "ma50": 4.461300005912781,
-    "rsi14": 42.151789167019814,
+    "ma20": 4.164000010490417,
+    "ma50": 4.306199998855591,
+    "rsi14": 43.10015043156593,
     "high_20d": 6.920000076293945,
-    "low_5d": 2.819999933242798,
-    "low_10d": 2.819999933242798,
+    "low_5d": 2.559999942779541,
+    "low_10d": 2.559999942779541,
     "high_52w": 17.149999618530273,
-    "low_52w": 2.819999933242798,
-    "atr14": 0.829285740852356,
-    "atr14_pct": 27.05663051779536,
-    "position_in_52w_range_pct": 1.7097008329260557
+    "low_52w": 2.559999942779541,
+    "atr14": 0.630014283316476,
+    "atr14_pct": 20.6562063333155,
+    "position_in_52w_range_pct": 3.3584648418542895
   },
   "ohlc_2y": [
     {
@@ -646,15 +646,31 @@
       "high": 3.08,
       "low": 2.84,
       "close": 2.91,
-      "volume": 8825800.0
+      "volume": 8904300.0
     },
     {
       "date": "2026-08-31",
       "open": 2.85,
       "high": 3.09,
       "low": 2.82,
-      "close": 3.065,
-      "volume": 7247152.0
+      "close": 3.07,
+      "volume": 7364400.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 2.93,
+      "high": 3.0,
+      "low": 2.65,
+      "close": 2.68,
+      "volume": 10964900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 2.595,
+      "high": 3.0702,
+      "low": 2.56,
+      "close": 3.05,
+      "volume": 13875100.0
     }
   ],
   "ohlc_1y": [
@@ -1240,15 +1256,31 @@
       "high": 3.08,
       "low": 2.84,
       "close": 2.91,
-      "volume": 8825800.0
+      "volume": 8904300.0
     },
     {
       "date": "2026-08-31",
       "open": 2.85,
       "high": 3.09,
       "low": 2.82,
-      "close": 3.065,
-      "volume": 7247152.0
+      "close": 3.07,
+      "volume": 7364400.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 2.93,
+      "high": 3.0,
+      "low": 2.65,
+      "close": 2.68,
+      "volume": 10964900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 2.595,
+      "high": 3.0702,
+      "low": 2.56,
+      "close": 3.05,
+      "volume": 13875100.0
     }
   ],
   "ai_synthesis": null,

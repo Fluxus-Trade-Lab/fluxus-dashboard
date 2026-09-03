@@ -1,8 +1,8 @@
 {
   "ticker": "LIFE",
-  "fetched_at": "2026-09-01T01:17:49Z",
+  "fetched_at": "2026-09-03T00:01:32Z",
   "_schema": "v2",
-  "current_price": 36.33000183105469,
+  "current_price": 36.8,
   "info": {
     "symbol": "LIFE",
     "longName": "Ethos Technologies Inc.",
@@ -13,13 +13,13 @@
     "city": "San Francisco",
     "website": "https://www.ethos.com",
     "fullTimeEmployees": 614,
-    "marketCap": 3481811200,
-    "enterpriseValue": 2149835008,
+    "marketCap": 3526855168,
+    "enterpriseValue": 2065034880,
     "trailingPE": null,
-    "forwardPE": 13.806706,
-    "priceToSalesTrailing12Months": 5.9362683,
-    "enterpriseToRevenue": 3.665,
-    "priceToBook": 4.8647566,
+    "forwardPE": 13.985323,
+    "priceToSalesTrailing12Months": 6.0130653,
+    "enterpriseToRevenue": 3.521,
+    "priceToBook": 4.9276915,
     "grossMargins": 0.98126,
     "operatingMargins": 0.09558,
     "profitMargins": -0.18145001,
@@ -32,8 +32,8 @@
     "currentRatio": 1.517,
     "fiftyTwoWeekHigh": 40.97,
     "fiftyTwoWeekLow": 9.45,
-    "averageVolume": 917769,
-    "averageVolume10days": 1489250,
+    "averageVolume": 932934,
+    "averageVolume10days": 1394140,
     "beta": null,
     "sharesOutstanding": 31554807,
     "sharesFloat": 28191880,
@@ -167,7 +167,7 @@
     "avg_price_target": 34.875,
     "high_price_target": 40.0,
     "low_price_target": 32.0,
-    "current_price": 36.33,
+    "current_price": 36.8,
     "recent_rating_changes": [
       {
         "date": "2024-05-14T14:51:16",
@@ -305,17 +305,15 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 34.17949991226196,
-    "ma50": 25.07339994430542,
-    "rsi14": 65.8344202212042,
+    "ma20": NaN,
+    "ma50": NaN,
+    "rsi14": 61.285269926598744,
     "high_20d": 40.970001220703125,
-    "low_5d": 35.779998779296875,
+    "low_5d": 34.83000183105469,
     "low_10d": 31.850000381469727,
     "high_52w": 40.970001220703125,
     "low_52w": 9.449999809265137,
-    "atr14": 2.585000310625349,
-    "atr14_pct": 7.11533217819908,
-    "position_in_52w_range_pct": 85.27919041283839
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -1487,20 +1485,28 @@
       "volume": 985900.0
     },
     {
-      "date": "2026-08-28",
-      "open": 39.6,
-      "high": 40.19,
-      "low": 37.73,
-      "close": 38.64,
-      "volume": 1087400.0
+      "date": "2026-08-31",
+      "open": 38.64,
+      "high": 38.64,
+      "low": 35.77,
+      "close": 36.33,
+      "volume": 1131500.0
     },
     {
-      "date": "2026-08-31",
-      "open": 38.6,
-      "high": 38.64,
-      "low": 35.78,
-      "close": 36.33,
-      "volume": 1131376.0
+      "date": "2026-09-01",
+      "open": 35.06,
+      "high": 36.01,
+      "low": 34.83,
+      "close": 35.0,
+      "volume": 1074800.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 1223480.0
     }
   ],
   "ohlc_1y": [
@@ -2673,20 +2679,28 @@
       "volume": 985900.0
     },
     {
-      "date": "2026-08-28",
-      "open": 39.6,
-      "high": 40.19,
-      "low": 37.73,
-      "close": 38.64,
-      "volume": 1087400.0
+      "date": "2026-08-31",
+      "open": 38.64,
+      "high": 38.64,
+      "low": 35.77,
+      "close": 36.33,
+      "volume": 1131500.0
     },
     {
-      "date": "2026-08-31",
-      "open": 38.6,
-      "high": 38.64,
-      "low": 35.78,
-      "close": 36.33,
-      "volume": 1131376.0
+      "date": "2026-09-01",
+      "open": 35.06,
+      "high": 36.01,
+      "low": 34.83,
+      "close": 35.0,
+      "volume": 1074800.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 1223480.0
     }
   ],
   "ai_synthesis": null,

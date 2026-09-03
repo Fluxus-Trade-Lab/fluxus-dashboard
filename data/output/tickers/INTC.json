@@ -1,46 +1,100 @@
 {
   "ticker": "INTC",
-  "fetched_at": "2026-09-01T01:12:21Z",
+  "fetched_at": "2026-09-02T23:56:23Z",
   "_schema": "v2",
-  "current_price": 89.51000213623047,
+  "current_price": 90.05000305175781,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "INTC",
+    "longName": "Intel Corporation",
+    "sector": "Technology",
+    "industry": "Semiconductors",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Santa Clara",
+    "website": "https://www.intel.com",
+    "fullTimeEmployees": 85100,
+    "marketCap": 476013789184,
+    "enterpriseValue": 485175689216,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 44.139347,
+    "priceToSalesTrailing12Months": 8.346434,
+    "enterpriseToRevenue": 8.507,
+    "priceToBook": 5.187511,
+    "grossMargins": 0.38873002,
+    "operatingMargins": 0.12189999,
+    "profitMargins": -0.19794,
+    "returnOnEquity": -0.10715,
+    "totalCash": 29727000576,
+    "totalDebt": 50537000960,
+    "totalRevenue": 57031999488,
+    "freeCashflow": 4866375168,
+    "debtToEquity": 48.997,
+    "currentRatio": 1.604,
+    "fiftyTwoWeekHigh": 142.35,
+    "fiftyTwoWeekLow": 23.72,
+    "averageVolume": 115397247,
+    "averageVolume10days": 86779880,
+    "beta": 2.241,
+    "sharesOutstanding": 5286105262,
+    "sharesFloat": 4618891680,
+    "companyOfficers": [
+      {
+        "name": "Mr. Lip-Bu  Tan",
+        "title": "CEO & Director",
+        "age": 66,
+        "yearBorn": 1959
+      },
+      {
+        "name": "Mr. David A. Zinsner",
+        "title": "Executive VP, CFO and Principal Financial & Accounting Officer",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Nagasubramaniyan  Chandrasekaran",
+        "title": "Executive VP, Chief Technology and Operations Officer & GM of Intel Foundry",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Gregory  Ernst",
+        "title": "Corporate VP, Chief Revenue Officer & General Manager of Sales Group",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.42,
+      "eps_estimate": 0.21584,
+      "eps_surprise_pct": 0.94589996
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.29,
+      "eps_estimate": 0.01313,
+      "eps_surprise_pct": 21.0868
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.15,
+      "eps_estimate": 0.08264,
+      "eps_surprise_pct": 0.8151
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.23,
+      "eps_estimate": 0.00705,
+      "eps_surprise_pct": 31.6241
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-22",
+    "revenue_low": 16281000000,
+    "revenue_high": 17027075000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,87 +153,164 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 49,
+    "bullish": 13,
+    "neutral": 32,
+    "bearish": 4,
+    "avg_price_target": 114.87805,
+    "high_price_target": 200.0,
+    "low_price_target": 75.0,
+    "current_price": 90.05,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-12T14:14:39",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-12T13:39:04",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-28T20:47:08",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-27T12:02:06",
+        "firm": "Baird",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-25T01:45:21",
+        "firm": "DA Davidson",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T18:49:32",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T18:03:17",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T17:51:08",
+        "firm": "JP Morgan",
+        "to_grade": "Underweight",
+        "from_grade": "Underweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T17:43:58",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T14:33:25",
+        "firm": "Stifel",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
-      "date": "2026-09-01T00:25:38Z",
-      "title": "NVDA Stock: Where Compounding Could Take The Price",
-      "url": "https://www.trefis.com/articles/613689/nvda-stock-where-compounding-could-take-the-price-2/2026-08-31",
+      "date": "2026-09-02T09:55:13Z",
+      "title": "Here's the biggest thing keeping AI stock investors up at night",
+      "url": "https://finance.yahoo.com/markets/stocks/article/heres-the-biggest-thing-keeping-ai-stock-investors-up-at-night-095513638.html",
+      "source": "Yahoo Finance"
+    },
+    {
+      "date": "2026-09-02T21:03:33Z",
+      "title": "The Real Price of Marvell Stock's Growth",
+      "url": "https://www.trefis.com/articles/613957/the-real-price-of-marvell-stocks-growth/2026-09-02",
       "source": "Trefis"
     },
     {
-      "date": "2026-08-31T23:53:57Z",
-      "title": "Marvell's Hyperscaler Deal Lands In A Fiscal Year Management Will Not Size Yet",
-      "url": "https://www.trefis.com/articles/613731/marvells-hyperscaler-deal-lands-in-a-fiscal-year-management-will-not-size-yet/2026-08-31",
+      "date": "2026-09-02T17:42:00Z",
+      "title": "Why Is Nvidia Willing to Pay $14 Billion for Hugging Face?",
+      "url": "https://www.barrons.com/articles/nvidia-stock-price-hugging-face-deal-93d524fe?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-09-02T17:30:12Z",
+      "title": "Prediction: Intel Stock Could Have a Major Catalyst Ahead",
+      "url": "https://247wallst.com/investing/2026/09/02/prediction-intel-stock-could-have-a-major-catalyst-ahead/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-02T16:24:47Z",
+      "title": "Beyond The Cloud Giants: What Could Power NVIDIA Stock From Here?",
+      "url": "https://www.trefis.com/articles/613954/beyond-the-cloud-giants-what-could-power-nvidia-stock-from-here/2026-09-02",
       "source": "Trefis"
     },
     {
-      "date": "2026-08-31T21:26:37Z",
-      "title": "Stocks to Watch Recap: Amazon, PG&E, Nvidia, Chevron",
-      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-08-31-2026/card/stocks-to-watch-pg-e-intel-chevron-eLbKJqWCN3hjlHXGy9qp?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
-    },
-    {
-      "date": "2026-08-31T20:58:15Z",
-      "title": "The Biggest Risk To Cerebras Systems Stock Is Sitting Inside Its Backlog",
-      "url": "https://www.trefis.com/articles/613716/the-biggest-risk-to-cerebras-systems-stock-is-sitting-inside-its-backlog/2026-08-31",
+      "date": "2026-09-02T16:02:27Z",
+      "title": "Micron Stock Offers More Than A Market Ride",
+      "url": "https://www.trefis.com/articles/613938/micron-stock-offers-more-than-a-market-ride/2026-09-02",
       "source": "Trefis"
     },
     {
-      "date": "2026-08-31T20:39:00Z",
-      "title": "Is Broadcom (AVGO) Stock a Buy Before Its Q3 Earnings?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-buy-q3-203900190.html",
+      "date": "2026-09-02T15:45:38Z",
+      "title": "Nvidia Nears $12.9 Billion Deal for Hugging Face",
+      "url": "https://finance.yahoo.com/technology/ai/articles/nvidia-nears-12-9-billion-154538468.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-02T14:19:00Z",
+      "title": "Micron Stock Soars 685% in a Year: Is the Momentum Still Sustainable?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/micron-stock-soars-685-momentum-141900647.html",
       "source": "Zacks"
     },
     {
-      "date": "2026-08-31T20:10:00Z",
-      "title": "Top Analyst Reports for Microsoft, Intel & Bank of America",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/top-analyst-reports-microsoft-intel-201000476.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-31T14:51:04Z",
-      "title": "Intel Stock Is Paying Now For Revenue Due Later",
-      "url": "https://www.trefis.com/articles/613729/intel-stock-is-paying-now-for-revenue-due-later/2026-08-31",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-08-31T13:52:02Z",
-      "title": "The Floor Under Micron's Worst Case Is Written Into Its Contracts, Not Memory Prices",
-      "url": "https://www.trefis.com/articles/613723/the-floor-under-microns-worst-case-is-written-into-its-contracts-not-memory-prices/2026-08-31",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-08-31T11:05:16Z",
-      "title": "Update: Market Chatter: SK Hynix Denies Report of Intel Foundry Partnership for HBM4E",
-      "url": "https://finance.yahoo.com/technology/articles/market-chatter-sk-hynix-denies-110516290.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-31T11:05:00Z",
-      "title": "CEO Lip-Bu Tan Just Gave 12 Million Reasons to Buy Intel Stock",
-      "url": "https://www.fool.com/investing/2026/08/31/ceo-lip-bu-tan-just-gave-12-million-reasons-to-buy/",
+      "date": "2026-09-02T13:43:01Z",
+      "title": "Prediction: This Is What a $1,000 Investment in Intel Will Be Worth by 2030",
+      "url": "https://www.fool.com/investing/2026/09/02/prediction-this-is-what-a-usd1-000-investment-in-intel-will-be-worth-by-2030/",
       "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-02T11:09:05Z",
+      "title": "The Firm That Filed a Bet Against Taiwan Semiconductor Then Launched a Foundry Fund Five Days Later",
+      "url": "https://247wallst.com/investing/etf/2026/09/02/the-firm-that-filed-a-bet-against-taiwan-semiconductor-then-launched-a-foundry-fund-five-days-later/",
+      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.006440865967174202,
   "technicals": {
-    "ma20": 95.79249954223633,
-    "ma50": 104.03179962158202,
-    "ma200": 73.04264991760255,
-    "rsi14": 41.56457965981224,
+    "ma20": 94.6474998474121,
+    "ma50": 102.14779968261719,
+    "ma200": 73.56874994277955,
+    "rsi14": 42.76785600134856,
     "high_20d": 107.56999969482422,
-    "low_5d": 85.62999725341797,
+    "low_5d": 85.72000122070312,
     "low_10d": 85.13999938964844,
     "high_52w": 142.35000610351562,
-    "low_52w": 23.68000030517578,
-    "atr14": 4.681649344308036,
-    "atr14_pct": 5.230308605269344,
-    "position_in_52w_range_pct": 55.47315969877169
+    "low_52w": 23.719999313354492,
+    "atr14": 4.255713326590402,
+    "atr14_pct": 4.725944677807902,
+    "position_in_52w_range_pct": 55.91334396172736
   },
   "ohlc_2y": [
     {
@@ -4172,34 +4303,34 @@
       "high": 93.7,
       "low": 89.05,
       "close": 89.47,
-      "volume": 86001600.0
+      "volume": 86172600.0
     },
     {
       "date": "2026-08-31",
       "open": 90.0,
-      "high": 91.8431,
+      "high": 91.85,
       "low": 88.97,
       "close": 89.51,
-      "volume": 64515383.0
+      "volume": 65188200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 86.84,
+      "high": 89.41,
+      "low": 85.72,
+      "close": 88.97,
+      "volume": 73962100.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 88.75,
+      "high": 90.43,
+      "low": 87.5,
+      "close": 90.05,
+      "volume": 60998770.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 24.76,
-      "high": 24.97,
-      "low": 24.28,
-      "close": 24.35,
-      "volume": 63734400.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 23.88,
-      "high": 24.24,
-      "low": 23.68,
-      "close": 24.21,
-      "volume": 57661800.0
-    },
     {
       "date": "2025-09-03",
       "open": 24.09,
@@ -6190,15 +6321,31 @@
       "high": 93.7,
       "low": 89.05,
       "close": 89.47,
-      "volume": 86001600.0
+      "volume": 86172600.0
     },
     {
       "date": "2026-08-31",
       "open": 90.0,
-      "high": 91.8431,
+      "high": 91.85,
       "low": 88.97,
       "close": 89.51,
-      "volume": 64515383.0
+      "volume": 65188200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 86.84,
+      "high": 89.41,
+      "low": 85.72,
+      "close": 88.97,
+      "volume": 73962100.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 88.75,
+      "high": 90.43,
+      "low": 87.5,
+      "close": 90.05,
+      "volume": 60998770.0
     }
   ],
   "ai_synthesis": null,

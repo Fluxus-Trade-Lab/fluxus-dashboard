@@ -1,46 +1,112 @@
 {
   "ticker": "SATL",
-  "fetched_at": "2026-09-01T01:18:45Z",
+  "fetched_at": "2026-09-03T00:02:32Z",
   "_schema": "v2",
-  "current_price": 4.869999885559082,
+  "current_price": 4.73,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "SATL",
+    "longName": "Satellogic Inc.",
+    "sector": "Industrials",
+    "industry": "Aerospace & Defense",
+    "exchange": "NCM",
+    "country": "United States",
+    "city": "Davidson",
+    "website": "https://satellogic.com",
+    "fullTimeEmployees": 154,
+    "marketCap": 727189760,
+    "enterpriseValue": 690880576,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
+    "forwardPE": -157.66667,
+    "priceToSalesTrailing12Months": 22.79163,
+    "enterpriseToRevenue": 21.654,
+    "priceToBook": 10.605381,
+    "grossMargins": 0.78929,
+    "operatingMargins": 0.01671,
+    "profitMargins": 0.0,
     "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "totalCash": 112809000,
+    "totalDebt": 96486000,
+    "totalRevenue": 31906000,
+    "freeCashflow": -18836376,
+    "debtToEquity": 284.771,
+    "currentRatio": 2.336,
+    "fiftyTwoWeekHigh": 12.0,
+    "fiftyTwoWeekLow": 1.255,
+    "averageVolume": 6557466,
+    "averageVolume10days": 3914170,
+    "beta": 1.316,
+    "sharesOutstanding": 143157270,
+    "sharesFloat": 124749176,
+    "companyOfficers": [
+      {
+        "name": "Mr. Emiliano  Kargieman",
+        "title": "Founder, CEO & Director",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Ms. Lorri  Kohler",
+        "title": "Senior Vice President of Operations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Alan  Kharsansky",
+        "title": "Chief Technology Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Noah S. Benz",
+        "title": "Senior Vice President & General Counsel",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Ryan  Driver",
+        "title": "Senior Vice President of Finance & Corporate Development",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Jeffrey S. Kerridge",
+        "title": "Senior Vice President of Global Sales",
+        "age": 63,
+        "yearBorn": 1962
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.00445,
+      "eps_estimate": -0.024,
+      "eps_surprise_pct": 0.8146
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.0375,
+      "eps_estimate": -0.048,
+      "eps_surprise_pct": 0.2188
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.31,
+      "eps_estimate": -0.05,
+      "eps_surprise_pct": 7.2
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.02,
+      "eps_estimate": null,
+      "eps_surprise_pct": null
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-12",
+    "revenue_low": 10230000,
+    "revenue_high": 14532000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,80 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 5,
+    "bullish": 5,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 10.2,
+    "high_price_target": 11.0,
+    "low_price_target": 9.0,
+    "current_price": 4.73,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-06T12:08:24",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-29T18:27:01",
+        "firm": "Freedom Broker",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-05-28T17:26:55",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-13T13:41:51",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-06T18:41:35",
+        "firm": "Freedom Broker",
+        "to_grade": "Hold",
+        "from_grade": "Buy",
+        "action": "down"
+      },
+      {
+        "date": "2026-03-11T18:53:28",
+        "firm": "Freedom Broker",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-02-20T11:49:05",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-01-21T14:45:36",
+        "firm": "Craig-Hallum",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2022-05-10T08:28:16",
+        "firm": "Piper Sandler",
+        "to_grade": "Underweight",
+        "from_grade": null,
+        "action": "init"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +302,18 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.14799154334038053,
   "technicals": {
-    "ma20": 5.37574999332428,
-    "ma50": 4.784399976730347,
-    "ma200": 4.701624999642372,
-    "rsi14": 45.777762494541626,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 42.00123027203654,
     "high_20d": 6.210000038146973,
-    "low_5d": 4.769999980926514,
-    "low_10d": 4.769999980926514,
+    "low_5d": 4.579999923706055,
+    "low_10d": 4.579999923706055,
     "high_52w": 12.0,
     "low_52w": 1.2549999952316284,
-    "atr14": 0.3898571218763079,
-    "atr14_pct": 8.005279898103156,
-    "position_in_52w_range_pct": 33.643554106311804
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4172,7 +4306,7 @@
       "high": 5.252,
       "low": 4.825,
       "close": 4.85,
-      "volume": 4147500.0
+      "volume": 4200500.0
     },
     {
       "date": "2026-08-31",
@@ -4180,26 +4314,26 @@
       "high": 4.9,
       "low": 4.77,
       "close": 4.87,
-      "volume": 2981670.0
+      "volume": 2985600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 4.73,
+      "high": 4.81,
+      "low": 4.58,
+      "close": 4.6,
+      "volume": 3014800.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 3264996.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 3.6,
-      "high": 3.77,
-      "low": 3.55,
-      "close": 3.73,
-      "volume": 1127100.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 3.55,
-      "high": 3.68,
-      "low": 3.52,
-      "close": 3.59,
-      "volume": 1097900.0
-    },
     {
       "date": "2025-09-03",
       "open": 3.61,
@@ -6190,7 +6324,7 @@
       "high": 5.252,
       "low": 4.825,
       "close": 4.85,
-      "volume": 4147500.0
+      "volume": 4200500.0
     },
     {
       "date": "2026-08-31",
@@ -6198,7 +6332,23 @@
       "high": 4.9,
       "low": 4.77,
       "close": 4.87,
-      "volume": 2981670.0
+      "volume": 2985600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 4.73,
+      "high": 4.81,
+      "low": 4.58,
+      "close": 4.6,
+      "volume": 3014800.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 3264996.0
     }
   ],
   "ai_synthesis": null,

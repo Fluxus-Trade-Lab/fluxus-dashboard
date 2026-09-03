@@ -1,46 +1,106 @@
 {
   "ticker": "RKLB",
-  "fetched_at": "2026-09-01T01:18:40Z",
+  "fetched_at": "2026-09-03T00:02:28Z",
   "_schema": "v2",
-  "current_price": 63.91999816894531,
+  "current_price": 63.1,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "RKLB",
+    "longName": "Rocket Lab Corporation",
+    "sector": "Industrials",
+    "industry": "Aerospace & Defense",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Long Beach",
+    "website": "https://rocketlabcorp.com",
+    "fullTimeEmployees": 2600,
+    "marketCap": 40346832896,
+    "enterpriseValue": 35252350976,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 1384.9868,
+    "priceToSalesTrailing12Months": 52.456665,
+    "enterpriseToRevenue": 45.833,
+    "priceToBook": 10.808496,
+    "grossMargins": 0.37264,
+    "operatingMargins": -0.24572,
+    "profitMargins": -0.21511999,
+    "returnOnEquity": -0.07915,
+    "totalCash": 2302184960,
+    "totalDebt": 133691000,
+    "totalRevenue": 769145984,
+    "freeCashflow": -251963632,
+    "debtToEquity": 3.828,
+    "currentRatio": 5.482,
+    "fiftyTwoWeekHigh": 151.0,
+    "fiftyTwoWeekLow": 37.57,
+    "averageVolume": 22040482,
+    "averageVolume10days": 14587630,
+    "beta": 2.629,
+    "sharesOutstanding": 598459739,
+    "sharesFloat": 556860860,
+    "companyOfficers": [
+      {
+        "name": "Mr. Adam C. Spice",
+        "title": "CFO & Treasurer",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Frank  Klein",
+        "title": "Chief Operations Officer",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Arjun L. Kampani J.D.",
+        "title": "Senior VP, General Counsel & Corporate Secretary",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Ms. Morgan  Bailey Connaughton",
+        "title": "Vice President of Marketing & Communications",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Connie  Lundgren",
+        "title": "Vice President of People & Culture",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Ehson  Mosleh",
+        "title": "Space Systems Chief Engineer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.08,
+      "eps_estimate": -0.07667,
+      "eps_surprise_pct": -0.0434
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.09,
+      "eps_estimate": -0.09803,
+      "eps_surprise_pct": 0.08189999
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.03,
+      "eps_estimate": -0.10452,
+      "eps_surprise_pct": 0.71300006
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-09",
+    "revenue_low": 224000000,
+    "revenue_high": 236693000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -99,87 +159,162 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 17,
+    "bullish": 14,
+    "neutral": 3,
+    "bearish": 0,
+    "avg_price_target": 111.0,
+    "high_price_target": 150.0,
+    "low_price_target": 64.0,
+    "current_price": 63.1,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-31T17:33:37",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-11T14:06:03",
+        "firm": "Citizens",
+        "to_grade": "Market Outperform",
+        "from_grade": "Market Outperform",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-11T11:46:31",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-27T16:09:21",
+        "firm": "KGI Securities",
+        "to_grade": "Outperform",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2026-07-16T10:25:01",
+        "firm": "Piper Sandler",
+        "to_grade": "Neutral",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-06-30T14:53:56",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-30T14:51:41",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-30T14:12:13",
+        "firm": "Citizens",
+        "to_grade": "Market Outperform",
+        "from_grade": "Market Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-30T14:02:02",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-30T14:00:26",
+        "firm": "Craig-Hallum",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
-      "date": "2026-08-31T08:43:04Z",
-      "title": "ASTS, RKLB, LUNR, FLY Eye August Gains \u2014 Elon Musk Backs Trump\u2019s Plan To Train America\u2019s Next Space Leaders",
-      "url": "https://stocktwits.com/news-articles/markets/equity/asts-rklb-lunr-fly-elon-musk-trump-train-america-space-leaders/cZYyFIFRJsc",
-      "source": "Stocktwits"
+      "date": "2026-09-02T22:03:51Z",
+      "title": "Rocket Lab Gets Bullish Call From Top Bank as Space Market Could Double",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-gets-bullish-call-220351892.html",
+      "source": "GuruFocus.com"
     },
     {
-      "date": "2026-08-31T08:33:16Z",
-      "title": "Why Are Nasdaq, S&P 500 Futures Subdued Premarket? NVDA, AAPL, INTC, CRWD, RKLB, SLS Stocks In Focus",
-      "url": "https://stocktwits.com/news-articles/markets/equity/why-nasdaq-sp500-futures-subdued-premarket-iran-strikes-nvda-aapl-intc-crwd-rklb-sls-stocks-in-focus/cZYynypRJsT",
-      "source": "Stocktwits"
+      "date": "2026-09-02T20:58:12Z",
+      "title": "Blue Origin Beats Rocket Lab, Wins $700 Million Mars Communications Contract",
+      "url": "https://www.investors.com/news/blue-origin-nasa-mars-communications-contract-mtn-jeff-bezos/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
     },
     {
-      "date": "2026-08-31T08:15:54Z",
-      "title": "Is Rocket Lab (RKLB) Quietly Recasting Its Defense Role With Vertically Integrated Space Services?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-rklb-quietly-recasting-081554756.html",
+      "date": "2026-09-02T20:26:45Z",
+      "title": "Rocket Lab Stock Flashes Major Warning Signal",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-stock-flashes-major-202645715.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-02T20:23:00Z",
+      "title": "AST SpaceMobile Stock Soars on New Buy Call",
+      "url": "https://www.barrons.com/articles/ast-spacemobile-stock-buy-rating-price-146b0862?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-09-02T18:10:26Z",
+      "title": "Rocket Lab (RKLB) Marks 94th Electron Mission With Perfect Customer Launch Record",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-rklb-marks-94th-181026906.html",
       "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-31T06:04:10Z",
-      "title": "RKLB Stock Slips Overnight: Strong Winds Delay Electron Launch, Insiders Sell $2.8M Worth Of Shares",
-      "url": "https://stocktwits.com/news-articles/markets/equity/rklb-strong-winds-delay-electron-insiders-sell-shares/cZYyk6BRJrs",
+      "date": "2026-09-02T18:00:49Z",
+      "title": "ASTS Stock Pops 10% To Best Day In A Month After Berenberg\u2019s Bullish Ratings, Early Investor Cisnero\u2019s Stock Buy-In",
+      "url": "https://stocktwits.com/news-articles/markets/equity/asts-stock-pops-10-to-best-day-in-a-month/cZsAz0eRJH5",
       "source": "Stocktwits"
     },
     {
-      "date": "2026-08-30T21:20:01Z",
-      "title": "A Rocket Lab President Sells Over 15,000 Shares After a 54% One-Year Return",
-      "url": "https://www.fool.com/coverage/filings/2026/08/30/a-rocket-lab-president-sells-over-15-000-shares-after-a-54-one-year-return/",
+      "date": "2026-09-02T16:35:00Z",
+      "title": "Rocket Lab Stock Has Collapsed 57% From Highs. Here's Why I'm Not Buying (Yet).",
+      "url": "https://www.fool.com/investing/2026/09/02/rocket-lab-stock-has-collapsed-57-from-highs-heres/",
       "source": "Motley Fool"
     },
     {
-      "date": "2026-08-30T11:20:01Z",
-      "title": "Rocket Lab COO Frank Klein Sells 35,558 Shares for $2.4 Million",
-      "url": "https://www.fool.com/coverage/filings/2026/08/30/rocket-lab-coo-frank-klein-sells-35-558-shares-for-usd2-4-million/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-29T16:20:00Z",
-      "title": "Rocket Lab Just Sold Its First Full Neutron Flight to Kepler Communications. Here's What That Means in Its Competition With SpaceX.",
-      "url": "https://www.fool.com/investing/2026/08/29/rocket-lab-just-sold-its-first-full-neutron-flight/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-29T11:00:00Z",
-      "title": "MarketBeat Week in Review \u2013 08/24 - 08/28",
-      "url": "https://www.marketbeat.com/articles/marketbeat-week-in-review-08-24-08-28/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-28T18:02:03Z",
-      "title": "Rocket Lab Falls 6% as SpaceX Flags Iridium Deal to the FCC, Intuitive Machines Slides 5%",
-      "url": "https://247wallst.com/investing/2026/08/28/rocket-lab-falls-6-as-spacex-flags-iridium-deal-to-the-fcc-intuitive-machines-slides-5/",
+      "date": "2026-09-02T15:30:33Z",
+      "title": "1 Reason Rocket Lab Stock Could Be a Monster Winner",
+      "url": "https://247wallst.com/investing/2026/09/02/1-reason-rocket-lab-stock-could-be-a-monster-winner/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-28T13:55:02Z",
-      "title": "Here's Why Rocket Lab Corporation (RKLB) Could be Great Choice for a Bottom Fisher",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/heres-why-rocket-lab-corporation-135502370.html",
+      "date": "2026-09-02T14:20:15Z",
+      "title": "AST SpaceMobile Soars 12% on Berenberg\u2019s $92 Price Target, Planet Labs Climbs 5%",
+      "url": "https://247wallst.com/investing/2026/09/02/ast-spacemobile-soars-12-on-berenbergs-92-price-target-planet-labs-climbs-5/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-02T13:57:00Z",
+      "title": "Rocket Lab Surges 43.7% in a Year: Is There More Room to Run?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-surges-43-7-135700002.html",
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03946117274167987,
   "technicals": {
-    "ma20": 74.4590000152588,
-    "ma50": 77.07140022277832,
-    "ma200": 79.1253751373291,
-    "rsi14": 34.803700598373354,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 33.3105766189328,
     "high_20d": 86.83000183105469,
-    "low_5d": 62.790000915527344,
-    "low_10d": 62.790000915527344,
+    "low_5d": 61.93000030517578,
+    "low_10d": 61.93000030517578,
     "high_52w": 151.0,
     "low_52w": 37.56999969482422,
-    "atr14": 3.968428747994559,
-    "atr14_pct": 6.208430634659448,
-    "position_in_52w_range_pct": 23.230184610092742
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4172,34 +4307,34 @@
       "high": 66.75,
       "low": 63.495,
       "close": 64.39,
-      "volume": 18496000.0
+      "volume": 18571100.0
     },
     {
       "date": "2026-08-31",
-      "open": 63.55,
-      "high": 64.1122,
+      "open": 63.73,
+      "high": 64.112,
       "low": 62.79,
       "close": 63.92,
-      "volume": 15207445.0
+      "volume": 15279400.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 62.24,
+      "high": 63.935,
+      "low": 61.93,
+      "close": 62.54,
+      "volume": 14443000.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 16363403.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 47.85,
-      "high": 48.8,
-      "low": 46.02,
-      "close": 48.6,
-      "volume": 15897800.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 46.75,
-      "high": 49.54,
-      "low": 45.68,
-      "close": 49.31,
-      "volume": 20305200.0
-    },
     {
       "date": "2025-09-03",
       "open": 50.27,
@@ -6190,15 +6325,31 @@
       "high": 66.75,
       "low": 63.495,
       "close": 64.39,
-      "volume": 18496000.0
+      "volume": 18571100.0
     },
     {
       "date": "2026-08-31",
-      "open": 63.55,
-      "high": 64.1122,
+      "open": 63.73,
+      "high": 64.112,
       "low": 62.79,
       "close": 63.92,
-      "volume": 15207445.0
+      "volume": 15279400.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 62.24,
+      "high": 63.935,
+      "low": 61.93,
+      "close": 62.54,
+      "volume": 14443000.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 16363403.0
     }
   ],
   "ai_synthesis": null,

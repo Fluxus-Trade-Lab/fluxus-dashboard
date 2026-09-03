@@ -1,46 +1,112 @@
 {
   "ticker": "ARM",
-  "fetched_at": "2026-09-01T01:11:29Z",
+  "fetched_at": "2026-09-02T23:55:36Z",
   "_schema": "v2",
-  "current_price": 241.91000366210938,
+  "current_price": 234.86000061035156,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "ARM",
+    "longName": "Arm Holdings plc",
+    "sector": "Technology",
+    "industry": "Semiconductors",
+    "exchange": "NMS",
+    "country": "United Kingdom",
+    "city": "Cambridge",
+    "website": "https://www.arm.com",
+    "fullTimeEmployees": 9584,
+    "marketCap": 250830143488,
+    "enterpriseValue": 247384752128,
+    "trailingPE": 237.23232,
+    "forwardPE": 76.730576,
+    "priceToSalesTrailing12Months": 48.64821,
+    "enterpriseToRevenue": 47.98,
+    "priceToBook": 29.063234,
+    "grossMargins": 0.97537005,
+    "operatingMargins": 0.07603,
+    "profitMargins": 0.20247999,
+    "returnOnEquity": 0.13352999,
+    "totalCash": 3888000000,
+    "totalDebt": 485000000,
+    "totalRevenue": 5155999744,
+    "freeCashflow": 1334499968,
+    "debtToEquity": 5.62,
+    "currentRatio": 5.252,
+    "fiftyTwoWeekHigh": 452.7,
+    "fiftyTwoWeekLow": 100.02,
+    "averageVolume": 7227788,
+    "averageVolume10days": 3557270,
+    "beta": 3.909,
+    "sharesOutstanding": 1067998569,
+    "sharesFloat": 142610040,
+    "companyOfficers": [
+      {
+        "name": "Mr. Rene Anthony Andrada  Haas",
+        "title": "CEO & Director",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Mr. Jason E. Child",
+        "title": "Executive VP & CFO",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Eric  Hayes",
+        "title": "Executive Vice President of Operations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Laura  Bartels",
+        "title": "Chief Accounting Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Jeffrey Thomas Kvaal",
+        "title": "VP & Head of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Spencer  Collins",
+        "title": "Executive VP, Chief Legal Officer, Company Secretary & Head of Corporate Development",
+        "age": 43,
+        "yearBorn": 1982
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.45,
+      "eps_estimate": 0.4038,
+      "eps_surprise_pct": 0.1144
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.6,
+      "eps_estimate": 0.5793,
+      "eps_surprise_pct": 0.0357
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.43,
+      "eps_estimate": 0.40919,
+      "eps_surprise_pct": 0.0509
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.39,
+      "eps_estimate": 0.33134,
+      "eps_surprise_pct": 0.177
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 1290000000,
+    "revenue_high": 1409000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,113 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 40,
+    "bullish": 27,
+    "neutral": 11,
+    "bearish": 2,
+    "avg_price_target": 286.44104,
+    "high_price_target": 500.0,
+    "low_price_target": 125.0,
+    "current_price": 234.86,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-31T11:42:35",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T19:52:06",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T17:23:06",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T16:44:50",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T15:37:26",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T14:52:29",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T13:52:46",
+        "firm": "Guggenheim",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-30T11:54:02",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-22T18:56:43",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-21T13:35:27",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T00:35:01Z",
+      "title": "ARM vs. Sandisk: Comparing Steady Historical Revenue Generation Against Rapid Sequential Revenue Expansion",
+      "url": "https://www.fool.com/coverage/charts/2026/09/01/arm-vs-sandisk-comparing-steady-historical-revenue-generation-against-rapid-sequential-revenue-expansion/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-01T22:14:58Z",
+      "title": "3 Automation Stocks With Revenue Growth Up To 30%",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/3-automation-stocks-revenue-growth-221458443.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-01T17:27:39Z",
+      "title": "Why Arm Holdings Stock Fell on Tuesday",
+      "url": "https://www.fool.com/investing/2026/09/01/why-arm-holdings-stock-fell-on-tuesday/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-01T02:57:51Z",
+      "title": "What's Going On With ARM Stock Monday",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/whats-going-arm-stock-monday-025751598.html",
+      "source": "GuruFocus.com"
+    },
     {
       "date": "2026-08-31T20:00:45Z",
       "title": "Sector Update: Tech Stocks Rise Late Afternoon",
@@ -140,46 +307,22 @@
       "title": "ARM's Expanding AI Growth Opportunity Goes Beyond Market Hype",
       "url": "https://finance.yahoo.com/technology/ai/articles/arms-expanding-ai-growth-opportunity-183000282.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-25T20:45:28Z",
-      "title": "AMD Stock Upgraded To Strong Buy. Here's Why.",
-      "url": "https://www.investors.com/news/technology/amd-stock-upgraded-strong-buy-server-cpus-agentic-ai/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-08-25T19:52:05Z",
-      "title": "Arm Rises 2.8% as $272 Target Prices the CPU Tollbooth",
-      "url": "https://finance.yahoo.com/technology/articles/arm-rises-2-8-272-195205428.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-08-25T18:38:00Z",
-      "title": "AMD Stock Gets a \u2018Strong Buy\u2019 Upgrade: Why It Could Outperform Nvidia",
-      "url": "https://www.barrons.com/articles/amd-stock-price-upgrade-strong-buy-nvidia-3636f478?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-25T17:35:00Z",
-      "title": "ARM's 93X Earnings Multiple Overshadows Its Growth Potential",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/arms-93x-earnings-multiple-overshadows-173500812.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.036617559301926325,
   "technicals": {
-    "ma20": 261.3414993286133,
-    "ma50": 283.9095993041992,
-    "ma200": 199.79612491607665,
-    "rsi14": 41.368363708149204,
+    "ma20": 257.0685005187988,
+    "ma50": 277.8209991455078,
+    "ma200": 200.69922496795655,
+    "rsi14": 38.95558698006398,
     "high_20d": 299.2850036621094,
-    "low_5d": 238.0946044921875,
-    "low_10d": 233.2899932861328,
+    "low_5d": 229.3000030517578,
+    "low_10d": 229.3000030517578,
     "high_52w": 452.70001220703125,
     "low_52w": 100.0199966430664,
-    "atr14": 14.81802259172712,
-    "atr14_pct": 6.125427790255572,
-    "position_in_52w_range_pct": 40.23193851575314
+    "atr14": 13.541073390415736,
+    "atr14_pct": 5.76559369634052,
+    "position_in_52w_range_pct": 38.23295849402318
   },
   "ohlc_2y": [
     {
@@ -4177,29 +4320,29 @@
     {
       "date": "2026-08-31",
       "open": 238.805,
-      "high": 243.6999,
-      "low": 238.0946,
+      "high": 243.7,
+      "low": 238.095,
       "close": 241.91,
-      "volume": 2143232.0
+      "volume": 2149400.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 233.92,
+      "high": 235.98,
+      "low": 229.3,
+      "close": 234.82,
+      "volume": 2955000.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 233.375,
+      "high": 236.44,
+      "low": 229.39,
+      "close": 234.86,
+      "volume": 2423600.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 140.67,
-      "high": 140.78,
-      "low": 137.31,
-      "close": 138.31,
-      "volume": 3616000.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 133.62,
-      "high": 134.89,
-      "low": 130.41,
-      "close": 132.34,
-      "volume": 5833700.0
-    },
     {
       "date": "2025-09-03",
       "open": 133.65,
@@ -6195,10 +6338,26 @@
     {
       "date": "2026-08-31",
       "open": 238.805,
-      "high": 243.6999,
-      "low": 238.0946,
+      "high": 243.7,
+      "low": 238.095,
       "close": 241.91,
-      "volume": 2143232.0
+      "volume": 2149400.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 233.92,
+      "high": 235.98,
+      "low": 229.3,
+      "close": 234.82,
+      "volume": 2955000.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 233.375,
+      "high": 236.44,
+      "low": 229.39,
+      "close": 234.86,
+      "volume": 2423600.0
     }
   ],
   "ai_synthesis": null,

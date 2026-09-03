@@ -1,8 +1,8 @@
 {
   "ticker": "AMLX",
-  "fetched_at": "2026-09-01T01:14:03Z",
+  "fetched_at": "2026-09-02T23:57:53Z",
   "_schema": "v2",
-  "current_price": 33.75,
+  "current_price": 34.4900016784668,
   "info": {
     "symbol": "AMLX",
     "longName": "Amylyx Pharmaceuticals, Inc.",
@@ -13,13 +13,13 @@
     "city": "Cambridge",
     "website": "https://amylyx.com",
     "fullTimeEmployees": 136,
-    "marketCap": 3760527872,
-    "enterpriseValue": 3515022848,
+    "marketCap": 3842981120,
+    "enterpriseValue": 3521708288,
     "trailingPE": null,
-    "forwardPE": -29.228624,
+    "forwardPE": -29.86949,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": 15.712291,
+    "priceToBook": 16.056797,
     "grossMargins": 0.0,
     "operatingMargins": 0.0,
     "profitMargins": 0.0,
@@ -31,9 +31,9 @@
     "debtToEquity": 2.197,
     "currentRatio": 12.12,
     "fiftyTwoWeekHigh": 41.14,
-    "fiftyTwoWeekLow": 9.145,
-    "averageVolume": 2443422,
-    "averageVolume10days": 5871810,
+    "fiftyTwoWeekLow": 9.61,
+    "averageVolume": 2478539,
+    "averageVolume10days": 3802110,
     "beta": -0.205,
     "sharesOutstanding": 111423048,
     "sharesFloat": 97214381,
@@ -173,8 +173,15 @@
     "avg_price_target": 42.36364,
     "high_price_target": 57.0,
     "low_price_target": 20.0,
-    "current_price": 33.75,
+    "current_price": 34.49,
     "recent_rating_changes": [
+      {
+        "date": "2026-08-27T13:43:43",
+        "firm": "Guggenheim",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
       {
         "date": "2026-08-19T17:41:32",
         "firm": "Mizuho",
@@ -237,17 +244,16 @@
         "to_grade": "Outperform",
         "from_grade": "Outperform",
         "action": "main"
-      },
-      {
-        "date": "2026-03-25T10:34:05",
-        "firm": "HC Wainwright & Co.",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "reit"
       }
     ]
   },
   "news": [
+    {
+      "date": "2026-09-01T13:50:00Z",
+      "title": "Is GLP-1 Stock Amylyx Still a Buy After Skyrocketing 247%?",
+      "url": "https://www.fool.com/investing/2026/09/01/is-glp-1-stock-amylyx-still-buy-after-skyrocketing/",
+      "source": "Motley Fool"
+    },
     {
       "date": "2026-08-30T16:35:00Z",
       "title": "Should Eli Lilly Investors Be Worried About a Threat From Amylyx?",
@@ -301,28 +307,22 @@
       "title": "Why Did AMLX, IOVA, OKE Stocks Hit 52-Week Highs Today?",
       "url": "https://stocktwits.com/news-articles/markets/equity/why-did-amlx-iova-oke-stocks-hit-52-week-highs-today/cZYdGjxRJkG",
       "source": "Stocktwits"
-    },
-    {
-      "date": "2026-08-18T23:44:39Z",
-      "title": "Amylyx (AMLX) Climbs to Fresh High as Avexitide Moves Closer to Commercialization",
-      "url": "https://finance.yahoo.com/healthcare/articles/amylyx-amlx-climbs-fresh-high-234439880.html",
-      "source": "Insider Monkey"
     }
   ],
-  "options_implied_move": 0.09807407407407406,
+  "options_implied_move": 0.11655551766788731,
   "technicals": {
-    "ma20": 29.81550016403198,
-    "ma50": 22.8410001373291,
-    "ma200": 16.44380003452301,
-    "rsi14": 63.25460055535356,
+    "ma20": 31.044500255584715,
+    "ma50": 23.55400016784668,
+    "ma200": 16.6615500497818,
+    "rsi14": 64.82051684587984,
     "high_20d": 41.13999938964844,
-    "low_5d": 33.0,
-    "low_10d": 28.0,
+    "low_5d": 32.97999954223633,
+    "low_10d": 32.97999954223633,
     "high_52w": 41.13999938964844,
-    "low_52w": 9.145000457763672,
-    "atr14": 2.927142688206264,
-    "atr14_pct": 8.673015372463004,
-    "position_in_52w_range_pct": 76.90264217423086
+    "low_52w": 9.609999656677246,
+    "atr14": 2.9946422576904297,
+    "atr14_pct": 8.68263877052833,
+    "position_in_52w_range_pct": 78.9089826593697
   },
   "ohlc_2y": [
     {
@@ -4319,30 +4319,30 @@
     },
     {
       "date": "2026-08-31",
-      "open": 34.78,
+      "open": 34.77,
       "high": 35.09,
-      "low": 33.0,
+      "low": 32.98,
       "close": 33.75,
-      "volume": 2728867.0
+      "volume": 2728900.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 33.49,
+      "high": 34.21,
+      "low": 32.99,
+      "close": 33.81,
+      "volume": 1821500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 34.105,
+      "high": 35.475,
+      "low": 34.0,
+      "close": 34.49,
+      "volume": 1921446.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 9.45,
-      "high": 9.55,
-      "low": 9.18,
-      "close": 9.38,
-      "volume": 1675900.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 9.2,
-      "high": 9.99,
-      "low": 9.145,
-      "close": 9.98,
-      "volume": 2667900.0
-    },
     {
       "date": "2025-09-03",
       "open": 9.95,
@@ -6337,11 +6337,27 @@
     },
     {
       "date": "2026-08-31",
-      "open": 34.78,
+      "open": 34.77,
       "high": 35.09,
-      "low": 33.0,
+      "low": 32.98,
       "close": 33.75,
-      "volume": 2728867.0
+      "volume": 2728900.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 33.49,
+      "high": 34.21,
+      "low": 32.99,
+      "close": 33.81,
+      "volume": 1821500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 34.105,
+      "high": 35.475,
+      "low": 34.0,
+      "close": 34.49,
+      "volume": 1921446.0
     }
   ],
   "ai_synthesis": null,

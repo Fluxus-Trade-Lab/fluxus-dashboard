@@ -1,46 +1,112 @@
 {
   "ticker": "AUR",
-  "fetched_at": "2026-09-01T01:11:31Z",
+  "fetched_at": "2026-09-02T23:55:38Z",
   "_schema": "v2",
-  "current_price": 5.630000114440918,
+  "current_price": 5.849999904632568,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "AUR",
+    "longName": "Aurora Innovation, Inc.",
+    "sector": "Consumer Cyclical",
+    "industry": "Auto Parts",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Pittsburgh",
+    "website": "https://aurora.tech",
+    "fullTimeEmployees": 1900,
+    "marketCap": 11724308480,
+    "enterpriseValue": 9807687680,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -13.0,
+    "priceToSalesTrailing12Months": 2344.8618,
+    "enterpriseToRevenue": 1961.538,
+    "priceToBook": 5.9877176,
+    "grossMargins": 0.0,
+    "operatingMargins": -133.0,
+    "profitMargins": 0.0,
+    "returnOnEquity": -0.45639,
+    "totalCash": 1216999936,
+    "totalDebt": 82000000,
+    "totalRevenue": 5000000,
+    "freeCashflow": -414249984,
+    "debtToEquity": 4.199,
+    "currentRatio": 11.382,
+    "fiftyTwoWeekHigh": 8.565,
+    "fiftyTwoWeekLow": 3.6,
+    "averageVolume": 28138619,
+    "averageVolume10days": 29762560,
+    "beta": 2.661,
+    "sharesOutstanding": 1708146085,
+    "sharesFloat": 1493055592,
+    "companyOfficers": [
+      {
+        "name": "Mr. Christopher  Urmson Ph.D.",
+        "title": "Co-Founder, CEO & Non-Independent Executive Chairman",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Ms. Ossa  Fisher",
+        "title": "President",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Mr. David  Maday",
+        "title": "Chief Financial Officer",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Ms. Shelley  Webb",
+        "title": "Secretary & Chief Legal Officer",
+        "age": 43,
+        "yearBorn": 1982
+      },
+      {
+        "name": "Mr. James Andrew Bagnell",
+        "title": "Chief Scientist",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Ms. Stacy  Feit C.F.A.",
+        "title": "Vice President of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.14,
+      "eps_estimate": -0.11778,
+      "eps_surprise_pct": -0.1887
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.11,
+      "eps_estimate": -0.11667,
+      "eps_surprise_pct": 0.0572
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.0817,
+      "eps_estimate": -0.12,
+      "eps_surprise_pct": 0.3192
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.0793,
+      "eps_estimate": -0.12,
+      "eps_surprise_pct": 0.3392
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-28",
+    "revenue_low": 2200000,
+    "revenue_high": 4000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 13,
+    "bullish": 8,
+    "neutral": 5,
+    "bearish": 0,
+    "avg_price_target": 11.21583,
+    "high_price_target": 18.0,
+    "low_price_target": 3.59,
+    "current_price": 5.85,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-23T13:45:55",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-05T13:20:24",
+        "firm": "Craig-Hallum",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-05-29T13:36:13",
+        "firm": "Northland Capital Markets",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-05-11T18:14:05",
+        "firm": "Amerx",
+        "to_grade": "Hold",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-05-07T19:53:53",
+        "firm": "TD Cowen",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-07T10:46:15",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-04-17T11:42:41",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-02-13T16:11:38",
+        "firm": "TD Cowen",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-02-12T11:18:27",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2025-11-26T16:12:10",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +309,20 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.0717948729652808,
   "technicals": {
-    "ma20": 6.421749997138977,
-    "ma50": 6.36670000076294,
-    "ma200": 5.313675000667572,
-    "rsi14": 37.47805162553147,
+    "ma20": 6.334249997138977,
+    "ma50": 6.345100002288818,
+    "ma200": 5.319925000667572,
+    "rsi14": 43.36740278651317,
     "high_20d": 7.25,
-    "low_5d": 5.46999979019165,
-    "low_10d": 5.46999979019165,
+    "low_5d": 5.400000095367432,
+    "low_10d": 5.400000095367432,
     "high_52w": 8.5649995803833,
     "low_52w": 3.5999999046325684,
-    "atr14": 0.382857152393886,
-    "atr14_pct": 6.800304522407728,
-    "position_in_52w_range_pct": 40.886210319870834
+    "atr14": 0.3778571741921561,
+    "atr14_pct": 6.459097100034719,
+    "position_in_52w_range_pct": 45.317223503338674
   },
   "ohlc_2y": [
     {
@@ -4167,31 +4310,31 @@
       "volume": 25421300.0
     },
     {
-      "date": "2026-08-28",
-      "open": 5.705,
-      "high": 5.9,
-      "low": 5.61,
-      "close": 5.83,
-      "volume": 31352500.0
-    },
-    {
       "date": "2026-08-31",
       "open": 5.737,
       "high": 5.8,
       "low": 5.47,
       "close": 5.63,
-      "volume": 29928371.0
+      "volume": 29984700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 5.52,
+      "high": 5.6,
+      "low": 5.44,
+      "close": 5.46,
+      "volume": 21761400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 5.45,
+      "high": 5.86,
+      "low": 5.4,
+      "close": 5.85,
+      "volume": 27908124.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 5.76,
-      "high": 5.775,
-      "low": 5.61,
-      "close": 5.63,
-      "volume": 9648500.0
-    },
     {
       "date": "2025-09-02",
       "open": 5.56,
@@ -6185,20 +6328,28 @@
       "volume": 25421300.0
     },
     {
-      "date": "2026-08-28",
-      "open": 5.705,
-      "high": 5.9,
-      "low": 5.61,
-      "close": 5.83,
-      "volume": 31352500.0
-    },
-    {
       "date": "2026-08-31",
       "open": 5.737,
       "high": 5.8,
       "low": 5.47,
       "close": 5.63,
-      "volume": 29928371.0
+      "volume": 29984700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 5.52,
+      "high": 5.6,
+      "low": 5.44,
+      "close": 5.46,
+      "volume": 21761400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 5.45,
+      "high": 5.86,
+      "low": 5.4,
+      "close": 5.85,
+      "volume": 27908124.0
     }
   ],
   "ai_synthesis": null,

@@ -1,46 +1,112 @@
 {
   "ticker": "TEM",
-  "fetched_at": "2026-09-01T01:13:26Z",
+  "fetched_at": "2026-09-02T23:57:18Z",
   "_schema": "v2",
-  "current_price": 63.04999923706055,
+  "current_price": 61.939998626708984,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "TEM",
+    "longName": "Tempus AI, Inc.",
+    "sector": "Healthcare",
+    "industry": "Health Information Services",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Chicago",
+    "website": "https://www.tempus.com",
+    "fullTimeEmployees": 3800,
+    "marketCap": 11176128512,
+    "enterpriseValue": 11863848960,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -2577.6113,
+    "priceToSalesTrailing12Months": 7.8044558,
+    "enterpriseToRevenue": 8.285,
+    "priceToBook": 25.066774,
+    "grossMargins": 0.63979,
+    "operatingMargins": -0.20106001,
+    "profitMargins": -0.17767,
+    "returnOnEquity": -0.67442,
+    "totalCash": 815990976,
+    "totalDebt": 1444167936,
+    "totalRevenue": 1432018944,
+    "freeCashflow": -93493376,
+    "debtToEquity": 324.58,
+    "currentRatio": 3.297,
+    "fiftyTwoWeekHigh": 104.32,
+    "fiftyTwoWeekLow": 40.77,
+    "averageVolume": 6650863,
+    "averageVolume10days": 11345770,
+    "beta": 3.578,
+    "sharesOutstanding": 175390967,
+    "sharesFloat": 115864374,
+    "companyOfficers": [
+      {
+        "name": "Mr. Eric P. Lefkofsky J.D.",
+        "title": "Co-Founder, CEO, President & Chairman",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. James  Rogers",
+        "title": "Chief Financial Officer",
+        "age": 38,
+        "yearBorn": 1987
+      },
+      {
+        "name": "Mr. Erik  Phelps",
+        "title": "Executive VP and Chief Administrative & Legal Officer",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Andrew  Polovin",
+        "title": "Chief Legal Officer",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Ryan  Fukushima",
+        "title": "Chief Executive Officer of Data & Apps",
+        "age": 39,
+        "yearBorn": 1986
+      },
+      {
+        "name": "Mr. Ryan M. Bartolucci CPA",
+        "title": "Chief Accounting Officer",
+        "age": 43,
+        "yearBorn": 1982
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.04,
+      "eps_estimate": -0.15167,
+      "eps_surprise_pct": 0.7363
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.13,
+      "eps_estimate": -0.20107,
+      "eps_surprise_pct": 0.35349998
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.04,
+      "eps_estimate": -0.05132,
+      "eps_surprise_pct": 0.2206
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.11,
+      "eps_estimate": -0.17534,
+      "eps_surprise_pct": 0.3726
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 405500000,
+    "revenue_high": 419856000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,137 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 18,
+    "bullish": 10,
+    "neutral": 7,
+    "bearish": 1,
+    "avg_price_target": 66.73333,
+    "high_price_target": 100.0,
+    "low_price_target": 35.0,
+    "current_price": 61.94,
+    "recent_rating_changes": [
+      {
+        "date": "2026-09-02T11:07:55",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-09-01T16:47:33",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-31T12:09:30",
+        "firm": "Freedom Capital Markets",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T11:05:34",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T14:39:50",
+        "firm": "Piper Sandler",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-03T18:04:27",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-03T17:25:26",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-03T12:06:10",
+        "firm": "Stifel",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T09:12:33",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-20T17:22:48",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T18:12:29Z",
+      "title": "3 AI Stocks To Watch With Up To 45% Earnings Growth",
+      "url": "https://finance.yahoo.com/healthcare/articles/3-ai-stocks-watch-45-181229104.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-02T13:54:48Z",
+      "title": "Sirius XM upgraded, Toast downgraded: Wall Street's top analyst calls",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/sirius-xm-upgraded-toast-downgraded-135448701.html",
+      "source": "The Fly"
+    },
+    {
+      "date": "2026-09-02T12:55:01Z",
+      "title": "Tempus AI Director Nadja West Sells 3,000 Shares for $207,000",
+      "url": "https://www.fool.com/coverage/filings/2026/09/02/tempus-ai-director-nadja-west-sells-3000-shares-for-207000/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-01T13:48:44Z",
+      "title": "Cathie Wood Sold $26 Million of Palantir to Buy These Two Stocks",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/cathie-wood-sold-26-million-134844178.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-01T13:45:58Z",
+      "title": "Piper Sandler Lifts Tempus AI to Overweight at $76",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/piper-sandler-lifts-tempus-ai-134558321.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-01T13:36:50Z",
+      "title": "Robinhood upgraded, Uber initiated: Wall Street's top analyst calls",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/robinhood-upgraded-uber-initiated-wall-133650211.html",
+      "source": "The Fly"
+    },
+    {
+      "date": "2026-09-01T13:36:18Z",
+      "title": "Tempus AI shares rise 2.7% following analyst actions",
+      "url": "https://investorshub.advfn.com/market-news/article/35385/tempus-ai-shares-rise-2-7-following-analyst-actions",
+      "source": "InvestorsHub"
+    },
+    {
+      "date": "2026-09-01T10:54:30Z",
+      "title": "What Is Cathie Wood Buying Now? Nvidia, SpaceX And Crypto Stocks Led ARK\u2019s August Trades \u2013 While Cutting These Growth Stocks",
+      "url": "https://stocktwits.com/news-articles/markets/equity/cathie-wood-ark-invest-nvidia-spacex-buys-roblox-sell-august/cZsoiDFRJMG",
+      "source": "Stocktwits"
+    },
     {
       "date": "2026-08-27T22:01:04Z",
       "title": "Tempus AI (TEM) Jumped on Moderna\u2019s Melanoma Win. Did its $1.5B Personalis Acquisition Just Get Validated?",
@@ -116,70 +307,22 @@
       "title": "Cathie Wood sells $4 million of surging AI stock",
       "url": "https://www.thestreet.com/investing/stocks/cathie-wood-sells-tempus-ai-tem-4-million-surging-stock",
       "source": "TheStreet"
-    },
-    {
-      "date": "2026-08-27T10:13:01Z",
-      "title": "Tempus AI (TEM) Wins FDA Clearance For ECG Tool That Flags Pulmonary Hypertension",
-      "url": "https://finance.yahoo.com/healthcare/articles/tempus-ai-tem-wins-fda-101301887.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-26T18:03:00Z",
-      "title": "Down 36%, can this Nancy Pelosi stock rebound in late 2026?",
-      "url": "https://www.thestreet.com/investing/stocks/tem-tempus-ai-nancy-pelosi-stock-tracker-portfolio",
-      "source": "TheStreet"
-    },
-    {
-      "date": "2026-08-26T03:01:39Z",
-      "title": "Tongcheng Travel Holdings Ltd (STU:TEM) (Q2 2026) Earnings Call Highlights: Resilient Growth ...",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/tongcheng-travel-holdings-ltd-stu-030139468.html",
-      "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-08-24T18:23:25Z",
-      "title": "What Is Really Moving Tempus AI Stock Right Now?",
-      "url": "https://www.trefis.com/articles/612597/what-is-really-moving-tempus-ai-stock-right-now/2026-08-24",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-08-23T11:35:00Z",
-      "title": "Why Tempus AI Skyrocketed This Week",
-      "url": "https://www.fool.com/investing/2026/08/23/why-tempus-ai-skyrocketed-this-week/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-22T12:39:00Z",
-      "title": "A Tempus AI Director Sold Stock Four Days Before a 24% Rally. Here's What to Know",
-      "url": "https://www.fool.com/coverage/filings/2026/08/22/a-tempus-ai-director-sold-stock-four-days-before-a-24-rally-here-s-what-to-know/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-22T12:25:25Z",
-      "title": "Is Tempus AI Stock a Buy After Its 75% Rally? Here's What to Know as the Firm's Legal Chief Files a Trade",
-      "url": "https://www.fool.com/coverage/filings/2026/08/22/is-tempus-ai-stock-a-buy-after-its-75-rally-here-s-what-to-know-as-the-firm-s-legal-chief-files-a-trade/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-22T12:18:47Z",
-      "title": "Tempus AI's Accounting Chief Just Reported an Insider Transaction. Here's What Long-Term Investors Should Know",
-      "url": "https://www.fool.com/coverage/filings/2026/08/22/tempus-ai-s-accounting-chief-just-reported-an-insider-transaction-here-s-what-long-term-investors-should-know/",
-      "source": "Motley Fool"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04197610683960947,
   "technicals": {
-    "ma20": 58.321000480651854,
-    "ma50": 54.68520004272461,
-    "ma200": 56.51289985656738,
-    "rsi14": 55.933929625916136,
+    "ma20": 59.84400043487549,
+    "ma50": 55.24020004272461,
+    "ma200": 56.43874984741211,
+    "rsi14": 54.33562640824351,
     "high_20d": 72.95999908447266,
-    "low_5d": 60.58039855957031,
-    "low_10d": 49.349998474121094,
+    "low_5d": 60.060001373291016,
+    "low_10d": 60.060001373291016,
     "high_52w": 104.31999969482422,
     "low_52w": 40.77000045776367,
-    "atr14": 5.150471551077707,
-    "atr14_pct": 8.168868538304881,
-    "position_in_52w_range_pct": 35.05900715464338
+    "atr14": 5.621921266828265,
+    "atr14_pct": 9.07639875924061,
+    "position_in_52w_range_pct": 33.312349997007665
   },
   "ohlc_2y": [
     {
@@ -4172,34 +4315,34 @@
       "high": 70.9,
       "low": 63.77,
       "close": 64.04,
-      "volume": 8722000.0
+      "volume": 8774800.0
     },
     {
       "date": "2026-08-31",
-      "open": 62.25,
+      "open": 62.365,
       "high": 64.55,
-      "low": 60.5804,
+      "low": 60.58,
       "close": 63.05,
-      "volume": 7164206.0
+      "volume": 7168800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 65.64,
+      "high": 65.79,
+      "low": 61.22,
+      "close": 62.27,
+      "volume": 6239200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 63.11,
+      "high": 67.0999,
+      "low": 60.06,
+      "close": 61.94,
+      "volume": 5766149.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 73.2,
-      "high": 76.39,
-      "low": 72.23,
-      "close": 75.86,
-      "volume": 7665400.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 73.64,
-      "high": 78.39,
-      "low": 71.4,
-      "close": 78.34,
-      "volume": 9424900.0
-    },
     {
       "date": "2025-09-03",
       "open": 79.06,
@@ -6190,15 +6333,31 @@
       "high": 70.9,
       "low": 63.77,
       "close": 64.04,
-      "volume": 8722000.0
+      "volume": 8774800.0
     },
     {
       "date": "2026-08-31",
-      "open": 62.25,
+      "open": 62.365,
       "high": 64.55,
-      "low": 60.5804,
+      "low": 60.58,
       "close": 63.05,
-      "volume": 7164206.0
+      "volume": 7168800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 65.64,
+      "high": 65.79,
+      "low": 61.22,
+      "close": 62.27,
+      "volume": 6239200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 63.11,
+      "high": 67.0999,
+      "low": 60.06,
+      "close": 61.94,
+      "volume": 5766149.0
     }
   ],
   "ai_synthesis": null,

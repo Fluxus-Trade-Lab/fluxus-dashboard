@@ -1,46 +1,96 @@
 {
   "ticker": "FPS",
-  "fetched_at": "2026-09-01T01:12:10Z",
+  "fetched_at": "2026-09-02T23:56:11Z",
   "_schema": "v2",
-  "current_price": 30.540000915527344,
+  "current_price": 29.420000076293945,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
+    "symbol": "FPS",
+    "longName": "Forgent Power Solutions, Inc.",
+    "sector": "Industrials",
+    "industry": "Electrical Equipment & Parts",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Dayton",
+    "website": "https://www.forgentpower.com",
+    "fullTimeEmployees": 2000,
+    "marketCap": 8956298240,
+    "enterpriseValue": 7895201792,
+    "trailingPE": 1471.0,
+    "forwardPE": 25.240435,
+    "priceToSalesTrailing12Months": 7.4885435,
+    "enterpriseToRevenue": 6.601,
+    "priceToBook": 16.085293,
+    "grossMargins": 0.34332,
+    "operatingMargins": 0.103870004,
+    "profitMargins": 0.02173,
     "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
+    "totalCash": 93831000,
+    "totalDebt": 707558976,
+    "totalRevenue": 1196000000,
     "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "debtToEquity": 121.449,
+    "currentRatio": 1.641,
+    "fiftyTwoWeekHigh": 66.0,
+    "fiftyTwoWeekLow": 25.95,
+    "averageVolume": 7695958,
+    "averageVolume10days": 4881850,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 259971169,
+    "sharesFloat": 140207220,
+    "companyOfficers": [
+      {
+        "name": "Mr. Gary John Niederpruem",
+        "title": "CEO & Director",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Ryan S. Fiedler",
+        "title": "Chief Financial Officer",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. Tyson K. Hottinger",
+        "title": "Chief Legal Officer & Corporate Secretary",
+        "age": 44,
+        "yearBorn": 1981
+      },
+      {
+        "name": "Mr. Jose  Caballero",
+        "title": "Chief Operating Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Inez  Lund",
+        "title": "Chief Accounting Officer",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Mr. Wyatt  Shallbetter",
+        "title": "Chief Technology Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_estimate": 0.16643
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_estimate": 0.11502
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-09-15",
+    "revenue_low": 412800000,
+    "revenue_high": 435000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -99,10 +149,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 8,
+    "bullish": 7,
+    "neutral": 1,
+    "bearish": 0,
+    "avg_price_target": 59.9,
+    "high_price_target": 73.0,
+    "low_price_target": 51.0,
+    "current_price": 29.42,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-16T09:36:04",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-06-22T16:39:07",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-18T12:20:15",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-15T15:28:04",
+        "firm": "Goldman Sachs",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-15T14:01:18",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-15T13:22:53",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-15T12:04:20",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-17T16:19:40",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-02T19:01:04",
+        "firm": "Wolfe Research",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-03-02T13:37:14",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      }
+    ]
   },
   "news": [
     {
@@ -166,19 +293,19 @@
       "source": "TipRanks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.16621345980009922,
   "technicals": {
-    "ma20": 35.51450023651123,
-    "ma50": 40.82740020751953,
-    "rsi14": 31.874972398847973,
-    "high_20d": 40.2599983215332,
-    "low_5d": 29.729999542236328,
-    "low_10d": 29.729999542236328,
+    "ma20": 34.554500102996826,
+    "ma50": 39.578400230407716,
+    "rsi14": 30.03283811790608,
+    "high_20d": 40.189998626708984,
+    "low_5d": 28.520000457763672,
+    "low_10d": 28.520000457763672,
     "high_52w": 66.0,
     "low_52w": 25.950000762939453,
-    "atr14": 1.8807141440255302,
-    "atr14_pct": 6.158199370155636,
-    "position_in_52w_range_pct": 11.460674756618976
+    "atr14": 1.8085714067731584,
+    "atr14_pct": 6.147421489065425,
+    "position_in_52w_range_pct": 8.664168238344194
   },
   "ohlc_2y": [
     {
@@ -1315,7 +1442,7 @@
       "high": 31.81,
       "low": 30.02,
       "close": 30.4,
-      "volume": 5530900.0
+      "volume": 5542900.0
     },
     {
       "date": "2026-08-31",
@@ -1323,7 +1450,23 @@
       "high": 30.68,
       "low": 29.73,
       "close": 30.54,
-      "volume": 4976869.0
+      "volume": 5015500.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 30.17,
+      "high": 30.74,
+      "low": 29.12,
+      "close": 29.27,
+      "volume": 4239700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 29.02,
+      "high": 29.46,
+      "low": 28.52,
+      "close": 29.42,
+      "volume": 4361818.0
     }
   ],
   "ohlc_1y": [
@@ -2461,7 +2604,7 @@
       "high": 31.81,
       "low": 30.02,
       "close": 30.4,
-      "volume": 5530900.0
+      "volume": 5542900.0
     },
     {
       "date": "2026-08-31",
@@ -2469,7 +2612,23 @@
       "high": 30.68,
       "low": 29.73,
       "close": 30.54,
-      "volume": 4976869.0
+      "volume": 5015500.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 30.17,
+      "high": 30.74,
+      "low": 29.12,
+      "close": 29.27,
+      "volume": 4239700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 29.02,
+      "high": 29.46,
+      "low": 28.52,
+      "close": 29.42,
+      "volume": 4361818.0
     }
   ],
   "ai_synthesis": null,

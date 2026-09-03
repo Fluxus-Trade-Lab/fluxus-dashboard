@@ -1,46 +1,112 @@
 {
   "ticker": "PLTR",
-  "fetched_at": "2026-09-01T01:12:56Z",
+  "fetched_at": "2026-09-02T23:56:50Z",
   "_schema": "v2",
-  "current_price": 186.3800048828125,
+  "current_price": 169.4600067138672,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "PLTR",
+    "longName": "Palantir Technologies Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Aventura",
+    "website": "https://www.palantir.com",
+    "fullTimeEmployees": 4401,
+    "marketCap": 407222288384,
+    "enterpriseValue": 423271268352,
+    "trailingPE": 144.83762,
+    "forwardPE": 73.22491,
+    "priceToSalesTrailing12Months": 66.15111,
+    "enterpriseToRevenue": 68.758,
+    "priceToBook": 41.656837,
+    "grossMargins": 0.84796,
+    "operatingMargins": 0.47120997,
+    "profitMargins": 0.49005002,
+    "returnOnEquity": 0.38097,
+    "totalCash": 9409098752,
+    "totalDebt": 211400000,
+    "totalRevenue": 6155940864,
+    "freeCashflow": 2159104512,
+    "debtToEquity": 2.139,
+    "currentRatio": 7.228,
+    "fiftyTwoWeekHigh": 207.52,
+    "fiftyTwoWeekLow": 106.37,
+    "averageVolume": 41052377,
+    "averageVolume10days": 30805660,
+    "beta": 1.563,
+    "sharesOutstanding": 2300713329,
+    "sharesFloat": 2109933407,
+    "companyOfficers": [
+      {
+        "name": "Dr. Alexander C. Karp J.D.",
+        "title": "Co-Founder, CEO & Director",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Stephen Andrew Cohen",
+        "title": "Co-Founder, President, Secretary & Director",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Mr. David A. Glazer J.D.",
+        "title": "CFO & Treasurer",
+        "age": 40,
+        "yearBorn": 1985
+      },
+      {
+        "name": "Mr. Shyam  Sankar",
+        "title": "CTO & Executive VP",
+        "age": 42,
+        "yearBorn": 1983
+      },
+      {
+        "name": "Mr. Ryan D. Taylor J.D.",
+        "title": "Chief Revenue Officer & Chief Legal Officer",
+        "age": 42,
+        "yearBorn": 1983
+      },
+      {
+        "name": "Mr. Peter Andreas Thiel J.D.",
+        "title": "Co-Founder & Chairman",
+        "age": 58,
+        "yearBorn": 1967
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.41,
+      "eps_estimate": 0.34596,
+      "eps_surprise_pct": 0.1851
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.33,
+      "eps_estimate": 0.27946,
+      "eps_surprise_pct": 0.1808
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.25,
+      "eps_estimate": 0.2302,
+      "eps_surprise_pct": 0.086
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.21,
+      "eps_estimate": 0.16738,
+      "eps_surprise_pct": 0.2546
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-02",
+    "revenue_low": 2161000000,
+    "revenue_high": 2262971840
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,87 +165,164 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 32,
+    "bullish": 20,
+    "neutral": 10,
+    "bearish": 2,
+    "avg_price_target": 191.68,
+    "high_price_target": 255.0,
+    "low_price_target": 80.0,
+    "current_price": 169.46,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-04T19:03:23",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T18:45:18",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T14:40:09",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T14:13:00",
+        "firm": "DA Davidson",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T12:12:50",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T11:23:04",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T10:02:36",
+        "firm": "Deutsche Bank",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-04T09:04:37",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-30T12:39:03",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T18:51:09",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
-      "date": "2026-08-31T21:05:00Z",
-      "title": "There Was No Beating Moderna in August. These Are the Best and Worst S&P 500 Stocks for the Month.",
-      "url": "https://www.barrons.com/articles/moderna-stock-sp500-best-worst-august-f24aa440?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
+      "date": "2026-09-02T19:40:00Z",
+      "title": "AI has become a 'non-negotiable', Sam Altman says at G20 summit",
+      "url": "https://finance.yahoo.com/video/ai-become-non-negotiable-sam-194000759.html",
+      "source": "Yahoo Finance Video"
     },
     {
-      "date": "2026-08-31T20:50:00Z",
-      "title": "Software Stocks & ETFs: Is the AI Sell-Off Over?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/software-stocks-etfs-ai-sell-205000363.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-31T17:52:37Z",
-      "title": "Palantir's $448 Billion Valuation Still Isn't Scaring Baird",
-      "url": "https://finance.yahoo.com/technology/ai/articles/palantirs-448-billion-valuation-still-175237552.html",
+      "date": "2026-09-02T20:32:19Z",
+      "title": "Palantir Shares Sink Despite $192 Million Army Contract",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/palantir-shares-sink-despite-192-203219324.html",
       "source": "GuruFocus.com"
     },
     {
-      "date": "2026-08-31T16:30:27Z",
-      "title": "Investors Are Looking Beyond the Magnificent Seven. Could This Be the Next AI Giant?",
-      "url": "https://247wallst.com/investing/2026/08/31/investors-are-looking-beyond-the-magnificent-seven-could-this-be-the-next-ai-giant/",
-      "source": "24/7 Wall St."
+      "date": "2026-09-02T20:30:38Z",
+      "title": "Palantir Stock Gets New Problem From Google",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/palantir-stock-gets-problem-google-203038795.html",
+      "source": "GuruFocus.com"
     },
     {
-      "date": "2026-08-31T15:42:06Z",
-      "title": "Say No to Tokenmaxxing. How Alex Karp\u2019s War on the \u2018Token Industrial Complex\u2019 Is Fueling the Next NVDA and PLTR Bull Run.",
-      "url": "https://www.barchart.com/story/news/4357201/say-no-to-tokenmaxxing-how-alex-karps-war-on-the-token-industrial-complex-is-fueling-the-next-nvda-and-pltr-bull-run",
-      "source": "Barchart"
+      "date": "2026-09-02T20:10:58Z",
+      "title": "Palantir Technologies (PLTR) Could Be 5% Overvalued On Peter Zaffino Hire",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/palantir-technologies-pltr-could-5-201058700.html",
+      "source": "Simply Wall St."
     },
     {
-      "date": "2026-08-31T15:40:03Z",
-      "title": "Gorilla Surges 5% as AI Infrastructure Spending Ramps: Is a B- Credit Rating Enough to Fund It?",
-      "url": "https://247wallst.com/investing/2026/08/31/gorilla-surges-5-as-ai-infrastructure-spending-ramps-is-a-b-credit-rating-enough-to-fund-it/",
-      "source": "24/7 Wall St."
+      "date": "2026-09-02T20:08:19Z",
+      "title": "Why Is Palantir Stock Down Today?",
+      "url": "https://www.fool.com/investing/2026/09/02/why-is-palantir-stock-down-today/",
+      "source": "Motley Fool"
     },
     {
-      "date": "2026-08-31T15:30:12Z",
-      "title": "Adam Schiff Says AI Companies 'Shouldn't be Able to Push Their Costs Off Onto Everyday Americans,' Calls For Progressive Tax Code",
-      "url": "https://www.yahoo.com/news/politics/articles/adam-schiff-says-ai-companies-153012748.html",
-      "source": "Benzinga"
+      "date": "2026-09-02T19:16:23Z",
+      "title": "2 Cash-Producing Stocks with Impressive Fundamentals and 1 We Question",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/2-cash-producing-stocks-impressive-191623023.html",
+      "source": "StockStory"
     },
     {
-      "date": "2026-08-31T15:04:32Z",
-      "title": "Snowflake Stock Ran On A Plan The Company Had Already Spelled Out",
-      "url": "https://www.trefis.com/articles/613734/snowflake-stock-ran-on-a-plan-the-company-had-already-spelled-out/2026-08-31",
+      "date": "2026-09-02T17:45:00Z",
+      "title": "Palantir Heads for Worst Day in 7 Months. It Isn\u2019t the Only Software Stock Sinking.",
+      "url": "https://www.barrons.com/articles/palantir-stock-technology-software-a0c98d84?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
+    },
+    {
+      "date": "2026-09-02T17:26:01Z",
+      "title": "Jim Cramer Explains Why Palantir\u2019s Rule of 40 Dominance Proves Bears Wrong",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-explains-why-palantir-172601433.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-09-02T17:05:54Z",
+      "title": "The AI Engine That Re-Accelerated Snowflake",
+      "url": "https://www.trefis.com/articles/613960/the-ai-engine-that-re-accelerated-snowflake/2026-09-02",
       "source": "Trefis"
     },
     {
-      "date": "2026-08-31T14:49:00Z",
-      "title": "BigBear.ai vs. Palantir: Which Defense AI Stock Is the Better Choice?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/bigbear-ai-vs-palantir-defense-144900741.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-31T13:30:02Z",
-      "title": "Dear Palantir Stock Fans, Here\u2019s What Maven\u2019s Billion-Dollar ARR Means for PLTR",
-      "url": "https://www.barchart.com/story/news/4354758/dear-palantir-stock-fans-heres-what-mavens-billion-dollar-arr-means-for-pltr",
-      "source": "Barchart"
+      "date": "2026-09-02T16:55:45Z",
+      "title": "Palantir stock tumbles as Google encroaches on defense AI market",
+      "url": "https://finance.yahoo.com/technology/ai/articles/palantir-stock-tumbles-google-encroaches-165545792.html",
+      "source": "Investing.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03428537572177825,
   "technicals": {
-    "ma20": 174.05899810791016,
-    "ma50": 144.90359893798828,
-    "ma200": 151.34854976654051,
-    "rsi14": 69.32316907564868,
+    "ma20": 175.47349853515624,
+    "ma50": 147.1671990966797,
+    "ma200": 151.31389980316163,
+    "rsi14": 52.201704999809834,
     "high_20d": 188.3699951171875,
-    "low_5d": 168.89999389648438,
-    "low_10d": 168.89999389648438,
+    "low_5d": 165.7100067138672,
+    "low_10d": 165.7100067138672,
     "high_52w": 207.52000427246094,
     "low_52w": 106.37000274658203,
-    "atr14": 6.793073381696429,
-    "atr14_pct": 3.644743644023195,
-    "position_in_52w_range_pct": 79.10034693945127
+    "atr14": 7.178072248186384,
+    "atr14_pct": 4.2358503268010255,
+    "position_in_52w_range_pct": 62.37271677266736
   },
   "ohlc_2y": [
     {
@@ -4172,7 +4315,7 @@
       "high": 188.37,
       "low": 184.38,
       "close": 186.29,
-      "volume": 24995400.0
+      "volume": 25060200.0
     },
     {
       "date": "2026-08-31",
@@ -4180,26 +4323,26 @@
       "high": 187.94,
       "low": 183.79,
       "close": 186.38,
-      "volume": 25633590.0
+      "volume": 25941200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 182.98,
+      "high": 186.55,
+      "low": 179.75,
+      "close": 179.92,
+      "volume": 24567200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 176.995,
+      "high": 177.55,
+      "low": 165.71,
+      "close": 169.46,
+      "volume": 39578542.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 156.98,
-      "high": 158.42,
-      "low": 153.0,
-      "close": 156.71,
-      "volume": 45270500.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 151.2,
-      "high": 158.39,
-      "low": 150.28,
-      "close": 157.09,
-      "volume": 65435000.0
-    },
     {
       "date": "2025-09-03",
       "open": 158.0,
@@ -6190,7 +6333,7 @@
       "high": 188.37,
       "low": 184.38,
       "close": 186.29,
-      "volume": 24995400.0
+      "volume": 25060200.0
     },
     {
       "date": "2026-08-31",
@@ -6198,7 +6341,23 @@
       "high": 187.94,
       "low": 183.79,
       "close": 186.38,
-      "volume": 25633590.0
+      "volume": 25941200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 182.98,
+      "high": 186.55,
+      "low": 179.75,
+      "close": 179.92,
+      "volume": 24567200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 176.995,
+      "high": 177.55,
+      "low": 165.71,
+      "close": 169.46,
+      "volume": 39578542.0
     }
   ],
   "ai_synthesis": null,

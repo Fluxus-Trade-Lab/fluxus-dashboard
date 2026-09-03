@@ -1,8 +1,8 @@
 {
   "ticker": "FIGR",
-  "fetched_at": "2026-09-01T01:16:53Z",
+  "fetched_at": "2026-09-03T00:00:31Z",
   "_schema": "v2",
-  "current_price": 36.689998626708984,
+  "current_price": 33.19,
   "info": {
     "symbol": "FIGR",
     "longName": "Figure Technology Solutions, Inc.",
@@ -13,13 +13,13 @@
     "city": "Reno",
     "website": "https://www.figure.com",
     "fullTimeEmployees": 602,
-    "marketCap": 8232423936,
-    "enterpriseValue": 8271586816,
-    "trailingPE": 37.82474,
-    "forwardPE": 24.679316,
-    "priceToSalesTrailing12Months": 13.297062,
-    "enterpriseToRevenue": 13.36,
-    "priceToBook": 5.8062983,
+    "marketCap": 7447101440,
+    "enterpriseValue": 7598453248,
+    "trailingPE": 34.572914,
+    "forwardPE": 22.325062,
+    "priceToSalesTrailing12Months": 12.028604,
+    "enterpriseToRevenue": 12.273,
+    "priceToBook": 5.2524133,
     "grossMargins": 1.0,
     "operatingMargins": 0.35525,
     "profitMargins": 0.38301,
@@ -32,8 +32,8 @@
     "currentRatio": 1.861,
     "fiftyTwoWeekHigh": 78.0,
     "fiftyTwoWeekLow": 24.11,
-    "averageVolume": 4000303,
-    "averageVolume10days": 4742040,
+    "averageVolume": 4059506,
+    "averageVolume10days": 4223140,
     "beta": null,
     "sharesOutstanding": 185672153,
     "sharesFloat": 139206276,
@@ -166,14 +166,14 @@
   ],
   "analyst": {
     "consensus": "Buy",
-    "total_ratings": 8,
+    "total_ratings": 7,
     "bullish": 6,
-    "neutral": 1,
+    "neutral": 0,
     "bearish": 1,
     "avg_price_target": 52.0,
     "high_price_target": 70.0,
     "low_price_target": 31.0,
-    "current_price": 36.69,
+    "current_price": 33.19,
     "recent_rating_changes": [
       {
         "date": "2026-08-20T10:23:28",
@@ -309,20 +309,18 @@
       "source": "Motley Fool"
     }
   ],
-  "options_implied_move": 0.0637775984623931,
+  "options_implied_move": 0.05031636034950286,
   "technicals": {
-    "ma20": 33.75724992752075,
-    "ma50": 31.132799835205077,
-    "ma200": 36.96562505722046,
-    "rsi14": 57.404375379828984,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 50.128884785263395,
     "high_20d": 41.5,
-    "low_5d": 34.630001068115234,
-    "low_10d": 34.29999923706055,
+    "low_5d": 33.65999984741211,
+    "low_10d": 33.65999984741211,
     "high_52w": 78.0,
     "low_52w": 24.110000610351562,
-    "atr14": 2.8304283959524974,
-    "atr14_pct": 7.7144412698125535,
-    "position_in_52w_range_pct": 23.343845163920847
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -2262,20 +2260,28 @@
       "volume": 3354200.0
     },
     {
-      "date": "2026-08-28",
-      "open": 37.49,
-      "high": 38.0,
-      "low": 35.87,
-      "close": 36.05,
-      "volume": 2491600.0
-    },
-    {
       "date": "2026-08-31",
-      "open": 35.7,
+      "open": 35.77,
       "high": 37.03,
       "low": 34.63,
       "close": 36.69,
-      "volume": 4838776.0
+      "volume": 4839000.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 35.46,
+      "high": 36.925,
+      "low": 33.66,
+      "close": 33.7,
+      "volume": 3770600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 4625366.0
     }
   ],
   "ohlc_1y": [
@@ -4216,20 +4222,28 @@
       "volume": 3354200.0
     },
     {
-      "date": "2026-08-28",
-      "open": 37.49,
-      "high": 38.0,
-      "low": 35.87,
-      "close": 36.05,
-      "volume": 2491600.0
-    },
-    {
       "date": "2026-08-31",
-      "open": 35.7,
+      "open": 35.77,
       "high": 37.03,
       "low": 34.63,
       "close": 36.69,
-      "volume": 4838776.0
+      "volume": 4839000.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 35.46,
+      "high": 36.925,
+      "low": 33.66,
+      "close": 33.7,
+      "volume": 3770600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 4625366.0
     }
   ],
   "ai_synthesis": null,

@@ -1,8 +1,8 @@
 {
   "ticker": "CAR",
-  "fetched_at": "2026-09-01T01:15:48Z",
+  "fetched_at": "2026-09-02T23:59:35Z",
   "_schema": "v2",
-  "current_price": 147.49000549316406,
+  "current_price": 137.83999633789062,
   "info": {
     "symbol": "CAR",
     "longName": "Avis Budget Group, Inc.",
@@ -13,13 +13,13 @@
     "city": "Parsippany",
     "website": "https://www.avisbudgetgroup.com",
     "fullTimeEmployees": 17000,
-    "marketCap": 5210195456,
-    "enterpriseValue": 33939255296,
+    "marketCap": 4869301760,
+    "enterpriseValue": 33698332672,
     "trailingPE": null,
-    "forwardPE": 24.395006,
-    "priceToSalesTrailing12Months": 0.4448976,
-    "enterpriseToRevenue": 2.898,
-    "priceToBook": -1.5367224,
+    "forwardPE": 22.798883,
+    "priceToSalesTrailing12Months": 0.41578874,
+    "enterpriseToRevenue": 2.877,
+    "priceToBook": -1.4361774,
     "grossMargins": 0.27385,
     "operatingMargins": 0.1491,
     "profitMargins": -0.05431,
@@ -32,8 +32,8 @@
     "currentRatio": 0.848,
     "fiftyTwoWeekHigh": 847.7,
     "fiftyTwoWeekLow": 85.96,
-    "averageVolume": 554065,
-    "averageVolume10days": 274630,
+    "averageVolume": 558676,
+    "averageVolume10days": 338360,
     "beta": 1.901,
     "sharesOutstanding": 35325754,
     "sharesFloat": 14852360,
@@ -165,15 +165,15 @@
     }
   ],
   "analyst": {
-    "consensus": "Sell",
+    "consensus": "Hold",
     "total_ratings": 8,
     "bullish": 0,
-    "neutral": 5,
-    "bearish": 3,
+    "neutral": 6,
+    "bearish": 2,
     "avg_price_target": 129.14285,
     "high_price_target": 160.0,
     "low_price_target": 94.0,
-    "current_price": 147.49,
+    "current_price": 137.84,
     "recent_rating_changes": [
       {
         "date": "2026-07-24T17:57:46",
@@ -309,20 +309,20 @@
       "source": "Bloomberg"
     }
   ],
-  "options_implied_move": 0.059665059815919984,
+  "options_implied_move": 0.061665700999902366,
   "technicals": {
-    "ma20": 141.30500183105468,
-    "ma50": 152.34840118408204,
-    "ma200": 157.69180015563964,
-    "rsi14": 51.730452631585734,
+    "ma20": 141.24200134277345,
+    "ma50": 150.3844009399414,
+    "ma200": 157.68075012207032,
+    "rsi14": 42.38860668041486,
     "high_20d": 149.85000610351562,
     "low_5d": 135.1300048828125,
     "low_10d": 135.1300048828125,
     "high_52w": 847.7000122070312,
     "low_52w": 85.95999908447266,
-    "atr14": 5.440001351492746,
-    "atr14_pct": 3.688386432221593,
-    "position_in_52w_range_pct": 8.077559974362494
+    "atr14": 5.672144208635602,
+    "atr14_pct": 4.115020574094716,
+    "position_in_52w_range_pct": 6.81072234091382
   },
   "ohlc_2y": [
     {
@@ -4323,26 +4323,26 @@
       "high": 149.56,
       "low": 135.13,
       "close": 147.49,
-      "volume": 844979.0
+      "volume": 845200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 146.77,
+      "high": 146.77,
+      "low": 138.82,
+      "close": 140.7,
+      "volume": 298900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 140.0,
+      "high": 141.78,
+      "low": 137.17,
+      "close": 137.84,
+      "volume": 248553.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 159.02,
-      "high": 160.0,
-      "low": 156.32,
-      "close": 158.23,
-      "volume": 521800.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 153.3,
-      "high": 161.91,
-      "low": 153.3,
-      "close": 161.2,
-      "volume": 673800.0
-    },
     {
       "date": "2025-09-03",
       "open": 161.14,
@@ -6341,7 +6341,23 @@
       "high": 149.56,
       "low": 135.13,
       "close": 147.49,
-      "volume": 844979.0
+      "volume": 845200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 146.77,
+      "high": 146.77,
+      "low": 138.82,
+      "close": 140.7,
+      "volume": 298900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 140.0,
+      "high": 141.78,
+      "low": 137.17,
+      "close": 137.84,
+      "volume": 248553.0
     }
   ],
   "ai_synthesis": null,

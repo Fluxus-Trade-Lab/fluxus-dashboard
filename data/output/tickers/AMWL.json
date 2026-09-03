@@ -1,46 +1,112 @@
 {
   "ticker": "AMWL",
-  "fetched_at": "2026-09-01T01:15:08Z",
+  "fetched_at": "2026-09-02T23:58:56Z",
   "_schema": "v2",
-  "current_price": 11.970000267028809,
+  "current_price": 12.829999923706055,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "AMWL",
+    "longName": "American Well Corporation",
+    "sector": "Healthcare",
+    "industry": "Health Information Services",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Boston",
+    "website": "https://business.amwell.com",
+    "fullTimeEmployees": 562,
+    "marketCap": 218222368,
+    "enterpriseValue": 25419710,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -8.120253,
+    "priceToSalesTrailing12Months": 0.99861515,
+    "enterpriseToRevenue": 0.116,
+    "priceToBook": 0.98163736,
+    "grossMargins": 0.52584,
+    "operatingMargins": -0.19594999,
+    "profitMargins": -0.35746,
+    "returnOnEquity": -0.2912,
+    "totalCash": 195946000,
+    "totalDebt": 2978000,
+    "totalRevenue": 218524992,
+    "freeCashflow": 3860375,
+    "debtToEquity": 1.271,
+    "currentRatio": 2.9,
+    "fiftyTwoWeekHigh": 14.19,
+    "fiftyTwoWeekLow": 3.71,
+    "averageVolume": 118493,
+    "averageVolume10days": 87910,
+    "beta": 1.696,
+    "sharesOutstanding": 15361463,
+    "sharesFloat": 11816154,
+    "companyOfficers": [
+      {
+        "name": "Dr. Ido  Schoenberg M.D.",
+        "title": "Chairman & CEO",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Mark J. Hirschhorn CPA",
+        "title": "Executive VP, COO & CFO",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Dan  Zamansky",
+        "title": "Chief Product & Technology Officer",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Mr. Paul Francis McNeice",
+        "title": "Vice President of Accounting",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Anna  Nesterova",
+        "title": "Head of Legal & Deputy General Counsel",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Michael  Miller",
+        "title": "Senior Vice President & Chief Sales Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.5141,
+      "eps_estimate": -0.6,
+      "eps_surprise_pct": 0.1432
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.671,
+      "eps_estimate": -0.77,
+      "eps_surprise_pct": 0.1286
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -1.125,
+      "eps_estimate": -1.595,
+      "eps_surprise_pct": 0.2947
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -1.5516,
+      "eps_estimate": -1.45681,
+      "eps_surprise_pct": -0.0651
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 46900000,
+    "revenue_high": 48027000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 7,
+    "bullish": 1,
+    "neutral": 6,
+    "bearish": 0,
+    "avg_price_target": 12.8,
+    "high_price_target": 16.0,
+    "low_price_target": 11.0,
+    "current_price": 12.83,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-13T15:41:41",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-05T09:42:19",
+        "firm": "Needham",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-17T14:25:35",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-06T18:33:20",
+        "firm": "TD Cowen",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-06T16:24:28",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-02-13T16:30:41",
+        "firm": "Stifel",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2025-12-18T17:39:24",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2025-11-05T15:25:03",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2025-11-05T12:53:24",
+        "firm": "Stifel",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2025-08-07T14:48:46",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +309,20 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.1480904139749339,
   "technicals": {
-    "ma20": 12.31399998664856,
-    "ma50": 11.05159999847412,
-    "ma200": 7.065250004529953,
-    "rsi14": 52.34656720621681,
-    "high_20d": 14.1899995803833,
-    "low_5d": 11.229999542236328,
+    "ma20": 12.386999940872192,
+    "ma50": 11.218599987030029,
+    "ma200": 7.149250001907348,
+    "rsi14": 61.47103521629494,
+    "high_20d": 14.130000114440918,
+    "low_5d": 11.475000381469727,
     "low_10d": 11.229999542236328,
     "high_52w": 14.1899995803833,
     "low_52w": 3.7100000381469727,
-    "atr14": 0.6518571717398507,
-    "atr14_pct": 5.445757370076104,
-    "position_in_52w_range_pct": 78.81679951981404
+    "atr14": 0.6788571221487862,
+    "atr14_pct": 5.291170118360317,
+    "position_in_52w_range_pct": 87.02290347250306
   },
   "ohlc_2y": [
     {
@@ -4180,26 +4323,26 @@
       "high": 12.185,
       "low": 11.58,
       "close": 11.97,
-      "volume": 112071.0
+      "volume": 112100.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 11.83,
+      "high": 12.22,
+      "low": 11.5,
+      "close": 12.07,
+      "volume": 155900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 12.08,
+      "high": 13.162,
+      "low": 12.05,
+      "close": 12.83,
+      "volume": 139543.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 6.95,
-      "high": 7.055,
-      "low": 6.86,
-      "close": 6.9,
-      "volume": 31100.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 6.82,
-      "high": 7.07,
-      "low": 6.71,
-      "close": 6.75,
-      "volume": 97900.0
-    },
     {
       "date": "2025-09-03",
       "open": 6.67,
@@ -6198,7 +6341,23 @@
       "high": 12.185,
       "low": 11.58,
       "close": 11.97,
-      "volume": 112071.0
+      "volume": 112100.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 11.83,
+      "high": 12.22,
+      "low": 11.5,
+      "close": 12.07,
+      "volume": 155900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 12.08,
+      "high": 13.162,
+      "low": 12.05,
+      "close": 12.83,
+      "volume": 139543.0
     }
   ],
   "ai_synthesis": null,

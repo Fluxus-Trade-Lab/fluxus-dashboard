@@ -1,46 +1,112 @@
 {
   "ticker": "APLD",
-  "fetched_at": "2026-09-01T01:15:16Z",
+  "fetched_at": "2026-09-02T23:59:02Z",
   "_schema": "v2",
-  "current_price": 25.40999984741211,
+  "current_price": 24.90999984741211,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "APLD",
+    "longName": "Applied Digital Corporation",
+    "sector": "Technology",
+    "industry": "Information Technology Services",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Dallas",
+    "website": "https://applieddigital.com",
+    "fullTimeEmployees": 256,
+    "marketCap": 7082008064,
+    "enterpriseValue": 12613813248,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -99.64,
+    "priceToSalesTrailing12Months": 11.584951,
+    "enterpriseToRevenue": 20.634,
+    "priceToBook": 4.175327,
+    "grossMargins": 0.25879,
+    "operatingMargins": -0.48219,
+    "profitMargins": -0.39915,
+    "returnOnEquity": -0.08376,
+    "totalCash": 1591987968,
+    "totalDebt": 5099915776,
+    "totalRevenue": 611310976,
+    "freeCashflow": -4961438720,
+    "debtToEquity": 136.231,
+    "currentRatio": 4.01,
+    "fiftyTwoWeekHigh": 50.725,
+    "fiftyTwoWeekLow": 13.16,
+    "averageVolume": 19090263,
+    "averageVolume10days": 15102650,
+    "beta": 5.767,
+    "sharesOutstanding": 284303812,
+    "sharesFloat": 250369053,
+    "companyOfficers": [
+      {
+        "name": "Mr. Wesley  Cummins",
+        "title": "Chairman, CEO, Secretary & Treasurer",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Mohammad Saidal L. Mohmand",
+        "title": "Chief Financial Officer",
+        "age": 34,
+        "yearBorn": 1991
+      },
+      {
+        "name": "Ms. Laura  Laltrello",
+        "title": "Chief Operating Officer",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Jason  Zhang",
+        "title": "Co-Founder & President",
+        "age": 32,
+        "yearBorn": 1993
+      },
+      {
+        "name": "Mr. Mark  Chavez",
+        "title": "Chief Compliance Officer & General Counsel",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Nick  Phillips",
+        "title": "Executive Vice President of External Affairs",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-05-31T00:00:00",
+      "eps_actual": 0.04,
+      "eps_estimate": -0.19,
+      "eps_surprise_pct": 1.2105
+    },
+    {
+      "period_end": "2026-02-28T00:00:00",
+      "eps_actual": 0.09,
+      "eps_estimate": -0.21,
+      "eps_surprise_pct": 1.4286
+    },
+    {
+      "period_end": "2025-11-30T00:00:00",
+      "eps_actual": 0.0,
+      "eps_estimate": -0.20667,
+      "eps_surprise_pct": 1.0
+    },
+    {
+      "period_end": "2025-08-31T00:00:00",
+      "eps_actual": -0.03,
+      "eps_estimate": -0.155,
+      "eps_surprise_pct": 0.8065
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-08",
+    "revenue_low": 118986000,
+    "revenue_high": 134300000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-05-31T00:00:00",
@@ -99,12 +165,113 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 11,
+    "bullish": 11,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 74.22727,
+    "high_price_target": 109.0,
+    "low_price_target": 37.5,
+    "current_price": 24.91,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-06T17:15:05",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-03T16:05:39",
+        "firm": "B. Riley Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-28T09:46:08",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-23T10:27:34",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-06-17T17:39:54",
+        "firm": "Northland Capital Markets",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-09T14:31:54",
+        "firm": "Craig-Hallum",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-09T14:02:17",
+        "firm": "Lake Street",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-09T10:38:26",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-27T18:03:34",
+        "firm": "B. Riley Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-21T20:07:13",
+        "firm": "Lake Street",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-01T15:58:00Z",
+      "title": "APLD's Hyperscaler Concentration Grows: Are Revenues at Risk?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/aplds-hyperscaler-concentration-grows-revenues-155800622.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-01T15:47:00Z",
+      "title": "IREN's CapEx Plan Accelerates: Can Funding Keep Up With Expansion?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/irens-capex-plan-accelerates-funding-154700814.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-01T14:03:37Z",
+      "title": "Applied Digital Drops 4% as Rising Yields Hit AI Infrastructure, Cipher Mining Sinks 6%, Core Scientific Slides 3%",
+      "url": "https://247wallst.com/investing/2026/09/01/applied-digital-drops-4-as-rising-yields-hit-ai-infrastructure-cipher-mining-sinks-6-core-scientific-slides-3/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-01T06:15:40Z",
+      "title": "3 Crypto Stocks To Watch With Up To 47% Revenue Growth",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/3-crypto-stocks-watch-47-061540423.html",
+      "source": "Simply Wall St."
+    },
     {
       "date": "2026-08-31T14:52:15Z",
       "title": "Building AI Infrastructure: Alpha Compute CEO Brittany Kaiser, Live at Nasdaq",
@@ -140,46 +307,22 @@
       "title": "Prediction: Applied Digital Stock Will Jump 156% in 3 Years. Here\u2019s the Math.",
       "url": "https://www.fool.com/investing/2026/08/28/prediction-applied-digital-stock-will-jump-156-in-3-years-here-s-the-math/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-28T13:04:59Z",
-      "title": "IREN Falls 6% as $639M Mining Rig Writedown Overshadows AI Cloud Growth, TeraWulf Eases",
-      "url": "https://247wallst.com/investing/2026/08/28/iren-falls-6-as-a-639m-mining-rig-writedown-overshadows-ai-cloud-growth-terawulf-eases/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-28T11:07:00Z",
-      "title": "Buy the Bayou? 2 Louisiana Microcaps for Your Watchlist",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/buy-bayou-2-louisiana-microcaps-110700965.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-28T10:00:52Z",
-      "title": "1 of Wall Street\u2019s Favorite Stocks to Own for Decades and 2 Facing Headwinds",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/1-wall-street-favorite-stocks-100052916.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-28T00:36:46Z",
-      "title": "Applied Digital Stock Is Down, But Its AI Data Center Business Is Powering Up. What Gives?",
-      "url": "https://www.trefis.com/articles/613277/applied-digital-stock-is-down-but-its-ai-data-center-business-is-powering-up-what-gives/2026-08-27",
-      "source": "Trefis"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04616619859672432,
   "technicals": {
-    "ma20": 28.776000118255617,
-    "ma50": 30.710300102233887,
-    "ma200": 32.17352501869202,
-    "rsi14": 38.8717764722637,
+    "ma20": 28.179000091552734,
+    "ma50": 29.884900093078613,
+    "ma200": 32.17217502593994,
+    "rsi14": 38.71088316385502,
     "high_20d": 33.040000915527344,
-    "low_5d": 24.829999923706055,
-    "low_10d": 24.829999923706055,
+    "low_5d": 23.829999923706055,
+    "low_10d": 23.829999923706055,
     "high_52w": 50.724998474121094,
     "low_52w": 13.15999984741211,
-    "atr14": 1.987285886492048,
-    "atr14_pct": 7.820881142958543,
-    "position_in_52w_range_pct": 32.6101436119584
+    "atr14": 1.8015717097691126,
+    "atr14_pct": 7.232323246907916,
+    "position_in_52w_range_pct": 31.279117342082547
   },
   "ohlc_2y": [
     {
@@ -4172,34 +4315,34 @@
       "high": 27.01,
       "low": 25.09,
       "close": 25.34,
-      "volume": 19704900.0
+      "volume": 19791300.0
     },
     {
       "date": "2026-08-31",
-      "open": 25.31,
+      "open": 25.26,
       "high": 25.495,
       "low": 24.83,
       "close": 25.41,
-      "volume": 11951658.0
+      "volume": 12020000.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 24.7,
+      "high": 25.085,
+      "low": 24.095,
+      "close": 24.29,
+      "volume": 15171000.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 23.954,
+      "high": 24.995,
+      "low": 23.83,
+      "close": 24.91,
+      "volume": 16799710.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 16.91,
-      "high": 17.29,
-      "low": 15.575,
-      "close": 15.98,
-      "volume": 28060900.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 15.13,
-      "high": 15.73,
-      "low": 14.46,
-      "close": 15.26,
-      "volume": 19251000.0
-    },
     {
       "date": "2025-09-03",
       "open": 15.39,
@@ -6190,15 +6333,31 @@
       "high": 27.01,
       "low": 25.09,
       "close": 25.34,
-      "volume": 19704900.0
+      "volume": 19791300.0
     },
     {
       "date": "2026-08-31",
-      "open": 25.31,
+      "open": 25.26,
       "high": 25.495,
       "low": 24.83,
       "close": 25.41,
-      "volume": 11951658.0
+      "volume": 12020000.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 24.7,
+      "high": 25.085,
+      "low": 24.095,
+      "close": 24.29,
+      "volume": 15171000.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 23.954,
+      "high": 24.995,
+      "low": 23.83,
+      "close": 24.91,
+      "volume": 16799710.0
     }
   ],
   "ai_synthesis": null,

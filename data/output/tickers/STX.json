@@ -1,46 +1,112 @@
 {
   "ticker": "STX",
-  "fetched_at": "2026-09-01T01:13:24Z",
+  "fetched_at": "2026-09-02T23:57:15Z",
   "_schema": "v2",
-  "current_price": 828.3800048828125,
+  "current_price": 808.5399780273438,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "STX",
+    "longName": "Seagate Technology Holdings plc",
+    "sector": "Technology",
+    "industry": "Computer Hardware",
+    "exchange": "NMS",
+    "country": "Singapore",
+    "city": "Singapore",
+    "website": "https://www.seagate.com",
+    "fullTimeEmployees": 30000,
+    "marketCap": 183251140608,
+    "enterpriseValue": 187280982016,
+    "trailingPE": 58.25216,
+    "forwardPE": 14.602123,
+    "priceToSalesTrailing12Months": 15.026743,
+    "enterpriseToRevenue": 15.357,
+    "priceToBook": 84.61957,
+    "grossMargins": 0.45576,
+    "operatingMargins": 0.4307,
+    "profitMargins": 0.26108998,
+    "returnOnEquity": 3.7152898,
+    "totalCash": 1704000000,
+    "totalDebt": 3897999872,
+    "totalRevenue": 12195000320,
+    "freeCashflow": 1943750016,
+    "debtToEquity": 179.88,
+    "currentRatio": 1.67,
+    "fiftyTwoWeekHigh": 1145.0,
+    "fiftyTwoWeekLow": 170.01,
+    "averageVolume": 4747960,
+    "averageVolume10days": 3352130,
+    "beta": 2.102,
+    "sharesOutstanding": 226644518,
+    "sharesFloat": 225971384,
+    "companyOfficers": [
+      {
+        "name": "Dr. William David Mosley Ph.D.",
+        "title": "CEO & Chairman",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Gianluca  Romano",
+        "title": "Executive VP & CFO",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Dr. John C. Morris",
+        "title": "Executive VP & CTO",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. James C. Lee J.D.",
+        "title": "Executive VP, Chief Legal Officer & Corporate Secretary",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Ban Seng Teh",
+        "title": "Executive VP & Chief Commercial Officer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Kian Fatt Chong",
+        "title": "Executive Vice President of Global Operations",
+        "age": 62,
+        "yearBorn": 1963
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 5.71,
+      "eps_estimate": 5.09418,
+      "eps_surprise_pct": 0.120900005
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 4.1,
+      "eps_estimate": 3.51146,
+      "eps_surprise_pct": 0.1676
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 3.11,
+      "eps_estimate": 2.83816,
+      "eps_surprise_pct": 0.0958
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 2.61,
+      "eps_estimate": 2.39986,
+      "eps_surprise_pct": 0.0876
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-27",
+    "revenue_low": 4027500000,
+    "revenue_high": 4212057210
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,17 +165,118 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 25,
+    "bullish": 21,
+    "neutral": 3,
+    "bearish": 1,
+    "avg_price_target": 1125.0,
+    "high_price_target": 1600.0,
+    "low_price_target": 700.0,
+    "current_price": 808.54,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-30T15:21:16",
+        "firm": "Argus Research",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T15:07:29",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T18:52:34",
+        "firm": "Morgan Stanley",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T18:39:25",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T17:43:22",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T17:02:14",
+        "firm": "Susquehanna",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T16:41:52",
+        "firm": "Wedbush",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T15:41:43",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T12:08:27",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-29T11:36:26",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-01T14:29:00Z",
+      "title": "Seagate's YTD Gains are Double the Industry: Is the Stock Still a Buy?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/seagates-ytd-gains-double-industry-142900001.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-01T13:22:00Z",
+      "title": "Will Quantum's Cost Discipline Keep Margins on an Upward Trajectory?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/quantums-cost-discipline-keep-margins-132200706.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-01T13:00:08Z",
+      "title": "Forget Nvidia. This AI Stock Is Selling the Storage Behind the Boom",
+      "url": "https://247wallst.com/investing/2026/09/01/forget-nvidia-this-ai-stock-is-selling-the-storage-behind-the-boom/",
+      "source": "24/7 Wall St."
+    },
     {
       "date": "2026-08-31T23:35:10Z",
       "title": "The Ceiling SanDisk Wrote Into Its Own Contracts",
       "url": "https://www.trefis.com/articles/613722/the-ceiling-sandisk-wrote-into-its-own-contracts/2026-08-31",
       "source": "Trefis"
+    },
+    {
+      "date": "2026-08-31T12:05:00Z",
+      "title": "These 5 ETFs Have Raked in Cash This Year\u2014What Do They All Have in Common?",
+      "url": "https://www.marketbeat.com/articles/these-5-etfs-have-raked-in-cash-this-yearwhat-do-they-all-have-in-common/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
     },
     {
       "date": "2026-08-31T05:04:20Z",
@@ -140,46 +307,22 @@
       "title": "4 High-Flying Memory & Storage Giants to Gain More Amid NVDA's Solid Q2",
       "url": "https://finance.yahoo.com/markets/stocks/articles/4-high-flying-memory-storage-125100276.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-28T11:30:03Z",
-      "title": "Seagate Stock Is Off 27%. Why It\u2019s Time to Buy the Dip in STX for 36% Upside.",
-      "url": "https://www.barchart.com/story/news/4307718/seagate-stock-is-off-27-why-its-time-to-buy-the-dip-in-stx-for-36-upside",
-      "source": "Barchart"
-    },
-    {
-      "date": "2026-08-28T01:19:10Z",
-      "title": "The Peer-Group Mispricing Sitting On SNDK Stock",
-      "url": "https://www.trefis.com/articles/613261/the-peer-group-mispricing-sitting-on-sndk-stock/2026-08-27",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-08-27T22:01:03Z",
-      "title": "AI Bubble Could Be Ready to Pop and Jim Cramer May Be the Warning Sign",
-      "url": "https://finance.yahoo.com/technology/ai/articles/ai-bubble-could-ready-pop-220103672.html",
-      "source": "Benzinga"
-    },
-    {
-      "date": "2026-08-27T15:30:22Z",
-      "title": "Seagate (STX) Up 10.7% Since Last Earnings Report: Can It Continue?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/seagate-stx-10-7-since-153022993.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04532861824521997,
   "technicals": {
-    "ma20": 857.1274993896484,
-    "ma50": 871.0568090820312,
-    "ma200": 581.7437967681885,
-    "rsi14": 46.85637681591147,
+    "ma20": 854.2360015869141,
+    "ma50": 860.9381994628907,
+    "ma200": 587.1544136810303,
+    "rsi14": 44.559305441305206,
     "high_20d": 1013.989990234375,
-    "low_5d": 800.1199951171875,
+    "low_5d": 785.6600952148438,
     "low_10d": 774.0,
     "high_52w": 1144.184150716912,
-    "low_52w": 162.51812127919573,
-    "atr14": 54.86214338030134,
-    "atr14_pct": 6.622823228098372,
-    "position_in_52w_range_pct": 67.82977750437311
+    "low_52w": 168.61775937470506,
+    "atr14": 50.272853306361604,
+    "atr14_pct": 6.2177325392142135,
+    "position_in_52w_range_pct": 65.59494303326899
   },
   "ohlc_2y": [
     {
@@ -187,7 +330,7 @@
       "open": 96.0509,
       "high": 96.0509,
       "low": 92.8765,
-      "close": 93.3783,
+      "close": 93.3782,
       "volume": 1670300.0
     },
     {
@@ -217,7 +360,7 @@
     {
       "date": "2024-09-09",
       "open": 95.8579,
-      "high": 97.8165,
+      "high": 97.8166,
       "low": 94.5361,
       "close": 97.778,
       "volume": 2318500.0
@@ -233,7 +376,7 @@
     {
       "date": "2024-09-11",
       "open": 98.7235,
-      "high": 99.1288,
+      "high": 99.1287,
       "low": 96.543,
       "close": 98.9261,
       "volume": 2373500.0
@@ -259,14 +402,14 @@
       "open": 98.2507,
       "high": 98.5112,
       "low": 97.4403,
-      "close": 97.8744,
+      "close": 97.8745,
       "volume": 1593500.0
     },
     {
       "date": "2024-09-17",
       "open": 98.7235,
       "high": 98.9261,
-      "low": 97.5367,
+      "low": 97.5368,
       "close": 98.4823,
       "volume": 1499300.0
     },
@@ -274,7 +417,7 @@
       "date": "2024-09-18",
       "open": 98.5884,
       "high": 99.8427,
-      "low": 97.1798,
+      "low": 97.1797,
       "close": 97.3824,
       "volume": 1833300.0
     },
@@ -283,7 +426,7 @@
       "open": 99.8524,
       "high": 100.7979,
       "low": 98.984,
-      "close": 100.4602,
+      "close": 100.4603,
       "volume": 1507100.0
     },
     {
@@ -385,25 +528,25 @@
     {
       "date": "2024-10-08",
       "open": 103.9045,
-      "high": 105.8277,
+      "high": 105.8278,
       "low": 103.448,
-      "close": 105.5363,
+      "close": 105.5364,
       "volume": 1551400.0
     },
     {
       "date": "2024-10-09",
-      "open": 105.9735,
-      "high": 106.2552,
+      "open": 105.9734,
+      "high": 106.2551,
       "low": 102.5252,
       "close": 106.158,
       "volume": 3410500.0
     },
     {
       "date": "2024-10-10",
-      "open": 104.6621,
+      "open": 104.6622,
       "high": 105.6141,
       "low": 103.4577,
-      "close": 105.0215,
+      "close": 105.0216,
       "volume": 1255900.0
     },
     {
@@ -523,15 +666,15 @@
       "open": 96.5709,
       "high": 98.3096,
       "low": 96.0755,
-      "close": 97.4936,
+      "close": 97.4937,
       "volume": 2708500.0
     },
     {
       "date": "2024-11-01",
       "open": 96.736,
       "high": 98.0862,
-      "low": 95.8326,
-      "close": 96.2697,
+      "low": 95.8327,
+      "close": 96.2698,
       "volume": 2001600.0
     },
     {
@@ -571,7 +714,7 @@
       "open": 102.4475,
       "high": 103.1954,
       "low": 101.2042,
-      "close": 101.7773,
+      "close": 101.7772,
       "volume": 1329800.0
     },
     {
@@ -585,7 +728,7 @@
     {
       "date": "2024-11-12",
       "open": 98.0279,
-      "high": 99.3101,
+      "high": 99.31,
       "low": 95.9201,
       "close": 96.94,
       "volume": 2064800.0
@@ -642,7 +785,7 @@
       "date": "2024-11-21",
       "open": 95.9201,
       "high": 97.3382,
-      "low": 95.2595,
+      "low": 95.2596,
       "close": 97.0565,
       "volume": 1744500.0
     },
@@ -681,7 +824,7 @@
     {
       "date": "2024-11-29",
       "open": 97.1342,
-      "high": 99.3877,
+      "high": 99.3878,
       "low": 97.1051,
       "close": 98.4261,
       "volume": 1460300.0
@@ -955,12 +1098,12 @@
       "open": 106.3008,
       "high": 109.5105,
       "low": 103.5902,
-      "close": 105.8605,
+      "close": 105.8604,
       "volume": 9814200.0
     },
     {
       "date": "2025-01-23",
-      "open": 105.107,
+      "open": 105.1069,
       "high": 106.2029,
       "low": 103.6489,
       "close": 106.0953,
@@ -977,7 +1120,7 @@
     {
       "date": "2025-01-27",
       "open": 102.8465,
-      "high": 104.7058,
+      "high": 104.7057,
       "low": 100.1261,
       "close": 101.2612,
       "volume": 4188600.0
@@ -1018,14 +1161,14 @@
       "date": "2025-02-03",
       "open": 92.5716,
       "high": 93.5795,
-      "low": 90.9179,
+      "low": 90.9178,
       "close": 91.4756,
       "volume": 3437000.0
     },
     {
       "date": "2025-02-04",
       "open": 90.8885,
-      "high": 92.7575,
+      "high": 92.7576,
       "low": 90.6928,
       "close": 92.4836,
       "volume": 2909700.0
@@ -1049,7 +1192,7 @@
     {
       "date": "2025-02-07",
       "open": 94.9789,
-      "high": 96.1433,
+      "high": 96.1434,
       "low": 93.4132,
       "close": 94.0884,
       "volume": 1976100.0
@@ -1234,7 +1377,7 @@
       "date": "2025-03-13",
       "open": 84.9291,
       "high": 85.5651,
-      "low": 83.1774,
+      "low": 83.1775,
       "close": 83.7842,
       "volume": 1573500.0
     },
@@ -1363,7 +1506,7 @@
       "open": 67.738,
       "high": 67.7578,
       "low": 63.0913,
-      "close": 65.834,
+      "close": 65.8339,
       "volume": 9249900.0
     },
     {
@@ -1376,7 +1519,7 @@
     },
     {
       "date": "2025-04-08",
-      "open": 70.0367,
+      "open": 70.0368,
       "high": 71.4574,
       "low": 64.5317,
       "close": 65.6465,
@@ -1481,7 +1624,7 @@
     {
       "date": "2025-04-28",
       "open": 81.1061,
-      "high": 81.7769,
+      "high": 81.777,
       "low": 79.4782,
       "close": 81.0568,
       "volume": 2895700.0
@@ -1514,8 +1657,8 @@
       "date": "2025-05-02",
       "open": 90.3207,
       "high": 92.0373,
-      "low": 90.0642,
-      "close": 91.8203,
+      "low": 90.0641,
+      "close": 91.8202,
       "volume": 3409300.0
     },
     {
@@ -1601,7 +1744,7 @@
     {
       "date": "2025-05-19",
       "open": 104.4878,
-      "high": 108.1973,
+      "high": 108.1974,
       "low": 104.2412,
       "close": 107.5758,
       "volume": 3286200.0
@@ -1624,9 +1767,9 @@
     },
     {
       "date": "2025-05-22",
-      "open": 104.6556,
+      "open": 104.6555,
       "high": 109.9732,
-      "low": 103.9354,
+      "low": 103.9353,
       "close": 107.3982,
       "volume": 8056800.0
     },
@@ -1640,10 +1783,10 @@
     },
     {
       "date": "2025-05-27",
-      "open": 112.341,
+      "open": 112.3409,
       "high": 115.7841,
       "low": 111.6799,
-      "close": 115.4783,
+      "close": 115.4782,
       "volume": 4485900.0
     },
     {
@@ -1666,7 +1809,7 @@
       "date": "2025-05-30",
       "open": 115.5966,
       "high": 117.5303,
-      "low": 115.1033,
+      "low": 115.1034,
       "close": 116.3563,
       "volume": 4352600.0
     },
@@ -1675,7 +1818,7 @@
       "open": 115.4388,
       "high": 118.1519,
       "low": 115.2119,
-      "close": 117.5501,
+      "close": 117.55,
       "volume": 3097600.0
     },
     {
@@ -1688,9 +1831,9 @@
     },
     {
       "date": "2025-06-04",
-      "open": 122.0685,
+      "open": 122.0686,
       "high": 125.9754,
-      "low": 122.0685,
+      "low": 122.0686,
       "close": 125.926,
       "volume": 5769200.0
     },
@@ -1699,7 +1842,7 @@
       "open": 126.1924,
       "high": 128.205,
       "low": 125.6498,
-      "close": 125.9853,
+      "close": 125.9852,
       "volume": 4765100.0
     },
     {
@@ -1745,7 +1888,7 @@
     {
       "date": "2025-06-13",
       "open": 123.4892,
-      "high": 126.5871,
+      "high": 126.587,
       "low": 122.9565,
       "close": 125.561,
       "volume": 3000800.0
@@ -1761,15 +1904,15 @@
     {
       "date": "2025-06-17",
       "open": 128.6983,
-      "high": 131.7073,
-      "low": 128.2543,
+      "high": 131.7074,
+      "low": 128.2544,
       "close": 129.1127,
       "volume": 3410800.0
     },
     {
       "date": "2025-06-18",
-      "open": 129.1127,
-      "high": 131.9639,
+      "open": 129.1126,
+      "high": 131.9638,
       "low": 128.6095,
       "close": 129.5369,
       "volume": 2816800.0
@@ -1792,7 +1935,7 @@
     },
     {
       "date": "2025-06-24",
-      "open": 132.2007,
+      "open": 132.2006,
       "high": 135.6931,
       "low": 132.0527,
       "close": 134.4796,
@@ -1848,9 +1991,9 @@
     },
     {
       "date": "2025-07-03",
-      "open": 150.7552,
+      "open": 150.7553,
       "high": 150.9139,
-      "low": 148.0178,
+      "low": 148.0179,
       "close": 148.2162,
       "volume": 3619700.0
     },
@@ -1888,9 +2031,9 @@
     },
     {
       "date": "2025-07-11",
-      "open": 142.8208,
+      "open": 142.8207,
       "high": 146.6987,
-      "low": 142.3249,
+      "low": 142.3248,
       "close": 145.9747,
       "volume": 2868600.0
     },
@@ -1931,7 +2074,7 @@
       "open": 146.4012,
       "high": 148.6824,
       "low": 145.0226,
-      "close": 147.8493,
+      "close": 147.8492,
       "volume": 3336500.0
     },
     {
@@ -1952,8 +2095,8 @@
     },
     {
       "date": "2025-07-23",
-      "open": 145.945,
-      "high": 151.5785,
+      "open": 145.9449,
+      "high": 151.5784,
       "low": 145.7962,
       "close": 151.509,
       "volume": 4024900.0
@@ -1995,12 +2138,12 @@
       "open": 139.8453,
       "high": 147.3236,
       "low": 137.1674,
-      "close": 146.2128,
+      "close": 146.2127,
       "volume": 12025100.0
     },
     {
       "date": "2025-07-31",
-      "open": 147.0856,
+      "open": 147.0855,
       "high": 156.1606,
       "low": 145.697,
       "close": 155.7242,
@@ -2056,9 +2199,9 @@
     },
     {
       "date": "2025-08-11",
-      "open": 150.3685,
+      "open": 150.3684,
       "high": 154.8217,
-      "low": 149.9916,
+      "low": 149.9915,
       "close": 150.4478,
       "volume": 2759400.0
     },
@@ -2067,7 +2210,7 @@
       "open": 150.9834,
       "high": 156.7061,
       "low": 150.9834,
-      "close": 154.3158,
+      "close": 154.3159,
       "volume": 2361600.0
     },
     {
@@ -2120,7 +2263,7 @@
     },
     {
       "date": "2025-08-21",
-      "open": 156.9441,
+      "open": 156.9442,
       "high": 158.055,
       "low": 151.7768,
       "close": 153.334,
@@ -2186,7 +2329,7 @@
       "date": "2025-09-03",
       "open": 169.6988,
       "high": 175.0447,
-      "low": 168.6177,
+      "low": 168.6178,
       "close": 174.8761,
       "volume": 3790400.0
     },
@@ -2208,7 +2351,7 @@
     },
     {
       "date": "2025-09-08",
-      "open": 188.4342,
+      "open": 188.4341,
       "high": 189.9516,
       "low": 185.6471,
       "close": 187.6903,
@@ -2227,7 +2370,7 @@
       "open": 191.4294,
       "high": 192.2129,
       "low": 188.3449,
-      "close": 191.4592,
+      "close": 191.4591,
       "volume": 4343800.0
     },
     {
@@ -2282,7 +2425,7 @@
       "date": "2025-09-19",
       "open": 216.6412,
       "high": 219.8448,
-      "low": 214.2311,
+      "low": 214.2312,
       "close": 219.4183,
       "volume": 4834900.0
     },
@@ -2409,9 +2552,9 @@
     {
       "date": "2025-10-13",
       "open": 224.418,
-      "high": 224.5076,
+      "high": 224.5075,
       "low": 215.4138,
-      "close": 218.3987,
+      "close": 218.3986,
       "volume": 3348800.0
     },
     {
@@ -2466,7 +2609,7 @@
       "date": "2025-10-22",
       "open": 212.5882,
       "high": 218.2096,
-      "low": 207.9418,
+      "low": 207.9419,
       "close": 213.9612,
       "volume": 2925200.0
     },
@@ -2482,7 +2625,7 @@
       "date": "2025-10-24",
       "open": 232.8949,
       "high": 239.6306,
-      "low": 229.3628,
+      "low": 229.3629,
       "close": 232.9347,
       "volume": 3664000.0
     },
@@ -2505,7 +2648,7 @@
     {
       "date": "2025-10-29",
       "open": 239.3023,
-      "high": 267.5486,
+      "high": 267.5485,
       "low": 238.8446,
       "close": 264.2752,
       "volume": 9900800.0
@@ -2514,7 +2657,7 @@
       "date": "2025-10-30",
       "open": 256.9027,
       "high": 273.0903,
-      "low": 256.6937,
+      "low": 256.6938,
       "close": 266.9814,
       "volume": 7175700.0
     },
@@ -2539,7 +2682,7 @@
       "open": 253.7686,
       "high": 259.002,
       "low": 248.2169,
-      "close": 249.1124,
+      "close": 249.1123,
       "volume": 3438000.0
     },
     {
@@ -2664,7 +2807,7 @@
     },
     {
       "date": "2025-11-26",
-      "open": 263.3201,
+      "open": 263.32,
       "high": 273.6077,
       "low": 261.3899,
       "close": 270.9015,
@@ -2720,9 +2863,9 @@
     },
     {
       "date": "2025-12-08",
-      "open": 279.5774,
+      "open": 279.5773,
       "high": 286.8105,
-      "low": 277.2592,
+      "low": 277.2591,
       "close": 283.965,
       "volume": 3469000.0
     },
@@ -2736,7 +2879,7 @@
     },
     {
       "date": "2025-12-10",
-      "open": 282.2636,
+      "open": 282.2637,
       "high": 299.9437,
       "low": 279.8758,
       "close": 297.4066,
@@ -2744,7 +2887,7 @@
     },
     {
       "date": "2025-12-11",
-      "open": 292.81,
+      "open": 292.8099,
       "high": 307.3659,
       "low": 287.1687,
       "close": 306.2914,
@@ -2802,8 +2945,8 @@
       "date": "2025-12-22",
       "open": 299.7248,
       "high": 300.471,
-      "low": 277.5874,
-      "close": 281.4179,
+      "low": 277.5875,
+      "close": 281.418,
       "volume": 4340400.0
     },
     {
@@ -4180,31 +4323,31 @@
       "high": 830.68,
       "low": 808.49,
       "close": 828.38,
-      "volume": 3453714.0
+      "volume": 3458600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 810.26,
+      "high": 832.76,
+      "low": 802.05,
+      "close": 816.64,
+      "volume": 2421300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 805.86,
+      "high": 835.4,
+      "low": 785.6601,
+      "close": 808.54,
+      "volume": 2656324.0
     }
   ],
   "ohlc_1y": [
     {
-      "date": "2025-08-29",
-      "open": 170.651,
-      "high": 171.9998,
-      "low": 165.2952,
-      "close": 166.0291,
-      "volume": 2798500.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 163.0636,
-      "high": 169.3517,
-      "low": 162.5181,
-      "close": 169.1037,
-      "volume": 3175400.0
-    },
-    {
       "date": "2025-09-03",
       "open": 169.6988,
       "high": 175.0447,
-      "low": 168.6177,
+      "low": 168.6178,
       "close": 174.8761,
       "volume": 3790400.0
     },
@@ -4226,7 +4369,7 @@
     },
     {
       "date": "2025-09-08",
-      "open": 188.4342,
+      "open": 188.4341,
       "high": 189.9516,
       "low": 185.6471,
       "close": 187.6903,
@@ -4245,7 +4388,7 @@
       "open": 191.4294,
       "high": 192.2129,
       "low": 188.3449,
-      "close": 191.4592,
+      "close": 191.4591,
       "volume": 4343800.0
     },
     {
@@ -4300,7 +4443,7 @@
       "date": "2025-09-19",
       "open": 216.6412,
       "high": 219.8448,
-      "low": 214.2311,
+      "low": 214.2312,
       "close": 219.4183,
       "volume": 4834900.0
     },
@@ -4427,9 +4570,9 @@
     {
       "date": "2025-10-13",
       "open": 224.418,
-      "high": 224.5076,
+      "high": 224.5075,
       "low": 215.4138,
-      "close": 218.3987,
+      "close": 218.3986,
       "volume": 3348800.0
     },
     {
@@ -4484,7 +4627,7 @@
       "date": "2025-10-22",
       "open": 212.5882,
       "high": 218.2096,
-      "low": 207.9418,
+      "low": 207.9419,
       "close": 213.9612,
       "volume": 2925200.0
     },
@@ -4500,7 +4643,7 @@
       "date": "2025-10-24",
       "open": 232.8949,
       "high": 239.6306,
-      "low": 229.3628,
+      "low": 229.3629,
       "close": 232.9347,
       "volume": 3664000.0
     },
@@ -4523,7 +4666,7 @@
     {
       "date": "2025-10-29",
       "open": 239.3023,
-      "high": 267.5486,
+      "high": 267.5485,
       "low": 238.8446,
       "close": 264.2752,
       "volume": 9900800.0
@@ -4532,7 +4675,7 @@
       "date": "2025-10-30",
       "open": 256.9027,
       "high": 273.0903,
-      "low": 256.6937,
+      "low": 256.6938,
       "close": 266.9814,
       "volume": 7175700.0
     },
@@ -4557,7 +4700,7 @@
       "open": 253.7686,
       "high": 259.002,
       "low": 248.2169,
-      "close": 249.1124,
+      "close": 249.1123,
       "volume": 3438000.0
     },
     {
@@ -4682,7 +4825,7 @@
     },
     {
       "date": "2025-11-26",
-      "open": 263.3201,
+      "open": 263.32,
       "high": 273.6077,
       "low": 261.3899,
       "close": 270.9015,
@@ -4738,9 +4881,9 @@
     },
     {
       "date": "2025-12-08",
-      "open": 279.5774,
+      "open": 279.5773,
       "high": 286.8105,
-      "low": 277.2592,
+      "low": 277.2591,
       "close": 283.965,
       "volume": 3469000.0
     },
@@ -4754,7 +4897,7 @@
     },
     {
       "date": "2025-12-10",
-      "open": 282.2636,
+      "open": 282.2637,
       "high": 299.9437,
       "low": 279.8758,
       "close": 297.4066,
@@ -4762,7 +4905,7 @@
     },
     {
       "date": "2025-12-11",
-      "open": 292.81,
+      "open": 292.8099,
       "high": 307.3659,
       "low": 287.1687,
       "close": 306.2914,
@@ -4820,8 +4963,8 @@
       "date": "2025-12-22",
       "open": 299.7248,
       "high": 300.471,
-      "low": 277.5874,
-      "close": 281.4179,
+      "low": 277.5875,
+      "close": 281.418,
       "volume": 4340400.0
     },
     {
@@ -6198,7 +6341,23 @@
       "high": 830.68,
       "low": 808.49,
       "close": 828.38,
-      "volume": 3453714.0
+      "volume": 3458600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 810.26,
+      "high": 832.76,
+      "low": 802.05,
+      "close": 816.64,
+      "volume": 2421300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 805.86,
+      "high": 835.4,
+      "low": 785.6601,
+      "close": 808.54,
+      "volume": 2656324.0
     }
   ],
   "ai_synthesis": null,

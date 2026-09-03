@@ -1,8 +1,8 @@
 {
   "ticker": "MDB",
-  "fetched_at": "2026-09-01T01:17:53Z",
+  "fetched_at": "2026-09-03T00:01:36Z",
   "_schema": "v2",
-  "current_price": 453.3699951171875,
+  "current_price": 375.4,
   "info": {
     "symbol": "MDB",
     "longName": "MongoDB, Inc.",
@@ -13,13 +13,13 @@
     "city": "New York",
     "website": "https://www.mongodb.com",
     "fullTimeEmployees": 5636,
-    "marketCap": 36465422336,
-    "enterpriseValue": 34108166144,
-    "trailingPE": null,
-    "forwardPE": 61.75777,
-    "priceToSalesTrailing12Months": 14.012234,
-    "enterpriseToRevenue": 13.106,
-    "priceToBook": 12.435405,
+    "marketCap": 30194145280,
+    "enterpriseValue": 32555829248,
+    "trailingPE": 544.058,
+    "forwardPE": 48.438644,
+    "priceToSalesTrailing12Months": 11.6024275,
+    "enterpriseToRevenue": 12.51,
+    "priceToBook": 10.29678,
     "grossMargins": 0.71970004,
     "operatingMargins": -0.03607,
     "profitMargins": -0.01118,
@@ -32,8 +32,8 @@
     "currentRatio": 4.949,
     "fiftyTwoWeekHigh": 473.1,
     "fiftyTwoWeekLow": 215.68,
-    "averageVolume": 1605511,
-    "averageVolume10days": 1271310,
+    "averageVolume": 1542098,
+    "averageVolume10days": 1523720,
     "beta": 1.545,
     "sharesOutstanding": 80431927,
     "sharesFloat": 78327828,
@@ -78,6 +78,12 @@
   },
   "earnings_history": [
     {
+      "period_end": "2026-07-31T00:00:00",
+      "eps_actual": 1.9,
+      "eps_estimate": 1.60897,
+      "eps_surprise_pct": 0.18090001
+    },
+    {
       "period_end": "2026-04-30T00:00:00",
       "eps_actual": 1.32,
       "eps_estimate": 1.18348,
@@ -94,18 +100,12 @@
       "eps_actual": 1.32,
       "eps_estimate": 0.79405,
       "eps_surprise_pct": 0.6624
-    },
-    {
-      "period_end": "2025-07-31T00:00:00",
-      "eps_actual": 1.0,
-      "eps_estimate": 0.6562,
-      "eps_surprise_pct": 0.5239
     }
   ],
   "next_earnings": {
-    "date": "2026-09-01",
-    "revenue_low": 730000000,
-    "revenue_high": 754803810
+    "date": "2026-12-01",
+    "revenue_low": 758100000,
+    "revenue_high": 778000000
   },
   "quarterly_metrics": [
     {
@@ -170,77 +170,77 @@
     "bullish": 31,
     "neutral": 9,
     "bearish": 0,
-    "avg_price_target": 441.69296,
+    "avg_price_target": 453.90918,
     "high_price_target": 560.0,
     "low_price_target": 272.64,
-    "current_price": 453.37,
+    "current_price": 375.4,
     "recent_rating_changes": [
       {
-        "date": "2026-08-25T12:33:04",
-        "firm": "Wells Fargo",
+        "date": "2026-09-02T19:12:30",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Outperform",
+        "from_grade": "Sector Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-02T18:39:52",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-02T17:25:45",
+        "firm": "Goldman Sachs",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-02T16:05:03",
+        "firm": "Piper Sandler",
         "to_grade": "Overweight",
         "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-09-02T15:49:24",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
         "action": "main"
       },
       {
-        "date": "2026-08-25T10:34:13",
-        "firm": "Baird",
-        "to_grade": "Neutral",
-        "from_grade": "Neutral",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-24T14:53:53",
+        "date": "2026-09-02T13:53:34",
         "firm": "UBS",
         "to_grade": "Neutral",
         "from_grade": "Neutral",
         "action": "main"
       },
       {
-        "date": "2026-08-21T12:57:11",
-        "firm": "Evercore ISI Group",
-        "to_grade": "Outperform",
-        "from_grade": null,
-        "action": "init"
+        "date": "2026-09-02T13:30:39",
+        "firm": "DA Davidson",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
       },
       {
-        "date": "2026-08-20T17:20:30",
+        "date": "2026-09-02T13:27:05",
         "firm": "BMO Capital",
         "to_grade": "Outperform",
         "from_grade": "Outperform",
         "action": "main"
       },
       {
-        "date": "2026-08-20T17:02:15",
-        "firm": "Truist Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-19T13:36:23",
-        "firm": "Citizens",
-        "to_grade": "Market Outperform",
-        "from_grade": "Market Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-18T12:21:54",
-        "firm": "Guggenheim",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-08-13T14:26:09",
-        "firm": "RBC Capital",
+        "date": "2026-09-02T13:22:07",
+        "firm": "Bernstein",
         "to_grade": "Outperform",
         "from_grade": "Outperform",
         "action": "main"
       },
       {
-        "date": "2026-08-12T14:56:41",
-        "firm": "Oppenheimer",
+        "date": "2026-09-02T13:14:06",
+        "firm": "Mizuho",
         "to_grade": "Outperform",
         "from_grade": "Outperform",
         "action": "main"
@@ -249,80 +249,78 @@
   },
   "news": [
     {
-      "date": "2026-08-31T17:43:00Z",
-      "title": "MongoDB heads into Q2 print with AI upside still unproven",
-      "url": "https://www.proactiveinvestors.com/companies/news/1097857/mongodb-heads-into-q2-print-with-ai-upside-still-unproven-1097857.html",
-      "source": "Proactive"
+      "date": "2026-09-02T23:39:07Z",
+      "title": "Dow Jones Futures: Snowflake, Broadcom, HPE Are Big Earnings Movers; Tesla Cybercab Event Due",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-snowflake-broadcom-hpe-earnings-tesla-cybercab-event/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
     },
     {
-      "date": "2026-08-31T14:54:24Z",
-      "title": "MongoDB (MDB) Q2 Earnings: What To Expect",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/mongodb-mdb-q2-earnings-expect-145424132.html",
-      "source": "StockStory"
+      "date": "2026-09-02T20:32:00Z",
+      "title": "MongoDB Earnings Beat Expectations. Why the Stock Is Dropping Anyway.",
+      "url": "https://www.barrons.com/articles/mongodb-earnings-stock-price-1cf2087e?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
     },
     {
-      "date": "2026-08-31T13:48:00Z",
-      "title": "Dow slips, Nasdaq edges lower as August ends in green",
-      "url": "https://www.proactiveinvestors.com/companies/news/1097847/dow-falls-as-us-strikes-iran-rate-hike-bets-jump-1097847.html",
-      "source": "Proactive"
+      "date": "2026-09-02T20:21:00Z",
+      "title": "Credo, Dell, Palo Alto, PG&E, Uber, MongoDB, and More Stocks That Explain Today\u2019s Market",
+      "url": "https://www.barrons.com/articles/stock-movers-4fed2750?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
     },
     {
-      "date": "2026-08-31T11:11:27Z",
-      "title": "Oil Outlook Weighs on Wall Street Pre-Bell; Asia Mixed, Europe Off",
-      "url": "https://finance.yahoo.com/markets/articles/oil-outlook-weighs-wall-street-111127924.html",
-      "source": "MT Newswires"
+      "date": "2026-09-02T18:40:53Z",
+      "title": "MongoDB Beat Every Estimate and Raised Guidance, Then Lost 13.6% in a Single Session",
+      "url": "https://247wallst.com/investing/2026/09/02/mongodb-beat-every-estimate-and-raised-guidance-then-lost-13-6-in-a-single-session/",
+      "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-31T07:13:23Z",
-      "title": "Jobs Report, New Apple CEO: What to Watch This Week",
-      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-08-31-2026/card/jobs-report-new-apple-ceo-what-to-watch-this-week-cNx7SniyXeq1H7wIhP2A?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
-    },
-    {
-      "date": "2026-08-29T02:38:54Z",
-      "title": "MongoDB at a Crossroads: Wall Street Firm Lifts Target but Stays Neutral as AI Story Awaits Proof",
-      "url": "https://finance.yahoo.com/technology/ai/articles/mongodb-crossroads-wall-street-firm-023854533.html",
+      "date": "2026-09-02T16:38:44Z",
+      "title": "Rosenblatt Raises MongoDB (MDB) Price Target Despite Atlas Growth Concerns",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/rosenblatt-raises-mongodb-mdb-price-163844853.html",
       "source": "Insider Monkey"
     },
     {
-      "date": "2026-08-28T22:15:02Z",
-      "title": "MongoDB (MDB) Increases Despite Market Slip: Here's What You Need to Know",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/mongodb-mdb-increases-despite-market-221502052.html",
+      "date": "2026-09-02T15:36:24Z",
+      "title": "Why MongoDB Stock Crashed Wednesday Morning",
+      "url": "https://www.fool.com/investing/2026/09/02/why-mongodb-stock-crashed-wednesday-morning/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-02T14:37:00Z",
+      "title": "MongoDB Q2 Earnings Call Highlights Atlas Strength and AI Traction",
+      "url": "https://finance.yahoo.com/technology/ai/articles/mongodb-q2-earnings-call-highlights-143700076.html",
       "source": "Zacks"
     },
     {
-      "date": "2026-08-28T14:16:00Z",
-      "title": "MongoDB's Q2 Earnings Ahead: What's in Store for the Stock?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/mongodbs-q2-earnings-ahead-whats-141600397.html",
+      "date": "2026-09-02T14:22:00Z",
+      "title": "MDB Q2 Earnings Beat Estimates on Atlas & EA Strength, Outlook Raised",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/mdb-q2-earnings-beat-estimates-142200400.html",
       "source": "Zacks"
     },
     {
-      "date": "2026-08-28T05:53:07Z",
-      "title": "Paylocity, MongoDB, Datadog, Five9, and monday.com Stocks Trade Up, What You Need To Know",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/paylocity-mongodb-datadog-five9-monday-055307084.html",
-      "source": "StockStory"
+      "date": "2026-09-02T13:24:19Z",
+      "title": "MongoDB Stock Tumbles Despite An Earnings Beat. Here's Why.",
+      "url": "https://www.investors.com/news/technology/mongodb-stock-q2-2026-earnings-report/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
     },
     {
-      "date": "2026-08-27T13:15:04Z",
-      "title": "Ahead of MongoDB (MDB) Q2 Earnings: Get Ready With Wall Street Estimates for Key Metrics",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ahead-mongodb-mdb-q2-earnings-131504908.html",
-      "source": "Zacks"
+      "date": "2026-09-02T13:15:59Z",
+      "title": "MongoDB\u2019s Impressive Results Can\u2019t Stop Stock Decline",
+      "url": "https://www.investopedia.com/market-update-mongodb-stock-drops-despite-strong-results-mdb-12076602",
+      "source": "Investopedia"
     }
   ],
-  "options_implied_move": 0.17164788327001,
+  "options_implied_move": 0.04808204581779436,
   "technicals": {
-    "ma20": 423.54099731445314,
-    "ma50": 366.9225994873047,
-    "ma200": 341.6777498626709,
-    "rsi14": 64.40754882324534,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 58.107301785514316,
     "high_20d": 473.1000061035156,
     "low_5d": 388.0799865722656,
     "low_10d": 388.0799865722656,
     "high_52w": 473.1000061035156,
     "low_52w": 215.67999267578125,
-    "atr14": 21.949855259486608,
-    "atr14_pct": 4.841488297833426,
-    "position_in_52w_range_pct": 92.33547900040533
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4310,31 +4308,31 @@
       "volume": 1798600.0
     },
     {
-      "date": "2026-08-28",
-      "open": 440.955,
-      "high": 457.85,
-      "low": 440.09,
-      "close": 446.62,
-      "volume": 1448500.0
-    },
-    {
       "date": "2026-08-31",
-      "open": 444.0,
+      "open": 443.71,
       "high": 455.97,
       "low": 441.52,
       "close": 453.37,
-      "volume": 1741562.0
+      "volume": 1753500.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 443.19,
+      "high": 448.681,
+      "low": 430.525,
+      "close": 434.21,
+      "volume": 3603200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 7350743.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 314.415,
-      "high": 321.92,
-      "low": 308.39,
-      "close": 315.61,
-      "volume": 5695500.0
-    },
     {
       "date": "2025-09-02",
       "open": 310.0,
@@ -6328,20 +6326,28 @@
       "volume": 1798600.0
     },
     {
-      "date": "2026-08-28",
-      "open": 440.955,
-      "high": 457.85,
-      "low": 440.09,
-      "close": 446.62,
-      "volume": 1448500.0
-    },
-    {
       "date": "2026-08-31",
-      "open": 444.0,
+      "open": 443.71,
       "high": 455.97,
       "low": 441.52,
       "close": 453.37,
-      "volume": 1741562.0
+      "volume": 1753500.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 443.19,
+      "high": 448.681,
+      "low": 430.525,
+      "close": 434.21,
+      "volume": 3603200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 7350743.0
     }
   ],
   "ai_synthesis": null,

@@ -1,46 +1,106 @@
 {
   "ticker": "AGRO",
-  "fetched_at": "2026-09-01T01:14:50Z",
+  "fetched_at": "2026-09-02T23:58:36Z",
   "_schema": "v2",
-  "current_price": 11.380000114440918,
+  "current_price": 11.779999732971191,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
+    "symbol": "AGRO",
+    "longName": "Adecoagro S.A.",
+    "sector": "Consumer Defensive",
+    "industry": "Farm Products",
+    "exchange": "NYQ",
+    "country": "Luxembourg",
+    "city": "Luxembourg City",
+    "website": "https://www.adecoagro.com",
     "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "marketCap": 1699947776,
+    "enterpriseValue": 3876916736,
+    "trailingPE": 31.0,
+    "forwardPE": 9.441524,
+    "priceToSalesTrailing12Months": 1.0303719,
+    "enterpriseToRevenue": 2.35,
+    "priceToBook": 0.9767827,
+    "grossMargins": 0.2591,
+    "operatingMargins": 0.16995001,
+    "profitMargins": 0.02999,
+    "returnOnEquity": 0.03686,
+    "totalCash": 330507008,
+    "totalDebt": 2334685952,
+    "totalRevenue": 1649838976,
+    "freeCashflow": -128340872,
+    "debtToEquity": 124.279,
+    "currentRatio": 1.729,
+    "fiftyTwoWeekHigh": 15.89,
+    "fiftyTwoWeekLow": 6.89,
+    "averageVolume": 861536,
+    "averageVolume10days": 1012240,
+    "beta": -0.058,
+    "sharesOutstanding": 144307966,
+    "sharesFloat": 32838721,
+    "companyOfficers": [
+      {
+        "name": "Mr. Mariano  Bosch",
+        "title": "Co-Founder, CEO & Director",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Ezequiel  Garbers",
+        "title": "Co-Founder and VP of Crops & Rice Businesses for Argentina & Uruguay",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Mr. Emilio Federico Gnecco",
+        "title": "Chief Financial Officer",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. Juan  Jose-Pineyro Sartori CFA",
+        "title": "Executive Chairman",
+        "age": 44,
+        "yearBorn": 1981
+      },
+      {
+        "name": "Ms. Victoria  Cabello",
+        "title": "Investor Relations Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Josefina Diaz Vega",
+        "title": "General Counsel",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.125,
+      "eps_estimate": 0.19926,
+      "eps_surprise_pct": -0.3727
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.28,
+      "eps_estimate": 0.06721,
+      "eps_surprise_pct": 3.1660001
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.152,
+      "eps_estimate": -0.08662,
+      "eps_surprise_pct": -0.7548
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-11",
+    "revenue_low": 557943960,
+    "revenue_high": 770482320
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -104,11 +164,18 @@
     "bullish": 1,
     "neutral": 5,
     "bearish": 1,
-    "avg_price_target": 13.13571,
+    "avg_price_target": 13.17143,
     "high_price_target": 16.0,
     "low_price_target": 10.5,
-    "current_price": 11.38,
+    "current_price": 11.78,
     "recent_rating_changes": [
+      {
+        "date": "2026-08-27T14:53:52",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
       {
         "date": "2026-06-15T15:09:56",
         "firm": "JP Morgan",
@@ -171,17 +238,28 @@
         "to_grade": "Underweight",
         "from_grade": "Equal-Weight",
         "action": "down"
-      },
-      {
-        "date": "2024-10-14T13:08:34",
-        "firm": "UBS",
-        "to_grade": "Neutral",
-        "from_grade": null,
-        "action": "init"
       }
     ]
   },
   "news": [
+    {
+      "date": "2026-09-02T14:14:00Z",
+      "title": "Can Flavors Keep Driving Archer Daniels' Human Nutrition Growth?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/flavors-keep-driving-archer-daniels-141400756.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-01T15:16:00Z",
+      "title": "Here's Why the Calavo Integration Matters for Mission Produce's Growth",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/heres-why-calavo-integration-matters-151600788.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-01T09:44:22Z",
+      "title": "Tether CEO Posts \u201cStable Cow\u201d GIF \u2014 And Confirms a 70% Stake in a Farming Giant",
+      "url": "https://beincrypto.com/tether-stable-cows-adecoagro-bitcoin-mining/",
+      "source": "BeInCrypto"
+    },
     {
       "date": "2026-08-26T14:57:00Z",
       "title": "AVO Stock Looks Expensive: Buy Now or Wait for Better Entry Point?",
@@ -223,40 +301,22 @@
       "title": "Corteva Growth Improves, But Valuation Limits Upside",
       "url": "https://finance.yahoo.com/markets/stocks/articles/corteva-growth-improves-valuation-limits-181500993.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-12T17:04:53Z",
-      "title": "Adecoagro Q2 Earnings Call Highlights",
-      "url": "https://www.marketbeat.com/instant-alerts/adecoagro-q2-earnings-call-highlights-2026-08-12/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-07T15:49:00Z",
-      "title": "Archer Daniels Earnings Boost Biofuels and Crush Capacity Growth Prospects Now",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/archer-daniels-earnings-boost-biofuels-154900491.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-07T15:43:00Z",
-      "title": "ADM Stock: Growth Gains vs. Valuation and Execution Risks Remain Ahead",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/adm-stock-growth-gains-vs-154300415.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": 0.13620386506262783,
+  "options_implied_move": 0.10101867801145137,
   "technicals": {
-    "ma20": 10.071999883651733,
-    "ma50": 10.008799915313721,
-    "ma200": 10.375524952411652,
-    "rsi14": 63.755725573858875,
-    "high_20d": 11.550000190734863,
+    "ma20": 10.33799991607666,
+    "ma50": 10.11439992904663,
+    "ma200": 10.417501332759857,
+    "rsi14": 65.2088192699262,
+    "high_20d": 12.079999923706055,
     "low_5d": 10.609999656677246,
-    "low_10d": 9.260000228881836,
+    "low_10d": 10.489999771118164,
     "high_52w": 15.751677257200384,
     "low_52w": 6.830022510390342,
-    "atr14": 0.5246428080967495,
-    "atr14_pct": 4.610217950973407,
-    "position_in_52w_range_pct": 50.99925667575772
+    "atr14": 0.5589285578046527,
+    "atr14_pct": 4.744724706913706,
+    "position_in_52w_range_pct": 55.48272560480695
   },
   "ohlc_2y": [
     {
@@ -4254,29 +4314,29 @@
     {
       "date": "2026-08-31",
       "open": 11.04,
-      "high": 11.445,
-      "low": 10.995,
+      "high": 11.45,
+      "low": 11.0,
       "close": 11.38,
       "volume": 883300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 11.47,
+      "high": 12.08,
+      "low": 11.31,
+      "close": 12.02,
+      "volume": 1385900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 11.73,
+      "high": 11.9388,
+      "low": 11.615,
+      "close": 11.78,
+      "volume": 838220.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 8.4359,
-      "high": 8.5152,
-      "low": 8.3467,
-      "close": 8.3864,
-      "volume": 385900.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 8.3665,
-      "high": 8.3963,
-      "low": 8.198,
-      "close": 8.2971,
-      "volume": 329100.0
-    },
     {
       "date": "2025-09-03",
       "open": 8.1881,
@@ -6272,10 +6332,26 @@
     {
       "date": "2026-08-31",
       "open": 11.04,
-      "high": 11.445,
-      "low": 10.995,
+      "high": 11.45,
+      "low": 11.0,
       "close": 11.38,
       "volume": 883300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 11.47,
+      "high": 12.08,
+      "low": 11.31,
+      "close": 12.02,
+      "volume": 1385900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 11.73,
+      "high": 11.9388,
+      "low": 11.615,
+      "close": 11.78,
+      "volume": 838220.0
     }
   ],
   "ai_synthesis": null,

@@ -1,46 +1,112 @@
 {
   "ticker": "NMAX",
-  "fetched_at": "2026-09-01T01:18:04Z",
+  "fetched_at": "2026-09-03T00:01:54Z",
   "_schema": "v2",
-  "current_price": 10.760000228881836,
+  "current_price": 11.0,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "symbol": "NMAX",
+    "longName": "Newsmax, Inc.",
+    "sector": "Communication Services",
+    "industry": "Broadcasting",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Boca Raton",
+    "website": "https://www.newsmax.com",
+    "fullTimeEmployees": 500,
+    "marketCap": 1420767104,
+    "enterpriseValue": 1225257984,
+    "trailingPE": 64.70588,
+    "forwardPE": 157.14285,
+    "priceToSalesTrailing12Months": 6.9889565,
+    "enterpriseToRevenue": 6.027,
+    "priceToBook": 12.557077,
+    "grossMargins": 0.39639,
+    "operatingMargins": 0.02411,
+    "profitMargins": -0.031519998,
+    "returnOnEquity": -0.05824,
+    "totalCash": 128299792,
+    "totalDebt": 11578683,
+    "totalRevenue": 203287440,
+    "freeCashflow": -37640884,
+    "debtToEquity": 10.23,
+    "currentRatio": 2.386,
+    "fiftyTwoWeekHigh": 14.28,
+    "fiftyTwoWeekLow": 5.11,
+    "averageVolume": 1160890,
+    "averageVolume10days": 943910,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 89921348,
+    "sharesFloat": 30944307,
+    "companyOfficers": [
+      {
+        "name": "Mr. Christopher W. Ruddy",
+        "title": "CEO & Director",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Darryle  Burnham",
+        "title": "Chief Financial Officer",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Andrew Allen Brown",
+        "title": "Chief Operating Officer of Newsmax Media",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Lokesh  Tiwari",
+        "title": "Chief Information Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Laura  Vail",
+        "title": "Vice President of Marketing",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Andy  Biggers",
+        "title": "Senior Vice President of Content Distribution",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.02,
+      "eps_estimate": -0.03,
+      "eps_surprise_pct": 1.6667
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.02,
+      "eps_estimate": -0.03,
+      "eps_surprise_pct": 0.33330002
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.04,
+      "eps_estimate": -0.09,
+      "eps_surprise_pct": 0.5556
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.03,
+      "eps_estimate": -0.07,
+      "eps_surprise_pct": 0.5714
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-13",
+    "revenue_low": 45100000,
+    "revenue_high": 52119000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -99,10 +165,31 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Strong Buy",
+    "total_ratings": 2,
+    "bullish": 2,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 18.5,
+    "high_price_target": 20.0,
+    "low_price_target": 17.0,
+    "current_price": 11.0,
+    "recent_rating_changes": [
+      {
+        "date": "2025-08-21T17:50:25",
+        "firm": "Noble Capital Markets",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2025-07-24T17:58:16",
+        "firm": "Maxim Group",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +253,18 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.09727272727272726,
   "technicals": {
-    "ma20": 9.966999959945678,
-    "ma50": 8.810999937057495,
-    "ma200": 7.676049976348877,
-    "rsi14": 62.90091636648968,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 57.38997153989277,
     "high_20d": 11.779999732971191,
-    "low_5d": 10.350000381469727,
-    "low_10d": 10.3100004196167,
-    "high_52w": 15.244000434875488,
+    "low_5d": 10.204999923706055,
+    "low_10d": 10.204999923706055,
+    "high_52w": 14.279999732971191,
     "low_52w": 5.110000133514404,
-    "atr14": 0.8114286831447056,
-    "atr14_pct": 7.5411586048732655,
-    "position_in_52w_range_pct": 55.75291027580281
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -3036,26 +3121,26 @@
       "high": 10.98,
       "low": 10.5,
       "close": 10.76,
-      "volume": 913644.0
+      "volume": 914200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 10.6,
+      "high": 10.72,
+      "low": 10.205,
+      "close": 10.39,
+      "volume": 845100.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 1324780.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 15.21,
-      "high": 15.244,
-      "low": 14.1,
-      "close": 14.19,
-      "volume": 1031700.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 13.8,
-      "high": 14.19,
-      "low": 13.78,
-      "close": 13.96,
-      "volume": 523000.0
-    },
     {
       "date": "2025-09-03",
       "open": 14.22,
@@ -5054,7 +5139,23 @@
       "high": 10.98,
       "low": 10.5,
       "close": 10.76,
-      "volume": 913644.0
+      "volume": 914200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 10.6,
+      "high": 10.72,
+      "low": 10.205,
+      "close": 10.39,
+      "volume": 845100.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 1324780.0
     }
   ],
   "ai_synthesis": null,

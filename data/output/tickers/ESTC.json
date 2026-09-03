@@ -1,46 +1,112 @@
 {
   "ticker": "ESTC",
-  "fetched_at": "2026-09-01T01:13:54Z",
+  "fetched_at": "2026-09-02T23:57:45Z",
   "_schema": "v2",
-  "current_price": 97.55000305175781,
+  "current_price": 89.58000183105469,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "ESTC",
+    "longName": "Elastic N.V.",
+    "sector": "Technology",
+    "industry": "Software - Application",
+    "exchange": "NYQ",
+    "country": "Netherlands",
+    "city": "Amsterdam",
+    "website": "https://www.elastic.co",
+    "fullTimeEmployees": 3834,
+    "marketCap": 9405119488,
+    "enterpriseValue": 8539851776,
+    "trailingPE": 25.594286,
+    "forwardPE": 22.724966,
+    "priceToSalesTrailing12Months": 5.2188153,
+    "enterpriseToRevenue": 4.739,
+    "priceToBook": 7.351059,
+    "grossMargins": 0.75586,
+    "operatingMargins": -0.00606,
+    "profitMargins": 0.20844,
+    "returnOnEquity": 0.33122003,
+    "totalCash": 1461042048,
+    "totalDebt": 595774976,
+    "totalRevenue": 1802156032,
+    "freeCashflow": 504316864,
+    "debtToEquity": 45.94,
+    "currentRatio": 1.81,
+    "fiftyTwoWeekHigh": 108.0,
+    "fiftyTwoWeekLow": 42.05,
+    "averageVolume": 2239995,
+    "averageVolume10days": 3685890,
+    "beta": 0.974,
+    "sharesOutstanding": 104991280,
+    "sharesFloat": 85787325,
+    "companyOfficers": [
+      {
+        "name": "Mr. Ashutosh  Kulkarni",
+        "title": "CEO & Executive Director",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. Shay  Banon",
+        "title": "Co-Founder, CTO & Executive Director",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Navam  Welihinda",
+        "title": "Chief Financial Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Mark  Dodds",
+        "title": "Chief Revenue Officer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Uri  Boness",
+        "title": "Founder",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Simon  Willnauer",
+        "title": "Founder",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-07-31T00:00:00",
+      "eps_actual": 0.7,
+      "eps_estimate": 0.58406,
+      "eps_surprise_pct": 0.1985
+    },
+    {
+      "period_end": "2026-04-30T00:00:00",
+      "eps_actual": 0.61,
+      "eps_estimate": 0.56252,
+      "eps_surprise_pct": 0.0844
+    },
+    {
+      "period_end": "2026-01-31T00:00:00",
+      "eps_actual": 0.73,
+      "eps_estimate": 0.64622,
+      "eps_surprise_pct": 0.1296
+    },
+    {
+      "period_end": "2025-10-31T00:00:00",
+      "eps_actual": 0.64,
+      "eps_estimate": 0.57614,
+      "eps_surprise_pct": 0.1108
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-19",
+    "revenue_low": 485900000,
+    "revenue_high": 489351530
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -99,12 +165,113 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 31,
+    "bullish": 19,
+    "neutral": 12,
+    "bearish": 0,
+    "avg_price_target": 105.51852,
+    "high_price_target": 130.0,
+    "low_price_target": 62.0,
+    "current_price": 89.58,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-28T19:11:15",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Perform",
+        "from_grade": "Sector Perform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T16:49:25",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T16:28:55",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T15:59:28",
+        "firm": "TD Cowen",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T15:56:23",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T15:33:15",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T15:11:17",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T15:01:59",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T14:55:56",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T14:37:24",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T16:20:02Z",
+      "title": "Can Elastic (ESTC) Run Higher on Rising Earnings Estimates?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/elastic-estc-run-higher-rising-162002096.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-02T10:20:44Z",
+      "title": "Elastic Beat and Raised Guidance. Wall Street Says One Quarter Isn\u2019t Enough.",
+      "url": "https://finance.yahoo.com/technology/ai/articles/elastic-beat-raised-guidance-wall-102044634.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-09-01T20:50:20Z",
+      "title": "Okta, Datadog, JFrog, Zscaler, and Elastic Shares Are Falling, What You Need To Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/okta-datadog-jfrog-zscaler-elastic-205020337.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-09-01T13:40:03Z",
+      "title": "Is Elastic (ESTC) Stock Outpacing Its Computer and Technology Peers This Year?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/elastic-estc-stock-outpacing-computer-134003464.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-31T22:37:59Z",
       "title": "Elastic (ESTC) Finally Delivered After Years of Head-Fakes \u2014 and Wall Street Still Can\u2019t Agree It Lasts",
@@ -140,46 +307,22 @@
       "title": "Why Elastic Stock Snapped Back Today",
       "url": "https://www.fool.com/investing/2026/08/28/why-elastic-stock-is-up-today/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-28T21:44:52Z",
-      "title": "Why Is Elastic (ESTC) Stock Rocketing Higher Today",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/why-elastic-estc-stock-rocketing-214452869.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-28T21:26:00Z",
-      "title": "Marvell, Nvidia, PayPal, Workday, Iren, Elastic, Pasqal, Affirm, and More Stocks That Explain Today\u2019s Market",
-      "url": "https://www.barrons.com/articles/stock-movers-c051c7eb?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-28T20:40:27Z",
-      "title": "Stock Market Today: Nasdaq Sinks As Fed's Warsh Ignites Rate-Hike Odds; Software Name Rockets",
-      "url": "https://www.investors.com/market-trend/stock-market-today/stock-market-today-dow-jones-sp500-nasdaq-warsh-jackson-hole-speech-marvell-affirm-paypal/?src=A00220&yptr=yahoo",
-      "source": "Investor's Business Daily"
-    },
-    {
-      "date": "2026-08-28T19:52:52Z",
-      "title": "ESTC Q2 CY2026 Deep Dive: AI Adoption, Enterprise Expansion, and New Product Investments Drive Growth",
-      "url": "https://finance.yahoo.com/technology/ai/articles/estc-q2-cy2026-deep-dive-195252210.html",
-      "source": "StockStory"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.07925876149668311,
   "technicals": {
-    "ma20": 82.00500030517578,
-    "ma50": 69.04120040893555,
-    "ma200": 63.80435007095337,
-    "rsi14": 73.16688700686623,
-    "high_20d": 108.0,
+    "ma20": 82.55500030517578,
+    "ma50": 69.5078003692627,
+    "ma200": 63.75235006332397,
+    "rsi14": 62.62745697490543,
+    "high_20d": 102.41999816894531,
     "low_5d": 78.79000091552734,
     "low_10d": 78.79000091552734,
-    "high_52w": 108.0,
+    "high_52w": 102.41999816894531,
     "low_52w": 42.04999923706055,
-    "atr14": 5.700356619698661,
-    "atr14_pct": 5.843522748711941,
-    "position_in_52w_range_pct": 84.15466743388644
+    "atr14": 5.288214002336774,
+    "atr14_pct": 5.903342145839866,
+    "position_in_52w_range_pct": 78.73116354966655
   },
   "ohlc_2y": [
     {
@@ -4167,31 +4310,31 @@
       "volume": 5251000.0
     },
     {
-      "date": "2026-08-28",
-      "open": 103.89,
-      "high": 108.0,
-      "low": 96.82,
-      "close": 99.91,
-      "volume": 10107900.0
-    },
-    {
       "date": "2026-08-31",
       "open": 98.0,
-      "high": 102.415,
+      "high": 102.42,
       "low": 95.36,
       "close": 97.55,
-      "volume": 5804377.0
+      "volume": 5938300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 95.76,
+      "high": 96.99,
+      "low": 92.1,
+      "close": 92.39,
+      "volume": 2862000.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 92.0,
+      "high": 93.485,
+      "low": 89.34,
+      "close": 89.58,
+      "volume": 2406471.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 94.37,
-      "high": 94.44,
-      "low": 83.65,
-      "close": 85.06,
-      "volume": 8866500.0
-    },
     {
       "date": "2025-09-02",
       "open": 83.8,
@@ -6185,20 +6328,28 @@
       "volume": 5251000.0
     },
     {
-      "date": "2026-08-28",
-      "open": 103.89,
-      "high": 108.0,
-      "low": 96.82,
-      "close": 99.91,
-      "volume": 10107900.0
-    },
-    {
       "date": "2026-08-31",
       "open": 98.0,
-      "high": 102.415,
+      "high": 102.42,
       "low": 95.36,
       "close": 97.55,
-      "volume": 5804377.0
+      "volume": 5938300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 95.76,
+      "high": 96.99,
+      "low": 92.1,
+      "close": 92.39,
+      "volume": 2862000.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 92.0,
+      "high": 93.485,
+      "low": 89.34,
+      "close": 89.58,
+      "volume": 2406471.0
     }
   ],
   "ai_synthesis": null,

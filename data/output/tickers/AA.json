@@ -1,46 +1,112 @@
 {
   "ticker": "AA",
-  "fetched_at": "2026-09-01T01:14:37Z",
+  "fetched_at": "2026-09-02T23:58:24Z",
   "_schema": "v2",
-  "current_price": 49.95000076293945,
+  "current_price": 51.04999923706055,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "AA",
+    "longName": "Alcoa Corporation",
+    "sector": "Basic Materials",
+    "industry": "Aluminum",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Pittsburgh",
+    "website": "https://www.alcoa.com",
+    "fullTimeEmployees": 14900,
+    "marketCap": 13472576512,
+    "enterpriseValue": 14372990976,
+    "trailingPE": 10.613306,
+    "forwardPE": 8.802983,
+    "priceToSalesTrailing12Months": 0.9904121,
+    "enterpriseToRevenue": 1.057,
+    "priceToBook": 1.8280455,
+    "grossMargins": 0.19790001,
+    "operatingMargins": 0.18356001,
+    "profitMargins": 0.09388,
+    "returnOnEquity": 0.18226999,
+    "totalCash": 1352000000,
+    "totalDebt": 2224999936,
+    "totalRevenue": 13603000320,
+    "freeCashflow": 960750016,
+    "debtToEquity": 29.918,
+    "currentRatio": 1.535,
+    "fiftyTwoWeekHigh": 84.38,
+    "fiftyTwoWeekLow": 30.28,
+    "averageVolume": 5688853,
+    "averageVolume10days": 4413020,
+    "beta": 1.623,
+    "sharesOutstanding": 263909445,
+    "sharesFloat": 262840612,
+    "companyOfficers": [
+      {
+        "name": "Mr. William F. Oplinger",
+        "title": "President, CEO & Director",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Ms. Molly S. Beerman",
+        "title": "Executive VP & CFO",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Matthew T. Reed",
+        "title": "Executive VP & COO",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Andrew J.A Hastings",
+        "title": "Executive VP & General Counsel",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Renato  Bacchi C.F.A.",
+        "title": "Executive VP & Chief Commercial Officer",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Ms. Tammi A. Jones",
+        "title": "Executive VP & Chief Human Resources Officer",
+        "age": 45,
+        "yearBorn": 1980
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 2.12,
+      "eps_estimate": 2.19038,
+      "eps_surprise_pct": -0.0321
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 1.4,
+      "eps_estimate": 1.54816,
+      "eps_surprise_pct": -0.095699996
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 1.26,
+      "eps_estimate": 1.01012,
+      "eps_surprise_pct": 0.2474
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.02,
+      "eps_estimate": -0.054,
+      "eps_surprise_pct": 0.6296
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-15",
+    "revenue_low": 3613651340,
+    "revenue_high": 3978000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,95 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 13,
+    "bullish": 10,
+    "neutral": 3,
+    "bearish": 0,
+    "avg_price_target": 62.975,
+    "high_price_target": 80.0,
+    "low_price_target": 49.7,
+    "current_price": 51.05,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-22T12:41:58",
+        "firm": "Argus Research",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-17T18:36:35",
+        "firm": "BMO Capital",
+        "to_grade": "Market Perform",
+        "from_grade": "Market Perform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-17T15:08:28",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-17T14:37:30",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-09T13:01:00",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-09T12:14:58",
+        "firm": "B of A Securities",
+        "to_grade": "Underperform",
+        "from_grade": "Underperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-09T11:08:26",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-08T09:21:54",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Overweight",
+        "action": "down"
+      },
+      {
+        "date": "2026-07-07T13:00:48",
+        "firm": "B. Riley Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-01T16:21:14",
+        "firm": "Morgan Stanley",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-01T10:26:00Z",
+      "title": "New Strong Sell Stocks for September 1st",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/strong-sell-stocks-september-1st-102600043.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-27T20:02:18Z",
       "title": "South32 H2 Earnings Call Highlights",
@@ -158,28 +307,22 @@
       "title": "Alcoa (AA) Jumped, But What Is Drawing Attention Now?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/alcoa-aa-jumped-drawing-attention-150818984.html",
       "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-23T09:21:28Z",
-      "title": "Could Canada fully supply the U.S. with aluminium?",
-      "url": "https://finance.yahoo.com/markets/commodities/articles/could-canada-fully-supply-u-092128571.html",
-      "source": "Investing.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03330068610002757,
   "technicals": {
-    "ma20": 50.28588981628418,
-    "ma50": 48.989520416259765,
-    "ma200": 57.215102462768556,
-    "rsi14": 49.77080310332119,
+    "ma20": 50.53042488098144,
+    "ma50": 48.85738075256348,
+    "ma200": 57.27413555145264,
+    "rsi14": 52.56809197717148,
     "high_20d": 55.04999923706055,
-    "low_5d": 49.2400016784668,
+    "low_5d": 49.06999969482422,
     "low_10d": 48.744998931884766,
     "high_52w": 84.2165620116639,
-    "low_52w": 29.973300436511618,
-    "atr14": 2.3512066432407925,
-    "atr14_pct": 4.707120334991621,
-    "position_in_52w_range_pct": 36.827985165956086
+    "low_52w": 29.973302298858073,
+    "atr14": 2.2203568049839566,
+    "atr14_pct": 4.349376764284169,
+    "position_in_52w_range_pct": 38.85588191011068
   },
   "ohlc_2y": [
     {
@@ -304,7 +447,7 @@
     },
     {
       "date": "2024-09-24",
-      "open": 35.7665,
+      "open": 35.7664,
       "high": 36.6239,
       "low": 35.4823,
       "close": 36.0408,
@@ -312,9 +455,9 @@
     },
     {
       "date": "2024-09-25",
-      "open": 34.7082,
+      "open": 34.7081,
       "high": 35.9134,
-      "low": 34.7082,
+      "low": 34.7081,
       "close": 35.2863,
       "volume": 5326800.0
     },
@@ -328,7 +471,7 @@
     },
     {
       "date": "2024-09-27",
-      "open": 38.7356,
+      "open": 38.7355,
       "high": 39.4901,
       "low": 38.3044,
       "close": 38.4808,
@@ -339,7 +482,7 @@
       "open": 38.1182,
       "high": 38.2456,
       "low": 37.5009,
-      "close": 37.8046,
+      "close": 37.8047,
       "volume": 3455100.0
     },
     {
@@ -539,7 +682,7 @@
       "open": 39.7821,
       "high": 40.6858,
       "low": 39.566,
-      "close": 40.008,
+      "close": 40.0081,
       "volume": 2931000.0
     },
     {
@@ -577,7 +720,7 @@
     {
       "date": "2024-11-11",
       "open": 43.5246,
-      "high": 43.5933,
+      "high": 43.5934,
       "low": 42.5128,
       "close": 42.7388,
       "volume": 4004100.0
@@ -738,7 +881,7 @@
       "date": "2024-12-10",
       "open": 41.1671,
       "high": 41.2997,
-      "low": 39.9639,
+      "low": 39.9638,
       "close": 40.3617,
       "volume": 5115200.0
     },
@@ -881,7 +1024,7 @@
     {
       "date": "2025-01-07",
       "open": 36.2361,
-      "high": 36.6388,
+      "high": 36.6389,
       "low": 35.1212,
       "close": 35.5976,
       "volume": 3381500.0
@@ -890,7 +1033,7 @@
       "date": "2025-01-08",
       "open": 35.1458,
       "high": 35.3914,
-      "low": 34.134,
+      "low": 34.1341,
       "close": 35.3619,
       "volume": 3775300.0
     },
@@ -953,7 +1096,7 @@
     {
       "date": "2025-01-22",
       "open": 38.9079,
-      "high": 39.1437,
+      "high": 39.1436,
       "low": 37.9944,
       "close": 38.0926,
       "volume": 9452200.0
@@ -971,7 +1114,7 @@
       "open": 37.1791,
       "high": 37.1791,
       "low": 36.0495,
-      "close": 36.7666,
+      "close": 36.7665,
       "volume": 4983800.0
     },
     {
@@ -1016,8 +1159,8 @@
     },
     {
       "date": "2025-02-03",
-      "open": 33.5741,
-      "high": 34.6104,
+      "open": 33.5742,
+      "high": 34.6105,
       "low": 32.8276,
       "close": 33.5054,
       "volume": 5864700.0
@@ -1186,7 +1329,7 @@
       "date": "2025-03-05",
       "open": 32.0064,
       "high": 32.2035,
-      "low": 31.1413,
+      "low": 31.1412,
       "close": 31.9079,
       "volume": 4520500.0
     },
@@ -1273,7 +1416,7 @@
     {
       "date": "2025-03-20",
       "open": 34.066,
-      "high": 34.9528,
+      "high": 34.9529,
       "low": 33.8689,
       "close": 34.332,
       "volume": 3102800.0
@@ -1338,7 +1481,7 @@
       "date": "2025-04-01",
       "open": 29.8582,
       "high": 30.0947,
-      "low": 28.9713,
+      "low": 28.9714,
       "close": 29.7006,
       "volume": 4272500.0
     },
@@ -1426,7 +1569,7 @@
       "date": "2025-04-16",
       "open": 23.8176,
       "high": 24.8917,
-      "low": 23.8078,
+      "low": 23.8077,
       "close": 24.7045,
       "volume": 9150600.0
     },
@@ -1546,7 +1689,7 @@
       "date": "2025-05-08",
       "open": 24.3005,
       "high": 25.6209,
-      "low": 24.0442,
+      "low": 24.0443,
       "close": 25.345,
       "volume": 9761200.0
     },
@@ -1595,7 +1738,7 @@
       "open": 27.8775,
       "high": 29.2374,
       "low": 27.8775,
-      "close": 28.9714,
+      "close": 28.9713,
       "volume": 8807700.0
     },
     {
@@ -1659,7 +1802,7 @@
       "open": 28.1111,
       "high": 28.1111,
       "low": 27.1075,
-      "close": 27.32,
+      "close": 27.3201,
       "volume": 3181100.0
     },
     {
@@ -1811,7 +1954,7 @@
       "open": 28.2594,
       "high": 29.9601,
       "low": 28.2198,
-      "close": 29.5943,
+      "close": 29.5942,
       "volume": 6456200.0
     },
     {
@@ -2418,7 +2561,7 @@
       "date": "2025-10-14",
       "open": 35.1623,
       "high": 36.1297,
-      "low": 34.8548,
+      "low": 34.8547,
       "close": 35.4699,
       "volume": 5867100.0
     },
@@ -2569,7 +2712,7 @@
     {
       "date": "2025-11-10",
       "open": 38.3411,
-      "high": 38.9678,
+      "high": 38.9679,
       "low": 38.0228,
       "close": 38.5898,
       "volume": 5676500.0
@@ -2608,7 +2751,7 @@
     },
     {
       "date": "2025-11-17",
-      "open": 36.8289,
+      "open": 36.829,
       "high": 36.8488,
       "low": 35.1775,
       "close": 35.5953,
@@ -2723,7 +2866,7 @@
       "open": 43.763,
       "high": 44.4693,
       "low": 42.8179,
-      "close": 44.2306,
+      "close": 44.2305,
       "volume": 7234700.0
     },
     {
@@ -2944,7 +3087,7 @@
     },
     {
       "date": "2026-01-20",
-      "open": 59.4218,
+      "open": 59.4217,
       "high": 61.9735,
       "low": 59.2825,
       "close": 61.7994,
@@ -2961,9 +3104,9 @@
     {
       "date": "2026-01-22",
       "open": 64.1671,
-      "high": 64.6645,
+      "high": 64.6646,
       "low": 62.063,
-      "close": 62.8141,
+      "close": 62.8142,
       "volume": 8993400.0
     },
     {
@@ -2971,7 +3114,7 @@
       "open": 60.4763,
       "high": 62.2172,
       "low": 57.2132,
-      "close": 61.8889,
+      "close": 61.889,
       "volume": 11525900.0
     },
     {
@@ -3002,8 +3145,8 @@
       "date": "2026-01-29",
       "open": 62.7246,
       "high": 63.2111,
-      "low": 58.8049,
-      "close": 60.327,
+      "low": 58.805,
+      "close": 60.3271,
       "volume": 8028900.0
     },
     {
@@ -3049,7 +3192,7 @@
     {
       "date": "2026-02-06",
       "open": 57.7206,
-      "high": 59.7301,
+      "high": 59.7302,
       "low": 57.5216,
       "close": 58.8547,
       "volume": 5781200.0
@@ -3128,7 +3271,7 @@
     },
     {
       "date": "2026-02-23",
-      "open": 59.6903,
+      "open": 59.6904,
       "high": 60.7051,
       "low": 57.9096,
       "close": 59.5013,
@@ -4167,31 +4310,31 @@
       "volume": 3763000.0
     },
     {
-      "date": "2026-08-28",
-      "open": 51.23,
-      "high": 51.702,
-      "low": 49.68,
-      "close": 50.32,
-      "volume": 2415000.0
-    },
-    {
       "date": "2026-08-31",
       "open": 50.5,
-      "high": 51.0799,
+      "high": 51.08,
       "low": 49.62,
       "close": 49.95,
-      "volume": 3303773.0
+      "volume": 3305800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 49.08,
+      "high": 52.03,
+      "low": 49.07,
+      "close": 50.9,
+      "volume": 4678300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 50.78,
+      "high": 51.56,
+      "low": 50.45,
+      "close": 51.05,
+      "volume": 3276885.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 31.6501,
-      "high": 32.2156,
-      "low": 31.5508,
-      "close": 31.9378,
-      "volume": 4180500.0
-    },
     {
       "date": "2025-09-02",
       "open": 30.8563,
@@ -4436,7 +4579,7 @@
       "date": "2025-10-14",
       "open": 35.1623,
       "high": 36.1297,
-      "low": 34.8548,
+      "low": 34.8547,
       "close": 35.4699,
       "volume": 5867100.0
     },
@@ -4587,7 +4730,7 @@
     {
       "date": "2025-11-10",
       "open": 38.3411,
-      "high": 38.9678,
+      "high": 38.9679,
       "low": 38.0228,
       "close": 38.5898,
       "volume": 5676500.0
@@ -4626,7 +4769,7 @@
     },
     {
       "date": "2025-11-17",
-      "open": 36.8289,
+      "open": 36.829,
       "high": 36.8488,
       "low": 35.1775,
       "close": 35.5953,
@@ -4741,7 +4884,7 @@
       "open": 43.763,
       "high": 44.4693,
       "low": 42.8179,
-      "close": 44.2306,
+      "close": 44.2305,
       "volume": 7234700.0
     },
     {
@@ -4962,7 +5105,7 @@
     },
     {
       "date": "2026-01-20",
-      "open": 59.4218,
+      "open": 59.4217,
       "high": 61.9735,
       "low": 59.2825,
       "close": 61.7994,
@@ -4979,9 +5122,9 @@
     {
       "date": "2026-01-22",
       "open": 64.1671,
-      "high": 64.6645,
+      "high": 64.6646,
       "low": 62.063,
-      "close": 62.8141,
+      "close": 62.8142,
       "volume": 8993400.0
     },
     {
@@ -4989,7 +5132,7 @@
       "open": 60.4763,
       "high": 62.2172,
       "low": 57.2132,
-      "close": 61.8889,
+      "close": 61.889,
       "volume": 11525900.0
     },
     {
@@ -5020,8 +5163,8 @@
       "date": "2026-01-29",
       "open": 62.7246,
       "high": 63.2111,
-      "low": 58.8049,
-      "close": 60.327,
+      "low": 58.805,
+      "close": 60.3271,
       "volume": 8028900.0
     },
     {
@@ -5067,7 +5210,7 @@
     {
       "date": "2026-02-06",
       "open": 57.7206,
-      "high": 59.7301,
+      "high": 59.7302,
       "low": 57.5216,
       "close": 58.8547,
       "volume": 5781200.0
@@ -5146,7 +5289,7 @@
     },
     {
       "date": "2026-02-23",
-      "open": 59.6903,
+      "open": 59.6904,
       "high": 60.7051,
       "low": 57.9096,
       "close": 59.5013,
@@ -6185,20 +6328,28 @@
       "volume": 3763000.0
     },
     {
-      "date": "2026-08-28",
-      "open": 51.23,
-      "high": 51.702,
-      "low": 49.68,
-      "close": 50.32,
-      "volume": 2415000.0
-    },
-    {
       "date": "2026-08-31",
       "open": 50.5,
-      "high": 51.0799,
+      "high": 51.08,
       "low": 49.62,
       "close": 49.95,
-      "volume": 3303773.0
+      "volume": 3305800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 49.08,
+      "high": 52.03,
+      "low": 49.07,
+      "close": 50.9,
+      "volume": 4678300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 50.78,
+      "high": 51.56,
+      "low": 50.45,
+      "close": 51.05,
+      "volume": 3276885.0
     }
   ],
   "ai_synthesis": null,

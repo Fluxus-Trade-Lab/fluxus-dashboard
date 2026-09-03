@@ -1,46 +1,112 @@
 {
   "ticker": "LEU",
-  "fetched_at": "2026-09-01T01:17:44Z",
+  "fetched_at": "2026-09-03T00:01:28Z",
   "_schema": "v2",
-  "current_price": 171.39999389648438,
+  "current_price": 171.49,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "LEU",
+    "longName": "Centrus Energy Corp.",
+    "sector": "Energy",
+    "industry": "Uranium",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Bethesda",
+    "website": "https://www.centrusenergy.com",
+    "fullTimeEmployees": 467,
+    "marketCap": 3421715712,
+    "enterpriseValue": 2667265536,
+    "trailingPE": 90.73545,
+    "forwardPE": 44.862488,
+    "priceToSalesTrailing12Months": 7.2203326,
+    "enterpriseToRevenue": 5.628,
+    "priceToBook": 4.0474396,
+    "grossMargins": 0.23655,
+    "operatingMargins": 0.053379998,
+    "profitMargins": 0.102340005,
+    "returnOnEquity": 0.08053,
+    "totalCash": 1868499968,
+    "totalDebt": 1177500032,
+    "totalRevenue": 473900000,
+    "freeCashflow": -127300000,
+    "debtToEquity": 139.283,
+    "currentRatio": 5.395,
+    "fiftyTwoWeekHigh": 464.25,
+    "fiftyTwoWeekLow": 142.13,
+    "averageVolume": 771253,
+    "averageVolume10days": 607540,
+    "beta": 1.35,
+    "sharesOutstanding": 19233658,
+    "sharesFloat": 19189063,
+    "companyOfficers": [
+      {
+        "name": "Mr. Amir V. Vexler",
+        "title": "President, CEO & Director",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Todd M. Tinelli",
+        "title": "CFO, Senior VP & Treasurer",
+        "age": 44,
+        "yearBorn": 1981
+      },
+      {
+        "name": "Mr. Neal K. Nagarajan",
+        "title": "Senior VP & Head of Investor Relations",
+        "age": 40,
+        "yearBorn": 1985
+      },
+      {
+        "name": "Mr. John M. A. Donelson",
+        "title": "Senior VP & Chief Marketing Officer",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Patrick S. Brown",
+        "title": "Senior Vice President of Field Operations",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Ms. Yanhong  Dai",
+        "title": "Principal Accounting Officer",
+        "age": 52,
+        "yearBorn": 1973
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 1.77,
+      "eps_estimate": 0.81,
+      "eps_surprise_pct": 1.1852
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 1.05,
+      "eps_estimate": 0.27,
+      "eps_surprise_pct": 2.8889
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.79,
+      "eps_estimate": 1.62597,
+      "eps_surprise_pct": -0.5141
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.19,
+      "eps_estimate": 0.35679,
+      "eps_surprise_pct": -0.4675
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 40600000,
+    "revenue_high": 105809720
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,101 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 16,
+    "bullish": 11,
+    "neutral": 5,
+    "bearish": 0,
+    "avg_price_target": 253.25,
+    "high_price_target": 340.0,
+    "low_price_target": 180.0,
+    "current_price": 171.49,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-25T11:30:16",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T14:55:38",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-18T12:41:04",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-08-07T15:48:12",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T13:18:55",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T12:42:34",
+        "firm": "Evercore ISI Group",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T18:44:12",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-14T10:54:15",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-09T12:26:33",
+        "firm": "B of A Securities",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-09T11:01:40",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T18:00:00Z",
+      "title": "Energy Fuels' Q2 Revenues Surge 496% Y/Y: Is This Growth Sustainable?",
+      "url": "https://finance.yahoo.com/energy/articles/energy-fuels-q2-revenues-surge-180000222.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-02T16:26:43Z",
+      "title": "Ondas, SoundHound AI Among 5 Stocks Facing Heavy Short Bets",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ondas-soundhound-ai-among-5-162643707.html",
+      "source": "GuruFocus.com"
+    },
     {
       "date": "2026-08-31T14:22:00Z",
       "title": "Is XE Building the Infrastructure Needed for Advanced Nuclear Scale-Up?",
@@ -152,34 +307,20 @@
       "title": "Can X-Energy's Xe-100 Capture the Growing Demand for Reliable AI Power?",
       "url": "https://finance.yahoo.com/energy/articles/x-energys-xe-100-capture-142400972.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-25T10:12:13Z",
-      "title": "Centrus Energy (LEU) Draws Focus On Nuclear Fuel, Is The Stock Still A Bargain?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/centrus-energy-leu-draws-focus-101213390.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-25T07:06:15Z",
-      "title": "Did Government\u2011Backed Piketon Expansion Just Shift Centrus Energy's (LEU) Investment Narrative?",
-      "url": "https://finance.yahoo.com/energy/articles/did-government-backed-piketon-expansion-070615012.html",
-      "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.1259548661729547,
   "technicals": {
-    "ma20": 184.8919990539551,
-    "ma50": 174.58039947509766,
-    "ma200": 212.30450012207032,
-    "rsi14": 45.49875431320687,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 44.180058592941485,
     "high_20d": 208.57000732421875,
-    "low_5d": 171.39999389648438,
-    "low_10d": 171.39999389648438,
+    "low_5d": 163.02999877929688,
+    "low_10d": 163.02999877929688,
     "high_52w": 464.25,
     "low_52w": 142.1300048828125,
-    "atr14": 12.753941127232142,
-    "atr14_pct": 7.441039429053177,
-    "position_in_52w_range_pct": 9.086672500110845
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4177,29 +4318,29 @@
     {
       "date": "2026-08-31",
       "open": 174.28,
-      "high": 178.0852,
-      "low": 171.4,
+      "high": 178.15,
+      "low": 171.37,
       "close": 171.4,
-      "volume": 529694.0
+      "volume": 530300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 166.87,
+      "high": 168.8,
+      "low": 163.03,
+      "close": 168.31,
+      "volume": 621100.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 608054.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 211.69,
-      "high": 212.0,
-      "low": 195.0,
-      "close": 201.73,
-      "volume": 1440300.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 192.47,
-      "high": 205.0,
-      "low": 186.5,
-      "close": 203.89,
-      "volume": 956100.0
-    },
     {
       "date": "2025-09-03",
       "open": 207.5,
@@ -6195,10 +6336,26 @@
     {
       "date": "2026-08-31",
       "open": 174.28,
-      "high": 178.0852,
-      "low": 171.4,
+      "high": 178.15,
+      "low": 171.37,
       "close": 171.4,
-      "volume": 529694.0
+      "volume": 530300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 166.87,
+      "high": 168.8,
+      "low": 163.03,
+      "close": 168.31,
+      "volume": 621100.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 608054.0
     }
   ],
   "ai_synthesis": null,

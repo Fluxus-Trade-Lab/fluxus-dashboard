@@ -1,46 +1,112 @@
 {
   "ticker": "NEO",
-  "fetched_at": "2026-09-01T01:14:35Z",
+  "fetched_at": "2026-09-03T00:01:52Z",
   "_schema": "v2",
-  "current_price": 17.90999984741211,
+  "current_price": 17.4,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "NEO",
+    "longName": "NeoGenomics, Inc.",
+    "sector": "Healthcare",
+    "industry": "Diagnostics & Research",
+    "exchange": "NCM",
+    "country": "United States",
+    "city": "Fort Myers",
+    "website": "https://www.neogenomics.com",
+    "fullTimeEmployees": 2500,
+    "marketCap": 2235472640,
+    "enterpriseValue": 2544725504,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 50.634384,
+    "priceToSalesTrailing12Months": 2.9172482,
+    "enterpriseToRevenue": 3.321,
+    "priceToBook": 2.8329532,
+    "grossMargins": 0.43917,
+    "operatingMargins": -0.048449997,
+    "profitMargins": -0.0677,
+    "returnOnEquity": -0.06327,
+    "totalCash": 145539008,
+    "totalDebt": 448368000,
+    "totalRevenue": 766294976,
+    "freeCashflow": 43904752,
+    "debtToEquity": 57.064,
+    "currentRatio": 3.603,
+    "fiftyTwoWeekHigh": 19.76,
+    "fiftyTwoWeekLow": 7.07,
+    "averageVolume": 2844323,
+    "averageVolume10days": 1881430,
+    "beta": 1.73,
+    "sharesOutstanding": 128475440,
+    "sharesFloat": 117018000,
+    "companyOfficers": [
+      {
+        "name": "Mr. Anthony P. Zook",
+        "title": "CEO & Director",
+        "age": 64,
+        "yearBorn": 1961
+      },
+      {
+        "name": "Mr. Warren  Stone",
+        "title": "President & COO",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Ms. Elizabeth A. Floegel",
+        "title": "Chief Digital & Information Officer",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. Gary  Passman",
+        "title": "Chief People & Culture Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Abhishek  Jain",
+        "title": "Executive VP & CFO",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. Gregory D. Aunan",
+        "title": "Senior VP & Chief Accounting Officer",
+        "age": 56,
+        "yearBorn": 1969
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.05,
+      "eps_estimate": 0.03364,
+      "eps_surprise_pct": 0.48630002
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.01,
+      "eps_estimate": 0.00111,
+      "eps_surprise_pct": 8.009
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.06,
+      "eps_estimate": 0.04,
+      "eps_surprise_pct": 0.5
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.03,
+      "eps_estimate": 0.02385,
+      "eps_surprise_pct": 0.2579
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-27",
+    "revenue_low": 203900000,
+    "revenue_high": 206552000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 12,
+    "bullish": 8,
+    "neutral": 4,
+    "bearish": 0,
+    "avg_price_target": 19.72222,
+    "high_price_target": 35.0,
+    "low_price_target": 16.0,
+    "current_price": 17.4,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-29T09:37:58",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T12:39:02",
+        "firm": "Benchmark",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-29T19:12:46",
+        "firm": "Benchmark",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-04-29T18:16:14",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-29T13:08:10",
+        "firm": "Leerink Partners",
+        "to_grade": "Outperform",
+        "from_grade": "Market Perform",
+        "action": "up"
+      },
+      {
+        "date": "2026-02-24T16:32:23",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-02-17T10:29:38",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-01-12T15:31:44",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2025-09-12T13:46:50",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-09-02T11:33:51",
+        "firm": "Stephens & Co.",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +309,18 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.12931034482758622,
   "technicals": {
-    "ma20": 16.672999954223634,
-    "ma50": 15.211599941253661,
-    "ma200": 11.518850021362304,
-    "rsi14": 63.694513056080645,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 59.51307082444367,
     "high_20d": 19.760000228881836,
-    "low_5d": 16.3700008392334,
-    "low_10d": 15.75,
+    "low_5d": 16.579999923706055,
+    "low_10d": 15.979999542236328,
     "high_52w": 19.760000228881836,
     "low_52w": 7.070000171661377,
-    "atr14": 0.7953570229666573,
-    "atr14_pct": 4.440854437425257,
-    "position_in_52w_range_pct": 85.4215888642404
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4167,31 +4308,31 @@
       "volume": 5098000.0
     },
     {
-      "date": "2026-08-28",
-      "open": 18.36,
-      "high": 18.75,
-      "low": 17.89,
-      "close": 18.05,
-      "volume": 1723900.0
-    },
-    {
       "date": "2026-08-31",
       "open": 17.77,
-      "high": 18.075,
+      "high": 18.08,
       "low": 17.19,
       "close": 17.91,
-      "volume": 1579095.0
+      "volume": 1579100.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 17.67,
+      "high": 18.11,
+      "low": 17.36,
+      "close": 17.45,
+      "volume": 1317700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 1794474.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 8.78,
-      "high": 9.06,
-      "low": 8.1,
-      "close": 8.78,
-      "volume": 9453500.0
-    },
     {
       "date": "2025-09-02",
       "open": 8.76,
@@ -6185,20 +6326,28 @@
       "volume": 5098000.0
     },
     {
-      "date": "2026-08-28",
-      "open": 18.36,
-      "high": 18.75,
-      "low": 17.89,
-      "close": 18.05,
-      "volume": 1723900.0
-    },
-    {
       "date": "2026-08-31",
       "open": 17.77,
-      "high": 18.075,
+      "high": 18.08,
       "low": 17.19,
       "close": 17.91,
-      "volume": 1579095.0
+      "volume": 1579100.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 17.67,
+      "high": 18.11,
+      "low": 17.36,
+      "close": 17.45,
+      "volume": 1317700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 1794474.0
     }
   ],
   "ai_synthesis": null,

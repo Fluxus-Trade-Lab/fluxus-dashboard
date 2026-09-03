@@ -1,46 +1,112 @@
 {
   "ticker": "NVTS",
-  "fetched_at": "2026-09-01T01:18:15Z",
+  "fetched_at": "2026-09-03T00:02:05Z",
   "_schema": "v2",
-  "current_price": 11.59000015258789,
+  "current_price": 11.21,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "NVTS",
+    "longName": "Navitas Semiconductor Corporation",
+    "sector": "Technology",
+    "industry": "Semiconductors",
+    "exchange": "NGM",
+    "country": "United States",
+    "city": "Torrance",
+    "website": "https://navitassemi.com",
+    "fullTimeEmployees": 190,
+    "marketCap": 2926857984,
+    "enterpriseValue": 2378501376,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -88.95413,
+    "priceToSalesTrailing12Months": 80.11107,
+    "enterpriseToRevenue": 65.102,
+    "priceToBook": 3.651466,
+    "grossMargins": 0.3812,
+    "operatingMargins": -2.54972,
+    "profitMargins": 0.0,
+    "returnOnEquity": -0.52601004,
+    "totalCash": 557409024,
+    "totalDebt": 5136000,
+    "totalRevenue": 36535000,
+    "freeCashflow": -3814750,
+    "debtToEquity": 0.641,
+    "currentRatio": 21.793,
+    "fiftyTwoWeekHigh": 34.17,
+    "fiftyTwoWeekLow": 5.44,
+    "averageVolume": 19842947,
+    "averageVolume10days": 12555420,
+    "beta": 3.882,
+    "sharesOutstanding": 261093488,
+    "sharesFloat": 242874384,
+    "companyOfficers": [
+      {
+        "name": "Mr. Chris  Allexandre",
+        "title": "CEO, President & Director",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Ms. Tonya  Stevens",
+        "title": "SVP, Chief Financial Officer &Treasurer",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Scott  Martin",
+        "title": "Senior Vice President of Operations & Execution",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Siddarth  Sundaresan Ph.D.",
+        "title": "SVP & CTO",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Matthew T. Sant Esq.",
+        "title": "Senior VP, Secretary & General Counsel",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Ms. Rachel  Sabhlok",
+        "title": "Vice President of People",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.04,
+      "eps_estimate": -0.04224,
+      "eps_surprise_pct": 0.053000003
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.04,
+      "eps_estimate": -0.04757,
+      "eps_surprise_pct": 0.1591
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.05,
+      "eps_estimate": -0.05201,
+      "eps_surprise_pct": 0.038599998
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.05,
+      "eps_estimate": -0.04974,
+      "eps_surprise_pct": -0.0052
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-02",
+    "revenue_low": 13500000,
+    "revenue_high": 13500000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,95 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 8,
+    "bullish": 2,
+    "neutral": 5,
+    "bearish": 1,
+    "avg_price_target": 14.075,
+    "high_price_target": 21.0,
+    "low_price_target": 8.0,
+    "current_price": 11.21,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-28T12:29:57",
+        "firm": "Rosenblatt",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-28T09:48:17",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-05-06T23:23:27",
+        "firm": "Rosenblatt",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-06T10:54:30",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-04T11:57:15",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-12T12:14:48",
+        "firm": "Rosenblatt",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-02-25T21:38:03",
+        "firm": "Rosenblatt",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2025-12-31T15:21:13",
+        "firm": "Morgan Stanley",
+        "to_grade": "Underweight",
+        "from_grade": "Underweight",
+        "action": "main"
+      },
+      {
+        "date": "2025-11-10T12:09:10",
+        "firm": "Rosenblatt",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2025-11-04T13:02:53",
+        "firm": "Rosenblatt",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T20:10:38Z",
+      "title": "What Could GLOBALFOUNDRIES (GFS) First U.S. GaN Shipments Mean For AI Demand?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/could-globalfoundries-gfs-first-u-201038457.html",
+      "source": "Simply Wall St."
+    },
     {
       "date": "2026-08-28T15:30:29Z",
       "title": "Qualcomm (QCOM) Up 8.7% Since Last Earnings Report: Can It Continue?",
@@ -158,28 +307,20 @@
       "title": "Navitas Accelerates AI Power Push With Claros Acquisition, Eyes $8 Billion Market",
       "url": "https://finance.yahoo.com/technology/ai/articles/navitas-accelerates-ai-power-push-111149281.html",
       "source": "Benzinga"
-    },
-    {
-      "date": "2026-08-25T11:00:15Z",
-      "title": "3 Chip Stocks Under $50 Worth Buying Now",
-      "url": "https://247wallst.com/investing/2026/08/25/3-chip-stocks-under-50-worth-buying-now/",
-      "source": "24/7 Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04817127564674398,
   "technicals": {
-    "ma20": 12.979500007629394,
-    "ma50": 13.63730001449585,
-    "ma200": 12.846274998188019,
-    "rsi14": 40.219459890933045,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 36.82830123301006,
     "high_20d": 14.949999809265137,
-    "low_5d": 11.279999732971191,
-    "low_10d": 11.279999732971191,
+    "low_5d": 10.800000190734863,
+    "low_10d": 10.800000190734863,
     "high_52w": 34.16999816894531,
     "low_52w": 5.440000057220459,
-    "atr14": 0.8924999918256488,
-    "atr14_pct": 7.700603797027264,
-    "position_in_52w_range_pct": 21.406197353203396
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4172,34 +4313,34 @@
       "high": 12.449,
       "low": 11.28,
       "close": 11.49,
-      "volume": 17470000.0
+      "volume": 17604800.0
     },
     {
       "date": "2026-08-31",
-      "open": 11.375,
+      "open": 11.45,
       "high": 11.661,
-      "low": 11.3,
+      "low": 11.295,
       "close": 11.59,
-      "volume": 9918462.0
+      "volume": 9960500.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 11.105,
+      "high": 11.24,
+      "low": 10.8,
+      "close": 10.94,
+      "volume": 9939200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 7293532.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 6.02,
-      "high": 6.06,
-      "low": 5.785,
-      "close": 5.86,
-      "volume": 12831500.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 5.72,
-      "high": 5.877,
-      "low": 5.61,
-      "close": 5.76,
-      "volume": 10691500.0
-    },
     {
       "date": "2025-09-03",
       "open": 5.77,
@@ -6190,15 +6331,31 @@
       "high": 12.449,
       "low": 11.28,
       "close": 11.49,
-      "volume": 17470000.0
+      "volume": 17604800.0
     },
     {
       "date": "2026-08-31",
-      "open": 11.375,
+      "open": 11.45,
       "high": 11.661,
-      "low": 11.3,
+      "low": 11.295,
       "close": 11.59,
-      "volume": 9918462.0
+      "volume": 9960500.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 11.105,
+      "high": 11.24,
+      "low": 10.8,
+      "close": 10.94,
+      "volume": 9939200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 7293532.0
     }
   ],
   "ai_synthesis": null,

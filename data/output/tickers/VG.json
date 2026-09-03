@@ -1,46 +1,112 @@
 {
   "ticker": "VG",
-  "fetched_at": "2026-09-01T01:19:10Z",
+  "fetched_at": "2026-09-03T00:02:57Z",
   "_schema": "v2",
-  "current_price": 14.640000343322754,
+  "current_price": 14.73,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "symbol": "VG",
+    "longName": "Venture Global, Inc.",
+    "sector": "Energy",
+    "industry": "Oil & Gas Midstream",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Arlington",
+    "website": "https://ventureglobal.com",
+    "fullTimeEmployees": 2000,
+    "marketCap": 36826365952,
+    "enterpriseValue": 80967401472,
+    "trailingPE": 11.15909,
+    "forwardPE": 14.769138,
+    "priceToSalesTrailing12Months": 2.1725187,
+    "enterpriseToRevenue": 4.777,
+    "priceToBook": 4.291958,
+    "grossMargins": 0.46923,
+    "operatingMargins": 0.47794,
+    "profitMargins": 0.22052,
+    "returnOnEquity": 0.33641997,
+    "totalCash": 3151000064,
+    "totalDebt": 42835001344,
+    "totalRevenue": 16951000064,
+    "freeCashflow": -8635625472,
+    "debtToEquity": 354.624,
+    "currentRatio": 1.185,
+    "fiftyTwoWeekHigh": 17.62,
+    "fiftyTwoWeekLow": 5.72,
+    "averageVolume": 14281471,
+    "averageVolume10days": 12586290,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 531488393,
+    "sharesFloat": 521644373,
+    "companyOfficers": [
+      {
+        "name": "Mr. Michael A. Sabel",
+        "title": "Founder, Executive Co-Chairman of the Board & CEO",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Robert  Pender",
+        "title": "Founder & Executive Co-Chairman of the Board",
+        "age": 71,
+        "yearBorn": 1954
+      },
+      {
+        "name": "Mr. Jonathan W. Thayer",
+        "title": "Chief Financial Officer",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Keith D. Larson",
+        "title": "General Counsel & Secretary",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Thomas  Earl",
+        "title": "Chief Commercial Officer",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Mr. Brian  Cothran",
+        "title": "Chief Operating Officer",
+        "age": 51,
+        "yearBorn": 1974
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.51,
+      "eps_estimate": 0.48823,
+      "eps_surprise_pct": 0.0446
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.19,
+      "eps_estimate": 0.1162,
+      "eps_surprise_pct": 0.6351
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.1546,
+      "eps_estimate": 0.23371,
+      "eps_surprise_pct": -0.3385
+    },
+    {
+      "period_end": "2025-06-30T00:00:00",
+      "eps_actual": 0.14,
+      "eps_estimate": 0.19214,
+      "eps_surprise_pct": -0.2714
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-09",
+    "revenue_low": 4280774860,
+    "revenue_high": 5263659000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -99,12 +165,95 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 19,
+    "bullish": 12,
+    "neutral": 7,
+    "bearish": 0,
+    "avg_price_target": 16.61111,
+    "high_price_target": 22.0,
+    "low_price_target": 14.0,
+    "current_price": 14.73,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-12T12:15:30",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-22T17:38:12",
+        "firm": "Mizuho",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-17T09:29:39",
+        "firm": "Bernstein",
+        "to_grade": "Market Perform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-06-04T16:01:50",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2026-05-13T19:19:51",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Perform",
+        "from_grade": "Sector Perform",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-13T16:50:18",
+        "firm": "Morgan Stanley",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-13T12:45:44",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2026-05-07T12:45:13",
+        "firm": "Mizuho",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-17T14:31:49",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-16T14:48:06",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Perform",
+        "from_grade": "Sector Perform",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T19:55:45Z",
+      "title": "Sector Update: Energy Stocks Rise Late Afternoon",
+      "url": "https://finance.yahoo.com/energy/articles/sector-energy-stocks-rise-afternoon-195545186.html",
+      "source": "MT Newswires"
+    },
     {
       "date": "2026-08-28T14:20:17Z",
       "title": "Stock Market New Issues Are Thriving. Here's Where To Find Them.",
@@ -158,28 +307,20 @@
       "title": "This Oil ETF Is Up 42% This Year. One Reopened Strait Could Take It All Back.",
       "url": "https://247wallst.com/investing/etf/2026/08/15/this-oil-etf-is-up-42-this-year-one-reopened-strait-could-take-it-all-back/",
       "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-14T15:13:00Z",
-      "title": "CQP Rises 10.8% in a Month: Can Its Recent Momentum Continue?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cqp-rises-10-8-month-151300328.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.042090970807875085,
   "technicals": {
-    "ma20": 13.857000064849853,
-    "ma50": 13.04560001373291,
-    "ma200": 11.229236209392548,
-    "rsi14": 57.947737003443926,
-    "high_20d": 14.829899787902832,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 62.025977890373106,
+    "high_20d": 15.15999984741211,
     "low_5d": 13.720000267028809,
     "low_10d": 13.699999809265137,
     "high_52w": 17.595752837261305,
     "low_52w": 5.704279297886197,
-    "atr14": 0.6328498295375279,
-    "atr14_pct": 4.322744635905478,
-    "position_in_52w_range_pct": 75.14393414616407
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -499,7 +640,7 @@
       "open": 11.4698,
       "high": 12.1545,
       "low": 11.3607,
-      "close": 11.5195,
+      "close": 11.5194,
       "volume": 11596100.0
     },
     {
@@ -1091,7 +1232,7 @@
       "open": 16.1407,
       "high": 16.4883,
       "low": 15.8725,
-      "close": 16.3095,
+      "close": 16.3096,
       "volume": 4260900.0
     },
     {
@@ -1601,7 +1742,7 @@
     {
       "date": "2025-10-08",
       "open": 12.9085,
-      "high": 13.197,
+      "high": 13.1969,
       "low": 12.7793,
       "close": 12.9583,
       "volume": 5071600.0
@@ -3383,31 +3524,31 @@
       "volume": 11900000.0
     },
     {
-      "date": "2026-08-28",
-      "open": 14.55,
-      "high": 14.65,
-      "low": 14.11,
-      "close": 14.18,
-      "volume": 6155200.0
-    },
-    {
       "date": "2026-08-31",
-      "open": 14.575,
-      "high": 14.8299,
+      "open": 14.58,
+      "high": 14.83,
       "low": 14.39,
       "close": 14.64,
-      "volume": 12931591.0
+      "volume": 12937500.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 14.96,
+      "high": 15.16,
+      "low": 14.58,
+      "close": 15.11,
+      "volume": 15325200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 13959404.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 12.7139,
-      "high": 12.9523,
-      "low": 12.4755,
-      "close": 12.9126,
-      "volume": 4629800.0
-    },
     {
       "date": "2025-09-02",
       "open": 12.8232,
@@ -3619,7 +3760,7 @@
     {
       "date": "2025-10-08",
       "open": 12.9085,
-      "high": 13.197,
+      "high": 13.1969,
       "low": 12.7793,
       "close": 12.9583,
       "volume": 5071600.0
@@ -5401,20 +5542,28 @@
       "volume": 11900000.0
     },
     {
-      "date": "2026-08-28",
-      "open": 14.55,
-      "high": 14.65,
-      "low": 14.11,
-      "close": 14.18,
-      "volume": 6155200.0
-    },
-    {
       "date": "2026-08-31",
-      "open": 14.575,
-      "high": 14.8299,
+      "open": 14.58,
+      "high": 14.83,
       "low": 14.39,
       "close": 14.64,
-      "volume": 12931591.0
+      "volume": 12937500.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 14.96,
+      "high": 15.16,
+      "low": 14.58,
+      "close": 15.11,
+      "volume": 15325200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 13959404.0
     }
   ],
   "ai_synthesis": null,

@@ -1,46 +1,112 @@
 {
   "ticker": "LGIH",
-  "fetched_at": "2026-09-01T01:17:46Z",
+  "fetched_at": "2026-09-03T00:01:30Z",
   "_schema": "v2",
-  "current_price": 55.939998626708984,
+  "current_price": 53.45,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "LGIH",
+    "longName": "LGI Homes, Inc.",
+    "sector": "Consumer Cyclical",
+    "industry": "Residential Construction",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "The Woodlands",
+    "website": "https://www.lgihomes.com",
+    "fullTimeEmployees": 1056,
+    "marketCap": 1242620160,
+    "enterpriseValue": 2773792256,
+    "trailingPE": 18.754387,
+    "forwardPE": 15.6286545,
+    "priceToSalesTrailing12Months": 0.7384251,
+    "enterpriseToRevenue": 1.648,
+    "priceToBook": 0.58266294,
+    "grossMargins": 0.19646,
+    "operatingMargins": 0.0572,
+    "profitMargins": 0.03932,
+    "returnOnEquity": 0.03159,
+    "totalCash": 61081000,
+    "totalDebt": 1585511040,
+    "totalRevenue": 1682797952,
+    "freeCashflow": 208319248,
+    "debtToEquity": 74.344,
+    "currentRatio": 33.032,
+    "fiftyTwoWeekHigh": 69.5,
+    "fiftyTwoWeekLow": 33.55,
+    "averageVolume": 334238,
+    "averageVolume10days": 231480,
+    "beta": 1.841,
+    "sharesOutstanding": 23248272,
+    "sharesFloat": 20300624,
+    "companyOfficers": [
+      {
+        "name": "Mr. Eric Thomas Lipar",
+        "title": "Chairman & CEO",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Michael Larry Snider",
+        "title": "President & COO",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Charles Michael Merdian CPA",
+        "title": "CFO & Treasurer",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Scott J. Garber",
+        "title": "General Counsel & Corporate Secretary",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Joshua D. Fattor",
+        "title": "Vice President of Investor Relations & Capital Markets",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Rachel Lyons Eaton",
+        "title": "Chief Marketing Officer",
+        "age": 43,
+        "yearBorn": 1982
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 1.16,
+      "eps_estimate": 1.16,
+      "eps_surprise_pct": 0.0
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.24,
+      "eps_estimate": -0.13,
+      "eps_surprise_pct": 2.8462
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.97,
+      "eps_estimate": 0.91333,
+      "eps_surprise_pct": 0.062
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.85,
+      "eps_estimate": 0.932,
+      "eps_surprise_pct": -0.088
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 459000000,
+    "revenue_high": 515700000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,15 +165,15 @@
     }
   ],
   "analyst": {
-    "consensus": "Hold",
-    "total_ratings": 3,
+    "consensus": "Buy",
+    "total_ratings": 2,
     "bullish": 1,
     "neutral": 1,
-    "bearish": 1,
+    "bearish": 0,
     "avg_price_target": 93.0,
     "high_price_target": 93.0,
     "low_price_target": 93.0,
-    "current_price": 55.94,
+    "current_price": 53.45,
     "recent_rating_changes": [
       {
         "date": "2026-04-30T22:14:20",
@@ -243,20 +309,18 @@
       "source": "MarketBeat"
     }
   ],
-  "options_implied_move": 0.08312477858695945,
+  "options_implied_move": 0.23386342376052385,
   "technicals": {
-    "ma20": 58.38099994659424,
-    "ma50": 58.88839988708496,
-    "ma200": 50.34720001220703,
-    "rsi14": 44.80341732919988,
-    "high_20d": 62.36000061035156,
-    "low_5d": 55.84000015258789,
-    "low_10d": 55.84000015258789,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 40.20448887704833,
+    "high_20d": 61.869998931884766,
+    "low_5d": 53.47999954223633,
+    "low_10d": 53.47999954223633,
     "high_52w": 69.5,
     "low_52w": 33.54999923706055,
-    "atr14": 2.1164281027657643,
-    "atr14_pct": 3.783389622314469,
-    "position_in_52w_range_pct": 62.280942738477194
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4257,26 +4321,26 @@
       "high": 57.24,
       "low": 55.84,
       "close": 55.94,
-      "volume": 223286.0
+      "volume": 223300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 54.93,
+      "high": 55.06,
+      "low": 53.48,
+      "close": 53.74,
+      "volume": 345700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 503997.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 62.73,
-      "high": 63.2,
-      "low": 61.35,
-      "close": 61.91,
-      "volume": 429400.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 60.59,
-      "high": 61.5,
-      "low": 60.3,
-      "close": 60.5,
-      "volume": 374000.0
-    },
     {
       "date": "2025-09-03",
       "open": 60.09,
@@ -6275,7 +6339,23 @@
       "high": 57.24,
       "low": 55.84,
       "close": 55.94,
-      "volume": 223286.0
+      "volume": 223300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 54.93,
+      "high": 55.06,
+      "low": 53.48,
+      "close": 53.74,
+      "volume": 345700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 503997.0
     }
   ],
   "ai_synthesis": null,

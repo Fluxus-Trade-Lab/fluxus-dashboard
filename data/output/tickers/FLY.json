@@ -1,46 +1,118 @@
 {
   "ticker": "FLY",
-  "fetched_at": "2026-09-01T01:12:05Z",
+  "fetched_at": "2026-09-03T00:00:37Z",
   "_schema": "v2",
-  "current_price": 21.1200008392334,
+  "current_price": 21.07,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "FLY",
+    "longName": "Firefly Aerospace Inc.",
+    "sector": "Industrials",
+    "industry": "Aerospace & Defense",
+    "exchange": "NGM",
+    "country": "United States",
+    "city": "Leander",
+    "website": "https://www.fireflyspace.com",
+    "fullTimeEmployees": 1409,
+    "marketCap": 3527215616,
+    "enterpriseValue": 2878386944,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "forwardPE": -12.087522,
+    "priceToSalesTrailing12Months": 12.289393,
+    "enterpriseToRevenue": 10.029,
+    "priceToBook": 2.86355,
+    "grossMargins": 0.22920999,
+    "operatingMargins": -0.80893,
+    "profitMargins": -1.29058,
+    "returnOnEquity": -0.57954,
+    "totalCash": 635264000,
+    "totalDebt": 53397000,
+    "totalRevenue": 287012992,
+    "freeCashflow": -166670368,
+    "debtToEquity": 4.366,
+    "currentRatio": 2.727,
+    "fiftyTwoWeekHigh": 62.17,
+    "fiftyTwoWeekLow": 16.0,
+    "averageVolume": 4577168,
+    "averageVolume10days": 2392950,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 167404645,
+    "sharesFloat": 108091505,
+    "companyOfficers": [
+      {
+        "name": "Mr. Jason  Kim",
+        "title": "CEO & Director",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Darren  Ma",
+        "title": "Chief Financial Officer",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. Ramon  Sanchez",
+        "title": "Chief Operating Officer",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Remington  Wu",
+        "title": "Chief Accounting Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Russel Shea Ferring",
+        "title": "Chief Technology Officer",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Brad  Warezak",
+        "title": "Chief Information Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.42,
+      "eps_estimate": -0.528,
+      "eps_surprise_pct": 0.2045
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.46,
+      "eps_estimate": -0.51981,
+      "eps_surprise_pct": 0.115100004
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.3757,
+      "eps_estimate": -0.48276,
+      "eps_surprise_pct": 0.2218
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -1.5,
+      "eps_estimate": -0.42791,
+      "eps_surprise_pct": -2.5054
+    },
+    {
+      "period_end": "2025-06-30T00:00:00",
+      "eps_actual": -5.6566,
+      "eps_estimate": -0.45667,
+      "eps_surprise_pct": -11.3866005
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-11",
+    "revenue_low": 82212000,
+    "revenue_high": 95000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -99,10 +171,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 9,
+    "bullish": 7,
+    "neutral": 2,
+    "bearish": 0,
+    "avg_price_target": 41.6,
+    "high_price_target": 65.0,
+    "low_price_target": 25.0,
+    "current_price": 21.07,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-12T18:09:37",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-12T16:53:45",
+        "firm": "B. Riley Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-12T11:08:44",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-07-27T16:37:19",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-06-15T11:52:24",
+        "firm": "Keybanc",
+        "to_grade": "Overweight",
+        "from_grade": "Sector Weight",
+        "action": "up"
+      },
+      {
+        "date": "2026-05-05T17:25:16",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-20T17:47:07",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-17T17:47:56",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-13T19:26:19",
+        "firm": "Jefferies",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-26T13:21:12",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +315,18 @@
       "source": "Insider Monkey"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.054579971523493115,
   "technicals": {
-    "ma20": 24.395000076293947,
-    "ma50": 23.757000045776365,
-    "ma200": 27.518599996566774,
-    "rsi14": 37.92430038434585,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 36.40309220401214,
     "high_20d": 28.200000762939453,
-    "low_5d": 20.790000915527344,
-    "low_10d": 20.790000915527344,
+    "low_5d": 20.35300064086914,
+    "low_10d": 20.35300064086914,
     "high_52w": 62.16999816894531,
     "low_52w": 16.0,
-    "atr14": 1.5826429639543806,
-    "atr14_pct": 7.493574342167624,
-    "position_in_52w_range_pct": 11.089454282623718
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -2320,30 +2467,30 @@
     },
     {
       "date": "2026-08-31",
-      "open": 21.0,
+      "open": 21.04,
       "high": 21.65,
       "low": 20.89,
       "close": 21.12,
-      "volume": 2164685.0
+      "volume": 2166300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 20.46,
+      "high": 21.25,
+      "low": 20.353,
+      "close": 20.67,
+      "volume": 2091800.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 2098898.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 46.54,
-      "high": 46.89,
-      "low": 45.155,
-      "close": 45.37,
-      "volume": 376400.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 45.0,
-      "high": 46.09,
-      "low": 43.606,
-      "close": 44.23,
-      "volume": 508300.0
-    },
     {
       "date": "2025-09-03",
       "open": 44.23,
@@ -4338,11 +4485,27 @@
     },
     {
       "date": "2026-08-31",
-      "open": 21.0,
+      "open": 21.04,
       "high": 21.65,
       "low": 20.89,
       "close": 21.12,
-      "volume": 2164685.0
+      "volume": 2166300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 20.46,
+      "high": 21.25,
+      "low": 20.353,
+      "close": 20.67,
+      "volume": 2091800.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 2098898.0
     }
   ],
   "ai_synthesis": null,

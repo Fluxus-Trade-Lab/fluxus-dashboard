@@ -1,46 +1,112 @@
 {
   "ticker": "EWTX",
-  "fetched_at": "2026-09-01T01:16:45Z",
+  "fetched_at": "2026-09-03T00:00:25Z",
   "_schema": "v2",
-  "current_price": 41.77000045776367,
+  "current_price": 41.98,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "EWTX",
+    "longName": "Edgewise Therapeutics, Inc.",
+    "sector": "Healthcare",
+    "industry": "Biotechnology",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Boulder",
+    "website": "https://edgewisetx.com",
+    "fullTimeEmployees": 127,
+    "marketCap": 4559201280,
+    "enterpriseValue": 4131405568,
     "trailingPE": null,
-    "forwardPE": null,
+    "forwardPE": -23.114958,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
+    "priceToBook": 10.098629,
+    "grossMargins": 0.0,
+    "operatingMargins": 0.0,
+    "profitMargins": 0.0,
+    "returnOnEquity": -0.38032,
+    "totalCash": 460708992,
+    "totalDebt": 3590000,
     "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "freeCashflow": -92311376,
+    "debtToEquity": 0.801,
+    "currentRatio": 16.236,
+    "fiftyTwoWeekHigh": 48.4,
+    "fiftyTwoWeekLow": 13.685,
+    "averageVolume": 1356733,
+    "averageVolume10days": 1169260,
+    "beta": 0.325,
+    "sharesOutstanding": 108604129,
+    "sharesFloat": 74261331,
+    "companyOfficers": [
+      {
+        "name": "Dr. Peter A. Thompson FACP, M.D.",
+        "title": "Co-Founder & Independent Chairman",
+        "age": 65,
+        "yearBorn": 1960
+      },
+      {
+        "name": "Dr. Kevin  Koch Ph.D.",
+        "title": "President, CEO & Director",
+        "age": 65,
+        "yearBorn": 1960
+      },
+      {
+        "name": "Dr. Badreddin  Edris Ph.D.",
+        "title": "Co-Founder & Independent Director",
+        "age": 38,
+        "yearBorn": 1987
+      },
+      {
+        "name": "Dr. Alan J. Russell Ph.D.",
+        "title": "Co-Founder, Chief Scientific Officer & Director",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Michael P. Nofi",
+        "title": "Chief Financial Officer",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Dr. Behrad  Derakhshan Ph.D.",
+        "title": "Chief Operating Officer",
+        "age": 45,
+        "yearBorn": 1980
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.53,
+      "eps_estimate": -0.47254,
+      "eps_surprise_pct": -0.1216
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.46,
+      "eps_estimate": -0.485,
+      "eps_surprise_pct": 0.0515
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.47,
+      "eps_estimate": -0.44237,
+      "eps_surprise_pct": -0.0625
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.39,
+      "eps_estimate": -0.40112,
+      "eps_surprise_pct": 0.0277
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 0,
+    "revenue_high": 1550000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 12,
+    "bullish": 10,
+    "neutral": 2,
+    "bearish": 0,
+    "avg_price_target": 51.69231,
+    "high_price_target": 66.0,
+    "low_price_target": 36.0,
+    "current_price": 41.98,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-20T17:54:51",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-11T17:52:17",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-20T12:56:31",
+        "firm": "Evercore ISI Group",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-09T13:31:31",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-06T14:00:34",
+        "firm": "Guggenheim",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-17T15:01:11",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-17T12:19:26",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-16T15:55:43",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-06-02T14:24:16",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-02T13:52:08",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +309,18 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.1250595521676989,
   "technicals": {
-    "ma20": 44.07625026702881,
-    "ma50": 42.042300109863284,
-    "ma200": 32.5698250579834,
-    "rsi14": 45.717914967577855,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 47.53143559339162,
     "high_20d": 46.59000015258789,
-    "low_5d": 40.65999984741211,
-    "low_10d": 40.65999984741211,
+    "low_5d": 40.63999938964844,
+    "low_10d": 40.63999938964844,
     "high_52w": 48.400001525878906,
     "low_52w": 13.6850004196167,
-    "atr14": 2.068856648036412,
-    "atr14_pct": 4.952972529000486,
-    "position_in_52w_range_pct": 80.90162507032369
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4176,30 +4317,30 @@
     },
     {
       "date": "2026-08-31",
-      "open": 42.45,
+      "open": 42.24,
       "high": 42.46,
-      "low": 40.66,
+      "low": 40.64,
       "close": 41.77,
-      "volume": 1082225.0
+      "volume": 1085800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 41.59,
+      "high": 42.64,
+      "low": 40.82,
+      "close": 42.25,
+      "volume": 1040500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 884178.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 14.6,
-      "high": 14.7,
-      "low": 14.12,
-      "close": 14.35,
-      "volume": 670600.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 14.5,
-      "high": 15.119,
-      "low": 14.33,
-      "close": 14.86,
-      "volume": 1048100.0
-    },
     {
       "date": "2025-09-03",
       "open": 14.64,
@@ -6194,11 +6335,27 @@
     },
     {
       "date": "2026-08-31",
-      "open": 42.45,
+      "open": 42.24,
       "high": 42.46,
-      "low": 40.66,
+      "low": 40.64,
       "close": 41.77,
-      "volume": 1082225.0
+      "volume": 1085800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 41.59,
+      "high": 42.64,
+      "low": 40.82,
+      "close": 42.25,
+      "volume": 1040500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 884178.0
     }
   ],
   "ai_synthesis": null,

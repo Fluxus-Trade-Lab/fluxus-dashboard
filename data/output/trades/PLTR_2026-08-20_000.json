@@ -1,6 +1,6 @@
 {
   "trade_id": "PLTR_2026-08-20_000",
-  "generated_at": "2026-09-01T23:55:30+00:00",
+  "generated_at": "2026-09-03T00:03:14+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "PLTR",
@@ -9,21 +9,33 @@
     "entry_date": "2026-08-20",
     "entry_price": 180.43,
     "original_qty": 1440,
-    "current_qty": 960,
-    "stop_price": 172.0,
+    "current_qty": 0,
+    "stop_price": 170.0,
     "initial_stop": 172.0,
-    "closed": false,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "exit_date": "2026-09-02",
+    "hold_business_days": 9,
     "r_dollars": 12139.20000000001,
-    "realized_pl": 1468.800000000001,
-    "realized_R": 0.12099644128113878,
+    "realized_pl": -2419.200000000003,
+    "realized_R": -0.1992882562277581,
     "trims": [
       {
         "date": "2026-09-01",
         "price": 183.49,
         "qty": 480,
         "type": "trim_1_3"
+      },
+      {
+        "date": "2026-09-02",
+        "price": 177.21,
+        "qty": 720,
+        "type": "trim_1_2"
+      },
+      {
+        "date": "2026-09-02",
+        "price": 173.89,
+        "qty": 240,
+        "type": "sell_rest"
       }
     ]
   },
@@ -33,10 +45,10 @@
     "high": 176.46,
     "low": 172.03,
     "volume": 27018400.0,
-    "ma20": 154.42350000000002,
-    "ma50": 137.9372,
+    "ma20": 154.4235,
+    "ma50": 137.93720000000002,
     "ma200": 151.6421,
-    "rsi14": 66.29810194484917,
+    "rsi14": 66.29810208962564,
     "atr14": 9.185571428571432,
     "atr14_pct": 5.280277896396546,
     "high_52w": 207.52,
@@ -50,20 +62,20 @@
   "path_analytics": {
     "mfe_R": 0.9418742586002362,
     "mfe_date": "2026-08-28",
-    "mae_R": 1.3677342823250287,
-    "mae_date": "2026-08-26",
+    "mae_R": 1.7461447212336876,
+    "mae_date": "2026-09-02",
     "optimal_exit_price": 188.37,
     "optimal_exit_date": "2026-08-28",
     "optimal_R": 0.9418742586002362,
     "days_to_optimal": 8,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": -0.1992882562277581,
+    "capture_pct": -21.15869017632245,
+    "missed_R": 1.1411625148279942,
     "post_exit_R": null,
-    "hold_calendar_days": 12
+    "hold_calendar_days": 13
   },
-  "lesson": "In progress",
-  "narrative": "Entered **PLTR** long on 2026-08-20 at $180.43 (qty 1440) with stop $172.00 (1R = $8.43/sh = $12,139). Setup: **Long in mixed structure** \u2014 price above MA20 ($154.42), MA stack mixed, RSI 66, 67% through 52W range, ATR 5.3% of price. **In progress.** Peak so far +0.94R; worst drawdown -1.37R.",
+  "lesson": "Choppy / no edge",
+  "narrative": "Entered **PLTR** long on 2026-08-20 at $180.43 (qty 1440) with stop $172.00 (currently trailed to $170.00) (1R = $8.43/sh = $12,139). Setup: **Long in mixed structure** \u2014 price above MA20 ($154.42), MA stack mixed, RSI 66, 67% through 52W range, ATR 5.3% of price. Realized **-0.20R**, peak was **+0.94R** on 2026-08-28 (day +8) \u2014 captured **-21%** of the move. **Lesson: Choppy / no edge.**",
   "ohlc_window": [
     {
       "date": "2026-07-21",
@@ -295,7 +307,7 @@
       "high": 188.37,
       "low": 184.38,
       "close": 186.29,
-      "volume": 24995400.0
+      "volume": 25060200.0
     },
     {
       "date": "2026-08-31",
@@ -303,7 +315,23 @@
       "high": 187.94,
       "low": 183.79,
       "close": 186.38,
-      "volume": 25633590.0
+      "volume": 25941200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 182.98,
+      "high": 186.55,
+      "low": 179.75,
+      "close": 179.92,
+      "volume": 24567200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 176.995,
+      "high": 177.55,
+      "low": 165.71,
+      "close": 169.46,
+      "volume": 39578542.0
     }
   ]
 }

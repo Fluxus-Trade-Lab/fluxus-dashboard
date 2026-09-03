@@ -1,46 +1,112 @@
 {
   "ticker": "CYTK",
-  "fetched_at": "2026-09-01T01:16:24Z",
+  "fetched_at": "2026-09-03T00:00:09Z",
   "_schema": "v2",
-  "current_price": 70.91000366210938,
+  "current_price": 71.93,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "CYTK",
+    "longName": "Cytokinetics, Incorporated",
+    "sector": "Healthcare",
+    "industry": "Biotechnology",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "South San Francisco",
+    "website": "https://www.cytokinetics.com",
+    "fullTimeEmployees": 673,
+    "marketCap": 9999954944,
+    "enterpriseValue": 10185040896,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
+    "forwardPE": -16.161575,
+    "priceToSalesTrailing12Months": 147.7753,
+    "enterpriseToRevenue": 150.51,
+    "priceToBook": -57.544,
+    "grossMargins": 0.0,
+    "operatingMargins": -6.2595,
+    "profitMargins": 0.0,
     "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
+    "totalCash": 1165686016,
+    "totalDebt": 1424455040,
+    "totalRevenue": 67670000,
+    "freeCashflow": -397408736,
     "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "currentRatio": 6.661,
+    "fiftyTwoWeekHigh": 88.31,
+    "fiftyTwoWeekLow": 47.22,
+    "averageVolume": 2072785,
+    "averageVolume10days": 1883630,
+    "beta": 0.376,
+    "sharesOutstanding": 139023418,
+    "sharesFloat": 138386691,
+    "companyOfficers": [
+      {
+        "name": "Mr. Robert I. Blum",
+        "title": "CEO, President & Director",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Sung H. Lee",
+        "title": "EVP & CFO",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Jeffrey J. Hessekiel J.D.",
+        "title": "Executive VP, Chief Legal & Administrative Officer",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Dr. Fady Ibraham Malik FACC, M.D., Ph.D.",
+        "title": "Executive Vice President of Research & Development",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Andrew M. Callos",
+        "title": "Executive VP & Chief Commercial Officer",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Dr. James H. Sabry M.D., Ph.D.",
+        "title": "Co-Founder & Chairman of Scientific Advisory Board",
+        "age": 67,
+        "yearBorn": 1958
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -1.5,
+      "eps_estimate": -1.60081,
+      "eps_surprise_pct": 0.063
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -1.67,
+      "eps_estimate": -1.64786,
+      "eps_surprise_pct": -0.0134000005
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -1.5,
+      "eps_estimate": -1.36778,
+      "eps_surprise_pct": -0.0967
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -1.5413,
+      "eps_estimate": -1.56583,
+      "eps_surprise_pct": 0.015700001
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 27623000,
+    "revenue_high": 51400000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,107 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 22,
+    "bullish": 20,
+    "neutral": 2,
+    "bearish": 0,
+    "avg_price_target": 109.9,
+    "high_price_target": 146.0,
+    "low_price_target": 85.0,
+    "current_price": 71.93,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-31T10:19:51",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-13T18:03:49",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-13T15:02:10",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-10T17:44:46",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T18:41:49",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T14:23:17",
+        "firm": "Citizens",
+        "to_grade": "Market Outperform",
+        "from_grade": "Market Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T13:27:52",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-07T16:11:07",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-29T16:22:53",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2026-06-24T13:04:04",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T18:30:00Z",
+      "title": "Can CYTK's Aficamten Strengthen Its HCM Growth Prospects?",
+      "url": "https://finance.yahoo.com/healthcare/articles/cytks-aficamten-strengthen-hcm-growth-183000656.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-01T13:08:23Z",
+      "title": "Cytokinetics (CYTK) Presents New Phase 3 Data, Is It Still 34% Undervalued?",
+      "url": "https://finance.yahoo.com/healthcare/articles/cytokinetics-cytk-presents-phase-3-130823981.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-01T05:05:09Z",
+      "title": "Cytokinetics (CYTK) Reaches A Phase 3 First In Non Obstructive HCM",
+      "url": "https://finance.yahoo.com/healthcare/articles/cytokinetics-cytk-reaches-phase-3-050509679.html",
+      "source": "Simply Wall St."
+    },
     {
       "date": "2026-08-31T11:00:19Z",
       "title": "Jefferies starts biopharma firm Braveheart at Buy after IPO",
@@ -146,40 +307,20 @@
       "title": "Capricor shares spike on CEO comments; Cytokinetics sues Bristol Myers",
       "url": "https://www.biopharmadive.com/news/capricor-fda-cytokinetics-lawsuit-valneva-indupro-rusfertide-veppanu/827770/",
       "source": "BioPharma Dive"
-    },
-    {
-      "date": "2026-08-13T22:32:30Z",
-      "title": "Cytokinetics (CYTK) Q2 2026 Earnings Call Transcript",
-      "url": "https://www.fool.com/earnings/call-transcripts/2026/08/13/cytokinetics-cytk-q2-2026-earnings-call-transcript/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-08T11:10:15Z",
-      "title": "Cytokinetics (CYTK) Stock Looks Near Fair Value Despite UK MYQORZO Approval",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cytokinetics-cytk-stock-looks-near-111015960.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-07T18:22:00Z",
-      "title": "CYTK Q2 Earnings Top Estimates, Myqorzo Uptake Strong",
-      "url": "https://finance.yahoo.com/healthcare/articles/cytk-q2-earnings-top-estimates-182200106.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.08410955095231475,
   "technicals": {
-    "ma20": 76.55649909973144,
-    "ma50": 79.81019958496094,
-    "ma200": 69.63715003967285,
-    "rsi14": 34.34794940629871,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 35.990884497039616,
     "high_20d": 81.7699966430664,
     "low_5d": 69.30999755859375,
     "low_10d": 69.30999755859375,
     "high_52w": 88.30999755859375,
-    "low_52w": 35.220001220703125,
-    "atr14": 2.456427437918527,
-    "atr14_pct": 3.4641479495947545,
-    "position_in_52w_range_pct": 67.2254754252716
+    "low_52w": 44.90999984741211,
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4167,31 +4308,31 @@
       "volume": 1109800.0
     },
     {
-      "date": "2026-08-28",
-      "open": 73.88,
-      "high": 74.42,
-      "low": 71.66,
-      "close": 72.09,
-      "volume": 4361500.0
-    },
-    {
       "date": "2026-08-31",
       "open": 71.54,
       "high": 71.79,
       "low": 69.31,
       "close": 70.91,
-      "volume": 3016601.0
+      "volume": 3078100.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 69.85,
+      "high": 72.46,
+      "low": 69.83,
+      "close": 71.4,
+      "volume": 1898300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 1605586.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 37.26,
-      "high": 37.74,
-      "low": 35.22,
-      "close": 35.33,
-      "volume": 3222000.0
-    },
     {
       "date": "2025-09-02",
       "open": 44.91,
@@ -6185,20 +6326,28 @@
       "volume": 1109800.0
     },
     {
-      "date": "2026-08-28",
-      "open": 73.88,
-      "high": 74.42,
-      "low": 71.66,
-      "close": 72.09,
-      "volume": 4361500.0
-    },
-    {
       "date": "2026-08-31",
       "open": 71.54,
       "high": 71.79,
       "low": 69.31,
       "close": 70.91,
-      "volume": 3016601.0
+      "volume": 3078100.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 69.85,
+      "high": 72.46,
+      "low": 69.83,
+      "close": 71.4,
+      "volume": 1898300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 1605586.0
     }
   ],
   "ai_synthesis": null,

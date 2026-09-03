@@ -1,46 +1,112 @@
 {
   "ticker": "APP",
-  "fetched_at": "2026-09-01T01:15:19Z",
+  "fetched_at": "2026-09-02T23:59:04Z",
   "_schema": "v2",
-  "current_price": 312.05999755859375,
+  "current_price": 319.04998779296875,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "APP",
+    "longName": "AppLovin Corporation",
+    "sector": "Communication Services",
+    "industry": "Advertising Agencies",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Palo Alto",
+    "website": "https://www.applovin.com",
+    "fullTimeEmployees": 876,
+    "marketCap": 107181498368,
+    "enterpriseValue": 104785870848,
+    "trailingPE": 24.542307,
+    "forwardPE": 15.209667,
+    "priceToSalesTrailing12Months": 15.694765,
+    "enterpriseToRevenue": 15.344,
+    "priceToBook": 33.819164,
+    "grossMargins": 0.88464,
+    "operatingMargins": 0.77678,
+    "profitMargins": 0.64575994,
+    "returnOnEquity": 2.03686,
+    "totalCash": 3053306112,
+    "totalDebt": 3515072000,
+    "totalRevenue": 6829124096,
+    "freeCashflow": 3179956224,
+    "debtToEquity": 111.13,
+    "currentRatio": 4.3,
+    "fiftyTwoWeekHigh": 745.61,
+    "fiftyTwoWeekLow": 297.5,
+    "averageVolume": 6012023,
+    "averageVolume10days": 4616220,
+    "beta": 2.529,
+    "sharesOutstanding": 305732000,
+    "sharesFloat": 253431202,
+    "companyOfficers": [
+      {
+        "name": "Mr. Adam Arash Foroughi",
+        "title": "Co-Founder, CEO & Director",
+        "age": 44,
+        "yearBorn": 1981
+      },
+      {
+        "name": "Mr. Matthew A. Stumpf",
+        "title": "Chief Financial Officer",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Ms. Victoria  Valenzuela",
+        "title": "Consultant",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Dmitriy  Dorosh",
+        "title": "Vice President Controller & Principal Accounting Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. David  Hsiao",
+        "title": "Head of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Corina  Cacovean",
+        "title": "Chief Legal Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 3.76,
+      "eps_estimate": 3.74407,
+      "eps_surprise_pct": 0.0043
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 3.56,
+      "eps_estimate": 3.44326,
+      "eps_surprise_pct": 0.0339
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 3.24,
+      "eps_estimate": 2.94408,
+      "eps_surprise_pct": 0.1005
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 2.45,
+      "eps_estimate": 2.38757,
+      "eps_surprise_pct": 0.026099999
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 2063500000,
+    "revenue_high": 2090700000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,101 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 32,
+    "bullish": 29,
+    "neutral": 3,
+    "bearish": 0,
+    "avg_price_target": 514.4839,
+    "high_price_target": 790.0,
+    "low_price_target": 325.0,
+    "current_price": 319.05,
+    "recent_rating_changes": [
+      {
+        "date": "2026-09-01T16:18:53",
+        "firm": "Evercore ISI Group",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-26T11:16:53",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-21T17:02:29",
+        "firm": "Piper Sandler",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T13:27:07",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-17T12:17:07",
+        "firm": "Benchmark",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-12T10:20:36",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-11T10:17:17",
+        "firm": "B of A Securities",
+        "to_grade": "Neutral",
+        "from_grade": "Buy",
+        "action": "down"
+      },
+      {
+        "date": "2026-08-07T20:36:20",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T18:33:36",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-06T17:56:11",
+        "firm": "Macquarie",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T16:21:26Z",
+      "title": "Magnite Rallies 6%, Trade Desk Climbs 5%, AppLovin Barely Budges: Is Agentic Ad-Tech Broadening Out?",
+      "url": "https://247wallst.com/investing/2026/09/02/magnite-rallies-6-trade-desk-climbs-5-applovin-barely-budges-is-agentic-ad-tech-broadening-out/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-02T08:28:26Z",
+      "title": "1 Large-Cap Stock with Exciting Potential and 2 We Find Risky",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/1-large-cap-stock-exciting-082826324.html",
+      "source": "StockStory"
+    },
     {
       "date": "2026-08-31T12:38:38Z",
       "title": "Trade Desk Rises 5% on Kokai Zuma Agentic AI Launch, AppLovin and Magnite Barely Budge",
@@ -152,34 +307,22 @@
       "title": "AppLovin vs. Meta Platforms: Analyzing Quarterly Revenue Trajectories Between These High-Growth Digital Media Companies",
       "url": "https://www.fool.com/coverage/charts/2026/08/27/applovin-vs-meta-platforms-analyzing-quarterly-revenue-trajectories-between-these-high-growth-digital-media-companies/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-27T18:19:56Z",
-      "title": "AppLovin Stock Has Already Taken A Shock-Sized Fall Without A Shock",
-      "url": "https://www.trefis.com/articles/613343/applovin-stock-has-already-taken-a-shock-sized-fall-without-a-shock/2026-08-27",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-08-27T18:15:00Z",
-      "title": "COHR vs. APP: Which AI Growth Stock Offers the Better Investment?",
-      "url": "https://finance.yahoo.com/technology/ai/articles/cohr-vs-app-ai-growth-181500494.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03510421698328874,
   "technicals": {
-    "ma20": 325.6890014648437,
-    "ma50": 405.23419982910156,
-    "ma200": 490.90712631225585,
-    "rsi14": 36.08913525938902,
-    "high_20d": 437.7900085449219,
-    "low_5d": 299.864990234375,
+    "ma20": 315.35350036621094,
+    "ma50": 399.1217993164062,
+    "ma200": 488.35602615356447,
+    "rsi14": 39.81902852922154,
+    "high_20d": 352.0,
+    "low_5d": 305.27899169921875,
     "low_10d": 297.5,
     "high_52w": 745.6099853515625,
     "low_52w": 297.5,
-    "atr14": 12.673568725585938,
-    "atr14_pct": 4.061260278388066,
-    "position_in_52w_range_pct": 3.2492017662071904
+    "atr14": 12.556141444614955,
+    "atr14_pct": 3.9354778012913214,
+    "position_in_52w_range_pct": 4.8090844876089545
   },
   "ohlc_2y": [
     {
@@ -4176,30 +4319,30 @@
     },
     {
       "date": "2026-08-31",
-      "open": 314.402,
+      "open": 315.245,
       "high": 317.89,
       "low": 306.25,
       "close": 312.06,
-      "volume": 5047643.0
+      "volume": 5059200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 305.5,
+      "high": 318.795,
+      "low": 305.279,
+      "close": 311.74,
+      "volume": 3897400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 307.54,
+      "high": 320.83,
+      "low": 305.67,
+      "close": 319.05,
+      "volume": 3872404.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 480.72,
-      "high": 485.528,
-      "low": 472.42,
-      "close": 478.59,
-      "volume": 5148100.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 464.0,
-      "high": 481.86,
-      "low": 452.25,
-      "close": 481.73,
-      "volume": 5279100.0
-    },
     {
       "date": "2025-09-03",
       "open": 487.69,
@@ -6194,11 +6337,27 @@
     },
     {
       "date": "2026-08-31",
-      "open": 314.402,
+      "open": 315.245,
       "high": 317.89,
       "low": 306.25,
       "close": 312.06,
-      "volume": 5047643.0
+      "volume": 5059200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 305.5,
+      "high": 318.795,
+      "low": 305.279,
+      "close": 311.74,
+      "volume": 3897400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 307.54,
+      "high": 320.83,
+      "low": 305.67,
+      "close": 319.05,
+      "volume": 3872404.0
     }
   ],
   "ai_synthesis": null,

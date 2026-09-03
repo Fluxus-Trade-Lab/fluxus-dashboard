@@ -1,46 +1,112 @@
 {
   "ticker": "KLIC",
-  "fetched_at": "2026-09-01T01:17:36Z",
+  "fetched_at": "2026-09-03T00:01:21Z",
   "_schema": "v2",
-  "current_price": 80.05999755859375,
+  "current_price": 78.95,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "KLIC",
+    "longName": "Kulicke and Soffa Industries, Inc.",
+    "sector": "Technology",
+    "industry": "Semiconductor Equipment & Materials",
+    "exchange": "NMS",
+    "country": "Singapore",
+    "city": "Singapore",
+    "website": "https://www.kns.com",
+    "fullTimeEmployees": 2551,
+    "marketCap": 4131383552,
+    "enterpriseValue": 3652928512,
+    "trailingPE": 36.215595,
+    "forwardPE": 13.373808,
+    "priceToSalesTrailing12Months": 4.34785,
+    "enterpriseToRevenue": 3.844,
+    "priceToBook": 4.5305862,
+    "grossMargins": 0.52641,
+    "operatingMargins": 0.20661,
+    "profitMargins": 0.121800005,
+    "returnOnEquity": 0.13231,
+    "totalCash": 516572992,
+    "totalDebt": 38118000,
+    "totalRevenue": 950212992,
+    "freeCashflow": 57164124,
+    "debtToEquity": 4.18,
+    "currentRatio": 3.444,
+    "fiftyTwoWeekHigh": 135.8,
+    "fiftyTwoWeekLow": 35.02,
+    "averageVolume": 1049674,
+    "averageVolume10days": 741110,
+    "beta": 1.64,
+    "sharesOutstanding": 52329115,
+    "sharesFloat": 50650920,
+    "companyOfficers": [
+      {
+        "name": "Mr. Robert Nestor  Chylak",
+        "title": "Senior VP of Central Engineering & CTO",
+        "age": 66,
+        "yearBorn": 1959
+      },
+      {
+        "name": "Mr. Mun Pun  Wong",
+        "title": "Senior Vice President of Global Sales & Supply Chain",
+        "age": 64,
+        "yearBorn": 1961
+      },
+      {
+        "name": "Dr. Fusen Ernie  Chen Ph.D.",
+        "title": "Advisor",
+        "age": 66,
+        "yearBorn": 1959
+      },
+      {
+        "name": "Mr. Joseph  Elgindy",
+        "title": "Senior Director of Investor Relations & Strategic Planning",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Zi Yao  Lim",
+        "title": "VP of Legal Affairs, General Counsel & Corporate Secretary",
+        "age": 37,
+        "yearBorn": 1988
+      },
+      {
+        "name": "Ms. Lisa  Lim",
+        "title": "Vice President of Global Human Resources",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 1.2,
+      "eps_estimate": 1.00667,
+      "eps_surprise_pct": 0.192
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.79,
+      "eps_estimate": 0.67,
+      "eps_surprise_pct": 0.17909999
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.44,
+      "eps_estimate": 0.33,
+      "eps_surprise_pct": 0.33330002
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.28,
+      "eps_estimate": 0.222,
+      "eps_surprise_pct": 0.2613
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-18",
+    "revenue_low": 375000000,
+    "revenue_high": 380400000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,113 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 3,
+    "bullish": 1,
+    "neutral": 2,
+    "bearish": 0,
+    "avg_price_target": 106.66667,
+    "high_price_target": 115.0,
+    "low_price_target": 100.0,
+    "current_price": 78.95,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-06T18:51:52",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-07T20:05:04",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-02-06T09:53:29",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-01-20T12:13:39",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-01-06T12:28:47",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-11-21T18:18:36",
+        "firm": "DA Davidson",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-11-21T16:20:09",
+        "firm": "B. Riley Securities",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "reit"
+      },
+      {
+        "date": "2025-11-21T10:24:59",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-10-10T13:44:49",
+        "firm": "B. Riley Securities",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2025-08-07T17:13:45",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T20:10:47Z",
+      "title": "How Is Kulicke And Soffa Industries (KLIC) Shaping AI Infrastructure Packaging?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/kulicke-soffa-industries-klic-shaping-201047642.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-02T16:13:21Z",
+      "title": "Kulicke And Soffa Industries (KLIC) Stock Looks Fairly Valued Following Its 117% Run",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/kulicke-soffa-industries-klic-stock-161321371.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-02T13:55:02Z",
+      "title": "Kulicke and Soffa (KLIC) Forms 'Hammer Chart Pattern': Time for Bottom Fishing?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/kulicke-soffa-klic-forms-hammer-135502152.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-01T15:14:20Z",
+      "title": "Kulicke and Soffa (NASDAQ:KLIC) Q2 Earnings: Leading The Semiconductor Manufacturing Pack",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/kulicke-soffa-nasdaq-klic-q2-151420468.html",
+      "source": "StockStory"
+    },
     {
       "date": "2026-08-27T13:55:04Z",
       "title": "How Much Upside is Left in Kulicke and Soffa (KLIC)? Wall Street Analysts Think 25.67%",
@@ -140,46 +307,20 @@
       "title": "3 of Wall Street\u2019s Favorite Stocks We Keep Off Our Radar",
       "url": "https://finance.yahoo.com/markets/stocks/articles/3-wall-street-favorite-stocks-042100756.html",
       "source": "StockStory"
-    },
-    {
-      "date": "2026-08-14T21:17:00Z",
-      "title": "3 Small-Cap Stocks That Concern Us",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/3-small-cap-stocks-concern-211700331.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-14T19:41:00Z",
-      "title": "Kulicke and Soffa, AMD, Intel, and Nvidia Shares Are Soaring, What You Need To Know",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/kulicke-soffa-amd-intel-nvidia-194100344.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-14T01:33:00Z",
-      "title": "5 Insightful Analyst Questions From Kulicke and Soffa\u2019s Q2 Earnings Call",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/5-insightful-analyst-questions-kulicke-013300237.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-09T10:11:11Z",
-      "title": "Kulicke And Soffa Industries (KLIC) On Earnings Rebound And Guidance With Fair Value In View",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/kulicke-soffa-industries-klic-earnings-101111547.html",
-      "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.08651044965167827,
   "technicals": {
-    "ma20": 89.34499893188476,
-    "ma50": 101.44559951782226,
-    "ma200": 77.98845106124878,
-    "rsi14": 35.25149039915517,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 33.41022013674845,
     "high_20d": 103.38999938964844,
-    "low_5d": 79.45999908447266,
-    "low_10d": 79.45999908447266,
+    "low_5d": 76.88999938964844,
+    "low_10d": 76.88999938964844,
     "high_52w": 135.8000030517578,
     "low_52w": 34.69322920304937,
-    "atr14": 4.4728578839983255,
-    "atr14_pct": 5.586882363723234,
-    "position_in_52w_range_pct": 44.87015718989228
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -241,7 +382,7 @@
     {
       "date": "2024-09-12",
       "open": 38.1972,
-      "high": 38.4965,
+      "high": 38.4966,
       "low": 37.4731,
       "close": 37.9655,
       "volume": 359400.0
@@ -347,7 +488,7 @@
       "open": 43.576,
       "high": 43.7409,
       "low": 41.9944,
-      "close": 42.5669,
+      "close": 42.5668,
       "volume": 426300.0
     },
     {
@@ -393,7 +534,7 @@
     {
       "date": "2024-10-09",
       "open": 43.0229,
-      "high": 43.5372,
+      "high": 43.5371,
       "low": 42.7997,
       "close": 43.1296,
       "volume": 341000.0
@@ -474,7 +615,7 @@
       "date": "2024-10-23",
       "open": 41.5286,
       "high": 41.6936,
-      "low": 40.5874,
+      "low": 40.5875,
       "close": 41.1599,
       "volume": 376500.0
     },
@@ -498,7 +639,7 @@
       "date": "2024-10-28",
       "open": 43.3722,
       "high": 44.8373,
-      "low": 43.2364,
+      "low": 43.2363,
       "close": 44.7597,
       "volume": 665600.0
     },
@@ -528,9 +669,9 @@
     },
     {
       "date": "2024-11-01",
-      "open": 43.867,
+      "open": 43.8671,
       "high": 44.915,
-      "low": 43.867,
+      "low": 43.8671,
       "close": 44.2261,
       "volume": 495900.0
     },
@@ -561,7 +702,7 @@
     {
       "date": "2024-11-07",
       "open": 48.2237,
-      "high": 48.4759,
+      "high": 48.476,
       "low": 47.2437,
       "close": 47.2825,
       "volume": 546000.0
@@ -626,7 +767,7 @@
       "date": "2024-11-19",
       "open": 44.3619,
       "high": 44.9053,
-      "low": 43.867,
+      "low": 43.8671,
       "close": 44.2261,
       "volume": 651300.0
     },
@@ -769,7 +910,7 @@
     {
       "date": "2024-12-16",
       "open": 48.0587,
-      "high": 48.8058,
+      "high": 48.8059,
       "low": 46.9914,
       "close": 48.6215,
       "volume": 448900.0
@@ -945,7 +1086,7 @@
     {
       "date": "2025-01-21",
       "open": 46.4786,
-      "high": 47.2191,
+      "high": 47.2192,
       "low": 46.2545,
       "close": 46.2935,
       "volume": 421600.0
@@ -1107,7 +1248,7 @@
       "open": 41.441,
       "high": 42.6103,
       "low": 41.2656,
-      "close": 42.318,
+      "close": 42.3179,
       "volume": 746100.0
     },
     {
@@ -1314,7 +1455,7 @@
       "date": "2025-03-27",
       "open": 35.2274,
       "high": 35.6487,
-      "low": 33.6203,
+      "low": 33.6204,
       "close": 33.8065,
       "volume": 648600.0
     },
@@ -1483,7 +1624,7 @@
       "open": 31.2686,
       "high": 31.7389,
       "low": 30.8962,
-      "close": 31.6704,
+      "close": 31.6703,
       "volume": 499100.0
     },
     {
@@ -1594,7 +1735,7 @@
       "date": "2025-05-16",
       "open": 33.2774,
       "high": 33.591,
-      "low": 32.6503,
+      "low": 32.6502,
       "close": 33.1402,
       "volume": 418500.0
     },
@@ -1704,7 +1845,7 @@
     },
     {
       "date": "2025-06-06",
-      "open": 32.6013,
+      "open": 32.6012,
       "high": 32.9246,
       "low": 31.9153,
       "close": 32.5033,
@@ -1720,9 +1861,9 @@
     },
     {
       "date": "2025-06-10",
-      "open": 33.6399,
+      "open": 33.64,
       "high": 35.2176,
-      "low": 33.5909,
+      "low": 33.591,
       "close": 34.4925,
       "volume": 917700.0
     },
@@ -1865,9 +2006,9 @@
     {
       "date": "2025-07-08",
       "open": 35.3688,
-      "high": 36.7192,
+      "high": 36.7193,
       "low": 35.2406,
-      "close": 36.3249,
+      "close": 36.325,
       "volume": 467800.0
     },
     {
@@ -1913,7 +2054,7 @@
     {
       "date": "2025-07-16",
       "open": 34.521,
-      "high": 34.7477,
+      "high": 34.7478,
       "low": 33.8211,
       "close": 34.6787,
       "volume": 332100.0
@@ -1936,9 +2077,9 @@
     },
     {
       "date": "2025-07-21",
-      "open": 35.142,
+      "open": 35.1421,
       "high": 35.7828,
-      "low": 35.142,
+      "low": 35.1421,
       "close": 35.1519,
       "volume": 422700.0
     },
@@ -2625,7 +2766,7 @@
     {
       "date": "2025-11-19",
       "open": 35.3966,
-      "high": 36.0505,
+      "high": 36.0504,
       "low": 34.8616,
       "close": 34.9607,
       "volume": 676200.0
@@ -2698,8 +2839,8 @@
       "date": "2025-12-03",
       "open": 44.699,
       "high": 46.72,
-      "low": 44.491,
-      "close": 46.5615,
+      "low": 44.4909,
+      "close": 46.5614,
       "volume": 632300.0
     },
     {
@@ -4180,26 +4321,26 @@
       "high": 83.76,
       "low": 79.46,
       "close": 80.06,
-      "volume": 736200.0
+      "volume": 736300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 78.57,
+      "high": 78.71,
+      "low": 76.89,
+      "close": 78.04,
+      "volume": 564800.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 532651.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 36.9361,
-      "high": 37.3896,
-      "low": 36.5517,
-      "close": 36.9657,
-      "volume": 610300.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 35.9898,
-      "high": 36.0588,
-      "low": 35.4772,
-      "close": 35.9997,
-      "volume": 485100.0
-    },
     {
       "date": "2025-09-03",
       "open": 35.9898,
@@ -4643,7 +4784,7 @@
     {
       "date": "2025-11-19",
       "open": 35.3966,
-      "high": 36.0505,
+      "high": 36.0504,
       "low": 34.8616,
       "close": 34.9607,
       "volume": 676200.0
@@ -4716,8 +4857,8 @@
       "date": "2025-12-03",
       "open": 44.699,
       "high": 46.72,
-      "low": 44.491,
-      "close": 46.5615,
+      "low": 44.4909,
+      "close": 46.5614,
       "volume": 632300.0
     },
     {
@@ -6198,7 +6339,23 @@
       "high": 83.76,
       "low": 79.46,
       "close": 80.06,
-      "volume": 736200.0
+      "volume": 736300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 78.57,
+      "high": 78.71,
+      "low": 76.89,
+      "close": 78.04,
+      "volume": 564800.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 532651.0
     }
   ],
   "ai_synthesis": null,

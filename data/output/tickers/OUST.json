@@ -1,46 +1,112 @@
 {
   "ticker": "OUST",
-  "fetched_at": "2026-09-01T01:12:51Z",
+  "fetched_at": "2026-09-02T23:56:46Z",
   "_schema": "v2",
-  "current_price": 34.439998626708984,
+  "current_price": 34.83000183105469,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "OUST",
+    "longName": "Ouster, Inc.",
+    "sector": "Technology",
+    "industry": "Electronic Components",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://ouster.com",
+    "fullTimeEmployees": 320,
+    "marketCap": 2511672832,
+    "enterpriseValue": 2153772288,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -278.64,
+    "priceToSalesTrailing12Months": 12.257623,
+    "enterpriseToRevenue": 10.511,
+    "priceToBook": 6.425014,
+    "grossMargins": 0.46623,
+    "operatingMargins": -0.46580002,
+    "profitMargins": -0.26025,
+    "returnOnEquity": -0.18006,
+    "totalCash": 261080992,
+    "totalDebt": 16397000,
+    "totalRevenue": 204907008,
+    "freeCashflow": -57373000,
+    "debtToEquity": 4.416,
+    "currentRatio": 4.164,
+    "fiftyTwoWeekHigh": 63.79,
+    "fiftyTwoWeekLow": 16.4,
+    "averageVolume": 3960177,
+    "averageVolume10days": 2209810,
+    "beta": 3.275,
+    "sharesOutstanding": 72112333,
+    "sharesFloat": 69799690,
+    "companyOfficers": [
+      {
+        "name": "Mr. Charles Angus Pacala",
+        "title": "Co-Founder, CEO & Director",
+        "age": 36,
+        "yearBorn": 1989
+      },
+      {
+        "name": "Mr. Mark  Frichtl",
+        "title": "Co-Founder & CTO",
+        "age": 36,
+        "yearBorn": 1989
+      },
+      {
+        "name": "Mr. Kenneth P. Gianella",
+        "title": "Chief Financial Officer",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Darien  Spencer",
+        "title": "Chief Operating Officer",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Ms. Megan  Chung",
+        "title": "General Counsel & Corporate Secretary",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Ms. Shaluinn  Fullove",
+        "title": "Chief People Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.2597,
+      "eps_estimate": -0.136,
+      "eps_surprise_pct": -0.9096
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.248,
+      "eps_estimate": -0.115,
+      "eps_surprise_pct": -1.1565
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.0666,
+      "eps_estimate": -0.135,
+      "eps_surprise_pct": 1.4933
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.1628,
+      "eps_estimate": -0.1825,
+      "eps_surprise_pct": 0.1079
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 56000000,
+    "revenue_high": 56600000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,95 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 7,
+    "bullish": 6,
+    "neutral": 1,
+    "bearish": 0,
+    "avg_price_target": 59.4,
+    "high_price_target": 75.0,
+    "low_price_target": 52.0,
+    "current_price": 34.83,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-27T20:02:59",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T12:05:01",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-21T18:38:11",
+        "firm": "Northland Capital Markets",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-15T17:16:27",
+        "firm": "Oppenheimer",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-27T12:42:11",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-11T18:20:55",
+        "firm": "Amerx",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-05-07T19:24:46",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Neutral",
+        "from_grade": "Overweight",
+        "action": "down"
+      },
+      {
+        "date": "2026-03-03T12:17:41",
+        "firm": "Rosenblatt",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-11-07T16:09:04",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2025-11-06T21:25:53",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "up"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-01T14:35:00Z",
+      "title": "How Trossen Robotics Collaboration Could Strengthen Ouster's Prospects",
+      "url": "https://finance.yahoo.com/technology/ai/articles/trossen-robotics-collaboration-could-strengthen-143500738.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-27T14:14:04Z",
       "title": "Is Ouster (OUST) Quietly Repositioning Its Lidar Platform at the Center of John Deere\u2019s Autonomy Stack?",
@@ -158,28 +307,22 @@
       "title": "Can Ouster's BlueCity Expand Its LiDAR Growth Opportunity?",
       "url": "https://finance.yahoo.com/technology/articles/ousters-bluecity-expand-lidar-growth-142900774.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-17T16:06:00Z",
-      "title": "Will Stereolabs Help Ouster Capitalize on Robotics Growth?",
-      "url": "https://finance.yahoo.com/technology/ai/articles/stereolabs-help-ouster-capitalize-robotics-160600759.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.0660350238037973,
   "technicals": {
-    "ma20": 41.508000183105466,
-    "ma50": 41.95300003051758,
-    "ma200": 29.736424980163573,
-    "rsi14": 39.752176569380396,
+    "ma20": 40.78950023651123,
+    "ma50": 41.668800048828125,
+    "ma200": 29.781724987030028,
+    "rsi14": 41.57806866845682,
     "high_20d": 51.8489990234375,
-    "low_5d": 33.770999908447266,
-    "low_10d": 33.770999908447266,
+    "low_5d": 32.970001220703125,
+    "low_10d": 32.970001220703125,
     "high_52w": 63.790000915527344,
     "low_52w": 16.399999618530273,
-    "atr14": 3.1284997122628346,
-    "atr14_pct": 9.083913580172483,
-    "position_in_52w_range_pct": 38.067099629562236
+    "atr14": 2.975999287196568,
+    "atr14_pct": 8.544355816091704,
+    "position_in_52w_range_pct": 38.89006479873689
   },
   "ohlc_2y": [
     {
@@ -4167,31 +4310,31 @@
       "volume": 1986700.0
     },
     {
-      "date": "2026-08-28",
-      "open": 35.92,
-      "high": 36.245,
-      "low": 34.12,
-      "close": 34.62,
-      "volume": 2266300.0
-    },
-    {
       "date": "2026-08-31",
       "open": 34.21,
       "high": 34.77,
       "low": 33.771,
       "close": 34.44,
-      "volume": 1643762.0
+      "volume": 1645100.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 33.4,
+      "high": 33.9,
+      "low": 32.97,
+      "close": 33.26,
+      "volume": 1906500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 33.1,
+      "high": 34.84,
+      "low": 33.075,
+      "close": 34.83,
+      "volume": 1655237.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 30.46,
-      "high": 30.78,
-      "low": 27.41,
-      "close": 28.53,
-      "volume": 2965900.0
-    },
     {
       "date": "2025-09-02",
       "open": 27.34,
@@ -6185,20 +6328,28 @@
       "volume": 1986700.0
     },
     {
-      "date": "2026-08-28",
-      "open": 35.92,
-      "high": 36.245,
-      "low": 34.12,
-      "close": 34.62,
-      "volume": 2266300.0
-    },
-    {
       "date": "2026-08-31",
       "open": 34.21,
       "high": 34.77,
       "low": 33.771,
       "close": 34.44,
-      "volume": 1643762.0
+      "volume": 1645100.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 33.4,
+      "high": 33.9,
+      "low": 32.97,
+      "close": 33.26,
+      "volume": 1906500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 33.1,
+      "high": 34.84,
+      "low": 33.075,
+      "close": 34.83,
+      "volume": 1655237.0
     }
   ],
   "ai_synthesis": null,

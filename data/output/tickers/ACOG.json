@@ -1,46 +1,112 @@
 {
   "ticker": "ACOG",
-  "fetched_at": "2026-09-01T01:14:27Z",
+  "fetched_at": "2026-09-02T23:58:28Z",
   "_schema": "v2",
-  "current_price": 9.270000457763672,
+  "current_price": 9.3149995803833,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "ACOG",
+    "longName": "Alpha Cognition Inc. Common Stock",
+    "sector": "Healthcare",
+    "industry": "Biotechnology",
+    "exchange": "NCM",
+    "country": "United States",
+    "city": "Grapevine",
+    "website": "https://www.alphacognition.com",
+    "fullTimeEmployees": 71,
+    "marketCap": 202860832,
+    "enterpriseValue": 161476608,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
+    "forwardPE": -15.024193,
+    "priceToSalesTrailing12Months": 13.293017,
+    "enterpriseToRevenue": 10.581,
+    "priceToBook": 3.830181,
+    "grossMargins": 0.90375,
+    "operatingMargins": -1.27294,
+    "profitMargins": -1.37696,
+    "returnOnEquity": -0.49526,
+    "totalCash": 41384288,
+    "totalDebt": 0,
+    "totalRevenue": 15260706,
+    "freeCashflow": -28530086,
     "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "currentRatio": 9.033,
+    "fiftyTwoWeekHigh": 10.14,
+    "fiftyTwoWeekLow": 4.5,
+    "averageVolume": 103673,
+    "averageVolume10days": 211460,
+    "beta": 2.232,
+    "sharesOutstanding": 21777868,
+    "sharesFloat": 11611741,
+    "companyOfficers": [
+      {
+        "name": "Mr. Michael E. McFadden B.B.A.",
+        "title": "CEO & Director",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Kenneth Anthony Cawkell B.A., LL.B.",
+        "title": "Founder, Consultant, Corporate Secretary & Director",
+        "age": 74,
+        "yearBorn": 1951
+      },
+      {
+        "name": "Mr. Henry H. Du CPA",
+        "title": "VP of Finance & Accounting and Interim CFO",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Ms. Lauren  D'Angelo M.B.A.",
+        "title": "Chief Operating Officer",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Dr. Denis G. Kay M.Sc., Ph.D.",
+        "title": "Chief Scientific Officer",
+        "age": 68,
+        "yearBorn": 1957
+      },
+      {
+        "name": "Mr. Timothy  Ayers",
+        "title": "Head of Compliance",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.4,
+      "eps_estimate": -0.39,
+      "eps_surprise_pct": -0.0256
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.32,
+      "eps_estimate": -0.395,
+      "eps_surprise_pct": 0.1899
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.31,
+      "eps_estimate": -0.35,
+      "eps_surprise_pct": 0.114300005
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.3,
+      "eps_estimate": -0.43,
+      "eps_surprise_pct": 0.3023
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-12",
+    "revenue_low": 8783000,
+    "revenue_high": 11019000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 3,
+    "bullish": 3,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 18.0,
+    "high_price_target": 21.0,
+    "low_price_target": 12.0,
+    "current_price": 9.315,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-20T10:47:38",
+        "firm": "B. Riley Securities",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-08-17T16:21:13",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-10T10:52:21",
+        "firm": "Raymond James",
+        "to_grade": "Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-05-29T13:45:03",
+        "firm": "Maxim Group",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-05-22T10:42:00",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-04-27T11:11:06",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-04-17T13:18:23",
+        "firm": "Craig-Hallum",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2025-12-19T12:57:54",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2025-10-20T12:20:57",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-05-16T11:12:33",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      }
+    ]
   },
   "news": [
     {
@@ -168,18 +311,18 @@
   ],
   "options_implied_move": null,
   "technicals": {
-    "ma20": 9.104250049591064,
-    "ma50": 8.384200029373169,
-    "ma200": 6.540799996852875,
-    "rsi14": 55.10384084897312,
+    "ma20": 9.155500030517578,
+    "ma50": 8.487200021743774,
+    "ma200": 6.571974995136261,
+    "rsi14": 55.528111838372716,
     "high_20d": 10.140000343322754,
-    "low_5d": 9.010000228881836,
-    "low_10d": 8.460000038146973,
+    "low_5d": 8.920000076293945,
+    "low_10d": 8.899999618530273,
     "high_52w": 10.140000343322754,
     "low_52w": 4.5,
-    "atr14": 0.7090715680803571,
-    "atr14_pct": 7.649099601570204,
-    "position_in_52w_range_pct": 84.57447105319625
+    "atr14": 0.7015643801007952,
+    "atr14_pct": 7.531555681207307,
+    "position_in_52w_range_pct": 85.37232778866444
   },
   "ohlc_2y": [
     {
@@ -3778,28 +3921,28 @@
       "date": "2026-08-31",
       "open": 9.2,
       "high": 9.37,
-      "low": 9.01,
+      "low": 9.0,
       "close": 9.27,
-      "volume": 215623.0
+      "volume": 215600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 9.24,
+      "high": 9.48,
+      "low": 8.92,
+      "close": 9.17,
+      "volume": 171300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 9.17,
+      "high": 9.4199,
+      "low": 9.06,
+      "close": 9.315,
+      "volume": 55603.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 8.15,
-      "high": 8.34,
-      "low": 7.953,
-      "close": 8.3,
-      "volume": 42800.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 8.33,
-      "high": 8.33,
-      "low": 8.105,
-      "close": 8.15,
-      "volume": 28700.0
-    },
     {
       "date": "2025-09-03",
       "open": 8.15,
@@ -5796,9 +5939,25 @@
       "date": "2026-08-31",
       "open": 9.2,
       "high": 9.37,
-      "low": 9.01,
+      "low": 9.0,
       "close": 9.27,
-      "volume": 215623.0
+      "volume": 215600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 9.24,
+      "high": 9.48,
+      "low": 8.92,
+      "close": 9.17,
+      "volume": 171300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 9.17,
+      "high": 9.4199,
+      "low": 9.06,
+      "close": 9.315,
+      "volume": 55603.0
     }
   ],
   "ai_synthesis": null,

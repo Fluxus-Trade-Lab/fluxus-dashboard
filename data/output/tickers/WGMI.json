@@ -1,21 +1,21 @@
 {
   "ticker": "WGMI",
-  "fetched_at": "2026-09-01T01:19:15Z",
+  "fetched_at": "2026-09-03T00:03:01Z",
   "_schema": "v2",
-  "current_price": 43.0,
+  "current_price": 42.54,
   "info": {
-    "symbol": null,
-    "longName": null,
+    "symbol": "WGMI",
+    "longName": "CoinShares Bitcoin Mining and Digital Power ETF",
     "sector": null,
     "industry": null,
-    "exchange": null,
+    "exchange": "NGM",
     "country": null,
     "city": null,
     "website": null,
     "fullTimeEmployees": null,
     "marketCap": null,
     "enterpriseValue": null,
-    "trailingPE": null,
+    "trailingPE": 16.280527,
     "forwardPE": null,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
@@ -30,10 +30,10 @@
     "freeCashflow": null,
     "debtToEquity": null,
     "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "fiftyTwoWeekHigh": 76.94,
+    "fiftyTwoWeekLow": 28.351,
+    "averageVolume": 676295,
+    "averageVolume10days": 776050,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -110,20 +110,18 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.23554301833568406,
   "technicals": {
-    "ma20": 46.983250045776366,
-    "ma50": 52.596000289916994,
-    "ma200": 48.526400089263916,
-    "rsi14": 40.38315655759234,
-    "high_20d": 54.959999084472656,
-    "low_5d": 41.75,
-    "low_10d": 41.75,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 37.95194605861121,
+    "high_20d": 51.06100082397461,
+    "low_5d": 40.81999969482422,
+    "low_10d": 40.81999969482422,
     "high_52w": 76.94000244140625,
     "low_52w": 28.35099983215332,
-    "atr14": 3.0049997057233537,
-    "atr14_pct": 6.988371408658963,
-    "position_in_52w_range_pct": 30.148797837346496
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4120,30 +4118,30 @@
     },
     {
       "date": "2026-08-31",
-      "open": 42.67,
+      "open": 42.78,
       "high": 43.01,
       "low": 41.75,
       "close": 43.0,
-      "volume": 343366.0
+      "volume": 343700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 41.72,
+      "high": 42.035,
+      "low": 40.82,
+      "close": 41.28,
+      "volume": 426600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 520562.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 30.64,
-      "high": 31.5,
-      "low": 29.681,
-      "close": 30.62,
-      "volume": 850400.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 29.71,
-      "high": 32.14,
-      "low": 29.22,
-      "close": 31.64,
-      "volume": 617700.0
-    },
     {
       "date": "2025-09-03",
       "open": 32.23,
@@ -6138,11 +6136,27 @@
     },
     {
       "date": "2026-08-31",
-      "open": 42.67,
+      "open": 42.78,
       "high": 43.01,
       "low": 41.75,
       "close": 43.0,
-      "volume": 343366.0
+      "volume": 343700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 41.72,
+      "high": 42.035,
+      "low": 40.82,
+      "close": 41.28,
+      "volume": 426600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 520562.0
     }
   ],
   "ai_synthesis": null,

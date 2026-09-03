@@ -1,46 +1,112 @@
 {
   "ticker": "BB",
-  "fetched_at": "2026-09-01T01:15:36Z",
+  "fetched_at": "2026-09-02T23:59:22Z",
   "_schema": "v2",
-  "current_price": 8.149999618530273,
+  "current_price": 7.610000133514404,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "BB",
+    "longName": "BlackBerry Limited",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NYQ",
+    "country": "Canada",
+    "city": "Waterloo",
+    "website": "https://www.blackberry.com",
+    "fullTimeEmployees": 1749,
+    "marketCap": 4460224000,
+    "enterpriseValue": 4459366400,
+    "trailingPE": 76.1,
+    "forwardPE": 33.29396,
+    "priceToSalesTrailing12Months": 7.686065,
+    "enterpriseToRevenue": 7.685,
+    "priceToBook": 5.9406714,
+    "grossMargins": 0.77133006,
+    "operatingMargins": 0.10268,
+    "profitMargins": 0.10305,
+    "returnOnEquity": 0.08104,
+    "totalCash": 350900000,
+    "totalDebt": 221100000,
+    "totalRevenue": 580300032,
+    "freeCashflow": 105150000,
+    "debtToEquity": 29.453,
+    "currentRatio": 2.197,
+    "fiftyTwoWeekHigh": 13.59,
+    "fiftyTwoWeekLow": 3.12,
+    "averageVolume": 24660012,
+    "averageVolume10days": 9003050,
+    "beta": 1.46,
+    "sharesOutstanding": 586100431,
+    "sharesFloat": 584641041,
+    "companyOfficers": [
+      {
+        "name": "Mr. John Joseph Giamatteo",
+        "title": "CEO; President of Secure Communications & Director",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Tim  Foote",
+        "title": "Chief Financial Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Philip  Kurtz CFA",
+        "title": "Chief Legal Officer & Head of Government Affairs",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Jennifer  Armstrong-Owen",
+        "title": "Chief People Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Jesse  Harold",
+        "title": "Senior VP & Chief Information and Information Security Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Suzanne M. Spera",
+        "title": "Senior Director of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-05-31T00:00:00",
+      "eps_actual": 0.04,
+      "eps_estimate": 0.02667,
+      "eps_surprise_pct": 0.4998
+    },
+    {
+      "period_end": "2026-02-28T00:00:00",
+      "eps_actual": 0.06,
+      "eps_estimate": 0.04333,
+      "eps_surprise_pct": 0.3847
+    },
+    {
+      "period_end": "2025-11-30T00:00:00",
+      "eps_actual": 0.05,
+      "eps_estimate": 0.03667,
+      "eps_surprise_pct": 0.3635
+    },
+    {
+      "period_end": "2025-08-31T00:00:00",
+      "eps_actual": 0.04,
+      "eps_estimate": 0.014,
+      "eps_surprise_pct": 1.8571
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-09-24",
+    "revenue_low": 141565000,
+    "revenue_high": 152000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-05-31T00:00:00",
@@ -99,12 +165,95 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 8,
+    "bullish": 2,
+    "neutral": 4,
+    "bearish": 2,
+    "avg_price_target": 9.71429,
+    "high_price_target": 13.0,
+    "low_price_target": 5.2,
+    "current_price": 7.61,
+    "recent_rating_changes": [
+      {
+        "date": "2026-06-29T15:22:15",
+        "firm": "RBC Capital",
+        "to_grade": "Sector Perform",
+        "from_grade": "Sector Perform",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-26T15:22:54",
+        "firm": "CIBC",
+        "to_grade": "Outperformer",
+        "from_grade": "Outperformer",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-26T14:59:22",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-24T17:57:06",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-24T09:29:42",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-06-17T18:25:05",
+        "firm": "CIBC",
+        "to_grade": "Outperformer",
+        "from_grade": "Outperformer",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-10T18:23:08",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-10T13:54:42",
+        "firm": "RBC Capital",
+        "to_grade": "Sector Perform",
+        "from_grade": "Sector Perform",
+        "action": "reit"
+      },
+      {
+        "date": "2025-12-19T15:08:12",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2025-12-19T14:52:41",
+        "firm": "RBC Capital",
+        "to_grade": "Sector Perform",
+        "from_grade": "Sector Perform",
+        "action": "reit"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-01T21:45:03Z",
+      "title": "BlackBerry (BB) Registers a Bigger Fall Than the Market: Important Facts to Note",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/blackberry-bb-registers-bigger-fall-214503526.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-31T18:20:05Z",
       "title": "20 Years Ago, BlackBerry Ruled the Smartphone Market. Now It\u2019s Depending on a $950 Million Product That Has Nothing to Do With Phones.",
@@ -158,28 +307,22 @@
       "title": "BlackBerry vs. Aptiv: Which Auto Tech Stock Is the Better Buy?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/blackberry-vs-aptiv-auto-tech-150000006.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-19T17:08:59Z",
-      "title": "BlackBerry (TSX:BB) Stock May Look Rich On Fresh Autonomous Driving News",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/blackberry-tsx-bb-stock-may-170859440.html",
-      "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03810775228805074,
   "technicals": {
-    "ma20": 8.492499852180481,
-    "ma50": 9.34999994277954,
-    "ma200": 5.9218999814987185,
-    "rsi14": 43.98442587006989,
+    "ma20": 8.384499883651733,
+    "ma50": 9.306599950790405,
+    "ma200": 5.954899983406067,
+    "rsi14": 37.6446816179146,
     "high_20d": 9.34000015258789,
-    "low_5d": 7.659999847412109,
-    "low_10d": 7.619999885559082,
+    "low_5d": 7.590000152587891,
+    "low_10d": 7.590000152587891,
     "high_52w": 13.59000015258789,
     "low_52w": 3.119999885559082,
-    "atr14": 0.4024998801095145,
-    "atr14_pct": 4.938649066858473,
-    "position_in_52w_range_pct": 48.0420210571648
+    "atr14": 0.39428557668413433,
+    "atr14_pct": 5.181150719665595,
+    "position_in_52w_range_pct": 42.88443298415981
   },
   "ohlc_2y": [
     {
@@ -4172,34 +4315,34 @@
       "high": 8.83,
       "low": 8.08,
       "close": 8.16,
-      "volume": 14688800.0
+      "volume": 14709000.0
     },
     {
       "date": "2026-08-31",
       "open": 8.12,
       "high": 8.33,
-      "low": 8.025,
+      "low": 8.03,
       "close": 8.15,
-      "volume": 7820228.0
+      "volume": 7954200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 8.03,
+      "high": 8.09,
+      "low": 7.75,
+      "close": 7.83,
+      "volume": 9510300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 7.84,
+      "high": 7.85,
+      "low": 7.59,
+      "close": 7.61,
+      "volume": 8416362.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 3.83,
-      "high": 3.95,
-      "low": 3.79,
-      "close": 3.83,
-      "volume": 11305200.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 3.75,
-      "high": 3.79,
-      "low": 3.69,
-      "close": 3.78,
-      "volume": 6788200.0
-    },
     {
       "date": "2025-09-03",
       "open": 3.77,
@@ -6190,15 +6333,31 @@
       "high": 8.83,
       "low": 8.08,
       "close": 8.16,
-      "volume": 14688800.0
+      "volume": 14709000.0
     },
     {
       "date": "2026-08-31",
       "open": 8.12,
       "high": 8.33,
-      "low": 8.025,
+      "low": 8.03,
       "close": 8.15,
-      "volume": 7820228.0
+      "volume": 7954200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 8.03,
+      "high": 8.09,
+      "low": 7.75,
+      "close": 7.83,
+      "volume": 9510300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 7.84,
+      "high": 7.85,
+      "low": 7.59,
+      "close": 7.61,
+      "volume": 8416362.0
     }
   ],
   "ai_synthesis": null,

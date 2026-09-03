@@ -1,46 +1,112 @@
 {
   "ticker": "MRVI",
-  "fetched_at": "2026-09-01T01:13:49Z",
+  "fetched_at": "2026-09-02T23:57:41Z",
   "_schema": "v2",
-  "current_price": 7.639999866485596,
+  "current_price": 7.380000114440918,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "MRVI",
+    "longName": "Maravai LifeSciences Holdings, Inc.",
+    "sector": "Healthcare",
+    "industry": "Biotechnology",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "San Diego",
+    "website": "https://www.maravai.com",
+    "fullTimeEmployees": 415,
+    "marketCap": 2733239808,
+    "enterpriseValue": 1398516864,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -73.5133,
+    "priceToSalesTrailing12Months": 13.091796,
+    "enterpriseToRevenue": 6.699,
+    "priceToBook": 5.371179,
+    "grossMargins": 0.35707,
+    "operatingMargins": -0.29396,
+    "profitMargins": -0.37067002,
+    "returnOnEquity": -0.33046,
+    "totalCash": 70091000,
+    "totalDebt": 218099008,
+    "totalRevenue": 208775008,
+    "freeCashflow": -3623125,
+    "debtToEquity": 61.335,
+    "currentRatio": 4.052,
+    "fiftyTwoWeekHigh": 9.42,
+    "fiftyTwoWeekLow": 2.3,
+    "averageVolume": 3545452,
+    "averageVolume10days": 7262520,
+    "beta": 0.582,
+    "sharesOutstanding": 148989545,
+    "sharesFloat": 3563830,
+    "companyOfficers": [
+      {
+        "name": "Mr. Robert Andrew Eckert M.B.A.",
+        "title": "Chairman of the Board",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Mr. Bernd  Brust",
+        "title": "CEO & Director",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Rajesh J. Asorpota",
+        "title": "EVP & Chief Financial Officer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Kurt A. Oreshack J.D.",
+        "title": "Executive VP, General Counsel & Secretary",
+        "age": 44,
+        "yearBorn": 1981
+      },
+      {
+        "name": "Ms. Christine  Dolan",
+        "title": "Executive VP & GM of Cygnus Technologies",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Ms. Chanfeng  Zhao",
+        "title": "Senior VP & Chief Scientific Officer",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.02,
+      "eps_estimate": -0.04397,
+      "eps_surprise_pct": 0.5451
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.01,
+      "eps_estimate": -0.04758,
+      "eps_surprise_pct": 1.2102
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.04,
+      "eps_estimate": -0.07017,
+      "eps_surprise_pct": 0.43
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.08,
+      "eps_estimate": -0.08226,
+      "eps_surprise_pct": 0.0275
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-05",
+    "revenue_low": 42362470,
+    "revenue_high": 46000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 8,
+    "bullish": 5,
+    "neutral": 3,
+    "bearish": 0,
+    "avg_price_target": 7.3,
+    "high_price_target": 8.0,
+    "low_price_target": 6.5,
+    "current_price": 7.38,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-07T14:07:55",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-08T13:34:08",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2025-12-15T18:25:08",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2025-08-12T14:05:02",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2025-08-12T09:40:02",
+        "firm": "Craig-Hallum",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-05-13T17:09:00",
+        "firm": "Craig-Hallum",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-05-13T12:29:52",
+        "firm": "Baird",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2025-03-25T14:23:00",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2025-03-21T15:41:34",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2025-03-03T13:18:56",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +309,20 @@
       "source": "MarketBeat"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.14905148820357872,
   "technicals": {
-    "ma20": 7.002499961853028,
-    "ma50": 6.646999998092651,
-    "ma200": 4.424449987411499,
-    "rsi14": 56.0998314845263,
+    "ma20": 7.09449999332428,
+    "ma50": 6.728200006484985,
+    "ma200": 4.465349988937378,
+    "rsi14": 52.613086428483825,
     "high_20d": 9.420000076293945,
-    "low_5d": 7.519999980926514,
-    "low_10d": 5.53000020980835,
+    "low_5d": 7.269999980926514,
+    "low_10d": 7.269999980926514,
     "high_52w": 9.420000076293945,
-    "low_52w": 2.2850000858306885,
-    "atr14": 0.607785735811506,
-    "atr14_pct": 7.955310817185756,
-    "position_in_52w_range_pct": 75.05255483969833
+    "low_52w": 2.299999952316284,
+    "atr14": 0.6231428214481899,
+    "atr14_pct": 8.443669536384512,
+    "position_in_52w_range_pct": 71.34831564141378
   },
   "ohlc_2y": [
     {
@@ -4176,30 +4319,30 @@
     },
     {
       "date": "2026-08-31",
-      "open": 7.68,
+      "open": 7.71,
       "high": 7.725,
       "low": 7.52,
       "close": 7.64,
-      "volume": 5316561.0
+      "volume": 5318000.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 7.58,
+      "high": 7.59,
+      "low": 7.28,
+      "close": 7.3,
+      "volume": 2698300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 7.3,
+      "high": 7.6,
+      "low": 7.27,
+      "close": 7.38,
+      "volume": 3668054.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 2.38,
-      "high": 2.45,
-      "low": 2.35,
-      "close": 2.42,
-      "volume": 731000.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 2.39,
-      "high": 2.45,
-      "low": 2.285,
-      "close": 2.37,
-      "volume": 1132500.0
-    },
     {
       "date": "2025-09-03",
       "open": 2.34,
@@ -6194,11 +6337,27 @@
     },
     {
       "date": "2026-08-31",
-      "open": 7.68,
+      "open": 7.71,
       "high": 7.725,
       "low": 7.52,
       "close": 7.64,
-      "volume": 5316561.0
+      "volume": 5318000.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 7.58,
+      "high": 7.59,
+      "low": 7.28,
+      "close": 7.3,
+      "volume": 2698300.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 7.3,
+      "high": 7.6,
+      "low": 7.27,
+      "close": 7.38,
+      "volume": 3668054.0
     }
   ],
   "ai_synthesis": null,

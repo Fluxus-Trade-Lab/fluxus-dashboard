@@ -1,46 +1,100 @@
 {
   "ticker": "NVCT",
-  "fetched_at": "2026-09-01T01:14:22Z",
+  "fetched_at": "2026-09-03T00:02:00Z",
   "_schema": "v2",
-  "current_price": 22.729999542236328,
+  "current_price": 23.92,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "NVCT",
+    "longName": "Nuvectis Pharma, Inc.",
+    "sector": "Healthcare",
+    "industry": "Biotechnology",
+    "exchange": "NCM",
+    "country": "United States",
+    "city": "Fort Lee",
+    "website": "https://www.nuvectis.com",
+    "fullTimeEmployees": 16,
+    "marketCap": 780846080,
+    "enterpriseValue": 729170176,
     "trailingPE": null,
-    "forwardPE": null,
+    "forwardPE": -24.916668,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
+    "priceToBook": 70.35294,
+    "grossMargins": 0.0,
+    "operatingMargins": 0.0,
+    "profitMargins": 0.0,
+    "returnOnEquity": -2.1458,
+    "totalCash": 22160000,
+    "totalDebt": 0,
     "totalRevenue": null,
-    "freeCashflow": null,
+    "freeCashflow": -8885500,
     "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "currentRatio": 1.683,
+    "fiftyTwoWeekHigh": 29.275,
+    "fiftyTwoWeekLow": 5.55,
+    "averageVolume": 327495,
+    "averageVolume10days": 248670,
+    "beta": -0.261,
+    "sharesOutstanding": 32644066,
+    "sharesFloat": 21203084,
+    "companyOfficers": [
+      {
+        "name": "Mr. Ron  Bentsur M.B.A.",
+        "title": "Co-Founder, Chairman, CEO & President",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Dr. Enrique  Poradosu Ph.D.",
+        "title": "Co-Founder, Executive VP, Chief Scientific & Business Officer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Shay  Shemesh",
+        "title": "Co-Founder, Executive VP, Chief Development & Operations Officer",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Mr. Michael  Carson CPA",
+        "title": "Vice President of Finance",
+        "age": 49,
+        "yearBorn": 1976
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.3,
+      "eps_estimate": -0.262,
+      "eps_surprise_pct": -0.145
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.26,
+      "eps_estimate": -0.314,
+      "eps_surprise_pct": 0.172
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.31,
+      "eps_estimate": -0.308,
+      "eps_surprise_pct": -0.0064999997
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.44,
+      "eps_estimate": -0.25,
+      "eps_surprise_pct": -0.76
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 0,
+    "revenue_high": 0
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +153,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 5,
+    "bullish": 5,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 35.4,
+    "high_price_target": 40.0,
+    "low_price_target": 30.0,
+    "current_price": 23.92,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-24T10:33:43",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-06T09:17:09",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-22T15:28:38",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-12T17:56:37",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-08-04T14:47:43",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-04-30T11:32:57",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2025-04-02T17:13:22",
+        "firm": "Maxim Group",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2025-03-17T12:16:48",
+        "firm": "Laidlaw & Co.",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2025-02-25T16:46:21",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2024-08-06T18:41:21",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +297,18 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.15468227424749165,
   "technicals": {
-    "ma20": 21.4897500038147,
-    "ma50": 20.8039001083374,
-    "ma200": 11.645850009918213,
-    "rsi14": 55.05590372591454,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 56.38803763344067,
     "high_20d": 25.940000534057617,
-    "low_5d": 22.59000015258789,
-    "low_10d": 19.059999465942383,
+    "low_5d": 22.56999969482422,
+    "low_10d": 22.360000610351562,
     "high_52w": 29.274999618530273,
     "low_52w": 5.550000190734863,
-    "atr14": 1.569856916155134,
-    "atr14_pct": 6.906541785177181,
-    "position_in_52w_range_pct": 72.41306539874542
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4178,28 +4307,28 @@
       "date": "2026-08-31",
       "open": 23.52,
       "high": 24.35,
-      "low": 22.59,
+      "low": 22.57,
       "close": 22.73,
-      "volume": 192552.0
+      "volume": 192600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 22.8,
+      "high": 23.81,
+      "low": 22.77,
+      "close": 23.06,
+      "volume": 176900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 188509.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 6.54,
-      "high": 6.745,
-      "low": 6.43,
-      "close": 6.56,
-      "volume": 35900.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 6.5,
-      "high": 6.62,
-      "low": 6.36,
-      "close": 6.38,
-      "volume": 115300.0
-    },
     {
       "date": "2025-09-03",
       "open": 6.38,
@@ -6196,9 +6325,25 @@
       "date": "2026-08-31",
       "open": 23.52,
       "high": 24.35,
-      "low": 22.59,
+      "low": 22.57,
       "close": 22.73,
-      "volume": 192552.0
+      "volume": 192600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 22.8,
+      "high": 23.81,
+      "low": 22.77,
+      "close": 23.06,
+      "volume": 176900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 188509.0
     }
   ],
   "ai_synthesis": null,

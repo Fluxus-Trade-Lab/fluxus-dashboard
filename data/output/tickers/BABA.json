@@ -1,46 +1,112 @@
 {
   "ticker": "BABA",
-  "fetched_at": "2026-09-01T01:15:33Z",
+  "fetched_at": "2026-09-02T23:59:20Z",
   "_schema": "v2",
-  "current_price": 114.0199966430664,
+  "current_price": 111.80999755859375,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "BABA",
+    "longName": "Alibaba Group Holding Limited",
+    "sector": "Consumer Cyclical",
+    "industry": "Internet Retail",
+    "exchange": "NYQ",
+    "country": "China",
+    "city": "Hangzhou",
+    "website": "https://www.alibabagroup.com",
+    "fullTimeEmployees": 132165,
+    "marketCap": 277917564928,
+    "enterpriseValue": 206639562752,
+    "trailingPE": 25.353743,
+    "forwardPE": 11.991283,
+    "priceToSalesTrailing12Months": 0.2659572,
+    "enterpriseToRevenue": 0.198,
+    "priceToBook": 1.6734779,
+    "grossMargins": 0.38199002,
+    "operatingMargins": 0.07295,
+    "profitMargins": 0.07039,
+    "returnOnEquity": 0.0636,
+    "totalCash": 385696989184,
+    "totalDebt": 266529996800,
+    "totalRevenue": 1044970995712,
+    "freeCashflow": -82644123648,
+    "debtToEquity": 23.928,
+    "currentRatio": 1.362,
+    "fiftyTwoWeekHigh": 192.67,
+    "fiftyTwoWeekLow": 91.99,
+    "averageVolume": 12654328,
+    "averageVolume10days": 16809650,
+    "beta": 0.51,
+    "sharesOutstanding": 2485623615,
+    "sharesFloat": 2216597781,
+    "companyOfficers": [
+      {
+        "name": "Mr. Joseph C.  Tsai",
+        "title": "Executive Chairman",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Yongming  Wu",
+        "title": "CEO, Head of Core E-Commerce Business & Director",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. J. Michael  Evans",
+        "title": "President & Director",
+        "age": 67,
+        "yearBorn": 1958
+      },
+      {
+        "name": "Ms. Fang  Jiang",
+        "title": "Chief People Officer",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Mr. Hong  Xu",
+        "title": "Chief Financial Officer",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Yuen Jen Yao",
+        "title": "Senior VP & Head of Corporate Finance",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 8.52,
+      "eps_estimate": 10.82038,
+      "eps_surprise_pct": -0.21260001
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.62,
+      "eps_estimate": 5.73836,
+      "eps_surprise_pct": -0.89199996
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 7.09,
+      "eps_estimate": 10.93826,
+      "eps_surprise_pct": -0.3518
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 4.36,
+      "eps_estimate": 5.77853,
+      "eps_surprise_pct": -0.2455
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-24",
+    "revenue_low": 263355000000,
+    "revenue_high": 279044566170
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-03-31T00:00:00",
@@ -99,12 +165,113 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 40,
+    "bullish": 38,
+    "neutral": 1,
+    "bearish": 1,
+    "avg_price_target": 187.07787,
+    "high_price_target": 238.1918,
+    "low_price_target": 95.1912,
+    "current_price": 111.81,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-28T15:21:58",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-21T15:55:10",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-21T14:57:15",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-21T12:24:14",
+        "firm": "Baird",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-15T13:47:31",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-14T16:09:29",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-14T13:23:09",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-14T12:03:05",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-14T14:28:42",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-26T15:18:44",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T18:31:08Z",
+      "title": "China\u2019s AI Race Heats Up: Baidu Says Its AI Investments Could Pay Off as CFO Bets on Cloud Growth",
+      "url": "https://finance.yahoo.com/technology/ai/articles/china-ai-race-heats-baidu-183108440.html",
+      "source": "Benzinga"
+    },
+    {
+      "date": "2026-09-01T11:35:00Z",
+      "title": "Alibaba Is Down 60% From Its All-Time High. Is This the Once-in-a-Decade Setup That Patient Investors Wait For?",
+      "url": "https://www.fool.com/investing/2026/09/01/alibaba-is-down-60-from-its-all-time-high-is-this/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-01T08:22:40Z",
+      "title": "Baidu\u2019s AI Profits to Match Those From Search Soon, CFO Says",
+      "url": "https://finance.yahoo.com/technology/ai/articles/baidu-ai-profits-match-those-082240043.html",
+      "source": "Bloomberg"
+    },
+    {
+      "date": "2026-09-01T04:14:16Z",
+      "title": "MU And SNDK's Nascent Rebound Faces A New Test \u2014 China's CXMT Reportedly Makes Major Breakthrough With New AI Memory Chip",
+      "url": "https://stocktwits.com/news-articles/markets/equity/mu-and-sndk-s-nascent-rebound-faces-a-new-test-china-s-cxmt-reportedly-makes-major-breakthrough-with-new-ai-memory-chip/cZso4JERJtO",
+      "source": "Stocktwits"
+    },
     {
       "date": "2026-08-31T16:14:59Z",
       "title": "Alibaba (BABA) Report Flags AI Data Center Bottlenecks Shaping Its Next Investment Phase",
@@ -140,46 +307,22 @@
       "title": "Alibaba Shares Fell on a $10 Billion AI Raise. Insiders Saw a Buying Opportunity",
       "url": "https://finance.yahoo.com/markets/stocks/articles/alibaba-shares-fell-10-billion-035502952.html",
       "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-28T16:50:20Z",
-      "title": "Alibaba (BABA) Just Answered Meta Platforms (META)\u2019s Open-Weight AI Challenge. The Download Numbers Aren\u2019t Close",
-      "url": "https://finance.yahoo.com/technology/ai/articles/alibaba-baba-just-answered-meta-165020500.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-28T14:14:00Z",
-      "title": "Alibaba\u2019s (BABA) Big AI Bet Comes With A Big Price Tag",
-      "url": "https://finance.yahoo.com/technology/ai/articles/alibaba-baba-big-ai-bet-141400449.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-28T12:49:00Z",
-      "title": "The Memory-Chip Battle Is on as China\u2019s CXMT Posts Explosive Earnings Report",
-      "url": "https://www.barrons.com/articles/cxmt-earnings-memory-chip-war-micron-sk-hynix-samsung-0b7d94f7?siteid=yhoof2&yptr=yahoo",
-      "source": "Barrons.com"
-    },
-    {
-      "date": "2026-08-28T10:00:00Z",
-      "title": "Meituan Returns to Profit as Food-Delivery Competition Eases",
-      "url": "https://www.wsj.com/business/earnings/meituan-returns-to-profit-as-food-delivery-competition-eases-1026a0e9?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.022001610354305243,
   "technicals": {
-    "ma20": 124.1349998474121,
-    "ma50": 115.22100006103516,
-    "ma200": 135.40471607208252,
-    "rsi14": 40.615690930761104,
+    "ma20": 122.4919994354248,
+    "ma50": 115.56279998779297,
+    "ma200": 134.95372428894044,
+    "rsi14": 38.13729048703756,
     "high_20d": 132.57000732421875,
-    "low_5d": 113.93000030517578,
-    "low_10d": 113.93000030517578,
+    "low_5d": 111.53500366210938,
+    "low_10d": 111.53500366210938,
     "high_52w": 190.91662560874934,
     "low_52w": 91.98999786376953,
-    "atr14": 4.354286738804409,
-    "atr14_pct": 3.818879904404202,
-    "position_in_52w_range_pct": 22.269028351079946
+    "atr14": 4.03778566632952,
+    "atr14_pct": 3.611292151413856,
+    "position_in_52w_range_pct": 20.03505036674013
   },
   "ohlc_2y": [
     {
@@ -264,8 +407,8 @@
     },
     {
       "date": "2024-09-17",
-      "open": 82.6512,
-      "high": 83.5769,
+      "open": 82.6511,
+      "high": 83.5768,
       "low": 82.466,
       "close": 82.5342,
       "volume": 10113900.0
@@ -296,7 +439,7 @@
     },
     {
       "date": "2024-09-23",
-      "open": 87.1822,
+      "open": 87.1823,
       "high": 88.8193,
       "low": 87.0361,
       "close": 87.7864,
@@ -409,7 +552,7 @@
     {
       "date": "2024-10-11",
       "open": 105.2872,
-      "high": 108.2105,
+      "high": 108.2104,
       "low": 104.4784,
       "close": 107.3237,
       "volume": 18042600.0
@@ -433,7 +576,7 @@
     {
       "date": "2024-10-16",
       "open": 99.8839,
-      "high": 101.1946,
+      "high": 101.1945,
       "low": 99.1775,
       "close": 99.5575,
       "volume": 16432600.0
@@ -456,9 +599,9 @@
     },
     {
       "date": "2024-10-21",
-      "open": 97.9059,
+      "open": 97.9058,
       "high": 99.0508,
-      "low": 97.5551,
+      "low": 97.555,
       "close": 98.3297,
       "volume": 10328600.0
     },
@@ -585,7 +728,7 @@
     {
       "date": "2024-11-12",
       "open": 90.3102,
-      "high": 90.9436,
+      "high": 90.9435,
       "low": 88.7024,
       "close": 89.4332,
       "volume": 21641900.0
@@ -704,7 +847,7 @@
     },
     {
       "date": "2024-12-04",
-      "open": 83.7523,
+      "open": 83.7522,
       "high": 83.7912,
       "low": 82.1152,
       "close": 82.7583,
@@ -937,7 +1080,7 @@
     {
       "date": "2025-01-17",
       "open": 81.0726,
-      "high": 83.4015,
+      "high": 83.4014,
       "low": 80.9069,
       "close": 82.9435,
       "volume": 21132400.0
@@ -1048,10 +1191,10 @@
     },
     {
       "date": "2025-02-07",
-      "open": 101.7889,
+      "open": 101.789,
       "high": 104.761,
       "low": 100.3663,
-      "close": 100.8632,
+      "close": 100.8633,
       "volume": 39538200.0
     },
     {
@@ -1136,10 +1279,10 @@
     },
     {
       "date": "2025-02-25",
-      "open": 129.3946,
+      "open": 129.3945,
       "high": 131.0316,
       "low": 127.4067,
-      "close": 130.5834,
+      "close": 130.5833,
       "volume": 38881100.0
     },
     {
@@ -1242,7 +1385,7 @@
       "date": "2025-03-14",
       "open": 137.7357,
       "high": 138.1937,
-      "low": 135.8842,
+      "low": 135.8843,
       "close": 137.4921,
       "volume": 17381900.0
     },
@@ -1314,7 +1457,7 @@
       "date": "2025-03-27",
       "open": 130.0377,
       "high": 134.2618,
-      "low": 129.4822,
+      "low": 129.4823,
       "close": 132.1619,
       "volume": 16688300.0
     },
@@ -1337,9 +1480,9 @@
     {
       "date": "2025-04-01",
       "open": 129.3556,
-      "high": 130.6711,
+      "high": 130.671,
       "low": 128.1668,
-      "close": 129.3069,
+      "close": 129.3068,
       "volume": 11627500.0
     },
     {
@@ -1352,7 +1495,7 @@
     },
     {
       "date": "2025-04-03",
-      "open": 122.4323,
+      "open": 122.4322,
       "high": 127.3288,
       "low": 122.291,
       "close": 126.023,
@@ -1369,7 +1512,7 @@
     {
       "date": "2025-04-07",
       "open": 103.8937,
-      "high": 111.2019,
+      "high": 111.202,
       "low": 100.0155,
       "close": 103.2701,
       "volume": 61386600.0
@@ -1594,14 +1737,14 @@
       "date": "2025-05-16",
       "open": 122.5638,
       "high": 122.8756,
-      "low": 120.157,
+      "low": 120.1569,
       "close": 120.3031,
       "volume": 20090000.0
     },
     {
       "date": "2025-05-19",
       "open": 117.107,
-      "high": 119.9133,
+      "high": 119.9134,
       "low": 116.9316,
       "close": 119.8159,
       "volume": 11197000.0
@@ -1633,7 +1776,7 @@
     {
       "date": "2025-05-23",
       "open": 116.5223,
-      "high": 117.9469,
+      "high": 117.947,
       "low": 116.2339,
       "close": 117.6429,
       "volume": 7163400.0
@@ -1651,7 +1794,7 @@
       "open": 114.4468,
       "high": 114.9048,
       "low": 113.5308,
-      "close": 113.7549,
+      "close": 113.755,
       "volume": 11707700.0
     },
     {
@@ -4177,29 +4320,29 @@
     {
       "date": "2026-08-31",
       "open": 116.67,
-      "high": 116.8268,
+      "high": 116.827,
       "low": 113.93,
       "close": 114.02,
-      "volume": 9254989.0
+      "volume": 9340100.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 112.175,
+      "high": 113.855,
+      "low": 112.066,
+      "close": 112.85,
+      "volume": 9865200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 112.52,
+      "high": 113.07,
+      "low": 111.535,
+      "close": 111.81,
+      "volume": 6812000.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 127.7072,
-      "high": 135.4064,
-      "low": 127.3405,
-      "close": 133.7715,
-      "volume": 82165100.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 133.2463,
-      "high": 137.5666,
-      "low": 131.8491,
-      "close": 137.2891,
-      "volume": 41625400.0
-    },
     {
       "date": "2025-09-03",
       "open": 135.456,
@@ -6195,10 +6338,26 @@
     {
       "date": "2026-08-31",
       "open": 116.67,
-      "high": 116.8268,
+      "high": 116.827,
       "low": 113.93,
       "close": 114.02,
-      "volume": 9254989.0
+      "volume": 9340100.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 112.175,
+      "high": 113.855,
+      "low": 112.066,
+      "close": 112.85,
+      "volume": 9865200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 112.52,
+      "high": 113.07,
+      "low": 111.535,
+      "close": 111.81,
+      "volume": 6812000.0
     }
   ],
   "ai_synthesis": null,

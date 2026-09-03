@@ -1,46 +1,112 @@
 {
   "ticker": "APA",
-  "fetched_at": "2026-09-01T01:15:13Z",
+  "fetched_at": "2026-09-02T23:59:00Z",
   "_schema": "v2",
-  "current_price": 43.150001525878906,
+  "current_price": 44.69499969482422,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "APA",
+    "longName": "APA Corporation",
+    "sector": "Energy",
+    "industry": "Oil & Gas E&P",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Houston",
+    "website": "https://www.apacorp.com",
+    "fullTimeEmployees": 1791,
+    "marketCap": 15658960896,
+    "enterpriseValue": 19880570880,
+    "trailingPE": 9.429325,
+    "forwardPE": 10.664748,
+    "priceToSalesTrailing12Months": 1.826757,
+    "enterpriseToRevenue": 2.319,
+    "priceToBook": 2.2322946,
+    "grossMargins": 0.78255,
+    "operatingMargins": 0.56331,
+    "profitMargins": 0.19564,
+    "returnOnEquity": 0.26659,
+    "totalCash": 444000000,
+    "totalDebt": 3880999936,
+    "totalRevenue": 8572000256,
+    "freeCashflow": 2146749952,
+    "debtToEquity": 48.854,
+    "currentRatio": 0.946,
+    "fiftyTwoWeekHigh": 45.66,
+    "fiftyTwoWeekLow": 21.57,
+    "averageVolume": 5558501,
+    "averageVolume10days": 5370990,
+    "beta": 0.348,
+    "sharesOutstanding": 350351510,
+    "sharesFloat": 348126778,
+    "companyOfficers": [
+      {
+        "name": "Mr. John J. Christmann IV",
+        "title": "CEO & Director",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Stephen J. Riney",
+        "title": "President",
+        "age": 64,
+        "yearBorn": 1961
+      },
+      {
+        "name": "Mr. Ben C. Rodgers",
+        "title": "Executive VP & CFO",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Ms. Kimberly O. Warnica J.D.",
+        "title": "Executive VP, Chief Legal Officer & Corporate Secretary",
+        "age": 51,
+        "yearBorn": 1974
+      },
+      {
+        "name": "Ms. Tracey K. Henderson",
+        "title": "Executive Vice President of Exploration",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Robert P. Rayphole",
+        "title": "VP, Chief Accounting Officer & Controller",
+        "age": 51,
+        "yearBorn": 1974
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 1.89,
+      "eps_estimate": 1.87114,
+      "eps_surprise_pct": 0.0101
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 1.38,
+      "eps_estimate": 1.14143,
+      "eps_surprise_pct": 0.20899999
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.91,
+      "eps_estimate": 0.64206,
+      "eps_surprise_pct": 0.4173
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.93,
+      "eps_estimate": 0.79087,
+      "eps_surprise_pct": 0.1759
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 1604000000,
+    "revenue_high": 2389000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,95 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 25,
+    "bullish": 8,
+    "neutral": 14,
+    "bearish": 3,
+    "avg_price_target": 44.08333,
+    "high_price_target": 54.0,
+    "low_price_target": 31.0,
+    "current_price": 44.695,
+    "recent_rating_changes": [
+      {
+        "date": "2026-09-02T14:25:34",
+        "firm": "Raymond James",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-02T14:00:42",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T18:57:52",
+        "firm": "Citigroup",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T12:49:23",
+        "firm": "Argus Research",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-17T13:16:08",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-13T12:59:40",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-12T13:05:33",
+        "firm": "Benchmark",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-11T12:11:00",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-10T17:28:56",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-21T14:42:14",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-01T10:50:20Z",
+      "title": "2 Value Stocks on Our Watchlist and 1 We Find Risky",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/2-value-stocks-watchlist-1-105020821.html",
+      "source": "StockStory"
+    },
     {
       "date": "2026-08-31T14:22:24Z",
       "title": "1 Unpopular Stock That Deserves Some Love and 2 We Brush Off",
@@ -158,28 +307,22 @@
       "title": "The 5 Most Interesting Analyst Questions From APA Corporation\u2019s Q2 Earnings Call",
       "url": "https://finance.yahoo.com/markets/stocks/articles/5-most-interesting-analyst-questions-115700620.html",
       "source": "StockStory"
-    },
-    {
-      "date": "2026-08-14T02:11:13Z",
-      "title": "APA (APA) Stock Fair Value Edges Higher After Q2 Analyst Revisions",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/apa-apa-stock-fair-value-021113364.html",
-      "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.028862289043697767,
   "technicals": {
-    "ma20": 40.77250003814697,
-    "ma50": 36.91798679351807,
-    "ma200": 32.830007266998294,
-    "rsi14": 64.09924958436022,
-    "high_20d": 45.04999923706055,
+    "ma20": 41.305249977111814,
+    "ma50": 37.16786731719971,
+    "ma200": 32.945565671920775,
+    "rsi14": 68.31638215106138,
+    "high_20d": 45.125,
     "low_5d": 40.459999084472656,
     "low_10d": 40.459999084472656,
-    "high_52w": 45.04999923706055,
+    "high_52w": 45.125,
     "low_52w": 20.843054512593888,
-    "atr14": 1.4467855181012834,
-    "atr14_pct": 3.3529211284815,
-    "position_in_52w_range_pct": 92.15102222602567
+    "atr14": 1.5159784044538225,
+    "atr14_pct": 3.391829991732557,
+    "position_in_52w_range_pct": 98.2291356950834
   },
   "ohlc_2y": [
     {
@@ -514,7 +657,7 @@
       "date": "2024-10-30",
       "open": 21.8368,
       "high": 22.1895,
-      "low": 21.6697,
+      "low": 21.6698,
       "close": 21.7811,
       "volume": 5116700.0
     },
@@ -611,7 +754,7 @@
       "open": 21.0665,
       "high": 21.5398,
       "low": 20.6396,
-      "close": 20.7696,
+      "close": 20.7695,
       "volume": 7335700.0
     },
     {
@@ -627,7 +770,7 @@
       "open": 20.6582,
       "high": 20.8624,
       "low": 20.3148,
-      "close": 20.3427,
+      "close": 20.3426,
       "volume": 7203500.0
     },
     {
@@ -722,7 +865,7 @@
       "date": "2024-12-06",
       "open": 20.2127,
       "high": 20.287,
-      "low": 19.4424,
+      "low": 19.4425,
       "close": 19.8786,
       "volume": 8629900.0
     },
@@ -744,10 +887,10 @@
     },
     {
       "date": "2024-12-11",
-      "open": 20.7696,
+      "open": 20.7695,
       "high": 20.8345,
       "low": 20.3983,
-      "close": 20.7696,
+      "close": 20.7695,
       "volume": 7055800.0
     },
     {
@@ -808,7 +951,7 @@
     },
     {
       "date": "2024-12-23",
-      "open": 19.3496,
+      "open": 19.3497,
       "high": 20.1478,
       "low": 19.3311,
       "close": 20.0457,
@@ -864,7 +1007,7 @@
     },
     {
       "date": "2025-01-03",
-      "open": 21.6698,
+      "open": 21.6697,
       "high": 21.7997,
       "low": 21.4006,
       "close": 21.7347,
@@ -1048,7 +1191,7 @@
     },
     {
       "date": "2025-02-07",
-      "open": 20.4564,
+      "open": 20.4563,
       "high": 20.5314,
       "low": 20.2219,
       "close": 20.325,
@@ -1392,7 +1535,7 @@
     },
     {
       "date": "2025-04-10",
-      "open": 14.735,
+      "open": 14.7349,
       "high": 14.8475,
       "low": 13.2812,
       "close": 13.6938,
@@ -1555,7 +1698,7 @@
       "open": 15.7296,
       "high": 16.1967,
       "low": 15.5485,
-      "close": 15.9394,
+      "close": 15.9393,
       "volume": 7697100.0
     },
     {
@@ -1801,7 +1944,7 @@
     {
       "date": "2025-06-25",
       "open": 17.2549,
-      "high": 17.3503,
+      "high": 17.3502,
       "low": 16.9117,
       "close": 16.9689,
       "volume": 6790800.0
@@ -1915,7 +2058,7 @@
       "open": 17.7888,
       "high": 17.8555,
       "low": 17.2073,
-      "close": 17.2931,
+      "close": 17.293,
       "volume": 6408300.0
     },
     {
@@ -2009,7 +2152,7 @@
     {
       "date": "2025-08-01",
       "open": 18.4466,
-      "high": 18.495,
+      "high": 18.4949,
       "low": 17.6253,
       "close": 17.8379,
       "volume": 7681400.0
@@ -2017,7 +2160,7 @@
     {
       "date": "2025-08-04",
       "open": 17.7606,
-      "high": 17.9731,
+      "high": 17.9732,
       "low": 17.5963,
       "close": 17.6543,
       "volume": 6345400.0
@@ -2056,7 +2199,7 @@
     },
     {
       "date": "2025-08-11",
-      "open": 19.5386,
+      "open": 19.5385,
       "high": 19.8671,
       "low": 19.1037,
       "close": 19.2487,
@@ -2240,7 +2383,7 @@
     },
     {
       "date": "2025-09-12",
-      "open": 22.5148,
+      "open": 22.5147,
       "high": 22.9109,
       "low": 22.0509,
       "close": 22.0703,
@@ -2704,7 +2847,7 @@
     },
     {
       "date": "2025-12-04",
-      "open": 26.3821,
+      "open": 26.3822,
       "high": 26.5678,
       "low": 26.0011,
       "close": 26.0988,
@@ -2824,7 +2967,7 @@
     },
     {
       "date": "2025-12-26",
-      "open": 23.7049,
+      "open": 23.7048,
       "high": 23.9784,
       "low": 23.3726,
       "close": 23.6267,
@@ -4167,31 +4310,31 @@
       "volume": 4329400.0
     },
     {
-      "date": "2026-08-28",
-      "open": 42.48,
-      "high": 42.95,
-      "low": 42.05,
-      "close": 42.54,
-      "volume": 3317200.0
-    },
-    {
       "date": "2026-08-31",
       "open": 43.67,
       "high": 44.11,
-      "low": 42.415,
+      "low": 42.42,
       "close": 43.15,
-      "volume": 4249700.0
+      "volume": 4251500.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 44.16,
+      "high": 44.4,
+      "low": 43.28,
+      "close": 44.3,
+      "volume": 4813200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 43.876,
+      "high": 45.125,
+      "low": 43.6913,
+      "close": 44.695,
+      "volume": 4266745.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 22.2055,
-      "high": 22.621,
-      "low": 22.0992,
-      "close": 22.4374,
-      "volume": 5662300.0
-    },
     {
       "date": "2025-09-02",
       "open": 22.4278,
@@ -4258,7 +4401,7 @@
     },
     {
       "date": "2025-09-12",
-      "open": 22.5148,
+      "open": 22.5147,
       "high": 22.9109,
       "low": 22.0509,
       "close": 22.0703,
@@ -4722,7 +4865,7 @@
     },
     {
       "date": "2025-12-04",
-      "open": 26.3821,
+      "open": 26.3822,
       "high": 26.5678,
       "low": 26.0011,
       "close": 26.0988,
@@ -4842,7 +4985,7 @@
     },
     {
       "date": "2025-12-26",
-      "open": 23.7049,
+      "open": 23.7048,
       "high": 23.9784,
       "low": 23.3726,
       "close": 23.6267,
@@ -6185,20 +6328,28 @@
       "volume": 4329400.0
     },
     {
-      "date": "2026-08-28",
-      "open": 42.48,
-      "high": 42.95,
-      "low": 42.05,
-      "close": 42.54,
-      "volume": 3317200.0
-    },
-    {
       "date": "2026-08-31",
       "open": 43.67,
       "high": 44.11,
-      "low": 42.415,
+      "low": 42.42,
       "close": 43.15,
-      "volume": 4249700.0
+      "volume": 4251500.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 44.16,
+      "high": 44.4,
+      "low": 43.28,
+      "close": 44.3,
+      "volume": 4813200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 43.876,
+      "high": 45.125,
+      "low": 43.6913,
+      "close": 44.695,
+      "volume": 4266745.0
     }
   ],
   "ai_synthesis": null,

@@ -1,46 +1,112 @@
 {
   "ticker": "ERO",
-  "fetched_at": "2026-09-01T01:16:42Z",
+  "fetched_at": "2026-09-03T00:00:23Z",
   "_schema": "v2",
-  "current_price": 37.130001068115234,
+  "current_price": 34.76,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
+    "symbol": "ERO",
+    "longName": "Ero Copper Corp.",
+    "sector": "Basic Materials",
+    "industry": "Copper",
+    "exchange": "NYQ",
+    "country": "Canada",
+    "city": "Vancouver",
+    "website": "https://www.ero.com",
     "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "marketCap": 3625559296,
+    "enterpriseValue": 4108079616,
+    "trailingPE": 11.783051,
+    "forwardPE": 7.353283,
+    "priceToSalesTrailing12Months": 3.4703345,
+    "enterpriseToRevenue": 3.932,
+    "priceToBook": 2.9875374,
+    "grossMargins": 0.42992002,
+    "operatingMargins": 0.37643,
+    "profitMargins": 0.29794002,
+    "returnOnEquity": 0.30806,
+    "totalCash": 101742000,
+    "totalDebt": 573355008,
+    "totalRevenue": 1044729024,
+    "freeCashflow": 47039876,
+    "debtToEquity": 47.066,
+    "currentRatio": 1.371,
+    "fiftyTwoWeekHigh": 40.83,
+    "fiftyTwoWeekLow": 14.355,
+    "averageVolume": 1337104,
+    "averageVolume10days": 1947790,
+    "beta": 1.586,
+    "sharesOutstanding": 104302633,
+    "sharesFloat": 101975641,
+    "companyOfficers": [
+      {
+        "name": "Mr. David Maxwell Strang",
+        "title": "Co-Founder & Executive Chairman",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Makko  DeFilippo",
+        "title": "President, CEO & Director",
+        "age": 38,
+        "yearBorn": 1987
+      },
+      {
+        "name": "Mr. Wayne  Drier",
+        "title": "Executive VP & CFO",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Gelson da Silva Batista",
+        "title": "Executive VP & COO",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Courtney R. B. Lynn",
+        "title": "Executive Vice President, External Affairs and Strategy",
+        "age": 44,
+        "yearBorn": 1981
+      },
+      {
+        "name": "Mr. Farooq  Hamed",
+        "title": "Vice President of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.83,
+      "eps_estimate": 0.71062,
+      "eps_surprise_pct": 0.168
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.69,
+      "eps_estimate": 0.52283,
+      "eps_surprise_pct": 0.3197
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 1.04,
+      "eps_estimate": 1.05432,
+      "eps_surprise_pct": -0.0136
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.27,
+      "eps_estimate": 0.32417,
+      "eps_surprise_pct": -0.1671
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-03",
+    "revenue_low": 486283000,
+    "revenue_high": 519214000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 18,
+    "bullish": 10,
+    "neutral": 8,
+    "bearish": 0,
+    "avg_price_target": 40.06667,
+    "high_price_target": 44.0,
+    "low_price_target": 33.0,
+    "current_price": 34.76,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-16T11:18:13",
+        "firm": "B of A Securities",
+        "to_grade": "Buy",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2026-04-14T16:49:36",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Buy",
+        "action": "down"
+      },
+      {
+        "date": "2026-02-20T10:57:46",
+        "firm": "Freedom Broker",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-01-14T17:37:45",
+        "firm": "Goldman Sachs",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2025-12-30T12:27:31",
+        "firm": "Freedom Broker",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2025-10-29T18:05:56",
+        "firm": "Goldman Sachs",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2024-12-02T09:29:23",
+        "firm": "Goldman Sachs",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2024-07-12T14:35:59",
+        "firm": "Jefferies",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T16:12:23Z",
+      "title": "Is Ero Copper (TSX:ERO) Fully Valued Ahead Of Its 2026 Capital Markets Day?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ero-copper-tsx-ero-fully-161223883.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-02T12:11:07Z",
+      "title": "Dow Jones Futures Rise As Oil Prices Fall; Dell, Credo, Palo Alto Are Earnings Movers",
+      "url": "https://www.investors.com/market-trend/stock-market-today/dow-jones-futures-dell-credo-palo-alto-earnings-oil-prices-jump/?src=A00220&yptr=yahoo",
+      "source": "Investor's Business Daily"
+    },
     {
       "date": "2026-08-28T12:00:03Z",
       "title": "Higher Gold Prices Help These Mining Stocks Dominate The IBD 50",
@@ -152,34 +293,20 @@
       "title": "5 Non-Ferrous Metal Mining Stocks to Watch in a Challenging Industry",
       "url": "https://finance.yahoo.com/markets/commodities/articles/5-non-ferrous-metal-mining-150000306.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-04T17:12:51Z",
-      "title": "Ero Copper (TSX:ERO) Could Be 23% Undervalued On Its Production Ramp Up Story",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ero-copper-tsx-ero-could-171251218.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-03T13:03:00Z",
-      "title": "Coeur Mining Set to Report Q2 Earnings: Here's What to Expect",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/coeur-mining-set-report-q2-130300450.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.09579976985040277,
   "technicals": {
-    "ma20": 35.66450033187866,
-    "ma50": 29.91240016937256,
-    "ma200": 28.685500040054322,
-    "rsi14": 58.49871527179738,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 51.29177654939663,
     "high_20d": 40.83000183105469,
-    "low_5d": 37.0,
-    "low_10d": 32.84000015258789,
+    "low_5d": 34.52000045776367,
+    "low_10d": 33.25,
     "high_52w": 40.83000183105469,
-    "low_52w": 13.90999984741211,
-    "atr14": 1.910714830671038,
-    "atr14_pct": 5.146013400769418,
-    "position_in_52w_range_pct": 86.25557024405983
+    "low_52w": 14.354999542236328,
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4180,26 +4307,26 @@
       "high": 39.09,
       "low": 37.0,
       "close": 37.13,
-      "volume": 1978627.0
+      "volume": 2026700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 35.95,
+      "high": 36.87,
+      "low": 34.52,
+      "close": 34.82,
+      "volume": 2514500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 1085913.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 14.03,
-      "high": 14.39,
-      "low": 13.979,
-      "close": 14.34,
-      "volume": 723800.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 14.25,
-      "high": 14.86,
-      "low": 13.91,
-      "close": 14.81,
-      "volume": 1226600.0
-    },
     {
       "date": "2025-09-03",
       "open": 14.92,
@@ -6198,7 +6325,23 @@
       "high": 39.09,
       "low": 37.0,
       "close": 37.13,
-      "volume": 1978627.0
+      "volume": 2026700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 35.95,
+      "high": 36.87,
+      "low": 34.52,
+      "close": 34.82,
+      "volume": 2514500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 1085913.0
     }
   ],
   "ai_synthesis": null,

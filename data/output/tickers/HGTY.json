@@ -1,8 +1,8 @@
 {
   "ticker": "HGTY",
-  "fetched_at": "2026-09-01T01:17:18Z",
+  "fetched_at": "2026-09-03T00:01:02Z",
   "_schema": "v2",
-  "current_price": 13.300000190734863,
+  "current_price": 13.23,
   "info": {
     "symbol": "HGTY",
     "longName": "Hagerty, Inc.",
@@ -13,13 +13,13 @@
     "city": "Traverse City",
     "website": "https://www.hagerty.com",
     "fullTimeEmployees": 1891,
-    "marketCap": 4566613504,
-    "enterpriseValue": 1080387968,
-    "trailingPE": 102.3077,
-    "forwardPE": 22.670326,
-    "priceToSalesTrailing12Months": 3.2263858,
-    "enterpriseToRevenue": 0.763,
-    "priceToBook": 6.2854447,
+    "marketCap": 4542578688,
+    "enterpriseValue": 1062015232,
+    "trailingPE": 101.76923,
+    "forwardPE": 22.551008,
+    "priceToSalesTrailing12Months": 3.209405,
+    "enterpriseToRevenue": 0.75,
+    "priceToBook": 6.2523627,
     "grossMargins": 0.56813,
     "operatingMargins": 0.18377,
     "profitMargins": 0.01249,
@@ -32,8 +32,8 @@
     "currentRatio": 1.436,
     "fiftyTwoWeekHigh": 14.0,
     "fiftyTwoWeekLow": 9.36,
-    "averageVolume": 152215,
-    "averageVolume10days": 124150,
+    "averageVolume": 152653,
+    "averageVolume10days": 127730,
     "beta": 0.792,
     "sharesOutstanding": 101802246,
     "sharesFloat": 47565884,
@@ -173,7 +173,7 @@
     "avg_price_target": 14.5,
     "high_price_target": 16.0,
     "low_price_target": 13.0,
-    "current_price": 13.3,
+    "current_price": 13.23,
     "recent_rating_changes": [
       {
         "date": "2026-08-11T10:52:43",
@@ -309,20 +309,18 @@
       "source": "GuruFocus.com"
     }
   ],
-  "options_implied_move": 0.04511278130792631,
+  "options_implied_move": 0.0453514739229025,
   "technicals": {
-    "ma20": 13.080499982833862,
-    "ma50": 12.326199989318848,
-    "ma200": 11.79939998626709,
-    "rsi14": 60.81335183865448,
-    "high_20d": 13.970000267028809,
-    "low_5d": 13.022000312805176,
-    "low_10d": 12.699999809265137,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 56.33482949769171,
+    "high_20d": 13.9399995803833,
+    "low_5d": 13.020000457763672,
+    "low_10d": 12.720000267028809,
     "high_52w": 14.0,
     "low_52w": 9.359999656677246,
-    "atr14": 0.4024569647652762,
-    "atr14_pct": 3.0259921728846177,
-    "position_in_52w_range_pct": 84.91379833037126
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4320,29 +4318,29 @@
     {
       "date": "2026-08-31",
       "open": 13.35,
-      "high": 13.7344,
-      "low": 13.022,
+      "high": 13.734,
+      "low": 13.02,
       "close": 13.3,
-      "volume": 162802.0
+      "volume": 162800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 13.33,
+      "high": 13.48,
+      "low": 13.07,
+      "close": 13.12,
+      "volume": 169900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 80490.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 11.32,
-      "high": 11.59,
-      "low": 11.07,
-      "close": 11.45,
-      "volume": 189600.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 11.35,
-      "high": 11.49,
-      "low": 10.97,
-      "close": 11.25,
-      "volume": 136400.0
-    },
     {
       "date": "2025-09-03",
       "open": 11.21,
@@ -6338,10 +6336,26 @@
     {
       "date": "2026-08-31",
       "open": 13.35,
-      "high": 13.7344,
-      "low": 13.022,
+      "high": 13.734,
+      "low": 13.02,
       "close": 13.3,
-      "volume": 162802.0
+      "volume": 162800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 13.33,
+      "high": 13.48,
+      "low": 13.07,
+      "close": 13.12,
+      "volume": 169900.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 80490.0
     }
   ],
   "ai_synthesis": null,

@@ -1,46 +1,112 @@
 {
   "ticker": "MXL",
-  "fetched_at": "2026-09-01T01:12:34Z",
+  "fetched_at": "2026-09-02T23:56:33Z",
   "_schema": "v2",
-  "current_price": 59.90999984741211,
+  "current_price": 60.099998474121094,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "MXL",
+    "longName": "MaxLinear, Inc.",
+    "sector": "Technology",
+    "industry": "Semiconductors",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Carlsbad",
+    "website": "https://www.maxlinear.com",
+    "fullTimeEmployees": 1115,
+    "marketCap": 5450660864,
+    "enterpriseValue": 5534043648,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 23.267067,
+    "priceToSalesTrailing12Months": 9.580547,
+    "enterpriseToRevenue": 9.727,
+    "priceToBook": 11.242049,
+    "grossMargins": 0.57477003,
+    "operatingMargins": -0.02441,
+    "profitMargins": -0.18238,
+    "returnOnEquity": -0.21324,
+    "totalCash": 64814000,
+    "totalDebt": 148196992,
+    "totalRevenue": 568929984,
+    "freeCashflow": 14404875,
+    "debtToEquity": 30.566,
+    "currentRatio": 1.776,
+    "fiftyTwoWeekHigh": 128.3,
+    "fiftyTwoWeekLow": 12.77,
+    "averageVolume": 3452884,
+    "averageVolume10days": 2081710,
+    "beta": 3.975,
+    "sharesOutstanding": 90693191,
+    "sharesFloat": 85222578,
+    "companyOfficers": [
+      {
+        "name": "Dr. Kishore  Seendripu Ph.D.",
+        "title": "Co-Founder, Chairman, CEO & President",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Steven G. Litchfield",
+        "title": "CFO & Chief Corporate Strategy Officer",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Ms. Connie H. Kwong",
+        "title": "Corporate Controller & Principal Accounting Officer",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Dr. Curtis  Ling Ph.D.",
+        "title": "Co-Founder & Chief Technical Officer",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Mohan  Kambhammettu",
+        "title": "Senior Vice President of Global Operations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. Michael  Bollesen",
+        "title": "Senior Vice President of Sales",
+        "age": 56,
+        "yearBorn": 1969
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.35,
+      "eps_estimate": 0.32952,
+      "eps_surprise_pct": 0.0622
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.22,
+      "eps_estimate": 0.17523,
+      "eps_surprise_pct": 0.2555
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.19,
+      "eps_estimate": 0.17875,
+      "eps_surprise_pct": 0.0629
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.14,
+      "eps_estimate": 0.1191,
+      "eps_surprise_pct": 0.17549999
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-22",
+    "revenue_low": 166900000,
+    "revenue_high": 217100000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 11,
+    "bullish": 7,
+    "neutral": 4,
+    "bearish": 0,
+    "avg_price_target": 94.54545,
+    "high_price_target": 125.0,
+    "low_price_target": 40.0,
+    "current_price": 60.1,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-24T17:46:39",
+        "firm": "Roth Capital",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T15:54:47",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T14:40:27",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T14:08:14",
+        "firm": "Susquehanna",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T10:17:44",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-20T13:06:58",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-29T14:50:10",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-04T14:19:16",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-04-29T13:13:00",
+        "firm": "Loop Capital",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-04-24T12:52:36",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +309,20 @@
       "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.13144759069173223,
   "technicals": {
-    "ma20": 69.57749977111817,
-    "ma50": 79.18719993591309,
-    "ma200": 46.52689996242523,
-    "rsi14": 40.01563098358358,
+    "ma20": 68.45299968719482,
+    "ma50": 77.83059982299805,
+    "ma200": 46.97204995632172,
+    "rsi14": 41.235676343455594,
     "high_20d": 89.0,
-    "low_5d": 59.170101165771484,
-    "low_10d": 59.170101165771484,
+    "low_5d": 56.470001220703125,
+    "low_10d": 56.470001220703125,
     "high_52w": 128.3000030517578,
     "low_52w": 12.770000457763672,
-    "atr14": 5.823563984462193,
-    "atr14_pct": 9.720520779994208,
-    "position_in_52w_range_pct": 40.80325312145282
+    "atr14": 5.383563995361328,
+    "atr14_pct": 8.95767742436712,
+    "position_in_52w_range_pct": 40.96771137683493
   },
   "ohlc_2y": [
     {
@@ -4178,28 +4321,28 @@
       "date": "2026-08-31",
       "open": 61.84,
       "high": 62.16,
-      "low": 59.1701,
+      "low": 59.17,
       "close": 59.91,
-      "volume": 2384540.0
+      "volume": 2395800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 58.47,
+      "high": 58.72,
+      "low": 56.47,
+      "close": 57.59,
+      "volume": 2885200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 57.6,
+      "high": 60.32,
+      "low": 56.5301,
+      "close": 60.1,
+      "volume": 1768238.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 16.5,
-      "high": 16.54,
-      "low": 15.64,
-      "close": 15.72,
-      "volume": 1028500.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 15.14,
-      "high": 15.67,
-      "low": 15.09,
-      "close": 15.62,
-      "volume": 1131300.0
-    },
     {
       "date": "2025-09-03",
       "open": 15.63,
@@ -6196,9 +6339,25 @@
       "date": "2026-08-31",
       "open": 61.84,
       "high": 62.16,
-      "low": 59.1701,
+      "low": 59.17,
       "close": 59.91,
-      "volume": 2384540.0
+      "volume": 2395800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 58.47,
+      "high": 58.72,
+      "low": 56.47,
+      "close": 57.59,
+      "volume": 2885200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 57.6,
+      "high": 60.32,
+      "low": 56.5301,
+      "close": 60.1,
+      "volume": 1768238.0
     }
   ],
   "ai_synthesis": null,

@@ -1,6 +1,6 @@
 {
   "trade_id": "NOW_2026-08-17_000",
-  "generated_at": "2026-09-01T23:55:30+00:00",
+  "generated_at": "2026-09-03T00:03:14+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "NOW",
@@ -9,16 +9,23 @@
     "entry_date": "2026-08-17",
     "entry_price": 119.83,
     "original_qty": 1370,
-    "current_qty": 1370,
-    "stop_price": 116.0,
+    "current_qty": 0,
+    "stop_price": 125.43,
     "initial_stop": 116.0,
-    "closed": false,
-    "exit_date": null,
-    "hold_business_days": null,
+    "closed": true,
+    "exit_date": "2026-09-02",
+    "hold_business_days": 12,
     "r_dollars": 5247.099999999998,
-    "realized_pl": 0,
-    "realized_R": 0.0,
-    "trims": []
+    "realized_pl": 26550.600000000013,
+    "realized_R": 5.060052219321154,
+    "trims": [
+      {
+        "date": "2026-09-02",
+        "price": 139.21,
+        "qty": 1370,
+        "type": "sell_rest"
+      }
+    ]
   },
   "entry_snapshot": {
     "close": 117.7,
@@ -28,8 +35,8 @@
     "volume": 20204200.0,
     "ma20": 114.10650000000001,
     "ma50": 107.6158,
-    "ma200": 121.46058000000001,
-    "rsi14": 53.43436408182553,
+    "ma200": 121.46058,
+    "rsi14": 53.43436306451538,
     "atr14": 6.65214285714286,
     "atr14_pct": 5.651778128413644,
     "high_52w": 194.726,
@@ -49,14 +56,14 @@
     "optimal_exit_date": "2026-08-31",
     "optimal_R": 7.772845953002613,
     "days_to_optimal": 14,
-    "realized_R": null,
-    "capture_pct": null,
-    "missed_R": null,
+    "realized_R": 5.060052219321154,
+    "capture_pct": 65.09909304669135,
+    "missed_R": 2.712793733681459,
     "post_exit_R": null,
-    "hold_calendar_days": 15
+    "hold_calendar_days": 16
   },
-  "lesson": "In progress",
-  "narrative": "Entered **NOW** long on 2026-08-17 at $119.83 (qty 1370) with stop $116.00 (1R = $3.83/sh = $5,247). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($114.11), MA stack mixed, RSI 53, 32% through 52W range, ATR 5.7% of price. **In progress.** Peak so far +7.77R; worst drawdown -0.58R.",
+  "lesson": "Good execution",
+  "narrative": "Entered **NOW** long on 2026-08-17 at $119.83 (qty 1370) with stop $116.00 (currently trailed to $125.43) (1R = $3.83/sh = $5,247). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price above MA20 ($114.11), MA stack mixed, RSI 53, 32% through 52W range, ATR 5.7% of price. Realized **+5.06R**, peak was **+7.77R** on 2026-08-31 (day +14) \u2014 captured **65%** of the move. **Lesson: Good execution.**",
   "ohlc_window": [
     {
       "date": "2026-07-20",
@@ -296,7 +303,7 @@
       "high": 145.72,
       "low": 137.8,
       "close": 144.71,
-      "volume": 28982600.0
+      "volume": 29034400.0
     },
     {
       "date": "2026-08-31",
@@ -304,7 +311,23 @@
       "high": 149.6,
       "low": 141.69,
       "close": 147.99,
-      "volume": 25851359.0
+      "volume": 26013700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 144.55,
+      "high": 146.96,
+      "low": 142.06,
+      "close": 142.9,
+      "volume": 16926100.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 140.3,
+      "high": 142.59,
+      "low": 136.375,
+      "close": 136.72,
+      "volume": 14507032.0
     }
   ]
 }

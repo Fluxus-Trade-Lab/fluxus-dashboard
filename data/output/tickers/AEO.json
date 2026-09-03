@@ -1,46 +1,112 @@
 {
   "ticker": "AEO",
-  "fetched_at": "2026-09-01T01:14:45Z",
+  "fetched_at": "2026-09-02T23:58:32Z",
   "_schema": "v2",
-  "current_price": 16.6299991607666,
+  "current_price": 16.65999984741211,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "AEO",
+    "longName": "American Eagle Outfitters, Inc.",
+    "sector": "Consumer Cyclical",
+    "industry": "Apparel Retail",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Pittsburgh",
+    "website": "https://www.aeo-inc.com",
+    "fullTimeEmployees": 10000,
+    "marketCap": 2791771648,
+    "enterpriseValue": 4562051584,
+    "trailingPE": 10.477987,
+    "forwardPE": 8.562779,
+    "priceToSalesTrailing12Months": 0.49386346,
+    "enterpriseToRevenue": 0.807,
+    "priceToBook": 1.6968833,
+    "grossMargins": 0.38194,
+    "operatingMargins": 0.023610001,
+    "profitMargins": 0.0496,
+    "returnOnEquity": 0.17569,
+    "totalCash": 103286000,
+    "totalDebt": 1874689024,
+    "totalRevenue": 5652921856,
+    "freeCashflow": 144004128,
+    "debtToEquity": 114.064,
+    "currentRatio": 1.545,
+    "fiftyTwoWeekHigh": 28.46,
+    "fiftyTwoWeekLow": 13.35,
+    "averageVolume": 4651296,
+    "averageVolume10days": 4713200,
+    "beta": 1.317,
+    "sharesOutstanding": 167573333,
+    "sharesFloat": 155809685,
+    "companyOfficers": [
+      {
+        "name": "Mr. Jay L. Schottenstein",
+        "title": "Executive Chairman of the Board & CEO",
+        "age": 71,
+        "yearBorn": 1954
+      },
+      {
+        "name": "Ms. Jennifer M. Foyle",
+        "title": "President and Executive Creative Director of AE & Aerie",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Ms. Beth M. Henke",
+        "title": "Executive VP & Chief Legal Officer",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Ms. Marisa A. Baldwin",
+        "title": "Executive VP & Chief Human Resources Officer",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Michael A. Mathias",
+        "title": "Full-Time Non-Executive Strategic Advisor",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Ravi  Thanawala",
+        "title": "Executive VP & CFO",
+        "age": 41,
+        "yearBorn": 1984
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-04-30T00:00:00",
+      "eps_actual": 0.14,
+      "eps_estimate": 0.1075,
+      "eps_surprise_pct": 0.3023
+    },
+    {
+      "period_end": "2026-01-31T00:00:00",
+      "eps_actual": 0.5,
+      "eps_estimate": 0.716,
+      "eps_surprise_pct": -0.3017
+    },
+    {
+      "period_end": "2025-10-31T00:00:00",
+      "eps_actual": 0.53,
+      "eps_estimate": 0.4275,
+      "eps_surprise_pct": 0.23979999
+    },
+    {
+      "period_end": "2025-07-31T00:00:00",
+      "eps_actual": 0.45,
+      "eps_estimate": 0.21,
+      "eps_surprise_pct": 1.1429
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-09-09",
+    "revenue_low": 1346203030,
+    "revenue_high": 1385322440
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -99,12 +165,113 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 12,
+    "bullish": 1,
+    "neutral": 10,
+    "bearish": 1,
+    "avg_price_target": 19.7,
+    "high_price_target": 31.0,
+    "low_price_target": 16.0,
+    "current_price": 16.66,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-18T14:13:22",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-01T19:09:10",
+        "firm": "Citigroup",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-29T20:49:28",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-29T18:09:56",
+        "firm": "B of A Securities",
+        "to_grade": "Underperform",
+        "from_grade": "Underperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-29T15:35:04",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-29T14:19:56",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-18T15:41:59",
+        "firm": "TD Cowen",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-06T12:46:40",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Underweight",
+        "action": "up"
+      },
+      {
+        "date": "2026-03-26T12:14:00",
+        "firm": "Needham",
+        "to_grade": "Hold",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-03-06T16:26:44",
+        "firm": "Citigroup",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T14:00:02Z",
+      "title": "Analysts Estimate American Eagle Outfitters (AEO) to Report a Decline in Earnings: What to Look Out for",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/analysts-estimate-american-eagle-outfitters-140002072.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-02T09:00:00Z",
+      "title": "How to build a brand newsletter in 2026",
+      "url": "https://www.marketingbrew.com/stories/how-to-build-a-brand-newsletter-in-2026?utm_source=&utm_medium=syndication&utm_campaign=feed",
+      "source": "Marketing Brew"
+    },
+    {
+      "date": "2026-09-02T06:04:07Z",
+      "title": "Sadie Sink Is Making Calvin Klein Viral \u2014 But PVH Stock Isn't Getting The Sydney Sweeney Effect",
+      "url": "https://stocktwits.com/news-articles/markets/equity/sadie-sink-is-making-calvin-klein-viral-but-pvh-stock-isn-t-getting-the-sydney-sweeney-effect/cZsA0fSRJuQ",
+      "source": "Stocktwits"
+    },
+    {
+      "date": "2026-09-01T14:11:44Z",
+      "title": "American Eagle (AEO) Stock Looks Cheap On Earnings Yet Fair On Cash Flow",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/american-eagle-aeo-stock-looks-141144542.html",
+      "source": "Simply Wall St."
+    },
     {
       "date": "2026-08-31T21:50:02Z",
       "title": "American Eagle Outfitters (AEO) Suffers a Larger Drop Than the General Market: Key Insights",
@@ -138,48 +305,24 @@
     {
       "date": "2026-08-27T20:15:00Z",
       "title": "Consumers are 'trading down, but not out' while seeking the best retail value",
-      "url": "https://finance.yahoo.com/video/consumers-trading-down-not-while-201500138.html",
+      "url": "https://finance.yahoo.com/video/consumers-are-trading-down-but-not-out-while-seeking-the-best-retail-value-201500138.html",
       "source": "Yahoo Finance Video"
-    },
-    {
-      "date": "2026-08-27T18:36:00Z",
-      "title": "Abercrombie's Shares Rise 36% on Q2 Earnings Beat on Tariff Refunds",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/abercrombies-shares-rise-36-q2-183600807.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-27T16:24:00Z",
-      "title": "Can American Eagle's TikTok Shop and Creator Programs Lift Demand?",
-      "url": "https://finance.yahoo.com/media-advertising/articles/american-eagles-tiktok-shop-creator-162400029.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-27T16:06:00Z",
-      "title": "DLTR Q2 Earnings Beat Estimates on Margin Gains and Higher Comps",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/dltr-q2-earnings-beat-estimates-160600138.html",
-      "source": "Zacks"
-    },
-    {
-      "date": "2026-08-27T15:57:00Z",
-      "title": "American Eagle Set to Report Q2 Earnings: What's in the Offing?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/american-eagle-set-report-q2-155700498.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03721488629523055,
   "technicals": {
-    "ma20": 16.944999980926514,
-    "ma50": 17.094828262329102,
-    "ma200": 19.552225723266602,
-    "rsi14": 47.2660421185031,
+    "ma20": 16.811999988555907,
+    "ma50": 17.054552001953127,
+    "ma200": 19.544967918395997,
+    "rsi14": 47.663059096415154,
     "high_20d": 18.459999084472656,
-    "low_5d": 16.43000030517578,
+    "low_5d": 16.170000076293945,
     "low_10d": 15.850000381469727,
     "high_52w": 27.92989601877248,
-    "low_52w": 12.263286141367928,
-    "atr14": 0.6585713114057269,
-    "atr14_pct": 3.960140376671964,
-    "position_in_52w_range_pct": 27.872737328428936
+    "low_52w": 12.993242086754991,
+    "atr14": 0.6235713277544294,
+    "atr14_pct": 3.7429251708624247,
+    "position_in_52w_range_pct": 24.548722741692725
   },
   "ohlc_2y": [
     {
@@ -601,9 +744,9 @@
     {
       "date": "2024-11-14",
       "open": 17.3478,
-      "high": 17.4609,
+      "high": 17.461,
       "low": 17.0744,
-      "close": 17.1592,
+      "close": 17.1593,
       "volume": 2407500.0
     },
     {
@@ -835,7 +978,7 @@
       "open": 15.4999,
       "high": 15.8676,
       "low": 15.4905,
-      "close": 15.5187,
+      "close": 15.5188,
       "volume": 3551200.0
     },
     {
@@ -856,7 +999,7 @@
     },
     {
       "date": "2025-01-02",
-      "open": 15.8864,
+      "open": 15.8865,
       "high": 16.2824,
       "low": 15.8016,
       "close": 16.1504,
@@ -1178,8 +1321,8 @@
       "date": "2025-03-04",
       "open": 11.4856,
       "high": 11.5521,
-      "low": 11.2196,
-      "close": 11.3906,
+      "low": 11.2195,
+      "close": 11.3905,
       "volume": 7464800.0
     },
     {
@@ -1192,9 +1335,9 @@
     },
     {
       "date": "2025-03-06",
-      "open": 11.2956,
+      "open": 11.2955,
       "high": 11.8086,
-      "low": 11.2861,
+      "low": 11.286,
       "close": 11.6946,
       "volume": 6313700.0
     },
@@ -1224,8 +1367,8 @@
     },
     {
       "date": "2025-03-12",
-      "open": 11.2196,
-      "high": 11.2861,
+      "open": 11.2195,
+      "high": 11.286,
       "low": 10.7635,
       "close": 10.8775,
       "volume": 9682800.0
@@ -1233,7 +1376,7 @@
     {
       "date": "2025-03-13",
       "open": 10.4405,
-      "high": 11.2006,
+      "high": 11.2005,
       "low": 10.374,
       "close": 10.431,
       "volume": 15707500.0
@@ -1248,10 +1391,10 @@
     },
     {
       "date": "2025-03-17",
-      "open": 11.21,
+      "open": 11.2101,
       "high": 11.5711,
       "low": 10.887,
-      "close": 11.4285,
+      "close": 11.4286,
       "volume": 14031900.0
     },
     {
@@ -1272,10 +1415,10 @@
     },
     {
       "date": "2025-03-20",
-      "open": 11.248,
+      "open": 11.2481,
       "high": 11.7326,
-      "low": 11.172,
-      "close": 11.248,
+      "low": 11.1721,
+      "close": 11.2481,
       "volume": 6144700.0
     },
     {
@@ -1306,7 +1449,7 @@
       "date": "2025-03-26",
       "open": 11.6376,
       "high": 11.7136,
-      "low": 11.2386,
+      "low": 11.2385,
       "close": 11.3811,
       "volume": 5638900.0
     },
@@ -1320,8 +1463,8 @@
     },
     {
       "date": "2025-03-28",
-      "open": 11.172,
-      "high": 11.2955,
+      "open": 11.1721,
+      "high": 11.2956,
       "low": 10.716,
       "close": 10.849,
       "volume": 5450000.0
@@ -1683,7 +1826,7 @@
       "open": 10.0451,
       "high": 10.1605,
       "low": 9.8336,
-      "close": 9.9971,
+      "close": 9.997,
       "volume": 8126100.0
     },
     {
@@ -1704,7 +1847,7 @@
     },
     {
       "date": "2025-06-06",
-      "open": 9.8432,
+      "open": 9.8433,
       "high": 9.8625,
       "low": 9.7087,
       "close": 9.7663,
@@ -2256,7 +2399,7 @@
     },
     {
       "date": "2025-09-16",
-      "open": 19.1152,
+      "open": 19.1151,
       "high": 19.6018,
       "low": 18.7745,
       "close": 19.339,
@@ -2889,7 +3032,7 @@
     {
       "date": "2026-01-08",
       "open": 26.7228,
-      "high": 27.4687,
+      "high": 27.4686,
       "low": 26.6934,
       "close": 27.2331,
       "volume": 4720500.0
@@ -4180,26 +4323,26 @@
       "high": 16.77,
       "low": 16.44,
       "close": 16.63,
-      "volume": 4994697.0
+      "volume": 4995300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 16.4,
+      "high": 16.94,
+      "low": 16.17,
+      "close": 16.58,
+      "volume": 4928200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 16.65,
+      "high": 16.95,
+      "low": 16.47,
+      "close": 16.66,
+      "volume": 4383737.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 12.9446,
-      "high": 12.9932,
-      "low": 12.4969,
-      "close": 12.5942,
-      "volume": 6284800.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 12.5261,
-      "high": 13.1976,
-      "low": 12.2633,
-      "close": 13.149,
-      "volume": 12913400.0
-    },
     {
       "date": "2025-09-03",
       "open": 13.1782,
@@ -4274,7 +4417,7 @@
     },
     {
       "date": "2025-09-16",
-      "open": 19.1152,
+      "open": 19.1151,
       "high": 19.6018,
       "low": 18.7745,
       "close": 19.339,
@@ -4907,7 +5050,7 @@
     {
       "date": "2026-01-08",
       "open": 26.7228,
-      "high": 27.4687,
+      "high": 27.4686,
       "low": 26.6934,
       "close": 27.2331,
       "volume": 4720500.0
@@ -6198,7 +6341,23 @@
       "high": 16.77,
       "low": 16.44,
       "close": 16.63,
-      "volume": 4994697.0
+      "volume": 4995300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 16.4,
+      "high": 16.94,
+      "low": 16.17,
+      "close": 16.58,
+      "volume": 4928200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 16.65,
+      "high": 16.95,
+      "low": 16.47,
+      "close": 16.66,
+      "volume": 4383737.0
     }
   ],
   "ai_synthesis": null,

@@ -1,46 +1,112 @@
 {
   "ticker": "SOFI",
-  "fetched_at": "2026-09-01T01:13:12Z",
+  "fetched_at": "2026-09-02T23:57:04Z",
   "_schema": "v2",
-  "current_price": 17.8799991607666,
+  "current_price": 17.84000015258789,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
+    "symbol": "SOFI",
+    "longName": "SoFi Technologies, Inc.",
+    "sector": "Financial Services",
+    "industry": "Credit Services",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://www.sofi.com",
+    "fullTimeEmployees": 6100,
+    "marketCap": 23041613824,
+    "enterpriseValue": 22070149120,
+    "trailingPE": 36.40816,
+    "forwardPE": 21.697355,
+    "priceToSalesTrailing12Months": 5.3981357,
+    "enterpriseToRevenue": 5.171,
+    "priceToBook": 2.0782852,
+    "grossMargins": 0.83734,
+    "operatingMargins": 0.16956,
+    "profitMargins": 0.14906,
+    "returnOnEquity": 0.07095,
+    "totalCash": 3366502912,
+    "totalDebt": 3415378944,
+    "totalRevenue": 4268439040,
     "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "debtToEquity": 30.835,
+    "currentRatio": 1.105,
+    "fiftyTwoWeekHigh": 32.73,
+    "fiftyTwoWeekLow": 14.88,
+    "averageVolume": 71745869,
+    "averageVolume10days": 42265280,
+    "beta": 2.204,
+    "sharesOutstanding": 1291570324,
+    "sharesFloat": 1271718888,
+    "companyOfficers": [
+      {
+        "name": "Mr. George Thompson Hutton",
+        "title": "Independent Non Executive Chairman",
+        "age": 69,
+        "yearBorn": 1956
+      },
+      {
+        "name": "Mr. Anthony J. Noto",
+        "title": "CEO & Director",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. Christopher  Lapointe",
+        "title": "Chief Financial Officer",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Mr. Jeremy  Rishel",
+        "title": "Chief Technology Officer",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Dr. Kelli A. Keough",
+        "title": "Executive VP and Group Business Unit Leader for Spend, Invest, Protect & Save",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Arun  Pinto",
+        "title": "Chief Risk Officer",
+        "age": 46,
+        "yearBorn": 1979
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.12,
+      "eps_estimate": 0.1092,
+      "eps_surprise_pct": 0.098900005
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.115,
+      "eps_estimate": 0.12,
+      "eps_surprise_pct": -0.0417
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.1217,
+      "eps_estimate": 0.112,
+      "eps_surprise_pct": 0.0866
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.1014,
+      "eps_estimate": 0.08243,
+      "eps_surprise_pct": 0.2301
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-27",
+    "revenue_low": 1213300000,
+    "revenue_high": 1393310000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,23 +165,106 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 24,
+    "bullish": 8,
+    "neutral": 12,
+    "bearish": 4,
+    "avg_price_target": 20.2619,
+    "high_price_target": 30.0,
+    "low_price_target": 12.0,
+    "current_price": 17.84,
+    "recent_rating_changes": [
+      {
+        "date": "2026-09-02T19:09:01",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Outperform",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-08-17T10:12:02",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Neutral",
+        "action": "init"
+      },
+      {
+        "date": "2026-08-12T17:32:07",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-31T18:08:37",
+        "firm": "Mizuho",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T17:36:34",
+        "firm": "Morgan Stanley",
+        "to_grade": "Underweight",
+        "from_grade": "Underweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T13:43:15",
+        "firm": "Wells Fargo",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T10:22:54",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-24T12:14:11",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-09T18:15:22",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-12T13:48:30",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
-      "date": "2026-07-22T10:49:00Z",
-      "title": "Best student loan refinance companies of September 2026",
-      "url": "https://finance.yahoo.com/personal-finance/student-loans/article/best-student-loan-refinance-companies-104900001.html",
-      "source": "Yahoo Personal Finance"
+      "date": "2026-09-02T01:00:45Z",
+      "title": "SOFI\u2019s Decline Has Retail Looking Elsewhere \u2014 Here\u2019s The Rival Fintech Traders Prefer Right Now",
+      "url": "https://stocktwits.com/news-articles/markets/equity/sofi-s-decline-has-retail-looking-elsewhere-here-s-the-rival-fintech-traders-prefer-right-now/cZsAJ7eRJMU",
+      "source": "Stocktwits"
     },
     {
-      "date": "2024-02-28T17:24:16Z",
-      "title": "The best personal loans for September 2026",
-      "url": "https://finance.yahoo.com/personal-finance/personal-loans/article/best-personal-loans-202034980.html",
-      "source": "Yahoo Personal Finance"
+      "date": "2026-09-01T16:56:54Z",
+      "title": "SoFi Drops 4%, Affirm Falls 5% as Yields Hit Balance-Sheet Lenders, Robinhood Holds Steady",
+      "url": "https://247wallst.com/investing/2026/09/01/sofi-drops-4-affirm-falls-5-as-yields-hit-balance-sheet-lenders-robinhood-holds-steady/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-01T06:15:40Z",
+      "title": "3 Crypto Stocks To Watch With Up To 47% Revenue Growth",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/3-crypto-stocks-watch-47-061540423.html",
+      "source": "Simply Wall St."
     },
     {
       "date": "2026-08-31T23:44:17Z",
@@ -158,28 +307,22 @@
       "title": "PayPal Stock's Biggest Risk Shows Up In Its Take Rate",
       "url": "https://www.trefis.com/articles/613290/paypal-stocks-biggest-risk-shows-up-in-its-take-rate/2026-08-27",
       "source": "Trefis"
-    },
-    {
-      "date": "2026-08-27T17:54:16Z",
-      "title": "Sofi Stock Is Failing to Break $20 This Year, but You Shouldn\u2019t Give Up Yet",
-      "url": "https://www.barchart.com/story/news/4230750/sofi-stock-is-failing-to-break-20-this-year-but-you-shouldnt-give-up-yet",
-      "source": "Barchart"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03139013426066399,
   "technicals": {
-    "ma20": 18.330500030517577,
-    "ma50": 17.82879997253418,
-    "ma200": 20.189424986839295,
-    "rsi14": 48.37363229249335,
+    "ma20": 18.227499961853027,
+    "ma50": 17.838799934387207,
+    "ma200": 20.06087499141693,
+    "rsi14": 48.83050051472311,
     "high_20d": 19.4950008392334,
-    "low_5d": 17.549999237060547,
-    "low_10d": 17.549999237060547,
+    "low_5d": 16.920000076293945,
+    "low_10d": 16.920000076293945,
     "high_52w": 32.72999954223633,
     "low_52w": 14.880000114440918,
-    "atr14": 0.8557142530168805,
-    "atr14_pct": 4.785874122939231,
-    "position_in_52w_range_pct": 16.80671788512322
+    "atr14": 0.8842856543404716,
+    "atr14_pct": 4.956758109736877,
+    "position_in_52w_range_pct": 16.582633798507363
   },
   "ohlc_2y": [
     {
@@ -4172,7 +4315,7 @@
       "high": 19.495,
       "low": 18.03,
       "close": 18.06,
-      "volume": 45428800.0
+      "volume": 45674400.0
     },
     {
       "date": "2026-08-31",
@@ -4180,26 +4323,26 @@
       "high": 17.96,
       "low": 17.55,
       "close": 17.88,
-      "volume": 36279846.0
+      "volume": 36601500.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 17.55,
+      "high": 17.66,
+      "low": 16.98,
+      "close": 17.05,
+      "volume": 41914000.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 17.05,
+      "high": 17.94,
+      "low": 16.92,
+      "close": 17.84,
+      "volume": 40464233.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 26.16,
-      "high": 26.42,
-      "low": 25.21,
-      "close": 25.54,
-      "volume": 54432500.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 24.5,
-      "high": 25.28,
-      "low": 23.7,
-      "close": 24.91,
-      "volume": 76177300.0
-    },
     {
       "date": "2025-09-03",
       "open": 25.06,
@@ -6190,7 +6333,7 @@
       "high": 19.495,
       "low": 18.03,
       "close": 18.06,
-      "volume": 45428800.0
+      "volume": 45674400.0
     },
     {
       "date": "2026-08-31",
@@ -6198,7 +6341,23 @@
       "high": 17.96,
       "low": 17.55,
       "close": 17.88,
-      "volume": 36279846.0
+      "volume": 36601500.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 17.55,
+      "high": 17.66,
+      "low": 16.98,
+      "close": 17.05,
+      "volume": 41914000.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 17.05,
+      "high": 17.94,
+      "low": 16.92,
+      "close": 17.84,
+      "volume": 40464233.0
     }
   ],
   "ai_synthesis": null,

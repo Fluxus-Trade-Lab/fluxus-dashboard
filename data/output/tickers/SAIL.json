@@ -1,46 +1,112 @@
 {
   "ticker": "SAIL",
-  "fetched_at": "2026-09-01T01:13:01Z",
+  "fetched_at": "2026-09-02T23:56:54Z",
   "_schema": "v2",
-  "current_price": 20.559999465942383,
+  "current_price": 18.309999465942383,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "SAIL",
+    "longName": "SailPoint, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Austin",
+    "website": "https://www.sailpoint.com",
+    "fullTimeEmployees": 3229,
+    "marketCap": 10385120256,
+    "enterpriseValue": 10007620608,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "forwardPE": 45.792168,
+    "priceToSalesTrailing12Months": 9.263413,
+    "enterpriseToRevenue": 8.927,
+    "priceToBook": 1.5178646,
+    "grossMargins": 0.66350996,
+    "operatingMargins": -0.28495002,
+    "profitMargins": -0.14041,
+    "returnOnEquity": -0.023120001,
+    "totalCash": 390806016,
+    "totalDebt": 18978000,
+    "totalRevenue": 1121090048,
+    "freeCashflow": 322153376,
+    "debtToEquity": 0.277,
+    "currentRatio": 1.395,
+    "fiftyTwoWeekHigh": 24.0,
+    "fiftyTwoWeekLow": 10.3,
+    "averageVolume": 4268112,
+    "averageVolume10days": 3236380,
     "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "sharesOutstanding": 567182997,
+    "sharesFloat": 70977280,
+    "companyOfficers": [
+      {
+        "name": "Mr. Mark D. McClain TTEE",
+        "title": "Founder, CEO & Director",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Mr. Matthew  Mills",
+        "title": "President",
+        "age": 67,
+        "yearBorn": 1958
+      },
+      {
+        "name": "Mr. Brian  Carolan CPA",
+        "title": "Chief Financial Officer",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Christopher G. Schmitt",
+        "title": "Executive VP, General Counsel & Secretary",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Ms. Abby  Payne",
+        "title": "Chief People Officer",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Ms. Mitra  Rezvan",
+        "title": "Chief Accounting Officer",
+        "age": 46,
+        "yearBorn": 1979
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-04-30T00:00:00",
+      "eps_actual": 0.05,
+      "eps_estimate": 0.04427,
+      "eps_surprise_pct": 0.1294
+    },
+    {
+      "period_end": "2026-01-31T00:00:00",
+      "eps_actual": 0.08,
+      "eps_estimate": 0.07996,
+      "eps_surprise_pct": 0.0005
+    },
+    {
+      "period_end": "2025-10-31T00:00:00",
+      "eps_actual": 0.08,
+      "eps_estimate": 0.06039,
+      "eps_surprise_pct": 0.3247
+    },
+    {
+      "period_end": "2025-07-31T00:00:00",
+      "eps_actual": 0.07,
+      "eps_estimate": 0.04397,
+      "eps_surprise_pct": 0.592
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-09-09",
+    "revenue_low": 303600000,
+    "revenue_high": 311000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -99,12 +165,101 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 23,
+    "bullish": 19,
+    "neutral": 3,
+    "bearish": 1,
+    "avg_price_target": 20.06,
+    "high_price_target": 25.0,
+    "low_price_target": 10.0,
+    "current_price": 18.31,
+    "recent_rating_changes": [
+      {
+        "date": "2026-09-01T18:45:37",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-01T11:04:01",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-20T17:44:06",
+        "firm": "Morgan Stanley",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T17:50:10",
+        "firm": "Mizuho",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T14:37:10",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-17T15:54:23",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-17T13:07:00",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-14T14:08:15",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-04T10:01:36",
+        "firm": "DA Davidson",
+        "to_grade": "Neutral",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-07-08T11:36:03",
+        "firm": "Rosenblatt",
+        "to_grade": "Neutral",
+        "from_grade": null,
+        "action": "init"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T12:40:01Z",
+      "title": "Daktronics (DAKT) Beats Q1 Earnings and Revenue Estimates",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/daktronics-dakt-beats-q1-earnings-124001236.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-02T11:23:02Z",
+      "title": "Palo Alto Beats Fiscal Fourth-Quarter Estimates; Gross Margin Declines",
+      "url": "https://finance.yahoo.com/technology/ai/articles/palo-alto-beats-fiscal-fourth-112302237.html",
+      "source": "MT Newswires"
+    },
     {
       "date": "2026-08-28T06:25:27Z",
       "title": "Why SailPoint Stock Was Cruising Higher This Week",
@@ -152,34 +307,22 @@
       "title": "Cybersecurity Firms Critical to Enterprise AI Adoption, BofA Says",
       "url": "https://finance.yahoo.com/technology/ai/articles/cybersecurity-firms-critical-enterprise-ai-144911324.html",
       "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-17T07:01:57Z",
-      "title": "SailPoint Highlights Identity Governance for Government Reorganizations",
-      "url": "https://www.marketbeat.com/instant-alerts/sailpoint-highlights-identity-governance-for-government-reorganizations-2026-08-17/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-14T19:44:18Z",
-      "title": "Major Software Providers Poised for Quarterly Beats Amid 'Bullish' Reseller Feedback, RBC Says",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/major-software-providers-poised-quarterly-194418720.html",
-      "source": "MT Newswires"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.14746040845179434,
   "technicals": {
-    "ma20": 18.874499988555907,
-    "ma50": 16.46310007095337,
-    "ma200": 16.02302499294281,
-    "rsi14": 64.93164944563387,
+    "ma20": 18.989499950408934,
+    "ma50": 16.703700046539307,
+    "ma200": 16.013524985313417,
+    "rsi14": 50.1686157598877,
     "high_20d": 21.364999771118164,
-    "low_5d": 17.299999237060547,
+    "low_5d": 17.989999771118164,
     "low_10d": 17.299999237060547,
     "high_52w": 24.0,
     "low_52w": 10.300000190734863,
-    "atr14": 1.0720000948224748,
-    "atr14_pct": 5.214008378736788,
-    "position_in_52w_range_pct": 74.89050670109361
+    "atr14": 1.0987145560128349,
+    "atr14_pct": 6.000625822280908,
+    "position_in_52w_range_pct": 58.4671488082099
   },
   "ohlc_2y": [
     {
@@ -3280,30 +3423,30 @@
     },
     {
       "date": "2026-08-31",
-      "open": 19.72,
+      "open": 20.015,
       "high": 20.9,
       "low": 19.72,
       "close": 20.56,
-      "volume": 3778488.0
+      "volume": 3780000.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 20.25,
+      "high": 20.639,
+      "low": 19.22,
+      "close": 19.23,
+      "volume": 2852800.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 19.13,
+      "high": 19.34,
+      "low": 17.99,
+      "close": 18.31,
+      "volume": 3266315.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 20.75,
-      "high": 20.87,
-      "low": 20.3,
-      "close": 20.64,
-      "volume": 1272000.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 20.91,
-      "high": 21.47,
-      "low": 20.58,
-      "close": 20.98,
-      "volume": 2707700.0
-    },
     {
       "date": "2025-09-03",
       "open": 21.17,
@@ -5298,11 +5441,27 @@
     },
     {
       "date": "2026-08-31",
-      "open": 19.72,
+      "open": 20.015,
       "high": 20.9,
       "low": 19.72,
       "close": 20.56,
-      "volume": 3778488.0
+      "volume": 3780000.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 20.25,
+      "high": 20.639,
+      "low": 19.22,
+      "close": 19.23,
+      "volume": 2852800.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 19.13,
+      "high": 19.34,
+      "low": 17.99,
+      "close": 18.31,
+      "volume": 3266315.0
     }
   ],
   "ai_synthesis": null,

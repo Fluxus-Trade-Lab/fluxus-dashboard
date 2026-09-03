@@ -1,46 +1,112 @@
 {
   "ticker": "OKLO",
-  "fetched_at": "2026-09-01T01:18:17Z",
+  "fetched_at": "2026-09-03T00:02:10Z",
   "_schema": "v2",
-  "current_price": 40.56999969482422,
+  "current_price": 39.52,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "OKLO",
+    "longName": "Oklo Inc.",
+    "sector": "Utilities",
+    "industry": "Utilities - Independent Power Producers",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Santa Clara",
+    "website": "https://www.oklo.com",
+    "fullTimeEmployees": 215,
+    "marketCap": 7351417344,
+    "enterpriseValue": 4706060800,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": -39.355103,
+    "priceToSalesTrailing12Months": 6075.552,
+    "enterpriseToRevenue": 3889.307,
+    "priceToBook": 2.2345357,
+    "grossMargins": 0.40412998,
+    "operatingMargins": -60.4876,
+    "profitMargins": 0.0,
+    "returnOnEquity": -0.07696,
+    "totalCash": 2465157888,
+    "totalDebt": 3959000,
+    "totalRevenue": 1210000,
+    "freeCashflow": -239324880,
+    "debtToEquity": 0.121,
+    "currentRatio": 48.463,
+    "fiftyTwoWeekHigh": 193.84,
+    "fiftyTwoWeekLow": 36.61,
+    "averageVolume": 10032788,
+    "averageVolume10days": 9579400,
+    "beta": 1.201,
+    "sharesOutstanding": 186017650,
+    "sharesFloat": 149387054,
+    "companyOfficers": [
+      {
+        "name": "Dr. Caroline  DeWitte",
+        "title": "Co-Founder, COO & Director",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Mr. Richard Craig Bealmear",
+        "title": "Chief Financial Officer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Michael  Dixon",
+        "title": "VP of Accounting & Controller and Principal Accounting Officer",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Sam  Doane",
+        "title": "Senior Director of Investor Relations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. William  Goodwin J.D.",
+        "title": "Chief Legal & Strategy Officer",
+        "age": 40,
+        "yearBorn": 1985
+      },
+      {
+        "name": "Bonita  Chester",
+        "title": "Head of Communications & Media",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.28,
+      "eps_estimate": -0.16039,
+      "eps_surprise_pct": -0.7457
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": null,
+      "eps_estimate": -0.18373,
+      "eps_surprise_pct": null
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.27,
+      "eps_estimate": -0.16359,
+      "eps_surprise_pct": -0.65050006
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.2,
+      "eps_estimate": -0.1243,
+      "eps_surprise_pct": -0.609
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-10",
+    "revenue_low": 0,
+    "revenue_high": 1500000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,119 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 24,
+    "bullish": 15,
+    "neutral": 8,
+    "bearish": 1,
+    "avg_price_target": 79.875,
+    "high_price_target": 130.0,
+    "low_price_target": 14.0,
+    "current_price": 39.52,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-10T18:15:29",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-10T15:09:15",
+        "firm": "Citigroup",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-10T12:32:22",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-10T12:05:39",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-23T14:27:14",
+        "firm": "Barclays",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-14T10:38:22",
+        "firm": "Truist Securities",
+        "to_grade": "Hold",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-06-25T13:00:46",
+        "firm": "Guggenheim",
+        "to_grade": "Neutral",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-06-11T15:47:48",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-27T13:37:42",
+        "firm": "Wedbush",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "reit"
+      },
+      {
+        "date": "2026-05-19T12:19:51",
+        "firm": "Wolfe Research",
+        "to_grade": "Peer Perform",
+        "from_grade": null,
+        "action": "init"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T15:28:00Z",
+      "title": "A New Nuclear Rival Recently Filed to Go Public. Should Oklo Investors Be Worried?",
+      "url": "https://www.fool.com/investing/2026/09/02/a-new-nuclear-rival-recently-filed-to-go-public-sh/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-02T06:13:13Z",
+      "title": "Top 3 Nuclear Stocks To Watch In September 2026",
+      "url": "https://finance.yahoo.com/energy/articles/top-3-nuclear-stocks-watch-061313408.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-02T05:58:31Z",
+      "title": "OKLO Stock Heads For 4th Week In Red: Insider Sells Shares Worth $74K",
+      "url": "https://stocktwits.com/news-articles/markets/equity/oklo-stock-heads-for-4th-week-in-red-insider-sells-shares-worth-74-k/cZsAidYRJuf",
+      "source": "Stocktwits"
+    },
+    {
+      "date": "2026-09-01T17:57:06Z",
+      "title": "Oklo Sinks 5% as PJM Pulls Its Meta-Backed Ohio Project, NuScale Power Barely Budges",
+      "url": "https://247wallst.com/investing/2026/09/01/oklo-sinks-5-as-pjm-pulls-its-meta-backed-ohio-project-nuscale-power-barely-budges/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-01T12:49:00Z",
+      "title": "What PJM's Decision Means for OKLO's Ohio Project Timeline",
+      "url": "https://finance.yahoo.com/energy/articles/pjms-decision-means-oklos-ohio-124900045.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-31T09:20:51Z",
       "title": "PJM drops Oklo advanced nuclear project from interconnection study cycle",
@@ -134,52 +307,20 @@
       "title": "1 Reason I Passed on Oklo Even After Its Big Rally",
       "url": "https://www.fool.com/investing/2026/08/28/1-reason-i-passed-on-oklo-even-after-its-big-rally/",
       "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-28T00:25:00Z",
-      "title": "Oklo and NuScale Power Have Shed a Combined 85.3% This Year. Why Are Nuclear Stocks Falling?",
-      "url": "https://www.fool.com/investing/2026/08/27/oklo-and-nuscale-power-have-shed-a-combined-853-th/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-27T21:55:00Z",
-      "title": "Oklo's Meta Deal Calls For a 1.2-Gigawatt Reactor in Ohio. Here's When It's Slated to Come Online.",
-      "url": "https://www.fool.com/investing/2026/08/27/oklos-meta-deal-calls-for-a-12-gigawatt-reactor-in/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-27T15:46:37Z",
-      "title": "NuScale Power Rises 4%, Oklo Climbs 3% as Risk Appetite Returns, Uranium Energy Ticks Up",
-      "url": "https://247wallst.com/investing/2026/08/27/nuscale-power-rises-4-oklo-climbs-3-as-risk-appetite-returns-uranium-energy-ticks-up/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-27T01:10:11Z",
-      "title": "Did AI-Focused Reactors and Fuel Recycling Just Shift Oklo's (OKLO) Investment Narrative?",
-      "url": "https://finance.yahoo.com/energy/articles/did-ai-focused-reactors-fuel-011011232.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-26T22:55:00Z",
-      "title": "Prediction: NuScale Hits a New High Before 2027",
-      "url": "https://www.fool.com/investing/2026/08/26/prediction-nuscale-hits-a-new-high-before-date/",
-      "source": "Motley Fool"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.04504048582995951,
   "technicals": {
-    "ma20": 43.25599994659424,
-    "ma50": 45.3026001739502,
-    "ma200": 66.08234983444214,
-    "rsi14": 44.618915768238615,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 41.35615825749283,
     "high_20d": 49.47999954223633,
-    "low_5d": 39.5,
-    "low_10d": 39.41999816894531,
+    "low_5d": 38.04999923706055,
+    "low_10d": 38.04999923706055,
     "high_52w": 193.83999633789062,
     "low_52w": 36.61000061035156,
-    "atr14": 2.954500470842634,
-    "atr14_pct": 7.282475950374629,
-    "position_in_52w_range_pct": 2.518602806130495
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4172,7 +4313,7 @@
       "high": 42.67,
       "low": 39.51,
       "close": 40.14,
-      "volume": 11332100.0
+      "volume": 11362400.0
     },
     {
       "date": "2026-08-31",
@@ -4180,26 +4321,26 @@
       "high": 40.95,
       "low": 39.5,
       "close": 40.57,
-      "volume": 6207506.0
+      "volume": 6232200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 39.35,
+      "high": 39.35,
+      "low": 38.05,
+      "close": 38.53,
+      "volume": 7848500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 6792649.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 77.67,
-      "high": 78.5,
-      "low": 72.78,
-      "close": 73.64,
-      "volume": 13628900.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 70.155,
-      "high": 73.59,
-      "low": 68.77,
-      "close": 73.59,
-      "volume": 11651600.0
-    },
     {
       "date": "2025-09-03",
       "open": 74.64,
@@ -6190,7 +6331,7 @@
       "high": 42.67,
       "low": 39.51,
       "close": 40.14,
-      "volume": 11332100.0
+      "volume": 11362400.0
     },
     {
       "date": "2026-08-31",
@@ -6198,7 +6339,23 @@
       "high": 40.95,
       "low": 39.5,
       "close": 40.57,
-      "volume": 6207506.0
+      "volume": 6232200.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 39.35,
+      "high": 39.35,
+      "low": 38.05,
+      "close": 38.53,
+      "volume": 7848500.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 6792649.0
     }
   ],
   "ai_synthesis": null,

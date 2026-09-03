@@ -1,8 +1,8 @@
 {
   "ticker": "IREN",
-  "fetched_at": "2026-09-01T01:17:29Z",
+  "fetched_at": "2026-09-03T00:01:15Z",
   "_schema": "v2",
-  "current_price": 37.1150016784668,
+  "current_price": 39.6,
   "info": {
     "symbol": "IREN",
     "longName": "IREN Limited",
@@ -13,13 +13,13 @@
     "city": "Sydney",
     "website": "https://iren.com",
     "fullTimeEmployees": 685,
-    "marketCap": 13264110592,
-    "enterpriseValue": 16569421824,
+    "marketCap": 15604722688,
+    "enterpriseValue": 17548656640,
     "trailingPE": null,
-    "forwardPE": -181.0488,
-    "priceToSalesTrailing12Months": 18.760933,
-    "enterpriseToRevenue": 23.436,
-    "priceToBook": 3.0236254,
+    "forwardPE": -149.43396,
+    "priceToSalesTrailing12Months": 22.071526,
+    "enterpriseToRevenue": 24.821,
+    "priceToBook": 3.2260692,
     "grossMargins": 0.68924004,
     "operatingMargins": -1.0247,
     "profitMargins": -0.9938,
@@ -32,10 +32,10 @@
     "currentRatio": 3.551,
     "fiftyTwoWeekHigh": 76.87,
     "fiftyTwoWeekLow": 25.31,
-    "averageVolume": 45501782,
-    "averageVolume10days": 46750390,
+    "averageVolume": 44950911,
+    "averageVolume10days": 45754140,
     "beta": 4.302,
-    "sharesOutstanding": 357378674,
+    "sharesOutstanding": 394058648,
     "sharesFloat": 346180522,
     "companyOfficers": [
       {
@@ -67,12 +67,6 @@
         "title": "Chief Technology Officer",
         "age": 40,
         "yearBorn": 1985
-      },
-      {
-        "name": "Ms. Cesilia  Kim",
-        "title": "Chief Legal Officer & Secretary",
-        "age": 50,
-        "yearBorn": 1975
       }
     ]
   },
@@ -105,7 +99,7 @@
   "next_earnings": {
     "date": "2026-11-05",
     "revenue_low": 200017000,
-    "revenue_high": 289500000
+    "revenue_high": 244600000
   },
   "quarterly_metrics": [
     {
@@ -165,16 +159,72 @@
     }
   ],
   "analyst": {
-    "consensus": "Hold",
-    "total_ratings": 15,
-    "bullish": 10,
-    "neutral": 3,
-    "bearish": 2,
-    "avg_price_target": 78.1875,
+    "consensus": "Buy",
+    "total_ratings": 16,
+    "bullish": 11,
+    "neutral": 4,
+    "bearish": 1,
+    "avg_price_target": 77.84375,
     "high_price_target": 131.0,
-    "low_price_target": 41.0,
-    "current_price": 37.115,
+    "low_price_target": 43.0,
+    "current_price": 39.6,
     "recent_rating_changes": [
+      {
+        "date": "2026-09-02T19:44:06",
+        "firm": "Freedom Capital Markets",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-09-02T09:44:25",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-28T19:55:55",
+        "firm": "Macquarie",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T18:19:00",
+        "firm": "Freedom Capital Markets",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T13:19:37",
+        "firm": "Canaccord Genuity",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T12:23:16",
+        "firm": "Cantor Fitzgerald",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-28T11:00:55",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-28T10:34:35",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
       {
         "date": "2026-07-22T10:30:03",
         "firm": "HC Wainwright & Co.",
@@ -188,141 +238,83 @@
         "to_grade": "Buy",
         "from_grade": "Buy",
         "action": "main"
-      },
-      {
-        "date": "2026-07-15T16:01:01",
-        "firm": "Macquarie",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-07-06T17:35:03",
-        "firm": "Freedom Broker",
-        "to_grade": "Buy",
-        "from_grade": "Hold",
-        "action": "up"
-      },
-      {
-        "date": "2026-06-18T18:25:23",
-        "firm": "Jefferies",
-        "to_grade": "Buy",
-        "from_grade": null,
-        "action": "init"
-      },
-      {
-        "date": "2026-06-04T14:52:26",
-        "firm": "Macquarie",
-        "to_grade": "Outperform",
-        "from_grade": "Outperform",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-04T13:33:22",
-        "firm": "B. Riley Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-06-03T14:45:35",
-        "firm": "Canaccord Genuity",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-28T13:49:25",
-        "firm": "Cantor Fitzgerald",
-        "to_grade": "Overweight",
-        "from_grade": "Overweight",
-        "action": "main"
-      },
-      {
-        "date": "2026-05-27T18:04:12",
-        "firm": "B. Riley Securities",
-        "to_grade": "Buy",
-        "from_grade": "Buy",
-        "action": "main"
       }
     ]
   },
   "news": [
     {
-      "date": "2026-08-31T17:47:35Z",
-      "title": "IREN Climbs 4% as Co-CEO Says Debt and Prepayments Can Fund FY27 Capex, TeraWulf Slips",
-      "url": "https://247wallst.com/investing/2026/08/31/iren-climbs-4-as-co-ceo-says-debt-and-prepayments-can-fund-fy27-capex-terawulf-slips/",
-      "source": "24/7 Wall St."
+      "date": "2026-09-02T21:01:18Z",
+      "title": "IREN's AI Cloud Revenue Just Jumped 687%",
+      "url": "https://finance.yahoo.com/technology/ai/articles/irens-ai-cloud-revenue-just-210118041.html",
+      "source": "GuruFocus.com"
     },
     {
-      "date": "2026-08-31T17:42:00Z",
-      "title": "IREN vs. CIFR: Which Bitcoin Miner Is the Better AI Play?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/iren-vs-cifr-bitcoin-miner-174200639.html",
+      "date": "2026-09-02T17:07:08Z",
+      "title": "IREN (IREN) Gains A Clearer Path To Texas Power Expansion",
+      "url": "https://finance.yahoo.com/technology/ai/articles/iren-iren-gains-clearer-path-170708035.html",
+      "source": "Simply Wall St."
+    },
+    {
+      "date": "2026-09-02T15:59:00Z",
+      "title": "IREN's Mining Exit Accelerates: Will AI Cloud Offset the Transition?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/irens-mining-exit-accelerates-ai-155900516.html",
       "source": "Zacks"
     },
     {
-      "date": "2026-08-31T17:22:00Z",
-      "title": "IREN's $4B Contracted ARR: How Quickly Can It Convert Into Revenues?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/irens-4b-contracted-arr-quickly-172200534.html",
-      "source": "Zacks"
+      "date": "2026-09-02T04:55:25Z",
+      "title": "NBIS, IREN, CRWV At Risk? OpenAI Co-Founder Warns AI Agents Could Turn Neoclouds Into Cybersecurity Targets \u2014 Palo Alto CEO Offers Fix",
+      "url": "https://stocktwits.com/news-articles/markets/equity/nbis-iren-crwv-at-risk-open-ai-co-founder-warns-ai-agents-could-turn-neoclouds-into-cybersecurity-targets-palo-alto-ceo-offers-fix/cZsAW0KRJuJ",
+      "source": "Stocktwits"
     },
     {
-      "date": "2026-08-31T15:59:56Z",
-      "title": "A $4 Billion Reason to Buy the Recent Dip in IREN Stock Today",
-      "url": "https://www.barchart.com/story/news/4357507/a-4-billion-reason-to-buy-the-recent-dip-in-iren-stock-today",
-      "source": "Barchart"
-    },
-    {
-      "date": "2026-08-31T15:44:26Z",
-      "title": "Investors Freaked Out Over IREN\u2019s $30 Billion Capex \u2014 CEO Explains Why They\u2019re Dead Wrong",
-      "url": "https://247wallst.com/investing/2026/08/31/investors-freaked-out-over-irens-30-billion-capex-ceo-explains-why-theyre-dead-wrong/",
-      "source": "24/7 Wall St."
-    },
-    {
-      "date": "2026-08-31T14:52:15Z",
-      "title": "Building AI Infrastructure: Alpha Compute CEO Brittany Kaiser, Live at Nasdaq",
-      "url": "https://finance.yahoo.com/technology/ai/articles/building-ai-infrastructure-alpha-compute-145215261.html",
-      "source": "IPO-Edge.com"
-    },
-    {
-      "date": "2026-08-31T14:13:57Z",
-      "title": "IREN CEO says debt and prepayments can fund most of FY27 capex",
-      "url": "https://blockspace.media/insight/iren-fy27-capex-plan-not-equity-requirement/",
+      "date": "2026-09-01T22:01:23Z",
+      "title": "What PUCT\u2019s transmission approval means for CORZ, IREN, CIFR, and others in West Texas",
+      "url": "https://blockspace.media/insight/what-pucts-transmission-approval-means-for-corz-iren-cifr-and-others-in-west-texas/",
       "source": "Blockspace"
     },
     {
-      "date": "2026-08-31T13:37:54Z",
-      "title": "Why Investors Should Buy IREN Limited Over Nebius",
-      "url": "https://247wallst.com/investing/2026/08/31/why-investors-should-buy-iren-limited-over-nebius/",
+      "date": "2026-09-01T15:47:00Z",
+      "title": "IREN's CapEx Plan Accelerates: Can Funding Keep Up With Expansion?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/irens-capex-plan-accelerates-funding-154700814.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-01T14:54:59Z",
+      "title": "IREN Sinks 4% as Rising Yields Reverse Monday\u2019s Rally, TeraWulf Falls 4%, Cipher Mining Drops 6%",
+      "url": "https://247wallst.com/investing/2026/09/01/iren-sinks-4-as-rising-yields-reverse-mondays-rally-terawulf-falls-4-cipher-mining-drops-6/",
       "source": "24/7 Wall St."
     },
     {
-      "date": "2026-08-31T13:23:40Z",
-      "title": "IREN (IREN) Q4 2026 Earnings Call Transcript",
-      "url": "https://www.fool.com/earnings/call-transcripts/2026/08/31/iren-iren-q4-2026-earnings-call-transcript/",
-      "source": "Motley Fool"
+      "date": "2026-09-01T08:39:47Z",
+      "title": "IREN (IREN) Swaps Bitcoin Rigs For Microsoft\u2019s (MSFT) GPU Contracts",
+      "url": "https://finance.yahoo.com/technology/ai/articles/iren-iren-swaps-bitcoin-rigs-083947823.html",
+      "source": "Insider Monkey"
     },
     {
-      "date": "2026-08-31T11:33:44Z",
-      "title": "IREN Limited Keeps Falling: A Respected Ratings Agency Sees 185% Growth Anyway",
-      "url": "https://247wallst.com/investing/2026/08/31/iren-limited-keeps-falling-a-respected-ratings-agency-sees-185-growth-anyway/",
-      "source": "24/7 Wall St."
+      "date": "2026-09-01T03:22:36Z",
+      "title": "This Bitcoin Miner Says It Has $4 Billion of Contracted AI ARR. One Analyst Thinks It Can More Than Double",
+      "url": "https://finance.yahoo.com/markets/crypto/articles/bitcoin-miner-says-4-billion-032236085.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-08-31T19:56:05Z",
+      "title": "IREN, CIFR, HUT Stock Price Updates, PUCT Approves Permian Basin Transmission Line, SpaceX\u2019s Turbine Fabrication",
+      "url": "https://blockspace.media/podcast/iren-cifr-hut-stock-price-updates-puct-approves-permian-basin-transmission-line-spacexs-turbine-fabrication/",
+      "source": "Blockspace"
     }
   ],
-  "options_implied_move": 0.07113026756325494,
+  "options_implied_move": 0.05303030303030303,
   "technicals": {
-    "ma20": 40.93975009918213,
-    "ma50": 41.16130001068115,
-    "ma200": 45.83697505950928,
-    "rsi14": 43.582755832614254,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 43.12264587188836,
     "high_20d": 49.185001373291016,
     "low_5d": 34.810001373291016,
     "low_10d": 34.810001373291016,
     "high_52w": 76.87000274658203,
     "low_52w": 25.309999465942383,
-    "atr14": 3.457106726510184,
-    "atr14_pct": 9.314580547401434,
-    "position_in_52w_range_pct": 22.89565838130405
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4315,34 +4307,34 @@
       "high": 38.048,
       "low": 34.81,
       "close": 35.45,
-      "volume": 89605900.0
+      "volume": 89874200.0
     },
     {
       "date": "2026-08-31",
-      "open": 35.82,
-      "high": 37.3155,
-      "low": 35.5105,
+      "open": 35.81,
+      "high": 37.316,
+      "low": 35.511,
       "close": 37.115,
-      "volume": 39403071.0
+      "volume": 39689600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 36.08,
+      "high": 37.26,
+      "low": 35.14,
+      "close": 36.82,
+      "volume": 33560100.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 40267008.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 27.5,
-      "high": 29.5,
-      "low": 25.62,
-      "close": 26.48,
-      "volume": 76548800.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 25.59,
-      "high": 29.85,
-      "low": 25.4,
-      "close": 29.11,
-      "volume": 50917800.0
-    },
     {
       "date": "2025-09-03",
       "open": 30.0,
@@ -6333,15 +6325,31 @@
       "high": 38.048,
       "low": 34.81,
       "close": 35.45,
-      "volume": 89605900.0
+      "volume": 89874200.0
     },
     {
       "date": "2026-08-31",
-      "open": 35.82,
-      "high": 37.3155,
-      "low": 35.5105,
+      "open": 35.81,
+      "high": 37.316,
+      "low": 35.511,
       "close": 37.115,
-      "volume": 39403071.0
+      "volume": 39689600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 36.08,
+      "high": 37.26,
+      "low": 35.14,
+      "close": 36.82,
+      "volume": 33560100.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 40267008.0
     }
   ],
   "ai_synthesis": null,

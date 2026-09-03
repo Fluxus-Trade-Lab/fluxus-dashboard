@@ -1,46 +1,112 @@
 {
   "ticker": "NET",
-  "fetched_at": "2026-09-01T01:12:42Z",
+  "fetched_at": "2026-09-02T23:56:40Z",
   "_schema": "v2",
-  "current_price": 305.1099853515625,
+  "current_price": 272.739990234375,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "NET",
+    "longName": "Cloudflare, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "San Francisco",
+    "website": "https://www.cloudflare.com",
+    "fullTimeEmployees": 5156,
+    "marketCap": 97117175808,
+    "enterpriseValue": 96483729408,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 163.01378,
+    "priceToSalesTrailing12Months": 38.65591,
+    "enterpriseToRevenue": 38.404,
+    "priceToBook": 59.91652,
+    "grossMargins": 0.72577006,
+    "operatingMargins": -0.07603,
+    "profitMargins": -0.082100004,
+    "returnOnEquity": -0.14425999,
+    "totalCash": 4162798080,
+    "totalDebt": 3529349888,
+    "totalRevenue": 2512349952,
+    "freeCashflow": 691946368,
+    "debtToEquity": 217.858,
+    "currentRatio": 1.818,
+    "fiftyTwoWeekHigh": 332.22,
+    "fiftyTwoWeekLow": 158.83,
+    "averageVolume": 3540717,
+    "averageVolume10days": 2970160,
+    "beta": 1.66,
+    "sharesOutstanding": 322618775,
+    "sharesFloat": 320453940,
+    "companyOfficers": [
+      {
+        "name": "Mr. Matthew  Prince J.D.",
+        "title": "Co-Founder, Co-Chairman & CEO",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Ms. Michelle  Zatlyn",
+        "title": "Co-Founder, President & Co-Chair of the Board",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Mr. Thomas Josef Seifert",
+        "title": "Chief Financial Officer",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Ms. Janel  Riley",
+        "title": "VP of Finance & Chief Accounting Officer",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Philip Alan Winslow Jr., C.F.A., Jr.",
+        "title": "Vice President of Strategic Finance, Treasury and Investor Relations",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. W.  Ling",
+        "title": "Head of Governance Risk & Compliance",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.29,
+      "eps_estimate": 0.26976,
+      "eps_surprise_pct": 0.075
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.25,
+      "eps_estimate": 0.23357,
+      "eps_surprise_pct": 0.070300005
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.28,
+      "eps_estimate": 0.27129,
+      "eps_surprise_pct": 0.0321
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.27,
+      "eps_estimate": 0.23406,
+      "eps_surprise_pct": 0.15359999
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-29",
+    "revenue_low": 736255000,
+    "revenue_high": 768444000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,119 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 34,
+    "bullish": 23,
+    "neutral": 9,
+    "bearish": 2,
+    "avg_price_target": 333.55194,
+    "high_price_target": 400.0,
+    "low_price_target": 160.0,
+    "current_price": 272.74,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-31T12:39:33",
+        "firm": "Citizens",
+        "to_grade": "Market Outperform",
+        "from_grade": "Market Outperform",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-10T14:39:10",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-10T13:17:14",
+        "firm": "Susquehanna",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-08T01:09:42",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Outperform",
+        "from_grade": "Sector Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T22:52:26",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T20:30:32",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T18:40:26",
+        "firm": "RBC Capital",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T17:23:52",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T16:34:13",
+        "firm": "Guggenheim",
+        "to_grade": "Sell",
+        "from_grade": "Sell",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-07T15:10:21",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T19:10:10Z",
+      "title": "Datadog Just Dropped 22% in a Month: Sell Now, or Buy More?",
+      "url": "https://247wallst.com/investing/2026/09/02/datadog-just-dropped-22-in-a-month-sell-now-or-buy-more/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-02T16:41:11Z",
+      "title": "Snowflake Drops 4% Before Its Earnings Report, Datadog Falls 6%: Is the Software Selloff the Real Story?",
+      "url": "https://247wallst.com/investing/2026/09/02/snowflake-drops-4-before-its-earnings-report-datadog-falls-6-is-the-software-selloff-the-real-story/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-01T20:34:20Z",
+      "title": "F5, Braze, CrowdStrike, MongoDB, and Cloudflare Shares Plummet, What You Need To Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/f5-braze-crowdstrike-mongodb-cloudflare-203420404.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-09-01T02:32:37Z",
+      "title": "Cloudflare Makes Bigger AI Push as Threats Rise",
+      "url": "https://finance.yahoo.com/technology/ai/articles/cloudflare-makes-bigger-ai-push-023237332.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-08-31T17:55:00Z",
+      "title": "Securing AI: 5 Most-Upgraded Stocks From the Q2 Reporting Season",
+      "url": "https://www.marketbeat.com/articles/securing-ai-5-most-upgraded-stocks-from-the-q2-reporting-season/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
+    },
     {
       "date": "2026-08-29T15:35:44Z",
       "title": "The Next Palantir? 100 Federal Agencies Already Use Cloudflare, and It\u2019s Cleared For More",
@@ -134,52 +307,22 @@
       "title": "Cathie Wood Sends a $20 Million Signal on Broadcom Stock",
       "url": "https://finance.yahoo.com/markets/stocks/articles/cathie-wood-sends-20-million-191855720.html",
       "source": "GuruFocus.com"
-    },
-    {
-      "date": "2026-08-27T17:02:10Z",
-      "title": "Major tech companies call for defensive surge to defeat AI-driven hacks",
-      "url": "https://ca.finance.yahoo.com/news/major-tech-companies-call-defensive-170210641.html",
-      "source": "Reuters"
-    },
-    {
-      "date": "2026-08-27T15:06:19Z",
-      "title": "How Investors May Respond To Cloudflare (NET) Workers Platform Emerging As A Meaningful Revenue Driver",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/investors-may-respond-cloudflare-net-150619695.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-27T14:42:00Z",
-      "title": "Cathie Wood Goes Bargain Hunting: 3 Stocks She Just Bought",
-      "url": "https://www.fool.com/investing/2026/08/27/cathie-wood-goes-bargain-hunting-3-stocks-she-just/",
-      "source": "Motley Fool"
-    },
-    {
-      "date": "2026-08-27T11:05:55Z",
-      "title": "Cloudflare (NET) Workers Growth Has Investors Asking If The Stock Is Already Priced In",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/cloudflare-net-workers-growth-investors-110555014.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-27T04:44:37Z",
-      "title": "On Nvidia Earnings Day, Cathie Wood\u2019s ARK Loaded Up $20M On Rival Chip Stock",
-      "url": "https://stocktwits.com/news-articles/markets/equity/on-nvidia-earnings-day-cathie-wood-s-ark-loaded-up-20-m-on-rival-chip-stock/cZY8YJSRJpk",
-      "source": "Stocktwits"
     }
   ],
-  "options_implied_move": 0.04916259945644281,
+  "options_implied_move": 0.03406174500489194,
   "technicals": {
-    "ma20": 299.14549865722654,
-    "ma50": 275.66319946289065,
-    "ma200": 220.99800003051757,
-    "rsi14": 56.16085352467892,
+    "ma20": 297.3434997558594,
+    "ma50": 277.96179931640626,
+    "ma200": 221.59315010070802,
+    "rsi14": 44.089808768942184,
     "high_20d": 332.2200012207031,
-    "low_5d": 272.2900085449219,
-    "low_10d": 272.2900085449219,
+    "low_5d": 269.29998779296875,
+    "low_10d": 269.29998779296875,
     "high_52w": 332.2200012207031,
     "low_52w": 158.8300018310547,
-    "atr14": 15.579860142299108,
-    "atr14_pct": 5.1063094917549945,
-    "position_in_52w_range_pct": 84.36471770888124
+    "atr14": 15.867719377790179,
+    "atr14_pct": 5.817892478530374,
+    "position_in_52w_range_pct": 65.69582375240545
   },
   "ohlc_2y": [
     {
@@ -4177,29 +4320,29 @@
     {
       "date": "2026-08-31",
       "open": 299.185,
-      "high": 309.25,
+      "high": 309.3,
       "low": 296.44,
       "close": 305.11,
-      "volume": 3676229.0
+      "volume": 3683800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 301.62,
+      "high": 306.47,
+      "low": 284.6,
+      "close": 285.51,
+      "volume": 2491400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 284.08,
+      "high": 284.95,
+      "low": 269.3,
+      "close": 272.74,
+      "volume": 3349009.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 212.48,
-      "high": 214.434,
-      "low": 206.0,
-      "close": 208.71,
-      "volume": 2095100.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 202.65,
-      "high": 208.71,
-      "low": 199.39,
-      "close": 208.05,
-      "volume": 1894000.0
-    },
     {
       "date": "2025-09-03",
       "open": 208.78,
@@ -6195,10 +6338,26 @@
     {
       "date": "2026-08-31",
       "open": 299.185,
-      "high": 309.25,
+      "high": 309.3,
       "low": 296.44,
       "close": 305.11,
-      "volume": 3676229.0
+      "volume": 3683800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 301.62,
+      "high": 306.47,
+      "low": 284.6,
+      "close": 285.51,
+      "volume": 2491400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 284.08,
+      "high": 284.95,
+      "low": 269.3,
+      "close": 272.74,
+      "volume": 3349009.0
     }
   ],
   "ai_synthesis": null,

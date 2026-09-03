@@ -1,21 +1,21 @@
 {
   "ticker": "SOXL",
-  "fetched_at": "2026-09-01T01:13:15Z",
+  "fetched_at": "2026-09-02T23:57:06Z",
   "_schema": "v2",
-  "current_price": 112.79000091552734,
+  "current_price": 106.3499984741211,
   "info": {
-    "symbol": null,
-    "longName": null,
+    "symbol": "SOXL",
+    "longName": "Direxion Daily Semiconductor Bull 3X Shares",
     "sector": null,
     "industry": null,
-    "exchange": null,
+    "exchange": "PCX",
     "country": null,
     "city": null,
     "website": null,
     "fullTimeEmployees": null,
     "marketCap": null,
     "enterpriseValue": null,
-    "trailingPE": null,
+    "trailingPE": 37.48644,
     "forwardPE": null,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
@@ -30,10 +30,10 @@
     "freeCashflow": null,
     "debtToEquity": null,
     "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
+    "fiftyTwoWeekHigh": 302.0,
+    "fiftyTwoWeekLow": 23.98,
+    "averageVolume": 64881680,
+    "averageVolume10days": 54602820,
     "beta": null,
     "sharesOutstanding": null,
     "sharesFloat": null,
@@ -110,20 +110,20 @@
       "source": "Barrons.com"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.015326751512804576,
   "technicals": {
-    "ma20": 128.74050025939943,
-    "ma50": 156.7699996948242,
-    "ma200": 107.43124997138978,
-    "rsi14": 41.27384886608125,
+    "ma20": 125.75500030517578,
+    "ma50": 150.3713999938965,
+    "ma200": 108.07789998054504,
+    "rsi14": 39.07870192655558,
     "high_20d": 156.9199981689453,
-    "low_5d": 110.20999908447266,
-    "low_10d": 106.0,
+    "low_5d": 101.33999633789062,
+    "low_10d": 101.33999633789062,
     "high_52w": 302.0,
-    "low_52w": 23.793086628144028,
-    "atr14": 11.712857927594866,
-    "atr14_pct": 10.384659839099623,
-    "position_in_52w_range_pct": 31.989468992249147
+    "low_52w": 23.973034493994387,
+    "atr14": 11.014286586216517,
+    "atr14_pct": 10.356640098021913,
+    "position_in_52w_range_pct": 29.62912745898645
   },
   "ohlc_2y": [
     {
@@ -4116,7 +4116,7 @@
       "high": 121.2,
       "low": 110.21,
       "close": 111.34,
-      "volume": 60540900.0
+      "volume": 60995600.0
     },
     {
       "date": "2026-08-31",
@@ -4124,26 +4124,26 @@
       "high": 115.05,
       "low": 110.33,
       "close": 112.79,
-      "volume": 33835849.0
+      "volume": 34269700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 106.36,
+      "high": 108.64,
+      "low": 102.31,
+      "close": 105.91,
+      "volume": 63954400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 104.5,
+      "high": 108.07,
+      "low": 101.34,
+      "close": 106.35,
+      "volume": 45335726.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 27.3121,
-      "high": 27.3421,
-      "low": 25.6625,
-      "close": 26.0324,
-      "volume": 108411300.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 24.073,
-      "high": 25.2727,
-      "low": 23.7931,
-      "close": 25.2427,
-      "volume": 101906700.0
-    },
     {
       "date": "2025-09-03",
       "open": 25.4026,
@@ -6134,7 +6134,7 @@
       "high": 121.2,
       "low": 110.21,
       "close": 111.34,
-      "volume": 60540900.0
+      "volume": 60995600.0
     },
     {
       "date": "2026-08-31",
@@ -6142,7 +6142,23 @@
       "high": 115.05,
       "low": 110.33,
       "close": 112.79,
-      "volume": 33835849.0
+      "volume": 34269700.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 106.36,
+      "high": 108.64,
+      "low": 102.31,
+      "close": 105.91,
+      "volume": 63954400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 104.5,
+      "high": 108.07,
+      "low": 101.34,
+      "close": 106.35,
+      "volume": 45335726.0
     }
   ],
   "ai_synthesis": null,

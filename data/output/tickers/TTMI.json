@@ -1,46 +1,112 @@
 {
   "ticker": "TTMI",
-  "fetched_at": "2026-09-01T01:19:00Z",
+  "fetched_at": "2026-09-03T00:02:48Z",
   "_schema": "v2",
-  "current_price": 118.91999816894531,
+  "current_price": 115.6,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "TTMI",
+    "longName": "TTM Technologies, Inc.",
+    "sector": "Technology",
+    "industry": "Electronic Components",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "Santa Ana",
+    "website": "https://www.ttm.com",
+    "fullTimeEmployees": 18200,
+    "marketCap": 12178328576,
+    "enterpriseValue": 12773620736,
+    "trailingPE": 52.30769,
+    "forwardPE": 16.771852,
+    "priceToSalesTrailing12Months": 3.606165,
+    "enterpriseToRevenue": 3.782,
+    "priceToBook": 6.5321803,
+    "grossMargins": 0.21191,
+    "operatingMargins": 0.108950004,
+    "profitMargins": 0.07011,
+    "returnOnEquity": 0.13260001,
+    "totalCash": 507904992,
+    "totalDebt": 1103197056,
+    "totalRevenue": 3377085952,
+    "freeCashflow": -19442376,
+    "debtToEquity": 57.03,
+    "currentRatio": 1.78,
+    "fiftyTwoWeekHigh": 223.83,
+    "fiftyTwoWeekLow": 45.1,
+    "averageVolume": 2838663,
+    "averageVolume10days": 2383520,
+    "beta": 2.161,
+    "sharesOutstanding": 105348864,
+    "sharesFloat": 103522115,
+    "companyOfficers": [
+      {
+        "name": "Dr. Edwin  Roks B.Sc., M.Sc., Ph.D.",
+        "title": "President, CEO & Director",
+        "age": 60,
+        "yearBorn": 1965
+      },
+      {
+        "name": "Mr. Daniel L. Boehle CPA",
+        "title": "Executive VP & CFO",
+        "age": 52,
+        "yearBorn": 1973
+      },
+      {
+        "name": "Mr. Daniel J. Weber",
+        "title": "Executive VP of Corporate Development & Government Relations andChief Legal Officer & Secretary",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Douglas L. Soder",
+        "title": "Executive VP & President of Commercial Sector",
+        "age": 64,
+        "yearBorn": 1961
+      },
+      {
+        "name": "Ms. Catherine A. Gridley",
+        "title": "Executive VP and President of Aerospace & Defense (A&D) Sector",
+        "age": 56,
+        "yearBorn": 1969
+      },
+      {
+        "name": "Mr. James P. Walsh",
+        "title": "Executive VP & COO",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.99,
+      "eps_estimate": 0.8975,
+      "eps_surprise_pct": 0.1031
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.75,
+      "eps_estimate": 0.6675,
+      "eps_surprise_pct": 0.1236
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.7,
+      "eps_estimate": 0.6825,
+      "eps_surprise_pct": 0.0256
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.67,
+      "eps_estimate": 0.6025,
+      "eps_surprise_pct": 0.111999996
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-04",
+    "revenue_low": 1119500000,
+    "revenue_high": 1139000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 4,
+    "bullish": 4,
+    "neutral": 0,
+    "bearish": 0,
+    "avg_price_target": 214.25,
+    "high_price_target": 224.0,
+    "low_price_target": 205.0,
+    "current_price": 115.6,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-18T10:16:55",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-08-06T16:07:13",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-18T14:37:18",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-11T10:46:18",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-05-28T16:49:47",
+        "firm": "Stifel",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-28T16:33:07",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-28T14:03:57",
+        "firm": "B. Riley Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-05-28T12:25:24",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-30T14:41:59",
+        "firm": "Truist Securities",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-30T11:07:31",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +309,18 @@
       "source": "Barchart"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.1249134948096886,
   "technicals": {
-    "ma20": 126.34100074768067,
-    "ma50": 141.78620071411132,
-    "ma200": 119.12425010681153,
-    "rsi14": 43.79980000489804,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 41.59877419698703,
     "high_20d": 149.94000244140625,
-    "low_5d": 110.30000305175781,
+    "low_5d": 113.81999969482422,
     "low_10d": 103.66000366210938,
     "high_52w": 223.8300018310547,
-    "low_52w": 42.689998626708984,
-    "atr14": 8.71571513584682,
-    "atr14_pct": 7.329057576560604,
-    "position_in_52w_range_pct": 42.08347035096415
+    "low_52w": 45.099998474121094,
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4180,26 +4321,26 @@
       "high": 119.71,
       "low": 116.72,
       "close": 118.92,
-      "volume": 1401171.0
+      "volume": 1401300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 116.68,
+      "high": 119.16,
+      "low": 113.82,
+      "close": 115.33,
+      "volume": 1432700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 1287344.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 46.41,
-      "high": 46.59,
-      "low": 44.38,
-      "close": 44.57,
-      "volume": 1517800.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 42.88,
-      "high": 45.05,
-      "low": 42.69,
-      "close": 44.96,
-      "volume": 2557400.0
-    },
     {
       "date": "2025-09-03",
       "open": 45.39,
@@ -6198,7 +6339,23 @@
       "high": 119.71,
       "low": 116.72,
       "close": 118.92,
-      "volume": 1401171.0
+      "volume": 1401300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 116.68,
+      "high": 119.16,
+      "low": 113.82,
+      "close": 115.33,
+      "volume": 1432700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 1287344.0
     }
   ],
   "ai_synthesis": null,

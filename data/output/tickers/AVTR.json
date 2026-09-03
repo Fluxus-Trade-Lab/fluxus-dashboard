@@ -1,46 +1,112 @@
 {
   "ticker": "AVTR",
-  "fetched_at": "2026-09-01T01:15:29Z",
+  "fetched_at": "2026-09-02T23:59:16Z",
   "_schema": "v2",
-  "current_price": 14.539999961853027,
+  "current_price": 14.649999618530273,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "AVTR",
+    "longName": "Avantor, Inc.",
+    "sector": "Healthcare",
+    "industry": "Medical Instruments & Supplies",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Radnor",
+    "website": "https://www.avantorsciences.com",
+    "fullTimeEmployees": 13500,
+    "marketCap": 9908657152,
+    "enterpriseValue": 12995295232,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 16.613556,
+    "priceToSalesTrailing12Months": 1.5102129,
+    "enterpriseToRevenue": 1.981,
+    "priceToBook": 1.7601826,
+    "grossMargins": 0.31825,
+    "operatingMargins": 0.07162,
+    "profitMargins": -0.08809,
+    "returnOnEquity": -0.09701,
+    "totalCash": 306800000,
+    "totalDebt": 3697799936,
+    "totalRevenue": 6561099776,
+    "freeCashflow": 450337504,
+    "debtToEquity": 65.678,
+    "currentRatio": 1.782,
+    "fiftyTwoWeekHigh": 15.93,
+    "fiftyTwoWeekLow": 7.265,
+    "averageVolume": 9387212,
+    "averageVolume10days": 5864000,
+    "beta": 0.888,
+    "sharesOutstanding": 676358840,
+    "sharesFloat": 657806317,
+    "companyOfficers": [
+      {
+        "name": "Mr. Emmanuel  Ligner",
+        "title": "President, CEO & Director",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Claudius O. Sokenu",
+        "title": "Executive VP, Corporate Secretary and Chief Legal & Compliance Officer",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Corey D. Walker",
+        "title": "President of Laboratory Solutions",
+        "age": 47,
+        "yearBorn": 1978
+      },
+      {
+        "name": "Mr. Benoit  Gourdier",
+        "title": "Executive Vice President of Bioscience Production",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Mr. Steven W. Eck",
+        "title": "Senior VP, Interim CFO, Corporate Controller & Chief Accounting Officer",
+        "age": 49,
+        "yearBorn": 1976
+      },
+      {
+        "name": "Ms. Mary  Blenn",
+        "title": "Executive VP & COO",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.21,
+      "eps_estimate": 0.18903,
+      "eps_surprise_pct": 0.1109
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.17,
+      "eps_estimate": 0.15715,
+      "eps_surprise_pct": 0.08180001
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.22,
+      "eps_estimate": 0.21667,
+      "eps_surprise_pct": 0.0154
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.22,
+      "eps_estimate": 0.22513,
+      "eps_surprise_pct": -0.0228
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-28",
+    "revenue_low": 1634000000,
+    "revenue_high": 1647000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,12 +165,95 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 17,
+    "bullish": 3,
+    "neutral": 11,
+    "bearish": 3,
+    "avg_price_target": 14.56429,
+    "high_price_target": 19.0,
+    "low_price_target": 12.0,
+    "current_price": 14.65,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-30T17:24:41",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T17:18:58",
+        "firm": "RBC Capital",
+        "to_grade": "Sector Perform",
+        "from_grade": "Sector Perform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T16:56:11",
+        "firm": "Stifel",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T14:19:01",
+        "firm": "Evercore ISI Group",
+        "to_grade": "In-Line",
+        "from_grade": "In-Line",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-30T14:11:05",
+        "firm": "Wells Fargo",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-08T16:02:51",
+        "firm": "Citigroup",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-06T15:09:43",
+        "firm": "Evercore ISI Group",
+        "to_grade": "In-Line",
+        "from_grade": "In-Line",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-24T14:25:18",
+        "firm": "Barclays",
+        "to_grade": "Underweight",
+        "from_grade": "Underweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-30T19:41:32",
+        "firm": "Citigroup",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-30T14:54:11",
+        "firm": "Evercore ISI Group",
+        "to_grade": "In-Line",
+        "from_grade": "In-Line",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T01:07:50Z",
+      "title": "How Investors Are Reacting To Merit Medical Systems (MMSI) New Global Operations Leadership Transition",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/investors-reacting-merit-medical-systems-010750684.html",
+      "source": "Simply Wall St."
+    },
     {
       "date": "2026-08-28T15:30:23Z",
       "title": "Why Is Avantor (AVTR) Up 5.4% Since Last Earnings Report?",
@@ -158,28 +307,22 @@
       "title": "Are Medical Stocks Lagging  Avantor (AVTR) This Year?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/medical-stocks-lagging-avantor-avtr-134002821.html",
       "source": "Zacks"
-    },
-    {
-      "date": "2026-08-01T01:07:10Z",
-      "title": "Avantor (AVTR) Is Up 20.5% After Raising 2026 Guidance On Stronger VWR Organic Growth \u2013 Has The Bull Case Changed?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/avantor-avtr-20-5-raising-010710315.html",
-      "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.1242320851461283,
   "technicals": {
-    "ma20": 13.958000040054321,
-    "ma50": 12.202399997711181,
-    "ma200": 10.299250030517578,
-    "rsi14": 68.43022891995123,
-    "high_20d": 14.699999809265137,
-    "low_5d": 14.050000190734863,
-    "low_10d": 13.324999809265137,
+    "ma20": 14.04850001335144,
+    "ma50": 12.40379997253418,
+    "ma200": 10.327250027656556,
+    "rsi14": 66.20117808126741,
+    "high_20d": 14.835000038146973,
+    "low_5d": 14.1899995803833,
+    "low_10d": 13.755000114440918,
     "high_52w": 15.930000305175781,
     "low_52w": 7.264999866485596,
-    "atr14": 0.39992850167410715,
-    "atr14_pct": 2.7505399086888227,
-    "position_in_52w_range_pct": 83.95845039872995
+    "atr14": 0.41421427045549664,
+    "atr14_pct": 2.8274012371411357,
+    "position_in_52w_range_pct": 85.22792127130008
   },
   "ohlc_2y": [
     {
@@ -4178,28 +4321,28 @@
       "date": "2026-08-31",
       "open": 14.54,
       "high": 14.59,
-      "low": 14.345,
+      "low": 14.34,
       "close": 14.54,
-      "volume": 6535518.0
+      "volume": 6535600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 14.55,
+      "high": 14.63,
+      "low": 14.19,
+      "close": 14.2,
+      "volume": 5670200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 14.22,
+      "high": 14.835,
+      "low": 14.245,
+      "close": 14.65,
+      "volume": 8921256.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 13.2,
-      "high": 13.58,
-      "low": 13.15,
-      "close": 13.47,
-      "volume": 8423800.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 13.3,
-      "high": 13.4,
-      "low": 13.015,
-      "close": 13.29,
-      "volume": 9775200.0
-    },
     {
       "date": "2025-09-03",
       "open": 13.14,
@@ -6196,9 +6339,25 @@
       "date": "2026-08-31",
       "open": 14.54,
       "high": 14.59,
-      "low": 14.345,
+      "low": 14.34,
       "close": 14.54,
-      "volume": 6535518.0
+      "volume": 6535600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 14.55,
+      "high": 14.63,
+      "low": 14.19,
+      "close": 14.2,
+      "volume": 5670200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 14.22,
+      "high": 14.835,
+      "low": 14.245,
+      "close": 14.65,
+      "volume": 8921256.0
     }
   ],
   "ai_synthesis": null,

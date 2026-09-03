@@ -1,46 +1,112 @@
 {
   "ticker": "AEHR",
-  "fetched_at": "2026-09-01T01:14:42Z",
+  "fetched_at": "2026-09-02T23:58:30Z",
   "_schema": "v2",
-  "current_price": 79.2699966430664,
+  "current_price": 80.23999786376953,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "AEHR",
+    "longName": "Aehr Test Systems, Inc.",
+    "sector": "Technology",
+    "industry": "Semiconductor Equipment & Materials",
+    "exchange": "NCM",
+    "country": "United States",
+    "city": "Fremont",
+    "website": "https://www.aehr.com",
+    "fullTimeEmployees": 138,
+    "marketCap": 2617464832,
+    "enterpriseValue": 2510988800,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 58.00496,
+    "priceToSalesTrailing12Months": 52.34825,
+    "enterpriseToRevenue": 50.219,
+    "priceToBook": 11.873335,
+    "grossMargins": 0.35301,
+    "operatingMargins": -0.06403,
+    "profitMargins": -0.14252,
+    "returnOnEquity": -0.04163,
+    "totalCash": 116358000,
+    "totalDebt": 9882000,
+    "totalRevenue": 50001000,
+    "freeCashflow": -1955375,
+    "debtToEquity": 4.502,
+    "currentRatio": 10.33,
+    "fiftyTwoWeekHigh": 147.4,
+    "fiftyTwoWeekLow": 18.7,
+    "averageVolume": 2484704,
+    "averageVolume10days": 2038280,
+    "beta": 3.087,
+    "sharesOutstanding": 32620450,
+    "sharesFloat": 31272573,
+    "companyOfficers": [
+      {
+        "name": "Mr. Rhea J. Posedel",
+        "title": "Founder & Independent Chairman",
+        "age": 83,
+        "yearBorn": 1942
+      },
+      {
+        "name": "Mr. Gayn  Erickson",
+        "title": "President, CEO & Director",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Chris P. Siu",
+        "title": "CFO, Executive VP of Finance & Secretary",
+        "age": 54,
+        "yearBorn": 1971
+      },
+      {
+        "name": "Mr. Adil  Engineer",
+        "title": "Chief Operating Officer",
+        "age": 48,
+        "yearBorn": 1977
+      },
+      {
+        "name": "Mr. Donald P. Richmond II",
+        "title": "Chief Technology Officer",
+        "age": 69,
+        "yearBorn": 1956
+      },
+      {
+        "name": "Mr. Vernon  Rogers",
+        "title": "Executive Vice President of Sales & Marketing",
+        "age": 58,
+        "yearBorn": 1967
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-05-31T00:00:00",
+      "eps_actual": 0.11,
+      "eps_estimate": -0.0075,
+      "eps_surprise_pct": 15.6667
+    },
+    {
+      "period_end": "2026-02-28T00:00:00",
+      "eps_actual": -0.05,
+      "eps_estimate": -0.07,
+      "eps_surprise_pct": 0.2857
+    },
+    {
+      "period_end": "2025-11-30T00:00:00",
+      "eps_actual": -0.04,
+      "eps_estimate": -0.03667,
+      "eps_surprise_pct": -0.0908
+    },
+    {
+      "period_end": "2025-08-31T00:00:00",
+      "eps_actual": 0.01,
+      "eps_estimate": 0.0,
+      "eps_surprise_pct": 0.0
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-08",
+    "revenue_low": 25000000,
+    "revenue_high": 27700000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-05-31T00:00:00",
@@ -99,12 +165,101 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 4,
+    "bullish": 3,
+    "neutral": 1,
+    "bearish": 0,
+    "avg_price_target": 130.0,
+    "high_price_target": 175.0,
+    "low_price_target": 110.0,
+    "current_price": 80.24,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-14T12:33:43",
+        "firm": "Jefferies",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2026-03-05T12:06:26",
+        "firm": "Freedom Broker",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-02T14:07:56",
+        "firm": "William Blair",
+        "to_grade": "Outperform",
+        "from_grade": "Market Perform",
+        "action": "up"
+      },
+      {
+        "date": "2026-02-13T12:03:53",
+        "firm": "Freedom Broker",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-01-13T11:54:53",
+        "firm": "Freedom Broker",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-01-09T19:37:35",
+        "firm": "Craig-Hallum",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2025-12-17T20:43:34",
+        "firm": "Lake Street",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "init"
+      },
+      {
+        "date": "2025-10-14T18:01:36",
+        "firm": "Freedom Broker",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2024-03-26T11:51:42",
+        "firm": "Craig-Hallum",
+        "to_grade": "Hold",
+        "from_grade": "Buy",
+        "action": "down"
+      },
+      {
+        "date": "2024-03-25T16:01:29",
+        "firm": "William Blair",
+        "to_grade": "Market Perform",
+        "from_grade": "Outperform",
+        "action": "down"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-01T20:28:18Z",
+      "title": "William Blair Says These Stocks Are Must-Own Picks",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/william-blair-says-stocks-must-202818420.html",
+      "source": "GuruFocus.com"
+    },
+    {
+      "date": "2026-09-01T05:04:29Z",
+      "title": "Is Aehr Test Systems (AEHR) Trading At A Premium For Too Long?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/aehr-test-systems-aehr-trading-050429853.html",
+      "source": "Simply Wall St."
+    },
     {
       "date": "2026-08-31T22:26:41Z",
       "title": "Is Aehr Test Systems (AEHR) Fully Valued As Investors Reassess Its Conference Message?",
@@ -152,34 +307,22 @@
       "title": "Why Did CRWD, S, AEHR Stocks Hit 52-Week Highs Last Week?",
       "url": "https://stocktwits.com/news-articles/markets/equity/why-did-crwd-s-aehr-stocks-hit-52-week-highs-last-week/cZo6o9eRJKi",
       "source": "Stocktwits"
-    },
-    {
-      "date": "2026-08-14T19:25:00Z",
-      "title": "FormFactor (FORM) Shares Skyrocket, What You Need To Know",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/formfactor-form-shares-skyrocket-know-192500089.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-14T16:35:04Z",
-      "title": "Aehr Test Systems' CEO Sells Shares Worth $5.2 Million After a 564% Rally in Price. Here's a Closer Look at the Transaction.",
-      "url": "https://www.fool.com/coverage/filings/2026/08/14/aehr-test-systems-ceo-sells-shares-worth-usd5-2-million-after-a-564-rally-in-price-here-s-a-closer-look-at-the-transaction/",
-      "source": "Motley Fool"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.07514955334666956,
   "technicals": {
-    "ma20": 106.9824993133545,
-    "ma50": 92.63019989013672,
-    "ma200": 61.561499996185304,
-    "rsi14": 39.32990545854485,
+    "ma20": 104.39049911499023,
+    "ma50": 91.45239974975586,
+    "ma200": 62.12584997177124,
+    "rsi14": 40.71977380306513,
     "high_20d": 147.39999389648438,
-    "low_5d": 78.44000244140625,
-    "low_10d": 78.44000244140625,
+    "low_5d": 74.2300033569336,
+    "low_10d": 74.2300033569336,
     "high_52w": 147.39999389648438,
     "low_52w": 18.700000762939453,
-    "atr14": 12.332141876220703,
-    "atr14_pct": 15.557136872036656,
-    "position_in_52w_range_pct": 47.06293637271355
+    "atr14": 10.934762137276786,
+    "atr14_pct": 13.627570324517816,
+    "position_in_52w_range_pct": 47.81662811510285
   },
   "ohlc_2y": [
     {
@@ -4176,30 +4319,30 @@
     },
     {
       "date": "2026-08-31",
-      "open": 81.34,
+      "open": 81.3,
       "high": 84.1,
       "low": 78.44,
       "close": 79.27,
-      "volume": 2252668.0
+      "volume": 2275900.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 77.9,
+      "high": 78.2,
+      "low": 74.23,
+      "close": 76.59,
+      "volume": 1960600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 78.03,
+      "high": 81.0367,
+      "low": 76.05,
+      "close": 80.24,
+      "volume": 3763053.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 26.8,
-      "high": 26.85,
-      "low": 24.65,
-      "close": 24.95,
-      "volume": 1763000.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 23.55,
-      "high": 25.0,
-      "low": 22.88,
-      "close": 24.88,
-      "volume": 1620200.0
-    },
     {
       "date": "2025-09-03",
       "open": 25.08,
@@ -6194,11 +6337,27 @@
     },
     {
       "date": "2026-08-31",
-      "open": 81.34,
+      "open": 81.3,
       "high": 84.1,
       "low": 78.44,
       "close": 79.27,
-      "volume": 2252668.0
+      "volume": 2275900.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 77.9,
+      "high": 78.2,
+      "low": 74.23,
+      "close": 76.59,
+      "volume": 1960600.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 78.03,
+      "high": 81.0367,
+      "low": 76.05,
+      "close": 80.24,
+      "volume": 3763053.0
     }
   ],
   "ai_synthesis": null,

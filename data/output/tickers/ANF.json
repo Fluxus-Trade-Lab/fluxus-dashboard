@@ -1,46 +1,112 @@
 {
   "ticker": "ANF",
-  "fetched_at": "2026-09-01T01:13:52Z",
+  "fetched_at": "2026-09-02T23:57:43Z",
   "_schema": "v2",
-  "current_price": 143.0800018310547,
+  "current_price": 136.60000610351562,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
-    "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "symbol": "ANF",
+    "longName": "Abercrombie & Fitch Co.",
+    "sector": "Consumer Cyclical",
+    "industry": "Apparel Retail",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "New Albany",
+    "website": "https://corporate.abercrombie.com",
+    "fullTimeEmployees": 6600,
+    "marketCap": 6069371904,
+    "enterpriseValue": 6821723648,
+    "trailingPE": 11.796201,
+    "forwardPE": 10.723524,
+    "priceToSalesTrailing12Months": 1.1363883,
+    "enterpriseToRevenue": 1.277,
+    "priceToBook": 4.4138556,
+    "grossMargins": 0.63675,
+    "operatingMargins": 0.19941,
+    "profitMargins": 0.10035,
+    "returnOnEquity": 0.40609002,
+    "totalCash": 637998976,
+    "totalDebt": 1287440000,
+    "totalRevenue": 5340931072,
+    "freeCashflow": 413247872,
+    "debtToEquity": 93.997,
+    "currentRatio": 1.407,
+    "fiftyTwoWeekHigh": 154.58,
+    "fiftyTwoWeekLow": 65.45,
+    "averageVolume": 1502319,
+    "averageVolume10days": 3461380,
+    "beta": 0.915,
+    "sharesOutstanding": 44431710,
+    "sharesFloat": 40396066,
+    "companyOfficers": [
+      {
+        "name": "Ms. Fran  Horowitz",
+        "title": "CEO & Director",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Robert J. Ball",
+        "title": "CFO & Executive VP",
+        "age": 45,
+        "yearBorn": 1980
+      },
+      {
+        "name": "Mr. Scott D. Lipesky",
+        "title": "Executive VP & COO",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Mr. Samir  Desai",
+        "title": "Executive VP and Chief Digital & Technology Officer",
+        "age": 44,
+        "yearBorn": 1981
+      },
+      {
+        "name": "Mr. Gregory J. Henchel J.D.",
+        "title": "Executive VP, Chief Legal Officer & Corporate Secretary",
+        "age": 57,
+        "yearBorn": 1968
+      },
+      {
+        "name": "Mr. Joseph  Frericks",
+        "title": "Group VP of Finance, Corporate Controller & Principal Accounting Officer",
+        "age": 47,
+        "yearBorn": 1978
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-07-31T00:00:00",
+      "eps_actual": 4.17,
+      "eps_estimate": 1.96764,
+      "eps_surprise_pct": 1.1193
+    },
+    {
+      "period_end": "2026-04-30T00:00:00",
+      "eps_actual": 1.47,
+      "eps_estimate": 1.27043,
+      "eps_surprise_pct": 0.1571
+    },
+    {
+      "period_end": "2026-01-31T00:00:00",
+      "eps_actual": 3.68,
+      "eps_estimate": 3.56862,
+      "eps_surprise_pct": 0.0312
+    },
+    {
+      "period_end": "2025-10-31T00:00:00",
+      "eps_actual": 2.36,
+      "eps_estimate": 2.15717,
+      "eps_surprise_pct": 0.094
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-25",
+    "revenue_low": 1358000000,
+    "revenue_high": 1370320000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -99,12 +165,125 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 13,
+    "bullish": 8,
+    "neutral": 4,
+    "bearish": 1,
+    "avg_price_target": 162.9,
+    "high_price_target": 185.0,
+    "low_price_target": 134.0,
+    "current_price": 136.6,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-31T12:27:38",
+        "firm": "Argus Research",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-08-27T19:21:30",
+        "firm": "Citigroup",
+        "to_grade": "Neutral",
+        "from_grade": "Buy",
+        "action": "down"
+      },
+      {
+        "date": "2026-08-27T15:09:24",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-27T13:58:06",
+        "firm": "UBS",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-27T13:14:54",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-26T10:17:26",
+        "firm": "Needham",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-26T10:07:19",
+        "firm": "BTIG",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-19T19:31:27",
+        "firm": "Telsey Advisory Group",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-18T14:09:02",
+        "firm": "JP Morgan",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-18T09:21:20",
+        "firm": "Raymond James",
+        "to_grade": "Market Perform",
+        "from_grade": "Outperform",
+        "action": "down"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T15:00:52Z",
+      "title": "Kohl\u2019s Rallies 7% on Rotation Into Beaten-Down Retail, Macy\u2019s Climbs 3%, Abercrombie & Fitch Slips",
+      "url": "https://247wallst.com/investing/2026/09/02/kohls-rallies-7-on-rotation-into-beaten-down-retail-macys-climbs-3-abercrombie-fitch-slips/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-02T14:34:00Z",
+      "title": "Columbia Sportswear Spring 2027 Book: Can Footwear Lead Growth?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/columbia-sportswear-spring-2027-book-143400978.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-02T12:58:47Z",
+      "title": "Abercrombie & Fitch (ANF) Q2 2026 Earnings Call Transcript",
+      "url": "https://www.fool.com/earnings/call-transcripts/2026/09/02/abercrombie-fitch-anf-q2-2026-earnings-call-transcript/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-01T16:50:00Z",
+      "title": "Is Abercrombie & Fitch's Hot Streak Just Getting Started?",
+      "url": "https://www.marketbeat.com/articles/is-abercrombie-and-fitchs-hot-streak-just-getting-started/?utm_source=yahoofinance&utm_medium=yahoofinance",
+      "source": "MarketBeat"
+    },
+    {
+      "date": "2026-09-01T13:30:04Z",
+      "title": "Is Abercrombie (ANF) a Buy as Wall Street Analysts Look Optimistic?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/abercrombie-anf-buy-wall-street-133004681.html",
+      "source": "Zacks"
+    },
+    {
+      "date": "2026-09-01T03:05:01Z",
+      "title": "Jim Cramer Notes Abercrombie & Fitch (ANF) is a Buy on a Pullback After Earnings Surge",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-notes-abercrombie-fitch-030501350.html",
+      "source": "Insider Monkey"
+    },
     {
       "date": "2026-08-31T16:20:02Z",
       "title": "Surging Earnings Estimates Signal Upside for Abercrombie (ANF) Stock",
@@ -128,58 +307,22 @@
       "title": "1 Surging  Stock to Own for Decades and 2 Facing Challenges",
       "url": "https://finance.yahoo.com/markets/stocks/articles/1-surging-stock-own-decades-125424125.html",
       "source": "StockStory"
-    },
-    {
-      "date": "2026-08-31T07:56:12Z",
-      "title": "5 Consumer Stocks Bucked August Gloom With Double-Digit Gains: ANF, FIGS, EL, ABNB, DASH",
-      "url": "https://stocktwits.com/news-articles/markets/equity/5-consumer-stocks-bucked-august-gloom-with-double-digit-gains-anf-figs-el-abnb-dash/cZYyNy0RJry",
-      "source": "Stocktwits"
-    },
-    {
-      "date": "2026-08-31T02:19:40Z",
-      "title": "What Does Abercrombie & Fitch (ANF) Gain From Its Expanded NFL Reach?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/does-abercrombie-fitch-anf-gain-021940699.html",
-      "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-31T01:00:00Z",
-      "title": "Corporate America\u2019s Profits Are Booming\u2014and Signal More Good Times Ahead",
-      "url": "https://www.wsj.com/business/earnings/corporate-profit-america-44836dc6?siteid=yhoof2&yptr=yahoo",
-      "source": "The Wall Street Journal"
-    },
-    {
-      "date": "2026-08-30T19:13:00Z",
-      "title": "Abercrombie may be back. Will its shoppers stay?",
-      "url": "https://www.thestreet.com/investing/abercrombie-fitch-anf-stock-sales-comeback",
-      "source": "TheStreet"
-    },
-    {
-      "date": "2026-08-30T11:19:41Z",
-      "title": "Abercrombie (ANF) Jumps 32% This Week, Hedge Funds Cut Positions",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/abercrombie-anf-climbs-32-week-111941689.html",
-      "source": "Insider Monkey"
-    },
-    {
-      "date": "2026-08-29T13:42:55Z",
-      "title": "Why Abercrombie & Fitch Stock Skyrocketed This Week",
-      "url": "https://www.fool.com/investing/2026/08/29/why-abercrombie-fitch-stock-skyrocketed-this-week/",
-      "source": "Motley Fool"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03477305847556438,
   "technicals": {
-    "ma20": 117.13549995422363,
-    "ma50": 102.9983999633789,
-    "ma200": 95.62219997406005,
-    "rsi14": 71.66499757973628,
+    "ma20": 120.01700019836426,
+    "ma50": 105.1381999206543,
+    "ma200": 96.29429996490478,
+    "rsi14": 64.75099561660373,
     "high_20d": 154.5800018310547,
-    "low_5d": 106.91999816894531,
-    "low_10d": 100.43000030517578,
+    "low_5d": 136.1699981689453,
+    "low_10d": 102.30000305175781,
     "high_52w": 154.5800018310547,
     "low_52w": 65.44999694824219,
-    "atr14": 8.38250023978097,
-    "atr14_pct": 5.858610660124829,
-    "position_in_52w_range_pct": 87.09749874341405
+    "atr14": 8.235357557024274,
+    "atr14_pct": 6.028811997843918,
+    "position_in_52w_range_pct": 79.8272245680015
   },
   "ohlc_2y": [
     {
@@ -4177,29 +4320,29 @@
     {
       "date": "2026-08-31",
       "open": 148.03,
-      "high": 148.735,
+      "high": 148.74,
       "low": 141.95,
       "close": 143.08,
-      "volume": 2385081.0
+      "volume": 2387300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 142.0,
+      "high": 143.37,
+      "low": 138.72,
+      "close": 140.68,
+      "volume": 1732200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 139.65,
+      "high": 141.075,
+      "low": 136.17,
+      "close": 136.6,
+      "volume": 1937768.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 97.07,
-      "high": 97.2,
-      "low": 92.12,
-      "close": 93.53,
-      "volume": 2190900.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 92.85,
-      "high": 92.85,
-      "low": 89.92,
-      "close": 91.93,
-      "volume": 2160200.0
-    },
     {
       "date": "2025-09-03",
       "open": 92.06,
@@ -6195,10 +6338,26 @@
     {
       "date": "2026-08-31",
       "open": 148.03,
-      "high": 148.735,
+      "high": 148.74,
       "low": 141.95,
       "close": 143.08,
-      "volume": 2385081.0
+      "volume": 2387300.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 142.0,
+      "high": 143.37,
+      "low": 138.72,
+      "close": 140.68,
+      "volume": 1732200.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 139.65,
+      "high": 141.075,
+      "low": 136.17,
+      "close": 136.6,
+      "volume": 1937768.0
     }
   ],
   "ai_synthesis": null,

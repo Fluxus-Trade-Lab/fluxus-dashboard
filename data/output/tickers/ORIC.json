@@ -1,46 +1,112 @@
 {
   "ticker": "ORIC",
-  "fetched_at": "2026-09-01T01:18:23Z",
+  "fetched_at": "2026-09-03T00:02:14Z",
   "_schema": "v2",
-  "current_price": 12.989999771118164,
+  "current_price": 13.13,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "ORIC",
+    "longName": "ORIC Pharmaceuticals, Inc.",
+    "sector": "Healthcare",
+    "industry": "Biotechnology",
+    "exchange": "NMS",
+    "country": "United States",
+    "city": "South San Francisco",
+    "website": "https://www.oricpharma.com",
+    "fullTimeEmployees": 111,
+    "marketCap": 1360959360,
+    "enterpriseValue": 1077319680,
     "trailingPE": null,
-    "forwardPE": null,
+    "forwardPE": -8.130735,
     "priceToSalesTrailing12Months": null,
     "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
+    "priceToBook": 3.5689046,
+    "grossMargins": 0.0,
+    "operatingMargins": 0.0,
+    "profitMargins": 0.0,
+    "returnOnEquity": -0.39801997,
+    "totalCash": 264760992,
+    "totalDebt": 5998000,
     "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "freeCashflow": -68834624,
+    "debtToEquity": 1.573,
+    "currentRatio": 13.186,
+    "fiftyTwoWeekHigh": 14.93,
+    "fiftyTwoWeekLow": 7.23,
+    "averageVolume": 1581042,
+    "averageVolume10days": 1057410,
+    "beta": 0.972,
+    "sharesOutstanding": 103652656,
+    "sharesFloat": 88685212,
+    "companyOfficers": [
+      {
+        "name": "Dr. Richard A. Heyman Ph.D.",
+        "title": "Founder, Independent Chairman & Member of Scientific Advisory Board",
+        "age": 68,
+        "yearBorn": 1957
+      },
+      {
+        "name": "Dr. Jacob M. Chacko M.B.A., M.D.",
+        "title": "President, CEO & Director",
+        "age": 46,
+        "yearBorn": 1979
+      },
+      {
+        "name": "Mr. Dominic G. Piscitelli CPA, M.B.A.",
+        "title": "Chief Financial Officer",
+        "age": 50,
+        "yearBorn": 1975
+      },
+      {
+        "name": "Dr. Pratik S. Multani M.D., M.S.",
+        "title": "Chief Medical Officer",
+        "age": 58,
+        "yearBorn": 1967
+      },
+      {
+        "name": "Dr. Charles L. Sawyers B.A., M.D., Ph.D.",
+        "title": "Founder & Member of Scientific Advisory Board",
+        "age": 66,
+        "yearBorn": 1959
+      },
+      {
+        "name": "Dr. Scott W. Lowe Ph.D.",
+        "title": "Founder & Member of Scientific Advisory Board",
+        "age": null,
+        "yearBorn": null
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": -0.38,
+      "eps_estimate": -0.36096,
+      "eps_surprise_pct": -0.052699998
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": -0.34,
+      "eps_estimate": -0.3208,
+      "eps_surprise_pct": -0.059899997
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": -0.3,
+      "eps_estimate": -0.36799,
+      "eps_surprise_pct": 0.1848
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": -0.33,
+      "eps_estimate": -0.40019,
+      "eps_surprise_pct": 0.1754
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-11-12",
+    "revenue_low": 0,
+    "revenue_high": 0
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,10 +165,87 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 16,
+    "bullish": 15,
+    "neutral": 1,
+    "bearish": 0,
+    "avg_price_target": 20.66667,
+    "high_price_target": 27.0,
+    "low_price_target": 14.0,
+    "current_price": 13.13,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-10T11:49:56",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-06-08T10:21:16",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-05-15T20:36:16",
+        "firm": "Goldman Sachs",
+        "to_grade": "Buy",
+        "from_grade": null,
+        "action": "up"
+      },
+      {
+        "date": "2026-05-05T15:53:34",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-04-02T10:19:38",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-04-01T12:39:06",
+        "firm": "Wedbush",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-03-13T10:14:16",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "reit"
+      },
+      {
+        "date": "2026-02-24T18:13:05",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-02-24T15:50:54",
+        "firm": "HC Wainwright & Co.",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-02-24T13:50:36",
+        "firm": "Wedbush",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "reit"
+      }
+    ]
   },
   "news": [
     {
@@ -166,20 +309,18 @@
       "source": "Simply Wall St."
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.1865955826351866,
   "technicals": {
-    "ma20": 13.635999965667725,
-    "ma50": 11.881900005340576,
-    "ma200": 10.64762498140335,
-    "rsi14": 50.039141010944114,
+    "ma20": NaN,
+    "ma50": NaN,
+    "ma200": NaN,
+    "rsi14": 49.315411462926086,
     "high_20d": 14.680000305175781,
     "low_5d": 12.670000076293945,
     "low_10d": 12.670000076293945,
     "high_52w": 14.930000305175781,
     "low_52w": 7.230000019073486,
-    "atr14": 0.6807143347603934,
-    "atr14_pct": 5.240295202112989,
-    "position_in_52w_range_pct": 74.80518880552358
+    "position_in_52w_range_pct": NaN
   },
   "ohlc_2y": [
     {
@@ -4167,31 +4308,31 @@
       "volume": 1061000.0
     },
     {
-      "date": "2026-08-28",
-      "open": 13.59,
-      "high": 13.925,
-      "low": 13.2,
-      "close": 13.24,
-      "volume": 765400.0
-    },
-    {
       "date": "2026-08-31",
       "open": 13.18,
       "high": 13.18,
       "low": 12.67,
       "close": 12.99,
-      "volume": 1158801.0
+      "volume": 1158800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 12.82,
+      "high": 13.06,
+      "low": 12.77,
+      "close": 12.89,
+      "volume": 646400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 1545422.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 10.06,
-      "high": 10.255,
-      "low": 9.87,
-      "close": 10.23,
-      "volume": 711500.0
-    },
     {
       "date": "2025-09-02",
       "open": 10.2,
@@ -6185,20 +6326,28 @@
       "volume": 1061000.0
     },
     {
-      "date": "2026-08-28",
-      "open": 13.59,
-      "high": 13.925,
-      "low": 13.2,
-      "close": 13.24,
-      "volume": 765400.0
-    },
-    {
       "date": "2026-08-31",
       "open": 13.18,
       "high": 13.18,
       "low": 12.67,
       "close": 12.99,
-      "volume": 1158801.0
+      "volume": 1158800.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 12.82,
+      "high": 13.06,
+      "low": 12.77,
+      "close": 12.89,
+      "volume": 646400.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": null,
+      "high": null,
+      "low": null,
+      "close": null,
+      "volume": 1545422.0
     }
   ],
   "ai_synthesis": null,

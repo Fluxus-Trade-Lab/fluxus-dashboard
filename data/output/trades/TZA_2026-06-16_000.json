@@ -1,6 +1,6 @@
 {
   "trade_id": "TZA_2026-06-16_000",
-  "generated_at": "2026-09-01T23:55:29+00:00",
+  "generated_at": "2026-09-03T00:03:14+00:00",
   "_schema": "v1",
   "trade": {
     "ticker": "TZA",
@@ -41,8 +41,8 @@
     "volume": 36312340.0,
     "ma20": 44.06753,
     "ma50": 48.272266,
-    "ma200": 65.820977,
-    "rsi14": 40.35195016284636,
+    "ma200": null,
+    "rsi14": 40.35188649740979,
     "atr14": 2.942542857142857,
     "atr14_pct": 7.125715544955787,
     "high_52w": 93.094,
@@ -52,10 +52,10 @@
     "low_10d": 38.819,
     "low_5d": 38.819
   },
-  "setup_type": "Long below MA200 \u2014 counter-trend",
+  "setup_type": "Long in mixed structure",
   "path_analytics": {},
   "lesson": "Insufficient data",
-  "narrative": "Entered **TZA** long on 2026-06-16 at $4.24 (qty 44063) with stop $4.00 (1R = $0.24/sh = $10,575). Setup: **Long below MA200 \u2014 counter-trend** \u2014 price below MA20 ($44.07), MA20 < MA50 < MA200 (death alignment), RSI 40, 5% through 52W range, ATR 7.1% of price.  **Lesson: Insufficient data.**",
+  "narrative": "Entered **TZA** long on 2026-06-16 at $4.24 (qty 44063) with stop $4.00 (1R = $0.24/sh = $10,575). Setup: **Long in mixed structure** \u2014 price below MA20 ($44.07), RSI 40, 5% through 52W range, ATR 7.1% of price.  **Lesson: Insufficient data.**",
   "ohlc_window": [
     {
       "date": "2026-05-18",

@@ -1,46 +1,112 @@
 {
   "ticker": "F",
-  "fetched_at": "2026-09-01T01:12:00Z",
+  "fetched_at": "2026-09-02T23:56:05Z",
   "_schema": "v2",
-  "current_price": 13.9399995803833,
+  "current_price": 14.140000343322754,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "F",
+    "longName": "Ford Motor Company",
+    "sector": "Consumer Cyclical",
+    "industry": "Auto Manufacturers",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Dearborn",
+    "website": "https://www.ford.com",
+    "fullTimeEmployees": 169000,
+    "marketCap": 56384606208,
+    "enterpriseValue": 196400316416,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
-    "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "forwardPE": 7.3903728,
+    "priceToSalesTrailing12Months": 0.2999612,
+    "enterpriseToRevenue": 1.045,
+    "priceToBook": 1.5784774,
+    "grossMargins": 0.07115,
+    "operatingMargins": 0.018819999,
+    "profitMargins": -0.03935,
+    "returnOnEquity": -0.18252,
+    "totalCash": 22119999488,
+    "totalDebt": 163296002048,
+    "totalRevenue": 187972993024,
+    "freeCashflow": -7940250112,
+    "debtToEquity": 456.708,
+    "currentRatio": 1.089,
+    "fiftyTwoWeekHigh": 17.78,
+    "fiftyTwoWeekLow": 11.11,
+    "averageVolume": 49788041,
+    "averageVolume10days": 42354180,
+    "beta": 1.848,
+    "sharesOutstanding": 3916743591,
+    "sharesFloat": 3876421500,
+    "companyOfficers": [
+      {
+        "name": "Mr. William Clay Ford Jr.",
+        "title": "Executive Chairman",
+        "age": 68,
+        "yearBorn": 1957
+      },
+      {
+        "name": "Mr. James Duncan Farley Jr.",
+        "title": "President, CEO & Director",
+        "age": 63,
+        "yearBorn": 1962
+      },
+      {
+        "name": "Ms. Sherry  House CPA",
+        "title": "Chief Financial Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Mr. John Douglas Field",
+        "title": "Chief EV, Digital & Design Officer",
+        "age": 59,
+        "yearBorn": 1966
+      },
+      {
+        "name": "Ms. Alicia S. Boler Davis",
+        "title": "President of Ford Pro",
+        "age": 55,
+        "yearBorn": 1970
+      },
+      {
+        "name": "Mr. Ashwani Kumar Galhotra",
+        "title": "Chief Operating Officer",
+        "age": 60,
+        "yearBorn": 1965
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-06-30T00:00:00",
+      "eps_actual": 0.42,
+      "eps_estimate": 0.34634,
+      "eps_surprise_pct": 0.21270001
+    },
+    {
+      "period_end": "2026-03-31T00:00:00",
+      "eps_actual": 0.66,
+      "eps_estimate": 0.18506,
+      "eps_surprise_pct": 2.5664
+    },
+    {
+      "period_end": "2025-12-31T00:00:00",
+      "eps_actual": 0.13,
+      "eps_estimate": 0.19364,
+      "eps_surprise_pct": -0.32869998
+    },
+    {
+      "period_end": "2025-09-30T00:00:00",
+      "eps_actual": 0.45,
+      "eps_estimate": 0.35883,
+      "eps_surprise_pct": 0.2541
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-10-22",
+    "revenue_low": 42427000000,
+    "revenue_high": 51287000000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-06-30T00:00:00",
@@ -99,87 +165,164 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Hold",
+    "total_ratings": 22,
+    "bullish": 6,
+    "neutral": 15,
+    "bearish": 1,
+    "avg_price_target": 15.751,
+    "high_price_target": 20.0,
+    "low_price_target": 11.0,
+    "current_price": 14.14,
+    "recent_rating_changes": [
+      {
+        "date": "2026-07-30T18:57:21",
+        "firm": "BNP Paribas",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T18:52:39",
+        "firm": "Citigroup",
+        "to_grade": "Buy",
+        "from_grade": "Neutral",
+        "action": "up"
+      },
+      {
+        "date": "2026-07-29T18:26:04",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T17:50:31",
+        "firm": "TD Cowen",
+        "to_grade": "Hold",
+        "from_grade": "Hold",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T17:26:37",
+        "firm": "Piper Sandler",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-29T17:25:50",
+        "firm": "RBC Capital",
+        "to_grade": "Sector Perform",
+        "from_grade": "Sector Perform",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-27T10:41:11",
+        "firm": "Jefferies",
+        "to_grade": "Buy",
+        "from_grade": "Hold",
+        "action": "up"
+      },
+      {
+        "date": "2026-07-17T15:03:20",
+        "firm": "JP Morgan",
+        "to_grade": "Overweight",
+        "from_grade": "Overweight",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-14T17:20:16",
+        "firm": "BNP Paribas",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-07-09T13:33:15",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      }
+    ]
   },
   "news": [
     {
-      "date": "2026-08-31T15:38:00Z",
-      "title": "Is General Motors a Buy After Its C$1B+ Canadian Investment Pledge?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/general-motors-buy-c-1b-153800116.html",
+      "date": "2026-09-02T21:45:03Z",
+      "title": "Ford Motor Company (F) Exceeds Market Returns: Some Facts to Consider",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/ford-motor-company-f-exceeds-214503568.html",
       "source": "Zacks"
     },
     {
-      "date": "2026-08-31T15:36:53Z",
-      "title": "Ford Motor Is Paying Up Front For A Payoff Management Will Not Yet Promise",
-      "url": "https://www.trefis.com/articles/613735/ford-motor-is-paying-up-front-for-a-payoff-management-will-not-yet-promise/2026-08-31",
-      "source": "Trefis"
-    },
-    {
-      "date": "2026-08-31T15:01:43Z",
-      "title": "Unifor, Stellantis to begin bargaining as Brampton closure looms large",
-      "url": "https://www.freep.com/story/money/cars/stellantis/2026/08/31/unifor-stellantis-detroit-3-contract-talks/91545305007/",
-      "source": "Detroit Free Press"
-    },
-    {
-      "date": "2026-08-29T22:50:01Z",
-      "title": "NIO's Next Earnings Report on September 1 Could Send the Stock Soaring. Here's Why.",
-      "url": "https://www.fool.com/investing/2026/08/29/nios-next-earnings-report-on-september-1-could-send-the-stock-soaring-heres-why/",
+      "date": "2026-09-02T21:28:01Z",
+      "title": "Stock Market Today, Sept. 2: Ford Gains as Investors Weigh August Sales Drop Against F-Series Strength",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/09/02/stock-market-today-sept-2-ford-gains-as-investors-weigh-august-sales-drop-against-f-series-strength/",
       "source": "Motley Fool"
     },
     {
-      "date": "2026-08-28T23:43:01Z",
-      "title": "History Says What Ford Stock Has Done in the 2 Years After Each Full-Year Loss",
-      "url": "https://www.fool.com/investing/2026/08/28/history-says-what-ford-stock-has-done-in-the-2-years-after-each-full-year-loss/",
-      "source": "Motley Fool"
+      "date": "2026-09-02T21:28:00Z",
+      "title": "Why High-Yield Baby Bonds Offer Income Investors a Rare Opportunity",
+      "url": "https://www.barrons.com/articles/baby-bonds-7-percent-yields-investment-grade-6e954fca?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
     },
     {
-      "date": "2026-08-28T15:14:29Z",
-      "title": "Ford (F) and General Motors (GM) Battle for Title of Most \u201cAmerican-Made\u201d Automaker",
-      "url": "https://finance.yahoo.com/economy/policy/articles/ford-f-general-motors-gm-151429216.html",
-      "source": "Insider Monkey"
+      "date": "2026-09-02T20:38:00Z",
+      "title": "NIO Stock Drops. The Weak Chinese Car Market Is Too Much to Overcome.",
+      "url": "https://www.barrons.com/articles/nio-stock-china-electric-vehicles-0f5df25d?siteid=yhoof2&yptr=yahoo",
+      "source": "Barrons.com"
     },
     {
-      "date": "2026-08-28T14:27:00Z",
-      "title": "Ford names new president of subsidiary Ford Energy",
-      "url": "https://www.wardsauto.com/news/ford-names-new-president-of-subsidiary-ford-energy/828997/",
-      "source": "Wards Auto"
+      "date": "2026-09-02T20:31:12Z",
+      "title": "Ford's EV Sales Just Collapsed 79% in August",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/fords-ev-sales-just-collapsed-203112610.html",
+      "source": "GuruFocus.com"
     },
     {
-      "date": "2026-08-28T07:06:00Z",
-      "title": "Zacks Industry Outlook General Motors, PACCAR, Ford and Harley-Davidson",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/zacks-industry-outlook-general-motors-070600256.html",
-      "source": "Zacks"
+      "date": "2026-09-02T17:18:13Z",
+      "title": "Ford F-Series truck production hits multi-year highs amid sales slump",
+      "url": "https://qz.com/ford-f-series-truck-production-multi-year-high-sales-decline-090226",
+      "source": "Quartz"
     },
     {
-      "date": "2026-08-27T20:17:25Z",
-      "title": "What Does Ford Motor (F) Changing Ford Energy Leadership Mean For Its Energy Storage Business?",
-      "url": "https://finance.yahoo.com/energy/articles/does-ford-motor-f-changing-201725882.html",
-      "source": "Simply Wall St."
+      "date": "2026-09-02T16:25:01Z",
+      "title": "Ford\u2019s Garage Earns Recognition of 2026 Inc. 5000 List",
+      "url": "https://www.fsrmagazine.com/industry-news/fords-garage-earns-recognition-of-2026-inc-5000-list/",
+      "source": "FSR"
     },
     {
-      "date": "2026-08-27T19:13:30Z",
-      "title": "Ford Motor vs. Tesla: Analyzing Revenue Trends Between These Automotive Giants",
-      "url": "https://www.fool.com/coverage/charts/2026/08/27/ford-motor-vs-tesla-analyzing-revenue-trends-between-these-automotive-giants/",
-      "source": "Motley Fool"
+      "date": "2026-09-02T12:00:42Z",
+      "title": "Ford and GM Will Have to Pay Tariffs on Cars Made in Canada",
+      "url": "https://247wallst.com/investing/2026/09/02/ford-and-gm-will-have-to-pay-tariffs-on-cars-made-in-canada/",
+      "source": "24/7 Wall St."
+    },
+    {
+      "date": "2026-09-02T10:37:54Z",
+      "title": "Market Chatter: Ford Motor Targets NATO Military Vehicle Sales With Ranger Trucks",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/market-chatter-ford-motor-targets-103754666.html",
+      "source": "MT Newswires"
+    },
+    {
+      "date": "2026-09-01T19:41:12Z",
+      "title": "Sector Update: Consumer Stocks Mixed Late Afternoon",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/sector-consumer-stocks-mixed-afternoon-194112336.html",
+      "source": "MT Newswires"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.024752474646528445,
   "technicals": {
-    "ma20": 13.99442491531372,
-    "ma50": 13.988693542480469,
-    "ma200": 13.20372501373291,
-    "rsi14": 48.11815178342364,
+    "ma20": 13.990123176574707,
+    "ma50": 13.992117118835449,
+    "ma200": 13.214451832771301,
+    "rsi14": 51.84006756579747,
     "high_20d": 14.550000190734863,
-    "low_5d": 13.760000228881836,
-    "low_10d": 13.760000228881836,
+    "low_5d": 13.729999542236328,
+    "low_10d": 13.729999542236328,
     "high_52w": 17.589500602896216,
     "low_52w": 10.8061782262762,
-    "atr14": 0.37948581150599886,
-    "atr14_pct": 2.7222799349292686,
-    "position_in_52w_range_pct": 46.19891522343681
+    "atr14": 0.4013857841491699,
+    "atr14_pct": 2.8386546987512196,
+    "position_in_52w_range_pct": 49.14733418150953
   },
   "ohlc_2y": [
     {
@@ -250,7 +393,7 @@
       "date": "2024-09-13",
       "open": 9.4813,
       "high": 9.579,
-      "low": 9.437,
+      "low": 9.4369,
       "close": 9.4902,
       "volume": 35184800.0
     },
@@ -577,7 +720,7 @@
     {
       "date": "2024-11-11",
       "open": 9.9611,
-      "high": 10.186,
+      "high": 10.1861,
       "low": 9.9161,
       "close": 10.1051,
       "volume": 56630500.0
@@ -890,7 +1033,7 @@
       "date": "2025-01-08",
       "open": 8.7643,
       "high": 8.7733,
-      "low": 8.6203,
+      "low": 8.6204,
       "close": 8.7643,
       "volume": 61678800.0
     },
@@ -963,7 +1106,7 @@
       "open": 9.0433,
       "high": 9.1512,
       "low": 8.9713,
-      "close": 9.1423,
+      "close": 9.1422,
       "volume": 56241100.0
     },
     {
@@ -1003,7 +1146,7 @@
       "open": 9.2322,
       "high": 9.3492,
       "low": 9.0523,
-      "close": 9.1423,
+      "close": 9.1422,
       "volume": 69663100.0
     },
     {
@@ -1025,14 +1168,14 @@
     {
       "date": "2025-02-04",
       "open": 8.9443,
-      "high": 9.1423,
+      "high": 9.1422,
       "low": 8.9083,
-      "close": 9.1423,
+      "close": 9.1422,
       "volume": 68716500.0
     },
     {
       "date": "2025-02-05",
-      "open": 9.1423,
+      "open": 9.1422,
       "high": 9.2862,
       "low": 8.9623,
       "close": 9.0073,
@@ -1378,7 +1521,7 @@
       "date": "2025-04-08",
       "open": 8.8463,
       "high": 8.8463,
-      "low": 7.9449,
+      "low": 7.945,
       "close": 8.075,
       "volume": 199286800.0
     },
@@ -2107,7 +2250,7 @@
       "open": 11.0068,
       "high": 11.2075,
       "low": 10.9782,
-      "close": 11.0641,
+      "close": 11.0642,
       "volume": 58020200.0
     },
     {
@@ -2210,8 +2353,8 @@
       "date": "2025-09-08",
       "open": 11.2266,
       "high": 11.2266,
-      "low": 11.0641,
-      "close": 11.1692,
+      "low": 11.0642,
+      "close": 11.1693,
       "volume": 39734500.0
     },
     {
@@ -2338,7 +2481,7 @@
       "date": "2025-09-30",
       "open": 11.5705,
       "high": 11.6565,
-      "low": 11.3795,
+      "low": 11.3794,
       "close": 11.4272,
       "volume": 70765000.0
     },
@@ -2450,7 +2593,7 @@
       "date": "2025-10-20",
       "open": 11.3986,
       "high": 11.5419,
-      "low": 11.3794,
+      "low": 11.3795,
       "close": 11.4559,
       "volume": 77878900.0
     },
@@ -2539,7 +2682,7 @@
       "open": 12.3349,
       "high": 12.354,
       "low": 12.182,
-      "close": 12.2202,
+      "close": 12.2203,
       "volume": 70360600.0
     },
     {
@@ -4172,34 +4315,34 @@
       "high": 14.26,
       "low": 13.8,
       "close": 13.88,
-      "volume": 40211700.0
+      "volume": 40250300.0
     },
     {
       "date": "2026-08-31",
       "open": 13.9,
       "high": 14.05,
-      "low": 13.8672,
+      "low": 13.87,
       "close": 13.94,
-      "volume": 40884470.0
+      "volume": 41054600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 13.95,
+      "high": 14.05,
+      "low": 13.73,
+      "close": 13.84,
+      "volume": 50110700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 13.88,
+      "high": 14.2394,
+      "low": 13.77,
+      "close": 14.14,
+      "volume": 58045480.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 11.217,
-      "high": 11.303,
-      "low": 11.1979,
-      "close": 11.2457,
-      "volume": 44069700.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 11.2361,
-      "high": 11.3603,
-      "low": 11.1215,
-      "close": 11.1979,
-      "volume": 57704200.0
-    },
     {
       "date": "2025-09-03",
       "open": 11.1501,
@@ -4228,8 +4371,8 @@
       "date": "2025-09-08",
       "open": 11.2266,
       "high": 11.2266,
-      "low": 11.0641,
-      "close": 11.1692,
+      "low": 11.0642,
+      "close": 11.1693,
       "volume": 39734500.0
     },
     {
@@ -4356,7 +4499,7 @@
       "date": "2025-09-30",
       "open": 11.5705,
       "high": 11.6565,
-      "low": 11.3795,
+      "low": 11.3794,
       "close": 11.4272,
       "volume": 70765000.0
     },
@@ -4468,7 +4611,7 @@
       "date": "2025-10-20",
       "open": 11.3986,
       "high": 11.5419,
-      "low": 11.3794,
+      "low": 11.3795,
       "close": 11.4559,
       "volume": 77878900.0
     },
@@ -4557,7 +4700,7 @@
       "open": 12.3349,
       "high": 12.354,
       "low": 12.182,
-      "close": 12.2202,
+      "close": 12.2203,
       "volume": 70360600.0
     },
     {
@@ -6190,15 +6333,31 @@
       "high": 14.26,
       "low": 13.8,
       "close": 13.88,
-      "volume": 40211700.0
+      "volume": 40250300.0
     },
     {
       "date": "2026-08-31",
       "open": 13.9,
       "high": 14.05,
-      "low": 13.8672,
+      "low": 13.87,
       "close": 13.94,
-      "volume": 40884470.0
+      "volume": 41054600.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 13.95,
+      "high": 14.05,
+      "low": 13.73,
+      "close": 13.84,
+      "volume": 50110700.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 13.88,
+      "high": 14.2394,
+      "low": 13.77,
+      "close": 14.14,
+      "volume": 58045480.0
     }
   ],
   "ai_synthesis": null,

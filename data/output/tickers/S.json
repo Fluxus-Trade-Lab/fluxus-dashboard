@@ -1,46 +1,112 @@
 {
   "ticker": "S",
-  "fetched_at": "2026-09-01T01:14:25Z",
+  "fetched_at": "2026-09-02T23:58:20Z",
   "_schema": "v2",
-  "current_price": 22.100000381469727,
+  "current_price": 19.68000030517578,
   "info": {
-    "symbol": null,
-    "longName": null,
-    "sector": null,
-    "industry": null,
-    "exchange": null,
-    "country": null,
-    "city": null,
-    "website": null,
-    "fullTimeEmployees": null,
-    "marketCap": null,
-    "enterpriseValue": null,
+    "symbol": "S",
+    "longName": "SentinelOne, Inc.",
+    "sector": "Technology",
+    "industry": "Software - Infrastructure",
+    "exchange": "NYQ",
+    "country": "United States",
+    "city": "Mountain View",
+    "website": "https://www.sentinelone.com",
+    "fullTimeEmployees": 2900,
+    "marketCap": 6849606656,
+    "enterpriseValue": 6390467072,
     "trailingPE": null,
-    "forwardPE": null,
-    "priceToSalesTrailing12Months": null,
-    "enterpriseToRevenue": null,
-    "priceToBook": null,
-    "grossMargins": null,
-    "operatingMargins": null,
-    "profitMargins": null,
-    "returnOnEquity": null,
-    "totalCash": null,
-    "totalDebt": null,
-    "totalRevenue": null,
-    "freeCashflow": null,
+    "forwardPE": 42.151257,
+    "priceToSalesTrailing12Months": 6.23426,
+    "enterpriseToRevenue": 5.816,
+    "priceToBook": 4.639321,
+    "grossMargins": 0.72539,
+    "operatingMargins": -0.21572,
+    "profitMargins": -0.30953,
+    "returnOnEquity": -0.23008,
+    "totalCash": 655248000,
+    "totalDebt": 0,
+    "totalRevenue": 1098704000,
+    "freeCashflow": 297298752,
     "debtToEquity": null,
-    "currentRatio": null,
-    "fiftyTwoWeekHigh": null,
-    "fiftyTwoWeekLow": null,
-    "averageVolume": null,
-    "averageVolume10days": null,
-    "beta": null,
-    "sharesOutstanding": null,
-    "sharesFloat": null,
-    "companyOfficers": []
+    "currentRatio": 1.449,
+    "fiftyTwoWeekHigh": 23.95,
+    "fiftyTwoWeekLow": 11.81,
+    "averageVolume": 7156128,
+    "averageVolume10days": 8901110,
+    "beta": 0.751,
+    "sharesOutstanding": 342184493,
+    "sharesFloat": 302736916,
+    "companyOfficers": [
+      {
+        "name": "Mr. Tomer  Weingarten",
+        "title": "Co-Founder, Chairman, President & CEO",
+        "age": 41,
+        "yearBorn": 1984
+      },
+      {
+        "name": "Mr. Barry  Padgett",
+        "title": "President & COO",
+        "age": 53,
+        "yearBorn": 1972
+      },
+      {
+        "name": "Mr. Keenan M. Conder J.D.",
+        "title": "Chief Legal Officer & Corporate Secretary",
+        "age": 62,
+        "yearBorn": 1963
+      },
+      {
+        "name": "Ms. Ana G. Pinczuk",
+        "title": "President of Product & Technology and Director",
+        "age": 61,
+        "yearBorn": 1964
+      },
+      {
+        "name": "Mr. Michael  Cremen",
+        "title": "President & Chief Revenue Officer",
+        "age": null,
+        "yearBorn": null
+      },
+      {
+        "name": "Ms. Sonalee Elizabeth Parekh",
+        "title": "Chief Financial Officer",
+        "age": 52,
+        "yearBorn": 1973
+      }
+    ]
   },
-  "earnings_history": [],
-  "next_earnings": {},
+  "earnings_history": [
+    {
+      "period_end": "2026-07-31T00:00:00",
+      "eps_actual": -0.27,
+      "eps_estimate": -0.23174,
+      "eps_surprise_pct": -0.16510001
+    },
+    {
+      "period_end": "2026-04-30T00:00:00",
+      "eps_actual": -0.23,
+      "eps_estimate": -0.23673,
+      "eps_surprise_pct": 0.028399998
+    },
+    {
+      "period_end": "2026-01-31T00:00:00",
+      "eps_actual": -0.33,
+      "eps_estimate": -0.18413,
+      "eps_surprise_pct": -0.7922
+    },
+    {
+      "period_end": "2025-10-31T00:00:00",
+      "eps_actual": -0.18,
+      "eps_estimate": -0.17497,
+      "eps_surprise_pct": -0.0287
+    }
+  ],
+  "next_earnings": {
+    "date": "2026-08-27",
+    "revenue_low": 309663000,
+    "revenue_high": 311387000
+  },
   "quarterly_metrics": [
     {
       "period_end": "2026-04-30T00:00:00",
@@ -99,12 +165,125 @@
     }
   ],
   "analyst": {
-    "avg_price_target": null,
-    "high_price_target": null,
-    "low_price_target": null,
-    "current_price": null
+    "consensus": "Buy",
+    "total_ratings": 35,
+    "bullish": 21,
+    "neutral": 14,
+    "bearish": 0,
+    "avg_price_target": 24.14516,
+    "high_price_target": 28.0,
+    "low_price_target": 17.5,
+    "current_price": 19.68,
+    "recent_rating_changes": [
+      {
+        "date": "2026-08-31T18:03:02",
+        "firm": "Goldman Sachs",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-31T13:54:26",
+        "firm": "Susquehanna",
+        "to_grade": "Positive",
+        "from_grade": "Positive",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T19:04:13",
+        "firm": "Scotiabank",
+        "to_grade": "Sector Outperform",
+        "from_grade": "Sector Outperform",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T16:25:24",
+        "firm": "UBS",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T16:04:42",
+        "firm": "TD Cowen",
+        "to_grade": "Buy",
+        "from_grade": "Buy",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T15:32:38",
+        "firm": "Citigroup",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T15:19:09",
+        "firm": "Piper Sandler",
+        "to_grade": "Neutral",
+        "from_grade": "Neutral",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T15:04:15",
+        "firm": "Barclays",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T14:21:51",
+        "firm": "Morgan Stanley",
+        "to_grade": "Equal-Weight",
+        "from_grade": "Equal-Weight",
+        "action": "main"
+      },
+      {
+        "date": "2026-08-28T13:58:32",
+        "firm": "Bernstein",
+        "to_grade": "Outperform",
+        "from_grade": "Outperform",
+        "action": "main"
+      }
+    ]
   },
   "news": [
+    {
+      "date": "2026-09-02T20:20:05Z",
+      "title": "The Real Question Behind CrowdStrike Stock's Premium Price",
+      "url": "https://www.trefis.com/articles/613967/the-real-question-behind-crowdstrike-stocks-premium-price/2026-09-02",
+      "source": "Trefis"
+    },
+    {
+      "date": "2026-09-02T10:20:01Z",
+      "title": "SentinelOne\u2019s ARR Guidance Just Moved From Low- to Mid-Single Digits. Scotiabank Says That\u2019s the Real Signal.",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/sentinelone-arr-guidance-just-moved-102001295.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-09-01T21:33:54Z",
+      "title": "SentinelOne Just Rebounded From a Rough Quarter With a Beat-and-Raise. Wall Street\u2019s Still Not Convinced",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/sentinelone-just-rebounded-rough-quarter-213354165.html",
+      "source": "Insider Monkey"
+    },
+    {
+      "date": "2026-09-01T20:58:20Z",
+      "title": "Tenable, Upstart, SentinelOne, monday.com, and DigitalOcean Stocks Trade Down, What You Need To Know",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/tenable-upstart-sentinelone-monday-com-205820303.html",
+      "source": "StockStory"
+    },
+    {
+      "date": "2026-09-01T16:07:00Z",
+      "title": "1 Magnificent Artificial Intelligence (AI) Stock to Buy With $25 Before 2026 Is Over",
+      "url": "https://www.fool.com/investing/2026/09/01/magnificent-ai-stock-buy-with-25-before-2026-over/",
+      "source": "Motley Fool"
+    },
+    {
+      "date": "2026-09-01T13:31:00Z",
+      "title": "Is AIDR Emerging as CrowdStrike's Next Major Growth Engine?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/aidr-emerging-crowdstrikes-next-major-133100326.html",
+      "source": "Zacks"
+    },
     {
       "date": "2026-08-31T18:52:12Z",
       "title": "SentinelOne (S) Rides an AI Security Boom to Record Operating Margins",
@@ -128,58 +307,22 @@
       "title": "Can SentinelOne (S) Stay Cheap As AI Cybersecurity Hype Grows?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/sentinelone-stay-cheap-ai-cybersecurity-010711871.html",
       "source": "Simply Wall St."
-    },
-    {
-      "date": "2026-08-29T00:01:46Z",
-      "title": "SentinelOne Q2 Earnings Call Highlights",
-      "url": "https://www.marketbeat.com/instant-alerts/transcript-sentinelone-q2-earnings-call-highlights-2026-08-27/?utm_source=yahoofinance&utm_medium=yahoofinance",
-      "source": "MarketBeat"
-    },
-    {
-      "date": "2026-08-28T23:10:37Z",
-      "title": "SentinelOne CEO on Earnings, AI's Cybersecurity Impact",
-      "url": "https://finance.yahoo.com/video/sentinelone-ceo-earnings-ais-cybersecurity-231037772.html",
-      "source": "Bloomberg"
-    },
-    {
-      "date": "2026-08-28T22:00:52Z",
-      "title": "SentinelOne (S) Stock Trades Down, Here Is Why",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/sentinelone-stock-trades-down-why-220052409.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-28T19:44:52Z",
-      "title": "S Q2 Deep Dive: AI Security Drives Growth, Margin Expansion Moderates",
-      "url": "https://finance.yahoo.com/technology/ai/articles/q2-deep-dive-ai-security-194452936.html",
-      "source": "StockStory"
-    },
-    {
-      "date": "2026-08-28T19:25:20Z",
-      "title": "Update: SentinelOne Shares Fall After Fiscal 2027 Adjusted EPS Outlook Cut",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/sentinelone-shares-fall-fiscal-2027-192520048.html",
-      "source": "MT Newswires"
-    },
-    {
-      "date": "2026-08-28T17:34:00Z",
-      "title": "SentinelOne Q2 Earnings Beat as Platform Growth Drives Outlook Raise",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/sentinelone-q2-earnings-beat-platform-173400972.html",
-      "source": "Zacks"
     }
   ],
-  "options_implied_move": null,
+  "options_implied_move": 0.03810975550659683,
   "technicals": {
-    "ma20": 21.69149990081787,
-    "ma50": 19.422399768829347,
-    "ma200": 15.955799946784973,
-    "rsi14": 56.89490508459615,
+    "ma20": 21.607999897003175,
+    "ma50": 19.631199760437013,
+    "ma200": 15.989099946022034,
+    "rsi14": 44.553857951992455,
     "high_20d": 23.950000762939453,
-    "low_5d": 19.81999969482422,
-    "low_10d": 19.81999969482422,
+    "low_5d": 19.2450008392334,
+    "low_10d": 19.2450008392334,
     "high_52w": 23.950000762939453,
     "low_52w": 11.8100004196167,
-    "atr14": 1.1825004305158342,
-    "atr14_pct": 5.350680588708632,
-    "position_in_52w_range_pct": 84.76111755229674
+    "atr14": 1.2341503415788924,
+    "atr14_pct": 6.27108903679394,
+    "position_in_52w_range_pct": 64.82701534590764
   },
   "ohlc_2y": [
     {
@@ -4172,7 +4315,7 @@
       "high": 22.25,
       "low": 20.71,
       "close": 21.54,
-      "volume": 16453200.0
+      "volume": 16465800.0
     },
     {
       "date": "2026-08-31",
@@ -4180,26 +4323,26 @@
       "high": 22.135,
       "low": 21.15,
       "close": 22.1,
-      "volume": 8954693.0
+      "volume": 8957100.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 21.72,
+      "high": 21.96,
+      "low": 20.54,
+      "close": 20.63,
+      "volume": 6887800.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 20.56,
+      "high": 20.7381,
+      "low": 19.245,
+      "close": 19.68,
+      "volume": 10376688.0
     }
   ],
   "ohlc_1y": [
-    {
-      "date": "2025-08-29",
-      "open": 19.0,
-      "high": 19.18,
-      "low": 18.273,
-      "close": 18.86,
-      "volume": 19347200.0
-    },
-    {
-      "date": "2025-09-02",
-      "open": 18.55,
-      "high": 18.68,
-      "low": 17.62,
-      "close": 17.7,
-      "volume": 15755500.0
-    },
     {
       "date": "2025-09-03",
       "open": 17.7,
@@ -6190,7 +6333,7 @@
       "high": 22.25,
       "low": 20.71,
       "close": 21.54,
-      "volume": 16453200.0
+      "volume": 16465800.0
     },
     {
       "date": "2026-08-31",
@@ -6198,7 +6341,23 @@
       "high": 22.135,
       "low": 21.15,
       "close": 22.1,
-      "volume": 8954693.0
+      "volume": 8957100.0
+    },
+    {
+      "date": "2026-09-01",
+      "open": 21.72,
+      "high": 21.96,
+      "low": 20.54,
+      "close": 20.63,
+      "volume": 6887800.0
+    },
+    {
+      "date": "2026-09-02",
+      "open": 20.56,
+      "high": 20.7381,
+      "low": 19.245,
+      "close": 19.68,
+      "volume": 10376688.0
     }
   ],
   "ai_synthesis": null,
