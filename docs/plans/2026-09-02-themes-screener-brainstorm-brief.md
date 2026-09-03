@@ -555,3 +555,4 @@ Andy 截图：对比图色带下方一根整栏宽、几百像素高的白色圆
 
 **本地实测**（本地生成的 ladder，09-02）：Terrain 10 / 10 / 2 / 34，五档窗口全可选、展开名单每档都有；三条竖排 30 点；Flux 三条线 + 悬停读数 + 色带。
 **待合分支**：`feat/rotation-v3` · 碰 `pipeline/themes` + `frontend/` → 不在自合白名单，合并即 Vercel 生产发布，**等 Andy 点头**。
+↳ **合并（Andy 09-03 原话「y，合，Terrain 也行」）**。合前照他的话改三处：Terrain 的展开按钮只剩一个「+」；卡上不写「四态计数 · 两周口径」这类说明（show, don't tell——「类似的设计错误我们做了很多，我都删除了」）；展开的名字不带 sector / factor 后缀。Flux 图下那行说明移进 How to read。分支 `feat/rotation-v3` 合进 main。
