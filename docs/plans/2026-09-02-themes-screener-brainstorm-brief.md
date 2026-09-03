@@ -256,3 +256,15 @@ Andy 09-02：「再做一个版本不用现有的设计语言，你自由发挥�
 已知边界：日线相对路径只有 13 个交易日（档案 08-14 才开始存 perf_1d）；四段区间的历史仍缺（§七挂单）；页面是静态快照，每天要重发或进代码。
 
 Andy 反馈待收：视觉方向对不对、五件里留哪几件、要不要把「每天六个」的核实勾并进 Compare。
+
+## 15 · 09-03 追加：Andy 拍板 Rotation；v2 已发；进代码
+
+Andy 09-03：「方向对，五件都留，把核实勾并进 Compare 然后进代码。数据视觉化要做得更加漂亮一点，参考之前 lieflat charts。」
+
+**Rotation v2**（同一链接）：https://claude.ai/code/artifact/ef54a51a-8d41-468a-b854-47b85c7984b5
+- 按 Lieflat 的卡片语法重做：暗卡 24px 圆角无边框、Inter（标题 700 / 数值 800 / 轴 600）、发丝线 0.7px、入场动画（点 pop 逐个 12ms 错开、线 draw、面 fade，quarticOut 性格，reduced-motion 降级）、每张卡「结论式标题 + 副标题图例 + 图 + 来源行」四件套；确定性、无随机。
+- 核实勾并进 Compare：每条线下面的四态色带右侧两勾（verified / watch），落 artifact db（`checks/<date>__<theme>`），本浏览器退路；Compare 标题实时数「N verified, M on watch today」。
+- 四态配色沿用两色相 × 两亮度（在 #1C1C1A 上重新校验通过）。
+- 一处坑：第一版用 IntersectionObserver 滚入才画，隐藏的标签页 / 面板里永远不触发，图全空——改成加载即画、入场动画只播一次。
+
+**进代码（本线，分支 `feat/rotation-page`）**：新页 `#/rotation`（MARKET 下新入口），**不动现有 Themes 页**。五件乐器 + 共享选中 + 时间滑块 + 阈值滑块 + Compare 的勾（localStorage 落库 + 导出，服务器端存储挂 §七）。数据用现有 `groups.json` + `groups_history.json`；Compare 的日线相对路径需要 `groups_history.json` 带每日 `perf_1d`（挂 §七），在此之前画季度超额路径。
