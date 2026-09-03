@@ -25,12 +25,13 @@ export const Y_MAX = 0.15
 export const R2W_LAG = 10
 /** the prior three weeks (rs_1w_1m) as weeks, for a per-week pace */
 export const PRIOR_WEEKS = 3.2
+/** `word` is a translation key — the cards speak one language at a time */
 export const BOARDS = [
-  { key: 'rs2w', word: '爆发', title: 'RS 0–2w' },
-  { key: 'acc', word: '转折', title: 'Acceleration' },
-  { key: 'long', word: '持续', title: 'Quarter' },
+  { key: 'rs2w', word: 'rot.burst', title: 'RS 0–2w' },
+  { key: 'acc', word: 'rot.turn', title: 'Acceleration' },
+  { key: 'long', word: 'rot.persist', title: 'Quarter' },
 ]
-export const WINDOWS = ['最近 2 周', '2–4 周前', '4–6 周前', '6–8 周前', '8–10 周前']
+export const WINDOWS = ['rot.win0', 'rot.win1', 'rot.win2', 'rot.win3', 'rot.win4']
 
 export const fmtPct = (x, d = 1) => (x == null || !Number.isFinite(x) ? '—' : `${x >= 0 ? '+' : '−'}${Math.abs(x * 100).toFixed(d)}%`)
 

@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from 'react'
+import { useLanguage } from '../../i18n/LanguageContext'
 import { STATES, STATE_LADDER, WINDOWS, windowBounds, countsAt, namesByState } from './rotationLogic'
 
 const W = 1000, H = 110, PAD = { l: 22, r: 6, t: 6, b: 16 }
@@ -15,6 +16,7 @@ const STACK = ['Lagging', 'Improving', 'Weakening', 'Leading']   // bottom → t
  * no kind suffix, and nothing on the card says what it is.
  */
 export default function TerrainCard({ ladder, loading, selected, onSelect }) {
+  const { t } = useLanguage()
   const [wk, setWk] = useState(0)
   const [open, setOpen] = useState(false)
   const [hov, setHov] = useState(null)
@@ -53,13 +55,13 @@ export default function TerrainCard({ ladder, loading, selected, onSelect }) {
   return (
     <div className="rot-card">
       <div className="rot-head">
-        <h2 className="rot-title">Terrain<span className="rot-cn">地形 · 面</span></h2>
+        <h2 className="rot-title">{t('rot.terrain')}</h2>
         <div className="rot-tools">
           {m > 0 && <span className="rot-meta">{dates[end]} · Leading {counts.Leading} · Weakening {counts.Weakening} · Improving {counts.Improving} · Lagging {counts.Lagging}</span>}
           <select className="rot-sel" value={wk} onChange={(e) => setWk(+e.target.value)} aria-label="window" disabled={!m}>
-            {WINDOWS.map((l, k) => <option key={k} value={k} disabled={!windowBounds(dates, k)}>{l}{windowBounds(dates, k) ? '' : ' · 待数据'}</option>)}
+            {WINDOWS.map((l, k) => <option key={k} value={k} disabled={!windowBounds(dates, k)}>{t(l)}{windowBounds(dates, k) ? '' : ` · ${t('rot.nodata')}`}</option>)}
           </select>
-          <button type="button" className="rot-btn rot-plus" aria-expanded={open} aria-label="themes in each state" onClick={() => setOpen((v) => !v)} disabled={!m}>{open ? '−' : '+'}</button>
+          <button type="button" className="rot-btn rot-plus" aria-expanded={open} aria-label={t('rot.expand')} onClick={() => setOpen((v) => !v)} disabled={!m}>{open ? '−' : '+'}</button>
         </div>
       </div>
       {m > 1 ? (
@@ -79,7 +81,7 @@ export default function TerrainCard({ ladder, loading, selected, onSelect }) {
             </g>
           )}
         </svg>
-      ) : <div className="rot-empty" style={{ minHeight: 110 }}>{loading ? '' : 'theme_ladder.json has no two-week history yet.'}</div>}
+      ) : <div className="rot-empty" style={{ minHeight: 110 }}>{loading ? '' : t('rot.noHistory')}</div>}
       {open && m > 0 && (
         <div className="rot-band">
           {known ? STATES.map((st) => (

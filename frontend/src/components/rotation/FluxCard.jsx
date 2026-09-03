@@ -1,4 +1,5 @@
 import { useId, useRef, useState } from 'react'
+import { useLanguage } from '../../i18n/LanguageContext'
 import { LINE, STATE_LADDER, Y_MAX, R2W_LAG, fmtPct, r2wSeries, spreadLabels, smoothPath } from './rotationLogic'
 
 const W = 1040, H = 340, PAD = { l: 44, r: 150, t: 14, b: 24 }
@@ -14,6 +15,7 @@ const W = 1040, H = 340, PAD = { l: 44, r: 150, t: 14, b: 24 }
  * 2026-09-03: 突变记号不要了).
  */
 export default function FluxCard({ shown, dates, stateDates, benchmark, picked, loading, onSelect }) {
+  const { t } = useLanguage()
   const clip = useId()
   const svgRef = useRef(null)
   const [hov, setHov] = useState(null)
@@ -38,7 +40,7 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
 
   return (
     <div className="rot-card">
-      <div className="rot-head"><h2 className="rot-title">Flux<span className="rot-cn">轨迹 · 线</span></h2></div>
+      <div className="rot-head"><h2 className="rot-title">{t('rot.flux')}</h2></div>
       <div className="rot-chips">
         {shown.map((o, j) => (
           <button key={o.name} type="button" className="rot-chip" onClick={() => onSelect(o.name)} title={picked ? 'remove' : 'select'}>
@@ -84,7 +86,7 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
             </g>
           )}
         </svg>
-      ) : <div className="rot-empty" style={{ minHeight: 120 }}>{loading ? '' : n ? 'Nothing selected has a series yet.' : 'The ten-week series arrives with the next nightly run of the ladder.'}</div>}
+      ) : <div className="rot-empty" style={{ minHeight: 120 }}>{loading ? '' : n ? t('rot.nothingSelected') : t('rot.noSeries')}</div>}
       {lines.map((o) => (
         <div key={o.name} className="rot-rib">
           <span style={{ color: LINE[o.j] }}>{o.name}</span>

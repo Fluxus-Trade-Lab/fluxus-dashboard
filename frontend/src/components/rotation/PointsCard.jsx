@@ -1,3 +1,4 @@
+import { useLanguage } from '../../i18n/LanguageContext'
 import { BOARDS, LINE, fmtPct, radius, pack, spreadLabels } from './rotationLogic'
 
 const W = 330, H = 620, PAD = { t: 36, b: 20 }, X0 = 70
@@ -9,7 +10,7 @@ const W = 330, H = 620, PAD = { t: 36, b: 20 }, X0 = 70
  * bottom two are named with their value, the rest are the lightest grey.
  * Click a dot or a name to put that theme on the Flux line.
  */
-function Strip({ board, items, selected, onSelect }) {
+function Strip({ board, items, selected, onSelect, t }) {
   const vals = items.map((it) => it[board.key])
   const lo = Math.min(0, ...vals), hi = Math.max(0, ...vals)
   const y = (v) => PAD.t + ((hi - v) / (hi - lo || 1)) * (H - PAD.t - PAD.b)
@@ -18,8 +19,8 @@ function Strip({ board, items, selected, onSelect }) {
   const labels = spreadLabels(items.map((it, j) => ({ it, j })).filter(({ j }) => named[j]), ({ j }) => dots[j].y, 16)
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="rot-chart" role="img" aria-label={`${board.word} ${board.title}`}>
-      <text className="rot-ink" x="0" y="13" style={{ fontSize: 13 }}>{board.word} <tspan style={{ fill: 'var(--color-text-muted)', fontWeight: 500 }}>· {board.title}</tspan></text>
+    <svg viewBox={`0 0 ${W} ${H}`} className="rot-chart" role="img" aria-label={`${t(board.word)} ${board.title}`}>
+      <text className="rot-ink" x="0" y="13" style={{ fontSize: 13 }}>{t(board.word)} <tspan style={{ fill: 'var(--color-text-muted)', fontWeight: 500 }}>· {board.title}</tspan></text>
       <line x1={X0} x2={X0} y1={PAD.t} y2={H - PAD.b} stroke="var(--color-border-light)" />
       <line x1={X0 - 26} x2={X0 + 26} y1={y(0).toFixed(1)} y2={y(0).toFixed(1)} stroke="var(--color-text-secondary)" strokeWidth="1" strokeDasharray="3 3" />
       {items.map((it, j) => {
@@ -45,11 +46,12 @@ function Strip({ board, items, selected, onSelect }) {
 }
 
 export default function PointsCard({ boards, selected, onSelect }) {
+  const { t } = useLanguage()
   return (
     <div className="rot-card">
-      <div className="rot-head"><h2 className="rot-title">Momentum &amp; Acceleration<span className="rot-cn">两种动能和加速度 · 点</span></h2></div>
+      <div className="rot-head"><h2 className="rot-title">{t('rot.points')}</h2></div>
       <div className="rot-three">
-        {BOARDS.map((b) => (boards[b.key]?.length ? <Strip key={b.key} board={b} items={boards[b.key]} selected={selected} onSelect={onSelect} /> : <div key={b.key} className="rot-empty">{b.title}: nothing measurable.</div>))}
+        {BOARDS.map((b) => (boards[b.key]?.length ? <Strip key={b.key} board={b} items={boards[b.key]} selected={selected} onSelect={onSelect} t={t} /> : <div key={b.key} className="rot-empty">{b.title}: nothing measurable.</div>))}
       </div>
     </div>
   )
