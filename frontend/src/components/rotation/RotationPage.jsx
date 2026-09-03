@@ -1,43 +1,43 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import PageHeader from '../PageHeader'
 import DataFreshnessBadge from '../shared/DataFreshnessBadge'
+import HowToRead from '../HowToRead'
 import { useGroups } from '../../hooks/useGroups'
 import { useGroupsHistory } from '../../hooks/useGroupsHistory'
+import { changeOf } from '../groups/stateChange'
 import { useRotationChecks } from './useRotationChecks'
 import {
-  questionLists, defaultPicks, stateCounts, summaryParts, measurable, wkAccel, DEFAULT_THRESHOLDS,
+  questionLists, defaultPicks, stateCounts, summaryParts, measurable, sideChanges, fastest, DEFAULT_THRESHOLDS, CHANGE_WINDOW,
 } from './rotationLogic'
 import FieldChart from './FieldChart'
 import LeadershipChart from './LeadershipChart'
 import SwarmChart from './SwarmChart'
-import QuestionLists from './QuestionLists'
+import ShapesCard from './ShapesCard'
 import CompareChart from './CompareChart'
+import { fmtPct } from './TipBody'
 import './rotation.css'
 
 /**
- * Rotation — five instruments, one selection.
+ * Rotation — five instruments, one selection, no sentences on the cards.
  *
- * Andy, 2026-09-02/03: the Themes page's job is a funnel that answers three
- * questions (what is building, what is igniting from the bottom, what is
- * fading), told with charts, interactive, on the newest data; keep the
- * existing Themes page as it is. So this is a NEW page beside it, not a
- * rewrite: the field with a time scrubber and eight-session tails, the
- * leadership counts over the archive, the three lists with live thresholds,
- * Compare with the state ribbons and the verify/watch checks (F3), and the
- * acceleration swarm. Click any dot, row or chip: up to three selected, shared
- * by every instrument; Escape clears.
+ * Andy, 2026-09-03, on the first version: the pair and greys only; the field
+ * should read like a 吴冠中 — thin lines, space, a few points of colour; play
+ * must glide; every card had been drowned in explanation and counts ("4 of
+ * 30" — he wants the four names, not the four). So: titles are names, the
+ * how-it-is-computed lives in How to read at the bottom with the two
+ * threshold sliders, the verified mark is a small tick on the chip, and play
+ * is a requestAnimationFrame glide between sessions.
  *
- * Compare draws the QUARTER excess over the archive, which is what
- * groups_history.json carries. The daily relative-to-SPY line the prototype
- * drew needs per-session returns in that file — a §七 ask to the data lane —
- * and the card says which of the two it is drawing.
+ * This page sits beside Themes; that page is untouched. Compare draws the
+ * quarter excess over the archive (what groups_history.json carries); the
+ * daily relative-to-SPY line waits on per-session returns in that file (§七).
  */
-export const STATE_COLOUR = {
-  Leading: 'var(--rot-lead)', Improving: 'var(--rot-impr)', Weakening: 'var(--rot-weak)', Lagging: 'var(--rot-lag)',
-}
 export const COHORTS = [
   { key: 'theme', label: 'Themes' }, { key: 'sector', label: 'Sectors' }, { key: 'factor', label: 'Factors' }, { key: 'all', label: 'All' },
 ]
+const SESSION_MS = 900   // one archive session per 0.9s when playing
+
+const Names = ({ list, empty = '—' }) => (list.length ? list.join(', ') : empty)
 
 export default function RotationPage() {
   const { themes, date, benchmark, loading, error } = useGroups()
@@ -45,7 +45,7 @@ export default function RotationPage() {
   const [cohort, setCohort] = useState('theme')
   const [selected, setSelected] = useState([])
   const [thresholds, setThresholds] = useState(DEFAULT_THRESHOLDS)
-  const [scrub, setScrub] = useState(null)          // null = the latest session
+  const [t, setT] = useState(null)             // fractional session; null = the latest
   const [playing, setPlaying] = useState(false)
   const [tip, setTip] = useState(null)
   const checks = useRotationChecks(date)
@@ -54,46 +54,46 @@ export default function RotationPage() {
   const rows = useMemo(() => all.filter((r) => cohort === 'all' || r.kind === cohort), [all, cohort])
   const dates = history.data?.dates ?? []
   const historyOf = useMemo(() => { const g = history.data?.groups ?? {}; return (name) => g[name] ?? null }, [history.data])
-  const at = scrub == null ? Math.max(0, dates.length - 1) : scrub
+  const last = Math.max(0, dates.length - 1)
+  const tt = t == null ? last : t
+  const at = Math.round(tt)
   const lists = useMemo(() => questionLists(rows, thresholds), [rows, thresholds])
-  const counts = useMemo(() => stateCounts(rows, historyOf), [rows, historyOf])
-  const parts = useMemo(() => summaryParts(rows, lists, counts), [rows, lists, counts])
+  const parts = useMemo(() => summaryParts(lists), [lists])
+  const counts = useMemo(() => stateCounts(rows, historyOf, dates.length ? at : null), [rows, historyOf, dates.length, at])
+  const changes = useMemo(() => sideChanges(rows, historyOf, at, changeOf, CHANGE_WINDOW), [rows, historyOf, at])
+  const movers = useMemo(() => fastest(rows, 4, 2), [rows])
 
   const picked = selected.map((n) => all.find((r) => r.group === n)).filter(Boolean)
   const shown = picked.length ? picked : defaultPicks(lists)
 
-  const toggle = (name) => setSelected((s) => {
-    if (s.includes(name)) return s.filter((n) => n !== name)
-    return [...s.slice(-2), name]
-  })
+  const toggle = (name) => setSelected((s) => (s.includes(name) ? s.filter((n) => n !== name) : [...s.slice(-2), name]))
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') setSelected([]) }
     window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey)
   }, [])
-  // drop selections that left the cohort. `rows` is a fresh array every render
-  // (useGroups filters on the way out), so this effect runs every render: it
-  // must return the SAME state object when nothing changed, or React re-renders
-  // forever ("Maximum update depth exceeded" — caught on the first open).
+  // drop selections that left the cohort — returning the same object when
+  // nothing changed, or React re-renders forever (`rows` is fresh each render)
   useEffect(() => {
     setSelected((s) => (s.some((n) => !rows.some((r) => r.group === n)) ? s.filter((n) => rows.some((r) => r.group === n)) : s))
   }, [rows])
-  // play: one session every 550ms, stops at the end
-  const timer = useRef(null)
+  // play: a glide, not steps — requestAnimationFrame from the first session to the last
+  const raf = useRef(null)
   useEffect(() => {
-    if (!playing) { clearInterval(timer.current); return undefined }
-    setScrub(0)
-    timer.current = setInterval(() => setScrub((i) => {
-      const next = Math.min(dates.length - 1, (i ?? 0) + 1)
-      if (next >= dates.length - 1) setPlaying(false)
-      return next
-    }), 550)
-    return () => clearInterval(timer.current)
-  }, [playing, dates.length])
+    if (!playing) { cancelAnimationFrame(raf.current); return undefined }
+    let cur = 0, prev = performance.now()
+    setT(0)
+    const step = (now) => {
+      cur = Math.min(last, cur + (now - prev) / SESSION_MS); prev = now
+      setT(cur)
+      if (cur >= last) { setPlaying(false); return }
+      raf.current = requestAnimationFrame(step)
+    }
+    raf.current = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(raf.current)
+  }, [playing, last])
 
   const showTip = (e, content) => setTip({ x: e.clientX + 14, y: e.clientY + 14, content })
   const hideTip = () => setTip(null)
-  const counters = counts
-  const accelerating = rows.filter((r) => wkAccel(r) > 0).length
 
   if (loading) return <div className="text-[13px] text-[var(--color-text-muted)]">Loading themes…</div>
   if (error) return <div className="text-[13px] text-[var(--color-text-muted)]">Could not load groups.json.</div>
@@ -101,92 +101,83 @@ export default function RotationPage() {
   return (
     <div className="rot space-y-5">
       <PageHeader group="market" title="Rotation"
-        meta={[`vs ${benchmark} · ${date} · ${rows.length} of ${all.length} groups · ${dates.length} sessions of archive`,
-               <DataFreshnessBadge key="fresh" sessionDate={date} />]} />
+        meta={[`vs ${benchmark} · ${date} · ${rows.length} of ${all.length} groups`, <DataFreshnessBadge key="fresh" sessionDate={date} />]} />
 
-      {/* headline card: the summary sentence, the cohort switch, the legend */}
-      <div className="rot-card">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <p className="m-0 text-[17px] leading-[1.35] font-semibold max-w-[60ch]" style={{ textWrap: 'balance' }}>
-            {parts.map((p, i) => <span key={i}>{p.text}{p.strong && <b className="font-bold text-white">{p.strong}</b>}{' '}</span>)}
-          </p>
-          <div className="rot-seg inline-flex gap-[2px] rounded-[12px] p-[3px]" style={{ background: 'var(--rot-well)' }} role="group" aria-label="cohort">
-            {COHORTS.map((c) => (
-              <button key={c.key} type="button" aria-pressed={cohort === c.key} onClick={() => setCohort(c.key)}>
-                {c.label} <span className="font-mono">{c.key === 'all' ? all.length : all.filter((r) => r.kind === c.key).length}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-4 mt-3 text-[11px]" style={{ color: 'var(--rot-muted)' }}>
-          {['Leading', 'Weakening', 'Improving', 'Lagging'].map((s) => (
-            <span key={s}><i className="inline-block w-[9px] h-[9px] rounded-full mr-[6px] align-[-1px]" style={{ background: STATE_COLOUR[s] }} />{s} {counters[s]}</span>
-          ))}
-          <span style={{ color: 'var(--rot-faint)' }}>blue = ahead of {benchmark} on the quarter · orange = behind · lighter = accelerating</span>
-          <span className="ml-auto">click any dot, row or chip to select up to three · esc clears</span>
+      {/* the headline: names, and the cohort switch */}
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <p className="m-0 text-[17px] leading-[1.35] max-w-[64ch]" style={{ textWrap: 'balance' }}>
+          {parts.map((p, i) => <span key={i}>{p.text}{p.strong && <b className="font-semibold">{p.strong}</b>}{' '}</span>)}
+        </p>
+        <div className="rot-seg inline-flex gap-[2px] rounded-[12px] p-[3px] bg-[var(--color-bg)]" role="group" aria-label="cohort">
+          {COHORTS.map((c) => <button key={c.key} type="button" aria-pressed={cohort === c.key} onClick={() => setCohort(c.key)}>{c.label}</button>)}
         </div>
       </div>
 
       {/* FIELD */}
       <div className="rot-card">
-        <h2 className="m-0 text-[17px] font-bold" style={{ letterSpacing: '-.02em' }}>
-          {dates[at] ?? date}: {stateCounts(rows, historyOf, dates.length ? at : null).Leading} leading, {stateCounts(rows, historyOf, dates.length ? at : null).Lagging} lagging
+        <h2 className="rot-title">
+          <span style={{ color: 'var(--color-took)' }}><Names list={changes.up} /></span>
+          <span className="text-[var(--color-text-muted)]"> · </span>
+          <span style={{ color: 'var(--color-refused)' }}><Names list={changes.down} /></span>
         </h2>
-        <div className="text-[11px] mb-3" style={{ color: 'var(--rot-muted)' }}>quarter excess vs {benchmark} → · acceleration ↑ · dot size = names in the theme · tails = the last eight sessions · scrub or play the date</div>
-        <FieldChart rows={rows} historyOf={historyOf} dates={dates} at={at} selected={selected} onSelect={toggle} onTip={showTip} offTip={hideTip} colourOf={STATE_COLOUR} />
-        <div className="flex flex-wrap items-center gap-3 mt-3 text-[11px]" style={{ color: 'var(--rot-muted)' }}>
-          <button type="button" className="rot-btn" onClick={() => setPlaying((p) => !p)} disabled={!dates.length}>{playing ? '⏸ pause' : '▶ play'}</button>
-          <input type="range" className="rot-range" min={0} max={Math.max(0, dates.length - 1)} step={1} value={at} aria-label="session"
-                 onChange={(e) => { setPlaying(false); setScrub(+e.target.value) }} disabled={!dates.length} />
-          <span className="font-mono font-semibold" style={{ color: 'var(--rot-paper)' }}>{dates[at] ?? '—'}</span>
+        <FieldChart rows={rows} historyOf={historyOf} dates={dates} t={tt} selected={selected} onSelect={toggle} onTip={showTip} offTip={hideTip} />
+        <div className="flex flex-wrap items-center gap-3 mt-2 text-[11px] text-[var(--color-text-muted)]">
+          <button type="button" className="rot-btn" onClick={() => setPlaying((p) => !p)} disabled={!dates.length}>{playing ? 'pause' : 'play'}</button>
+          <input type="range" className="rot-range" min={0} max={last} step={0.01} value={tt} aria-label="session"
+                 onChange={(e) => { setPlaying(false); setT(+e.target.value) }} disabled={!dates.length} />
+          <span className="font-mono text-[var(--color-text)]">{dates[at] ?? date}</span>
         </div>
-        <div className="rot-src">Rotation field · excess_3m × rs_accel · groups_history.json {dates[0] ?? '—'} → {dates[dates.length - 1] ?? '—'}</div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-5">
         {/* LEADERSHIP */}
         <div className="rot-card">
-          <h2 className="m-0 text-[17px] font-bold" style={{ letterSpacing: '-.02em' }}>
-            {dates.length
-              ? `Leaders ${counters.Leading - stateCounts(rows, historyOf, 0).Leading >= 0 ? 'up' : 'down'} ${Math.abs(counters.Leading - stateCounts(rows, historyOf, 0).Leading)}, laggards ${counters.Lagging - stateCounts(rows, historyOf, 0).Lagging >= 0 ? 'up' : 'down'} ${Math.abs(counters.Lagging - stateCounts(rows, historyOf, 0).Lagging)} since ${dates[0].slice(5)}`
-              : 'No archive yet'}
-          </h2>
-          <div className="text-[11px] mb-3" style={{ color: 'var(--rot-muted)' }}>themes in each state, every session · hover for the count · click a day to scrub the field there</div>
-          <LeadershipChart rows={rows} historyOf={historyOf} dates={dates} at={at} onScrub={(i) => { setPlaying(false); setScrub(i) }} onTip={showTip} offTip={hideTip} colourOf={STATE_COLOUR} />
-          <div className="rot-src">Leadership over time · four-state counts · {dates.length} sessions</div>
+          <h2 className="rot-title"><b>{counts.Leading}</b> leading <span className="text-[var(--color-text-muted)]">·</span> <b>{counts.Lagging}</b> lagging</h2>
+          <LeadershipChart rows={rows} historyOf={historyOf} dates={dates} at={at} onScrub={(i) => { setPlaying(false); setT(i) }} onTip={showTip} offTip={hideTip} />
         </div>
-
         {/* SWARM */}
         <div className="rot-card">
-          <h2 className="m-0 text-[17px] font-bold" style={{ letterSpacing: '-.02em' }}>{accelerating} of {rows.length} are moving faster this week than the three before</h2>
-          <div className="text-[11px] mb-3" style={{ color: 'var(--rot-muted)' }}>this week's pace minus the prior three weeks' pace, per week · right = speeding up · ringed = on one of the three lists</div>
-          <SwarmChart rows={rows} lists={lists} selected={selected} onSelect={toggle} onTip={showTip} offTip={hideTip} colourOf={STATE_COLOUR} />
-          <div className="rot-src">Acceleration swarm · rs_0_1w − rs_1w_1m ÷ 3.2 · groups.json {date}</div>
+          <h2 className="rot-title"><Names list={movers.up.map((r) => r.group)} empty="Nobody" /> <span className="text-[var(--color-text-muted)] font-normal">speeding up</span></h2>
+          <SwarmChart rows={rows} lists={lists} historyOf={historyOf} dates={dates} selected={selected} onSelect={toggle} onTip={showTip} offTip={hideTip}
+                      named={[...movers.up, ...movers.down].map((r) => r.group)} />
         </div>
       </div>
 
-      {/* QUESTIONS */}
+      {/* SHAPES */}
       <div className="rot-card">
-        <h2 className="m-0 text-[17px] font-bold" style={{ letterSpacing: '-.02em' }}>
-          Building {lists.q1.length} · igniting {lists.q2.length} · fading {lists.q3.length} — {rows.length - lists.q1.length - lists.q2.length - lists.q3.length} are just travelling
-        </h2>
-        <div className="text-[11px] mb-3" style={{ color: 'var(--rot-muted)' }}>shapes across the four stretches · 3–6m · 1–3m · prior 3w · this week · the two thresholds are live</div>
-        <QuestionLists lists={lists} selected={selected} onSelect={toggle} thresholds={thresholds} onThresholds={setThresholds} colourOf={STATE_COLOUR} />
-        <div className="rot-src">Three questions · building · igniting · fading · thresholds are placeholders</div>
+        <ShapesCard lists={lists} selected={selected} onSelect={toggle} />
       </div>
 
       {/* COMPARE */}
       <div className="rot-card">
-        <CompareChart shown={shown} picked={!!picked.length} dates={dates} historyOf={historyOf} benchmark={benchmark}
-                      onSelect={toggle} checks={checks} onTip={showTip} offTip={hideTip} colourOf={STATE_COLOUR} lists={lists} />
-        <div className="rot-src">Compare · quarter excess over the archive · checks kept in this browser per session date</div>
+        <CompareChart shown={shown} picked={!!picked.length} dates={dates} historyOf={historyOf} onSelect={toggle} checks={checks} onTip={showTip} offTip={hideTip} />
       </div>
 
-      {tip && (
-        <div className="rot-tip" style={{ left: tip.x, top: tip.y }} role="status">
-          {tip.content}
+      <HowToRead>
+        <p><b>Colour.</b> Blue: the group moved to a stronger state over the last {CHANGE_WINDOW} sessions. Red: to a weaker one. Ink: unchanged. The ribbons under Compare read the four states as greys, darkest = Leading, then Weakening, Improving, Lagging.</p>
+        <p><b>The field.</b> Right of centre = ahead of {benchmark} on the quarter; above = accelerating (last month's excess above the two months before it). Each thin line is a group's whole path through the archive; the dot is where it is on the scrubbed session. Play glides one session per {SESSION_MS / 1000}s.</p>
+        <p><b>Leaders and laggards.</b> How many groups sit in each state, every session of the archive. Click a day to scrub the field there.</p>
+        <p><b>Speeding up.</b> This week's pace minus the prior three weeks' pace, per week. The fastest on each end are named. A ring means the group sits on one of the three lists.</p>
+        <p><b>The three lists.</b> Building: prior three weeks up, this week up and at least as fast, and not already strong one to three months ago. Igniting: weak for months (three to six months ago, or the quarter, negative), quiet for the prior three weeks, this week up and faster. Fading: ahead for months, the acceleration slope negative, this week still slower than the prior three. The shape beside each name is the four stretches — three to six months, one to three months, the prior three weeks, this week — as per-week pace, this week in ink.</p>
+        <div className="flex flex-wrap gap-6 mt-3 text-[11px] text-[var(--color-text-muted)]">
+          <label className="grid grid-cols-[auto_1fr_auto] gap-2 items-center min-w-[280px]">
+            <span>Building: "not strong before" cap</span>
+            <input type="range" className="rot-range" min={0} max={0.15} step={0.005} value={thresholds.q1PriorCap} onChange={(e) => setThresholds({ ...thresholds, q1PriorCap: +e.target.value })} />
+            <span className="font-mono text-[var(--color-text)]">{fmtPct(thresholds.q1PriorCap)}</span>
+          </label>
+          <label className="grid grid-cols-[auto_1fr_auto] gap-2 items-center min-w-[280px]">
+            <span>Igniting: "prior 3w quiet" cap</span>
+            <input type="range" className="rot-range" min={0} max={0.06} step={0.005} value={thresholds.q2PriorCap} onChange={(e) => setThresholds({ ...thresholds, q2PriorCap: +e.target.value })} />
+            <span className="font-mono text-[var(--color-text)]">{fmtPct(thresholds.q2PriorCap)}</span>
+          </label>
         </div>
-      )}
+        <p><b>Compare.</b> The quarter excess of up to three groups over the archive — the top of each list until you pick. The tick on a chip marks the group as verified for this session date; the marks stay in this browser and can be copied as JSON here:{' '}
+          <button type="button" className="rot-btn" onClick={() => { try { navigator.clipboard?.writeText(checks.exportJson()) } catch { /* clipboard may be unavailable */ } }}>copy checks</button>
+          {' '}({checks.verified} verified today).</p>
+        <p><b>Data.</b> groups.json {date}; groups_history.json {dates.length ? `${dates[0]} → ${dates[dates.length - 1]}` : '(empty)'}. A group missing from the archive on a day is not counted that day.</p>
+      </HowToRead>
+
+      {tip && <div className="rot-tip" style={{ left: tip.x, top: tip.y }} role="status">{tip.content}</div>}
     </div>
   )
 }

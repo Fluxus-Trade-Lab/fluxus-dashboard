@@ -5,7 +5,7 @@
  * the four disjoint stretches (rs_3m_6m · rs_1m_3m · rs_1w_1m · rs_0_1w),
  * the quarter level (excess_3m), the acceleration gate and slope (rs_accel,
  * rs_accel_rate). No history is needed for the three questions; history only
- * feeds the field tails, the leadership counts and the compare lines.
+ * feeds the field, the leadership counts and the compare lines.
  *
  * ANDY'S THREE QUESTIONS (2026-09-02), as shapes across the stretches:
  *   ① Building  — prior 3 weeks up, this week up and at least as fast, and
@@ -14,16 +14,27 @@
  *                 the prior 3 weeks, this week turned up and faster.
  *   ③ Fading    — ahead for months, the acceleration slope has turned
  *                 negative, and this week is still slower than the prior 3.
- * The two caps are placeholders the page exposes as sliders; the brief
+ * The two caps are placeholders the page exposes under How to read; the brief
  * (docs/plans/2026-09-02-themes-screener-brainstorm-brief.md §10–§12) has the
  * backtests that shaped them. Stretches are converted to a per-week pace
  * before comparing: 5 sessions a week, 21 a month.
+ *
+ * COLOUR ON THE PAGE (Andy 2026-09-03: the pair and greys, nothing else): a
+ * dot is blue when the group moved to a stronger state over the window, red
+ * when weaker, ink otherwise — `stateChange.js`'s grammar, reused. The
+ * ribbons read the four states as a grey ladder, strongest darkest.
  */
 export const WEEKS = { rs_3m_6m: 12.6, rs_1m_3m: 8.4, rs_1w_1m: 3.2, rs_0_1w: 1 }
 export const STATES = ['Leading', 'Improving', 'Weakening', 'Lagging']
 export const QUESTIONS = ['q1', 'q2', 'q3']
-export const QUESTION_LABEL = { q1: '① Building', q2: '② Igniting', q3: '③ Fading' }
+export const QUESTION_WORD = { q1: 'Building', q2: 'Igniting', q3: 'Fading' }
 export const DEFAULT_THRESHOLDS = { q1PriorCap: 0.05, q2PriorCap: 0.02 }
+/** the four states as a grey ladder, strongest darkest: ahead-and-accelerating … behind-and-falling */
+export const STATE_LADDER = {
+  Leading: 'var(--color-slot-1)', Weakening: 'var(--color-slot-2)', Improving: 'var(--color-slot-3)', Lagging: 'var(--color-untested)',
+}
+/** how many sessions back the field's colour looks when it asks "did it change sides" */
+export const CHANGE_WINDOW = 5
 
 const STRETCHES = ['rs_3m_6m', 'rs_1m_3m', 'rs_1w_1m', 'rs_0_1w']
 
@@ -86,34 +97,47 @@ export function stateCounts(rows, historyOf, i = null) {
   return c
 }
 
-/** the momentum kind Andy named: persistent, burst, starting, or fading */
-export function momentumKind(r, q) {
-  if (q === 'q3') return 'fading'
-  if ((r.persistence ?? 0) >= 3) return 'persistent'
-  if (q && Math.abs(r.rs_0_1w) >= 0.03) return 'burst'
-  return 'starting'
+/** the names that changed sides over the window ending at session `i` — {up: [...], down: [...]} */
+export function sideChanges(rows, historyOf, i, changeOf, window = CHANGE_WINDOW) {
+  const out = { up: [], down: [] }
+  rows.forEach((r) => {
+    const states = historyOf(r.group)?.state
+    if (!states) return
+    const dir = changeOf(states.slice(Math.max(0, i - window), i + 1))
+    if (dir) out[dir].push(r.group)
+  })
+  return out
 }
 
-const names = (list, n = 3) => list.slice(0, n).map((r) => r.group)
+/** the fastest movers by weekly acceleration — right (speeding up) and left (slowing) */
+export function fastest(rows, nRight = 4, nLeft = 2) {
+  const sorted = rows.slice().sort((a, b) => wkAccel(b) - wkAccel(a))
+  return { up: sorted.slice(0, nRight).filter((r) => wkAccel(r) > 0), down: sorted.slice(-nLeft).reverse().filter((r) => wkAccel(r) < 0) }
+}
 
-/**
- * The headline, as parts: `[{text, strong}]`. Only counts and names — no
- * adjectives, so it cannot be wrong in a way a number is not.
- */
-export function summaryParts(rows, lists, counts) {
-  const parts = [
-    { text: `${counts.Leading} leading, ${counts.Lagging} lagging of ${rows.length}.` },
-  ]
-  if (lists.q1.length) parts.push({ text: 'Building: ', strong: names(lists.q1).join(', ') + '.' })
-  if (lists.q2.length) parts.push({ text: 'Igniting this week: ', strong: names(lists.q2).join(', ') + '.' })
-  if (lists.q3.length) {
-    const more = lists.q3.length > 3 ? ` and ${lists.q3.length - 3} more` : ''
-    parts.push({ text: 'Fading: ', strong: names(lists.q3).join(', ') + more + '.' })
-  }
+/** the headline: names, never counts. `[{text, strong}]` */
+export function summaryParts(lists) {
+  const names = (list, n = 3) => list.slice(0, n).map((r) => r.group).join(', ')
+  const parts = []
+  if (lists.q2.length) parts.push({ text: 'Igniting: ', strong: names(lists.q2) + '.' })
+  if (lists.q1.length) parts.push({ text: 'Building: ', strong: names(lists.q1) + '.' })
+  if (lists.q3.length) parts.push({ text: 'Fading: ', strong: names(lists.q3) + (lists.q3.length > 3 ? ` and ${lists.q3.length - 3} more` : '') + '.' })
+  if (!parts.length) parts.push({ text: 'Nothing is turning today.' })
   return parts
 }
 
-/** end labels pushed apart so none overlap; returns [{item, y}] sorted by y */
+/** position of a group at a fractional session `t` — linear between the two sessions around it */
+export function positionAt(h, t) {
+  if (!h?.excess?.length) return null
+  const n = h.excess.length
+  const a = Math.max(0, Math.min(n - 1, Math.floor(t))), b = Math.min(n - 1, a + 1), f = Math.min(1, Math.max(0, t - a))
+  const xa = h.excess[a], ya = h.rs_accel[a], xb = h.excess[b], yb = h.rs_accel[b]
+  if (xa == null || ya == null) return null
+  if (xb == null || yb == null || b === a) return { x: xa, y: ya, state: h.state?.[a] }
+  return { x: xa + (xb - xa) * f, y: ya + (yb - ya) * f, state: h.state?.[f <= 0.5 ? a : b] }   // the nearer session's state; the midpoint keeps the earlier one
+}
+
+/** end labels pushed apart so none overlap; returns [{item, y, y0}] sorted by y */
 export function spreadLabels(items, yOf, gap = 14) {
   const sorted = items.map((item) => ({ item, y: yOf(item) })).sort((a, b) => a.y - b.y)
   let prev = -Infinity

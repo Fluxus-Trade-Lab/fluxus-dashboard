@@ -1,8 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import {
-  questionOf, questionLists, wkAccel, stateCounts, summaryParts, defaultPicks,
-  momentumKind, spreadLabels, swarmLevels, measurable, DEFAULT_THRESHOLDS,
+  questionOf, questionLists, wkAccel, stateCounts, summaryParts, defaultPicks, sideChanges, fastest,
+  positionAt, spreadLabels, swarmLevels, measurable, DEFAULT_THRESHOLDS,
 } from './rotationLogic'
+import { changeOf } from '../groups/stateChange'
 
 const base = { group: 'X', state: 'Improving', excess_3m: -0.1, rs_3m_6m: -0.2, rs_1m_3m: -0.05, rs_1w_1m: 0.0, rs_0_1w: 0.03, rs_accel: 0.1, rs_accel_rate: 0.05, persistence: 1 }
 
@@ -11,8 +12,7 @@ describe('questionOf — the three shapes', () => {
     expect(questionOf(base)).toBe('q2')
   })
   it('① building: prior 3w up, this week up and not slower, not strong 1–3m ago', () => {
-    const r = { ...base, rs_1w_1m: 0.03, rs_0_1w: 0.02, rs_1m_3m: 0.01 }
-    expect(questionOf(r)).toBe('q1')
+    expect(questionOf({ ...base, rs_1w_1m: 0.03, rs_0_1w: 0.02, rs_1m_3m: 0.01 })).toBe('q1')
   })
   it('① is refused when the theme was already strong 1–3m ago (the cap)', () => {
     const r = { ...base, rs_1w_1m: 0.03, rs_0_1w: 0.02, rs_1m_3m: 0.2 }
@@ -20,12 +20,10 @@ describe('questionOf — the three shapes', () => {
     expect(questionOf(r, { ...DEFAULT_THRESHOLDS, q1PriorCap: 0.3 })).toBe('q1')
   })
   it('③ fading: ahead for months, slope negative, still slowing', () => {
-    const r = { ...base, excess_3m: 0.2, rs_1m_3m: 0.1, rs_accel_rate: -0.04, rs_0_1w: -0.01, rs_1w_1m: 0.02 }
-    expect(questionOf(r)).toBe('q3')
+    expect(questionOf({ ...base, excess_3m: 0.2, rs_1m_3m: 0.1, rs_accel_rate: -0.04, rs_0_1w: -0.01, rs_1w_1m: 0.02 })).toBe('q3')
   })
   it('a steady traveller is in no list', () => {
-    const r = { ...base, excess_3m: 0.2, rs_1m_3m: 0.1, rs_accel_rate: 0.02, rs_0_1w: 0.01, rs_1w_1m: 0.03 }
-    expect(questionOf(r)).toBeNull()
+    expect(questionOf({ ...base, excess_3m: 0.2, rs_1m_3m: 0.1, rs_accel_rate: 0.02, rs_0_1w: 0.01, rs_1w_1m: 0.03 })).toBeNull()
   })
   it('an unmeasured group is never classified — absence is not a shape', () => {
     expect(questionOf({ ...base, rs_3m_6m: null })).toBeNull()
@@ -49,36 +47,44 @@ describe('lists, defaults and the headline', () => {
   it('defaults are the top of each question, in question order', () => {
     expect(defaultPicks(questionLists(rows)).map((r) => r.group)).toEqual(['Ign A', 'Fade'])
   })
-  it('the headline carries counts and names only', () => {
-    const parts = summaryParts(rows, questionLists(rows), stateCounts(rows, () => null))
-    expect(parts[0].text).toBe('1 leading, 0 lagging of 4.')
-    expect(parts.find((p) => p.text.startsWith('Igniting')).strong).toBe('Ign A, Ign B.')
-    expect(parts.some((p) => p.text.startsWith('Building'))).toBe(false)
+  it('the headline is names, never counts', () => {
+    const parts = summaryParts(questionLists(rows))
+    expect(parts[0]).toEqual({ text: 'Igniting: ', strong: 'Ign A, Ign B.' })
+    expect(parts.some((p) => /\d/.test(p.text))).toBe(false)
+    expect(summaryParts({ q1: [], q2: [], q3: [] })[0].text).toBe('Nothing is turning today.')
   })
   it('wkAccel is this week minus the prior three weeks per week', () => {
     expect(wkAccel({ rs_0_1w: 0.05, rs_1w_1m: 0.032 })).toBeCloseTo(0.04, 6)
   })
-  it('momentum kinds follow Andy\'s two kinds plus the edges', () => {
-    expect(momentumKind({ ...base, persistence: 4 }, 'q1')).toBe('persistent')
-    expect(momentumKind({ ...base, rs_0_1w: 0.05 }, 'q2')).toBe('burst')
-    expect(momentumKind(base, 'q3')).toBe('fading')
-    expect(momentumKind({ ...base, rs_0_1w: 0.01 }, 'q2')).toBe('starting')
+  it('fastest names the movers on both ends and never a zero mover', () => {
+    const f = fastest(rows, 2, 1)
+    expect(f.up.map((r) => r.group)).toEqual(['Ign A', 'Ign B'])
+    expect(f.down.map((r) => r.group)).toEqual(['Fade'])
   })
 })
 
-describe('history counts', () => {
-  it('counts states at a session from the history, skipping groups with no row that day', () => {
-    const hist = { A: { state: ['Leading', 'Leading'] }, B: { state: ['Lagging', null] } }
-    const rows = [{ group: 'A' }, { group: 'B' }, { group: 'C' }]
-    expect(stateCounts(rows, (n) => hist[n] ?? null, 0)).toEqual({ Leading: 1, Improving: 0, Weakening: 0, Lagging: 1 })
-    expect(stateCounts(rows, (n) => hist[n] ?? null, 1)).toEqual({ Leading: 1, Improving: 0, Weakening: 0, Lagging: 0 })
+describe('history', () => {
+  const hist = { A: { state: ['Lagging', 'Improving', 'Leading'], excess: [-0.1, 0, 0.1], rs_accel: [0, 0.1, 0.2] }, B: { state: ['Leading', 'Leading', 'Weakening'], excess: [0.2, 0.2, 0.2], rs_accel: [0.1, 0.1, -0.1] } }
+  const historyOf = (n) => hist[n] ?? null
+  const rows = [{ group: 'A' }, { group: 'B' }, { group: 'C' }]
+  it('counts states at a session, skipping groups with no row that day', () => {
+    expect(stateCounts(rows, historyOf, 0)).toEqual({ Leading: 1, Improving: 0, Weakening: 0, Lagging: 1 })
+  })
+  it('names who changed sides over the window ending at a session', () => {
+    expect(sideChanges(rows, historyOf, 2, changeOf, 5)).toEqual({ up: ['A'], down: ['B'] })
+    expect(sideChanges(rows, historyOf, 0, changeOf, 5)).toEqual({ up: [], down: [] })
+  })
+  it('positionAt interpolates between sessions and holds at the ends', () => {
+    expect(positionAt(hist.A, 0.5)).toEqual({ x: -0.05, y: 0.05, state: 'Lagging' })
+    expect(positionAt(hist.A, 2)).toEqual({ x: 0.1, y: 0.2, state: 'Leading' })
+    expect(positionAt(hist.A, 9)).toEqual({ x: 0.1, y: 0.2, state: 'Leading' })
+    expect(positionAt(null, 1)).toBeNull()
   })
 })
 
 describe('layout helpers', () => {
   it('spreadLabels keeps a gap and preserves order', () => {
-    const out = spreadLabels([10, 12, 40], (v) => v, 14)
-    expect(out.map((e) => e.y)).toEqual([10, 24, 40])
+    expect(spreadLabels([10, 12, 40], (v) => v, 14).map((e) => e.y)).toEqual([10, 24, 40])
   })
   it('swarmLevels steps neighbours outward deterministically', () => {
     expect(swarmLevels([0, 3, 6, 50], 10)).toEqual([0, 1, 2, 0])
