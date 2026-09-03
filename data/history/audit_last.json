@@ -1,12 +1,12 @@
 {
- "as_of_session": "2026-09-02",
- "ok": true,
- "violations": 0,
+ "as_of_session": "2026-09-03",
+ "ok": false,
+ "violations": 1,
  "warnings": 0,
  "archives": [
   {
    "archive": "breadth_archive.csv",
-   "rows": 577,
+   "rows": 578,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -14,7 +14,7 @@
   },
   {
    "archive": "ticker_events.csv",
-   "rows": 116663,
+   "rows": 118651,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -22,7 +22,7 @@
   },
   {
    "archive": "watchlist_hits.csv",
-   "rows": 9130,
+   "rows": 9821,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -30,7 +30,7 @@
   },
   {
    "archive": "leaders_log.csv",
-   "rows": 2215,
+   "rows": 2382,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -38,7 +38,7 @@
   },
   {
    "archive": "groups_archive.csv",
-   "rows": 3491,
+   "rows": 3667,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -46,7 +46,7 @@
   },
   {
    "archive": "momentum97_shadow.csv",
-   "rows": 1106,
+   "rows": 1181,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -54,7 +54,7 @@
   },
   {
    "archive": "universe_quality.csv",
-   "rows": 18,
+   "rows": 19,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -62,7 +62,7 @@
   },
   {
    "archive": "asset_signals.csv",
-   "rows": 286,
+   "rows": 312,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -70,15 +70,17 @@
   },
   {
    "archive": "shortlist_log.csv",
-   "rows": 103,
-   "violations": [],
+   "rows": 119,
+   "violations": [
+    "I2 1 duplicate rows on ['date', 'ticker']"
+   ],
    "warnings": [],
    "drop_dates": [],
-   "drop_dupes": 0
+   "drop_dupes": 1
   },
   {
    "archive": "regime_ledger.csv",
-   "rows": 10,
+   "rows": 11,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -86,7 +88,7 @@
   },
   {
    "archive": "delayed_ep_log.csv",
-   "rows": 752,
+   "rows": 793,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
@@ -102,7 +104,7 @@
   },
   {
    "archive": "tickers(I7)",
-   "rows": 212,
+   "rows": 216,
    "violations": [],
    "warnings": [],
    "drop_dates": [],
