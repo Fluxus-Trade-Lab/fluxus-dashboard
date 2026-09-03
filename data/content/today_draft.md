@@ -1,6 +1,6 @@
-date: 2026-09-02
-tier: B
-source: queue（08-29 包 V1 待批 + W5 收割毛坯 + 定时队列）
+date: 2026-09-03
+tier: A
+source: 2026-08-29_extension-arithmetic（V1）+ 2026-09-01_august-scorecard（V3）
 gate: 🎮 0/5 · streak 1 周
 ---
 ## C1
@@ -23,35 +23,47 @@ number shifts a few points. The distance does the rest.
 
 The trim line isn't where the stock turns dangerous. It's where the division
 already had you at two thirds.
-why: 08-29 包里唯一还活着的一条。V4（昨天的 C1）窗口写死「周一收盘后作废」，ET 最近完成场就是 08-31 周一——那扇门今天关了；V1 是包里标了「⭐ 常青弹药：零 ticker、零日期、零盘面状态」的那条，Gate 三轮零拦路，任何一天都能原样发。
+why: 待批队列里排在最前、且今天唯一还活着的一条。同包的旗舰与 V4 窗口写死「08-31 周一收盘后作废」，已过期；V1 是纯函数帖（零 ticker、零日期、零盘面），Gate 三轮零拦路，连续第 3 天可原样发。
 ---
 ## C2
-bucket: BUILD | entry: 6
-We ran 10,913 breakouts to ask one question: what part of a move is predictable?
+bucket: ARC | entry: 4
+Sort your trades by how the market looked the day you got in, chop them into four equal piles, and you have built a table that cannot surprise you. Same size, every pile. Heavy enough to trust, every pile. Nothing ever thin enough to make you stop.
 
-Rank the stock's 20-day volatility BEFORE the event. Then measure what happened AFTER.
+What would four piles built to come out equal ever tell you?
 
-Size of the move: rho = +0.296.
-Direction of the move: rho = -0.006.
+So fix the cut points before a single trade goes into them. Take whatever number you already put on a day — a market read, a score you give the morning yourself — and set the four brackets off the history of that number, not off the trades you are about to file. One scale for every row, and no re-scoring a day once you know how the trade turned out.
 
-Same variable. One column is nearly certain. The other is literally zero.
+Then file each trade by its entry date and let it land where it lands. The brackets will come out lopsided. Leave them lopsided: a bracket you barely traded is telling you something, and equal piles hide it.
 
-Probability of a big right-tail move goes from 3.4% in the quietest fifth to 19.0% in the noisiest. Holdout replicated it: 3.4% to 17.5%.
+Now the subtraction. Two shares per bracket, then take one away from the other.
 
-Here's the part nobody wants: it is not a buy signal. The left tail grew with the right tail. Expectancy is negative at both ends.
+| Bracket | Share of trades | Share of total R | Difference |
+|---|---|---|---|
+| lowest | ___% | ___% | ___ |
+| | ___% | ___% | ___ |
+| | ___% | ___% | ___ |
+| highest | ___% | ___% | ___ |
 
-It's not a signal. It's a divisor. Same dollars into the noisiest bucket = 2.4x the five-day volatility — and that difference was chosen by the screener, not by you.
-why: W5 收割的六条毛坯里最贴交易的一条，且是刊名「How Much」的论据本身——可预测的是「多大」不是「往哪」。数字全部来自 `data/research/amplitude_2026-08/results.md`，有 holdout 复现，不依赖今天的盘面。
+Difference above zero and that bracket is taxing you — you spend more of your book there than it sends back. Wider gap, steeper rate.
+
+Difference below zero and it is a rebate. It returns above the share you fed it.
+
+Difference near zero and it is square with you. Nothing owed in either direction.
+
+One line keeps the whole thing honest: a bracket holding fewer than ten trades gets an n written beside it, never a verdict. Not a hedged verdict. An n.
+
+The table stays silent on why any bracket charges what it charges. That is a different afternoon's work.
+why: 09-01 那张卡昨夜过闸转 queued，今天起是 A 档主菜。包里排第一的 V1 是挂 Article 的入口推，而 Article 卡在你那一段收口上发不出去——V3 是包里唯一能单独站住的：零数字、零第一人称、读者今晚就能对自己台账跑完。
 ---
 ## C3
 bucket: VOICE | entry: -
-Borrowed conviction was never conviction.
-why: 定时队列本周排的就是 09-02 这一条（`Fluxus_Queue.md` 本周队列 #3），你自己的原句 `Fluxus_Own_Lines.md:446`。队列的存在意义是断更保险——C1/C2 都要你拍板，这条不用，粘上就走。
+底部的仓位永远比消息先到。
+why: 定时队列本周排的就是 09-03 这一条（`Fluxus_Brand/ops/Fluxus_Queue.md` 本周队列 #4），你自己的原句 `Fluxus_Own_Lines.md:559`。C1/C2 都要你拍板，这条不用，粘上就走。
 ---
 ## notes
-⚠️ 昨天的 C1（V4）今天下架：RECORD 写死它「只在 08-31 周一 ET 盘前成立，周一收盘后作废」，ET 最近完成交易日 = 2026-09-01（周一），窗口已过。数字本身没错，是它的时间标签（"Friday's close"）现在指向三场之前。
-⚠️ 09-01 的新 campaign `2026-09-01_august-scorecard` status = **flagship**（在旗舰站，没过闸），所以本班不是 A 档——按任务书只有 queued/approved 才当主菜。
-⏰ `APPROVAL_QUEUE.md` 里 `2026-08-29_extension-arithmetic` 连续第 2 天挂在「待批」，`verdicts.jsonl` 至今 0 条真判决。C1 一旦你点头就能发；否了也请给一个字，那是判决账的第一条真记录。
-🟡 C1 待你拍的一处（Gate 三轮点名，AI 不代拍）：收口 `The trim line isn't where … It's where …` 是负面清单上的「不是 A，是 B」镜像句。非镜像备选：`By the time a chart reaches the trim line, the division has already cut you to two thirds. Nobody had to decide the stock got dangerous.`
-📌 补位弹药（今天没排上，随时可取）：W5 毛坯 ①「我给自己造了个游戏逼自己发帖」——押后条件（第一次过关）08-30 已达成，只差你把最后一段换成自己的话；毛坯 ⑥「我们把他的脚注实现了七个月」。均在 `Fluxus_Brand/ops/weekly/2026-08-30_W5.md`。
-📉 输入现状：`voice/raw/` 最新一份是 08-30，近 7 天只有 1 份你的原料；`posts.csv` 最后一条是 08-28。本周关卡 0/5。
+✅ 陈旧闸已跑（09-03 09:40 JST）：月报指纹 `1,645,532 bytes · 2026-08-31 15:25 · md5 ababe3ef` 与两轮 Gate 逐位一致，**未重生成**——09-01 卡整包数字有效。C2 本身零数字，不受此影响。
+⚠️ C2 是**跳序**：包内排期建议 `V1（与 Article 同日）→ V3 → V4 → V2`，V1 被 Article 卡住，所以直接上 V3。代价＝旗舰的可复用物先于旗舰出街；Gate 两轮实测 V3 与旗舰 8-gram 重叠 0.00%（阳性对照 22.90%），两条不互相吃，但先后顺序是你的判断不是我的。
+⏰ `APPROVAL_QUEUE.md` 现在挂着**两张待批的卡**：`2026-08-29_extension-arithmetic`（连续第 3 天）与 `2026-09-01_august-scorecard`（新过闸）。`verdicts.jsonl` 至今 **0 条真判决**——否了也请给一个字，那是判决账的第一条真记录。
+🟡 你要拍的三件（AI 不代拍）：① C1 收口 `The trim line isn't where … It's where …` 是负面清单上的镜像句，非镜像备选 `By the time a chart reaches the trim line, the division has already cut you to two thirds. Nobody had to decide the stock got dangerous.`；② 09-01 卡的**旗舰收口是空槽，等你亲笔**，不写就发不出去；③ 那篇旗舰散文 704 词，砍不砍。
+📌 补位弹药：09-01 卡还有 V2（教「怎么读别人给你的归因表」，完全常青）与 V4（把总胜率拆成四档加权平均，数字今天刚复核有效）；W5 毛坯 ①⑥ 仍在 `Fluxus_Brand/ops/weekly/2026-08-30_W5.md`。
+📉 输入现状：`voice/raw/` 最新一份仍是 08-30，近 7 天只有 1 份你的原料；`posts.csv` 最后一条是 08-28（第 6 天无发布）。本周关卡 0/5。
