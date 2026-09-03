@@ -24,7 +24,9 @@
 .rot-plus { width: 22px; height: 22px; padding: 0; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; line-height: 1; }
 .rot-btn[aria-expanded="true"] { background: var(--color-text); color: var(--color-bg); border-color: var(--color-text); }
 .rot-btn:focus-visible, .rot-sel:focus-visible { outline: 2px solid var(--color-accent); }
-.rot-band { display: flex; flex-direction: column; gap: 3px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--color-border-light); }
+.rot-span { grid-column: 1 / -1; }
+.rot-band { display: flex; flex-direction: column; gap: 3px; padding-top: 14px; padding-bottom: 14px; }
+.rot-counts { display: inline-flex; gap: 10px; align-items: center; } .rot-counts span { display: inline-flex; align-items: center; gap: 4px; } .rot-counts i { width: 8px; height: 8px; border-radius: 99px; display: inline-block; }
 .rot-band-row { display: grid; grid-template-columns: 110px 1fr; gap: 8px; align-items: baseline; font-size: 12px; line-height: 1.6; }
 .rot-band-row .rot-st { display: flex; gap: 6px; align-items: center; font-weight: 600; }
 .rot-band-row .rot-st i { width: 9px; height: 9px; border-radius: 99px; display: inline-block; }

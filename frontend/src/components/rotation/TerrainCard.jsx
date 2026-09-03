@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { STATES, STATE_LADDER, WINDOWS, windowBounds, countsAt, namesByState } from './rotationLogic'
 
@@ -15,19 +15,14 @@ const STACK = ['Lagging', 'Improving', 'Weakening', 'Leading']   // bottom → t
  * Show, don't tell (Andy 2026-09-03): the expand is a "+", the names carry
  * no kind suffix, and nothing on the card says what it is.
  */
-export default function TerrainCard({ ladder, loading, selected, onSelect }) {
+export default function TerrainCard({ ladder, loading, wk, setWk, open, onToggle }) {
   const { t } = useLanguage()
-  const [wk, setWk] = useState(0)
-  const [open, setOpen] = useState(false)
   const [hov, setHov] = useState(null)
   const svgRef = useRef(null)
   const h = ladder?.history?.['2w'] ?? null
   const dates = h?.dates ?? []
   const m = dates.length
-  const names = useMemo(() => Object.keys(ladder?.themes ?? {}), [ladder])
-  const total = Math.max(1, ...(h?.measurable ?? [names.length]))
-  const seriesOf = (n) => ladder?.series?.[n] ?? null
-  const todayOf = (n) => ladder?.themes?.[n]?.['2w'] ?? null
+  const total = Math.max(1, ...(h?.measurable ?? [Object.keys(ladder?.themes ?? {}).length]))
   const bounds = windowBounds(dates, wk)
   const end = bounds?.end ?? m - 1
   const x = (i) => PAD.l + (i * (W - PAD.l - PAD.r)) / Math.max(1, m - 1)
@@ -42,7 +37,6 @@ export default function TerrainCard({ ladder, loading, selected, onSelect }) {
     })
   }
   const counts = countsAt(h, end)
-  const { byState, known } = namesByState(names, seriesOf, todayOf, end, m - 1)
 
   const indexAt = (e) => {
     const svg = svgRef.current; const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY
@@ -57,11 +51,11 @@ export default function TerrainCard({ ladder, loading, selected, onSelect }) {
       <div className="rot-head">
         <h2 className="rot-title">{t('rot.terrain')}</h2>
         <div className="rot-tools">
-          {m > 0 && <span className="rot-meta">{dates[end]} · Leading {counts.Leading} · Weakening {counts.Weakening} · Improving {counts.Improving} · Lagging {counts.Lagging}</span>}
+          {m > 0 && <span className="rot-meta rot-counts">{dates[end]}{STATES.map((s) => <span key={s} title={s}><i style={{ background: STATE_LADDER[s] }} />{counts[s]}</span>)}</span>}
           <select className="rot-sel" value={wk} onChange={(e) => setWk(+e.target.value)} aria-label="window" disabled={!m}>
             {WINDOWS.map((l, k) => <option key={k} value={k} disabled={!windowBounds(dates, k)}>{t(l)}{windowBounds(dates, k) ? '' : ` · ${t('rot.nodata')}`}</option>)}
           </select>
-          <button type="button" className="rot-btn rot-plus" aria-expanded={open} aria-label={t('rot.expand')} onClick={() => setOpen((v) => !v)} disabled={!m}>{open ? '−' : '+'}</button>
+          <button type="button" className="rot-btn rot-plus" aria-expanded={open} aria-label={t('rot.expand')} onClick={onToggle} disabled={!m}>{open ? '−' : '+'}</button>
         </div>
       </div>
       {m > 1 ? (
@@ -82,20 +76,31 @@ export default function TerrainCard({ ladder, loading, selected, onSelect }) {
           )}
         </svg>
       ) : <div className="rot-empty" style={{ minHeight: 110 }}>{loading ? '' : t('rot.noHistory')}</div>}
-      {open && m > 0 && (
-        <div className="rot-band">
-          {known ? STATES.map((st) => (
-            <div key={st} className="rot-band-row">
-              <div className="rot-st"><i style={{ background: STATE_LADDER[st] }} />{st} <span className="rot-meta">{byState[st].length}</span></div>
-              <div className="rot-names">
-                {byState[st].length ? byState[st].map((n) => (
-                  <button key={n} type="button" className="rot-nmx" aria-pressed={selected.includes(n)} onClick={() => onSelect(n)}>{n}</button>
-                )) : <span className="rot-meta">—</span>}
-              </div>
-            </div>
-          )) : <div className="rot-empty">—</div>}
+    </div>
+  )
+}
+
+/** the names under the plane — who sat in each state on the picked window's last session; spans the whole row */
+export function StateBand({ ladder, wk, selected, onSelect }) {
+  const h = ladder?.history?.['2w'] ?? null
+  const dates = h?.dates ?? []
+  const m = dates.length
+  if (!m) return null
+  const names = Object.keys(ladder?.themes ?? {})
+  const end = windowBounds(dates, wk)?.end ?? m - 1
+  const { byState, known } = namesByState(names, (n) => ladder?.series?.[n] ?? null, (n) => ladder?.themes?.[n]?.['2w'] ?? null, end, m - 1)
+  return (
+    <div className="rot-card rot-span rot-band">
+      {known ? STATES.map((st) => (
+        <div key={st} className="rot-band-row">
+          <div className="rot-st"><i style={{ background: STATE_LADDER[st] }} />{st} <span className="rot-meta">{byState[st].length}</span></div>
+          <div className="rot-names">
+            {byState[st].length ? byState[st].map((n) => (
+              <button key={n} type="button" className="rot-nmx" aria-pressed={selected.includes(n)} onClick={() => onSelect(n)}>{n}</button>
+            )) : <span className="rot-meta">—</span>}
+          </div>
         </div>
-      )}
+      )) : <div className="rot-empty">—</div>}
     </div>
   )
 }
