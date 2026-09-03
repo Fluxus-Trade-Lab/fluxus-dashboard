@@ -543,3 +543,15 @@ Andy 截图：对比图色带下方一根整栏宽、几百像素高的白色圆
 4. 页面三行通栏：Temperature → Momentum & Acceleration → Flux。配色只用灰阶 + 蓝红配对。卡上不写说明文字。
 
 **数据现状与代码里的诚实处理**：Flux 的十周日线在预览里用的是 ETF 代理（yfinance），代码里不能这么干——改用 `groups_history.json` 的逐日超额链成相对指数（目前 19 个交易日，每天多一天；十周回填在 §七 挂单），窗口没填满的部分留空。
+
+### 18.23 进代码：分支 `feat/rotation-v3`（09-03）
+
+**名字**：Terrain · 地形 · 面 / Momentum & Acceleration · 两种动能和加速度 · 点 / Flux · 轨迹 · 线（点线面，康定斯基；Andy 问「是温度还是地图那种立体一点的」，我选了地形，待他点头）。
+
+**代码**（都在分支上，未合）：
+- `pipeline/themes/short_window.py`：`build()` 多出 `series_dates`（60 个交易日）和 `series[<group>] = {rel, states_2w}`——rel 是等权篮子 / SPY 的相对指数（归一到首日），states_2w 是每组两周态、与 `history['2w'].dates` 对齐。`themes[<group>]` 五档不动。测试 +3（`TestFluxSeries`），16 过。**这就是 §七 09-03 挂单的①，和更早挂的十周窗口——前端线自己修了，数据端只需知悉。**
+- 前端 `frontend/src/components/rotation/`：v2 的五件（Field / Leadership / Swarm / Shapes / Compare + checks）删除；新三卡 `TerrainCard / PointsCard / FluxCard` + `rotationLogic.js`（14 个单测）+ `useThemeLadder` hook。整站 428 测试过，`vite build` 过。
+- 数据依赖：Terrain 和 Flux 读 `theme_ladder.json`；**线上那份还没有 `series`，要等合并后第一个夜间产线**——那之前 Flux 卡显示「等下一次夜间产线」，RS 0–2w 用「本周 + 前三周的一周」近似并在图下注明。
+
+**本地实测**（本地生成的 ladder，09-02）：Terrain 10 / 10 / 2 / 34，五档窗口全可选、展开名单每档都有；三条竖排 30 点；Flux 三条线 + 悬停读数 + 色带。
+**待合分支**：`feat/rotation-v3` · 碰 `pipeline/themes` + `frontend/` → 不在自合白名单，合并即 Vercel 生产发布，**等 Andy 点头**。
