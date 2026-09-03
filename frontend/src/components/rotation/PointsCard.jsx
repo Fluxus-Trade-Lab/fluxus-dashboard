@@ -19,7 +19,7 @@ function Strip({ board, items, selected, onSelect, t }) {
   const labels = spreadLabels(items.map((it, j) => ({ it, j })).filter(({ j }) => named[j]), ({ j }) => dots[j].y, 16)
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="rot-chart" role="img" aria-label={`${t(board.word)} ${board.title}`}>
+    <svg viewBox={`0 0 ${W} ${H}`} className="rot-strip" preserveAspectRatio="xMinYMin meet" role="img" aria-label={`${t(board.word)} ${board.title}`}>
       <text className="rot-ink" x="0" y="13" style={{ fontSize: 13 }}>{t(board.word)} <tspan style={{ fill: 'var(--color-text-muted)', fontWeight: 500 }}>· {board.title}</tspan></text>
       <line x1={X0} x2={X0} y1={PAD.t} y2={H - PAD.b} stroke="var(--color-border-light)" />
       <line x1={X0 - 26} x2={X0 + 26} y1={y(0).toFixed(1)} y2={y(0).toFixed(1)} stroke="var(--color-text-secondary)" strokeWidth="1" strokeDasharray="3 3" />

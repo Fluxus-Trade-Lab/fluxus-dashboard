@@ -7,6 +7,11 @@
 .rot-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
 .rot-title { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: -.01em; line-height: 1.3; }
 .rot-chart { display: block; width: 100%; height: auto; }
+/* the dot strips fit the viewport whatever the screen: the SVG keeps its aspect and scales to the height it is given */
+.rot-strip { display: block; width: 100%; height: clamp(360px, calc(100vh - 210px), 620px); }
+/* Terrain and Flux side by side; the dots alone below (Andy 2026-09-04) */
+.rot-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
+@media (max-width: 1000px) { .rot-grid2 { grid-template-columns: 1fr; } }
 .rot-card svg text { fill: var(--color-text-muted); font-size: 11px; font-weight: 500; font-family: var(--font-sans); }
 .rot-card svg text.rot-ink { fill: var(--color-text); font-weight: 600; }
 .rot-card svg text.rot-mono { font-family: var(--font-mono); }

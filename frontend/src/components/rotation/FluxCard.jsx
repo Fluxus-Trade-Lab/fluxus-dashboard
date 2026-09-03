@@ -2,7 +2,7 @@ import { useId, useRef, useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { LINE, STATE_LADDER, Y_MAX, R2W_LAG, fmtPct, r2wSeries, spreadLabels, smoothPath } from './rotationLogic'
 
-const W = 1040, H = 340, PAD = { l: 44, r: 150, t: 14, b: 24 }
+const W = 640, H = 380, PAD = { l: 44, r: 140, t: 14, b: 24 }
 
 /**
  * FLUX · 轨迹 · 线 — up to three themes' two-week relative strength against

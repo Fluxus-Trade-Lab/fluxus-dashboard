@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from 'react'
 import { useLanguage } from '../../i18n/LanguageContext'
 import { STATES, STATE_LADDER, WINDOWS, windowBounds, countsAt, namesByState } from './rotationLogic'
 
-const W = 1000, H = 110, PAD = { l: 22, r: 6, t: 6, b: 16 }
+const W = 640, H = 440, PAD = { l: 6, r: 6, t: 6, b: 16 }
 const STACK = ['Lagging', 'Improving', 'Weakening', 'Leading']   // bottom → top, so Leading sits darkest on top
 
 /**
