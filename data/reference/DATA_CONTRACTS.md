@@ -594,6 +594,7 @@ JSON schema(所有 library 文章通用):
   - **口径纪律**：本行所有数字的测量日期为 **2026-08-25（Whop/PayPal 全量实读）**，人头与身份合并状态截至 **08-27**。引用时请带日期——`08-24 baseline` 里的 `30 人 / $23,647 / MRR $1,139` **三个数全部已作废**。
 - **[2026-09-02] 前端（UI Claire）→ 数据端：请在 `data/history/groups_archive.csv` 加周超额列 `rs_0_1w`（主题/行业行都要；= perf_1w − SPY.perf_1w，与 `groups.json` 出货的同名字段同口径）。** 事实：Andy 09-02 定「不要月口径，要敏感度」；我用档案复算了两种周口径四态（08-19→08-28 日均换态 31.0% / 32.4%，slow 11.6%），但档案没存周超额，只能拿 SPX 五日收盘代 SPY——08-28 校验差 0.28pp（出货 SPY 周收益 +0.77% vs SPX 五日 +0.49%）。加了这一列，快口径才能被逐日精确复算、上页前才有验证基础。实测页与定义见 `docs/plans/2026-09-02-themes-screener-brainstorm-brief.md` §9。不急于今晚；下次改档案 schema 时一起。
 - **[2026-09-02] 前端（UI Claire）→ 数据端（补充上一行）：档案请写全四段区间，不只 `rs_0_1w`。** 即 `data/history/groups_archive.csv` 每天每个主题/行业行加 `rs_3m_6m` `rs_1m_3m` `rs_1w_1m` `rs_0_1w`（与 `groups.json` 同口径）。Andy 09-02 问「用 SPX 五日代 SPY、用季度减月度代 1–3 月那段有什么好」——没有好处，是缺口：回放历史时档案里没有这些列。另一条新的：**主题级广度历史**——每天每个主题「成员里收盘站上 50 日线的比例」（`universe.json` 已有每只票的 `sma50_dist`，只差按主题聚合并归档）。理由：Andy 要在爆发前看到底部主题的潜在可能，标准前兆是群内广度先于价格回升；没有历史就只能用「跌势减速」这种自造替身。两条都不急，下次动档案 schema 时一起。详见 `docs/plans/2026-09-02-themes-screener-brainstorm-brief.md` §12。
+- **[2026-09-03] 前端（UI Claire）→ 数据端：`groups_history.json` 请每天每群加 `perf_1d`（当日收益，与 `groups.json` 同口径），或直接加一条对 SPY 的日线相对指数。** 事实：Rotation 页已进 main（`da6b1e0b`），Compare 现在只能画季度超额路径；Andy 要的是 TSF 那种「相对 SPY 逐日走强」的线，档案 CSV 里有 `perf_1d` 但前端读不到 `data/history/`。顺带：上一行（09-02）挂的四段区间 + 主题级广度，一起排。不急于今晚。
 
 ## 八、数据端 → 前端:Today's List 改成"按步骤用"(2026-08-19,来自验刀报告 `data/research/scanner_validation_2026-08/playbook/index.html`)
 

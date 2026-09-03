@@ -268,3 +268,17 @@ Andy 09-03：「方向对，五件都留，把核实勾并进 Compare 然后进�
 - 一处坑：第一版用 IntersectionObserver 滚入才画，隐藏的标签页 / 面板里永远不触发，图全空——改成加载即画、入场动画只播一次。
 
 **进代码（本线，分支 `feat/rotation-page`）**：新页 `#/rotation`（MARKET 下新入口），**不动现有 Themes 页**。五件乐器 + 共享选中 + 时间滑块 + 阈值滑块 + Compare 的勾（localStorage 落库 + 导出，服务器端存储挂 §七）。数据用现有 `groups.json` + `groups_history.json`；Compare 的日线相对路径需要 `groups_history.json` 带每日 `perf_1d`（挂 §七），在此之前画季度超额路径。
+
+## 16 · 09-03 落地：Rotation 进 main（`da6b1e0b`）
+
+新页 `#/rotation`（MARKET 下 Themes 旁的入口，现有 Themes 页未动）。文件：`frontend/src/components/rotation/`（RotationPage · FieldChart · LeadershipChart · SwarmChart · QuestionLists · CompareChart · TipBody · rotationLogic + 14 个测试 · useRotationChecks · rotation.css），Rail / Layout / translations 各一行。全套 428 个测试通过，生产构建通过，本地开发服务器上逐件点过（切 cohort、拉滑块、改阈值、点选、打勾落 localStorage）。
+
+**和原型的差别（明写）**：
+- Compare 画的是**季度超额**在档案里的路径（`groups_history.json` 现有字段）；原型那条**日线相对 SPY** 需要该文件每天带 `perf_1d`——§七 已挂给数据端，字段一到就换。
+- 核实勾落在浏览器 localStorage（按交易日），可复制成 JSON；服务器端存储另挂。
+- 同一变化的折叠（成员重叠 / 共动）没进 v1；等档案有周超额列再做。
+- 页内用应用自己的字体（Plex），卡片语法、动画、配色照 Lieflat / 原型。
+
+**踩的两个坑**：① `useGroups()` 每次渲染返回新数组，「把离开 cohort 的选中剔掉」的 effect 每次都 setState 一个新数组 → 无限重渲染（Maximum update depth）；修法是没有变化时返回同一个 state 对象。② 开发服务器靠 `frontend/public/data/output` 这个**未跟踪的软链接**读数据，新 worktree 里没有它，页面只看到「Could not load groups.json」——建 worktree 要顺手补软链接。
+
+下一步：日线数据到位后换 Compare 的线；命中率定义（F3′）定了之后写读回脚本。
