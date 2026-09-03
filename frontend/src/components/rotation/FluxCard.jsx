@@ -13,7 +13,7 @@ const W = 1040, H = 340, PAD = { l: 44, r: 150, t: 14, b: 24 }
  * grey ladder. No markers — a sudden week is read from the hover (Andy
  * 2026-09-03: 突变记号不要了).
  */
-export default function FluxCard({ shown, dates, stateDates, benchmark, picked, onSelect, note }) {
+export default function FluxCard({ shown, dates, stateDates, benchmark, picked, onSelect }) {
   const clip = useId()
   const svgRef = useRef(null)
   const [hov, setHov] = useState(null)
@@ -42,7 +42,7 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
       <div className="rot-chips">
         {shown.map((o, j) => (
           <button key={o.name} type="button" className="rot-chip" onClick={() => onSelect(o.name)} title={picked ? 'remove' : 'select'}>
-            <i style={{ background: LINE[j] }} />{o.name}{o.rel?.length ? '' : <span className="rot-meta">(no series yet)</span>} <span className="rot-meta">×</span>
+            <i style={{ background: LINE[j] }} />{o.name}{o.rel?.length ? '' : <span className="rot-meta">·</span>} <span className="rot-meta">×</span>
           </button>
         ))}
       </div>
@@ -93,7 +93,6 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
           </div>
         </div>
       ))}
-      {note && <div className="rot-note">{note}</div>}
     </div>
   )
 }

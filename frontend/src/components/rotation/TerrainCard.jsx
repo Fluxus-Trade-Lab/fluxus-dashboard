@@ -11,8 +11,10 @@ const STACK = ['Lagging', 'Improving', 'Weakening', 'Leading']   // bottom → t
  * date); expand lists who sat in each state on that window's last session.
  * Counts are over every group the ladder measures (themes, sectors,
  * factors), which is the range TSF's Current Leadership counts too.
+ * Show, don't tell (Andy 2026-09-03): the expand is a "+", the names carry
+ * no kind suffix, and nothing on the card says what it is.
  */
-export default function TerrainCard({ ladder, kindOf, selected, onSelect }) {
+export default function TerrainCard({ ladder, selected, onSelect }) {
   const [wk, setWk] = useState(0)
   const [open, setOpen] = useState(false)
   const [hov, setHov] = useState(null)
@@ -57,7 +59,7 @@ export default function TerrainCard({ ladder, kindOf, selected, onSelect }) {
           <select className="rot-sel" value={wk} onChange={(e) => setWk(+e.target.value)} aria-label="window" disabled={!m}>
             {WINDOWS.map((l, k) => <option key={k} value={k} disabled={!windowBounds(dates, k)}>{l}{windowBounds(dates, k) ? '' : ' · 待数据'}</option>)}
           </select>
-          <button type="button" className="rot-btn" aria-expanded={open} onClick={() => setOpen((v) => !v)} disabled={!m}>展开 · 谁在哪一态</button>
+          <button type="button" className="rot-btn rot-plus" aria-expanded={open} aria-label="themes in each state" onClick={() => setOpen((v) => !v)} disabled={!m}>{open ? '−' : '+'}</button>
         </div>
       </div>
       {m > 1 ? (
@@ -85,13 +87,11 @@ export default function TerrainCard({ ladder, kindOf, selected, onSelect }) {
               <div className="rot-st"><i style={{ background: STATE_LADDER[st] }} />{st} <span className="rot-meta">{byState[st].length}</span></div>
               <div className="rot-names">
                 {byState[st].length ? byState[st].map((n) => (
-                  <button key={n} type="button" className="rot-nmx" aria-pressed={selected.includes(n)} onClick={() => onSelect(n)}>
-                    {n}{kindOf(n) && kindOf(n) !== 'theme' ? <small>{kindOf(n)}</small> : null}
-                  </button>
+                  <button key={n} type="button" className="rot-nmx" aria-pressed={selected.includes(n)} onClick={() => onSelect(n)}>{n}</button>
                 )) : <span className="rot-meta">—</span>}
               </div>
             </div>
-          )) : <div className="rot-empty">这一档的名单要等产线补每组的两周态历史；计数和堆叠图已经是那一档的。</div>}
+          )) : <div className="rot-empty">—</div>}
         </div>
       )}
     </div>
