@@ -14,7 +14,7 @@ const STACK = ['Lagging', 'Improving', 'Weakening', 'Leading']   // bottom → t
  * Show, don't tell (Andy 2026-09-03): the expand is a "+", the names carry
  * no kind suffix, and nothing on the card says what it is.
  */
-export default function TerrainCard({ ladder, selected, onSelect }) {
+export default function TerrainCard({ ladder, loading, selected, onSelect }) {
   const [wk, setWk] = useState(0)
   const [open, setOpen] = useState(false)
   const [hov, setHov] = useState(null)
@@ -79,7 +79,7 @@ export default function TerrainCard({ ladder, selected, onSelect }) {
             </g>
           )}
         </svg>
-      ) : <div className="rot-empty">theme_ladder.json has no two-week history yet.</div>}
+      ) : <div className="rot-empty" style={{ minHeight: 110 }}>{loading ? '' : 'theme_ladder.json has no two-week history yet.'}</div>}
       {open && m > 0 && (
         <div className="rot-band">
           {known ? STATES.map((st) => (

@@ -13,7 +13,7 @@ const W = 1040, H = 340, PAD = { l: 44, r: 150, t: 14, b: 24 }
  * grey ladder. No markers — a sudden week is read from the hover (Andy
  * 2026-09-03: 突变记号不要了).
  */
-export default function FluxCard({ shown, dates, stateDates, benchmark, picked, onSelect }) {
+export default function FluxCard({ shown, dates, stateDates, benchmark, picked, loading, onSelect }) {
   const clip = useId()
   const svgRef = useRef(null)
   const [hov, setHov] = useState(null)
@@ -84,7 +84,7 @@ export default function FluxCard({ shown, dates, stateDates, benchmark, picked, 
             </g>
           )}
         </svg>
-      ) : <div className="rot-empty">{n ? 'Nothing selected has a series yet.' : 'The ten-week series arrives with the next nightly run of the ladder.'}</div>}
+      ) : <div className="rot-empty" style={{ minHeight: 120 }}>{loading ? '' : n ? 'Nothing selected has a series yet.' : 'The ten-week series arrives with the next nightly run of the ladder.'}</div>}
       {lines.map((o) => (
         <div key={o.name} className="rot-rib">
           <span style={{ color: LINE[o.j] }}>{o.name}</span>

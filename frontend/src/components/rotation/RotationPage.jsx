@@ -57,9 +57,9 @@ export default function RotationPage() {
       <PageHeader group="market" title="Rotation"
         meta={[`vs ${benchmark} · ${date} · ${rows.length} themes${ladderDate ? ` · ladder ${ladderDate}` : ''}`, <DataFreshnessBadge key="fresh" sessionDate={date} />]} />
 
-      <TerrainCard ladder={ladder.data} selected={names} onSelect={toggle} />
+      <TerrainCard ladder={ladder.data} loading={ladder.loading} selected={names} onSelect={toggle} />
       <PointsCard boards={boards} selected={names} onSelect={toggle} />
-      <FluxCard shown={shown} dates={seriesDates} stateDates={stateDates} benchmark={benchmark} picked={!!selected.length} onSelect={toggle} />
+      <FluxCard shown={shown} dates={seriesDates} stateDates={stateDates} benchmark={benchmark} picked={!!selected.length} loading={ladder.loading} onSelect={toggle} />
 
       <HowToRead>
         <p><b>Terrain.</b> Every group the ladder measures, placed on the two-week board each session: level = the last ten sessions' excess over {benchmark}, momentum = the last five; Leading when both are positive, Weakening when only the level is, Improving when only the momentum is, Lagging when neither. Stacked, darkest = Leading. The window select moves the board to an earlier fortnight; expand lists who sat where on that fortnight's last session.</p>
