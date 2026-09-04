@@ -42,4 +42,14 @@
   · 顺带（不用回）：本卡对外**不再引用 SQN**，故 `METRIC_SOURCES.md` 缺 SQN 口径行**已不是发布前阻塞**，降为常规挂单转数据线。另 `05_distribution.md` §六.1 前两格的记账数没跟着撤下更新（仍写「5 个 / 1-2-4-5-6」）——**读者不可见**，不影响发布。
   · 判定全文：[`06_gate_review.md`](2026-09-01_august-scorecard/06_gate_review.md) §第 2 轮（过闸）
 
+- **[09-04] `2026-09-03_noise-with-structure`**（云端夜间产线，断点续跑第 2/3 轮）· 终稿 [`Fluxus_Brand/ops/campaigns/2026-09-03_noise-with-structure/`](2026-09-03_noise-with-structure/)
+  （旗舰＝[`04_flagship.md`](2026-09-03_noise-with-structure/04_flagship.md) · 六条 X 变体 + newsletter 骨架见 [`05_distribution.md`](2026-09-03_noise-with-structure/05_distribution.md)；**V7 已由 Gate 裁定撤下独立帖，改列为 V1 配图规格，不在本包变体表内**）
+  · 平台 **X**（旗舰＝Article 长文，发后 Pin · V1–V6＝短帖）+ **Substack「How Much」**（NL 骨架，交 Mia 成稿）· 入口 **1/2/3/4/5/6**，无重复；hook 六型（反高潮 / 翻译钩 / 时差票根钩🆕 / 反面先行钩 / 自拆钩 / 能不能变红钩🆕）互不重复
+  · ⚠️ **未经 Writer Mia 成稿 / Visual Vera 配图**（两线尚无夜跑 routine，按 PIPELINE〈过渡条款〉以**毛坯**过闸）——你看到的是毛坯，不是成稿；V1 需要的配图（三行对照表，原 V7）也还没画
+  · ⏰ **窗口：常青。** 全部引用数字已关账（41/45/47→45/45/45、43/47/49/43、22/48 等），零处引用当前杀死率（C7，保质期仅几小时），不随仓库当前读数过期
+  · **需你定的 2 件事**：
+    1. **等 Mia/Vera 有 routine 再发，还是这次也按毛坯直接发**——本卡不含时效窗口（不同于上一张因等窗口错过发布的卡），等待成本较低，但拖延成本仍在你
+    2. **V1 长文的配图（三行对照表，原 V7）谁来画**——Vera 无 routine，若要按计划带图发布，需你亲自出或指派
+  · 判定全文：[`RECORD.md`](2026-09-03_noise-with-structure/RECORD.md) `## review` 节（round 1 退回 → round 2 退回窄范围一处 → round 3 独立新上下文 Gate 过闸，三轮均为不同子 agent 独立复审）
+
 ## 已批
