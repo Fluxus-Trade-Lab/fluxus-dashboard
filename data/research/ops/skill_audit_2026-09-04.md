@@ -2,16 +2,17 @@
 
 # Skill 审计 · 2026-09-04 · 四档处置
 
-**一句话结论**：38 项里真正要动手的是 9 件「退」（全部有替代件或零调用）和 12 件「修」（全是描述缺我们的黑话或与宪法条冲突、要在任务书里钉死用法）；4 件「用」加 13 份定时任务书原样保留，「建」为 0 件——这轮不新造任何 skill。插件层 11 个键留 2 个、退 9 个（其中 1 个本来就是 false）。
+**一句话结论**：38 项里真正要动手的是 3 件「退」（全部有替代件或零调用）和 13 件「修」（全是描述缺我们的黑话或与宪法条冲突、要在任务书里钉死用法）；7 件「用」+ 2 件「保留·不进路由」加 13 份定时任务书原样保留，「建」为 0 件——这轮不新造任何 skill。插件层 11 个键用 3 个、退 8 个。修复轮 1（控制器裁决 R10–R12）已收束。
 
 **Action Plan**
-1. 归档 9 件「退」（第 3 节清单，本地 mv 与 git mv，均可逆）+ 把 8 个插件键设 false——须 Andy 点头再动，理由：停插件是改配置。
-2. 12 件「修」分两类：本仓库自有的（fable-voice、shuorenhua、video-subtitles）直接改 description；superpowers 的 9 件第三方不改，触发词与宪法覆盖句写进各线任务书。
-3. 抽查（第 4 节）无一改判，判据可信；下轮周检按同一 JSON 再跑一遍看漂移。
+1. 归档 3 件「退」（第 3 节清单，本地 mv 均可逆）+ 把 8 个插件键设 false——须 Andy 点头再动，理由：停插件是改配置。
+2. 13 件「修」分两类：本仓库自有的（fable-voice、shuorenhua、video-subtitles、tearsheet）直接改 description；superpowers 的 9 件第三方不改，触发词与宪法覆盖句写进各线任务书。
+3. 2 件「保留·不进路由」（executing-plans、receiving-code-review）同插件内保留，规矩已在 CLAUDE.md。
+4. 下轮周检按同一 JSON 再跑一遍看漂移。
 
 判据（照 brief）：情境对不对得上 14 项清单 · description 有没有「做什么 + 什么时候用 + 我们的说法」（0–2 分） · 有没有真实调用痕迹 · 有没有另一件做同一件事且更好。
 
-## 用（4 件）
+## 用（7 件）
 
 | name | source | 它怎么工作 | 情境 | 冲突组 | 判定 | 理由 | 主人 | 归档动作 |
 |---|---|---|---|---|---|---|---|---|
@@ -19,8 +20,11 @@
 | growth-officer | project-agent | 增长官子 agent：把 Andy 递来的 Whop/Discord 导出或口述数字录进 data/growth/ 台账，每周一追加 metrics.csv 一行并写 ≤10 行周报，每个数字必须带来源日期、量不到标「未测量」。 | 周检 | — | 用 | 第三人称、含做什么（会员/漏斗/转化率台账）和什么时候用（「叫增长官」、Andy 给导出或口述数字时），黑话（台账、摸清存量、Whop）齐；周一记账＋周报落在周检情境，TEAM.md 明确归 Growth Gary。 | Growth Gary | — |
 | repo-janitor | project-agent | 每周 git 体检子 agent：fetch --prune 后逐项报未 push commit、脏 worktree、可删/重复分支；快进的未 push 直接 push、脏树封存 wip commit，删除类动作只列清单等 Andy 点头，≤15 行中文报告。 | 周检 | — | 用 | 第三人称、含做什么（查未 push/脏 worktree/可删分支出体检报告）和什么时候用（「跑一次大扫除」），黑话（大扫除、脏 worktree、等 Andy 点头）齐；TEAM.md 把「大扫除」和 .claude/agents/ 都划给 OPS Fable，周检情境对得上。 | OPS | — |
 | podcast-to-md | user-skill | 跑 transcribe.py（本机已打补丁走 mlx-whisper）把小宇宙/YouTube/mp3 链接转成 00-raw-transcript + meta.json，再由 Claude 在对话里写出带说话人的逐字稿、总结+金句、三个口播稿角度和最终口播稿。 | 内容产线 | — | 用 | 在用：~/.cache/podcast-to-md-work 有 42 集缓存、最近一次 09-02 13:16，~/Desktop/中文表达训练/tools/run_batch.py 拿它做批量转录喂语料库，09-02 刚为本机打了 mlx-whisper 补丁；description 第三人称、有 what+when、含「文字稿/逐字稿/口播稿/金句」中文触发词。注意：它服务的是中文表达训练那条内容产线，不是 Fluxus_Brand 的；video-subtitles 只在「转录」一步与它部分重叠，输出物不同不算重复。 | OPS | — |
+| using-superpowers | plugin-skill | 会话开头注入的元规则：只要有 1% 可能适用就必须先调 skill 再回应，流程 skill 优先于实现 skill，子 agent 忽略，用户指令（CLAUDE.md）高于 skill。 | 多情境（元规则） | — | 用 | 会话开头自动注入的元规则，是让整套 superpowers 触发的机制；不按调用次数计。 | OPS | — |
+| writing-skills | plugin-skill | 把 TDD 套到 skill 写作：先用子 agent 跑无 skill 的压力场景取基线，再写最小 SKILL.md 让 agent 合规，最后补理由化对照表堵漏洞；附 SDO 描述写法（只写何时用、不写做什么）。 | 周检 | anthropic-skills:skill-creator | 用 | spec v2 §3.2 选定的 discipline skill 迭代法（先跑无 skill 基线再写）。 | OPS | — |
+| requesting-code-review | plugin-skill | 任务完成/合并前取 BASE 与 HEAD SHA，用 code-reviewer.md 模板派一个 general-purpose 子 agent 审 diff，按 Critical/Important/Minor 分级处理返回意见。 | 发布前 | code-review、code-review:code-review | 用 | SDD 最终整支审用它的 code-reviewer.md 模板。 | OPS | — |
 
-## 修（12 件）
+## 修（13 件）
 
 | name | source | 它怎么工作 | 情境 | 冲突组 | 判定 | 理由 | 主人 | 归档动作 |
 |---|---|---|---|---|---|---|---|---|
@@ -36,20 +40,22 @@
 | using-git-worktrees | plugin-skill | 开工前先检测是否已在隔离 worktree，否则优先用平台原生工具（如 EnterWorktree），兜底 git worktree add 到 .worktrees/ 并开新分支，装依赖、跑基线测试后报 ready。 | 写代码前 | — | 修 | 对上「写代码前」；但其兜底默认（.worktrees/ + -b 具名分支 + 自动 pip install）与主树保护第 2 条（scratchpad 只基于 origin/main detached HEAD）、直推 main 标准动作（mktemp 临时树）冲突，任务书必须覆盖目录与分支策略；描述有做什么+何时用但无中文触发词。 | OPS | 第三方不改；把我们的触发词写进 SKILL_ROUTER 已废→改写进各线任务书的『该用 skill』一句 |
 | verification-before-completion | plugin-skill | 任何「完成/修好/通过」的说法之前必须在本条消息里重新跑出证据命令并读完输出，禁止 should/probably、禁止信子 agent 的自报成功。 | 收工 | — | 修 | 精确对上「收工」，与 CLAUDE.md「push 成功≠投递成功，必须核 origin/main」「完成=合进 main 且能点开」同一形状；描述有做什么+何时用，但缺「收工 / 已合进 main / 汇报」等中文触发词。 | OPS | 第三方不改；把我们的触发词写进 SKILL_ROUTER 已废→改写进各线任务书的『该用 skill』一句 |
 | writing-plans | plugin-skill | 把已批准的 spec 写成零上下文工程师也能照做的实施计划：文件结构、按任务拆的 2-5 分钟步骤（含测试代码与提交），自审无占位符后存 docs/superpowers/plans/ 并交给 SDD 或 executing-plans 执行。 | 设计/方案/plan | — | 修 | 对上「设计/方案/plan」；但其计划头缺我们的立项三件套（发布物/截止日/到期规则）、默认存 docs/superpowers/ 而非 NOW.md/proposals，任务书须补；描述只写何时用、无做什么、无中文触发词。 | OPS | 第三方不改；把我们的触发词写进 SKILL_ROUTER 已废→改写进各线任务书的『该用 skill』一句 |
+| tearsheet | project-command | 读 data/output/tickers/<SYM>.json 的 L1 数据 + WebSearch/WebFetch 抓新闻，合成 bull/bear、交易计划、催化剂等 ai_synthesis 字段写回 JSON 并单独 commit。 | 个股页 AI 段 | daloopa:tearsheet、sp-global:tear-sheet | 修 | 计划 Task 3 Step 4 / Task 8 明写迁 skills/ 并做描述优化；有真情境（个股页 AI 段）；description 缺『什么时候用』与中文说法 → 修。 | DATA ALEX | Task 3 中执行：git mv .claude/commands/tearsheet.md .claude/skills/tearsheet/SKILL.md |
 
-## 退（9 件）
+## 退（3 件）
 
 | name | source | 它怎么工作 | 情境 | 冲突组 | 判定 | 理由 | 主人 | 归档动作 |
 |---|---|---|---|---|---|---|---|---|
-| tearsheet | project-command | 读 data/output/tickers/<SYM>.json 的 L1 数据 + WebSearch/WebFetch 抓新闻，合成 bull/bear、交易计划、催化剂等 ai_synthesis 字段写回 JSON 并单独 commit。 | 无 | daloopa:tearsheet、sp-global:tear-sheet | 退 | 最后一次真实调用是 2026-05-24（AAOI/NBIS 共 4 个 ai(tearsheet) commit），此后三个多月零调用；情境清单里没有「个股页 AI 段」这一项；description 是祈使句、无「什么时候用」、无中文说法。frontend/src/components/ticker/ 五个组件仍读 ai_synthesis（209/210 个 ticker JSON 已有该字段），退役命令不影响页面。skill-os-v2 plan Task 3/8 想把它迁成 skill 当首批住户——若 Andy 要留，按该 Task 重写 description 后再进阶段三实测。 | DATA ALEX | git mv .claude/commands/tearsheet.md 到 .claude/commands/_retired/tearsheet.md（主树与 skill-os-v2 worktree 各一份，两处同步） |
 | lieflat-charts | user-skill | 按数据形状在 Lupi/Basics/Glance/Maps gallery 里锁定一个模板卡，沿用其 SVG/ECharts 骨架换数据，输出单文件 HTML 图表或 R01–R12 整页报告；默认 Mono 灰阶，可自动选 porcelain/palm/wire 色系。 | 做图表/artifact | dataviz、data:create-viz、data:data-visualization | 退 | 有情境，但同一情境已被 dataviz 覆盖且后者更好：dataviz 是 Artifact 工具强制前置加载的、色板可换成我们的 DESIGN token；lieflat 锁死 Mono/Inter、禁止混色系，与 DESIGN.v2 的 Plex + 蓝红配对冲突。DESIGN.v2.md:1028 明记它是 PolyForm Noncommercial、26 种几何「全部自己实现，只学公开样式规则」——已经把能学的学完。真实调用仅 2 个 transcript（08-15 试样 5 个 HTML），此后零调用；description 无「什么时候用」、无中文触发词。 | UI Claire | mv ~/.claude/skills/lieflat-charts 到 ~/.claude/skills/_retired/lieflat-charts |
 | openmaic | user-skill | 分阶段引导用户选 Live Demo / 本地 / 二开模式，配置 OpenMAIC 的 provider key，启动服务并提交多 agent 互动课堂生成任务。 | 无 | — | 退 | 与本项目十四个情境无一对应（它是教学课堂生成器的安装向导）；Skill 工具零调用，transcript 里只有 09-01 安装当天一个会话提到 OpenMAIC；description 第三人称、有 what+when，但无我们的说法。 | OPS | mv ~/.claude/skills/openmaic 到 ~/.claude/skills/_retired/openmaic |
-| youtube-clipper | user-skill | 六阶段流水线：查 yt-dlp/ffmpeg-full→下载 YouTube 视频+英文字幕→AI 切 2-5 分钟章节→用户选片→FFmpeg 剪辑、翻译成双语 SRT、烧录硬字幕、生成社媒文案→输出到 ./youtube-clips/<时间戳>/。 | 无 | podcast-to-md、video-subtitles | 退 | 零调用（transcripts 里 0 次 Skill 调用、0 次脚本执行、目录 02-01 装好后再没动过）且对不上任何情境——Fluxus 内容产线是 X/Substack 文字稿，没有「剪别人 YouTube 出短视频」这一环；下载+转写一步 podcast-to-md 已做且被用过，字幕翻译一步 video-subtitles 已做且被用过；另外它是第三方仓（op7418）、硬钉 model: claude-sonnet-4-5-20250514，描述第三人称有场景但无项目黑话。 | OPS | mv ~/.claude/skills/youtube-clipper ~/.claude/skills/_retired/ |
-| executing-plans | plugin-skill | 在独立会话里加载一份已写好的实施计划，先批判性审阅再逐任务照步骤执行、遇阻即停，收尾转 finishing-a-development-branch。 | 写代码前 | subagent-driven-development | 退 | SKILL.md 自己写明「有子 agent 可用时改用 subagent-driven-development」，Claude Code 一直有子 agent，所以它是被同套件里更好的一件覆盖的兜底版；描述亦无做什么、无中文触发词。 | OPS | 第三方不改；任何任务书的『该用 skill』句都不指向本件，同情境统一指向 subagent-driven-development |
-| receiving-code-review | plugin-skill | 收到审阅意见时先读完、复述、对照代码库核实再决定实现或有理有据地回推，禁止「你说得对」式表演性附和，多条意见先全部澄清再逐条实现并测试。 | 无 | — | 退 | 「处理别人给我的代码审阅意见」不在 14 项情境清单里；其核心精神（verify first、别顺着说）已由记忆 feedback_challenge_dont_agree 与 CLAUDE.md 覆盖，本仓库也不走 PR 审阅流。 | OPS | 第三方不改；任何任务书的『该用 skill』句都不指向本件 |
-| requesting-code-review | plugin-skill | 任务完成/合并前取 BASE 与 HEAD SHA，用 code-reviewer.md 模板派一个 general-purpose 子 agent 审 diff，按 Critical/Important/Minor 分级处理返回意见。 | 发布前 | code-review、code-review:code-review | 退 | 与内置 code-review skill（原生 diff/PR/分支目标、--fix、ultra 多 agent 云审）做同一件事且后者更好；本件只是一个手填模板的子 agent 派发，描述亦无做什么、无中文触发词。 | OPS | 第三方不改；任务书『该用 skill』句在「发布前」情境统一指向内置 code-review，不指向本件 |
-| using-superpowers | plugin-skill | 会话开头注入的元规则：只要有 1% 可能适用就必须先调 skill 再回应，流程 skill 优先于实现 skill，子 agent 忽略，用户指令（CLAUDE.md）高于 skill。 | 无 | — | 退 | 它是插件的路由器不是干活的件，14 项情境无一对应；「1% 就必须调」与 CLAUDE.md 决策分级/宁短勿长相悖，虽自述 CLAUDE.md 优先，仍不应被任何任务书引用为依据。 | OPS | 第三方不改；插件自动注入无法单独卸下，任何任务书的『该用 skill』句都不指向本件；要停用只能整体停 superpowers 插件（须 Andy 裁） |
-| writing-skills | plugin-skill | 把 TDD 套到 skill 写作：先用子 agent 跑无 skill 的压力场景取基线，再写最小 SKILL.md 让 agent 合规，最后补理由化对照表堵漏洞；附 SDO 描述写法（只写何时用、不写做什么）。 | 周检 | anthropic-skills:skill-creator | 退 | 三次律「第 3 次成功=固化成 skill」归 OPS 周检，情境存在；但 anthropic-skills:skill-creator 是官方件、自带 eval 跑分与描述触发优化脚本，且本件坚持「描述不写做什么」正好与本次审计所依的官方打分条 (a) 相反——重复且另一件更好。 | OPS | 第三方不改；任务书『该用 skill』句在「周检/固化 skill」情境统一指向 anthropic-skills:skill-creator，不指向本件 |
+| youtube-clipper | user-skill | 六阶段流水线：查 yt-dlp/ffmpeg-full→下载 YouTube 视频+英文字幕→AI 切 2-5 分钟章节→用户选片→FFmpeg 剪辑、翻译成双语 SRT、烧录硬字幕、生成社媒文案→输出到 ./youtube-clips/<时间戳>/。 | 无 | podcast-to-md、video-subtitles | 退 | 零调用（transcripts 里 0 次 Skill 调用、0 次脚本执行、目录 02-01 装好后再没动过）且对不上任何情景——Fluxus 内容产线是 X/Substack 文字稿，没有「剪别人 YouTube 出短视频」这一环；下载+转写一步 podcast-to-md 已做且被用过，字幕翻译一步 video-subtitles 已做且被用过；另外它是第三方仓（op7418）、硬钉 model: claude-sonnet-4-5-20250514，描述第三人称有场景但无项目黑话。 | OPS | mv ~/.claude/skills/youtube-clipper ~/.claude/skills/_retired/ |
+
+## 保留·不进路由（2 件）
+
+| name | source | 它怎么工作 | 情境 | 冲突组 | 判定 | 理由 | 主人 | 归档动作 |
+|---|---|---|---|---|---|---|---|---|
+| executing-plans | plugin-skill | 在独立会话里加载一份已写好的实施计划，先批判性审阅再逐任务照步骤执行、遇阻即停，收尾转 finishing-a-development-branch。 | 写代码前 | subagent-driven-development | 保留·不进路由 | 同插件内保留；我们的流程用 subagent-driven-development 代替 executing-plans；SKILL.md 自己写明「有子 agent 可用时改用 subagent-driven-development」，Claude Code 一直有子 agent，所以它是被同套件里更好的一件覆盖的兜底版。 | OPS | — |
+| receiving-code-review | plugin-skill | 收到审阅意见时先读完、复述、对照代码库核实再决定实现或有理有据地回推，禁止「你说得对」式表演性附和，多条意见先全部澄清再逐条实现并测试。 | 无 | — | 保留·不进路由 | 同插件内保留；receiving-code-review 的规矩已在 CLAUDE.md；「处理别人给我的代码审阅意见」不在 14 项情境清单里，其核心精神（verify first、别顺着说）已由记忆 feedback_challenge_dont_agree 与 CLAUDE.md 覆盖。 | OPS | — |
 
 ## 建（0 件）
 
@@ -65,8 +71,8 @@
 |---|---|---|---|---|
 | `superpowers@claude-plugins-official` | true | 用 | 开发主线（控制器已裁）；能力盘点里有使用痕迹 | 保持 true |
 | `document-skills@anthropic-agent-skills` | true | 用 | docx/xlsx/pptx/pdf 对上「审阅件出双版本」；能力盘点里有使用痕迹 | 保持 true |
+| `ralph-loop@claude-plugins-official` | true | 用 | Andy 09-02 亲自用它跑 5 小时冲刺并有产出；Stop-hook 定 prompt 循环与内置 /loop（间隔唤醒）不是同一机制 | 保持 true |
 | `planning-with-files@planning-with-files` | false | 退 | 已是 false；「设计/方案/plan」由 superpowers:writing-plans 接，不复开 | enabledPlugins 键保持 false |
-| `ralph-loop@claude-plugins-official` | true | 退 | 只用过一次，对不上情境清单；同形状的内置 /loop skill 已在，重复且另一件是原生 | enabledPlugins 键设 false |
 | `ui-ux-pro-max@ui-ux-pro-max-skill` | true | 退 | 零痕迹或用两天即停；UI 线的视觉决策走 DESIGN.v2 + artifact-design，不靠它 | enabledPlugins 键设 false |
 | `frontend-design@claude-plugins-official` | true | 退 | 零痕迹或用两天即停；同上，前端设计的口径在 DESIGN.v2，不需要第二个审美源 | enabledPlugins 键设 false |
 | `vercel@claude-plugins-official` | true | 退 | 零痕迹；部署走 main→Vercel 自动，且 deploy --prod 是须 Andy 先批的外部动作，不该有 skill 一键化 | enabledPlugins 键设 false |
@@ -77,7 +83,7 @@
 
 ---
 
-## 1. 冲突组（同 situation ≥ 2 件，共 7 组）
+## 1. 冲突组（同 situation ≥ 2 件，共 7 组；另 2 件对手在清单外）
 
 先说 brief 点名的四组：**含 gstack 的三组已随 gstack 整套退役而解散**——`~/.claude/skills/_retired/` 下现在躺着 gstack、review、qa、spec、ship、plan-* 等整套，它们不再出现在清单 JSON 里，所以不必再判「留谁」。四组里剩下真要判的只有一对：`code-review`（插件）vs `superpowers:requesting-code-review`。
 
@@ -99,27 +105,20 @@
 
 **superpowers = 开发主线（控制器已裁）。** 它在清单里共 14 件：
 
-- **有情境、留用（9 件，全为「修」）**：brainstorming（设计/方案/plan）、dispatching-parallel-agents（查 bug）、finishing-a-development-branch（收工）、subagent-driven-development（写代码前）、systematic-debugging（查 bug）、test-driven-development（写代码前）、using-git-worktrees（写代码前）、verification-before-completion（收工）、writing-plans（设计/方案/plan）。共同缺口是 description 零中文触发词，且其中 brainstorming、dispatching-parallel-agents、finishing-a-development-branch、subagent-driven-development、using-git-worktrees、writing-plans 的默认动作与宪法条（决策分级、主树保护六条、safe-merge、立项三件套、临时树规矩）相冲——第三方文件不改，冲突覆盖句写进各线任务书的『该用 skill』一句。
-- **无情境或被覆盖、退（5 件）**：executing-plans（被 subagent-driven-development 覆盖）、receiving-code-review（无情境）、requesting-code-review（被 code-review/code-review:code-review 覆盖）、using-superpowers（无情境）、writing-skills（被 anthropic-skills:skill-creator 覆盖）。第三方件不删，「退」的含义是任何任务书不指向它。
-- **using-superpowers 是特例**：它是插件的路由器，随插件自动注入、无法单独卸下；它的「1% 就必须调」与 CLAUDE.md 决策分级相悖，但它自述 CLAUDE.md 优先，所以现状可忍——要真停只能整体停 superpowers 插件，那是 Andy 的裁决，本审计不建议。
+- **有情境、留用（12 件：9 修 + 3 用）**：brainstorming（设计/方案/plan）、dispatching-parallel-agents（查 bug）、finishing-a-development-branch（收工）、subagent-driven-development（写代码前）、systematic-debugging（查 bug）、test-driven-development（写代码前）、using-git-worktrees（写代码前）、verification-before-completion（收工）、writing-plans（设计/方案/plan）为「修」；requesting-code-review（发布前）、using-superpowers（元规则）、writing-skills（周检）为「用」。共同缺口是 description 零中文触发词，且其中 brainstorming、dispatching-parallel-agents、finishing-a-development-branch、subagent-driven-development、using-git-worktrees、writing-plans 的默认动作与宪法条（决策分级、主树保护六条、safe-merge、立项三件套、临时树规矩）相冲——第三方文件不改，冲突覆盖句写进各线任务书的『该用 skill』一句。
+- **保留·不进路由（2 件）**：executing-plans、receiving-code-review。同插件内保留不单退；流程规矩已写进 CLAUDE.md，任何任务书不指向这两件。
+- **无情境或被覆盖、退（0 件）**：superpowers 套件内已无退件。
 
 **其余层次**：本仓库自有件（project-agent 3 件 + fable-voice）全部留用；用户级 skill 6 件里留 3 件（podcast-to-md、shuorenhua、video-subtitles），退 3 件；插件层只留 superpowers、document-skills。路由不再靠 SKILL_ROUTER（已废），靠三样：官方 description 触发 + 各线任务书的『该用 skill』句 + 本文件作为周检基线。
 
-## 3. 归档清单（「退」9 件 + 插件 9 个键）
+## 3. 归档清单（「退」3 件 + 插件 8 个键）
 
 | 件 | 层 | 动作 | 一句原因 |
 |---|---|---|---|
-| tearsheet | project-command | git mv .claude/commands/tearsheet.md 到 .claude/commands/_retired/tearsheet.md（主树与 skill-os-v2 worktree 各一份，两处同步） | 三个多月零调用、情境清单无「个股页 AI 段」；页面读 ai_synthesis 不受影响 |
 | lieflat-charts | user-skill | mv ~/.claude/skills/lieflat-charts 到 ~/.claude/skills/_retired/lieflat-charts | dataviz 覆盖且更好；锁色系与 DESIGN.v2 冲突、非商用许可 |
 | openmaic | user-skill | mv ~/.claude/skills/openmaic 到 ~/.claude/skills/_retired/openmaic | 课堂生成器安装向导，与十四情境无一对应，零调用 |
 | youtube-clipper | user-skill | mv ~/.claude/skills/youtube-clipper ~/.claude/skills/_retired/ | 零调用、无「剪 YouTube 短视频」情境，两步分别被 podcast-to-md / video-subtitles 做掉 |
-| executing-plans | plugin-skill | 第三方不改；任何任务书的『该用 skill』句都不指向本件，同情境统一指向 subagent-driven-development | 自述有子 agent 时让位 SDD，是被同套件覆盖的兜底版 |
-| receiving-code-review | plugin-skill | 第三方不改；任何任务书的『该用 skill』句都不指向本件 | 「处理审阅意见」不在情境清单，精神已在 CLAUDE.md 与记忆里 |
-| requesting-code-review | plugin-skill | 第三方不改；任务书『该用 skill』句在「发布前」情境统一指向内置 code-review，不指向本件 | 内置 code-review 做同一件事且更好 |
-| using-superpowers | plugin-skill | 第三方不改；插件自动注入无法单独卸下，任何任务书的『该用 skill』句都不指向本件；要停用只能整体停 superpowers 插件（须 Andy 裁） | 路由器不是干活件，无法单独卸下，只是不被任务书引用 |
-| writing-skills | plugin-skill | 第三方不改；任务书『该用 skill』句在「周检/固化 skill」情境统一指向 anthropic-skills:skill-creator，不指向本件 | anthropic-skills:skill-creator 官方件更好，且描述写法与打分条相反 |
 | `planning-with-files@planning-with-files` | enabledPlugins | enabledPlugins 键保持 false | 已是 false；「设计/方案/plan」由 superpowers:writing-plans 接，不复开 |
-| `ralph-loop@claude-plugins-official` | enabledPlugins | enabledPlugins 键设 false | 只用过一次，对不上情境清单；同形状的内置 /loop skill 已在，重复且另一件是原生 |
 | `ui-ux-pro-max@ui-ux-pro-max-skill` | enabledPlugins | enabledPlugins 键设 false | 零痕迹或用两天即停；UI 线的视觉决策走 DESIGN.v2 + artifact-design，不靠它 |
 | `frontend-design@claude-plugins-official` | enabledPlugins | enabledPlugins 键设 false | 零痕迹或用两天即停；同上，前端设计的口径在 DESIGN.v2，不需要第二个审美源 |
 | `vercel@claude-plugins-official` | enabledPlugins | enabledPlugins 键设 false | 零痕迹；部署走 main→Vercel 自动，且 deploy --prod 是须 Andy 先批的外部动作，不该有 skill 一键化 |
@@ -128,7 +127,7 @@
 | `code-review@claude-plugins-official` | enabledPlugins | enabledPlugins 键设 false | 零痕迹；只接 PR，本仓库不走 PR 审阅流；「发布前」情境由内置 code-review skill（非插件）接 |
 | `impeccable@impeccable` | enabledPlugins | enabledPlugins 键设 false | 零痕迹或用两天即停；与 frontend-design/ui-ux-pro-max 同形状，三件一起退 |
 
-执行顺序：本地 mv（用户级 skill）与 git mv（tearsheet，两树同步）都可逆、只影响我们自己的目录，OPS 可直接做；插件键设 false 是改 `~/.claude/settings.json` 配置，按「外部动作」条先问 Andy 一句再动。
+执行顺序：本地 mv（用户级 skill）都可逆、只影响我们自己的目录，OPS 可直接做；插件键设 false 是改 `~/.claude/settings.json` 配置，按「外部动作」条先问 Andy 一句再动。
 
 ## 4. 抽查（随机抽「退」3 件，重读原文件）
 
@@ -138,9 +137,23 @@
 |---|---|---|
 | lieflat-charts | `~/.claude/skills/lieflat-charts/SKILL.md` 开头即写「以 Mono 为保底」「同一交付禁止混用色系」「必须从仓库模板生成，违反任意一条都必须返工」；description 只讲它是什么，没有一句「什么时候用」；仓内 `DESIGN.v2.md:1028` 原文「全部自己实现——lieflat 是 PolyForm Noncommercial，只学它公开的样式规则」。 | **站得住。** 硬约束与 DESIGN.v2 的蓝红配对正面冲突，能学的已学完，dataviz 是 Artifact 强制前置件。 |
 | youtube-clipper | frontmatter 硬钉 `model: claude-sonnet-4-5-20250514`，正文第一行让人去 `npx skills add op7418/Youtube-clipper-skill` 装，是第三方仓原样；目录 mtime 停在 02-01；六阶段全是「下载别人的 YouTube→剪→烧字幕」。 | **站得住。** Fluxus 内容产线没有这一环，钉死的旧模型名也说明没人维护过。 |
-| using-superpowers | 6.3.0 版原文：`If you think there is even a 1% chance a skill might apply... you ABSOLUTELY MUST invoke`；同时有 `<SUBAGENT-STOP>` 和末段「User instructions (CLAUDE.md...) take precedence over skills」。 | **站得住。** 它确实是路由器而非干活件；CLAUDE.md 优先的自述让现状可忍，但仍不该被任何任务书引用为依据，「退」的动作（不引用）没有改的必要。 |
+| using-superpowers | 6.3.0 版原文：`If you think there is even a 1% chance a skill might apply... you ABSOLUTELY MUST invoke`；同时有 `<SUBAGENT-STOP>` 和末段「User instructions (CLAUDE.md...) take precedence over skills」。 | **审查时站得住（判退的理由成立）。** 控制器裁决 R11 后 using-superpowers 改判『用』；抽查结论对当时的『退』成立，现由裁决取代。 |
 
-抽查改判 0 件。
+抽查改判 1 件（by 控制器裁决）。
+
+---
+
+## 修复轮 1（审查 + 控制器裁决）
+
+1. **冲突组计数更正**：第 1 节表头「7 组」补注「另 2 件对手在清单外」→ 准确反映 7 真冲突组 + 2 个单件与外部工具竞争的情况。
+2. **R10 · tearsheet**：退 → 修（有真情境「个股页 AI 段」、将在 Task 3/8 迁为 skill）；移入修表、移出退表；归档动作变为 Task 3 Step 4 执行 git mv。
+3. **R11 · superpowers 五件分流**：
+   - requesting-code-review、using-superpowers、writing-skills：退 → 用（三项被裁定为实际可用）
+   - executing-plans、receiving-code-review：退 → 保留·不进路由（同插件内保留、规矩已在 CLAUDE.md）
+   - 新增「保留·不进路由」分组（2 件）
+4. **R12 · ralph-loop 插件**：退 → 用（Andy 09-02 亲用且有产出）；enabledPlugins 键保持 true。
+5. **新总数**：用 7 件（+3 from superpowers）/ 修 13 件（+1 tearsheet）/ 退 3 件（-6 to other groups）/ 保留 2 件（new）；插件用 3 个键（+1 ralph-loop）/ 退 8 个键（-1）。
+6. **体系判定更新**：superpowers 套件内已无纯「退」件，留用 12 件（9 修+3 用）+ 保留 2 件。
 
 ---
 
