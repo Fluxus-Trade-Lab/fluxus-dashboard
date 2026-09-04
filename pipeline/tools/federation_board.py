@@ -13,7 +13,9 @@ def git(*a):
 def show(p):
     return git("show", "origin/main:" + p)
 
-now = datetime.datetime.now()
+now = datetime.datetime.now()  # localtime-ok 这块板量的是「各线什么时候干的活」,
+# 不是交易日:下面每一处 now 的对手方都是本机 git 提交时间(同样是 JST),换成 ET 会让
+# 「几小时前提交」整体偏 13 小时。交易日在 _last_sess 那段单独用 ET 取,见下。
 TODAY = now.strftime("%m-%d")
 
 ROSTER = [
@@ -501,7 +503,12 @@ try:
 except Exception:      # marketcal 依赖 pandas；取不到就退成「周一到周五」的粗算，并在说明里讲清楚
     def _is_td(d):
         return d.weekday() < 5
-    _t = datetime.date.today()
+    # 交易日必须走 ET。这里是 marketcal 取不到时的退路,所以不能再 import 它;
+    # zoneinfo 是标准库、不依赖 pandas,够用。本机是 JST(早 ET 约 13 小时),
+    # 用 date.today() 在美股当天大部分时间里会算成「明天」,再往回退一天就把
+    # 上一场完成的交易日整体推后一天 —— 这正是 tests/test_no_naive_clock.py 拦的东西。
+    import zoneinfo
+    _t = datetime.datetime.now(zoneinfo.ZoneInfo("America/New_York")).date()
     while not _is_td(_t):
         _t -= datetime.timedelta(days=1)
     _last_sess = _t
@@ -548,7 +555,9 @@ def last_nonempty(csv_text, col):
 def stale_days(d):
     """读数距今几天；解析不了返回 None。"""
     try:
-        return (datetime.date.today() - datetime.date.fromisoformat(d)).days
+        # d 来自 data/growth/metrics.csv 的 date 列,是 Andy 本机记账那天,
+        # 不是交易日;两边同一个 JST 框架里相减才对得上。
+        return (datetime.date.today() - datetime.date.fromisoformat(d)).days  # localtime-ok 见上
     except Exception:
         return None
 
