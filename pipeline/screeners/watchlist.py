@@ -4,7 +4,7 @@ The Screener page is the workbench: the whole universe, thirty filter keys,
 recipes the user edits and saves. This is the other reading of the same
 fields: **zones = the questions a trader asks after the close, panels = the
 signals that answer them**, each panel a short list with RS 1M beside the
-ticker, sorted by Hybrid RS. oratnek's "Today's Watchlist" is the model; the
+ticker, sorted by Composite Score. oratnek's "Today's Watchlist" is the model; the
 change is that his nine panels are grouped into five questions, and "in N
 watchlists" counts ZONES rather than panels -- his three momentum panels all
 say "moving", so 3+ there mostly meant one thing three times.
@@ -154,7 +154,7 @@ PANELS: Dict[str, Panel] = {p.key: p for p in [
           ["liquid_leader", "_group_state"],
           lambda r: r.get("liquid_leader") is True and r.get("_group_state") == "Leading" and _ge(r, "rs_1m", 80)),
     Panel("liquid_leaders", "Liquid Leaders",
-          "avg_volume >= 2M, above SMA50, rs_3m >= 80 (course M2_L09; Alex's list). Top 25 by Hybrid RS shown, count is the whole list",
+          "avg_volume >= 2M, above SMA50, rs_3m >= 80 (course M2_L09; Alex's list). Top 25 by Composite Score shown, count is the whole list",
           ["liquid_leader"], lambda r: r.get("liquid_leader") is True),
     # --- entries ---
     Panel("ll_hl_1st", "LL-HL Structure 1st Pivot",
@@ -288,7 +288,14 @@ def _entry(r: Mapping[str, Any]) -> Dict[str, Any]:
          "chg_pct": _round(_f(r, "change_pct") * 100.0) if _f(r, "change_pct") is not None else None,
          "chase": (_f(r, "change_pct") is not None and _f(r, "change_pct") >= CHASE_PCT),
          "atr_from_sma50": _round(_f(r, "atr_from_sma50")),
-         "hybrid_rs": _round(_f(r, "h_score")),
+         # Composite Score -- the cross-sectional percentile of h_score
+         # (Andy 2026-09-04: "改成 composite score"). It carried the name
+         # `hybrid_rs` until then, which was wrong twice over: the raw
+         # h_score is a weighted MEAN of percentiles and so not itself a
+         # percentile (top decile held 0.6% of names), and 50% of its weight
+         # is fundamentals + industry, not relative strength. Sort order is
+         # unchanged: h_score_pctl is a monotone rank of h_score.
+         "composite_score": _round(_f(r, "h_score_pctl")),
          "sector": r.get("sector")}
     if r.get("_group") is not None:
         e["group"] = r.get("_group")
@@ -453,7 +460,7 @@ def _round(v, nd=1):
 
 def build(rows: Sequence[Mapping[str, Any]], *, date: str,
           group_states: Optional[Mapping[str, Tuple[str, Optional[str]]]] = None) -> Dict[str, Any]:
-    """Zones -> panels -> tickers (RS 1M beside, sorted by Hybrid RS desc), plus
+    """Zones -> panels -> tickers (RS 1M beside, sorted by Composite Score desc), plus
     the cross-ZONE count. Panels whose fields are absent from every row are
     emitted empty with measured=False. `group_states` (from groups.json via
     load_group_states) supplies the home group and its four-state; without it
@@ -502,7 +509,7 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
     cross = [{"ticker": t, "count": len(zs), "zones": [z for z in zone_order if z in zs],
               **{k: v for k, v in _entry(by_ticker[t]).items() if k != "ticker"}}
              for t, zs in zone_hits.items() if len(zs) >= MIN_CROSS_ZONES]
-    cross.sort(key=lambda c: (-c["count"], -(c["hybrid_rs"] or -1), c["ticker"]))
+    cross.sort(key=lambda c: (-c["count"], -(c["composite_score"] or -1), c["ticker"]))
 
     return {
         "date": date,
@@ -514,7 +521,7 @@ def build(rows: Sequence[Mapping[str, Any]], *, date: str,
                  "adr_exempt_zones": sorted(ADR_EXEMPT_ZONES),
                  "adr_unmeasured": adr_unmeasured,
                  "gated_rows": len(gated)},
-        "sort": "hybrid_rs desc; the number beside each ticker is rs_line_pctl_21 (oratnek's RS 1M: RS-line self-percentile, 21 sessions); rs_1m (cross-sectional) is the second reading",
+        "sort": "composite_score desc (percentile of h_score); the number beside each ticker is rs_line_pctl_21 (oratnek's RS 1M: RS-line self-percentile, 21 sessions); rs_1m (cross-sectional) is the second reading",
         "cross_zone_rule": f"count of ZONES a name appears in (not panels); >= {MIN_CROSS_ZONES} listed",
         "rs_high_rule": "rs_high = RS line (close/SPY) at a 21-session high (rs_line_pctl_21 == 100); detection only, no panel filters on it; count_rs_high per panel",
         "top_3m_rule": f"top_3m = perf_3m_pctile >= {TOP_3M_PCTILE} (top 15% of 3M performance, whole universe); oratnek's pool as fitted on three sessions; detection only, count_top_3m per panel",

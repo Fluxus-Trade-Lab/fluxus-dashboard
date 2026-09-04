@@ -169,11 +169,16 @@ class TestBuild:
             row(ticker="F", sp_signal="stop_hit", rs_1m=40, h_score=50),
         ]
 
-    def test_panels_carry_tickers_with_rs1m_sorted_by_hybrid_rs(self):
+    def test_panels_carry_tickers_with_rs1m_sorted_by_composite_score(self):
         out = W.build(self._rows(), date="2026-08-14")
         p = {pn["key"]: pn for z in out["zones"] for pn in z["panels"]}
         assert [t["ticker"] for t in p["ll_hl_1st"]["tickers"]] == ["A"]        # E is under the gate
-        assert p["ll_hl_1st"]["tickers"][0]["rs_1m"] == 95
+        first = p["ll_hl_1st"]["tickers"][0]
+        assert first["rs_1m"] == 95
+        # Andy 2026-09-04: "改成 composite score". The old key carried a
+        # weighted mean under a percentile's name; the new one is the rank.
+        assert "composite_score" in first
+        assert "hybrid_rs" not in first
         # D is in three 'moving' panels but they are ONE zone: cross-zone count 1
         assert [t["ticker"] for t in p["weekly_20_gainers"]["tickers"]] == ["D"]
 

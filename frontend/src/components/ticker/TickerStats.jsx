@@ -24,7 +24,7 @@ export default function TickerStats({ universe }) {
     ['Avg Vol (50D)', u.avg_volume ? `${(u.avg_volume / 1e6).toFixed(1)}M` : '—'],
     ['ADR%', u.adr_pct != null ? `${u.adr_pct.toFixed(1)}%` : '—'],
     ['ATR', u.atr ? fmtCur(u.atr) : '—'],
-    ['Hybrid RS', u.h_score ?? '—'],
+    ['Composite Score', u.h_score_pctl ?? '—'],
     ['RS 21D', u.rs_21d ?? '—'],
     ['RS 63D', u.rs_63d ?? '—'],
     ['Perf 1W', u.perf_1w != null ? fmtPct(u.perf_1w * 100) : '—'],
