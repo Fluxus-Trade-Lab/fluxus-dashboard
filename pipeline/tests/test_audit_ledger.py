@@ -130,6 +130,26 @@ def test_a_rate_limit_wall_warns_and_does_not_block_the_night(tmp_path):
     assert not out["runs"][0]["violations"]
 
 
+def test_no_downgrade_no_baseline_warns_and_does_not_block_the_night(tmp_path):
+    """2026-09-04, live: run 9e0c42e (session 2026-09-03) had every guard `ok`
+    -- including `no_downgrade`, which correctly reported it had nothing to
+    compare the new session against ("stored copy is session 2026-09-02,
+    candidate is 2026-09-03") -- and `audit_ledger` still exited 1, `Commit
+    and push` never ran, and the dashboard stayed on 09-02. `no-baseline` is
+    `no_downgrade`'s documented normal-day word (pipeline/no_downgrade.py:56:
+    "all `no-baseline`, all allowed through"), not a failure to classify."""
+    row = _row("2026-09-03", guards=_guards(
+        no_downgrade={"status": "no-baseline",
+                      "reason": "stored copy is session 2026-09-02, candidate is "
+                                "2026-09-03 -- a different day is the market moving, "
+                                "not the pipeline",
+                      "stored_session": "2026-09-02", "candidate_session": "2026-09-03"}))
+    out = L.run(_write(tmp_path, [row]), window=0, last_done="2026-09-03")
+    assert out["ok"], out["runs"][0]["violations"]     # the night still ships
+    assert any("L2 no_downgrade no-baseline" in x for x in out["runs"][0]["warnings"])
+    assert not out["runs"][0]["violations"]
+
+
 def test_an_unknown_status_word_is_still_fatal(tmp_path):
     """The list is a list, not a shrug. A word nobody has classified must stop
     the publish -- that is what caught the 08-27 gap in the first place."""
@@ -318,7 +338,9 @@ class TestHoldsPredicateBoundaries:
 # ---------------------------------------------------------------------------
 
 # 已知未登记、已投递给数据端待判的 guard。登记或退役之后，本行必须删掉。
-KNOWN_UNCOVERED_GUARDS = {"shortlist_feedback"}
+# no_downgrade（pipeline/no_downgrade.py，89ba7d94 09-03 落地）是比较型 guard，
+# "ok" 只表示「候选不比存量差」——没有量级证据可登记进 EVIDENCE，天然属于此表。
+KNOWN_UNCOVERED_GUARDS = {"shortlist_feedback", "no_downgrade"}
 
 
 class TestEveryLedgerGuardIsCovered:

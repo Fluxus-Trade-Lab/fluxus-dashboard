@@ -90,7 +90,23 @@ OK_WORDS = {"ok", "OK", True}
 # It stays LOUD: a warning still prints, still lands in audit_ledger_last.json,
 # and L6 still reports the fundamentals failure rate separately. What it no
 # longer does is exit 1.
-WARN_WORDS = {"degraded", "skipped", "stale", "partial", "walled"}
+#
+# "no-baseline" joined 2026-09-04, after it silently blocked every publish
+# since `no_downgrade` (pipeline/no_downgrade.py) landed in the ledger
+# (89ba7d94, 09-03). That guard's own docstring is explicit: "A different
+# session, a missing file, an unparsable file: all `no-baseline`, all
+# allowed through" -- it is the guard's NORMAL daily word, since every new
+# trading day's candidate session differs from the stored one by
+# construction. audit_ledger never learned that vocabulary, so the L2 loop
+# fell through to its `else` branch and flagged the one guard that was
+# working correctly as the violation. Run 9e0c42e (2026-09-04, session
+# 2026-09-03) is the caught case: every other guard "ok", the pipeline's own
+# no_downgrade check said "candidate is fine, nothing to compare against" --
+# and `audit_ledger` still failed the job before "Commit and push" ran,
+# leaving the dashboard stuck on 09-02 even though good 09-03 data had
+# already been computed on disk. Same shape as WALLED above: two guards,
+# two vocabularies, never compared.
+WARN_WORDS = {"degraded", "skipped", "stale", "partial", "walled", "no-baseline"}
 FUND_FAIL_WARN = 0.20      # >20% of the night's fundamentals fetches failing
 DRIFT_WARN = 0.10          # universe rows moving >10% vs the window median
 
