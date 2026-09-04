@@ -1142,3 +1142,25 @@ Zac 09-04 晨报 §三① 已量出根因：`steve-night-campaign` **不是没�
 **下一班第一件事**：确认此刻 ET 时段（04:00 后进入盘中禁窗，禁跑到 16:15 ET）；禁窗内只监测/告警，16:15 ET 后再重跑 `daily-data-update.yml`；若仍是 universe_quality severe/yfinance 限流,继续判 B 类可重跑,不需要再查 audit_ledger（已修）。
 
 — 数据哨兵（定时任务，2026-09-04）
+
+## [2026-09-04 04:16–04:39 UTC / 00:16–00:39 ET] 数据哨兵 —— 第 2 班：重跑仍败，上游从「部分限流」恶化为「近乎全灭」
+
+**回执**：上一班（03:16–04:10 UTC）判 B 类上游限流、交下一班接力，未留待办给本班——本班按其交接执行。
+
+**健康检查**：`data/output/breadth.json` 最新 session 仍是 2026-09-02，落后一个交易日（2026-09-03 未落地）。此刻 00:16 ET，早于 04:00 ET 盘中禁窗（`pipeline/screeners/run_all.py:454-464`），可发时段内。
+
+**动作**：
+1. 无在飞 run，直接 `workflow_dispatch` 触发新一轮（run [33836209238](https://github.com/Fluxus-Trade-Lab/fluxus-dashboard/actions/runs/33836209238)），轮询 18 分钟至 completed——**仍失败**。
+2. 追查失败日志（非仅读 ledger 摘要，本班多做一步：拉了 `update-data` job 的完整日志）：
+   - OHLC 批量下载本身**正常**：`Got OHLC for 5568/5630 tickers (62 missing, 1.1%)`（04:25 UTC）。
+   - 但紧接着 04:29:49–51 两秒内密集出现 **`HTTP Error 401: Invalid Crumb`**（Yahoo quoteSummary 端点鉴权失败，非普通限流的 429/503），随后 universe_quality 判 severe：**avg_volume、ema10/20/21、atr、rs_126d/1m/21d/3m 等近 80 列 100% 缺失**（对比上一班的 ~65 列 96–98%），`tradeable` 从上一班的 46 **跌到 0**——"a feed that worked has died" 的范围在扩大，不是原地踏步。
+   - `avg_volume` 是 Finviz 直接抓取字段（非 yfinance 衍生），也 100% 缺失，说明不是单一 yfinance 技术指标计算环节的问题，而是更大范围的数据在这轮全灭——**怀疑是 GitHub Actions 共享 IP 池被 Yahoo 判定为滥用而临时封锁鉴权（Invalid Crumb 是 Yahoo 反爬 crumb/cookie 机制失效的典型信号）**，而非我们代码新引入的 bug（fundamentals_store 自身仍报 400/400 成功，说明部分端点用了不同的鉴权路径还能过）。
+   - 未发现新的代码回归证据（run_all.py / adapters 无相关改动落在今天失败窗口内），**判断仍是 B 类上游限流，只是这一轮撞得更狠**，不改判类别，不动 `pipeline/screeners|tickers|adapters`（超出本线 safe-merge 白名单，按 CLAUDE.md 需交 DATA ALEX，不自行改）。
+
+**结果**：dashboard 仍停在 **2026-09-02**。过去约 2.5 小时（02:08–04:39 UTC）连续 **7 次**重跑同一形状失败，且最近一次实测比前几次更差（tradeable 46→0）。本班判断：继续在同一小时内重跑边际收益低（IP 未换），交下一整点班接力——**这不是「等下一轮」的搪塞，是待的对象明确**：等下一次 GitHub Actions 分配到未被 Yahoo 标记的 runner IP，预计下一班（约 05:xx ET）自然获得。
+
+- [09-04] 🔴 **数据哨兵**：B 上游限流恶化(yfinance,`HTTP 401 Invalid Crumb`,universe_quality severe→近全灭,tradeable 46→0) · run 33836209238 · 已重试至第 2 班 · dashboard 仍停在 2026-09-02(09-03 交易日两天未落地) · 下一步：下个整点接力重跑,盘中禁窗(04:00–16:15 ET)内只告警不重跑
+
+**下一班第一件事**：确认此刻 ET 时段是否已进入 04:00–16:15 盘中禁窗；禁窗内只监测/告警不重跑。窗外则直接 `workflow_dispatch` 重跑，若仍是 universe_quality severe/401 Invalid Crumb，继续判 B 类，不需要再深挖（本班已定位到具体错误签名）；若连续到第 4–5 班仍未恢复，建议升级为「需要人工介入排查 Yahoo/IP 封锁」而非继续无限重跑。
+
+— 数据哨兵（定时任务，2026-09-04）
