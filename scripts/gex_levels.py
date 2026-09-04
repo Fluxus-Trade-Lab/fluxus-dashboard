@@ -39,7 +39,43 @@ Output: gex_<SYMBOL>_<YYYYMMDD>.json and .csv in the data/gex/ directory.
 """
 import argparse, datetime as dt, json, math, os, sys
 import pandas as pd
-from ib_async import IB, Index, Stock, Option
+
+# ib_async is an OPTIONAL dependency and is deliberately absent from
+# pipeline/requirements.txt -- `pipeline/ibkr.py:48` already imports it inside a
+# function for the same reason. Here it was at module scope, and that one line
+# was the whole reason `tests/gex/test_resting.py` could not even be COLLECTED
+# on a machine (or a CI runner) without the IBKR stack: that test loads this
+# file by path to reach its pure helpers and never opens a connection.
+#
+# Binding failure-on-use instead of failure-on-import keeps every behaviour
+# identical wherever ib_async IS installed -- the names come from the same
+# import, unchanged -- while making the module importable where it is not. A
+# plain `= None` would have turned a clear ModuleNotFoundError into a
+# `NoneType is not callable` three frames away, so the placeholders raise the
+# original error with the name that needed it.
+try:
+    from ib_async import IB, Index, Stock, Option
+except ModuleNotFoundError as _e:                           # pragma: no cover
+    # Python unbinds an `except ... as NAME` target when the block ends, so the
+    # original error has to be copied out before the class can close over it --
+    # otherwise the placeholder raises NameError instead of the message it was
+    # written to give. Caught by actually calling one of these, not by reading.
+    _no_ib = _e
+
+    class _NeedsIBKR:
+        def __init__(self, name):
+            self._name = name
+
+        def __call__(self, *a, **k):
+            raise ModuleNotFoundError(
+                f"{self._name} needs ib_async, which is not installed. "
+                f"This script talks to IB Gateway/TWS; install it with "
+                f"`pip install ib_async`.") from _no_ib
+
+    IB = _NeedsIBKR("IB")
+    Index = _NeedsIBKR("Index")
+    Stock = _NeedsIBKR("Stock")
+    Option = _NeedsIBKR("Option")
 
 # Running this as a script puts scripts/ on sys.path, not the repo root, so the
 # pipeline package is not importable without help.
