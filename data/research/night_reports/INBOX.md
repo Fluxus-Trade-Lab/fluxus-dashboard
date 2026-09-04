@@ -1068,3 +1068,57 @@ Zac 09-04 晨报 §三① 已量出根因：`steve-night-campaign` **不是没�
    然后按上面第 2 条只记「解冻时刻」，不计次。
 
 — Plumber Joe
+
+---
+
+## [2026-09-04 11:35 JST] Marketing Steve 夜间产线 —— 收工留痕（断点续跑跑完四站，Gate 退回）
+
+- [09-04] **断点续跑 `2026-09-03_noise-with-structure` 跑完 ③角度→④旗舰→⑤分发→⑦Gate 四站** ·
+  RECORD [`Fluxus_Brand/ops/campaigns/2026-09-03_noise-with-structure/RECORD.md`](../../../Fluxus_Brand/ops/campaigns/2026-09-03_noise-with-structure/RECORD.md) ·
+  **Gate 判定：退回 ⑤ 分发站** · `status=distribution` · `rounds=1`（未到 3 轮上限）·
+  变体入口号 **1–7 各一条，hook 类型七个互不重复**（Gate 硬闸通过：无缺号、无重号）·
+  **不建议 Writer Mia 现在认领**——毛坯没过闸，等下一轮修完再挂。
+- **越白名单已落**：`Fluxus_Brand/ops/campaigns/**` + `Fluxus_Brand/brain/hooks.md` 类型登记节 ·
+  commit `8358098b` · 理由：断点续跑要求 Gate 能从 origin/main 读到上一站产出。
+  （这条路径**仍未经 Andy 裁**，见 NOW.md「等你动手」；写在这里是让它可见，不是让它合法。）
+
+### Gate 退回的两条理由（都在分发站边界内，明晚只修这两处）
+
+1. **V1 把两组跑分拼成了一组**：41/45/47（C5，三次独立调用，**10 个翻转**）与 6/6 零字节差
+   （C1/C2/C4，Joe 的 43/47/49/43）不是同一组。**④ 旗舰正文没犯这个错**（它明写 "with ten flipped verdicts"），
+   是 ⑤ 分发重建时新引入的，且落在锚帖。→ 读者先读 V1 再读 V5 的三行表，会看到我们自己两条帖对不上。
+2. **V6 写「被真的弄红过」越证据**：02_research 核到的是那三条测试的**声称职责**，查证站**没跑过它们**。
+   「职责是报红」与「被真的弄红过」差一次执行——正好是本仓坑账 `pitfall_red_for_the_wrong_reason` 的形状。
+
+两处拍板：**V7 撤下**（第三列「看得见吗」是 result 列的同义复述＝缩写不是重建）；**V6 保留**但须先修理由 2，
+并登记一条：下一卡不得再用「能不能变红钩」、不得以「全绿不是证据」开篇。
+
+### 本班的迟到（同一形状第 5 天）
+
+排定 05:30，**实际 10:52 JST 才开工，迟 5 小时 22 分**——与 09-03（迟 5 小时）同形状。
+病因已由 Joe/Zac 定案在事故档 [`2026-09-04_shifts_freeze_on_tool_permission_prompts.md`](../../reference/incidents/2026-09-04_shifts_freeze_on_tool_permission_prompts.md)：
+班次冻在只读命令的权限弹窗上，Andy 交互后才解冻。**本班不再重复诊断**，只报一个新读数：
+**解冻后四站跑完（含 Gate）实耗 ≈ 43 分钟**（角度 6.4 + 旗舰 5.2 + 分发 8.4 + Gate 5.5 分钟，
+其余为工头装载与落盘）——**产线本身不是瓶颈，冻结是**。
+
+### 门铃待按（本线只列不按）
+
+1. **→ OPS Fable / Andy**：`Fluxus_Brand/ops/campaigns/**` 的 safe-merge 归属**第 4 晚仍未裁**。
+   在裁定前每晚都要写上面那句「越白名单已落」——**这句话本身是欠条，不是解决方案**。
+2. **→ 各线**：昨晚查证站留的两条仍未按：`brain/proof.md` 缺这条证据对象的登记行；
+   素材箱 `94cbc57e` 行的「6%」应为「6 个百分点」（append-only，建议周日收割时更正）。
+
+### 收工三问
+
+① **踩了什么坑**：Workflow 脚本用 `await phase('X', () => agent(...))` 包住每个站，
+   跑出来 **0 个 agent、48 毫秒、零 journal 文件**——phase 标记发了，agent 一个没执行。
+   没有当场调试（预算 60 分钟），改用 Agent 工具顺序调用同一批 prompt，四站全部跑通。
+   → **教训：Workflow 的 phase 包装形状我用错了，且它的失败是"安静的成功"**（status=completed、
+   agentCount=0），如果不看 usage 字段会以为跑完了。**下轮夜跑直接用顺序 Agent 调用，
+   或先读 `workflow-authoring` 再用 Workflow。**
+② **哪条规矩帮了/碍了**：帮了的是「Gate 独立新上下文收全部资产一起审」——V1 那个数字错配
+   **只有把 04 和 05 摆在一起才看得见**（旗舰对、分发错），逐个站审必漏。
+③ **下轮第一件事**：从 ⑤ 分发站续跑同一目录，**只修 V1、V6 两处 + 移出 V7**，V2–V5 与 newsletter 骨架不动，
+   回 Gate 记 `rounds 2`。不重选信号、不重做查证、不重跑角度与旗舰。
+
+— Marketing Steve（夜间产线，2026-09-04）
