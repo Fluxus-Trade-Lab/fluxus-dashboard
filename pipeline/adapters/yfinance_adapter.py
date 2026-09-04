@@ -966,6 +966,15 @@ class YfinanceAdapter(BaseAdapter):
                     'vcs': vcs,
                     **sp_row,
                     'ti65': sb['ti65'], 'mdt': sb['mdt'], 'min_vol_3d': sb['min_vol_3d'],
+                    # The helper has returned prev_volume since it was written
+                    # and run_all's export list has always named it, but this
+                    # line -- the only place a helper key becomes a universe
+                    # column -- carried three of the four. So `v > v1`, a hard
+                    # condition of the Stockbee 4% scan, has been unevaluable
+                    # from universe.json the whole time (the DATA_CONTRACTS S2
+                    # debt of 2026-08-24). export_cols filters silently on
+                    # missing columns, so nothing ever went red.
+                    'prev_volume': sb['prev_volume'],
                     'ad_ratio_20': af['ad_ratio_20'], 'cmf21': af['cmf21'],
                     'ema21_low_dist': ema21_low_dist,
                     'ema21': ema21,

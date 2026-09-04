@@ -366,15 +366,54 @@ class TestStockbeeAnticipationInputs:
         hist = pd.DataFrame({"Close": [10.0], "Low": [9.0], "Volume": [100_000.0]})
         assert stockbee_ratios(hist)["prev_volume"] is None
 
-    def test_prev_volume_reaches_the_universe_row(self):
+    def test_prev_volume_reaches_the_universe_row(self, monkeypatch):
         """The helper carrying the field is a different claim from the field
-        reaching the file the scan reads. Both halves of the 08-17 unit swap
-        went wrong in exactly that gap, so the export list is asserted too."""
-        from pathlib import Path as _P
-        from pipeline.screeners import run_all
-        src = _P(run_all.__file__).read_text()
-        cols = src.split("universe_cols = [", 1)[1].split("]", 1)[0]
-        assert "'prev_volume'" in cols
+        reaching the file the scan reads.
+
+        This test used to read run_all's source and grep the export list for
+        the string. It passed for weeks while the column did not exist: the
+        list named it, but the line that turns helper keys into universe
+        columns carried three of the four, and export_cols drops missing
+        columns without a word. Grepping the manifest is not checking the
+        truck. So the enrichment actually runs here, and the column is
+        asserted on the frame that comes out.
+        """
+        import numpy as np
+        import pandas as pd
+        from pipeline.adapters import yfinance_adapter as YA
+
+        n = 260
+        idx = pd.bdate_range("2026-01-01", periods=n)
+        rng = np.linspace(10.0, 20.0, n)
+
+        class _Yahoo:
+            @staticmethod
+            def download(batch, **kw):
+                cols = pd.MultiIndex.from_product(
+                    [list(batch), ["Open", "High", "Low", "Close", "Volume"]])
+                data = {}
+                for t in batch:
+                    data[(t, "Open")] = rng
+                    data[(t, "High")] = rng * 1.02
+                    data[(t, "Low")] = rng * 0.98
+                    data[(t, "Close")] = rng
+                    data[(t, "Volume")] = np.linspace(1e6, 2e6, n)
+                return pd.DataFrame(data, index=idx, columns=cols)
+
+        monkeypatch.setattr(YA, "yf", _Yahoo)
+        monkeypatch.setattr(YA.time, "sleep", lambda s: None)
+        monkeypatch.setattr(YA, "_expected_session", lambda: None)
+        monkeypatch.setattr(YA.YfinanceAdapter, "_fetch_spy_close",
+                            staticmethod(lambda: None))
+
+        universe = pd.DataFrame({
+            "ticker": ["AAA", "BBB"], "sector": "Technology",
+            "industry": "Software", "market_cap": 1e9,
+            "close": None, "change_pct": None, "volume": None,
+        })
+        out = YA.YfinanceAdapter().enrich_universe(universe, batch_size=4)
+        assert "prev_volume" in out.columns
+        assert out["prev_volume"].notna().all()
 
 
 class TestLiquidLeader:
