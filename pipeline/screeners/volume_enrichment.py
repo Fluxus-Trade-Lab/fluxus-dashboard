@@ -68,8 +68,11 @@ def _one_pass(names: Sequence[str], out: Dict[str, Optional[float]],
     """Fill `out` for `names`, in batches. Never raises."""
     import yfinance as yf
 
+    from pipeline.adapters.yahoo_budget import BUDGET
+
     for i in range(0, len(names), chunk):
         batch = list(names[i:i + chunk])
+        BUDGET.before_batch(f"vol_5d_50d {label}")
         try:
             df = yf.download(batch, period="3mo", interval="1d",
                              group_by="column", threads=True,
@@ -77,21 +80,27 @@ def _one_pass(names: Sequence[str], out: Dict[str, Optional[float]],
         except Exception as e:  # noqa: BLE001 -- vendor errors are data, not bugs
             logger.warning("vol_5d_50d %s: batch %d-%d failed: %s",
                            label, i, i + len(batch), e)
+            BUDGET.note_batch(len(batch), 0, e, f"vol_5d_50d {label}")
             continue
         if df is None or df.empty:
             logger.warning("vol_5d_50d %s: batch %d-%d came back empty",
                            label, i, i + len(batch))
+            BUDGET.note_batch(len(batch), 0, None, f"vol_5d_50d {label}")
             continue
         try:
             vol = df['Volume']
         except KeyError:
+            BUDGET.note_batch(len(batch), 0, None, f"vol_5d_50d {label}")
             continue
         # single-ticker downloads come back unstacked
         if isinstance(vol, pd.Series):
             vol = vol.to_frame(batch[0])
+        got = 0
         for t in batch:
             if t in vol.columns:
                 out[t] = ratio_from_volumes(vol[t])
+                got += 1
+        BUDGET.note_batch(len(batch), got, None, f"vol_5d_50d {label}")
 
 
 def fetch_volume_ratios(tickers: Iterable[str], chunk: int = _CHUNK,

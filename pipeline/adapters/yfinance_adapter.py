@@ -12,6 +12,7 @@ import yfinance as yf
 from scipy.stats import rankdata
 
 from .base_adapter import BaseAdapter
+from .yahoo_budget import BUDGET
 from ..constants.tickers import STOCK_GROUPS
 from ..constants.leveraged import get_leveraged_etfs
 from ..screeners.atr_enrichment import atr_multiple_from_levels
@@ -653,23 +654,30 @@ class YfinanceAdapter(BaseAdapter):
                 batch = symbols[i:i + size]
                 logger.info(f"  yfinance {tag} batch {i // size + 1}: "
                             f"{len(batch)} tickers")
+                # Whoever hit the wall last -- this module or the fundamentals
+                # store or the ticker fetcher -- set a clock we all wait on.
+                BUDGET.before_batch(f"enrich {tag}")
+                got_before = len(all_data)
+                err: Exception | None = None
                 try:
                     data = yf.download(batch, period='1y', group_by='ticker',
                                        progress=False, threads=True)
-                    if data.empty:
-                        continue
-                    for t in batch:
-                        try:
-                            if len(batch) == 1:
-                                hist = _flatten_yf_columns(data).dropna()
-                            else:
-                                hist = data[t].dropna()
-                            if len(hist) >= 20:
-                                all_data[t] = hist
-                        except Exception:
-                            pass
+                    if not data.empty:
+                        for t in batch:
+                            try:
+                                if len(batch) == 1:
+                                    hist = _flatten_yf_columns(data).dropna()
+                                else:
+                                    hist = data[t].dropna()
+                                if len(hist) >= 20:
+                                    all_data[t] = hist
+                            except Exception:
+                                pass
                 except Exception as e:
+                    err = e
                     logger.warning(f"  Batch download failed: {e}")
+                BUDGET.note_batch(len(batch), len(all_data) - got_before,
+                                  err, f"enrich {tag}")
 
         sweep(tickers, batch_size, "pass 1")
 
@@ -698,7 +706,14 @@ class YfinanceAdapter(BaseAdapter):
             logger.warning(
                 "  %d/%d tickers still missing after %s pass(es) — retrying "
                 "in smaller batches", len(missing), len(tickers), attempt)
-            time.sleep(20 * attempt)
+            # Exponential, not 20*attempt. The linear ladder was written from
+            # the 2026-08-18 night and was still too short on 2026-09-04, when
+            # six dispatched runs an hour apart walked the throttle from 429
+            # all the way to `HTTP 401 Invalid Crumb` and a tradeable count of
+            # zero. Waiting longer costs minutes; not waiting cost two days of
+            # a stale dashboard. BUDGET may already have slept us -- these
+            # compose, and over-waiting is the cheap direction.
+            time.sleep(30 * (2 ** (attempt - 1)))
             before = len(all_data)
             sweep(missing, max(50, batch_size // 4), f"retry {attempt}")
             if len(all_data) == before:

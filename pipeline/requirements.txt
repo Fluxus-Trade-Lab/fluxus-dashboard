@@ -1,5 +1,22 @@
+# The vendor-facing pins are exact on purpose. yfinance owns the crumb/cookie
+# handshake with Yahoo and its behaviour has changed across minor releases;
+# with an open upper bound, every night's CI install was an uncontrolled
+# input -- "which client did we use last night" had no answer in the repo.
+# 1.7.0 is the version that ran the successful nights of 2026-09-01..09-03
+# (runs 33477559153, 33571359007, 33597360358, 33695423921), so it is the
+# version we know works against Yahoo today.
+#
+# To bump: change the pin, run the nightly by hand once (workflow_dispatch,
+# outside 09:30-16:15 ET), and only keep the new version if that run lands
+# data. Never bump blind -- a client-side handshake change looks exactly like
+# a throttle from the log side.
+yfinance==1.7.0
+# yfinance's HTTP transport (it uses curl_cffi's browser impersonation for the
+# crumb handshake). Pulled in transitively, named here so the install is
+# legible and so a transport change shows up as a diff in this file.
+curl_cffi>=0.15
+
 pandas>=2.0
-yfinance>=0.2.31
 requests>=2.31
 scipy>=1.9.0
 anthropic>=0.40.0

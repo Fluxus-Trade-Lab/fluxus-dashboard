@@ -43,6 +43,10 @@ from typing import Callable, Dict, Iterable, List, Mapping, Optional, Sequence
 
 import pandas as pd
 
+# Aliased on import: this module's own BUDGET is an integer (how many tickers
+# to refresh tonight). Two different quantities must not share a name.
+from .yahoo_budget import BUDGET as YAHOO_BUDGET
+
 log = logging.getLogger(__name__)
 
 STORE = Path("data/reference/fundamentals.json")
@@ -157,6 +161,13 @@ def refresh(store: Dict[str, Dict], tickers: Iterable[str], *, budget: int = BUD
                         hit_wall = True
                         log.warning("fundamentals: %d consecutive failures (rate limit wall)",
                                     consecutive)
+                        # Say it out loud. This wall detector was the only real
+                        # one in the pipeline, and its verdict used to stay in
+                        # this function -- the OHLC sweep would keep hammering
+                        # the same host through the same wall, minutes later,
+                        # knowing nothing. Now every Yahoo caller waits.
+                        YAHOO_BUDGET.note_batch(consecutive, 0, None,
+                                                "fundamentals wall")
                         # Everything not yet SUCCESSFUL is the wall's victim --
                         # both the queued names we can cancel and the ones that
                         # already came back empty because the limit was already
@@ -179,6 +190,8 @@ def refresh(store: Dict[str, Dict], tickers: Iterable[str], *, budget: int = BUD
     todo = list(due)
     workers_now = workers
     while todo:
+        # Another Yahoo caller may have hit the wall while this store was idle.
+        YAHOO_BUDGET.before_batch("fundamentals")
         p_ok, p_fail, hit_wall, remaining = _pass(todo, workers_now)
         ok += p_ok
         fail += p_fail
