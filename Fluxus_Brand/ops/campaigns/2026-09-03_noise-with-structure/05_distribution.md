@@ -4,8 +4,8 @@
 > 毛坯当素材库用：正文里出现的每个数字都能在 04 §二 的出处表上找到编号，⛔ **零处引用 C7（当前杀死率）**。
 > 语言：对外一律 EN（`brain/x.md`）。**本站无任何发布权**——过 Gate → `APPROVAL_QUEUE.md` → Andy 签字。
 
-**产出**：X 变体 **6 个已写全文**（入口 1/2/3/4/5/6）+ **入口 7 规格交 Visual Vera**（本站不代画）+ **newsletter 变体 1 个**（`brain/newsletter.md` 顶部「开站状态：已开」→ 照产）。
-**入口号 1–7 各占一条，hook 类型 7 个互不重复**，其中 **2 个是首次使用**（已在 `brain/hooks.md`〈类型登记〉append ⏳ 行）。
+**产出（09-04 第 2 轮修订，见文末〈本轮修订记录〉）**：X 变体 **6 个已写全文**（入口 1/2/3/4/5/6）+ **入口 7 本轮撤下**（Gate 09-04 裁决：独立性不成立，三行表保留为 V1 配图规格，不再作独立帖）+ **newsletter 变体 1 个**（`brain/newsletter.md` 顶部「开站状态：已开」→ 照产）。
+**入口号 1–6 各占一条，hook 类型 6 个互不重复**，其中 **2 个是首次使用**（已在 `brain/hooks.md`〈类型登记〉append ⏳ 行）。入口 7 本卡不出。
 
 ---
 
@@ -19,10 +19,10 @@
 | V4 | **4 · 可复用物** | **反面先行钩**（⏳ 在册） | 唯一一条读者今晚能抄到自己台账上的**动作清单**，且三步各自带「做了等于没做」的反例；零叙事、不复述故事 |
 | V5 | **5 · 批判做法** | **自拆钩**（⏳ 在册） | 唯一一条回答「**我明明检查过**」这个反驳：把我们自己那三次「全绿」的稳定性自检拆开；结果帖和清单帖都不处理这个反驳 |
 | V6 | **6 · 反馈环** | **能不能变红钩**（🆕 首用） | 唯一一条把这台仪器当**台账对象**报过去式数字（四晚零测试 → 同一 commit 补 7 条 / 其中 3 条被真的弄红过），并给出一条与本卡 thesis 不同的判据：绿不是证据，被弄红过才是 |
-| V7 | **7 · 压缩图** | **对照钩**（⏳ 在册） | 三种测法 × 同一处污染 × **一列「看得见吗」**——那一列是 V5 正文里没有的东西；V5 是论证，V7 是可存的对照表（⚠️ 独立性最弱的一条，Gate 判词见文末） |
+| ~~V7~~ | ~~7 · 压缩图~~ | ~~对照钩~~ | **本轮撤下**（Gate 09-04 裁决：与 V5 三行表重叠、独立性不成立）——三行表保留，改列为 V1 的配图规格，见文末 V7 节 |
 | NL | （Substack） | — | X 全看过的人打开仍有新东西：22/48 的精度限定、p 值为什么不算证明、「损伤其实很小」这半、以及为什么我们自己造仪器（X 装不下的上下文） |
 
-⚠️ **本卡七入口全用满**（角度站判定七入口全可用，因有长载体）。日推按 `brain/x.md`「一个入口一条」排期，**不是一天一条**。
+⚠️ **本卡六入口发帖**（入口 7 本轮不出，角度站原判七入口全可用，但 Gate 09-04 裁决 V7 独立性不成立，见文末）。日推按 `brain/x.md`「一个入口一条」排期，**不是一天一条**。
 
 ---
 
@@ -36,18 +36,21 @@ Three runs of the same check gave 41, 45, 47. The gap is small enough that the
 reasonable thing is to average it and move on — which happens to be the one move
 that guarantees you never find out what you were looking at.
 
-Nobody asked how big the wobble was. One question got asked instead: the readings
-that flipped — do they look like each other? Six out of six, identical along an
-axis that is nowhere in the score. Same protocol after the fix: 45, 45, 45,
-identical position by position.
+A separate, earlier measurement of the same tool had already turned up six
+verdicts that changed sides between two of its runs. Nobody asked how big that
+swing was either. One question got asked instead: the six that flipped — do
+they look like each other? Six out of six, identical along an axis that is
+nowhere in the score. Same protocol as the 41/45/47 run, after the fix: 45, 45,
+45, identical position by position.
 
 What that axis was, and the three-step swap it leaves you with:
 ↓ [X Article]
 ```
-（配图 = 入口 7 的三行对照表；长文发布后 **Pin 到 profile**，`brain/x.md` 载体规则。）
+（配图 = 三行对照表，规格见文末「V1 配图规格」节；长文发布后 **Pin 到 profile**，`brain/x.md` 载体规则。）
 
 **独立存在理由**：它是唯一交付**结果对**的变体——「41/45/47 → 45/45/45 逐位相同」这组前后对照只在这里出现一次。轴（字节数）、机制（缓存判据）、清单（三步）全部**扣着不给**，所以读过 V2–V6 任何一条的人来读它，拿到的是「原来前后差这么多」而不是重复；反过来只读它的人，答案仍在长文里。
 **⛔ 自查**：无「6%」（本条不出现跨度数字）· 无 C7 · 未断言「多跑几次看不见它」· 主语是 check / question，不是人。
+**⚠️ 09-04 第 2 轮修订（退回理由 1 的修法）**：原文把「41/45/47」（C5，三次独立调用，10 个翻转）与「六个全中」（C4，映射自 Joe 四次跑分里翻转的那 6 个，属另一组测量）拼成了一句，读者只能读成同一组跑分里的 6 个翻转——而那三次实际是 10 个。现改为明写「a separate, earlier measurement」+「between two of its runs」，把两组测量的边界立起来；「after the fix」只回接 41/45/47 那组（C5 本身就是这组的前后对），不再暗示六个翻转也来自这三次。
 
 ---
 
@@ -180,25 +183,28 @@ Past tense, our own ledger. The tool we use to grade our tests had been running
 four nights with zero tests of its own. The commit that fixed its self-noise
 added seven.
 
-Three of those seven are the ones that count, because they are the three that
-have been made to go red on purpose. Take away the flag that suppresses the
-bytecode cache — the test has to report the leftover file. Hand it a genuinely
-flaky test — it has to come back UNSTABLE, not a kill. Hand it something that
-hangs — it has to report no verdict, not a kill.
+Three of those seven exist for one job each, and none of the three is "pass
+quietly": take away the flag that suppresses the bytecode cache, and one of
+them has to report the leftover file — not stay silent about it. Hand another
+a genuinely flaky test, and it has to come back UNSTABLE, not a kill. Hand the
+third something that hangs, and it has to report no verdict, not a kill.
 
-A green suite tells you nothing about whether it can go red. Three of ours have
-been made to. That is the number we would put in front of anybody.
+A green suite tells you nothing about whether it can go red. Three of ours are
+built with exactly one way to pass: report the specific failure they were
+named to catch. That is the number we would put in front of anybody.
 ```
 
-**独立存在理由**：唯一一条把这台仪器当**台账对象**报表现数据（四晚零测试 / 7 条 / 3 条被真的弄红过），也是唯一一条给出**与本卡 thesis 不同的判据**：绿不是证据，被弄红过才是。看过 V1–V5 的读者在这里第一次看到「事后我们改了什么工作方式」。
+**独立存在理由**：唯一一条把这台仪器当**台账对象**报表现数据（四晚零测试 / 7 条 / 3 条按名各扛一个失效场景），也是唯一一条给出**与本卡 thesis 不同的判据**：绿不是证据，专职把关才是。看过 V1–V5 的读者在这里第一次看到「事后我们改了什么工作方式」。
 **⛔ 自查**：只报过去式、无预告 · 无 C7 · 未提「测试测的是模块不是接线」（那是弃选 #6，留给下一张卡）——**本条只讲阳性对照，不讲接线**。
-⚠️ **给 Gate 的一句**：本条与角度站放弃方向 **B**（「看不见的那一类 bug」下一卡）在**邻域**上接近，但机制不同（阳性对照 vs 失效判据不在 diff 里）。若 Gate 判它啃了下一张卡的料，**本条可整条撤下，V1–V5 不受影响**。
+**⚠️ 09-04 第 2 轮修订（退回理由 2 的修法：降级口径，未补实跑）**：原文「have been made to go red on purpose」/「have been made to」断言三条测试**被执行过**且确实报红——查证站只核过 commit 存在、`+210` 行 stat 相符、三条测试的**名字与其声称职责**对得上，没有跑过它们、没有留痕「注入后真的变红」。改稿去掉「made to go red」这个执行态动词，只说三条测试**各自被设计为只有一种通过方式**（报出它们被命名要抓的那个失效场景）——这是查证站实际核到的那一层，不越一次执行。
 
 ---
 
-## V7 · 入口 7（压缩图）· hook：对照钩 · **规格交 Visual Vera**（`roles/07_visual.md`，本站不代画）
+## V1 配图规格（原 V7，09-04 Gate 裁决撤下独立帖，改列为 V1 的配图）
 
-**图内容（三行 × 三列，收藏闸设计：为收藏而生）**
+> **裁决摘录**（RECORD.md `## review`）：「V7 作为独立帖撤下，入口 7 本卡不出；V5 正文的三行表原样保留、⛔ 不许改两列」——V7 唯一的独立性来源（第三列「could you see it?」）逐格对照后是 result 列的同义复述，不构成重建；`brain/hooks.md` 的**对照钩**定义是「两个标的同读数不同待遇的并置」，V7 的「三种测法 × 同一处污染」不落在该定义里。表本身**仍是好素材**，保留作 V1（入口 1）的配图。
+
+**图内容（三行 × 三列，供 Visual Vera 按 `roles/07_visual.md` 配 V1 用）**
 
 | what was repeated | result | could you see it? |
 |---|---|---|
@@ -208,14 +214,7 @@ been made to. That is the number we would put in front of anybody.
 
 图脚一行（图内排版，不放正文）：`The dimension you repeated is the dimension the contamination does not vary in.`
 
-**配帖文案（三行以内）**
-```
-Three ways to run the same check more than once. Two of them are photographs of
-the same contaminated state. Only the third one is a check.
-```
-
-**独立存在理由（⚠️ 全卡最弱的一条，Gate 请按此判）**：V5 用这张表**论证**「你的自检为什么瞎」，V7 把它变成一张**可存的对照表**，并加了 V5 正文里**不存在的第三列**（看得见吗）。独立性靠的就是那一列——它把表从「证据」变成「判据卡」。
-**若 Gate 认为这不足以独立**：处理办法二选一（本站建议①）——① **V7 保留、V5 正文里的三行表改成两列**（去掉 result 列的对照感，只留作为论据的那两行数字）；② V7 撤下，入口 7 本卡不出。⛔ 不接受的做法是两条都原样发＝同一条帖发两遍（`brain/x.md` 入口 7 警告）。
+⛔ **不单独配文发布**——这张表只作为 V1 长文帖的随文配图，不构成入口 7 的独立帖，避免「同一条帖发两遍」。
 
 ---
 
@@ -258,33 +257,47 @@ the same contaminated state. Only the third one is a check.
 | V3 | 43/47/49/43（**六个百分点**）· 49 个判定里 6 个翻转 | **C1 / C2** | 常青（`a2e3132b` 的历史跑分，非当前读数） | 02_research §六 **R1**（两份归档 JSON 的 `survivors` 对称差） |
 | V3 | 两 commit 时间戳与 21 小时间隔 · 四晚零测试 → 补 7 条（3 条注射式阳性对照） | C5 / 02_research L115–118 | 常青（commit 时间戳不变） | `git -C <repo> show -s --format=%ci a2e3132b deb7a0f5` |
 | V4 | p = 0.0061 | **C4** | 常青（**必须紧跟「真正的证明是把缓存关掉」**——已执行） | 02_research §六 **R3** |
-| V5 / V7 | 12/12 一致 · `--repeat 3` 零翻转 · 三次独立调用 10 个翻转 | **M1** | 常青 | 同 C5 源（`audit_mutation_2026-09-02.md` §五） |
-| V6 | 7 条测试 / 3 条注射式阳性对照（名称见 02_research L117） | 02_research §C5 | 常青（已在 main） | `git -C <repo> show --stat deb7a0f5` |
+| V5 | 12/12 一致 · `--repeat 3` 零翻转 · 三次独立调用 10 个翻转 | **M1** | 常青 | 同 C5 源（`audit_mutation_2026-09-02.md` §五） |
+| V1 配图 | 同 M1（原 V7 表，改列为 V1 配图规格） | **M1** | 常青 | 同上 |
+| V6 | 7 条测试 / 3 条各按名扛一个失效场景（名称见 02_research L117；⚠️ 09-04 降级：未断言已执行验证） | 02_research §C5 | 常青（已在 main） | `git -C <repo> show --stat deb7a0f5` |
 | NL | 22/48 零字节差（**特指 `audit_universe_shape` @ `02e387d1`**）· 475 里错 5 个 | **C3 / X5** | 常青，但 **22/48 的限定不可去**（去掉即变成一个关于 Python 的假常数） | 02_research §六 **R2**（用工具自己的 `sites()`/`build_mutant()` 重生成 49 个变异体量相邻字节差） |
 
 ---
 
-## 本站的 ⛔ 禁令终检（`03_angle.md` §七 六条 + 两条推翻项，逐条按**全部 7 个变体 + NL 骨架**扫）
+## 本站的 ⛔ 禁令终检（`03_angle.md` §七 六条 + 两条推翻项，逐条按**全部 6 个 X 变体 + NL 骨架**扫，09-04 第 2 轮复扫）
 
 | # | 禁令 | 判 | 证据 |
 |---|---|---|---|
 | 1 | ⛔「读数大面积是错的」 | ✅ 未犯 | 全页零处；NL 段 5 反向写出「475 里错 5 个」 |
 | 2 | ⛔「多跑几次看不见它」 | ✅ 未犯 | V5 三行表最后一行明写**三次独立调用 → 10 个翻转**（看得见）；限定词 "inside a single run" 在 V5 正文 |
-| 3 | ⛔ 三个交易类比带数字 / 写成「我们发现」 | ✅ 未犯 | 仅 NL 段 6 以类比语气出现，**零数字**，且明写「形状相同，仅此而已」；X 七条全无类比 |
+| 3 | ⛔ 三个交易类比带数字 / 写成「我们发现」 | ✅ 未犯 | 仅 NL 段 6 以类比语气出现，**零数字**，且明写「形状相同，仅此而已」；X 六条全无类比 |
 | 4 | ⛔ U5 红海断言 · U6 全仓唯一 · U3 同一秒内写完 | ✅ 三条全未出现 | V2 用 "can be handed"（可能性）；全页零处「没人写过这个角度」 |
 | 5 | ⛔「`-B` 能救已有脏 `.pyc`」 | ✅ 未犯 | V6 只写「拿掉抑制缓存的 flag → 测试必须报出残留文件」，未主张 `-B` 能清理既有 `.pyc` |
-| 6 | M3 锋利句必带「这台机器、这个 commit」限定 | ✅ 规避 | **本站七个变体全部未引 M3（真值 22/49）**——它留在长文尾部（04 正文已带限定） |
+| 6 | M3 锋利句必带「这台机器、这个 commit」限定 | ✅ 规避 | **本站六个变体全部未引 M3（真值 22/49）**——它留在长文尾部（04 正文已带限定） |
+| 7 | ⛔ 断言未经执行验证的结果（**09-04 新增自查，对应退回理由 2**） | ✅ 已修 | V6 不再写「have been made to go red」这类执行态断言，只写测试的设计职责（名字对应的失效场景） |
 | X1 | 单位：⛔ 永不写「6%」 | ✅ | **变体正文零命中**（`grep '6%'` 仅命中本页三处自查/禁令的元文本，不是可发布文案）；V3/NL 写 "six percentage points" / **六个百分点** |
 | X5 | ⛔ 过头（「所有杀死率不可信」） | ✅ | 未出现；NL 段 5 正面承认损伤小 |
+| X8 | ⛔ 数据组混淆（**09-04 新增自查，对应退回理由 1**） | ✅ 已修 | V1 已把「41/45/47（C5）」与「六个全中（C4，映射自 Joe 四次跑分）」用「a separate, earlier measurement」「between two of its runs」分清边界 |
 | — | ⛔ 入口 2 的「两个字段都不在任何 diff 里」不许升成中心主张 | ✅ | V2 中心＝判据本身，该句降级为末段附注一句，且立刻转回规则 |
-| — | ⛔ 主语是机制不是人 | ✅ | 七条零人名；V3 用 "somebody"，V5/V6 用 "we"（作为犯了那个工作流错误的**我们自己**，非指认他人） |
-| — | CTA 冻结线 | ✅ | 冷读者（V2/V3/V5/V6/V7）**零 CTA**；温读者（V1 长文、NL）**只给订阅**；⛔ 会员/付费零字 |
+| — | ⛔ 主语是机制不是人 | ✅ | 六条零人名；V3 用 "somebody"，V5/V6 用 "we"（作为犯了那个工作流错误的**我们自己**，非指认他人） |
+| — | CTA 冻结线 | ✅ | 冷读者（V2/V3/V5/V6）**零 CTA**；温读者（V1 长文、NL）**只给订阅**；⛔ 会员/付费零字 |
 
 ---
 
 ## 交接 ⑥ Gate（`roles/06_gate.md`）
 
-1. **入口号 1–7 各一条、hook 类型七个互不重复**（总表已列）；08-29 首件的教训是**文体不同 ≠ 入口不同**，本页按入口定义逐条判过。
+1. **入口号 1–6 各一条、hook 类型六个互不重复**（总表已列，入口 7 本卡不出）；08-29 首件的教训是**文体不同 ≠ 入口不同**，本页按入口定义逐条判过。
 2. **两个新 hook 类型**（时差票根钩 / 能不能变红钩）已按 `roles/05` append 进 `brain/hooks.md`〈类型登记〉，各一行 ⏳，**只碰了那一节**。
-3. **两处请 Gate 拍板**：① V7 与 V5 的三行表重叠（本站建议：留 V7、V5 表改两列）② V6 是否啃了下一张卡（放弃方向 B）的料——若判是，V6 整条撤下不影响其余。
+3. **09-04 第 2 轮：仅修了 Gate 09-04 第 1 轮退回的两处**（V1 数据组混淆、V6 未验证执行断言），并按拍板①执行了 V7 撤下。V2–V5 与 NL 骨架**逐字未动**。
 4. 排期口径：**一个入口一条**，不是一天一条（`brain/x.md`）。长文（V1 挂的 Article）发布后 **Pin 到 profile**。
+
+---
+
+## 本轮修订记录（09-04 第 2 轮，分发站断点续跑）
+
+对照 RECORD.md `## review`（Gate 09-04 第 1 轮判定「退回 ⑤ 分发站」）逐条执行：
+1. **退回理由 1（V1 数据组混淆）→ 已修**：改用「a separate, earlier measurement」「between two of its runs」把 C5（41/45/47，10 翻转）与 C4/C2（六个全中，来自 Joe 四次跑分里翻转的那 6 个）的边界立起来，不再暗示同一组。
+2. **退回理由 2（V6 越证据）→ 已降级口径**（未补实跑，未走「查证站补一次实跑」的另一分支——本轮无查证站执行权，选降级）：去掉「have been made to go red」等执行态断言，改为陈述三条测试的**设计职责**（按名字扛一个失效场景），这是查证站实际核到的那一层。
+3. **拍板①（V7 vs V5 三行表）→ 已执行**：V7 撤下独立帖身份，改列为「V1 配图规格」；V5 正文三行表**原样保留，未改列**（遵 Gate 明令「⛔ 不许改两列」）。
+4. **拍板②（V6 是否啃下一张卡的料）→ Gate 已裁「不算，保留」**，本轮未动 V6 的核心论点，只修了退回理由 2 的执行态断言。
+5. V2 / V3 / V4 / V5 / NL 骨架：**逐字未动**（Gate 09-04 已判通过，PIPELINE〈断点续跑〉「已过闸的站不重做」）。
