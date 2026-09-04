@@ -328,6 +328,34 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
         df['rs_6m'] * 2
     ) / 10
 
+    # ...and then RANK it, which is the half IBD does and we did not.
+    #
+    # A weighted average of five percentiles is not a percentile. Measured on
+    # the 2026-09-03 universe (n=5,380): the top decile held 0.6% of names
+    # instead of 10%, the bottom 1.0%, and the 30-40 bucket 21.3%. IQR 29
+    # against 50; SD 18.6 against 28.6. The cause is arithmetic, not a bug --
+    # the components are close to independent (f_score correlates 0.00-0.12
+    # with everything, i_score 0.00-0.31), so averaging them concentrates the
+    # result near the middle by the central limit theorem.
+    #
+    # It never hurt the RANKING -- every consumer sorts by it, and a monotone
+    # squeeze preserves order. What it hurt is the READING: `h_score` is
+    # published as `hybrid_rs` beside genuine percentiles like `rs_1m`, and 62
+    # means "top 22%" in one column and "top 38%" in the other. The same
+    # number on two scales, side by side.
+    #
+    # `h_score` itself is left raw: watchlist_hits.csv and shortlist_seat_log
+    # have been archiving it, and re-scaling in place would put a level break
+    # inside those series. The percentile ships alongside.
+    #
+    # NOTE what this does NOT fix: the weights are still ours. IBD's six
+    # coefficients are proprietary and no citable table exists (checked), so
+    # a 20%-fundamentals, 30%-industry score keeps carrying the name "RS"
+    # until someone renames it. Registered in METRIC_SOURCES.md.
+    df['_h_raw'] = df['h_score']
+    df['h_score_pctl'] = score_against_tradeable('_h_raw')
+    df.drop(columns=['_h_raw'], inplace=True)
+
     # --- Liquid Leader (course definition, SwingMasterclass M2_L09) ---
     # ADV >= 2M shares, above the 50-SMA, RS rank top 20% (rs_3m >= 80 on the
     # tradeable percentile). A QUALIFICATION list -- the water the entries
@@ -418,7 +446,7 @@ def compute_universe_scores(universe: pd.DataFrame) -> pd.DataFrame:
 
     # Round score columns to integers
     for col in ['rs_1m', 'rs_3m', 'rs_6m', 'rs_21d', 'rs_63d', 'rs_126d',
-                'rs_ibd', 'f_score', 'i_score', 'h_score']:
+                'rs_ibd', 'f_score', 'i_score', 'h_score', 'h_score_pctl']:
         df[col] = df[col].round(0).astype('Int64')  # Int64 keeps NA where the input was missing
 
     # --- Performance percentile ranks (0-1 scale, relative to full universe) ---
@@ -860,7 +888,7 @@ def main():
         'rs_1m', 'rs_3m', 'rs_6m',
         'rs_21d', 'rs_63d', 'rs_126d',   # deprecated aliases, drop once the UI moves
         'rs_ibd',
-        'f_score', 'i_score', 'h_score', 'tradeable',   # tradeable: the field the scores are measured on
+        'f_score', 'i_score', 'h_score', 'h_score_pctl', 'tradeable',   # tradeable: the field the scores are measured on
         'adr_pct', 'atr_pct', 'ema21_r', 'sma50_r', 'high_52w_dist',
         'from_open_pct', 'dcr_pct', 'pocket_pivot', 'pp_count_30d', 'pp_count_10d',
         'vol10_green', 'vol10_green_count_10d', 'vol10_green_count_30d',
